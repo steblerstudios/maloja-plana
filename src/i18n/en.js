@@ -1290,7 +1290,7 @@ export default {
           adultSelf: 'Me',
           adultLabel: 'Adult {nr}',
           addAdult: 'Add adult',
-          zweitePersonFehlt: { sie: 'Your marital status includes a second person, but only one is recorded in the household so far. Premium subsidies and social assistance are calculated with the people recorded here.', du: 'Your marital status includes a second person, but only one is recorded in the household so far. Premium subsidies and social assistance are calculated with the people recorded here.' },
+          zweitePersonFehlt: { sie: 'Your marital status includes a second person, but only one is recorded in the household so far. Social assistance is calculated with the people recorded here. For premium subsidies, in the cantons with an official model (ZH, BE, AG, SG, LU) Maloja shows a couple an orientation without an amount.', du: 'Your marital status includes a second person, but only one is recorded in the household so far. Social assistance is calculated with the people recorded here. For premium subsidies, in the cantons with an official model (ZH, BE, AG, SG, LU) Maloja shows a couple an orientation without an amount.' },
           zweitePersonHinzufuegen: 'Add person',
           adultRelationship: 'Relationship',
           relPartner: 'Partner',
@@ -2453,6 +2453,7 @@ export default {
     annahmeAlleinverdiener: "Calculated as a single-earner married couple (no partner income).",
     // K62.1: Konkubinat, Einzelbesteuerung
     annahmeEinzeln: "Calculated for you alone: people who cohabit are taxed individually, so your partner's income does not count here. Only the incomes of married couples and registered partners are added together (DBG Art. 9).",
+    annahmeKinderabzugKonkubinat: "Calculated with the full child deduction for you. With joint parental authority and no maintenance payments claimed for the child, each parent receives half of the child deduction (FTA, Circular No. 30, section 14.8.1, direct federal tax) — the federal tax is then the same or higher. How the canton splits the deduction has not been checked.",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Maloja does not show an amount for cantonal and municipal tax here: it was measured only for married couples with one income, and the partner income is missing. The federal tax above uses the value entered — Maloja assumes it is the joint taxable income from the assessment. If the partner has no income of their own, enter 0 in the profile (Personal basics → «Partner net salary»).",
     bandKonkubinat: "Maloja shows no amount for cantonal and municipal tax here: in this canton the FTA tax calculator treats cohabiting people differently from people living alone (measured for 2026: higher when cohabiting). Maloja's table covers people living alone only. The federal tax above still applies; it is calculated for each person individually. The FTA tax calculator works out the amount for your municipality (marital status «cohabiting»).",
@@ -3012,6 +3013,7 @@ export default {
     budgetCalm: 'You have an overview of your finances. Every recorded area helps.',
     ipvHint: 'You may be eligible for premium reduction (IPV) — approx. CHF {amount}/month. You can apply at your municipality or cantonal compensation office.',
     ipvHintOhneBetrag: 'Premium reduction (IPV): the canton decides whether you are entitled and to how much. Especially on a tight budget, it is worth checking.',
+    ipvHintLuFristVorbei: 'Premium reduction Lucerne: not deducted in the budget. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. The budget does not know whether or when registration took place — with timely registration, the full annual entitlement applies.',
     sozialhilfeHint: 'Your income is below the SKOS basic needs threshold. Social assistance may be an option — counselling is confidential and free.',
     elHint: 'With a modest income in retirement, supplementary benefits (EL) may be available. Your AHV branch office can advise you for free.',
   },
@@ -3064,11 +3066,12 @@ export default {
     sgFristLaeuft: 'For {jahr} the deadline for a full-year entitlement runs until 31 March {jahr}. Anyone receiving supplementary benefits gets the reduction without applying.',
     sgFristFolgejahr: 'The deadline for a full-year {jahr} entitlement ran until 31 March {jahr} and has passed. The amount here shows what is at stake. How a later application is treated, and from when {folgejahr} applications are accepted, is for SVA St. Gallen to say — the {folgejahr} figures have not been decided yet. Anyone receiving supplementary benefits gets the reduction without applying.',
     // K31 LU (23.09.2026): Prämienverbilligungsgesetz SRL 866 §§ 7, 8a, 12; Verordnung SRL 866a § 7.
-    vorbehaltLU: 'In the canton of Lucerne, the basis is the most recent final tax assessment, not current income. If circumstances have changed significantly since 1 November of the previous year, an adjustment can be requested from WAS Ausgleichskasse Luzern — for the current year no later than 31 December. Amounts received without entitlement are reclaimed.',
+    vorbehaltLU: 'In the canton of Lucerne, the basis is the most recent final tax assessment, not current income. If circumstances have changed significantly since 1 November of the previous year, the premium reduction is adjusted on application to WAS Ausgleichskasse Luzern or ex officio. An application for an increase must be filed by 31 December of the year the change applies to. Amounts paid without entitlement are reclaimed from the health insurer they were paid to.',
     luKeinAnspruch: 'According to this calculation there is no entitlement: the reference premium does not exceed the personal share calculated on the relevant income. The canton of Lucerne does not publish an income limit as a figure — it only results from the calculation.',
     luUnterMindestbetrag: 'According to this calculation there would be an entitlement, but it is not paid out: the canton of Lucerne pays no premium reduction if the total entitlement is below CHF 100.',
     luFristLaeuft: 'In the canton of Lucerne, the premium reduction has to be applied for every year — for {jahr} by 31 October {vorjahr}, with WAS Ausgleichskasse Luzern. Anyone applying later only receives the reduction for premiums falling due after the application. Anyone receiving supplementary benefits or social assistance does not need to apply.',
     luFristVorbei: 'The application deadline for {jahr} was 31 October {vorjahr}. Anyone applying only now receives the reduction only for premiums falling due after the application — not retroactively. The amount shown is the full annual entitlement. For {folgejahr} the deadline is 31 October {jahr}; the values for {folgejahr} have not yet been set. Anyone receiving supplementary benefits or social assistance does not need to apply.',
+    luFristNichtAbgezogen: 'Premium reduction Lucerne: not deducted here. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. Once the decision has arrived, its amount can be entered under premium reduction via «Decision received».',
     naeherung: 'Calculated from the income and assets recorded here, not from taxable income. The cantonal office uses the tax factors and will therefore arrive at a somewhat different amount.',
     offenGrund: {
       haushalt: 'For couples and households with several adults the app does not calculate yet: the age and income of the second person are missing.',
@@ -3441,6 +3444,7 @@ export default {
       annahmeOhneDreizehnten: "Calculated without a 13th monthly salary",
       annahmeAlleinverdiener: "Single-earner married couple (partner income 0)",
       annahmeEinzeln: "Cohabiting: calculated for the person alone (individual taxation)",
+      annahmeKinderabzugKonkubinat: "Cohabiting with children: full child deduction calculated for the person (half with joint parental authority, FTA Circular No. 30, section 14.8.1)",
       disclaimer: "Guidance based on the data entered; does not replace a binding assessment by the responsible authority.",
     },
     generated: 'Generated on {date}',

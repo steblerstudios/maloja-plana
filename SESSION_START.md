@@ -19,6 +19,30 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🚀 **Nachtrag 24.09., ~15:30 — Release-PR 0.1.40-beta als Entwurf (#324), Befunde des Deploy-Gates behoben. Nicht gemergt, nicht deployt, kein Tag.**
+>
+> **Stand beim Schreiben:** `main` = `c2acdab` (#321). Zweig `release/0.1.40-beta-gate` mit `main`
+> gemergt. **3252 Tests grün** (180 Dateien, zweimal), Lint 0 Fehler, Build ok, SEO 0/0, Startdatei
+> **56,44 kB** (main 56,31), PII-Scan grün, ESTV-Stichprobe 156/156 (Exit 0). Die Stand-Zeile
+> **vor dem Weiterarbeiten messen** (`bash scripts/stand-jetzt.sh`) — sie altert mit jedem Merge.
+>
+> **Was #324 bringt (wenn gemergt):** Version `0.1.40-beta`, CHANGELOG gegen `git log` nachgezogen ·
+> rm-Notfallpass in Sie/Du, Anrede-Test prüft rm (Altbestand 299 als Schuld-Liste, K124) ·
+> Konkubinat mit Kindern: Annahme «ganzer Kinderabzug» sichtbar (KS 30 Ziff. 14.8.1 gelesen; kantonal
+> K125 offen) · LU-Vorbehalt am Wortlaut (K122 erledigt) · Budget LU ohne IPV nach der Frist ·
+> Impressum «nur Tatsachen» · a11y (radiogroup, aria-controls, 44-px-Tippflächen) · Fehlerschirm-Token ·
+> Doku (Datenschutz, Verzeichnis + E-Mail-Tätigkeit, Lizenzen, K48 F0, Bau-Liste K62/K117/K118/K123).
+>
+> ### 🛑 Offen nach #324
+> 1. **Mergen** (Stebler Studios), dann **Deploy**, dann erst der **Tag `v0.1.40-beta`**.
+> 2. **Studio-Impressum** (`stebler-studios/website/impressum.html`) auf denselben Satz bringen —
+>    liegt ausserhalb dieses Repos, der Kommentar in `seiten-inhalt.mjs` verlangt Gleichlauf.
+> 3. **rm-Gegenlese** der neuen Sie-Fassungen (alle mit `TODO(rm)` markiert).
+> 4. **K123** AHV-Nummer/Kontaktkarte im QR (Oktober) · **K124** rm-Altbestand · **K125** kantonale
+>    Aufteilung des Kinderabzugs · K121 Handprüfungen bleiben.
+> 5. Der alte Zweig `release/0.1.40-beta` (22.09., `4614ff4`, nie als PR) liegt noch auf origin —
+>    Löschen nur auf Zuruf.
+
 > ✅ **Nachtrag 24.09., 15:20 — Tester-Rückmeldung «ok und jetzt…?»: der Rundgang endet beim ersten Schritt. #321 gemergt auf ausdrückliches Wort von Stebler Studios («sauber mergen»).**
 >
 > **Stand, gemessen 24.09.2026 15:20** (`bash scripts/stand-jetzt.sh`): `main` = `c2acdab` (15:20) ·

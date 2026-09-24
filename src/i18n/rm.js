@@ -1167,7 +1167,7 @@ export default {
           adultSelf: 'Jau',
           adultLabel: 'Creschì/da {nr}',
           addAdult: 'Agiuntar in creschì',
-          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.' }, // TODO(rm): provisorisch
+          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. L’agid social vegn quintà cun las persunas registradas qua. Per la reducziun da premias mussa Maloja per in pèr en ils chantuns cun model uffizial (ZH, BE, AG, SG, LU) in’orientaziun senza import.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. L’agid social vegn quintà cun las persunas registradas qua. Per la reducziun da premias mussa Maloja per in pèr en ils chantuns cun model uffizial (ZH, BE, AG, SG, LU) in’orientaziun senza import.' }, // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
           zweitePersonHinzufuegen: 'Agiuntar la persuna', // TODO(rm): provisorisch
           adultRelationship: 'Relaziun',
           relPartner: 'Partenari/a',
@@ -2113,11 +2113,13 @@ export default {
     sgFristLaeuft: 'Per {jahr} dura il termin per in dretg per l’entir onn fin ils 31 da mars {jahr}. Tgi che survegn prestaziuns cumplementaras survegn la sbassada senza annunzia.',
     sgFristFolgejahr: 'Il termin per in dretg per l’entir onn {jahr} durava fin ils 31 da mars {jahr} ed è passà. L’import qua mussa da tge ch’i va. Co ch’ina annunzia pli tarda vegn tractada e da cura che ins po s’annunziar per {folgejahr}, di la SVA St.Gallen — las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras survegn la sbassada senza annunzia.',
     // K31 LU (23.09.2026): Prämienverbilligungsgesetz SRL 866 §§ 7, 8a, 12; Verordnung SRL 866a § 7.
-    vorbehaltLU: 'En il chantun Lucerna è la basa l’ultima taxaziun fiscala giuridicamain valaivla, betg l’entrada dad oz. Sche las relaziuns èn sa midadas considerablamain dapi il 1. da november da l’onn precedent, po ins pretender tar la WAS Ausgleichskasse Luzern in’adattaziun — per l’onn current il pli tard ils 31 da december. Imports retratgs a tort vegnan pretendids enavos.',
+    vorbehaltLU: 'En il chantun Lucerna è la basa l’ultima taxaziun fiscala giuridicamain valaivla, betg l’entrada dad oz. Sche las relaziuns èn sa midadas considerablamain dapi il 1. da november da l’onn precedent, vegn la reducziun da premias adattada sin dumonda tar la WAS Ausgleichskasse Luzern u d’uffizi. Ina dumonda d’augment sto vegnir inoltrada il pli tard ils 31 da december da l’onn per il qual la midada vala. Imports pajads a tort vegnan pretendids enavos da la cassa da malsauns, a la quala els èn vegnids pajads.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     luKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg la part atgna da l’entrada decisiva. Il chantun Lucerna na publitgescha nagina limita d’entrada sco cifra — ella resulta pir da la quintada.',
     luUnterMindestbetrag: 'Tenor questa quintada dess i in dretg, el na vegn dentant betg pajà ora: il chantun Lucerna na paja nagina reducziun da las premias, sch’il dretg total è sut 100 francs.',
     luFristLaeuft: 'En il chantun Lucerna sto la reducziun da las premias vegnir annunziada mintga onn da nov — per {jahr} fin ils 31 d’october {vorjahr}, tar la WAS Ausgleichskasse Luzern. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
@@ -2225,15 +2227,21 @@ export default {
   },
   notfallpass: {
     title: 'Preparar il pass d’urgenza',
-    intro: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.',
-    datenschutz: 'Quai che stat en il pass d’urgenza po leger tgi che tegna tes telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Ti decidas tge che ti endatas.',
-    angabenTitel: 'Tias indicaziuns, champ per champ',
-    angabenText: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferescha quai che ti vuls.',
-    leer: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che ti endatas insatge là, è quai pront qua.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    intro: { sie: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; Vus endatais las indicaziuns a maun. Qua èn ellas prontas, champ per champ.', du: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; Ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    datenschutz: { sie: 'Quai che stat en il pass d’urgenza po leger tgi che tegna Voss telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Vus decidais tge che Vus endatais.', du: 'Quai che stat en il pass d’urgenza po leger tgi che tegna Tes telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Ti decidas tge che Ti endatas.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    angabenTitel: { sie: 'Vossas indicaziuns, champ per champ', du: 'Tias indicaziuns, champ per champ' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    angabenText: { sie: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferi quai che Vus vulais.', du: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferescha quai che Ti vuls.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    leer: { sie: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che Vus endatais insatge là, è quai pront qua.', du: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che Ti endatas insatge là, è quai pront qua.' },
     leerLink: 'Al chapitel Urgenza',
     gruppe_profil: 'En las infurmaziuns da sanadad',
     gruppe_pass: 'En il pass d’urgenza',
-    profilHinweis: 'Num e data da naschientscha endatas ti en l’app «Health»: tutgar sin tes maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    profilHinweis: { sie: 'Num e data da naschientscha endatais Vus en l’app «Health»: tutgar sin Voss maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).', du: 'Num e data da naschientscha endatas Ti en l’app «Health»: tutgar sin Tes maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).' },
     feld_name: 'Num',
     feld_geburtsdatum: 'Data da naschientscha',
     feld_erkrankungen: 'Malsognas',
@@ -2247,21 +2255,28 @@ export default {
     kopiertKurz: 'Copià',
     kopierenAria: 'Copiar: {feld}',
     kopiert: '{feld}: copià.',
-    kopierenFehler: 'Copiar n’ha betg funcziunà qua. Ti pos marcar l’indicaziun u la scriver giu.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    kopierenFehler: { sie: 'Copiar n’ha betg funcziunà qua. Vus pudais marcar l’indicaziun u la scriver giu.', du: 'Copiar n’ha betg funcziunà qua. Ti pos marcar l’indicaziun u la scriver giu.' },
     iphoneTitel: 'Sin l’iPhone',
-    iphone1: 'Avra l’app «Health», tutga sin tes maletg e lura sin «Notfallpass».',
-    iphone2: 'Tutga sin «Los gehts» u «Bearbeiten» ed endatescha las indicaziuns da survart.',
-    iphone3: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Ti tschernas ord tes contacts — endatescha l’emprim la persuna là, sch’ella manca.',
-    iphone4: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    iphone1: { sie: 'Avri l’app «Health», tutgai sin Voss maletg e lura sin «Notfallpass».', du: 'Avra l’app «Health», tutga sin Tes maletg e lura sin «Notfallpass».' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    iphone2: { sie: 'Tutgai sin «Los gehts» u «Bearbeiten» ed endatai las indicaziuns da survart.', du: 'Tutga sin «Los gehts» u «Bearbeiten» ed endatescha las indicaziuns da survart.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    iphone3: { sie: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Vus tschernis ord Voss contacts — endatai l’emprim la persuna là, sch’ella manca.', du: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Ti tschernas ord Tes contacts — endatescha l’emprim la persuna là, sch’ella manca.' },
+    // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt.
+    iphone4: { sie: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».', du: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».' },
     iphoneSperr: 'Uschia chattan agidantas ed agidants il pass: sin il visur bloccà stritgar ensi u smatgar la tasta Home, tutgar «Notfall», lura «Notfallpass».',
     iphoneNotruf: 'L’opziun «Notruf» parta il pass automaticamain durant ina clamada d’urgenza — tenor Apple mo en ils Stadis Unids ed en il Canada.',
     iphoneLink: 'Agid dad Apple: Notfallpass einrichten und anzeigen (tudestg)',
     iphoneUrl: 'https://support.apple.com/de-ch/guide/iphone/iph08022b192/ios',
     androidTitel: 'Sin Android',
     androidText: 'Betg mintga telefonin Android ha questa app. Nua ch’ella exista (a partir dad Android 12), sa numna ella «Persönliche Sicherheit», en la glista da las apps curt «Sicherheit».',
-    android1: 'Avra l’app «Sicherheit», s’annunzia sche necessari cun tes conto da Google e tutga sin «Meine Infos».',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    android1: { sie: 'Avri l’app «Sicherheit» (sche necessari cun Voss conto da Google) e tutgai sin «Meine Infos».', du: 'Avra l’app «Sicherheit», s’annunzia sche necessari cun Tes conto da Google e tutga sin «Meine Infos».' },
     android2: 'Sut «Medizinische Daten» endatar gruppa da sang, allergias e medicaments.',
-    android3: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord tes contacts.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    android3: { sie: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord Voss contacts.', du: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord Tes contacts.' },
     android4: 'Sut «Zugriff auf Notfallinformationen» tscherner «Anzeigen, wenn gesperrt».',
     androidLink: 'Agid dad Android: Im Notfall Hilfe anfordern (tudestg)',
     androidUrl: 'https://support.google.com/android/answer/9319337?hl=de',
@@ -2269,8 +2284,10 @@ export default {
     dossierVerweis: 'Preparar las medemas indicaziuns per il pass d’urgenza en il telefonin',
     zurueck: 'Enavos a l’urgenza',
     einstiegTitel: 'Preparar il pass d’urgenza en il telefonin',
-    einstiegSub: 'Per il visur bloccà: tias indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.',
-    fussNichtsUebertragen: 'Questa pagina na trametta nagut. Copià vegn mo, sche ti tutgas sin «Copiar».',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    einstiegSub: { sie: 'Per il visur bloccà: Vossas indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.', du: 'Per il visur bloccà: Tias indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    fussNichtsUebertragen: { sie: 'Questa pagina na trametta nagut. Copià vegn mo, sche Vus tutgais sin «Copiar».', du: 'Questa pagina na trametta nagut. Copià vegn mo, sche Ti tutgas sin «Copiar».' },
   },
   notfallDossier: {
     title: "Dossier d'urgenza",
@@ -2378,7 +2395,8 @@ export default {
     berge: { title: 'Il progress', text: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' },
     anspruch: { title: 'Pussaivels dretgs', text: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' },
     privacy: { title: 'Tut resta sin l\'apparat', text: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.' },
-    start: { title: 'Cumenza qua', text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026; #321 hatte nur die Du-Form)
+    start: { title: { sie: 'Cumenzai qua', du: 'Cumenza qua' }, text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
     startAction: 'Cumenzar cun «{name}»',
   },
 
@@ -2452,6 +2470,7 @@ export default {
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
       annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
+      annahmeKinderabzugKonkubinat: "Concubinat cun uffants: entira deducziun per uffants quintada tar la persuna (mesadad cun autoritad parentala cuminaivla, circular AFC nr. 30, cifra 14.8.1)", // TODO(rm): provisorisch
       disclaimer: "Orientaziun sin basa da las indicaziuns endatadas; na remplazza nagin examen liant tras il post cumpetent.", // TODO(rm): provisorisch
     },
     generated: 'Creà ils {date}',
@@ -2629,6 +2648,7 @@ export default {
     budgetCalm: { sie: 'Vus avais ina survista da Vossas finanzas. Mintga sectur registrà gida.', du: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.' },
     ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
     ipvHintOhneBetrag: 'Reducziun da premias (IPV): dretg ed import decida il chantun. Cunzunt cun in budget stretg vala la paina dad examinar.', // TODO(rm): provisorisch
+    ipvHintLuFristVorbei: 'Reducziun da premias Lucerna: betg deducida en il budget. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Il budget na sa betg, sche e cura che l’annunzia è succedida — cun ina annunzia a temp vala l’entir dretg annual.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     sozialhilfeHint: { sie: "Vossa entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.", du: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita." },
     elHint: { sie: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Vossa filiala AVS As cussegliescha gratuitamain.", du: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Tia filiala AVS Ta cussegliescha gratuitamain." },
   },
@@ -3134,6 +3154,7 @@ export default {
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
     // K62.1: Konkubinat, Einzelbesteuerung
     annahmeEinzeln: { sie: "Quintà mo per Vus: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9).", du: "Quintà mo per tai: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9)." }, // TODO(rm): provisorisch
+    annahmeKinderabzugKonkubinat: { sie: "Quintà cun l'entira deducziun per uffants tar Vus. Cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant survegn mintga genitur la mesadad da la deducziun per uffants (AFC, circular nr. 30, cifra 14.8.1, taglia federala directa) — la taglia federala è lura tuttina auta u pli auta. Co ch'il chantun parta la deducziun n'è betg verifitgà.", du: "Quintà cun l'entira deducziun per uffants tar tai. Cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant survegn mintga genitur la mesadad da la deducziun per uffants (AFC, circular nr. 30, cifra 14.8.1, taglia federala directa) — la taglia federala è lura tuttina auta u pli auta. Co ch'il chantun parta la deducziun n'è betg verifitgà." }, // TODO(rm): provisorisch — Gegenlese
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin la valur endatada — Maloja suppona ch'i saja l'entrada taxabla cuminaivla tenor la taxaziun. Sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
     bandKonkubinat: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca (stadi civil «concubinat»).", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca (stadi civil «concubinat»)." }, // TODO(rm): provisorisch

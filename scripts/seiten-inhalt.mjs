@@ -471,16 +471,26 @@ export const quelle = q;
 //
 // Was das Gesetz verlangt: UWG Art. 3 Abs. 1 Bst. s Ziff. 1 fordert Angaben
 // über Identität und «Kontaktadresse einschliesslich derjenigen der
-// elektronischen Post». Es schreibt nicht in jedem Fall eine Postanschrift
-// vor, und ob ein kostenloses Angebot ohne Bestellvorgang überhaupt als
-// «elektronischer Geschäftsverkehr» im Sinn der Bestimmung gilt, ist eine
-// Auslegungsfrage. Sie wird hier NICHT beantwortet — sie liegt als Frage F0
-// in docs/legal/k48-fragen-juristin.md.
+// elektronischen Post». Ob daraus eine Postanschrift folgt und ob ein
+// kostenloses Angebot ohne Bestellvorgang überhaupt als «elektronischer
+// Geschäftsverkehr» im Sinn der Bestimmung gilt, sind Auslegungsfragen. Sie
+// werden hier NICHT beantwortet — sie liegen als Frage F0 in
+// docs/legal/k48-fragen-juristin.md.
+//
+// Entscheid Stebler Studios 24.09.2026 (Deploy-Gate 0.1.40-beta): «nur
+// Tatsachen». Der Satz «Eine Postanschrift schreibt die Bestimmung nicht in
+// jedem Fall vor» war eine Auslegung und ist gestrichen. Die Seite sagt jetzt
+// nur, was angegeben ist, und dass die Frage abgeklärt wird.
 //
 // Warum keine Adresse: Stebler Studios hat (Stand 23.09.2026) kein
 // Geschäftsdomizil, und die Wohnadresse soll nicht ins öffentliche Repo. Das
-// hängt am Handelsregister-Entscheid: ein Eintrag macht die Domiziladresse
-// ohnehin öffentlich (OR Art. 931), deshalb wird beides zusammen entschieden.
+// hängt am Handelsregister-Entscheid: ein Eintrag ist öffentlich (OR Art. 936
+// Abs. 1: «Das Handelsregister ist öffentlich.»), deshalb wird beides zusammen
+// entschieden. Die Eintragungspflicht für Einzelunternehmen regelt OR Art. 931
+// Abs. 1 (Umsatzerlös ab 100 000 Franken). Beides gelesen an Fedlex, SR 220,
+// Fassung 1.1.2026, am 24.09.2026. Dass die Domiziladresse zum Eintrag gehört,
+// steht in der HRegV — dort nicht gelesen. (Bis 24.09. stand hier «OR Art. 931»
+// für die Öffentlichkeit; das ist Art. 936.)
 //
 // 🛑 Dieselbe Stelle, dieselbe Begründung steht im Studio-Impressum
 // (stebler-studios/website/impressum.html, Fassung vom 22.09.2026). Wer hier
@@ -506,7 +516,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Basel, Schweiz<br>E-Mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — Schweizer Lebensordner. Ein Open-Source-Projekt unter AGPL-3.0. Die Nutzung der App ist kostenlos; für White-Label und andere kommerzielle Nutzung gibt es auf Anfrage eine separate Lizenz.',
-          'Zur Kontaktadresse: <a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">UWG Art. 3 Abs. 1 Bst. s Ziff. 1</a> verlangt Angaben über Identität und Kontaktadresse «einschliesslich derjenigen der elektronischen Post». Eine Postanschrift schreibt die Bestimmung nicht in jedem Fall vor. Angegeben sind Name, Ort und E-Mail; eine Postanschrift ist ein offener Entscheid und wird zusammen mit der Frage des Handelsregister-Eintrags entschieden. Über die E-Mail-Adresse sind wir für alle Anliegen erreichbar, auch für rechtliche.',
+          'Zur Kontaktadresse: <a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">UWG Art. 3 Abs. 1 Bst. s Ziff. 1</a> verlangt Angaben über Identität und Kontaktadresse «einschliesslich derjenigen der elektronischen Post». Angegeben sind Name, Ort und E-Mail; ob zusätzlich eine Postanschrift geschuldet ist, wird abgeklärt. Über die E-Mail-Adresse sind wir für alle Anliegen erreichbar, auch für rechtliche.',
         ],
       },
       {

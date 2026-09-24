@@ -1,6 +1,12 @@
 # Impressum — Maloja Plana
 
-**Gemäss Art. 3 Abs. 1 lit. s UWG**
+*Angeglichen an die App (`legal.imprint`) und an `/rechtliches/` am 24.09.2026. Bis dahin stand
+hier «Gemäss Art. 3 Abs. 1 lit. s UWG» — eine Vollständigkeits-Behauptung, die die öffentliche
+Seite seit dem 23.09. nicht mehr trägt (Frage F0, `k48-fragen-juristin.md`).*
+
+Zur Kontaktadresse: UWG Art. 3 Abs. 1 Bst. s Ziff. 1 verlangt Angaben über Identität und
+Kontaktadresse «einschliesslich derjenigen der elektronischen Post». Angegeben sind Name, Ort
+und E-Mail; ob zusätzlich eine Postanschrift geschuldet ist, wird abgeklärt.
 
 ---
 

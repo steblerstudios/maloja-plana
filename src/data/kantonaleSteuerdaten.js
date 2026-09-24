@@ -397,7 +397,7 @@ export function steuerEingabenAusDaten(data = {}) {
 /**
  * E39: Bundessteuer und Kantons-/Gemeindesteuer aus demselben steuerbaren Einkommen.
  * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object, gemeinsamDirekt: boolean,
- *             annahmen: { ohneDreizehnten: boolean, alleinverdiener: boolean, einzeln: boolean } }}
+ *             annahmen: { ohneDreizehnten: boolean, alleinverdiener: boolean, einzeln: boolean, kinderabzugGanz: boolean } }}
  *   bund = null, wenn es kein steuerbares Einkommen gibt (grund sagt warum).
  *   gemeinsamDirekt (K86) = verheiratet und direkt eingetragener Wert: Maloja nimmt an, dass es der
  *     gemeinsame Wert aus der Veranlagung ist. Der Nettolohn im Profil ist nur der eigene — darum
@@ -406,6 +406,13 @@ export function steuerEingabenAusDaten(data = {}) {
  *     ohneDreizehnten — aus dem Nettolohn geschätzt, Frage nach dem 13. Monatslohn offen
  *     alleinverdiener — verheiratet und gerechnet wie gemessen (Partnereinkommen 0)
  *     einzeln (K62.1) — Konkubinat: für die Person allein gerechnet, ohne das Partnereinkommen
+ *     kinderabzugGanz (Gate 24.09.2026) — Konkubinat mit Kindern, aus dem Nettolohn geschätzt: der
+ *       ganze Kinderabzug ist der Person zugerechnet. Bei gemeinsamer elterlicher Sorge ohne
+ *       Unterhaltszahlungen kann «jeder Elternteil je den halben Kinderabzug» geltend machen (ESTV,
+ *       Kreisschreiben Nr. 30, Ziff. 14.8.1; gelesen 24.09.2026 an estv2.admin.ch/dvs/kreisschreiben/
+ *       dbst-ks-2010-1-030-d-de.pdf, Gegenprobe erfundener Name → 404). Die Sorge fragt die App nicht,
+ *       darum rechnet sie nicht hälftig, sagt es aber. Ein direkt eingetragener Wert stammt aus der
+ *       Veranlagung — dort ist der Abzug schon verteilt, keine Annahme.
  */
 export function steuernFuerProfil(p = {}) {
   const basis = steuerbaresEinkommenFuerProfil(p);
@@ -421,6 +428,7 @@ export function steuernFuerProfil(p = {}) {
     alleinverdiener: p.verheiratet === true && (basis.quelle === 'estv' || Boolean(kanton.kantonal)),
     // K62.1: im Konkubinat für die Person allein gerechnet (Einzelbesteuerung).
     einzeln: basis.steuerbar != null && imKonkubinat(p),
+    kinderabzugGanz: basis.quelle === 'estv' && imKonkubinat(p) && Number(p.kinder) > 0,
   };
   return { ...basis, bund, kanton, annahmen, gemeinsamDirekt };
 }

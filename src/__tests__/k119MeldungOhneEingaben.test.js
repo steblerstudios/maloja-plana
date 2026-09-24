@@ -30,6 +30,28 @@ describe('meldungOhneEingaben', () => {
     expect(m).toContain('#');
   });
 
+  // Gate 24.09.2026 (0.1.40-beta): deutsche Anführungszeichen und offene Zitate.
+  it('deutsche Anführungszeichen „…“ fallen weg', () => {
+    const m = meldungOhneEingaben('Ungültiger Wert „Diabetes Typ 2“ im Feld');
+    expect(m).not.toMatch(/Diabetes|Typ/);
+    expect(m).toContain('im Feld');
+    expect(meldungOhneEingaben('Wert „Muster” ungültig')).not.toMatch(/Muster/);
+  });
+
+  it('ein offenes Zitat ohne Schluss fällt bis zum Zeilenende weg, die nächste Zeile bleibt', () => {
+    const m = meldungOhneEingaben('Unexpected end of JSON input near "Diabetes Typ\nZeile zwei');
+    expect(m).not.toMatch(/Diabetes/);
+    expect(m).toContain('Unexpected end of JSON input near');
+    expect(m).toContain('Zeile zwei');
+    expect(meldungOhneEingaben('Wert „Muster ohne Schluss')).not.toMatch(/Muster/);
+    expect(meldungOhneEingaben('Wert «Muster ohne Schluss')).not.toMatch(/Muster/);
+  });
+
+  it('Gegenprobe: ein Apostroph mitten im Wort öffnet kein Zitat', () => {
+    expect(meldungOhneEingaben("Cannot read properties of undefined")).toBe('Cannot read properties of undefined');
+    expect(meldungOhneEingaben("doesn't work here")).toBe("doesn't work here");
+  });
+
   it('kurze Positionsangaben bleiben lesbar (zum Nachstellen)', () => {
     expect(meldungOhneEingaben(V8_POSITION)).toBe(V8_POSITION);
   });

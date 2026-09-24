@@ -1,7 +1,7 @@
 # Verzeichnis der Bearbeitungstätigkeiten — Maloja Plana
 
 **Gemäss Art. 12 nDSG / Art. 24 DSV**
-**Stand: 16.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
+**Stand: 24.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
 
 ---
 
@@ -124,10 +124,29 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Speicherort** | Infomaniak-Infrastruktur, Rechenzentren in der Schweiz |
 | **Empfänger** | Infomaniak Network SA, Genf, als Hosting-Provider (Belege: `deploy.sh` Z. 2, `src/i18n/de.js` `privacy.hosting1`, `docs/legal/third-party-licenses.md` — Vercel nicht mehr verwendet) |
 | **Übermittlung ins Ausland** | Keine (Stand 15.09.2026). Bis zu diesem Datum stand hier Vercel Inc., USA — seit dem Hosting-Wechsel nicht mehr zutreffend |
-| **Aufbewahrungsfrist** | Server-Logs: nicht belegt (Infomaniak-Standard; bei Bedarf beim Hoster erfragen) |
-| **Auftragsbearbeitungsvertrag (Art. 9 DSG)** | Offen — nicht geprüft, ob die Infomaniak-Vertragsbedingungen die Anforderung abdecken |
+| **Aufbewahrungsfrist** | Server-Logs: nach Angabe des Anbieters mindestens 7 Tage (Infomaniak Support-FAQ 1926, abgerufen 23.09.2026; so auch `legal.privacy.hosting1`/`hostingSource`). Bis 24.09.2026 stand hier «nicht belegt» |
+| **Auftragsbearbeitung (Art. 9 DSG)** | Rolle: Infomaniak ist Auftragsbearbeiterin (so auch die App, `legal.privacy.hosting1`). Vertrag: Infomaniak-Standardbedingungen, **nicht im Einzelnen geprüft**; kein eigener Auftragsbearbeitungsvertrag |
 | **Technische Massnahmen** | HTTPS/TLS, HSTS, keine Nutzerdaten in Server-Logs (die App sendet keine) |
 | **Rechtsgrundlage** | Berechtigtes Interesse / technische Notwendigkeit |
+
+---
+
+## Bearbeitungstätigkeit 7: E-Mail-Korrespondenz
+
+| Feld | Beschreibung |
+|---|---|
+| **Bezeichnung** | Beantworten von Nachrichten an info@malojaplana.ch |
+| **Zweck** | Antwort auf Anfragen, Fehlermeldungen und Rückmeldungen (auch über den Melde-Weg der App, der nur einen Mail-Entwurf öffnet) |
+| **Kategorien betroffener Personen** | Personen, die schreiben |
+| **Kategorien von Personendaten** | E-Mail-Adresse, Inhalt der Nachricht, allfällige Anhänge — was die Person selbst mitschickt |
+| **Speicherort** | Postfach bei Infomaniak, Schweiz |
+| **Empfänger** | Keine Weitergabe an Dritte, ausser gesetzlich geschuldet. Das Postfach betreibt Infomaniak; die Rolle beim Postfach ist nicht eigens geprüft |
+| **Übermittlung ins Ausland** | Keine (Postfach in der Schweiz) |
+| **Aufbewahrungsfrist** | So lange, wie die Anfrage und übliche Nachfragen es brauchen, danach gelöscht — keine feste Frist in Tagen |
+| **Rechtsgrundlage** | Die Nachricht der Person selbst (Anfrage) |
+| **Beleg** | App-Text `legal.privacy.contactTitle`/`contact1` (seit #277) |
+
+Nachgetragen 24.09.2026 (Deploy-Gate 0.1.40-beta): die Tätigkeit stand in der App seit #277, aber nicht in diesem Verzeichnis.
 
 ---
 
@@ -152,9 +171,12 @@ Nutzende Person
     │       └── Datei auf dem Gerät der nutzenden Person
     │       └── ❌ KEINE automatische Übertragung
     │
-    └── [EXTERN] Seitenabruf (HTTPS)
-            └── Infomaniak Hosting (Schweiz): IP-Adresse in Server-Logs
-                (Aufbewahrungsdauer nicht belegt)
+    ├── [EXTERN] Seitenabruf (HTTPS)
+    │       └── Infomaniak Hosting (Schweiz): IP-Adresse in Server-Logs
+    │           (nach Angabe des Anbieters mindestens 7 Tage)
+    │
+    └── [EXTERN, nur wenn die Person schreibt] E-Mail an info@malojaplana.ch
+            └── Postfach bei Infomaniak (Schweiz)
 ```
 
 ---
@@ -175,3 +197,4 @@ Dieses Verzeichnis wird bei wesentlichen Änderungen aktualisiert, insbesondere 
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
 Tätigkeiten 1 und 3 (Export-Formate, Zeilenbelege): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
 Kopf-Datum, Tätigkeiten 1–3 (Löschweg E18, «trifft nicht zu» E17, Schnappschuss-Takt): auf Code-Stand `main` 3500330 gebracht (Bau-Liste K39), nicht juristisch geprüft.
+Tätigkeit 6 (Log-Frist, Auftragsbearbeitung) und neue Tätigkeit 7 (E-Mail-Korrespondenz): an die App-Texte `legal.privacy.hosting1`/`contact1` angeglichen, 24.09.2026 (Deploy-Gate 0.1.40-beta), nicht juristisch geprüft.

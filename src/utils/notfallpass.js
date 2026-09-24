@@ -17,6 +17,13 @@
 // Die genaue Maske auf dem Gerät ist NICHT an einer Apple-Quelle belegt; darum folgt die
 // Reihenfolge dem Satz oben, nicht einer Erinnerung an den Bildschirm.
 //
+// Satz «Notruf … nur in den USA und in Kanada» (i18n `notfallpass.iphoneNotruf`): belegt an
+//   support.apple.com/de-ch/guide/iphone/iph08022b192/ios, gelesen 24.09.2026 (Deploy-Gate
+//   0.1.40-beta): «Dein iPhone und deine Apple Watch können automatisch deinen Notfallpass
+//   während eines Notrufs (nur USA und Kanada) und persönlich mit Ersthelfenden teilen» und
+//   «können bei einem Notruf automatisch geteilt (nur USA und Kanada) … werden». Gegenprobe:
+//   dieselbe Adresse mit erfundener Kennung (iphzzzz99999) liefert eine Seite OHNE diesen Satz.
+//
 // Bewusst NICHT abgebildet: Organspende (bei Apple nur die US-Registrierung «Donate Life»),
 // Hausarzt, Spital, Krankenkasse, Vorsorge — dafür nennt die Quelle kein Feld.
 

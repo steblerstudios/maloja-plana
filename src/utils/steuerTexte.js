@@ -10,4 +10,5 @@ export const annahmenTexte = (t, annahmen) => [
   annahmen?.ohneDreizehnten && t('tax.annahmeOhneDreizehnten'),
   annahmen?.alleinverdiener && t('tax.annahmeAlleinverdiener'),
   annahmen?.einzeln && t('tax.annahmeEinzeln'),
+  annahmen?.kinderabzugGanz && t('tax.annahmeKinderabzugKonkubinat'),
 ].filter(Boolean);

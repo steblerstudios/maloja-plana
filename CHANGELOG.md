@@ -11,11 +11,80 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.40-beta] — 2026-09-24
+
+*Alles seit `0.1.39-beta` (`3ccaa62`, 20.09.), nachgezogen gegen
+`git log --no-merges 3ccaa62..HEAD` (PR #248 bis #322), dazu die Befunde des Deploy-Gates vom
+24.09.2026 (9 Prüfer). Ein früherer Anlauf auf dieselbe Nummer (Zweig `release/0.1.40-beta`,
+22.09.) wurde nie gemergt; diese Fassung ersetzt ihn. Der Tag wird erst nach dem Deploy gesetzt.
+**Gemergt ist nicht live.** Startdatei nach diesem Release **56,46 kB gzip** (Deckel 65 kB;
+`main` vor dem Release 56,31 kB, beide mit `npx size-limit` gemessen am 24.09.2026).*
+
+### Deploy-Gate 24.09.2026 — in diesem Release behoben
+- **Rätoromanisch: Notfallpass in Sie- und Du-Form.** Der ganze Block stand als Du-Text und
+  erschien bei der voreingestellten Anrede «Sie». Die 15 anredenden Schlüssel tragen jetzt beide
+  Fassungen (Sie: «Vus», «Voss/Vossa»; provisorisch, zur Gegenlese markiert). Der
+  Anrede-Paritätstest prüfte nur fr und it; er prüft jetzt auch rm. Der übrige rm-Altbestand
+  (299 Schlüssel ohne `{ sie, du }`) steht als Schuld-Liste im Test und darf nur schrumpfen
+  (Bau-Liste K124) Der erweiterte Test fing beim Einmergen gleich einen neuen Fall aus #321
+  (`tour.start.title`, «Cumenza qua») — jetzt «Cumenzai qua» / «Cumenza qua».
+- **Konkubinat mit Kindern: die Annahme «ganzer Kinderabzug bei Ihnen» steht neben der Zahl.**
+  Nach ESTV-Kreisschreiben Nr. 30, Ziff. 14.8.1 erhält bei gemeinsamer elterlicher Sorge ohne
+  Unterhaltsbeiträge jeder Elternteil den halben Kinderabzug — die Bundessteuer fällt dann gleich
+  hoch oder höher aus. Die App fragt die Sorge nicht; sie sagt es jetzt (Steuerrechner,
+  Finanzübersicht, Dossier, Kennung `kinderabzug_ganz_konkubinat`). Kantonale Aufteilung: nicht
+  geprüft, so gesagt. Fünf Sprachen, Sie/Du.
+- **Luzern: Vorbehalt an den Wortlaut angeglichen** (SRL 866 § 8a, § 21). Die Frist
+  31. Dezember gilt für das Gesuch um Erhöhung; angepasst wird auf Gesuch oder von Amtes wegen;
+  zurückgefordert wird beim Krankenversicherer. Quellenblatt LU um § 8, § 12 und § 21 wörtlich
+  ergänzt. Fünf Sprachen.
+- **Budget, Luzern:** nach abgelaufener Anmeldefrist (31. Oktober des Vorjahres) zieht das Budget
+  die Prämienverbilligung nicht mehr ab (SRL 866 § 12 Abs. 3: nur Prämien nach dem Gesuch) und
+  sagt warum.
+- **Impressum «nur Tatsachen»:** die Auslegung «Eine Postanschrift schreibt die Bestimmung nicht in
+  jedem Fall vor» ist gestrichen. Neu: «Angegeben sind Name, Ort und E-Mail; ob zusätzlich eine
+  Postanschrift geschuldet ist, wird abgeklärt.» Fünf Sprachen, Seiten neu erzeugt.
+- **Barrierefreiheit:** Haushalt-Pillen als `radiogroup` mit `aria-checked`; `aria-controls` an
+  zwei Aufklapp-Knöpfen; Tippflächen 44 px (Installier-Hinweis «×», Zurück im Notfallpass,
+  «Erneut versuchen»/«Neu laden» im Fehlerschirm).
+- **Fehlerschirm:** Gipfelpunkt aus dem Farb-Token, Rückfall-Farben aus `DARK_PALETTE`.
+- **Melde-Entwurf:** auch Zitate in „deutschen“ Anführungszeichen und offene Zitate werden
+  maskiert.
+- **Hinweis «zweite Person» präzisiert:** in den Kantonen mit amtlichem Modell
+  (ZH, BE, AG, SG, LU) gibt die Prämienverbilligung für ein Paar eine Orientierung ohne Betrag.
+- **Doku:** Datenschutzerklärung und Bearbeitungsverzeichnis an die App angeglichen
+  (Log-Frist, Auftragsbearbeitung, neue Tätigkeit E-Mail-Korrespondenz); Lizenzliste an
+  `package.json`; OR Art. 936 statt 931 für die Öffentlichkeit des Handelsregisters; Beleg für
+  «Notruf nur USA und Kanada» an der Apple-Hilfe.
+
 ### Neu
+- **Die Einführung endet beim ersten Schritt** (#321). Der Rundgang hat eine letzte Station
+  «Hier fangen Sie an» mit Blick auf «Was ist jetzt dran?»; der letzte Knopf öffnet das Kapitel
+  mit dem ersten offenen Feld. Anlass: Tester-Rückmeldung «ok und jetzt…?».
+- **Anleitung «Als App installieren»** (#294) — der Weg, den Safari und Firefox nie von sich aus
+  zeigen, je Gerät; dazu ein schlanker Installier-Hinweis (nachgeladen, nicht im Startbundle).
+- **Markenpaket 1.0** (#289): das Logo in der App aus einer Quelle (`MarkenLogo`), neue Bildmarke
+  in Favicon, App-Icons, Maskable-Icons und Link-Vorschau (og-image); Brand Guidelines nachgeführt.
+- **Melde-Weg im Absturz-Schirm** (#273): ein Link auf dasselbe Postfach mit Version, Ansicht und
+  Sprache in einem Mail-Entwurf; nichts wird von selbst gesendet. Dabei behoben: der Schirm sprach
+  immer Englisch. **Melde-Weg auch vor dem Beta-Gate** (M-1, #285).
+- **Säule 3a** (#270, #271, #275): das Maximum aus einer Quelle (`src/data/saeule3a.js`, ESTV,
+  je Steuerjahr; 2026: 7 258 / 36 288); der Berner 3a-Deckel rechnet (KKVV Art. 6 Abs. 4 lit. i,
+  Maximum des Bemessungsjahres, Lesart beim ASV angefragt); der Einzahlungs-Tracker zieht die
+  Jahresgrenze (vorher summierte er über alle Jahre).
+- **Erklärseiten in fünf Sprachen** mit Freigabe-Sperre (#256); öffentlich ist weiter nur Deutsch.
+  Öffentliche Erklärseiten vor dem Gate (#253), crawlbarer Kern-Text ohne JavaScript (#252).
+- **Der Lebensbaum auf der Finanz-Übersicht** (#261).
+- **Glossar erkennt seine Begriffe in jeder Sprache** (#298); 16 statt 12 Einträge (#258).
+- **Zwei offene Tabs überschreiben einander nicht mehr still** (K116, #303): ein anderer Tab, der
+  gespeichert hat, sperrt das Zurückschreiben; die Speicher-Anzeige bittet ruhig ums Neuladen.
+- **`version.json` bei jedem Deploy** und `scripts/stand-jetzt.sh` (#287): der ausgelieferte Commit
+  ist messbar, nicht mehr aus dem Tag geraten.
 - **Hinweis «zweite Person»** (K62-Nachlauf E, K62 Punkt 5). Steht im Zivilstand «verheiratet»,
   «eingetragene Partnerschaft» oder «Konkubinat» und ist im Haushalt nur eine erwachsene Person
-  erfasst, sagt ein ruhiger Satz, dass Prämienverbilligung und Sozialhilfe mit den erfassten Personen
-  rechnen. Der Knopf «Person hinzufügen» führt nur zur bestehenden Erfassung, fügt nichts hinzu.
+  erfasst, sagt ein ruhiger Satz, dass die Sozialhilfe mit den erfassten Personen rechnet und die
+  Prämienverbilligung in den Modellkantonen für ein Paar eine Orientierung ohne Betrag gibt
+  (präzisiert im Deploy-Gate 24.09.). Der Knopf «Person hinzufügen» führt nur zur bestehenden Erfassung, fügt nichts hinzu.
   Dieselbe Regel wie das Feld «Nettolohn Partner/in». In allen fünf Sprachen, Sie und Du.
 - **Notfallpass vorbereiten.** Ein neues Blatt im Notfall-Bereich legt die Angaben aus
   dem Kapitel Notfall Feld für Feld bereit, damit sie von Hand in den Notfallpass des
@@ -47,6 +116,30 @@ kommt der Changelog immer mit, nie doppelt.*
   als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
+- **QR-Codes und vCard überarbeitet** (#264, #283, #307). Der Notfall-QR trägt eine vCard statt
+  Klartext (vorher zeigte die Kamera ihn nicht an); der Organspende-QR ebenso, dort stand JSON.
+  Die KK-Karte trägt zwei Codes statt eines falsch beschrifteten. Die QR-Farben kommen nie mehr
+  aus dem Thema — im Dark Mode waren zwei Codes invertiert. Zeilenfaltung nach RFC 6350
+  (75 Oktette, nie mitten in einem Zeichen). Der KK-QR heisst jetzt ausdrücklich «nicht
+  verschlüsselt»; die Zeile «Telefon Notfall» bleibt in der Notiz.
+- **Rechtstexte nach Tester-Durchsicht** (#277): Hoster-Frist belegt (Infomaniak: mindestens
+  7 Tage, Support-FAQ 1926), neuer Block «Kontakt per E-Mail», Gesundheitsfelder ehrlich
+  beschrieben, alle fünf Sprachen; die fehlende Postanschrift als Entscheid ausgewiesen.
+- **Compliance** (#266): Lizenztexte werden mit ausgeliefert, der Affiliate-Wächter arbeitet mit
+  einer Erlaubnisliste, Regulierungsgrenzen stehen im Code; «15 von 15 Ansichten mit Hinweis»
+  wird gerendert statt behauptet.
+- **UI/UX-Runde** (#272, #296): die Leistungs-Zeile im Dashboard erscheint nur, solange sie hilft;
+  die Statuszeile des Dossiers gehört dem Bildschirm, nicht dem Drucker; das Dokument scrollt statt
+  eines Kastens darin; Flächenfarben, die als Text standen, auf die Tiefe-Varianten (25 Stellen);
+  fünf Text-Aktionen auf Trefferflächen-Mass.
+- **Zeichenschicht und Fokus-Falle** (#258): rohe Zeichen im Produkt 1079 → 173; ein Baustein
+  `useFocusTrap` für Rundgang, Datenlöschen und Mobil-Navigation. Stipendien-Ergebnis mit Form
+  statt Buchstabe (#291); Icon-Namen-Wächter auf `.js`, Template-Strings und Zuordnungstabellen
+  (#288, #295, #299).
+- **Luzern nennt die richtige Anmeldestelle** (WAS Ausgleichskasse, #307).
+- **ESTV-Stichprobe vor jedem Deploy** (#311), Warnung, kein Blocker.
+- Aufgeräumt: toter Übersetzungsbestand (`premiumCalc`, zwei rm-Waisen, #297); drei lastabhängige
+  Test-Timeouts robust (#306).
 - **Logo-Schriftzug als eigene Datei — 4,03 kB mehr Luft unter dem 65-kB-Deckel (E36).**
   Der Schriftzug «Maloja Plana» ist Ubuntu in Vektorpfaden, 8648 Zeichen Koordinaten.
   Im Startbundle kostete er **4,14 kB gzip** — gut 6 % des ganzen Startbudgets und
@@ -116,6 +209,21 @@ kommt der Changelog immer mit, nie doppelt.*
   **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
+- **Luzern nach der Anmeldefrist: auch KK-Last-Karte und Prämien-Beleg ziehen nichts mehr ab**
+  (SRL 866 § 12 Abs. 3). Budget, Karte und Beleg lesen den Abzug aus einer Stelle
+  (`src/data/ipvAbzug.js`) und nennen statt einer Zahl den Grund; eine eingetragene Verfügung
+  mit Betrag gilt vor der Schätzung. Die Finanzübersicht zeigt den Anspruch mit dem Frist-Hinweis.
+- **Eine fehlende Angabe ist keine Null** (K117, K118, #312): Konkubinat mit Kindern ohne
+  Partnerangabe zeigt keine Kantonszahl mehr (vorher z. B. ZH, 2 Kinder, 70 000: CHF 2 211 aus
+  «ledig»); ohne erkannten Kanton «Beim Kanton prüfen» statt «Nicht berechtigt».
+- **Melde-Entwurf ohne mitzitierte Eingaben** (K119, #314): Zitate und Ziffernfolgen aus der
+  Fehlermeldung des Browsers werden maskiert.
+- **Fehlerschirm folgt dem Thema** (#274) — im Hellmodus war er dunkel; nichts rutscht mehr
+  unerreichbar über die obere Kante (#272).
+- **EL ist keine Prämienbefreiung, SKOS empfiehlt** (#254) — zwei Fachaussagen richtiggestellt.
+- **Labels mit ihren Feldern verbunden** (#249), 18 tote `htmlFor` → 0, dazu ein Wächter.
+- **SEO:** vier Befunde aus dem Audit vom 20.09. (#251), fünf tote `hreflang`-Zeilen (#256).
+- **PII-Scan** meldet eine fehlende Deny-Liste laut statt «sauber» (#269).
 - **Verstecktes Partnereinkommen zählt nicht mehr** (K62-Nachlauf A). Wurde die zweite erwachsene
   Person gelöscht, blieb der «Nettolohn Partner/in» gespeichert und floss weiter in Steuer, IPV,
   Sozialhilfe, EL und Vorsorge — obwohl das Feld nicht mehr zu sehen war. Jetzt zählt der Wert nur,

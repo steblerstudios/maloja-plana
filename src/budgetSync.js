@@ -2,6 +2,7 @@
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
 import { getFullName } from './config/constants.js';
 import { calculateIPV } from './config/cantonalData.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 
 // Budget Light V1 — Grouped expense structure
@@ -96,9 +97,12 @@ const syncBudgetFromChapters = (data) => {
 
   // IPV relief (reduces health insurance cost, not an income)
   const ipv = calculateIPV(data);
-  // E9: nur ein amtlich belegter Kanton liefert einen Betrag fürs Budget. Unbelegt
-  // fliesst nichts ins Budget; es bleibt beim Hinweis ohne Betrag (ipvOrientierung).
-  const ipvRelief = ipv.eligible && ipv.belegt ? (Number(ipv.amount) || 0) : 0;
+  // Was abgezogen werden darf, entscheidet allein data/ipvAbzug.js (E9 unbelegt → 0; Luzern nach
+  // der Anmeldefrist → 0, SRL 866 § 12 Abs. 3; eine eingetragene Verfügung gilt vor der Schätzung).
+  // Unbelegt bleibt es beim Hinweis ohne Betrag (ipvOrientierung).
+  const abzug = ipvAbzug(data, ipv);
+  const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
+  const ipvRelief = abzug.betrag;
   const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
@@ -110,6 +114,7 @@ const syncBudgetFromChapters = (data) => {
     },
     ipvRelief,
     ipvOrientierung,
+    ipvAnmeldefristVorbei,
     expenses: {}
   };
 
@@ -217,6 +222,11 @@ const getBudgetRecommendations = (budget, t) => {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.ipvHint', { amount: budget.ipvRelief }) : 'You may be eligible for premium reduction (IPV).'
+    });
+  } else if (budget.ipvAnmeldefristVorbei) {
+    recommendations.push({
+      level: 'info',
+      text: t ? t('budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction Lucerne: not deducted, the registration deadline has passed.'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({

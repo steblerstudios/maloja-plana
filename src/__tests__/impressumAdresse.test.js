@@ -13,8 +13,9 @@ import rm from '../i18n/rm.js';
 // DER ENTSCHEID: Es steht KEINE Postanschrift im Impressum. Genannt sind
 // Name, Ort und E-Mail. Grund: Stebler Studios hat kein Geschäftsdomizil, und
 // die Wohnadresse gehört nicht in ein öffentliches Repo. Das hängt am
-// Handelsregister-Entscheid (ein Eintrag macht das Domizil ohnehin öffentlich,
-// OR Art. 931), deshalb wird beides zusammen entschieden.
+// Handelsregister-Entscheid (ein Eintrag ist öffentlich, OR Art. 936 Abs. 1;
+// die Eintragungspflicht steht in OR Art. 931 — gelesen an Fedlex 24.09.2026),
+// deshalb wird beides zusammen entschieden.
 //
 // Ob UWG Art. 3 Abs. 1 Bst. s Ziff. 1 hier überhaupt greift, ist Frage F0 in
 // docs/legal/k48-fragen-juristin.md — hier NICHT zu entscheiden.
@@ -94,6 +95,19 @@ describe('Kontaktadresse im Impressum', () => {
       .toContain('fedlex.admin.ch/eli/cc/1988/223_223_223');
     expect(html, 'Artikel genannt, aber ohne den Wortlaut zur elektronischen Post')
       .toMatch(/elektronisch|électronique|elettronic|electronic|electronica/i);
+  });
+
+  // Entscheid Stebler Studios 24.09.2026: «nur Tatsachen». Die Seite legt die Bestimmung
+  // nicht aus — sie sagt, was angegeben ist, und dass die Postanschrift-Frage abgeklärt wird.
+  const AUSLEGUNG = [
+    'nicht in jedem Fall', 'n’impose pas dans tous les cas', 'non prescrive in ogni caso',
+    'does not require a postal address in every case', 'na prescriva betg en mintga cas',
+  ];
+  const ABKLAERUNG = { '': 'wird abgeklärt', 'fr/': 'en cours d’examen', 'it/': 'in fase di chiarimento', 'en/': 'is being clarified', 'rm/': 'vegn sclerì' };
+  it.each(SEITEN)('/%srechtliches/ legt die Bestimmung nicht aus, sagt aber, dass abgeklärt wird', (praefix) => {
+    const html = liesSeite(praefix);
+    for (const satz of AUSLEGUNG) expect(html).not.toContain(satz);
+    expect(html).toContain(ABKLAERUNG[praefix]);
   });
 
   // Gegenprobe: die Platzhalter-Regel darf nicht einfach überall anschlagen.

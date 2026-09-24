@@ -272,7 +272,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Basilea, Svizzera<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — raccoglitore di vita svizzero. Un progetto open source sotto AGPL-3.0. L’utilizzo dell’applicazione è gratuito; per il white label e altri usi commerciali è disponibile su richiesta una licenza separata.',
-          'Sull’indirizzo di contatto: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3" rel="noopener">art. 3 cpv. 1 lett. s n. 1 LCSl</a> esige indicazioni sull’identità e sull’indirizzo di contatto «compreso quello della posta elettronica». La disposizione non prescrive in ogni caso un indirizzo postale. Nome, luogo ed e-mail sono indicati; un indirizzo postale è una decisione aperta e verrà presa insieme alla questione dell’iscrizione nel registro di commercio. Tramite e-mail siamo raggiungibili per ogni richiesta, anche giuridica.',
+          'Sull’indirizzo di contatto: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3" rel="noopener">art. 3 cpv. 1 lett. s n. 1 LCSl</a> esige indicazioni sull’identità e sull’indirizzo di contatto «compreso quello della posta elettronica». Nome, luogo ed e-mail sono indicati; se sia dovuto in aggiunta un indirizzo postale è in fase di chiarimento. Tramite e-mail siamo raggiungibili per ogni richiesta, anche giuridica.',
         ],
       },
       {

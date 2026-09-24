@@ -173,16 +173,26 @@ heute live stehende** Angebot, nicht die Bezahlversion. Zwei Teile:
 (a) Greift lit. s überhaupt, wenn es keinen Bestellvorgang und keinen Vertrag
 gibt? Der Einleitungssatz spricht von «elektronischem Geschäftsverkehr».
 (b) Falls ja: Impressum, Datenschutz-Reiter und `/rechtliches/` nennen heute
-Name, Ort und E-Mail, **aber keine Strasse** — und `/rechtliches/` trägt zugleich
-den Satz «Angaben gemäss Art. 3 Abs. 1 lit. s UWG», behauptet also eine
-Vollständigkeit, die sie ohne Strasse nicht hat.
-→ *Was hängt daran:* ob der Satz bleiben darf, und ob eine c/o- oder
-Geschäftsadresse genügt oder die Wohnadresse nötig ist. Eine erreichbare
-Adresse setzen wir so oder so — die Frage ist nur, ob sie geschuldet ist.
-→ *Stand 23.09.2026:* Die Stelle ist als sichtbarer Platzhalter markiert und
-durch einen absichtlich roten Test gesichert
-(`src/__tests__/impressumAdresse.test.js`); ausliefern lässt sich dieser
-Stand nicht. Aufgeschlagen ist die Lücke bei einer Durchsicht von aussen.
+**Name, Ort und E-Mail**, bewusst **keine Postanschrift** (Entscheid Stebler
+Studios 23.09.2026: kein Geschäftsdomizil, die Wohnadresse gehört nicht in ein
+öffentliches Repo; der Entscheid hängt am Handelsregister). Der frühere Satz
+«Angaben gemäss Art. 3 Abs. 1 lit. s UWG» ist seit dem 23.09. ersetzt; die
+Auslegung «Eine Postanschrift schreibt die Bestimmung nicht in jedem Fall vor»
+ist seit dem 24.09. gestrichen («nur Tatsachen», Entscheid Stebler Studios).
+Auf `/rechtliches/` steht jetzt, **zur Prüfung wörtlich**:
+> «Zur Kontaktadresse: UWG Art. 3 Abs. 1 Bst. s Ziff. 1 verlangt Angaben über
+> Identität und Kontaktadresse «einschliesslich derjenigen der elektronischen
+> Post». Angegeben sind Name, Ort und E-Mail; ob zusätzlich eine Postanschrift
+> geschuldet ist, wird abgeklärt. Über die E-Mail-Adresse sind wir für alle
+> Anliegen erreichbar, auch für rechtliche.»
+
+→ *Was hängt daran:* ob Name, Ort und E-Mail genügen, und falls nicht, ob eine
+c/o- oder Geschäftsadresse genügt oder die Wohnadresse nötig ist. Eine
+erreichbare Adresse setzen wir so oder so, wenn sie geschuldet ist.
+→ *Stand 24.09.2026:* kein Platzhalter mehr; `src/__tests__/impressumAdresse.test.js`
+hält drei Zusagen (kein Platzhalter, E-Mail überall, keine nackte
+Konformitätsbehauptung) und seit dem 24.09. eine vierte (keine Auslegung, der
+Abklärungs-Satz steht da). Aufgeschlagen ist die Lücke bei einer Durchsicht von aussen.
 
 **F1. Bestellstrecke nach UWG Art. 3 Abs. 1 lit. s Ziff. 2–4.**
 Der Wortlaut verlangt: Hinweis auf die technischen Schritte zum Vertragsschluss,
