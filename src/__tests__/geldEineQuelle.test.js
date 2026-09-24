@@ -65,8 +65,15 @@ describe('eine Quelle', () => {
     const treffer = zeilen().filter(([o, z]) => /\(\?=\(\\d\{3\}\)\+/.test(z) && !o.startsWith('utils/geld.js')).map(([o]) => o);
     expect(treffer).toEqual([]);
   });
-  it('kein «CHF » + toFixed() ohne Trennung', () => {
-    const treffer = zeilen().filter(([, z]) => /'CHF '\s*\+\s*[^;]*?\.toFixed\(/.test(z)).map(([o]) => o);
+  // Jeder Text, der auf «CHF » endet ('CHF ', '~ CHF ', ': CHF ', 'Max: CHF ' …) und mit einem
+  // Ausdruck verbunden wird, der nicht durch einen Formatierer läuft. Erlaubnisliste:
+  // der Text-Export (zipExport.js) schreibt Rohwerte wie eingegeben — eigene Frage, offen.
+  it('kein «CHF » vor einer rohen Zahl', () => {
+    const FORMATIERER = /^(betrag|chfBetrag|zahl|fmt|fmtCHF|formatCHF|fmtAmount|formatAmount|num|num1|chf|t)\(/;
+    const treffer = zeilen().filter(([o, z]) => {
+      if (o.startsWith('utils/geld.js') || o.startsWith('zipExport.js')) return false;
+      return [...z.matchAll(/CHF ['"]\s*\+\s*([^,;)]+)/g)].some((m) => !FORMATIERER.test(m[1].trim()) && !/^franchiseValue\(/.test(m[1].trim()));
+    }).map(([o]) => o);
     expect(treffer).toEqual([]);
   });
 });

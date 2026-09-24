@@ -781,7 +781,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.franchiseOpen') + ': CHF ' + result.franchiseOffen)
+        }, t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 }))
       ),
 
       React.createElement('div', { style: { marginBottom: '14px' } },
@@ -796,7 +796,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.selbstbehaltMax') + ': CHF ' + result.selbstbehaltMax)
+        }, t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
       ),
 
       React.createElement('div', {

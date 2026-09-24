@@ -286,7 +286,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       debtPlan && React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, maxHeight: '400px', overflowY: 'auto' } },
         React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, t('schulden.paymentPlanTitle', { amount: 500 })),
         debtPlan.slice(0, 12).map((month, idx) => React.createElement('div', { key: idx, style: { fontSize: text.xs, padding: space.xs, borderBottom: '1px solid ' + palette.border } },
-          '#' + month.month + ': CHF ' + month.payment + ' (' + t('budgetSync.remaining') + ': CHF ' + month.remaining + ')'
+          '#' + month.month + ': ' + betrag(month.payment, { hoechstens: 2 }) + ' (' + t('budgetSync.remaining') + ': ' + betrag(month.remaining, { hoechstens: 2 }) + ')'
         ))
       )
     ),

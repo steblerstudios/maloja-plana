@@ -84,7 +84,8 @@ const zeige = (steuerbar, { canton = 'ZH', kinder = 0, verheiratet = false, elte
   const alle = render();
   const text = texte(alle);
   // Beträge in Anzeige-Reihenfolge: Bundessteuer, Kantons-/Gemeindesteuer, Gesamt.
-  const betraege = text.split('\n').filter((z) => /^~ CHF \d+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6)));
+  // Seit 24.09.2026 mit Tausender-’ (utils/geld.js) — vor dem Umwandeln entfernen.
+  const betraege = text.split('\n').filter((z) => /^~ CHF [\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
   return { alle, text, betraege, orientierung: alle.find((k) => k.props['data-testid'] === 'kantonssteuer-orientierung') };
 };
 

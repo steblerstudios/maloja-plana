@@ -49,7 +49,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
       type: 'button',
       onClick,
       'aria-pressed': aktiv,
-      'aria-label': label + ': CHF ' + betrag + (aktiv ? ' — ' + t('tax.saeulen.active') : ''),
+      'aria-label': label + ': ' + chfBetrag(betrag) + (aktiv ? ' — ' + t('tax.saeulen.active') : ''),
       style: {
         flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center',
         gap: space.xs, padding: space.sm, cursor: 'pointer', fontFamily: 'inherit',

@@ -107,7 +107,9 @@ const steuerrechner = (data) => {
   zustand.effekte.forEach((fn) => fn());
   const alle = render();
   const text = texte(alle);
-  const betraege = text.split('\n').filter((z) => /^~ CHF \d+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6)));
+  // Seit 24.09.2026 mit Tausender-’ (utils/geld.js). Ohne diese Anpassung erkennte der Leser
+  // KEINEN Betrag mehr — und die «keine Zahl»-Prüfungen (toEqual([])) wären leer grün.
+  const betraege = text.split('\n').filter((z) => /^~ CHF [\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
   const steuerbar = alle.find((k) => k.props['data-testid'] === 'steuerbares-einkommen');
   return { alle, text, betraege, steuerbar: steuerbar ? texte(knoten(steuerbar.props.children)) : null, gespeichert, render };
 };
