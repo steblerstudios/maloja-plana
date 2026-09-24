@@ -178,7 +178,7 @@ fr   k=city type="text" mvo=true autoComplete="address-level2" label~f7280ce4
 fr   k=moveInDate type="date" label~272ab907
 fr   k=rentAmount type="currency" section~83d0a3e9 orientation~b6178eac label~6c67bb6f sectionIntro~62bd2902
 fr   k=utilities type="currency" label~9427b231
-fr   k=rooms type="text" label~070282a7
+fr   k=rooms type="text" label~089681d1
 fr   k=landlord type="text" section~bb2e46c9 label~c49584ba sectionIntro~c82ba5d4
 fr   k=landlordPhone type="tel" label~66531bdc
 fr   k=mortgageStatus type="select" section~4d47010b label~c239305b sectionIntro~e9668d48 options=3 optWerte~0cea95a2 optLabels~d4197d7e weitere=secondary
@@ -333,7 +333,7 @@ it   k=city type="text" mvo=true autoComplete="address-level2" label~d8d39773
 it   k=moveInDate type="date" label~18e73bd5
 it   k=rentAmount type="currency" section~bfe03a23 orientation~896f417d label~5c8286b5 sectionIntro~aacf1508
 it   k=utilities type="currency" label~851ee10b
-it   k=rooms type="text" label~5bf87899
+it   k=rooms type="text" label~5a14c78f
 it   k=landlord type="text" section~10b5a608 label~74facf3a sectionIntro~ebaedaa9
 it   k=landlordPhone type="tel" label~a7995851
 it   k=mortgageStatus type="select" section~cd90f0a4 label~c18932bf sectionIntro~f2559219 options=3 optWerte~0cea95a2 optLabels~1fa08e2f weitere=secondary
@@ -643,7 +643,7 @@ rm   k=city type="text" mvo=true autoComplete="address-level2" label~87fc1024
 rm   k=moveInDate type="date" label~65b7de99
 rm   k=rentAmount type="currency" section~971fe0e3 orientation~ca0d4cff label~3f13b3e2 sectionIntro~e8ffab2d
 rm   k=utilities type="currency" label~0cd5ec4b
-rm   k=rooms type="text" label~8cdb88c5
+rm   k=rooms type="text" label~daf855ab
 rm   k=landlord type="text" section~11547214 label~9a73e919 sectionIntro~448c85c8
 rm   k=landlordPhone type="tel" label~b0e3cc3a
 rm   k=mortgageStatus type="select" section~b0e30033 label~cafafdbe sectionIntro~cb62daa4 options=3 optWerte~0cea95a2 optLabels~689a9eb0 weitere=secondary
