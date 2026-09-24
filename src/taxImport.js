@@ -231,7 +231,12 @@ export const applyTaxToFinanzen = (matched, currentFinanzen = {}) => {
   const merged = { ...currentFinanzen };
   const applied = [];
   const kept = [];
-  for (const f of matched || []) {
+  for (const f0 of matched || []) {
+    // Der Jahres-Bruttolohn enthält einen 13. schon. Steht im Profil «13. Monatslohn: Ja»,
+    // ist der Monatslohn ein Dreizehntel — sonst zählten EO/AHV/BVG den 13. doppelt (×13).
+    const f = f0.target === 'monthlyIncome' && currentFinanzen.dreizehnter === 'yes' && f0.annualValue
+      ? { ...f0, value: Math.round(f0.annualValue / 13) }
+      : f0;
     const existing = currentFinanzen[f.target];
     const hasExisting = existing !== undefined && existing !== null && String(existing).trim() !== '' && Number(existing) !== 0;
     if (hasExisting) {
