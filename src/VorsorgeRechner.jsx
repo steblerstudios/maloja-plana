@@ -14,6 +14,7 @@ import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
+import { zahl } from './utils/geld.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -246,7 +247,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       })
     );
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
 
   // === IK-Auszug: Helfer + Render ===
   const ikTypLabel = (typ) => t('vr.ikTyp' + typ.charAt(0).toUpperCase() + typ.slice(1));

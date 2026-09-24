@@ -4,6 +4,7 @@ import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { betrag } from './utils/geld.js';
 
 // Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung.
 // Spiegelt das Muster von BudgetImport: Datei wählen -> Vorschau -> bestätigen.
@@ -13,7 +14,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
   const [preview, setPreview] = useState(null);
   const [importError, setImportError] = useState(null);
 
-  const fmt = (n) => 'CHF ' + Number(n).toLocaleString('de-CH');
+  const fmt = (n) => betrag(n, { hoechstens: 2 });
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];

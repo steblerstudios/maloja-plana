@@ -3,7 +3,9 @@
 // dossierGenerator — alle lazy geladen, darum bleibt dieses Modul aus dem Hauptbundle.
 
 // Tausendertrennung wie in FinanzUebersicht/dossierGenerator — nicht von der Laufzeit-Locale abhängig.
-export const chf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’');
+import { zahl } from './geld.js';
+
+export const chf = (n) => zahl(n); // seit 24.09.2026 aus utils/geld.js — dieselbe Regel, eine Quelle
 
 // R4: die Annahmen hinter einer gezeigten Zahl (annahmen aus steuernFuerProfil), als Sätze.
 export const annahmenTexte = (t, annahmen) => [

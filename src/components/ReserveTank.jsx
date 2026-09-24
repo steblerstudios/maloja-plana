@@ -2,13 +2,14 @@ import React from 'react';
 import { Gauge } from './Gauge.jsx';
 import { reserveTankState } from '../data/reserveTank.js';
 import { text, space, leading } from '../config/tokens.js';
+import { zahl } from '../utils/geld.js';
 
 // Reserve-Tankanzeige: das dritte „Instrument", wieder über dem Gauge-Primitiv
 // (wie der Franchise-Tacho). Zeigt, wie viele Monate der liquide Notgroschen
 // trägt. Zone sand = aufbauen (unter Empfehlung), sage = tragfähig (darüber),
 // Marke bei der Empfehlung. Ruhig, kein Alarm — dünn = Ziel, nicht Versagen.
-const num = (n) => Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
-const num1 = (n) => Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 1 });
+const num = (n) => zahl(n || 0);
+const num1 = (n) => zahl(n || 0, { hoechstens: 1 });
 
 export const ReserveTank = ({ palette, t, savings, monthlyExpenses }) => {
   const st = reserveTankState({ savings, monthlyExpenses });

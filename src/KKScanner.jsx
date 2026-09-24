@@ -10,6 +10,7 @@ import { getFullName } from './config/constants.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { betrag } from './utils/geld.js';
 
 // Die Kassenkarte ist der Sonderfall unter den drei QR-Codes, und deshalb bekommt sie ZWEI.
 //
@@ -285,7 +286,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
           [t('kkScanner.cardNumber'), kkData.cardNumber],
           [t('kkScanner.insuredPerson'), kkData.holder],
           [t('kkScanner.ahvNumber'), kkData.ahv],
-          [t('kkScanner.franchise'), kkData.franchise ? 'CHF ' + kkData.franchise : ''],
+          [t('kkScanner.franchise'), kkData.franchise ? betrag(kkData.franchise, { hoechstens: 2 }) : ''],
           [t('kkScanner.model'), kkData.model]
         ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '10px', background: palette.up, borderRadius: radius.sm } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, label),

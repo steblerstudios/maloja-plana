@@ -4,6 +4,7 @@ import { berechneTaggeld, ALV_PARAMS } from './data/alvRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { zahl, betrag } from './utils/geld.js';
 
 function currentAge(dateStr) {
   if (!dateStr) return null;
@@ -40,7 +41,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     });
   }, [parsedLohn, hatKinder, ivGrad40, parsedMonate, alter]);
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
   const canton = data.basis?.canton;
 
   const s = {
@@ -126,7 +127,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     result && result.anspruch && React.createElement('div', { style: s.resultBox },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm + 'px' } }, t('alv.resultTitle')),
       resultLine(t('alv.satzLabel'), t('alv.satzValue', { p: Math.round(result.satz * 100) })),
-      resultLine(t('alv.taggeldLabel'), 'CHF ' + result.taggeld.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })),
+      resultLine(t('alv.taggeldLabel'), betrag(result.taggeld, { stellen: 2 })),
       resultLine(t('alv.monatlichLabel'), 'CHF ' + fmt(result.monatlich), { big: true }),
       resultLine(t('alv.wartetageLabel'), t('alv.wartetageValue', { n: result.wartetage })),
       resultLine(t('alv.anspruchLabel'),

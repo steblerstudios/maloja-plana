@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
+import { zahl as geldZahl } from '../utils/geld.js';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
@@ -41,7 +42,7 @@ describe('K31 IPV-Rechner, Kanton St.Gallen', () => {
     expect(html).not.toContain('ipv.orientierungOffen');
     // 18 000 massgebend → 12,16 + (18 000 − 18 700 < 0) → 12,16 %
     // 6 285.60 − 2 188.80 = 4 096.80 → 4 097/Jahr, 341/Monat
-    expect(html).toContain('CHF 4097');
+    expect(html).toContain('CHF 4’097');
     expect(html).toContain('CHF 341');
   });
 
@@ -50,9 +51,9 @@ describe('K31 IPV-Rechner, Kanton St.Gallen', () => {
     const tief = render(profil(1500, { kkPremium: 150 }));
     const hoch = render(profil(1500, { kkPremium: 900 }));
     for (const html of [tief, hoch]) {
-      expect(html).toContain('CHF 4097');
+      expect(html).toContain('CHF 4’097');
     }
-    expect(ohne).toContain('CHF 4097');
+    expect(ohne).toContain('CHF 4’097');
   });
 
   it('der Vorbehalt sagt, dass die Referenzprämie die Grundlage ist — nicht die eigene Prämie', () => {
@@ -65,11 +66,11 @@ describe('K31 IPV-Rechner, Kanton St.Gallen', () => {
   it('nennt keine Einkommensgrenze — weder eine amtliche noch die alten Musterwerte', () => {
     const html = render(profil(1500));
     expect(html).not.toContain('premium.maxIncome');
-    expect(html).not.toContain((48000).toLocaleString());
+    expect(html).not.toContain(geldZahl(48000));
     // Auch die abgeleiteten Nullpunkte stehen nirgends — sie wären unsere eigene Rechnung.
     for (const zahl of [38833, 38414, 41700]) {
       expect(html).not.toContain(String(zahl));
-      expect(html).not.toContain(zahl.toLocaleString());
+      expect(html).not.toContain(geldZahl(zahl));
     }
   });
 

@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { zahl } from '../utils/geld.js';
 
 // ─────────────────────────────────────────────────────────────
 // E37 / E38 · Der Steuerrechner zeigt die Kantons-/Gemeindesteuer aus der ESTV-Tabelle —
@@ -118,7 +119,7 @@ const einSteuerbares = (v, wert, label) => {
   const boxen = v.alle.filter((k) => k.props['data-testid'] === 'steuerbares-einkommen');
   expect(boxen).toHaveLength(1);
   const inhalt = texte(knoten(boxen[0].props.children));
-  expect(inhalt).toContain(label + '\nCHF ' + wert + '\n');
+  expect(inhalt).toContain(label + '\nCHF ' + zahl(wert) + '\n'); // seit 24.09.2026 mit ’ (utils/geld.js)
   expect(inhalt).toContain(label === 'tax.taxableIncomeEstimated' ? 'tax.taxableEstimatedHint' : 'tax.taxableEnteredHint');
   expect(v.text).not.toContain('cantonalTaxableBasis');
 };

@@ -9,6 +9,7 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { renderSource } from './utils/renderSource.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { zahl } from './utils/geld.js';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -43,8 +44,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
     if (info.group === 'families' && childrenCount === 0) return { key: 'familiesOnly', tone: 'soft' };
     if (incomeLimit == null) return { key: 'effortBased', tone: 'neutral' }; // GE: mietabhängiges barème
     if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
-    if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { limit: incomeLimit.toLocaleString() } };
-    return { key: 'likely', tone: 'good', params: { income: annualIncome.toLocaleString(), limit: incomeLimit.toLocaleString() } };
+    if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { limit: zahl(incomeLimit, { hoechstens: 2 }) } };
+    return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
   })();
   const toneColor = (tone) => tone === 'good' ? palette.sage : (tone === 'soft' ? palette.soft : palette.text);
 
@@ -76,8 +77,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         // Was wir verwenden (transparent, wie ein Rechner).
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.normal } },
           t('mietzinsView.basis', {
-            income: annualIncome ? annualIncome.toLocaleString() : '—',
-            rent: rentMonthly ? rentMonthly.toLocaleString() : '—',
+            income: annualIncome ? zahl(annualIncome, { hoechstens: 2 }) : '—',
+            rent: rentMonthly ? zahl(rentMonthly, { hoechstens: 2 }) : '—',
             size: householdSize,
           })),
         // Ergebnis (mit Zahlen, sofern vorhanden).
@@ -86,7 +87,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         }, hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {})),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
         rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: rentLimit.toLocaleString(), size: householdSize })),
+          hinweisZeichen(), t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: zahl(rentLimit, { hoechstens: 2 }), size: householdSize })),
         assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('mietzinsView.enterIncomeLink'))
       ),
 

@@ -6,6 +6,7 @@ import { text, weight, radius, space, visuallyHiddenStyle } from './config/token
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { betrag } from './utils/geld.js';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
@@ -93,14 +94,14 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px' } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginTop: space.xs } }, preview.fileName),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, t(preview.count === 1 ? 'budgetImport.eintrag' : 'budgetImport.eintraege', { count: preview.count })),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': CHF ' + preview.totalAmount.toFixed(2))
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': ' + betrag(preview.totalAmount, { stellen: 2 }))
         ),
 
         React.createElement('div', { style: { maxHeight: '300px', overflowY: 'auto', marginBottom: '12px' } },
           preview.entries.slice(0, 10).map((entry, idx) => React.createElement('div', { key: idx, style: { padding: space.sm, background: palette.up, borderRadius: '4px', marginBottom: space.xs, fontSize: text.sm } },
             React.createElement('div', null,
               React.createElement('span', { style: { fontWeight: weight.semi } }, entry.description),
-              React.createElement('span', { style: { float: 'right' } }, (entry.type === 'income' ? '+' : '-') + ' CHF ' + entry.amount.toFixed(2))
+              React.createElement('span', { style: { float: 'right' } }, (entry.type === 'income' ? '+' : '-') + ' ' + betrag(entry.amount, { stellen: 2 }))
             ),
             React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginTop: '2px' } }, entry.date + ' | ' + entry.category)
           ))

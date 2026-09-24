@@ -3,6 +3,7 @@ import { PanelTitle } from './Heading.jsx';
 import { text, weight, radius, space } from '../config/tokens.js';
 import { hinweisZeichen } from '../IconSystem.jsx';
 import { GlossarText } from '../GlossarBegriff.jsx';
+import { betrag as chfBetrag } from '../utils/geld.js';
 
 // Ruhige Zivilstand-Säulen (Probier-Modus) — zeigt dieselbe Steuerbasis unter
 // verschiedenen Zivilständen als drei schlanke Säulen nebeneinander.
@@ -57,7 +58,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
         borderRadius: radius.sm,
       },
     },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + betrag),
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, chfBetrag(betrag)),
       React.createElement('div', { 'aria-hidden': true, style: {
         width: '100%', maxWidth: '72px', height: barH(betrag) + 'px',
         background: aktiv ? palette.sand : palette.mid + '55',

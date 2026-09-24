@@ -5,6 +5,7 @@ import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
 import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { zahl } from './utils/geld.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const isMobile = useIsMobile();
@@ -68,7 +69,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
   };
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
 
   const field = (labelKey, value, setter, placeholder, hint) =>
     React.createElement('div', { style: s.inputGroup },

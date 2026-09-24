@@ -13,16 +13,13 @@ import { text, weight, shadow, radius , leading , space } from './config/tokens.
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
+import { betrag } from './utils/geld.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
   if (amount === 0) return 'CHF 0';
   const rounded = Math.round(amount);
-  const abs = Math.abs(rounded);
-  const formatted = abs >= 1000
-    ? abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’')
-    : abs.toString();
-  return (rounded < 0 ? '− ' : '') + 'CHF ' + formatted;
+  return betrag(rounded); // utils/geld.js — eine Quelle
 };
 
 export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {

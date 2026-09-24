@@ -25,15 +25,12 @@ import { monthlyExpenses } from './data/haushaltskosten.js';
 import { renderSource } from './utils/renderSource.js';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { betrag } from './utils/geld.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
   if (n === 0) return 'CHF 0';
-  const abs = Math.abs(n);
-  const formatted = abs >= 1000
-    ? abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’')
-    : abs.toString();
-  return (n < 0 ? '− ' : '') + 'CHF ' + formatted;
+  return betrag(n); // utils/geld.js — eine Quelle
 }
 
 const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick }) =>

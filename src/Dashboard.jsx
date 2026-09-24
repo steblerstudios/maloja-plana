@@ -10,6 +10,7 @@ import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import { aufklappZeichen } from './IconKern.jsx';
 import { inDays } from './utils/helpers.js';
+import { zahl, betrag } from './utils/geld.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -28,7 +29,7 @@ const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.
 
 function fmtCHF(v) {
   const n = Number(v);
-  return n && !isNaN(n) ? "CHF " + n.toLocaleString('de-CH') : null;
+  return n && !isNaN(n) ? betrag(n, { hoechstens: 2 }) : null;
 }
 
 function buildSnippet(chapterKey, chData, allData, t) {
@@ -102,7 +103,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
   const annual = (Number(income) || 0) * 12;
   const canton = data?.basis?.canton;
-  const fmt = (v) => v.toLocaleString('de-CH');
+  const fmt = (v) => zahl(v, { hoechstens: 2 });
 
   // Ein Einkommen → mehrere Leistungen (Basel-Stadt-Leistungsrechner als Vorbild).
   // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die

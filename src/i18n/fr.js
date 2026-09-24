@@ -920,7 +920,7 @@ export default {
       finanzuebersichtHint: 'Tous les calculs en un coup d\'œil',
       addressInWohnen: { sie: 'Votre adresse est enregistrée dans le chapitre «Logement»', du: 'Ton adresse est enregistrée dans le chapitre «Logement»' },
       employerInFinanzen: 'Employeur & revenu dans le chapitre «Finances»',
-      educationTaxHint: 'Frais de formation ? Jusqu\'à CHF 10\'000 déductibles des impôts',
+      educationTaxHint: 'Frais de formation ? Jusqu\'à CHF 10’000 déductibles des impôts',
       taxFromBehoerdenHint: 'Estimer la charge fiscale',
       schuldenFromBehoerdenHint: 'Gérer les poursuites',
     },

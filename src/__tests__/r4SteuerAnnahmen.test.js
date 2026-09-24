@@ -173,7 +173,7 @@ describe('R4-1 · 13. Monatslohn', () => {
     expect(steuerrechner(p).text).toContain('tax.annahmeOhneDreizehnten');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).not.toContain('tax.annahmeOhneDreizehnten');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('tax.netIncomeNote13');
-    expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF 65000');
+    expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF 65’000');
     const json = generateBehoerdenJSON(p, dossierRechnung(p)).calculations.tax;
     // E40: Kennung statt deutschem Klartext (ohne t nur die Kennung)
     expect(json.assumptions).toContainEqual({ code: 'ohne_13_monatslohn' });
@@ -415,7 +415,7 @@ describe('R4-4 · eine Zahl überall (Häkchen «eingetragenen Wert verwenden»)
     const steuerbar = quelle === 'direkt' ? 40000 : 72000 - 2160 - 1800;
     expect(s.steuerbar).toBe(steuerbar);
     // Steuerrechner
-    expect(r.steuerbar).toContain('CHF ' + steuerbar);
+    expect(r.steuerbar).toContain('CHF ' + tausender(steuerbar)); // seit 24.09.2026 mit ’
     expect(r.betraege[0]).toBe(Math.round(s.bund.steuer));
     expect(r.betraege[1]).toBe(s.kanton.kantonal.kantonalUndGemeinde);
     // Finanzübersicht
