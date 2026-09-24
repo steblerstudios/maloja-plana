@@ -1,17 +1,17 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { inMonths, formatDE } from './utils/helpers.js';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusMonate } from './utils/fristen.js';
 
 // Neuer Job — der 5. geführte Ablauf auf der Schale. Ruhige Orientierung über die
 // Zusammenhänge eines Stellenantritts: Vertrag, Pensionskasse, Unfall/KTG, Steuern,
 // Probezeit & Ferien. Kein Rechner, kein Rat — Orientierung.
 
-// Orientierungs-Frist für das Probezeit-Ende: oft 1–3 Monate. Wir kennen das genaue
-// Datum nicht → ruhige Erinnerung 3 Monate ab heute (verschiebbar).
+// Probezeit-Ende: ohne andere Abrede ein Monat ab Stellenantritt (OR Art. 335b I), per
+// Vertrag bis drei Monate. Gerechnet ab dem eingegebenen ersten Arbeitstag — vorher
+// stand hier «3 Monate ab heute», also das Maximum statt des Normalfalls (24.09.2026).
 
 export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
   const s = ablaufStyles(palette);
-  const probeEnd = inMonths(3);
   // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
   const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
 
@@ -47,19 +47,12 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
     // Schritt 5 — Probezeit & Ferien
     React.createElement(AblaufStep, { palette, title: t('neuerJob.step5Title') },
       React.createElement('p', { style: s.stepText }, t('neuerJob.step5Text')),
-      React.createElement(FristButton, {
-        palette, t,
-        buttonLabel: t('neuerJob.step5Button', { date: formatDE(probeEnd) }),
-        doneLabel: t('neuerJob.step5Done'),
-        calendarLabel: t('neuerJob.step5CalendarLink'),
-        onNavigate,
-        reminder: {
-          title: t('neuerJob.reminderTitle'),
-          dueDate: probeEnd,
-          category: 'admin',
-          recurrence: 'once',
-          notes: t('neuerJob.reminderNotes'),
-        },
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'neuerJob-frist', frist: (d) => plusMonate(d, 1),
+        labelKey: 'neuerJob.fristLabel', hinweisKey: 'neuerJob.fristHinweis', vorbeiKey: 'neuerJob.fristVorbei',
+        buttonKey: 'neuerJob.step5Button', doneKey: 'neuerJob.step5Done', calendarKey: 'neuerJob.step5CalendarLink',
+        reminderTitle: t('neuerJob.reminderTitle'), category: 'admin',
+        reminderNotes: t('neuerJob.reminderNotes'),
       })
     ),
 

@@ -5,6 +5,8 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { renderSource } from './utils/renderSource.js';
+import { istVorbei } from './utils/fristen.js';
+import { formatDE } from './utils/helpers.js';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -69,6 +71,38 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
     );
   }
   return React.createElement('button', { style: s.primaryBtn, onClick: handle }, buttonLabel);
+};
+
+// Frist ab einem Ereignis, das die Person selbst angibt (Zustellung, Geburt,
+// Vertragsende …). Ohne Datum: KEIN Termin. Ist die Frist schon vorbei: kein neuer
+// Termin, sondern der ruhige Satz «vorbei — bei der Stelle nachfragen». Die
+// Rechnung selbst (`frist`) kommt aus utils/fristen.js — nie später als das Gesetz.
+// `wert`/`onWert` optional: wer das Datum auch anderswo braucht, hält es selbst.
+export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey, buttonKey, doneKey, calendarKey,
+  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate }) => {
+  const s = styles(palette);
+  const [eigen, setEigen] = useState(wert || '');
+  const datum = onWert ? (wert || '') : eigen;
+  const setze = onWert || setEigen;
+  const ziel = frist(datum);
+  const vorbei = istVorbei(ziel);
+  return React.createElement('div', null,
+    React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
+    React.createElement('input', {
+      id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
+      style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+    }),
+    ziel && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } },
+      t(vorbei ? vorbeiKey : hinweisKey, { date: formatDE(ziel) })),
+    ziel && !vorbei && React.createElement(FristButton, {
+      // Ein neues Datum ist ein neuer Termin — der Knopf beginnt wieder unbestätigt.
+      key: ziel, palette, t, onNavigate,
+      buttonLabel: t(buttonKey, { date: formatDE(ziel) }),
+      doneLabel: t(doneKey),
+      calendarLabel: calendarKey ? t(calendarKey) : null,
+      reminder: { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}) },
+    })
+  );
 };
 
 // Fuss-Hinweise (Hinweis-Piktogramm je Zeile).

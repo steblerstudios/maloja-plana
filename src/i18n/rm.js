@@ -252,6 +252,12 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für umzug — sauberes Romanisch nachziehen.
   umzug: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die 14 Tage waren am {date} vorbei. Melden Sie sich trotzdem sofort an — die Gemeinde sagt, was nun gilt.', du: 'Die 14 Tage waren am {date} vorbei. Melde dich trotzdem sofort an — die Gemeinde sagt, was nun gilt.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Anmelden bis spätestens {date} — 14 Tage nach dem Umzug (RHG Art. 11).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Umzugsdatum',
     quelle: 'Quellen: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]] (geprüft im September 2026).',
     title: 'Umzug',
     intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
@@ -348,6 +354,12 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für neuerJob — sauberes Romanisch nachziehen.
   neuerJob: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: 'Die gesetzliche Probezeit von einem Monat endete am {date}. Steht im Vertrag eine längere, gilt jene.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Ohne andere Abrede endet die Probezeit nach einem Monat, am {date} (OR Art. 335b). Der Vertrag kann bis zu drei Monate vorsehen — dann gilt jenes Datum.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Erster Arbeitstag',
     quelle: 'Quellen: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]] (geprüft im September 2026).',
     title: 'Neuer Job',
     intro: 'Ein neuer Job verändert mehr als nur den Lohn. Hier der ruhige Überblick, was dazugehört — Vertrag, Vorsorge, Versicherungen, Steuern, Fristen.',
@@ -381,6 +393,14 @@ export default {
   // TODO(rm): provisorischer DE-Fallback für stelleVerloren — sauberes Romanisch nachziehen.
   stelleVerloren: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step1DateVorbei: { sie: 'Der späteste Tag war der {date}. Melden Sie sich jetzt sofort an — Taggeld gibt es ab dem Tag der Anmeldung, nicht rückwirkend (AVIG Art. 10).', du: 'Der späteste Tag war der {date}. Melde dich jetzt sofort an — Taggeld gibt es ab dem Tag der Anmeldung, nicht rückwirkend (AVIG Art. 10).' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step2Vorbei: 'Die Deckung über den alten Arbeitgeber endete am {date}.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step2Ohne: { sie: 'Tragen Sie oben das Ende des Arbeitsverhältnisses ein, dann erscheint hier das Datum.', du: 'Trag oben das Ende des Arbeitsverhältnisses ein, dann erscheint hier das Datum.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step2Hinweis: 'Die Deckung über den alten Arbeitgeber endet am {date} (UVG Art. 3).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
     step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
     step1Button: 'Spätestens-Termin RAV merken ({date})',
@@ -394,7 +414,7 @@ export default {
     step1Link: 'Taggeld abschätzen',
     step2Title: '2 · Versicherungen — die unsichtbare Lücke',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach müssen Sie den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach musst du den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
+    step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehen Sie danach Arbeitslosentaggeld, sind Sie über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehst du danach Arbeitslosentaggeld, bist du über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
     step2Button: 'Frist „Unfalldeckung“ merken ({date})',
     step2Done: 'Frist im Kalender gespeichert.',
     step2CalendarLink: 'Im Kalender ansehen',
@@ -415,6 +435,12 @@ export default {
   // TODO(rm): provisorischer Fallback auf Deutsch — sauberes Romanisch nachziehen.
   // Bewusst kein erfundenes RM; RM-Sprechende verstehen DE. Übersetzung folgt im i18n-Durchgang.
   todesfall: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die drei Monate sind am {date} abgelaufen. Wer nicht ausgeschlagen hat, hat die Erbschaft in der Regel erworben (ZGB Art. 571) — lassen Sie sich bei der zuständigen Behörde oder einer Beratungsstelle beraten.', du: 'Die drei Monate sind am {date} abgelaufen. Wer nicht ausgeschlagen hat, hat die Erbschaft in der Regel erworben (ZGB Art. 571) — lass dich bei der zuständigen Behörde oder einer Beratungsstelle beraten.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: { sie: 'Die drei Monate für eine Ausschlagung enden am {date} (ZGB Art. 567). Sind Sie in einem Testament als Erbin oder Erbe eingesetzt, zählt stattdessen der Tag der amtlichen Mitteilung.', du: 'Die drei Monate für eine Ausschlagung enden am {date} (ZGB Art. 567). Bist du in einem Testament als Erbin oder Erbe eingesetzt, zählt stattdessen der Tag der amtlichen Mitteilung.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: { sie: 'Tag, an dem Sie vom Tod erfahren haben', du: 'Tag, an dem du vom Tod erfahren hast' },
     quelle: 'Quellen: [[ZStV Art. 35|https://www.fedlex.admin.ch/eli/cc/2004/362/de#art_35]], [[ZGB Art. 567|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_567]] (geprüft im September 2026).',
     title: 'In mortori en il conturn',
     intro: 'Cura ch’ina persuna stretga mora, sto vegnir reglà bler a medem temp — e tuttina po la gronda part spetgar. Ina survista calma senza squetsch: ils emprims dis, l’enterrament, rentas & assicuranzas, la lubientscha.',
@@ -500,6 +526,12 @@ export default {
     footerNote: { sie: 'Cun pauca energia conta mintga pitschen pass. Laschai As accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.', du: 'Cun pauca energia conta mintga pitschen pass. Lascha t’accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.' },
   },
   bewilligung: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die 14-Tage-Grenze war am {date}. Reichen Sie das Gesuch trotzdem sofort ein und sprechen Sie mit dem Migrationsamt — Ausnahmen sind in begründeten Fällen möglich (VZAE Art. 59).', du: 'Die 14-Tage-Grenze war am {date}. Reiche das Gesuch trotzdem sofort ein und sprich mit dem Migrationsamt — Ausnahmen sind in begründeten Fällen möglich (VZAE Art. 59).' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Das Gesuch muss spätestens am {date} eingereicht sein — 14 Tage vor Ablauf (VZAE Art. 59). Frühestens geht es drei Monate vor Ablauf.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Die Bewilligung ist gültig bis',
     quelle: 'Quellen: [[VZAE Art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_59]], [[AIG Art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_33]] (geprüft im September 2026).',
     title: 'Renovar l’autorisaziun da dimora',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -587,6 +619,12 @@ export default {
     footerNote: 'In contract da maridaglia (regim dals bains) è facultativ, ma po esser sensà — surtut cun proprietad u independenza. Quai è orientaziun, betg cussegl giuridic.',
   },
   kind: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: 'Die drei Monate sind am {date} abgelaufen. Das Kind trotzdem sofort anmelden: Die Deckung beginnt dann mit der Anmeldung, und die Kasse kann einen Prämienzuschlag verlangen (KVG Art. 5).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Die drei Monate enden am {date} (KVG Art. 3). Bis dahin angemeldet, gilt die Deckung rückwirkend ab Geburt.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Geburtsdatum des Kindes',
     quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[ZGB Art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_260]], [[EOG Art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_b]] (geprüft im September 2026).',
     title: 'Avair in uffant',
     intro: 'In uffant mida bler a medem temp — annunzias, assicuranza, supplements, budget. Ina survista calma, pass per pass, per betg emblidar nagut.',
@@ -671,6 +709,12 @@ export default {
     footerNote: { sie: 'Planisai Vossa prevenziun conscientamain — la largia senza cassa da pensiun As tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.', du: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.' },
   },
   betreibung: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die 10 Tage sind am {date} abgelaufen. Fragen Sie beim Betreibungsamt nach, was jetzt noch möglich ist.', du: 'Die 10 Tage sind am {date} abgelaufen. Frag beim Betreibungsamt nach, was jetzt noch möglich ist.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Die 10 Tage enden am {date} (SchKG Art. 74). Fällt dieser Tag auf ein Wochenende, einen Feiertag oder in die Betreibungsferien, kann die Frist länger sein — früher ist nie falsch.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Zugestellt am (steht auf dem Zahlungsbefehl)',
     quelle: 'Quellen: [[SchKG Art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_74]] (geprüft im September 2026).',
     title: 'Scussiun retschavida — tge far?',
     intro: 'In cumond da pajar para smanatschant, ma l’emprim è quai mo ina pretensiun — nagina sentenzia e nagina inscripziun en il register penal. Ussa importa mo ina chaussa: il termin da 10 dis. Ina survista calma.',
@@ -728,6 +772,12 @@ export default {
     footerEarly: { sie: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quintai baud tge ch’è purtabel — e dumandai in quen uffizial tar Vossa cassa da cumpensaziun.', du: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.' },
   },
   kkErst: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: 'Die drei Monate sind am {date} abgelaufen. Trotzdem sofort versichern: Die Deckung beginnt dann mit dem Beitritt, und die Kasse kann einen Prämienzuschlag verlangen (KVG Art. 5).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Die drei Monate enden am {date} (KVG Art. 3). Bis dahin versichert, gilt die Deckung rückwirkend.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Zuzug in die Schweiz (Wohnsitznahme)',
     quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[KVV Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_7]] (geprüft im September 2026).',
     title: 'Cassa da malsauns per l’emprima giada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
