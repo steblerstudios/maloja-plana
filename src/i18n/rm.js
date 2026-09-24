@@ -2532,7 +2532,7 @@ export default {
     importFailed: 'Import betg reussì: {error}',
     invalidFile: 'Nagina datoteca da segirezza valida da Maloja Plana.',
     wrongPassphrase: 'Decriptaziun betg reussida. Fauss pled-clav u datoteca donnegiada.',
-    preRestoreNote: { sie: 'In snapshot da Vossas datas actualas è vegnì memorisà avant la restituziun.', du: 'In snapshot da Tes datas actualas è vegnì memorisà avant la restituziun.' },
+    preRestoreNote: { sie: 'Avant mintga restituziun vegn memorisà in snapshot da Vossas datas actualas.', du: 'Avant mintga restituziun vegn memorisà in snapshot da Tes datas actualas.' },
     sessionCount: 'Sessiun: {count} backup creà',
     sessionCountPlural: 'Sessiun: {count} backups creads',
     letterPreview: 'Prevista da la brev',

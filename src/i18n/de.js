@@ -3431,7 +3431,7 @@ export default {
     importFailed: 'Import fehlgeschlagen: {error}',
     invalidFile: 'Keine gültige Maloja Plana Sicherungsdatei.',
     wrongPassphrase: 'Entschlüsselung fehlgeschlagen. Falsches Passwort oder beschädigte Datei.',
-    preRestoreNote: { sie: 'Ein Snapshot Ihrer aktuellen Daten wurde vor der Wiederherstellung gespeichert.', du: 'Ein Snapshot deiner aktuellen Daten wurde vor der Wiederherstellung gespeichert.' },
+    preRestoreNote: { sie: 'Vor jeder Wiederherstellung wird ein Snapshot Ihrer aktuellen Daten gespeichert.', du: 'Vor jeder Wiederherstellung wird ein Snapshot deiner aktuellen Daten gespeichert.' },
     sessionCount: 'Sitzung: {count} Backup erstellt',
     sessionCountPlural: 'Sitzung: {count} Backups erstellt',
     letterPreview: 'Brief-Vorschau',

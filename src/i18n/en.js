@@ -3412,7 +3412,7 @@ export default {
     importFailed: 'Import failed: {error}',
     invalidFile: 'This is not a valid Maloja Plana backup file.',
     wrongPassphrase: 'Decryption failed. Wrong passphrase or corrupted file.',
-    preRestoreNote: 'A snapshot of your current data was saved before restoring.',
+    preRestoreNote: 'Before every restore, a snapshot of your current data is saved.',
     sessionCount: 'Session: {count} backup created',
     sessionCountPlural: 'Session: {count} backups created',
     letterPreview: 'Letter preview',

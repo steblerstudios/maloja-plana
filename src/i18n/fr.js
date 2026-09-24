@@ -3411,7 +3411,7 @@ export default {
     importFailed: 'Import échoué : {error}',
     invalidFile: 'Ce n\'est pas un fichier de sauvegarde Maloja Plana valide.',
     wrongPassphrase: 'Déchiffrement échoué. Mauvais mot de passe ou fichier corrompu.',
-    preRestoreNote: { sie: 'Un instantané de vos données actuelles a été sauvegardé avant la restauration.', du: 'Un instantané de tes données actuelles a été sauvegardé avant la restauration.' },
+    preRestoreNote: { sie: 'Avant chaque restauration, un instantané de vos données actuelles est sauvegardé.', du: 'Avant chaque restauration, un instantané de tes données actuelles est sauvegardé.' },
     sessionCount: 'Session : {count} sauvegarde créée',
     sessionCountPlural: 'Session : {count} sauvegardes créées',
     letterPreview: 'Aperçu de la lettre',

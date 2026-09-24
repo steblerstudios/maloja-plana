@@ -3388,7 +3388,7 @@ export default {
     importFailed: 'Importazione fallita: {error}',
     invalidFile: 'Questo non è un file di backup Maloja Plana valido.',
     wrongPassphrase: 'Decrittografia fallita. Password errata o file corrotto.',
-    preRestoreNote: { sie: 'Un\'istantanea dei dati attuali è stata salvata prima del ripristino.', du: 'Un\'istantanea dei dati attuali è stata salvata prima del ripristino.' },
+    preRestoreNote: { sie: 'Prima di ogni ripristino viene salvata un\'istantanea dei Suoi dati attuali.', du: 'Prima di ogni ripristino viene salvata un\'istantanea dei tuoi dati attuali.' },
     sessionCount: 'Sessione: {count} backup creato',
     sessionCountPlural: 'Sessione: {count} backup creati',
     letterPreview: 'Anteprima della lettera',
