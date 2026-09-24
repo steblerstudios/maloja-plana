@@ -2265,7 +2265,7 @@ export default {
     enterCanton: { sie: 'Veuillez entrer votre canton sous « Données personnelles » ou votre code postal sous « Logement ».', du: 'Entre ton canton sous « Données personnelles » ou ton code postal sous « Logement ».' },
     cantonChoose: { sie: 'Dans quel canton habitez-vous ?', du: 'Dans quel canton habites-tu ?' },
     cantonSavedHint: { sie: 'Nous le reprenons aussi sous « Données personnelles ». Vous pouvez l\'y modifier à tout moment.', du: 'Nous le reprenons aussi sous « Données personnelles ». Tu peux l\'y modifier à tout moment.' },
-    enterIncome: { sie: 'Votre canton a été repris. Saisissez maintenant votre revenu mensuel sous « Finances » pour calculer votre réduction de primes.', du: 'Ton canton a été repris. Saisis maintenant ton revenu mensuel sous « Finances » pour calculer ta réduction de primes.' },
+    enterIncome: { sie: 'Votre canton a été repris. Saisissez maintenant votre revenu mensuel ici pour calculer votre réduction de primes.', du: 'Ton canton a été repris. Saisis maintenant ton revenu mensuel ici pour calculer ta réduction de primes.' },
     eligible: 'Éligible',
     disclaimer: 'À titre indicatif. Le droit effectif est vérifié par l\'autorité compétente.',
     notEligible: 'Non éligible',

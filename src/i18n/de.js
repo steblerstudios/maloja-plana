@@ -2274,7 +2274,7 @@ export default {
     enterCanton: { sie: 'Bitte geben Sie Ihren Kanton unter "Persönliche Basis" oder Ihre PLZ unter "Wohnen" ein.', du: 'Bitte gib Deinen Kanton unter "Persönliche Basis" oder Deine PLZ unter "Wohnen" ein.' },
     cantonChoose: { sie: 'In welchem Kanton wohnen Sie?', du: 'In welchem Kanton wohnst Du?' },
     cantonSavedHint: { sie: 'Wir übernehmen ihn auch unter «Persönliche Basis». Dort können Sie ihn jederzeit ändern.', du: 'Wir übernehmen ihn auch unter «Persönliche Basis». Dort kannst Du ihn jederzeit ändern.' },
-    enterIncome: { sie: 'Ihr Kanton ist übernommen. Geben Sie jetzt Ihr monatliches Einkommen unter "Finanzen" ein, um Ihren IPV-Anspruch zu berechnen.', du: 'Dein Kanton ist übernommen. Gib jetzt Dein monatliches Einkommen unter "Finanzen" ein, um Deinen IPV-Anspruch zu berechnen.' },
+    enterIncome: { sie: 'Ihr Kanton ist übernommen. Geben Sie jetzt Ihr monatliches Einkommen hier ein, um Ihren IPV-Anspruch zu berechnen.', du: 'Dein Kanton ist übernommen. Gib jetzt Dein monatliches Einkommen hier ein, um Deinen IPV-Anspruch zu berechnen.' },
     eligible: 'Berechtigt',
     disclaimer: 'Orientierungshilfe. Der tatsächliche Anspruch wird von der zuständigen Stelle geprüft.',
     notEligible: 'Nicht berechtigt',
