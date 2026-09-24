@@ -89,9 +89,11 @@ export const druckAbschnitte = (t, w) => {
 
   // Eine gültige Verfügung (data/ipvAbzug.js) steht vor der Schätzung — wie in Budget, KK-Last-Karte
   // und Prämien-Beleg, die ihren Betrag abziehen.
+  // Altbestand ohne Kanton/Jahr: der Betrag, der abgezogen wird (höchstens die Verfügung).
   const ipvVerfuegt = w.ipvAbzug && w.ipvAbzug.grund === IPV_ABZUG_GRUND.BESTAETIGT;
-  const ipvBetragText = ipvVerfuegt
-    ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t('finanzUebersicht.ipvLautVerfuegung') + ')'
+  const ipvOhneJahr = w.ipvAbzug && w.ipvAbzug.grund === IPV_ABZUG_GRUND.VERFUEGUNG_UNZUGEORDNET;
+  const ipvBetragText = ipvVerfuegt || ipvOhneJahr
+    ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t(ipvVerfuegt ? 'finanzUebersicht.ipvLautVerfuegung' : 'finanzUebersicht.ipvVerfuegungOhneJahr') + ')'
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
@@ -172,6 +174,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   const ipvAbzugWert = ipvAbzug(data, ipv);
   const ipvFristVorbei = ipvAbzugWert.grund === IPV_ABZUG_GRUND.FRIST_VORBEI;
   const ipvVerfuegung = ipvAbzugWert.grund === IPV_ABZUG_GRUND.BESTAETIGT ? ipvAbzugWert.betrag : null;
+  // Altbestand ohne Kanton/Jahr (data/ipvAbzug.js): die Kachel zeigt den Betrag, der abgezogen
+  // wird — höchstens die Verfügung —, nicht die ungedeckelte Schätzung.
+  const ipvOhneJahr = ipvAbzugWert.grund === IPV_ABZUG_GRUND.VERFUEGUNG_UNZUGEORDNET ? ipvAbzugWert.betrag : null;
   const el = checkELEligibility(data);
   // E38/E39: dieselbe Regel wie im Steuerrechner — ein steuerbares Einkommen (Standardabzüge der
   // ESTV) für Bund und Kanton; Kantonszahl nur, wo die ESTV-Tabelle trägt.
@@ -431,16 +436,19 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       palette, icon: 'insurance',
       title: t('finanzUebersicht.ipv'),
       // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
-      status: ipvVerfuegung != null
-        ? erledigtZeichen(true, formatCHF(ipvVerfuegung) + ' ' + t('common.perMonth'))
+      status: ipvVerfuegung != null || ipvOhneJahr != null
+        ? erledigtZeichen(true, formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth'))
         : ipv.eligible
         ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
         : ipv.belegt === false
           ? t('ipv.statusOffen')
           : t('finanzUebersicht.notEligible'),
-      statusColor: ipvVerfuegung != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
+      statusColor: ipvVerfuegung != null || ipvOhneJahr != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
+      // Kein Jahresbetrag aus der Verfügung: sie kann unterjährig beginnen, «× 12» wäre geraten.
       detail: ipvVerfuegung != null
-        ? formatCHF(ipvVerfuegung * 12) + ' ' + t('common.perYear') + ' (' + t('finanzUebersicht.ipvLautVerfuegung') + ')'
+        ? t('finanzUebersicht.ipvLautVerfuegung')
+        : ipvOhneJahr != null
+        ? t('finanzUebersicht.ipvVerfuegungOhneJahr')
         : ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
         : ipv.belegt === false

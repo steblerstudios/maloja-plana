@@ -2491,6 +2491,7 @@ export default {
   finanzUebersicht: {
     title: 'Survista da finanzas',
     ipvLautVerfuegung: 'tenor la decisiun', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
+    ipvVerfuegungOhneJahr: 'decisiun senza onn: al pli sia summa', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     subtitle: { sie: "Vossa situaziun en in'egliada — basond sin Vossas indicaziuns.", du: "Tia situaziun en in'egliada — basond sin Tias indicaziuns." },
     monthlyIncome: 'Entrada mensiala',
     assets: 'Facultad',
@@ -2649,6 +2650,7 @@ export default {
     budgetCalm: { sie: 'Vus avais ina survista da Vossas finanzas. Mintga sectur registrà gida.', du: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.' },
     ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
     ipvHintVerfuegung: 'Reducziun da premias (IPV) tenor la decisiun: CHF {amount}/mais — deducida en il budget da la premia da la cassa da malsauns.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
+    ipvHintVerfuegungUnzugeordnet: { sie: 'Reducziun da premias (IPV): CHF {amount}/mais deducids en il budget — al pli la summa da Vossa decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; Vus pudais l’attribuir sut «Reducziun da premias».', du: 'Reducziun da premias (IPV): CHF {amount}/mais deducids en il budget — al pli la summa da tia decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; ti pos l’attribuir sut «Reducziun da premias».' }, // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     ipvHintOhneBetrag: 'Reducziun da premias (IPV): dretg ed import decida il chantun. Cunzunt cun in budget stretg vala la paina dad examinar.', // TODO(rm): provisorisch
     ipvHintLuFristVorbei: 'Reducziun da premias Lucerna: betg deducida en il budget. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Il budget na sa betg, sche e cura che l’annunzia è succedida — cun ina annunzia a temp vala l’entir dretg annual.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     sozialhilfeHint: { sie: "Vossa entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.", du: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita." },
@@ -4428,6 +4430,11 @@ export default {
     renewAdd: 'Regordar mintga onn',
     renewAdded: 'Regordientscha messa',
     reset: 'Reinizialisar',
+    ohneJahrLead: 'Per questa decisiun n’èn chantun ed onn betg memorisads. Fin ch’ella è attribuida, deduceschan budget e survista da finanzas al pli sia summa — e mai dapli che la stima.', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
+    zuordnenFrage: 'Vala questa decisiun per {kanton} {jahr}?', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
+    zuordnenJa: 'Gea, per {kanton} {jahr}', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
+    giltNicht: 'Decisiun per {kanton} {jahr} — na vala betg per {aktKanton} {aktJahr}. Perquai na vegn ella betg deducida en il budget.', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
+    jahrLabel: 'Decisiun per l’onn', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
   },
   barKurz: { ipv: 'IPV', soz: 'Agid soc.' },
   beleg: {
@@ -4436,6 +4443,7 @@ export default {
     selbst: 'atgna part',
     kanton: 'Chantun',
     geschaetzt: 'stimaziun · orientaziun',
+    verfuegungOhneJahr: 'decisiun senza onn', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     orientierung: 'orientaziun · senza import', // TODO(rm): provisorisch
     keineVerbilligung: 'Sur la limita — nagina reducziun. I dat autras vias.',
     premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',

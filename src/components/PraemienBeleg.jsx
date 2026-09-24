@@ -27,7 +27,7 @@ export const PraemienBeleg = ({ palette, t, state }) => {
     ? h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t('beleg.orientierung'))
     : confirmed
     ? h('span', { style: { border: '1px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontFamily: MONO, padding: '1px 6px', borderRadius: radius.sm + 'px', transform: 'rotate(-4deg)', display: 'inline-block' } }, t('ipvStatus.stamp'))
-    : h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t('beleg.geschaetzt'));
+    : h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t(state.verfuegungOhneJahr ? 'beleg.verfuegungOhneJahr' : 'beleg.geschaetzt'));
   const headRow = h('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
     h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('schnellcheck.ipv')),
     marker

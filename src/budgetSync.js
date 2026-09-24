@@ -106,6 +106,9 @@ const syncBudgetFromChapters = (data) => {
   // Abgezogen wird der Betrag einer gültigen Verfügung — dann sagt der Hinweis «laut Verfügung»,
   // nicht «möglicherweise Anspruch».
   const ipvVerfuegung = abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT;
+  // Altbestand ohne Kanton/Jahr: abgezogen ist höchstens der Verfügungsbetrag — der Hinweis sagt
+  // das und zeigt den Weg zum Zuordnen, statt «möglicherweise Anspruch».
+  const ipvVerfuegungUnzugeordnet = abzug.grund === IPV_ABZUG_GRUND.VERFUEGUNG_UNZUGEORDNET;
   const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
@@ -117,6 +120,7 @@ const syncBudgetFromChapters = (data) => {
     },
     ipvRelief,
     ipvVerfuegung,
+    ipvVerfuegungUnzugeordnet,
     ipvOrientierung,
     ipvAnmeldefristVorbei,
     expenses: {}
@@ -226,6 +230,11 @@ const getBudgetRecommendations = (budget, t) => {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.ipvHintVerfuegung', { amount: budget.ipvRelief }) : 'Premium reduction (IPV) per decision letter: deducted from the premium.'
+    });
+  } else if (budget.ipvRelief > 0 && budget.ipvVerfuegungUnzugeordnet) {
+    recommendations.push({
+      level: 'info',
+      text: t ? t('budget.ipvHintVerfuegungUnzugeordnet', { amount: budget.ipvRelief }) : 'Premium reduction (IPV): at most the amount of the decision letter is deducted.'
     });
   } else if (budget.ipvRelief > 0) {
     recommendations.push({
