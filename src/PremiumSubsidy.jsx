@@ -13,6 +13,7 @@ import { getCantonalLinks } from './data/direktLinks.js';
 import { addTodo } from './utils/merkliste.js';
 import { addReminder } from './utils/reminders.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
+import { verfuegungZuordnung, VERFUEGUNG_ZUORDNUNG } from './data/ipvAbzug.js';
 import { abweichungen, mitUebergabe } from './data/schnellcheckUebergabe.js';
 import { text, weight, radius , space } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -37,6 +38,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     return s.betrag ? String(s.betrag) : '';
   });
   const [renewAdded, setRenewAdded] = useState(false);
+  // Für welches Jahr die Verfügung gilt (Deploy-Gate Runde 4): wählbar beim Eintragen, laufendes
+  // oder folgendes Jahr — eine Verfügung fürs nächste Jahr kommt oft schon im Herbst.
+  const laufendesJahr = new Date().getFullYear();
+  const [verfJahr, setVerfJahr] = useState(String(laufendesJahr));
   // Export-Vorschau (K20): erst zeigen, was im IPV-Dokument steht, dann herunterladen.
   const [ipvVorschau, setIpvVorschau] = useState(false);
   // Unterlagen für den IPV-Antrag als offenen Punkt in die Merkliste legen (Muster wie Umzug),
@@ -102,6 +107,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // Antrag — darum führt 'geschaetzt' sowohl zu 'beantragt' (Antrags-Weg) als
   // auch direkt zu 'bestaetigt' (Verfügung kam automatisch). Kein Rot, kein Zwang.
   const ipvStatus = readIpvStatus(data);
+  // Dieselbe Frage wie Budget, KK-Last-Karte, Beleg und Finanzübersicht (data/ipvAbzug.js):
+  // gilt die eingetragene Verfügung jetzt? Die Seite sagt es dazu, statt nur «bestätigt».
+  const zuordnung = verfuegungZuordnung(data, ipvStatus);
+  const kantonName = (code) => (code ? getCantonName(code, t) : '');
   const setIpvStatus = (status, extra) => onUpdateData && onUpdateData('anspruch', 'ipv', nextIpvStatus(status, extra));
   const lineBtn = (label, onClick, opts = {}) => React.createElement('button', {
     onClick,
@@ -114,6 +123,22 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       border: opts.primary ? 'none' : '1px solid ' + palette.border,
     },
   }, label);
+
+  // Jahr wählen beim Eintragen der Verfügung — klein, zwei Möglichkeiten.
+  const jahrWahl = () => React.createElement('label', {
+    style: { display: 'flex', alignItems: 'center', gap: space.xs, fontSize: text.sm, color: palette.mid, marginBottom: space.sm, flexWrap: 'wrap' },
+  },
+    t('ipvStatus.jahrLabel'),
+    React.createElement('select', {
+      value: verfJahr,
+      onChange: (e) => setVerfJahr(e.target.value),
+      style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+    },
+      React.createElement('option', { value: String(laufendesJahr) }, String(laufendesJahr)),
+      React.createElement('option', { value: String(laufendesJahr + 1) }, String(laufendesJahr + 1))
+    )
+  );
+  const verfuegungEintragen = () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton, jahr: Number(verfJahr) });
 
   const renderLebenslinie = () => {
     if (!onUpdateData || !hasIncome) return null;
@@ -142,9 +167,28 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // dueDate über Tage stabil und die addReminder-Dedup (Titel + Datum) greift —
       // sonst entstünde bei jedem erneuten Antippen an einem anderen Tag ein Duplikat.
       const dueNext = (() => { const base = ipvStatus.datum ? new Date(ipvStatus.datum) : new Date(); base.setFullYear(base.getFullYear() + 1); return base.toISOString().split('T')[0]; })();
+      // Gilt die Verfügung nicht (anderes Jahr/anderer Kanton) oder fehlt ihr die Zuordnung
+      // (Altbestand vor 0.1.40-beta), sagt die Seite das — Kanton und Jahr ergänzt erst ein
+      // sichtbares «Ja», nie automatisch.
+      const zuordnen = zuordnung === VERFUEGUNG_ZUORDNUNG.UNZUGEORDNET && canton
+        ? h('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', marginBottom: space.sm } },
+            h('span', { style: { fontSize: text.sm, color: palette.text } }, t('ipvStatus.zuordnenFrage', { kanton: kantonName(canton), jahr: laufendesJahr })),
+            lineBtn(t('ipvStatus.zuordnenJa', { kanton: kantonName(canton), jahr: laufendesJahr }),
+              () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: ipvStatus.betrag, datum: ipvStatus.datum, kanton: canton, jahr: laufendesJahr }))
+          )
+        : null;
+      const hinweis = zuordnung === VERFUEGUNG_ZUORDNUNG.UNZUGEORDNET
+        ? lead(t('ipvStatus.ohneJahrLead'))
+        : zuordnung === VERFUEGUNG_ZUORDNUNG.GILT_NICHT
+        ? lead(t('ipvStatus.giltNicht', {
+            kanton: kantonName(ipvStatus.kanton), jahr: ipvStatus.jahr != null ? ipvStatus.jahr : '',
+            aktKanton: kantonName(canton), aktJahr: laufendesJahr,
+          }).replace(/\s{2,}/g, ' '))
+        : lead(t('ipvStatus.confirmedLead'));
       return card([
         head(null, stamp),
-        lead(t('ipvStatus.confirmedLead')),
+        hinweis,
+        zuordnen,
         ipvStatus.betrag > 0
           ? h('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sageDeep, marginBottom: space.sm } }, fmtCHF(ipvStatus.betrag) + ' / ' + t('schnellcheck.monat'))
           : h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm } }, t('ipvStatus.betragPrompt')),
@@ -175,8 +219,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       return card([
         head(null, badge),
         lead(t('ipvStatus.appliedLead')),
+        jahrWahl(),
         h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
-          lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton }), { primary: true }),
+          lineBtn(t('ipvStatus.markConfirmed'), verfuegungEintragen, { primary: true }),
           lineBtn(t('ipvStatus.reset'), () => setIpvStatus(IPV_STATUS.GESCHAETZT))
         ),
       ]);
@@ -190,9 +235,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         h('li', { style: { marginBottom: space.xs } }, t('ipvStatus.wayAuto')),
         h('li', null, t('ipvStatus.wayApply'))
       ),
+      jahrWahl(),
       h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
         lineBtn(t('ipvStatus.markApplied'), () => setIpvStatus(IPV_STATUS.BEANTRAGT)),
-        lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton }), { primary: true })
+        lineBtn(t('ipvStatus.markConfirmed'), verfuegungEintragen, { primary: true })
       ),
     ]);
   };
