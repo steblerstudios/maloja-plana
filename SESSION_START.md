@@ -19,6 +19,52 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 24.09., 14:40 — Fremd-Audit gegengelegt, K116 gebaut, Vorab-Prüfung vor dem Deploy, K117–K121. Neun PRs gemergt, jeder auf ausdrückliches Wort von Stebler Studios («sauber mergen»).**
+>
+> **Stand, gemessen 24.09.2026 14:40** (`bash scripts/stand-jetzt.sh`): `main` = `0049b68` (14:39) ·
+> live = `index-8FolD38L.js`, Commit unbekannt · Abstand nicht messbar · offen: #313 (Entwurf,
+> fremde Sitzung). Auf `0049b68`: **3214 Tests grün** (175 Dateien) · Startdatei **60,23 kB**
+> (Deckel 65; die Luft kam aus #308/#317 anderer Sitzungen).
+>
+> ### Was gemergt ist (alle Squash, jeder PR vorher gegen das bewegte `main` nachgetestet)
+> | PR | was | Beleg |
+> |---|---|---|
+> | **#292** | Bauliste §26: ChatGPT-Audit (MP-001–159) gegen `main` gelegt — das meiste erledigt oder geführt; **neu nur K116**. Regel: Fremd-Audits nur aus `git archive`, nie als Ordner-ZIP | Konflikt mit #285 von Hand gelöst, beide Abschnitte behalten |
+> | **#303** | **K116 · zwei offene Tabs überschreiben einander nicht mehr still.** `storage`-Ereignis auf `or5_data`/`or5_docs` → dieser Tab schreibt nicht mehr, ruhige Meldung «… Seite neu laden» | **vorher im Browser erprobt** (Nachname aus Tab B verschwand), nachher dasselbe mit Schutz; `zweiTabs.test.js`, 2 Mutationen rot |
+> | **#304** | Bauliste: K116-Nachtrag | nur Doku |
+> | **#307** | Vorab-Prüfung: **LU-Anmeldestelle** (kantonale Ausgleichskasse statt AHV-Zweigstelle) · **KK-QR** «nicht verschlüsselt» statt «nur diese App liest ihn» · **Notfall-vCard** trägt «Telefon Notfall: …» wieder in der Notiz | `vorabPruefung2409.test.js`, 3 Mutationen rot |
+> | **#309** | Bauliste §27: Vorab-Prüfung festgehalten, K117–K121 | nur Doku |
+> | **#312** | **K117** Konkubinat mit Kindern ohne Partnerangabe → keine Kantonszahl (vorher CHF 2'211 aus «ledig») · **K118** ohne Kanton «Beim Kanton prüfen» statt «Nicht berechtigt» | beides im Browser nachgesehen; 3 Mutationen rot |
+> | **#314** | **K119** Melde-Entwurf maskiert Zitate und Ziffernfolgen (V8 zitiert Eingaben in JSON-Fehlern) | echte V8-Meldungen im Test, 2 Mutationen rot |
+> | **#318** | **K120** SRL 866 § 8a/§ 21 selbst gelesen (Gegenprobe 404) und eingetragen; Datenschutzberater nur auf Art. 10 Abs. 1 DSG; Marke «keine aktive Marke» statt «frei»; **neu K122** | nur Doku + Kommentar |
+> | **#319** | **K121** ESTV-Stichprobe: **156/156, 0 Abweichungen, Exit 0**, auch TI | Gegenprobe gescheitert wie erwartet |
+>
+> ### Vorab-Prüfung vor dem Deploy (auf `1e111d5`, 41 PRs #264–#304)
+> swiss-precision-, rechts- und sicherheits-pruefer + Tests/Build/Grösse/PII/`npm audit`:
+> **kein Deploy-Blocker.** LU-Formel am amtlichen WAS-Beispiel nachgerechnet (457.20/Monat),
+> Säule 3a korrekt, keine neuen Datenabflüsse oder Abhängigkeiten. Der Live-Commit liess sich
+> **nicht** zuordnen (zwei Nachbau-Versuche ergaben andere Hashes); #264 ist der erste belegt
+> nicht-live Merge.
+>
+> ### 🛑 Was offen bleibt
+> 1. **Deploy** — alles oben und alles seit dem 22.09. ist **nicht live**. Die Vorab-Prüfung ist
+>    gemacht; `/maloja-predeploy` und `bash deploy.sh` bleiben bei Stebler Studios.
+> 2. **K121, Handprüfungen:** Notfall-QR (#307) mit echter iPhone- und Android-Kamera scannen ·
+>    Hoster-Frist «mindestens 7 Tage». Die ESTV-Reihen **mit Kindern** sind nicht nachgemessen.
+> 3. **K122, Entscheid:** Luzern-Vorbehalt genauer fassen (Frist gilt für *Erhöhung*, Rückforderung
+>    beim *Krankenversicherer*) — dann `rechts-pruefer`, 5 Sprachen.
+> 4. **Ungeprüft:** VoiceOver-Ansage der K116-Meldung · fr/it/rm-Wortlaut der neuen Texte · ob aus
+>    der Zeit vor K116 Dokument-Dateien ohne Eintrag in IndexedDB liegen.
+>
+> 🛑 **Zwei Stolpersteine dieser Sitzung, damit die nächste sie nicht wiederholt:**
+> - **Der Dev-Server im Browser-Fenster startet aus dem Haupt-Checkout, nicht aus dem Worktree.**
+>   Eine erste Browser-Probe lief darum mit altem Code. Prüfen: `fetch('/src/…')` auf die eigene
+>   Änderung greppen, bevor man einem Browser-Ergebnis glaubt. Worktree-Server: Eintrag mit
+>   `npm --prefix <worktree>` in `~/Claude/.claude/launch.json`.
+> - **`git reset --soft origin/main` nach einem `fetch` dreht fremde Merges zurück** (einmal
+>   passiert, nur auf dem Zweig, ohne Force-Push repariert). Zusammenfassen nur gegen
+>   `git merge-base HEAD origin/main`.
+
 > ✅ **Nachtrag 24.09., 01:13 — Zeichen, Icons, Glossar: sieben PRs gemergt, alle auf ausdrückliches Wort von Stebler Studios.**
 > Gemessen mit `bash scripts/stand-jetzt.sh` unmittelbar vor dem Schreiben:
 >
