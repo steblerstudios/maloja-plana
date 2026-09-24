@@ -64,13 +64,14 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 |---|---|---|
 | Speichern in kDrive / Proton Drive, **Weg A** (über «Teilen», mit Hinweis) | §14 | nichts; keine Verbindung nach aussen |
 | Karten **Stufe 1**: Link «In OpenStreetMap öffnen» | §14 | Muster `ExternerLink` |
-| Fristen aus den Abläufen werden Termine (`.ics`) — heute nur feste Vorlagen | §5 | `icsExport.js` + Export-Vorschau existieren |
 | Herzensempfehlungen: pflegewegweiser.ch und David-Rau-App prüfen und ergänzen (die übrigen 26 sind drin) | §9 | je Angebot prüfen, ob es noch besteht |
 | Schwarz-Weiss-Modus: ist der vorhandene Graustufen-Schalter das Gewünschte? | §4 | nur ansehen und entscheiden |
 
 *Korrektur 24.09. spätabends, am Code nachgesehen:* «Vor dem Wechsel prüfen» (KVG und
 Zusatz, `checkIntro`) und «Das verlässt dein Gerät» (`ExportVorschau` in elf Ansichten) sind
-**schon gebaut** — die Landkarte führte sie seit Juli als Idee. Die Herzensempfehlungen stehen
+**schon gebaut** — die Landkarte führte sie seit Juli als Idee. Ebenso **Fristen werden Termine**: die
+Abläufe haben Frist-Knöpfe, die Erinnerungen anlegen, exportierbar als `.ics`; #342 rechnet sie
+ab dem Ereignis statt ab heute, je mit Gesetzesartikel. Die Herzensempfehlungen stehen
 als Buch in der Bibliothek (`direktLinks.js`, 26 Einträge inkl. artfuljana, Leihlager,
 Abschiedsagentur, plaant).
 
@@ -266,8 +267,8 @@ Abschiedsagentur, plaant).
   Steuern), IPV-Anträge (kantonal verschieden), Kündigungsschreiben mit OR-Fristen.
   Briefvorlagen im Schweizer Format (Empfänger rechts, Policen-/Rechnungsnummer);
   Vorlagen von Mieterverband und K-Tipp als Vorbild nachbauen, nicht abschreiben.
-- 🔨 **Kalender** *⟨Eingang 19.07.⟩* — `.ics`-Export existiert (`icsExport.js`). Offen: Fristen
-  werden automatisch Termine, Arzttermine mit «ist das gedeckt?», Erinnerungen.
+- 🔨 **Kalender** *⟨Eingang 19.07.⟩* — gebaut: Erinnerungen, Frist-Knöpfe in den Abläufen,
+  `.ics`-Export mit Vorschau. Offen: Arzttermine mit «ist das gedeckt?».
 - 🌱 **Aus einem Befund wird eine Aufgabe** *⟨Eingang 19.07.⟩* — z. B. «darf IPV beziehen» →
   Aufgabe mit Link. Berührt «Nächster Schritt» (Bauliste O7).
 - 🌱 **Versicherungen: Ablauf melden, günstigere Wege zeigen** *⟨Eingang 19.07.⟩* — KK,
