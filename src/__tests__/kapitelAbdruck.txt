@@ -624,7 +624,7 @@ rm   k=canton type="select" mvo=true label~e2ba5408 options=26 optWerte~25f3960d
 rm   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~9efa9d9c sectionIntro~e5a49c43
 rm   k=email type="email" recommended=true naOk=true autoComplete="email" label~31bb94b0
 rm   k=ahv type="text" orientation~db4c1084 hint~302dc2a1 placeholder~6fc297e9 label~e8c0ae54
-rm   k=maritalStatus type="select" section~35531553 label~1a688031 sectionIntro~aa315ee9 options=7 optWerte~ea8bd93f optLabels~e4994462
+rm   k=maritalStatus type="select" section~35531553 label~1a688031 sectionIntro~aa315ee9 options=7 optWerte~ea8bd93f optLabels~2633a683
 rm   k=household type="household" label~cd8a2627
 rm   doc k=id label~f0f43f8d
 rm   doc k=ahv_card label~d21e2241

@@ -62,9 +62,11 @@ const knoten = (el, out = []) => {
 const texte = (alle) => alle.map((k) => k.props.children).flat().filter((c) => typeof c === 'string').join('\n');
 
 // R4: verheiratet = Alleinverdiener-Ehepaar wie gemessen → Partnereinkommen 0 ausdrücklich eingetragen.
+// K62-Nachlauf A: ein Partnereinkommen zählt nur mit sichtbarem Feld — also mit erfasster zweiter
+// Person (oder Zivilstand verheiratet/Konkubinat). Darum hier zwei Erwachsene, sobald eines angegeben ist.
 const zeige = (steuerbar, { canton = 'ZH', kinder = 0, verheiratet = false, elterntarif, nettolohn, incomeType, partnerIncome } = {}) => {
   const data = {
-    basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : verheiratet ? { partnerIncome: '0' } : {}) } },
+    basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet || partnerIncome ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : verheiratet ? { partnerIncome: '0' } : {}) } },
     // steuerbar = direkt eingetragenes steuerbares Einkommen; nettolohn = Weg über den Nettolohn.
     finanzen: nettolohn ? { monthlyIncome: nettolohn / 12, ...(incomeType ? { incomeType } : {}) } : { taxableIncome: steuerbar },
     versicherungen: {},

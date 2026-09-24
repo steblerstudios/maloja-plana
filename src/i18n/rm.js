@@ -460,7 +460,7 @@ export default {
   },
   heirat: {
     title: 'Maridaglia u partenariat',
-    intro: 'La maridaglia u il partenariat registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
+    intro: 'La maridaglia u il partenadi registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
     step1Title: '1 · Annunziar la maridaglia',
     step1Text: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.',
     step1Button: 'Memorisar il termin «Annunziar la maridaglia» ({date})',
@@ -1153,7 +1153,7 @@ export default {
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
-        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va', dissolvedPartnership: 'Partenadi schlià' } },
+        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenadi registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va', dissolvedPartnership: 'Partenadi schlià' } },
         dependents: "Dumber d'uffants",
         household: {
           adults: 'Creschids en il ménaschi',
@@ -1167,6 +1167,8 @@ export default {
           adultSelf: 'Jau',
           adultLabel: 'Creschì/da {nr}',
           addAdult: 'Agiuntar in creschì',
+          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.' }, // TODO(rm): provisorisch
+          zweitePersonHinzufuegen: 'Agiuntar la persuna', // TODO(rm): provisorisch
           adultRelationship: 'Relaziun',
           relPartner: 'Partenari/a',
           relRoommate: 'Coabitant/a',
@@ -3087,7 +3089,7 @@ export default {
     estimatedTax: 'Taglientas stimadas',
     netIncome: "Entrada netta (stima annaira)",
     saveData: 'Memorisar las datas',
-    married: 'Maridà/maridada u en partenariat registrà',
+    married: 'Maridà/maridada u en partenadi registrà',
     children: 'Uffants',
     elterntarifConfirm: 'Ils uffants vivan en mia chasada, ed jau surpigl la part principala da lur mantegniment.',
     elterntarifHint: { sie: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Vossa taglia po lura esser pli bassa che quai che vegn mussà qua.', du: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Tia taglia po lura esser pli bassa che quai che vegn mussà qua.' },
@@ -4539,7 +4541,7 @@ export default {
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
     gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
-    verheiratet: 'Maridà/ada u en partenariat registrà',
+    verheiratet: 'Maridà/ada u en partenadi registrà',
     einkommenPartner: 'Entrada dal partenari (CHF)',
     ahvRente: 'Renta da vegliadetgna AVS stimada',
     monat: 'Mais',

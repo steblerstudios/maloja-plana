@@ -1290,6 +1290,8 @@ export default {
           adultSelf: 'Me',
           adultLabel: 'Adult {nr}',
           addAdult: 'Add adult',
+          zweitePersonFehlt: { sie: 'Your marital status includes a second person, but only one is recorded in the household so far. Premium subsidies and social assistance are calculated with the people recorded here.', du: 'Your marital status includes a second person, but only one is recorded in the household so far. Premium subsidies and social assistance are calculated with the people recorded here.' },
+          zweitePersonHinzufuegen: 'Add person',
           adultRelationship: 'Relationship',
           relPartner: 'Partner',
           relRoommate: 'Flatmate',

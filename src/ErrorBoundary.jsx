@@ -4,6 +4,7 @@ import { text, weight, radius, space, fontFamily } from './config/tokens.js';
 import { paletteAusSpeicher } from './config/constants.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
+import { meldungOhneEingaben } from './utils/meldungOhneEingaben.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -48,8 +49,9 @@ export class ErrorBoundary extends React.Component {
   // nachstellbar. Sie ist auf 200 Zeichen gekürzt, damit keine langen
   // Zwischenstände mitwandern, steht sichtbar im Entwurf und ist löschbar.
   // Gesendet wird nichts automatisch.
+  // K119: ohne Zitate und Ziffernfolgen — manche Browser zitieren die Eingabe in der Meldung.
   meldeHref(tx) {
-    const meldung = String(this.state.error?.message || '').slice(0, 200);
+    const meldung = meldungOhneEingaben(this.state.error?.message);
     const body = '\n\n\n— — —\n' + tx('beta.feedbackContext', '') + '\n'
       + 'Version: ' + APP_VERSION + '\n'
       + 'Ansicht: Fehlerschirm\n'
