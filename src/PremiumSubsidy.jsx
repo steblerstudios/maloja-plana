@@ -286,7 +286,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       ),
       // E9: unbelegt weder Modell noch Grenze noch Verfahrens-Hinweis (für GL nachweislich
       // falsch) — der Weg zum Kanton steht als Link im Orientierungs-Kasten darunter.
-      !canton && React.createElement('div', { style: { color: palette.roseDeep } }, t('premium.enterCanton'))
+      // (Ohne Kanton kommt die Ansicht nicht bis hier: sie endet oben mit premium.enterCanton.)
     ),
 
     // B-1/E22: sichtbar sagen, dass mit den Schnellcheck-Zahlen gerechnet wird.

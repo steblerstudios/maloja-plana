@@ -250,6 +250,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         placeholder: opts.placeholder || '',
         min: opts.min,
         max: opts.max,
+        // Die Bezeichnung steht als <div> darüber — ohne Namen hörte ein Screenreader nur «Eingabefeld».
+        'aria-label': labelText,
       })
     );
 

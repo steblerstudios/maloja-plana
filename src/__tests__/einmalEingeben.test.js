@@ -112,7 +112,14 @@ describe('EO- und Vorsorge-Rechner: Bruttojahreslohn, nie ein Nettolohn', () => 
 describe('Vorsorge-Rechner: Nettolohn Partner/in ist nicht der AHV-Lohn', () => {
   it('verheiratet mit Partnerlohn im Profil: Feld leer, Hinweis statt Wert', () => {
     const html = zeichne(VorsorgeRechner, { ...profil, basis: { ...profil.basis, maritalStatus: 'married', household: { adultsList: [{}], partnerIncome: '4000' } } });
+    expect(feldWert(html, t('vr.einkommenPartner'))).toBe('');
     expect(html).not.toContain('value="48000"');
     expect(html).toContain(t('vr.partnerNettoHint'));
+  });
+  it('jedes Zahlenfeld des Vorsorge-Rechners hat einen Namen für Screenreader', () => {
+    const html = zeichne(VorsorgeRechner, profil);
+    const felder = html.match(/<input[^>]*type="number"[^>]*>/g) || [];
+    expect(felder.length).toBeGreaterThan(3);
+    expect(felder.filter(f => !/aria-label="[^"]+"/.test(f))).toEqual([]);
   });
 });
