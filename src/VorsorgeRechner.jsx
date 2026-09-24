@@ -14,6 +14,8 @@ import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
+import { zahl } from './utils/geld.js';
+import { jahreslohnAusProfil, lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -42,20 +44,26 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const fmtAlterMonate = (monate) => Math.floor(monate / 12) + ' ' + t('vr.jahre')
     + (monate % 12 ? ' ' + (monate % 12) + ' ' + t('vr.monate') : '');
 
-  const [einkommen, setEinkommen] = useState(data.finanzen?.monthlyIncome ? String(Math.round(Number(data.finanzen.monthlyIncome) * 12)) : '');
+  // Bruttojahreslohn aus den Finanzen (inkl. 13.), nicht bei netto erfasstem Lohn (utils/jahreslohnAusProfil.js).
+  const nettoHinterlegt = lohnIstNetto(data.finanzen) && Number(data.finanzen?.monthlyIncome) > 0;
+  const [einkommen, setEinkommen] = useState(() => jahreslohnAusProfil(data.finanzen));
   const [beitragsjahre, setBeitragsjahre] = useState('');
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState(() => String(refAlterJahre));
   const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
-  const [einkommenPartner, setEinkommenPartner] = useState(() => {
-    // K62: 0 ist eine Antwort (kein Partnereinkommen) und wird als «0» übernommen.
-    // K62-Nachlauf A: nur, wenn das Feld im Profil sichtbar ist (utils/partnereinkommen.js).
-    const p = partnerEinkommenRoh(data.basis);
-    return p == null || p === '' ? '' : String(Math.round(Number(p) * 12) || 0);
+  // Splitting und Plafonierung rechnen mit dem Bruttolohn (massgebender Lohn nach AHVG). Im Profil
+  // steht nur der NETTOlohn der Partnerin/des Partners — der wäre die falsche Basis (rund 12–17 %
+  // zu tief, ohne 13.). Darum nicht vorbefüllen, sondern am Feld darauf hinweisen. Hochrechnen
+  // geht nicht: die Abzüge hängen von der Pensionskasse ab.
+  const partnerNettoImProfil = Number(partnerEinkommenRoh(data.basis)) > 0;
+  const [einkommenPartner, setEinkommenPartner] = useState('');
+  // Aus dem Kapitel «Versicherungen» (Pensionskassen-Guthaben laut Ausweis) — nicht zweimal eingeben.
+  const [bvgGuthaben, setBvgGuthaben] = useState(() => {
+    const b = data.versicherungen?.bvgBalance;
+    return b == null || b === '' || !Number.isFinite(Number(b)) ? '' : String(Math.round(Number(b)));
   });
-  const [bvgGuthaben, setBvgGuthaben] = useState('');
   // Umwandlungssatz der eigenen Pensionskasse (leer = BVG-Mindestsatz 6,8 %).
   const [bvgUmwandlung, setBvgUmwandlung] = useState('');
   const [rendite, setRendite] = useState('1.5');
@@ -243,10 +251,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         placeholder: opts.placeholder || '',
         min: opts.min,
         max: opts.max,
+        // Die Bezeichnung steht als <div> darüber — ohne Namen hörte ein Screenreader nur «Eingabefeld».
+        'aria-label': labelText,
       })
     );
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
 
   // === IK-Auszug: Helfer + Render ===
   const ikTypLabel = (typ) => t('vr.ikTyp' + typ.charAt(0).toUpperCase() + typ.slice(1));
@@ -412,7 +422,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // Input fields
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
-        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: t('vr.einkommenHint') }),
+        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : t('vr.einkommenHint') }),
         field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(parsedBeitragsjahre), width: '80px', min: 1, max: 44 }),
         field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 63, max: 70 })
       ),
@@ -434,7 +444,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             )
           )
         ),
-        verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000' })
+        verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000', sublabel: partnerNettoImProfil ? t('vr.partnerNettoHint') : undefined })
       )
     ),
 

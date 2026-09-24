@@ -10,6 +10,8 @@ import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import { aufklappZeichen } from './IconKern.jsx';
 import { ABLAEUFE } from './config/ansichtenRegister.js';
+import { inDays } from './utils/helpers.js';
+import { zahl, betrag } from './utils/geld.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -28,7 +30,7 @@ const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.
 
 function fmtCHF(v) {
   const n = Number(v);
-  return n && !isNaN(n) ? "CHF " + n.toLocaleString('de-CH') : null;
+  return n && !isNaN(n) ? betrag(n, { hoechstens: 2 }) : null;
 }
 
 function buildSnippet(chapterKey, chData, allData, t) {
@@ -102,7 +104,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
   const annual = (Number(income) || 0) * 12;
   const canton = data?.basis?.canton;
-  const fmt = (v) => v.toLocaleString('de-CH');
+  const fmt = (v) => zahl(v, { hoechstens: 2 });
 
   // Ein Einkommen → mehrere Leistungen (Basel-Stadt-Leistungsrechner als Vorbild).
   // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
@@ -503,7 +505,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
           return React.createElement('button', {
             onClick: () => onSelectChapter(nextField.chapterIdx),
-            'aria-label': nextField.label + ' — ' + nextField.chapterTitle,
+            'aria-label': t('dashboard.nextUpAction', { feld: nextField.label }) + ' — ' + nextField.chapterTitle,
             style: {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
               width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
@@ -517,7 +519,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
               React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
               React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
-                React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, nextField.label),
+                // Codex-Audit 24.09.: das Feld allein («Vorname») sagt nicht, was zu tun ist — ein Verb dazu.
+                React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, t('dashboard.nextUpAction', { feld: nextField.label })),
                 React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
               ),
             ),
@@ -532,7 +535,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.nextUpReassure')),
       (() => {
         const reminders = loadReminders();
-        const today = new Date().toISOString().split('T')[0];
+        const today = inDays(0);
         const upcoming = reminders
           .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
@@ -547,7 +550,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         },
           part(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
           dot,
-          part(t('dashboard.glanceSaved'), lastBackup || t('dashboard.glanceNeverSaved')),
+          // «Zuletzt gesichert noch kein Backup» stand neben «Gespeichert» (Codex-Audit): ohne
+          // Sicherungsdatei ein eigener Satz, der Datei und Gerät nicht vermischt.
+          lastBackup ? part(t('dashboard.glanceSaved'), lastBackup) : React.createElement('span', null, t('dashboard.glanceNeverSaved')),
         );
       })()
     ),

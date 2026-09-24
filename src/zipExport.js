@@ -1,6 +1,7 @@
 // ZIP-Export für Datensicherung
 import { getFullName } from './config/constants.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
+import { inDays } from './utils/helpers.js';
 
 export const prepareDataForExport = (data, docs = []) => {
   return {
@@ -172,11 +173,11 @@ export const prepareDownloadFiles = (data, docs = [], t) => {
       content: generateZipManifest(prepareDataForExport(data, docs), t)
     },
     json: {
-      filename: `backup_${(getFullName(data.basis) || 'export').replace(/\s/g, '_')}_${new Date().toISOString().split('T')[0]}.json`,
+      filename: `backup_${(getFullName(data.basis) || 'export').replace(/\s/g, '_')}_${inDays(0)}.json`,
       content: createJSONBackup(data, docs)
     },
     csv: {
-      filename: `data_export_${new Date().toISOString().split('T')[0]}.csv`,
+      filename: `data_export_${inDays(0)}.csv`,
       content: generateCSVBackup(data, t)
     }
   };

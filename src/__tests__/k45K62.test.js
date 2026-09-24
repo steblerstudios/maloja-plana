@@ -174,8 +174,7 @@ describe('K62.2 · Partnereinkommen 0 bleibt sichtbar', () => {
     expect(anzeige('')).toBe('');
   });
 
-  it('der Vorsorgerechner übernimmt 0 als «0»', () => {
-    const vr = src('VorsorgeRechner.jsx');
-    expect(vr).toContain("return p == null || p === '' ? '' : String(Math.round(Number(p) * 12) || 0);");
-  });
+  // Der Vorsorgerechner übernimmt das Partnereinkommen seit 24.09.2026 nicht mehr: im Profil
+  // steht der Nettolohn, AHV-Splitting/Plafonierung brauchen den Bruttolohn (Fachprüfung).
+  // Geprüft am gezeichneten Rechner in einmalEingeben.test.js.
 });
