@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { vergleicheEOLeistungen, EO_PARAMS } from './data/eoRechner.js';
+import { vergleicheEOLeistungen, eoErgebnis, EO_PARAMS } from './data/eoRechner.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -103,6 +104,8 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.xs } }, t('eo.erklaerung'))
     ),
 
+    // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026).
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: eoErgebnis({ einkommen: parsedEinkommen }) }),
     React.createElement('div', { style: s.source }, renderSource(t('eo.source'), null, t)),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint'))
   );

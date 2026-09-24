@@ -2331,7 +2331,7 @@ export default {
     step3: 'Tenere pronti il contratto di locazione e la polizza assicurativa',
     step4: 'I contributi AVS/LPP possono essere coperti',
     step5: 'Verificare la richiesta di PC presso la cassa di compensazione AVS',
-    orientationNote: { sie: 'Questo calcolo è puramente indicativo. Per una valutazione vincolante, si rivolga al Suo comune o a un servizio specializzato.', du: 'Questo calcolo è puramente indicativo. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.' },
+    orientationNote: { sie: 'Questa stima è puramente indicativa. Per una valutazione vincolante, si rivolga al Suo comune o a un servizio specializzato.', du: 'Questa stima è puramente indicativa. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.' },
     householdAdults: 'Nucleo familiare: {count} adulto/i',
     householdAdultsChildren: 'Nucleo familiare: {adults} adulto/i + {children} bambino/i',
     childrenNote: { sie: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Si informi presso il servizio sociale.', du: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.' },
@@ -4465,7 +4465,7 @@ export default {
     hinweisMutterschaft: 'Maternità: 14 settimane dalla nascita. Requisito: almeno 5 mesi di attività lavorativa.',
     hinweisVaterschaft: 'Paternità: 2 settimane, da fruire entro 6 mesi dalla nascita.',
     hinweisAdoption: 'Adozione: 2 settimane, bambino sotto i 4 anni.',
-    source: 'Calcolo secondo [[LIPG Art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]]. Nessuna informazione giuridicamente vincolante. Stato 2026.',
+    source: 'Stima secondo i valori di riferimento della [[LIPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]] (stato 2026). Se sussiste un diritto e a quanto ammonta lo decide la cassa di compensazione. Nessuna informazione giuridicamente vincolante.',
   },
 
   sh: {
@@ -4514,7 +4514,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
-    source: 'Calcolo secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026); franchigia sul patrimonio secondo il cantone. Nessuna informazione giuridicamente vincolante.',
+    source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali e differenze cantonali. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
   },
 
   dl: {

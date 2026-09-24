@@ -2339,7 +2339,7 @@ export default {
     step3: 'Mietvertrag und KK-Police bereithalten',
     step4: 'AHV/BVG-Beiträge werden ggf. übernommen',
     step5: 'EL-Antrag bei AHV-Zweigstelle prüfen',
-    orientationNote: { sie: 'Diese Berechnung dient der Orientierung. Für eine verbindliche Einschätzung wenden Sie sich bitte an Ihre Gemeinde oder eine Fachstelle.', du: 'Diese Berechnung dient der Orientierung. Für eine verbindliche Einschätzung wende dich bitte an deine Gemeinde oder eine Fachstelle.' },
+    orientationNote: { sie: 'Diese Schätzung dient der Orientierung. Für eine verbindliche Einschätzung wenden Sie sich bitte an Ihre Gemeinde oder eine Fachstelle.', du: 'Diese Schätzung dient der Orientierung. Für eine verbindliche Einschätzung wende dich bitte an deine Gemeinde oder eine Fachstelle.' },
     householdAdults: 'Haushalt: {count} Erwachsene',
     householdAdultsChildren: 'Haushalt: {adults} Erwachsene + {children} Kinder',
     childrenNote: { sie: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Klären Sie dies mit dem Sozialdienst.', du: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.' },
@@ -4521,7 +4521,7 @@ export default {
     hinweisMutterschaft: 'Mutterschaft: 14 Wochen ab Geburt. Voraussetzung: mind. 5 Monate erwerbstätig.',
     hinweisVaterschaft: 'Vaterschaft: 2 Wochen, Bezug innerhalb 6 Monaten nach Geburt.',
     hinweisAdoption: 'Adoption: 2 Wochen, Kind unter 4 Jahren.',
-    source: 'Berechnung nach [[EOG Art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]]. Keine rechtsverbindliche Auskunft. Stand 2026.',
+    source: 'Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand 2026). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.',
   },
   sh: {
     title: 'Sozialhilfe-Rechner',
@@ -4569,7 +4569,7 @@ export default {
     vermoegenHinweis: 'Vermögen übersteigt Freibetrag – kein Anspruch',
     freibetrag: 'Freibetrag',
     eingeben: { sie: 'Geben Sie Miete und KVG-Prämie ein, um den Anspruch zu berechnen.', du: 'Gib Miete und KVG-Prämie ein, um den Anspruch zu berechnen.' },
-    source: 'Berechnung nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026); Vermögensfreibetrag je Kanton. Keine rechtsverbindliche Auskunft.',
+    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen und kantonale Abweichungen. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
   dl: {
     lang: 'de',

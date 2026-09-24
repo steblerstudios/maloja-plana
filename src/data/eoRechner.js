@@ -6,6 +6,8 @@
 //
 // Alle Beträge in CHF. Keine Netzwerk-Calls, reine Berechnung.
 
+import { ergebnis, ERGEBNIS_ART } from './ergebnisArt.js';
+
 // === EO-Parameter 2026 ===
 const MAX_TAGGELD = 220;          // Maximales Taggeld (CHF/Tag)
 const ENTSCHAEDIGUNGSSATZ = 0.80; // 80% des Einkommens
@@ -181,3 +183,13 @@ export const EO_PARAMS = {
 
 export const EO_DATA_VERSION = '2026';
 export const EO_DATA_SOURCE = 'EOG Art. 16a–16n, EOMV, BSV 2026';
+
+// O3 — Ergebnis-Art des EO-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
+// Die Eckwerte sind amtlich (80 %, Höchstbetrag, Tage), aber der Rechner nimmt den Anspruch für
+// alle vier Leistungen an, ohne Voraussetzungen, Erwerbsstatus oder Lohnart abzufragen, und rechnet
+// mit einem einzelnen Jahreseinkommen ÷ 360 statt der Bemessung der Ausgleichskasse. Das begründet
+// die Art — es sind keine «fehlenden Angaben», weil der Rechner dafür kein Feld hat.
+// Fehlend zählt nur das eine Feld, ohne das es keinen Betrag gibt: das Jahreseinkommen.
+export function eoErgebnis({ einkommen }) {
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, { fehlend: Number(einkommen) > 0 ? [] : ['bruttolohn'] });
+}

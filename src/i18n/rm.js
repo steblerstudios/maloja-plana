@@ -3266,7 +3266,7 @@ export default {
     step3: 'Avair pront il contract da locaziun e la polizza CM',
     step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
     step5: 'Examinar la dumonda PC tar la filiala AVS',
-    orientationNote: { sie: "Questa calculaziun serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa calculaziun serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
+    orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
     householdAdults: 'Ménaschi: {count} creschids',
     householdAdultsChildren: 'Ménaschi: {adults} creschids + {children} uffants',
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
@@ -3732,7 +3732,8 @@ export default {
     hinweisMutterschaft: "Maternitad: 14 emnas a partir da la naschientscha. Cundiziun: almain 5 mais activa.",
     hinweisVaterschaft: 'Paternitad: 2 emnas, retschaviment entaifer 6 mais suenter la naschientscha.',
     hinweisAdoption: "Adopziun: 2 emnas, uffant sut 4 onns.",
-    source: "Calculaziun tenor [[LEO art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]]. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.",
+    // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
+    source: "Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand 2026). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.",
   },
 
   sh: {
@@ -3782,7 +3783,8 @@ export default {
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
-    source: 'Calculaziun tenor [[directivas COSAS|skos.ch]] (stadi 1.1.2026); franchisa sin la facultad tenor chantun. Nagina infurmaziun giuridicamain vinculanta.',
+    // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
+    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen und kantonale Abweichungen. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
 
   kvg: {
