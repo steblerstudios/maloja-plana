@@ -29,6 +29,8 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
 
   const parsedLohn = Number(String(bruttolohn).replace(',', '.')) || 0;
   const parsedMonate = Number(beitragsmonate) || 0;
+  // O3: die Art des Ergebnisses als festes Feld — Schätzung, dazu die Zahl der fehlenden Angaben.
+  const art = alvErgebnis({ bruttolohn: parsedLohn, beitragsmonate: parsedMonate, alter });
 
   const result = useMemo(() => {
     if (parsedLohn <= 0) return null;
@@ -40,9 +42,6 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
       alter,
     });
   }, [parsedLohn, hatKinder, ivGrad40, parsedMonate, alter]);
-
-  // O3: die Art des Ergebnisses als festes Feld — Schätzung, dazu die Zahl der fehlenden Angaben.
-  const art = alvErgebnis({ bruttolohn: parsedLohn, beitragsmonate: parsedMonate, alter });
 
   const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
   const canton = data.basis?.canton;

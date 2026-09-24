@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
-import { getMietzinsbeitraege, mietzinsEinschaetzung } from './data/mietzinsbeitraege.js';
+import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis } from './data/mietzinsbeitraege.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
@@ -36,11 +36,20 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
   const annualIncome = Math.round(monthlyIncome * 12);
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
+  const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount) : null;
 
-  // Einschätzung aus erfassten Beträgen + Kanton-Eckwerten (nie verbindlich) — samt Ergebnis-Art
-  // (O3) aus data/mietzinsbeitraege.js.
-  const { assessment, ergebnis: art } = mietzinsEinschaetzung({ info, annualIncome, householdSize, childrenCount });
+  // Einschätzung aus erfassten Beträgen + Kanton-Eckwerten (nie verbindlich).
+  const assessment = (() => {
+    if (!hasProgram) return null;
+    if (info.group === 'families' && childrenCount === 0) return { key: 'familiesOnly', tone: 'soft' };
+    if (incomeLimit == null) return { key: 'effortBased', tone: 'neutral' }; // GE: mietabhängiges barème
+    if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
+    if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { limit: incomeLimit.toLocaleString() } };
+    return { key: 'likely', tone: 'good', params: { income: annualIncome.toLocaleString(), limit: incomeLimit.toLocaleString() } };
+  })();
   const toneColor = (tone) => tone === 'good' ? palette.sage : (tone === 'soft' ? palette.soft : palette.text);
+  // O3: die Art des Ergebnisses, abgeleitet aus der Einschätzung oben (data/mietzinsbeitraege.js).
+  const art = mietzinsErgebnis({ info, assessmentKey: assessment && assessment.key, annualIncome });
 
   const card = (extra) => ({ padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md + 'px', fontSize: text.sm, ...extra });
   const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };

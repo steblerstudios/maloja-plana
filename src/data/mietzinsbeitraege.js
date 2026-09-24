@@ -80,37 +80,22 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
   return limit;
 }
 
-// Schnellcheck der Mietzins-Ansicht — aus MietzinsOrientierung.jsx hierher gezogen (O3), damit die
-// Einschätzung und ihre Ergebnis-Art an EINER Stelle entstehen und testbar sind. Die Logik der
-// Einschätzung ist unverändert; neu ist nur, dass `incomeHigh` das Einkommen mitgibt, das sein
-// Satz nennt (vorher blieb «{income}» als Rohtext stehen).
+// O3 — Ergebnis-Art des Mietzins-Schnellchecks (MietzinsOrientierung.jsx).
+// Die Einschätzung selbst bleibt in der Ansicht; hier wird nur aus IHREM Ergebnis (dem Schlüssel)
+// die Art abgeleitet, damit es für die Einschätzung weiter genau eine Quelle gibt.
 //
-// Ergebnis-Art: VORPRÜFUNG. Der Check vergleicht das Jahreseinkommen mit einer Richtgrenze
-// (Stand oben, MIETZINS_DATA_VERSION) und sagt, ob sich ein Antrag lohnen könnte — nie einen
-// Betrag. Wo der Kanton keine feste Grenze kennt (GE: Mietbelastung), wird nichts geprüft:
-// ORIENTIERUNG. Ohne Kanton ist offen, ob es ein Programm gibt — die Vorprüfung wartet dann
-// auf den Kanton (und aufs Einkommen, falls es fehlt). Kein Programm ('none'/'check'): keine
-// Prüfung, darum auch keine Ergebnis-Art (ergebnis: null).
-export function mietzinsEinschaetzung({ info, annualIncome = 0, householdSize = 1, childrenCount = 0 }) {
-  const einkommenDa = annualIncome > 0;
+//   VORPRÜFUNG   Vergleich des Jahreseinkommens mit einer Richtgrenze (MIETZINS_DATA_VERSION) —
+//                sagt, ob sich ein Antrag lohnen könnte, nie einen Betrag.
+//   ORIENTIERUNG 'effortBased' (GE): keine feste Grenze, also wird nichts geprüft.
+//   null         Kanton ohne bestätigtes Programm ('none'/'check'): keine Prüfung, keine Art.
+// Ohne Kanton ist offen, ob es ein Programm gibt — die Vorprüfung wartet auf den Kanton und,
+// falls es fehlt, aufs Einkommen.
+export function mietzinsErgebnis({ info, assessmentKey, annualIncome = 0 }) {
   if (!info) {
-    return { assessment: null, ergebnis: ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: fehlendeAngaben({ kanton: false, einkommen: einkommenDa }) }) };
+    return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: fehlendeAngaben({ kanton: false, einkommen: annualIncome > 0 }) });
   }
-  if (info.state !== 'has') return { assessment: null, ergebnis: null };
-  const vorpruefung = (fehlend = []) => ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend });
-  if (info.group === 'families' && childrenCount === 0) {
-    return { assessment: { key: 'familiesOnly', tone: 'soft' }, ergebnis: vorpruefung() };
-  }
-  const incomeLimit = mietzinsIncomeLimit(info, householdSize, childrenCount);
-  if (incomeLimit == null) {
-    return { assessment: { key: 'effortBased', tone: 'neutral' }, ergebnis: ergebnis(ERGEBNIS_ART.ORIENTIERUNG) };
-  }
-  if (!einkommenDa) {
-    return { assessment: { key: 'needIncome', tone: 'neutral' }, ergebnis: vorpruefung(['einkommen']) };
-  }
-  const params = { income: annualIncome.toLocaleString(), limit: incomeLimit.toLocaleString() };
-  if (annualIncome > incomeLimit) {
-    return { assessment: { key: 'incomeHigh', tone: 'soft', params }, ergebnis: vorpruefung() };
-  }
-  return { assessment: { key: 'likely', tone: 'good', params }, ergebnis: vorpruefung() };
+  if (info.state !== 'has' || !assessmentKey) return null;
+  if (assessmentKey === 'effortBased') return ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
+  if (assessmentKey === 'needIncome') return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: ['einkommen'] });
+  return ergebnis(ERGEBNIS_ART.VORPRUEFUNG);
 }

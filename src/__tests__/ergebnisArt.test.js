@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ERGEBNIS_ART, ERGEBNIS_ARTEN, ergebnis, ergebnisSatz, fehlendeAngaben, istErgebnisArt } from '../data/ergebnisArt.js';
 import { alvErgebnis } from '../data/alvRechner.js';
-import { getMietzinsbeitraege, mietzinsEinschaetzung } from '../data/mietzinsbeitraege.js';
+import { getMietzinsbeitraege, mietzinsErgebnis } from '../data/mietzinsbeitraege.js';
 import { PFLEGE_ENTLOEHNUNG_ERGEBNIS, PflegeEntloehnung } from '../PflegeEntloehnung.jsx';
 import { AlvRechner } from '../AlvRechner.jsx';
 import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
@@ -98,10 +98,11 @@ describe('O3 · Mietzinsbeiträge (Vorprüfung)', () => {
   const KANTONE = ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'];
 
   it('reine Funktion: wo geprüft wird, nie ein Betrag — also nie Berechnung oder Schätzung', () => {
+    const SCHLUESSEL = ['familiesOnly', 'effortBased', 'needIncome', 'incomeHigh', 'likely'];
     let geprueft = 0;
-    for (const k of KANTONE) for (const annualIncome of [0, 30000, 200000]) for (const childrenCount of [0, 2]) {
+    for (const k of KANTONE) for (const assessmentKey of SCHLUESSEL) {
       const info = getMietzinsbeitraege(k);
-      const { ergebnis: e } = mietzinsEinschaetzung({ info, annualIncome, householdSize: 1 + childrenCount, childrenCount });
+      const e = mietzinsErgebnis({ info, assessmentKey, annualIncome: 30000 });
       if (info.state !== 'has') { expect(e, k).toBeNull(); continue; }
       geprueft++;
       expect([ERGEBNIS_ART.VORPRUEFUNG, ERGEBNIS_ART.ORIENTIERUNG], k).toContain(e.art);
@@ -120,13 +121,12 @@ describe('O3 · Mietzinsbeiträge (Vorprüfung)', () => {
     expect(artZeilen(render(MietzinsOrientierung, { data: mit }))).toEqual([{ art: 'vorpruefung', fehlend: 0 }]);
   });
 
-  it('über der Richtgrenze nennt der Satz das Einkommen, statt «{income}» stehen zu lassen', () => {
-    const t = createT({ de }, 'de', 'sie');
-    const html = renderToStaticMarkup(React.createElement(MietzinsOrientierung, {
-      palette, t, onNavigate: () => {}, data: { ...leer, basis: { canton: 'BS' }, finanzen: { monthlyIncome: 8000 } },
-    }));
-    expect(html).not.toContain('{income}');
-    expect(html).toContain('96');
+  it('Aufrufstelle: Genf prüft nichts (Orientierung), ein Kanton ohne Programm zeigt keine Art', () => {
+    const ge = { ...leer, basis: { canton: 'GE' }, finanzen: { monthlyIncome: 4000 } };
+    expect(artZeilen(render(MietzinsOrientierung, { data: ge }))).toEqual([{ art: 'orientierung', fehlend: 0 }]);
+    const ohne = KANTONE.find((k) => getMietzinsbeitraege(k).state !== 'has');
+    const html = render(MietzinsOrientierung, { data: { ...leer, basis: { canton: ohne }, finanzen: { monthlyIncome: 4000 } } });
+    expect(artZeilen(html), ohne).toEqual([]);
   });
 });
 
@@ -142,8 +142,8 @@ describe('O3 · Wahrheits-Disziplin', () => {
     const faelle = [
       alvErgebnis({ bruttolohn: 6000, beitragsmonate: 20, alter: 40 }),
       PFLEGE_ENTLOEHNUNG_ERGEBNIS,
-      mietzinsEinschaetzung({ info: getMietzinsbeitraege('BS'), annualIncome: 30000 }).ergebnis,
-      mietzinsEinschaetzung({ info: getMietzinsbeitraege('GE'), annualIncome: 30000 }).ergebnis,
+      mietzinsErgebnis({ info: getMietzinsbeitraege('BS'), assessmentKey: 'likely', annualIncome: 30000 }),
+      mietzinsErgebnis({ info: getMietzinsbeitraege('GE'), assessmentKey: 'effortBased', annualIncome: 30000 }),
     ];
     for (const e of faelle) expect(e.art).not.toBe(ERGEBNIS_ART.BERECHNUNG);
   });
