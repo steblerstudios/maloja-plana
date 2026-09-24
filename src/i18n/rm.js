@@ -622,6 +622,9 @@ export default {
     step5Text: { sie: 'Cun be in sulet retgav sa mida quai che As stat a disposiziun. Vossa reducziun da premias (RIP) vegn calculada danovamain sin Vossa nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.', du: 'Cun be in sulet retgav sa mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin tia nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.' },
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     step5LinkSituation: 'Guardar la situaziun «genitur sulet»',
+    // TODO(rm): provisorisch — Gegenlese (ALV-Befreiung im Trennungs-Ablauf, 24.09.2026)
+    step5TextAlv: 'Tgi che sto tschertgar ina plazza u augmentar il pensum pervia da la separaziun u dal divorzi po esser liberà dal temp da contribuziun da l’assicuranza cunter la dischoccupaziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn e sch’il domicil era lura en Svizra (LACI art. 14 al. 2, art. 27 al. 4). La cassa da dischoccupaziun scleriescha quai.',
+    step5LinkAlv: 'Guardar ils daners da dischoccupaziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Vus na stuais betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.', du: 'Ti na stos betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.' },
   },

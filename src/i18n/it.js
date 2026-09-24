@@ -511,6 +511,8 @@ export default {
     step5Text: { sie: 'Vivere con un solo reddito cambia ciò a cui ha diritto. La Sua riduzione dei premi (RIP) viene ricalcolata sulla nuova situazione — vale la pena ricontrollare. Come genitore solo possono aprirsi ulteriori sostegni; lo stato di vita «genitore solo» li raccoglie in un luogo tranquillo.', du: 'Vivere con un solo reddito cambia ciò a cui hai diritto. La tua riduzione dei premi (RIP) viene ricalcolata sulla nuova situazione — vale la pena ricontrollare. Come genitore solo possono aprirsi ulteriori sostegni; lo stato di vita «genitore solo» li raccoglie in un luogo tranquillo.' },
     step5LinkIpv: 'Ricalcola la riduzione dei premi',
     step5LinkSituation: 'Vedi la situazione «genitore solo»',
+    step5TextAlv: 'Chi a causa della separazione o del divorzio deve cercare un lavoro o aumentare il grado di occupazione può essere esonerato dal periodo di contribuzione dell’assicurazione contro la disoccupazione — fino a 90 indennità giornaliere, se l’evento risale al massimo a un anno e allora il domicilio era in Svizzera (LADI art. 14 cpv. 2, art. 27 cpv. 4). La cassa di disoccupazione lo verifica.',
+    step5LinkAlv: 'Vedi l’indennità di disoccupazione',
     footerNote: { sie: 'Non deve regolare tutto da solo — mediazione, consulenza coniugale e legale ci sono. Questo è orientamento, non consulenza legale.', du: 'Non devi regolare tutto da solo — mediazione, consulenza coniugale e legale ci sono. Questo è orientamento, non consulenza legale.' },
   },
   selbstaendigkeit: {

@@ -511,6 +511,8 @@ export default {
     step5Text: { sie: 'Vivre sur un seul revenu change ce à quoi vous avez droit. Votre réduction de primes (RIP) est recalculée sur votre nouvelle situation — cela vaut la peine de vérifier à nouveau. En tant que parent seul, d’autres soutiens peuvent s’ouvrir ; la situation de vie « parent seul » les rassemble en un endroit calme.', du: 'Vivre sur un seul revenu change ce à quoi tu as droit. Ta réduction de primes (RIP) est recalculée sur ta nouvelle situation — cela vaut la peine de vérifier à nouveau. En tant que parent seul, d’autres soutiens peuvent s’ouvrir ; la situation de vie « parent seul » les rassemble en un endroit calme.' },
     step5LinkIpv: 'Recalculer la réduction de primes',
     step5LinkSituation: 'Voir la situation « parent seul »',
+    step5TextAlv: 'Qui doit chercher un emploi ou augmenter son taux d’activité à la suite de la séparation ou du divorce peut être libéré de la période de cotisation de l’assurance-chômage — jusqu’à 90 indemnités journalières si l’événement remonte à un an au plus et que le domicile était alors en Suisse (LACI art. 14 al. 2, art. 27 al. 4). La caisse de chômage le vérifie.',
+    step5LinkAlv: 'Voir l’indemnité de chômage',
     footerNote: { sie: 'Vous n’avez pas à tout régler seul — médiation, conseil conjugal et juridique existent. Ceci est une orientation, pas un conseil juridique.', du: 'Tu n’as pas à tout régler seul — médiation, conseil conjugal et juridique existent. Ceci est une orientation, pas un conseil juridique.' },
   },
   selbstaendigkeit: {

@@ -511,6 +511,8 @@ export default {
     step5Text: 'Living on one income changes what you may be entitled to. Your premium reduction (IPV) is recalculated on your new situation — worth checking again. As a single parent, further support may open up; the “single parent” life situation gathers it in one calm place.',
     step5LinkIpv: 'Recalculate premium reduction',
     step5LinkSituation: 'View the “single parent” situation',
+    step5TextAlv: 'Anyone who has to look for work or increase their hours because of the separation or divorce may be exempt from the unemployment insurance contribution period — up to 90 daily allowances if the event was no more than a year ago and they lived in Switzerland at the time (AVIG Art. 14 para. 2, Art. 27 para. 4). The unemployment fund will check.',
+    step5LinkAlv: 'See unemployment benefit',
     footerNote: 'You don’t have to arrange everything alone — mediation, marriage and legal counselling services are there. This is orientation, not legal advice.',
   },
   selbstaendigkeit: {

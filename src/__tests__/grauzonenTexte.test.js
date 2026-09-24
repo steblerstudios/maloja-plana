@@ -28,3 +28,13 @@ describe('Trennung — getrennte Besteuerung gilt für das ganze Jahr, nicht ers
     });
   }
 });
+
+describe('Trennungs-Ablauf nennt die ALV-Befreiung (AVIG Art. 14 Abs. 2) und führt zum ALV-Rechner', () => {
+  for (const [lang, tr] of Object.entries(SPRACHEN)) {
+    it(lang, () => {
+      expect(tr.trennung.step5TextAlv).toMatch(/\b90\b/);
+      expect(tr.trennung.step5TextAlv).toMatch(/14/);
+      expect(tr.trennung.step5LinkAlv).toBeTruthy();
+    });
+  }
+});

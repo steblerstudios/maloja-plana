@@ -511,6 +511,8 @@ export default {
     step5Text: { sie: 'Mit nur noch einem Einkommen ändert sich, was Ihnen zusteht. Ihre Prämienverbilligung (IPV) wird auf die neue Situation neu berechnet — ein zweiter Blick lohnt sich. Als alleinerziehende Person können weitere Unterstützungen dazukommen; der Lebenszustand „Alleinerziehend" sammelt sie an einem ruhigen Ort.', du: 'Mit nur noch einem Einkommen ändert sich, was dir zusteht. Deine Prämienverbilligung (IPV) wird auf die neue Situation neu berechnet — ein zweiter Blick lohnt sich. Als alleinerziehende Person können weitere Unterstützungen dazukommen; der Lebenszustand „Alleinerziehend" sammelt sie an einem ruhigen Ort.' },
     step5LinkIpv: 'Prämienverbilligung neu berechnen',
     step5LinkSituation: 'Situation „Alleinerziehend" ansehen',
+    step5TextAlv: 'Wer wegen der Trennung oder Scheidung eine Stelle suchen oder das Pensum erhöhen muss, kann von der Beitragszeit der Arbeitslosenversicherung befreit sein — bis zu 90 Taggelder, wenn das Ereignis höchstens ein Jahr zurückliegt und damals Wohnsitz in der Schweiz bestand (AVIG Art. 14 Abs. 2, Art. 27 Abs. 4). Die Arbeitslosenkasse klärt es ab.',
+    step5LinkAlv: 'Arbeitslosengeld ansehen',
     footerNote: { sie: 'Sie müssen nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.', du: 'Du musst nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   selbstaendigkeit: {

@@ -33,8 +33,10 @@ export const Trennung = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('trennung.step5Title') },
       React.createElement('p', { style: s.stepText }, t('trennung.step5Text')),
+      React.createElement('p', { style: s.stepText }, t('trennung.step5TextAlv')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step5LinkIpv'), onClick: () => onNavigate('premium') }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step5LinkSituation'), onClick: () => onNavigate('situationen') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step5LinkSituation'), onClick: () => onNavigate('situationen') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step5LinkAlv'), onClick: () => onNavigate('alv') })
     ),
     React.createElement(AblaufFooter, { palette, notes: [t('trennung.footerNote'), t('trust.localOnly')] })
   );
