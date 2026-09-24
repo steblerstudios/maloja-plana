@@ -213,6 +213,11 @@ kommt der Changelog immer mit, nie doppelt.*
   (SRL 866 § 12 Abs. 3). Budget, Karte und Beleg lesen den Abzug aus einer Stelle
   (`src/data/ipvAbzug.js`) und nennen statt einer Zahl den Grund; eine eingetragene Verfügung
   mit Betrag gilt vor der Schätzung. Die Finanzübersicht zeigt den Anspruch mit dem Frist-Hinweis.
+- **Eine Verfügung gilt nur für ihr Jahr und ihren Kanton** (Deploy-Gate Runde 3): eine
+  LU-Verfügung 2026 wird 2027 und nach einem Umzug nicht mehr abgezogen, es gelten die Regeln der
+  Schätzung; Einträge ohne Kanton/Jahr (vor diesem Release) ziehen nichts ab, gelöscht wird nichts.
+  Finanzübersicht (Kachel und Druck) und Budget-Hinweis zeigen den Betrag «laut Verfügung»; der
+  Luzerner Hinweis «hier nicht abgezogen» nennt auch EL und Sozialhilfe (SRL 866 § 8 Abs. 2/3).
 - **Eine fehlende Angabe ist keine Null** (K117, K118, #312): Konkubinat mit Kindern ohne
   Partnerangabe zeigt keine Kantonszahl mehr (vorher z. B. ZH, 2 Kinder, 70 000: CHF 2 211 aus
   «ledig»); ohne erkannten Kanton «Beim Kanton prüfen» statt «Nicht berechtigt».
