@@ -1328,7 +1328,9 @@ const AppInner = ({ demo }) => {
       }, t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
-        React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
+        // handleNavigate, nicht setView: nur so springt die Seite nach oben und der Fokus
+        // auf <main> — seit das Dokument scrollt (#296), landete man sonst mitten im Kalender.
+        React.createElement(OverdueBanner, { palette, t, onNavigate: handleNavigate }),
         // Der Weg auf den Startbildschirm. Eigene, nachgeladene Datei:
         // das Hauptbundle hat 60 Byte Luft unter dem size-limit, der Kasten
         // kostet 290 B. Begründung ausführlich in InstallHinweis.jsx.
