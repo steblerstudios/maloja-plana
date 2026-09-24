@@ -19,6 +19,33 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 24.09., 19:15 — 0.1.40-beta ist live. Deploy durch Stebler Studios, 18:48.**
+>
+> **Stand, gemessen 24.09.2026 19:06** (`bash scripts/stand-jetzt.sh`): `main` = `d47dc32` (#327) ·
+> live = `d47dc32` (0.1.40-beta) · **live = main** · offene PRs: keine · Tag `v0.1.40-beta` auf
+> `d47dc32` (origin). Erster Deploy mit `version.json` — das Skript kennt den Live-Commit jetzt.
+>
+> **Belegt, nicht behauptet:**
+> - Live `index-wvBX25xP.js` ist **byte-gleich** mit dem lokalen Build (`cmp`), und ein
+>   **sauberer Nachbau** von `d47dc32` in einem frischen Worktree ergibt denselben Hash.
+> - `version.json` meldet `"sauber": false`. Ursache: eine **ungetrackte** `launch.json` im
+>   Repo-Stamm (Kopie von `.claude/launch.json`, byte-gleich, 24.09. 14:46). Sie geht nicht in den
+>   Build — der saubere Nachbau belegt das. **Falscher Alarm, aber richtig gemeldet:** die Prüfung
+>   in `deploy.sh` zählt jede ungetrackte Datei, weil eine ungetrackte Datei in `public/` sehr wohl
+>   mitginge.
+> - Lizenztexte live: alle 8 unter `/licenses/` → 200, erfundener Name → 404.
+> - Rauchtest: Beta-Tor lädt mit neuer Bildmarke, keine Konsolenfehler.
+>
+> **Damit live** (war seit dem 22.09. alles gemergt, nicht live): K116–K121, UI/UX-Runde (#272,
+> #296), Markenpaket (#289), Rundgang endet beim ersten Schritt (#321), Release #324 (u. a. **K122
+> erledigt**), Altbestand-Verfügung gedeckelt (#327).
+>
+> ### Offen nach dem Deploy
+> 1. **Handprüfungen, jetzt möglich:** Notfall-QR mit echter Kamera (K121) · Rundgang am iPhone ·
+>    Rückmeldung an die Testerin, ob «Mit ‹…› beginnen» ihr «ok und jetzt…?» beantwortet.
+> 2. **#328** (Entwurf): statische Seiten auf `apple-touch-icon.png` — wirkt erst mit dem nächsten Deploy.
+> 3. Rundgang im Hell-Modus ansehen, fr/it gegenlesen · Claim-Entscheid Marke · K123–K125 (Oktober).
+
 > 🚀 **Nachtrag 24.09., ~15:30 — Release-PR 0.1.40-beta als Entwurf (#324), Befunde des Deploy-Gates behoben. Nicht gemergt, nicht deployt, kein Tag.**
 >
 > **Stand beim Schreiben:** `main` = `c2acdab` (#321). Zweig `release/0.1.40-beta-gate` mit `main`
