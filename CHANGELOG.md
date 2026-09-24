@@ -12,6 +12,11 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
+- **Hinweis «zweite Person»** (K62-Nachlauf E, K62 Punkt 5). Steht im Zivilstand «verheiratet»,
+  «eingetragene Partnerschaft» oder «Konkubinat» und ist im Haushalt nur eine erwachsene Person
+  erfasst, sagt ein ruhiger Satz, dass Prämienverbilligung und Sozialhilfe mit den erfassten Personen
+  rechnen. Der Knopf «Person hinzufügen» führt nur zur bestehenden Erfassung, fügt nichts hinzu.
+  Dieselbe Regel wie das Feld «Nettolohn Partner/in». In allen fünf Sprachen, Sie und Du.
 - **Notfallpass vorbereiten.** Ein neues Blatt im Notfall-Bereich legt die Angaben aus
   dem Kapitel Notfall Feld für Feld bereit, damit sie von Hand in den Notfallpass des
   Telefons übertragen werden können — den das iPhone (und manche Android-Telefone) auf
@@ -42,6 +47,14 @@ kommt der Changelog immer mit, nie doppelt.*
   als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
+- **`scripts/bundle-posten.mjs`: nachmessen statt raten, was in der Startdatei liegt**
+  (Entwickler-Skript, kein neues Paket). Liest die Sourcemap neben dem gebauten Chunk
+  und ordnet jedes Byte seiner Quelldatei zu, auf Wunsch bis auf die Original-Zeile
+  (`--datei <pfad> --zeilen`). Anlass: PR #294 brauchte drei Verschlankungsrunden, weil
+  die Zusammensetzung der Startdatei niemand kannte; das Startbundle ist bei 65 kB gzip
+  gedeckelt. 🛑 Das Skript zählt minifizierte Bytes, nicht gzip — am Startbundle gemessen
+  etwa 6:1; die Rangfolge ist belastbar, der Betrag eines einzelnen Postens nicht. Eine
+  echte Ersparnis nennt nur `npm run size`, gemessen gegen frisches `origin/main`.
 - **ESTV-Stichprobe für die Kantonssteuer-Tabelle** (Entwickler-Skript, die App bleibt ohne
   Netz). `node scripts/estv-stichprobe.mjs` fragt den ESTV-Steuerrechner an 156 Punkten
   (26 Kantone × ledig/verheiratet × Brutto 50 000/80 000/120 000) erneut und vergleicht mit
@@ -68,6 +81,25 @@ kommt der Changelog immer mit, nie doppelt.*
   **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
+- **Verstecktes Partnereinkommen zählt nicht mehr** (K62-Nachlauf A). Wurde die zweite erwachsene
+  Person gelöscht, blieb der «Nettolohn Partner/in» gespeichert und floss weiter in Steuer, IPV,
+  Sozialhilfe, EL und Vorsorge — obwohl das Feld nicht mehr zu sehen war. Jetzt zählt der Wert nur,
+  wenn das Feld nach derselben Regel sichtbar wäre (`src/utils/partnereinkommen.js`, eine Regel für
+  Anzeige und Rechnung). Der gespeicherte Wert bleibt: kommt die Person wieder dazu, zählt er wieder.
+- **Steuerrechner, Probiermodus im Konkubinat** (K62-Nachlauf D, K62 Punkt 4). Wer im Profil im
+  Konkubinat lebt, das Partnereinkommen nicht angegeben hat und im Steuerrechner «verheiratet»
+  ankreuzt, sah bisher eine Zahl für ein gedachtes Alleinverdiener-Ehepaar. Jetzt steht dort wie im
+  Profil «verheiratet» ohne Angabe: die Angabe zum Partnereinkommen fehlt. Mit bewusst 0 wird
+  weiter gerechnet.
+- **Rätoromanisch: «Partenadi registrà»** statt «Partenariat registrà» (K62-Nachlauf C) — die
+  amtliche Schreibweise der Zivilstandsverordnung (ZStV, SR 211.112.2, rm, Art. 8 lit. d), wie
+  schon «Partenadi schlià». Im Zivilstand, im Schalter «verheiratet» von Steuer- und
+  Vorsorgerechner und im Lebensereignis «Maridaglia».
+- **«undefined» in der aufgeklappten Grundordnung** (24.09.2026). Unter «Fortschritt im Detail» →
+  «Ihre Grundordnung» begann jede Kapitel-Kopfzeile mit «undefined» («undefined Persönliche
+  Basis»): der Code klebte ein Kapitel-Icon-Feld an den Titel, das die Kapitel nicht haben. Die
+  Kopfzeile nennt jetzt nur den Titel; das Kapitel-Icon steht als eigener, für Screenreader
+  abgeschirmter Knoten davor. Test `grundordnungKapitelKopf.test.js`.
 - **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
   CHF 250 über dem heutigen ESTV-Steuerrechner (Median CHF 97, an 434 von 544 Punkten tiefer, nie
   höher). Belegt: gleicher Ort (Bellinzona), gleiche Steuerfüsse, gleicher Tarif — das steuerbare
@@ -88,6 +120,13 @@ kommt der Changelog immer mit, nie doppelt.*
   Am ESTV-Steuerrechner gemessen (Konkubinat gegen ledig, 26 Kantone): in **BE, JU und VS** (dort
   bis Brutto 45 000) rechnet der Kanton Konkubinat höher — dort weiter keine Kantonszahl, mit
   Begründung. Messung: `docs/sources/konkubinat-kantonssteuer-2026.md`.
+- **Konkubinat mit Kindern gemessen** (K62-Nachlauf B). Am ESTV-Steuerrechner Konkubinat gegen
+  ledig mit 1, 2 und 3 Kindern, 26 Kantone × 68 Löhne, im selben Lauf: die Bundessteuer ist überall
+  gleich (die ESTV gibt Person 1 den ganzen Kinderabzug und den Elterntarif). Die Kantons- und
+  Gemeindesteuer ist in **BE, BS, JU, OW, UR und VD** im Konkubinat höher (dort fällt der Abzug für
+  Alleinstehende mit Kindern weg) — dort mit Kindern jetzt keine Kantonszahl mehr, mit Begründung.
+  Neu gesperrt: BS, OW, UR, VD. VS rechnet mit Kindern gleich und zeigt die Zahl jetzt auch unter
+  Brutto 45 000. Messung: `docs/sources/konkubinat-kinder-kantonssteuer-2026.md`.
 - **Feld «Nettolohn Partner/in»** erscheint auch bei Zivilstand «verheiratet», «eingetragene Partnerschaft» oder «Konkubinat»,
   wenn erst eine Person im Haushalt erfasst ist. Nichts wird vorbelegt.
 - **Zivilstand-Vergleich im Konkubinat:** kein Vergleich mehr mit einem gedachten

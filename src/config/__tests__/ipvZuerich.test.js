@@ -125,7 +125,11 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG und LU rechnen exak
     { adults: 1, children: [{ age: 2 }, { age: 7 }, { age: 12 }] },
   ];
   const faelle = [];
-  for (const canton of [...CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k)), 'XX', '']) {
+  // K118 (24.09.2026): 'XX' und '' (kein Kanton) sind hier bewusst NICHT mehr dabei. Die Kopie
+  // v0.1.37 hält für sie «amount: 0» fest — genau der Befund, den K118 behebt (unbekannt ≠ 0).
+  // Gleichheit mit einem falschen Stand wäre kein Beleg. Geprüft wird der Fall jetzt in
+  // cantonalData.test.js («ohne erkannten Kanton: kein Betrag»).
+  for (const canton of CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))) {
     for (const household of haushalte) {
       for (const monthlyIncome of [0, 800, 2500, 4000, 6000, 12000]) {
         for (const kkPremium of [undefined, 0, 380]) {

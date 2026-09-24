@@ -2,6 +2,7 @@
 // Ein Datei-weiter Datenstand (CANTONAL_DATA_VERSION '2024/2025') wurde am 16.09.2026
 // entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
 // unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
+import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 
@@ -177,7 +178,8 @@ export function getHouseholdInfo(data) {
       children,
       isRetired: Boolean(household.isRetired),
       householdSize: adults + children.length,
-      partnerIncome: Number(household.partnerIncome || 0),
+      // K62-Nachlauf A: nur, wenn das Feld «Nettolohn Partner/in» sichtbar wäre (utils/partnereinkommen.js).
+      partnerIncome: Number(partnerEinkommenRoh(basis) || 0),
     };
   }
 
@@ -382,7 +384,10 @@ export function calculateSozialhilfe(data) {
 export function calculateIPV(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
-  if (!ipvData) return { eligible: false, amount: 0, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
+  // K118: ohne (erkannten) Kanton ist der Anspruch UNBEKANNT, nicht 0. Dieselbe Form wie ein
+  // unbelegter Kanton (belegt: false, amount: null) — sonst zeigte der Rechner mit erfasstem
+  // Einkommen «Nicht berechtigt» und «CHF 0», eine Aussage, für die jede Grundlage fehlt.
+  if (!ipvData) return { eligible: false, belegt: false, amount: null, anspruchMoeglich: false, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const hh = getHouseholdInfo(data);
   const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome) * 12;

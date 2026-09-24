@@ -18,6 +18,7 @@ import {
   KANTONSSTEUER_MAX_KINDER,
 } from './kantonssteuerTabelle.js';
 import { bundessteuerAusSteuerbarem, vergleicheTarife } from './steuerRechner.js';
+import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
@@ -201,6 +202,7 @@ export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
   erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder, konkubinat = false,
+  partnerAngegebenProfil,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
@@ -220,10 +222,17 @@ export function kantonssteuerFuerProfil({
   // Veranlagung enthält beide Einkommen) — darum ein eigener Grund, dessen Text nur die
   // Kantonssteuer betrifft und nicht «keine Steuerschätzung» sagt.
   else if (verheiratet && !partnerAngegeben) grund = direkt ? 'partnerOffenDirekt' : 'partnerOffen';
+  // K117 (Vorab-Prüfung 24.09.2026): Konkubinat mit Kindern, Partnereinkommen im Profil nie
+  // beantwortet → keine Kantonszahl. Sonst rechnete die App mit 0 und zeigte die Reihe «ledig
+  // mit Kindern» (ZH, 2 Kinder, 70 000 netto: CHF 2 211), obwohl das Quellenblatt den Fall
+  // «nicht gemessen» nennt. Massgebend ist die Angabe im PROFIL, nicht der Probiermodus des
+  // Steuerrechners (der setzt partnerAngegeben für Nicht-Verheiratete auf true) — wie K62.5.
+  else if (!verheiratet && konkubinat === true && kinder > 0 && (partnerAngegebenProfil ?? partnerAngegeben) === false) grund = 'konkubinatKinderOffen';
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
   const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
   // K62.1: Konkubinat, wo die ESTV Konkubinat und «ledig» verschieden rechnet → keine Zahl.
-  if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && !(steuerbar >= (KONKUBINAT_WIE_LEDIG_AB[kanton] ?? 0))) {
+  // K62-Nachlauf B: mit Kindern gilt die eigene Messung (KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB).
+  if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && !(steuerbar >= konkubinatWieLedigAb(kanton, kinder))) {
     return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund: 'konkubinatKanton' };
   }
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
@@ -243,6 +252,26 @@ export function kantonssteuerFuerProfil({
 // Die Tabelle gilt dort für Konkubinat erst ab dem steuerbaren Einkommen unten (Infinity = nie);
 // dazwischen wird nicht interpoliert. Kantone ohne Eintrag: gleich an allen 68 Punkten.
 export const KONKUBINAT_WIE_LEDIG_AB = Object.freeze({ BE: Infinity, JU: Infinity, VS: 39417 });
+
+// K62-Nachlauf B · Konkubinat MIT Kindern. Gemessen am ESTV-Steuerrechner 2026 (Zivilstand
+// «Konkubinat», Relationship 3, Person 2 ohne Einkommen, gegen «ledig» = alleinerziehend, im selben
+// Lauf; 26 Kantone × 1, 2, 3 Kinder × 68 Bruttolöhne; docs/sources/konkubinat-kinder-kantonssteuer-2026.md).
+// Die Schnittstelle kennt je Kind nur das Alter; sie rechnet die Kinder ganz der Person 1 zu (voller
+// Kinderabzug). Steuerbares Einkommen Bund und Bundessteuer an allen 5 304 Punkten gleich wie ledig,
+// ein Einkommen der Person 2 ändert nichts. Die Kantons- und Gemeindesteuer weicht in sechs Kantonen
+// ab, immer nach oben, und zwar ab dem ersten Punkt mit Steuer bis Brutto 300 000 — der Abzug für
+// Alleinstehende/Alleinerziehende mit Kindern entfällt dort im Konkubinat:
+//   BE bis CHF 1 665 · BS bis 2 752 · JU bis 8 669 · OW bis 1 280 · UR bis 817 · VD bis 3 684.
+// VS rechnet mit Kindern gleich (ohne Kinder nicht, siehe oben). Dort keine Kantonszahl (Infinity).
+export const KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB = Object.freeze({
+  BE: Infinity, BS: Infinity, JU: Infinity, OW: Infinity, UR: Infinity, VD: Infinity,
+});
+
+// Ab welchem steuerbaren Einkommen (Bund) gilt für Konkubinat die Reihe «ledig»? 0 = überall.
+export function konkubinatWieLedigAb(kanton, kinder = 0) {
+  const tabelle = Number(kinder) > 0 ? KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB : KONKUBINAT_WIE_LEDIG_AB;
+  return tabelle[kanton] ?? 0;
+}
 
 // Lebt die Person im Konkubinat? Im Profil so erfasst, oder nicht verheiratet mit Partnereinkommen.
 export function imKonkubinat({ verheiratet = false, konkubinat = false, partnerEinkommen = 0 } = {}) {
@@ -320,8 +349,9 @@ export function dreizehnterStatus(v) {
 
 // R4: Wurde das Partnereinkommen beantwortet? ChapterView legt household.partnerIncome erst an,
 // wenn etwas eingetippt wird (Wert als Text); ein geleertes Feld ist ''. «0» ist eine Antwort.
+// K62-Nachlauf A: ein Wert im nicht mehr sichtbaren Feld (zweite Person gelöscht) ist keine Antwort.
 export function partnerEinkommenAngegeben(data = {}) {
-  const v = data?.basis?.household?.partnerIncome;
+  const v = partnerEinkommenRoh(data?.basis);
   return v !== undefined && v !== null && String(v).trim() !== '';
 }
 
@@ -425,7 +455,8 @@ export function tarifvergleichFuerProfil(p = {}) {
  *   'konkubinatPartnerOffen' K62.5: im Profil Konkubinat, Partnereinkommen nie beantwortet
  * Massgebend ist der Zivilstand im Profil (direktVerheiratet), nicht der Probiermodus des
  * Steuerrechners, und die Partnerangabe im Profil (partnerAngegebenProfil; der Steuerrechner setzt
- * partnerAngegeben für den Probiermodus bei Nicht-Verheirateten auf true, siehe TaxCalculator.jsx).
+ * partnerAngegeben für den Probiermodus bei Ledigen ohne erwartete zweite Person auf true — nicht
+ * bei verheiratet, eingetragener Partnerschaft oder Konkubinat, siehe TaxCalculator.jsx).
  */
 export function tarifvergleichGrund(p = {}) {
   const profilVerheiratet = p.direktVerheiratet ?? p.verheiratet;

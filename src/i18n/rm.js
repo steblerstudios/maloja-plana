@@ -460,7 +460,7 @@ export default {
   },
   heirat: {
     title: 'Maridaglia u partenariat',
-    intro: 'La maridaglia u il partenariat registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
+    intro: 'La maridaglia u il partenadi registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
     step1Title: '1 · Annunziar la maridaglia',
     step1Text: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.',
     step1Button: 'Memorisar il termin «Annunziar la maridaglia» ({date})',
@@ -1153,7 +1153,7 @@ export default {
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
-        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va', dissolvedPartnership: 'Partenadi schlià' } },
+        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenadi registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va', dissolvedPartnership: 'Partenadi schlià' } },
         dependents: "Dumber d'uffants",
         household: {
           adults: 'Creschids en il ménaschi',
@@ -1167,6 +1167,8 @@ export default {
           adultSelf: 'Jau',
           adultLabel: 'Creschì/da {nr}',
           addAdult: 'Agiuntar in creschì',
+          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.' }, // TODO(rm): provisorisch
+          zweitePersonHinzufuegen: 'Agiuntar la persuna', // TODO(rm): provisorisch
           adultRelationship: 'Relaziun',
           relPartner: 'Partenari/a',
           relRoommate: 'Coabitant/a',
@@ -3087,7 +3089,7 @@ export default {
     estimatedTax: 'Taglientas stimadas',
     netIncome: "Entrada netta (stima annaira)",
     saveData: 'Memorisar las datas',
-    married: 'Maridà/maridada u en partenariat registrà',
+    married: 'Maridà/maridada u en partenadi registrà',
     children: 'Uffants',
     elterntarifConfirm: 'Ils uffants vivan en mia chasada, ed jau surpigl la part principala da lur mantegniment.',
     elterntarifHint: { sie: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Vossa taglia po lura esser pli bassa che quai che vegn mussà qua.', du: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Tia taglia po lura esser pli bassa che quai che vegn mussà qua.' },
@@ -3135,6 +3137,9 @@ export default {
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin la valur endatada — Maloja suppona ch'i saja l'entrada taxabla cuminaivla tenor la taxaziun. Sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
     bandKonkubinat: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca (stadi civil «concubinat»).", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca (stadi civil «concubinat»)." }, // TODO(rm): provisorisch
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    // K117: Konkubinat mit Kindern, Partnereinkommen im Profil nie beantwortet.
+    bandKonkubinatKinderOffen: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en il concubinat cun uffants dovra Maloja l'entrada dal partenari u da la partenaria, e questa indicaziun manca anc. La taglia federala survart vala vinavant.", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en il concubinat cun uffants dovra Maloja l'entrada da tes partenari u da tia partenaria, e questa indicaziun manca anc. La taglia federala survart vala vinavant." },
     ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     ohneZahlKinderDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al dumber d'uffants en il profil. Per in auter dumber d'uffants na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch (K87)
     gemeinsamDirektHinweis: "Maloja suppona che la valur endatada saja l'entrada taxabla cuminaivla dal pèr tenor la taxaziun. La lingia dal salari net cuntegna mo l'atgna entrada — perquai na mussa Maloja qua nagina quota da taglia e nagina entrada netta suenter las taglias.", // TODO(rm): provisorisch (K86)
@@ -4536,7 +4541,7 @@ export default {
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
     gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
-    verheiratet: 'Maridà/ada u en partenariat registrà',
+    verheiratet: 'Maridà/ada u en partenadi registrà',
     einkommenPartner: 'Entrada dal partenari (CHF)',
     ahvRente: 'Renta da vegliadetgna AVS stimada',
     monat: 'Mais',
