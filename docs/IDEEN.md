@@ -10,12 +10,82 @@ sondern die **Seele**: Metaphern, Atmosphäre, grosse Ideen, offene Entscheide.
 schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegangen 2026-07-08
 (alle ~30 Braindumps + docs); Detail-Kontext je Idee in den Memory-Notizen.
 
+**Einziger Ort für Visionen (zusammengeführt 2026-09-24).** Bis dahin lagen Visionen an sechs
+Stellen: hier, in `design/grundstueck-und-modi.md`, `roadmap/master-roadmap.md`,
+`context/VISION.md`, im Masterplan ausserhalb des Repos und in rund acht Gedächtnis-Notizen.
+Was nur im Gedächtnis stand, ist jetzt unten eingetragen und mit *⟨Eingang 19.07.⟩* o. ä.
+markiert. Beim Zusammenführen wurde **nichts gestrichen und nichts neu bewertet** — sortiert
+wird in einem eigenen Schritt.
+
+> **Regel ab jetzt:** Eine neue Vision kommt **hierher**. Andere Dateien dürfen sie
+> ausführen (Detailblatt), aber nicht zum zweiten Mal aufzählen. Die Detailblätter:
+>
+> | Blatt | Wofür |
+> |---|---|
+> | [`design/grundstueck-und-modi.md`](design/grundstueck-und-modi.md) | Kanon für Grundstück, zwei Modi, Momentum, Baracke → Villa (§2) |
+> | [`design/ipv-lebenslinie.md`](design/ipv-lebenslinie.md) | das Lebenslinien-Muster |
+> | [`design/haushalt-teilen-berechtigung.md`](design/haushalt-teilen-berechtigung.md) | Haushalt, Teilen, Nachlass-Zugang (§11) |
+> | [`design/design-backlog.md`](design/design-backlog.md) | Design-Politur (keine Visionen, sondern Feinschliff) |
+> | [`i18n-sprachausbau.md`](i18n-sprachausbau.md) | Sprachen für das Asylwesen (§11) |
+>
+> `roadmap/master-roadmap.md` ist seit 22.06. die **Historie** der Phasen, keine Planung mehr.
+> Was gerade gebaut wird, steht in `BAULISTE-2026-09-30.md`.
+
+---
+
+## 0 · Der Kern — was Maloja eigentlich ist
+
+- ⭐ **Kern-These** *⟨Brain-Dump 30.06.⟩*: «Nicht Budget. Nicht Dokumente. Nicht
+  Versicherungen. Sondern: Was passiert im Leben eines Menschen — und was muss ich in der
+  Schweiz dafür wissen oder erledigen?» Ausgeführt als Lebensmodell-Matrix in §6.
+- 🔨 **Jedes Ereignis gleich gebaut (13 Ebenen)** — Lebensereignis → Auslöser → Folgen →
+  Pflichten → Optionen → Dokumente → Versicherungen → Budget → Fristen → Bibliothek →
+  Generatoren → Schnellchecks → verwandte Ereignisse. Heute tragen die Abläufe ein
+  einfacheres Gerüst (`AblaufSchale`); die volle Uniform ist die nächste Stufe.
+- 🌱 **Elf Lebenskapitel mit Unter-Ereignissen** — Geburt & Kindheit · Ausbildung · Arbeit ·
+  Beziehung & Familie · Wohnen · Finanzen · Gesundheit · Mobilität · Ausland · Alter · Tod.
+- 🔨 **Lebenszustände** (Ereignis *passiert*, Zustand *ist*): alleinstehend, Partnerschaft,
+  Konkubinat, verheiratet, mit Kindern, in Ausbildung u. a. Als
+  Onboarding-Chips gebaut (§10); dass ein Zustand viele Abläufe gleichzeitig umschaltet,
+  fehlt noch.
+- 🌱 **Grauzonen als Entscheidungsbäume** — «fast am wichtigsten». Nicht nur der Normalfall,
+  sondern die Verzweigungen: arbeitslos → Taggeld? Sozialhilfe? EL? IV? Zwischenverdienst?
+  · Krankheit → KTG? UVG? IV? · Trennung → Kinder? Mietvertrag? Unterhalt? Beispiel für eine
+  Grauzone, die niemand erklärt: Wer mit 18 mit Unterstützung des Sozialamts ausziehen will,
+  braucht eine «Indikation Wohnen» *⟨Eingang 19.07., Fachaussage noch ohne Quelle — vor
+  jedem Bau bei der Stelle belegen⟩*. Leitfrage: «Ist jede Grauzone, in die jemand fallen
+  kann, abgedeckt und aufgezeigt?»
+- 🌱 **Nach dem Tod** *⟨Eingang 19.07.⟩* — wer das Konto übernehmen und aufräumen darf, und
+  dass die berechtigte Person erfährt, *dass* und *ab wann* sie berechtigt ist. Hängt an §11
+  (Haushalt, Nachlass-Zugang).
+- ❓ **Widerspruch zum Masterplan** — der Masterplan (24.08.) sagt «ein digitaler
+  Lebensordner für Dokumente, Budget, Versicherungen und Notfall», die Kern-These sagt
+  ausdrücklich «nicht Dokumente». Offen, gemeinsam zu klären.
+
 ---
 
 ## 1 · Die Skeuomorphismus-Welt (Metapher pro Bereich)
 
 > Kern: nicht „Papier draufklatschen", sondern *jede Funktion bekommt die reale Metapher,
 > die unser Gehirn damit verbindet* — eine sorgfältige Lebenswerkzeugkiste.
+
+- 🌱 **House of Life / Swiss Life Estate** *⟨10.07. und Eingang 19.07.⟩* — die grösste Fassung
+  dieser Welt: Maloja fühlt sich nicht wie Software an, sondern wie ein kleines Schweizer
+  Anwesen, das man erkundet. «Man kommt nicht in eine App, man kommt nach Hause.» Orte statt
+  Menüpunkte: **Bibliothek** = Dokumente (das zuletzt geöffnete Buch liegt aufgeschlagen) ·
+  **Obstgarten** = Gesundheit · **Gewächshaus** = Finanzen (Rücklagen wachsen) · **Haus** =
+  Wohnen (Briefkasten → Mietvertrag, Keller → Inventar, Estrich → Garantien, Werkstatt → DIY)
+  · **Archiv** = Versicherungen · **Rathaus** = Behörden · **Lebensweg** = Lebensereignisse
+  (Wanderweg Geburt → Nachlass) · **Kuhglocke** am Eingang = Erinnerungen · **Briefkasten** =
+  offene Aufgaben. Einstieg als isometrische Karte des Anwesens. Das Anwesen verändert sich
+  leise mit Jahreszeit und Lebensfortschritt. Ton: «Apple trifft Architekturmagazin» —
+  Muji, Kinfolk, Monocle, japanische Gärten, Museumsausstellung, Monument Valley. **Grenze:**
+  kein Cartoon, keine Fantasy. Technik später: räumliches Gehen per Scroll,
+  `prefers-reduced-motion` zwingend.
+- ❓ **Widerspruch Gamification** — House of Life (19.07.) sagt «keine Gamification»;
+  `design/grundstueck-und-modi.md` (13.07.) hat Gamification bewusst **erlaubt**: Momentum im
+  Kern, verspielte Welt als abschaltbare Haut, nie Wettbewerb. Beide Texte sind danach nie
+  gegeneinander gelegt worden. Offen, gemeinsam zu klären.
 
 - 🔨 **Gesundheit = Leder-Arztkoffer** — Fächer-Ansicht existiert, aber ruhige Liste; der Koffer mit *Instrumenten* (Thermometer/Wochenblister/Karteikarten/Impfausweis/KVG/Notfall) fehlt.
 - 🌱 **Dokumente = Aktenschrank** (Ordner/Mappen/Tabs) · **Budget = Thermobeleg** (Coop-Quittung, Monatsabschluss) · **Schulden = Betreibungs-/Verlustschein-Look** (Siegel/Stempel, kein CH-Kreuz).
@@ -27,6 +97,26 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - ⏸ **Konto = schlichtes Banking** · **Analysen = modern/Apple-Glas** — bewusst KEINE Metapher.
 
 ## 2 · Der Lebensbaum (Nordstern-Atmosphäre)
+
+- 🌱 **Grundstück + zwei Modi** — Kanon in [`design/grundstueck-und-modi.md`](design/grundstueck-und-modi.md)
+  (13.07.). Kurz: Berg = Kulisse, Grundstück (Haus + Obstgarten) = Besitz — geschachtelt,
+  nicht verschmolzen. **Normal-Modus** immer vollständig, **Grundstück-Modus** opt-in, beide
+  mit identischen Daten; der Schalter ändert die Haut, nie die Substanz.
+- 🔨 **Momentum im Kern** — Fortschritt nur gegen sich selbst. Gebaut: Pro-Kapitel-Fortschritt
+  und «Was ist jetzt dran?» mit Anti-Druck-Zeile (#75).
+- 🌱 **Baracke → Villa, ohne Scham** — Aufbau statt Bewertung; nie «dein Leben sieht ärmlich
+  aus» für Menschen mit Schulden oder in der Sozialhilfe.
+- 🌱 **Anschaffungs-Lebenslinien (Auto/Garage)** — ein Auto erscheint erst, wenn man eins hat
+  oder die Leistbarkeit vorgerechnet ist («bau dir erst die Garage»). Gleiches Muster für
+  Velo, Töff, Führerausweis; Kosten als Tacho.
+- 🌱 **Haus-Mapping, offene Zuordnungen** *⟨Eingang 19.07.⟩* — Eingangstür wird schöner, wenn
+  die Passwörter aufgeräumt sind (mit Checkliste); Dach ähnlich; Fenster, Wände, Zimmer noch
+  ohne Zuordnung; Versicherungen als Schilder mit ihrem Symbol (nur generische Symbole, keine
+  Marken).
+- ⏸ **Freunde-Dörfer / Code teilen** — Konflikt mit «nicht social» und local-first.
+- 🌱 **Lebenslinien als durchgängiges Muster** *⟨Werkstatt 19.07.⟩* — alles hat einen Ablauf
+  über die Zeit (wie die IPV-Lebenslinie), immer mit einer normalen Ansicht daneben.
+  Offene Frage aus derselben Werkstatt: *was kommt in welchen Modus, und warum?*
 
 - ❓ **Obstgarten statt/neben 1 Baum** — nie entschieden. Hybrid: Baum als Startbild, Obstgarten beim Zoomen.
 - ❓ **Zwei Bäume verschmelzen** — heute Lebensbaum (Frucht=Bereich) + zweiter „Spiegel"-Baum (Werkzeuge). Idee: Werkzeuge wachsen am SELBEN Ast ihres Bereichs.
@@ -53,6 +143,15 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Seltene Überraschungen** — 1.-August-Feuerwerk, Weihnachtsschnee, Geburtstags-Wimpel, 100 %→Eule.
 - 🌱 **Natur subtil (Apple-Niveau)** — Nebel/Schnee/Tiere; Materialien statt Edelweiss/Kühe; Landschafts-Easter-Eggs naturalisieren.
 - 🌱 **Weitere Transitions** (à la Sackmesser-Klappen) — Motion-Vokabular Context/Drill/Continuity, Rule-of-Three; **Flat-Design auf Apple-Niveau mastern**.
+- 🔨 **Schwarz-Weiss-Modus** *⟨Eingang 19.07.⟩* — nah am Dumbphone, gegen Bildschirmsucht.
+  Eine Graustufen-Einstellung existiert (`settingsGroups.js`); ob sie das Gewünschte ist,
+  nicht geprüft.
+- **Design-Rückmeldungen vom 19.07.** (Politur, keine Vision — gehört in
+  [`design/design-backlog.md`](design/design-backlog.md)): Dunkelmodus zu dunkel · Beige
+  überzeugt nicht · «sieht stark nach AI aus» · Dashboard hektisch, «weniger ist mehr, nicht
+  weg, nur an andere Orte» · Mond/Sonne statt Kreis für Hell/Dunkel · Footer oder unteres
+  App-Menü · Früchte sollen hängen, nicht auf den Ästen sitzen. Seither ist viel Politur
+  gelaufen (UI/UX-Runden 1–4); welche davon erledigt sind, ist nicht einzeln geprüft.
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 
@@ -66,6 +165,34 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Faden 3-II** — persönlicher Screening-Intervall-Abgleich (nur belegbar, mit Evidenzqualität).
 - 🌱 **Ablauf „KK-Rechnung stimmt nicht"** (+ Beanstandungs-/Einsprache-Brief) · **„Gezahlt/offen"-Ablauf pro Arztrechnung**.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).
+- 🌱 **Generatoren fürs Lebensende** *⟨Eingang 19.07.⟩* — Vorsorgeauftrag, Testament,
+  Bestattungsauftrag; evtl. bei der Gemeinde hinterlegen (gemeinde- und kantonsabhängig).
+  Stand im Code 24.09.: Vorsorgeauftrag als Wegweiser (KOKES) und im Dossier, Bestattung
+  im Todesfall-Ablauf, Testament nur als Link — **einen Generator gibt es für keinen der drei.**
+- 🌱 **Weitere Generatoren** *⟨Master-Roadmap 22.06.⟩* — Einsprachen (Sozialhilfe, KK,
+  Steuern), IPV-Anträge (kantonal verschieden), Kündigungsschreiben mit OR-Fristen.
+  Briefvorlagen im Schweizer Format (Empfänger rechts, Policen-/Rechnungsnummer);
+  Vorlagen von Mieterverband und K-Tipp als Vorbild nachbauen, nicht abschreiben.
+- 🔨 **Kalender** *⟨Eingang 19.07.⟩* — `.ics`-Export existiert (`icsExport.js`). Offen: Fristen
+  werden automatisch Termine, Arzttermine mit «ist das gedeckt?», Erinnerungen.
+- 🌱 **Aus einem Befund wird eine Aufgabe** *⟨Eingang 19.07.⟩* — z. B. «darf IPV beziehen» →
+  Aufgabe mit Link. Berührt «Nächster Schritt» (Bauliste O7).
+- 🌱 **Versicherungen: Ablauf melden, günstigere Wege zeigen** *⟨Eingang 19.07.⟩* — KK,
+  Haftpflicht; Prämienvergleich mit «Wunsch-Kasse»; Franchise-Check; KK-Wechsel geht nur ohne
+  offene Schulden bei der alten Kasse → im Ablauf sagen. *(Fachaussagen vom 19.07. — vor dem
+  Bau je an der Quelle belegen.)*
+- 🌱 **Budget: Ziele und Richtwerte** *⟨Eingang 19.07.⟩* — eigene Ziele, Abgleich mit
+  Standardwerten, Haushalts-Empfehlungen je Posten mit Bund/WHO als Referenz.
+- 🌱 **Haushalt genauer erfassen** *⟨Eingang 19.07.⟩* — weitere Erwachsene wie Kinder
+  hinzufügen · Kinder mit Name, Geburtsdatum, Versicherungen, Alter automatisch · mehrere
+  Internet-/Telefon-Verträge · Nebenerwerb · Konkubinat und Mehrpersonen-Haushalte ·
+  Genossenschafts-Nebenkosten (monatlich + jährliche Abrechnung → Schätzung Folgejahr).
+- 🌱 **Hausrat-Quittungen ergeben den Hauswert** *⟨Eingang 19.07.⟩*.
+- 🌱 **Pflichten sichtbar machen** *⟨Eingang 19.07.⟩* — Rückzahlungspflicht der Sozialhilfe,
+  Stellensuche-Pflicht beim RAV, Rückforderungsbelege fünf Jahre rückwirkend, kantonale
+  Kündigungstermine. *(Belegen vor dem Bau.)*
+- ✅ **Schulden-Abzahlmethode** — Schneeball und Lawine in `schuldenCalc.js`
+  *(Wunsch vom 19.07., im Code gefunden am 24.09.)*.
 - 🌱 **Stiftungs- & Härtefonds-Verzeichnisse ausbauen** (nicht nur Ausbildung) + Antrags-Generator.
 
 ## 6 · Architektur & Struktur (grosse Entscheide)
@@ -77,6 +204,19 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **„Keine Doppel-Eingabe"-Audit** (semantische Kontinuität: Name/Kanton/Haushalt/Einkommen einmal → überall) · **Lärm-Audit** (was schreit vs. flüstert) · **Flow-Health-Check** über die 43 Abläufe.
 - ❓ **Bottom-Nav vs. Hamburger** (Daumen-Erreichbarkeit vs. „Ort"-Gefühl) · **Info-Buttons-Systematik** app-weit (inline expand/collapse).
 - 🌱 **Exakte-Quellen-Audit-Agent** + periodischer Lauf — jede Behauptung ↔ präzise Fundstelle (rechtlich/Vertrauen, hohe Prio).
+- 🌱 **Langfristige Bausteine** *⟨Master-Roadmap 22.06.⟩* — kantonale Regeln als deklaratives
+  Schema (Canton Rule Engine) · abgeleitete Felder, einmal erfasst (Derived State) ·
+  deterministische Dokumenterzeugung (Template Engine) · Export-Architektur PDF/JSON/CSV/DOCX/ZIP
+  mit Manifest. Zurückgestellt: Runtime-Governance P1/P2, KI-Assistenz («deterministisch
+  zuerst»).
+- ⭐ **Crosslinks sind «die Magie von Maloja»** *⟨Eingang 19.07.⟩* — Kanton am Anfang gilt
+  überall; Daten nie zweimal eingeben; Rechner übernehmen Eingaben. Siehe «Keine
+  Doppel-Eingabe» oben.
+- ❓ **App-Struktur prüfen** *⟨Eingang 19.07.⟩* — Persönliche Basis · Wohnen · Finanzen ·
+  Versicherungen · Ausbildung · Behörden · Notfall (+ Lebensereignisse): stimmt das? Gehört
+  zum Entscheid «Kapitel nach Lebens-Domäne» oben.
+- 🌱 **Schnell und sparsam** *⟨Eingang 19.07.⟩* — kein Akku-Fresser, speicher- und
+  energieeffizient.
 
 ## 7 · Copy, Ton & Psychologie
 
@@ -93,10 +233,17 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **WCAG 2.1 AA / eCH-0059** systematisch (grosse Buttons, Kontrast, Tastatur, Fokus, verständliche Fehler).
 - ❓ **Handy-Gesten / Shake** — vage, vor dem Bau präzisieren (Shake→was? Kopieren?); Spannung zu Calm/Discoverability.
 - ⭐ Merker: Versalien via CSS `text-transform`, nie literale Grossbuchstaben (Screenreader).
+- 🌱 **Menschen, die nicht oder kaum lesen, mitdenken** *⟨Eingang 19.07.⟩* — Symbole,
+  Vorlesen, kurze Sätze.
 
 ## 9 · Herzensempfehlungen (extern verlinkt, nicht integriert)
 
 - 🌱 **Skribble / DocuSign** (E-Signatur — NICHT integrieren, nur empfehlen; Skribble = CH) · **Zollomat** (Zoll-/Einfuhr) · **EGK** (nachhaltige KK — Werte prüfen).
+- 🌱 **Weitere Kandidaten** *⟨Eingang 19.07.⟩* — Leihlager · Foodshiner · Abschiedsagentur ·
+  pflegewegweiser.ch · David-Rau-App · Ecosia (nur Text-Link, Logo braucht Erlaubnis) ·
+  plaant.ch. Für Menschen mit IPV: KulturLegi/Caritas, Volkszahnklinik, Familienpass,
+  Reka-Ferien, GGG, Volkshochschule (teils schon gebaut, §3). Vor der Aufnahme je prüfen, ob
+  das Angebot noch besteht.
 - 🌱 **Warme Inhalte bündeln** — Herzensempfehlungen + grün gehostet + Zertifikate als ein ruhiges Hamburger-„Blatt", Links aufs Wort.
 
 ## 10 · Onboarding & Beispiel-Modus
@@ -107,6 +254,20 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 ## 11 · Strategie & Aussenwelt (eigene Gespräche)
 
 - ⏸ **Backend / Konten / Sync / SwissID** — Grundsatzentscheid Local-First (eigene Session).
+  *Stand 24.09.:* Ein Server-Skelett existiert im privaten Repo `maloja-server` (WebAuthn,
+  Ende-zu-Ende-verschlüsseltes Backup, «Zero-Knowledge»), seit 08.07. unverändert auf `dev`;
+  das Frontend ist nicht angebunden. Mögliche Auflösung: Sync als **Opt-in** über der lokalen
+  Basis, der Server sieht nur Chiffrat. Keine Google-/Apple-Logins, SwissID später.
+  Treiber wären Zugänge für Gemeinden und Beratungsstellen.
+- ❓ **Sechs Meinungs-Entscheide vom 19.07.** — Dynamic Pricing/Paywall (wer über dem
+  Medianlohn verdient, zahlt; Working Poor nicht) · Affiliate-Links · B-Corp/MyClimate ·
+  KK-Schulden übernehmen ja/nein · Readdle als Empfehlung · PWA vs. native App (Empfehlung:
+  PWA). Geführt als E4 in `BAULISTE-2026-09-30.md`, auf Oktober gelegt.
+- 🔨 **Asylwesen, Stand 24.09.** — gebaut: Status N/S/F/B, Verfahren, Rechte und Fristen,
+  kantonale Rechtsberatung für alle 26 Kantone, «Mein Status im Alltag», Crosslinks;
+  Sprach-Auswahl skaliert, RTL vorbereitet. Offen: Übersetzungen (Albanisch, Tigrinya,
+  Arabisch) **nur mit Menschen, keine Maschinenübersetzung**, dafür Partnerorganisationen
+  finden. Plan: [`i18n-sprachausbau.md`](i18n-sprachausbau.md).
 - ⏸ **Haushalt, Teilen & Berechtigung** — wie zwei (+ Kind) als Paar ihre Sachen aufteilen/bezahlen, wer welche Berechtigung/Zugriff hat, und der Nachlass-Zugang. Hängt an Login/Tresor → kommt zuletzt. Voller Faden: [`docs/design/haushalt-teilen-berechtigung.md`](design/haushalt-teilen-berechtigung.md), verlinkt mit der Tresor-Vertagung.
 - ⭐ **Datenschutz-Haltung** — keine Daten verkaufen, kein Google/Apple-Login, SwissID ja, cookieless + aggregierte Stats.
 - 🌱 **SEO** — hreflang, pro-Sprache-Landing, sitemap.xml, Google Search Console (der eigentliche Auffindbarkeits-Hebel) · **Subdomains** (app./mail./news.).
@@ -183,3 +344,12 @@ heute nur verlinkt (Ressourcen), nicht angebunden.
 1. ✅ **Diese Landkarte** — vollständig, sichtbar, wählbar.
 2. ⏭ **Schnellchecks als Instrumente** (§3) — Design zuerst, Mockup läuft.
 3. ⏭ **Obstgarten / lebendiger Baum** (§2) — zuerst die Grundsatzfrage Baum vs. Garten.
+
+**Runde vom 24.09.2026 — Visionen ordnen:**
+
+1. ✅ **Zusammenführen** — alle Visionen an diesem einen Ort (dieser Stand).
+2. ⏭ **Sortieren nach Horizont** — jede Idee bekommt *Oktober* · *Winter* · *irgendwann* und
+   den Satz, woran sie hängt.
+3. ⏭ **Entscheiden, gemeinsam** — die beiden Widersprüche (§0 Kern vs. Masterplan, §1
+   Gamification), Baum oder Obstgarten (§2), Kapitel-Architektur (§6), die sechs
+   Meinungs-Entscheide (§11), das erste grosse Thema nach dem 30.09.
