@@ -12,6 +12,11 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
+- **Hinweis «zweite Person»** (K62-Nachlauf E, K62 Punkt 5). Steht im Zivilstand «verheiratet»,
+  «eingetragene Partnerschaft» oder «Konkubinat» und ist im Haushalt nur eine erwachsene Person
+  erfasst, sagt ein ruhiger Satz, dass Prämienverbilligung und Sozialhilfe mit den erfassten Personen
+  rechnen. Der Knopf «Person hinzufügen» führt nur zur bestehenden Erfassung, fügt nichts hinzu.
+  Dieselbe Regel wie das Feld «Nettolohn Partner/in». In allen fünf Sprachen, Sie und Du.
 - **Notfallpass vorbereiten.** Ein neues Blatt im Notfall-Bereich legt die Angaben aus
   dem Kapitel Notfall Feld für Feld bereit, damit sie von Hand in den Notfallpass des
   Telefons übertragen werden können — den das iPhone (und manche Android-Telefone) auf

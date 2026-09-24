@@ -1167,6 +1167,8 @@ export default {
           adultSelf: 'Jau',
           adultLabel: 'Creschì/da {nr}',
           addAdult: 'Agiuntar in creschì',
+          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.' }, // TODO(rm): provisorisch
+          zweitePersonHinzufuegen: 'Agiuntar la persuna', // TODO(rm): provisorisch
           adultRelationship: 'Relaziun',
           relPartner: 'Partenari/a',
           relRoommate: 'Coabitant/a',

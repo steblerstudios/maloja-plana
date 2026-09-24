@@ -67,6 +67,18 @@ const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Regel steht in utils/partnereinkommen.js — dieselbe entscheidet, ob der Wert in Rechnungen zählt.
 export { zeigtPartnereinkommen };
 
+// K62-Nachlauf E: der Knopf «Person hinzufügen» im Hinweis öffnet nur die bestehende Erfassung —
+// er holt den Knopf «Erwachsene/n hinzufügen» ins Bild und setzt den Fokus darauf. Er fügt nichts
+// hinzu; IPV und Sozialhilfe ändern sich erst, wenn die Person wirklich erfasst ist.
+export const ERWACHSENE_HINZUFUEGEN_ID = 'hh-add-adult';
+export function zurErwachsenenErfassung(doc = typeof document !== 'undefined' ? document : null) {
+  const knopf = doc && doc.getElementById(ERWACHSENE_HINZUFUEGEN_ID);
+  if (!knopf) return false;
+  if (typeof knopf.scrollIntoView === 'function') knopf.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  if (typeof knopf.focus === 'function') knopf.focus({ preventScroll: true });
+  return true;
+}
+
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
@@ -290,6 +302,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.sm, fontSize: text.sm, color: palette.text, fontWeight: weight.medium }
         }, tr('chapters.basis.fields.household.adultSelf') + (data.basis && data.basis.firstName ? ' · ' + data.basis.firstName : '')),
 
+        // K62-Nachlauf E: Zivilstand verheiratet / eingetragene Partnerschaft / Konkubinat, erfasst ist
+        // nur eine Person → ein ruhiger Satz, kein Warnton. Dieselbe Regel wie das Partnereinkommen.
+        zweitePersonFehlt(adultCount, data.maritalStatus) && React.createElement('p', {
+          'data-hinweis': 'zweite-person',
+          style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+        },
+          tr('chapters.basis.fields.household.zweitePersonFehlt') + ' ',
+          React.createElement('button', {
+            type: 'button',
+            onClick: () => zurErwachsenenErfassung(),
+            style: { background: 'none', border: 'none', padding: '6px 0', minHeight: '24px', cursor: 'pointer', color: palette.sageDeep || palette.text, textDecoration: 'underline', fontSize: text.sm, fontFamily: fontFamily }
+          }, tr('chapters.basis.fields.household.zweitePersonHinzufuegen'))
+        ),
+
         // Weitere Erwachsene
         adultsList.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, marginBottom: '12px' } },
           adultsList.map((adult, idx) => {
@@ -329,6 +355,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
         React.createElement('button', {
           type: 'button',
+          id: ERWACHSENE_HINZUFUEGEN_ID,
           onClick: () => setAdultsList([...adultsList, { name: '', relationship: '' }]),
           style: { background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', color: palette.mid, fontSize: text.sm, padding: space.sm + 'px ' + space.md + 'px', fontFamily: fontFamily }
         }, '+ ' + tr('chapters.basis.fields.household.addAdult'))
