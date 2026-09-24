@@ -2393,7 +2393,8 @@ export default {
     berge: { title: 'Il progress', text: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' },
     anspruch: { title: 'Pussaivels dretgs', text: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' },
     privacy: { title: 'Tut resta sin l\'apparat', text: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.' },
-    start: { title: 'Cumenza qua', text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026; #321 hatte nur die Du-Form)
+    start: { title: { sie: 'Cumenzai qua', du: 'Cumenza qua' }, text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
     startAction: 'Cumenzar cun «{name}»',
   },
 
