@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
+import { betrag } from '../utils/geld.js';
 
 // Der IPV-Prämien-Beleg (Phase 1 „geschätzt"): zeigt IPV als das, was es ist —
 // ein Abzug von der KK-Prämie, mit Deckungsbalken (selbst / Kanton). Bewusst
@@ -8,7 +9,7 @@ import { text, weight, space, radius, leading } from '../config/tokens.js';
 // calculateIPV (siehe data/praemienBeleg.js), Berechnung unberührt.
 
 const MONO = "ui-monospace, 'SF Mono', Menlo, Consolas, monospace";
-const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+const fmtCHF = (n) => betrag(n || 0);
 
 export const PraemienBeleg = ({ palette, t, state }) => {
   const h = React.createElement;

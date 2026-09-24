@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { zahl } from './utils/geld.js';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
 // (Spitex-nahen) Organisationen angestellt und für ihre Pflege entlöhnt werden.
@@ -13,7 +14,7 @@ const WOCHEN_PRO_MONAT = 4.33;    // 52/12
 export const PflegeEntloehnung = ({ palette, t }) => {
   const [stunden, setStunden] = useState(14);
   const brutto = Math.round(stunden * WOCHEN_PRO_MONAT * STUNDENSATZ);
-  const fmt = (v) => v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const fmt = (v) => zahl(v);
 
   const s = {
     wrap: { marginTop: space.sm + 'px' },

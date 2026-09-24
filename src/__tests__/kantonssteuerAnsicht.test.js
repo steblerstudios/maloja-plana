@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { zahl } from '../utils/geld.js';
 
 // ─────────────────────────────────────────────────────────────
 // E37 / E38 · Der Steuerrechner zeigt die Kantons-/Gemeindesteuer aus der ESTV-Tabelle —
@@ -83,7 +84,8 @@ const zeige = (steuerbar, { canton = 'ZH', kinder = 0, verheiratet = false, elte
   const alle = render();
   const text = texte(alle);
   // Beträge in Anzeige-Reihenfolge: Bundessteuer, Kantons-/Gemeindesteuer, Gesamt.
-  const betraege = text.split('\n').filter((z) => /^~ CHF \d+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6)));
+  // Seit 24.09.2026 mit Tausender-’ (utils/geld.js) — vor dem Umwandeln entfernen.
+  const betraege = text.split('\n').filter((z) => /^~ CHF [\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
   return { alle, text, betraege, orientierung: alle.find((k) => k.props['data-testid'] === 'kantonssteuer-orientierung') };
 };
 
@@ -118,7 +120,7 @@ const einSteuerbares = (v, wert, label) => {
   const boxen = v.alle.filter((k) => k.props['data-testid'] === 'steuerbares-einkommen');
   expect(boxen).toHaveLength(1);
   const inhalt = texte(knoten(boxen[0].props.children));
-  expect(inhalt).toContain(label + '\nCHF ' + wert + '\n');
+  expect(inhalt).toContain(label + '\nCHF ' + zahl(wert) + '\n'); // seit 24.09.2026 mit ’ (utils/geld.js)
   expect(inhalt).toContain(label === 'tax.taxableIncomeEstimated' ? 'tax.taxableEstimatedHint' : 'tax.taxableEnteredHint');
   expect(v.text).not.toContain('cantonalTaxableBasis');
 };

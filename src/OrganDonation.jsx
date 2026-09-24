@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
@@ -90,8 +91,13 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
     setQRGenerated(true);
   };
 
+  // «Gespeichert» gilt, solange der Stand dem gespeicherten gleicht — ändert man danach
+  // etwas, verschwindet es wieder. Bis 24.09.2026 speicherte der Knopf ohne ein Wort.
+  const [gespeichertAls, setGespeichertAls] = useState(null);
+  const stand = JSON.stringify({ organStatus: status, organDonation: organs });
   const handleSave = () => {
     onSave({ organStatus: status, organDonation: organs });
+    setGespeichertAls(stand);
   };
 
   const buttonStyle = {
@@ -142,6 +148,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         })),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
+      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, hinweisZeichen(), t('organ.generateQr')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
