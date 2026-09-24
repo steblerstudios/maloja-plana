@@ -4255,6 +4255,9 @@ export default {
     formatExample: 'Exempel da format (CSV)',
     preview: 'Prevista',
     noFile: 'Nagina datoteca tschernida',
+    eintrag: '1 inscripziun',
+    eintraege: '{count} inscripziuns',
+    keineErkannt: "En questa datoteca n'è vegnida renconuschida nagina inscripziun. È il format correct? L'exempel da format mussa la structura spetgada.",
     selectCsvOrExcel: 'Tscherna ina datoteca CSV u Excel',
   },
 

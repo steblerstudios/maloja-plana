@@ -92,7 +92,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
       preview ? React.createElement('div', null,
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px' } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginTop: space.xs } }, preview.fileName),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, preview.count + ' entries'),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, t(preview.count === 1 ? 'budgetImport.eintrag' : 'budgetImport.eintraege', { count: preview.count })),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': CHF ' + preview.totalAmount.toFixed(2))
         ),
 
@@ -106,8 +106,11 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
           ))
         ),
 
+        // Nichts erkannt → nichts zu speichern. Bis 24.09.2026 stand hier trotzdem
+        // «Speichern» (und «0 entries», englisch) — ein Klick schrieb ein leeres Budget-Update.
+        preview.count === 0 && React.createElement('p', { role: 'status', style: { margin: '0 0 12px', fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('budgetImport.keineErkannt')),
         React.createElement('div', { style: { display: 'flex', gap: space.sm } },
-          React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
+          preview.count > 0 && React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
           React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
         )
       ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },

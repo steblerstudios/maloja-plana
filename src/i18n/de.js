@@ -2847,6 +2847,9 @@ export default {
     formatExample: 'Format-Beispiel (CSV)',
     preview: 'Vorschau',
     noFile: 'Keine Datei ausgewählt',
+    eintrag: '1 Eintrag',
+    eintraege: '{count} Einträge',
+    keineErkannt: 'In dieser Datei wurden keine Einträge erkannt. Stimmt das Format? Das Format-Beispiel zeigt den erwarteten Aufbau.',
     selectCsvOrExcel: { sie: 'Wählen Sie eine CSV oder Excel Datei', du: 'Wähle eine CSV oder Excel Datei' },
   },
 

@@ -2813,6 +2813,9 @@ export default {
     formatExample: 'Exemple de format (CSV)',
     preview: 'Aperçu',
     noFile: 'Aucun fichier sélectionné',
+    eintrag: '1 entrée',
+    eintraege: '{count} entrées',
+    keineErkannt: "Aucune entrée reconnue dans ce fichier. Le format est-il correct ? L'exemple de format montre la structure attendue.",
     selectCsvOrExcel: { sie: 'Sélectionnez un fichier CSV ou Excel', du: 'Sélectionne un fichier CSV ou Excel' },
   },
 

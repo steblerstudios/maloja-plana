@@ -2814,6 +2814,9 @@ export default {
     formatExample: 'Format example (CSV)',
     preview: 'Preview',
     noFile: 'No file selected',
+    eintrag: '1 entry',
+    eintraege: '{count} entries',
+    keineErkannt: 'No entries recognised in this file. Is the format right? The format example shows the expected layout.',
     selectCsvOrExcel: 'Select a CSV or Excel file',
   },
 
