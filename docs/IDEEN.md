@@ -85,7 +85,8 @@ wird in einem eigenen Schritt.
 - ❓ **Widerspruch Gamification** — House of Life (19.07.) sagt «keine Gamification»;
   `design/grundstueck-und-modi.md` (13.07.) hat Gamification bewusst **erlaubt**: Momentum im
   Kern, verspielte Welt als abschaltbare Haut, nie Wettbewerb. Beide Texte sind danach nie
-  gegeneinander gelegt worden. Offen, gemeinsam zu klären.
+  gegeneinander gelegt worden. **Entscheid 24.09.2026: im Oktober klären.** Bis dahin stehen
+  beide Texte nebeneinander; beim Sortieren kommt alles Spielerische auf «irgendwann».
 
 - 🔨 **Gesundheit = Leder-Arztkoffer** — Fächer-Ansicht existiert, aber ruhige Liste; der Koffer mit *Instrumenten* (Thermometer/Wochenblister/Karteikarten/Impfausweis/KVG/Notfall) fehlt.
 - 🌱 **Dokumente = Aktenschrank** (Ordner/Mappen/Tabs) · **Budget = Thermobeleg** (Coop-Quittung, Monatsabschluss) · **Schulden = Betreibungs-/Verlustschein-Look** (Siegel/Stempel, kein CH-Kreuz).
