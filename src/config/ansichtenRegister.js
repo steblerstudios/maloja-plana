@@ -42,6 +42,10 @@ export const SEARCH_VIEWS = [
   { view: 'charts', nav: 'nav.charts', icon: 'chartsSchoko', aliases: ['charts', 'diagramme', 'statistik', 'grafik'] },
   { view: 'export', nav: 'nav.export', icon: 'download', aliases: ['export', 'sicherung', 'backup', 'datensicherung'] },
   { view: 'notifications', nav: 'nav.notifications', icon: 'cowbell', aliases: ['benachrichtigungen', 'erinnerungen', 'notifications'] },
+  // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
+  // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
+  // sucht, sucht mit genau diesen Wörtern.
+  { view: 'installApp', nav: 'nav.installApp', sub: 'nav.sub.installApp', icon: 'download', aliases: ['install', 'installieren', 'app', 'pwa', 'homescreen', 'startbildschirm', 'herunterladen', 'download'] },
 ];
 
 // Piktogramm einer Ansicht — mit Rückfall, damit ein unbekannter Schlüssel

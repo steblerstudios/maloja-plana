@@ -389,7 +389,27 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
       Section({ title: t('legal.faq.q5'), palette, children: [P({ children: t('legal.faq.a5') })] }),
       Section({ title: t('legal.faq.q6'), palette, children: [P({ children: t('legal.faq.a6') })] }),
       Section({ title: t('legal.faq.q7'), palette, children: [P({ children: t('legal.faq.a7') })] }),
-      Section({ title: t('legal.faq.q8'), palette, children: [P({ children: t('legal.faq.a8') })] })
+      Section({ title: t('legal.faq.q8'), palette, children: [P({ children: t('legal.faq.a8') })] }),
+      // Der Weg auf den Startbildschirm. Stand hier bis 23.09.2026 nur als
+      // Klammer in Antwort 6 («zum Homescreen hinzufügen») — ohne zu sagen, wo
+      // dieser Weg beginnt. Die Schritte selbst stehen auf einer eigenen Seite,
+      // weil sie je Browser andere sind.
+      Section({
+        title: t('legal.faq.q9'),
+        palette,
+        children: [
+          P({ children: t('legal.faq.a9') }),
+          React.createElement('button', {
+            type: 'button',
+            onClick: () => onNavigate('installApp'),
+            style: {
+              background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+              padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
+              fontSize: text.sm, color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
+            },
+          }, t('install.title')),
+        ],
+      })
     ),
 
     // Footer
