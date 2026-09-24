@@ -33,7 +33,9 @@ describe('K101 · QR-Hinweis an allen drei QR-Stellen', () => {
     });
   }
 
-  it('der Schlüssel ist in allen fünf Sprachen vorhanden', async () => {
+  // Zeitgrenze 30 s: lädt alle fünf Sprachdateien per dynamischem Import; unter Last
+  // lag das bei 5,0–5,2 s und fiel als Timeout rot (24.09.2026).
+  it('der Schlüssel ist in allen fünf Sprachen vorhanden', { timeout: 30_000 }, async () => {
     for (const lang of ['de', 'fr', 'it', 'en', 'rm']) {
       const { default: tr } = await import(`../i18n/${lang}.js`);
       const wert = (tr.notfallDossier || {}).qrHint;

@@ -37,7 +37,9 @@ describe('Hauptbundle: kein statischer Import von Lazy-Modulen (E36)', () => {
   });
 });
 
-describe('Onboarding und Tour laden weiter nach (E36)', () => {
+// Zeitgrenze 30 s: der dynamische Import übersetzt Onboarding.jsx samt Abhängigkeiten
+// im Test selbst. Unter Last lag das bei 5,0–5,3 s und fiel als Timeout rot (24.09.2026).
+describe('Onboarding und Tour laden weiter nach (E36)', { timeout: 30_000 }, () => {
   it('Onboarding.jsx liefert die Komponente und weiter isOnboardingDone', async () => {
     const m = await import('../Onboarding.jsx');
     expect(typeof m.Onboarding).toBe('function');
@@ -75,5 +77,41 @@ describe('einfuehrungStatus: gleiche Schlüssel, gleiches Verhalten', () => {
     expect(isOnboardingDone()).toBe(false);
     expect(isTourDone()).toBe(false);
     expect(() => markTourDone()).not.toThrow();
+  });
+});
+
+describe('Berg-Detail lädt nach, das Dashboard hält es nicht fest (E36, 24.09.2026)', () => {
+  const dashboardJsx = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
+
+  it('Dashboard lädt BergDetail per React.lazy und importiert es nicht statisch', () => {
+    expect(dashboardJsx).toMatch(/React\.lazy\(\(\) => import\('\.\/BergDetail\.jsx'\)\)/);
+    expect(dashboardJsx).not.toMatch(/^import[^;]*from '\.\/BergDetail\.jsx'/m);
+  });
+
+  it('BergDetail.jsx liefert die Komponente als Default', async () => {
+    const m = await import('../BergDetail.jsx');
+    expect(typeof m.default).toBe('function');
+    expect(m.default).toBe(m.BergDetail);
+  });
+
+  it('zeichnet Kapitel-Fortschritt und Grundordnung wie vorher im Dashboard', async () => {
+    const React = (await import('react')).default;
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { BergDetail } = await import('../BergDetail.jsx');
+    const { DARK_PALETTE } = await import('../config/constants.js');
+    const t = (k) => k;
+    const html = renderToStaticMarkup(React.createElement(BergDetail, {
+      palette: DARK_PALETTE, t, lang: 'de',
+      chapters: [{ key: 'basis', title: 'Basis', icon: '' }, { key: 'notfall', title: 'Notfall', icon: '' }],
+      chapterCompletions: [50, 0], chapterStatuses: ['begonnen', 'leer'],
+      chapterAccentColor: {}, onSelectChapter: () => {},
+      mvo: { total: 2, filled: 1, pct: 50, fields: [] },
+    }));
+    expect(html).toContain('fortschritt.title');
+    expect(html).toContain('Basis — 50%');
+    expect(html).toContain('mvo.title');
+    expect(html).toContain('1/2');
+    // Kapitel-Icon aus dem Register (Kern): gezeichnet, nicht leer.
+    expect(html).toMatch(/<svg[^>]*viewBox/);
   });
 });

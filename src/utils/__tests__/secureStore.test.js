@@ -41,7 +41,11 @@ const seed = () => {
   localStorage.setItem('or5_theme', 'dark'); // NICHT im Tresor — bleibt Klartext
 };
 
-describe('secureStore', () => {
+// Zeitgrenze 30 s statt 5 s: jede Aktivierung/Entsperrung rechnet echtes PBKDF2 mit 600k
+// Runden (bewusst nicht heruntergesetzt). Allein ~0,3–1,4 s pro Test; unter Last
+// (parallele Builds) lagen sieben dieser Tests bei 5,0 s und fielen als Timeout rot
+// (Stresslauf 24.09.2026).
+describe('secureStore', { timeout: 30_000 }, () => {
   beforeEach(() => { installLocalStorageMock(); idbMap.clear(); });
 
   it('ist standardmäßig inaktiv', () => {

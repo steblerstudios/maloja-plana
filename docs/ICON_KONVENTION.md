@@ -66,6 +66,28 @@ Seite, die es zeigt.** Im Zweifel ein bestehendes wiederverwenden.
 > wenig Luft unter dem Deckel steht. Der Icon-Abbau bleibt trotzdem der *letzte*
 > Kandidat — 1,42 kB für den grössten Umbau ist ein schlechtes Verhältnis.
 
+### ⟨Nachtrag 24.09.2026⟩ Das Register ist jetzt geteilt — ohne Namens-Raten
+
+Der Abschnitt oben bleibt als Beleg stehen; seine Voraussetzung gilt nicht mehr.
+Verworfen war damals, *nachgeladene* Dateien auf eine Teilmenge zu setzen — dort
+bilden sich die Namen zur Laufzeit (`Baum3D`: `emergency`). Gebaut ist die
+Gegenrichtung:
+
+- **`src/IconKern.jsx`** — die 35 Icons, die der **fest geladene** Teil zeigt
+  (main.jsx, Dashboard, ExternerLink, StorageWarning, AutoSaveStatus, OverdueBanner).
+  Nur diese Dateien importieren den Kern.
+- **`src/IconSystem.jsx`** — die übrigen 39; beim Laden hängen sie sich in dasselbe
+  `Icons`-Objekt ein. **Jede nachgeladene Datei importiert wie bisher `IconSystem.jsx`**,
+  statisch — ihr Stück wartet also auf das volle Register. Ein zur Laufzeit gebildeter
+  Name findet dort immer alles; kein Icon kommt verspätet.
+- Geraten wird nur im festen Teil, und dort sind die Namen Literale oder
+  Tabellen: Wächter «Kern-Namen im festen Teil» in `src/__tests__/iconNamen.test.js`
+  (Mutationsprobe rot gesehen).
+
+Gemessen (E36): **64,71 → 62,00 kB** gzip, also 2,71 kB — mehr als die 1,42 kB für 23
+Icons oben, weil hier 39 Icons wandern. Neues Icon: in `IconSystem.jsx`, ausser der fest
+geladene Teil zeigt es — dann in den Kern (der Wächter meldet es sonst).
+
 ## Die Regel für Pfeile und Ziel-Zeichen (20.09.2026)
 
 Die Regel stand vorher ungeschrieben in `AnspruchLandkarte.jsx`: `isExternal ? ' ↗' : ' →'`

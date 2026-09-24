@@ -14,6 +14,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { Icons } from '../IconSystem.jsx';
+import { KERN_NAMEN } from '../IconKern.jsx';
 
 const SRC = path.resolve(__dirname, '..');
 
@@ -45,7 +46,7 @@ const AUSNAHMEN = new Set([
 const verweise = () => {
   const gefunden = [];
   for (const datei of dateien(SRC)) {
-    if (datei.endsWith('IconSystem.jsx')) continue;
+    if (/Icon(System|Kern)\.jsx$/.test(datei)) continue;
     const inhalt = fs.readFileSync(datei, 'utf8');
     for (const muster of MUSTER) {
       for (const m of inhalt.matchAll(muster)) {
@@ -86,7 +87,7 @@ describe('Icon-Namen · Zuordnungstabellen', () => {
   const tabellen = () => {
     const gefunden = [];
     for (const datei of dateien(SRC)) {
-      if (datei.endsWith('IconSystem.jsx')) continue;
+      if (/Icon(System|Kern)\.jsx$/.test(datei)) continue;
       const inhalt = fs.readFileSync(datei, 'utf8');
       for (const m of inhalt.matchAll(/const (\w*(?:icon|Icon|ICON)\w*)\s*=\s*\{([\s\S]*?)\};/g)) {
         const werte = [...m[2].matchAll(/:\s*'([^']+)'/g)].map((w) => w[1]);
@@ -112,5 +113,66 @@ describe('Icon-Namen · Zuordnungstabellen', () => {
   it('jeder Kapitel-Schlüssel ist auch ein Icon (Dashboard liest `Icons[ch.key]`)', async () => {
     const { CHAPTER_KEYS } = await import('../config/constants.js');
     expect(CHAPTER_KEYS.filter((k) => !(k in Icons))).toEqual([]);
+  });
+});
+
+// ─── Kern-Namen im festen Teil (24.09.2026, E36) ─────────────────────────────
+// Das Register ist geteilt: `IconKern.jsx` liegt in der Startdatei, die übrigen
+// Icons hängt `IconSystem.jsx` erst ein, wenn eine nachgeladene Ansicht es
+// mitbringt. Eine fest geladene Datei importiert darum `IconKern.jsx` — und darf
+// nur Kern-Namen zeigen. Ein anderer Name bliebe dort STILL leer (bis irgendeine
+// Ansicht das volle Register nachgeladen hat), also genau der Fehler oben, nur
+// zeitabhängig. Geprüft: dieselben Literal-Muster und Icon-Tabellen wie oben,
+// dazu die Kapitel-Schlüssel (Dashboard liest `Icons[ch.key]`).
+// Grenze wie oben: ein zur Laufzeit gebildeter Name bleibt unsichtbar. Darum
+// gehören Dateien mit solchen Namen (Baum3D: `Icons[b.iconName]`) NICHT in den
+// festen Teil — sie importieren `IconSystem.jsx` und bekommen immer alle Icons.
+describe('Icon-Namen · Kern-Namen im festen Teil', () => {
+  const kernDateien = () => dateien(SRC).filter((d) =>
+    !/Icon(System|Kern)\.jsx$/.test(d)
+    && /from '\.{1,2}\/(?:\.\.\/)*IconKern\.jsx'/.test(fs.readFileSync(d, 'utf8')));
+
+  it('findet die fest geladenen Icon-Nutzer (sonst prüft der Test die leere Menge)', () => {
+    const namen = kernDateien().map((d) => path.basename(d));
+    expect(namen).toEqual(expect.arrayContaining([
+      'main.jsx', 'Dashboard.jsx', 'ExternerLink.jsx', 'StorageWarning.jsx', 'AutoSaveStatus.jsx', 'OverdueBanner.jsx',
+    ]));
+  });
+
+  it('der Kern ist echt kleiner als das Register (sonst wäre die Prüfung leer)', () => {
+    expect(KERN_NAMEN.length).toBeGreaterThan(20);
+    expect(Object.keys(Icons).length).toBeGreaterThan(KERN_NAMEN.length);
+  });
+
+  it('jede fest geladene Datei zeigt nur Kern-Namen', () => {
+    const kern = new Set(KERN_NAMEN);
+    const fremd = [];
+    for (const datei of kernDateien()) {
+      const inhalt = fs.readFileSync(datei, 'utf8');
+      const basis = path.basename(datei);
+      for (const muster of MUSTER) {
+        for (const m of inhalt.matchAll(muster)) {
+          if (kern.has(m[1]) || AUSNAHMEN.has(`${basis}:${m[1]}`)) continue;
+          fremd.push(`${basis}:${inhalt.slice(0, m.index).split('\n').length} → ${m[1]}`);
+        }
+      }
+      for (const m of inhalt.matchAll(/const (\w*(?:icon|Icon|ICON)\w*)\s*=\s*\{([\s\S]*?)\};/g)) {
+        for (const w of m[2].matchAll(/:\s*'([^']+)'/g)) {
+          if (!kern.has(w[1])) fremd.push(`${basis}:${m[1]} → ${w[1]}`);
+        }
+      }
+    }
+    expect(fremd).toEqual([]);
+  });
+
+  it('jeder Kapitel-Schlüssel ist ein Kern-Icon', async () => {
+    const { CHAPTER_KEYS } = await import('../config/constants.js');
+    expect(CHAPTER_KEYS.filter((k) => !KERN_NAMEN.includes(k))).toEqual([]);
+  });
+
+  it('der Kern hält seine Namen fest, bevor das Register ergänzt wird', () => {
+    // `Icons` ist nach dem Import von IconSystem.jsx vollständig — KERN_NAMEN nicht.
+    expect(KERN_NAMEN).not.toContain('emergency');
+    expect('emergency' in Icons).toBe(true);
   });
 });

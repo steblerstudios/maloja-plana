@@ -29,18 +29,16 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   const rang = key => { const i = qrReihenfolge.indexOf(key); return i === -1 ? qrReihenfolge.length : i; };
   const qrAbschnitte = [...preview.sections].sort((a, b) => rang(a.key) - rang(b.key));
 
-  // Die Notfallnummer wandert aus der Notiz in ein eigenes TEL-Feld: auf der Kontaktkarte ist
-  // sie damit WÄHLBAR statt abzutippen. Die Zeile fällt dafür aus der Notiz weg — sie stünde
-  // sonst zweimal im Code und kostete Platz, den die medizinischen Angaben brauchen.
-  // Verglichen wird der Wert, nicht das Etikett: die Etiketten gibt es in fünf Sprachen.
+  // Die Notfallnummer steht zusätzlich in einem eigenen TEL-Feld: auf der Kontaktkarte ist
+  // sie damit WÄHLBAR statt abzutippen.
+  // 🛑 Die Zeile bleibt trotzdem in der Notiz (Vorab-Prüfung 24.09.2026): N/FN tragen den
+  // Namen der Person, TEL aber die Nummer der KONTAKTPERSON. Ohne die Zeile «Telefon Notfall:
+  // …» neben «Notfall-Kontaktperson: …» stünde die Nummer unbeschriftet unter dem falschen
+  // Namen — in einem Notfallausweis eine falsche Zuordnung. Kostet rund 30 Byte; die
+  // Medizin steht zuerst, und was nicht mehr passt, nennt der Code am Ende selbst.
   const notfallNummer = String(data?.notfall?.emergencyPhone ?? '').trim();
-  const qrAbschnitteOhneNummer = notfallNummer
-    ? qrAbschnitte
-        .map(a => ({ ...a, rows: a.rows.filter(r => String(r.value ?? '').trim() !== notfallNummer) }))
-        .filter(a => a.rows.length > 0)
-    : qrAbschnitte;
 
-  const { text: qrText, gekuerzt: qrGekuerzt } = qrNotfallVcard(qrAbschnitteOhneNummer, {
+  const { text: qrText, gekuerzt: qrGekuerzt } = qrNotfallVcard(qrAbschnitte, {
     fehltTitel: t('notfallDossier.qrNichtEnthalten'),
     name: getFullName(data?.basis) || t('notfallDossier.qrTitle'),
     tel: notfallNummer,

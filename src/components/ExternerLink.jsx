@@ -1,5 +1,5 @@
 import React from 'react';
-import { hinweisZeichen } from '../IconSystem.jsx';
+import { hinweisZeichen } from '../IconKern.jsx';
 import { visuallyHiddenStyle } from '../config/tokens.js';
 
 // Visuell verstecktes Element — wohnt jetzt in config/tokens.js, damit auch der
