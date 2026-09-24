@@ -4317,6 +4317,7 @@ export default {
     einkommen: 'Reddito annuo lordo (CHF)',
     einkommenHint: 'Reddito medio determinante',
     nettoHint: 'Il reddito salvato è indicato come netto — inserire qui il salario annuo lordo per AVS e LPP.',
+    partnerNettoHint: 'Inserire il salario annuo lordo — nel profilo è registrato solo il salario netto, che qui sarebbe la base sbagliata.',
     beitragsjahre: 'Anni di contribuzione',
     bezugAlter: 'Età di riscossione',
     erziehungsjahre: 'Anni di accrediti educativi',

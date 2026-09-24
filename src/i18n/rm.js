@@ -4841,6 +4841,7 @@ export default {
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: 'Entrada media determinanta',
     nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari annual brut per AVS e LPP.",
+    partnerNettoHint: 'Endatar per plaschair il salari annual brut — en il profil è mo il salari net registrà, e quel fiss qua la basa sbagliada.',
     beitragsjahre: 'Onns da contribuziun',
     bezugAlter: 'Vegliadetgna da retschavida',
     erziehungsjahre: "Onns d'educaziun",

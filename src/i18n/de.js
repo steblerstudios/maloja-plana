@@ -4372,6 +4372,7 @@ export default {
     einkommen: 'Jahreseinkommen brutto (CHF)',
     einkommenHint: 'Massgebendes Durchschnittseinkommen',
     nettoHint: 'Das hinterlegte Einkommen ist als Netto markiert — für AHV und BVG bitte den Bruttojahreslohn eintragen.',
+    partnerNettoHint: 'Bitte den Bruttojahreslohn eintragen — im Profil ist nur der Nettolohn erfasst, und der wäre hier die falsche Basis.',
     beitragsjahre: 'Beitragsjahre',
     bezugAlter: 'Bezugsalter',
     erziehungsjahre: 'Erziehungsjahre',

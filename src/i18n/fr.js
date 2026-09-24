@@ -4329,6 +4329,7 @@ export default {
     einkommen: 'Revenu annuel brut (CHF)',
     einkommenHint: 'Revenu moyen déterminant',
     nettoHint: "Le revenu enregistré est indiqué comme net — veuillez saisir ici le salaire annuel brut pour l'AVS et la LPP.",
+    partnerNettoHint: 'Veuillez saisir le salaire annuel brut — le profil ne contient que le salaire net, qui serait ici une base erronée.',
     beitragsjahre: 'Années de cotisation',
     bezugAlter: 'Âge de la retraite',
     erziehungsjahre: 'Années d\'éducation',

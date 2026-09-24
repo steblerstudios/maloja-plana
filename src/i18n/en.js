@@ -4330,6 +4330,7 @@ export default {
     einkommen: 'Gross annual income (CHF)',
     einkommenHint: 'Average insured income',
     nettoHint: 'The saved income is marked as net — please enter the gross annual salary for AHV and BVG here.',
+    partnerNettoHint: 'Please enter the gross annual salary — the profile only holds the net salary, which would be the wrong basis here.',
     beitragsjahre: 'Contribution years',
     bezugAlter: 'Retirement age',
     erziehungsjahre: 'Child-rearing years',

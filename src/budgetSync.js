@@ -136,8 +136,10 @@ const syncBudgetFromChapters = (data) => {
   budget.expenses.healthInsurance = Number(data.versicherungen?.kkPremium || 0);
   budget.expenses.bvg = Number(data.versicherungen?.bvgContribution || 0);
   budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
-  // Keine UVG-Zeile: ein Feld «uvgPremium» gab es nie (der Wert war immer 0), und die
-  // Nichtberufsunfall-Prämie zieht der Arbeitgeber vom Lohn ab — sie steckt im Nettolohn.
+  // Keine UVG-Zeile: ein Feld «uvgPremium» gab es nie (der Wert war immer 0). Bei Angestellten
+  // ab 8 Std./Woche trägt die Arbeitnehmerin die Nichtberufsunfall-Prämie (UVG Art. 91 Abs. 2),
+  // der Arbeitgeber zieht sie vom Lohn ab (Abs. 3) — sie steckt im Nettolohn. Selbständige und
+  // Nichterwerbstätige sind über die Krankenkasse unfallversichert.
 
   // Budget Light V1 — new fields from "finanzen" chapter
   budget.expenses.otherInsurance = Number(data.finanzen?.otherInsurance || 0);

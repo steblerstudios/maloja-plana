@@ -52,12 +52,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [bezugAlter, setBezugAlter] = useState(() => String(refAlterJahre));
   const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
-  const [einkommenPartner, setEinkommenPartner] = useState(() => {
-    // K62: 0 ist eine Antwort (kein Partnereinkommen) und wird als «0» übernommen.
-    // K62-Nachlauf A: nur, wenn das Feld im Profil sichtbar ist (utils/partnereinkommen.js).
-    const p = partnerEinkommenRoh(data.basis);
-    return p == null || p === '' ? '' : String(Math.round(Number(p) * 12) || 0);
-  });
+  // Splitting und Plafonierung rechnen mit dem Bruttolohn (massgebender Lohn nach AHVG). Im Profil
+  // steht nur der NETTOlohn der Partnerin/des Partners — der wäre die falsche Basis (rund 12–17 %
+  // zu tief, ohne 13.). Darum nicht vorbefüllen, sondern am Feld darauf hinweisen. Hochrechnen
+  // geht nicht: die Abzüge hängen von der Pensionskasse ab.
+  const partnerNettoImProfil = Number(partnerEinkommenRoh(data.basis)) > 0;
+  const [einkommenPartner, setEinkommenPartner] = useState('');
   // Aus dem Kapitel «Versicherungen» (Pensionskassen-Guthaben laut Ausweis) — nicht zweimal eingeben.
   const [bvgGuthaben, setBvgGuthaben] = useState(() => {
     const b = data.versicherungen?.bvgBalance;
@@ -441,7 +441,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             )
           )
         ),
-        verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000' })
+        verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000', sublabel: partnerNettoImProfil ? t('vr.partnerNettoHint') : undefined })
       )
     ),
 
