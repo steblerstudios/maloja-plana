@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
@@ -145,7 +146,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     setTaxData(prev => ({ ...prev, [key]: Number(value) || 0 }));
   };
 
+  // «Gespeichert» gilt, solange die Eingaben dem gespeicherten Stand gleichen — wie bei der
+  // Organspende. Bis 24.09.2026 speicherte der Knopf ohne ein Wort.
+  const [gespeichertAls, setGespeichertAls] = useState(null);
+  const stand = JSON.stringify({ taxData, useEntered, canton, enteredTaxable });
   const handleSave = () => {
+    setGespeichertAls(stand);
     // taxableIncome als geteilten Knoten mitspeichern (oder tilgen, wenn leer), das Häkchen dazu.
     onSave({ ...data, taxData: { ...taxData, useEnteredTaxable: useEntered }, ...steuerkantonSpeichern(data, canton), finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined } });
   };
@@ -414,6 +420,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     ),
 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand }),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.disclaimer'))

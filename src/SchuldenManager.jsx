@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
@@ -343,8 +344,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
     // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
     // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
-    React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.semi } },
-      gespeichert ? [hinweisZeichen('check', 12, 'z'), t('common.saved')] : null)
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert })
   );
 };
 
