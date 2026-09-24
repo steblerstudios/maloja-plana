@@ -19,7 +19,7 @@ const NS = {
   stelleverloren: 'stelleVerloren', unfallkrankheit: 'unfallKrankheit', umzug: 'umzug',
   pensionierung: 'pensionierung', betreibung: 'betreibung', selbstaendigkeit: 'selbstaendigkeit',
   heirat: 'heirat', kind: 'kind', trennung: 'trennung', bewilligung: 'bewilligung',
-  fuehrerausweis: 'fuehrerausweis', asyl: 'asyl', iv: 'iv', pflege: 'pflege', todesfall: 'todesfall',
+  fuehrerausweis: 'fuehrerausweis', asyl: 'asyl', einbuergerung: 'einbuergerung', zuzug: 'zuzug', aussteuerung: 'aussteuerung', quellensteuer: 'quellensteuer', wohnunggekuendigt: 'wohnungGekuendigt', iv: 'iv', pflege: 'pflege', todesfall: 'todesfall',
 };
 // Der Zusatzversicherungs-Wechsel zitiert seine Quelle schon im Schritt selbst,
 // Artikel für Artikel (zusatzWechsel.checkSource) — eine zweite Zeile im Fuss
@@ -51,7 +51,7 @@ describe('Abläufe — Quellen', () => {
       kkerst: 'KKErstAnmeldung', kvgwechsel: 'KVGWechsel', neuerjob: 'NeuerJob', stelleverloren: 'StelleVerloren',
       unfallkrankheit: 'UnfallKrankheit', umzug: 'UmzugAblauf', pensionierung: 'Pensionierung',
       betreibung: 'BetreibungErhalten', selbstaendigkeit: 'Selbstaendigkeit', heirat: 'Heirat', kind: 'KindBekommen',
-      trennung: 'Trennung', bewilligung: 'BewilligungFristen', fuehrerausweis: 'Fuehrerausweis', asyl: 'AsylView',
+      trennung: 'Trennung', bewilligung: 'BewilligungFristen', fuehrerausweis: 'Fuehrerausweis', asyl: 'AsylView', einbuergerung: 'Einbuergerung', zuzug: 'ZuzugAusland', aussteuerung: 'Aussteuerung', quellensteuer: 'Quellensteuer', wohnunggekuendigt: 'WohnungGekuendigt',
       iv: 'IvVerfahren', pflege: 'PflegeAblauf', todesfall: 'Todesfall',
     }[view];
     const src = readFileSync(resolve(__dirname, '..', datei + '.jsx'), 'utf8');

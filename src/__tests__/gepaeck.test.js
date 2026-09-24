@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { GEGENSTAENDE, alleWege, wegeCount, gegenstandReadiness } from '../data/gepaeck.js';
+import { ABLAEUFE } from '../config/ansichtenRegister.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { VALID_VIEWS } from '../utils/hashRouter.js';
 
@@ -48,9 +49,21 @@ describe('Gepäck-Registry', () => {
   });
 
   it('wegeCount zählt echt', () => {
-    expect(wegeCount('wohnen')).toBe(4);
+    expect(wegeCount('wohnen')).toBe(8);
     expect(wegeCount('abschied')).toBe(2);
     expect(wegeCount('gibtsnicht')).toBe(0);
     expect(alleWege().length).toBe(GEGENSTAENDE.reduce((n, g) => n + g.wege.length, 0));
   });
 });
+
+// Befund 24.09.2026: vier Abläufe (Zusatzversicherung, Betreibung, Führerausweis,
+// Asyl) fehlten im Gepäck — nicht als Entscheid, sondern weil niemand sie
+// nachtrug. Stebler Studios: «nein, bitte ändere das». Seither gilt: jeder geführte
+// Ablauf liegt in einem Gegenstand.
+describe('Gepäck ist vollständig', () => {
+  it('jeder geführte Ablauf aus dem Register liegt in einem Gegenstand', () => {
+    const imGepaeck = new Set(alleWege().map((w) => w.view));
+    for (const a of ABLAEUFE) expect(imGepaeck.has(a.view), `${a.view} fehlt im Gepäck`).toBe(true);
+  });
+});
+

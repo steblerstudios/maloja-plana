@@ -86,6 +86,11 @@ const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
 const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 const BetreibungErhalten = React.lazy(() => import('./BetreibungErhalten.jsx'));
+const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
+const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
+const Aussteuerung = React.lazy(() => import('./Aussteuerung.jsx'));
+const Quellensteuer = React.lazy(() => import('./Quellensteuer.jsx'));
+const WohnungGekuendigt = React.lazy(() => import('./WohnungGekuendigt.jsx'));
 const Selbstaendigkeit = React.lazy(() => import('./Selbstaendigkeit.jsx'));
 const Heirat = React.lazy(() => import('./Heirat.jsx'));
 const KindBekommen = React.lazy(() => import('./KindBekommen.jsx'));
@@ -1454,6 +1459,11 @@ const AppInner = ({ demo }) => {
         view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'betreibung' && React.createElement(BetreibungErhalten, { palette, t, onNavigate: handleNavigate }),
+        view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'aussteuerung' && React.createElement(Aussteuerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
         view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
         view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate }),

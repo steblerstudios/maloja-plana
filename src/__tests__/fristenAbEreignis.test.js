@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { leseDatum, plusTage, plusMonate, istVorbei, heuteIso } from '../utils/fristen.js';
+import { leseDatum, plusTage, plusMonate, istVorbei, heuteIso, endeMaerzFolgejahr, werktagAmOderDavor } from '../utils/fristen.js';
 import { EreignisFrist } from '../AblaufSchale.jsx';
 
 // Befund 24.09.2026: zehn Frist-Knöpfe rechneten ab HEUTE statt ab dem Ereignis.
@@ -23,6 +23,18 @@ describe('Fristen — Rechnen nach OR Art. 77', () => {
     expect(plusMonate('2027-11-30', 3)).toBe('2028-02-29'); // Schaltjahr
     expect(plusMonate('2026-08-31', 3)).toBe('2026-11-30');
     expect(plusMonate('2026-01-31', 1)).toBe('2026-02-28');
+  });
+
+  it('Quellensteuer: 31. März des Jahres nach dem Steuerjahr, fest (DBG Art. 89a Abs. 3)', () => {
+    expect(endeMaerzFolgejahr('2026-01-01')).toBe('2027-03-31');
+    expect(endeMaerzFolgejahr('2026-12-31')).toBe('2027-03-31');
+    expect(endeMaerzFolgejahr('2026-02-31')).toBeNull();
+  });
+
+  it('KVG-Kündigung: Samstag/Sonntag → Werktag davor (BAG)', () => {
+    expect(werktagAmOderDavor('2026-11-30')).toBe('2026-11-30'); // Montag
+    expect(werktagAmOderDavor('2025-11-30')).toBe('2025-11-28'); // Sonntag → Freitag
+    expect(werktagAmOderDavor('2024-11-30')).toBe('2024-11-29'); // Samstag → Freitag
   });
 
   it('ungültige Eingaben ergeben keine Frist — nie ein still verschobenes Datum', () => {
@@ -79,7 +91,7 @@ const AUSNAHMEN = {
 const ABLAUF_DATEIEN = ['KKErstAnmeldung', 'KVGWechsel', 'ZusatzWechsel', 'NeuerJob', 'StelleVerloren',
   'UnfallKrankheit', 'UmzugAblauf', 'Pensionierung', 'BetreibungErhalten', 'Selbstaendigkeit', 'Heirat',
   'KindBekommen', 'Trennung', 'BewilligungFristen', 'Fuehrerausweis', 'AsylView', 'IvVerfahren',
-  'PflegeAblauf', 'Todesfall'];
+  'PflegeAblauf', 'Todesfall', 'WohnungGekuendigt', 'Quellensteuer', 'Aussteuerung', 'ZuzugAusland', 'Einbuergerung'];
 
 describe('Abläufe — keine Frist ab heute', () => {
   it.each(ABLAUF_DATEIEN)('%s', (name) => {

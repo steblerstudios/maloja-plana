@@ -38,6 +38,11 @@ export const ABLAEUFE = [
   { view: 'asyl', nav: 'nav.asyl', sub: 'nav.sub.asyl', icon: 'behoerden', aliases: ['asyl', 'asylum', 'flucht', 'migration'] },
   { view: 'iv', nav: 'nav.iv', sub: 'nav.sub.iv', icon: 'health', aliases: ['iv', 'invalidität', 'krankheit', 'ai', 'invalidité', 'invalidità'] },
   { view: 'pflege', nav: 'nav.pflege', sub: 'nav.sub.pflege', icon: 'heart', aliases: ['pflege', 'angehörige', 'betreuung', 'betreuungsgutschrift', 'proches aidants', 'familiari curanti'] },
+  { view: 'wohnunggekuendigt', nav: 'nav.wohnunggekuendigt', sub: 'nav.sub.wohnunggekuendigt', icon: 'home', aliases: ['kündigung', 'wohnung', 'miete', 'vermieter', 'anfechten', 'erstreckung', 'schlichtung', 'résiliation', 'bail', 'disdetta', 'eviction'] },
+  { view: 'quellensteuer', nav: 'nav.quellensteuer', sub: 'nav.sub.quellensteuer', icon: 'money', aliases: ['quellensteuer', 'tarifcode', 'lohnabzug', 'nov', 'nachträgliche veranlagung', 'impôt à la source', 'imposta alla fonte', 'withholding tax'] },
+  { view: 'aussteuerung', nav: 'nav.aussteuerung', sub: 'nav.sub.aussteuerung', icon: 'lebenslauf', aliases: ['ausgesteuert', 'aussteuerung', 'arbeitslos', 'taggeld', 'überbrückungsleistung', 'fin de droits', 'esaurimento', 'benefits exhausted'] },
+  { view: 'zuzug', nav: 'nav.zuzug', sub: 'nav.sub.zuzug', icon: 'behoerden', aliases: ['zuzug', 'einreise', 'ausland', 'neu in der schweiz', 'anmeldung', 'expat', 'arrivée', 'arrivo', 'moving to switzerland'] },
+  { view: 'einbuergerung', nav: 'nav.einbuergerung', sub: 'nav.sub.einbuergerung', icon: 'behoerden', aliases: ['einbürgerung', 'einbuergerung', 'pass', 'schweizer pass', 'bürgerrecht', 'naturalisation', 'naturalizzazione', 'citizenship'] },
   { view: 'todesfall', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
