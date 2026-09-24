@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
 import {
@@ -88,6 +89,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const [uploadExpiry, setUploadExpiry] = useState('');
   const [uploadType, setUploadType] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState('');
+  // «oder hierher ziehen» stand schon da — jetzt tut die Fläche es auch.
+  const [ablageProps, ablageAktiv] = useDateiAblage((e) => { setUploadFile(e.target.files?.[0]); setUploadError(''); });
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
@@ -2364,7 +2367,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           )
         ),
 
-        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           // Nach der Wahl steht der Dateiname da, wo vorher «Datei auswählen» stand —
           // sonst sieht niemand (und hört kein Screenreader), welche Datei hochgeht.
           hinweisZeichen(uploadFile ? 'document' : 'kaestchen'), uploadFile ? uploadFile.name : tr('chapterView.selectFile'),
