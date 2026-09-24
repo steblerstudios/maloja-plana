@@ -10,6 +10,7 @@ import { renderSource } from './utils/renderSource.js';
 import { getCantonName } from './config/cantonalData.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { StatusForm } from './components/StatusForm.jsx';
+import { inDays } from './utils/helpers.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -173,7 +174,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                 id: 'kvg-lastvisit-' + item.key,
                 type: 'date',
                 value: lastVisit || '',
-                max: new Date().toISOString().slice(0, 10),
+                max: inDays(0),
                 onChange: (e) => { const v = e.target.value; setLastVisit(v); saveVorsorgeDate(item.key, v); setReminderSaved(false); },
                 style: {
                   fontSize: text.xs, padding: '4px 6px', border: '1px solid ' + palette.border,
@@ -194,7 +195,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                     : React.createElement('button', {
                         type: 'button',
                         onClick: () => {
-                          const r = addReminder({ title: t('kvg.' + item.key), dueDate: new Date().toISOString().slice(0, 10), category: 'health' });
+                          const r = addReminder({ title: t('kvg.' + item.key), dueDate: inDays(0), category: 'health' });
                           if (r) setReminderSaved(true);
                         },
                         style: {

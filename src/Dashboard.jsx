@@ -9,6 +9,7 @@ import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } 
 import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import { aufklappZeichen } from './IconKern.jsx';
+import { inDays } from './utils/helpers.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -531,7 +532,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.nextUpReassure')),
       (() => {
         const reminders = loadReminders();
-        const today = new Date().toISOString().split('T')[0];
+        const today = inDays(0);
         const upcoming = reminders
           .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];

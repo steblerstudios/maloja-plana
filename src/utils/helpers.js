@@ -70,7 +70,7 @@ export function openPrintWindow(html) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'maloja-plana-' + new Date().toISOString().split('T')[0] + '.html';
+  a.download = 'maloja-plana-' + toLocalISO(new Date()) + '.html';
   a.click();
   URL.revokeObjectURL(url);
 }
