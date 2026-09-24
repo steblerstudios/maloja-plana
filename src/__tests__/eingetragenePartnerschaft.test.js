@@ -118,7 +118,8 @@ describe('Option und Übersetzung', () => {
     it(`${lang}: der Schalter «verheiratet» in Steuer- und Vorsorgerechner nennt die Partnerschaft mit`, () => {
       const ep = tr.chapters.basis.fields.maritalStatus.options.registeredPartnership.toLowerCase();
       // Das Kernwort der Option (z. B. «partnerschaft», «partenariat», «unione») steht auch im Schalter.
-      const kern = { de: 'partnerschaft', fr: 'partenariat', it: 'unione domestica', en: 'partnership', rm: 'partenariat' }[lang];
+      // rm: amtliche Schreibweise der ZStV (SR 211.112.2, rm, Art. 8 lit. d) — «partenadi», wie «Partenadi schlià».
+      const kern = { de: 'partnerschaft', fr: 'partenariat', it: 'unione domestica', en: 'partnership', rm: 'partenadi' }[lang];
       expect(ep).toContain(kern);
       expect(tr.tax.married.toLowerCase()).toContain(kern);
       expect(tr.vr.verheiratet.toLowerCase()).toContain(kern);
