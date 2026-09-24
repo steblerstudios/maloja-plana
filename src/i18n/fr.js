@@ -4807,4 +4807,16 @@ export default {
       other: 'Autre spécialité',
     },
   },
+  // O3 — type de résultat (src/data/ergebnisArt.js). Bloc propre en fin de fichier.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Calcul selon les règles en vigueur ; la décision contraignante revient au service compétent',
+      schaetzung: 'Estimation selon les valeurs officielles, simplifiée',
+      vorpruefung: 'Examen préalable : un droit entre-t-il en ligne de compte ? Sans montant',
+      orientierung: 'Orientation : un ordre de grandeur, pas calculé selon une règle officielle',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. Encore une indication nécessaire.',
+    fehltMehrere: '{satz}. Encore {n} indications nécessaires.',
+  },
 };

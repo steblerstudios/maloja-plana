@@ -4808,4 +4808,16 @@ export default {
       other: 'Other specialty',
     },
   },
+  // O3 — result type (src/data/ergebnisArt.js). Own block at the end of the file.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Calculation under the rules in force; the responsible office decides with binding effect',
+      schaetzung: 'Estimate based on official reference values, simplified',
+      vorpruefung: 'Preliminary check of whether an entitlement may apply, without an amount',
+      orientierung: 'Orientation: an order of magnitude, not calculated under an official rule',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. One more entry needed.',
+    fehltMehrere: '{satz}. {n} more entries needed.',
+  },
 };

@@ -4813,4 +4813,16 @@ export default {
     markDone: 'Segna come fatto',
     undo: 'Segna come non fatto',
   },
+  // O3 — tipo di risultato (src/data/ergebnisArt.js). Blocco proprio in fondo al file.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Calcolo secondo le regole in vigore; decide in modo vincolante il servizio competente',
+      schaetzung: 'Stima secondo i valori ufficiali, semplificata',
+      vorpruefung: 'Verifica preliminare: un diritto entra in considerazione? Senza importo',
+      orientierung: 'Orientamento: un ordine di grandezza, non calcolato secondo una regola ufficiale',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. Manca ancora un dato.',
+    fehltMehrere: '{satz}. Mancano ancora {n} dati.',
+  },
 };

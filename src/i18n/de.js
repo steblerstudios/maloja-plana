@@ -4870,4 +4870,17 @@ export default {
     markDone: 'Als erledigt markieren',
     undo: 'Als nicht erledigt markieren',
   },
+  // O3 — Ergebnis-Art als festes Feld (src/data/ergebnisArt.js). Eigener Block am Dateiende,
+  // damit parallele Zweige nicht in denselben Zeilen arbeiten. Bewusst ohne Anrede.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Berechnung nach den geltenden Regeln; verbindlich entscheidet die zuständige Stelle',
+      schaetzung: 'Schätzung nach amtlichen Eckwerten, vereinfacht',
+      vorpruefung: 'Vorprüfung, ob ein Anspruch infrage kommt, ohne Betrag',
+      orientierung: 'Orientierung: eine Grössenordnung, nicht nach amtlicher Regel gerechnet',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. Noch eine Angabe nötig.',
+    fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
+  },
 };
