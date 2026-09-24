@@ -71,6 +71,19 @@ describe('K125 · Kinderabzug im Konkubinat hälftig', () => {
     expect(orientierungsText(t, s.kanton, 2026)).toBe('tax.bandKonkubinatKinderabzugHaelftig');
   });
 
+  it('die Annahme neben der Bundessteuer sagt nicht mehr «nicht geprüft» — sonst widerspräche sie dem Kantonstext', () => {
+    for (const d of [de, fr, itTexte, rm]) {
+      for (const v of Object.values(d.tax.annahmeKinderabzugKonkubinat)) expect(v).not.toMatch(/nicht geprüft|pas été vérifiée|non è stata verificata|betg verifitgà/);
+    }
+    expect(en.tax.annahmeKinderabzugKonkubinat).not.toMatch(/not been checked/);
+    expect(de.tax.annahmeKinderabzugKonkubinat.sie).toMatch(/je Kanton nachgelesen/);
+  });
+
+  it('der Text behauptet keine fehlende Ausnahme als Tatsache — er sagt, was die Quelle nennt', () => {
+    expect(de.tax.bandKonkubinatKinderabzugHaelftig.sie).not.toMatch(/auch wenn nur eine Person verdient/);
+    expect(de.tax.bandKonkubinatKinderabzugHaelftig.sie).toMatch(/nennt die amtliche Quelle nicht/);
+  });
+
   it('der Text verweist nicht auf den ESTV-Rechner als Lösung — der rechnet ebenfalls mit dem ganzen Abzug', () => {
     const sie = de.tax.bandKonkubinatKinderabzugHaelftig.sie;
     expect(sie).toMatch(/hälftig/);

@@ -283,7 +283,7 @@ export const KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB = Object.freeze({
 // Die App rechnet nur, wenn der Partner KEIN Einkommen hat. Kantone, die für genau diesen Fall eine
 // amtliche Ausnahme «nur ein Elternteil verdient → ganzer Abzug» nennen (FR Merkblatt Ziff. 4, GE
 // Tabelle Fussnote 2, BE Merkblatt 12), stehen darum NICHT hier. TI kennt eine solche Ausnahme nur
-// aus einem Urteil (nicht amtlich wiedergegeben) → hier. NE und AR: Wahlrecht bzw. Kann-Vorschrift →
+// aus einem Urteil (RtiD II 2018 N. 6t, nur nicht amtlich wiedergegeben, nicht selbst gelesen) → hier. NE und AR: Wahlrecht bzw. Kann-Vorschrift →
 // nicht hier, im Quellenblatt als unsicher. BE, BS, JU, OW, UR, VD zeigen ohnehin keine Zahl (oben).
 // Die App kennt die Sorge-Regelung nicht; bei alleiniger Sorge gälte der ganze Abzug. Im Zweifel
 // lieber keine Zahl als eine zu tiefe.
