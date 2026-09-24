@@ -62,10 +62,12 @@ describe('Sozialhilfe-Rechner übernimmt, was im Profil steht', () => {
     expect(konk).toMatch(/aria-label="Weitere Personen im Haushalt"[^>]*>(?:(?!<\/select>).)*<option value="1" selected=""/s);
     expect(konk).toMatch(/<input type="radio" name="sh-wohnform"(?=[^>]*checked="")(?=[^>]*value="familienaehnlich")[^>]*>/);
     expect(konk).toContain(t('sh.mieteAnteilHint'));
+    expect(feldWert(konk, t('sh.miete'))).toBe(''); // ganze Miete aus dem Profil wäre die falsche Basis
     expect(konk).toMatch(/Anteil 1 von 2 Pers\.\)<\/td><td[^>]*>812</);
   });
   it('allein: kein Wohnform-Block, Grundbedarf 1061', () => {
     expect(html).not.toContain('name="sh-wohnform"');
+    expect(feldWert(html, t('sh.miete'))).toBe('1400');
     expect(html).toMatch(/\(1 Pers\.\)<\/td><td[^>]*>1(?:&#x27;|’|'|\.)061</);
   });
   it('leeres Profil: keine Vorbefüllung, kein Hinweis', () => {
