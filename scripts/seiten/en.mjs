@@ -276,7 +276,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Basel, Switzerland<br>Email: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — Swiss life folder. An open-source project under AGPL-3.0. The app is free to use; for white-label and other commercial use, a separate licence is available on request.',
-          'On the contact address: <a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">Art. 3 para. 1 lit. s no. 1 UWG</a> requires details of identity and of the contact address «including that of electronic mail». The provision does not require a postal address in every case. Name, place and email are given; a postal address is an open decision and will be settled together with the question of a commercial register entry. We can be reached by email for any matter, including legal ones.',
+          'On the contact address: <a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">Art. 3 para. 1 lit. s no. 1 UWG</a> requires details of identity and of the contact address «including that of electronic mail». Name, place and email are given; whether a postal address is also required is being clarified. We can be reached by email for any matter, including legal ones.',
         ],
       },
       {

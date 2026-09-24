@@ -96,6 +96,19 @@ describe('Kontaktadresse im Impressum', () => {
       .toMatch(/elektronisch|électronique|elettronic|electronic|electronica/i);
   });
 
+  // Entscheid Stebler Studios 24.09.2026: «nur Tatsachen». Die Seite legt die Bestimmung
+  // nicht aus — sie sagt, was angegeben ist, und dass die Postanschrift-Frage abgeklärt wird.
+  const AUSLEGUNG = [
+    'nicht in jedem Fall', 'n’impose pas dans tous les cas', 'non prescrive in ogni caso',
+    'does not require a postal address in every case', 'na prescriva betg en mintga cas',
+  ];
+  const ABKLAERUNG = { '': 'wird abgeklärt', 'fr/': 'en cours d’examen', 'it/': 'in fase di chiarimento', 'en/': 'is being clarified', 'rm/': 'vegn sclerì' };
+  it.each(SEITEN)('/%srechtliches/ legt die Bestimmung nicht aus, sagt aber, dass abgeklärt wird', (praefix) => {
+    const html = liesSeite(praefix);
+    for (const satz of AUSLEGUNG) expect(html).not.toContain(satz);
+    expect(html).toContain(ABKLAERUNG[praefix]);
+  });
+
   // Gegenprobe: die Platzhalter-Regel darf nicht einfach überall anschlagen.
   it('ein fertiger Adresstext liefe durch', () => {
     const fertig = 'Stebler Studios — Musterweg 1, 4051 Basel, Schweiz';
