@@ -9,6 +9,7 @@ import { text, weight, leading, space, radius, shadow } from './config/tokens.js
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { betrag } from './utils/geld.js';
 
 export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -27,7 +28,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
   const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : 'hauptwohnsitz';
 
-  const formatCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const formatCHF = (n) => betrag(n || 0);
 
   // Inline-Präfix-Icon vor Fliesstext-Titeln (statt roher Glyphe ◰/□): sitzt in der
   // Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon`.

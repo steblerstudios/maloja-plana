@@ -8,6 +8,8 @@
 //   beantragt  → nur im Antrags-Weg; Automatik-Kantone überspringen ihn
 //   bestaetigt → Verfügung da; Betrag stammt aus der Verfügung, nicht von uns
 
+import { inDays } from '../utils/helpers.js';
+
 export const IPV_STATUS = { GESCHAETZT: 'geschaetzt', BEANTRAGT: 'beantragt', BESTAETIGT: 'bestaetigt' };
 
 const VALID = new Set(Object.values(IPV_STATUS));
@@ -39,7 +41,7 @@ export function readIpvStatus(data) {
 export function nextIpvStatus(status, { betrag, datum, kanton, jahr } = {}) {
   const safe = VALID.has(status) ? status : IPV_STATUS.GESCHAETZT;
   if (safe === IPV_STATUS.BESTAETIGT) {
-    const d = datum || new Date().toISOString().split('T')[0];
+    const d = datum || inDays(0);
     const ausDatum = datum ? Number(String(datum).slice(0, 4)) : new Date().getFullYear();
     const next = { status: safe, betrag: Math.max(0, Number(betrag) || 0), datum: d };
     if (Number.isInteger(jahr)) next.jahr = jahr;

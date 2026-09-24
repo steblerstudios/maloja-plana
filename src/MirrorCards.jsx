@@ -11,6 +11,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { text, weight, space, radius, leading, shadow } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { zivilstandLabel } from './utils/zivilstand.js';
+import { betrag } from './utils/geld.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -116,7 +117,7 @@ function buildBasisSentence(data, t) {
 function formatCHF(value) {
   const num = Number(value);
   if (!num || isNaN(num)) return null;
-  return "CHF " + num.toLocaleString('de-CH');
+  return betrag(num, { hoechstens: 2 });
 }
 
 function calcDuration(moveInDate, t) {

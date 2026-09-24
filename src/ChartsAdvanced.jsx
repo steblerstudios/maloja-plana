@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, shadow, radius, space } from './config/tokens.js';
+import { betrag } from './utils/geld.js';
 
 const PieChart = ({ data, labels, colors, title, palette }) => {
   const total = data.reduce((a, b) => a + b, 0);
@@ -55,7 +56,7 @@ const HorizontalBar = ({ label, value, maxValue, color, palette }) => {
   return React.createElement('div', { style: { marginBottom: space.sm } },
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, marginBottom: '3px' } },
       React.createElement('span', null, label),
-      React.createElement('span', { style: { fontWeight: weight.semi, fontVariantNumeric: 'tabular-nums' } }, 'CHF ' + value.toLocaleString('de-CH'))
+      React.createElement('span', { style: { fontWeight: weight.semi, fontVariantNumeric: 'tabular-nums' } }, betrag(value, { hoechstens: 2 }))
     ),
     React.createElement('div', { style: { height: '8px', background: palette.border, borderRadius: '4px', overflow: 'hidden' } },
       React.createElement('div', { style: { height: '100%', width: pct + '%', background: color, borderRadius: '4px' } })
@@ -123,15 +124,15 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
     income > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: space.sm } },
       React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('budgetSync.income') || 'Einkommen'),
-        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi } }, 'CHF ' + income.toLocaleString('de-CH'))
+        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi } }, betrag(income, { hoechstens: 2 }))
       ),
       React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('budgetSync.expenses') || 'Ausgaben'),
-        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.roseDeep } }, 'CHF ' + totalExpenses.toLocaleString('de-CH'))
+        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.roseDeep } }, betrag(totalExpenses, { hoechstens: 2 }))
       ),
       React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('budgetSync.remaining') || 'Verfügbar'),
-        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: remaining > 0 ? (palette.sageDeep || palette.sage) : (palette.roseDeep || palette.rose) } }, 'CHF ' + remaining.toLocaleString('de-CH'))
+        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: remaining > 0 ? (palette.sageDeep || palette.sage) : (palette.roseDeep || palette.rose) } }, betrag(remaining, { hoechstens: 2 }))
       )
     ),
 

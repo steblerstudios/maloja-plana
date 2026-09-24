@@ -2,9 +2,11 @@
 // Damit jeder Ablauf eine Frist in den Kalender legen kann — ruhig, ohne Duplikate.
 // CalendarReminders.jsx nutzt dieselben load/save-Funktionen (eine Quelle der Wahrheit).
 
+import { inDays } from './helpers.js';
+
 const STORAGE_KEY = 'or5_reminders';
 
-const todayISO = () => new Date().toISOString().split('T')[0];
+const todayISO = () => inDays(0);
 
 export const loadReminders = () => {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }

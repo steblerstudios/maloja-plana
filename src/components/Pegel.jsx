@@ -1,6 +1,7 @@
 import React from 'react';
 import { PEGEL_SCALE } from '../data/pegel.js';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
+import { betrag } from '../utils/geld.js';
 
 // Der Pegel: EIN ruhiges Glas-Instrument (Flat + leichter Skeuomorphismus) für die
 // ganze Frage-Familie „Einkommen relativ zu einer Linie". Zwei ehrliche Lesarten
@@ -18,7 +19,7 @@ const LINE_Y = INNER_BOTTOM - (1 / PEGEL_SCALE) * INNER_H;                    //
 const VESSEL = 'M32 16 L32 124 Q32 138 46 138 L82 138 Q96 138 96 124 L96 16';
 const VESSEL_CLIP = 'M33 17 L33 123 Q33 137 46 137 L82 137 Q95 137 95 123 L95 17 Z';
 
-const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+const fmtCHF = (n) => betrag(n || 0);
 
 export const Pegel = ({ palette, t, state }) => {
   const h = React.createElement;

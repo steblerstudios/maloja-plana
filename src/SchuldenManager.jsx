@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
@@ -9,6 +10,7 @@ import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
+import { betrag } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 
@@ -181,7 +183,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         ].map(([key, val], i, arr) =>
           React.createElement('div', { key, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, padding: space.sm + 'px ' + space.md + 'px', borderBottom: i < arr.length - 1 ? '1px solid ' + palette.border + '55' : 'none', fontSize: text.sm } },
             React.createElement('span', { style: { color: palette.mid } }, t('schulden.' + key)),
-            React.createElement('span', { style: { fontWeight: weight.medium, color: palette.text } }, 'CHF ' + val.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.medium, color: palette.text } }, betrag(val, { stellen: 2 }))
           )
         )
       ),
@@ -229,7 +231,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           return React.createElement('div', { key: d.id || idx, style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.sm, border: '1px solid ' + palette.border } },
             React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, marginBottom: '4px' } },
               React.createElement('span', { style: { fontWeight: weight.semi } }, (idx + 1) + '. ' + (d.creditor || '—')),
-              React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + Number(d.amount || 0).toFixed(2))
+              React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(Number(d.amount || 0), { stellen: 2 }))
             ),
             React.createElement('div', { style: { display: 'inline-block', fontSize: text.xs, fontWeight: weight.semi, color: tierColor, marginBottom: '4px' } }, React.createElement(LegendenMarke, { form: 'punkt', color: tierColor, palette }), tierLabel),
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, tierReason)
@@ -274,7 +276,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, debt.creditor),
-            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)
@@ -290,7 +292,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       debtPlan && React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, maxHeight: '400px', overflowY: 'auto' } },
         React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, t('schulden.paymentPlanTitle', { amount: 500 })),
         debtPlan.slice(0, 12).map((month, idx) => React.createElement('div', { key: idx, style: { fontSize: text.xs, padding: space.xs, borderBottom: '1px solid ' + palette.border } },
-          '#' + month.month + ': CHF ' + month.payment + ' (' + t('budgetSync.remaining') + ': CHF ' + month.remaining + ')'
+          '#' + month.month + ': ' + betrag(month.payment, { hoechstens: 2 }) + ' (' + t('budgetSync.remaining') + ': ' + betrag(month.remaining, { hoechstens: 2 }) + ')'
         ))
       )
     ),
@@ -354,8 +356,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
     // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
     // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
-    React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.semi } },
-      gespeichert ? [hinweisZeichen('check', 12, 'z'), t('common.saved')] : null)
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert })
   );
 };
 

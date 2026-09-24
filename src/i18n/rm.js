@@ -2538,7 +2538,7 @@ export default {
     importFailed: 'Import betg reussì: {error}',
     invalidFile: 'Nagina datoteca da segirezza valida da Maloja Plana.',
     wrongPassphrase: 'Decriptaziun betg reussida. Fauss pled-clav u datoteca donnegiada.',
-    preRestoreNote: { sie: 'In snapshot da Vossas datas actualas è vegnì memorisà avant la restituziun.', du: 'In snapshot da Tes datas actualas è vegnì memorisà avant la restituziun.' },
+    preRestoreNote: { sie: 'Avant mintga restituziun vegn memorisà in snapshot da Vossas datas actualas.', du: 'Avant mintga restituziun vegn memorisà in snapshot da Tes datas actualas.' },
     sessionCount: 'Sessiun: {count} backup creà',
     sessionCountPlural: 'Sessiun: {count} backups creads',
     letterPreview: 'Prevista da la brev',
@@ -4271,6 +4271,9 @@ export default {
     formatExample: 'Exempel da format (CSV)',
     preview: 'Prevista',
     noFile: 'Nagina datoteca tschernida',
+    eintrag: '1 inscripziun',
+    eintraege: '{count} inscripziuns',
+    keineErkannt: "En questa datoteca n'è vegnida renconuschida nagina inscripziun. È il format correct? L'exempel da format mussa la structura spetgada.",
     selectCsvOrExcel: 'Tscherna ina datoteca CSV u Excel',
   },
 

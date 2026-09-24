@@ -4,6 +4,7 @@ import { vergleicheEOLeistungen, EO_PARAMS } from './data/eoRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { zahl } from './utils/geld.js';
 import { jahreslohnAusProfil, lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 
 export const EOrechner = ({ palette, t, data }) => {
@@ -32,7 +33,7 @@ export const EOrechner = ({ palette, t, data }) => {
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
   };
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
 
   const leistungRow = (leistung, labelKey) => {
     if (!leistung || !leistung.anspruch) return null;

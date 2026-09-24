@@ -9,6 +9,7 @@ import { text, weight, radius, space, visuallyHiddenStyle } from './config/token
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { inDays } from './utils/helpers.js';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
@@ -67,7 +68,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     setBackupStatus(null);
     try {
       const json = await exportPlaintext();
-      const date = new Date().toISOString().split('T')[0];
+      const date = inDays(0);
       downloadFile('maloja-plana-backup-' + date + '.json', json, 'application/json');
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
       // K94: Die Datei ist schon heruntergeladen — ein voller Speicher darf daraus keinen Fehler machen.
@@ -104,7 +105,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     setBackupStatus({ type: 'info', msg: t('backup.encrypting') });
     try {
       const encrypted = await exportEncrypted(passphrase);
-      const date = new Date().toISOString().split('T')[0];
+      const date = inDays(0);
       downloadFile('maloja-plana-backup-' + date + '.maloja', encrypted, 'application/octet-stream');
       try { localStorage.setItem('or5_lastBackup', new Date().toISOString()); } catch { /* K94, wie oben */ }
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });

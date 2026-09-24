@@ -9,6 +9,7 @@ import { sozialhilfePegelState } from './data/pegel.js';
 import { praemienBelegState } from './data/praemienBeleg.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
+import { betrag } from './utils/geld.js';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
 // Angaben — auto vorbelegt aus dem Profil, hier frei anpassbar zum Ausprobieren —
@@ -23,7 +24,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   const [rent, setRent] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
   const [kk, setKk] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
 
-  const fmt = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+  const fmt = (n) => betrag(n || 0);
 
   const numIncome = Number(income) || 0;
   const numRent = Number(rent) || 0;
