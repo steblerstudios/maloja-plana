@@ -68,6 +68,11 @@ kommt der Changelog immer mit, nie doppelt.*
   **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
+- **«undefined» in der aufgeklappten Grundordnung** (24.09.2026). Unter «Fortschritt im Detail» →
+  «Ihre Grundordnung» begann jede Kapitel-Kopfzeile mit «undefined» («undefined Persönliche
+  Basis»): der Code klebte ein Kapitel-Icon-Feld an den Titel, das die Kapitel nicht haben. Die
+  Kopfzeile nennt jetzt nur den Titel; das Kapitel-Icon steht als eigener, für Screenreader
+  abgeschirmter Knoten davor. Test `grundordnungKapitelKopf.test.js`.
 - **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
   CHF 250 über dem heutigen ESTV-Steuerrechner (Median CHF 97, an 434 von 544 Punkten tiefer, nie
   höher). Belegt: gleicher Ort (Bellinzona), gleiche Steuerfüsse, gleicher Tarif — das steuerbare
