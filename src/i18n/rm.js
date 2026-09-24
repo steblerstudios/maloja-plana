@@ -2225,15 +2225,21 @@ export default {
   },
   notfallpass: {
     title: 'Preparar il pass d’urgenza',
-    intro: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.',
-    datenschutz: 'Quai che stat en il pass d’urgenza po leger tgi che tegna tes telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Ti decidas tge che ti endatas.',
-    angabenTitel: 'Tias indicaziuns, champ per champ',
-    angabenText: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferescha quai che ti vuls.',
-    leer: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che ti endatas insatge là, è quai pront qua.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    intro: { sie: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; Vus endatais las indicaziuns a maun. Qua èn ellas prontas, champ per champ.', du: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; Ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    datenschutz: { sie: 'Quai che stat en il pass d’urgenza po leger tgi che tegna Voss telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Vus decidais tge che Vus endatais.', du: 'Quai che stat en il pass d’urgenza po leger tgi che tegna Tes telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Ti decidas tge che Ti endatas.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    angabenTitel: { sie: 'Vossas indicaziuns, champ per champ', du: 'Tias indicaziuns, champ per champ' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    angabenText: { sie: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferi quai che Vus vulais.', du: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferescha quai che Ti vuls.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    leer: { sie: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che Vus endatais insatge là, è quai pront qua.', du: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che Ti endatas insatge là, è quai pront qua.' },
     leerLink: 'Al chapitel Urgenza',
     gruppe_profil: 'En las infurmaziuns da sanadad',
     gruppe_pass: 'En il pass d’urgenza',
-    profilHinweis: 'Num e data da naschientscha endatas ti en l’app «Health»: tutgar sin tes maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    profilHinweis: { sie: 'Num e data da naschientscha endatais Vus en l’app «Health»: tutgar sin Voss maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).', du: 'Num e data da naschientscha endatas Ti en l’app «Health»: tutgar sin Tes maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).' },
     feld_name: 'Num',
     feld_geburtsdatum: 'Data da naschientscha',
     feld_erkrankungen: 'Malsognas',
@@ -2247,21 +2253,28 @@ export default {
     kopiertKurz: 'Copià',
     kopierenAria: 'Copiar: {feld}',
     kopiert: '{feld}: copià.',
-    kopierenFehler: 'Copiar n’ha betg funcziunà qua. Ti pos marcar l’indicaziun u la scriver giu.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    kopierenFehler: { sie: 'Copiar n’ha betg funcziunà qua. Vus pudais marcar l’indicaziun u la scriver giu.', du: 'Copiar n’ha betg funcziunà qua. Ti pos marcar l’indicaziun u la scriver giu.' },
     iphoneTitel: 'Sin l’iPhone',
-    iphone1: 'Avra l’app «Health», tutga sin tes maletg e lura sin «Notfallpass».',
-    iphone2: 'Tutga sin «Los gehts» u «Bearbeiten» ed endatescha las indicaziuns da survart.',
-    iphone3: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Ti tschernas ord tes contacts — endatescha l’emprim la persuna là, sch’ella manca.',
-    iphone4: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    iphone1: { sie: 'Avri l’app «Health», tutgai sin Voss maletg e lura sin «Notfallpass».', du: 'Avra l’app «Health», tutga sin Tes maletg e lura sin «Notfallpass».' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    iphone2: { sie: 'Tutgai sin «Los gehts» u «Bearbeiten» ed endatai las indicaziuns da survart.', du: 'Tutga sin «Los gehts» u «Bearbeiten» ed endatescha las indicaziuns da survart.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    iphone3: { sie: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Vus tschernis ord Voss contacts — endatai l’emprim la persuna là, sch’ella manca.', du: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Ti tschernas ord Tes contacts — endatescha l’emprim la persuna là, sch’ella manca.' },
+    // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt.
+    iphone4: { sie: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».', du: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».' },
     iphoneSperr: 'Uschia chattan agidantas ed agidants il pass: sin il visur bloccà stritgar ensi u smatgar la tasta Home, tutgar «Notfall», lura «Notfallpass».',
     iphoneNotruf: 'L’opziun «Notruf» parta il pass automaticamain durant ina clamada d’urgenza — tenor Apple mo en ils Stadis Unids ed en il Canada.',
     iphoneLink: 'Agid dad Apple: Notfallpass einrichten und anzeigen (tudestg)',
     iphoneUrl: 'https://support.apple.com/de-ch/guide/iphone/iph08022b192/ios',
     androidTitel: 'Sin Android',
     androidText: 'Betg mintga telefonin Android ha questa app. Nua ch’ella exista (a partir dad Android 12), sa numna ella «Persönliche Sicherheit», en la glista da las apps curt «Sicherheit».',
-    android1: 'Avra l’app «Sicherheit», s’annunzia sche necessari cun tes conto da Google e tutga sin «Meine Infos».',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    android1: { sie: 'Avri l’app «Sicherheit» (sche necessari cun Voss conto da Google) e tutgai sin «Meine Infos».', du: 'Avra l’app «Sicherheit», s’annunzia sche necessari cun Tes conto da Google e tutga sin «Meine Infos».' },
     android2: 'Sut «Medizinische Daten» endatar gruppa da sang, allergias e medicaments.',
-    android3: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord tes contacts.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    android3: { sie: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord Voss contacts.', du: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord Tes contacts.' },
     android4: 'Sut «Zugriff auf Notfallinformationen» tscherner «Anzeigen, wenn gesperrt».',
     androidLink: 'Agid dad Android: Im Notfall Hilfe anfordern (tudestg)',
     androidUrl: 'https://support.google.com/android/answer/9319337?hl=de',
@@ -2269,8 +2282,10 @@ export default {
     dossierVerweis: 'Preparar las medemas indicaziuns per il pass d’urgenza en il telefonin',
     zurueck: 'Enavos a l’urgenza',
     einstiegTitel: 'Preparar il pass d’urgenza en il telefonin',
-    einstiegSub: 'Per il visur bloccà: tias indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.',
-    fussNichtsUebertragen: 'Questa pagina na trametta nagut. Copià vegn mo, sche ti tutgas sin «Copiar».',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    einstiegSub: { sie: 'Per il visur bloccà: Vossas indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.', du: 'Per il visur bloccà: Tias indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
+    fussNichtsUebertragen: { sie: 'Questa pagina na trametta nagut. Copià vegn mo, sche Vus tutgais sin «Copiar».', du: 'Questa pagina na trametta nagut. Copià vegn mo, sche Ti tutgas sin «Copiar».' },
   },
   notfallDossier: {
     title: "Dossier d'urgenza",
