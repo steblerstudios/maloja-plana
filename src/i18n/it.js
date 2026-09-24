@@ -1290,6 +1290,8 @@ export default {
           adultSelf: 'Io',
           adultLabel: 'Adulto {nr}',
           addAdult: 'Aggiungi adulto',
+          zweitePersonFehlt: { sie: 'Il Suo stato civile indica una seconda persona, ma nell’economia domestica per ora ne è registrata solo una. La riduzione dei premi e l’assistenza sociale si calcolano con le persone registrate qui.', du: 'Il tuo stato civile indica una seconda persona, ma nell’economia domestica per ora ne è registrata solo una. La riduzione dei premi e l’assistenza sociale si calcolano con le persone registrate qui.' },
+          zweitePersonHinzufuegen: 'Aggiungi la persona',
           adultRelationship: 'Relazione',
           relPartner: 'Partner',
           relRoommate: 'Coinquilino/a',

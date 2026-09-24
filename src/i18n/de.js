@@ -1296,6 +1296,8 @@ export default {
           adultSelf: 'Ich',
           adultLabel: 'Erwachsene/r {nr}',
           addAdult: 'Erwachsene/n hinzufügen',
+          zweitePersonFehlt: { sie: 'Ihr Zivilstand nennt eine zweite Person, im Haushalt ist bisher nur eine erfasst. Prämienverbilligung und Sozialhilfe rechnen mit den Personen, die hier stehen.', du: 'Dein Zivilstand nennt eine zweite Person, im Haushalt ist bisher nur eine erfasst. Prämienverbilligung und Sozialhilfe rechnen mit den Personen, die hier stehen.' },
+          zweitePersonHinzufuegen: 'Person hinzufügen',
           adultRelationship: 'Beziehung',
           relPartner: 'Partner/in',
           relRoommate: 'Mitbewohner/in',

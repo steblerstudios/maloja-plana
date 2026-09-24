@@ -13,6 +13,7 @@ import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, al
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
+import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -50,7 +51,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
   const [einkommenPartner, setEinkommenPartner] = useState(() => {
     // K62: 0 ist eine Antwort (kein Partnereinkommen) und wird als «0» übernommen.
-    const p = data.basis?.household?.partnerIncome;
+    // K62-Nachlauf A: nur, wenn das Feld im Profil sichtbar ist (utils/partnereinkommen.js).
+    const p = partnerEinkommenRoh(data.basis);
     return p == null || p === '' ? '' : String(Math.round(Number(p) * 12) || 0);
   });
   const [bvgGuthaben, setBvgGuthaben] = useState('');

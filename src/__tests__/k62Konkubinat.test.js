@@ -86,7 +86,7 @@ const steuerrechner = (data) => {
   render();
   zustand.effekte.forEach((fn) => fn());
   const alle = render();
-  return { alle, text: texte(alle), saeulen: alle.some((k) => k.type === SteuerSaeulen) };
+  return { alle, text: texte(alle), saeulen: alle.some((k) => k.type === SteuerSaeulen), render };
 };
 
 describe('Messung · ESTV rechnet Konkubinat einzeln', () => {
@@ -232,6 +232,30 @@ describe('K62.5 · Zivilstand-Vergleich im Konkubinat', () => {
   it('der Probiermodus «verheiratet» öffnet den Vergleich im Konkubinat nicht (Profil zählt)', () => {
     const e = { ...steuerEingabenAusDaten(profil({ partnerIncome: undefined })), verheiratet: true, partnerAngegeben: true, partnerAngegebenProfil: false };
     expect(tarifvergleichGrund(e)).toBe('konkubinatPartnerOffen');
+  });
+
+  // K62-Nachlauf D (K62 Punkt 4): im Profil Konkubinat, Partnerangabe fehlt, im Steuerrechner
+  // «verheiratet» angekreuzt. Vorher: gerechnet als Alleinverdiener-Ehepaar (gekennzeichnet) — obwohl
+  // eine Partnerin oder ein Partner im Haushalt lebt und das Einkommen offen ist. Jetzt wie im echten
+  // Profil «verheiratet» ohne Angabe: keine Zahl, «Angabe fehlt».
+  it('Probiermodus «verheiratet» im Konkubinat ohne Partnerangabe: «Angabe fehlt», kein Alleinverdiener-Ehepaar', () => {
+    for (const partnerIncome of [undefined, '']) {
+      const r = steuerrechner(profil({ partnerIncome }));
+      const box = r.alle.find((k) => k.props.type === 'checkbox' && k.props.checked === false && typeof k.props.onChange === 'function');
+      box.props.onChange({ target: { checked: true } });
+      const nach = texte(r.render());
+      expect(nach, String(partnerIncome)).toContain('tax.ohneZahlPartnerOffen');
+      expect(nach, String(partnerIncome)).not.toContain('tax.annahmeAlleinverdiener');
+    }
+  });
+
+  it('Probiermodus «verheiratet» im Konkubinat mit bewusst 0: gerechnet wie gemessen (Alleinverdiener)', () => {
+    const r = steuerrechner(profil({ partnerIncome: '0' }));
+    const box = r.alle.find((k) => k.props.type === 'checkbox' && k.props.checked === false && typeof k.props.onChange === 'function');
+    box.props.onChange({ target: { checked: true } });
+    const nach = texte(r.render());
+    expect(nach).toContain('tax.annahmeAlleinverdiener');
+    expect(nach).not.toContain('tax.ohneZahlPartnerOffen');
   });
 
   it('ein eingetragener Wert: weiter der alte Hinweis', () => {

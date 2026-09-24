@@ -23,8 +23,10 @@ const tausender = (n) => { const r = Math.round(n); return r >= 1000 ? r.toStrin
 
 // R4: verheiratet ohne Partnerangabe zeigt keine Zahl mehr. Gemessen ist das Alleinverdiener-Ehepaar,
 // darum tragen die verheirateten Profile hier das Partnereinkommen 0 ausdrücklich ein.
+// K62-Nachlauf A: ein Partnereinkommen zählt nur mit sichtbarem Feld — also mit erfasster zweiter
+// Person (oder Zivilstand verheiratet/Konkubinat). Darum hier zwei Erwachsene, sobald eines angegeben ist.
 const profil = ({ canton = 'ZH', monat, verheiratet = false, kinder = 0, elterntarif, incomeType, partnerIncome, steuerkanton } = {}) => ({
-  basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : verheiratet ? { partnerIncome: '0' } : {}) } },
+  basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet || partnerIncome ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : verheiratet ? { partnerIncome: '0' } : {}) } },
   finanzen: { monthlyIncome: monat, ...(incomeType ? { incomeType } : {}) },
   ...(steuerkanton ? { behoerden: { cantoneOfTaxation: steuerkanton } } : {}),
   wohnen: {},
