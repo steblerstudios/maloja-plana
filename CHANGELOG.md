@@ -56,7 +56,8 @@ kommt der Changelog immer mit, nie doppelt.*
   Dazu der Inhalt des zugeklappten Abschnitts «Fortschritt im Detail» (Kapitel-Fortschritt
   und Grundordnung) als eigenes Stück `src/BergDetail.jsx`: beim ersten Bild ist er zu,
   also unsichtbar; das Dashboard hängt ihn sofort ein und er lädt gleich danach.
-  62,00 → 60,91 kB gzip.
+  62,00 → 60,91 kB gzip. Nach dem Nachziehen von `main` (Basis dort 64,93 kB):
+  **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
 - **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
