@@ -182,7 +182,7 @@ export const EO_PARAMS = {
 };
 
 export const EO_DATA_VERSION = '2026';
-export const EO_DATA_SOURCE = 'EOG Art. 16a–16n, EOMV, BSV 2026';
+export const EO_DATA_SOURCE = 'EOG Art. 16a–16x, EOMV, BSV 2026';
 
 // O3 — Ergebnis-Art des EO-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
 // Die Eckwerte sind amtlich (80 %, Höchstbetrag, Tage), aber der Rechner nimmt den Anspruch für
