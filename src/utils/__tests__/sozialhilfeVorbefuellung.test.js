@@ -5,7 +5,7 @@ import { sozialhilfeVorbefuellung as vb, saeule3aBeziehbar } from '../sozialhilf
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ adults: 1, einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
+    expect(vb({})).toEqual({ adults: 1, weiterePersonen: 0, wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 
@@ -81,6 +81,29 @@ describe('sozialhilfeVorbefuellung', () => {
     const r = vb({ basis: { maritalStatus: 'cohabiting', household: { adultsList: [{}], partnerIncome: '3000' } } });
     expect(r.andereEinkuenfte).toBe('');
     expect(r.partnerKonkubinat).toBe(true);
+  });
+
+  describe('Haushalt: Unterstützungseinheit und weitere Personen (SKOS C.3.1/C.3.2)', () => {
+    it('verheiratet, 2 Erwachsene → Einheit 2, keine weiteren', () => {
+      const r = vb({ basis: { maritalStatus: 'married', household: { adultsList: [{}] } } });
+      expect([r.adults, r.weiterePersonen, r.wohnform]).toEqual([2, 0, 'allein']);
+    });
+    it('Konkubinat, 2 Erwachsene → Einheit 1 + 1 weitere, startet familienähnlich', () => {
+      const r = vb({ basis: { maritalStatus: 'cohabiting', household: { adultsList: [{}] } } });
+      expect([r.adults, r.weiterePersonen, r.wohnform]).toEqual([1, 1, 'familienaehnlich']);
+    });
+    it('ledig in WG mit 3 Erwachsenen → Einheit 1 + 2 weitere', () => {
+      const r = vb({ basis: { maritalStatus: 'single', household: { adultsList: [{}, {}] } } });
+      expect([r.adults, r.weiterePersonen]).toEqual([1, 2]);
+    });
+    it('verheiratet, aber nur 1 Person erfasst → Einheit 1 (die zweite fehlt, nichts erfinden)', () => {
+      const r = vb({ basis: { maritalStatus: 'married', household: { adultsList: [] } } });
+      expect([r.adults, r.weiterePersonen]).toEqual([1, 0]);
+    });
+    it('verheiratet mit erwachsenem Kind → Einheit 2 + 1 weitere', () => {
+      const r = vb({ basis: { maritalStatus: 'married', household: { adultsList: [{}, {}] } } });
+      expect([r.adults, r.weiterePersonen]).toEqual([2, 1]);
+    });
   });
 
   it('zweite Person gelöscht, ledig: der gespeicherte Partnerlohn zählt nicht und löst keinen Hinweis aus', () => {

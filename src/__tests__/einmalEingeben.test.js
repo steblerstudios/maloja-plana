@@ -57,6 +57,17 @@ describe('Sozialhilfe-Rechner übernimmt, was im Profil steht', () => {
     expect(feldWert(konk, t('sh.andereEinkuenfte'))).toBe('815');
     expect(konk).toContain(t('sh.konkubinatHint'));
   });
+  it('Konkubinat: 1 unterstützt + 1 weitere, Wohnform «gemeinsam», Grundbedarf 812 (GR-Merkblatt)', () => {
+    const konk = zeichne(SozialhilfeRechner, { ...profil, basis: { ...profil.basis, maritalStatus: 'cohabiting', household: { adultsList: [{}] } } });
+    expect(konk).toMatch(/aria-label="Weitere Personen im Haushalt"[^>]*>(?:(?!<\/select>).)*<option value="1" selected=""/s);
+    expect(konk).toMatch(/<input type="radio" name="sh-wohnform"(?=[^>]*checked="")(?=[^>]*value="familienaehnlich")[^>]*>/);
+    expect(konk).toContain(t('sh.mieteAnteilHint'));
+    expect(konk).toMatch(/Anteil 1 von 2 Pers\.\)<\/td><td[^>]*>812</);
+  });
+  it('allein: kein Wohnform-Block, Grundbedarf 1061', () => {
+    expect(html).not.toContain('name="sh-wohnform"');
+    expect(html).toMatch(/\(1 Pers\.\)<\/td><td[^>]*>1(?:&#x27;|’|'|\.)061</);
+  });
   it('leeres Profil: keine Vorbefüllung, kein Hinweis', () => {
     const leer = zeichne(SozialhilfeRechner, {});
     expect(feldWert(leer, t('sh.vermoegen'))).toBe('');

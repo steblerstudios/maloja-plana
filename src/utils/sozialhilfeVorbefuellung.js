@@ -13,6 +13,10 @@
 // - Vermögen = Sparkonto + Wertschriften + übriges Vermögen + freie Vorsorge 3b. Die Säule 3a
 //   ist gebunden und zählt erst, wenn sie bezogen werden kann: frühestens fünf Jahre vor dem
 //   Referenzalter (BVV 3 Art. 3 Abs. 1) — ab dann mit eigenem Hinweis.
+// - Haushalt: zur Unterstützungseinheit zählen die antragstellende Person und, bei Ehe oder
+//   eingetragener Partnerschaft, die Partnerin/der Partner. Alle übrigen Erwachsenen im Haushalt
+//   (Konkubinat, WG, erwachsene Kinder) sind «weitere Personen»; die Wohnform startet dann mit
+//   «familienähnlich» — so rechnet die Sozialbehörde im Zweifel (SKOS-RL C.3.1/C.3.2).
 // - Erwerbstätig = Anstellungstyp angestellt/selbstständig/freiberuflich, oder ohne Anstellungstyp
 //   ein eingetragener Arbeitgeber. «Rentner» geht vor einem liegen gebliebenen Arbeitgeber.
 
@@ -70,8 +74,14 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     ? ERWERBSTAETIG.includes(typ)
     : typeof f.employer === 'string' && f.employer.trim() !== '';
 
+  const erwachsene = erwachseneImHaushalt(basis.household);
+  const einheitErwachsene = verheiratet && erwachsene >= 2 ? 2 : 1;
+  const weiterePersonen = Math.max(0, erwachsene - einheitErwachsene);
+
   return {
-    adults: erwachseneImHaushalt(basis.household),
+    adults: einheitErwachsene,
+    weiterePersonen,
+    wohnform: weiterePersonen > 0 ? 'familienaehnlich' : 'allein',
     einkommen,
     einkommenMitNebenerwerb: !hauptBrutto && nebenZaehlt,
     hauptBrutto,
