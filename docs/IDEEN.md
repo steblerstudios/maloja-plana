@@ -33,6 +33,90 @@ wird in einem eigenen Schritt.
 
 ---
 
+## Horizonte — was wann dran ist (Stand 24.09.2026)
+
+*Schritt 2 der Runde vom 24.09. Diese Tabelle ist der **einzige Ort für Zeitpunkte**; die
+Abschnitte unten beschreiben die Ideen, sie datieren sie nicht. Ein Horizont ist ein
+Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler Studios.*
+
+**Wie sortiert wurde:**
+- **Oktober** — klein, ohne offenen Entscheid, verträglich mit «lokal gespeichert» und
+  baut auf Vorhandenem auf. Der Oktober ist schon teils belegt (Oktober-Paket der Bauliste:
+  Kantons-Nachfragen K30/K32, RM-Gegenlese K29, Umbauten O1–O7), darum bewusst wenig.
+- **Winter** (Nov. bis Feb.) — mittelgross, oder es braucht erst einen Baustein aus dem
+  Oktober (meist O3 «Ergebnis-Art als festes Feld» oder einen Entscheid).
+- **Irgendwann** — hängt an einem Grundsatz-Entscheid (Gamification, Backend, Konten) oder
+  an Menschen ausserhalb (Übersetzung, Partner).
+
+### Oktober — entscheiden
+
+| Entscheid | § | Warum jetzt |
+|---|---|---|
+| Kern: Ordner oder Ereignisse · zusammen mit der Kapitel-Architektur und der App-Struktur | §0, §6 | davon hängt ab, wie der ganze Winter gebaut wird |
+| Gamification: House of Life gegenüber Grundstück-Blatt | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
+| Baum oder Obstgarten · zwei Bäume verschmelzen | §2 | braucht nur ein Mockup, kein Bau |
+| Sechs Meinungs-Entscheide (E4), vor allem Preis/Paywall | §11 | Preis bestimmt, was Maloja nach aussen verspricht |
+| Bottom-Nav oder Hamburger | §6 | gehört zur Kapitel-Frage |
+
+### Oktober — bauen (klein)
+
+| Idee | § | hängt an |
+|---|---|---|
+| «Vor dem Wechsel prüfen»-Schritt in KVG- und Zusatz-Wechsel | §13 | nichts; bestehende Abläufe |
+| «Das verlässt dein Gerät»-Vorschau vor Export, Dossier, Brief | §13 | nach K3/K17 (Export), wie O2 |
+| Speichern in kDrive / Proton Drive, **Weg A** (über «Teilen», mit Hinweis) | §14 | nichts; keine Verbindung nach aussen |
+| Karten **Stufe 1**: Link «In OpenStreetMap öffnen» | §14 | Muster `ExternerLink` |
+| Fristen werden Termine (`.ics`) | §5 | `icsExport.js` existiert |
+| Herzensempfehlungen: neue Kandidaten prüfen und als ein ruhiges Blatt bündeln | §9 | je Angebot prüfen, ob es noch besteht |
+| Schwarz-Weiss-Modus: ist die vorhandene Graustufen-Einstellung das Gewünschte? | §4 | nur ansehen und entscheiden |
+
+### Oktober — vorbereiten, ohne Code
+
+| Idee | § | hängt an |
+|---|---|---|
+| **Grauzonen sammeln** — eine Liste echter Fälle, jeder mit Quelle | §0 | Recherche; Bau erst im Winter |
+| Übersetzer:innen / Partnerorganisation für Asyl-Sprachen suchen | §11 | Stebler Studios, Kontakt nach aussen |
+| Fachaussagen vom 19.07. belegen (KK-Wechsel mit Schulden, Kündigungstermine, Rückforderungen) | §5 | Quellen; `swiss-precision-pruefer` |
+
+### Winter
+
+| Idee | § | hängt an |
+|---|---|---|
+| Generatoren fürs Lebensende (Vorsorgeauftrag, Testament, Bestattungsauftrag) | §5 | O3; Rechts-Prüfung vor jeder Vorlage |
+| Weitere Generatoren: Einsprachen, IPV-Anträge, Kündigungen, Schweizer Briefformat | §5 | O3; Rechts-Prüfung |
+| «Nächster Schritt» mit Warum · aus einem Befund wird eine Aufgabe | §5, Bauliste O7 | O3 + Vorgangs-Modell |
+| Jedes Ereignis mit 13 Ebenen · Lebenszustände schalten Abläufe um | §0 | Kern-Entscheid (Oktober) |
+| Grauzonen als Entscheidungsbäume | §0 | die Oktober-Sammlung |
+| Schnellchecks als Instrumente | §3 | Design-Mockup |
+| Kapitel-Architektur umsetzen | §6 | Kern-Entscheid (Oktober) |
+| Versicherungen: Ablauf melden, günstigere Wege · Pflichten sichtbar machen | §5 | Oktober-Belege |
+| Budget: Ziele und Richtwerte · Haushalt genauer erfassen · Hausrat → Hauswert | §5 | Keine-Doppel-Eingabe-Audit |
+| Zukunftsrechner-Reste · Kreditkarten · Säule 3b · «Lohnt sich ein Umzug?» | §5 | — |
+| KK-Rechnung stimmt nicht · UVG-Brief · Führerschein · Stiftungen und Härtefonds | §5 | Generatoren-Muster |
+| Berechtigungs-Landkarte je Kanton · Befreiungen · AHV-Beitragsjahre | §3 | Kantons-Belege (K30/K32) |
+| Vergünstigungen weiterer Kantone · eigener Bereich für Beeinträchtigungen · Screening-Abgleich (Faden 3-II) | §3, §5 | je Quelle einzeln belegen |
+| Keine-Doppel-Eingabe-Audit · Drei-Schritt-Standard · Robustheits-Checkliste · Quellen-Audit | §6, §7 | O1, O4 |
+| Barrierefreiheit systematisch (WCAG 2.1 AA / eCH-0059) · Menschen, die kaum lesen | §8 | — |
+| Skeuomorphe Metaphern je Bereich · Lebensbaum: Wuchs, Jahreszeiten, hängende Früchte | §1, §2 | Baum-Entscheid (Oktober); **nicht** an der Gamification |
+| Beispiel-Modus mit Personas | §10 | Persona-Durchlauf |
+
+### Irgendwann
+
+| Idee | § | hängt an |
+|---|---|---|
+| House of Life · Grundstück-Modus · Baracke → Villa · Anschaffungs-Lebenslinien · Haus-Mapping | §1, §2 | **Gamification-Entscheid** |
+| Atmosphäre: Leuchtturm, Stempel, seltene Überraschungen · Achievements | §4, §2 | Gamification-Entscheid |
+| Backend, Sync, SwissID · Haushalt teilen · Zugang nach dem Tod | §11, §0 | Grundsatz local-first |
+| kDrive/Proton direkt angebunden · SecureSafe · Karten Stufe 2/3 | §14 | Grundsatz local-first, neue DSFA |
+| Asyl-Sprachen freischalten (Albanisch, Tigrinya, Arabisch) | §11 | Menschen, die übersetzen |
+| Canton Rule Engine · Template Engine · Derived State | §6 | wächst aus den Winter-Umbauten |
+| Petitionsgenerator · Mietvertrag-Generator | §5 | Generatoren-Muster, Rechts-Prüfung |
+| Zertifizierungen · Markenschutz · Business-Modell · Marketing und Pilot | §11 | Preis-Entscheid; «Marketing nach fertig» |
+| Freunde-Dörfer | §2 | bleibt geparkt |
+| Handy-Gesten / Shake | §8 | erst präzisieren, was sie tun sollen |
+
+---
+
 ## 0 · Der Kern — was Maloja eigentlich ist
 
 - ⭐ **Kern-These** *⟨Brain-Dump 30.06.⟩*: «Nicht Budget. Nicht Dokumente. Nicht
@@ -60,7 +144,11 @@ wird in einem eigenen Schritt.
   (Haushalt, Nachlass-Zugang).
 - ❓ **Widerspruch zum Masterplan** — der Masterplan (24.08.) sagt «ein digitaler
   Lebensordner für Dokumente, Budget, Versicherungen und Notfall», die Kern-These sagt
-  ausdrücklich «nicht Dokumente». Offen, gemeinsam zu klären.
+  ausdrücklich «nicht Dokumente». **Entscheid 24.09.2026: im Oktober klären, zusammen mit der
+  Kapitel-Architektur (§6)** — im Grunde dieselbe Frage: was sieht man zuerst, worauf geht
+  die Bauzeit? Hilfsbild aus dem Gespräch: *der Ordner ist das Haus, die Ereignisse sind das,
+  was im Leben passiert.* Nach aussen heisst Maloja heute «Schweizer Lebensordner» (Titel,
+  Suchmaschinen-Texte, strukturierte Daten in `index.html`).
 
 ---
 
