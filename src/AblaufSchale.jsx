@@ -74,7 +74,9 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
 // Fuss-Hinweise (Hinweis-Piktogramm je Zeile).
 // `quelle`: die Zeile «Quellen: … · Stand …» (i18n-Text mit [[Wort|url]]-Markern,
 // siehe utils/renderSource.js). Steht zuoberst im Fuss, weil sie für den ganzen
-// Ablauf gilt. Seit 24.09.2026 trägt jeder der 19 Abläufe eine — vorher zwei.
+// Ablauf gilt. Seit 24.09.2026 trägt jeder der 19 Abläufe eine (AsylView ohne
+// diese Schale setzt sie selbst); vorher hatten zwei eine. Wache:
+// src/__tests__/ablaufQuellen.test.js.
 export const AblaufFooter = ({ palette, notes, quelle, t }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },

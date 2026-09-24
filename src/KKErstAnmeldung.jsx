@@ -72,7 +72,7 @@ export const KKErstAnmeldung = ({ palette, t, data, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kkErst.asylLink'), onClick: () => onNavigate('asyl') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('kkErst.footerAufnahme'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('kkErst.quelle'), notes: [t('kkErst.footerAufnahme'), t('trust.localOnly')] })
   );
 };
 

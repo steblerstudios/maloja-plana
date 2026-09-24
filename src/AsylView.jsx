@@ -3,6 +3,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { renderSource } from './utils/renderSource.js';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -176,7 +177,11 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
         style: { ...s.crosslink, marginTop: space.xs + 'px' },
         onClick: () => onNavigate('vorsorge'),
       }, t('asyl.linkAhvIntl'))
-    )
+    ),
+
+    // Quellen — dieselbe Zeile, die die anderen Abläufe im Fuss tragen (24.09.2026).
+    React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.6, marginTop: space.lg + 'px' } },
+      renderSource(t('asyl.quelle'), null, t))
   );
 };
 

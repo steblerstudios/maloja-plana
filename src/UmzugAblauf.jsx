@@ -158,7 +158,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.step4Link'), onClick: () => onNavigate('briefe') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('umzug.footerFrist'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('umzug.quelle'), notes: [t('umzug.footerFrist'), t('trust.localOnly')] })
   );
 };
 

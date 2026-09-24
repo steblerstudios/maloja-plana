@@ -92,7 +92,10 @@ export const LEBENSZUSTAENDE = [
     key: 'frischZugezogen',
     berechtigungen: [
       { key: 'kkErst',        view: 'kkerst',      quelle: 'BAG / KVG',            stand: '2026' },
-      { key: 'bewilligung',   view: 'bewilligung', quelle: 'SEM / Kanton',         stand: '2026' },
+      // 14 Tage: RHG Art. 11 Bst. a; mit Bewilligungspflicht vor Stellenantritt: AIG Art. 12 I.
+      // Ziel bleibt vorerst `bewilligung` — einen Zuzugs-Ablauf aus dem Ausland gibt es
+      // noch nicht (`umzug` kennt nur Umzüge innerhalb der Schweiz). Offen, 24.09.2026.
+      { key: 'bewilligung',   view: 'bewilligung', quelle: 'RHG Art. 11 · AIG Art. 12', stand: '2026' },
       { key: 'quellensteuer', view: 'tax',         quelle: 'ESTV / Kanton',        stand: '2026' },
       { key: 'ipv',           view: 'premium',     quelle: 'BAG / Kanton',         stand: '2026' },
       { key: 'mietzins',      view: 'mietzins',    quelle: 'Kanton',               stand: '2026' },

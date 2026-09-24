@@ -98,7 +98,7 @@ export default {
       intro: 'The first weeks come with quiet deadlines and rights that are easy to miss — a few steps taken early save trouble later.',
       berechtigungen: {
         kkErst: { titel: 'Register for health insurance', text: 'Basic health insurance is mandatory and must be arranged within three months of arrival — cover then applies retroactively from day one.' },
-        bewilligung: { titel: 'Registration & residence permit', text: 'Register at your commune within 14 days of arrival; the residence permit follows. Deadlines and documents differ by nationality and canton.' },
+        bewilligung: { titel: 'Registration & residence permit', text: 'Register at your commune within 14 days of arrival — before your first working day if you need a permit and work here. The residence permit follows. Deadlines and documents differ by nationality and canton.' },
         quellensteuer: { titel: 'Withholding tax (Quellensteuer)', text: 'Without a settlement permit (C), tax is deducted directly from your salary. Deductions can often be reclaimed through a later ordinary assessment.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'New residents on a low or middle income can have the canton help pay health-insurance premiums — from the very first year.' },
         mietzins: { titel: 'Rent assistance', text: 'Some cantons and communes contribute to rent when it weighs heavily on a modest income — worth checking after moving in.' },
@@ -204,6 +204,7 @@ export default {
     reminderNotes: 'Ordinary cancellation of supplementary insurance (often 3 months before year-end). Only cancel once the new supplementary insurer has accepted you. Check the exact deadline in the policy.',
   },
   umzug: {
+    quelle: 'Sources: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]] (German text where no English exists, checked September 2026).',
     title: 'Moving home',
     intro: 'A move brings many small steps. Here is the calm overview — address, municipality, old flat. One thing at a time.',
     step1Title: '1 · New address',
@@ -252,6 +253,7 @@ export default {
     footerFrist: 'The 14-day deadline is a guide — some municipalities handle it a little differently. When in doubt, ask your municipality.',
   },
   unfallKrankheit: {
+    quelle: 'Sources: [[UVG Art. 45|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_45]], [[KVG Art. 8|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_8]] (German text where no English exists, checked September 2026).',
     title: 'Accident or illness — what to do?',
     intro: 'When something happens, help comes first — then the paperwork. Here is the calm overview: emergency, who pays, inability to work, records.',
     step1Title: '1 · In an emergency, first',
@@ -280,6 +282,7 @@ export default {
     footerOrientation: 'Orientation, not medical or legal advice — in an emergency, the emergency number counts (144).',
   },
   neuerJob: {
+    quelle: 'Sources: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]] (German text where no English exists, checked September 2026).',
     title: 'New job',
     intro: 'A new job changes more than just your salary. Here is the calm overview of what belongs to it — contract, pension, insurances, taxes, deadlines.',
     step1Title: '1 · Check and file your employment contract',
@@ -304,6 +307,11 @@ export default {
     footerProbe: 'The probation length is in your contract (often 1–3 months); the reminder is a guide, adjust it.',
   },
   stelleVerloren: {
+    step1DateLabel: 'End of employment (as stated in the notice)',
+    step1DateHint: 'Register by {date} at the latest if you claim daily allowance from then on (AVIG Art. 17). Earlier is better — you can also register online at arbeit.swiss.',
+    step1Button: 'Save the latest RAV date ({date})',
+    reminderRavTitle: 'Register with the RAV — today at the latest',
+    quelle: 'Sources: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (German text where no English exists, checked September 2026).',
     title: 'Lost your job — what to do?',
     intro: 'When the job falls away, every day counts. Here is the calm overview: first the most important registration, then insurances, pension and records.',
     step1Title: '1 · Register with the RAV — immediately',
@@ -326,6 +334,7 @@ export default {
     footerSperrzeit: 'If you resign yourself or are at fault for the termination, the RAV can impose suspension days — seek advice beforehand.',
   },
   todesfall: {
+    quelle: 'Sources: [[ZStV Art. 35|https://www.fedlex.admin.ch/eli/cc/2004/362/de#art_35]], [[ZGB Art. 567|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_567]] (German text where no English exists, checked September 2026).',
     title: 'A death in your circle',
     intro: 'When someone close dies, much has to be arranged at once — yet most of it can wait. A calm overview without pressure: the first days, the funeral, pensions & insurance, the estate.',
     step1Title: '1 · The first days',
@@ -348,6 +357,7 @@ export default {
     footerNote: 'Grief takes time, and most steps can wait. A counselling service or the funeral home helps you keep an overview. This is orientation, not legal advice.',
   },
   pflege: {
+    quelle: 'Sources: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]] (German text where no English exists, checked September 2026).',
     title: 'Caring for relatives',
     intro: 'Care given quietly often goes unnoticed — yet it comes with entitlements many people never claim. A calm overview: pension credit, compensation, support.',
     step1Title: '1 · AHV caregiving credit',
@@ -378,6 +388,7 @@ export default {
     footerNote: 'Orientation, not legal advice. Entitlements and deadlines are clarified by the compensation office or an advice centre.',
   },
   iv: {
+    quelle: 'Sources: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]] (German text where no English exists, checked September 2026).',
     title: 'Illness & disability insurance (IV)',
     intro: 'A longer illness or impairment raises questions about salary, insurance and making ends meet. A calm overview, readable on low energy: inability to work, register with IV early, secure your livelihood, get support.',
     step1Title: '1 · Inability to work — salary & benefits',
@@ -397,6 +408,7 @@ export default {
     footerNote: 'On little energy, every small step counts. Get support — counselling services are free. This is orientation, not legal or medical advice.',
   },
   bewilligung: {
+    quelle: 'Sources: [[VZAE Art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_59]], [[AIG Art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_33]] (German text where no English exists, checked September 2026).',
     title: 'Renewing your residence permit',
     intro: 'A residence permit (B or L) expires and is not renewed automatically — you must apply in good time. A calm overview: deadline, documents, duties to report, and looking ahead.',
     step1Title: '1 · Renew in good time',
@@ -421,6 +433,7 @@ export default {
     footerNote: 'Never let the permit expire without having applied. If unsure, the cantonal migration authority or a counselling service for migrants can help. This is orientation, not legal advice.',
   },
   fuehrerausweis: {
+    quelle: 'Sources: [[VZV Art. 27|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_27]], [[SVG Art. 15a|https://www.fedlex.admin.ch/eli/cc/1959/679_705_685/de#art_15_a]] (German text where no English exists, checked September 2026).',
     title: 'Driving licence',
     intro: 'A Swiss driving licence does not expire — but a few things are worth keeping in view: exchanging the old paper licence, the medical check-up from age 75, and the probationary period for new drivers. Here is the calm overview.',
     step1Title: '1 · Store your licence safely',
@@ -443,10 +456,10 @@ export default {
     relatedTitle: 'Related events',
     relatedUmzug: 'Moving — change of address',
     relatedPension: 'Retirement',
-    footerSource: 'Sources: ch.ch and the Federal Roads Office (ASTRA), as of 2026.',
     footerNote: 'Deadlines and costs can vary by canton. The cantonal road traffic office is authoritative. This is orientation, not legal advice.',
   },
   heirat: {
+    quelle: 'Sources: [[ZGB Art. 97|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_97]], [[DBG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_9]] (German text where no English exists, checked September 2026).',
     title: 'Marriage or partnership',
     intro: 'Marriage or registered partnership change your civil status, taxes and pension provision all at once. A calm overview: register the wedding, name & status, taxes, insurance.',
     step1Title: '1 · Register the marriage',
@@ -471,6 +484,7 @@ export default {
     footerNote: 'A marriage contract (matrimonial property regime) is optional but can be sensible — especially with home ownership or self-employment. This is orientation, not legal advice.',
   },
   kind: {
+    quelle: 'Sources: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[ZGB Art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_260]], [[EOG Art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_b]] (German text where no English exists, checked September 2026).',
     title: 'Having a child',
     intro: 'A child changes many things at once — registrations, insurance, allowances, budget. A calm step-by-step overview, so nothing is forgotten.',
     step1Title: '1 · Register the birth',
@@ -496,6 +510,7 @@ export default {
     footerNote: 'Much goes through the employer and compensation office — keep confirmations safe. This is orientation, not legal advice.',
   },
   trennung: {
+    quelle: 'Sources: [[ZGB Art. 176|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_176]], [[ZGB Art. 114|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_114]] (German text where no English exists, checked September 2026).',
     title: 'Separation or divorce',
     intro: 'A separation is emotionally hard — and raises many practical questions. A calm overview without pressure: advice, housing, children & support, finances & taxes.',
     step1Title: '1 · Calm & counselling',
@@ -516,6 +531,7 @@ export default {
     footerNote: 'You don’t have to arrange everything alone — mediation, marriage and legal counselling services are there. This is orientation, not legal advice.',
   },
   selbstaendigkeit: {
+    quelle: 'Sources: [[AHV leaflet 2.02|https://www.ahv-iv.ch/p/2.02.e]], [[UVG Art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_4]] (German text where no English exists, checked September 2026).',
     title: 'Becoming self-employed',
     intro: 'Going self-employed brings freedom — and responsibilities your employer used to carry. Much no longer happens automatically. A calm overview: AHV status, type of activity, insurance gaps and taxes.',
     step1Title: '1 · Get your AHV status recognised',
@@ -538,6 +554,7 @@ export default {
     footerNote: 'Plan your pension deliberately — the gap without a pension fund only hits you decades later. Advice from the compensation office or a start-up counselling service is worthwhile. This is orientation, not legal or tax advice.',
   },
   betreibung: {
+    quelle: 'Sources: [[SchKG Art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_74]] (German text where no English exists, checked September 2026).',
     title: 'Debt-collection notice — what to do?',
     intro: 'A payment order looks threatening, but at first it is only a claim — not a verdict and not a criminal record. Right now only one thing matters: the 10-day deadline. A calm overview.',
     step1Title: '1 · Stay calm — you have 10 days',
@@ -556,6 +573,7 @@ export default {
     footerNote: 'A debt-collection entry is not a criminal record. It disappears from the register after five years; for an unjustified collection you can request its deletion. This is orientation, not legal advice.',
   },
   pensionierung: {
+    quelle: 'Sources: [[AHVG Art. 21|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_21]], [[BVG Art. 37|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_37]], [[AHV leaflet 3.01|https://www.ahv-iv.ch/p/3.01.e]] (German text where no English exists, checked September 2026).',
     title: 'Retirement',
     intro: 'The move into retirement needs early planning — much of it isn’t automatic and has its own deadlines. A calm overview: register for AHV, decide on your pension fund, draw your third pillar, and check what you’re entitled to.',
     step1Title: '1 · Register for the AHV pension',
@@ -583,6 +601,7 @@ export default {
     footerEarly: 'Early retirement reduces the AHV and often the pension-fund pension for life. Work out early what is affordable — and get an official projection from your compensation office.',
   },
   kkErst: {
+    quelle: 'Sources: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[KVV Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_7]] (German text where no English exists, checked September 2026).',
     title: 'Health insurance for the first time',
     intro: 'New to Switzerland, or insuring yourself for the first time? Basic insurance is mandatory — but you have time and a free choice. A calm overview: first the deadline, then the insurer, franchise and a possible subsidy.',
     step1Title: '1 · Insure within 3 months',
@@ -620,6 +639,7 @@ export default {
     noReset: "Maloja can't reset your passphrase — only you know it.",
   },
   kvgWechsel: {
+    quelle: 'Sources: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (German text where no English exists, checked September 2026).',
     checkIntro: "A lower premium alone isn't a reason to switch. Pause for a moment — does the switch really fit?",
     checkPoint1: "Basic insurance covers the same legally defined benefits at every insurer. Switching doesn't change your coverage and doesn't interrupt ongoing treatment.",
     checkPoint2: 'A lower premium often comes with a savings model (family doctor, telemedicine, HMO) or a higher deductible. Does that fit your everyday needs?',
@@ -4589,6 +4609,7 @@ export default {
     pathsLink: 'Vocational qualification for adults',
   },
   asyl: {
+    quelle: 'Sources: [[AsylG Art. 108|https://www.fedlex.admin.ch/eli/cc/1999/358/de#art_108]], [[AIG Art. 85a|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_85_a]] (German text where no English exists, checked September 2026).',
     title: "Asylum & protection in Switzerland",
     intro: "The asylum process is complex and often stressful. This page gives you a calm first orientation: which statuses exist, how the procedure works, and where to get personal advice.",
     disclaimer: "This is orientation, not legal advice. For your specific situation, the offices listed below help you free of charge and confidentially.",

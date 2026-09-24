@@ -63,7 +63,7 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
       })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('neuerJob.footerProbe'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('neuerJob.quelle'), notes: [t('neuerJob.footerProbe'), t('trust.localOnly')] })
   );
 };
 

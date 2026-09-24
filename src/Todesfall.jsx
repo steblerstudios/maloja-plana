@@ -47,7 +47,7 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step4Link'), onClick: () => onNavigate('schulden') })
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('todesfall.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('todesfall.quelle'), notes: [t('todesfall.footerNote'), t('trust.localOnly')] })
   );
 };
 

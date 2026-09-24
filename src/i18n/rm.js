@@ -121,7 +121,7 @@ export default {
       intro: 'Las emnas primaras portan cun sai termins silenzius e dretgs facils da perder — intgins pass fatgs baud spargnan lu problems pli tard.',
       berechtigungen: {
         kkErst: { titel: 'S’annunziar tar la cassa da malsauns', text: 'L’assicuranza da basa è obligatorica e sto vegnir concludida entaifer trais mais suenter l’arriv — la protecziun vala lura retroactivamain dapi l’emprim di.' },
-        bewilligung: { titel: 'Annunzia & permiss da dimora', text: 'S’annunziar tar la vischnanca entaifer 14 dis suenter l’arriv; il permiss da dimora suonda. Termins e documents varieschan tenor naziunalitad e chantun.' },
+        bewilligung: { titel: 'Annunzia & permiss da dimora', text: 'Innert 14 Tagen bei der Wohngemeinde anmelden — wer eine Bewilligung braucht und hier arbeitet, schon vor dem ersten Arbeitstag. Die Aufenthaltsbewilligung folgt. Termins e documents varieschan tenor naziunalitad e chantun.' },
         quellensteuer: { titel: 'Taglia a la funtauna', text: 'Senza permiss da domicil (C) vegn la taglia deducida directamain dal salari. Deducziuns pon savens vegnir turnadas via ina taxaziun ordinaria posteriura.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Novs arrivads cun in bass u med entrada pon retschaiver agid dal chantun per las premias da la cassa da malsauns — gia l’emprim onn.' },
         mietzins: { titel: 'Agid per la pigiun', text: 'Intgins chantuns e vischnancas participeschan a la pigiun sch’ella grava fitg sin in modest entrada — da controllar suenter il transferiment.' },
@@ -252,6 +252,7 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für umzug — sauberes Romanisch nachziehen.
   umzug: {
+    quelle: 'Quellen: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]] (geprüft im September 2026).',
     title: 'Umzug',
     intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
     step1Title: '1 · Neue Adresse',
@@ -311,6 +312,7 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für unfallKrankheit — sauberes Romanisch nachziehen.
   unfallKrankheit: {
+    quelle: 'Quellen: [[UVG Art. 45|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_45]], [[KVG Art. 8|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_8]] (geprüft im September 2026).',
     title: 'Unfall oder Krankheit — was tun?',
     intro: 'Wenn etwas passiert, zählt zuerst die Hilfe — dann die Administration. Hier der ruhige Überblick: Notfall, wer zahlt, Arbeitsunfähigkeit, Belege.',
     step1Title: '1 · Im Notfall zuerst',
@@ -346,6 +348,7 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für neuerJob — sauberes Romanisch nachziehen.
   neuerJob: {
+    quelle: 'Quellen: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]] (geprüft im September 2026).',
     title: 'Neuer Job',
     intro: 'Ein neuer Job verändert mehr als nur den Lohn. Hier der ruhige Überblick, was dazugehört — Vertrag, Vorsorge, Versicherungen, Steuern, Fristen.',
     step1Title: '1 · Arbeitsvertrag prüfen & ablegen',
@@ -377,6 +380,12 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für stelleVerloren — sauberes Romanisch nachziehen.
   stelleVerloren: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
+    step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
+    step1Button: 'Spätestens-Termin RAV merken ({date})',
+    reminderRavTitle: 'RAV-Anmeldung — spätestens heute',
+    quelle: 'Quellen: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (geprüft im September 2026).',
     title: 'Stelle verloren — was tun?',
     intro: 'Wenn die Stelle wegfällt, zählt jeder Tag. Hier der ruhige Überblick: zuerst die wichtigste Anmeldung, dann Versicherungen, Vorsorge und Unterlagen.',
     step1Title: '1 · Beim RAV anmelden — sofort',
@@ -406,6 +415,7 @@ export default {
   // TODO(rm): provisorischer Fallback auf Deutsch — sauberes Romanisch nachziehen.
   // Bewusst kein erfundenes RM; RM-Sprechende verstehen DE. Übersetzung folgt im i18n-Durchgang.
   todesfall: {
+    quelle: 'Quellen: [[ZStV Art. 35|https://www.fedlex.admin.ch/eli/cc/2004/362/de#art_35]], [[ZGB Art. 567|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_567]] (geprüft im September 2026).',
     title: 'In mortori en il conturn',
     intro: 'Cura ch’ina persuna stretga mora, sto vegnir reglà bler a medem temp — e tuttina po la gronda part spetgar. Ina survista calma senza squetsch: ils emprims dis, l’enterrament, rentas & assicuranzas, la lubientscha.',
     step1Title: '1 · Ils emprims dis',
@@ -431,6 +441,7 @@ export default {
     footerNote: 'Il led dovra temp, e la gronda part dals pass pon spetgar. In post da cussegliaziun u l’interpresa da pompas funebras gida a mantegnair la survista. Quai è orientaziun, betg cussegl giuridic.',
   },
   pflege: {
+    quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]] (geprüft im September 2026).',
     title: 'Tgirar confamigliars',
     intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista calma: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
@@ -464,6 +475,7 @@ export default {
     footerNote: 'Orientaziun, betg cussegliaziun giuridica. Dretgs e termins vegnan sclerids da la cassa da cumpensaziun u dad in post da cussegliaziun.',
   },
   iv: {
+    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]] (geprüft im September 2026).',
     title: 'Malsogna & AI',
     intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista calma, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
     step1Title: '1 · Inabilitad da lavurar — salari & indemnisaziun',
@@ -488,6 +500,7 @@ export default {
     footerNote: { sie: 'Cun pauca energia conta mintga pitschen pass. Laschai As accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.', du: 'Cun pauca energia conta mintga pitschen pass. Lascha t’accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.' },
   },
   bewilligung: {
+    quelle: 'Quellen: [[VZAE Art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_59]], [[AIG Art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_33]] (geprüft im September 2026).',
     title: 'Renovar l’autorisaziun da dimora',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'L’autorisaziun da dimora (B u L) scada e na vegn betg renovada automaticamain — Vus stuais far ina dumonda a temp. Ina survista calma: termin, documents, obligaziuns d’annunzia e la vista enavant.', du: 'L’autorisaziun da dimora (B u L) scada e na vegn betg renovada automaticamain — ti stos far ina dumonda a temp. Ina survista calma: termin, documents, obligaziuns d’annunzia e la vista enavant.' },
@@ -517,6 +530,7 @@ export default {
     footerNote: { sie: 'Na laschai mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.', du: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.' },
   },
   fuehrerausweis: {
+    quelle: 'Quellen: [[VZV Art. 27|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_27]], [[SVG Art. 15a|https://www.fedlex.admin.ch/eli/cc/1959/679_705_685/de#art_15_a]] (geprüft im September 2026).',
     title: 'Permess da manar',
     intro: 'Il permess da manar na scada betg en Svizra — tuttina èsi bun da tegnair en egl intgins puncts: baratar il vegl permess da palpiri, la controlla medicinala a partir da 75 onns ed il temp da prova per novs manaders. Qua ina survista calma.',
     step1Title: '1 · Deponer il permess a segir',
@@ -541,10 +555,10 @@ export default {
     relatedTitle: 'Eveniments parentads',
     relatedUmzug: 'Midada da domicil — midar l’adressa',
     relatedPension: 'Pensiun',
-    footerSource: 'Funtaunas: ch.ch e l’Uffizi federal da vias (USTRA), stadi 2026.',
     footerNote: 'Termins e custs pon variar tenor chantun. Fa fide l’uffizi chantunal da traffic. Quai è orientaziun, betg cussegl giuridic.',
   },
   heirat: {
+    quelle: 'Quellen: [[ZGB Art. 97|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_97]], [[DBG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_9]] (geprüft im September 2026).',
     title: 'Maridaglia u partenariat',
     intro: 'La maridaglia u il partenadi registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
     step1Title: '1 · Annunziar la maridaglia',
@@ -573,6 +587,7 @@ export default {
     footerNote: 'In contract da maridaglia (regim dals bains) è facultativ, ma po esser sensà — surtut cun proprietad u independenza. Quai è orientaziun, betg cussegl giuridic.',
   },
   kind: {
+    quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[ZGB Art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_260]], [[EOG Art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_b]] (geprüft im September 2026).',
     title: 'Avair in uffant',
     intro: 'In uffant mida bler a medem temp — annunzias, assicuranza, supplements, budget. Ina survista calma, pass per pass, per betg emblidar nagut.',
     step1Title: '1 · Annunziar la naschientscha',
@@ -603,6 +618,7 @@ export default {
     footerNote: { sie: 'Bler va via il patrun e la cassa da cumpensaziun — conservai bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.', du: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.' },
   },
   trennung: {
+    quelle: 'Quellen: [[ZGB Art. 176|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_176]], [[ZGB Art. 114|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_114]] (geprüft im September 2026).',
     title: 'Separaziun u divorzi',
     intro: 'Ina separaziun è greva emoziunalmain — ed maina blers dumondas practicas. Ina survista calma senza squetsch: cussegl, abitar, uffants & mantegniment, finanzas & taglias.',
     step1Title: '1 · Calma & cussegl',
@@ -628,6 +644,7 @@ export default {
     footerNote: { sie: 'Vus na stuais betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.', du: 'Ti na stos betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.' },
   },
   selbstaendigkeit: {
+    quelle: 'Quellen: [[AHV-Merkblatt 2.02|https://www.ahv-iv.ch/p/2.02.d]], [[UVG Art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_4]] (geprüft im September 2026).',
     title: 'Daventar independent',
     intro: 'Il pass en la independenza porta libertad — e responsabladad che il patrun ha purtà avant. Bler na va betg pli automaticamain. Ina survista calma: status AVS, tip d’activitad, largias d’assicuranza e taglias.',
     step1Title: '1 · Laschar renconuscher tes status AVS',
@@ -654,6 +671,7 @@ export default {
     footerNote: { sie: 'Planisai Vossa prevenziun conscientamain — la largia senza cassa da pensiun As tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.', du: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.' },
   },
   betreibung: {
+    quelle: 'Quellen: [[SchKG Art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_74]] (geprüft im September 2026).',
     title: 'Scussiun retschavida — tge far?',
     intro: 'In cumond da pajar para smanatschant, ma l’emprim è quai mo ina pretensiun — nagina sentenzia e nagina inscripziun en il register penal. Ussa importa mo ina chaussa: il termin da 10 dis. Ina survista calma.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -676,6 +694,7 @@ export default {
     footerNote: { sie: 'Ina scussiun n’è betg ina inscripziun en il register penal. Ella spararescha dal register suenter tschintg onns; en cas d’ina scussiun nungiustifitgada pudais Vus dumandar la stizzada. Quai è orientaziun, betg cussegl giuridic.', du: 'Ina scussiun n’è betg ina inscripziun en il register penal. Ella spararescha dal register suenter tschintg onns; en cas d’ina scussiun nungiustifitgada pos ti dumandar la stizzada. Quai è orientaziun, betg cussegl giuridic.' },
   },
   pensionierung: {
+    quelle: 'Quellen: [[AHVG Art. 21|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_21]], [[BVG Art. 37|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_37]], [[AHV-Merkblatt 3.01|https://www.ahv-iv.ch/p/3.01.d]] (geprüft im September 2026).',
     title: 'Pensiunament',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar Voss dretgs.', du: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar tes dretgs.' },
@@ -709,6 +728,7 @@ export default {
     footerEarly: { sie: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quintai baud tge ch’è purtabel — e dumandai in quen uffizial tar Vossa cassa da cumpensaziun.', du: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.' },
   },
   kkErst: {
+    quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[KVV Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_7]] (geprüft im September 2026).',
     title: 'Cassa da malsauns per l’emprima giada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Nov en Svizra u assicurà per l’emprima giada? L’assicuranza da basa è obligatorica — ma Vus avais temp e libra tscherna. Ina survista calma: l’emprim il termin, lura la cassa, la franchisa ed ina eventuala reducziun.', du: 'Nov en Svizra u assicurà per l’emprima giada? L’assicuranza da basa è obligatorica — ma ti has temp e libra tscherna. Ina survista calma: l’emprim il termin, lura la cassa, la franchisa ed ina eventuala reducziun.' },
@@ -758,6 +778,7 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },
@@ -5029,6 +5050,7 @@ export default {
     pathsLink: 'Diplom professiunal per creschids',
   },
   asyl: {
+    quelle: 'Quellen: [[AsylG Art. 108|https://www.fedlex.admin.ch/eli/cc/1999/358/de#art_108]], [[AIG Art. 85a|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_85_a]] (geprüft im September 2026).',
     title: "Asil & protecziun en Svizra",
     intro: { sie: "La procedura d'asil è cumplexa e savens pesanta. Questa pagina As dat ina emprima orientaziun calma: tge status ch'i dat, co la procedura va e nua ch'i dat cussegliaziun persunala.", du: "La procedura d'asil è cumplexa e savens pesanta. Questa pagina At dat ina emprima orientaziun calma: tge status ch'i dat, co la procedura va e nua ch'i dat cussegliaziun persunala." },
     disclaimer: { sie: "Quai è ina orientaziun, betg ina cussegliaziun giuridica. Per Vossa situaziun concreta As gidan gratuitamain e confidenzialmain las plazzas numnadas qua sut.", du: "Quai è ina orientaziun, betg ina cussegliaziun giuridica. Per Tia situaziun concreta At gidan gratuitamain e confidenzialmain las plazzas numnadas qua sut." },

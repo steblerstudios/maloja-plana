@@ -78,7 +78,7 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step4LinkAblage'), onClick: () => onNavigate('tresor', undefined, 'versicherungen') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('unfallKrankheit.footerOrientation'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('unfallKrankheit.quelle'), notes: [t('unfallKrankheit.footerOrientation'), t('trust.localOnly')] })
   );
 };
 

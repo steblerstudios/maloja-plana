@@ -98,7 +98,7 @@ export default {
       intro: 'Die ersten Wochen bringen stille Fristen und Rechte mit, die leicht untergehen — ein paar Schritte früh erledigt, erspart später Ärger.',
       berechtigungen: {
         kkErst: { titel: 'Krankenkasse anmelden', text: 'Die Grundversicherung ist obligatorisch und muss innert drei Monaten nach Zuzug abgeschlossen werden — der Schutz gilt dann rückwirkend ab dem ersten Tag.' },
-        bewilligung: { titel: 'Anmeldung & Aufenthaltsbewilligung', text: 'Innert 14 Tagen bei der Wohngemeinde anmelden; die Aufenthaltsbewilligung folgt. Fristen und Unterlagen unterscheiden sich je nach Nationalität und Kanton.' },
+        bewilligung: { titel: 'Anmeldung & Aufenthaltsbewilligung', text: 'Innert 14 Tagen bei der Wohngemeinde anmelden — wer eine Bewilligung braucht und hier arbeitet, schon vor dem ersten Arbeitstag. Die Aufenthaltsbewilligung folgt. Fristen und Unterlagen unterscheiden sich je nach Nationalität und Kanton.' },
         quellensteuer: { titel: 'Quellensteuer', text: 'Ohne Niederlassungsbewilligung (C) wird die Steuer direkt vom Lohn abgezogen. Abzüge lassen sich oft über eine nachträgliche ordentliche Veranlagung zurückholen.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Neu Zugezogene mit tiefem oder mittlerem Einkommen können sich vom Kanton bei den Krankenkassenprämien helfen lassen — schon im ersten Jahr.' },
         mietzins: { titel: 'Mietzinsbeitrag', text: 'Manche Kantone und Gemeinden zahlen an die Miete, wenn sie ein bescheidenes Einkommen stark belastet — nach dem Einzug prüfen.' },
@@ -204,6 +204,7 @@ export default {
     reminderNotes: { sie: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung Sie aufgenommen hat. Genaue Frist in der Police prüfen.', du: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung dich aufgenommen hat. Genaue Frist in der Police prüfen.' },
   },
   umzug: {
+    quelle: 'Quellen: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]] (geprüft im September 2026).',
     title: 'Umzug',
     intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
     step1Title: '1 · Neue Adresse',
@@ -252,6 +253,7 @@ export default {
     footerFrist: { sie: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Fragen Sie im Zweifel bei Ihrer Gemeinde nach.', du: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Frag im Zweifel bei deiner Gemeinde nach.' },
   },
   unfallKrankheit: {
+    quelle: 'Quellen: [[UVG Art. 45|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_45]], [[KVG Art. 8|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_8]] (geprüft im September 2026).',
     title: 'Unfall oder Krankheit — was tun?',
     intro: 'Wenn etwas passiert, zählt zuerst die Hilfe — dann die Administration. Hier der ruhige Überblick: Notfall, wer zahlt, Arbeitsunfähigkeit, Belege.',
     step1Title: '1 · Im Notfall zuerst',
@@ -280,6 +282,7 @@ export default {
     footerOrientation: 'Orientierung, kein medizinischer oder rechtlicher Rat — im Notfall zählt der Notruf (144).',
   },
   neuerJob: {
+    quelle: 'Quellen: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]] (geprüft im September 2026).',
     title: 'Neuer Job',
     intro: 'Ein neuer Job verändert mehr als nur den Lohn. Hier der ruhige Überblick, was dazugehört — Vertrag, Vorsorge, Versicherungen, Steuern, Fristen.',
     step1Title: '1 · Arbeitsvertrag prüfen & ablegen',
@@ -304,6 +307,11 @@ export default {
     footerProbe: { sie: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, passen Sie sie an.', du: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, pass sie an.' },
   },
   stelleVerloren: {
+    step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
+    step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
+    step1Button: 'Spätestens-Termin RAV merken ({date})',
+    reminderRavTitle: 'RAV-Anmeldung — spätestens heute',
+    quelle: 'Quellen: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (geprüft im September 2026).',
     title: 'Stelle verloren — was tun?',
     intro: 'Wenn die Stelle wegfällt, zählt jeder Tag. Hier der ruhige Überblick: zuerst die wichtigste Anmeldung, dann Versicherungen, Vorsorge und Unterlagen.',
     step1Title: '1 · Beim RAV anmelden — sofort',
@@ -326,6 +334,7 @@ export default {
     footerSperrzeit: { sie: 'Wenn Sie selbst kündigen oder die Kündigung verschuldet haben, kann das RAV Einstelltage verhängen — lassen Sie sich vorher beraten.', du: 'Wenn du selbst kündigst oder die Kündigung verschuldet hast, kann das RAV Einstelltage verhängen — lass dich vorher beraten.' },
   },
   todesfall: {
+    quelle: 'Quellen: [[ZStV Art. 35|https://www.fedlex.admin.ch/eli/cc/2004/362/de#art_35]], [[ZGB Art. 567|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_567]] (geprüft im September 2026).',
     title: 'Todesfall im Umfeld',
     intro: 'Wenn ein nahestehender Mensch stirbt, ist vieles auf einmal zu regeln — und doch hat das meiste Zeit. Hier ein ruhiger Überblick, ohne Druck: die ersten Tage, die Bestattung, Renten & Versicherungen, der Nachlass.',
     step1Title: '1 · Die ersten Tage',
@@ -348,6 +357,7 @@ export default {
     footerNote: 'Trauer braucht Zeit, und die meisten Schritte haben Aufschub. Eine Beratungsstelle oder das Bestattungsinstitut hilft beim Überblick. Dies ist Orientierung, keine Rechtsberatung.',
   },
   pflege: {
+    quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]] (geprüft im September 2026).',
     title: 'Angehörige pflegen',
     intro: 'Pflege, die still geleistet wird, bleibt oft unbeachtet — dabei bestehen Ansprüche, die vielen unbekannt sind. Hier ein ruhiger Überblick: Rentengutschrift, Entschädigung, Entlastung.',
     step1Title: '1 · Betreuungsgutschrift der AHV',
@@ -378,6 +388,7 @@ export default {
     footerNote: 'Orientierung, keine Rechtsberatung. Ansprüche und Fristen klärt die Ausgleichskasse oder Beratungsstelle.',
   },
   iv: {
+    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]] (geprüft im September 2026).',
     title: 'Krankheit & IV',
     intro: 'Eine längere Krankheit oder Einschränkung wirft Fragen zu Lohn, Versicherung und Existenz auf. Hier ein ruhiger Überblick, mit reduzierter Energie lesbar: Arbeitsunfähigkeit, IV früh anmelden, Existenz sichern, Entlastung holen.',
     step1Title: '1 · Arbeitsunfähigkeit — Lohn & Taggeld',
@@ -397,6 +408,7 @@ export default {
     footerNote: { sie: 'Mit wenig Energie zählt jeder kleine Schritt. Holen Sie sich Begleitung — Beratungsstellen sind kostenlos. Dies ist Orientierung, keine Rechts- oder Medizinberatung.', du: 'Mit wenig Energie zählt jeder kleine Schritt. Hol dir Begleitung — Beratungsstellen sind kostenlos. Dies ist Orientierung, keine Rechts- oder Medizinberatung.' },
   },
   bewilligung: {
+    quelle: 'Quellen: [[VZAE Art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_59]], [[AIG Art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_33]] (geprüft im September 2026).',
     title: 'Aufenthaltsbewilligung verlängern',
     intro: { sie: 'Die Aufenthaltsbewilligung (B oder L) läuft ab und wird nicht automatisch verlängert — Sie müssen rechtzeitig einen Antrag stellen. Hier der ruhige Überblick: Frist, Unterlagen, Meldepflichten und der Blick nach vorn.', du: 'Die Aufenthaltsbewilligung (B oder L) läuft ab und wird nicht automatisch verlängert — du musst rechtzeitig einen Antrag stellen. Hier der ruhige Überblick: Frist, Unterlagen, Meldepflichten und der Blick nach vorn.' },
     step1Title: '1 · Rechtzeitig verlängern',
@@ -421,6 +433,7 @@ export default {
     footerNote: { sie: 'Lassen Sie die Bewilligung nie ablaufen, ohne den Antrag gestellt zu haben. Bei Unsicherheit hilft die kantonale Migrationsbehörde oder eine Beratungsstelle für Migrantinnen und Migranten. Dies ist Orientierung, keine Rechtsberatung.', du: 'Lass die Bewilligung nie ablaufen, ohne den Antrag gestellt zu haben. Bei Unsicherheit hilft die kantonale Migrationsbehörde oder eine Beratungsstelle für Migrantinnen und Migranten. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   fuehrerausweis: {
+    quelle: 'Quellen: [[VZV Art. 27|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_27]], [[SVG Art. 15a|https://www.fedlex.admin.ch/eli/cc/1959/679_705_685/de#art_15_a]] (geprüft im September 2026).',
     title: 'Führerausweis',
     intro: 'Der Führerausweis läuft in der Schweiz nicht ab — trotzdem gibt es ein paar Dinge im Blick zu behalten: den alten Papierausweis umtauschen, die Kontrolluntersuchung ab 75 und die Probezeit für Neulenkende. Hier der ruhige Überblick.',
     step1Title: '1 · Ausweis sicher ablegen',
@@ -443,10 +456,10 @@ export default {
     relatedTitle: 'Verwandte Ereignisse',
     relatedUmzug: 'Umzug — Adresse ändern',
     relatedPension: 'Pensionierung',
-    footerSource: 'Quellen: ch.ch und Bundesamt für Strassen (ASTRA), Stand 2026.',
     footerNote: 'Fristen und Kosten können je nach Kanton abweichen. Verbindlich ist das kantonale Strassenverkehrsamt. Dies ist Orientierung, keine Rechtsberatung.',
   },
   heirat: {
+    quelle: 'Quellen: [[ZGB Art. 97|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_97]], [[DBG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_9]] (geprüft im September 2026).',
     title: 'Heirat oder Partnerschaft',
     intro: 'Heirat oder eingetragene Partnerschaft verändern Zivilstand, Steuern und Vorsorge zugleich. Hier der ruhige Überblick: Trauung anmelden, Name & Zivilstand, Steuern, Versicherungen.',
     step1Title: '1 · Trauung anmelden',
@@ -471,6 +484,7 @@ export default {
     footerNote: 'Ein Ehevertrag (Güterstand) ist freiwillig, kann aber sinnvoll sein — besonders bei Wohneigentum oder Selbständigkeit. Dies ist Orientierung, keine Rechtsberatung.',
   },
   kind: {
+    quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[ZGB Art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_260]], [[EOG Art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_b]] (geprüft im September 2026).',
     title: 'Kind bekommen',
     intro: 'Ein Kind verändert vieles auf einmal — Anmeldungen, Versicherung, Zulagen, Budget. Hier der ruhige Überblick, Schritt für Schritt, ohne etwas zu vergessen.',
     step1Title: '1 · Geburt anmelden',
@@ -496,6 +510,7 @@ export default {
     footerNote: { sie: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahren Sie Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.', du: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahre Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   trennung: {
+    quelle: 'Quellen: [[ZGB Art. 176|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_176]], [[ZGB Art. 114|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_114]] (geprüft im September 2026).',
     title: 'Trennung oder Scheidung',
     intro: 'Eine Trennung ist emotional schwer — und bringt viele praktische Fragen mit. Hier ein ruhiger Überblick ohne Druck: Beratung, Wohnen, Kinder & Unterhalt, Finanzen & Steuern.',
     step1Title: '1 · Ruhe & Beratung',
@@ -516,6 +531,7 @@ export default {
     footerNote: { sie: 'Sie müssen nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.', du: 'Du musst nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   selbstaendigkeit: {
+    quelle: 'Quellen: [[AHV-Merkblatt 2.02|https://www.ahv-iv.ch/p/2.02.d]], [[UVG Art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_4]] (geprüft im September 2026).',
     title: 'Selbständig werden',
     intro: 'Der Schritt in die Selbständigkeit bringt Freiheit — und Verantwortung, die vorher der Arbeitgeber getragen hat. Vieles läuft jetzt nicht mehr automatisch. Hier der ruhige Überblick: AHV-Status, Erwerbsart, Versicherungslücken und Steuern.',
     step1Title: '1 · AHV-Status anerkennen lassen',
@@ -538,6 +554,7 @@ export default {
     footerNote: { sie: 'Planen Sie Ihre Vorsorge bewusst — die Lücke ohne Pensionskasse trifft Sie erst Jahrzehnte später. Eine Beratung bei der Ausgleichskasse oder einer Gründungsberatung lohnt sich. Dies ist Orientierung, keine Rechts- oder Steuerberatung.', du: 'Plane deine Vorsorge bewusst — die Lücke ohne Pensionskasse trifft dich erst Jahrzehnte später. Eine Beratung bei der Ausgleichskasse oder einer Gründungsberatung lohnt sich. Dies ist Orientierung, keine Rechts- oder Steuerberatung.' },
   },
   betreibung: {
+    quelle: 'Quellen: [[SchKG Art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_74]] (geprüft im September 2026).',
     title: 'Betreibung erhalten — was tun?',
     intro: 'Ein Zahlungsbefehl sieht bedrohlich aus, ist aber zuerst nur eine Behauptung — kein Urteil und kein Eintrag ins Strafregister. Wichtig ist jetzt nur eines: die 10-Tage-Frist. Hier der ruhige Überblick.',
     step1Title: { sie: '1 · Ruhig bleiben — Sie haben 10 Tage', du: '1 · Ruhig bleiben — du hast 10 Tage' },
@@ -556,6 +573,7 @@ export default {
     footerNote: { sie: 'Eine Betreibung ist kein Strafregister-Eintrag. Sie verschwindet nach fünf Jahren aus dem Register; bei unberechtigter Betreibung können Sie die Löschung verlangen. Dies ist Orientierung, keine Rechtsberatung.', du: 'Eine Betreibung ist kein Strafregister-Eintrag. Sie verschwindet nach fünf Jahren aus dem Register; bei unberechtigter Betreibung kannst du die Löschung verlangen. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   pensionierung: {
+    quelle: 'Quellen: [[AHVG Art. 21|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_21]], [[BVG Art. 37|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_37]], [[AHV-Merkblatt 3.01|https://www.ahv-iv.ch/p/3.01.d]] (geprüft im September 2026).',
     title: 'Pensionierung',
     intro: { sie: 'Der Übergang in die Pensionierung will früh geplant sein — vieles läuft nicht automatisch und hat eigene Fristen. Hier der ruhige Überblick: AHV anmelden, Pensionskasse entscheiden, 3. Säule beziehen und prüfen, was Ihnen zusteht.', du: 'Der Übergang in die Pensionierung will früh geplant sein — vieles läuft nicht automatisch und hat eigene Fristen. Hier der ruhige Überblick: AHV anmelden, Pensionskasse entscheiden, 3. Säule beziehen und prüfen, was dir zusteht.' },
     step1Title: '1 · AHV-Altersrente anmelden',
@@ -583,6 +601,7 @@ export default {
     footerEarly: { sie: 'Eine Frühpensionierung kürzt die AHV- und oft auch die Pensionskassen-Rente lebenslang. Rechnen Sie früh durch, was tragbar ist — und holen Sie eine offizielle Vorausberechnung bei Ihrer Ausgleichskasse.', du: 'Eine Frühpensionierung kürzt die AHV- und oft auch die Pensionskassen-Rente lebenslang. Rechne früh durch, was tragbar ist — und hole eine offizielle Vorausberechnung bei deiner Ausgleichskasse.' },
   },
   kkErst: {
+    quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[KVV Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_7]] (geprüft im September 2026).',
     title: 'Krankenkasse zum ersten Mal',
     intro: { sie: 'Neu in der Schweiz oder zum ersten Mal selbst versichert? Die Grundversicherung ist Pflicht — aber Sie haben Zeit und freie Wahl. Hier der ruhige Überblick: zuerst die Frist, dann Kasse, Franchise und eine mögliche Verbilligung.', du: 'Neu in der Schweiz oder zum ersten Mal selbst versichert? Die Grundversicherung ist Pflicht — aber du hast Zeit und freie Wahl. Hier der ruhige Überblick: zuerst die Frist, dann Kasse, Franchise und eine mögliche Verbilligung.' },
     step1Title: '1 · Innert 3 Monaten versichern',
@@ -620,6 +639,7 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
     checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
     checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },
     checkPoint2: { sie: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu Ihrem Alltag?', du: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?' },
@@ -4754,6 +4774,7 @@ export default {
   // Asyl-Orientierung — fehlte in de.js (Nutzer sahen den englischen Fallback).
   // Schweizer Rechtsbegriffe; rechtlich sensibel → fachliche Review vor Deploy empfohlen.
   asyl: {
+    quelle: 'Quellen: [[AsylG Art. 108|https://www.fedlex.admin.ch/eli/cc/1999/358/de#art_108]], [[AIG Art. 85a|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_85_a]] (geprüft im September 2026).',
     title: 'Asyl & Schutz in der Schweiz',
     intro: { sie: 'Das Asylverfahren ist komplex und oft belastend. Diese Seite gibt Ihnen eine ruhige erste Orientierung: welche Status es gibt, wie das Verfahren abläuft und wo es persönliche Beratung gibt.', du: 'Das Asylverfahren ist komplex und oft belastend. Diese Seite gibt dir eine ruhige erste Orientierung: welche Status es gibt, wie das Verfahren abläuft und wo es persönliche Beratung gibt.' },
     disclaimer: { sie: 'Das ist eine Orientierung, keine Rechtsberatung. Für Ihre konkrete Situation helfen Ihnen die unten genannten Stellen kostenlos und vertraulich.', du: 'Das ist eine Orientierung, keine Rechtsberatung. Für deine konkrete Situation helfen dir die unten genannten Stellen kostenlos und vertraulich.' },

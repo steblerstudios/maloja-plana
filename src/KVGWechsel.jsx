@@ -150,7 +150,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     // Der Wechselpfad führt an eine Versicherung heran; darum hier derselbe
     // Orientierungs-Hinweis, den die übrigen Ablauf-Ansichten schon tragen
     // (alpha.noAdviceHint, geprüft 23.09.2026 in allen fünf Sprachen).
-    React.createElement(AblaufFooter, { palette, notes: [t('kvgWechsel.specialRight'), t('alpha.noAdviceHint'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('kvgWechsel.quelle'), notes: [t('kvgWechsel.specialRight'), t('alpha.noAdviceHint'), t('trust.localOnly')] })
   );
 };
 
