@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
   steuernFuerProfil, steuerEingabenAusDaten, konkubinatWieLedigAb,
-  KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB, KONKUBINAT_WIE_LEDIG_AB,
+  KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB, KONKUBINAT_WIE_LEDIG_AB, KINDERABZUG_KONKUBINAT_HAELFTIG,
 } from '../data/kantonaleSteuerdaten.js';
 
 // ─────────────────────────────────────────────────────────────
@@ -86,6 +86,9 @@ describe('K62-Nachlauf B · was die App zeigt', () => {
       expect(Math.abs(s.bund.steuer - bund), kt + ' ' + kinder).toBeLessThanOrEqual(1);
       if (kt in KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB) {
         expect(s.kanton, kt + ' ' + kinder).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'konkubinatKanton' });
+      } else if (KINDERABZUG_KONKUBINAT_HAELFTIG.includes(kt)) {
+        // K125: die Messung (ganzer Abzug) stimmt mit der ESTV überein — aber der Kanton teilt hälftig.
+        expect(s.kanton, kt + ' ' + kinder).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'konkubinatKinderabzugHaelftig' });
       } else {
         expect(s.kanton.lage, kt + ' ' + kinder).toBe('innerhalb');
         expect(imRahmen(s.kanton.kantonal.kantonalUndGemeinde, kg), kt + ' ' + kinder + ': ' + s.kanton.kantonal.kantonalUndGemeinde + ' gegen ESTV ' + kg).toBe(true);
@@ -101,11 +104,11 @@ describe('K62-Nachlauf B · was die App zeigt', () => {
     expect(s.bund).not.toBeNull();
   });
 
-  it('VS mit Kind unter der Schwelle ohne Kinder (Brutto 40 000): gleich wie ledig gemessen → Zahl', () => {
-    const [, , , , , kg] = punkt('VS', 1, 40000);
+  it('VS mit Kind (Brutto 40 000): ESTV rechnet wie ledig — aber VS teilt den Kinderabzug hälftig (K125) → keine Zahl', () => {
+    const p = punkt('VS', 1, 40000);
+    expect(weichtAb(p)).toBe(false); // die Messung selbst bleibt: gleich wie ledig
     const s = regel(profil({ canton: 'VS', brutto: 40000 }));
-    expect(s.kanton.lage).toBe('innerhalb');
-    expect(imRahmen(s.kanton.kantonal.kantonalUndGemeinde, kg)).toBe(true);
+    expect(s.kanton.grund).toBe('konkubinatKinderabzugHaelftig');
   });
 
   it('mit Partnereinkommen > 0 weiter keine Zahl (Aufteilung des Kinderabzugs, DBG Art. 35 Abs. 1 lit. a)', () => {

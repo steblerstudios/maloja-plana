@@ -6,7 +6,7 @@ import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerden
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
-import { openPrintWindow } from './utils/helpers.js';
+import { openPrintWindow, inDays } from './utils/helpers.js';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
   // Export-Vorschau (K3): null | 'druck' | 'json' — erst zeigen, was rausgeht, dann erstellen.
@@ -60,7 +60,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
     const a = document.createElement('a');
     a.href = url;
     const name = (data.basis?.lastName || 'dossier').toLowerCase().replace(/[^a-z0-9]/g, '_');
-    a.download = 'dossier_' + name + '_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.download = 'dossier_' + name + '_' + inDays(0) + '.json';
     a.click();
     URL.revokeObjectURL(url);
   };

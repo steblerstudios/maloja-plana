@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { text, weight, space, radius } from './config/tokens.js';
 import { anzeigeWert, hatWert } from './utils/vollstaendigkeit.js';
 import { Icon } from './IconSystem.jsx';
+import { betrag } from './utils/geld.js';
 
 // Wiederverwendbare Mehrfach-Betrags-Liste: mehrere benannte Posten {label, amount},
 // die sich zu einer Summe addieren (z.B. Internet + Telefon + Streaming, oder
@@ -63,7 +64,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
       }, '+ ' + t('itemized.add')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid },
-      }, t('itemized.sum') + ': CHF ' + sum.toFixed(0))
+      }, t('itemized.sum') + ': ' + betrag(sum))
     )
   );
 };

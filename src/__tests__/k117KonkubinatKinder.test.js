@@ -37,7 +37,8 @@ describe('K117 · Konkubinat mit Kindern ohne Partnerangabe', () => {
   });
 
   it('unverändert: Partnerangabe vorhanden (auch 0) → wie bisher eine Zahl', () => {
-    const r = kantonssteuerFuerProfil({ ...fall, partnerAngegeben: true });
+    // K125: in ZH/LU teilt der Kanton den Kinderabzug hälftig (dort keine Zahl) — Beispiel AG.
+    const r = kantonssteuerFuerProfil({ ...fall, kanton: 'AG', partnerAngegeben: true });
     expect(r.grund).toBeNull();
     expect(r.kantonal).not.toBeNull();
   });

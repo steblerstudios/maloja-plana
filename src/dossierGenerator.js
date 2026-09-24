@@ -14,6 +14,7 @@ import { getFullName } from './config/constants.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
+import { betrag } from './utils/geld.js';
 
 // ─── Druckfarben (K53) ────────────────────────────────────
 // Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
@@ -44,11 +45,7 @@ function formatCHF(value) {
   const n = parseFloat(value);
   if (isNaN(n) || n === 0) return '';
   const rounded = Math.round(n);
-  const abs = Math.abs(rounded);
-  const formatted = abs >= 1000
-    ? abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’')
-    : abs.toString();
-  return (rounded < 0 ? '− ' : '') + 'CHF ' + formatted;
+  return betrag(rounded); // utils/geld.js — eine Quelle
 }
 
 // Format date for display (DD.MM.YYYY — Swiss convention)

@@ -10,6 +10,8 @@ import { renderSource } from './utils/renderSource.js';
 import { getCantonName } from './config/cantonalData.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { StatusForm } from './components/StatusForm.jsx';
+import { inDays } from './utils/helpers.js';
+import { betrag } from './utils/geld.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -173,7 +175,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                 id: 'kvg-lastvisit-' + item.key,
                 type: 'date',
                 value: lastVisit || '',
-                max: new Date().toISOString().slice(0, 10),
+                max: inDays(0),
                 onChange: (e) => { const v = e.target.value; setLastVisit(v); saveVorsorgeDate(item.key, v); setReminderSaved(false); },
                 style: {
                   fontSize: text.xs, padding: '4px 6px', border: '1px solid ' + palette.border,
@@ -194,7 +196,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                     : React.createElement('button', {
                         type: 'button',
                         onClick: () => {
-                          const r = addReminder({ title: t('kvg.' + item.key), dueDate: new Date().toISOString().slice(0, 10), category: 'health' });
+                          const r = addReminder({ title: t('kvg.' + item.key), dueDate: inDays(0), category: 'health' });
                           if (r) setReminderSaved(true);
                         },
                         style: {
@@ -345,7 +347,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
 
   // Belege, für die schon eine offene Kalender-Erinnerung existiert (für ✓-Feedback,
   // auch nach erneutem Öffnen der Ansicht). addReminder ist ohnehin idempotent.
-  const reminderTitle = (b) => t('kvg.belegReminderTitle', { betrag: 'CHF ' + (Number(b.betrag) || 0) });
+  const reminderTitle = (b) => t('kvg.belegReminderTitle', { betrag: betrag(Number(b.betrag) || 0, { hoechstens: 2 }) });
   const [remindedIds, setRemindedIds] = useState(() => {
     const rem = loadReminders();
     const s = new Set();
@@ -447,7 +449,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           }
         },
           FRANCHISE_STUFEN.map(f =>
-            React.createElement('option', { key: f, value: f }, 'CHF ' + f)
+            React.createElement('option', { key: f, value: f }, betrag(f, { hoechstens: 2 }))
           )
         ),
         React.createElement('div', {
@@ -701,7 +703,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                     }, t('kvg.belegOpen'))
                   ),
                   React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
-                    React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, 'CHF ' + (Number(b.betrag) || 0)),
+                    React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, betrag(Number(b.betrag) || 0, { hoechstens: 2 })),
                     React.createElement('button', {
                       onClick: () => removeBeleg(b.id),
                       'aria-label': t('kvg.belegRemove'),
@@ -730,7 +732,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                 ),
                 b.nichtGedeckt > 0 && React.createElement('div', {
                   style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' }
-                }, t('kvg.belegNichtGedecktNote', { amount: 'CHF ' + b.nichtGedeckt })),
+                }, t('kvg.belegNichtGedecktNote', { amount: betrag(b.nichtGedeckt, { hoechstens: 2 }) })),
                 React.createElement('button', {
                   onClick: () => toggleEingereicht(b.id),
                   'aria-pressed': b.eingereicht ? 'true' : 'false',
@@ -747,7 +749,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
               style: { display: 'flex', justifyContent: 'space-between', paddingTop: '10px', fontSize: text.sm }
             },
               React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.belegSum')),
-              React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + kosten)
+              React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(kosten, { hoechstens: 2 }))
             )
           ),
       React.createElement('div', {
@@ -772,14 +774,14 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
         },
           React.createElement('span', { style: { color: palette.mid } }, t('kvg.franchiseUsed')),
-          React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + result.franchiseVerbraucht)
+          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.franchiseVerbraucht, { hoechstens: 2 }))
         ),
         React.createElement('div', { style: barStyle() },
           React.createElement('div', { style: barFill(result.franchiseVerbraucht, result.franchise, palette.sand) })
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.franchiseOpen') + ': CHF ' + result.franchiseOffen)
+        }, t('kvg.franchiseOpen') + ': ' + betrag(result.franchiseOffen, { hoechstens: 2 }))
       ),
 
       React.createElement('div', { style: { marginBottom: '14px' } },
@@ -787,14 +789,14 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
         },
           React.createElement('span', { style: { color: palette.mid } }, t('kvg.selbstbehalt')),
-          React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + Math.round(result.selbstbehalt))
+          React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.selbstbehalt))
         ),
         React.createElement('div', { style: barStyle() },
           React.createElement('div', { style: barFill(result.selbstbehalt, result.selbstbehaltMax, palette.sage || '#5a7a5a') })
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }
-        }, t('kvg.selbstbehaltMax') + ': CHF ' + result.selbstbehaltMax)
+        }, t('kvg.selbstbehaltMax') + ': ' + betrag(result.selbstbehaltMax, { hoechstens: 2 }))
       ),
 
       React.createElement('div', {
@@ -807,7 +809,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
         React.createElement('span', {
           style: { fontWeight: weight.semi, color: palette.goldDeep || '#c47a20' }
-        }, 'CHF ' + Math.round(result.eigenanteil))
+        }, betrag(result.eigenanteil))
       ),
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm }
@@ -815,7 +817,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.kasseZahlt')),
         React.createElement('span', {
           style: { fontWeight: weight.semi, color: palette.sageDeep || '#5a7a5a' }
-        }, 'CHF ' + Math.round(result.kasseZahlt))
+        }, betrag(result.kasseZahlt))
       )
     )
   );
@@ -904,7 +906,7 @@ const RechnungTab = ({ palette, t, data }) => {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '8px' }
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.taxpunktwert')),
-        React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + result.taxpunktwert.toFixed(2))
+        React.createElement('span', { style: { fontWeight: weight.semi } }, betrag(result.taxpunktwert, { stellen: 2 }))
       ),
       React.createElement('div', {
         style: { height: '1px', background: palette.border, marginBottom: '8px' }
@@ -913,7 +915,7 @@ const RechnungTab = ({ palette, t, data }) => {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.body }
       },
         React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.berechneterBetrag')),
-        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, 'CHF ' + result.betrag.toFixed(2))
+        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, betrag(result.betrag, { stellen: 2 }))
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }

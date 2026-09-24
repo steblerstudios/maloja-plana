@@ -5,13 +5,16 @@ import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
 import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { zahl } from './utils/geld.js';
+import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const isMobile = useIsMobile();
   const household = data?.basis?.household;
   // Kanton aus dem Profil → kantonaler Vermögensfreibetrag (ohne Kanton: SKOS-Empfehlung).
   const kanton = data?.basis?.canton || '';
-  const initAdults = household?.adults || 1;
+  const vorbefuellt = useMemo(() => sozialhilfeVorbefuellung(data), [data]);
+  const initAdults = Math.min(4, vorbefuellt.adults);
   const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
 
   const [adults, setAdults] = useState(initAdults);
@@ -21,11 +24,11 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   const [kvg, setKvg] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
   // Sozialhilfe basiert auf dem NETTO-Einkommen: ist das Einkommen als Brutto hinterlegt,
   // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
-  const nettoBruttoMismatch = data?.finanzen?.incomeType === 'brutto';
-  const [einkommen, setEinkommen] = useState((data?.finanzen?.monthlyIncome && !nettoBruttoMismatch) ? String(data.finanzen.monthlyIncome) : '');
-  const [andereEinkuenfte, setAndereEinkuenfte] = useState('');
-  const [vermoegen, setVermoegen] = useState('');
-  const [erwerbstaetig, setErwerbstaetig] = useState(false);
+  const nettoBruttoMismatch = vorbefuellt.hauptBrutto;
+  const [einkommen, setEinkommen] = useState(vorbefuellt.einkommen);
+  const [andereEinkuenfte, setAndereEinkuenfte] = useState(vorbefuellt.andereEinkuenfte);
+  const [vermoegen, setVermoegen] = useState(vorbefuellt.vermoegen);
+  const [erwerbstaetig, setErwerbstaetig] = useState(vorbefuellt.erwerbstaetig);
   const [integration, setIntegration] = useState(false);
 
   const result = useMemo(() => {
@@ -68,7 +71,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
   };
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
 
   const field = (labelKey, value, setter, placeholder, hint) =>
     React.createElement('div', { style: s.inputGroup },
@@ -129,9 +132,13 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         field('sh.kvg', kvg, setKvg, '380'),
       ),
       React.createElement('div', { style: s.inputRow },
-        field('sh.einkommen', einkommen, setEinkommen, '0', nettoBruttoMismatch ? t('sh.nettoBruttoHint') : null),
-        field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0'),
-        field('sh.vermoegen', vermoegen, setVermoegen, '0'),
+        field('sh.einkommen', einkommen, setEinkommen, '0',
+          nettoBruttoMismatch ? t('sh.nettoBruttoHint')
+            : vorbefuellt.nebenerwerbBrutto ? t('sh.nebenerwerbBruttoHint')
+            : vorbefuellt.einkommenMitNebenerwerb ? t('sh.ausProfilHint') : null),
+        field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
+          vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
+        field('sh.vermoegen', vermoegen, setVermoegen, '0', vorbefuellt.vermoegenMit3a ? t('sh.inkl3aHint') : vorbefuellt.vermoegen ? t('sh.ausProfilHint') : null),
       ),
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },
         toggle('sh.erwerbstaetig', erwerbstaetig, setErwerbstaetig),

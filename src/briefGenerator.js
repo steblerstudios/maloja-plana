@@ -15,6 +15,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { escapeHtml as esc } from './utils/helpers.js';
+import { zahl } from './utils/geld.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
 // (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
@@ -119,7 +120,7 @@ function formatDate(iso) {
 function formatAmount(n) {
   const num = Number(n);
   if (!isFinite(num) || num <= 0) return '';
-  return num.toLocaleString('de-CH');
+  return zahl(num, { hoechstens: 2 });
 }
 
 function senderBlock(data) {
@@ -260,6 +261,9 @@ function getLeaseTerminationFields(data, t) {
   return {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
+    // Vermieter/Verwaltung aus dem Kapitel «Wohnen» — nicht zweimal eingeben. Die Adresse der
+    // Verwaltung ist dort nicht erfasst und bleibt als Lücke markiert, wie beim Versicherer.
+    landlord: String(data.wohnen?.landlord || '').trim(),
     // Klartext, nicht esc(): der Wert wird in body2 über esc(t(…, { address })) genau einmal
     // escaped. Vorher doppelt → «Meier &amp; Co» stand als «&amp;amp;» im Brief (Voll-Review 15.09.2026).
     objectAddress: data.wohnen?.address ? data.wohnen.address : t('briefe.fillIn'),
@@ -352,7 +356,7 @@ function generateLeaseTermination(data, t) {
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
-    <div class="recipient"><div class="placeholder">${f.recipient}</div></div>
+    <div class="recipient">${f.landlord ? esc(f.landlord) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + f.recipient + '</div>'}</div>
     <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.leaseTermination.subject'))}</div>
     <div class="body-text">
