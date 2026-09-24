@@ -2162,7 +2162,7 @@ export default {
   },
 
   contextLinks: {
-    kkWechsel: { label: 'Comparer les caisses maladie (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
+    kkWechsel: { label: 'Comparer les caisses maladie (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/fr/praemien' },
     ahv: { label: 'Rente AVS : mémento 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.f' },
     testament: { label: 'Testament et pacte successoral (ch.ch)', url: 'https://www.ch.ch/fr/famille-et-partenariat/heritage/testament-et-pacte-successoral/' },
     patientenverfuegung: { label: 'Directives anticipées (ch.ch)', url: 'https://www.ch.ch/fr/sante/directives-anticipees/' },
