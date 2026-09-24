@@ -5,7 +5,7 @@ import { sozialhilfeVorbefuellung as vb, saeule3aBeziehbar } from '../sozialhilf
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ adults: 1, weiterePersonen: 0, wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
+    expect(vb({})).toEqual({ adults: 1, kinder: 0, weiterePersonen: 0, miete: '', wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 
@@ -99,6 +99,25 @@ describe('sozialhilfeVorbefuellung', () => {
     it('verheiratet, aber nur 1 Person erfasst → Einheit 1 (die zweite fehlt, nichts erfinden)', () => {
       const r = vb({ basis: { maritalStatus: 'married', household: { adultsList: [] } } });
       expect([r.adults, r.weiterePersonen]).toEqual([1, 0]);
+    });
+    it('Kinder ab 18 sind weitere Personen, jüngere und ohne Alter bleiben in der Einheit', () => {
+      const heute = new Date('2026-09-24');
+      const r = vb({ basis: { household: { adultsList: [], children: [{ age: 20 }, { age: 12 }, {}, { birthDate: '2008-09-24' }, { birthDate: '2008-09-25' }] } } }, heute);
+      expect([r.kinder, r.weiterePersonen]).toEqual([3, 2]); // 20 J. und genau 18 → weitere
+    });
+    it('Miete: allein aus dem Profil, bei weiteren Personen leer (im Profil steht die ganze Miete)', () => {
+      expect(vb({ wohnen: { rentAmount: 1400 } }).miete).toBe('1400');
+      expect(vb({ wohnen: { rentAmount: 1400 }, basis: { household: { adultsList: [{}] } } }).miete).toBe('');
+    });
+    it('Konkubinat ohne erfassten Partnerlohn: Konkubinatsbeitrag-Hinweis trotzdem', () => {
+      expect(vb({ basis: { maritalStatus: 'cohabiting', household: { adultsList: [{}] } } }).partnerKonkubinat).toBe(true);
+      expect(vb({ basis: { maritalStatus: 'single', household: { adultsList: [{}] } } }).partnerKonkubinat).toBe(false);
+    });
+    it('junge Erwachsene: Hinweis nur bei bekanntem Alter unter 25', () => {
+      const heute = new Date('2026-09-24');
+      expect(vb({ basis: { dateOfBirth: '2002-09-25' } }, heute).jungErwachsen).toBe(true);
+      expect(vb({ basis: { dateOfBirth: '2001-09-24' } }, heute).jungErwachsen).toBe(false);
+      expect(vb({}, heute).jungErwachsen).toBe(false);
     });
     it('verheiratet mit erwachsenem Kind → Einheit 2 + 1 weitere', () => {
       const r = vb({ basis: { maritalStatus: 'married', household: { adultsList: [{}, {}] } } });

@@ -16,7 +16,11 @@
 // - Haushalt: zur Unterstützungseinheit zählen die antragstellende Person und, bei Ehe oder
 //   eingetragener Partnerschaft, die Partnerin/der Partner. Alle übrigen Erwachsenen im Haushalt
 //   (Konkubinat, WG, erwachsene Kinder) sind «weitere Personen»; die Wohnform startet dann mit
-//   «familienähnlich» — so rechnet die Sozialbehörde im Zweifel (SKOS-RL C.3.1/C.3.2).
+//   «familienähnlich» — so rechnet die Sozialbehörde in der Regel (SKOS-RL C.3.1/C.3.2).
+//   Kinder zählen zur Einheit, solange sie minderjährig sind; ab 18 sind sie «weitere Personen»
+//   (das Profil erfasst Kinder bis 25). Ohne Alter gilt ein Kind als minderjährig.
+// - Miete: bei weiteren Personen NICHT vorbefüllen — im Profil steht die ganze Miete, gezählt wird
+//   nur der eigene Anteil (SKOS C.4). Leer mit Hinweis statt eine Pro-Kopf-Annahme.
 // - Erwerbstätig = Anstellungstyp angestellt/selbstständig/freiberuflich, oder ohne Anstellungstyp
 //   ein eingetragener Arbeitgeber. «Rentner» geht vor einem liegen gebliebenen Arbeitgeber.
 
@@ -31,6 +35,15 @@ function alterInMonaten(geburtsdatum, heute) {
   let m = (heute.getFullYear() - g.getFullYear()) * 12 + (heute.getMonth() - g.getMonth());
   if (heute.getDate() < g.getDate()) m -= 1;
   return m;
+}
+
+function kindAlter(kind, heute) {
+  if (kind?.birthDate) {
+    const m = alterInMonaten(kind.birthDate, heute);
+    if (m != null) return Math.floor(m / 12);
+  }
+  const a = Number(kind?.age);
+  return Number.isFinite(a) && kind?.age !== '' && kind?.age != null ? a : null;
 }
 
 export function saeule3aBeziehbar(basis, heute = new Date()) {
@@ -76,11 +89,16 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
 
   const erwachsene = erwachseneImHaushalt(basis.household);
   const einheitErwachsene = verheiratet && erwachsene >= 2 ? 2 : 1;
-  const weiterePersonen = Math.max(0, erwachsene - einheitErwachsene);
+  const kinderListe = Array.isArray(basis.household?.children) ? basis.household.children : [];
+  const erwachseneKinder = kinderListe.filter(k => { const a = kindAlter(k, heute); return a != null && a >= 18; }).length;
+  const weiterePersonen = Math.max(0, erwachsene - einheitErwachsene) + erwachseneKinder;
+  const konkubinat = basis.maritalStatus === 'cohabiting';
 
   return {
     adults: einheitErwachsene,
+    kinder: kinderListe.length - erwachseneKinder,
     weiterePersonen,
+    miete: weiterePersonen > 0 ? '' : summeAlsFeld([data?.wohnen?.rentAmount]),
     wohnform: weiterePersonen > 0 ? 'familienaehnlich' : 'allein',
     einkommen,
     einkommenMitNebenerwerb: !hauptBrutto && nebenZaehlt,
@@ -88,8 +106,11 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     andereEinkuenfte,
     vermoegen,
     vermoegenMit3a: mit3a,
+    // Unter 25 kann der Grundbedarf kantonal tiefer sein (SKOS C.3.3) — nur Hinweis, keine Rechnung.
+    jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,
     nebenerwerbBrutto,
-    partnerKonkubinat: partnerErfasst && !verheiratet,
+    // Konkubinatsbeitrag-Hinweis: bei erfasstem Partnerlohn — oder im Konkubinat mit Mitbewohnenden.
+    partnerKonkubinat: !verheiratet && (partnerErfasst || (konkubinat && weiterePersonen > 0)),
   };
 }

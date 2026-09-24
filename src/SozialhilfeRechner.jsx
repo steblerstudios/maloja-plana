@@ -14,7 +14,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   const kanton = data?.basis?.canton || '';
   const vorbefuellt = useMemo(() => sozialhilfeVorbefuellung(data), [data]);
   const initAdults = Math.min(4, vorbefuellt.adults);
-  const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
+  const initChildren = Math.min(5, vorbefuellt.kinder);
 
   const [adults, setAdults] = useState(initAdults);
   const [kinderCount, setKinderCount] = useState(initChildren);
@@ -22,7 +22,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   const [weiterePersonen, setWeiterePersonen] = useState(Math.min(5, vorbefuellt.weiterePersonen));
   const [wohnform, setWohnform] = useState(vorbefuellt.wohnform === 'allein' ? 'familienaehnlich' : vorbefuellt.wohnform);
   // Vorbefüllen aus bereits erfassten Angaben (überschreibbar) — nicht zweimal eingeben.
-  const [miete, setMiete] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
+  const [miete, setMiete] = useState(vorbefuellt.miete);
   const [kvg, setKvg] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
   // Sozialhilfe basiert auf dem NETTO-Einkommen: ist das Einkommen als Brutto hinterlegt,
   // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
@@ -60,7 +60,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
     hint: { color: palette.mid, fontSize: text.xs, marginBottom: space.xs + 'px' },
     inputRow: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
-    inputGroup: { display: 'flex', flexDirection: 'column', minWidth: '140px' },
+    inputGroup: { display: 'flex', flexDirection: 'column', minWidth: '140px', maxWidth: '240px' },
     input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     select: { width: '100%', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', appearance: 'none', WebkitAppearance: 'none', paddingRight: '28px', cursor: 'pointer', boxSizing: 'border-box' },
     selectWrap: { position: 'relative', display: 'inline-block', width: '80px' },
@@ -105,6 +105,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         React.createElement('div', { style: s.inputGroup },
           React.createElement('div', { style: s.label }, t('sh.erwachsene')),
           React.createElement('div', { style: s.hint }, t('sh.erwachseneHint')),
+          vorbefuellt.jungErwachsen && React.createElement('div', { style: s.hint }, t('sh.jungeErwachseneHint')),
           React.createElement('div', { style: s.selectWrap },
             React.createElement('select', {
               style: s.select, value: adults,
@@ -160,7 +161,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             t(w === 'zweckWg' ? 'sh.wohnformZweckWg' : 'sh.wohnformFamilienaehnlich')
           ))
         ),
-        React.createElement('div', { style: s.hint }, t('sh.wohnformHint'))
+        React.createElement('div', { style: { ...s.hint, marginBottom: space.sm + 'px' } }, t('sh.wohnformHint'))
       ),
       React.createElement('div', { style: s.inputRow },
         field('sh.einkommen', einkommen, setEinkommen, '0',
