@@ -60,3 +60,14 @@ describe('Codex-Audit: Texte in allen fünf Sprachen', () => {
     });
   }
 });
+
+// Die Aufrufstelle zählt: ein Schlüssel in fünf Sprachen nützt nichts, wenn das Dashboard
+// weiter nur das Feld ausgibt (Lehre 23.09.: eine Mutation überlebte an der Aufrufstelle).
+import { readFileSync } from 'node:fs';
+describe('Codex-Audit: das Dashboard benutzt die Handlung', () => {
+  const src = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
+  it('der nächste Schritt gibt nextField.label nie nackt als Text aus', () => {
+    expect(src).toContain("t('dashboard.nextUpAction', { feld: nextField.label })");
+    expect(src).not.toMatch(/\},\s*nextField\.label\)/);
+  });
+});
