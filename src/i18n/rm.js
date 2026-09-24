@@ -1360,6 +1360,8 @@ export default {
         landlord: 'Num dal possessur',
         landlordPhone: 'Telefon dal possessur',
         mortgageStatus: { label: 'Ipoteca existenta?', options: { no: 'Na', fixedRate: 'Gea tschains fix', variable: 'Gea variabel' } },
+        mortgagePayment: 'Tschains ipotecar ed amortisaziun CHF/mais',
+        rooms: 'Dumber da stanzas (p.ex. 3,5)',
         propertyValue: "Valur da l'immobiglia CHF",
         buildingsInsurance: "Assicuranza d'edifizi CHF/onn",
         residenceType: { label: 'Tip da domicil', options: { main: 'Domicil principal', weekly: "Dimorant per l'emna", secondary: 'Domicil secundar' } },
@@ -2156,6 +2158,9 @@ export default {
     needInfo: 'Per plaschair agiuntar creditur ed import.',
     creditor: 'Creditur (p.ex. banca, persuna)',
     amount: 'Import (CHF)',
+    ausProfilHint: "Import surpiglià da «Imprest persunal» en il chapitel Finanzas — qua libramain adattabel.",
+    registerHinweis: "Ina scussiun registrada po star en il register da scussiun — ma betg per forza, per exempel sch'ella è vegnida retratga. Notar il stadi en il chapitel Autoritads.",
+    registerHinweisLink: 'Al chapitel Autoritads',
     interestRate: 'Tschains (%)',
     debtor: 'Debitur',
     court: 'Uffizi da scussiun',
@@ -3360,13 +3365,15 @@ export default {
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
     // K62.1: Konkubinat, Einzelbesteuerung
     annahmeEinzeln: { sie: "Quintà mo per Vus: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9).", du: "Quintà mo per tai: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9)." }, // TODO(rm): provisorisch
-    annahmeKinderabzugKonkubinat: { sie: "Quintà cun l'entira deducziun per uffants tar Vus. Cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant survegn mintga genitur la mesadad da la deducziun per uffants (AFC, circular nr. 30, cifra 14.8.1, taglia federala directa) — la taglia federala è lura tuttina auta u pli auta. Co ch'il chantun parta la deducziun n'è betg verifitgà.", du: "Quintà cun l'entira deducziun per uffants tar tai. Cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant survegn mintga genitur la mesadad da la deducziun per uffants (AFC, circular nr. 30, cifra 14.8.1, taglia federala directa) — la taglia federala è lura tuttina auta u pli auta. Co ch'il chantun parta la deducziun n'è betg verifitgà." }, // TODO(rm): provisorisch — Gegenlese
+    annahmeKinderabzugKonkubinat: { sie: "Quintà cun l'entira deducziun per uffants tar Vus. Cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant survegn mintga genitur la mesadad da la deducziun per uffants (AFC, circular nr. 30, cifra 14.8.1, taglia federala directa) — la taglia federala è lura tuttina auta u pli auta. La regla chantunala è vegnida legida per mintga chantun; nua ch'il chantun parta per mesadad, na mussa Maloja nagin import chantunal.", du: "Quintà cun l'entira deducziun per uffants tar tai. Cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant survegn mintga genitur la mesadad da la deducziun per uffants (AFC, circular nr. 30, cifra 14.8.1, taglia federala directa) — la taglia federala è lura tuttina auta u pli auta. La regla chantunala è vegnida legida per mintga chantun; nua ch'il chantun parta per mesadad, na mussa Maloja nagin import chantunal." }, // TODO(rm): provisorisch — Gegenlese
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin la valur endatada — Maloja suppona ch'i saja l'entrada taxabla cuminaivla tenor la taxaziun. Sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
     bandKonkubinat: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca (stadi civil «concubinat»).", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca (stadi civil «concubinat»)." }, // TODO(rm): provisorisch
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     // K117: Konkubinat mit Kindern, Partnereinkommen im Profil nie beantwortet.
     bandKonkubinatKinderOffen: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en il concubinat cun uffants dovra Maloja l'entrada dal partenari u da la partenaria, e questa indicaziun manca anc. La taglia federala survart vala vinavant.", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en il concubinat cun uffants dovra Maloja l'entrada da tes partenari u da tia partenaria, e questa indicaziun manca anc. La taglia federala survart vala vinavant." },
+    // TODO(rm): K125, provisorisch — Gegenlese Rumantsch ausstehend
+    bandKonkubinatKinderabzugHaelftig: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant parta quest chantun la deducziun per uffants per mesadad tranter ils geniturs; la funtauna uffiziala na numna nagina excepziun per il cas che mo ina persuna gudogna. La tabella da Maloja ed il calculatur da taglia da l'AFT quintan l'entira deducziun tar Vus e mussassan perquai ina taglia memia bassa. L'import decisiv stat en la taxaziun; l'administraziun chantunala da taglia As dat infurmaziuns.", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: cun autoritad parentala cuminaivla e senza contribuziuns da mantegniment per l'uffant parta quest chantun la deducziun per uffants per mesadad tranter ils geniturs; la funtauna uffiziala na numna nagina excepziun per il cas che mo ina persuna gudogna. La tabella da Maloja ed il calculatur da taglia da l'AFT quintan l'entira deducziun tar tai e mussassan perquai ina taglia memia bassa. L'import decisiv stat en la taxaziun; l'administraziun chantunala da taglia ta dat infurmaziuns." },
     ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     ohneZahlKinderDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al dumber d'uffants en il profil. Per in auter dumber d'uffants na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch (K87)
     gemeinsamDirektHinweis: "Maloja suppona che la valur endatada saja l'entrada taxabla cuminaivla dal pèr tenor la taxaziun. La lingia dal salari net cuntegna mo l'atgna entrada — perquai na mussa Maloja qua nagina quota da taglia e nagina entrada netta suenter las taglias.", // TODO(rm): provisorisch (K86)
@@ -3701,6 +3708,7 @@ export default {
     title: 'Cumpensaziun da gudogn (EO)',
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: "Ultima entrada annaira avant l'eveniment",
+    nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair l'entrada annuala bruta per la EO.",
     einkommenEingeben: { sie: "Endatai Vossa entrada annaira per calcular l'indemnisaziun.", du: "Endatescha Tia entrada annaira per calcular l'indemnisaziun." },
     erklaerung: { sie: "Il calculatur mussa Voss taggeld e l'indemnisaziun totala per maternitad (14 emnas), paternitad (2 emnas), adopziun (2 emnas) e vacanzas da tgira (14 emnas).", du: "Il calculatur mussa Tes taggeld e l'indemnisaziun totala per maternitad (14 emnas), paternitad (2 emnas), adopziun (2 emnas) e vacanzas da tgira (14 emnas)." },
     taggeld: 'Taggeld',
@@ -3732,6 +3740,10 @@ export default {
     kvg: 'Premia LAMal (CHF)',
     einkommen: 'Entrada da lavur (CHF)',
     nettoBruttoHint: "L'entrada memorisada è marcada sco brut — endatar qua per plaschair l'entrada netta per l'agid social.",
+    ausProfilHint: "Summà ord il profil — qua libramain adattabel.",
+    nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai na vegn ella betg quintada — qua agiuntar l'import net.",
+    konkubinatHint: "En concubinat na quinta betg l'entir salari da la partenaria u dal partenari, mabain ina contribuziun da concubinat — il servetsch social la fixescha. Perquai na vegn nagut preemplenì qua.",
+    inkl3aHint: 'Summà ord il profil, inclusiv il pilaster 3a — el po vegnir retratg a partir da tschintg onns avant la vegliadetgna da referenza e quinta lura sco facultad.',
     andereEinkuenfte: 'Autras entradas (CHF)',
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',
@@ -4834,6 +4846,8 @@ export default {
     szenarioMonate: 'mais',
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: 'Entrada media determinanta',
+    nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari annual brut per AVS e LPP.",
+    partnerNettoHint: 'Endatar per plaschair il salari annual brut — en il profil è mo il salari net registrà, e quel fiss qua la basa sbagliada.',
     beitragsjahre: 'Onns da contribuziun',
     bezugAlter: 'Vegliadetgna da retschavida',
     erziehungsjahre: "Onns d'educaziun",

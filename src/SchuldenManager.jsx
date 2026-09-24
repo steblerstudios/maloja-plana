@@ -11,6 +11,8 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
 import { betrag } from './utils/geld.js';
+import { darlehenVorschlag, betreibungsHinweis } from './utils/schuldenAusProfil.js';
+import { CHAPTER_KEYS } from './config/constants.js';
 
 export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -18,7 +20,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
   const [verlustscheine, setVerlustscheine] = useState(data.verlustscheine || []);
-  const [newDebt, setNewDebt] = useState({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open', category: 'sonstige' });
+  // Nicht zweimal eingeben: «Persönliche Darlehen» aus dem Kapitel Finanzen, solange noch keine Schuld erfasst ist.
+  const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
+  const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
   const [debtPlan, setDebtPlan] = useState(null);
   const [method, setMethod] = useState('lawine');
   const [formError, setFormError] = useState(false);
@@ -100,6 +104,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     onSaveRef.current({ schulden, betreibung, verlustscheine });
     setGespeichert(true);
   }, [schulden, betreibung, verlustscheine]);
+
 
   const debtStatus = calculateDebtStatus(schulden);
   const prioritized = prioritizeDebts(schulden, method);
@@ -242,6 +247,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
         React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: inputStyle }),
+        vorschlag && newDebt.amount === vorschlag.amount && schulden.length === 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.ausProfilHint')),
         // Pflicht = Gläubiger + Betrag; alles Weitere optional, eingeklappt
         React.createElement('details', null,
           React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),
@@ -296,6 +302,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.debtCollection')),
 
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
+      // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
+      betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
+        hinweisZeichen(), t('schulden.registerHinweis'), ' ',
+        onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: { background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } }, t('schulden.registerHinweisLink'))
+      ),
 
       betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
         betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },

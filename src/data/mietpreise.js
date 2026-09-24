@@ -46,8 +46,10 @@ export const RENT_BY_CANTON = {
 };
 
 // Methode 3: explizite Zimmerzahl → Spalte (auf 1–6 begrenzt).
+// Eingetippt wird, wie man es kennt: «3.5», «3,5», «3½» oder «3 ½» (Feld wohnen.rooms, Text).
 export function roomKeyFromRooms(rooms) {
-  const r = Math.round(Number(rooms));
+  const text = String(rooms ?? '').trim().replace(/\s*½$/, '.5').replace(',', '.');
+  const r = Math.round(Number(text));
   if (!r || r < 1) return null;
   if (r <= 1) return 'r1';
   if (r >= 6) return 'r6';
