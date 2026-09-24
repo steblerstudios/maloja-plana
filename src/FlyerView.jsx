@@ -8,7 +8,7 @@ import { buildFlyerHtml } from './flyerGenerator.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { text, weight, space, radius } from './config/tokens.js';
 
-// Verteil-Flyer mit QR-Code zu malojaplana.ch (in der aktuell gewählten Sprache).
+// Verteil-Flyer A5 (Vorder- und Rückseite) mit QR-Code zu malojaplana.ch (in der aktuell gewählten Sprache).
 // Für Beratungsstellen, Gemeinden, Aushänge — niederschwellige Verbreitung.
 export const FlyerView = ({ palette, t, lang }) => {
   const vorlesen = useVorlesenContext();
@@ -73,6 +73,7 @@ export const FlyerView = ({ palette, t, lang }) => {
       React.createElement('button', { style: s.shareButton, onClick: handleShare }, t('flyer.share')),
       shared && React.createElement('span', { style: s.copied, role: 'status' }, hinweisZeichen('check'), t('flyer.copied'))
     ),
+    React.createElement('p', { style: s.hint }, t('flyer.printHint')),
     React.createElement('p', { style: s.hint }, t('flyer.langHint'))
   );
 };
