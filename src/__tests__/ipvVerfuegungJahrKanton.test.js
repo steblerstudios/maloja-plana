@@ -101,7 +101,9 @@ describe('Verfügung aus einem anderen Kanton: kein Abzug aus der Verfügung', (
     const d = person('BS', verfuegung(200, 'LU', 2026));
     expect(ipvAbzug(d)).toMatchObject({ betrag: 0, grund: 'keiner' });
   });
-  it('ein alter Eintrag ohne Kanton/Jahr ist nicht zuordenbar → Schätzung', () => {
+  // Runde 4: Altbestand zieht höchstens den Verfügungsbetrag ab, nie mehr als die Schätzung —
+  // in LU nach der Frist ist das 0 (Details: ipvAltVerfuegung.test.js).
+  it('ein alter Eintrag ohne Kanton/Jahr in LU nach der Frist → wie die Schätzung, 0', () => {
     am(SEPT_2026);
     const d = person('LU', alteVerfuegung(200));
     expect(ipvAbzug(d)).toEqual(ipvAbzug(person('LU')));
