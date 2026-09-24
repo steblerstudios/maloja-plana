@@ -75,7 +75,7 @@ export const grundordnung = (chapters, data) => {
     ch.fields.filter((f) => f.mvo).forEach((f) => {
       const done = feldErledigt(d, f.k);
       if (done) filled++;
-      fields.push({ key: f.k, label: f.label, done, na: trifftNichtZu(d, f.k), chapterIdx, chapterTitle: ch.title, chapterIcon: ch.icon });
+      fields.push({ key: f.k, label: f.label, done, na: trifftNichtZu(d, f.k), chapterIdx, chapterTitle: ch.title, chapterKey: ch.key });
     });
   });
   return { filled, total: fields.length, pct: pct(filled, fields.length), fields };

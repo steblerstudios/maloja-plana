@@ -384,7 +384,10 @@ export function calculateSozialhilfe(data) {
 export function calculateIPV(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
-  if (!ipvData) return { eligible: false, amount: 0, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
+  // K118: ohne (erkannten) Kanton ist der Anspruch UNBEKANNT, nicht 0. Dieselbe Form wie ein
+  // unbelegter Kanton (belegt: false, amount: null) — sonst zeigte der Rechner mit erfasstem
+  // Einkommen «Nicht berechtigt» und «CHF 0», eine Aussage, für die jede Grundlage fehlt.
+  if (!ipvData) return { eligible: false, belegt: false, amount: null, anspruchMoeglich: false, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const hh = getHouseholdInfo(data);
   const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome) * 12;

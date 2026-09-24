@@ -127,6 +127,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     // K62-Nachlauf D: ebenso im Konkubinat — dort lebt eine zweite Person im Haushalt, deren
     // Einkommen offen ist; ohne Angabe «Angabe fehlt» statt eines gedachten Alleinverdiener-Ehepaars.
     partnerAngegeben: profilEingaben.partnerAngegeben || !partnerErwartet(data.basis?.maritalStatus),
+    // K117: die Kantonssteuer im Konkubinat mit Kindern fragt die Angabe im Profil, nicht den Probiermodus.
+    partnerAngegebenProfil: profilEingaben.partnerAngegeben,
   };
   const steuern = steuernFuerProfil(eingaben);
   // K62.5: der Vergleich richtet sich nach der Partnerangabe im Profil, nicht nach dem Probiermodus.

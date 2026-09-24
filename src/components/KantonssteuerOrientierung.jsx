@@ -31,6 +31,9 @@ export const orientierungsText = (t, schaetzung, jahr) =>
           // K62.1: Konkubinat in BE, JU oder VS (unter der Schwelle) — Bundessteuer steht, Kanton nicht.
           : schaetzung.grund === 'konkubinatKanton'
             ? t('tax.bandKonkubinat')
+          // K117: Konkubinat mit Kindern, Partnerangabe fehlt.
+          : schaetzung.grund === 'konkubinatKinderOffen'
+            ? t('tax.bandKonkubinatKinderOffen')
           : schaetzung.grund === 'brutto'
             ? t('tax.bandNotCheckedBrutto')
             : t('tax.bandNotChecked');

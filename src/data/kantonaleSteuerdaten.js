@@ -202,6 +202,7 @@ export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
   erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder, konkubinat = false,
+  partnerAngegebenProfil,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
@@ -221,6 +222,12 @@ export function kantonssteuerFuerProfil({
   // Veranlagung enthält beide Einkommen) — darum ein eigener Grund, dessen Text nur die
   // Kantonssteuer betrifft und nicht «keine Steuerschätzung» sagt.
   else if (verheiratet && !partnerAngegeben) grund = direkt ? 'partnerOffenDirekt' : 'partnerOffen';
+  // K117 (Vorab-Prüfung 24.09.2026): Konkubinat mit Kindern, Partnereinkommen im Profil nie
+  // beantwortet → keine Kantonszahl. Sonst rechnete die App mit 0 und zeigte die Reihe «ledig
+  // mit Kindern» (ZH, 2 Kinder, 70 000 netto: CHF 2 211), obwohl das Quellenblatt den Fall
+  // «nicht gemessen» nennt. Massgebend ist die Angabe im PROFIL, nicht der Probiermodus des
+  // Steuerrechners (der setzt partnerAngegeben für Nicht-Verheiratete auf true) — wie K62.5.
+  else if (!verheiratet && konkubinat === true && kinder > 0 && (partnerAngegebenProfil ?? partnerAngegeben) === false) grund = 'konkubinatKinderOffen';
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
   const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
   // K62.1: Konkubinat, wo die ESTV Konkubinat und «ledig» verschieden rechnet → keine Zahl.

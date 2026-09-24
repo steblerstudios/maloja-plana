@@ -13,6 +13,45 @@ import { text, weight, leading, space, radius, shadow, ease, duration } from './
 
 const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' };
 
+// Die aufgeklappte «Ihre Grundordnung»: Pflicht-Felder, gruppiert nach Kapitel.
+// Die Kapitel-Kopfzeile trägt das Kapitel-Icon als eigenes Kind (aria-hidden) —
+// bis 24.09.2026 stand hier `f.chapterIcon + ' ' + f.chapterTitle`, und weil die
+// Kapitel kein `icon`-Feld haben, las man «undefined Persönliche Basis».
+export const GrundordnungFelder = ({ palette, fields, onSelectChapter }) => {
+  let lastChapter = null;
+  return fields.map((f, i) => {
+    const showHeader = f.chapterTitle !== lastChapter;
+    lastChapter = f.chapterTitle;
+    const IconFn = Icons[f.chapterKey];
+    return React.createElement(React.Fragment, { key: f.key },
+      showHeader && React.createElement('div', {
+        style: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px' }
+      },
+        IconFn && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '14px', height: '14px', flexShrink: 0 } }, IconFn()),
+        React.createElement('span', null, f.chapterTitle)
+      ),
+      React.createElement('button', {
+        onClick: () => onSelectChapter(f.chapterIdx),
+        style: {
+          display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
+          padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.sm,
+          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
+          textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
+        },
+        onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+        onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
+      },
+        React.createElement('span', {
+          style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
+        }, f.na ? '–' : hinweisZeichen(f.done ? 'check' : 'kaestchen', 12)),
+        React.createElement('span', {
+          style: { color: f.done ? palette.mid : palette.text }
+        }, f.label)
+      )
+    );
+  });
+};
+
 const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow, lang }) => {
   // K18: Kurzlabels statt der ausgeschriebenen Status — die Spalte ist schmal, 13px braucht Platz.
   const statusLabels = { leer: t('chapterStatus.leerShort'), begonnen: t('chapterStatus.begonnenShort'), grundordnung: t('chapterStatus.grundordnungShort'), vertieft: t('chapterStatus.vertieftShort') };
@@ -151,36 +190,7 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
         mvoExpanded && React.createElement('div', {
           style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: '3px' }
         },
-          (() => {
-            let lastChapter = null;
-            return mvo.fields.map((f, i) => {
-              const showHeader = f.chapterTitle !== lastChapter;
-              lastChapter = f.chapterTitle;
-              return React.createElement(React.Fragment, { key: f.key },
-                showHeader && React.createElement('div', {
-                  style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px' }
-                }, f.chapterIcon + ' ' + f.chapterTitle),
-                React.createElement('button', {
-                  onClick: () => onSelectChapter(f.chapterIdx),
-                  style: {
-                    display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
-                    padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.sm,
-                    cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
-                    textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
-                  },
-                  onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-                  onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
-                },
-                  React.createElement('span', {
-                    style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
-                  }, f.na ? '–' : hinweisZeichen(f.done ? 'check' : 'kaestchen', 12)),
-                  React.createElement('span', {
-                    style: { color: f.done ? palette.mid : palette.text }
-                  }, f.label)
-                )
-              );
-            });
-          })()
+          React.createElement(GrundordnungFelder, { palette, fields: mvo.fields, onSelectChapter })
         )
       )
   );

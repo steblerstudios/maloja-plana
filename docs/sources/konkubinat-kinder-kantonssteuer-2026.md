@@ -33,8 +33,9 @@ Brutto 80 000 (Abzugsposten je Kanton und Kinderzahl in der Messdatei, `abzuegeK
 
 **Annahme, die daraus folgt:** Die gemessene Zahl gilt für die Lage «Person 2 ohne Einkommen, die
 Kinder und der Unterhalt ganz bei Person 1». Die App zeigt im Konkubinat mit Kindern darum nur dann
-eine Zahl, wenn kein Partnereinkommen erfasst ist (bei Partnereinkommen > 0: `grund: 'partner'`, wie
-seit K62.1), und die Kantonszahl mit Kindern nur mit bestätigtem Elterntarif (wie für ledige Eltern).
+eine Zahl, wenn das Partnereinkommen ausdrücklich 0 ist: bei Partnereinkommen > 0 `grund: 'partner'`
+(seit K62.1), bei nie beantworteter Angabe `grund: 'konkubinatKinderOffen'` (K117, #312). Die
+Kantonszahl mit Kindern zudem nur mit bestätigtem Elterntarif (wie für ledige Eltern).
 
 ## Messung
 
@@ -114,10 +115,7 @@ Die kantonalen Gesetze sind dafür nicht gelesen worden, darum steht in der App 
 
 ## Offen
 
-- **Konkubinat mit Kindern, Partnereinkommen nie beantwortet.** Die App rechnet dann wie mit 0 — die
-  gemessene Lage (Person 1 trägt Kinder und Unterhalt allein). Hat die zweite Person ein Einkommen,
-  kann der Kinderabzug aufgeteilt und der Elterntarif bei ihr sein; das wäre dann keine Zahl
-  (`grund: 'partner'`). Ob die App hier wie bei «verheiratet» die Angabe verlangen soll (keine Zahl bis
-  zur Antwort), ist ein Entscheid, nicht Teil dieses Nachlaufs.
+- ~~Konkubinat mit Kindern, Partnereinkommen nie beantwortet~~ — geregelt mit K117 (#312, parallel
+  gemergt): dann keine Kantonszahl (`konkubinatKinderOffen`).
 - Die Aufteilung von Kinderabzug und Elterntarif unter nicht verheirateten Eltern (ESTV-Kreisschreiben)
   ist nicht gelesen; der ESTV-Rechner bildet sie nicht ab.
