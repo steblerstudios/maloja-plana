@@ -3312,7 +3312,9 @@ export default {
     welcome: { title: 'Willkommen bei Maloja', text: { sie: 'Ihr ruhiger Ort für alles Schweizerische — Papiere, Budget, Versicherungen, Fristen. Ein kurzer Rundgang, jederzeit überspringbar.', du: 'Dein ruhiger Ort für alles Schweizerische — Papiere, Budget, Versicherungen, Fristen. Ein kurzer Rundgang, jederzeit überspringbar.' } },
     berge: { title: 'Der Fortschritt', text: { sie: 'Die Berge zeigen ruhig, wie weit Ihr Lebensordner eingerichtet ist — ohne Druck, ohne Prozentjagd.', du: 'Die Berge zeigen ruhig, wie weit dein Lebensordner eingerichtet ist — ohne Druck, ohne Prozentjagd.' } },
     anspruch: { title: 'Mögliche Ansprüche', text: { sie: 'Hier deckt Maloja auf, worauf Sie Anspruch haben könnten — passend zu dem, was Sie am Anfang gewählt haben.', du: 'Hier deckt Maloja auf, worauf du Anspruch haben könntest — passend zu dem, was du am Anfang gewählt hast.' } },
-    privacy: { title: 'Alles bleibt auf dem Gerät', text: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Kein Konto, keine Cloud, kein Tracking. Los geht\'s.', du: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto, keine Cloud, kein Tracking. Los geht\'s.' } },
+    privacy: { title: 'Alles bleibt auf dem Gerät', text: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Kein Konto, keine Cloud, kein Tracking.', du: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto, keine Cloud, kein Tracking.' } },
+    start: { title: { sie: 'Hier fangen Sie an', du: 'Hier fängst du an' }, text: 'Hier steht immer genau ein nächster Schritt. Alles andere hat Zeit.' },
+    startAction: 'Mit «{name}» beginnen',
   },
 
   onboarding: {
@@ -3334,9 +3336,7 @@ export default {
     readyTitle: 'Bereit, {name}.',
     readyTitleGeneric: 'Alles ist eingerichtet.',
     readyMessage: { sie: 'Ihr persönlicher Schweizer Lebensordner ist eingerichtet.', du: 'Dein persönlicher Schweizer Lebensordner ist eingerichtet.' },
-    tip1: { sie: 'Beginnen Sie mit «Persönliche Basis», um Ihre wichtigsten Infos zu speichern', du: 'Beginne mit «Persönliche Basis», um deine wichtigsten Infos zu speichern' },
-    tip2: { sie: 'Laden Sie wichtige Dokumente in die Ablage hoch', du: 'Lade wichtige Dokumente in die Ablage hoch' },
-    tip3: { sie: 'Setzen Sie Erinnerungen für Bewilligungen, Versicherungen und Termine', du: 'Setze Erinnerungen für Bewilligungen, Versicherungen und Termine' },
+    readyNext: { sie: 'Auf der Übersicht wartet Ihr erster Schritt. Eins nach dem anderen.', du: 'Auf der Übersicht wartet dein erster Schritt. Eins nach dem anderen.' },
     getStarted: 'Los geht\'s',
   },
 
