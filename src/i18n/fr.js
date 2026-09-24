@@ -3597,6 +3597,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Aperçu financier',
+    ipvLautVerfuegung: 'selon la décision',
     subtitle: { sie: 'Votre situation en un coup d\'œil — basé sur vos données.', du: 'Ta situation en un coup d\'œil — basé sur tes données.' },
     monthlyIncome: 'Revenu mensuel',
     assets: 'Patrimoine',

@@ -3574,6 +3574,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Panoramica finanziaria',
+    ipvLautVerfuegung: 'secondo la decisione',
     subtitle: { sie: 'La Sua situazione in sintesi — basata sui Suoi dati.', du: 'La tua situazione in sintesi — basata sui tuoi dati.' },
     monthlyIncome: 'Reddito mensile',
     assets: 'Patrimonio',

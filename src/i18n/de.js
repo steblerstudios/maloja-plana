@@ -3617,6 +3617,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Finanz-Übersicht',
+    ipvLautVerfuegung: 'laut Verfügung',
     subtitle: { sie: 'Ihre Situation auf einen Blick — basierend auf Ihren Eingaben.', du: 'Deine Situation auf einen Blick — basierend auf Deinen Eingaben.' },
     monthlyIncome: 'Monatliches Einkommen',
     assets: 'Vermögen',

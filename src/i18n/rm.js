@@ -2490,6 +2490,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Survista da finanzas',
+    ipvLautVerfuegung: 'tenor la decisiun', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     subtitle: { sie: "Vossa situaziun en in'egliada — basond sin Vossas indicaziuns.", du: "Tia situaziun en in'egliada — basond sin Tias indicaziuns." },
     monthlyIncome: 'Entrada mensiala',
     assets: 'Facultad',

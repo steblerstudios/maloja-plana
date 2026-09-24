@@ -3598,6 +3598,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Financial Overview',
+    ipvLautVerfuegung: 'per decision letter',
     subtitle: 'Your situation at a glance — based on your entries.',
     monthlyIncome: 'Monthly income',
     assets: 'Assets',
