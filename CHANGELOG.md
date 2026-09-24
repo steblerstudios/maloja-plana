@@ -42,6 +42,21 @@ kommt der Changelog immer mit, nie doppelt.*
   als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
+- **Kapitel-Tabelle verdichtet — 1,31 kB mehr Luft unter dem 65-kB-Deckel (E36).** In
+  `src/config/constants.js` standen die Übersetzungs-Aufrufe für Bezeichnung, Auswahl-
+  Optionen, Hinweis, Platzhalter und Abschnitt 121-mal wörtlich in der Feldtabelle,
+  obwohl sie sich alle aus Kapitel- und Feld-Schlüssel ergeben; dazu 23 Dokument-
+  Bezeichnungen und die Titel der sieben Kapitel. Sie werden jetzt von
+  `kapitelFuellen()` eingesetzt, und die Tabelle nennt nur noch, was NICHT ableitbar
+  ist — Merkmale wie `mvo`/`naOk`, die zwei Felder mit Kantonsliste und der eine Fall,
+  in dem ein Feld die Auswahlliste eines anderen teilt (`sideIncomeType` → `incomeType`).
+  Was `getChapters(t)` LIEFERT, ist unverändert; keine Aufrufstelle wurde berührt.
+  Startdatei **61,16 → 59,85 kB gzip**, beides mit `npx size-limit` auf derselben Basis
+  (`e976d5d`) gemessen — von 65 kB bleiben damit **5,15 kB** frei.
+  Abgesichert durch einen Abdruck über alle fünf Sprachen
+  (`src/__tests__/kapitelAbdruck.test.js`), erzeugt vom Stand VOR dem Umbau; drei
+  Mutationsproben (vertauschte Bezeichnung, verlorenes Merkmal `mvo`, verschluckte
+  Auswahl-Option) wurden rot gesehen.
 - **ESTV-Stichprobe für die Kantonssteuer-Tabelle** (Entwickler-Skript, die App bleibt ohne
   Netz). `node scripts/estv-stichprobe.mjs` fragt den ESTV-Steuerrechner an 156 Punkten
   (26 Kantone × ledig/verheiratet × Brutto 50 000/80 000/120 000) erneut und vergleicht mit
