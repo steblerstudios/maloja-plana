@@ -55,7 +55,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     const p = partnerEinkommenRoh(data.basis);
     return p == null || p === '' ? '' : String(Math.round(Number(p) * 12) || 0);
   });
-  const [bvgGuthaben, setBvgGuthaben] = useState('');
+  // Aus dem Kapitel «Versicherungen» (Pensionskassen-Guthaben laut Ausweis) — nicht zweimal eingeben.
+  const [bvgGuthaben, setBvgGuthaben] = useState(() => {
+    const b = data.versicherungen?.bvgBalance;
+    return b == null || b === '' || !Number.isFinite(Number(b)) ? '' : String(Math.round(Number(b)));
+  });
   // Umwandlungssatz der eigenen Pensionskasse (leer = BVG-Mindestsatz 6,8 %).
   const [bvgUmwandlung, setBvgUmwandlung] = useState('');
   const [rendite, setRendite] = useState('1.5');
