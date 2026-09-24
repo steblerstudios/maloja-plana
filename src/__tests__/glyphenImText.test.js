@@ -38,8 +38,9 @@ const TYPOGRAFIE = new Set([...'·—–’‘“”„«»…‹›−≈%‰§
 const jsxDateien = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
   const p = path.join(dir, e.name);
   if (e.isDirectory()) return e.name === '__tests__' || e.name === 'i18n' ? [] : jsxDateien(p);
-  // IconSystem trägt die Muster als Beispiel im Kommentar des Bausteins.
-  return /\.jsx?$/.test(e.name) && e.name !== 'IconSystem.jsx' ? [p] : [];
+  // IconSystem trägt die Muster als Beispiel im Kommentar des Bausteins — seit der
+  // Aufteilung (24.09.2026) steht der Baustein samt Kommentar in IconKern.jsx.
+  return /\.jsx?$/.test(e.name) && e.name !== 'IconSystem.jsx' && e.name !== 'IconKern.jsx' ? [p] : [];
 });
 
 // Symbol- oder Interpunktionszeichen jenseits von ASCII, per Unicode-Eigenschaft

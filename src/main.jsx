@@ -40,7 +40,7 @@ import BetaGate from './BetaGate.jsx';
 // Luft unter dem 65-KB-Deckel. Damit das erste Antippen trotzdem nicht stockt, wird
 // das Stück nach dem ersten Bild im Leerlauf vorgeladen (siehe `vorladen` unten).
 const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
-import { Icon, zurueckZeichen, aufklappZeichen } from './IconSystem.jsx';
+import { Icon, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';

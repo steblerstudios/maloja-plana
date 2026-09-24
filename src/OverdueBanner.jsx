@@ -1,6 +1,6 @@
 import React from 'react';
 import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon } from './IconKern.jsx';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
 // Shows on Dashboard when there are overdue or due-today reminders.
