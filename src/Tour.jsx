@@ -19,7 +19,9 @@ import { markTourDone } from './utils/einfuehrungStatus.js';
 export { isTourDone, markTourDone } from './utils/einfuehrungStatus.js';
 
 // steps: [{ key, target? }]. Sichtbare Texte in i18n unter tour.<key>.title/text.
-export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
+// abschluss (optional): { label, onClick } — der letzte Knopf führt dann direkt
+// zum ersten Schritt, statt nur zu schliessen. Ohne abschluss: «Fertig» wie bisher.
+export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
   const [i, setI] = useState(0);
   const [rect, setRect] = useState(null); // Bounding-Box des aktuellen Ziels (oder null = zentriert)
   const dialogRef = useRef(null);
@@ -55,6 +57,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
   useFocusTrap(true, { ref: dialogRef, onEscape: onLater, neuAusrichten: [i] });
 
   const finish = () => { markTourDone(); onFinish && onFinish(); }; // erledigt → kommt nicht wieder
+  const losgehen = () => { finish(); abschluss.onClick(); };        // erledigt UND gleich zum ersten Schritt
   const later = () => { onLater && onLater(); };                    // verschoben → beim nächsten Start wieder
   const next = () => { if (isLast) finish(); else setI(n => n + 1); };
   const back = () => setI(n => Math.max(0, n - 1));
@@ -144,12 +147,18 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
         steps.map((s, idx) => React.createElement(React.Fragment, { key: s.key }, dot(idx === i)))
       ),
 
+      // Am Schluss mit Ziel: der Schritt-Knopf bekommt die volle Breite (der Feldname
+      // ist länger als «Weiter» und brach sonst dreizeilig um).
+      (isLast && abschluss) && React.createElement(PrimaryButton, {
+        palette, onClick: losgehen, style: { width: '100%', padding: '11px 18px', marginBottom: space.xs + 'px' },
+      }, abschluss.label),
+
       // Steuerung
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm } },
         React.createElement('button', { type: 'button', onClick: finish, style: btnGhost }, t('tour.skip')),
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
           i > 0 && React.createElement('button', { type: 'button', onClick: back, style: btnGhost }, t('tour.back')),
-          React.createElement(PrimaryButton, { palette, onClick: next, style: { padding: '11px 18px' } },
+          !(isLast && abschluss) && React.createElement(PrimaryButton, { palette, onClick: next, style: { padding: '11px 18px' } },
             isLast ? t('tour.done') : t('tour.next'))
         )
       )
