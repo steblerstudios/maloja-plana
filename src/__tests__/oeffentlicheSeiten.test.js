@@ -188,6 +188,16 @@ describe('Öffentliche Erklärseiten', () => {
     it('setzt Farben für hell und dunkel', () => {
       expect(html).toMatch(/@media \(prefers-color-scheme: dark\)/);
     });
+
+    it('legt dasselbe Home-Bildschirm-Icon ab wie die App', () => {
+      // Markenpaket #289: die App zeigt auf das eigene 180-px-Icon. Die Seiten
+      // zeigten danach noch auf icon-192.png — gleiche Marke, zwei Quellen.
+      const icon = (h) => (h.match(/rel="apple-touch-icon" href="([^"]+)"/) || [])[1];
+      const app = icon(fs.readFileSync(path.resolve(WURZEL, 'index.html'), 'utf8'));
+      expect(app).toBeTruthy();
+      expect(icon(html)).toBe(app);
+      expect(fs.existsSync(path.resolve(WURZEL, 'public', app.replace(/^\//, '')))).toBe(true);
+    });
   });
 
   // ─── Die Rechtliches-Seite ───────────────────────────────────────────────
