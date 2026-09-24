@@ -4,6 +4,7 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { renderSource } from './utils/renderSource.js';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -71,9 +72,13 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
 };
 
 // Fuss-Hinweise (Hinweis-Piktogramm je Zeile).
-export const AblaufFooter = ({ palette, notes }) => {
+// `quelle`: die Zeile «Quellen: … · Stand …» (i18n-Text mit [[Wort|url]]-Markern,
+// siehe utils/renderSource.js). Steht zuoberst im Fuss, weil sie für den ganzen
+// Ablauf gilt. Seit 24.09.2026 trägt jeder der 19 Abläufe eine — vorher zwei.
+export const AblaufFooter = ({ palette, notes, quelle, t }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },
+    quelle ? React.createElement('div', { key: 'quelle', style: { marginBottom: '6px' } }, renderSource(quelle, null, t)) : null,
     (notes || []).flatMap((n, i) => [
       i > 0 ? React.createElement('br', { key: 'br' + i }) : null,
       hinweisZeichen(undefined, undefined, 'z' + i), n,
