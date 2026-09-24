@@ -73,6 +73,11 @@ kommt der Changelog immer mit, nie doppelt.*
   Sozialhilfe, EL und Vorsorge — obwohl das Feld nicht mehr zu sehen war. Jetzt zählt der Wert nur,
   wenn das Feld nach derselben Regel sichtbar wäre (`src/utils/partnereinkommen.js`, eine Regel für
   Anzeige und Rechnung). Der gespeicherte Wert bleibt: kommt die Person wieder dazu, zählt er wieder.
+- **Steuerrechner, Probiermodus im Konkubinat** (K62-Nachlauf D, K62 Punkt 4). Wer im Profil im
+  Konkubinat lebt, das Partnereinkommen nicht angegeben hat und im Steuerrechner «verheiratet»
+  ankreuzt, sah bisher eine Zahl für ein gedachtes Alleinverdiener-Ehepaar. Jetzt steht dort wie im
+  Profil «verheiratet» ohne Angabe: die Angabe zum Partnereinkommen fehlt. Mit bewusst 0 wird
+  weiter gerechnet.
 - **Rätoromanisch: «Partenadi registrà»** statt «Partenariat registrà» (K62-Nachlauf C) — die
   amtliche Schreibweise der Zivilstandsverordnung (ZStV, SR 211.112.2, rm, Art. 8 lit. d), wie
   schon «Partenadi schlià». Im Zivilstand, im Schalter «verheiratet» von Steuer- und

@@ -427,7 +427,8 @@ export function tarifvergleichFuerProfil(p = {}) {
  *   'konkubinatPartnerOffen' K62.5: im Profil Konkubinat, Partnereinkommen nie beantwortet
  * Massgebend ist der Zivilstand im Profil (direktVerheiratet), nicht der Probiermodus des
  * Steuerrechners, und die Partnerangabe im Profil (partnerAngegebenProfil; der Steuerrechner setzt
- * partnerAngegeben für den Probiermodus bei Nicht-Verheirateten auf true, siehe TaxCalculator.jsx).
+ * partnerAngegeben für den Probiermodus bei Ledigen ohne erwartete zweite Person auf true — nicht
+ * bei verheiratet, eingetragener Partnerschaft oder Konkubinat, siehe TaxCalculator.jsx).
  */
 export function tarifvergleichGrund(p = {}) {
   const profilVerheiratet = p.direktVerheiratet ?? p.verheiratet;

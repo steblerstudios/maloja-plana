@@ -13,6 +13,7 @@ import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
+import { partnerErwartet } from './utils/partnereinkommen.js';
 import { chf, annahmenTexte } from './utils/steuerTexte.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -123,7 +124,9 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     verheiratet, kinder, elterntarif,
     // Probiermodus: Wer im Profil nicht verheiratet ist und hier «verheiratet» ankreuzt, rechnet
     // ein gedachtes Alleinverdiener-Ehepaar (gekennzeichnet). Im Profil verheiratet → Angabe nötig.
-    partnerAngegeben: profilEingaben.partnerAngegeben || !giltAlsVerheiratet(data.basis?.maritalStatus),
+    // K62-Nachlauf D: ebenso im Konkubinat — dort lebt eine zweite Person im Haushalt, deren
+    // Einkommen offen ist; ohne Angabe «Angabe fehlt» statt eines gedachten Alleinverdiener-Ehepaars.
+    partnerAngegeben: profilEingaben.partnerAngegeben || !partnerErwartet(data.basis?.maritalStatus),
   };
   const steuern = steuernFuerProfil(eingaben);
   // K62.5: der Vergleich richtet sich nach der Partnerangabe im Profil, nicht nach dem Probiermodus.
