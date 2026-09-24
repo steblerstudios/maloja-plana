@@ -1,7 +1,8 @@
 // EO-Rechner (Erwerbsersatzordnung) für Maloja Plana
 // Quelle: EOG Art. 16a–16g, EOMV (Mutterschaftsentschädigung),
 //         EOG Art. 16i–16k (Vaterschaftsentschädigung seit 01.01.2021),
-//         EOG Art. 16l–16n (Adoptionsentschädigung seit 01.01.2023)
+//         EOG Art. 16n–16s (Betreuungsentschädigung seit 01.07.2021),
+//         EOG Art. 16t–16x (Adoptionsentschädigung seit 01.01.2023)
 // Stand: 2026
 //
 // Alle Beträge in CHF. Keine Netzwerk-Calls, reine Berechnung.
@@ -27,7 +28,11 @@ const ADOPTION_TAGE = 14;
 const ADOPTION_MAX_ALTER_KIND = 4; // Kind muss unter 4 Jahre alt sein
 
 // Betreuungsentschädigung (seit 01.07.2021)
-const BETREUUNG_MAX_TAGE = 14;    // Max 14 Tage pro Ereignis
+// Innerhalb einer Rahmenfrist von 18 Monaten höchstens 98 Taggelder (= 14 Wochen,
+// pro fünf Taggelder zwei zusätzliche), bei zwei erwerbstätigen Eltern je die
+// Hälfte (EOG Art. 16p, 16q). Bis 25.09.2026 stand hier 14 — der Rechner zeigte
+// damit ein Siebtel des möglichen Totals (Fachprüfung 25.09.2026).
+const BETREUUNG_MAX_TAGE = 98;
 
 /**
  * Berechne das Taggeld basierend auf dem Einkommen.
@@ -180,4 +185,4 @@ export const EO_PARAMS = {
 };
 
 export const EO_DATA_VERSION = '2026';
-export const EO_DATA_SOURCE = 'EOG Art. 16a–16n, EOMV, BSV 2026';
+export const EO_DATA_SOURCE = 'EOG Art. 16a–16x, EOMV, BSV 2026';

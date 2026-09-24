@@ -1132,7 +1132,8 @@ export default {
       contact: "Tgi duai vegnir infurmà sco emprima persuna? In num ed in numer da telefon bastan sco cumenzament.",
       medical: { sie: "Tge medis e forzas da salvament duain savair da Vus en cas d'urgenza.", du: "Tge medis e forzas da salvament duain savair da Tai en cas d'urgenza." },
       care: { sie: "Voss medi da famiglia e Vossa clinica preferida — per che questa infurmaziun saja chattabla cura ch'ella vegn dovrada.", du: "Tes medi da famiglia e Tia clinica preferida — per che questa infurmaziun saja chattabla cura ch'ella vegn dovrada." },
-      provision: { sie: "Quests trais documents protegian Vus e Voss appartenents: La disposiziun dal pazient regla decisiuns medicalas (CC art. 370). Il mandat da prevenziun determinescha tgi ch'agischa per Vus en cas d'incapacitad da giuditgar (CC art. 360). Omadus ston esser scrits a maun u autentifitgads dal notar. Ina giada fatg — deponì per adina.", du: "Quests trais documents protegian Tai e Tes appartenents: La disposiziun dal pazient regla decisiuns medicalas (CC art. 370). Il mandat da prevenziun determinescha tgi ch'agischa per Tai en cas d'incapacitad da giuditgar (CC art. 360). Omadus ston esser scrits a maun u autentifitgads dal notar. Ina giada fatg — deponì per adina." },
+      // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+      provision: { sie: 'Diese drei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese drei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
       contacts: "Contact d'urgenza e relaziun.",
       documents: "Carta d'organs e certificat da vaccinaziun.",
     },
@@ -3356,14 +3357,15 @@ export default {
   },
 
   expiryHints: {
-    idCard: 'Legitimaziun: 5 onns valida',
-    betreibung: 'Extract da scussiun: 3 mais valid',
+    idCard: 'Legitimaziun: 10 onns valida (< 18: 5 onns)',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+    betreibung: 'Betreibungsauszug: keine gesetzliche Gültigkeitsdauer — massgebend ist das Ausstellungsdatum',
     lease: 'Contract da locaziun: Illimitadamain',
     insurance: "Polizza d'assicuranza: controllar annualmain",
     ikExtract: 'Extract CI: 5 onns valid',
     paySlip: 'Quint da paja: 1 onn valid',
     bankStatement: 'Extract da conto: 1 onn valid',
-    passport: 'Passaport: 10 onns valid',
+    passport: 'Passaport: 10 onns valid (< 18: 5 onns)',
     diploma: 'Diploma: Illimitadamain',
     kkCard: 'Carta CM: 1 onn valida',
     unknown: 'Durada da validitad nunenconuschenta',
@@ -3438,15 +3440,18 @@ export default {
     sozialdienst: { sie: "Il servetsch social da Vossa vischnanca è l'emprima post d'infurmaziun per sustegn. Ina conversaziun è senza obligaziun e confidenziala.", du: "Il servetsch social da Tia vischnanca è l'emprima post d'infurmaziun per sustegn. Ina conversaziun è senza obligaziun e confidenziala." },
     steuerverwaltung: "La decleraziun da taglia è en Svizra obligatorica — era cun pauc entrada. L'administraziun chantunalas da taglia gida tar dumondas.",
     beruf: { sie: "Vossa professiun e Vossas qualificaziuns èn relevantas per permissiuns da lavur, assicuranzas e dretgs da sustegn.", du: "Tia professiun e Tias qualificaziuns èn relevantas per permissiuns da lavur, assicuranzas e dretgs da sustegn." },
-    patientenverfuegung: { sie: "Ina disposiziun dal pazient cuntegna tge tractaments medicals che Vus giavischais, sch'i na Vus pudais betg pli exprimer. Sto esser a maun u notariala (ZGB Art. 370).", du: "Ina disposiziun dal pazient cuntegna tge tractaments medicals che Ti giavischas, sch'i na Ti pos betg pli exprimer. Sto esser a maun u notariala (ZGB Art. 370)." },
-    vorsorgeauftrag: { sie: "In mandat da prevenziun determinescha tgi che decida per Vus en cas d'incapacitad da giuditgar — finanzas, traffic giuridic, tgira da la persuna. Sto esser cumplettamain a maun u notarialmain certificà (ZGB Art. 360).", du: "In mandat da prevenziun determinescha tgi che decida per Tai en cas d'incapacitad da giuditgar — finanzas, traffic giuridic, tgira da la persuna. Sto esser cumplettamain a maun u notarialmain certificà (ZGB Art. 360)." },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+    patientenverfuegung: { sie: 'Eine Patientenverfügung hält fest, welche medizinischen Behandlungen Sie wünschen, falls Sie sich nicht mehr äussern können. Sie muss schriftlich, datiert und unterzeichnet sein — eine ausgefüllte Vorlage genügt (ZGB Art. 371). Vorlagen gibt es bei der FMH oder beim SRK — am besten mit Ihrem Hausarzt besprechen.', du: 'Eine Patientenverfügung hält fest, welche medizinischen Behandlungen Du wünschst, falls Du Dich nicht mehr äussern kannst. Sie muss schriftlich, datiert und unterzeichnet sein — eine ausgefüllte Vorlage genügt (ZGB Art. 371). Vorlagen gibt es bei der FMH oder beim SRK — am besten mit Deinem Hausarzt besprechen.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+    vorsorgeauftrag: { sie: 'Ein Vorsorgeauftrag bestimmt, wer für Sie entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, können Sie beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).', du: 'Ein Vorsorgeauftrag bestimmt, wer für Dich entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, kannst Du beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).' },
     testament: "En Svizra vala senza testament la successiun legala (ZGB Art. 457 ss.). In testament a maun sto esser cumplettamain scrit a maun, datà e suttascrit.",
     contextIpv: { sie: "Tenor l'entrada avais Vus eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmai Vus tar Vossa vischnanca u Voss chantun.", du: "Tenor l'entrada has Ti eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmescha Tai tar Tia vischnanca u Tes chantun." },
     contextFamilienzulagen: { sie: "Per Voss uffants As stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Voss patrun po gidar enavant.", du: "Per Tes uffants Ta stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Tes patrun po gidar enavant." },
     ipv: { sie: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Vus.", du: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Tai." },
     familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 200 per uffant e mais.",
     bewilligung_c: { sie: "La permissiun C è illimitada. Vus na stuais betg la prolungar e avais pratischamain ils medems dretgs sco burgais svizzers.", du: "La permissiun C è illimitada. Ti na stos betg la prolungar e has pratischamain ils medems dretgs sco burgais svizzers." },
-    el: { sie: "Prestaziuns cumplementaras gidan, sch'la renta AVS u AI na basta betg per viver. Vossa vischnanca po dir a Vus sche Vus avais dretg.", du: "Prestaziuns cumplementaras gidan, sch'la renta AVS u AI na basta betg per viver. Tia vischnanca po dir a Tai sche Ti has dretg." },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+    el: { sie: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle Ihres Kantons sagt Ihnen, ob Sie Anspruch haben (ELG Art. 21).', du: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle Deines Kantons sagt Dir, ob Du Anspruch hast (ELG Art. 21).' },
     alv: { sie: "L'assicuranza da dischoccupaziun As assicurescha en cas da perdita dal plaz da lavur. Las contribuziuns vegnan deducidas directamain dal salari.", du: "L'assicuranza da dischoccupaziun T'assicurescha en cas da perdita dal plaz da lavur. Las contribuziuns vegnan deducidas directamain dal salari." },
     rav: { sie: "Il RAV (Mediaziun regiunala da lavur) è Vossa post d'infurmaziun en cas da dischoccupaziun. Annunziai Vus là l'emprim di.", du: "Il RAV (Mediaziun regiunala da lavur) è Tia post d'infurmaziun en cas da dischoccupaziun. Annunzia Tai là l'emprim di." },
     skos: 'Las directivas SKOS recumondan quant auta che l’agid social duess esser. Ellas èn liantas mo uschè lunsch sco in chantun las surpiglia en ses dretg.',

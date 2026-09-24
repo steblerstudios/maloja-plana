@@ -23,6 +23,9 @@ describe('Fristen — Rechnen nach OR Art. 77', () => {
     expect(plusMonate('2027-11-30', 3)).toBe('2028-02-29'); // Schaltjahr
     expect(plusMonate('2026-08-31', 3)).toBe('2026-11-30');
     expect(plusMonate('2026-01-31', 1)).toBe('2026-02-28');
+    // rückwärts (Zivildienst-Gesuch: drei Monate VOR dem Dienst)
+    expect(plusMonate('2026-11-30', -3)).toBe('2026-08-30');
+    expect(plusMonate('2026-05-31', -3)).toBe('2026-02-28');
   });
 
   it('Quellensteuer: 31. März des Jahres nach dem Steuerjahr, fest (DBG Art. 89a Abs. 3)', () => {
