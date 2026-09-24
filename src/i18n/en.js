@@ -1290,7 +1290,7 @@ export default {
           adultSelf: 'Me',
           adultLabel: 'Adult {nr}',
           addAdult: 'Add adult',
-          zweitePersonFehlt: { sie: 'Your marital status includes a second person, but only one is recorded in the household so far. Premium subsidies and social assistance are calculated with the people recorded here.', du: 'Your marital status includes a second person, but only one is recorded in the household so far. Premium subsidies and social assistance are calculated with the people recorded here.' },
+          zweitePersonFehlt: { sie: 'Your marital status includes a second person, but only one is recorded in the household so far. Social assistance is calculated with the people recorded here. For premium subsidies, in the cantons with an official model (ZH, BE, AG, SG, LU) Maloja shows a couple an orientation without an amount.', du: 'Your marital status includes a second person, but only one is recorded in the household so far. Social assistance is calculated with the people recorded here. For premium subsidies, in the cantons with an official model (ZH, BE, AG, SG, LU) Maloja shows a couple an orientation without an amount.' },
           zweitePersonHinzufuegen: 'Add person',
           adultRelationship: 'Relationship',
           relPartner: 'Partner',

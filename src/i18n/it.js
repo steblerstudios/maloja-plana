@@ -1290,7 +1290,7 @@ export default {
           adultSelf: 'Io',
           adultLabel: 'Adulto {nr}',
           addAdult: 'Aggiungi adulto',
-          zweitePersonFehlt: { sie: 'Il Suo stato civile indica una seconda persona, ma nell’economia domestica per ora ne è registrata solo una. La riduzione dei premi e l’assistenza sociale si calcolano con le persone registrate qui.', du: 'Il tuo stato civile indica una seconda persona, ma nell’economia domestica per ora ne è registrata solo una. La riduzione dei premi e l’assistenza sociale si calcolano con le persone registrate qui.' },
+          zweitePersonFehlt: { sie: 'Il Suo stato civile indica una seconda persona, ma nell’economia domestica per ora ne è registrata solo una. L’assistenza sociale si calcola con le persone registrate qui. Per la riduzione dei premi, nei Cantoni con modello ufficiale (ZH, BE, AG, SG, LU) Maloja mostra per una coppia un orientamento senza importo.', du: 'Il tuo stato civile indica una seconda persona, ma nell’economia domestica per ora ne è registrata solo una. L’assistenza sociale si calcola con le persone registrate qui. Per la riduzione dei premi, nei Cantoni con modello ufficiale (ZH, BE, AG, SG, LU) Maloja mostra per una coppia un orientamento senza importo.' },
           zweitePersonHinzufuegen: 'Aggiungi la persona',
           adultRelationship: 'Relazione',
           relPartner: 'Partner',

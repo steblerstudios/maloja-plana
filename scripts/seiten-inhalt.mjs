@@ -484,8 +484,13 @@ export const quelle = q;
 //
 // Warum keine Adresse: Stebler Studios hat (Stand 23.09.2026) kein
 // Geschäftsdomizil, und die Wohnadresse soll nicht ins öffentliche Repo. Das
-// hängt am Handelsregister-Entscheid: ein Eintrag macht die Domiziladresse
-// ohnehin öffentlich (OR Art. 931), deshalb wird beides zusammen entschieden.
+// hängt am Handelsregister-Entscheid: ein Eintrag ist öffentlich (OR Art. 936
+// Abs. 1: «Das Handelsregister ist öffentlich.»), deshalb wird beides zusammen
+// entschieden. Die Eintragungspflicht für Einzelunternehmen regelt OR Art. 931
+// Abs. 1 (Umsatzerlös ab 100 000 Franken). Beides gelesen an Fedlex, SR 220,
+// Fassung 1.1.2026, am 24.09.2026. Dass die Domiziladresse zum Eintrag gehört,
+// steht in der HRegV — dort nicht gelesen. (Bis 24.09. stand hier «OR Art. 931»
+// für die Öffentlichkeit; das ist Art. 936.)
 //
 // 🛑 Dieselbe Stelle, dieselbe Begründung steht im Studio-Impressum
 // (stebler-studios/website/impressum.html, Fassung vom 22.09.2026). Wer hier

@@ -1296,7 +1296,7 @@ export default {
           adultSelf: 'Ich',
           adultLabel: 'Erwachsene/r {nr}',
           addAdult: 'Erwachsene/n hinzufügen',
-          zweitePersonFehlt: { sie: 'Ihr Zivilstand nennt eine zweite Person, im Haushalt ist bisher nur eine erfasst. Prämienverbilligung und Sozialhilfe rechnen mit den Personen, die hier stehen.', du: 'Dein Zivilstand nennt eine zweite Person, im Haushalt ist bisher nur eine erfasst. Prämienverbilligung und Sozialhilfe rechnen mit den Personen, die hier stehen.' },
+          zweitePersonFehlt: { sie: 'Ihr Zivilstand nennt eine zweite Person, im Haushalt ist bisher nur eine erfasst. Die Sozialhilfe rechnet mit den Personen, die hier stehen. Bei der Prämienverbilligung zeigt Maloja für ein Paar in den Kantonen mit amtlichem Modell (ZH, BE, AG, SG, LU) eine Orientierung ohne Betrag.', du: 'Dein Zivilstand nennt eine zweite Person, im Haushalt ist bisher nur eine erfasst. Die Sozialhilfe rechnet mit den Personen, die hier stehen. Bei der Prämienverbilligung zeigt Maloja für ein Paar in den Kantonen mit amtlichem Modell (ZH, BE, AG, SG, LU) eine Orientierung ohne Betrag.' },
           zweitePersonHinzufuegen: 'Person hinzufügen',
           adultRelationship: 'Beziehung',
           relPartner: 'Partner/in',

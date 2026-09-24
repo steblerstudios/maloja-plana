@@ -1289,7 +1289,7 @@ export default {
           adultSelf: 'Moi',
           adultLabel: 'Adulte {nr}',
           addAdult: 'Ajouter un adulte',
-          zweitePersonFehlt: { sie: 'Votre état civil mentionne une deuxième personne, mais le ménage n’en compte pour l’instant qu’une. La réduction de primes et l’aide sociale se calculent avec les personnes saisies ici.', du: 'Ton état civil mentionne une deuxième personne, mais le ménage n’en compte pour l’instant qu’une. La réduction de primes et l’aide sociale se calculent avec les personnes saisies ici.' },
+          zweitePersonFehlt: { sie: 'Votre état civil mentionne une deuxième personne, mais le ménage n’en compte pour l’instant qu’une. L’aide sociale se calcule avec les personnes saisies ici. Pour la réduction de primes, Maloja affiche pour un couple, dans les cantons au modèle officiel (ZH, BE, AG, SG, LU), une orientation sans montant.', du: 'Ton état civil mentionne une deuxième personne, mais le ménage n’en compte pour l’instant qu’une. L’aide sociale se calcule avec les personnes saisies ici. Pour la réduction de primes, Maloja affiche pour un couple, dans les cantons au modèle officiel (ZH, BE, AG, SG, LU), une orientation sans montant.' },
           zweitePersonHinzufuegen: 'Ajouter la personne',
           adultRelationship: 'Relation',
           relPartner: 'Partenaire',

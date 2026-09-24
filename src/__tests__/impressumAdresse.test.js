@@ -13,8 +13,9 @@ import rm from '../i18n/rm.js';
 // DER ENTSCHEID: Es steht KEINE Postanschrift im Impressum. Genannt sind
 // Name, Ort und E-Mail. Grund: Stebler Studios hat kein Geschäftsdomizil, und
 // die Wohnadresse gehört nicht in ein öffentliches Repo. Das hängt am
-// Handelsregister-Entscheid (ein Eintrag macht das Domizil ohnehin öffentlich,
-// OR Art. 931), deshalb wird beides zusammen entschieden.
+// Handelsregister-Entscheid (ein Eintrag ist öffentlich, OR Art. 936 Abs. 1;
+// die Eintragungspflicht steht in OR Art. 931 — gelesen an Fedlex 24.09.2026),
+// deshalb wird beides zusammen entschieden.
 //
 // Ob UWG Art. 3 Abs. 1 Bst. s Ziff. 1 hier überhaupt greift, ist Frage F0 in
 // docs/legal/k48-fragen-juristin.md — hier NICHT zu entscheiden.

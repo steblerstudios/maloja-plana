@@ -1167,7 +1167,7 @@ export default {
           adultSelf: 'Jau',
           adultLabel: 'Creschì/da {nr}',
           addAdult: 'Agiuntar in creschì',
-          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. La reducziun da premias e l’agid social vegnan quintads cun las persunas registradas qua.' }, // TODO(rm): provisorisch
+          zweitePersonFehlt: { sie: 'Voss stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. L’agid social vegn quintà cun las persunas registradas qua. Per la reducziun da premias mussa Maloja per in pèr en ils chantuns cun model uffizial (ZH, BE, AG, SG, LU) in’orientaziun senza import.', du: 'Tes stadi civil numna ina segunda persuna, en il menaschi è dentant fin ussa mo ina registrada. L’agid social vegn quintà cun las persunas registradas qua. Per la reducziun da premias mussa Maloja per in pèr en ils chantuns cun model uffizial (ZH, BE, AG, SG, LU) in’orientaziun senza import.' }, // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
           zweitePersonHinzufuegen: 'Agiuntar la persuna', // TODO(rm): provisorisch
           adultRelationship: 'Relaziun',
           relPartner: 'Partenari/a',
