@@ -29,3 +29,21 @@ describe('Kündigungsbrief — Objektadresse wird genau einmal escaped', () => {
     expect(html).not.toMatch(/266a\b/);
   });
 });
+
+// Nicht zweimal eingeben: der Vermieter steht im Kapitel «Wohnen» und gehört ins Empfängerfeld.
+describe('Kündigungsbrief — Vermieter aus dem Profil', () => {
+  const empfaenger = (html) => html.match(/<div class="recipient">([\s\S]*?)<\/div>\s*<div class="date-line">/)[1];
+  it('setzt den Vermieter ein, escaped, und markiert die fehlende Adresse', () => {
+    const html = generateLetter('leaseTermination', { wohnen: { landlord: 'Huber & Söhne <Verwaltung>' } }, t);
+    const block = empfaenger(html);
+    expect(block).toContain('Huber &amp; Söhne &lt;Verwaltung&gt;');
+    expect(block).toContain('class="placeholder"');
+    expect(block).not.toContain(t('briefe.recipientPlaceholder'));
+  });
+  it('ohne Vermieter (auch nur Leerzeichen) bleibt der Platzhalter', () => {
+    for (const landlord of [undefined, '', '   ']) {
+      const block = empfaenger(generateLetter('leaseTermination', { wohnen: { landlord } }, t));
+      expect(block).toContain(t('briefe.recipientPlaceholder'));
+    }
+  });
+});

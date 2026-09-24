@@ -260,6 +260,9 @@ function getLeaseTerminationFields(data, t) {
   return {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
+    // Vermieter/Verwaltung aus dem Kapitel «Wohnen» — nicht zweimal eingeben. Die Adresse der
+    // Verwaltung ist dort nicht erfasst und bleibt als Lücke markiert, wie beim Versicherer.
+    landlord: String(data.wohnen?.landlord || '').trim(),
     // Klartext, nicht esc(): der Wert wird in body2 über esc(t(…, { address })) genau einmal
     // escaped. Vorher doppelt → «Meier &amp; Co» stand als «&amp;amp;» im Brief (Voll-Review 15.09.2026).
     objectAddress: data.wohnen?.address ? data.wohnen.address : t('briefe.fillIn'),
@@ -352,7 +355,7 @@ function generateLeaseTermination(data, t) {
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
-    <div class="recipient"><div class="placeholder">${f.recipient}</div></div>
+    <div class="recipient">${f.landlord ? esc(f.landlord) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + f.recipient + '</div>'}</div>
     <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.leaseTermination.subject'))}</div>
     <div class="body-text">
