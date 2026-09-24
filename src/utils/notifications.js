@@ -6,6 +6,8 @@
 // Phase 2 (future):  Browser Notification API for overdue reminders
 // Phase 3 (future):  Background sync for periodic reminder checks
 
+import { inDays } from './helpers.js';
+
 const SW_PATH = '/sw.js';
 
 // ─── Service Worker Registration ───────────────────────────
@@ -114,7 +116,7 @@ export const checkOverdueReminders = (t) => {
 
   try {
     const reminders = JSON.parse(localStorage.getItem('or5_reminders') || '[]');
-    const today = new Date().toISOString().split('T')[0];
+    const today = inDays(0);
     const overdue = reminders.filter(r => !r.done && r.dueDate < today);
 
     if (overdue.length > 0) {

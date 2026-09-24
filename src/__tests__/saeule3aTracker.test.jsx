@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import React from 'react';
+import { zahl } from '../utils/geld.js';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Saeule3aTracker } from '../Saeule3aTracker.jsx';
 import {
@@ -27,7 +28,8 @@ const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length
 // ICU-Fassung ein gerades oder ein typografisches Apostroph, und React maskiert das gerade
 // zu `&#x27;`. Ein Test, der eines davon fest verdrahtet, bricht beim nächsten Node — ohne
 // dass an der App etwas falsch wäre.
-const chf = (v) => 'CHF ' + Math.round(v).toLocaleString('de-CH');
+// Seit 24.09.2026 kommt die Trennung aus utils/geld.js (fest ’, nicht mehr aus der ICU-Fassung).
+const chf = (v) => 'CHF ' + zahl(v);
 const render = (props) => renderToStaticMarkup(
   React.createElement(Saeule3aTracker, { palette, t, onChange: () => {}, ...props }))
   .replace(/&#x27;/g, "'").replace(/&quot;/g, '"');

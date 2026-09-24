@@ -3,6 +3,8 @@
 // in the Calendar system. Runs on app load and when documents change.
 // Local-first: reads or5_docs, writes to or5_reminders.
 
+import { inDays } from './helpers.js';
+
 const REMINDERS_KEY = 'or5_reminders';
 const DOC_REMINDER_PREFIX = 'doc_expiry_';
 
@@ -17,7 +19,7 @@ const saveReminders = (reminders) => {
   catch { return false; }
 };
 
-const todayISO = () => new Date().toISOString().split('T')[0];
+const todayISO = () => inDays(0);
 
 // Generates a stable ID for a document-linked reminder
 const docReminderId = (docId) => DOC_REMINDER_PREFIX + docId;

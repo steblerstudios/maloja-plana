@@ -5,6 +5,7 @@ import { lohnBandState, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
+import { zahl } from '../utils/geld.js';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
 // Encoding: docs/design/farb-und-daten-system.md
@@ -201,7 +202,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     marks.unshift({ value: mindestlohn.monat, form: 'exclaim', color: mlBreached ? palette.roseDeep : palette.text });
   }
 
-  const fmt = (n) => Math.round(n).toLocaleString('de-CH');
+  const fmt = (n) => zahl(n);
 
   return React.createElement('div', { style: card },
     React.createElement('div', {

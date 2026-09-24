@@ -3,6 +3,7 @@ import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { zahl } from './utils/geld.js';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
 // (Spitex-nahen) Organisationen angestellt und für ihre Pflege entlöhnt werden.
@@ -20,7 +21,7 @@ export const PFLEGE_ENTLOEHNUNG_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 export const PflegeEntloehnung = ({ palette, t }) => {
   const [stunden, setStunden] = useState(14);
   const brutto = Math.round(stunden * WOCHEN_PRO_MONAT * STUNDENSATZ);
-  const fmt = (v) => v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const fmt = (v) => zahl(v);
 
   const s = {
     wrap: { marginTop: space.sm + 'px' },

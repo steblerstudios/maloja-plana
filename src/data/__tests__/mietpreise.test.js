@@ -22,6 +22,15 @@ describe('mietpreise', () => {
       expect(roomKeyFromRooms(0)).toBeNull();
       expect(roomKeyFromRooms(undefined)).toBeNull();
     });
+    // Das Profilfeld ist Text: in der Romandie und im Tessin tippt man «3,5», sonst oft «3½».
+    it('versteht Komma, Punkt und ½ gleich', () => {
+      for (const eingabe of ['3.5', '3,5', '3½', '3 ½', ' 3,5 ']) {
+        expect(roomKeyFromRooms(eingabe), eingabe).toBe(roomKeyFromRooms(3.5));
+      }
+      expect(roomKeyFromRooms('2,5')).toBe(roomKeyFromRooms(2.5));
+      expect(roomKeyFromRooms('abc')).toBeNull();
+      expect(roomKeyFromRooms('')).toBeNull();
+    });
   });
 
   describe('roomKeyFromHousehold', () => {

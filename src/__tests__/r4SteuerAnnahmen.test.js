@@ -107,7 +107,9 @@ const steuerrechner = (data) => {
   zustand.effekte.forEach((fn) => fn());
   const alle = render();
   const text = texte(alle);
-  const betraege = text.split('\n').filter((z) => /^~ CHF \d+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6)));
+  // Seit 24.09.2026 mit Tausender-’ (utils/geld.js). Ohne diese Anpassung erkennte der Leser
+  // KEINEN Betrag mehr — und die «keine Zahl»-Prüfungen (toEqual([])) wären leer grün.
+  const betraege = text.split('\n').filter((z) => /^~ CHF [\d’]+(\.\d+)?$/.test(z)).map((z) => Number(z.slice(6).replace(/’/g, '')));
   const steuerbar = alle.find((k) => k.props['data-testid'] === 'steuerbares-einkommen');
   return { alle, text, betraege, steuerbar: steuerbar ? texte(knoten(steuerbar.props.children)) : null, gespeichert, render };
 };
@@ -173,7 +175,7 @@ describe('R4-1 · 13. Monatslohn', () => {
     expect(steuerrechner(p).text).toContain('tax.annahmeOhneDreizehnten');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).not.toContain('tax.annahmeOhneDreizehnten');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('tax.netIncomeNote13');
-    expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF 65000');
+    expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF 65’000');
     const json = generateBehoerdenJSON(p, dossierRechnung(p)).calculations.tax;
     // E40: Kennung statt deutschem Klartext (ohne t nur die Kennung)
     expect(json.assumptions).toContainEqual({ code: 'ohne_13_monatslohn' });
@@ -415,7 +417,7 @@ describe('R4-4 · eine Zahl überall (Häkchen «eingetragenen Wert verwenden»)
     const steuerbar = quelle === 'direkt' ? 40000 : 72000 - 2160 - 1800;
     expect(s.steuerbar).toBe(steuerbar);
     // Steuerrechner
-    expect(r.steuerbar).toContain('CHF ' + steuerbar);
+    expect(r.steuerbar).toContain('CHF ' + tausender(steuerbar)); // seit 24.09.2026 mit ’
     expect(r.betraege[0]).toBe(Math.round(s.bund.steuer));
     expect(r.betraege[1]).toBe(s.kanton.kantonal.kantonalUndGemeinde);
     // Finanzübersicht
