@@ -47,6 +47,23 @@ kommt der Changelog immer mit, nie doppelt.*
   als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
+- **Logo-Schriftzug als eigene Datei — 4,03 kB mehr Luft unter dem 65-kB-Deckel (E36).**
+  Der Schriftzug «Maloja Plana» ist Ubuntu in Vektorpfaden, 8648 Zeichen Koordinaten.
+  Im Startbundle kostete er **4,14 kB gzip** — gut 6 % des ganzen Startbudgets und
+  damit der teuerste Posten der Datei überhaupt (Koordinaten komprimieren nur etwa
+  2:1, wiederholter Code 6:1). Er liegt jetzt in `src/components/marken-schriftzug.svg`,
+  bekommt von Vite einen Hash unter `/assets/` und wird per `mask-image` in der Farbe
+  der Fläche gezeichnet — der Schriftzug ist in beiden Fassungen einfarbig, darum
+  genügt **eine** Datei und es entsteht keine zweite Quelle für dieselben Pfade.
+  Die **Bildmarke bleibt inline** (nur 553 Zeichen, im Dunkeln zweifarbig): die Marke
+  steht im ersten Bild sofort ohne Abruf, nachgeladen wird nur die Beschriftung, und
+  der Kasten hält seine Höhe, damit nichts springt. Startdatei **60,23 → 56,20 kB gzip**
+  (Basis `0049b68`); von 65 kB bleiben **8,80 kB** frei. Als eigene Datei wiegt der
+  Schriftzug übertragen 3,39 kB statt 4,14 kB — er wird also nicht nur aus der
+  gedeckelten Datei verschoben, sondern insgesamt leichter, und überlebt als
+  unveränderliche Datei jedes JS-Deploy im Cache.
+  Am Bildschirm geprüft (hell und dunkel): Maske und Bildmarke liegen deckungsgleich,
+  Farben `#22211F` bzw. `#E6E3DC` + Salbei/Sand.
 - **`scripts/bundle-posten.mjs`: nachmessen statt raten, was in der Startdatei liegt**
   (Entwickler-Skript, kein neues Paket). Liest die Sourcemap neben dem gebauten Chunk
   und ordnet jedes Byte seiner Quelldatei zu, auf Wunsch bis auf die Original-Zeile
