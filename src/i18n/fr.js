@@ -2104,6 +2104,8 @@ export default {
       help3: { name: 'Aide aux victimes', url: 'https://www.aide-aux-victimes.ch/fr/', desc: 'Conseil gratuit pour les victimes d\'infractions.' },
       help4: { name: 'Maisons des femmes', url: 'https://www.frauenhaus-schweiz.ch', desc: 'Protection et conseil en cas de violence domestique.' },
       ombudsTitle: 'Médiateurs',
+      verbaendeTitle: 'Associations & défense d’intérêts',
+      verbaendeHinweis: 'Ces associations défendent une partie — les locataires ou les consommateurs et consommatrices. Elles conseillent, mais ne sont pas un service de médiation neutre.',
       ombuds1: { name: 'Ombudsman de l\'assurance-maladie', url: 'https://www.om-kv.ch', desc: 'Médiation gratuite en cas de litige avec la caisse maladie.' },
       ombuds2: { name: 'Ombudsman des banques', url: 'https://www.bankingombudsman.ch', desc: 'Médiation en cas de conflit avec les banques.' },
       ombuds3: { name: 'Association des locataires', url: 'https://www.asloca.ch', desc: 'Association de défense des locataires : conseil (en partie réservé aux membres) et accompagnement devant l’autorité de conciliation.' },

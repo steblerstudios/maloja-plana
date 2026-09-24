@@ -2112,6 +2112,8 @@ export default {
       help3: { name: 'Opferhilfe Schweiz', url: 'https://www.opferhilfe-schweiz.ch/de/', desc: 'Kostenlose Beratung für Betroffene von Straftaten.' },
       help4: { name: 'Frauenhaus-Netz', url: 'https://www.frauenhaus-schweiz.ch', desc: 'Schutz und Beratung bei häuslicher Gewalt.' },
       ombudsTitle: 'Ombudsstellen',
+      verbaendeTitle: 'Verbände & Interessenvertretung',
+      verbaendeHinweis: 'Diese Verbände vertreten eine Seite — Mieterinnen und Mieter bzw. Konsumentinnen und Konsumenten. Sie beraten, sind aber keine neutrale Vermittlungsstelle.',
       ombuds1: { name: 'Ombudsman der Krankenversicherung', url: 'https://www.om-kv.ch', desc: 'Kostenlose Vermittlung bei Streit mit der Krankenkasse.' },
       ombuds2: { name: 'Bankenombudsman', url: 'https://www.bankingombudsman.ch', desc: 'Vermittlung bei Konflikten mit Banken.' },
       ombuds3: { name: 'Mieterverband', url: 'https://www.mieterverband.ch', desc: 'Interessenverband der Mieterinnen und Mieter: Beratung (teils nur für Mitglieder) und Begleitung vor die Schlichtungsbehörde.' },

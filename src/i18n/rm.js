@@ -2085,6 +2085,9 @@ export default {
       help3: { name: 'Agid a victimas Svizra', url: 'https://www.opferhilfe-schweiz.ch/rm/', desc: 'Cussegliaziun gratuita per persunas pertutgadas da delicts.' },
       help4: { name: 'Chasa da dunnas', url: 'https://www.frauenhaus-schweiz.ch', desc: 'Protecziun e cussegliaziun tar violenza domestica.' },
       ombudsTitle: 'Mediaturs',
+      // TODO(rm): provisorisch — deutscher Rückfall (25.09.2026)
+      verbaendeTitle: 'Verbände & Interessenvertretung',
+      verbaendeHinweis: 'Diese Verbände vertreten eine Seite — Mieterinnen und Mieter bzw. Konsumentinnen und Konsumenten. Sie beraten, sind aber keine neutrale Vermittlungsstelle.',
       ombuds1: { name: 'Ombudsman da l\'assicuranza da malsogna', url: 'https://www.om-kv.ch', desc: 'Mediaziun gratuita tar dispitas cun la cassa da malsogna.' },
       ombuds2: { name: 'Ombudsman da las bancas', url: 'https://www.bankingombudsman.ch', desc: 'Mediaziun tar conflicts cun bancas.' },
       ombuds3: { name: 'Associaziun dals abitants', url: 'https://www.mieterverband.ch', desc: 'Interessenverband der Mieterinnen und Mieter: Beratung (teils nur für Mitglieder) und Begleitung vor die Schlichtungsbehörde.' },

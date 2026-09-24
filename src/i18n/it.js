@@ -2105,6 +2105,8 @@ export default {
       help3: { name: 'Aiuto alle vittime', url: 'https://www.aiuto-alle-vittime.ch/it/', desc: 'Consulenza gratuita per vittime di reati.' },
       help4: { name: 'Case delle donne', url: 'https://www.frauenhaus-schweiz.ch', desc: 'Protezione e consulenza in caso di violenza domestica.' },
       ombudsTitle: 'Mediatori',
+      verbaendeTitle: 'Associazioni & difesa di interessi',
+      verbaendeHinweis: 'Queste associazioni rappresentano una parte — inquilini o consumatori e consumatrici. Offrono consulenza, ma non sono un servizio di mediazione neutrale.',
       ombuds1: { name: 'Ombudsman dell\'assicurazione malattia', url: 'https://www.om-kv.ch', desc: 'Mediazione gratuita per controversie con la cassa malati.' },
       ombuds2: { name: 'Ombudsman bancario', url: 'https://www.bankingombudsman.ch', desc: 'Mediazione per conflitti con le banche.' },
       ombuds3: { name: 'Associazione inquilini', url: 'https://www.asi-infoalloggio.ch', desc: 'Associazione che difende gli inquilini: consulenza (in parte solo per i soci) e accompagnamento davanti all’autorità di conciliazione.' },

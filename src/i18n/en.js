@@ -2105,6 +2105,8 @@ export default {
       help3: { name: 'Victim Support Switzerland', url: 'https://www.opferhilfe-schweiz.ch/en/', desc: 'Free counselling for crime victims.' },
       help4: { name: 'Women\'s shelter network', url: 'https://www.frauenhaus-schweiz.ch', desc: 'Protection and counselling for domestic violence.' },
       ombudsTitle: 'Ombudsman offices',
+      verbaendeTitle: 'Associations & advocacy',
+      verbaendeHinweis: 'These associations represent one side — tenants or consumers. They advise, but are not a neutral mediation service.',
       ombuds1: { name: 'Health insurance ombudsman', url: 'https://www.om-kv.ch', desc: 'Free mediation for disputes with health insurers.' },
       ombuds2: { name: 'Banking ombudsman', url: 'https://www.bankingombudsman.ch', desc: 'Mediation for conflicts with banks.' },
       ombuds3: { name: 'Tenants\' association', url: 'https://www.mieterverband.ch', desc: 'Tenants\' interest group: advice (partly for members only) and support before the conciliation authority.' },
