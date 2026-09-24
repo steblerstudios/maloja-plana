@@ -127,10 +127,11 @@ export const Tour = ({ palette, t, steps, onFinish, onLater, abschluss }) => {
 
     // Karte
     React.createElement('div', { style: { ...cardBase, ...cardPos, position: cardPos.position } },
-      // „Später" (verschieben) — dezenter Schliessen-Knopf oben rechts
+      // „Später" (verschieben) — dezenter Schliessen-Knopf oben rechts. 44 × 44 wie die
+      // übrigen Tippflächen (Gate 0.1.40); das Zeichen sitzt wie zuvor bei 24/24 px.
       React.createElement('button', {
         type: 'button', onClick: later, 'aria-label': t('tour.later'), title: t('tour.later'),
-        style: { position: 'absolute', top: '10px', right: '10px', width: '28px', height: '28px',
+        style: { position: 'absolute', top: '2px', right: '2px', width: '44px', height: '44px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: 'transparent', border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           color: palette.mid, fontSize: '18px', lineHeight: 1, fontFamily }
