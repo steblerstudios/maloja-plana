@@ -106,3 +106,23 @@ describe('Codex-Audit, Nachtrag: die nächste fehlende Angabe ist ein Feld, kein
     expect(html(be({}, { kkPremium: 420 }), false)).not.toContain('ipv-geburt');
   });
 });
+
+describe('Codex-Audit, Nachtrag: ohne eindeutige Gemeinde steht PLZ bzw. Ort im Rechner', () => {
+  const be = (wohnen) => ({
+    basis: { canton: 'BE', maritalStatus: 'single', dateOfBirth: '1980-05-01', household: { adults: 1, children: [] } },
+    finanzen: { monthlyIncome: 3500 }, wohnen, versicherungen: { kkPremium: 420 },
+  });
+  const html = (d) => renderToStaticMarkup(React.createElement(PremiumSubsidy, { palette, t, data: d, onUpdateData: () => {} }));
+  beforeAll(async () => { preloadPLZ(); await import('../config/ipvBern.js'); await new Promise((r) => setTimeout(r, 0)); });
+
+  it('ohne PLZ: PLZ-Feld', () => {
+    const h = html(be({}));
+    expect(h).toContain('ipv.offenGrund.region');
+    expect(h).toContain('id="ipv-plz"');
+  });
+  it('halbe PLZ: das PLZ-Feld bleibt, statt beim Tippen zum Ort zu springen', () => {
+    const h = html(be({ postalCode: '30' }));
+    expect(h).toMatch(/id="ipv-plz"[^>]*value="30"|value="30"[^>]*id="ipv-plz"/);
+    expect(h).not.toContain('ipv-ort');
+  });
+});

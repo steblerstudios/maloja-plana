@@ -245,22 +245,29 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   };
 
   // Codex-Audit 24.09., Nachtrag: nach Kanton und Einkommen hielt die Rechnung an der nächsten
-  // fehlenden Angabe an (eigenes Geburtsdatum, Prämie) — mit einem Satz, aber ohne Feld. Fehlt
+  // fehlenden Angabe an (Geburtsdatum, PLZ/Ort, Prämie) — mit einem Satz, aber ohne Feld. Fehlt
   // genau eine eigene Angabe, steht ihr Feld hier; es schreibt dasselbe Profilfeld wie das Kapitel.
   // Kinder-Geburtsdaten bleiben im Haushalt: dort gibt es je Kind eine Zeile, hier nicht.
   const offenFeld = (offen) => {
     if (!onUpdateData) return null;
-    const feld = offen === 'alter' && !geburtsjahr(data.basis)
-      ? { id: 'ipv-geburt', kapitel: 'basis', k: 'dateOfBirth', type: 'date', label: t('chapters.basis.fields.dateOfBirth'), value: data.basis?.dateOfBirth || '', autoComplete: 'bday' }
-      : offen === 'praemie'
-        ? { id: 'ipv-praemie', kapitel: 'versicherungen', k: 'kkPremium', type: 'number', label: t('chapters.versicherungen.fields.kkPremium'), value: data.versicherungen?.kkPremium ?? '', inputMode: 'decimal' }
-        : null;
+    // Bis vier Ziffern stehen, bleibt das PLZ-Feld — sonst spränge es beim ersten Tippen zum Ort-Feld.
+    const plz = String(data.wohnen?.postalCode || '').trim();
+    const ohnePlz = !/^\d{4}$/.test(plz);
+    const felder = [
+      offen === 'alter' && !geburtsjahr(data.basis) && { id: 'ipv-geburt', kapitel: 'basis', k: 'dateOfBirth', type: 'date', label: t('chapters.basis.fields.dateOfBirth'), value: data.basis?.dateOfBirth || '', autoComplete: 'bday' },
+      offen === 'region' && ohnePlz && { id: 'ipv-plz', kapitel: 'wohnen', k: 'postalCode', type: 'text', label: t('chapters.wohnen.fields.postalCode'), value: plz, inputMode: 'numeric', autoComplete: 'postal-code' },
+      // PLZ da, Gemeinde trotzdem offen: die PLZ deckt mehrere Gemeinden ab → der Ort entscheidet.
+      offen === 'region' && !ohnePlz && { id: 'ipv-ort', kapitel: 'wohnen', k: 'city', type: 'text', label: t('chapters.wohnen.fields.city'), value: data.wohnen?.city || '', autoComplete: 'address-level2' },
+      offen === 'praemie' && { id: 'ipv-praemie', kapitel: 'versicherungen', k: 'kkPremium', type: 'number', label: t('chapters.versicherungen.fields.kkPremium'), value: data.versicherungen?.kkPremium ?? '', inputMode: 'decimal' },
+    ];
+    const feld = felder.find(Boolean);
     if (!feld) return null;
     return React.createElement('div', { style: { marginTop: space.sm } },
       React.createElement('label', { htmlFor: feld.id, style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '6px' } }, feld.label),
       React.createElement('input', {
         id: feld.id, type: feld.type, value: feld.value,
-        ...(feld.type === 'number' && { min: '0', inputMode: feld.inputMode }),
+        ...(feld.type === 'number' && { min: '0' }),
+        ...(feld.inputMode && { inputMode: feld.inputMode }),
         ...(feld.autoComplete && { autoComplete: feld.autoComplete }),
         'aria-describedby': feld.id + '-hinweis',
         onChange: (e) => onUpdateData(feld.kapitel, feld.k, e.target.value),
