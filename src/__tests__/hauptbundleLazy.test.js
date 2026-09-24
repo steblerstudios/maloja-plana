@@ -37,7 +37,9 @@ describe('Hauptbundle: kein statischer Import von Lazy-Modulen (E36)', () => {
   });
 });
 
-describe('Onboarding und Tour laden weiter nach (E36)', () => {
+// Zeitgrenze 30 s: der dynamische Import übersetzt Onboarding.jsx samt Abhängigkeiten
+// im Test selbst. Unter Last lag das bei 5,0–5,3 s und fiel als Timeout rot (24.09.2026).
+describe('Onboarding und Tour laden weiter nach (E36)', { timeout: 30_000 }, () => {
   it('Onboarding.jsx liefert die Komponente und weiter isOnboardingDone', async () => {
     const m = await import('../Onboarding.jsx');
     expect(typeof m.Onboarding).toBe('function');
