@@ -489,8 +489,12 @@ export const quelle = q;
 // entschieden. Die Eintragungspflicht für Einzelunternehmen regelt OR Art. 931
 // Abs. 1 (Umsatzerlös ab 100 000 Franken). Beides gelesen an Fedlex, SR 220,
 // Fassung 1.1.2026, am 24.09.2026. Dass die Domiziladresse zum Eintrag gehört,
-// steht in der HRegV — dort nicht gelesen. (Bis 24.09. stand hier «OR Art. 931»
-// für die Öffentlichkeit; das ist Art. 936.)
+// steht in HRegV Art. 38 Bst. b («der Sitz und das Rechtsdomizil»); nach
+// Art. 117 Abs. 2 kann das Rechtsdomizil auch eine c/o-Adresse sein. Gelesen an
+// Fedlex, SR 221.411, Fassung 1.1.2025, am 24.09.2026 (bis dahin stand hier
+// «dort nicht gelesen»). Was das fürs Impressum heisst, ist Frage F0 in
+// docs/legal/k48-fragen-juristin.md — hier wird es nicht beantwortet.
+// (Bis 24.09. stand hier «OR Art. 931» für die Öffentlichkeit; das ist Art. 936.)
 //
 // 🛑 Dieselbe Stelle, dieselbe Begründung steht im Studio-Impressum
 // (stebler-studios/website/impressum.html, Fassung vom 22.09.2026). Wer hier

@@ -189,6 +189,11 @@ Auf `/rechtliches/` steht jetzt, **zur Prüfung wörtlich**:
 → *Was hängt daran:* ob Name, Ort und E-Mail genügen, und falls nicht, ob eine
 c/o- oder Geschäftsadresse genügt oder die Wohnadresse nötig ist. Eine
 erreichbare Adresse setzen wir so oder so, wenn sie geschuldet ist.
+→ *Wortlaut zum Register* (HRegV Art. 38 Bst. b, Art. 117 Abs. 2/3/5; OR Art. 936
+Abs. 1 — an Fedlex gelesen am 24.09.2026) steht als Grundlage bei der gleichlautenden
+Frage 3a der Studio-Liste (`stebler-studios/website/FRAGEN-JURISTIN.md`, ausserhalb
+dieses Repos). Dort einmal, nicht hier ein zweites Mal. Register und Impressum sind
+zwei Fragen: der Registerwortlaut beantwortet F0 nicht.
 → *Stand 24.09.2026:* kein Platzhalter mehr; `src/__tests__/impressumAdresse.test.js`
 hält drei Zusagen (kein Platzhalter, E-Mail überall, keine nackte
 Konformitätsbehauptung) und seit dem 24.09. eine vierte (keine Auslegung, der
