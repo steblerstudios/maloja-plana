@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
 import {
@@ -6,7 +7,7 @@ import {
 } from './validationUtils.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
@@ -88,6 +89,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const [uploadExpiry, setUploadExpiry] = useState('');
   const [uploadType, setUploadType] = useState('');
   const [uploadSuccess, setUploadSuccess] = useState('');
+  // «oder hierher ziehen» stand schon da — jetzt tut die Fläche es auch.
+  const [ablageProps, ablageAktiv] = useDateiAblage((e) => { setUploadFile(e.target.files?.[0]); setUploadError(''); });
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
@@ -626,10 +629,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Erscheinen aus, die id verbindet ihn via aria-describedby mit dem Eingabefeld.
     const renderError = (fieldId) => error && React.createElement('div',
       { id: fieldId + '-err', role: 'alert', style: errorStyle }, error);
-    // aria-Props fürs Eingabefeld — nur wenn ein Fehler ansteht.
-    const errAria = (fieldId) => error
-      ? { 'aria-invalid': 'true', 'aria-describedby': fieldId + '-err' }
-      : null;
+    // aria-Props fürs Eingabefeld: Pflicht, Fehler und — wo es ihn gibt — der Hinweis.
+    // Bis 24.09.2026 nur der Fehler: das Pflicht-Sternchen stand allein im Label-Text
+    // (von Screenreadern je nach Satzzeichen-Einstellung verschluckt), und der Hinweis
+    // unter dem Feld war nicht angebunden — wer das Feld ansteuerte, hörte ihn nicht.
+    const errAria = (fieldId, hinweisId) => {
+      const beschrieben = [hinweisId, error ? fieldId + '-err' : null].filter(Boolean).join(' ');
+      return {
+        ...(field.required ? { 'aria-required': 'true' } : null),
+        ...(error ? { 'aria-invalid': 'true' } : null),
+        ...(beschrieben ? { 'aria-describedby': beschrieben } : null),
+      };
+    };
 
     // Mehrfach-Einträge — mehrere benannte Posten, die sich zur Summe addieren.
     // Das Budget-Feld (field.k) bleibt eine Zahl (= Summe); die Posten liegen in <field.k>Items.
@@ -716,10 +727,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           onBlur: (e) => handleFieldBlur(field.k, e.target.value),
           placeholder: field.placeholder || '',
           autoComplete: field.autoComplete || 'off',
-          ...errAria(fieldId),
+          ...errAria(fieldId, field.hint ? fieldId + '-hint' : null),
           style: inputStyle
         }),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
+        field.hint && React.createElement('div', { id: fieldId + '-hint', style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         renderOrientation(field),
         renderError(fieldId)
       );
@@ -807,7 +818,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         inp.focus();
       };
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(fieldId, field.label, field.hint),
+        renderLabel(fieldId, field.label + (field.required ? ' *' : ''), field.hint),
         React.createElement('div', { style: { position: 'relative' } },
           React.createElement('input', {
             id: fieldId,
@@ -818,6 +829,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             onChange: (e) => handleFieldChange(field.k, e.target.value),
             onInput: (e) => { if (!e.target.value && value) handleFieldChange(field.k, ''); },
             autoComplete: field.autoComplete || 'off',
+            ...errAria(fieldId),
             style: { ...inputStyle, paddingRight: (value ? 64 : 38) + 'px' }
           }),
           value && React.createElement('button', {
@@ -2364,18 +2376,23 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           )
         ),
 
-        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          hinweisZeichen('kaestchen'), tr('chapterView.selectFile'),
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+          // Nach der Wahl steht der Dateiname da, wo vorher «Datei auswählen» stand —
+          // sonst sieht niemand (und hört kein Screenreader), welche Datei hochgeht.
+          hinweisZeichen(uploadFile ? 'document' : 'kaestchen'), uploadFile ? uploadFile.name : tr('chapterView.selectFile'),
           React.createElement('input', {
             type: 'file',
-            onChange: (e) => setUploadFile(e.target.files?.[0]),
-            style: { display: 'none' }
+            onChange: (e) => { setUploadFile(e.target.files?.[0]); setUploadError(''); },
+            className: 'mp-datei-eingang', style: visuallyHiddenStyle,
           })
         ),
 
-        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
+        uploadError && React.createElement('div', { role: 'alert', style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
-        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess),
+        // Die Status-Region steht immer da und füllt sich erst — eine Region, die MIT
+        // ihrem Text erscheint, wird von Screenreadern oft nicht angesagt.
+        React.createElement('div', { role: 'status' },
+          uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess)),
 
         React.createElement('button', {
           onClick: () => {

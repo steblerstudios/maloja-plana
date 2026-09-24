@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
@@ -45,6 +46,9 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
     width: '100%', padding: space.sm, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
+  // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
+  const [ablageProps, ablageAktiv] = useDateiAblage(handleFileSelect);
+
   return React.createElement('div', { style: { maxWidth: '720px' } },
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Upload
@@ -59,8 +63,8 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
           React.createElement('option', { value: 'text' }, t('budgetImport.tsv'))
         )),
 
-      React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-        React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, style: { display: 'none' } }),
+      React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
         React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
         React.createElement('div', { style: { fontWeight: weight.semi } }, t('budgetImport.selectFile')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
