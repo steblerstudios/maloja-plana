@@ -2795,6 +2795,8 @@ export default {
     qrKarteTitel: 'Krankenversicherung',
     qrNotfallLesbar: 'Für den Notfall — jede Kamera zeigt ihn an',
     qrUebernahme: 'Zum Übernehmen in Maloja gedacht — nicht verschlüsselt',
+    ahvImQr: "AHV-Nummer in die Codes aufnehmen",
+    ahvImQrHinweis: "Standard aus. Wer einen Code scannt, liest die Nummer. Die Nummer steht ohnehin auf der Versichertenkarte.",
     errorNoInsurer: 'Versicherer fehlt',
     errorCardNumber: 'Kartennummer fehlt oder ist unvollständig',
     errorAhvFormat: 'AHV-Format ungültig',

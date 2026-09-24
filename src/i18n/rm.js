@@ -3600,6 +3600,9 @@ export default {
     qrKarteTitel: 'Assicuranza da malsauns',
     qrNotfallLesbar: "En cas d'urgenza — mintgina camera al mussa",
     qrUebernahme: 'Previs per surprender en Maloja — betg criptà',
+    // TODO(rm): K123, provisorisch — Gegenlese Rumantsch ausstehend
+    ahvImQr: "Integrar il numer AVS en ils codes",
+    ahvImQrHinweis: "Deactivà sco standard. Tgi che scannescha in code legia il numer. El stat en mintga cas sin la carta d'assicurà.",
     errorNoInsurer: 'Assicurader manca',
     errorCardNumber: 'Numer da la carta manca u è incomplet',
     errorAhvFormat: 'Format AVS nunvalid',
