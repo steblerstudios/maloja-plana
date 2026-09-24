@@ -2119,7 +2119,7 @@ export default {
     luFristLaeuft: 'En il chantun Lucerna sto la reducziun da las premias vegnir annunziada mintga onn da nov — per {jahr} fin ils 31 d’october {vorjahr}, tar la WAS Ausgleichskasse Luzern. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
-    luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».',
+    luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
@@ -2490,6 +2490,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Survista da finanzas',
+    ipvLautVerfuegung: 'tenor la decisiun', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     subtitle: { sie: "Vossa situaziun en in'egliada — basond sin Vossas indicaziuns.", du: "Tia situaziun en in'egliada — basond sin Tias indicaziuns." },
     monthlyIncome: 'Entrada mensiala',
     assets: 'Facultad',
@@ -2647,6 +2648,7 @@ export default {
     deficitInfo: { sie: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Voss chantun chattais Vus agid.", du: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Tes chantun chattas Ti agid." },
     budgetCalm: { sie: 'Vus avais ina survista da Vossas finanzas. Mintga sectur registrà gida.', du: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.' },
     ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
+    ipvHintVerfuegung: 'Reducziun da premias (IPV) tenor la decisiun: CHF {amount}/mais — deducida en il budget da la premia da la cassa da malsauns.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     ipvHintOhneBetrag: 'Reducziun da premias (IPV): dretg ed import decida il chantun. Cunzunt cun in budget stretg vala la paina dad examinar.', // TODO(rm): provisorisch
     ipvHintLuFristVorbei: 'Reducziun da premias Lucerna: betg deducida en il budget. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Il budget na sa betg, sche e cura che l’annunzia è succedida — cun ina annunzia a temp vala l’entir dretg annual.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
     sozialhilfeHint: { sie: "Vossa entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.", du: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita." },

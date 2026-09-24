@@ -3011,6 +3011,7 @@ export default {
     deficitInfo: { sie: 'Les dépenses dépassent actuellement les revenus. Cela peut être temporaire — le service de conseil en désendettement de votre canton peut vous aider.', du: 'Les dépenses dépassent actuellement les revenus. Cela peut être temporaire — le service de conseil en désendettement de ton canton peut t\'aider.' },
     budgetCalm: { sie: 'Vous avez une vue d\'ensemble de vos finances. Chaque domaine enregistré aide.', du: 'Tu as une vue d\'ensemble de tes finances. Chaque domaine enregistré aide.' },
     ipvHint: { sie: 'Vous pourriez avoir droit à une réduction de prime (RDP) — env. CHF {amount}/mois. La demande peut être faite auprès de votre commune ou caisse de compensation cantonale.', du: 'Tu pourrais avoir droit à une réduction de prime (RDP) — env. CHF {amount}/mois. La demande peut être faite auprès de ta commune ou caisse de compensation cantonale.' },
+    ipvHintVerfuegung: 'Réduction de primes (RDP) selon la décision : CHF {amount}/mois — déduite de la prime d’assurance-maladie dans le budget.',
     ipvHintOhneBetrag: 'Réduction des primes (RIP) : c’est le canton qui décide du droit et du montant. Surtout avec un budget serré, la vérification en vaut la peine.',
     ipvHintLuFristVorbei: 'Réduction de primes Lucerne : non déduite du budget. Le délai d’inscription pour {jahr} courait jusqu’au 31 octobre {vorjahr}. En cas d’inscription plus tardive, seules les primes échues après l’inscription sont réduites. Le budget ne sait pas si ni quand l’inscription a eu lieu — en cas d’inscription dans le délai, le droit annuel entier s’applique.',
     sozialhilfeHint: { sie: 'Votre revenu est inférieur au minimum vital CSIAS. L\'aide sociale peut être une option — le conseil est confidentiel et gratuit.', du: 'Ton revenu est inférieur au minimum vital CSIAS. L\'aide sociale peut être une option — le conseil est confidentiel et gratuit.' },
@@ -3070,7 +3071,7 @@ export default {
     luUnterMindestbetrag: 'Selon ce calcul, un droit existerait, mais il n’est pas versé: le canton de Lucerne ne verse pas de réduction de primes lorsque le droit total est inférieur à 100 francs.',
     luFristLaeuft: 'Dans le canton de Lucerne, la réduction de primes doit être demandée chaque année — pour {jahr}, jusqu’au 31 octobre {vorjahr}, auprès de la WAS Ausgleichskasse Luzern. En cas d’inscription plus tardive, seules les primes échues après l’inscription sont réduites. Les personnes au bénéfice de prestations complémentaires ou de l’aide sociale n’ont pas besoin de s’inscrire.',
     luFristVorbei: 'Le délai d’inscription pour {jahr} courait jusqu’au 31 octobre {vorjahr}. En cas d’inscription maintenant, seules les primes échues après l’inscription sont réduites — pas de manière rétroactive. Le montant affiché correspond au droit annuel complet. Pour {folgejahr}, le délai court jusqu’au 31 octobre {jahr}; les valeurs pour {folgejahr} ne sont pas encore fixées. Les personnes au bénéfice de prestations complémentaires ou de l’aide sociale n’ont pas besoin de s’inscrire.',
-    luFristNichtAbgezogen: 'Réduction de primes Lucerne : non déduite ici. Le délai d’inscription pour {jahr} courait jusqu’au 31 octobre {vorjahr}. En cas d’inscription plus tardive, seules les primes échues après l’inscription sont réduites. Une fois la décision reçue, son montant peut être saisi dans la réduction de primes, sous « Décision reçue ».',
+    luFristNichtAbgezogen: 'Réduction de primes Lucerne : non déduite ici. Le délai d’inscription pour {jahr} courait jusqu’au 31 octobre {vorjahr}. En cas d’inscription plus tardive, seules les primes échues après l’inscription sont réduites. Une fois la décision reçue, son montant peut être saisi dans la réduction de primes, sous « Décision reçue ». Les personnes au bénéfice de prestations complémentaires ou de l’aide sociale n’ont pas besoin de s’inscrire.',
     naeherung: 'Calcul basé sur les revenus et la fortune saisis ici, et non sur le revenu imposable. Le service cantonal se fonde sur les facteurs fiscaux et arrive donc à un montant quelque peu différent.',
     offenGrund: {
       haushalt: 'Pour les couples et les ménages de plusieurs adultes, l’application ne calcule pas encore: l’âge et les revenus de la deuxième personne manquent.',
@@ -3597,6 +3598,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Aperçu financier',
+    ipvLautVerfuegung: 'selon la décision',
     subtitle: { sie: 'Votre situation en un coup d\'œil — basé sur vos données.', du: 'Ta situation en un coup d\'œil — basé sur tes données.' },
     monthlyIncome: 'Revenu mensuel',
     assets: 'Patrimoine',

@@ -33,7 +33,8 @@ const person = (canton = 'LU', extra = {}) => ({
   versicherungen: { kkPremium: 450 },
   ...extra,
 });
-const bestaetigt = (betrag) => ({ anspruch: { ipv: { status: 'bestaetigt', betrag, datum: '2026-01-15' } } });
+// Verfügung 2026 für den Kanton der Person (seit Runde 3 gilt sie nur für ihr Jahr und ihren Kanton).
+const bestaetigt = (betrag, kanton = 'LU') => ({ anspruch: { ipv: { status: 'bestaetigt', betrag, datum: '2026-01-15', kanton, jahr: 2026 } } });
 const HINWEIS = 'ipv.luFristNichtAbgezogen(2026|2025)';
 const FRIST_LAEUFT = '2025-10-15T12:00:00';
 const FRIST_VORBEI = '2026-09-24T12:00:00';
@@ -130,7 +131,8 @@ describe('Verfügung eingetragen: der bestätigte Betrag, in allen drei Lesern',
     expect(b.ipvAnmeldefristVorbei).toBeNull();
   });
   it('Zürich: die Verfügung ersetzt die Schätzung', () => {
-    const d = person('ZH', bestaetigt(123));
+    am(FRIST_VORBEI);
+    const d = person('ZH', bestaetigt(123, 'ZH'));
     expect(calculateMonthlyBudget(d, t).ipvRelief).toBe(123);
     expect(praemienBelegState(d)).toMatchObject({ verbilligung: 123, confirmed: true });
   });

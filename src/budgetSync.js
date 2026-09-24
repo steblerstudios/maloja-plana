@@ -103,6 +103,9 @@ const syncBudgetFromChapters = (data) => {
   const abzug = ipvAbzug(data, ipv);
   const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
   const ipvRelief = abzug.betrag;
+  // Abgezogen wird der Betrag einer gültigen Verfügung — dann sagt der Hinweis «laut Verfügung»,
+  // nicht «möglicherweise Anspruch».
+  const ipvVerfuegung = abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT;
   const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
@@ -113,6 +116,7 @@ const syncBudgetFromChapters = (data) => {
       alimenteReceived,
     },
     ipvRelief,
+    ipvVerfuegung,
     ipvOrientierung,
     ipvAnmeldefristVorbei,
     expenses: {}
@@ -217,8 +221,13 @@ const getBudgetRecommendations = (budget, t) => {
     });
   }
 
-  // IPV hint — if eligible but not yet applied
-  if (budget.ipvRelief > 0) {
+  // IPV hint — Verfügung eingetragen: ihr Betrag; sonst: if eligible but not yet applied
+  if (budget.ipvRelief > 0 && budget.ipvVerfuegung) {
+    recommendations.push({
+      level: 'info',
+      text: t ? t('budget.ipvHintVerfuegung', { amount: budget.ipvRelief }) : 'Premium reduction (IPV) per decision letter: deducted from the premium.'
+    });
+  } else if (budget.ipvRelief > 0) {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.ipvHint', { amount: budget.ipvRelief }) : 'You may be eligible for premium reduction (IPV).'

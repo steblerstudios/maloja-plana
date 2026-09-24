@@ -153,7 +153,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           h('input', {
             type: 'number', inputMode: 'numeric', min: '0', value: verfBetrag,
             onChange: (e) => setVerfBetrag(e.target.value),
-            onBlur: () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, datum: ipvStatus.datum }),
+            onBlur: () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, datum: ipvStatus.datum, kanton: ipvStatus.kanton, jahr: ipvStatus.jahr }),
             'aria-label': t('ipvStatus.betragLabel'),
             style: { width: '120px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
           })
@@ -176,7 +176,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         head(null, badge),
         lead(t('ipvStatus.appliedLead')),
         h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
-          lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag }), { primary: true }),
+          lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton }), { primary: true }),
           lineBtn(t('ipvStatus.reset'), () => setIpvStatus(IPV_STATUS.GESCHAETZT))
         ),
       ]);
@@ -192,7 +192,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       ),
       h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
         lineBtn(t('ipvStatus.markApplied'), () => setIpvStatus(IPV_STATUS.BEANTRAGT)),
-        lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag }), { primary: true })
+        lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton }), { primary: true })
       ),
     ]);
   };

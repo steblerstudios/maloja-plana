@@ -6,7 +6,8 @@
 //
 // Rückgabe: { betrag, grund, frist }
 //   betrag  → CHF pro Monat, ungedeckelt (die Leser deckeln an der erfassten Prämie wie bisher)
-//   grund   → 'bestaetigt'  Verfügung eingetragen: ihr Betrag gilt, in jedem Kanton
+//   grund   → 'bestaetigt'  Verfügung eingetragen, für das laufende Jahr und den aktuellen
+//                           Wohnkanton: ihr Betrag gilt (auch in einem nicht belegten Kanton)
 //             'geschaetzt'  amtlich belegter Kanton, Anspruch, nichts spricht dagegen
 //             'fristVorbei' Anspruch geschätzt, aber die Anmeldefrist ist abgelaufen → 0
 //             'keiner'      kein Anspruch, kein belegter Kanton oder kein Betrag → 0
@@ -23,6 +24,11 @@
 // Gruppe nicht erkennen. Sie bleibt hier beim Grund 'fristVorbei'; der Hinweis-Text ist so
 // gefasst, dass er für sie nicht falsch wird (er sagt «nicht abgezogen», nicht «kein Anspruch»),
 // und der Weg über «Verfügung erhalten» führt auch für sie zum richtigen Betrag.
+// Die Verfügung gilt nur für ihr Jahr und ihren Kanton (Deploy-Gate Runde 3, 24.09.2026): eine
+// LU-Verfügung 2026 darf im Januar 2027 nichts mehr abziehen — dort sagt die Schätzung «Jahr
+// vorbei, keine Zahl» —, und nach einem Umzug gilt die Verfügung des alten Kantons nicht. Fehlt an
+// einem älteren Eintrag Kanton oder Jahr, ist er nicht zuordenbar: kein Abzug aus der Verfügung,
+// es gelten die Regeln der Schätzung. Anspruchsjahr = das laufende Kalenderjahr.
 import { calculateIPV } from '../config/cantonalData.js';
 import { readIpvStatus, IPV_STATUS } from './ipvStatus.js';
 
@@ -32,9 +38,16 @@ export const IPV_ABZUG_GRUND = {
 
 // `ipv` darf mitgegeben werden, wenn der Leser calculateIPV schon gerechnet hat (gleiches Ergebnis,
 // nur ohne zweite Rechnung).
+export function verfuegungGilt(data, status = readIpvStatus(data)) {
+  const kanton = data && data.basis && data.basis.canton;
+  return status.status === IPV_STATUS.BESTAETIGT && status.betrag > 0
+    && !!kanton && status.kanton === kanton
+    && status.jahr === new Date().getFullYear();
+}
+
 export function ipvAbzug(data, ipv = calculateIPV(data || {})) {
   const status = readIpvStatus(data);
-  if (status.status === IPV_STATUS.BESTAETIGT && status.betrag > 0) {
+  if (verfuegungGilt(data, status)) {
     return { betrag: status.betrag, grund: IPV_ABZUG_GRUND.BESTAETIGT, frist: null };
   }
   // E9: nur ein amtlich belegter Kanton liefert einen Betrag.

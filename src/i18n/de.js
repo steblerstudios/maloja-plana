@@ -3046,6 +3046,7 @@ export default {
     deficitInfo: { sie: 'Die Ausgaben sind aktuell höher als die Einnahmen. Das kann vorübergehend sein — bei der Schuldenberatung Ihres Kantons finden Sie Unterstützung.', du: 'Die Ausgaben sind aktuell höher als die Einnahmen. Das kann vorübergehend sein — bei der Schuldenberatung deines Kantons findest du Unterstützung.' },
     budgetCalm: { sie: 'Sie haben einen Überblick über Ihre Finanzen. Jeder erfasste Bereich hilft.', du: 'Du hast einen Überblick über deine Finanzen. Jeder erfasste Bereich hilft.' },
     ipvHint: { sie: 'Sie haben möglicherweise Anspruch auf Prämienverbilligung (IPV) — ca. CHF {amount}/Monat. Die IPV kann bei Ihrer Gemeinde oder kantonalen Ausgleichskasse beantragt werden.', du: 'Du hast möglicherweise Anspruch auf Prämienverbilligung (IPV) — ca. CHF {amount}/Monat. Die IPV kann bei deiner Gemeinde oder kantonalen Ausgleichskasse beantragt werden.' },
+    ipvHintVerfuegung: 'Prämienverbilligung (IPV) laut Verfügung: CHF {amount}/Monat — im Budget von der Krankenkassenprämie abgezogen.',
     ipvHintOhneBetrag: 'Prämienverbilligung (IPV): Ob ein Anspruch besteht und wie hoch er ist, legt der Kanton fest. Gerade bei knappem Budget lohnt sich die Prüfung.',
     ipvHintLuFristVorbei: 'Prämienverbilligung Luzern: im Budget nicht abgezogen. Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden. Ob und wann angemeldet wurde, weiss das Budget nicht — bei rechtzeitiger Anmeldung gilt der ganze Jahresanspruch.',
     sozialhilfeHint: { sie: 'Ihr Einkommen liegt unter dem SKOS-Grundbedarf. Sozialhilfe kann eine Möglichkeit sein — die Beratung ist vertraulich und kostenlos.', du: 'Dein Einkommen liegt unter dem SKOS-Grundbedarf. Sozialhilfe kann eine Möglichkeit sein — die Beratung ist vertraulich und kostenlos.' },
@@ -3112,7 +3113,7 @@ export default {
     luUnterMindestbetrag: 'Nach dieser Rechnung bestünde ein Anspruch, er wird aber nicht ausbezahlt: Der Kanton Luzern zahlt keine Prämienverbilligung aus, wenn der gesamte Anspruch unter Fr. 100.– liegt.',
     luFristLaeuft: 'Die Prämienverbilligung muss im Kanton Luzern jedes Jahr neu angemeldet werden — für {jahr} bis zum 31. Oktober {vorjahr}, bei der WAS Ausgleichskasse Luzern. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die danach fällig werden. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristVorbei: 'Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich erst jetzt anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden — rückwirkend geht es nicht. Der Betrag hier zeigt den ganzen Jahresanspruch. Für {folgejahr} läuft die Frist bis zum 31. Oktober {jahr}; die Werte für {folgejahr} sind noch nicht beschlossen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
-    luFristNichtAbgezogen: 'Prämienverbilligung Luzern: hier nicht abgezogen. Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden. Ist die Verfügung da, lässt sich ihr Betrag bei der Prämienverbilligung unter «Verfügung erhalten» eintragen.',
+    luFristNichtAbgezogen: 'Prämienverbilligung Luzern: hier nicht abgezogen. Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden. Ist die Verfügung da, lässt sich ihr Betrag bei der Prämienverbilligung unter «Verfügung erhalten» eintragen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.
@@ -3617,6 +3618,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Finanz-Übersicht',
+    ipvLautVerfuegung: 'laut Verfügung',
     subtitle: { sie: 'Ihre Situation auf einen Blick — basierend auf Ihren Eingaben.', du: 'Deine Situation auf einen Blick — basierend auf Deinen Eingaben.' },
     monthlyIncome: 'Monatliches Einkommen',
     assets: 'Vermögen',

@@ -87,7 +87,13 @@ export const druckAbschnitte = (t, w) => {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + annahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
 
-  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
+  // Eine gültige Verfügung (data/ipvAbzug.js) steht vor der Schätzung — wie in Budget, KK-Last-Karte
+  // und Prämien-Beleg, die ihren Betrag abziehen.
+  const ipvVerfuegt = w.ipvAbzug && w.ipvAbzug.grund === IPV_ABZUG_GRUND.BESTAETIGT;
+  const ipvBetragText = ipvVerfuegt
+    ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t('finanzUebersicht.ipvLautVerfuegung') + ')'
+    : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
+  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
@@ -161,7 +167,11 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   const ipv = calculateIPV(data);
   // Luzern nach der Anmeldefrist (SRL 866 § 12 Abs. 3): die Kachel zeigt den Anspruch weiter, sagt
   // aber dazu, dass er nicht mehr ganz ankommt. Die Regel steht in data/ipvAbzug.js.
-  const ipvFristVorbei = ipvAbzug(data, ipv).grund === IPV_ABZUG_GRUND.FRIST_VORBEI;
+  // Eine gültige Verfügung (Jahr + Kanton) zeigt die Kachel mit ihrem Betrag, «laut Verfügung» —
+  // denselben, den Budget, KK-Last-Karte und Prämien-Beleg abziehen.
+  const ipvAbzugWert = ipvAbzug(data, ipv);
+  const ipvFristVorbei = ipvAbzugWert.grund === IPV_ABZUG_GRUND.FRIST_VORBEI;
+  const ipvVerfuegung = ipvAbzugWert.grund === IPV_ABZUG_GRUND.BESTAETIGT ? ipvAbzugWert.betrag : null;
   const el = checkELEligibility(data);
   // E38/E39: dieselbe Regel wie im Steuerrechner — ein steuerbares Einkommen (Standardabzüge der
   // ESTV) für Bund und Kanton; Kantonszahl nur, wo die ESTV-Tabelle trägt.
@@ -203,7 +213,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
 
   // Die Werte, die gedruckt werden — auch die Quelle der Export-Vorschau (K20).
   const druckWerte = {
-    income, canton, taxResult, steuerOhneZahl, kantonal, annahmen, ipv, sozialhilfe, el,
+    income, canton, taxResult, steuerOhneZahl, kantonal, annahmen, ipv, ipvAbzug: ipvAbzugWert, sozialhilfe, el,
     totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten,
   };
 
@@ -421,13 +431,17 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       palette, icon: 'insurance',
       title: t('finanzUebersicht.ipv'),
       // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
-      status: ipv.eligible
+      status: ipvVerfuegung != null
+        ? erledigtZeichen(true, formatCHF(ipvVerfuegung) + ' ' + t('common.perMonth'))
+        : ipv.eligible
         ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
         : ipv.belegt === false
           ? t('ipv.statusOffen')
           : t('finanzUebersicht.notEligible'),
-      statusColor: ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
-      detail: ipv.eligible
+      statusColor: ipvVerfuegung != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
+      detail: ipvVerfuegung != null
+        ? formatCHF(ipvVerfuegung * 12) + ' ' + t('common.perYear') + ' (' + t('finanzUebersicht.ipvLautVerfuegung') + ')'
+        : ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
         : ipv.belegt === false
           ? t(ipv.noteKey, ipv.noteParams)

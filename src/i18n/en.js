@@ -3012,6 +3012,7 @@ export default {
     deficitInfo: 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.',
     budgetCalm: 'You have an overview of your finances. Every recorded area helps.',
     ipvHint: 'You may be eligible for premium reduction (IPV) — approx. CHF {amount}/month. You can apply at your municipality or cantonal compensation office.',
+    ipvHintVerfuegung: 'Premium reduction (IPV) per decision letter: CHF {amount}/month — deducted from the health insurance premium in the budget.',
     ipvHintOhneBetrag: 'Premium reduction (IPV): the canton decides whether you are entitled and to how much. Especially on a tight budget, it is worth checking.',
     ipvHintLuFristVorbei: 'Premium reduction Lucerne: not deducted in the budget. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. The budget does not know whether or when registration took place — with timely registration, the full annual entitlement applies.',
     sozialhilfeHint: 'Your income is below the SKOS basic needs threshold. Social assistance may be an option — counselling is confidential and free.',
@@ -3071,7 +3072,7 @@ export default {
     luUnterMindestbetrag: 'According to this calculation there would be an entitlement, but it is not paid out: the canton of Lucerne pays no premium reduction if the total entitlement is below CHF 100.',
     luFristLaeuft: 'In the canton of Lucerne, the premium reduction has to be applied for every year — for {jahr} by 31 October {vorjahr}, with WAS Ausgleichskasse Luzern. Anyone applying later only receives the reduction for premiums falling due after the application. Anyone receiving supplementary benefits or social assistance does not need to apply.',
     luFristVorbei: 'The application deadline for {jahr} was 31 October {vorjahr}. Anyone applying only now receives the reduction only for premiums falling due after the application — not retroactively. The amount shown is the full annual entitlement. For {folgejahr} the deadline is 31 October {jahr}; the values for {folgejahr} have not yet been set. Anyone receiving supplementary benefits or social assistance does not need to apply.',
-    luFristNichtAbgezogen: 'Premium reduction Lucerne: not deducted here. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. Once the decision has arrived, its amount can be entered under premium reduction via «Decision received».',
+    luFristNichtAbgezogen: 'Premium reduction Lucerne: not deducted here. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. Once the decision has arrived, its amount can be entered under premium reduction via «Decision received». Anyone receiving supplementary benefits or social assistance does not need to apply.',
     naeherung: 'Calculated from the income and assets recorded here, not from taxable income. The cantonal office uses the tax factors and will therefore arrive at a somewhat different amount.',
     offenGrund: {
       haushalt: 'For couples and households with several adults the app does not calculate yet: the age and income of the second person are missing.',
@@ -3598,6 +3599,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Financial Overview',
+    ipvLautVerfuegung: 'per decision letter',
     subtitle: 'Your situation at a glance — based on your entries.',
     monthlyIncome: 'Monthly income',
     assets: 'Assets',

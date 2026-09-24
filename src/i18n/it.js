@@ -3012,6 +3012,7 @@ export default {
     deficitInfo: { sie: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del Suo cantone può aiutarLa.', du: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del tuo cantone può aiutarti.' },
     budgetCalm: { sie: 'Ha una panoramica delle Sue finanze. Ogni ambito registrato aiuta.', du: 'Hai una panoramica delle tue finanze. Ogni ambito registrato aiuta.' },
     ipvHint: { sie: 'Potrebbe avere diritto alla riduzione dei premi (RDP) — ca. CHF {amount}/mese. La domanda può essere presentata presso il Suo comune o la cassa di compensazione cantonale.', du: 'Potresti avere diritto alla riduzione dei premi (RDP) — ca. CHF {amount}/mese. La domanda può essere presentata presso il tuo comune o la cassa di compensazione cantonale.' },
+    ipvHintVerfuegung: 'Riduzione dei premi (RDP) secondo la decisione: CHF {amount}/mese — dedotta dal premio della cassa malati nel budget.',
     ipvHintOhneBetrag: { sie: 'Riduzione dei premi (RIPM): diritto e importo li stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificare.', du: 'Riduzione dei premi (RIPM): diritto e importo li stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificare.' },
     ipvHintLuFristVorbei: 'Riduzione dei premi Lucerna: non dedotta dal budget. Il termine di iscrizione per il {jahr} scadeva il 31 ottobre {vorjahr}. Con un’iscrizione successiva vengono ridotti solo i premi che scadono dopo l’iscrizione. Il budget non sa se e quando è avvenuta l’iscrizione — con un’iscrizione entro il termine vale l’intero diritto annuo.',
     sozialhilfeHint: { sie: 'Il Suo reddito è inferiore al fabbisogno di base COSAS. L\'aiuto sociale può essere un\'opzione — la consulenza è confidenziale e gratuita.', du: 'Il tuo reddito è inferiore al fabbisogno di base COSAS. L\'aiuto sociale può essere un\'opzione — la consulenza è confidenziale e gratuita.' },
@@ -3071,7 +3072,7 @@ export default {
     luUnterMindestbetrag: 'Secondo questo calcolo ci sarebbe un diritto, ma non viene versato: il Cantone di Lucerna non versa la riduzione dei premi se il diritto complessivo è inferiore a 100 franchi.',
     luFristLaeuft: 'Nel Cantone di Lucerna la riduzione dei premi va richiesta ogni anno — per il {jahr} entro il 31 ottobre {vorjahr}, presso la WAS Ausgleichskasse Luzern. Chi si annuncia più tardi riceve la riduzione solo per i premi che scadono dopo l’annuncio. Chi percepisce prestazioni complementari o l’aiuto sociale non deve annunciarsi.',
     luFristVorbei: 'Il termine d’annuncio per il {jahr} scadeva il 31 ottobre {vorjahr}. Chi si annuncia solo ora riceve la riduzione soltanto per i premi che scadono dopo l’annuncio — non retroattivamente. L’importo indicato mostra l’intero diritto annuo. Per il {folgejahr} il termine scade il 31 ottobre {jahr}; i valori per il {folgejahr} non sono ancora stabiliti. Chi percepisce prestazioni complementari o l’aiuto sociale non deve annunciarsi.',
-    luFristNichtAbgezogen: 'Riduzione dei premi Lucerna: qui non dedotta. Il termine di iscrizione per il {jahr} scadeva il 31 ottobre {vorjahr}. Con un’iscrizione successiva vengono ridotti solo i premi che scadono dopo l’iscrizione. Quando arriva la decisione, il suo importo può essere registrato nella riduzione dei premi, alla voce «Decisione ricevuta».',
+    luFristNichtAbgezogen: 'Riduzione dei premi Lucerna: qui non dedotta. Il termine di iscrizione per il {jahr} scadeva il 31 ottobre {vorjahr}. Con un’iscrizione successiva vengono ridotti solo i premi che scadono dopo l’iscrizione. Quando arriva la decisione, il suo importo può essere registrato nella riduzione dei premi, alla voce «Decisione ricevuta». Chi percepisce prestazioni complementari o l’aiuto sociale non deve annunciarsi.',
     naeherung: 'Calcolo basato sui redditi e sulla sostanza registrati qui, non sul reddito imponibile. Il servizio cantonale si basa sui fattori fiscali e arriva quindi a un importo un po’ diverso.',
     offenGrund: {
       haushalt: 'Per le coppie e le economie domestiche con più adulti l’app non calcola ancora: mancano l’età e i redditi della seconda persona.',
@@ -3574,6 +3575,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Panoramica finanziaria',
+    ipvLautVerfuegung: 'secondo la decisione',
     subtitle: { sie: 'La Sua situazione in sintesi — basata sui Suoi dati.', du: 'La tua situazione in sintesi — basata sui tuoi dati.' },
     monthlyIncome: 'Reddito mensile',
     assets: 'Patrimonio',
