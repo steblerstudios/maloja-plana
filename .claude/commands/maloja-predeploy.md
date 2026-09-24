@@ -18,6 +18,15 @@ Führe das **Maloja-Deploy-Gate** aus. Wichtig: Dieser Loop **deployt nie**. Dep
      `info@malojaplana.ch`/Platzhalter); legaler voller Name gehört NUR ins Impressum.
      (Deny-Tokens: lokale, gitignorierte `.pii-deny.txt`; Vorlage `.pii-deny.txt.example`.)
    - i18n-Parität 5 Sprachen (de/fr/it/rm/en) — keine fehlenden Keys.
+   - **ESTV-Stichprobe** (Entscheid Stebler Studios 24.09.2026: vor jedem Deploy **und** monatlich im
+     Morgenlauf): `node scripts/estv-stichprobe.mjs` — 156 Abrufe (26 Kantone × ledig/verheiratet ×
+     3 Löhne) gegen die gespeicherten Messpunkte, nur lesend, ~1 Min. **Exit 0** = ✅ Tabelle aktuell.
+     **Exit 1** = ⚠️ ESTV rechnet anders als gespeichert → betroffene Kantone nennen, Nachmessung
+     (`--messen --kanton XX`, siehe Ausgabe) empfehlen; kein Blocker, weil die Kantonssteuer als grobe
+     Schätzung ausgewiesen ist — aber vor dem Deploy entscheiden lassen. **Exit 2** = ⚠️ Messung
+     gescheitert (Netz/Schnittstelle) → «keine Aussage», **nie** als «gleich» melden. Anzahl
+     erfolgreicher Abrufe immer mit ausgeben. Prüft nur Löhne ohne Kinder (siehe
+     `docs/sources/kantonssteuer-tabelle-2026.md`, Abschnitt «Stichprobe»).
    - CSP self-only — keine externen Referenzen dazugekommen.
    - `git status` sauber / keine ungewollten Dateien; `git diff package.json` → keine neuen Dependencies ohne Freigabe.
 3. **de-Chunk-Verifikation:** Nach `npm run build` die gebauten Sprach-Chunks (`dist/assets/de-*.js` usw.) auf die zuletzt geänderten Strings greppen — bestätigen, dass neue Texte wirklich im Bundle sind (bekannter Verifikations-Schritt).
