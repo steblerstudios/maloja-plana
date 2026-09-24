@@ -12,7 +12,7 @@ Basel, Schweiz
 E-Mail: info@malojaplana.ch
 Web: https://malojaplana.ch
 
-Maloja Plana ist ein Open-Source-Projekt. Die Nutzung der App ist kostenlos; für White-Label und andere kommerzielle Nutzung gibt es auf Anfrage eine separate Lizenz (Dual Licensing, siehe `docs/legal/nutzungsbedingungen.md`). Es gibt keinen Datenschutzberater im Sinne von Art. 10 nDSG, da die Datenbearbeitung ausschliesslich lokal auf dem Gerät der nutzenden Person stattfindet.
+Maloja Plana ist ein Open-Source-Projekt. Die Nutzung der App ist kostenlos; für White-Label und andere kommerzielle Nutzung gibt es auf Anfrage eine separate Lizenz (Dual Licensing, siehe `docs/legal/nutzungsbedingungen.md`). Es gibt keinen Datenschutzberater im Sinne von Art. 10 nDSG: Nach Art. 10 Abs. 1 DSG *können* private Verantwortliche einen ernennen, die Benennung ist freiwillig. *(Bis 24.09.2026 stand hier als Begründung «da die Datenbearbeitung ausschliesslich lokal … stattfindet». Das stimmt für die Angaben in der App, aber nicht mehr als Ganzes: die Rechtstexte der App nennen seit #277 auch Hoster-Protokolle und E-Mails. Das Ergebnis bleibt, die Begründung war zu eng.)*
 
 > Bis zum 23.09.2026 stand hier «ein nicht-kommerzielles Open-Source-Projekt». Das ging
 > mit Dual Licensing und dem Beitrags-Aufruf in der App nicht auf: kostenlos nutzbar ist

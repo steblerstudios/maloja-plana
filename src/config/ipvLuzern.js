@@ -12,6 +12,9 @@
 //       § 5 Abs. 2/3: Gesamtanspruch, Stichtag 1. November · § 7 Abs. 2: massgebendes Einkommen ·
 //       § 7 Abs. 2ter: Vermögensgrenze · § 7 Abs. 7: höchstens die geschuldeten Prämien ·
 //       § 12 Abs. 2/3: Anmeldung bis Ende Oktober des Vorjahres.
+//       § 8a Abs. 1/2: Anpassung bei wesentlich geänderten Verhältnissen seit 1. November;
+//       Gesuch um Erhöhung spätestens am letzten Tag des Jahres · § 21 Abs. 1: Rückforderung beim
+//       Krankenversicherer (Beleg für premium.vorbehaltLU, nachgetragen 24.09.2026, K120).
 //   [3] WAS Ausgleichskasse Luzern, «Richtprämien 2026 … / Prämienregionen 2026» (November 2025):
 //       Altersgrenzen nach Jahrgang und die Gemeindeliste der drei Regionen.
 //   [4] WAS Ausgleichskasse Luzern, «Berechnungsbeispiel Prämienverbilligung / Anspruch

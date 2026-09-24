@@ -50,8 +50,10 @@ Maloja Clothing GmbH (Rimsting, DE) für die Klassen **18** (Leder/Taschen), **2
 16746/2019 · Maloja Bergrennen 58947/2006 · maloja fig. 526678 · Maloja-Bitter
 16297/2021) sind **gelöscht**; zwei weitere Treffer hängen an Engadiner Adressen.
 
-**Klassen 9 und 42 sind in der Schweiz frei.** «Maloja Plana» selbst ist nirgends
-eingetragen.
+**Die Wortlaut-Recherche ergab keine aktive Marke «Maloja» in den Klassen 9 und 42.** «Maloja
+Plana» selbst ist nirgends eingetragen. *(Bis 24.09.2026 stand hier «Klassen 9 und 42 sind in
+der Schweiz frei» — stärker als der Befund: gesucht wurde nur nach dem Wort, ohne
+Ähnlichkeitsprüfung, siehe unten.)*
 
 Was die Recherche **nicht** klärt: ob das IGE den Ortsnamen «Maloja» als
 Herkunftsangabe oder Gemeingut beanstandet (MSchG Art. 2); nicht eingetragene

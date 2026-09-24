@@ -665,6 +665,38 @@ der Kinder-Grenze, wenn noch ein allgemeiner Anspruch bleibt (bei einer erwachse
 erst ab fünf Kindern) · Quellenbesteuerte, EL- und Sozialhilfebeziehende · Werte 2027 (laut
 WAS «erst Mitte November 2026»).
 
+### Nachtrag 24.09.2026 — Beleg für den Luzern-Vorbehalt (K120)
+
+Der Vorbehalt in der App (`premium.vorbehaltLU`: Anpassung bei geänderten Verhältnissen,
+Frist 31. Dezember, Rückforderung) stützte sich auf SRL 866 § 8a und § 21. Beide standen
+bisher weder hier noch im Kopf von `src/config/ipvLuzern.js` (Befund rechts-pruefer,
+Vorab-Prüfung 24.09.2026). Am 24.09.2026 gelesen:
+`https://srl.lu.ch/api/de/texts_of_law/866/show_as_json` → 200, 179'651 B (gleich gross wie
+am 23.09.); Gegenprobe `…/999999/…` → **404**.
+
+**§ 8a Änderung der Verhältnisse**
+> ¹ «Haben sich die persönlichen, die familiären oder die wirtschaftlichen Verhältnisse seit
+> dem 1. November des Jahres vor dem Jahr, für das Prämienverbilligung beansprucht wird,
+> wesentlich geändert, wird die Prämienverbilligung auf begründetes Gesuch oder allenfalls von
+> Amtes wegen angepasst.»
+> ² «Das Gesuch um Erhöhung der Prämienverbilligung ist spätestens am letzten Tag des Jahres
+> einzureichen, für das eine Änderung der Verhältnisse geltend gemacht wird. Wird die Frist
+> nicht eingehalten, wird die Änderung erst ab dem Jahr berücksichtigt, in dem das Gesuch
+> eingereicht wurde.»
+
+**§ 21 Rückerstattung**
+> ¹ «Das Sozialversicherungszentrum hat Leistungen aufgrund dieses Gesetzes, die zu Unrecht
+> ausgerichtet wurden, von dem Krankenversicherer zurückzufordern, dem sie ausbezahlt wurden.»
+
+**Abgleich mit dem App-Text:** stimmt in der Sache. Zwei Stellen sind ungenauer als der
+Wortlaut — **nicht geändert**, nur festgehalten (ein Rechtstext in fünf Sprachen wird nicht
+nebenbei umgeschrieben):
+- «Frist 31. Dezember» gilt nach Abs. 2 für das Gesuch um **Erhöhung**; die App sagt allgemein
+  «Anpassung».
+- «Zu Unrecht bezogene Beträge werden zurückgefordert» nennt nicht, **von wem**: § 21 Abs. 1
+  fordert beim **Krankenversicherer** zurück, dem ausbezahlt wurde. Ob und wie dieser es
+  danach von der versicherten Person zurückholt, sagt § 21 nicht — **nicht geprüft**.
+
 ---
 
 ## UR — Uri
