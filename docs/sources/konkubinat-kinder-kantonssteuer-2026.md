@@ -105,7 +105,7 @@ Die kantonalen Gesetze sind dafür nicht gelesen worden, darum steht in der App 
 - `konkubinatWieLedigAb(kanton, kinder)` wählt: ohne Kinder `KONKUBINAT_WIE_LEDIG_AB` (K62.1), mit
   Kindern die Tabelle oben. Folge für VS: mit Kindern jetzt eine Kantonszahl auch unter Brutto 45 000
   (gemessen gleich); vorher griff dort die Schwelle von ohne Kinder.
-- Vorher → jetzt, Konkubinat mit Kindern, Partnereinkommen 0 oder nicht angegeben:
+- Vorher → jetzt, Konkubinat mit Kindern, Partnereinkommen ausdrücklich 0:
   BS, OW, UR, VD zeigten eine Kantonszahl nach «ledig mit Kindern», die ESTV rechnet höher → jetzt
   keine. BE, JU waren schon gesperrt (Tabelle ohne Kinder, Infinity). Die übrigen 20 Kantone: Zahl
   bleibt, jetzt gemessen belegt.
