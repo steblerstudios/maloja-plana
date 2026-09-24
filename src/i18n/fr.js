@@ -2763,6 +2763,7 @@ export default {
     errorNoInsurer: 'Assureur non reconnu',
     errorCardNumber: 'Numéro de carte invalide',
     errorAhvFormat: 'Format du numéro AVS invalide',
+    nichtsGelesen: { sie: 'Rien de lisible sur cette image. Une photo plus nette aide — ou vous pouvez saisir les données manuellement.', du: 'Rien de lisible sur cette image. Une photo plus nette aide — ou tu peux saisir les données manuellement.' },
     scanRequiresInternet: { sie: 'Le scan nécessite une connexion internet. Vous pouvez aussi saisir les données manuellement.', du: 'Le scan nécessite une connexion internet. Tu peux aussi saisir les données manuellement.' },
     conflictTitle: 'Différences détectées',
     conflictHint: { sie: 'Le scan a retourné des valeurs différentes de vos données actuelles.', du: 'Le scan a retourné des valeurs différentes de tes données actuelles.' },

@@ -2764,6 +2764,7 @@ export default {
     errorNoInsurer: 'Assicuratore non riconosciuto',
     errorCardNumber: 'Numero tessera non valido',
     errorAhvFormat: 'Formato numero AVS non valido',
+    nichtsGelesen: { sie: "Nell'immagine non si legge nulla. Una foto più nitida aiuta — oppure può inserire i dati manualmente.", du: "Nell'immagine non si legge nulla. Una foto più nitida aiuta — oppure puoi inserire i dati manualmente." },
     scanRequiresInternet: { sie: 'La scansione richiede una connessione internet. Può anche inserire i dati manualmente.', du: 'La scansione richiede una connessione internet. Puoi anche inserire i dati manualmente.' },
     conflictTitle: 'Differenze rilevate',
     conflictHint: { sie: 'La scansione ha restituito valori diversi dai Suoi dati attuali.', du: 'La scansione ha restituito valori diversi dai tuoi dati attuali.' },

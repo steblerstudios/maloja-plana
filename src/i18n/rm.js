@@ -3397,6 +3397,7 @@ export default {
     errorNoInsurer: 'Assicurader betg enconuschent',
     errorCardNumber: 'Numer da la carta nunvalid',
     errorAhvFormat: 'Format AVS nunvalid',
+    nichtsGelesen: { sie: 'Sin il maletg n\'è nagut legibel. Ina foto pli nitida gida — u Vus pudais endatar las datas manualmain.', du: 'Sin il maletg n\'è nagut legibel. Ina foto pli nitida gida — u ti pos endatar las datas manualmain.' },
     scanRequiresInternet: { sie: 'Scannar dovra ina connexiun dad internet. Vus pudais era endatar las datas manualmain.', du: 'Scannar dovra ina connexiun dad internet. Ti pos era endatar las datas manualmain.' },
     conflictTitle: 'Divergenzas enconuschidas',
     conflictHint: { sie: 'Il scan furnischa auters valurs che Vossas datas existentas.', du: 'Il scan furnischa auters valurs che Tes datas existentas.' },

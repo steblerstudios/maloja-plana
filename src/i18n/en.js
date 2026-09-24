@@ -2764,6 +2764,7 @@ export default {
     errorNoInsurer: 'Insurer not recognized',
     errorCardNumber: 'Card number invalid',
     errorAhvFormat: 'AHV number format invalid',
+    nichtsGelesen: 'Nothing readable in this image. A sharper photo helps — or you can enter the data manually.',
     scanRequiresInternet: 'Scanning requires an internet connection. You can also enter the data manually.',
     conflictTitle: 'Differences detected',
     conflictHint: 'The scan returned different values than your existing data.',
