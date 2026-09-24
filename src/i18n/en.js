@@ -85,6 +85,7 @@ export default {
       frage: 'Regularly caring for a relative or close person?',
       intro: 'Care given quietly is rarely recognised — yet it can build pension credits and entitlements. Relief services and counselling exist too.',
       berechtigungen: {
+        pflege: { titel: 'Guided steps: caring for relatives', text: 'The guided steps show what to do, in order: credit, compensation, support.' },
         betreuungsgutschriften: { titel: 'Care credits (AHV)', text: 'Caring for a close relative can be credited to your AHV account and raise your future pension — claimed yearly with the compensation office.' },
         betreuungsentschaedigung: { titel: 'Care allowance (EO)', text: 'Paid leave to care for a severely ill or injured child, plus short leave to care for a relative — compensated through the EO scheme.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance (for the person cared for)', text: 'The person you care for may be entitled to a monthly allowance — which can help fund the care they need.' },
@@ -271,6 +272,7 @@ export default {
     step3Title: '3 · If you cannot work',
     step3Text: 'Inform your employer and get a medical certificate (often from day 3). Continued salary payment or daily sickness benefits (KTG) cushion the loss of income — for an accident, the accident insurer.',
     step3Link: 'View insurances',
+    step3LinkIv: 'If it lasts longer: illness & IV',
     step4Title: '4 · Collect and file records',
     step4Text: 'Collect medical certificates, bills and the accident report. Check health insurance bills (deductible/retention fee) and file everything in your life folder.',
     step4LinkScan: 'Check / scan a bill',

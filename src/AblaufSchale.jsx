@@ -7,7 +7,8 @@ import { GlossarText } from './GlossarBegriff.jsx';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
-// ist der Zusatzversicherungs-Wechsel; der KVG-Faden kann später hierauf migrieren.
+// war der Zusatzversicherungs-Wechsel; heute bauen 18 der 19 Abläufe darauf, auch der
+// KVG-Wechsel (Stand 24.09.2026). Nur AsylView hat seine eigene Gliederung.
 // Bewusst schlanke Primitiven statt einer config-getriebenen Engine (keine Über-Abstraktion).
 
 const styles = (palette) => ({

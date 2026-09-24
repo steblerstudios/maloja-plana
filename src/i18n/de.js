@@ -85,6 +85,7 @@ export default {
       frage: { sie: 'Pflegen Sie regelmässig eine angehörige oder nahestehende Person?', du: 'Pflegst du regelmässig eine angehörige oder nahestehende Person?' },
       intro: 'Pflege, die still geleistet wird, bleibt oft unbeachtet — dabei kann sie Rentengutschriften und Ansprüche schaffen. Auch Entlastungsdienste und Beratung gibt es.',
       berechtigungen: {
+        pflege: { titel: 'Der geführte Ablauf: Angehörige pflegen', text: 'Der geführte Ablauf zeigt die Schritte der Reihe nach: Gutschrift, Entschädigung, Entlastung.' },
         betreuungsgutschriften: { titel: 'Betreuungsgutschriften (AHV)', text: { sie: 'Die Pflege naher Angehöriger kann Ihrem AHV-Konto gutgeschrieben werden und die spätere Rente erhöhen — jährlich bei der Ausgleichskasse anmelden.', du: 'Die Pflege naher Angehöriger kann deinem AHV-Konto gutgeschrieben werden und die spätere Rente erhöhen — jährlich bei der Ausgleichskasse anmelden.' } },
         betreuungsentschaedigung: { titel: 'Betreuungsentschädigung (EO)', text: 'Bezahlter Urlaub zur Pflege eines schwer kranken oder verunfallten Kindes, dazu Kurzurlaub für Angehörige — entschädigt über die EO.' },
         hilflosenentschaedigung: { titel: 'Hilflosenentschädigung (der gepflegten Person)', text: 'Die gepflegte Person hat allenfalls Anspruch auf einen monatlichen Betrag — der mithilft, die nötige Betreuung zu finanzieren.' },
@@ -271,6 +272,7 @@ export default {
     step3Title: { sie: '3 · Wenn Sie nicht arbeiten können', du: '3 · Wenn du nicht arbeiten kannst' },
     step3Text: { sie: 'Informieren Sie Ihren Arbeitgeber und holen Sie ein Arztzeugnis (oft ab dem 3. Tag). Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.', du: 'Informiere deinen Arbeitgeber und hol ein Arztzeugnis (oft ab dem 3. Tag). Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.' },
     step3Link: 'Versicherungen ansehen',
+    step3LinkIv: 'Dauert es länger: Krankheit & IV',
     step4Title: '4 · Belege sammeln & ablegen',
     step4Text: { sie: 'Sammeln Sie Arztzeugnisse, Rechnungen und die Unfallmeldung. Prüfen Sie Krankenkassen-Rechnungen (Franchise/Selbstbehalt) und legen Sie alles im Lebensordner ab.', du: 'Sammle Arztzeugnisse, Rechnungen und die Unfallmeldung. Prüfe Krankenkassen-Rechnungen (Franchise/Selbstbehalt) und lege alles im Lebensordner ab.' },
     step4LinkScan: 'Rechnung prüfen / scannen',

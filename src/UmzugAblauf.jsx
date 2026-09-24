@@ -98,7 +98,9 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       umzugType !== 'gemeinde' && React.createElement(MietzinsHinweis, { palette, t, canton: userCanton }),
       // Voller Mietzinsbeiträge-Schnellcheck (mit echten Beträgen), nicht nur der Hinweis.
       umzugType !== 'gemeinde' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkMietzins'), onClick: () => onNavigate('mietzins') }),
-      // Zuzug aus dem Ausland: erstmalige Krankenkassen-Anmeldung (selbst-selektierend formuliert).
+      // Beim Wechsel in einen anderen Kanton (`extra`) — einen Umzugstyp «aus dem Ausland»
+      // gibt es nicht. Wer tatsächlich neu in der Schweiz ist, erkennt sich an der
+      // Beschriftung («Neu in der Schweiz?») und findet dort die erste KK-Anmeldung.
       umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkKkErst'), onClick: () => onNavigate('kkerst') }),
       React.createElement(FristButton, {
         palette, t,

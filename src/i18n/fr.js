@@ -85,6 +85,7 @@ export default {
       frage: { sie: 'Vous occupez-vous régulièrement d’un proche ou d’une personne proche ?', du: 'T’occupes-tu régulièrement d’un proche ou d’une personne proche ?' },
       intro: 'Les soins donnés en silence sont rarement reconnus — pourtant ils peuvent créer des bonifications de rente et des droits. Des services de relève et des conseils existent aussi.',
       berechtigungen: {
+        pflege: { titel: 'Le parcours guidé : aider un proche', text: 'Le parcours guidé montre les étapes dans l’ordre : bonification, indemnité, soutien.' },
         betreuungsgutschriften: { titel: 'Bonifications pour tâches d’assistance (AVS)', text: { sie: 'L’assistance à un proche peut être créditée sur votre compte AVS et augmenter votre future rente — à annoncer chaque année à la caisse de compensation.', du: 'L’assistance à un proche peut être créditée sur ton compte AVS et augmenter ta future rente — à annoncer chaque année à la caisse de compensation.' } },
         betreuungsentschaedigung: { titel: 'Allocation de prise en charge (APG)', text: 'Congé payé pour s’occuper d’un enfant gravement malade ou accidenté, et court congé pour un proche — indemnisés par les APG.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent (de la personne aidée)', text: 'La personne prise en charge peut avoir droit à un montant mensuel — qui peut aider à financer les soins nécessaires.' },
@@ -271,6 +272,7 @@ export default {
     step3Title: { sie: '3 · Si vous ne pouvez pas travailler', du: '3 · Si tu ne peux pas travailler' },
     step3Text: { sie: 'Informez votre employeur et obtenez un certificat médical (souvent dès le 3e jour). Le maintien du salaire ou les indemnités journalières (APG/IJ maladie) amortissent la perte de revenu — en cas d\'accident, l\'assureur-accidents.', du: 'Informe ton employeur et obtiens un certificat médical (souvent dès le 3e jour). Le maintien du salaire ou les indemnités journalières (APG/IJ maladie) amortissent la perte de revenu — en cas d\'accident, l\'assureur-accidents.' },
     step3Link: 'Voir les assurances',
+    step3LinkIv: 'Si cela dure : maladie & AI',
     step4Title: '4 · Rassembler et classer les justificatifs',
     step4Text: { sie: 'Rassemblez certificats médicaux, factures et la déclaration d\'accident. Vérifiez les factures de la caisse maladie (franchise/quote-part) et classez tout dans votre classeur de vie.', du: 'Rassemble certificats médicaux, factures et la déclaration d\'accident. Vérifie les factures de la caisse maladie (franchise/quote-part) et classe tout dans ton classeur de vie.' },
     step4LinkScan: 'Vérifier / scanner une facture',

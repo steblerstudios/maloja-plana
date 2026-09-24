@@ -80,6 +80,8 @@ export const LEBENSZUSTAENDE = [
   {
     key: 'pflegendeAngehoerige',
     berechtigungen: [
+      // Rückweg zum geführten Ablauf — Gegenstück zu rentnerin→pensionierung (24.09.2026).
+      { key: 'pflege',                   view: 'pflege',   quelle: 'BSV / Ausgleichskasse', stand: '2026' },
       { key: 'betreuungsgutschriften', view: 'vorsorge', quelle: 'BSV / Ausgleichskasse', stand: '2026' },
       { key: 'betreuungsentschaedigung', view: 'eo',      quelle: 'BSV',                   stand: '2026' },
       { key: 'hilflosenentschaedigung',  view: 'iv',      quelle: 'BSV',                   stand: '2026' },

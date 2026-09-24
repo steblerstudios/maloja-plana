@@ -86,6 +86,7 @@ export default {
       frage: 'Tgirais Vus regularmain ina persuna confamigliara u dativa?',
       intro: 'La tgira ch’ins fa en silenzi resta savens nunconsiderada — e tuttina po ella crear bunificaziuns da renta e dretgs. I dat er servetschs da sgraventada e cussegliaziun.',
       berechtigungen: {
+        pflege: { titel: 'Der geführte Ablauf: Angehörige pflegen', text: 'Der geführte Ablauf zeigt die Schritte der Reihe nach: Gutschrift, Entschädigung, Entlastung.' },
         betreuungsgutschriften: { titel: 'Bunificaziuns d’assistenza (AVS)', text: 'La tgira da confamigliars datvis po vegnir scrita sin Voss conto da l’AVS ed augmentar Vossa renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.' },
         betreuungsentschaedigung: { titel: 'Indemnisaziun da tgira (UCG)', text: 'Congedi pajà per tgirar in uffant grevamain malsaun u accidentà, plis in curt congedi per in confamigliar — indemnisads tras l’UCG.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas (da la persuna tgirada)', text: 'La persuna tgirada po avair dretg sin in import mensil — quai po gidar a finanziar la tgira necessaria.' },
@@ -281,6 +282,7 @@ export default {
     step3Title: '3 · Wenn du nicht arbeiten kannst',
     step3Text: 'Informiere deinen Arbeitgeber und hol ein Arztzeugnis (oft ab dem 3. Tag). Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.',
     step3Link: 'Versicherungen ansehen',
+    step3LinkIv: 'Dauert es länger: Krankheit & IV',
     step4Title: '4 · Belege sammeln & ablegen',
     step4Text: 'Sammle Arztzeugnisse, Rechnungen und die Unfallmeldung. Prüfe Krankenkassen-Rechnungen (Franchise/Selbstbehalt) und lege alles im Lebensordner ab.',
     step4LinkScan: 'Rechnung prüfen / scannen',

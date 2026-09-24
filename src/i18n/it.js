@@ -85,6 +85,7 @@ export default {
       frage: { sie: 'Assiste regolarmente un familiare o una persona vicina?', du: 'Assisti regolarmente un familiare o una persona vicina?' },
       intro: 'L’assistenza prestata in silenzio viene raramente riconosciuta — eppure può creare accrediti di rendita e diritti. Esistono anche servizi di sgravio e consulenza.',
       berechtigungen: {
+        pflege: { titel: 'Il percorso guidato: assistere i propri cari', text: 'Il percorso guidato mostra i passi in ordine: accredito, indennità, sgravio.' },
         betreuungsgutschriften: { titel: 'Accrediti per compiti assistenziali (AVS)', text: { sie: 'L’assistenza a un familiare stretto può essere accreditata sul suo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.', du: 'L’assistenza a un familiare stretto può essere accreditata sul tuo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.' } },
         betreuungsentschaedigung: { titel: 'Indennità di assistenza (IPG)', text: 'Congedo pagato per assistere un figlio gravemente malato o infortunato, più un breve congedo per un familiare — indennizzati tramite le IPG.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi (della persona assistita)', text: 'La persona assistita può avere diritto a un importo mensile — che può aiutare a finanziare l’assistenza necessaria.' },
@@ -271,6 +272,7 @@ export default {
     step3Title: { sie: '3 · Se non può lavorare', du: '3 · Se non puoi lavorare' },
     step3Text: { sie: 'Informi il datore di lavoro e si procuri un certificato medico (spesso dal 3° giorno). Il proseguimento del salario o l\'indennità giornaliera di malattia attenuano la perdita di reddito — in caso di infortunio, l\'assicuratore infortuni.', du: 'Informa il datore di lavoro e procurati un certificato medico (spesso dal 3° giorno). Il proseguimento del salario o l\'indennità giornaliera di malattia attenuano la perdita di reddito — in caso di infortunio, l\'assicuratore infortuni.' },
     step3Link: 'Vedi le assicurazioni',
+    step3LinkIv: 'Se dura a lungo: malattia & AI',
     step4Title: '4 · Raccogliere e archiviare i giustificativi',
     step4Text: { sie: 'Raccolga certificati medici, fatture e la dichiarazione d\'infortunio. Verifichi le fatture della cassa malati (franchigia/aliquota) e archivi tutto nel raccoglitore di vita.', du: 'Raccogli certificati medici, fatture e la dichiarazione d\'infortunio. Verifica le fatture della cassa malati (franchigia/aliquota) e archivia tutto nel raccoglitore di vita.' },
     step4LinkScan: 'Verifica / scansiona una fattura',

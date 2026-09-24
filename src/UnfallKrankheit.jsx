@@ -66,7 +66,9 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
     // ── Schritt 3 — Wenn du nicht arbeiten kannst ──
     React.createElement(AblaufStep, { palette, title: t('unfallKrankheit.step3Title') },
       React.createElement('p', { style: s.stepText }, t('unfallKrankheit.step3Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step3Link'), onClick: () => onNavigate('chapter', chapterIdx('versicherungen')) })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step3Link'), onClick: () => onNavigate('chapter', chapterIdx('versicherungen')) }),
+      // Gegenstück zu iv → unfallkrankheit: das Taggeld steht in beiden Abläufen.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step3LinkIv'), onClick: () => onNavigate('iv') })
     ),
 
     // ── Schritt 4 — Belege sammeln & ablegen ──
