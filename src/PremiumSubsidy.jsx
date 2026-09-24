@@ -248,6 +248,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // fehlenden Angabe an (Geburtsdatum, PLZ/Ort, Prämie) — mit einem Satz, aber ohne Feld. Fehlt
   // genau eine eigene Angabe, steht ihr Feld hier; es schreibt dasselbe Profilfeld wie das Kapitel.
   // Kinder-Geburtsdaten bleiben im Haushalt: dort gibt es je Kind eine Zeile, hier nicht.
+  const uebernehmen = (feld, wert) => {
+    const v = String(wert ?? '').trim();
+    if (v !== String(feld.value ?? '')) onUpdateData(feld.kapitel, feld.k, v);
+  };
   const offenFeld = (offen) => {
     if (!onUpdateData) return null;
     // Bis vier Ziffern stehen, bleibt das PLZ-Feld — sonst spränge es beim ersten Tippen zum Ort-Feld.
@@ -264,15 +268,27 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     if (!feld) return null;
     return React.createElement('div', { style: { marginTop: space.sm } },
       React.createElement('label', { htmlFor: feld.id, style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '6px' } }, feld.label),
+      // Unkontrolliert, übernommen beim Verlassen, mit Enter oder «Speichern». Bei jedem Tastendruck
+      // zu schreiben machte schon die erste Ziffer zur Angabe: im Browser verschwand das Prämienfeld
+      // nach «4» mitten im Tippen, der Fokus war weg (24.09.). `key` setzt es bei neuem Wert zurück.
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm } },
       React.createElement('input', {
-        id: feld.id, type: feld.type, value: feld.value,
+        key: feld.id + ':' + feld.value,
+        id: feld.id, type: feld.type, defaultValue: feld.value,
         ...(feld.type === 'number' && { min: '0' }),
         ...(feld.inputMode && { inputMode: feld.inputMode }),
         ...(feld.autoComplete && { autoComplete: feld.autoComplete }),
         'aria-describedby': feld.id + '-hinweis',
-        onChange: (e) => onUpdateData(feld.kapitel, feld.k, e.target.value),
+        onBlur: (e) => uebernehmen(feld, e.target.value),
+        onKeyDown: (e) => { if (e.key === 'Enter') uebernehmen(feld, e.target.value); },
         style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
       }),
+      React.createElement('button', {
+        type: 'button',
+        onClick: () => { const el = document.getElementById(feld.id); if (el) uebernehmen(feld, el.value); },
+        style: { padding: '8px 14px', fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit', cursor: 'pointer', border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.up, color: palette.text },
+      }, t('common.save'))
+      ),
       React.createElement('p', { id: feld.id + '-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } }, t('premium.feldImProfil'))
     );
   };
