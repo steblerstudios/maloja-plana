@@ -6,7 +6,7 @@ import {
 } from './validationUtils.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
@@ -2365,17 +2365,22 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          hinweisZeichen('kaestchen'), tr('chapterView.selectFile'),
+          // Nach der Wahl steht der Dateiname da, wo vorher «Datei auswählen» stand —
+          // sonst sieht niemand (und hört kein Screenreader), welche Datei hochgeht.
+          hinweisZeichen(uploadFile ? 'document' : 'kaestchen'), uploadFile ? uploadFile.name : tr('chapterView.selectFile'),
           React.createElement('input', {
             type: 'file',
-            onChange: (e) => setUploadFile(e.target.files?.[0]),
-            style: { display: 'none' }
+            onChange: (e) => { setUploadFile(e.target.files?.[0]); setUploadError(''); },
+            className: 'mp-datei-eingang', style: visuallyHiddenStyle,
           })
         ),
 
-        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
+        uploadError && React.createElement('div', { role: 'alert', style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
-        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess),
+        // Die Status-Region steht immer da und füllt sich erst — eine Region, die MIT
+        // ihrem Text erscheint, wird von Screenreadern oft nicht angesagt.
+        React.createElement('div', { role: 'status' },
+          uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess)),
 
         React.createElement('button', {
           onClick: () => {

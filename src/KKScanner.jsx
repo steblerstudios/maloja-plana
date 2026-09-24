@@ -190,7 +190,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       scanMode === 'upload' && React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kkScanner.scanRequiresInternet'))),
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, style: { display: 'none' } }),
+          React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('kkScanner.qrBarcode'))
