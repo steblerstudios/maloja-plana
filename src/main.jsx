@@ -1417,7 +1417,6 @@ const AppInner = ({ demo }) => {
           palette, t,
           data: activeData,
           onNavigate: handleNavigate,
-          onUpdateData: updateData,
           onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {

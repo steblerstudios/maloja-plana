@@ -2485,6 +2485,8 @@ export default {
     creditor: 'Creditore (p.es. banca, persona)',
     amount: 'Importo (CHF)',
     ausProfilHint: "Importo ripreso da «Prestiti personali» nel capitolo Finanze — liberamente modificabile qui.",
+    registerHinweis: "Un'esecuzione registrata può figurare nel registro delle esecuzioni — ma non necessariamente, ad esempio se è stata ritirata. Annotare lo stato nel capitolo Autorità.",
+    registerHinweisLink: 'Al capitolo Autorità',
     interestRate: 'Tasso d\'interesse (%)',
     debtor: 'Debitore',
     court: 'Ufficio esecuzioni',

@@ -2159,6 +2159,8 @@ export default {
     creditor: 'Creditur (p.ex. banca, persuna)',
     amount: 'Import (CHF)',
     ausProfilHint: "Import surpiglià da «Imprest persunal» en il chapitel Finanzas — qua libramain adattabel.",
+    registerHinweis: "Ina scussiun registrada po star en il register da scussiun — ma betg per forza, per exempel sch'ella è vegnida retratga. Notar il stadi en il chapitel Autoritads.",
+    registerHinweisLink: 'Al chapitel Autoritads',
     interestRate: 'Tschains (%)',
     debtor: 'Debitur',
     court: 'Uffizi da scussiun',

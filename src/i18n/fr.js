@@ -2526,6 +2526,8 @@ export default {
     creditor: 'Créancier (p. ex. banque, personne)',
     amount: 'Montant (CHF)',
     ausProfilHint: "Montant repris de « Prêts personnels » dans le chapitre Finances — librement modifiable ici.",
+    registerHinweis: "Une poursuite saisie peut figurer au registre des poursuites — mais pas forcément, par exemple si elle a été retirée. Noter l'état dans le chapitre Autorités.",
+    registerHinweisLink: 'Vers le chapitre Autorités',
     interestRate: 'Taux d\'intérêt (%)',
     debtor: 'Débiteur',
     court: 'Office des poursuites',

@@ -9,9 +9,10 @@ import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
-import { darlehenVorschlag, betreibungsStatusNachEintrag } from './utils/schuldenAusProfil.js';
+import { darlehenVorschlag, betreibungsHinweis } from './utils/schuldenAusProfil.js';
+import { CHAPTER_KEYS } from './config/constants.js';
 
-export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, onUpdateData }) => {
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const [view, setView] = useState('overview');
   const [schulden, setSchulden] = useState(data.schulden || []);
@@ -102,13 +103,6 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, onUpdate
     setGespeichert(true);
   }, [schulden, betreibung, verlustscheine]);
 
-  // Eine erfasste Betreibung heisst «Einträge vorhanden» im Kapitel Behörden — nur wo dort
-  // noch nichts oder «Unbekannt» steht (utils/schuldenAusProfil.js).
-  const betreibungsStatus = data.behoerden?.betreibungsStatus;
-  useEffect(() => {
-    const neu = betreibungsStatusNachEintrag(betreibungsStatus, betreibung);
-    if (neu && onUpdateData) onUpdateData('behoerden', 'betreibungsStatus', neu);
-  }, [betreibung, betreibungsStatus, onUpdateData]);
 
   const debtStatus = calculateDebtStatus(schulden);
   const prioritized = prioritizeDebts(schulden, method);
@@ -306,6 +300,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, onUpdate
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.debtCollection')),
 
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
+      // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
+      betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
+        hinweisZeichen(), t('schulden.registerHinweis'), ' ',
+        onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('behoerden')), style: { background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' } }, t('schulden.registerHinweisLink'))
+      ),
 
       betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
         betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },

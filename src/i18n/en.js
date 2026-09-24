@@ -2527,6 +2527,8 @@ export default {
     creditor: 'Creditor (e.g. bank, person)',
     amount: 'Amount (CHF)',
     ausProfilHint: 'Amount taken from “Personal loans” in the Finances chapter — adjust freely here.',
+    registerHinweis: 'A recorded debt collection may appear in the debt collection register — but not necessarily, for instance if it was withdrawn. Record the status in the Authorities chapter.',
+    registerHinweisLink: 'Go to the Authorities chapter',
     interestRate: 'Interest rate (%)',
     debtor: 'Debtor',
     court: 'Debt enforcement office',

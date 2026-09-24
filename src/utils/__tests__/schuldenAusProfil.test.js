@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { darlehenVorschlag, betreibungsStatusNachEintrag } from '../schuldenAusProfil.js';
+import { darlehenVorschlag, betreibungsHinweis } from '../schuldenAusProfil.js';
 
 describe('darlehenVorschlag — «Persönliche Darlehen» nicht nochmals eintippen', () => {
   it('leere Liste + Darlehen im Profil → Kredit-Vorschlag', () => {
@@ -14,20 +14,19 @@ describe('darlehenVorschlag — «Persönliche Darlehen» nicht nochmals eintipp
   });
 });
 
-describe('betreibungsStatusNachEintrag — Register-Stand ins Kapitel Behörden', () => {
+describe('betreibungsHinweis — Registerstand nur als Hinweis, nie automatisch', () => {
   const eintrag = { creditor: 'Inkasso AG', amount: 0, status: 'active' };
-  it.each([undefined, '', 'unknown'])('Status %j + erfasste Betreibung → «entries»', (status) => {
-    expect(betreibungsStatusNachEintrag(status, [eintrag])).toBe('entries');
+  it.each([undefined, '', 'unknown', 'none'])('Status %j + erfasste Betreibung → Hinweis', (status) => {
+    expect(betreibungsHinweis(status, [eintrag])).toBe(true);
   });
-  it('eigene Angabe wird nie überschrieben — auch «none» nicht', () => {
-    expect(betreibungsStatusNachEintrag('none', [eintrag])).toBeNull();
-    expect(betreibungsStatusNachEintrag('entries', [eintrag])).toBeNull();
+  it('«Einträge vorhanden» schon festgehalten → kein Hinweis', () => {
+    expect(betreibungsHinweis('entries', [eintrag])).toBe(false);
   });
-  it('bezahlte Betreibung zählt trotzdem (bleibt 5 Jahre einsehbar, SchKG 8a Abs. 4)', () => {
-    expect(betreibungsStatusNachEintrag('', [{ creditor: '', amount: 800, status: 'paid' }])).toBe('entries');
+  it('auch eine bezahlte Betreibung → Hinweis (der Rückzug ist nicht erfasst)', () => {
+    expect(betreibungsHinweis('', [{ creditor: '', amount: 800, status: 'paid' }])).toBe(true);
   });
-  it('eben angelegter, leerer Eintrag zählt noch nicht', () => {
-    expect(betreibungsStatusNachEintrag('', [{ creditor: '  ', amount: 0, status: 'active' }])).toBeNull();
-    expect(betreibungsStatusNachEintrag('', [])).toBeNull();
+  it('eben angelegter, leerer Eintrag → noch kein Hinweis', () => {
+    expect(betreibungsHinweis('', [{ creditor: '  ', amount: 0, status: 'active' }])).toBe(false);
+    expect(betreibungsHinweis('', [])).toBe(false);
   });
 });

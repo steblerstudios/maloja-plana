@@ -2551,6 +2551,8 @@ export default {
     creditor: 'Gläubiger (z.B. Bank, Person)',
     amount: 'Betrag (CHF)',
     ausProfilHint: 'Betrag aus «Persönliche Darlehen» im Kapitel Finanzen übernommen — hier frei anpassbar.',
+    registerHinweis: 'Eine erfasste Betreibung kann im Betreibungsregister stehen — muss aber nicht, etwa wenn sie zurückgezogen wurde. Den Stand im Kapitel Behörden festhalten.',
+    registerHinweisLink: 'Zum Kapitel Behörden',
     interestRate: 'Zinssatz (%)',
     debtor: 'Schuldner',
     court: 'Betreibungsamt',
