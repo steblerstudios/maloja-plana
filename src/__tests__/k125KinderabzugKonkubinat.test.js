@@ -11,7 +11,7 @@ import en from '../i18n/en.js';
 import rm from '../i18n/rm.js';
 
 // ─────────────────────────────────────────────────────────────
-// K125 · Konkubinat mit Kindern: ZH und LU teilen den kantonalen Kinderabzug bei gemeinsamer
+// K125 · Konkubinat mit Kindern: acht Kantone teilen den kantonalen Kinderabzug bei gemeinsamer
 // elterlicher Sorge ohne Unterhaltsbeiträge hälftig (Wortlaut: docs/sources/
 // kinderabzug-konkubinat-kantone-2026.md). Die Kantonstabelle ist mit dem GANZEN Abzug gemessen
 // und zeigte dort zu tief — darum keine Kantonszahl. Die Zusage, die hier gehalten wird:
@@ -32,7 +32,7 @@ const regel = (p) => steuernFuerProfil(steuerEingabenAusDaten(p));
 
 describe('K125 · Kinderabzug im Konkubinat hälftig', () => {
   it('die Liste enthält genau die belegten Kantone, und jeder steht im Quellenblatt als «hälftig»', () => {
-    expect([...KINDERABZUG_KONKUBINAT_HAELFTIG].sort()).toEqual(['LU', 'ZH']);
+    expect([...KINDERABZUG_KONKUBINAT_HAELFTIG].sort()).toEqual(['AI', 'LU', 'NW', 'SH', 'SO', 'TI', 'VS', 'ZH']);
     for (const kt of KINDERABZUG_KONKUBINAT_HAELFTIG) {
       expect(quelle, kt).toMatch(new RegExp('\\| \\*\\*' + kt + '\\*\\* \\| \\*\\*hälftig\\*\\*'));
       expect(kt in KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB, kt).toBe(false); // sonst wäre die Regel doppelt
@@ -47,7 +47,8 @@ describe('K125 · Kinderabzug im Konkubinat hälftig', () => {
     }
   });
 
-  it('Gegenproben: ohne Kinder, verheiratet, und im Kanton mit «ganz»-Regel (AG) weiter eine Kantonszahl', () => {
+  it('Gegenproben: ohne Kinder, verheiratet, «ganz»-Kanton (AG) und Einverdiener-Ausnahme (FR, GE) weiter eine Kantonszahl', () => {
+    for (const kt of ['FR', 'GE']) expect(regel(profil({ canton: kt })).kanton.grund, kt).not.toBe('konkubinatKinderabzugHaelftig');
     expect(regel(profil({ canton: 'ZH', kinder: 0 })).kanton.grund).not.toBe('konkubinatKinderabzugHaelftig');
     expect(regel(profil({ canton: 'ZH', kinder: 0 })).kanton.kantonal).not.toBeNull();
     expect(regel(profil({ canton: 'LU', maritalStatus: 'married' })).kanton.grund).not.toBe('konkubinatKinderabzugHaelftig');

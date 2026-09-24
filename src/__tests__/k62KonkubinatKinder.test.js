@@ -104,11 +104,11 @@ describe('K62-Nachlauf B · was die App zeigt', () => {
     expect(s.bund).not.toBeNull();
   });
 
-  it('VS mit Kind unter der Schwelle ohne Kinder (Brutto 40 000): gleich wie ledig gemessen → Zahl', () => {
-    const [, , , , , kg] = punkt('VS', 1, 40000);
+  it('VS mit Kind (Brutto 40 000): ESTV rechnet wie ledig — aber VS teilt den Kinderabzug hälftig (K125) → keine Zahl', () => {
+    const p = punkt('VS', 1, 40000);
+    expect(weichtAb(p)).toBe(false); // die Messung selbst bleibt: gleich wie ledig
     const s = regel(profil({ canton: 'VS', brutto: 40000 }));
-    expect(s.kanton.lage).toBe('innerhalb');
-    expect(imRahmen(s.kanton.kantonal.kantonalUndGemeinde, kg)).toBe(true);
+    expect(s.kanton.grund).toBe('konkubinatKinderabzugHaelftig');
   });
 
   it('mit Partnereinkommen > 0 weiter keine Zahl (Aufteilung des Kinderabzugs, DBG Art. 35 Abs. 1 lit. a)', () => {

@@ -34,7 +34,7 @@ export const orientierungsText = (t, schaetzung, jahr) =>
           // K117: Konkubinat mit Kindern, Partnerangabe fehlt.
           : schaetzung.grund === 'konkubinatKinderOffen'
             ? t('tax.bandKonkubinatKinderOffen')
-          // K125: Kanton teilt den Kinderabzug im Konkubinat hälftig (ZH, LU).
+          // K125: Kanton teilt den Kinderabzug im Konkubinat hälftig (KINDERABZUG_KONKUBINAT_HAELFTIG).
           : schaetzung.grund === 'konkubinatKinderabzugHaelftig'
             ? t('tax.bandKonkubinatKinderabzugHaelftig')
           : schaetzung.grund === 'brutto'

@@ -278,9 +278,16 @@ export const KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB = Object.freeze({
 // Rohtext gelesen: docs/sources/kinderabzug-konkubinat-kantone-2026.md.
 //   ZH: § 34 Abs. 1 lit. a al. 2 StG, Weisung Finanzdirektion ab StP 2026, Rz. 19
 //   LU: § 42 Abs. 2 StG, Luzerner Steuerbuch 2026 § 42 Nr. 2 Ziff. 1.3; Merkblatt Fall 11
+//   AI, NW, SH, SO, TI: Gesetz bzw. Wegleitung/Kantonsblatt 2025/2026 — hälftig, ohne Unterschied nach Haushalt
+//   VS: Tabelle zum KS 30, Fall 14.8 «Un ménage, concubinage, autorité parentale commune» 1/2 – 1/2 (Stand 2018)
+// Die App rechnet nur, wenn der Partner KEIN Einkommen hat. Kantone, die für genau diesen Fall eine
+// amtliche Ausnahme «nur ein Elternteil verdient → ganzer Abzug» nennen (FR Merkblatt Ziff. 4, GE
+// Tabelle Fussnote 2, BE Merkblatt 12), stehen darum NICHT hier. TI kennt eine solche Ausnahme nur
+// aus einem Urteil (nicht amtlich wiedergegeben) → hier. NE und AR: Wahlrecht bzw. Kann-Vorschrift →
+// nicht hier, im Quellenblatt als unsicher. BE, BS, JU, OW, UR, VD zeigen ohnehin keine Zahl (oben).
 // Die App kennt die Sorge-Regelung nicht; bei alleiniger Sorge gälte der ganze Abzug. Im Zweifel
 // lieber keine Zahl als eine zu tiefe.
-export const KINDERABZUG_KONKUBINAT_HAELFTIG = Object.freeze(['ZH', 'LU']);
+export const KINDERABZUG_KONKUBINAT_HAELFTIG = Object.freeze(['ZH', 'LU', 'AI', 'NW', 'SH', 'SO', 'TI', 'VS']);
 
 // Ab welchem steuerbaren Einkommen (Bund) gilt für Konkubinat die Reihe «ledig»? 0 = überall.
 export function konkubinatWieLedigAb(kanton, kinder = 0) {
