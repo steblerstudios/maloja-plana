@@ -3390,6 +3390,7 @@ export default {
     sessionCountPlural: 'Sessione: {count} backup creati',
     letterPreview: 'Anteprima della lettera',
     confirmRestore: { sie: 'Questo sostituirà i Suoi dati attuali. Continuare?', du: 'Questo sostituirà i tuoi dati attuali. Continuare?' },
+    restoreJa: 'Sì, ripristina',
     encryptionInfo: { sie: 'Crittografia AES-256, elaborata localmente. La Sua password non lascia mai questo dispositivo.', du: 'Crittografia AES-256, elaborata localmente. La tua password non lascia mai questo dispositivo.' },
     noWebCrypto: 'Il backup crittografato richiede HTTPS o localhost.',
     selectFile: 'Seleziona file',

@@ -3414,6 +3414,7 @@ export default {
     sessionCountPlural: 'Session: {count} backups created',
     letterPreview: 'Letter preview',
     confirmRestore: 'This will replace your current data. Continue?',
+    restoreJa: 'Yes, restore',
     encryptionInfo: 'AES-256 encryption, processed locally. Your passphrase never leaves this device.',
     noWebCrypto: 'Encrypted backup requires HTTPS or localhost.',
     selectFile: 'Select backup file',
