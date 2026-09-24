@@ -437,8 +437,7 @@ heute nur verlinkt (Ressourcen), nicht angebunden.
 **Runde vom 24.09.2026 — Visionen ordnen:**
 
 1. ✅ **Zusammenführen** — alle Visionen an diesem einen Ort (dieser Stand).
-2. ⏭ **Sortieren nach Horizont** — jede Idee bekommt *Oktober* · *Winter* · *irgendwann* und
-   den Satz, woran sie hängt.
-3. ⏭ **Entscheiden, gemeinsam** — die beiden Widersprüche (§0 Kern vs. Masterplan, §1
+2. ✅ **Sortieren nach Horizont** — Tabelle «Horizonte» oben (Vorschlag, kein Beschluss).
+3. ⏭ **Entscheiden, gemeinsam, im Oktober** (Entscheid 24.09.) — die beiden Widersprüche (§0 Kern vs. Masterplan, §1
    Gamification), Baum oder Obstgarten (§2), Kapitel-Architektur (§6), die sechs
    Meinungs-Entscheide (§11), das erste grosse Thema nach dem 30.09.
