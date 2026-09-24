@@ -77,5 +77,8 @@ neu zu messen (eigener Punkt, nicht Teil von K62). In der Messdatei stehen für 
   ersten gleichen Punkt in VS wird nicht interpoliert.
 - Konkubinat **mit** Kindern bleibt ohne Zahl, sobald ein Partnereinkommen erfasst ist (Aufteilung
   des Kinderabzugs, DBG Art. 35 Abs. 1 lit. a; nicht gemessen).
+- **Nachtrag 24.09.2026 (K62-Nachlauf B):** Konkubinat mit Kindern ist jetzt gemessen —
+  `konkubinat-kinder-kantonssteuer-2026.md`. Mit Kindern gilt dort eine eigene Tabelle
+  (`KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB`: BE, BS, JU, OW, UR, VD); die Tabelle oben gilt nur ohne Kinder.
 - Der Test `src/__tests__/k62Konkubinat.test.js` liest diese Messdatei und prüft, dass die Regel jeden
   abweichenden Punkt sperrt und die gezeigten Zahlen im Rahmen der ESTV-Werte liegen.

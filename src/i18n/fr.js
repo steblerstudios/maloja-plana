@@ -1289,6 +1289,8 @@ export default {
           adultSelf: 'Moi',
           adultLabel: 'Adulte {nr}',
           addAdult: 'Ajouter un adulte',
+          zweitePersonFehlt: { sie: 'Votre état civil mentionne une deuxième personne, mais le ménage n’en compte pour l’instant qu’une. La réduction de primes et l’aide sociale se calculent avec les personnes saisies ici.', du: 'Ton état civil mentionne une deuxième personne, mais le ménage n’en compte pour l’instant qu’une. La réduction de primes et l’aide sociale se calculent avec les personnes saisies ici.' },
+          zweitePersonHinzufuegen: 'Ajouter la personne',
           adultRelationship: 'Relation',
           relPartner: 'Partenaire',
           relRoommate: 'Colocataire',
