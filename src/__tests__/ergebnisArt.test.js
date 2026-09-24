@@ -7,6 +7,15 @@ import { getMietzinsbeitraege, mietzinsErgebnis } from '../data/mietzinsbeitraeg
 import { PFLEGE_ENTLOEHNUNG_ERGEBNIS, PflegeEntloehnung } from '../PflegeEntloehnung.jsx';
 import { AlvRechner } from '../AlvRechner.jsx';
 import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
+import { eoErgebnis } from '../data/eoRechner.js';
+import { sozialhilfeErgebnis } from '../data/sozialhilfeRechner.js';
+import { stipendienErgebnis } from '../data/stipendienData.js';
+import { lohnEinordnungErgebnis } from '../data/lohnEinordnung.js';
+import { EOrechner } from '../EOrechner.jsx';
+import { SozialhilfeRechner } from '../SozialhilfeRechner.jsx';
+import { KKLastCard, KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
+import { StipendienView } from '../StipendienView.jsx';
+import { LohnEinordnung } from '../components/LohnEinordnung.jsx';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import fr from '../i18n/fr.js';
@@ -137,6 +146,86 @@ describe('O3 · Pflege-Entlöhnung (Orientierung)', () => {
   });
 });
 
+describe('O3 · EO-Rechner (Schätzung, Fachprüfung 24.09.2026)', () => {
+  it('reine Funktion: Schätzung; es fehlt nur das Einkommen, sonst nichts', () => {
+    expect(eoErgebnis({ einkommen: 0 })).toEqual({ art: 'schaetzung', fehlend: ['bruttolohn'] });
+    expect(eoErgebnis({ einkommen: 80000 }).fehlend).toEqual([]);
+  });
+  it('Aufrufstelle: ohne Lohn eine fehlende Angabe, mit Bruttolohn keine', () => {
+    expect(artZeilen(render(EOrechner, { data: leer }))).toEqual([{ art: 'schaetzung', fehlend: 1 }]);
+    const data = { ...leer, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } };
+    expect(artZeilen(render(EOrechner, { data }))).toEqual([{ art: 'schaetzung', fehlend: 0 }]);
+  });
+  it('die Quellenzeile nennt sich in keiner Sprache mehr «Berechnung»', () => {
+    for (const [lang, texte] of Object.entries({ de, fr, it: itTexte, en, rm })) {
+      expect(texte.eo.source, lang).not.toMatch(/^(Berechnung|Calcul|Calcolo|Calculation|Calculaziun)/);
+      expect(texte.sh.source, lang).not.toMatch(/^(Berechnung|Calcul|Calcolo|Calculation|Calculaziun)/);
+    }
+  });
+});
+
+describe('O3 · SKOS-Rechner (Schätzung, Fachprüfung 24.09.2026)', () => {
+  it('reine Funktion: ein leeres Feld fehlt, eine eingetragene 0 ist eine Antwort', () => {
+    const alleLeer = sozialhilfeErgebnis({ miete: '', kvgPraemie: '', erwerbseinkommen: '', vermoegen: '', kanton: '' });
+    expect(alleLeer.art).toBe(ERGEBNIS_ART.SCHAETZUNG);
+    expect(alleLeer.fehlend).toEqual(['miete', 'kvgPraemie', 'erwerbseinkommen', 'vermoegen']);
+    const nullen = sozialhilfeErgebnis({ miete: '1200', kvgPraemie: '400', erwerbseinkommen: '0', vermoegen: '0', kanton: '' });
+    expect(nullen.fehlend).toEqual([]);
+  });
+  it('reine Funktion: der Kanton fehlt nur, wenn Vermögen erfasst ist', () => {
+    const basis = { miete: '1200', kvgPraemie: '400', erwerbseinkommen: '0' };
+    expect(sozialhilfeErgebnis({ ...basis, vermoegen: '20000', kanton: '' }).fehlend).toEqual(['kanton']);
+    expect(sozialhilfeErgebnis({ ...basis, vermoegen: '20000', kanton: 'ZH' }).fehlend).toEqual([]);
+  });
+  it('Aufrufstelle: ohne Angaben vier fehlende; mit Miete, Prämie, Lohn, Vermögen und Kanton keine', () => {
+    expect(artZeilen(render(SozialhilfeRechner, { data: leer }))).toEqual([{ art: 'schaetzung', fehlend: 4 }]);
+    const data = {
+      basis: { canton: 'ZH', household: { adults: 1, children: [] } },
+      wohnen: { rentAmount: 1200 },
+      versicherungen: { kkPremium: 400 },
+      finanzen: { monthlyIncome: 1500, incomeType: 'netto', savingsAccount: 2000 },
+    };
+    const zeilen = artZeilen(render(SozialhilfeRechner, { data }));
+    expect(zeilen).toHaveLength(1);
+    expect(zeilen[0].art).toBe('schaetzung');
+    expect(zeilen[0].fehlend).toBe(0);
+  });
+});
+
+describe('O3 · KK-Last (Orientierung)', () => {
+  it('mit Prämie und Einkommen: Orientierung ohne fehlende Angabe; ohne: keine Karte, keine Zeile', () => {
+    expect(KK_LAST_ERGEBNIS.art).toBe(ERGEBNIS_ART.ORIENTIERUNG);
+    const data = { ...leer, basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 4000 }, versicherungen: { kkPremium: 450 } };
+    expect(artZeilen(render(KKLastCard, { data }))).toEqual([{ art: 'orientierung', fehlend: 0 }]);
+    expect(artZeilen(render(KKLastCard, { data: leer }))).toEqual([]);
+  });
+});
+
+describe('O3 · Stipendien-Kurzcheck (Vorprüfung)', () => {
+  it('reine Funktion: zählt die offenen Fragen des Checks', () => {
+    expect(stipendienErgebnis({ status: '', scope: '' })).toEqual({ art: 'vorpruefung', fehlend: ['status', 'scope'] });
+    expect(stipendienErgebnis({ status: 'swiss', scope: '' }).fehlend).toEqual(['scope']);
+    expect(stipendienErgebnis({ status: 'swiss', scope: 'tertiaer' }).fehlend).toEqual([]);
+  });
+  it('Aufrufstelle: vor der ersten Antwort Vorprüfung mit zwei offenen Fragen', () => {
+    expect(artZeilen(render(StipendienView, { data: leer }))).toEqual([{ art: 'vorpruefung', fehlend: 2 }]);
+  });
+});
+
+describe('O3 · Lohn-Einordnung (Orientierung)', () => {
+  it('reine Funktion: Einkommen, Einkommensart, Wochenstunden', () => {
+    expect(lohnEinordnungErgebnis({}).fehlend).toEqual(['einkommen', 'einkommensart', 'wochenstunden']);
+    expect(lohnEinordnungErgebnis({ income: 6000, incomeType: 'brutto', hoursPerWeek: 42 })).toEqual({ art: 'orientierung', fehlend: [] });
+  });
+  it('Aufrufstelle: in allen drei Zuständen genau eine Zeile mit der richtigen Zahl', () => {
+    expect(artZeilen(render(LohnEinordnung, { data: leer }))).toEqual([{ art: 'orientierung', fehlend: 3 }]);
+    const ohneStunden = { ...leer, basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 6000, incomeType: 'brutto' } };
+    expect(artZeilen(render(LohnEinordnung, { data: ohneStunden }))).toEqual([{ art: 'orientierung', fehlend: 1 }]);
+    const voll = { ...ohneStunden, ausbildung: { workHoursPerWeek: 42 } };
+    expect(artZeilen(render(LohnEinordnung, { data: voll }))).toEqual([{ art: 'orientierung', fehlend: 0 }]);
+  });
+});
+
 describe('O3 · Wahrheits-Disziplin', () => {
   it('kein umgestellter Rechner nennt sich «Berechnung»', () => {
     const faelle = [
@@ -144,6 +233,11 @@ describe('O3 · Wahrheits-Disziplin', () => {
       PFLEGE_ENTLOEHNUNG_ERGEBNIS,
       mietzinsErgebnis({ info: getMietzinsbeitraege('BS'), assessmentKey: 'likely', annualIncome: 30000 }),
       mietzinsErgebnis({ info: getMietzinsbeitraege('GE'), assessmentKey: 'effortBased', annualIncome: 30000 }),
+      eoErgebnis({ einkommen: 80000 }),
+      sozialhilfeErgebnis({ miete: '1200', kvgPraemie: '400', erwerbseinkommen: '0', vermoegen: '0' }),
+      KK_LAST_ERGEBNIS,
+      stipendienErgebnis({ status: 'swiss', scope: 'tertiaer' }),
+      lohnEinordnungErgebnis({ income: 6000, incomeType: 'brutto', hoursPerWeek: 42 }),
     ];
     for (const e of faelle) expect(e.art).not.toBe(ERGEBNIS_ART.BERECHNUNG);
   });
