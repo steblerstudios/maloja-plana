@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
-import { initBarcodeScanner, scanBarcodeFromImage, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
+import { initBarcodeScanner, scanBarcodeFromImage, scanHatInhalt, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
@@ -61,6 +62,12 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   const [qrFehler, setQrFehler] = useState(false);
   const [qrAnsage, setQrAnsage] = useState('');
   const [conflicts, setConflicts] = useState(null);
+  // Bis 24.09.2026 brach Speichern bei ungültiger Eingabe STUMM ab (`return`), und ein
+  // gelungenes Speichern leerte das Formular ohne ein Wort. `validation.errors` war
+  // fertig übersetzt, in fünf Sprachen — und wurde nirgends gezeigt.
+  const [fehler, setFehler] = useState([]);
+  const [gespeichert, setGespeichert] = useState(false);
+  const [nichtsGelesen, setNichtsGelesen] = useState(false);
 
   React.useEffect(() => { initBarcodeScanner(); }, []);
 
@@ -74,6 +81,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setScanning(true);
+    setNichtsGelesen(false);
+    setGespeichert(false);
     try {
       const result = await scanBarcodeFromImage(file);
       setScanResult(result);
@@ -83,7 +92,10 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       } else if (result.type === 'ocr') {
         scanned = result.data;
       }
-      if (scanned) {
+      if (!scanHatInhalt(scanned)) {
+        setScanResult(null);
+        setNichtsGelesen(true);
+      } else {
         const c = detectConflicts(scanned);
         if (c) {
           setConflicts(c);
@@ -93,7 +105,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         }
       }
     } catch (error) {
-      // scan failed
+      setScanResult(null);
+      setNichtsGelesen(true);
     } finally {
       setScanning(false);
     }
@@ -101,10 +114,13 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
   const handleManualInput = (field, value) => {
     setKKData(prev => ({ ...prev, [field]: value }));
+    setFehler([]);
+    setGespeichert(false);
   };
 
   const handleGenerateQR = () => {
     const validation = validateKKData(kkData, t);
+    setFehler(validation.errors);
     if (!validation.valid) return;
     const qrData = generateKKQRCode(kkData);
     setQRCode(qrData);
@@ -135,11 +151,13 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
   const handleSave = () => {
     const validation = validateKKData(kkData, t);
+    setFehler(validation.errors);
     if (!validation.valid) return;
     onSave(kkData);
     setKKData({ insurer: '', cardNumber: '', holder: '', ahv: '', franchise: '', model: '' });
     setScanResult(null);
     setQRCode(null);
+    setGespeichert(true);
   };
 
   const inputStyle = {
@@ -152,6 +170,9 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
     padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
+
+  // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
+  const [ablageProps, ablageAktiv] = useDateiAblage(handleFileUpload);
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
@@ -172,12 +193,16 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
       scanMode === 'upload' && React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kkScanner.scanRequiresInternet'))),
-        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, style: { display: 'none' } }),
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+          React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('kkScanner.qrBarcode'))
         ),
+        nichtsGelesen && !scanning && React.createElement('p', {
+          role: 'status',
+          style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '12px', borderRadius: radius.sm, margin: '0 0 12px' },
+        }, t('kkScanner.nichtsGelesen')),
         scanning && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('kkScanner.scanning'))
       ),
 
@@ -238,7 +263,15 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         )
       ),
 
-      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save')),
+      // Fehler als Text, direkt über dem Knopf, der sie auslöst — im Foto-Modus sind die
+      // Felder zugeklappt, dort wäre eine Markierung am Feld unsichtbar.
+      fehler.length > 0 && React.createElement('ul', {
+        id: 'kk-fehler', role: 'alert',
+        style: { margin: '0 0 12px', padding: '10px 12px 10px 28px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
+      }, fehler.map(f => React.createElement('li', { key: f }, f))),
+      React.createElement('button', { onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, style: { ...buttonStyle, width: '100%' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save')),
+      React.createElement('p', { role: 'status', style: { margin: gespeichert ? '8px 0 0' : 0, fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.semi } },
+        gespeichert ? [hinweisZeichen('check', 12, 'z'), t('common.saved')] : null),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly'))
     ),
 

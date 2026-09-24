@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PanelTitle } from './components/Heading.jsx';
 import { prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, restoreBackup, exceedsBackupFileLimit, downloadFile, MIN_PASSPHRASE_LENGTH, passphraseLangGenug } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -26,6 +26,12 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const [pendingFile, setPendingFile] = useState(null);
   const [, setPendingType] = useState(null);
   const [validationWarnings, setValidationWarnings] = useState([]);
+  // Die Rückfrage vor dem Ersetzen steht in der Seite, nicht in einem Browser-Fenster.
+  // Bis 24.09.2026 kam hier `window.confirm` — das einzige der App: grau, ohne Anrede-
+  // Stil, im Dunkelmodus hell, und am Handy je nach Browser unterdrückbar.
+  const [wartendeSicherung, setWartendeSicherung] = useState(null);
+  const bestaetigenKnopf = useRef(null);
+  useEffect(() => { if (wartendeSicherung) bestaetigenKnopf.current?.focus(); }, [wartendeSicherung]);
   // Export-Vorschau (K3): null | 'json' | 'csv' | 'manifest' | 'sicherung' | 'sicherungVerschluesselt'.
   // Jeder Export-Knopf öffnet zuerst die Vorschau; erst «Datei erstellen» schreibt.
   const [vorschau, setVorschau] = useState(null);
@@ -181,10 +187,14 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
       return;
     }
 
-    if (!window.confirm(t('backup.confirmRestore'))) {
-      setBackupStatus(null);
-      return;
-    }
+    setBackupStatus(null);
+    setWartendeSicherung(backup);
+  };
+
+  const wiederherstellen = async () => {
+    const backup = wartendeSicherung;
+    setWartendeSicherung(null);
+    if (!backup) return;
 
     // restoreBackup prüft erneut (Barriere gilt unabhängig vom Aufrufer),
     // legt den Snapshot an und schreibt erst dann.
@@ -396,7 +406,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'upload', size: 22 }), style: { marginBottom: space.md } }, t('backup.importFile')),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, style: { display: 'none' } }),
+          React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('backup.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('backup.fileTypes'))
@@ -418,6 +428,24 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             React.createElement('button', {
               onClick: cancelImport,
               style: { ...btnStyle(palette.up, palette.text), flex: 1, border: '1px solid ' + palette.border }
+            }, t('common.cancel'))
+          )
+        ),
+
+        // Rückfrage vor dem Ersetzen — ruhig, in der Seite, Fokus auf dem Ja.
+        wartendeSicherung && React.createElement('div', {
+          role: 'group', 'aria-labelledby': 'sicherung-rueckfrage',
+          style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.border },
+        },
+          React.createElement('p', { id: 'sicherung-rueckfrage', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, color: palette.text, fontWeight: weight.semi } }, t('backup.confirmRestore')),
+          React.createElement('div', { style: { display: 'flex', gap: space.sm } },
+            React.createElement('button', {
+              ref: bestaetigenKnopf, onClick: wiederherstellen,
+              style: { ...btnStyle(palette.sand, palette.onSand), flex: 1 },
+            }, t('backup.restoreJa')),
+            React.createElement('button', {
+              onClick: () => setWartendeSicherung(null),
+              style: { ...btnStyle(palette.up, palette.text), flex: 1, border: '1px solid ' + palette.border },
             }, t('common.cancel'))
           )
         ),

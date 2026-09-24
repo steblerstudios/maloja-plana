@@ -684,7 +684,15 @@ const _iconFactories = {
 // to 0×0 inside flex containers, so icons disappeared on iPhones while desktop
 // Chrome rendered them fine. Wrap every factory so the returned SVG always fills
 // its (already sized) parent wrapper on all browsers.
-const fuellend = (fn) => () => React.cloneElement(fn(), { width: '100%', height: '100%' });
+//
+// Hier, nicht erst in `<Icon>`, steht auch `aria-hidden`: zehn Stellen rufen die
+// Fabrik direkt (`IconFn()` in Dashboard, MobileNav, Baum3D …) und bekamen den
+// Schirm nie. Die Kapitel-Zeichen tragen <text> — «HELVETIA», «5 FR.», «2026» —,
+// und ein Screenreader las sie am 24.09. 17-mal als Wörter vor, mitten in
+// Knopfnamen wie «Pensionierung … HELVETIA». Wächter: iconsVersteckt.test.js.
+const fuellend = (fn) => () => React.cloneElement(fn(), {
+  width: '100%', height: '100%', 'aria-hidden': 'true', focusable: 'false',
+});
 
 export const Icons = Object.fromEntries(
   Object.entries(_iconFactories).map(([key, fn]) => [key, fuellend(fn)])
