@@ -90,7 +90,10 @@ export const druckAbschnitte = (t, w) => {
   // Eine gültige Verfügung (data/ipvAbzug.js) steht vor der Schätzung — wie in Budget, KK-Last-Karte
   // und Prämien-Beleg, die ihren Betrag abziehen.
   const ipvVerfuegt = w.ipvAbzug && w.ipvAbzug.grund === IPV_ABZUG_GRUND.BESTAETIGT;
-  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvVerfuegt ? '✓ ' + fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t('finanzUebersicht.ipvLautVerfuegung') + ')' : w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
+  const ipvBetragText = ipvVerfuegt
+    ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t('finanzUebersicht.ipvLautVerfuegung') + ')'
+    : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
+  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
