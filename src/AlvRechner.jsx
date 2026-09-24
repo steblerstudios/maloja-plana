@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { berechneTaggeld, ALV_PARAMS } from './data/alvRechner.js';
+import { berechneTaggeld, alvErgebnis, ALV_PARAMS } from './data/alvRechner.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -39,6 +40,9 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
       alter,
     });
   }, [parsedLohn, hatKinder, ivGrad40, parsedMonate, alter]);
+
+  // O3: die Art des Ergebnisses als festes Feld — Schätzung, dazu die Zahl der fehlenden Angaben.
+  const art = alvErgebnis({ bruttolohn: parsedLohn, beitragsmonate: parsedMonate, alter });
 
   const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
   const canton = data.basis?.canton;
@@ -138,6 +142,9 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
       result.gedeckelt && React.createElement('div', { style: s.hint }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
       React.createElement('div', { style: s.disclaimer }, t('alv.disclaimer'))
     ),
+
+    // ── Art des Ergebnisses (O3) — auch ohne Eingabe, damit sichtbar ist, was fehlt ──
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: art, style: { marginTop: 0, marginBottom: space.md + 'px' } }),
 
     // ── Anmeldung / RAV ──
     React.createElement('div', { style: { ...s.section, background: palette.sky + '14', border: '1px solid ' + palette.sky + '44' } },
