@@ -3363,7 +3363,7 @@ export default {
     scanForEmergency: "Scannar per il pass d'urgenza",
     qrKarteTitel: 'Assicuranza da malsauns',
     qrNotfallLesbar: "En cas d'urgenza — mintgina camera al mussa",
-    qrUebernahme: 'Per surprender en Maloja — mo questa app al legia',
+    qrUebernahme: 'Previs per surprender en Maloja — betg criptà',
     errorNoInsurer: 'Assicurader betg enconuschent',
     errorCardNumber: 'Numer da la carta nunvalid',
     errorAhvFormat: 'Format AVS nunvalid',

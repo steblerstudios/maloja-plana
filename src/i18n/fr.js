@@ -2754,7 +2754,7 @@ export default {
     scanForEmergency: 'Scanner pour le pass d\'urgence',
     qrKarteTitel: 'Assurance maladie',
     qrNotfallLesbar: 'En cas d\'urgence — toute caméra l\'affiche',
-    qrUebernahme: 'Pour reprendre dans Maloja — seule cette app le lit',
+    qrUebernahme: 'Prévu pour reprendre dans Maloja — non chiffré',
     errorNoInsurer: 'Assureur non reconnu',
     errorCardNumber: 'Numéro de carte invalide',
     errorAhvFormat: 'Format du numéro AVS invalide',
