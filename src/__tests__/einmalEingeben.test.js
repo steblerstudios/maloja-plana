@@ -18,6 +18,7 @@ const de = (await import('../i18n/de.js')).default;
 const { SozialhilfeRechner } = await import('../SozialhilfeRechner.jsx');
 const { VorsorgeRechner } = await import('../VorsorgeRechner.jsx');
 const { SchuldenManager } = await import('../SchuldenManager.jsx');
+const { EOrechner } = await import('../EOrechner.jsx');
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (schluessel, p) => {
@@ -80,5 +81,24 @@ describe('Schulden-Manager schlägt die Darlehen aus dem Kapitel Finanzen vor', 
     const html = zeichne(SchuldenManager, { finanzen: { loans: 12000 }, schulden: [{ id: 1, creditor: 'Bank', amount: 12000, status: 'open', category: 'kredit' }] });
     expect(betrag(html)).toBe('');
     expect(html).not.toContain(t('schulden.ausProfilHint'));
+  });
+});
+
+describe('EO- und Vorsorge-Rechner: Bruttojahreslohn, nie ein Nettolohn', () => {
+  const brutto13 = { ...profil, finanzen: { monthlyIncome: 5000, incomeType: 'brutto', dreizehnter: 'yes' } };
+  const netto = { ...profil, finanzen: { monthlyIncome: 5000, incomeType: 'netto' } };
+  it('EO: brutto mit 13. → 65000', () => {
+    expect(feldWert(zeichne(EOrechner, brutto13), t('eo.einkommen'))).toBe('65000');
+  });
+  it('EO: netto → leer, mit Hinweis', () => {
+    const html = zeichne(EOrechner, netto);
+    expect(feldWert(html, t('eo.einkommen'))).toBe('');
+    expect(html).toContain(t('eo.nettoHint'));
+  });
+  it('Vorsorge: brutto mit 13. → 65000; netto → Hinweis statt Wert', () => {
+    expect(zeichne(VorsorgeRechner, brutto13)).toContain('value="65000"');
+    const html = zeichne(VorsorgeRechner, netto);
+    expect(html).not.toContain('value="60000"');
+    expect(html).toContain(t('vr.nettoHint'));
   });
 });
