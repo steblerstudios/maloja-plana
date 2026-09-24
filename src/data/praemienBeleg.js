@@ -15,7 +15,6 @@
 //
 // Was abgezogen wird, entscheidet allein data/ipvAbzug.js — hier nur Darstellung und Deckel.
 import { calculateIPV } from '../config/cantonalData.js';
-import { isIpvConfirmed } from './ipvStatus.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from './ipvAbzug.js';
 
 export function praemienBelegState(data) {
@@ -26,13 +25,14 @@ export function praemienBelegState(data) {
   // Read-only Spiegelung des Lebenslinie-Status (gesetzt wird er nur im Voll-Tool).
   // Der „bestätigt"-Stempel darf NUR erscheinen, wo der Beleg auch eine Verbilligung
   // zeigt — nie neben „keine Verbilligung" (over) oder auf einem leeren Beleg, sonst
-  // widerspricht der Stempel der Karte, auf der er sitzt.
-  const confirmed = isIpvConfirmed(data);
-
+  // widerspricht der Stempel der Karte, auf der er sitzt. Und nur, wenn die Verfügung für das
+  // laufende Jahr und den aktuellen Kanton gilt (data/ipvAbzug.js) — sonst stünde «bestätigt»
+  // neben der Schätzung.
   if (!canton || income <= 0) {
     return { show: true, mode: 'empty', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false };
   }
   const abzug = ipvAbzug(data, ipv);
+  const confirmed = abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT;
   // Eine eingetragene Verfügung mit Betrag gilt vor der Schätzung — auch wo die Schätzung
   // «unbelegt» oder «über der Grenze» sagt; sonst stünde der Stempel neben einer anderen Zahl.
   if (abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT) return belegMitBetrag(abzug.betrag, praemie, canton, confirmed);

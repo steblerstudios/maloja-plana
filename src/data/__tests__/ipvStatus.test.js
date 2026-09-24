@@ -3,9 +3,9 @@ import { readIpvStatus, nextIpvStatus, isIpvConfirmed, IPV_STATUS } from '../ipv
 
 describe('readIpvStatus — Default & Robustheit', () => {
   it('fehlendes Feld ⇒ geschaetzt (Phase-1-Verhalten, keine Migration)', () => {
-    expect(readIpvStatus(undefined)).toEqual({ status: 'geschaetzt', betrag: 0, datum: null });
-    expect(readIpvStatus({})).toEqual({ status: 'geschaetzt', betrag: 0, datum: null });
-    expect(readIpvStatus({ anspruch: {} })).toEqual({ status: 'geschaetzt', betrag: 0, datum: null });
+    expect(readIpvStatus(undefined)).toEqual({ status: 'geschaetzt', betrag: 0, datum: null, kanton: null, jahr: null });
+    expect(readIpvStatus({})).toEqual({ status: 'geschaetzt', betrag: 0, datum: null, kanton: null, jahr: null });
+    expect(readIpvStatus({ anspruch: {} })).toEqual({ status: 'geschaetzt', betrag: 0, datum: null, kanton: null, jahr: null });
   });
 
   it('unbekannter Status fällt auf geschaetzt zurück', () => {
@@ -14,12 +14,12 @@ describe('readIpvStatus — Default & Robustheit', () => {
 
   it('Betrag/Datum gelten nur bei bestaetigt — nie an einem unbestätigten Zustand', () => {
     const applied = readIpvStatus({ anspruch: { ipv: { status: 'beantragt', betrag: 200, datum: '2026-01-01' } } });
-    expect(applied).toEqual({ status: 'beantragt', betrag: 0, datum: null });
+    expect(applied).toEqual({ status: 'beantragt', betrag: 0, datum: null, kanton: null, jahr: null });
   });
 
   it('bestaetigt trägt Betrag + Datum, Betrag nie negativ', () => {
     const c = readIpvStatus({ anspruch: { ipv: { status: 'bestaetigt', betrag: -50, datum: '2026-07-01' } } });
-    expect(c).toEqual({ status: 'bestaetigt', betrag: 0, datum: '2026-07-01' });
+    expect(c).toEqual({ status: 'bestaetigt', betrag: 0, datum: '2026-07-01', kanton: null, jahr: null });
   });
 });
 
@@ -38,7 +38,7 @@ describe('nextIpvStatus — Übergänge', () => {
 
   it('bestaetigt akzeptiert explizites Datum und deckelt Betrag bei 0', () => {
     expect(nextIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: -1, datum: '2026-07-13' }))
-      .toEqual({ status: 'bestaetigt', betrag: 0, datum: '2026-07-13' });
+      .toEqual({ status: 'bestaetigt', betrag: 0, datum: '2026-07-13', jahr: 2026 });
   });
 
   it('unbekannter Zielstatus ⇒ geschaetzt', () => {
