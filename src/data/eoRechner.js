@@ -34,7 +34,13 @@ const BETREUUNG_MAX_TAGE = 14;    // Max 14 Tage pro Ereignis
  */
 function taggeldAusEinkommen(jahreseinkommen) {
   if (jahreseinkommen <= 0) return 0;
-  const tageseinkommen = jahreseinkommen / 365;
+  // EOV Art. 5 Abs. 2 Bst. b: der Monatslohn wird durch 30 geteilt — für ein Jahreseinkommen
+  // (12 Monatslöhne) also durch 360. Regelmässige Jahreszahlungen wie der 13. werden nach Abs. 4
+  // auf den Tag umgerechnet und dazugezählt; im Jahreseinkommen stecken sie schon. Mutterschaft:
+  // Art. 31 Abs. 2 EOV («Die Artikel 5 und 6 sind sinngemäss anwendbar»). Bis 24.09.2026 stand
+  // hier 365 — das Taggeld lag rund 1,4 % zu tief. (Wortlaut gelesen in der Fassung Stand
+  // 19.02.2019 via lexfind.ch.)
+  const tageseinkommen = jahreseinkommen / 360;
   const taggeld = tageseinkommen * ENTSCHAEDIGUNGSSATZ;
   return Math.min(Math.round(taggeld * 100) / 100, MAX_TAGGELD);
 }
