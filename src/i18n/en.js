@@ -2453,6 +2453,7 @@ export default {
     annahmeAlleinverdiener: "Calculated as a single-earner married couple (no partner income).",
     // K62.1: Konkubinat, Einzelbesteuerung
     annahmeEinzeln: "Calculated for you alone: people who cohabit are taxed individually, so your partner's income does not count here. Only the incomes of married couples and registered partners are added together (DBG Art. 9).",
+    annahmeKinderabzugKonkubinat: "Calculated with the full child deduction for you. With joint parental authority and no maintenance payments claimed for the child, each parent receives half of the child deduction (FTA, Circular No. 30, section 14.8.1, direct federal tax) — the federal tax is then the same or higher. How the canton splits the deduction has not been checked.",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Maloja does not show an amount for cantonal and municipal tax here: it was measured only for married couples with one income, and the partner income is missing. The federal tax above uses the value entered — Maloja assumes it is the joint taxable income from the assessment. If the partner has no income of their own, enter 0 in the profile (Personal basics → «Partner net salary»).",
     bandKonkubinat: "Maloja shows no amount for cantonal and municipal tax here: in this canton the FTA tax calculator treats cohabiting people differently from people living alone (measured for 2026: higher when cohabiting). Maloja's table covers people living alone only. The federal tax above still applies; it is calculated for each person individually. The FTA tax calculator works out the amount for your municipality (marital status «cohabiting»).",
@@ -3441,6 +3442,7 @@ export default {
       annahmeOhneDreizehnten: "Calculated without a 13th monthly salary",
       annahmeAlleinverdiener: "Single-earner married couple (partner income 0)",
       annahmeEinzeln: "Cohabiting: calculated for the person alone (individual taxation)",
+      annahmeKinderabzugKonkubinat: "Cohabiting with children: full child deduction calculated for the person (half with joint parental authority, FTA Circular No. 30, section 14.8.1)",
       disclaimer: "Guidance based on the data entered; does not replace a binding assessment by the responsible authority.",
     },
     generated: 'Generated on {date}',
