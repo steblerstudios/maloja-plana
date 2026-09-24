@@ -5,13 +5,15 @@ import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
 import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const isMobile = useIsMobile();
   const household = data?.basis?.household;
   // Kanton aus dem Profil → kantonaler Vermögensfreibetrag (ohne Kanton: SKOS-Empfehlung).
   const kanton = data?.basis?.canton || '';
-  const initAdults = household?.adults || 1;
+  const vorbefuellt = useMemo(() => sozialhilfeVorbefuellung(data), [data]);
+  const initAdults = Math.min(4, vorbefuellt.adults);
   const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
 
   const [adults, setAdults] = useState(initAdults);
@@ -23,9 +25,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
   const nettoBruttoMismatch = data?.finanzen?.incomeType === 'brutto';
   const [einkommen, setEinkommen] = useState((data?.finanzen?.monthlyIncome && !nettoBruttoMismatch) ? String(data.finanzen.monthlyIncome) : '');
-  const [andereEinkuenfte, setAndereEinkuenfte] = useState('');
-  const [vermoegen, setVermoegen] = useState('');
-  const [erwerbstaetig, setErwerbstaetig] = useState(false);
+  const [andereEinkuenfte, setAndereEinkuenfte] = useState(vorbefuellt.andereEinkuenfte);
+  const [vermoegen, setVermoegen] = useState(vorbefuellt.vermoegen);
+  const [erwerbstaetig, setErwerbstaetig] = useState(vorbefuellt.erwerbstaetig);
   const [integration, setIntegration] = useState(false);
 
   const result = useMemo(() => {
@@ -130,8 +132,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       ),
       React.createElement('div', { style: s.inputRow },
         field('sh.einkommen', einkommen, setEinkommen, '0', nettoBruttoMismatch ? t('sh.nettoBruttoHint') : null),
-        field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0'),
-        field('sh.vermoegen', vermoegen, setVermoegen, '0'),
+        field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
+          vorbefuellt.nebenerwerbBrutto ? t('sh.nebenerwerbBruttoHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
+        field('sh.vermoegen', vermoegen, setVermoegen, '0', vorbefuellt.vermoegen ? t('sh.ausProfilHint') : null),
       ),
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },
         toggle('sh.erwerbstaetig', erwerbstaetig, setErwerbstaetig),

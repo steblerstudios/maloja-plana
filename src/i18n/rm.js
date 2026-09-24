@@ -3517,6 +3517,8 @@ export default {
     kvg: 'Premia LAMal (CHF)',
     einkommen: 'Entrada da lavur (CHF)',
     nettoBruttoHint: "L'entrada memorisada è marcada sco brut — endatar qua per plaschair l'entrada netta per l'agid social.",
+    ausProfilHint: "Summà ord il profil — qua libramain adattabel.",
+    nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai betg quintada — qua agiuntar l'import net.",
     andereEinkuenfte: 'Autras entradas (CHF)',
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',

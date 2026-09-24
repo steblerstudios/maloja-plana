@@ -4459,6 +4459,8 @@ export default {
     kvg: 'Premio LAMal (CHF)',
     einkommen: 'Reddito da lavoro (CHF)',
     nettoBruttoHint: "Il reddito salvato è indicato come lordo — inserire qui il reddito netto per l'aiuto sociale.",
+    ausProfilHint: "Sommato dal profilo — liberamente modificabile qui.",
+    nebenerwerbBruttoHint: "Il reddito accessorio è salvato come lordo e quindi non è conteggiato — aggiungere qui l'importo netto.",
     andereEinkuenfte: 'Altri redditi (CHF)',
     vermoegen: 'Patrimonio (CHF)',
     erwerbstaetig: 'Occupato/a',

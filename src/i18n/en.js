@@ -4481,6 +4481,8 @@ export default {
     kvg: 'Health insurance (CHF)',
     einkommen: 'Earned income (CHF)',
     nettoBruttoHint: 'The saved income is marked as gross — please enter the net income for social assistance here.',
+    ausProfilHint: 'Added up from the profile — adjust freely here.',
+    nebenerwerbBruttoHint: 'The side income is saved as gross and is therefore not counted — add the net amount here.',
     andereEinkuenfte: 'Other income (CHF)',
     vermoegen: 'Assets (CHF)',
     erwerbstaetig: 'Employed',

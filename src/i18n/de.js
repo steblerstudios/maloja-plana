@@ -4514,6 +4514,8 @@ export default {
     kvg: 'KVG-Prämie (CHF)',
     einkommen: 'Erwerbseinkommen (CHF)',
     nettoBruttoHint: 'Das hinterlegte Einkommen ist als Brutto markiert — für die Sozialhilfe bitte das Netto-Einkommen eintragen.',
+    ausProfilHint: 'Aus dem Profil zusammengezählt — hier frei anpassbar.',
+    nebenerwerbBruttoHint: 'Der Nebenerwerb ist als Brutto hinterlegt und darum nicht mitgezählt — hier den Netto-Betrag ergänzen.',
     andereEinkuenfte: 'Andere Einkünfte (CHF)',
     vermoegen: 'Vermögen (CHF)',
     erwerbstaetig: 'Erwerbstätig',

@@ -4480,6 +4480,8 @@ export default {
     kvg: 'Prime LAMal (CHF)',
     einkommen: 'Revenu professionnel (CHF)',
     nettoBruttoHint: "Le revenu enregistré est indiqué comme brut — veuillez saisir ici le revenu net pour l'aide sociale.",
+    ausProfilHint: "Additionné à partir du profil — librement modifiable ici.",
+    nebenerwerbBruttoHint: "Le revenu accessoire est enregistré en brut et n'est donc pas compté — ajouter ici le montant net.",
     andereEinkuenfte: 'Autres revenus (CHF)',
     vermoegen: 'Fortune (CHF)',
     erwerbstaetig: 'En emploi',
