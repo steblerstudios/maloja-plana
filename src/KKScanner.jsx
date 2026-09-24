@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { initBarcodeScanner, scanBarcodeFromImage, scanHatInhalt, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
@@ -170,6 +171,9 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
 
+  // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
+  const [ablageProps, ablageAktiv] = useDateiAblage(handleFileUpload);
+
   return React.createElement('div', { style: { maxWidth: '720px' } },
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Scanner
@@ -189,7 +193,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
       scanMode === 'upload' && React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kkScanner.scanRequiresInternet'))),
-        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),

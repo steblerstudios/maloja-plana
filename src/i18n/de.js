@@ -3433,6 +3433,7 @@ export default {
     sessionCountPlural: 'Sitzung: {count} Backups erstellt',
     letterPreview: 'Brief-Vorschau',
     confirmRestore: { sie: 'Dies ersetzt Ihre aktuellen Daten. Fortfahren?', du: 'Dies ersetzt deine aktuellen Daten. Fortfahren?' },
+    restoreJa: 'Ja, wiederherstellen',
     encryptionInfo: { sie: 'AES-256-Verschlüsselung, lokal verarbeitet. Ihr Passwort verlässt dieses Gerät nie.', du: 'AES-256-Verschlüsselung, lokal verarbeitet. Dein Passwort verlässt dieses Gerät nie.' },
     noWebCrypto: 'Verschlüsselte Sicherung benötigt HTTPS oder localhost.',
     selectFile: 'Sicherungsdatei wählen',

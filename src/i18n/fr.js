@@ -3413,6 +3413,7 @@ export default {
     sessionCountPlural: 'Session : {count} sauvegardes créées',
     letterPreview: 'Aperçu de la lettre',
     confirmRestore: { sie: 'Ceci remplacera vos données actuelles. Continuer ?', du: 'Ceci remplacera tes données actuelles. Continuer ?' },
+    restoreJa: 'Oui, restaurer',
     encryptionInfo: { sie: 'Chiffrement AES-256, traité localement. Votre mot de passe ne quitte jamais cet appareil.', du: 'Chiffrement AES-256, traité localement. Ton mot de passe ne quitte jamais cet appareil.' },
     noWebCrypto: 'La sauvegarde chiffrée nécessite HTTPS ou localhost.',
     selectFile: 'Sélectionner le fichier',

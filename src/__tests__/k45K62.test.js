@@ -77,9 +77,16 @@ describe('K45b · Notfallkontakt ohne Pflicht-Stern', () => {
     expect(feld('notfall', 'emergencyPhone').required).toBeFalsy();
   });
 
-  it('der Stern hängt allein an `required` (kein aria-required, der Label-Text bleibt)', () => {
+  // Bis 24.09.2026 stand hier `not.toContain('aria-required')` — das beschrieb den Code vom
+  // 17.09., nicht den Entscheid. Die Zusage von K45 ist: Stern UND Pflicht-Ansage hängen
+  // allein an `required`; wer es nicht trägt (der Notfallkontakt), wird nirgends als Pflicht
+  // gemeldet. Seit der UI/UX-Runde 4 setzt errAria `aria-required` — aus `field.required`.
+  it('Stern und Pflicht-Ansage hängen allein an `required` (der Label-Text bleibt)', () => {
     const cv = src('ChapterView.jsx');
-    expect(cv).not.toContain('aria-required');
+    const ansagen = cv.match(/'aria-required'[^\n]*/g) || [];
+    expect(ansagen.length).toBeGreaterThan(0);
+    for (const z of ansagen) expect(z).toMatch(/field\.required|^'aria-required': 'true' \}/);
+    expect(cv).toMatch(/field\.required \? \{ 'aria-required': 'true' \}/);
     expect(cv).toContain("field.label + (field.required ? ' *' : '')");
     expect(feld('notfall', 'emergencyContact').label).toBe('chapters.notfall.fields.emergencyContact');
   });

@@ -2537,6 +2537,7 @@ export default {
     sessionCountPlural: 'Sessiun: {count} backups creads',
     letterPreview: 'Prevista da la brev',
     confirmRestore: { sie: 'Quai remplazza Vossas datas actualas. Cuntinuar?', du: 'Quai remplazza Tes datas actualas. Cuntinuar?' },
+    restoreJa: 'Gea, restituir',
     encryptionInfo: { sie: 'Criptaziun AES-256, elavurada localmain. Voss pled-clav na banduna mai quest apparat.', du: 'Criptaziun AES-256, elavurada localmain. Tes pled-clav na banduna mai quest apparat.' },
     noWebCrypto: 'Segirezza criptada dovra HTTPS u localhost.',
     selectFile: 'Tscherner la datoteca da segirezza',
