@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
-import { CANTON_CODES } from '../config/cantonalData.js';
+import { CANTON_CODES, preloadPLZ } from '../config/cantonalData.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
 import fr from '../i18n/fr.js';
@@ -69,5 +69,40 @@ describe('Codex-Audit: das Dashboard benutzt die Handlung', () => {
   it('der nächste Schritt gibt nextField.label nie nackt als Text aus', () => {
     expect(src).toContain("t('dashboard.nextUpAction', { feld: nextField.label })");
     expect(src).not.toMatch(/\},\s*nextField\.label\)/);
+  });
+});
+
+// Nachtrag: nach Kanton und Einkommen hielt die Rechnung (BE) am Geburtsdatum an — Satz ohne Feld.
+describe('Codex-Audit, Nachtrag: die nächste fehlende Angabe ist ein Feld, kein Verweis', () => {
+  const be = (basis, versicherungen) => ({
+    basis: { canton: 'BE', maritalStatus: 'single', household: { adults: 1, children: [] }, ...basis },
+    finanzen: { monthlyIncome: 3500 },
+    wohnen: { postalCode: '3011', city: 'Bern', rentAmount: 1200 },
+    versicherungen,
+  });
+  const html = (d, mitSchreibweg = true) => renderToStaticMarkup(React.createElement(PremiumSubsidy, { palette, t, data: d, ...(mitSchreibweg && { onUpdateData: () => {} }) }));
+
+  beforeAll(async () => {
+    preloadPLZ();
+    await import('../config/ipvBern.js');
+    await new Promise((r) => setTimeout(r, 0));
+  });
+
+  it('ohne Geburtsdatum: das Feld steht im Rechner', () => {
+    const h = html(be({}, { kkPremium: 420 }));
+    expect(h).toContain('ipv.offenGrund.alter');
+    expect(h).toMatch(/<input[^>]*id="ipv-geburt"[^>]*type="date"/);
+    expect(h).toContain('for="ipv-geburt"');
+  });
+
+  it('ohne Prämie: das Prämienfeld steht im Rechner', () => {
+    const h = html(be({ dateOfBirth: '1980-05-01' }, {}));
+    expect(h).toContain('ipv.offenGrund.praemie');
+    expect(h).toContain('id="ipv-praemie"');
+    expect(h).not.toContain('ipv-geburt');
+  });
+
+  it('ohne Schreibweg kein Feld', () => {
+    expect(html(be({}, { kkPremium: 420 }), false)).not.toContain('ipv-geburt');
   });
 });
