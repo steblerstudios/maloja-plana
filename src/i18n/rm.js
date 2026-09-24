@@ -1360,6 +1360,8 @@ export default {
         landlord: 'Num dal possessur',
         landlordPhone: 'Telefon dal possessur',
         mortgageStatus: { label: 'Ipoteca existenta?', options: { no: 'Na', fixedRate: 'Gea tschains fix', variable: 'Gea variabel' } },
+        mortgagePayment: 'Tschains ipotecar ed amortisaziun CHF/mais',
+        rooms: 'Dumber da stanzas (p.ex. 3.5)',
         propertyValue: "Valur da l'immobiglia CHF",
         buildingsInsurance: "Assicuranza d'edifizi CHF/onn",
         residenceType: { label: 'Tip da domicil', options: { main: 'Domicil principal', weekly: "Dimorant per l'emna", secondary: 'Domicil secundar' } },

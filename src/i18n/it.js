@@ -1337,6 +1337,8 @@ export default {
         landlord: 'Nome del locatore',
         landlordPhone: 'Telefono del locatore',
         mortgageStatus: { label: 'Ipoteca?', options: { no: 'No', fixedRate: 'Sì, tasso fisso', variable: 'Sì, tasso variabile' } },
+        mortgagePayment: 'Interessi ipotecari e ammortamento CHF/mese',
+        rooms: 'Numero di locali (p. es. 3.5)',
         propertyValue: 'Valore dell\'immobile (CHF)',
         buildingsInsurance: 'Assicurazione stabili (CHF/anno)',
         residenceType: { label: 'Tipo di residenza', options: { main: 'Residenza principale', weekly: 'Residenza settimanale', secondary: 'Residenza secondaria' } },

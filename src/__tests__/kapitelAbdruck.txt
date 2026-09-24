@@ -16,16 +16,18 @@ de   k=maritalStatus type="select" section~87778534 label~bf99b615 sectionIntro~
 de   k=household type="household" label~cd8a2627
 de   doc k=id label~02dd9130
 de   doc k=ahv_card label~66406294
-de kapitel=wohnen title~bc0184bc short~4c36ba0a description~d387a9aa felder=12 docs=3
+de kapitel=wohnen title~bc0184bc short~4c36ba0a description~d387a9aa felder=14 docs=3
 de   k=address type="text" mvo=true autoComplete="street-address" section~1f2a8a8e label~18b3aa19 sectionIntro~5ceee912
 de   k=postalCode type="text" mvo=true autoComplete="postal-code" label~e1efaf99
 de   k=city type="text" mvo=true autoComplete="address-level2" label~0ba89c70
 de   k=moveInDate type="date" label~712c6f03
 de   k=rentAmount type="currency" section~0f3e02f3 orientation~2d4a90ac label~1e0e94be sectionIntro~5649bf6c
 de   k=utilities type="currency" label~c9426e2c
+de   k=rooms type="text" label~b29a5a82
 de   k=landlord type="text" section~1c3e07ae label~0ea5728f sectionIntro~fdba0ae8
 de   k=landlordPhone type="tel" label~de74c7c1
 de   k=mortgageStatus type="select" section~08a5f33b label~838b2c4b sectionIntro~cd47cc55 options=3 optWerte~0cea95a2 optLabels~ca3bd945 weitere=secondary
+de   k=mortgagePayment type="currency" label~1102c174 weitere=secondary
 de   k=propertyValue type="currency" label~79cea98b weitere=secondary
 de   k=buildingsInsurance type="currency" label~1da85b29 weitere=secondary
 de   k=residenceType type="select" orientation~c1e73ef8 label~a8d1f8f9 options=3 optWerte~2d45a5d5 optLabels~03370150 weitere=secondary
@@ -169,16 +171,18 @@ fr   k=maritalStatus type="select" section~7b7e2e15 label~101c0a06 sectionIntro~
 fr   k=household type="household" label~cd8a2627
 fr   doc k=id label~503aded3
 fr   doc k=ahv_card label~3dbc8932
-fr kapitel=wohnen title~73af4680 short~73af4680 description~3b52e981 felder=12 docs=3
+fr kapitel=wohnen title~73af4680 short~73af4680 description~3b52e981 felder=14 docs=3
 fr   k=address type="text" mvo=true autoComplete="street-address" section~1f2a8a8e label~6433ef68 sectionIntro~f6a6eb9f
 fr   k=postalCode type="text" mvo=true autoComplete="postal-code" label~fe33eb7b
 fr   k=city type="text" mvo=true autoComplete="address-level2" label~f7280ce4
 fr   k=moveInDate type="date" label~272ab907
 fr   k=rentAmount type="currency" section~83d0a3e9 orientation~b6178eac label~6c67bb6f sectionIntro~62bd2902
 fr   k=utilities type="currency" label~9427b231
+fr   k=rooms type="text" label~070282a7
 fr   k=landlord type="text" section~bb2e46c9 label~c49584ba sectionIntro~c82ba5d4
 fr   k=landlordPhone type="tel" label~66531bdc
 fr   k=mortgageStatus type="select" section~4d47010b label~c239305b sectionIntro~e9668d48 options=3 optWerte~0cea95a2 optLabels~d4197d7e weitere=secondary
+fr   k=mortgagePayment type="currency" label~8a918eb2 weitere=secondary
 fr   k=propertyValue type="currency" label~07e23931 weitere=secondary
 fr   k=buildingsInsurance type="currency" label~6459c42d weitere=secondary
 fr   k=residenceType type="select" orientation~72141d35 label~f399d9c0 options=3 optWerte~2d45a5d5 optLabels~61377f72 weitere=secondary
@@ -322,16 +326,18 @@ it   k=maritalStatus type="select" section~35531553 label~0f8c2e7e sectionIntro~
 it   k=household type="household" label~cd8a2627
 it   doc k=id label~92fcbaed
 it   doc k=ahv_card label~c9e801ae
-it kapitel=wohnen title~70b2bb71 short~70b2bb71 description~c3cd4501 felder=12 docs=3
+it kapitel=wohnen title~70b2bb71 short~70b2bb71 description~c3cd4501 felder=14 docs=3
 it   k=address type="text" mvo=true autoComplete="street-address" section~440865ed label~932ffecf sectionIntro~f359b3de
 it   k=postalCode type="text" mvo=true autoComplete="postal-code" label~5a2482aa
 it   k=city type="text" mvo=true autoComplete="address-level2" label~d8d39773
 it   k=moveInDate type="date" label~18e73bd5
 it   k=rentAmount type="currency" section~bfe03a23 orientation~896f417d label~5c8286b5 sectionIntro~aacf1508
 it   k=utilities type="currency" label~851ee10b
+it   k=rooms type="text" label~5bf87899
 it   k=landlord type="text" section~10b5a608 label~74facf3a sectionIntro~ebaedaa9
 it   k=landlordPhone type="tel" label~a7995851
 it   k=mortgageStatus type="select" section~cd90f0a4 label~c18932bf sectionIntro~f2559219 options=3 optWerte~0cea95a2 optLabels~1fa08e2f weitere=secondary
+it   k=mortgagePayment type="currency" label~dc7d0ae0 weitere=secondary
 it   k=propertyValue type="currency" label~862ed1de weitere=secondary
 it   k=buildingsInsurance type="currency" label~27f53152 weitere=secondary
 it   k=residenceType type="select" orientation~306fdfb3 label~1d508b17 options=3 optWerte~2d45a5d5 optLabels~abd7ae09 weitere=secondary
@@ -475,16 +481,18 @@ en   k=maritalStatus type="select" section~c46f8f49 label~f0e1ce83 sectionIntro~
 en   k=household type="household" label~cd8a2627
 en   doc k=id label~77927c4b
 en   doc k=ahv_card label~81df02e0
-en kapitel=wohnen title~b49ea45c short~b49ea45c description~2cafaf80 felder=12 docs=3
+en kapitel=wohnen title~b49ea45c short~b49ea45c description~2cafaf80 felder=14 docs=3
 en   k=address type="text" mvo=true autoComplete="street-address" section~700560f3 label~7651fc60 sectionIntro~2867f7a3
 en   k=postalCode type="text" mvo=true autoComplete="postal-code" label~8602f9f3
 en   k=city type="text" mvo=true autoComplete="address-level2" label~906b3662
 en   k=moveInDate type="date" label~3861d92c
 en   k=rentAmount type="currency" section~b9e030b1 orientation~254ebf8e label~f9c91e73 sectionIntro~4447675e
 en   k=utilities type="currency" label~79733d6a
+en   k=rooms type="text" label~b0406aca
 en   k=landlord type="text" section~f64e9f6b label~15b600ca sectionIntro~42456891
 en   k=landlordPhone type="tel" label~ce25490b
 en   k=mortgageStatus type="select" section~5221f9e8 label~d83e6610 sectionIntro~d99901ef options=3 optWerte~0cea95a2 optLabels~b4a890ee weitere=secondary
+en   k=mortgagePayment type="currency" label~40449472 weitere=secondary
 en   k=propertyValue type="currency" label~6880092f weitere=secondary
 en   k=buildingsInsurance type="currency" label~1fb7fab3 weitere=secondary
 en   k=residenceType type="select" orientation~81bf8d1d label~f4c043a1 options=3 optWerte~2d45a5d5 optLabels~ac330c95 weitere=secondary
@@ -628,16 +636,18 @@ rm   k=maritalStatus type="select" section~35531553 label~1a688031 sectionIntro~
 rm   k=household type="household" label~cd8a2627
 rm   doc k=id label~f0f43f8d
 rm   doc k=ahv_card label~d21e2241
-rm kapitel=wohnen title~d5f9a20c short~168e1c30 description~04493667 felder=12 docs=3
+rm kapitel=wohnen title~d5f9a20c short~168e1c30 description~04493667 felder=14 docs=3
 rm   k=address type="text" mvo=true autoComplete="street-address" section~232a90da label~42e49d53 sectionIntro~ad6a0264
 rm   k=postalCode type="text" mvo=true autoComplete="postal-code" label~68a67b16
 rm   k=city type="text" mvo=true autoComplete="address-level2" label~87fc1024
 rm   k=moveInDate type="date" label~65b7de99
 rm   k=rentAmount type="currency" section~971fe0e3 orientation~ca0d4cff label~3f13b3e2 sectionIntro~e8ffab2d
 rm   k=utilities type="currency" label~0cd5ec4b
+rm   k=rooms type="text" label~8cdb88c5
 rm   k=landlord type="text" section~11547214 label~9a73e919 sectionIntro~448c85c8
 rm   k=landlordPhone type="tel" label~b0e3cc3a
 rm   k=mortgageStatus type="select" section~b0e30033 label~cafafdbe sectionIntro~cb62daa4 options=3 optWerte~0cea95a2 optLabels~689a9eb0 weitere=secondary
+rm   k=mortgagePayment type="currency" label~5b364e60 weitere=secondary
 rm   k=propertyValue type="currency" label~67c628ce weitere=secondary
 rm   k=buildingsInsurance type="currency" label~f5fd0b3d weitere=secondary
 rm   k=residenceType type="select" orientation~d05c45dc label~1a65f040 options=3 optWerte~2d45a5d5 optLabels~ce9ca02b weitere=secondary

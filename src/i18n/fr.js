@@ -1336,6 +1336,8 @@ export default {
         landlord: 'Nom du propriétaire',
         landlordPhone: 'Téléphone du propriétaire',
         mortgageStatus: { label: 'Hypothèque ?', options: { no: 'Non', fixedRate: 'Oui, taux fixe', variable: 'Oui, variable' } },
+        mortgagePayment: 'Intérêts hypothécaires et amortissement CHF/mois',
+        rooms: 'Nombre de pièces (p. ex. 3.5)',
         propertyValue: 'Valeur du bien (CHF)',
         buildingsInsurance: 'Assurance bâtiment (CHF/an)',
         residenceType: { label: 'Type de résidence', options: { main: 'Résidence principale', weekly: 'Résidence hebdomadaire', secondary: 'Résidence secondaire' } },

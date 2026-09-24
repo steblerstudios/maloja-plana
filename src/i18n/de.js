@@ -1343,6 +1343,8 @@ export default {
         landlord: 'Name Vermieter',
         landlordPhone: 'Telefon Vermieter',
         mortgageStatus: { label: 'Hypothek vorhanden?', options: { no: 'Nein', fixedRate: 'Ja Festzins', variable: 'Ja Variabel' } },
+        mortgagePayment: 'Hypothekarzins und Amortisation CHF/Monat',
+        rooms: 'Anzahl Zimmer (z. B. 3.5)',
         propertyValue: 'Immobilienwert CHF',
         buildingsInsurance: 'Gebäudeversicherung CHF/Jahr',
         residenceType: { label: 'Aufenthaltstyp', options: { main: 'Hauptwohnsitz', weekly: 'Wochenaufenthalter/in', secondary: 'Nebenwohnsitz' } },

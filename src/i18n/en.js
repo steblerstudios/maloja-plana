@@ -1337,6 +1337,8 @@ export default {
         landlord: 'Landlord name',
         landlordPhone: 'Landlord phone',
         mortgageStatus: { label: 'Mortgage?', options: { no: 'No', fixedRate: 'Yes, fixed rate', variable: 'Yes, variable' } },
+        mortgagePayment: 'Mortgage interest and amortisation CHF/month',
+        rooms: 'Number of rooms (e.g. 3.5)',
         propertyValue: 'Property value (CHF)',
         buildingsInsurance: 'Building insurance (CHF/year)',
         residenceType: { label: 'Residence type', options: { main: 'Main residence', weekly: 'Weekly residence', secondary: 'Secondary residence' } },

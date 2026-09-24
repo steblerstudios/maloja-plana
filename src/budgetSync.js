@@ -136,7 +136,8 @@ const syncBudgetFromChapters = (data) => {
   budget.expenses.healthInsurance = Number(data.versicherungen?.kkPremium || 0);
   budget.expenses.bvg = Number(data.versicherungen?.bvgContribution || 0);
   budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
-  budget.expenses.uvg = Number(data.versicherungen?.uvgPremium || 0) || 0;
+  // Keine UVG-Zeile: ein Feld «uvgPremium» gab es nie (der Wert war immer 0), und die
+  // Nichtberufsunfall-Prämie zieht der Arbeitgeber vom Lohn ab — sie steckt im Nettolohn.
 
   // Budget Light V1 — new fields from "finanzen" chapter
   budget.expenses.otherInsurance = Number(data.finanzen?.otherInsurance || 0);
