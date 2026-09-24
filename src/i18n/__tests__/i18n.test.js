@@ -6,6 +6,7 @@ import de from '../de.js';
 import fr from '../fr.js';
 import itTranslations from '../it.js'; // nicht `it` — kollidiert mit vitest it()
 import rm from '../rm.js';
+import rmAnredeAltbestand from './rm-anrede-altbestand.json';
 
 // Sammelt alle Blatt-Pfade. Ein { sie, du }-Objekt zählt als EIN Blatt
 // (Anrede-Variante), nicht als zwei verschachtelte Keys.
@@ -249,17 +250,42 @@ function isAnredeObject(v) {
 // sobald weitere Schlüssel nachgezogen werden (dann aus der Liste entfernen).
 // K49 (17.09.2026): alle 237 fr- und 119 it-Lücken nachgezogen — beide Listen leer.
 // Die Liste bleibt als Mechanismus stehen; neue Einträge nur mit Begründung.
+//
+// Gate 24.09.2026 (0.1.40-beta): rm.js war hier NIE geprüft — der Test lief nur über
+// fr und it. So stand der ganze Block `notfallpass` in rm als Du-Einheitstext und
+// erschien bei der voreingestellten Anrede «Sie». rm ist jetzt eingeschlossen.
+// Der rm-Altbestand (299 Schlüssel, gemessen 24.09.2026, davon rund die Hälfte in
+// Du-Form) steht in `rm-anrede-altbestand.json`: eine SCHULD-Liste, keine Erlaubnis —
+// sie darf nur schrumpfen (der Aktualitäts-Test unten erzwingt das Austragen).
+// en ist bewusst nicht dabei: «you» kennt keine Sie/Du-Unterscheidung.
+//
+// ANREDEFREI: Schlüssel, die in einer Sprache belegt KEINE Anrede tragen und deshalb
+// als reiner String stehen dürfen (z. B. Infinitiv-Anleitung). Nur mit Begründung
+// eintragen; derzeit keine.
 const KNOWN_GAPS = {
   fr: [],
   it: [],
+  rm: rmAnredeAltbestand,
+};
+const ANREDEFREI = {
+  fr: [],
+  it: [],
+  rm: [],
 };
 
-describe('de-{sie,du}-Schlüssel sind in fr/it ebenfalls { sie, du } (keine stille Einheitsform)', () => {
+describe('de-{sie,du}-Schlüssel sind in fr/it/rm ebenfalls { sie, du } (keine stille Einheitsform)', () => {
   const deAnredePaths = flattenAnredePaths(de);
 
-  for (const [name, dict] of Object.entries({ fr, it: itTranslations })) {
+  it('Gegenprobe: ein reiner String an einem de-{sie,du}-Pfad wird gefunden', () => {
+    const fake = { notfallpass: { intro: 'Ti endatas las indicaziuns a maun.' } };
+    const pfad = 'notfallpass.intro';
+    expect(deAnredePaths).toContain(pfad);
+    expect(isAnredeObject(resolvePath(fake, pfad))).toBe(false);
+  });
+
+  for (const [name, dict] of Object.entries({ fr, it: itTranslations, rm })) {
     it(`${name}.js: kein NEUER de-{sie,du}-Schlüssel ohne { sie, du } (ausser bekannte Lücke)`, () => {
-      const gaps = new Set(KNOWN_GAPS[name]);
+      const gaps = new Set([...KNOWN_GAPS[name], ...ANREDEFREI[name]]);
       const unexpected = [];
       for (const path of deAnredePaths) {
         const val = resolvePath(dict, path);

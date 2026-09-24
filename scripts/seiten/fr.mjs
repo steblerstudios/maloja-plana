@@ -280,7 +280,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Bâle, Suisse<br>Courriel : <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — classeur de vie suisse. Un projet open source sous AGPL-3.0. L’utilisation de l’application est gratuite ; pour le white-label et tout autre usage commercial, une licence séparée est disponible sur demande.',
-          'Concernant l’adresse de contact : l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/fr#art_3" rel="noopener">art. 3 al. 1 let. s ch. 1 LCD</a> exige des indications sur l’identité et sur l’adresse de contact « y compris celle du courrier électronique ». La disposition n’impose pas dans tous les cas une adresse postale. Le nom, le lieu et le courriel sont indiqués ; une adresse postale constitue une décision ouverte, qui sera tranchée en même temps que la question de l’inscription au registre du commerce. Le courriel permet de nous joindre pour toute question, y compris juridique.',
+          'Concernant l’adresse de contact : l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/fr#art_3" rel="noopener">art. 3 al. 1 let. s ch. 1 LCD</a> exige des indications sur l’identité et sur l’adresse de contact « y compris celle du courrier électronique ». Le nom, le lieu et le courriel sont indiqués ; la question de savoir si une adresse postale est en outre due est en cours d’examen. Le courriel permet de nous joindre pour toute question, y compris juridique.',
         ],
       },
       {

@@ -1,7 +1,7 @@
 # Datenschutzerklärung — Maloja Plana
 
 **Gemäss neuem Datenschutzgesetz (nDSG), in Kraft seit 1. September 2023**
-**Stand: 16.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
+**Stand: 24.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
 
 ---
 
@@ -84,12 +84,16 @@ Die statische Webanwendung (HTML, CSS, JavaScript — ohne Nutzerdaten) wird bei
 
 Diese Verarbeitung ist technisch notwendig für die Auslieferung der Webseite.
 
-- **Aufbewahrungsdauer der Server-Logs:** nicht belegt (Infomaniak-Standard; bei Bedarf beim Hoster erfragen).
-- **Auftragsbearbeitungsvertrag (Art. 9 DSG):** offen — ob die Standard-Vertragsbedingungen von Infomaniak diese Anforderung abdecken, ist nicht geprüft.
+- **Aufbewahrungsdauer der Server-Logs:** nach Angabe des Anbieters mindestens 7 Tage (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026; so auch die App, `legal.privacy.hosting1`/`hostingSource`). *(Bis 24.09.2026 stand hier «nicht belegt».)*
+- **Auftragsbearbeitung (Art. 9 DSG):** Infomaniak bearbeitet die Protokolldaten als Auftragsbearbeiterin — so benennt es auch die App (`legal.privacy.hosting1`). Vertraglich gelten die Standard-Vertragsbedingungen von Infomaniak; ob sie die Anforderungen von Art. 9 DSG im Einzelnen abdecken, ist **nicht geprüft**. Ein eigener Auftragsbearbeitungsvertrag ist nicht abgeschlossen.
 
 Belege für den Hoster: `deploy.sh` Z. 2 (SFTP-Deploy zu Infomaniak), `src/i18n/de.js` `privacy.hosting1`, `docs/legal/third-party-licenses.md` («Vercel — nicht mehr verwendet»). Bis zum 15.09.2026 nannte diese Erklärung noch Vercel Inc. (USA); das war seit dem Hosting-Wechsel nicht mehr zutreffend.
 
-### 5.2 Keine weiteren Dritten
+### 5.2 E-Mail-Korrespondenz
+
+Wer an info@malojaplana.ch schreibt, gibt der Betreiberin E-Mail-Adresse, Inhalt der Nachricht und allfällige Anhänge. Bearbeitet werden sie, um zu antworten. Das Postfach liegt bei Infomaniak in der Schweiz. Die Korrespondenz wird so lange behalten, wie die Anfrage und übliche Nachfragen es brauchen, danach gelöscht; eine Weitergabe an Dritte findet nicht statt, ausser sie ist gesetzlich geschuldet. So steht es in der App (`legal.privacy.contact1`, seit #277). Eine feste Frist in Tagen ist nicht festgelegt.
+
+### 5.3 Keine weiteren Dritten
 
 Es gibt **keine** weiteren Datenempfänger:
 - Keine Werbung, kein Tracking, keine Analyse-Cookies
@@ -134,7 +138,7 @@ Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Kl
 **Verschlüsselung (Bau-Liste E10):** Unter «Sicherung» steht der verschlüsselte Weg zuerst und ist als Voreinstellung benannt (`src/ZipExport.jsx` Z. 339–358); neue verschlüsselte Sicherungen verlangen ein Passwort von mindestens 12 Zeichen (`src/utils/backupCrypto.js` Z. 107 und 316–320). Die Klartext-Sicherung bleibt wählbar, steht darunter und trägt einen Hinweis (`ZipExport.jsx` Z. 360–367). JSON, CSV und `MANIFEST.txt` sind immer unverschlüsselt. Ältere Sicherungen mit kürzerem Passwort lassen sich weiter öffnen. Die App-Texte `legal.privacy.backup1` und `legal.faq.a5`/`a7` sagen seit der Bau-Liste K39 dasselbe; bis dahin stand dort «auf Wunsch verschlüsselt».
 
 ### 7.4 Weitere Rechte
-Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speichert, entfallen die typischen Betroffenenrechte gegenüber der Betreiberin. Für Fragen zum Hosting wende Dich an info@malojaplana.ch.
+Die Angaben in der App bearbeitet die Betreiberin nicht — sie liegen nur auf Deinem Gerät; dafür gibt es gegenüber der Betreiberin nichts herauszugeben oder zu löschen. **Anders bei E-Mails** (Abschnitt 5.2): für Deine Korrespondenz mit uns gelten Auskunft, Berichtigung und Löschung (Art. 25 ff. nDSG) gegenüber der Betreiberin; Anfragen an info@malojaplana.ch. Für Fragen zum Hosting ebenso. *(Bis 24.09.2026 stand hier, die Betroffenenrechte entfielen, weil keine Personendaten auf eigenen Servern lägen — für E-Mails traf das nicht zu.)*
 
 ---
 
@@ -218,3 +222,4 @@ Abschnitt 7.1 und 7.3 (Benennung des Exports): auf Code-Stand `main` 0274ce9 geb
 Abschnitt 3 (Export-Satz und Speichernamen-Beleg): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
 Abschnitt 7.2 und 8 (Löschweg «Alle Daten auf diesem Gerät löschen», Bau-Liste E18): auf den Stand des Zweigs `feat/e17-e18-trifft-nicht-zu-loeschweg` gebracht (seit PR #174 auf `main`), nicht juristisch geprüft.
 Kopf-Datum, Abschnitte 3, 7.1, 7.3 und 8 (Verschlüsselung als Voreinstellung E10, Schnappschüsse K34, «trifft nicht zu» E17): auf Code-Stand `main` 3500330 gebracht (Bau-Liste K39), nicht juristisch geprüft.
+Abschnitte 5.1 (Log-Frist, Auftragsbearbeitung), 5.2 neu (E-Mail-Korrespondenz) und 7.4 (Rechte bei E-Mails): an die App-Texte `legal.privacy.hosting1`/`contact1` angeglichen, 24.09.2026 (Deploy-Gate 0.1.40-beta), nicht juristisch geprüft.

@@ -146,8 +146,11 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
         }
       },
         React.createElement('button', {
+          type: 'button',
           onClick: () => setMvoExpanded(!mvoExpanded),
           'aria-expanded': mvoExpanded,
+          // aria-controls nur, solange das Ziel im DOM steht (es wird eingeklappt nicht gerendert).
+          'aria-controls': mvoExpanded ? 'mvo-felder' : undefined,
           style: {
             display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
             // Polsterung statt padding:0 — die Zeile war 19 px hoch und lag damit unter
@@ -188,6 +191,7 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
         }, mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress')),
 
         mvoExpanded && React.createElement('div', {
+          id: 'mvo-felder',
           style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: '3px' }
         },
           React.createElement(GrundordnungFelder, { palette, fields: mvo.fields, onSelectChapter })

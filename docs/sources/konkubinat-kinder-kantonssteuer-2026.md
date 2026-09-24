@@ -117,5 +117,35 @@ Die kantonalen Gesetze sind dafür nicht gelesen worden, darum steht in der App 
 
 - ~~Konkubinat mit Kindern, Partnereinkommen nie beantwortet~~ — geregelt mit K117 (#312, parallel
   gemergt): dann keine Kantonszahl (`konkubinatKinderOffen`).
-- Die Aufteilung von Kinderabzug und Elterntarif unter nicht verheirateten Eltern (ESTV-Kreisschreiben)
-  ist nicht gelesen; der ESTV-Rechner bildet sie nicht ab.
+- ~~Die Aufteilung von Kinderabzug und Elterntarif unter nicht verheirateten Eltern ist nicht gelesen~~ —
+  gelesen 24.09.2026 (Deploy-Gate 0.1.40-beta), siehe unten. Die App rechnet weiter den ganzen Abzug
+  und sagt es als Annahme (`annahmen.kinderabzugGanz`, Text `tax.annahmeKinderabzugKonkubinat`).
+- Offen bleibt: wie die **Kantone** (StHG, kantonale Gesetze) teilen — nicht gelesen. Der Annahme-Text
+  sagt «Wie der Kanton den Abzug aufteilt, ist nicht geprüft».
+
+## ESTV-Kreisschreiben Nr. 30 — Kinderabzug und Elterntarif im Konkubinat
+
+- Quelle: ESTV, Kreisschreiben Nr. 30 «Ehepaar- und Familienbesteuerung nach dem Bundesgesetz über die
+  direkte Bundessteuer (DBG)», Bern, 21. Dezember 2010. Abgerufen 24.09.2026 als PDF (58 Seiten,
+  1 624 573 Bytes, PDF-Änderungsdatum 21.06.2017) unter
+  `https://www.estv2.admin.ch/dvs/kreisschreiben/dbst-ks-2010-1-030-d-de.pdf`.
+  Gegenprobe: dieselbe Adresse mit erfundener Nummer (`…-1-099-d-de.pdf`) → HTTP 404; die alte
+  `www.estv.admin.ch/dam/…`-Adresse → HTTP 502. Es ist also keine Hülle, die jede Adresse bedient.
+- Ziff. 14.8 «Unverheiratete Eltern (gemeinsamer Haushalt), mit gemeinsamem minderjährigem Kind, mit
+  gemeinsamer elterlicher Sorge, keine Unterhaltszahlungen», 14.8.1 Abzüge, wörtlich:
+  «Jeder Elternteil kann je den halben Kinderabzug sowie den halben Versicherungs- und
+  Sparzinsenabzug für das Kind geltend machen.»
+- 14.8.2 Tarife, wörtlich: «Der Elternteil, der zur Hauptsache für den Unterhalt des Kindes aufkommt,
+  erhält den Elterntarif. Hierbei ist davon auszugehen das dies in der Regel derjenige Elternteil mit
+  dem höheren Einkommen ist.» — Die App rechnet eine Zahl im Konkubinat mit Kindern nur mit
+  Partnereinkommen 0 (sonst `grund 'partner'`); dann hat die Person das höhere Einkommen, der
+  Elterntarif bei ihr entspricht der Regel. Darum nennt die Annahme nur den Kinderabzug.
+- 14.6 (ohne gemeinsame elterliche Sorge, keine Unterhaltszahlungen): der Elternteil mit der
+  elterlichen Sorge erhält Kinderabzug und Elterntarif — dort stimmt die Rechnung der App, wenn die
+  Sorge bei der Person liegt.
+- Ziff. 10.2: «Nicht massgebend für die hälftige Aufteilung des Kinderabzuges ist der Umfang der
+  alternierenden Obhut.»
+- Die Beträge im PDF (z. B. Drittbetreuung 5 050 / 10 100 Franken) sind veraltet; das Kreisschreiben
+  ist hier nur für die Aufteilungsregel gelesen, nicht für Beträge.
+- Wirkung: halber statt ganzer Kinderabzug heisst ein höheres oder gleiches steuerbares Einkommen,
+  also eine gleich hohe oder höhere Bundessteuer. Die Zahl der App ist in diesem Fall eine Untergrenze.

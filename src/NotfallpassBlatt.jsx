@@ -61,7 +61,9 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     link: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit' },
     zurueck: {
       background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm,
-      padding: 0, marginBottom: space.md + 'px', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs + 'px',
+      // Tippfläche mind. 44 hoch (WCAG 2.2, 2.5.8 verlangt 24; App-Massstab 44). Der Text bleibt
+      // links bündig, darum keine seitliche Polsterung.
+      padding: 0, minHeight: '44px', marginBottom: space.md + 'px', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs + 'px',
     },
   };
 

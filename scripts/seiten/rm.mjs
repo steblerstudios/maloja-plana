@@ -285,7 +285,7 @@ export const SONDERSEITEN = [
         absaetze: [
           'Sophie Stebler / Stebler Studios<br>Basilea, Svizra<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
           'Maloja Plana — classeur da vita svizzer. In project da funtauna averta sut AGPL-3.0. L’utilisaziun da l’applicaziun è gratuita; per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada.',
-          'Tar l’adressa da contact: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">art. 3 al. 1 lit. s cifra 1 LCSL</a> pretenda indicaziuns davart l’identitad e davart l’adressa da contact «cumpraisa quella da la posta electronica». La disposiziun na prescriva betg en mintga cas ina adressa postala. Num, lieu ed e-mail èn inditgads; ina adressa postala è ina decisiun averta e vegn prisa ensemen cun la dumonda da l’endataziun en il register da commerzi. Via e-mail essan nus cuntanschibels per mintga fatschenda, era per giuridicas.',
+          'Tar l’adressa da contact: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">art. 3 al. 1 lit. s cifra 1 LCSL</a> pretenda indicaziuns davart l’identitad e davart l’adressa da contact «cumpraisa quella da la posta electronica». Num, lieu ed e-mail èn inditgads; sch’ina adressa postala è supplementarmain obligatorica, vegn sclerì. Via e-mail essan nus cuntanschibels per mintga fatschenda, era per giuridicas.',
         ],
       },
       {

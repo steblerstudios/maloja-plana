@@ -82,9 +82,11 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
         style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium },
       }, t('pwa.anleitung')),
       React.createElement('button', {
+        type: 'button',
         onClick: verwerfen,
         'aria-label': t('common.close'),
-        style: { ...knopfStil, color: palette.mid },
+        // Tippfläche 44 × 44 (WCAG 2.2, 2.5.8 verlangt mind. 24; App-Massstab wie der Melde-Link).
+        style: { ...knopfStil, color: palette.mid, minWidth: '44px', minHeight: '44px' },
       }, '×')
     )
   );

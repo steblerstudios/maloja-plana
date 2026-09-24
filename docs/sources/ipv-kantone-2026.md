@@ -697,6 +697,44 @@ nebenbei umgeschrieben):
   fordert beim **Krankenversicherer** zurück, dem ausbezahlt wurde. Ob und wie dieser es
   danach von der versicherten Person zurückholt, sagt § 21 nicht — **nicht geprüft**.
 
+### Nachtrag 24.09.2026, Deploy-Gate 0.1.40-beta — Text an den Wortlaut angeglichen, § 8 und § 12 vollständig
+
+Erneut gelesen 24.09.2026: `https://srl.lu.ch/api/de/texts_of_law/866/show_as_json` → 200,
+179'651 B (gleich wie oben); Gegenprobe `https://srl.lu.ch/api/de/texts_of_law/999999/show_as_json`
+→ **404**. Artikel aus dem JSON-Baum (Knoten `type: article`), nicht aus einer Volltextsuche.
+
+**§ 8 Sonderfälle** (Abs. 2 und 3, soweit für die App wesentlich)
+> ² «Personen, die Ergänzungsleistungen zur AHV/IV beziehen, haben Anspruch auf Verbilligung der
+> Prämien gemäss dem Bundesgesetz über Ergänzungsleistungen zur Alters-, Hinterlassenen- und
+> Invalidenversicherung (ELG) vom 6. Oktober 2006. Für das Verfahren gelten sinngemäss die
+> Bestimmungen über die Ergänzungsleistungen. Die §§ 12, 13 Absatz 1, 14, 15 und 17 Absatz 1 finden
+> keine Anwendung.»
+> ³ (Anfang) «Personen, die wirtschaftliche Sozialhilfe gemäss den §§ 27 Absatz 1, 53 Absatz 1 oder
+> 54 Absatz 1 des Sozialhilfegesetzes vom 16. März 2015 beziehen und deren Anspruch auf
+> Prämienverbilligung von Bundesrechts wegen nicht sistiert ist, haben vorbehältlich § 7 Absatz 7
+> Anspruch auf Verbilligung der vollen Richtprämie. […] Die §§ 12, 13 Absatz 1, 14 und 15 finden
+> keine Anwendung.»
+
+**§ 12 Anmeldung und Mitwirkungspflicht**
+> ² «Die Anmeldung ist zusammen mit den nötigen Unterlagen spätestens Ende Oktober des Vorjahres vor
+> dem Jahr, für das Anspruch auf Prämienverbilligung geltend gemacht wird, einzureichen.»
+> ³ «Wird das Gesuch erst im Jahr, für das Anspruch auf Prämienverbilligung geltend gemacht wird,
+> eingereicht, werden nur diejenigen Prämien verbilligt, die nach der Gesuchstellung fällig werden.»
+
+**§ 21 Rückerstattung** (Abs. 2 und 3 ergänzt)
+> ² «Der Rückforderungsanspruch verjährt innert eines Jahres nach dem Zeitpunkt, in dem das
+> Sozialversicherungszentrum vom Sachverhalt Kenntnis erhielt.»
+> ³ (Satz 1) «Der Rückforderungsanspruch verwirkt in der Regel fünf Jahre nach der Auszahlung.»
+
+**Folge für den App-Text (K122, erledigt):** `ipv.vorbehaltLU` sagt jetzt in allen fünf Sprachen nur,
+was § 7 Abs. 4, § 8a und § 21 Abs. 1 tragen: Anpassung «auf Gesuch … oder von Amtes wegen»
+(§ 8a Abs. 1); die Frist 31. Dezember gilt für das **Gesuch um Erhöhung** (§ 8a Abs. 2);
+zurückgefordert wird **beim Krankenversicherer, dem ausbezahlt wurde** (§ 21 Abs. 1). Ob der
+Versicherer danach bei der versicherten Person zurückholt, sagt der Text nicht — nicht geprüft.
+Offen: dass die «WAS Ausgleichskasse Luzern» das Sozialversicherungszentrum im Sinn des Gesetzes
+ist, steht nicht im SRL 866 selbst (dort nur «Sozialversicherungszentrum»); der Name stammt aus
+der WAS-Quelle weiter oben.
+
 ---
 
 ## UR — Uri

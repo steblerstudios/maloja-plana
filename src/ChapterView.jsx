@@ -267,15 +267,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const adultCount = 1 + adultsList.length;
     const setAdultsList = (list) => updateHousehold({ adultsList: list, adults: 1 + list.length });
 
-    // Pill-group — consistent with field-based pills (Zivilstand)
-    const hhPills = (labelText, opts, current, onSelect) =>
+    // Pill-group — consistent with field-based pills (Zivilstand): radiogroup mit benennender
+    // Überschrift, je Pille role="radio" + aria-checked (Gate 24.09.2026, a11y).
+    const hhPills = (groupId, labelText, opts, current, onSelect) =>
       React.createElement('div', { style: { marginBottom: space.md } },
-        React.createElement('div', { style: hhLabel }, labelText),
-        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        React.createElement('div', { id: groupId, style: hhLabel }, labelText),
+        React.createElement('div', { role: 'radiogroup', 'aria-labelledby': groupId, style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
           opts.map((opt, idx) => {
             const selected = current === opt.value;
             return React.createElement('button', {
-              key: idx, type: 'button',
+              key: idx, type: 'button', role: 'radio', 'aria-checked': selected,
               onClick: () => onSelect(opt.value),
               style: {
                 padding: '7px 14px', fontSize: text.sm, fontFamily: 'inherit',
@@ -339,6 +340,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 React.createElement('input', { id: 'hh-adult-' + idx + '-name', type: 'text', value: adult.name || '', onChange: (e) => updateAdult({ name: e.target.value }), placeholder: '–', style: { ...hhSelect, cursor: 'text' } })
               ),
               hhPills(
+                'hh-adult-' + idx + '-rel-label',
                 tr('chapters.basis.fields.household.adultRelationship'),
                 [
                   { value: 'partner', label: tr('chapters.basis.fields.household.relPartner') },
@@ -382,6 +384,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
       // Retired
       hhPills(
+        'hh-retired-label',
         tr('chapters.basis.fields.household.retired'),
         [
           { value: 'no', label: tr('chapters.basis.fields.household.retiredNo') },

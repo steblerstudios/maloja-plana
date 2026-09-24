@@ -101,9 +101,11 @@ function jahressteuer(steuerBaresEinkommen, tarifAbs2, ermaessigung) {
 }
 
 // Standardabzüge vom steuerbaren Einkommen (Bundessteuer)
+// Die Säule-3a-Höchstabzüge stehen je Steuerjahr in `saeule3a.js`
+// (SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR). Die Kopie, die hier stand, las niemand —
+// entfernt 24.09.2026, damit es keine zweite Quelle gibt.
 const ABZUEGE = {
   versicherung: { alleinstehend: 1800, verheiratet: 3700, proKind: 700 },
-  saeule3a: { mitBVG: 7258, ohneBVG: 36288 },
   berufsauslagen: { pauschal: 2000, max: 4000 },
   kinderabzug: 6800,
   zweiverdiener: 8600,

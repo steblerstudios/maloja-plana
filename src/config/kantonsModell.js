@@ -177,8 +177,12 @@ export const SAEULE_3A = Object.freeze({
     maximumFuer: (bemessungsjahr) => saeule3aMaximum(bemessungsjahr),
     // Das rohe Nettoeinkommen trägt die 3a voll, der Kanton rechnet sie nur bis zum Maximum
     // auf ⇒ abzuziehen ist der Überschuss. Gegengerechnet am Erlassweg, Nettoeinkommen
-    // 60'000, Einzahlung 20'000, Maximum 7'056: amtlich Reineinkommen 40'000 +
-    // min(20'000, 7'056) = 47'056; hier 60'000 − max(0, 20'000 − 7'056) = 47'056.
+    // 60'000, Einzahlung 20'000, Anspruchsjahr 2026 (Bemessung 2024, Maximum 7'056):
+    // amtlich Reineinkommen 40'000 + min(20'000, 7'056) = 47'056. Die App zieht erst über
+    // BEIDEN Jahresmaxima ab (`abzugsSchwelle`, 2026: max(7'056, 7'258) = 7'258, Begründung
+    // unten): 60'000 − max(0, 20'000 − 7'258) = 47'258 — 202 Franken über dem amtlichen Weg.
+    // (Bis 24.09.2026 stand hier «= 47'056» für die App; das galt vor der Schwelle über
+    // beiden Maxima.)
     //
     // 🛑 DIESER RECHENWEG UNTERSTELLT, die Veranlagung habe die volle Einzahlung abgezogen —
     // also 40'000 statt 60'000 − 7'056. Das trifft zu für Personen OHNE 2. Säule (BVV 3

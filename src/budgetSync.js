@@ -98,7 +98,12 @@ const syncBudgetFromChapters = (data) => {
   const ipv = calculateIPV(data);
   // E9: nur ein amtlich belegter Kanton liefert einen Betrag fürs Budget. Unbelegt
   // fliesst nichts ins Budget; es bleibt beim Hinweis ohne Betrag (ipvOrientierung).
-  const ipvRelief = ipv.eligible && ipv.belegt ? (Number(ipv.amount) || 0) : 0;
+  // Gate 24.09.2026: Luzern, Anmeldefrist (31. Oktober des Vorjahres) vorbei → nichts abziehen.
+  // SRL 866 § 12 Abs. 3: bei späterem Gesuch «werden nur diejenigen Prämien verbilligt, die nach
+  // der Gesuchstellung fällig werden». Ob und wann angemeldet wurde, weiss das Budget nicht.
+  const ipvAnmeldefristVorbei = ipv.eligible && ipv.belegt && ipv.anmeldefristVorbei === true
+    ? { jahr: ipv.jahr, vorjahr: ipv.jahr - 1 } : null;
+  const ipvRelief = ipv.eligible && ipv.belegt && !ipvAnmeldefristVorbei ? (Number(ipv.amount) || 0) : 0;
   const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
@@ -110,6 +115,7 @@ const syncBudgetFromChapters = (data) => {
     },
     ipvRelief,
     ipvOrientierung,
+    ipvAnmeldefristVorbei,
     expenses: {}
   };
 
@@ -217,6 +223,11 @@ const getBudgetRecommendations = (budget, t) => {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.ipvHint', { amount: budget.ipvRelief }) : 'You may be eligible for premium reduction (IPV).'
+    });
+  } else if (budget.ipvAnmeldefristVorbei) {
+    recommendations.push({
+      level: 'info',
+      text: t ? t('budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction Lucerne: not deducted, the registration deadline has passed.'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({

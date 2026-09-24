@@ -169,6 +169,8 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
         type: 'button',
         onClick: () => setAndereOffen(!andereOffen),
         'aria-expanded': andereOffen,
+        // aria-controls nur, solange das Ziel im DOM steht (eingeklappt wird es nicht gerendert).
+        'aria-controls': andereOffen ? 'install-andere-geraete' : undefined,
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           color: palette.sandDeep, fontSize: text.sm, fontFamily: 'inherit',
@@ -177,7 +179,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
       },
         React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(andereOffen)),
         andereOffen ? t('install.andereVerbergen') : t('install.andereZeigen')),
-      andereOffen && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+      andereOffen && React.createElement('div', { id: 'install-andere-geraete', style: { marginTop: space.sm + 'px' } },
         andere.map((g) => React.createElement(Geraetblock, { key: g, kennung: g, t, palette })))
     ),
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { version as APP_VERSION } from '../package.json';
 import { text, weight, radius, space, fontFamily } from './config/tokens.js';
-import { paletteAusSpeicher } from './config/constants.js';
+import { paletteAusSpeicher, DARK_PALETTE } from './config/constants.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
 import { meldungOhneEingaben } from './utils/meldungOhneEingaben.js';
@@ -73,11 +73,16 @@ export class ErrorBoundary extends React.Component {
     // ein Schlüssel, bleibt der englische Rückfalltext stehen — nie ein leerer Knopf.
     const tt = tMitRueckfall(this.props.t, this.context?.t, 'Fehlerschirm');
     const tx = (key, fallback) => tt(key) || fallback;
-    const bg = palette?.bg || '#1a1a18';
-    const textColor = palette?.text || '#e8e6e0';
-    const surface = palette?.surface || '#2a2a28';
-    const border = palette?.border || '#3a3a38';
-    const sand = palette?.sand || '#c8a96e';
+    // Rückfall aus DARK_PALETTE statt eigener Hex-Kopie (Gate 24.09.2026). Kein neues Risiko:
+    // paletteAusSpeicher kommt schon aus demselben Modul — ist constants.js kaputt, fehlte der
+    // Schirm auch vorher. Dunkel, wie der Default von paletteAusSpeicher und theme-init.js.
+    const farbe = (k) => palette?.[k] || DARK_PALETTE[k];
+    const bg = farbe('bg');
+    const textColor = farbe('text');
+    const surface = farbe('surface');
+    const border = farbe('border');
+    const sand = farbe('sand');
+    const mid = farbe('mid');
 
     return React.createElement('div', {
       role: 'alert',
@@ -114,28 +119,31 @@ export class ErrorBoundary extends React.Component {
       },
         React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', style: { marginBottom: space.md }, 'aria-hidden': 'true' },
           React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: sand, strokeWidth: '1.5', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-          React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: '#C4A870' })
+          React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: sand })
         ),
         React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, color: textColor, marginBottom: space.sm } },
           tx('error.title', 'Something went wrong')
         ),
-        React.createElement('p', { style: { fontSize: text.sm, color: palette?.mid || '#888', marginBottom: space.lg, lineHeight: 1.5 } },
+        React.createElement('p', { style: { fontSize: text.sm, color: mid, marginBottom: space.lg, lineHeight: 1.5 } },
           tx('error.message', 'Your data is safe — it is stored locally on your device. Please try again.')
         ),
 
         React.createElement('div', { style: { display: 'flex', gap: space.sm, justifyContent: 'center' } },
           React.createElement('button', {
+            type: 'button',
             onClick: this.handleReset,
             style: {
-              padding: '10px 20px', background: sand, color: '#000',
+              // mind. 44 hoch wie der Melde-Link darunter (WCAG 2.2, 2.5.8: mind. 24).
+              minHeight: '44px', padding: '10px 20px', background: sand, color: '#000',
               border: 'none', borderRadius: radius.sm, cursor: 'pointer',
               fontWeight: weight.semi, fontSize: text.sm
             }
           }, tx('error.tryAgain', 'Try again')),
           React.createElement('button', {
+            type: 'button',
             onClick: this.handleHardReset,
             style: {
-              padding: '10px 20px', background: 'transparent', color: textColor,
+              minHeight: '44px', padding: '10px 20px', background: 'transparent', color: textColor,
               border: '1px solid ' + border, borderRadius: radius.sm,
               cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
             }
@@ -156,7 +164,7 @@ export class ErrorBoundary extends React.Component {
           }, tx('error.report', 'Report a problem'))
         ),
 
-        React.createElement('p', { style: { fontSize: text.xs, color: palette?.mid || '#888', marginTop: space.sm } },
+        React.createElement('p', { style: { fontSize: text.xs, color: mid, marginTop: space.sm } },
           tx('error.privacy', 'No data was sent anywhere. Everything stays on your device.')
         )
       )
