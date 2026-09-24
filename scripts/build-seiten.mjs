@@ -245,7 +245,7 @@ function seiteBauen(seite, sprache) {
   <meta name="twitter:image" content="${BASIS}/og-image.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <script type="application/ld+json">
 ${JSON.stringify(ld, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
