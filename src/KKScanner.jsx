@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
-import { initBarcodeScanner, scanBarcodeFromImage, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
+import { initBarcodeScanner, scanBarcodeFromImage, scanHatInhalt, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
@@ -91,10 +91,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       } else if (result.type === 'ocr') {
         scanned = result.data;
       }
-      // Die Texterkennung liefert auch bei einem leeren Bild ein Objekt — nur ohne Werte.
-      // Vorher stand dann «Scan erfolgreich (OCR)» über einem leeren Formular.
-      const gelesen = scanned && Object.values(scanned).some(v => String(v ?? '').trim());
-      if (!gelesen) {
+      if (!scanHatInhalt(scanned)) {
         setScanResult(null);
         setNichtsGelesen(true);
       } else {
