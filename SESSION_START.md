@@ -43,6 +43,34 @@
 > 5. Der alte Zweig `release/0.1.40-beta` (22.09., `4614ff4`, nie als PR) liegt noch auf origin —
 >    Löschen nur auf Zuruf.
 
+> ✅ **Nachtrag 24.09., 15:20 — Tester-Rückmeldung «ok und jetzt…?»: der Rundgang endet beim ersten Schritt. #321 gemergt auf ausdrückliches Wort von Stebler Studios («sauber mergen»).**
+>
+> **Stand, gemessen 24.09.2026 15:20** (`bash scripts/stand-jetzt.sh`): `main` = `c2acdab` (15:20) ·
+> live = `index-8FolD38L.js`, Commit unbekannt · Abstand nicht messbar · offen: #313 (Entwurf,
+> fremde Sitzung). Auf dem Zweig nach Einmischen von `main` (#322): **3228 Tests grün**
+> (176 Dateien) · eslint sauber · Startdatei **56,31 kB** von 65 · PII-Scan grün · CI grün.
+>
+> **Befund:** Der nächste Schritt stand längst auf der Übersicht («Was ist jetzt dran?»), aber
+> Einführungs-Ende (drei Text-Tipps, kein Knopf) und Rundgang (Berge · Ansprüche · Datenschutz)
+> endeten beide auf «Los geht's», **ohne ihn zu zeigen**. Das Werkzeug war gebaut, der Weg dahin nicht.
+>
+> | PR | was | Beleg |
+> |---|---|---|
+> | **#321** | Rundgang: neue letzte Station «Hier fangen Sie an» (Spotlight auf `data-tour="naechster-schritt"`), letzter Knopf «Mit «‹Feld›» beginnen» in voller Breite, öffnet das Kapitel; ohne offenen Schritt bleibt «Fertig» · Einführungs-Ende: ein Satz statt drei Tipps · `naechsterSchritt()` in `utils/vollstaendigkeit.js` als **eine Quelle** für Übersicht und Rundgang · 5 Sprachen | `einfuehrungErsterSchritt.test.js`, 2 Mutationen rot · Browser Desktop + 375 px durchgeklickt: Knopf öffnet «Persönliche Basis», `or5_tour_done=true`; **auf dem Handy geht der Rundgang nach der Einführung auf** (vorher offene Frage) |
+>
+> **Bewusst so:** «Überspringen» bleibt neutral (schliesst, landet auf der Übersicht, wo der Block
+> sichtbar ist) — wer überspringt, wollte keine Führung. Änderbar, falls Tester es anders erleben.
+>
+> ### 🛑 Offen
+> 1. **Nicht live** — hängt am selben Deploy wie alles seit dem 22.09. (Stebler Studios).
+> 2. **Ungeprüft:** echtes iPhone + VoiceOver · Rundgang im **Hell**-Modus (nur Dunkel angesehen) ·
+>    fr/it-Wortlaut gegenlesen, rm provisorisch.
+> 3. **Rückmeldung an die Testerin** nach dem Deploy: ob «Mit «Nachname» beginnen» ihr «ok und jetzt…?» beantwortet.
+>
+> 🛑 **Stolperstein, dritte Ausprägung:** Die Startdatei für Browser-Server ist
+> **`~/Claude/.claude/launch.json`** (Startordner der Sitzung), nicht die im Repo und nicht
+> `~/Claude/Projects/.claude/`. Eintrag für den Worktree dort ergänzen, nach der Probe wieder entfernen.
+
 > ✅ **Nachtrag 24.09., 14:40 — Fremd-Audit gegengelegt, K116 gebaut, Vorab-Prüfung vor dem Deploy, K117–K121. Neun PRs gemergt, jeder auf ausdrückliches Wort von Stebler Studios («sauber mergen»).**
 >
 > **Stand, gemessen 24.09.2026 14:40** (`bash scripts/stand-jetzt.sh`): `main` = `0049b68` (14:39) ·
