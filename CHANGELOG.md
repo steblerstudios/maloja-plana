@@ -47,6 +47,14 @@ kommt der Changelog immer mit, nie doppelt.*
   als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
+- **`scripts/bundle-posten.mjs`: nachmessen statt raten, was in der Startdatei liegt**
+  (Entwickler-Skript, kein neues Paket). Liest die Sourcemap neben dem gebauten Chunk
+  und ordnet jedes Byte seiner Quelldatei zu, auf Wunsch bis auf die Original-Zeile
+  (`--datei <pfad> --zeilen`). Anlass: PR #294 brauchte drei Verschlankungsrunden, weil
+  die Zusammensetzung der Startdatei niemand kannte; das Startbundle ist bei 65 kB gzip
+  gedeckelt. 🛑 Das Skript zählt minifizierte Bytes, nicht gzip — am Startbundle gemessen
+  etwa 6:1; die Rangfolge ist belastbar, der Betrag eines einzelnen Postens nicht. Eine
+  echte Ersparnis nennt nur `npm run size`, gemessen gegen frisches `origin/main`.
 - **ESTV-Stichprobe für die Kantonssteuer-Tabelle** (Entwickler-Skript, die App bleibt ohne
   Netz). `node scripts/estv-stichprobe.mjs` fragt den ESTV-Steuerrechner an 156 Punkten
   (26 Kantone × ledig/verheiratet × Brutto 50 000/80 000/120 000) erneut und vergleicht mit
