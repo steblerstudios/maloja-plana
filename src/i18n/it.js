@@ -2266,6 +2266,7 @@ export default {
     enterCanton: { sie: 'Inserisca il Suo cantone in "Dati personali" o il codice postale in "Abitazione".', du: 'Inserisci il tuo cantone in "Dati personali" o il codice postale in "Abitazione".' },
     cantonChoose: { sie: 'In quale cantone abita?', du: 'In quale cantone abiti?' },
     cantonSavedHint: { sie: 'Lo riprendiamo anche in "Dati personali". Lì può modificarlo in qualsiasi momento.', du: 'Lo riprendiamo anche in "Dati personali". Lì puoi modificarlo in qualsiasi momento.' },
+    feldImProfil: { sie: 'Viene salvato anche nel Suo profilo e vale ovunque.', du: 'Viene salvato anche nel tuo profilo e vale ovunque.' },
     enterIncome: { sie: 'Il Suo cantone è stato ripreso. Inserisca ora il Suo reddito mensile qui per calcolare la riduzione dei premi.', du: 'Il tuo cantone è stato ripreso. Inserisci ora il tuo reddito mensile qui per calcolare la riduzione dei premi.' },
     eligible: 'Avente diritto',
     disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',

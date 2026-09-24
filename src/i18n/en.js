@@ -2266,6 +2266,7 @@ export default {
     enterCanton: 'Please enter your canton under "Personal basics" or your postal code under "Housing".',
     cantonChoose: 'Which canton do you live in?',
     cantonSavedHint: 'We also save it under "Personal basics". You can change it there at any time.',
+    feldImProfil: 'Also saved in your profile and used everywhere.',
     enterIncome: 'Your canton has been carried over. Now enter your monthly income here to calculate your premium subsidy.',
     eligible: 'Eligible',
     disclaimer: 'For orientation only. Actual entitlement is determined by the responsible authority.',

@@ -3197,6 +3197,7 @@ export default {
     enterCanton: { sie: 'Per plaschair endatai Voss chantun sut "Basa persunala" u Vossa PLZ sut "Abitar".', du: 'Per plaschair endatescha Tes chantun sut "Basa persunala" u Tia PLZ sut "Abitar".' },
     cantonChoose: { sie: 'En tge chantun abitais Vus?', du: 'En tge chantun abitas ti?' },
     cantonSavedHint: { sie: 'Nus al surpigliain er sut "Basa persunala". Là pudais Vus al midar da tut temp.', du: 'Nus al surpigliain er sut "Basa persunala". Là pos ti al midar da tut temp.' },
+    feldImProfil: { sie: 'Vegn er memorisà en Voss profil e vala dapertut.', du: 'Vegn er memorisà en tes profil e vala dapertut.' },
     enterIncome: { sie: 'Voss chantun è vegnì surpiglià. Endatai ussa Vossa entrada mensila qua per calcular Vossa reducziun da premias.', du: 'Tes chantun è vegnì surpiglià. Endatescha ussa Tia entrada mensila qua per calcular Tia reducziun da premias.' },
     eligible: 'Autorisà',
     disclaimer: "Agid d'orientaziun. Il dretg effectiv vegn examinà da la post cumpetenta.",

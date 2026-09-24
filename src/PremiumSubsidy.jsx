@@ -17,6 +17,7 @@ import { verfuegungZuordnung, VERFUEGUNG_ZUORDNUNG } from './data/ipvAbzug.js';
 import { abweichungen, mitUebergabe } from './data/schnellcheckUebergabe.js';
 import { text, weight, radius , space } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { geburtsjahr } from './config/kantonsModell.js';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
 const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
@@ -243,6 +244,32 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ]);
   };
 
+  // Codex-Audit 24.09., Nachtrag: nach Kanton und Einkommen hielt die Rechnung an der nächsten
+  // fehlenden Angabe an (eigenes Geburtsdatum, Prämie) — mit einem Satz, aber ohne Feld. Fehlt
+  // genau eine eigene Angabe, steht ihr Feld hier; es schreibt dasselbe Profilfeld wie das Kapitel.
+  // Kinder-Geburtsdaten bleiben im Haushalt: dort gibt es je Kind eine Zeile, hier nicht.
+  const offenFeld = (offen) => {
+    if (!onUpdateData) return null;
+    const feld = offen === 'alter' && !geburtsjahr(data.basis)
+      ? { id: 'ipv-geburt', kapitel: 'basis', k: 'dateOfBirth', type: 'date', label: t('chapters.basis.fields.dateOfBirth'), value: data.basis?.dateOfBirth || '', autoComplete: 'bday' }
+      : offen === 'praemie'
+        ? { id: 'ipv-praemie', kapitel: 'versicherungen', k: 'kkPremium', type: 'number', label: t('chapters.versicherungen.fields.kkPremium'), value: data.versicherungen?.kkPremium ?? '', inputMode: 'decimal' }
+        : null;
+    if (!feld) return null;
+    return React.createElement('div', { style: { marginTop: space.sm } },
+      React.createElement('label', { htmlFor: feld.id, style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '6px' } }, feld.label),
+      React.createElement('input', {
+        id: feld.id, type: feld.type, value: feld.value,
+        ...(feld.type === 'number' && { min: '0', inputMode: feld.inputMode }),
+        ...(feld.autoComplete && { autoComplete: feld.autoComplete }),
+        'aria-describedby': feld.id + '-hinweis',
+        onChange: (e) => onUpdateData(feld.kapitel, feld.k, e.target.value),
+        style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', minWidth: '180px' },
+      }),
+      React.createElement('p', { id: feld.id + '-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } }, t('premium.feldImProfil'))
+    );
+  };
+
   // Only block when the canton is genuinely missing. If the canton is set but the
   // income isn't yet, we still show the canton-specific info and prompt for income.
   if (!canton) {
@@ -354,6 +381,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // Warum hier keine Zahl steht (K31, Fachprüfung 20.09.2026). Ohne diesen Satz liest sich
       // «kein Betrag» wie «der Kanton ist ungeprüft» — es heisst aber oft nur, dass eine Angabe fehlt.
       ipvResult.offen && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, t('ipv.offenGrund.' + ipvResult.offen)),
+      offenFeld(ipvResult.offen),
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle')),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
