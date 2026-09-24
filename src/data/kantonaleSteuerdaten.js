@@ -224,7 +224,8 @@ export function kantonssteuerFuerProfil({
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
   const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
   // K62.1: Konkubinat, wo die ESTV Konkubinat und «ledig» verschieden rechnet → keine Zahl.
-  if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && !(steuerbar >= (KONKUBINAT_WIE_LEDIG_AB[kanton] ?? 0))) {
+  // K62-Nachlauf B: mit Kindern gilt die eigene Messung (KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB).
+  if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && !(steuerbar >= konkubinatWieLedigAb(kanton, kinder))) {
     return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund: 'konkubinatKanton' };
   }
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
@@ -244,6 +245,26 @@ export function kantonssteuerFuerProfil({
 // Die Tabelle gilt dort für Konkubinat erst ab dem steuerbaren Einkommen unten (Infinity = nie);
 // dazwischen wird nicht interpoliert. Kantone ohne Eintrag: gleich an allen 68 Punkten.
 export const KONKUBINAT_WIE_LEDIG_AB = Object.freeze({ BE: Infinity, JU: Infinity, VS: 39417 });
+
+// K62-Nachlauf B · Konkubinat MIT Kindern. Gemessen am ESTV-Steuerrechner 2026 (Zivilstand
+// «Konkubinat», Relationship 3, Person 2 ohne Einkommen, gegen «ledig» = alleinerziehend, im selben
+// Lauf; 26 Kantone × 1, 2, 3 Kinder × 68 Bruttolöhne; docs/sources/konkubinat-kinder-kantonssteuer-2026.md).
+// Die Schnittstelle kennt je Kind nur das Alter; sie rechnet die Kinder ganz der Person 1 zu (voller
+// Kinderabzug). Steuerbares Einkommen Bund und Bundessteuer an allen 5 304 Punkten gleich wie ledig,
+// ein Einkommen der Person 2 ändert nichts. Die Kantons- und Gemeindesteuer weicht in sechs Kantonen
+// ab, immer nach oben, und zwar ab dem ersten Punkt mit Steuer bis Brutto 300 000 — der Abzug für
+// Alleinstehende/Alleinerziehende mit Kindern entfällt dort im Konkubinat:
+//   BE bis CHF 1 665 · BS bis 2 752 · JU bis 8 669 · OW bis 1 280 · UR bis 817 · VD bis 3 684.
+// VS rechnet mit Kindern gleich (ohne Kinder nicht, siehe oben). Dort keine Kantonszahl (Infinity).
+export const KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB = Object.freeze({
+  BE: Infinity, BS: Infinity, JU: Infinity, OW: Infinity, UR: Infinity, VD: Infinity,
+});
+
+// Ab welchem steuerbaren Einkommen (Bund) gilt für Konkubinat die Reihe «ledig»? 0 = überall.
+export function konkubinatWieLedigAb(kanton, kinder = 0) {
+  const tabelle = Number(kinder) > 0 ? KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB : KONKUBINAT_WIE_LEDIG_AB;
+  return tabelle[kanton] ?? 0;
+}
 
 // Lebt die Person im Konkubinat? Im Profil so erfasst, oder nicht verheiratet mit Partnereinkommen.
 export function imKonkubinat({ verheiratet = false, konkubinat = false, partnerEinkommen = 0 } = {}) {

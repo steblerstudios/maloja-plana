@@ -102,6 +102,13 @@ kommt der Changelog immer mit, nie doppelt.*
   Am ESTV-Steuerrechner gemessen (Konkubinat gegen ledig, 26 Kantone): in **BE, JU und VS** (dort
   bis Brutto 45 000) rechnet der Kanton Konkubinat höher — dort weiter keine Kantonszahl, mit
   Begründung. Messung: `docs/sources/konkubinat-kantonssteuer-2026.md`.
+- **Konkubinat mit Kindern gemessen** (K62-Nachlauf B). Am ESTV-Steuerrechner Konkubinat gegen
+  ledig mit 1, 2 und 3 Kindern, 26 Kantone × 68 Löhne, im selben Lauf: die Bundessteuer ist überall
+  gleich (die ESTV gibt Person 1 den ganzen Kinderabzug und den Elterntarif). Die Kantons- und
+  Gemeindesteuer ist in **BE, BS, JU, OW, UR und VD** im Konkubinat höher (dort fällt der Abzug für
+  Alleinstehende mit Kindern weg) — dort mit Kindern jetzt keine Kantonszahl mehr, mit Begründung.
+  Neu gesperrt: BS, OW, UR, VD. VS rechnet mit Kindern gleich und zeigt die Zahl jetzt auch unter
+  Brutto 45 000. Messung: `docs/sources/konkubinat-kinder-kantonssteuer-2026.md`.
 - **Feld «Nettolohn Partner/in»** erscheint auch bei Zivilstand «verheiratet», «eingetragene Partnerschaft» oder «Konkubinat»,
   wenn erst eine Person im Haushalt erfasst ist. Nichts wird vorbelegt.
 - **Zivilstand-Vergleich im Konkubinat:** kein Vergleich mehr mit einem gedachten
