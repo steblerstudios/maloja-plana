@@ -3012,6 +3012,7 @@ export default {
     deficitInfo: 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.',
     budgetCalm: 'You have an overview of your finances. Every recorded area helps.',
     ipvHint: 'You may be eligible for premium reduction (IPV) — approx. CHF {amount}/month. You can apply at your municipality or cantonal compensation office.',
+    ipvHintVerfuegung: 'Premium reduction (IPV) per decision letter: CHF {amount}/month — deducted from the health insurance premium in the budget.',
     ipvHintOhneBetrag: 'Premium reduction (IPV): the canton decides whether you are entitled and to how much. Especially on a tight budget, it is worth checking.',
     ipvHintLuFristVorbei: 'Premium reduction Lucerne: not deducted in the budget. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. The budget does not know whether or when registration took place — with timely registration, the full annual entitlement applies.',
     sozialhilfeHint: 'Your income is below the SKOS basic needs threshold. Social assistance may be an option — counselling is confidential and free.',
