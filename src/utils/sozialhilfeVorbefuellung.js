@@ -21,7 +21,7 @@ const betrag = (v) => {
 // Leer bleibt leer: eine Summe von 0 aus lauter leeren Feldern ist kein Eintrag.
 const alsFeld = (summe, irgendwasErfasst) => (irgendwasErfasst ? String(Math.round(summe)) : '');
 
-const erfasst = (v) => v != null && v !== '' && Number.isFinite(Number(v));
+const erfasst = (v) => v != null && v !== '' && Number.isFinite(Number(v)) && Number(v) >= 0;
 
 export function sozialhilfeVorbefuellung(data) {
   const f = data?.finanzen || {};
