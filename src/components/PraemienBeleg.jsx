@@ -15,7 +15,8 @@ export const PraemienBeleg = ({ palette, t, state }) => {
   if (!state || !state.show || state.mode === 'empty') return null;
   const { mode, verbilligung, praemie, selbst, confirmed } = state;
   const over = mode === 'over';
-  const orientierung = mode === 'orientierung';
+  // fristVorbei (Luzern nach der Anmeldefrist): wie die Orientierung ohne Betrag, mit dem Grund.
+  const orientierung = mode === 'orientierung' || mode === 'fristVorbei';
   const hasBalken = mode === 'eligible' && praemie > 0;
   const kantonPct = hasBalken ? Math.min(100, Math.max(0, (Math.min(verbilligung, praemie) / praemie) * 100)) : 0;
   const selbstPct = 100 - kantonPct;
@@ -35,7 +36,7 @@ export const PraemienBeleg = ({ palette, t, state }) => {
   let body;
   if (orientierung) {
     // E9: Kanton nicht amtlich belegt — keine Zahl, nur die ruhige Orientierung.
-    body = h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, t(state.noteKey || 'ipv.orientierungOffen'));
+    body = h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, t(state.noteKey || 'ipv.orientierungOffen', state.noteParams));
   } else if (over) {
     body = h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('beleg.keineVerbilligung'));
   } else {

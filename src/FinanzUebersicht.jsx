@@ -4,6 +4,7 @@ import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { annahmenTexte } from './utils/steuerTexte.js';
@@ -158,6 +159,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
 
   const sozialhilfe = calculateSozialhilfe(data);
   const ipv = calculateIPV(data);
+  // Luzern nach der Anmeldefrist (SRL 866 § 12 Abs. 3): die Kachel zeigt den Anspruch weiter, sagt
+  // aber dazu, dass er nicht mehr ganz ankommt. Die Regel steht in data/ipvAbzug.js.
+  const ipvFristVorbei = ipvAbzug(data, ipv).grund === IPV_ABZUG_GRUND.FRIST_VORBEI;
   const el = checkELEligibility(data);
   // E38/E39: dieselbe Regel wie im Steuerrechner — ein steuerbares Einkommen (Standardabzüge der
   // ESTV) für Bund und Kanton; Kantonszahl nur, wo die ESTV-Tabelle trägt.
@@ -424,7 +428,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
           : t('finanzUebersicht.notEligible'),
       statusColor: ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
       detail: ipv.eligible
-        ? formatCHF(ipv.annual) + ' ' + t('common.perYear')
+        ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
         : ipv.belegt === false
           ? t(ipv.noteKey, ipv.noteParams)
           // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht

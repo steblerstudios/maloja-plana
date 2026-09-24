@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { calculateIPV } from './config/cantonalData.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 
@@ -27,8 +28,11 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
   // IPV-Fairness (Petitions-Saat): zeigt, was die Prämienverbilligung ausmacht
   // (falls Anrecht) und wie viel nach IPV noch über der 10%-Linie bleibt.
   const ipv = calculateIPV(data);
-  // E9: Betrag nur mit amtlich belegtem Kanton; sonst eine Orientierung ohne Zahl.
-  const ipvAmount = ipv.eligible && ipv.belegt ? Math.min(premium, Math.max(0, ipv.amount || 0)) : 0;
+  // Was abgezogen werden darf, entscheidet allein data/ipvAbzug.js (E9: nur belegter Kanton;
+  // Luzern nach der Anmeldefrist: nichts; eingetragene Verfügung: ihr Betrag). Gedeckelt an der Prämie.
+  const abzug = ipvAbzug(data, ipv);
+  const ipvAmount = Math.min(premium, abzug.betrag);
+  const fristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI;
   const netPremium = Math.max(0, premium - ipvAmount);
   const netShare = (netPremium / income) * 100;
   const netShareRounded = Math.round(netShare * 10) / 10;
@@ -64,6 +68,10 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     // IPV-Fairness: Entlastung (falls Anrecht) + Restlücke bis 10%
     showFairness && ipvAmount > 0 && React.createElement('div', { style: { fontSize: text.sm, color: palette.skyDeep, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
       t('kkLast.ipvRelief', { ipv: ipvAmount, share: netShareRounded })
+    ),
+    // Luzern nach der Anmeldefrist: statt der Abzugszeile der Grund, warum nichts abgezogen ist.
+    showFairness && fristVorbei && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
+      t('ipv.luFristNichtAbgezogen', abzug.frist)
     ),
     showFairness && ipvAmount === 0 && ipv && !ipv.eligible && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
       ipv.belegt === false ? t(ipv.noteKey, ipv.noteParams) : t('kkLast.ipvNoClaim')

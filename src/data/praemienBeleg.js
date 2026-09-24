@@ -10,8 +10,13 @@
 //   eligible   → Anspruch + Prämie bekannt → voller Beleg mit Deckungsbalken
 //   orientierung → Kanton nicht amtlich belegt (E9) und Prämie erfasst: Beleg ohne
 //                  Betrag, nur der neutrale Hinweis «Anspruch und Höhe legt der Kanton fest»
+//   fristVorbei  → Anspruch geschätzt, aber die Anmeldefrist ist vorbei (Luzern, SRL 866
+//                  § 12 Abs. 3): kein Abzug, die Prämie bleibt ganz selbst, dazu der Grund
+//
+// Was abgezogen wird, entscheidet allein data/ipvAbzug.js — hier nur Darstellung und Deckel.
 import { calculateIPV } from '../config/cantonalData.js';
 import { isIpvConfirmed } from './ipvStatus.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from './ipvAbzug.js';
 
 export function praemienBelegState(data) {
   const canton = data?.basis?.canton || '';
@@ -27,6 +32,10 @@ export function praemienBelegState(data) {
   if (!canton || income <= 0) {
     return { show: true, mode: 'empty', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false };
   }
+  const abzug = ipvAbzug(data, ipv);
+  // Eine eingetragene Verfügung mit Betrag gilt vor der Schätzung — auch wo die Schätzung
+  // «unbelegt» oder «über der Grenze» sagt; sonst stünde der Stempel neben einer anderen Zahl.
+  if (abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT) return belegMitBetrag(abzug.betrag, praemie, canton, confirmed);
   // E9: unbelegter Kanton → nie ein Betrag, nie «keine Verbilligung».
   if (ipv?.belegt === false) {
     return ipv.anspruchMoeglich
@@ -36,7 +45,13 @@ export function praemienBelegState(data) {
   if (!ipv?.eligible) {
     return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false };
   }
-  const verbilligungRoh = Number(ipv.amount) || 0;
+  if (abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI) {
+    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: 'ipv.luFristNichtAbgezogen', noteParams: abzug.frist };
+  }
+  return belegMitBetrag(abzug.betrag, praemie, canton, confirmed);
+}
+
+function belegMitBetrag(verbilligungRoh, praemie, canton, confirmed) {
   const hasPraemie = praemie > 0;
   // Eine Verbilligung senkt die Prämie — sie kann sie nie übersteigen (keine
   // Auszahlung). calculateIPV kennt die eingetragene Prämie nicht, also hier bei

@@ -247,7 +247,8 @@ export function ipvLuzern(data, hh, ipvData, youngAdultsCount, orientierung, loo
   // § 12 Abs. 2/3 [2]: Anmeldung bis Ende Oktober des Vorjahres; wer später kommt, erhält nur
   // die Prämien verbilligt, die nach dem Gesuch fällig werden. Für 2026 war das der 31.10.2025.
   const fristVorbei = new Date() > new Date(`${jahr - 1}-10-31T23:59:59`);
-  // anmeldefristVorbei: das Budget zieht dann nichts ab (budgetSync.js) — wie viel noch verbilligt
+  // anmeldefristVorbei: dann wird nirgends etwas von der Prämie abgezogen (data/ipvAbzug.js, für
+  // Budget, KK-Last-Karte und Prämien-Beleg) — wie viel noch verbilligt
   // wird, hängt vom Tag der Anmeldung ab, und den kennt die App nicht.
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,

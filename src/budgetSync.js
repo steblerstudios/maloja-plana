@@ -2,6 +2,7 @@
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
 import { getFullName } from './config/constants.js';
 import { calculateIPV } from './config/cantonalData.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 
 // Budget Light V1 — Grouped expense structure
@@ -96,14 +97,12 @@ const syncBudgetFromChapters = (data) => {
 
   // IPV relief (reduces health insurance cost, not an income)
   const ipv = calculateIPV(data);
-  // E9: nur ein amtlich belegter Kanton liefert einen Betrag fürs Budget. Unbelegt
-  // fliesst nichts ins Budget; es bleibt beim Hinweis ohne Betrag (ipvOrientierung).
-  // Gate 24.09.2026: Luzern, Anmeldefrist (31. Oktober des Vorjahres) vorbei → nichts abziehen.
-  // SRL 866 § 12 Abs. 3: bei späterem Gesuch «werden nur diejenigen Prämien verbilligt, die nach
-  // der Gesuchstellung fällig werden». Ob und wann angemeldet wurde, weiss das Budget nicht.
-  const ipvAnmeldefristVorbei = ipv.eligible && ipv.belegt && ipv.anmeldefristVorbei === true
-    ? { jahr: ipv.jahr, vorjahr: ipv.jahr - 1 } : null;
-  const ipvRelief = ipv.eligible && ipv.belegt && !ipvAnmeldefristVorbei ? (Number(ipv.amount) || 0) : 0;
+  // Was abgezogen werden darf, entscheidet allein data/ipvAbzug.js (E9 unbelegt → 0; Luzern nach
+  // der Anmeldefrist → 0, SRL 866 § 12 Abs. 3; eine eingetragene Verfügung gilt vor der Schätzung).
+  // Unbelegt bleibt es beim Hinweis ohne Betrag (ipvOrientierung).
+  const abzug = ipvAbzug(data, ipv);
+  const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
+  const ipvRelief = abzug.betrag;
   const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
