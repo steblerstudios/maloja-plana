@@ -76,6 +76,36 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
 - **Gegenprobe des Messgeräts:** ZH am selben Abend an denselben Punkten in allen Feldern gleich wie am 16.09. (ledig, Brutto 50 000/80 000/120 000). Eine zweite TI-Abfrage aller 136 Punkte ohne Kinder lieferte dieselben Werte wie die Nachmessung. Das Messgerät unterscheidet also: für die Gegenthese «nichts hat sich geändert» hätte es die alten Werte geliefert.
 - **Vermutung, nicht belegt — welcher Abzug:** Heute weist der Rechner für TI «Abzug private Versicherungen / Sparzinsen» CHF 4 560 (ledig) bzw. 9 120 (verheiratet), ledig mit 1 Kind 5 760, und «Übrige Berufsauslagen» CHF 3 500 aus. Die Aufschlüsselung vom 16.09. wurde nicht gespeichert; welcher Posten sich um CHF 500 verschoben hat, lässt sich deshalb nicht belegen. Naheliegend ist der Versicherungsabzug (Art. 32 LT, Ticino). Ob die ESTV damit eine Gesetzesänderung für 2026 nachgetragen oder einen Datenfehler berichtigt hat, ist offen — bitte bei der ESTV oder der Divisione delle contribuzioni prüfen.
 
+## Stichprobe
+
+Die Tests der App sichern die **Interpolation** der Tabelle, nicht ihre **Aktualität**. Am 23.09.2026 hatte die ESTV
+für TI die Daten des laufenden Steuerjahres geändert, ohne dass sich die Versionsangabe der Schnittstelle änderte
+(«Nachmessungen» oben); die Tests merkten es nicht. Die Stichprobe fragt deshalb den Rechner erneut und vergleicht
+mit den **gespeicherten Messpunkten** — nicht mit der interpolierten Tabelle.
+
+- **Aufruf:** `node scripts/estv-stichprobe.mjs` (optional `--messpunkte <datei>`, `--schwelle <CHF>`). Nur lesend, schreibt
+  nichts. Gleiche Schnittstelle und gleiche Anfrage wie die Messung (beide aus `scripts/estv-schnittstelle.mjs`).
+- **Umfang:** 26 Kantone × ledig/verheiratet × Brutto 50'000 · 80'000 · 120'000, ohne Kinder = **156 Abrufe**,
+  seriell mit 150 ms Pause (rund 40 Sekunden). Vorher: Gegenprobe mit einer erfundenen Operation und Abruf der Version.
+- **Vergleich:** Kantons- + Gemeindesteuer (K+G) und steuerbares Einkommen Bund gegen `steuerfaktor-band-2026.messpunkte.json`.
+  Abweichend ist ein Punkt, wenn einer der beiden Werte um **mehr als CHF 1** abweicht. Die ESTV ist ein Rechner,
+  keine Messung mit Streuung: am selben Punkt liefert sie dieselbe Zahl (ZH am 23.09. in allen Feldern gleich wie am 16.09.).
+- **Exit-Code:** 0 = alle 156 Abrufe erfolgreich, keine Abweichung · 1 = mindestens eine Abweichung · 2 = Messung
+  gescheitert oder unvollständig (Netz, Schnittstelle geändert, Gegenprobe beantwortet, Messpunkt fehlt, weniger als 156
+  erfolgreiche Abrufe). 2 hat Vorrang vor 1; gefundene Abweichungen werden trotzdem ausgegeben. Die Zahl der erfolgreichen
+  Abrufe steht immer in der Ausgabe — «0 Abweichungen aus 0 Abrufen» ist 2, nie 0.
+- **Wann (Vorschlag):** vor einem Deploy, der Steuerzahlen zeigt, und wenn die ESTV Änderungen am Rechner ankündigt. Ob und wie oft
+  sie regelmässig läuft, entscheidet Stebler Studios; es gibt bewusst keinen Cron und keinen GitHub-Workflow.
+- **Bei Exit 1:** die Tabelle **nicht von Hand** ändern. Den gemeldeten Kanton nachmessen
+  (`node scripts/steuerband-messen.mjs --messen --kanton XX`, dann `--messen --kinder --kanton XX`, dann ohne Argumente
+  auswerten), den Befund unter «Nachmessungen» begründen (was hat sich geändert, belegt oder nur vermutet) und als
+  eigenen PR vorlegen.
+- **Bei Exit 2:** kein Befund über die Aktualität. Fehlerzeilen lesen; bei Netzproblemen später wiederholen, bei
+  geänderter Schnittstelle zuerst `steuerband-messen.mjs` anpassen.
+- **Grenzen:** geprüft werden nur drei Löhne ohne Kinder. Eine Änderung, die allein Kinderabzüge, andere Lohnbereiche
+  oder andere Gemeinden als den Hauptort betrifft, sieht die Stichprobe nicht. Die TI-Änderung vom 23.09. hätte sie an
+  allen 6 TI-Punkten gemeldet (−29 bis −123 CHF; Gegenprobe mit den archivierten Werten am 24.09.2026).
+
 ## Tabelle und Randregel
 
 - Je Kanton × Zivilstand × Kinderzahl eine Reihe von **Stützpunkten**. Jeder Stützpunkt ist ein Messpunkt.

@@ -42,6 +42,14 @@ kommt der Changelog immer mit, nie doppelt.*
   als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
+- **ESTV-Stichprobe für die Kantonssteuer-Tabelle** (Entwickler-Skript, die App bleibt ohne
+  Netz). `node scripts/estv-stichprobe.mjs` fragt den ESTV-Steuerrechner an 156 Punkten
+  (26 Kantone × ledig/verheiratet × Brutto 50 000/80 000/120 000) erneut und vergleicht mit
+  den gespeicherten Messpunkten; Exit 0 = gleich, 1 = Abweichung (Kanton nachmessen),
+  2 = Messung gescheitert. Anlass: die TI-Änderung vom 23.09., die die Tests nicht bemerkten.
+  Erster Lauf 24.09.2026: 156 von 156 Abrufen, keine Abweichung. Anbindung an die ESTV jetzt
+  in `scripts/estv-schnittstelle.mjs`, gemeinsam für Messung und Stichprobe. Beschreibung im
+  Quellenblatt `docs/sources/kantonssteuer-tabelle-2026.md`, Abschnitt «Stichprobe».
 - Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
   verstreuter Vergleiche mit `'married'`; ein Test prüft die Quelle, dass niemand an ihr
   vorbei vergleicht.
