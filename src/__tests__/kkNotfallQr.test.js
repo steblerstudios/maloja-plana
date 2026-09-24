@@ -78,7 +78,9 @@ describe('KK-Karte: zwei Codes, zwei Aufgaben', () => {
     const notiz = notizVon(v);
     expect(notiz).toContain('Versicherer: ÖKK');
     expect(notiz).toContain('Kartennummer: 80756001234567890');
-    expect(notiz).toContain('AHV-Nummer: 756.1234.5678.90');
+    // K123 (Entscheid 24.09.2026): AHV-Nummer nur mit Schalter — siehe k123AhvNurAufWunsch.test.js.
+    expect(notiz).not.toContain('756.1234.5678.90');
+    expect(notizVon(kkNotfallVcard({ t, kkData, mitAhv: true }))).toContain('AHV-Nummer: 756.1234.5678.90');
   });
 
   it('nimmt eine Überschrift, die auf einer Karte Sinn ergibt — keine Handlungsaufforderung', () => {
