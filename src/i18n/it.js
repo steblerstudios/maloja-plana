@@ -3267,7 +3267,9 @@ export default {
     welcome: { title: 'Benvenuto su Maloja', text: { sie: 'Il suo luogo tranquillo per tutto ciò che è svizzero — documenti, budget, assicurazioni, scadenze. Una breve visita, saltabile in qualsiasi momento.', du: 'Il tuo luogo tranquillo per tutto ciò che è svizzero — documenti, budget, assicurazioni, scadenze. Una breve visita, saltabile in qualsiasi momento.' } },
     berge: { title: 'I progressi', text: { sie: 'Le montagne mostrano con calma a che punto è il suo raccoglitore di vita — senza pressione, senza rincorrere le percentuali.', du: 'Le montagne mostrano con calma a che punto è il tuo raccoglitore di vita — senza pressione, senza rincorrere le percentuali.' } },
     anspruch: { title: 'Possibili diritti', text: { sie: 'Qui Maloja rivela a cosa potrebbe avere diritto — in base a ciò che ha scelto all\'inizio.', du: 'Qui Maloja rivela a cosa potresti avere diritto — in base a ciò che hai scelto all\'inizio.' } },
-    privacy: { title: 'Tutto resta sul dispositivo', text: { sie: 'I suoi dati restano su questo dispositivo. Nessun account, nessun cloud, nessun tracciamento. Cominciamo.', du: 'I tuoi dati restano su questo dispositivo. Nessun account, nessun cloud, nessun tracciamento. Cominciamo.' } },
+    privacy: { title: 'Tutto resta sul dispositivo', text: { sie: 'I suoi dati restano su questo dispositivo. Nessun account, nessun cloud, nessun tracciamento.', du: 'I tuoi dati restano su questo dispositivo. Nessun account, nessun cloud, nessun tracciamento.' } },
+    start: { title: { sie: 'Inizi da qui', du: 'Inizia da qui' }, text: 'Qui c\'è sempre un solo prossimo passo. Il resto può aspettare.' },
+    startAction: 'Iniziare con «{name}»',
   },
 
   onboarding: {
@@ -3289,9 +3291,7 @@ export default {
     readyTitle: 'Pronto, {name}.',
     readyTitleGeneric: 'Tutto è configurato.',
     readyMessage: { sie: 'Il Suo organizzatore di vita svizzero è configurato.', du: 'Il tuo organizzatore di vita svizzero è configurato.' },
-    tip1: { sie: 'Inizi con «Base personale» per salvare le Sue informazioni principali', du: 'Inizia con «Base personale» per salvare le tue informazioni principali' },
-    tip2: { sie: 'Carichi i documenti importanti nell\'archivio', du: 'Carica i documenti importanti nell\'archivio' },
-    tip3: { sie: 'Imposti promemoria per permessi, assicurazioni e appuntamenti', du: 'Imposta promemoria per permessi, assicurazioni e appuntamenti' },
+    readyNext: { sie: 'Il Suo primo passo La aspetta nella panoramica. Una cosa alla volta.', du: 'Il tuo primo passo ti aspetta nella panoramica. Una cosa alla volta.' },
     getStarted: 'Iniziamo',
   },
 

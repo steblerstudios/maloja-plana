@@ -2377,7 +2377,9 @@ export default {
     welcome: { title: 'Bainvegni tar Maloja', text: 'Tes lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.' },
     berge: { title: 'Il progress', text: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' },
     anspruch: { title: 'Pussaivels dretgs', text: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' },
-    privacy: { title: 'Tut resta sin l\'apparat', text: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking. Lain cumenzar.' },
+    privacy: { title: 'Tut resta sin l\'apparat', text: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.' },
+    start: { title: 'Cumenza qua', text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
+    startAction: 'Cumenzar cun «{name}»',
   },
 
   onboarding: {
@@ -2406,9 +2408,7 @@ export default {
     readyTitle: 'Pront, {name}.',
     readyTitleGeneric: 'Tut è pront.',
     readyMessage: { sie: 'Voss organisatur svizzer persunala è installà.', du: 'Tes organisatur svizzer persunala è installà.' },
-    tip1: { sie: 'Cumenzai cun «Basa persunala» per memorisar Vossas infurmaziuns las pli impurtantas', du: 'Cumenza cun «Basa persunala» per memorisar Tias infurmaziuns las pli impurtantas' },
-    tip2: 'Chargia si documents impurtants en la deposita',
-    tip3: 'Metta commemoraziuns per permissiuns, assicuranzas e termins',
+    readyNext: { sie: 'Voss emprim pass As spetga en la survista. Ina chaussa suenter l\'autra.', du: 'Tes emprim pass ta spetga en la survista. Ina chaussa suenter l\'autra.' },
     getStarted: 'Dai!',
   },
 

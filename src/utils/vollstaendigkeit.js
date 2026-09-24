@@ -80,3 +80,8 @@ export const grundordnung = (chapters, data) => {
   });
   return { filled, total: fields.length, pct: pct(filled, fields.length), fields };
 };
+
+// Der EINE nächste Schritt: erstes offenes Grundordnungs-Feld, sonst null.
+// Eine Quelle für «Was ist jetzt dran?» im Dashboard und das Ende des Rundgangs.
+export const naechsterSchritt = (chapters, data) =>
+  grundordnung(chapters, data).fields.find((f) => !f.done) || null;

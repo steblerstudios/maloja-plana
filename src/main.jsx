@@ -13,7 +13,7 @@ import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
-import { gesamtVollstaendigkeit } from './utils/vollstaendigkeit.js';
+import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
 import { eintragFolgen } from './utils/eintragFolgen.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
@@ -538,6 +538,7 @@ const AppInner = ({ demo }) => {
     { key: 'berge', target: 'berge' },
     { key: 'anspruch', target: 'anspruch' },
     { key: 'privacy' },
+    { key: 'start', target: 'naechster-schritt' },
   ];
   // Nach abgeschlossenem Onboarding einmalig anbieten, solange nicht erledigt.
   useEffect(() => {
@@ -1105,6 +1106,14 @@ const AppInner = ({ demo }) => {
     (tourOpen && view === 'dashboard') && React.createElement(React.Suspense, { fallback: null, key: 'tour' },
       React.createElement(Tour, {
         palette, t, steps: TOUR_STEPS,
+        // Letzte Station zeigt «Was ist jetzt dran?»; der Knopf öffnet genau diesen Schritt.
+        abschluss: (() => {
+          const schritt = naechsterSchritt(chapters, activeData);
+          return schritt && {
+            label: t('tour.startAction', { name: schritt.label }),
+            onClick: () => startTransition(() => { setActiveChapter(schritt.chapterIdx); setView('chapter'); }),
+          };
+        })(),
         onFinish: () => setTourOpen(false),
         onLater: () => setTourOpen(false),
       })

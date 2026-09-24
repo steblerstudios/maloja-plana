@@ -347,15 +347,10 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         t('onboarding.readyMessage')
       ),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left', padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
-        [
-          t('onboarding.tip1'),
-          t('onboarding.tip2'),
-          t('onboarding.tip3'),
-        ].map((tip, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, display: 'flex', gap: space.sm } },
-          React.createElement('span', { style: { color: palette.sage } }, hinweisZeichen('check', 12)),
-          tip
-        ))
+      // Ein Satz statt drei Tipps: die Einführung zeigt auf EINEN ersten Schritt,
+      // den die Übersicht («Was ist jetzt dran?») und der Rundgang dann öffnen.
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, padding: space.md, background: palette.up, borderRadius: radius.sm, margin: '0 0 ' + space.md + 'px 0' } },
+        t('onboarding.readyNext')
       ),
 
       React.createElement('button', { onClick: finish, style: btnPrimary },

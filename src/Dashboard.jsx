@@ -5,7 +5,7 @@ import { text, weight, leading, space, radius, shadow, ease, duration } from './
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
-import { grundordnung, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
+import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import { aufklappZeichen } from './IconKern.jsx';
@@ -483,7 +483,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Marken-Tönung; die nächste Aktion ist der Hero (kleiner Bereichs-Punkt als
     // A11y-Identität, nicht laute Fläche); die Aktion ist randlos, Fläche kommt erst
     // im Hover zurück; der Glance wird EINE ruhige tertiäre Zeile mit Dot-Separator.
+    // data-tour: der Rundgang endet hier (Tester-Rückmeldung 24.09.: «ok und jetzt…?»).
     React.createElement('div', {
+      'data-tour': 'naechster-schritt',
       style: {
         marginTop: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
         background: palette.surface, border: '1px solid ' + palette.border,
@@ -495,7 +497,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
-        const nextField = mvo.fields.find((f) => !f.done);
+        const nextField = naechsterSchritt(chapters, data);
         if (nextField) {
           const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
           return React.createElement('button', {
