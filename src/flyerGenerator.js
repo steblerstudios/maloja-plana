@@ -1,5 +1,8 @@
 // Druckbarer Verteil-Flyer A5, zwei Seiten, mit QR-Code zu malojaplana.ch.
 // Reines HTML für openPrintWindow → Nutzer:in druckt oder speichert als PDF.
+// Kein onload-Druckaufruf im HTML: das Fenster erbt die CSP der App (script-src
+// 'self'), ein Inline-Handler wird dort blockiert — gemessen 25.09.2026. Den Druck
+// löst FlyerView aus dem App-Fenster aus.
 // Keine neue Dependency: QR kommt als data-URL aus dem vorhandenen QRCode-Vendor.
 //
 // Aufbau nach dem Druckerei-Flyer vom 21.09.2026 (Vorderseite: Claim, Rückseite:
@@ -28,6 +31,19 @@ function claimTeilen(claim) {
   return m ? [m[1], m[2]] : [claim, ''];
 }
 
+// Lexend wie in der App (tokens.css). Das Druckfenster erbt die Schriften der App
+// nicht — ohne eigene @font-face stand der Flyer in der Systemschrift. Absolute
+// Adresse, weil das Fenster about:blank ist; aus einer gespeicherten HTML-Datei
+// greift die Adresse nicht, dann bleibt der Rückfall auf die Systemschrift.
+const LATIN = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
+const LATIN_EXT = 'U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF';
+function schriften(ursprung) {
+  return [400, 600, 700].map((w) => [['latin', LATIN], ['latin-ext', LATIN_EXT]].map(([teil, bereich]) =>
+    '@font-face { font-family: "Lexend"; font-style: normal; font-weight: ' + w + '; src: url("'
+    + ursprung + '/fonts/lexend-' + teil + '-' + w + '-normal.woff2") format("woff2"); unicode-range: ' + bereich + '; }'
+  ).join('')).join('');
+}
+
 function bildmarke(hoeheMm) {
   const f = LOGO_FARBEN.hell;
   return '<svg class="marke" viewBox="0 0 500 540" style="height:' + hoeheMm + 'mm" aria-hidden="true">'
@@ -37,7 +53,7 @@ function bildmarke(hoeheMm) {
     + '</svg>';
 }
 
-export function buildFlyerHtml({ t, qrDataUrl }) {
+export function buildFlyerHtml({ t, qrDataUrl, ursprung = (typeof location !== 'undefined' ? location.origin : '') }) {
   const [claimA, claimB] = claimTeilen(t('flyer.claim')).map(esc);
   const lead = esc(t('flyer.lead'));
   const points = [t('flyer.point1'), t('flyer.point2'), t('flyer.point3')]
@@ -54,6 +70,7 @@ export function buildFlyerHtml({ t, qrDataUrl }) {
 
   return '<!DOCTYPE html><html><head><meta charset="utf-8">'
     + '<title>Maloja Plana — Flyer</title><style>'
+    + schriften(ursprung)
     + '@page { size: A5; margin: 0; }'
     + '* { box-sizing: border-box; }'
     + 'body { font-family: "Lexend", -apple-system, system-ui, Segoe UI, Roboto, sans-serif; color: ' + FARBE.text + '; margin: 0; background: #EDEBE6; }'
@@ -84,7 +101,7 @@ export function buildFlyerHtml({ t, qrDataUrl }) {
     + '.start .url { margin-top: 5mm; }'
     + '.hinweis { font-size: 7.5pt; color: ' + FARBE.mid + '; line-height: 1.45; margin-top: 6mm; }'
     + '@media print { body { background: none; } .seite { margin: 0; box-shadow: none; break-after: page; page-break-after: always; } .seite:last-child { break-after: auto; page-break-after: auto; } }'
-    + '</style></head><body onload="window.focus();window.print();">'
+    + '</style></head><body>'
 
     // Vorderseite
     + '<section class="seite">'

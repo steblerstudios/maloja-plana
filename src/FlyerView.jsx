@@ -26,7 +26,13 @@ export const FlyerView = ({ palette, t, lang }) => {
   const handlePrint = () => {
     const canvas = qrRef.current && qrRef.current.querySelector('canvas');
     const qrDataUrl = canvas ? canvas.toDataURL('image/png') : '';
-    openPrintWindow(buildFlyerHtml({ t, qrDataUrl }));
+    const win = openPrintWindow(buildFlyerHtml({ t, qrDataUrl }));
+    // Aus dem App-Fenster drucken (ein Inline-Handler im Druckfenster fällt unter
+    // die CSP) — und erst, wenn Lexend geladen ist, sonst druckt die Systemschrift.
+    if (win) {
+      const bereit = win.document.fonts ? win.document.fonts.ready : Promise.resolve();
+      bereit.then(() => { win.focus(); win.print(); });
+    }
   };
 
   // App teilen: native Teilen-Dialog (Handy) oder Fallback „Link kopiert".

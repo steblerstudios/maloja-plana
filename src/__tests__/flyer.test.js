@@ -27,7 +27,8 @@ describe('flyerGenerator', () => {
     expect(html).toContain('Maloja Plana');
     expect(html).toContain('malojaplana.ch');
     expect(html).toContain('data:image/png;base64,AAAA');
-    expect(html).toContain('window.print()');
+    // Kein Inline-Handler: die CSP (script-src 'self') blockiert ihn im Druckfenster.
+    expect(html).not.toMatch(/\son[a-z]+=/);
   });
 
   it('escaped HTML-Sonderzeichen aus Übersetzungen', () => {
@@ -53,6 +54,11 @@ describe('flyerGenerator', () => {
     expect(zwei).toContain('<span class="a">Erster Satz.</span><span class="b">Zweiter Satz.</span>');
     const eins = buildFlyerHtml({ t: (k) => k === 'flyer.claim' ? 'Ohne Punkt' : k, qrDataUrl: '' });
     expect(eins).toContain('<span class="a">Ohne Punkt</span></div>');
+  });
+
+  it('bindet Lexend über die App-Adresse ein', () => {
+    const html = buildFlyerHtml({ t: tStub, qrDataUrl: '', ursprung: 'https://malojaplana.ch' });
+    for (const w of [400, 600, 700]) expect(html).toContain('https://malojaplana.ch/fonts/lexend-latin-' + w + '-normal.woff2');
   });
 
   it('bleibt robust ohne QR-Daten', () => {

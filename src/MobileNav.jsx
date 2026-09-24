@@ -4,7 +4,7 @@ import { text, weight, space, radius, shadow, ease, duration } from './config/to
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
 import { aufklappZeichen } from './IconSystem.jsx';
-import { ansichtIkon } from './config/ansichtenRegister.js';
+import { ansichtIkon, SEARCH_VIEWS } from './config/ansichtenRegister.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -288,13 +288,30 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
             }
           });
 
-          // Tools
+          // Tools — gesucht wird wie in der grossen Suche (SearchView): Name,
+          // Beschreibung und Aliase aus dem gemeinsamen Register. Vorher nur die
+          // eigenen 18 Einträge über Name und Schlüssel: «Flyer», «Asyl», «AHV»
+          // oder «Links» fanden im Menü nichts, obwohl es die Ansichten gibt (25.09.2026).
+          const trifft = (teile) => teile.some(p => (p || '').toLowerCase().includes(q));
+          const registerTeile = (key) => {
+            const e = SEARCH_VIEWS.find(v => v.view === key);
+            return e ? [e.sub ? t(e.sub) : '', ...(e.aliases || [])] : [];
+          };
           allTools.forEach(tool => {
-            if (tool.label.toLowerCase().includes(q) || tool.key.toLowerCase().includes(q)) {
+            if (trifft([tool.label, tool.key, ...registerTeile(tool.key)])) {
               results.push(navItem(tool.key, tool.label, tool.icon,
                 () => { onNavigate(tool.key); onClose(); }, activeView === tool.key));
             }
           });
+          SEARCH_VIEWS
+            .filter(v => !allTools.some(tool => tool.key === v.view))
+            .forEach(v => {
+              const label = t(v.nav);
+              if (trifft([label, v.view, ...registerTeile(v.view)])) {
+                results.push(navItem(v.view, label, v.icon,
+                  () => { onNavigate(v.view); onClose(); }, activeView === v.view));
+              }
+            });
 
           if (results.length === 0) {
             results.push(React.createElement('div', {
