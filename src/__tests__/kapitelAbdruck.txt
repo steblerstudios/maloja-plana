@@ -1,0 +1,765 @@
+# de: 7 Kapitel
+de kapitel=basis title~e089a066 short~e72f9e0d description~f569cf9f felder=14 docs=2
+de   k=firstName type="text" required=true mvo=true autoComplete="given-name" section~c36eeba0 label~908b0683 sectionIntro~8f39a8ca
+de   k=middleName type="text" autoComplete="additional-name" label~fb882b67
+de   k=lastName type="text" required=true mvo=true autoComplete="family-name" label~6d9af6f8
+de   k=academicTitle type="text" autoComplete="honorific-prefix" hint~42d218b2 label~09ea0d77
+de   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~cc5ccbe6
+de   k=gender type="select" label~b2bec09f options=3 optWerte~c41e840c optLabels~0c2cb9c8
+de   k=pronouns type="select" label~c91cb56d options=4 optWerte~a161f8e0 optLabels~ec9e100b
+de   k=nationality type="select" label~11fd0bba options=6 optWerte~4fd616d7 optLabels~63e127bf
+de   k=canton type="select" mvo=true label~426d5396 options=26 optWerte~25f3960d optLabels~5a274633
+de   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~42ec9773 placeholder~ba44eeab label~9efa9d9c sectionIntro~e5f81fa8
+de   k=email type="email" recommended=true naOk=true autoComplete="email" label~b463dcd0
+de   k=ahv type="text" orientation~089d05e5 hint~302dc2a1 placeholder~6fc297e9 label~5874dcd9
+de   k=maritalStatus type="select" section~87778534 label~bf99b615 sectionIntro~9657498a options=7 optWerte~ea8bd93f optLabels~3f6db097
+de   k=household type="household" label~cd8a2627
+de   doc k=id label~02dd9130
+de   doc k=ahv_card label~66406294
+de kapitel=wohnen title~bc0184bc short~4c36ba0a description~d387a9aa felder=12 docs=3
+de   k=address type="text" mvo=true autoComplete="street-address" section~1f2a8a8e label~18b3aa19 sectionIntro~5ceee912
+de   k=postalCode type="text" mvo=true autoComplete="postal-code" label~e1efaf99
+de   k=city type="text" mvo=true autoComplete="address-level2" label~0ba89c70
+de   k=moveInDate type="date" label~712c6f03
+de   k=rentAmount type="currency" section~0f3e02f3 orientation~2d4a90ac label~1e0e94be sectionIntro~5649bf6c
+de   k=utilities type="currency" label~c9426e2c
+de   k=landlord type="text" section~1c3e07ae label~0ea5728f sectionIntro~fdba0ae8
+de   k=landlordPhone type="tel" label~de74c7c1
+de   k=mortgageStatus type="select" section~08a5f33b label~838b2c4b sectionIntro~cd47cc55 options=3 optWerte~0cea95a2 optLabels~ca3bd945 weitere=secondary
+de   k=propertyValue type="currency" label~79cea98b weitere=secondary
+de   k=buildingsInsurance type="currency" label~1da85b29 weitere=secondary
+de   k=residenceType type="select" orientation~c1e73ef8 label~a8d1f8f9 options=3 optWerte~2d45a5d5 optLabels~03370150 weitere=secondary
+de   doc k=lease label~2292b1c9
+de   doc k=insurance label~68f53ecd
+de   doc k=deposit label~25dd044a
+de kapitel=finanzen title~815ac648 short~93e7cfca description~eaac6bbb felder=37 docs=3
+de   k=monthlyIncome type="currency" mvo=true section~983ce564 orientation~e7644eb3 hint~df7ceba5 label~b34ce9dc sectionIntro~886ab738
+de   k=sideIncome type="currency" hint~88a04524 label~396916f9
+de   k=sideEmployer type="text" hint~ee7f4af3 label~cc5f9c0c
+de   k=sideEmployerAddress type="textarea" hint~cdc1af9a label~d235684e
+de   k=sideHoursPerWeek type="text" hint~3d008c77 label~c99c1444
+de   k=sideIncomeType type="select" label~f0699779 options=2 optWerte~808c757b optLabels~b5fa5c35
+de   k=taxableIncome type="currency" hint~7b79b5cc label~c170169c weitere=secondary
+de   k=incomeType type="select" label~e67c1e1a options=2 optWerte~808c757b optLabels~b5fa5c35
+de   k=dreizehnter type="select" label~64231a85 options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=employer type="text" recommended=true naOk=true label~29d7414b
+de   k=employerAddress type="textarea" naOk=true hint~496988cf label~902f77eb
+de   k=employmentType type="select" label~691027ce options=4 optWerte~cb5df223 optLabels~28763f8f
+de   k=startDate type="date" naOk=true label~19564dc6
+de   k=familienzulagen type="currency" hint~7435e1a4 label~0fe6842d
+de   k=alimenteReceived type="currency" naOk=true hint~7b19adf2 label~32f358ea
+de   k=monthlyTax type="currency" section~7fbd78d9 orientation~f084a402 hint~31f01489 label~ed272dd3 sectionIntro~fff57679
+de   k=groceries type="currency" hint~7ade268d label~df1e6174 weitere=itemized
+de   k=communication type="currency" hint~00951ccf label~0cb95b8e weitere=itemized
+de   k=mobility type="currency" hint~3651fe84 label~de6ba476
+de   k=childcare type="currency" hint~2a713569 label~c3160dfc
+de   k=otherInsurance type="currency" hint~9ae3d160 label~d79c84c5
+de   k=debtPayments type="currency" section~814ae527 orientation~585fa5b1 hint~67b38874 label~90013432 sectionIntro~669d2066
+de   k=alimentePaid type="currency" naOk=true hint~f0a343e6 label~6ef147fd
+de   k=savingsGoal type="currency" section~ed62852a label~e04a31f6 sectionIntro~657a9e98
+de   k=savingsAccount type="currency" label~45795046
+de   k=bankName type="text" label~8254e6b4
+de   k=securitiesValue type="currency" section~6dc1aa13 hint~e46086ce label~39f3005c sectionIntro~77cd4a77
+de   k=otherAssets type="currency" hint~d168a424 label~0493040e
+de   k=creditCard type="select" section~7004241c label~8ea90c21 sectionIntro~bd8b59e5 options=3 optWerte~040349ee optLabels~fde72da3
+de   k=creditCardLimit type="currency" hint~5ee0b1e3 label~28250706
+de   k=creditCardBalance type="currency" hint~fc7b50e6 label~338fa8d7
+de   k=loans type="currency" label~922e1b38
+de   k=pension3a type="currency" section~7074ad60 orientation~3f1dd2e3 label~1bb6f7a8 sectionIntro~f42320a6 weitere=secondary
+de   k=pension3aBalance type="currency" hint~3bb19401 label~f70878b7 weitere=secondary
+de   k=pension3b type="select" orientation~7508f8f6 label~3d286587 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
+de   k=pension3bBalance type="currency" hint~025d7f7c label~3680e522 weitere=secondary
+de   k=investmentFunds type="select" label~b27a4fc5 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
+de   doc k=tax_return label~1ae7994f
+de   doc k=income_proof label~27624eea
+de   doc k=bank_statement label~67623951
+de kapitel=versicherungen title~ef27b74c short~dca3d9ce description~deb8fbd8 felder=25 docs=5
+de   k=kkInsurer type="text" mvo=true section~a6b6d59a orientation~73f99cd4 link~8ce59537 placeholder~3cd655d7 label~308f6858 sectionIntro~bcc4d385
+de   k=kkModel type="select" label~86df66a1 options=7 optWerte~8aa6d6ea optLabels~83eac850
+de   k=kkPremium type="currency" mvo=true label~8a67ec89
+de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b options=10 optWerte~98b76529 optLabels~6fdc5753
+de   k=kkCardNumber type="text" label~8fdb99db
+de   k=policyNumber type="text" hint~d822c8ff label~45658792
+de   k=kkZusatz type="text" placeholder~e363faf1 label~32e009c5
+de   k=bvgInsurer type="text" section~a6cafb55 orientation~d8d2f012 label~c46d911d sectionIntro~1da37530
+de   k=bvgContribution type="currency" hint~035e422c label~8e69d0e5
+de   k=bvgBalance type="currency" hint~eb9360bd label~fdb3b6f8
+de   k=lifeInsurance type="select" label~7c765337 options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=freizuegigkeit type="text" placeholder~f95f5578 label~16fd9aeb
+de   k=uvg type="select" section~737d6896 orientation~a55470cd label~3aebc309 sectionIntro~bc27e17c options=4 optWerte~7a7294d0 optLabels~8f7142fd
+de   k=ktg type="select" hint~26ef1d64 label~e368f0c6 options=3 optWerte~b282c309 optLabels~b84eabf0
+de   k=liabilityInsurance type="select" label~35689dfd options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=liabilityAmount type="currency" label~60667f87
+de   k=legalInsurance type="select" label~ef65a8c2 options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=childInsurance type="select" label~d4bfa8c0 options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=householdInsurance type="select" section~84dd083b label~7fb8ceae sectionIntro~8ab19c05 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
+de   k=householdInsuranceAmount type="currency" label~93aa3ada weitere=secondary
+de   k=travelInsurance type="select" label~67f3c95c options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
+de   k=cyberInsurance type="select" label~20416e75 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
+de   k=autoInsurance type="select" section~dc190f05 label~8c2e48e7 sectionIntro~1047edc8 options=4 optWerte~5e620e1c optLabels~886529c7 weitere=secondary
+de   k=autoInsuranceAmount type="currency" label~287b6bc3 weitere=secondary
+de   k=ahvContribution type="currency" section~68b4466c orientation~c73b3b05 link~4c587ded label~81b296f0 sectionIntro~227f8993
+de   doc k=kkcard label~2633a5e7
+de   doc k=bvg_cert label~88abb78c
+de   doc k=ahv_confirmation label~2afe4119
+de   doc k=household_policy label~ef2ca267
+de   doc k=auto_policy label~b2d4d9c9
+de kapitel=ausbildung title~481c54e8 short~eaab6a9f description~eeb30453 felder=11 docs=3
+de   k=schoolName type="text" section~cbdaf340 label~2778e109 sectionIntro~abdd9795
+de   k=educationLevel type="select" label~32a9109a options=7 optWerte~fde3f0aa optLabels~71fa8490
+de   k=efzNumber type="text" label~9a6aa984
+de   k=certifications type="textarea" label~4edaf2ae
+de   k=employer type="text" naOk=true section~81dea24a label~29d7414b sectionIntro~6965924c
+de   k=employerAddress type="textarea" naOk=true label~902f77eb
+de   k=jobTitle type="text" mvo=true naOk=true orientation~29fa1707 label~36ea3f94
+de   k=employmentStart type="date" naOk=true label~61333009
+de   k=workPermit type="select" orientation~16448996 label~d08cbc7b options=5 optWerte~14b89076 optLabels~1de4e09b
+de   k=workHoursPerWeek type="text" naOk=true label~034f1a25
+de   k=languages type="textarea" section~8955896f label~8955896f sectionIntro~85162a34
+de   doc k=diploma label~d65d7498
+de   doc k=certificates label~6883c28b
+de   doc k=cv_file label~b8f43900
+de kapitel=behoerden title~61ba669b short~033e78a7 description~c43c4149 felder=10 docs=4
+de   k=cantoneOfTaxation type="select" mvo=true section~a3dcb96b orientation~23dfb9d3 label~e1f7d840 sectionIntro~28d5e10b options=26 optWerte~25f3960d optLabels~5a274633
+de   k=taxId type="text" label~05fb1ebf
+de   k=taxFilingDeadline type="date" label~90bd9dbf
+de   k=pendingTaxReturns type="text" label~9eebcd73
+de   k=registryOffice type="text" section~dddc3925 orientation~a4568872 label~30c4b117 sectionIntro~ddcd3275
+de   k=betreibungsStatus type="select" orientation~e6595be7 label~c61133fe options=3 optWerte~13bd59f1 optLabels~541b5dfe
+de   k=courtCases type="select" label~bd0cc30a options=2 optWerte~2bfd19fd optLabels~b50f42dc
+de   k=legalRepresentative type="text" section~5dca6923 label~70fd3696 sectionIntro~c8e6925b
+de   k=representativePhone type="tel" label~fe6ae533
+de   k=willMade type="select" orientation~12ec713c link~2c2317f6 label~aa1af562 options=4 optWerte~ba1da0c9 optLabels~d0eae07a
+de   doc k=betreibungsauszug label~0e973d0c
+de   doc k=will label~aa111790
+de   doc k=power_of_attorney label~264c7d29
+de   doc k=patientenverfuegung label~05956eff
+de kapitel=notfall title~75c3c7ff short~75c3c7ff description~2433267e felder=13 docs=3
+de   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~6f2714f9 label~26b17e0b sectionIntro~8b17a924
+de   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~5ad51ea0
+de   k=bloodType type="select" section~43769dba label~08bc5ed1 sectionIntro~fde5817a options=9 optWerte~a43a8405 optLabels~5ba685c5
+de   k=allergies type="textarea" label~5c4713d0
+de   k=medications type="textarea" label~7f167c9e
+de   k=chronicDiseases type="textarea" label~a2e0f5ce
+de   k=doctor type="text" section~3a28348b label~5bf93fcf sectionIntro~fae0cb62
+de   k=doctorPhone type="tel" label~b805a4e9
+de   k=hospital type="text" label~28a433c8
+de   k=organDonor type="select" section~7074ad60 label~cf2fb2f6 sectionIntro~a340b7e7 options=3 optWerte~5703751f optLabels~012a5dcd weitere=secondary
+de   k=patientenverfuegung type="select" orientation~2c1f0a7c link~3fad1fbd hint~3420c2e1 label~1f306ca3 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
+de   k=vorsorgeauftrag type="select" orientation~5d58a3d5 hint~99417e17 label~9bf8b758 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
+de   k=bestattungswuensche type="select" hint~7b40ff07 label~6d81a204 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
+de   doc k=advance_directive label~05956eff
+de   doc k=organ_card label~173ef4d5
+de   doc k=blood_card label~5220626f
+# fr: 7 Kapitel
+fr kapitel=basis title~39cedbbd short~8b01539f description~b4184065 felder=14 docs=2
+fr   k=firstName type="text" required=true mvo=true autoComplete="given-name" section~557ab8fd label~01b6c31c sectionIntro~252e837f
+fr   k=middleName type="text" autoComplete="additional-name" label~075f92d9
+fr   k=lastName type="text" required=true mvo=true autoComplete="family-name" label~5bed6fc2
+fr   k=academicTitle type="text" autoComplete="honorific-prefix" hint~7791b0b7 label~00c52e73
+fr   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~6fc2f4c1
+fr   k=gender type="select" label~1c27eb60 options=3 optWerte~c41e840c optLabels~fc0fe3bc
+fr   k=pronouns type="select" label~95fee8e7 options=4 optWerte~a161f8e0 optLabels~752a4151
+fr   k=nationality type="select" label~b7ab7099 options=6 optWerte~4fd616d7 optLabels~5c9e8d7f
+fr   k=canton type="select" mvo=true label~c1c737be options=26 optWerte~25f3960d optLabels~869f43a7
+fr   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~5a7efbf7 sectionIntro~5b3205a4
+fr   k=email type="email" recommended=true naOk=true autoComplete="email" label~31bb94b0
+fr   k=ahv type="text" orientation~00642a96 hint~daee59a5 placeholder~6fc297e9 label~5d3f5709
+fr   k=maritalStatus type="select" section~7b7e2e15 label~101c0a06 sectionIntro~6e89a052 options=7 optWerte~ea8bd93f optLabels~1b5efc7e
+fr   k=household type="household" label~cd8a2627
+fr   doc k=id label~503aded3
+fr   doc k=ahv_card label~3dbc8932
+fr kapitel=wohnen title~73af4680 short~73af4680 description~3b52e981 felder=12 docs=3
+fr   k=address type="text" mvo=true autoComplete="street-address" section~1f2a8a8e label~6433ef68 sectionIntro~f6a6eb9f
+fr   k=postalCode type="text" mvo=true autoComplete="postal-code" label~fe33eb7b
+fr   k=city type="text" mvo=true autoComplete="address-level2" label~f7280ce4
+fr   k=moveInDate type="date" label~272ab907
+fr   k=rentAmount type="currency" section~83d0a3e9 orientation~b6178eac label~6c67bb6f sectionIntro~62bd2902
+fr   k=utilities type="currency" label~9427b231
+fr   k=landlord type="text" section~bb2e46c9 label~c49584ba sectionIntro~c82ba5d4
+fr   k=landlordPhone type="tel" label~66531bdc
+fr   k=mortgageStatus type="select" section~4d47010b label~c239305b sectionIntro~e9668d48 options=3 optWerte~0cea95a2 optLabels~d4197d7e weitere=secondary
+fr   k=propertyValue type="currency" label~07e23931 weitere=secondary
+fr   k=buildingsInsurance type="currency" label~6459c42d weitere=secondary
+fr   k=residenceType type="select" orientation~72141d35 label~f399d9c0 options=3 optWerte~2d45a5d5 optLabels~61377f72 weitere=secondary
+fr   doc k=lease label~238fa6cd
+fr   doc k=insurance label~41e8ca5d
+fr   doc k=deposit label~95fc26bf
+fr kapitel=finanzen title~791c82da short~791c82da description~05cec89d felder=37 docs=3
+fr   k=monthlyIncome type="currency" mvo=true section~f604eb7d orientation~f95f04a5 hint~2789285c label~4b56cc07 sectionIntro~4bea5a92
+fr   k=sideIncome type="currency" hint~a20fe93d label~b416eb33
+fr   k=sideEmployer type="text" hint~cb7c499b label~c28597bb
+fr   k=sideEmployerAddress type="textarea" hint~485299de label~a14229f0
+fr   k=sideHoursPerWeek type="text" hint~4082e040 label~1f7018fc
+fr   k=sideIncomeType type="select" label~83b49dbb options=2 optWerte~808c757b optLabels~db37ac7c
+fr   k=taxableIncome type="currency" hint~d5faa8d7 label~729a2e1d weitere=secondary
+fr   k=incomeType type="select" label~0e0a9629 options=2 optWerte~808c757b optLabels~db37ac7c
+fr   k=dreizehnter type="select" label~495f05d6 options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=employer type="text" recommended=true naOk=true label~375760d9
+fr   k=employerAddress type="textarea" naOk=true hint~30fe80dc label~1cbb3c6e
+fr   k=employmentType type="select" label~7947fb48 options=4 optWerte~cb5df223 optLabels~714717e1
+fr   k=startDate type="date" naOk=true label~f6a61ad7
+fr   k=familienzulagen type="currency" hint~30e71d92 label~7af5a968
+fr   k=alimenteReceived type="currency" naOk=true hint~02d20698 label~5be3aecd
+fr   k=monthlyTax type="currency" section~4c69a239 orientation~21720dae hint~4254ea11 label~0dedd722 sectionIntro~d2db756c
+fr   k=groceries type="currency" hint~b3cc4ce6 label~839ae437 weitere=itemized
+fr   k=communication type="currency" hint~bd489fc6 label~287f4ea4 weitere=itemized
+fr   k=mobility type="currency" hint~0bee7f96 label~b750c7e6
+fr   k=childcare type="currency" hint~1d5a0ee9 label~ce523916
+fr   k=otherInsurance type="currency" hint~2bfcabbd label~c6bf8ccb
+fr   k=debtPayments type="currency" section~bd90d24e orientation~b77bc473 hint~5452b16a label~6e2d7107 sectionIntro~72bff012
+fr   k=alimentePaid type="currency" naOk=true hint~c7a20d97 label~24820529
+fr   k=savingsGoal type="currency" section~cc648e45 label~952818fa sectionIntro~2c644048
+fr   k=savingsAccount type="currency" label~e6e8ee93
+fr   k=bankName type="text" label~786dfbff
+fr   k=securitiesValue type="currency" section~bdfdd16a hint~b9f9a0ba label~726b5bc9 sectionIntro~0e48fc5c
+fr   k=otherAssets type="currency" hint~12fdc02d label~c71488d4
+fr   k=creditCard type="select" section~cf975a18 label~f1615cde sectionIntro~9b1e8b66 options=3 optWerte~040349ee optLabels~35f6ee44
+fr   k=creditCardLimit type="currency" hint~5a6aed5e label~007e5118
+fr   k=creditCardBalance type="currency" hint~c4be50ec label~c656f865
+fr   k=loans type="currency" label~30a93699
+fr   k=pension3a type="currency" section~7e99e423 orientation~5f3e4d5a label~c2ed4733 sectionIntro~56ce2669 weitere=secondary
+fr   k=pension3aBalance type="currency" hint~7fbe134b label~039bf1f3 weitere=secondary
+fr   k=pension3b type="select" orientation~12609e61 label~fc2ecff7 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
+fr   k=pension3bBalance type="currency" hint~3175f3c6 label~17ffdf4a weitere=secondary
+fr   k=investmentFunds type="select" label~9ebd6846 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
+fr   doc k=tax_return label~aca212a3
+fr   doc k=income_proof label~2f308946
+fr   doc k=bank_statement label~eedff1ab
+fr kapitel=versicherungen title~c74bd01f short~c74bd01f description~9a4e9a92 felder=25 docs=5
+fr   k=kkInsurer type="text" mvo=true section~4384b172 orientation~23c37a17 link~8ce59537 placeholder~3f2cceb8 label~14a71ffc sectionIntro~199947b7
+fr   k=kkModel type="select" label~7fc82fe8 options=7 optWerte~8aa6d6ea optLabels~dc6d42f3
+fr   k=kkPremium type="currency" mvo=true label~5d1cd9b4
+fr   k=franchise type="select" mvo=true orientation~1148922f label~41fbffa6 options=10 optWerte~98b76529 optLabels~f9e805ab
+fr   k=kkCardNumber type="text" label~527590eb
+fr   k=policyNumber type="text" hint~d07b68a9 label~57ba1e46
+fr   k=kkZusatz type="text" placeholder~2e1ce55e label~0e5cafc1
+fr   k=bvgInsurer type="text" section~05df8781 orientation~62af339c label~ec62308d sectionIntro~231c6da0
+fr   k=bvgContribution type="currency" hint~0ed643ae label~bc7757e2
+fr   k=bvgBalance type="currency" hint~9a0b9e08 label~efff73bc
+fr   k=lifeInsurance type="select" label~05c2d09e options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=freizuegigkeit type="text" placeholder~2d156349 label~eda8d82d
+fr   k=uvg type="select" section~2b64d29b orientation~4ac28821 label~b2088c18 sectionIntro~ca83d236 options=4 optWerte~7a7294d0 optLabels~2234d15c
+fr   k=ktg type="select" hint~0f86480f label~8295ffd9 options=3 optWerte~b282c309 optLabels~663c7233
+fr   k=liabilityInsurance type="select" label~06f30d53 options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=liabilityAmount type="currency" label~28d0e1d7
+fr   k=legalInsurance type="select" label~4ab16741 options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=childInsurance type="select" label~678802ea options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=householdInsurance type="select" section~53de6553 label~7da57549 sectionIntro~9b504bc6 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
+fr   k=householdInsuranceAmount type="currency" label~f179140b weitere=secondary
+fr   k=travelInsurance type="select" label~04d093eb options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
+fr   k=cyberInsurance type="select" label~4c129163 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
+fr   k=autoInsurance type="select" section~26357dc4 label~2aff3843 sectionIntro~20d535e5 options=4 optWerte~5e620e1c optLabels~09ea8a6d weitere=secondary
+fr   k=autoInsuranceAmount type="currency" label~88995d9f weitere=secondary
+fr   k=ahvContribution type="currency" section~8375c184 orientation~fa310432 link~4a587ac7 label~8ba447b4 sectionIntro~0c34c283
+fr   doc k=kkcard label~20db5e70
+fr   doc k=bvg_cert label~bfe675a1
+fr   doc k=ahv_confirmation label~75494ae1
+fr   doc k=household_policy label~fa628240
+fr   doc k=auto_policy label~f036b99e
+fr kapitel=ausbildung title~f48b5f55 short~b08ae58c description~afd4da82 felder=11 docs=3
+fr   k=schoolName type="text" section~b08ae58c label~6e198f2c sectionIntro~71ba23b1
+fr   k=educationLevel type="select" label~173704c6 options=7 optWerte~fde3f0aa optLabels~9ec1ea17
+fr   k=efzNumber type="text" label~a3028d61
+fr   k=certifications type="textarea" label~02d521b0
+fr   k=employer type="text" naOk=true section~05caadbf label~375760d9 sectionIntro~7d398bdf
+fr   k=employerAddress type="textarea" naOk=true label~1cbb3c6e
+fr   k=jobTitle type="text" mvo=true naOk=true orientation~09629125 label~dded5583
+fr   k=employmentStart type="date" naOk=true label~ee585ba1
+fr   k=workPermit type="select" orientation~6f20cae6 label~1fcaa2be options=5 optWerte~14b89076 optLabels~e473da76
+fr   k=workHoursPerWeek type="text" naOk=true label~4734a2a6
+fr   k=languages type="textarea" section~37f82364 label~37f82364 sectionIntro~13d45c74
+fr   doc k=diploma label~212b8a6f
+fr   doc k=certificates label~41ce1b52
+fr   doc k=cv_file label~b76a72e1
+fr kapitel=behoerden title~cd67a7aa short~d56b3dc1 description~749e1e4d felder=10 docs=4
+fr   k=cantoneOfTaxation type="select" mvo=true section~b3e26776 orientation~99f6d0b7 label~902a6e6a sectionIntro~0af69d8a options=26 optWerte~25f3960d optLabels~869f43a7
+fr   k=taxId type="text" label~81b0177d
+fr   k=taxFilingDeadline type="date" label~3e1f4c64
+fr   k=pendingTaxReturns type="text" label~5c9de4f2
+fr   k=registryOffice type="text" section~cfd75909 orientation~f2006eae label~385531fc sectionIntro~ede0eeed
+fr   k=betreibungsStatus type="select" orientation~b0ad3f5c label~c62055f5 options=3 optWerte~13bd59f1 optLabels~33d2ffb9
+fr   k=courtCases type="select" label~20b9d4a7 options=2 optWerte~2bfd19fd optLabels~b74e5823
+fr   k=legalRepresentative type="text" section~47681fdc label~43eca758 sectionIntro~3196baa2
+fr   k=representativePhone type="tel" label~7bbf8cc7
+fr   k=willMade type="select" orientation~8136a05a link~5ffebf04 label~197789ff options=4 optWerte~ba1da0c9 optLabels~fd0a5449
+fr   doc k=betreibungsauszug label~5030071d
+fr   doc k=will label~aa111790
+fr   doc k=power_of_attorney label~f0cdd99b
+fr   doc k=patientenverfuegung label~e44d35b2
+fr kapitel=notfall title~348ada00 short~348ada00 description~629a5cb4 felder=13 docs=3
+fr   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~bea9c8bf label~1fed170c sectionIntro~7d833d01
+fr   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~8d429f0b
+fr   k=bloodType type="select" section~d1e6c920 label~4f88c36e sectionIntro~38f12aaa options=9 optWerte~a43a8405 optLabels~4d3c65db
+fr   k=allergies type="textarea" label~59470f17
+fr   k=medications type="textarea" label~00ad4c03
+fr   k=chronicDiseases type="textarea" label~8bbdbea2
+fr   k=doctor type="text" section~0c503b47 label~ca3df85b sectionIntro~ebb1d025
+fr   k=doctorPhone type="tel" label~35c819af
+fr   k=hospital type="text" label~625996ae
+fr   k=organDonor type="select" section~e44d35b2 label~e466d103 sectionIntro~cc0091ef options=3 optWerte~5703751f optLabels~c3ec2f9d weitere=secondary
+fr   k=patientenverfuegung type="select" orientation~fa0f14cf link~361b792c hint~d143b29a label~9956aacb options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
+fr   k=vorsorgeauftrag type="select" orientation~4d317fd2 hint~2025a9d3 label~d06cac12 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
+fr   k=bestattungswuensche type="select" hint~e3332b91 label~86c51b39 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
+fr   doc k=advance_directive label~e44d35b2
+fr   doc k=organ_card label~d9344d20
+fr   doc k=blood_card label~7300bd74
+# it: 7 Kapitel
+it kapitel=basis title~93182e2a short~c31722d0 description~67ffef76 felder=14 docs=2
+it   k=firstName type="text" required=true mvo=true autoComplete="given-name" section~689d20d3 label~20569a90 sectionIntro~7edfcb38
+it   k=middleName type="text" autoComplete="additional-name" label~899ece23
+it   k=lastName type="text" required=true mvo=true autoComplete="family-name" label~7d62c429
+it   k=academicTitle type="text" autoComplete="honorific-prefix" hint~4fce84f0 label~73ad2236
+it   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~19637711
+it   k=gender type="select" label~2f3f1b79 options=3 optWerte~c41e840c optLabels~ef8c1a31
+it   k=pronouns type="select" label~7ffec645 options=4 optWerte~a161f8e0 optLabels~860678b7
+it   k=nationality type="select" label~9152ad98 options=6 optWerte~4fd616d7 optLabels~99bb8961
+it   k=canton type="select" mvo=true label~e79cedc1 options=26 optWerte~25f3960d optLabels~cf4927a4
+it   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~9a6a2c39 placeholder~ba44eeab label~3786a589 sectionIntro~2b536485
+it   k=email type="email" recommended=true naOk=true autoComplete="email" label~31bb94b0
+it   k=ahv type="text" orientation~b31b8b82 hint~91bafc78 placeholder~6fc297e9 label~3096babd
+it   k=maritalStatus type="select" section~35531553 label~0f8c2e7e sectionIntro~5a59bbc9 options=7 optWerte~ea8bd93f optLabels~d417c6c0
+it   k=household type="household" label~cd8a2627
+it   doc k=id label~92fcbaed
+it   doc k=ahv_card label~c9e801ae
+it kapitel=wohnen title~70b2bb71 short~70b2bb71 description~c3cd4501 felder=12 docs=3
+it   k=address type="text" mvo=true autoComplete="street-address" section~440865ed label~932ffecf sectionIntro~f359b3de
+it   k=postalCode type="text" mvo=true autoComplete="postal-code" label~5a2482aa
+it   k=city type="text" mvo=true autoComplete="address-level2" label~d8d39773
+it   k=moveInDate type="date" label~18e73bd5
+it   k=rentAmount type="currency" section~bfe03a23 orientation~896f417d label~5c8286b5 sectionIntro~aacf1508
+it   k=utilities type="currency" label~851ee10b
+it   k=landlord type="text" section~10b5a608 label~74facf3a sectionIntro~ebaedaa9
+it   k=landlordPhone type="tel" label~a7995851
+it   k=mortgageStatus type="select" section~cd90f0a4 label~c18932bf sectionIntro~f2559219 options=3 optWerte~0cea95a2 optLabels~1fa08e2f weitere=secondary
+it   k=propertyValue type="currency" label~862ed1de weitere=secondary
+it   k=buildingsInsurance type="currency" label~27f53152 weitere=secondary
+it   k=residenceType type="select" orientation~306fdfb3 label~1d508b17 options=3 optWerte~2d45a5d5 optLabels~abd7ae09 weitere=secondary
+it   doc k=lease label~88f43a54
+it   doc k=insurance label~77be3d69
+it   doc k=deposit label~7b1210e2
+it kapitel=finanzen title~91a47720 short~91a47720 description~a48669fe felder=37 docs=3
+it   k=monthlyIncome type="currency" mvo=true section~8d4e2bde orientation~c8da23fe hint~d5bf4387 label~21f267cd sectionIntro~6abaa1bb
+it   k=sideIncome type="currency" hint~40e503ca label~70c1dae7
+it   k=sideEmployer type="text" hint~d333de51 label~d2e01f32
+it   k=sideEmployerAddress type="textarea" hint~afb2e895 label~be5711bf
+it   k=sideHoursPerWeek type="text" hint~77b007ee label~6cd4bf20
+it   k=sideIncomeType type="select" label~50a7faa9 options=2 optWerte~808c757b optLabels~6d8e4ef5
+it   k=taxableIncome type="currency" hint~4dc061bb label~05a17e1b weitere=secondary
+it   k=incomeType type="select" label~91124d77 options=2 optWerte~808c757b optLabels~6d8e4ef5
+it   k=dreizehnter type="select" label~25a780ec options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=employer type="text" recommended=true naOk=true label~b93da698
+it   k=employerAddress type="textarea" naOk=true hint~24eee765 label~4f9570c9
+it   k=employmentType type="select" label~f63135dc options=4 optWerte~cb5df223 optLabels~e9f45455
+it   k=startDate type="date" naOk=true label~5e6e6a52
+it   k=familienzulagen type="currency" hint~7bd4ff6f label~f0b71c86
+it   k=alimenteReceived type="currency" naOk=true hint~e7e8ab21 label~a6991b52
+it   k=monthlyTax type="currency" section~9c18be66 orientation~2ae09d08 hint~5490cdd5 label~4f663ec5 sectionIntro~f973474b
+it   k=groceries type="currency" hint~19dc01fc label~d30b8455 weitere=itemized
+it   k=communication type="currency" hint~3bfdb4f6 label~f386de48 weitere=itemized
+it   k=mobility type="currency" hint~549d7cbb label~7d5e32cd
+it   k=childcare type="currency" hint~507e65f6 label~c5e96f88
+it   k=otherInsurance type="currency" hint~e86497b2 label~6ffdbe9b
+it   k=debtPayments type="currency" section~e67d2d6d orientation~675ed400 hint~48b2bbe1 label~5f38e06f sectionIntro~11c2f449
+it   k=alimentePaid type="currency" naOk=true hint~3c4ce8be label~2679b4af
+it   k=savingsGoal type="currency" section~079ba5b7 label~b58a4c93 sectionIntro~5a74b490
+it   k=savingsAccount type="currency" label~13b6502c
+it   k=bankName type="text" label~a3c0015a
+it   k=securitiesValue type="currency" section~a267d97d hint~1f60ce13 label~0f9c57b4 sectionIntro~bae90215
+it   k=otherAssets type="currency" hint~fe3a5e1f label~e0bbccd0
+it   k=creditCard type="select" section~039acb91 label~9b543878 sectionIntro~b18f4d24 options=3 optWerte~040349ee optLabels~87b5eb14
+it   k=creditCardLimit type="currency" hint~3a43ef98 label~d2bd0df2
+it   k=creditCardBalance type="currency" hint~4c455f1c label~35de924c
+it   k=loans type="currency" label~4b5d67ce
+it   k=pension3a type="currency" section~27393e0b orientation~07e87d60 label~286ed9c2 sectionIntro~25dd5d73 weitere=secondary
+it   k=pension3aBalance type="currency" hint~bb2ea7e2 label~f122c2ef weitere=secondary
+it   k=pension3b type="select" orientation~dd2acdbe label~1551817e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
+it   k=pension3bBalance type="currency" hint~b59dc695 label~fad3cae4 weitere=secondary
+it   k=investmentFunds type="select" label~6be024fe options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
+it   doc k=tax_return label~cd4bc8e0
+it   doc k=income_proof label~24ec9a21
+it   doc k=bank_statement label~9bbe904f
+it kapitel=versicherungen title~5da62723 short~5da62723 description~28100566 felder=25 docs=5
+it   k=kkInsurer type="text" mvo=true section~e24dd047 orientation~033581a1 link~8ce59537 placeholder~fc5f0a41 label~14bab828 sectionIntro~c33f5d4f
+it   k=kkModel type="select" label~466790b4 options=7 optWerte~8aa6d6ea optLabels~eaa4b72c
+it   k=kkPremium type="currency" mvo=true label~b97636a8
+it   k=franchise type="select" mvo=true orientation~95d3602b label~dd2b8bed options=10 optWerte~98b76529 optLabels~f9e805ab
+it   k=kkCardNumber type="text" label~c8cc9310
+it   k=policyNumber type="text" hint~f2c42569 label~2ccc2ea9
+it   k=kkZusatz type="text" placeholder~4dd9e6e3 label~3a2c1215
+it   k=bvgInsurer type="text" section~757bc421 orientation~47f63c40 label~d886a320 sectionIntro~d616286e
+it   k=bvgContribution type="currency" hint~66d767ef label~faffbd49
+it   k=bvgBalance type="currency" hint~be03c0fd label~73e86460
+it   k=lifeInsurance type="select" label~3952c95e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=freizuegigkeit type="text" placeholder~c98d4c38 label~2a79744a
+it   k=uvg type="select" section~fe0e343d orientation~93b7615c label~c047e296 sectionIntro~59f41538 options=4 optWerte~7a7294d0 optLabels~7cadb9b3
+it   k=ktg type="select" hint~85e81e6f label~f6e05be4 options=3 optWerte~b282c309 optLabels~5ad21f72
+it   k=liabilityInsurance type="select" label~bd521a5e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=liabilityAmount type="currency" label~2bc08c79
+it   k=legalInsurance type="select" label~fea0ee5c options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=childInsurance type="select" label~562e92f0 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=householdInsurance type="select" section~4aab41a1 label~aaba0d15 sectionIntro~530f2359 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
+it   k=householdInsuranceAmount type="currency" label~1d2dd2ce weitere=secondary
+it   k=travelInsurance type="select" label~e0f5f5b5 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
+it   k=cyberInsurance type="select" label~a28b3902 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
+it   k=autoInsurance type="select" section~1f3572bf label~3aa8ae90 sectionIntro~68c8d198 options=4 optWerte~5e620e1c optLabels~2418f905 weitere=secondary
+it   k=autoInsuranceAmount type="currency" label~8d48a8e7 weitere=secondary
+it   k=ahvContribution type="currency" section~4371ba35 orientation~c126ad4b link~3f586976 label~4181a7cf sectionIntro~1672b9c2
+it   doc k=kkcard label~92e4c462
+it   doc k=bvg_cert label~a2a32982
+it   doc k=ahv_confirmation label~71f7f2ca
+it   doc k=household_policy label~389b382a
+it   doc k=auto_policy label~c443b1d5
+it kapitel=ausbildung title~981288c5 short~dda0b741 description~ed4e3de7 felder=11 docs=3
+it   k=schoolName type="text" section~dda0b741 label~8369f760 sectionIntro~665cbfa9
+it   k=educationLevel type="select" label~69e80ce0 options=7 optWerte~fde3f0aa optLabels~459e0025
+it   k=efzNumber type="text" label~a5e891c1
+it   k=certifications type="textarea" label~ab1fea66
+it   k=employer type="text" naOk=true section~a0e10c7d label~b93da698 sectionIntro~2c2bd7bd
+it   k=employerAddress type="textarea" naOk=true label~4f9570c9
+it   k=jobTitle type="text" mvo=true naOk=true orientation~31e87c07 label~1439496e
+it   k=employmentStart type="date" naOk=true label~aa810e8f
+it   k=workPermit type="select" orientation~1c5b2455 label~1113a949 options=5 optWerte~14b89076 optLabels~02f7955e
+it   k=workHoursPerWeek type="text" naOk=true label~279a7c7a
+it   k=languages type="textarea" section~d9190757 label~d9190757 sectionIntro~d6112569
+it   doc k=diploma label~34551f6d
+it   doc k=certificates label~57ce3df4
+it   doc k=cv_file label~da047e32
+it kapitel=behoerden title~41bd1066 short~43f19ca3 description~c9e9b2a4 felder=10 docs=4
+it   k=cantoneOfTaxation type="select" mvo=true section~64420548 orientation~5cf3ccfb label~38fb9708 sectionIntro~12f105f6 options=26 optWerte~25f3960d optLabels~cf4927a4
+it   k=taxId type="text" label~1cb159bc
+it   k=taxFilingDeadline type="date" label~5897c933
+it   k=pendingTaxReturns type="text" label~5d2dd82d
+it   k=registryOffice type="text" section~4d9c8658 orientation~cbe79139 label~412f5a42 sectionIntro~ed29e19b
+it   k=betreibungsStatus type="select" orientation~006a04a4 label~baffea7a options=3 optWerte~13bd59f1 optLabels~48be9981
+it   k=courtCases type="select" label~9a2ca8f9 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
+it   k=legalRepresentative type="text" section~5a3eab11 label~1e82eb05 sectionIntro~c1f06288
+it   k=representativePhone type="tel" label~d0a1d1cf
+it   k=willMade type="select" orientation~9046ffd9 link~d56f10b4 label~4c267d0b options=4 optWerte~ba1da0c9 optLabels~9e43a748
+it   doc k=betreibungsauszug label~bc93e2f7
+it   doc k=will label~b7e8c66d
+it   doc k=power_of_attorney label~c432f491
+it   doc k=patientenverfuegung label~9b700c11
+it kapitel=notfall title~36f4217f short~36f4217f description~1b9a2c44 felder=13 docs=3
+it   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~143370ca label~c4da7048 sectionIntro~c046401f
+it   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~7b60e85c
+it   k=bloodType type="select" section~e7e0bc52 label~40192ca9 sectionIntro~681baf10 options=9 optWerte~a43a8405 optLabels~616efef2
+it   k=allergies type="textarea" label~e30c3e9e
+it   k=medications type="textarea" label~9404816c
+it   k=chronicDiseases type="textarea" label~fea4e791
+it   k=doctor type="text" section~f198b1cd label~d578256d sectionIntro~b2afb76b
+it   k=doctorPhone type="tel" label~6aa5ea13
+it   k=hospital type="text" label~7b926a78
+it   k=organDonor type="select" section~9b700c11 label~32650b1f sectionIntro~39281da1 options=3 optWerte~5703751f optLabels~b3e414dc weitere=secondary
+it   k=patientenverfuegung type="select" orientation~bacc3df9 link~6994aaab hint~8e7ba057 label~df632c6a options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
+it   k=vorsorgeauftrag type="select" orientation~fc289632 hint~5bfb39c3 label~143d53a6 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
+it   k=bestattungswuensche type="select" hint~beb13941 label~7bba6303 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
+it   doc k=advance_directive label~9b700c11
+it   doc k=organ_card label~a329f71a
+it   doc k=blood_card label~34152ed1
+# en: 7 Kapitel
+en kapitel=basis title~c9dcfab4 short~6dcdddea description~8b17311f felder=14 docs=2
+en   k=firstName type="text" required=true mvo=true autoComplete="given-name" section~c36eeba0 label~98e75218 sectionIntro~542bfb55
+en   k=middleName type="text" autoComplete="additional-name" label~431ae66b
+en   k=lastName type="text" required=true mvo=true autoComplete="family-name" label~3302c4c0
+en   k=academicTitle type="text" autoComplete="honorific-prefix" hint~33a6a1f6 label~24d471a9
+en   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~96156047
+en   k=gender type="select" label~a72c0ba0 options=3 optWerte~c41e840c optLabels~67a1172c
+en   k=pronouns type="select" label~854aeb71 options=4 optWerte~a161f8e0 optLabels~d8160749
+en   k=nationality type="select" label~47aac049 options=6 optWerte~4fd616d7 optLabels~272b65d7
+en   k=canton type="select" mvo=true label~c1c737be options=26 optWerte~25f3960d optLabels~b651dc64
+en   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~4930944f sectionIntro~4940945d
+en   k=email type="email" recommended=true naOk=true autoComplete="email" label~43352167
+en   k=ahv type="text" orientation~c04c5e98 hint~302dc2a1 placeholder~6fc297e9 label~088762d7
+en   k=maritalStatus type="select" section~c46f8f49 label~f0e1ce83 sectionIntro~1fbdb37d options=7 optWerte~ea8bd93f optLabels~ad264c3f
+en   k=household type="household" label~cd8a2627
+en   doc k=id label~77927c4b
+en   doc k=ahv_card label~81df02e0
+en kapitel=wohnen title~b49ea45c short~b49ea45c description~2cafaf80 felder=12 docs=3
+en   k=address type="text" mvo=true autoComplete="street-address" section~700560f3 label~7651fc60 sectionIntro~2867f7a3
+en   k=postalCode type="text" mvo=true autoComplete="postal-code" label~8602f9f3
+en   k=city type="text" mvo=true autoComplete="address-level2" label~906b3662
+en   k=moveInDate type="date" label~3861d92c
+en   k=rentAmount type="currency" section~b9e030b1 orientation~254ebf8e label~f9c91e73 sectionIntro~4447675e
+en   k=utilities type="currency" label~79733d6a
+en   k=landlord type="text" section~f64e9f6b label~15b600ca sectionIntro~42456891
+en   k=landlordPhone type="tel" label~ce25490b
+en   k=mortgageStatus type="select" section~5221f9e8 label~d83e6610 sectionIntro~d99901ef options=3 optWerte~0cea95a2 optLabels~b4a890ee weitere=secondary
+en   k=propertyValue type="currency" label~6880092f weitere=secondary
+en   k=buildingsInsurance type="currency" label~1fb7fab3 weitere=secondary
+en   k=residenceType type="select" orientation~81bf8d1d label~f4c043a1 options=3 optWerte~2d45a5d5 optLabels~ac330c95 weitere=secondary
+en   doc k=lease label~d8ed1503
+en   doc k=insurance label~bf4c7bdf
+en   doc k=deposit label~cece48e1
+en kapitel=finanzen title~791c82da short~791c82da description~02b69f63 felder=37 docs=3
+en   k=monthlyIncome type="currency" mvo=true section~c129d37e orientation~4ee67b0e hint~4300a911 label~3be3d7af sectionIntro~70c1e37d
+en   k=sideIncome type="currency" hint~0cfe05fd label~4a6a2a7f
+en   k=sideEmployer type="text" hint~34ffcd3d label~1c9f26c2
+en   k=sideEmployerAddress type="textarea" hint~4f146935 label~9226670e
+en   k=sideHoursPerWeek type="text" hint~a6560ab5 label~8653615a
+en   k=sideIncomeType type="select" label~abdeecb0 options=2 optWerte~808c757b optLabels~868faac7
+en   k=taxableIncome type="currency" hint~7fbb36f3 label~d08cb424 weitere=secondary
+en   k=incomeType type="select" label~90d6fcba options=2 optWerte~808c757b optLabels~868faac7
+en   k=dreizehnter type="select" label~981c932c options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=employer type="text" recommended=true naOk=true label~a9dd48a4
+en   k=employerAddress type="textarea" naOk=true hint~2c162a45 label~85dee87c
+en   k=employmentType type="select" label~6aed03e1 options=4 optWerte~cb5df223 optLabels~68106654
+en   k=startDate type="date" naOk=true label~44faa00d
+en   k=familienzulagen type="currency" hint~cd283f33 label~b9f292ff
+en   k=alimenteReceived type="currency" naOk=true hint~3a7419da label~39087ca0
+en   k=monthlyTax type="currency" section~6d707b3b orientation~c34e4f6c hint~7ca5d4d5 label~c679e309 sectionIntro~262aa952
+en   k=groceries type="currency" hint~a4262461 label~cd013009 weitere=itemized
+en   k=communication type="currency" hint~3b510aa6 label~3912546c weitere=itemized
+en   k=mobility type="currency" hint~26f89099 label~18770456
+en   k=childcare type="currency" hint~225b9602 label~b115dde6
+en   k=otherInsurance type="currency" hint~00eb17e6 label~2123c78f
+en   k=debtPayments type="currency" section~bd90d24e orientation~2a8d3ede hint~fb1dcbdd label~eca9c344 sectionIntro~37be6d07
+en   k=alimentePaid type="currency" naOk=true hint~28931b2f label~79e3743d
+en   k=savingsGoal type="currency" section~3edeeb10 label~4d4544c9 sectionIntro~dc5d0292
+en   k=savingsAccount type="currency" label~c9925daa
+en   k=bankName type="text" label~a274c5b7
+en   k=securitiesValue type="currency" section~577d8224 hint~7981cfaa label~5dccca22 sectionIntro~8abe129b
+en   k=otherAssets type="currency" hint~61339116 label~84600bed
+en   k=creditCard type="select" section~5e27c4a4 label~0371e614 sectionIntro~a8866998 options=3 optWerte~040349ee optLabels~86680376
+en   k=creditCardLimit type="currency" hint~8f6c9372 label~6c5db131
+en   k=creditCardBalance type="currency" hint~f5ec3a15 label~e12b7c59
+en   k=loans type="currency" label~ce3bb934
+en   k=pension3a type="currency" section~5f22c760 orientation~c4aa9762 label~13de36a9 sectionIntro~9e23f9f9 weitere=secondary
+en   k=pension3aBalance type="currency" hint~06ea535b label~0961e5a5 weitere=secondary
+en   k=pension3b type="select" orientation~cddf5a0c label~f04ccb36 options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
+en   k=pension3bBalance type="currency" hint~520e4143 label~975d0300 weitere=secondary
+en   k=investmentFunds type="select" label~c8095fad options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
+en   doc k=tax_return label~5413f028
+en   doc k=income_proof label~51d8d3fd
+en   doc k=bank_statement label~921df5a6
+en kapitel=versicherungen title~1ed7e947 short~1ed7e947 description~200e0c22 felder=25 docs=5
+en   k=kkInsurer type="text" mvo=true section~8e278f01 orientation~819945ad link~8ce59537 placeholder~8408ec55 label~d79e62d3 sectionIntro~b45c3f12
+en   k=kkModel type="select" label~0093873a options=7 optWerte~8aa6d6ea optLabels~290129ca
+en   k=kkPremium type="currency" mvo=true label~feb677c9
+en   k=franchise type="select" mvo=true orientation~680a9a69 label~7c145cb0 options=10 optWerte~98b76529 optLabels~f9e805ab
+en   k=kkCardNumber type="text" label~75df6208
+en   k=policyNumber type="text" hint~3f6eab70 label~fab0da68
+en   k=kkZusatz type="text" placeholder~2c2048e7 label~984042b4
+en   k=bvgInsurer type="text" section~ff4e9269 orientation~bdf1872b label~4cd38100 sectionIntro~54bc6b88
+en   k=bvgContribution type="currency" hint~867f3ee0 label~880d440f
+en   k=bvgBalance type="currency" hint~160eef79 label~46a3a5f9
+en   k=lifeInsurance type="select" label~04f0d58f options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=freizuegigkeit type="text" placeholder~6d88eaff label~f3bd5ac4
+en   k=uvg type="select" section~019da748 orientation~34eb183f label~5a7cec5f sectionIntro~a5a559c3 options=4 optWerte~7a7294d0 optLabels~fef33285
+en   k=ktg type="select" hint~3d51fb60 label~29c913ff options=3 optWerte~b282c309 optLabels~361d012b
+en   k=liabilityInsurance type="select" label~96d0b360 options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=liabilityAmount type="currency" label~9495ad6b
+en   k=legalInsurance type="select" label~c665d261 options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=childInsurance type="select" label~ef788590 options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=householdInsurance type="select" section~f65394a2 label~0f6a86d0 sectionIntro~3b1eafbc options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
+en   k=householdInsuranceAmount type="currency" label~37a7557d weitere=secondary
+en   k=travelInsurance type="select" label~04eced3d options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
+en   k=cyberInsurance type="select" label~68ff8a82 options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
+en   k=autoInsurance type="select" section~b634cd74 label~054022aa sectionIntro~ce039abf options=4 optWerte~5e620e1c optLabels~5303abcb weitere=secondary
+en   k=autoInsuranceAmount type="currency" label~ffd97b45 weitere=secondary
+en   k=ahvContribution type="currency" section~dd92f452 orientation~e7b8571e link~4c587ded label~8ec4ed40 sectionIntro~00192e85
+en   doc k=kkcard label~8e5054bf
+en   doc k=bvg_cert label~c9936b59
+en   doc k=ahv_confirmation label~0a6f64f3
+en   doc k=household_policy label~238623a0
+en   doc k=auto_policy label~8ec73e47
+en kapitel=ausbildung title~b1f0b6b5 short~1697d235 description~110a15f1 felder=11 docs=3
+en   k=schoolName type="text" section~1697d235 label~ff8ed21c sectionIntro~d0f73232
+en   k=educationLevel type="select" label~fbe72e22 options=7 optWerte~fde3f0aa optLabels~81563b6b
+en   k=efzNumber type="text" label~54eb190e
+en   k=certifications type="textarea" label~4b699ef7
+en   k=employer type="text" naOk=true section~b6d8b2d3 label~a9dd48a4 sectionIntro~eb0c0f1d
+en   k=employerAddress type="textarea" naOk=true label~85dee87c
+en   k=jobTitle type="text" mvo=true naOk=true orientation~0c147156 label~fb1d97e2
+en   k=employmentStart type="date" naOk=true label~90628f1c
+en   k=workPermit type="select" orientation~b84133b7 label~22ede7b2 options=5 optWerte~14b89076 optLabels~17a4f41e
+en   k=workHoursPerWeek type="text" naOk=true label~0fe02418
+en   k=languages type="textarea" section~0c632e38 label~0c632e38 sectionIntro~25be863d
+en   doc k=diploma label~2a550faf
+en   doc k=certificates label~b88e4cd9
+en   doc k=cv_file label~4d2bc7a5
+en kapitel=behoerden title~59f3010e short~cf239e0e description~7f425261 felder=10 docs=4
+en   k=cantoneOfTaxation type="select" mvo=true section~0d438a7a orientation~df85f479 label~69e1ee39 sectionIntro~d5815415 options=26 optWerte~25f3960d optLabels~b651dc64
+en   k=taxId type="text" label~3acd429b
+en   k=taxFilingDeadline type="date" label~6d68c60c
+en   k=pendingTaxReturns type="text" label~a5ea5836
+en   k=registryOffice type="text" section~de7530aa orientation~bbc8cbfb label~71136ec8 sectionIntro~e5cd866a
+en   k=betreibungsStatus type="select" orientation~7c8e1bd0 label~905897fd options=3 optWerte~13bd59f1 optLabels~393e2723
+en   k=courtCases type="select" label~b9e95469 options=2 optWerte~2bfd19fd optLabels~ea0983bd
+en   k=legalRepresentative type="text" section~587e9830 label~15b541c3 sectionIntro~6ce32e48
+en   k=representativePhone type="tel" label~34c50bfb
+en   k=willMade type="select" orientation~67c2c711 link~ef3beccd label~53f4e27a options=4 optWerte~ba1da0c9 optLabels~54d770bb
+en   doc k=betreibungsauszug label~4bc008c4
+en   doc k=will label~903cb9ad
+en   doc k=power_of_attorney label~9d16cfd7
+en   doc k=patientenverfuegung label~4ef71a24
+en kapitel=notfall title~530a13e2 short~530a13e2 description~b7284be0 felder=13 docs=3
+en   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~ee5f7e66 label~36c28f7f sectionIntro~38d61fec
+en   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~4679bd36
+en   k=bloodType type="select" section~40cccc7c label~ecfa190d sectionIntro~90bdb19a options=9 optWerte~a43a8405 optLabels~42aa4f91
+en   k=allergies type="textarea" label~59470f17
+en   k=medications type="textarea" label~74d1df63
+en   k=chronicDiseases type="textarea" label~4b032299
+en   k=doctor type="text" section~351601dd label~e51dab88 sectionIntro~d63848d3
+en   k=doctorPhone type="tel" label~49650b66
+en   k=hospital type="text" label~38c19e90
+en   k=organDonor type="select" section~a5fe76f5 label~5577f89f sectionIntro~199f0c5a options=3 optWerte~5703751f optLabels~ab4da33f weitere=secondary
+en   k=patientenverfuegung type="select" orientation~2b596be9 link~2f871eb7 hint~bc4bc8b4 label~67e42b26 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=vorsorgeauftrag type="select" orientation~697d12a0 hint~7f43e7e1 label~1e34ab98 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=bestattungswuensche type="select" hint~32af9fea label~4f7f8f65 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   doc k=advance_directive label~4ef71a24
+en   doc k=organ_card label~269afc58
+en   doc k=blood_card label~76ec1811
+# rm: 7 Kapitel
+rm kapitel=basis title~958580ad short~a8bc3244 description~9ae54d92 felder=14 docs=2
+rm   k=firstName type="text" required=true mvo=true autoComplete="given-name" section~6cd54fb1 label~4a59a5ae sectionIntro~33dfaa3d
+rm   k=middleName type="text" autoComplete="additional-name" label~0a9354c2
+rm   k=lastName type="text" required=true mvo=true autoComplete="family-name" label~0f2ad073
+rm   k=academicTitle type="text" autoComplete="honorific-prefix" hint~e88f4920 label~09ea0d77
+rm   k=dateOfBirth type="date" required=true mvo=true autoComplete="bday" label~a6c806f4
+rm   k=gender type="select" label~b13d1481 options=3 optWerte~c41e840c optLabels~f9fef624
+rm   k=pronouns type="select" label~95fee8e7 options=4 optWerte~a161f8e0 optLabels~e3b81092
+rm   k=nationality type="select" label~494e375f options=6 optWerte~4fd616d7 optLabels~bf2c4bf1
+rm   k=canton type="select" mvo=true label~e2ba5408 options=26 optWerte~25f3960d optLabels~635a07c4
+rm   k=phone type="tel" recommended=true naOk=true autoComplete="tel" section~73ac94c3 placeholder~ba44eeab label~9efa9d9c sectionIntro~e5a49c43
+rm   k=email type="email" recommended=true naOk=true autoComplete="email" label~31bb94b0
+rm   k=ahv type="text" orientation~db4c1084 hint~302dc2a1 placeholder~6fc297e9 label~e8c0ae54
+rm   k=maritalStatus type="select" section~35531553 label~1a688031 sectionIntro~aa315ee9 options=7 optWerte~ea8bd93f optLabels~2633a683
+rm   k=household type="household" label~cd8a2627
+rm   doc k=id label~f0f43f8d
+rm   doc k=ahv_card label~d21e2241
+rm kapitel=wohnen title~d5f9a20c short~168e1c30 description~04493667 felder=12 docs=3
+rm   k=address type="text" mvo=true autoComplete="street-address" section~232a90da label~42e49d53 sectionIntro~ad6a0264
+rm   k=postalCode type="text" mvo=true autoComplete="postal-code" label~68a67b16
+rm   k=city type="text" mvo=true autoComplete="address-level2" label~87fc1024
+rm   k=moveInDate type="date" label~65b7de99
+rm   k=rentAmount type="currency" section~971fe0e3 orientation~ca0d4cff label~3f13b3e2 sectionIntro~e8ffab2d
+rm   k=utilities type="currency" label~0cd5ec4b
+rm   k=landlord type="text" section~11547214 label~9a73e919 sectionIntro~448c85c8
+rm   k=landlordPhone type="tel" label~b0e3cc3a
+rm   k=mortgageStatus type="select" section~b0e30033 label~cafafdbe sectionIntro~cb62daa4 options=3 optWerte~0cea95a2 optLabels~689a9eb0 weitere=secondary
+rm   k=propertyValue type="currency" label~67c628ce weitere=secondary
+rm   k=buildingsInsurance type="currency" label~f5fd0b3d weitere=secondary
+rm   k=residenceType type="select" orientation~d05c45dc label~1a65f040 options=3 optWerte~2d45a5d5 optLabels~ce9ca02b weitere=secondary
+rm   doc k=lease label~979d8b95
+rm   doc k=insurance label~d41a893d
+rm   doc k=deposit label~86bb601e
+rm kapitel=finanzen title~49686d10 short~b0f0f7cd description~3497eb10 felder=37 docs=3
+rm   k=monthlyIncome type="currency" mvo=true section~49e53544 orientation~0e46c773 hint~d757bfe2 label~6cefbb57 sectionIntro~1bba8649
+rm   k=sideIncome type="currency" hint~18739de3 label~845dbcee
+rm   k=sideEmployer type="text" hint~84a4df84 label~c5d6aeaa
+rm   k=sideEmployerAddress type="textarea" hint~f3b9ba8e label~b8cb9d86
+rm   k=sideHoursPerWeek type="text" hint~2eecba22 label~249871c9
+rm   k=sideIncomeType type="select" label~1fffb706 options=2 optWerte~808c757b optLabels~4354d65e
+rm   k=taxableIncome type="currency" hint~fe90cf49 label~770a0048 weitere=secondary
+rm   k=incomeType type="select" label~146bcd0e options=2 optWerte~808c757b optLabels~4354d65e
+rm   k=dreizehnter type="select" label~52c28702 options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=employer type="text" recommended=true naOk=true label~ae80e17b
+rm   k=employerAddress type="textarea" naOk=true hint~c961f130 label~3b999ae7
+rm   k=employmentType type="select" label~979ec471 options=4 optWerte~cb5df223 optLabels~9fbdc700
+rm   k=startDate type="date" naOk=true label~60fff5d7
+rm   k=familienzulagen type="currency" hint~01145d3e label~5fd44950
+rm   k=alimenteReceived type="currency" naOk=true hint~157230a0 label~b6402f7c
+rm   k=monthlyTax type="currency" section~4a5bbcd5 orientation~ebfd1252 hint~b3eb42e5 label~15b3b0ee sectionIntro~f144466d
+rm   k=groceries type="currency" hint~96a2baab label~0ea7c630 weitere=itemized
+rm   k=communication type="currency" hint~c0da8267 label~865f462e weitere=itemized
+rm   k=mobility type="currency" hint~e1116852 label~bb5d7a87
+rm   k=childcare type="currency" hint~4d6c8b35 label~20c81933
+rm   k=otherInsurance type="currency" hint~87df0ca1 label~39b0be85
+rm   k=debtPayments type="currency" section~d2cd2dde orientation~c14b0328 hint~4691c531 label~261014b0 sectionIntro~680cae36
+rm   k=alimentePaid type="currency" naOk=true hint~b5d07461 label~c7569653
+rm   k=savingsGoal type="currency" section~ed670258 label~6e17cfc1 sectionIntro~10de038a
+rm   k=savingsAccount type="currency" label~7fcc0507
+rm   k=bankName type="text" label~f81b9e5b
+rm   k=securitiesValue type="currency" section~2e9d112d hint~64ca8ef9 label~71350396 sectionIntro~2e8ad2b8
+rm   k=otherAssets type="currency" hint~f06405c4 label~2e2530f7
+rm   k=creditCard type="select" section~5e27c4a4 label~aafec8a2 sectionIntro~4a987a08 options=3 optWerte~040349ee optLabels~5af4a660
+rm   k=creditCardLimit type="currency" hint~22740fa9 label~25922bb7
+rm   k=creditCardBalance type="currency" hint~d0d2f065 label~b83031db
+rm   k=loans type="currency" label~655f7754
+rm   k=pension3a type="currency" section~9067c1a5 orientation~d037ec79 label~b25df0ea sectionIntro~d5548bf7 weitere=secondary
+rm   k=pension3aBalance type="currency" hint~28562c7a label~213cc08d weitere=secondary
+rm   k=pension3b type="select" orientation~9356eed0 label~02bec3b3 options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
+rm   k=pension3bBalance type="currency" hint~1f923040 label~8de8ffe0 weitere=secondary
+rm   k=investmentFunds type="select" label~2905109f options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
+rm   doc k=tax_return label~3f24d8d0
+rm   doc k=income_proof label~7074109f
+rm   doc k=bank_statement label~c8787c08
+rm kapitel=versicherungen title~f6230c0e short~93d1bf3b description~33573315 felder=25 docs=5
+rm   k=kkInsurer type="text" mvo=true section~6200cabf orientation~55cd8b83 link~8ce59537 placeholder~72b164ea label~fc7dfbfd sectionIntro~bda20a42
+rm   k=kkModel type="select" label~8285e8fa options=7 optWerte~e61b141c optLabels~bd304914
+rm   k=kkPremium type="currency" mvo=true label~45705432
+rm   k=franchise type="select" mvo=true orientation~b80db104 label~c5887ae4 options=10 optWerte~98b76529 optLabels~6fdc5753
+rm   k=kkCardNumber type="text" label~dcc7ad86
+rm   k=policyNumber type="text" hint~e509e3b0 label~655a1464
+rm   k=kkZusatz type="text" placeholder~f2b6e130 label~0104df8f
+rm   k=bvgInsurer type="text" section~4c4badb1 orientation~89ab7ff7 label~6974e838 sectionIntro~f7185a40
+rm   k=bvgContribution type="currency" hint~e71c40c5 label~8496554b
+rm   k=bvgBalance type="currency" hint~5c37bdec label~2f73bf1b
+rm   k=lifeInsurance type="select" label~edfe7cec options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=freizuegigkeit type="text" placeholder~81d1e23c label~b3d2ed86
+rm   k=uvg type="select" section~60e418d6 orientation~87e1a4b4 label~b0dcebd1 sectionIntro~9fd788ea options=4 optWerte~7a7294d0 optLabels~26828a85
+rm   k=ktg type="select" hint~cb20bf4e label~e3e6cd98 options=3 optWerte~b282c309 optLabels~49de47f4
+rm   k=liabilityInsurance type="select" label~5a1e266e options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=liabilityAmount type="currency" label~87e338d0
+rm   k=legalInsurance type="select" label~755e6aa4 options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=childInsurance type="select" label~bc500ed2 options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=householdInsurance type="select" section~da1aa5ec label~c55b07ec sectionIntro~532943a4 options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
+rm   k=householdInsuranceAmount type="currency" label~3240b782 weitere=secondary
+rm   k=travelInsurance type="select" label~fd43f88d options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
+rm   k=cyberInsurance type="select" label~ccb9967a options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
+rm   k=autoInsurance type="select" section~d4e41fd8 label~72dffc50 sectionIntro~39ee63b6 options=4 optWerte~5e620e1c optLabels~4078091e weitere=secondary
+rm   k=autoInsuranceAmount type="currency" label~1757863b weitere=secondary
+rm   k=ahvContribution type="currency" section~13b243dd orientation~5e087791 link~4c587ded label~3dfda40a sectionIntro~625d0f89
+rm   doc k=kkcard label~8569dede
+rm   doc k=bvg_cert label~bfe675a1
+rm   doc k=ahv_confirmation label~71f7f2ca
+rm   doc k=household_policy label~54bb275b
+rm   doc k=auto_policy label~761d8cdb
+rm kapitel=ausbildung title~e5e735d4 short~0b659f5e description~38016dfc felder=11 docs=3
+rm   k=schoolName type="text" section~0b659f5e label~4e704d48 sectionIntro~dcb20faf
+rm   k=educationLevel type="select" label~c526f347 options=9 optWerte~a331cdd8 optLabels~cab4d38c
+rm   k=efzNumber type="text" label~f02fd5c6
+rm   k=certifications type="textarea" label~45a82a6f
+rm   k=employer type="text" naOk=true section~26b41c7f label~ae80e17b sectionIntro~d8cd068b
+rm   k=employerAddress type="textarea" naOk=true label~3b999ae7
+rm   k=jobTitle type="text" mvo=true naOk=true orientation~3ce61019 label~fb50b2e5
+rm   k=employmentStart type="date" naOk=true label~9cc6d84c
+rm   k=workPermit type="select" orientation~0d4856c9 label~cca5b62b options=5 optWerte~14b89076 optLabels~c8e02ec6
+rm   k=workHoursPerWeek type="text" naOk=true label~94f62bd4
+rm   k=languages type="textarea" section~ee5d4fe8 label~ee5d4fe8 sectionIntro~522fd0ff
+rm   doc k=diploma label~aaded0b0
+rm   doc k=certificates label~41ce1b52
+rm   doc k=cv_file label~6ffb39cb
+rm kapitel=behoerden title~6daf42eb short~e7bce7bd description~62d0eaa0 felder=10 docs=4
+rm   k=cantoneOfTaxation type="select" mvo=true section~fda928f7 orientation~7cfcecd6 label~094b02ef sectionIntro~c2084392 options=26 optWerte~25f3960d optLabels~635a07c4
+rm   k=taxId type="text" label~a398d9f7
+rm   k=taxFilingDeadline type="date" label~91e2c20e
+rm   k=pendingTaxReturns type="text" label~20d6ba57
+rm   k=registryOffice type="text" section~5165a563 orientation~ee400a84 label~cc446faa sectionIntro~63c171ce
+rm   k=betreibungsStatus type="select" orientation~8fb40474 label~00044cb2 options=6 optWerte~a05dcace optLabels~15ed2fd0
+rm   k=courtCases type="select" label~ecccbeb4 options=2 optWerte~2bfd19fd optLabels~1534032f
+rm   k=legalRepresentative type="text" section~2fc92f34 label~c55bf97d sectionIntro~130b06d6
+rm   k=representativePhone type="tel" label~4f1460dc
+rm   k=willMade type="select" orientation~f9d30efb link~2c2317f6 label~343cbd22 options=6 optWerte~d51cb516 optLabels~c894eab4
+rm   doc k=betreibungsauszug label~8328c5f6
+rm   doc k=will label~aa111790
+rm   doc k=power_of_attorney label~c432f491
+rm   doc k=patientenverfuegung label~1b62ec66
+rm kapitel=notfall title~64c51121 short~64c51121 description~ce06a710 felder=13 docs=3
+rm   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~eee87d0e label~eee87d0e sectionIntro~ec019f18
+rm   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~74e527b1
+rm   k=bloodType type="select" section~40cccc7c label~20a1bc58 sectionIntro~9a87c1c0 options=17 optWerte~47314723 optLabels~ad41972d
+rm   k=allergies type="textarea" label~514ffcdb
+rm   k=medications type="textarea" label~3df944cd
+rm   k=chronicDiseases type="textarea" label~5fd1cb1e
+rm   k=doctor type="text" section~349f10cb label~058b8411 sectionIntro~3c4142db
+rm   k=doctorPhone type="tel" label~fa642349
+rm   k=hospital type="text" label~62c0b242
+rm   k=organDonor type="select" section~9067c1a5 label~86e3d1e0 sectionIntro~f8987aff options=4 optWerte~3fb1ad2a optLabels~9169ccaf weitere=secondary
+rm   k=patientenverfuegung type="select" orientation~b47744bd link~3fad1fbd hint~7fd023e6 label~3a34ad40 options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
+rm   k=vorsorgeauftrag type="select" orientation~a663933d hint~e21398f6 label~1020900b options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
+rm   k=bestattungswuensche type="select" hint~e7d52593 label~d2ea1648 options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
+rm   doc k=advance_directive label~1b62ec66
+rm   doc k=organ_card label~d1ce2e30
+rm   doc k=blood_card label~a820fa54

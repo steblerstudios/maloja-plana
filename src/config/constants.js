@@ -153,6 +153,65 @@ function dl(t, chapterKey, docKey) {
   return t('chapters.' + chapterKey + '.docs.' + docKey);
 }
 
+// ─── Ableitbare Angaben ergänzen (E36) ──────────────────────────────────────
+// Die Tabelle unten nennt je Feld nur, was sich NICHT aus Kapitel- und
+// Feld-Schlüssel ergibt. Alles andere folgt immer demselben Übersetzungs-
+// Schlüssel und wird hier eingesetzt:
+//
+//   (immer)      label       = fl(t, kapitel, k)
+//   sel: 1       options     = opts(t, kapitel, k)
+//   sel: 'x'     options     = opts(t, kapitel, 'x')   — abweichender Schlüssel;
+//                              sideIncomeType teilt die Liste von incomeType
+//   hint: 1      hint        = hn(t, kapitel, k)
+//   ph: 1        placeholder = ph(t, kapitel, k)
+//   sec: 'x'     section     = t('sections.<kapitel>.x')  +  sectionIntro = si(…)
+//   docs: ['id'] docs        = [{ k: 'id', label: dl(t, kapitel, 'id') }]
+//
+// Warum: dieselben Aufrufe standen 121-mal wörtlich in der Tabelle und trugen
+// rund 12 kB Quelltext, ohne eine einzige Angabe zu tragen, die nicht schon im
+// Feld-Schlüssel steht. Das Startbundle ist bei 65 kB gzip gedeckelt
+// (`npm run size`); im September 2026 blieben davon 60 Byte Luft, worauf PR #294
+// drei Verschlankungsrunden brauchte.
+//
+// 🛑 Die FORM des Ergebnisses ist unverändert — jede Aufrufstelle sieht dieselben
+// Felder wie vorher, nur die Reihenfolge der Schlüssel im Objekt ist anders
+// (label steht jetzt hinten). Das ist folgenlos, weil niemand über die Schlüssel
+// einer Feld-DEFINITION iteriert; `Object.entries` in zipExport.js läuft über die
+// erfassten Daten, nicht über diese Definitionen.
+// Festgehalten in src/__tests__/kapitelAbdruck.test.js — Abdruck über alle fünf
+// Sprachen, drei Mutationsproben (vertauschte Bezeichnung, verlorenes Merkmal,
+// verschluckte Option) rot gesehen.
+//
+// Zum Nachmessen, was in der Startdatei liegt: scripts/bundle-posten.mjs
+function kapitelFuellen(t, kapitel) {
+  for (const ch of kapitel) {
+    ch.title = t('chapters.' + ch.key + '.title');
+    ch.short = t('chapters.' + ch.key + '.short');
+    ch.description = t('chapters.' + ch.key + '.description');
+    for (const f of ch.fields) {
+      // Sonderbauten bringen ihre Beschriftung selbst mit (type 'household')
+      if (f.type !== 'household') f.label = fl(t, ch.key, f.k);
+      if (f.sel !== undefined) {
+        f.options = opts(t, ch.key, f.sel === 1 ? f.k : f.sel);
+        delete f.sel;
+      }
+      if (f.hint === 1) f.hint = hn(t, ch.key, f.k);
+      if (f.ph === 1) {
+        f.placeholder = ph(t, ch.key, f.k);
+        delete f.ph;
+      }
+      if (f.sec !== undefined) {
+        const abschnitt = f.sec;
+        delete f.sec;
+        f.section = t('sections.' + ch.key + '.' + abschnitt);
+        f.sectionIntro = si(t, ch.key, abschnitt);
+      }
+    }
+    if (ch.docs) ch.docs = ch.docs.map((k) => ({ k, label: dl(t, ch.key, k) }));
+  }
+  return kapitel;
+}
+
 // Feld-Merkmale (E17): `mvo` = zählt zur Grundordnung · `recommended` = empfohlen,
 // zählt nicht zur Grundordnung · `naOk` = bietet den Schalter «trifft nicht zu» an
 // (Markierung in `data[kapitel]._na`, siehe utils/vollstaendigkeit.js).
@@ -161,230 +220,209 @@ function dl(t, chapterKey, docKey) {
 // K45: `required` zeigt nur den Stern — der Notfallkontakt trägt ihn nicht mehr (er ist
 // markierbar); er zählt weiter zur Grundordnung wie `jobTitle`, «trifft nicht zu» erledigt ihn.
 export function getChapters(t) {
-  return [
+  return kapitelFuellen(t, [
     {
       key: 'basis',
-      title: t('chapters.basis.title'),
-      short: t('chapters.basis.short'),
-      description: t('chapters.basis.description'),
       fields: [
-        { k: 'firstName', label: fl(t, 'basis', 'firstName'), type: 'text', required: true, mvo: true, autoComplete: 'given-name', section: t('sections.basis.person'), sectionIntro: si(t, 'basis', 'person') },
-        { k: 'middleName', label: fl(t, 'basis', 'middleName'), type: 'text', autoComplete: 'additional-name' },
-        { k: 'lastName', label: fl(t, 'basis', 'lastName'), type: 'text', required: true, mvo: true, autoComplete: 'family-name' },
-        { k: 'academicTitle', label: fl(t, 'basis', 'academicTitle'), hint: hn(t, 'basis', 'academicTitle'), type: 'text', autoComplete: 'honorific-prefix' },
-        { k: 'dateOfBirth', label: fl(t, 'basis', 'dateOfBirth'), type: 'date', required: true, mvo: true, autoComplete: 'bday' },
-        { k: 'gender', label: fl(t, 'basis', 'gender'), type: 'select', options: opts(t, 'basis', 'gender') },
-        { k: 'pronouns', label: fl(t, 'basis', 'pronouns'), type: 'select', options: opts(t, 'basis', 'pronouns') },
-        { k: 'nationality', label: fl(t, 'basis', 'nationality'), type: 'select', options: opts(t, 'basis', 'nationality') },
-        { k: 'canton', label: fl(t, 'basis', 'canton'), type: 'select', options: cantonOptions(t), mvo: true },
-        { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone'), recommended: true, naOk: true, autoComplete: 'tel', section: t('sections.basis.contact'), sectionIntro: si(t, 'basis', 'contact') },
-        { k: 'email', label: fl(t, 'basis', 'email'), type: 'email', recommended: true, naOk: true, autoComplete: 'email' },
-        { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv'), orientation: or(t, 'ahv') },
-        { k: 'maritalStatus', label: fl(t, 'basis', 'maritalStatus'), type: 'select', options: opts(t, 'basis', 'maritalStatus'), section: t('sections.basis.family'), sectionIntro: si(t, 'basis', 'family') },
+        { k: 'firstName', type: 'text', required: true, mvo: true, autoComplete: 'given-name', sec: 'person' },
+        { k: 'middleName', type: 'text', autoComplete: 'additional-name' },
+        { k: 'lastName', type: 'text', required: true, mvo: true, autoComplete: 'family-name' },
+        { k: 'academicTitle', hint: 1, type: 'text', autoComplete: 'honorific-prefix' },
+        { k: 'dateOfBirth', type: 'date', required: true, mvo: true, autoComplete: 'bday' },
+        { k: 'gender', type: 'select', sel: 1 },
+        { k: 'pronouns', type: 'select', sel: 1 },
+        { k: 'nationality', type: 'select', sel: 1 },
+        { k: 'canton', type: 'select', options: cantonOptions(t), mvo: true },
+        { k: 'phone', type: 'tel', ph: 1, recommended: true, naOk: true, autoComplete: 'tel', sec: 'contact' },
+        { k: 'email', type: 'email', recommended: true, naOk: true, autoComplete: 'email' },
+        { k: 'ahv', type: 'text', ph: 1, hint: 1, orientation: or(t, 'ahv') },
+        { k: 'maritalStatus', type: 'select', sel: 1, sec: 'family' },
         { k: 'household', type: 'household' },
       ],
       docs: [
-        { k: 'id', label: dl(t, 'basis', 'id') },
-        { k: 'ahv_card', label: dl(t, 'basis', 'ahv_card') },
+        'id',
+        'ahv_card',
       ]
     },
     {
       key: 'wohnen',
-      title: t('chapters.wohnen.title'),
-      short: t('chapters.wohnen.short'),
-      description: t('chapters.wohnen.description'),
       fields: [
-        { k: 'address', label: fl(t, 'wohnen', 'address'), type: 'text', mvo: true, autoComplete: 'street-address', section: t('sections.wohnen.address'), sectionIntro: si(t, 'wohnen', 'address') },
-        { k: 'postalCode', label: fl(t, 'wohnen', 'postalCode'), type: 'text', mvo: true, autoComplete: 'postal-code' },
-        { k: 'city', label: fl(t, 'wohnen', 'city'), type: 'text', mvo: true, autoComplete: 'address-level2' },
-        { k: 'moveInDate', label: fl(t, 'wohnen', 'moveInDate'), type: 'date' },
-        { k: 'rentAmount', label: fl(t, 'wohnen', 'rentAmount'), type: 'currency', section: t('sections.wohnen.costs'), sectionIntro: si(t, 'wohnen', 'costs'), orientation: or(t, 'miete') },
-        { k: 'utilities', label: fl(t, 'wohnen', 'utilities'), type: 'currency' },
-        { k: 'landlord', label: fl(t, 'wohnen', 'landlord'), type: 'text', section: t('sections.wohnen.landlord'), sectionIntro: si(t, 'wohnen', 'landlord') },
-        { k: 'landlordPhone', label: fl(t, 'wohnen', 'landlordPhone'), type: 'tel' },
-        { k: 'mortgageStatus', label: fl(t, 'wohnen', 'mortgageStatus'), type: 'select', options: opts(t, 'wohnen', 'mortgageStatus'), section: t('sections.wohnen.property'), sectionIntro: si(t, 'wohnen', 'property'), secondary: true },
-        { k: 'propertyValue', label: fl(t, 'wohnen', 'propertyValue'), type: 'currency', secondary: true },
-        { k: 'buildingsInsurance', label: fl(t, 'wohnen', 'buildingsInsurance'), type: 'currency', secondary: true },
-        { k: 'residenceType', label: fl(t, 'wohnen', 'residenceType'), type: 'select', options: opts(t, 'wohnen', 'residenceType'), secondary: true, orientation: or(t, 'wohnform') },
+        { k: 'address', type: 'text', mvo: true, autoComplete: 'street-address', sec: 'address' },
+        { k: 'postalCode', type: 'text', mvo: true, autoComplete: 'postal-code' },
+        { k: 'city', type: 'text', mvo: true, autoComplete: 'address-level2' },
+        { k: 'moveInDate', type: 'date' },
+        { k: 'rentAmount', type: 'currency', sec: 'costs', orientation: or(t, 'miete') },
+        { k: 'utilities', type: 'currency' },
+        { k: 'landlord', type: 'text', sec: 'landlord' },
+        { k: 'landlordPhone', type: 'tel' },
+        { k: 'mortgageStatus', type: 'select', sel: 1, sec: 'property', secondary: true },
+        { k: 'propertyValue', type: 'currency', secondary: true },
+        { k: 'buildingsInsurance', type: 'currency', secondary: true },
+        { k: 'residenceType', type: 'select', sel: 1, secondary: true, orientation: or(t, 'wohnform') },
       ],
       docs: [
-        { k: 'lease', label: dl(t, 'wohnen', 'lease') },
-        { k: 'insurance', label: dl(t, 'wohnen', 'insurance') },
-        { k: 'deposit', label: dl(t, 'wohnen', 'deposit') },
+        'lease',
+        'insurance',
+        'deposit',
       ]
     },
     {
       key: 'finanzen',
-      title: t('chapters.finanzen.title'),
-      short: t('chapters.finanzen.short'),
-      description: t('chapters.finanzen.description'),
       fields: [
-        { k: 'monthlyIncome', label: fl(t, 'finanzen', 'monthlyIncome'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyIncome'), mvo: true, section: t('sections.finanzen.income'), sectionIntro: si(t, 'finanzen', 'income'), orientation: or(t, 'einkommen') },
-        { k: 'sideIncome', label: fl(t, 'finanzen', 'sideIncome'), type: 'currency', hint: hn(t, 'finanzen', 'sideIncome') },
+        { k: 'monthlyIncome', type: 'currency', hint: 1, mvo: true, sec: 'income', orientation: or(t, 'einkommen') },
+        { k: 'sideIncome', type: 'currency', hint: 1 },
         // Nebenerwerb-Anstellung: nur nötig, wenn daraus ein Brief werden soll. Die Stunden
         // sind Pflicht für jeden Lohn-Befund — ohne sie wird nicht gerechnet (kein 182h-Raten).
-        { k: 'sideEmployer', label: fl(t, 'finanzen', 'sideEmployer'), type: 'text', hint: hn(t, 'finanzen', 'sideEmployer') },
-        { k: 'sideEmployerAddress', label: fl(t, 'finanzen', 'sideEmployerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'sideEmployerAddress') },
-        { k: 'sideHoursPerWeek', label: fl(t, 'finanzen', 'sideHoursPerWeek'), type: 'text', hint: hn(t, 'finanzen', 'sideHoursPerWeek') },
+        { k: 'sideEmployer', type: 'text', hint: 1 },
+        { k: 'sideEmployerAddress', type: 'textarea', hint: 1 },
+        { k: 'sideHoursPerWeek', type: 'text', hint: 1 },
         // Spiegelt `incomeType` für den Nebenerwerb. Ohne dieses Feld wäre die Basis des
         // Nebenlohns unbekannt → nie ein Mindestlohn-Befund, und die Nutzerin hätte keinen
         // Weg, das zu ändern (Sackgasse). Der Mindestlohn ist ein BRUTTO-Stundenlohn.
-        { k: 'sideIncomeType', label: fl(t, 'finanzen', 'sideIncomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
-        { k: 'taxableIncome', label: fl(t, 'finanzen', 'taxableIncome'), type: 'currency', hint: hn(t, 'finanzen', 'taxableIncome'), secondary: true },
-        { k: 'incomeType', label: fl(t, 'finanzen', 'incomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
-        { k: 'dreizehnter', label: fl(t, 'finanzen', 'dreizehnter'), type: 'select', options: opts(t, 'finanzen', 'dreizehnter') },
-        { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', recommended: true, naOk: true },
-        { k: 'employerAddress', label: fl(t, 'finanzen', 'employerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'employerAddress'), naOk: true },
-        { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
-        { k: 'startDate', label: fl(t, 'finanzen', 'startDate'), type: 'date', naOk: true },
-        { k: 'familienzulagen', label: fl(t, 'finanzen', 'familienzulagen'), type: 'currency', hint: hn(t, 'finanzen', 'familienzulagen') },
-        { k: 'alimenteReceived', label: fl(t, 'finanzen', 'alimenteReceived'), type: 'currency', hint: hn(t, 'finanzen', 'alimenteReceived'), naOk: true },
-        { k: 'monthlyTax', label: fl(t, 'finanzen', 'monthlyTax'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyTax'), section: t('sections.finanzen.budgetLight'), sectionIntro: si(t, 'finanzen', 'budgetLight'), orientation: or(t, 'steuern') },
-        { k: 'groceries', label: fl(t, 'finanzen', 'groceries'), type: 'currency', itemized: true, hint: hn(t, 'finanzen', 'groceries') },
-        { k: 'communication', label: fl(t, 'finanzen', 'communication'), type: 'currency', itemized: true, hint: hn(t, 'finanzen', 'communication') },
-        { k: 'mobility', label: fl(t, 'finanzen', 'mobility'), type: 'currency', hint: hn(t, 'finanzen', 'mobility') },
-        { k: 'childcare', label: fl(t, 'finanzen', 'childcare'), type: 'currency', hint: hn(t, 'finanzen', 'childcare') },
-        { k: 'otherInsurance', label: fl(t, 'finanzen', 'otherInsurance'), type: 'currency', hint: hn(t, 'finanzen', 'otherInsurance') },
-        { k: 'debtPayments', label: fl(t, 'finanzen', 'debtPayments'), type: 'currency', hint: hn(t, 'finanzen', 'debtPayments'), section: t('sections.finanzen.obligations'), sectionIntro: si(t, 'finanzen', 'obligations'), orientation: or(t, 'schuldenraten') },
-        { k: 'alimentePaid', label: fl(t, 'finanzen', 'alimentePaid'), type: 'currency', hint: hn(t, 'finanzen', 'alimentePaid'), naOk: true },
-        { k: 'savingsGoal', label: fl(t, 'finanzen', 'savingsGoal'), type: 'currency', section: t('sections.finanzen.savings'), sectionIntro: si(t, 'finanzen', 'savings') },
-        { k: 'savingsAccount', label: fl(t, 'finanzen', 'savingsAccount'), type: 'currency' },
-        { k: 'bankName', label: fl(t, 'finanzen', 'bankName'), type: 'text' },
-        { k: 'securitiesValue', label: fl(t, 'finanzen', 'securitiesValue'), type: 'currency', hint: hn(t, 'finanzen', 'securitiesValue'), section: t('sections.finanzen.assets'), sectionIntro: si(t, 'finanzen', 'assets') },
-        { k: 'otherAssets', label: fl(t, 'finanzen', 'otherAssets'), type: 'currency', hint: hn(t, 'finanzen', 'otherAssets') },
-        { k: 'creditCard', label: fl(t, 'finanzen', 'creditCard'), type: 'select', options: opts(t, 'finanzen', 'creditCard'), section: t('sections.finanzen.credit'), sectionIntro: si(t, 'finanzen', 'credit') },
-        { k: 'creditCardLimit', label: fl(t, 'finanzen', 'creditCardLimit'), type: 'currency', hint: hn(t, 'finanzen', 'creditCardLimit') },
-        { k: 'creditCardBalance', label: fl(t, 'finanzen', 'creditCardBalance'), type: 'currency', hint: hn(t, 'finanzen', 'creditCardBalance') },
-        { k: 'loans', label: fl(t, 'finanzen', 'loans'), type: 'currency' },
-        { k: 'pension3a', label: fl(t, 'finanzen', 'pension3a'), type: 'currency', section: t('sections.finanzen.provision'), sectionIntro: si(t, 'finanzen', 'provision'), secondary: true, orientation: or(t, 'saeule3a') },
-        { k: 'pension3aBalance', label: fl(t, 'finanzen', 'pension3aBalance'), type: 'currency', hint: hn(t, 'finanzen', 'pension3aBalance'), secondary: true },
-        { k: 'pension3b', label: fl(t, 'finanzen', 'pension3b'), type: 'select', options: opts(t, 'finanzen', 'pension3b'), secondary: true, orientation: or(t, 'saeule3b') },
-        { k: 'pension3bBalance', label: fl(t, 'finanzen', 'pension3bBalance'), type: 'currency', hint: hn(t, 'finanzen', 'pension3bBalance'), secondary: true },
-        { k: 'investmentFunds', label: fl(t, 'finanzen', 'investmentFunds'), type: 'select', options: opts(t, 'finanzen', 'investmentFunds'), secondary: true },
+        { k: 'sideIncomeType', type: 'select', sel: 'incomeType' },
+        { k: 'taxableIncome', type: 'currency', hint: 1, secondary: true },
+        { k: 'incomeType', type: 'select', sel: 1 },
+        { k: 'dreizehnter', type: 'select', sel: 1 },
+        { k: 'employer', type: 'text', recommended: true, naOk: true },
+        { k: 'employerAddress', type: 'textarea', hint: 1, naOk: true },
+        { k: 'employmentType', type: 'select', sel: 1 },
+        { k: 'startDate', type: 'date', naOk: true },
+        { k: 'familienzulagen', type: 'currency', hint: 1 },
+        { k: 'alimenteReceived', type: 'currency', hint: 1, naOk: true },
+        { k: 'monthlyTax', type: 'currency', hint: 1, sec: 'budgetLight', orientation: or(t, 'steuern') },
+        { k: 'groceries', type: 'currency', itemized: true, hint: 1 },
+        { k: 'communication', type: 'currency', itemized: true, hint: 1 },
+        { k: 'mobility', type: 'currency', hint: 1 },
+        { k: 'childcare', type: 'currency', hint: 1 },
+        { k: 'otherInsurance', type: 'currency', hint: 1 },
+        { k: 'debtPayments', type: 'currency', hint: 1, sec: 'obligations', orientation: or(t, 'schuldenraten') },
+        { k: 'alimentePaid', type: 'currency', hint: 1, naOk: true },
+        { k: 'savingsGoal', type: 'currency', sec: 'savings' },
+        { k: 'savingsAccount', type: 'currency' },
+        { k: 'bankName', type: 'text' },
+        { k: 'securitiesValue', type: 'currency', hint: 1, sec: 'assets' },
+        { k: 'otherAssets', type: 'currency', hint: 1 },
+        { k: 'creditCard', type: 'select', sel: 1, sec: 'credit' },
+        { k: 'creditCardLimit', type: 'currency', hint: 1 },
+        { k: 'creditCardBalance', type: 'currency', hint: 1 },
+        { k: 'loans', type: 'currency' },
+        { k: 'pension3a', type: 'currency', sec: 'provision', secondary: true, orientation: or(t, 'saeule3a') },
+        { k: 'pension3aBalance', type: 'currency', hint: 1, secondary: true },
+        { k: 'pension3b', type: 'select', sel: 1, secondary: true, orientation: or(t, 'saeule3b') },
+        { k: 'pension3bBalance', type: 'currency', hint: 1, secondary: true },
+        { k: 'investmentFunds', type: 'select', sel: 1, secondary: true },
       ],
       docs: [
-        { k: 'tax_return', label: dl(t, 'finanzen', 'tax_return') },
-        { k: 'income_proof', label: dl(t, 'finanzen', 'income_proof') },
-        { k: 'bank_statement', label: dl(t, 'finanzen', 'bank_statement') },
+        'tax_return',
+        'income_proof',
+        'bank_statement',
       ]
     },
     {
       key: 'versicherungen',
-      title: t('chapters.versicherungen.title'),
-      short: t('chapters.versicherungen.short'),
-      description: t('chapters.versicherungen.description'),
       fields: [
-        { k: 'kkInsurer', label: fl(t, 'versicherungen', 'kkInsurer'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkInsurer'), mvo: true, section: t('sections.versicherungen.basic'), sectionIntro: si(t, 'versicherungen', 'basic'), orientation: or(t, 'kvg'), link: lk(t, 'kkWechsel') },
-        { k: 'kkModel', label: fl(t, 'versicherungen', 'kkModel'), type: 'select', options: opts(t, 'versicherungen', 'kkModel') },
-        { k: 'kkPremium', label: fl(t, 'versicherungen', 'kkPremium'), type: 'currency', mvo: true },
-        { k: 'franchise', label: fl(t, 'versicherungen', 'franchise'), type: 'select', options: opts(t, 'versicherungen', 'franchise'), mvo: true, orientation: or(t, 'franchise') },
-        { k: 'kkCardNumber', label: fl(t, 'versicherungen', 'kkCardNumber'), type: 'text' },
-        { k: 'policyNumber', label: fl(t, 'versicherungen', 'policyNumber'), type: 'text', hint: hn(t, 'versicherungen', 'policyNumber') },
-        { k: 'kkZusatz', label: fl(t, 'versicherungen', 'kkZusatz'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkZusatz') },
-        { k: 'bvgInsurer', label: fl(t, 'versicherungen', 'bvgInsurer'), type: 'text', section: t('sections.versicherungen.occupational'), sectionIntro: si(t, 'versicherungen', 'occupational'), orientation: or(t, 'bvg') },
-        { k: 'bvgContribution', label: fl(t, 'versicherungen', 'bvgContribution'), type: 'currency', hint: hn(t, 'versicherungen', 'bvgContribution') },
-        { k: 'bvgBalance', label: fl(t, 'versicherungen', 'bvgBalance'), type: 'currency', hint: hn(t, 'versicherungen', 'bvgBalance') },
-        { k: 'lifeInsurance', label: fl(t, 'versicherungen', 'lifeInsurance'), type: 'select', options: opts(t, 'versicherungen', 'lifeInsurance') },
-        { k: 'freizuegigkeit', label: fl(t, 'versicherungen', 'freizuegigkeit'), type: 'text', placeholder: ph(t, 'versicherungen', 'freizuegigkeit') },
-        { k: 'uvg', label: fl(t, 'versicherungen', 'uvg'), type: 'select', options: opts(t, 'versicherungen', 'uvg'), section: t('sections.versicherungen.additional'), sectionIntro: si(t, 'versicherungen', 'additional'), orientation: or(t, 'uvg') },
-        { k: 'ktg', label: fl(t, 'versicherungen', 'ktg'), type: 'select', options: opts(t, 'versicherungen', 'ktg'), hint: hn(t, 'versicherungen', 'ktg') },
-        { k: 'liabilityInsurance', label: fl(t, 'versicherungen', 'liabilityInsurance'), type: 'select', options: opts(t, 'versicherungen', 'liabilityInsurance') },
-        { k: 'liabilityAmount', label: fl(t, 'versicherungen', 'liabilityAmount'), type: 'currency' },
-        { k: 'legalInsurance', label: fl(t, 'versicherungen', 'legalInsurance'), type: 'select', options: opts(t, 'versicherungen', 'legalInsurance') },
-        { k: 'childInsurance', label: fl(t, 'versicherungen', 'childInsurance'), type: 'select', options: opts(t, 'versicherungen', 'childInsurance') },
-        { k: 'householdInsurance', label: fl(t, 'versicherungen', 'householdInsurance'), type: 'select', options: opts(t, 'versicherungen', 'householdInsurance'), section: t('sections.versicherungen.property'), sectionIntro: si(t, 'versicherungen', 'property'), secondary: true },
-        { k: 'householdInsuranceAmount', label: fl(t, 'versicherungen', 'householdInsuranceAmount'), type: 'currency', secondary: true },
-        { k: 'travelInsurance', label: fl(t, 'versicherungen', 'travelInsurance'), type: 'select', options: opts(t, 'versicherungen', 'travelInsurance'), secondary: true },
-        { k: 'cyberInsurance', label: fl(t, 'versicherungen', 'cyberInsurance'), type: 'select', options: opts(t, 'versicherungen', 'cyberInsurance'), secondary: true },
-        { k: 'autoInsurance', label: fl(t, 'versicherungen', 'autoInsurance'), type: 'select', options: opts(t, 'versicherungen', 'autoInsurance'), section: t('sections.versicherungen.mobility'), sectionIntro: si(t, 'versicherungen', 'mobility'), secondary: true },
-        { k: 'autoInsuranceAmount', label: fl(t, 'versicherungen', 'autoInsuranceAmount'), type: 'currency', secondary: true },
-        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency', section: t('sections.versicherungen.social'), sectionIntro: si(t, 'versicherungen', 'social'), orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
+        { k: 'kkInsurer', type: 'text', ph: 1, mvo: true, sec: 'basic', orientation: or(t, 'kvg'), link: lk(t, 'kkWechsel') },
+        { k: 'kkModel', type: 'select', sel: 1 },
+        { k: 'kkPremium', type: 'currency', mvo: true },
+        { k: 'franchise', type: 'select', sel: 1, mvo: true, orientation: or(t, 'franchise') },
+        { k: 'kkCardNumber', type: 'text' },
+        { k: 'policyNumber', type: 'text', hint: 1 },
+        { k: 'kkZusatz', type: 'text', ph: 1 },
+        { k: 'bvgInsurer', type: 'text', sec: 'occupational', orientation: or(t, 'bvg') },
+        { k: 'bvgContribution', type: 'currency', hint: 1 },
+        { k: 'bvgBalance', type: 'currency', hint: 1 },
+        { k: 'lifeInsurance', type: 'select', sel: 1 },
+        { k: 'freizuegigkeit', type: 'text', ph: 1 },
+        { k: 'uvg', type: 'select', sel: 1, sec: 'additional', orientation: or(t, 'uvg') },
+        { k: 'ktg', type: 'select', sel: 1, hint: 1 },
+        { k: 'liabilityInsurance', type: 'select', sel: 1 },
+        { k: 'liabilityAmount', type: 'currency' },
+        { k: 'legalInsurance', type: 'select', sel: 1 },
+        { k: 'childInsurance', type: 'select', sel: 1 },
+        { k: 'householdInsurance', type: 'select', sel: 1, sec: 'property', secondary: true },
+        { k: 'householdInsuranceAmount', type: 'currency', secondary: true },
+        { k: 'travelInsurance', type: 'select', sel: 1, secondary: true },
+        { k: 'cyberInsurance', type: 'select', sel: 1, secondary: true },
+        { k: 'autoInsurance', type: 'select', sel: 1, sec: 'mobility', secondary: true },
+        { k: 'autoInsuranceAmount', type: 'currency', secondary: true },
+        { k: 'ahvContribution', type: 'currency', sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
       ],
       docs: [
-        { k: 'kkcard', label: dl(t, 'versicherungen', 'kkcard') },
-        { k: 'bvg_cert', label: dl(t, 'versicherungen', 'bvg_cert') },
-        { k: 'ahv_confirmation', label: dl(t, 'versicherungen', 'ahv_confirmation') },
-        { k: 'household_policy', label: dl(t, 'versicherungen', 'household_policy') },
-        { k: 'auto_policy', label: dl(t, 'versicherungen', 'auto_policy') },
+        'kkcard',
+        'bvg_cert',
+        'ahv_confirmation',
+        'household_policy',
+        'auto_policy',
       ]
     },
     {
       key: 'ausbildung',
-      title: t('chapters.ausbildung.title'),
-      short: t('chapters.ausbildung.short'),
-      description: t('chapters.ausbildung.description'),
       fields: [
-        { k: 'schoolName', label: fl(t, 'ausbildung', 'schoolName'), type: 'text', section: t('sections.ausbildung.education'), sectionIntro: si(t, 'ausbildung', 'education') },
-        { k: 'educationLevel', label: fl(t, 'ausbildung', 'educationLevel'), type: 'select', options: opts(t, 'ausbildung', 'educationLevel') },
-        { k: 'efzNumber', label: fl(t, 'ausbildung', 'efzNumber'), type: 'text' },
-        { k: 'certifications', label: fl(t, 'ausbildung', 'certifications'), type: 'textarea' },
-        { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', naOk: true, section: t('sections.ausbildung.work'), sectionIntro: si(t, 'ausbildung', 'work') },
+        { k: 'schoolName', type: 'text', sec: 'education' },
+        { k: 'educationLevel', type: 'select', sel: 1 },
+        { k: 'efzNumber', type: 'text' },
+        { k: 'certifications', type: 'textarea' },
+        { k: 'employer', type: 'text', naOk: true, sec: 'work' },
         // Kein `hint`: das Kapitel „Ausbildung & Arbeit" führt bewusst keine Hinweise.
         // Die Erklärung steht am gekoppelten Feld in Finanzen (Quer-Befüllung, main.jsx).
-        { k: 'employerAddress', label: fl(t, 'ausbildung', 'employerAddress'), type: 'textarea', naOk: true },
-        { k: 'jobTitle', label: fl(t, 'ausbildung', 'jobTitle'), type: 'text', mvo: true, naOk: true, orientation: or(t, 'beruf') },
-        { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date', naOk: true },
-        { k: 'workPermit', label: fl(t, 'ausbildung', 'workPermit'), type: 'select', options: opts(t, 'ausbildung', 'workPermit'), orientation: or(t, 'bewilligung_b') },
-        { k: 'workHoursPerWeek', label: fl(t, 'ausbildung', 'workHoursPerWeek'), type: 'text', naOk: true },
-        { k: 'languages', label: fl(t, 'ausbildung', 'languages'), type: 'textarea', section: t('sections.ausbildung.languages'), sectionIntro: si(t, 'ausbildung', 'languages') },
+        { k: 'employerAddress', type: 'textarea', naOk: true },
+        { k: 'jobTitle', type: 'text', mvo: true, naOk: true, orientation: or(t, 'beruf') },
+        { k: 'employmentStart', type: 'date', naOk: true },
+        { k: 'workPermit', type: 'select', sel: 1, orientation: or(t, 'bewilligung_b') },
+        { k: 'workHoursPerWeek', type: 'text', naOk: true },
+        { k: 'languages', type: 'textarea', sec: 'languages' },
       ],
       docs: [
-        { k: 'diploma', label: dl(t, 'ausbildung', 'diploma') },
-        { k: 'certificates', label: dl(t, 'ausbildung', 'certificates') },
-        { k: 'cv_file', label: dl(t, 'ausbildung', 'cv_file') },
+        'diploma',
+        'certificates',
+        'cv_file',
       ]
     },
     {
       key: 'behoerden',
-      title: t('chapters.behoerden.title'),
-      short: t('chapters.behoerden.short'),
-      description: t('chapters.behoerden.description'),
       fields: [
-        { k: 'cantoneOfTaxation', label: fl(t, 'behoerden', 'cantoneOfTaxation'), type: 'select', options: cantonOptions(t), mvo: true, section: t('sections.behoerden.taxes'), sectionIntro: si(t, 'behoerden', 'taxes'), orientation: or(t, 'steuerverwaltung') },
-        { k: 'taxId', label: fl(t, 'behoerden', 'taxId'), type: 'text' },
-        { k: 'taxFilingDeadline', label: fl(t, 'behoerden', 'taxFilingDeadline'), type: 'date' },
-        { k: 'pendingTaxReturns', label: fl(t, 'behoerden', 'pendingTaxReturns'), type: 'text' },
-        { k: 'registryOffice', label: fl(t, 'behoerden', 'registryOffice'), type: 'text', section: t('sections.behoerden.legal'), sectionIntro: si(t, 'behoerden', 'legal'), orientation: or(t, 'sozialdienst') },
-        { k: 'betreibungsStatus', label: fl(t, 'behoerden', 'betreibungsStatus'), type: 'select', options: opts(t, 'behoerden', 'betreibungsStatus'), orientation: or(t, 'betreibung') },
-        { k: 'courtCases', label: fl(t, 'behoerden', 'courtCases'), type: 'select', options: opts(t, 'behoerden', 'courtCases') },
-        { k: 'legalRepresentative', label: fl(t, 'behoerden', 'legalRepresentative'), type: 'text', section: t('sections.behoerden.representation'), sectionIntro: si(t, 'behoerden', 'representation') },
-        { k: 'representativePhone', label: fl(t, 'behoerden', 'representativePhone'), type: 'tel' },
-        { k: 'willMade', label: fl(t, 'behoerden', 'willMade'), type: 'select', options: opts(t, 'behoerden', 'willMade'), orientation: or(t, 'testament'), link: lk(t, 'testament') },
+        { k: 'cantoneOfTaxation', type: 'select', options: cantonOptions(t), mvo: true, sec: 'taxes', orientation: or(t, 'steuerverwaltung') },
+        { k: 'taxId', type: 'text' },
+        { k: 'taxFilingDeadline', type: 'date' },
+        { k: 'pendingTaxReturns', type: 'text' },
+        { k: 'registryOffice', type: 'text', sec: 'legal', orientation: or(t, 'sozialdienst') },
+        { k: 'betreibungsStatus', type: 'select', sel: 1, orientation: or(t, 'betreibung') },
+        { k: 'courtCases', type: 'select', sel: 1 },
+        { k: 'legalRepresentative', type: 'text', sec: 'representation' },
+        { k: 'representativePhone', type: 'tel' },
+        { k: 'willMade', type: 'select', sel: 1, orientation: or(t, 'testament'), link: lk(t, 'testament') },
       ],
       docs: [
-        { k: 'betreibungsauszug', label: dl(t, 'behoerden', 'betreibungsauszug') },
-        { k: 'will', label: dl(t, 'behoerden', 'will') },
-        { k: 'power_of_attorney', label: dl(t, 'behoerden', 'power_of_attorney') },
-        { k: 'patientenverfuegung', label: dl(t, 'behoerden', 'patientenverfuegung') },
+        'betreibungsauszug',
+        'will',
+        'power_of_attorney',
+        'patientenverfuegung',
       ]
     },
     {
       key: 'notfall',
-      title: t('chapters.notfall.title'),
-      short: t('chapters.notfall.short'),
-      description: t('chapters.notfall.description'),
       fields: [
-        { k: 'emergencyContact', label: fl(t, 'notfall', 'emergencyContact'), type: 'text', mvo: true, naOk: true, naMit: ['emergencyPhone'], section: t('sections.notfall.contact'), sectionIntro: si(t, 'notfall', 'contact') },
-        { k: 'emergencyPhone', label: fl(t, 'notfall', 'emergencyPhone'), type: 'tel', mvo: true, naVon: 'emergencyContact' },
-        { k: 'bloodType', label: fl(t, 'notfall', 'bloodType'), type: 'select', options: opts(t, 'notfall', 'bloodType'), section: t('sections.notfall.medical'), sectionIntro: si(t, 'notfall', 'medical') },
-        { k: 'allergies', label: fl(t, 'notfall', 'allergies'), type: 'textarea' },
-        { k: 'medications', label: fl(t, 'notfall', 'medications'), type: 'textarea' },
-        { k: 'chronicDiseases', label: fl(t, 'notfall', 'chronicDiseases'), type: 'textarea' },
-        { k: 'doctor', label: fl(t, 'notfall', 'doctor'), type: 'text', section: t('sections.notfall.care'), sectionIntro: si(t, 'notfall', 'care') },
-        { k: 'doctorPhone', label: fl(t, 'notfall', 'doctorPhone'), type: 'tel' },
-        { k: 'hospital', label: fl(t, 'notfall', 'hospital'), type: 'text' },
-        { k: 'organDonor', label: fl(t, 'notfall', 'organDonor'), type: 'select', options: opts(t, 'notfall', 'organDonor'), section: t('sections.notfall.provision'), sectionIntro: si(t, 'notfall', 'provision'), secondary: true },
-        { k: 'patientenverfuegung', label: fl(t, 'notfall', 'patientenverfuegung'), type: 'select', options: opts(t, 'notfall', 'patientenverfuegung'), hint: hn(t, 'notfall', 'patientenverfuegung'), orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
-        { k: 'vorsorgeauftrag', label: fl(t, 'notfall', 'vorsorgeauftrag'), type: 'select', options: opts(t, 'notfall', 'vorsorgeauftrag'), hint: hn(t, 'notfall', 'vorsorgeauftrag'), orientation: or(t, 'vorsorgeauftrag'), secondary: true },
-        { k: 'bestattungswuensche', label: fl(t, 'notfall', 'bestattungswuensche'), type: 'select', options: opts(t, 'notfall', 'bestattungswuensche'), hint: hn(t, 'notfall', 'bestattungswuensche'), secondary: true },
+        { k: 'emergencyContact', type: 'text', mvo: true, naOk: true, naMit: ['emergencyPhone'], sec: 'contact' },
+        { k: 'emergencyPhone', type: 'tel', mvo: true, naVon: 'emergencyContact' },
+        { k: 'bloodType', type: 'select', sel: 1, sec: 'medical' },
+        { k: 'allergies', type: 'textarea' },
+        { k: 'medications', type: 'textarea' },
+        { k: 'chronicDiseases', type: 'textarea' },
+        { k: 'doctor', type: 'text', sec: 'care' },
+        { k: 'doctorPhone', type: 'tel' },
+        { k: 'hospital', type: 'text' },
+        { k: 'organDonor', type: 'select', sel: 1, sec: 'provision', secondary: true },
+        { k: 'patientenverfuegung', type: 'select', sel: 1, hint: 1, orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
+        { k: 'vorsorgeauftrag', type: 'select', sel: 1, hint: 1, orientation: or(t, 'vorsorgeauftrag'), secondary: true },
+        { k: 'bestattungswuensche', type: 'select', sel: 1, hint: 1, secondary: true },
       ],
       docs: [
-        { k: 'advance_directive', label: dl(t, 'notfall', 'advance_directive') },
-        { k: 'organ_card', label: dl(t, 'notfall', 'organ_card') },
-        { k: 'blood_card', label: dl(t, 'notfall', 'blood_card') },
+        'advance_directive',
+        'organ_card',
+        'blood_card',
       ]
     },
-  ];
+  ]);
 }
 
 // Derive display name from firstName + lastName (backward-compat with legacy fullName)
