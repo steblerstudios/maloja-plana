@@ -23,7 +23,13 @@ const dateien = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e
 // JS-Stil (`height: '100vh'`) und CSS (`height: 100vh;`) — nicht `min-height`/`minHeight`.
 const FEST = /(?<![-\w])height\s*:\s*['"]?100d?vh\b/g;
 
-const treffer = (quelltext) => [...quelltext.matchAll(FEST)].length;
+// Kommentare zählen nicht: beide Korrekturen zitieren das alte Muster im Kommentar
+// darüber, und ein Wächter, der auf die eigene Begründung anschlägt, ist Lärm.
+const ohneKommentare = (quelltext) => quelltext
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .split('\n').filter((z) => !/^\s*\/\//.test(z)).join('\n');
+
+const treffer = (quelltext) => [...ohneKommentare(quelltext).matchAll(FEST)].length;
 
 describe('Vollbild-Flächen schneiden nichts ab', () => {
   const alle = dateien(SRC);
@@ -39,6 +45,8 @@ describe('Vollbild-Flächen schneiden nichts ab', () => {
     expect(treffer("style: { minHeight: '100dvh' }")).toBe(0);
     expect(treffer('.x { min-height: 100vh; }')).toBe(0);
     expect(treffer("style: { lineHeight: '100vh' }")).toBe(0);
+    expect(treffer("  // vorher `width:100vw; height:100vh`\n  minHeight: '100dvh'")).toBe(0);
+    expect(treffer("  // Kommentar\n  height: '100vh',")).toBe(1);
   });
 
   it('keine Datei in src/ setzt eine feste Vollbild-Höhe', () => {
