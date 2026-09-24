@@ -209,11 +209,16 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
     ...overrides,
   });
 
-  it('returns not eligible for an unknown canton', () => {
-    const r = calculateIPV({ basis: { canton: 'XX' }, finanzen: {} });
-    expect(r.eligible).toBe(false);
-    expect(r.amount).toBe(0);
-    expect(r.noteKey).toBe('ipv.cantonUnknown');
+  // K118 (Vorab-Prüfung 24.09.2026): unbekannt ist nicht 0 — kein Betrag, belegt: false.
+  it('ohne erkannten Kanton: kein Betrag, nicht «0» (K118)', () => {
+    for (const canton of ['XX', '', undefined]) {
+      const r = calculateIPV({ basis: { canton }, finanzen: { monthlyIncome: 4000 } });
+      expect(r.eligible).toBe(false);
+      expect(r.belegt).toBe(false);
+      expect(r.amount).toBeNull();
+      expect(r.anspruchMoeglich).toBe(false);
+      expect(r.noteKey).toBe('ipv.cantonUnknown');
+    }
   });
 
   it('grants the full single subsidy at zero income', () => {
