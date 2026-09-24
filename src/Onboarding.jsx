@@ -21,7 +21,7 @@ const STORAGE_KEY = 'or5_onboarding_done';
 export { isOnboardingDone } from './utils/einfuehrungStatus.js';
 
 import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
-import { zurueckZeichen, hinweisZeichen } from './IconSystem.jsx';
+import { zurueckZeichen, Icon } from './IconSystem.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 
 export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
@@ -64,7 +64,20 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     onComplete();
   };
 
+  // Die Hülle um jeden Schritt. Vorher `width:100vw; height:100vh; align-items:center`
+  // — dieselbe Falle wie am Fehlerschirm (ErrorBoundary.jsx, dort ausführlich): ist die
+  // Karte höher als der Schirm, schiebt die Zentrierung ihren oberen Rand über die Kante,
+  // und nach oben führt kein Scrollweg. Gemessen 24.09.2026, Schritt 2 bei 375×520:
+  // Karte beginnt bei −92 px — Schrittanzeige, «Zurück» und Titel unerreichbar.
+  // Jetzt: Mindesthöhe statt Höhe, zentriert über `margin:auto` an der Karte
+  // (Auto-Ränder werden nie negativ), `100%` statt `100vw` (kein Querscrollen).
+  const schale = {
+    width: '100%', minHeight: '100dvh', background: palette.bg, display: 'flex',
+    padding: '20px', boxSizing: 'border-box',
+  };
+
   const cardStyle = {
+    margin: 'auto',
     maxWidth: '440px', width: '100%', padding: space.xl,
     background: palette.surface, borderRadius: radius.lg,
     border: '1px solid ' + palette.border,
@@ -143,7 +156,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   // ─── Step 0: Language ────────────────────────────────────
   if (step === 0) {
     return React.createElement('div', {
-      style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
+      style: schale
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
         stepIndicator(0),
@@ -209,7 +222,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   // ─── Step 1: Name + Canton ───────────────────────────────
   if (step === 1) {
     return React.createElement('div', {
-      style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
+      style: schale
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
         stepIndicator(1),
@@ -280,7 +293,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   // direkt bei den relevanten Ansprüchen der Person beginnt. Skip/„später" erlaubt.
   if (step === 2) {
     return React.createElement('div', {
-      style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
+      style: schale
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, maxWidth: '520px' } },
         stepIndicator(2),
@@ -328,16 +341,20 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   // ─── Step 3: Ready ───────────────────────────────────────
   return React.createElement('div', {
-    style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
+    style: schale
   },
     React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, textAlign: 'center' } },
       stepIndicator(3),
-      React.createElement('div', { style: {
-        width: '80px', height: '80px', borderRadius: '50%',
-        background: 'linear-gradient(135deg, ' + palette.sand + ', ' + palette.sage + ')',
+      // Flach statt Verlauf (sand→sage war das einzige rein dekorative Verlaufs-Abzeichen
+      // der App) und ein Haken, der den Kreis füllt: vorher 12 px in 80 px, dazu seitlich
+      // verschoben, weil `hinweisZeichen` für Fliesstext 5 px Abstand rechts mitbringt.
+      React.createElement('div', { 'aria-hidden': 'true', style: {
+        width: '72px', height: '72px', borderRadius: '50%',
+        background: palette.up, border: '1px solid ' + palette.sage,
+        color: palette.sageDeep,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        margin: '0 auto 20px auto', fontSize: '32px',
-      } }, hinweisZeichen('check', 12)),
+        margin: '0 auto 20px auto',
+      } }, React.createElement(Icon, { name: 'check', size: 32 })),
 
       React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, firstName.trim()
           ? t('onboarding.readyTitle', { name: firstName.trim() })

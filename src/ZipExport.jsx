@@ -5,7 +5,7 @@ import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, 
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -396,7 +396,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'upload', size: 22 }), style: { marginBottom: space.md } }, t('backup.importFile')),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, style: { display: 'none' } }),
+          React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('backup.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('backup.fileTypes'))

@@ -117,6 +117,12 @@ export const generateKKQRCode = (kkData) => {
   return qrData;
 };
 
+// Hat ein Scan überhaupt etwas geliefert? Die Texterkennung gibt auch für ein leeres
+// Bild ein Objekt zurück — nur ohne Werte. Bis 24.09.2026 stand darüber
+// «Scan erfolgreich (OCR)».
+export const scanHatInhalt = (scanned) =>
+  !!scanned && typeof scanned === 'object' && Object.values(scanned).some(v => String(v ?? '').trim() !== '');
+
 export const validateKKData = (data, t) => {
   const errors = [];
 
