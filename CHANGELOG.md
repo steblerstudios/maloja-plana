@@ -209,6 +209,10 @@ kommt der Changelog immer mit, nie doppelt.*
   **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
+- **Luzern nach der Anmeldefrist: auch KK-Last-Karte und Prämien-Beleg ziehen nichts mehr ab**
+  (SRL 866 § 12 Abs. 3). Budget, Karte und Beleg lesen den Abzug aus einer Stelle
+  (`src/data/ipvAbzug.js`) und nennen statt einer Zahl den Grund; eine eingetragene Verfügung
+  mit Betrag gilt vor der Schätzung. Die Finanzübersicht zeigt den Anspruch mit dem Frist-Hinweis.
 - **Eine fehlende Angabe ist keine Null** (K117, K118, #312): Konkubinat mit Kindern ohne
   Partnerangabe zeigt keine Kantonszahl mehr (vorher z. B. ZH, 2 Kinder, 70 000: CHF 2 211 aus
   «ledig»); ohne erkannten Kanton «Beim Kanton prüfen» statt «Nicht berechtigt».
