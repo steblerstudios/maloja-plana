@@ -2,6 +2,7 @@
 // Ein Datei-weiter Datenstand (CANTONAL_DATA_VERSION '2024/2025') wurde am 16.09.2026
 // entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
 // unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
+import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 
@@ -177,7 +178,8 @@ export function getHouseholdInfo(data) {
       children,
       isRetired: Boolean(household.isRetired),
       householdSize: adults + children.length,
-      partnerIncome: Number(household.partnerIncome || 0),
+      // K62-Nachlauf A: nur, wenn das Feld «Nettolohn Partner/in» sichtbar wäre (utils/partnereinkommen.js).
+      partnerIncome: Number(partnerEinkommenRoh(basis) || 0),
     };
   }
 

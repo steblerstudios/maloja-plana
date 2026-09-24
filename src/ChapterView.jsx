@@ -29,7 +29,7 @@ import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
-import { giltAlsVerheiratet } from './utils/zivilstand.js';
+import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -64,8 +64,8 @@ const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
 // im Haushalt erst eine Person erfasst ist. Eingetragene Partnerschaft zählt wie verheiratet.
-export const zeigtPartnereinkommen = (adultCount, maritalStatus) =>
-  adultCount >= 2 || giltAlsVerheiratet(maritalStatus) || maritalStatus === 'cohabiting';
+// Die Regel steht in utils/partnereinkommen.js — dieselbe entscheidet, ob der Wert in Rechnungen zählt.
+export { zeigtPartnereinkommen };
 
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();

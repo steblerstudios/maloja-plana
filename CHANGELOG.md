@@ -68,6 +68,11 @@ kommt der Changelog immer mit, nie doppelt.*
   **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
+- **Verstecktes Partnereinkommen zählt nicht mehr** (K62-Nachlauf A). Wurde die zweite erwachsene
+  Person gelöscht, blieb der «Nettolohn Partner/in» gespeichert und floss weiter in Steuer, IPV,
+  Sozialhilfe, EL und Vorsorge — obwohl das Feld nicht mehr zu sehen war. Jetzt zählt der Wert nur,
+  wenn das Feld nach derselben Regel sichtbar wäre (`src/utils/partnereinkommen.js`, eine Regel für
+  Anzeige und Rechnung). Der gespeicherte Wert bleibt: kommt die Person wieder dazu, zählt er wieder.
 - **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
   CHF 250 über dem heutigen ESTV-Steuerrechner (Median CHF 97, an 434 von 544 Punkten tiefer, nie
   höher). Belegt: gleicher Ort (Bellinzona), gleiche Steuerfüsse, gleicher Tarif — das steuerbare

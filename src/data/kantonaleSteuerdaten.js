@@ -18,6 +18,7 @@ import {
   KANTONSSTEUER_MAX_KINDER,
 } from './kantonssteuerTabelle.js';
 import { bundessteuerAusSteuerbarem, vergleicheTarife } from './steuerRechner.js';
+import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
@@ -320,8 +321,9 @@ export function dreizehnterStatus(v) {
 
 // R4: Wurde das Partnereinkommen beantwortet? ChapterView legt household.partnerIncome erst an,
 // wenn etwas eingetippt wird (Wert als Text); ein geleertes Feld ist ''. «0» ist eine Antwort.
+// K62-Nachlauf A: ein Wert im nicht mehr sichtbaren Feld (zweite Person gelöscht) ist keine Antwort.
 export function partnerEinkommenAngegeben(data = {}) {
-  const v = data?.basis?.household?.partnerIncome;
+  const v = partnerEinkommenRoh(data?.basis);
   return v !== undefined && v !== null && String(v).trim() !== '';
 }
 
