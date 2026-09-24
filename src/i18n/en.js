@@ -755,6 +755,7 @@ export default {
     skipToContent: 'Skip to content',
     saved: 'Saved',
     saveError: 'Could not save — please check available storage.',
+    fremdGeaendert: 'Changed in another window. So that nothing there is overwritten, this window no longer saves.',
     notSaved: 'Not saved',
     never: 'Never',
     justNow: 'just now',
@@ -801,6 +802,7 @@ export default {
     moreTools: 'More tools',
     advanced: 'Advanced',
     notifications: 'Notifications',
+    installApp: 'Install as an app',
     tresor: 'Documents',
     kkScanner: 'Insurance scanner',
     budget: 'Budget',
@@ -856,6 +858,7 @@ export default {
     todesfall: 'A death in your circle',
     arztkoffer: 'Health',
     sub: {
+      installApp: 'Add it to your home screen',
       arztkoffer: 'Your health tools in one doctor’s case',
       kkerst: 'Get insured when new to Switzerland',
       pensionierung: 'AHV, pension fund, third pillar',
@@ -1942,6 +1945,8 @@ export default {
       a7: 'Create a backup under Tools → Export (encrypted by default, unencrypted if you choose) and import it on the new device. Afterwards you can delete everything on the old device under Settings → "Data on this device". There is no automatic sync by design — that would require a server.',
       q8: 'How up-to-date is the data (taxes, health insurance, AHV)?',
       a8: 'The data is based on official 2026 values. Tax changes, health insurance premiums and AHV parameters are updated with app releases.',
+      q9: 'How do I get the app onto my phone?',
+      a9: 'Maloja Plana is not in any app store — instead, the website can be added to your home screen and behaves like an app afterwards. The path differs from browser to browser; the guide walks through it step by step.',
     },
   },
 
@@ -3654,6 +3659,84 @@ export default {
   pwa: {
     installHint: 'Install Maloja Plana as an app — available offline, right from your home screen.',
     install: 'Install',
+    anleitungHint: 'Maloja Plana can be added to your home screen — in this browser, through the browser menu.',
+    anleitung: 'How it works',
+  },
+
+  install: {
+    title: 'Install as an app',
+    navSub: 'Add it to your home screen',
+    lead: 'Maloja Plana is not in any app store. It is a website that can be added to your home screen — after that it opens with its own icon and fills the screen, without an address bar. Every browser calls this something different. Here are the steps.',
+    schonInstalliert: 'Maloja Plana is already running as an app on this device.',
+    jetztInstallieren: 'Install now',
+    jetztInstallierenHinweis: 'This browser can handle the installation itself. A dialog will ask; after that Maloja Plana sits with your other apps.',
+    diesesGeraet: 'On this device',
+    alleGeraete: 'The steps for each device',
+    geraetUnbekannt: 'This device could not be identified with certainty, so all the paths are listed here — the right one is among them.',
+    andereZeigen: 'Show the steps for other devices',
+    andereVerbergen: 'Hide other devices',
+
+    geraet: {
+      ios: 'iPhone and iPad',
+      android: 'Android',
+      macSafari: 'Mac with Safari',
+      chromium: 'Computer with Chrome or Edge',
+      firefox: 'Firefox',
+    },
+
+    schritte: {
+      ios: [
+        'Open malojaplana.ch in Safari.',
+        'Tap the share symbol in the bar at the bottom — the square with an arrow pointing up.',
+        'Scroll down the list until «Add to Home Screen» appears.',
+        'Tap «Add» in the top right.',
+      ],
+      android: [
+        'Open malojaplana.ch in Chrome.',
+        'Tap the three dots in the top right.',
+        'Choose «Install app». Depending on your Chrome version the entry reads «Add to Home screen».',
+        'Confirm. The icon then sits with your other apps.',
+      ],
+      macSafari: [
+        'Open malojaplana.ch in Safari.',
+        'In the «File» menu, click «Add to Dock».',
+        'Confirm the name. Maloja Plana then sits in the Dock and opens in a window of its own.',
+      ],
+      chromium: [
+        'Open malojaplana.ch.',
+        'Click the install symbol at the right-hand end of the address bar — a small screen with an arrow in it.',
+        'If the symbol is missing, use the menu in the top right and choose «Install Maloja Plana». Depending on the version it sits in a submenu for sharing and saving.',
+        'Confirm.',
+      ],
+      firefox: [
+        'On Android: open the menu in the top right and choose «Add to Home screen».',
+        'On a computer this is not possible — see the note.',
+      ],
+    },
+
+    hinweis: {
+      ios: 'Safari has no button for this inside the page itself; the path always goes through the share symbol. The same applies to Chrome and Firefox on iPhone — on iOS every browser uses the same underlying engine.',
+      macSafari: '«Add to Dock» exists from Safari 17 (macOS Sonoma) onwards. Older versions cannot install web apps; there a bookmark is the alternative.',
+      firefox: 'Firefox on a computer cannot install web apps. Maloja Plana simply runs in the browser there, with every feature, reachable as a bookmark. For an icon of its own on a computer, use Chrome, Edge or Safari.',
+    },
+
+    daten: {
+      title: 'First: make a backup',
+      p1: 'Maloja Plana keeps everything on the device, not on a server. That storage belongs to the browser — and depending on the device and version, an installed app counts as a separate place. So the app may start out empty even though everything is there in the browser.',
+      p2: 'That is why it is worth making a backup before installing. If the app does start out empty, the backup fills it in one step. And if it does not, the backup was still the right move.',
+      cta: 'Go to backup',
+    },
+
+    danach: {
+      title: 'What changes — and what does not',
+      items: [
+        'Its own icon, its own launch, no browser frame. The app looks like any other on the device.',
+        'Usable offline in the areas that have been opened at least once. A calculator that has never loaded needs the internet the first time.',
+        'No account, no sign-in, no notifications unless you ask for them. Installing changes none of that.',
+        'New versions arrive on their own when you open the app, as soon as there is internet again. There is nothing to download.',
+        'To remove it, delete the icon like any other app. The stored entries may go with it — the backup stays.',
+      ],
+    },
   },
 
   kvg: {
