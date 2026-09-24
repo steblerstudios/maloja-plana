@@ -2755,7 +2755,7 @@ export default {
     scanForEmergency: 'Scansione per tessera di emergenza',
     qrKarteTitel: 'Assicurazione malattia',
     qrNotfallLesbar: 'In caso di emergenza — ogni fotocamera lo mostra',
-    qrUebernahme: 'Per riprenderlo in Maloja — solo questa app lo legge',
+    qrUebernahme: 'Pensato per riprenderlo in Maloja — non cifrato',
     errorNoInsurer: 'Assicuratore non riconosciuto',
     errorCardNumber: 'Numero tessera non valido',
     errorAhvFormat: 'Formato numero AVS non valido',

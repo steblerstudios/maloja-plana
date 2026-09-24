@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { text, weight, ease, duration } from './config/tokens.js';
-import { hinweisZeichen } from './IconSystem.jsx';
+import { hinweisZeichen } from './IconKern.jsx';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, fremdGeaendert }) => {
   const [visible, setVisible] = useState(false);

@@ -2788,7 +2788,7 @@ export default {
     scanForEmergency: 'Zum Notfall-Pass scannen',
     qrKarteTitel: 'Krankenversicherung',
     qrNotfallLesbar: 'Für den Notfall — jede Kamera zeigt ihn an',
-    qrUebernahme: 'Zum Übernehmen in Maloja — nur diese App liest ihn',
+    qrUebernahme: 'Zum Übernehmen in Maloja gedacht — nicht verschlüsselt',
     errorNoInsurer: 'Versicherer nicht erkannt',
     errorCardNumber: 'Kartennummer ungültig',
     errorAhvFormat: 'AHV-Format ungültig',

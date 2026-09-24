@@ -2755,7 +2755,7 @@ export default {
     scanForEmergency: 'Scan for emergency pass',
     qrKarteTitel: 'Health insurance',
     qrNotfallLesbar: 'For an emergency — any camera shows it',
-    qrUebernahme: 'To transfer into Maloja — only this app reads it',
+    qrUebernahme: 'Meant for transferring into Maloja — not encrypted',
     errorNoInsurer: 'Insurer not recognized',
     errorCardNumber: 'Card number invalid',
     errorAhvFormat: 'AHV number format invalid',

@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { getChapters } from '../config/constants.js';
 import { grundordnung } from '../utils/vollstaendigkeit.js';
-import { GrundordnungFelder } from '../Dashboard.jsx';
+import { GrundordnungFelder } from '../BergDetail.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // Befund 24.09.2026, im Browser: «Fortschritt im Detail» → «Ihre Grundordnung»
