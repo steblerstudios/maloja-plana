@@ -9,17 +9,24 @@ export default {
   },
   lebenszustaende: {
     sectionTitle: 'Pertutga ina da questas situaziuns a Vus?',
-    sectionIntro: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherni quai che correspunda. Quai resta sin Voss apparat ed agida mo a mussar a Vus quai che va bain per Vus — nagin profil, nagina valitaziun.',
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    sectionIntro: { sie: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherni quai che correspunda. Quai resta sin Voss apparat ed agida mo a mussar a Vus quai che va bain per Vus — nagin profil, nagina valitaziun.', du: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherna quai che correspunda. Quai resta sin tes apparat ed agida mo a mussar a tai quai che va bain per tai — nagin profil, nagina valitaziun.' },
     selectHint: 'Tutgar ina situaziun per vesair quai che pudess pertutgar.',
     quelleLabel: 'Funtauna',
     standLabel: 'Stadi',
     regio: {
-      title: 'Purschidas en tia regiun',
-      kulturlegiRegion: 'Tia KulturLegi regiunala',
-      kulturlegiRegionText: 'Las purschidas per tia regiun — cultura, curs, sport e dapli.',
-      checkTitle: 'Chattar tia KulturLegi regiunala',
-      checkText: 'La KulturLegi renda attent a purschidas reducidas per regiun — guarda tge che vala tar tai.',
-      noneNote: 'En tia regiun para betg dar anc ina KulturLegi — quai po midar.',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      title: { sie: 'Purschidas en Vossa regiun', du: 'Purschidas en tia regiun' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      kulturlegiRegion: { sie: 'Vossa KulturLegi regiunala', du: 'Tia KulturLegi regiunala' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      kulturlegiRegionText: { sie: 'Las purschidas per Vossa regiun — cultura, curs, sport e dapli.', du: 'Las purschidas per tia regiun — cultura, curs, sport e dapli.' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      checkTitle: { sie: 'Chattar Vossa KulturLegi regiunala', du: 'Chattar tia KulturLegi regiunala' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      checkText: { sie: 'La KulturLegi renda attent a purschidas reducidas per regiun — guardai tge che vala tar Vus.', du: 'La KulturLegi renda attent a purschidas reducidas per regiun — guarda tge che vala tar tai.' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      noneNote: { sie: 'En Vossa regiun para betg dar anc ina KulturLegi — quai po midar.', du: 'En tia regiun para betg dar anc ina KulturLegi — quai po midar.' },
       offers: {
         familienpass: { titel: 'Familienpass Region Basel', text: 'Passa 150 purschidas e reducziuns per famiglias; FamilienpassPlus per pitschens budgets (30.–/onn).' },
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Tractament dals dents che resguarda la situaziun finanziala (Soziales Basel / UZB).' },
@@ -34,7 +41,8 @@ export default {
     moreInfo: 'Vinavant',
     pageTitle: 'Situaziuns da vita',
     pageSub: 'Scuvrir dretgs pauc enconuschents',
-    dashboardLink: 'Pertutga ina situaziun a Vus?',
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    dashboardLink: { sie: 'Pertutga ina situaziun a Vus?', du: 'Pertutga ina situaziun a tai?' },
     tiefesEinkommen: {
       label: 'Cura ch’ils raps èn stretgs',
       frage: 'Il retgav na basta savens betg fin la fin dal mais?',
@@ -45,35 +53,45 @@ export default {
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sch’il retgav na cuvra betg il necessari, po l’agid social cumplettar. Quai è in dretg, betg ina almosna.' },
         stipendien: { titel: 'Stipendis', text: 'Per la furmaziun ed ils studis cun in bass retgav existan stipendis — restituibels u betg.' },
         franchise: { titel: 'Controllar la franchisa', text: 'Cun paucas visitas dal medi reducescha ina franchisa pli auta la premia mensila — da repetir mintga atun.' },
-        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' },
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: 'Tes chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.' },
-        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.' },
-        kulturlegi: { titel: 'KulturLegi (Caritas)', text: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Voss chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.', du: 'Tes chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.' } },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.' } },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        kulturlegi: { titel: 'KulturLegi (Caritas)', text: { sie: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — Vossa KulturLegi chantunala mussa tge che vala tar Vus.', du: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' } },
         rekaFerien: { titel: 'Vacanzas Reka per 200.–', text: 'Cun la KulturLegi pussibilitescha la Fundaziun Reka a famiglias e persunas sulettas pertutgadas da la povradad ina emna da vacanzas per circa 200 francs — abitaziun e viadi cun il traffic public inclus.' },
       },
     },
     alleinerziehend: {
       label: 'Crescher uffants sulet/sula',
-      frage: 'Creschais Vus in u plirs uffants sulet/sula?',
+      // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+      frage: { sie: 'Creschais Vus in u plirs uffants sulet/sula?', du: 'Creschas ti in u plirs uffants sulet/sula?' },
       intro: 'Geniturs suls portan dapli — e propri per questa situaziun existan diversas furmas da sustegn, bleras restan dentant nunduvradas.',
       berechtigungen: {
         alimente: { titel: 'Avanzament dals alimors & agid d’incasso', text: 'Sche las contribuziuns d’mantegniment n’arrivan betg, po la vischnanca las avanzar ed gidar a las incassar — uschia che l’uffant na resta betg senza.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Chasadas cun in sulet genitur han savens dretg sin in agid per las premias da la cassa da malsauns — per il genitur ed ils uffants.' },
         familienzulagen: { titel: 'Supplements da famiglia', text: 'Supplements per uffants e da furmaziun per mintga uffant — recuperabels retroactivamain sche emblidads. Els suondan il genitur che lavura.' },
-        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' },
-        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: 'Tes chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.' },
-        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.' },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: { sie: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumandai tar Vossa vischnanca per buns da chüra u plazzas subvenziunadas.', du: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' } },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        familienEL: { titel: 'Prestaziuns cumplementaras per famiglias', text: { sie: 'Voss chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.', du: 'Tes chantun paja a famiglias che lavuran, cun uffants pitschens e in bass retgav, ina prestaziun cumplementara mensila — per betg stuair ir en l’agid social. Savens nunenconuschent.' } },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        mutterschaftsbeihilfe: { titel: 'Agid da maternitad', text: { sie: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez Voss uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.', du: 'Tscherts chantuns pajan, suenter la naschientscha e durant plirs mais, in agid per pudair tgirar sez tes uffant pitschen, sche l’entrada na cuvra betg il basegn vital. Savens nunenconuschent.' } },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
         steuern: { titel: 'Tarifa per geniturs & deducziun per uffants', text: 'Geniturs suls vegnan taxads cun la tarifa pli bassa per geniturs e pon deducir las custas per uffants e la chüra.' },
       },
     },
     beeintraechtigung: {
       label: 'Cun in impediment u ina malsogna cronica',
-      frage: 'Vivais Vus cun in impediment, ina malsogna cronica u in’indicaziun renconuschida?',
+      // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+      frage: { sie: 'Vivais Vus cun in impediment, ina malsogna cronica u in’indicaziun renconuschida?', du: 'Vivas ti cun in impediment, ina malsogna cronica u in’indicaziun renconuschida?' },
       intro: 'In’indicaziun po avrir in sustegn pli baud u pli ampel che quai ch’ins crai — bler vegn numnà darar ed è facil da surveseir.',
       berechtigungen: {
         iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
-        hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.' },
+        // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
+        hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: { sie: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.', du: 'In import mensil sche ti has regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.' } },
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
@@ -83,10 +101,12 @@ export default {
     },
     pflegendeAngehoerige: {
       label: 'Tgirar confamigliars',
-      frage: 'Tgirais Vus regularmain ina persuna confamigliara u dativa?',
+      // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+      frage: { sie: 'Tgirais Vus regularmain ina persuna confamigliara u dativa?', du: 'Tgiras ti regularmain ina persuna confamigliara u dativa?' },
       intro: 'La tgira ch’ins fa en silenzi resta savens nunconsiderada — e tuttina po ella crear bunificaziuns da renta e dretgs. I dat er servetschs da sgraventada e cussegliaziun.',
       berechtigungen: {
-        betreuungsgutschriften: { titel: 'Bunificaziuns d’assistenza (AVS)', text: 'La tgira da confamigliars datvis po vegnir scrita sin Voss conto da l’AVS ed augmentar Vossa renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.' },
+        // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
+        betreuungsgutschriften: { titel: 'Bunificaziuns d’assistenza (AVS)', text: { sie: 'La tgira da confamigliars datvis po vegnir scrita sin Voss conto da l’AVS ed augmentar Vossa renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.', du: 'La tgira da confamigliars datvis po vegnir scrita sin tes conto da l’AVS ed augmentar tia renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.' } },
         betreuungsentschaedigung: { titel: 'Indemnisaziun da tgira (UCG)', text: 'Congedi pajà per tgirar in uffant grevamain malsaun u accidentà, plis in curt congedi per in confamigliar — indemnisads tras l’UCG.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas (da la persuna tgirada)', text: 'La persuna tgirada po avair dretg sin in import mensil — quai po gidar a finanziar la tgira necessaria.' },
         steuern: { titel: 'Deducziun per persunas sustegnidas', text: 'Tgi che sustegna essenzialmain ina persuna en basegn po la deducir en la decleraziun da taglia.' },
@@ -110,7 +130,8 @@ export default {
       frage: 'En in emprendissadi, a scola u en il studi?',
       intro: 'Esser en furmaziun avra sustegns che blers na dumondan mai — e cumenza en silenzi intginas obligaziuns da tegnair en egl.',
       berechtigungen: {
-        stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: { sie: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor Vossa entrada e quella da Voss geniturs, cun termins d’annunzia.', du: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' } },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
         franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
         ahv: { titel: 'Contribuziuns AVS & largias', text: 'Dapi l’onn suenter ils 20 onns èn ils contribuziuns AVS debitas era senza lavur — students senza activitad pajan il contribut minimal. Onns che mancan reduceschan la renta futura.' },
@@ -133,7 +154,8 @@ export default {
       frage: 'Retschaivas ti ina renta da l’AVS u ta stas ti datiers?',
       intro: 'En la vegliadetgna restan blers dretgs nunduvrads — surtut las prestaziuns cumplementaras. Bler da quai è in dretg, betg assistenza.',
       berechtigungen: {
-        pensionierung: { titel: 'Transiziun en la pensiun', text: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        pensionierung: { titel: 'Transiziun en la pensiun', text: { sie: 'Stais Vus prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.', du: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' } },
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella — ina da las prestaziuns las pli savens betg dumandadas en Svizra. In dretg, betg carezza.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC, ma savens sursvieu.' },
@@ -147,8 +169,10 @@ export default {
       frage: 'Senza lavur, tranter duas plazzas u sortì da la garanzia?',
       intro: 'Senza lavur avran ins sustegns che na vegnan betg automaticamain — e suenter la fin dals dretgs datti auters agids che blers na san betg dumandar.',
       berechtigungen: {
-        rav: { titel: 'S’annunziar a temp tar l’URC', text: 'L’annunzia tar l’URC è la scadenza la pli impurtanta — il meglier il emprim di senza plaz, avant che ti dumondas indemnisaziuns. Mintga di memia tard custa indemnisaziuns. L’access guidà mussa ils pass e memorisescha la scadenza en tes chalender.' },
-        alv: { titel: 'Indemnisaziun da dischoccupaziun (AD)', text: 'Annunzia ta uschè baud sco pussaivel tar l’URC — las indemnisaziuns dependan da tes mais da contribuziun, ed ina annunzia tardiva custa dis.' },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        rav: { titel: 'S’annunziar a temp tar l’URC', text: { sie: 'L’annunzia tar l’URC è la scadenza la pli impurtanta — il meglier il emprim di senza plaz, avant che Vus dumandais indemnisaziuns. Mintga di memia tard custa indemnisaziuns. L’access guidà mussa ils pass e memorisescha la scadenza en Voss chalender.', du: 'L’annunzia tar l’URC è la scadenza la pli impurtanta — il meglier il emprim di senza plaz, avant che ti dumondas indemnisaziuns. Mintga di memia tard custa indemnisaziuns. L’access guidà mussa ils pass e memorisescha la scadenza en tes chalender.' } },
+        // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+        alv: { titel: 'Indemnisaziun da dischoccupaziun (AD)', text: { sie: 'Annunziai Vus uschè baud sco pussaivel tar l’URC — las indemnisaziuns dependan da Voss mais da contribuziun, ed ina annunzia tardiva custa dis.', du: 'Annunzia ta uschè baud sco pussaivel tar l’URC — las indemnisaziuns dependan da tes mais da contribuziun, ed ina annunzia tardiva custa dis.' } },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'In pli bass entrada avra savens in nov dretg sin agid per las premias da la cassa da malsauns — dumandar danovamain tar il chantun, betg spetgar.' },
         sozialhilfe: { titel: 'Agid social (era suenter la fin dals dretgs)', text: 'Sche las indemnisaziuns èn exauridas, po l’agid social surpuntar la largia. In dretg, betg carezza — e separà da l’URC.' },
         franchise: { titel: 'Controllar la franchisa', text: 'Cun in pli bass entrada po ina franchisa bassa esser pli segira, ina auta pli favuraivla sche ins va darar tar il medi — controllar mintg’atun.' },
@@ -158,7 +182,8 @@ export default {
     // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
     verschuldet: {
       label: 'Endebità u en scussiun',
-      frage: 'Ta grevan debits u ina scussiun (Betreibung)?',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      frage: { sie: 'As grevan debits u ina scussiun (Betreibung)?', du: 'Ta grevan debits u ina scussiun (Betreibung)?' },
       intro: 'Ils debits fan sentir sulet, dentant datti dretgs clers ed agid gratuit — pli baud ch’ins als acceptescha, pli blera aria resta.',
       berechtigungen: {
         schuldenberatung: { titel: 'Cussegliaziun da debits gratuita', text: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — i dat in post en mintga chantun. Ir baud tegna dapli vias avertas.' },
@@ -171,7 +196,8 @@ export default {
     // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
     halbwaise: {
       label: 'In genitur è mort (renta d’orfen)',
-      frage: 'È in genitur mort, e ti u tes uffant avais main che 25 onns u essas en furmaziun?',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      frage: { sie: 'È in genitur mort, e Vus u Voss uffant avais main che 25 onns u essas en furmaziun?', du: 'È in genitur mort, e ti u tes uffant avais main che 25 onns u essas en furmaziun?' },
       intro: 'Suenter la mort d’in genitur han ils uffants dretgs clers che van facilmain a perder en in temp grev — ina renta d’orfen, e sustegn cumplementar sch’ella na tanscha betg.',
       berechtigungen: {
         waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun e cumenza savens memia tard.' },
@@ -185,30 +211,42 @@ export default {
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',
     intro: 'Die Zusatzversicherung ist getrennt von der Grundversicherung — eigene Regeln, eigene Fristen. Ein ruhiger Weg in vier Schritten.',
-    step1Title: '1 · Welche Zusatz hast du?',
-    step1Known: 'Erfasst: {insurer}. Prüfe, was sie dir bringt — und ob du sie noch brauchst.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Title: { sie: '1 · Welche Zusatz haben Sie?', du: '1 · Welche Zusatz hast du?' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Known: { sie: 'Erfasst: {insurer}. Prüfen Sie, was sie Ihnen bringt — und ob Sie sie noch brauchen.', du: 'Erfasst: {insurer}. Prüfe, was sie dir bringt — und ob du sie noch brauchst.' },
     step1OptionsNote: 'Noch keine erfasst. Typische Zusätze: ambulant, Spital (halbprivat/privat), Zahn, Brille, Alternativmedizin, Ausland.',
     // TODO(rm): «Vor dem Wechsel prüfen» (VVG) — DE-Fallback wie der ganze Block.
-    checkIntro: 'Vor dem Wechsel prüfen: Für die Zusatzversicherung gilt das Versicherungsvertragsgesetz (VVG), nicht das KVG. Drei Punkte, bevor du etwas kündigst.',
-    checkPoint1: 'Die neue Versicherung fragt dich vor dem Abschluss schriftlich nach allem, was für die Beurteilung des Risikos erheblich ist — bei einer Zusatzversicherung zur Krankenversicherung also auch nach deiner Gesundheit. Je nach Antworten kann sie den Vertrag ablehnen oder nur zu anderen Bedingungen anbieten (VVG Art. 4).',
-    checkPoint2: 'Beantworte die Fragen vollständig und wahrheitsgetreu. Wird eine erfragte, erhebliche Tatsache verschwiegen oder falsch angegeben, darf die Versicherung den Vertrag kündigen; für bereits eingetretene Schäden, soweit sie davon beeinflusst sind, entfällt dann auch die Leistung (VVG Art. 6).',
-    checkPoint3: 'Deine bisherige Zusatzversicherung kann dir nicht ordentlich kündigen: In der Zusatzversicherung zur Krankenversicherung hat dieses Recht nur die versicherungsnehmende Person (VVG Art. 35a Abs. 4). Es gibt also keinen Grund, die alte Police vorschnell aufzugeben.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkIntro: { sie: 'Vor dem Wechsel prüfen: Für die Zusatzversicherung gilt das Versicherungsvertragsgesetz (VVG), nicht das KVG. Drei Punkte, bevor Sie etwas kündigen.', du: 'Vor dem Wechsel prüfen: Für die Zusatzversicherung gilt das Versicherungsvertragsgesetz (VVG), nicht das KVG. Drei Punkte, bevor du etwas kündigst.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkPoint1: { sie: 'Die neue Versicherung fragt Sie vor dem Abschluss schriftlich nach allem, was für die Beurteilung des Risikos erheblich ist — bei einer Zusatzversicherung zur Krankenversicherung also auch nach Ihrer Gesundheit. Je nach Antworten kann sie den Vertrag ablehnen oder nur zu anderen Bedingungen anbieten (VVG Art. 4).', du: 'Die neue Versicherung fragt dich vor dem Abschluss schriftlich nach allem, was für die Beurteilung des Risikos erheblich ist — bei einer Zusatzversicherung zur Krankenversicherung also auch nach deiner Gesundheit. Je nach Antworten kann sie den Vertrag ablehnen oder nur zu anderen Bedingungen anbieten (VVG Art. 4).' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkPoint2: { sie: 'Beantworten Sie die Fragen vollständig und wahrheitsgetreu. Wird eine erfragte, erhebliche Tatsache verschwiegen oder falsch angegeben, darf die Versicherung den Vertrag kündigen; für bereits eingetretene Schäden, soweit sie davon beeinflusst sind, entfällt dann auch die Leistung (VVG Art. 6).', du: 'Beantworte die Fragen vollständig und wahrheitsgetreu. Wird eine erfragte, erhebliche Tatsache verschwiegen oder falsch angegeben, darf die Versicherung den Vertrag kündigen; für bereits eingetretene Schäden, soweit sie davon beeinflusst sind, entfällt dann auch die Leistung (VVG Art. 6).' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkPoint3: { sie: 'Ihre bisherige Zusatzversicherung kann Ihnen nicht ordentlich kündigen: In der Zusatzversicherung zur Krankenversicherung hat dieses Recht nur die versicherungsnehmende Person (VVG Art. 35a Abs. 4). Es gibt also keinen Grund, die alte Police vorschnell aufzugeben.', du: 'Deine bisherige Zusatzversicherung kann dir nicht ordentlich kündigen: In der Zusatzversicherung zur Krankenversicherung hat dieses Recht nur die versicherungsnehmende Person (VVG Art. 35a Abs. 4). Es gibt also keinen Grund, die alte Police vorschnell aufzugeben.' },
     checkSource: 'Quelle: [[VVG Art. 4|https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de#art_4]], [[Art. 6|https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de#art_6]], [[Art. 35a|https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de#art_35_a]] (Stand 1. Januar 2024, abgerufen am 15.09.2026).',
     step2Title: '2 · Wichtig: keine Aufnahmepflicht',
-    step2Text: 'Anders als die Grundversicherung darf die Zusatzversicherung dich ablehnen (Gesundheitsprüfung).',
-    step2Warn: 'Kündige erst, wenn die neue Zusatzversicherung dich schriftlich aufgenommen hat.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text: { sie: 'Anders als die Grundversicherung darf die Zusatzversicherung Sie ablehnen (Gesundheitsprüfung).', du: 'Anders als die Grundversicherung darf die Zusatzversicherung dich ablehnen (Gesundheitsprüfung).' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Warn: { sie: 'Kündigen Sie erst, wenn die neue Zusatzversicherung Sie schriftlich aufgenommen hat.', du: 'Kündige erst, wenn die neue Zusatzversicherung dich schriftlich aufgenommen hat.' },
     step3Title: '3 · Kündigung schreiben',
-    step3Text: 'Für die Zusatzversicherung gibt es noch keine fertige Vorlage — die Briefvorlagen findest du hier.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Text: { sie: 'Für die Zusatzversicherung gibt es noch keine fertige Vorlage — die Briefvorlagen finden Sie hier.', du: 'Für die Zusatzversicherung gibt es noch keine fertige Vorlage — die Briefvorlagen findest du hier.' },
     step3Link: 'Zu den Briefvorlagen',
     step4Title: '4 · Frist sichern',
-    step4Text: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfe die genaue Frist in deiner Police.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step4Text: { sie: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfen Sie die genaue Frist in Ihrer Police.', du: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfe die genaue Frist in deiner Police.' },
     step4Button: 'Frist {date} in den Kalender',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',
-    footerFrist: 'Die Kündigungsfrist steht in deiner Police — sie kann von der Faustregel abweichen.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    footerFrist: { sie: 'Die Kündigungsfrist steht in Ihrer Police — sie kann von der Faustregel abweichen.', du: 'Die Kündigungsfrist steht in deiner Police — sie kann von der Faustregel abweichen.' },
     reminderTitle: 'Zusatzversicherung kündigen — Frist',
-    reminderNotes: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung dich aufgenommen hat. Genaue Frist in der Police prüfen.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    reminderNotes: { sie: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung Sie aufgenommen hat. Genaue Frist in der Police prüfen.', du: 'Ordentliche Kündigung der Zusatzversicherung (oft 3 Monate aufs Jahresende). Erst kündigen, wenn die neue Zusatzversicherung dich aufgenommen hat. Genaue Frist in der Police prüfen.' },
   },
   // TODO(rm): provisorischer DE-Fallback für umzug — sauberes Romanisch nachziehen.
   umzug: {
@@ -216,20 +254,27 @@ export default {
     intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
     step1Title: '1 · Neue Adresse',
     step1Known: 'Erfasst: {address}. Stimmt sie noch?',
-    step1Note: 'Noch keine Adresse erfasst. Trag sie im Kapitel Wohnen ein — dann setzt sie sich überall richtig ein.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Note: { sie: 'Noch keine Adresse erfasst. Tragen Sie sie im Kapitel Wohnen ein — dann setzt sie sich überall richtig ein.', du: 'Noch keine Adresse erfasst. Trag sie im Kapitel Wohnen ein — dann setzt sie sich überall richtig ein.' },
     step1Link: 'Adresse im Kapitel Wohnen',
     step2Title: '2 · Bei der Gemeinde an- und abmelden',
     typeLabel: 'Welche Art Umzug ist das?',
     typeGemeinde: 'In derselben Gemeinde',
     typeKanton: 'Andere Gemeinde, gleicher Kanton',
     typeExtra: 'In einen anderen Kanton',
-    step2Text: 'In der Schweiz meldest du dich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nimm Ausweis und Mietvertrag mit.',
-    step2Text_gemeinde: 'Du bleibst in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melde nur deine neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.',
-    step2Text_kanton: 'Du wechselst die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.',
-    step2Text_extra: 'Du ziehst in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text: { sie: 'In der Schweiz melden Sie sich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'In der Schweiz meldest du dich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nimm Ausweis und Mietvertrag mit.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text_gemeinde: { sie: 'Sie bleiben in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melden Sie nur Ihre neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'Du bleibst in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melde nur deine neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text_kanton: { sie: 'Sie wechseln die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'Du wechselst die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text_extra: { sie: 'Sie ziehen in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', du: 'Du ziehst in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.' },
     changes_gemeinde: 'Kanton, Steueramt und Krankenkassen-Prämienregion bleiben gleich — ausser der Adresse ändert sich wenig.',
-    changes_kanton: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und deine Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.',
-    changes_extra: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüf Prämie und Steuern für den neuen Kanton.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    changes_kanton: { sie: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und Ihre Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.', du: 'Der Kanton bleibt, aber die neue Gemeinde kann einen anderen Steuerfuss haben, und deine Krankenkassen-Prämienregion kann sich ändern. Beides lohnt sich zu prüfen.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    changes_extra: { sie: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüfen Sie Prämie und Steuern für den neuen Kanton.', du: 'Ein anderer Kanton bedeutet neue kantonale Steuern, oft eine andere Krankenkassen-Prämie (neue Region) und das Ummelden von Fahrzeugen und Kontrollschildern. Prüf Prämie und Steuern für den neuen Kanton.' },
     changesLinkPraemien: 'Krankenkassen-Prämie prüfen',
     changesLinkTax: 'Steuern ansehen',
     linkMietzins: 'Verifitgar ils contributs da fittanza',
@@ -241,7 +286,8 @@ export default {
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',
-    step3Text: 'Diese Stellen sollten deine neue Adresse kennen:',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Text: { sie: 'Diese Stellen sollten Ihre neue Adresse kennen:', du: 'Diese Stellen sollten deine neue Adresse kennen:' },
     step3Post: 'Post — Nachsendeauftrag einrichten',
     step3Kk: 'Krankenkasse',
     step3Employer: 'Arbeitgeber',
@@ -255,9 +301,11 @@ export default {
     step3AddAll: 'Agiuntar tut a la glista',
     step3TodoPrefix: 'Midar adressa:',
     step4Title: '4 · Alte Wohnung kündigen',
-    step4Text: 'Falls du zur Miete wohnst: kündige die alte Wohnung fristgerecht. Eine Vorlage findest du bei den Briefvorlagen.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step4Text: { sie: 'Falls Sie zur Miete wohnen: kündigen Sie die alte Wohnung fristgerecht. Eine Vorlage finden Sie bei den Briefvorlagen.', du: 'Falls du zur Miete wohnst: kündige die alte Wohnung fristgerecht. Eine Vorlage findest du bei den Briefvorlagen.' },
     step4Link: 'Zur Mietkündigung',
-    footerFrist: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Frag im Zweifel bei deiner Gemeinde nach.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    footerFrist: { sie: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Fragen Sie im Zweifel bei Ihrer Gemeinde nach.', du: 'Die 14-Tage-Frist ist eine Orientierung — manche Gemeinden handhaben sie etwas anders. Frag im Zweifel bei deiner Gemeinde nach.' },
   },
   // TODO(rm): provisorischer DE-Fallback für unfallKrankheit — sauberes Romanisch nachziehen.
   unfallKrankheit: {
@@ -270,19 +318,25 @@ export default {
     num_tox: 'Tox Info (Vergiftungen)',
     num_euro: 'Notruf (allgemein, auch aus dem Ausland)',
     step1Note: 'Diese App ist Orientierung, kein Ersatz für den Notruf.',
-    step1Link: 'Sind deine Notfall-Angaben bereit?',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Link: { sie: 'Sind Ihre Notfall-Angaben bereit?', du: 'Sind deine Notfall-Angaben bereit?' },
     step2Title: '2 · Wer zahlt?',
     step2Intro: 'In der Schweiz hängt das davon ab, ob es ein Unfall oder eine Krankheit war:',
     step2UnfallTitle: 'Bei einem Unfall',
-    step2UnfallText: 'Über die Unfallversicherung (UVG). Wer angestellt ist und mind. 8 Std./Woche arbeitet, ist über den Arbeitgeber versichert (auch in der Freizeit) — melde den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Selbständige, Nicht-Erwerbstätige oder unter 8 Std.: der Unfall muss in der Krankenkasse eingeschlossen sein.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2UnfallText: { sie: 'Über die Unfallversicherung (UVG). Wer angestellt ist und mind. 8 Std./Woche arbeitet, ist über den Arbeitgeber versichert (auch in der Freizeit) — melden Sie den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Selbständige, Nicht-Erwerbstätige oder unter 8 Std.: der Unfall muss in der Krankenkasse eingeschlossen sein.', du: 'Über die Unfallversicherung (UVG). Wer angestellt ist und mind. 8 Std./Woche arbeitet, ist über den Arbeitgeber versichert (auch in der Freizeit) — melde den Unfall dem Arbeitgeber, er meldet ihn der Unfallversicherung (z.B. Suva). Selbständige, Nicht-Erwerbstätige oder unter 8 Std.: der Unfall muss in der Krankenkasse eingeschlossen sein.' },
     step2KrankheitTitle: 'Bei Krankheit',
-    step2KrankheitText: 'Über die Krankenkasse (Grundversicherung). Du trägst Franchise und Selbstbehalt. Behandlungen und Rechnungen reichst du über deine Kasse ein.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2KrankheitText: { sie: 'Über die Krankenkasse (Grundversicherung). Sie tragen Franchise und Selbstbehalt. Behandlungen und Rechnungen reichen Sie über Ihre Kasse ein.', du: 'Über die Krankenkasse (Grundversicherung). Du trägst Franchise und Selbstbehalt. Behandlungen und Rechnungen reichst du über deine Kasse ein.' },
     step2Note: 'Der Unterschied zählt: Bei einem anerkannten Unfall über die UVG gibt es keine Franchise.',
-    step3Title: '3 · Wenn du nicht arbeiten kannst',
-    step3Text: 'Informiere deinen Arbeitgeber und hol ein Arztzeugnis (oft ab dem 3. Tag). Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Title: { sie: '3 · Wenn Sie nicht arbeiten können', du: '3 · Wenn du nicht arbeiten kannst' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Text: { sie: 'Informieren Sie Ihren Arbeitgeber und holen Sie ein Arztzeugnis (oft ab dem 3. Tag). Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.', du: 'Informiere deinen Arbeitgeber und hol ein Arztzeugnis (oft ab dem 3. Tag). Den Lohnausfall federt die Lohnfortzahlung oder ein Krankentaggeld (KTG) ab — bei einem Unfall die Unfallversicherung.' },
     step3Link: 'Versicherungen ansehen',
     step4Title: '4 · Belege sammeln & ablegen',
-    step4Text: 'Sammle Arztzeugnisse, Rechnungen und die Unfallmeldung. Prüfe Krankenkassen-Rechnungen (Franchise/Selbstbehalt) und lege alles im Lebensordner ab.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step4Text: { sie: 'Sammeln Sie Arztzeugnisse, Rechnungen und die Unfallmeldung. Prüfen Sie Krankenkassen-Rechnungen (Franchise/Selbstbehalt) und legen Sie alles im Lebensordner ab.', du: 'Sammle Arztzeugnisse, Rechnungen und die Unfallmeldung. Prüfe Krankenkassen-Rechnungen (Franchise/Selbstbehalt) und lege alles im Lebensordner ab.' },
     step4LinkScan: 'Rechnung prüfen / scannen',
     step4LinkAblage: 'Im Lebensordner ablegen',
     footerOrientation: 'Orientierung, kein medizinischer oder rechtlicher Rat — im Notfall zählt der Notruf (144).',
@@ -292,35 +346,43 @@ export default {
     title: 'Neuer Job',
     intro: 'Ein neuer Job verändert mehr als nur den Lohn. Hier der ruhige Überblick, was dazugehört — Vertrag, Vorsorge, Versicherungen, Steuern, Fristen.',
     step1Title: '1 · Arbeitsvertrag prüfen & ablegen',
-    step1Text: 'Prüfe Pensum, Lohn, Probezeit, Kündigungsfrist und Ferien. Leg den Vertrag im Lebensordner ab — du brauchst ihn immer wieder.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Text: { sie: 'Prüfen Sie Pensum, Lohn, Probezeit, Kündigungsfrist und Ferien. Legen Sie den Vertrag im Lebensordner ab — Sie brauchen ihn immer wieder.', du: 'Prüfe Pensum, Lohn, Probezeit, Kündigungsfrist und Ferien. Leg den Vertrag im Lebensordner ab — du brauchst ihn immer wieder.' },
     step1LinkChapter: 'Lohn & Arbeit erfassen',
     step1LinkAblage: 'Vertrag im Lebensordner ablegen',
     step2Title: '2 · Pensionskasse (BVG)',
-    step2Text: 'Ab einem Jahreslohn von rund 22 000 Fr. bist du obligatorisch in der Pensionskasse (2. Säule). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text: { sie: 'Ab einem Jahreslohn von rund 22 000 Fr. sind Sie obligatorisch in der Pensionskasse (2. Säule). Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Ab einem Jahreslohn von rund 22 000 Fr. bist du obligatorisch in der Pensionskasse (2. Säule). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
     step3Title: '3 · Unfall & Krankentaggeld',
-    step3Text: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht meist auf dem Lohnausweis.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Text: { sie: 'Ab 8 Std./Woche sind Sie über den Arbeitgeber unfallversichert (UVG) — dann können Sie die Unfalldeckung in der Krankenkasse abwählen und sparen Prämie. Ob ein Krankentaggeld (KTG) besteht, steht meist auf dem Lohnausweis.', du: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht meist auf dem Lohnausweis.' },
     step3Link: 'Unfall oder Krankheit — was tun?',
     step4Title: '4 · Steuern',
-    step4Text: 'Ein neuer Lohn ändert deine Steuern. Ohne Niederlassung (C) zieht der Arbeitgeber die Quellensteuer direkt ab; sonst passt du die Steuerprognose an.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step4Text: { sie: 'Ein neuer Lohn ändert Ihre Steuern. Ohne Niederlassung (C) zieht der Arbeitgeber die Quellensteuer direkt ab; sonst passen Sie die Steuerprognose an.', du: 'Ein neuer Lohn ändert deine Steuern. Ohne Niederlassung (C) zieht der Arbeitgeber die Quellensteuer direkt ab; sonst passt du die Steuerprognose an.' },
     step4Link: 'Steuern berechnen',
     step5Title: '5 · Probezeit & Ferien',
-    step5Text: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notier dir das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step5Text: { sie: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notieren Sie sich das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).', du: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notier dir das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).' },
     step5Button: 'Probezeit-Ende {date} merken',
     step5Done: 'Im Kalender notiert.',
     step5CalendarLink: 'Zum Kalender',
     reminderTitle: 'Probezeit-Ende prüfen',
     reminderNotes: 'Während der Probezeit gilt eine kürzere Kündigungsfrist. Die genaue Dauer steht im Arbeitsvertrag (oft 1–3 Monate) — Datum anpassen.',
-    footerProbe: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, pass sie an.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    footerProbe: { sie: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, passen Sie sie an.', du: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, pass sie an.' },
   },
   // TODO(rm): provisorischer DE-Fallback für stelleVerloren — sauberes Romanisch nachziehen.
   stelleVerloren: {
     title: 'Stelle verloren — was tun?',
     intro: 'Wenn die Stelle wegfällt, zählt jeder Tag. Hier der ruhige Überblick: zuerst die wichtigste Anmeldung, dann Versicherungen, Vorsorge und Unterlagen.',
     step1Title: '1 · Beim RAV anmelden — sofort',
-    step1Text: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melde dich darum spätestens am ersten Tag ohne Stelle bei deiner Wohngemeinde bzw. dem RAV an. Schon während der Kündigungsfrist solltest du dich bewerben und die Bemühungen festhalten.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Text: { sie: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag ohne Stelle bei Ihrer Wohngemeinde bzw. dem RAV an. Schon während der Kündigungsfrist sollten Sie sich bewerben und die Bemühungen festhalten.', du: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melde dich darum spätestens am ersten Tag ohne Stelle bei deiner Wohngemeinde bzw. dem RAV an. Schon während der Kündigungsfrist solltest du dich bewerben und die Bemühungen festhalten.' },
     step1Link: 'Taggeld abschätzen',
     step2Title: '2 · Versicherungen — die unsichtbare Lücke',
-    step2Text: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach musst du den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach müssen Sie den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach musst du den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
     step2Button: 'Frist „Unfalldeckung“ merken ({date})',
     step2Done: 'Frist im Kalender gespeichert.',
     step2CalendarLink: 'Im Kalender ansehen',
@@ -328,12 +390,15 @@ export default {
     step2LinkUk: 'Unfall oder Krankheit — was tun?',
     step2LinkKk: 'Krankenkasse ansehen',
     step3Title: '3 · Pensionskasse (Freizügigkeit)',
-    step3Text: 'Beim Austritt wird dein Pensionskassen-Guthaben fällig. Übertrag es auf ein Freizügigkeitskonto — sonst geht es an die Auffangeinrichtung. Bei einer neuen Stelle bringst du es dort wieder ein.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Text: { sie: 'Beim Austritt wird Ihr Pensionskassen-Guthaben fällig. Übertragen Sie es auf ein Freizügigkeitskonto — sonst geht es an die Auffangeinrichtung. Bei einer neuen Stelle bringen Sie es dort wieder ein.', du: 'Beim Austritt wird dein Pensionskassen-Guthaben fällig. Übertrag es auf ein Freizügigkeitskonto — sonst geht es an die Auffangeinrichtung. Bei einer neuen Stelle bringst du es dort wieder ein.' },
     step3Link: 'Vorsorge ansehen',
     step4Title: '4 · Arbeitszeugnis & Unterlagen',
-    step4Text: 'Verlang ein qualifiziertes Arbeitszeugnis. Sammle Kündigung, Lohnabrechnungen und deine Arbeitsbemühungen und leg alles im Lebensordner ab.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step4Text: { sie: 'Verlangen Sie ein qualifiziertes Arbeitszeugnis. Sammeln Sie Kündigung, Lohnabrechnungen und Ihre Arbeitsbemühungen und legen Sie alles im Lebensordner ab.', du: 'Verlang ein qualifiziertes Arbeitszeugnis. Sammle Kündigung, Lohnabrechnungen und deine Arbeitsbemühungen und leg alles im Lebensordner ab.' },
     step4Link: 'Im Lebensordner ablegen',
-    footerSperrzeit: 'Wenn du selbst kündigst oder die Kündigung verschuldet hast, kann das RAV Einstelltage verhängen — lass dich vorher beraten.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    footerSperrzeit: { sie: 'Wenn Sie selbst kündigen oder die Kündigung verschuldet haben, kann das RAV Einstelltage verhängen — lassen Sie sich vorher beraten.', du: 'Wenn du selbst kündigst oder die Kündigung verschuldet hast, kann das RAV Einstelltage verhängen — lass dich vorher beraten.' },
   },
   // TODO(rm): provisorischer Fallback auf Deutsch — sauberes Romanisch nachziehen.
   // Bewusst kein erfundenes RM; RM-Sprechende verstehen DE. Übersetzung folgt im i18n-Durchgang.
@@ -341,11 +406,14 @@ export default {
     title: 'In mortori en il conturn',
     intro: 'Cura ch’ina persuna stretga mora, sto vegnir reglà bler a medem temp — e tuttina po la gronda part spetgar. Ina survista calma senza squetsch: ils emprims dis, l’enterrament, rentas & assicuranzas, la lubientscha.',
     step1Title: '1 · Ils emprims dis',
-    step1Text: 'In medi emetta l’attestat da mort. Il mortori vegn annunzià entaifer dus dis a l’uffizi da stadi civil dal lieu da mort — in’interpresa da pompas funebras surpiglia quai per ordinari per tai. Ti na stos betg purtar tut sulet en quels dis.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'In medi emetta l’attestat da mort. Il mortori vegn annunzià entaifer dus dis a l’uffizi da stadi civil dal lieu da mort — in’interpresa da pompas funebras surpiglia quai per ordinari per Vus. Vus na stuais betg purtar tut sulet en quels dis.', du: 'In medi emetta l’attestat da mort. Il mortori vegn annunzià entaifer dus dis a l’uffizi da stadi civil dal lieu da mort — in’interpresa da pompas funebras surpiglia quai per ordinari per tai. Ti na stos betg purtar tut sulet en quels dis.' },
     step2Title: '2 · Organisar l’enterrament',
-    step2Text: 'L’interpresa da pompas funebras As accumpogna tras l’organisaziun. Dumandai ils giavischs da la persuna morta (testament, documents da provediment) e laschai As detaglar ils custs transparentamain. La vischnanca reglescha la fossa.',
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'L’interpresa da pompas funebras As accumpogna tras l’organisaziun. Dumandai ils giavischs da la persuna morta (testament, documents da provediment) e laschai As detaglar ils custs transparentamain. La vischnanca reglescha la fossa.', du: 'L’interpresa da pompas funebras as accumpogna tras l’organisaziun. Dumandai ils giavischs da la persuna morta (testament, documents da provediment) e laschai as detaglar ils custs transparentamain. La vischnanca reglescha la fossa.' },
     step3Title: '3 · Annunziar a rentas & assicuranzas',
-    step3Text: 'Annunziai il mortori a la cassa da cumpensaziun AVS, a la cassa da pensiun, a la cassa da malsauns, a l’assicuranza da vita e a la banca. Bler da quai ha intginas emnas temp.',
+    // Gleicher Text: der Vus-Imperativ (2. Pl.) deckt «Sie» und de-du «ihr» ab (K124, 24.09.2026).
+    step3Text: { sie: 'Annunziai il mortori a la cassa da cumpensaziun AVS, a la cassa da pensiun, a la cassa da malsauns, a l’assicuranza da vita e a la banca. Bler da quai ha intginas emnas temp.', du: 'Annunziai il mortori a la cassa da cumpensaziun AVS, a la cassa da pensiun, a la cassa da malsauns, a l’assicuranza da vita e a la banca. Bler da quai ha intginas emnas temp.' },
     step3Link: 'Guardar la prevenziun',
     step3LinkSituation: 'Sche in genitur è mort: la situaziun «mez orfen»',
     stepElTitle: '4 · Renta da survivents & prestaziuns cumplementaras',
@@ -365,7 +433,8 @@ export default {
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
     step1Text: 'Tgi che tgira regularmain confamigliars datiers po survegnir ina bonificaziun d’assistenza — ella auza la renta AVS futura (medem import sco la bonificaziun d’educaziun). Impurtant: s’annunziar mintg’onn tar la cassa da cumpensaziun, uschiglio va ella a perder.',
     step1Link: 'Endatar en il calculatur da prevenziun',
-    stepLohnTitle: '2 · Laschar indemnisar tes stgaffiment',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    stepLohnTitle: { sie: '2 · Laschar indemnisar Voss stgaffiment', du: '2 · Laschar indemnisar tes stgaffiment' },
     stepLohnText: 'Tgira è lavur — ed ella dastga vegnir indemnisada. Tschertas organisaziuns (datiers da la Spitex) engaschan confamigliars che tgiran e pajan in salari per ura. Qua ina stima grossa:',
     entl: {
       hoursLabel: 'Tgira per emna',
@@ -376,7 +445,8 @@ export default {
       rateNote: 'quintà cun ca. CHF 37.90/ura',
       zuschlaege: 'Per intervents la saira, la fin d’emna u la notg èn supplements pussaivels tut tenor l’organisaziun.',
       disclaimer: 'Orientaziun nunliand. Il salari real dependa da l’organisaziun che engascha e dal chantun — betg ina tariffa garantida.',
-      extLink: 'Chattar ina organisaziun Spitex en tia regiun',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      extLink: { sie: 'Chattar ina organisaziun Spitex en Vossa regiun', du: 'Chattar ina organisaziun Spitex en tia regiun' },
     },
     step2Title: '3 · Indemnisaziun d’assistenza (IPG)',
     step2Text: 'Tgirar in uffant grevamain malsaun u blessà dat dretg ad ina vacanza d’assistenza pajada, indemnisada tras las indemnisaziuns per perdita da gudogn (IPG). Er curtas vacanzas per confamigliars creschids èn pussaivlas.',
@@ -385,7 +455,8 @@ export default {
     step3Text: 'Sche la persuna tgirada dovra regularmain agid en il mintgadi, po ella avair dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ella gida a finanziar la tgira necessaria.',
     step3Link: 'Vesair malsogna & AI',
     step4Title: '5 · Sgravi & cussegliaziun',
-    step4Text: 'Ti na stos betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Vus na stuais betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.', du: 'Ti na stos betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.' },
     step4Link: 'Vesair la situaziun «Tgirar confamigliars»',
     footerNote: 'Orientaziun, betg cussegliaziun giuridica. Dretgs e termins vegnan sclerids da la cassa da cumpensaziun u dad in post da cussegliaziun.',
   },
@@ -393,26 +464,33 @@ export default {
     title: 'Malsogna & AI',
     intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista calma, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
     step1Title: '1 · Inabilitad da lavurar — salari & indemnisaziun',
-    step1Text: 'Lascha attestar l’inabilitad da lavurar dad in medi ed infurmescha il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche ti n’has ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'Laschai attestar l’inabilitad da lavurar dad in medi ed infurmai il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche Vus n’avais ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).', du: 'Lascha attestar l’inabilitad da lavurar dad in medi ed infurmescha il patrun. Per in temp cuntinuescha il salari; lura intervegn — sche ti n’has ina — in’indemnisaziun da malsogna (IGM). Sche la chaschun è in accident, vala l’assicuranza d’accidents (LAINF).' },
     step1Link: 'Accident u malsogna — tge che conta',
     step2Title: '2 · S’annunziar baud a l’AI',
-    step2Text: 'Sche igl para che la limitaziun dura pli lung, annunzia’t baud a l’AI (detecziun precoza). L’AI metta l’accent l’emprim sin l’integraziun — «integraziun avant renta». Pli baud l’annunzia, meglier; l’AI paja il pli baud sis mais suenter.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'Sche igl para che la limitaziun dura pli lung, annunziai Vus baud a l’AI (detecziun precoza). L’AI metta l’accent l’emprim sin l’integraziun — «integraziun avant renta». Pli baud l’annunzia, meglier; l’AI paja il pli baud sis mais suenter.', du: 'Sche igl para che la limitaziun dura pli lung, annunzia’t baud a l’AI (detecziun precoza). L’AI metta l’accent l’emprim sin l’integraziun — «integraziun avant renta». Pli baud l’annunzia, meglier; l’AI paja il pli baud sis mais suenter.' },
     step2Button: 'Memorisar il termin «Examinar l’annunzia AI» ({date})',
     step2Done: 'Termin memorisà en il chalender.',
     step2CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Examinar l’annunzia AI / la detecziun precoza',
     step3Title: '3 · Segirar l’existenza',
-    step3Text: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinescha els senza temma.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Text: { sie: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinai els senza temma.', du: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinescha els senza temma.' },
     step3Link: 'Examinar il dretg',
     step4Title: '4 · Sustegn & sgraventscha',
-    step4Text: 'Ti na stos betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) t’accumpognan tras la procedura AI. Pensa era al mandat preventiv ed a las directivas dal pazient, uschè ditg che ti pos decider sez — quai prenda squetsch per pli tard.',
-    footerNote: 'Cun pauca energia conta mintga pitschen pass. Lascha t’accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Vus na stuais betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) As accumpognan tras la procedura AI. Pensai era al mandat preventiv ed a las directivas dal pazient, uschè ditg che Vus pudais decider sez — quai prenda squetsch per pli tard.', du: 'Ti na stos betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) t’accumpognan tras la procedura AI. Pensa era al mandat preventiv ed a las directivas dal pazient, uschè ditg che ti pos decider sez — quai prenda squetsch per pli tard.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerNote: { sie: 'Cun pauca energia conta mintga pitschen pass. Laschai As accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.', du: 'Cun pauca energia conta mintga pitschen pass. Lascha t’accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.' },
   },
   bewilligung: {
     title: 'Renovar l’autorisaziun da dimora',
-    intro: 'L’autorisaziun da dimora (B u L) scada e na vegn betg renovada automaticamain — ti stos far ina dumonda a temp. Ina survista calma: termin, documents, obligaziuns d’annunzia e la vista enavant.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'L’autorisaziun da dimora (B u L) scada e na vegn betg renovada automaticamain — Vus stuais far ina dumonda a temp. Ina survista calma: termin, documents, obligaziuns d’annunzia e la vista enavant.', du: 'L’autorisaziun da dimora (B u L) scada e na vegn betg renovada automaticamain — ti stos far ina dumonda a temp. Ina survista calma: termin, documents, obligaziuns d’annunzia e la vista enavant.' },
     step1Title: '1 · Renovar a temp',
-    step1Text: 'Fai la dumonda da renovaziun var dus fin trais mais avant la scadenza, tar la vischnanca u l’uffizi chantunal da migraziun. L’autorisaziun na sa renova betg da sasezza. Tgi che emblida il termin ristga largias en il dretg da dimora — nota perquai bain la data da scadenza.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'Fai la dumonda da renovaziun var dus fin trais mais avant la scadenza, tar la vischnanca u l’uffizi chantunal da migraziun. L’autorisaziun na sa renova betg da sasezza. Tgi che emblida il termin ristga largias en il dretg da dimora — notai perquai bain la data da scadenza.', du: 'Fai la dumonda da renovaziun var dus fin trais mais avant la scadenza, tar la vischnanca u l’uffizi chantunal da migraziun. L’autorisaziun na sa renova betg da sasezza. Tgi che emblida il termin ristga largias en il dretg da dimora — nota perquai bain la data da scadenza.' },
     step1Button: 'Memorisar il termin «Renovar l’autorisaziun» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
@@ -421,16 +499,19 @@ export default {
     step2Text: 'Tegna pronts tes passaport, l’autorisaziun actuala, in contract da lavur u ina cumprova da gudogn ed il contract da fittanza. Tenor chantun ed autorisaziun po vegnir dumandà in attestat da lingua (criteris d’integraziun). Deponra ils documents en in lieu per als chattar svelt.',
     step2Link: 'Deponer en il register da vita',
     step3Title: '3 · Annunziar midadas',
-    step3Text: 'Ti stos annunziar a l’uffizi da migraziun ina midada d’adressa, da plaz u ina maridaglia — quai fa part da las obligaziuns da l’autorisaziun. In’annunzia memia tard po far problems.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Text: { sie: 'Vus stuais annunziar a l’uffizi da migraziun ina midada d’adressa, da plaz u ina maridaglia — quai fa part da las obligaziuns da l’autorisaziun. In’annunzia memia tard po far problems.', du: 'Ti stos annunziar a l’uffizi da migraziun ina midada d’adressa, da plaz u ina maridaglia — quai fa part da las obligaziuns da l’autorisaziun. In’annunzia memia tard po far problems.' },
     step3Link: 'Guardar il move da chasa',
     step4Title: '4 · Vista enavant: l’autorisaziun C',
-    step4Text: 'Suenter tschintg fin diesch onns da dimora ininterrutta pos ti, tenor naziunalitad, dumandar l’autorisaziun da domicil (C) — ella è illimitada e pli segira. Impurtants èn ils criteris d’integraziun sco lingua, lavur e nagina dependenza da l’agid social. Bun da savair: la reducziun da premias (RIP) è in sustegn normal, betg agid social — dumandar ella na quinta betg cunter tia permissiun. Na lascha betg ir daners che ta stattan a disposiziun per tema.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Suenter tschintg fin diesch onns da dimora ininterrutta pudais Vus, tenor naziunalitad, dumandar l’autorisaziun da domicil (C) — ella è illimitada e pli segira. Impurtants èn ils criteris d’integraziun sco lingua, lavur e nagina dependenza da l’agid social. Bun da savair: la reducziun da premias (RIP) è in sustegn normal, betg agid social — dumandar ella na quinta betg cunter Vossa permissiun. Na laschai betg ir daners che As stattan a disposiziun per tema.', du: 'Suenter tschintg fin diesch onns da dimora ininterrutta pos ti, tenor naziunalitad, dumandar l’autorisaziun da domicil (C) — ella è illimitada e pli segira. Impurtants èn ils criteris d’integraziun sco lingua, lavur e nagina dependenza da l’agid social. Bun da savair: la reducziun da premias (RIP) è in sustegn normal, betg agid social — dumandar ella na quinta betg cunter tia permissiun. Na lascha betg ir daners che ta stattan a disposiziun per tema.' },
     step4LinkIpv: 'Verifitgar la reducziun da premias (RIP)',
     step4LinkSituation: 'Guardar la situaziun «nov arrivà»',
     relatedTitle: 'Eveniments parents',
     relatedKkErst: 'Cassa da malsauns per l’emprima giada',
     relatedJob: 'Nov plaz',
-    footerNote: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerNote: { sie: 'Na laschai mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.', du: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.' },
   },
   fuehrerausweis: {
     title: 'Permess da manar',
@@ -439,7 +520,8 @@ export default {
     step1Text: 'Deponra tes permess en il format da carta da credit en tes register da vita — uschia al chattas ti svelt en cas da perdita u d’ina controlla.',
     step1Link: 'Deponer en il register da vita',
     step2Title: '2 · Baratar il vegl permess da palpiri',
-    step2Text: 'Has ti anc il vegl permess da manar blau da palpiri? El n’è betg pli valaivel dapi il 1. da november 2024. Barata el en il format da carta da credit tar l’uffizi chantunal da traffic — il permess sez n’ha nagina data da scadenza.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'Avais Vus anc il vegl permess da manar blau da palpiri? El n’è betg pli valaivel dapi il 1. da november 2024. Baratai el en il format da carta da credit tar l’uffizi chantunal da traffic — il permess sez n’ha nagina data da scadenza.', du: 'Has ti anc il vegl permess da manar blau da palpiri? El n’è betg pli valaivel dapi il 1. da november 2024. Barata el en il format da carta da credit tar l’uffizi chantunal da traffic — il permess sez n’ha nagina data da scadenza.' },
     step2Link: 'Al dossier da las autoritads',
     step3Title: '3 · A partir da 75: controlla medicinala',
     step3Text: 'A partir da tes 75avel anniversari fa part mintga dus onns ina controlla medicinala da traffic. L’invit vegn dal chantun — i giova d’avair il termin en egl.',
@@ -450,7 +532,8 @@ export default {
     step4Title: '4 · Nov al volant: permess a prova',
     step4Text: 'Tgi che surpassa l’examen survegn l’emprim il permess a prova — per trais onns. En quest temp fa part in curs da furmaziun supplementara (WAB); suenter vegn il permess nunlimità. Sche il curs vegn mancà, scada il permess.',
     step5Title: '5 · Perdita u furt',
-    step5Text: 'Sch’il permess è svanì, dumonda in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step5Text: { sie: 'Sch’il permess è svanì, dumandai in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.', du: 'Sch’il permess è svanì, dumonda in duplicat tar l’uffizi chantunal da traffic. Ina copia u ina foto en il register da vita gida da tegnair las infurmaziuns a portada da man.' },
     step5Link: 'Al dossier da las autoritads',
     relatedTitle: 'Eveniments parentads',
     relatedUmzug: 'Midada da domicil — midar l’adressa',
@@ -462,20 +545,24 @@ export default {
     title: 'Maridaglia u partenariat',
     intro: 'La maridaglia u il partenadi registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
     step1Title: '1 · Annunziar la maridaglia',
-    step1Text: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai Vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.', du: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.' },
     step1Button: 'Memorisar il termin «Annunziar la maridaglia» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     step1LinkBewilligung: 'Guardar la permissiun da dimora & ils termins',
     reminderTitle: 'Annunziar la maridaglia a l’uffizi da stadi civil',
     step2Title: '2 · Num & stadi civil',
-    step2Text: 'Vus pudais mantegnair voss num actual u tscherner in num da famiglia cuminaivel. Suenter la maridaglia mida il stadi civil — pensai ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'Vus pudais mantegnair Voss num actual u tscherner in num da famiglia cuminaivel. Suenter la maridaglia mida il stadi civil — pensai ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun.', du: 'Vus pudais mantegnair voss num actual u tscherner in num da famiglia cuminaivel. Suenter la maridaglia mida il stadi civil — pensai ad adattar documents d’identitad, datas AVS ed indicaziuns tar il patrun.' },
     step3Title: '3 · Taglias',
-    step3Text: 'Maridads e partenaris registrads vegnan taxads cuminaivlamain — per tut l’onn a partir da l’onn da la maridaglia. Quai po augmentar u sminuir la grevezza fiscala. Tgi che vegn taxà a la funtauna duess laschar adattar la tariffa. Era tia reducziun da premias (RIP) vegn ussa calculada sin il retgav cuminaivel — ei vala la paina da recalcular.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Text: { sie: 'Maridads e partenaris registrads vegnan taxads cuminaivlamain — per tut l’onn a partir da l’onn da la maridaglia. Quai po augmentar u sminuir la grevezza fiscala. Tgi che vegn taxà a la funtauna duess laschar adattar la tariffa. Era Vossa reducziun da premias (RIP) vegn ussa calculada sin il retgav cuminaivel — ei vala la paina da recalcular.', du: 'Maridads e partenaris registrads vegnan taxads cuminaivlamain — per tut l’onn a partir da l’onn da la maridaglia. Quai po augmentar u sminuir la grevezza fiscala. Tgi che vegn taxà a la funtauna duess laschar adattar la tariffa. Era tia reducziun da premias (RIP) vegn ussa calculada sin il retgav cuminaivel — ei vala la paina da recalcular.' },
     step3Link: 'Guardar las taglias',
     step3LinkPremium: 'Calcular danovamain la reducziun da premias',
     step4Title: '4 · Assicuranzas & prevenziun',
-    step4Text: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.',
+    // Gleicher Text: der Vus-Imperativ (2. Pl.) deckt «Sie» und de-du «ihr» ab (K124, 24.09.2026).
+    step4Text: { sie: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.', du: 'La cassa da malsauns resta individuala. Controllai l’economia da chasa e la responsabladad civila — savens basta ina polissa cuminaivla. Adattai il benefiziari en il pilaster 3a ed en la cassa da pensiun, uschia che la persuna gista è protegida en cas da basegns.' },
     step4Link: 'Guardar la prevenziun',
     relatedTitle: 'Eveniments parents',
     relatedKind: 'Avair in uffant',
@@ -488,24 +575,29 @@ export default {
     step1Title: '1 · Annunziar la naschientscha',
     step1Text: 'La naschientscha vegn annunziada a l’uffizi da stadi civil — per ordinari fa quai il ospital. Sche ils geniturs n’èn betg maridads, dovra igl ina renconuschentscha da la paternitad (avant u suenter la naschientscha, a l’uffizi da stadi civil). Uschia èn reglads il num e l’autoritad parentala.',
     step2Title: '2 · Assicurar l’uffant',
-    step2Text: 'Assicurescha l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Ti has libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'Assicurai l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Vus avais libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.', du: 'Assicurescha l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Ti has libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.' },
     step2Button: 'Memorisar il termin «Assicurar l’uffant» ({date})',
     step2Done: 'Termin memorisà en il chalender.',
     step2CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Annunziar l’uffant a la cassa da malsauns — termin da 3 mais',
     step2Link: 'Cumparar las premias',
     step3Title: '3 · Dumandar ils supplements da famiglia',
-    step3Text: 'Per mintga uffant datti in supplement per uffants, pli tard in supplement da scolaziun. El vegn dumandà via il patrun u la cassa da cumpensaziun — el na vegn betg automaticamain. Era persunas senza activitad pon avair dretg. Intgins chantuns pajan ultra da quai in supplement da naschientscha ina giada — dumonda tar tia cassa da cumpensaziun.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Text: { sie: 'Per mintga uffant datti in supplement per uffants, pli tard in supplement da scolaziun. El vegn dumandà via il patrun u la cassa da cumpensaziun — el na vegn betg automaticamain. Era persunas senza activitad pon avair dretg. Intgins chantuns pajan ultra da quai in supplement da naschientscha ina giada — dumandai tar Vossa cassa da cumpensaziun.', du: 'Per mintga uffant datti in supplement per uffants, pli tard in supplement da scolaziun. El vegn dumandà via il patrun u la cassa da cumpensaziun — el na vegn betg automaticamain. Era persunas senza activitad pon avair dretg. Intgins chantuns pajan ultra da quai in supplement da naschientscha ina giada — dumonda tar tia cassa da cumpensaziun.' },
     step4Title: '4 · Indemnisaziuns & chüra',
-    step4Text: 'Las mammas han dretg a 14 emnas d’indemnisaziun da maternitad, l’auter genitur a 2 emnas — omadus via las IPG. Pensa baud a la chüra (asil, famiglia da di) ed a las deducziuns fiscalas correspundentas.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Las mammas han dretg a 14 emnas d’indemnisaziun da maternitad, l’auter genitur a 2 emnas — omadus via las IPG. Pensai baud a la chüra (asil, famiglia da di) ed a las deducziuns fiscalas correspundentas.', du: 'Las mammas han dretg a 14 emnas d’indemnisaziun da maternitad, l’auter genitur a 2 emnas — omadus via las IPG. Pensa baud a la chüra (asil, famiglia da di) ed a las deducziuns fiscalas correspundentas.' },
     step4Link: 'Guardar las IPG',
     step5Title: '5 · Verifitgar danovamain tes dretgs',
-    step5Text: 'Ina chasada pli gronda mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin la nova chasada — ei vala la paina da controllar danovamain. Sche ti fas crescher l’uffant suletta u cun in budget stgars, rimnan ils stadis da vita ulteriurs sustegns en in lieu calm.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step5Text: { sie: 'Ina chasada pli gronda mida quai che As stat a disposiziun. Vossa reducziun da premias (RIP) vegn calculada danovamain sin la nova chasada — ei vala la paina da controllar danovamain. Sche Vus faschais crescher l’uffant suletta u cun in budget stgars, rimnan ils stadis da vita ulteriurs sustegns en in lieu calm.', du: 'Ina chasada pli gronda mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin la nova chasada — ei vala la paina da controllar danovamain. Sche ti fas crescher l’uffant suletta u cun in budget stgars, rimnan ils stadis da vita ulteriurs sustegns en in lieu calm.' },
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     step5LinkSituation: 'Guardar las situaziuns da vita correspundentas',
     relatedTitle: 'Eveniments parents',
     relatedHeirat: 'Maridaglia u partenariat',
-    footerNote: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerNote: { sie: 'Bler va via il patrun e la cassa da cumpensaziun — conservai bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.', du: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.' },
   },
   trennung: {
     title: 'Separaziun u divorzi',
@@ -513,65 +605,80 @@ export default {
     step1Title: '1 · Calma & cussegl',
     step1Text: 'Ina separaziun na sto betg esser immediat in divorzi. Ina cunvegna da separaziun (u la procedura giudiziala da protecziun da l’uniun) reglescha l’abitar, ils daners e las uffants per l’intertant. In cussegl matrimonial u giuridic gida a chattar ina via gista.',
     step2Title: '2 · Abitar & adressa',
-    step2Text: 'Schliarir tgi che resta en l’abitaziun. Sche omadus èn sin il contract da fittanza, restan per ordinari omadus responsabels — in’adattaziun tar il possessur procura clerezza. Tgi che bandunescha annunzia la nova adressa dapertut.',
+    // Anredefrei (Infinitiv/3. Person) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    step2Text: { sie: 'Schliarir tgi che resta en l’abitaziun. Sche omadus èn sin il contract da fittanza, restan per ordinari omadus responsabels — in’adattaziun tar il possessur procura clerezza. Tgi che bandunescha annunzia la nova adressa dapertut.', du: 'Schliarir tgi che resta en l’abitaziun. Sche omadus èn sin il contract da fittanza, restan per ordinari omadus responsabels — in’adattaziun tar il possessur procura clerezza. Tgi che bandunescha annunzia la nova adressa dapertut.' },
     step2Link: 'Guardar il move da chasa',
     step3Title: '3 · Uffants & mantegniment',
-    step3Text: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po tia vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — ti na stos betg currer suenter ils daners suletta. Prendai vus temp, betg tut sto vegnir decidì immediat.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Text: { sie: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po Vossa vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — Vus na stuais betg currer suenter ils daners suletta. Prendai Vus temp, betg tut sto vegnir decidì immediat.', du: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po tia vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — ti na stos betg currer suenter ils daners suletta. Prendai vus temp, betg tut sto vegnir decidì immediat.' },
     step4Title: '4 · Finanzas & taglias',
-    step4Text: 'Dapi la separaziun vegnis vus taxads separadamain — la tariffa per maridads croda davent e ti vegns taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Dapi la separaziun vegnis Vus taxads separadamain — la tariffa per maridads croda davent e Vus vegnis taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai Vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter Vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).', du: 'Dapi la separaziun vegnis vus taxads separadamain — la tariffa per maridads croda davent e ti vegns taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).' },
     step4LinkTax: 'Guardar las taglias',
     step4LinkVorsorge: 'Guardar la prevenziun',
     step5Title: '5 · Verifitgar danovamain tes dretgs',
-    step5Text: 'Cun be in sulet retgav sa mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin tia nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step5Text: { sie: 'Cun be in sulet retgav sa mida quai che As stat a disposiziun. Vossa reducziun da premias (RIP) vegn calculada danovamain sin Vossa nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.', du: 'Cun be in sulet retgav sa mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin tia nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.' },
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     step5LinkSituation: 'Guardar la situaziun «genitur sulet»',
-    footerNote: 'Ti na stos betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerNote: { sie: 'Vus na stuais betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.', du: 'Ti na stos betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.' },
   },
   selbstaendigkeit: {
     title: 'Daventar independent',
     intro: 'Il pass en la independenza porta libertad — e responsabladad che il patrun ha purtà avant. Bler na va betg pli automaticamain. Ina survista calma: status AVS, tip d’activitad, largias d’assicuranza e taglias.',
     step1Title: '1 · Laschar renconuscher tes status AVS',
-    step1Text: 'L’activitad independenta cumenza uffizialmain cura che tia cassa da cumpensaziun AVS at renconuscha sco independent. Annunzia’t baud e tegna pronts facturas, mandats e tes concept d’interpresa — la cassa controllescha sche ti lavuras propi sin agen ristg.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'L’activitad independenta cumenza uffizialmain cura che Vossa cassa da cumpensaziun AVS As renconuscha sco independent. Annunziai Vus baud e tegnai pronts facturas, mandats e Voss concept d’interpresa — la cassa controllescha sche Vus lavurais propi sin agen ristg.', du: 'L’activitad independenta cumenza uffizialmain cura che tia cassa da cumpensaziun AVS at renconuscha sco independent. Annunzia’t baud e tegna pronts facturas, mandats e tes concept d’interpresa — la cassa controllescha sche ti lavuras propi sin agen ristg.' },
     step1Button: 'Memorisar il termin «S’annunziar a l’AVS» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'S’annunziar sco independent tar la cassa da cumpensaziun AVS',
     step1Link: 'Guardar la prevenziun',
     step2Title: '2 · Gudogn accessoric u principal?',
-    step2Text: 'Resta l’independenza in supplement sper in plaz (gudogn accessoric) u vegn ella tes gudogn principal? Quai influenzeschia tes contributs AVS, tia prevenziun e sche ti stos t’assecurar cunter la perdita da gudogn. Sco gudogn principal croda la rait da segirezza dal patrun dal tut davent — e cunter dischoccupaziun (AD) n’es ti betg assicurà. Sche il gudogn resta stgars u irregular, na stas ti betg senza sustegn: il stadi da vita «bass gudogn» rimna quai che ta stat tuttina a disposiziun (reducziun da premias, contribuziun al fittanza, agid social cumplementar).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'Resta l’independenza in supplement sper in plaz (gudogn accessoric) u vegn ella Voss gudogn principal? Quai influenzeschia Voss contributs AVS, Vossa prevenziun e sche Vus stuais As assecurar cunter la perdita da gudogn. Sco gudogn principal croda la rait da segirezza dal patrun dal tut davent — e cunter dischoccupaziun (AD) n’essas Vus betg assicurà. Sche il gudogn resta stgars u irregular, na stais Vus betg senza sustegn: il stadi da vita «bass gudogn» rimna quai che As stat tuttina a disposiziun (reducziun da premias, contribuziun al fittanza, agid social cumplementar).', du: 'Resta l’independenza in supplement sper in plaz (gudogn accessoric) u vegn ella tes gudogn principal? Quai influenzeschia tes contributs AVS, tia prevenziun e sche ti stos t’assecurar cunter la perdita da gudogn. Sco gudogn principal croda la rait da segirezza dal patrun dal tut davent — e cunter dischoccupaziun (AD) n’es ti betg assicurà. Sche il gudogn resta stgars u irregular, na stas ti betg senza sustegn: il stadi da vita «bass gudogn» rimna quai che ta stat tuttina a disposiziun (reducziun da premias, contribuziun al fittanza, agid social cumplementar).' },
     step2LinkSituation: 'Guardar la situaziun «bass gudogn»',
     step3Title: '3 · Serrar las largias d’assicuranza',
     step3Text: 'Sco independent n’es ti betg pli assicurà automaticamain cunter accidents (LAINF) e na pajas betg pli en ina cassa da pensiun (LPP). Includa l’accident en tia cassa da malsauns u assecurescha’t voluntarmain, pensa ad ina indemnisaziun da malsogna (IGM) e fabritgescha tia prevenziun cul pilaster 3a u la LPP facultativa.',
     step3LinkUk: 'Accident u malsogna — tge che conta',
     step3LinkVorsorge: 'Guardar la prevenziun',
     step4Title: '4 · Metter da maint taglias & TVA',
-    step4Text: 'Tes gudogn na vegn betg pli taxà a la funtauna — metti perquai da maint daners per la factura da taglia dapi l’entschatta (pajaments a quint). Da 100 000 francs da svieuta annuala vegns ti suttamess a la TVA. Ina contabilitad netta dapi l’emprim di spargna bler pli tard.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Voss gudogn na vegn betg pli taxà a la funtauna — metti perquai da maint daners per la factura da taglia dapi l’entschatta (pajaments a quint). Da 100 000 francs da svieuta annuala vegnis Vus suttamess a la TVA. Ina contabilitad netta dapi l’emprim di spargna bler pli tard.', du: 'Tes gudogn na vegn betg pli taxà a la funtauna — metti perquai da maint daners per la factura da taglia dapi l’entschatta (pajaments a quint). Da 100 000 francs da svieuta annuala vegns ti suttamess a la TVA. Ina contabilitad netta dapi l’emprim di spargna bler pli tard.' },
     step4Link: 'Guardar las taglias',
-    footerNote: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerNote: { sie: 'Planisai Vossa prevenziun conscientamain — la largia senza cassa da pensiun As tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.', du: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.' },
   },
   betreibung: {
     title: 'Scussiun retschavida — tge far?',
     intro: 'In cumond da pajar para smanatschant, ma l’emprim è quai mo ina pretensiun — nagina sentenzia e nagina inscripziun en il register penal. Ussa importa mo ina chaussa: il termin da 10 dis. Ina survista calma.',
-    step1Title: '1 · Restar calm — ti has 10 dis',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Title: { sie: '1 · Restar calm — Vus avais 10 dis', du: '1 · Restar calm — ti has 10 dis' },
     step1Text: 'Cun il cumond da pajar cumenza in termin da 10 dis. En quest temp pos ti far «opposiziun» tar l’uffizi da scussiun — a bucca al sportegl u en scrit, senza motivaziun. Quai ferma la scussiun per ussa. Ti na perdas nagut cun far opposiziun, era sche la pretensiun è a la fin fundada.',
     step1Button: 'Memorisar il termin «Far opposiziun» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Far opposiziun — termin da 10 dis',
     step2Title: '2 · È la pretensiun correcta?',
-    step2Text: 'Sche la pretensiun è fundada, pos ti pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, fas ti opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegna la survista da las pretensiuns avertas.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'Sche la pretensiun è fundada, pudais Vus pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, faschais Vus opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegnai la survista da las pretensiuns avertas.', du: 'Sche la pretensiun è fundada, pos ti pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, fas ti opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegna la survista da las pretensiuns avertas.' },
     step2Link: 'Ordinar las debitas',
     step3Title: '3 · Proteger il budget & tschertgar cussegl',
-    step3Text: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Text: { sie: 'Voss minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’essas Vus betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.', du: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.' },
     step3Link: 'Guardar il budget',
     step3LinkSituation: 'Guardar la situaziun «indebità u en scussiun»',
-    footerNote: 'Ina scussiun n’è betg ina inscripziun en il register penal. Ella spararescha dal register suenter tschintg onns; en cas d’ina scussiun nungiustifitgada pos ti dumandar la stizzada. Quai è orientaziun, betg cussegl giuridic.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerNote: { sie: 'Ina scussiun n’è betg ina inscripziun en il register penal. Ella spararescha dal register suenter tschintg onns; en cas d’ina scussiun nungiustifitgada pudais Vus dumandar la stizzada. Quai è orientaziun, betg cussegl giuridic.', du: 'Ina scussiun n’è betg ina inscripziun en il register penal. Ella spararescha dal register suenter tschintg onns; en cas d’ina scussiun nungiustifitgada pos ti dumandar la stizzada. Quai è orientaziun, betg cussegl giuridic.' },
   },
   pensionierung: {
     title: 'Pensiunament',
-    intro: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar tes dretgs.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar Voss dretgs.', du: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar tes dretgs.' },
     step1Title: '1 · Dumandar la renta AVS',
-    step1Text: 'La renta AVS na vegn betg pajada automaticamain — ti stos t’annunziar tar tia cassa da cumpensaziun, idealmain trais fin sis mais avant il pensiunament. L’vegliadetgna da referenza è 65 onns; in retrair anticipà è pussaivel, ma reducescha la renta per la vita.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'La renta AVS na vegn betg pajada automaticamain — Vus stuais As annunziar tar Vossa cassa da cumpensaziun, idealmain trais fin sis mais avant il pensiunament. L’vegliadetgna da referenza è 65 onns; in retrair anticipà è pussaivel, ma reducescha la renta per la vita.', du: 'La renta AVS na vegn betg pajada automaticamain — ti stos t’annunziar tar tia cassa da cumpensaziun, idealmain trais fin sis mais avant il pensiunament. L’vegliadetgna da referenza è 65 onns; in retrair anticipà è pussaivel, ma reducescha la renta per la vita.' },
     step1Button: 'Memorisar il termin «S’annunziar a l’AVS» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
@@ -584,94 +691,125 @@ export default {
     step3Text: 'L’avair dal pilaster 3a vegn exigibel cun il pensiunament. Stgalunar il retrair sur plirs onns (plirs contos) po reducir considerablamain la grevezza fiscala.',
     step3Link: 'Guardar la prevenziun',
     step4Title: '4 · Verifitgar las prestaziuns cumplementaras',
-    step4Text: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, avais Vus eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgai el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.', du: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.' },
     step4Link: 'Verifitgar il dretg',
     step4LinkSituation: 'Guardar la situaziun «pensiunà»',
     step5Title: '5 · Sche pli tard è basegn da cura',
-    step5Text: 'Intgins custs vegnan pir en la vegliadetgna: cura a chasa (Spitex) u en in dom da cura. La cassa da malsauns surpiglia la cura sezza — assistenza ed abitar (en il dom l’abitaziun ed il mangiar) pajas ti sez. Sche la renta ed il patrimoni na bastan betg, intervegnan las prestaziuns cumplementaras. Sche ti has regularmain basegn d’agid en il mintgadi, dat i l’indemnisaziun per impotents da l’AVS, independentamain da l’entrada. Tar meds auxiliars sco apparats d’udida sa participescha l’AVS. Pro Senectute ta cussegliescha gratuitamain.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step5Text: { sie: 'Intgins custs vegnan pir en la vegliadetgna: cura a chasa (Spitex) u en in dom da cura. La cassa da malsauns surpiglia la cura sezza — assistenza ed abitar (en il dom l’abitaziun ed il mangiar) pajais Vus sez. Sche la renta ed il patrimoni na bastan betg, intervegnan las prestaziuns cumplementaras. Sche Vus avais regularmain basegn d’agid en il mintgadi, dat i l’indemnisaziun per impotents da l’AVS, independentamain da l’entrada. Tar meds auxiliars sco apparats d’udida sa participescha l’AVS. Pro Senectute As cussegliescha gratuitamain.', du: 'Intgins custs vegnan pir en la vegliadetgna: cura a chasa (Spitex) u en in dom da cura. La cassa da malsauns surpiglia la cura sezza — assistenza ed abitar (en il dom l’abitaziun ed il mangiar) pajas ti sez. Sche la renta ed il patrimoni na bastan betg, intervegnan las prestaziuns cumplementaras. Sche ti has regularmain basegn d’agid en il mintgadi, dat i l’indemnisaziun per impotents da l’AVS, independentamain da l’entrada. Tar meds auxiliars sco apparats d’udida sa participescha l’AVS. Pro Senectute ta cussegliescha gratuitamain.' },
     step5Link: 'Guardar prestaziuns cumplementaras & cussegliaziun',
-    step5LinkSituation: 'Pensiunà / en la vegliadetgna AVS: a tge ti has dretg',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step5LinkSituation: { sie: 'Pensiunà / en la vegliadetgna AVS: a tge Vus avais dretg', du: 'Pensiunà / en la vegliadetgna AVS: a tge ti has dretg' },
     step5LinkProSenectute: 'Pro Senectute — cussegliaziun gratuita en la vegliadetgna',
-    footerEarly: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerEarly: { sie: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quintai baud tge ch’è purtabel — e dumandai in quen uffizial tar Vossa cassa da cumpensaziun.', du: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.' },
   },
   kkErst: {
     title: 'Cassa da malsauns per l’emprima giada',
-    intro: 'Nov en Svizra u assicurà per l’emprima giada? L’assicuranza da basa è obligatorica — ma ti has temp e libra tscherna. Ina survista calma: l’emprim il termin, lura la cassa, la franchisa ed ina eventuala reducziun.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'Nov en Svizra u assicurà per l’emprima giada? L’assicuranza da basa è obligatorica — ma Vus avais temp e libra tscherna. Ina survista calma: l’emprim il termin, lura la cassa, la franchisa ed ina eventuala reducziun.', du: 'Nov en Svizra u assicurà per l’emprima giada? L’assicuranza da basa è obligatorica — ma ti has temp e libra tscherna. Ina survista calma: l’emprim il termin, lura la cassa, la franchisa ed ina eventuala reducziun.' },
     step1Title: '1 · S’assicurar entaifer 3 mais',
-    step1Text: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche ti t’annunzias a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche ti emblidas il termin, vegn attribuida ina cassa, cun eventuals supplements.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche Vus As annunziais a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche Vus emblidais il termin, vegn attribuida ina cassa, cun eventuals supplements.', du: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche ti t’annunzias a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche ti emblidas il termin, vegn attribuida ina cassa, cun eventuals supplements.' },
     step1Button: 'Memorisar il termin «Far l’assicuranza» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Far l’assicuranza da malsauns — termin da 3 mais',
     step2Title: '2 · Tscherner ina cassa',
-    step2Text: 'L’assicuranza da basa è tenor lescha la medema dapertut — las prestaziuns èn identicas, mo la premia ed il servetsch sa differenzieschan. Ti has libra tscherna, e nagina cassa dastga ta refusar per l’assicuranza da basa (obligaziun d’admissiun).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Text: { sie: 'L’assicuranza da basa è tenor lescha la medema dapertut — las prestaziuns èn identicas, mo la premia ed il servetsch sa differenzieschan. Vus avais libra tscherna, e nagina cassa dastga As refusar per l’assicuranza da basa (obligaziun d’admissiun).', du: 'L’assicuranza da basa è tenor lescha la medema dapertut — las prestaziuns èn identicas, mo la premia ed il servetsch sa differenzieschan. Ti has libra tscherna, e nagina cassa dastga ta refusar per l’assicuranza da basa (obligaziun d’admissiun).' },
     step2Link: 'Cumparar las premias',
     step3Title: '3 · Franchisa e cuvretga d’accidents',
     step3Text: 'Tscherna tia franchisa (pli auta = premia pli bassa, ma dapli a tia donda en cas da malsogna). Sche ti lavuras main che 8 uras l’emna tar il medem patrun, u na lavuras betg, stos ti includer l’accident en tia assicuranza da malsauns.',
     step3LinkFranchise: 'Cumparar las franchisas',
     step3LinkUk: 'Accident u malsogna — tge che conta',
     step4Title: '4 · Verifitgar la reducziun da premias',
-    step4Text: 'Cun ina entrada bassa surpiglia il chantun ina part da tia premia (reducziun individuala da premias, RIP). Verifitgescha baud sche ti has dretg — quai po reducir considerablamain ils custs.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step4Text: { sie: 'Cun ina entrada bassa surpiglia il chantun ina part da Vossa premia (reducziun individuala da premias, RIP). Verifitgai baud sche Vus avais dretg — quai po reducir considerablamain ils custs.', du: 'Cun ina entrada bassa surpiglia il chantun ina part da tia premia (reducziun individuala da premias, RIP). Verifitgescha baud sche ti has dretg — quai po reducir considerablamain ils custs.' },
     step4Link: 'Verifitgar il dretg a la reducziun',
     asylTitle: 'Durant la procedura d’asil',
-    asylText: 'Sche ti es en la procedura d’asil u admess provisoricamain, vegn la cassa da malsauns per ordinari tschernida da l’autoritad u dal chantun — ti na stos betg ta participar sez. La cuvretga da basa è tuttina garantida.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    asylText: { sie: 'Sche Vus essas en la procedura d’asil u admess provisoricamain, vegn la cassa da malsauns per ordinari tschernida da l’autoritad u dal chantun — Vus na stuais betg As participar sez. La cuvretga da basa è tuttina garantida.', du: 'Sche ti es en la procedura d’asil u admess provisoricamain, vegn la cassa da malsauns per ordinari tschernida da l’autoritad u dal chantun — ti na stos betg ta participar sez. La cuvretga da basa è tuttina garantida.' },
     asylLink: 'Orientaziun en la procedura d’asil',
-    footerAufnahme: 'Per l’assicuranza da basa vala l’obligaziun d’admissiun: mintga cassa sto t’acceptar, independentamain da vegliadetgna u sanadad. Las assicuranzas cumplementaras èn facultativas e pon vegnir refusadas.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerAufnahme: { sie: 'Per l’assicuranza da basa vala l’obligaziun d’admissiun: mintga cassa sto As acceptar, independentamain da vegliadetgna u sanadad. Las assicuranzas cumplementaras èn facultativas e pon vegnir refusadas.', du: 'Per l’assicuranza da basa vala l’obligaziun d’admissiun: mintga cassa sto t’acceptar, independentamain da vegliadetgna u sanadad. Las assicuranzas cumplementaras èn facultativas e pon vegnir refusadas.' },
   },
   tresorLock: {
-    title: 'Dein Tresor ist gesperrt',
-    intro: 'Gib deine Passphrase ein, um deine Unterlagen zu entsperren. Sie werden nur auf diesem Gerät entschlüsselt.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    title: { sie: 'Ihr Tresor ist gesperrt', du: 'Dein Tresor ist gesperrt' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    intro: { sie: 'Geben Sie Ihre Passphrase ein, um Ihre Unterlagen zu entsperren. Die Unterlagen werden nur auf diesem Gerät entschlüsselt.', du: 'Gib deine Passphrase ein, um deine Unterlagen zu entsperren. Sie werden nur auf diesem Gerät entschlüsselt.' },
     passphraseLabel: 'Passphrase',
-    passphrasePlaceholder: 'Deine Passphrase',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    passphrasePlaceholder: { sie: 'Ihre Passphrase', du: 'Deine Passphrase' },
     showPassphrase: 'Anzeigen',
     hidePassphrase: 'Verbergen',
     unlock: 'Entsperren',
     unlocking: 'Entsperre…',
-    wrong: 'Passphrase stimmt nicht. Versuch es nochmal.',
-    corrupted: 'Der Tresor-Datensatz ist beschädigt. Stell ihn aus einem Backup wieder her.',
-    noReset: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    wrong: { sie: 'Passphrase stimmt nicht. Versuchen Sie es nochmal.', du: 'Passphrase stimmt nicht. Versuch es nochmal.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    corrupted: { sie: 'Der Tresor-Datensatz ist beschädigt. Stellen Sie ihn aus einem Backup wieder her.', du: 'Der Tresor-Datensatz ist beschädigt. Stell ihn aus einem Backup wieder her.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
     checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
-    checkPoint1: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.',
-    checkPoint2: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?',
-    checkPoint3: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige sie nie vorschnell mit — prüfe sie zuerst.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkPoint2: { sie: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu Ihrem Alltag?', du: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    checkPoint3: { sie: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündigen Sie sie nie vorschnell mit — prüfen Sie sie zuerst.', du: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige sie nie vorschnell mit — prüfe sie zuerst.' },
     checkZusatzLink: 'Zusatzversicherung zuerst prüfen',
     title: 'Krankenkasse wechseln',
-    intro: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Du musst nichts auf einmal entscheiden.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    intro: { sie: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Sie müssen nichts auf einmal entscheiden.', du: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Du musst nichts auf einmal entscheiden.' },
     step1Title: '1 · Lohnt sich der Wechsel?',
-    step1Text: 'Vergleiche deine Prämie mit den Alternativen in deinem Kanton.',
-    step1TextKnown: 'Deine aktuelle Kasse: {insurer}. Vergleiche die Prämie mit den Alternativen in deinem Kanton.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1Text: { sie: 'Vergleichen Sie Ihre Prämie mit den Alternativen in Ihrem Kanton.', du: 'Vergleiche deine Prämie mit den Alternativen in deinem Kanton.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step1TextKnown: { sie: 'Ihre aktuelle Kasse: {insurer}. Vergleichen Sie die Prämie mit den Alternativen in Ihrem Kanton.', du: 'Deine aktuelle Kasse: {insurer}. Vergleiche die Prämie mit den Alternativen in deinem Kanton.' },
     step1Link: 'Prämien vergleichen',
     step2Title: '2 · Neue Kasse — zwei Wege',
-    step2Intro: 'Du kannst selbst zur neuen Kasse wechseln, oder die neue Kasse den Wechsel übernehmen lassen. Keiner ist «richtiger».',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step2Intro: { sie: 'Sie können selbst zur neuen Kasse wechseln, oder die neue Kasse den Wechsel übernehmen lassen. Keiner ist «richtiger».', du: 'Du kannst selbst zur neuen Kasse wechseln, oder die neue Kasse den Wechsel übernehmen lassen. Keiner ist «richtiger».' },
     path3aTitle: 'Ich melde mich selbst an',
     path3aText: 'Antrag bei der neuen Kasse stellen (Grundversicherung).',
     path3aWarn: 'Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat.',
     path3bTitle: 'Die neue Kasse übernimmt',
-    path3bText: 'Viele Kassen kündigen die alte für dich — mit einer Vollmacht / einem Wechselservice.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    path3bText: { sie: 'Viele Kassen kündigen die alte für Sie — mit einer Vollmacht / einem Wechselservice.', du: 'Viele Kassen kündigen die alte für dich — mit einer Vollmacht / einem Wechselservice.' },
     path3bReassure: 'Dann ist die Reihenfolge automatisch sicher.',
-    uptakeReassure: 'In der Grundversicherung gilt Aufnahmepflicht — keine Kasse darf dich ablehnen.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    uptakeReassure: { sie: 'In der Grundversicherung gilt Aufnahmepflicht — keine Kasse darf Sie ablehnen.', du: 'In der Grundversicherung gilt Aufnahmepflicht — keine Kasse darf dich ablehnen.' },
     step3Title: '3 · Kündigung schreiben',
-    step3Text: 'Den Kündigungsbrief erstellst du mit der fertigen Vorlage — deine Kasse und Policennummer sind schon eingesetzt.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Text: { sie: 'Den Kündigungsbrief erstellen Sie mit der fertigen Vorlage — Ihre Kasse und Policennummer sind schon eingesetzt.', du: 'Den Kündigungsbrief erstellst du mit der fertigen Vorlage — deine Kasse und Policennummer sind schon eingesetzt.' },
     step3Link: 'Kündigungsbrief erstellen',
     step4Title: '4 · Frist sichern',
-    step4Text: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein. Leg dir die Frist in den Kalender.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step4Text: { sie: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein. Legen Sie sich die Frist in den Kalender.', du: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein. Leg dir die Frist in den Kalender.' },
     step4Button: 'Frist {date} in den Kalender',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',
     reminderTitle: 'Krankenkasse kündigen — Frist',
     reminderNotes: 'Ordentliche Kündigung der Grundversicherung bis 30.11. Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
-    specialRight: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung kannst du innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    specialRight: { sie: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung können Sie innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung kannst du innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.' },
     chosen: 'Gewählt',
-    step3Note3b: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    step3Note3b: { sie: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — Sie müssen selbst keinen Brief schreiben.', du: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.' },
     wunschKasseLabel: 'Wunsch-Kasse (optional)',
     wunschKassePlaceholder: 'Name der Kasse',
     reminderTitleTo: 'Wechsel zu {insurer} — Frist',
     todoText: 'Krankenkassen-Wechsel: Prämien vergleichen',
-    path3bCaveat: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.',
-    debtNote: 'Wechseln kannst du nur, wenn du bei deiner aktuellen Kasse keine offenen Prämien oder Ausstände hast — sonst kann sie den Wechsel blockieren. Offene Beträge zuerst begleichen.',
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    path3bCaveat: { sie: 'Nicht jede Kasse übernimmt das zuverlässig — lassen Sie sich die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.', du: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.' },
+    // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+    debtNote: { sie: 'Wechseln können Sie nur, wenn Sie bei Ihrer aktuellen Kasse keine offenen Prämien oder Ausstände haben — sonst kann sie den Wechsel blockieren. Offene Beträge zuerst begleichen.', du: 'Wechseln kannst du nur, wenn du bei deiner aktuellen Kasse keine offenen Prämien oder Ausstände hast — sonst kann sie den Wechsel blockieren. Offene Beträge zuerst begleichen.' },
   },
   sections: {
     basis: { person: 'Persuna', contact: 'Contact', family: 'Famiglia' },
@@ -685,18 +823,25 @@ export default {
 
   sectionIntros: {
     basis: {
-      person: 'Num, data da naschientscha e naziunalitad.',
-      contact: 'Telefon, e-mail e adressa.',
-      family: 'Stadi civil, uffants e ménaschi.',
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      person: { sie: 'Num, data da naschientscha e naziunalitad.', du: 'Num, data da naschientscha e naziunalitad.' },
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      contact: { sie: 'Telefon, e-mail e adressa.', du: 'Telefon, e-mail e adressa.' },
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      family: { sie: 'Stadi civil, uffants e ménaschi.', du: 'Stadi civil, uffants e ménaschi.' },
     },
     wohnen: {
       address: { sie: "Vossa adressa actuala e PLZ.", du: "Tia adressa actuala e PLZ." },
-      costs: "Tschains, custs accessorics e finanzas d'abitar.",
-      landlord: "Num e contact dal possessur.",
-      property: "Ipoteca, valur e assicuranza d'edifizi.",
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      costs: { sie: "Tschains, custs accessorics e finanzas d'abitar.", du: "Tschains, custs accessorics e finanzas d'abitar." },
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      landlord: { sie: 'Num e contact dal possessur.', du: 'Num e contact dal possessur.' },
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      property: { sie: "Ipoteca, valur e assicuranza d'edifizi.", du: "Ipoteca, valur e assicuranza d'edifizi." },
     },
     finanzen: {
-      income: 'Entrada mensiala ed annaira.',
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      income: { sie: 'Entrada mensiala ed annaira.', du: 'Entrada mensiala ed annaira.' },
       budgetLight: 'Ina survista grossa basta. Imports exacts èn main impurtants che la dimensiun.',
       obligations: 'Pajaments regulars che na pon betg vegnir spustads — debits, aliments, deducziuns fixas.',
       savings: 'Spargn, banca e cartas da credit.',
@@ -888,7 +1033,8 @@ export default {
     arztkoffer: 'Sanadad',
     sub: {
       installApp: 'Metter sin il homescreen',
-      arztkoffer: 'Voss utensils da sanadad en ina valisch da medi',
+      // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+      arztkoffer: { sie: 'Voss utensils da sanadad en ina valisch da medi', du: 'Tes utensils da sanadad en ina valisch da medi' },
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
       betreibung: 'Reagir cun calma',
@@ -1275,7 +1421,8 @@ export default {
         investmentFunds: { label: 'Fond da investiziun avant maun?', options: { no: 'Na', yes: 'Gea' } },
       },
       hints: {
-        monthlyIncome: 'Salari mensil net (quai che arriva sin il conto)',
+        // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+        monthlyIncome: { sie: 'Salari mensil net (quai che arriva sin il conto)', du: 'Salari mensil net (quai che arriva sin il conto)' },
         creditCardLimit: 'La summa da tut ils limits da tias cartas.',
         creditCardBalance: 'Import actualmain debit sin tias cartas — quinta sco debit, savens cun auts tschains.',
         sideIncome: 'Entrada supplementara ultra l’activitad principala. Vegn quintada sco entrada.',
@@ -1316,7 +1463,8 @@ export default {
       description: 'Cassa da malsauns, cassa da pensiun e protecziun',
       intro: { sie: 'Vossas assicuranzas protegian Vus. Impurtant: la cassa da malsauns è obligatorica en Svizra.', du: 'Tias assicuranzas protegian Tai. Impurtant: la cassa da malsauns è obligatorica en Svizra.' },
       emptyState: { sie: 'Vossa premia da la cassa da malsauns activescha la calculaziun IPV.', du: 'Tia premia da la cassa da malsauns activescha la calculaziun IPV.' },
-      emptyStateHint: 'Endatar la cassa da malsauns e la premia — dura 20 secundas.',
+      // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      emptyStateHint: { sie: 'Endatar la cassa da malsauns e la premia — dura 20 secundas.', du: 'Endatar la cassa da malsauns e la premia — dura 20 secundas.' },
       benefits: ['Calculaziun IPV', 'Survista da las premias', 'Prevenziun'],
       fields: {
         kkInsurer: 'Cassa da malsauns',
@@ -1405,9 +1553,11 @@ export default {
       title: 'Autoritads & dretg',
       short: 'Autoritads',
       description: 'Taglia, affars legals',
-      intro: 'Documents ed infurmaziuns per ils contacts cun autoritads.',
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      intro: { sie: 'Documents ed infurmaziuns per ils contacts cun autoritads.', du: 'Documents ed infurmaziuns per ils contacts cun autoritads.' },
       emptyState: { sie: 'Voss chantun da taglia activescha la calculaziun da taglia.', du: 'Tes chantun da taglia activescha la calculaziun da taglia.' },
-      emptyStateHint: 'Chantun da taglia e stadi dals debits — in bun cumenzament.',
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      emptyStateHint: { sie: 'Chantun da taglia e stadi dals debits — in bun cumenzament.', du: 'Chantun da taglia e stadi dals debits — in bun cumenzament.' },
       benefits: ['Calculatur da taglia', 'Links directs'],
       fields: {
         cantoneOfTaxation: 'Chantun da taglia',
@@ -1438,8 +1588,10 @@ export default {
       title: 'Urgenza',
       short: 'Urgenza',
       description: "Contacts d'urgenza e datas medicalas",
-      intro: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas.",
-      emptyState: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang.",
+      // Anredefrei (rm-Kurztext ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      intro: { sie: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas.", du: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas." },
+      // Anredefrei (Infinitiv) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+      emptyState: { sie: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang.", du: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang." },
       emptyStateHint: "Contact d'urgenza e gruppa da sang — las infurmaziuns las pli impurtantas.",
       benefits: ["Carta d'urgenza", 'Survista da prevenziun'],
       fields: {
@@ -1510,7 +1662,8 @@ export default {
       tierMid: 'I va uschè-uschè: ina pitschna contribuziun ina giada gida gia.',
       tierHigh: 'I ma va bain: ina contribuziun regulara tegna Maloja avert per auters.',
       medianNote: 'Per orientaziun: il salari median svizzer è circa 6800 CHF brut al mais. Tgi che è sur quai e ha in pau spazi sustegna per il mument — e cun mintga partener vegn Maloja pli favuraivel.',
-      howTitle: 'Uschia pos ti contribuir',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      howTitle: { sie: 'Uschia pudais Vus contribuir', du: 'Uschia pos ti contribuir' },
       contributeCta: 'Far ina contribuziun voluntaria',
       paymentPending: 'In med da pajament vegn installà pir — la pussaivladad da contribuir cumpara prest qua. Grazia per la pazienza.',
       transparency: 'La transparenza è impurtanta per nus: Maloja resta open source, local e senza reclama. Las contribuziuns van en il manaschi, la tgira da datas e la sviluppada.',
@@ -1647,7 +1800,8 @@ export default {
     },
     resources: {
       movedTitle: 'Tut en la biblioteca',
-      movedText: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattas ti ussa radunadas en la biblioteca.',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      movedText: { sie: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattais Vus ussa radunadas en la biblioteca.', du: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattas ti ussa radunadas en la biblioteca.' },
       movedCta: '→ Tar la biblioteca',
       secure1: "Per il barat segir cun autoritads e posts spezialisadas recumandain nus:",
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Messenger svizzer, criptà end-to-end, utilisabel senza numer da telefon.' },
@@ -1671,7 +1825,8 @@ export default {
       ombuds3: { name: 'Associaziun dals abitants', url: 'https://www.mieterverband.ch', desc: 'Cussegliaziun e mediaziun tar dispitas da localitad.' },
       ombuds4: { name: 'Protecziun dals consumaders', url: 'https://www.konsumentenschutz.ch', desc: 'Cussegliaziun independenta per dretgs dals consumaders.' },
       heartfeltIntro: 'Servetschs e projects che nus stimain persunalmain — recumandads gratuitamain, senza cuntraprestaziun.',
-      heartfeltIntroAffiliate: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a tai.',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      heartfeltIntroAffiliate: { sie: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a Vus.', du: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a tai.' },
       affiliateMarker: 'Affiliate',
       // TODO(rm): provisorischer DE-Fallback — RM nachziehen
       heartfeltGroups: { digital: 'Digital & Privatsphäre', soziales: 'Sustegn social', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
@@ -1693,7 +1848,8 @@ export default {
       heartfelt16: 'Emissiun da la SRF davart ils consuments — revelescha abus e controllescha products e servetschs.',
       heartfelt17: 'App cunter il spreder da victualias — gestiunescha tes provisiuns e datas da durabladad. Nagin conto, nagin tracking, nagina pajada cun datas.',
       // TODO(rm): provisorischer DE-Fallback — sauberes Romanisch nachziehen
-      heartfelt18: 'Schweizer Tastatur-App, die mit dir mitdenkt — datensparsam, ohne Tracking.',
+      // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
+      heartfelt18: { sie: 'Schweizer Tastatur-App, die mit Ihnen mitdenkt — datensparsam, ohne Tracking.', du: 'Schweizer Tastatur-App, die mit dir mitdenkt — datensparsam, ohne Tracking.' },
       heartfelt19: 'Tätowier-Kunst mit eigener Handschrift — derzeit auf Instagram zu finden.',
       heartfelt20: 'Tätowier-Kunst, die uns berührt — derzeit auf Instagram zu finden.',
       heartfelt21: 'Malergeschäft aus Nunningen — sorgfältiges Handwerk, persönlich.',
@@ -1711,7 +1867,8 @@ export default {
       q3: 'Funcziuna l\'app senza internet?',
       a3: 'Gea, suenter il prim chargiar — grazia al Service Worker, per regla en ils secturs ch\'èn gia vegnids averts almain ina giada. Maloja Plana sez na trametta naginas endataziuns sur la rait: las datas bandunan l\'apparat mo tras in export u ina spediziun da la persuna sezza.', // TODO(rm): Gegenlese Muttersprache (K55: Satz neu, vorsichtig übersetzt)
       q4: 'Èn ils calculs giuridicamain vinculants?',
-      a4: 'Na. Tuts calculaturs (taglia, subvenziuns, assicuranza da malsogna, agid social) èn instruments d\'orientaziun basads sin datas publicas. Per infurmaziuns vinculantas contactescha l\'autoritad cumpetenta.',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      a4: { sie: "Na. Tuts calculaturs (taglia, subvenziuns, assicuranza da malsogna, agid social) èn instruments d'orientaziun basads sin datas publicas. Per infurmaziuns vinculantas contactai l'autoritad cumpetenta.", du: "Na. Tuts calculaturs (taglia, subvenziuns, assicuranza da malsogna, agid social) èn instruments d'orientaziun basads sin datas publicas. Per infurmaziuns vinculantas contactescha l'autoritad cumpetenta." },
       q5: 'Poss jau exportar mias datas?',
       // K17: l'export scriva datotecas singulas (JSON, CSV, .maloja criptà), nagin ZIP.
       // TODO(rm): a1/a5/a7 laschar controllar d'ina persuna da lingua materna.
@@ -1737,7 +1894,8 @@ export default {
   beta: {
     bannerLabel: 'Beta segira',
     intro: { sie: "Vossa survista calma da la vita en Svizra — taglias, assicuranzas, documents. Memorisà localmain, offline-abel, gratuit.", du: "Tia survista calma da la vita en Svizra — taglias, assicuranzas, documents. Memorisà localmain, offline-abel, gratuit." }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
-    gateMessage: "Questa app sa chatta en la beta serrada. Endatescha per plaschair il code d'access.",
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    gateMessage: { sie: "Questa app sa chatta en la beta serrada. Endatai per plaschair il code d'access.", du: "Questa app sa chatta en la beta serrada. Endatescha per plaschair il code d'access." },
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',
     enter: 'Avrir',
@@ -2026,7 +2184,8 @@ export default {
     tier1Reason: 'Reglar l\'emprim — patg, cassa da malsauns, alimentaziun e multas han las consequenzas las pli gravas.',
     tier2Reason: 'Tractar prest — taglias betg pajadas pon manar a l\'execuziun.',
     tier3Reason: 'En la successiun tschernida.',
-    helpTitle: 'Vus na stuais betg far quai sulet/a',
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    helpTitle: { sie: 'Vus na stuais betg far quai sulet/a', du: 'Ti na stos betg far quai sulet/a' },
     helpBody: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — la Cussegliaziun da debits Svizra e la Caritas han in post en mintga chantun.',
     situationLink: 'Guardar la situaziun «indebità u en scussiun»',
   },
@@ -2191,25 +2350,32 @@ export default {
 
   notfallkarte: {
     title: 'Carta da clamada d’urgenza',
-    intro: 'Sche insatge capita, na stos ti betg tegnair endament nagut. Questa carta ti di tge dir — e mussa las indicaziuns che ti has memorisà.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'Sche insatge capita, na stuais Vus betg tegnair endament nagut. Questa carta As di tge dir — e mussa las indicaziuns che Vus avais memorisà.', du: 'Sche insatge capita, na stos ti betg tegnair endament nagut. Questa carta ti di tge dir — e mussa las indicaziuns che ti has memorisà.' },
     step1Title: 'Tscherner il numer',
-    step1Text: 'Tutga sin in numer per telefonar. Il 112 funcziunescha era senza credit u carta SIM.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Text: { sie: 'Tutgai sin in numer per telefonar. Il 112 funcziunescha era senza credit u carta SIM.', du: 'Tutga sin in numer per telefonar. Il 112 funcziunescha era senza credit u carta SIM.' },
     num_sani: 'Ambulanza',
     num_police: 'Polizia',
     num_fire: 'Pumpiers',
     num_tox: 'Intoxicaziuns (Tox Info)',
     num_rega: 'Salvament ord l’aria (Rega)',
     num_euro: 'Numer d’urgenza europeic',
-    step1Note: 'Betg segir tge? Telefonescha 144 — els ta collieschan vinavant.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step1Note: { sie: 'Betg segir tge? Telefonai 144 — els As collieschan vinavant.', du: 'Betg segir tge? Telefonescha 144 — els ta collieschan vinavant.' },
     step2Title: 'Tge che ti dis',
     step2Text: 'Resta calm. Di el en questa successiun:',
-    sayWhere: 'Nua es ti?',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    sayWhere: { sie: 'Nua essas Vus?', du: 'Nua es ti?' },
     sayWhereEmpty: 'di nua che ti es',
     sayWhat: 'Tge è capità?',
     sayHowMany: 'Quantas persunas èn pertutgadas?',
-    sayWho: 'Tgi es ti?',
-    sayWhoEmpty: 'di tes num e tes numer',
-    step2Stay: 'Resta al telefon. Serra pir giu, cur che la centrala di.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    sayWho: { sie: 'Tgi essas Vus?', du: 'Tgi es ti?' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    sayWhoEmpty: { sie: 'numnai Voss num e Voss numer', du: 'di tes num e tes numer' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step2Stay: { sie: 'Restai al telefon. Serrai pir giu, cur che la centrala di.', du: 'Resta al telefon. Serra pir giu, cur che la centrala di.' },
     locBtn: 'Adressa nunsegira? Mussar mia posiziun',
     locLoading: 'Determinar la posiziun …',
     locAccuracy: 'Precisiun ±{m} m',
@@ -2218,12 +2384,14 @@ export default {
     loc_denied: 'Access a la posiziun refusà — quai è ok. Di simplamain nua che ti es.',
     loc_error: 'La posiziun na sa lascha betg determinar. Di simplamain nua che ti es.',
     loc_unsupported: 'Quest apparat na po betg determinar la posiziun qua. Di simplamain nua che ti es.',
-    step3Title: 'Tias indicaziuns per leger',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    step3Title: { sie: 'Vossas indicaziuns per leger', du: 'Tias indicaziuns per leger' },
     step3Text: 'Ti na stos betg tegnair endament — legia las, sche ins ta dumonda:',
     step3Empty: 'Anc naginas indicaziuns d’urgenza memorisadas. Gia il gruppa da sang ed in contact gidan.',
     step3EmptyLink: 'Agiuntar indicaziuns d’urgenza',
     dossierLink: 'Dossier d’urgenza cumplet (per stampar)',
-    footerCalm: 'Questa carta resta mo sin tes apparat — nagin auter la vesa.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footerCalm: { sie: 'Questa carta resta mo sin Voss apparat — nagin auter la vesa.', du: 'Questa carta resta mo sin tes apparat — nagin auter la vesa.' },
   },
   notfallpass: {
     title: 'Preparar il pass d’urgenza',
@@ -2353,7 +2521,8 @@ export default {
     exportEncrypted: 'Export (criptà)',
     importFile: 'Importar ina segirezza',
     passphrase: 'Pled-clav',
-    passphraseHint: "Almain {min} segns, il meglier plirs pleds. Regorda il, i na dat nagina restituziun.",
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    passphraseHint: { sie: 'Almain {min} segns, il meglier plirs pleds. Regordai il, i na dat nagina restituziun.', du: 'Almain {min} segns, il meglier plirs pleds. Regorda il, i na dat nagina restituziun.' },
     passphraseConfirm: 'Confermar il pled-clav',
     passphraseMismatch: 'Ils pleds-clavs na correspundan betg.',
     encrypting: 'Criptar...',
@@ -2368,6 +2537,7 @@ export default {
     sessionCountPlural: 'Sessiun: {count} backups creads',
     letterPreview: 'Prevista da la brev',
     confirmRestore: { sie: 'Quai remplazza Vossas datas actualas. Cuntinuar?', du: 'Quai remplazza Tes datas actualas. Cuntinuar?' },
+    restoreJa: 'Gea, restituir',
     encryptionInfo: { sie: 'Criptaziun AES-256, elavurada localmain. Voss pled-clav na banduna mai quest apparat.', du: 'Criptaziun AES-256, elavurada localmain. Tes pled-clav na banduna mai quest apparat.' },
     noWebCrypto: 'Segirezza criptada dovra HTTPS u localhost.',
     selectFile: 'Tscherner la datoteca da segirezza',
@@ -2391,10 +2561,14 @@ export default {
     a11yLabel: 'Rundgang tras Maloja',
     reopen: 'Reaviar il rundgang',
     next: 'Vinavant', back: 'Enavos', skip: 'Sursiglir', later: 'Pli tard', done: 'Finì',
-    welcome: { title: 'Bainvegni tar Maloja', text: 'Tes lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.' },
-    berge: { title: 'Il progress', text: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' },
-    anspruch: { title: 'Pussaivels dretgs', text: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' },
-    privacy: { title: 'Tut resta sin l\'apparat', text: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+    welcome: { title: 'Bainvegni tar Maloja', text: { sie: 'Voss lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.', du: 'Tes lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.' } },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+    berge: { title: 'Il progress', text: { sie: 'Las muntognas mussan a moda tranquilla quant lunsch che Vossa urden da vita è endrizzada — senza pressiun.', du: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' } },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+    anspruch: { title: 'Pussaivels dretgs', text: { sie: 'Qua mussa Maloja sin tge che Vus pudessas avair dretg — tenor quai che Vus avais tschernì al cumenzament.', du: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' } },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
+    privacy: { title: 'Tut resta sin l\'apparat', text: { sie: 'Vossas datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.', du: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking.' } },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026; #321 hatte nur die Du-Form)
     start: { title: { sie: 'Cumenzai qua', du: 'Cumenza qua' }, text: 'Qua stat adina exact in proxim pass. Il rest po spetgar.' },
     startAction: 'Cumenzar cun «{name}»',
@@ -2421,7 +2595,8 @@ export default {
     privacyNote: { sie: 'Vossas indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.', du: 'Tias indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.' },
     skipForNow: 'Sursiglir per il mument',
     stepOf: 'Pass {current} da {total}',
-    needsTitle: 'Tge pertutga tai en quest mument?',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    needsTitle: { sie: 'Tge pertutga Vus en quest mument?', du: 'Tge pertutga tai en quest mument?' },
     needsSubtitle: 'Tscherna tge che correspunda — Maloja ta mussa immediatamain tge che ta stat a disposiziun. Ti pos midar quai da mintga mument.',
     readyTitle: 'Pront, {name}.',
     readyTitleGeneric: 'Tut è pront.',
@@ -2519,11 +2694,14 @@ export default {
     tankMark: 'recumandà',
     tankEmpty: 'vid',
     tankFull: 'plain',
-    tankOrientation: 'Uschespert che tias expensas èn registradas, mussa l\'indicatur quants mais che tia reserva cuvra.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    tankOrientation: { sie: "Uschespert che Vossas expensas èn registradas, mussa l'indicatur quants mais che Vossa reserva cuvra.", du: "Uschespert che tias expensas èn registradas, mussa l'indicatur quants mais che tia reserva cuvra." },
     tankReadoutEmpty: 'Anc nagina reserva registrada — {recommend} mais d\'expensas èn recumandads.',
-    tankReadout: 'Tia reserva (CHF {savings}) cuvra var {months} mais. {recommend} èn recumandads.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    tankReadout: { sie: 'Vossa reserva (CHF {savings}) cuvra var {months} mais. {recommend} èn recumandads.', du: 'Tia reserva (CHF {savings}) cuvra var {months} mais. {recommend} èn recumandads.' },
     printAction: 'Stampar la survista / memorisar sco PDF',
-    disclaimer: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactescha la post cumpetenta.",
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    disclaimer: { sie: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactai la post cumpetenta.", du: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactescha la post cumpetenta." },
     showPosition: 'Mussar la classificaziun',
     belowPoverty: 'Sut la limita da povrezza',
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
@@ -2674,10 +2852,12 @@ export default {
   anspruch: {
     pageTitle: 'Survista da las prestaziuns',
     gefuehrtLink: 'Gugent pass per pass? Controlla guidada',
-    intro: 'Blers dretgs existan senza ch’ins al sa. Qua tut las prestaziuns pussaivlas cun in’egliada — senza obligaziun, senza giudicar. Tucca ina per savair dapli.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'Blers dretgs existan senza ch’ins al sa. Qua tut las prestaziuns pussaivlas cun in’egliada — senza obligaziun, senza giudicar. Tutgai ina per savair dapli.', du: 'Blers dretgs existan senza ch’ins al sa. Qua tut las prestaziuns pussaivlas cun in’egliada — senza obligaziun, senza giudicar. Tucca ina per savair dapli.' },
     gruppen: {
       einkommen: { label: 'Tenor l’entrada', desc: 'Dependa da quant che vegn mensilmain.' },
-      lebenslage: { label: 'Tenor la situaziun', desc: 'Dependa da tia situaziun persunala.' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für desc]
+      lebenslage: { label: 'Tenor la situaziun', desc: { sie: 'Dependa da Vossa situaziun persunala.', du: 'Dependa da tia situaziun persunala.' } },
       ereignis: { label: 'Tenor in eveniment', desc: 'Vegn chaschunà d’in eveniment da la vita.' },
     },
     items: {
@@ -2692,28 +2872,35 @@ export default {
       verguenstigungen: { label: 'Facilitaziuns regiunalas', sub: 'KulturLegi, Reka e.u. — tenor il domicil' },
       serafe: { label: 'Deliberaziun SERAFE', sub: 'Nagina taxa radio/TV cun PC' },
       sbbBegleitabo: { label: 'Abunament d’accumpagnament VFF', sub: 'Persuna d’accumpagnament gratuita en il traffic public' },
-      beistandschaft: { label: 'Mandat da prevenziun & Beistandschaft', sub: 'Tgi che decida sche ti na pos betg pli' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für sub]
+      beistandschaft: { label: 'Mandat da prevenziun & Beistandschaft', sub: { sie: 'Tgi che decida sche Vus na pudais betg pli', du: 'Tgi che decida sche ti na pos betg pli' } },
       alv: { label: 'Indemnisaziun da dischoccupaziun (ALV)', sub: 'Suenter la perdita da la plazza' },
       eo: { label: 'Cumpensaziun da la perdita da gudogn (EO)', sub: 'Servetsch, maternitad u tgira' },
       familienzulagen: { label: 'Supplements da famiglia', sub: 'Supplements per uffants e furmaziun' },
       waisenrente: { label: 'Renta d’orfen', sub: 'Tar la mort d’in genitur' },
     },
-    footNote: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar tai. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    footNote: { sie: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar Vus. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.', du: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar tai. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.' },
   },
 
   anspruchCheck: {
     stepWord: 'Pass',
     stepIncome: 'Tenor l’entrada',
     stepSituation: 'Tenor la situaziun',
-    stepOverview: 'Tia survista',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    stepOverview: { sie: 'Vossa survista', du: 'Tia survista' },
     weiter: 'Vinavant a las situaziuns',
     weiterOverview: 'Vinavant a la survista',
     zurueck: 'Enavos',
     fertig: 'Finì — a la survista',
-    resultIntro: 'Resumà da tias indicaziuns — tge che pudess pertutgar tai.',
-    resultIncomeHeader: 'Tenor l’entrada (da tes profil)',
-    resultSituationHeader: 'Tenor tias situaziuns',
-    resultEmptyIncome: 'Endatescha tia entrada en pass 1 (il chantun defineschas en tes profil) — lura cumpara qua tge che ta stat.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    resultIntro: { sie: 'Resumà da Vossas indicaziuns — tge che pudess pertutgar Vus.', du: 'Resumà da tias indicaziuns — tge che pudess pertutgar tai.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    resultIncomeHeader: { sie: 'Tenor l’entrada (da Voss profil)', du: 'Tenor l’entrada (da tes profil)' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    resultSituationHeader: { sie: 'Tenor Vossas situaziuns', du: 'Tenor tias situaziuns' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    resultEmptyIncome: { sie: 'Endatai Vossa entrada en pass 1 (il chantun definis Vus en Voss profil) — lura cumpara qua tge che As stat.', du: 'Endatescha tia entrada en pass 1 (il chantun defineschas en tes profil) — lura cumpara qua tge che ta stat.' },
     resultEmptySituation: 'Tscherna tias situaziuns en pass 2 — lura cumparan ellas qua.',
     resultToLandkarte: 'Vesair tuttas prestaziuns pussaivlas',
   },
@@ -2734,7 +2921,8 @@ export default {
     taxpunktwert: 'Valur dal punct da taxa — l\'import en francs per punct da taxa d\'ina prestaziun medicinala. El vegn concordà ed approvà per mintga chantun; il medem tractament custa perquai different tenor il chantun. Basa: LAMal art. 43 ss.',
     bundessteuer: 'Taglia federala — la taglia federala directa sin il retgav. Ina tarifa per tut la Svizra, independentamain dal chantun da domicil; la taglia chantunala e communala vegn ultra da quai. Basa: LIFD art. 36.',
     veranlagung: 'Taxaziun — la decisiun da l\'autoritad da taglia per in onn fiscal. Ella inditgescha il retgav e la facultad taxabla ed il import debità.',
-    ipv: 'IPV — reducziun individuala da premias: in agid chantunal a tia premia da la cassa da malsauns sche l’entrada è bassa avunda.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    ipv: { sie: 'IPV — reducziun individuala da premias: in agid chantunal a Vossa premia da la cassa da malsauns sche l’entrada è bassa avunda.', du: 'IPV — reducziun individuala da premias: in agid chantunal a tia premia da la cassa da malsauns sche l’entrada è bassa avunda.' },
     skos: 'SKOS — Conferenza svizra per l’agid social: recumonda directivas per l’agid social. Ellas èn liantas mo sche in chantun las surpiglia.',
     el: 'PC — prestaziuns cumplementaras: cumpleteschan l’AVS u l’AI sche la renta na basta betg.',
     mietbeitraege: 'Contribuziuns da fittanza — contribuziuns chantunalas a la fittanza per chasadas cun bassa entrada.',
@@ -2749,18 +2937,21 @@ export default {
   },
   settingsDrawer: {
     accountTitle: 'Conto & datas',
-    accountNote: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Tias datas ta appartegnan.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    accountNote: { sie: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Vossas datas As appartegnan.', du: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Tias datas ta appartegnan.' },
     backup: 'Backup & export',
   },
   arztkoffer: {
     title: 'Vossa valisch da sanadad',
-    subtitle: 'Voss temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.',
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    subtitle: { sie: 'Voss temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.', du: 'Tes temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.' },
     back: 'Enavos a la survista',
     inVorbereitung: 'En preparaziun',
     inVorbereitungHint: 'Prest en la valisch',
     weitereWege: 'Auters vias:',
     faecher: {
-      kvg: { title: 'Prestaziuns & franchisa', desc: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.' },
+      // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für desc]
+      kvg: { title: 'Prestaziuns & franchisa', desc: { sie: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.', du: 'Tge che l’assicuranza da basa paja e co che tia franchisa funcziuna.' } },
       kkbeleg: { title: 'Register da quittanzas', desc: 'Rimnar quintas da medi, tegnair egl’egl franchisa & participaziun.' },
       notfall: { title: 'Urgenza', desc: 'Carta d’urgenza e las infurmaziuns pli impurtantas per il cas serius.' },
       thermometer: { title: 'Termometer', desc: 'Registrar simptoms e fevra durant ils dis.' },
@@ -2779,8 +2970,10 @@ export default {
     subtitle: { sie: 'Trais scenaris — e tge indicaziuns che Vus duessas avair prontas.', du: 'Trais scenaris — e tge indicaziuns che Ti duessas avair prontas.' },
     back: 'Enavos tar la survista',
     allDone: 'Tut las indicaziuns avant maun.',
-    vorlesekarteTitle: 'En cas d’urgenza: tge dir al telefon',
-    vorlesekarteSub: 'La carta da leger ta maina tras la telefonada e mussa tias indicaziuns pli impurtantas',
+    // Anredefrei (Infinitiv («tge dir»)) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    vorlesekarteTitle: { sie: 'En cas d’urgenza: tge dir al telefon', du: 'En cas d’urgenza: tge dir al telefon' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    vorlesekarteSub: { sie: 'La carta da leger As maina tras la telefonada e mussa Vossas indicaziuns pli impurtantas', du: 'La carta da leger ta maina tras la telefonada e mussa tias indicaziuns pli impurtantas' },
     unfall: { title: 'Accident', description: { sie: "Vus avais gì in accident. Tge dovran las forzas da salvament e la clinica?", du: "Ti has gì in accident. Tge dovran las forzas da salvament e la clinica?" } },
     spital: { title: 'Dimora en la clinica', description: { sie: "Vus stuais en la clinica. Tge dovra l'admissiun?", du: "Ti stos en la clinica. Tge dovra l'admissiun?" } },
     behoerde: { title: "Contact cun l'autoritad", description: { sie: 'Vus vais sin in uffizi. Tge stuais Vus avair cun Vus?', du: 'Ti vas sin in uffizi. Tge stos Ti avair cun tai?' } },
@@ -2951,7 +3144,8 @@ export default {
 
   docReminder: {
     title: 'Document scada: {name}',
-    notes: "Data da scadenza: {date}. Renova u remplazza per plaschair il document a temp.",
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    notes: { sie: 'Data da scadenza: {date}. Renovai u remplazzai per plaschair il document a temp.', du: 'Data da scadenza: {date}. Renova u remplazza per plaschair il document a temp.' },
   },
 
   orientation: {
@@ -3140,20 +3334,28 @@ export default {
     cantonalNoteLabel: 'Remartga davart la taglia chantunala e communala',
     noCantonalFigure: "nagina stimaziun per questa situaziun — calculatur da taglia da l'AFT: swisstaxcalculator.estv.admin.ch",
     // TODO(rm): E38 — provisorisch, von Muttersprachler:in gegenlesen.
-    bandNotCheckedPartner: "Per questa situaziun na mussa Maloja qua nagin import: la taglia chantunala e communala è mesirada mo per chasadas cun ina entrada. Cun ina segunda entrada (pèr maridà cun duas entradas u concubinat) valan autras deducziuns. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
-    bandNotCheckedBrutto: "Per questa situaziun na mussa Maloja qua nagin import: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    bandNotCheckedPartner: { sie: "Per questa situaziun na mussa Maloja qua nagin import: la taglia chantunala e communala è mesirada mo per chasadas cun ina entrada. Cun ina segunda entrada (pèr maridà cun duas entradas u concubinat) valan autras deducziuns. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import: la taglia chantunala e communala è mesirada mo per chasadas cun ina entrada. Cun ina segunda entrada (pèr maridà cun duas entradas u concubinat) valan autras deducziuns. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    bandNotCheckedBrutto: { sie: "Per questa situaziun na mussa Maloja qua nagin import: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     // E39: ein steuerbares Einkommen für Bund und Kanton
     // TODO(rm): E39 — provisorisch, von Muttersprachler:in gegenlesen.
     taxableIncomeEstimated: 'Entrada taxabla (stimada tenor las deducziuns standard da l\'AFT)',
-    taxableEstimatedHint: 'Paja netta main las deducziuns standard ch\'il calculatur da taglia da l\'AFT utilisescha: custs professiunals (3 %, almain CHF 2 000, maximalmain CHF 4 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.',
-    taxableEnteredHint: 'Endatà da Vus (cifra per la taglia federala directa). Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.',
-    federalNotCheckedBrutto: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l\'entrada taxabla. Cun la paja netta u cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import exact.',
+    // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    taxableEstimatedHint: { sie: "Paja netta main las deducziuns standard ch'il calculatur da taglia da l'AFT utilisescha: custs professiunals (3 %, almain CHF 2 000, maximalmain CHF 4 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.", du: "Paja netta main las deducziuns standard ch'il calculatur da taglia da l'AFT utilisescha: custs professiunals (3 %, almain CHF 2 000, maximalmain CHF 4 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala." },
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    taxableEnteredHint: { sie: 'Endatà da Vus (cifra per la taglia federala directa). Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.', du: 'Endatà da tai (cifra per la taglia federala directa). Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.' },
+    // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    federalNotCheckedBrutto: { sie: "Per questa situaziun na mussa Maloja qua nagina taglia federala: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import exact.", du: "Per questa situaziun na mussa Maloja qua nagina taglia federala: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import exact." },
     federalNotCheckedPartner: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: tar persunas maridadas vegnan las duas entradas sumadas, cun ina atgna deducziun per pèrs cun duas entradas; tar geniturs betg maridads po la deducziun per uffants vegnir partida tranter els. Cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import.',
     noTaxFigure: 'nagina stimaziun — calculatur da taglia da l\'AFT',
     // R4 (16.09.2026): Steuer-Annahmen — Rentner/Selbständige, Partnereinkommen offen, 13. Monatslohn
-    ohneZahlRente: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", // TODO(rm): provisorisch
-    ohneZahlSelbstaendig: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica ina activitad da gudogn independenta. Taxabla è lura l'entrada da l'activitad independenta suenter deducziun dals custs giustifitgads commerzialmain u professiunalmain — betg ina paja netta cun las deducziuns per persunas empleadas che Maloja dovra. Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", // TODO(rm): provisorisch
-    ohneZahlPartnerOffen: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0).", // TODO(rm): provisorisch
+    // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    ohneZahlRente: { sie: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", du: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import." }, // TODO(rm): provisorisch
+    // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    ohneZahlSelbstaendig: { sie: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica ina activitad da gudogn independenta. Taxabla è lura l'entrada da l'activitad independenta suenter deducziun dals custs giustifitgads commerzialmain u professiunalmain — betg ina paja netta cun las deducziuns per persunas empleadas che Maloja dovra. Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", du: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica ina activitad da gudogn independenta. Taxabla è lura l'entrada da l'activitad independenta suenter deducziun dals custs giustifitgads commerzialmain u professiunalmain — betg ina paja netta cun las deducziuns per persunas empleadas che Maloja dovra. Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import." }, // TODO(rm): provisorisch
+    // Anredefrei (Infinitiv («Per plaschair cumplettar»)) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    ohneZahlPartnerOffen: { sie: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0).", du: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0)." }, // TODO(rm): provisorisch
     annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
     // K62.1: Konkubinat, Einzelbesteuerung
@@ -3179,7 +3381,8 @@ export default {
     parentTariff: 'Tarif per geniturs',
     marginalRate: 'Tschains marginal',
     dataVersion: 'Stadi da las datas',
-    disclaimer: "Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.",
+    // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    disclaimer: { sie: 'Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.', du: 'Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.' },
     netIncomeNote: { sie: "Projecziun da Voss salari net × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net × 12. La chargia da taglia effectiva po divergiar." },
     useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
     taxableIncomeDirect: 'Entrada taxabla (facultativ)',
@@ -3188,7 +3391,8 @@ export default {
     useTaxableEntered: 'Duvrar quest valur sco basa — deducziuns na valan lura betg pli (el è gia taxabel).',
     saeulen: {
       title: 'Stadi civil en cumparaziun',
-      hint: 'Tutgai ina colonna per empruvar in stadi civil.',
+      // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+      hint: { sie: 'Tutgai ina colonna per empruvar in stadi civil.', du: 'Tutga ina colonna per empruvar in stadi civil.' },
       ledig: 'Nunmaridà',
       gemeinsam: 'Maridà, taxaziun communabla',
       einzeln: 'Maridà, taxaziun individuala',
@@ -3394,9 +3598,10 @@ export default {
     qrKarteTitel: 'Assicuranza da malsauns',
     qrNotfallLesbar: "En cas d'urgenza — mintgina camera al mussa",
     qrUebernahme: 'Previs per surprender en Maloja — betg criptà',
-    errorNoInsurer: 'Assicurader betg enconuschent',
-    errorCardNumber: 'Numer da la carta nunvalid',
+    errorNoInsurer: 'Assicurader manca',
+    errorCardNumber: 'Numer da la carta manca u è incomplet',
     errorAhvFormat: 'Format AVS nunvalid',
+    nichtsGelesen: { sie: 'Sin il maletg n\'è nagut legibel. Ina foto pli nitida gida — u Vus pudais endatar las datas manualmain.', du: 'Sin il maletg n\'è nagut legibel. Ina foto pli nitida gida — u ti pos endatar las datas manualmain.' },
     scanRequiresInternet: { sie: 'Scannar dovra ina connexiun dad internet. Vus pudais era endatar las datas manualmain.', du: 'Scannar dovra ina connexiun dad internet. Ti pos era endatar las datas manualmain.' },
     conflictTitle: 'Divergenzas enconuschidas',
     conflictHint: { sie: 'Il scan furnischa auters valurs che Vossas datas existentas.', du: 'Il scan furnischa auters valurs che Tes datas existentas.' },
@@ -3409,24 +3614,34 @@ export default {
   po: {
     franchiseChangeWhen: 'La franchisa po vegnir midada ina giada l\'onn — cun effect dal 1. da schaner, communicaziun fin la fin da november (midada da cassa: 30 da november). Funtauna: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
     franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
-    franchiseOptSaving: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.',
-    franchiseOptReserve: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas ti pudair metter da maun.',
-    franchiseOptBreakeven: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    franchiseOptSaving: { sie: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnais Vus var CHF {saving}/onn da premias.', du: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    franchiseOptReserve: { sie: 'En picada portais Vus en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas Vus pudair metter da maun.', du: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas ti pudair metter da maun.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF {breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.' },
     tachoBreakeven: 'Break-even',
     tachoLegendHigh: 'franchisa auta pli favuraivla',
     tachoLegendLow: 'franchisa bassa pli favuraivla',
-    tachoReadoutBelow: 'Fin ussa CHF {costs} quest onn. Sut il break-even (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.',
+    // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    tachoReadoutBelow: { sie: 'Fin ussa CHF {costs} quest onn. Sut il break-even (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.', du: 'Fin ussa CHF {costs} quest onn. Sut il break-even (CHF {be}) è la franchisa auta (CHF {high}) pli favuraivla.' },
     tachoReadoutAbove: 'Fin ussa CHF {costs} quest onn — sur il break-even (CHF {be}). Quest onn fiss la franchisa bassa (CHF {low}) stada pli favuraivla.',
-    tachoOrientation: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    tachoOrientation: { sie: 'Uschespert che Vus registrais ils custs da sanadad, mussa la sajetta nua che Vus essas quest onn.', du: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.' },
     tachoTrackLink: 'Registrar ils custs da sanadad',
-    reserveCheck_strong: 'Tia reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.',
-    reserveCheck_ok: 'Tia reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.',
-    reserveCheck_low: 'Tia reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa ta dat dapli segirezza fin ch\'il cussin è là.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    reserveCheck_strong: { sie: 'Vossa reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per Vus.', du: 'Tia reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    reserveCheck_ok: { sie: 'Vossa reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.', du: 'Tia reserva (CHF {savings}) cuvra il cas il pli mal ina giada. In cussin per dus onns (CHF {ideal}) fiss anc pli serain.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    reserveCheck_low: { sie: "Vossa reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa As dat dapli segirezza fin ch'il cussin è là.", du: "Tia reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa ta dat dapli segirezza fin ch'il cussin è là." },
     reserveCheck_none: 'Avant che tscherner la franchisa pli auta: metta sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.',
     reserveCheckLink: 'Reserva en la survista finanziala',
     franchiseOptSource: 'Funtauna: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · quota-part 10% / max. CHF 700 (creschids), CHF 350 (uffants).',
-    pickFranchiseHint: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.',
-    chooseByPrice: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    pickFranchiseHint: { sie: 'Tutgai ina franchisa per cumparegliar las cassas a quel nivel.', du: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    chooseByPrice: { sie: 'Tutgai in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.', du: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.' },
     unfallLabel: 'Cuvrida d’accident',
     mitUnfall: 'Cun accident',
     ohneUnfall: 'Senza accident',
@@ -3540,7 +3755,8 @@ export default {
     sozialhilfe: "Dretg d'agid social",
     vermoegenHinweis: 'La facultad surpassa la limita libra — nagin dretg',
     freibetrag: 'Import liber',
-    eingeben: "Endatescha il tschains e la premia LAMal per calcular il dretg.",
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
     source: 'Calculaziun tenor [[directivas COSAS|skos.ch]] (stadi 1.1.2026); franchisa sin la facultad tenor chantun. Nagina infurmaziun giuridicamain vinculanta.',
   },
 
@@ -3597,7 +3813,8 @@ export default {
     mammografie2j: 'Mintga 2 onns',
     mammografieWho: 'Mintga 2 onns per dunnas da 50–74 onns.',
     mammografieEu: 'Mintga 2 onns (50–69); in pau main savens tar 45–49 e 70–74 onns.',
-    mammografieSynthese: 'L’assicuranza da basa cuvra quest ritmus. Sche tes chantun da domicil ha in program organisà cun invit persunal, variescha — guarda sutvart.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    mammografieSynthese: { sie: 'L’assicuranza da basa cuvra quest ritmus. Sche Voss chantun da domicil ha in program organisà cun invit persunal, variescha — guardai sutvart.', du: 'L’assicuranza da basa cuvra quest ritmus. Sche tes chantun da domicil ha in program organisà cun invit persunal, variescha — guarda sutvart.' },
     mammografieQuelle: 'Funtaunas: OMS · UE (ECIBC) · Lia svizra cunter il cancer.',
     mammoGeoTitle: 'Program organisà — tut tenor il chantun',
     mammoGeoNote: 'Betg dapertut envida il chantun per brev a la mammografia. En in program organisà surpiglia l’assicuranza da basa ils custs senza franchisa — resta mo la participaziun da 10 %. Nua ch’i n’exista nagin program, s’organisescha la prevenziun sez (suenter ina prescripziun medicinala); lura vegn incassada la franchisa.',
@@ -3989,12 +4206,15 @@ export default {
     incomeAlimente: 'Aliments retschavids',
     ipvRelief: 'Reducziun IPV',
     ipvEffective: 'Grevezza effectiva',
-    benchmark: 'Per orientaziun: ina chasada cumparabla dat qua var {amount} (UST 2020/21). La tia po fitg bain variar.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    benchmark: { sie: 'Per orientaziun: ina chasada cumparabla dat qua var {amount} (UST 2020/21). La Vossa po fitg bain variar.', du: 'Per orientaziun: ina chasada cumparabla dat qua var {amount} (UST 2020/21). La tia po fitg bain variar.' },
     priceTrend: 'Qua èn ils pretschs sa midads per {pct} dapi 2020 — en general {general} (rincar UST).',
     infoToggle: 'Valurs d\'orientaziun & rincar',
     skosTitle: 'Basegns da basa SKOS (orientaziun)',
-    skosClaim: 'Tia entrada è sut il budget da sustegn (≈ {amount}/mais) — l\'agid social pudess esser relevant.',
-    skosNoClaim: 'L\'agid social n\'è qua probablamain betg relevant — tia entrada è sur quai ch\'el cuvrissi (≈ {amount}/mais).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    skosClaim: { sie: "Vossa entrada è sut il budget da sustegn (≈ {amount}/mais) — l'agid social pudess esser relevant.", du: "Tia entrada è sut il budget da sustegn (≈ {amount}/mais) — l'agid social pudess esser relevant." },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    skosNoClaim: { sie: "L'agid social n'è qua probablamain betg relevant — Vossa entrada è sur quai ch'el cuvrissi (≈ {amount}/mais).", du: "L'agid social n'è qua probablamain betg relevant — tia entrada è sur quai ch'el cuvrissi (≈ {amount}/mais)." },
   },
 
   taxImport: {
@@ -4142,9 +4362,12 @@ export default {
       documents: 'DOCUMENTS ({count} datotecas)',
       securityTitle: 'INDICAZIUNS DA SEGIREZZA',
       securityTip1: 'Questa datoteca cuntegna datas persunalas confidenzialas',
-      securityTip2: 'Conservescha las datotecas exportadas en segirezza (il meglier la segirezza criptada)',
-      securityTip3: 'Memorisescha pliras copias en differents lieus',
-      securityTip4: 'Controllescha regularmain la restauraziun',
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      securityTip2: { sie: 'Conservai las datotecas exportadas en segirezza (il meglier la segirezza criptada)', du: 'Conservescha las datotecas exportadas en segirezza (il meglier la segirezza criptada)' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      securityTip3: { sie: 'Memorisai pliras copias en differents lieus', du: 'Memorisescha pliras copias en differents lieus' },
+      // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+      securityTip4: { sie: 'Controllai regularmain la restauraziun', du: 'Controllescha regularmain la restauraziun' },
       securityTip5: 'Resguardar la protecziun da datas (RGPD/Swiss DPA)',
       moreInfo: 'ULTERIURAS INFURMAZIUNS',
       copyright: '© 2026 Stebler Studios — Tut ils dretgs reservads',
@@ -4162,20 +4385,24 @@ export default {
     title: 'Tschertgar',
     placeholder: 'Tschertgar utensils e chapitels…',
     emptyTitle: 'Nagins resultats',
-    empty: 'Nagut chattà per «{query}». Emprova in auter term.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    empty: { sie: 'Nagut chattà per «{query}». Empruvai in auter term.', du: 'Nagut chattà per «{query}». Emprova in auter term.' },
     toolsTitle: 'Utensils',
     chaptersTitle: 'Chapitels',
   },
 
   merkliste: {
     title: 'Mia glista da memoria',
-    intro: "Has ti remartgà insatge che ti vuls reglar pli tard — p.ex. «jau pudess dumandar la reducziun da premias»? Notescha quai qua e collia el directamain cun l'utensil dretg, per chattar enavos la via cura che ti has temp.",
-    placeholder: 'Tge vuls ti tegnair endament?',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: "Avais Vus remartgà insatge che Vus vulais reglar pli tard — p.ex. «jau pudess dumandar la reducziun da premias»? Notai quai qua e colliai el directamain cun l'utensil dretg, per chattar enavos la via cura che Vus avais temp.", du: "Has ti remartgà insatge che ti vuls reglar pli tard — p.ex. «jau pudess dumandar la reducziun da premias»? Notescha quai qua e collia el directamain cun l'utensil dretg, per chattar enavos la via cura che ti has temp." },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    placeholder: { sie: 'Tge vulais Vus tegnair endament?', du: 'Tge vuls ti tegnair endament?' },
     linkLabel: 'Colliar cun',
     linkNone: 'Nagin link',
     add: 'Agiuntar',
     emptyTitle: 'Anc navot memorisà',
-    empty: 'Tia glista da memoria è vida. Agiuntescha ina emprima notizia survart.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    empty: { sie: 'Vossa glista da memoria è vida. Agiuntai ina emprima notizia survart.', du: 'Tia glista da memoria è vida. Agiuntescha ina emprima notizia survart.' },
     openTitle: 'Da far',
     doneTitle: 'Fatg',
     markDone: 'Marcar sco fatg',
@@ -4183,7 +4410,8 @@ export default {
   },
 
   kkLast: {
-    title: 'Grevezza da las premias',
+    // Anredefrei (rm-Titel ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    title: { sie: 'Grevezza da las premias', du: 'Grevezza da las premias' },
     share: 'La premia da l’assicuranza da basa correspunda a {share}% da l’entrada mensila.',
     overNote: 'Gia la premia sulet surpassa il valur d’orientaziun da 10%.',
     underNote: 'La premia sulet è sut 10% — franchisa, part da quota e custs betg cuvrids s’agiuntan.',
@@ -4198,41 +4426,56 @@ export default {
   },
   uvgHint: {
     title: 'Cuvrida d’accident: spargnar sco emploià',
-    body: 'Sco emploià·da es ti assicurà·da cunter accidents tras tes patrun — inclus accidents na professiunals a partir da 8 uras/emna. Ti pos deselecziunar la cuvrida d’accident tar tia cassa da malsauns; quai diminuescha tia premia notablamain.',
-    fieldSuggest: 'Sco emploià·da es ti per regla cuvert·a tras tes patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    body: { sie: 'Sco emploià·da essas Vus assicurà·da cunter accidents tras Voss patrun — inclus accidents na professiunals a partir da 8 uras/emna. Vus pudais deselecziunar la cuvrida d’accident tar Vossa cassa da malsauns; quai diminuescha Vossa premia notablamain.', du: 'Sco emploià·da es ti assicurà·da cunter accidents tras tes patrun — inclus accidents na professiunals a partir da 8 uras/emna. Ti pos deselecziunar la cuvrida d’accident tar tia cassa da malsauns; quai diminuescha tia premia notablamain.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    fieldSuggest: { sie: 'Sco emploià·da essas Vus per regla cuvert·a tras Voss patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.', du: 'Sco emploià·da es ti per regla cuvert·a tras tes patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.' },
   },
   mietzins: {
     title: 'Contribuziuns a la fittanza:',
-    has: 'Tes chantun enconuscha contribuziuns a la fittanza tenor l\'entrada. Controllescha il dretg e las cundiziuns tar tia vischnanca u il chantun.',
-    none: 'En tes chantun n\'existan naginas contribuziuns chantunalas a la fittanza.',
-    check: 'Contribuziuns a la fittanza datti mo en singuls chantuns e vischnancas — blers chantuns n\'han naginas, tschertas vischnancas gea. Controllescha tar tia vischnanca u il chantun.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    has: { sie: "Voss chantun enconuscha contribuziuns a la fittanza tenor l'entrada. Controllai il dretg e las cundiziuns tar Vossa vischnanca u il chantun.", du: "Tes chantun enconuscha contribuziuns a la fittanza tenor l'entrada. Controllescha il dretg e las cundiziuns tar tia vischnanca u il chantun." },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    none: { sie: "En Voss chantun n'existan naginas contribuziuns chantunalas a la fittanza.", du: "En tes chantun n'existan naginas contribuziuns chantunalas a la fittanza." },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    check: { sie: "Contribuziuns a la fittanza datti mo en singuls chantuns e vischnancas — blers chantuns n'han naginas, tschertas vischnancas gea. Controllai tar Vossa vischnanca u il chantun.", du: "Contribuziuns a la fittanza datti mo en singuls chantuns e vischnancas — blers chantuns n'han naginas, tschertas vischnancas gea. Controllescha tar tia vischnanca u il chantun." },
     linkCanton: 'Tar l\'uffizi chantunal',
     linkOverview: 'Survista chantunala (BWO)',
   },
   mietzinsView: {
     title: 'Contribuziuns a la fittanza',
     intro: 'Tscherts chantuns e vischnancas sustegnan inquilins cun contribuziuns a la fittanza tenor l\'entrada. Qua ina orientaziun calma — nagina dumonda, nagina garanzia lianta.',
-    enterCanton: 'Endatescha tia numra postala, lura mussain nus sche tes chantun enconuscha contribuziuns a la fittanza.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    enterCanton: { sie: 'Endatai Vossa numra postala, lura mussain nus sche Voss chantun enconuscha contribuziuns a la fittanza.', du: 'Endatescha tia numra postala, lura mussain nus sche tes chantun enconuscha contribuziuns a la fittanza.' },
     enterCantonLink: 'Endatar la numra postala',
-    cantonLabel: 'Tes chantun: {name}',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    cantonLabel: { sie: 'Voss chantun: {name}', du: 'Tes chantun: {name}' },
     checkTitle: 'Test svelt',
     basis: 'Basa: entrada CHF {income}/onn · fittanza CHF {rent}/mais · chasada {size} pers.',
-    result_likely: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.',
-    result_incomeHigh: 'Tia entrada (CHF {income}) surpassa la limita indicativa (CHF {limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    result_incomeHigh: { sie: 'Vossa entrada (CHF {income}) surpassa la limita indicativa (CHF {limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.', du: 'Tia entrada (CHF {income}) surpassa la limita indicativa (CHF {limit}). In dretg è pli tgunsch improbabel — ma en in cas limit vala igl tuttina la paina da controllar.' },
     result_familiesOnly: 'En quest chantun datti contribuziuns a la fittanza mo per chasadas cun almain in uffant.',
-    result_effortBased: 'Qua dependa il dretg da tia grevezza da fittanza (taux d\'effort), betg d\'ina limita d\'entrada fixa. Controllescha las cundiziuns tar la posiziun chantunala.',
-    result_needIncome: 'Endatescha tia entrada, lura pudain nus stimar il dretg pli precis.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    result_effortBased: { sie: "Qua dependa il dretg da Vossa grevezza da fittanza (taux d'effort), betg d'ina limita d'entrada fixa. Controllai las cundiziuns tar la posiziun chantunala.", du: "Qua dependa il dretg da tia grevezza da fittanza (taux d'effort), betg d'ina limita d'entrada fixa. Controllescha las cundiziuns tar la posiziun chantunala." },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    result_needIncome: { sie: 'Endatai Vossa entrada, lura pudain nus stimar il dretg pli precis.', du: 'Endatescha tia entrada, lura pudain nus stimar il dretg pli precis.' },
     enterIncomeLink: 'Endatar l\'entrada',
-    rentWithin: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    rentWithin: { sie: 'Vossa fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).', du: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).' },
     rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
     cantonNote_BS: 'Dapi fanadur 2025 era per chasadas d\'ina u duas persunas cun bassa entrada (indicativ ~CHF 50’000/onn), betg mo famiglias. Almain 2 onns domicil.',
     cantonNote_BL: 'Mo per chasadas cun almain in uffant. Entrada netta annuala radund CHF 40’000–75’000 (pèrs) u 30’000–60’000 (geniturs sulets). La vischnanca paja or l\'agid.',
     cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d\'effort), betg ina limita d\'entrada fixa. Max. CHF 1’400 per stanza, il pli ferm la mesadad da la fittanza. 2 dals davos 5 onns domicil.',
     cantonNote_ZG: 'Entrada suenter la taglia federala directa fin CHF 60’000 (+2’500 per uffant, +20’000 per ulteriura persuna creschida), facultad netta fin CHF 144’000. Almain 3 onns domicil; la contribuziun va al locatur.',
-    compareTitle: 'Nua sa chatta tia fittanza?',
-    rentShare: 'Tes cuosts da viver èn {pct}% da tia entrada.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    rentShare: { sie: 'Voss cuosts da viver èn {pct}% da Vossa entrada.', du: 'Tes cuosts da viver èn {pct}% da tia entrada.' },
     rentShareGuide: 'Sco reglacurta na duessi la fittanza betg surpassar radund in terz da l\'entrada — blers locaturs pretendan quai schizont.',
-    docsTitle: 'Tge che ti dovras savens',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    docsTitle: { sie: 'Tge che Vus dovrais savens', du: 'Tge che ti dovras savens' },
     doc1: 'Contract da fittanza',
     doc2: 'Attestaziun da l\'entrada (salari, renta, documents)',
     doc3: 'Indicaziuns davart la chasada (persunas, uffants)',
@@ -4251,7 +4494,8 @@ export default {
     exportIcs: 'Exportar il chalender (.ics)',
     locale: 'rm-CH',
     calAria: 'Survista dal chalender',
-    exportIcsHint: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    exportIcsHint: { sie: 'Surpigliai Vossas commemoraziuns en il chalender da Voss telefon u computer.', du: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.' },
     editReminder: 'Modifitgar la commemoraziun',
     noRemindersTitle: 'Anc nagut planisà',
     noReminders: { sie: 'Anc naginas commemoraziuns. Agiuntai Vossa emprima commemoraziun per restar organisà.', du: 'Anc naginas commemoraziuns. Agiunta Tia emprima commemoraziun per restar organisà.' },
@@ -4319,7 +4563,8 @@ export default {
       medicationRefill: 'Reordinar medicaments / renovar la recepta',
       kkChange: 'Termin per midar la cassa da malsauns (30 nov.)',
     },
-    disclaimer: "Questas commemoraziuns servan mo a l'infurmaziun. Contactescha per plaschair l'autoritad cumpetenta u la persuna spezialisada per infurmaziuns uffizialas.",
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    disclaimer: { sie: "Questas commemoraziuns servan mo a l'infurmaziun. Contactai per plaschair l'autoritad cumpetenta u la persuna spezialisada per infurmaziuns uffizialas.", du: "Questas commemoraziuns servan mo a l'infurmaziun. Contactescha per plaschair l'autoritad cumpetenta u la persuna spezialisada per infurmaziuns uffizialas." },
     stats: {
       total: 'Total commemoraziuns',
       upcoming: 'Proximas',
@@ -4354,7 +4599,8 @@ export default {
   },
   obstgarten: {
     title: 'Mes iert da fritgs',
-    intro: 'Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l\'arbre plain. Tutga per avrir il sectur.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: "Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che Vus endatais — da la plantina fin a l'arbre plain. Tutgai per avrir il sectur.", du: "Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l'arbre plain. Tutga per avrir il sectur." },
     link: 'Mes iert da fritgs',
     ctaSub: 'Mintga sectur da vita sco in agen arbulet — sper l\'arbre survart.',
     legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils quatter arbulets ils pli giuvens vegnan pli tard.',
@@ -4381,8 +4627,10 @@ export default {
     w: { umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
-    title: 'Tes instruments',
-    intro: 'Quatter controllas tranquillas cun in sguard — tutga ina.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    title: { sie: 'Voss instruments', du: 'Tes instruments' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'Quatter controllas tranquillas cun in sguard — tutgai ina.', du: 'Quatter controllas tranquillas cun in sguard — tutga ina.' },
     tacho: 'Tachimeter da franchisa',
     tachoSub: 'auta u bassa — tge vala la paina?',
     kompass: 'Boussola da prestaziuns',
@@ -4467,7 +4715,8 @@ export default {
   },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',
-    intro: 'In set d’infurmaziuns — a tge pudessas ti avair dretg? Blers dretgs existan senza che la glieud al sappia. Tias datas dal profil èn preemplenidas; ti pos las adattar liberamain qua per empruvar.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    intro: { sie: 'In set d’infurmaziuns — a tge pudessas Vus avair dretg? Blers dretgs existan senza che la glieud al sappia. Vossas datas dal profil èn preemplenidas; Vus pudais las adattar liberamain qua per empruvar.', du: 'In set d’infurmaziuns — a tge pudessas ti avair dretg? Blers dretgs existan senza che la glieud al sappia. Tias datas dal profil èn preemplenidas; ti pos las adattar liberamain qua per empruvar.' },
     income: 'Entrada mensila (brutto)',
     rent: 'Fittanza / mais',
     kk: 'Premia da la cassa da malsauns / mais',
@@ -4487,11 +4736,14 @@ export default {
     elNote: 'Cun ina renta AVS u AI che na basta betg per viver.',
     pruefen: 'verifitgar',
     noResult: 'Cun questas datas mussa la verifica svelta nagin dretg monetar cler — las vias sutvart cseries dapli, e la gronda part na dependa betg mo da l’entrada.',
-    noResultNoCanton: 'La reducziun da premias e l’agid social dovran tes chantun — endatescha el en il profil.',
-    enterIncome: 'Endatescha tia entrada mensila per vesair tge ch’è pussaivel.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    noResultNoCanton: { sie: 'La reducziun da premias e l’agid social dovran Voss chantun — endatai el en il profil.', du: 'La reducziun da premias e l’agid social dovran tes chantun — endatescha el en il profil.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    enterIncome: { sie: 'Endatai Vossa entrada mensila per vesair tge ch’è pussaivel.', du: 'Endatescha tia entrada mensila per vesair tge ch’è pussaivel.' },
     kompassLeistungen: 'Prestaziuns',
     kompassWege: 'autras vias',
-    kompassIdle: 'Endatescha in retgav, lura mussa la boussola tge che ta stat da bun.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    kompassIdle: { sie: 'Endatai in retgav, lura mussa la boussola tge che As stat da bun.', du: 'Endatescha in retgav, lura mussa la boussola tge che ta stat da bun.' },
     kompassFound: '{n} vias pussaivlas chattadas — la pli ferma: {top}.',
     kompassFoundOne: 'Ina via pussaivla: {top}.',
     kompassNone: 'Nagut direct dal retgav — ma i dat autras vias.',
@@ -4505,7 +4757,8 @@ export default {
     waySituationen: 'Situaziuns da vita — dretgs zuppads',
     wayStipendien: 'Stipendis & agids da furmaziun',
     wayMietzins: 'Verifitgar ils contributs da fittanza',
-    disclaimer: 'Orientaziun grossa, senza garanzia. Il dretg exact dependa dal chantun e da tia situaziun — ils utensils e ils uffizis colliads verifitgeschan en detagl.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    disclaimer: { sie: 'Orientaziun grossa, senza garanzia. Il dretg exact dependa dal chantun e da Vossa situaziun — ils utensils e ils uffizis colliads verifitgeschan en detagl.', du: 'Orientaziun grossa, senza garanzia. Il dretg exact dependa dal chantun e da tia situaziun — ils utensils e ils uffizis colliads verifitgeschan en detagl.' },
   },
   vr: {
     title: 'Calculatur da prevenziun',
@@ -4513,10 +4766,14 @@ export default {
     tabBvg: 'Cassa da pensiun (LPP)',
     tabVergleich: 'Cumparegliaziun',
     tabZukunft: 'Futur',
-    zukunftIntro: 'Co ch’Vossa facultad da prevenziun pudess crescher fin la pensiun — 2. pitga, 3a e 3b ensemen. Import da «Finanzas», la rendita è ina supposiziun.',
-    zukunftIkTitle: 'Basa AVS: Vossa istorgia da contribuziuns',
-    zukunftIkAktiv: 'Questa proiecziun utilisescha Vossa istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF {eink}.',
-    zukunftIkInaktiv: 'La surfatscha AVS en il grafic sa basa anc sin ina stima. Registrai Vossa istorgia da contribuziuns per ina basa pli precisa.',
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    zukunftIntro: { sie: 'Co ch’Vossa facultad da prevenziun pudess crescher fin la pensiun — 2. pitga, 3a e 3b ensemen. Import da «Finanzas», la rendita è ina supposiziun.', du: 'Co che tia facultad da prevenziun pudess crescher fin la pensiun — 2. pitga, 3a e 3b ensemen. Import da «Finanzas», la rendita è ina supposiziun.' },
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    zukunftIkTitle: { sie: 'Basa AVS: Vossa istorgia da contribuziuns', du: 'Basa AVS: tia istorgia da contribuziuns' },
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    zukunftIkAktiv: { sie: 'Questa proiecziun utilisescha Vossa istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF {eink}.', du: 'Questa proiecziun utilisescha tia istorgia da contribuziuns (CI) sco fundament AVS — {jahre} onns da contribuziun, medi CHF {eink}.' },
+    // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
+    zukunftIkInaktiv: { sie: 'La surfatscha AVS en il grafic sa basa anc sin ina stima. Registrai Vossa istorgia da contribuziuns per ina basa pli precisa.', du: 'La surfatscha AVS en il grafic sa basa anc sin ina stima. Registrescha tia istorgia da contribuziuns per ina basa pli precisa.' },
     zukunftIkEdit: 'Modifitgar l’istorgia da contribuziuns',
     zukunftIkHide: 'Zuppentar l’istorgia da contribuziuns',
     zukunftIkJump: 'Avrir en il register AVS',
@@ -4528,12 +4785,16 @@ export default {
     zukunftEnde: 'Facultad tar la pensiun',
     zukunftHeute: 'Oz',
     zukunftHinweis: 'Orientaziun grofla cun ina rendita constanta — las renditas realas varieschan. Na remplazza betg ina cussegliaziun da prevenziun.',
-    altersHilfenTitle: 'Tge che at allevgia en la vegliadetgna',
-    altersHilfenIntro: 'Cun ina renta bassa ta tutga savens dapli che blers pensan — igl vala la paina da controllar.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    altersHilfenTitle: { sie: 'Tge che As allevgia en la vegliadetgna', du: 'Tge che at allevgia en la vegliadetgna' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    altersHilfenIntro: { sie: 'Cun ina renta bassa As tutga savens dapli che blers pensan — igl vala la paina da controllar.', du: 'Cun ina renta bassa ta tutga savens dapli che blers pensan — igl vala la paina da controllar.' },
     altersHilfenRegional: 'Regiunalmain dat quai ulteriuras reglas da favur — bigliets dad in di reducids, offertas culturalas e da temp liber (p.ex. tras la KulturLegi) u reducziuns da la vischnanca. Dumondar il meglier tar vischnanca e chantun.',
     altersHilfenCheck: 'Controllar tes dretgs',
-    altersKostenTitle: 'Tge che spetta en la vegliadetgna',
-    altersKostenIntro: 'Ina survista grofla da las custentschas da quintar en la vegliadetgna — senza summas, perquai ch’ellas dependan fitg da tia situaziun ed il chantun.',
+    // Anredefrei (rm-Titel ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    altersKostenTitle: { sie: 'Tge che spetta en la vegliadetgna', du: 'Tge che spetta en la vegliadetgna' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    altersKostenIntro: { sie: 'Ina survista grofla da las custentschas da quintar en la vegliadetgna — senza summas, perquai ch’ellas dependan fitg da Vossa situaziun ed il chantun.', du: 'Ina survista grofla da las custentschas da quintar en la vegliadetgna — senza summas, perquai ch’ellas dependan fitg da tia situaziun ed il chantun.' },
     altersKostenK1: 'Cassa da malsauns & franchisa — las premias cuntinueschan e creschan savens; la franchisa e la partizipaziun returnan mintg’onn.',
     altersKostenK2: 'Tractaments dals dents — betg cuvrids da l’assicuranza da basa e savens pli chars cun la vegliadetgna.',
     altersKostenK3: 'Abitar — fittanza u ipoteca cuntinueschan; magari cun in adattament a la vegliadetgna.',
@@ -4545,22 +4806,27 @@ export default {
     lebenserwartung: 'Spetgativa da vita',
     lebenserwartungHint: 'Statistica, dals 65 (UST). Prefullida, adattabla.',
     zukunftRenteHinweis: 'La 2. pitga cunta u sco chapital (survart) u sco renta mensila (qua) — betg omadus.',
-    zukunftAhvFlaeche: 'La surfatscha AVS è la valur actuala stimada da tia renta AVS (chapitalisada fin {le} onns) — uschia daventa la 1. pitga visibla sco fundament e cumparabla cun las autras pitgas.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    zukunftAhvFlaeche: { sie: 'La surfatscha AVS è la valur actuala stimada da Vossa renta AVS (chapitalisada fin {le} onns) — uschia daventa la 1. pitga visibla sco fundament e cumparabla cun las autras pitgas.', du: 'La surfatscha AVS è la valur actuala stimada da tia renta AVS (chapitalisada fin {le} onns) — uschia daventa la 1. pitga visibla sco fundament e cumparabla cun las autras pitgas.' },
     phaseErwerb: 'Vita da lavur',
     phasePension: 'Pensiun',
     achseAlter: 'Vegliadetgna',
     zukunftGraphHinweis: 'Spusta la vegliadetgna da pensiun: tira la marca sin il grafic u cun ←/→ — la renta e il chapital s’adattan immediatamain.',
     zukunft3aSchwelleTitle: 'Repartir il 3a sin plirs contos',
     zukunft3aSchwelle: 'Sur circa CHF {schwelle} paja blers contos 3a da banca damain tschains. Emplenir plirs contos cun moderaziun gida a mantegnair il tschains preferenzial — e avra pli tard il retratg stafflà che spargna taglias (guarda sutvart).',
-    zukunftSzenarioTitle: 'Tge che tia vegliadetgna da pensiun munta',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    zukunftSzenarioTitle: { sie: 'Tge che Vossa vegliadetgna da pensiun munta', du: 'Tge che tia vegliadetgna da pensiun munta' },
     zukunftSzenarioFrueh: 'Pensiun anticipada: {dauer} avant la vegliadetgna da referenza ({referenzalter}).',
     zukunftSzenarioReferenz: 'Pensiun ordinara a la vegliadetgna da referenza ({referenzalter}) — AVS cumpletta, senza reducziun u supplement.',
     zukunftSzenarioAufschub: 'Spustament: {dauer} sur la vegliadetgna da referenza ({referenzalter}) ora.',
     zukunftSzenarioAhvFrueh: 'AVS retratga a partir da {alter} onns: {pct} durant l’entira vita (il pli baud a partir da 63 onns).',
     zukunftSzenarioAhvAufschub: 'AVS spustada fin {alter} onns: {pct} durant l’entira vita.',
-    zukunftSzenarioBridge: 'Ils onns da {von} fin 63 surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.',
-    zukunftSzenarioSaeulen: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da tia cassa da pensiun.',
-    zukunftSzenarioWeiter: 'LPP e pitgin 3a creschan vinavant, uschè ditg che ti pajas endament (3a al pli tard fin 70 onns).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    zukunftSzenarioBridge: { sie: 'Ils onns da {von} fin 63 surpassais Vus senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.', du: 'Ils onns da {von} fin 63 surpassas ti senza AVS — p.ex. cun la renta LPP u il chapital dal pitgin 3a.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    zukunftSzenarioSaeulen: { sie: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da Vossa cassa da pensiun.', du: 'Ina renta LPP è pussaivla a partir da 58 onns, il chapital dal pitgin 3a a partir da 60 onns — tenor il reglament da tia cassa da pensiun.' },
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    zukunftSzenarioWeiter: { sie: 'LPP e pitgin 3a creschan vinavant, uschè ditg che Vus pajais endament (3a al pli tard fin 70 onns).', du: 'LPP e pitgin 3a creschan vinavant, uschè ditg che ti pajas endament (3a al pli tard fin 70 onns).' },
     szenarioJahr: 'onn',
     szenarioJahre: 'onns',
     szenarioMonat: 'mais',
@@ -4635,9 +4901,11 @@ export default {
     fzLinkFINMA: 'FINMA — Cumparegliar contos da liber passadi',
     // Extract IC (reconstruir la istorgia da contribuziun) — RM best-effort, gegenlese offen
     ikTitle: 'Reconstruir la istorgia da contribuziun (extract IC)',
-    ikIntro: 'Empè dad ina supposiziun pos ti reconstruir tia vaira istorgia da contribuziun — onn per onn. Quai dat ina stima pli precisa.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    ikIntro: { sie: 'Empè dad ina supposiziun pudais Vus reconstruir Vossa vaira istorgia da contribuziun — onn per onn. Quai dat ina stima pli precisa.', du: 'Empè dad ina supposiziun pos ti reconstruir tia vaira istorgia da contribuziun — onn per onn. Quai dat ina stima pli precisa.' },
     ikEmptyTitle: 'Anc nagins onns reconstruids',
-    ikEmpty: 'Cumenza cun ina precumplenida a partir da 21 onns cun tes retgav actual — lura adatta singuls onns (largias, dischoccupaziun, educaziun).',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    ikEmpty: { sie: 'Cumenzai cun ina precumplenida a partir da 21 onns cun Voss retgav actual — lura adattai singuls onns (largias, dischoccupaziun, educaziun).', du: 'Cumenza cun ina precumplenida a partir da 21 onns cun tes retgav actual — lura adatta singuls onns (largias, dischoccupaziun, educaziun).' },
     ikPrefill: 'Precumpler da mias datas',
     ikJugend: 'Contar ils onns da giuventetgna (17–20) — els emplenischan largias posteriuras',
     ikUse: 'Duvrar questa istorgia per la stima da la renta',
@@ -4685,7 +4953,8 @@ export default {
     intlLeavingTitle: "Bandunar la Svizra",
     intlLeavingText: "Ina renta AVS po vegnir pajada a l'exteriur. Burgais svizzers mantegnan lur dretg; per persunas estras dependa quai d'ina cunvegna da segirezza sociala tranter la Svizra e lur pajais.",
     intlVoluntaryTitle: "AVS/AI facultativa",
-    intlVoluntaryText: "Burgais svizzers e dad UE/AELS che sa stabileschan ordaifer l'UE/AELS pon cuntinuar a pajar contribuziuns — sch'els eran assicurads almain 5 onns consecutivs avant. La participaziun sto succeder entaifer 12 mais suenter la partenza.",
+    // Anredefrei (rm-Text in 3. Person, ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    intlVoluntaryText: { sie: "Burgais svizzers e dad UE/AELS che sa stabileschan ordaifer l'UE/AELS pon cuntinuar a pajar contribuziuns — sch'els eran assicurads almain 5 onns consecutivs avant. La participaziun sto succeder entaifer 12 mais suenter la partenza.", du: "Burgais svizzers e dad UE/AELS che sa stabileschan ordaifer l'UE/AELS pon cuntinuar a pajar contribuziuns — sch'els eran assicurads almain 5 onns consecutivs avant. La participaziun sto succeder entaifer 12 mais suenter la partenza." },
     intlRefundTitle: "Restituziun da las contribuziuns",
     intlRefundText: "Persunas estras dad in pajais senza cunvegna da segirezza sociala pon, cur ch'ellas bandunan la Svizra definitivamain, dumandar la restituziun da lur contribuziuns AVS (suenter almain in onn da contribuziuns) — empè d'ina renta pli tard.",
     intlContact: "Post da contact: Cassa svizra da cumpensaziun (SAK) / ZAS, Genevra",
@@ -4721,7 +4990,8 @@ export default {
     notes: 'Remartga',
     notesPlaceholder: 'p. ex. cun mangiar, betg cun latg...',
     compendiumLink: 'Tschertgar en il compendi da medicaments',
-    hint: 'Cumenza a tippar — medicaments frequents vegnan proponids.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    hint: { sie: 'Cumenzai a tippar — medicaments frequents vegnan proponids.', du: 'Cumenza a tippar — medicaments frequents vegnan proponids.' },
     migrated: 'Anteriura endataziun en text liber:',
   },
   jobs: {
@@ -4747,7 +5017,8 @@ export default {
     levels: { native: 'Lingua materna' },
   },
   edu: {
-    pathsTitle: 'Nagin diplom professiunal? Co al cuntanscher sco creschida/creschì',
+    // Anredefrei (Infinitiv («Co al cuntanscher»)) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+    pathsTitle: { sie: 'Nagin diplom professiunal? Co al cuntanscher sco creschida/creschì', du: 'Nagin diplom professiunal? Co al cuntanscher sco creschida/creschì' },
     pathsIntro: { sie: 'Era senza in emprendissadi classic pudais Vus cuntanscher in attestat federal da capacitad (AFC) u in certificat (CFP). Quatter vias mainan al diplom:', du: 'Era senza in emprendissadi classic pos ti cuntanscher in attestat federal da capacitad (AFC) u in certificat (CFP). Quatter vias mainan al diplom:' },
     path1Title: 'Emprendissadi regular u accurzà',
     path1: 'Ina furmaziun cun contract d’emprendissadi — pussaivel era sco creschida/creschì. Furmaziun ed experientscha precedentas pon vegnir quintadas tperiu e l’emprendissadi accurzà.',
@@ -4818,12 +5089,14 @@ export default {
       s: {
         arbeit: "Permess, senza termin da spetga — il patrun annunzia simplamain la lavur.",
         familie: "Il conjugal e las uffants minorens pon vegnir e survegnan er il status S.",
-        reisen: "Viagiar a l'exteriur è pussaivel senza permissiun da viagiar, cun return en Svizra.",
+        // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+        reisen: { sie: "Viagiar a l'exteriur è pussaivel senza permissiun da viagiar, cun return en Svizra.", du: "Viagiar a l'exteriur è pussaivel senza permissiun da viagiar, cun return en Svizra." },
       },
       f: {
         arbeit: "Permess en tut la Svizra, senza termin da spetga — il patrun annunzia simplamain la lavur.",
         familie: "Pussaivel il pli baud suenter in termin da spetga (var 3 onns), cun cundiziuns: nagina dependenza da l'agid social ed ina abitaziun adequata.",
-        reisen: "Nagin viagiar liber — il passaport vegn deponì tar il SEM. In visum da return vegn dà mo per motivs impurtants. Mai en il pajais d'origin.",
+        // Anredefrei (rm-Text ohne Anrede) — wie in de als { sie, du } mit gleichem Text geführt (K124, 24.09.2026).
+        reisen: { sie: "Nagin viagiar liber — il passaport vegn deponì tar il SEM. In visum da return vegn dà mo per motivs impurtants. Mai en il pajais d'origin.", du: "Nagin viagiar liber — il passaport vegn deponì tar il SEM. In visum da return vegn dà mo per motivs impurtants. Mai en il pajais d'origin." },
       },
       b: {
         arbeit: "Permess en tut la Svizra, senza termin da spetga — il patrun annunzia simplamain la lavur.",
@@ -4954,7 +5227,8 @@ export default {
     code: 'ICD-10',
     notes: 'Remartga',
     notesPlaceholder: 'p.ex. dapi 2019, bain reglada',
-    hint: 'Cumenza a tippar — diagnosas frequentas vegnan proponidas.',
+    // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
+    hint: { sie: 'Cumenzai a tippar — diagnosas frequentas vegnan proponidas.', du: 'Cumenza a tippar — diagnosas frequentas vegnan proponidas.' },
     migrated: 'Endataziun precedenta:',
   },
   doctors: {

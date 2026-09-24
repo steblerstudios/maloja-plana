@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
@@ -84,9 +84,20 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     setSchulden(schulden.filter(d => d.id !== id));
   };
 
-  const handleSaveAll = () => {
-    onSave({ schulden, betreibung, verlustscheine });
-  };
+  // Sofort übernehmen, wie überall sonst in der App. Bis 24.09.2026 lagen neue Einträge
+  // nur hier im Zustand und wurden erst mit «Speichern» ganz unten geschrieben — wer
+  // vorher auf «Übersicht» tippte, verlor sie still. Der erste Lauf (Einhängen) schreibt
+  // nichts; `onSave` über eine Referenz, weil main.jsx bei jedem Rendern eine neue
+  // Funktion übergibt und der Effekt sonst in jeder Runde feuern würde.
+  const onSaveRef = useRef(onSave);
+  onSaveRef.current = onSave;
+  const eingehaengt = useRef(false);
+  const [gespeichert, setGespeichert] = useState(false);
+  useEffect(() => {
+    if (!eingehaengt.current) { eingehaengt.current = true; return; }
+    onSaveRef.current({ schulden, betreibung, verlustscheine });
+    setGespeichert(true);
+  }, [schulden, betreibung, verlustscheine]);
 
   const debtStatus = calculateDebtStatus(schulden);
   const prioritized = prioritizeDebts(schulden, method);
@@ -330,8 +341,10 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     // Orientierungs-Disclaimer (keine Rechts-/Finanzberatung)
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint')),
 
-    // Save Button
-    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, justifyContent: 'center', width: '100%', padding: '12px', marginTop: space.sm, background: palette.sageBtn, color: '#fff' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save'))
+    // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
+    // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
+    React.createElement('p', { role: 'status', style: { margin: space.sm + 'px 0 0', fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.semi } },
+      gespeichert ? [hinweisZeichen('check', 12, 'z'), t('common.saved')] : null)
   );
 };
 

@@ -257,6 +257,12 @@ function isAnredeObject(v) {
 // Der rm-Altbestand (299 Schlüssel, gemessen 24.09.2026, davon rund die Hälfte in
 // Du-Form) steht in `rm-anrede-altbestand.json`: eine SCHULD-Liste, keine Erlaubnis —
 // sie darf nur schrumpfen (der Aktualitäts-Test unten erzwingt das Austragen).
+// K124 (24.09.2026): 272 der 299 Schlüssel nachgezogen (Vus-/ti-Fassungen mit
+// TODO(rm)-Marke, DE-Fallback-Blöcke mit der de-Sie-Fassung); 2 tote Einträge
+// gestrichen. Die 25 übrigen bleiben bewusst offen — Verbformen, die im Bestand
+// uneinheitlich oder unbelegt sind (tscherner, dir, leger, …), und gepaeck.intro
+// (steht in rm auf Französisch). Anredefreie rm-Texte stehen wie im Notfallpass-Block
+// als { sie, du } mit gleichem Text, nicht in ANREDEFREI.
 // en ist bewusst nicht dabei: «you» kennt keine Sie/Du-Unterscheidung.
 //
 // ANREDEFREI: Schlüssel, die in einer Sprache belegt KEINE Anrede tragen und deshalb
