@@ -124,6 +124,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     // Probiermodus: Wer im Profil nicht verheiratet ist und hier «verheiratet» ankreuzt, rechnet
     // ein gedachtes Alleinverdiener-Ehepaar (gekennzeichnet). Im Profil verheiratet → Angabe nötig.
     partnerAngegeben: profilEingaben.partnerAngegeben || !giltAlsVerheiratet(data.basis?.maritalStatus),
+    // K117: die Kantonssteuer im Konkubinat mit Kindern fragt die Angabe im Profil, nicht den Probiermodus.
+    partnerAngegebenProfil: profilEingaben.partnerAngegeben,
   };
   const steuern = steuernFuerProfil(eingaben);
   // K62.5: der Vergleich richtet sich nach der Partnerangabe im Profil, nicht nach dem Probiermodus.
