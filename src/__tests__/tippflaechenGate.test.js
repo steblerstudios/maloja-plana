@@ -7,6 +7,7 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import ErrorBoundary from '../ErrorBoundary.jsx';
 import { InstallHinweis } from '../InstallHinweis.jsx';
 import { NotfallpassBlatt } from '../NotfallpassBlatt.jsx';
+import { Tour } from '../Tour.jsx';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters } from '../config/constants.js';
 
 const t = (k) => k;
@@ -30,6 +31,15 @@ describe('Tippflächen', () => {
     const tag = knopf(html, 'aria-label="common.close"');
     mindestens(tag, 'min-width', 44);
     mindestens(tag, 'min-height', 44);
+  });
+
+  it('Rundgang: «×» (Später) mindestens 44 × 44 — in beiden Paletten', () => {
+    for (const palette of [LIGHT_PALETTE, DARK_PALETTE]) {
+      const html = renderToStaticMarkup(React.createElement(Tour, { palette, t, steps: [{ key: 'welcome' }], onFinish: () => {}, onLater: () => {} }));
+      const tag = knopf(html, 'aria-label="tour.later"');
+      mindestens(tag, '(?<!-)width', 44);
+      mindestens(tag, '(?<![-a-z])height', 44);
+    }
   });
 
   it('NotfallpassBlatt: Zurück-Knopf mindestens 44 hoch', () => {
