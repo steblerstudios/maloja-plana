@@ -2523,6 +2523,7 @@ export default {
     needInfo: 'Veuillez indiquer le créancier et le montant.',
     creditor: 'Créancier (p. ex. banque, personne)',
     amount: 'Montant (CHF)',
+    ausProfilHint: "Montant repris de « Prêts personnels » dans le chapitre Finances — librement modifiable ici.",
     interestRate: 'Taux d\'intérêt (%)',
     debtor: 'Débiteur',
     court: 'Office des poursuites',

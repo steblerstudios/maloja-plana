@@ -2156,6 +2156,7 @@ export default {
     needInfo: 'Per plaschair agiuntar creditur ed import.',
     creditor: 'Creditur (p.ex. banca, persuna)',
     amount: 'Import (CHF)',
+    ausProfilHint: "Import surpiglià da «Imprest persunal» en il chapitel Finanzas — qua libramain adattabel.",
     interestRate: 'Tschains (%)',
     debtor: 'Debitur',
     court: 'Uffizi da scussiun',

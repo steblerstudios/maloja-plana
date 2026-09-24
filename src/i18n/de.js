@@ -2548,6 +2548,7 @@ export default {
     needInfo: 'Bitte Gläubiger und Betrag ergänzen.',
     creditor: 'Gläubiger (z.B. Bank, Person)',
     amount: 'Betrag (CHF)',
+    ausProfilHint: 'Betrag aus «Persönliche Darlehen» im Kapitel Finanzen übernommen — hier frei anpassbar.',
     interestRate: 'Zinssatz (%)',
     debtor: 'Schuldner',
     court: 'Betreibungsamt',

@@ -2482,6 +2482,7 @@ export default {
     needInfo: 'Indicare creditore e importo.',
     creditor: 'Creditore (p.es. banca, persona)',
     amount: 'Importo (CHF)',
+    ausProfilHint: "Importo ripreso da «Prestiti personali» nel capitolo Finanze — liberamente modificabile qui.",
     interestRate: 'Tasso d\'interesse (%)',
     debtor: 'Debitore',
     court: 'Ufficio esecuzioni',

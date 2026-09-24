@@ -9,14 +9,17 @@ import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
+import { darlehenVorschlag, betreibungsStatusNachEintrag } from './utils/schuldenAusProfil.js';
 
-export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, onUpdateData }) => {
   const vorlesen = useVorlesenContext();
   const [view, setView] = useState('overview');
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
   const [verlustscheine, setVerlustscheine] = useState(data.verlustscheine || []);
-  const [newDebt, setNewDebt] = useState({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open', category: 'sonstige' });
+  // Nicht zweimal eingeben: «Persönliche Darlehen» aus dem Kapitel Finanzen, solange noch keine Schuld erfasst ist.
+  const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
+  const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
   const [debtPlan, setDebtPlan] = useState(null);
   const [method, setMethod] = useState('lawine');
   const [formError, setFormError] = useState(false);
@@ -98,6 +101,14 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     onSaveRef.current({ schulden, betreibung, verlustscheine });
     setGespeichert(true);
   }, [schulden, betreibung, verlustscheine]);
+
+  // Eine erfasste Betreibung heisst «Einträge vorhanden» im Kapitel Behörden — nur wo dort
+  // noch nichts oder «Unbekannt» steht (utils/schuldenAusProfil.js).
+  const betreibungsStatus = data.behoerden?.betreibungsStatus;
+  useEffect(() => {
+    const neu = betreibungsStatusNachEintrag(betreibungsStatus, betreibung);
+    if (neu && onUpdateData) onUpdateData('behoerden', 'betreibungsStatus', neu);
+  }, [betreibung, betreibungsStatus, onUpdateData]);
 
   const debtStatus = calculateDebtStatus(schulden);
   const prioritized = prioritizeDebts(schulden, method);
@@ -240,6 +251,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
         React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: inputStyle }),
+        vorschlag && newDebt.amount === vorschlag.amount && schulden.length === 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.ausProfilHint')),
         // Pflicht = Gläubiger + Betrag; alles Weitere optional, eingeklappt
         React.createElement('details', null,
           React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),

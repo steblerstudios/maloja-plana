@@ -2524,6 +2524,7 @@ export default {
     needInfo: 'Please add creditor and amount.',
     creditor: 'Creditor (e.g. bank, person)',
     amount: 'Amount (CHF)',
+    ausProfilHint: 'Amount taken from “Personal loans” in the Finances chapter — adjust freely here.',
     interestRate: 'Interest rate (%)',
     debtor: 'Debtor',
     court: 'Debt enforcement office',
