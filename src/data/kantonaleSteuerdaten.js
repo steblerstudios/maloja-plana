@@ -235,6 +235,10 @@ export function kantonssteuerFuerProfil({
   if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && !(steuerbar >= konkubinatWieLedigAb(kanton, kinder))) {
     return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund: 'konkubinatKanton' };
   }
+  // K125: Kanton teilt den Kinderabzug im Konkubinat hälftig → die Tabelle (ganzer Abzug) zeigte zu tief.
+  if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && Number(kinder) > 0 && KINDERABZUG_KONKUBINAT_HAELFTIG.includes(kanton)) {
+    return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund: 'konkubinatKinderabzugHaelftig' };
+  }
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
 }
 
@@ -266,6 +270,17 @@ export const KONKUBINAT_WIE_LEDIG_AB = Object.freeze({ BE: Infinity, JU: Infinit
 export const KONKUBINAT_MIT_KINDERN_WIE_LEDIG_AB = Object.freeze({
   BE: Infinity, BS: Infinity, JU: Infinity, OW: Infinity, UR: Infinity, VD: Infinity,
 });
+
+// K125 · Kinderabzug im Konkubinat mit gemeinsamer elterlicher Sorge, ohne Unterhaltsbeiträge.
+// Die Tabelle oben ist mit dem GANZEN Kinderabzug bei der Person gemessen (so bildet der ESTV-Rechner
+// es ab). Diese Kantone teilen den Abzug laut Gesetz/Weisung aber hälftig — auch wenn der Partner kein
+// Einkommen hat —, die Tabelle zeigte dort also zu tief. Dort keine Kantonszahl. Belege wörtlich im
+// Rohtext gelesen: docs/sources/kinderabzug-konkubinat-kantone-2026.md.
+//   ZH: § 34 Abs. 1 lit. a al. 2 StG, Weisung Finanzdirektion ab StP 2026, Rz. 19
+//   LU: § 42 Abs. 2 StG, Luzerner Steuerbuch 2026 § 42 Nr. 2 Ziff. 1.3; Merkblatt Fall 11
+// Die App kennt die Sorge-Regelung nicht; bei alleiniger Sorge gälte der ganze Abzug. Im Zweifel
+// lieber keine Zahl als eine zu tiefe.
+export const KINDERABZUG_KONKUBINAT_HAELFTIG = Object.freeze(['ZH', 'LU']);
 
 // Ab welchem steuerbaren Einkommen (Bund) gilt für Konkubinat die Reihe «ledig»? 0 = überall.
 export function konkubinatWieLedigAb(kanton, kinder = 0) {
