@@ -62,13 +62,17 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 
 | Idee | § | hängt an |
 |---|---|---|
-| «Vor dem Wechsel prüfen»-Schritt in KVG- und Zusatz-Wechsel | §13 | nichts; bestehende Abläufe |
-| «Das verlässt dein Gerät»-Vorschau vor Export, Dossier, Brief | §13 | nach K3/K17 (Export), wie O2 |
 | Speichern in kDrive / Proton Drive, **Weg A** (über «Teilen», mit Hinweis) | §14 | nichts; keine Verbindung nach aussen |
 | Karten **Stufe 1**: Link «In OpenStreetMap öffnen» | §14 | Muster `ExternerLink` |
-| Fristen werden Termine (`.ics`) | §5 | `icsExport.js` existiert |
-| Herzensempfehlungen: neue Kandidaten prüfen und als ein ruhiges Blatt bündeln | §9 | je Angebot prüfen, ob es noch besteht |
-| Schwarz-Weiss-Modus: ist die vorhandene Graustufen-Einstellung das Gewünschte? | §4 | nur ansehen und entscheiden |
+| Fristen aus den Abläufen werden Termine (`.ics`) — heute nur feste Vorlagen | §5 | `icsExport.js` + Export-Vorschau existieren |
+| Herzensempfehlungen: pflegewegweiser.ch und David-Rau-App prüfen und ergänzen (die übrigen 26 sind drin) | §9 | je Angebot prüfen, ob es noch besteht |
+| Schwarz-Weiss-Modus: ist der vorhandene Graustufen-Schalter das Gewünschte? | §4 | nur ansehen und entscheiden |
+
+*Korrektur 24.09. spätabends, am Code nachgesehen:* «Vor dem Wechsel prüfen» (KVG und
+Zusatz, `checkIntro`) und «Das verlässt dein Gerät» (`ExportVorschau` in elf Ansichten) sind
+**schon gebaut** — die Landkarte führte sie seit Juli als Idee. Die Herzensempfehlungen stehen
+als Buch in der Bibliothek (`direktLinks.js`, 26 Einträge inkl. artfuljana, Leihlager,
+Abschiedsagentur, plaant).
 
 ### Oktober — vorbereiten, ohne Code
 
@@ -328,9 +332,10 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 ## 9 · Herzensempfehlungen (extern verlinkt, nicht integriert)
 
 - 🌱 **Skribble / DocuSign** (E-Signatur — NICHT integrieren, nur empfehlen; Skribble = CH) · **Zollomat** (Zoll-/Einfuhr) · **EGK** (nachhaltige KK — Werte prüfen).
-- 🌱 **Weitere Kandidaten** *⟨Eingang 19.07.⟩* — Leihlager · Foodshiner · Abschiedsagentur ·
-  pflegewegweiser.ch · David-Rau-App · Ecosia (nur Text-Link, Logo braucht Erlaubnis) ·
-  plaant.ch. Für Menschen mit IPV: KulturLegi/Caritas, Volkszahnklinik, Familienpass,
+- 🔨 **Weitere Kandidaten** *⟨Eingang 19.07.⟩* — schon im Buch (Stand 24.09.): Leihlager ·
+  Foodshiner (ohne Link, Zertifikat abgelaufen) · Abschiedsagentur · Ecosia · plaant ·
+  **artfuljana** (bleibt drin, Stebler Studios 24.09.). Noch nicht drin: pflegewegweiser.ch
+  (nur als Quelle in `PflegeEntloehnung.jsx`), David-Rau-App. Für Menschen mit IPV: KulturLegi/Caritas, Volkszahnklinik, Familienpass,
   Reka-Ferien, GGG, Volkshochschule (teils schon gebaut, §3). Vor der Aufnahme je prüfen, ob
   das Angebot noch besteht.
 - 🌱 **Warme Inhalte bündeln** — Herzensempfehlungen + grün gehostet + Zertifikate als ein ruhiges Hamburger-„Blatt", Links aufs Wort.
@@ -370,11 +375,11 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 > (Anbieter-Verzeichnis, signierte Bestätigung, verifizierter Nachweis) braucht ein
 > Backend → bleibt Zielbild. Zwei Ideen sind aber **jetzt** in bestehende Flows holbar:
 
-- 🌱 **„Vor dem Wechsel prüfen"-Schritt** in `KVGWechsel`/`ZusatzWechsel` — ruhiger
+- ✅ **„Vor dem Wechsel prüfen"-Schritt** *(gebaut, festgestellt 24.09.)* in `KVGWechsel`/`ZusatzWechsel` — ruhiger
   Anti-Dark-Pattern-Zwischenschritt mit der Haltung *„tieferer Preis / mehr Leistung
   allein ist kein Wechselgrund"*. Kurze Prüfliste (laufende Behandlungen, Franchise-Jahr,
   Kündigungsfrist, Zusatz-Aufnahmevorbehalt). Bremst statt pusht.
-- 🌱 **Freigabe-/Export-Vorschau „Das verlässt dein Gerät: …"** vor Export-/Dossier-/
+- ✅ **Freigabe-/Export-Vorschau „Das verlässt dein Gerät: …"** vor Export-/Dossier-/
   Brief-Versand — zeigt datensparsam und konkret, welche Angaben rausgehen. Passt zur
   Trust-Layer; wiederverwendbar über alle Teilen-Momente.
 - ⏸ Geparkt (Zielbild, Backend): zwei getrennte Balken *institutioneller Score* vs.
