@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData.js';
+import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
@@ -255,8 +255,26 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
         permitTodoButton()
       ),
+      // Codex-Audit 24.09.: die Kachel verspricht «Kanton und Einkommen hier eingeben»,
+      // die Seite schickte vorher in zwei andere Kapitel. Jetzt die Wahl direkt hier — sie
+      // schreibt basis.canton, dasselbe Feld wie Einführung und «Persönliche Basis».
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-        hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterCanton'))
+        onUpdateData
+          ? React.createElement(React.Fragment, null,
+              React.createElement('label', { htmlFor: 'ipv-kanton', style: { display: 'block', color: palette.text, fontWeight: weight.semi, marginBottom: '6px' } }, t('premium.cantonChoose')),
+              React.createElement('select', {
+                id: 'ipv-kanton',
+                value: '',
+                onChange: (e) => { if (e.target.value) onUpdateData('basis', 'canton', e.target.value); },
+                'aria-describedby': 'ipv-kanton-hinweis',
+                style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px' },
+              },
+                React.createElement('option', { value: '' }, t('common.select')),
+                CANTON_CODES.map((c) => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
+              ),
+              React.createElement('p', { id: 'ipv-kanton-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } }, t('premium.cantonSavedHint'))
+            )
+          : React.createElement(React.Fragment, null, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterCanton')))
       )
     );
   }
