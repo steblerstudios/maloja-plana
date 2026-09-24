@@ -4494,6 +4494,7 @@ export default {
     ausProfilHint: 'Added up from the profile — adjust freely here.',
     nebenerwerbBruttoHint: 'The side income is saved as gross and is therefore not counted — add the net amount here.',
     konkubinatHint: "In a cohabiting relationship, it is not the partner's full salary that counts but a cohabitation contribution — set by the social services office. That is why nothing is prefilled here.",
+    inkl3aHint: 'Added up from the profile, including pillar 3a — it can be withdrawn from five years before the reference age and then counts as assets.',
     andereEinkuenfte: 'Other income (CHF)',
     vermoegen: 'Assets (CHF)',
     erwerbstaetig: 'Employed',

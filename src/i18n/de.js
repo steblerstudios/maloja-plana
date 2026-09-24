@@ -4527,6 +4527,7 @@ export default {
     ausProfilHint: 'Aus dem Profil zusammengezählt — hier frei anpassbar.',
     nebenerwerbBruttoHint: 'Der Nebenerwerb ist als Brutto hinterlegt und darum nicht mitgezählt — hier den Netto-Betrag ergänzen.',
     konkubinatHint: 'Im Konkubinat zählt nicht der ganze Lohn der Partnerin oder des Partners, sondern ein Konkubinatsbeitrag — die Sozialbehörde legt ihn fest. Darum hier nicht vorbefüllt.',
+    inkl3aHint: 'Aus dem Profil zusammengezählt, inklusive Säule 3a — sie kann ab fünf Jahren vor dem Referenzalter bezogen werden und zählt dann zum Vermögen.',
     andereEinkuenfte: 'Andere Einkünfte (CHF)',
     vermoegen: 'Vermögen (CHF)',
     erwerbstaetig: 'Erwerbstätig',

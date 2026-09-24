@@ -1,17 +1,43 @@
 import { describe, it, expect } from 'vitest';
-import { sozialhilfeVorbefuellung as vb } from '../sozialhilfeVorbefuellung.js';
+import { sozialhilfeVorbefuellung as vb, saeule3aBeziehbar } from '../sozialhilfeVorbefuellung.js';
 
 // Zusage: was im Profil steht, muss im Sozialhilfe-Rechner nicht nochmals eingetippt werden —
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ adults: 1, einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
+    expect(vb({})).toEqual({ adults: 1, einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 
-  it('Vermögen = Sparkonto + Wertschriften + übriges, Säule 3a nicht', () => {
-    const r = vb({ finanzen: { savingsAccount: 4000, securitiesValue: '2500', otherAssets: 500, pension3aBalance: 30000 } });
-    expect(r.vermoegen).toBe('7000');
+  it('Vermögen = Sparkonto + Wertschriften + übriges + 3b, Säule 3a nicht (ohne Geburtsdatum)', () => {
+    const r = vb({ finanzen: { savingsAccount: 4000, securitiesValue: '2500', otherAssets: 500, pension3bBalance: 1000, pension3aBalance: 30000 } });
+    expect(r.vermoegen).toBe('8000');
+    expect(r.vermoegenMit3a).toBe(false);
+  });
+
+  describe('Säule 3a zählt ab fünf Jahren vor dem Referenzalter (BVV 3 Art. 3 Abs. 1)', () => {
+    const heute = new Date('2026-09-24');
+    const f = { savingsAccount: 1000, pension3aBalance: 30000 };
+    it('Mann, Jg. 1966: 60 Jahre am 24.09.2026 → beziehbar, zählt', () => {
+      const r = vb({ basis: { dateOfBirth: '1966-09-24', gender: 'male' }, finanzen: f }, heute);
+      expect(r.vermoegen).toBe('31000');
+      expect(r.vermoegenMit3a).toBe(true);
+    });
+    it('Mann, einen Tag vor dem 60. Geburtstag → noch nicht', () => {
+      expect(saeule3aBeziehbar({ dateOfBirth: '1966-09-25', gender: 'male' }, heute)).toBe(false);
+      expect(vb({ basis: { dateOfBirth: '1966-09-25', gender: 'male' }, finanzen: f }, heute).vermoegen).toBe('1000');
+    });
+    it('Frau: Grenze nach ihrem Referenzalter (ab Jg. 1964 wie Männer 65 → ab 60)', () => {
+      expect(saeule3aBeziehbar({ dateOfBirth: '1966-09-25', gender: 'female' }, heute)).toBe(false);
+      expect(saeule3aBeziehbar({ dateOfBirth: '1966-09-24', gender: 'female' }, heute)).toBe(true);
+      // Übergangsjahrgang 1962 (Referenzalter 64 J. 6 M.): Grenze 59 J. 6 M. — am Stichtag 1. 3. 2022
+      expect(saeule3aBeziehbar({ dateOfBirth: '1962-09-01', gender: 'female' }, new Date('2022-03-01'))).toBe(true);
+      expect(saeule3aBeziehbar({ dateOfBirth: '1962-09-01', gender: 'female' }, new Date('2022-02-28'))).toBe(false);
+    });
+    it('ohne oder mit unsinnigem Geburtsdatum: nicht beziehbar', () => {
+      expect(saeule3aBeziehbar({}, heute)).toBe(false);
+      expect(saeule3aBeziehbar({ dateOfBirth: 'abc' }, heute)).toBe(false);
+    });
   });
 
   it('eine eingetragene 0 ist ein Eintrag und wird als 0 übernommen', () => {

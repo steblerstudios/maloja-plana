@@ -4493,6 +4493,7 @@ export default {
     ausProfilHint: "Additionné à partir du profil — librement modifiable ici.",
     nebenerwerbBruttoHint: "Le revenu accessoire est enregistré en brut et n'est donc pas compté — ajouter ici le montant net.",
     konkubinatHint: "En concubinage, ce n'est pas tout le salaire de la ou du partenaire qui compte, mais une contribution de concubinage — fixée par le service social. C'est pourquoi rien n'est prérempli ici.",
+    inkl3aHint: "Additionné à partir du profil, pilier 3a compris — il peut être retiré dès cinq ans avant l'âge de référence et compte alors comme fortune.",
     andereEinkuenfte: 'Autres revenus (CHF)',
     vermoegen: 'Fortune (CHF)',
     erwerbstaetig: 'En emploi',

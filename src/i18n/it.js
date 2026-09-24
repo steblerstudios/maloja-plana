@@ -4472,6 +4472,7 @@ export default {
     ausProfilHint: "Sommato dal profilo — liberamente modificabile qui.",
     nebenerwerbBruttoHint: "Il reddito accessorio è salvato come lordo e quindi non è conteggiato — aggiungere qui l'importo netto.",
     konkubinatHint: "In concubinato non conta l'intero salario della o del partner, ma un contributo di concubinato — lo stabilisce il servizio sociale. Per questo qui non è precompilato.",
+    inkl3aHint: "Sommato dal profilo, pilastro 3a compreso — può essere prelevato da cinque anni prima dell'età di riferimento e conta allora come sostanza.",
     andereEinkuenfte: 'Altri redditi (CHF)',
     vermoegen: 'Patrimonio (CHF)',
     erwerbstaetig: 'Occupato/a',

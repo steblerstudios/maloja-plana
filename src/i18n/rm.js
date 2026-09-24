@@ -3741,6 +3741,7 @@ export default {
     ausProfilHint: "Summà ord il profil — qua libramain adattabel.",
     nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai betg quintada — qua agiuntar l'import net.",
     konkubinatHint: "En concubinat na quinta betg l'entir salari da la partenaria u dal partenari, mabain ina contribuziun da concubinat — il servetsch social la fixescha. Perquai na vegn nagut emplenì qua ordavant.",
+    inkl3aHint: 'Summà ord il profil, inclusiv il pilaster 3a — el po vegnir retratg a partir da tschintg onns avant la vegliadetgna da referenza e quinta lura sco facultad.',
     andereEinkuenfte: 'Autras entradas (CHF)',
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',

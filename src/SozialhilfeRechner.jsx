@@ -137,7 +137,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             : vorbefuellt.einkommenMitNebenerwerb ? t('sh.ausProfilHint') : null),
         field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
           vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
-        field('sh.vermoegen', vermoegen, setVermoegen, '0', vorbefuellt.vermoegen ? t('sh.ausProfilHint') : null),
+        field('sh.vermoegen', vermoegen, setVermoegen, '0', vorbefuellt.vermoegenMit3a ? t('sh.inkl3aHint') : vorbefuellt.vermoegen ? t('sh.ausProfilHint') : null),
       ),
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },
         toggle('sh.erwerbstaetig', erwerbstaetig, setErwerbstaetig),
