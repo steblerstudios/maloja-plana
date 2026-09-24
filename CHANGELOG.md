@@ -215,9 +215,20 @@ kommt der Changelog immer mit, nie doppelt.*
   mit Betrag gilt vor der Schätzung. Die Finanzübersicht zeigt den Anspruch mit dem Frist-Hinweis.
 - **Eine Verfügung gilt nur für ihr Jahr und ihren Kanton** (Deploy-Gate Runde 3): eine
   LU-Verfügung 2026 wird 2027 und nach einem Umzug nicht mehr abgezogen, es gelten die Regeln der
-  Schätzung; Einträge ohne Kanton/Jahr (vor diesem Release) ziehen nichts ab, gelöscht wird nichts.
-  Finanzübersicht (Kachel und Druck) und Budget-Hinweis zeigen den Betrag «laut Verfügung»; der
-  Luzerner Hinweis «hier nicht abgezogen» nennt auch EL und Sozialhilfe (SRL 866 § 8 Abs. 2/3).
+  Schätzung. Finanzübersicht (Kachel und Druck) und Budget-Hinweis zeigen den Betrag «laut
+  Verfügung»; der Luzerner Hinweis «hier nicht abgezogen» nennt auch EL und Sozialhilfe
+  (SRL 866 § 8 Abs. 2/3).
+- **Verfügungen von vor diesem Release (ohne Kanton/Jahr) ziehen höchstens ihren Betrag ab**
+  (Deploy-Gate Runde 4): Abzug = der kleinere von Verfügungsbetrag und Schätzung, die Schätzung
+  mit allen ihren Regeln (unbelegter Kanton, Jahr vorbei, Luzerner Frist → 0). Vorher zog das
+  Budget die ganze Schätzung ab — ZH, 20 000 Fr./Jahr, Verfügung 100: 308 statt 100. Budget,
+  KK-Last-Karte, Beleg und Finanzübersicht sagen «Verfügung ohne Jahr»; gelöscht wird nichts.
+  Auf der Seite Prämienverbilligung fragt ein ruhiger Satz «Gilt diese Verfügung für {Kanton}
+  {Jahr}?» — erst das sichtbare «Ja» ergänzt Kanton und Jahr. Die Seite sagt jetzt auch, wenn
+  eine Verfügung nicht gilt («Verfügung für LU 2025 — gilt nicht für ZH 2026»), statt nur
+  «bestätigt». Beim Eintragen ist das Jahr wählbar (laufendes oder folgendes). Die Kachel der
+  Finanzübersicht rechnet aus der Verfügung keinen Jahresbetrag mehr (× 12 wäre bei einer
+  unterjährigen Verfügung geraten).
 - **Eine fehlende Angabe ist keine Null** (K117, K118, #312): Konkubinat mit Kindern ohne
   Partnerangabe zeigt keine Kantonszahl mehr (vorher z. B. ZH, 2 Kinder, 70 000: CHF 2 211 aus
   «ledig»); ohne erkannten Kanton «Beim Kanton prüfen» statt «Nicht berechtigt».
