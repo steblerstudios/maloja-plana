@@ -83,6 +83,26 @@ describe('Service Worker: Offline-Ablage nach dem ersten Besuch (K59)', () => {
     expect([...sw.abgelegt.keys()]).toEqual(['/assets/de-111.js']);
   });
 
+  it('nimmt auch Bilder unter /assets/ an — den Logo-Schriftzug (E36)', async () => {
+    // Seit dem 24.09.2026 liegt der Schriftzug des Logos nicht mehr im Bundle,
+    // sondern als eigene Datei (src/components/marken-schriftzug.svg; 4,14 kB gzip
+    // aus der Startdatei heraus). Offline ist er nur da, wenn ihn dieser Weg
+    // mitnimmt — die Filterung fragt nach /assets/, nicht nach der Endung.
+    // Ohne diesen Test wäre das eine Behauptung: im Browser-Pane lässt sich die
+    // Registrierung eines Service Workers nicht ausführen (am 24.09. geprüft,
+    // schlägt auf dem unveränderten Stand genauso fehl).
+    const sw = swLaden();
+    const { ereignis, fertig } = sw.warten({
+      data: { type: 'assets-ablegen', adressen: [
+        `${ORIGIN}/assets/marken-schriftzug-Du4ZOqH-.svg`,
+        `${ORIGIN}/assets/index-abc123.js`,
+      ] },
+    });
+    sw.hoerer.message(ereignis);
+    await fertig();
+    expect([...sw.abgelegt.keys()]).toContain('/assets/marken-schriftzug-Du4ZOqH-.svg');
+  });
+
   it('ignoriert fremde Nachrichten', () => {
     const sw = swLaden();
     let gewartet = false;
