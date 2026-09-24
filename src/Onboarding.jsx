@@ -21,7 +21,7 @@ const STORAGE_KEY = 'or5_onboarding_done';
 export { isOnboardingDone } from './utils/einfuehrungStatus.js';
 
 import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
-import { zurueckZeichen, hinweisZeichen } from './IconSystem.jsx';
+import { zurueckZeichen, Icon } from './IconSystem.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
 
 export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
@@ -345,12 +345,16 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   },
     React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, textAlign: 'center' } },
       stepIndicator(3),
-      React.createElement('div', { style: {
-        width: '80px', height: '80px', borderRadius: '50%',
-        background: 'linear-gradient(135deg, ' + palette.sand + ', ' + palette.sage + ')',
+      // Flach statt Verlauf (sand→sage war das einzige rein dekorative Verlaufs-Abzeichen
+      // der App) und ein Haken, der den Kreis füllt: vorher 12 px in 80 px, dazu seitlich
+      // verschoben, weil `hinweisZeichen` für Fliesstext 5 px Abstand rechts mitbringt.
+      React.createElement('div', { 'aria-hidden': 'true', style: {
+        width: '72px', height: '72px', borderRadius: '50%',
+        background: palette.up, border: '1px solid ' + palette.sage,
+        color: palette.sageDeep,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        margin: '0 auto 20px auto', fontSize: '32px',
-      } }, hinweisZeichen('check', 12)),
+        margin: '0 auto 20px auto',
+      } }, React.createElement(Icon, { name: 'check', size: 32 })),
 
       React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, firstName.trim()
           ? t('onboarding.readyTitle', { name: firstName.trim() })
