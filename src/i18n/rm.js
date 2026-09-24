@@ -3728,6 +3728,10 @@ export default {
     vaterschaft: 'Indemnisaziun da paternitad',
     adoption: "Indemnisaziun d'adopziun",
     betreuung: 'Indemnisaziun da tgira',
+    // TODO(rm): provisorisch — Gegenlese (EO Betreuung 98 daners dal di, 25.09.2026)
+    hinweisBetreuung: 'Tgira d’in uffant grevamain malsaun u blessà: maximalmain 98 daners dal di entaifer 18 mais (var 14 emnas congedi). Sch’omadus geniturs lavuran, tutga a mintgin maximalmain la mesadad (per ordinari 49), tenor l’agen retgav — ina autra repartiziun è pussaivla. Il total vala per tut ils 98 daners dal di.',
+    betreuungDauer: 'fin {n} daners dal di',
+    hoechstens: 'maximalmain',
     plafoniert: 'Max.',
     hinweisMutterschaft: "Maternitad: 14 emnas a partir da la naschientscha. Cundiziun: almain 5 mais activa.",
     hinweisVaterschaft: 'Paternitad: 2 emnas, retschaviment entaifer 6 mais suenter la naschientscha.',
