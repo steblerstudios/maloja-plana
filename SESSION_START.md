@@ -19,6 +19,29 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🧮 **Nachtrag 25.09., 22:45 — Sitzung «IPV 13. Monatslohn»: eine Regel für den 13. Monatslohn, Mietzinsbeiträge gegen die Quellen 2026 (#388), gemergt auf ausdrückliches Wort von Stebler Studios («und dann bitte noch mergen»), Squash.**
+>
+> **Stand, gemessen 25.09.2026 22:43** (`bash scripts/stand-jetzt.sh`): main = `1b1a307` (22:43) · live = `bb9448c`
+> (0.1.40-beta, gebaut 25.09. 19:06) · 11 Commits dazwischen · offen: #396, #351 (Entwürfe).
+> **#388 ist NICHT live.** Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> | Was | Wo |
+> |---|---|
+> | 13. Monatslohn als **eine** Regel (`dreizehnterStatus`, `hauptlohnMonate`): Steuer, EO/AHV/BVG-Vorbefüllung, IPV (5 Kantonsmodule + Muster-Kantone + Pegel), Schnellcheck | `src/utils/dreizehnter.js` |
+> | IPV-Annahmen sichtbar: `ohneDreizehnten` (Frage offen → ×12), `partnerOhneDreizehnten` — Rechner, Finanzübersicht (Kachel + Export), Dossier (PDF + JSON-Kennung) | `cantonalData.js`, `PremiumSubsidy.jsx`, `FinanzUebersicht.jsx`, `dossierGenerator.js` |
+> | Schutzschild: BVG-Schwelle mit ×13, `bvgUnklar` bei Netto unter der Schwelle oder offenem 13. | `data/schutzschild.js` |
+> | Mietzinsbeiträge: Haushaltseinkommen (Nebenerwerb, Partner bei Ehe; sonst Hinweis mit Zahl) · BL ohne feste Grenze (MBG § 6/§ 10) · GE 1'000/Zimmer (RGL Art. 24 Abs. 2) · BS Grenze = Grundeinkommen + 36'000 (Merkblatt 01.2026 Ziff. 13, +4'000 ab 6. Person nach MBVO Anhang 1), 18–24 mit Frage «Erstausbildung?», 25+ raus · ZG Frage «WFG-Wohnung?», volljährige Kinder als Erwachsene, Hinweis Mietbelastung · Datenstand 2026 | `data/mietzinsbeitraege.js`, `MietzinsOrientierung.jsx` |
+> | Wiedervorlage 13. AHV-Rente vor IPV-Anspruchsjahr 2027 | `docs/IDEEN.md` (Winter) |
+>
+> **Belegt:** `ipvDreizehnter.test.js` (64 Regeln, u. a. «ja» mit m ≡ «nein» mit m × 13/12 in allen fünf Kantonsmodulen) + `schutzschild.test.js`; Mutationsproben je Schritt rot. Auf dem mit `main` zusammengeführten Stand **4198 Tests grün**, Build ok, Startbündel **63,15 / 65 kB**, CI grün. swiss-precision-pruefer: mehrere Quellenprüfungen (BS/BL/GE/ZG mit Wortlaut, SoHaG/SoHaV/MBVO) + Abschlussprüfung ohne Blocker (7 «sollte» eingearbeitet); qualitaets-pruefer ohne Blocker.
+>
+> **Offen:**
+> 1. **Deploy** (Stebler Studios) → danach live prüfen: IPV-Rechner, Mietzins BS/ZG, Schutzschild, Dossier.
+> 2. **rm:** 25+ neue Texte `TODO(rm)` — Liste an Stebler Studios übergeben.
+> 3. Einkommensbasis Mietzins: BS/ZG messen massgebendes/steuerbares Einkommen, die App den Lohn (Hinweis steht).
+> 4. «Kann» aus der Abschlussprüfung: Schnellcheck-Jahreseinkommen ohne Neben-/Partnereinkommen, BVG `>=` vs. «mehr als», BS Referenzalter nicht geprüft, Kinder ohne Alter.
+> 5. Wiedervorlage 13. AHV-Rente vor 2027.
+
 > 🧮 **Nachtrag 25.09., 20:55 — Sitzung «Sozialhilfe eine Wahrheit»: Schnellrechnung und SKOS-Rechner teilen einen Kern (#389), gemergt auf ausdrückliches Wort von Stebler Studios («gerne mergen»), Squash.**
 >
 > **Stand, gemessen 25.09.2026 20:53** (`bash scripts/stand-jetzt.sh`): main = `1dc1f69` (20:53) · live = `bb9448c`
