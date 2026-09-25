@@ -132,17 +132,19 @@ export function gesundheitskostenBisher(data, heute = new Date()) {
 
 // Erster Vorschlag fürs Dashboard-Instrument (Wunsch 25.09.2026: statt «lohnt sich hoch oder
 // tief?» schon eine Einschätzung). Nur aus dem, was das Kreuz zeigt — keine neue Regel:
-//   basis   = Hochrechnung aufs Jahr, sonst die Kosten bisher; ohne Kosten → 'offen'
+//   basis   = Hochrechnung aufs Jahr; ohne Kosten oder vor Tag 60 → 'offen'
 //   günstiger = hohe Franchise, solange basis ≤ Break-even, sonst die tiefe
 //   'passt' wenn die eigene Franchise schon die günstigere ist, sonst 'wechsel'
 //   polster: die hohe Franchise nur mit Polster ≥ Reserve (wie der Reserve-Check der Seite)
 // Verglichen werden, wie im Optimierer, nur die beiden Enden (tiefste/höchste Franchise).
 export function franchiseVorschlag(opt, { costs, eigeneFranchise, ersparnisse, heute = new Date() } = {}) {
   const st = kreuzState(opt, costs, heute);
-  if (!st.show || !(st.costs > 0)) return { art: 'offen' };
-  const basis = st.hochrechnung ?? st.costs;
-  const guenstiger = basis <= st.breakEven ? opt.highFra : opt.lowFra;
-  if (eigeneFranchise === guenstiger) return { art: 'passt', franchise: guenstiger };
+  // Predeploy 25.09.2026 (Rechts-Prüfung): nur mit Hochrechnung (ab Tag 60) — vorher kippt der
+  // Vorschlag fast immer zur hohen Franchise, weil erst wenig Kosten angefallen sind.
+  if (!st.show || !(st.costs > 0) || st.hochrechnung == null) return { art: 'offen' };
+  const guenstiger = st.hochrechnung <= st.breakEven ? opt.highFra : opt.lowFra;
+  // Polster auch bei «passt»: wer die hohe Franchise schon hat, aber die Reserve nicht trägt.
   const polster = guenstiger === opt.highFra && (Number(ersparnisse) || 0) < opt.reserve;
+  if (eigeneFranchise === guenstiger) return { art: 'passt', franchise: guenstiger, polster };
   return { art: 'wechsel', franchise: guenstiger, polster };
 }

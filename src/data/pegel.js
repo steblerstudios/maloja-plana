@@ -75,7 +75,10 @@ export function sozialhilfePegelState(data) {
   // Vermögens-Gate spiegelt die Ergebnisliste (Schnellcheck.jsx): liegt Vermögen
   // über dem SKOS-Freibetrag, wird es zuerst angerechnet — dann KEINE Aufstockung
   // behaupten (sonst widerspräche der Pegel dem Ergebnisblock auf derselben Seite).
-  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : 'covered');
+  // 'efb' (Predeploy 25.09.2026): ohne Freibetrag gedeckt, MIT Einkommensfreibetrag (SKOS D.2) ein
+  // Anspruch möglich — ob er beim Eintritt zählt, regelt der Kanton. Dann kein «keine Aufstockung
+  // nötig» (Nein ohne Grundlage), sondern der offene Satz sozialhilfe.efbEntscheidet.
+  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : 'covered'));
   const fraction = Math.max(0, Math.min(PEGEL_SCALE, rawFraction));
   return {
     show: true, variant: 'aufstockung', mode, fraction,

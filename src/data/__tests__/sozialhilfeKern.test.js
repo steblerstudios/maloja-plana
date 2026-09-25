@@ -165,7 +165,11 @@ describe('Anzeigen, die die Rechnung weitertragen', () => {
     expect(p.fraction).toBeLessThan(1);
   });
 
-  it('Pegel: ergäbe erst der Freibetrag einen Anspruch, zeigt er keine Lücke', () => {
-    expect(sozialhilfePegelState(profil({ canton: 'BE', monthlyIncome: 2600 })).mode).toBe('covered');
+  it('Pegel: ergäbe erst der Freibetrag einen Anspruch, zeigt er keine Lücke — aber auch kein «gedeckt»', () => {
+    // Predeploy 25.09.2026: 'efb' statt 'covered' — kein Betrag, keine Lücke, aber auch nicht
+    // «keine Aufstockung nötig» (das wäre ein Nein ohne Grundlage, SKOS D.2 Erl. c).
+    const st = sozialhilfePegelState(profil({ canton: 'BE', monthlyIncome: 2600 }));
+    expect(st.mode).toBe('efb');
+    expect(st.amount).toBe(0);
   });
 });

@@ -75,7 +75,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
     const el = checkELEligibility(probe);
     if (el?.eligible) benefits.push({
-      key: 'el', view: 'sozialhilfe', color: palette.goldDeep, textColor: palette.goldDeep,
+      // Eigene EL-Seite (bis 25.09.2026 führte die Zeile auf die Sozialhilfe-Seite).
+      key: 'el', view: 'ergaenzungsleistungen', color: palette.goldDeep, textColor: palette.goldDeep,
       label: t('schnellcheck.el'), qualitative: true, note: t('schnellcheck.elNote'),
     });
   } catch { /* Orientierung, nie blockierend */ }

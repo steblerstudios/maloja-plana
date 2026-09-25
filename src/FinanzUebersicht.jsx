@@ -104,7 +104,7 @@ export const druckAbschnitte = (t, w) => {
   if (ipvAnnahmen.length) {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
-  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
@@ -478,7 +478,8 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       title: t('finanzUebersicht.sozialhilfe'),
       status: sozialhilfe.eligible
         ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
-        : t('sozialhilfe.notEntitled'),
+        // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
+        : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
       statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
       detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf) + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
       onClick: () => onNavigate('sozialhilfe'),
