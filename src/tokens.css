@@ -259,6 +259,16 @@ html { overflow-x: clip; }
   z-index: -1;
   pointer-events: none;
 }
+/* Schrift steht nie auf dem Glas: Abschnitte OHNE eigene Kachelfarbe (Überschriften,
+   «Ihr Alltag», Tipps …) bekommen eine ruhige Unterlage in Seitenfarbe, 12 px weich
+   über den Rand hinaus (Schatten statt padding — das Layout bleibt, wie es ist). Das
+   Glas bleibt in den Zwischenräumen. Kacheln tragen ihre Farbe inline und sind hier
+   ausgenommen. Grund: graue Kleinschrift erreichte über hellem Himmel nur ~2,5:1. */
+.mp-blatt > :not([style*="background"]) {
+  background-color: var(--mp-seite);
+  border-radius: var(--mp-radius-md);
+  box-shadow: 0 0 0 12px var(--mp-seite);
+}
 /* Wer weniger Transparenz eingestellt hat, bekommt eine deckende Seite. */
 @media (prefers-reduced-transparency: reduce) {
   .mp-blatt::before {
