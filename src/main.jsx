@@ -21,7 +21,7 @@ import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsFor
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
 import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle } from './utils/hashRouter.js';
-import { blendeEin, bewegungReduziert } from './utils/einblenden.js';
+import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
@@ -625,7 +625,7 @@ const AppInner = ({ demo }) => {
     if (ersteAnsicht.current) { ersteAnsicht.current = false; return; }
     const zurueck = zurueckGekommen.current;
     zurueckGekommen.current = false;
-    blendeEin(document.getElementById('mp-main'), { zurueck, reduziert: bewegungReduziert() });
+    blendeEin(document.getElementById('mp-main'), { zurueck });
   }, [view, activeChapter]);
 
   // ─── Hash routing: listen for browser back/forward ────────
