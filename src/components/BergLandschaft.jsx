@@ -213,9 +213,14 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     const messen = () => {
       const links = el.parentElement.getBoundingClientRect().left;
       const breite = document.documentElement.clientWidth;
-      // Freie Höhe unter der klebenden Kopfzeile (--mp-kopf-h setzt main.jsx).
-      const kopf = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h')) || 0;
-      const hoehe = window.innerHeight - kopf;
+      // Freie Höhe: Fenster minus ALLES, was beim Öffnen über dem Berg steht — Kopfzeile, die
+      // Leiste «Lokal gespeichert», Hinweise. Gemessen am ersten nicht klebenden Vorfahren (die
+      // Hülle um den Berg klebt; ihr eigener Abstand wechselt beim Scrollen). Bis 25.09.2026
+      // abends zählte nur --mp-kopf-h: live fehlten unten die Kreise (Rückmeldung mit Bild).
+      let vorfahr = el.parentElement;
+      while (vorfahr && vorfahr.parentElement && getComputedStyle(vorfahr).position === 'sticky') vorfahr = vorfahr.parentElement;
+      const oben = vorfahr ? vorfahr.getBoundingClientRect().top + window.scrollY : 0;
+      const hoehe = window.innerHeight - oben;
       setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite && alt.hoehe === hoehe) ? alt : { links: -links, breite, hoehe });
     };
     messen();
@@ -437,7 +442,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         role: begonnen > 0 ? 'img' : undefined,
         'aria-label': begonnen > 0 ? zusammenfassung : undefined,
         style: {
-          position: 'absolute', left: schmal ? '10px' : Math.max(12, spalte) + 'px', right: schmal ? '10px' : Math.max(12, spalte) + 'px', bottom: schmal ? '10px' : '14px',
+          // An den Bildrändern, mit Luft nach unten (Rückmeldung Stebler Studios, 25.09.2026:
+          // vorher bündig mit der Inhaltsspalte und nur 14 px über dem Bildrand).
+          position: 'absolute', left: schmal ? '12px' : '24px', right: schmal ? '12px' : '24px', bottom: schmal ? '16px' : '28px',
           display: 'flex', justifyContent: alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
           gap: '8px', pointerEvents: 'none', lineHeight: 1.2,
         },
