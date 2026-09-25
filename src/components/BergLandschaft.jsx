@@ -42,19 +42,18 @@ export const DUNST_UNTER_HOEHE = 520;
 // Tannengrün hält ohne Dunst überall am Computer ≥ 3,77:1 (768×1024 … 1920×700 gemessen).
 export const TITEL_GRUEN = '#2F4A3C';
 const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
-// Flache, breite Fenster (Laptops): das Bild wäre in voller Breite zu hoch. Früher fiel dann oben
-// der Himmel weg — und mit ihm der Platz für den Titel. Jetzt zeigt der Ausschnitt immer Himmel
-// bis Unterkante (0 … UNTERKANTE) und wird dafür BREITER als das Bild: links und rechts setzt
-// sich die Landschaft gespiegelt fort (scharf, keine Unschärfe; Entscheid 25.09.2026).
+// Flache, breite Fenster (Laptops): das Bild wäre in voller Breite höher als das Fenster. Früher
+// fiel dann oben der Himmel weg — und mit ihm der Platz für den Titel. Jetzt zeigt der Ausschnitt
+// immer Himmel bis Unterkante (0 … UNTERKANTE); dafür ist das Bild dort höher als das Fenster und
+// man scrollt kurz zu den Kreisen (Entscheid 25.09.2026 — Dunst, Unschärfe und gespiegelte
+// Fortsetzung an den Seiten wurden alle verworfen).
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
   const voll = AUSSCHNITT.breit;
   if (!rahmenBreite || !fensterHoehe) return voll;
   const hMax = fensterHoehe * MAX_HOEHE_ANTEIL; // px
   const h = (BILD.w * hMax) / rahmenBreite;     // Bild-Einheiten bei voller Breite
   if (h >= BILD.h) return voll;
-  if (h >= UNTERKANTE) return { x: 0, y: Math.max(0, UNTERKANTE - h), w: BILD.w, h };
-  const w = (UNTERKANTE * rahmenBreite) / hMax;
-  return { x: (BILD.w - w) / 2, y: 0, w, h: UNTERKANTE };
+  return { x: 0, y: 0, w: BILD.w, h: Math.max(h, UNTERKANTE) };
 };
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
@@ -164,6 +163,20 @@ const Kreis = ({ ui, anteil, mitte, d }) => {
   );
 };
 
+// Wie mitKontrast, aber in die richtige Richtung: auf dunklem Grund (Dunkelmodus) wird die Farbe
+// aufgehellt — Richtung Weiss gemischt, Farbton bleibt —, auf hellem abgedunkelt. Für Stations-
+// Zeichen und -Ring, die seit 25.09.2026 dem Modus der App folgen.
+export const mitKontrastZu = (hex, grund, ziel = 3) => {
+  if (luminanz(grund) >= 0.2) return mitKontrast(hex, grund, ziel);
+  let farbe = hex;
+  let [r, g, b] = kanal(hex);
+  for (let i = 0; i < 40 && kontrast(farbe, grund) < ziel; i++) {
+    [r, g, b] = [r, g, b].map((v) => Math.round(v + (255 - v) * 0.08));
+    farbe = '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+  }
+  return farbe;
+};
+
 // Das Bild bleibt auch im Dunkelmodus hell (Entscheid 25.09.2026: «so dunkel ist unangenehm»).
 // Darum tragen Stationen und Etiketten immer die helle Palette — ihr Kontrast hängt dann nicht
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
@@ -269,14 +282,6 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         href: landschaft,
         width: BILD.w, height: BILD.h,
         onError: () => setBildFehlt(true),
-      }),
-      // Gespiegelte Fortsetzung links und rechts, nur wenn der Ausschnitt breiter als das Bild ist.
-      // Je 1 Einheit Überlappung an der Naht — sonst bleibt beim Runden eine helle Haarlinie.
-      !bildFehlt && a.x < 0 && React.createElement('image', {
-        key: 'links', href: landschaft, width: BILD.w, height: BILD.h, transform: 'translate(1 0) scale(-1 1)',
-      }),
-      !bildFehlt && a.x < 0 && React.createElement('image', {
-        key: 'rechts', href: landschaft, width: BILD.w, height: BILD.h, transform: `translate(${2 * BILD.w - 1} 0) scale(-1 1)`,
       }),
       // Der Weg: noch offene Stücke gepunktet (die Route ist von Anfang an lesbar), der Weg zu
       // einem begonnenen Kapitel golden. Unter dem Gold ein heller Saum, damit es sich von der hellen Fahrbahn abhebt.
@@ -433,7 +438,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       const pct = chapterCompletions[i] || 0;
       const IconFn = Icons[station.key];
       const farbe = kapitelFarbe[station.key] || p.sage;
-      const zeichen = mitKontrast(farbe, p.surface, 3);
+      // Zeichen und Ring folgen dem Modus (Scheibe ui.surface); Kapitelfarbe bis ≥ 3:1 darauf.
+      const zeichen = mitKontrastZu(farbe, ui.surface, 3);
       // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig, getragen von Grösse.
       // Seit 25.09.2026 zeigt der Rand den Stand genau: ein Ring, dessen Bogen in der
       // (abgedunkelten) Kapitelfarbe so weit läuft, wie das Kapitel ausgefüllt ist; die Spur
@@ -471,9 +477,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           style: {
             position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
             width: sz + 'px', height: sz + 'px', padding: 0,
-            borderRadius: '50%', background: p.surface, border: 'none', color: zeichen,
+            borderRadius: '50%', background: ui.surface, border: 'none', color: zeichen,
             display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-            boxShadow: maturity === 'complete' ? `0 0 0 3px ${p.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
+            boxShadow: maturity === 'complete' ? `0 0 0 3px ${ui.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
           },
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
@@ -485,7 +491,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             style: { position: 'absolute', inset: 0, overflow: 'visible' },
           },
             React.createElement('circle', {
-              cx: sz / 2, cy: sz / 2, r: ringR, fill: 'none', stroke: p.border, strokeWidth: ringBreite,
+              cx: sz / 2, cy: sz / 2, r: ringR, fill: 'none', stroke: ui.border, strokeWidth: ringBreite,
               strokeDasharray: pct === 0 ? '3 3' : undefined,
             }),
             pct > 0 && React.createElement('circle', {

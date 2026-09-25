@@ -6,7 +6,7 @@ import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constant
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
   STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
-  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit, TITEL_GRUEN, DUNST,
+  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit, TITEL_GRUEN, DUNST, mitKontrastZu,
 } from '../components/BergLandschaft.jsx';
 import BergLandschaft from '../components/BergLandschaft.jsx';
 
@@ -43,8 +43,8 @@ describe('Berge · Kapitel-Zeichen tragen in ihrer Kapitelfarbe', () => {
     });
   }
   it('die Aufrufstelle nutzt das abgedunkelte Zeichen (nicht nur die Hilfsfunktion ist geprüft)', () => {
-    expect(src).toMatch(/const zeichen = mitKontrast\(farbe, p\.surface, 3\)/);
-    expect(src).toMatch(/background: p\.surface, border: 'none', color: zeichen/);
+    expect(src).toMatch(/const zeichen = mitKontrastZu\(farbe, ui\.surface, 3\)/);
+    expect(src).toMatch(/background: ui\.surface, border: 'none', color: zeichen/);
     // Seit 25.09.2026 trägt der Fortschrittsring dasselbe abgedunkelte Zeichen (≥ 3:1).
     expect(src).toMatch(/stroke: zeichen, strokeWidth: ringBreite/);
   });
@@ -402,21 +402,46 @@ describe('Berge · Fortschritt in hell und dunkel', () => {
   });
 });
 
-// Flache, breite Fenster (Laptops, 25.09.2026): statt oben den Himmel wegzuschneiden, wird der
-// Ausschnitt breiter als das Bild (gespiegelte Fortsetzung) — Himmel und alle Stationen bleiben.
-describe('Berge · flache Fenster: Himmel bleibt, Seiten gespiegelt', () => {
-  for (const [w, h] of [[1351, 650], [1265, 650], [1009, 600], [1905, 700], [2545, 600]]) {
-    it(`${w}×${h}: Ausschnitt beginnt oben (Himmel), reicht bis 740, Rahmen passt ins Fenster`, () => {
+// Flache, breite Fenster (Laptops, 25.09.2026): der Himmel wird nie weggeschnitten — der
+// Ausschnitt reicht immer von 0 bis 740; das Bild ist dort höher als das Fenster (gewollt).
+describe('Berge · flache Fenster: Himmel bleibt, Bild darf höher sein als das Fenster', () => {
+  for (const [w, h] of [[1351, 650], [1265, 650], [1009, 600], [1905, 700], [2545, 600], [1265, 800], [1905, 1080]]) {
+    it(`${w}×${h}: Ausschnitt beginnt oben (Himmel), volle Bildbreite, alle Stationen drin`, () => {
       const a = ausschnittBreit(w, h);
       expect(a.y).toBe(0);
-      expect(a.h).toBe(740);
-      expect(a.x).toBeLessThan(0);
-      expect(Math.round((w * a.h) / a.w)).toBeLessThanOrEqual(h);
+      expect(a.x).toBe(0);
+      expect(a.w).toBe(1100);
+      expect(a.h).toBeGreaterThanOrEqual(740);
       for (const st of STATIONEN) expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
     });
   }
-  it('Spiegelbilder werden nur gezeichnet, wenn der Ausschnitt breiter als das Bild ist', () => {
-    expect(src).toMatch(/!bildFehlt && a\.x < 0 && React\.createElement\('image', \{\s*key: 'links'/);
-    expect(src).toMatch(/!bildFehlt && a\.x < 0 && React\.createElement\('image', \{\s*key: 'rechts'/);
+  it('keine Spiegelbilder, kein Dunst am Computer', () => {
+    expect(src).not.toMatch(/scale\(-1 1\)/);
   });
 });
+
+// Seit 25.09.2026 folgen die Stations-Knöpfe dem Modus der App: im Dunkelmodus dunkle Scheibe,
+// Zeichen und Ring in der AUFGEHELLTEN Kapitelfarbe. Jede Kapitelfarbe ≥ 3:1 auf der Scheibe
+// (WCAG 1.4.11), in hell, dunkel und Farbenblind — und der Farbton bleibt erkennbar.
+describe('Berge · Stations-Knöpfe in hell und dunkel', () => {
+  for (const [name, basis, farbenblind] of [
+    ['hell', LIGHT_PALETTE, false], ['dunkel', DARK_PALETTE, false],
+    ['hell, Farbenblind', LIGHT_PALETTE, true], ['dunkel, Farbenblind', DARK_PALETTE, true],
+  ]) {
+    it(`${name}: jedes Zeichen ≥ 3:1 auf der Scheibe des Modus`, () => {
+      const ui = applyColorBlind(basis, farbenblind);
+      const farben = astFarben(KAPITEL, bildPalette(ui), false);
+      for (const [key, farbe] of Object.entries(farben)) {
+        expect(kontrast(mitKontrastZu(farbe, ui.surface, 3), ui.surface), `${name} · ${key}`).toBeGreaterThanOrEqual(3);
+      }
+    });
+  }
+  it('im Dunkelmodus wird aufgehellt, nicht abgedunkelt (Gold bleibt golden)', () => {
+    const gold = '#C4A870';
+    const hell = mitKontrastZu(gold, DARK_PALETTE.surface, 3);
+    expect(luminanzVon(hell)).toBeGreaterThanOrEqual(luminanzVon(gold));
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hell.slice(i, i + 2), 16));
+    expect(r).toBeGreaterThan(b);
+  });
+});
+function luminanzVon(hex) { return kontrast(hex, '#000000'); }
