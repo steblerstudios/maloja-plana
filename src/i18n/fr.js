@@ -2465,6 +2465,7 @@ export default {
       heartfelt24: 'Accompagne les personnes en souffrance psychique vers une vie autodéterminée — conseil, logement, structure de jour.',
       heartfelt25: 'Plateforme de prêt à but non lucratif à Bâle — « emprunter plutôt qu’acheter » : plus de 1’300 objets à emprunter, gérée par des bénévoles.',
       heartfelt26: 'Semences de fleurs sauvages qui transforment une pelouse en prairie fleurie — de quoi nourrir les abeilles sauvages et autres insectes. Livre aussi en Suisse.',
+      heartfelt27: 'le suivi d’habitudes (App Store et Google Play, Crewz) — Suivre ses habitudes sans pression de série ni mauvaise conscience. Selon l’éditeur, utilisable sans compte, toutes les données exportables à tout moment dans un fichier.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',

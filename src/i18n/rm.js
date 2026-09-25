@@ -2464,6 +2464,8 @@ export default {
       heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
       heartfelt25: 'Gemeinnützige Leihplattform in Basel — „Leihen statt kaufen“: über 1’300 Gegenstände zum Ausleihen, ehrenamtlich betrieben.',
       heartfelt26: 'Wildblumen-Saatgut, das Rasen in eine Blühwiese verwandelt — Nahrung für Wildbienen und andere Insekten. Liefert auch in die Schweiz.', // TODO(rm): Übersetzung
+      // TODO(rm): provisorisch — Gegenlese (Nexter, 25.09.2026)
+      heartfelt27: 'il tracker d’usits (App Store e Google Play, Crewz) — Notar usits senza squitsch da seria e senza mala conscienza. Tenor il purschider utilisabel senza conto, tut las datas exportablas da tut temp sco datoteca.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
