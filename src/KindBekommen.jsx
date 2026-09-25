@@ -47,7 +47,7 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
     onNavigate && React.createElement(AblaufStep, { palette, title: t('kind.relatedTitle') },
       React.createElement(AblaufLink, { palette, label: t('kind.relatedHeirat'), onClick: () => onNavigate('heirat') })
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('kind.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('kind.quelle'), notes: [t('kind.footerNote'), t('trust.localOnly')] })
   );
 };
 

@@ -47,7 +47,7 @@ export const BewilligungFristen = ({ palette, t, onNavigate }) => {
       React.createElement(AblaufLink, { palette, label: t('bewilligung.relatedKkErst'), onClick: () => onNavigate('kkerst') }),
       React.createElement(AblaufLink, { palette, label: t('bewilligung.relatedJob'), onClick: () => onNavigate('neuerjob') })
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('bewilligung.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('bewilligung.quelle'), notes: [t('bewilligung.footerNote'), t('trust.localOnly')] })
   );
 };
 

@@ -38,7 +38,7 @@ export const IvVerfahren = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('iv.step4Title') },
       React.createElement('p', { style: s.stepText }, t('iv.step4Text'))
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('iv.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('iv.quelle'), notes: [t('iv.footerNote'), t('trust.localOnly')] })
   );
 };
 

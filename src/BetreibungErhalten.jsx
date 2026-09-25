@@ -53,7 +53,7 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('betreibung.step3LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('betreibung.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('betreibung.quelle'), notes: [t('betreibung.footerNote'), t('trust.localOnly')] })
   );
 };
 

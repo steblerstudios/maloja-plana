@@ -81,7 +81,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
       React.createElement(ExternerLink, { t, href: 'https://www.prosenectute.ch/', style: { ...s.link, textDecoration: 'none' } }, t('pensionierung.step5LinkProSenectute'))
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('pensionierung.footerEarly'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('pensionierung.quelle'), notes: [t('pensionierung.footerEarly'), t('trust.localOnly')] })
   );
 };
 

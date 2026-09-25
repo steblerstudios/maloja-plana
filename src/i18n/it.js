@@ -85,6 +85,7 @@ export default {
       frage: { sie: 'Assiste regolarmente un familiare o una persona vicina?', du: 'Assisti regolarmente un familiare o una persona vicina?' },
       intro: 'L’assistenza prestata in silenzio viene raramente riconosciuta — eppure può creare accrediti di rendita e diritti. Esistono anche servizi di sgravio e consulenza.',
       berechtigungen: {
+        pflege: { titel: 'Il percorso guidato: assistere i propri cari', text: 'Il percorso guidato mostra i passi in ordine: accredito, indennità, sgravio.' },
         betreuungsgutschriften: { titel: 'Accrediti per compiti assistenziali (AVS)', text: { sie: 'L’assistenza a un familiare stretto può essere accreditata sul suo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.', du: 'L’assistenza a un familiare stretto può essere accreditata sul tuo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.' } },
         betreuungsentschaedigung: { titel: 'Indennità di assistenza (IPG)', text: 'Congedo pagato per assistere un figlio gravemente malato o infortunato, più un breve congedo per un familiare — indennizzati tramite le IPG.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi (della persona assistita)', text: 'La persona assistita può avere diritto a un importo mensile — che può aiutare a finanziare l’assistenza necessaria.' },
@@ -97,7 +98,7 @@ export default {
       intro: 'Le prime settimane portano con sé scadenze silenziose e diritti facili da perdere — poche pratiche svolte per tempo evitano problemi più avanti.',
       berechtigungen: {
         kkErst: { titel: 'Iscriversi alla cassa malati', text: 'L’assicurazione di base è obbligatoria e va stipulata entro tre mesi dall’arrivo — la copertura vale poi retroattivamente dal primo giorno.' },
-        bewilligung: { titel: 'Notifica & permesso di soggiorno', text: 'Annunciarsi al comune entro 14 giorni dall’arrivo; il permesso di soggiorno segue. Termini e documenti variano secondo nazionalità e cantone.' },
+        bewilligung: { titel: 'Notifica & permesso di soggiorno', text: 'Annunciarsi al comune entro 14 giorni dall’arrivo — prima del primo giorno di lavoro per chi ha bisogno di un permesso e lavora qui. Il permesso di soggiorno segue. Termini e documenti variano secondo nazionalità e cantone.' },
         quellensteuer: { titel: 'Imposta alla fonte', text: 'Senza permesso di domicilio (C), l’imposta viene trattenuta direttamente dallo stipendio. Le deduzioni si possono spesso recuperare con una tassazione ordinaria successiva.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I nuovi arrivati con reddito basso o medio possono ricevere dal cantone un aiuto per i premi della cassa malati — già dal primo anno.' },
         mietzins: { titel: 'Aiuto per la pigione', text: 'Alcuni cantoni e comuni partecipano alla pigione quando pesa troppo su un reddito modesto — da verificare dopo il trasloco.' },
@@ -203,6 +204,7 @@ export default {
     reminderNotes: { sie: 'Disdetta ordinaria della complementare (spesso 3 mesi prima della fine dell\'anno). Disdica solo quando la nuova complementare ha confermato la Sua ammissione. Verifichi il termine esatto nella polizza.', du: 'Disdetta ordinaria della complementare (spesso 3 mesi prima della fine dell\'anno). Disdici solo quando la nuova complementare ti ha accettato. Verifica il termine esatto nella polizza.' },
   },
   umzug: {
+    quelle: 'Fonti: [[LArRa art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/it#art_11]], [[CO art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_266_c]] (verificato a settembre 2026).',
     title: 'Trasloco',
     intro: 'Un trasloco porta con sé molti piccoli passi. Ecco la panoramica tranquilla — indirizzo, comune, vecchia abitazione. Una cosa alla volta.',
     step1Title: '1 · Nuovo indirizzo',
@@ -251,6 +253,7 @@ export default {
     footerFrist: { sie: 'Il termine di 14 giorni è un orientamento — alcuni comuni lo gestiscono in modo un po\' diverso. Nel dubbio, chieda al Suo comune.', du: 'Il termine di 14 giorni è un orientamento — alcuni comuni lo gestiscono in modo un po\' diverso. Nel dubbio, chiedi al tuo comune.' },
   },
   unfallKrankheit: {
+    quelle: 'Fonti: [[LAINF art. 45|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/it#art_45]], [[LAMal art. 8|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_8]] (verificato a settembre 2026).',
     title: 'Infortunio o malattia — cosa fare?',
     intro: 'Quando succede qualcosa, prima conta l\'aiuto — poi l\'amministrazione. Ecco la panoramica tranquilla: emergenza, chi paga, incapacità al lavoro, giustificativi.',
     step1Title: '1 · In caso di emergenza, prima',
@@ -271,6 +274,7 @@ export default {
     step3Title: { sie: '3 · Se non può lavorare', du: '3 · Se non puoi lavorare' },
     step3Text: { sie: 'Informi il datore di lavoro e si procuri un certificato medico (spesso dal 3° giorno). Il proseguimento del salario o l\'indennità giornaliera di malattia attenuano la perdita di reddito — in caso di infortunio, l\'assicuratore infortuni.', du: 'Informa il datore di lavoro e procurati un certificato medico (spesso dal 3° giorno). Il proseguimento del salario o l\'indennità giornaliera di malattia attenuano la perdita di reddito — in caso di infortunio, l\'assicuratore infortuni.' },
     step3Link: 'Vedi le assicurazioni',
+    step3LinkIv: 'Se dura a lungo: malattia & AI',
     step4Title: '4 · Raccogliere e archiviare i giustificativi',
     step4Text: { sie: 'Raccolga certificati medici, fatture e la dichiarazione d\'infortunio. Verifichi le fatture della cassa malati (franchigia/aliquota) e archivi tutto nel raccoglitore di vita.', du: 'Raccogli certificati medici, fatture e la dichiarazione d\'infortunio. Verifica le fatture della cassa malati (franchigia/aliquota) e archivia tutto nel raccoglitore di vita.' },
     step4LinkScan: 'Verifica / scansiona una fattura',
@@ -278,6 +282,7 @@ export default {
     footerOrientation: 'Orientamento, non un consiglio medico o legale — in caso di emergenza conta il numero d\'emergenza (144).',
   },
   neuerJob: {
+    quelle: 'Fonti: [[CO art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_335_b]], [[LPP art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/it#art_7]] (verificato a settembre 2026).',
     title: 'Nuovo lavoro',
     intro: 'Un nuovo lavoro cambia più del solo salario. Ecco la panoramica tranquilla di ciò che ne fa parte — contratto, previdenza, assicurazioni, imposte, scadenze.',
     step1Title: '1 · Verificare e archiviare il contratto di lavoro',
@@ -302,6 +307,11 @@ export default {
     footerProbe: { sie: 'La durata del periodo di prova è nel contratto (spesso 1–3 mesi); il promemoria è un orientamento, lo adatti.', du: 'La durata del periodo di prova è nel contratto (spesso 1–3 mesi); il promemoria è un orientamento, adattalo.' },
   },
   stelleVerloren: {
+    step1DateLabel: 'Fine del rapporto di lavoro (secondo la disdetta)',
+    step1DateHint: 'Iscriversi al più tardi il {date} se l’indennità è richiesta da quella data (LADI art. 17). Prima è meglio — l’iscrizione è possibile anche online su lavoro.swiss.',
+    step1Button: 'Annotare il termine URC ({date})',
+    reminderRavTitle: 'Iscrizione all’URC — al più tardi oggi',
+    quelle: 'Fonti: [[LADI art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/it#art_17]], [[OADI art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/it#art_19]], [[LAINF art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/it#art_3]] (verificato a settembre 2026).',
     title: 'Perso il lavoro — cosa fare?',
     intro: 'Quando il lavoro viene a mancare, ogni giorno conta. Ecco la panoramica tranquilla: prima l\'iscrizione più importante, poi assicurazioni, previdenza e documenti.',
     step1Title: '1 · Iscriversi all\'URC — subito',
@@ -324,6 +334,7 @@ export default {
     footerSperrzeit: { sie: 'Se si dimette di Sua iniziativa o è in colpa per la disdetta, l\'URC può imporre giorni di sospensione — si faccia consigliare prima.', du: 'Se ti dimetti tu stesso o sei in colpa per la disdetta, l\'URC può imporre giorni di sospensione — fatti consigliare prima.' },
   },
   todesfall: {
+    quelle: 'Fonti: [[OSC art. 35|https://www.fedlex.admin.ch/eli/cc/2004/362/it#art_35]], [[CC art. 567|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/it#art_567]] (verificato a settembre 2026).',
     title: 'Un lutto nella cerchia',
     intro: 'Quando muore una persona cara, molte cose vanno sistemate insieme — eppure la maggior parte può aspettare. Una panoramica tranquilla senza pressione: i primi giorni, il funerale, rendite & assicurazioni, la successione.',
     step1Title: '1 · I primi giorni',
@@ -346,6 +357,7 @@ export default {
     footerNote: 'Il lutto richiede tempo, e la maggior parte dei passi può attendere. Un servizio di consulenza o l’impresa di pompe funebri aiuta a mantenere la visione d’insieme. Questo è orientamento, non consulenza legale.',
   },
   pflege: {
+    quelle: 'Fonti: [[LAVS art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it#art_29_septies]], [[LIPG art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it#art_16_n]], [[CO art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_329_h]] (verificato a settembre 2026).',
     title: 'Assistere i propri cari',
     intro: 'L’assistenza prestata in silenzio spesso passa inosservata — eppure esistono diritti che molti non richiedono mai. Una panoramica tranquilla: accredito per la rendita, indennità, sgravio.',
     step1Title: '1 · Accredito per compiti assistenziali (AVS)',
@@ -376,6 +388,7 @@ export default {
     footerNote: 'Orientamento, non consulenza legale. Diritti e termini sono chiariti dalla cassa di compensazione o da un consultorio.',
   },
   iv: {
+    quelle: 'Fonti: [[LAI art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/it#art_28]], [[LAI art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/it#art_29]], [[CO art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_324_a]] (verificato a settembre 2026).',
     title: 'Malattia & AI',
     intro: 'Una malattia o una limitazione prolungata solleva domande su salario, assicurazione ed esistenza. Una panoramica tranquilla, leggibile con poca energia: incapacità lavorativa, annunciarsi presto all’AI, garantire l’esistenza, ottenere sostegno.',
     step1Title: '1 · Incapacità lavorativa — salario & indennità',
@@ -395,6 +408,7 @@ export default {
     footerNote: { sie: 'Con poca energia, ogni piccolo passo conta. Si faccia accompagnare — i servizi di consulenza sono gratuiti. Questo è orientamento, non consulenza legale o medica.', du: 'Con poca energia, ogni piccolo passo conta. Fatti accompagnare — i servizi di consulenza sono gratuiti. Questo è orientamento, non consulenza legale o medica.' },
   },
   bewilligung: {
+    quelle: 'Fonti: [[OASA art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/it#art_59]], [[LStrI art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/it#art_33]] (verificato a settembre 2026).',
     title: 'Rinnovare il permesso di soggiorno',
     intro: { sie: 'Il permesso di soggiorno (B o L) scade e non viene rinnovato automaticamente — deve presentare la domanda per tempo. Una panoramica tranquilla: termine, documenti, obblighi di notifica e prospettiva.', du: 'Il permesso di soggiorno (B o L) scade e non viene rinnovato automaticamente — devi presentare la domanda per tempo. Una panoramica tranquilla: termine, documenti, obblighi di notifica e prospettiva.' },
     step1Title: '1 · Rinnovare per tempo',
@@ -419,6 +433,7 @@ export default {
     footerNote: { sie: 'Non lasci mai scadere il permesso senza aver presentato la domanda. In caso di dubbio, l’autorità cantonale della migrazione o un servizio di consulenza per migranti può aiutare. Questo è orientamento, non consulenza legale.', du: 'Non lasciare mai scadere il permesso senza aver presentato la domanda. In caso di dubbio, l’autorità cantonale della migrazione o un servizio di consulenza per migranti può aiutare. Questo è orientamento, non consulenza legale.' },
   },
   fuehrerausweis: {
+    quelle: 'Fonti: [[OAC art. 27|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/it#art_27]], [[LCStr art. 15a|https://www.fedlex.admin.ch/eli/cc/1959/679_705_685/it#art_15_a]] (verificato a settembre 2026).',
     title: 'Licenza di condurre',
     intro: 'La licenza di condurre svizzera non scade — ma alcuni aspetti meritano attenzione: la sostituzione della vecchia licenza cartacea, il controllo medico dai 75 anni e il periodo di prova per i neopatentati. Ecco una panoramica tranquilla.',
     step1Title: '1 · Conservare la licenza al sicuro',
@@ -441,10 +456,10 @@ export default {
     relatedTitle: 'Eventi collegati',
     relatedUmzug: 'Trasloco — cambiare indirizzo',
     relatedPension: 'Pensionamento',
-    footerSource: 'Fonti: ch.ch e Ufficio federale delle strade (USTRA), stato 2026.',
     footerNote: 'Termini e costi possono variare a seconda del Cantone. Fa fede l’ufficio cantonale della circolazione. Questo è orientamento, non consulenza legale.',
   },
   heirat: {
+    quelle: 'Fonti: [[CC art. 97|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/it#art_97]], [[LIFD art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/it#art_9]] (verificato a settembre 2026).',
     title: 'Matrimonio o unione',
     intro: 'Il matrimonio o l’unione domestica registrata cambiano stato civile, imposte e previdenza allo stesso tempo. Una panoramica tranquilla: annunciare le nozze, nome & stato civile, imposte, assicurazioni.',
     step1Title: '1 · Annunciare il matrimonio',
@@ -469,6 +484,7 @@ export default {
     footerNote: 'Un contratto matrimoniale (regime dei beni) è facoltativo ma può essere sensato — soprattutto con proprietà o attività indipendente. Questo è orientamento, non consulenza legale.',
   },
   kind: {
+    quelle: 'Fonti: [[LAMal art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_3]], [[CC art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/it#art_260]], [[LIPG art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it#art_16_b]] (verificato a settembre 2026).',
     title: 'Avere un figlio',
     intro: 'Un figlio cambia molte cose insieme — annunci, assicurazione, assegni, budget. Una panoramica tranquilla, passo dopo passo, per non dimenticare nulla.',
     step1Title: '1 · Annunciare la nascita',
@@ -494,6 +510,7 @@ export default {
     footerNote: { sie: 'Molto passa tramite datore di lavoro e cassa di compensazione — conservi bene le conferme. Questo è orientamento, non consulenza legale.', du: 'Molto passa tramite datore di lavoro e cassa di compensazione — conserva bene le conferme. Questo è orientamento, non consulenza legale.' },
   },
   trennung: {
+    quelle: 'Fonti: [[CC art. 176|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/it#art_176]], [[CC art. 114|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/it#art_114]] (verificato a settembre 2026).',
     title: 'Separazione o divorzio',
     intro: 'Una separazione è emotivamente difficile — e porta molte domande pratiche. Una panoramica tranquilla senza pressione: consulenza, abitazione, figli & mantenimento, finanze & imposte.',
     step1Title: '1 · Calma & consulenza',
@@ -514,6 +531,7 @@ export default {
     footerNote: { sie: 'Non deve regolare tutto da solo — mediazione, consulenza coniugale e legale ci sono. Questo è orientamento, non consulenza legale.', du: 'Non devi regolare tutto da solo — mediazione, consulenza coniugale e legale ci sono. Questo è orientamento, non consulenza legale.' },
   },
   selbstaendigkeit: {
+    quelle: 'Fonti: [[Promemoria AVS 2.02|https://www.ahv-iv.ch/p/2.02.i]], [[LAINF art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/it#art_4]] (verificato a settembre 2026).',
     title: 'Mettersi in proprio',
     intro: 'Mettersi in proprio porta libertà — e responsabilità che prima portava il datore di lavoro. Molte cose non sono più automatiche. Una panoramica tranquilla: statuto AVS, tipo di attività, lacune assicurative e imposte.',
     step1Title: '1 · Far riconoscere lo statuto AVS',
@@ -536,6 +554,7 @@ export default {
     footerNote: { sie: 'Pianifichi la Sua previdenza con consapevolezza — la lacuna senza cassa pensioni La colpisce solo decenni dopo. Una consulenza presso la cassa di compensazione o un servizio di consulenza alla costituzione vale la pena. Questo è orientamento, non consulenza legale o fiscale.', du: 'Pianifica la tua previdenza con consapevolezza — la lacuna senza cassa pensioni ti colpisce solo decenni dopo. Una consulenza presso la cassa di compensazione o un servizio di consulenza alla costituzione vale la pena. Questo è orientamento, non consulenza legale o fiscale.' },
   },
   betreibung: {
+    quelle: 'Fonti: [[LEF art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/it#art_74]] (verificato a settembre 2026).',
     title: 'Precetto esecutivo — cosa fare?',
     intro: 'Un precetto esecutivo sembra minaccioso, ma all’inizio è solo una pretesa — non una sentenza né un’iscrizione nel casellario giudiziale. Ora conta una cosa sola: il termine di 10 giorni. Una panoramica tranquilla.',
     step1Title: { sie: '1 · Mantenga la calma — ha 10 giorni', du: '1 · Mantieni la calma — hai 10 giorni' },
@@ -554,6 +573,7 @@ export default {
     footerNote: { sie: 'Un’esecuzione non è un’iscrizione nel casellario giudiziale. Scompare dal registro dopo cinque anni; in caso di esecuzione ingiustificata può chiederne la cancellazione. Questo è orientamento, non consulenza legale.', du: 'Un’esecuzione non è un’iscrizione nel casellario giudiziale. Scompare dal registro dopo cinque anni; in caso di esecuzione ingiustificata puoi chiederne la cancellazione. Questo è orientamento, non consulenza legale.' },
   },
   pensionierung: {
+    quelle: 'Fonti: [[LAVS art. 21|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it#art_21]], [[LPP art. 37|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/it#art_37]], [[Promemoria AVS 3.01|https://www.ahv-iv.ch/p/3.01.i]] (verificato a settembre 2026).',
     title: 'Pensionamento',
     intro: { sie: 'Il passaggio alla pensione va pianificato per tempo — molte cose non sono automatiche e hanno scadenze proprie. Una panoramica tranquilla: richiedere l’AVS, decidere sulla cassa pensioni, riscuotere il 3° pilastro e verificare i Suoi diritti.', du: 'Il passaggio alla pensione va pianificato per tempo — molte cose non sono automatiche e hanno scadenze proprie. Una panoramica tranquilla: richiedere l’AVS, decidere sulla cassa pensioni, riscuotere il 3° pilastro e verificare i tuoi diritti.' },
     step1Title: '1 · Richiedere la rendita AVS',
@@ -581,6 +601,7 @@ export default {
     footerEarly: { sie: 'Un pensionamento anticipato riduce l’AVS e spesso la rendita della cassa pensioni a vita. Calcoli per tempo ciò che è sostenibile — e richieda un calcolo ufficiale alla Sua cassa di compensazione.', du: 'Un pensionamento anticipato riduce l’AVS e spesso la rendita della cassa pensioni a vita. Calcola per tempo ciò che è sostenibile — e richiedi un calcolo ufficiale alla tua cassa di compensazione.' },
   },
   kkErst: {
+    quelle: 'Fonti: [[LAMal art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_3]], [[OAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it#art_7]] (verificato a settembre 2026).',
     title: 'Cassa malati per la prima volta',
     intro: { sie: 'Nuovo·a in Svizzera o assicurato·a per la prima volta? L’assicurazione di base è obbligatoria — ma ha tempo e libera scelta. Una panoramica tranquilla: prima il termine, poi la cassa, la franchigia e un’eventuale riduzione.', du: 'Nuovo·a in Svizzera o assicurato·a per la prima volta? L’assicurazione di base è obbligatoria — ma hai tempo e libera scelta. Una panoramica tranquilla: prima il termine, poi la cassa, la franchigia e un’eventuale riduzione.' },
     step1Title: '1 · Assicurarsi entro 3 mesi',
@@ -618,6 +639,7 @@ export default {
     noReset: { sie: 'Maloja non può reimpostare la sua frase segreta — solo lei la conosce.', du: 'Maloja non può reimpostare la tua frase segreta — solo tu la conosci.' },
   },
   kvgWechsel: {
+    quelle: 'Fonti: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_7]] (verificato a settembre 2026).',
     checkIntro: 'Un premio più basso da solo non è un motivo per cambiare. Una breve pausa — il cambio è davvero adatto?',
     checkPoint1: { sie: 'L\'assicurazione di base copre le stesse prestazioni previste dalla legge presso tutte le casse. Cambiare non modifica la Sua copertura e non interrompe alcuna cura in corso.', du: 'L\'assicurazione di base copre le stesse prestazioni previste dalla legge presso tutte le casse. Cambiare non modifica la tua copertura e non interrompe alcuna cura in corso.' },
     checkPoint2: { sie: 'Un premio più basso è spesso legato a un modello di risparmio (medico di famiglia, telemedicina, HMO) o a una franchigia più alta. Fa al caso Suo nella vita di tutti i giorni?', du: 'Un premio più basso è spesso legato a un modello di risparmio (medico di famiglia, telemedicina, HMO) o a una franchigia più alta. Fa al caso tuo nella vita di tutti i giorni?' },
@@ -1894,12 +1916,12 @@ export default {
       helpTitle: 'Linee di aiuto',
       help1: { name: 'Telefono Amico · Tel. 143', url: 'tel:143', desc: '24/7, gratuito, anonimo.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · Tel. 147', url: 'tel:147', desc: 'Consulenza per bambini e giovani.', web: 'https://www.projuventute.ch' },
-      help3: { name: 'Aiuto alle vittime', url: 'https://www.aiuto-alle-vittime.ch', desc: 'Consulenza gratuita per vittime di reati.' },
+      help3: { name: 'Aiuto alle vittime', url: 'https://www.aiuto-alle-vittime.ch/it/', desc: 'Consulenza gratuita per vittime di reati.' },
       help4: { name: 'Case delle donne', url: 'https://www.frauenhaus-schweiz.ch', desc: 'Protezione e consulenza in caso di violenza domestica.' },
       ombudsTitle: 'Mediatori',
       ombuds1: { name: 'Ombudsman dell\'assicurazione malattia', url: 'https://www.om-kv.ch', desc: 'Mediazione gratuita per controversie con la cassa malati.' },
       ombuds2: { name: 'Ombudsman bancario', url: 'https://www.bankingombudsman.ch', desc: 'Mediazione per conflitti con le banche.' },
-      ombuds3: { name: 'Associazione inquilini', url: 'https://www.asi-infoalloggio.ch', desc: 'Consulenza e mediazione per controversie locative.' },
+      ombuds3: { name: 'Associazione inquilini', url: 'https://www.asi-infoalloggio.ch', desc: 'Associazione che difende gli inquilini: consulenza (in parte solo per i soci) e accompagnamento davanti all’autorità di conciliazione.' },
       ombuds4: { name: 'Protezione dei consumatori', url: 'https://www.konsumentenschutz.ch', desc: 'Consulenza indipendente per i diritti dei consumatori.' },
       heartfeltIntro: 'Servizi e progetti che apprezziamo personalmente — consigliati gratuitamente, senza contropartita.',
       heartfeltIntroAffiliate: { sie: 'Servizi e progetti che apprezziamo personalmente. La maggior parte è consigliata senza compenso; i link contrassegnati con « Affiliate » fanno guadagnare a Maloja una piccola commissione — senza costi per lei.', du: 'Servizi e progetti che apprezziamo personalmente. La maggior parte è consigliata senza compenso; i link contrassegnati con « Affiliate » fanno guadagnare a Maloja una piccola commissione — senza costi per te.' },
@@ -2166,7 +2188,7 @@ export default {
   },
 
   contextLinks: {
-    kkWechsel: { label: 'Confrontare le casse malati (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
+    kkWechsel: { label: 'Confrontare le casse malati (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/it/praemien' },
     ahv: { label: 'Rendita AVS: promemoria 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.i' },
     testament: { label: 'Testamento e contratto successorio (ch.ch)', url: 'https://www.ch.ch/it/famiglia-e-unione-domestica/eredita/testamento-e-contratto-successorio/' },
     patientenverfuegung: { label: 'Direttive anticipate (ch.ch)', url: 'https://www.ch.ch/it/salute/direttive-del-paziente/' },
@@ -4599,6 +4621,7 @@ export default {
     pathsLink: 'Titolo professionale per adulti',
   },
   asyl: {
+    quelle: 'Fonti: [[LAsi art. 108|https://www.fedlex.admin.ch/eli/cc/1999/358/it#art_108]], [[LStrI art. 85a|https://www.fedlex.admin.ch/eli/cc/2007/758/it#art_85_a]] (verificato a settembre 2026).',
     title: "Asilo e protezione in Svizzera",
     intro: { sie: 'La procedura d\'asilo è complessa e spesso pesante. Questa pagina Le offre un primo orientamento sereno: quali status esistono, come si svolge la procedura e dove ottenere una consulenza personale.', du: 'La procedura d\'asilo è complessa e spesso pesante. Questa pagina ti offre un primo orientamento sereno: quali status esistono, come si svolge la procedura e dove ottenere una consulenza personale.' },
     disclaimer: { sie: 'Questo è un orientamento, non una consulenza legale. Per la Sua situazione concreta, i servizi indicati qui sotto La aiutano gratuitamente e in modo confidenziale.', du: 'Questo è un orientamento, non una consulenza legale. Per la tua situazione concreta, i servizi indicati qui sotto ti aiutano gratuitamente e in modo confidenziale.' },

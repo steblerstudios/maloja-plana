@@ -231,7 +231,7 @@ fr   doc k=tax_return label~aca212a3
 fr   doc k=income_proof label~2f308946
 fr   doc k=bank_statement label~eedff1ab
 fr kapitel=versicherungen title~c74bd01f short~c74bd01f description~9a4e9a92 felder=25 docs=5
-fr   k=kkInsurer type="text" mvo=true section~4384b172 orientation~23c37a17 link~8ce59537 placeholder~3f2cceb8 label~14a71ffc sectionIntro~199947b7
+fr   k=kkInsurer type="text" mvo=true section~4384b172 orientation~23c37a17 link~f91795de placeholder~3f2cceb8 label~14a71ffc sectionIntro~199947b7
 fr   k=kkModel type="select" label~7fc82fe8 options=7 optWerte~8aa6d6ea optLabels~dc6d42f3
 fr   k=kkPremium type="currency" mvo=true label~5d1cd9b4
 fr   k=franchise type="select" mvo=true orientation~1148922f label~41fbffa6 options=10 optWerte~98b76529 optLabels~f9e805ab
@@ -386,7 +386,7 @@ it   doc k=tax_return label~cd4bc8e0
 it   doc k=income_proof label~24ec9a21
 it   doc k=bank_statement label~9bbe904f
 it kapitel=versicherungen title~5da62723 short~5da62723 description~28100566 felder=25 docs=5
-it   k=kkInsurer type="text" mvo=true section~e24dd047 orientation~033581a1 link~8ce59537 placeholder~fc5f0a41 label~14bab828 sectionIntro~c33f5d4f
+it   k=kkInsurer type="text" mvo=true section~e24dd047 orientation~033581a1 link~503f51a9 placeholder~fc5f0a41 label~14bab828 sectionIntro~c33f5d4f
 it   k=kkModel type="select" label~466790b4 options=7 optWerte~8aa6d6ea optLabels~eaa4b72c
 it   k=kkPremium type="currency" mvo=true label~b97636a8
 it   k=franchise type="select" mvo=true orientation~95d3602b label~dd2b8bed options=10 optWerte~98b76529 optLabels~f9e805ab
@@ -565,7 +565,7 @@ en   k=travelInsurance type="select" label~04eced3d options=2 optWerte~2bfd19fd 
 en   k=cyberInsurance type="select" label~68ff8a82 options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
 en   k=autoInsurance type="select" section~b634cd74 label~054022aa sectionIntro~ce039abf options=4 optWerte~5e620e1c optLabels~5303abcb weitere=secondary
 en   k=autoInsuranceAmount type="currency" label~ffd97b45 weitere=secondary
-en   k=ahvContribution type="currency" section~dd92f452 orientation~e7b8571e link~4c587ded label~8ec4ed40 sectionIntro~00192e85
+en   k=ahvContribution type="currency" section~dd92f452 orientation~e7b8571e link~4b587c5a label~8ec4ed40 sectionIntro~00192e85
 en   doc k=kkcard label~8e5054bf
 en   doc k=bvg_cert label~c9936b59
 en   doc k=ahv_confirmation label~0a6f64f3
