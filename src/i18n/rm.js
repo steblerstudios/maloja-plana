@@ -2864,6 +2864,7 @@ export default {
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
     annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
@@ -5163,6 +5164,8 @@ export default {
     konkubinatPartner: 'L’entrada da la segunda persuna creschida n’è betg quintada: senza matrimoni quinta ella tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
     konkubinatPartnerGrenze: 'L’entrada da la segunda persuna creschida n’è betg quintada ed il limit è quintà senza ella: senza matrimoni quinta ella a Basilea-Citad pir cun uffants cuminaivels u suenter tschintg onns da convivenza. Quintada, fiss l’entrada da la chasada CHF {mit} ed il limit var. CHF {grenze} — sch’ella quinta, scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
     partnerOffen: 'Quintà senza l’entrada dal consort u da la consorta — l’indicaziun manca anc (chapitel Basa persunala, chasada). Cun ina entrada è l’entrada da la chasada pli auta.', // TODO(rm): provisorisch
+    referenzalterBS: 'A partir da la vegliadetgna da referenza AVS na paja Basilea-Citad naginas contribuziuns da fitg pli (lescha da contribuziuns da fitg § 4 al. 2). Tar ina pensiun anticipada po exister in dretg — quai scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    kindOhneAlter: 'Tar almain in uffant manca la vegliadetgna — quintà sco uffant minoren. A partir da 18 onns quinta el mo en emprima furmaziun; la vegliadetgna sa lascha cumplettar tar la chasada.', // TODO(rm): provisorisch
     mietbelastungZG: 'Tranter CHF 50’000 e 60’000 dat Zug mo ina contribuziun, sche la fittanza suenter la reducziun surpassa 25 % da l’entrada — qua è ella gia avant sut quai.', // TODO(rm): provisorisch
     basis: 'Basa: entrada CHF {income}/onn · fittanza CHF {rent}/mais · chasada {size} pers.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

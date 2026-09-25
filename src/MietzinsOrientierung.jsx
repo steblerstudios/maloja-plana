@@ -176,6 +176,13 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           hinweisZeichen(), grenzeMitPartner != null
             ? t('mietzinsView.konkubinatPartnerGrenze', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }), grenze: zahl(grenzeMitPartner, { hoechstens: 2 }) })
             : t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),
+        // BS: ab AHV-Referenzalter kein Anspruch (MBG 890.500 § 4 Abs. 2). Die App kennt nur «pensioniert» —
+        // das kann auch eine Frühpensionierung sein, darum Hinweis statt Ausschluss.
+        assessment && assessment.key === 'likely' && info.limitFormel === 'bs' && hh.isRetired && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.referenzalterBS')),
+        // BS: Kind ohne Altersangabe zählt als minderjährig (bsHaushalt) — sichtbar machen.
+        assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && info.limitFormel === 'bs' && (hh.children || []).some((c) => c?.age == null || c?.age === '' || !Number.isFinite(Number(c?.age))) && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.kindOhneAlter')),
         // Verheiratet ohne Angabe zum Partnereinkommen: gerechnet ohne — sichtbar.
         assessment && assessment.key === 'likely' && partnerOffen && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.partnerOffen')),

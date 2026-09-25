@@ -4,7 +4,7 @@ import { text, weight, leading, space, radius, ease, duration } from '../config/
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
+import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
@@ -43,7 +43,12 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       // in den Rechner (und von dort womöglich ins Profil).
       uebergabe: e.geschaetzt ? undefined : { schnellcheck: { monthlyIncome: income } },
       monthly: ipv.eligible ? ipv.amount : 0,
-      detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
+      // Das Jahreseinkommen, mit dem die IPV rechnet (inkl. Nebenerwerb und Partnereinkommen) — nicht nur
+      // der Hauptlohn (Abschluss-Prüfung #388). Bei offenem 13. steht die Annahme dabei.
+      detail: ipv.eligible
+        ? t('dashboard.quickCheckResult', { income: fmt(ipvJahreseinkommen(probe)), amount: fmt(ipv.annual) })
+          + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
+        : t(ipv.noteKey),
     };
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
