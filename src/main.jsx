@@ -1330,6 +1330,7 @@ const AppInner = ({ demo }) => {
       view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
         onClick: () => handleNavigate('dashboard'),
         'aria-label': t('nav.backToDashboard'),
+        className: 'mp-link',
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,

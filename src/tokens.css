@@ -208,6 +208,23 @@ textarea:focus-visible,
   z-index: 1;
 }
 
+/* ─── Hover für Weg-Knöpfe (Zurück, Querverweise) ──────────
+   Bis 25.09.2026 gab es in der App KEINE Hover-Regel in CSS; Hover stand nur dort,
+   wo er per onMouseEnter von Hand gebaut war (22 Stellen). «Übersicht», die
+   Querverweise in den Kapiteln und die «→»-Verweise der Abläufe zeigten beim
+   Drüberfahren nichts ausser dem Zeiger.
+   Jetzt eine Regel: unterstreichen. Keine Farbe, keine Deckkraft — der Kontrast
+   bleibt, wie er ist. Nur auf Geräten mit echtem Zeiger (hover: hover), damit auf
+   dem Handy nach einem Tipp nichts unterstrichen hängen bleibt.
+   Wächter: src/__tests__/hoverWege.test.js */
+@media (hover: hover) {
+  .mp-link:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+}
+
 /* ─── Datei-Auswahl: das Feld ist unsichtbar, der Ring sitzt am Label ──
    Bis 24.09.2026 trugen alle fünf Datei-Felder `display:none`. Ein solches Feld
    bekommt keinen Fokus, und das umgebende <label> ist nicht fokussierbar — per
