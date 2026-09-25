@@ -401,3 +401,22 @@ describe('Berge · Fortschritt in hell und dunkel', () => {
     expect(pille).toMatch(/Kreis, \{ ui, anteil, mitte: wert/);
   });
 });
+
+// Flache, breite Fenster (Laptops, 25.09.2026): statt oben den Himmel wegzuschneiden, wird der
+// Ausschnitt breiter als das Bild (gespiegelte Fortsetzung) — Himmel und alle Stationen bleiben.
+describe('Berge · flache Fenster: Himmel bleibt, Seiten gespiegelt', () => {
+  for (const [w, h] of [[1351, 650], [1265, 650], [1009, 600], [1905, 700], [2545, 600]]) {
+    it(`${w}×${h}: Ausschnitt beginnt oben (Himmel), reicht bis 740, Rahmen passt ins Fenster`, () => {
+      const a = ausschnittBreit(w, h);
+      expect(a.y).toBe(0);
+      expect(a.h).toBe(740);
+      expect(a.x).toBeLessThan(0);
+      expect(Math.round((w * a.h) / a.w)).toBeLessThanOrEqual(h);
+      for (const st of STATIONEN) expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
+    });
+  }
+  it('Spiegelbilder werden nur gezeichnet, wenn der Ausschnitt breiter als das Bild ist', () => {
+    expect(src).toMatch(/!bildFehlt && a\.x < 0 && React\.createElement\('image', \{\s*key: 'links'/);
+    expect(src).toMatch(/!bildFehlt && a\.x < 0 && React\.createElement\('image', \{\s*key: 'rechts'/);
+  });
+});

@@ -41,15 +41,20 @@ export const DUNST_UNTER_HOEHE = 520;
 // (#4A6657) ist fast die Farbe der Berge — ohne Dunst gemessen bis 2,45:1 (1920×700). Dieses
 // Tannengrün hält ohne Dunst überall am Computer ≥ 3,77:1 (768×1024 … 1920×700 gemessen).
 export const TITEL_GRUEN = '#2F4A3C';
-const MIN_HOEHE = 560;   // Bild-Einheiten: darunter käme der Titel in die Stationen
 const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
+// Flache, breite Fenster (Laptops): das Bild wäre in voller Breite zu hoch. Früher fiel dann oben
+// der Himmel weg — und mit ihm der Platz für den Titel. Jetzt zeigt der Ausschnitt immer Himmel
+// bis Unterkante (0 … UNTERKANTE) und wird dafür BREITER als das Bild: links und rechts setzt
+// sich die Landschaft gespiegelt fort (scharf, keine Unschärfe; Entscheid 25.09.2026).
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
   const voll = AUSSCHNITT.breit;
   if (!rahmenBreite || !fensterHoehe) return voll;
-  const h = Math.min(BILD.h, Math.max(MIN_HOEHE, (BILD.w * fensterHoehe * MAX_HOEHE_ANTEIL) / rahmenBreite));
+  const hMax = fensterHoehe * MAX_HOEHE_ANTEIL; // px
+  const h = (BILD.w * hMax) / rahmenBreite;     // Bild-Einheiten bei voller Breite
   if (h >= BILD.h) return voll;
-  const y = Math.max(0, Math.min(UNTERKANTE - h, BILD.h - h));
-  return { x: 0, y, w: BILD.w, h };
+  if (h >= UNTERKANTE) return { x: 0, y: Math.max(0, UNTERKANTE - h), w: BILD.w, h };
+  const w = (UNTERKANTE * rahmenBreite) / hMax;
+  return { x: (BILD.w - w) / 2, y: 0, w, h: UNTERKANTE };
 };
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
@@ -264,6 +269,14 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         href: landschaft,
         width: BILD.w, height: BILD.h,
         onError: () => setBildFehlt(true),
+      }),
+      // Gespiegelte Fortsetzung links und rechts, nur wenn der Ausschnitt breiter als das Bild ist.
+      // Je 1 Einheit Überlappung an der Naht — sonst bleibt beim Runden eine helle Haarlinie.
+      !bildFehlt && a.x < 0 && React.createElement('image', {
+        key: 'links', href: landschaft, width: BILD.w, height: BILD.h, transform: 'translate(1 0) scale(-1 1)',
+      }),
+      !bildFehlt && a.x < 0 && React.createElement('image', {
+        key: 'rechts', href: landschaft, width: BILD.w, height: BILD.h, transform: `translate(${2 * BILD.w - 1} 0) scale(-1 1)`,
       }),
       // Der Weg: noch offene Stücke gepunktet (die Route ist von Anfang an lesbar), der Weg zu
       // einem begonnenen Kapitel golden. Unter dem Gold ein heller Saum, damit es sich von der hellen Fahrbahn abhebt.
