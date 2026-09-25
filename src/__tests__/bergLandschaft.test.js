@@ -464,3 +464,34 @@ describe('Berge · Stations-Knöpfe in hell und dunkel', () => {
   });
 });
 function luminanzVon(hex) { return kontrast(hex, '#000000'); }
+
+// Bis zum Gamification-Entscheid im Oktober zeigt der Berg keine Bilder, die mit dem
+// Ausfüllstand erscheinen (Stebler Studios, 25.09.2026). Der goldene Weg bleibt: Orientierung.
+describe('Berge · keine Fortschritts-Bilder bis zum Oktober-Entscheid', () => {
+  const rendern = (prozent, chapterCompletions = [0, 0, 0, 0, 0, 0, 0]) => renderToStaticMarkup(
+    React.createElement(BergLandschaft, {
+      palette: LIGHT_PALETTE, chapters: KAPITEL, chapterCompletions, completion: prozent,
+      onSelectChapter: () => {}, lang: 'de', hyphenStyle: {}, titel: 'T',
+      fortschritt: { begonnen: 7, abgeschlossen: 7, gesamt: 7 },
+      fortschrittLabels: { begonnen: 'b', abgeschlossen: 'a', leer: 'l' }, prozent,
+    }));
+  // Je ein Merkmal, das nur das jeweilige Bild zeichnet.
+  const BILDER = {
+    tannen: 'M 842 548 L 852 520', edelweiss: 'cx="452"', gipfelkreuz: 'x1="591"',
+    matterhorn: 'M 912 170 L 926 134', kuh: 'cx="700"', uhr: 'cx="150"',
+    schoggi: 'M 760 600 L 768 586', sonne: 'cx="250"', fahne: '#d42b2b',
+  };
+  it('bei 99 % und bei 100 % erscheint keines der neun Bilder', () => {
+    for (const prozent of [99, 100]) {
+      const html = rendern(prozent);
+      for (const [name, merkmal] of Object.entries(BILDER)) {
+        expect(html, `${name} bei ${prozent} %`).not.toContain(merkmal);
+      }
+    }
+  });
+  it('der goldene Weg zu begonnenen Kapiteln bleibt', () => {
+    const golden = 'stroke-width="5"';
+    expect(rendern(0)).not.toContain(golden);
+    expect(rendern(40, [0, 50, 0, 0, 0, 0, 0])).toContain(golden);
+  });
+});
