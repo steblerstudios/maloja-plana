@@ -5139,6 +5139,8 @@ export default {
     cantonLabel: { sie: 'Voss chantun: {name}', du: 'Tes chantun: {name}' },
     checkTitle: 'Test svelt',
     annahmeOhneDreizehnten: 'Entrada quintada senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è ella pli auta e po surpassar il limit. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    result_tableLimit: 'Cun uffants na vala qua nagina paupla: il limit crescha cun la grondezza da la chasada e stat en la tabella dal chantun. Il dretg exact scleresch il servetsch chantunal.', // TODO(rm): provisorisch
+    bedingung_ZG: 'Vala mo per abitaziuns tenor la lescha chantunala da promoziun d’abitaziuns — l’administraziun sa sche l’atgna tutga latiers.', // TODO(rm): provisorisch
     result_municipalLimit: 'Qua na datti nagin limit fix d’entradas: el vegn quintà per chasada (basegn da viver, premia da la cassa da malsauns, fitg, tgira d’uffants) e fixà da la vischnanca da domicil. Sch’i dat in dretg, scleresch la vischnanca.', // TODO(rm): provisorisch
     steuerbarTiefer: 'Il chantun cumpareglia las entradas taxablas da la davosa taxaziun — suenter las deducziuns èn ellas savens pli bassas ch’il salari net. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
     konkubinatPartner: 'En il concubinat quinta l’entrada da la persuna partenaria tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
@@ -5156,10 +5158,10 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     rentWithin: { sie: 'Vossa fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).', du: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).' },
     rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
-    cantonNote_BS: 'Dapi fanadur 2025 era per chasadas d\'ina u duas persunas cun bassa entrada (indicativ ~CHF 50’000/onn), betg mo famiglias. Almain 2 onns domicil.',
-    cantonNote_BL: 'Mo per chasadas cun almain in uffant. Entrada netta annuala radund CHF 40’000–75’000 (pèrs) u 30’000–60’000 (geniturs sulets). La vischnanca paja or l\'agid.',
-    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d\'effort), betg ina limita d\'entrada fixa. Max. CHF 1’400 per stanza, il pli ferm la mesadad da la fittanza. 2 dals davos 5 onns domicil.',
-    cantonNote_ZG: 'Entrada suenter la taglia federala directa fin CHF 60’000 (+2’500 per uffant, +20’000 per ulteriura persuna creschida), facultad netta fin CHF 144’000. Almain 3 onns domicil; la contribuziun va al locatur.',
+    cantonNote_BS: 'Per chasadas cun bassa entrada: limit da radund CHF 50’000 l’onn per ina u duas persunas, cun uffants pli aut tenor la grondezza da la chasada (tabella dal chantun). Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
+    cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
+    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza e onn, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
+    cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF 60’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25 % da l’entrada. Facultad netta fin CHF 144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

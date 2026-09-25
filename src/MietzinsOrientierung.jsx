@@ -62,9 +62,10 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
     if (!hasProgram) return null;
     if (info.group === 'families' && childrenCount === 0) return { key: 'familiesOnly', tone: 'soft' };
     // GE: mietabhängiges barème · BL: Grenze je Haushalt, von der Gemeinde festgesetzt (§ 6/§ 10 MBG).
-    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : 'effortBased', tone: 'neutral' };
+    // BS mit Kindern: Grenze nach Haushaltsgrösse (Beitragstabelle), keine Pauschale.
+    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : info.incomeLimitNurOhneKinder ? 'tableLimit' : 'effortBased', tone: 'neutral' };
     if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
-    if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { limit: zahl(incomeLimit, { hoechstens: 2 }) } };
+    if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
     return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
   })();
   const toneColor = (tone) => tone === 'good' ? palette.sage : (tone === 'soft' ? palette.soft : palette.text);
@@ -111,6 +112,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         // Frage offen, ×12 gerechnet: nur wo es die Einschätzung kippen kann (unter der Grenze).
         assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
+        // Bedingung, die die App nicht kennt (ZG: nur WFG-Wohnungen) — beim positiven Ergebnis sichtbar.
+        assessment && assessment.key === 'likely' && info.bedingungKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t(info.bedingungKey)),
         // ZG misst das steuerbare Einkommen (nach Abzügen) — tiefer als der Nettolohn. Knapp darüber kann es reichen.
         assessment && assessment.key === 'incomeHigh' && info.einkommensBasis === 'steuerbar' && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.steuerbarTiefer')),

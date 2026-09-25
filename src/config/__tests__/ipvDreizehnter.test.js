@@ -260,3 +260,35 @@ describe('Mietzinsbeiträge: BL ohne feste Grenze, ZG steuerbar', () => {
     expect(await render('BS', 5500)).not.toContain('mietzinsView.steuerbarTiefer');
   });
 });
+
+// Quellenprüfung 2026 (swiss-precision, 25.09.2026): BS-Pauschale nur ohne Kinder, GE 1'000/Zimmer,
+// ZG nur WFG-Wohnungen, «über der Grenze» nennt das Einkommen.
+describe('Mietzinsbeiträge: Datenstand 2026', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const render = async (canton, monthlyIncome, children = []) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const data = { basis: { canton, maritalStatus: 'single', household: { adults: 1, children } }, finanzen: { monthlyIncome, dreizehnter: NEIN }, wohnen: { rentAmount: 1200 } };
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
+  };
+  it('BS mit Kind: kein Vergleich mit der Pauschale 50 000 (hielt Familien ab)', async () => {
+    const html = await render('BS', 4500, [{ age: 5 }]);
+    expect(html).toContain('mietzinsView.result_tableLimit');
+    expect(html).not.toContain('mietzinsView.result_incomeHigh');
+  });
+  it('BS ohne Kind: weiter mit 50 000, «über der Grenze» nennt beide Zahlen', async () => {
+    expect(await render('BS', 4500)).toContain('mietzinsView.result_incomeHigh(54’000|50’000)');
+  });
+  it('ZG unter der Grenze: Bedingung WFG-Wohnung steht dabei', async () => {
+    const html = await render('ZG', 3000);
+    expect(html).toContain('mietzinsView.result_likely');
+    expect(html).toContain('mietzinsView.bedingung_ZG');
+    expect(await render('BS', 3000)).not.toContain('mietzinsView.bedingung_ZG');
+  });
+  it('GE: höchstens 1 000 pro Zimmer (RGL Art. 24 Abs. 2), Datenstand 2026', async () => {
+    const { getMietzinsbeitraege, MIETZINS_DATA_VERSION } = await import('../../data/mietzinsbeitraege.js');
+    expect(getMietzinsbeitraege('GE').benefitMaxRoom).toBe(1000);
+    expect(MIETZINS_DATA_VERSION).toBe('2026');
+    for (const k of ['BS', 'BL', 'GE', 'ZG']) expect(getMietzinsbeitraege(k).stand, k).toBe('2026');
+  });
+});
