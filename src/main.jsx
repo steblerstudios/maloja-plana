@@ -20,7 +20,7 @@ import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
-import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
+import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle } from './utils/hashRouter.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
@@ -597,6 +597,11 @@ const AppInner = ({ demo }) => {
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
 
+  // Woher man in die aktuelle Ansicht kam (Entscheid 25.09.2026: Brotkrume + Herkunft).
+  // Steht im Verlaufs-Eintrag, nicht nur hier — darum überlebt es Neuladen und
+  // stimmt nach der Zurück-Taste des Browsers wieder.
+  const [herkunft, setHerkunft] = useState(() => leseHerkunft());
+
   // ─── Hash routing: sync URL when view changes ─────────────
   const isFirstRender = React.useRef(true);
   useEffect(() => {
@@ -608,6 +613,7 @@ const AppInner = ({ demo }) => {
     } else {
       setHash(view, chapterIdx);
     }
+    setHerkunft(leseHerkunft());
   }, [view, activeChapter]);
 
   // ─── Hash routing: listen for browser back/forward ────────
@@ -622,7 +628,13 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
+        setHerkunft(leseHerkunft());
       });
+      // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
+      // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
+      if (parsed.stelle !== null) {
+        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: parsed.stelle, behavior: 'instant' })));
+      }
     });
     return cleanup;
   }, [chapters.length]);
@@ -855,6 +867,7 @@ const AppInner = ({ demo }) => {
   };
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
+    merkeStelle();
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
@@ -1337,6 +1350,22 @@ const AppInner = ({ demo }) => {
           display: 'flex', alignItems: 'center', gap: '6px',
         },
       }, zurueckZeichen(), t('nav.backToDashboard')),
+      // «Zurück zu Kapitel …» — nur, wenn man aus einem Kapitel über einen Querverweis
+      // hierher kam (Entscheid 25.09.2026: die Brotkrume zeigt die feste Ordnung, diese
+      // Zeile den eigenen Weg). history.back(), nicht handleNavigate: der Verlauf bleibt
+      // derselbe wie mit der Zurück-Taste, und man landet an der Stelle im Kapitel, an der
+      // man den Querverweis angetippt hat (merkeStelle/onHashChange, nicht der Browser).
+      view !== 'chapter' && herkunft && herkunft.view === 'chapter' && chapters[herkunft.chapterIndex] && React.createElement('button', {
+        type: 'button',
+        className: 'mp-link',
+        onClick: () => window.history.back(),
+        style: {
+          background: 'none', border: 'none', cursor: 'pointer',
+          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
+          color: palette.mid, fontFamily: 'inherit',
+          display: 'flex', alignItems: 'center', gap: '6px',
+        },
+      }, zurueckZeichen(), t('nav.zurueckZu', { name: chapters[herkunft.chapterIndex].title })),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
         style: {

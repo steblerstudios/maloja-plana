@@ -1541,6 +1541,7 @@ export default {
   },
 
   nav: {
+    zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
     moreTools: 'Ulteriurs utensils',
