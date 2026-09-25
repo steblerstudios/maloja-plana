@@ -1663,7 +1663,8 @@ export default {
       mietzins: 'Dretg e test svelt',
       kvgLeistungen: 'Tge paja la cassa?',
       vorsorge: 'AVS & cassa da pensiun',
-      eo: 'Maternitad, paternitad, servetsch',
+      // TODO(rm): «Adoption» fehlt, rm-Wort durch Muttersprache ergänzen (25.09.2026) — «servetsch» entfernt, der Rechner rechnet keinen Dienst
+      eo: 'Maternitad, paternitad, tgira',
       stipendien: 'Contribuziuns da furmaziun, chantunal',
       alv: "Stimar l'indemnisaziun dal di",
       asyl: "Orientaziun en la procedura d'asil",
@@ -3486,7 +3487,7 @@ export default {
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für sub]
       beistandschaft: { label: 'Mandat da prevenziun & Beistandschaft', sub: { sie: 'Tgi che decida sche Vus na pudais betg pli', du: 'Tgi che decida sche ti na pos betg pli' } },
       alv: { label: 'Indemnisaziun da dischoccupaziun (ALV)', sub: 'Suenter la perdita da la plazza' },
-      eo: { label: 'Cumpensaziun da la perdita da gudogn (EO)', sub: 'Servetsch, maternitad u tgira' },
+      eo: { label: 'Cumpensaziun da la perdita da gudogn (EO)', sub: 'Maternitad, paternitad u tgira' }, // TODO(rm): «Adoption» fehlt (25.09.2026),
       familienzulagen: { label: 'Supplements da famiglia', sub: 'Supplements per uffants e furmaziun' },
       waisenrente: { label: 'Renta d’orfen', sub: 'Tar la mort d’in genitur' },
     },
@@ -3701,12 +3702,14 @@ export default {
     betreibung: 'Betreibungsauszug: keine gesetzliche Gültigkeitsdauer — massgebend ist das Ausstellungsdatum',
     lease: 'Contract da locaziun: Illimitadamain',
     insurance: "Polizza d'assicuranza: controllar annualmain",
-    ikExtract: 'Extract CI: 5 onns valid',
-    paySlip: 'Quint da paja: 1 onn valid',
-    bankStatement: 'Extract da conto: 1 onn valid',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+    ikExtract: 'IK-Auszug: keine gesetzliche Gültigkeitsdauer — massgebend ist das Ausstellungsdatum',
+    paySlip: 'Lohnzettel: keine gesetzliche Gültigkeitsdauer — massgebend ist der Monat, den er belegt',
+    bankStatement: 'Kontoauszug: keine gesetzliche Gültigkeitsdauer — massgebend ist der Zeitraum, den er belegt',
     passport: 'Passaport: 10 onns valid (< 18: 5 onns)',
     diploma: 'Diploma: Illimitadamain',
-    kkCard: 'Carta CM: 1 onn valida',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
+    kkCard: 'KK-Karte: das Ablaufdatum steht auf der Karte',
     unknown: 'Durada da validitad nunenconuschenta',
   },
 
@@ -3787,7 +3790,7 @@ export default {
     contextIpv: { sie: "Tenor l'entrada avais Vus eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmai Vus tar Vossa vischnanca u Voss chantun.", du: "Tenor l'entrada has Ti eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmescha Tai tar Tia vischnanca u Tes chantun." },
     contextFamilienzulagen: { sie: "Per Voss uffants As stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Voss patrun po gidar enavant.", du: "Per Tes uffants Ta stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Tes patrun po gidar enavant." },
     ipv: { sie: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Vus.", du: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Tai." },
-    familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 200 per uffant e mais.",
+    familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 215 per uffant e mais.", // TODO(rm): Ausbildungszulage mind. CHF 268 (FamZG Art. 5) ergänzen, siehe de.js (25.09.2026)
     bewilligung_c: { sie: "La permissiun C è illimitada. Vus na stuais betg la prolungar e avais pratischamain ils medems dretgs sco burgais svizzers.", du: "La permissiun C è illimitada. Ti na stos betg la prolungar e has pratischamain ils medems dretgs sco burgais svizzers." },
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     el: { sie: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle Ihres Kantons sagt Ihnen, ob Sie Anspruch haben (ELG Art. 21).', du: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Die EL-Stelle Deines Kantons sagt Dir, ob Du Anspruch hast (ELG Art. 21).' },
@@ -4115,7 +4118,7 @@ export default {
       body2: "Object da locaziun: {address}",
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
-      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Tar abitaziuns da famiglia è il consentiment dad omadus conjugals necessari (ZGB art. 169). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it)
+      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Dient die Wohnung der Familie, braucht die Kündigung die ausdrückliche Zustimmung des Ehegatten bzw. der eingetragenen Partnerin oder des eingetragenen Partners (OR Art. 266m). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it; OR-266m-Satz deutscher Rückfall nach Fachkorrektur 25.09.2026)
     },
     taxExtension: {
       title: 'Prolungaziun dal termin da taglia',
