@@ -4,7 +4,9 @@
 // nichts wird zurückgeschrieben.
 // - Erwerbseinkommen = Monatslohn + Nebenerwerb, beide nur netto. Der Nebenerwerb ist
 //   Erwerbseinkommen und gehört darum hierher, nicht zu «andere Einkünfte» — nur so greift der
-//   Einkommensfreibetrag. Ist der Hauptlohn brutto hinterlegt, bleibt das Feld leer (Hinweis).
+//   Einkommensfreibetrag. Ist der Hauptlohn brutto hinterlegt ODER die Art nicht gewählt, bleibt
+//   das Feld leer (Hinweis) — nie eine geratene Basis (utils/jahreslohnAusProfil.js, lohnBasis).
+//   Ein Nebenerwerb ohne gewählte Art zählt aus demselben Grund nicht mit (eigener Hinweis).
 // - Andere Einkünfte = Familienzulagen + Alimente erhalten + Nettolohn Partner/in, Letzteres nur
 //   bei Ehe oder eingetragener Partnerschaft (eine Unterstützungseinheit) und nur, wenn das Feld
 //   nach utils/partnereinkommen.js zählt. Als «andere Einkünfte» ohne Freibetrag — eine vorsichtige
@@ -27,6 +29,7 @@
 import { partnerEinkommenRoh, erwachseneImHaushalt } from './partnereinkommen.js';
 import { giltAlsVerheiratet } from './zivilstand.js';
 import { referenzalterMonate } from '../data/ahvRechner.js';
+import { lohnBasis, lohnBasisOffen } from './jahreslohnAusProfil.js';
 
 // Alter in ganzen Monaten am Stichtag; null ohne gültiges Geburtsdatum.
 function alterInMonaten(geburtsdatum, heute) {
@@ -69,10 +72,12 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
   const f = data?.finanzen || {};
   const basis = data?.basis || {};
 
-  const hauptBrutto = f.incomeType === 'brutto';
+  const hauptBrutto = lohnBasis(f) === 'brutto';
+  const hauptBasisOffen = lohnBasisOffen(f);
   const nebenerwerbBrutto = f.sideIncomeType === 'brutto' && betrag(f.sideIncome) > 0;
-  const nebenZaehlt = !nebenerwerbBrutto && betrag(f.sideIncome) > 0;
-  const einkommen = hauptBrutto ? '' : summeAlsFeld([f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined]);
+  const nebenerwerbBasisOffen = f.sideIncomeType !== 'brutto' && f.sideIncomeType !== 'netto' && betrag(f.sideIncome) > 0;
+  const nebenZaehlt = f.sideIncomeType === 'netto' && betrag(f.sideIncome) > 0;
+  const einkommen = hauptBrutto || hauptBasisOffen ? '' : summeAlsFeld([f.monthlyIncome, nebenZaehlt ? f.sideIncome : undefined]);
 
   const partner = partnerEinkommenRoh(basis);
   const partnerErfasst = betrag(partner) > 0;
@@ -101,8 +106,9 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     miete: weiterePersonen > 0 ? '' : summeAlsFeld([data?.wohnen?.rentAmount]),
     wohnform: weiterePersonen > 0 ? 'familienaehnlich' : 'allein',
     einkommen,
-    einkommenMitNebenerwerb: !hauptBrutto && nebenZaehlt,
+    einkommenMitNebenerwerb: !hauptBrutto && !hauptBasisOffen && nebenZaehlt,
     hauptBrutto,
+    hauptBasisOffen,
     andereEinkuenfte,
     vermoegen,
     vermoegenMit3a: mit3a,
@@ -110,6 +116,7 @@ export function sozialhilfeVorbefuellung(data, heute = new Date()) {
     jungErwachsen: (() => { const m = alterInMonaten(basis.dateOfBirth, heute); return m != null && m < 25 * 12; })(),
     erwerbstaetig,
     nebenerwerbBrutto,
+    nebenerwerbBasisOffen,
     // Konkubinatsbeitrag-Hinweis: bei erfasstem Partnerlohn — oder im Konkubinat mit Mitbewohnenden.
     partnerKonkubinat: !verheiratet && (partnerErfasst || (konkubinat && weiterePersonen > 0)),
   };

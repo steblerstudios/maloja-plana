@@ -758,7 +758,7 @@ export default {
     step3Title: '3 · Apply — in your canton of residence, as early as possible',
     step3Text: 'The canton in which you are resident is responsible; the canton decides which office accepts the application — for example the cantonal compensation office, but never the social assistance authority (ELG Art. 21). Entitlement begins in the month in which you submit the application (ELG Art. 12) — if you still submit within the current month, you lose no month. A decision on the application should as a rule be made within 90 days; otherwise advance payments may be made in certain cases (ELV Art. 21).',
     fristLabel: 'Decision on the AHV or IV pension (or on a change to it) received on — for registered mail: the day of the collection notice',
-    fristHinweis: 'If you apply by {date}, EL starts from the month in which you applied for the pension — at the earliest from the start of the pension entitlement (ELV Art. 22). Weekends and public holidays do not extend this deadline — earlier is never wrong.',
+    fristHinweis: 'If you apply by {date}, EL starts from the month in which you applied for the pension — at the earliest from the start of the pension entitlement (ELV Art. 22). We do not count weekends or public holidays — earlier is never wrong.',
     fristVorbei: 'The six months ended on {date}. You can still apply: EL then starts from the month of your application (ELG Art. 12) — so ideally still this month.',
     step3Button: 'Save deadline “Apply for EL retroactively” ({date})',
     step3Done: 'Deadline saved in the calendar.',
@@ -5030,6 +5030,12 @@ export default {
     hinweisVaterschaft: 'Paternity: 2 weeks, to be taken within 6 months of birth.',
     hinweisAdoption: 'Adoption: 2 weeks, child under 4 years old.',
     source: 'Estimate based on the reference values of the [[LIECA|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (as of 2026). Whether an entitlement exists and how high it is, the compensation office decides. Not legally binding.',
+  },
+  // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensart: {
+    offenBrutto: 'Your profile doesn’t say whether the salary is gross or net — so it isn’t carried over here. Please enter your gross salary.',
+    offenNetto: 'Your profile doesn’t say whether the salary is gross or net — so it isn’t carried over here. Please enter your net income.',
+    nebenOffen: 'Your profile doesn’t say whether the side income is gross or net — so it isn’t counted. Add the net amount here.',
   },
   sh: {
     title: 'Social Assistance Calculator',

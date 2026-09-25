@@ -168,7 +168,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.inputRow },
         field('sh.einkommen', einkommen, setEinkommen, '0',
           nettoBruttoMismatch ? t('sh.nettoBruttoHint')
+            : vorbefuellt.hauptBasisOffen ? t('einkommensart.offenNetto')
             : vorbefuellt.nebenerwerbBrutto ? t('sh.nebenerwerbBruttoHint')
+            : vorbefuellt.nebenerwerbBasisOffen ? t('einkommensart.nebenOffen')
             : vorbefuellt.einkommenMitNebenerwerb ? t('sh.ausProfilHint') : null),
         field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
           vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),

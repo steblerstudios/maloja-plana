@@ -758,7 +758,7 @@ export default {
     step3Title: '3 · Annunciarsi — nel Cantone di domicilio, il prima possibile',
     step3Text: { sie: 'È competente il Cantone in cui ha il domicilio; è il Cantone a stabilire quale organo riceve la richiesta — per esempio la cassa di compensazione cantonale, ma mai gli organi dell’aiuto sociale (LPC art. 21). Il diritto nasce il mese in cui inoltra la richiesta (LPC art. 12) — chi la inoltra ancora nel mese in corso non perde nessun mese. Di regola si deve decidere sulla richiesta entro 90 giorni; altrimenti, in determinati casi, sono versati anticipi (OPC-AVS/AI art. 21).', du: 'È competente il Cantone in cui hai il domicilio; è il Cantone a stabilire quale organo riceve la richiesta — per esempio la cassa di compensazione cantonale, ma mai gli organi dell’aiuto sociale (LPC art. 21). Il diritto nasce il mese in cui inoltri la richiesta (LPC art. 12) — chi la inoltra ancora nel mese in corso non perde nessun mese. Di regola si deve decidere sulla richiesta entro 90 giorni; altrimenti, in determinati casi, sono versati anticipi (OPC-AVS/AI art. 21).' },
     fristLabel: 'Decisione sulla rendita AVS o AI (o sulla sua modifica) ricevuta il — per un invio raccomandato: il giorno dell’avviso di ritiro',
-    fristHinweis: { sie: 'Se si annuncia entro il {date}, le PC decorrono già dal mese in cui ha presentato la richiesta di rendita — al più presto dalla nascita del diritto alla rendita (OPC-AVS/AI art. 22). Fine settimana e giorni festivi non prolungano questo termine — prima non è mai sbagliato.', du: 'Se ti annunci entro il {date}, le PC decorrono già dal mese in cui hai presentato la richiesta di rendita — al più presto dalla nascita del diritto alla rendita (OPC-AVS/AI art. 22). Fine settimana e giorni festivi non prolungano questo termine — prima non è mai sbagliato.' },
+    fristHinweis: { sie: 'Se si annuncia entro il {date}, le PC decorrono già dal mese in cui ha presentato la richiesta di rendita — al più presto dalla nascita del diritto alla rendita (OPC-AVS/AI art. 22). Non teniamo conto di fine settimana e giorni festivi — prima non è mai sbagliato.', du: 'Se ti annunci entro il {date}, le PC decorrono già dal mese in cui hai presentato la richiesta di rendita — al più presto dalla nascita del diritto alla rendita (OPC-AVS/AI art. 22). Non teniamo conto di fine settimana e giorni festivi — prima non è mai sbagliato.' },
     fristVorbei: { sie: 'I sei mesi sono scaduti il {date}. Può comunque annunciarsi: le PC decorrono allora dal mese della Sua richiesta (LPC art. 12) — meglio ancora questo mese.', du: 'I sei mesi sono scaduti il {date}. Puoi comunque annunciarti: le PC decorrono allora dal mese della tua richiesta (LPC art. 12) — meglio ancora questo mese.' },
     step3Button: 'Annotare il termine «Chiedere le PC con effetto retroattivo» ({date})',
     step3Done: 'Termine salvato nel calendario.',
@@ -5009,6 +5009,12 @@ export default {
     source: 'Stima secondo i valori di riferimento della [[LIPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]] (stato 2026). Se sussiste un diritto e a quanto ammonta lo decide la cassa di compensazione. Nessuna informazione giuridicamente vincolante.',
   },
 
+  // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensart: {
+    offenBrutto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il salario lordo.',
+    offenNetto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il reddito netto.',
+    nebenOffen: 'Nel profilo non è indicato se il reddito accessorio è lordo o netto — per questo non viene conteggiato. Aggiungere qui l’importo netto.',
+  },
   sh: {
     title: 'Calcolatore aiuto sociale',
     haushalt: 'Dimensione dell\'economia domestica',

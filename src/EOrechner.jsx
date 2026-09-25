@@ -6,11 +6,12 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { zahl } from './utils/geld.js';
-import { jahreslohnAusProfil, lohnIstNetto } from './utils/jahreslohnAusProfil.js';
+import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 
 export const EOrechner = ({ palette, t, data }) => {
   // Bruttojahreslohn aus den Finanzen (inkl. 13.), nicht bei netto erfasstem Lohn (utils/jahreslohnAusProfil.js).
   const nettoHinterlegt = lohnIstNetto(data.finanzen) && Number(data.finanzen?.monthlyIncome) > 0;
+  const basisOffen = lohnBasisOffen(data.finanzen);
   const [einkommen, setEinkommen] = useState(() => jahreslohnAusProfil(data.finanzen));
   const parsedEinkommen = Number(einkommen) || 0;
 
@@ -56,7 +57,7 @@ export const EOrechner = ({ palette, t, data }) => {
 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.label }, t('eo.einkommen')),
-      React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginBottom: space.xs + 'px' } }, nettoHinterlegt ? t('eo.nettoHint') : t('eo.einkommenHint')),
+      React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginBottom: space.xs + 'px' } }, nettoHinterlegt ? t('eo.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('eo.einkommenHint')),
       React.createElement('input', {
         style: s.input,
         type: 'number',
