@@ -71,9 +71,14 @@ export function kreuzState(franchiseOpt, costs, heute = new Date()) {
   for (let c = 0; c <= scaleMax; c += schritt) {
     kurve.push({ c, tief: gesamt(lowFra, lowPremium, c), hoch: gesamt(highFra, highPremium, c) });
   }
-  const yMax = Math.max(...kurve.map((p) => Math.max(p.tief, p.hoch)));
+  // Linien brauchen keine Null-Grundlinie (Säulen schon): die y-Achse läuft vom tiefsten
+  // zum höchsten Gesamtwert, auf 500 gerundet — sonst kleben beide Linien oben und das Kreuz
+  // verschwindet (Prämien ≈ 6–9 Tsd., Unterschied ≈ 1–2 Tsd.).
+  const alle = kurve.flatMap((p) => [p.tief, p.hoch]);
+  const yMin = Math.floor(Math.min(...alle) / 500) * 500;
+  const yMax = Math.ceil(Math.max(...alle) / 500) * 500;
   return {
-    ...st, scaleMax, kurve, yMax, hochrechnung,
+    ...st, scaleMax, kurve, yMin, yMax, hochrechnung,
     gesamtBei: (c) => ({ tief: gesamt(lowFra, lowPremium, c), hoch: gesamt(highFra, highPremium, c) }),
   };
 }

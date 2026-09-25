@@ -27,10 +27,16 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
   const num = (n) => zahl(Math.round(n || 0));
 
   const x = (c) => L + (c / st.scaleMax) * (W - L - R);
-  const y = (v) => T + (1 - v / st.yMax) * (H - T - B);
+  const y = (v) => T + (1 - (v - st.yMin) / (st.yMax - st.yMin)) * (H - T - B);
   const linie = (key) => st.kurve.map((p) => x(p.c).toFixed(1) + ',' + y(p[key]).toFixed(1)).join(' ');
   const ende = st.kurve[st.kurve.length - 1];
   const farbeHoch = palette.sky, farbeTief = palette.sand;
+  // Namen am Linienende mindestens 16 px auseinander, damit sie sich nicht überdecken.
+  const labelY = (() => {
+    let a = y(ende.tief), b = y(ende.hoch);
+    if (Math.abs(a - b) < 16) { const m = (a + b) / 2, s = a <= b ? -8 : 8; a = m + s; b = m - s; }
+    return { tief: a, hoch: b };
+  })();
 
   const readout =
     st.mode === 'orientation' ? t('po.kreuzOrientation')
@@ -73,26 +79,28 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
       h('text', { x: x(st.scaleMax), y: H - B + 16, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, num(st.scaleMax)),
       h('text', { x: (L + x(st.scaleMax)) / 2, y: H - 4, fontSize: 11, fill: palette.mid, textAnchor: 'middle' }, t('po.kreuzAchse') + ' (CHF)'),
       h('text', { x: L - 6, y: T + 4, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, num(st.yMax)),
-      h('text', { x: L - 6, y: H - B, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, '0'),
+      h('text', { x: L - 6, y: H - B, fontSize: 11, fill: palette.mid, textAnchor: 'end' }, num(st.yMin)),
       h('text', { x: L, y: T - 8, fontSize: 11, fill: palette.mid }, t('po.kreuzKosten')),
       // Break-even
-      senkrecht('be', st.breakEven, palette.mid, '4 4', t('po.tachoBreakeven') + ' ≈ ' + num(st.breakEven), T + 12),
+      // Break-even: Beschriftung unten im Feld, damit sie keine Linie überdeckt
+      senkrecht('be', st.breakEven, palette.mid, '4 4', t('po.tachoBreakeven') + ' ≈ ' + num(st.breakEven), H - B - 8),
       // die zwei Linien, 2 px, Enden mit Form + Name
       h('polyline', { points: linie('tief'), fill: 'none', stroke: farbeTief, strokeWidth: 2, strokeLinejoin: 'round' }),
       h('polyline', { points: linie('hoch'), fill: 'none', stroke: farbeHoch, strokeWidth: 2, strokeLinejoin: 'round' }),
       h('rect', { x: x(ende.c) - 4, y: y(ende.tief) - 4, width: 8, height: 8, fill: farbeTief, stroke: palette.surface, strokeWidth: 2 }),
       h('circle', { cx: x(ende.c), cy: y(ende.hoch), r: 4.5, fill: farbeHoch, stroke: palette.surface, strokeWidth: 2 }),
-      h('text', { x: x(ende.c) + 10, y: y(ende.tief) + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.low) })),
-      h('text', { x: x(ende.c) + 10, y: y(ende.hoch) + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.high) })),
+      h('text', { x: x(ende.c) + 10, y: labelY.tief + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.low) })),
+      h('text', { x: x(ende.c) + 10, y: labelY.hoch + 4, fontSize: 12, fill: palette.text }, t('po.kreuzLinie', { franchise: num(st.high) })),
       // eigene Kosten: bisher (durchgezogen) · Hochrechnung (gestrichelt, Schätzung)
-      st.costs > 0 && senkrecht('bisher', Math.min(st.costs, st.scaleMax), palette.text, null, t('po.kreuzBisher') + ' ' + num(st.costs), T + 28),
-      st.hochrechnung && senkrecht('hoch', st.hochrechnung, palette.text, '2 3', t('po.kreuzHochrechnung') + ' ≈ ' + num(st.hochrechnung), T + 44),
+      st.costs > 0 && senkrecht('bisher', Math.min(st.costs, st.scaleMax), palette.text, null, t('po.kreuzBisher') + ' ' + num(st.costs), T + 12),
+      st.hochrechnung && senkrecht('hoch', st.hochrechnung, palette.text, '2 3', t('po.kreuzHochrechnung') + ' ≈ ' + num(st.hochrechnung), T + 26),
       // Hover-Fadenkreuz
       hv && h('g', { pointerEvents: 'none' },
         h('line', { x1: x(hoverC), x2: x(hoverC), y1: T, y2: H - B, stroke: palette.mid, strokeWidth: 1 }),
         h('circle', { cx: x(hoverC), cy: y(hv.tief), r: 3.5, fill: farbeTief }),
         h('circle', { cx: x(hoverC), cy: y(hv.hoch), r: 3.5, fill: farbeHoch }),
-        h('text', { x: W - 2, y: H - B - 6, fontSize: 11, fill: palette.text, textAnchor: 'end' },
+        // oben rechts über der Fläche — unten steht die Break-even-Beschriftung
+        h('text', { x: W - 2, y: T - 8, fontSize: 11, fill: palette.text, textAnchor: 'end' },
           t('po.kreuzTooltip', { c: num(hoverC), low: num(st.low), tief: num(hv.tief), high: num(st.high), hoch: num(hv.hoch) })))
     ),
     h('div', { style: { display: 'flex', justifyContent: 'center', gap: space.md + 'px', flexWrap: 'wrap', margin: space.xs + 'px 0 ' + space.sm + 'px' } },
