@@ -407,6 +407,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
           }
         }, sozialhilfe.eligible
           ? t('budgetSync.skosClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
+          // Freibetrag-Fall (Predeploy 25.09.2026): kein «voraussichtlich nicht relevant».
+          : sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet')
           : t('budgetSync.skosNoClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
         ),
         React.createElement('div', {
