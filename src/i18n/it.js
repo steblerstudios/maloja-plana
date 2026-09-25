@@ -1726,7 +1726,6 @@ export default {
     tierSupporting: { sie: 'La Sua copertura', du: 'La tua copertura' },
     tierProtective: { sie: 'La Sua protezione', du: 'La tua protezione' },
     toolsAndFeatures: 'Strumenti e funzioni',
-    detailProgress: 'Avanzamento dettagliato per capitolo',
     toolsSubtitle: { sie: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.', du: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.' },
     toolGroups: {
       gesundheit: 'Salute',

@@ -1733,7 +1733,6 @@ export default {
     tierSupporting: { sie: 'Ihre Absicherung', du: 'Deine Absicherung' },
     tierProtective: { sie: 'Ihr Schutz', du: 'Dein Schutz' },
     toolsAndFeatures: 'Werkzeuge & Features',
-    detailProgress: 'Detaillierter Fortschritt pro Kapitel',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
     toolGroups: {
       gesundheit: 'Gesundheit',

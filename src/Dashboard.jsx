@@ -24,7 +24,7 @@ import { zahl, betrag } from './utils/geld.js';
 const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' };
 // Lazy: hält die Instrumente (Tacho/Kompass/Tank/Schutzschild + Daten) aus dem
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
-// Inhalt des zugeklappten Abschnitts «Fortschritt im Detail» — siehe BergDetail.jsx.
+// Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = React.lazy(() => import('./BergDetail.jsx'));
 const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
 
@@ -818,17 +818,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
-    React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
-      React.createElement('summary', {
-        style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, padding: space.sm + 'px 0', letterSpacing: '0.2px' }
-      }, t('dashboard.detailProgress')),
-      React.createElement('div', { style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: space.lg + 'px' } },
-        // Inhalt nachgeladen (E36): beim ersten Bild ist der Abschnitt zu, also unsichtbar.
-        React.createElement(React.Suspense, { fallback: null },
-          React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
-        ),
-      )
+    // ─── Fortschritt & Grundordnung — eine Karte, offen (Schicht 1) ──
+    // Bis 25.09.2026 zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt».
+    // Tester-Feedback: von Anfang an sichtbar, als eine Karte, Kapitel einzeln aufklappbar.
+    // Abstand nach unten trägt die Karte selbst (marginBottom in BergDetail).
+    React.createElement(React.Suspense, { fallback: null },
+      React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
     ),
     // ─── Highlight tools — immediate value (first for new users) ──
     React.createElement('div', {

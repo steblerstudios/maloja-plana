@@ -1726,7 +1726,6 @@ export default {
     tierSupporting: 'Your coverage',
     tierProtective: 'Your safety net',
     toolsAndFeatures: 'Tools and features',
-    detailProgress: 'Detailed progress per chapter',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
     toolGroups: {
       gesundheit: 'Health',

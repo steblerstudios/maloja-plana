@@ -248,19 +248,18 @@ Abschiedsagentur, plaant).
   App-Menü · Früchte sollen hängen, nicht auf den Ästen sitzen. Seither ist viel Politur
   gelaufen (UI/UX-Runden 1–4); welche davon erledigt sind, ist nicht einzeln geprüft.
 - **Tester-Feedback vom 25.09.2026** (eine Testerin, Dashboard). Stand je Punkt:
-  - ✅ **Kapitel-Kopfzeile in der Grundordnung anklickbar**: vorher waren nur die Felder
-    («Vorname») Knöpfe, nicht «Persönliche Basis». Die Kopfzeile führt jetzt ins Kapitel.
-    Offen dazu: auch ein Feld öffnet nur das Kapitel, es springt nicht zum Feld.
+  - ✅ **Kapitel anklickbar**: vorher waren nur die Felder («Vorname») Knöpfe, nicht
+    «Persönliche Basis». Heute ist jede Kapitelzeile ein Knopf (s. nächster Punkt).
+    Offen: ein Feld öffnet das Kapitel, springt aber nicht zum Feld.
   - ✅ **Werkzeuge: Lebensereignisse startet eingeklappt**, wie alle anderen Gruppen.
     Die Instrumente bleiben auf dem Dashboard (so gewünscht).
   - ❓ **«Warum nicht *Willkommen bei Maloja Plana*?»**: das Dashboard trägt nur den Claim,
     der Rundgang sagt «Willkommen bei Maloja». Offen: Name im Produkt («Maloja» oder
     «Maloja Plana»), und ob ein Gruss über dem Claim steht. Ihr Satz brach bei «wenn man» ab.
-  - 🔨 **Fortschritt + Grundordnung zu einer Karte verschmelzen**: eine Zeile je Kapitel,
-    aufklappbar, darin die Grundordnungs-Felder dieses Kapitels. Dazu: der Fortschritt
-    soll das Dashboard *sein* und «Detaillierter Fortschritt» von Anfang an offen stehen.
-    Zielkonflikt: der Bereich ist heute zu, damit sein Inhalt nachgeladen wird (E36,
-    65-kB-Deckel) und am Handy der Berg über den Falz passt. Vor dem Umbau messen.
+  - ✅ **Fortschritt + Grundordnung sind eine Karte, von Anfang an sichtbar**: eine
+    Zeile je Kapitel, aufklappbar, darin die Grundordnungs-Felder dieses Kapitels und
+    «Öffnen». Der Abschnitt «Detaillierter Fortschritt» ist weg. Die Karte bleibt ein
+    nachgeladenes Stück (1,9 kB gzip), das Hauptbundle wurde nicht grösser.
   - 🌱 **Werkzeuge & Features nochmals anschauen**: 7 Gruppen, Lebensereignisse allein
     34 Einträge. Verwandt: «Zwei Bäume verschmelzen» (Abschnitt 2).
 
