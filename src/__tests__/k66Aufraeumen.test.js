@@ -31,8 +31,14 @@ describe('K66 annahmenTexte', () => {
 
 describe('K66 chf', () => {
   const alteChf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’');
-  it.each([0, 7, 999.4, 999.5, 1000, 12345.6, 1234567, -4321])('gleich wie vorher für %s', (n) => {
+  it.each([0, 7, 999.4, 999.5, 1000, 12345.6, 1234567])('gleich wie vorher für %s', (n) => {
     expect(chf(n)).toBe(alteChf(n));
+  });
+  // Seit 24.09.2026 kommt chf() aus utils/geld.js. Einzige Änderung: negative Werte tragen das
+  // typografische Minus (U+2212) wie die übrigen Franken-Anzeigen, nicht den Bindestrich.
+  it('negativ: typografisches Minus, sonst gleich', () => {
+    expect(chf(-4321)).toBe('−4’321');
+    expect(alteChf(-4321)).toBe('-4’321');
   });
 });
 

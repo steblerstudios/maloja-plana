@@ -208,6 +208,18 @@ textarea:focus-visible,
   z-index: 1;
 }
 
+/* ─── Datei-Auswahl: das Feld ist unsichtbar, der Ring sitzt am Label ──
+   Bis 24.09.2026 trugen alle fünf Datei-Felder `display:none`. Ein solches Feld
+   bekommt keinen Fokus, und das umgebende <label> ist nicht fokussierbar — per
+   Tastatur liess sich KEINE Datei wählen, auch keine Sicherung wiederherstellen.
+   Jetzt: das Feld nur optisch versteckt (`visuallyHiddenStyle`, Klasse
+   `mp-datei-eingang`), und der Fokusring erscheint an der sichtbaren Fläche.
+   Wächter: src/__tests__/dateiwahlTastatur.test.js */
+label:has(> input.mp-datei-eingang:focus-visible) {
+  outline: 2px solid var(--mp-focus);
+  outline-offset: 2px;
+}
+
 /* ─── Sprungziele unter der klebenden Kopfzeile ──────────
    Seit das Dokument selbst scrollt, klebt die Kopfzeile über dem Inhalt — und in
    den Kapiteln zusätzlich die Sektionsleiste darunter. Ein scrollIntoView mit

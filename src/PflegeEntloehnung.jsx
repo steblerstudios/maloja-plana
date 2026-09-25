@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
+import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { zahl } from './utils/geld.js';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
 // (Spitex-nahen) Organisationen angestellt und für ihre Pflege entlöhnt werden.
@@ -10,10 +13,15 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 const STUNDENSATZ = 37.90;        // CHF/h, Richtwert
 const WOCHEN_PRO_MONAT = 4.33;    // 52/12
 
+// O3 — Ergebnis-Art: ORIENTIERUNG. Der Stundensatz ist ein Anbieter-Richtwert, kein amtlicher
+// Tarif; gerechnet wird nicht nach einer Regel der Stelle, die den Lohn festlegt. Es fehlt nie
+// eine Angabe (der Regler hat immer einen Wert).
+export const PFLEGE_ENTLOEHNUNG_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
+
 export const PflegeEntloehnung = ({ palette, t }) => {
   const [stunden, setStunden] = useState(14);
   const brutto = Math.round(stunden * WOCHEN_PRO_MONAT * STUNDENSATZ);
-  const fmt = (v) => v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const fmt = (v) => zahl(v);
 
   const s = {
     wrap: { marginTop: space.sm + 'px' },
@@ -47,6 +55,7 @@ export const PflegeEntloehnung = ({ palette, t }) => {
       React.createElement('div', { style: s.big }, 'CHF ' + fmt(brutto) + ' / ' + t('pflege.entl.month')),
       React.createElement('div', { style: s.sub }, '≈ CHF ' + fmt(brutto * 12) + ' / ' + t('pflege.entl.year') + ' · ' + t('pflege.entl.rateNote'))
     ),
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: PFLEGE_ENTLOEHNUNG_ERGEBNIS }),
     React.createElement('div', { style: s.note }, t('pflege.entl.zuschlaege')),
     React.createElement('div', { style: s.note }, t('pflege.entl.disclaimer')),
     React.createElement(ExternerLink, { t, style: s.extLink, href: 'https://www.spitex.ch' }, t('pflege.entl.extLink'))

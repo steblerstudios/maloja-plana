@@ -9,6 +9,9 @@ import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } 
 import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import { aufklappZeichen } from './IconKern.jsx';
+import { ABLAEUFE } from './config/ansichtenRegister.js';
+import { inDays } from './utils/helpers.js';
+import { zahl, betrag } from './utils/geld.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -27,7 +30,7 @@ const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.
 
 function fmtCHF(v) {
   const n = Number(v);
-  return n && !isNaN(n) ? "CHF " + n.toLocaleString('de-CH') : null;
+  return n && !isNaN(n) ? betrag(n, { hoechstens: 2 }) : null;
 }
 
 function buildSnippet(chapterKey, chData, allData, t) {
@@ -101,7 +104,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
   const annual = (Number(income) || 0) * 12;
   const canton = data?.basis?.canton;
-  const fmt = (v) => v.toLocaleString('de-CH');
+  const fmt = (v) => zahl(v, { hoechstens: 2 });
 
   // Ein Einkommen → mehrere Leistungen (Basel-Stadt-Leistungsrechner als Vorbild).
   // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
@@ -502,7 +505,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
           return React.createElement('button', {
             onClick: () => onSelectChapter(nextField.chapterIdx),
-            'aria-label': nextField.label + ' — ' + nextField.chapterTitle,
+            'aria-label': t('dashboard.nextUpAction', { feld: nextField.label }) + ' — ' + nextField.chapterTitle,
             style: {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
               width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
@@ -516,7 +519,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
               React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
               React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
-                React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, nextField.label),
+                // Codex-Audit 24.09.: das Feld allein («Vorname») sagt nicht, was zu tun ist — ein Verb dazu.
+                React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, t('dashboard.nextUpAction', { feld: nextField.label })),
                 React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
               ),
             ),
@@ -531,7 +535,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.nextUpReassure')),
       (() => {
         const reminders = loadReminders();
-        const today = new Date().toISOString().split('T')[0];
+        const today = inDays(0);
         const upcoming = reminders
           .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
@@ -546,7 +550,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         },
           part(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
           dot,
-          part(t('dashboard.glanceSaved'), lastBackup || t('dashboard.glanceNeverSaved')),
+          // «Zuletzt gesichert noch kein Backup» stand neben «Gespeichert» (Codex-Audit): ohne
+          // Sicherungsdatei ein eigener Satz, der Datei und Gerät nicht vermischt.
+          lastBackup ? part(t('dashboard.glanceSaved'), lastBackup) : React.createElement('span', null, t('dashboard.glanceNeverSaved')),
         );
       })()
     ),
@@ -1227,27 +1233,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           );
         };
         const groups = [
-          { label: t('dashboard.toolGroups.lebensereignisse'), items: [
-            { label: t('nav.kkerst'), sub: t('nav.sub.kkerst'), view: 'kkerst', icon: 'insurance' },
-            { label: t('kvgWechsel.title'), sub: t('nav.sub.kvgwechsel'), view: 'kvgwechsel', icon: 'insurance' },
-            { label: t('zusatzWechsel.title'), sub: t('nav.sub.zusatzwechsel'), view: 'zusatzwechsel', icon: 'insurance' },
-            { label: t('nav.neuerjob'), sub: t('nav.sub.neuerjob'), view: 'neuerjob', icon: 'lebenslauf' },
-            { label: t('nav.stelleverloren'), sub: t('nav.sub.stelleverloren'), view: 'stelleverloren', icon: 'lebenslauf' },
-            { label: t('nav.unfallkrankheit'), sub: t('nav.sub.unfallkrankheit'), view: 'unfallkrankheit', icon: 'notfall' },
-            { label: t('nav.umzug'), sub: t('nav.sub.umzug'), view: 'umzug', icon: 'home' },
-            { label: t('nav.pensionierung'), sub: t('nav.sub.pensionierung'), view: 'pensionierung', icon: 'vorsorge' },
-            { label: t('nav.betreibung'), sub: t('nav.sub.betreibung'), view: 'betreibung', icon: 'behoerden' },
-            { label: t('nav.selbstaendigkeit'), sub: t('nav.sub.selbstaendigkeit'), view: 'selbstaendigkeit', icon: 'lebenslauf' },
-            { label: t('nav.heirat'), sub: t('nav.sub.heirat'), view: 'heirat', icon: 'heart' },
-            { label: t('nav.kind'), sub: t('nav.sub.kind'), view: 'kind', icon: 'family' },
-            { label: t('nav.trennung'), sub: t('nav.sub.trennung'), view: 'trennung', icon: 'family' },
-            { label: t('nav.bewilligung'), sub: t('nav.sub.bewilligung'), view: 'bewilligung', icon: 'behoerden' },
-            { label: t('nav.fuehrerausweis'), sub: t('nav.sub.fuehrerausweis'), view: 'fuehrerausweis', icon: 'behoerden' },
-            { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
-            { label: t('nav.iv'), sub: t('nav.sub.iv'), view: 'iv', icon: 'health' },
-            { label: t('nav.pflege'), sub: t('nav.sub.pflege'), view: 'pflege', icon: 'heart' },
-            { label: t('nav.todesfall'), sub: t('nav.sub.todesfall'), view: 'todesfall', icon: 'document' },
-          ] },
+          // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
+          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map((a) => (
+            { label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon }
+          )) },
           { label: t('dashboard.toolGroups.gesundheit'), items: [
             { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
           ] },

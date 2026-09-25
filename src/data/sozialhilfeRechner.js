@@ -10,6 +10,7 @@
 
 import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
 
@@ -92,8 +93,32 @@ export function rueckerstattungsFreibetrag(adults = 1, minorChildren = 0) {
   return basis + Math.max(0, minorChildren) * 15000;
 }
 
+// Grundbedarf je Wohnform (SKOS-RL C.3.1 / C.3.2; Wortlaut und Beträge gegengelesen im Merkblatt
+// «Grundbedarf in Wohngemeinschaften», Kantonales Sozialamt GR, V6.0 vom 7.1.2025):
+// - 'allein': nur die Unterstützungseinheit lebt im Haushalt → GBL nach ihrer Grösse.
+// - 'familienaehnlich': gemeinsam geführter Haushalt ohne gemeinsame Unterstützungseinheit (z. B.
+//   Konkubinat, Eltern mit volljährigen Kindern) → GBL nach der GANZEN Haushaltsgrösse, davon der
+//   Pro-Kopf-Anteil der unterstützten Personen (GR: 2 Pers. 812, 3 Pers. 658 p. P.).
+// - 'zweckWg': Zusammenwohnen, um Wohnkosten zu sparen, Haushalt getrennt geführt → GBL nach der
+//   Unterstützungseinheit, minus 10 % (GR: 955 p. P.).
+// Im Zweifel gilt ein gemeinsamer Haushalt als familienähnlich — die Zweck-WG muss die unterstützte
+// Person nachweisen (GR-Merkblatt Ziff. 2.1). Sonderregeln für junge Erwachsene sind kantonal und
+// hier nicht abgebildet.
+export const WOHNFORMEN = ['allein', 'familienaehnlich', 'zweckWg'];
+export function grundbedarfNachWohnform(einheit, weiterePersonen = 0, wohnform = 'allein') {
+  const weitere = Math.max(0, Math.floor(Number(weiterePersonen) || 0));
+  if (wohnform === 'familienaehnlich' && weitere > 0) {
+    const haushalt = einheit + weitere;
+    return Math.round(grundbedarfFuerHaushalt(haushalt) / haushalt * einheit);
+  }
+  if (wohnform === 'zweckWg' && weitere > 0) return Math.round(grundbedarfFuerHaushalt(einheit) * 0.9);
+  return grundbedarfFuerHaushalt(einheit);
+}
+
 export function berechneSozialhilfe({
   haushaltGroesse,
+  wohnform = 'allein',
+  weiterePersonen = 0,
   adults = 1,
   kinderImHaushalt = 0,
   miete = 0,
@@ -105,8 +130,10 @@ export function berechneSozialhilfe({
   integrationsMassnahme = false,
   kanton, // Kantonskürzel; ohne → SKOS-Empfehlung beim Vermögensfreibetrag
 }) {
+  // haushaltGroesse = Grösse der Unterstützungseinheit (Erwachsene + Kinder); Mitbewohnende
+  // ausserhalb der Einheit kommen über weiterePersonen + wohnform dazu.
   if (haushaltGroesse == null) haushaltGroesse = adults + kinderImHaushalt;
-  const gbl = grundbedarfFuerHaushalt(haushaltGroesse);
+  const gbl = grundbedarfNachWohnform(haushaltGroesse, weiterePersonen, wohnform);
   const wohnkosten = Math.max(0, miete);
   const kvgPraemie = Math.max(0, krankenkassePraemie);
 
@@ -154,6 +181,8 @@ export function berechneSozialhilfe({
     vfbUnbestaetigt,
     haushaltGroesse,
     kinderImHaushalt,
+    wohnform: Number(weiterePersonen) > 0 ? wohnform : 'allein',
+    weiterePersonen: Math.max(0, Math.floor(Number(weiterePersonen) || 0)),
   };
 }
 
@@ -207,3 +236,28 @@ export function berechneArmutsgrenze({ grundbedarf, effektiveWohnkosten = 0, per
 
 // Der Brutto-Richtwert aus einem Netto-Lohn (AHV/ALV + geschätzte PK) lebt in
 // data/ahvRechner.js (nettoZuBruttoRichtwert) — dort, wo die BVG-Bausteine sind.
+
+// O3 — Ergebnis-Art des SKOS-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
+// Grundbedarf und Vermögensfreibetrag folgen Richtlinien und Kantonsrecht, aber: Miete ohne
+// Mietzins-Obergrenze der Gemeinde, KVG-Prämie ohne Prämienverbilligung, keine medizinische
+// Grundversorgung und keine situationsbedingten Leistungen im Bedarf, Einkommensfreibetrag und
+// Integrationszulage für alle Kantone gleich. Der Sozialdienst rechnet anders.
+//
+// Fehlend: ein LEERES Feld fehlt, eine eingetragene 0 ist eine Antwort (heute macht der Rechner aus
+// «leer» still 0 — beim Einkommen und Vermögen zu hoch, bei Miete oder Prämie zu tief).
+//   miete, kvgPraemie      je einzeln — gerechnet wird schon, sobald eines von beiden da ist
+//   erwerbseinkommen       leer → zählt als 0 → Anspruch zu hoch
+//   vermoegen              leer → zählt als 0 → Freibetrag nie überschritten
+//   kanton                 nur wenn Vermögen erfasst ist: ohne Kanton gilt der SKOS-Standardfreibetrag
+const leer = (v) => v == null || String(v).trim() === '';
+export function sozialhilfeErgebnis({ miete, kvgPraemie, erwerbseinkommen, vermoegen, kanton }) {
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, {
+    fehlend: fehlendeAngaben({
+      miete: !leer(miete),
+      kvgPraemie: !leer(kvgPraemie),
+      erwerbseinkommen: !leer(erwerbseinkommen),
+      vermoegen: !leer(vermoegen),
+      kanton: !(Number(vermoegen) > 0) || !!kanton,
+    }),
+  });
+}

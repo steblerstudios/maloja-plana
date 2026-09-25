@@ -184,7 +184,13 @@ export const DirektLinks = ({ palette, t, data }) => {
       ['help1', 'help2', 'help3', 'help4'].forEach((k, i) => kids.push(entryCard(resEntry('help' + i, t('legal.resources.' + k)))));
       BERATUNG_HILFE.forEach((x, i) => kids.push(entryCard({ key: 'ber' + i, name: l(x.name), url: x.url, desc: l(x.beschreibung) })));
       kids.push(groupHeading(t('legal.resources.ombudsTitle'), 'gh-omb'));
-      ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].forEach((k, i) => kids.push(entryCard(resEntry('omb' + i, t('legal.resources.' + k)))));
+      ['ombuds1', 'ombuds2'].forEach((k, i) => kids.push(entryCard(resEntry('omb' + i, t('legal.resources.' + k)))));
+      // Mieterverband und Konsumentenschutz vertreten EINE Seite — sie beraten, sind aber
+      // keine neutrale Ombudsstelle (Rechtsprüfung 24.09.2026, Entscheid Stebler Studios
+      // 25.09.2026). Die Schlüssel ombuds3/4 bleiben, nur die Gruppe ist eine andere.
+      kids.push(groupHeading(t('legal.resources.verbaendeTitle'), 'gh-verb'));
+      kids.push(React.createElement('p', { key: 'verb-hinweis', style: { ...s.groupHeading, fontWeight: 'normal', textTransform: 'none', letterSpacing: 'normal' } }, t('legal.resources.verbaendeHinweis')));
+      ['ombuds3', 'ombuds4'].forEach((k, i) => kids.push(entryCard(resEntry('verb' + i, t('legal.resources.' + k)))));
       return bookWrap('beratung', t('dl.beratungNote'), kids);
     }
     // Sichere Kanäle: verschlüsselte/rechtsgültige Kommunikationswege.

@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
 import { Icon } from './IconKern.jsx';
+import { inDays } from './utils/helpers.js';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
 // Shows on Dashboard when there are overdue or due-today reminders.
@@ -14,7 +15,10 @@ const loadReminders = () => {
   catch { return []; }
 };
 
-const todayISO = () => new Date().toISOString().split('T')[0];
+// «Heute» nach Schweizer Uhr, nicht nach UTC. Bis 24.09.2026 stand hier
+// `new Date().toISOString()` — zwischen Mitternacht und 1/2 Uhr ist das in UTC noch
+// gestern: eine heute fällige Frist galt als morgen, eine gestrige als heute.
+const todayISO = () => inDays(0);
 
 export const OverdueBanner = ({ palette, t, onNavigate }) => {
   const reminders = loadReminders();

@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
+import { zahl as geldZahl } from '../utils/geld.js';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
@@ -37,7 +38,7 @@ describe('K31 IPV-Rechner, Kanton Luzern', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).toContain('CHF 3388');
+    expect(html).toContain('CHF 3’388');
     expect(html).toContain('CHF 282');
   });
 
@@ -45,7 +46,7 @@ describe('K31 IPV-Rechner, Kanton Luzern', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3388');
+    expect(html).not.toContain('CHF 3’388');
   });
 
   it('nennt keine Einkommensgrenze — weder die Kinder-Grenze noch die alten Musterwerte', () => {
@@ -53,7 +54,7 @@ describe('K31 IPV-Rechner, Kanton Luzern', () => {
     expect(html).not.toContain('premium.maxIncome');
     for (const zahl of [54000, 77114, 96392]) {
       expect(html).not.toContain(String(zahl));
-      expect(html).not.toContain(zahl.toLocaleString());
+      expect(html).not.toContain(geldZahl(zahl));
     }
   });
 

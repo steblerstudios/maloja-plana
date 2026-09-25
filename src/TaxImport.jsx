@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
-import { text, weight, radius, space, leading } from './config/tokens.js';
+import { text, weight, radius, space, leading, visuallyHiddenStyle } from './config/tokens.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { betrag } from './utils/geld.js';
 
 // Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung.
 // Spiegelt das Muster von BudgetImport: Datei wählen -> Vorschau -> bestätigen.
@@ -13,7 +14,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
   const [preview, setPreview] = useState(null);
   const [importError, setImportError] = useState(null);
 
-  const fmt = (n) => 'CHF ' + Number(n).toLocaleString('de-CH');
+  const fmt = (n) => betrag(n, { hoechstens: 2 });
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];
@@ -66,7 +67,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
         React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('taxImport.title')),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          React.createElement('input', { type: 'file', accept: '.csv,.txt,.tsv,.xml,.tax', onChange: handleFileSelect, style: { display: 'none' } }),
+          React.createElement('input', { type: 'file', accept: '.csv,.txt,.tsv,.xml,.tax', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('taxImport.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('taxImport.fileTypes'))
         ),

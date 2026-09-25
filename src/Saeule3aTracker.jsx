@@ -5,8 +5,9 @@ import {
   SAEULE3A_HOECHSTABZUG, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR, saeule3aMaximum,
   einzahlungenImJahr, jahreMitEinzahlungen,
 } from './data/saeule3a.js';
+import { zahl } from './utils/geld.js';
 
-const fmt = (v) => Math.round(v).toLocaleString('de-CH');
+const fmt = (v) => zahl(v);
 const chf = (v) => 'CHF ' + fmt(v);
 
 // Einzahlungs-Tracker der Säule 3a.

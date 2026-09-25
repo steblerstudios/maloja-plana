@@ -41,7 +41,7 @@ export const PflegeAblauf = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('pflege.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.step4Link'), onClick: () => onNavigate('situationen') })
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('pflege.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('pflege.quelle'), notes: [t('pflege.footerNote'), t('trust.localOnly')] })
   );
 };
 

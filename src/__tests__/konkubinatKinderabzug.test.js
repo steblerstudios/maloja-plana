@@ -27,7 +27,9 @@ describe('Konkubinat mit Kindern · Annahme «Kinderabzug ganz bei Ihnen»', () 
   });
 
   it('und in der Dossier-Datei mit eigener Kennung', () => {
-    const s = steuernFuerProfil(fall);
+    // K125: ZH zeigt im Konkubinat mit Kindern keine Kantonszahl mehr, und die Bundessteuer ist hier 0 —
+    // ohne beides kein Steuerblock im Dossier. Beispiel darum AG («ganz»-Kanton).
+    const s = steuernFuerProfil({ ...fall, kanton: 'AG' });
     const json = generateBehoerdenJSON({}, { tax: { total: s.bund.steuer, annahmen: s.annahmen, kantonal: s.kanton.kantonal, basis: 'estv' } }, t).calculations.tax;
     expect(json.assumptions).toContainEqual({ code: 'kinderabzug_ganz_konkubinat', text: 'behoerdenDossier.jsonTexte.annahmeKinderabzugKonkubinat' });
     expect(STEUER_KENNUNG.annahmeKinderabzugKonkubinat).toBe('kinderabzug_ganz_konkubinat');

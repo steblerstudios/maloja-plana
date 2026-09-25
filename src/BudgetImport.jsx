@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, weight, radius, space, visuallyHiddenStyle } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { betrag } from './utils/geld.js';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
@@ -45,6 +47,9 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
     width: '100%', padding: space.sm, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
+  // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
+  const [ablageProps, ablageAktiv] = useDateiAblage(handleFileSelect);
+
   return React.createElement('div', { style: { maxWidth: '720px' } },
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Upload
@@ -59,8 +64,8 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
           React.createElement('option', { value: 'text' }, t('budgetImport.tsv'))
         )),
 
-      React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-        React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, style: { display: 'none' } }),
+      React.createElement('label', { ...ablageProps, style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + (ablageAktiv ? palette.sageDeep : palette.border), borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, className: 'mp-datei-eingang', style: visuallyHiddenStyle }),
         React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
         React.createElement('div', { style: { fontWeight: weight.semi } }, t('budgetImport.selectFile')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
@@ -88,22 +93,25 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
       preview ? React.createElement('div', null,
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px' } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginTop: space.xs } }, preview.fileName),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, preview.count + ' entries'),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': CHF ' + preview.totalAmount.toFixed(2))
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, t(preview.count === 1 ? 'budgetImport.eintrag' : 'budgetImport.eintraege', { count: preview.count })),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': ' + betrag(preview.totalAmount, { stellen: 2 }))
         ),
 
         React.createElement('div', { style: { maxHeight: '300px', overflowY: 'auto', marginBottom: '12px' } },
           preview.entries.slice(0, 10).map((entry, idx) => React.createElement('div', { key: idx, style: { padding: space.sm, background: palette.up, borderRadius: '4px', marginBottom: space.xs, fontSize: text.sm } },
             React.createElement('div', null,
               React.createElement('span', { style: { fontWeight: weight.semi } }, entry.description),
-              React.createElement('span', { style: { float: 'right' } }, (entry.type === 'income' ? '+' : '-') + ' CHF ' + entry.amount.toFixed(2))
+              React.createElement('span', { style: { float: 'right' } }, (entry.type === 'income' ? '+' : '-') + ' ' + betrag(entry.amount, { stellen: 2 }))
             ),
             React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginTop: '2px' } }, entry.date + ' | ' + entry.category)
           ))
         ),
 
+        // Nichts erkannt → nichts zu speichern. Bis 24.09.2026 stand hier trotzdem
+        // «Speichern» (und «0 entries», englisch) — ein Klick schrieb ein leeres Budget-Update.
+        preview.count === 0 && React.createElement('p', { role: 'status', style: { margin: '0 0 12px', fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('budgetImport.keineErkannt')),
         React.createElement('div', { style: { display: 'flex', gap: space.sm } },
-          React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
+          preview.count > 0 && React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
           React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
         )
       ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
