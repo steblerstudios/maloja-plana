@@ -19,6 +19,26 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 25.09., 11:50 — DEPLOYT: live = `main` = `0a80d71` (0.1.40-beta), live gegengeprüft.**
+>
+> **Stand, gemessen 25.09.2026 11:48** (`bash scripts/stand-jetzt.sh`): main = `0a80d71` · live = `0a80d71`
+> (gebaut 11:47, `version.json` `sauber: true`) · **live = main** · offen nur #351 (Flyer, Entwurf).
+> **Beleg:** Live-Startdatei `index-CWn0DZjG.js` = frischer `main`-Build; Sprachdatei `de-oT6wlmCW.js` 200,
+> erfundener Name 404. Deploy durch Stebler Studios nach Predeploy-Gate (Marke `0a80d71`).
+>
+> **Mit diesem Deploy live** (74 + 5 Commits über dem alten Live-Stand `d47dc32`): #340 #342 #349 #352 (Links,
+> Fristen ab Ereignis, 34 Abläufe) · #355 Reste · #357 Einkommensart · #343 **AHV-Nummer im QR nur auf Wunsch**
+> · #345 O3 · #347 ALV/Trennung · #350 EO 98 Taggelder · #354 Herzensempfehlungen · #356 .htaccess-Abschrift.
+>
+> **Rauchtest live (Browser, Demo «Ohne Code»):** #/zuzug Einreise 20.09.2026 → Gemeinde 04.10.2026,
+> Führerausweis 19.09.2027 ✓ · #/ergaenzungsleistungen Verfügung 10.09.2026 → 10.03.2027, neuer Satz ✓ ·
+> #/dienst, #/wohnunggekuendigt ✓ · EO-Menü ohne «Dienst» ✓ · ALV/EO/Vorsorge/Sozialhilfe ohne Einkommensart:
+> leer + Hinweis ✓ · Suche «Heirat» ✓. Notfall-QR ohne AHV nur per Test belegt, nicht live gescannt.
+>
+> ⚠️ **Live aufgefallen:** das Demo-Profil (`src/config/demoData.js:35`) hat `monthlyIncome` ohne `incomeType` —
+> die Demo zeigt darum in vier Rechnern leere Felder mit Hinweis. Offene ⚠️ aus dem Gate:
+> `PRUEFUNG-links-ablaeufe-2026-09-24.md` (ausserhalb des Repos), Teil 8.
+
 > ✅ **Nachtrag 25.09., 02:30 — Links, Quellen, Abläufe: vier gestapelte PRs gemergt, jeder auf ausdrückliches Wort von Stebler Studios («merge sauber»). Nicht deployt.**
 >
 > **Stand, gemessen 25.09.2026 02:29** (`bash scripts/stand-jetzt.sh`): `main` = `0e1edee` · live = `d47dc32`
