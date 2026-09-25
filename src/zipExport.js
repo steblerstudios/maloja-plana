@@ -1,5 +1,6 @@
 // ZIP-Export für Datensicherung
-import { getFullName } from './config/constants.js';
+import { getFullName, getChapters } from './config/constants.js';
+import { betrag } from './utils/geld.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
 import { inDays } from './utils/helpers.js';
 
@@ -38,6 +39,22 @@ export const prepareDataForExport = (data, docs = []) => {
 const generateZipManifest = (data, t) => {
   const m = (key, params) => t ? t('zipExport.manifest.' + key, params) : key;
   const dash = '—';
+  // Bis 25.09.2026 schrieb der Text-Export Rohwerte: Auswahlfelder als Schlüssel («f2500»,
+  // «yes», «handwritten»), Beträge ohne Trennung — und ein LEERES Feld als «CHF 0». «Nicht
+  // erfasst» ist aber keine Null. Jetzt: Beschriftung aus derselben Kapiteldefinition wie das
+  // Formular (getChapters), Beträge über utils/geld.js, Leeres als «—».
+  const kapitel = t ? getChapters(t) : [];
+  const wahl = (kap, k, wert, sonst = dash) => {
+    if (wert === undefined || wert === null || wert === '') return sonst;
+    const feld = kapitel.find((c) => c.key === kap)?.fields.find((f) => f.k === k);
+    const opt = feld?.options?.find((o) => String(o.value) === String(wert));
+    return opt ? opt.label : String(wert);
+  };
+  const geld = (wert, zusatz = '') => {
+    if (wert === undefined || wert === null || String(wert).trim() === '') return dash;
+    const n = Number(wert);
+    return Number.isFinite(n) ? betrag(n, { hoechstens: 2 }) + zusatz : String(wert) + zusatz;
+  };
   return `${m('header')}
 ═════════════════════════════════════════
 
@@ -57,35 +74,35 @@ ${m('chBasis')}
 
 ${m('chWohnen')}
    - ${m('address')}: ${data.chapters.wohnen?.address || dash}
-   - ${m('rent')}: CHF ${data.chapters.wohnen?.rentAmount || '0'}${m('perMonth')}
-   - ${m('utilities')}: CHF ${data.chapters.wohnen?.utilities || '0'}${m('perMonth')}
+   - ${m('rent')}: ${geld(data.chapters.wohnen?.rentAmount, m('perMonth'))}
+   - ${m('utilities')}: ${geld(data.chapters.wohnen?.utilities, m('perMonth'))}
 
 ${m('chFinanzen')}
-   - ${m('monthlyIncome')}: CHF ${data.chapters.finanzen?.monthlyIncome || '0'}
+   - ${m('monthlyIncome')}: ${geld(data.chapters.finanzen?.monthlyIncome)}
    - ${m('employer')}: ${data.chapters.finanzen?.employer || dash}
-   - ${m('pillar3a')}: CHF ${data.chapters.finanzen?.pension3a || '0'}${m('perYear')}
+   - ${m('pillar3a')}: ${geld(data.chapters.finanzen?.pension3a, m('perYear'))}
 
 ${m('chVersicherungen')}
    - ${m('healthInsurer')}: ${data.chapters.versicherungen?.kkInsurer || dash}
-   - ${m('premium')}: CHF ${data.chapters.versicherungen?.kkPremium || '0'}${m('perMonth')}
-   - ${m('franchise')}: CHF ${data.chapters.versicherungen?.franchise || '0'}
-   - ${m('bvg')}: CHF ${data.chapters.versicherungen?.bvgContribution || '0'}${m('perMonth')}
+   - ${m('premium')}: ${geld(data.chapters.versicherungen?.kkPremium, m('perMonth'))}
+   - ${m('franchise')}: ${data.chapters.versicherungen?.franchise ? 'CHF ' + wahl('versicherungen', 'franchise', data.chapters.versicherungen.franchise) : dash}
+   - ${m('bvg')}: ${geld(data.chapters.versicherungen?.bvgContribution, m('perMonth'))}
 
 ${m('chAusbildung')}
    - ${m('jobTitle')}: ${data.chapters.ausbildung?.jobTitle || dash}
    - ${m('employer')}: ${data.chapters.ausbildung?.employer || dash}
-   - ${m('educationLevel')}: ${data.chapters.ausbildung?.educationLevel || dash}
+   - ${m('educationLevel')}: ${wahl('ausbildung', 'educationLevel', data.chapters.ausbildung?.educationLevel)}
 
 ${m('chBehoerden')}
    - ${m('taxCanton')}: ${data.chapters.behoerden?.cantoneOfTaxation || dash}
-   - ${m('debtStatus')}: ${data.chapters.behoerden?.betreibungsStatus || m('unknown')}
-   - ${m('will')}: ${data.chapters.behoerden?.willMade || m('no')}
+   - ${m('debtStatus')}: ${wahl('behoerden', 'betreibungsStatus', data.chapters.behoerden?.betreibungsStatus, m('unknown'))}
+   - ${m('will')}: ${wahl('behoerden', 'willMade', data.chapters.behoerden?.willMade)}
 
 ${m('chNotfall')}
-   - ${m('bloodType')}: ${data.chapters.notfall?.bloodType || dash}
+   - ${m('bloodType')}: ${wahl('notfall', 'bloodType', data.chapters.notfall?.bloodType)}
    - ${m('emergencyContact')}: ${data.chapters.notfall?.emergencyContact || (keineKontaktperson(data.chapters.notfall) && t ? t('naZustand.keineKontaktperson') : dash)}
    - ${m('allergies')}: ${data.chapters.notfall?.allergies || dash}
-   - ${m('organDonor')}: ${data.chapters.notfall?.organDonor || m('unknown')}
+   - ${m('organDonor')}: ${wahl('notfall', 'organDonor', data.chapters.notfall?.organDonor, m('unknown'))}
 
 ${m('documents', { count: data.documents.count })}:
 ──────────────────────────────────────
