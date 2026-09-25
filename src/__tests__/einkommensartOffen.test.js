@@ -55,3 +55,16 @@ describe('Einkommensart offen → kein Rechner füllt den Lohn vor', () => {
     expect(html).toContain(de.einkommensart.nebenOffen);
   });
 });
+
+describe('Demo-Profil hat eine gewählte Einkommensart', () => {
+  // Live 25.09.2026 aufgefallen: die Demo hatte monthlyIncome ohne incomeType und zeigte darum in
+  // vier Rechnern nur Hinweise. Entscheid Stebler Studios: netto — Steuern und Sozialhilfe rechnen.
+  it('netto: Steuerschätzung rechnet, Sozialhilfe ist vorbefüllt', async () => {
+    const { DEMO_DATA } = await import('../config/demoData.js');
+    const { steuerbaresEinkommenFuerProfil, steuerEingabenAusDaten } = await import('../data/kantonaleSteuerdaten.js');
+    const { sozialhilfeVorbefuellung } = await import('../utils/sozialhilfeVorbefuellung.js');
+    expect(DEMO_DATA.finanzen.incomeType).toBe('netto');
+    expect(steuerbaresEinkommenFuerProfil(steuerEingabenAusDaten(DEMO_DATA)).steuerbar).toBeGreaterThan(0);
+    expect(sozialhilfeVorbefuellung(DEMO_DATA).einkommen).toBe(String(DEMO_DATA.finanzen.monthlyIncome));
+  });
+});
