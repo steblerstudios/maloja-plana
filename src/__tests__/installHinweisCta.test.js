@@ -48,12 +48,12 @@ describe('InstallHinweis · Karte im Panorama', () => {
   };
   afterEach(() => { delete globalThis.localStorage; });
 
-  it('Zeichen folgt dem Gerät: iPhone → Handy, Mac-Chrome → Computer', () => {
+  it('Zeichen: überall das Smartphone, wie im Menü (Entscheid 25.09.2026)', () => {
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     const iphone = mitGeraet('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1', 5, () => rendern({}));
     const mac = mitGeraet('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128.0 Safari/537.36', 0, () => rendern({}));
     expect(iphone).toContain('data-zeichen="handy"');
-    expect(mac).toContain('data-zeichen="computer"');
+    expect(mac).toContain('data-zeichen="handy"');
   });
 
   it('klein: ohne Satz, der Knopf trägt ihn im Namen; gross: Satz sichtbar', () => {
