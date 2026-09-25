@@ -619,19 +619,17 @@ const AppInner = ({ demo }) => {
 
   // ─── Leises Einblenden beim Ansichtswechsel (utils/einblenden.js) ─
   // Nicht beim ersten Bild, nicht nach «Zurück» (dort gilt die gemerkte Stelle).
-  const ersteAnsicht = React.useRef(true);
-  const zurueckGekommen = React.useRef(false);
+  // Eine Markierung: true = erstes Bild oder nach «Zurück» → still; sonst einblenden.
+  const stillBleiben = React.useRef(true);
   useEffect(() => {
-    if (ersteAnsicht.current) { ersteAnsicht.current = false; return; }
-    const zurueck = zurueckGekommen.current;
-    zurueckGekommen.current = false;
-    blendeEin(document.getElementById('mp-main'), { zurueck });
+    blendeEin(document.getElementById('mp-main'), { zurueck: stillBleiben.current });
+    stillBleiben.current = false;
   }, [view, activeChapter]);
 
   // ─── Hash routing: listen for browser back/forward ────────
   useEffect(() => {
     const cleanup = onHashChange((parsed) => {
-      zurueckGekommen.current = true;
+      stillBleiben.current = true;
       // startTransition: das Ziel kann ein noch nicht geladener Lazy-Chunk sein — so darf
       // React den Suspense-Fallback (CalmLoader) zeigen statt „suspended on sync input" zu werfen.
       startTransition(() => {
@@ -881,7 +879,7 @@ const AppInner = ({ demo }) => {
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
     merkeStelle();
-    zurueckGekommen.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
+    stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
