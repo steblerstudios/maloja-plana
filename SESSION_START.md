@@ -19,6 +19,29 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🧮 **Nachtrag 25.09., 20:55 — Sitzung «Sozialhilfe eine Wahrheit»: Schnellrechnung und SKOS-Rechner teilen einen Kern (#389), gemergt auf ausdrückliches Wort von Stebler Studios («gerne mergen»), Squash.**
+>
+> **Stand, gemessen 25.09.2026 20:53** (`bash scripts/stand-jetzt.sh`): main = `1dc1f69` (20:53) · live = `bb9448c`
+> (0.1.40-beta, gebaut 25.09. 19:06) · 5 Commits dazwischen · offen: #388, #351 (Entwürfe). **#389 ist NICHT live.**
+> Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> | Was | Wo |
+> |---|---|
+> | Ein Kern für Bedarf ↔ Einkommen: `sozialhilfeBilanz`, `einkommensfreibetrag`, `istErwerbstaetig` (ohne Importe, `cantonalData.js` liegt im Startbündel) | `src/data/sozialhilfeKern.js` |
+> | Erwerbsunkosten (**SKOS-RL C.6.3**, nicht C.6.1) im Bedarf — Feld im Rechner; Profil hat keins → Hinweis in der Schnellrechnung | `SozialhilfeRechner.jsx`, `SozialhilfeView.jsx` |
+> | Eintritt vorsichtig **ohne** Einkommensfreibetrag (**D.2**, nicht C.6.2); belegt: **ZH** ohne (Handbuch 6.2.05, Stand 1.3.2024), **BS** 200 Fr. Abzug (URL WSU 2026 Ziff. 4.3); sonst Flag `efbEntscheidet` («möglich, Kanton entscheidet») | Kern |
+> | Betrag bei Anspruch mit EFB = **⅓ Lohn, max 400** (Regel BS = SKOS-Untergrenze), nie über dem Lohn; ersetzt die unbelegte Formel 400 + 33 %/max 700 | Kern, `sozialhilfeRechner.js` |
+> | Behörden-Dossier: EFB-Zeile + Vorbehalte (`notes` je Abschnitt, neu), JSON mit `efb`/`efbEntscheidet` · Pegel mit angerechnetem Einkommen | `dossierGenerator.js`, `BehoerdenDossier.jsx`, `data/pegel.js` |
+> | Quellen im Wortlaut gelesen: SKOS-RL Fassung 1.1.2021 + Synopse 2. Etappe (C.6.3/D.2 per 1.1.2026 unverändert) | Kopf von `sozialhilfeKern.js` |
+>
+> **Belegt:** 18 Regel-Tests `sozialhilfeKern.test.js` (Gleichheit über 26 Kantone, ZH/BS, EFB ≤ Lohn, Dossier, Pegel); Mutationsprobe 7 rot auf altem Code, 13 rot auf dem Stand vor der Prüfer-Runde. Auf dem mit `main` zusammengeführten Stand **4116 Tests grün**, Build ok, Startbündel **62,22 / 65 kB**, CI grün. swiss-precision- und rechts-pruefer: je 3 Blocker gefunden, alle eingearbeitet. Vorschau (Beispiel ZH): 2400 → 461 Fr. mit «geschätzt», 2600 → kein Anspruch ohne Vorbehalt.
+>
+> **Offen:**
+> 1. **Deploy** (Stebler Studios) → danach live prüfen: Sozialhilfe-Seite + Rechner + Dossier.
+> 2. **Netto/Brutto:** Schnellrechnung prüft `incomeType` nicht; der Schnellcheck fragt sogar «brutto» ab — wirkt jetzt auch auf den EFB (unter 1200 Fr.).
+> 3. **«Möglich» in Listen:** Leistungsliste/Schnellcheck/Instrumente zeigen bei `efbEntscheidet` nichts — Entscheid offen.
+> 4. Nicht abgebildet: Lernende (D.2 Erl. b), 13. Monatslohn beim EFB (BS zählt ihn), EFB über 400 nur mit belegten Kantonswerten. RM-Texte `TODO(rm)`.
+
 > 🏔️ **Nachtrag 25.09., 16:15 — Sitzung «Maloja Dashboard Berge Variante»: Dashboard-Berge als gemalte Malojapass-Landschaft (#365), gemergt auf ausdrückliches Wort von Stebler Studios («jetzt darfst du mergen») und LIVE.**
 >
 > **Stand, gemessen 25.09.2026 16:10** (`bash scripts/stand-jetzt.sh`): main = `63c6f80` (15:33) · live = `3ec7515`
