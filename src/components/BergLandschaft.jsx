@@ -192,16 +192,17 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
     ),
-    // Der Anspruch als Titel im Himmel (Hero, seit 25.09.2026). Mittig, weil links oben der
-    // dunkle Hang ins Bild ragt. Dunkler Text der hellen Palette auf hellem Himmel und blassen
-    // Gipfeln; ein heller Schein dahinter hält ihn lesbar, wo er einen Gipfel streift — keine
-    // Deckkraft auf dem Text (K41).
+    // Der Anspruch als Titel im Himmel (Hero, seit 25.09.2026), links bündig (Entscheid Stebler
+    // Studios). Dunkler Text der hellen Palette auf hellem Himmel und blassen Gipfeln. Links oben
+    // ragt der dunkle Hang ins Bild: an den Bildpunkten gemessen streift der Text ihn nur an
+    // wenigen Punkten (≤ 0,5 %) — der helle Schein dahinter hält ihn dort lesbar. Keine Deckkraft
+    // auf dem Text (K41).
     titel && React.createElement(PageTitle, {
       palette: p,
       'data-testid': 'berg-titel',
       style: {
-        position: 'absolute', top: schmal ? '14px' : '22px', left: '50%', transform: 'translateX(-50%)',
-        width: schmal ? '88%' : '84%', textAlign: 'center',
+        position: 'absolute', top: schmal ? '14px' : '22px', left: schmal ? '16px' : '28px',
+        right: schmal ? '16px' : '28px', textAlign: 'left',
         fontSize: schmal ? '24px' : '30px', lineHeight: 1.15, letterSpacing: '-0.3px',
         color: p.text, textShadow: `0 0 14px ${p.surface}, 0 0 4px ${p.surface}`,
         textWrap: 'balance',
