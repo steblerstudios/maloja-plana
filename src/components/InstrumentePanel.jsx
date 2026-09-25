@@ -67,7 +67,9 @@ const miniShield = (palette, fraction) => {
   );
 };
 
-export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
+// eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
+// Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   const shield = schildState(v, {
@@ -118,8 +120,13 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
     },
   ];
 
-  return h('div', { style: { marginBottom: space.xl + 'px' } },
-    h(PanelTitle, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('instrumente.title')),
+  return h('div', { style: eingebettet ? { marginTop: space.md + 'px' } : { marginBottom: space.xl + 'px' } },
+    h(PanelTitle, {
+      palette,
+      style: eingebettet
+        ? { margin: '0 0 ' + space.xs + 'px 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+        : { margin: '0 0 ' + space.xs + 'px 0' },
+    }, t('instrumente.title')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
     // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
     // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).

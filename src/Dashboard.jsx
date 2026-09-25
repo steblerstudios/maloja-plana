@@ -652,6 +652,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
           primary && renderItem(primary),
+          // Deine Instrumente — seit 25.09.2026 im selben Block, gleich unter der Übersicht.
+          // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           React.createElement(QuickCheck, { palette, t, onNavigate, data }),
           (() => {
             // Anspruchs-Matrix — nur ein *positiver, ermutigender* Hinweis „Anspruch
@@ -931,10 +935,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ),
     ),
 
-    // ─── Deine Instrumente — Dashboard-Spiegel der vier Selbstchecks ──
-    // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
-    React.createElement(React.Suspense, { fallback: null },
-      React.createElement(InstrumentePanel, { palette, t, data, onNavigate })),
 
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
