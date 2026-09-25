@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // ─── Lebensmappe View ─────────────────────────────────────
 // Calm preview of the personal life overview dossier.
@@ -72,16 +73,8 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
   return React.createElement('div', {
     style: { maxWidth: '520px' }
   },
-
-    // ─── Back link ──────────────────────────────────────
-    React.createElement('button', {
-      onClick: () => onNavigate('unterlagen'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
-      }
-    }, zurueckZeichen(), t('lebensmappe.back')),
+    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
+    React.createElement(Brotkrume, { palette, t, view: 'lebensmappe', onNavigate }),
 
     // ─── Header ─────────────────────────────────────────
     React.createElement('div', {

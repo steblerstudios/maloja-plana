@@ -1458,6 +1458,7 @@ export default {
       schuldenFromBehoerdenHint: 'Gérer les poursuites',
     },
     backToDashboard: 'Aperçu',
+    pfad: 'Chemin', // Name der Brotkrume für Screenreader (components/Brotkrume.jsx)
   },
 
   wohnen: {

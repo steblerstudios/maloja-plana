@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
+import { PFADE } from './config/brotkrumePfade.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -1320,8 +1321,12 @@ const AppInner = ({ demo }) => {
     // bleibt nur der Kopf (position: sticky), und die Reiter darin hängen sich per
     // --mp-kopf-h darunter.
     React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
-      view !== 'dashboard' && React.createElement('button', {
-        onClick: () => setView('dashboard'),
+      // In den fünf Unter-Ansichten zeichnet die Ansicht selbst die Brotkrume (components/
+      // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
+      // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
+      // sprang die Seite dabei nicht nach oben, und der Fokus blieb stehen.
+      view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
+        onClick: () => handleNavigate('dashboard'),
         'aria-label': t('nav.backToDashboard'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',

@@ -1458,6 +1458,7 @@ export default {
       schuldenFromBehoerdenHint: 'Manage debt collection',
     },
     backToDashboard: 'Overview',
+    pfad: 'Breadcrumb', // Name der Brotkrume für Screenreader (components/Brotkrume.jsx)
   },
 
   wohnen: {

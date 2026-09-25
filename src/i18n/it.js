@@ -1458,6 +1458,7 @@ export default {
       schuldenFromBehoerdenHint: 'Gestire le esecuzioni',
     },
     backToDashboard: 'Panoramica',
+    pfad: 'Percorso', // Name der Brotkrume für Screenreader (components/Brotkrume.jsx)
   },
 
   wohnen: {

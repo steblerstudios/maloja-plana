@@ -1461,6 +1461,7 @@ export default {
       schuldenFromBehoerdenHint: 'Betreibungen verwalten',
     },
     backToDashboard: 'Übersicht',
+    pfad: 'Pfad', // Name der Brotkrume für Screenreader (components/Brotkrume.jsx)
   },
 
   wohnen: {
