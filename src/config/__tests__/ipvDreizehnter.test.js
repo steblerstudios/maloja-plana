@@ -97,9 +97,9 @@ describe('calculateIPV in den fünf Kantonsmodulen', () => {
     const offen = calculateIPV(profil(canton, plz, city, 2160));
     const nein = calculateIPV(profil(canton, plz, city, 2160, NEIN));
     expect(offen.annual).toBe(nein.annual);
-    expect(offen.annahmen).toEqual({ ohneDreizehnten: true });
-    expect(nein.annahmen).toEqual({ ohneDreizehnten: false });
-    expect(calculateIPV(profil(canton, plz, city, 2160, JA)).annahmen).toEqual({ ohneDreizehnten: false });
+    expect(offen.annahmen).toEqual({ ohneDreizehnten: true, partnerOhneDreizehnten: false });
+    expect(nein.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
+    expect(calculateIPV(profil(canton, plz, city, 2160, JA)).annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: false });
   });
 
   it('der IPV-Rechner zeigt die Annahme nur bei offener Frage', () => {
@@ -123,6 +123,14 @@ describe('calculateIPV in einem Muster-Kanton (Beleg simuliert)', () => {
       expect(calculateIPV(mit13).annual).toBeLessThan(calculateIPV(profil('BS', '4051', 'Basel', 2160, NEIN)).annual);
       // Der Pegel steht neben derselben Grenze — also dasselbe Einkommen.
       expect(pegelState(mit13).income).toBe(2160 * 13);
+      // Partnereinkommen: immer ×12, und das Ergebnis sagt es dazu (nach dem 13. der zweiten
+      // Person fragt die App nicht). Nur mit sichtbarem Partnerfeld (zweite erwachsene Person).
+      const paar = { ...mit13, basis: { ...mit13.basis, maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '1000' } } };
+      expect(ipvJahreseinkommen(paar)).toBe(2160 * 13 + 1000 * 12);
+      const r = calculateIPV(paar);
+      expect(r.eligible).toBe(true);
+      expect(r.annahmen).toEqual({ ohneDreizehnten: false, partnerOhneDreizehnten: true });
+      expect(calculateIPV(mit13).annahmen.partnerOhneDreizehnten).toBe(false);
     } finally { zurueck(); }
   });
 });
@@ -132,10 +140,11 @@ describe('calculateIPV in einem Muster-Kanton (Beleg simuliert)', () => {
 describe('Behörden-Dossier trägt die Annahme mit', () => {
   it('JSON: calculations.ipv.assumptions nur bei offener Frage', async () => {
     const { generateBehoerdenJSON } = await import('../../dossierGenerator.js');
-    const ipv = (ohneDreizehnten) => ({ belegt: true, eligible: true, amount: 100, annahmen: { ohneDreizehnten } });
-    const offen = generateBehoerdenJSON({}, { ipv: ipv(true) }, (k) => k).calculations.ipv;
-    expect(offen.assumptions).toEqual([{ code: 'ohne_13_monatslohn', text: 'behoerdenDossier.jsonTexte.annahmeOhneDreizehnten' }]);
-    expect(generateBehoerdenJSON({}, { ipv: ipv(false) }, (k) => k).calculations.ipv.assumptions).toBeUndefined();
+    const ipv = (ohneDreizehnten, partnerOhneDreizehnten = false) => ({ belegt: true, eligible: true, amount: 100, annahmen: { ohneDreizehnten, partnerOhneDreizehnten } });
+    const json = (i) => generateBehoerdenJSON({}, { ipv: i }, (k) => k).calculations.ipv;
+    expect(json(ipv(true)).assumptions).toEqual([{ code: 'ohne_13_monatslohn', text: 'behoerdenDossier.jsonTexte.annahmeOhneDreizehnten' }]);
+    expect(json(ipv(false, true)).assumptions).toEqual([{ code: 'partner_ohne_13_monatslohn', text: 'behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten' }]);
+    expect(json(ipv(false)).assumptions).toBeUndefined();
   });
 });
 
@@ -164,5 +173,34 @@ describe('Mietzinsbeiträge: 13. Monatslohn nach derselben Regel', () => {
     const html = await render(undefined);
     expect(html).toContain('mietzinsView.result_likely');
     expect(html).toContain('mietzinsView.annahmeOhneDreizehnten');
+  });
+});
+
+// Schutzschild: die BVG-Eintrittsschwelle misst den AHV-Jahreslohn, der 13. gehört dazu
+// (BVG Art. 7 Abs. 2). Ein Monatslohn, der ×12 knapp unter, ×13 über der Schwelle liegt.
+describe('Schutzschild: BVG-Eintrittsschwelle mit 13. Monatslohn', () => {
+  it('×13 bei «ja» macht die BVG-Pflicht sichtbar, ×12 sonst nicht', async () => {
+    const { schildState, jahreseinkommenFuerSchild } = await import('../../data/schutzschild.js');
+    const { BVG_PARAMS } = await import('../../data/ahvRechner.js');
+    const m = BVG_PARAMS.eintrittsschwelle / 12.5;
+    const bvgPflicht = (dreizehnter) => schildState({ kkInsurer: 'X' }, { employed: true, annualIncome: jahreseinkommenFuerSchild({ monthlyIncome: m, dreizehnter }) })
+      .pflicht.items.some((i) => i.key === 'bvg');
+    expect(bvgPflicht(JA)).toBe(true);
+    expect(bvgPflicht(NEIN)).toBe(false);
+    expect(bvgPflicht(undefined)).toBe(false);
+  });
+});
+
+describe('IPV-Rechner zeigt die Partner-Annahme', () => {
+  it('nur mit Partnereinkommen', () => {
+    const zurueck = kantoneBelegtSimulieren(['BS']);
+    try {
+      const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+      const render = (data) => renderToStaticMarkup(React.createElement(PremiumSubsidy, { palette, t: (k) => k, data, onUpdateData: () => {} }));
+      const allein = profil('BS', '4051', 'Basel', 2160, JA);
+      const paar = { ...allein, basis: { ...allein.basis, maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '1000' } } };
+      expect(render(paar)).toContain('ipv.annahmePartnerOhneDreizehnten');
+      expect(render(allein)).not.toContain('ipv.annahmePartnerOhneDreizehnten');
+    } finally { zurueck(); }
   });
 });

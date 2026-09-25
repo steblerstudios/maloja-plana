@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import { IPV_ZH, ipvZuerichRechnen, zhRegion } from '../ipvZuerich.js';
-import { calculateIPV, preloadPLZ, CANTONAL_IPV, CANTON_CODES } from '../cantonalData.js';
+import { calculateIPV, preloadPLZ, CANTONAL_IPV, CANTON_CODES, getHouseholdInfo } from '../cantonalData.js';
 import { getRegion } from '../../data/praemienRegionen.js';
 import { calculateIPVAlt } from './calculateIPV-v0.1.37.js';
 import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
@@ -158,7 +158,7 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG und LU rechnen exak
       for (const d of faelle) {
         const { annahmen, ...rest } = calculateIPV(d);
         expect(rest).toStrictEqual(calculateIPVAlt(d));
-        if (rest.eligible) expect(annahmen).toEqual({ ohneDreizehnten: d.finanzen.monthlyIncome > 0 });
+        if (rest.eligible) expect(annahmen).toEqual({ ohneDreizehnten: d.finanzen.monthlyIncome > 0, partnerOhneDreizehnten: getHouseholdInfo(d).partnerIncome > 0 });
         else expect(annahmen).toBeUndefined();
       }
     } finally {

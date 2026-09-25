@@ -27,6 +27,12 @@ import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
 
+// IPV-Annahmen hinter einem geschätzten Betrag (cantonalData.js calculateIPV), in fester Reihenfolge.
+const ipvAnnahmenTexte = (t, a) => [
+  a?.ohneDreizehnten && t('ipv.annahmeOhneDreizehnten'),
+  a?.partnerOhneDreizehnten && t('ipv.annahmePartnerOhneDreizehnten'),
+].filter(Boolean);
+
 function formatCHF(value) {
   const n = Math.round(value);
   if (n === 0) return 'CHF 0';
@@ -94,8 +100,9 @@ export const druckAbschnitte = (t, w) => {
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   // Geschätzter Betrag bei offener Frage nach dem 13. Monatslohn: die Annahme gehört dazu (wie bei der Steuer).
-  if (!ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible && w.ipv.annahmen?.ohneDreizehnten) {
-    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('ipv.annahmeOhneDreizehnten')) + '</td></tr>' });
+  const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? ipvAnnahmenTexte(t, w.ipv.annahmen) : [];
+  if (ipvAnnahmen.length) {
+    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
@@ -452,7 +459,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         ? t('finanzUebersicht.ipvVerfuegungOhneJahr')
         : ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
-          + (ipv.annahmen?.ohneDreizehnten ? '. ' + t('ipv.annahmeOhneDreizehnten') : '')
+          + ipvAnnahmenTexte(t, ipv.annahmen).map((x) => '. ' + x).join('')
         : ipv.belegt === false
           ? t(ipv.noteKey, ipv.noteParams)
           // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht

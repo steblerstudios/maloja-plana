@@ -394,11 +394,14 @@ export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
 //   annahmen.ohneDreizehnten  wie im Steuerrechner (steuernFuerProfil): ein Betrag steht, der
 //                    Hauptlohn ist erfasst, die Frage nach dem 13. Monatslohn aber offen — gerechnet
 //                    ×12. Mit 13. läge das Einkommen 8,3 % höher (13/12) und die Verbilligung tiefer.
+//   annahmen.partnerOhneDreizehnten  Partnereinkommen erfasst — immer ×12 gerechnet (keine Frage dazu).
 export function calculateIPV(data) {
   const r = ipvRechnen(data);
   if (!r.eligible) return r;
   const ohneDreizehnten = Number(data.finanzen?.monthlyIncome) > 0 && dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
-  return { ...r, annahmen: { ohneDreizehnten } };
+  // Das Partnereinkommen zählt ×12 — nach dem 13. der zweiten Person fragt die App nicht.
+  const partnerOhneDreizehnten = getHouseholdInfo(data).partnerIncome > 0;
+  return { ...r, annahmen: { ohneDreizehnten, partnerOhneDreizehnten } };
 }
 
 function ipvRechnen(data) {
