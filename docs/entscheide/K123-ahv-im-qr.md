@@ -2,6 +2,13 @@
 
 *Vorbereitet 24.09.2026 auf `main` `5dae403`. Entscheid: Stebler Studios. Keine Rechtsberatung.*
 
+> ✅ **Entschieden 24.09.2026, abends: Option B** (Stebler Studios: «dann b, vielleicht anwählbar
+> oder klickbar»). Umgesetzt: Notfall-QR über die Erlaubnisliste `NOTFALL_QR_FELDER`
+> (`dossierGenerator.js`, ohne `basis.ahv`; das gedruckte Dossier behält die Nummer), Organspende-QR
+> ohne AHV, KK-Karte mit Kästchen «AHV-Nummer in die Codes aufnehmen» — Standard aus, nicht
+> gespeichert, für beide KK-Codes. Tests: `k123AhvNurAufWunsch.test.js`, `k123AhvAufrufstelle.test.js`.
+> C (Kontaktkarte) bleibt eine eigene Idee für später.
+
 **Die Frage:** Soll die AHV-Nummer in einem QR-Code stehen, den Maloja erzeugt — und wenn ja, in
 welchem, und auf wessen Wunsch?
 

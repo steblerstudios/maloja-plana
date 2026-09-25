@@ -485,6 +485,31 @@ function getNotfallSections(data, chapters, t) {
   return sections;
 }
 
+// ─── K123 · Was in den Notfall-QR darf ──────────────────
+// Entscheid Stebler Studios 24.09.2026 (Option B, docs/entscheide/K123-ahv-im-qr.md): die
+// AHV-Nummer gehört NICHT in den Notfall-QR. Ein Code wird gezeigt, fotografiert, weitergegeben
+// und ist nicht widerrufbar; das gedruckte Dossier behält die Nummer. ERLAUBNIS-, nicht
+// Verbotsliste: ein neues Dossier-Feld kommt erst in den Code, wenn es hier steht.
+export const NOTFALL_QR_FELDER = Object.freeze([
+  'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
+  'notfall.emergencyContact', 'notfall.emergencyPhone',
+  'notfall.bloodType', 'notfall.allergies', 'notfall.medications', 'notfall.chronicDiseases',
+  'notfall.doctor', 'notfall.doctorPhone', 'notfall.hospital',
+  'notfall.organDonor', 'notfall.patientenverfuegung', 'notfall.vorsorgeauftrag', 'notfall.bestattungswuensche',
+  'versicherungen.kkInsurer', 'versicherungen.kkCardNumber',
+]);
+
+// Abschnitte für den Notfall-QR: Reihenfolge Medizin zuerst (Entscheid 17.09.2026), nur Felder
+// aus NOTFALL_QR_FELDER, leere Abschnitte fallen weg.
+const NOTFALL_QR_REIHENFOLGE = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
+export function notfallQrAbschnitte(sections) {
+  const rang = key => { const i = NOTFALL_QR_REIHENFOLGE.indexOf(key); return i === -1 ? NOTFALL_QR_REIHENFOLGE.length : i; };
+  return [...sections]
+    .sort((a, b) => rang(a.key) - rang(b.key))
+    .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }))
+    .filter(s => s.rows.length > 0);
+}
+
 // ─── Notfall Preview Data (for React rendering) ─────────
 
 export function getNotfallDossierPreview(data, chapters, t) {

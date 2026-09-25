@@ -3307,6 +3307,8 @@ export default {
     qrKarteTitel: 'Health insurance',
     qrNotfallLesbar: 'For an emergency — any camera shows it',
     qrUebernahme: 'Meant for transferring into Maloja — not encrypted',
+    ahvImQr: "Include the AHV number in the codes",
+    ahvImQrHinweis: "Off by default. Anyone who scans a code can read the number. It is printed on the insurance card anyway.",
     errorNoInsurer: 'Insurer missing',
     errorCardNumber: 'Card number missing or incomplete',
     errorAhvFormat: 'AHV number format invalid',

@@ -3307,6 +3307,8 @@ export default {
     qrKarteTitel: 'Assicurazione malattia',
     qrNotfallLesbar: 'In caso di emergenza — ogni fotocamera lo mostra',
     qrUebernahme: 'Pensato per riprenderlo in Maloja — non cifrato',
+    ahvImQr: "Includere il numero AVS nei codici",
+    ahvImQrHinweis: "Disattivato di default. Chi scansiona un codice legge il numero. Figura comunque sulla tessera d'assicurato.",
     errorNoInsurer: 'Manca l\'assicuratore',
     errorCardNumber: 'Numero tessera mancante o incompleto',
     errorAhvFormat: 'Formato numero AVS non valido',

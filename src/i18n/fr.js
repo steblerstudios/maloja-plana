@@ -3306,6 +3306,8 @@ export default {
     qrKarteTitel: 'Assurance maladie',
     qrNotfallLesbar: 'En cas d\'urgence — toute caméra l\'affiche',
     qrUebernahme: 'Prévu pour reprendre dans Maloja — non chiffré',
+    ahvImQr: "Inclure le numéro AVS dans les codes",
+    ahvImQrHinweis: "Désactivé par défaut. Qui scanne un code lit le numéro. Il figure de toute façon sur la carte d'assuré.",
     errorNoInsurer: 'Assureur manquant',
     errorCardNumber: 'Numéro de carte manquant ou incomplet',
     errorAhvFormat: 'Format du numéro AVS invalide',

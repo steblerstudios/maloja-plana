@@ -25,7 +25,8 @@ import { betrag } from './utils/geld.js';
 //
 // Steht hier und nicht in kkScanner.js, damit jene Datei frei von der QR-Bibliothek bleibt:
 // die hängt sich beim Import an `window` und zöge eine Browser-Abhängigkeit in reine Logik.
-export function kkNotfallVcard({ t, kkData = {} }) {
+// K123: AHV-Nummer nur mit `mitAhv` (Schalter an der Karte, Standard aus).
+export function kkNotfallVcard({ t, kkData = {}, mitAhv = false }) {
   const zeile = (schluessel, wert) => {
     const w = String(wert ?? '').trim();
     return w ? '  ' + t('kkScanner.' + schluessel) + ': ' + w : null;
@@ -36,7 +37,7 @@ export function kkNotfallVcard({ t, kkData = {} }) {
     t('kkScanner.qrKarteTitel') + ':',
     zeile('insurer', kkData.insurer),
     zeile('cardNumber', kkData.cardNumber),
-    zeile('ahv', kkData.ahv),
+    mitAhv ? zeile('ahv', kkData.ahv) : null,
     zeile('franchise', kkData.franchise),
     zeile('model', kkData.model),
   ].filter(Boolean);
@@ -63,6 +64,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   const [qrCode, setQRCode] = useState(null);
   const [qrFehler, setQrFehler] = useState(false);
   const [qrAnsage, setQrAnsage] = useState('');
+  // K123: AHV-Nummer in die Codes? Standard aus, wird nicht gespeichert — jedes Mal neu gewählt.
+  const [ahvImQr, setAhvImQr] = useState(false);
   const [conflicts, setConflicts] = useState(null);
   // Bis 24.09.2026 brach Speichern bei ungültiger Eingabe STUMM ab (`return`), und ein
   // gelungenes Speichern leerte das Formular ohne ein Wort. `validation.errors` war
@@ -124,7 +127,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     const validation = validateKKData(kkData, t);
     setFehler(validation.errors);
     if (!validation.valid) return;
-    const qrData = generateKKQRCode(kkData);
+    const qrData = generateKKQRCode(kkData, { mitAhv: ahvImQr });
     setQRCode(qrData);
     setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
@@ -133,7 +136,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       // Der lesbare Code zuerst — er ist der, den im Ernstfall jemand Fremdes braucht.
       const lesbar = document.getElementById('kk-qr-lesbar');
       const okLesbar = lesbar
-        ? qrZeichnen(lesbar, kkNotfallVcard({ t, kkData }), {
+        ? qrZeichnen(lesbar, kkNotfallVcard({ t, kkData, mitAhv: ahvImQr }), {
             maxBytes: QR_MAX_BYTES_VCARD, width: 180, height: 180,
             beschriftung: t('kkScanner.qrNotfallLesbar'),
           })
@@ -294,6 +297,22 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         ))
       ),
 
+      // K123 (Entscheid Stebler Studios 24.09.2026, Option B): AHV-Nummer nur auf ausdrücklichen
+      // Wunsch in die Codes. Standard aus; umschalten löscht die gezeichneten Codes, damit nie
+      // ein Code mit dem alten Inhalt stehen bleibt.
+      String(kkData.ahv ?? '').trim() && React.createElement('label', {
+        style: { display: 'flex', alignItems: 'flex-start', gap: space.sm, minHeight: '44px', cursor: 'pointer', fontSize: text.sm, color: palette.text, marginBottom: space.sm, lineHeight: 1.4 },
+      },
+        React.createElement('input', {
+          type: 'checkbox', checked: ahvImQr,
+          onChange: (e) => { setAhvImQr(e.target.checked); setQRCode(null); setQrAnsage(''); },
+          style: { width: '20px', height: '20px', margin: '2px 0 0', flexShrink: 0, accentColor: palette.sageDeep },
+        }),
+        React.createElement('span', null,
+          t('kkScanner.ahvImQr'),
+          React.createElement('span', { style: { display: 'block', color: palette.mid, fontSize: text.xs } }, t('kkScanner.ahvImQrHinweis'))
+        )
+      ),
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, hinweisZeichen(), t('kkScanner.qrBarcode')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
