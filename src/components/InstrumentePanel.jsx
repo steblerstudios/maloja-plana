@@ -4,7 +4,7 @@ import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil } from '../data/kantonaleSteuerdaten.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
-import { zahl } from '../utils/geld.js';
+import { zahl, betrag as chfBetrag } from '../utils/geld.js';
 import { shieldPath } from './shieldShape.js';
 import { PanelTitle } from './Heading.jsx';
 import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
@@ -38,22 +38,38 @@ const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
   return h('svg', { viewBox: '0 0 60 40', width: 60, height: 40, style: { overflow: 'visible' }, 'aria-hidden': true }, els);
 };
 
-// Steuer-Säulen im Kleinen — Spiegel von SteuerSaeulen.jsx (Steuerrechner): zwei belegte
-// Säulen (ledig, verheiratet gemeinsam, DBG Art. 36), die dritte gestrichelt und ohne Wert
-// (Individualbesteuerung, noch nicht in Kraft). Höhen aus dem echten Tarifvergleich, sonst
-// gleich hoch; die Säule des eigenen Zivilstands in Sand, wie «aktuell gewählt» im Rechner.
-const miniSaeulen = (palette, { ledig, gemeinsam, verheiratet }) => {
+// Steuer-Säulen im Kleinen — direkter Spiegel von SteuerSaeulen.jsx (Steuerrechner), gleiche
+// Regeln im Massstab 34 : 120 px:
+//  - Höhe ∝ Betrag AB NULL (dieselbe Formel, Mindesthöhe 8/120), gemeinsame Grundlinie;
+//    nur die obere Kante gerundet, der Fuss steht auf der Linie.
+//  - «ledig» und «verheiratet, gemeinsam» belegt (DBG Art. 36); die eigene Säule in Sand
+//    («aktuell gewählt»), die andere gedämpft (mid + 55), wie im Rechner.
+//  - «verheiratet, einzeln» (Individualbesteuerung, noch nicht in Kraft): gestrichelt,
+//    feste Höhe 44/120, unten offen, ohne Wert.
+//  - Ohne Tarifvergleich (z.B. Konkubinat mit offenem Partnereinkommen) keine erfundenen
+//    Höhen: alle drei gestrichelt.
+//  - Hover: <title> je Säule mit Name und Betrag (die Zahl darunter bleibt die eine Kennzahl).
+const S_MAX = 34, S_BASIS = 40, S_BREIT = 14;
+const oben = (x, y, w, h, r) => 'M ' + x + ' ' + (y + h) + ' V ' + (y + r) + ' Q ' + x + ' ' + y + ' ' + (x + r) + ' ' + y
+  + ' H ' + (x + w - r) + ' Q ' + (x + w) + ' ' + y + ' ' + (x + w) + ' ' + (y + r) + ' V ' + (y + h);
+const miniSaeulen = (palette, t, { ledig, gemeinsam, verheiratet, belegt }) => {
   const h = React.createElement;
-  const max = Math.max(ledig || 0, gemeinsam || 0);
-  const hoehe = (v) => (max > 0 ? 10 + 24 * (v / max) : 22);
-  const saeule = (key, x, v, aktiv) => h('rect', {
-    key, x, width: 9, rx: 2, y: 38 - hoehe(v), height: hoehe(v),
+  const max = Math.max(ledig, gemeinsam, 1);
+  const hoehe = (v) => Math.max(S_MAX * 8 / 120, S_MAX * v / max);
+  const offen = (key, x, hh, titel) => h('path', {
+    key, d: oben(x + 0.5, S_BASIS - hh, S_BREIT - 1, hh, 2), fill: 'none',
+    stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2',
+  }, titel && h('title', null, titel));
+  const fest = (key, x, v, aktiv) => h('path', {
+    key, d: oben(x, S_BASIS - hoehe(v), S_BREIT, hoehe(v), 3) + ' Z',
     fill: aktiv ? palette.sand : palette.mid + '55',
-  });
-  return h('svg', { viewBox: '0 0 46 40', width: 46, height: 40, 'aria-hidden': true },
-    saeule('l', 4, ledig, !verheiratet),
-    saeule('g', 18, gemeinsam, verheiratet),
-    h('rect', { key: 'e', x: 32.5, y: 10.5, width: 8, height: 27, rx: 2, fill: 'none', stroke: palette.mid, strokeDasharray: '2 2' })
+  }, h('title', null, t('tax.saeulen.' + key) + ': ' + chfBetrag(v) + (aktiv ? ' — ' + t('tax.saeulen.active') : '')));
+  return h('svg', { viewBox: '0 0 56 44', width: 56, height: 44, role: 'img', 'aria-label': t('tax.saeulen.title') },
+    belegt ? fest('ledig', 4, ledig, !verheiratet) : offen('ledig', 4, S_MAX * 0.6),
+    belegt ? fest('gemeinsam', 21, gemeinsam, verheiratet) : offen('gemeinsam', 21, S_MAX * 0.6),
+    offen('einzeln', 38, S_MAX * 44 / 120, t('tax.saeulen.einzeln')),
+    // Grundlinie: die drei Säulen stehen auf derselben Null.
+    h('line', { x1: 1, x2: 55, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
   );
 };
 
@@ -107,9 +123,10 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
       key: 'steuer', name: t('instrumente.steuer'),
       sub: bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
-      glyph: miniSaeulen(palette, {
-        ledig: tarif ? Number(tarif.alleinstehend) : 0,
-        gemeinsam: tarif ? Number(tarif.verheiratet) : 0,
+      glyph: miniSaeulen(palette, t, {
+        belegt: !!tarif,
+        ledig: tarif ? Math.max(0, Math.round(Number(tarif.alleinstehend) || 0)) : 0,
+        gemeinsam: tarif ? Math.max(0, Math.round(Number(tarif.verheiratet) || 0)) : 0,
         verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
       }),
       onClick: () => onNavigate('tax'),
