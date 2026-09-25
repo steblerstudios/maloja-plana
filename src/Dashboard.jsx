@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
-import { GlossarText } from './GlossarBegriff.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
@@ -486,14 +485,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },
 
-    // Die Leistungs-Zeile beantwortet «Was ist das hier?» und hilft genau einmal: beim ersten
-    // Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr bei jedem Öffnen vorgesetzt.
-    // Seit dem Hero (25.09.2026) direkt unter dem Bild statt unter dem Titel — im Bild wäre sie
-    // am Handy zu lang. (Suchmaschinen sehen diesen Text nie — sie kommen nicht hinter das
-    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
-    !hasMeaningfulProgress && React.createElement('p', {
-      style: { fontSize: text.body, color: palette.mid, margin: '0 0 ' + space.lg + 'px', lineHeight: leading.relaxed }
-    }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
+    // Die Leistungs-Zeile («Ihr persönlicher Schweizer Lebensordner …») steht seit 25.09.2026
+    // abends fest in der Fusszeile (main.jsx, Entscheid Stebler Studios) — hier stand sie nur
+    // am Anfang und schob «Was ist jetzt dran?» nach unten.
 
     // ─── Alpha banner — UNTER dem Hero: erst das Versprechen, dann der ruhige
     // Entwicklungs-Hinweis (auf Handy stand die Warnung sonst vor dem Nutzen). ──
