@@ -48,13 +48,22 @@ const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
 // immer Himmel bis Unterkante (0 … UNTERKANTE); dafür ist das Bild dort höher als das Fenster und
 // man scrollt kurz zu den Kreisen (Entscheid 25.09.2026 — Dunst, Unschärfe und gespiegelte
 // Fortsetzung an den Seiten wurden alle verworfen).
+// Der ganze Berg im Fenster, randlos (Entscheid Stebler Studios, 25.09.2026 abends — dreht den
+// Mittags-Entscheid «Himmel nie wegschneiden, am Laptop kurz scrollen»): unten (Stationen,
+// Kreise) hat Vorrang. Passt das Bild nicht, fällt OBEN Himmel weg, bis die Unterkante genau am
+// Fensterrand liegt — höchstens bis OBERKANTE_MAX, damit Titel und oberste Station (Ausbildung,
+// y 479) Platz behalten; bei noch flacheren Fenstern scrollt man den Rest. Fehlt Himmel, trägt
+// der Titel den Dunst (mitDunst).
+export const OBERKANTE_MAX = 300; // Bild-Einheiten
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
   const voll = AUSSCHNITT.breit;
   if (!rahmenBreite || !fensterHoehe) return voll;
   const hMax = fensterHoehe * MAX_HOEHE_ANTEIL; // px
   const h = (BILD.w * hMax) / rahmenBreite;     // Bild-Einheiten bei voller Breite
   if (h >= BILD.h) return voll;
-  return { x: 0, y: 0, w: BILD.w, h: Math.max(h, UNTERKANTE) };
+  if (h >= UNTERKANTE) return { x: 0, y: 0, w: BILD.w, h };
+  const y = Math.min(UNTERKANTE - h, OBERKANTE_MAX);
+  return { x: 0, y, w: BILD.w, h: UNTERKANTE - y };
 };
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
@@ -204,7 +213,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     const messen = () => {
       const links = el.parentElement.getBoundingClientRect().left;
       const breite = document.documentElement.clientWidth;
-      const hoehe = window.innerHeight;
+      // Freie Höhe unter der klebenden Kopfzeile (--mp-kopf-h setzt main.jsx).
+      const kopf = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h')) || 0;
+      const hoehe = window.innerHeight - kopf;
       setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite && alt.hoehe === hoehe) ? alt : { links: -links, breite, hoehe });
     };
     messen();
@@ -347,7 +358,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // ganze Breite, kein Schein um einzelne Buchstaben. Ohne ihn landet die zweite Zeile je nach
       // Fenster auf Berggrün (Salbeigrün darauf gemessen bis 1,07:1, dunkler Text bis 2,6:1).
       const dunstHoehe = oben + (titelHoehe || groesse * 2.1) + (schmal ? 46 : 70);
-      const mitDunst = schmal || breite < DUNST_UNTER_BREITE;
+      // Dunst auch, sobald oben Himmel fehlt: dann stünde der Titel sonst auf den Bergen.
+      const mitDunst = schmal || breite < DUNST_UNTER_BREITE || a.y > 0;
       return [mitDunst && React.createElement('div', {
         key: 'dunst', 'aria-hidden': 'true', 'data-dunst': dunstHoehe,
         style: {

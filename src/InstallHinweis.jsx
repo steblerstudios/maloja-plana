@@ -92,8 +92,10 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
         // der negative Rand holt sie in die Kartenecke, ohne die Karte aufzublähen.
         style: { ...knopfStil, color: palette.mid, minWidth: '44px', minHeight: '44px', margin: -space.sm + 'px ' + -space.sm + 'px 0 0', lineHeight: 1 },
       }, '×')),
-    // Klein (Handy-Ausschnitt): nur Zeichen, «×» und Knopf — der Satz steht dann im Namen des Knopfs.
-    !klein && React.createElement('span', { style: { fontSize: text.sm, lineHeight: 1.3, color: palette.text, marginTop: -space.sm } },
+    // Der Satz steht immer sichtbar da — am Handy (klein) eine Stufe kleiner, damit die Karte im
+    // Bild nicht zu gross wird. Bis 25.09.2026 abends fehlte er am Handy ganz und stand nur im
+    // Namen des Knopfs; man sah allein «So geht es» (Rückmeldung Stebler Studios).
+    React.createElement('span', { style: { fontSize: klein ? text.xs : text.sm, lineHeight: 1.3, color: palette.text, marginTop: -space.sm } },
       t('install.navSub')),
     // «So geht es»: wo der Browser nicht selbst installieren kann (Safari, Firefox), ist die
     // Anleitung DER Weg — also der Hauptknopf (Entscheid 25.09.2026). Wo «Installieren» steht,
@@ -103,7 +105,6 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
         React.createElement(PrimaryButton, {
           palette,
           onClick: () => installAusloesen(installPrompt, onPromptWeg),
-          'aria-label': klein ? t('install.navSub') + ' — ' + t('pwa.install') : undefined,
           style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
         }, t('pwa.install')),
         !klein && React.createElement('button', {
@@ -114,7 +115,6 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
       : React.createElement(PrimaryButton, {
         palette,
         'data-testid': 'install-anleitung-cta',
-        'aria-label': klein ? t('install.navSub') + ' — ' + t('pwa.anleitung') : undefined,
         onClick: () => onNavigate('installApp'),
         style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
       }, t('pwa.anleitung'))
