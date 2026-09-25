@@ -1,9 +1,10 @@
 import React from 'react';
 import { schildState } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
-import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
+import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil } from '../data/kantonaleSteuerdaten.js';
+import { giltAlsVerheiratet } from '../utils/zivilstand.js';
+import { zahl } from '../utils/geld.js';
 import { shieldPath } from './shieldShape.js';
 import { PanelTitle } from './Heading.jsx';
 import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
@@ -37,17 +38,22 @@ const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
   return h('svg', { viewBox: '0 0 60 40', width: 60, height: 40, style: { overflow: 'visible' }, 'aria-hidden': true }, els);
 };
 
-const miniCompass = (palette, bearing, state) => {
+// Steuer-Säulen im Kleinen — Spiegel von SteuerSaeulen.jsx (Steuerrechner): zwei belegte
+// Säulen (ledig, verheiratet gemeinsam, DBG Art. 36), die dritte gestrichelt und ohne Wert
+// (Individualbesteuerung, noch nicht in Kraft). Höhen aus dem echten Tarifvergleich, sonst
+// gleich hoch; die Säule des eigenen Zivilstands in Sand, wie «aktuell gewählt» im Rechner.
+const miniSaeulen = (palette, { ledig, gemeinsam, verheiratet }) => {
   const h = React.createElement;
-  const cx = 22, cy = 22;
-  const north = state === 'found' ? palette.sage : state === 'none' ? palette.sky : palette.mid;
-  return h('svg', { viewBox: '0 0 44 44', width: 44, height: 44, 'aria-hidden': true },
-    h('circle', { cx, cy, r: 18, fill: 'none', stroke: palette.border, strokeWidth: 2 }),
-    h('g', { transform: 'rotate(' + bearing + ' ' + cx + ' ' + cy + ')' },
-      h('polygon', { points: cx + ',7 ' + (cx + 4) + ',' + cy + ' ' + (cx - 4) + ',' + cy, fill: north, opacity: state === 'idle' ? 0.5 : 1 }),
-      h('polygon', { points: cx + ',37 ' + (cx + 4) + ',' + cy + ' ' + (cx - 4) + ',' + cy, fill: palette.mid, opacity: 0.35 })
-    ),
-    h('circle', { cx, cy, r: 3, fill: palette.surface, stroke: palette.mid, strokeWidth: 1.5 })
+  const max = Math.max(ledig || 0, gemeinsam || 0);
+  const hoehe = (v) => (max > 0 ? 10 + 24 * (v / max) : 22);
+  const saeule = (key, x, v, aktiv) => h('rect', {
+    key, x, width: 9, rx: 2, y: 38 - hoehe(v), height: hoehe(v),
+    fill: aktiv ? palette.sand : palette.mid + '55',
+  });
+  return h('svg', { viewBox: '0 0 46 40', width: 46, height: 40, 'aria-hidden': true },
+    saeule('l', 4, ledig, !verheiratet),
+    saeule('g', 18, gemeinsam, verheiratet),
+    h('rect', { key: 'e', x: 32.5, y: 10.5, width: 8, height: 27, rx: 2, fill: 'none', stroke: palette.mid, strokeDasharray: '2 2' })
   );
 };
 
@@ -78,18 +84,17 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   });
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
-  // Kompass-Peilung: Leistungszahl wie im Schnellcheck (gleiche Gates, gleiche Engine).
-  let benefitCount = 0;
-  const hasIncome = (Number(data?.finanzen?.monthlyIncome) || 0) > 0;
+  // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
+  // Nur die Bundessteuer als Zahl — sie ist der amtlich belegte Tarif (DBG Art. 36).
+  let bundessteuer = null, tarif = null;
   try {
-    const income = Number(data?.finanzen?.monthlyIncome) || 0;
-    const rent = Number(data?.wohnen?.rentAmount) || 0;
-    const canton = data?.basis?.canton;
-    if (income > 0 && canton && calculateIPV(data)?.anspruchMoeglich) benefitCount++;
-    if (rent > 0) { const sh = calculateSozialhilfe(data); if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefitCount++; }
-    if (checkELEligibility(data)?.eligible) benefitCount++;
+    if ((Number(data?.finanzen?.monthlyIncome) || 0) > 0 || (Number(data?.finanzen?.taxableIncome) || 0) > 0) {
+      const eingaben = steuerEingabenAusDaten(data);
+      const st = steuernFuerProfil(eingaben);
+      bundessteuer = st?.bund ? Math.round(st.bund.steuer) : null;
+      tarif = tarifvergleichFuerProfil(eingaben);
+    }
   } catch { /* Orientierung, nie blockierend */ }
-  const kompass = kompassBearing({ hasIncome, benefitCount });
 
   const setup = t('instrumente.setup');
   const tiles = [
@@ -99,12 +104,15 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       onClick: () => onNavigate('praemien'),
     },
     {
-      key: 'kompass', name: t('instrumente.kompass'),
-      sub: kompass.state === 'found'
-          ? (benefitCount === 1 ? t('instrumente.kompassFoundOne') : t('instrumente.kompassFound', { n: benefitCount }))
-        : kompass.state === 'none' ? t('instrumente.kompassNone') : setup,
-      glyph: miniCompass(palette, kompass.bearing, kompass.state),
-      onClick: () => onNavigate('schnellcheck'),
+      // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
+      key: 'steuer', name: t('instrumente.steuer'),
+      sub: bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
+      glyph: miniSaeulen(palette, {
+        ledig: tarif ? Number(tarif.alleinstehend) : 0,
+        gemeinsam: tarif ? Number(tarif.verheiratet) : 0,
+        verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
+      }),
+      onClick: () => onNavigate('tax'),
     },
     {
       key: 'tank', name: t('instrumente.tank'),

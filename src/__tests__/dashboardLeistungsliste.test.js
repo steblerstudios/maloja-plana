@@ -59,3 +59,22 @@ describe('Dashboard-Leistungsliste · IPV und Sozialhilfe', () => {
     expect(html).not.toContain('sozialhilfeCalc.notEntitled');
   });
 });
+
+// ─────────────────────────────────────────────────────────────
+// Steuer-Säulen (Instrument, 25.09.2026): EINE Zahl, die Bundessteuer — dieselbe
+// Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
+// ─────────────────────────────────────────────────────────────
+describe('Instrument Steuer-Säulen', () => {
+  it('zeigt die Bundessteuer aus steuernFuerProfil, ohne Einkommen «einrichten»', async () => {
+    const { InstrumentePanel } = await import('../components/InstrumentePanel.jsx');
+    const { steuernFuerProfil, steuerEingabenAusDaten } = await import('../data/kantonaleSteuerdaten.js');
+    const data = { basis: { canton: 'ZH', maritalStatus: 'ledig', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 6200 } };
+    const erwartet = Math.round(steuernFuerProfil(steuerEingabenAusDaten(data)).bund.steuer);
+    expect(erwartet).toBeGreaterThan(0);
+    const mit = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data, onNavigate: () => {}, eingebettet: true }));
+    expect(mit).toContain('instrumente.steuerBetrag(' + zahl(erwartet) + ')');
+    const ohne = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data: { basis: {} }, onNavigate: () => {}, eingebettet: true }));
+    expect(ohne).not.toContain('instrumente.steuerBetrag');
+    expect(ohne).toContain('instrumente.setup');
+  });
+});

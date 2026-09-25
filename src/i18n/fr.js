@@ -4703,6 +4703,8 @@ export default {
     tankMonths: '{months} mois de réserve',
     schild: 'Bouclier de protection',
     schildCount: '{covered}/{total} couvertes',
+    steuer: 'Colonnes fiscales',
+    steuerBetrag: 'Impôt fédéral ≈ CHF {value} / an',
     setup: 'toucher pour configurer',
   },
   schutzschild: {

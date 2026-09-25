@@ -5298,6 +5298,9 @@ export default {
     tankMonths: '{months} mais reserva',
     schild: 'Scud da protecziun',
     schildCount: '{covered}/{total} cuverts',
+    // TODO(rm): provisorisch — Gegenlese (Steuer-Säulen, 25.09.2026)
+    steuer: 'Colonnas da taglia',
+    steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
     setup: 'tutgar per configurar',
   },
   schutzschild: {

@@ -3,6 +3,8 @@ import Icons from './IconKern.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
+import { miniCompass } from './components/miniKompass.js';
+import { kompassBearing } from './data/leistungsKompass.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
@@ -155,6 +157,10 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const totalMonthly = counted.reduce((sum, k) => sum + found[k].monthly, 0);
   const maxMonthly = Math.max(0, ...counted.map(k => found[k].monthly));
 
+  // Kompass-Peilung aus derselben Liste: was hier gefunden wird, zählt.
+  const anzahlGefunden = Object.keys(found).length;
+  const kompass = kompassBearing({ hasIncome: annual > 0, benefitCount: anzahlGefunden });
+
   const leistungen = [
     { key: 'ipv', label: t('dashboard.quickCheckIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
     { key: 'soz', label: t('nav.sozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
@@ -210,9 +216,29 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   };
 
   return React.createElement('div', { style: { marginTop: space.xl + 'px' } },
-    React.createElement(PanelTitle, {
-      palette, style: { margin: '0 0 ' + space.sm + 'px 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
-    }, t('schnellcheck.kompassLeistungen')),
+    // Kopf: Titel links, rechts der Leistungs-Kompass (bis 25.09.2026 ein Instrument).
+    // Seine Nadel zählt, was die Liste darunter findet, und führt zum vollen Schnellcheck.
+    React.createElement('div', {
+      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.md + 'px', marginBottom: space.sm + 'px' }
+    },
+      React.createElement(PanelTitle, {
+        palette, style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+      }, t('schnellcheck.kompassLeistungen')),
+      React.createElement('button', {
+        onClick: () => onNavigate('schnellcheck'),
+        style: {
+          display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0',
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'right',
+        },
+      },
+        React.createElement('span', { style: { minWidth: 0 } },
+          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('instrumente.kompass')),
+          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } },
+            kompass.state === 'found'
+              ? (anzahlGefunden === 1 ? t('instrumente.kompassFoundOne') : t('instrumente.kompassFound', { n: anzahlGefunden }))
+              : kompass.state === 'none' ? t('instrumente.kompassNone') : t('instrumente.setup'))),
+        miniCompass(palette, kompass.bearing, kompass.state))
+    ),
     React.createElement('div', {
       style: { display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: space.md + 'px', marginBottom: space.md + 'px' }
     },
@@ -621,7 +647,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       (() => {
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
-          { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
+          // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
           { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
