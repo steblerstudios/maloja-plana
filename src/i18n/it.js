@@ -3606,6 +3606,7 @@ export default {
     noteAutoSam: 'Automatico tramite il SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Cantone non riconosciuto',
     youngAdultsNote: 'I giovani adulti (19–25) in formazione hanno spesso una riduzione propria, più alta. Da verificare a parte.',
+    annahmeOhneDreizehnten: 'Calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima il reddito annuo è più alto e la riduzione più bassa. Si può indicare nel capitolo «Finanze».',
     incomeAboveLimit: 'Reddito superiore al limite (CHF {value})',
     eligible: 'Diritto alla riduzione dei premi: CHF {value}/mese',
     orientierungOffen: { sie: 'Se ha diritto a una riduzione e di quale importo lo stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificarlo presso il servizio cantonale.', du: 'Se hai diritto a una riduzione e di quale importo lo stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificarlo presso il servizio cantonale.' },

@@ -3606,6 +3606,7 @@ export default {
     noteAutoSam: 'Automatique via le SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton non reconnu',
     youngAdultsNote: 'Les jeunes adultes (19–25) en formation ont souvent une réduction propre, plus élevée. À vérifier séparément.',
+    annahmeOhneDreizehnten: 'Calculé sans 13e salaire — l’indication manque encore. Avec un 13e salaire, le revenu annuel est plus élevé et la réduction plus basse. Cela peut être indiqué dans le chapitre « Finances ».',
     incomeAboveLimit: 'Revenu supérieur à la limite (CHF {value})',
     eligible: 'Droit à la réduction de primes : CHF {value}/mois',
     orientierungOffen: { sie: 'C’est le canton qui décide si vous avez droit à une réduction et de son montant. Surtout avec un budget serré, il vaut la peine de vérifier auprès du service cantonal.', du: 'C’est le canton qui décide si tu as droit à une réduction et de son montant. Surtout avec un budget serré, cela vaut la peine de vérifier auprès du service cantonal.' },

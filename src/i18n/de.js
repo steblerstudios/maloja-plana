@@ -3640,6 +3640,7 @@ export default {
     noteAutoSam: 'Automatisch via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Kanton nicht erkannt',
     youngAdultsNote: 'Junge Erwachsene (19–25) in Ausbildung haben oft eine eigene, höhere Verbilligung. Bitte separat prüfen.',
+    annahmeOhneDreizehnten: 'Ohne 13. Monatslohn gerechnet — die Angabe fehlt noch. Mit 13. Monatslohn liegt das Jahreseinkommen höher und die Verbilligung tiefer. Angeben lässt sich das im Kapitel «Finanzen & Geld».',
     incomeAboveLimit: 'Einkommen über Grenze (CHF {value})',
     eligible: 'Anspruch auf Prämienverbilligung: CHF {value}/Monat',
     orientierungOffen: 'Ob ein Anspruch besteht und wie hoch er ist, legt der Kanton fest. Gerade bei knappem Budget lohnt es sich, das bei der kantonalen Stelle zu prüfen.',
