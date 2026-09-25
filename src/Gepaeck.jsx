@@ -106,7 +106,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
     style: {
       fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer',
       color: palette.text, background: palette.gold + '22', border: '1px solid ' + palette.gold + '55',
-      borderRadius: '999px', padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
+      borderRadius: radius.full, padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
     },
   }, packed ? t('gepaeck.unpack') : t('gepaeck.pack'));
 

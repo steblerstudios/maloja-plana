@@ -49,11 +49,14 @@ export const leading = {
 
 // ─── Border radii ───────────────────────────────────────────
 export const radius = {
+  hair: 2,  // feine Balken und Markierungen (Fortschritt, Tacho, Diagramme)
+  xs:   4,  // kleine Marken, Abzeichen, Knöpfe in dichten Tabellen
   sm:   6,
   md:   10,
   lg:   16,
   xl:   24,
-  full: 9999, // Stand 17.09.2026 nirgends genutzt (K53); bleibt als Stufe der Skala stehen
+  full: 9999, // Pillen und Kreise. Ersetzt seit 25.09.2026 die rohen '999px' und das nie
+            // definierte `radius.pill` (fiel still auf 10 px zurück, IDEEN §15)
 };
 
 // ─── Shadows (subtle, premium) ──────────────────────────────

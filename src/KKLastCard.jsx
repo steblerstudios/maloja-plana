@@ -62,10 +62,10 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       t('kkLast.share', { share: shareRounded })
     ),
     // Ruhiger Balken mit 10%-Marker
-    React.createElement('div', { style: { position: 'relative', height: '8px', background: palette.border, borderRadius: '4px', marginBottom: '4px' } },
-      React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: accent, borderRadius: '4px' } }),
+    React.createElement('div', { style: { position: 'relative', height: '8px', background: palette.border, borderRadius: radius.xs, marginBottom: '4px' } },
+      React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: accent, borderRadius: radius.xs } }),
       // IPV-Anteil (was die Verbilligung von der Last abnimmt) hellblau über dem rechten Teil
-      ipvAmount > 0 && React.createElement('div', { style: { position: 'absolute', top: 0, bottom: 0, left: netFillPct + '%', width: Math.max(0, fillPct - netFillPct) + '%', background: palette.sky, borderRadius: '0 4px 4px 0' } }),
+      ipvAmount > 0 && React.createElement('div', { style: { position: 'absolute', top: 0, bottom: 0, left: netFillPct + '%', width: Math.max(0, fillPct - netFillPct) + '%', background: palette.sky, borderRadius: '0 ' + radius.xs + 'px ' + radius.xs + 'px 0' } }),
       React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', left: markerPct + '%', width: '2px', background: palette.text } })
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm } }, t('kkLast.marker10')),

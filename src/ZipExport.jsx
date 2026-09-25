@@ -388,7 +388,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.exportEncrypted')),
         vorschauPanel('sicherungVerschluesselt'),
 
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: radius.xs } }, t('backup.encryptionInfo')),
 
         // Unverschlüsselt bleibt wählbar — zurückhaltend gestaltet, mit ruhigem Hinweis.
         React.createElement('div', { style: { margin: '20px 0 6px', paddingTop: space.md, borderTop: '1px solid ' + palette.border, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('backupVoreinstellung.titelUnverschluesselt')),

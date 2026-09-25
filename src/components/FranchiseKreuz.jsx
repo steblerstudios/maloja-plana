@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { kreuzState } from '../data/franchiseTacho.js';
-import { text, weight, leading, space } from '../config/tokens.js';
+import { text, weight, leading, space, radius } from '../config/tokens.js';
 import { zahl } from '../utils/geld.js';
 
 // Franchise-Kreuz (seit 25.09.2026, ersetzt den Franchise-Tacho). Die Frage «lohnt sich die
@@ -73,7 +73,7 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
   const swatch = (color, label, form) => h('span', {
     key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid },
   },
-    h('span', { 'aria-hidden': true, style: { width: '10px', height: '10px', borderRadius: form === 'kreis' ? '50%' : '2px', background: color, flexShrink: 0 } }),
+    h('span', { 'aria-hidden': true, style: { width: '10px', height: '10px', borderRadius: (form === 'kreis' ? radius.full : radius.hair) + 'px', background: color, flexShrink: 0 } }),
     label);
 
   return h('div', { ref: huelle, style: { marginBottom: space.md + 'px' } },

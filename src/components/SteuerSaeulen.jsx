@@ -62,7 +62,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
       React.createElement('div', { 'aria-hidden': true, style: {
         width: '100%', maxWidth: '72px', height: barH(betrag) + 'px',
         background: aktiv ? palette.sand : palette.mid + '55',
-        borderRadius: radius.sm + ' ' + radius.sm + ' 0 0', transition: 'height .2s ease',
+        borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0', transition: 'height .2s ease',
       } }),
       React.createElement('div', { style: { fontSize: text.xs, color: aktiv ? palette.sandDeep : palette.mid, fontWeight: aktiv ? weight.semi : weight.medium, textAlign: 'center', lineHeight: 1.3 } }, label)
     );
@@ -79,7 +79,7 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
     React.createElement('div', { 'aria-hidden': true, style: {
       width: '100%', maxWidth: '72px', height: '44px',
       border: '1px dashed ' + palette.border, borderBottom: 'none',
-      borderRadius: radius.sm + ' ' + radius.sm + ' 0 0', background: 'transparent',
+      borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0', background: 'transparent',
     } }),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, textAlign: 'center', lineHeight: 1.3 } }, t('tax.saeulen.einzeln'))
   );

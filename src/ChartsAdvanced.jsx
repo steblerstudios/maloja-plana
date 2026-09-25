@@ -44,7 +44,7 @@ const PieChart = ({ data, labels, colors, title, palette }) => {
     React.createElement('svg', { width: '200', height: '200', viewBox: '0 0 200 200', 'aria-hidden': 'true', style: { margin: '0 auto', display: 'block' } }, segments),
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm, marginTop: '12px', fontSize: text.xs } },
       labels.map((label, idx) => data[idx] > 0 ? React.createElement('div', { key: idx, style: { display: 'flex', gap: '6px', alignItems: 'center' } },
-        React.createElement('div', { style: { width: '10px', height: '10px', background: colors[idx], borderRadius: '2px', flexShrink: 0 } }),
+        React.createElement('div', { style: { width: '10px', height: '10px', background: colors[idx], borderRadius: radius.hair, flexShrink: 0 } }),
         React.createElement('span', null, label + ' (' + Math.round((data[idx] / total) * 100) + '%)')
       ) : null)
     )
@@ -58,8 +58,8 @@ const HorizontalBar = ({ label, value, maxValue, color, palette }) => {
       React.createElement('span', null, label),
       React.createElement('span', { style: { fontWeight: weight.semi, fontVariantNumeric: 'tabular-nums' } }, betrag(value, { hoechstens: 2 }))
     ),
-    React.createElement('div', { style: { height: '8px', background: palette.border, borderRadius: '4px', overflow: 'hidden' } },
-      React.createElement('div', { style: { height: '100%', width: pct + '%', background: color, borderRadius: '4px' } })
+    React.createElement('div', { style: { height: '8px', background: palette.border, borderRadius: radius.xs, overflow: 'hidden' } },
+      React.createElement('div', { style: { height: '100%', width: pct + '%', background: color, borderRadius: radius.xs } })
     )
   );
 };

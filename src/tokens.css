@@ -138,6 +138,15 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Leises Einblenden beim Ansichtswechsel (utils/einblenden.js, 25.09.2026).
+   Nur Deckkraft — kein transform, sonst würde <main> während der Animation zum
+   Bezugsrahmen für position:fixed darin. Verstummt mit dem Block für reduzierte
+   Bewegung unten (Gerät und Schalter in der App). Nutzt das vorhandene fadeIn.
+   Wächter: einblenden.test.js */
+.mp-einblenden {
+  animation: fadeIn var(--mp-duration-normal) var(--mp-ease-default);
+}
+
 /* Ruhiges „Atmen" für den Lade-Zustand (CalmLoader) — langsam, kein Zappeln.
    Wird bei prefers-reduced-motion automatisch still (globaler Block unten). */
 @keyframes mp-breathe {

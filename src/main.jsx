@@ -21,6 +21,7 @@ import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsFor
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
 import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle } from './utils/hashRouter.js';
+import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
@@ -195,7 +196,7 @@ const LanguageSwitcher = ({ palette }) => {
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',
-        border: '1px solid ' + palette.border, borderRadius: '6px',
+        border: '1px solid ' + palette.border, borderRadius: radius.sm,
         paddingBlock: '5px', paddingInlineStart: '30px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
@@ -231,7 +232,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       color: vorlesen.enabled ? palette.sand : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
       border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
-      borderRadius: '4px',
+      borderRadius: radius.xs,
       cursor: 'pointer',
       fontSize: '11px',
       lineHeight: 1,
@@ -616,9 +617,19 @@ const AppInner = ({ demo }) => {
     setHerkunft(leseHerkunft());
   }, [view, activeChapter]);
 
+  // ─── Leises Einblenden beim Ansichtswechsel (utils/einblenden.js) ─
+  // Nicht beim ersten Bild, nicht nach «Zurück» (dort gilt die gemerkte Stelle).
+  // Eine Markierung: true = erstes Bild oder nach «Zurück» → still; sonst einblenden.
+  const stillBleiben = React.useRef(true);
+  useEffect(() => {
+    blendeEin(document.getElementById('mp-main'), { zurueck: stillBleiben.current });
+    stillBleiben.current = false;
+  }, [view, activeChapter]);
+
   // ─── Hash routing: listen for browser back/forward ────────
   useEffect(() => {
     const cleanup = onHashChange((parsed) => {
+      stillBleiben.current = true;
       // startTransition: das Ziel kann ein noch nicht geladener Lazy-Chunk sein — so darf
       // React den Suspense-Fallback (CalmLoader) zeigen statt „suspended on sync input" zu werfen.
       startTransition(() => {
@@ -868,6 +879,7 @@ const AppInner = ({ demo }) => {
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
     merkeStelle();
+    stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
     if (viewName === 'chapter' && chapterIdx !== undefined) {

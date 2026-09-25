@@ -376,7 +376,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
                 ),
                 // K13: am Ergebnis sichtbar als grobe Schätzung kennzeichnen (Bauliste §9-E20/K13).
                 React.createElement('span', {
-                  style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, background: palette.up, border: '1px solid ' + palette.border, borderRadius: '999px', padding: '1px 8px' }
+                  style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.full, padding: '1px 8px' }
                 }, t('tax.roughEstimateBadge'))
               ),
               React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ ' + betrag(kantonal.kantonalUndGemeinde, { hoechstens: 2 })),

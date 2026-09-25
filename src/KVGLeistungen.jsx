@@ -71,7 +71,7 @@ const CatButton = ({ active, label, onClick, palette }) =>
       background: active ? palette.sand + '25' : 'transparent',
       color: active ? palette.sandDeep : palette.soft,
       border: active ? '1px solid ' + palette.sand + '40' : '1px solid ' + palette.border,
-      borderRadius: '12px',
+      borderRadius: radius.full,
       cursor: 'pointer',
       fontSize: text.xs,
       fontWeight: weight.medium,
@@ -410,7 +410,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const barStyle = (_value, _max, _color) => ({
     height: '8px',
     background: palette.border,
-    borderRadius: '4px',
+    borderRadius: radius.xs,
     overflow: 'hidden',
     marginBottom: '4px',
   });
@@ -419,7 +419,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
     height: '100%',
     width: (max > 0 ? Math.min(100, (value / max) * 100) : 0) + '%',
     background: color,
-    borderRadius: '4px',
+    borderRadius: radius.xs,
     transition: `width ${duration.slow}ms ${ease}`,
   });
 
@@ -664,7 +664,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
             onClick: () => setSelectedYear(y),
             'aria-pressed': y === selectedYear ? 'true' : 'false',
             style: {
-              padding: '4px 10px', borderRadius: '12px', fontFamily: 'inherit', fontSize: text.xs, cursor: 'pointer',
+              padding: '4px 10px', borderRadius: radius.full, fontFamily: 'inherit', fontSize: text.xs, cursor: 'pointer',
               border: '1px solid ' + (y === selectedYear ? palette.sand + '40' : palette.border),
               background: y === selectedYear ? palette.sand + '25' : 'transparent',
               color: y === selectedYear ? palette.sandDeep : palette.soft,
@@ -698,7 +698,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                     offen && React.createElement('span', {
                       style: {
                         fontSize: text.xs, fontWeight: weight.medium, color: gold,
-                        background: gold + '18', padding: '1px 7px', borderRadius: '8px',
+                        background: gold + '18', padding: '1px 7px', borderRadius: radius.full,
                       }
                     }, t('kvg.belegOpen'))
                   ),

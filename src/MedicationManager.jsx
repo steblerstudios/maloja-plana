@@ -250,7 +250,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
             onClick: () => toggleFreq(freq),
             style: {
               padding: '4px 12px', fontSize: text.xs, fontFamily,
-              borderRadius: '20px', cursor: 'pointer', fontWeight: weight.medium,
+              borderRadius: radius.full, cursor: 'pointer', fontWeight: weight.medium,
               border: active ? '1px solid ' + palette.sand : '1px solid ' + palette.border,
               background: active ? palette.sand + '22' : 'transparent',
               color: active ? palette.text : palette.mid,

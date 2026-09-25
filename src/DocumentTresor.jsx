@@ -124,7 +124,7 @@ export const DocumentTresor = ({
     // Aktiver Reiter trägt oben den farbigen Trennblatt-Streifen seines Astes.
     borderTop: isActive && accent ? '2px solid ' + accent : (isActive ? '1px solid ' + palette.border : '1px solid transparent'),
     borderBottom: isActive ? '1px solid ' + palette.surface : '1px solid ' + palette.border,
-    borderRadius: '6px 6px 0 0', cursor: 'pointer', fontSize: text.xs,
+    borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0', cursor: 'pointer', fontSize: text.xs,
     fontWeight: isActive ? weight.semi : weight.normal, color: isActive ? palette.text : palette.mid,
     marginBottom: '-1px', whiteSpace: 'nowrap',
   });
@@ -177,11 +177,11 @@ export const DocumentTresor = ({
               React.createElement('div', { style: { display: 'flex', gap: space.xs } },
                 React.createElement('button', {
                   onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
-                  style: { flex: 1, padding: '4px 8px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
+                  style: { flex: 1, padding: '4px 8px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.hair, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
                 }, hinweisZeichen('check', 12), 'OK'),
                 React.createElement('button', {
                   onClick: () => setEditingDocId(null),
-                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs },
+                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: radius.hair, cursor: 'pointer', fontSize: text.xs },
                 }, t('common.cancel')),
               ),
             )
@@ -193,16 +193,16 @@ export const DocumentTresor = ({
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
-          style: { padding: '10px 12px', background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: radius.xs, fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, React.createElement(Icon, { name: 'download', size: 12 })),
         React.createElement('button', {
           'aria-label': t('common.edit'),
           onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
-          style: { padding: '10px 12px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky lag bei 4.496:1 (unter AA), surface/skyDeep 5.42 hell · 5.94 dunkel (Voll-Review 15.09.2026) */ border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky lag bei 4.496:1 (unter AA), surface/skyDeep 5.42 hell · 5.94 dunkel (Voll-Review 15.09.2026) */ border: 'none', cursor: 'pointer', borderRadius: radius.xs, fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, React.createElement(Icon, { name: 'edit', size: 12 })),
         React.createElement('button', {
           'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),
-          style: { padding: '10px 12px', background: palette.roseBtn, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.roseBtn, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: radius.xs, fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, React.createElement(Icon, { name: 'kreuz', size: 12 })),
       ),
     );

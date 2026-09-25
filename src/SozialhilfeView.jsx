@@ -207,7 +207,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
             style: {
               padding: space.sm,
               background: Number(size) === sozialhilfe.householdSize ? palette.gold + '22' : palette.up,
-              borderRadius: '4px',
+              borderRadius: radius.xs,
               border: '1px solid ' + (Number(size) === sozialhilfe.householdSize ? palette.gold : palette.border),
               fontSize: text.sm,
               textAlign: 'center'
