@@ -181,11 +181,11 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
     const z = zahlen(WEGSTUECKE[3]);
     for (let k = 0; k < z.length; k += 2) expect(nah(z[k], z[k + 1], STATIONEN[0], 45), `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
   });
-  it('der Weg von Behörden zum Notfall taucht unter der oberen Strasse durch (Kreuzung ausgeblendet)', () => {
+  it('der Weg von Behörden zum Notfall taucht unter der oberen Strasse durch (Schlaufe unten ausgeblendet)', () => {
     const z = zahlen(WEGSTUECKE[5]);
     for (let k = 0; k < z.length; k += 2) {
       const [x, y] = [z[k], z[k + 1]];
-      expect(x > 300 && x < 365 && y > 564, `Punkt ${x} ${y} liegt auf der oberen Strasse`).toBe(false);
+      expect(y > 586 || (x < 340 && y > 564), `Punkt ${x} ${y} liegt in der Schlaufe`).toBe(false);
     }
   });
   it('der Weg nach Versicherungen endet unter der Behörden-Beschriftung (nichts zwischen x 205 und 325)', () => {
@@ -208,9 +208,10 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
   it('das Stück unten in der U-Kurve zwischen den Tannen ist da', () => {
     expect(zahlen(WEGSTUECKE[1]).some((v, k, z) => k % 2 === 0 && v > 420 && v < 470 && z[k + 1] > 715)).toBe(true);
   });
-  it('der Weg zum Notfall beginnt erst, wo die Strasse ins Bild kommt (rechts der Kreuzung)', () => {
+  it('der Weg zum Notfall beginnt an der Einmündung der rechten Strasse, nicht am Behörden-Knopf', () => {
     const z = zahlen(WEGSTUECKE[5]);
-    expect(z[0]).toBeGreaterThan(350);
+    expect(z[0]).toBeGreaterThan(340);
+    expect(z[1]).toBeGreaterThan(575);
     expect(nah(z[0], z[1], STATIONEN[5], 60)).toBe(false);
   });
   it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {

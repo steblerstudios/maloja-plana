@@ -38,8 +38,9 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 //     Ausbildung wieder auf; das kurze Stück unten in der U-Kurve zwischen den Tannen bleibt;
 //   · von Wohnen läuft der Weg in einem weichen Bogen als EINE Linie hinter die erste Tanne
 //     (kein abgesetztes Stückchen zwischen den Ästen);
-//   · der Weg zum Notfall beginnt erst, wo die Strasse unter der oberen Strasse hervor ins Bild
-//     kommt — nicht am Behörden-Knopf;
+//   · der Weg zum Notfall beginnt, wo die rechte Strasse an der oberen Strasse anfängt (unterhalb
+//     der Kurve) — nicht am Behörden-Knopf; die Schlaufe unten im S bleibt verdeckt;
+//   · in der U-Kurve vor Finanzen läuft der Weg etwas mittiger, parallel zum Kurvenbogen;
 //   · der Weg läuft möglichst mittig auf der Fahrbahn: auf den schmalen Strassen quer zur
 //     Fahrrichtung vermessen und auf die Mitte gerückt, auf der breiten U-Kurve und der oberen
 //     Strasse (Fahrbahn ~38 Einheiten) von Hand auf die Mitte gelegt.
@@ -49,7 +50,7 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 export const STATIONEN = [
   { key: 'basis', x: 185, y: 549, seite: { breit: 'links', schmal: 'unten' } },
   { key: 'wohnen', x: 272, y: 616, seite: { breit: 'links', schmal: 'unten' } },
-  { key: 'finanzen', x: 558, y: 678, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'finanzen', x: 551, y: 680, seite: { breit: 'rechts', schmal: 'links' } },
   { key: 'versicherungen', x: 440, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
   { key: 'ausbildung', x: 195, y: 479, seite: { breit: 'links', schmal: 'oben' } },
   { key: 'behoerden', x: 290, y: 513, seite: { breit: 'unten', schmal: 'unten' } },
@@ -62,11 +63,11 @@ export const STATIONEN = [
 export const WEG_VON = [0, 1, 2, 3, 4, 5];
 export const WEGSTUECKE = [
   'M185 549C189 550.9 197.5 552.5 208.7 560.3C220 568.1 241.9 586.4 252.6 595.6C263.2 604.7 269.4 611.8 272.6 615.2C275.9 618.6 272.1 615.9 272 616',
-  'M272 616C275.8 619.5 289.2 631.5 295.1 637.2C301 642.8 303.5 645.6 307.4 649.9C311.3 654.3 313.5 656.6 318.5 663.1C323.5 669.7 334.3 684.7 337.5 689M432.1 727.2C435.3 727.6 448.2 729 451.5 729.3M540.5 724.2C541.9 723.4 546.7 721.3 548.9 719.1C551.1 716.9 552.4 715.1 553.9 711.2C555.4 707.3 557.2 701.3 557.9 695.7C558.5 690.2 558 681 558 678',
-  'M558 678C557.2 675.1 555.5 665.4 553.3 660.6C551.1 655.9 548.6 652.8 545 649.6C541.3 646.5 537.4 644.2 531.4 641.7C525.3 639.2 512.5 636 508.8 634.8M484.2 630.6C476.9 629.8 447.4 626.8 440 626',
+  'M272 616C275.8 619.5 289.2 631.5 295.1 637.2C301 642.8 303.5 645.6 307.4 649.9C311.3 654.3 313.5 656.6 318.5 663.1C323.5 669.7 334.3 684.7 337.5 689M432.1 727.2C435.3 727.5 448.4 728.9 451.6 729.2M540.5 724.4C541.2 723.6 542.9 722.4 544.5 719.5C546 716.5 548.5 710.6 549.6 706.6C550.7 702.6 551 699.9 551.2 695.4C551.4 691 551 682.6 551 680',
+  'M551 680C550.6 677 549.6 666.3 548.7 662.1C547.8 657.9 546.9 657.3 545.5 655C544.2 652.8 542.6 650.6 540.8 648.6C539 646.7 537.1 644.9 534.9 643.3C532.7 641.6 532.3 640.7 527.6 638.7C522.9 636.7 510.3 632.4 506.8 631.1M484.3 627.4C476.9 627.2 447.4 626.2 440 626',
   'M440 626C433.6 625 408.2 621.1 401.8 620.2M364.4 611.1C358.7 609.8 335.7 604.4 330 603M172.9 504.9C173.6 503.7 173.2 501.9 177.2 497.8C181.2 493.7 194 483.3 196.9 480.2C199.9 477.1 195.3 479.2 195 479',
   'M195.7 474.2C197.2 472.3 202.5 464.9 204.7 462.7C206.9 460.5 203.6 462.5 208.9 461.1C214.1 459.7 227.2 456.1 236.4 454.4C245.6 452.6 254.2 452.5 264.2 450.8C274.1 449.1 288.8 446.9 296 444.4C303.1 441.8 303.4 437.8 307.2 435.6C310.9 433.3 314.7 431.1 318.5 430.9C322.4 430.6 326.9 432.9 330.3 434.3C333.7 435.8 336.3 437.4 338.9 439.5C341.4 441.7 344.1 444.6 345.6 447.2C347.1 449.8 347.7 452.5 347.7 455.2C347.8 457.9 348 460.3 346 463.4C344.1 466.4 340.6 469.7 336.1 473.5C331.5 477.3 324.6 482.2 318.8 486.1C313 489.9 305.3 493.9 301.3 496.8C297.4 499.6 297.2 500.5 295.3 503.2C293.4 505.9 290.9 511.4 290 513',
-  'M353.1 562C354.3 560.1 358 553.5 360.5 550.4C363 547.4 365.3 545.9 367.9 544C370.6 542 371.9 540.9 376.4 538.8C380.9 536.8 386.9 533.8 394.8 531.8C402.8 529.7 419.1 527.4 424 526.5',
+  'M348 584C348.4 581.9 349.4 575.3 350.4 571.2C351.5 567.1 352.7 562.5 354.2 559.3C355.6 556 357.1 554.3 359.1 551.9C361.2 549.6 363.5 547.3 366.4 545.2C369.2 543 372.6 540.8 376.4 538.8C380.2 536.9 384.8 535 389.1 533.5C393.5 532.1 396.8 531.2 402.6 530C408.4 528.8 420.4 527.1 424 526.5',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
