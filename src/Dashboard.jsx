@@ -468,8 +468,44 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       })
     ),
 
+    // ─── Maloja Pass — interactive topographic map ─────────
+    React.createElement('div', {
+      style: { margin: '20px -8px 0 -8px' }
+    },
+      React.createElement('div', {
+        style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          padding: '0 8px ' + space.sm + 'px 8px',
+        }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid }
+        },
+          (() => {
+            const started = chapterCompletions.filter(p => p > 0).length;
+            const done = chapterCompletions.filter(p => p >= 100).length;
+            const total = chapterCompletions.length;
+            if (done === total) return t('progress.allDone');
+            if (started === 0) return t('progress.notStarted');
+            return t('progress.status', { started, done, total });
+          })()
+        ),
+        // Prozentzahl erst ab spürbarem Fortschritt (≥10%) zeigen — eine einsame
+        // „1%" am Anfang liest sich als „im Rückstand" und widerspricht der Ruhe.
+        // Bis dahin trägt die Status-Zeile links die Orientierung.
+        Math.round(completion) >= 10 && React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.medium }
+        }, Math.round(completion) + '%')
+      )
+    ),
+    // Die Landschaft (eigene Malojapass-Fotos → Codex-Illustration) mit den Kapiteln als
+    // Stationen auf der Passstrasse — siehe components/BergLandschaft.jsx.
+    React.createElement(BergLandschaft, { palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }),
+
     // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
-    // Führt oben sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
+    // Steht seit 25.09.2026 UNTER der Landschaft, vor der Fortschritts-Karte (Entscheid Stebler Studios):
+    // erst das Bild, dann der eine nächste Schritt. Oben trägt die Landschaft den Abstand (28 px).
+    // Führt sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
     // Punkt) und zeigt einen TWINT-artigen Glance (nächste Frist · zuletzt gesichert).
     // Weniger Farbe, klare Hierarchie (Prinzipien von Stebler Studios): neutraler Grund statt
     // Marken-Tönung; die nächste Aktion ist der Hero (kleiner Bereichs-Punkt als
@@ -479,7 +515,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement('div', {
       'data-tour': 'naechster-schritt',
       style: {
-        marginTop: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
+        marginBottom: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
         background: palette.surface, border: '1px solid ' + palette.border,
         borderRadius: radius.md,
       },
@@ -545,40 +581,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         );
       })()
     ),
-
-    // ─── Maloja Pass — interactive topographic map ─────────
-    React.createElement('div', {
-      style: { margin: '20px -8px 0 -8px' }
-    },
-      React.createElement('div', {
-        style: {
-          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-          padding: '0 8px ' + space.sm + 'px 8px',
-        }
-      },
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid }
-        },
-          (() => {
-            const started = chapterCompletions.filter(p => p > 0).length;
-            const done = chapterCompletions.filter(p => p >= 100).length;
-            const total = chapterCompletions.length;
-            if (done === total) return t('progress.allDone');
-            if (started === 0) return t('progress.notStarted');
-            return t('progress.status', { started, done, total });
-          })()
-        ),
-        // Prozentzahl erst ab spürbarem Fortschritt (≥10%) zeigen — eine einsame
-        // „1%" am Anfang liest sich als „im Rückstand" und widerspricht der Ruhe.
-        // Bis dahin trägt die Status-Zeile links die Orientierung.
-        Math.round(completion) >= 10 && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.medium }
-        }, Math.round(completion) + '%')
-      )
-    ),
-    // Die Landschaft (eigene Malojapass-Fotos → Codex-Illustration) mit den Kapiteln als
-    // Stationen auf der Passstrasse — siehe components/BergLandschaft.jsx.
-    React.createElement(BergLandschaft, { palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }),
 
     // ─── Fortschritt & Grundordnung — eine Karte, offen (Schicht 1) ──
     // Bis 25.09.2026 zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt».
