@@ -37,3 +37,30 @@ describe('InstallHinweis · «So geht es»', () => {
     expect(hauptknoepfe(html)).toHaveLength(1);
   });
 });
+
+// Karte im Bergpanorama (25.09.2026): am Handy ein Handy-Zeichen, am Computer ein Bildschirm; im
+// schmalen Ausschnitt nur Zeichen, «×» und Knopf — der Satz wandert in den Namen des Knopfs.
+describe('InstallHinweis · Karte im Panorama', () => {
+  const mitGeraet = (ua, touch, fn) => {
+    const alt = Object.getOwnPropertyDescriptor(globalThis, 'navigator');
+    Object.defineProperty(globalThis, 'navigator', { value: { userAgent: ua, platform: '', maxTouchPoints: touch }, configurable: true });
+    try { return fn(); } finally { if (alt) Object.defineProperty(globalThis, 'navigator', alt); else delete globalThis.navigator; }
+  };
+  afterEach(() => { delete globalThis.localStorage; });
+
+  it('Zeichen folgt dem Gerät: iPhone → Handy, Mac-Chrome → Computer', () => {
+    globalThis.localStorage = { getItem: () => null, setItem: () => {} };
+    const iphone = mitGeraet('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1', 5, () => rendern({}));
+    const mac = mitGeraet('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128.0 Safari/537.36', 0, () => rendern({}));
+    expect(iphone).toContain('data-zeichen="handy"');
+    expect(mac).toContain('data-zeichen="computer"');
+  });
+
+  it('klein: ohne Satz, der Knopf trägt ihn im Namen; gross: Satz sichtbar', () => {
+    globalThis.localStorage = { getItem: () => null, setItem: () => {} };
+    const klein = rendern({ klein: true });
+    expect(klein).not.toMatch(/>install\.navSub</);
+    expect(klein).toMatch(/aria-label="install\.navSub — pwa\.anleitung"/);
+    expect(rendern({})).toMatch(/>install\.navSub</);
+  });
+});

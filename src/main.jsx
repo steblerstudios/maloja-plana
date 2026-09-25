@@ -27,7 +27,9 @@ import ThemeToggle from './ThemeToggle.jsx';
 const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
 import Dashboard from './Dashboard.jsx';
 const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
-import OverdueBanner from './OverdueBanner.jsx';
+// Nachgeladen (25.09.2026): das Hauptbundle hatte 20 B Luft, die Startbildschirm-Karte im Panorama
+// brauchte mehr. Der Hinweis erscheint nur bei fälligen Erinnerungen.
+const OverdueBanner = React.lazy(() => import('./OverdueBanner.jsx'));
 import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
@@ -1347,7 +1349,9 @@ const AppInner = ({ demo }) => {
     // Hinweis) permanent stehen, statt wegzuscrollen. Jetzt scrollt die Seite; klebend
     // bleibt nur der Kopf (position: sticky), und die Reiter darin hängen sich per
     // --mp-kopf-h darunter.
-    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
+    // Auf der Übersicht ohne Abstand oben: das Bergpanorama schliesst direkt an die Kopfzeile bzw.
+    // den Beispiel-Balken an (Entscheid 25.09.2026).
+    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: (view === 'dashboard' ? '0' : '24px') + ' 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
       // In den fünf Unter-Ansichten zeichnet die Ansicht selbst die Brotkrume (components/
       // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
       // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
@@ -1394,16 +1398,18 @@ const AppInner = ({ demo }) => {
         React.createElement(StorageWarning, { palette, t }),
         // handleNavigate, nicht setView: nur so springt die Seite nach oben und der Fokus
         // auf <main> — seit das Dokument scrollt (#296), landete man sonst mitten im Kalender.
-        React.createElement(OverdueBanner, { palette, t, onNavigate: handleNavigate }),
-        // Der Weg auf den Startbildschirm. Eigene, nachgeladene Datei:
-        // das Hauptbundle hat 60 Byte Luft unter dem size-limit, der Kasten
-        // kostet 290 B. Begründung ausführlich in InstallHinweis.jsx.
         React.createElement(React.Suspense, { fallback: null },
-          React.createElement(InstallHinweis, {
-            palette, t, onNavigate: handleNavigate, installPrompt,
-            onPromptWeg: () => setInstallPrompt(null),
-          })),
+          React.createElement(OverdueBanner, { palette, t, onNavigate: handleNavigate })),
         React.createElement(Dashboard, {
+          // Der Weg auf den Startbildschirm: kleine Karte rechts oben im Bergpanorama (seit
+          // 25.09.2026, vorher ein Kasten über den Bergen). Eigene, nachgeladene Datei — das
+          // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
+          // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
+          installKarte: (klein) => React.createElement(React.Suspense, { fallback: null },
+            React.createElement(InstallHinweis, {
+              palette, t, onNavigate: handleNavigate, installPrompt, klein,
+              onPromptWeg: () => setInstallPrompt(null),
+            })),
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
           completion: calculateCompletion(),

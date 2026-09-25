@@ -393,7 +393,7 @@ const bergKleben = (el) => {
   return () => { ro.disconnect(); window.removeEventListener('resize', setzen); };
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
@@ -473,6 +473,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement(BergLandschaft, {
       palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle,
       titel: t('dashboard.welcome'),
+      ecke: installKarte,
       // Fortschritt als Kreise (seit 25.09.2026): begonnen · abgeschlossen · Prozent.
       fortschritt: {
         begonnen: chapterCompletions.filter(p => p > 0).length,
