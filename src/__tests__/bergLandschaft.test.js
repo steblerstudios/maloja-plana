@@ -188,9 +188,16 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
       expect(x > 300 && x < 365 && y > 564, `Punkt ${x} ${y} liegt auf der oberen Strasse`).toBe(false);
     }
   });
-  it('der Weg nach Versicherungen endet vor der Behörden-Beschriftung (nichts zwischen x 205 und 396)', () => {
+  it('der Weg nach Versicherungen endet unter der Behörden-Beschriftung (nichts zwischen x 205 und 325)', () => {
     const z = zahlen(WEGSTUECKE[3]);
-    for (let k = 0; k < z.length; k += 2) expect(z[k] > 205 && z[k] < 396, `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
+    for (let k = 0; k < z.length; k += 2) expect(z[k] > 205 && z[k] < 325, `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
+  });
+  it('der Weg nach Versicherungen läuft hinter der Tanne weiter (nicht zu kurz, bis x ≤ 335)', () => {
+    const xs = zahlen(WEGSTUECKE[3]).filter((_, k) => k % 2 === 0 && _ > 205);
+    expect(Math.min(...xs)).toBeLessThanOrEqual(335);
+  });
+  it('das Stück unten in der U-Kurve zwischen den Tannen ist da', () => {
+    expect(zahlen(WEGSTUECKE[1]).some((v, k, z) => k % 2 === 0 && v > 420 && v < 470 && z[k + 1] > 715)).toBe(true);
   });
   it('der Weg zum Notfall beginnt erst, wo die Strasse ins Bild kommt (rechts der Kreuzung)', () => {
     const z = zahlen(WEGSTUECKE[5]);

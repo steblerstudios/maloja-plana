@@ -33,8 +33,9 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 // obere Strasse an der Basis vorbeiläuft, ist der Weg ausgeblendet (Umkreis 48 Einheiten), damit
 // es nicht aussieht, als schneide die Basis ihn.
 // Weitere Vorgaben (Stebler Studios, 25.09.2026):
-//   · der Weg von Versicherungen nach links endet spätestens vor der Behörden-Beschriftung (an
-//     der Tanne) und taucht erst an der schmalen Strasse unterhalb der Ausbildung wieder auf;
+//   · der Weg von Versicherungen nach links läuft hinter der Tanne weiter und endet unter der
+//     Behörden-Beschriftung (x 330), dann taucht er erst an der schmalen Strasse unterhalb der
+//     Ausbildung wieder auf; das kurze Stück unten in der U-Kurve zwischen den Tannen bleibt;
 //   · der Weg zum Notfall beginnt erst, wo die Strasse unter der oberen Strasse hervor ins Bild
 //     kommt — nicht am Behörden-Knopf;
 //   · der Weg läuft möglichst mittig auf der Fahrbahn: auf den schmalen Strassen quer zur
@@ -59,9 +60,9 @@ export const STATIONEN = [
 export const WEG_VON = [0, 1, 2, 3, 4, 5];
 export const WEGSTUECKE = [
   'M185 549C189 550.9 197.5 552.5 208.7 560.3C220 568.1 241.9 586.4 252.6 595.6C263.2 604.7 269.4 611.8 272.6 615.2C275.9 618.6 272.1 615.9 272 616',
-  'M272 616C277.5 621.5 296.7 639.6 305.2 648.9C313.8 658.2 318.1 664.6 323.3 671.7C328.5 678.8 334.3 688.2 336.5 691.5M540.5 724.2C541.9 723.4 546.7 721.3 548.9 719.1C551.1 716.9 552.4 715.1 553.9 711.2C555.4 707.3 557.2 701.3 557.9 695.7C558.5 690.2 558 681 558 678',
+  'M272 616C277.5 621.5 296.7 639.6 305.2 648.9C313.8 658.2 318.1 664.6 323.3 671.7C328.5 678.8 334.3 688.2 336.5 691.5M340.1 695.6C341.6 696.9 347.8 701.9 349.3 703.1M432.4 727.3C435.6 727.7 448.4 729 451.6 729.3M540.5 724.2C541.9 723.4 546.7 721.3 548.9 719.1C551.1 716.9 552.4 715.1 553.9 711.2C555.4 707.3 557.2 701.3 557.9 695.7C558.5 690.2 558 681 558 678',
   'M558 678C557.2 675.1 555.5 665.4 553.3 660.6C551.1 655.9 548.6 652.8 545 649.6C541.3 646.5 537.4 644.2 531.4 641.7C525.3 639.2 512.5 636 508.8 634.8M484.2 630.6C476.9 629.8 447.4 626.8 440 626',
-  'M440 626C433.6 625 408 621.2 401.6 620.3M172.9 504.9C173.6 503.7 173.3 501.9 177.2 497.8C181.2 493.7 193.7 483.3 196.6 480.2C199.6 477.1 195.3 479.2 195 479',
+  'M440 626C433.6 625 408 621.2 401.6 620.3M367.6 596C361 594.6 340.5 590.8 330 588.2M172.9 504.9C173.6 503.7 173.2 501.9 177.2 497.8C181.2 493.7 194 483.3 196.9 480.2C199.9 477.1 195.3 479.2 195 479',
   'M195.7 474.2C197.2 472.3 202.5 464.9 204.7 462.7C206.9 460.5 203.6 462.5 208.9 461.1C214.1 459.7 227.2 456.1 236.4 454.4C245.6 452.6 254.2 452.5 264.2 450.8C274.1 449.1 288.8 446.9 296 444.4C303.1 441.8 303.4 437.8 307.2 435.6C310.9 433.3 314.7 431.1 318.5 430.9C322.4 430.6 326.9 432.9 330.3 434.3C333.7 435.8 336.3 437.4 338.9 439.5C341.4 441.7 344.1 444.6 345.6 447.2C347.1 449.8 347.7 452.5 347.7 455.2C347.8 457.9 348 460.3 346 463.4C344.1 466.4 340.6 469.7 336.1 473.5C331.5 477.3 324.6 482.2 318.8 486.1C313 489.9 305.3 493.9 301.3 496.8C297.4 499.6 297.2 500.5 295.3 503.2C293.4 505.9 290.9 511.4 290 513',
   'M353.1 562C354.3 560.1 358 553.5 360.5 550.4C363 547.4 365.3 545.9 367.9 544C370.6 542 371.9 540.9 376.4 538.8C380.9 536.8 386.9 533.8 394.8 531.8C402.8 529.7 419.1 527.4 424 526.5',
 ];
