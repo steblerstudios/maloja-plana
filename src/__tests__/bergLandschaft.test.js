@@ -1,10 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
   STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
+  ETIKETT_SCHRIFT, etikettGrund,
 } from '../components/BergLandschaft.jsx';
+import BergLandschaft from '../components/BergLandschaft.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // Dashboard-Berge seit 25.09.2026: eine gemalte Landschaft (eigene Malojapass-Fotos →
@@ -238,10 +242,15 @@ describe('Berge · Fortschritt im Bild', () => {
   }
 
   it('die Schildchen haben undurchsichtigen Grund und keine Deckkraft', () => {
-    const block = src.slice(src.indexOf('const schild = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    const block = src.slice(src.indexOf('const kachel = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    const kreis = src.slice(src.indexOf('const Kreis = '), src.indexOf('// Das Bild bleibt auch im Dunkelmodus hell'));
     expect(block.length).toBeGreaterThan(100);
     expect(block).toContain('background: p.surface');
     expect(block).not.toMatch(/opacity/);
+    // Der Kreis selbst: volle Scheibe unter dem Bogen, Zahl in der Textfarbe.
+    expect(kreis).toContain('fill: p.surface');
+    expect(kreis).toContain('fill: p.text');
+    expect(kreis).not.toMatch(/opacity/);
   });
 });
 
@@ -262,5 +271,67 @@ describe('Berge · Titel im Himmel', () => {
   it('die Ausschnitte reichen oben in den Himmel (breit) bzw. in die Gipfel (schmal)', () => {
     expect(AUSSCHNITT.breit.y).toBe(0);
     expect(AUSSCHNITT.schmal.y).toBeLessThanOrEqual(130);
+  });
+});
+
+// Seit 25.09.2026 tragen die Stationsnamen die Kapitelfarbe als Grund, weiss beschriftet. Etiketten
+// sind 11–13 px, also normale Schrift: Weiss muss auf jedem Grund ≥ 4.5:1 tragen (WCAG 1.4.3) —
+// für jede Kapitelfarbe, in allen vier Modi (die helle Palette gilt auch im Dunkelmodus).
+describe('Berge · Stationsnamen weiss auf Kapitelfarbe', () => {
+  for (const [name, dunkelModus, farbenblind] of [
+    ['hell', false, false], ['dunkel', true, false],
+    ['hell, Farbenblind', false, true], ['dunkel, Farbenblind', true, true],
+  ]) {
+    it(`${name}: Weiss ≥ 4.5:1 auf jedem Etikett`, () => {
+      const p = bildPalette(applyColorBlind(dunkelModus ? DARK_PALETTE : LIGHT_PALETTE, farbenblind));
+      const farben = astFarben(KAPITEL, p, false);
+      expect(Object.keys(farben)).toHaveLength(7);
+      for (const [key, farbe] of Object.entries(farben)) {
+        expect(kontrast(ETIKETT_SCHRIFT, etikettGrund(farbe)), `${name} · ${key}: ${farbe} → ${etikettGrund(farbe)}`).toBeGreaterThanOrEqual(4.5);
+      }
+    });
+  }
+
+  it('Fortschritts-Zahl im Kreis: Textfarbe auf der Scheibe ≥ 4.5:1', () => {
+    const p = bildPalette(LIGHT_PALETTE);
+    expect(kontrast(p.text, p.surface)).toBeGreaterThanOrEqual(4.5);
+    expect(kontrast(p.mid, p.surface)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// Die Kreise zeigen, was der Stand ist (Entscheid 25.09.2026): «begonnen» bis alle fertig sind,
+// «abgeschlossen» ab dem ersten fertigen Kapitel, und am Anfang nur der ruhige Satz.
+describe('Berge · Fortschritts-Kreise zeigen den Stand', () => {
+  const rendern = (fortschritt, prozent = 50) => renderToStaticMarkup(React.createElement(BergLandschaft, {
+    palette: LIGHT_PALETTE, chapters: KAPITEL, chapterCompletions: [0, 0, 0, 0, 0, 0, 0], completion: prozent,
+    onSelectChapter: () => {}, lang: 'de', hyphenStyle: {}, titel: 'T',
+    fortschritt, fortschrittLabels: { begonnen: 'begonnen', abgeschlossen: 'abgeschlossen', leer: 'Ihr Weg beginnt hier' },
+    prozent,
+  }));
+  it('nichts begonnen: nur der Satz, keine Kreise', () => {
+    const html = rendern({ begonnen: 0, abgeschlossen: 0, gesamt: 7 }, null);
+    expect(html).toContain('Ihr Weg beginnt hier');
+    expect(html).not.toContain('berg-begonnen');
+    expect(html).not.toContain('berg-abgeschlossen');
+    expect(html).not.toContain('berg-prozent');
+  });
+  it('begonnen, noch keins fertig: nur «begonnen» 7/7 und der Prozent-Kreis', () => {
+    const html = rendern({ begonnen: 7, abgeschlossen: 0, gesamt: 7 }, 63);
+    expect(html).toContain('berg-begonnen');
+    expect(html).toContain('7/7');
+    expect(html).not.toContain('berg-abgeschlossen');
+    expect(html).toContain('63%');
+  });
+  it('eins fertig: «abgeschlossen» 1/7 kommt dazu', () => {
+    const html = rendern({ begonnen: 7, abgeschlossen: 1, gesamt: 7 }, 70);
+    expect(html).toContain('berg-begonnen');
+    expect(html).toContain('berg-abgeschlossen');
+    expect(html).toContain('1/7');
+  });
+  it('alle fertig: «begonnen» geht weg, «abgeschlossen» 7/7 bleibt', () => {
+    const html = rendern({ begonnen: 7, abgeschlossen: 7, gesamt: 7 }, 100);
+    expect(html).not.toContain('berg-begonnen');
+    expect(html).toContain('berg-abgeschlossen');
+    expect(html).toContain('100%');
   });
 });

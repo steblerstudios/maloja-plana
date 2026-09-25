@@ -15,11 +15,13 @@ import landschaft from '../assets/berge/landschaft.webp?url';
 const BILD = { w: 1100, h: 788 };
 // Breit: das ganze Bild — seit dem Hero (25.09.2026) mit dem ganzen Himmel, in dem der Titel
 // steht. Schmal: das Strassennetz, damit die Stationen am Handy weit genug auseinanderliegen,
-// nach oben erweitert bis in die blassen Gipfel (Platz für den Titel). Die Breite und damit
-// der Massstab bleiben gleich — Stationen und Etiketten liegen zueinander wie zuvor.
+// nach oben erweitert bis in die blassen Gipfel (Platz für den Titel) und nach unten bis zum
+// Bildrand (ein Streifen Vordergrund-Wald für die Fortschritts-Kreise, unter den Stationen).
+// Die Breite und damit der Massstab bleiben gleich — Stationen und Etiketten liegen zueinander
+// wie zuvor.
 export const AUSSCHNITT = {
   breit: { x: 0, y: 0, w: 1100, h: 788 },
-  schmal: { x: 110, y: 130, w: 490, h: 580 },
+  schmal: { x: 110, y: 130, w: 490, h: 658 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
@@ -95,20 +97,58 @@ export const mitKontrast = (hex, grund, ziel = 3) => {
   return farbe;
 };
 
+// Stationsnamen: Grund in der Kapitelfarbe, Schrift weiss (seit 25.09.2026). Ist eine Farbe
+// für weisse Schrift zu hell (Finanzen golden), wird sie im selben Farbton abgedunkelt, bis
+// Weiss ≥ 4.5:1 trägt (WCAG 1.4.3, 11–13 px = normale Schrift).
+export const ETIKETT_SCHRIFT = '#ffffff';
+export const etikettGrund = (farbe) => mitKontrast(farbe, ETIKETT_SCHRIFT, 4.5);
+
+// Ein Fortschritts-Kreis: Spur + Bogen im Verhältnis `anteil` (0–1), in der Mitte der Wert.
+// Undurchsichtige Scheibe darunter, damit der Kontrast nicht am Bild hängt (K41).
+const Kreis = ({ p, anteil, mitte, d }) => {
+  const r = d / 2 - 3.5, u = 2 * Math.PI * r;
+  return React.createElement('svg', { width: d, height: d, viewBox: `0 0 ${d} ${d}`, 'aria-hidden': 'true', style: { display: 'block' } },
+    React.createElement('circle', { cx: d / 2, cy: d / 2, r, fill: p.surface, stroke: p.border, strokeWidth: 4 }),
+    anteil > 0 && React.createElement('circle', {
+      cx: d / 2, cy: d / 2, r, fill: 'none', stroke: p.sageDeep, strokeWidth: 4, strokeLinecap: 'round',
+      strokeDasharray: `${u * Math.min(1, anteil)} ${u}`, transform: `rotate(-90 ${d / 2} ${d / 2})`,
+      style: { transition: 'stroke-dasharray 900ms ease' },
+    }),
+    React.createElement('text', {
+      x: '50%', y: '50%', textAnchor: 'middle', dominantBaseline: 'central',
+      fontSize: d >= 52 ? 14 : 12, fontWeight: weight.semi, fill: p.text, fontFamily: 'inherit',
+    }, mitte),
+  );
+};
+
 // Das Bild bleibt auch im Dunkelmodus hell (Entscheid 25.09.2026: «so dunkel ist unangenehm»).
 // Darum tragen Stationen und Etiketten immer die helle Palette — ihr Kontrast hängt dann nicht
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschrittText, prozent }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent }) => {
   const rahmen = useRef(null);
-  const [schmal, setSchmal] = useState(false);
+  // «abgeschlossen» springt auf, sobald das erste Kapitel fertig ist — nicht beim ersten Zeichnen.
+  const abgeschlossenKachel = useRef(null);
+  const warAbgeschlossen = useRef(null);
+  const abgeschlossenJetzt = fortschritt ? fortschritt.abgeschlossen : 0;
+  useEffect(() => {
+    const vorher = warAbgeschlossen.current;
+    warAbgeschlossen.current = abgeschlossenJetzt;
+    const el = abgeschlossenKachel.current;
+    if (vorher === null || vorher > 0 || abgeschlossenJetzt === 0 || !el || !el.animate) return;
+    if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.animate([{ transform: 'scale(0.4)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+      { duration: 520, easing: 'cubic-bezier(.2,.8,.3,1.2)' });
+  }, [abgeschlossenJetzt]);
+  const [breite, setBreite] = useState(0);
+  const schmal = breite > 0 && breite < SCHMAL_AB;
   const [bildFehlt, setBildFehlt] = useState(false);
 
   useEffect(() => {
     const el = rahmen.current;
     if (!el || typeof ResizeObserver === 'undefined') return undefined;
-    const ro = new ResizeObserver(([eintrag]) => setSchmal(eintrag.contentRect.width < SCHMAL_AB));
+    const ro = new ResizeObserver(([eintrag]) => setBreite(eintrag.contentRect.width));
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
@@ -209,36 +249,58 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         textWrap: 'balance',
       },
     }, titel),
-    // Fortschritt im Bild, unten (seit 25.09.2026, vorher eine Zeile über dem Bild): links der
-    // Stand («7 von 7 begonnen»), rechts die Prozentzahl. Am Handy (< SCHMAL_AB) liegt unten
-    // rechts die Station Finanzen — dort rückt die Prozentzahl direkt neben den Stand (gemessen
-    // 320–736 px, ohne Überschneidung). Gleiche Machart wie die Etiketten: undurchsichtiger
-    // Grund, helle Palette, damit der Kontrast nicht am Bild hängt (K41).
-    (fortschrittText || prozent) && React.createElement('div', {
-      key: 'fortschritt',
-      style: {
-        position: 'absolute', left: schmal ? '8px' : '12px', right: schmal ? '8px' : '12px', bottom: schmal ? '8px' : '12px',
-        display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
-        gap: '6px', pointerEvents: 'none',
+    // Fortschritt im Bild, unten, als Kreise (seit 25.09.2026): links «begonnen» (7/7) und — sobald
+    // das erste Kapitel fertig ist, aufspringend — «abgeschlossen» (1/7); sind alle fertig, geht
+    // «begonnen» weg. Rechts die Prozentzahl im Kreis. Am Handy (< SCHMAL_AB) liegt unten rechts
+    // die Station Finanzen — dort rückt der Prozent-Kreis zu den anderen nach links.
+    // Undurchsichtige Kacheln, helle Palette: der Kontrast hängt nicht am Bild (K41).
+    fortschritt && (() => {
+      const { begonnen, abgeschlossen, gesamt } = fortschritt;
+      const L = fortschrittLabels || {};
+      // Knapp über der Handy-Grenze (520–655 px) ist das Bild niedrig und Wohnen liegt nahe am
+      // unteren linken Rand — dort kleinere Kreise (gemessen: sonst berührt «begonnen» Wohnen).
+      const eng = !schmal && breite < 656;
+      const d = schmal ? 38 : eng ? 32 : 46;
+      const kachel = {
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: eng ? '2px' : '3px',
+        background: p.surface, borderRadius: radius.md, padding: schmal || eng ? '4px 6px 5px' : '5px 8px 7px',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.18)', lineHeight: 1.1,
+      };
+      const beschriftung = (txt) => React.createElement('span', {
+        style: { fontSize: schmal || eng ? '10px' : '11px', color: p.mid, whiteSpace: 'nowrap' },
+      }, txt);
+      const zusammenfassung = [
+        begonnen > 0 && abgeschlossen < gesamt && `${begonnen}/${gesamt} ${L.begonnen || ''}`,
+        abgeschlossen > 0 && `${abgeschlossen}/${gesamt} ${L.abgeschlossen || ''}`,
+        prozent != null && `${prozent}%`,
+      ].filter(Boolean).join(' · ');
+      return React.createElement('div', {
+        key: 'fortschritt', 'data-testid': 'berg-fortschritt',
+        role: begonnen > 0 ? 'img' : undefined,
+        'aria-label': begonnen > 0 ? zusammenfassung : undefined,
+        style: {
+          position: 'absolute', left: schmal ? '8px' : '12px', right: schmal ? '8px' : '12px', bottom: schmal ? '8px' : '12px',
+          display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
+          gap: '6px', pointerEvents: 'none', lineHeight: 1.2,
+        },
       },
-    },
-      ...(() => {
-        const schild = {
-          fontSize: schmal ? '11px' : text.xs, lineHeight: 1.2, whiteSpace: 'nowrap',
-          background: p.surface, padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm,
-          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-        };
-        return [
-          fortschrittText && React.createElement('div', {
-            key: 'stand', 'data-testid': 'berg-fortschritt', style: { ...schild, color: p.mid },
-          }, fortschrittText),
-          prozent && React.createElement('div', {
-            key: 'prozent', 'data-testid': 'berg-prozent',
-            style: { ...schild, color: p.sageDeep, fontWeight: weight.medium, marginLeft: fortschrittText ? undefined : 'auto' },
-          }, prozent),
-        ];
-      })(),
-    ),
+        React.createElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'flex-end' } },
+          begonnen === 0 && React.createElement('div', {
+            style: { ...kachel, flexDirection: 'row', padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm },
+          }, React.createElement('span', { style: { fontSize: schmal ? '11px' : text.xs, color: p.mid } }, L.leer)),
+          begonnen > 0 && abgeschlossen < gesamt && React.createElement('div', { key: 'begonnen', 'data-testid': 'berg-begonnen', style: kachel },
+            beschriftung(L.begonnen),
+            React.createElement(Kreis, { p, anteil: begonnen / gesamt, mitte: `${begonnen}/${gesamt}`, d })),
+          abgeschlossen > 0 && React.createElement('div', { key: 'abgeschlossen', ref: abgeschlossenKachel, 'data-testid': 'berg-abgeschlossen', style: kachel },
+            beschriftung(L.abgeschlossen),
+            React.createElement(Kreis, { p, anteil: abgeschlossen / gesamt, mitte: `${abgeschlossen}/${gesamt}`, d })),
+          schmal && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '4px' } },
+            React.createElement(Kreis, { p, anteil: prozent / 100, mitte: prozent + '%', d: d + 6 })),
+        ),
+        !schmal && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '5px' } },
+          React.createElement(Kreis, { p, anteil: prozent / 100, mitte: prozent + '%', d: d + 10 })),
+      );
+    })(),
     // Kapitel-Stationen auf der Strasse
     STATIONEN.map((station, i) => {
       const pct = chapterCompletions[i] || 0;
@@ -293,17 +355,17 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           'aria-hidden': 'true',
           style: {
             position: 'absolute', ...etikettOrt, whiteSpace: 'nowrap', pointerEvents: 'none',
-            display: 'flex', alignItems: 'center', gap: '4px',
-            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: p.mid,
-            background: p.surface, padding: schmal ? '1px 5px' : '2px 6px', borderRadius: radius.sm,
+            display: 'flex', alignItems: 'center',
+            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
+            background: etikettGrund(farbe), padding: schmal ? '1px 6px' : '2px 7px', borderRadius: radius.sm,
             fontStyle: maturity === 'sketch' ? 'italic' : 'normal',
             fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
             ...hyphenStyle,
           },
         },
-          // Farbpunkt: dieselbe Kapitelfarbe wie der Rand — Farbe ergänzt, das Wort trägt.
-          React.createElement('span', { style: { width: '6px', height: '6px', borderRadius: '50%', background: farbe, flex: 'none' } }),
+          // Seit 25.09.2026 trägt das Etikett selbst die Kapitelfarbe (weisse Schrift) — der
+          // Farbpunkt davor ist damit überflüssig. Das Wort trägt, die Farbe ergänzt.
           shortLabel)
       );
     })

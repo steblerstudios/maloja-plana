@@ -443,20 +443,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // (dashboard.welcome) als Titel — vorher stand er als eigene Zeile darüber (Entscheid
     // Stebler Studios). Eigene Malojapass-Fotos → Codex-Illustration, die Kapitel als Stationen
     // auf der Passstrasse — siehe components/BergLandschaft.jsx.
-    // Die Fortschritts-Zeile («7 von 7 begonnen · 63%») steht unten IM Bild. Die Prozentzahl
-    // erst ab spürbarem Fortschritt (≥10%) — eine einsame «1%» liest sich als «im Rückstand».
+    // Der Fortschritt steht unten IM Bild, als Kreise. Die Prozentzahl erst ab spürbarem
+    // Fortschritt (≥10%) — eine einsame «1%» liest sich als «im Rückstand».
     React.createElement(BergLandschaft, {
       palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle,
       titel: t('dashboard.welcome'),
-      fortschrittText: (() => {
-        const started = chapterCompletions.filter(p => p > 0).length;
-        const done = chapterCompletions.filter(p => p >= 100).length;
-        const total = chapterCompletions.length;
-        if (done === total) return t('progress.allDone');
-        if (started === 0) return t('progress.notStarted');
-        return t('progress.status', { started, done, total });
-      })(),
-      prozent: Math.round(completion) >= 10 ? Math.round(completion) + '%' : null,
+      // Fortschritt als Kreise (seit 25.09.2026): begonnen · abgeschlossen · Prozent.
+      fortschritt: {
+        begonnen: chapterCompletions.filter(p => p > 0).length,
+        abgeschlossen: chapterCompletions.filter(p => p >= 100).length,
+        gesamt: chapterCompletions.length,
+      },
+      fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), leer: t('progress.notStarted') },
+      prozent: Math.round(completion) >= 10 ? Math.round(completion) : null,
     }),
 
     // Die Leistungs-Zeile beantwortet «Was ist das hier?» und hilft genau einmal: beim ersten

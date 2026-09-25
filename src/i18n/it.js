@@ -1478,6 +1478,9 @@ export default {
     notStarted: { sie: 'Il Suo percorso inizia qui', du: 'Il tuo percorso inizia qui' },
     status: '{started} di {total} iniziati',
     allDone: 'Tutte le sezioni completate',
+    // Beschriftung der Fortschritts-Kreise im Berg-Hero (25.09.2026)
+    begonnen: 'iniziati',
+    abgeschlossen: 'completati',
   },
 
   guidedStart: {
