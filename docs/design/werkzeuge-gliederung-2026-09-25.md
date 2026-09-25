@@ -109,8 +109,9 @@ Achtung Namensgleichheit: die Werkzeug-Ansicht «Gesundheit» (`view: 'gesundhei
 `nav.arztkoffer`) und der Gegenstand «Arztkoffer» im Gepäck sind zwei verschiedene Dinge.
 
 ### Offene Entscheide
-1. **Geld:** neuer Gegenstand (z. B. Portemonnaie) für die Finanz-Werkzeuge — ja/nein, welcher?
-2. **Ablegen & Ordnen:** Aussenfach im Rucksack, oder bleiben sie direkt im Menü?
+1. ✅ **Geld: Portemonnaie** (Entscheid 25.09.) — siebter Gegenstand, trägt Steuern, Steuer-Import,
+   Budget, Budget-Sync, Schulden, Finanz-Übersicht, Mindestlohn-Check, Sozialhilfe.
+2. ❓ **Ablegen & Ordnen:** Aussenfach im Rucksack, oder bleiben sie direkt im Menü? *(25.09.: noch offen)*
 3. **Die 5 Hervorhebungen auf dem Dashboard:** noch offen. Vorschlag: vorerst unverändert
    lassen — der Umbau hängt nicht davon ab — und im Oktober mit neuem Tester-Feedback entscheiden.
 
