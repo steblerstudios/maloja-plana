@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius } from './config/tokens.js';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { inDays, formatDE } from './utils/helpers.js';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusTage } from './utils/fristen.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { addTodo } from './utils/merkliste.js';
@@ -14,15 +14,14 @@ import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 // Die Stellen, die die neue Adresse brauchen — stabile Schlüssel für Label + Merkliste.
 const CHECKLIST = ['Post', 'Kk', 'Employer', 'Ahv', 'Tax', 'Insurance', 'Bank', 'Subs'];
 
-// Orientierungs-Frist: In der Schweiz meldet man sich innert 14 Tagen nach dem Umzug
-// bei der neuen Gemeinde an. Wir kennen das Umzugsdatum nicht → ruhige Erinnerung
-// 14 Tage ab heute (verschiebbar), bewusst Orientierung, kein Verdikt.
+// Frist: innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (RHG Art. 11).
+// Gerechnet ab dem Umzugsdatum, das die Person eingibt (vorbelegt aus dem Kapitel
+// Wohnen, falls erfasst) — nicht mehr ab heute (Befund 24.09.2026, utils/fristen.js).
 
 export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
   const s = ablaufStyles(palette);
   const currentAddress = [data?.wohnen?.address, [data?.wohnen?.postalCode, data?.wohnen?.city].filter(Boolean).join(' ')]
     .filter(Boolean).join(', ');
-  const deadline = inDays(14);
   // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
   const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
 
@@ -102,19 +101,13 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       // gibt es nicht. Wer tatsächlich neu in der Schweiz ist, erkennt sich an der
       // Beschriftung («Neu in der Schweiz?») und findet dort die erste KK-Anmeldung.
       umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkKkErst'), onClick: () => onNavigate('kkerst') }),
-      React.createElement(FristButton, {
-        palette, t,
-        buttonLabel: t('umzug.step2Button', { date: formatDE(deadline) }),
-        doneLabel: t('umzug.step2Done'),
-        calendarLabel: t('umzug.step2CalendarLink'),
-        onNavigate,
-        reminder: {
-          title: t('umzug.reminderTitle'),
-          dueDate: deadline,
-          category: 'admin',
-          recurrence: 'once',
-          notes: t('umzug.reminderNotes'),
-        },
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'umzug-frist', frist: (d) => plusTage(d, 14),
+        wert: data?.wohnen?.moveInDate,
+        labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
+        buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
+        reminderTitle: t('umzug.reminderTitle'), category: 'admin',
+        reminderNotes: t('umzug.reminderNotes'),
       })
     ),
 

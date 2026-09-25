@@ -109,7 +109,8 @@ export default {
         pflege: { titel: 'Der geführte Ablauf: Angehörige pflegen', text: 'Der geführte Ablauf zeigt die Schritte der Reihe nach: Gutschrift, Entschädigung, Entlastung.' },
         // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026) [gilt für text]
         betreuungsgutschriften: { titel: 'Bunificaziuns d’assistenza (AVS)', text: { sie: 'La tgira da confamigliars datvis po vegnir scrita sin Voss conto da l’AVS ed augmentar Vossa renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.', du: 'La tgira da confamigliars datvis po vegnir scrita sin tes conto da l’AVS ed augmentar tia renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.' } },
-        betreuungsentschaedigung: { titel: 'Indemnisaziun da tgira (UCG)', text: 'Congedi pajà per tgirar in uffant grevamain malsaun u accidentà, plis in curt congedi per in confamigliar — indemnisads tras l’UCG.' },
+        // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur (24.09.2026)
+        betreuungsentschaedigung: { titel: 'Indemnisaziun da tgira (UCG)', text: 'Bezahlter Urlaub von bis zu 14 Wochen zur Betreuung eines schwer kranken oder verunfallten Kindes — entschädigt über die EO. Für kurze Abwesenheiten wegen anderer Angehöriger zahlt der Arbeitgeber bis zu 3 Tage pro Ereignis und 10 pro Jahr (OR Art. 329h).' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas (da la persuna tgirada)', text: 'La persuna tgirada po avair dretg sin in import mensil — quai po gidar a finanziar la tgira necessaria.' },
         steuern: { titel: 'Deducziun per persunas sustegnidas', text: 'Tgi che sustegna essenzialmain ina persuna en basegn po la deducir en la decleraziun da taglia.' },
       },
@@ -252,6 +253,12 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für umzug — sauberes Romanisch nachziehen.
   umzug: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die 14 Tage waren am {date} vorbei. Melden Sie sich trotzdem sofort an — die Gemeinde sagt, was nun gilt.', du: 'Die 14 Tage waren am {date} vorbei. Melde dich trotzdem sofort an — die Gemeinde sagt, was nun gilt.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Anmelden bis spätestens {date} — 14 Tage nach dem Umzug (RHG Art. 11).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Umzugsdatum',
     quelle: 'Quellen: [[RHG Art. 11|https://www.fedlex.admin.ch/eli/cc/2006/619/de#art_11]], [[OR Art. 266c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_c]] (geprüft im September 2026).',
     title: 'Umzug',
     intro: 'Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.',
@@ -348,6 +355,12 @@ export default {
   },
   // TODO(rm): provisorischer DE-Fallback für neuerJob — sauberes Romanisch nachziehen.
   neuerJob: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: 'Die gesetzliche Probezeit von einem Monat endete am {date}. Steht im Vertrag eine längere, gilt jene.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Ohne andere Abrede endet die Probezeit nach einem Monat, am {date} (OR Art. 335b). Der Vertrag kann bis zu drei Monate vorsehen — dann gilt jenes Datum.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Erster Arbeitstag',
     quelle: 'Quellen: [[OR Art. 335b|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_335_b]], [[BVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_7]] (geprüft im September 2026).',
     title: 'Neuer Job',
     intro: 'Ein neuer Job verändert mehr als nur den Lohn. Hier der ruhige Überblick, was dazugehört — Vertrag, Vorsorge, Versicherungen, Steuern, Fristen.',
@@ -358,10 +371,12 @@ export default {
     step1LinkAblage: 'Vertrag im Lebensordner ablegen',
     step2Title: '2 · Pensionskasse (BVG)',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text: { sie: 'Ab einem Jahreslohn von rund 22 000 Fr. sind Sie obligatorisch in der Pensionskasse (2. Säule). Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Ab einem Jahreslohn von rund 22 000 Fr. bist du obligatorisch in der Pensionskasse (2. Säule). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step2Text: { sie: 'Verdienen Sie bei einem Arbeitgeber mehr als 22 680 Fr. im Jahr, sind Sie obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7). Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Verdienst du bei einem Arbeitgeber mehr als 22 680 Fr. im Jahr, bist du obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
     step3Title: '3 · Unfall & Krankentaggeld',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step3Text: { sie: 'Ab 8 Std./Woche sind Sie über den Arbeitgeber unfallversichert (UVG) — dann können Sie die Unfalldeckung in der Krankenkasse abwählen und sparen Prämie. Ob ein Krankentaggeld (KTG) besteht, steht meist auf dem Lohnausweis.', du: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht meist auf dem Lohnausweis.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step3Text: { sie: 'Ab 8 Std./Woche sind Sie über den Arbeitgeber unfallversichert (UVG) — dann können Sie die Unfalldeckung in der Krankenkasse abwählen und sparen Prämie. Ob ein Krankentaggeld (KTG) besteht, steht im Arbeitsvertrag oder Personalreglement; zahlen Sie mit, sehen Sie den Abzug auf der Lohnabrechnung.', du: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht im Arbeitsvertrag oder Personalreglement; zahlst du mit, siehst du den Abzug auf der Lohnabrechnung.' },
     step3Link: 'Unfall oder Krankheit — was tun?',
     step4Title: '4 · Steuern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
@@ -381,6 +396,14 @@ export default {
   // TODO(rm): provisorischer DE-Fallback für stelleVerloren — sauberes Romanisch nachziehen.
   stelleVerloren: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step1DateVorbei: { sie: 'Der späteste Tag war der {date}. Melden Sie sich jetzt sofort an — Taggeld gibt es ab dem Tag der Anmeldung, nicht rückwirkend (AVIG Art. 10).', du: 'Der späteste Tag war der {date}. Melde dich jetzt sofort an — Taggeld gibt es ab dem Tag der Anmeldung, nicht rückwirkend (AVIG Art. 10).' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step2Vorbei: 'Die Deckung über den alten Arbeitgeber endete am {date}.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step2Ohne: { sie: 'Tragen Sie oben das Ende des Arbeitsverhältnisses ein, dann erscheint hier das Datum.', du: 'Trag oben das Ende des Arbeitsverhältnisses ein, dann erscheint hier das Datum.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    step2Hinweis: 'Die Deckung über den alten Arbeitgeber endet am {date} (UVG Art. 3).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
     step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
     step1Button: 'Spätestens-Termin RAV merken ({date})',
@@ -390,11 +413,12 @@ export default {
     intro: 'Wenn die Stelle wegfällt, zählt jeder Tag. Hier der ruhige Überblick: zuerst die wichtigste Anmeldung, dann Versicherungen, Vorsorge und Unterlagen.',
     step1Title: '1 · Beim RAV anmelden — sofort',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step1Text: { sie: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag ohne Stelle bei Ihrer Wohngemeinde bzw. dem RAV an. Schon während der Kündigungsfrist sollten Sie sich bewerben und die Bemühungen festhalten.', du: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melde dich darum spätestens am ersten Tag ohne Stelle bei deiner Wohngemeinde bzw. dem RAV an. Schon während der Kündigungsfrist solltest du dich bewerben und die Bemühungen festhalten.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step1Text: { sie: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melden Sie sich darum spätestens am ersten Tag, für den Sie Taggeld beanspruchen, beim RAV an — online über arbeit.swiss oder persönlich (AVIG Art. 17, AVIV Art. 19). Schon während der Kündigungsfrist sollten Sie sich bewerben und die Bemühungen festhalten.', du: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melde dich darum spätestens am ersten Tag, für den du Taggeld beanspruchst, beim RAV an — online über arbeit.swiss oder persönlich (AVIG Art. 17, AVIV Art. 19). Schon während der Kündigungsfrist solltest du dich bewerben und die Bemühungen festhalten.' },
     step1Link: 'Taggeld abschätzen',
     step2Title: '2 · Versicherungen — die unsichtbare Lücke',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach müssen Sie den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach musst du den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
+    step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehen Sie danach Arbeitslosentaggeld, sind Sie über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehst du danach Arbeitslosentaggeld, bist du über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
     step2Button: 'Frist „Unfalldeckung“ merken ({date})',
     step2Done: 'Frist im Kalender gespeichert.',
     step2CalendarLink: 'Im Kalender ansehen',
@@ -415,6 +439,12 @@ export default {
   // TODO(rm): provisorischer Fallback auf Deutsch — sauberes Romanisch nachziehen.
   // Bewusst kein erfundenes RM; RM-Sprechende verstehen DE. Übersetzung folgt im i18n-Durchgang.
   todesfall: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die drei Monate sind am {date} abgelaufen. Wer nicht ausgeschlagen hat, hat die Erbschaft in der Regel erworben (ZGB Art. 571) — lassen Sie sich bei der zuständigen Behörde oder einer Beratungsstelle beraten.', du: 'Die drei Monate sind am {date} abgelaufen. Wer nicht ausgeschlagen hat, hat die Erbschaft in der Regel erworben (ZGB Art. 571) — lass dich bei der zuständigen Behörde oder einer Beratungsstelle beraten.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: { sie: 'Die drei Monate für eine Ausschlagung enden am {date} (ZGB Art. 567). Sind Sie in einem Testament als Erbin oder Erbe eingesetzt, zählt stattdessen der Tag der amtlichen Mitteilung.', du: 'Die drei Monate für eine Ausschlagung enden am {date} (ZGB Art. 567). Bist du in einem Testament als Erbin oder Erbe eingesetzt, zählt stattdessen der Tag der amtlichen Mitteilung.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: { sie: 'Tag, an dem Sie vom Tod erfahren haben', du: 'Tag, an dem du vom Tod erfahren hast' },
     quelle: 'Quellen: [[ZStV Art. 35|https://www.fedlex.admin.ch/eli/cc/2004/362/de#art_35]], [[ZGB Art. 567|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_567]] (geprüft im September 2026).',
     title: 'In mortori en il conturn',
     intro: 'Cura ch’ina persuna stretga mora, sto vegnir reglà bler a medem temp — e tuttina po la gronda part spetgar. Ina survista calma senza squetsch: ils emprims dis, l’enterrament, rentas & assicuranzas, la lubientscha.',
@@ -432,7 +462,8 @@ export default {
     stepElTitle: '4 · Renta da survivents & prestaziuns cumplementaras',
     stepElText: 'Survivents han savens dretg ad ina renta da vaivas, vaivs u orfens. Sche ella na cuvra betg ils custs da viver, pon prestaziuns cumplementaras (PC) la cumplettar — betg ina almosna, mabain in dretg legal.',
     step4Title: '5 · Ierta & lubientscha',
-    step4Text: 'Tenor situaziun dovra la lubientscha in attestat d’ierta; in testament vegn avert da la dretgira. Impurtant: sche la lubientscha è surchargiada da debits, po l’ierta vegnir refusada entaifer trais mais — uschiglio surpiglia in era ils debits. En cas d’instabilitad, laschar As cussegliar baud.',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step4Text: 'Für den Nachlass braucht es je nach Situation einen Erbschein; ein Testament wird von der zuständigen Behörde eröffnet — welche das ist, regelt der Kanton (ZGB Art. 557). Wichtig: Ist der Nachlass überschuldet, kann das Erbe innert drei Monaten ausgeschlagen werden — sonst übernimmt man die Schulden mit. Bei Unsicherheit lieber früh beraten lassen.',
     step4Button: 'Memorisar il termin «Examinar/refusar l’ierta» ({date})',
     step4Done: 'Termin memorisà en il chalender.',
     step4CalendarLink: 'Guardar en il chalender',
@@ -484,7 +515,8 @@ export default {
     step1Link: 'Accident u malsogna — tge che conta',
     step2Title: '2 · S’annunziar baud a l’AI',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step2Text: { sie: 'Sche igl para che la limitaziun dura pli lung, annunziai Vus baud a l’AI (detecziun precoza). L’AI metta l’accent l’emprim sin l’integraziun — «integraziun avant renta». Pli baud l’annunzia, meglier; l’AI paja il pli baud sis mais suenter.', du: 'Sche igl para che la limitaziun dura pli lung, annunzia’t baud a l’AI (detecziun precoza). L’AI metta l’accent l’emprim sin l’integraziun — «integraziun avant renta». Pli baud l’annunzia, meglier; l’AI paja il pli baud sis mais suenter.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step2Text: { sie: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melden Sie sich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40 % Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).', du: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melde dich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40 % Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).' },
     step2Button: 'Memorisar il termin «Examinar l’annunzia AI» ({date})',
     step2Done: 'Termin memorisà en il chalender.',
     step2CalendarLink: 'Guardar en il chalender',
@@ -500,6 +532,12 @@ export default {
     footerNote: { sie: 'Cun pauca energia conta mintga pitschen pass. Laschai As accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.', du: 'Cun pauca energia conta mintga pitschen pass. Lascha t’accumpognar — ils posts da cussegliaziun èn gratuits. Quai è orientaziun, betg cussegl giuridic u medicinal.' },
   },
   bewilligung: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die 14-Tage-Grenze war am {date}. Reichen Sie das Gesuch trotzdem sofort ein und sprechen Sie mit dem Migrationsamt — Ausnahmen sind in begründeten Fällen möglich (VZAE Art. 59).', du: 'Die 14-Tage-Grenze war am {date}. Reiche das Gesuch trotzdem sofort ein und sprich mit dem Migrationsamt — Ausnahmen sind in begründeten Fällen möglich (VZAE Art. 59).' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Das Gesuch muss spätestens am {date} eingereicht sein — 14 Tage vor Ablauf (VZAE Art. 59). Frühestens geht es drei Monate vor Ablauf.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Die Bewilligung ist gültig bis',
     quelle: 'Quellen: [[VZAE Art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_59]], [[AIG Art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_33]] (geprüft im September 2026).',
     title: 'Renovar l’autorisaziun da dimora',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -516,7 +554,8 @@ export default {
     step2Link: 'Deponer en il register da vita',
     step3Title: '3 · Annunziar midadas',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step3Text: { sie: 'Vus stuais annunziar a l’uffizi da migraziun ina midada d’adressa, da plaz u ina maridaglia — quai fa part da las obligaziuns da l’autorisaziun. In’annunzia memia tard po far problems.', du: 'Ti stos annunziar a l’uffizi da migraziun ina midada d’adressa, da plaz u ina maridaglia — quai fa part da las obligaziuns da l’autorisaziun. In’annunzia memia tard po far problems.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step3Text: { sie: 'Einen Adresswechsel oder eine Heirat müssen Sie melden — das gehört zu den Pflichten der Bewilligung. Mit Aufenthaltsbewilligung (B) können Sie die Stelle ohne weitere Bewilligung wechseln; mit Kurzaufenthaltsbewilligung (L) braucht ein Stellenwechsel eine Bewilligung (AIG Art. 38). Für einen Umzug in einen anderen Kanton braucht es vorher dessen Bewilligung (AIG Art. 37). Eine späte Meldung kann Probleme machen.', du: 'Einen Adresswechsel oder eine Heirat musst du melden — das gehört zu den Pflichten der Bewilligung. Mit Aufenthaltsbewilligung (B) kannst du die Stelle ohne weitere Bewilligung wechseln; mit Kurzaufenthaltsbewilligung (L) braucht ein Stellenwechsel eine Bewilligung (AIG Art. 38). Für einen Umzug in einen anderen Kanton braucht es vorher dessen Bewilligung (AIG Art. 37). Eine späte Meldung kann Probleme machen.' },
     step3Link: 'Guardar il move da chasa',
     step4Title: '4 · Vista enavant: l’autorisaziun C',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -560,7 +599,8 @@ export default {
   heirat: {
     quelle: 'Quellen: [[ZGB Art. 97|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_97]], [[DBG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_9]] (geprüft im September 2026).',
     title: 'Maridaglia u partenariat',
-    intro: 'La maridaglia u il partenadi registrà midan a medem temp il stadi civil, las taglias e la prevenziun. Ina survista calma: annunziar la maridaglia, num & stadi civil, taglias, assicuranzas.',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    intro: 'Eine Heirat verändert Zivilstand, Steuern und Vorsorge zugleich. Hier der ruhige Überblick: Trauung anmelden, Name & Zivilstand, Steuern, Versicherungen. Eine eingetragene Partnerschaft lässt sich seit Juli 2022 nicht mehr neu eingehen; eine bestehende kann in eine Ehe umgewandelt werden (PartG Art. 35).',
     step1Title: '1 · Annunziar la maridaglia',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai Vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.', du: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.' },
@@ -587,11 +627,18 @@ export default {
     footerNote: 'In contract da maridaglia (regim dals bains) è facultativ, ma po esser sensà — surtut cun proprietad u independenza. Quai è orientaziun, betg cussegl giuridic.',
   },
   kind: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: 'Die drei Monate sind am {date} abgelaufen. Das Kind trotzdem sofort anmelden: Die Deckung beginnt dann mit der Anmeldung, und die Kasse kann einen Prämienzuschlag verlangen (KVG Art. 5).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Die drei Monate enden am {date} (KVG Art. 3). Bis dahin angemeldet, gilt die Deckung rückwirkend ab Geburt.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Geburtsdatum des Kindes',
     quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[ZGB Art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_260]], [[EOG Art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_b]] (geprüft im September 2026).',
     title: 'Avair in uffant',
     intro: 'In uffant mida bler a medem temp — annunzias, assicuranza, supplements, budget. Ina survista calma, pass per pass, per betg emblidar nagut.',
     step1Title: '1 · Annunziar la naschientscha',
-    step1Text: 'La naschientscha vegn annunziada a l’uffizi da stadi civil — per ordinari fa quai il ospital. Sche ils geniturs n’èn betg maridads, dovra igl ina renconuschentscha da la paternitad (avant u suenter la naschientscha, a l’uffizi da stadi civil). Uschia èn reglads il num e l’autoritad parentala.',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step1Text: 'Die Geburt wird beim Zivilstandsamt gemeldet — meist erledigt das Spital. Sind die Eltern nicht verheiratet, braucht es eine Anerkennung der Vaterschaft (vor oder nach der Geburt beim Zivilstandsamt). Die gemeinsame elterliche Sorge braucht zusätzlich eine gemeinsame Erklärung der Eltern; bis sie vorliegt, hat die Mutter die Sorge allein und das Kind trägt ihren Ledignamen (ZGB Art. 298a, 270a).',
     step2Title: '2 · Assicurar l’uffant',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step2Text: { sie: 'Assicurai l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Vus avais libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.', du: 'Assicurescha l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Ti has libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.' },
@@ -605,7 +652,8 @@ export default {
     step3Text: { sie: 'Per mintga uffant datti in supplement per uffants, pli tard in supplement da scolaziun. El vegn dumandà via il patrun u la cassa da cumpensaziun — el na vegn betg automaticamain. Era persunas senza activitad pon avair dretg. Intgins chantuns pajan ultra da quai in supplement da naschientscha ina giada — dumandai tar Vossa cassa da cumpensaziun.', du: 'Per mintga uffant datti in supplement per uffants, pli tard in supplement da scolaziun. El vegn dumandà via il patrun u la cassa da cumpensaziun — el na vegn betg automaticamain. Era persunas senza activitad pon avair dretg. Intgins chantuns pajan ultra da quai in supplement da naschientscha ina giada — dumonda tar tia cassa da cumpensaziun.' },
     step4Title: '4 · Indemnisaziuns & chüra',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step4Text: { sie: 'Las mammas han dretg a 14 emnas d’indemnisaziun da maternitad, l’auter genitur a 2 emnas — omadus via las IPG. Pensai baud a la chüra (asil, famiglia da di) ed a las deducziuns fiscalas correspundentas.', du: 'Las mammas han dretg a 14 emnas d’indemnisaziun da maternitad, l’auter genitur a 2 emnas — omadus via las IPG. Pensa baud a la chüra (asil, famiglia da di) ed a las deducziuns fiscalas correspundentas.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step4Text: { sie: 'Mütter haben Anspruch auf 14 Wochen Mutterschaftsentschädigung, wenn sie in den neun Monaten vor der Geburt versichert und davon mindestens fünf Monate erwerbstätig waren (EOG Art. 16b). Der andere Elternteil hat Anspruch auf 2 Wochen, zu beziehen innert sechs Monaten nach der Geburt (EOG Art. 16j) — beides über die EO. Denken Sie früh an die Kinderbetreuung (Kita, Tagesfamilie) und an die Steuerabzüge dafür.', du: 'Mütter haben Anspruch auf 14 Wochen Mutterschaftsentschädigung, wenn sie in den neun Monaten vor der Geburt versichert und davon mindestens fünf Monate erwerbstätig waren (EOG Art. 16b). Der andere Elternteil hat Anspruch auf 2 Wochen, zu beziehen innert sechs Monaten nach der Geburt (EOG Art. 16j) — beides über die EO. Denk früh an die Kinderbetreuung (Kita, Tagesfamilie) und an die Steuerabzüge dafür.' },
     step4Link: 'Guardar las IPG',
     step5Title: '5 · Verifitgar danovamain tes dretgs',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -671,12 +719,19 @@ export default {
     footerNote: { sie: 'Planisai Vossa prevenziun conscientamain — la largia senza cassa da pensiun As tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.', du: 'Planisescha tia prevenziun conscientamain — la largia senza cassa da pensiun at tutga pir decennis pli tard. In cussegl tar la cassa da cumpensaziun u in servetsch da cussegliaziun da fundaziun vala la paina. Quai è orientaziun, betg cussegl giuridic u fiscal.' },
   },
   betreibung: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: { sie: 'Die 10 Tage sind am {date} abgelaufen. Fragen Sie beim Betreibungsamt nach, was jetzt noch möglich ist.', du: 'Die 10 Tage sind am {date} abgelaufen. Frag beim Betreibungsamt nach, was jetzt noch möglich ist.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Die 10 Tage enden am {date} (SchKG Art. 74). Fällt dieser Tag auf ein Wochenende, einen Feiertag oder in die Betreibungsferien, kann die Frist länger sein — früher ist nie falsch.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Zugestellt am (steht auf dem Zahlungsbefehl)',
     quelle: 'Quellen: [[SchKG Art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_74]] (geprüft im September 2026).',
     title: 'Scussiun retschavida — tge far?',
     intro: 'In cumond da pajar para smanatschant, ma l’emprim è quai mo ina pretensiun — nagina sentenzia e nagina inscripziun en il register penal. Ussa importa mo ina chaussa: il termin da 10 dis. Ina survista calma.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Title: { sie: '1 · Restar calm — Vus avais 10 dis', du: '1 · Restar calm — ti has 10 dis' },
-    step1Text: 'Cun il cumond da pajar cumenza in termin da 10 dis. En quest temp pos ti far «opposiziun» tar l’uffizi da scussiun — a bucca al sportegl u en scrit, senza motivaziun. Quai ferma la scussiun per ussa. Ti na perdas nagut cun far opposiziun, era sche la pretensiun è a la fin fundada.',
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step1Text: { sie: 'Mit dem Zahlungsbefehl beginnt eine Frist von 10 Tagen. In dieser Zeit können Sie beim Betreibungsamt „Rechtsvorschlag“ erheben — mündlich am Schalter oder schriftlich, ohne Begründung. Das stoppt die Betreibung vorerst. Stimmt die Forderung am Ende, tragen Sie die Betreibungskosten und allenfalls die Kosten eines Gerichtsverfahrens (SchKG Art. 68).', du: 'Mit dem Zahlungsbefehl beginnt eine Frist von 10 Tagen. In dieser Zeit kannst du beim Betreibungsamt „Rechtsvorschlag“ erheben — mündlich am Schalter oder schriftlich, ohne Begründung. Das stoppt die Betreibung vorerst. Stimmt die Forderung am Ende, trägst du die Betreibungskosten und allenfalls die Kosten eines Gerichtsverfahrens (SchKG Art. 68).' },
     step1Button: 'Memorisar il termin «Far opposiziun» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
@@ -700,7 +755,8 @@ export default {
     intro: { sie: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar Voss dretgs.', du: 'Il passatg en la pensiun sto vegnir planisà baud — bler na va betg automaticamain ed ha agens termins. Ina survista calma: s’annunziar a l’AVS, decider davart la cassa da pensiun, retrair il 3. pilaster e verifitgar tes dretgs.' },
     step1Title: '1 · Dumandar la renta AVS',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step1Text: { sie: 'La renta AVS na vegn betg pajada automaticamain — Vus stuais As annunziar tar Vossa cassa da cumpensaziun, idealmain trais fin sis mais avant il pensiunament. L’vegliadetgna da referenza è 65 onns; in retrair anticipà è pussaivel, ma reducescha la renta per la vita.', du: 'La renta AVS na vegn betg pajada automaticamain — ti stos t’annunziar tar tia cassa da cumpensaziun, idealmain trais fin sis mais avant il pensiunament. L’vegliadetgna da referenza è 65 onns; in retrair anticipà è pussaivel, ma reducescha la renta per la vita.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    step1Text: { sie: 'Die AHV-Rente kommt nicht automatisch — Sie müssen sie bei Ihrer Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist möglich, kürzt die Rente aber lebenslang.', du: 'Die AHV-Rente kommt nicht automatisch — du musst sie bei deiner Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist möglich, kürzt die Rente aber lebenslang.' },
     step1Button: 'Memorisar il termin «S’annunziar a l’AVS» ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
@@ -728,6 +784,12 @@ export default {
     footerEarly: { sie: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quintai baud tge ch’è purtabel — e dumandai in quen uffizial tar Vossa cassa da cumpensaziun.', du: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.' },
   },
   kkErst: {
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristVorbei: 'Die drei Monate sind am {date} abgelaufen. Trotzdem sofort versichern: Die Deckung beginnt dann mit dem Beitritt, und die Kasse kann einen Prämienzuschlag verlangen (KVG Art. 5).',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristHinweis: 'Die drei Monate enden am {date} (KVG Art. 3). Bis dahin versichert, gilt die Deckung rückwirkend.',
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
+    fristLabel: 'Zuzug in die Schweiz (Wohnsitznahme)',
     quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[KVV Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_7]] (geprüft im September 2026).',
     title: 'Cassa da malsauns per l’emprima giada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -822,7 +884,8 @@ export default {
     reminderTitle: 'Krankenkasse kündigen — Frist',
     reminderNotes: 'Ordentliche Kündigung der Grundversicherung bis 30.11. Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
-    specialRight: { sie: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung können Sie innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung kannst du innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.' },
+    // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
+    specialRight: { sie: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie können Sie mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie kannst du mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.' },
     chosen: 'Gewählt',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step3Note3b: { sie: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — Sie müssen selbst keinen Brief schreiben.', du: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.' },

@@ -1,29 +1,21 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { inDays, formatDE } from './utils/helpers.js';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusMonate } from './utils/fristen.js';
 
 // Krankenkasse zum ersten Mal — geführter Ablauf für Neuzuzüger:innen, junge Menschen
-// (mit ~25 aus der Familiendeckung gefallen) und Menschen im Asylkontext. Ruhige
+// (jede Person ist einzeln versichert — es gibt keine «Familiendeckung», BAG) und Menschen im Asylkontext. Ruhige
 // Orientierung mit der kritischsten Sache zuerst: die 3-Monats-Frist (Deckung gilt bei
 // rechtzeitigem Abschluss rückwirkend → keine Lücke), dann Kassenwahl (Grundversicherung
 // überall gleich, Aufnahmepflicht), Franchise/Unfall, Prämienverbilligung. Kein Rat —
 // Orientierung. Asyl-Hinweis würdevoll (Kasse wird im Verfahren meist zugewiesen).
 
-export const KKErstAnmeldung = ({ palette, t, data, onNavigate }) => {
+export const KKErstAnmeldung = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
-  // Versicherungspflicht: innert 3 Monaten ab Zuzug. Wenn ein Einzugsdatum erfasst ist
-  // (z.B. weil der Umzug in die Schweiz noch geplant ist), rechnen wir die Frist ab da —
-  // aber nur, wenn sie noch in der Zukunft liegt. Sonst ruhige Orientierungs-Frist
-  // 90 Tage ab heute (im Kalender verschiebbar).
-  const moveIn = (data?.wohnen?.moveInDate || '').trim();
-  let deadline = inDays(90);
-  if (/^\d{4}-\d{2}-\d{2}$/.test(moveIn)) {
-    const d = new Date(moveIn + 'T00:00:00');
-    d.setDate(d.getDate() + 90);
-    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    if (iso >= inDays(0)) deadline = iso;
-  }
-
+  // Versicherungspflicht: innert drei Monaten nach der Wohnsitznahme (KVG Art. 3) —
+  // drei MONATE, nicht 90 Tage. Gerechnet ab dem Zuzugsdatum, das die Person eingibt.
+  // Bewusst NICHT aus `wohnen.moveInDate` vorbelegt: das kann ein Umzug innerhalb der
+  // Schweiz sein. Vorher: bei verstrichener Frist zeigte der Ablauf «heute + 90» — ein
+  // Zeitfenster, das es nicht mehr gibt (Befund 24.09.2026).
   return React.createElement(AblaufContainer, {
     palette, icon: 'insurance',
     title: t('kkErst.title'),
@@ -32,18 +24,11 @@ export const KKErstAnmeldung = ({ palette, t, data, onNavigate }) => {
     // Schritt 1 — die 3-Monats-Frist (Deckung rückwirkend bei rechtzeitigem Abschluss)
     React.createElement(AblaufStep, { palette, title: t('kkErst.step1Title') },
       React.createElement('p', { style: s.stepText }, t('kkErst.step1Text')),
-      React.createElement(FristButton, {
-        palette, t,
-        buttonLabel: t('kkErst.step1Button', { date: formatDE(deadline) }),
-        doneLabel: t('kkErst.step1Done'),
-        calendarLabel: t('kkErst.step1CalendarLink'),
-        onNavigate,
-        reminder: {
-          title: t('kkErst.reminderTitle'),
-          dueDate: deadline,
-          category: 'insurance',
-          recurrence: 'once',
-        },
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'kkErst-frist', frist: (d) => plusMonate(d, 3),
+        labelKey: 'kkErst.fristLabel', hinweisKey: 'kkErst.fristHinweis', vorbeiKey: 'kkErst.fristVorbei',
+        buttonKey: 'kkErst.step1Button', doneKey: 'kkErst.step1Done', calendarKey: 'kkErst.step1CalendarLink',
+        reminderTitle: t('kkErst.reminderTitle'), category: 'insurance',
       })
     ),
 

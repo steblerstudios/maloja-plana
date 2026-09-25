@@ -1,6 +1,6 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { inDays, formatDE } from './utils/helpers.js';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusMonate } from './utils/fristen.js';
 
 // Todesfall im Umfeld — geführter Ablauf, würdevoll und ohne Druck. Die ersten Tage,
 // Bestattung, Renten & Versicherungen melden, eigener Aufstockung-Schritt
@@ -11,7 +11,6 @@ import { inDays, formatDE } from './utils/helpers.js';
 
 export const Todesfall = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
-  const deadline = inDays(90); // Erbschaft ausschlagen innert 3 Monaten (Orientierung)
 
   return React.createElement(AblaufContainer, {
     palette, icon: 'document',
@@ -37,13 +36,11 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('todesfall.step4Title') },
       React.createElement('p', { style: s.stepText }, t('todesfall.step4Text')),
-      React.createElement(FristButton, {
-        palette, t,
-        buttonLabel: t('todesfall.step4Button', { date: formatDE(deadline) }),
-        doneLabel: t('todesfall.step4Done'),
-        calendarLabel: t('todesfall.step4CalendarLink'),
-        onNavigate,
-        reminder: { title: t('todesfall.reminderTitle'), dueDate: deadline, category: 'admin', recurrence: 'once' },
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'todesfall-frist', frist: (d) => plusMonate(d, 3),
+        labelKey: 'todesfall.fristLabel', hinweisKey: 'todesfall.fristHinweis', vorbeiKey: 'todesfall.fristVorbei',
+        buttonKey: 'todesfall.step4Button', doneKey: 'todesfall.step4Done', calendarKey: 'todesfall.step4CalendarLink',
+        reminderTitle: t('todesfall.reminderTitle'), category: 'admin',
       }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step4Link'), onClick: () => onNavigate('schulden') })
     ),
