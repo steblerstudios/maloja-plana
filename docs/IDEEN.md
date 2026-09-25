@@ -253,9 +253,9 @@ Abschiedsagentur, plaant).
     Offen: ein Feld öffnet das Kapitel, springt aber nicht zum Feld.
   - ✅ **Werkzeuge: Lebensereignisse startet eingeklappt**, wie alle anderen Gruppen.
     Die Instrumente bleiben auf dem Dashboard (so gewünscht).
-  - ❓ **«Warum nicht *Willkommen bei Maloja Plana*?»**: das Dashboard trägt nur den Claim,
-    der Rundgang sagt «Willkommen bei Maloja». Offen: Name im Produkt («Maloja» oder
-    «Maloja Plana»), und ob ein Gruss über dem Claim steht. Ihr Satz brach bei «wenn man» ab.
+  - ✅/❓ **«Warum nicht *Willkommen bei Maloja Plana*?»**: Entscheid 25.09.: im Produkt
+    heisst es **«Maloja Plana»**. Der Rundgang begrüsst jetzt so (5 Sprachen). Offen:
+    ob auch über dem Claim auf dem Dashboard ein Gruss steht.
   - ✅ **Fortschritt + Grundordnung sind eine Karte, von Anfang an sichtbar**: eine
     Zeile je Kapitel, aufklappbar, darin die Grundordnungs-Felder dieses Kapitels und
     «Öffnen». Der Abschnitt «Detaillierter Fortschritt» ist weg. Die Karte bleibt ein

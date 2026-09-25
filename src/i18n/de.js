@@ -3860,10 +3860,10 @@ export default {
   },
 
   tour: {
-    a11yLabel: 'Rundgang durch Maloja',
+    a11yLabel: 'Rundgang durch Maloja Plana',
     reopen: 'Rundgang neu starten',
     next: 'Weiter', back: 'Zurück', skip: 'Überspringen', later: 'Später', done: 'Fertig',
-    welcome: { title: 'Willkommen bei Maloja', text: { sie: 'Ihr ruhiger Ort für alles Schweizerische — Papiere, Budget, Versicherungen, Fristen. Ein kurzer Rundgang, jederzeit überspringbar.', du: 'Dein ruhiger Ort für alles Schweizerische — Papiere, Budget, Versicherungen, Fristen. Ein kurzer Rundgang, jederzeit überspringbar.' } },
+    welcome: { title: 'Willkommen bei Maloja Plana', text: { sie: 'Ihr ruhiger Ort für alles Schweizerische — Papiere, Budget, Versicherungen, Fristen. Ein kurzer Rundgang, jederzeit überspringbar.', du: 'Dein ruhiger Ort für alles Schweizerische — Papiere, Budget, Versicherungen, Fristen. Ein kurzer Rundgang, jederzeit überspringbar.' } },
     berge: { title: 'Der Fortschritt', text: { sie: 'Die Berge zeigen ruhig, wie weit Ihr Lebensordner eingerichtet ist — ohne Druck, ohne Prozentjagd.', du: 'Die Berge zeigen ruhig, wie weit dein Lebensordner eingerichtet ist — ohne Druck, ohne Prozentjagd.' } },
     anspruch: { title: 'Mögliche Ansprüche', text: { sie: 'Hier deckt Maloja auf, worauf Sie Anspruch haben könnten — passend zu dem, was Sie am Anfang gewählt haben.', du: 'Hier deckt Maloja auf, worauf du Anspruch haben könntest — passend zu dem, was du am Anfang gewählt hast.' } },
     privacy: { title: 'Alles bleibt auf dem Gerät', text: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Kein Konto, keine Cloud, kein Tracking.', du: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto, keine Cloud, kein Tracking.' } },
