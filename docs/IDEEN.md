@@ -471,6 +471,11 @@ Meine Unterlagen» bzw. «Zurück zum Notfall» — zwei Wege mit verschiedenem 
   («Übersicht › Meine Unterlagen › Dossier») · C · lassen.
 - ✅ **Entschieden 25.09.2026 (Stebler Studios): B, die Brotkrume.** Wird gebaut (eigener PR),
   unabhängig von «Bottom-Nav oder Hamburger».
+- ✅ **Dazu entschieden 25.09.2026 (Stebler Studios): Brotkrume + Herkunft.** Die Brotkrume
+  zeigt die feste Ordnung; wer aus einem Kapitel über einen Querverweis in ein Werkzeug
+  springt, bekommt zusätzlich «‹ Zurück zu ‹Kapitel›» — dieselbe Rückkehr wie die
+  Zurück-Taste des Browsers, an die Stelle im Kapitel, an der man den Verweis angetippt hat.
+  Vorher führte kein Knopf dorthin zurück. Eigener PR (`feat/zurueck-zur-herkunft-2026-09-25`).
 
 **Ladehinweis beim Nachladen.** Sechs Teile in den Kapiteln (Ärzt:innen, Säule 3a, Medikamente,
 Sprachen, Erkrankungen, Jobs) und die Einstellungs-Schublade zeigen beim ersten Öffnen kurz

@@ -32,8 +32,7 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
  * Parse the current URL hash into a view state.
  * Returns { view, chapterIndex } or null if hash is empty/invalid.
  */
-export function parseHash() {
-  const hash = window.location.hash;
+export function parseHash(hash = window.location.hash) {
   if (!hash || hash === '#' || hash === '#/') {
     return null; // no hash → use default (dashboard)
   }
@@ -72,8 +71,32 @@ export function setHash(view, chapterIndex) {
   }
 
   if (window.location.hash !== hash) {
-    window.history.pushState(null, '', hash);
+    // Der Eintrag merkt sich, woher man kam (die Adresse davor). So weiss die Ansicht,
+    // wohin «Zurück zu …» führt — und weil es genau der vorige Verlaufs-Eintrag ist,
+    // führt history.back() dorthin, im Gleichschritt mit der Zurück-Taste des Browsers.
+    window.history.pushState({ von: window.location.hash }, '', hash);
   }
+}
+
+/**
+ * Die Scroll-Stelle im aktuellen Eintrag festhalten, bevor man ihn verlässt.
+ * Der Browser stellt sie bei Hash-Wechseln NICHT verlässlich wieder her — gemessen
+ * 25.09.2026: Kapitel bei 573 px verlassen, nach «Zurück» bei 400 px gelandet (dort,
+ * wo man im Werkzeug stand). Liest onHashChange als `stelle` wieder aus.
+ */
+export function merkeStelle() {
+  const bisher = window.history.state && typeof window.history.state === 'object' ? window.history.state : {};
+  window.history.replaceState({ ...bisher, y: Math.round(window.scrollY) }, '');
+}
+
+/**
+ * Woher kam man in die aktuelle Ansicht? Liest die beim Wechsel mitgegebene
+ * Adresse aus dem Verlaufs-Eintrag. Null bei Direkteinstieg (Lesezeichen, geteilter
+ * Link, erster Start) — dann gibt es keinen Weg zurück, den die App kennt.
+ */
+export function leseHerkunft(state = window.history.state) {
+  const von = state && typeof state.von === 'string' ? state.von : null;
+  return von ? parseHash(von) : null;
 }
 
 /**
@@ -103,7 +126,8 @@ export function onHashChange(onNavigate) {
   const handler = () => {
     const parsed = parseHash();
     if (parsed) {
-      onNavigate(parsed);
+      const y = window.history.state && window.history.state.y;
+      onNavigate({ ...parsed, stelle: typeof y === 'number' ? y : null });
     }
   };
 

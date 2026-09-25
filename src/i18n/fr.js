@@ -1300,6 +1300,7 @@ export default {
   },
 
   nav: {
+    zurueckZu: 'Retour à {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Tableau de bord',
     tools: 'Outils',
     moreTools: 'Plus d\'outils',
