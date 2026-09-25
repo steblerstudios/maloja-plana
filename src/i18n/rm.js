@@ -4263,6 +4263,16 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     tachoOrientation: { sie: 'Uschespert che Vus registrais ils custs da sanadad, mussa la sajetta nua che Vus essas quest onn.', du: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.' },
     tachoTrackLink: 'Registrar ils custs da sanadad',
+    // TODO(rm): provisorisch — Gegenlese (Franchise-Kreuz, 25.09.2026)
+    kreuzAchse: 'Custs da sanadad per onn',
+    kreuzKosten: 'Custs per onn',
+    kreuzLinie: 'Franchisa {franchise}',
+    kreuzBisher: 'fin ussa',
+    kreuzHochrechnung: 'Projecziun',
+    kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
+    kreuzOrientation: { sie: 'Uschespert che Vus registrais custs da sanadad, mussa ina strivla, nua che Vus stais en l’onn.', du: 'Uschespert che ti registreschas custs da sanadad, mussa ina strivla, nua che ti stas en l’onn.' },
+    kreuzTooltip: 'Tar CHF {c}: franchisa {low} ≈ CHF {tief} · franchisa {high} ≈ CHF {hoch}',
+    kreuzAria: 'Custs totals per onn per la franchisa {low} e {high}; las lingias sa cruschan al punct da pareglia da CHF {be}.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     reserveCheck_strong: { sie: 'Vossa reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per Vus.', du: 'Tia reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -4365,6 +4375,16 @@ export default {
 
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (25.09.2026)
+  // TODO(rm): provisorisch — Gegenlese (Einkommensfeld brutto/netto, 25.09.2026)
+  einkommensfeld: {
+    label: 'Entrada mensila',
+    art: 'Gener d’entrada',
+    netto: 'net',
+    brutto: 'brut',
+    nettoGeschaetzt: '≈ net CHF {value} (stimà)',
+    bruttoGeschaetzt: '≈ brut CHF {value} (stimà)',
+    knapp: 'Stretg — la stimaziun quinta senza AINP ed senza taglia a la funtauna; controllar cun la paja netta exacta.',
+  },
   einkommensart: {
     offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',
     offenNetto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte das Netto-Einkommen eintragen.',
@@ -5295,8 +5315,12 @@ export default {
     title: { sie: 'Voss instruments', du: 'Tes instruments' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Quatter controllas tranquillas cun in sguard — tutgai ina.', du: 'Quatter controllas tranquillas cun in sguard — tutga ina.' },
-    tacho: 'Tachimeter da franchisa',
+    tacho: 'Crusch da franchisa',
     tachoSub: 'auta u bassa — tge vala la paina?',
+    // TODO(rm): provisorisch — Gegenlese (Franchise-Vorschlag, 25.09.2026)
+    kreuzPasst: { sie: 'Vossa franchisa va bain', du: 'Tia franchisa va bain' },
+    kreuzWechsel: 'Proposta: {franchise} a partir dal 1. schaner',
+    kreuzWechselPolster: 'Proposta: {franchise}, sche la reserva tanscha',
     kompass: 'Boussola da prestaziuns',
     kompassFound: '{n} vias pussaivlas',
     kompassFoundOne: 'ina via pussaivla',
@@ -5305,6 +5329,9 @@ export default {
     tankMonths: '{months} mais reserva',
     schild: 'Scud da protecziun',
     schildCount: '{covered}/{total} cuverts',
+    // TODO(rm): provisorisch — Gegenlese (Steuer-Säulen, 25.09.2026)
+    steuer: 'Colonna da taglia',
+    steuerBetrag: 'Taglia federala ≈ CHF {value} / onn',
     setup: 'tutgar per configurar',
   },
   schutzschild: {
@@ -5390,7 +5417,8 @@ export default {
     resultTitle: 'Cun questas datas pudessas ti avair dretg a:',
     monat: 'mais',
     barHint: 'Sgraventament mensil stimà — orientaziun grossa, senza garanzia.',
-    ipvSubsumed: 'La reducziun da premias (radund {amount} / mais) sbassa gia il premi da la cassa da malsauns — cun l’agid social è quella part gia includida en il basegn survart, i n’è betg in import supplementar.',
+    // TODO(rm): provisorisch — Gegenlese (ipvSubsumed neu, IPV bei Sozialhilfe, 25.09.2026)
+    ipvSubsumed: { sie: 'Uschè ditg che Vus retschavais agid social, vegn la reducziun da premias quintada en – nagins daners supplementars. Sche l’agid social finescha, sbassa ella puspè directamain Voss premi; il servetsch social As di, sch’ina dumonda è necessaria.', du: 'Uschè ditg che ti retschaivas agid social, vegn la reducziun da premias quintada en – nagins daners supplementars. Sche l’agid social finescha, sbassa ella puspè directamain tes premi; il servetsch social ta di, sch’ina dumonda è necessaria.' },
     ipvEnthalten: 'includida en l’agid social',
     ipv: 'Reducziun da premias',
     ipvNote: 'Reducziun chantunala da tia premia da la cassa da malsauns.',

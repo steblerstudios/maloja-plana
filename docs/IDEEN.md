@@ -116,6 +116,8 @@ Abschiedsagentur, plaant).
 | Barrierefreiheit systematisch (WCAG 2.1 AA / eCH-0059) · Menschen, die kaum lesen | §8 | — |
 | Skeuomorphe Metaphern je Bereich · Lebensbaum: Wuchs, Jahreszeiten, hängende Früchte | §1, §2 | Baum-Entscheid (Oktober); **nicht** an der Gamification |
 | Beispiel-Modus mit Personas | §10 | Persona-Durchlauf |
+| Steuer-Säule mit Vergleich (Barometer wie Miete/Lohn) | §15 | ESTV-Steuerbelastung belegen |
+| Leistungs-Schnellcheck und Anspruchs-Landkarte zu **einer** Seite | §15 | Seiten-Entwurf |
 
 ### Irgendwann
 
@@ -516,6 +518,25 @@ Edelweiss, Gipfelkreuz, Matterhorn, Kuh, Uhr, Schoggi, Sonne, Fahne (`Dashboard.
 - A · behalten · B · auf 2–3 Stufen reduzieren · C · weglassen · D · als abschaltbare «Haut».
 - *Vorschlag:* folgt aus dem Gamification-Entscheid oben — «keine Gamification» → C,
   «abschaltbare Haut» → D.
+
+**Steuer-Säule mit Vergleich** (Idee, festgehalten 25.09.2026, Stebler Studios). Das Instrument
+«Steuer-Säule» im Dashboard zeigt seit dem Umbau «Was steht mir zu?» nur die **eine** Säule des
+eigenen Zivilstands und eine Zahl (Bundessteuer ≈ CHF / Jahr). Gewünscht: irgendwann ein
+Vergleich, wie bei Miete und Lohn (`MietVergleich`, `LohnEinordnung`).
+- **Haken:** Die direkte Bundessteuer ist in der ganzen Schweiz gleich (DBG Art. 36) — ein
+  Regionen-Vergleich ist nur bei Kanton und Gemeinde sinnvoll.
+- **Denkbare Form** (Kodierung wie das Miet-Barometer, `docs/design/farb-und-daten-system.md`):
+  Füllung = eigene Gesamtsteuer (Bund + Kanton + Gemeinde) in % des Einkommens · ● = Schnitt der
+  Kantonshauptorte bei gleichem Einkommen · | = Spanne günstigster bis teuerster Hauptort.
+- **Hängt an:** amtliche Vergleichswerte, z. B. ESTV-Statistik «Steuerbelastung in den
+  Kantonshauptorten» — **noch nicht geprüft**. Ob `docs/sources/kantonssteuer-tabelle-2026.md`
+  dafür reicht, ist offen. Ohne Beleg keine Vergleichszahl.
+
+**Leistungs-Schnellcheck und Anspruchs-Landkarte zu einer Seite** (Idee, 25.09.2026). Auf dem
+Dashboard ist das Doppelte aufgelöst (Kompass = Kopf der Leistungsliste, «Alle Ansprüche im
+Überblick» als Link). Die Seiten dahinter bleiben zwei: `#/schnellcheck` **rechnet** mit den
+eigenen Zahlen, `#/ansprueche` **listet** alle Leistungen nach Auslöser. Denkbar: die Landkarte
+mit dem Schnellcheck obenauf — ein eigener Umbau mit Seiten-Entwurf, nicht nebenbei.
 
 **Kleinkram ohne Eile** (Token-Hygiene, bewusst nicht angefasst, weil sichtbar): `radius.pill`
 gibt es nicht — 4 Stellen fallen seit jeher auf 10 px zurück, ein echter Pillen-Radius würde das

@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { schildState } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
-import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
+import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
+import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
+import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
+import { giltAlsVerheiratet } from '../utils/zivilstand.js';
+import { zahl, betrag as chfBetrag } from '../utils/geld.js';
 import { shieldPath } from './shieldShape.js';
 import { PanelTitle } from './Heading.jsx';
 import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
 
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
 // Instrument als Mini-Glyph + Peilung + Ort zeigt und in die Detailansicht führt.
-// Live wo es günstig/robust ist (Schild, Tankanzeige, Kompass — reine Zustands-
-// Funktionen). Der Tacho braucht die Prämien-Pipeline → hier bewusst nur
-// Einstieg statt gefälschtem Zeiger (Ehrlichkeit).
+// Live wo es günstig/robust ist (Schild, Tankanzeige, Steuer-Säule — reine Zustands-
+// Funktionen). Das Franchise-Kreuz braucht die Prämien-Pipeline → hier bewusst nur
+// Einstieg statt eines erfundenen Standes (Ehrlichkeit). Seit 25.09.2026 hat jedes
+// Instrument eine eigene Form: Kreuz · Säule · Tacho (Reserve) · Schild.
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
 const gp = (f, r, cx, cy) => { const a = Math.PI * (1 - Math.max(0, Math.min(1, f))); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
@@ -37,17 +41,37 @@ const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
   return h('svg', { viewBox: '0 0 60 40', width: 60, height: 40, style: { overflow: 'visible' }, 'aria-hidden': true }, els);
 };
 
-const miniCompass = (palette, bearing, state) => {
+// Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
+// betrifft (Wunsch 25.09.2026): ihr Zivilstand, in Sand wie «aktuell gewählt» im Rechner,
+// oben gerundet, auf der Grundlinie stehend. Eine einzelne Säule hat nichts, woran ihre Höhe
+// sich messen könnte — darum feste Höhe; die Zahl darunter trägt die Aussage. Ohne Betrag
+// gestrichelt, wie die Platzhalter-Säule im Rechner. <title> mit Name und Betrag (Hover).
+const S_BASIS = 40, S_BREIT = 16, S_HOCH = 30;
+const oben = (x, y, w, h, r) => 'M ' + x + ' ' + (y + h) + ' V ' + (y + r) + ' Q ' + x + ' ' + y + ' ' + (x + r) + ' ' + y
+  + ' H ' + (x + w - r) + ' Q ' + (x + w) + ' ' + y + ' ' + (x + w) + ' ' + (y + r) + ' V ' + (y + h);
+const miniSaeule = (palette, t, { betragJahr, verheiratet }) => {
   const h = React.createElement;
-  const cx = 22, cy = 22;
-  const north = state === 'found' ? palette.sage : state === 'none' ? palette.sky : palette.mid;
-  return h('svg', { viewBox: '0 0 44 44', width: 44, height: 44, 'aria-hidden': true },
-    h('circle', { cx, cy, r: 18, fill: 'none', stroke: palette.border, strokeWidth: 2 }),
-    h('g', { transform: 'rotate(' + bearing + ' ' + cx + ' ' + cy + ')' },
-      h('polygon', { points: cx + ',7 ' + (cx + 4) + ',' + cy + ' ' + (cx - 4) + ',' + cy, fill: north, opacity: state === 'idle' ? 0.5 : 1 }),
-      h('polygon', { points: cx + ',37 ' + (cx + 4) + ',' + cy + ' ' + (cx - 4) + ',' + cy, fill: palette.mid, opacity: 0.35 })
-    ),
-    h('circle', { cx, cy, r: 3, fill: palette.surface, stroke: palette.mid, strokeWidth: 1.5 })
+  const x = 20;
+  const titel = t('tax.saeulen.' + (verheiratet ? 'gemeinsam' : 'ledig')) + (betragJahr != null ? ': ' + chfBetrag(betragJahr) : '');
+  return h('svg', { viewBox: '0 0 56 44', width: 56, height: 44, role: 'img', 'aria-label': titel },
+    betragJahr != null
+      ? h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand }, h('title', null, titel))
+      : h('path', { d: oben(x + 0.5, S_BASIS - S_HOCH, S_BREIT - 1, S_HOCH, 2), fill: 'none', stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2' }, h('title', null, titel)),
+    h('line', { x1: 12, x2: 44, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
+  );
+};
+
+// Mini-Kreuz — Spiegel des Franchise-Kreuzes (PraemienOrientierung): zwei Linien, die sich
+// kreuzen (hohe Franchise sky, tiefe sand, wie dort). Bewusst ohne Strich für die eigenen
+// Kosten — die Prämien-Pipeline läuft hier nicht, also kein erfundener Stand.
+const miniKreuz = (palette) => {
+  const h = React.createElement;
+  return h('svg', { viewBox: '0 0 64 44', width: 64, height: 44, 'aria-hidden': true },
+    h('line', { x1: 4, x2: 60, y1: 40.5, y2: 40.5, stroke: palette.border, strokeWidth: 1 }),
+    h('polyline', { points: '6,28 34,15 58,15', fill: 'none', stroke: palette.sand, strokeWidth: 2.5, strokeLinejoin: 'round' }),
+    h('polyline', { points: '6,35 40,11 58,7', fill: 'none', stroke: palette.sky, strokeWidth: 2.5, strokeLinejoin: 'round' }),
+    h('rect', { x: 55, y: 12, width: 6, height: 6, fill: palette.sand }),
+    h('circle', { cx: 58, cy: 7, r: 3, fill: palette.sky })
   );
 };
 
@@ -67,7 +91,9 @@ const miniShield = (palette, fraction) => {
   );
 };
 
-export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
+// eingebettet: steht im Dashboard-Block «Was steht mir zu?» (seit 25.09.2026) —
+// Titel dann in der Grösse der übrigen Zwischentitel dort, kein eigener Abstand nach unten.
+export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
   const shield = schildState(v, {
@@ -76,33 +102,49 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   });
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
-  // Kompass-Peilung: Leistungszahl wie im Schnellcheck (gleiche Gates, gleiche Engine).
-  let benefitCount = 0;
-  const hasIncome = (Number(data?.finanzen?.monthlyIncome) || 0) > 0;
+  // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
+  // Nur die Bundessteuer als Zahl — sie ist der amtlich belegte Tarif (DBG Art. 36).
+  let bundessteuer = null;
   try {
-    const income = Number(data?.finanzen?.monthlyIncome) || 0;
-    const rent = Number(data?.wohnen?.rentAmount) || 0;
-    const canton = data?.basis?.canton;
-    if (income > 0 && canton && calculateIPV(data)?.anspruchMoeglich) benefitCount++;
-    if (rent > 0) { const sh = calculateSozialhilfe(data); if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefitCount++; }
-    if (checkELEligibility(data)?.eligible) benefitCount++;
+    if ((Number(data?.finanzen?.monthlyIncome) || 0) > 0 || (Number(data?.finanzen?.taxableIncome) || 0) > 0) {
+      const eingaben = steuerEingabenAusDaten(data);
+      const st = steuernFuerProfil(eingaben);
+      bundessteuer = st?.bund ? Math.round(st.bund.steuer) : null;
+    }
   } catch { /* Orientierung, nie blockierend */ }
-  const kompass = kompassBearing({ hasIncome, benefitCount });
+
+  // Franchise-Kreuz: erster Vorschlag statt der Frage — sobald die Prämien im Hintergrund
+  // geladen sind (nur mit Kasse + PLZ). Bis dahin und ohne Kosten bleibt die Frage stehen.
+  const [franchiseOpt, setFranchiseOpt] = useState(null);
+  const plz = data?.wohnen?.postalCode, kasse = data?.versicherungen?.kkInsurer, geburt = data?.basis?.dateOfBirth;
+  useEffect(() => {
+    let aktiv = true;
+    ladeFranchiseOpt(data).then((o) => { if (aktiv) setFranchiseOpt(o); }).catch(() => { if (aktiv) setFranchiseOpt(null); });
+    return () => { aktiv = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plz, kasse, geburt]);
+  const vorschlag = franchiseOpt ? franchiseVorschlag(franchiseOpt, {
+    costs: gesundheitskostenBisher(data),
+    eigeneFranchise: parseFranchise(data?.versicherungen?.franchise),
+    ersparnisse: data?.finanzen?.savingsAccount,
+  }) : { art: 'offen' };
+  const kreuzSub = vorschlag.art === 'passt' ? t('instrumente.kreuzPasst')
+    : vorschlag.art === 'wechsel' ? t(vorschlag.polster ? 'instrumente.kreuzWechselPolster' : 'instrumente.kreuzWechsel', { franchise: zahl(vorschlag.franchise) })
+    : t('instrumente.tachoSub');
 
   const setup = t('instrumente.setup');
   const tiles = [
     {
-      key: 'tacho', name: t('instrumente.tacho'), sub: t('instrumente.tachoSub'),
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sage, right: palette.sandDeep }),
+      key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
+      glyph: miniKreuz(palette),
       onClick: () => onNavigate('praemien'),
     },
     {
-      key: 'kompass', name: t('instrumente.kompass'),
-      sub: kompass.state === 'found'
-          ? (benefitCount === 1 ? t('instrumente.kompassFoundOne') : t('instrumente.kompassFound', { n: benefitCount }))
-        : kompass.state === 'none' ? t('instrumente.kompassNone') : setup,
-      glyph: miniCompass(palette, kompass.bearing, kompass.state),
-      onClick: () => onNavigate('schnellcheck'),
+      // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
+      key: 'steuer', name: t('instrumente.steuer'),
+      sub: bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
+      glyph: miniSaeule(palette, t, { betragJahr: bundessteuer, verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus) }),
+      onClick: () => onNavigate('tax'),
     },
     {
       key: 'tank', name: t('instrumente.tank'),
@@ -118,9 +160,17 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
     },
   ];
 
-  return h('div', { style: { marginBottom: space.xl + 'px' } },
-    h(PanelTitle, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('instrumente.title')),
-    h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
+  const titel = h(PanelTitle, {
+    palette,
+    style: eingebettet
+      ? { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+      : { margin: '0 0 ' + space.xs + 'px 0' },
+  }, t('instrumente.title'));
+
+  return h('div', { style: eingebettet ? { marginTop: space.lg + 'px' } : { marginBottom: space.xl + 'px' } },
+    // Eingebettet: Titel ohne Einleitung — die Finanz-Übersicht steht als Karte direkt darüber.
+    eingebettet ? h('div', { style: { marginBottom: space.sm + 'px' } }, titel) : titel,
+    !eingebettet && h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
     // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
     // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
