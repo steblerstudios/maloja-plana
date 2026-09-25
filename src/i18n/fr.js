@@ -1755,7 +1755,7 @@ export default {
     glanceSaved: 'Dernière sauvegarde',
     glanceNeverSaved: 'Aucun fichier de sauvegarde créé',
     nextUpAction: 'Compléter : {feld}',
-    nextUpCta: 'Compléter', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpCta: 'Maintenant', // Verb steht schon im Titel (Compléter : …), 25.09.
     nextUpWeiter: 'Continuer avec {name}',
     tipsTitle: 'Conseils pour commencer :',
     tip1: { sie: 'Commencez par le chapitre « Données personnelles »', du: 'Commence par le chapitre « Données personnelles »' },

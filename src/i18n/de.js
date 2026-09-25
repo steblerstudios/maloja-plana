@@ -1761,7 +1761,7 @@ export default {
     glanceSaved: 'Zuletzt gesichert',
     glanceNeverSaved: 'Noch keine Sicherungsdatei erstellt',
     nextUpAction: '{feld} ergänzen',
-    nextUpCta: 'Jetzt ergänzen', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpCta: 'Jetzt', // gefüllter Knopf im «Was ist jetzt dran?» — das Verb steht schon im Titel ({feld} ergänzen), 25.09.
     nextUpWeiter: 'Weiter mit {name}',
     tipsTitle: 'Tipps für den Anfang:',
     tip1: { sie: 'Beginnen Sie mit dem Kapitel "Persönliche Basis"', du: 'Beginne mit dem Kapitel "Persönliche Basis"' },
