@@ -19,6 +19,34 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 25.09., 02:30 — Links, Quellen, Abläufe: vier gestapelte PRs gemergt, jeder auf ausdrückliches Wort von Stebler Studios («merge sauber»). Nicht deployt.**
+>
+> **Stand, gemessen 25.09.2026 02:29** (`bash scripts/stand-jetzt.sh`): `main` = `0e1edee` · live = `d47dc32`
+> (0.1.40-beta) · **36 Commits** zwischen live und main · offene PRs (alle Entwurf, fremde Sitzungen):
+> #351 · #350 · #347 · #346 · #345 · #343 · #337.
+>
+> **Gemergt, der Reihe nach** (Merge-Commits, CI auf `main` nach jedem grün):
+> - **#340** `20119ff` — Links geprüft (340 + 15 Adressen), KVG-Art.-7-ELI korrigiert, AHV/Priminfo/Opferhilfe
+>   je Sprache, Mieterverband «schlichtet nicht»; `ABLAEUFE`-Register (Dashboard + Suche aus einer Liste —
+>   18 von 19 Abläufen waren unfindbar); Quellen-Zeile in jedem Ablauf; RAV-Spätestens-Termin.
+> - **#342** `f5986e6` — **Fristen ab dem Ereignis statt ab heute** (10 Knöpfe; `EreignisFrist`,
+>   `utils/fristen.js` nach OR 77, «nie später als das Gesetz») + 13 Textkorrekturen am Gesetzeswortlaut.
+> - **#349** `131d300` — 5 neue Abläufe (Neu in der Schweiz, Einbürgerung, Quellensteuer, Wohnung gekündigt,
+>   Ausgesteuert), Gepäck vollständig (Wächter), 15 belegte Korrekturen — 🔴 **112 «ohne SIM» war falsch**,
+>   🔴 **Asyl 5 Arbeitstage fehlten**; KVG 30.11. Werktag davor.
+> - **#352** `0e1edee` — 10 weitere Abläufe (**34** insgesamt): Vorsorgeauftrag & Patientenverfügung, EL
+>   beantragen, Zusammenziehen, Adoption, Wegzug, Pass/ID, Betreibungsauszug, Lehre, 18 werden, Dienst;
+>   🔴 Patientenverfügung «handschriftlich» falsch (ZGB 371), 🔴 Ausweis «5 Jahre» falsch (VAwG 5); EL-Verweise
+>   auf den EL-Ablauf (ELG 21 VI); Verbände-Gruppe statt «Ombudsstellen» für Mieterverband/Konsumentenschutz.
+>
+> **Belegt:** CI `build` grün auf jedem der vier Merge-Commits · lokal 207 Dateien / 3807 Tests · Build ·
+> size-limit 61,09 / 65 kB · PII-Scan vor jedem Push · alle neuen Abläufe im Browser (Demo-Modus) geöffnet.
+>
+> **Nicht erledigt / offen:** Deploy (Stebler Studios) · rm-Fassungen aller `TODO(rm)` · EO-Betreuung
+> 98 Taggelder liegt als **#350** (fremde Sitzung) · Wiedervorlagen **VAwG 01.11.2026**, **BVV 3 Art. 2
+> 01.06.2027**, **EOG 01.07.2027**. Vollständiger Prüfbericht mit allen Befunden und Belegen:
+> `~/Claude/Projects/maloja plana/PRUEFUNG-links-ablaeufe-2026-09-24.md` (ausserhalb des Repos).
+
 > ✅ **Nachtrag 24.09., 19:15 — 0.1.40-beta ist live. Deploy durch Stebler Studios, 18:48.**
 >
 > **Stand, gemessen 24.09.2026 19:06** (`bash scripts/stand-jetzt.sh`): `main` = `d47dc32` (#327) ·

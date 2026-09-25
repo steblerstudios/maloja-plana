@@ -1,6 +1,6 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { inDays, formatDE } from './utils/helpers.js';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { plusTage } from './utils/fristen.js';
 
 // Betreibung erhalten — geführter Ablauf als ruhige Anti-Panik-Orientierung. Die
 // kritischste Frist zuerst: 10 Tage Rechtsvorschlag (stoppt die Betreibung vorerst,
@@ -11,10 +11,6 @@ import { inDays, formatDE } from './utils/helpers.js';
 
 export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
-  // Rechtsvorschlag-Frist: 10 Tage ab Zustellung des Zahlungsbefehls. Das genaue
-  // Zustelldatum kennen wir nicht → ruhige Orientierungs-Frist 10 Tage ab heute
-  // (im Kalender verschiebbar auf das tatsächliche Datum).
-  const deadline = inDays(10);
 
   return React.createElement(AblaufContainer, {
     palette, icon: 'behoerden',
@@ -24,18 +20,11 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
     // Schritt 1 — Ruhe, 10-Tage-Frist Rechtsvorschlag (das Wichtigste zuerst)
     React.createElement(AblaufStep, { palette, title: t('betreibung.step1Title') },
       React.createElement('p', { style: s.stepText }, t('betreibung.step1Text')),
-      React.createElement(FristButton, {
-        palette, t,
-        buttonLabel: t('betreibung.step1Button', { date: formatDE(deadline) }),
-        doneLabel: t('betreibung.step1Done'),
-        calendarLabel: t('betreibung.step1CalendarLink'),
-        onNavigate,
-        reminder: {
-          title: t('betreibung.reminderTitle'),
-          dueDate: deadline,
-          category: 'admin',
-          recurrence: 'once',
-        },
+      React.createElement(EreignisFrist, {
+        palette, t, onNavigate, id: 'betreibung-frist', frist: (d) => plusTage(d, 10),
+        labelKey: 'betreibung.fristLabel', hinweisKey: 'betreibung.fristHinweis', vorbeiKey: 'betreibung.fristVorbei',
+        buttonKey: 'betreibung.step1Button', doneKey: 'betreibung.step1Done', calendarKey: 'betreibung.step1CalendarLink',
+        reminderTitle: t('betreibung.reminderTitle'), category: 'admin',
       })
     ),
 
@@ -53,7 +42,7 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('betreibung.step3LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('betreibung.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('betreibung.quelle'), notes: [t('betreibung.footerNote'), t('trust.localOnly')] })
   );
 };
 

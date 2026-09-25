@@ -8,6 +8,27 @@
 > Leitfrage (aus dem Swiss-Life-Model): *„Hilft das den Menschen, ihre Schweizer
 > Lebensrealität ruhiger, verständlicher und mit weniger Aufwand zu organisieren?"*
 
+> **⟨Nachtrag 25.09.2026⟩ Zehn weitere Abläufe:** Vorsorgeauftrag & Patientenverfügung, Ergänzungsleistungen
+> beantragen, Zusammenziehen ohne Trauschein, Adoption, Wegzug ins Ausland, Pass/Identitätskarte,
+> Betreibungsauszug, Lehre, 18 werden, Militär-/Zivildienst → **34** Abläufe. Damit sind aus dieser Datei
+> auch D4 (EL), G3 (Betreibungsauszug), G4 (Pass), H4 (Wegzug), C5 (Lehre) und I5 (Vorsorgeauftrag) gebaut.
+>
+> **⟨Nachtrag 24.09.2026 nachts⟩ Fünf neue Abläufe:** Neu in der Schweiz (`zuzug`), Einbürgerung
+> (`einbuergerung`), Quellensteuer (`quellensteuer`), Wohnung gekündigt (`wohnunggekuendigt`),
+> Ausgesteuert (`aussteuerung`) — damit **24** Abläufe, alle im Gepäck (Wächter
+> `gepaeck.test.js`), in der Suche und mit Quellen-Zeile. Die Lücken H2 (Einbürgerung) und C7
+> (Quellensteuer) sind damit gebaut. Fristen rechnen ab dem Ereignis (`utils/fristen.js`).
+>
+> **⟨Nachtrag 24.09.2026⟩ Was sich seit diesem Audit geändert hat — die Befunde unten
+> bleiben als Beleg stehen.** Heute gibt es **19 geführte Abläufe**, eine Liste im Register
+> `src/config/ansichtenRegister.js` (`ABLAEUFE`), aus der Dashboard und Suche lesen.
+> Gebaut sind seither u. a. Trennung, Todesfall, Selbständigkeit, Heirat, Kind, IV und Pflege;
+> die Frist-in-Kalender-API (Q1) gibt es als `addReminder` in `src/utils/reminders.js`.
+> Die Liste «Echte Lücken» weiter unten ist damit zum grossen Teil **erledigt**; offen sind
+> daraus Quellensteuer (C7), Einbürgerung (H2) und EL als eigener Ablauf (D4).
+> Querverweise bewacht `src/__tests__/ablaufQuerverweise.test.js`, die Auffindbarkeit
+> `src/__tests__/search.test.js`. Prüfbericht: Bestandsaufnahme vom 24.09.2026.
+
 ---
 
 ## Das Audit-Raster
@@ -233,6 +254,8 @@ export · calendar · notifications · settings · legal
 ### Querschnitt (Klammern für alle Abläufe)
 
 #### Q1 · Fristen & Termine — `calendar`/`CalendarReminders`
+- ⟨überholt 24.09.2026⟩ Die API gibt es: `addReminder` in `src/utils/reminders.js`, genutzt von
+  `FristButton` in `AblaufSchale.jsx`. Der Befund darunter beschreibt den damaligen Stand.
 - **Befund:** 🔴 **systemische Kern-Lücke.** `CalendarReminders.jsx` exportiert **keine** programmatische `addReminder`-Funktion — `loadReminders`/`saveReminders` sind modul-intern (`:9-16`), Reminder entstehen nur manuell im Formular oder aus den `TEMPLATES` (`:36`). Grep „or5_reminders/CalendarReminders" trifft **nur 3 Dateien**: die Komponente selbst, `OverdueBanner.jsx`, `main.jsx`. Das heisst: **kein einziger Ablauf kann eine Frist in den Kalender schreiben.** Alle Frist-🔴 oben hängen an dieser einen fehlenden API.
 - **Nächste Aktion (Hebel #1):** Eine kleine exportierte Helper-Funktion `addReminder({title, dueDate, category, recurrence})` (schreibt `or5_reminders`), die Abläufe aufrufen können. Danach werden ~12 Frist-Lücken mit je 1 Zeile schliessbar.
 
@@ -454,6 +477,8 @@ export · calendar · notifications · settings · legal
   Muster, das alle Sackgassen-Views übernehmen sollten.
 
 ### Echte Lücken (Ablauf ohne jeden Baustein — grep-verifiziert)
+> ⟨überholt 24.09.2026⟩ Trennung, Todesfall, Selbständigkeit, Heirat, VVG-Zusatz, Geburt und
+> die IV-Kette sind inzwischen als Abläufe gebaut. Offen: Quellensteuer, Einbürgerung, EL.
 - 🔴 **Trennung/Scheidung** (I3, „trennung" 0 Treffer) — nur Alimente-Budget-Sektion.
 - 🔴 **Todesfall/Nachlass** (I4, „nachlass" 0 Treffer).
 - 🔴 **Quellensteuer** (C7, 0 Treffer) — migrations-/Amanda-relevant.
