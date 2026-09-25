@@ -454,7 +454,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         abgeschlossen: chapterCompletions.filter(p => p >= 100).length,
         gesamt: chapterCompletions.length,
       },
-      fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), leer: t('progress.notStarted') },
+      fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), ausgefuellt: t('progress.ausgefuellt'), leer: t('progress.notStarted') },
       prozent: Math.round(completion) >= 10 ? Math.round(completion) : null,
     }),
 

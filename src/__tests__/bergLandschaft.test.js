@@ -248,14 +248,14 @@ describe('Berge · Fortschritt im Bild', () => {
   }
 
   it('die Schildchen haben undurchsichtigen Grund und keine Deckkraft', () => {
-    const block = src.slice(src.indexOf('const kachel = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    const block = src.slice(src.indexOf('const pilleStil = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
     const kreis = src.slice(src.indexOf('const Kreis = '), src.indexOf('// Das Bild bleibt auch im Dunkelmodus hell'));
     expect(block.length).toBeGreaterThan(100);
-    expect(block).toContain('background: p.surface');
+    expect(block).toContain('background: ui.surface');
     expect(block).not.toMatch(/opacity/);
-    // Der Kreis selbst: volle Scheibe unter dem Bogen, Zahl in der Textfarbe.
-    expect(kreis).toContain('fill: p.surface');
-    expect(kreis).toContain('fill: p.text');
+    // Der Kreis selbst: volle Scheibe unter dem Bogen, Zahl in der Textfarbe des Modus.
+    expect(kreis).toContain('fill: ui.surface');
+    expect(kreis).toContain('fill: ui.text');
     expect(kreis).not.toMatch(/opacity/);
   });
 });
@@ -267,7 +267,7 @@ describe('Berge · Fortschritt im Bild', () => {
 // kein heller Schein (er zeigte sich am dunklen Hang als weisser Fleck), helle Palette.
 describe('Berge · Titel im Himmel', () => {
   it('der Titel trägt keine Deckkraft, keinen Schein und die Textfarbe der hellen Palette', () => {
-    const block = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('}, titel)'));
+    const block = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('// Fortschritt im Bild, unten'));
     expect(block.length).toBeGreaterThan(100);
     expect(block).toContain('color: p.text');
     expect(block).not.toMatch(/opacity/);
@@ -359,4 +359,33 @@ describe('Berge · Ausschnitt bei randloser Breite', () => {
       expect(a.y + a.h).toBeLessThanOrEqual(788);
     });
   }
+});
+
+// Seit 25.09.2026 folgen die Fortschritts-Angaben (Pillen am Computer, Scheiben am Handy) dem Modus
+// der App: in hell UND dunkel müssen Zahl und Wort ≥ 4.5:1 auf ihrem Grund tragen, der Bogen ≥ 3:1
+// (WCAG 1.4.11), und das weisse Etikett über der Scheibe ≥ 4.5:1 — auch im Farbenblind-Modus.
+describe('Berge · Fortschritt in hell und dunkel', () => {
+  for (const [name, basis, farbenblind] of [
+    ['hell', LIGHT_PALETTE, false], ['dunkel', DARK_PALETTE, false],
+    ['hell, Farbenblind', LIGHT_PALETTE, true], ['dunkel, Farbenblind', DARK_PALETTE, true],
+  ]) {
+    it(`${name}: Zahl, Wort, Bogen und Etikett lesbar`, () => {
+      const ui = applyColorBlind(basis, farbenblind);
+      expect(kontrast(ui.text, ui.surface), 'Zahl').toBeGreaterThanOrEqual(4.5);
+      expect(kontrast(ui.mid, ui.surface), 'Wort').toBeGreaterThanOrEqual(4.5);
+      expect(kontrast(ui.sageDeep, ui.surface), 'Bogen').toBeGreaterThanOrEqual(3);
+      expect(kontrast(ETIKETT_SCHRIFT, etikettGrund(ui.sageDeep)), 'Etikett').toBeGreaterThanOrEqual(4.5);
+    });
+  }
+  it('die Angaben nehmen die Palette des Modus, nicht die immer helle Bild-Palette', () => {
+    expect(src).toMatch(/const ui = palette;/);
+    const block = src.slice(src.indexOf('const pilleStil = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    expect(block).not.toMatch(/\bp\.(surface|text|mid|sageDeep)\b/);
+  });
+  it('Titel «T1»: Titelschrift, zweiter Satz in Salbeigrün der hellen Palette, keine Deckkraft', () => {
+    const t = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('// Fortschritt im Bild, unten'));
+    expect(t).toContain('fontFamily: fontFamilyDisplay');
+    expect(t).toContain("color: p.sageDeep");
+    expect(t).not.toMatch(/opacity|textShadow/);
+  });
 });

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icons from '../IconKern.jsx';
 import { PageTitle } from './Heading.jsx';
-import { text, weight, radius, ease, duration } from '../config/tokens.js';
+import { text, weight, radius, ease, duration, fontFamilyDisplay } from '../config/tokens.js';
 import { LIGHT_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 // Als eigene Datei, nicht im JS-Bündel: Vite legt sie mit Hash unter /assets/ ab, der
@@ -28,7 +28,10 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 // breiten Fenstern nicht höher als ~80 % des Fensters wird, zeigt der breite Ausschnitt dann weniger
 // Höhe: oben fällt Himmel weg, unten etwas Vordergrund — die Stationen bleiben immer ganz drin.
 // (Eine Fassung mit verschwommener Fortsetzung links/rechts wurde am selben Tag verworfen.)
-export const MAX_HOEHE_ANTEIL = 0.92;
+export const MAX_HOEHE_ANTEIL = 1;
+// Dunst hinter dem Titel: Himmelsfarbe aus dem Bild (#F6F2E8, gemessen), Deckung als Hex-Alpha
+// oben / in der Mitte, auslaufend nach unten. Nur Grund, nie Deckkraft auf Text (K41).
+export const DUNST = { farbe: '#F6F2E8', oben: 'EB', mitte: 'D9', mitteBei: 55 };
 const MIN_HOEHE = 560;   // Bild-Einheiten: darunter käme der Titel in die Stationen
 const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
@@ -127,20 +130,22 @@ export const mitKontrast = (hex, grund, ziel = 3) => {
 export const ETIKETT_SCHRIFT = '#ffffff';
 export const etikettGrund = (farbe) => mitKontrast(farbe, ETIKETT_SCHRIFT, 4.5);
 
-// Ein Fortschritts-Kreis: Spur + Bogen im Verhältnis `anteil` (0–1), in der Mitte der Wert.
+// Ein Fortschritts-Kreis: Spur + Bogen im Verhältnis `anteil` (0–1), in der Mitte (wenn gegeben)
+// der Wert. Farben aus der Palette des Modus (`ui`, seit 25.09.2026: hell/dunkel wie die App).
 // Undurchsichtige Scheibe darunter, damit der Kontrast nicht am Bild hängt (K41).
-const Kreis = ({ p, anteil, mitte, d }) => {
-  const r = d / 2 - 3.5, u = 2 * Math.PI * r;
-  return React.createElement('svg', { width: d, height: d, viewBox: `0 0 ${d} ${d}`, 'aria-hidden': 'true', style: { display: 'block' } },
-    React.createElement('circle', { cx: d / 2, cy: d / 2, r, fill: p.surface, stroke: p.border, strokeWidth: 4 }),
+const Kreis = ({ ui, anteil, mitte, d }) => {
+  const sw = d >= 36 ? 4 : 3.5;
+  const r = d / 2 - sw / 2 - 0.5, u = 2 * Math.PI * r;
+  return React.createElement('svg', { width: d, height: d, viewBox: `0 0 ${d} ${d}`, 'aria-hidden': 'true', style: { display: 'block', flex: 'none' } },
+    React.createElement('circle', { cx: d / 2, cy: d / 2, r, fill: ui.surface, stroke: ui.border, strokeWidth: sw }),
     anteil > 0 && React.createElement('circle', {
-      cx: d / 2, cy: d / 2, r, fill: 'none', stroke: p.sageDeep, strokeWidth: 4, strokeLinecap: 'round',
+      cx: d / 2, cy: d / 2, r, fill: 'none', stroke: ui.sageDeep, strokeWidth: sw, strokeLinecap: 'round',
       strokeDasharray: `${u * Math.min(1, anteil)} ${u}`, transform: `rotate(-90 ${d / 2} ${d / 2})`,
       style: { transition: 'stroke-dasharray 900ms ease' },
     }),
-    React.createElement('text', {
+    mitte != null && React.createElement('text', {
       x: '50%', y: '50%', textAnchor: 'middle', dominantBaseline: 'central',
-      fontSize: d >= 52 ? 14 : 12, fontWeight: weight.semi, fill: p.text, fontFamily: 'inherit',
+      fontSize: d >= 44 ? 12 : 11, fontWeight: weight.semi, fill: ui.text, fontFamily: 'inherit',
     }, mitte),
   );
 };
@@ -153,6 +158,15 @@ export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette
 const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent }) => {
   const rahmen = useRef(null);
   const huelle = useRef(null);
+  // Höhe des Titels (umbricht je nach Sprache und Breite) — der Dunst wächst mit.
+  const [titelHoehe, setTitelHoehe] = useState(0);
+  useEffect(() => {
+    const el = huelle.current && huelle.current.querySelector('[data-testid="berg-titel"]');
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(([e]) => setTitelHoehe(Math.round(e.contentRect.height)));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   // Randlos: die Hülle greift aus der 720-px-Spalte bis an die Fensterränder. Gemessen statt 100vw,
   // weil 100vw eine klassische Scrollleiste mitzählt und die Seite dann seitlich scrollen liesse.
   const [ausgriff, setAusgriff] = useState(null);
@@ -197,6 +211,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
   }, []);
 
   const p = bildPalette(palette);
+  // Die Fortschritts-Angaben folgen dem Modus der App (hell/dunkel), anders als Bild, Titel und
+  // Stationen, die auf dem immer hellen Bild stehen (Entscheid 25.09.2026).
+  const ui = palette;
   const kapitelFarbe = astFarben(chapters, p, false);
   const modus = schmal ? 'schmal' : 'breit';
   const a = schmal ? AUSSCHNITT.schmal : ausschnittBreit(breite, ausgriff && ausgriff.hoehe);
@@ -289,78 +306,101 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       ),
     ),
     // Der Anspruch als Titel im Himmel (Hero, seit 25.09.2026), links bündig (Entscheid Stebler
-    // Studios). Dunkler Text der hellen Palette auf hellem Himmel und blassen Gipfeln. Links oben
-    // ragt der dunkle Hang ins Bild — der Abstand (oben/links) ist so gewählt, dass der Text ihn
-    // nicht berührt: an den Bildpunkten gemessen 320–736 px jeder Punkt ≥ 3:1. KEIN heller Schein
-    // dahinter (er stand bis 25.09. da und zeigte sich am Hang als weisser Fleck um das «O»).
-    // Keine Deckkraft auf dem Text (K41).
-    titel && React.createElement(PageTitle, {
-      palette: p,
-      'data-testid': 'berg-titel',
-      style: {
-        position: 'absolute', top: schmal ? '10px' : '16px', left: schmal ? '26px' : Math.max(44, spalte) + 'px',
-        right: schmal ? '26px' : Math.max(44, spalte) + 'px', textAlign: 'left',
-        fontSize: schmal ? '24px' : '30px', lineHeight: 1.15, letterSpacing: '-0.3px',
-        color: p.text,
-        textWrap: 'balance',
-      },
-    }, titel),
-    // Fortschritt im Bild, unten, als Kreise (seit 25.09.2026): links «begonnen» (7/7) und — sobald
-    // das erste Kapitel fertig ist, aufspringend — «abgeschlossen» (1/7); sind alle fertig, geht
-    // «begonnen» weg. Rechts die Prozentzahl im Kreis. Am Handy (< SCHMAL_AB) liegt unten rechts
-    // die Station Finanzen — dort rückt der Prozent-Kreis zu den anderen nach links.
-    // Undurchsichtige Kacheln, helle Palette: der Kontrast hängt nicht am Bild (K41).
+    // Studios), gesetzt in der Titelschrift (Hanken Grotesk), gross und eng; der zweite Satz — die
+    // Antwort — in Salbeigrün (Variante «T1», Entscheid 25.09.2026). Er steht auf hellem Himmel,
+    // darum in BEIDEN Modi dunkel (helle Palette). Links oben ragt der dunkle Hang ins Bild — der
+    // Abstand ist so gewählt, dass der Text ihn nicht berührt (an den Bildpunkten gemessen). Kein
+    // Schein dahinter, keine Deckkraft auf dem Text (K41).
+    titel && (() => {
+      const teile = String(titel).match(/^(.+?[.!?])\s+(.+)$/);
+      const groesse = schmal ? 27 : Math.round(Math.min(50, Math.max(32, breite * 0.04)));
+      const oben = schmal ? 10 : 16;
+      // Dunst: der Himmel läuft in seiner eigenen Farbe sanft über die Gipfel hinunter — über die
+      // ganze Breite, kein Schein um einzelne Buchstaben. Ohne ihn landet die zweite Zeile je nach
+      // Fenster auf Berggrün (Salbeigrün darauf gemessen bis 1,07:1, dunkler Text bis 2,6:1).
+      const dunstHoehe = oben + (titelHoehe || groesse * 2.1) + (schmal ? 46 : 70);
+      return [React.createElement('div', {
+        key: 'dunst', 'aria-hidden': 'true', 'data-dunst': dunstHoehe,
+        style: {
+          position: 'absolute', left: 0, right: 0, top: 0, height: dunstHoehe + 'px', pointerEvents: 'none',
+          background: `linear-gradient(to bottom, ${DUNST.farbe}${DUNST.oben} 0%, ${DUNST.farbe}${DUNST.mitte} ${DUNST.mitteBei}%, ${DUNST.farbe}00 100%)`,
+        },
+      }), React.createElement(PageTitle, {
+        key: 'titel',
+        palette: p,
+        'data-testid': 'berg-titel',
+        style: {
+          position: 'absolute', top: oben + 'px', left: schmal ? '26px' : Math.max(44, spalte) + 'px',
+          right: schmal ? '26px' : Math.max(44, spalte) + 'px', textAlign: 'left',
+          fontFamily: fontFamilyDisplay, fontWeight: 700, fontSize: groesse + 'px', lineHeight: 1.03, letterSpacing: '-0.025em',
+          color: p.text,
+        },
+      }, teile
+        ? [React.createElement('span', { key: 'a', style: { display: 'block' } }, teile[1]),
+           React.createElement('span', { key: 'b', 'data-testid': 'berg-titel-antwort', style: { display: 'block', color: p.sageDeep } }, teile[2])]
+        : titel)];
+    })(),
+    // Fortschritt im Bild, unten (seit 25.09.2026): «begonnen» n/7, ab dem ersten fertigen Kapitel
+    // springt «abgeschlossen» auf; sind alle fertig, geht «begonnen» weg; dazu die Prozentzahl.
+    // Gestaltung (Entscheid 25.09.2026): am Handy runde Scheiben mit Etikett darüber (Sprache der
+    // Stationen, «R1»), am Computer runde Pillen, Kreis links, Zahl + Wort rechts («R3»). Farben
+    // aus dem Modus (hell/dunkel wie die App) — Grund, Schrift und Ring passen sich an. Immer
+    // undurchsichtig, damit der Kontrast nicht am Bild hängt (K41).
     fortschritt && (() => {
       const { begonnen, abgeschlossen, gesamt } = fortschritt;
       const L = fortschrittLabels || {};
-      // Knapp über der Handy-Grenze (520–655 px) ist das Bild niedrig und Wohnen liegt nahe am
-      // unteren linken Rand — dort kleinere Kreise (gemessen: sonst berührt «begonnen» Wohnen).
-      const eng = !schmal && breite < 656;
       // Breit, aber flach (Handy quer): dann liegt Wohnen so nah am unteren Rand, dass «begonnen»
-      // darauf läge — nur dann stehen alle Kreise zusammen unten rechts. Gemessen: Platz unter
+      // darauf läge — nur dann stehen alle Angaben zusammen unten rechts. Gemessen: Platz unter
       // Wohnen ≥ ~118 px (Tablet, Desktop) reicht links, ≤ ~93 px (568–844 px quer) nicht.
       const wohnen = STATIONEN.find((st) => st.key === 'wohnen');
       const platzUnterWohnen = breite > 0 ? (a.y + a.h - wohnen.y) * (breite / a.w) : Infinity;
       const alleRechts = !schmal && platzUnterWohnen < 105;
-      const d = schmal ? 38 : eng ? 32 : 46;
-      const kachel = {
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: eng ? '2px' : '3px',
-        background: p.surface, borderRadius: radius.md, padding: schmal || eng ? '4px 6px 5px' : '5px 8px 7px',
-        boxShadow: '0 1px 4px rgba(0,0,0,0.18)', lineHeight: 1.1,
+      const schatten = '0 1px 5px rgba(0,0,0,0.22)';
+      const pilleStil = {
+        display: 'flex', alignItems: 'center', gap: '8px', background: ui.surface, borderRadius: '999px',
+        padding: '4px 13px 4px 4px', boxShadow: schatten, lineHeight: 1.1,
       };
-      const beschriftung = (txt) => React.createElement('span', {
-        style: { fontSize: schmal || eng ? '10px' : '11px', color: p.mid, whiteSpace: 'nowrap' },
-      }, txt);
+      const pille = (key, testid, anteil, wert, wort, ref) => React.createElement('div', { key, ref, 'data-testid': testid, style: pilleStil },
+        React.createElement(Kreis, { ui, anteil, d: 30 }),
+        React.createElement('span', { style: { display: 'flex', flexDirection: 'column' } },
+          React.createElement('span', { style: { fontSize: '13px', fontWeight: weight.semi, color: ui.text } }, wert),
+          wort && React.createElement('span', { style: { fontSize: '11px', color: ui.mid } }, wort)));
+      const scheibe = (key, testid, anteil, wert, wort, ref) => React.createElement('div', {
+        key, ref, 'data-testid': testid, style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' },
+      },
+        wort && React.createElement('span', {
+          style: { fontSize: '10px', lineHeight: 1.15, color: ETIKETT_SCHRIFT, background: etikettGrund(ui.sageDeep), padding: '2px 6px', borderRadius: radius.sm, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' },
+        }, wort),
+        React.createElement('div', { style: { borderRadius: '50%', boxShadow: schatten } },
+          React.createElement(Kreis, { ui, anteil, mitte: wert, d: 38 })));
+      // Handy quer (alleRechts): die schmaleren Scheiben — Pillen stiessen dort an Finanzen (667×375 gemessen).
+      const kompakt = schmal || alleRechts;
+      const angabe = kompakt ? scheibe : pille;
       const zusammenfassung = [
         begonnen > 0 && abgeschlossen < gesamt && `${begonnen}/${gesamt} ${L.begonnen || ''}`,
         abgeschlossen > 0 && `${abgeschlossen}/${gesamt} ${L.abgeschlossen || ''}`,
-        prozent != null && `${prozent}%`,
+        prozent != null && `${prozent}% ${L.ausgefuellt || ''}`,
       ].filter(Boolean).join(' · ');
+      const prozentAngabe = prozent != null && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
       return React.createElement('div', {
         key: 'fortschritt', 'data-testid': 'berg-fortschritt',
         role: begonnen > 0 ? 'img' : undefined,
         'aria-label': begonnen > 0 ? zusammenfassung : undefined,
         style: {
-          position: 'absolute', left: schmal ? '8px' : Math.max(12, spalte) + 'px', right: schmal ? '8px' : Math.max(12, spalte) + 'px', bottom: schmal ? '8px' : '12px',
+          position: 'absolute', left: schmal ? '10px' : Math.max(12, spalte) + 'px', right: schmal ? '10px' : Math.max(12, spalte) + 'px', bottom: schmal ? '10px' : '14px',
           display: 'flex', justifyContent: schmal ? 'flex-start' : alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
-          gap: '6px', pointerEvents: 'none', lineHeight: 1.2,
+          gap: '8px', pointerEvents: 'none', lineHeight: 1.2,
         },
       },
-        React.createElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'flex-end' } },
+        React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'flex-end' } },
           begonnen === 0 && React.createElement('div', {
-            style: { ...kachel, flexDirection: 'row', padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm },
-          }, React.createElement('span', { style: { fontSize: schmal ? '11px' : text.xs, color: p.mid } }, L.leer)),
-          begonnen > 0 && abgeschlossen < gesamt && React.createElement('div', { key: 'begonnen', 'data-testid': 'berg-begonnen', style: kachel },
-            beschriftung(L.begonnen),
-            React.createElement(Kreis, { p, anteil: begonnen / gesamt, mitte: `${begonnen}/${gesamt}`, d })),
-          abgeschlossen > 0 && React.createElement('div', { key: 'abgeschlossen', ref: abgeschlossenKachel, 'data-testid': 'berg-abgeschlossen', style: kachel },
-            beschriftung(L.abgeschlossen),
-            React.createElement(Kreis, { p, anteil: abgeschlossen / gesamt, mitte: `${abgeschlossen}/${gesamt}`, d })),
-          (schmal || alleRechts) && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '4px' } },
-            React.createElement(Kreis, { p, anteil: prozent / 100, mitte: prozent + '%', d: d + 6 })),
+            style: { ...pilleStil, padding: schmal ? '4px 10px' : '6px 14px' },
+          }, React.createElement('span', { style: { fontSize: schmal ? '11px' : text.xs, color: ui.mid } }, L.leer)),
+          begonnen > 0 && abgeschlossen < gesamt && angabe('begonnen', 'berg-begonnen', begonnen / gesamt, `${begonnen}/${gesamt}`, L.begonnen),
+          abgeschlossen > 0 && angabe('abgeschlossen', 'berg-abgeschlossen', abgeschlossen / gesamt, `${abgeschlossen}/${gesamt}`, L.abgeschlossen, abgeschlossenKachel),
+          (schmal || alleRechts) && prozentAngabe,
         ),
-        !schmal && !alleRechts && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '5px' } },
-          React.createElement(Kreis, { p, anteil: prozent / 100, mitte: prozent + '%', d: d + 10 })),
+        !schmal && !alleRechts && prozentAngabe,
       );
     })(),
     // Kapitel-Stationen auf der Strasse

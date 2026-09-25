@@ -1728,6 +1728,7 @@ export default {
     // Beschriftung der Fortschritts-Kreise im Berg-Hero (25.09.2026)
     begonnen: 'cumenzà',
     abgeschlossen: 'terminà',
+    ausgefuellt: 'emplenì',
   },
 
   guidedStart: {
