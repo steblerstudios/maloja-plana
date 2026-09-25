@@ -245,9 +245,17 @@ html { overflow-x: clip; }
 /* Der Berg verschwimmt, je weiter man scrollt — er tritt in den Hintergrund. An die
    Scroll-Position gekoppelt vom Browser selbst (scroll-driven animation), ohne Code im
    Hauptbündel. Browser ohne diese Fähigkeit zeigen ihn einfach scharf. */
+/* Der untere Rand läuft weich aus — aber erst, während der Berg zurücktritt: oben, scharf,
+   bleiben die Fortschritts-Kreise am Bildrand voll sichtbar (Auslauf 0 px), hinten sind es
+   ~100 px. Als registrierte Eigenschaft, damit der Browser die Länge stufenlos animiert. */
+@property --mp-berg-auslauf {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
 @keyframes mp-berg-verschwimmen {
-  from { filter: blur(0); }
-  to   { filter: blur(10px) opacity(0.22); }
+  from { filter: blur(0); --mp-berg-auslauf: 0px; }
+  to   { filter: blur(10px) opacity(0.22); --mp-berg-auslauf: 100px; }
 }
 /* Wie weit der Berg zurücktritt — gemessen 25.09.2026 am Bild selbst (Leinwand, gleicher
    Filter, schlechteste Stelle): bei 22 % Deckkraft erreicht normale Schrift über dem Berg
@@ -258,6 +266,13 @@ html { overflow-x: clip; }
     animation: mp-berg-verschwimmen linear both;
     animation-timeline: scroll(root);
     animation-range: 0 70vh;
+  }
+  /* Die Maske sitzt auf dem BILD, nicht auf der Hülle: eine Maske schneidet alles ab, was
+     über ihr Element hinausragt — auf der Hülle (Spaltenbreite) war der Berg plötzlich
+     nicht mehr randlos. Der Wert kommt per Vererbung von der Hülle. */
+  .mp-berg-buehne > * {
+    -webkit-mask-image: linear-gradient(#000 calc(100% - var(--mp-berg-auslauf)), transparent);
+    mask-image: linear-gradient(#000 calc(100% - var(--mp-berg-auslauf)), transparent);
   }
 }
 /* Bei reduzierter Bewegung bleibt der Berg scharf und ruhig (Gerät und App-Schalter).
