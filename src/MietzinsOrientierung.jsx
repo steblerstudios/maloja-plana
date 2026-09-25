@@ -11,6 +11,7 @@ import { MietVergleich } from './components/MietVergleich.jsx';
 import { renderSource } from './utils/renderSource.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
+import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -34,7 +35,10 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
   const childrenCount = hh.childrenCount || 0;
 
   const monthlyIncome = parseFloat(data?.finanzen?.monthlyIncome) || 0;
-  const annualIncome = Math.round(monthlyIncome * 12);
+  // 13. Monatslohn: dieselbe Regel wie Steuer und IPV (utils/dreizehnter.js). Vorher immer ×12 —
+  // mit 13. lag das Jahreseinkommen 8,3 % zu tief, die Einschätzung zu grosszügig.
+  const annualIncome = Math.round(monthlyIncome * hauptlohnMonate(data?.finanzen?.dreizehnter));
+  const ohneDreizehnten = monthlyIncome > 0 && dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen';
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
   const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount) : null;
@@ -89,6 +93,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         assessment && React.createElement('div', {
           style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, fontSize: text.sm, color: toneColor(assessment.tone), lineHeight: leading.normal },
         }, hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {})),
+        // Frage offen, ×12 gerechnet: nur wo es die Einschätzung kippen kann (unter der Grenze).
+        assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
         React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
         rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },

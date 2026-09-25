@@ -138,3 +138,31 @@ describe('Behörden-Dossier trägt die Annahme mit', () => {
     expect(generateBehoerdenJSON({}, { ipv: ipv(false) }, (k) => k).calculations.ipv.assumptions).toBeUndefined();
   });
 });
+
+// Gleiche Fehlerklasse ausserhalb der IPV: Mietzinsbeiträge (MietzinsOrientierung.jsx) rechneten
+// das Jahreseinkommen ebenfalls ×12. BS, Richtgrenze 50 000: 4 000 × 12 = 48 000 liegt darunter,
+// 4 000 × 13 = 52 000 darüber — genau der Fall, den der 13. kippt.
+describe('Mietzinsbeiträge: 13. Monatslohn nach derselben Regel', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const render = async (dreizehnter) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const data = { basis: { canton: 'BS', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 4000, ...(dreizehnter !== undefined && { dreizehnter }) }, wohnen: { rentAmount: 1200 } };
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
+  };
+  it('«ja»: 52 000 über der Grenze', async () => {
+    const html = await render(JA);
+    expect(html).toContain('mietzinsView.result_incomeHigh');
+    expect(html).not.toContain('mietzinsView.result_likely');
+  });
+  it('«nein»: 48 000 unter der Grenze, ohne Annahme-Hinweis', async () => {
+    const html = await render(NEIN);
+    expect(html).toContain('mietzinsView.result_likely');
+    expect(html).not.toContain('mietzinsView.annahmeOhneDreizehnten');
+  });
+  it('offen: ×12 wie «nein», aber mit sichtbarer Annahme', async () => {
+    const html = await render(undefined);
+    expect(html).toContain('mietzinsView.result_likely');
+    expect(html).toContain('mietzinsView.annahmeOhneDreizehnten');
+  });
+});

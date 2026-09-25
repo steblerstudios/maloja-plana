@@ -3804,6 +3804,7 @@ export default {
     enterCantonLink: 'Enter postal code',
     cantonLabel: 'Your canton: {name}',
     checkTitle: 'Quick check',
+    annahmeOhneDreizehnten: 'Income calculated without a 13th monthly salary — this has not been stated yet. With a 13th salary it is higher and may exceed the limit. It can be stated in the «Finances» chapter.',
     basis: 'Basis: income CHF {income}/year · rent CHF {rent}/month · household {size} pers.',
     result_likely: 'It\'s worth checking your entitlement: your income (CHF {income}) is below the guideline limit (CHF {limit}). The cantonal office determines the exact entitlement.',
     result_incomeHigh: 'Your income (CHF {income}) is above the guideline limit (CHF {limit}). An entitlement is rather unlikely — but in a borderline case it\'s still worth checking.',

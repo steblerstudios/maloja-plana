@@ -3738,6 +3738,7 @@ export default {
     enterCantonLink: 'Saisir le code postal',
     cantonLabel: { sie: 'Votre canton : {name}', du: 'Ton canton : {name}' },
     checkTitle: 'Vérification rapide',
+    annahmeOhneDreizehnten: 'Revenu calculé sans 13e salaire — l’indication manque encore. Avec un 13e salaire, il est plus élevé et peut dépasser la limite. Cela peut être indiqué dans le chapitre « Finances ».',
     basis: 'Base : revenu CHF {income}/an · loyer CHF {rent}/mois · ménage {size} pers.',
     result_likely: { sie: 'Cela vaut la peine de vérifier votre droit : votre revenu (CHF {income}) est inférieur à la limite indicative (CHF {limit}). Le service cantonal détermine le droit exact.', du: 'Cela vaut la peine de vérifier ton droit : ton revenu (CHF {income}) est inférieur à la limite indicative (CHF {limit}). Le service cantonal détermine le droit exact.' },
     result_incomeHigh: { sie: 'Votre revenu (CHF {income}) dépasse la limite indicative (CHF {limit}). Un droit est plutôt improbable — mais dans un cas limite, cela vaut quand même la peine de vérifier.', du: 'Ton revenu (CHF {income}) dépasse la limite indicative (CHF {limit}). Un droit est plutôt improbable — mais dans un cas limite, cela vaut quand même la peine de vérifier.' },

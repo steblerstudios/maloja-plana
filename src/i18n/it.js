@@ -3714,6 +3714,7 @@ export default {
     enterCantonLink: 'Inserisci il codice postale',
     cantonLabel: { sie: 'Il Suo cantone: {name}', du: 'Il tuo cantone: {name}' },
     checkTitle: 'Verifica rapida',
+    annahmeOhneDreizehnten: 'Reddito calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima è più alto e può superare il limite. Si può indicare nel capitolo «Finanze».',
     basis: 'Base: reddito CHF {income}/anno · affitto CHF {rent}/mese · economia domestica {size} pers.',
     result_likely: { sie: 'Vale la pena verificare il diritto: il Suo reddito (CHF {income}) è sotto il limite indicativo (CHF {limit}). Il diritto esatto lo determina il servizio cantonale.', du: 'Vale la pena verificare il diritto: il tuo reddito (CHF {income}) è sotto il limite indicativo (CHF {limit}). Il diritto esatto lo determina il servizio cantonale.' },
     result_incomeHigh: { sie: 'Il Suo reddito (CHF {income}) supera il limite indicativo (CHF {limit}). Un diritto è piuttosto improbabile — ma in un caso limite vale comunque la pena verificare.', du: 'Il tuo reddito (CHF {income}) supera il limite indicativo (CHF {limit}). Un diritto è piuttosto improbabile — ma in un caso limite vale comunque la pena verificare.' },

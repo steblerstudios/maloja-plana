@@ -3757,6 +3757,7 @@ export default {
     enterCantonLink: 'Postleitzahl erfassen',
     cantonLabel: { sie: 'Ihr Kanton: {name}', du: 'Dein Kanton: {name}' },
     checkTitle: 'Schnellcheck',
+    annahmeOhneDreizehnten: 'Einkommen ohne 13. Monatslohn gerechnet — die Angabe fehlt noch. Mit 13. Monatslohn liegt es höher und kann über der Grenze liegen. Angeben lässt sich das im Kapitel «Finanzen & Geld».',
     basis: 'Grundlage: Einkommen CHF {income}/Jahr · Miete CHF {rent}/Monat · Haushalt {size} Pers.',
     result_likely: { sie: 'Es lohnt sich, den Anspruch zu prüfen: Ihr Einkommen (CHF {income}) liegt unter der Richtgrenze (CHF {limit}). Den genauen Anspruch klärt die kantonale Stelle.', du: 'Es lohnt sich, den Anspruch zu prüfen: dein Einkommen (CHF {income}) liegt unter der Richtgrenze (CHF {limit}). Den genauen Anspruch klärt die kantonale Stelle.' },
     result_incomeHigh: { sie: 'Ihr Einkommen (CHF {income}) liegt über der Richtgrenze (CHF {limit}). Ein Anspruch ist eher unwahrscheinlich — bei knappem Fall lohnt die Prüfung trotzdem.', du: 'Dein Einkommen (CHF {income}) liegt über der Richtgrenze (CHF {limit}). Ein Anspruch ist eher unwahrscheinlich — bei knappem Fall lohnt die Prüfung trotzdem.' },
