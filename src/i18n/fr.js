@@ -4785,7 +4785,7 @@ export default {
     resultTitle: { sie: 'Avec ces informations, vous pourriez avoir droit à :', du: 'Avec ces informations, tu pourrais avoir droit à :' },
     monat: 'mois',
     barHint: 'Allègement mensuel estimé — orientation approximative, sans garantie.',
-    ipvSubsumed: 'La réduction de primes (environ {amount} / mois) diminue déjà la prime d’assurance-maladie — avec l’aide sociale, cette part est déjà comprise dans le besoin ci-dessus, ce n’est pas un montant supplémentaire.',
+    ipvSubsumed: { sie: 'Tant que vous percevez l’aide sociale, la réduction de primes est prise en compte dans celle-ci – pas d’argent en plus. Lorsque l’aide sociale prend fin, elle réduit à nouveau directement votre prime ; le service social vous dira si une demande est nécessaire.', du: 'Tant que tu perçois l’aide sociale, la réduction de primes est prise en compte dans celle-ci – pas d’argent en plus. Lorsque l’aide sociale prend fin, elle réduit à nouveau directement ta prime ; le service social te dira si une demande est nécessaire.' },
     ipvEnthalten: 'comprise dans l’aide sociale',
     ipv: 'Réduction de primes',
     ipvNote: 'Réduction cantonale de la prime d’assurance-maladie.',

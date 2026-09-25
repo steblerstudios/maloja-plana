@@ -4817,7 +4817,7 @@ export default {
     resultTitle: 'Mit diesen Angaben könnte möglich sein:',
     monat: 'Monat',
     barHint: 'Geschätzte monatliche Entlastung — grobe Orientierung, keine Zusicherung.',
-    ipvSubsumed: 'Die Prämienverbilligung (rund {amount} / Monat) senkt bereits die Krankenkassenprämie — bei Sozialhilfe steckt dieser Teil schon im Bedarf oben, es ist kein zusätzlicher Betrag.',
+    ipvSubsumed: { sie: 'Solange Sie Sozialhilfe beziehen, wird die Prämienverbilligung angerechnet – kein zusätzliches Geld. Endet die Sozialhilfe, senkt sie wieder direkt Ihre Prämie; ob ein Antrag nötig ist, sagt Ihnen der Sozialdienst.', du: 'Solange du Sozialhilfe beziehst, wird die Prämienverbilligung angerechnet – kein zusätzliches Geld. Endet die Sozialhilfe, senkt sie wieder direkt deine Prämie; ob ein Antrag nötig ist, sagt dir der Sozialdienst.' },
     ipvEnthalten: 'in der Sozialhilfe enthalten',
     ipv: 'Prämienverbilligung',
     ipvNote: 'Verbilligung der Krankenkassen-Prämie durch den Kanton.',

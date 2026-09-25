@@ -4785,7 +4785,7 @@ export default {
     resultTitle: 'With these details, you might be entitled to:',
     monat: 'month',
     barHint: 'Estimated monthly relief — rough orientation, not a guarantee.',
-    ipvSubsumed: 'The premium reduction (about {amount} / month) already lowers the health-insurance premium — with social assistance this part is already in the need above, not an additional amount.',
+    ipvSubsumed: 'While you receive social assistance, the premium reduction is offset against it – no additional money. Once social assistance ends, it lowers your premium directly again; the social services office will tell you whether an application is needed.',
     ipvEnthalten: 'included in social assistance',
     ipv: 'Premium reduction',
     ipvNote: 'Cantonal reduction of your health insurance premium.',

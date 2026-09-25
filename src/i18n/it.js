@@ -4762,7 +4762,7 @@ export default {
     resultTitle: 'Con questi dati potrebbe sussistere un diritto a:',
     monat: 'mese',
     barHint: 'Sgravio mensile stimato — orientamento approssimativo, senza garanzia.',
-    ipvSubsumed: 'La riduzione dei premi (circa {amount} / mese) abbassa già il premio della cassa malati — con l’aiuto sociale questa parte è già compresa nel fabbisogno sopra, non è un importo aggiuntivo.',
+    ipvSubsumed: { sie: 'Finché riceve l’aiuto sociale, la riduzione dei premi viene computata – nessun importo aggiuntivo. Quando l’aiuto sociale termina, riduce di nuovo direttamente il Suo premio; il servizio sociale Le dirà se occorre una domanda.', du: 'Finché ricevi l’aiuto sociale, la riduzione dei premi viene computata – nessun importo aggiuntivo. Quando l’aiuto sociale termina, riduce di nuovo direttamente il tuo premio; il servizio sociale ti dirà se occorre una domanda.' },
     ipvEnthalten: 'compresa nell’aiuto sociale',
     ipv: 'Riduzione dei premi',
     ipvNote: 'Riduzione cantonale del premio della cassa malati.',

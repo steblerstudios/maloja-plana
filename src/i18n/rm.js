@@ -5383,7 +5383,8 @@ export default {
     resultTitle: 'Cun questas datas pudessas ti avair dretg a:',
     monat: 'mais',
     barHint: 'Sgraventament mensil stimà — orientaziun grossa, senza garanzia.',
-    ipvSubsumed: 'La reducziun da premias (radund {amount} / mais) sbassa gia il premi da la cassa da malsauns — cun l’agid social è quella part gia includida en il basegn survart, i n’è betg in import supplementar.',
+    // TODO(rm): provisorisch — Gegenlese (ipvSubsumed neu, IPV bei Sozialhilfe, 25.09.2026)
+    ipvSubsumed: { sie: 'Uschè ditg che Vus retschavais agid social, vegn la reducziun da premias quintada en – nagins daners supplementars. Sche l’agid social finescha, sbassa ella puspè directamain Voss premi; il servetsch social As di, sch’ina dumonda è necessaria.', du: 'Uschè ditg che ti retschaivas agid social, vegn la reducziun da premias quintada en – nagins daners supplementars. Sche l’agid social finescha, sbassa ella puspè directamain tes premi; il servetsch social ta di, sch’ina dumonda è necessaria.' },
     ipvEnthalten: 'includida en l’agid social',
     ipv: 'Reducziun da premias',
     ipvNote: 'Reducziun chantunala da tia premia da la cassa da malsauns.',
