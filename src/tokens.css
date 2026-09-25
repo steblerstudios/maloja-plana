@@ -247,12 +247,12 @@ html { overflow-x: clip; }
    Hauptbündel. Browser ohne diese Fähigkeit zeigen ihn einfach scharf. */
 @keyframes mp-berg-verschwimmen {
   from { filter: blur(0); }
-  to   { filter: var(--mp-berg-hinten); }
+  to   { filter: blur(10px) opacity(0.22); }
 }
-/* Wie weit der Berg zurücktritt: dunkel wird er dunkler, hell blasser — so steht die
-   Schrift in den durchsichtigen Abschnitten nie gegen den vollen Berg. */
-:root { --mp-berg-hinten: blur(10px) brightness(1.18) saturate(0.6) contrast(0.55); }
-:root[data-theme="dark"] { --mp-berg-hinten: blur(10px) brightness(0.42) saturate(0.7); }
+/* Wie weit der Berg zurücktritt — gemessen 25.09.2026 am Bild selbst (Leinwand, gleicher
+   Filter, schlechteste Stelle): bei 22 % Deckkraft erreicht normale Schrift über dem Berg
+   dunkel ≥ 5,7:1 und hell ≥ 9:1. Graue Kleinschrift schafft das bei KEINER sichtbaren
+   Deckkraft (hell schon auf leerer Seite nur 4,5:1) — sie hält der Schein unten. */
 @supports (animation-timeline: scroll()) {
   .mp-berg-buehne {
     animation: mp-berg-verschwimmen linear both;
