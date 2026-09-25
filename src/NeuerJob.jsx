@@ -1,13 +1,14 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
-import { plusMonate } from './utils/fristen.js';
+import { plusTage, plusMonate } from './utils/fristen.js';
 
 // Neuer Job — der 5. geführte Ablauf auf der Schale. Ruhige Orientierung über die
 // Zusammenhänge eines Stellenantritts: Vertrag, Pensionskasse, Unfall/KTG, Steuern,
 // Probezeit & Ferien. Kein Rechner, kein Rat — Orientierung.
 
 // Probezeit-Ende: ohne andere Abrede ein Monat ab Stellenantritt (OR Art. 335b I), per
-// Vertrag bis drei Monate. Gerechnet ab dem eingegebenen ersten Arbeitstag — vorher
+// Vertrag bis drei Monate. Gerechnet ab dem eingegebenen ersten Arbeitstag, der selbst
+// mitzählt: Antritt 01.08. → letzter Probetag 31.08. (25.09.2026) — vorher
 // stand hier «3 Monate ab heute», also das Maximum statt des Normalfalls (24.09.2026).
 
 export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
@@ -48,7 +49,7 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('neuerJob.step5Title') },
       React.createElement('p', { style: s.stepText }, t('neuerJob.step5Text')),
       React.createElement(EreignisFrist, {
-        palette, t, onNavigate, id: 'neuerJob-frist', frist: (d) => plusMonate(d, 1),
+        palette, t, onNavigate, id: 'neuerJob-frist', frist: (d) => plusTage(plusMonate(d, 1), -1),
         labelKey: 'neuerJob.fristLabel', hinweisKey: 'neuerJob.fristHinweis', vorbeiKey: 'neuerJob.fristVorbei',
         buttonKey: 'neuerJob.step5Button', doneKey: 'neuerJob.step5Done', calendarKey: 'neuerJob.step5CalendarLink',
         reminderTitle: t('neuerJob.reminderTitle'), category: 'admin',

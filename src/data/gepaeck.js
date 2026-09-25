@@ -11,6 +11,9 @@ export const GEGENSTAENDE = [
   {
     key: 'wohnen', ill: 'key',
     wege: [
+      { key: 'betreibungsauszug', view: 'betreibungsauszug', g: ['M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z', 'M14 3v4h4', 'M9 11h6M9 14h6M9 17h4'] },
+      { key: 'ausweis', view: 'ausweis', g: ['M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z', 'M9 12.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M6 16c.5-1.3 1.6-2 3-2s2.5.7 3 2', 'M14.5 10h3.5M14.5 13h2.5'] },
+      { key: 'wegzug', view: 'wegzug', g: ['M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z', 'M9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2', 'M9 12v4M15 12v4'] },
       { key: 'einbuergerung', view: 'einbuergerung', g: ['M5 4h14v16H5z', 'M12 8l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z'] },
       { key: 'wohnunggekuendigt', view: 'wohnunggekuendigt', g: ['M3 11l9-7 9 7', 'M5 10v10h14V10', 'M9 14l6 6', 'M15 14l-6 6'] },
       { key: 'umzug', view: 'umzug', g: ['M3 12l9-8 9 8', 'M5 10v10h14V10', 'M10 20v-6h4v6'] },
@@ -24,6 +27,8 @@ export const GEGENSTAENDE = [
   {
     key: 'arbeit', ill: 'toolroll',
     wege: [
+      { key: 'dienst', view: 'dienst', g: ['M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z', 'M9 12l2 2 4-4'] },
+      { key: 'lehre', view: 'lehre', g: ['M3 9l9-4 9 4-9 4-9-4z', 'M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11', 'M21 9v5'] },
       { key: 'aussteuerung', view: 'aussteuerung', g: ['M4 12h16', 'M12 4v16', 'M6 6l12 12'] },
       { key: 'quellensteuer', view: 'quellensteuer', g: ['M5 3h14v18H5z', 'M8 7h8', 'M8 11h8', 'M8 15h4', 'M15.5 15.5l2 2'] },
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
@@ -36,6 +41,9 @@ export const GEGENSTAENDE = [
   {
     key: 'familie', ill: 'box',
     wege: [
+      { key: 'volljaehrig', view: 'volljaehrig', g: ['M7.5 16.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z', 'M11 13h9', 'M17 13v3', 'M20 13v2'] },
+      { key: 'adoption', view: 'adoption', g: ['M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z', 'M3.5 20v-4.5a4.5 4.5 0 0 1 9 0V20', 'M17 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M14 20v-2.5a3 3 0 0 1 6 0V20'] },
+      { key: 'zusammenziehen', view: 'zusammenziehen', g: ['M4 11l8-7 8 7', 'M6 10v10h12V10', 'M12 17.5l-2.3-2.2a1.4 1.4 0 0 1 2.3-1.8 1.4 1.4 0 0 1 2.3 1.8z'] },
       { key: 'heirat', view: 'heirat', g: ['M7 15a5 5 0 1 0 10 0 5 5 0 0 0-10 0', 'M9.5 8.5l2.5-3 2.5 3-2.5 2.5z'] },
       { key: 'geburt', view: 'kind', g: ['M12 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10', 'M12 13v7', 'M9.5 20h5'] },
       { key: 'trennung', view: 'trennung', g: ['M12 3v7', 'M8 21l4-11 4 11', 'M5 21h6', 'M13 21h6'] },
@@ -54,6 +62,8 @@ export const GEGENSTAENDE = [
   {
     key: 'alter', ill: 'flask',
     wege: [
+      { key: 'ergaenzungsleistungen', view: 'ergaenzungsleistungen', g: ['M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M3 15h3l3 2h5a1.5 1.5 0 0 0 0-3h-3', 'M14 17l5-3a1.5 1.5 0 0 1 2 2l-6 4H6', 'M3 13v8'] },
+      { key: 'vorsorgeauftrag', view: 'vorsorgeauftrag', g: ['M7 3h7l4 4v14H7z', 'M14 3v4h4', 'M10 12h5', 'M10 16l1.5 1.5L15 14'] },
       { key: 'pension', view: 'pensionierung', g: ['M3 20l6-14 4 8 3-5 5 11z'] },
       { key: 'pflege', view: 'pflege', g: ['M12 19c3-2 6-5 6-8a3 3 0 0 0-6-1 3 3 0 0 0-6 1c0 3 3 6 6 8z', 'M12 19v2'] },
     ],

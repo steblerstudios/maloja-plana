@@ -49,7 +49,7 @@ describe('Gepäck-Registry', () => {
   });
 
   it('wegeCount zählt echt', () => {
-    expect(wegeCount('wohnen')).toBe(8);
+    expect(wegeCount('wohnen')).toBe(11);
     expect(wegeCount('abschied')).toBe(2);
     expect(wegeCount('gibtsnicht')).toBe(0);
     expect(alleWege().length).toBe(GEGENSTAENDE.reduce((n, g) => n + g.wege.length, 0));
