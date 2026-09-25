@@ -7,6 +7,7 @@ import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 import { sozialhilfeBilanz, istErwerbstaetig } from '../data/sozialhilfeKern.js';
+import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 
 // PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
@@ -333,7 +334,12 @@ export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   const householdSize = hh.householdSize;
-  const erwerbseinkommen = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0);
+  // Brutto im Profil → Netto-Richtwert (eine Regel mit dem Dashboard, utils/nettoAusProfil.js;
+  // Predeploy 25.09.2026). Vorher galt jeder Monatslohn hier als netto, auch ein brutto erfasster.
+  const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, data.finanzen?.incomeType, data.basis);
+  const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, data.finanzen?.sideIncomeType, data.basis);
+  const erwerbseinkommen = haupt.netto + neben.netto;
+  const einkommenGeschaetzt = haupt.geschaetzt || neben.geschaetzt;
   const erwerbstaetig = istErwerbstaetig(data.finanzen);
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
@@ -370,6 +376,8 @@ export function calculateSozialhilfe(data) {
     efb: bilanz.efb,
     anrechenbaresEinkommen: bilanz.anrechenbaresEinkommen,
     efbEntscheidet: bilanz.efbEntscheidet,
+    // Einkommen aus brutto geschätzt (Anzeige: «≈ … (geschätzt)»).
+    einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     deficit,

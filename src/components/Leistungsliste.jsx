@@ -28,7 +28,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
   // Berechnung ist dieselbe wie in den vollständigen Tools (calculateIPV/
   // calculateSozialhilfe), damit Liste und Rechner nie widersprechen.
-  const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
+  // incomeType 'netto': das Feld hat schon umgerechnet — calculateSozialhilfe soll nicht nochmals.
+  const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income, incomeType: 'netto' } };
   const found = {};
   let sozPegel = null;
   let knappSoz = false;

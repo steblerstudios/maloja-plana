@@ -32,7 +32,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   const numRent = Number(rent) || 0;
   const probe = {
     ...data,
-    finanzen: { ...(data?.finanzen || {}), monthlyIncome: numIncome },
+    // incomeType 'netto': das Feld hat schon umgerechnet — nicht nochmals (calculateSozialhilfe).
+    finanzen: { ...(data?.finanzen || {}), monthlyIncome: numIncome, incomeType: 'netto' },
     wohnen: { ...(data?.wohnen || {}), rentAmount: numRent },
     versicherungen: { ...(data?.versicherungen || {}), kkPremium: Number(kk) || 0 },
   };

@@ -102,7 +102,10 @@ describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
     const netto = bruttoZuNettoRichtwert(1100);
     const html = render({ data: p });
     expect(html).toContain('einkommensfeld.nettoGeschaetzt(' + zahl(netto) + ')');
-    const soz = calculateSozialhilfe({ ...p, finanzen: { ...p.finanzen, monthlyIncome: netto } }).deficit;
+    // Eine Wahrheit (Predeploy 25.09.2026): die Sozialhilfe-Rechnung mit dem BRUTTO-Profil ergibt
+    // dieselbe Lücke wie das Dashboard — sie rechnet brutto selbst um.
+    const soz = calculateSozialhilfe(p).deficit;
+    expect(calculateSozialhilfe(p).einkommenGeschaetzt).toBe(true);
     expect(html).toContain(betrag(soz) + ' / schnellcheck.monat');
   });
 
