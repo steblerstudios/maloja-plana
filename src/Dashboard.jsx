@@ -600,11 +600,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
     ),
     // ─── Highlight tools — immediate value (first for new users) ──
-    // Weissraum statt Kasten (25.09.2026): bis dahin eine umrandete Fläche, in der die
-    // Werkzeuge nochmals als umrandete Kästen standen — Kasten im Kasten. Jetzt ein offener
-    // Abschnitt wie «Ihr Alltag» weiter unten: weiter Abstand davor (48 px), eng darin.
-    React.createElement('section', {
-      style: { marginTop: space['2xl'] + 'px', marginBottom: space.md + 'px' }
+    React.createElement('div', {
+      style: {
+        marginTop: space.lg, marginBottom: space.md,
+        padding: '20px 24px',
+        background: palette.surface,
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.border + '88',
+      }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
