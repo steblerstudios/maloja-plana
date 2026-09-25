@@ -180,6 +180,13 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
     const z = zahlen(WEGSTUECKE[3]);
     for (let k = 0; k < z.length; k += 2) expect(nah(z[k], z[k + 1], STATIONEN[0], 45), `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
   });
+  it('der Weg von Behörden zum Notfall taucht unter der oberen Strasse durch (Kreuzung ausgeblendet)', () => {
+    const z = zahlen(WEGSTUECKE[5]);
+    for (let k = 0; k < z.length; k += 2) {
+      const [x, y] = [z[k], z[k + 1]];
+      expect(x > 300 && x < 365 && y > 564, `Punkt ${x} ${y} liegt auf der oberen Strasse`).toBe(false);
+    }
+  });
   it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {
     expect(WEG_VON).toEqual([0, 1, 2, 3, 4, 5]);
     const z = zahlen(WEGSTUECKE[3]);
