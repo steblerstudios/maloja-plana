@@ -55,6 +55,11 @@ const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
 // y 479) Platz behalten; bei noch flacheren Fenstern scrollt man den Rest. Fehlt Himmel, trägt
 // der Titel den Dunst (mitDunst).
 export const OBERKANTE_MAX = 300; // Bild-Einheiten
+// Die neun Berg-Bilder, die mit dem Ausfüllstand erscheinen (Tannen ab 20 % … Fahne bei 100 %),
+// sind bis zum Gamification-Entscheid im Oktober ausgeschaltet (Stebler Studios, 25.09.2026;
+// docs/IDEEN.md «Oktober — entscheiden», §15 «Berg-Bilder bei 20–100 %»). Der goldene Weg zu
+// begonnenen Kapiteln bleibt — er ist Orientierung, keine Belohnung. Wieder einschalten: true.
+export const BERG_BILDER = false;
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
   const voll = AUSSCHNITT.breit;
   if (!rahmenBreite || !fensterHoehe) return voll;
@@ -311,39 +316,39 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
                React.createElement('path', { key: 'w', d, stroke: p.sand, strokeWidth: 5 })]
             : React.createElement('path', { d, stroke: p.sageDeep, strokeWidth: 3, strokeDasharray: '0.1 9' }));
       }),
-      // ─── Überraschungen mit dem Fortschritt (wie bisher, neu verortet) ───
-      completion >= 20 && React.createElement('g', { key: 'tannen', fill: p.sageDeep, style: s(20, 0.8, 30) },
+      // ─── Überraschungen mit dem Fortschritt (wie bisher, neu verortet) — bis Oktober aus, s. BERG_BILDER ───
+      BERG_BILDER && completion >= 20 && React.createElement('g', { key: 'tannen', fill: p.sageDeep, style: s(20, 0.8, 30) },
         React.createElement('path', { d: 'M 842 548 L 852 520 L 862 548 Z' }),
         React.createElement('path', { d: 'M 862 552 L 870 530 L 878 552 Z' }),
       ),
-      completion >= 35 && React.createElement('g', { key: 'edelweiss', style: s(35, 0.9, 20) },
+      BERG_BILDER && completion >= 35 && React.createElement('g', { key: 'edelweiss', style: s(35, 0.9, 20) },
         React.createElement('circle', { cx: 452, cy: 548, r: 4.5, fill: '#fff' }),
         React.createElement('circle', { cx: 452, cy: 548, r: 1.8, fill: p.sand }),
         React.createElement('circle', { cx: 610, cy: 590, r: 4, fill: '#fff' }),
         React.createElement('circle', { cx: 610, cy: 590, r: 1.5, fill: p.sand }),
       ),
-      completion >= 45 && completion < 100 && React.createElement('g', { key: 'gipfelkreuz', stroke: p.mid, strokeWidth: 1.8, style: s(45, 0.8, 20) },
+      BERG_BILDER && completion >= 45 && completion < 100 && React.createElement('g', { key: 'gipfelkreuz', stroke: p.mid, strokeWidth: 1.8, style: s(45, 0.8, 20) },
         React.createElement('line', { x1: 598, y1: 176, x2: 598, y2: 198 }),
         React.createElement('line', { x1: 591, y1: 182, x2: 605, y2: 182 }),
       ),
-      completion >= 55 && React.createElement('path', { key: 'matterhorn',
+      BERG_BILDER && completion >= 55 && React.createElement('path', { key: 'matterhorn',
         d: 'M 912 170 L 926 134 L 932 146 L 942 170 Z', fill: p.sageDeep, style: s(55, 0.35, 60) }),
-      completion >= 65 && React.createElement('g', { key: 'kuh', fill: p.text, style: s(65, 0.55, 20) },
+      BERG_BILDER && completion >= 65 && React.createElement('g', { key: 'kuh', fill: p.text, style: s(65, 0.55, 20) },
         React.createElement('ellipse', { cx: 700, cy: 560, rx: 8, ry: 4.6 }),
         React.createElement('ellipse', { cx: 692, cy: 556, rx: 3.2, ry: 2.6 }),
         React.createElement('rect', { x: 694, y: 563, width: 1.4, height: 6 }),
         React.createElement('rect', { x: 704, y: 563, width: 1.4, height: 6 }),
       ),
-      completion >= 75 && React.createElement('g', { key: 'uhr', fill: 'none', stroke: p.mid, style: s(75, 0.6, 15) },
+      BERG_BILDER && completion >= 75 && React.createElement('g', { key: 'uhr', fill: 'none', stroke: p.mid, style: s(75, 0.6, 15) },
         React.createElement('circle', { cx: 150, cy: 150, r: 7, strokeWidth: 1.2 }),
         React.createElement('line', { x1: 150, y1: 150, x2: 150, y2: 145.5, strokeWidth: 1 }),
         React.createElement('line', { x1: 150, y1: 150, x2: 153.5, y2: 151.5, strokeWidth: 0.8 }),
       ),
-      completion >= 85 && React.createElement('path', { key: 'schoggi',
+      BERG_BILDER && completion >= 85 && React.createElement('path', { key: 'schoggi',
         d: 'M 760 600 L 768 586 L 776 600 L 784 586 L 792 600 Z', fill: p.sand, style: s(85, 0.7, 10) }),
-      completion >= 95 && React.createElement('circle', { key: 'sonne',
+      BERG_BILDER && completion >= 95 && React.createElement('circle', { key: 'sonne',
         cx: 250, cy: 130, r: 22, fill: p.sand, style: { opacity: 0.35, transition: 'opacity 1.5s ease' } }),
-      completion >= 100 && React.createElement('g', { key: 'fahne' },
+      BERG_BILDER && completion >= 100 && React.createElement('g', { key: 'fahne' },
         React.createElement('line', { x1: 598, y1: 172, x2: 598, y2: 198, stroke: p.mid, strokeWidth: 1.6 }),
         React.createElement('rect', { x: 599, y: 172, width: 15, height: 10, rx: 0.8, fill: '#d42b2b' }),
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
