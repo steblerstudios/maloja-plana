@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icons from '../IconKern.jsx';
-import { text, weight, radius, ease, duration } from '../config/tokens.js';
+import { PageTitle } from './Heading.jsx';
+import { text, weight, radius, ease, duration, fontFamilyDisplay } from '../config/tokens.js';
 import { LIGHT_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 // Als eigene Datei, nicht im JS-Bündel: Vite legt sie mit Hash unter /assets/ ab, der
@@ -12,13 +13,49 @@ import landschaft from '../assets/berge/landschaft.webp?url';
 // Die Passstrasse steigt in Kehren von unten rechts nach oben links; die Kapitel sitzen der
 // Reihe nach auf ihr — Basis unten, Notfall oben.
 const BILD = { w: 1100, h: 788 };
-// Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur das Strassennetz, damit die
-// Stationen am Handy weit genug auseinanderliegen.
+// Breit: das ganze Bild — seit dem Hero (25.09.2026) mit dem ganzen Himmel, in dem der Titel
+// steht. Schmal: das Strassennetz, damit die Stationen am Handy weit genug auseinanderliegen,
+// nach oben erweitert bis in die blassen Gipfel (Platz für den Titel) und nach unten bis zum
+// Bildrand (ein Streifen Vordergrund-Wald für die Fortschritts-Kreise, unter den Stationen).
+// Die Breite und damit der Massstab bleiben gleich — Stationen und Etiketten liegen zueinander
+// wie zuvor.
 export const AUSSCHNITT = {
-  breit: { x: 0, y: 80, w: 1100, h: 708 },
-  schmal: { x: 110, y: 370, w: 490, h: 340 },
+  breit: { x: 0, y: 0, w: 1100, h: 788 },
+  schmal: { x: 110, y: 130, w: 490, h: 658 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
+// Hero randlos (seit 25.09.2026): die Landschaft füllt die ganze Seitenbreite, scharf. Damit sie auf
+// breiten Fenstern nicht höher als ~80 % des Fensters wird, zeigt der breite Ausschnitt dann weniger
+// Höhe: oben fällt Himmel weg, unten etwas Vordergrund — die Stationen bleiben immer ganz drin.
+// (Eine Fassung mit verschwommener Fortsetzung links/rechts wurde am selben Tag verworfen.)
+export const MAX_HOEHE_ANTEIL = 1;
+// Dunst hinter dem Titel: Himmelsfarbe aus dem Bild (#F6F2E8, gemessen), Deckung als Hex-Alpha
+// oben / in der Mitte, auslaufend nach unten. Nur Grund, nie Deckkraft auf Text (K41).
+export const DUNST = { farbe: '#F6F2E8', oben: 'EB', mitte: 'D9', mitteBei: 55 };
+// Der Dunst steht nur, wo der Titel ohne ihn auf Berg läge: am Handy hochkant (Ausschnitt beginnt
+// in den Gipfeln) und bei Bildern unter DUNST_UNTER_BREITE px (kleinstes Handy quer, 568×320: der
+// Titelanfang liegt dort auf dem dunklen Hang, 2,26:1). Am Computer stört er (Entscheid
+// 25.09.2026); seit der Himmel nie weggeschnitten wird, trägt der Titel dort ohne ihn — gemessen
+// 640×360 … 2560×1300: erste Zeile 13,5:1, zweite ≥ 5,1:1.
+export const DUNST_UNTER_BREITE = 600;
+// Zweite Titelzeile: Salbeigrün in der Tiefe, die auf dem Bild trägt. Das Marken-Salbeigrün
+// (#4A6657) ist fast die Farbe der Berge — ohne Dunst gemessen bis 2,45:1 (1920×700). Dieses
+// Tannengrün hält ohne Dunst überall am Computer ≥ 3,77:1 (768×1024 … 1920×700 gemessen).
+export const TITEL_GRUEN = '#2F4A3C';
+const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
+// Flache, breite Fenster (Laptops): das Bild wäre in voller Breite höher als das Fenster. Früher
+// fiel dann oben der Himmel weg — und mit ihm der Platz für den Titel. Jetzt zeigt der Ausschnitt
+// immer Himmel bis Unterkante (0 … UNTERKANTE); dafür ist das Bild dort höher als das Fenster und
+// man scrollt kurz zu den Kreisen (Entscheid 25.09.2026 — Dunst, Unschärfe und gespiegelte
+// Fortsetzung an den Seiten wurden alle verworfen).
+export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
+  const voll = AUSSCHNITT.breit;
+  if (!rahmenBreite || !fensterHoehe) return voll;
+  const hMax = fensterHoehe * MAX_HOEHE_ANTEIL; // px
+  const h = (BILD.w * hMax) / rahmenBreite;     // Bild-Einheiten bei voller Breite
+  if (h >= BILD.h) return voll;
+  return { x: 0, y: 0, w: BILD.w, h: Math.max(h, UNTERKANTE) };
+};
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
 // nach Vorgabe von Stebler Studios gesetzt (25.09.2026). Im Bild sind es zwei Strassen: die breite
@@ -53,7 +90,12 @@ export const STATIONEN = [
   { key: 'finanzen', x: 551, y: 680, seite: { breit: 'rechts', schmal: 'links' } },
   { key: 'versicherungen', x: 440, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
   { key: 'ausbildung', x: 195, y: 479, seite: { breit: 'links', schmal: 'oben' } },
-  { key: 'behoerden', x: 290, y: 513, seite: { breit: 'unten', schmal: 'unten' } },
+  // Behörden: seit 25.09.2026 läuft von hier der Weg senkrecht das S hinunter — «unten» läge darauf,
+  // «oben» auf dem Zulauf von Ausbildung. «links» lässt beide frei; wo das Bild klein ist (Massstab
+  // unter ENG_UNTER px je Bild-Einheit), stösst es an Ausbildung. Dort (gemessen): am Handy
+  // «obenlinks» (verdeckt ~4 Punkte am Anfang des Zulaufs), breit «obenrechts» (obenlinks stiesse
+  // an das Ausbildung-Etikett; verdeckt das Ende des Zulaufs) — das neue senkrechte Stück bleibt frei.
+  { key: 'behoerden', x: 290, y: 513, seite: { breit: 'links', schmal: 'links', eng: { breit: 'obenrechts', schmal: 'obenlinks' } } },
   { key: 'notfall', x: 424, y: 526.5, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
@@ -61,13 +103,17 @@ export const STATIONEN = [
 // durchgehende Route, also immer von der vorigen Station. Nur sichtbare Fahrbahn, je Lauf ein
 // eigener Unterpfad (M … C …).
 export const WEG_VON = [0, 1, 2, 3, 4, 5];
+// Unter diesem Massstab (px je Bild-Einheit) gilt die Ausweich-Seite `seite.eng`, wo es eine gibt.
+// Gemessen 25.09.2026: breit ist «links» bei Behörden ab ~900 px Bildbreite frei (0,82), am Handy
+// ab 375 px (0,72).
+export const ENG_UNTER = { breit: 0.82, schmal: 0.72 };
 export const WEGSTUECKE = [
   'M185 549C189 550.9 197.5 552.5 208.7 560.3C220 568.1 241.9 586.4 252.6 595.6C263.2 604.7 269.4 611.8 272.6 615.2C275.9 618.6 272.1 615.9 272 616',
   'M272 616C275.8 619.5 289.2 631.5 295.1 637.2C301 642.8 303.5 645.6 307.4 649.9C311.3 654.3 313.5 656.6 318.5 663.1C323.5 669.7 334.3 684.7 337.5 689M432.1 727.2C435.3 727.5 448.4 728.9 451.6 729.2M540.5 724.4C541.2 723.6 542.9 722.4 544.5 719.5C546 716.5 548.5 710.6 549.6 706.6C550.7 702.6 551 699.9 551.2 695.4C551.4 691 551 682.6 551 680',
   'M551 680C550.6 677 549.6 666.3 548.7 662.1C547.8 657.9 546.9 657.3 545.5 655C544.2 652.8 542.6 650.6 540.8 648.6C539 646.7 537.1 644.9 534.9 643.3C532.7 641.6 532.3 640.7 527.6 638.7C522.9 636.7 510.3 632.4 506.8 631.1M484.3 627.4C476.9 627.2 447.4 626.2 440 626',
   'M440 626C433.6 625 408.2 621.1 401.8 620.2M364.4 611.1C358.7 609.8 335.7 604.4 330 603M172.9 504.9C173.6 503.7 173.2 501.9 177.2 497.8C181.2 493.7 194 483.3 196.9 480.2C199.9 477.1 195.3 479.2 195 479',
   'M195.7 474.2C197.2 472.3 202.5 464.9 204.7 462.7C206.9 460.5 203.6 462.5 208.9 461.1C214.1 459.7 227.2 456.1 236.4 454.4C245.6 452.6 254.2 452.5 264.2 450.8C274.1 449.1 288.8 446.9 296 444.4C303.1 441.8 303.4 437.8 307.2 435.6C310.9 433.3 314.7 431.1 318.5 430.9C322.4 430.6 326.9 432.9 330.3 434.3C333.7 435.8 336.3 437.4 338.9 439.5C341.4 441.7 344.1 444.6 345.6 447.2C347.1 449.8 347.7 452.5 347.7 455.2C347.8 457.9 348 460.3 346 463.4C344.1 466.4 340.6 469.7 336.1 473.5C331.5 477.3 324.6 482.2 318.8 486.1C313 489.9 305.3 493.9 301.3 496.8C297.4 499.6 297.2 500.5 295.3 503.2C293.4 505.9 290.9 511.4 290 513',
-  'M348 584C348.4 581.9 349.4 575.3 350.4 571.2C351.5 567.1 352.7 562.5 354.2 559.3C355.6 556 357.1 554.3 359.1 551.9C361.2 549.6 363.5 547.3 366.4 545.2C369.2 543 372.6 540.8 376.4 538.8C380.2 536.9 384.8 535 389.1 533.5C393.5 532.1 396.8 531.2 402.6 530C408.4 528.8 420.4 527.1 424 526.5',
+  'M290 513C291.6 514.6 293.6 519.1 294 523.2C294.4 527.3 293.3 525.6 296.2 531.9C299.1 538.3 308.7 556.4 311.2 561.3M348 584C348.4 581.9 349.4 575.3 350.4 571.2C351.5 567.1 352.7 562.5 354.2 559.3C355.6 556 357.1 554.3 359.1 551.9C361.2 549.6 363.5 547.3 366.4 545.2C369.2 543 372.6 540.8 376.4 538.8C380.2 536.9 384.8 535 389.1 533.5C393.5 532.1 396.8 531.2 402.6 530C408.4 528.8 420.4 527.1 424 526.5',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
@@ -92,48 +138,146 @@ export const mitKontrast = (hex, grund, ziel = 3) => {
   return farbe;
 };
 
+// Stationsnamen: Grund in der Kapitelfarbe, Schrift weiss (seit 25.09.2026). Ist eine Farbe
+// für weisse Schrift zu hell (Finanzen golden), wird sie im selben Farbton abgedunkelt, bis
+// Weiss ≥ 4.5:1 trägt (WCAG 1.4.3, 11–13 px = normale Schrift).
+export const ETIKETT_SCHRIFT = '#ffffff';
+export const etikettGrund = (farbe) => mitKontrast(farbe, ETIKETT_SCHRIFT, 4.5);
+
+// Ein Fortschritts-Kreis: Spur + Bogen im Verhältnis `anteil` (0–1), in der Mitte (wenn gegeben)
+// der Wert. Farben aus der Palette des Modus (`ui`, seit 25.09.2026: hell/dunkel wie die App).
+// Undurchsichtige Scheibe darunter, damit der Kontrast nicht am Bild hängt (K41).
+const Kreis = ({ ui, anteil, mitte, d }) => {
+  const sw = d >= 36 ? 4 : 3.5;
+  const r = d / 2 - sw / 2 - 0.5, u = 2 * Math.PI * r;
+  return React.createElement('svg', { width: d, height: d, viewBox: `0 0 ${d} ${d}`, 'aria-hidden': 'true', style: { display: 'block', flex: 'none' } },
+    React.createElement('circle', { cx: d / 2, cy: d / 2, r, fill: ui.surface, stroke: ui.border, strokeWidth: sw }),
+    anteil > 0 && React.createElement('circle', {
+      cx: d / 2, cy: d / 2, r, fill: 'none', stroke: ui.sageDeep, strokeWidth: sw, strokeLinecap: 'round',
+      strokeDasharray: `${u * Math.min(1, anteil)} ${u}`, transform: `rotate(-90 ${d / 2} ${d / 2})`,
+      style: { transition: 'stroke-dasharray 900ms ease' },
+    }),
+    mitte != null && React.createElement('text', {
+      x: '50%', y: '50%', textAnchor: 'middle', dominantBaseline: 'central',
+      fontSize: d >= 44 ? 12 : 11, fontWeight: weight.semi, fill: ui.text, fontFamily: 'inherit',
+    }, mitte),
+  );
+};
+
+// Wie mitKontrast, aber in die richtige Richtung: auf dunklem Grund (Dunkelmodus) wird die Farbe
+// aufgehellt — Richtung Weiss gemischt, Farbton bleibt —, auf hellem abgedunkelt. Für Stations-
+// Zeichen und -Ring, die seit 25.09.2026 dem Modus der App folgen.
+export const mitKontrastZu = (hex, grund, ziel = 3) => {
+  if (luminanz(grund) >= 0.2) return mitKontrast(hex, grund, ziel);
+  let farbe = hex;
+  let [r, g, b] = kanal(hex);
+  for (let i = 0; i < 40 && kontrast(farbe, grund) < ziel; i++) {
+    [r, g, b] = [r, g, b].map((v) => Math.round(v + (255 - v) * 0.08));
+    farbe = '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+  }
+  return farbe;
+};
+
 // Das Bild bleibt auch im Dunkelmodus hell (Entscheid 25.09.2026: «so dunkel ist unangenehm»).
 // Darum tragen Stationen und Etiketten immer die helle Palette — ihr Kontrast hängt dann nicht
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, fortschrittText, prozent }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent }) => {
   const rahmen = useRef(null);
-  const [schmal, setSchmal] = useState(false);
+  const huelle = useRef(null);
+  // Höhe des Titels (umbricht je nach Sprache und Breite) — der Dunst wächst mit.
+  const [titelHoehe, setTitelHoehe] = useState(0);
+  useEffect(() => {
+    const el = huelle.current && huelle.current.querySelector('[data-testid="berg-titel"]');
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(([e]) => setTitelHoehe(Math.round(e.contentRect.height)));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  // Randlos: die Hülle greift aus der 720-px-Spalte bis an die Fensterränder. Gemessen statt 100vw,
+  // weil 100vw eine klassische Scrollleiste mitzählt und die Seite dann seitlich scrollen liesse.
+  const [ausgriff, setAusgriff] = useState(null);
+  useEffect(() => {
+    const el = huelle.current;
+    if (!el || !el.parentElement || typeof window === 'undefined') return undefined;
+    const messen = () => {
+      const links = el.parentElement.getBoundingClientRect().left;
+      const breite = document.documentElement.clientWidth;
+      const hoehe = window.innerHeight;
+      setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite && alt.hoehe === hoehe) ? alt : { links: -links, breite, hoehe });
+    };
+    messen();
+    window.addEventListener('resize', messen);
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(messen);
+    if (ro) ro.observe(el.parentElement);
+    return () => { window.removeEventListener('resize', messen); if (ro) ro.disconnect(); };
+  }, []);
+  // «abgeschlossen» springt auf, sobald das erste Kapitel fertig ist — nicht beim ersten Zeichnen.
+  const abgeschlossenKachel = useRef(null);
+  const warAbgeschlossen = useRef(null);
+  const abgeschlossenJetzt = fortschritt ? fortschritt.abgeschlossen : 0;
+  useEffect(() => {
+    const vorher = warAbgeschlossen.current;
+    warAbgeschlossen.current = abgeschlossenJetzt;
+    const el = abgeschlossenKachel.current;
+    if (vorher === null || vorher > 0 || abgeschlossenJetzt === 0 || !el || !el.animate) return;
+    if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.animate([{ transform: 'scale(0.4)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+      { duration: 520, easing: 'cubic-bezier(.2,.8,.3,1.2)' });
+  }, [abgeschlossenJetzt]);
+  const [breite, setBreite] = useState(0);
+  const schmal = breite > 0 && breite < SCHMAL_AB;
   const [bildFehlt, setBildFehlt] = useState(false);
 
   useEffect(() => {
     const el = rahmen.current;
     if (!el || typeof ResizeObserver === 'undefined') return undefined;
-    const ro = new ResizeObserver(([eintrag]) => setSchmal(eintrag.contentRect.width < SCHMAL_AB));
+    const ro = new ResizeObserver(([eintrag]) => setBreite(eintrag.contentRect.width));
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
   const p = bildPalette(palette);
+  // Die Fortschritts-Angaben folgen dem Modus der App (hell/dunkel), anders als Bild, Titel und
+  // Stationen, die auf dem immer hellen Bild stehen (Entscheid 25.09.2026).
+  const ui = palette;
   const kapitelFarbe = astFarben(chapters, p, false);
   const modus = schmal ? 'schmal' : 'breit';
-  const a = AUSSCHNITT[modus];
+  const a = schmal ? AUSSCHNITT.schmal : ausschnittBreit(breite, ausgriff && ausgriff.hoehe);
+  // Linke Kante der Inhaltsspalte, gemessen in der Hülle: Titel und Kreise stehen am Desktop
+  // bündig mit dem Inhalt darunter.
+  const spalte = ausgriff ? -ausgriff.links : 0;
   const imRahmen = (x, y) => ({ left: ((x - a.x) / a.w) * 100 + '%', top: ((y - a.y) / a.h) * 100 + '%' });
   // Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
   const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity 1.5s ease' });
 
   return React.createElement('div', {
+    ref: huelle,
+    style: {
+      position: 'relative', overflow: 'hidden', lineHeight: 0,
+      margin: '8px 0 24px', marginLeft: ausgriff ? ausgriff.links + 'px' : 0,
+      width: ausgriff ? ausgriff.breite + 'px' : '100%',
+      // Ladezustand und Fehlerfall: eine ruhige Fläche, nichts springt.
+      background: p.up,
+    },
+  },
+  React.createElement('div', {
     'data-tour': 'berge',
     ref: rahmen,
     style: {
-      margin: '20px -8px 28px -8px', position: 'relative', lineHeight: 0,
+      position: 'relative', lineHeight: 0, width: '100%',
       aspectRatio: `${a.w} / ${a.h}`,
-      borderRadius: radius.md, overflow: 'hidden',
-      // Ladezustand und Fehlerfall: eine ruhige Fläche in Bildgrösse, nichts springt.
-      background: p.up,
+      overflow: 'hidden',
     },
   },
     React.createElement('svg', {
       viewBox: `${a.x} ${a.y} ${a.w} ${a.h}`,
       preserveAspectRatio: 'xMidYMid slice',
       'aria-hidden': 'true',
-      style: { position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' },
+      style: {
+        position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block',
+      },
     },
       !bildFehlt && React.createElement('image', {
         href: landschaft,
@@ -189,50 +333,126 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
     ),
-    // Fortschritt im Bild, unten (seit 25.09.2026, vorher eine Zeile über dem Bild): links der
-    // Stand («7 von 7 begonnen»), rechts die Prozentzahl. Am Handy (< SCHMAL_AB) liegt unten
-    // rechts die Station Finanzen — dort rückt die Prozentzahl direkt neben den Stand (gemessen
-    // 320–736 px, ohne Überschneidung). Gleiche Machart wie die Etiketten: undurchsichtiger
-    // Grund, helle Palette, damit der Kontrast nicht am Bild hängt (K41).
-    (fortschrittText || prozent) && React.createElement('div', {
-      key: 'fortschritt',
-      style: {
-        position: 'absolute', left: schmal ? '8px' : '12px', right: schmal ? '8px' : '12px', bottom: schmal ? '8px' : '12px',
-        display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
-        gap: '6px', pointerEvents: 'none',
+    // Der Anspruch als Titel im Himmel (Hero, seit 25.09.2026), links bündig (Entscheid Stebler
+    // Studios), gesetzt in der Titelschrift (Hanken Grotesk), gross und eng; der zweite Satz — die
+    // Antwort — in Salbeigrün (Variante «T1», Entscheid 25.09.2026). Er steht auf hellem Himmel,
+    // darum in BEIDEN Modi dunkel (helle Palette). Links oben ragt der dunkle Hang ins Bild — der
+    // Abstand ist so gewählt, dass der Text ihn nicht berührt (an den Bildpunkten gemessen). Kein
+    // Schein dahinter, keine Deckkraft auf dem Text (K41).
+    titel && (() => {
+      const teile = String(titel).match(/^(.+?[.!?])\s+(.+)$/);
+      const groesse = schmal ? 27 : Math.round(Math.min(50, Math.max(26, breite * 0.04)));
+      const oben = schmal ? 10 : 16;
+      // Dunst: der Himmel läuft in seiner eigenen Farbe sanft über die Gipfel hinunter — über die
+      // ganze Breite, kein Schein um einzelne Buchstaben. Ohne ihn landet die zweite Zeile je nach
+      // Fenster auf Berggrün (Salbeigrün darauf gemessen bis 1,07:1, dunkler Text bis 2,6:1).
+      const dunstHoehe = oben + (titelHoehe || groesse * 2.1) + (schmal ? 46 : 70);
+      const mitDunst = schmal || breite < DUNST_UNTER_BREITE;
+      return [mitDunst && React.createElement('div', {
+        key: 'dunst', 'aria-hidden': 'true', 'data-dunst': dunstHoehe,
+        style: {
+          position: 'absolute', left: 0, right: 0, top: 0, height: dunstHoehe + 'px', pointerEvents: 'none',
+          background: `linear-gradient(to bottom, ${DUNST.farbe}${DUNST.oben} 0%, ${DUNST.farbe}${DUNST.mitte} ${DUNST.mitteBei}%, ${DUNST.farbe}00 100%)`,
+        },
+      }), React.createElement(PageTitle, {
+        key: 'titel',
+        palette: p,
+        'data-testid': 'berg-titel',
+        style: {
+          position: 'absolute', top: oben + 'px', left: schmal ? '26px' : Math.max(44, spalte) + 'px',
+          right: schmal ? '26px' : Math.max(44, spalte) + 'px', textAlign: 'left',
+          fontFamily: fontFamilyDisplay, fontWeight: 700, fontSize: groesse + 'px', lineHeight: 1.03, letterSpacing: '-0.025em',
+          color: p.text,
+        },
+      }, teile
+        ? [React.createElement('span', { key: 'a', style: { display: 'block' } }, teile[1]),
+           React.createElement('span', { key: 'b', 'data-testid': 'berg-titel-antwort', style: { display: 'block', color: TITEL_GRUEN } }, teile[2])]
+        : titel)];
+    })(),
+    // Fortschritt im Bild, unten (seit 25.09.2026): «begonnen» n/7, ab dem ersten fertigen Kapitel
+    // springt «abgeschlossen» auf (100 %); sind alle fertig, geht «begonnen» weg; rechts die
+    // Prozentzahl.
+    // Gestaltung (Entscheid 25.09.2026): am Handy runde Scheiben mit Etikett darüber (Sprache der
+    // Stationen, «R1»), am Computer runde Pillen, Kreis links, Zahl + Wort rechts («R3»). Farben
+    // aus dem Modus (hell/dunkel wie die App) — Grund, Schrift und Ring passen sich an. Immer
+    // undurchsichtig, damit der Kontrast nicht am Bild hängt (K41).
+    fortschritt && (() => {
+      const { begonnen, abgeschlossen, gesamt } = fortschritt;
+      const L = fortschrittLabels || {};
+      // Breit, aber flach (Handy quer): dann liegt Wohnen so nah am unteren Rand, dass «begonnen»
+      // darauf läge — nur dann stehen alle Angaben zusammen unten rechts. Gemessen: Platz unter
+      // Wohnen ≥ ~118 px (Tablet, Desktop) reicht links, ≤ ~93 px (568–844 px quer) nicht.
+      const wohnen = STATIONEN.find((st) => st.key === 'wohnen');
+      const platzUnterWohnen = breite > 0 ? (a.y + a.h - wohnen.y) * (breite / a.w) : Infinity;
+      const alleRechts = !schmal && platzUnterWohnen < 105;
+      const schatten = '0 1px 5px rgba(0,0,0,0.22)';
+      const pilleStil = {
+        display: 'flex', alignItems: 'center', gap: '8px', background: ui.surface, borderRadius: '999px',
+        padding: '4px 14px 4px 4px', boxShadow: schatten, lineHeight: 1.1,
+      };
+      // Pille: die Zahl steht im Kreis (Rückmeldung 25.09.2026), das Wort daneben.
+      const pille = (key, testid, anteil, wert, wort, ref) => React.createElement('div', { key, ref, 'data-testid': testid, style: pilleStil },
+        React.createElement(Kreis, { ui, anteil, mitte: wert, d: 42 }),
+        wort && React.createElement('span', { style: { fontSize: '12px', fontWeight: weight.medium, color: ui.mid } }, wort));
+      const scheibe = (key, testid, anteil, wert, wort, ref) => React.createElement('div', {
+        key, ref, 'data-testid': testid, style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' },
       },
-    },
-      ...(() => {
-        const schild = {
-          fontSize: schmal ? '11px' : text.xs, lineHeight: 1.2, whiteSpace: 'nowrap',
-          background: p.surface, padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm,
-          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-        };
-        return [
-          fortschrittText && React.createElement('div', {
-            key: 'stand', 'data-testid': 'berg-fortschritt', style: { ...schild, color: p.mid },
-          }, fortschrittText),
-          prozent && React.createElement('div', {
-            key: 'prozent', 'data-testid': 'berg-prozent',
-            style: { ...schild, color: p.sageDeep, fontWeight: weight.medium, marginLeft: fortschrittText ? undefined : 'auto' },
-          }, prozent),
-        ];
-      })(),
-    ),
+        wort && React.createElement('span', {
+          style: { fontSize: '10px', lineHeight: 1.15, color: ETIKETT_SCHRIFT, background: etikettGrund(ui.sageDeep), padding: '2px 6px', borderRadius: radius.sm, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' },
+        }, wort),
+        React.createElement('div', { style: { borderRadius: '50%', boxShadow: schatten } },
+          React.createElement(Kreis, { ui, anteil, mitte: wert, d: 38 })));
+      // Handy quer (alleRechts): die schmaleren Scheiben — Pillen stiessen dort an Finanzen (667×375 gemessen).
+      const kompakt = schmal || alleRechts;
+      const angabe = kompakt ? scheibe : pille;
+      const zusammenfassung = [
+        begonnen > 0 && abgeschlossen < gesamt && `${begonnen}/${gesamt} ${L.begonnen || ''}`,
+        abgeschlossen > 0 && `${abgeschlossen}/${gesamt} ${L.abgeschlossen || ''}`,
+        prozent != null && `${prozent}% ${L.ausgefuellt || ''}`,
+      ].filter(Boolean).join(' · ');
+      const prozentAngabe = prozent != null && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
+      return React.createElement('div', {
+        key: 'fortschritt', 'data-testid': 'berg-fortschritt',
+        role: begonnen > 0 ? 'img' : undefined,
+        'aria-label': begonnen > 0 ? zusammenfassung : undefined,
+        style: {
+          position: 'absolute', left: schmal ? '10px' : Math.max(12, spalte) + 'px', right: schmal ? '10px' : Math.max(12, spalte) + 'px', bottom: schmal ? '10px' : '14px',
+          display: 'flex', justifyContent: alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
+          gap: '8px', pointerEvents: 'none', lineHeight: 1.2,
+        },
+      },
+        React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'flex-end' } },
+          begonnen === 0 && React.createElement('div', {
+            style: { ...pilleStil, padding: schmal ? '4px 10px' : '6px 14px' },
+          }, React.createElement('span', { style: { fontSize: schmal ? '11px' : text.xs, color: ui.mid } }, L.leer)),
+          begonnen > 0 && abgeschlossen < gesamt && angabe('begonnen', 'berg-begonnen', begonnen / gesamt, `${begonnen}/${gesamt}`, L.begonnen),
+          abgeschlossen > 0 && angabe('abgeschlossen', 'berg-abgeschlossen', abgeschlossen / gesamt, `${abgeschlossen}/${gesamt}`, L.abgeschlossen, abgeschlossenKachel),
+          alleRechts && prozentAngabe,
+        ),
+        // Die Prozentzahl rechts, auch am Handy (Rückmeldung 25.09.2026; seit der Handy-Ausschnitt
+        // bis zum Bildrand reicht, ist unten rechts unter Finanzen Platz — gemessen).
+        !alleRechts && prozentAngabe,
+      );
+    })(),
     // Kapitel-Stationen auf der Strasse
     STATIONEN.map((station, i) => {
       const pct = chapterCompletions[i] || 0;
       const IconFn = Icons[station.key];
       const farbe = kapitelFarbe[station.key] || p.sage;
-      const zeichen = mitKontrast(farbe, p.surface, 3);
-      // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig. Getragen von
-      // Rand (gestrichelt → dünn → kräftig) und Grösse, nie von Deckkraft; die Fläche ist
-      // immer undurchsichtig (K41) — sonst hängt der Kontrast am Bild dahinter.
+      // Zeichen und Ring folgen dem Modus (Scheibe ui.surface); Kapitelfarbe bis ≥ 3:1 darauf.
+      const zeichen = mitKontrastZu(farbe, ui.surface, 3);
+      // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig, getragen von Grösse.
+      // Seit 25.09.2026 zeigt der Rand den Stand genau: ein Ring, dessen Bogen in der
+      // (abgedunkelten) Kapitelfarbe so weit läuft, wie das Kapitel ausgefüllt ist; die Spur
+      // darunter grau — bei 0 % gestrichelt, damit «noch nicht begonnen» an der Form erkennbar
+      // bleibt, nicht nur an der Farbe. Nie Deckkraft; die Fläche ist immer undurchsichtig (K41).
       const maturity = pct === 0 ? 'sketch' : pct < 50 ? 'emerging' : pct < 100 ? 'maturing' : 'complete';
       // Handy: 26 px (WCAG 2.5.8 verlangt 24) — mehr passt zwischen die Kehren nicht, ohne dass Etiketten kollidieren.
       const sz = schmal ? 26 : { sketch: 30, emerging: 32, maturing: 34, complete: 36 }[maturity];
       const iconSz = schmal ? 15 : { sketch: 17, emerging: 18, maturing: 20, complete: 21 }[maturity];
-      const rand = { sketch: '2px dashed ', emerging: '2px solid ', maturing: '3px solid ', complete: '3px solid ' }[maturity] + farbe;
+      const ringBreite = schmal ? 2.5 : 3;
+      const ringR = sz / 2 - ringBreite / 2;
+      const ringU = 2 * Math.PI * ringR;
       const chapterTitle = chapters[i] ? chapters[i].title : station.key;
       const shortLabel = (chapters[i] && chapters[i].short) || chapterTitle.split(/[\s–—]/)[0];
       const abstand = sz / 2 + 4 + 'px';
@@ -245,7 +465,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         // Nachbarstation keinen Platz lässt
         obenrechts: { bottom: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
         untenrechts: { top: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
-      }[station.seite[modus]];
+        obenlinks: { bottom: sz / 2 + 3 + 'px', right: -(sz / 2 + 4) + 'px' },
+      }[(station.seite.eng && breite > 0 && breite / a.w < ENG_UNTER[modus]) ? station.seite.eng[modus] : station.seite[modus]];
       return React.createElement('div', {
         key: station.key,
         style: { position: 'absolute', ...imRahmen(station.x, station.y), width: 0, height: 0 },
@@ -253,19 +474,36 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('button', {
           type: 'button',
           onClick: () => onSelectChapter(i),
-          'aria-label': chapterTitle,
+          'aria-label': `${chapterTitle}, ${Math.round(pct)} %`,
           style: {
             position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
             width: sz + 'px', height: sz + 'px', padding: 0,
-            borderRadius: '50%', background: p.surface, border: rand, color: zeichen,
+            borderRadius: '50%', background: ui.surface, border: 'none', color: zeichen,
             display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-            boxShadow: maturity === 'complete' ? `0 0 0 3px ${p.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
+            boxShadow: maturity === 'complete' ? `0 0 0 3px ${ui.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
           },
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         },
-          React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px' } }, IconFn ? IconFn() : null)
+          // Der Fortschrittsring: graue Spur, darauf der Bogen im Verhältnis des Kapitel-Stands.
+          React.createElement('svg', {
+            'data-ring': station.key, width: sz, height: sz, viewBox: `0 0 ${sz} ${sz}`, 'aria-hidden': 'true',
+            style: { position: 'absolute', inset: 0, overflow: 'visible' },
+          },
+            React.createElement('circle', {
+              cx: sz / 2, cy: sz / 2, r: ringR, fill: 'none', stroke: ui.border, strokeWidth: ringBreite,
+              strokeDasharray: pct === 0 ? '3 3' : undefined,
+            }),
+            pct > 0 && React.createElement('circle', {
+              cx: sz / 2, cy: sz / 2, r: ringR, fill: 'none', stroke: zeichen, strokeWidth: ringBreite,
+              strokeLinecap: pct >= 100 ? 'butt' : 'round',
+              strokeDasharray: `${(ringU * Math.min(100, pct)) / 100} ${ringU}`,
+              transform: `rotate(-90 ${sz / 2} ${sz / 2})`,
+              style: { transition: 'stroke-dasharray 900ms ease' },
+            }),
+          ),
+          React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px', position: 'relative' } }, IconFn ? IconFn() : null)
         ),
         React.createElement('span', {
           className: 'mountain-label',
@@ -273,21 +511,21 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           'aria-hidden': 'true',
           style: {
             position: 'absolute', ...etikettOrt, whiteSpace: 'nowrap', pointerEvents: 'none',
-            display: 'flex', alignItems: 'center', gap: '4px',
-            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: p.mid,
-            background: p.surface, padding: schmal ? '1px 5px' : '2px 6px', borderRadius: radius.sm,
+            display: 'flex', alignItems: 'center',
+            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
+            background: etikettGrund(farbe), padding: schmal ? '1px 6px' : '2px 7px', borderRadius: radius.sm,
             fontStyle: maturity === 'sketch' ? 'italic' : 'normal',
             fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
             ...hyphenStyle,
           },
         },
-          // Farbpunkt: dieselbe Kapitelfarbe wie der Rand — Farbe ergänzt, das Wort trägt.
-          React.createElement('span', { style: { width: '6px', height: '6px', borderRadius: '50%', background: farbe, flex: 'none' } }),
+          // Seit 25.09.2026 trägt das Etikett selbst die Kapitelfarbe (weisse Schrift) — der
+          // Farbpunkt davor ist damit überflüssig. Das Wort trägt, die Farbe ergänzt.
           shortLabel)
       );
     })
-  );
+  ));
 };
 
 export default BergLandschaft;
