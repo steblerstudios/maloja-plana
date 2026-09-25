@@ -32,6 +32,15 @@ export const MAX_HOEHE_ANTEIL = 1;
 // Dunst hinter dem Titel: Himmelsfarbe aus dem Bild (#F6F2E8, gemessen), Deckung als Hex-Alpha
 // oben / in der Mitte, auslaufend nach unten. Nur Grund, nie Deckkraft auf Text (K41).
 export const DUNST = { farbe: '#F6F2E8', oben: 'EB', mitte: 'D9', mitteBei: 55 };
+// Der Dunst steht nur, wo der Titel ohne ihn auf Berg läge: am Handy (Ausschnitt beginnt in den
+// Gipfeln) und in flachen Fenstern unter DUNST_UNTER_HOEHE px (Handy quer: der Titel rückt dort
+// nach links auf den dunklen Hang). Am Computer stört er (Entscheid 25.09.2026) — dort trägt der
+// Titel ohne ihn (gemessen 768×1024 … 1920×700: jede Zeile ≥ 3:1; 568–844 px quer nicht).
+export const DUNST_UNTER_HOEHE = 520;
+// Zweite Titelzeile: Salbeigrün in der Tiefe, die auf dem Bild trägt. Das Marken-Salbeigrün
+// (#4A6657) ist fast die Farbe der Berge — ohne Dunst gemessen bis 2,45:1 (1920×700). Dieses
+// Tannengrün hält ohne Dunst überall am Computer ≥ 3,77:1 (768×1024 … 1920×700 gemessen).
+export const TITEL_GRUEN = '#2F4A3C';
 const MIN_HOEHE = 560;   // Bild-Einheiten: darunter käme der Titel in die Stationen
 const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
@@ -319,7 +328,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // ganze Breite, kein Schein um einzelne Buchstaben. Ohne ihn landet die zweite Zeile je nach
       // Fenster auf Berggrün (Salbeigrün darauf gemessen bis 1,07:1, dunkler Text bis 2,6:1).
       const dunstHoehe = oben + (titelHoehe || groesse * 2.1) + (schmal ? 46 : 70);
-      return [React.createElement('div', {
+      const mitDunst = schmal || (ausgriff && ausgriff.hoehe < DUNST_UNTER_HOEHE);
+      return [mitDunst && React.createElement('div', {
         key: 'dunst', 'aria-hidden': 'true', 'data-dunst': dunstHoehe,
         style: {
           position: 'absolute', left: 0, right: 0, top: 0, height: dunstHoehe + 'px', pointerEvents: 'none',
@@ -337,11 +347,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         },
       }, teile
         ? [React.createElement('span', { key: 'a', style: { display: 'block' } }, teile[1]),
-           React.createElement('span', { key: 'b', 'data-testid': 'berg-titel-antwort', style: { display: 'block', color: p.sageDeep } }, teile[2])]
+           React.createElement('span', { key: 'b', 'data-testid': 'berg-titel-antwort', style: { display: 'block', color: TITEL_GRUEN } }, teile[2])]
         : titel)];
     })(),
     // Fortschritt im Bild, unten (seit 25.09.2026): «begonnen» n/7, ab dem ersten fertigen Kapitel
-    // springt «abgeschlossen» auf; sind alle fertig, geht «begonnen» weg; dazu die Prozentzahl.
+    // springt «abgeschlossen» auf (100 %); sind alle fertig, geht «begonnen» weg; rechts die
+    // Prozentzahl.
     // Gestaltung (Entscheid 25.09.2026): am Handy runde Scheiben mit Etikett darüber (Sprache der
     // Stationen, «R1»), am Computer runde Pillen, Kreis links, Zahl + Wort rechts («R3»). Farben
     // aus dem Modus (hell/dunkel wie die App) — Grund, Schrift und Ring passen sich an. Immer
@@ -358,13 +369,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       const schatten = '0 1px 5px rgba(0,0,0,0.22)';
       const pilleStil = {
         display: 'flex', alignItems: 'center', gap: '8px', background: ui.surface, borderRadius: '999px',
-        padding: '4px 13px 4px 4px', boxShadow: schatten, lineHeight: 1.1,
+        padding: '4px 14px 4px 4px', boxShadow: schatten, lineHeight: 1.1,
       };
+      // Pille: die Zahl steht im Kreis (Rückmeldung 25.09.2026), das Wort daneben.
       const pille = (key, testid, anteil, wert, wort, ref) => React.createElement('div', { key, ref, 'data-testid': testid, style: pilleStil },
-        React.createElement(Kreis, { ui, anteil, d: 30 }),
-        React.createElement('span', { style: { display: 'flex', flexDirection: 'column' } },
-          React.createElement('span', { style: { fontSize: '13px', fontWeight: weight.semi, color: ui.text } }, wert),
-          wort && React.createElement('span', { style: { fontSize: '11px', color: ui.mid } }, wort)));
+        React.createElement(Kreis, { ui, anteil, mitte: wert, d: 42 }),
+        wort && React.createElement('span', { style: { fontSize: '12px', fontWeight: weight.medium, color: ui.mid } }, wort));
       const scheibe = (key, testid, anteil, wert, wort, ref) => React.createElement('div', {
         key, ref, 'data-testid': testid, style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' },
       },
@@ -388,7 +398,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         'aria-label': begonnen > 0 ? zusammenfassung : undefined,
         style: {
           position: 'absolute', left: schmal ? '10px' : Math.max(12, spalte) + 'px', right: schmal ? '10px' : Math.max(12, spalte) + 'px', bottom: schmal ? '10px' : '14px',
-          display: 'flex', justifyContent: schmal ? 'flex-start' : alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
+          display: 'flex', justifyContent: alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
           gap: '8px', pointerEvents: 'none', lineHeight: 1.2,
         },
       },
@@ -398,9 +408,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           }, React.createElement('span', { style: { fontSize: schmal ? '11px' : text.xs, color: ui.mid } }, L.leer)),
           begonnen > 0 && abgeschlossen < gesamt && angabe('begonnen', 'berg-begonnen', begonnen / gesamt, `${begonnen}/${gesamt}`, L.begonnen),
           abgeschlossen > 0 && angabe('abgeschlossen', 'berg-abgeschlossen', abgeschlossen / gesamt, `${abgeschlossen}/${gesamt}`, L.abgeschlossen, abgeschlossenKachel),
-          (schmal || alleRechts) && prozentAngabe,
+          alleRechts && prozentAngabe,
         ),
-        !schmal && !alleRechts && prozentAngabe,
+        // Die Prozentzahl rechts, auch am Handy (Rückmeldung 25.09.2026; seit der Handy-Ausschnitt
+        // bis zum Bildrand reicht, ist unten rechts unter Finanzen Platz — gemessen).
+        !alleRechts && prozentAngabe,
       );
     })(),
     // Kapitel-Stationen auf der Strasse

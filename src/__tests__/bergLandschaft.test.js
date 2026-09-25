@@ -6,7 +6,7 @@ import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constant
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
   STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
-  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit,
+  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit, TITEL_GRUEN, DUNST,
 } from '../components/BergLandschaft.jsx';
 import BergLandschaft from '../components/BergLandschaft.jsx';
 
@@ -382,10 +382,22 @@ describe('Berge · Fortschritt in hell und dunkel', () => {
     const block = src.slice(src.indexOf('const pilleStil = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
     expect(block).not.toMatch(/\bp\.(surface|text|mid|sageDeep)\b/);
   });
-  it('Titel «T1»: Titelschrift, zweiter Satz in Salbeigrün der hellen Palette, keine Deckkraft', () => {
+  it('Titel «T1»: Titelschrift, zweiter Satz in Tannengrün, keine Deckkraft', () => {
     const t = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('// Fortschritt im Bild, unten'));
     expect(t).toContain('fontFamily: fontFamilyDisplay');
-    expect(t).toContain("color: p.sageDeep");
+    expect(t).toContain('color: TITEL_GRUEN');
     expect(t).not.toMatch(/opacity|textShadow/);
+  });
+  it('Tannengrün ist tiefer als das Marken-Salbeigrün (das auf den Bergen nur 2,45:1 trug) und trägt auf dem Himmel', () => {
+    expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThan(kontrast(LIGHT_PALETTE.sageDeep, DUNST.farbe));
+    expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThanOrEqual(4.5);
+  });
+  it('Dunst nur am Handy und in flachen Fenstern (Handy quer), nicht am Computer', () => {
+    expect(src).toMatch(/const mitDunst = schmal \|\| \(ausgriff && ausgriff\.hoehe < DUNST_UNTER_HOEHE\);/);
+    expect(src).toMatch(/return \[mitDunst && React\.createElement\('div'/);
+  });
+  it('Pille: die Zahl steht im Kreis', () => {
+    const pille = src.slice(src.indexOf('const pille = '), src.indexOf('const scheibe = '));
+    expect(pille).toMatch(/Kreis, \{ ui, anteil, mitte: wert/);
   });
 });
