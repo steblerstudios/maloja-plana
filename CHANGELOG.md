@@ -11,6 +11,14 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert
+- **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
+  Vorher zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt»; jetzt offen,
+  je Kapitel eine aufklappbare Zeile mit den Grundordnungs-Feldern und «Öffnen». Am Handy
+  stehen Titel, Balken und Status untereinander.
+- **Werkzeuge & Features: alle Gruppen starten eingeklappt**, auch «Lebensereignisse» (34 Einträge).
+- **Rundgang begrüsst mit «Maloja Plana»** statt «Maloja» (5 Sprachen, auch die Screenreader-Beschriftung). Italienisch geschlechtsneutral: «Le diamo / Ti diamo il benvenuto» statt «Benvenuto».
+
 ## [0.1.40-beta] — 2026-09-24
 
 *Alles seit `0.1.39-beta` (`3ccaa62`, 20.09.), nachgezogen gegen

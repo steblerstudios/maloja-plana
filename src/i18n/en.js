@@ -1458,6 +1458,7 @@ export default {
       schuldenFromBehoerdenHint: 'Manage debt collection',
     },
     backToDashboard: 'Overview',
+    pfad: 'Breadcrumb', // Name der Brotkrume für Screenreader (components/Brotkrume.jsx)
   },
 
   wohnen: {
@@ -1726,7 +1727,6 @@ export default {
     tierSupporting: 'Your coverage',
     tierProtective: 'Your safety net',
     toolsAndFeatures: 'Tools and features',
-    detailProgress: 'Detailed progress per chapter',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
     toolGroups: {
       gesundheit: 'Health',
@@ -3655,10 +3655,10 @@ export default {
   },
 
   tour: {
-    a11yLabel: 'Tour of Maloja',
+    a11yLabel: 'Tour of Maloja Plana',
     reopen: 'Restart the tour',
     next: 'Next', back: 'Back', skip: 'Skip', later: 'Later', done: 'Done',
-    welcome: { title: 'Welcome to Maloja', text: 'Your calm place for everything Swiss — papers, budget, insurance, deadlines. A short tour, skippable anytime.' },
+    welcome: { title: 'Welcome to Maloja Plana', text: 'Your calm place for everything Swiss — papers, budget, insurance, deadlines. A short tour, skippable anytime.' },
     berge: { title: 'Your progress', text: 'The mountains quietly show how far your life organizer is set up — no pressure, no chasing percentages.' },
     anspruch: { title: 'What you\'re entitled to', text: 'Here Maloja surfaces what you might be entitled to — based on what you picked at the start.' },
     privacy: { title: 'Everything stays with you', text: 'Your data stays on this device. No account, no cloud, no tracking.' },

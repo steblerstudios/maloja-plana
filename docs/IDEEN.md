@@ -54,10 +54,20 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 | Entscheid | § | Warum jetzt |
 |---|---|---|
 | Kern: Ordner oder Ereignisse · zusammen mit der Kapitel-Architektur und der App-Struktur | §0, §6 | davon hängt ab, wie der ganze Winter gebaut wird |
-| Gamification: House of Life gegenüber Grundstück-Blatt | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
+| Gamification: House of Life gegenüber Grundstück-Blatt · dazu die **Berg-Bilder bei 20–100 %** auf dem Dashboard (§15) | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
+| UI/UX aus den Runden 3–5: **Löschen ohne Rückgängig** (15 Knöpfe) · **Ladehinweis** beim Nachladen — *vor Oktober ansehen* · ~~zwei Zurück-Knöpfe~~ ✅ Brotkrume (25.09.) | §15 | der Dokumenten-Tresor löscht endgültig — der einzige Weg zu Datenverlust ohne Netz |
 | Baum oder Obstgarten · zwei Bäume verschmelzen | §2 | braucht nur ein Mockup, kein Bau |
 | Sechs Meinungs-Entscheide (E4), vor allem Preis/Paywall | §11 | Preis bestimmt, was Maloja nach aussen verspricht |
 | Bottom-Nav oder Hamburger | §6 | gehört zur Kapitel-Frage |
+| Dashboard entschlacken: 11 Abschnitte, 4 «hier anfangen»-Blöcke → Einstiege, nächster Schritt, eigene Übersicht; **Suche sichtbar** statt im Werkzeug-Raster | §6 | zwei Aussenstimmen sagen dasselbe (Codex-Audit 24.09., Tester-Feedback 25.09. in #361) |
+| Installationshinweis steht über dem Hero, vor dem Nutzen — später anbieten? | §10 | im Browser bestätigt; klein, aber ein Platz-Entscheid |
+| Bildwelten neben dem Berg (Obstgarten, Gepäck, Reserve-Tank, Schutzschild): Sachbegriff voranstellen? | §1 | gehört zur Gamification-Frage oben |
+| Silbentrennung in der Bergnavigation («Versiche-rung») — K18 war bewusst, die Nebenwirkung ist echt | §8 | nur ansehen und entscheiden |
+
+*Herkunft der vier Dashboard-Zeilen oben:* eine UX-Durchsicht von Codex (24.09.2026), jeder
+Befund am Code geprüft. Was ein **Fehler** war, ist gebaut und live (#344): IPV ohne Sackgassen
+(Kanton, Geburtsdatum, PLZ/Ort und Prämie direkt im Rechner), «Vorname ergänzen» statt «Vorname»,
+Kacheln ohne unbelegten Frankenbetrag. Hier stehen nur die **Entscheide**.
 
 ### Oktober — bauen (klein)
 
@@ -80,6 +90,7 @@ Abschiedsagentur, plaant).
 
 | Idee | § | hängt an |
 |---|---|---|
+| Kontraste im Dunkelmodus **messen** (Karten, Rahmen, Sekundärtext, Interaktionszustände) — das Audit hat nur geschätzt | §8 | `a11y-pruefer` |
 | ✅ **Grauzonen sammeln** — erledigt 25.09.: [`GRAUZONEN.md`](GRAUZONEN.md), 19 Fälle (14 belegt, 5 teilweise); drei live falsche Sätze daraus behoben (#347), EO-Betreuung 14 → 98 Taggelder (#350) | §0 | Bau der Entscheidungsbäume im Winter |
 | Übersetzer:innen / Partnerorganisation für Asyl-Sprachen suchen | §11 | Stebler Studios, Kontakt nach aussen |
 | Fachaussagen vom 19.07. belegen (KK-Wechsel mit Schulden, Kündigungstermine, Rückforderungen) | §5 | Quellen; `swiss-precision-pruefer` |
@@ -247,6 +258,31 @@ Abschiedsagentur, plaant).
   weg, nur an andere Orte» · Mond/Sonne statt Kreis für Hell/Dunkel · Footer oder unteres
   App-Menü · Früchte sollen hängen, nicht auf den Ästen sitzen. Seither ist viel Politur
   gelaufen (UI/UX-Runden 1–4); welche davon erledigt sind, ist nicht einzeln geprüft.
+- **Tester-Feedback vom 25.09.2026** (eine Testerin, Dashboard). Stand je Punkt:
+  - ✅ **Kapitel anklickbar**: vorher waren nur die Felder («Vorname») Knöpfe, nicht
+    «Persönliche Basis». Heute ist jede Kapitelzeile ein Knopf (s. nächster Punkt).
+    **→ Oktober:** ein Feld öffnet das Kapitel, springt aber nicht zum Feld (Tipp auf
+    «PLZ» → Kapitel Wohnen, oben). Gewünscht: hinscrollen + Fokus ins Feld. Gilt ebenso
+    für «Was ist jetzt dran? → … ergänzen». Kein bestehender Mechanismus, eigener Umbau.
+  - ✅ **Werkzeuge: Lebensereignisse startet eingeklappt**, wie alle anderen Gruppen.
+    Die Instrumente bleiben auf dem Dashboard (so gewünscht).
+  - ✅/❓ **«Warum nicht *Willkommen bei Maloja Plana*?»**: Entscheid 25.09.: im Produkt
+    heisst es **«Maloja Plana»**. Der Rundgang begrüsst jetzt so (5 Sprachen; Italienisch
+    neu geschlechtsneutral «Le diamo / Ti diamo il benvenuto» statt «Benvenuto»).
+    **→ Oktober:** ob auch über dem Claim auf dem Dashboard ein Gruss steht (Vorschlag:
+    nur beim ersten Besuch, er kostet am Handy Platz über dem Berg).
+  - ✅ **Fortschritt + Grundordnung sind eine Karte, von Anfang an sichtbar**: eine
+    Zeile je Kapitel, aufklappbar, darin die Grundordnungs-Felder dieses Kapitels und
+    «Öffnen». Der Abschnitt «Detaillierter Fortschritt» ist weg. Die Karte bleibt ein
+    nachgeladenes Stück (1,9 kB gzip), das Hauptbundle wurde nicht grösser.
+  - ❓ **Werkzeuge & Features nochmals anschauen**: Bestand + drei Gliederungen (A nach
+    Lebensbereich · B nach Anlass · C wenig zeigen, eine Liste) in
+    [`design/werkzeuge-gliederung-2026-09-25.md`](design/werkzeuge-gliederung-2026-09-25.md).
+    Befund: Menü (18) und Dashboard (53) führen **zwei verschiedene Listen**, einig nur bei 8.
+    **Entscheid 25.09.: alle drei in einem, im Rucksack** — «Mein Gepäck» (gibt es schon,
+    alle 34 Lebensereignisse in 6 Gegenständen) wird die eine Werkzeug-Seite; Einstellungen,
+    Export und Benachrichtigungen wandern in die Einstellungen. Offen: Gegenstand für Geld,
+    Ort für Ablegen & Ordnen, die 5 Hervorhebungen (→ Oktober).
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 
@@ -434,6 +470,52 @@ heute nur verlinkt (Ressourcen), nicht angebunden.
   FAQ `a1`/`a3`, CSP). Solche Bausteine immer zusammen mit Rechts- und Sicherheits-Prüfer planen.
 
 ---
+
+## 15 · UI/UX-Entscheide aus den Runden 3–5 (25.09.2026)
+
+*Was in den Runden 3–5 (#332, #336, #341, #364) ein **Fehler** war, ist gebaut und live. Hier
+stehen nur die **Gestaltungsfragen**, die übrig blieben — je mit Befund am Code, Varianten
+und einem Vorschlag von Claude. Die **vier «hier anfangen»-Blöcke** stehen nicht hier, sondern
+oben in der Zeile «Dashboard entschlacken» (Codex-Audit, #363) — dieselbe Frage, ein Ort.*
+
+**Löschen ohne Rückgängig.** 15 Knöpfe in 12 Bereichen löschen sofort und ohne Nachfrage (am Code nachgezählt 25.09.): Dokumente im Tresor
+(`DocumentTresor` → `main.jsx`, **endgültig** aus dem Gerätespeicher), Kalender, KVG-Belege,
+Merkliste, Schulden (3×), Jobs, Sprachen, Säule 3a, Einzelposten, Ärzt:innen, Medikamente (2×),
+Erkrankungen. Ein «Rückgängig» gibt es nirgends (die Treffer für «rückgängig» sind Abhaken und Kommentare). Die ruhige Vorlage für Schweres existiert
+(`components/DatenLoeschen.jsx`: erklären, ankreuzen, bestätigen).
+- A · **Nachfrage** vor jedem Löschen — sicher, aber elf neue Dialoge.
+- B · **Sofort löschen, «Entfernt · Rückgängig»** einige Sekunden lang — ruhig, kein Dialog.
+- C · **Mischform:** B für Listen-Einträge, A nur beim Tresor (dort ist die Datei weg).
+- *Vorschlag: C.* Aufwand B: S (ein gemeinsamer Hinweis-Baustein); Tresor: M (das Löschen im
+  Gerätespeicher muss bis zum Ablauf des Hinweises warten).
+
+**Zwei Zurück-Knöpfe.** In Lebensmappe, Behörden-Dossier, Notfall-Dossier, Briefe und
+Notfallpass steht oben «Übersicht» (global, `main.jsx`) **und** ein eigener Knopf «Zurück zu
+Meine Unterlagen» bzw. «Zurück zum Notfall» — zwei Wege mit verschiedenem Ziel.
+- A · den globalen Knopf dort ausblenden · B · beide zu einer **Brotkrume** zusammenfassen
+  («Übersicht › Meine Unterlagen › Dossier») · C · lassen.
+- ✅ **Entschieden 25.09.2026 (Stebler Studios): B, die Brotkrume.** Wird gebaut (eigener PR),
+  unabhängig von «Bottom-Nav oder Hamburger».
+
+**Ladehinweis beim Nachladen.** Sechs Teile in den Kapiteln (Ärzt:innen, Säule 3a, Medikamente,
+Sprachen, Erkrankungen, Jobs) und die Einstellungs-Schublade zeigen beim ersten Öffnen kurz
+**nichts** (`fallback: null`). Der vorhandene `CalmLoader` hat 160 px Mindesthöhe und keine
+Verzögerung — er würde bei kurzem Laden als grosser Block aufblitzen.
+- A · lassen · B · kleiner Platzhalter mit fester Höhe, **erst nach ~300 ms** sichtbar.
+- *Vorschlag: A, bis es jemand bemerkt.* Die Ladezeit auf einem langsamen Handy ist **nicht
+  gemessen** — erst messen, dann bauen.
+
+**Berg-Bilder bei 20–100 %.** Am Fortschritts-Berg erscheinen je nach Ausfüllgrad Tannen,
+Edelweiss, Gipfelkreuz, Matterhorn, Kuh, Uhr, Schoggi, Sonne, Fahne (`Dashboard.jsx`, ~Z. 612–680). Dezent
+(keine Einblendung, kein Ton) — aber strukturell «mehr ausgefüllt = mehr Belohnung».
+- A · behalten · B · auf 2–3 Stufen reduzieren · C · weglassen · D · als abschaltbare «Haut».
+- *Vorschlag:* folgt aus dem Gamification-Entscheid oben — «keine Gamification» → C,
+  «abschaltbare Haut» → D.
+
+**Kleinkram ohne Eile** (Token-Hygiene, bewusst nicht angefasst, weil sichtbar): `radius.pill`
+gibt es nicht — 4 Stellen fallen seit jeher auf 10 px zurück, ein echter Pillen-Radius würde das
+Aussehen ändern · 13× `text.xs - 1` / `text.body + 1` statt einer Skalenstufe · 16 verschiedene
+Deckkraft-Suffixe ohne Token.
 
 ## Nächste Schritte (gemeinsam gewählt)
 
