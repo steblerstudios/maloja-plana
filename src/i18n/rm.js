@@ -5305,6 +5305,10 @@ export default {
     intro: { sie: 'Quatter controllas tranquillas cun in sguard — tutgai ina.', du: 'Quatter controllas tranquillas cun in sguard — tutga ina.' },
     tacho: 'Crusch da franchisa',
     tachoSub: 'auta u bassa — tge vala la paina?',
+    // TODO(rm): provisorisch — Gegenlese (Franchise-Vorschlag, 25.09.2026)
+    kreuzPasst: { sie: 'Vossa franchisa va bain', du: 'Tia franchisa va bain' },
+    kreuzWechsel: 'Proposta: {franchise} a partir dal 1. schaner',
+    kreuzWechselPolster: 'Proposta: {franchise}, sche la reserva tanscha',
     kompass: 'Boussola da prestaziuns',
     kompassFound: '{n} vias pussaivlas',
     kompassFoundOne: 'ina via pussaivla',

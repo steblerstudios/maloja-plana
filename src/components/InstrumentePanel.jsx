@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { schildState } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
+import { franchiseVorschlag, gesundheitskostenBisher, parseFranchise } from '../data/franchiseTacho.js';
+import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
 import { shieldPath } from './shieldShape.js';
@@ -111,10 +113,29 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     }
   } catch { /* Orientierung, nie blockierend */ }
 
+  // Franchise-Kreuz: erster Vorschlag statt der Frage — sobald die Prämien im Hintergrund
+  // geladen sind (nur mit Kasse + PLZ). Bis dahin und ohne Kosten bleibt die Frage stehen.
+  const [franchiseOpt, setFranchiseOpt] = useState(null);
+  const plz = data?.wohnen?.postalCode, kasse = data?.versicherungen?.kkInsurer, geburt = data?.basis?.dateOfBirth;
+  useEffect(() => {
+    let aktiv = true;
+    ladeFranchiseOpt(data).then((o) => { if (aktiv) setFranchiseOpt(o); }).catch(() => { if (aktiv) setFranchiseOpt(null); });
+    return () => { aktiv = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plz, kasse, geburt]);
+  const vorschlag = franchiseOpt ? franchiseVorschlag(franchiseOpt, {
+    costs: gesundheitskostenBisher(data),
+    eigeneFranchise: parseFranchise(data?.versicherungen?.franchise),
+    ersparnisse: data?.finanzen?.savingsAccount,
+  }) : { art: 'offen' };
+  const kreuzSub = vorschlag.art === 'passt' ? t('instrumente.kreuzPasst')
+    : vorschlag.art === 'wechsel' ? t(vorschlag.polster ? 'instrumente.kreuzWechselPolster' : 'instrumente.kreuzWechsel', { franchise: zahl(vorschlag.franchise) })
+    : t('instrumente.tachoSub');
+
   const setup = t('instrumente.setup');
   const tiles = [
     {
-      key: 'tacho', name: t('instrumente.tacho'), sub: t('instrumente.tachoSub'),
+      key: 'tacho', name: t('instrumente.tacho'), sub: kreuzSub,
       glyph: miniKreuz(palette),
       onClick: () => onNavigate('praemien'),
     },

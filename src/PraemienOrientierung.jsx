@@ -9,25 +9,9 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
-import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './data/kvgLeistungen.js';
+import { ageClassFromBirth, parseFranchise, franchiseOptimierer, gesundheitskostenBisher } from './data/franchiseTacho.js';
 import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
 import { zahl, betrag } from './utils/geld.js';
-
-function ageClassFromBirth(dateStr) {
-  if (!dateStr) return 'erwachsen';
-  const birth = new Date(dateStr);
-  const now = new Date();
-  const age = now.getFullYear() - birth.getFullYear() - (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
-  if (age < 19) return 'kind';
-  if (age < 26) return 'jung';
-  return 'erwachsen';
-}
-
-function parseFranchise(val) {
-  if (!val) return null;
-  const s = String(val).replace(/[^0-9]/g, '');
-  return s ? Number(s) : null;
-}
 
 export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const storedPLZ = data.wohnen?.postalCode || '';
@@ -89,34 +73,12 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   // Vergleicht tiefste vs höchste verfügbare Franchise (Mit-Unfall) der eigenen Kasse:
   // Prämien-Ersparnis/Jahr, max. Eigenanteil/Jahr (Reserve = Franchise + Selbstbehalt-Max)
   // und Break-even (Gesundheitskosten/Jahr, unter denen die hohe Franchise günstiger ist).
-  const franchiseOpt = useMemo(() => {
-    const fras = referenceData?.allFranchises;
-    if (!fras || fras.length < 2) return null;
-    const low = fras[0], high = fras[fras.length - 1];
-    if (!low.premium || !high.premium || high.franchise <= low.franchise) return null;
-    const annualSaving = Math.round((low.premium - high.premium) * 12);
-    if (annualSaving <= 0) return null;
-    const sbMax = ageClass === 'kind' ? SELBSTBEHALT_MAX_KINDER : SELBSTBEHALT_MAX;
-    const reserve = high.franchise + sbMax; // max. Eigenanteil/Jahr bei hoher Franchise
-    let breakEven = null;
-    for (let c = 0; c <= high.franchise + 8000; c += 50) {
-      const totalLow = low.premium * 12 + berechneFranchise(low.franchise, c, sbMax).eigenanteil;
-      const totalHigh = high.premium * 12 + berechneFranchise(high.franchise, c, sbMax).eigenanteil;
-      if (totalHigh > totalLow) { breakEven = c; break; }
-    }
-    return { lowFra: low.franchise, highFra: high.franchise, lowPremium: low.premium, highPremium: high.premium, annualSaving, reserve, sbMax, breakEven };
-  }, [referenceData, ageClass]);
+  // Rechnung in data/franchiseTacho.js — dieselbe, die das Dashboard-Instrument nutzt.
+  const franchiseOpt = useMemo(() => franchiseOptimierer(referenceData?.allFranchises, ageClass), [referenceData, ageClass]);
 
   // Laufende, KVG-anrechenbare Gesundheitskosten dieses Jahres (aus den KK-Belegen) —
   // Zeigerwert des Franchise-Tachos. Gleiche Quelle/Definition wie der Franchise-Tab.
-  const healthCostsYTD = useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    const belege = Array.isArray(data.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
-    const belegYear = (b) => b.datum ? Number(String(b.datum).slice(0, 4)) : currentYear;
-    return belege
-      .filter(b => belegYear(b) === currentYear)
-      .reduce((s, b) => s + (Number(b.betrag) || 0), 0);
-  }, [data.versicherungen?.kkBelege]);
+  const healthCostsYTD = useMemo(() => gesundheitskostenBisher(data), [data]);
 
   // ── Reserve-Check: kann der Maximalfall überhaupt getragen werden? ──
   // Die hohe Franchise spart Prämie, kostet im schlechten Jahr aber bis zu `reserve`
