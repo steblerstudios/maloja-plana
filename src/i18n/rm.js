@@ -1701,6 +1701,7 @@ export default {
       schuldenFromBehoerdenHint: 'Administrar las esecuziuns',
     },
     backToDashboard: 'Survista',
+    pfad: 'Percurs', // Name der Brotkrume für Screenreader (components/Brotkrume.jsx)
   },
 
   wohnen: {

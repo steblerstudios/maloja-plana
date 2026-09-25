@@ -4,7 +4,8 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 import { getNotfallDossierPreview } from './dossierGenerator.js';
 import { notfallpassFelder, inZwischenablage } from './utils/notfallpass.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
+import { hinweisZeichen } from './IconSystem.jsx';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Notfallpass vorbereiten — der zweite Ausgang der Notfall-Pflege (Entscheid 22.09.2026).
 // Der QR im Notfall-Dossier geht aufs Papier; dieses Blatt legt dieselben Angaben so bereit,
@@ -59,12 +60,6 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     schritte: { margin: space.sm + 'px 0 0 0', paddingLeft: '20px' },
     schritt: { marginBottom: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed },
     link: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit' },
-    zurueck: {
-      background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm,
-      // Tippfläche mind. 44 hoch (WCAG 2.2, 2.5.8 verlangt 24; App-Massstab 44). Der Text bleibt
-      // links bündig, darum keine seitliche Polsterung.
-      padding: 0, minHeight: '44px', marginBottom: space.md + 'px', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs + 'px',
-    },
   };
 
   const feldZeile = (feld, i) => {
@@ -89,13 +84,15 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     keys.map(k => React.createElement('li', { key: k, style: s.schritt }, t(k)))
   );
 
-  return React.createElement(AblaufContainer, {
+  // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026), ÜBER dem Titel — der alte Knopf
+  // sass unter Titel und Einleitung.
+  return React.createElement(React.Fragment, null,
+    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'notfallpass', onNavigate }),
+    React.createElement(AblaufContainer, {
     palette, icon: 'notfall',
     title: t('notfallpass.title'),
     intro: t('notfallpass.intro'),
   },
-    onNavigate && React.createElement('button', { type: 'button', onClick: () => onNavigate('notfalleinstieg'), style: s.zurueck },
-      zurueckZeichen(), t('notfallpass.zurueck')),
 
     // Datenschutz zuerst: wer hier einträgt, soll wissen, wer es lesen kann.
     React.createElement('div', { style: s.hinweis }, hinweisZeichen('lock'), t('notfallpass.datenschutz')),
@@ -133,7 +130,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     onNavigate && React.createElement(AblaufLink, { palette, label: t('notfallpass.dossierLink'), onClick: () => onNavigate('notfalldossier') }),
 
     React.createElement(AblaufFooter, { palette, notes: [t('notfallpass.fussNichtsUebertragen'), t('trust.localOnly')] })
-  );
+  ));
 };
 
 export default NotfallpassBlatt;

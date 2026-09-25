@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, inDays } from './utils/helpers.js';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
   // Export-Vorschau (K3): null | 'druck' | 'json' — erst zeigen, was rausgeht, dann erstellen.
@@ -129,15 +130,8 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
 
   return React.createElement('div', { style: { maxWidth: '520px' } },
 
-    React.createElement('button', {
-      onClick: () => onNavigate('unterlagen'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
-      }
-    }, zurueckZeichen(), t('lebensmappe.back')),
-
+    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
+    React.createElement(Brotkrume, { palette, t, view: 'behoerdendossier', onNavigate }),
     React.createElement('div', {
       style: {
         background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,

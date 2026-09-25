@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender } from './briefGenerator.js';
-import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
@@ -10,6 +10,7 @@ import { openPrintWindow } from './utils/helpers.js';
 import { addReminder } from './utils/reminders.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
 const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
@@ -97,15 +98,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }
   },
-    // Back button
-    React.createElement('button', {
-      onClick: () => onNavigate('unterlagen'),
-      style: {
-        background: 'none', border: 'none', color: palette.mid,
-        fontSize: textTokens.sm, cursor: 'pointer', padding: '8px 0',
-        marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px',
-      }
-    }, zurueckZeichen(), t('briefe.backToUnterlagen')),
+    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
+    React.createElement(Brotkrume, { palette, t, view: 'briefe', onNavigate }),
 
     // Title
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('briefe.title')),
