@@ -15,7 +15,8 @@
 // 1. Erwerbsunkosten gehören in den Bedarf (SKOS-RL C.6.3, C.6.1 Erl. b, C.2 Abs. 1).
 //    Mehrkosten für auswärtige Verpflegung (8–10 Fr. pro Mahlzeit), öffentlichen Verkehr, ein
 //    Motorfahrzeug (nur wenn es mit dem öffentlichen Verkehr nicht zumutbar geht) und UVG-Prämien
-//    «sind zu übernehmen». Sie sind grundversorgende SIL und zählen deshalb schon beim Eintritt.
+//    «sind zu übernehmen», wenn die Tätigkeit den Zielen der Sozialhilfe dient (Abs. 1). Sie sind
+//    grundversorgende SIL und zählen deshalb schon beim Eintritt.
 //    Übernommen werden die BELEGTEN Kosten, eine SKOS-Pauschale gibt es nicht. Deshalb rechnen wir
 //    nur mit einem eingetragenen Betrag und schätzen nie. Der Nahverkehr steckt schon im Grundbedarf
 //    (C.6.1 Erl. d): gemeint sind nur die Mehrkosten, die darüber hinausgehen.
@@ -24,28 +25,41 @@
 // 2. Einkommensfreibetrag (EFB, SKOS-RL D.2). Er gilt nur für Erwerbseinkommen aus dem ersten
 //    Arbeitsmarkt. Laut Abs. 3 beträgt er «400 bis 700 Franken pro Monat für eine Vollanstellung».
 //    Den Betrag innerhalb dieser Spanne legt der Kanton fest.
-//    🟡 UNSICHER — die Höhe: die Formel unten (400 + 33 % über 400, höchstens 700) ist UNSERE
-//    Abstufung innerhalb der SKOS-Spanne, keine SKOS-Formel und keine eines belegten Kantons. Sie
-//    richtet sich nach dem Einkommen, nicht nach dem Pensum. Zum Vergleich BS (Unterstützungs-
-//    richtlinien WSU, gültig ab 1.1.2026, Ziff. 12.1): ein Drittel des Nettoeinkommens, höchstens
-//    400 Fr. pro erwerbstätige Person. Unsere Zahl liegt dort also eher zu hoch.
-//    🟡 UNSICHER — ob er schon beim Eintritt zählt: laut C.2 Abs. 3 «können» die Kantone ihn
-//    berücksichtigen, und D.2 Erl. c empfiehlt, ihn «sowohl bei der Eintritts- als auch bei der
-//    Austrittsberechnung» zu zählen. Zürich zählt ihn beim Eintritt NICHT (Sozialhilfehandbuch ZH
-//    6.2.05, Stand 1.3.2024). Basel-Stadt nimmt beim Eintritt stattdessen 200 Fr. pro erwerbstätige
-//    Person, höchstens 400 Fr. pro Einheit, nicht als Einnahme (URL WSU 2026, Ziff. 4.3). Wir folgen
-//    der SKOS-Empfehlung. Kippt aber erst der Freibetrag das Ergebnis auf «Anspruch», meldet
-//    `efbEntscheidet` das, und die Anzeige sagt, dass der Kanton hier entscheidet.
+//    HÖHE — vorsichtig: ein Drittel des Erwerbseinkommens, höchstens 400 Fr. Das ist die Regel von
+//    Basel-Stadt (Unterstützungsrichtlinien WSU, gültig ab 1.1.2026, Ziff. 12.1: «ein Drittel des
+//    Nettoeinkommens, maximal Fr. 400.00 pro erwerbstätige Person»). 400 ist zugleich die
+//    SKOS-Untergrenze für eine Vollanstellung. Bis 25.09.2026 galt «400 + 33 % über 400, höchstens
+//    700». Das war eine eigene, unbelegte Abstufung: 700 schon ab 1309 Fr. Lohn, und unter 400 Fr.
+//    Lohn ein Freibetrag über dem Lohn (Fachprüfung swiss-precision zu PR #389).
+//    🟡 UNSICHER bleibt: Andere Kantone geben mehr (bis 700) oder rechnen nach Pensum. Die Anzeige
+//    nennt den Betrag deshalb «geschätzt». Lernende nehmen viele Kantone vom EFB aus (D.2 Erl. b);
+//    das ist hier nicht abgebildet.
+//
+// 3. Freibetrag beim EINTRITT (ob überhaupt ein Anspruch entsteht). Laut C.2 Abs. 3 «können» EFB bei
+//    der materiellen Grundsicherung berücksichtigt werden. D.2 Erl. c empfiehlt, sie «sowohl bei der
+//    Eintritts- als auch bei der Austrittsberechnung» zu zählen. Die Kantone halten es verschieden,
+//    zwei sind belegt:
+//      ZH  zählt beim Eintritt keinen EFB (Sozialhilfehandbuch ZH 6.2.05, Stand 1.3.2024: «weder
+//          Integrationszulagen noch Einkommensfreibeträge»)
+//      BS  nimmt beim Eintritt 200 Fr. pro erwerbstätige Person nicht als Einnahme, höchstens 400 Fr.
+//          pro Einheit (URL WSU 2026, Ziff. 4.3). Hier zählt nur die eigene Erwerbstätigkeit, also
+//          höchstens 200 Fr.
+//    Alle anderen Kantone: nicht belegt. Wir rechnen den Eintritt deshalb vorsichtig OHNE Freibetrag.
+//    Ergäbe erst der Freibetrag einen Anspruch, meldet `efbEntscheidet` das («möglich, der Kanton
+//    entscheidet»). Steht der Anspruch einmal, zählt der Freibetrag für den Betrag (D.2 Abs. 1).
 
-const EFB_PAUSCHAL = 400;
-const EFB_ANTEIL = 0.33;
-const EFB_MAX = 700;
-export const EFB_PARAMS = { pauschal: EFB_PAUSCHAL, anteil: EFB_ANTEIL, max: EFB_MAX };
+const EFB_ANTEIL = 1 / 3;
+const EFB_MAX = 400;
+export const EFB_PARAMS = { anteil: EFB_ANTEIL, max: EFB_MAX };
 
+// Kantone, deren Regel für den Eintritt belegt ist (Quellen oben).
+const EINTRITT_ABZUG = { ZH: () => 0, BS: (erwerb) => Math.min(200, erwerb) };
+
+// Nie höher als das Erwerbseinkommen selbst (ein Drittel davon, höchstens 400).
 export function einkommensfreibetrag(erwerbseinkommen) {
-  if (erwerbseinkommen <= 0) return 0;
-  const efb = EFB_PAUSCHAL + (erwerbseinkommen - EFB_PAUSCHAL) * EFB_ANTEIL;
-  return Math.min(Math.max(0, Math.round(efb)), EFB_MAX);
+  const e = Number(erwerbseinkommen) || 0;
+  if (e <= 0) return 0;
+  return Math.min(Math.round(e * EFB_ANTEIL), EFB_MAX);
 }
 
 // Erwerbstätig heisst: Anstellungstyp angestellt, selbstständig oder freiberuflich. Ist kein
@@ -65,6 +79,7 @@ const plus = (v) => Math.max(0, Number(v) || 0);
 //                                        macht der jeweilige Rechenweg vorher)
 //   erwerbsunkosten                      belegte Mehrkosten der Arbeit (C.6.3); ohne Angabe 0
 //   erwerbseinkommen / andereEinkuenfte  der Freibetrag gilt nur auf das Erwerbseinkommen
+//   kanton                               für die belegten Eintrittsregeln (ZH, BS)
 export function sozialhilfeBilanz({
   grundbedarf = 0,
   wohnkosten = 0,
@@ -73,6 +88,7 @@ export function sozialhilfeBilanz({
   erwerbseinkommen = 0,
   andereEinkuenfte = 0,
   erwerbstaetig = false,
+  kanton = '',
 }) {
   const eu = plus(erwerbsunkosten);
   const erwerb = plus(erwerbseinkommen);
@@ -80,7 +96,12 @@ export function sozialhilfeBilanz({
   const efb = erwerbstaetig && erwerb > 0 ? einkommensfreibetrag(erwerb) : 0;
   const totalEinkommen = erwerb + plus(andereEinkuenfte);
   const anrechenbaresEinkommen = Math.max(0, totalEinkommen - efb);
-  const luecke = Math.max(0, bedarf - anrechenbaresEinkommen);
+  // Eintritt: ohne Freibetrag, ausser eine Kantonsregel ist belegt.
+  const regel = EINTRITT_ABZUG[kanton];
+  const eintrittsAbzug = regel && erwerbstaetig ? regel(erwerb) : 0;
+  const eintritt = bedarf - (totalEinkommen - eintrittsAbzug) > 0;
+  const lueckeMitEfb = Math.max(0, bedarf - anrechenbaresEinkommen);
+  const luecke = eintritt ? lueckeMitEfb : 0;
   return {
     bedarf,
     erwerbsunkosten: eu,
@@ -88,7 +109,7 @@ export function sozialhilfeBilanz({
     totalEinkommen,
     anrechenbaresEinkommen,
     luecke,
-    // Anspruch nur MIT Freibetrag: ob der Kanton ihn beim Eintritt zählt, ist offen (siehe oben).
-    efbEntscheidet: luecke > 0 && bedarf - totalEinkommen <= 0,
+    // Kein Anspruch ohne Freibetrag, aber einer mit: in einem Kanton ohne belegte Regel offen.
+    efbEntscheidet: !eintritt && !regel && lueckeMitEfb > 0,
   };
 }

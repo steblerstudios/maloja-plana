@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { sozialhilfeBilanz, einkommensfreibetrag, istErwerbstaetig } from '../sozialhilfeKern.js';
 import { berechneSozialhilfe, sozialhilfeErgebnis } from '../sozialhilfeRechner.js';
 import { calculateSozialhilfe, CANTON_CODES } from '../../config/cantonalData.js';
+import { getBehoerdenDossierPreview } from '../../dossierGenerator.js';
+import { sozialhilfePegelState } from '../pegel.js';
 
 // Fachprüfung swiss-precision 25.09.2026 (PR #380): Schnellrechnung und ausführlicher Rechner
 // rechneten verschieden. Regeln und Quellen: data/sozialhilfeKern.js.
@@ -36,20 +38,43 @@ describe('Eine Wahrheit: Schnellrechnung = ausführlicher Rechner', () => {
 });
 
 describe('Einkommensfreibetrag (SKOS-RL D.2) in der Schnellrechnung', () => {
-  // Bedarf Einzelperson: 1061 + 1000 + 400 = 2461.
-  it('zieht den Freibetrag vom Erwerbseinkommen ab, bevor es angerechnet wird', () => {
-    const r = calculateSozialhilfe(profil({ monthlyIncome: 2400 }));
+  // Bedarf Einzelperson: 1061 + 1000 + 400 = 2461. Freibetrag ab 1200 Lohn: 400.
+  it('Anspruch ohne Freibetrag → der Betrag rechnet mit Freibetrag (D.2 Abs. 1)', () => {
+    const r = calculateSozialhilfe(profil({ canton: 'BE', monthlyIncome: 2400 }));
     expect(r.totalBedarf).toBe(2461);
-    expect(r.efb).toBe(einkommensfreibetrag(2400)); // 700
-    expect(r.deficit).toBe(2461 - (2400 - 700));
-    expect(r.efbEntscheidet).toBe(false); // auch ohne Freibetrag schon eine Lücke (61)
+    expect(r.efb).toBe(400);
+    expect(r.eligible).toBe(true);
+    expect(r.deficit).toBe(2461 - (2400 - 400));
+    expect(r.efbEntscheidet).toBe(false);
   });
 
-  it('meldet, wenn erst der Freibetrag den Anspruch ergibt (kantonal offen)', () => {
-    const r = calculateSozialhilfe(profil({ monthlyIncome: 2600 }));
-    expect(r.eligible).toBe(true);
-    expect(r.deficit).toBe(2461 - (2600 - 700));
+  it('Eintritt vorsichtig OHNE Freibetrag; ergäbe erst er einen Anspruch → efbEntscheidet', () => {
+    const r = calculateSozialhilfe(profil({ canton: 'BE', monthlyIncome: 2600 }));
+    expect(r.eligible).toBe(false);
+    expect(r.deficit).toBe(0);
     expect(r.efbEntscheidet).toBe(true);
+  });
+
+  it('ZH: kein Freibetrag beim Eintritt (Handbuch ZH 6.2.05) — belegt, darum kein Vorbehalt', () => {
+    const r = calculateSozialhilfe(profil({ canton: 'ZH', monthlyIncome: 2600 }));
+    expect(r.eligible).toBe(false);
+    expect(r.efbEntscheidet).toBe(false);
+  });
+
+  it('BS: beim Eintritt zählen 200 Fr. nicht als Einnahme (URL WSU 2026 Ziff. 4.3)', () => {
+    const r = calculateSozialhilfe(profil({ canton: 'BS', monthlyIncome: 2600 }));
+    expect(r.totalBedarf).toBe(2461);
+    expect(r.eligible).toBe(true); // 2461 > 2600 − 200
+    expect(r.deficit).toBe(2461 - (2600 - 400));
+    expect(r.efbEntscheidet).toBe(false);
+    expect(calculateSozialhilfe(profil({ canton: 'BS', monthlyIncome: 2700 })).eligible).toBe(false);
+  });
+
+  it('der Freibetrag ist nie höher als der Lohn — er schmälert keine anderen Einkünfte', () => {
+    const b = sozialhilfeBilanz({ grundbedarf: 1061, wohnkosten: 1000, kvgPraemie: 400, erwerbseinkommen: 100, andereEinkuenfte: 3700, erwerbstaetig: true });
+    expect(b.efb).toBeLessThanOrEqual(100);
+    expect(b.anrechenbaresEinkommen).toBeGreaterThanOrEqual(3700);
+    expect(b.luecke).toBe(0);
   });
 
   it('kein Freibetrag ohne Erwerbstätigkeit (D.2 Abs. 2: Arbeitsleistung nötig)', () => {
@@ -67,7 +92,7 @@ describe('Einkommensfreibetrag (SKOS-RL D.2) in der Schnellrechnung', () => {
 });
 
 describe('Erwerbsunkosten (SKOS-RL C.6.3) gehören in den Bedarf', () => {
-  const basis = { adults: 1, miete: 1000, krankenkassePraemie: 400, erwerbseinkommen: 2600, erwerbstaetig: true };
+  const basis = { adults: 1, miete: 1000, krankenkassePraemie: 400, erwerbseinkommen: 2000, erwerbstaetig: true };
 
   it('erhöhen den Bedarf und damit die Anspruchsgrenze', () => {
     const ohne = berechneSozialhilfe(basis);
@@ -107,5 +132,40 @@ describe('istErwerbstaetig — eine Regel für Schnellrechnung und Vorbefüllung
     expect(istErwerbstaetig({ employer: 'Firma' })).toBe(true);
     expect(istErwerbstaetig({ employer: '  ' })).toBe(false);
     expect(istErwerbstaetig(undefined)).toBe(false);
+  });
+});
+
+describe('Anzeigen, die die Rechnung weitertragen', () => {
+  const t = (k) => k;
+  const sektion = (data) => {
+    const sozialhilfe = calculateSozialhilfe(data);
+    return getBehoerdenDossierPreview(data, [], t, { sozialhilfe }).sections.find(x => x.key === 'sozialhilfe');
+  };
+
+  it('Behörden-Dossier: mit Anspruch steht der Freibetrag als Zeile da (Bedarf − Einkommen + EFB = Lücke), dazu «geschätzt»', () => {
+    const data = profil({ canton: 'BE', monthlyIncome: 2400 });
+    const r = calculateSozialhilfe(data);
+    expect(r.totalBedarf - r.income + r.efb).toBe(r.deficit);
+    const s = sektion(data);
+    expect(s.rows.map(x => x.label)).toContain('sh.efbLabel');
+    expect(s.notes).toContain('sozialhilfe.efbGeschaetzt');
+  });
+
+  it('Behörden-Dossier: ohne Anspruch keine Freibetrag-Zeile, aber der Vorbehalt, wenn der Kanton entscheidet', () => {
+    const s = sektion(profil({ canton: 'BE', monthlyIncome: 2600 }));
+    expect(s.rows.map(x => x.label)).not.toContain('sh.efbLabel');
+    expect(s.notes).toContain('sozialhilfe.efbEntscheidet');
+    expect(s.notes).toContain('sozialhilfe.erwerbsunkostenNichtEingerechnet');
+  });
+
+  it('Pegel: bei einer Lücke ergeben Wasser (angerechnetes Einkommen) + Aufstockung den Bedarf', () => {
+    const p = sozialhilfePegelState(profil({ canton: 'BE', monthlyIncome: 2400 }));
+    expect(p.mode).toBe('gap');
+    expect(p.income + p.amount).toBe(p.bedarf);
+    expect(p.fraction).toBeLessThan(1);
+  });
+
+  it('Pegel: ergäbe erst der Freibetrag einen Anspruch, zeigt er keine Lücke', () => {
+    expect(sozialhilfePegelState(profil({ canton: 'BE', monthlyIncome: 2600 })).mode).toBe('covered');
   });
 });

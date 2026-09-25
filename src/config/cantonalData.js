@@ -326,7 +326,8 @@ export function getGrundbedarf(householdSize) {
 // - Erwerbsunkosten (SKOS-RL C.6.3): das Profil hat dafür kein Feld, deshalb 0. Bei Erwerbstätigen
 //   ist der Bedarf also zu tief; `erwerbsunkostenOffen` sagt das der Anzeige, und im Rechner
 //   lassen sie sich eintragen.
-// - `efbEntscheidet`: Anspruch nur dank Freibetrag. Ob der beim Eintritt zählt, regelt der Kanton.
+// - Eintritt vorsichtig ohne Freibetrag (ausser ZH/BS mit belegter Regel). `efbEntscheidet`: erst
+//   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
@@ -344,7 +345,7 @@ export function calculateSozialhilfe(data) {
 
   const bilanz = sozialhilfeBilanz({
     grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
-    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig,
+    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig, kanton: canton,
   });
   const totalBedarf = bilanz.bedarf;
   const income = bilanz.totalEinkommen;

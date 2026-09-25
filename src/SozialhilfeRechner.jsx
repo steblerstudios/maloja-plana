@@ -210,8 +210,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
         ),
-        // Anspruch erst dank Einkommensfreibetrag — ob er beim Eintritt zählt, regelt der Kanton.
-        result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
+        // Erst der Einkommensfreibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
+        !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
           t('sozialhilfe.efbEntscheidet')
         ),
         // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
@@ -256,11 +256,15 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             React.createElement('td', { style: s.td }, t('sh.einkommenTotal')),
             React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.totalEinkommen))
           ),
-          result.efb > 0 && React.createElement('tr', null,
+          // Freibetrag nur, wenn eine Lücke bleibt (er gilt im Bezug) — sonst ginge die Tabelle nicht auf.
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, color: palette.sageDeep } }, t('sh.efbLabel')),
             React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + fmt(result.efb))
           ),
-          result.totalEinkommen > 0 && React.createElement('tr', null,
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
+            React.createElement('td', { colSpan: 2, style: { ...s.td, ...s.hint, paddingTop: 0 } }, t('sozialhilfe.efbGeschaetzt'))
+          ),
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.anrechenbar')),
             React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.anrechenbaresEinkommen))
           ),

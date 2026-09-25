@@ -38,7 +38,7 @@ const IZU_STANDARD = IZU_MIN;
 
 // Einkommensfreibetrag (EFB) – SKOS-RL D.2. Formel, Quellen und was daran unsicher ist, stehen in
 // data/sozialhilfeKern.js; von dort kommen auch die Werte, damit beide Rechenwege gleich rechnen.
-const { pauschal: EFB_PAUSCHAL, anteil: EFB_ANTEIL, max: EFB_MAX } = EFB_PARAMS;
+const { anteil: EFB_ANTEIL, max: EFB_MAX } = EFB_PARAMS;
 
 // Medizinische Grundversorgung – SKOS C.5
 const FRANCHISE_STANDARD = 300;
@@ -52,7 +52,6 @@ export const SKOS_PARAMS = {
   izuMin: IZU_MIN,
   izuMax: IZU_MAX,
   izuStandard: IZU_STANDARD,
-  efbPauschal: EFB_PAUSCHAL,
   efbAnteil: Math.round(EFB_ANTEIL * 100),
   efbMax: EFB_MAX,
   franchiseStandard: FRANCHISE_STANDARD,
@@ -142,7 +141,7 @@ export function berechneSozialhilfe({
   // Bedarf, Erwerbsunkosten, Freibetrag und Lücke: dieselbe Rechnung wie die Schnellrechnung.
   const bilanz = sozialhilfeBilanz({
     grundbedarf: gbl, wohnkosten, kvgPraemie, erwerbsunkosten,
-    erwerbseinkommen, andereEinkuenfte, erwerbstaetig,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig, kanton,
   });
   const { bedarf, efb, totalEinkommen, anrechenbaresEinkommen, efbEntscheidet } = bilanz;
   const sozialhilfeAnspruch = bilanz.luecke;
