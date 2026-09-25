@@ -57,52 +57,58 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
   };
 
   const knopfStil = {
-    padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent',
-    border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
+    background: 'transparent', border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
   };
 
+  // Seit 25.09.2026 eine kleine Karte rechts oben im Bergpanorama (BergLandschaft, `ecke`) statt
+  // eines Kastens über den Bergen: Zeichen und «×» oben, darunter der Satz, unten der Knopf. Die
+  // Breite gibt die Ecke vor; hier füllt die Karte sie.
   return React.createElement('div', {
+    'data-testid': 'install-karte',
     style: {
-      margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px',
-      background: palette.up, border: '1px solid ' + palette.border,
-      borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center',
-      justifyContent: 'space-between', gap: space.sm,
-      // Am Handy rutschen die Knöpfe unter den Text, statt ihn in eine schmale Spalte zu drücken
-      // (gemessen 375 px: sonst sieben Zeilen Text neben dem Knopf).
-      flexWrap: 'wrap',
+      padding: space.sm + 'px', background: palette.surface, borderRadius: radius.md + 'px',
+      boxShadow: '0 1px 5px rgba(0,0,0,0.22)', display: 'flex', flexDirection: 'column', gap: space.xs,
     },
   },
-    React.createElement('span', { style: { fontSize: text.sm, color: palette.text, flex: '1 1 240px' } },
-      t(installPrompt ? 'pwa.installHint' : 'pwa.anleitungHint')),
-    React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center', flexShrink: 0, marginLeft: 'auto' } },
-      installPrompt && React.createElement(PrimaryButton, {
-        palette,
-        onClick: () => installAusloesen(installPrompt, onPromptWeg),
-        style: { padding: space.xs + 'px ' + space.sm + 'px', whiteSpace: 'nowrap' },
-      }, t('pwa.install')),
-      // «So geht es»: wo der Browser nicht selbst installieren kann (Safari, Firefox), ist die
-      // Anleitung DER Weg — also der Hauptknopf (Entscheid 25.09.2026). Wo «Installieren» schon
-      // steht, bleibt sie der ruhige Zweitweg daneben: nie zwei Hauptknöpfe in einem Kasten.
-      // Beide brechen nicht um (vorher stand «So geht es» am Desktop auf drei Zeilen).
-      installPrompt
-        ? React.createElement('button', {
-          onClick: () => onNavigate('installApp'),
-          style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap' },
-        }, t('pwa.anleitung'))
-        : React.createElement(PrimaryButton, {
-          palette,
-          'data-testid': 'install-anleitung-cta',
-          onClick: () => onNavigate('installApp'),
-          style: { padding: space.xs + 'px ' + space.md + 'px', minHeight: '44px', whiteSpace: 'nowrap' },
-        }, t('pwa.anleitung')),
+    React.createElement('div', { style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' } },
+      // Ein Handy — das Zeichen sagt «Startbildschirm», bevor man liest.
+      React.createElement('svg', {
+        width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: palette.sageDeep, strokeWidth: 1.6,
+        strokeLinecap: 'round', 'aria-hidden': 'true', style: { marginTop: space.xs, flex: 'none' },
+      },
+        React.createElement('rect', { x: 6.5, y: 2.5, width: 11, height: 19, rx: 2 }),
+        React.createElement('path', { d: 'M11 18.5h2' })),
       React.createElement('button', {
         type: 'button',
         onClick: verwerfen,
         'aria-label': t('common.close'),
-        // Tippfläche 44 × 44 (WCAG 2.2, 2.5.8 verlangt mind. 24; App-Massstab wie der Melde-Link).
-        style: { ...knopfStil, color: palette.mid, minWidth: '44px', minHeight: '44px' },
-      }, '×')
-    )
+        // Tippfläche 44 × 44 (WCAG 2.2, 2.5.8 verlangt mind. 24; App-Massstab wie der Melde-Link);
+        // der negative Rand holt sie in die Kartenecke, ohne die Karte aufzublähen.
+        style: { ...knopfStil, color: palette.mid, minWidth: '44px', minHeight: '44px', margin: -space.sm + 'px ' + -space.sm + 'px 0 0', lineHeight: 1 },
+      }, '×')),
+    React.createElement('span', { style: { fontSize: text.sm, lineHeight: 1.3, color: palette.text, marginTop: -space.sm } },
+      t('install.navSub')),
+    // «So geht es»: wo der Browser nicht selbst installieren kann (Safari, Firefox), ist die
+    // Anleitung DER Weg — also der Hauptknopf (Entscheid 25.09.2026). Wo «Installieren» steht,
+    // bleibt sie der ruhige Zweitweg darunter: nie zwei Hauptknöpfe in einer Karte.
+    installPrompt
+      ? React.createElement(React.Fragment, null,
+        React.createElement(PrimaryButton, {
+          palette,
+          onClick: () => installAusloesen(installPrompt, onPromptWeg),
+          style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
+        }, t('pwa.install')),
+        React.createElement('button', {
+          type: 'button',
+          onClick: () => onNavigate('installApp'),
+          style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap', minHeight: '44px', padding: 0 },
+        }, t('pwa.anleitung')))
+      : React.createElement(PrimaryButton, {
+        palette,
+        'data-testid': 'install-anleitung-cta',
+        onClick: () => onNavigate('installApp'),
+        style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
+      }, t('pwa.anleitung'))
   );
 };
 
