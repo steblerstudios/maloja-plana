@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sozialhilfeBilanz, einkommensfreibetrag, istErwerbstaetig } from '../sozialhilfeKern.js';
+import { sozialhilfeBilanz, istErwerbstaetig } from '../sozialhilfeKern.js';
 import { berechneSozialhilfe, sozialhilfeErgebnis } from '../sozialhilfeRechner.js';
 import { calculateSozialhilfe, CANTON_CODES } from '../../config/cantonalData.js';
 import { getBehoerdenDossierPreview } from '../../dossierGenerator.js';
