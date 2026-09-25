@@ -172,7 +172,8 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
     WEGSTUECKE.forEach((d, i) => {
       const z = zahlen(d);
       // Start: an der Ausgangsstation, höchstens eine Tannenbreite dahinter (dort beginnt er verdeckt)
-      expect(nah(z[0], z[1], STATIONEN[WEG_VON[i]], 32), `Start ${i}`).toBe(true);
+      // (Stück 5 zum Notfall beginnt bewusst erst, wo die Strasse ins Bild kommt — eigener Test)
+      if (i !== 5) expect(nah(z[0], z[1], STATIONEN[WEG_VON[i]], 32), `Start ${i}`).toBe(true);
       expect(nah(z[z.length - 2], z[z.length - 1], STATIONEN[i + 1], 25), `Ende ${i}`).toBe(true);
     });
   });
@@ -186,6 +187,15 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
       const [x, y] = [z[k], z[k + 1]];
       expect(x > 300 && x < 365 && y > 564, `Punkt ${x} ${y} liegt auf der oberen Strasse`).toBe(false);
     }
+  });
+  it('der Weg nach Versicherungen endet vor der Behörden-Beschriftung (nichts zwischen x 205 und 396)', () => {
+    const z = zahlen(WEGSTUECKE[3]);
+    for (let k = 0; k < z.length; k += 2) expect(z[k] > 205 && z[k] < 396, `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
+  });
+  it('der Weg zum Notfall beginnt erst, wo die Strasse ins Bild kommt (rechts der Kreuzung)', () => {
+    const z = zahlen(WEGSTUECKE[5]);
+    expect(z[0]).toBeGreaterThan(350);
+    expect(nah(z[0], z[1], STATIONEN[5], 60)).toBe(false);
   });
   it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {
     expect(WEG_VON).toEqual([0, 1, 2, 3, 4, 5]);

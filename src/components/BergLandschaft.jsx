@@ -32,19 +32,25 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 // Basis und Ausbildung sind NICHT direkt verbunden — dort geht keine Strasse durch. Und wo die
 // obere Strasse an der Basis vorbeiläuft, ist der Weg ausgeblendet (Umkreis 48 Einheiten), damit
 // es nicht aussieht, als schneide die Basis ihn.
-// Ebenso taucht der Weg von Behörden zum Notfall unter der oberen Strasse durch: die Schlaufe
-// unten im S, wo sie die obere Strasse kreuzt, ist ausgeblendet (Stebler Studios, 25.09.2026).
+// Weitere Vorgaben (Stebler Studios, 25.09.2026):
+//   · der Weg von Versicherungen nach links endet spätestens vor der Behörden-Beschriftung (an
+//     der Tanne) und taucht erst an der schmalen Strasse unterhalb der Ausbildung wieder auf;
+//   · der Weg zum Notfall beginnt erst, wo die Strasse unter der oberen Strasse hervor ins Bild
+//     kommt — nicht am Behörden-Knopf;
+//   · der Weg läuft möglichst mittig auf der Fahrbahn: auf den schmalen Strassen quer zur
+//     Fahrrichtung vermessen und auf die Mitte gerückt, auf der breiten U-Kurve und der oberen
+//     Strasse (Fahrbahn ~38 Einheiten) von Hand auf die Mitte gelegt.
 // Wo eine Tanne die Strasse verdeckt, fehlt der Weg — er geht dahinter durch.
 // Etikett-Seiten sind errechnet (Suche über alle Kombinationen): ohne Überschneidung bei
 // 656/736 px (breit) und 296–496 px (schmal).
 export const STATIONEN = [
   { key: 'basis', x: 185, y: 549, seite: { breit: 'links', schmal: 'unten' } },
-  { key: 'wohnen', x: 272, y: 616, seite: { breit: 'links', schmal: 'rechts' } },
-  { key: 'finanzen', x: 573.4, y: 675.3, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'versicherungen', x: 440, y: 608.5, seite: { breit: 'rechts', schmal: 'oben' } },
-  { key: 'ausbildung', x: 195.6, y: 479, seite: { breit: 'links', schmal: 'oben' } },
-  { key: 'behoerden', x: 294.4, y: 514.3, seite: { breit: 'unten', schmal: 'unten' } },
-  { key: 'notfall', x: 424.1, y: 525.7, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'wohnen', x: 272, y: 616, seite: { breit: 'links', schmal: 'unten' } },
+  { key: 'finanzen', x: 558, y: 678, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'versicherungen', x: 440, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
+  { key: 'ausbildung', x: 195, y: 479, seite: { breit: 'links', schmal: 'oben' } },
+  { key: 'behoerden', x: 290, y: 513, seite: { breit: 'unten', schmal: 'unten' } },
+  { key: 'notfall', x: 424, y: 526.5, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
@@ -52,12 +58,12 @@ export const STATIONEN = [
 // eigener Unterpfad (M … C …).
 export const WEG_VON = [0, 1, 2, 3, 4, 5];
 export const WEGSTUECKE = [
-  'M185 549C194.7 555.7 228.5 577.9 243 589C257.5 600.2 267.2 611.5 272 616',
-  'M272 616C277.5 621.4 296.4 639.3 305 648.7C313.7 658 318.5 665.2 323.7 672.2C328.8 679.3 334 687.8 336 691M433 727.4C436.2 727.7 449.1 729.1 452.4 729.4M541.2 724.9C543.7 723.6 551.3 720.6 555.7 717.1C560.1 713.6 564.8 707.7 567.6 703.7C570.5 699.7 571.9 697.7 572.8 693C573.8 688.3 573.3 678.2 573.4 675.3',
-  'M573.4 675.3C572.1 672.3 568.1 661.5 565.9 657.4C563.7 653.2 562.4 652.5 560.4 650.3C558.3 648.1 559.2 647.7 553.6 644.3C548.1 641 536 633.9 527.3 630.1C518.7 626.3 506 623 501.7 621.5M487.1 618C479.3 616.4 447.9 610.1 440 608.5',
-  'M440 608.5C432.6 607.3 403 602.4 395.6 601.2M367.6 596C361 594.6 340.5 590.8 328 587.5C315.4 584.2 301.4 579.5 292.3 576.2C283.1 572.9 280.8 571.8 273.1 567.5C265.5 563.3 253.2 554.6 246.5 550.7C239.9 546.7 235.5 544.9 233.3 543.7M176.2 500.8C179.4 497.2 192.4 482.6 195.6 479',
-  'M195.6 479C197.4 476.6 203 468.2 206.6 464.8C210.1 461.4 204.1 461.9 216.9 458.8C229.7 455.8 266.9 451 283.2 446.6C299.5 442.3 308.1 435.1 314.6 432.7C321.1 430.3 319.6 432.1 322.1 432.3C324.5 432.5 326.6 432.9 329.3 434.1C332 435.3 335.8 437.4 338.3 439.4C340.8 441.4 342.7 443.7 344.2 446.2C345.6 448.8 346.6 452.1 346.8 454.7C347.1 457.3 346.7 459.4 345.5 462C344.3 464.7 343.4 466.4 339.7 470.7C335.9 475 327.9 483.9 322.9 487.9C317.9 491.9 313 492.5 309.5 494.6C306.1 496.6 304.5 498 302.5 500.1C300.4 502.2 298.5 505 297.2 507.3C295.8 509.7 294.9 513.1 294.4 514.3',
-  'M294.4 514.3C294.4 515.8 293.7 520.3 294 523.2C294.3 526.2 293.3 525.6 296.2 531.9C299.1 538.3 308.7 556.4 311.2 561.3M352.6 561.9C353.2 560.8 354.5 557.5 356.1 555.2C357.6 553 358.2 551.4 361.8 548.4C365.4 545.3 371.5 540.2 377.7 537.2C383.9 534.1 391.2 531.7 398.9 529.8C406.7 527.9 419.9 526.4 424.1 525.7',
+  'M185 549C189 550.9 197.5 552.5 208.7 560.3C220 568.1 241.9 586.4 252.6 595.6C263.2 604.7 269.4 611.8 272.6 615.2C275.9 618.6 272.1 615.9 272 616',
+  'M272 616C277.5 621.5 296.7 639.6 305.2 648.9C313.8 658.2 318.1 664.6 323.3 671.7C328.5 678.8 334.3 688.2 336.5 691.5M540.5 724.2C541.9 723.4 546.7 721.3 548.9 719.1C551.1 716.9 552.4 715.1 553.9 711.2C555.4 707.3 557.2 701.3 557.9 695.7C558.5 690.2 558 681 558 678',
+  'M558 678C557.2 675.1 555.5 665.4 553.3 660.6C551.1 655.9 548.6 652.8 545 649.6C541.3 646.5 537.4 644.2 531.4 641.7C525.3 639.2 512.5 636 508.8 634.8M484.2 630.6C476.9 629.8 447.4 626.8 440 626',
+  'M440 626C433.6 625 408 621.2 401.6 620.3M172.9 504.9C173.6 503.7 173.3 501.9 177.2 497.8C181.2 493.7 193.7 483.3 196.6 480.2C199.6 477.1 195.3 479.2 195 479',
+  'M195.7 474.2C197.2 472.3 202.5 464.9 204.7 462.7C206.9 460.5 203.6 462.5 208.9 461.1C214.1 459.7 227.2 456.1 236.4 454.4C245.6 452.6 254.2 452.5 264.2 450.8C274.1 449.1 288.8 446.9 296 444.4C303.1 441.8 303.4 437.8 307.2 435.6C310.9 433.3 314.7 431.1 318.5 430.9C322.4 430.6 326.9 432.9 330.3 434.3C333.7 435.8 336.3 437.4 338.9 439.5C341.4 441.7 344.1 444.6 345.6 447.2C347.1 449.8 347.7 452.5 347.7 455.2C347.8 457.9 348 460.3 346 463.4C344.1 466.4 340.6 469.7 336.1 473.5C331.5 477.3 324.6 482.2 318.8 486.1C313 489.9 305.3 493.9 301.3 496.8C297.4 499.6 297.2 500.5 295.3 503.2C293.4 505.9 290.9 511.4 290 513',
+  'M353.1 562C354.3 560.1 358 553.5 360.5 550.4C363 547.4 365.3 545.9 367.9 544C370.6 542 371.9 540.9 376.4 538.8C380.9 536.8 386.9 533.8 394.8 531.8C402.8 529.7 419.1 527.4 424 526.5',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
