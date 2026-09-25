@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
-import { GlossarText } from './GlossarBegriff.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
-import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
+import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
@@ -486,14 +485,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },
 
-    // Die Leistungs-Zeile beantwortet «Was ist das hier?» und hilft genau einmal: beim ersten
-    // Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr bei jedem Öffnen vorgesetzt.
-    // Seit dem Hero (25.09.2026) direkt unter dem Bild statt unter dem Titel — im Bild wäre sie
-    // am Handy zu lang. (Suchmaschinen sehen diesen Text nie — sie kommen nicht hinter das
-    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
-    !hasMeaningfulProgress && React.createElement('p', {
-      style: { fontSize: text.body, color: palette.mid, margin: '0 0 ' + space.lg + 'px', lineHeight: leading.relaxed }
-    }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
+    // Die Leistungs-Zeile («Ihr persönlicher Schweizer Lebensordner …») steht seit 25.09.2026
+    // abends fest in der Fusszeile (main.jsx, Entscheid Stebler Studios) — hier stand sie nur
+    // am Anfang und schob «Was ist jetzt dran?» nach unten.
 
     // ─── Alpha banner — UNTER dem Hero: erst das Versprechen, dann der ruhige
     // Entwicklungs-Hinweis (auf Handy stand die Warnung sonst vor dem Nutzen). ──
@@ -552,7 +546,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
-              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
+              // Das Icon des Kapitels statt des Punkts (25.09.2026) — dasselbe wie in der
+              // Fortschritts-Karte darunter, in der Farbe des Bereichs. Ohne Icon bleibt der Punkt.
+              Icons[chapters[nextField.chapterIdx].key]
+                ? React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '22px', height: '22px', flexShrink: 0, color: dotColor } }, Icons[chapters[nextField.chapterIdx].key]())
+                : React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
               React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
                 // Codex-Audit 24.09.: das Feld allein («Vorname») sagt nicht, was zu tun ist — ein Verb dazu.
                 React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, t('dashboard.nextUpAction', { feld: nextField.label })),
@@ -562,7 +560,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             // Zum Ausprobieren, Entscheid 25.09.2026 (Variante «beide farbig»): der nächste
             // Schritt trägt einen gefüllten Knopf, wie «So geht es» oben. Nur Darstellung —
             // die ganze Zeile bleibt EIN Knopf (kein Knopf im Knopf).
-            React.createElement('span', { 'aria-hidden': 'true', style: ctaFlaeche }, t('dashboard.nextUpCta'), ' ›'),
+            // Seit 25.09. abends in der Farbe des Bereichs (wie der Punkt), nicht mehr Sand.
+            React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
         // Grundordnung steht: weiter mit dem Kapitel, das am wenigsten ausgefüllt ist.
