@@ -3741,7 +3741,7 @@ export default {
     checkTitle: 'Vérification rapide',
     annahmeOhneDreizehnten: 'Revenu calculé sans 13e salaire — l’indication manque encore. Avec un 13e salaire, il est plus élevé et peut dépasser la limite. Cela peut être indiqué dans le chapitre « Finances ».',
     result_tableLimit: 'Pour ce ménage (trois adultes ou plus sans enfant), le barème ne donne pas de limite. L’office des contributions sociales précise le droit.',
-    result_jungeErwachseneOffen: 'Une personne de 18 à 24 ans vit dans le ménage. Elle ne compte que si elle est en première formation (apprentissage, école ou études jusqu’au premier diplôme) — la limite est alors nettement plus élevée. L’office des contributions sociales précise le droit.',
+    result_jungeErwachseneOffen: 'Au moins une personne de 18 à 24 ans vit dans le ménage. Elle ne compte que si elle est en première formation (apprentissage, école ou études jusqu’au premier diplôme) — la limite est alors nettement plus élevée. L’office des contributions sociales précise le droit.',
     erstausbildungFrage: '{name} : en première formation ?',
     personAlter: 'Personne, {alter} ans',
     erstausbildungHinweis: 'Première formation signifie : apprentissage, école ou études jusqu’au premier diplôme. Seulement dans ce cas la personne compte (et la limite augmente) ; sinon elle ne fait pas partie du ménage. La réponse reste enregistrée dans le ménage.',

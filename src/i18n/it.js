@@ -3717,7 +3717,7 @@ export default {
     checkTitle: 'Verifica rapida',
     annahmeOhneDreizehnten: 'Reddito calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima è più alto e può superare il limite. Si può indicare nel capitolo «Finanze».',
     result_tableLimit: 'Per questa economia domestica (tre o più adulti senza figli) la tabella non indica un limite. Il diritto lo chiarisce l’ufficio dei contributi sociali.',
-    result_jungeErwachseneOffen: 'Nell’economia domestica vive una persona tra 18 e 24 anni. Conta solo se è in prima formazione (apprendistato, scuola o studi fino al primo diploma) — allora il limite è nettamente più alto. Il diritto lo chiarisce l’ufficio dei contributi sociali.',
+    result_jungeErwachseneOffen: 'Nell’economia domestica vive almeno una persona tra 18 e 24 anni. Conta solo se è in prima formazione (apprendistato, scuola o studi fino al primo diploma) — allora il limite è nettamente più alto. Il diritto lo chiarisce l’ufficio dei contributi sociali.',
     erstausbildungFrage: '{name}: in prima formazione?',
     personAlter: 'Persona, {alter} anni',
     erstausbildungHinweis: 'Prima formazione significa: apprendistato, scuola o studi fino al primo diploma. Solo allora la persona conta (e il limite sale); altrimenti non fa parte dell’economia domestica. La risposta resta salvata nell’economia domestica.',
