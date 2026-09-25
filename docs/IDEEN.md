@@ -44,7 +44,8 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
   baut auf Vorhandenem auf. Der Oktober ist schon teils belegt (Oktober-Paket der Bauliste:
   Kantons-Nachfragen K30/K32, RM-Gegenlese K29, Umbauten O1–O7), darum bewusst wenig.
 - **Winter** (Nov. bis Feb.) — mittelgross, oder es braucht erst einen Baustein aus dem
-  Oktober (meist O3 «Ergebnis-Art als festes Feld» oder einen Entscheid).
+  Oktober (meist O3 «Ergebnis-Art als festes Feld» oder einen Entscheid). *O3 ist seit 25.09.
+  gebaut (#345): Baustein plus 8 Rechner; die übrigen Rechner folgen Stück für Stück.*
 - **Irgendwann** — hängt an einem Grundsatz-Entscheid (Gamification, Backend, Konten) oder
   an Menschen ausserhalb (Übersetzung, Partner).
 
@@ -79,7 +80,7 @@ Abschiedsagentur, plaant).
 
 | Idee | § | hängt an |
 |---|---|---|
-| **Grauzonen sammeln** — eine Liste echter Fälle, jeder mit Quelle | §0 | Recherche; Bau erst im Winter |
+| ✅ **Grauzonen sammeln** — erledigt 25.09.: [`GRAUZONEN.md`](GRAUZONEN.md), 19 Fälle (14 belegt, 5 teilweise); drei live falsche Sätze daraus behoben (#347), EO-Betreuung 14 → 98 Taggelder (#350) | §0 | Bau der Entscheidungsbäume im Winter |
 | Übersetzer:innen / Partnerorganisation für Asyl-Sprachen suchen | §11 | Stebler Studios, Kontakt nach aussen |
 | Fachaussagen vom 19.07. belegen (KK-Wechsel mit Schulden, Kündigungstermine, Rückforderungen) | §5 | Quellen; `swiss-precision-pruefer` |
 
@@ -91,7 +92,7 @@ Abschiedsagentur, plaant).
 | Weitere Generatoren: Einsprachen, IPV-Anträge, Kündigungen, Schweizer Briefformat | §5 | O3; Rechts-Prüfung |
 | «Nächster Schritt» mit Warum · aus einem Befund wird eine Aufgabe | §5, Bauliste O7 | O3 + Vorgangs-Modell |
 | Jedes Ereignis mit 13 Ebenen · Lebenszustände schalten Abläufe um | §0 | Kern-Entscheid (Oktober) |
-| Grauzonen als Entscheidungsbäume | §0 | die Oktober-Sammlung |
+| Grauzonen als Entscheidungsbäume | §0 | [`GRAUZONEN.md`](GRAUZONEN.md) (liegt vor) |
 | Schnellchecks als Instrumente | §3 | Design-Mockup |
 | Kapitel-Architektur umsetzen | §6 | Kern-Entscheid (Oktober) |
 | Versicherungen: Ablauf melden, günstigere Wege · Pflichten sichtbar machen | §5 | Oktober-Belege |
