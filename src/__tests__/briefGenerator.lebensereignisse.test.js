@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   generateLetter, getLetterTemplates, leseAngaben, BRIEF_ANGABEN,
-  rechtsvorschlagFrist, klageFrist336b, briefCanRender,
+  rechtsvorschlagFrist, klageFrist336b, briefCanRender, leseBetrag, angabenEingetippt,
 } from '../briefGenerator.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -167,6 +167,9 @@ describe('dismissalObjection — OR Art. 336b / 335', () => {
     const html = generateLetter('dismissalObjection', person, t, { angaben: { ende: '2026-12-31' } });
     expect(html).not.toContain('31.12.2026');
   });
+  it('Hilfetext: sachlich, ohne Namen und Anschuldigungen', () => {
+    expect(t('briefe.dismissalObjection.felder.einschaetzung.hilfe')).toMatch(/Namen und Anschuldigungen/);
+  });
   it('Klagefrist: 180 Tage nach dem Ende, Tag des Endes zählt nicht', () => {
     expect(klageFrist336b('2026-12-31')).toBe('2027-06-29');
     expect(klageFrist336b('')).toBeNull();
@@ -198,6 +201,32 @@ describe('debtObjection — SchKG Art. 74', () => {
   it('Teilrechtsvorschlag ohne Betrag: Platzhalter statt geratener Zahl', () => {
     const k = koerper(generateLetter('debtObjection', person, t, { angaben: { ...angaben, umfang: 'teil' } }));
     expect(k).toContain(`CHF ${FILL}`);
+  });
+  // Fach-Prüfer 26.09.2026 (Blocker): parseFloat("1'234.50") ergab 1 → «CHF 1» bestritten.
+  it('🛑 Betrag: Schweizer Schreibweisen werden richtig gelesen, Mehrdeutiges nie geraten', () => {
+    expect(leseBetrag("1'234.50")).toBe(1234.5);
+    expect(leseBetrag('1’234.50')).toBe(1234.5);
+    expect(leseBetrag('1 234,50')).toBe(1234.5);
+    expect(leseBetrag('CHF 500.-')).toBe(500);
+    expect(leseBetrag('Fr. 80.–')).toBe(80);
+    expect(leseBetrag('250')).toBe(250);
+    for (const unklar of ['1.234,50', '1,234.50', '12.345', 'zwei', '', '-50', '0', '1.2.3']) {
+      expect(leseBetrag(unklar), unklar).toBe(0);
+    }
+  });
+  it('🛑 Betrag im Brief: «1\'234.50» wird CHF 1’234.50, nicht CHF 1', () => {
+    const k = koerper(generateLetter('debtObjection', person, t, { angaben: { ...angaben, umfang: 'teil', teilbetrag: "1'234.50" } }));
+    expect(k).toMatch(/CHF 1.234\.50/);
+    expect(k).not.toMatch(/CHF 1\./);
+  });
+  it('SchKG Art. 75 Abs. 2: Einrede «kein neues Vermögen» nur auf Wunsch im Brief', () => {
+    expect(koerper(generateLetter('debtObjection', person, t, { angaben }))).not.toContain('neuem Vermögen');
+    const k = koerper(generateLetter('debtObjection', person, t, { angaben: { ...angaben, neuesVermoegen: true } }));
+    expect(k).toContain('bestreite ich, zu neuem Vermögen gekommen zu sein (Art. 75 Abs. 2 SchKG)');
+  });
+  it('abgelaufene Frist: «möglicherweise» — nie ein endgültiges «zu spät»', () => {
+    expect(t('briefe.debtObjection.frist.vorbei')).toMatch(/möglicherweise/);
+    expect(t('briefe.debtObjection.frist.vorbei')).toMatch(/im Zweifel trotzdem/);
   });
   it('keine Begründung im Brief (Art. 75 Abs. 1)', () => {
     const k = koerper(generateLetter('debtObjection', person, t, { angaben }));
@@ -269,8 +298,24 @@ describe('deathNotice — keine Annahme der Erbschaft (ZGB Art. 571 Abs. 2)', ()
     expect(t('briefe.deathNotice.erbe.brief')).toMatch(/Ergänzen Sie/);
     expect(tDu('briefe.deathNotice.erbe.brief')).toMatch(/Ergänze ihn/);
   });
+  it('🛑 gedruckter Brief sagt ausdrücklich «keine Kündigung» (Rechts-Prüfer 26.09.2026)', () => {
+    expect(koerper(generateLetter('deathNotice', person, t, { angaben }))).toContain('keine Kündigung');
+  });
+  it('UI-Hinweis: Beispiele als Beispiele, «blosse Verwaltung» nicht als Freibrief', () => {
+    expect(t('briefe.deathNotice.erbe.text')).toMatch(/zum Beispiel/);
+    expect(t('briefe.deathNotice.erbe.text')).toMatch(/im Zweifel bei der Erbschaftsbehörde/);
+  });
   it('Empfänger bleibt Platzhalter (die Stelle ist frei wählbar)', () => {
     expect(empfaenger(generateLetter('deathNotice', person, t, { angaben }))).toContain(t('briefe.recipientPlaceholder'));
+  });
+});
+
+describe('angabenEingetippt — nur, was im Brief steht', () => {
+  it('Frist-Feld «ende» und ausgeblendeter Teilbetrag zählen nicht', () => {
+    expect(angabenEingetippt('dismissalObjection', { ende: '2026-12-31' })).toBe(false);
+    expect(angabenEingetippt('debtObjection', { umfang: 'ganz', teilbetrag: '50' })).toBe(false);
+    expect(angabenEingetippt('debtObjection', { umfang: 'teil', teilbetrag: '50' })).toBe(true);
+    expect(angabenEingetippt('deathNotice', { verstorben: 'X' })).toBe(true);
   });
 });
 
@@ -278,8 +323,8 @@ describe('Sie/Du — Hinweise folgen der Anrede, der Brief bleibt «Sie» an die
   it('Hinweise unterscheiden sich', () => {
     expect(t('briefe.workReference.hinweis')).toMatch(/können Sie/);
     expect(tDu('briefe.workReference.hinweis')).toMatch(/kannst du/);
-    expect(t('briefe.debtObjection.frist.vorbei')).toMatch(/Wenden Sie/);
-    expect(tDu('briefe.debtObjection.frist.vorbei')).toMatch(/Wende dich/);
+    expect(t('briefe.debtObjection.frist.vorbei')).toMatch(/Fragen Sie sofort/);
+    expect(tDu('briefe.debtObjection.frist.vorbei')).toMatch(/Frag sofort/);
   });
   it.each(NEU)('%s: Brieftext identisch bei Sie und Du', (key) => {
     const a = generateLetter(key, person, t, { angaben: { einschaetzung: 'x' } });

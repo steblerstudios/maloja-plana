@@ -679,7 +679,7 @@ export const BRIEF_ANGABEN = {
   dismissalObjection: [
     { key: 'kuendigungsdatum', type: 'date' },
     // Nur für die Frist-Anzeige in der App — steht nicht im Brief.
-    { key: 'ende', type: 'date' },
+    { key: 'ende', type: 'date', nurFrist: true },
     { key: 'begruendung', type: 'ja', vorgabe: true },
     { key: 'einschaetzung', type: 'text' },
   ],
@@ -689,6 +689,9 @@ export const BRIEF_ANGABEN = {
     { key: 'glaeubiger', type: 'text' },
     { key: 'umfang', type: 'wahl', optionen: ['ganz', 'teil'], vorgabe: 'ganz' },
     { key: 'teilbetrag', type: 'betrag', nurWenn: { umfang: 'teil' } },
+    // SchKG Art. 75 Abs. 2: nach einem Konkurs muss die Einrede «kein neues Vermögen» IM
+    // Rechtsvorschlag stehen, sonst ist sie verwirkt (Rechts-Prüfer 26.09.2026). Vorgabe aus.
+    { key: 'neuesVermoegen', type: 'ja', vorgabe: false },
   ],
   deathNotice: [
     { key: 'verstorben', type: 'text' },
@@ -696,6 +699,24 @@ export const BRIEF_ANGABEN = {
     { key: 'vertragsnummer', type: 'text' },
   ],
 };
+
+// Bestrittener Betrag aus einer Texteingabe — STRENG (Fach-Prüfer 26.09.2026, Blocker):
+// `parseFloat("1'234.50")` ergab 1, und «CHF 1» im Rechtsvorschlag hiesse «nur 1 Franken
+// bestritten» (SchKG Art. 74 Abs. 2). Erlaubt: Schweizer Tausender-Apostroph (' ’ ‘),
+// Leerzeichen, «CHF», Endung «.-»/«.–», EIN Dezimaltrenner (Punkt oder Komma) mit höchstens
+// zwei Stellen. Alles Mehrdeutige (z. B. «1.234,50») → 0 = Platzhalter statt falscher Zahl.
+export function leseBetrag(v) {
+  let x = String(v == null ? '' : v).replace(/CHF|Fr\./gi, '').replace(/[\s'’‘\u00a0\u202f]/g, '');
+  x = x.replace(/[.,][-–—]$/, '');
+  if (!/^\d+([.,]\d{1,2})?$/.test(x)) return 0;
+  const n = parseFloat(x.replace(',', '.'));
+  return n > 0 ? n : 0;
+}
+
+// Ist ein Feld bei den aktuellen Angaben sichtbar (nurWenn)?
+export function feldSichtbar(f, a) {
+  return !f.nurWenn || Object.entries(f.nurWenn).every(([k, v]) => a[k] === v);
+}
 
 // Angaben einer Vorlage lesen: Vorgaben einsetzen, Text trimmen, ungültige Wahl → Vorgabe.
 export function leseAngaben(templateKey, roh) {
@@ -706,7 +727,7 @@ export function leseAngaben(templateKey, roh) {
     const v = r[f.key];
     if (f.type === 'wahl') out[f.key] = f.optionen.includes(v) ? v : f.vorgabe;
     else if (f.type === 'ja') out[f.key] = typeof v === 'boolean' ? v : !!f.vorgabe;
-    else if (f.type === 'betrag') out[f.key] = num(v) > 0 ? num(v) : 0;
+    else if (f.type === 'betrag') out[f.key] = leseBetrag(v);
     else out[f.key] = String(v == null ? '' : v).trim();
   }
   return out;
@@ -715,10 +736,13 @@ export function leseAngaben(templateKey, roh) {
 // Hat die Person etwas EINGETIPPT (Text, Datum, Betrag)? Wahlfelder und Ankreuzfelder haben
 // immer eine Vorgabe und tragen keine persönliche Angabe — sie zählen nicht. Quelle für die
 // Export-Vorschau (Kategorie 'briefAngaben').
+// Nur Felder, die im Brief STEHEN: ausgeblendete (nurWenn) und reine Frist-Felder (nurFrist)
+// zählen nicht (Fach-Prüfer 26.09.2026).
 export function angabenEingetippt(templateKey, roh) {
   const r = roh && typeof roh === 'object' ? roh : {};
+  const a = leseAngaben(templateKey, r);
   return (BRIEF_ANGABEN[templateKey] || [])
-    .filter(f => f.type !== 'wahl' && f.type !== 'ja')
+    .filter(f => f.type !== 'wahl' && f.type !== 'ja' && !f.nurFrist && feldSichtbar(f, a))
     .some(f => String(r[f.key] == null ? '' : r[f.key]).trim() !== '');
 }
 
@@ -825,8 +849,9 @@ function generateDebtObjection(data, t, options = {}) {
     absaetze: [
       t(k + 'salutation'),
       t(k + 'body1', { number: nummer, date: datum, creditor: glaeubiger }),
-      // Der bestrittene Betrag muss «genau» sein (Abs. 2): Rappen immer zweistellig.
+      // Der bestrittene Betrag muss «genau» sein (Abs. 2): mit Rappen zweistellig, ganze Franken ohne.
       teil ? t(k + 'teil', { amount: a.teilbetrag > 0 ? zahl(a.teilbetrag, { stellen: Number.isInteger(a.teilbetrag) ? 0 : 2 }) : fill }) : t(k + 'ganz'),
+      a.neuesVermoegen ? t(k + 'neuesVermoegen') : '',
       t(k + 'bescheinigung'),
       t(k + 'closing'),
     ],

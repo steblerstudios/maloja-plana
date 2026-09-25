@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
@@ -83,7 +83,7 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
     fontSize: textTokens.sm, fontFamily: 'inherit',
   };
   const zeile = { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
-  const sichtbar = felder.filter(f => !f.nurWenn || Object.entries(f.nurWenn).every(([k, v]) => a[k] === v));
+  const sichtbar = felder.filter(f => feldSichtbar(f, a));
   return React.createElement('div', {
     style: { padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md },
   },
@@ -123,7 +123,13 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
             autoComplete: 'off',
             style: inputStil,
           }),
-          hilfe
+          hilfe,
+          // Betrag: zeigen, was im Brief steht — eine falsch gelesene Zahl fiele sonst erst
+          // beim Betreibungsamt auf (Fach-Prüfer 26.09.2026).
+          f.type === 'betrag' && String(roh[f.key] == null ? '' : roh[f.key]).trim() !== '' && React.createElement('div', {
+            'aria-live': 'polite',
+            style: { fontSize: textTokens.xs, color: a[f.key] > 0 ? palette.text : palette.goldDeep, lineHeight: leading.normal, marginTop: space.xs, fontWeight: weight.medium },
+          }, a[f.key] > 0 ? t('briefe.angaben.betragErkannt', { amount: zahl(a[f.key], { stellen: Number.isInteger(a[f.key]) ? 0 : 2 }) }) : t('briefe.angaben.betragUnklar'))
         );
       })
     )
