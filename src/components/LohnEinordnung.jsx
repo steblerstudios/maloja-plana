@@ -57,7 +57,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
           left: 'calc(' + l + '% + ' + leftGap + 'px)',
           width: 'calc(' + w + '% - ' + (leftGap + rightGap) + 'px)',
           background: 'rgba(' + tintBase + ',' + (alphas[i] != null ? alphas[i] : 0.03) + ')',
-          borderRadius: '9px', border: '0.5px solid ' + palette.border,
+          borderRadius: radius.md, border: '0.5px solid ' + palette.border,
         },
       },
         fillW > 0 && React.createElement('div', {

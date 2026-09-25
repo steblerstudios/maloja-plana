@@ -91,7 +91,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
         style: {
           fontSize: text.xs, fontFamily: 'inherit', cursor: 'pointer',
           color: palette.mid, background: 'none',
-          border: '1px solid ' + palette.sage + '40', borderRadius: '999px',
+          border: '1px solid ' + palette.sage + '40', borderRadius: radius.full,
           padding: '3px 12px', minHeight: '44px',
         },
       }, zeigeRaeumlich ? t('datenWirken.ansichtFlach') : t('datenWirken.ansichtRaeumlich')),
@@ -260,7 +260,7 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
                     style: {
                       display: 'inline-flex', alignItems: 'center', gap: '4px',
                       background: b.color + '14', border: '1px solid ' + b.color + '33',
-                      borderRadius: '999px', padding: '1px 7px 1px 3px',
+                      borderRadius: radius.full, padding: '1px 7px 1px 3px',
                       whiteSpace: 'nowrap',
                     },
                   },

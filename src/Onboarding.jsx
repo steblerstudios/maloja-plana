@@ -314,7 +314,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               style: {
                 padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                borderRadius: radius.pill || radius.md,
+                borderRadius: radius.md,
                 border: '1px solid ' + (on ? palette.sage + '88' : palette.border),
                 background: on ? palette.sage + '18' : 'transparent',
                 color: on ? (palette.sageDeep || palette.text) : palette.mid,

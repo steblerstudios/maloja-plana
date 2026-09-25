@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, space, leading } from '../config/tokens.js';
+import { text, weight, space, leading, radius } from '../config/tokens.js';
 import { renderSource } from '../utils/renderSource.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
 
@@ -109,7 +109,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
       style: {
-        position: 'relative', height: '10px', background: palette.border, borderRadius: '5px',
+        position: 'relative', height: '10px', background: palette.border, borderRadius: radius.full,
         marginBottom: '12px',
         // Das abgehobene „!" ist absolut positioniert und würde sonst in die Überschrift
         // ragen — Platz reservieren statt auf Glück hoffen.
@@ -117,7 +117,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       },
     },
       // Füllung = eigener Wert
-      React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: barFill, borderRadius: '5px' } }),
+      React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: barFill, borderRadius: radius.full } }),
       // Punkt = Regions-Durchschnitt (nur wenn die Füllung den eigenen Wert zeigt).
       // Dünner Halo (1.5px), kein hartes Weiss.
       hasUser && React.createElement('div', {

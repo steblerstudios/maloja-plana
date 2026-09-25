@@ -126,7 +126,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
           onClick: () => toggle(z.key),
           'aria-pressed': on,
           style: {
-            padding: '12px 14px', borderRadius: radius.pill || radius.md,
+            padding: '12px 14px', borderRadius: radius.md,
             border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
             background: on ? palette.sage + '18' : 'transparent',
             color: on ? (palette.sageDeep || palette.text) : palette.mid,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Gauge } from './Gauge.jsx';
 import { tachoState } from '../data/franchiseTacho.js';
-import { text, weight, space, leading } from '../config/tokens.js';
+import { text, weight, space, leading, radius } from '../config/tokens.js';
 import { zahl } from '../utils/geld.js';
 
 // Franchise-Tacho: das erste „Instrument". Liest die bestehende Franchise-
@@ -36,7 +36,7 @@ export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) 
   const swatch = (color, label) => h('span', {
     style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid },
   },
-    h('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: color, flexShrink: 0 }, 'aria-hidden': true }),
+    h('span', { style: { width: '10px', height: '10px', borderRadius: radius.hair, background: color, flexShrink: 0 }, 'aria-hidden': true }),
     label);
 
   return h('div', { style: { marginBottom: space.md + 'px' } },

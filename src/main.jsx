@@ -195,7 +195,7 @@ const LanguageSwitcher = ({ palette }) => {
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',
-        border: '1px solid ' + palette.border, borderRadius: '6px',
+        border: '1px solid ' + palette.border, borderRadius: radius.sm,
         paddingBlock: '5px', paddingInlineStart: '30px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
@@ -231,7 +231,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       color: vorlesen.enabled ? palette.sand : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
       border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
-      borderRadius: '4px',
+      borderRadius: radius.xs,
       cursor: 'pointer',
       fontSize: '11px',
       lineHeight: 1,

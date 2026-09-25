@@ -164,7 +164,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     const lead = (s) => h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', marginBottom: space.sm } }, s);
 
     if (ipvStatus.status === IPV_STATUS.BESTAETIGT) {
-      const stamp = h('span', { style: { border: '2px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.5px', padding: '2px 8px', borderRadius: '4px', transform: 'rotate(-6deg)', display: 'inline-block' } }, t('ipvStatus.stamp'));
+      const stamp = h('span', { style: { border: '2px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.5px', padding: '2px 8px', borderRadius: radius.xs, transform: 'rotate(-6deg)', display: 'inline-block' } }, t('ipvStatus.stamp'));
       // Frist an das Verfügungs-Datum koppeln (nicht an „heute"): so bleibt die
       // dueDate über Tage stabil und die addReminder-Dedup (Titel + Datum) greift —
       // sonst entstünde bei jedem erneuten Antippen an einem anderen Tag ein Duplikat.
@@ -483,7 +483,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
               style: {
                 padding: space.sm,
                 background: key === canton ? palette.sage + '22' : palette.up,
-                borderRadius: '4px',
+                borderRadius: radius.xs,
                 border: '1px solid ' + (key === canton ? palette.sage : palette.border),
                 fontSize: text.sm
               }

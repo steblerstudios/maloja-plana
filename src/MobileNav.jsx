@@ -209,7 +209,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         style: { padding: '12px 20px 8px 20px' }
       },
         React.createElement('div', {
-          style: { display: 'flex', alignItems: 'center', gap: '8px', background: palette.up, borderRadius: '8px', padding: '8px 12px', border: '1px solid ' + palette.border }
+          style: { display: 'flex', alignItems: 'center', gap: '8px', background: palette.up, borderRadius: radius.md, padding: '8px 12px', border: '1px solid ' + palette.border }
         },
           React.createElement('div', { style: { color: palette.mid, flexShrink: 0, width: '16px', height: '16px' } }, renderIcon('search', '16px')),
           React.createElement('input', {

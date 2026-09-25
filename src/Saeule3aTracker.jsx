@@ -71,7 +71,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, jahr, max, onChange }) =
           ceiling ? t('saeule3a.ofMax', { max: chf(ceiling), jahr: jahrJetzt }) : t('saeule3a.forYear', { jahr: jahrJetzt }))
       ),
       // calm progress bar — nur, wenn es ein belegtes Maximum gibt, gegen das sie misst
-      ceiling && React.createElement('div', { style: { height: '6px', background: palette.border, borderRadius: '3px', overflow: 'hidden' } },
+      ceiling && React.createElement('div', { style: { height: '6px', background: palette.border, borderRadius: radius.hair, overflow: 'hidden' } },
         React.createElement('div', { style: { height: '100%', width: pct + '%', background: pct >= 100 ? palette.sage : palette.sky, transition: 'width 300ms ease' } })
       ),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
