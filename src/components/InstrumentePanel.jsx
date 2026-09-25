@@ -11,9 +11,10 @@ import { text, weight, space, radius, leading, duration, ease } from '../config/
 
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
 // Instrument als Mini-Glyph + Peilung + Ort zeigt und in die Detailansicht führt.
-// Live wo es günstig/robust ist (Schild, Tankanzeige, Kompass — reine Zustands-
-// Funktionen). Der Tacho braucht die Prämien-Pipeline → hier bewusst nur
-// Einstieg statt gefälschtem Zeiger (Ehrlichkeit).
+// Live wo es günstig/robust ist (Schild, Tankanzeige, Steuer-Säule — reine Zustands-
+// Funktionen). Das Franchise-Kreuz braucht die Prämien-Pipeline → hier bewusst nur
+// Einstieg statt eines erfundenen Standes (Ehrlichkeit). Seit 25.09.2026 hat jedes
+// Instrument eine eigene Form: Kreuz · Säule · Tacho (Reserve) · Schild.
 
 // ── Mini-Glyphen (ohne Text, damit sie klein lesbar bleiben) ──
 const gp = (f, r, cx, cy) => { const a = Math.PI * (1 - Math.max(0, Math.min(1, f))); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
@@ -55,6 +56,20 @@ const miniSaeule = (palette, t, { betragJahr, verheiratet }) => {
       ? h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand }, h('title', null, titel))
       : h('path', { d: oben(x + 0.5, S_BASIS - S_HOCH, S_BREIT - 1, S_HOCH, 2), fill: 'none', stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2' }, h('title', null, titel)),
     h('line', { x1: 12, x2: 44, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
+  );
+};
+
+// Mini-Kreuz — Spiegel des Franchise-Kreuzes (PraemienOrientierung): zwei Linien, die sich
+// kreuzen (hohe Franchise sky, tiefe sand, wie dort). Bewusst ohne Strich für die eigenen
+// Kosten — die Prämien-Pipeline läuft hier nicht, also kein erfundener Stand.
+const miniKreuz = (palette) => {
+  const h = React.createElement;
+  return h('svg', { viewBox: '0 0 64 44', width: 64, height: 44, 'aria-hidden': true },
+    h('line', { x1: 4, x2: 60, y1: 40.5, y2: 40.5, stroke: palette.border, strokeWidth: 1 }),
+    h('polyline', { points: '6,28 34,15 58,15', fill: 'none', stroke: palette.sand, strokeWidth: 2.5, strokeLinejoin: 'round' }),
+    h('polyline', { points: '6,35 40,11 58,7', fill: 'none', stroke: palette.sky, strokeWidth: 2.5, strokeLinejoin: 'round' }),
+    h('rect', { x: 55, y: 12, width: 6, height: 6, fill: palette.sand }),
+    h('circle', { cx: 58, cy: 7, r: 3, fill: palette.sky })
   );
 };
 
@@ -100,7 +115,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: t('instrumente.tachoSub'),
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sage, right: palette.sandDeep }),
+      glyph: miniKreuz(palette),
       onClick: () => onNavigate('praemien'),
     },
     {

@@ -4261,6 +4261,16 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     tachoOrientation: { sie: 'Uschespert che Vus registrais ils custs da sanadad, mussa la sajetta nua che Vus essas quest onn.', du: 'Uschespert che ti registreschas ils custs da sanadad, mussa la sajetta nua che ti es quest onn.' },
     tachoTrackLink: 'Registrar ils custs da sanadad',
+    // TODO(rm): provisorisch — Gegenlese (Franchise-Kreuz, 25.09.2026)
+    kreuzAchse: 'Custs da sanadad per onn',
+    kreuzKosten: 'Custs per onn',
+    kreuzLinie: 'Franchisa {franchise}',
+    kreuzBisher: 'fin ussa',
+    kreuzHochrechnung: 'Projecziun',
+    kreuzHochrechnungText: 'Projectà sin l’entir onn fissan quai radund CHF {value} — ina stimaziun grossa: custs da sanadad vegnan savens irregularmain.',
+    kreuzOrientation: { sie: 'Uschespert che Vus registrais custs da sanadad, mussa ina strivla, nua che Vus stais en l’onn.', du: 'Uschespert che ti registreschas custs da sanadad, mussa ina strivla, nua che ti stas en l’onn.' },
+    kreuzTooltip: 'Tar CHF {c}: franchisa {low} ≈ CHF {tief} · franchisa {high} ≈ CHF {hoch}',
+    kreuzAria: 'Custs totals per onn per la franchisa {low} e {high}; las lingias sa cruschan al punct da pareglia da CHF {be}.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     reserveCheck_strong: { sie: 'Vossa reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per Vus.', du: 'Tia reserva (CHF {savings}) cuvra quest cas il pli mal facilmain — schizont dubel. La franchisa pli auta è bain purtabla per tai.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -5293,7 +5303,7 @@ export default {
     title: { sie: 'Voss instruments', du: 'Tes instruments' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Quatter controllas tranquillas cun in sguard — tutgai ina.', du: 'Quatter controllas tranquillas cun in sguard — tutga ina.' },
-    tacho: 'Tachimeter da franchisa',
+    tacho: 'Crusch da franchisa',
     tachoSub: 'auta u bassa — tge vala la paina?',
     kompass: 'Boussola da prestaziuns',
     kompassFound: '{n} vias pussaivlas',

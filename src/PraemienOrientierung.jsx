@@ -10,7 +10,7 @@ import { renderSource } from './utils/renderSource.js';
 import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
 import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './data/kvgLeistungen.js';
-import { FranchiseTacho } from './components/FranchiseTacho.jsx';
+import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
 import { zahl, betrag } from './utils/geld.js';
 
 function ageClassFromBirth(dateStr) {
@@ -104,7 +104,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       const totalHigh = high.premium * 12 + berechneFranchise(high.franchise, c, sbMax).eigenanteil;
       if (totalHigh > totalLow) { breakEven = c; break; }
     }
-    return { lowFra: low.franchise, highFra: high.franchise, annualSaving, reserve, sbMax, breakEven };
+    return { lowFra: low.franchise, highFra: high.franchise, lowPremium: low.premium, highPremium: high.premium, annualSaving, reserve, sbMax, breakEven };
   }, [referenceData, ageClass]);
 
   // Laufende, KVG-anrechenbare Gesundheitskosten dieses Jahres (aus den KK-Belegen) —
@@ -348,8 +348,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
     },
       React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, marginBottom: space.sm + 'px' } }, t('po.franchiseOptTitle')),
-      // Franchise-Tacho: visuelle Kopfzeile des Optimierers (Instrument über derselben Logik)
-      React.createElement(FranchiseTacho, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
+      // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
+      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
         t('po.franchiseOptSaving', { high: zahl(franchiseOpt.highFra, { hoechstens: 2 }), low: zahl(franchiseOpt.lowFra, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) })),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
