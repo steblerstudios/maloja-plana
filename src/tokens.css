@@ -246,9 +246,26 @@ html { overflow-x: clip; }
   position: absolute;
   top: 0; bottom: 0; left: 50%;
   width: 100vw; margin-left: -50vw;
-  background: linear-gradient(transparent, var(--mp-seite) var(--mp-space-xl));
+  /* Milchglas zwischen den Kacheln (Rückmeldung Stebler Studios, 25.09.): die Kacheln
+     bleiben deckend, dazwischen scheint der Berg weichgezeichnet durch. Eingetönt mit
+     72 % Seitenfarbe — Überschriften ohne Kachel («Ihr Alltag») stehen sonst auf hellem
+     Himmel; gerechnet ≥ 5:1 auch über dem hellsten Himmel. Oben blendet die Maske
+     das Glas weich ein, damit keine Kante über dem Berg steht. */
+  background: color-mix(in srgb, var(--mp-seite) 72%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(transparent, #000 var(--mp-space-2xl));
+  mask-image: linear-gradient(transparent, #000 var(--mp-space-2xl));
   z-index: -1;
   pointer-events: none;
+}
+/* Wer weniger Transparenz eingestellt hat, bekommt eine deckende Seite. */
+@media (prefers-reduced-transparency: reduce) {
+  .mp-blatt::before {
+    background: linear-gradient(transparent, var(--mp-seite) var(--mp-space-xl));
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    -webkit-mask-image: none; mask-image: none;
+  }
 }
 
 /* ─── Hover für Weg-Knöpfe (Zurück, Querverweise) ──────────
