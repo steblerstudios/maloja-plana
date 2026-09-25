@@ -258,6 +258,31 @@ Abschiedsagentur, plaant).
   weg, nur an andere Orte» · Mond/Sonne statt Kreis für Hell/Dunkel · Footer oder unteres
   App-Menü · Früchte sollen hängen, nicht auf den Ästen sitzen. Seither ist viel Politur
   gelaufen (UI/UX-Runden 1–4); welche davon erledigt sind, ist nicht einzeln geprüft.
+- **Tester-Feedback vom 25.09.2026** (eine Testerin, Dashboard). Stand je Punkt:
+  - ✅ **Kapitel anklickbar**: vorher waren nur die Felder («Vorname») Knöpfe, nicht
+    «Persönliche Basis». Heute ist jede Kapitelzeile ein Knopf (s. nächster Punkt).
+    **→ Oktober:** ein Feld öffnet das Kapitel, springt aber nicht zum Feld (Tipp auf
+    «PLZ» → Kapitel Wohnen, oben). Gewünscht: hinscrollen + Fokus ins Feld. Gilt ebenso
+    für «Was ist jetzt dran? → … ergänzen». Kein bestehender Mechanismus, eigener Umbau.
+  - ✅ **Werkzeuge: Lebensereignisse startet eingeklappt**, wie alle anderen Gruppen.
+    Die Instrumente bleiben auf dem Dashboard (so gewünscht).
+  - ✅/❓ **«Warum nicht *Willkommen bei Maloja Plana*?»**: Entscheid 25.09.: im Produkt
+    heisst es **«Maloja Plana»**. Der Rundgang begrüsst jetzt so (5 Sprachen; Italienisch
+    neu geschlechtsneutral «Le diamo / Ti diamo il benvenuto» statt «Benvenuto»).
+    **→ Oktober:** ob auch über dem Claim auf dem Dashboard ein Gruss steht (Vorschlag:
+    nur beim ersten Besuch, er kostet am Handy Platz über dem Berg).
+  - ✅ **Fortschritt + Grundordnung sind eine Karte, von Anfang an sichtbar**: eine
+    Zeile je Kapitel, aufklappbar, darin die Grundordnungs-Felder dieses Kapitels und
+    «Öffnen». Der Abschnitt «Detaillierter Fortschritt» ist weg. Die Karte bleibt ein
+    nachgeladenes Stück (1,9 kB gzip), das Hauptbundle wurde nicht grösser.
+  - ❓ **Werkzeuge & Features nochmals anschauen**: Bestand + drei Gliederungen (A nach
+    Lebensbereich · B nach Anlass · C wenig zeigen, eine Liste) in
+    [`design/werkzeuge-gliederung-2026-09-25.md`](design/werkzeuge-gliederung-2026-09-25.md).
+    Befund: Menü (18) und Dashboard (53) führen **zwei verschiedene Listen**, einig nur bei 8.
+    **Entscheid 25.09.: alle drei in einem, im Rucksack** — «Mein Gepäck» (gibt es schon,
+    alle 34 Lebensereignisse in 6 Gegenständen) wird die eine Werkzeug-Seite; Einstellungen,
+    Export und Benachrichtigungen wandern in die Einstellungen. Offen: Gegenstand für Geld,
+    Ort für Ablegen & Ordnen, die 5 Hervorhebungen (→ Oktober).
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 

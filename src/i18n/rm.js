@@ -3171,11 +3171,11 @@ export default {
   },
 
   tour: {
-    a11yLabel: 'Rundgang tras Maloja',
+    a11yLabel: 'Rundgang tras Maloja Plana',
     reopen: 'Reaviar il rundgang',
     next: 'Vinavant', back: 'Enavos', skip: 'Sursiglir', later: 'Pli tard', done: 'Finì',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
-    welcome: { title: 'Bainvegni tar Maloja', text: { sie: 'Voss lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.', du: 'Tes lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.' } },
+    welcome: { title: 'Bainvegni tar Maloja Plana', text: { sie: 'Voss lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.', du: 'Tes lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.' } },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
     berge: { title: 'Il progress', text: { sie: 'Las muntognas mussan a moda tranquilla quant lunsch che Vossa urden da vita è endrizzada — senza pressiun.', du: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' } },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026) [gilt für text]
