@@ -4703,7 +4703,7 @@ export default {
     tankMonths: '{months} months of buffer',
     schild: 'Protection shield',
     schildCount: '{covered}/{total} covered',
-    steuer: 'Tax columns',
+    steuer: 'Tax column',
     steuerBetrag: 'Federal tax ≈ CHF {value} / year',
     setup: 'tap to set up',
   },

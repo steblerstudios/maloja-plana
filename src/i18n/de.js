@@ -4735,7 +4735,7 @@ export default {
     tankMonths: '{months} Monate Reserve',
     schild: 'Schutzschild',
     schildCount: '{covered}/{total} gedeckt',
-    steuer: 'Steuer-Säulen',
+    steuer: 'Steuer-Säule',
     steuerBetrag: 'Bundessteuer ≈ CHF {value} / Jahr',
     setup: 'antippen zum Einrichten',
   },

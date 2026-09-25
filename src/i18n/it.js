@@ -4680,7 +4680,7 @@ export default {
     tankMonths: '{months} mesi di riserva',
     schild: 'Scudo di protezione',
     schildCount: '{covered}/{total} coperte',
-    steuer: 'Colonne fiscali',
+    steuer: 'Colonna fiscale',
     steuerBetrag: 'Imposta federale ≈ CHF {value} / anno',
     setup: 'toccare per configurare',
   },

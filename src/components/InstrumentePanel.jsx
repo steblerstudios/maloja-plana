@@ -2,7 +2,7 @@ import React from 'react';
 import { schildState } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
-import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil } from '../data/kantonaleSteuerdaten.js';
+import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { zahl, betrag as chfBetrag } from '../utils/geld.js';
 import { shieldPath } from './shieldShape.js';
@@ -38,38 +38,23 @@ const miniGauge = (palette, { split = 0.5, left, right, needle }) => {
   return h('svg', { viewBox: '0 0 60 40', width: 60, height: 40, style: { overflow: 'visible' }, 'aria-hidden': true }, els);
 };
 
-// Steuer-Säulen im Kleinen — direkter Spiegel von SteuerSaeulen.jsx (Steuerrechner), gleiche
-// Regeln im Massstab 34 : 120 px:
-//  - Höhe ∝ Betrag AB NULL (dieselbe Formel, Mindesthöhe 8/120), gemeinsame Grundlinie;
-//    nur die obere Kante gerundet, der Fuss steht auf der Linie.
-//  - «ledig» und «verheiratet, gemeinsam» belegt (DBG Art. 36); die eigene Säule in Sand
-//    («aktuell gewählt»), die andere gedämpft (mid + 55), wie im Rechner.
-//  - «verheiratet, einzeln» (Individualbesteuerung, noch nicht in Kraft): gestrichelt,
-//    feste Höhe 44/120, unten offen, ohne Wert.
-//  - Ohne Tarifvergleich (z.B. Konkubinat mit offenem Partnereinkommen) keine erfundenen
-//    Höhen: alle drei gestrichelt.
-//  - Hover: <title> je Säule mit Name und Betrag (die Zahl darunter bleibt die eine Kennzahl).
-const S_MAX = 34, S_BASIS = 40, S_BREIT = 14;
+// Steuer-Säule im Kleinen — Spiegel der EINEN Säule aus SteuerSaeulen.jsx, die die Person
+// betrifft (Wunsch 25.09.2026): ihr Zivilstand, in Sand wie «aktuell gewählt» im Rechner,
+// oben gerundet, auf der Grundlinie stehend. Eine einzelne Säule hat nichts, woran ihre Höhe
+// sich messen könnte — darum feste Höhe; die Zahl darunter trägt die Aussage. Ohne Betrag
+// gestrichelt, wie die Platzhalter-Säule im Rechner. <title> mit Name und Betrag (Hover).
+const S_BASIS = 40, S_BREIT = 16, S_HOCH = 30;
 const oben = (x, y, w, h, r) => 'M ' + x + ' ' + (y + h) + ' V ' + (y + r) + ' Q ' + x + ' ' + y + ' ' + (x + r) + ' ' + y
   + ' H ' + (x + w - r) + ' Q ' + (x + w) + ' ' + y + ' ' + (x + w) + ' ' + (y + r) + ' V ' + (y + h);
-const miniSaeulen = (palette, t, { ledig, gemeinsam, verheiratet, belegt }) => {
+const miniSaeule = (palette, t, { betragJahr, verheiratet }) => {
   const h = React.createElement;
-  const max = Math.max(ledig, gemeinsam, 1);
-  const hoehe = (v) => Math.max(S_MAX * 8 / 120, S_MAX * v / max);
-  const offen = (key, x, hh, titel) => h('path', {
-    key, d: oben(x + 0.5, S_BASIS - hh, S_BREIT - 1, hh, 2), fill: 'none',
-    stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2',
-  }, titel && h('title', null, titel));
-  const fest = (key, x, v, aktiv) => h('path', {
-    key, d: oben(x, S_BASIS - hoehe(v), S_BREIT, hoehe(v), 3) + ' Z',
-    fill: aktiv ? palette.sand : palette.mid + '55',
-  }, h('title', null, t('tax.saeulen.' + key) + ': ' + chfBetrag(v) + (aktiv ? ' — ' + t('tax.saeulen.active') : '')));
-  return h('svg', { viewBox: '0 0 56 44', width: 56, height: 44, role: 'img', 'aria-label': t('tax.saeulen.title') },
-    belegt ? fest('ledig', 4, ledig, !verheiratet) : offen('ledig', 4, S_MAX * 0.6),
-    belegt ? fest('gemeinsam', 21, gemeinsam, verheiratet) : offen('gemeinsam', 21, S_MAX * 0.6),
-    offen('einzeln', 38, S_MAX * 44 / 120, t('tax.saeulen.einzeln')),
-    // Grundlinie: die drei Säulen stehen auf derselben Null.
-    h('line', { x1: 1, x2: 55, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
+  const x = 20;
+  const titel = t('tax.saeulen.' + (verheiratet ? 'gemeinsam' : 'ledig')) + (betragJahr != null ? ': ' + chfBetrag(betragJahr) : '');
+  return h('svg', { viewBox: '0 0 56 44', width: 56, height: 44, role: 'img', 'aria-label': titel },
+    betragJahr != null
+      ? h('path', { d: oben(x, S_BASIS - S_HOCH, S_BREIT, S_HOCH, 3) + ' Z', fill: palette.sand }, h('title', null, titel))
+      : h('path', { d: oben(x + 0.5, S_BASIS - S_HOCH, S_BREIT - 1, S_HOCH, 2), fill: 'none', stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2' }, h('title', null, titel)),
+    h('line', { x1: 12, x2: 44, y1: S_BASIS + 0.5, y2: S_BASIS + 0.5, stroke: palette.border, strokeWidth: 1 })
   );
 };
 
@@ -102,13 +87,12 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
 
   // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).
   // Nur die Bundessteuer als Zahl — sie ist der amtlich belegte Tarif (DBG Art. 36).
-  let bundessteuer = null, tarif = null;
+  let bundessteuer = null;
   try {
     if ((Number(data?.finanzen?.monthlyIncome) || 0) > 0 || (Number(data?.finanzen?.taxableIncome) || 0) > 0) {
       const eingaben = steuerEingabenAusDaten(data);
       const st = steuernFuerProfil(eingaben);
       bundessteuer = st?.bund ? Math.round(st.bund.steuer) : null;
-      tarif = tarifvergleichFuerProfil(eingaben);
     }
   } catch { /* Orientierung, nie blockierend */ }
 
@@ -123,12 +107,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
       // Bis 25.09.2026 stand hier der Leistungs-Kompass — er ist jetzt Kopf der Leistungsliste.
       key: 'steuer', name: t('instrumente.steuer'),
       sub: bundessteuer != null ? t('instrumente.steuerBetrag', { value: zahl(bundessteuer) }) : setup,
-      glyph: miniSaeulen(palette, t, {
-        belegt: !!tarif,
-        ledig: tarif ? Math.max(0, Math.round(Number(tarif.alleinstehend) || 0)) : 0,
-        gemeinsam: tarif ? Math.max(0, Math.round(Number(tarif.verheiratet) || 0)) : 0,
-        verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
-      }),
+      glyph: miniSaeule(palette, t, { betragJahr: bundessteuer, verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus) }),
       onClick: () => onNavigate('tax'),
     },
     {
