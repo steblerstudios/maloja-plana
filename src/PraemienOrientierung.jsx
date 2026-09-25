@@ -11,7 +11,7 @@ import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
 import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './data/kvgLeistungen.js';
 import { FranchiseTacho } from './components/FranchiseTacho.jsx';
-import { zahl, betrag } from './utils/geld.js';
+import { zahl } from './utils/geld.js';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
