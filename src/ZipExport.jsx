@@ -363,7 +363,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
       // Encrypted backup export
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-        React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'lock', size: 22 }), style: { marginBottom: space.md } }, t('backup.title')),
+        React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'sicherung', size: 22 }), style: { marginBottom: space.md } }, t('backup.title')),
 
         sessionBackupCount > 0 && React.createElement('div', {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm }
@@ -396,7 +396,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement('button', {
           onClick: () => { setBackupStatus(null); setVorschau('sicherung'); },
           style: { ...btnStyle(palette.up, palette.text), border: '1px solid ' + palette.border }
-        }, React.createElement(Icon, { name: 'download', size: 14 }), t('backup.exportPlain')),
+        }, React.createElement(Icon, { name: 'sicherung', size: 14 }), t('backup.exportPlain')),
         vorschauPanel('sicherung')
       )
     ),

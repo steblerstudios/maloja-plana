@@ -287,7 +287,16 @@ const _upload = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
   React.createElement('path', { d: 'M 4 17 L 4 20 L 20 20 L 20 17' })
 );
 
-const _document = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+// Sicherung / Speichern — Doppel-Dokument mit Pfeil hinein (Sicherungskopie).
+// Entscheid docs/brand/icon-dictionary.md 23.06.2026: bewusst KEINE Wolke (local-first).
+const _sicherung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 9 3 H 16 L 20 7 V 17' }),
+  React.createElement('path', { d: 'M 5 7 H 12 L 16 11 V 21 H 5 Z' }),
+  React.createElement('path', { d: 'M 10.5 12 V 18' }),
+  React.createElement('polyline', { points: '8,15.5 10.5,18 13,15.5' })
+);
+
+const _document =() => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 6 2 L 6 22 L 18 22 L 18 8 L 12 2 Z' }),
   React.createElement('path', { d: 'M 12 2 L 12 8 L 18 8', fill: 'none', stroke: 'white', strokeWidth: '1' })
 );
@@ -454,6 +463,7 @@ const _iconFactories = {
   upload: _upload,
   document: _document,
   download: _download,
+  sicherung: _sicherung,
   check: _check,
   kaestchen: _kaestchen,
   kreuz: _kreuz,
