@@ -38,9 +38,10 @@ describe('Schnellcheck: IPV-Jahreseinkommen wie die IPV (inkl. Nebenerwerb)', ()
     const zurueck = kantoneBelegtSimulieren(['BS']);
     try {
       const data = { basis: { canton: 'BS', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
-        finanzen: { monthlyIncome: 2000, incomeType: 'netto', sideIncome: 500, dreizehnter: 'no' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } };
+        finanzen: { monthlyIncome: 3500, incomeType: 'netto', sideIncome: 500, dreizehnter: 'no' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } };
       const html = renderToStaticMarkup(React.createElement(QuickCheck, { palette, t, data, onNavigate: () => {} }));
-      expect(html).toContain('dashboard.quickCheckResult(30’000|');
+      // Einkommen ohne Sozialhilfe-Anspruch, sonst zeigt die Zeile «in der Sozialhilfe enthalten».
+      expect(html).toContain('dashboard.quickCheckResult(48’000|');
     } finally { zurueck(); }
   });
 });
