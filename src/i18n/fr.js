@@ -4154,7 +4154,7 @@ export default {
     sectionInsurance: 'Assurance',
     footerPrivacy: 'Ce dossier contient des informations de santé personnelles. Veuillez le conserver avec soin.',
     qrTitle: 'QR d’urgence pour les secours',
-    qrHint: 'Lisible avec n’importe quel smartphone — le code contient uniquement du texte, aucun lien. Il n’est pas chiffré : toute personne qui le scanne peut lire toutes les indications qu’il contient. Pour l’emporter, faire une capture d’écran ou imprimer cette page.',
+    qrHint: 'Lisible avec n’importe quel smartphone — le code contient uniquement du texte, aucun lien. Il n’est pas chiffré : toute personne qui le scanne peut lire toutes les indications qu’il contient. Pour l’emporter, faire une capture d’écran ou imprimer cette page. Au scan, le téléphone propose souvent d’enregistrer les indications comme contact — elles se retrouvent alors dans le carnet d’adresses de la personne qui scanne.',
     qrGekuerzt: 'Le code QR contient une version abrégée : toutes les indications n’y tiennent pas, et le code indique à la fin ce qui manque. Elles figurent en entier uniquement dans le dossier ci-dessous.',
     qrNichtEnthalten: 'Non inclus, voir le dossier',
     qrFehler: 'Le code QR n’a pas pu être généré. Toutes les indications figurent en entier dans le dossier ci-dessous.',
