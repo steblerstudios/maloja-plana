@@ -237,8 +237,8 @@ describe('Berge · Fortschritt im Bild', () => {
     });
   }
 
-  it('das Schildchen hat undurchsichtigen Grund und keine Deckkraft', () => {
-    const block = src.slice(src.indexOf("'data-testid': 'berg-fortschritt'"), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+  it('die Schildchen haben undurchsichtigen Grund und keine Deckkraft', () => {
+    const block = src.slice(src.indexOf('const schild = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
     expect(block.length).toBeGreaterThan(100);
     expect(block).toContain('background: p.surface');
     expect(block).not.toMatch(/opacity/);

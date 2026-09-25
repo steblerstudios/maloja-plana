@@ -189,22 +189,35 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
     ),
-    // Fortschritt als Schildchen oben links im Himmel (seit 25.09.2026, vorher eine Zeile über
-    // dem Bild). Dort liegt keine Station, breit wie schmal. Gleiche Machart wie die Etiketten:
-    // undurchsichtiger Grund, helle Palette, damit der Kontrast nicht am Bild hängt (K41).
-    fortschrittText && React.createElement('div', {
-      'data-testid': 'berg-fortschritt',
+    // Fortschritt im Bild, unten (seit 25.09.2026, vorher eine Zeile über dem Bild): links der
+    // Stand («7 von 7 begonnen»), rechts die Prozentzahl. Am Handy (< SCHMAL_AB) liegt unten
+    // rechts die Station Finanzen — dort rückt die Prozentzahl direkt neben den Stand (gemessen
+    // 320–736 px, ohne Überschneidung). Gleiche Machart wie die Etiketten: undurchsichtiger
+    // Grund, helle Palette, damit der Kontrast nicht am Bild hängt (K41).
+    (fortschrittText || prozent) && React.createElement('div', {
+      key: 'fortschritt',
       style: {
-        position: 'absolute', top: schmal ? '8px' : '12px', left: schmal ? '8px' : '12px',
-        display: 'flex', alignItems: 'baseline', gap: '8px',
-        fontSize: schmal ? '11px' : text.xs, lineHeight: 1.2, whiteSpace: 'nowrap',
-        color: p.mid, background: p.surface,
-        padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm,
-        boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+        position: 'absolute', left: schmal ? '8px' : '12px', right: schmal ? '8px' : '12px', bottom: schmal ? '8px' : '12px',
+        display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
+        gap: '6px', pointerEvents: 'none',
       },
     },
-      React.createElement('span', null, fortschrittText),
-      prozent && React.createElement('span', { style: { color: p.sageDeep, fontWeight: weight.medium } }, prozent),
+      ...(() => {
+        const schild = {
+          fontSize: schmal ? '11px' : text.xs, lineHeight: 1.2, whiteSpace: 'nowrap',
+          background: p.surface, padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+        };
+        return [
+          fortschrittText && React.createElement('div', {
+            key: 'stand', 'data-testid': 'berg-fortschritt', style: { ...schild, color: p.mid },
+          }, fortschrittText),
+          prozent && React.createElement('div', {
+            key: 'prozent', 'data-testid': 'berg-prozent',
+            style: { ...schild, color: p.sageDeep, fontWeight: weight.medium, marginLeft: fortschrittText ? undefined : 'auto' },
+          }, prozent),
+        ];
+      })(),
     ),
     // Kapitel-Stationen auf der Strasse
     STATIONEN.map((station, i) => {
