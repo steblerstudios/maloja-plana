@@ -37,8 +37,13 @@
 > | Stationen in Kapitelfarbe, Zeichen auf ≥ 3:1 abgedunkelt; Etikett-Seiten errechnet (keine Überschneidung breit 656–736, schmal 296–496 px) | `BergLandschaft.jsx` |
 > | Jede Vorgabe als Test, jeder per Mutationsprobe rot gesehen | `bergLandschaft.test.js` |
 >
+> **Nachtrag 17:06** (`stand-jetzt.sh`): **#374 «Berg-Hero» gemergt** 17:04 → main = `5b4ae89` (randlos, Titel im
+> Himmel, Kreise, farbige Stationen; darin auch das senkrechte Stück Behörden → Busch, `5aa9a88`, Behörden-Etikett «links»
+> mit Ausweichen). **Nicht deployt** — live weiter `3ec7515`, 6 Commits dazwischen. ⚠️ **Hauptbündel 64,69 von 65 kB**
+> (Probe-Merge der #374-Sitzung): nur noch ~0,3 kB Luft für weitere Dashboard-Änderungen.
+>
 > **Offen:**
-> 1. **Folge-PR #374 «Berg-Hero»** (andere Sitzung) baut `BergLandschaft.jsx` weiter (randlos, Titel im Himmel). Dort
+> 1. ~~Folge-PR #374~~ **erledigt 17:04** (siehe oben). Ursprünglich: #374 «Berg-Hero» (andere Sitzung) baut `BergLandschaft.jsx` weiter (randlos, Titel im Himmel). Dort
 >    einzubauen: Wunsch von Stebler Studios **«senkrechtes Stück von Behörden das S hinunter bis zum Busch»** (`WEGSTUECKE[5]`) — Daten
 >    übergeben, auf `4450726` geprüft 3988/3988. ⚠️ Das Behörden-Etikett «unten» deckt dieses Stück; die Seite muss #374
 >    im Layout lösen. (Ein zuerst falsch verstandenes waagrechtes Stück kam als `040fc30` rein und ist per `4450726` zurück.)
