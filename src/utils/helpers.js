@@ -64,7 +64,7 @@ export function openPrintWindow(html) {
   if (win) {
     win.document.write(html);
     win.document.close();
-    return;
+    return win;
   }
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
@@ -73,4 +73,5 @@ export function openPrintWindow(html) {
   a.download = 'maloja-plana-' + toLocalISO(new Date()) + '.html';
   a.click();
   URL.revokeObjectURL(url);
+  return null;
 }

@@ -8,7 +8,7 @@ import { buildFlyerHtml } from './flyerGenerator.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { text, weight, space, radius } from './config/tokens.js';
 
-// Verteil-Flyer mit QR-Code zu malojaplana.ch (in der aktuell gewählten Sprache).
+// Verteil-Flyer A5 (Vorder- und Rückseite) mit QR-Code zu malojaplana.ch (in der aktuell gewählten Sprache).
 // Für Beratungsstellen, Gemeinden, Aushänge — niederschwellige Verbreitung.
 export const FlyerView = ({ palette, t, lang }) => {
   const vorlesen = useVorlesenContext();
@@ -26,7 +26,13 @@ export const FlyerView = ({ palette, t, lang }) => {
   const handlePrint = () => {
     const canvas = qrRef.current && qrRef.current.querySelector('canvas');
     const qrDataUrl = canvas ? canvas.toDataURL('image/png') : '';
-    openPrintWindow(buildFlyerHtml({ t, qrDataUrl }));
+    const win = openPrintWindow(buildFlyerHtml({ t, qrDataUrl }));
+    // Aus dem App-Fenster drucken (ein Inline-Handler im Druckfenster fällt unter
+    // die CSP) — und erst, wenn Lexend geladen ist, sonst druckt die Systemschrift.
+    if (win) {
+      const bereit = win.document.fonts ? win.document.fonts.ready : Promise.resolve();
+      bereit.then(() => { win.focus(); win.print(); });
+    }
   };
 
   // App teilen: native Teilen-Dialog (Handy) oder Fallback „Link kopiert".
@@ -73,6 +79,7 @@ export const FlyerView = ({ palette, t, lang }) => {
       React.createElement('button', { style: s.shareButton, onClick: handleShare }, t('flyer.share')),
       shared && React.createElement('span', { style: s.copied, role: 'status' }, hinweisZeichen('check'), t('flyer.copied'))
     ),
+    React.createElement('p', { style: s.hint }, t('flyer.printHint')),
     React.createElement('p', { style: s.hint }, t('flyer.langHint'))
   );
 };

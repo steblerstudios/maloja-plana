@@ -5829,6 +5829,17 @@ export default {
     shareText: "Maloja Plana — tia survista calma da la vita en Svizra. Privat, offline-abel, gratuit.", // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     copied: "Link copià",
     langHint: "Il flyer vegn creà en la lingua tschernida actualmain. Per in'autra lingua, mida l'emprim la lingua sura.",
+    printHint: "Format A5, vart davant e vart davos. Tscherni «dubla vart» en il dialog da stampa per avair omaduas varts sin in fegl.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    backTitle: "In lieu quiet per Voss proxims pass.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step1Title: "Ordinar ils documents.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step1Text: "Avair en egl en in sulet lieu las indicaziuns ed ils documents impurtants.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step2Title: "Examinar las pussaivladads.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step2Text: "Chattar orientaziun davart las taglias, la reducziun da premias ed ulteriuras prestaziuns da sustegn.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step3Title: "Esser preparà per il mintgadi.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step3Text: "Preparar ina carta d'urgenza e tegnair a maun ils contacts impurtants.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    startTitle: "Cumenzai cun in pitschen pass.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    startText: "Avri Maloja Plana e tscherni il tema ch'è impurtant per Vus en quest mument.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    disclaimer: "Ils cuntegns servan a l'orientaziun. Els na remplazzan nagin cussegliament giuridic u finanzial individual. Verifitgai las indicaziuns tar il post cumpetent.", // TODO(rm): Flyer A5 25.09., Gegenlese
   },
   alv: {
     title: "Indemnisaziun da dischoccupaziun",

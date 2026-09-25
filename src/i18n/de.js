@@ -5460,6 +5460,17 @@ export default {
     shareText: 'Maloja Plana — Ihre ruhige Übersicht über das Leben in der Schweiz. Privat, offline-fähig, kostenlos.',
     copied: 'Link kopiert',
     langHint: 'Der Flyer wird in der aktuell gewählten Sprache erstellt. Für eine andere Sprache zuerst oben die Sprache wechseln.',
+    printHint: 'Format A5, Vorder- und Rückseite. Im Druckdialog «Beidseitig» wählen, damit beide Seiten auf ein Blatt kommen.',
+    backTitle: 'Ein ruhiger Ort für Ihre nächsten Schritte.',
+    step1Title: 'Unterlagen ordnen.',
+    step1Text: 'Wichtige Angaben und Dokumente an einem Ort im Blick behalten.',
+    step2Title: 'Möglichkeiten prüfen.',
+    step2Text: 'Orientierung zu Steuern, Prämienverbilligung und weiteren Unterstützungsleistungen finden.',
+    step3Title: 'Für den Alltag vorsorgen.',
+    step3Text: 'Eine Notfallkarte vorbereiten und wichtige Kontakte griffbereit halten.',
+    startTitle: 'Beginnen Sie mit einem kleinen Schritt.',
+    startText: 'Öffnen Sie Maloja Plana und wählen Sie das Thema, das für Sie gerade wichtig ist.',
+    disclaimer: 'Die Inhalte dienen der Orientierung. Sie ersetzen keine individuelle Rechts- oder Finanzberatung. Angaben bei der zuständigen Stelle prüfen.',
   },
 
   search: {

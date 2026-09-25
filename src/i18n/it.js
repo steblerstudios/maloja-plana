@@ -5403,6 +5403,17 @@ export default {
     shareText: 'Maloja Plana — la Sua panoramica serena della vita in Svizzera. Privata, utilizzabile offline, gratuita.',
     copied: 'Link copiato',
     langHint: "Il volantino viene creato nella lingua attualmente selezionata. Per un'altra lingua, cambiare prima la lingua in alto.",
+    printHint: "Formato A5, fronte e retro. Nella finestra di stampa scelga «fronte-retro» per avere entrambe le facciate su un foglio.",
+    backTitle: "Un luogo tranquillo per i Suoi prossimi passi.",
+    step1Title: "Mettere in ordine i documenti.",
+    step1Text: "Tenere sott’occhio in un unico posto dati e documenti importanti.",
+    step2Title: "Verificare le possibilità.",
+    step2Text: "Orientarsi su imposte, riduzione dei premi e altre prestazioni di sostegno.",
+    step3Title: "Prepararsi per la vita quotidiana.",
+    step3Text: "Preparare una scheda di emergenza e tenere a portata di mano i contatti importanti.",
+    startTitle: "Inizi con un piccolo passo.",
+    startText: "Apra Maloja Plana e scelga il tema che per Lei è importante in questo momento.",
+    disclaimer: "I contenuti servono all’orientamento. Non sostituiscono una consulenza giuridica o finanziaria individuale. Verifichi le indicazioni presso l’ufficio competente.",
   },
 
   search: {
