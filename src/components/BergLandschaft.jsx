@@ -372,11 +372,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     })(),
     // Die Ecke rechts oben (seit 25.09.2026): der Weg auf den Startbildschirm als kleine Karte.
     // Am Computer neben dem Titel, am Handy — wo der Titel die ganze Breite nimmt — darunter.
-    // Karte 168 px breit (Handy 136), der Titel hält daneben 208 px frei.
+    // Karte 168 px breit (Handy 140), der Titel hält daneben 208 px frei. `ecke(schmal)`: die Karte
+    // zeigt sich im Handy-Ausschnitt kleiner.
     ecke && React.createElement('div', {
       key: 'ecke',
-      style: { position: 'absolute', lineHeight: 'normal', top: schmal ? 20 + (titelHoehe || 90) : 16, right: schmal ? 12 : 24, width: schmal ? 136 : 168 },
-    }, ecke),
+      style: { position: 'absolute', lineHeight: 'normal', top: schmal ? 20 + (titelHoehe || 90) : 16, right: schmal ? 12 : 24, width: schmal ? 140 : 168 },
+    }, ecke(schmal)),
     // Fortschritt im Bild, unten (seit 25.09.2026): «begonnen» n/7, ab dem ersten fertigen Kapitel
     // springt «abgeschlossen» auf (100 %); sind alle fertig, geht «begonnen» weg; rechts die
     // Prozentzahl.

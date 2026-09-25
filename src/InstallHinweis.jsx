@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
-import { laeuftAlsApp } from './utils/geraetErkennung.js';
+import { laeuftAlsApp, aktuellesGeraet } from './utils/geraetErkennung.js';
 
 // ─── Der Hinweis auf den Weg zum Startbildschirm ──────────────────────────────
 //
@@ -40,8 +40,10 @@ export const installAusloesen = (installPrompt, fertig) => {
   installPrompt.userChoice.then(fertig);
 };
 
-export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPromptWeg }) => {
+export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPromptWeg, klein }) => {
   const [laeuftSchonAlsApp] = useState(() => laeuftAlsApp());
+  // Zeichen nach Gerät (Entscheid 25.09.2026): Handy auf iOS/Android, sonst ein Bildschirm.
+  const [mobil] = useState(() => ['ios', 'android'].includes(aktuellesGeraet()));
   const [weg, setWeg] = useState(() => {
     try { return localStorage.getItem('or5_install_hinweis') === 'weg'; } catch (e) { return false; }
   });
@@ -71,13 +73,17 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
     },
   },
     React.createElement('div', { style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' } },
-      // Ein Handy — das Zeichen sagt «Startbildschirm», bevor man liest.
+      // Das Zeichen sagt «Startbildschirm», bevor man liest: am Handy ein Handy, am Computer ein Bildschirm.
       React.createElement('svg', {
         width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: palette.sageDeep, strokeWidth: 1.6,
-        strokeLinecap: 'round', 'aria-hidden': 'true', style: { marginTop: space.xs, flex: 'none' },
+        strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', 'data-zeichen': mobil ? 'handy' : 'computer',
+        style: { marginTop: space.xs, flex: 'none' },
       },
-        React.createElement('rect', { x: 6.5, y: 2.5, width: 11, height: 19, rx: 2 }),
-        React.createElement('path', { d: 'M11 18.5h2' })),
+        mobil
+          ? [React.createElement('rect', { key: 'a', x: 6.5, y: 2.5, width: 11, height: 19, rx: 2 }),
+             React.createElement('path', { key: 'b', d: 'M11 18.5h2' })]
+          : [React.createElement('rect', { key: 'a', x: 2.5, y: 4, width: 19, height: 12.5, rx: 1.5 }),
+             React.createElement('path', { key: 'b', d: 'M9 20.5h6M12 16.5v4' })]),
       React.createElement('button', {
         type: 'button',
         onClick: verwerfen,
@@ -86,7 +92,8 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
         // der negative Rand holt sie in die Kartenecke, ohne die Karte aufzublähen.
         style: { ...knopfStil, color: palette.mid, minWidth: '44px', minHeight: '44px', margin: -space.sm + 'px ' + -space.sm + 'px 0 0', lineHeight: 1 },
       }, '×')),
-    React.createElement('span', { style: { fontSize: text.sm, lineHeight: 1.3, color: palette.text, marginTop: -space.sm } },
+    // Klein (Handy-Ausschnitt): nur Zeichen, «×» und Knopf — der Satz steht dann im Namen des Knopfs.
+    !klein && React.createElement('span', { style: { fontSize: text.sm, lineHeight: 1.3, color: palette.text, marginTop: -space.sm } },
       t('install.navSub')),
     // «So geht es»: wo der Browser nicht selbst installieren kann (Safari, Firefox), ist die
     // Anleitung DER Weg — also der Hauptknopf (Entscheid 25.09.2026). Wo «Installieren» steht,
@@ -96,9 +103,10 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
         React.createElement(PrimaryButton, {
           palette,
           onClick: () => installAusloesen(installPrompt, onPromptWeg),
+          'aria-label': klein ? t('install.navSub') + ' — ' + t('pwa.install') : undefined,
           style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
         }, t('pwa.install')),
-        React.createElement('button', {
+        !klein && React.createElement('button', {
           type: 'button',
           onClick: () => onNavigate('installApp'),
           style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap', minHeight: '44px', padding: 0 },
@@ -106,6 +114,7 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
       : React.createElement(PrimaryButton, {
         palette,
         'data-testid': 'install-anleitung-cta',
+        'aria-label': klein ? t('install.navSub') + ' — ' + t('pwa.anleitung') : undefined,
         onClick: () => onNavigate('installApp'),
         style: { padding: space.xs + 'px ' + space.sm + 'px', minHeight: '44px', whiteSpace: 'nowrap', width: '100%' },
       }, t('pwa.anleitung'))

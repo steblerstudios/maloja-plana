@@ -1404,9 +1404,10 @@ const AppInner = ({ demo }) => {
           // Der Weg auf den Startbildschirm: kleine Karte rechts oben im Bergpanorama (seit
           // 25.09.2026, vorher ein Kasten über den Bergen). Eigene, nachgeladene Datei — das
           // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
-          installKarte: React.createElement(React.Suspense, { fallback: null },
+          // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
+          installKarte: (klein) => React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstallHinweis, {
-              palette, t, onNavigate: handleNavigate, installPrompt,
+              palette, t, onNavigate: handleNavigate, installPrompt, klein,
               onPromptWeg: () => setInstallPrompt(null),
             })),
           palette, t, chapters, data: activeData,
