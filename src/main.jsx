@@ -1350,6 +1350,7 @@ const AppInner = ({ demo }) => {
       // man den Querverweis angetippt hat (merkeStelle/onHashChange, nicht der Browser).
       view !== 'chapter' && herkunft && herkunft.view === 'chapter' && chapters[herkunft.chapterIndex] && React.createElement('button', {
         type: 'button',
+        className: 'mp-link',
         onClick: () => window.history.back(),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
