@@ -63,3 +63,14 @@ describe('EO-Rechner verspricht nur, was er rechnet', () => {
     expect(SEARCH_VIEWS.find((a) => a.view === 'eo')?.sub).toBe('nav.sub.eo');
   });
 });
+
+describe('Keine Frist behauptet, Wochenenden verlängerten sie nicht', () => {
+  // ATSG Art. 38 Abs. 3 verlängert auf den nächsten Werktag und gilt u. a. für die EL (ELG Art. 1).
+  // Maloja rechnet das nicht ein — das darf der Text sagen, nicht mehr (Predeploy-Gate 25.09.2026).
+  const BEHAUPTUNG = /verlängern die Frist hier nicht|ne prolongent pas ce délai|non prolungano questo termine|do not extend this deadline/;
+  for (const [lang, dict] of SPRACHEN) {
+    it(`${lang}: nirgends in den Texten`, () => {
+      expect(JSON.stringify(dict)).not.toMatch(BEHAUPTUNG);
+    });
+  }
+});

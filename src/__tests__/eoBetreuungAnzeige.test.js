@@ -13,7 +13,7 @@ import { EOrechner } from '../EOrechner.jsx';
 // ein Höchstwert — bei zwei erwerbstätigen Eltern hat jeder höchstens die Hälfte, je nach
 // eigenem Einkommen (Abs. 4, Art. 16r). Geprüft wird, was die Nutzerin sieht.
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
-const data = { finanzen: { monthlyIncome: 8000, dreizehnter: 'yes' } }; // 104'000 → Taggeld gedeckelt 220
+const data = { finanzen: { monthlyIncome: 8000, incomeType: 'brutto', dreizehnter: 'yes' } }; // 104'000 → Taggeld gedeckelt 220
 
 describe('EO-Rechner — Betreuungsentschädigung als Höchstwert mit 98 Taggeldern', () => {
   const html = renderToStaticMarkup(React.createElement(EOrechner, { palette, t: createT({ de, en, fr, it: itTranslations, rm }, 'de'), data }));

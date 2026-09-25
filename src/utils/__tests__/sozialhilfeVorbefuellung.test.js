@@ -5,7 +5,7 @@ import { sozialhilfeVorbefuellung as vb, saeule3aBeziehbar } from '../sozialhilf
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ adults: 1, kinder: 0, weiterePersonen: 0, miete: '', wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
+    expect(vb({})).toEqual({ adults: 1, kinder: 0, weiterePersonen: 0, miete: '', wohnform: 'allein', einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, hauptBasisOffen: false, andereEinkuenfte: '', vermoegen: '', vermoegenMit3a: false, jungErwachsen: false, erwerbstaetig: false, nebenerwerbBrutto: false, nebenerwerbBasisOffen: false, partnerKonkubinat: false });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 
@@ -52,7 +52,7 @@ describe('sozialhilfeVorbefuellung', () => {
   });
 
   it('Nebenerwerb brutto bleibt draussen und wird gemeldet', () => {
-    const r = vb({ finanzen: { monthlyIncome: 3000, sideIncome: 400, sideIncomeType: 'brutto' } });
+    const r = vb({ finanzen: { monthlyIncome: 3000, incomeType: 'netto', sideIncome: 400, sideIncomeType: 'brutto' } });
     expect(r.einkommen).toBe('3000');
     expect(r.nebenerwerbBrutto).toBe(true);
     expect(r.einkommenMitNebenerwerb).toBe(false);

@@ -758,7 +758,7 @@ export default {
     step3Title: '3 · S’annoncer — auprès du canton de domicile, le plus tôt possible',
     step3Text: { sie: 'Le canton compétent est celui où vous avez votre domicile ; c’est lui qui désigne l’organe qui reçoit la demande — par exemple la caisse cantonale de compensation, mais jamais les services d’aide sociale (LPC art. 21). Le droit prend naissance le mois où vous déposez la demande (LPC art. 12) — qui la dépose encore dans le mois en cours ne perd aucun mois. En règle générale, il doit être statué sur la demande dans les 90 jours ; sinon, des avances peuvent être versées dans certains cas (OPC-AVS/AI art. 21).', du: 'Le canton compétent est celui où tu as ton domicile ; c’est lui qui désigne l’organe qui reçoit la demande — par exemple la caisse cantonale de compensation, mais jamais les services d’aide sociale (LPC art. 21). Le droit prend naissance le mois où tu déposes la demande (LPC art. 12) — qui la dépose encore dans le mois en cours ne perd aucun mois. En règle générale, il doit être statué sur la demande dans les 90 jours ; sinon, des avances peuvent être versées dans certains cas (OPC-AVS/AI art. 21).' },
     fristLabel: 'Décision sur la rente AVS ou AI (ou sur sa modification) reçue le — pour un envoi recommandé : le jour de l’avis de retrait',
-    fristHinweis: { sie: 'Si vous vous annoncez d’ici au {date}, les PC commencent dès le mois où vous avez déposé la demande de rente — au plus tôt dès la naissance du droit à la rente (OPC-AVS/AI art. 22). Les week-ends et jours fériés ne prolongent pas ce délai — plus tôt n’est jamais faux.', du: 'Si tu t’annonces d’ici au {date}, les PC commencent dès le mois où tu as déposé la demande de rente — au plus tôt dès la naissance du droit à la rente (OPC-AVS/AI art. 22). Les week-ends et jours fériés ne prolongent pas ce délai — plus tôt n’est jamais faux.' },
+    fristHinweis: { sie: 'Si vous vous annoncez d’ici au {date}, les PC commencent dès le mois où vous avez déposé la demande de rente — au plus tôt dès la naissance du droit à la rente (OPC-AVS/AI art. 22). Nous ne tenons pas compte des week-ends et jours fériés — plus tôt n’est jamais faux.', du: 'Si tu t’annonces d’ici au {date}, les PC commencent dès le mois où tu as déposé la demande de rente — au plus tôt dès la naissance du droit à la rente (OPC-AVS/AI art. 22). Nous ne tenons pas compte des week-ends et jours fériés — plus tôt n’est jamais faux.' },
     fristVorbei: { sie: 'Les six mois sont échus depuis le {date}. Vous pouvez tout de même vous annoncer : les PC commencent alors dès le mois de votre demande (LPC art. 12) — de préférence encore ce mois-ci.', du: 'Les six mois sont échus depuis le {date}. Tu peux tout de même t’annoncer : les PC commencent alors dès le mois de ta demande (LPC art. 12) — de préférence encore ce mois-ci.' },
     step3Button: 'Noter le délai «Demander les PC avec effet rétroactif» ({date})',
     step3Done: 'Délai enregistré dans le calendrier.',
@@ -5029,6 +5029,12 @@ export default {
     hinweisVaterschaft: 'Paternité : 2 semaines, à prendre dans les 6 mois suivant la naissance.',
     hinweisAdoption: 'Adoption : 2 semaines, enfant de moins de 4 ans.',
     source: 'Estimation selon les valeurs de référence de la [[LAPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/fr]] (état 2026). L’existence et le montant du droit sont décidés par la caisse de compensation. Sans valeur juridique.',
+  },
+  // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensart: {
+    offenBrutto: 'Le profil n’indique pas si le salaire est brut ou net — il n’est donc pas repris ici. Veuillez saisir le salaire brut.',
+    offenNetto: 'Le profil n’indique pas si le salaire est brut ou net — il n’est donc pas repris ici. Veuillez saisir le revenu net.',
+    nebenOffen: 'Le profil n’indique pas si le revenu accessoire est brut ou net — il n’est donc pas compté. Ajoutez ici le montant net.',
   },
   sh: {
     title: 'Calculateur d\'aide sociale',

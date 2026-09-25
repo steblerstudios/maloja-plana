@@ -918,7 +918,7 @@ export default {
     step3Title: '3 · Anmelden — beim Wohnkanton, so früh wie möglich',
     step3Text: { sie: 'Zuständig ist der Kanton, in dem Sie Wohnsitz haben; welche Stelle die Anmeldung entgegennimmt, bestimmt der Kanton — z. B. die kantonale Ausgleichskasse, nie aber die Sozialhilfebehörde (ELG Art. 21). Der Anspruch beginnt mit dem Monat, in dem Sie die Anmeldung einreichen (ELG Art. 12) — wer im laufenden Monat noch einreicht, verliert keinen Monat. Über die Anmeldung soll in der Regel innert 90 Tagen entschieden werden; sonst gibt es unter Umständen Vorschüsse (ELV Art. 21).', du: 'Zuständig ist der Kanton, in dem du Wohnsitz hast; welche Stelle die Anmeldung entgegennimmt, bestimmt der Kanton — z. B. die kantonale Ausgleichskasse, nie aber die Sozialhilfebehörde (ELG Art. 21). Der Anspruch beginnt mit dem Monat, in dem du die Anmeldung einreichst (ELG Art. 12) — wer im laufenden Monat noch einreicht, verliert keinen Monat. Über die Anmeldung soll in der Regel innert 90 Tagen entschieden werden; sonst gibt es unter Umständen Vorschüsse (ELV Art. 21).' },
     fristLabel: 'Verfügung über die AHV- oder IV-Rente (oder deren Änderung) erhalten am — bei einem Einschreiben: der Tag der Abholungseinladung',
-    fristHinweis: { sie: 'Melden Sie sich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem Sie die Rente angemeldet haben — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage verlängern die Frist hier nicht — früher ist nie falsch.', du: 'Melde dich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem du die Rente angemeldet hast — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage verlängern die Frist hier nicht — früher ist nie falsch.' },
+    fristHinweis: { sie: 'Melden Sie sich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem Sie die Rente angemeldet haben — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.', du: 'Melde dich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem du die Rente angemeldet hast — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.' },
     fristVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.' },
     step3Button: 'Frist „EL rückwirkend anmelden“ merken ({date})',
     step3Done: 'Frist im Kalender gespeichert.',
@@ -4355,6 +4355,13 @@ export default {
     source: "Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand 2026). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.",
   },
 
+  // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (25.09.2026)
+  einkommensart: {
+    offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',
+    offenNetto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte das Netto-Einkommen eintragen.',
+    nebenOffen: 'Beim Nebenerwerb ist nicht angegeben, ob er brutto oder netto ist — darum nicht mitgezählt. Hier den Netto-Betrag ergänzen.',
+  },
   sh: {
     title: "Calculatur d'agid social",
     haushalt: 'Grondezza dal ménaschi',
