@@ -574,8 +574,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement(React.Suspense, { fallback: null },
       React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
     ),
-    // ─── Highlight tools — immediate value (first for new users) ──
+    // ─── Was steht mir zu? — ein Block (seit 25.09.2026) ──
+    // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
+    // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
+    // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
     React.createElement('div', {
+      'data-tour': 'anspruch',
       style: {
         marginTop: space.lg, marginBottom: space.md,
         padding: '20px 24px',
@@ -590,12 +594,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         React.createElement(PanelTitle, {
           palette,
           style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
-        }, t('dashboard.highlightTitle')),
+        }, t('dashboard.anspruchTitle')),
         React.createElement('div', {
           // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
           style: { fontSize: text.xs - 1, color: palette.sageDeep }
         }, t('dashboard.highlightPrivacy'))
       ),
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
+      }, t('dashboard.anspruchIntro')),
       (() => {
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
@@ -645,8 +652,88 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
           primary && renderItem(primary),
+          React.createElement(QuickCheck, { palette, t, onNavigate, data }),
+          (() => {
+            // Anspruchs-Matrix — nur ein *positiver, ermutigender* Hinweis „Anspruch
+            // möglich", und ausschliesslich dort, wo echte Logik dahintersteht
+            // (IPV, Sozialhilfe). Nie ein „Nein"/Verdikt (Würde, kein Scham-Signal),
+            // keine erfundenen Status. Streng gegated auf selbst eingetragene Angaben.
+            const incomeEntered = data?.finanzen?.monthlyIncome !== undefined
+              && data?.finanzen?.monthlyIncome !== null
+              && String(data.finanzen.monthlyIncome).trim() !== '';
+            const canton = data?.basis?.canton;
+            let ipvHint = false, sozialhilfeHint = false;
+            try {
+              if (incomeEntered && canton) {
+                ipvHint = !!calculateIPV(data)?.anspruchMoeglich;
+              }
+              if (incomeEntered) {
+                const sh = calculateSozialhilfe(data);
+                // Nur wenn Bedarf gedeckt UND kein Vermögen über dem Freibetrag,
+                // damit der Hinweis ehrlich bleibt (Vermögen ginge sonst vor).
+                sozialhilfeHint = !!sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0;
+              }
+            } catch { /* Orientierung, nie blockierend */ }
+            return React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
+          },
+            [
+              // IPV statt Prämien-Modellvergleich: der Hinweis «Anspruch möglich» rechnet die
+              // Verbilligung (calculateIPV), gehört also an die IPV, nicht an die Modelle.
+              { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung', hint: ipvHint },
+              { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
+              { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
+              { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
+              { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
+            ].map(item => {
+              const IconFn = Icons[item.icon];
+              return React.createElement('button', {
+                key: item.view,
+                onClick: () => onNavigate(item.view),
+                style: {
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  padding: '12px 14px', background: 'transparent',
+                  border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
+                  cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', color: palette.text,
+                  transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
+                },
+                onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
+                onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
+              },
+                React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: palette.sage } }, IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null),
+                React.createElement('div', { style: { minWidth: 0 } },
+                  React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
+                  React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub),
+                  // Positiver Anspruchs-Hinweis als leise Zeile in der Textspalte —
+                  // kein rechtsbündiges Pill (kollidiert in schmalen Karten mit
+                  // umbrechenden Labels), ruhig statt plakativ.
+                  item.hint && React.createElement('div', {
+                    style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.sageDeep || palette.sage, marginTop: '3px' }
+                  }, '· ' + t('dashboard.anspruchMoeglich'))
+                )
+              );
+            })
+          );
+          })(),
+          React.createElement('button', {
+            onClick: () => onNavigate('ansprueche'),
+            style: {
+              // Zwei gestapelte Text-Aktionen, je 19 px hoch. Polsterung hebt sie auf 35 px;
+              // die marginTop sind um dieselben 8 px gekürzt, damit der Abstand gleich bleibt.
+              display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
+              padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+            },
+          }, t('dashboard.anspruchAlleLink')),
+          React.createElement('button', {
+            onClick: () => onNavigate('situationen'),
+            style: {
+              display: 'block', marginTop: 0, background: 'none', border: 'none', cursor: 'pointer',
+              padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+            },
+          }, t('lebenszustaende.dashboardLink')),
+          // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
           }, rest.map(renderItem))
         );
       })(),
@@ -842,96 +929,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
         }, t('gepaeck.ctaSub')),
       ),
-    ),
-
-    // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
-    React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
-      React.createElement(PanelTitle, {
-        palette,
-        style: { margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
-      }, t('dashboard.anspruchTitle')),
-      React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
-      }, t('dashboard.anspruchIntro')),
-      React.createElement(QuickCheck, { palette, t, onNavigate, data }),
-      (() => {
-        // Anspruchs-Matrix — nur ein *positiver, ermutigender* Hinweis „Anspruch
-        // möglich", und ausschliesslich dort, wo echte Logik dahintersteht
-        // (IPV, Sozialhilfe). Nie ein „Nein"/Verdikt (Würde, kein Scham-Signal),
-        // keine erfundenen Status. Streng gegated auf selbst eingetragene Angaben.
-        const incomeEntered = data?.finanzen?.monthlyIncome !== undefined
-          && data?.finanzen?.monthlyIncome !== null
-          && String(data.finanzen.monthlyIncome).trim() !== '';
-        const canton = data?.basis?.canton;
-        let ipvHint = false, sozialhilfeHint = false;
-        try {
-          if (incomeEntered && canton) {
-            ipvHint = !!calculateIPV(data)?.anspruchMoeglich;
-          }
-          if (incomeEntered) {
-            const sh = calculateSozialhilfe(data);
-            // Nur wenn Bedarf gedeckt UND kein Vermögen über dem Freibetrag,
-            // damit der Hinweis ehrlich bleibt (Vermögen ginge sonst vor).
-            sozialhilfeHint = !!sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0;
-          }
-        } catch { /* Orientierung, nie blockierend */ }
-        return React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
-      },
-        [
-          // IPV statt Prämien-Modellvergleich: der Hinweis «Anspruch möglich» rechnet die
-          // Verbilligung (calculateIPV), gehört also an die IPV, nicht an die Modelle.
-          { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung', hint: ipvHint },
-          { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
-          { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
-          { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
-          { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
-        ].map(item => {
-          const IconFn = Icons[item.icon];
-          return React.createElement('button', {
-            key: item.view,
-            onClick: () => onNavigate(item.view),
-            style: {
-              display: 'flex', alignItems: 'center', gap: '10px',
-              padding: '12px 14px', background: 'transparent',
-              border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
-              cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', color: palette.text,
-              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
-          },
-            React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: palette.sage } }, IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null),
-            React.createElement('div', { style: { minWidth: 0 } },
-              React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub),
-              // Positiver Anspruchs-Hinweis als leise Zeile in der Textspalte —
-              // kein rechtsbündiges Pill (kollidiert in schmalen Karten mit
-              // umbrechenden Labels), ruhig statt plakativ.
-              item.hint && React.createElement('div', {
-                style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.sageDeep || palette.sage, marginTop: '3px' }
-              }, '· ' + t('dashboard.anspruchMoeglich'))
-            )
-          );
-        })
-      );
-      })(),
-      React.createElement('button', {
-        onClick: () => onNavigate('ansprueche'),
-        style: {
-          // Zwei gestapelte Text-Aktionen, je 19 px hoch. Polsterung hebt sie auf 35 px;
-          // die marginTop sind um dieselben 8 px gekürzt, damit der Abstand gleich bleibt.
-          display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
-          padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-        },
-      }, t('dashboard.anspruchAlleLink')),
-      React.createElement('button', {
-        onClick: () => onNavigate('situationen'),
-        style: {
-          display: 'block', marginTop: 0, background: 'none', border: 'none', cursor: 'pointer',
-          padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-        },
-      }, t('lebenszustaende.dashboardLink'))
     ),
 
     // ─── Deine Instrumente — Dashboard-Spiegel der vier Selbstchecks ──
