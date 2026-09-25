@@ -4,9 +4,9 @@ import { text, weight, radius, ease, duration } from '../config/tokens.js';
 import { LIGHT_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 // Als eigene Datei, nicht im JS-Bündel: Vite legt sie mit Hash unter /assets/ ab, der
-// Service Worker liefert sie danach cache-first. Herkunft und Nachbau:
-// scripts/berge-vereinfachen.py (eigene Malojapass-Fotos → Codex-Illustration → 48 Farbflächen).
-import landschaft from '../assets/berge/landschaft.svg?url';
+// Service Worker liefert sie danach cache-first. Herkunft und Nachbau: assets/berge/_QUELLE.md
+// (eigene Malojapass-Fotos → Codex-Illustration → WebP in voller Auflösung, alle Details).
+import landschaft from '../assets/berge/landschaft.webp?url';
 
 // Koordinaten im Bild (1100 × 788; die Datei selbst ist 1482 × 1062, gleiches Seitenverhältnis).
 // Die Passstrasse steigt in Kehren von unten rechts nach oben links; die Kapitel sitzen der

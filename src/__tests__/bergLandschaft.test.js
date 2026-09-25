@@ -66,6 +66,12 @@ describe('Berge · das Bild bleibt hell, also auch die Stationen', () => {
     expect(cb.surface).toBe(LIGHT_PALETTE.surface);
     expect(cb.sage).not.toBe(LIGHT_PALETTE.sage);
   });
+  it('die Landschaft ist das detaillierte WebP und bleibt unter 120 KB (Budget, 25.09.2026: 87 KB)', () => {
+    expect(src).toMatch(/import landschaft from '\.\.\/assets\/berge\/landschaft\.webp\?url'/);
+    const bytes = readFileSync(new URL('../assets/berge/landschaft.webp', import.meta.url));
+    expect(bytes.subarray(8, 12).toString('ascii')).toBe('WEBP');
+    expect(bytes.length).toBeLessThan(120 * 1024);
+  });
   it('es gibt nur noch eine Landschaft (keine dunkle Fassung mehr im Quelltext)', () => {
     expect(src).not.toMatch(/landschaft-dunkel|isDarkMode/);
   });
