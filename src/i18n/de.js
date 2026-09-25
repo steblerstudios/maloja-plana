@@ -1757,6 +1757,8 @@ export default {
     glanceSaved: 'Zuletzt gesichert',
     glanceNeverSaved: 'Noch keine Sicherungsdatei erstellt',
     nextUpAction: '{feld} ergänzen',
+    nextUpCta: 'Jetzt ergänzen', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpWeiter: 'Weiter mit {name}',
     tipsTitle: 'Tipps für den Anfang:',
     tip1: { sie: 'Beginnen Sie mit dem Kapitel "Persönliche Basis"', du: 'Beginne mit dem Kapitel "Persönliche Basis"' },
     tip2: { sie: 'Laden Sie Ihre wichtigen Dokumente hoch', du: 'Lade Deine wichtigen Dokumente hoch' },

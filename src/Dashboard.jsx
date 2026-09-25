@@ -510,6 +510,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
+        // Gleiche Fläche wie PrimaryButton (Sand, onSand, 6 px) — so sieht der Knopf aus wie
+        // «So geht es» oben. Hier abgeschrieben statt importiert: der Kopf dieser Datei wird
+        // am 25.09.2026 parallel umgebaut (Berg-Hero), ein Import dort hätte kollidiert.
+        const ctaFlaeche = {
+          display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', flexShrink: 0,
+          padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
+          background: palette.sand, color: palette.onSand, borderRadius: radius.sm + 'px',
+          fontSize: text.sm, fontWeight: weight.semi, whiteSpace: 'nowrap',
+        };
         const nextField = naechsterSchritt(chapters, data);
         if (nextField) {
           const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
@@ -534,11 +543,27 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
               ),
             ),
+            // Zum Ausprobieren, Entscheid 25.09.2026 (Variante «beide farbig»): der nächste
+            // Schritt trägt einen gefüllten Knopf, wie «So geht es» oben. Nur Darstellung —
+            // die ganze Zeile bleibt EIN Knopf (kein Knopf im Knopf).
+            React.createElement('span', { 'aria-hidden': 'true', style: ctaFlaeche }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
-        return React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.sageDeep, margin: 0, fontWeight: weight.medium },
-        }, t('dashboard.nextUpAllDone'));
+        // Grundordnung steht: weiter mit dem Kapitel, das am wenigsten ausgefüllt ist.
+        const weiterIdx = chapterCompletions.reduce((best, pct, i) =>
+          (pct < 100 && (best < 0 || pct < chapterCompletions[best]) ? i : best), -1);
+        return React.createElement('div', {
+          style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px', flexWrap: 'wrap' },
+        },
+          React.createElement('p', {
+            style: { fontSize: text.sm, color: palette.sageDeep, margin: 0, fontWeight: weight.medium },
+          }, t('dashboard.nextUpAllDone')),
+          weiterIdx >= 0 && React.createElement('button', {
+            type: 'button',
+            onClick: () => onSelectChapter(weiterIdx),
+            style: { ...ctaFlaeche, border: 'none', cursor: 'pointer', fontFamily: 'inherit' },
+          }, t('dashboard.nextUpWeiter', { name: chapters[weiterIdx].title }), ' ›'),
+        );
       })(),
       mvo.fields.some((f) => !f.done) && React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
@@ -575,14 +600,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
     ),
     // ─── Highlight tools — immediate value (first for new users) ──
-    React.createElement('div', {
-      style: {
-        marginTop: space.lg, marginBottom: space.md,
-        padding: '20px 24px',
-        background: palette.surface,
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.border + '88',
-      }
+    // Weissraum statt Kasten (25.09.2026): bis dahin eine umrandete Fläche, in der die
+    // Werkzeuge nochmals als umrandete Kästen standen — Kasten im Kasten. Jetzt ein offener
+    // Abschnitt wie «Ihr Alltag» weiter unten: weiter Abstand davor (48 px), eng darin.
+    React.createElement('section', {
+      style: { marginTop: space['2xl'] + 'px', marginBottom: space.md + 'px' }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
@@ -680,7 +702,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     // ─── Life chapters — moved up: the core action, immediately visible ──
-    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space.xl + 'px' } },
+    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
 
       // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
       ...[
