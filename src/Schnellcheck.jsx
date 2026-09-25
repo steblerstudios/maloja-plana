@@ -6,6 +6,7 @@ import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { Pegel } from './components/Pegel.jsx';
 import { PraemienBeleg } from './components/PraemienBeleg.jsx';
 import { sozialhilfePegelState } from './data/pegel.js';
+import { useEinkommen, EinkommenFeld, istKnapp } from './components/EinkommenFeld.jsx';
 import { praemienBelegState } from './data/praemienBeleg.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
@@ -20,13 +21,14 @@ import { betrag } from './utils/geld.js';
 export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) => {
   const canton = data?.basis?.canton || '';
   const hh = getHouseholdInfo(data);
-  const [income, setIncome] = useState(data?.finanzen?.monthlyIncome ? String(data.finanzen.monthlyIncome) : '');
+  // Brutto oder netto (EinkommenFeld, wie auf dem Dashboard); gerechnet wird mit netto.
+  const e = useEinkommen(data);
   const [rent, setRent] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
   const [kk, setKk] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
 
   const fmt = (n) => betrag(n || 0);
 
-  const numIncome = Number(income) || 0;
+  const numIncome = e.nettoMonat;
   const numRent = Number(rent) || 0;
   const probe = {
     ...data,
@@ -40,7 +42,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // sonst blieben sie in diesem lokalen Zustand gefangen. Ohne Callback (Solo-
   // Ansicht) passiert nichts. Kanton bleibt profilgebunden (kein Feld hier).
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Absicht: bei Änderung der Roh-Eingaben feuern und das abgeleitete `probe` durchreichen. `probe` (jedes Render neu) / `onProbeChange` (Prop) als Dep würden bei jedem Render feuern.
-  useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [income, rent, kk, data]);
+  useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [numIncome, rent, kk, data]);
 
   // Gedeckte Leistungen sammeln — jede mit eigenem Ehrlichkeits-Gate.
   const benefits = [];
@@ -49,7 +51,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     const ipv = (numIncome > 0 && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
     // B-1/E22: die hier eingetippten Zahlen gehen beim Klick an den IPV-Rechner mit.
-    const uebergabe = uebergabeAusProbe(probe);
+    // Eine aus brutto GESCHÄTZTE Zahl geht nicht mit — nur eingetippte (25.09.2026).
+    const uebergabe = uebergabeAusProbe(e.geschaetzt ? { ...probe, finanzen: { ...probe.finanzen, monthlyIncome: 0 } } : probe);
     if (ipv && ipv.eligible) benefits.push({
       key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep, uebergabe,
       label: t('schnellcheck.ipv'), monthly: ipv.amount, note: t('schnellcheck.ipvNote'),
@@ -80,10 +83,11 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // Instrument-Zustände (Beleg/Pegel) im selben Ehrlichkeits-/Crash-Gate berechnen
   // wie die Leistungsliste: werfen calculateIPV/calculateSozialhilfe, degradiert die
   // ganze Ansicht sonst zum leeren Screen statt sanft zu „keine Angabe".
-  let belegState = null, sozPegelState = null;
+  let belegState = null, sozPegelState = null, knappSoz = false;
   try {
     if (canton && numIncome > 0) belegState = praemienBelegState(probe);
     if (canton && numIncome > 0 && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
+    if (e.geschaetzt && numRent > 0) knappSoz = istKnapp(calculateSozialhilfe(probe));
   } catch { /* Orientierung, nie blockierend */ }
 
   const monetary = benefits.filter(b => !b.qualitative && b.monthly > 0);
@@ -204,7 +208,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // Angaben — auto vorbelegt, frei anpassbar
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap' } },
-        field(t('schnellcheck.income'), income, setIncome, '4500'),
+        React.createElement(EinkommenFeld, { palette, t, e }),
         field(t('schnellcheck.rent'), rent, setRent, '1500'),
         field(t('schnellcheck.kk'), kk, setKk, '350')
       ),
@@ -237,6 +241,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     sozPegelState && React.createElement(Pegel, {
       palette, t, state: sozPegelState,
     }),
+    // Knapp: geschätztes Netto nahe am Bedarf — dieselbe Regel wie auf dem Dashboard.
+    knappSoz && React.createElement('div', { style: { fontSize: text.xs, color: palette.sandDeep, marginTop: space.xs + 'px' } }, t('einkommensfeld.knapp')),
 
     // Ergebnis
     numIncome > 0

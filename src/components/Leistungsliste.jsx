@@ -6,10 +6,7 @@ import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { calculateIPV, calculateSozialhilfe } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
-import { useEinkommen, EinkommenFeld } from './EinkommenFeld.jsx';
-
-// «Knapp»: geschätztes Netto innerhalb dieses Anteils am SKOS-Bedarf (Fachprüfung ausstehend).
-const KNAPP_ANTEIL = 0.05;
+import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 
 // Leistungsliste des Dashboard-Blocks «Was steht mir zu?» (seit 25.09.2026 eigene Datei,
 // lazy geladen — vorher in Dashboard.jsx). Name QuickCheck bleibt: Tests und Übergabe-Logik
@@ -51,7 +48,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     if (annual > 0 && rentContext) {
       const sh = calculateSozialhilfe(probe);
       // Knapp: ist das Netto nur geschätzt und liegt es nahe am Bedarf, kann die Schätzung kippen.
-      knappSoz = e.geschaetzt && sh && Math.abs(sh.income - sh.totalBedarf) <= KNAPP_ANTEIL * sh.totalBedarf;
+      knappSoz = e.geschaetzt && istKnapp(sh);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.

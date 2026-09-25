@@ -54,7 +54,7 @@ afterEach(() => vi.restoreAllMocks());
 describe('B-1 · der Klick im Schnellcheck nimmt die eingetippten Zahlen mit', () => {
   it('die Zeile «Prämienverbilligung» übergibt Einkommen, Miete und Prämie an den IPV-Rechner', () => {
     // Im Schnellcheck steht, was die Person eingetippt hat: 3000 / 1100 / 380.
-    const schnellcheckStand = profil({ monthlyIncome: 3000 });
+    const schnellcheckStand = profil({ monthlyIncome: 3000, incomeType: 'netto' });
     schnellcheckStand.wohnen = { rentAmount: 1100 };
     schnellcheckStand.versicherungen = { kkPremium: 380 };
     const onNavigate = vi.fn();
@@ -88,7 +88,7 @@ describe('B-1 · der Klick im Schnellcheck nimmt die eingetippten Zahlen mit', (
 
   it('andere Zeilen im Schnellcheck tragen keine Übergabe', () => {
     const onNavigate = vi.fn();
-    const stand = profil({ monthlyIncome: 800 });
+    const stand = profil({ monthlyIncome: 800, incomeType: 'netto' });
     const { gesehen } = renderMitProps(Schnellcheck, { data: stand, onNavigate });
     const soz = gesehen.find((e) => e.typ === 'button' && e.p.key === 'soz');
     expect(soz).toBeTruthy();

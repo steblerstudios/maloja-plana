@@ -67,7 +67,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     expect(calculateIPV(hoch)).toEqual(calculateIPV(tief));
     expect(render(PremiumSubsidy, { data: hoch, onUpdateData: () => {} })).toBe(render(PremiumSubsidy, { data: tief, onUpdateData: () => {} }));
     expect(calculateMonthlyBudget(hoch, t).recommendations.map((r) => r.text)).toContain('budget.ipvHintOhneBetrag');
-    const ipvZeile = (d) => render(Schnellcheck, { data: d }).includes('schnellcheck.ipvOhneBetragNote');
+    const ipvZeile = (d) => render(Schnellcheck, { data: { ...d, finanzen: { ...d.finanzen, incomeType: 'netto' } } }).includes('schnellcheck.ipvOhneBetragNote');
     expect(ipvZeile(hoch)).toBe(true);
     expect(ipvZeile(tief)).toBe(true);
     expect(render(FinanzUebersicht, { data: hoch })).toContain('ipv.statusOffen');
@@ -104,7 +104,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
   });
 
   it('Schnellcheck: IPV als Weg «prüfen», Beleg ohne Betrag', () => {
-    const html = render(Schnellcheck, { data: profil() });
+    const html = render(Schnellcheck, { data: nettoProfil() });
     expect(html).toContain('schnellcheck.ipvOhneBetragNote');
     expect(html).toContain('schnellcheck.pruefen');
     expect(html).toContain('beleg.orientierung');
@@ -211,7 +211,7 @@ describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
   });
 
   it('Schnellcheck zeigt den Betrag', () => {
-    const html = render(Schnellcheck, { data: profil() });
+    const html = render(Schnellcheck, { data: nettoProfil() });
     expect(html).toContain(fmt(calculateIPV(profil()).amount));
     expect(html).not.toContain('schnellcheck.ipvOhneBetragNote');
   });

@@ -15,6 +15,11 @@ import { zahl } from '../utils/geld.js';
 //     bleibt das Feld leer, mit dem bestehenden Hinweis (einkommensart.offenNetto) — dieselbe Regel
 //     wie in den übrigen Rechnern (Predeploy-Gate 25.09.2026, einkommensartOffen.test.js).
 
+// «Knapp»: geschätztes Netto innerhalb dieses Anteils am SKOS-Bedarf — die Umrechnung kann dort
+// kippen (fehlende NBU/KTG/PK-Überobligatorium). Eine Regel für Dashboard und Schnellcheck.
+export const KNAPP_ANTEIL = 0.05;
+export const istKnapp = (sh) => !!sh && sh.totalBedarf > 0 && Math.abs(sh.income - sh.totalBedarf) <= KNAPP_ANTEIL * sh.totalBedarf;
+
 const alterAus = (geburt) => {
   if (!geburt) return undefined;
   const g = new Date(geburt);
