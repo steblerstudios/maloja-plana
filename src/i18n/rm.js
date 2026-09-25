@@ -1541,6 +1541,7 @@ export default {
   },
 
   nav: {
+    zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
     moreTools: 'Ulteriurs utensils',
@@ -1725,6 +1726,10 @@ export default {
     notStarted: { sie: 'Vossa via cumenza qua', du: 'Tia via cumenza qua' },
     status: '{started} da {total} cumenzà',
     allDone: 'Tut las secziuns cumpletadas',
+    // Beschriftung der Fortschritts-Kreise im Berg-Hero (25.09.2026)
+    begonnen: 'cumenzà',
+    abgeschlossen: 'terminà',
+    ausgefuellt: 'emplenì',
   },
 
   guidedStart: {

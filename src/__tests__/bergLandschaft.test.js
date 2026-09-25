@@ -1,10 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
   STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
+  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit, TITEL_GRUEN, DUNST, mitKontrastZu,
 } from '../components/BergLandschaft.jsx';
+import BergLandschaft from '../components/BergLandschaft.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // Dashboard-Berge seit 25.09.2026: eine gemalte Landschaft (eigene Malojapass-Fotos →
@@ -39,8 +43,10 @@ describe('Berge · Kapitel-Zeichen tragen in ihrer Kapitelfarbe', () => {
     });
   }
   it('die Aufrufstelle nutzt das abgedunkelte Zeichen (nicht nur die Hilfsfunktion ist geprüft)', () => {
-    expect(src).toMatch(/const zeichen = mitKontrast\(farbe, p\.surface, 3\)/);
-    expect(src).toMatch(/background: p\.surface, border: rand, color: zeichen/);
+    expect(src).toMatch(/const zeichen = mitKontrastZu\(farbe, ui\.surface, 3\)/);
+    expect(src).toMatch(/background: ui\.surface, border: 'none', color: zeichen/);
+    // Seit 25.09.2026 trägt der Fortschrittsring dasselbe abgedunkelte Zeichen (≥ 3:1).
+    expect(src).toMatch(/stroke: zeichen, strokeWidth: ringBreite/);
   });
   it('Gegenprobe: ohne Abdunkeln fiele mindestens eine Kapitelfarbe unter 3:1 (sonst prüft der Test nichts)', () => {
     const farben = Object.values(astFarben(KAPITEL, LIGHT_PALETTE, false));
@@ -123,7 +129,7 @@ describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
   it('jede Station hat eine Etikett-Seite für beide Ausschnitte', () => {
     for (const s of STATIONEN) {
       expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts'], s.key).toContain(s.seite.breit);
-      expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts'], s.key).toContain(s.seite.schmal);
+      expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts', 'obenlinks'], s.key).toContain(s.seite.schmal);
     }
   });
   it('alle sieben Kapitel haben eine Station, in der Reihenfolge der Kapitel', () => {
@@ -208,11 +214,15 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
   it('das Stück unten in der U-Kurve zwischen den Tannen ist da', () => {
     expect(zahlen(WEGSTUECKE[1]).some((v, k, z) => k % 2 === 0 && v > 420 && v < 470 && z[k + 1] > 715)).toBe(true);
   });
-  it('der Weg zum Notfall beginnt an der Einmündung der rechten Strasse, nicht am Behörden-Knopf', () => {
-    const z = zahlen(WEGSTUECKE[5]);
-    expect(z[0]).toBeGreaterThan(340);
-    expect(z[1]).toBeGreaterThan(575);
-    expect(nah(z[0], z[1], STATIONEN[5], 60)).toBe(false);
+  it('der Weg zum Notfall: senkrecht von Behörden das S hinunter, dann ab der Einmündung der rechten Strasse', () => {
+    const teile = WEGSTUECKE[5].split('M').filter(Boolean).map((t) => zahlen('M' + t));
+    expect(teile).toHaveLength(2);
+    const [s, r] = teile;
+    expect(nah(s[0], s[1], STATIONEN[5], 5), 'beginnt an Behörden').toBe(true);
+    expect(s[s.length - 1]).toBeGreaterThan(555);
+    expect(s[s.length - 1]).toBeLessThan(564);
+    expect(r[0]).toBeGreaterThan(340);
+    expect(r[1]).toBeGreaterThan(575);
   });
   it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {
     expect(WEG_VON).toEqual([0, 1, 2, 3, 4, 5]);
@@ -238,9 +248,200 @@ describe('Berge · Fortschritt im Bild', () => {
   }
 
   it('die Schildchen haben undurchsichtigen Grund und keine Deckkraft', () => {
-    const block = src.slice(src.indexOf('const schild = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    const block = src.slice(src.indexOf('const pilleStil = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    const kreis = src.slice(src.indexOf('const Kreis = '), src.indexOf('// Das Bild bleibt auch im Dunkelmodus hell'));
     expect(block.length).toBeGreaterThan(100);
-    expect(block).toContain('background: p.surface');
+    expect(block).toContain('background: ui.surface');
     expect(block).not.toMatch(/opacity/);
+    // Der Kreis selbst: volle Scheibe unter dem Bogen, Zahl in der Textfarbe des Modus.
+    expect(kreis).toContain('fill: ui.surface');
+    expect(kreis).toContain('fill: ui.text');
+    expect(kreis).not.toMatch(/opacity/);
   });
 });
+
+// Seit 25.09.2026 ist die Landschaft der Hero und trägt den Anspruch als Titel im Himmel.
+// Links bündig gemessen im Browser an den Bildpunkten hinter dem Text (320–736 px): jeder
+// Punkt ≥ 3:1 (schlechtester 3,05:1; gross + fett braucht 3:1, WCAG 1.4.3). Das gilt nur,
+// solange der Text selbst voll deckt und nichts dahinter liegt — darum hier: keine Deckkraft,
+// kein heller Schein (er zeigte sich am dunklen Hang als weisser Fleck), helle Palette.
+describe('Berge · Titel im Himmel', () => {
+  it('der Titel trägt keine Deckkraft, keinen Schein und die Textfarbe der hellen Palette', () => {
+    const block = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('// Fortschritt im Bild, unten'));
+    expect(block.length).toBeGreaterThan(100);
+    expect(block).toContain('color: p.text');
+    expect(block).not.toMatch(/opacity/);
+    expect(block).not.toMatch(/textShadow/);
+  });
+
+  it('die Ausschnitte reichen oben in den Himmel (breit) bzw. in die Gipfel (schmal)', () => {
+    expect(AUSSCHNITT.breit.y).toBe(0);
+    expect(AUSSCHNITT.schmal.y).toBeLessThanOrEqual(130);
+  });
+});
+
+// Seit 25.09.2026 tragen die Stationsnamen die Kapitelfarbe als Grund, weiss beschriftet. Etiketten
+// sind 11–13 px, also normale Schrift: Weiss muss auf jedem Grund ≥ 4.5:1 tragen (WCAG 1.4.3) —
+// für jede Kapitelfarbe, in allen vier Modi (die helle Palette gilt auch im Dunkelmodus).
+describe('Berge · Stationsnamen weiss auf Kapitelfarbe', () => {
+  for (const [name, dunkelModus, farbenblind] of [
+    ['hell', false, false], ['dunkel', true, false],
+    ['hell, Farbenblind', false, true], ['dunkel, Farbenblind', true, true],
+  ]) {
+    it(`${name}: Weiss ≥ 4.5:1 auf jedem Etikett`, () => {
+      const p = bildPalette(applyColorBlind(dunkelModus ? DARK_PALETTE : LIGHT_PALETTE, farbenblind));
+      const farben = astFarben(KAPITEL, p, false);
+      expect(Object.keys(farben)).toHaveLength(7);
+      for (const [key, farbe] of Object.entries(farben)) {
+        expect(kontrast(ETIKETT_SCHRIFT, etikettGrund(farbe)), `${name} · ${key}: ${farbe} → ${etikettGrund(farbe)}`).toBeGreaterThanOrEqual(4.5);
+      }
+    });
+  }
+
+  it('Fortschritts-Zahl im Kreis: Textfarbe auf der Scheibe ≥ 4.5:1', () => {
+    const p = bildPalette(LIGHT_PALETTE);
+    expect(kontrast(p.text, p.surface)).toBeGreaterThanOrEqual(4.5);
+    expect(kontrast(p.mid, p.surface)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// Die Kreise zeigen, was der Stand ist (Entscheid 25.09.2026): «begonnen» bis alle fertig sind,
+// «abgeschlossen» ab dem ersten fertigen Kapitel, und am Anfang nur der ruhige Satz.
+describe('Berge · Fortschritts-Kreise zeigen den Stand', () => {
+  const rendern = (fortschritt, prozent = 50) => renderToStaticMarkup(React.createElement(BergLandschaft, {
+    palette: LIGHT_PALETTE, chapters: KAPITEL, chapterCompletions: [0, 0, 0, 0, 0, 0, 0], completion: prozent,
+    onSelectChapter: () => {}, lang: 'de', hyphenStyle: {}, titel: 'T',
+    fortschritt, fortschrittLabels: { begonnen: 'begonnen', abgeschlossen: 'abgeschlossen', leer: 'Ihr Weg beginnt hier' },
+    prozent,
+  }));
+  it('nichts begonnen: nur der Satz, keine Kreise', () => {
+    const html = rendern({ begonnen: 0, abgeschlossen: 0, gesamt: 7 }, null);
+    expect(html).toContain('Ihr Weg beginnt hier');
+    expect(html).not.toContain('berg-begonnen');
+    expect(html).not.toContain('berg-abgeschlossen');
+    expect(html).not.toContain('berg-prozent');
+  });
+  it('begonnen, noch keins fertig: nur «begonnen» 7/7 und der Prozent-Kreis', () => {
+    const html = rendern({ begonnen: 7, abgeschlossen: 0, gesamt: 7 }, 63);
+    expect(html).toContain('berg-begonnen');
+    expect(html).toContain('7/7');
+    expect(html).not.toContain('berg-abgeschlossen');
+    expect(html).toContain('63%');
+  });
+  it('eins fertig: «abgeschlossen» 1/7 kommt dazu', () => {
+    const html = rendern({ begonnen: 7, abgeschlossen: 1, gesamt: 7 }, 70);
+    expect(html).toContain('berg-begonnen');
+    expect(html).toContain('berg-abgeschlossen');
+    expect(html).toContain('1/7');
+  });
+  it('alle fertig: «begonnen» geht weg, «abgeschlossen» 7/7 bleibt', () => {
+    const html = rendern({ begonnen: 7, abgeschlossen: 7, gesamt: 7 }, 100);
+    expect(html).not.toContain('berg-begonnen');
+    expect(html).toContain('berg-abgeschlossen');
+    expect(html).toContain('100%');
+  });
+});
+
+// Randlos, scharf (25.09.2026, nach verworfenem Unschärfe-Rand): auf breiten Fenstern zeigt der
+// Ausschnitt weniger Höhe — die Stationen (Ausbildung y 479 … Finanzen y 680) bleiben immer drin.
+describe('Berge · Ausschnitt bei randloser Breite', () => {
+  it('schmale/hohe Fenster: das ganze Bild', () => {
+    expect(ausschnittBreit(753, 1024)).toEqual(AUSSCHNITT.breit);
+  });
+  for (const [w, h] of [[1265, 800], [1425, 900], [1905, 1080], [1905, 700], [2545, 1440], [2545, 600]]) {
+    it(`${w}×${h}: alle Stationen im Ausschnitt, mit Rand`, () => {
+      const a = ausschnittBreit(w, h);
+      for (const st of STATIONEN) {
+        expect(st.y - 30, st.key).toBeGreaterThanOrEqual(a.y);
+        expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
+      }
+      expect(a.y).toBeGreaterThanOrEqual(0);
+      expect(a.y + a.h).toBeLessThanOrEqual(788);
+    });
+  }
+});
+
+// Seit 25.09.2026 folgen die Fortschritts-Angaben (Pillen am Computer, Scheiben am Handy) dem Modus
+// der App: in hell UND dunkel müssen Zahl und Wort ≥ 4.5:1 auf ihrem Grund tragen, der Bogen ≥ 3:1
+// (WCAG 1.4.11), und das weisse Etikett über der Scheibe ≥ 4.5:1 — auch im Farbenblind-Modus.
+describe('Berge · Fortschritt in hell und dunkel', () => {
+  for (const [name, basis, farbenblind] of [
+    ['hell', LIGHT_PALETTE, false], ['dunkel', DARK_PALETTE, false],
+    ['hell, Farbenblind', LIGHT_PALETTE, true], ['dunkel, Farbenblind', DARK_PALETTE, true],
+  ]) {
+    it(`${name}: Zahl, Wort, Bogen und Etikett lesbar`, () => {
+      const ui = applyColorBlind(basis, farbenblind);
+      expect(kontrast(ui.text, ui.surface), 'Zahl').toBeGreaterThanOrEqual(4.5);
+      expect(kontrast(ui.mid, ui.surface), 'Wort').toBeGreaterThanOrEqual(4.5);
+      expect(kontrast(ui.sageDeep, ui.surface), 'Bogen').toBeGreaterThanOrEqual(3);
+      expect(kontrast(ETIKETT_SCHRIFT, etikettGrund(ui.sageDeep)), 'Etikett').toBeGreaterThanOrEqual(4.5);
+    });
+  }
+  it('die Angaben nehmen die Palette des Modus, nicht die immer helle Bild-Palette', () => {
+    expect(src).toMatch(/const ui = palette;/);
+    const block = src.slice(src.indexOf('const pilleStil = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    expect(block).not.toMatch(/\bp\.(surface|text|mid|sageDeep)\b/);
+  });
+  it('Titel «T1»: Titelschrift, zweiter Satz in Tannengrün, keine Deckkraft', () => {
+    const t = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('// Fortschritt im Bild, unten'));
+    expect(t).toContain('fontFamily: fontFamilyDisplay');
+    expect(t).toContain('color: TITEL_GRUEN');
+    expect(t).not.toMatch(/opacity|textShadow/);
+  });
+  it('Tannengrün ist tiefer als das Marken-Salbeigrün (das auf den Bergen nur 2,45:1 trug) und trägt auf dem Himmel', () => {
+    expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThan(kontrast(LIGHT_PALETTE.sageDeep, DUNST.farbe));
+    expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThanOrEqual(4.5);
+  });
+  it('Dunst nur am Handy (hochkant, kleinstes quer), nicht am Computer', () => {
+    expect(src).toMatch(/const mitDunst = schmal \|\| breite < DUNST_UNTER_BREITE;/);
+    expect(src).toMatch(/return \[mitDunst && React\.createElement\('div'/);
+  });
+  it('Pille: die Zahl steht im Kreis', () => {
+    const pille = src.slice(src.indexOf('const pille = '), src.indexOf('const scheibe = '));
+    expect(pille).toMatch(/Kreis, \{ ui, anteil, mitte: wert/);
+  });
+});
+
+// Flache, breite Fenster (Laptops, 25.09.2026): der Himmel wird nie weggeschnitten — der
+// Ausschnitt reicht immer von 0 bis 740; das Bild ist dort höher als das Fenster (gewollt).
+describe('Berge · flache Fenster: Himmel bleibt, Bild darf höher sein als das Fenster', () => {
+  for (const [w, h] of [[1351, 650], [1265, 650], [1009, 600], [1905, 700], [2545, 600], [1265, 800], [1905, 1080]]) {
+    it(`${w}×${h}: Ausschnitt beginnt oben (Himmel), volle Bildbreite, alle Stationen drin`, () => {
+      const a = ausschnittBreit(w, h);
+      expect(a.y).toBe(0);
+      expect(a.x).toBe(0);
+      expect(a.w).toBe(1100);
+      expect(a.h).toBeGreaterThanOrEqual(740);
+      for (const st of STATIONEN) expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
+    });
+  }
+  it('keine Spiegelbilder, kein Dunst am Computer', () => {
+    expect(src).not.toMatch(/scale\(-1 1\)/);
+  });
+});
+
+// Seit 25.09.2026 folgen die Stations-Knöpfe dem Modus der App: im Dunkelmodus dunkle Scheibe,
+// Zeichen und Ring in der AUFGEHELLTEN Kapitelfarbe. Jede Kapitelfarbe ≥ 3:1 auf der Scheibe
+// (WCAG 1.4.11), in hell, dunkel und Farbenblind — und der Farbton bleibt erkennbar.
+describe('Berge · Stations-Knöpfe in hell und dunkel', () => {
+  for (const [name, basis, farbenblind] of [
+    ['hell', LIGHT_PALETTE, false], ['dunkel', DARK_PALETTE, false],
+    ['hell, Farbenblind', LIGHT_PALETTE, true], ['dunkel, Farbenblind', DARK_PALETTE, true],
+  ]) {
+    it(`${name}: jedes Zeichen ≥ 3:1 auf der Scheibe des Modus`, () => {
+      const ui = applyColorBlind(basis, farbenblind);
+      const farben = astFarben(KAPITEL, bildPalette(ui), false);
+      for (const [key, farbe] of Object.entries(farben)) {
+        expect(kontrast(mitKontrastZu(farbe, ui.surface, 3), ui.surface), `${name} · ${key}`).toBeGreaterThanOrEqual(3);
+      }
+    });
+  }
+  it('im Dunkelmodus wird aufgehellt, nicht abgedunkelt (Gold bleibt golden)', () => {
+    const gold = '#C4A870';
+    const hell = mitKontrastZu(gold, DARK_PALETTE.surface, 3);
+    expect(luminanzVon(hell)).toBeGreaterThanOrEqual(luminanzVon(gold));
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hell.slice(i, i + 2), 16));
+    expect(r).toBeGreaterThan(b);
+  });
+});
+function luminanzVon(hex) { return kontrast(hex, '#000000'); }

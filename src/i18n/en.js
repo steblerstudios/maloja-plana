@@ -1300,6 +1300,7 @@ export default {
   },
 
   nav: {
+    zurueckZu: 'Back to {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Overview',
     tools: 'Tools',
     moreTools: 'More tools',
@@ -1478,6 +1479,10 @@ export default {
     notStarted: 'Your journey starts here',
     status: '{started} of {total} started',
     allDone: 'All sections completed',
+    // Beschriftung der Fortschritts-Kreise im Berg-Hero (25.09.2026)
+    begonnen: 'started',
+    abgeschlossen: 'completed',
+    ausgefuellt: 'filled in',
   },
 
   guidedStart: {

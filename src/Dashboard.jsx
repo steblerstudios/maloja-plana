@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
-import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
+import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { miniCompass } from './components/miniKompass.js';
 import { kompassBearing } from './data/leistungsKompass.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
@@ -481,58 +481,46 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
-    // ─── Welcome area ──────────────────────────────────────
-    // Der Anspruch (dashboard.welcome) steht immer — er ist die Identität der Seite.
-    // Die Leistungs-Zeile darunter beantwortet "Was ist das hier?" und hilft genau
-    // einmal: beim ersten Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr
-    // bei jedem Öffnen vorgesetzt. Gemessen am Handy (390x844): sie kostet 123 px
-    // einer Bildschirmseite, die nur 619 px hoch ist — ohne sie kommt der Berg mit
-    // dem Fortschritt über den Falz. Weggenommen wird nichts: für neue Nutzerinnen
-    // und Nutzer steht sie unverändert da.
-    // (Suchmaschinen sehen diesen Text ohnehin nie — sie kommen nicht hinter das
-    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
-    React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
-      React.createElement(PageTitle, {
-        palette,
-        style: { margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
-      }, t('dashboard.welcome')),
-      !hasMeaningfulProgress && React.createElement('p', {
-        style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
-      }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
+    // ─── Hero: die Landschaft mit dem Anspruch im Himmel ─────────
+    // Seit 25.09.2026 ist das Bergpanorama die Eröffnung der Seite und trägt den Anspruch
+    // (dashboard.welcome) als Titel — vorher stand er als eigene Zeile darüber (Entscheid
+    // Stebler Studios). Eigene Malojapass-Fotos → Codex-Illustration, die Kapitel als Stationen
+    // auf der Passstrasse — siehe components/BergLandschaft.jsx.
+    // Der Fortschritt steht unten IM Bild, als Kreise. Die Prozentzahl erst ab spürbarem
+    // Fortschritt (≥10%) — eine einsame «1%» liest sich als «im Rückstand».
+    React.createElement(BergLandschaft, {
+      palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle,
+      titel: t('dashboard.welcome'),
+      // Fortschritt als Kreise (seit 25.09.2026): begonnen · abgeschlossen · Prozent.
+      fortschritt: {
+        begonnen: chapterCompletions.filter(p => p > 0).length,
+        abgeschlossen: chapterCompletions.filter(p => p >= 100).length,
+        gesamt: chapterCompletions.length,
+      },
+      fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), ausgefuellt: t('progress.ausgefuellt'), leer: t('progress.notStarted') },
+      prozent: Math.round(completion) >= 10 ? Math.round(completion) : null,
+    }),
 
-      null
-    ),
+    // Die Leistungs-Zeile beantwortet «Was ist das hier?» und hilft genau einmal: beim ersten
+    // Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr bei jedem Öffnen vorgesetzt.
+    // Seit dem Hero (25.09.2026) direkt unter dem Bild statt unter dem Titel — im Bild wäre sie
+    // am Handy zu lang. (Suchmaschinen sehen diesen Text nie — sie kommen nicht hinter das
+    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
+    !hasMeaningfulProgress && React.createElement('p', {
+      style: { fontSize: text.body, color: palette.mid, margin: '0 0 ' + space.lg + 'px', lineHeight: leading.relaxed }
+    }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
 
     // ─── Alpha banner — UNTER dem Hero: erst das Versprechen, dann der ruhige
     // Entwicklungs-Hinweis (auf Handy stand die Warnung sonst vor dem Nutzen). ──
-    !alphaDismissed && React.createElement('div', { style: { marginTop: '20px' } },
+    !alphaDismissed && React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
       React.createElement(AlphaBanner, {
         palette, t, onDismiss: () => setAlphaDismissed(true)
       })
     ),
 
-    // ─── Maloja Pass — die Landschaft ─────────
-    // Eigene Malojapass-Fotos → Codex-Illustration, die Kapitel als Stationen auf der
-    // Passstrasse — siehe components/BergLandschaft.jsx.
-    // Seit 25.09.2026 steht die Fortschritts-Zeile («7 von 7 begonnen · 63%») IM Bild, nicht
-    // mehr darüber (Entscheid Stebler Studios). Die Prozentzahl erst ab spürbarem Fortschritt
-    // (≥10%) — eine einsame «1%» am Anfang liest sich als «im Rückstand».
-    React.createElement(BergLandschaft, {
-      palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle,
-      fortschrittText: (() => {
-        const started = chapterCompletions.filter(p => p > 0).length;
-        const done = chapterCompletions.filter(p => p >= 100).length;
-        const total = chapterCompletions.length;
-        if (done === total) return t('progress.allDone');
-        if (started === 0) return t('progress.notStarted');
-        return t('progress.status', { started, done, total });
-      })(),
-      prozent: Math.round(completion) >= 10 ? Math.round(completion) + '%' : null,
-    }),
-
     // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
     // Steht seit 25.09.2026 UNTER der Landschaft, vor der Fortschritts-Karte (Entscheid Stebler Studios):
-    // erst das Bild, dann der eine nächste Schritt. Oben trägt die Landschaft den Abstand (28 px).
+    // erst das Bild, dann der eine nächste Schritt.
     // Führt sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
     // Punkt) und zeigt einen TWINT-artigen Glance (nächste Frist · zuletzt gesichert).
     // Weniger Farbe, klare Hierarchie (Prinzipien von Stebler Studios): neutraler Grund statt

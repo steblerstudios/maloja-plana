@@ -19,6 +19,38 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🏔️ **Nachtrag 25.09., 16:15 — Sitzung «Maloja Dashboard Berge Variante»: Dashboard-Berge als gemalte Malojapass-Landschaft (#365), gemergt auf ausdrückliches Wort von Stebler Studios («jetzt darfst du mergen») und LIVE.**
+>
+> **Stand, gemessen 25.09.2026 16:10** (`bash scripts/stand-jetzt.sh`): main = `63c6f80` (15:33) · live = `3ec7515`
+> (0.1.40-beta, gebaut 25.09. 15:00, `sauber: true`) = genau der Merge von #365 · 5 Commits dazwischen (#370 #372 #373
+> #369 #371) · offen: #375, #374, #351 (Entwürfe). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Live belegt (curl 16:12):** das ausgelieferte Bündel `index-Cds39Suk.js` verweist auf `landschaft-DFaLDuw5.webp`,
+> die Datei antwortet 200 mit **89 042 Bytes** (= die Datei im Repo); erfundener Name → 404. **Nicht** im Browser auf der
+> Live-Seite angesehen (Aufruf in dieser Sitzung verweigert) → FEATURES steht auf `deployed`, nicht `verified-live`.
+>
+> | Was | Wo |
+> |---|---|
+> | Landschaft: eigene Malojapass-Fotos → Codex-Illustration → WebP 1482 × 1062, 87 KB (alle Details; die vereinfachte SVG verlor sie) | `src/assets/berge/landschaft.webp`, Herkunft `_QUELLE.md` |
+> | Bild bleibt im **Dunkelmodus hell**; Stationen/Etiketten tragen immer die helle Palette (Farbenblind-Modus gilt weiter) | `bildPalette()` |
+> | Route nach Vorgabe Stebler Studios: Basis links → Wohnen (Mittelstreifen) → hinter den Tannen → Finanzen (U-Kurve) → Versicherungen (zwischen den Tannen) → obere Strasse zurück, an der Basis verdeckt → Ausbildung → Behörden (im S) → unter der oberen Strasse durch → Notfall (rechte Strasse) | `STATIONEN`, `WEGSTUECKE` |
+> | Stationen in Kapitelfarbe, Zeichen auf ≥ 3:1 abgedunkelt; Etikett-Seiten errechnet (keine Überschneidung breit 656–736, schmal 296–496 px) | `BergLandschaft.jsx` |
+> | Jede Vorgabe als Test, jeder per Mutationsprobe rot gesehen | `bergLandschaft.test.js` |
+>
+> **Nachtrag 17:06** (`stand-jetzt.sh`): **#374 «Berg-Hero» gemergt** 17:04 → main = `5b4ae89` (randlos, Titel im
+> Himmel, Kreise, farbige Stationen; darin auch das senkrechte Stück Behörden → Busch, `5aa9a88`, Behörden-Etikett «links»
+> mit Ausweichen). **Nicht deployt** — live weiter `3ec7515`, 6 Commits dazwischen. ⚠️ **Hauptbündel 64,69 von 65 kB**
+> (Probe-Merge der #374-Sitzung): nur noch ~0,3 kB Luft für weitere Dashboard-Änderungen.
+>
+> **Offen:**
+> 1. ~~Folge-PR #374~~ **erledigt 17:04** (siehe oben). Ursprünglich: #374 «Berg-Hero» (andere Sitzung) baut `BergLandschaft.jsx` weiter (randlos, Titel im Himmel). Dort
+>    einzubauen: Wunsch von Stebler Studios **«senkrechtes Stück von Behörden das S hinunter bis zum Busch»** (`WEGSTUECKE[5]`) — Daten
+>    übergeben, auf `4450726` geprüft 3988/3988. ⚠️ Das Behörden-Etikett «unten» deckt dieses Stück; die Seite muss #374
+>    im Layout lösen. (Ein zuerst falsch verstandenes waagrechtes Stück kam als `040fc30` rein und ist per `4450726` zurück.)
+> 2. **Live im Browser ansehen** (Stebler Studios): Berge hell/dunkel/Handy auf malojaplana.ch → dann FEATURES auf `verified-live`.
+> 3. Etiketten nur für **Deutsch** auf Überschneidung geprüft — fr/it haben längere Kapitelnamen.
+> 4. Leerer Rest-Ordner `_werkbank/berge-landschaft` (nur `.vite`-Cache, 8 KB) — Löschen wurde der Sitzung verweigert.
+
 > 🧾 **Nachtrag 25.09., 12:40 — Sitzung «Deployment follow-up» (24.09. 18:50 bis 25.09.): Deploy 0.1.40 belegt, K123/K124/K125 vorgezogen und gebaut. Alle Merges auf ausdrückliches Wort von Stebler Studios («sauber mergen»), je Squash, vorher gegen das aktuelle `main` getestet.**
 >
 > **Stand, gemessen 25.09.2026 12:35** (`bash scripts/stand-jetzt.sh`): main = `cbb6447` · live = `0a80d71`
