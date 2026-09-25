@@ -67,20 +67,34 @@ export const InstallHinweis = ({ palette, t, onNavigate, installPrompt, onPrompt
       background: palette.up, border: '1px solid ' + palette.border,
       borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center',
       justifyContent: 'space-between', gap: space.sm,
+      // Am Handy rutschen die Knöpfe unter den Text, statt ihn in eine schmale Spalte zu drücken
+      // (gemessen 375 px: sonst sieben Zeilen Text neben dem Knopf).
+      flexWrap: 'wrap',
     },
   },
-    React.createElement('span', { style: { fontSize: text.sm, color: palette.text } },
+    React.createElement('span', { style: { fontSize: text.sm, color: palette.text, flex: '1 1 240px' } },
       t(installPrompt ? 'pwa.installHint' : 'pwa.anleitungHint')),
-    React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center' } },
+    React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center', flexShrink: 0, marginLeft: 'auto' } },
       installPrompt && React.createElement(PrimaryButton, {
         palette,
         onClick: () => installAusloesen(installPrompt, onPromptWeg),
-        style: { padding: space.xs + 'px ' + space.sm + 'px' },
+        style: { padding: space.xs + 'px ' + space.sm + 'px', whiteSpace: 'nowrap' },
       }, t('pwa.install')),
-      React.createElement('button', {
-        onClick: () => onNavigate('installApp'),
-        style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium },
-      }, t('pwa.anleitung')),
+      // «So geht es»: wo der Browser nicht selbst installieren kann (Safari, Firefox), ist die
+      // Anleitung DER Weg — also der Hauptknopf (Entscheid 25.09.2026). Wo «Installieren» schon
+      // steht, bleibt sie der ruhige Zweitweg daneben: nie zwei Hauptknöpfe in einem Kasten.
+      // Beide brechen nicht um (vorher stand «So geht es» am Desktop auf drei Zeilen).
+      installPrompt
+        ? React.createElement('button', {
+          onClick: () => onNavigate('installApp'),
+          style: { ...knopfStil, color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap' },
+        }, t('pwa.anleitung'))
+        : React.createElement(PrimaryButton, {
+          palette,
+          'data-testid': 'install-anleitung-cta',
+          onClick: () => onNavigate('installApp'),
+          style: { padding: space.xs + 'px ' + space.md + 'px', minHeight: '44px', whiteSpace: 'nowrap' },
+        }, t('pwa.anleitung')),
       React.createElement('button', {
         type: 'button',
         onClick: verwerfen,
