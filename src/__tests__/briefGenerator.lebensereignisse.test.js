@@ -241,11 +241,19 @@ describe('deathNotice — keine Annahme der Erbschaft (ZGB Art. 571 Abs. 2)', ()
     expect(html).toMatch(/<div class="signature">Alex Muster<\/div>/);
   });
   // Verbotene Formulierungen: alles, was als Einmischung / Annahme gelesen werden kann.
+  // 🛑 Unicode-Wortgrenzen: JS-\b kennt «ü» nicht als Buchstaben — /\bübernehme\b/ trifft
+  // «Ich übernehme» NIE (Mutationsprobe 26.09.2026 hat genau das gezeigt).
+  const wort = (w) => new RegExp('(?<!\\p{L})' + w + '(?!\\p{L})', 'iu');
   const VERBOTEN = [
-    /\bich (be)?zahle\b/i, /\büberweise\b/i, /\bübernehme\b/i, /\banerkenne\b/i,
-    /\bkündige\b/i, /\bnehme .{0,40}\ban\b/i, /\bals (Erbin|Erbe|Erben)\b/i,
+    wort('ich (be)?zahle'), wort('überweise'), wort('übernehme'), wort('anerkenne'),
+    wort('kündige'), /\bnehme .{0,40}\ban\b/i, wort('als (Erbin|Erbe|Erben)'),
     /auf mein Konto/i, /an mich (aus|zu überweisen)/i, /Zahlung(en)? .{0,20}(leisten|veranlassen)/i,
   ];
+  it('Gegenprobe: die Wortgrenzen greifen auch bei Umlauten', () => {
+    expect('Ich übernehme die Beträge.').toMatch(wort('übernehme'));
+    expect('Ich zahle.').toMatch(wort('ich (be)?zahle'));
+    expect('Unternehmensübernehmer').not.toMatch(wort('übernehme'));
+  });
   it.each(['de', 'fr', 'it', 'en', 'rm'])('🛑 %s: Brief enthält den Vorbehalt und keine Annahme-Formulierung', (lang) => {
     const tl = createT(ALL, lang, 'sie');
     const k = koerper(generateLetter('deathNotice', person, tl, { angaben }));
