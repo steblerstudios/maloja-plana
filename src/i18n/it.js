@@ -1754,6 +1754,8 @@ export default {
     glanceSaved: 'Ultimo salvataggio',
     glanceNeverSaved: 'Ancora nessun file di backup creato',
     nextUpAction: 'Completare: {feld}',
+    nextUpCta: 'Completa ora', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpWeiter: 'Continua con {name}',
     tipsTitle: 'Consigli per iniziare:',
     tip1: { sie: 'Inizi con il capitolo "Dati personali"', du: 'Inizia con il capitolo "Dati personali"' },
     tip2: { sie: 'Carichi i Suoi documenti importanti', du: 'Carica i tuoi documenti importanti' },

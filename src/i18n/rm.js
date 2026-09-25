@@ -1847,6 +1847,8 @@ export default {
     glanceSaved: 'Ultima segirada',
     glanceNeverSaved: 'Anc nagina datoteca da backup creada',
     nextUpAction: 'Cumplettar: {feld}',
+    nextUpCta: 'Cumplettar ussa', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpWeiter: 'Cuntinuar cun {name}',
     tipsTitle: 'Tips per cumenzar:',
     tip1: { sie: 'Cumenzai cun il chapitel "Basa persunala"', du: 'Cumenza cun il chapitel "Basa persunala"' },
     tip2: { sie: 'Chargiai si Voss documents impurtants', du: 'Chargia si Tes documents impurtants' },

@@ -1754,6 +1754,8 @@ export default {
     glanceSaved: 'Last saved',
     glanceNeverSaved: 'No backup file created yet',
     nextUpAction: 'Fill in: {feld}',
+    nextUpCta: 'Add now', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpWeiter: 'Continue with {name}',
     tipsTitle: 'Tips for getting started:',
     tip1: 'Start with the chapter "Personal basics"',
     tip2: 'Upload your important documents',
