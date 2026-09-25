@@ -274,11 +274,12 @@ html { overflow-x: clip; }
   }
 }
 
-/* Schrift steht nie auf dem Glas: Abschnitte OHNE eigene Kachelfarbe (Überschriften,
-   «Ihr Alltag», Tipps …) bekommen eine ruhige Unterlage in Seitenfarbe, 12 px weich
-   über den Rand hinaus (Schatten statt padding — das Layout bleibt, wie es ist). Das
-   Berg bleibt in den Zwischenräumen sichtbar. Kacheln tragen ihre Farbe inline und sind hier
-   ausgenommen. Grund: graue Kleinschrift erreichte über hellem Himmel nur ~2,5:1. */
+/* Schrift steht nie direkt auf dem Berg: Abschnitte OHNE eigene Kachelfarbe
+   (Überschriften, «Ihr Alltag», Tipps …) bekommen eine ruhige Unterlage in Seitenfarbe,
+   12 px weich über den Rand hinaus (Schatten statt padding — das Layout bleibt). In den
+   Zwischenräumen bleibt der Berg sichtbar. Ausgenommen: Kacheln (Farbe inline) und Hüllen,
+   deren Kind selbst eine Kachel ist — sonst läge ein dunkler Ring um sie.
+   Grund: graue Kleinschrift erreichte über hellem Himmel gerechnet nur ~2,5:1. */
 .mp-blatt > :not([style*="background"]):not(:has(> [style*="background"])) {
   background-color: var(--mp-seite);
   border-radius: var(--mp-radius-md);
