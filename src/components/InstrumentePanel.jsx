@@ -120,14 +120,28 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     },
   ];
 
-  return h('div', { style: eingebettet ? { marginTop: space.md + 'px' } : { marginBottom: space.xl + 'px' } },
-    h(PanelTitle, {
-      palette,
-      style: eingebettet
-        ? { margin: '0 0 ' + space.xs + 'px 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
-        : { margin: '0 0 ' + space.xs + 'px 0' },
-    }, t('instrumente.title')),
-    h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
+  const titel = h(PanelTitle, {
+    palette,
+    style: eingebettet
+      ? { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+      : { margin: '0 0 ' + space.xs + 'px 0' },
+  }, t('instrumente.title'));
+
+  return h('div', { style: eingebettet ? { marginTop: space.lg + 'px' } : { marginBottom: space.xl + 'px' } },
+    // Eingebettet: statt Einleitung der Weg zur Finanz-Übersicht — sie war vorher eine
+    // eigene grosse Karte direkt darüber, mit demselben Ziel wie die Tankanzeige.
+    eingebettet
+      ? h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', marginBottom: space.sm + 'px' } },
+          titel,
+          h('button', {
+            onClick: () => onNavigate('finanzuebersicht'),
+            style: {
+              background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', fontFamily: 'inherit',
+              fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage,
+            },
+          }, t('dashboard.highlightFinanz')))
+      : titel,
+    !eingebettet && h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
     // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
     // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },

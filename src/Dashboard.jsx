@@ -107,128 +107,125 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const canton = data?.basis?.canton;
   const fmt = (v) => zahl(v, { hoechstens: 2 });
 
-  // Ein Einkommen → mehrere Leistungen (Basel-Stadt-Leistungsrechner als Vorbild).
+  // Seit 25.09.2026 EINE Liste: Schnell-Check und die Leistungs-Kacheln waren zwei
+  // Darstellungen derselben Frage. Jede Leistung ist eine Zeile; wo echte Logik
+  // dahintersteht (IPV, Sozialhilfe), zeigt die Zeile das Ergebnis, sonst ihren Untertitel.
   // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
   // Berechnung ist dieselbe wie in den vollständigen Tools (calculateIPV/
-  // calculateSozialhilfe), damit Schnellcheck und Rechner nie widersprechen.
+  // calculateSozialhilfe), damit Liste und Rechner nie widersprechen.
   const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
-  const benefits = [];
+  const found = {};
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
     // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
-    if (ipv && ipv.anspruchMoeglich) benefits.push({
-      key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'), color: palette.sky,
+    if (ipv && ipv.anspruchMoeglich) found.ipv = {
       uebergabe: { schnellcheck: { monthlyIncome: Number(income) } },
-      monthly: ipv.amount,
+      monthly: ipv.eligible ? ipv.amount : 0,
       detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
-    });
+    };
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
     // sonst wäre ein „Anspruch möglich" unehrlich.
     const rentContext = Number(data?.wohnen?.rentAmount || 0) > 0;
     if (annual > 0 && rentContext) {
       const sh = calculateSozialhilfe(probe);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
-        key: 'soz', view: 'sozialhilfe', label: t('nav.sozialhilfe'), color: palette.sage,
+      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
         detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
-      });
+      };
     }
   } catch { /* Orientierung, nie blockierend */ }
 
-  // Schlanke Total-Leiste (Flat-Viz, konsistent mit der Vollansicht #/schnellcheck):
-  // summiert nur die monetären Leistungen zu einer geschätzten Monats-Entlastung.
-  const monetary = benefits.filter(b => b.monthly > 0);
-  const totalMonthly = monetary.reduce((sum, b) => sum + b.monthly, 0);
-  const miniBar = monetary.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
-    React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
-      '≈ CHF ' + fmt(totalMonthly) + ' / ' + t('schnellcheck.monat')),
-    React.createElement('div', { style: { display: 'flex', height: '8px', borderRadius: '4px', overflow: 'hidden', background: palette.up } },
-      monetary.map(b => React.createElement('div', {
-        key: b.key,
-        style: { width: (totalMonthly > 0 ? b.monthly / totalMonthly * 100 : 0).toFixed(1) + '%', background: b.color },
-      })))
-  );
+  // Wie der volle Schnellcheck (Schnellcheck.jsx): bei Sozialhilfe steckt die IPV schon
+  // im Bedarf — sie zählt dann nicht zusätzlich. Bis 25.09.2026 zählte das Dashboard
+  // beide zusammen und zeigte damit mehr Entlastung als der Schnellcheck selbst.
+  const ipvSubsumed = !!found.soz && !!found.ipv && found.ipv.monthly > 0;
+  const counted = ['ipv', 'soz'].filter(k => found[k] && found[k].monthly > 0 && !(ipvSubsumed && k === 'ipv'));
+  const totalMonthly = counted.reduce((sum, k) => sum + found[k].monthly, 0);
+  const maxMonthly = Math.max(0, ...counted.map(k => found[k].monthly));
 
-  const row = (b) => React.createElement('button', {
-    key: b.key,
-    onClick: () => onNavigate(b.view, undefined, b.uebergabe),
-    style: {
-      display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
-      padding: '10px 14px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
-      background: palette.sage + '10', color: palette.text,
-      border: '1px solid ' + palette.sage + '30', borderRadius: radius.sm,
-      transition: `background ${duration.normal}ms ${ease}`,
-    },
-    onMouseEnter: (e) => { e.currentTarget.style.background = palette.sage + '1e'; },
-    onMouseLeave: (e) => { e.currentTarget.style.background = palette.sage + '10'; },
-  },
-    React.createElement('div', { style: { minWidth: 0, flex: 1 } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, b.label),
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, b.detail)
-    )
-  );
+  const leistungen = [
+    { key: 'ipv', label: t('dashboard.quickCheckIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
+    { key: 'soz', label: t('nav.sozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
+    { key: 'stipendien', label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
+    { key: 'alv', label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
+    { key: 'eo', label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
+  ];
 
-  return React.createElement('div', {
-    style: {
-      marginTop: space.md, marginBottom: space.lg,
-      padding: '20px 24px',
-      background: palette.up,
-      borderRadius: radius.md,
-    }
-  },
-    React.createElement('div', {
-      style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm }
-    }, t('dashboard.quickCheckTitle')),
-    React.createElement('label', { style: { display: 'block', maxWidth: '260px' } },
-      React.createElement('span', {
-        style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
-      }, t('dashboard.quickCheckIncome')),
-      React.createElement('input', {
-        type: 'number',
-        inputMode: 'numeric',
-        placeholder: t('dashboard.quickCheckPlaceholder'),
-        'aria-label': t('dashboard.quickCheckIncome'),
-        value: income,
-        onChange: (e) => setIncome(e.target.value),
-        style: {
-          width: '100%', padding: '10px 12px', fontSize: text.body,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          background: palette.surface, color: palette.text,
-          fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-        }
-      })
-    ),
-    annual > 0 && React.createElement('div', { style: { marginTop: space.md } },
-      benefits.length > 0
-        ? React.createElement('div', null,
-            React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('dashboard.quickCheckWithIncome')),
-            miniBar || null,
-            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px' } }, benefits.map(row))
-          )
-        : React.createElement('div', {
-            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-          }, !canton ? t('dashboard.quickCheckHint') : t('dashboard.quickCheckNoResult')),
-      // Kanton-Caveat nur, wenn nicht schon der No-Result-Zweig denselben Hinweis
-      // zeigt (kein Kanton → Hinweis steht bereits oben; keine Doppelung).
-      (benefits.length > 0 || canton) && React.createElement('div', {
-        style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm }
-      }, t('dashboard.quickCheckHint'))
-    ),
-    // Zum vollständigen Leistungs-Schnellcheck (eigene Ansicht, mehr Angaben + Tacho)
-    React.createElement('button', {
-      onClick: () => onNavigate('schnellcheck'),
+  // Zeile statt Karte (dichte Liste: Linien, keine Rahmen). Rechts, wo ein Betrag
+  // gezählt wird, ein dünner Balken auf GEMEINSAMER Skala (Grösse = Betrag), eine Farbe:
+  // es ist dieselbe Grösse, keine Kategorie. Der Betrag steht als Text daneben.
+  const row = (l) => {
+    const f = found[l.key];
+    const zaehlt = f && counted.includes(l.key);
+    const IconFn = Icons[l.icon];
+    return React.createElement('button', {
+      key: l.key,
+      onClick: () => (f && f.uebergabe) ? onNavigate(l.view, undefined, f.uebergabe) : onNavigate(l.view),
       style: {
-        // 8 px Polsterung hebt das Ziel von 17 auf 33 px (WCAG 2.2 AA: 24x24);
-        // marginTop ist um dieselben 8 px gekürzt, das Bild bleibt gleich.
-        background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
-        fontSize: text.xs, color: palette.sandDeep, fontFamily: 'inherit',
-        fontWeight: weight.medium, marginTop: space.sm,
-      }
-    }, t('dashboard.quickCheckAllLeistungen'))
+        display: 'flex', alignItems: 'center', gap: '12px', width: '100%',
+        padding: '12px 4px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+        background: 'transparent', color: palette.text,
+        border: 'none', borderTop: '1px solid ' + palette.border + '55', borderRadius: 0,
+        transition: `background ${duration.normal}ms ${ease}`,
+      },
+      onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+      onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+    },
+      React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: f ? (palette.sageDeep || palette.sage) : palette.mid } }, IconFn ? IconFn() : null),
+      React.createElement('div', { style: { minWidth: 0, flex: 1 } },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, l.label),
+        React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
+          f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail) : l.sub)
+      ),
+      zaehlt && React.createElement('div', { style: { flexShrink: 0, width: '96px', textAlign: 'right' } },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, '≈ CHF ' + fmt(f.monthly)),
+        React.createElement('div', { 'aria-hidden': true, style: { height: '6px', marginTop: '4px', borderRadius: '3px', background: palette.up, overflow: 'hidden' } },
+          React.createElement('div', { style: { height: '100%', width: (maxMonthly > 0 ? f.monthly / maxMonthly * 100 : 0).toFixed(1) + '%', background: palette.sage, borderRadius: '3px' } }))
+      )
+    );
+  };
+
+  return React.createElement('div', { style: { marginTop: space.xl + 'px' } },
+    React.createElement(PanelTitle, {
+      palette, style: { margin: '0 0 ' + space.sm + 'px 0', fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+    }, t('schnellcheck.kompassLeistungen')),
+    React.createElement('div', {
+      style: { display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: space.md + 'px', marginBottom: space.md + 'px' }
+    },
+      React.createElement('label', { style: { display: 'block', flex: '0 1 220px' } },
+        React.createElement('span', {
+          style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
+        }, t('dashboard.quickCheckIncome')),
+        React.createElement('input', {
+          type: 'number',
+          inputMode: 'numeric',
+          placeholder: t('dashboard.quickCheckPlaceholder'),
+          'aria-label': t('dashboard.quickCheckIncome'),
+          value: income,
+          onChange: (e) => setIncome(e.target.value),
+          style: {
+            width: '100%', padding: '10px 12px', fontSize: text.body,
+            border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            background: palette.surface, color: palette.text,
+            fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
+          }
+        })
+      ),
+      // Die eine Kennzahl: geschätzte Entlastung pro Monat — nur wenn etwas gezählt wird.
+      totalMonthly > 0 && React.createElement('div', { style: { textAlign: 'right' } },
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('dashboard.quickCheckWithIncome')),
+        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+          '≈ CHF ' + fmt(totalMonthly) + ' / ' + t('schnellcheck.monat'))
+      )
+    ),
+    React.createElement('div', { style: { borderBottom: '1px solid ' + palette.border + '55' } }, leistungen.map(row)),
+    React.createElement('div', {
+      style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm, lineHeight: leading.relaxed }
+    }, annual > 0 ? (totalMonthly > 0 ? t('schnellcheck.barHint') : t('dashboard.quickCheckHint')) : t('schnellcheck.enterIncome'))
   );
 };
 
@@ -603,7 +600,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.anspruchIntro')),
       (() => {
         const items = [
-          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
+          // Finanz-Übersicht: seit 25.09.2026 als Link bei «Ihre Instrumente» (die Tankanzeige führt ohnehin hin).
           { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
@@ -646,93 +643,25 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             )
           );
         };
-        const primary = items.find(i => i.primary);
-        const rest = items.filter(i => !i.primary);
+        const rest = items;
         return React.createElement(React.Fragment, null,
-          primary && renderItem(primary),
           // Deine Instrumente — seit 25.09.2026 im selben Block, gleich unter der Übersicht.
           // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           React.createElement(QuickCheck, { palette, t, onNavigate, data }),
-          (() => {
-            // Anspruchs-Matrix — nur ein *positiver, ermutigender* Hinweis „Anspruch
-            // möglich", und ausschliesslich dort, wo echte Logik dahintersteht
-            // (IPV, Sozialhilfe). Nie ein „Nein"/Verdikt (Würde, kein Scham-Signal),
-            // keine erfundenen Status. Streng gegated auf selbst eingetragene Angaben.
-            const incomeEntered = data?.finanzen?.monthlyIncome !== undefined
-              && data?.finanzen?.monthlyIncome !== null
-              && String(data.finanzen.monthlyIncome).trim() !== '';
-            const canton = data?.basis?.canton;
-            let ipvHint = false, sozialhilfeHint = false;
-            try {
-              if (incomeEntered && canton) {
-                ipvHint = !!calculateIPV(data)?.anspruchMoeglich;
-              }
-              if (incomeEntered) {
-                const sh = calculateSozialhilfe(data);
-                // Nur wenn Bedarf gedeckt UND kein Vermögen über dem Freibetrag,
-                // damit der Hinweis ehrlich bleibt (Vermögen ginge sonst vor).
-                sozialhilfeHint = !!sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0;
-              }
-            } catch { /* Orientierung, nie blockierend */ }
-            return React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
-          },
-            [
-              // IPV statt Prämien-Modellvergleich: der Hinweis «Anspruch möglich» rechnet die
-              // Verbilligung (calculateIPV), gehört also an die IPV, nicht an die Modelle.
-              { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung', hint: ipvHint },
-              { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
-              { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
-              { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
-              { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
-            ].map(item => {
-              const IconFn = Icons[item.icon];
-              return React.createElement('button', {
-                key: item.view,
-                onClick: () => onNavigate(item.view),
+          // Die zwei Wege weiter — nebeneinander, in einer Zeile.
+          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.lg + 'px', marginTop: space.sm } },
+            ...[['ansprueche', t('dashboard.anspruchAlleLink')], ['situationen', t('lebenszustaende.dashboardLink')]].map(([view, label]) =>
+              React.createElement('button', {
+                key: view,
+                onClick: () => onNavigate(view),
                 style: {
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '12px 14px', background: 'transparent',
-                  border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
-                  cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', color: palette.text,
-                  transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
+                  // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+                  background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
+                  fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
                 },
-                onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
-                onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
-              },
-                React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: palette.sage } }, IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null),
-                React.createElement('div', { style: { minWidth: 0 } },
-                  React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
-                  React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub),
-                  // Positiver Anspruchs-Hinweis als leise Zeile in der Textspalte —
-                  // kein rechtsbündiges Pill (kollidiert in schmalen Karten mit
-                  // umbrechenden Labels), ruhig statt plakativ.
-                  item.hint && React.createElement('div', {
-                    style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.sageDeep || palette.sage, marginTop: '3px' }
-                  }, '· ' + t('dashboard.anspruchMoeglich'))
-                )
-              );
-            })
-          );
-          })(),
-          React.createElement('button', {
-            onClick: () => onNavigate('ansprueche'),
-            style: {
-              // Zwei gestapelte Text-Aktionen, je 19 px hoch. Polsterung hebt sie auf 35 px;
-              // die marginTop sind um dieselben 8 px gekürzt, damit der Abstand gleich bleibt.
-              display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
-              padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-            },
-          }, t('dashboard.anspruchAlleLink')),
-          React.createElement('button', {
-            onClick: () => onNavigate('situationen'),
-            style: {
-              display: 'block', marginTop: 0, background: 'none', border: 'none', cursor: 'pointer',
-              padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-            },
-          }, t('lebenszustaende.dashboardLink')),
+              }, label))),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           React.createElement('div', {
             style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
