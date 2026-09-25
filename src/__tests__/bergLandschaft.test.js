@@ -176,6 +176,10 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
       expect(nah(z[z.length - 2], z[z.length - 1], STATIONEN[i + 1], 25), `Ende ${i}`).toBe(true);
     });
   });
+  it('der Weg zur Ausbildung läuft nicht durch die Basis (dort ausgeblendet, Umkreis 45 Einheiten)', () => {
+    const z = zahlen(WEGSTUECKE[3]);
+    for (let k = 0; k < z.length; k += 2) expect(nah(z[k], z[k + 1], STATIONEN[0], 45), `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
+  });
   it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {
     expect(WEG_VON).toEqual([0, 1, 2, 3, 4, 5]);
     const z = zahlen(WEGSTUECKE[3]);

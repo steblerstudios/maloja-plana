@@ -25,21 +25,24 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 // mit dem Mittelstreifen, die links ins Bild kommt und zum Betrachter hin abbiegt, und darüber die
 // obere Strasse, die nach rechts in die U-Kurve läuft und in die links die schmale Strasse mündet.
 //   Basis (links, breite Strasse) → Wohnen (auf dem Mittelstreifen) → unten hinter den Tannen
-//   durch → Finanzen (U-Kurve) → Versicherungen (oben in der Kurve) → die obere Strasse zurück
-//   nach links, kurz verdeckt → die schmale Strasse hinauf: Ausbildung → Behörden (oben im
-//   Bogen) → Notfall (über die Kehre ins S).
-// Basis und Ausbildung sind NICHT direkt verbunden — dort geht keine Strasse durch.
+//   durch → Finanzen (U-Kurve) → Versicherungen (auf der oberen Strasse zwischen den zwei
+//   Tannen) → die obere Strasse zurück nach links → die schmale Strasse hinauf zur Ausbildung →
+//   oben über den Bogen und die Kehre ins S: Behörden → das S hinunter und die rechte Strasse
+//   nach hinten: Notfall.
+// Basis und Ausbildung sind NICHT direkt verbunden — dort geht keine Strasse durch. Und wo die
+// obere Strasse an der Basis vorbeiläuft, ist der Weg ausgeblendet (Umkreis 48 Einheiten), damit
+// es nicht aussieht, als schneide die Basis ihn.
 // Wo eine Tanne die Strasse verdeckt, fehlt der Weg — er geht dahinter durch.
 // Etikett-Seiten sind errechnet (Suche über alle Kombinationen): ohne Überschneidung bei
 // 656/736 px (breit) und 296–496 px (schmal).
 export const STATIONEN = [
   { key: 'basis', x: 185, y: 549, seite: { breit: 'links', schmal: 'unten' } },
-  { key: 'wohnen', x: 272, y: 616, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'wohnen', x: 272, y: 616, seite: { breit: 'links', schmal: 'rechts' } },
   { key: 'finanzen', x: 573.4, y: 675.3, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'versicherungen', x: 516.2, y: 625.7, seite: { breit: 'rechts', schmal: 'oben' } },
+  { key: 'versicherungen', x: 440, y: 608.5, seite: { breit: 'rechts', schmal: 'oben' } },
   { key: 'ausbildung', x: 195.6, y: 479, seite: { breit: 'links', schmal: 'oben' } },
-  { key: 'behoerden', x: 287.5, y: 445.3, seite: { breit: 'rechts', schmal: 'rechts' } },
-  { key: 'notfall', x: 294.4, y: 514.3, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'behoerden', x: 294.4, y: 514.3, seite: { breit: 'unten', schmal: 'unten' } },
+  { key: 'notfall', x: 424.1, y: 525.7, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
@@ -49,10 +52,10 @@ export const WEG_VON = [0, 1, 2, 3, 4, 5];
 export const WEGSTUECKE = [
   'M185 549C194.7 555.7 228.5 577.9 243 589C257.5 600.2 267.2 611.5 272 616',
   'M272 616C277.5 621.4 296.4 639.3 305 648.7C313.7 658 318.5 665.2 323.7 672.2C328.8 679.3 334 687.8 336 691M433 727.4C436.2 727.7 449.1 729.1 452.4 729.4M541.2 724.9C543.7 723.6 551.3 720.6 555.7 717.1C560.1 713.6 564.8 707.7 567.6 703.7C570.5 699.7 571.9 697.7 572.8 693C573.8 688.3 573.3 678.2 573.4 675.3',
-  'M573.4 675.3C572.4 672.7 570.2 664.6 567.5 659.9C564.8 655.2 561.6 651 557.1 647.2C552.7 643.3 547.7 640.1 540.8 636.6C534 633 520.3 627.5 516.2 625.7',
-  'M487.2 617.9C482.8 617 476.1 615 460.8 612.2C445.6 609.5 406.6 603.1 395.8 601.2M367.7 596.1C361.1 594.6 340.5 590.7 328.2 587.5C315.8 584.3 303 580.1 293.8 576.8C284.7 573.5 281.4 572.1 273.3 567.6C265.2 563.2 252.5 554.2 245.4 550C238.3 545.8 238.5 545.9 230.7 542.5C222.9 539.1 207.2 532.5 198.7 529.6C190.3 526.6 183.6 526.2 179.9 524.9C176.2 523.7 177.5 523.3 176.5 522C175.5 520.6 174.4 518.3 173.7 516.7C173.1 515.1 172.8 514 172.8 512.3C172.8 510.6 173 508.5 173.7 506.4C174.4 504.3 173.3 504.3 177 499.7C180.6 495.2 192.5 482.5 195.6 479',
-  'M195.6 479C197.4 476.6 203 468.2 206.6 464.8C210.1 461.4 203.4 462.1 216.9 458.8C230.4 455.6 275.7 447.6 287.5 445.3',
-  'M287.5 445.3C291.3 443.4 304.5 436.1 310.3 433.9C316 431.7 318.6 432.2 322.1 432.3C325.5 432.4 328 433.5 330.7 434.7C333.4 435.8 336.1 437.5 338.3 439.4C340.5 441.3 342.8 443.9 344.2 446.2C345.6 448.5 346.4 450.8 346.7 453.2C347 455.6 347 457.9 346 460.6C345 463.3 344.5 465 340.6 469.6C336.8 474.1 328.1 483.7 322.9 487.9C317.7 492 312.8 492.7 309.5 494.6C306.3 496.4 305.5 497.1 303.5 499C301.6 500.9 299.4 503.5 297.9 506C296.4 508.6 295 512.9 294.4 514.3',
+  'M573.4 675.3C572.1 672.3 568.1 661.5 565.9 657.4C563.7 653.2 562.4 652.5 560.4 650.3C558.3 648.1 559.2 647.7 553.6 644.3C548.1 641 536 633.9 527.3 630.1C518.7 626.3 506 623 501.7 621.5M487.1 618C479.3 616.4 447.9 610.1 440 608.5',
+  'M440 608.5C432.6 607.3 403 602.4 395.6 601.2M367.6 596C361 594.6 340.5 590.8 328 587.5C315.4 584.2 301.4 579.5 292.3 576.2C283.1 572.9 280.8 571.8 273.1 567.5C265.5 563.3 253.2 554.6 246.5 550.7C239.9 546.7 235.5 544.9 233.3 543.7M176.2 500.8C179.4 497.2 192.4 482.6 195.6 479',
+  'M195.6 479C197.4 476.6 203 468.2 206.6 464.8C210.1 461.4 204.1 461.9 216.9 458.8C229.7 455.8 266.9 451 283.2 446.6C299.5 442.3 308.1 435.1 314.6 432.7C321.1 430.3 319.6 432.1 322.1 432.3C324.5 432.5 326.6 432.9 329.3 434.1C332 435.3 335.8 437.4 338.3 439.4C340.8 441.4 342.7 443.7 344.2 446.2C345.6 448.8 346.6 452.1 346.8 454.7C347.1 457.3 346.7 459.4 345.5 462C344.3 464.7 343.4 466.4 339.7 470.7C335.9 475 327.9 483.9 322.9 487.9C317.9 491.9 313 492.5 309.5 494.6C306.1 496.6 304.5 498 302.5 500.1C300.4 502.2 298.5 505 297.2 507.3C295.8 509.7 294.9 513.1 294.4 514.3',
+  'M294.4 514.3C294.3 515.5 293.6 519 293.8 521.7C294.1 524.4 292.5 523.2 295.7 530.5C298.9 537.8 309.3 556.2 313.1 565.4C316.9 574.6 316.5 581.1 318.3 585.7C320 590.2 321.6 591.1 323.6 592.8C325.6 594.5 327.8 595.6 330.4 595.8C332.9 596 336.5 595.3 339 593.9C341.5 592.6 343.8 589.9 345.4 587.7C347 585.5 347.5 584.5 348.5 580.9C349.5 577.3 350.4 569.8 351.2 566.2C352.1 562.5 352.4 561.7 353.8 559.1C355.2 556.5 357.5 553.1 359.8 550.5C362.1 547.9 364.5 545.7 367.5 543.4C370.5 541.2 373.9 539 377.7 537.2C381.5 535.3 385.7 533.7 390.3 532.2C394.8 530.8 399.1 529.6 404.8 528.5C410.4 527.4 420.9 526.2 424.1 525.7',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
