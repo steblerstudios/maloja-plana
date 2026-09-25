@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius } from '../config/tokens.js';
-import { bruttoZuNettoRichtwert, nettoZuBruttoRichtwert, referenzalterMonate } from '../data/ahvRechner.js';
+import { bruttoZuNettoRichtwert, nettoZuBruttoRichtwert } from '../data/lohnAbzuege.js';
+import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { zahl } from '../utils/geld.js';
 
 // Monatseinkommen brutto ODER netto (Wunsch 25.09.2026: «man sollte immer vor und zurück rechnen
@@ -26,25 +27,14 @@ export const istKnapp = (sh, ohneAlter = false) => {
   return q >= KNAPP_UNTEN && q <= (ohneAlter ? KNAPP_OBEN_OHNE_ALTER : KNAPP_OBEN);
 };
 
-const alterAus = (geburt) => {
-  if (!geburt) return undefined;
-  const g = new Date(geburt);
-  if (isNaN(g.getTime())) return undefined;
-  const h = new Date();
-  return h.getFullYear() - g.getFullYear() - (h < new Date(h.getFullYear(), g.getMonth(), g.getDate()) ? 1 : 0);
-};
-
 export function useEinkommen(data) {
   const typ = data?.finanzen?.incomeType;
   const profilWert = data?.finanzen?.monthlyIncome;
   const bekannt = typ === 'netto' || typ === 'brutto';
   const [betrag, setBetrag] = useState(bekannt && profilWert ? String(profilWert) : '');
   const [art, setArt] = useState(typ === 'brutto' ? 'brutto' : 'netto');
-  const alter = alterAus(data?.basis?.dateOfBirth);
-  // Rentenalter nach Referenzalter (AHV 21: Frauen JG 1961–63 früher) — dann andere Abzüge.
-  const geburt = data?.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
-  const rentenalter = alter != null && geburt && !isNaN(geburt.getTime())
-    && alter * 12 >= referenzalterMonate({ geschlecht: data?.basis?.gender, geburtsjahr: geburt.getFullYear() });
+  // Alter und Rentenalter: dieselbe Regel wie die Sozialhilfe-Schnellrechnung (utils/nettoAusProfil.js).
+  const { alter, rentenalter } = alterUndRentenalter(data?.basis);
   const zahlWert = Math.max(0, Number(betrag) || 0);
   const nettoMonat = art === 'netto' ? zahlWert : bruttoZuNettoRichtwert(zahlWert, alter, rentenalter);
   const gegenwert = zahlWert > 0 ? (art === 'netto' ? nettoZuBruttoRichtwert(zahlWert, alter, rentenalter) : nettoMonat) : 0;

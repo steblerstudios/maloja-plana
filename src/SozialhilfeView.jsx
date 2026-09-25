@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { zahl } from './utils/geld.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
 import { rueckerstattungsFreibetrag } from './data/sozialhilfeRechner.js';
@@ -93,6 +94,9 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', null, formatCHF(sozialhilfe.totalBedarf))
         ),
         Row(t('sozialhilfe.deductIncome'), '- ' + formatCHF(sozialhilfe.income), palette.mid),
+        // Aus brutto geschätzt (utils/nettoAusProfil.js, Predeploy 25.09.2026) — sagen, nicht verschweigen.
+        sozialhilfe.einkommenGeschaetzt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } },
+          t('einkommensfeld.nettoGeschaetzt', { value: zahl(sozialhilfe.income) })),
         // Freibetrag nur bei Anspruch (er gilt im Bezug) — sonst ginge Bedarf − Einkommen = 0 nicht auf.
         sozialhilfe.eligible && sozialhilfe.efb > 0 && Row(t('sh.efbLabel'), '+ ' + formatCHF(sozialhilfe.efb), palette.sageDeep),
         sozialhilfe.eligible && sozialhilfe.efb > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } }, t('sozialhilfe.efbGeschaetzt')),
