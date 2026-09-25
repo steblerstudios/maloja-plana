@@ -115,6 +115,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // calculateSozialhilfe), damit Liste und Rechner nie widersprechen.
   const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
   const found = {};
+  let sozPegel = null;
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
@@ -135,6 +136,13 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
         detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
+      };
+      // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem
+      // etwas zusteht»), sachlich statt als Urteil: Einkommen gegen SKOS-Bedarf, als Pegel.
+      // Texte aus dem Pegel-Werkzeug (pegel.*), dieselbe Engine wie der Rechner.
+      else if (sh) sozPegel = {
+        bedarf: sh.totalBedarf, einkommen: sh.income,
+        detail: sh.eligible ? t('pegel.vermoegen') : t('pegel.covered'),
       };
     }
   } catch { /* Orientierung, nie blockierend */ }
@@ -179,8 +187,20 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       React.createElement('div', { style: { minWidth: 0, flex: 1 } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, l.label),
         React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
-          f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail) : l.sub)
+          f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
+            : (l.key === 'soz' && sozPegel) ? sozPegel.detail : l.sub)
       ),
+      // Pegel: Balken = Einkommen, Strich = SKOS-Bedarf, gemeinsame Skala (das Grössere).
+      // Neutral eingefärbt — es ist eine Lage, kein Betrag, der zusteht.
+      !f && l.key === 'soz' && sozPegel && (() => {
+        const max = Math.max(sozPegel.bedarf, sozPegel.einkommen, 1);
+        return React.createElement('div', { style: { flexShrink: 0, width: '96px', textAlign: 'right' } },
+          React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+            t('pegel.bedarf') + ' ≈ ' + fmt(sozPegel.bedarf)),
+          React.createElement('div', { 'aria-hidden': true, style: { position: 'relative', height: '6px', marginTop: '5px', borderRadius: '3px', background: palette.up } },
+            React.createElement('div', { style: { height: '100%', width: (sozPegel.einkommen / max * 100).toFixed(1) + '%', background: palette.mid, opacity: 0.55, borderRadius: '3px' } }),
+            React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', width: '2px', left: 'calc(' + (sozPegel.bedarf / max * 100).toFixed(1) + '% - 1px)', background: palette.text } })));
+      })(),
       zaehlt && React.createElement('div', { style: { flexShrink: 0, width: '96px', textAlign: 'right' } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, '≈ CHF ' + fmt(f.monthly)),
         React.createElement('div', { 'aria-hidden': true, style: { height: '6px', marginTop: '4px', borderRadius: '3px', background: palette.up, overflow: 'hidden' } },
@@ -600,7 +620,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.anspruchIntro')),
       (() => {
         const items = [
-          // Finanz-Übersicht: seit 25.09.2026 als Link bei «Ihre Instrumente» (die Tankanzeige führt ohnehin hin).
+          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
           { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
@@ -643,8 +663,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             )
           );
         };
-        const rest = items;
+        const primary = items.find(i => i.primary);
+        const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
+          // Die Finanz-Übersicht bleibt der eine grosse Einstieg — sie fasst alles zusammen.
+          primary && renderItem(primary),
           // Deine Instrumente — seit 25.09.2026 im selben Block, gleich unter der Übersicht.
           // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
           React.createElement(React.Suspense, { fallback: null },
