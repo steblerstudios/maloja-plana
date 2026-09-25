@@ -2866,7 +2866,7 @@ export default {
     step3: 'Have rental contract and insurance policy ready',
     step4: 'AHV/BVG contributions may be covered',
     step5: 'Check EL application at AHV branch office',
-    orientationNote: 'This calculation is for orientation only. For a binding assessment, please contact your municipality or a specialist office.',
+    orientationNote: 'This estimate is for orientation only. For a binding assessment, please contact your municipality or a specialist office.',
     householdAdults: 'Household: {count} adult(s)',
     householdAdultsChildren: 'Household: {adults} adult(s) + {children} child(ren)',
     childrenNote: 'Additional benefits may be available for children (childcare, school supplies, clothing). Discuss this with social services.',
@@ -5026,7 +5026,7 @@ export default {
     hinweisMutterschaft: 'Maternity: 14 weeks from birth. Requires at least 5 months of employment.',
     hinweisVaterschaft: 'Paternity: 2 weeks, to be taken within 6 months of birth.',
     hinweisAdoption: 'Adoption: 2 weeks, child under 4 years old.',
-    source: 'Calculation based on [[LIECA Art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]]. Not legally binding. As of 2026.',
+    source: 'Estimate based on the reference values of the [[LIECA|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (as of 2026). Whether an entitlement exists and how high it is, the compensation office decides. Not legally binding.',
   },
   sh: {
     title: 'Social Assistance Calculator',
@@ -5074,7 +5074,7 @@ export default {
     vermoegenHinweis: 'Assets exceed exemption – no entitlement',
     freibetrag: 'exemption',
     eingeben: 'Enter rent and health insurance premium to calculate entitlement.',
-    source: 'Calculation based on [[SKOS guidelines|skos.ch]] (1.1.2026); asset allowance by canton. Not legally binding.',
+    source: 'Basic needs based on [[SKOS guidelines|skos.ch]] (1.1.2026), asset allowance by canton. Not included: the municipality’s rent limits, premium reduction, situation-related benefits and cantonal deviations. The social services office assesses the entitlement. Not legally binding.',
   },
   dl: {
     lang: 'en',
@@ -5376,5 +5376,17 @@ export default {
       psychiater: 'Psychiatrist',
       other: 'Other specialty',
     },
+  },
+  // O3 — result type (src/data/ergebnisArt.js). Own block at the end of the file.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Calculation under the rules in force; the responsible office decides with binding effect',
+      schaetzung: 'Estimate based on official reference values, simplified',
+      vorpruefung: 'Preliminary check of whether an entitlement may apply, without an amount',
+      orientierung: 'Orientation: an order of magnitude, not calculated under an official rule',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. One more entry needed.',
+    fehltMehrere: '{satz}. {n} more entries needed.',
   },
 };

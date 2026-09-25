@@ -2865,7 +2865,7 @@ export default {
     step3: 'Ayez le contrat de bail et la police d\'assurance à disposition',
     step4: 'Les cotisations AVS/LPP peuvent être prises en charge',
     step5: 'Vérifiez la demande de PC auprès de la caisse AVS',
-    orientationNote: { sie: 'Ce calcul est donné à titre indicatif. Pour une évaluation contraignante, adressez-vous à votre commune ou à un service spécialisé.', du: 'Ce calcul est donné à titre indicatif. Pour une évaluation contraignante, adresse-toi à ta commune ou à un service spécialisé.' },
+    orientationNote: { sie: 'Cette estimation est donnée à titre indicatif. Pour une évaluation contraignante, adressez-vous à votre commune ou à un service spécialisé.', du: 'Cette estimation est donnée à titre indicatif. Pour une évaluation contraignante, adresse-toi à ta commune ou à un service spécialisé.' },
     householdAdults: 'Ménage : {count} adulte(s)',
     householdAdultsChildren: 'Ménage : {adults} adulte(s) + {children} enfant(s)',
     childrenNote: { sie: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.', du: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseigne-toi auprès du service social.' },
@@ -5025,7 +5025,7 @@ export default {
     hinweisMutterschaft: 'Maternité : 14 semaines dès la naissance. Condition : au moins 5 mois d\'activité.',
     hinweisVaterschaft: 'Paternité : 2 semaines, à prendre dans les 6 mois suivant la naissance.',
     hinweisAdoption: 'Adoption : 2 semaines, enfant de moins de 4 ans.',
-    source: 'Calcul selon [[LAPG art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/fr]]. Sans valeur juridique. État 2026.',
+    source: 'Estimation selon les valeurs de référence de la [[LAPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/fr]] (état 2026). L’existence et le montant du droit sont décidés par la caisse de compensation. Sans valeur juridique.',
   },
   sh: {
     title: 'Calculateur d\'aide sociale',
@@ -5073,7 +5073,7 @@ export default {
     vermoegenHinweis: 'La fortune dépasse la franchise – pas de droit',
     freibetrag: 'franchise',
     eingeben: { sie: 'Saisissez le loyer et la prime LAMal pour calculer le droit.', du: 'Saisis le loyer et la prime LAMal pour calculer le droit.' },
-    source: 'Calcul selon les [[normes CSIAS|skos.ch]] (1.1.2026) ; franchise sur la fortune selon le canton. Sans valeur juridique.',
+    source: 'Forfait pour l’entretien selon les [[normes CSIAS|skos.ch]] (1.1.2026), franchise sur la fortune selon le canton. Non pris en compte : plafonds de loyer de la commune, réduction des primes, prestations circonstancielles et écarts cantonaux. Le service social examine le droit. Sans valeur juridique.',
   },
   dl: {
     lang: 'fr',
@@ -5375,5 +5375,17 @@ export default {
       psychiater: 'Psychiatre',
       other: 'Autre spécialité',
     },
+  },
+  // O3 — type de résultat (src/data/ergebnisArt.js). Bloc propre en fin de fichier.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Calcul selon les règles en vigueur ; la décision contraignante revient au service compétent',
+      schaetzung: 'Estimation selon les valeurs officielles, simplifiée',
+      vorpruefung: 'Examen préalable : un droit entre-t-il en ligne de compte ? Sans montant',
+      orientierung: 'Orientation : un ordre de grandeur, pas calculé selon une règle officielle',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. Encore une indication nécessaire.',
+    fehltMehrere: '{satz}. Encore {n} indications nécessaires.',
   },
 };

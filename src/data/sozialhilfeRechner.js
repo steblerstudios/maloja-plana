@@ -10,6 +10,7 @@
 
 import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
 
@@ -235,3 +236,28 @@ export function berechneArmutsgrenze({ grundbedarf, effektiveWohnkosten = 0, per
 
 // Der Brutto-Richtwert aus einem Netto-Lohn (AHV/ALV + geschätzte PK) lebt in
 // data/ahvRechner.js (nettoZuBruttoRichtwert) — dort, wo die BVG-Bausteine sind.
+
+// O3 — Ergebnis-Art des SKOS-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
+// Grundbedarf und Vermögensfreibetrag folgen Richtlinien und Kantonsrecht, aber: Miete ohne
+// Mietzins-Obergrenze der Gemeinde, KVG-Prämie ohne Prämienverbilligung, keine medizinische
+// Grundversorgung und keine situationsbedingten Leistungen im Bedarf, Einkommensfreibetrag und
+// Integrationszulage für alle Kantone gleich. Der Sozialdienst rechnet anders.
+//
+// Fehlend: ein LEERES Feld fehlt, eine eingetragene 0 ist eine Antwort (heute macht der Rechner aus
+// «leer» still 0 — beim Einkommen und Vermögen zu hoch, bei Miete oder Prämie zu tief).
+//   miete, kvgPraemie      je einzeln — gerechnet wird schon, sobald eines von beiden da ist
+//   erwerbseinkommen       leer → zählt als 0 → Anspruch zu hoch
+//   vermoegen              leer → zählt als 0 → Freibetrag nie überschritten
+//   kanton                 nur wenn Vermögen erfasst ist: ohne Kanton gilt der SKOS-Standardfreibetrag
+const leer = (v) => v == null || String(v).trim() === '';
+export function sozialhilfeErgebnis({ miete, kvgPraemie, erwerbseinkommen, vermoegen, kanton }) {
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, {
+    fehlend: fehlendeAngaben({
+      miete: !leer(miete),
+      kvgPraemie: !leer(kvgPraemie),
+      erwerbseinkommen: !leer(erwerbseinkommen),
+      vermoegen: !leer(vermoegen),
+      kanton: !(Number(vermoegen) > 0) || !!kanton,
+    }),
+  });
+}

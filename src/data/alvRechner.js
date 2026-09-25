@@ -10,6 +10,8 @@
 // ACHTUNG: Orientierung, KEINE verbindliche Berechnung. Massgebend ist das RAV /
 // die zuständige Arbeitslosenkasse.
 
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+
 export const ALV_PARAMS = {
   versicherterVerdienstMax: 12350, // UVV Art. 22 Abs. 1: 148 200 Fr./Jahr ÷ 12 (AVIG Art. 3 Abs. 2 verweist auf das UVG-Maximum)
   versicherterVerdienstMin: 500,   // AVIV Art. 40: unter 500 Fr./Monat nicht versichert
@@ -76,6 +78,27 @@ export function berechneTaggeld({ versicherterVerdienst, hatKinder, ivGrad40, be
     wartetage: bestimmeWartetage({ versicherterVerdienst: v, hatKinder }),
     anspruchstage: bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }),
   };
+}
+
+// O3 — Ergebnis-Art des ALV-Rechners: SCHÄTZUNG, nicht Berechnung.
+// Der Betrag folgt den amtlichen Eckwerten oben (AVIG Art. 22, AVIV Art. 40, UVV Art. 22), aber
+// vereinfacht: 21,7 Taggelder als Monatsdurchschnitt, ein eingetragener Monatslohn statt des
+// Durchschnitts, den die Kasse aus der Bemessungsperiode bildet, keine Befreiten von der
+// Beitragszeit (siehe bestimmeAnspruchstage), keine Zwischenverdienste. Das RAV bzw. die
+// Arbeitslosenkasse rechnet den Einzelfall.
+// Fehlend zählt, was das Ergebnis verändert:
+//   bruttolohn      ohne ihn gibt es keinen Betrag
+//   beitragsmonate  ohne sie keine Anspruchsdauer (bestimmeAnspruchstage → null)
+//   geburtsdatum    ohne Alter rechnet die Anspruchsdauer, als wäre man zwischen 25 und 54 —
+//                   jünger und älter gelten andere Höchstzahlen (siehe bestimmeAnspruchstage)
+export function alvErgebnis({ bruttolohn, beitragsmonate, alter }) {
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, {
+    fehlend: fehlendeAngaben({
+      bruttolohn: Number(bruttolohn) > 0,
+      beitragsmonate: Number(beitragsmonate) > 0,
+      geburtsdatum: alter != null,
+    }),
+  });
 }
 
 export const ALV_DATA_VERSION = '2026';
