@@ -149,10 +149,18 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG und LU rechnen exak
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 
-  it('belegt (simuliert, linearer Abbau): identisch', () => {
+  // 25.09.2026 (13. Monatslohn, Befund PR #380): die Fälle haben keine Antwort zum 13. — «offen»
+  // rechnet ×12 wie v0.1.37, sagt es aber dazu. Einzige erlaubte Differenz ist darum `annahmen`,
+  // und nur dort, wo ein Betrag steht; alles andere bleibt Feld für Feld gleich.
+  it('belegt (simuliert, linearer Abbau): identisch, bis auf die ausgewiesene Annahme', () => {
     const zurueck = kantoneBelegtSimulieren(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k)));
     try {
-      for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
+      for (const d of faelle) {
+        const { annahmen, ...rest } = calculateIPV(d);
+        expect(rest).toStrictEqual(calculateIPVAlt(d));
+        if (rest.eligible) expect(annahmen).toEqual({ ohneDreizehnten: d.finanzen.monthlyIncome > 0 });
+        else expect(annahmen).toBeUndefined();
+      }
     } finally {
       zurueck();
     }
