@@ -48,19 +48,20 @@ describe('InstallHinweis · Karte im Panorama', () => {
   };
   afterEach(() => { delete globalThis.localStorage; });
 
-  it('Zeichen: überall das Smartphone, wie im Menü (Entscheid 25.09.2026)', () => {
+  it('Zeichen folgt dem Gerät: iPhone → Handy, Mac-Chrome → Computer', () => {
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     const iphone = mitGeraet('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Version/17.0 Mobile/15E148 Safari/604.1', 5, () => rendern({}));
     const mac = mitGeraet('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/128.0 Safari/537.36', 0, () => rendern({}));
     expect(iphone).toContain('data-zeichen="handy"');
-    expect(mac).toContain('data-zeichen="handy"');
+    expect(mac).toContain('data-zeichen="computer"');
   });
 
-  it('klein: ohne Satz, der Knopf trägt ihn im Namen; gross: Satz sichtbar', () => {
+  it('der Satz steht immer sichtbar da, am Handy (klein) und am Computer — und nur einmal', () => {
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     const klein = rendern({ klein: true });
-    expect(klein).not.toMatch(/>install\.navSub</);
-    expect(klein).toMatch(/aria-label="install\.navSub — pwa\.anleitung"/);
+    expect(klein).toMatch(/>install\.navSub</);
+    // kein zweites Mal im Knopf-Namen — sonst liest ein Screenreader den Satz doppelt
+    expect(klein).not.toMatch(/aria-label="install\.navSub/);
     expect(rendern({})).toMatch(/>install\.navSub</);
   });
 });
