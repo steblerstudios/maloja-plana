@@ -1931,6 +1931,7 @@ export default {
       heartfelt24: 'Supports people with mental-health burdens towards a self-determined life — counselling, housing, day structure.',
       heartfelt25: 'Non-profit lending platform in Basel — "borrow instead of buy": over 1,300 items to borrow, run by volunteers.',
       heartfelt26: 'Wildflower seeds that turn a lawn into a flowering meadow — food for wild bees and other insects. Also ships to Switzerland.',
+      heartfelt27: 'the habit tracker (App Store and Google Play, Crewz) — Keep track of habits without streak pressure or guilt. According to the maker, usable without an account, with all data exportable as a file at any time.',
     },
     faq: {
       q1: 'Where is my data stored?',

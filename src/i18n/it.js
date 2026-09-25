@@ -1931,6 +1931,7 @@ export default {
       heartfelt24: 'Accompagna le persone con disagio psichico verso una vita autodeterminata — consulenza, alloggio, struttura diurna.',
       heartfelt25: 'Piattaforma di prestito senza scopo di lucro a Basilea — « prendere in prestito invece di comprare » : oltre 1’300 oggetti da prendere in prestito, gestita da volontari.',
       heartfelt26: 'Sementi di fiori selvatici che trasformano un prato in un prato fiorito — nutrimento per api selvatiche e altri insetti. Spedisce anche in Svizzera.',
+      heartfelt27: 'il tracker di abitudini (App Store e Google Play, Crewz) — Tenere traccia delle abitudini senza la pressione delle serie e senza sensi di colpa. Secondo il produttore utilizzabile senza account, tutti i dati esportabili in qualsiasi momento come file.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',

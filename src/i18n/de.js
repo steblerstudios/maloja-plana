@@ -1938,6 +1938,7 @@ export default {
       heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
       heartfelt25: 'Gemeinnützige Leihplattform in Basel — „Leihen statt kaufen“: über 1’300 Gegenstände zum Ausleihen, ehrenamtlich betrieben.',
       heartfelt26: 'Wildblumen-Saatgut, das Rasen in eine Blühwiese verwandelt — Nahrung für Wildbienen und andere Insekten. Liefert auch in die Schweiz.',
+      heartfelt27: 'der Habit-Tracker (App Store und Google Play, Crewz) — Gewohnheiten festhalten ohne Streak-Druck und ohne schlechtes Gewissen. Laut Anbieter ohne Konto nutzbar, alle Daten jederzeit als Datei exportierbar.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',

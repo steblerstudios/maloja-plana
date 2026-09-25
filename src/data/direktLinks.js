@@ -200,7 +200,7 @@ export const HEARTFELT = [
   { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss', group: 'gemeinschaft' },
   { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch', group: 'tiere' },
   { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch', group: 'gemeinschaft' },
-  { key: 'heartfelt10', name: 'Xdo', url: null, group: 'digital' }, // App Store (Rau Media), keine Website
+  { key: 'heartfelt10', name: 'Xdo', url: 'https://xdo-app.com', group: 'digital' }, // Rau Media (David Rau); Website ist eine Einseiten-App — nur die Startseite verlinken, geprüft 25.09.2026
   { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch', group: 'tiere' },
   { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch', group: 'tiere' },
   { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch', group: 'gesundheit' },
@@ -217,6 +217,7 @@ export const HEARTFELT = [
   { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
   { key: 'heartfelt25', name: 'Leihlager', url: 'https://www.leihlager.ch/', group: 'gemeinschaft' }, // gemeinnützige Leihplattform Basel («Leihen statt kaufen»), ehrenamtlich
   { key: 'heartfelt26', name: 'utopi', url: 'https://utopi.one/', group: 'tiere' }, // Wildblumen-Saatgut für Wildbienen (Shop, PRTGNST GmbH/MONTY., DE; liefert in die CH) – kein Affiliate, geprüft 19.09.2026
+  { key: 'heartfelt27', name: 'Nexter', url: 'https://crewz.io/de/nexter/', group: 'digital' }, // Habit-Tracker der Crewz GmbH (Freiburg i. Br.) – kein Affiliate, Seite geprüft 25.09.2026 (erfundene Adresse → 404)
 ];
 
 // Reihenfolge der Gruppen in der Anzeige.
