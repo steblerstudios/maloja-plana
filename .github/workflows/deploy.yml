@@ -21,10 +21,11 @@ name: Deploy to Infomaniak
 #   FTP_PASSWORD  – FTP-Passwort
 # Upload via SFTP (Port 22). Zielpfad absolut, unten gesetzt.
 # Kein BASE_URL nötig: base default '/' passt für die Root-Domain.
-# WICHTIG: public/.htaccess wird beim Build nach dist/ kopiert, verursacht auf
-# Infomaniak aber einen 503 → wird vor dem Upload entfernt (Schritt unten).
-# Security-Header laufen übers Infomaniak-Panel; die App nutzt Hash-Routing
-# (#/…) und braucht keine Server-Rewrites.
+# WICHTIG: public/.htaccess wird beim Build nach dist/ kopiert und vor dem Upload
+# entfernt (Schritt unten). Die .htaccess auf dem Server wird von Hand gepflegt —
+# alle Security-Header kommen aus ihr (belegt 25.09.2026, wie in deploy.sh), nicht
+# aus dem Infomaniak-Panel. Der Upload darf sie nie überschreiben. Die App nutzt
+# Hash-Routing (#/…) und braucht keine Server-Rewrites.
 
 on:
   # push:                 # reaktivieren, sobald der SSH/SFTP-Host geklärt ist
@@ -39,9 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
           cache: npm

@@ -115,6 +115,10 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
+  // Nur Anfragen an den eigenen Server anfassen — Fremdes geht am Cache vorbei
+  // direkt ans Netz (Sicherheitsprüfung 25.09.2026). Die CSP lässt heute ohnehin
+  // nur 'self' zu; das hier hält auch, falls sie je gelockert wird.
+  if (url.origin !== self.location.origin) return;
   const isHashedAsset = url.pathname.startsWith('/assets/');
 
   if (isHashedAsset) {
