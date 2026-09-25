@@ -268,7 +268,10 @@ Abschiedsagentur, plaant).
     Lebensbereich · B nach Anlass · C wenig zeigen, eine Liste) in
     [`design/werkzeuge-gliederung-2026-09-25.md`](design/werkzeuge-gliederung-2026-09-25.md).
     Befund: Menü (18) und Dashboard (53) führen **zwei verschiedene Listen**, einig nur bei 8.
-    Empfehlung C+B. Wartet auf Entscheid.
+    **Entscheid 25.09.: alle drei in einem, im Rucksack** — «Mein Gepäck» (gibt es schon,
+    alle 34 Lebensereignisse in 6 Gegenständen) wird die eine Werkzeug-Seite; Einstellungen,
+    Export und Benachrichtigungen wandern in die Einstellungen. Offen: Gegenstand für Geld,
+    Ort für Ablegen & Ordnen, die 5 Hervorhebungen (→ Oktober).
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 

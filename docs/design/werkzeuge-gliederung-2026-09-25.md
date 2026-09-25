@@ -64,7 +64,57 @@ Werkzeuge»). Alles andere liegt auf **einer** Seite mit Suche — und Menü, Da
 lesen aus **demselben** Register. **Stärke:** ruhigstes Dashboard, und die zwei Listen können
 nicht mehr auseinanderlaufen. **Schwäche:** wer stöbern will, braucht einen Klick mehr.
 
-## Empfehlung
+## Nachtrag 25.09. abends: alle drei in einem, im Rucksack
+
+**Entscheid Stebler Studios:** «alle drei in einem» — und die Werkzeug-Seite ist der Rucksack.
+
+**Befund, der den Vorschlag oben korrigiert:** der Rucksack existiert schon. «Mein Gepäck»
+(`src/Gepaeck.jsx`, Register `src/data/gepaeck.js`) ordnet **alle 34 Lebensereignisse** in
+6 Gegenstände, dazu 3 Werkzeuge (Mietzinsbeiträge, Stipendien, Organspende). Gemessen: kein
+Lebensereignis fehlt. Variante B oben ist also **gebaut** — mit eigener, etwas anderer
+Einteilung; es gilt die bestehende, nicht meine:
+
+| Gegenstand | Bereich | Wege |
+|---|---|---|
+| Schlüsselbund | Wohnen & Aufenthalt | 11 (inkl. Mietzinsbeiträge) |
+| Werkzeugrolle | Arbeit | 9 (inkl. Stipendien) |
+| Erinnerungskiste | Familie | 6 |
+| Arztkoffer | Gesundheit | 5 |
+| Feldflasche | Alter | 4 |
+| Versiegelter Brief | Abschied | 2 (inkl. Organspende) |
+
+Die flache Liste «Lebensereignisse» (34) auf dem Dashboard ist damit eine **dritte**
+Darstellung derselben Wege, neben Gepäck und Suche.
+
+### Das Modell «alle drei in einem»
+
+- **C · ein Ort:** «Mein Gepäck» wird die eine Werkzeug-Seite. Dashboard und Menü zeigen
+  darauf, statt eigene Listen zu führen.
+- **A · nach Lebensbereich:** jeder Gegenstand ist ein Lebensbereich und trägt **Wege und
+  Werkzeuge** — so wie Mietzinsbeiträge schon heute im Schlüsselbund liegen.
+- **B · nach Anlass:** innerhalb des Gegenstands die Wege (Lebensereignisse), wie heute.
+- **Eine Quelle:** Menü, Suche, Dashboard und Gepäck lesen aus demselben Register.
+
+Wohin die übrigen Werkzeuge kämen (Vorschlag):
+
+| Werkzeuge | Ort |
+|---|---|
+| Prämienverbilligung (IPV) · Prämien-Orientierung · KVG-Leistungen & Franchise · KK-Scanner | Arztkoffer |
+| Vorsorge-Rechner | Feldflasche |
+| Steuern · Steuer-Import · Budget · Budget-Sync · Schulden · Finanz-Übersicht · Mindestlohn-Check · Sozialhilfe | **fehlt** — kein Gegenstand für Geld (neuer Gegenstand nötig, z. B. Portemonnaie) |
+| Dokumentenablage · Meine Unterlagen · Kalender · Merkliste · Lebenslauf · Offizielle Links · Flyer · Charts · Suche · Lebenssituationen · Gesundheit (Arztkoffer-Ansicht) | Ablegen & Ordnen — kein Lebensbereich: Aussenfach des Rucksacks **oder** direkt im Menü |
+| Einstellungen · Export · Benachrichtigungen | **Einstellungen.** Export steht dort schon (`SettingsView.jsx`, samt «Daten löschen»); Benachrichtigungen ist eine eigene Ansicht und käme als Eintrag dazu. |
+
+Achtung Namensgleichheit: die Werkzeug-Ansicht «Gesundheit» (`view: 'gesundheit'`,
+`nav.arztkoffer`) und der Gegenstand «Arztkoffer» im Gepäck sind zwei verschiedene Dinge.
+
+### Offene Entscheide
+1. **Geld:** neuer Gegenstand (z. B. Portemonnaie) für die Finanz-Werkzeuge — ja/nein, welcher?
+2. **Ablegen & Ordnen:** Aussenfach im Rucksack, oder bleiben sie direkt im Menü?
+3. **Die 5 Hervorhebungen auf dem Dashboard:** noch offen. Vorschlag: vorerst unverändert
+   lassen — der Umbau hängt nicht davon ab — und im Oktober mit neuem Tester-Feedback entscheiden.
+
+## Empfehlung (Stand vor dem Nachtrag)
 
 **C als Gerüst, B als Ordnung darin.** C behebt den eigentlichen Fehler (drei Listen, die
 sich widersprechen) und macht das Dashboard ruhiger — «weniger ist mehr, nicht weg, nur an
