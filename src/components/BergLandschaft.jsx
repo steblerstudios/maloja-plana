@@ -21,34 +21,36 @@ export const AUSSCHNITT = {
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
-// nach Vorgabe von Stebler Studios gesetzt (25.09.2026): die Basis links, wo die schmale Strasse
-// von der breiten abzweigt. Von dort zwei Äste —
-//   · die breite Strasse nach rechts: Wohnen (noch vor den Tannen), Finanzen, Versicherungen
-//     (in der U-Kurve);
-//   · die schmale Strasse hinauf: Ausbildung, Behörden (oben im Bogen), Notfall (weiter über
-//     die Kehre ins S).
+// nach Vorgabe von Stebler Studios gesetzt (25.09.2026). Im Bild sind es zwei Strassen: die breite
+// mit dem Mittelstreifen, die links ins Bild kommt und zum Betrachter hin abbiegt, und darüber die
+// obere Strasse, die nach rechts in die U-Kurve läuft und in die links die schmale Strasse mündet.
+//   Basis (links, breite Strasse) → Wohnen (auf dem Mittelstreifen) → unten hinter den Tannen
+//   durch → Finanzen (U-Kurve) → Versicherungen (oben in der Kurve) → die obere Strasse zurück
+//   nach links, kurz verdeckt → die schmale Strasse hinauf: Ausbildung → Behörden (oben im
+//   Bogen) → Notfall (über die Kehre ins S).
+// Basis und Ausbildung sind NICHT direkt verbunden — dort geht keine Strasse durch.
 // Wo eine Tanne die Strasse verdeckt, fehlt der Weg — er geht dahinter durch.
-// Etikett-Seiten sind errechnet: die einzige Anordnung ohne Überschneidung bei 656/736 px (breit)
-// und 296–496 px (schmal); Ausbildung und Notfall dafür je ein Stück die Strasse entlang gerückt.
+// Etikett-Seiten sind errechnet (Suche über alle Kombinationen): ohne Überschneidung bei
+// 656/736 px (breit) und 296–496 px (schmal).
 export const STATIONEN = [
   { key: 'basis', x: 185, y: 549, seite: { breit: 'links', schmal: 'unten' } },
-  { key: 'wohnen', x: 300.2, y: 581.8, seite: { breit: 'rechts', schmal: 'rechts' } },
-  { key: 'finanzen', x: 516.2, y: 625.7, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'versicherungen', x: 573.4, y: 675.3, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'wohnen', x: 272, y: 616, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'finanzen', x: 573.4, y: 675.3, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'versicherungen', x: 516.2, y: 625.7, seite: { breit: 'rechts', schmal: 'oben' } },
   { key: 'ausbildung', x: 195.6, y: 479, seite: { breit: 'links', schmal: 'oben' } },
   { key: 'behoerden', x: 287.5, y: 445.3, seite: { breit: 'rechts', schmal: 'rechts' } },
   { key: 'notfall', x: 294.4, y: 514.3, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
-// Wegstück i gehört zum Kapitel i+1 und endet an dessen Station. Es beginnt an der Station
-// WEG_VON[i] — beim zweiten Ast (Ausbildung) wieder an der Basis. Nur sichtbare Fahrbahn,
-// je Lauf ein eigener Unterpfad (M … C …).
-export const WEG_VON = [0, 1, 2, 0, 4, 5];
+// Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
+// durchgehende Route, also immer von der vorigen Station. Nur sichtbare Fahrbahn, je Lauf ein
+// eigener Unterpfad (M … C …).
+export const WEG_VON = [0, 1, 2, 3, 4, 5];
 export const WEGSTUECKE = [
-  'M185 549C193.7 552 218.2 561.8 237.4 567.3C256.6 572.7 289.7 579.4 300.2 581.8',
-  'M300.2 581.8C311.5 584.2 356.5 593.5 367.8 595.8M395.8 601.2C411 604 472 615 487.3 617.7M501.8 621.3C504.2 622 513.8 625 516.2 625.7',
-  'M516.2 625.7C520.3 627.5 534 633 540.9 636.6C547.7 640.1 552.8 643.3 557.2 647.2C561.6 651.1 564.8 655.3 567.5 660C570.2 664.6 572.5 672.7 573.4 675.3',
-  'M185 549C183.9 547.7 179.9 543.5 178.2 541C176.6 538.5 175.9 537.1 175 534.2C174.2 531.4 173.4 527.7 173.1 523.9C172.8 520.2 172.4 516 173.2 512C174.1 507.9 174.3 504.9 178 499.4C181.7 494 192.6 482.4 195.6 479',
+  'M185 549C194.7 555.7 228.5 577.9 243 589C257.5 600.2 267.2 611.5 272 616',
+  'M272 616C277.5 621.4 296.4 639.3 305 648.7C313.7 658 318.5 665.2 323.7 672.2C328.8 679.3 334 687.8 336 691M433 727.4C436.2 727.7 449.1 729.1 452.4 729.4M541.2 724.9C543.7 723.6 551.3 720.6 555.7 717.1C560.1 713.6 564.8 707.7 567.6 703.7C570.5 699.7 571.9 697.7 572.8 693C573.8 688.3 573.3 678.2 573.4 675.3',
+  'M573.4 675.3C572.4 672.7 570.2 664.6 567.5 659.9C564.8 655.2 561.6 651 557.1 647.2C552.7 643.3 547.7 640.1 540.8 636.6C534 633 520.3 627.5 516.2 625.7',
+  'M487.2 617.9C482.8 617 476.1 615 460.8 612.2C445.6 609.5 406.6 603.1 395.8 601.2M367.7 596.1C361.1 594.6 340.5 590.7 328.2 587.5C315.8 584.3 303 580.1 293.8 576.8C284.7 573.5 281.4 572.1 273.3 567.6C265.2 563.2 252.5 554.2 245.4 550C238.3 545.8 238.5 545.9 230.7 542.5C222.9 539.1 207.2 532.5 198.7 529.6C190.3 526.6 183.6 526.2 179.9 524.9C176.2 523.7 177.5 523.3 176.5 522C175.5 520.6 174.4 518.3 173.7 516.7C173.1 515.1 172.8 514 172.8 512.3C172.8 510.6 173 508.5 173.7 506.4C174.4 504.3 173.3 504.3 177 499.7C180.6 495.2 192.5 482.5 195.6 479',
   'M195.6 479C197.4 476.6 203 468.2 206.6 464.8C210.1 461.4 203.4 462.1 216.9 458.8C230.4 455.6 275.7 447.6 287.5 445.3',
   'M287.5 445.3C291.3 443.4 304.5 436.1 310.3 433.9C316 431.7 318.6 432.2 322.1 432.3C325.5 432.4 328 433.5 330.7 434.7C333.4 435.8 336.1 437.5 338.3 439.4C340.5 441.3 342.8 443.9 344.2 446.2C345.6 448.5 346.4 450.8 346.7 453.2C347 455.6 347 457.9 346 460.6C345 463.3 344.5 465 340.6 469.6C336.8 474.1 328.1 483.7 322.9 487.9C317.7 492 312.8 492.7 309.5 494.6C306.3 496.4 305.5 497.1 303.5 499C301.6 500.9 299.4 503.5 297.9 506C296.4 508.6 295 512.9 294.4 514.3',
 ];

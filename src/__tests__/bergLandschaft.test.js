@@ -168,17 +168,18 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
     expect(WEGSTUECKE).toHaveLength(STATIONEN.length - 1);
     expect(WEG_VON).toHaveLength(WEGSTUECKE.length);
   });
-  it('Stück i beginnt an seiner Ausgangsstation und endet nah an Station i+1 (verdeckte Stücke fehlen)', () => {
+  it('Stück i beginnt und endet nah an seinen Stationen (verdeckte Stücke fehlen)', () => {
     WEGSTUECKE.forEach((d, i) => {
       const z = zahlen(d);
-      expect(nah(z[0], z[1], STATIONEN[WEG_VON[i]], 1), `Start ${i}`).toBe(true);
+      // Start: an der Ausgangsstation, höchstens eine Tannenbreite dahinter (dort beginnt er verdeckt)
+      expect(nah(z[0], z[1], STATIONEN[WEG_VON[i]], 32), `Start ${i}`).toBe(true);
       expect(nah(z[z.length - 2], z[z.length - 1], STATIONEN[i + 1], 25), `Ende ${i}`).toBe(true);
     });
   });
-  it('zwei Äste ab der Basis: nach rechts Wohnen–Finanzen–Versicherungen, hinauf Ausbildung–Behörden–Notfall', () => {
-    expect(WEG_VON).toEqual([0, 1, 2, 0, 4, 5]);
-    const [basis, wohnen, finanzen, versicherungen, ausbildung, behoerden] = STATIONEN;
-    expect(wohnen.x > basis.x && finanzen.x > wohnen.x && versicherungen.x > finanzen.x).toBe(true);
-    expect(ausbildung.y < basis.y && behoerden.y < ausbildung.y).toBe(true);
+  it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {
+    expect(WEG_VON).toEqual([0, 1, 2, 3, 4, 5]);
+    const z = zahlen(WEGSTUECKE[3]);
+    expect(nah(z[0], z[1], STATIONEN[0], 20), 'der Weg zur Ausbildung beginnt nicht bei der Basis').toBe(false);
   });
+
 });
