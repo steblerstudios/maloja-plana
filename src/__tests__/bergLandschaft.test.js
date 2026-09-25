@@ -1,59 +1,70 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constants.js';
-import { STATIONEN, AUSSCHNITT, SCHMAL_AB } from '../components/BergLandschaft.jsx';
+import { astFarben } from '../utils/lebensbereichFruechte.js';
+import {
+  STATIONEN, WEGSTUECKE, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
+} from '../components/BergLandschaft.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // Dashboard-Berge seit 25.09.2026: eine gemalte Landschaft (eigene Malojapass-Fotos →
-// Codex-Illustration) statt drei halbtransparenter Grate. Damit liegt jede Station auf
-// einem Bild, dessen Farben wir nicht kennen — also darf ihr Kontrast nie am Bild hängen.
-// Drei Zusagen, je als Test statt als Kommentar (Lehre K41: die Regel stand vierzig
-// Zeilen unter der Deckkraft, die sie aufhob):
-//   1. Das Kapitel-Zeichen im Knopf trägt ≥ 3:1 auf der eigenen Knopf-Fläche (WCAG 1.4.11).
-//   2. Keine Deckkraft auf Knopf oder Etikett — sonst scheint das Bild durch.
-//   3. Am kleinsten Handy überlappen sich die Knöpfe nicht und bleiben im Ausschnitt.
+// Codex-Illustration) statt drei halbtransparenter Grate. Das Bild bleibt auch im
+// Dunkelmodus hell; jede Station liegt darauf in ihrer Kapitelfarbe. Die Zusagen, je als
+// Test statt als Kommentar (Lehre K41: die Regel stand vierzig Zeilen unter der Deckkraft,
+// die sie aufhob):
+//   1. Das Kapitel-Zeichen im Knopf trägt ≥ 3:1 auf der Knopf-Fläche (WCAG 1.4.11) —
+//      für jede Kapitelfarbe, auch im Farbenblind-Modus.
+//   2. Im Dunkelmodus gilt die helle Palette (das Bild ist hell, also auch die Stationen).
+//   3. Keine Deckkraft auf Knopf oder Etikett — sonst scheint das Bild durch.
+//   4. Am kleinsten Handy überlappen sich die Knöpfe nicht und bleiben im Ausschnitt.
+//   5. Die Wegstücke beginnen und enden genau an den Stationen.
 // ─────────────────────────────────────────────────────────────
 
-function luminanz(hex) {
-  const h = hex.replace('#', '');
-  const kanal = [0, 2, 4].map((i) => {
-    const v = parseInt(h.slice(i, i + 2), 16) / 255;
-    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * kanal[0] + 0.7152 * kanal[1] + 0.0722 * kanal[2];
-}
-const kontrast = (a, b) => {
-  const la = luminanz(a), lb = luminanz(b);
-  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
-};
-
-const PALETTEN = {
-  hell: LIGHT_PALETTE,
-  dunkel: DARK_PALETTE,
-  'hell, Farbenblind': applyColorBlind(LIGHT_PALETTE, true),
-  'dunkel, Farbenblind': applyColorBlind(DARK_PALETTE, true),
-};
-
+const KAPITEL = STATIONEN.map((s) => ({ key: s.key, title: s.key }));
 const src = readFileSync(new URL('../components/BergLandschaft.jsx', import.meta.url), 'utf8');
 
-describe('Berge · Stations-Zeichen tragen auf ihrer eigenen Fläche', () => {
-  // Die Farben, die der Quelltext je Reifestufe setzt — aus dem Quelltext gelesen, damit
-  // der Test mitgeht, wenn jemand dort eine Farbe tauscht.
-  const stufen = [...src.matchAll(/(sketch|emerging|maturing|complete): \{ bg: palette\.(\w+), border: [^,]+, color: palette\.(\w+) \}/g)]
-    .map(([, stufe, bg, color]) => ({ stufe, bg, color }));
-
-  it('alle vier Reifestufen sind gefunden (sonst prüft der Test die leere Menge)', () => {
-    expect(stufen.map((s) => s.stufe)).toEqual(['sketch', 'emerging', 'maturing', 'complete']);
-  });
-
-  for (const [name, p] of Object.entries(PALETTEN)) {
-    it(`${name}: jedes Kapitel-Zeichen ≥ 3:1 auf der Knopf-Fläche`, () => {
-      for (const { stufe, bg, color } of stufen) {
-        expect(p[bg], `${stufe}: ${bg}`).toMatch(/^#[0-9A-Fa-f]{6}$/);
-        expect(kontrast(p[color], p[bg]), `${name} · ${stufe}: ${color} auf ${bg}`).toBeGreaterThanOrEqual(3);
+describe('Berge · Kapitel-Zeichen tragen in ihrer Kapitelfarbe', () => {
+  for (const [name, dunkelModus, farbenblind] of [
+    ['hell', false, false], ['dunkel', true, false],
+    ['hell, Farbenblind', false, true], ['dunkel, Farbenblind', true, true],
+  ]) {
+    it(`${name}: jedes Zeichen ≥ 3:1 auf der Knopf-Fläche`, () => {
+      const app = applyColorBlind(dunkelModus ? DARK_PALETTE : LIGHT_PALETTE, farbenblind);
+      const p = bildPalette(app);
+      const farben = astFarben(KAPITEL, p, false);
+      expect(Object.keys(farben)).toHaveLength(7);
+      for (const [key, farbe] of Object.entries(farben)) {
+        expect(kontrast(mitKontrast(farbe, p.surface, 3), p.surface), `${name} · ${key}: ${farbe}`).toBeGreaterThanOrEqual(3);
       }
     });
   }
+  it('Gegenprobe: ohne Abdunkeln fiele mindestens eine Kapitelfarbe unter 3:1 (sonst prüft der Test nichts)', () => {
+    const farben = Object.values(astFarben(KAPITEL, LIGHT_PALETTE, false));
+    expect(farben.some((f) => kontrast(f, LIGHT_PALETTE.surface) < 3)).toBe(true);
+  });
+  it('das Abdunkeln behält den Farbton (Finanzen bleibt golden, nur tiefer)', () => {
+    const gold = '#C4A870';
+    const tief = mitKontrast(gold, LIGHT_PALETTE.surface, 3);
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(tief.slice(i, i + 2), 16));
+    expect(r).toBeGreaterThan(g);
+    expect(g).toBeGreaterThan(b);
+  });
+});
+
+describe('Berge · das Bild bleibt hell, also auch die Stationen', () => {
+  it('im Dunkelmodus tragen die Stationen die helle Palette', () => {
+    expect(bildPalette(DARK_PALETTE).surface).toBe(LIGHT_PALETTE.surface);
+    expect(bildPalette(DARK_PALETTE).mid).toBe(LIGHT_PALETTE.mid);
+  });
+  it('der Farbenblind-Modus kommt trotzdem an', () => {
+    const cb = bildPalette(applyColorBlind(DARK_PALETTE, true));
+    expect(cb.colorBlind).toBe(true);
+    expect(cb.surface).toBe(LIGHT_PALETTE.surface);
+    expect(cb.sage).not.toBe(LIGHT_PALETTE.sage);
+  });
+  it('es gibt nur noch eine Landschaft (keine dunkle Fassung mehr im Quelltext)', () => {
+    expect(src).not.toMatch(/landschaft-dunkel|isDarkMode/);
+  });
 });
 
 describe('Berge · keine Deckkraft auf Knopf oder Etikett', () => {
@@ -99,7 +110,27 @@ describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
       }
     }
   });
+  it('jede Station hat eine Etikett-Seite für beide Ausschnitte', () => {
+    for (const s of STATIONEN) {
+      expect(['rechts', 'links', 'unten'], s.key).toContain(s.seite.breit);
+      expect(['rechts', 'links', 'unten'], s.key).toContain(s.seite.schmal);
+    }
+  });
   it('alle sieben Kapitel haben eine Station, in der Reihenfolge der Kapitel', () => {
     expect(STATIONEN.map((s) => s.key)).toEqual(['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'behoerden', 'notfall']);
+  });
+});
+
+describe('Berge · Wegstücke verbinden die Stationen', () => {
+  const zahlen = (d) => d.match(/-?\d+(\.\d+)?/g).map(Number);
+  it('sechs Stücke für sieben Stationen', () => {
+    expect(WEGSTUECKE).toHaveLength(STATIONEN.length - 1);
+  });
+  it('Stück i beginnt an Station i und endet an Station i+1', () => {
+    WEGSTUECKE.forEach((d, i) => {
+      const z = zahlen(d);
+      expect([z[0], z[1]], `Start ${i}`).toEqual([STATIONEN[i].x, STATIONEN[i].y]);
+      expect(z.slice(-2), `Ende ${i}`).toEqual([STATIONEN[i + 1].x, STATIONEN[i + 1].y]);
+    });
   });
 });

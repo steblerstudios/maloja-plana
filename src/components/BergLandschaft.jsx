@@ -1,66 +1,78 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icons from '../IconKern.jsx';
 import { text, weight, radius, ease, duration } from '../config/tokens.js';
-// Als eigene Dateien, nicht im JS-Bündel: Vite legt sie mit Hash unter /assets/ ab,
-// der Service Worker liefert sie danach cache-first. Herkunft und Nachbau:
-// scripts/berge-vereinfachen.py (eigene Malojapass-Fotos → Codex-Illustration → 17 Farbflächen).
-import landschaftHell from '../assets/berge/landschaft-hell.svg?url';
-import landschaftDunkel from '../assets/berge/landschaft-dunkel.svg?url';
+import { LIGHT_PALETTE, applyColorBlind } from '../config/constants.js';
+import { astFarben } from '../utils/lebensbereichFruechte.js';
+// Als eigene Datei, nicht im JS-Bündel: Vite legt sie mit Hash unter /assets/ ab, der
+// Service Worker liefert sie danach cache-first. Herkunft und Nachbau:
+// scripts/berge-vereinfachen.py (eigene Malojapass-Fotos → Codex-Illustration → 48 Farbflächen).
+import landschaft from '../assets/berge/landschaft.svg?url';
 
-// Koordinaten im Bild (1100 × 788). Die Passstrasse steigt in Kehren von unten rechts
-// nach oben links; die Kapitel sitzen der Reihe nach auf ihr — Basis unten, Notfall oben.
+// Koordinaten im Bild (1100 × 788; die Datei selbst ist 1482 × 1062, gleiches Seitenverhältnis).
+// Die Passstrasse steigt in Kehren von unten rechts nach oben links; die Kapitel sitzen der
+// Reihe nach auf ihr — Basis unten, Notfall oben.
 const BILD = { w: 1100, h: 788 };
 // Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur die Strasse, damit die
-// Stationen am Handy weit genug auseinanderliegen (≥ 44 px Abstand bei 28-px-Knöpfen).
+// Stationen am Handy weit genug auseinanderliegen.
 export const AUSSCHNITT = {
   breit: { x: 0, y: 80, w: 1100, h: 708 },
   schmal: { x: 60, y: 360, w: 580, h: 410 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
+// Stationen und Wegstücke sind aus dem Bild gemessen, nicht geschätzt: Strasse = helle, fast
+// graue Bildpunkte; jede Station auf die Fahrbahnmitte gezogen (grösster Randabstand), jedes
+// Wegstück als günstigster Weg über die Fahrbahn (Dijkstra, Mitte billiger als Rand), dann
+// geglättet. Nachgemessen: 91–100 % jedes Stücks liegen auf der Strasse (25.09.2026).
+// Etikett-Seite je Ausschnitt, damit am Handy nichts über den Rand oder auf eine Nachbarstation läuft.
 export const STATIONEN = [
-  { key: 'basis', x: 540, y: 712, seite: 'rechts' },
-  { key: 'wohnen', x: 566, y: 648, seite: 'rechts' },
-  { key: 'finanzen', x: 390, y: 620, seite: 'unten' },
-  { key: 'versicherungen', x: 235, y: 578, seite: 'unten' },
-  { key: 'ausbildung', x: 138, y: 541, seite: 'unten' },
-  { key: 'behoerden', x: 276, y: 486, seite: 'links' },
-  { key: 'notfall', x: 318, y: 404, seite: 'rechts' },
+  { key: 'basis', x: 548, y: 725, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'wohnen', x: 554, y: 665, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'finanzen', x: 408, y: 608, seite: { breit: 'unten', schmal: 'unten' } },
+  { key: 'versicherungen', x: 246, y: 579, seite: { breit: 'unten', schmal: 'unten' } },
+  { key: 'ausbildung', x: 153, y: 542, seite: { breit: 'links', schmal: 'unten' } },
+  { key: 'behoerden', x: 201, y: 465, seite: { breit: 'links', schmal: 'links' } },
+  { key: 'notfall', x: 304, y: 432, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
-// Zwischenpunkte, damit der gegangene Weg der Strasse folgt statt quer durch den Wald.
-const ZWISCHEN = [
-  [[580, 686]],
-  [[530, 616], [470, 612]],
-  [[310, 600]],
-  [[182, 560]],
-  [[200, 552], [250, 540], [270, 512]],
-  [[284, 452]],
+// Wegstück i führt von Station i zu Station i+1.
+export const WEGSTUECKE = [
+  'M 548 725 C 549 715 553 675 554 665',
+  'M 554 665 C 545 657 523 622 501 615 C 479 608 438 623 422 622 C 407 621 410 610 408 608',
+  'M 408 608 C 402 606 396 596 373 594 C 350 592 289 601 268 598 C 247 596 250 582 246 579',
+  'M 246 579 C 239 575 217 560 201 554 C 186 548 161 544 153 542',
+  'M 153 542 C 156 539 169 529 172 523 C 175 517 167 513 172 505 C 177 497 196 482 201 475 C 206 468 201 467 201 465',
+  'M 201 465 C 216 462 273 451 290 445 C 307 440 302 434 304 432',
 ];
 
-// Catmull-Rom → kubische Bézier, einmal beim Laden: ein Pfad je Wegstück (Station i → i+1).
-const WEGSTUECKE = (() => {
-  const punkte = [], stationIndex = [];
-  STATIONEN.forEach((s, i) => {
-    stationIndex.push(punkte.length);
-    punkte.push([s.x, s.y]);
-    if (ZWISCHEN[i]) punkte.push(...ZWISCHEN[i]);
-  });
-  const p = (i) => punkte[Math.max(0, Math.min(punkte.length - 1, i))];
-  const kurve = (i) => {
-    const [p0, p1, p2, p3] = [p(i - 1), p(i), p(i + 1), p(i + 2)];
-    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
-    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-    return ` C ${c1.map(Math.round).join(' ')} ${c2.map(Math.round).join(' ')} ${p2.join(' ')}`;
-  };
-  return stationIndex.slice(0, -1).map((von, k) => {
-    let d = `M ${punkte[von].join(' ')}`;
-    for (let i = von; i < stationIndex[k + 1]; i++) d += kurve(i);
-    return d;
-  });
-})();
+// ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
+const kanal = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+const luminanz = (hex) => {
+  const [r, g, b] = kanal(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+export const kontrast = (a, b) => {
+  const la = luminanz(a), lb = luminanz(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+};
+// Dunkelt eine Farbe in kleinen Schritten ab, bis sie auf `grund` mindestens `ziel` erreicht.
+// Farbton bleibt, nur die Helligkeit sinkt — Finanzen bleibt golden, nur tiefer.
+export const mitKontrast = (hex, grund, ziel = 3) => {
+  let [r, g, b] = kanal(hex);
+  let farbe = hex;
+  for (let i = 0; i < 30 && kontrast(farbe, grund) < ziel; i++) {
+    [r, g, b] = [r, g, b].map((v) => Math.round(v * 0.93));
+    farbe = '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+  }
+  return farbe;
+};
 
-const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }) => {
+// Das Bild bleibt auch im Dunkelmodus hell (Entscheid 25.09.2026: «so dunkel ist unangenehm»).
+// Darum tragen Stationen und Etiketten immer die helle Palette — ihr Kontrast hängt dann nicht
+// am Modus. Der Farbenblind-Modus gilt trotzdem.
+export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
+
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }) => {
   const rahmen = useRef(null);
   const [schmal, setSchmal] = useState(false);
   const [bildFehlt, setBildFehlt] = useState(false);
@@ -73,9 +85,12 @@ const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, com
     return () => ro.disconnect();
   }, []);
 
-  const a = schmal ? AUSSCHNITT.schmal : AUSSCHNITT.breit;
+  const p = bildPalette(palette);
+  const kapitelFarbe = astFarben(chapters, p, false);
+  const modus = schmal ? 'schmal' : 'breit';
+  const a = AUSSCHNITT[modus];
   const imRahmen = (x, y) => ({ left: ((x - a.x) / a.w) * 100 + '%', top: ((y - a.y) / a.h) * 100 + '%' });
-  // Farben der Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
+  // Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
   const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity 1.5s ease' });
 
   return React.createElement('div', {
@@ -86,7 +101,7 @@ const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, com
       aspectRatio: `${a.w} / ${a.h}`,
       borderRadius: radius.md, overflow: 'hidden',
       // Ladezustand und Fehlerfall: eine ruhige Fläche in Bildgrösse, nichts springt.
-      background: palette.up,
+      background: p.up,
     },
   },
     React.createElement('svg', {
@@ -96,50 +111,50 @@ const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, com
       style: { position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' },
     },
       !bildFehlt && React.createElement('image', {
-        href: isDarkMode ? landschaftDunkel : landschaftHell,
+        href: landschaft,
         width: BILD.w, height: BILD.h,
         onError: () => setBildFehlt(true),
       }),
       // Gegangener Weg — je Kapitel ein Stück, golden sobald es begonnen ist.
       ...WEGSTUECKE.map((d, i) => React.createElement('path', {
         key: 'weg-' + i, d, fill: 'none',
-        stroke: palette.sand, strokeWidth: 5, strokeLinecap: 'round',
+        stroke: p.sand, strokeWidth: 5, strokeLinecap: 'round', strokeLinejoin: 'round',
         style: { opacity: chapterCompletions[i] > 0 ? 1 : 0, transition: 'opacity 0.8s ease' },
       })),
       // ─── Überraschungen mit dem Fortschritt (wie bisher, neu verortet) ───
-      completion >= 20 && React.createElement('g', { key: 'tannen', fill: palette.sageDeep, style: s(20, 0.8, 30) },
+      completion >= 20 && React.createElement('g', { key: 'tannen', fill: p.sageDeep, style: s(20, 0.8, 30) },
         React.createElement('path', { d: 'M 842 548 L 852 520 L 862 548 Z' }),
         React.createElement('path', { d: 'M 862 552 L 870 530 L 878 552 Z' }),
       ),
       completion >= 35 && React.createElement('g', { key: 'edelweiss', style: s(35, 0.9, 20) },
         React.createElement('circle', { cx: 452, cy: 548, r: 4.5, fill: '#fff' }),
-        React.createElement('circle', { cx: 452, cy: 548, r: 1.8, fill: palette.sand }),
+        React.createElement('circle', { cx: 452, cy: 548, r: 1.8, fill: p.sand }),
         React.createElement('circle', { cx: 610, cy: 590, r: 4, fill: '#fff' }),
-        React.createElement('circle', { cx: 610, cy: 590, r: 1.5, fill: palette.sand }),
+        React.createElement('circle', { cx: 610, cy: 590, r: 1.5, fill: p.sand }),
       ),
-      completion >= 45 && completion < 100 && React.createElement('g', { key: 'gipfelkreuz', stroke: palette.mid, strokeWidth: 1.8, style: s(45, 0.8, 20) },
+      completion >= 45 && completion < 100 && React.createElement('g', { key: 'gipfelkreuz', stroke: p.mid, strokeWidth: 1.8, style: s(45, 0.8, 20) },
         React.createElement('line', { x1: 598, y1: 176, x2: 598, y2: 198 }),
         React.createElement('line', { x1: 591, y1: 182, x2: 605, y2: 182 }),
       ),
       completion >= 55 && React.createElement('path', { key: 'matterhorn',
-        d: 'M 912 170 L 926 134 L 932 146 L 942 170 Z', fill: palette.sageDeep, style: s(55, 0.35, 60) }),
-      completion >= 65 && React.createElement('g', { key: 'kuh', fill: palette.text, style: s(65, 0.55, 20) },
+        d: 'M 912 170 L 926 134 L 932 146 L 942 170 Z', fill: p.sageDeep, style: s(55, 0.35, 60) }),
+      completion >= 65 && React.createElement('g', { key: 'kuh', fill: p.text, style: s(65, 0.55, 20) },
         React.createElement('ellipse', { cx: 700, cy: 560, rx: 8, ry: 4.6 }),
         React.createElement('ellipse', { cx: 692, cy: 556, rx: 3.2, ry: 2.6 }),
         React.createElement('rect', { x: 694, y: 563, width: 1.4, height: 6 }),
         React.createElement('rect', { x: 704, y: 563, width: 1.4, height: 6 }),
       ),
-      completion >= 75 && React.createElement('g', { key: 'uhr', fill: 'none', stroke: palette.mid, style: s(75, 0.6, 15) },
+      completion >= 75 && React.createElement('g', { key: 'uhr', fill: 'none', stroke: p.mid, style: s(75, 0.6, 15) },
         React.createElement('circle', { cx: 150, cy: 150, r: 7, strokeWidth: 1.2 }),
         React.createElement('line', { x1: 150, y1: 150, x2: 150, y2: 145.5, strokeWidth: 1 }),
         React.createElement('line', { x1: 150, y1: 150, x2: 153.5, y2: 151.5, strokeWidth: 0.8 }),
       ),
       completion >= 85 && React.createElement('path', { key: 'schoggi',
-        d: 'M 760 600 L 768 586 L 776 600 L 784 586 L 792 600 Z', fill: palette.sand, style: s(85, 0.7, 10) }),
+        d: 'M 760 600 L 768 586 L 776 600 L 784 586 L 792 600 Z', fill: p.sand, style: s(85, 0.7, 10) }),
       completion >= 95 && React.createElement('circle', { key: 'sonne',
-        cx: 250, cy: 130, r: 22, fill: palette.sand, style: { opacity: 0.35, transition: 'opacity 1.5s ease' } }),
+        cx: 250, cy: 130, r: 22, fill: p.sand, style: { opacity: 0.35, transition: 'opacity 1.5s ease' } }),
       completion >= 100 && React.createElement('g', { key: 'fahne' },
-        React.createElement('line', { x1: 598, y1: 172, x2: 598, y2: 198, stroke: palette.mid, strokeWidth: 1.6 }),
+        React.createElement('line', { x1: 598, y1: 172, x2: 598, y2: 198, stroke: p.mid, strokeWidth: 1.6 }),
         React.createElement('rect', { x: 599, y: 172, width: 15, height: 10, rx: 0.8, fill: '#d42b2b' }),
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
@@ -148,29 +163,26 @@ const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, com
     STATIONEN.map((station, i) => {
       const pct = chapterCompletions[i] || 0;
       const IconFn = Icons[station.key];
-      // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig
+      const farbe = kapitelFarbe[station.key] || p.sage;
+      const zeichen = mitKontrast(farbe, p.surface, 3);
+      // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig. Getragen von
+      // Rand (gestrichelt → dünn → kräftig) und Grösse, nie von Deckkraft; die Fläche ist
+      // immer undurchsichtig (K41) — sonst hängt der Kontrast am Bild dahinter.
       const maturity = pct === 0 ? 'sketch' : pct < 50 ? 'emerging' : pct < 100 ? 'maturing' : 'complete';
       const sz = schmal ? 28 : { sketch: 30, emerging: 32, maturing: 34, complete: 36 }[maturity];
       const iconSz = schmal ? 16 : { sketch: 17, emerging: 18, maturing: 20, complete: 21 }[maturity];
-      // Auf dem Bild braucht jede Station eine undurchsichtige Fläche (K41) — sonst
-      // hängt der Kontrast am Bild dahinter. Stufe trägt Rand + Füllung, nie Deckkraft.
-      const stil = {
-        sketch: { bg: palette.surface, border: '1.5px dashed ' + palette.mid, color: palette.mid },
-        emerging: { bg: palette.surface, border: '2px solid ' + palette.sand, color: palette.sandDeep },
-        maturing: { bg: palette.surface, border: '2px solid ' + palette.sand, color: palette.sageDeep },
-        complete: { bg: palette.surface, border: '2.5px solid ' + palette.sage, color: palette.sageDeep },
-      }[maturity];
+      const rand = { sketch: '2px dashed ', emerging: '2px solid ', maturing: '3px solid ', complete: '3px solid ' }[maturity] + farbe;
       const chapterTitle = chapters[i] ? chapters[i].title : station.key;
       const shortLabel = (chapters[i] && chapters[i].short) || chapterTitle.split(/[\s–—]/)[0];
-      const ort = imRahmen(station.x, station.y);
+      const abstand = sz / 2 + 4 + 'px';
       const etikettOrt = {
-        rechts: { left: sz / 2 + 4 + 'px', top: '50%', transform: 'translateY(-50%)' },
-        links: { right: sz / 2 + 4 + 'px', top: '50%', transform: 'translateY(-50%)' },
+        rechts: { left: abstand, top: '50%', transform: 'translateY(-50%)' },
+        links: { right: abstand, top: '50%', transform: 'translateY(-50%)' },
         unten: { top: sz / 2 + 3 + 'px', left: '50%', transform: 'translateX(-50%)' },
-      }[station.seite];
+      }[station.seite[modus]];
       return React.createElement('div', {
         key: station.key,
-        style: { position: 'absolute', ...ort, width: 0, height: 0 },
+        style: { position: 'absolute', ...imRahmen(station.x, station.y), width: 0, height: 0 },
       },
         React.createElement('button', {
           type: 'button',
@@ -179,9 +191,9 @@ const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, com
           style: {
             position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
             width: sz + 'px', height: sz + 'px', padding: 0,
-            borderRadius: '50%', background: stil.bg, border: stil.border, color: stil.color,
+            borderRadius: '50%', background: p.surface, border: rand, color: zeichen,
             display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.18)',
+            boxShadow: maturity === 'complete' ? `0 0 0 3px ${p.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
           },
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
@@ -189,20 +201,24 @@ const BergLandschaft = ({ palette, isDarkMode, chapters, chapterCompletions, com
         },
           React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px' } }, IconFn ? IconFn() : null)
         ),
-        !schmal && React.createElement('span', {
+        React.createElement('span', {
           className: 'mountain-label',
           lang,
           'aria-hidden': 'true',
           style: {
             position: 'absolute', ...etikettOrt, whiteSpace: 'nowrap', pointerEvents: 'none',
-            fontSize: text.xs, lineHeight: 1.15, color: palette.mid,
-            background: palette.surface, padding: '2px 6px', borderRadius: radius.sm,
+            display: 'flex', alignItems: 'center', gap: '4px',
+            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: p.mid,
+            background: p.surface, padding: schmal ? '1px 5px' : '2px 6px', borderRadius: radius.sm,
             fontStyle: maturity === 'sketch' ? 'italic' : 'normal',
             fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
-            boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
             ...hyphenStyle,
           },
-        }, shortLabel)
+        },
+          // Farbpunkt: dieselbe Kapitelfarbe wie der Rand — Farbe ergänzt, das Wort trägt.
+          React.createElement('span', { style: { width: '6px', height: '6px', borderRadius: '50%', background: farbe, flex: 'none' } }),
+          shortLabel)
       );
     })
   );

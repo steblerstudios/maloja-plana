@@ -578,7 +578,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
     // Die Landschaft (eigene Malojapass-Fotos → Codex-Illustration) mit den Kapiteln als
     // Stationen auf der Passstrasse — siehe components/BergLandschaft.jsx.
-    React.createElement(BergLandschaft, { palette, isDarkMode, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }),
+    React.createElement(BergLandschaft, { palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }),
 
     // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },

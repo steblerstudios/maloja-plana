@@ -99,7 +99,8 @@ describe('K41 · Quell-Scan (BergLandschaft.jsx, mountain-label)', () => {
   });
 
   it('eine eigene, undurchsichtige Fläche trägt den Kontrast (background: palette.surface)', () => {
-    expect(block).toMatch(/background:\s*palette\.surface/);
+    // Seit 25.09.2026 heisst die Palette dort `p` (immer die helle, das Bild bleibt hell).
+    expect(block).toMatch(/background:\s*(palette|p)\.surface/);
   });
 
   it('«noch nicht begonnen» bleibt über Form erkennbar (fontStyle, nicht nur Farbe)', () => {
