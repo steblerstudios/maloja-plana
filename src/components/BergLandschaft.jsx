@@ -24,6 +24,10 @@ export const AUSSCHNITT = {
   schmal: { x: 110, y: 130, w: 490, h: 658 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
+// Hero randlos (seit 25.09.2026): die Landschaft läuft über die ganze Seitenbreite, das Bild selbst
+// ist aber höchstens so hoch (in % der Fensterhöhe) — auf breiten Fenstern steht es darum in voller
+// Höhe in der Mitte, und links/rechts läuft es in eine verschwommene Fortsetzung desselben Bildes aus.
+export const MAX_HOEHE_VH = 80;
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
 // nach Vorgabe von Stebler Studios gesetzt (25.09.2026). Im Bild sind es zwei Strassen: die breite
@@ -128,6 +132,24 @@ export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette
 
 const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent }) => {
   const rahmen = useRef(null);
+  const huelle = useRef(null);
+  // Randlos: die Hülle greift aus der 720-px-Spalte bis an die Fensterränder. Gemessen statt 100vw,
+  // weil 100vw eine klassische Scrollleiste mitzählt und die Seite dann seitlich scrollen liesse.
+  const [ausgriff, setAusgriff] = useState(null);
+  useEffect(() => {
+    const el = huelle.current;
+    if (!el || !el.parentElement || typeof window === 'undefined') return undefined;
+    const messen = () => {
+      const links = el.parentElement.getBoundingClientRect().left;
+      const breite = document.documentElement.clientWidth;
+      setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite) ? alt : { links: -links, breite });
+    };
+    messen();
+    window.addEventListener('resize', messen);
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(messen);
+    if (ro) ro.observe(el.parentElement);
+    return () => { window.removeEventListener('resize', messen); if (ro) ro.disconnect(); };
+  }, []);
   // «abgeschlossen» springt auf, sobald das erste Kapitel fertig ist — nicht beim ersten Zeichnen.
   const abgeschlossenKachel = useRef(null);
   const warAbgeschlossen = useRef(null);
@@ -161,22 +183,49 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
   // Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
   const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity 1.5s ease' });
 
+  // Steht das Bild schmaler als die Hülle (breites Fenster), läuft es an den Seiten weich aus.
+  const randWeich = ausgriff && breite > 0 && breite < ausgriff.breite - 2;
+
   return React.createElement('div', {
+    ref: huelle,
+    style: {
+      position: 'relative', overflow: 'hidden', lineHeight: 0,
+      margin: '8px 0 24px', marginLeft: ausgriff ? ausgriff.links + 'px' : 0,
+      width: ausgriff ? ausgriff.breite + 'px' : '100%',
+      // Ladezustand und Fehlerfall: eine ruhige Fläche, nichts springt.
+      background: p.up,
+    },
+  },
+    // Die verschwommene Fortsetzung links und rechts — dasselbe Bild, gross und unscharf.
+    randWeich && !bildFehlt && React.createElement('div', {
+      'aria-hidden': 'true',
+      style: {
+        position: 'absolute', inset: '-48px', backgroundImage: `url(${landschaft})`,
+        backgroundSize: 'cover', backgroundPosition: 'center 70%', filter: 'blur(28px)',
+      },
+    }),
+  React.createElement('div', {
     'data-tour': 'berge',
     ref: rahmen,
     style: {
-      margin: '8px -8px 24px -8px', position: 'relative', lineHeight: 0,
+      position: 'relative', margin: '0 auto', lineHeight: 0,
+      width: `min(100%, calc(${MAX_HOEHE_VH}vh * ${a.w} / ${a.h}))`,
       aspectRatio: `${a.w} / ${a.h}`,
-      borderRadius: radius.md, overflow: 'hidden',
-      // Ladezustand und Fehlerfall: eine ruhige Fläche in Bildgrösse, nichts springt.
-      background: p.up,
+      overflow: 'hidden',
     },
   },
     React.createElement('svg', {
       viewBox: `${a.x} ${a.y} ${a.w} ${a.h}`,
       preserveAspectRatio: 'xMidYMid slice',
       'aria-hidden': 'true',
-      style: { position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' },
+      style: {
+        position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block',
+        // Weicher Übergang in die unscharfe Fortsetzung — nur das Bild, nicht Stationen und Kreise.
+        ...(randWeich ? {
+          maskImage: 'linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)',
+        } : {}),
+      },
     },
       !bildFehlt && React.createElement('image', {
         href: landschaft,
@@ -369,7 +418,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           shortLabel)
       );
     })
-  );
+  ));
 };
 
 export default BergLandschaft;
