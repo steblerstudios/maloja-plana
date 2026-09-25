@@ -107,7 +107,7 @@ describe('O3 · Mietzinsbeiträge (Vorprüfung)', () => {
   const KANTONE = ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'];
 
   it('reine Funktion: wo geprüft wird, nie ein Betrag — also nie Berechnung oder Schätzung', () => {
-    const SCHLUESSEL = ['familiesOnly', 'effortBased', 'municipalLimit', 'tableLimit', 'needIncome', 'incomeHigh', 'likely'];
+    const SCHLUESSEL = ['familiesOnly', 'effortBased', 'municipalLimit', 'tableLimit', 'wfgNein', 'needIncome', 'incomeHigh', 'likely'];
     let geprueft = 0;
     for (const k of KANTONE) for (const assessmentKey of SCHLUESSEL) {
       const info = getMietzinsbeitraege(k);

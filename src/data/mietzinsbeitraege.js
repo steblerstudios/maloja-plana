@@ -32,12 +32,18 @@ const PROGRAMS = {
   // Basel-Stadt — Mietbeiträge. Seit 1.7.2025 auch Einzel-/Paarhaushalte (vorher nur Familien).
   // Einkommensgrenze ~50'000 (Einzel/Paar, Familien höher); Mietzinslimiten nach Zimmerzahl;
   // Beitrag 50–1'060 CHF/Monat; min. 2 Jahre Wohnsitz. Quelle: bs.ch (Amt für Sozialbeiträge).
-  // ⟨25.09.2026⟩ Beitragstabelle (Juli 2025, Merkblatt 01.2026): 50'000 gilt für Einzel- und Paar-
-  // haushalte (letzte Zeile mit Beitrag: 1 Person 49'350 · 2 Personen 51'600); mit Kindern liegt die
-  // Grenze deutlich höher (63'600 bis 87'600). Darum mit Kindern KEIN Vergleich mit 50'000 — der hielt
-  // Familien ab. Die Tabelle je Haushaltsgrösse ist nicht eindeutig genug abgeschrieben, um sie zu rechnen.
-  // MBG (890.500) § 4 Abs. 2: kein Anspruch mehr ab Referenzalter (steht im Kantonstext).
-  BS: { state: 'has', group: 'all', incomeLimit: 50000, incomeLimitNurOhneKinder: true, residencyYears: 2, benefitMaxMonth: 1060,
+  // ⟨25.09.2026, Quellenprüfung⟩ Keine Pauschale: die Grenze ist je Haushalt eindeutig berechenbar,
+  // Merkblatt Mietbeiträge 01.2026 Ziff. 13 — Faktor 0, wenn das massgebliche Einkommen «das Grund-
+  // einkommen um mehr als 36'000 Franken übersteigt». Grundeinkommen = Haushaltsabzug (12'000 ohne,
+  // 24'000 mit Kindern) + Sozialabzug (3'750 · 6'000 · 16'000 · 24'000 · 30'000, +6'000 je weitere
+  // Person); Beitragstabelle 04.07.2025 Kopfzeile. Die frühere Pauschale 50'000 lag für eine Person
+  // ~1'750 zu tief, für ein Paar ~4'000 zu tief und hielt Familien ab. Obere Schranke — der Beitrag
+  // kann schon darunter unter die Auszahlungsschwelle (600/Jahr, Ziff. 11) fallen; darum «bis etwa».
+  // Drei und mehr Erwachsene ohne Kind stehen nicht in der Tabelle → keine Zahl (nicht belegt).
+  // Massgeblich ist das Einkommen nach SoHaG § 6 Abs. 2 lit. c inkl. 10 % des Vermögens über dem
+  // Freibetrag (Ziff. 2) — nicht der Lohn. MBG (890.500) § 4 Abs. 2: kein Anspruch ab Referenzalter.
+  BS: { state: 'has', group: 'all', incomeLimit: 'formel', limitFormel: 'bs', einkommensBasis: 'massgebend',
+        residencyYears: 2, benefitMaxMonth: 1060,
         noteKey: 'mietzinsView.cantonNote_BS', stand: '2026',
         url: 'https://www.bs.ch/themen/finanzielle-hilfe/leistungen/mietbeitraege' },
   // Basel-Landschaft — Mietzinsbeiträge, nur Haushalte mit mind. 1 Kind. Netto-Jahreseinkommen
@@ -69,7 +75,9 @@ const PROGRAMS = {
   ZG: { state: 'has', group: 'all', incomeLimit: 60000, einkommensBasis: 'steuerbar', incomePerChild: 2500, incomePerAdult: 20000,
         residencyYears: 3, assetLimit: 144000,
         // Nur für Wohnungen, die dem WFG unterstellt sind (Merkblatt Sept. 2025; zg.ch: «rund 1900
-        // Wohnungen»). Die App weiss das nicht — darum steht es beim positiven Ergebnis dabei.
+        // Wohnungen»). Entscheid Stebler Studios 25.09.2026: der Rechner FRAGT danach (wohnen.wfgWohnung,
+        // 'ja' | 'nein' | 'weissNicht'). «nein» → kein Anspruch; offen/«weiss nicht» → Hinweis beim Ergebnis.
+        wfgFrage: true,
         bedingungKey: 'mietzinsView.bedingung_ZG',
         noteKey: 'mietzinsView.cantonNote_ZG', stand: '2026',
         url: 'https://zg.ch/de/soziales/wohnungswesen/foerderinstrumente/fuer-privatpersonen' },
@@ -86,8 +94,7 @@ export function getMietzinsbeitraege(canton) {
 // Gibt null zurück, wenn der Kanton keine einzelne Grenze hat (z.B. GE: mietabhängiges barème).
 export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 0) {
   if (!program || program.incomeLimit == null) return null;
-  // BS: die Pauschale gilt nur ohne Kinder (Beitragstabelle) — mit Kindern keine feste Zahl.
-  if (program.incomeLimitNurOhneKinder && childrenCount > 0) return null;
+  if (program.limitFormel === 'bs') return bsObergrenze(householdSize, childrenCount);
   let limit = program.incomeLimit;
   if (program.incomePerChild) limit += program.incomePerChild * childrenCount;
   if (program.incomePerAdult) {
@@ -99,13 +106,24 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
   return limit;
 }
 
+// BS: Grundeinkommen + 36'000 (Merkblatt 01.2026 Ziff. 13, Werte oben beim Programm).
+// null für drei und mehr Erwachsene ohne Kind — diesen Haushaltstyp führt die Tabelle nicht.
+export function bsObergrenze(personen, kinder) {
+  const n = Math.max(1, Number(personen) || 1);
+  const k = Math.max(0, Number(kinder) || 0);
+  if (k === 0 && n >= 3) return null;
+  const haushaltsabzug = k > 0 ? 24000 : 12000;
+  const sozialabzug = n <= 5 ? [3750, 6000, 16000, 24000, 30000][n - 1] : 30000 + 6000 * (n - 5);
+  return haushaltsabzug + sozialabzug + 36000;
+}
+
 // O3 — Ergebnis-Art des Mietzins-Schnellchecks (MietzinsOrientierung.jsx).
 // Die Einschätzung selbst bleibt in der Ansicht; hier wird nur aus IHREM Ergebnis (dem Schlüssel)
 // die Art abgeleitet, damit es für die Einschätzung weiter genau eine Quelle gibt.
 //
 //   VORPRÜFUNG   Vergleich des Jahreseinkommens mit einer Richtgrenze (MIETZINS_DATA_VERSION) —
 //                sagt, ob sich ein Antrag lohnen könnte, nie einen Betrag.
-//   ORIENTIERUNG 'effortBased' (GE) / 'municipalLimit' (BL) / 'tableLimit' (BS mit Kindern): keine feste
+//   ORIENTIERUNG 'effortBased' (GE) / 'municipalLimit' (BL) / 'tableLimit' (BS, Haushaltstyp nicht in der Tabelle): keine feste
 //                Grenze, also wird nichts geprüft.
 //   null         Kanton ohne bestätigtes Programm ('none'/'check'): keine Prüfung, keine Art.
 // Ohne Kanton ist offen, ob es ein Programm gibt — die Vorprüfung wartet auf den Kanton und,

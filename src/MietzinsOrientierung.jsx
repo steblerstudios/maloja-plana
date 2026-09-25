@@ -20,7 +20,7 @@ import { giltAlsVerheiratet } from './utils/zivilstand.js';
 // (data/mietzinsbeitraege.js) und die kantonale Mietzins-Limite (getRentLimit, SKOS-belegt).
 // Bewusst eine EINSCHÄTZUNG, keine verbindliche Zusage — die Programme sind kantonal/kommunal
 // fragmentiert; verbindlich ist immer die kantonale Stelle (würdevoll, keine falsche Hoffnung).
-export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode }) => {
+export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateData, isDarkMode }) => {
   const canton = data?.basis?.canton || (() => {
     const plz = (data?.wohnen?.postalCode || '').trim();
     if (plz.length < 4) return '';
@@ -57,13 +57,17 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
   const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount) : null;
 
+  // ZG: gilt nur für WFG-Wohnungen — die Antwort steht in wohnen.wfgWohnung (Frage unten im Schnellcheck).
+  const wfg = data?.wohnen?.wfgWohnung;
+
   // Einschätzung aus erfassten Beträgen + Kanton-Eckwerten (nie verbindlich).
   const assessment = (() => {
     if (!hasProgram) return null;
     if (info.group === 'families' && childrenCount === 0) return { key: 'familiesOnly', tone: 'soft' };
+    if (info.wfgFrage && wfg === 'nein') return { key: 'wfgNein', tone: 'soft' };
     // GE: mietabhängiges barème · BL: Grenze je Haushalt, von der Gemeinde festgesetzt (§ 6/§ 10 MBG).
-    // BS mit Kindern: Grenze nach Haushaltsgrösse (Beitragstabelle), keine Pauschale.
-    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : info.incomeLimitNurOhneKinder ? 'tableLimit' : 'effortBased', tone: 'neutral' };
+    // BS: Haushaltstyp, den die Beitragstabelle nicht führt (drei und mehr Erwachsene ohne Kind).
+    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : info.limitFormel ? 'tableLimit' : 'effortBased', tone: 'neutral' };
     if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
     if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
     return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
@@ -105,6 +109,19 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
             rent: rentMonthly ? zahl(rentMonthly, { hoechstens: 2 }) : '—',
             size: householdSize,
           })),
+        // ZG: die WFG-Frage — nur mit Schreibweg (onUpdateData); ohne bleibt es beim Hinweis am Ergebnis.
+        info.wfgFrage && onUpdateData && React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
+          React.createElement('label', { htmlFor: 'mz-wfg', style: { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' } }, t('mietzinsView.wfgFrage')),
+          React.createElement('select', {
+            id: 'mz-wfg', value: wfg || '', 'aria-describedby': 'mz-wfg-hinweis',
+            onChange: (e) => onUpdateData('wohnen', 'wfgWohnung', e.target.value),
+            style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' },
+          },
+            React.createElement('option', { value: '' }, t('common.select')),
+            ['ja', 'nein', 'weissNicht'].map((v) => React.createElement('option', { key: v, value: v }, t('mietzinsView.wfg_' + v)))
+          ),
+          React.createElement('p', { id: 'mz-wfg-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, t('mietzinsView.wfgHinweis'))
+        ),
         // Ergebnis (mit Zahlen, sofern vorhanden).
         assessment && React.createElement('div', {
           style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, fontSize: text.sm, color: toneColor(assessment.tone), lineHeight: leading.normal },
@@ -113,11 +130,12 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
         // Bedingung, die die App nicht kennt (ZG: nur WFG-Wohnungen) — beim positiven Ergebnis sichtbar.
-        assessment && assessment.key === 'likely' && info.bedingungKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+        assessment && assessment.key === 'likely' && info.bedingungKey && !(info.wfgFrage && wfg === 'ja') && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t(info.bedingungKey)),
-        // ZG misst das steuerbare Einkommen (nach Abzügen) — tiefer als der Nettolohn. Knapp darüber kann es reichen.
-        assessment && assessment.key === 'incomeHigh' && info.einkommensBasis === 'steuerbar' && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.steuerbarTiefer')),
+        // ZG (steuerbar) / BS (massgebend nach SoHaG) messen ein Einkommen nach Abzügen — meist tiefer als
+        // der Lohn, mit dem hier gerechnet wird. Knapp über der Grenze kann es reichen.
+        assessment && assessment.key === 'incomeHigh' && info.einkommensBasis && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t(info.einkommensBasis === 'steuerbar' ? 'mietzinsView.steuerbarTiefer' : 'mietzinsView.massgebendTiefer')),
         // Konkubinat: ob das Partnereinkommen zählt, entscheidet die Stelle — die Zahl mit ihm steht daneben.
         assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && konkubinatMitPartner != null && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),

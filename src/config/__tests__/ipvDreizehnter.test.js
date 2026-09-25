@@ -149,8 +149,8 @@ describe('Behörden-Dossier trägt die Annahme mit', () => {
 });
 
 // Gleiche Fehlerklasse ausserhalb der IPV: Mietzinsbeiträge (MietzinsOrientierung.jsx) rechneten
-// das Jahreseinkommen ebenfalls ×12. BS, Richtgrenze 50 000: 4 000 × 12 = 48 000 liegt darunter,
-// 4 000 × 13 = 52 000 darüber — genau der Fall, den der 13. kippt.
+// das Jahreseinkommen ebenfalls ×12. BS, 1 Person, Grenze 15 750 + 36 000 = 51 750: 4 000 × 12 = 48 000
+// liegt darunter, 4 000 × 13 = 52 000 darüber — genau der Fall, den der 13. kippt.
 describe('Mietzinsbeiträge: 13. Monatslohn nach derselben Regel', () => {
   const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
   const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
@@ -219,20 +219,20 @@ describe('Mietzinsbeiträge: Haushaltseinkommen', () => {
     };
     return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
   };
-  it('allein: 36 000 unter 50 000', async () => {
-    expect(await render()).toContain('mietzinsView.result_likely(36’000|50’000)');
+  it('allein: 36 000 unter 51 750', async () => {
+    expect(await render()).toContain('mietzinsView.result_likely(36’000|51’750)');
   });
   it('Nebenerwerb zählt ×12: 3 000 × 12 + 1 500 × 12 = 54 000 über der Grenze', async () => {
     expect(await render({ sideIncome: 1500 })).toContain('mietzinsView.result_incomeHigh');
   });
-  it('verheiratet: Partnereinkommen zählt (36 000 + 24 000)', async () => {
+  it('verheiratet: Partnereinkommen zählt (36 000 + 24 000 über 54 000)', async () => {
     const html = await render({ maritalStatus: 'married', adults: 2, partnerIncome: 2000 });
     expect(html).toContain('mietzinsView.result_incomeHigh');
     expect(html).not.toContain('mietzinsView.konkubinatPartner');
   });
   it('Konkubinat: nicht eingerechnet, aber die Zahl mit Partnereinkommen genannt', async () => {
     const html = await render({ maritalStatus: 'cohabiting', adults: 2, partnerIncome: 2000 });
-    expect(html).toContain('mietzinsView.result_likely(36’000|50’000)');
+    expect(html).toContain('mietzinsView.result_likely(36’000|54’000)');
     expect(html).toContain('mietzinsView.konkubinatPartner(60’000)');
   });
 });
@@ -271,13 +271,14 @@ describe('Mietzinsbeiträge: Datenstand 2026', () => {
     const data = { basis: { canton, maritalStatus: 'single', household: { adults: 1, children } }, finanzen: { monthlyIncome, dreizehnter: NEIN }, wohnen: { rentAmount: 1200 } };
     return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
   };
-  it('BS mit Kind: kein Vergleich mit der Pauschale 50 000 (hielt Familien ab)', async () => {
+  it('BS mit Kind: Grenze nach Formel (24 000 + 6 000 + 36 000 = 66 000), nicht die alte Pauschale', async () => {
     const html = await render('BS', 4500, [{ age: 5 }]);
-    expect(html).toContain('mietzinsView.result_tableLimit');
-    expect(html).not.toContain('mietzinsView.result_incomeHigh');
+    expect(html).toContain('mietzinsView.result_likely(54’000|66’000)');
   });
-  it('BS ohne Kind: weiter mit 50 000, «über der Grenze» nennt beide Zahlen', async () => {
-    expect(await render('BS', 4500)).toContain('mietzinsView.result_incomeHigh(54’000|50’000)');
+  it('BS ohne Kind: 54 000 über 51 750, «über der Grenze» nennt beide Zahlen + Einkommensbasis', async () => {
+    const html = await render('BS', 4500);
+    expect(html).toContain('mietzinsView.result_incomeHigh(54’000|51’750)');
+    expect(html).toContain('mietzinsView.massgebendTiefer');
   });
   it('ZG unter der Grenze: Bedingung WFG-Wohnung steht dabei', async () => {
     const html = await render('ZG', 3000);
@@ -290,5 +291,51 @@ describe('Mietzinsbeiträge: Datenstand 2026', () => {
     expect(getMietzinsbeitraege('GE').benefitMaxRoom).toBe(1000);
     expect(MIETZINS_DATA_VERSION).toBe('2026');
     for (const k of ['BS', 'BL', 'GE', 'ZG']) expect(getMietzinsbeitraege(k).stand, k).toBe('2026');
+  });
+});
+
+// BS-Grenze nach Merkblatt 01.2026 Ziff. 13 (Quellenprüfung 25.09.2026): Grundeinkommen + 36 000.
+// Die Werte je Haushalt wörtlich aus der Beitragstabelle (Kopfzeile «Grundeinkommen»), nicht aus der Formel abgeleitet.
+describe('Mietzinsbeiträge BS: Obergrenze je Haushalt', () => {
+  it.each([
+    [1, 0, 15750], [2, 0, 18000], [2, 1, 30000], [3, 1, 40000], [3, 2, 40000], [4, 2, 48000], [5, 3, 54000],
+  ])('%i Personen, %i Kinder: Grundeinkommen %i + 36 000', async (n, k, grund) => {
+    const { bsObergrenze } = await import('../../data/mietzinsbeitraege.js');
+    expect(bsObergrenze(n, k)).toBe(grund + 36000);
+  });
+  it('6 Personen: +6 000 je weitere Person; 3 Erwachsene ohne Kind: nicht belegt → null', async () => {
+    const { bsObergrenze } = await import('../../data/mietzinsbeitraege.js');
+    expect(bsObergrenze(6, 4)).toBe(24000 + 36000 + 36000);
+    expect(bsObergrenze(3, 0)).toBeNull();
+  });
+});
+
+// Entscheid Stebler Studios 25.09.2026: ZG fragt, ob die Wohnung dem WFG untersteht.
+describe('Mietzinsbeiträge ZG: WFG-Frage', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const render = async (wfgWohnung, onUpdateData) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const data = { basis: { canton: 'ZG', maritalStatus: 'single', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 3000, dreizehnter: NEIN }, wohnen: { rentAmount: 1200, ...(wfgWohnung && { wfgWohnung }) } };
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data, onUpdateData }));
+  };
+  const schreib = () => {};
+  it('«nein»: kein Anspruch, kein positives Ergebnis', async () => {
+    const html = await render('nein', schreib);
+    expect(html).toContain('mietzinsView.result_wfgNein');
+    expect(html).not.toContain('mietzinsView.result_likely');
+  });
+  it('«ja»: positives Ergebnis ohne Bedingungs-Hinweis', async () => {
+    const html = await render('ja', schreib);
+    expect(html).toContain('mietzinsView.result_likely');
+    expect(html).not.toContain('mietzinsView.bedingung_ZG');
+  });
+  it('offen / «weiss nicht»: positives Ergebnis mit Hinweis', async () => {
+    expect(await render(undefined, schreib)).toContain('mietzinsView.bedingung_ZG');
+    expect(await render('weissNicht', schreib)).toContain('mietzinsView.bedingung_ZG');
+  });
+  it('die Frage erscheint nur mit Schreibweg und nur in ZG', async () => {
+    expect(await render(undefined, schreib)).toContain('id="mz-wfg"');
+    expect(await render(undefined, undefined)).not.toContain('id="mz-wfg"');
   });
 });
