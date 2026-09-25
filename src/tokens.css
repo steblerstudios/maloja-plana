@@ -279,7 +279,7 @@ html { overflow-x: clip; }
    über den Rand hinaus (Schatten statt padding — das Layout bleibt, wie es ist). Das
    Berg bleibt in den Zwischenräumen sichtbar. Kacheln tragen ihre Farbe inline und sind hier
    ausgenommen. Grund: graue Kleinschrift erreichte über hellem Himmel nur ~2,5:1. */
-.mp-blatt > :not([style*="background"]) {
+.mp-blatt > :not([style*="background"]):not(:has(> [style*="background"])) {
   background-color: var(--mp-seite);
   border-radius: var(--mp-radius-md);
   box-shadow: 0 0 0 12px var(--mp-seite);
