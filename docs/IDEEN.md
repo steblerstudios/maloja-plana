@@ -116,6 +116,7 @@ Abschiedsagentur, plaant).
 | Barrierefreiheit systematisch (WCAG 2.1 AA / eCH-0059) · Menschen, die kaum lesen | §8 | — |
 | Skeuomorphe Metaphern je Bereich · Lebensbaum: Wuchs, Jahreszeiten, hängende Früchte | §1, §2 | Baum-Entscheid (Oktober); **nicht** an der Gamification |
 | Beispiel-Modus mit Personas | §10 | Persona-Durchlauf |
+| 🔁 **Wiedervorlage vor IPV-Anspruchsjahr 2027:** 13. AHV-Altersrente (erstmals Dez. 2026) — fällt sie ins Bemessungsjahr der fünf Kantonsmodelle? Heute Renten ×12 (`rohesEinkommenJahr`, kantonsModell.js); IV-Renten bleiben ×12. Aus der Fachprüfung zu #388 (25.09.2026) | §5 | Kantonswerte 2027 (Riegel `jahrVorbei` ab 01.01.2027) |
 
 ### Irgendwann
 

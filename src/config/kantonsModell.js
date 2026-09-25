@@ -339,6 +339,8 @@ export const SAEULE_3A = Object.freeze({
 // Hauptlohn zählt jetzt nach derselben Regel wie im Steuerrechner (utils/dreizehnter.js);
 // Nebenerwerb und Renten bleiben ×12. Bei «offen» ×12 — das Ergebnis sagt es dazu
 // (annahmen.ohneDreizehnten, gesetzt in calculateIPV).
+// 🔁 Wiedervorlage vor dem Anspruchsjahr 2027 (docs/IDEEN.md, Winter): die 13. AHV-Altersrente
+// (erstmals Dez. 2026) ist hier noch ×12 — für 2026 richtig, weil die Bemessung auf Vorjahren liegt.
 export function rohesEinkommenJahr(f) {
   return Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter)
     + ['sideIncome', 'ahvRente', 'ivRente', 'bvgRente'].reduce((s, k) => s + Number(f[k] || 0), 0) * 12;
