@@ -12,40 +12,45 @@ import landschaft from '../assets/berge/landschaft.webp?url';
 // Die Passstrasse steigt in Kehren von unten rechts nach oben links; die Kapitel sitzen der
 // Reihe nach auf ihr — Basis unten, Notfall oben.
 const BILD = { w: 1100, h: 788 };
-// Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur die Serpentine, damit die
+// Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur das Strassennetz, damit die
 // Stationen am Handy weit genug auseinanderliegen.
 export const AUSSCHNITT = {
   breit: { x: 0, y: 80, w: 1100, h: 708 },
-  schmal: { x: 150, y: 420, w: 450, h: 310 },
+  schmal: { x: 110, y: 370, w: 490, h: 340 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
-// Die Route ist aus dem Bild gelesen (25.09.2026, Werkzeug: Maske der hellen Fahrbahn + Skelett):
-// die Serpentine beginnt rechts unten in der U-Kurve um die Wiese, läuft oben zurück nach links
-// zur Kehre und steigt über die schmale Strasse zur Passhöhe. Die sieben Stationen stehen in
-// gleicher Bogenlänge (Abstand ~110 Bildeinheiten, in der Kehre enger; Versicherungen 15 Einheiten
-// zurückgesetzt, damit am 320-px-Handy das Etikett «Ausbildung» Luft hat); wo eine Tanne die Strasse
-// verdeckt, fehlt der Weg — er geht dahinter durch.
-// Etikett-Seite je Ausschnitt, im Browser auf Überschneidungen nachgemessen (320–1280 px).
+// Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
+// nach Vorgabe von Stebler Studios gesetzt (25.09.2026): die Basis links, wo die schmale Strasse
+// von der breiten abzweigt. Von dort zwei Äste —
+//   · die breite Strasse nach rechts: Wohnen (noch vor den Tannen), Finanzen, Versicherungen
+//     (in der U-Kurve);
+//   · die schmale Strasse hinauf: Ausbildung, Behörden (oben im Bogen), Notfall (weiter über
+//     die Kehre ins S).
+// Wo eine Tanne die Strasse verdeckt, fehlt der Weg — er geht dahinter durch.
+// Etikett-Seiten sind errechnet: die einzige Anordnung ohne Überschneidung bei 656/736 px (breit)
+// und 296–496 px (schmal); Ausbildung und Notfall dafür je ein Stück die Strasse entlang gerückt.
 export const STATIONEN = [
-  { key: 'basis', x: 564, y: 706, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'wohnen', x: 516, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
-  { key: 'finanzen', x: 404, y: 603, seite: { breit: 'unten', schmal: 'unten' } },
-  { key: 'versicherungen', x: 310, y: 584, seite: { breit: 'obenrechts', schmal: 'oben' } },
-  { key: 'ausbildung', x: 181, y: 552, seite: { breit: 'unten', schmal: 'untenrechts' } },
-  { key: 'behoerden', x: 187, y: 491, seite: { breit: 'links', schmal: 'rechts' } },
-  { key: 'notfall', x: 287, y: 445, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'basis', x: 185, y: 549, seite: { breit: 'links', schmal: 'unten' } },
+  { key: 'wohnen', x: 300.2, y: 581.8, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'finanzen', x: 516.2, y: 625.7, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'versicherungen', x: 573.4, y: 675.3, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'ausbildung', x: 195.6, y: 479, seite: { breit: 'links', schmal: 'oben' } },
+  { key: 'behoerden', x: 287.5, y: 445.3, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'notfall', x: 294.4, y: 514.3, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
-// Wegstück i führt von Station i zu Station i+1 — nur die sichtbaren Stücke der Fahrbahn,
-// je Lauf ein eigener Unterpfad (M … C …). Mittellinie der Spur, geglättet.
+// Wegstück i gehört zum Kapitel i+1 und endet an dessen Station. Es beginnt an der Station
+// WEG_VON[i] — beim zweiten Ast (Ausbildung) wieder an der Basis. Nur sichtbare Fahrbahn,
+// je Lauf ein eigener Unterpfad (M … C …).
+export const WEG_VON = [0, 1, 2, 0, 4, 5];
 export const WEGSTUECKE = [
-  'M563.9 706.1C565.2 704.3 570.2 698.5 572 695.3C573.7 692.1 574.3 690.4 574.4 686.7C574.6 683.1 574.3 678.1 573 673.4C571.7 668.6 568.8 662.4 566.5 658.3C564.2 654.2 561.9 651.7 559.1 648.9C556.3 646.1 553.6 644.1 549.6 641.5C545.6 639 540.7 636.4 535.1 633.7C529.4 631 519 626.9 515.7 625.6',
-  'M515.7 625.6C513.6 624.9 505 622.2 502.8 621.6M488.3 618C483.1 616.9 471.5 614.1 457.4 611.6C443.4 609 413 604.2 404.2 602.8',
-  'M404.2 602.8C402.9 602.5 398 601.6 396.8 601.4M367.3 595.7C357.8 593.7 319.6 585.9 310 583.9',
-  'M310 583.9C298.3 581.2 261.4 573.3 239.8 568C218.3 562.6 190.4 554.3 180.6 551.6',
-  'M180.6 551.6C175 550.2 154 545.2 147.1 543.2C140.2 541.1 140.5 540.3 139.3 539.1C138 538 138.8 537.4 139.6 536.3C140.3 535.1 141.8 533.9 144 532.2C146.1 530.6 149.4 528.2 152.6 526.3C155.9 524.5 161.7 522.1 163.5 521.2M170.3 515.5C170.9 514.7 173.3 511.5 173.9 510.6',
-  'M187.2 490.7C188.9 488.5 193.4 481.8 197.3 477.7C201.3 473.5 206.8 468.7 210.8 465.8C214.9 463 216.9 462.2 221.6 460.7C226.3 459.1 236.2 457.3 239.1 456.6M248 454.9C252.6 453.9 269.3 450.5 275.8 448.8C282.3 447.2 285.3 445.7 287.2 445.1',
+  'M185 549C193.7 552 218.2 561.8 237.4 567.3C256.6 572.7 289.7 579.4 300.2 581.8',
+  'M300.2 581.8C311.5 584.2 356.5 593.5 367.8 595.8M395.8 601.2C411 604 472 615 487.3 617.7M501.8 621.3C504.2 622 513.8 625 516.2 625.7',
+  'M516.2 625.7C520.3 627.5 534 633 540.9 636.6C547.7 640.1 552.8 643.3 557.2 647.2C561.6 651.1 564.8 655.3 567.5 660C570.2 664.6 572.5 672.7 573.4 675.3',
+  'M185 549C183.9 547.7 179.9 543.5 178.2 541C176.6 538.5 175.9 537.1 175 534.2C174.2 531.4 173.4 527.7 173.1 523.9C172.8 520.2 172.4 516 173.2 512C174.1 507.9 174.3 504.9 178 499.4C181.7 494 192.6 482.4 195.6 479',
+  'M195.6 479C197.4 476.6 203 468.2 206.6 464.8C210.1 461.4 203.4 462.1 216.9 458.8C230.4 455.6 275.7 447.6 287.5 445.3',
+  'M287.5 445.3C291.3 443.4 304.5 436.1 310.3 433.9C316 431.7 318.6 432.2 322.1 432.3C325.5 432.4 328 433.5 330.7 434.7C333.4 435.8 336.1 437.5 338.3 439.4C340.5 441.3 342.8 443.9 344.2 446.2C345.6 448.5 346.4 450.8 346.7 453.2C347 455.6 347 457.9 346 460.6C345 463.3 344.5 465 340.6 469.6C336.8 474.1 328.1 483.7 322.9 487.9C317.7 492 312.8 492.7 309.5 494.6C306.3 496.4 305.5 497.1 303.5 499C301.6 500.9 299.4 503.5 297.9 506C296.4 508.6 295 512.9 294.4 514.3',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
@@ -118,10 +123,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         width: BILD.w, height: BILD.h,
         onError: () => setBildFehlt(true),
       }),
-      // Der Weg: noch offene Stücke gepunktet (die Route ist von Anfang an lesbar), begonnene
-      // Kapitel golden. Unter dem Gold ein heller Saum, damit es sich von der hellen Fahrbahn abhebt.
+      // Der Weg: noch offene Stücke gepunktet (die Route ist von Anfang an lesbar), der Weg zu
+      // einem begonnenen Kapitel golden. Unter dem Gold ein heller Saum, damit es sich von der hellen Fahrbahn abhebt.
       ...WEGSTUECKE.map((d, i) => {
-        const gegangen = chapterCompletions[i] > 0;
+        // Stück i führt zur Station des Kapitels i+1 — golden, sobald dieses Kapitel begonnen ist.
+        const gegangen = chapterCompletions[i + 1] > 0;
         return React.createElement('g', { key: 'weg-' + i, fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' },
           gegangen
             ? [React.createElement('path', { key: 's', d, stroke: p.surface, strokeWidth: 9 }),

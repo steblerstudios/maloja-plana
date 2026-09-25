@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
-  STATIONEN, WEGSTUECKE, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
+  STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
 } from '../components/BergLandschaft.jsx';
 
 // ─────────────────────────────────────────────────────────────
@@ -163,20 +163,22 @@ describe('Berge · Etiketten am 296-px-Handy überschneiden sich nicht (deutsche
 
 describe('Berge · Wegstücke verbinden die Stationen', () => {
   const zahlen = (d) => d.match(/-?\d+(\.\d+)?/g).map(Number);
-  it('sechs Stücke für sieben Stationen', () => {
+  const nah = (x, y, s, max) => Math.hypot(x - s.x, y - s.y) <= max;
+  it('sechs Stücke für sieben Stationen, je mit Ausgangsstation', () => {
     expect(WEGSTUECKE).toHaveLength(STATIONEN.length - 1);
+    expect(WEG_VON).toHaveLength(WEGSTUECKE.length);
   });
-  it('Stück i beginnt an Station i und endet nah an Station i+1 (verdeckte Stücke fehlen)', () => {
+  it('Stück i beginnt an seiner Ausgangsstation und endet nah an Station i+1 (verdeckte Stücke fehlen)', () => {
     WEGSTUECKE.forEach((d, i) => {
       const z = zahlen(d);
-      const nah = (x, y, s, max) => Math.hypot(x - s.x, y - s.y) <= max;
-      expect(nah(z[0], z[1], STATIONEN[i], 1), `Start ${i}`).toBe(true);
-      // Ende: höchstens eine Tannenbreite vor der nächsten Station (dort geht der Weg dahinter durch)
+      expect(nah(z[0], z[1], STATIONEN[WEG_VON[i]], 1), `Start ${i}`).toBe(true);
       expect(nah(z[z.length - 2], z[z.length - 1], STATIONEN[i + 1], 25), `Ende ${i}`).toBe(true);
     });
   });
-  it('die Stationen folgen der Route von unten nach oben (Notfall zuoberst)', () => {
-    expect(STATIONEN[0].y).toBe(Math.max(...STATIONEN.map((s) => s.y)));
-    expect(STATIONEN[6].y).toBe(Math.min(...STATIONEN.map((s) => s.y)));
+  it('zwei Äste ab der Basis: nach rechts Wohnen–Finanzen–Versicherungen, hinauf Ausbildung–Behörden–Notfall', () => {
+    expect(WEG_VON).toEqual([0, 1, 2, 0, 4, 5]);
+    const [basis, wohnen, finanzen, versicherungen, ausbildung, behoerden] = STATIONEN;
+    expect(wohnen.x > basis.x && finanzen.x > wohnen.x && versicherungen.x > finanzen.x).toBe(true);
+    expect(ausbildung.y < basis.y && behoerden.y < ausbildung.y).toBe(true);
   });
 });
