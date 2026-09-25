@@ -161,13 +161,24 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     gemeindeBtn: (active) => ({ padding: '6px 12px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
-    table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
-    th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
+    // Feste Spaltenbreiten: bei 375 px schob die Kassen-Tabelle die Seite auf 385 px (25.09.2026).
+    // Die Namensspalte bricht um, die Betragsspalten bleiben schmal, «CHF» steht einmal im Kopf.
+    table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm, tableLayout: 'fixed' },
+    th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium, verticalAlign: 'bottom' },
+    einheit: { display: 'block', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
-    nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
+    nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left', overflowWrap: 'anywhere' },
     targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
   };
+  // Betragsspalte: Kopf mit «CHF» darunter, damit die Zellen nur die Zahl tragen.
+  const kopfBetrag = (key, label) => React.createElement('th', { key, style: { ...s.th, textAlign: 'right' } },
+    label, React.createElement('span', { style: s.einheit }, 'CHF'));
+  // Erste Spalte nimmt den Rest, jede Betragsspalte einen festen Anteil.
+  const spalten = (betraege) => React.createElement('colgroup', null,
+    React.createElement('col'),
+    Array.from({ length: betraege }, (_, i) => React.createElement('col', { key: i, style: { width: betraege > 1 ? '29%' : '36%' } })));
+  const zahlBetrag = (n) => zahl(n, { stellen: 2 });
 
   return React.createElement('div', { style: s.card },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('po.title')),
@@ -295,11 +306,12 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
           t('po.pickFranchiseHint')),
         React.createElement('table', { style: s.table },
+          spalten(hasOhne ? 2 : 1),
           React.createElement('thead', null,
             React.createElement('tr', null,
-              React.createElement('th', { style: s.th }, t('po.thFranchise')),
-              React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, hasOhne ? t('po.mitUnfall') : t('po.thPremium')),
-              hasOhne && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall'))
+              React.createElement('th', { style: s.th }, t('po.thFranchise'), React.createElement('span', { style: s.einheit }, 'CHF')),
+              kopfBetrag('mit', hasOhne ? t('po.mitUnfall') : t('po.thPremium')),
+              hasOhne && kopfBetrag('ohne', t('po.ohneUnfall'))
             )
           ),
           React.createElement('tbody', null,
@@ -318,12 +330,12 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                         style: {
                           background: isActive ? palette.sage + '22' : 'none',
                           border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
-                          borderRadius: radius.sm + 'px', padding: '5px 8px', width: '100%', textAlign: 'right',
-                          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
+                          borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
+                          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                           color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
                         },
-                      }, erledigtZeichen(isActive, betrag(amount, { stellen: 2 })))
+                      }, erledigtZeichen(isActive, zahlBetrag(amount)))
                 );
               };
               return React.createElement('tr', { key: f.franchise },
@@ -331,10 +343,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
                     style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
-                  }, 'CHF ' + zahl(f.franchise, { hoechstens: 2 }))
+                  }, zahl(f.franchise, { hoechstens: 2 }))
                 ),
                 hasOhne ? variantCell('mit', f.premium)
-                  : React.createElement('td', { style: { ...cell, textAlign: 'right' } }, betrag(f.premium, { stellen: 2 })),
+                  : React.createElement('td', { style: { ...cell, textAlign: 'right' } }, zahlBetrag(f.premium)),
                 hasOhne && variantCell('ohne', ohnePrem)
               );
             })
@@ -395,11 +407,12 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         )
       ),
       React.createElement('table', { style: s.table },
+        spalten(ageClass !== 'kind' ? 2 : 1),
         React.createElement('thead', null,
           React.createElement('tr', null,
             React.createElement('th', { style: s.th }, t('po.thInsurer')),
-            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, ageClass !== 'kind' ? t('po.mitUnfall') : t('po.thPremium')),
-            ageClass !== 'kind' && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall'))
+            kopfBetrag('mit', ageClass !== 'kind' ? t('po.mitUnfall') : t('po.thPremium')),
+            ageClass !== 'kind' && kopfBetrag('ohne', t('po.ohneUnfall'))
           )
         ),
         React.createElement('tbody', null,
@@ -422,13 +435,13 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                     style: {
                       background: chosenVariant === variant ? palette.sage + '22' : 'none',
                       border: '1px solid ' + (chosenVariant === variant ? palette.sage : 'transparent'),
-                      borderRadius: radius.sm + 'px', padding: '5px 8px', width: '100%', textAlign: 'right',
-                      cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
+                      borderRadius: radius.sm + 'px', padding: '5px 6px', width: '100%', textAlign: 'right',
+                      cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontVariantNumeric: 'tabular-nums',
                       color: chosenVariant === variant ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
                     },
-                  }, erledigtZeichen(chosenVariant === variant, betrag(amount, { stellen: 2 })))
-                : betrag(amount, { stellen: 2 })
+                  }, erledigtZeichen(chosenVariant === variant, zahlBetrag(amount)))
+                : zahlBetrag(amount)
             );
             const out = [
               React.createElement('tr', { key: ins.nr },
@@ -448,20 +461,21 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
               const ohneMap = ladderOhne ? Object.fromEntries(ladderOhne.map(f => [f.franchise, f.premium])) : null;
               out.push(React.createElement('tr', { key: ins.nr + '-d' },
                 React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: cols },
-                  React.createElement('table', { style: { ...s.table, fontSize: text.xs } },
+                  React.createElement('table', { style: { ...s.table, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' } },
+                    spalten(ohneMap ? 2 : 1),
                     React.createElement('thead', null,
                       React.createElement('tr', null,
-                        React.createElement('th', { style: s.th }, t('po.thFranchise')),
-                        React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, ohneMap ? t('po.mitUnfall') : t('po.thPremium')),
-                        ohneMap && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall'))
+                        React.createElement('th', { style: s.th }, t('po.thFranchise'), React.createElement('span', { style: s.einheit }, 'CHF')),
+                        kopfBetrag('mit', ohneMap ? t('po.mitUnfall') : t('po.thPremium')),
+                        ohneMap && kopfBetrag('ohne', t('po.ohneUnfall'))
                       )
                     ),
                     React.createElement('tbody', null,
                       ladderMit.map(f => React.createElement('tr', { key: f.franchise },
-                        React.createElement('td', { style: s.td }, 'CHF ' + zahl(f.franchise, { hoechstens: 2 })),
-                        React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, betrag(f.premium, { stellen: 2 })),
+                        React.createElement('td', { style: s.td }, zahl(f.franchise, { hoechstens: 2 })),
+                        React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, zahlBetrag(f.premium)),
                         ohneMap && React.createElement('td', { style: { ...s.td, textAlign: 'right', color: palette.mid } },
-                          ohneMap[f.franchise] != null ? betrag(ohneMap[f.franchise], { stellen: 2 }) : '–')
+                          ohneMap[f.franchise] != null ? zahlBetrag(ohneMap[f.franchise]) : '–')
                       ))
                     )
                   )
