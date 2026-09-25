@@ -352,7 +352,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         gesamt: chapterCompletions.length,
       },
       fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), ausgefuellt: t('progress.ausgefuellt'), leer: t('progress.notStarted') },
-      prozent: Math.round(completion) >= 10 ? Math.round(completion) : null,
+      // Immer mitgegeben, auch unter 10 % (Entscheid Stebler Studios 25.09.2026; vorher erst
+      // ab 10 %). Ob der Kreis steht, entscheidet BergLandschaft: sobald etwas begonnen ist.
+      prozent: Number.isFinite(completion) ? Math.round(completion) : 0,
     })),
 
     React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },
