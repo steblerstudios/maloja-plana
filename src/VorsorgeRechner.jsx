@@ -639,7 +639,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const xticks = []; for (let a = Math.ceil(START / 10) * 10; a <= AXIS_END; a += 10) xticks.push(a);
         const yticks = [0, 0.5, 1].map((f) => maxY * f);
         const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
-          React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: col, display: 'inline-block' } }), label);
+          React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: radius.hair, background: col, display: 'inline-block' } }), label);
         // Monatliche Rente ab Rücktritt — macht alle vier Säulen VERGLEICHBAR:
         // AHV/BVG sind lebenslange Renten; 3a/3b sind Kapital, hier transparent auf
         // eine Monatsrente umgelegt (Kapital gleichmässig verteilt bis Alter 85).
@@ -664,7 +664,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               key: label, style: { width: pctOf(v).toFixed(1) + '%', background: col, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
               pctOf(v) >= 16 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, label) : null) : null;
             const legendDot = (col, label, amount) => amount > 0 ? React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
-              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '2px', background: col, display: 'inline-block' } }),
+              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: radius.hair, background: col, display: 'inline-block' } }),
               label + ' CHF ' + fmt(amount) + ' / ' + t('vr.monat')) : null;
             const kapitalRente = s3aMonat > 0 || s3bMonat > 0;
             return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },

@@ -157,13 +157,13 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
         }, t('notfallEinstieg.' + scenario.key + '.description')),
 
         React.createElement('div', {
-          style: { width: '100%', height: '3px', background: palette.up, borderRadius: '2px', overflow: 'hidden', marginBottom: space.md + 'px' }
+          style: { width: '100%', height: '3px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', marginBottom: space.md + 'px' }
         },
           React.createElement('div', {
             style: {
               width: pct + '%', height: '100%',
               background: allDone ? palette.sage : palette.sand,
-              borderRadius: '2px',
+              borderRadius: radius.hair,
               transition: `width ${duration.slow}ms ${ease}`,
             }
           })

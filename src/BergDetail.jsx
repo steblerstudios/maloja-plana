@@ -74,11 +74,11 @@ export const KapitelZeile = ({ palette, t, ch, idx, pct, status, accent, statusL
         React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, ch.title),
         // span statt div: im Knopf ist nur Phrasing-Inhalt gültig.
         React.createElement('span', {
-          style: { display: 'block', height: '6px', background: palette.border + '80', borderRadius: '3px', overflow: 'hidden', margin: '5px 0 3px' }
+          style: { display: 'block', height: '6px', background: palette.border + '80', borderRadius: radius.hair, overflow: 'hidden', margin: '5px 0 3px' }
         },
           React.createElement('span', {
             style: {
-              display: 'block', height: '100%', width: pct + '%', borderRadius: '3px',
+              display: 'block', height: '100%', width: pct + '%', borderRadius: radius.hair,
               background: pct === 100 ? palette.sage : pct > 0 ? accent : 'transparent',
               transition: `width ${duration.cinematic}ms ${ease}`,
             }
@@ -156,10 +156,10 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
       )
     ),
     React.createElement('div', {
-      style: { height: '4px', background: palette.border, borderRadius: '2px', marginBottom: space.md, overflow: 'hidden' }
+      style: { height: '4px', background: palette.border, borderRadius: radius.hair, marginBottom: space.md, overflow: 'hidden' }
     },
       React.createElement('div', {
-        style: { height: '100%', width: totalPct + '%', background: palette.sage, borderRadius: '2px', transition: `width ${duration.cinematic}ms ${ease}` }
+        style: { height: '100%', width: totalPct + '%', background: palette.sage, borderRadius: radius.hair, transition: `width ${duration.cinematic}ms ${ease}` }
       })
     ),
     // Die Grundordnung als eine Zeile — vorher eine eigene Karte mit eigenem Balken.

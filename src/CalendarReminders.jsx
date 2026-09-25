@@ -237,7 +237,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
             onClick: () => toggleDone(r.id),
             style: {
               padding: '6px 10px', background: r.done ? palette.gold : palette.sageBtn,
-              color: r.done ? palette.onSand : '#fff', border: 'none', borderRadius: '4px',
+              color: r.done ? palette.onSand : '#fff', border: 'none', borderRadius: radius.xs,
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
           }, hinweisZeichen(r.done ? 'recurring' : 'check', 12)),
@@ -246,7 +246,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
             onClick: () => deleteReminder(r.id),
             style: {
               padding: '6px 10px', background: palette.roseBtn,
-              color: '#fff', border: 'none', borderRadius: '4px',
+              color: '#fff', border: 'none', borderRadius: radius.xs,
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
           }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
@@ -448,7 +448,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
               'aria-pressed': newCoverage === opt,
               onClick: () => setNewCoverage(newCoverage === opt ? '' : opt),
               style: {
-                padding: '6px 12px', borderRadius: '4px', cursor: 'pointer',
+                padding: '6px 12px', borderRadius: radius.xs, cursor: 'pointer',
                 fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400',
                 background: newCoverage === opt ? palette.sand : palette.surface,
                 color: newCoverage === opt ? palette.onSand : palette.text,
@@ -468,7 +468,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
               'aria-pressed': newRecurrence === freq,
               onClick: () => { setNewRecurrence(freq); if (newLastVisit) setNewDate(nextDueFrom(newLastVisit, freq)); },
               style: {
-                padding: '6px 12px', borderRadius: '4px', cursor: 'pointer',
+                padding: '6px 12px', borderRadius: radius.xs, cursor: 'pointer',
                 fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400',
                 background: newRecurrence === freq ? palette.sand : palette.surface,
                 color: newRecurrence === freq ? palette.onSand : palette.text,

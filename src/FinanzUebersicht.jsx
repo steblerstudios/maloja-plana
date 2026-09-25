@@ -380,7 +380,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
                   style: {
                     // padding vertikal 6px: 10px-Text (~12px Zeile) + 12px → ~24px hoch,
                     // damit das Tipp-Ziel WCAG 2.5.8 (24×24) trifft, nicht nur ~16px.
-                    fontSize: '10px', padding: '6px 8px', borderRadius: '3px',
+                    fontSize: '10px', padding: '6px 8px', borderRadius: radius.hair,
                     cursor: 'pointer',
                     // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
                     // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'

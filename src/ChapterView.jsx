@@ -1710,7 +1710,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             'aria-current': on ? 'true' : undefined,
             style: {
               flexShrink: 0,
-              padding: '5px 12px', borderRadius: (radius.pill || radius.md),
+              padding: '5px 12px', borderRadius: radius.md,
               border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
               background: on ? palette.sage + '18' : 'transparent',
               color: on ? (palette.sageDeep || palette.text) : palette.mid,

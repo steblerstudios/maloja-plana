@@ -98,7 +98,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         ),
 
         React.createElement('div', { style: { maxHeight: '300px', overflowY: 'auto', marginBottom: '12px' } },
-          preview.entries.slice(0, 10).map((entry, idx) => React.createElement('div', { key: idx, style: { padding: space.sm, background: palette.up, borderRadius: '4px', marginBottom: space.xs, fontSize: text.sm } },
+          preview.entries.slice(0, 10).map((entry, idx) => React.createElement('div', { key: idx, style: { padding: space.sm, background: palette.up, borderRadius: radius.xs, marginBottom: space.xs, fontSize: text.sm } },
             React.createElement('div', null,
               React.createElement('span', { style: { fontWeight: weight.semi } }, entry.description),
               React.createElement('span', { style: { float: 'right' } }, (entry.type === 'income' ? '+' : '-') + ' ' + betrag(entry.amount, { stellen: 2 }))
