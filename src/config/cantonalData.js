@@ -393,7 +393,7 @@ export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
 // ohne cantonData (auch der Verfahrens-Hinweis je Kanton ist unbelegt).
 //   annahmen.ohneDreizehnten  wie im Steuerrechner (steuernFuerProfil): ein Betrag steht, der
 //                    Hauptlohn ist erfasst, die Frage nach dem 13. Monatslohn aber offen — gerechnet
-//                    ×12. Mit 13. läge das Einkommen 7,7 % höher und die Verbilligung tiefer.
+//                    ×12. Mit 13. läge das Einkommen 8,3 % höher (13/12) und die Verbilligung tiefer.
 export function calculateIPV(data) {
   const r = ipvRechnen(data);
   if (!r.eligible) return r;

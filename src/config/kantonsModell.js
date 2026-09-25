@@ -335,7 +335,7 @@ export const SAEULE_3A = Object.freeze({
 // Eigene Funktion, weil BE es zweimal braucht: einmal für die Rechnung und einmal, um zu
 // prüfen, ob die 3a-Einzahlung überhaupt daraus stammen kann.
 // 🛑 13. Monatslohn (Befund Fachprüfung 25.09.2026, PR #380): bis dahin ×12 für alles — wer
-// einen 13. erhält, hat 7,7 % mehr Jahreseinkommen, die Verbilligung fiel ZU HOCH aus. Der
+// einen 13. erhält, hat 8,3 % mehr Jahreseinkommen (13/12), die Verbilligung fiel ZU HOCH aus. Der
 // Hauptlohn zählt jetzt nach derselben Regel wie im Steuerrechner (utils/dreizehnter.js);
 // Nebenerwerb und Renten bleiben ×12. Bei «offen» ×12 — das Ergebnis sagt es dazu
 // (annahmen.ohneDreizehnten, gesetzt in calculateIPV).

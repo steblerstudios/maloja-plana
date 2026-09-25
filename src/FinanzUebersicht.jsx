@@ -93,6 +93,10 @@ export const druckAbschnitte = (t, w) => {
     ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t(ipvVerfuegt ? 'finanzUebersicht.ipvLautVerfuegung' : 'finanzUebersicht.ipvVerfuegungOhneJahr') + ')'
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
+  // Geschätzter Betrag bei offener Frage nach dem 13. Monatslohn: die Annahme gehört dazu (wie bei der Steuer).
+  if (!ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible && w.ipv.annahmen?.ohneDreizehnten) {
+    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + escapeHtml(t('ipv.annahmeOhneDreizehnten')) + '</td></tr>' });
+  }
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
@@ -448,6 +452,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         ? t('finanzUebersicht.ipvVerfuegungOhneJahr')
         : ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
+          + (ipv.annahmen?.ohneDreizehnten ? '. ' + t('ipv.annahmeOhneDreizehnten') : '')
         : ipv.belegt === false
           ? t(ipv.noteKey, ipv.noteParams)
           // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht

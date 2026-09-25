@@ -2867,7 +2867,7 @@ export default {
     noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
-    annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).

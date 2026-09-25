@@ -771,6 +771,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     if (ipv.eligible) {
       iRows.push({ label: t('premium.monthlySubsidy'), value: formatCHF(ipv.amount) + t('common.perMonth'), bold: true });
       iRows.push({ label: t('premium.annualSubsidy'), value: formatCHF(ipv.amount * 12) + t('common.perYear') });
+      // 13. Monatslohn offen: ×12 gerechnet — dieselbe Annahme wie bei der Steuer, auch hier sichtbar.
+      if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
     }
     // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
@@ -965,6 +967,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
           eligible: !!ipv.eligible,
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
+          ...(ipv.annahmen?.ohneDreizehnten ? { assumptions: [erl('annahmeOhneDreizehnten')] } : {}),
         };
   }
   if (el) {

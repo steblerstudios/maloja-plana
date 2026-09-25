@@ -10,7 +10,7 @@ import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../../PremiumSubsidy.jsx';
 
 // Befund Fachprüfung 25.09.2026 (PR #380): die IPV rechnete das Jahreseinkommen immer ×12.
-// Wer einen 13. Monatslohn erhält, hat 7,7 % mehr — die Verbilligung fiel zu hoch aus.
+// Wer einen 13. Monatslohn erhält, hat 8,3 % mehr (13/12) — die Verbilligung fiel zu hoch aus.
 // Regel: der HAUPTLOHN zählt ×13 bei «ja», sonst ×12 — genau wie im Steuerrechner
 // (steuerEingabenAusDaten) und bei der EO/AHV/BVG-Vorbefüllung. Eine Regel, eine Quelle:
 // utils/dreizehnter.js. Nebenerwerb, Renten und Partnereinkommen bleiben ×12.
@@ -124,5 +124,17 @@ describe('calculateIPV in einem Muster-Kanton (Beleg simuliert)', () => {
       // Der Pegel steht neben derselben Grenze — also dasselbe Einkommen.
       expect(pegelState(mit13).income).toBe(2160 * 13);
     } finally { zurueck(); }
+  });
+});
+
+// Fachprüfung 25.09.2026 zum Fix: der Schätzbetrag läuft auch ins Behörden-Dossier — die Annahme
+// muss dort mit (Datei-Kennung wie bei der Steuer), sonst steht der Betrag ohne sie beim Amt.
+describe('Behörden-Dossier trägt die Annahme mit', () => {
+  it('JSON: calculations.ipv.assumptions nur bei offener Frage', async () => {
+    const { generateBehoerdenJSON } = await import('../../dossierGenerator.js');
+    const ipv = (ohneDreizehnten) => ({ belegt: true, eligible: true, amount: 100, annahmen: { ohneDreizehnten } });
+    const offen = generateBehoerdenJSON({}, { ipv: ipv(true) }, (k) => k).calculations.ipv;
+    expect(offen.assumptions).toEqual([{ code: 'ohne_13_monatslohn', text: 'behoerdenDossier.jsonTexte.annahmeOhneDreizehnten' }]);
+    expect(generateBehoerdenJSON({}, { ipv: ipv(false) }, (k) => k).calculations.ipv.assumptions).toBeUndefined();
   });
 });

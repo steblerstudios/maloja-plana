@@ -3606,7 +3606,7 @@ export default {
     noteAutoSam: 'Automatic via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton not recognized',
     youngAdultsNote: 'Young adults (19–25) in education often have their own, higher subsidy. Please check separately.',
-    annahmeOhneDreizehnten: 'Calculated without a 13th monthly salary — this has not been stated yet. With a 13th salary, the annual income is higher and the subsidy lower. It can be stated in the «Finances» chapter.',
+    annahmeOhneDreizehnten: 'Calculated without a 13th monthly salary — this has not been stated yet. With a 13th salary, the annual income is higher and the subsidy lower — or none at all. It can be stated in the «Finances» chapter.',
     incomeAboveLimit: 'Income above limit (CHF {value})',
     eligible: 'Entitled to premium subsidy: CHF {value}/month',
     orientierungOffen: 'Whether you are entitled, and to how much, is decided by the canton. Especially on a tight budget, it is worth checking with the cantonal office.',
