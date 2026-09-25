@@ -63,7 +63,6 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 | Installationshinweis steht über dem Hero, vor dem Nutzen — später anbieten? | §10 | im Browser bestätigt; klein, aber ein Platz-Entscheid |
 | Bildwelten neben dem Berg (Obstgarten, Gepäck, Reserve-Tank, Schutzschild): Sachbegriff voranstellen? | §1 | gehört zur Gamification-Frage oben |
 | Silbentrennung in der Bergnavigation («Versiche-rung») — K18 war bewusst, die Nebenwirkung ist echt | §8 | nur ansehen und entscheiden |
-| Briefgenerator auf Lebensereignisse ausweiten (aus «Befund → Brief» beim Lohn, `unpaidWage`/`wageClaim`) — ob, und vor oder nach dem Generatoren-Muster (Winter) | §5 | Stebler Studios 25.09.: «im Oktober entscheiden»; wartet seit dem Eingang 19.07. |
 
 *Herkunft der vier Dashboard-Zeilen oben:* eine UX-Durchsicht von Codex (24.09.2026), jeder
 Befund am Code geprüft. Was ein **Fehler** war, ist gebaut und live (#344): IPV ohne Sackgassen
