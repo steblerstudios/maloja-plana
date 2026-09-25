@@ -221,3 +221,26 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
   });
 
 });
+
+// Seit 25.09.2026 steht die Fortschritts-Zeile («7 von 7 begonnen · 63%») als Schildchen im
+// Bild. Text auf dem Bild: ≥ 4.5:1 (WCAG 1.4.3), in jedem Modus — die helle Palette gilt auch
+// im Dunkelmodus. Und keine Deckkraft am Schildchen, sonst hängt der Kontrast am Bild dahinter.
+describe('Berge · Fortschritt im Bild', () => {
+  for (const [name, dunkelModus, farbenblind] of [
+    ['hell', false, false], ['dunkel', true, false],
+    ['hell, Farbenblind', false, true], ['dunkel, Farbenblind', true, true],
+  ]) {
+    it(`${name}: Text und Prozent ≥ 4.5:1 auf dem Schildchen`, () => {
+      const p = bildPalette(applyColorBlind(dunkelModus ? DARK_PALETTE : LIGHT_PALETTE, farbenblind));
+      expect(kontrast(p.mid, p.surface)).toBeGreaterThanOrEqual(4.5);
+      expect(kontrast(p.sageDeep, p.surface)).toBeGreaterThanOrEqual(4.5);
+    });
+  }
+
+  it('die Schildchen haben undurchsichtigen Grund und keine Deckkraft', () => {
+    const block = src.slice(src.indexOf('const schild = {'), src.indexOf('// Kapitel-Stationen auf der Strasse'));
+    expect(block.length).toBeGreaterThan(100);
+    expect(block).toContain('background: p.surface');
+    expect(block).not.toMatch(/opacity/);
+  });
+});

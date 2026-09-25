@@ -97,7 +97,7 @@ export const mitKontrast = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, fortschrittText, prozent }) => {
   const rahmen = useRef(null);
   const [schmal, setSchmal] = useState(false);
   const [bildFehlt, setBildFehlt] = useState(false);
@@ -122,7 +122,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     'data-tour': 'berge',
     ref: rahmen,
     style: {
-      margin: '0 -8px 28px -8px', position: 'relative', lineHeight: 0,
+      margin: '20px -8px 28px -8px', position: 'relative', lineHeight: 0,
       aspectRatio: `${a.w} / ${a.h}`,
       borderRadius: radius.md, overflow: 'hidden',
       // Ladezustand und Fehlerfall: eine ruhige Fläche in Bildgrösse, nichts springt.
@@ -188,6 +188,36 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('rect', { x: 599, y: 172, width: 15, height: 10, rx: 0.8, fill: '#d42b2b' }),
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
+    ),
+    // Fortschritt im Bild, unten (seit 25.09.2026, vorher eine Zeile über dem Bild): links der
+    // Stand («7 von 7 begonnen»), rechts die Prozentzahl. Am Handy (< SCHMAL_AB) liegt unten
+    // rechts die Station Finanzen — dort rückt die Prozentzahl direkt neben den Stand (gemessen
+    // 320–736 px, ohne Überschneidung). Gleiche Machart wie die Etiketten: undurchsichtiger
+    // Grund, helle Palette, damit der Kontrast nicht am Bild hängt (K41).
+    (fortschrittText || prozent) && React.createElement('div', {
+      key: 'fortschritt',
+      style: {
+        position: 'absolute', left: schmal ? '8px' : '12px', right: schmal ? '8px' : '12px', bottom: schmal ? '8px' : '12px',
+        display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
+        gap: '6px', pointerEvents: 'none',
+      },
+    },
+      ...(() => {
+        const schild = {
+          fontSize: schmal ? '11px' : text.xs, lineHeight: 1.2, whiteSpace: 'nowrap',
+          background: p.surface, padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+        };
+        return [
+          fortschrittText && React.createElement('div', {
+            key: 'stand', 'data-testid': 'berg-fortschritt', style: { ...schild, color: p.mid },
+          }, fortschrittText),
+          prozent && React.createElement('div', {
+            key: 'prozent', 'data-testid': 'berg-prozent',
+            style: { ...schild, color: p.sageDeep, fontWeight: weight.medium, marginLeft: fortschrittText ? undefined : 'auto' },
+          }, prozent),
+        ];
+      })(),
     ),
     // Kapitel-Stationen auf der Strasse
     STATIONEN.map((station, i) => {
