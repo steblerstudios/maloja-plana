@@ -56,11 +56,12 @@ describe('InstallHinweis · Karte im Panorama', () => {
     expect(mac).toContain('data-zeichen="computer"');
   });
 
-  it('klein: ohne Satz, der Knopf trägt ihn im Namen; gross: Satz sichtbar', () => {
+  it('der Satz steht immer sichtbar da, am Handy (klein) und am Computer — und nur einmal', () => {
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     const klein = rendern({ klein: true });
-    expect(klein).not.toMatch(/>install\.navSub</);
-    expect(klein).toMatch(/aria-label="install\.navSub — pwa\.anleitung"/);
+    expect(klein).toMatch(/>install\.navSub</);
+    // kein zweites Mal im Knopf-Namen — sonst liest ein Screenreader den Satz doppelt
+    expect(klein).not.toMatch(/aria-label="install\.navSub/);
     expect(rendern({})).toMatch(/>install\.navSub</);
   });
 });

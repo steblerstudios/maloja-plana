@@ -435,3 +435,47 @@ describe('nettoZuBruttoRichtwert — Netto→Brutto-Schätzung (AHV/ALV + PK nac
     expect(nettoZuBruttoRichtwert(-100, 40)).toBe(0);
   });
 });
+
+// ─── Gegenrichtung brutto→netto (25.09.2026) ─────────────────────────────────
+import { bruttoZuNettoRichtwert } from '../ahvRechner.js';
+
+describe('bruttoZuNettoRichtwert — dieselben Abzüge wie netto→brutto', () => {
+  it('unter der BVG-Schwelle nur AHV/ALV (6.4 %)', () => {
+    expect(bruttoZuNettoRichtwert(1500, 40)).toBe(Math.round(1500 * (1 - 0.064)));
+  });
+  it('hin und zurück trifft sich (±1 Franken Rundung), über Alter und Lohnhöhen', () => {
+    for (const alter of [undefined, 22, 30, 40, 50, 60]) {
+      for (const netto of [1800, 3000, 4500, 6200, 9000, 14000]) {
+        const brutto = nettoZuBruttoRichtwert(netto, alter);
+        expect(Math.abs(bruttoZuNettoRichtwert(brutto, alter) - netto)).toBeLessThanOrEqual(1);
+      }
+    }
+  });
+  it('mit Alter liegt das Netto tiefer als ohne (PK-Anteil)', () => {
+    expect(bruttoZuNettoRichtwert(7000, 50)).toBeLessThan(bruttoZuNettoRichtwert(7000));
+  });
+  it('leer oder negativ → 0', () => {
+    expect(bruttoZuNettoRichtwert('')).toBe(0);
+    expect(bruttoZuNettoRichtwert(-100)).toBe(0);
+  });
+});
+
+describe('Korrekturen Fachprüfung 25.09.2026 (brutto↔netto)', () => {
+  it('ALV nur bis zum Höchstbetrag 148 200/Jahr', () => {
+    // ohne Alter keine PK: 15 000 − 5.3 % − 1.1 % × 12 350
+    expect(bruttoZuNettoRichtwert(15000)).toBe(Math.round(15000 - 15000 * 0.053 - 12350 * 0.011));
+  });
+  it('im Rentenalter: nur AHV/IV/EO über dem Freibetrag 1 400/Monat', () => {
+    expect(bruttoZuNettoRichtwert(2000, 67, true)).toBe(Math.round(2000 - 600 * 0.053)); // 1968
+    expect(bruttoZuNettoRichtwert(1200, 67, true)).toBe(1200);
+    expect(nettoZuBruttoRichtwert(1968, 67, true)).toBe(2000);
+  });
+  it('BVG: genau 22 680 ist befreit (Art. 2 Abs. 1 «mehr als»)', () => {
+    expect(bvgKoordinationsabzug(22680).versichert).toBe(false);
+    expect(bvgKoordinationsabzug(22681).versichert).toBe(true);
+  });
+  it('an der Eintrittsschwelle passt die Rückrechnung (Alter 58, netto 1 769)', () => {
+    const b = nettoZuBruttoRichtwert(1769, 58);
+    expect(Math.abs(bruttoZuNettoRichtwert(b, 58) - 1769)).toBeLessThanOrEqual(1);
+  });
+});

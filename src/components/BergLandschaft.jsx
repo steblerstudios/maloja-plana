@@ -48,13 +48,22 @@ const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
 // immer Himmel bis Unterkante (0 … UNTERKANTE); dafür ist das Bild dort höher als das Fenster und
 // man scrollt kurz zu den Kreisen (Entscheid 25.09.2026 — Dunst, Unschärfe und gespiegelte
 // Fortsetzung an den Seiten wurden alle verworfen).
+// Der ganze Berg im Fenster, randlos (Entscheid Stebler Studios, 25.09.2026 abends — dreht den
+// Mittags-Entscheid «Himmel nie wegschneiden, am Laptop kurz scrollen»): unten (Stationen,
+// Kreise) hat Vorrang. Passt das Bild nicht, fällt OBEN Himmel weg, bis die Unterkante genau am
+// Fensterrand liegt — höchstens bis OBERKANTE_MAX, damit Titel und oberste Station (Ausbildung,
+// y 479) Platz behalten; bei noch flacheren Fenstern scrollt man den Rest. Fehlt Himmel, trägt
+// der Titel den Dunst (mitDunst).
+export const OBERKANTE_MAX = 300; // Bild-Einheiten
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
   const voll = AUSSCHNITT.breit;
   if (!rahmenBreite || !fensterHoehe) return voll;
   const hMax = fensterHoehe * MAX_HOEHE_ANTEIL; // px
   const h = (BILD.w * hMax) / rahmenBreite;     // Bild-Einheiten bei voller Breite
   if (h >= BILD.h) return voll;
-  return { x: 0, y: 0, w: BILD.w, h: Math.max(h, UNTERKANTE) };
+  if (h >= UNTERKANTE) return { x: 0, y: 0, w: BILD.w, h };
+  const y = Math.min(UNTERKANTE - h, OBERKANTE_MAX);
+  return { x: 0, y, w: BILD.w, h: UNTERKANTE - y };
 };
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
@@ -204,7 +213,14 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     const messen = () => {
       const links = el.parentElement.getBoundingClientRect().left;
       const breite = document.documentElement.clientWidth;
-      const hoehe = window.innerHeight;
+      // Freie Höhe: Fenster minus ALLES, was beim Öffnen über dem Berg steht — Kopfzeile, die
+      // Leiste «Lokal gespeichert», Hinweise. Gemessen am ersten nicht klebenden Vorfahren (die
+      // Hülle um den Berg klebt; ihr eigener Abstand wechselt beim Scrollen). Bis 25.09.2026
+      // abends zählte nur --mp-kopf-h: live fehlten unten die Kreise (Rückmeldung mit Bild).
+      let vorfahr = el.parentElement;
+      while (vorfahr && vorfahr.parentElement && getComputedStyle(vorfahr).position === 'sticky') vorfahr = vorfahr.parentElement;
+      const oben = vorfahr ? vorfahr.getBoundingClientRect().top + window.scrollY : 0;
+      const hoehe = window.innerHeight - oben;
       setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite && alt.hoehe === hoehe) ? alt : { links: -links, breite, hoehe });
     };
     messen();
@@ -347,7 +363,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // ganze Breite, kein Schein um einzelne Buchstaben. Ohne ihn landet die zweite Zeile je nach
       // Fenster auf Berggrün (Salbeigrün darauf gemessen bis 1,07:1, dunkler Text bis 2,6:1).
       const dunstHoehe = oben + (titelHoehe || groesse * 2.1) + (schmal ? 46 : 70);
-      const mitDunst = schmal || breite < DUNST_UNTER_BREITE;
+      // Dunst auch, sobald oben Himmel fehlt: dann stünde der Titel sonst auf den Bergen.
+      const mitDunst = schmal || breite < DUNST_UNTER_BREITE || a.y > 0;
       return [mitDunst && React.createElement('div', {
         key: 'dunst', 'aria-hidden': 'true', 'data-dunst': dunstHoehe,
         style: {
@@ -419,13 +436,17 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         abgeschlossen > 0 && `${abgeschlossen}/${gesamt} ${L.abgeschlossen || ''}`,
         prozent != null && `${prozent}% ${L.ausgefuellt || ''}`,
       ].filter(Boolean).join(' · ');
-      const prozentAngabe = prozent != null && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
+      // Ab dem ersten begonnenen Kapitel immer da, auch bei 1 % (25.09.2026). Vorher, bei
+      // «Ihr Weg beginnt hier», bleibt es beim ruhigen Satz — kein «0 %».
+      const prozentAngabe = prozent != null && begonnen > 0 && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
       return React.createElement('div', {
         key: 'fortschritt', 'data-testid': 'berg-fortschritt',
         role: begonnen > 0 ? 'img' : undefined,
         'aria-label': begonnen > 0 ? zusammenfassung : undefined,
         style: {
-          position: 'absolute', left: schmal ? '10px' : Math.max(12, spalte) + 'px', right: schmal ? '10px' : Math.max(12, spalte) + 'px', bottom: schmal ? '10px' : '14px',
+          // An den Bildrändern, mit Luft nach unten (Rückmeldung Stebler Studios, 25.09.2026:
+          // vorher bündig mit der Inhaltsspalte und nur 14 px über dem Bildrand).
+          position: 'absolute', left: schmal ? '12px' : '24px', right: schmal ? '12px' : '24px', bottom: schmal ? '16px' : '28px',
           display: 'flex', justifyContent: alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
           gap: '8px', pointerEvents: 'none', lineHeight: 1.2,
         },

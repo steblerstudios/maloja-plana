@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
-import { GlossarText } from './GlossarBegriff.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
-import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
+import { getCantonName } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
-import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
+import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
 import { ABLAEUFE } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
-import { zahl, betrag } from './utils/geld.js';
+import { betrag } from './utils/geld.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -27,6 +26,9 @@ const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'bre
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
 // Die Fortschritts-Karte (Kapitel + Grundordnung) — siehe BergDetail.jsx.
 const BergDetail = React.lazy(() => import('./BergDetail.jsx'));
+// Lazy: die Leistungsliste («Was steht mir zu?») mit IPV-/Sozialhilfe-Rechnung und Kompass
+// liegt in eigenem Chunk — das Hauptpaket stand am 25.09.2026 bei 65,17 / 65 kB.
+const QuickCheck = React.lazy(() => import('./components/Leistungsliste.jsx').then(m => ({ default: m.QuickCheck })));
 const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
 
 function fmtCHF(v) {
@@ -100,137 +102,6 @@ function buildSnippet(chapterKey, chData, allData, t) {
   }
   return null;
 }
-
-export const QuickCheck = ({ palette, t, onNavigate, data }) => {
-  const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
-  const annual = (Number(income) || 0) * 12;
-  const canton = data?.basis?.canton;
-  const fmt = (v) => zahl(v, { hoechstens: 2 });
-
-  // Ein Einkommen → mehrere Leistungen (Basel-Stadt-Leistungsrechner als Vorbild).
-  // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
-  // Berechnung ist dieselbe wie in den vollständigen Tools (calculateIPV/
-  // calculateSozialhilfe), damit Schnellcheck und Rechner nie widersprechen.
-  const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
-  const benefits = [];
-  try {
-    // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
-    const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
-    // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
-    // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
-    if (ipv && ipv.anspruchMoeglich) benefits.push({
-      key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'), color: palette.sky,
-      uebergabe: { schnellcheck: { monthlyIncome: Number(income) } },
-      monthly: ipv.amount,
-      detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
-    });
-    // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
-    // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
-    // sonst wäre ein „Anspruch möglich" unehrlich.
-    const rentContext = Number(data?.wohnen?.rentAmount || 0) > 0;
-    if (annual > 0 && rentContext) {
-      const sh = calculateSozialhilfe(probe);
-      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
-        key: 'soz', view: 'sozialhilfe', label: t('nav.sozialhilfe'), color: palette.sage,
-        monthly: sh.deficit,
-        // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
-        detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
-      });
-    }
-  } catch { /* Orientierung, nie blockierend */ }
-
-  // Schlanke Total-Leiste (Flat-Viz, konsistent mit der Vollansicht #/schnellcheck):
-  // summiert nur die monetären Leistungen zu einer geschätzten Monats-Entlastung.
-  const monetary = benefits.filter(b => b.monthly > 0);
-  const totalMonthly = monetary.reduce((sum, b) => sum + b.monthly, 0);
-  const miniBar = monetary.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
-    React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
-      '≈ CHF ' + fmt(totalMonthly) + ' / ' + t('schnellcheck.monat')),
-    React.createElement('div', { style: { display: 'flex', height: '8px', borderRadius: '4px', overflow: 'hidden', background: palette.up } },
-      monetary.map(b => React.createElement('div', {
-        key: b.key,
-        style: { width: (totalMonthly > 0 ? b.monthly / totalMonthly * 100 : 0).toFixed(1) + '%', background: b.color },
-      })))
-  );
-
-  const row = (b) => React.createElement('button', {
-    key: b.key,
-    onClick: () => onNavigate(b.view, undefined, b.uebergabe),
-    style: {
-      display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
-      padding: '10px 14px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
-      background: palette.sage + '10', color: palette.text,
-      border: '1px solid ' + palette.sage + '30', borderRadius: radius.sm,
-      transition: `background ${duration.normal}ms ${ease}`,
-    },
-    onMouseEnter: (e) => { e.currentTarget.style.background = palette.sage + '1e'; },
-    onMouseLeave: (e) => { e.currentTarget.style.background = palette.sage + '10'; },
-  },
-    React.createElement('div', { style: { minWidth: 0, flex: 1 } },
-      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, b.label),
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, b.detail)
-    )
-  );
-
-  return React.createElement('div', {
-    style: {
-      marginTop: space.md, marginBottom: space.lg,
-      padding: '20px 24px',
-      background: palette.up,
-      borderRadius: radius.md,
-    }
-  },
-    React.createElement('div', {
-      style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm }
-    }, t('dashboard.quickCheckTitle')),
-    React.createElement('label', { style: { display: 'block', maxWidth: '260px' } },
-      React.createElement('span', {
-        style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
-      }, t('dashboard.quickCheckIncome')),
-      React.createElement('input', {
-        type: 'number',
-        inputMode: 'numeric',
-        placeholder: t('dashboard.quickCheckPlaceholder'),
-        'aria-label': t('dashboard.quickCheckIncome'),
-        value: income,
-        onChange: (e) => setIncome(e.target.value),
-        style: {
-          width: '100%', padding: '10px 12px', fontSize: text.body,
-          border: '1px solid ' + palette.border, borderRadius: radius.sm,
-          background: palette.surface, color: palette.text,
-          fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-        }
-      })
-    ),
-    annual > 0 && React.createElement('div', { style: { marginTop: space.md } },
-      benefits.length > 0
-        ? React.createElement('div', null,
-            React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('dashboard.quickCheckWithIncome')),
-            miniBar || null,
-            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px' } }, benefits.map(row))
-          )
-        : React.createElement('div', {
-            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-          }, !canton ? t('dashboard.quickCheckHint') : t('dashboard.quickCheckNoResult')),
-      // Kanton-Caveat nur, wenn nicht schon der No-Result-Zweig denselben Hinweis
-      // zeigt (kein Kanton → Hinweis steht bereits oben; keine Doppelung).
-      (benefits.length > 0 || canton) && React.createElement('div', {
-        style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm }
-      }, t('dashboard.quickCheckHint'))
-    ),
-    // Zum vollständigen Leistungs-Schnellcheck (eigene Ansicht, mehr Angaben + Tacho)
-    React.createElement('button', {
-      onClick: () => onNavigate('schnellcheck'),
-      style: {
-        // 8 px Polsterung hebt das Ziel von 17 auf 33 px (WCAG 2.2 AA: 24x24);
-        // marginTop ist um dieselben 8 px gekürzt, das Bild bleibt gleich.
-        background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
-        fontSize: text.xs, color: palette.sandDeep, fontFamily: 'inherit',
-        fontWeight: weight.medium, marginTop: space.sm,
-      }
-    }, t('dashboard.quickCheckAllLeistungen'))
-  );
-};
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
@@ -481,19 +352,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         gesamt: chapterCompletions.length,
       },
       fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), ausgefuellt: t('progress.ausgefuellt'), leer: t('progress.notStarted') },
-      prozent: Math.round(completion) >= 10 ? Math.round(completion) : null,
+      // Immer mitgegeben, auch unter 10 % (Entscheid Stebler Studios 25.09.2026; vorher erst
+      // ab 10 %). Ob der Kreis steht, entscheidet BergLandschaft: sobald etwas begonnen ist.
+      prozent: Number.isFinite(completion) ? Math.round(completion) : 0,
     })),
 
     React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },
 
-    // Die Leistungs-Zeile beantwortet «Was ist das hier?» und hilft genau einmal: beim ersten
-    // Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr bei jedem Öffnen vorgesetzt.
-    // Seit dem Hero (25.09.2026) direkt unter dem Bild statt unter dem Titel — im Bild wäre sie
-    // am Handy zu lang. (Suchmaschinen sehen diesen Text nie — sie kommen nicht hinter das
-    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
-    !hasMeaningfulProgress && React.createElement('p', {
-      style: { fontSize: text.body, color: palette.mid, margin: '0 0 ' + space.lg + 'px', lineHeight: leading.relaxed }
-    }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
+    // Die Leistungs-Zeile («Ihr persönlicher Schweizer Lebensordner …») steht seit 25.09.2026
+    // abends fest in der Fusszeile (main.jsx, Entscheid Stebler Studios) — hier stand sie nur
+    // am Anfang und schob «Was ist jetzt dran?» nach unten.
 
     // ─── Alpha banner — UNTER dem Hero: erst das Versprechen, dann der ruhige
     // Entwicklungs-Hinweis (auf Handy stand die Warnung sonst vor dem Nutzen). ──
@@ -552,7 +420,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
-              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
+              // Das Icon des Kapitels statt des Punkts (25.09.2026) — dasselbe wie in der
+              // Fortschritts-Karte darunter, in der Farbe des Bereichs. Ohne Icon bleibt der Punkt.
+              Icons[chapters[nextField.chapterIdx].key]
+                ? React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '22px', height: '22px', flexShrink: 0, color: dotColor } }, Icons[chapters[nextField.chapterIdx].key]())
+                : React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
               React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
                 // Codex-Audit 24.09.: das Feld allein («Vorname») sagt nicht, was zu tun ist — ein Verb dazu.
                 React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, t('dashboard.nextUpAction', { feld: nextField.label })),
@@ -562,7 +434,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             // Zum Ausprobieren, Entscheid 25.09.2026 (Variante «beide farbig»): der nächste
             // Schritt trägt einen gefüllten Knopf, wie «So geht es» oben. Nur Darstellung —
             // die ganze Zeile bleibt EIN Knopf (kein Knopf im Knopf).
-            React.createElement('span', { 'aria-hidden': 'true', style: ctaFlaeche }, t('dashboard.nextUpCta'), ' ›'),
+            // Seit 25.09. abends in der Farbe des Bereichs (wie der Punkt), nicht mehr Sand.
+            React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
         // Grundordnung steht: weiter mit dem Kapitel, das am wenigsten ausgefüllt ist.
@@ -615,14 +488,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement(React.Suspense, { fallback: null },
       React.createElement(BergDetail, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, lang, mvo })
     ),
-    // ─── Highlight tools — immediate value (first for new users) ──
+    // ─── Was steht mir zu? — ein Block (seit 25.09.2026) ──
+    // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
+    // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
+    // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
     React.createElement('div', {
+      'data-tour': 'anspruch',
+      // Kein Kasten im Kasten (Grundsatz 25.09.2026, Vorbild «Ihr Alltag»): die Einträge
+      // tragen eigene Rahmen, der Abschnitt selbst hat nur Luft — 48 px nach aussen.
       style: {
-        marginTop: space.lg, marginBottom: space.md,
-        padding: '20px 24px',
-        background: palette.surface,
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.border + '88',
+        marginTop: space['2xl'] + 'px', marginBottom: space['2xl'] + 'px',
       }
     },
       React.createElement('div', {
@@ -630,19 +505,22 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       },
         React.createElement(PanelTitle, {
           palette,
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
-        }, t('dashboard.highlightTitle')),
+          style: { margin: 0, letterSpacing: '-0.2px' }
+        }, t('dashboard.anspruchTitle')),
         React.createElement('div', {
           // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
           style: { fontSize: text.xs - 1, color: palette.sageDeep }
         }, t('dashboard.highlightPrivacy'))
       ),
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
+      }, t('dashboard.anspruchIntro')),
       (() => {
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
-          { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
-          { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
-          { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
+          // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
+          // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
+          // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
           { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
           !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
         ].filter(Boolean);
@@ -685,9 +563,31 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const primary = items.find(i => i.primary);
         const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
+          // Die Finanz-Übersicht bleibt der eine grosse Einstieg — sie fasst alles zusammen.
           primary && renderItem(primary),
+          // Eigene Suspense-Grenze wie bei den Instrumenten.
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(QuickCheck, { palette, t, onNavigate, data })),
+          // Die zwei Wege weiter — nebeneinander, in einer Zeile.
+          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.lg + 'px', marginTop: space.sm } },
+            ...[['ansprueche', t('dashboard.anspruchAlleLink')], ['situationen', t('lebenszustaende.dashboardLink')]].map(([view, label]) =>
+              React.createElement('button', {
+                key: view,
+                onClick: () => onNavigate(view),
+                style: {
+                  // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+                  background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
+                  fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+                },
+              }, label))),
+          // Deine Instrumente — seit 25.09.2026 im selben Block, nach den Leistungen
+          // (Wunsch 25.09.: erst was zusteht, dann der eigene Stand).
+          // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
+          // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
           }, rest.map(renderItem))
         );
       })(),
@@ -885,98 +785,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ),
     ),
 
-    // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
-    React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
-      React.createElement(PanelTitle, {
-        palette,
-        style: { margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
-      }, t('dashboard.anspruchTitle')),
-      React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
-      }, t('dashboard.anspruchIntro')),
-      React.createElement(QuickCheck, { palette, t, onNavigate, data }),
-      (() => {
-        // Anspruchs-Matrix — nur ein *positiver, ermutigender* Hinweis „Anspruch
-        // möglich", und ausschliesslich dort, wo echte Logik dahintersteht
-        // (IPV, Sozialhilfe). Nie ein „Nein"/Verdikt (Würde, kein Scham-Signal),
-        // keine erfundenen Status. Streng gegated auf selbst eingetragene Angaben.
-        const incomeEntered = data?.finanzen?.monthlyIncome !== undefined
-          && data?.finanzen?.monthlyIncome !== null
-          && String(data.finanzen.monthlyIncome).trim() !== '';
-        const canton = data?.basis?.canton;
-        let ipvHint = false, sozialhilfeHint = false;
-        try {
-          if (incomeEntered && canton) {
-            ipvHint = !!calculateIPV(data)?.anspruchMoeglich;
-          }
-          if (incomeEntered) {
-            const sh = calculateSozialhilfe(data);
-            // Nur wenn Bedarf gedeckt UND kein Vermögen über dem Freibetrag,
-            // damit der Hinweis ehrlich bleibt (Vermögen ginge sonst vor).
-            sozialhilfeHint = !!sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0;
-          }
-        } catch { /* Orientierung, nie blockierend */ }
-        return React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
-      },
-        [
-          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
-          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance', hint: ipvHint },
-          { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
-          { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
-          { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
-        ].map(item => {
-          const IconFn = Icons[item.icon];
-          return React.createElement('button', {
-            key: item.view,
-            onClick: () => onNavigate(item.view),
-            style: {
-              display: 'flex', alignItems: 'center', gap: '10px',
-              padding: '12px 14px', background: 'transparent',
-              border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
-              cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', color: palette.text,
-              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
-          },
-            React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: palette.sage } }, IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null),
-            React.createElement('div', { style: { minWidth: 0 } },
-              React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub),
-              // Positiver Anspruchs-Hinweis als leise Zeile in der Textspalte —
-              // kein rechtsbündiges Pill (kollidiert in schmalen Karten mit
-              // umbrechenden Labels), ruhig statt plakativ.
-              item.hint && React.createElement('div', {
-                style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.sageDeep || palette.sage, marginTop: '3px' }
-              }, '· ' + t('dashboard.anspruchMoeglich'))
-            )
-          );
-        })
-      );
-      })(),
-      React.createElement('button', {
-        onClick: () => onNavigate('ansprueche'),
-        style: {
-          // Zwei gestapelte Text-Aktionen, je 19 px hoch. Polsterung hebt sie auf 35 px;
-          // die marginTop sind um dieselben 8 px gekürzt, damit der Abstand gleich bleibt.
-          display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
-          padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-        },
-      }, t('dashboard.anspruchAlleLink')),
-      React.createElement('button', {
-        onClick: () => onNavigate('situationen'),
-        style: {
-          display: 'block', marginTop: 0, background: 'none', border: 'none', cursor: 'pointer',
-          padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-        },
-      }, t('lebenszustaende.dashboardLink'))
-    ),
-
-    // ─── Deine Instrumente — Dashboard-Spiegel der vier Selbstchecks ──
-    // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
-    React.createElement(React.Suspense, { fallback: null },
-      React.createElement(InstrumentePanel, { palette, t, data, onNavigate })),
 
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
