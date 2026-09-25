@@ -8,6 +8,12 @@
 > Leitfrage (aus dem Swiss-Life-Model): *„Hilft das den Menschen, ihre Schweizer
 > Lebensrealität ruhiger, verständlicher und mit weniger Aufwand zu organisieren?"*
 
+> **⟨Nachtrag 24.09.2026 nachts⟩ Fünf neue Abläufe:** Neu in der Schweiz (`zuzug`), Einbürgerung
+> (`einbuergerung`), Quellensteuer (`quellensteuer`), Wohnung gekündigt (`wohnunggekuendigt`),
+> Ausgesteuert (`aussteuerung`) — damit **24** Abläufe, alle im Gepäck (Wächter
+> `gepaeck.test.js`), in der Suche und mit Quellen-Zeile. Die Lücken H2 (Einbürgerung) und C7
+> (Quellensteuer) sind damit gebaut. Fristen rechnen ab dem Ereignis (`utils/fristen.js`).
+>
 > **⟨Nachtrag 24.09.2026⟩ Was sich seit diesem Audit geändert hat — die Befunde unten
 > bleiben als Beleg stehen.** Heute gibt es **19 geführte Abläufe**, eine Liste im Register
 > `src/config/ansichtenRegister.js` (`ABLAEUFE`), aus der Dashboard und Suche lesen.

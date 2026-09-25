@@ -70,7 +70,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 
 ## 6 · Architektur & Struktur (grosse Entscheide)
 
-- ⭐ **Nordstern: alles ist ein Lebensereignis-Ablauf** — kein Rechner steht allein; Onboarding inklusive. (16 Abläufe ✅; *Nachtrag 24.09.2026:* 19, gezählt im Register `ABLAEUFE`.)
+- ⭐ **Nordstern: alles ist ein Lebensereignis-Ablauf** — kein Rechner steht allein; Onboarding inklusive. (16 Abläufe ✅; *Nachtrag 24.09.2026:* 24, gezählt im Register `ABLAEUFE`.)
 - ⭐ **Schweizer Lebensmodell-Matrix** — „Was passiert im Leben + was in CH tun?", 11 Kapitel Geburt→Tod + Grauzonen + Lebenszustände.
 - ❓ **Kapitel-Architektur nach Lebens-Domäne** — Gesundheit als eigener Bereich; Arbeit+Vorsorge+Steuer zusammen statt „Versicherungen"-Sammeltopf. Grosser Design-Entscheid, eigene Session.
 - 🌱 **Standard-3-Schritt-Ablauf für ALLE Orientierungsseiten** — (1) Übersicht+Eingaben → (2) Stand+Vergleich → (3) Änderungsarbeiten. App-weit angleichen + Quellen-Checks.

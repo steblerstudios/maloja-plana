@@ -53,3 +53,24 @@ export const heuteIso = () => zuIso(new Date());
 
 // Liegt die Frist schon hinter uns? (Der letzte Tag selbst zählt noch.)
 export const istVorbei = (fristIso, heute = heuteIso()) => !!fristIso && fristIso < heute;
+
+// 31. März des Folgejahres — Quellensteuer: Antrag auf nachträgliche ordentliche
+// Veranlagung bzw. Formular-Anforderung (DBG Art. 89a Abs. 3, Art. 89 Abs. 4).
+// Festes Datum, auch wenn es auf ein Wochenende fällt (nie später als das Gesetz).
+export const endeMaerzFolgejahr = (iso) => {
+  const d = leseDatum(iso);
+  return d ? `${d.getFullYear() + 1}-03-31` : null;
+};
+
+// Fällt ein Stichtag auf Samstag oder Sonntag, gilt der Werktag DAVOR — so sagt es das
+// BAG für die KVG-Kündigung (priminfo FAQ: «oder dem letzten Werktag davor, wenn das
+// Datum auf einen Samstag, Sonntag oder Feiertag fällt»; massgebend ist der Eingang).
+// Feiertage sind kantonal und hier nicht abgebildet — der Text sagt es dazu.
+export const werktagAmOderDavor = (iso) => {
+  const d = leseDatum(iso);
+  if (!d) return null;
+  const tag = d.getDay();
+  if (tag === 6) d.setDate(d.getDate() - 1);
+  if (tag === 0) d.setDate(d.getDate() - 2);
+  return zuIso(d);
+};

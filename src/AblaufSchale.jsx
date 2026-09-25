@@ -10,7 +10,7 @@ import { formatDE } from './utils/helpers.js';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
-// war der Zusatzversicherungs-Wechsel; heute bauen 18 der 19 Abläufe darauf, auch der
+// war der Zusatzversicherungs-Wechsel; heute bauen alle Abläufe ausser AsylView darauf (24 im Register, Stand 24.09.2026), auch der
 // KVG-Wechsel (Stand 24.09.2026). Nur AsylView hat seine eigene Gliederung.
 // Bewusst schlanke Primitiven statt einer config-getriebenen Engine (keine Über-Abstraktion).
 
@@ -79,16 +79,19 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
 // Rechnung selbst (`frist`) kommt aus utils/fristen.js — nie später als das Gesetz.
 // `wert`/`onWert` optional: wer das Datum auch anderswo braucht, hält es selbst.
 export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey, buttonKey, doneKey, calendarKey,
-  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate }) => {
+  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate, ohneFeld = false }) => {
   const s = styles(palette);
   const [eigen, setEigen] = useState(wert || '');
   const datum = onWert ? (wert || '') : eigen;
   const setze = onWert || setEigen;
   const ziel = frist(datum);
   const vorbei = istVorbei(ziel);
+  // `ohneFeld`: das Datum kommt aus einem Feld weiter oben im selben Ablauf (ein
+  // Ereignis, zwei Fristen — z.B. Einreise → Gemeinde und Führerausweis). Dann kein
+  // zweites Eingabefeld, das dieselbe Frage noch einmal stellt.
   return React.createElement('div', null,
-    React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
-    React.createElement('input', {
+    !ohneFeld && React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
+    !ohneFeld && React.createElement('input', {
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
       style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
@@ -108,7 +111,7 @@ export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey,
 // Fuss-Hinweise (Hinweis-Piktogramm je Zeile).
 // `quelle`: die Zeile «Quellen: … · Stand …» (i18n-Text mit [[Wort|url]]-Markern,
 // siehe utils/renderSource.js). Steht zuoberst im Fuss, weil sie für den ganzen
-// Ablauf gilt. Seit 24.09.2026 trägt jeder der 19 Abläufe eine (AsylView ohne
+// Ablauf gilt. Seit 24.09.2026 trägt jeder Ablauf im Register eine (AsylView ohne
 // diese Schale setzt sie selbst); vorher hatten zwei eine. Wache:
 // src/__tests__/ablaufQuellen.test.js.
 export const AblaufFooter = ({ palette, notes, quelle, t }) => {

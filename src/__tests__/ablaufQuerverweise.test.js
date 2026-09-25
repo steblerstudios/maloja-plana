@@ -15,7 +15,7 @@ const DATEI = {
   umzug: 'UmzugAblauf.jsx', pensionierung: 'Pensionierung.jsx', betreibung: 'BetreibungErhalten.jsx',
   selbstaendigkeit: 'Selbstaendigkeit.jsx', heirat: 'Heirat.jsx', kind: 'KindBekommen.jsx',
   trennung: 'Trennung.jsx', bewilligung: 'BewilligungFristen.jsx', fuehrerausweis: 'Fuehrerausweis.jsx',
-  asyl: 'AsylView.jsx', iv: 'IvVerfahren.jsx', pflege: 'PflegeAblauf.jsx', todesfall: 'Todesfall.jsx',
+  asyl: 'AsylView.jsx', einbuergerung: 'Einbuergerung.jsx', zuzug: 'ZuzugAusland.jsx', aussteuerung: 'Aussteuerung.jsx', quellensteuer: 'Quellensteuer.jsx', wohnunggekuendigt: 'WohnungGekuendigt.jsx', iv: 'IvVerfahren.jsx', pflege: 'PflegeAblauf.jsx', todesfall: 'Todesfall.jsx',
 };
 
 const ziele = (datei) => {
