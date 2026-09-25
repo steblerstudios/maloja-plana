@@ -13,7 +13,7 @@ describe('eoRechner', () => {
       expect(EO_PARAMS.mutterschaftTage).toBe(98);
       expect(EO_PARAMS.vaterschaftTage).toBe(14);
       expect(EO_PARAMS.adoptionTage).toBe(14);
-      expect(EO_PARAMS.betreuungMaxTage).toBe(98); // EOG Art. 16q Abs. 2
+      expect(EO_PARAMS.betreuungMaxTage).toBe(14);
     });
 
     it('has correct version', () => {
@@ -82,20 +82,15 @@ describe('eoRechner', () => {
   });
 
   describe('berechneBetreuung', () => {
-    it('calculates for max 98 daily allowances (EOG Art. 16q Abs. 2)', () => {
+    it('calculates for max 14 days', () => {
       const r = berechneBetreuung({ jahreseinkommen: 80000 });
       expect(r.anspruch).toBe(true);
-      expect(r.tage).toBe(98);
+      expect(r.tage).toBe(14);
     });
 
-    it('caps at 98 even if more requested', () => {
-      const r = berechneBetreuung({ jahreseinkommen: 80000, tage: 120 });
-      expect(r.tage).toBe(98);
-    });
-
-    it('takes fewer days when fewer are requested', () => {
+    it('caps at max days even if more requested', () => {
       const r = berechneBetreuung({ jahreseinkommen: 80000, tage: 30 });
-      expect(r.tage).toBe(30);
+      expect(r.tage).toBe(14);
     });
   });
 

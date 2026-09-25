@@ -94,7 +94,7 @@ const AUSNAHMEN = {
 const ABLAUF_DATEIEN = ['KKErstAnmeldung', 'KVGWechsel', 'ZusatzWechsel', 'NeuerJob', 'StelleVerloren',
   'UnfallKrankheit', 'UmzugAblauf', 'Pensionierung', 'BetreibungErhalten', 'Selbstaendigkeit', 'Heirat',
   'KindBekommen', 'Trennung', 'BewilligungFristen', 'Fuehrerausweis', 'AsylView', 'IvVerfahren',
-  'PflegeAblauf', 'Todesfall', 'WohnungGekuendigt', 'Quellensteuer', 'Aussteuerung', 'ZuzugAusland', 'Einbuergerung'];
+  'PflegeAblauf', 'Todesfall', 'WohnungGekuendigt', 'Quellensteuer', 'Aussteuerung', 'ZuzugAusland', 'Einbuergerung', 'Vorsorgeauftrag', 'Ergaenzungsleistungen', 'Zusammenziehen', 'Adoption', 'Wegzug', 'Ausweis', 'BetreibungsAuszug', 'Lehre', 'Volljaehrig', 'Dienst'];
 
 describe('Abläufe — keine Frist ab heute', () => {
   it.each(ABLAUF_DATEIEN)('%s', (name) => {

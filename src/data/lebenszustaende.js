@@ -21,6 +21,9 @@
 // Diese Registry hält nur sprachneutrale Fakten: Crosslink-Ziel,
 // Quelle und Stand (Aktualisierungsjahr).
 
+// EL-Ziel seit 25.09.2026 der Ablauf «Ergänzungsleistungen beantragen» — vorher die
+// Finanzübersicht bzw. (in Pensionierung/IV) die Sozialhilfe, obwohl ELG Art. 21 Abs. 6
+// die Sozialhilfebehörden als EL-Stelle ausdrücklich ausschliesst.
 export const LEBENSZUSTAENDE = [
   {
     key: 'tiefesEinkommen',
@@ -68,7 +71,7 @@ export const LEBENSZUSTAENDE = [
     berechtigungen: [
       { key: 'iv',                    view: 'iv',              quelle: 'BSV / IV-Stelle', stand: '2026' },
       { key: 'hilflosenentschaedigung', view: 'iv',            quelle: 'BSV',             stand: '2026' },
-      { key: 'el',                    view: 'finanzuebersicht', quelle: 'BSV',            stand: '2026' },
+      { key: 'el',                    view: 'ergaenzungsleistungen', quelle: 'BSV',            stand: '2026' },
       { key: 'ipv',                   view: 'premium',         quelle: 'BAG / Kanton',    stand: '2026' },
       { key: 'steuern',               view: 'tax',             quelle: 'ESTV',            stand: '2026' },
       // Externe offizielle Quellen (kein interner Ablauf): SERAFE-Befreiung
@@ -129,7 +132,7 @@ export const LEBENSZUSTAENDE = [
       // Rückweg zum Übergangs-Ablauf (für „kurz davor": AHV anmelden, PK Rente/Kapital,
       // 3. Säule gestaffelt) — Gegenstück zu pensionierung→situationen.
       { key: 'pensionierung',           view: 'pensionierung',    quelle: 'BSV / Ausgleichskasse', stand: '2026' },
-      { key: 'el',                      view: 'finanzuebersicht', quelle: 'BSV',          stand: '2026' },
+      { key: 'el',                      view: 'ergaenzungsleistungen', quelle: 'BSV',          stand: '2026' },
       { key: 'ipv',                     view: 'premium',          quelle: 'BAG / Kanton', stand: '2026' },
       { key: 'hilflosenentschaedigung', view: 'iv',               quelle: 'BSV',          stand: '2026' },
       { key: 'steuern',                 view: 'tax',              quelle: 'ESTV',         stand: '2026' },
@@ -166,7 +169,7 @@ export const LEBENSZUSTAENDE = [
     key: 'halbwaise',
     berechtigungen: [
       { key: 'waisenrente', view: 'todesfall',       quelle: 'BSV / Ausgleichskasse', stand: '2026' },
-      { key: 'el',          view: 'finanzuebersicht', quelle: 'BSV',                  stand: '2026' },
+      { key: 'el',          view: 'ergaenzungsleistungen', quelle: 'BSV',                  stand: '2026' },
       { key: 'stipendien',  view: 'stipendien',       quelle: 'EDK / Kanton',         stand: '2026' },
       { key: 'steuern',     view: 'tax',              quelle: 'ESTV',                 stand: '2026' },
     ],

@@ -8,6 +8,11 @@
 > Leitfrage (aus dem Swiss-Life-Model): *„Hilft das den Menschen, ihre Schweizer
 > Lebensrealität ruhiger, verständlicher und mit weniger Aufwand zu organisieren?"*
 
+> **⟨Nachtrag 25.09.2026⟩ Zehn weitere Abläufe:** Vorsorgeauftrag & Patientenverfügung, Ergänzungsleistungen
+> beantragen, Zusammenziehen ohne Trauschein, Adoption, Wegzug ins Ausland, Pass/Identitätskarte,
+> Betreibungsauszug, Lehre, 18 werden, Militär-/Zivildienst → **34** Abläufe. Damit sind aus dieser Datei
+> auch D4 (EL), G3 (Betreibungsauszug), G4 (Pass), H4 (Wegzug), C5 (Lehre) und I5 (Vorsorgeauftrag) gebaut.
+>
 > **⟨Nachtrag 24.09.2026 nachts⟩ Fünf neue Abläufe:** Neu in der Schweiz (`zuzug`), Einbürgerung
 > (`einbuergerung`), Quellensteuer (`quellensteuer`), Wohnung gekündigt (`wohnunggekuendigt`),
 > Ausgesteuert (`aussteuerung`) — damit **24** Abläufe, alle im Gepäck (Wächter
