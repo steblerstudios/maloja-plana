@@ -924,6 +924,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           React.createElement(PrimaryButton, {
             palette, onClick: () => onNavigate('export'),
             style: { minHeight: '44px' },
+            icon: React.createElement('span', {
+              'aria-hidden': 'true',
+              style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand },
+            }, Icons.sicherung()),
           }, t('dashboard.exportReminderAction'), ' ›')
         )
       );
