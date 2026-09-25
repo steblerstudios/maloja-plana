@@ -4375,6 +4375,16 @@ export default {
 
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (25.09.2026)
+  // TODO(rm): provisorisch — Gegenlese (Einkommensfeld brutto/netto, 25.09.2026)
+  einkommensfeld: {
+    label: 'Entrada mensila',
+    art: 'Gener d’entrada',
+    netto: 'net',
+    brutto: 'brut',
+    nettoGeschaetzt: '≈ net CHF {value} (stimà)',
+    bruttoGeschaetzt: '≈ brut CHF {value} (stimà)',
+    knapp: 'Stretg — controllar cun la paja netta exacta.',
+  },
   einkommensart: {
     offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',
     offenNetto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte das Netto-Einkommen eintragen.',

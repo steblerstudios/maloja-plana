@@ -40,6 +40,9 @@ const profil = (extra = {}) => ({
   ...extra,
 });
 
+// QuickCheck füllt seit 25.09.2026 nur mit bekannter Einkommensart vor (EinkommenFeld).
+const nettoProfil = () => { const p = profil(); return { ...p, finanzen: { ...p.finanzen, incomeType: 'netto' } }; };
+
 // Der Betrag, den das Muster rechnen WÜRDE — er darf unbelegt nirgends stehen.
 let musterBetrag;
 beforeAll(() => {
@@ -183,7 +186,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
   });
 
   it('Dashboard (Kurz-Check): kein IPV-Betrag in der Zeile', () => {
-    const html = render(QuickCheck, { data: profil() });
+    const html = render(QuickCheck, { data: nettoProfil() });
     expect(html).toContain('dashboard.quickCheckIpv');
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).not.toContain('dashboard.quickCheckResult');
@@ -235,7 +238,7 @@ describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
     const fu = render(FinanzUebersicht, { data: profil() });
     expect(fu).toContain(fmt(calculateIPV(profil()).amount));
     expect(fu).not.toContain('✓');   // keine rohe Glyphe mehr
-    const html = render(QuickCheck, { data: profil() });
+    const html = render(QuickCheck, { data: nettoProfil() });
     expect(html).toContain('dashboard.quickCheckResult');
     expect(html).toContain('≈ CHF');
   });

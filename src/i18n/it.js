@@ -5031,6 +5031,15 @@ export default {
   },
 
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensfeld: {
+    label: 'Reddito mensile',
+    art: 'Tipo di reddito',
+    netto: 'netto',
+    brutto: 'lordo',
+    nettoGeschaetzt: '≈ netto CHF {value} (stimato)',
+    bruttoGeschaetzt: '≈ lordo CHF {value} (stimato)',
+    knapp: 'Al limite — da verificare con il salario netto esatto.',
+  },
   einkommensart: {
     offenBrutto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il salario lordo.',
     offenNetto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il reddito netto.',

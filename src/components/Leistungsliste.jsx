@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Icons from '../IconKern.jsx';
 import { text, weight, leading, space, radius, ease, duration } from '../config/tokens.js';
 import { PanelTitle } from './Heading.jsx';
@@ -6,13 +6,19 @@ import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { calculateIPV, calculateSozialhilfe } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
+import { useEinkommen, EinkommenFeld } from './EinkommenFeld.jsx';
+
+// «Knapp»: geschätztes Netto innerhalb dieses Anteils am SKOS-Bedarf (Fachprüfung ausstehend).
+const KNAPP_ANTEIL = 0.05;
 
 // Leistungsliste des Dashboard-Blocks «Was steht mir zu?» (seit 25.09.2026 eigene Datei,
 // lazy geladen — vorher in Dashboard.jsx). Name QuickCheck bleibt: Tests und Übergabe-Logik
 // (B-1/E22) hängen daran.
 export const QuickCheck = ({ palette, t, onNavigate, data }) => {
-  const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
-  const annual = (Number(income) || 0) * 12;
+  // Brutto oder netto (EinkommenFeld); gerechnet wird mit netto.
+  const e = useEinkommen(data);
+  const income = e.nettoMonat;
+  const annual = income * 12;
   const canton = data?.basis?.canton;
   const fmt = (v) => zahl(v, { hoechstens: 2 });
 
@@ -25,13 +31,16 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
   const found = {};
   let sozPegel = null;
+  let knappSoz = false;
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
     // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
     if (ipv && ipv.anspruchMoeglich) found.ipv = {
-      uebergabe: { schnellcheck: { monthlyIncome: Number(income) } },
+      // Übergabe nur mit einer eingetippten Netto-Zahl — eine aus brutto geschätzte gehört nicht
+      // in den Rechner (und von dort womöglich ins Profil).
+      uebergabe: e.geschaetzt ? undefined : { schnellcheck: { monthlyIncome: income } },
       monthly: ipv.eligible ? ipv.amount : 0,
       detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
     };
@@ -41,6 +50,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     const rentContext = Number(data?.wohnen?.rentAmount || 0) > 0;
     if (annual > 0 && rentContext) {
       const sh = calculateSozialhilfe(probe);
+      // Knapp: ist das Netto nur geschätzt und liegt es nahe am Bedarf, kann die Schätzung kippen.
+      knappSoz = e.geschaetzt && sh && Math.abs(sh.income - sh.totalBedarf) <= KNAPP_ANTEIL * sh.totalBedarf;
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
@@ -101,7 +112,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, l.label),
         React.createElement('div', { style: { fontSize: text.xs - 1, color: f ? (palette.sageDeep || palette.sage) : palette.mid, marginTop: '2px', lineHeight: leading.normal } },
           f ? (ipvSubsumed && l.key === 'ipv' ? t('schnellcheck.ipvSubsumed', { amount: fmt(f.monthly) }) : f.detail)
-            : (l.key === 'soz' && sozPegel) ? sozPegel.detail : l.sub)
+            : (l.key === 'soz' && sozPegel) ? sozPegel.detail : l.sub,
+          l.key === 'soz' && knappSoz && React.createElement('span', { style: { display: 'block', color: palette.sandDeep, marginTop: '2px' } }, t('einkommensfeld.knapp')))
       ),
       // Pegel: Balken = Einkommen, Strich = SKOS-Bedarf, gemeinsame Skala (das Grössere).
       // Neutral eingefärbt — es ist eine Lage, kein Betrag, der zusteht.
@@ -149,25 +161,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('div', {
       style: { display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: space.md + 'px', marginBottom: space.md + 'px' }
     },
-      React.createElement('label', { style: { display: 'block', flex: '0 1 220px' } },
-        React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
-        }, t('dashboard.quickCheckIncome')),
-        React.createElement('input', {
-          type: 'number',
-          inputMode: 'numeric',
-          placeholder: t('dashboard.quickCheckPlaceholder'),
-          'aria-label': t('dashboard.quickCheckIncome'),
-          value: income,
-          onChange: (e) => setIncome(e.target.value),
-          style: {
-            width: '100%', padding: '10px 12px', fontSize: text.body,
-            border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            background: palette.surface, color: palette.text,
-            fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-          }
-        })
-      ),
+      React.createElement(EinkommenFeld, { palette, t, e }),
       // Die eine Kennzahl: geschätzte Entlastung pro Monat — nur wenn etwas gezählt wird.
       totalMonthly > 0 && React.createElement('div', { style: { textAlign: 'right' } },
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('dashboard.quickCheckWithIncome')),

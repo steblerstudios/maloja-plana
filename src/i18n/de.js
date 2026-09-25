@@ -5086,6 +5086,15 @@ export default {
     source: 'Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand 2026). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.',
   },
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensfeld: {
+    label: 'Monatseinkommen',
+    art: 'Art des Einkommens',
+    netto: 'netto',
+    brutto: 'brutto',
+    nettoGeschaetzt: '≈ netto CHF {value} (geschätzt)',
+    bruttoGeschaetzt: '≈ brutto CHF {value} (geschätzt)',
+    knapp: 'Knapp — mit dem genauen Nettolohn nachprüfen.',
+  },
   einkommensart: {
     offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',
     offenNetto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte das Netto-Einkommen eintragen.',

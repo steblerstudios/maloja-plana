@@ -69,11 +69,21 @@ describe('B-1 · der Klick im Schnellcheck nimmt die eingetippten Zahlen mit', (
 
   it('auch der Schnell-Check auf dem Dashboard übergibt sein Einkommen', () => {
     const onNavigate = vi.fn();
-    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000 }), onNavigate });
+    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000, incomeType: 'netto' }), onNavigate });
     const zeile = gesehen.find((e) => e.typ === 'button' && e.p.key === 'ipv');
     expect(zeile).toBeTruthy();
     zeile.p.onClick();
     expect(onNavigate).toHaveBeenCalledWith('premium', undefined, { schnellcheck: { monthlyIncome: 3000 } });
+  });
+
+  it('Dashboard: eine aus BRUTTO geschätzte Zahl geht nicht als Übergabe mit (25.09.2026)', () => {
+    const onNavigate = vi.fn();
+    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000, incomeType: 'brutto' }), onNavigate });
+    const zeile = gesehen.find((e) => e.typ === 'button' && e.p.key === 'ipv');
+    expect(zeile).toBeTruthy();
+    zeile.p.onClick();
+    expect(onNavigate).toHaveBeenCalledWith('premium');
+    expect(onNavigate.mock.calls[0]).toHaveLength(1);
   });
 
   it('andere Zeilen im Schnellcheck tragen keine Übergabe', () => {

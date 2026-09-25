@@ -25,7 +25,7 @@ const betrag = (n) => '≈ CHF ' + zahl(n, { hoechstens: 2 });
 
 const profil = (monthlyIncome) => ({
   basis: { canton: 'BS', household: { adults: 1, children: [] } },
-  finanzen: { monthlyIncome },
+  finanzen: { monthlyIncome, incomeType: 'netto' },
   wohnen: { rentAmount: 1000 },
   versicherungen: { kkPremium: 450 },
 });
@@ -76,5 +76,43 @@ describe('Instrument Steuer-Säulen', () => {
     const ohne = renderToStaticMarkup(React.createElement(InstrumentePanel, { palette, t, data: { basis: {} }, onNavigate: () => {}, eingebettet: true }));
     expect(ohne).not.toContain('instrumente.steuerBetrag');
     expect(ohne).toContain('instrumente.setup');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// Einkommen brutto ODER netto (25.09.2026): gerechnet wird mit netto; brutto wird geschätzt
+// umgerechnet (bruttoZuNettoRichtwert). Ohne bekannte Art kein Vorbefüllen.
+// ─────────────────────────────────────────────────────────────
+describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
+  let zuruecksetzen;
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  afterAll(() => zuruecksetzen());
+
+  it('Art offen: Feld leer, Hinweis statt Rechnung', () => {
+    const p = profil(1000); delete p.finanzen.incomeType;
+    const html = render({ data: p });
+    expect(html).toContain('einkommensart.offenNetto');
+    expect(html).not.toContain('schnellcheck.ipvSubsumed');
+    expect(html).toContain('schnellcheck.enterIncome');
+  });
+
+  it('brutto: rechnet mit dem geschätzten Netto und zeigt es an', async () => {
+    const { bruttoZuNettoRichtwert } = await import('../data/ahvRechner.js');
+    const p = profil(1100); p.finanzen.incomeType = 'brutto';
+    const netto = bruttoZuNettoRichtwert(1100);
+    const html = render({ data: p });
+    expect(html).toContain('einkommensfeld.nettoGeschaetzt(' + zahl(netto) + ')');
+    const soz = calculateSozialhilfe({ ...p, finanzen: { ...p.finanzen, monthlyIncome: netto } }).deficit;
+    expect(html).toContain(betrag(soz) + ' / schnellcheck.monat');
+  });
+
+  it('brutto nahe am Bedarf: «knapp» — bei netto nicht', () => {
+    // Bedarf BS, 1 Person, Miete 1000, KK 450 → Netto knapp darunter
+    const bedarf = calculateSozialhilfe(profil(0)).totalBedarf;
+    // 3 % über dem Bedarf: innerhalb der Knapp-Schwelle, aber nicht gleich (Gegenprobe mit Schwelle 0 → rot)
+    const brutto = Math.round(bedarf * 1.03 / 0.936);   // unter der BVG-Schwelle: netto = brutto × 0.936
+    const p = profil(brutto); p.finanzen.incomeType = 'brutto';
+    expect(render({ data: p })).toContain('einkommensfeld.knapp');
+    expect(render({ data: profil(Math.round(bedarf * 1.03)) })).not.toContain('einkommensfeld.knapp');
   });
 });

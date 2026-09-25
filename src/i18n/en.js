@@ -5053,6 +5053,15 @@ export default {
     source: 'Estimate based on the reference values of the [[LIECA|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (as of 2026). Whether an entitlement exists and how high it is, the compensation office decides. Not legally binding.',
   },
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensfeld: {
+    label: 'Monthly income',
+    art: 'Type of income',
+    netto: 'net',
+    brutto: 'gross',
+    nettoGeschaetzt: '≈ net CHF {value} (estimated)',
+    bruttoGeschaetzt: '≈ gross CHF {value} (estimated)',
+    knapp: 'Close — check again with your exact net pay.',
+  },
   einkommensart: {
     offenBrutto: 'Your profile doesn’t say whether the salary is gross or net — so it isn’t carried over here. Please enter your gross salary.',
     offenNetto: 'Your profile doesn’t say whether the salary is gross or net — so it isn’t carried over here. Please enter your net income.',

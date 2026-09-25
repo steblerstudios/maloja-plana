@@ -5053,6 +5053,15 @@ export default {
     source: 'Estimation selon les valeurs de référence de la [[LAPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/fr]] (état 2026). L’existence et le montant du droit sont décidés par la caisse de compensation. Sans valeur juridique.',
   },
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensfeld: {
+    label: 'Revenu mensuel',
+    art: 'Type de revenu',
+    netto: 'net',
+    brutto: 'brut',
+    nettoGeschaetzt: '≈ net CHF {value} (estimé)',
+    bruttoGeschaetzt: '≈ brut CHF {value} (estimé)',
+    knapp: 'Juste — à vérifier avec le salaire net exact.',
+  },
   einkommensart: {
     offenBrutto: 'Le profil n’indique pas si le salaire est brut ou net — il n’est donc pas repris ici. Veuillez saisir le salaire brut.',
     offenNetto: 'Le profil n’indique pas si le salaire est brut ou net — il n’est donc pas repris ici. Veuillez saisir le revenu net.',
