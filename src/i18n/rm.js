@@ -3900,6 +3900,9 @@ export default {
     // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
     assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
     assetLimitUnconfirmedShort: 'Franchisa da facultad betg confermada dal chantun.',
+    // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (25.09.2026)
+    efbEntscheidet: 'Il dretg resulta pir cun la limita d’entrada libra. Sch’ella quinta gia tar la verificaziun dal dretg, regla il chantun: la SKOS al recumonda, Turitg p. ex. na la quinta betg en quel mument.',
+    erwerbsunkostenOffen: 'Custs supplementars per la lavur, sco mangiar ordaifer u il viadi a la lavur, n’èn betg quintads qua. Els augmentan il basegn — en il quintader sutvart pon ins endatar els.',
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: { sie: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche Vus arrivais tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).", du: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda)." },
     repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",
@@ -4411,6 +4414,9 @@ export default {
     bedarf: 'Basegn total',
     einkommenTotal: 'Entrada totala',
     efbLabel: "Limita d'entrada libra (EFB)",
+    // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (SKOS C.6.3/D.2, 25.09.2026)
+    erwerbsunkosten: 'Custs supplementars per la lavur (CHF/mais)',
+    erwerbsunkostenHint: 'Custs cumprovads, chaschunads da la lavur: mangiar ordaifer (8–10 francs per past), il viadi a la lavur sur il traffic local ora, in auto mo sch’il traffic public na va betg en moda raschunaivla. Els augmentan il basegn (SKOS C.6.3).',
     anrechenbar: 'Entrada imputabla',
     sozialhilfe: "Dretg d'agid social",
     vermoegenHinweis: 'La facultad surpassa la limita libra — nagin dretg',
@@ -4418,7 +4424,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
     // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
-    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen und kantonale Abweichungen. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
+    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
 
   kvg: {

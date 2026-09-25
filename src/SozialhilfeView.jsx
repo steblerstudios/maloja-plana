@@ -93,6 +93,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', null, formatCHF(sozialhilfe.totalBedarf))
         ),
         Row(t('sozialhilfe.deductIncome'), '- ' + formatCHF(sozialhilfe.income), palette.mid),
+        sozialhilfe.efb > 0 && Row(t('sh.efbLabel'), '+ ' + formatCHF(sozialhilfe.efb), palette.sageDeep),
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: text.body, fontWeight: weight.bold, borderTop: '1px solid ' + palette.border, marginTop: space.xs } },
           React.createElement('span', null, t('sozialhilfe.deficit')),
           React.createElement('span', { style: { color: palette.text } }, formatCHF(sozialhilfe.deficit) + t('common.perMonth'))
@@ -103,7 +104,8 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     // Status
     sozialhilfe.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('sozialhilfe.entitled')),
-      React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
+      React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams)),
+      sozialhilfe.efbEntscheidet && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('sozialhilfe.efbEntscheidet'))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), t('sozialhilfe.notEntitled')),
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
@@ -120,6 +122,11 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     // Freibetrag. Ist er kantonal nicht bestätigt, eine leise Zeile (einmal, nicht doppelt).
     sozialhilfe.eligible && sozialhilfe.vermoegenUeberFreibetrag === 0 && sozialhilfe.vfbUnbestaetigt && React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px' } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('sozialhilfe.assetLimitUnconfirmedUnder', { freibetrag: formatCHF(sozialhilfe.vermoegensfreibetrag) }))
+    ),
+    // Erwerbsunkosten (SKOS-RL C.6.3) kennt das Profil nicht — bei Erwerbstätigen ist der Bedarf oben
+    // darum zu tief. Im Rechner unten lassen sie sich eintragen.
+    sozialhilfe.erwerbsunkostenOffen && React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.mid, marginBottom: space.md } },
+      hinweisZeichen(), t('sozialhilfe.erwerbsunkostenOffen')
     ),
 
     // Repayment info
