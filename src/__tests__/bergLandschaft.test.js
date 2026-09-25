@@ -192,9 +192,9 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
       expect(y > 586 || (x < 340 && y > 564), `Punkt ${x} ${y} liegt in der Schlaufe`).toBe(false);
     }
   });
-  it('der Weg nach Versicherungen endet unter Behörden (nichts zwischen x 205 und 288)', () => {
+  it('der Weg nach Versicherungen endet unter der Behörden-Beschriftung (nichts zwischen x 205 und 325)', () => {
     const z = zahlen(WEGSTUECKE[3]);
-    for (let k = 0; k < z.length; k += 2) expect(z[k] > 205 && z[k] < 288, `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
+    for (let k = 0; k < z.length; k += 2) expect(z[k] > 205 && z[k] < 325, `Punkt ${z[k]} ${z[k + 1]}`).toBe(false);
   });
   it('der Weg nach Versicherungen läuft hinter der Tanne weiter (nicht zu kurz, bis x ≤ 335)', () => {
     const xs = zahlen(WEGSTUECKE[3]).filter((_, k) => k % 2 === 0 && _ > 205);
