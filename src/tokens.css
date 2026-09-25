@@ -247,8 +247,12 @@ html { overflow-x: clip; }
    Hauptbündel. Browser ohne diese Fähigkeit zeigen ihn einfach scharf. */
 @keyframes mp-berg-verschwimmen {
   from { filter: blur(0); }
-  to   { filter: blur(10px) brightness(0.92); }
+  to   { filter: var(--mp-berg-hinten); }
 }
+/* Wie weit der Berg zurücktritt: dunkel wird er dunkler, hell blasser — so steht die
+   Schrift in den durchsichtigen Abschnitten nie gegen den vollen Berg. */
+:root { --mp-berg-hinten: blur(10px) brightness(1.18) saturate(0.6) contrast(0.55); }
+:root[data-theme="dark"] { --mp-berg-hinten: blur(10px) brightness(0.42) saturate(0.7); }
 @supports (animation-timeline: scroll()) {
   .mp-berg-buehne {
     animation: mp-berg-verschwimmen linear both;
@@ -274,16 +278,13 @@ html { overflow-x: clip; }
   }
 }
 
-/* Schrift steht nie direkt auf dem Berg: Abschnitte OHNE eigene Kachelfarbe
-   (Überschriften, «Ihr Alltag», Tipps …) bekommen eine ruhige Unterlage in Seitenfarbe,
-   12 px weich über den Rand hinaus (Schatten statt padding — das Layout bleibt). In den
-   Zwischenräumen bleibt der Berg sichtbar. Ausgenommen: Kacheln (Farbe inline) und Hüllen,
-   deren Kind selbst eine Kachel ist — sonst läge ein dunkler Ring um sie.
-   Grund: graue Kleinschrift erreichte über hellem Himmel gerechnet nur ~2,5:1. */
+/* Abschnitte ohne eigene Kachel («Ihr Alltag», Instrumente, Tipps …) bleiben
+   durchsichtig (Rückmeldung Stebler Studios, 25.09.: keine schwarzen Flächen). Lesbar
+   bleiben sie auf zwei Wegen: der Berg tritt beim Scrollen stark zurück (unten), und
+   die Schrift trägt einen weichen Schein in Seitenfarbe — Nebel um die Buchstaben, keine
+   Fläche. Kacheln (Farbe inline) und Hüllen um Kacheln sind ausgenommen. */
 .mp-blatt > :not([style*="background"]):not(:has(> [style*="background"])) {
-  background-color: var(--mp-seite);
-  border-radius: var(--mp-radius-md);
-  box-shadow: 0 0 0 12px var(--mp-seite);
+  text-shadow: 0 0 2px var(--mp-seite), 0 0 6px var(--mp-seite), 0 0 14px var(--mp-seite);
 }
 
 /* ─── Hover für Weg-Knöpfe (Zurück, Querverweise) ──────────
