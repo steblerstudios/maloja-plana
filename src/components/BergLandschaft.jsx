@@ -12,37 +12,39 @@ import landschaft from '../assets/berge/landschaft.webp?url';
 // Die Passstrasse steigt in Kehren von unten rechts nach oben links; die Kapitel sitzen der
 // Reihe nach auf ihr — Basis unten, Notfall oben.
 const BILD = { w: 1100, h: 788 };
-// Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur die Strasse, damit die
+// Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur die Serpentine, damit die
 // Stationen am Handy weit genug auseinanderliegen.
 export const AUSSCHNITT = {
   breit: { x: 0, y: 80, w: 1100, h: 708 },
-  schmal: { x: 20, y: 370, w: 630, h: 420 },
+  schmal: { x: 150, y: 420, w: 450, h: 310 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
-// Stationen und Wegstücke sind aus dem Bild gemessen, nicht geschätzt: Strasse = helle, fast
-// graue Bildpunkte; jede Station auf die Fahrbahnmitte gezogen (grösster Randabstand), jedes
-// Wegstück als günstigster Weg über die Fahrbahn (Dijkstra, Mitte billiger als Rand), dann
-// geglättet. Nachgemessen: 91–100 % jedes Stücks liegen auf der Strasse (25.09.2026).
-// Etikett-Seite je Ausschnitt, damit am Handy nichts über den Rand oder auf eine Nachbarstation läuft.
+// Die Route ist aus dem Bild gelesen (25.09.2026, Werkzeug: Maske der hellen Fahrbahn + Skelett):
+// die Serpentine beginnt rechts unten in der U-Kurve um die Wiese, läuft oben zurück nach links
+// zur Kehre und steigt über die schmale Strasse zur Passhöhe. Die sieben Stationen stehen in
+// gleicher Bogenlänge (Abstand ~110 Bildeinheiten, in der Kehre enger); wo eine Tanne die Strasse
+// verdeckt, fehlt der Weg — er geht dahinter durch.
+// Etikett-Seite je Ausschnitt, im Browser auf Überschneidungen nachgemessen (320–1280 px).
 export const STATIONEN = [
-  { key: 'basis', x: 548, y: 725, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'wohnen', x: 554, y: 665, seite: { breit: 'rechts', schmal: 'oben' } },
-  { key: 'finanzen', x: 408, y: 608, seite: { breit: 'unten', schmal: 'oben' } },
-  { key: 'versicherungen', x: 246, y: 579, seite: { breit: 'unten', schmal: 'unten' } },
-  { key: 'ausbildung', x: 153, y: 542, seite: { breit: 'untenlinks', schmal: 'untenlinks' } },
-  { key: 'behoerden', x: 201, y: 465, seite: { breit: 'links', schmal: 'obenlinks' } },
-  { key: 'notfall', x: 304, y: 432, seite: { breit: 'rechts', schmal: 'rechts' } },
+  { key: 'basis', x: 564, y: 706, seite: { breit: 'rechts', schmal: 'links' } },
+  { key: 'wohnen', x: 516, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
+  { key: 'finanzen', x: 404, y: 603, seite: { breit: 'unten', schmal: 'unten' } },
+  { key: 'versicherungen', x: 291, y: 580, seite: { breit: 'obenrechts', schmal: 'unten' } },
+  { key: 'ausbildung', x: 181, y: 552, seite: { breit: 'unten', schmal: 'untenrechts' } },
+  { key: 'behoerden', x: 187, y: 491, seite: { breit: 'links', schmal: 'rechts' } },
+  { key: 'notfall', x: 287, y: 445, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
-// Wegstück i führt von Station i zu Station i+1.
+// Wegstück i führt von Station i zu Station i+1 — nur die sichtbaren Stücke der Fahrbahn,
+// je Lauf ein eigener Unterpfad (M … C …). Mittellinie der Spur, geglättet.
 export const WEGSTUECKE = [
-  'M 548 725 C 549 715 553 675 554 665',
-  'M 554 665 C 545 657 523 622 501 615 C 479 608 438 623 422 622 C 407 621 410 610 408 608',
-  'M 408 608 C 402 606 396 596 373 594 C 350 592 289 601 268 598 C 247 596 250 582 246 579',
-  'M 246 579 C 239 575 217 560 201 554 C 186 548 161 544 153 542',
-  'M 153 542 C 156 539 169 529 172 523 C 175 517 167 513 172 505 C 177 497 196 482 201 475 C 206 468 201 467 201 465',
-  'M 201 465 C 216 462 273 451 290 445 C 307 440 302 434 304 432',
+  'M563.9 706.1C565.2 704.3 570.2 698.5 572 695.3C573.7 692.1 574.3 690.4 574.4 686.7C574.6 683.1 574.3 678.1 573 673.4C571.7 668.6 568.8 662.4 566.5 658.3C564.2 654.2 561.9 651.7 559.1 648.9C556.3 646.1 553.6 644.1 549.6 641.5C545.6 639 540.7 636.4 535.1 633.7C529.4 631 519 626.9 515.7 625.6',
+  'M515.7 625.6C513.6 624.9 505 622.2 502.8 621.6M488.3 618C483.1 616.9 471.5 614.1 457.4 611.6C443.4 609 413 604.2 404.2 602.8',
+  'M404.2 602.8C402.9 602.5 398 601.6 396.8 601.4M367.3 595.7C354.6 593.1 303.7 582.4 291 579.8',
+  'M291 579.8C281.7 577.6 253.9 571.6 235.5 566.9C217.1 562.2 189.7 554.1 180.6 551.6',
+  'M180.6 551.6C175 550.2 154 545.2 147.1 543.2C140.2 541.1 140.5 540.3 139.3 539.1C138 538 138.8 537.4 139.6 536.3C140.3 535.1 141.8 533.9 144 532.2C146.1 530.6 149.4 528.2 152.6 526.3C155.9 524.5 161.7 522.1 163.5 521.2M170.3 515.5C170.9 514.7 173.3 511.5 173.9 510.6',
+  'M187.2 490.7C188.9 488.5 193.4 481.8 197.3 477.7C201.3 473.5 206.8 468.7 210.8 465.8C214.9 463 216.9 462.2 221.6 460.7C226.3 459.1 236.2 457.3 239.1 456.6M248 454.9C252.6 453.9 269.3 450.5 275.8 448.8C282.3 447.2 285.3 445.7 287.2 445.1',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
@@ -115,12 +117,16 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         width: BILD.w, height: BILD.h,
         onError: () => setBildFehlt(true),
       }),
-      // Gegangener Weg — je Kapitel ein Stück, golden sobald es begonnen ist.
-      ...WEGSTUECKE.map((d, i) => React.createElement('path', {
-        key: 'weg-' + i, d, fill: 'none',
-        stroke: p.sand, strokeWidth: 5, strokeLinecap: 'round', strokeLinejoin: 'round',
-        style: { opacity: chapterCompletions[i] > 0 ? 1 : 0, transition: 'opacity 0.8s ease' },
-      })),
+      // Der Weg: noch offene Stücke gepunktet (die Route ist von Anfang an lesbar), begonnene
+      // Kapitel golden. Unter dem Gold ein heller Saum, damit es sich von der hellen Fahrbahn abhebt.
+      ...WEGSTUECKE.map((d, i) => {
+        const gegangen = chapterCompletions[i] > 0;
+        return React.createElement('g', { key: 'weg-' + i, fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' },
+          gegangen
+            ? [React.createElement('path', { key: 's', d, stroke: p.surface, strokeWidth: 9 }),
+               React.createElement('path', { key: 'w', d, stroke: p.sand, strokeWidth: 5 })]
+            : React.createElement('path', { d, stroke: p.sageDeep, strokeWidth: 3, strokeDasharray: '0.1 9' }));
+      }),
       // ─── Überraschungen mit dem Fortschritt (wie bisher, neu verortet) ───
       completion >= 20 && React.createElement('g', { key: 'tannen', fill: p.sageDeep, style: s(20, 0.8, 30) },
         React.createElement('path', { d: 'M 842 548 L 852 520 L 862 548 Z' }),
@@ -181,10 +187,10 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         links: { right: abstand, top: '50%', transform: 'translateY(-50%)' },
         unten: { top: sz / 2 + 3 + 'px', left: '50%', transform: 'translateX(-50%)' },
         oben: { bottom: sz / 2 + 3 + 'px', left: '50%', transform: 'translateX(-50%)' },
-        // unter der Station, rechte Kante knapp rechts der Mitte: am linken Bildrand, wenn
-        // rechts daneben eine Nachbarstation sitzt (Ausbildung neben Versicherungen)
-        untenlinks: { top: sz / 2 + 3 + 'px', right: -sz + 'px' },
-        obenlinks: { bottom: sz / 2 + 3 + 'px', right: -sz + 'px' },
+        // über/unter der Station, nach rechts laufend: wo links der Bildrand oder eine
+        // Nachbarstation keinen Platz lässt
+        obenrechts: { bottom: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
+        untenrechts: { top: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
       }[station.seite[modus]];
       return React.createElement('div', {
         key: station.key,

@@ -122,8 +122,8 @@ describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
   });
   it('jede Station hat eine Etikett-Seite für beide Ausschnitte', () => {
     for (const s of STATIONEN) {
-      expect(['rechts', 'links', 'unten', 'oben', 'untenlinks', 'obenlinks'], s.key).toContain(s.seite.breit);
-      expect(['rechts', 'links', 'unten', 'oben', 'untenlinks', 'obenlinks'], s.key).toContain(s.seite.schmal);
+      expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts'], s.key).toContain(s.seite.breit);
+      expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts'], s.key).toContain(s.seite.schmal);
     }
   });
   it('alle sieben Kapitel haben eine Station, in der Reihenfolge der Kapitel', () => {
@@ -136,11 +136,17 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
   it('sechs Stücke für sieben Stationen', () => {
     expect(WEGSTUECKE).toHaveLength(STATIONEN.length - 1);
   });
-  it('Stück i beginnt an Station i und endet an Station i+1', () => {
+  it('Stück i beginnt an Station i und endet nah an Station i+1 (verdeckte Stücke fehlen)', () => {
     WEGSTUECKE.forEach((d, i) => {
       const z = zahlen(d);
-      expect([z[0], z[1]], `Start ${i}`).toEqual([STATIONEN[i].x, STATIONEN[i].y]);
-      expect(z.slice(-2), `Ende ${i}`).toEqual([STATIONEN[i + 1].x, STATIONEN[i + 1].y]);
+      const nah = (x, y, s, max) => Math.hypot(x - s.x, y - s.y) <= max;
+      expect(nah(z[0], z[1], STATIONEN[i], 1), `Start ${i}`).toBe(true);
+      // Ende: höchstens eine Tannenbreite vor der nächsten Station (dort geht der Weg dahinter durch)
+      expect(nah(z[z.length - 2], z[z.length - 1], STATIONEN[i + 1], 25), `Ende ${i}`).toBe(true);
     });
+  });
+  it('die Stationen folgen der Route von unten nach oben (Notfall zuoberst)', () => {
+    expect(STATIONEN[0].y).toBe(Math.max(...STATIONEN.map((s) => s.y)));
+    expect(STATIONEN[6].y).toBe(Math.min(...STATIONEN.map((s) => s.y)));
   });
 });
