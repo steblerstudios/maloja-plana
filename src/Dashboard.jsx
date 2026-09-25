@@ -580,12 +580,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
     React.createElement('div', {
       'data-tour': 'anspruch',
+      // Kein Kasten im Kasten (Grundsatz 25.09.2026, Vorbild «Ihr Alltag»): die Einträge
+      // tragen eigene Rahmen, der Abschnitt selbst hat nur Luft — 48 px nach aussen.
       style: {
-        marginTop: space.lg, marginBottom: space.md,
-        padding: '20px 24px',
-        background: palette.surface,
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.border + '88',
+        marginTop: space['2xl'] + 'px', marginBottom: space['2xl'] + 'px',
       }
     },
       React.createElement('div', {
@@ -593,7 +591,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       },
         React.createElement(PanelTitle, {
           palette,
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+          style: { margin: 0, letterSpacing: '-0.2px' }
         }, t('dashboard.anspruchTitle')),
         React.createElement('div', {
           // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
