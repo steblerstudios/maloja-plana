@@ -668,10 +668,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         return React.createElement(React.Fragment, null,
           // Die Finanz-Übersicht bleibt der eine grosse Einstieg — sie fasst alles zusammen.
           primary && renderItem(primary),
-          // Deine Instrumente — seit 25.09.2026 im selben Block, gleich unter der Übersicht.
-          // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
-          React.createElement(React.Suspense, { fallback: null },
-            React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           React.createElement(QuickCheck, { palette, t, onNavigate, data }),
           // Die zwei Wege weiter — nebeneinander, in einer Zeile.
           React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.lg + 'px', marginTop: space.sm } },
@@ -685,6 +681,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
                 },
               }, label))),
+          // Deine Instrumente — seit 25.09.2026 im selben Block, nach den Leistungen
+          // (Wunsch 25.09.: erst was zusteht, dann der eigene Stand).
+          // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
           React.createElement('div', {
             style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
