@@ -120,8 +120,11 @@ bash "$(dirname "$0")/scripts/pii-scan.sh"
 echo "→ Build…  (Branch ${BRANCH}, Commit ${COMMIT})"
 npm run build
 
-# Infomaniak liefert 503, wenn ein .htaccess vorhanden ist (Security-Header laufen
-# übers Panel; die App nutzt Hash-Routing, braucht keine Server-Rewrites).
+# Die .htaccess auf dem Server wird von Hand gepflegt (Security-Header, HTTPS-Umleitung,
+# Cache-Regeln inkl. K85 — Abschrift in public/.htaccess). Der Deploy darf sie nie
+# überschreiben, darum fliegt die aus dem Build raus. (Früher stand hier «Infomaniak
+# liefert 503 bei .htaccess, Header übers Panel» — am 25.09.2026 widerlegt: die Datei
+# existiert, alle Header kommen aus ihr.)
 echo "→ .htaccess aus dem Build entfernen…"
 rm -f dist/.htaccess
 
