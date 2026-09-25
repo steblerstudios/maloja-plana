@@ -9,6 +9,7 @@ import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 import { addReminder } from './utils/reminders.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { zahl } from './utils/geld.js';
 
 // Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
 const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
@@ -26,7 +27,7 @@ const fmtDate = (iso) => {
 };
 const fmtAmount = (n) => {
   const num = Number(n);
-  return isFinite(num) ? num.toLocaleString('de-CH') : String(n);
+  return isFinite(num) ? zahl(num, { hoechstens: 2 }) : String(n);
 };
 
 const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {

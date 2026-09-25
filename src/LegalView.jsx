@@ -39,7 +39,7 @@ const LEGAL_LAST_UPDATED = {
 
 const LEGAL_LINKS = {
   'Art. 28 nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de#art_28',
-  'KVG Art. 7': 'https://www.fedlex.admin.ch/eli/cc/1994/1837_1837_1837/de#art_7',
+  'KVG Art. 7': 'https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7',
   'Art. 266l': 'https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_l',
   'Art. 266a': 'https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_a',
   'Art. 169': 'https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_169',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
@@ -9,6 +10,7 @@ import { getFullName } from './config/constants.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { betrag } from './utils/geld.js';
 
 // Die Kassenkarte ist der Sonderfall unter den drei QR-Codes, und deshalb bekommt sie ZWEI.
 //
@@ -270,8 +272,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         style: { margin: '0 0 12px', padding: '10px 12px 10px 28px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
       }, fehler.map(f => React.createElement('li', { key: f }, f))),
       React.createElement('button', { onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, style: { ...buttonStyle, width: '100%' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save')),
-      React.createElement('p', { role: 'status', style: { margin: gespeichert ? '8px 0 0' : 0, fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.semi } },
-        gespeichert ? [hinweisZeichen('check', 12, 'z'), t('common.saved')] : null),
+      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly'))
     ),
 
@@ -285,7 +286,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
           [t('kkScanner.cardNumber'), kkData.cardNumber],
           [t('kkScanner.insuredPerson'), kkData.holder],
           [t('kkScanner.ahvNumber'), kkData.ahv],
-          [t('kkScanner.franchise'), kkData.franchise ? 'CHF ' + kkData.franchise : ''],
+          [t('kkScanner.franchise'), kkData.franchise ? betrag(kkData.franchise, { hoechstens: 2 }) : ''],
           [t('kkScanner.model'), kkData.model]
         ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '10px', background: palette.up, borderRadius: radius.sm } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, label),

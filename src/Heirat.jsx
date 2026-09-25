@@ -46,7 +46,7 @@ export const Heirat = ({ palette, t, onNavigate }) => {
       React.createElement(AblaufLink, { palette, label: t('heirat.relatedKind'), onClick: () => onNavigate('kind') }),
       React.createElement(AblaufLink, { palette, label: t('heirat.relatedTrennung'), onClick: () => onNavigate('trennung') })
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('heirat.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('heirat.quelle'), notes: [t('heirat.footerNote'), t('trust.localOnly')] })
   );
 };
 

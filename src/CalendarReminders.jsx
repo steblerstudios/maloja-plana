@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { inDays } from './utils/helpers.js';
 import { Eyebrow, PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { buildICS, downloadICS } from './utils/icsExport.js';
@@ -16,7 +17,10 @@ const daysBetween = (a, b) => {
   return Math.round((new Date(b) - new Date(a)) / msPerDay);
 };
 
-const todayISO = () => new Date().toISOString().split('T')[0];
+// «Heute» nach Schweizer Uhr, nicht nach UTC. Bis 24.09.2026 stand hier
+// `new Date().toISOString()` — zwischen Mitternacht und 1/2 Uhr ist das in UTC noch
+// gestern: eine heute fällige Frist galt als morgen, eine gestrige als heute.
+const todayISO = () => inDays(0);
 
 const INTERVALS = {
   once: null,
@@ -127,7 +131,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
   };
 
   const addFromTemplate = (template) => {
-    const dueDate = new Date(Date.now() + (template.daysFromNow || 30) * 86400000).toISOString().split('T')[0];
+    const dueDate = inDays(template.daysFromNow || 30); // lokal, wie todayISO
     const reminder = {
       id: Date.now().toString() + '_' + Math.random().toString(36).slice(2, 8),
       title: template.title,

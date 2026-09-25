@@ -1,10 +1,12 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
-import { lohnBandState, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { lohnBandState, lohnEinordnungErgebnis, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
+import { zahl } from '../utils/geld.js';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
 // Encoding: docs/design/farb-und-daten-system.md
@@ -119,6 +121,13 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     dreizehnter: data?.finanzen?.dreizehnter,
   });
 
+  // O3: die Art des Ergebnisses — Orientierung, dazu was dem Instrument noch fehlt. In allen drei
+  // Zuständen (leer · nicht vergleichbar · Balken) dieselbe Zeile.
+  const artZeile = React.createElement(ErgebnisArt, {
+    palette, t,
+    ergebnis: lohnEinordnungErgebnis({ income: data?.finanzen?.monthlyIncome, incomeType: data?.finanzen?.incomeType, hoursPerWeek: data?.ausbildung?.workHoursPerWeek }),
+  });
+
   const card = embedded
     ? { fontSize: text.sm }
     : { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm };
@@ -126,7 +135,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
   if (!state.show) {
     return React.createElement('div', { style: card },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),
-      React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('lohnEinordnung.empty'))
+      React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('lohnEinordnung.empty')),
+      artZeile
     );
   }
 
@@ -169,7 +179,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
             // Der Pfeil ist Dekoration — sonst liest der Screenreader „… eintragen. Rechtspfeil".
             
           )
-        : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis))
+        : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis)),
+      artZeile
     );
   }
 
@@ -201,7 +212,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     marks.unshift({ value: mindestlohn.monat, form: 'exclaim', color: mlBreached ? palette.roseDeep : palette.text });
   }
 
-  const fmt = (n) => Math.round(n).toLocaleString('de-CH');
+  const fmt = (n) => zahl(n);
 
   return React.createElement('div', { style: card },
     React.createElement('div', {
@@ -302,7 +313,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },
-    }, renderSource(t('lohnEinordnung.source', { median: fmt(median), jahr: LOHN_REFERENZ.jahr }), null, t))
+    }, renderSource(t('lohnEinordnung.source', { median: fmt(median), jahr: LOHN_REFERENZ.jahr }), null, t)),
+    artZeile
   );
 };
 

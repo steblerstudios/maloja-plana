@@ -58,7 +58,7 @@ export const Selbstaendigkeit = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('selbstaendigkeit.step4Link'), onClick: () => onNavigate('tax') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('selbstaendigkeit.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('selbstaendigkeit.quelle'), notes: [t('selbstaendigkeit.footerNote'), t('trust.localOnly')] })
   );
 };
 

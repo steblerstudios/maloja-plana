@@ -31,6 +31,7 @@ import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollst
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
+import { zahl } from './utils/geld.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -1543,7 +1544,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const income = (parseFloat(fin.monthlyIncome) || 0) + (parseFloat(fin.familienzulagen) || 0) + (parseFloat(fin.alimenteReceived) || 0);
       if (income <= 0) return null;
       const pct = ((wohnkosten / income) * 100).toFixed(1).replace(/\.0$/, '');
-      const fmt = (v) => Math.round(v).toLocaleString(undefined, { minimumFractionDigits: 0 });
+      const fmt = (v) => zahl(v);
       return React.createElement('div', {
         style: {
           marginBottom: space.lg + 'px',

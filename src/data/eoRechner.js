@@ -1,10 +1,13 @@
 // EO-Rechner (Erwerbsersatzordnung) für Maloja Plana
 // Quelle: EOG Art. 16a–16g, EOMV (Mutterschaftsentschädigung),
 //         EOG Art. 16i–16k (Vaterschaftsentschädigung seit 01.01.2021),
-//         EOG Art. 16l–16n (Adoptionsentschädigung seit 01.01.2023)
+//         EOG Art. 16n–16s (Betreuungsentschädigung seit 01.07.2021),
+//         EOG ab Art. 16t (Adoptionsentschädigung seit 01.01.2023)
 // Stand: 2026
 //
 // Alle Beträge in CHF. Keine Netzwerk-Calls, reine Berechnung.
+
+import { ergebnis, ERGEBNIS_ART } from './ergebnisArt.js';
 
 // === EO-Parameter 2026 ===
 const MAX_TAGGELD = 220;          // Maximales Taggeld (CHF/Tag)
@@ -26,15 +29,25 @@ const ADOPTION_WOCHEN = 2;        // 2 Wochen = 14 Tage
 const ADOPTION_TAGE = 14;
 const ADOPTION_MAX_ALTER_KIND = 4; // Kind muss unter 4 Jahre alt sein
 
-// Betreuungsentschädigung (seit 01.07.2021)
-const BETREUUNG_MAX_TAGE = 14;    // Max 14 Tage pro Ereignis
+// Betreuungsentschädigung für ein gesundheitlich schwer beeinträchtigtes Kind (seit 01.07.2021).
+// EOG Art. 16q Abs. 2: «Innerhalb der Rahmenfrist besteht Anspruch auf höchstens 98 Taggelder»;
+// Rahmenfrist 18 Monate (Art. 16p Abs. 1). Sind beide Eltern erwerbstätig, hat jeder höchstens
+// die Hälfte, eine andere Aufteilung ist möglich (Art. 16q Abs. 4). Gelesen in der Fassung
+// 1.6.2026 (Fedlex-Dateispeicher) am 25.09.2026. Bis dahin stand hier 14 — ein Siebtel des Anspruchs.
+const BETREUUNG_MAX_TAGE = 98;
 
 /**
  * Berechne das Taggeld basierend auf dem Einkommen.
  */
 function taggeldAusEinkommen(jahreseinkommen) {
   if (jahreseinkommen <= 0) return 0;
-  const tageseinkommen = jahreseinkommen / 365;
+  // EOV Art. 5 Abs. 2 Bst. b: der Monatslohn wird durch 30 geteilt — für ein Jahreseinkommen
+  // (12 Monatslöhne) also durch 360. Regelmässige Jahreszahlungen wie der 13. werden nach Abs. 4
+  // auf den Tag umgerechnet und dazugezählt; im Jahreseinkommen stecken sie schon. Mutterschaft:
+  // Art. 31 Abs. 2 EOV («Die Artikel 5 und 6 sind sinngemäss anwendbar»). Bis 24.09.2026 stand
+  // hier 365 — das Taggeld lag rund 1,4 % zu tief. (Wortlaut gelesen in der Fassung Stand
+  // 19.02.2019 via lexfind.ch.)
+  const tageseinkommen = jahreseinkommen / 360;
   const taggeld = tageseinkommen * ENTSCHAEDIGUNGSSATZ;
   return Math.min(Math.round(taggeld * 100) / 100, MAX_TAGGELD);
 }
@@ -174,4 +187,14 @@ export const EO_PARAMS = {
 };
 
 export const EO_DATA_VERSION = '2026';
-export const EO_DATA_SOURCE = 'EOG Art. 16a–16n, EOMV, BSV 2026';
+export const EO_DATA_SOURCE = 'EOG Art. 16a–16x, EOMV, BSV 2026';
+
+// O3 — Ergebnis-Art des EO-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
+// Die Eckwerte sind amtlich (80 %, Höchstbetrag, Tage), aber der Rechner nimmt den Anspruch für
+// alle vier Leistungen an, ohne Voraussetzungen, Erwerbsstatus oder Lohnart abzufragen, und rechnet
+// mit einem einzelnen Jahreseinkommen ÷ 360 statt der Bemessung der Ausgleichskasse. Das begründet
+// die Art — es sind keine «fehlenden Angaben», weil der Rechner dafür kein Feld hat.
+// Fehlend zählt nur das eine Feld, ohne das es keinen Betrag gibt: das Jahreseinkommen.
+export function eoErgebnis({ einkommen }) {
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, { fehlend: Number(einkommen) > 0 ? [] : ['bruttolohn'] });
+}
