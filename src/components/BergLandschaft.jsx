@@ -97,7 +97,7 @@ export const mitKontrast = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, fortschrittText, prozent }) => {
   const rahmen = useRef(null);
   const [schmal, setSchmal] = useState(false);
   const [bildFehlt, setBildFehlt] = useState(false);
@@ -122,7 +122,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     'data-tour': 'berge',
     ref: rahmen,
     style: {
-      margin: '0 -8px 28px -8px', position: 'relative', lineHeight: 0,
+      margin: '20px -8px 28px -8px', position: 'relative', lineHeight: 0,
       aspectRatio: `${a.w} / ${a.h}`,
       borderRadius: radius.md, overflow: 'hidden',
       // Ladezustand und Fehlerfall: eine ruhige Fläche in Bildgrösse, nichts springt.
@@ -188,6 +188,23 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('rect', { x: 599, y: 172, width: 15, height: 10, rx: 0.8, fill: '#d42b2b' }),
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
+    ),
+    // Fortschritt als Schildchen oben links im Himmel (seit 25.09.2026, vorher eine Zeile über
+    // dem Bild). Dort liegt keine Station, breit wie schmal. Gleiche Machart wie die Etiketten:
+    // undurchsichtiger Grund, helle Palette, damit der Kontrast nicht am Bild hängt (K41).
+    fortschrittText && React.createElement('div', {
+      'data-testid': 'berg-fortschritt',
+      style: {
+        position: 'absolute', top: schmal ? '8px' : '12px', left: schmal ? '8px' : '12px',
+        display: 'flex', alignItems: 'baseline', gap: '8px',
+        fontSize: schmal ? '11px' : text.xs, lineHeight: 1.2, whiteSpace: 'nowrap',
+        color: p.mid, background: p.surface,
+        padding: schmal ? '3px 7px' : '4px 9px', borderRadius: radius.sm,
+        boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+      },
+    },
+      React.createElement('span', null, fortschrittText),
+      prozent && React.createElement('span', { style: { color: p.sageDeep, fontWeight: weight.medium } }, prozent),
     ),
     // Kapitel-Stationen auf der Strasse
     STATIONEN.map((station, i) => {

@@ -468,39 +468,24 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       })
     ),
 
-    // ─── Maloja Pass — interactive topographic map ─────────
-    React.createElement('div', {
-      style: { margin: '20px -8px 0 -8px' }
-    },
-      React.createElement('div', {
-        style: {
-          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-          padding: '0 8px ' + space.sm + 'px 8px',
-        }
-      },
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid }
-        },
-          (() => {
-            const started = chapterCompletions.filter(p => p > 0).length;
-            const done = chapterCompletions.filter(p => p >= 100).length;
-            const total = chapterCompletions.length;
-            if (done === total) return t('progress.allDone');
-            if (started === 0) return t('progress.notStarted');
-            return t('progress.status', { started, done, total });
-          })()
-        ),
-        // Prozentzahl erst ab spürbarem Fortschritt (≥10%) zeigen — eine einsame
-        // „1%" am Anfang liest sich als „im Rückstand" und widerspricht der Ruhe.
-        // Bis dahin trägt die Status-Zeile links die Orientierung.
-        Math.round(completion) >= 10 && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.medium }
-        }, Math.round(completion) + '%')
-      )
-    ),
-    // Die Landschaft (eigene Malojapass-Fotos → Codex-Illustration) mit den Kapiteln als
-    // Stationen auf der Passstrasse — siehe components/BergLandschaft.jsx.
-    React.createElement(BergLandschaft, { palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle }),
+    // ─── Maloja Pass — die Landschaft ─────────
+    // Eigene Malojapass-Fotos → Codex-Illustration, die Kapitel als Stationen auf der
+    // Passstrasse — siehe components/BergLandschaft.jsx.
+    // Seit 25.09.2026 steht die Fortschritts-Zeile («7 von 7 begonnen · 63%») IM Bild, nicht
+    // mehr darüber (Entscheid Stebler Studios). Die Prozentzahl erst ab spürbarem Fortschritt
+    // (≥10%) — eine einsame «1%» am Anfang liest sich als «im Rückstand».
+    React.createElement(BergLandschaft, {
+      palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle,
+      fortschrittText: (() => {
+        const started = chapterCompletions.filter(p => p > 0).length;
+        const done = chapterCompletions.filter(p => p >= 100).length;
+        const total = chapterCompletions.length;
+        if (done === total) return t('progress.allDone');
+        if (started === 0) return t('progress.notStarted');
+        return t('progress.status', { started, done, total });
+      })(),
+      prozent: Math.round(completion) >= 10 ? Math.round(completion) + '%' : null,
+    }),
 
     // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
     // Steht seit 25.09.2026 UNTER der Landschaft, vor der Fortschritts-Karte (Entscheid Stebler Studios):
