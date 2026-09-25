@@ -204,3 +204,35 @@ describe('IPV-Rechner zeigt die Partner-Annahme', () => {
     } finally { zurueck(); }
   });
 });
+
+// Fachprüfung 25.09.2026: massgebend ist das HAUSHALTSeinkommen (BS bs.ch · BL MBG § 8 Abs. 1 ·
+// ZG Merkblatt Sept. 2025). Nebenerwerb immer, Partnereinkommen bei Ehe; im Konkubinat offen.
+describe('Mietzinsbeiträge: Haushaltseinkommen', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const render = async ({ maritalStatus = 'single', adults = 1, partnerIncome, sideIncome } = {}) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const data = {
+      basis: { canton: 'BS', maritalStatus, household: { adults, children: [], ...(partnerIncome != null && { partnerIncome: String(partnerIncome) }) } },
+      finanzen: { monthlyIncome: 3000, dreizehnter: NEIN, ...(sideIncome != null && { sideIncome }) },
+      wohnen: { rentAmount: 1200 },
+    };
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
+  };
+  it('allein: 36 000 unter 50 000', async () => {
+    expect(await render()).toContain('mietzinsView.result_likely(36’000|50’000)');
+  });
+  it('Nebenerwerb zählt ×12: 3 000 × 12 + 1 500 × 12 = 54 000 über der Grenze', async () => {
+    expect(await render({ sideIncome: 1500 })).toContain('mietzinsView.result_incomeHigh');
+  });
+  it('verheiratet: Partnereinkommen zählt (36 000 + 24 000)', async () => {
+    const html = await render({ maritalStatus: 'married', adults: 2, partnerIncome: 2000 });
+    expect(html).toContain('mietzinsView.result_incomeHigh');
+    expect(html).not.toContain('mietzinsView.konkubinatPartner');
+  });
+  it('Konkubinat: nicht eingerechnet, aber die Zahl mit Partnereinkommen genannt', async () => {
+    const html = await render({ maritalStatus: 'cohabiting', adults: 2, partnerIncome: 2000 });
+    expect(html).toContain('mietzinsView.result_likely(36’000|50’000)');
+    expect(html).toContain('mietzinsView.konkubinatPartner(60’000)');
+  });
+});

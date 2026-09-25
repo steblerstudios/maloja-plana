@@ -5119,6 +5119,7 @@ export default {
     cantonLabel: { sie: 'Voss chantun: {name}', du: 'Tes chantun: {name}' },
     checkTitle: 'Test svelt',
     annahmeOhneDreizehnten: 'Entrada quintada senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è ella pli auta e po surpassar il limit. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    konkubinatPartner: 'En il concubinat quinta l’entrada da la persuna partenaria tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
     basis: 'Basa: entrada CHF {income}/onn · fittanza CHF {rent}/mais · chasada {size} pers.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.' },

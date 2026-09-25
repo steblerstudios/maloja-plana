@@ -12,6 +12,7 @@ import { renderSource } from './utils/renderSource.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
 import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
+import { giltAlsVerheiratet } from './utils/zivilstand.js';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -37,7 +38,20 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
   const monthlyIncome = parseFloat(data?.finanzen?.monthlyIncome) || 0;
   // 13. Monatslohn: dieselbe Regel wie Steuer und IPV (utils/dreizehnter.js). Vorher immer ×12 —
   // mit 13. lag das Jahreseinkommen 8,3 % zu tief, die Einschätzung zu grosszügig.
-  const annualIncome = Math.round(monthlyIncome * hauptlohnMonate(data?.finanzen?.dreizehnter));
+  // Massgebend ist in allen vier Programmen das HAUSHALTSeinkommen (Fachprüfung 25.09.2026:
+  // BS «Summe aller Einkünfte des Haushalts», bs.ch · BL MBG § 8 Abs. 1 «Nettoeinkommen aller im
+  // Haushalt lebenden … Personen» · ZG Merkblatt Sept. 2025 «Haushaltseinkommen nach direkter
+  // Bundessteuer» · GE LRDU). Darum: Nebenerwerb ×12 immer; Partnereinkommen bei Ehe/eingetragener
+  // Partnerschaft. Im Konkubinat hängt es an Dauer und gemeinsamen Kindern (BS: mit Kindern oder nach
+  // fünf Jahren · BL: «gefestigtes Konkubinat» § 4 Abs. 2 lit. b MBG · ZG: nicht belegt) — dort NICHT
+  // eingerechnet, aber die Zahl mit ihm genannt. Vorher zählte nur der Hauptlohn: zu grosszügig.
+  const partnerMonat = hh.partnerIncome || 0;
+  const partnerZaehlt = giltAlsVerheiratet(data?.basis?.maritalStatus);
+  const eigenesJahr = Math.round(monthlyIncome * hauptlohnMonate(data?.finanzen?.dreizehnter)
+    + (parseFloat(data?.finanzen?.sideIncome) || 0) * 12);
+  const annualIncome = eigenesJahr + (partnerZaehlt ? Math.round(partnerMonat * 12) : 0);
+  const konkubinatMitPartner = !partnerZaehlt && data?.basis?.maritalStatus === 'cohabiting' && partnerMonat > 0
+    ? eigenesJahr + Math.round(partnerMonat * 12) : null;
   const ohneDreizehnten = monthlyIncome > 0 && dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen';
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
@@ -96,6 +110,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         // Frage offen, ×12 gerechnet: nur wo es die Einschätzung kippen kann (unter der Grenze).
         assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
+        // Konkubinat: ob das Partnereinkommen zählt, entscheidet die Stelle — die Zahl mit ihm steht daneben.
+        assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && konkubinatMitPartner != null && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),
         React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
         rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
