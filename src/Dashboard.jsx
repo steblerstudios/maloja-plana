@@ -600,8 +600,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
           { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
-          { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
-          { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
+          // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
+          // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
           { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
           !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
         ].filter(Boolean);
@@ -879,8 +879,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
       },
         [
-          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
-          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance', hint: ipvHint },
+          // IPV statt Prämien-Modellvergleich: der Hinweis «Anspruch möglich» rechnet die
+          // Verbilligung (calculateIPV), gehört also an die IPV, nicht an die Modelle.
+          { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung', hint: ipvHint },
+          { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
           { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
           { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
           { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
