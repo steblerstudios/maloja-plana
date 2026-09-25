@@ -108,9 +108,12 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('sozialhilfe.entitled')),
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), t('sozialhilfe.notEntitled')),
-      React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams)),
-      sozialhilfe.efbEntscheidet && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('sozialhilfe.efbEntscheidet'))
+      // Freibetrag-Fall (Predeploy 25.09.2026): nicht «reicht aus» + «Kein Anspruch» + «wäre möglich»
+      // untereinander, sondern offen — «Anspruch möglich» und warum der Kanton entscheidet.
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(),
+        t(sozialhilfe.efbEntscheidet ? 'dashboard.anspruchMoeglich' : 'sozialhilfe.notEntitled')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text } },
+        sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
     // Vermögensfreibetrag-Orientierung (je Kanton, data/sozialhilfeRechner.js) — nur wenn ein
