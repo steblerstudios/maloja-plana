@@ -37,7 +37,11 @@ const PROGRAMS = {
   // Basel-Landschaft — Mietzinsbeiträge, nur Haushalte mit mind. 1 Kind. Netto-Jahreseinkommen
   // ~40–75k (Paare) bzw. ~30–60k (Alleinerziehende); min. 2 Jahre Wohnsitz; Gemeinden zahlen aus.
   // Quelle: baselland.ch (Sozialamt), Mietzinsbeitragsgesetz.
-  BL: { state: 'has', group: 'families', incomeLimit: 75000, residencyYears: 2,
+  // ⟨25.09.2026, Fachprüfung⟩ KEINE feste Grenze mehr: nach § 6 MBG wird die Grenze je Haushalt
+  // berechnet (Lebensbedarf, KVG-Prämie, Miete, Kinderbetreuung), die Gemeinden setzen sie per
+  // Reglement fest (§ 10). Die frühere Pauschale 75'000 schätzte in beide Richtungen falsch.
+  // limitArt 'gemeinde' → Orientierung mit Verweis auf die Wohngemeinde statt Grenzvergleich.
+  BL: { state: 'has', group: 'families', incomeLimit: null, limitArt: 'gemeinde', residencyYears: 2,
         noteKey: 'mietzinsView.cantonNote_BL', stand: '2025',
         url: 'https://www.baselland.ch/politik-und-behorden/direktionen/finanz-und-kirchendirektion/sozialamt/mietzinsbeitraege' },
   // Genf — Allocation de logement. Anspruch über „taux d'effort" (Mietbelastung 24.7–29.9% je
@@ -52,7 +56,9 @@ const PROGRAMS = {
   // Mietzinsbeiträge Sept. 2025: „Für mehr als zwei erwachsene Personen erhöht sich die
   // Einkommensgrenze um CHF 20'000 je weitere Person."); Reinvermögen ≤ 144'000; Wohnung
   // max. 2 Zimmer mehr als Personen; min. 3 Jahre Wohnsitz/Arbeit; an Vermieter. Quelle: zg.ch.
-  ZG: { state: 'has', group: 'all', incomeLimit: 60000, incomePerChild: 2500, incomePerAdult: 20000,
+  // einkommensBasis 'steuerbar': ZG vergleicht das steuerbare Einkommen (neuste definitive Veranlagung),
+  // die App den Nettolohn — der liegt meist höher. Über der Grenze sagt die Ansicht das dazu.
+  ZG: { state: 'has', group: 'all', incomeLimit: 60000, einkommensBasis: 'steuerbar', incomePerChild: 2500, incomePerAdult: 20000,
         residencyYears: 3, assetLimit: 144000,
         noteKey: 'mietzinsView.cantonNote_ZG', stand: '2025',
         url: 'https://zg.ch/de/soziales/wohnungswesen/foerderinstrumente/fuer-privatpersonen' },
@@ -86,7 +92,7 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
 //
 //   VORPRÜFUNG   Vergleich des Jahreseinkommens mit einer Richtgrenze (MIETZINS_DATA_VERSION) —
 //                sagt, ob sich ein Antrag lohnen könnte, nie einen Betrag.
-//   ORIENTIERUNG 'effortBased' (GE): keine feste Grenze, also wird nichts geprüft.
+//   ORIENTIERUNG 'effortBased' (GE) / 'municipalLimit' (BL): keine feste Grenze, also wird nichts geprüft.
 //   null         Kanton ohne bestätigtes Programm ('none'/'check'): keine Prüfung, keine Art.
 // Ohne Kanton ist offen, ob es ein Programm gibt — die Vorprüfung wartet auf den Kanton und,
 // falls es fehlt, aufs Einkommen.
@@ -95,7 +101,7 @@ export function mietzinsErgebnis({ info, assessmentKey, annualIncome = 0 }) {
     return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: fehlendeAngaben({ kanton: false, einkommen: annualIncome > 0 }) });
   }
   if (info.state !== 'has' || !assessmentKey) return null;
-  if (assessmentKey === 'effortBased') return ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
+  if (assessmentKey === 'effortBased' || assessmentKey === 'municipalLimit') return ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
   if (assessmentKey === 'needIncome') return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: ['einkommen'] });
   return ergebnis(ERGEBNIS_ART.VORPRUEFUNG);
 }

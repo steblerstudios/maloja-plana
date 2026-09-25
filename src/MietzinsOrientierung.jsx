@@ -61,7 +61,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
   const assessment = (() => {
     if (!hasProgram) return null;
     if (info.group === 'families' && childrenCount === 0) return { key: 'familiesOnly', tone: 'soft' };
-    if (incomeLimit == null) return { key: 'effortBased', tone: 'neutral' }; // GE: mietabhängiges barème
+    // GE: mietabhängiges barème · BL: Grenze je Haushalt, von der Gemeinde festgesetzt (§ 6/§ 10 MBG).
+    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : 'effortBased', tone: 'neutral' };
     if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
     if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { limit: zahl(incomeLimit, { hoechstens: 2 }) } };
     return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
@@ -110,6 +111,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         // Frage offen, ×12 gerechnet: nur wo es die Einschätzung kippen kann (unter der Grenze).
         assessment && assessment.key === 'likely' && ohneDreizehnten && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.annahmeOhneDreizehnten')),
+        // ZG misst das steuerbare Einkommen (nach Abzügen) — tiefer als der Nettolohn. Knapp darüber kann es reichen.
+        assessment && assessment.key === 'incomeHigh' && info.einkommensBasis === 'steuerbar' && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.steuerbarTiefer')),
         // Konkubinat: ob das Partnereinkommen zählt, entscheidet die Stelle — die Zahl mit ihm steht daneben.
         assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && konkubinatMitPartner != null && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),

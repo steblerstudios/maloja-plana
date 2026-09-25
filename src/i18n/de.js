@@ -3759,6 +3759,8 @@ export default {
     cantonLabel: { sie: 'Ihr Kanton: {name}', du: 'Dein Kanton: {name}' },
     checkTitle: 'Schnellcheck',
     annahmeOhneDreizehnten: 'Einkommen ohne 13. Monatslohn gerechnet — die Angabe fehlt noch. Mit 13. Monatslohn liegt es höher und kann über der Grenze liegen. Angeben lässt sich das im Kapitel «Finanzen & Geld».',
+    result_municipalLimit: 'Hier gibt es keine feste Einkommensgrenze: Sie wird je Haushalt berechnet (Lebensbedarf, Krankenkassenprämie, Miete, Kinderbetreuung) und von der Wohngemeinde festgelegt. Ob ein Anspruch besteht, klärt die Gemeinde.',
+    steuerbarTiefer: 'Der Kanton vergleicht das steuerbare Einkommen aus der letzten Veranlagung — es liegt nach den Abzügen meist tiefer als der Nettolohn. Knapp über der Grenze lohnt sich die Prüfung trotzdem.',
     konkubinatPartner: 'Im Konkubinat zählt das Einkommen der Partnerperson je nach Kanton erst nach einigen Jahren Zusammenleben oder mit gemeinsamen Kindern. Mitgezählt läge das Haushaltseinkommen bei CHF {mit} — ob es zählt, klärt die kantonale Stelle.',
     basis: 'Grundlage: Einkommen CHF {income}/Jahr · Miete CHF {rent}/Monat · Haushalt {size} Pers.',
     result_likely: { sie: 'Es lohnt sich, den Anspruch zu prüfen: Ihr Einkommen (CHF {income}) liegt unter der Richtgrenze (CHF {limit}). Den genauen Anspruch klärt die kantonale Stelle.', du: 'Es lohnt sich, den Anspruch zu prüfen: dein Einkommen (CHF {income}) liegt unter der Richtgrenze (CHF {limit}). Den genauen Anspruch klärt die kantonale Stelle.' },

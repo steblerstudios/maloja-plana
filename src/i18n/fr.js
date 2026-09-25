@@ -3740,6 +3740,8 @@ export default {
     cantonLabel: { sie: 'Votre canton : {name}', du: 'Ton canton : {name}' },
     checkTitle: 'Vérification rapide',
     annahmeOhneDreizehnten: 'Revenu calculé sans 13e salaire — l’indication manque encore. Avec un 13e salaire, il est plus élevé et peut dépasser la limite. Cela peut être indiqué dans le chapitre « Finances ».',
+    result_municipalLimit: 'Il n’y a pas de limite de revenu fixe : elle est calculée par ménage (besoins vitaux, prime d’assurance-maladie, loyer, garde d’enfants) et fixée par la commune de domicile. La commune précise s’il existe un droit.',
+    steuerbarTiefer: 'Le canton compare le revenu imposable de la dernière taxation — après déductions, il est souvent inférieur au salaire net. Juste au-dessus de la limite, une vérification vaut quand même la peine.',
     konkubinatPartner: 'En concubinage, le revenu de la personne partenaire ne compte, selon le canton, qu’après quelques années de vie commune ou avec des enfants communs. En le comptant, le revenu du ménage serait de CHF {mit} — le service cantonal précise s’il compte.',
     basis: 'Base : revenu CHF {income}/an · loyer CHF {rent}/mois · ménage {size} pers.',
     result_likely: { sie: 'Cela vaut la peine de vérifier votre droit : votre revenu (CHF {income}) est inférieur à la limite indicative (CHF {limit}). Le service cantonal détermine le droit exact.', du: 'Cela vaut la peine de vérifier ton droit : ton revenu (CHF {income}) est inférieur à la limite indicative (CHF {limit}). Le service cantonal détermine le droit exact.' },

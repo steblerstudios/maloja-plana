@@ -236,3 +236,27 @@ describe('Mietzinsbeiträge: Haushaltseinkommen', () => {
     expect(html).toContain('mietzinsView.konkubinatPartner(60’000)');
   });
 });
+
+describe('Mietzinsbeiträge: BL ohne feste Grenze, ZG steuerbar', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const render = async (canton, monthlyIncome, children = []) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const data = { basis: { canton, maritalStatus: 'single', household: { adults: 1, children } }, finanzen: { monthlyIncome, dreizehnter: NEIN }, wohnen: { rentAmount: 1200 } };
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
+  };
+  it('BL: kein Grenzvergleich, Verweis auf die Gemeinde — auch bei tiefem Einkommen', async () => {
+    const html = await render('BL', 2000, [{ age: 5 }]);
+    expect(html).toContain('mietzinsView.result_municipalLimit');
+    expect(html).not.toContain('mietzinsView.result_likely');
+    expect(html).not.toContain('mietzinsView.result_effortBased');
+  });
+  it('ZG über der Grenze: Hinweis aufs steuerbare Einkommen; darunter nicht', async () => {
+    const hoch = await render('ZG', 5500);
+    expect(hoch).toContain('mietzinsView.result_incomeHigh');
+    expect(hoch).toContain('mietzinsView.steuerbarTiefer');
+    expect(await render('ZG', 3000)).not.toContain('mietzinsView.steuerbarTiefer');
+    // BS misst anders (Haushaltseinkommen) — dort kein solcher Hinweis.
+    expect(await render('BS', 5500)).not.toContain('mietzinsView.steuerbarTiefer');
+  });
+});

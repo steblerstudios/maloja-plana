@@ -3716,6 +3716,8 @@ export default {
     cantonLabel: { sie: 'Il Suo cantone: {name}', du: 'Il tuo cantone: {name}' },
     checkTitle: 'Verifica rapida',
     annahmeOhneDreizehnten: 'Reddito calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima è più alto e può superare il limite. Si può indicare nel capitolo «Finanze».',
+    result_municipalLimit: 'Non c’è un limite di reddito fisso: viene calcolato per economia domestica (fabbisogno vitale, premio di cassa malati, affitto, custodia dei figli) e fissato dal comune di domicilio. Se esiste un diritto, lo chiarisce il comune.',
+    steuerbarTiefer: 'Il cantone confronta il reddito imponibile dell’ultima tassazione — dopo le deduzioni è spesso più basso del salario netto. Appena sopra il limite, verificare vale comunque la pena.',
     konkubinatPartner: 'Nel concubinato il reddito della persona partner conta, secondo il cantone, solo dopo alcuni anni di convivenza o con figli comuni. Contandolo, il reddito dell’economia domestica sarebbe di CHF {mit} — se conta, lo chiarisce il servizio cantonale.',
     basis: 'Base: reddito CHF {income}/anno · affitto CHF {rent}/mese · economia domestica {size} pers.',
     result_likely: { sie: 'Vale la pena verificare il diritto: il Suo reddito (CHF {income}) è sotto il limite indicativo (CHF {limit}). Il diritto esatto lo determina il servizio cantonale.', du: 'Vale la pena verificare il diritto: il tuo reddito (CHF {income}) è sotto il limite indicativo (CHF {limit}). Il diritto esatto lo determina il servizio cantonale.' },

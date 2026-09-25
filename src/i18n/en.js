@@ -3806,6 +3806,8 @@ export default {
     cantonLabel: 'Your canton: {name}',
     checkTitle: 'Quick check',
     annahmeOhneDreizehnten: 'Income calculated without a 13th monthly salary — this has not been stated yet. With a 13th salary it is higher and may exceed the limit. It can be stated in the «Finances» chapter.',
+    result_municipalLimit: 'There is no fixed income limit here: it is calculated per household (living costs, health insurance premium, rent, childcare) and set by the municipality of residence. The municipality clarifies whether there is an entitlement.',
+    steuerbarTiefer: 'The canton compares taxable income from the latest assessment — after deductions it is usually lower than net salary. Just above the limit, checking is still worthwhile.',
     konkubinatPartner: 'When cohabiting, the partner’s income only counts in some cantons after several years together or with children in common. Counting it, the household income would be CHF {mit} — the cantonal office clarifies whether it counts.',
     basis: 'Basis: income CHF {income}/year · rent CHF {rent}/month · household {size} pers.',
     result_likely: 'It\'s worth checking your entitlement: your income (CHF {income}) is below the guideline limit (CHF {limit}). The cantonal office determines the exact entitlement.',
