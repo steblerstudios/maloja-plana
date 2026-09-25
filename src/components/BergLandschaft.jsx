@@ -24,10 +24,21 @@ export const AUSSCHNITT = {
   schmal: { x: 110, y: 130, w: 490, h: 658 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
-// Hero randlos (seit 25.09.2026): die Landschaft läuft über die ganze Seitenbreite, das Bild selbst
-// ist aber höchstens so hoch (in % der Fensterhöhe) — auf breiten Fenstern steht es darum in voller
-// Höhe in der Mitte, und links/rechts läuft es in eine verschwommene Fortsetzung desselben Bildes aus.
-export const MAX_HOEHE_VH = 80;
+// Hero randlos (seit 25.09.2026): die Landschaft füllt die ganze Seitenbreite, scharf. Damit sie auf
+// breiten Fenstern nicht höher als ~80 % des Fensters wird, zeigt der breite Ausschnitt dann weniger
+// Höhe: oben fällt Himmel weg, unten etwas Vordergrund — die Stationen bleiben immer ganz drin.
+// (Eine Fassung mit verschwommener Fortsetzung links/rechts wurde am selben Tag verworfen.)
+export const MAX_HOEHE_ANTEIL = 0.92;
+const MIN_HOEHE = 560;   // Bild-Einheiten: darunter käme der Titel in die Stationen
+const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
+export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
+  const voll = AUSSCHNITT.breit;
+  if (!rahmenBreite || !fensterHoehe) return voll;
+  const h = Math.min(BILD.h, Math.max(MIN_HOEHE, (BILD.w * fensterHoehe * MAX_HOEHE_ANTEIL) / rahmenBreite));
+  if (h >= BILD.h) return voll;
+  const y = Math.max(0, Math.min(UNTERKANTE - h, BILD.h - h));
+  return { x: 0, y, w: BILD.w, h };
+};
 
 // Die Route ist aus dem Bild gelesen (Maske der hellen Fahrbahn, Mittellinie), die Stationen
 // nach Vorgabe von Stebler Studios gesetzt (25.09.2026). Im Bild sind es zwei Strassen: die breite
@@ -142,7 +153,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     const messen = () => {
       const links = el.parentElement.getBoundingClientRect().left;
       const breite = document.documentElement.clientWidth;
-      setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite) ? alt : { links: -links, breite });
+      const hoehe = window.innerHeight;
+      setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite && alt.hoehe === hoehe) ? alt : { links: -links, breite, hoehe });
     };
     messen();
     window.addEventListener('resize', messen);
@@ -178,13 +190,13 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
   const p = bildPalette(palette);
   const kapitelFarbe = astFarben(chapters, p, false);
   const modus = schmal ? 'schmal' : 'breit';
-  const a = AUSSCHNITT[modus];
+  const a = schmal ? AUSSCHNITT.schmal : ausschnittBreit(breite, ausgriff && ausgriff.hoehe);
+  // Linke Kante der Inhaltsspalte, gemessen in der Hülle: Titel und Kreise stehen am Desktop
+  // bündig mit dem Inhalt darunter.
+  const spalte = ausgriff ? -ausgriff.links : 0;
   const imRahmen = (x, y) => ({ left: ((x - a.x) / a.w) * 100 + '%', top: ((y - a.y) / a.h) * 100 + '%' });
   // Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
   const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity 1.5s ease' });
-
-  // Steht das Bild schmaler als die Hülle (breites Fenster), läuft es an den Seiten weich aus.
-  const randWeich = ausgriff && breite > 0 && breite < ausgriff.breite - 2;
 
   return React.createElement('div', {
     ref: huelle,
@@ -196,20 +208,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       background: p.up,
     },
   },
-    // Die verschwommene Fortsetzung links und rechts — dasselbe Bild, gross und unscharf.
-    randWeich && !bildFehlt && React.createElement('div', {
-      'aria-hidden': 'true',
-      style: {
-        position: 'absolute', inset: '-48px', backgroundImage: `url(${landschaft})`,
-        backgroundSize: 'cover', backgroundPosition: 'center 70%', filter: 'blur(28px)',
-      },
-    }),
   React.createElement('div', {
     'data-tour': 'berge',
     ref: rahmen,
     style: {
-      position: 'relative', margin: '0 auto', lineHeight: 0,
-      width: `min(100%, calc(${MAX_HOEHE_VH}vh * ${a.w} / ${a.h}))`,
+      position: 'relative', lineHeight: 0, width: '100%',
       aspectRatio: `${a.w} / ${a.h}`,
       overflow: 'hidden',
     },
@@ -220,11 +223,6 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       'aria-hidden': 'true',
       style: {
         position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block',
-        // Weicher Übergang in die unscharfe Fortsetzung — nur das Bild, nicht Stationen und Kreise.
-        ...(randWeich ? {
-          maskImage: 'linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%)',
-        } : {}),
       },
     },
       !bildFehlt && React.createElement('image', {
@@ -291,8 +289,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       palette: p,
       'data-testid': 'berg-titel',
       style: {
-        position: 'absolute', top: schmal ? '10px' : '16px', left: schmal ? '26px' : '44px',
-        right: schmal ? '26px' : '44px', textAlign: 'left',
+        position: 'absolute', top: schmal ? '10px' : '16px', left: schmal ? '26px' : Math.max(44, spalte) + 'px',
+        right: schmal ? '26px' : Math.max(44, spalte) + 'px', textAlign: 'left',
         fontSize: schmal ? '24px' : '30px', lineHeight: 1.15, letterSpacing: '-0.3px',
         color: p.text,
         textWrap: 'balance',
@@ -328,7 +326,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         role: begonnen > 0 ? 'img' : undefined,
         'aria-label': begonnen > 0 ? zusammenfassung : undefined,
         style: {
-          position: 'absolute', left: schmal ? '8px' : '12px', right: schmal ? '8px' : '12px', bottom: schmal ? '8px' : '12px',
+          position: 'absolute', left: schmal ? '8px' : Math.max(12, spalte) + 'px', right: schmal ? '8px' : Math.max(12, spalte) + 'px', bottom: schmal ? '8px' : '12px',
           display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
           gap: '6px', pointerEvents: 'none', lineHeight: 1.2,
         },

@@ -6,7 +6,7 @@ import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constant
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
   STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
-  ETIKETT_SCHRIFT, etikettGrund,
+  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit,
 } from '../components/BergLandschaft.jsx';
 import BergLandschaft from '../components/BergLandschaft.jsx';
 
@@ -334,4 +334,23 @@ describe('Berge · Fortschritts-Kreise zeigen den Stand', () => {
     expect(html).toContain('berg-abgeschlossen');
     expect(html).toContain('100%');
   });
+});
+
+// Randlos, scharf (25.09.2026, nach verworfenem Unschärfe-Rand): auf breiten Fenstern zeigt der
+// Ausschnitt weniger Höhe — die Stationen (Ausbildung y 479 … Finanzen y 680) bleiben immer drin.
+describe('Berge · Ausschnitt bei randloser Breite', () => {
+  it('schmale/hohe Fenster: das ganze Bild', () => {
+    expect(ausschnittBreit(753, 1024)).toEqual(AUSSCHNITT.breit);
+  });
+  for (const [w, h] of [[1265, 800], [1425, 900], [1905, 1080], [1905, 700], [2545, 1440], [2545, 600]]) {
+    it(`${w}×${h}: alle Stationen im Ausschnitt, mit Rand`, () => {
+      const a = ausschnittBreit(w, h);
+      for (const st of STATIONEN) {
+        expect(st.y - 30, st.key).toBeGreaterThanOrEqual(a.y);
+        expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
+      }
+      expect(a.y).toBeGreaterThanOrEqual(0);
+      expect(a.y + a.h).toBeLessThanOrEqual(788);
+    });
+  }
 });
