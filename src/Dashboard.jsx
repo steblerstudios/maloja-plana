@@ -552,7 +552,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
             React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
-              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
+              // Das Icon des Kapitels statt des Punkts (25.09.2026) — dasselbe wie in der
+              // Fortschritts-Karte darunter, in der Farbe des Bereichs. Ohne Icon bleibt der Punkt.
+              Icons[chapters[nextField.chapterIdx].key]
+                ? React.createElement('span', { 'aria-hidden': 'true', style: { display: 'block', width: '22px', height: '22px', flexShrink: 0, color: dotColor } }, Icons[chapters[nextField.chapterIdx].key]())
+                : React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
               React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
                 // Codex-Audit 24.09.: das Feld allein («Vorname») sagt nicht, was zu tun ist — ein Verb dazu.
                 React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, t('dashboard.nextUpAction', { feld: nextField.label })),
