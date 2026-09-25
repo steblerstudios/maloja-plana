@@ -435,3 +435,27 @@ describe('nettoZuBruttoRichtwert — Netto→Brutto-Schätzung (AHV/ALV + PK nac
     expect(nettoZuBruttoRichtwert(-100, 40)).toBe(0);
   });
 });
+
+// ─── Gegenrichtung brutto→netto (25.09.2026) ─────────────────────────────────
+import { bruttoZuNettoRichtwert } from '../ahvRechner.js';
+
+describe('bruttoZuNettoRichtwert — dieselben Abzüge wie netto→brutto', () => {
+  it('unter der BVG-Schwelle nur AHV/ALV (6.4 %)', () => {
+    expect(bruttoZuNettoRichtwert(1500, 40)).toBe(Math.round(1500 * (1 - 0.064)));
+  });
+  it('hin und zurück trifft sich (±1 Franken Rundung), über Alter und Lohnhöhen', () => {
+    for (const alter of [undefined, 22, 30, 40, 50, 60]) {
+      for (const netto of [1800, 3000, 4500, 6200, 9000, 14000]) {
+        const brutto = nettoZuBruttoRichtwert(netto, alter);
+        expect(Math.abs(bruttoZuNettoRichtwert(brutto, alter) - netto)).toBeLessThanOrEqual(1);
+      }
+    }
+  });
+  it('mit Alter liegt das Netto tiefer als ohne (PK-Anteil)', () => {
+    expect(bruttoZuNettoRichtwert(7000, 50)).toBeLessThan(bruttoZuNettoRichtwert(7000));
+  });
+  it('leer oder negativ → 0', () => {
+    expect(bruttoZuNettoRichtwert('')).toBe(0);
+    expect(bruttoZuNettoRichtwert(-100)).toBe(0);
+  });
+});

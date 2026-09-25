@@ -278,20 +278,35 @@ export function bvgAltersgutschriftSatz(alter) {
 // PK weg (dann = reiner AHV/ALV-Richtwert).
 export const AHV_ALV_ARBEITNEHMER_SATZ = 0.064;
 
+// Geschätzte Arbeitnehmer-Abzüge pro Monat aus einem Brutto-Monatslohn — der EINE Baustein für
+// beide Richtungen (brutto→netto, netto→brutto), damit sie nie auseinanderlaufen.
+function abzuegeRichtwertMonat(bruttoMonat, alter) {
+  const gutschrift = bvgAltersgutschriftSatz(alter);
+  const koord = bvgKoordinationsabzug(bruttoMonat * 12);
+  const pkMonat = koord.versichert ? (koord.koordinierterLohn / 12) * (gutschrift / 100) / 2 : 0;
+  return bruttoMonat * AHV_ALV_ARBEITNEHMER_SATZ + pkMonat;
+}
+
 export function nettoZuBruttoRichtwert(nettoMonat, alter) {
   const netto = Math.max(0, Number(nettoMonat) || 0);
   if (netto <= 0) return 0;
-  const gutschrift = bvgAltersgutschriftSatz(alter);
   // Fixpunkt-Iteration: Brutto minus (AHV/ALV + PK) soll das Netto treffen. Die
   // Abzüge wachsen monoton mit dem Brutto → wenige Schritte konvergieren.
   let brutto = netto / (1 - AHV_ALV_ARBEITNEHMER_SATZ);
   for (let i = 0; i < 8; i++) {
-    const koord = bvgKoordinationsabzug(brutto * 12);
-    const pkMonat = koord.versichert ? (koord.koordinierterLohn / 12) * (gutschrift / 100) / 2 : 0;
-    const nettoCalc = brutto - brutto * AHV_ALV_ARBEITNEHMER_SATZ - pkMonat;
-    brutto += netto - nettoCalc;
+    brutto += netto - (brutto - abzuegeRichtwertMonat(brutto, alter));
   }
   return Math.round(brutto);
+}
+
+// Gegenrichtung (25.09.2026, Dashboard-Leistungsliste und Schnellcheck): grober NETTO-Richtwert aus
+// einem Brutto-Monatslohn — dieselben Abzüge wie oben (AHV/IV/EO + ALV 6.4 %, PK-Anteil nach Alter
+// über der Eintrittsschwelle). NICHT enthalten: NBU-Prämie, Krankentaggeld, überobligatorische PK,
+// Quellensteuer, 13. Monatslohn → das echte Netto liegt meist etwas TIEFER. Nur als «≈», nie verbindlich.
+export function bruttoZuNettoRichtwert(bruttoMonat, alter) {
+  const brutto = Math.max(0, Number(bruttoMonat) || 0);
+  if (brutto <= 0) return 0;
+  return Math.round(brutto - abzuegeRichtwertMonat(brutto, alter));
 }
 
 /**
