@@ -9,6 +9,7 @@ import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } 
 import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import { aufklappZeichen } from './IconKern.jsx';
+import { ABLAEUFE } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { zahl, betrag } from './utils/geld.js';
 
@@ -1232,27 +1233,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           );
         };
         const groups = [
-          { label: t('dashboard.toolGroups.lebensereignisse'), items: [
-            { label: t('nav.kkerst'), sub: t('nav.sub.kkerst'), view: 'kkerst', icon: 'insurance' },
-            { label: t('kvgWechsel.title'), sub: t('nav.sub.kvgwechsel'), view: 'kvgwechsel', icon: 'insurance' },
-            { label: t('zusatzWechsel.title'), sub: t('nav.sub.zusatzwechsel'), view: 'zusatzwechsel', icon: 'insurance' },
-            { label: t('nav.neuerjob'), sub: t('nav.sub.neuerjob'), view: 'neuerjob', icon: 'lebenslauf' },
-            { label: t('nav.stelleverloren'), sub: t('nav.sub.stelleverloren'), view: 'stelleverloren', icon: 'lebenslauf' },
-            { label: t('nav.unfallkrankheit'), sub: t('nav.sub.unfallkrankheit'), view: 'unfallkrankheit', icon: 'notfall' },
-            { label: t('nav.umzug'), sub: t('nav.sub.umzug'), view: 'umzug', icon: 'home' },
-            { label: t('nav.pensionierung'), sub: t('nav.sub.pensionierung'), view: 'pensionierung', icon: 'vorsorge' },
-            { label: t('nav.betreibung'), sub: t('nav.sub.betreibung'), view: 'betreibung', icon: 'behoerden' },
-            { label: t('nav.selbstaendigkeit'), sub: t('nav.sub.selbstaendigkeit'), view: 'selbstaendigkeit', icon: 'lebenslauf' },
-            { label: t('nav.heirat'), sub: t('nav.sub.heirat'), view: 'heirat', icon: 'heart' },
-            { label: t('nav.kind'), sub: t('nav.sub.kind'), view: 'kind', icon: 'family' },
-            { label: t('nav.trennung'), sub: t('nav.sub.trennung'), view: 'trennung', icon: 'family' },
-            { label: t('nav.bewilligung'), sub: t('nav.sub.bewilligung'), view: 'bewilligung', icon: 'behoerden' },
-            { label: t('nav.fuehrerausweis'), sub: t('nav.sub.fuehrerausweis'), view: 'fuehrerausweis', icon: 'behoerden' },
-            { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
-            { label: t('nav.iv'), sub: t('nav.sub.iv'), view: 'iv', icon: 'health' },
-            { label: t('nav.pflege'), sub: t('nav.sub.pflege'), view: 'pflege', icon: 'heart' },
-            { label: t('nav.todesfall'), sub: t('nav.sub.todesfall'), view: 'todesfall', icon: 'document' },
-          ] },
+          // Aus dem gemeinsamen Register — dieselbe Liste speist die Suche.
+          { label: t('dashboard.toolGroups.lebensereignisse'), items: ABLAEUFE.map((a) => (
+            { label: t(a.nav), sub: t(a.sub), view: a.view, icon: a.icon }
+          )) },
           { label: t('dashboard.toolGroups.gesundheit'), items: [
             { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
           ] },

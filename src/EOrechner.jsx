@@ -43,9 +43,11 @@ export const EOrechner = ({ palette, t, data }) => {
         t('eo.' + labelKey),
         leistung.istPlafoniert && React.createElement('span', { style: s.tag }, t('eo.plafoniert'))
       ),
-      React.createElement('td', { style: s.td }, leistung.tage + ' ' + t('eo.tage')),
+      // Betreuung: Taggelder, nicht Urlaubstage (EOG Art. 16q Abs. 3), und ein Höchstwert —
+      // bei zwei erwerbstätigen Eltern je nach eigenem Einkommen (Art. 16q Abs. 4, 16r Abs. 1).
+      React.createElement('td', { style: s.td }, leistung.typ === 'betreuung' ? t('eo.betreuungDauer', { n: leistung.tage }) : leistung.tage + ' ' + t('eo.tage')),
       React.createElement('td', { style: s.td }, 'CHF ' + fmt(leistung.taggeld)),
-      React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, 'CHF ' + fmt(leistung.totalEntschaedigung))
+      React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, (leistung.typ === 'betreuung' ? t('eo.hoechstens') + ' ' : '') + 'CHF ' + fmt(leistung.totalEntschaedigung))
     );
   };
 
@@ -95,7 +97,8 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', fontSize: text.xs } },
         React.createElement('div', null, t('eo.hinweisMutterschaft')),
         React.createElement('div', null, t('eo.hinweisVaterschaft')),
-        React.createElement('div', null, t('eo.hinweisAdoption'))
+        React.createElement('div', null, t('eo.hinweisAdoption')),
+        React.createElement('div', null, t('eo.hinweisBetreuung'))
       )
     ),
 
