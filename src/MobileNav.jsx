@@ -5,6 +5,7 @@ import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
 import { aufklappZeichen } from './IconSystem.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { laeuftAlsApp } from './utils/geraetErkennung.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -202,6 +203,23 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       },
         React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIcon('info', '16px')),
         t('tour.reopen')
+      ) : null,
+
+      // Auf den Startbildschirm — immer hier zu finden (Entscheid 25.09.2026), auch wenn die Karte
+      // im Bergpanorama weggeklickt ist. Läuft die Seite schon als App, fehlt der Eintrag.
+      mode === 'nav' && !laeuftAlsApp() ? React.createElement('button', {
+        key: 'install-app',
+        type: 'button',
+        onClick: () => { onClose(); onNavigate('installApp'); },
+        style: {
+          display: 'flex', alignItems: 'center', gap: space.sm, width: '100%',
+          textAlign: 'left', padding: '12px 20px', background: 'transparent',
+          border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer',
+          color: palette.mid, fontSize: text.sm, fontFamily: "inherit",
+        }
+      },
+        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIcon('phone', '16px')),
+        t('install.navSub')
       ) : null,
 
       // Search
