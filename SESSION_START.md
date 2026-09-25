@@ -19,6 +19,25 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🚀 **Nachtrag 25.09., 23:15 — Deploy durch Stebler Studios: live = `main` = `cb37254`.**
+>
+> **Stand, gemessen 25.09.2026 23:15** (`bash scripts/stand-jetzt.sh`): main = `cb37254` (23:04) · live = `cb37254`
+> (0.1.40-beta, gebaut 25.09. 23:09, `version.json` `sauber: true`) · live = main · offen: #351 (Entwurf).
+> Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Belegt:** Live-`index-DK_NVU1m.js` == frischer Build von `cb37254` (Build von `bd18793` ergibt einen anderen Hash —
+> #399 und #396 sind mit drin) · `scripts/check-deploy.sh`: 132 Assets erreichbar · Rauchtest im Browser auf
+> malojaplana.ch, Beispiel-Profil (63 %): Berg ohne eines der neun Bilder, 6 Wegstücke golden, Kreise 7/7 und 63 %,
+> keine Konsolenfehler.
+>
+> **Damit live** (vorher gemergt, nicht live): u. a. #388 13. Monatslohn + Mietzins · #389 Sozialhilfe eine Wahrheit ·
+> #392 IDEEN: Briefgenerator → Oktober entscheiden · #398 Berg-Bilder bis zum Oktober-Entscheid aus (`BERG_BILDER = false`) ·
+> #399 Kann-Punkte #388 · #396 Actions gepinnt / Service Worker. FEATURES.md: #388/#389 → `verified-live`, Zeile #398 neu.
+>
+> **Entscheide dieser Sitzung** (Stebler Studios): Gamification bis Oktober **nur** die neun Berg-Bilder aus — Lebensbaum,
+> Obstgarten, Gepäck, Instrumente und goldener Weg bleiben · Pastille «abgeschlossen» bleibt wie gebaut (erst ab dem ersten
+> Kapitel auf 100 %, keine «0/7»; beide Varianten im Browser verglichen) · `docs/IDEEN.md` bis Oktober nicht anfassen.
+
 > 🧮 **Nachtrag 25.09., 22:45 — Sitzung «IPV 13. Monatslohn»: eine Regel für den 13. Monatslohn, Mietzinsbeiträge gegen die Quellen 2026 (#388), gemergt auf ausdrückliches Wort von Stebler Studios («und dann bitte noch mergen»), Squash.**
 >
 > **Stand, gemessen 25.09.2026 22:43** (`bash scripts/stand-jetzt.sh`): main = `1b1a307` (22:43) · live = `bb9448c`
