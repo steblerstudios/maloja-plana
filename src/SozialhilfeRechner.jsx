@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
+import { berechneSozialhilfe, sozialhilfeErgebnis } from './data/sozialhilfeRechner.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -264,6 +265,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
     !result && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('sh.eingeben')),
 
+    // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026), leere Felder zählen als fehlend.
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton }) }),
     React.createElement('div', { style: s.source }, renderSource(t('sh.source'), null, t))
   );
 };

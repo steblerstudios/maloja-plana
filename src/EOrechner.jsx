@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { vergleicheEOLeistungen, EO_PARAMS } from './data/eoRechner.js';
+import { vergleicheEOLeistungen, eoErgebnis, EO_PARAMS } from './data/eoRechner.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -42,9 +43,11 @@ export const EOrechner = ({ palette, t, data }) => {
         t('eo.' + labelKey),
         leistung.istPlafoniert && React.createElement('span', { style: s.tag }, t('eo.plafoniert'))
       ),
-      React.createElement('td', { style: s.td }, leistung.tage + ' ' + t('eo.tage')),
+      // Betreuung: Taggelder, nicht Urlaubstage (EOG Art. 16q Abs. 3), und ein Höchstwert —
+      // bei zwei erwerbstätigen Eltern je nach eigenem Einkommen (Art. 16q Abs. 4, 16r Abs. 1).
+      React.createElement('td', { style: s.td }, leistung.typ === 'betreuung' ? t('eo.betreuungDauer', { n: leistung.tage }) : leistung.tage + ' ' + t('eo.tage')),
       React.createElement('td', { style: s.td }, 'CHF ' + fmt(leistung.taggeld)),
-      React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, 'CHF ' + fmt(leistung.totalEntschaedigung))
+      React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, (leistung.typ === 'betreuung' ? t('eo.hoechstens') + ' ' : '') + 'CHF ' + fmt(leistung.totalEntschaedigung))
     );
   };
 
@@ -94,7 +97,8 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', fontSize: text.xs } },
         React.createElement('div', null, t('eo.hinweisMutterschaft')),
         React.createElement('div', null, t('eo.hinweisVaterschaft')),
-        React.createElement('div', null, t('eo.hinweisAdoption'))
+        React.createElement('div', null, t('eo.hinweisAdoption')),
+        React.createElement('div', null, t('eo.hinweisBetreuung'))
       )
     ),
 
@@ -103,6 +107,8 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.xs } }, t('eo.erklaerung'))
     ),
 
+    // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026).
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: eoErgebnis({ einkommen: parsedEinkommen }) }),
     React.createElement('div', { style: s.source }, renderSource(t('eo.source'), null, t)),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint'))
   );

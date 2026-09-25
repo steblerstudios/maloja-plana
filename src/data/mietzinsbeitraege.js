@@ -11,6 +11,8 @@
 // falsches „none"). Die Programm-Parameter (Stand 2025) sind RICHTWERTE für eine erste
 // Einschätzung — verbindlich ist immer die kantonale bzw. kommunale Stelle. Die Werte
 // ändern jährlich → bei Pflege gegen die Quellen unten prüfen.
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+
 export const MIETZINS_OVERVIEW_URL = 'https://www.bwo.admin.ch/de/kantonale-hilfen';
 
 // Datenstand der Programm-Parameter (für künftige Pflege sichtbar).
@@ -76,4 +78,24 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
     limit += program.incomePerAdult * Math.max(0, adults - 2);
   }
   return limit;
+}
+
+// O3 — Ergebnis-Art des Mietzins-Schnellchecks (MietzinsOrientierung.jsx).
+// Die Einschätzung selbst bleibt in der Ansicht; hier wird nur aus IHREM Ergebnis (dem Schlüssel)
+// die Art abgeleitet, damit es für die Einschätzung weiter genau eine Quelle gibt.
+//
+//   VORPRÜFUNG   Vergleich des Jahreseinkommens mit einer Richtgrenze (MIETZINS_DATA_VERSION) —
+//                sagt, ob sich ein Antrag lohnen könnte, nie einen Betrag.
+//   ORIENTIERUNG 'effortBased' (GE): keine feste Grenze, also wird nichts geprüft.
+//   null         Kanton ohne bestätigtes Programm ('none'/'check'): keine Prüfung, keine Art.
+// Ohne Kanton ist offen, ob es ein Programm gibt — die Vorprüfung wartet auf den Kanton und,
+// falls es fehlt, aufs Einkommen.
+export function mietzinsErgebnis({ info, assessmentKey, annualIncome = 0 }) {
+  if (!info) {
+    return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: fehlendeAngaben({ kanton: false, einkommen: annualIncome > 0 }) });
+  }
+  if (info.state !== 'has' || !assessmentKey) return null;
+  if (assessmentKey === 'effortBased') return ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
+  if (assessmentKey === 'needIncome') return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: ['einkommen'] });
+  return ergebnis(ERGEBNIS_ART.VORPRUEFUNG);
 }

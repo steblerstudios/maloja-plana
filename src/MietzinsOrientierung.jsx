@@ -3,7 +3,8 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
-import { getMietzinsbeitraege, mietzinsIncomeLimit } from './data/mietzinsbeitraege.js';
+import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis } from './data/mietzinsbeitraege.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
@@ -48,6 +49,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
     return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
   })();
   const toneColor = (tone) => tone === 'good' ? palette.sage : (tone === 'soft' ? palette.soft : palette.text);
+  // O3: die Art des Ergebnisses, abgeleitet aus der Einschätzung oben (data/mietzinsbeitraege.js).
+  const art = mietzinsErgebnis({ info, assessmentKey: assessment && assessment.key, annualIncome });
 
   const card = (extra) => ({ padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md + 'px', fontSize: text.sm, ...extra });
   const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
@@ -58,7 +61,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
 
     !canton ? React.createElement('div', { style: card() },
       React.createElement('div', { style: { color: palette.mid } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('mietzinsView.enterCanton'))),
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('praemien') }, t('mietzinsView.enterCantonLink'))
+      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('praemien') }, t('mietzinsView.enterCantonLink')),
+      React.createElement(ErgebnisArt, { palette, t, ergebnis: art })
     ) : React.createElement(React.Fragment, null,
       // Kanton-Verfügbarkeit + kantonsspezifische Besonderheit (belegte Quelle).
       React.createElement('div', { style: card() },
@@ -85,6 +89,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         assessment && React.createElement('div', {
           style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, fontSize: text.sm, color: toneColor(assessment.tone), lineHeight: leading.normal },
         }, hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {})),
+        React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
         rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: zahl(rentLimit, { hoechstens: 2 }), size: householdSize })),

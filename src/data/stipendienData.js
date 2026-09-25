@@ -5,6 +5,8 @@
 // variieren pro Kanton und ändern jährlich; diese App gibt Orientierung, keine
 // verbindliche Zusage.
 
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+
 export const STIPENDIEN_DATA_VERSION = '2026-06';
 
 // Offizielle, stabile Top-Quellen (kantonsübergreifend)
@@ -51,4 +53,11 @@ export const STIPENDIEN_PRIVATE = [
 
 export function getStipendienPrivate() {
   return STIPENDIEN_PRIVATE;
+}
+
+// O3 — Ergebnis-Art des Kurz-Checks in StipendienView.jsx: VORPRÜFUNG. Er prüft zwei
+// harmonisierte Mindestkriterien (Aufenthalt, Ausbildungsstufe) und sagt, ob sich ein Antrag lohnt —
+// nie einen Betrag; Beträge und Grenzen legt der Kanton fest. Fehlend: die zwei Fragen des Checks.
+export function stipendienErgebnis({ status, scope }) {
+  return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: fehlendeAngaben({ status: !!status, scope: !!scope }) });
 }

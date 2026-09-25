@@ -540,13 +540,15 @@ export default {
     step3Title: '3 · Figli & mantenimento',
     step3Text: { sie: 'Con i figli, cura e responsabilità continuano — il bene dei figli è al centro. Il mantenimento dei figli ed eventualmente del coniuge viene regolato; in caso di disaccordo, l’APMA o il tribunale aiuta. Se l’altro genitore non versa il mantenimento concordato, il Suo Comune può anticiparlo (anticipo degli alimenti) e aiutare a incassarlo (assistenza all’incasso) — non deve rincorrere il denaro da solo. Si prenda tempo, non tutto va deciso subito.', du: 'Con i figli, cura e responsabilità continuano — il bene dei figli è al centro. Il mantenimento dei figli ed eventualmente del coniuge viene regolato; in caso di disaccordo, l’APMA o il tribunale aiuta. Se l’altro genitore non versa il mantenimento concordato, il tuo Comune può anticiparlo (anticipo degli alimenti) e aiutare a incassarlo (assistenza all’incasso) — non devi rincorrere il denaro da solo. Prendetevi tempo, non tutto va deciso subito.' },
     step4Title: '4 · Finanze & imposte',
-    step4Text: { sie: 'Dalla separazione l’imposizione avviene separatamente — la tariffa per coniugati decade e Lei viene tassato con la tariffa per persone sole o, con figli, con quella per genitori, quindi l’importo dovuto cambia. Separi conti comuni e procure e si faccia una visione d’insieme. In caso di divorzio, il reddito AVS degli anni di matrimonio viene ripartito a metà tra i due coniugi (splitting AVS), gli accrediti per compiti educativi vengono divisi, e la cassa pensioni di quegli anni viene anch’essa divisa (conguaglio della previdenza).', du: 'Dalla separazione siete tassati separatamente — la tariffa per coniugati decade e vieni tassato con la tariffa per persone sole o, con figli, con quella per genitori, quindi l’importo dovuto cambia. Separate conti comuni e procure e fatevi una visione d’insieme. In caso di divorzio, il reddito AVS degli anni di matrimonio viene ripartito a metà tra voi (splitting AVS), gli accrediti per compiti educativi vengono divisi, e la cassa pensioni di quegli anni viene anch’essa divisa (conguaglio della previdenza).' },
+    step4Text: { sie: 'Se alla fine dell’anno fiscale vivete stabilmente separati (separazione giudiziale o di fatto), l’imposizione avviene separatamente per tutto l’anno, ciascuno con la propria dichiarazione — la tariffa per coniugati decade e Lei viene tassato con la tariffa per persone sole o, con figli, con quella per genitori, quindi l’importo dovuto cambia. Separi conti comuni e procure e si faccia una visione d’insieme. In caso di divorzio, il reddito AVS degli anni di matrimonio viene ripartito a metà tra i due coniugi (splitting AVS), gli accrediti per compiti educativi vengono divisi, e la cassa pensioni di quegli anni viene anch’essa divisa (conguaglio della previdenza).', du: 'Se alla fine dell’anno fiscale vivete stabilmente separati (separazione giudiziale o di fatto), siete tassati separatamente per tutto l’anno, ciascuno con la propria dichiarazione — la tariffa per coniugati decade e vieni tassato con la tariffa per persone sole o, con figli, con quella per genitori, quindi l’importo dovuto cambia. Separate conti comuni e procure e fatevi una visione d’insieme. In caso di divorzio, il reddito AVS degli anni di matrimonio viene ripartito a metà tra voi (splitting AVS), gli accrediti per compiti educativi vengono divisi, e la cassa pensioni di quegli anni viene anch’essa divisa (conguaglio della previdenza).' },
     step4LinkTax: 'Vedi le imposte',
     step4LinkVorsorge: 'Vedi la previdenza',
     step5Title: '5 · Riverificare i diritti',
     step5Text: { sie: 'Vivere con un solo reddito cambia ciò a cui ha diritto. La Sua riduzione dei premi (RIP) viene ricalcolata sulla nuova situazione — vale la pena ricontrollare. Come genitore solo possono aprirsi ulteriori sostegni; lo stato di vita «genitore solo» li raccoglie in un luogo tranquillo.', du: 'Vivere con un solo reddito cambia ciò a cui hai diritto. La tua riduzione dei premi (RIP) viene ricalcolata sulla nuova situazione — vale la pena ricontrollare. Come genitore solo possono aprirsi ulteriori sostegni; lo stato di vita «genitore solo» li raccoglie in un luogo tranquillo.' },
     step5LinkIpv: 'Ricalcola la riduzione dei premi',
     step5LinkSituation: 'Vedi la situazione «genitore solo»',
+    step5TextAlv: 'Chi a causa della separazione o del divorzio deve cercare un lavoro o aumentare il grado di occupazione può essere esonerato dal periodo di contribuzione dell’assicurazione contro la disoccupazione — fino a 90 indennità giornaliere, se l’evento risale al massimo a un anno e allora il domicilio era in Svizzera (LADI art. 14 cpv. 2, art. 27 cpv. 4). La cassa di disoccupazione lo verifica.',
+    step5LinkAlv: 'Vedi l’indennità di disoccupazione',
     footerNote: { sie: 'Non deve regolare tutto da solo — mediazione, consulenza coniugale e legale ci sono. Questo è orientamento, non consulenza legale.', du: 'Non devi regolare tutto da solo — mediazione, consulenza coniugale e legale ci sono. Questo è orientamento, non consulenza legale.' },
   },
   selbstaendigkeit: {
@@ -2464,6 +2466,7 @@ export default {
       heartfelt24: 'Accompagna le persone con disagio psichico verso una vita autodeterminata — consulenza, alloggio, struttura diurna.',
       heartfelt25: 'Piattaforma di prestito senza scopo di lucro a Basilea — « prendere in prestito invece di comprare » : oltre 1’300 oggetti da prendere in prestito, gestita da volontari.',
       heartfelt26: 'Sementi di fiori selvatici che trasformano un prato in un prato fiorito — nutrimento per api selvatiche e altri insetti. Spedisce anche in Svizzera.',
+      heartfelt27: 'il tracker di abitudini (App Store e Google Play, Crewz) — Tenere traccia delle abitudini senza la pressione delle serie e senza sensi di colpa. Secondo il produttore utilizzabile senza account, tutti i dati esportabili in qualsiasi momento come file.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',
@@ -2864,7 +2867,7 @@ export default {
     step3: 'Tenere pronti il contratto di locazione e la polizza assicurativa',
     step4: 'I contributi AVS/LPP possono essere coperti',
     step5: 'Verificare la richiesta di PC presso la cassa di compensazione AVS',
-    orientationNote: { sie: 'Questo calcolo è puramente indicativo. Per una valutazione vincolante, si rivolga al Suo comune o a un servizio specializzato.', du: 'Questo calcolo è puramente indicativo. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.' },
+    orientationNote: { sie: 'Questa stima è puramente indicativa. Per una valutazione vincolante, si rivolga al Suo comune o a un servizio specializzato.', du: 'Questa stima è puramente indicativa. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.' },
     householdAdults: 'Nucleo familiare: {count} adulto/i',
     householdAdultsChildren: 'Nucleo familiare: {adults} adulto/i + {children} bambino/i',
     childrenNote: { sie: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Si informi presso il servizio sociale.', du: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.' },
@@ -4994,11 +4997,14 @@ export default {
     vaterschaft: 'Indennità di paternità',
     adoption: 'Indennità di adozione',
     betreuung: 'Indennità di assistenza',
+    hinweisBetreuung: 'Assistenza a un figlio con gravi problemi di salute dovuti a malattia o infortunio: al massimo 98 indennità giornaliere entro un termine quadro di 18 mesi (circa 14 settimane di congedo). Se entrambi i genitori esercitano un’attività lucrativa, a ciascuno spetta al massimo la metà (di norma 49), secondo il proprio reddito — è possibile un’altra ripartizione. Il totale vale per tutte le 98 indennità.',
+    betreuungDauer: 'fino a {n} indennità',
+    hoechstens: 'al massimo',
     plafoniert: 'Max.',
     hinweisMutterschaft: 'Maternità: 14 settimane dalla nascita. Requisito: almeno 5 mesi di attività lavorativa.',
     hinweisVaterschaft: 'Paternità: 2 settimane, da fruire entro 6 mesi dalla nascita.',
     hinweisAdoption: 'Adozione: 2 settimane, bambino sotto i 4 anni.',
-    source: 'Calcolo secondo [[LIPG Art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]]. Nessuna informazione giuridicamente vincolante. Stato 2026.',
+    source: 'Stima secondo i valori di riferimento della [[LIPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]] (stato 2026). Se sussiste un diritto e a quanto ammonta lo decide la cassa di compensazione. Nessuna informazione giuridicamente vincolante.',
   },
 
   sh: {
@@ -5047,7 +5053,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
-    source: 'Calcolo secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026); franchigia sul patrimonio secondo il cantone. Nessuna informazione giuridicamente vincolante.',
+    source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali e differenze cantonali. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
   },
 
   dl: {
@@ -5228,7 +5234,7 @@ export default {
     wartetageValue: "{n} giorni",
     anspruchLabel: "Durata del diritto",
     anspruchValue: "{n} indennità giornaliere (≈ {m} mesi)",
-    anspruchUnklar: "Servono almeno 12 mesi di contribuzione — altrimenti di norma nessun diritto.",
+    anspruchUnklar: "Con meno di 12 mesi di contribuzione negli ultimi due anni di norma nessun diritto. Esistono eccezioni: chi deve cercare un lavoro a causa di separazione, divorzio, invalidità o decesso del coniuge (anche in unione domestica registrata) e allora abitava in Svizzera può essere esonerato dal periodo di contribuzione — fino a 90 indennità giornaliere, se l’evento risale al massimo a un anno (LADI art. 14 cpv. 2, art. 27 cpv. 4). Altri esoneri valgono p. es. dopo una formazione, una malattia o la soppressione di una rendita AI. La cassa di disoccupazione lo verifica.",
     gedeckeltHint: "I guadagni superiori a CHF {max}/mese sono limitati al massimo.",
     disclaimer: { sie: 'Orientamento senza garanzia. L\'URC / la cassa di disoccupazione calcola l\'importo vincolante, a seconda della Sua situazione.', du: 'Orientamento senza garanzia. L\'URC / la cassa di disoccupazione calcola l\'importo vincolante, a seconda della tua situazione.' },
     ravTitle: { sie: 'Dove annunciarsi', du: 'Dove annunciarti' },
@@ -5376,5 +5382,17 @@ export default {
     doneTitle: 'Fatto',
     markDone: 'Segna come fatto',
     undo: 'Segna come non fatto',
+  },
+  // O3 — tipo di risultato (src/data/ergebnisArt.js). Blocco proprio in fondo al file.
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Calcolo secondo le regole in vigore; decide in modo vincolante il servizio competente',
+      schaetzung: 'Stima secondo i valori ufficiali, semplificata',
+      vorpruefung: 'Verifica preliminare: un diritto entra in considerazione? Senza importo',
+      orientierung: 'Orientamento: un ordine di grandezza, non calcolato secondo una regola ufficiale',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. Manca ancora un dato.',
+    fehltMehrere: '{satz}. Mancano ancora {n} dati.',
   },
 };

@@ -685,7 +685,8 @@ export default {
     step3Text: { sie: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po Vossa vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — Vus na stuais betg currer suenter ils daners suletta. Prendai Vus temp, betg tut sto vegnir decidì immediat.', du: 'Cun uffants van avant la chüra e la responsabladad — il bainstar dals uffants stat en il center. Il mantegniment dals uffants ed eventualmain dal conjugal vegn reglà; en cas da dischaccord gida l’APMA u la dretgira. Sche l’auter genitur na paja betg il mantegniment concordà, po tia vischnanca al pajar anticipadamain (anticipaziun dal mantegniment) e gidar a l’incassar (agid d’incasso) — ti na stos betg currer suenter ils daners suletta. Prendai vus temp, betg tut sto vegnir decidì immediat.' },
     step4Title: '4 · Finanzas & taglias',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    step4Text: { sie: 'Dapi la separaziun vegnis Vus taxads separadamain — la tariffa per maridads croda davent e Vus vegnis taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai Vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter Vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).', du: 'Dapi la separaziun vegnis vus taxads separadamain — la tariffa per maridads croda davent e ti vegns taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).' },
+    // TODO(rm): provisorisch — Gegenlese (Steuern ganzes Trennungsjahr, 24.09.2026)
+    step4Text: { sie: 'Sche Vus vivais separads a lunga vista la fin da l’onn fiscal (giudizialmain u da fatg), vegnis Vus taxads separadamain per l’entir onn, mintgin cun sia atgna decleraziun da taglia — la tariffa per maridads croda davent e Vus vegnis taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai Vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter Vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).', du: 'Sche vus vivais separads a lunga vista la fin da l’onn fiscal (giudizialmain u da fatg), vegnis vus taxads separadamain per l’entir onn, mintgin cun sia atgna decleraziun da taglia — la tariffa per maridads croda davent e ti vegns taxà cun la tariffa per persunas sulettas u, cun uffants, cun la tariffa per geniturs, uschia ch’il import debità sa mida. Separai contos cuminaivels e procuras e fai vus ina survista. En cas d’in divorzi vegn il retgav AVS dals onns da maridaglia partì a mesas tranter vus (splitting AVS), las bunificaziuns per lavurs educativas vegnan partidas, e la cassa da pensiun da quels onns vegn era partida (gulivaziun da la prevenziun).' },
     step4LinkTax: 'Guardar las taglias',
     step4LinkVorsorge: 'Guardar la prevenziun',
     step5Title: '5 · Verifitgar danovamain tes dretgs',
@@ -693,6 +694,9 @@ export default {
     step5Text: { sie: 'Cun be in sulet retgav sa mida quai che As stat a disposiziun. Vossa reducziun da premias (RIP) vegn calculada danovamain sin Vossa nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.', du: 'Cun be in sulet retgav sa mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin tia nova situaziun — ei vala la paina da controllar danovamain. Sco genitur sulet pon s’avrir ulteriurs sustegns; il stadi da vita «genitur sulet» als rimna en in lieu calm.' },
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
     step5LinkSituation: 'Guardar la situaziun «genitur sulet»',
+    // TODO(rm): provisorisch — Gegenlese (ALV-Befreiung im Trennungs-Ablauf, 24.09.2026)
+    step5TextAlv: 'Tgi che sto tschertgar ina plazza u augmentar il pensum pervia da la separaziun u dal divorzi po esser liberà dal temp da contribuziun da l’assicuranza cunter la dischoccupaziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn e sch’il domicil era lura en Svizra (LACI art. 14 al. 2, art. 27 al. 4). La cassa da dischoccupaziun scleriescha quai.',
+    step5LinkAlv: 'Guardar ils daners da dischoccupaziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     footerNote: { sie: 'Vus na stuais betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.', du: 'Ti na stos betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.' },
   },
@@ -2461,6 +2465,8 @@ export default {
       heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
       heartfelt25: 'Gemeinnützige Leihplattform in Basel — „Leihen statt kaufen“: über 1’300 Gegenstände zum Ausleihen, ehrenamtlich betrieben.',
       heartfelt26: 'Wildblumen-Saatgut, das Rasen in eine Blühwiese verwandelt — Nahrung für Wildbienen und andere Insekten. Liefert auch in die Schweiz.', // TODO(rm): Übersetzung
+      // TODO(rm): provisorisch — Gegenlese (Nexter, 25.09.2026)
+      heartfelt27: 'il tracker d’usits (App Store e Google Play, Crewz) — Notar usits senza squitsch da seria e senza mala conscienza. Tenor il purschider utilisabel senza conto, tut las datas exportablas da tut temp sco datoteca.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
@@ -3872,7 +3878,7 @@ export default {
     step3: 'Avair pront il contract da locaziun e la polizza CM',
     step4: 'Contribuziuns AVS/LPP vegnan eventualmain surpigliadas',
     step5: 'Examinar la dumonda PC tar la filiala AVS',
-    orientationNote: { sie: "Questa calculaziun serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa calculaziun serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
+    orientationNote: { sie: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactai Vossa vischnanca u ina post spezialisada.", du: "Questa stima serva a l'orientaziun. Per ina evaluaziun vinculanta, contactescha Tia vischnanca u ina post spezialisada." },
     householdAdults: 'Ménaschi: {count} creschids',
     householdAdultsChildren: 'Ménaschi: {adults} creschids + {children} uffants',
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
@@ -4334,11 +4340,16 @@ export default {
     vaterschaft: 'Indemnisaziun da paternitad',
     adoption: "Indemnisaziun d'adopziun",
     betreuung: 'Indemnisaziun da tgira',
+    // TODO(rm): provisorisch — Gegenlese (EO Betreuung 98 daners dal di, 25.09.2026)
+    hinweisBetreuung: 'Tgira d’in uffant grevamain malsaun u blessà: maximalmain 98 daners dal di entaifer 18 mais (var 14 emnas congedi). Sch’omadus geniturs lavuran, tutga a mintgin maximalmain la mesadad (per ordinari 49), tenor l’agen retgav — ina autra repartiziun è pussaivla. Il total vala per tut ils 98 daners dal di.',
+    betreuungDauer: 'fin {n} daners dal di',
+    hoechstens: 'maximalmain',
     plafoniert: 'Max.',
     hinweisMutterschaft: "Maternitad: 14 emnas a partir da la naschientscha. Cundiziun: almain 5 mais activa.",
     hinweisVaterschaft: 'Paternitad: 2 emnas, retschaviment entaifer 6 mais suenter la naschientscha.',
     hinweisAdoption: "Adopziun: 2 emnas, uffant sut 4 onns.",
-    source: "Calculaziun tenor [[LEO art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]]. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.",
+    // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
+    source: "Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand 2026). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.",
   },
 
   sh: {
@@ -4388,7 +4399,8 @@ export default {
     freibetrag: 'Import liber',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
-    source: 'Calculaziun tenor [[directivas COSAS|skos.ch]] (stadi 1.1.2026); franchisa sin la facultad tenor chantun. Nagina infurmaziun giuridicamain vinculanta.',
+    // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
+    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen und kantonale Abweichungen. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
 
   kvg: {
@@ -5784,7 +5796,8 @@ export default {
     wartetageValue: "{n} dis",
     anspruchLabel: "Durada dal dretg",
     anspruchValue: "{n} indemnisaziuns dal di (≈ {m} mais)",
-    anspruchUnklar: "I dovran almain 12 mais da contribuziun — uschiglio per ordinari nagin dretg.",
+    // TODO(rm): provisorisch — Gegenlese (ALV-Befreiung AVIG 14 II, 24.09.2026)
+    anspruchUnklar: "Sut 12 mais da contribuziun ils ultims dus onns per ordinari nagin dretg. I dat excepziuns: tgi che sto tschertgar ina plazza pervia d’ina separaziun, d’in divorzi, da l’invaliditad u da la mort dal consort u da la consorta (era en partenadi registrà) ed abitava lura en Svizra po esser liberà dal temp da contribuziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn (LACI art. 14 al. 2, art. 27 al. 4). Ulteriuras liberaziuns valan p. ex. suenter ina scolaziun, ina malsogna u la fin d’ina renta AI. La cassa da dischoccupaziun scleriescha quai.",
     gedeckeltHint: "Gudogns sur CHF {max}/mais vegnan limitads al maximum.",
     disclaimer: { sie: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor Vossa situaziun.", du: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor tia situaziun." },
     ravTitle: { sie: "Nua As annunziar", du: "Nua t'annunziar" },
@@ -5891,5 +5904,19 @@ export default {
       psychiater: 'Psichlater / Psichlatra',
       other: 'Autra spezialisaziun',
     },
+  },
+  // O3 — Ergebnis-Art (src/data/ergebnisArt.js). Eigener Block am Dateiende.
+  // TODO(rm): DE-Fallback für den ganzen Block — Fachbegriffe (Berechnung/Schätzung/Vorprüfung/
+  // Orientierung) von Muttersprachler:in setzen lassen, nicht maschinell übersetzen (24.09.2026).
+  ergebnisArt: {
+    satz: {
+      berechnung: 'Berechnung nach den geltenden Regeln; verbindlich entscheidet die zuständige Stelle',
+      schaetzung: 'Schätzung nach amtlichen Eckwerten, vereinfacht',
+      vorpruefung: 'Vorprüfung, ob ein Anspruch infrage kommt, ohne Betrag',
+      orientierung: 'Orientierung: eine Grössenordnung, nicht nach amtlicher Regel gerechnet',
+    },
+    vollstaendig: '{satz}.',
+    fehltEine: '{satz}. Noch eine Angabe nötig.',
+    fehltMehrere: '{satz}. Noch {n} Angaben nötig.',
   },
 };

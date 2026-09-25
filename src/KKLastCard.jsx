@@ -4,10 +4,17 @@ import { calculateIPV } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
+import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
 
 // WHO / UNO SDG-Indikator 3.8.2: Gesundheitsausgaben über 10% des Einkommens
 // gelten als "katastrophale" (belastende) Ausgaben. Ruhige Orientierung, kein Alarm.
 const WHO_THRESHOLD = 10;
+
+// O3 — Ergebnis-Art: ORIENTIERUNG. Der Anteil ist die eigene Prämie geteilt durch das eigene
+// Einkommen, verglichen mit einem WHO-Richtwert — keine Schweizer Regel für den Einzelfall. Die
+// Karte erscheint nur, wenn beide Zahlen da sind, darum fehlt nie eine Angabe.
+export const KK_LAST_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 
 // Zeigt die Grundversicherungs-Prämie als % des Einkommens gegen den WHO-Richtwert.
 // Rendert nichts, wenn Prämie oder Einkommen fehlen (kein Druck, calm UX).
@@ -83,6 +90,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       t('kkLast.underWithIpv')
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('kkLast.whoNote')),
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: KK_LAST_ERGEBNIS, style: { marginTop: space.xs + 'px' } }),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, renderSource(t('kkLast.source'), null, t)),
     over && onNavigate && React.createElement('button', {
       type: 'button',

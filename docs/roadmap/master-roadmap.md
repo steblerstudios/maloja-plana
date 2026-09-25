@@ -1,5 +1,9 @@
 # Maloja Plana — Master Roadmap
 
+> **Historie, keine Planung mehr (Hinweis vom 24.09.2026).** Die Abschnitte «Nächste Schritte»
+> und «Bewusst zurückgestellt» sind in [`../IDEEN.md`](../IDEEN.md) übernommen und werden
+> nur noch dort gepflegt. Was gebaut wird: [`../BAULISTE-2026-09-30.md`](../BAULISTE-2026-09-30.md).
+
 > Stand: 2026-06-22
 
 ---
