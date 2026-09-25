@@ -780,6 +780,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     if (ipv.eligible) {
       iRows.push({ label: t('premium.monthlySubsidy'), value: formatCHF(ipv.amount) + t('common.perMonth'), bold: true });
       iRows.push({ label: t('premium.annualSubsidy'), value: formatCHF(ipv.amount * 12) + t('common.perYear') });
+      // 13. Monatslohn offen: ×12 gerechnet — dieselbe Annahme wie bei der Steuer, auch hier sichtbar.
+      if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
+      if (ipv.annahmen?.partnerOhneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten') });
     }
     // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
@@ -890,6 +893,8 @@ export const STEUER_KENNUNG = Object.freeze({
   basisDirekt: 'eingetragen_dbst',
   kantonBasis: 'estv_hauptort_ohne_kirchensteuer',
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
+  // IPV (25.09.2026): Partnereinkommen ×12, nach dessen 13. Monatslohn fragt die App nicht.
+  annahmePartnerOhneDreizehnten: 'partner_ohne_13_monatslohn',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
   annahmeEinzeln: 'einzeln_konkubinat',
   // Gate 24.09.2026: Konkubinat mit Kindern, ganzer Kinderabzug bei der Person (KS 30, Ziff. 14.8.1).
@@ -976,6 +981,10 @@ export function generateBehoerdenJSON(data, calculations, t) {
           eligible: !!ipv.eligible,
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
+          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
+            ...(ipv.annahmen.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
+            ...(ipv.annahmen.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+          ] } : {}),
         };
   }
   if (el) {

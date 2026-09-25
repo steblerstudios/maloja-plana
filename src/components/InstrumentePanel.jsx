@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { schildState } from '../data/schutzschild.js';
+import { schildState, schildOptionen } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
@@ -96,10 +96,7 @@ const miniShield = (palette, fraction) => {
 export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = false }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
-  const shield = schildState(v, {
-    employed: data?.finanzen?.employmentType === 'employed',
-    annualIncome: (Number(data?.finanzen?.monthlyIncome) || 0) * 12,
-  });
+  const shield = schildState(v, schildOptionen(data));
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
   // Steuer: dieselbe Rechnung wie Steuerrechner und Finanz-Übersicht (E39: steuernFuerProfil).

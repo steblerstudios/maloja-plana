@@ -119,6 +119,7 @@ Abschiedsagentur, plaant).
 | Beispiel-Modus mit Personas | §10 | Persona-Durchlauf |
 | Steuer-Säule mit Vergleich (Barometer wie Miete/Lohn) | §15 | ESTV-Steuerbelastung belegen |
 | Leistungs-Schnellcheck und Anspruchs-Landkarte zu **einer** Seite | §15 | Seiten-Entwurf |
+| 🔁 **Wiedervorlage vor IPV-Anspruchsjahr 2027:** 13. AHV-Altersrente (erstmals Dez. 2026) — fällt sie ins Bemessungsjahr der fünf Kantonsmodelle? Heute Renten ×12 (`rohesEinkommenJahr`, kantonsModell.js); IV-Renten bleiben ×12. Aus der Fachprüfung zu #388 (25.09.2026) | §5 | Kantonswerte 2027 (Riegel `jahrVorbei` ab 01.01.2027) |
 
 ### Irgendwann
 

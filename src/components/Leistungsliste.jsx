@@ -6,6 +6,7 @@ import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
+import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 
 // Leistungsliste des Dashboard-Blocks «Was steht mir zu?» (seit 25.09.2026 eigene Datei,
@@ -15,7 +16,9 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // Brutto oder netto (EinkommenFeld); gerechnet wird mit netto.
   const e = useEinkommen(data);
   const income = e.nettoMonat;
-  const annual = income * 12;
+  // Mit dem 13. Monatslohn aus dem Profil — dieselbe Regel wie calculateIPV (utils/dreizehnter.js),
+  // denn `probe` trägt `dreizehnter` mit und die IPV rechnet damit.
+  const annual = income * hauptlohnMonate(data?.finanzen?.dreizehnter);
   const canton = data?.basis?.canton;
   const fmt = (v) => zahl(v, { hoechstens: 2 });
 

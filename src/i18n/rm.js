@@ -2863,6 +2863,8 @@ export default {
     noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
+    annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
@@ -3259,6 +3261,7 @@ export default {
       basisDirekt: "Endatà (entrada taxabla, taglia federala directa)", // TODO(rm): provisorisch
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
+      annahmePartnerOhneDreizehnten: "Entrada da la segunda persuna quintada senza 13avla paja", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
       annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       annahmeKinderabzugKonkubinat: "Concubinat cun uffants: entira deducziun per uffants quintada tar la persuna (mesadad cun autoritad parentala cuminaivla, circular AFC nr. 30, cifra 14.8.1)", // TODO(rm): provisorisch
@@ -5141,6 +5144,26 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     cantonLabel: { sie: 'Voss chantun: {name}', du: 'Tes chantun: {name}' },
     checkTitle: 'Test svelt',
+    annahmeOhneDreizehnten: 'Entrada quintada senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è ella pli auta e po surpassar il limit. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    result_tableLimit: 'Per questa chasada (trais u dapli creschids senza uffants) na numna la tabella nagin limit. L’uffizi da contribuziuns socialas scleresch il dretg.', // TODO(rm): provisorisch
+    result_jungeErwachseneOffen: 'En la chasada viva almain ina persuna tranter 18 e 24 onns. Ella quinta mo sch’ella è en emprima furmaziun (emprendissadi, scola u studi fin a l’emprim diplom) — lura è il limit bler pli aut. Il dretg scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    erstausbildungFrage: '{name}: en emprima furmaziun?', // TODO(rm): provisorisch
+    personAlter: 'Persuna, {alter} onns', // TODO(rm): provisorisch
+    erstausbildungHinweis: 'Emprima furmaziun munta: emprendissadi, scola u studi fin a l’emprim diplom. Mo lura quinta la persuna (ed il limit crescha); uschiglio na tutga ella betg tar la chasada. La resposta resta memorisada tar la chasada.', // TODO(rm): provisorisch
+    bedingung_ZG: 'Vala mo per abitaziuns tenor la lescha chantunala da promoziun d’abitaziuns — l’administraziun sa sche l’atgna tutga latiers.', // TODO(rm): provisorisch
+    wfgFrage: 'È l’abitaziun suttamessa a la lescha chantunala da promoziun d’abitaziuns (WFG)?', // TODO(rm): provisorisch
+    wfg_ja: 'Gea', // TODO(rm): provisorisch
+    wfg_nein: 'Na', // TODO(rm): provisorisch
+    wfg_weissNicht: 'Na sai betg', // TODO(rm): provisorisch
+    wfgHinweis: 'Quai sa l’administraziun u il locatur. La resposta resta memorisada en il chapitel Abitar.', // TODO(rm): provisorisch
+    result_wfgNein: 'A Zug datti contribuziuns da fitg mo per abitaziuns tenor la lescha da promoziun d’abitaziuns — per questa abitaziun pia betg. Autras agids sco la reducziun da premias na dependan betg da quai.', // TODO(rm): provisorisch
+    result_municipalLimit: 'Qua na datti nagin limit fix d’entradas: el vegn quintà per chasada (basegn da viver, premia da la cassa da malsauns, fitg, tgira d’uffants) e fixà da la vischnanca da domicil. Sch’i dat in dretg, scleresch la vischnanca.', // TODO(rm): provisorisch
+    steuerbarTiefer: 'Il chantun cumpareglia las entradas taxablas da la davosa taxaziun — suenter las deducziuns èn ellas savens pli bassas ch’il salari net. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
+    massgebendTiefer: 'Il chantun quinta cun l’entrada decisiva suenter las deducziuns (plus 10 % da la facultad sur la franchisa) — ella è savens pli bassa ch’il salari. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
+    konkubinatPartner: 'L’entrada da la segunda persuna creschida n’è betg quintada: senza matrimoni quinta ella tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
+    konkubinatPartnerGrenze: 'L’entrada da la segunda persuna creschida n’è betg quintada ed il limit è quintà senza ella: senza matrimoni quinta ella a Basilea-Citad pir cun uffants cuminaivels u suenter tschintg onns da convivenza. Quintada, fiss l’entrada da la chasada CHF {mit} ed il limit var. CHF {grenze} — sch’ella quinta, scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    partnerOffen: 'Quintà senza l’entrada dal consort u da la consorta — l’indicaziun manca anc (chapitel Basa persunala, chasada). Cun ina entrada è l’entrada da la chasada pli auta.', // TODO(rm): provisorisch
+    mietbelastungZG: 'Tranter CHF 50’000 e 60’000 dat Zug mo ina contribuziun, sche la fittanza suenter la reducziun surpassa 25 % da l’entrada — qua è ella gia avant sut quai.', // TODO(rm): provisorisch
     basis: 'Basa: entrada CHF {income}/onn · fittanza CHF {rent}/mais · chasada {size} pers.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.' },
@@ -5155,10 +5178,10 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     rentWithin: { sie: 'Vossa fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).', du: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).' },
     rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
-    cantonNote_BS: 'Dapi fanadur 2025 era per chasadas d\'ina u duas persunas cun bassa entrada (indicativ ~CHF 50’000/onn), betg mo famiglias. Almain 2 onns domicil.',
-    cantonNote_BL: 'Mo per chasadas cun almain in uffant. Entrada netta annuala radund CHF 40’000–75’000 (pèrs) u 30’000–60’000 (geniturs sulets). La vischnanca paja or l\'agid.',
-    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d\'effort), betg ina limita d\'entrada fixa. Max. CHF 1’400 per stanza, il pli ferm la mesadad da la fittanza. 2 dals davos 5 onns domicil.',
-    cantonNote_ZG: 'Entrada suenter la taglia federala directa fin CHF 60’000 (+2’500 per uffant, +20’000 per ulteriura persuna creschida), facultad netta fin CHF 144’000. Almain 3 onns domicil; la contribuziun va al locatur.',
+    cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
+    cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
+    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
+    cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF 60’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25 % da l’entrada. Facultad netta fin CHF 144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -5345,6 +5368,8 @@ export default {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',
     pflichtNote: 'Prescrit da la lescha.',
+    bvgUnklar: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. I n’è betg registrada ina paja bruta — il certificat da salari mussa sch’ella vala qua.', // TODO(rm): provisorisch
+    bvgUnklar13: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. Cun ina 13avla paja fiss la paja sura — l’indicaziun manca anc (chapitel Finanzas & daners).', // TODO(rm): provisorisch
     empfohlenTitle: 'Recumandà',
     empfohlenNote: 'Facultativ, ma sensà.',
     kk: 'Assicuranza da malsauns',

@@ -1519,7 +1519,7 @@ const AppInner = ({ demo }) => {
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
-        view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Design-Vorschau des Tresor-LockScreens (nur DEV; onUnlock ist ein Stub —
         // Passphrase „test1234" = Erfolg, sonst Fehler). Noch NICHT an secureStore verdrahtet.

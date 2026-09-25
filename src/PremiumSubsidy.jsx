@@ -470,7 +470,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.maxPossible', { value: ipvResult.maxAnnual })
           )
-        )
+        ),
+        // Wie im Steuerrechner (annahmen.ohneDreizehnten): die Frage nach dem 13. Monatslohn ist offen,
+        // gerechnet ×12 — mit 13. läge die Verbilligung tiefer. Sichtbar, nicht still angenommen.
+        ipvResult.annahmen?.ohneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+          hinweisZeichen(), t('ipv.annahmeOhneDreizehnten')),
+        ipvResult.annahmen?.partnerOhneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+          hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten'))
       ),
 
       // All cantons overview — nur amtlich belegte Kantone (E9); ohne einen belegten entfällt der Vergleich
