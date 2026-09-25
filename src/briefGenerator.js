@@ -712,6 +712,16 @@ export function leseAngaben(templateKey, roh) {
   return out;
 }
 
+// Hat die Person etwas EINGETIPPT (Text, Datum, Betrag)? Wahlfelder und Ankreuzfelder haben
+// immer eine Vorgabe und tragen keine persönliche Angabe — sie zählen nicht. Quelle für die
+// Export-Vorschau (Kategorie 'briefAngaben').
+export function angabenEingetippt(templateKey, roh) {
+  const r = roh && typeof roh === 'object' ? roh : {};
+  return (BRIEF_ANGABEN[templateKey] || [])
+    .filter(f => f.type !== 'wahl' && f.type !== 'ja')
+    .some(f => String(r[f.key] == null ? '' : r[f.key]).trim() !== '');
+}
+
 // Gemeinsames Gerüst der vier Briefe: Absender, Empfänger, Ort/Datum, Betreff, Absätze,
 // Unterschrift, Bildschirm-Hinweis. `absaetze` sind KLARTEXT — esc() genau einmal hier.
 function briefGeruest(data, t, { recipientHtml, subject, absaetze, legalNote }) {

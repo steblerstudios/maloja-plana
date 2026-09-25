@@ -25,7 +25,9 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
         labelKey: 'betreibung.fristLabel', hinweisKey: 'betreibung.fristHinweis', vorbeiKey: 'betreibung.fristVorbei',
         buttonKey: 'betreibung.step1Button', doneKey: 'betreibung.step1Done', calendarKey: 'betreibung.step1CalendarLink',
         reminderTitle: t('betreibung.reminderTitle'), category: 'admin',
-      })
+      }),
+      // Rechtsvorschlag als Brief, vorgewählt (26.09.2026).
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.debtObjection'), onClick: () => onNavigate('briefe', undefined, 'debtObjection') })
     ),
 
     // Schritt 2 — Stimmt die Forderung? (zahlen/Raten vs. Rechtsvorschlag)

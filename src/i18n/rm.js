@@ -5132,6 +5132,7 @@ export default {
         belege: 'Quittanzas tschernidas ({count})',
         arbeitgeber: 'Patrun ed adressa',
         lohn: 'Datas da salari',
+        briefAngaben: 'Indicaziuns dal formular dal brev (numers, datas, nums)', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
         // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
         ipvErgebnis: 'Reducziun da premias stimada (RIP)',
         ipvOrientierung: 'Stimaziun da la reducziun da premias (senza import)', // TODO(rm): provisorisch

@@ -3552,6 +3552,7 @@ export default {
         belege: 'Justificatifs choisis ({count})',
         arbeitgeber: 'Employeur et adresse',
         lohn: 'Données salariales',
+        briefAngaben: 'Indications du formulaire de lettre (numéros, dates, noms)',
         ipvErgebnis: 'Réduction de primes estimée (RIP)',
         ipvOrientierung: 'Estimation de la réduction de primes (sans montant)',
         einkommen: 'Revenu (salaire, allocations familiales, pensions alimentaires)',

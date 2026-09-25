@@ -3552,6 +3552,7 @@ export default {
         belege: 'Giustificativi scelti ({count})',
         arbeitgeber: 'Datore di lavoro e indirizzo',
         lohn: 'Dati salariali',
+        briefAngaben: 'Dati inseriti nel modulo della lettera (numeri, date, nomi)',
         ipvErgebnis: 'Riduzione dei premi stimata (RIPM)',
         ipvOrientierung: 'Valutazione della riduzione dei premi (senza importo)',
         einkommen: 'Reddito (salario, assegni familiari, alimenti)',

@@ -3588,6 +3588,7 @@ export default {
         belege: 'Ausgewählte Belege ({count})',
         arbeitgeber: 'Arbeitgeber und Adresse',
         lohn: 'Lohnangaben',
+        briefAngaben: 'Angaben aus dem Brief-Formular (Nummern, Daten, Namen)',
         ipvErgebnis: 'Geschätzte Prämienverbilligung (IPV)',
         ipvOrientierung: 'Einschätzung zur Prämienverbilligung (ohne Betrag)',
         einkommen: 'Einkommen (Lohn, Familienzulagen, Alimente)',

@@ -3552,6 +3552,7 @@ export default {
         belege: 'Selected receipts ({count})',
         arbeitgeber: 'Employer and address',
         lohn: 'Wage details',
+        briefAngaben: 'Details entered in the letter form (numbers, dates, names)',
         ipvErgebnis: 'Estimated premium reduction (IPV)',
         ipvOrientierung: 'Assessment of the premium reduction (no amount)',
         einkommen: 'Income (wage, family allowances, maintenance)',

@@ -125,6 +125,13 @@ function briefKategorien(q) {
       if (hatWert(v.kkInsurer)) out.push({ id: 'versicherung' });
       if (q.belegeCount > 0) out.push({ id: 'belege', count: q.belegeCount });
       break;
+    // Lebensereignis-Briefe (26.09.2026): Arbeitgeber aus dem Profil …
+    case 'workReference':
+    case 'dismissalObjection': {
+      const side = q.job === 'side';
+      if (hatWert(side ? f.sideEmployer : f.employer) || hatWert(side ? f.sideEmployerAddress : f.employerAddress)) out.push({ id: 'arbeitgeber' });
+      break;
+    }
     case 'wageClaim':
     case 'unpaidWage': {
       const side = q.job === 'side';
@@ -138,6 +145,10 @@ function briefKategorien(q) {
     default:
       break;
   }
+  // … und die im Briefgenerator eingetippten Angaben (Nummern, Daten, Namen). Sie stammen
+  // nicht aus dem Profil, stehen aber im Brief — also werden sie hier genannt. Ob etwas
+  // eingetippt ist, entscheidet `angabenEingetippt` aus briefGenerator.js (Wahlfelder zählen nicht).
+  if (q.angabenEingetippt) out.push({ id: 'briefAngaben' });
   return out;
 }
 
