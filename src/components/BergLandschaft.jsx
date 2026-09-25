@@ -16,7 +16,7 @@ const BILD = { w: 1100, h: 788 };
 // Stationen am Handy weit genug auseinanderliegen.
 export const AUSSCHNITT = {
   breit: { x: 0, y: 80, w: 1100, h: 708 },
-  schmal: { x: 60, y: 360, w: 580, h: 410 },
+  schmal: { x: 20, y: 370, w: 630, h: 420 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
@@ -27,11 +27,11 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 // Etikett-Seite je Ausschnitt, damit am Handy nichts über den Rand oder auf eine Nachbarstation läuft.
 export const STATIONEN = [
   { key: 'basis', x: 548, y: 725, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'wohnen', x: 554, y: 665, seite: { breit: 'rechts', schmal: 'links' } },
-  { key: 'finanzen', x: 408, y: 608, seite: { breit: 'unten', schmal: 'unten' } },
+  { key: 'wohnen', x: 554, y: 665, seite: { breit: 'rechts', schmal: 'oben' } },
+  { key: 'finanzen', x: 408, y: 608, seite: { breit: 'unten', schmal: 'oben' } },
   { key: 'versicherungen', x: 246, y: 579, seite: { breit: 'unten', schmal: 'unten' } },
-  { key: 'ausbildung', x: 153, y: 542, seite: { breit: 'links', schmal: 'unten' } },
-  { key: 'behoerden', x: 201, y: 465, seite: { breit: 'links', schmal: 'links' } },
+  { key: 'ausbildung', x: 153, y: 542, seite: { breit: 'untenlinks', schmal: 'untenlinks' } },
+  { key: 'behoerden', x: 201, y: 465, seite: { breit: 'links', schmal: 'obenlinks' } },
   { key: 'notfall', x: 304, y: 432, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
@@ -169,8 +169,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // Rand (gestrichelt → dünn → kräftig) und Grösse, nie von Deckkraft; die Fläche ist
       // immer undurchsichtig (K41) — sonst hängt der Kontrast am Bild dahinter.
       const maturity = pct === 0 ? 'sketch' : pct < 50 ? 'emerging' : pct < 100 ? 'maturing' : 'complete';
-      const sz = schmal ? 28 : { sketch: 30, emerging: 32, maturing: 34, complete: 36 }[maturity];
-      const iconSz = schmal ? 16 : { sketch: 17, emerging: 18, maturing: 20, complete: 21 }[maturity];
+      // Handy: 26 px (WCAG 2.5.8 verlangt 24) — mehr passt zwischen die Kehren nicht, ohne dass Etiketten kollidieren.
+      const sz = schmal ? 26 : { sketch: 30, emerging: 32, maturing: 34, complete: 36 }[maturity];
+      const iconSz = schmal ? 15 : { sketch: 17, emerging: 18, maturing: 20, complete: 21 }[maturity];
       const rand = { sketch: '2px dashed ', emerging: '2px solid ', maturing: '3px solid ', complete: '3px solid ' }[maturity] + farbe;
       const chapterTitle = chapters[i] ? chapters[i].title : station.key;
       const shortLabel = (chapters[i] && chapters[i].short) || chapterTitle.split(/[\s–—]/)[0];
@@ -179,6 +180,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         rechts: { left: abstand, top: '50%', transform: 'translateY(-50%)' },
         links: { right: abstand, top: '50%', transform: 'translateY(-50%)' },
         unten: { top: sz / 2 + 3 + 'px', left: '50%', transform: 'translateX(-50%)' },
+        oben: { bottom: sz / 2 + 3 + 'px', left: '50%', transform: 'translateX(-50%)' },
+        // unter der Station, rechte Kante knapp rechts der Mitte: am linken Bildrand, wenn
+        // rechts daneben eine Nachbarstation sitzt (Ausbildung neben Versicherungen)
+        untenlinks: { top: sz / 2 + 3 + 'px', right: -sz + 'px' },
+        obenlinks: { bottom: sz / 2 + 3 + 'px', right: -sz + 'px' },
       }[station.seite[modus]];
       return React.createElement('div', {
         key: station.key,

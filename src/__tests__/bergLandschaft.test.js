@@ -38,6 +38,10 @@ describe('Berge · Kapitel-Zeichen tragen in ihrer Kapitelfarbe', () => {
       }
     });
   }
+  it('die Aufrufstelle nutzt das abgedunkelte Zeichen (nicht nur die Hilfsfunktion ist geprüft)', () => {
+    expect(src).toMatch(/const zeichen = mitKontrast\(farbe, p\.surface, 3\)/);
+    expect(src).toMatch(/background: p\.surface, border: rand, color: zeichen/);
+  });
   it('Gegenprobe: ohne Abdunkeln fiele mindestens eine Kapitelfarbe unter 3:1 (sonst prüft der Test nichts)', () => {
     const farben = Object.values(astFarben(KAPITEL, LIGHT_PALETTE, false));
     expect(farben.some((f) => kontrast(f, LIGHT_PALETTE.surface) < 3)).toBe(true);
@@ -84,9 +88,9 @@ describe('Berge · keine Deckkraft auf Knopf oder Etikett', () => {
 
 describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
   const a = AUSSCHNITT.schmal;
-  const KNOPF = 28;
-  // Kleinste Breite, für die wir bauen, abzüglich des Seitenrands (16 px je Seite, −8 px Rahmen-Überstand).
-  const breite = 320 - 2 * 16 + 2 * 8;
+  const KNOPF = 26; // Handy-Knopf; WCAG 2.5.8 verlangt mindestens 24
+  // Kleinste Breite, für die wir bauen: bei 320 px Fensterbreite gemessen 296 px Rahmen (25.09.2026).
+  const breite = 296;
   const massstab = breite / a.w;
   const orte = STATIONEN.map((s) => [(s.x - a.x) * massstab, (s.y - a.y) * massstab]);
 
@@ -112,8 +116,8 @@ describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
   });
   it('jede Station hat eine Etikett-Seite für beide Ausschnitte', () => {
     for (const s of STATIONEN) {
-      expect(['rechts', 'links', 'unten'], s.key).toContain(s.seite.breit);
-      expect(['rechts', 'links', 'unten'], s.key).toContain(s.seite.schmal);
+      expect(['rechts', 'links', 'unten', 'oben', 'untenlinks', 'obenlinks'], s.key).toContain(s.seite.breit);
+      expect(['rechts', 'links', 'unten', 'oben', 'untenlinks', 'obenlinks'], s.key).toContain(s.seite.schmal);
     }
   });
   it('alle sieben Kapitel haben eine Station, in der Reihenfolge der Kapitel', () => {
