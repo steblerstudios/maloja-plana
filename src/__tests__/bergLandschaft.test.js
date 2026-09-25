@@ -44,7 +44,9 @@ describe('Berge · Kapitel-Zeichen tragen in ihrer Kapitelfarbe', () => {
   }
   it('die Aufrufstelle nutzt das abgedunkelte Zeichen (nicht nur die Hilfsfunktion ist geprüft)', () => {
     expect(src).toMatch(/const zeichen = mitKontrast\(farbe, p\.surface, 3\)/);
-    expect(src).toMatch(/background: p\.surface, border: rand, color: zeichen/);
+    expect(src).toMatch(/background: p\.surface, border: 'none', color: zeichen/);
+    // Seit 25.09.2026 trägt der Fortschrittsring dasselbe abgedunkelte Zeichen (≥ 3:1).
+    expect(src).toMatch(/stroke: zeichen, strokeWidth: ringBreite/);
   });
   it('Gegenprobe: ohne Abdunkeln fiele mindestens eine Kapitelfarbe unter 3:1 (sonst prüft der Test nichts)', () => {
     const farben = Object.values(astFarben(KAPITEL, LIGHT_PALETTE, false));
@@ -127,7 +129,7 @@ describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
   it('jede Station hat eine Etikett-Seite für beide Ausschnitte', () => {
     for (const s of STATIONEN) {
       expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts'], s.key).toContain(s.seite.breit);
-      expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts'], s.key).toContain(s.seite.schmal);
+      expect(['rechts', 'links', 'unten', 'oben', 'obenrechts', 'untenrechts', 'obenlinks'], s.key).toContain(s.seite.schmal);
     }
   });
   it('alle sieben Kapitel haben eine Station, in der Reihenfolge der Kapitel', () => {
@@ -212,11 +214,15 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
   it('das Stück unten in der U-Kurve zwischen den Tannen ist da', () => {
     expect(zahlen(WEGSTUECKE[1]).some((v, k, z) => k % 2 === 0 && v > 420 && v < 470 && z[k + 1] > 715)).toBe(true);
   });
-  it('der Weg zum Notfall beginnt an der Einmündung der rechten Strasse, nicht am Behörden-Knopf', () => {
-    const z = zahlen(WEGSTUECKE[5]);
-    expect(z[0]).toBeGreaterThan(340);
-    expect(z[1]).toBeGreaterThan(575);
-    expect(nah(z[0], z[1], STATIONEN[5], 60)).toBe(false);
+  it('der Weg zum Notfall: senkrecht von Behörden das S hinunter, dann ab der Einmündung der rechten Strasse', () => {
+    const teile = WEGSTUECKE[5].split('M').filter(Boolean).map((t) => zahlen('M' + t));
+    expect(teile).toHaveLength(2);
+    const [s, r] = teile;
+    expect(nah(s[0], s[1], STATIONEN[5], 5), 'beginnt an Behörden').toBe(true);
+    expect(s[s.length - 1]).toBeGreaterThan(555);
+    expect(s[s.length - 1]).toBeLessThan(564);
+    expect(r[0]).toBeGreaterThan(340);
+    expect(r[1]).toBeGreaterThan(575);
   });
   it('eine durchgehende Route; Basis und Ausbildung sind nicht direkt verbunden (dort geht keine Strasse durch)', () => {
     expect(WEG_VON).toEqual([0, 1, 2, 3, 4, 5]);

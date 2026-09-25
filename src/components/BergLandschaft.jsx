@@ -73,7 +73,12 @@ export const STATIONEN = [
   { key: 'finanzen', x: 551, y: 680, seite: { breit: 'rechts', schmal: 'links' } },
   { key: 'versicherungen', x: 440, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
   { key: 'ausbildung', x: 195, y: 479, seite: { breit: 'links', schmal: 'oben' } },
-  { key: 'behoerden', x: 290, y: 513, seite: { breit: 'unten', schmal: 'unten' } },
+  // Behörden: seit 25.09.2026 läuft von hier der Weg senkrecht das S hinunter — «unten» läge darauf,
+  // «oben» auf dem Zulauf von Ausbildung. «links» lässt beide frei; wo das Bild klein ist (Massstab
+  // unter ENG_UNTER px je Bild-Einheit), stösst es an Ausbildung. Dort (gemessen): am Handy
+  // «obenlinks» (verdeckt ~4 Punkte am Anfang des Zulaufs), breit «obenrechts» (obenlinks stiesse
+  // an das Ausbildung-Etikett; verdeckt das Ende des Zulaufs) — das neue senkrechte Stück bleibt frei.
+  { key: 'behoerden', x: 290, y: 513, seite: { breit: 'links', schmal: 'links', eng: { breit: 'obenrechts', schmal: 'obenlinks' } } },
   { key: 'notfall', x: 424, y: 526.5, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
@@ -81,13 +86,17 @@ export const STATIONEN = [
 // durchgehende Route, also immer von der vorigen Station. Nur sichtbare Fahrbahn, je Lauf ein
 // eigener Unterpfad (M … C …).
 export const WEG_VON = [0, 1, 2, 3, 4, 5];
+// Unter diesem Massstab (px je Bild-Einheit) gilt die Ausweich-Seite `seite.eng`, wo es eine gibt.
+// Gemessen 25.09.2026: breit ist «links» bei Behörden ab ~900 px Bildbreite frei (0,82), am Handy
+// ab 375 px (0,72).
+export const ENG_UNTER = { breit: 0.82, schmal: 0.72 };
 export const WEGSTUECKE = [
   'M185 549C189 550.9 197.5 552.5 208.7 560.3C220 568.1 241.9 586.4 252.6 595.6C263.2 604.7 269.4 611.8 272.6 615.2C275.9 618.6 272.1 615.9 272 616',
   'M272 616C275.8 619.5 289.2 631.5 295.1 637.2C301 642.8 303.5 645.6 307.4 649.9C311.3 654.3 313.5 656.6 318.5 663.1C323.5 669.7 334.3 684.7 337.5 689M432.1 727.2C435.3 727.5 448.4 728.9 451.6 729.2M540.5 724.4C541.2 723.6 542.9 722.4 544.5 719.5C546 716.5 548.5 710.6 549.6 706.6C550.7 702.6 551 699.9 551.2 695.4C551.4 691 551 682.6 551 680',
   'M551 680C550.6 677 549.6 666.3 548.7 662.1C547.8 657.9 546.9 657.3 545.5 655C544.2 652.8 542.6 650.6 540.8 648.6C539 646.7 537.1 644.9 534.9 643.3C532.7 641.6 532.3 640.7 527.6 638.7C522.9 636.7 510.3 632.4 506.8 631.1M484.3 627.4C476.9 627.2 447.4 626.2 440 626',
   'M440 626C433.6 625 408.2 621.1 401.8 620.2M364.4 611.1C358.7 609.8 335.7 604.4 330 603M172.9 504.9C173.6 503.7 173.2 501.9 177.2 497.8C181.2 493.7 194 483.3 196.9 480.2C199.9 477.1 195.3 479.2 195 479',
   'M195.7 474.2C197.2 472.3 202.5 464.9 204.7 462.7C206.9 460.5 203.6 462.5 208.9 461.1C214.1 459.7 227.2 456.1 236.4 454.4C245.6 452.6 254.2 452.5 264.2 450.8C274.1 449.1 288.8 446.9 296 444.4C303.1 441.8 303.4 437.8 307.2 435.6C310.9 433.3 314.7 431.1 318.5 430.9C322.4 430.6 326.9 432.9 330.3 434.3C333.7 435.8 336.3 437.4 338.9 439.5C341.4 441.7 344.1 444.6 345.6 447.2C347.1 449.8 347.7 452.5 347.7 455.2C347.8 457.9 348 460.3 346 463.4C344.1 466.4 340.6 469.7 336.1 473.5C331.5 477.3 324.6 482.2 318.8 486.1C313 489.9 305.3 493.9 301.3 496.8C297.4 499.6 297.2 500.5 295.3 503.2C293.4 505.9 290.9 511.4 290 513',
-  'M348 584C348.4 581.9 349.4 575.3 350.4 571.2C351.5 567.1 352.7 562.5 354.2 559.3C355.6 556 357.1 554.3 359.1 551.9C361.2 549.6 363.5 547.3 366.4 545.2C369.2 543 372.6 540.8 376.4 538.8C380.2 536.9 384.8 535 389.1 533.5C393.5 532.1 396.8 531.2 402.6 530C408.4 528.8 420.4 527.1 424 526.5',
+  'M290 513C291.6 514.6 293.6 519.1 294 523.2C294.4 527.3 293.3 525.6 296.2 531.9C299.1 538.3 308.7 556.4 311.2 561.3M348 584C348.4 581.9 349.4 575.3 350.4 571.2C351.5 567.1 352.7 562.5 354.2 559.3C355.6 556 357.1 554.3 359.1 551.9C361.2 549.6 363.5 547.3 366.4 545.2C369.2 543 372.6 540.8 376.4 538.8C380.2 536.9 384.8 535 389.1 533.5C393.5 532.1 396.8 531.2 402.6 530C408.4 528.8 420.4 527.1 424 526.5',
 ];
 
 // ─── Kontrast: das Kapitel-Zeichen trägt die Kapitelfarbe, aber nie unter 3:1 (WCAG 1.4.11) ──
@@ -307,6 +316,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // Knapp über der Handy-Grenze (520–655 px) ist das Bild niedrig und Wohnen liegt nahe am
       // unteren linken Rand — dort kleinere Kreise (gemessen: sonst berührt «begonnen» Wohnen).
       const eng = !schmal && breite < 656;
+      // Breit, aber kleiner Massstab (Handy quer, kleines Tablet): unten links liegt Wohnen zu
+      // nah — dort stehen alle Kreise zusammen unten rechts (gemessen 568–844 px quer).
+      const alleRechts = !schmal && breite > 0 && breite / a.w < ENG_UNTER.breit;
       const d = schmal ? 38 : eng ? 32 : 46;
       const kachel = {
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: eng ? '2px' : '3px',
@@ -327,7 +339,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         'aria-label': begonnen > 0 ? zusammenfassung : undefined,
         style: {
           position: 'absolute', left: schmal ? '8px' : Math.max(12, spalte) + 'px', right: schmal ? '8px' : Math.max(12, spalte) + 'px', bottom: schmal ? '8px' : '12px',
-          display: 'flex', justifyContent: schmal ? 'flex-start' : 'space-between', alignItems: 'flex-end',
+          display: 'flex', justifyContent: schmal ? 'flex-start' : alleRechts ? 'flex-end' : 'space-between', alignItems: 'flex-end',
           gap: '6px', pointerEvents: 'none', lineHeight: 1.2,
         },
       },
@@ -341,10 +353,10 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           abgeschlossen > 0 && React.createElement('div', { key: 'abgeschlossen', ref: abgeschlossenKachel, 'data-testid': 'berg-abgeschlossen', style: kachel },
             beschriftung(L.abgeschlossen),
             React.createElement(Kreis, { p, anteil: abgeschlossen / gesamt, mitte: `${abgeschlossen}/${gesamt}`, d })),
-          schmal && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '4px' } },
+          (schmal || alleRechts) && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '4px' } },
             React.createElement(Kreis, { p, anteil: prozent / 100, mitte: prozent + '%', d: d + 6 })),
         ),
-        !schmal && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '5px' } },
+        !schmal && !alleRechts && prozent != null && React.createElement('div', { key: 'prozent', 'data-testid': 'berg-prozent', style: { ...kachel, padding: '5px' } },
           React.createElement(Kreis, { p, anteil: prozent / 100, mitte: prozent + '%', d: d + 10 })),
       );
     })(),
@@ -354,14 +366,18 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       const IconFn = Icons[station.key];
       const farbe = kapitelFarbe[station.key] || p.sage;
       const zeichen = mitKontrast(farbe, p.surface, 3);
-      // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig. Getragen von
-      // Rand (gestrichelt → dünn → kräftig) und Grösse, nie von Deckkraft; die Fläche ist
-      // immer undurchsichtig (K41) — sonst hängt der Kontrast am Bild dahinter.
+      // Reifestufen wie bisher: Skizze → im Werden → reift → vollständig, getragen von Grösse.
+      // Seit 25.09.2026 zeigt der Rand den Stand genau: ein Ring, dessen Bogen in der
+      // (abgedunkelten) Kapitelfarbe so weit läuft, wie das Kapitel ausgefüllt ist; die Spur
+      // darunter grau — bei 0 % gestrichelt, damit «noch nicht begonnen» an der Form erkennbar
+      // bleibt, nicht nur an der Farbe. Nie Deckkraft; die Fläche ist immer undurchsichtig (K41).
       const maturity = pct === 0 ? 'sketch' : pct < 50 ? 'emerging' : pct < 100 ? 'maturing' : 'complete';
       // Handy: 26 px (WCAG 2.5.8 verlangt 24) — mehr passt zwischen die Kehren nicht, ohne dass Etiketten kollidieren.
       const sz = schmal ? 26 : { sketch: 30, emerging: 32, maturing: 34, complete: 36 }[maturity];
       const iconSz = schmal ? 15 : { sketch: 17, emerging: 18, maturing: 20, complete: 21 }[maturity];
-      const rand = { sketch: '2px dashed ', emerging: '2px solid ', maturing: '3px solid ', complete: '3px solid ' }[maturity] + farbe;
+      const ringBreite = schmal ? 2.5 : 3;
+      const ringR = sz / 2 - ringBreite / 2;
+      const ringU = 2 * Math.PI * ringR;
       const chapterTitle = chapters[i] ? chapters[i].title : station.key;
       const shortLabel = (chapters[i] && chapters[i].short) || chapterTitle.split(/[\s–—]/)[0];
       const abstand = sz / 2 + 4 + 'px';
@@ -374,7 +390,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         // Nachbarstation keinen Platz lässt
         obenrechts: { bottom: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
         untenrechts: { top: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
-      }[station.seite[modus]];
+        obenlinks: { bottom: sz / 2 + 3 + 'px', right: -(sz / 2 + 4) + 'px' },
+      }[(station.seite.eng && breite > 0 && breite / a.w < ENG_UNTER[modus]) ? station.seite.eng[modus] : station.seite[modus]];
       return React.createElement('div', {
         key: station.key,
         style: { position: 'absolute', ...imRahmen(station.x, station.y), width: 0, height: 0 },
@@ -382,11 +399,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('button', {
           type: 'button',
           onClick: () => onSelectChapter(i),
-          'aria-label': chapterTitle,
+          'aria-label': `${chapterTitle}, ${Math.round(pct)} %`,
           style: {
             position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
             width: sz + 'px', height: sz + 'px', padding: 0,
-            borderRadius: '50%', background: p.surface, border: rand, color: zeichen,
+            borderRadius: '50%', background: p.surface, border: 'none', color: zeichen,
             display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
             boxShadow: maturity === 'complete' ? `0 0 0 3px ${p.surface}, 0 1px 5px rgba(0,0,0,0.25)` : '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
@@ -394,7 +411,24 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         },
-          React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px' } }, IconFn ? IconFn() : null)
+          // Der Fortschrittsring: graue Spur, darauf der Bogen im Verhältnis des Kapitel-Stands.
+          React.createElement('svg', {
+            'data-ring': station.key, width: sz, height: sz, viewBox: `0 0 ${sz} ${sz}`, 'aria-hidden': 'true',
+            style: { position: 'absolute', inset: 0, overflow: 'visible' },
+          },
+            React.createElement('circle', {
+              cx: sz / 2, cy: sz / 2, r: ringR, fill: 'none', stroke: p.border, strokeWidth: ringBreite,
+              strokeDasharray: pct === 0 ? '3 3' : undefined,
+            }),
+            pct > 0 && React.createElement('circle', {
+              cx: sz / 2, cy: sz / 2, r: ringR, fill: 'none', stroke: zeichen, strokeWidth: ringBreite,
+              strokeLinecap: pct >= 100 ? 'butt' : 'round',
+              strokeDasharray: `${(ringU * Math.min(100, pct)) / 100} ${ringU}`,
+              transform: `rotate(-90 ${sz / 2} ${sz / 2})`,
+              style: { transition: 'stroke-dasharray 900ms ease' },
+            }),
+          ),
+          React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px', position: 'relative' } }, IconFn ? IconFn() : null)
         ),
         React.createElement('span', {
           className: 'mountain-label',
