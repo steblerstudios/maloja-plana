@@ -55,7 +55,7 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 |---|---|---|
 | Kern: Ordner oder Ereignisse · zusammen mit der Kapitel-Architektur und der App-Struktur | §0, §6 | davon hängt ab, wie der ganze Winter gebaut wird |
 | Gamification: House of Life gegenüber Grundstück-Blatt · dazu die **Berg-Bilder bei 20–100 %** auf dem Dashboard (§15) | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
-| UI/UX aus den Runden 3–5: **Löschen ohne Rückgängig** (15 Knöpfe) · **zwei Zurück-Knöpfe** (5 Ansichten) · **Ladehinweis** beim Nachladen | §15 | der Dokumenten-Tresor löscht endgültig — der einzige Weg zu Datenverlust ohne Netz |
+| UI/UX aus den Runden 3–5: **Löschen ohne Rückgängig** (15 Knöpfe) · **Ladehinweis** beim Nachladen — *vor Oktober ansehen* · ~~zwei Zurück-Knöpfe~~ ✅ Brotkrume (25.09.) | §15 | der Dokumenten-Tresor löscht endgültig — der einzige Weg zu Datenverlust ohne Netz |
 | Baum oder Obstgarten · zwei Bäume verschmelzen | §2 | braucht nur ein Mockup, kein Bau |
 | Sechs Meinungs-Entscheide (E4), vor allem Preis/Paywall | §11 | Preis bestimmt, was Maloja nach aussen verspricht |
 | Bottom-Nav oder Hamburger | §6 | gehört zur Kapitel-Frage |
@@ -459,7 +459,8 @@ Notfallpass steht oben «Übersicht» (global, `main.jsx`) **und** ein eigener K
 Meine Unterlagen» bzw. «Zurück zum Notfall» — zwei Wege mit verschiedenem Ziel.
 - A · den globalen Knopf dort ausblenden · B · beide zu einer **Brotkrume** zusammenfassen
   («Übersicht › Meine Unterlagen › Dossier») · C · lassen.
-- *Vorschlag: B* — hängt an «Bottom-Nav oder Hamburger» (oben), darum zusammen entscheiden.
+- ✅ **Entschieden 25.09.2026 (Stebler Studios): B, die Brotkrume.** Wird gebaut (eigener PR),
+  unabhängig von «Bottom-Nav oder Hamburger».
 
 **Ladehinweis beim Nachladen.** Sechs Teile in den Kapiteln (Ärzt:innen, Säule 3a, Medikamente,
 Sprachen, Erkrankungen, Jobs) und die Einstellungs-Schublade zeigen beim ersten Öffnen kurz
