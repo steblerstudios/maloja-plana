@@ -6,7 +6,7 @@ import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
-import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
+import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
@@ -562,7 +562,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             // Zum Ausprobieren, Entscheid 25.09.2026 (Variante «beide farbig»): der nächste
             // Schritt trägt einen gefüllten Knopf, wie «So geht es» oben. Nur Darstellung —
             // die ganze Zeile bleibt EIN Knopf (kein Knopf im Knopf).
-            React.createElement('span', { 'aria-hidden': 'true', style: ctaFlaeche }, t('dashboard.nextUpCta'), ' ›'),
+            // Seit 25.09. abends in der Farbe des Bereichs (wie der Punkt), nicht mehr Sand.
+            React.createElement('span', { 'aria-hidden': 'true', style: { ...ctaFlaeche, ...bereichsKnopf(dotColor, palette) } }, t('dashboard.nextUpCta'), ' ›'),
           );
         }
         // Grundordnung steht: weiter mit dem Kapitel, das am wenigsten ausgefüllt ist.
