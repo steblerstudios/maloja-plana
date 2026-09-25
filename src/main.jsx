@@ -1146,7 +1146,9 @@ const AppInner = ({ demo }) => {
         style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, letterSpacing: '0.3px', display: 'flex' }
       },
         React.createElement('button', {
-          onClick: () => setView('dashboard'),
+          // handleNavigate, nicht setView: sonst springt die Seite nicht nach oben (gemessen von
+          // der Sitzung «Rückkehr, Laden und Hover-Flow»: Übersicht landete bei scrollY 2494).
+          onClick: () => handleNavigate('dashboard'),
           'aria-label': t('common.appName'),
           style: {
             font: 'inherit', color: 'inherit', letterSpacing: 'inherit',

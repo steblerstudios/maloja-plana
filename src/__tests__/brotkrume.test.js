@@ -63,6 +63,13 @@ describe('Darstellung', () => {
 });
 
 describe('ein Weg zurück', () => {
+  it('Logo-Knopf und «Übersicht» navigieren über handleNavigate (Sprung nach oben, Fokus)', () => {
+    const main = lies('main.jsx');
+    expect(main).toMatch(/onClick: \(\) => handleNavigate\('dashboard'\),\s*'aria-label': t\('common\.appName'\)/);
+  });
+  it('InstallGuide trägt keinen zweiten Zurück-Knopf unter «Übersicht»', () => {
+    expect(lies('InstallGuide.jsx')).not.toMatch(/onNavigate\('dashboard'\)/);
+  });
   it('main.jsx lässt in diesen Ansichten «Übersicht» weg und navigiert sonst über handleNavigate', () => {
     const main = lies('main.jsx');
     expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && React\.createElement\('button', \{\s*onClick: \(\) => handleNavigate\('dashboard'\)/);
