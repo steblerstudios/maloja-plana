@@ -3811,6 +3811,7 @@ export default {
     checkTitle: 'Quick check',
     annahmeOhneDreizehnten: 'Income calculated without a 13th monthly salary — this has not been stated yet. With a 13th salary it is higher and may exceed the limit. It can be stated in the «Finances» chapter.',
     result_tableLimit: 'For this household (three or more adults without children) the table gives no limit. The social contributions office clarifies the entitlement.',
+    result_jungeErwachseneOffen: 'A person aged 18 to 24 lives in the household. They only count if in initial education (apprenticeship, school or studies up to the first qualification) — the limit is then considerably higher. The social contributions office clarifies the entitlement.',
     bedingung_ZG: 'Only applies to flats under the cantonal housing promotion act — the property management knows whether this one does.',
     wfgFrage: 'Is the flat subject to the cantonal housing promotion act (WFG)?',
     wfg_ja: 'Yes',

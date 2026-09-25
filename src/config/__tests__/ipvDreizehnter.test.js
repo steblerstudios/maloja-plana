@@ -303,9 +303,11 @@ describe('Mietzinsbeiträge BS: Obergrenze je Haushalt', () => {
     const { bsObergrenze } = await import('../../data/mietzinsbeitraege.js');
     expect(bsObergrenze(n, k)).toBe(grund + 36000);
   });
-  it('6 Personen: +6 000 je weitere Person; 3 Erwachsene ohne Kind: nicht belegt → null', async () => {
+  // MBVO (890.510) Anhang 1 / SoHaV § 11 Abs. 2: +4 000 je weitere Person ab 5 PH (Merkblatt nennt 6 000).
+  it('6 und 7 Personen: +4 000 je weitere Person; 3 Erwachsene ohne Kind: nicht belegt → null', async () => {
     const { bsObergrenze } = await import('../../data/mietzinsbeitraege.js');
-    expect(bsObergrenze(6, 4)).toBe(24000 + 36000 + 36000);
+    expect(bsObergrenze(6, 4)).toBe(94000);
+    expect(bsObergrenze(7, 5)).toBe(98000);
     expect(bsObergrenze(3, 0)).toBeNull();
   });
 });
@@ -337,5 +339,25 @@ describe('Mietzinsbeiträge ZG: WFG-Frage', () => {
   it('die Frage erscheint nur mit Schreibweg und nur in ZG', async () => {
     expect(await render(undefined, schreib)).toContain('id="mz-wfg"');
     expect(await render(undefined, undefined)).not.toContain('id="mz-wfg"');
+  });
+});
+
+// SoHaG § 5 Abs. 2 lit. c · SoHaV § 2/§ 3: 18–24 zählt nur in Erstausbildung, 25+ gar nicht.
+describe('Mietzinsbeiträge BS: junge Erwachsene', () => {
+  it('bsHaushalt: 18–24 offen, 25 nicht mitgezählt, ohne Alter minderjährig', async () => {
+    const { bsHaushalt } = await import('../../data/mietzinsbeitraege.js');
+    expect(bsHaushalt(2, [{ age: 5 }, { age: 20 }])).toMatchObject({ offen: true });
+    expect(bsHaushalt(2, [{ age: 5 }, { age: 25 }])).toEqual({ personen: 3, kinder: 1, offen: false });
+    expect(bsHaushalt(1, [{}])).toEqual({ personen: 2, kinder: 1, offen: false });
+  });
+  it('Rechner: mit 20-Jähriger keine Grenze, sondern der Hinweis; mit 25-Jährigem wie ohne', async () => {
+    const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const render = (children) => renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t,
+      data: { basis: { canton: 'BS', maritalStatus: 'single', household: { adults: 1, children } }, finanzen: { monthlyIncome: 3000, dreizehnter: NEIN }, wohnen: { rentAmount: 1200 } } }));
+    expect(render([{ age: 20 }])).toContain('mietzinsView.result_jungeErwachseneOffen');
+    // 25-jährig: gehört nicht zur Haushaltseinheit → 1 Person, 51 750.
+    expect(render([{ age: 25 }])).toContain('mietzinsView.result_likely(36’000|51’750)');
   });
 });

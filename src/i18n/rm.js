@@ -5150,6 +5150,7 @@ export default {
     checkTitle: 'Test svelt',
     annahmeOhneDreizehnten: 'Entrada quintada senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è ella pli auta e po surpassar il limit. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
     result_tableLimit: 'Per questa chasada (trais u dapli creschids senza uffants) na numna la tabella nagin limit. L’uffizi da contribuziuns socialas scleresch il dretg.', // TODO(rm): provisorisch
+    result_jungeErwachseneOffen: 'En la chasada viva ina persuna tranter 18 e 24 onns. Ella quinta mo sch’ella è en emprima furmaziun (emprendissadi, scola u studi fin a l’emprim diplom) — lura è il limit bler pli aut. Il dretg scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
     bedingung_ZG: 'Vala mo per abitaziuns tenor la lescha chantunala da promoziun d’abitaziuns — l’administraziun sa sche l’atgna tutga latiers.', // TODO(rm): provisorisch
     wfgFrage: 'È l’abitaziun suttamessa a la lescha chantunala da promoziun d’abitaziuns (WFG)?', // TODO(rm): provisorisch
     wfg_ja: 'Gea', // TODO(rm): provisorisch

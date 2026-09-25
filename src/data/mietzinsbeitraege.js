@@ -92,9 +92,13 @@ export function getMietzinsbeitraege(canton) {
 
 // Einkommens-Richtgrenze inkl. Haushalts-Zuschläge (sofern der Kanton solche kennt).
 // Gibt null zurück, wenn der Kanton keine einzelne Grenze hat (z.B. GE: mietabhängiges barème).
-export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 0) {
+export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 0, children = null) {
   if (!program || program.incomeLimit == null) return null;
-  if (program.limitFormel === 'bs') return bsObergrenze(householdSize, childrenCount);
+  if (program.limitFormel === 'bs') {
+    if (!children) return bsObergrenze(householdSize, childrenCount);
+    const h = bsHaushalt(householdSize - childrenCount, children);
+    return h.offen ? null : bsObergrenze(h.personen, h.kinder);
+  }
   let limit = program.incomeLimit;
   if (program.incomePerChild) limit += program.incomePerChild * childrenCount;
   if (program.incomePerAdult) {
@@ -108,13 +112,28 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
 
 // BS: Grundeinkommen + 36'000 (Merkblatt 01.2026 Ziff. 13, Werte oben beim Programm).
 // null für drei und mehr Erwachsene ohne Kind — diesen Haushaltstyp führt die Tabelle nicht.
+// ⟨25.09.2026, Quellenprüfung⟩ Ab der sechsten Person +4'000, nicht +6'000: MBVO (890.510) Anhang 1
+// «Für jede weitere Person plus Fr. 4'000.- ausgehend vom 5 PH», ebenso SoHaV (890.710) § 11 Abs. 2.
+// Das Merkblatt nennt 6'000; massgebend sind nach seiner Ziff. 14 die Gesetzesbestimmungen.
 export function bsObergrenze(personen, kinder) {
   const n = Math.max(1, Number(personen) || 1);
   const k = Math.max(0, Number(kinder) || 0);
   if (k === 0 && n >= 3) return null;
   const haushaltsabzug = k > 0 ? 24000 : 12000;
-  const sozialabzug = n <= 5 ? [3750, 6000, 16000, 24000, 30000][n - 1] : 30000 + 6000 * (n - 5);
+  const sozialabzug = n <= 5 ? [3750, 6000, 16000, 24000, 30000][n - 1] : 30000 + 4000 * (n - 5);
   return haushaltsabzug + sozialabzug + 36000;
+}
+
+// BS: wer als «Kind» zur Haushaltseinheit zählt — SoHaG (890.700) § 5 Abs. 2 lit. c, SoHaV § 2/§ 3,
+// MBVO § 9 Abs. 2: minderjährig, oder 18–24 UND in Erstausbildung. 25 und älter gehört nicht dazu
+// (auch nicht als erwachsene Person). Ob jemand zwischen 18 und 24 in Erstausbildung ist, weiss die
+// App nicht — dann `offen`, und es gibt keine Grenze (je nach Antwort 12'000–16'000 Unterschied).
+// Ohne Altersangabe zählt ein Kind als minderjährig (so erfasst die App Kinder).
+export function bsHaushalt(erwachsene, children = []) {
+  const alter = (c) => Number(c?.age);
+  const kinder = children.filter((c) => !(alter(c) >= 18));
+  const jungeErwachsene = children.filter((c) => alter(c) >= 18 && alter(c) <= 24);
+  return { personen: Math.max(1, erwachsene) + kinder.length, kinder: kinder.length, offen: jungeErwachsene.length > 0 };
 }
 
 // O3 — Ergebnis-Art des Mietzins-Schnellchecks (MietzinsOrientierung.jsx).
@@ -133,7 +152,7 @@ export function mietzinsErgebnis({ info, assessmentKey, annualIncome = 0 }) {
     return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: fehlendeAngaben({ kanton: false, einkommen: annualIncome > 0 }) });
   }
   if (info.state !== 'has' || !assessmentKey) return null;
-  if (assessmentKey === 'effortBased' || assessmentKey === 'municipalLimit' || assessmentKey === 'tableLimit') return ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
+  if (['effortBased', 'municipalLimit', 'tableLimit', 'jungeErwachseneOffen'].includes(assessmentKey)) return ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
   if (assessmentKey === 'needIncome') return ergebnis(ERGEBNIS_ART.VORPRUEFUNG, { fehlend: ['einkommen'] });
   return ergebnis(ERGEBNIS_ART.VORPRUEFUNG);
 }

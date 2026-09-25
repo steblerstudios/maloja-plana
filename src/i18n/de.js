@@ -3764,6 +3764,7 @@ export default {
     checkTitle: 'Schnellcheck',
     annahmeOhneDreizehnten: 'Einkommen ohne 13. Monatslohn gerechnet — die Angabe fehlt noch. Mit 13. Monatslohn liegt es höher und kann über der Grenze liegen. Angeben lässt sich das im Kapitel «Finanzen & Geld».',
     result_tableLimit: 'Für diesen Haushalt (drei oder mehr Erwachsene ohne Kind) nennt die Beitragstabelle keine Grenze. Das Amt für Sozialbeiträge klärt den Anspruch.',
+    result_jungeErwachseneOffen: 'Im Haushalt lebt eine Person zwischen 18 und 24 Jahren. Sie zählt nur mit, wenn sie in Erstausbildung ist (Lehre, Schule oder Studium bis zum ersten Abschluss) — dann liegt die Grenze deutlich höher. Den Anspruch klärt das Amt für Sozialbeiträge.',
     bedingung_ZG: 'Gilt nur für Wohnungen nach dem kantonalen Wohnraumförderungsgesetz — die Verwaltung weiss, ob die eigene dazugehört.',
     wfgFrage: 'Untersteht die Wohnung dem kantonalen Wohnraumförderungsgesetz (WFG)?',
     wfg_ja: 'Ja',

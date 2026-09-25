@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
-import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis } from './data/mietzinsbeitraege.js';
+import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt } from './data/mietzinsbeitraege.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
@@ -55,7 +55,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const ohneDreizehnten = monthlyIncome > 0 && dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen';
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
-  const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount) : null;
+  const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount, hh.children || []) : null;
+  // BS: jemand zwischen 18 und 24 im Haushalt — ob in Erstausbildung, entscheidet, ob er zählt.
+  const bsJungOffen = info?.limitFormel === 'bs' && bsHaushalt(householdSize - childrenCount, hh.children || []).offen;
 
   // ZG: gilt nur für WFG-Wohnungen — die Antwort steht in wohnen.wfgWohnung (Frage unten im Schnellcheck).
   const wfg = data?.wohnen?.wfgWohnung;
@@ -67,7 +69,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     if (info.wfgFrage && wfg === 'nein') return { key: 'wfgNein', tone: 'soft' };
     // GE: mietabhängiges barème · BL: Grenze je Haushalt, von der Gemeinde festgesetzt (§ 6/§ 10 MBG).
     // BS: Haushaltstyp, den die Beitragstabelle nicht führt (drei und mehr Erwachsene ohne Kind).
-    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : info.limitFormel ? 'tableLimit' : 'effortBased', tone: 'neutral' };
+    if (incomeLimit == null) return { key: info.limitArt === 'gemeinde' ? 'municipalLimit' : bsJungOffen ? 'jungeErwachseneOffen' : info.limitFormel ? 'tableLimit' : 'effortBased', tone: 'neutral' };
     if (!annualIncome) return { key: 'needIncome', tone: 'neutral' };
     if (annualIncome > incomeLimit) return { key: 'incomeHigh', tone: 'soft', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };
     return { key: 'likely', tone: 'good', params: { income: zahl(annualIncome, { hoechstens: 2 }), limit: zahl(incomeLimit, { hoechstens: 2 }) } };

@@ -3721,6 +3721,7 @@ export default {
     checkTitle: 'Verifica rapida',
     annahmeOhneDreizehnten: 'Reddito calcolato senza tredicesima — l’indicazione manca ancora. Con la tredicesima è più alto e può superare il limite. Si può indicare nel capitolo «Finanze».',
     result_tableLimit: 'Per questa economia domestica (tre o più adulti senza figli) la tabella non indica un limite. Il diritto lo chiarisce l’ufficio dei contributi sociali.',
+    result_jungeErwachseneOffen: 'Nell’economia domestica vive una persona tra 18 e 24 anni. Conta solo se è in prima formazione (apprendistato, scuola o studi fino al primo diploma) — allora il limite è nettamente più alto. Il diritto lo chiarisce l’ufficio dei contributi sociali.',
     bedingung_ZG: 'Vale solo per abitazioni secondo la legge cantonale sulla promozione dell’alloggio — l’amministrazione sa se la propria ne fa parte.',
     wfgFrage: 'L’abitazione è sottoposta alla legge cantonale sulla promozione dell’alloggio (WFG)?',
     wfg_ja: 'Sì',
