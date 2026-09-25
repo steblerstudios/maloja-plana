@@ -32,6 +32,9 @@ const mvo = grundordnung(chapters, {});
 const knoepfe = (el, acc = []) => {
   if (Array.isArray(el)) { el.forEach((e) => knoepfe(e, acc)); return acc; }
   if (!el || typeof el !== 'object') return acc;
+  // Die nachgeladene Münze (IconKern) ist ein Bild mit Hook — ausserhalb einer React-
+  // Anzeige nicht aufrufbar, und Knöpfe trägt sie keine.
+  if (el.type?.name === 'Muenze') return acc;
   if (typeof el.type === 'function') return knoepfe(el.type(el.props), acc);
   if (el.type === 'button') acc.push(el);
   knoepfe(el.props?.children, acc);

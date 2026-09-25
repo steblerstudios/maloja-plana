@@ -250,7 +250,22 @@ const BetaFeedback = ({ palette, t }) => {
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode }) => {
+// Wo der Berg klebt: direkt unter der Kopfzeile — ausser er ist höher als das Fenster, dann
+// so weit oben, dass seine Unterkante gerade am Fensterrand liegt. Neu gerechnet, wenn sich
+// Bild oder Fenster in der Grösse ändern. Gibt die Aufräum-Funktion für useEffect zurück.
+const bergKleben = (el) => {
+  if (!el || !window.ResizeObserver) return undefined;
+  const setzen = () => {
+    const kopf = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h')) || 0;
+    el.style.top = Math.min(kopf, window.innerHeight - el.offsetHeight) + 'px';
+  };
+  const ro = new ResizeObserver(setzen);
+  ro.observe(el);
+  window.addEventListener('resize', setzen);
+  return () => { ro.disconnect(); window.removeEventListener('resize', setzen); };
+};
+
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, simpleView, isDarkMode, installKarte }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
@@ -308,6 +323,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     { label: t('guidedStart.emergency'), action: () => onNavigate('notfalleinstieg') },
   ];
 
+  const bergBuehne = React.useRef(null);
+  React.useEffect(() => bergKleben(bergBuehne.current), []);
+
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
     // ─── Hero: die Landschaft mit dem Anspruch im Himmel ─────────
@@ -317,9 +335,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // auf der Passstrasse — siehe components/BergLandschaft.jsx.
     // Der Fortschritt steht unten IM Bild, als Kreise. Die Prozentzahl erst ab spürbarem
     // Fortschritt (≥10%) — eine einsame «1%» liest sich als «im Rückstand».
+    // ─── Berg als Bühne, die Seite als Blatt darüber (Vorschau 25.09.2026) ──
+    // Die Hülle klebt (tokens.css .mp-berg-buehne); alles darunter liegt in .mp-blatt und
+    // schiebt sich beim Scrollen über das stehende Bild. Die Hülle trägt KEIN eigenes
+    // padding/margin/transform: BergLandschaft misst seinen Ausgriff an genau diesem Element.
+    // Ist der Berg höher als das Fenster (flache Laptops), klebt er erst mit der UNTERKANTE
+    // am Fensterrand — sonst sähe man Stationen und Kreise nie (bergKleben).
+    React.createElement('div', { ref: bergBuehne, className: 'mp-berg-buehne' },
     React.createElement(BergLandschaft, {
       palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle,
       titel: t('dashboard.welcome'),
+      ecke: installKarte,
       // Fortschritt als Kreise (seit 25.09.2026): begonnen · abgeschlossen · Prozent.
       fortschritt: {
         begonnen: chapterCompletions.filter(p => p > 0).length,
@@ -328,7 +354,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       },
       fortschrittLabels: { begonnen: t('progress.begonnen'), abgeschlossen: t('progress.abgeschlossen'), ausgefuellt: t('progress.ausgefuellt'), leer: t('progress.notStarted') },
       prozent: Math.round(completion) >= 10 ? Math.round(completion) : null,
-    }),
+    })),
+
+    React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },
 
     // Die Leistungs-Zeile beantwortet «Was ist das hier?» und hilft genau einmal: beim ersten
     // Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr bei jedem Öffnen vorgesetzt.
@@ -701,7 +729,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         display: 'flex', alignItems: 'center', gap: space.sm + 'px',
         width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
         padding: space.sm + 'px ' + space.md + 'px',
-        background: palette.sage + '08', border: '1px solid ' + palette.sage + '20',
+        background: 'linear-gradient(' + palette.sage + '08,' + palette.sage + '08),' + palette.bg, border: '1px solid ' + palette.sage + '20',
         borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
         transition: `background ${duration.normal}ms ${ease}`,
       },
@@ -731,7 +759,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         display: 'flex', alignItems: 'center', gap: space.sm + 'px',
         width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
         padding: space.sm + 'px ' + space.md + 'px',
-        background: palette.gold + '10', border: '1px solid ' + palette.gold + '2e',
+        background: 'linear-gradient(' + palette.gold + '10,' + palette.gold + '10),' + palette.bg, border: '1px solid ' + palette.gold + '2e',
         borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
         transition: `background ${duration.normal}ms ${ease}`,
       },
@@ -914,6 +942,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     !demoMode && React.createElement(BetaFeedback, { palette, t })
+    )
   );
 };
 

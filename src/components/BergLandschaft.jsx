@@ -183,7 +183,7 @@ export const mitKontrastZu = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke }) => {
   const rahmen = useRef(null);
   const huelle = useRef(null);
   // Höhe des Titels (umbricht je nach Sprache und Breite) — der Dunst wächst mit.
@@ -256,7 +256,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     ref: huelle,
     style: {
       position: 'relative', overflow: 'hidden', lineHeight: 0,
-      margin: '8px 0 24px', marginLeft: ausgriff ? ausgriff.links + 'px' : 0,
+      margin: '0 0 24px', marginLeft: ausgriff ? ausgriff.links + 'px' : 0,
       width: ausgriff ? ausgriff.breite + 'px' : '100%',
       // Ladezustand und Fehlerfall: eine ruhige Fläche, nichts springt.
       background: p.up,
@@ -360,7 +360,8 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         'data-testid': 'berg-titel',
         style: {
           position: 'absolute', top: oben + 'px', left: schmal ? '26px' : Math.max(44, spalte) + 'px',
-          right: schmal ? '26px' : Math.max(44, spalte) + 'px', textAlign: 'left',
+          // Mit Ecke (Startbildschirm-Karte) hält der Titel rechts Abstand, wo die Spalte schmal ist.
+          right: schmal ? '26px' : Math.max(44, spalte, ecke ? 208 : 0), textAlign: 'left',
           fontFamily: fontFamilyDisplay, fontWeight: 700, fontSize: groesse + 'px', lineHeight: 1.03, letterSpacing: '-0.025em',
           color: p.text,
         },
@@ -369,6 +370,14 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
            React.createElement('span', { key: 'b', 'data-testid': 'berg-titel-antwort', style: { display: 'block', color: TITEL_GRUEN } }, teile[2])]
         : titel)];
     })(),
+    // Die Ecke rechts oben (seit 25.09.2026): der Weg auf den Startbildschirm als kleine Karte.
+    // Am Computer neben dem Titel, am Handy — wo der Titel die ganze Breite nimmt — darunter.
+    // Karte 168 px breit (Handy 140), der Titel hält daneben 208 px frei. `ecke(schmal)`: die Karte
+    // zeigt sich im Handy-Ausschnitt kleiner.
+    ecke && React.createElement('div', {
+      key: 'ecke',
+      style: { position: 'absolute', lineHeight: 'normal', top: schmal ? 20 + (titelHoehe || 90) : 16, right: schmal ? 12 : 24, width: schmal ? 140 : 168 },
+    }, ecke(schmal)),
     // Fortschritt im Bild, unten (seit 25.09.2026): «begonnen» n/7, ab dem ersten fertigen Kapitel
     // springt «abgeschlossen» auf (100 %); sind alle fertig, geht «begonnen» weg; rechts die
     // Prozentzahl.

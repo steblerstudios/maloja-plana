@@ -37,7 +37,8 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
     style: {
       width: '100%',
       padding: '12px 16px',
-      marginBottom: space.md,
+      // Oben Abstand zur Kopfzeile: die Übersicht beginnt ohne Rand (seit 25.09.2026).
+      margin: space.md + 'px 0',
       background: palette.up,
       border: '1px solid ' + (overdue.length > 0 ? palette.rose + '33' : palette.gold + '33'),
       borderRadius: radius.sm,
