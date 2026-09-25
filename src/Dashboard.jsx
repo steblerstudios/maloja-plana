@@ -901,11 +901,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
       if (daysSince <= 7) return null;
       const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
-      // 25.09.2026: Sicherungs-Zeichen links + gefüllter Knopf (vorher nackter Textlink,
-      // Stebler Studios: «sollte ein CTA haben und ein Icon»). Knopf = der EINE PrimaryButton.
+      // 25.09.2026: gefüllter Knopf mit Sicherungs-Zeichen (vorher nackter Textlink,
+      // Stebler Studios: «sollte ein CTA haben und ein Icon»). Das Zeichen steht NUR im
+      // Knopf, nicht noch einmal vor dem Text (Entscheid gleicher Abend).
       return React.createElement('div', {
         style: {
-          display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px',
           marginBottom: space.xl,
           padding: '16px 20px',
           background: palette.sageMist || palette.sage + '08',
@@ -913,10 +913,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           border: '1px solid ' + palette.sage + '25',
         }
       },
-        React.createElement('span', {
-          'aria-hidden': 'true',
-          style: { display: 'block', width: '22px', height: '22px', flexShrink: 0, marginTop: '1px', color: palette.sageDeep || palette.sage },
-        }, Icons.sicherung()),
         React.createElement('div', { style: { minWidth: 0 } },
           React.createElement('div', {
             style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
