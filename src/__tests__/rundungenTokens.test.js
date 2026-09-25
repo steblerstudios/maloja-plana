@@ -16,6 +16,9 @@ const AUSNAHMEN = {
   // Wird am 25.09.2026 parallel umgebaut (Berg-Hero, eine andere Sitzung). Nachziehen,
   // sobald der Umbau gemergt ist.
   'Dashboard.jsx': "'4px'",
+  // Kam mit dem Berg-Hero (#374), während dieser Wächter entstand; die Datei wird am
+  // 25.09.2026 weiter bearbeitet (Handy-Weg). Dann `radius.full` statt '999px'.
+  'BergLandschaft.jsx': "'999px'",
 };
 
 const src = fileURLToPath(new URL('..', import.meta.url));
