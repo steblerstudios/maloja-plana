@@ -436,7 +436,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         abgeschlossen > 0 && `${abgeschlossen}/${gesamt} ${L.abgeschlossen || ''}`,
         prozent != null && `${prozent}% ${L.ausgefuellt || ''}`,
       ].filter(Boolean).join(' · ');
-      const prozentAngabe = prozent != null && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
+      // Ab dem ersten begonnenen Kapitel immer da, auch bei 1 % (25.09.2026). Vorher, bei
+      // «Ihr Weg beginnt hier», bleibt es beim ruhigen Satz — kein «0 %».
+      const prozentAngabe = prozent != null && begonnen > 0 && angabe('prozent', 'berg-prozent', prozent / 100, `${prozent}%`, kompakt ? null : L.ausgefuellt);
       return React.createElement('div', {
         key: 'fortschritt', 'data-testid': 'berg-fortschritt',
         role: begonnen > 0 ? 'img' : undefined,
