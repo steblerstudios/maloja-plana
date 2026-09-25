@@ -5089,6 +5089,7 @@ export default {
     efbLabel: 'Income exemption (EFB)',
     erwerbsunkosten: 'Extra costs of working (CHF/month)',
     erwerbsunkostenHint: 'Documented costs caused by work: meals away from home (CHF 8–10 per meal), commuting beyond local public transport, a car only if public transport is not a reasonable option. They increase the needs (SKOS C.6.3).',
+    erwerbsunkostenZeile: 'Extra costs of working',
     anrechenbar: 'Countable income',
     sozialhilfe: 'Social assistance',
     vermoegenHinweis: 'Assets exceed exemption – no entitlement',

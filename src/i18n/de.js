@@ -5122,6 +5122,7 @@ export default {
     efbLabel: 'Einkommensfreibetrag (EFB)',
     erwerbsunkosten: 'Mehrkosten für die Arbeit (CHF/Monat)',
     erwerbsunkostenHint: 'Belegte Kosten, die wegen der Arbeit anfallen: auswärtige Verpflegung (8–10 Franken pro Mahlzeit), der Arbeitsweg, soweit er über den Nahverkehr hinausgeht, ein Auto nur, wenn es mit dem öffentlichen Verkehr nicht zumutbar geht. Sie erhöhen den Bedarf (SKOS C.6.3).',
+    erwerbsunkostenZeile: 'Mehrkosten für die Arbeit',
     anrechenbar: 'Anrechenbares Einkommen',
     sozialhilfe: 'Sozialhilfe-Anspruch',
     vermoegenHinweis: 'Vermögen übersteigt Freibetrag – kein Anspruch',

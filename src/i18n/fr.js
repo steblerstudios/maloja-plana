@@ -5089,6 +5089,7 @@ export default {
     efbLabel: 'Franchise sur le revenu (FR)',
     erwerbsunkosten: 'Frais liés au travail (CHF/mois)',
     erwerbsunkostenHint: 'Frais justifiés, dus au travail : repas pris à l’extérieur (8 à 10 francs par repas), trajet au travail au-delà des transports publics locaux, voiture seulement si les transports publics ne sont pas raisonnablement utilisables. Ils augmentent les besoins (CSIAS C.6.3).',
+    erwerbsunkostenZeile: 'Frais liés au travail',
     anrechenbar: 'Revenu déterminant',
     sozialhilfe: 'Aide sociale',
     vermoegenHinweis: 'La fortune dépasse la franchise – pas de droit',

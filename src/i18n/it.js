@@ -5067,6 +5067,7 @@ export default {
     efbLabel: 'Franchigia sul reddito (EFB)',
     erwerbsunkosten: 'Spese dovute al lavoro (CHF/mese)',
     erwerbsunkostenHint: 'Spese comprovate, dovute al lavoro: pasti fuori casa (8–10 franchi per pasto), tragitto casa-lavoro oltre i trasporti pubblici locali, auto solo se i trasporti pubblici non sono ragionevolmente utilizzabili. Aumentano il fabbisogno (COSAS C.6.3).',
+    erwerbsunkostenZeile: 'Spese dovute al lavoro',
     anrechenbar: 'Reddito computabile',
     sozialhilfe: 'Diritto all\'aiuto sociale',
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',

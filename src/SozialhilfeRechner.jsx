@@ -245,7 +245,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             React.createElement('td', { style: s.tdRight }, fmt(result.kvgPraemie))
           ),
           result.erwerbsunkosten > 0 && React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.erwerbsunkosten')),
+            React.createElement('td', { style: s.td }, t('sh.erwerbsunkostenZeile')),
             React.createElement('td', { style: s.tdRight }, fmt(result.erwerbsunkosten))
           ),
           React.createElement('tr', null,

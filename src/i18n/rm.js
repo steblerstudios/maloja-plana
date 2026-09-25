@@ -4417,6 +4417,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese durch Muttersprachler:in (SKOS C.6.3/D.2, 25.09.2026)
     erwerbsunkosten: 'Custs supplementars per la lavur (CHF/mais)',
     erwerbsunkostenHint: 'Custs cumprovads, chaschunads da la lavur: mangiar ordaifer (8–10 francs per past), il viadi a la lavur sur il traffic local ora, in auto mo sch’il traffic public na va betg en moda raschunaivla. Els augmentan il basegn (SKOS C.6.3).',
+    erwerbsunkostenZeile: 'Custs supplementars per la lavur',
     anrechenbar: 'Entrada imputabla',
     sozialhilfe: "Dretg d'agid social",
     vermoegenHinweis: 'La facultad surpassa la limita libra — nagin dretg',
