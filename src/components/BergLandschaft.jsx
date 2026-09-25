@@ -32,11 +32,12 @@ export const MAX_HOEHE_ANTEIL = 1;
 // Dunst hinter dem Titel: Himmelsfarbe aus dem Bild (#F6F2E8, gemessen), Deckung als Hex-Alpha
 // oben / in der Mitte, auslaufend nach unten. Nur Grund, nie Deckkraft auf Text (K41).
 export const DUNST = { farbe: '#F6F2E8', oben: 'EB', mitte: 'D9', mitteBei: 55 };
-// Der Dunst steht nur, wo der Titel ohne ihn auf Berg läge: am Handy (Ausschnitt beginnt in den
-// Gipfeln) und in flachen Fenstern unter DUNST_UNTER_HOEHE px (Handy quer: der Titel rückt dort
-// nach links auf den dunklen Hang). Am Computer stört er (Entscheid 25.09.2026) — dort trägt der
-// Titel ohne ihn (gemessen 768×1024 … 1920×700: jede Zeile ≥ 3:1; 568–844 px quer nicht).
-export const DUNST_UNTER_HOEHE = 520;
+// Der Dunst steht nur, wo der Titel ohne ihn auf Berg läge: am Handy hochkant (Ausschnitt beginnt
+// in den Gipfeln) und bei Bildern unter DUNST_UNTER_BREITE px (kleinstes Handy quer, 568×320: der
+// Titelanfang liegt dort auf dem dunklen Hang, 2,26:1). Am Computer stört er (Entscheid
+// 25.09.2026); seit der Himmel nie weggeschnitten wird, trägt der Titel dort ohne ihn — gemessen
+// 640×360 … 2560×1300: erste Zeile 13,5:1, zweite ≥ 5,1:1.
+export const DUNST_UNTER_BREITE = 600;
 // Zweite Titelzeile: Salbeigrün in der Tiefe, die auf dem Bild trägt. Das Marken-Salbeigrün
 // (#4A6657) ist fast die Farbe der Berge — ohne Dunst gemessen bis 2,45:1 (1920×700). Dieses
 // Tannengrün hält ohne Dunst überall am Computer ≥ 3,77:1 (768×1024 … 1920×700 gemessen).
@@ -340,13 +341,13 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     // Schein dahinter, keine Deckkraft auf dem Text (K41).
     titel && (() => {
       const teile = String(titel).match(/^(.+?[.!?])\s+(.+)$/);
-      const groesse = schmal ? 27 : Math.round(Math.min(50, Math.max(32, breite * 0.04)));
+      const groesse = schmal ? 27 : Math.round(Math.min(50, Math.max(26, breite * 0.04)));
       const oben = schmal ? 10 : 16;
       // Dunst: der Himmel läuft in seiner eigenen Farbe sanft über die Gipfel hinunter — über die
       // ganze Breite, kein Schein um einzelne Buchstaben. Ohne ihn landet die zweite Zeile je nach
       // Fenster auf Berggrün (Salbeigrün darauf gemessen bis 1,07:1, dunkler Text bis 2,6:1).
       const dunstHoehe = oben + (titelHoehe || groesse * 2.1) + (schmal ? 46 : 70);
-      const mitDunst = schmal || (ausgriff && ausgriff.hoehe < DUNST_UNTER_HOEHE);
+      const mitDunst = schmal || breite < DUNST_UNTER_BREITE;
       return [mitDunst && React.createElement('div', {
         key: 'dunst', 'aria-hidden': 'true', 'data-dunst': dunstHoehe,
         style: {

@@ -392,8 +392,8 @@ describe('Berge · Fortschritt in hell und dunkel', () => {
     expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThan(kontrast(LIGHT_PALETTE.sageDeep, DUNST.farbe));
     expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThanOrEqual(4.5);
   });
-  it('Dunst nur am Handy und in flachen Fenstern (Handy quer), nicht am Computer', () => {
-    expect(src).toMatch(/const mitDunst = schmal \|\| \(ausgriff && ausgriff\.hoehe < DUNST_UNTER_HOEHE\);/);
+  it('Dunst nur am Handy (hochkant, kleinstes quer), nicht am Computer', () => {
+    expect(src).toMatch(/const mitDunst = schmal \|\| breite < DUNST_UNTER_BREITE;/);
     expect(src).toMatch(/return \[mitDunst && React\.createElement\('div'/);
   });
   it('Pille: die Zahl steht im Kreis', () => {
