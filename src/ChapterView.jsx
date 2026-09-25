@@ -1596,6 +1596,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
       React.createElement('button', {
+        className: 'mp-link',
         onClick: () => onNavigate('finanzuebersicht'),
         style: {
           marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
@@ -1789,6 +1790,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           const crosslinkBtn = (key, view, textKey) => onNavigate && elements.push(
             React.createElement('button', {
               key: 'crosslink-' + key,
+              className: 'mp-link',
               onClick: () => onNavigate(view),
               style: {
                 gridColumn: '1 / -1',
@@ -1822,6 +1824,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               }, t('nav.crosslink.relatedTitle')),
               items.map(([key, view, textKey]) => React.createElement('button', {
                 key: 'crosslink-' + key,
+                className: 'mp-link',
                 onClick: () => onNavigate(view),
                 style: {
                   display: 'flex', alignItems: 'center', gap: space.xs + 'px', width: '100%',
@@ -1837,6 +1840,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // durch Gewicht (21.09.2026).
               dach && React.createElement('button', {
                 key: 'crosslink-dach',
+                className: 'mp-link',
                 onClick: () => onNavigate(dach[1]),
                 style: {
                   display: 'flex', alignItems: 'center', gap: space.xs + 'px', width: '100%',
@@ -1930,6 +1934,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 if (WAGECLAIM_BEREIT && onNavigate) {
                   elements.push(
                     React.createElement('button', {
+                      className: 'mp-link',
                       key: 'hours-minwage-nextstep',
                       onClick: () => onNavigate('briefe', undefined, 'wageClaim'),
                       style: { gridColumn: '1 / -1', justifySelf: 'start', background: 'none', border: '1px solid ' + palette.rose + '55', borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.roseDeep, cursor: 'pointer', marginBottom: space.sm + 'px' }
@@ -1999,6 +2004,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   },
                 }, hinweisZeichen(), tr('nav.crosslink.mindestlohnNews')),
                 React.createElement('button', {
+                  className: 'mp-link',
                   key: 'crosslink-mindestlohn',
                   onClick: () => onNavigate('chapter', 2),
                   style: {
@@ -2078,6 +2084,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 if (result.status === 'unvollstaendig' && onNavigate) {
                   elements.push(
                     React.createElement('button', {
+                      className: 'mp-link',
                       key: 'mindestlohn-hours-missing',
                       onClick: () => onNavigate('chapter', 4),
                       style: {
@@ -2178,6 +2185,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   if (WAGECLAIM_BEREIT && onNavigate) {
                     elements.push(
                       React.createElement('button', {
+                        className: 'mp-link',
                         key: 'mindestlohn-nextstep',
                         onClick: () => onNavigate('briefe', undefined, 'wageClaim'),
                         style: { gridColumn: '1 / -1', justifySelf: 'start', background: 'none', border: '1px solid ' + palette.rose + '55', borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.roseDeep, cursor: 'pointer', marginBottom: space.sm + 'px' }
@@ -2215,6 +2223,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             crosslinkBtn('cantonSozial', 'sozialhilfe', 'nav.crosslink.cantonSozialhilfeHint');
             onNavigate && elements.push(
               React.createElement('button', {
+                className: 'mp-link',
                 key: 'crosslink-addressWohnen',
                 onClick: () => onNavigate('chapter', 1),
                 style: {

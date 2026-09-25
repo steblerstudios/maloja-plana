@@ -52,7 +52,7 @@ export const AblaufStep = ({ palette, title, icon, children }) => {
 // Crosslink-Knopf „→ Label" → onNavigate-Ziel.
 export const AblaufLink = ({ palette, label, onClick }) => {
   const s = styles(palette);
-  return React.createElement('button', { style: s.link, onClick }, label);
+  return React.createElement('button', { className: 'mp-link', style: s.link, onClick }, label);
 };
 
 // Frist-in-Kalender-Knopf: legt beim Klick eine Erinnerung an, zeigt danach Bestätigung.
@@ -66,7 +66,7 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
     return React.createElement('div', null,
       React.createElement('div', { style: s.done }, hinweisZeichen('check'), doneLabel),
       onNavigate && calendarLabel
-        ? React.createElement('button', { style: s.link, onClick: () => onNavigate('calendar') }, calendarLabel)
+        ? React.createElement('button', { className: 'mp-link', style: s.link, onClick: () => onNavigate('calendar') }, calendarLabel)
         : null
     );
   }
