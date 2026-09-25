@@ -1,16 +1,36 @@
-# Maloja Plana — Apache Security Headers
+# Maloja Plana — Abschrift der Server-.htaccess (Stand 25.09.2026, K85)
 # ⚠️ WIRD NICHT DEPLOYT: deploy.sh löscht dist/.htaccess und lädt die Wurzel ohne
 # --delete hoch — die .htaccess AUF DEM SERVER bleibt dadurch unberührt. Die Live-Header
-# kommen aus dieser Server-Datei (von Stebler Studios von Hand gepflegt; Stand 17.09.2026:
-# geolocation=(self), gemessen per curl). Diese Datei hier ist nur die Vorlage.
-# CSP is already defined via <meta> in index.html — not duplicated here.
+# kommen aus dieser Server-Datei (von Stebler Studios von Hand gepflegt, per curl belegt
+# 25.09.2026). Diese Datei hier ist nur die Abschrift: wer die Server-Datei ändert,
+# zieht sie hier nach.
+
+# HTTPS + canonical domain
+RewriteEngine On
+
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
+RewriteCond %{HTTP_HOST} !^malojaplana\.ch$ [NC]
+RewriteRule ^(.*)$ https://malojaplana.ch/$1 [R=301,L]
 
 <IfModule mod_headers.c>
+Header always set Strict-Transport-Security "max-age=31536000"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
 </IfModule>
+
+# Long-term caching only for versioned assets and fonts
+<If "%{REQUEST_URI} =~ m#^/(assets|fonts)/#">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</If>
+
+# K85 — Einstiegsdateien nie ungeprüft aus dem Cache (Stebler Studios, 25.09.2026)
+<If "%{REQUEST_URI} =~ m#^/(index\.html|sw\.js|theme-init\.js|manifest\.json)?$#">
+  Header set Cache-Control "no-cache"
+</If>
 
 # Custom 404 page
 ErrorDocument 404 /404.html
