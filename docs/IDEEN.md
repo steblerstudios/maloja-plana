@@ -264,8 +264,11 @@ Abschiedsagentur, plaant).
     Zeile je Kapitel, aufklappbar, darin die Grundordnungs-Felder dieses Kapitels und
     «Öffnen». Der Abschnitt «Detaillierter Fortschritt» ist weg. Die Karte bleibt ein
     nachgeladenes Stück (1,9 kB gzip), das Hauptbundle wurde nicht grösser.
-  - 🌱 **Werkzeuge & Features nochmals anschauen**: 7 Gruppen, Lebensereignisse allein
-    34 Einträge. Verwandt: «Zwei Bäume verschmelzen» (Abschnitt 2).
+  - ❓ **Werkzeuge & Features nochmals anschauen**: Bestand + drei Gliederungen (A nach
+    Lebensbereich · B nach Anlass · C wenig zeigen, eine Liste) in
+    [`design/werkzeuge-gliederung-2026-09-25.md`](design/werkzeuge-gliederung-2026-09-25.md).
+    Befund: Menü (18) und Dashboard (53) führen **zwei verschiedene Listen**, einig nur bei 8.
+    Empfehlung C+B. Wartet auf Entscheid.
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 
