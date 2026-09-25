@@ -204,7 +204,9 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     const messen = () => {
       const links = el.parentElement.getBoundingClientRect().left;
       const breite = document.documentElement.clientWidth;
-      const hoehe = window.innerHeight;
+      // Freie Höhe unter der klebenden Kopfzeile (--mp-kopf-h setzt main.jsx).
+      const kopf = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h')) || 0;
+      const hoehe = window.innerHeight - kopf;
       setAusgriff((alt) => (alt && alt.links === -links && alt.breite === breite && alt.hoehe === hoehe) ? alt : { links: -links, breite, hoehe });
     };
     messen();
@@ -245,9 +247,19 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
   const kapitelFarbe = astFarben(chapters, p, false);
   const modus = schmal ? 'schmal' : 'breit';
   const a = schmal ? AUSSCHNITT.schmal : ausschnittBreit(breite, ausgriff && ausgriff.hoehe);
+  // Der ganze Berg im Fenster (Wunsch Stebler Studios, 25.09.2026): wäre er randlos höher als
+  // der Platz unter der Kopfzeile (flache, breite Fenster), wird er nur so breit, dass Himmel
+  // bis Unterkante hineinpasst, und steht mittig — links und rechts Seitenfarbe. Nie schmaler
+  // als SCHMAL_AB: darunter wechselte der Ausschnitt auf «schmal» und das Bild spränge hin und her.
+  const volleBreite = ausgriff ? ausgriff.breite : 0;
+  const passBreite = ausgriff ? Math.floor((ausgriff.hoehe * BILD.w) / UNTERKANTE) : 0;
+  const bildBreite = ausgriff && volleBreite >= SCHMAL_AB
+    ? Math.min(volleBreite, Math.max(SCHMAL_AB, passBreite))
+    : volleBreite;
+  const einzug = ausgriff ? Math.round((volleBreite - bildBreite) / 2) : 0;
   // Linke Kante der Inhaltsspalte, gemessen in der Hülle: Titel und Kreise stehen am Desktop
   // bündig mit dem Inhalt darunter.
-  const spalte = ausgriff ? -ausgriff.links : 0;
+  const spalte = ausgriff ? Math.max(0, -ausgriff.links - einzug) : 0;
   const imRahmen = (x, y) => ({ left: ((x - a.x) / a.w) * 100 + '%', top: ((y - a.y) / a.h) * 100 + '%' });
   // Überraschungen: Marken-Töne, keine Deckkraft auf Text (K41).
   const s = (ab, max, spanne) => ({ opacity: Math.min(max, (completion - ab) / spanne), transition: 'opacity 1.5s ease' });
@@ -256,8 +268,10 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     ref: huelle,
     style: {
       position: 'relative', overflow: 'hidden', lineHeight: 0,
-      margin: '0 0 24px', marginLeft: ausgriff ? ausgriff.links + 'px' : 0,
-      width: ausgriff ? ausgriff.breite + 'px' : '100%',
+      margin: '0 0 24px', marginLeft: ausgriff ? (ausgriff.links + einzug) + 'px' : 0,
+      width: ausgriff ? bildBreite + 'px' : '100%',
+      // Steht der Berg nicht randlos, liegt er als Bild auf der Seite — mit Ecken wie die Kacheln.
+      borderRadius: einzug > 0 ? radius.lg : 0,
       // Ladezustand und Fehlerfall: eine ruhige Fläche, nichts springt.
       background: p.up,
     },
