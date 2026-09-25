@@ -60,8 +60,10 @@ export function sozialhilfePegelState(data) {
   const rent = Number(data?.wohnen?.rentAmount || 0);
   const sh = calculateSozialhilfe(data);
   const bedarf = Number(sh?.totalBedarf) || 0;
-  const income = Number(sh?.income) || 0;
   const deficit = Number(sh?.deficit) || 0;
+  // Bei einer Lücke steht das Wasser beim ANGERECHNETEN Einkommen (nach Einkommensfreibetrag,
+  // SKOS-RL D.2) — nur so ergeben Wasser + Aufstockung genau den Bedarf.
+  const income = Number(deficit > 0 ? sh?.anrechenbaresEinkommen : sh?.income) || 0;
   const vermoegenUeber = Number(sh?.vermoegenUeberFreibetrag) || 0;
 
   // Ohne Kanton, Miet-Kontext oder Bedarf ist die Berechnung unvollständig.

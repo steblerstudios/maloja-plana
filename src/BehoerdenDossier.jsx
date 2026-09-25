@@ -112,6 +112,9 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
             }
           }, row.value)
         )
+      ),
+      ...(section.notes || []).map((n, i) =>
+        React.createElement('p', { key: 'n' + i, style: { fontSize: text.xs, color: palette.mid, margin: space.xs + 'px 0 0', lineHeight: 1.4 } }, n)
       )
     );
 

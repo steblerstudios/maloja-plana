@@ -321,6 +321,16 @@ describe('Berge · Fortschritts-Kreise zeigen den Stand', () => {
     expect(html).not.toContain('berg-abgeschlossen');
     expect(html).not.toContain('berg-prozent');
   });
+  it('nichts begonnen: auch mit Prozentwert 0 kein «0 %»-Kreis', () => {
+    const html = rendern({ begonnen: 0, abgeschlossen: 0, gesamt: 7 }, 0);
+    expect(html).toContain('Ihr Weg beginnt hier');
+    expect(html).not.toContain('berg-prozent');
+  });
+  it('knapp begonnen (1 %): der Prozent-Kreis steht schon — keine 10-%-Schwelle mehr', () => {
+    const html = rendern({ begonnen: 1, abgeschlossen: 0, gesamt: 7 }, 1);
+    expect(html).toContain('berg-prozent');
+    expect(html).toContain('1%');
+  });
   it('begonnen, noch keins fertig: nur «begonnen» 7/7 und der Prozent-Kreis', () => {
     const html = rendern({ begonnen: 7, abgeschlossen: 0, gesamt: 7 }, 63);
     expect(html).toContain('berg-begonnen');

@@ -751,8 +751,16 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
       { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
       { label: t('sozialhilfe.deductIncome'), value: '− ' + formatCHF(sozialhilfe.income) },
+      // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
+      sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
       { label: t('sozialhilfe.deficit'), value: formatCHF(sozialhilfe.deficit) + t('common.perMonth'), bold: true },
-    ].filter(r => r.value);
+    ].filter(r => r && r.value);
+    // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
+    const notes = [
+      sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
+      sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
+      sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
+    ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
       : t('sozialhilfe.notEntitled');
@@ -763,6 +771,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       status,
       statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: sozialhilfe.eligible,
+      notes,
     });
   }
 
@@ -958,6 +967,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.income || 0,
+      efb: sozialhilfe.efb || 0,
+      efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       deficit: sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };
@@ -1043,6 +1054,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
             </tr>
           `).join('')}
         </table>` : ''}
+        ${(s.notes || []).map(n => `<p class="bd-note">${esc(n)}</p>`).join('')}
       </div>
     `).join('');
 
@@ -1102,6 +1114,12 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       margin-bottom: 10px;
       padding-bottom: 4px;
       border-bottom: 1px solid ${DRUCK.linie};
+    }
+    .bd-note {
+      font-size: 11px;
+      color: ${DRUCK.grau};
+      margin: 6px 0 0;
+      line-height: 1.4;
     }
     .bd-status {
       font-size: 13px;
