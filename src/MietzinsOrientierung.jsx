@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
-import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt } from './data/mietzinsbeitraege.js';
+import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt, istJungErwachsen } from './data/mietzinsbeitraege.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
@@ -123,6 +123,28 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
             ['ja', 'nein', 'weissNicht'].map((v) => React.createElement('option', { key: v, value: v }, t('mietzinsView.wfg_' + v)))
           ),
           React.createElement('p', { id: 'mz-wfg-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, t('mietzinsView.wfgHinweis'))
+        ),
+        // BS: je Kind zwischen 18 und 24 — in Erstausbildung? Nur dann zählt es zum Haushalt (SoHaV § 2/§ 3).
+        // Die Antwort steht am Kind im Haushalt (basis.household.children[i].erstausbildung).
+        info.limitFormel === 'bs' && onUpdateData && (hh.children || []).some(istJungErwachsen) && React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
+          (hh.children || []).map((c, i) => istJungErwachsen(c) && React.createElement('div', { key: i, style: { marginBottom: space.xs + 'px' } },
+            React.createElement('label', { htmlFor: 'mz-ausb-' + i, style: { display: 'block', fontSize: text.sm, color: palette.text, fontWeight: weight.medium, marginBottom: '4px' } },
+              t('mietzinsView.erstausbildungFrage', { name: (c.name || '').trim() || t('mietzinsView.personAlter', { alter: Number(c.age) }) })),
+            React.createElement('select', {
+              id: 'mz-ausb-' + i, value: c.erstausbildung || '', 'aria-describedby': 'mz-ausb-hinweis',
+              onChange: (e) => {
+                const household = data?.basis?.household || {};
+                const children = (household.children || []).map((k, j) => j === i ? { ...k, erstausbildung: e.target.value || undefined } : k);
+                onUpdateData('basis', 'household', { ...household, children });
+              },
+              style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '200px' },
+            },
+              React.createElement('option', { value: '' }, t('common.select')),
+              React.createElement('option', { value: 'ja' }, t('mietzinsView.wfg_ja')),
+              React.createElement('option', { value: 'nein' }, t('mietzinsView.wfg_nein'))
+            )
+          )),
+          React.createElement('p', { id: 'mz-ausb-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, t('mietzinsView.erstausbildungHinweis'))
         ),
         // Ergebnis (mit Zahlen, sofern vorhanden).
         assessment && React.createElement('div', {

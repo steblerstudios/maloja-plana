@@ -361,3 +361,41 @@ describe('Mietzinsbeiträge BS: junge Erwachsene', () => {
     expect(render([{ age: 25 }])).toContain('mietzinsView.result_likely(36’000|51’750)');
   });
 });
+
+// Entscheid Stebler Studios 25.09.2026: der Rechner fragt je Kind 18–24 nach der Erstausbildung.
+describe('Mietzinsbeiträge BS: Frage «in Erstausbildung?»', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const data = (erstausbildung) => ({ basis: { canton: 'BS', maritalStatus: 'single', household: { adults: 1, children: [{ age: 5 }, { age: 20, name: 'Lea', ...(erstausbildung && { erstausbildung }) }] } },
+    finanzen: { monthlyIncome: 3000, dreizehnter: NEIN }, wohnen: { rentAmount: 1200 } });
+  const render = async (d, onUpdateData) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data: d, onUpdateData }));
+  };
+  it('bsHaushalt: «ja» zählt als Kind, «nein» gar nicht, ohne Antwort offen', async () => {
+    const { bsHaushalt } = await import('../../data/mietzinsbeitraege.js');
+    expect(bsHaushalt(1, [{ age: 5 }, { age: 20, erstausbildung: 'ja' }])).toEqual({ personen: 3, kinder: 2, offen: false });
+    expect(bsHaushalt(1, [{ age: 5 }, { age: 20, erstausbildung: 'nein' }])).toEqual({ personen: 2, kinder: 1, offen: false });
+    expect(bsHaushalt(1, [{ age: 5 }, { age: 20 }]).offen).toBe(true);
+  });
+  it('«ja»: 3 Personen mit Kindern → 24 000 + 16 000 + 36 000 = 76 000', async () => {
+    expect(await render(data('ja'), () => {})).toContain('mietzinsView.result_likely(36’000|76’000)');
+  });
+  it('«nein»: 2 Personen (1 Erwachsene + 1 Kind) → 24 000 + 6 000 + 36 000 = 66 000', async () => {
+    expect(await render(data('nein'), () => {})).toContain('mietzinsView.result_likely(36’000|66’000)');
+  });
+  it('Frage mit Namen, nur mit Schreibweg; ohne Antwort weiter offen', async () => {
+    const html = await render(data(), () => {});
+    expect(html).toContain('mietzinsView.erstausbildungFrage(Lea)');
+    expect(html).toContain('mietzinsView.result_jungeErwachseneOffen');
+    expect(await render(data(), undefined)).not.toContain('mz-ausb-');
+  });
+  it('die Antwort landet am Kind im Haushalt, die anderen Kinder bleiben unverändert', async () => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const aufrufe = [];
+    const el = MietzinsOrientierung({ palette, t, data: data(), onUpdateData: (...a) => aufrufe.push(a) });
+    const finde = (n) => { if (!n || typeof n !== 'object') return null; if (Array.isArray(n)) { for (const c of n) { const r = finde(c); if (r) return r; } return null; } if (n.props?.id === 'mz-ausb-1') return n; for (const c of [].concat(n.props?.children || [])) { const r = finde(c); if (r) return r; } return null; };
+    finde(el).props.onChange({ target: { value: 'ja' } });
+    expect(aufrufe).toEqual([['basis', 'household', { adults: 1, children: [{ age: 5 }, { age: 20, name: 'Lea', erstausbildung: 'ja' }] }]]);
+  });
+});

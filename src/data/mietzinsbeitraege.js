@@ -127,13 +127,16 @@ export function bsObergrenze(personen, kinder) {
 // BS: wer als «Kind» zur Haushaltseinheit zählt — SoHaG (890.700) § 5 Abs. 2 lit. c, SoHaV § 2/§ 3,
 // MBVO § 9 Abs. 2: minderjährig, oder 18–24 UND in Erstausbildung. 25 und älter gehört nicht dazu
 // (auch nicht als erwachsene Person). Ob jemand zwischen 18 und 24 in Erstausbildung ist, weiss die
-// App nicht — dann `offen`, und es gibt keine Grenze (je nach Antwort 12'000–16'000 Unterschied).
-// Ohne Altersangabe zählt ein Kind als minderjährig (so erfasst die App Kinder).
+// App nur, wenn es beantwortet ist: `erstausbildung` am Kind ('ja' | 'nein'), gefragt im Mietzins-
+// Rechner (Entscheid Stebler Studios 25.09.2026). 'ja' → Kind · 'nein' → nicht in der Haushaltseinheit
+// (auch nicht als erwachsene Person, SoHaV § 3) · keine Antwort → `offen`, keine Grenze (je nach
+// Antwort 12'000–16'000 Unterschied). Ohne Altersangabe zählt ein Kind als minderjährig.
+export const istJungErwachsen = (c) => Number(c?.age) >= 18 && Number(c?.age) <= 24;
 export function bsHaushalt(erwachsene, children = []) {
   const alter = (c) => Number(c?.age);
-  const kinder = children.filter((c) => !(alter(c) >= 18));
-  const jungeErwachsene = children.filter((c) => alter(c) >= 18 && alter(c) <= 24);
-  return { personen: Math.max(1, erwachsene) + kinder.length, kinder: kinder.length, offen: jungeErwachsene.length > 0 };
+  const kinder = children.filter((c) => !(alter(c) >= 18) || (istJungErwachsen(c) && c.erstausbildung === 'ja'));
+  const offen = children.some((c) => istJungErwachsen(c) && c.erstausbildung !== 'ja' && c.erstausbildung !== 'nein');
+  return { personen: Math.max(1, erwachsene) + kinder.length, kinder: kinder.length, offen };
 }
 
 // O3 — Ergebnis-Art des Mietzins-Schnellchecks (MietzinsOrientierung.jsx).
