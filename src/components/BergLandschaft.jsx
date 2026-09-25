@@ -23,14 +23,15 @@ export const SCHMAL_AB = 520; // px Breite des Rahmens
 // Die Route ist aus dem Bild gelesen (25.09.2026, Werkzeug: Maske der hellen Fahrbahn + Skelett):
 // die Serpentine beginnt rechts unten in der U-Kurve um die Wiese, läuft oben zurück nach links
 // zur Kehre und steigt über die schmale Strasse zur Passhöhe. Die sieben Stationen stehen in
-// gleicher Bogenlänge (Abstand ~110 Bildeinheiten, in der Kehre enger); wo eine Tanne die Strasse
+// gleicher Bogenlänge (Abstand ~110 Bildeinheiten, in der Kehre enger; Versicherungen 15 Einheiten
+// zurückgesetzt, damit am 320-px-Handy das Etikett «Ausbildung» Luft hat); wo eine Tanne die Strasse
 // verdeckt, fehlt der Weg — er geht dahinter durch.
 // Etikett-Seite je Ausschnitt, im Browser auf Überschneidungen nachgemessen (320–1280 px).
 export const STATIONEN = [
   { key: 'basis', x: 564, y: 706, seite: { breit: 'rechts', schmal: 'links' } },
   { key: 'wohnen', x: 516, y: 626, seite: { breit: 'rechts', schmal: 'oben' } },
   { key: 'finanzen', x: 404, y: 603, seite: { breit: 'unten', schmal: 'unten' } },
-  { key: 'versicherungen', x: 291, y: 580, seite: { breit: 'obenrechts', schmal: 'unten' } },
+  { key: 'versicherungen', x: 310, y: 584, seite: { breit: 'obenrechts', schmal: 'oben' } },
   { key: 'ausbildung', x: 181, y: 552, seite: { breit: 'unten', schmal: 'untenrechts' } },
   { key: 'behoerden', x: 187, y: 491, seite: { breit: 'links', schmal: 'rechts' } },
   { key: 'notfall', x: 287, y: 445, seite: { breit: 'rechts', schmal: 'rechts' } },
@@ -41,8 +42,8 @@ export const STATIONEN = [
 export const WEGSTUECKE = [
   'M563.9 706.1C565.2 704.3 570.2 698.5 572 695.3C573.7 692.1 574.3 690.4 574.4 686.7C574.6 683.1 574.3 678.1 573 673.4C571.7 668.6 568.8 662.4 566.5 658.3C564.2 654.2 561.9 651.7 559.1 648.9C556.3 646.1 553.6 644.1 549.6 641.5C545.6 639 540.7 636.4 535.1 633.7C529.4 631 519 626.9 515.7 625.6',
   'M515.7 625.6C513.6 624.9 505 622.2 502.8 621.6M488.3 618C483.1 616.9 471.5 614.1 457.4 611.6C443.4 609 413 604.2 404.2 602.8',
-  'M404.2 602.8C402.9 602.5 398 601.6 396.8 601.4M367.3 595.7C354.6 593.1 303.7 582.4 291 579.8',
-  'M291 579.8C281.7 577.6 253.9 571.6 235.5 566.9C217.1 562.2 189.7 554.1 180.6 551.6',
+  'M404.2 602.8C402.9 602.5 398 601.6 396.8 601.4M367.3 595.7C357.8 593.7 319.6 585.9 310 583.9',
+  'M310 583.9C298.3 581.2 261.4 573.3 239.8 568C218.3 562.6 190.4 554.3 180.6 551.6',
   'M180.6 551.6C175 550.2 154 545.2 147.1 543.2C140.2 541.1 140.5 540.3 139.3 539.1C138 538 138.8 537.4 139.6 536.3C140.3 535.1 141.8 533.9 144 532.2C146.1 530.6 149.4 528.2 152.6 526.3C155.9 524.5 161.7 522.1 163.5 521.2M170.3 515.5C170.9 514.7 173.3 511.5 173.9 510.6',
   'M187.2 490.7C188.9 488.5 193.4 481.8 197.3 477.7C201.3 473.5 206.8 468.7 210.8 465.8C214.9 463 216.9 462.2 221.6 460.7C226.3 459.1 236.2 457.3 239.1 456.6M248 454.9C252.6 453.9 269.3 450.5 275.8 448.8C282.3 447.2 285.3 445.7 287.2 445.1',
 ];

@@ -131,6 +131,36 @@ describe('Berge · Stationen passen in den Handy-Ausschnitt', () => {
   });
 });
 
+describe('Berge · Etiketten am 296-px-Handy überschneiden sich nicht (deutsche Kurzlabels)', () => {
+  // Etikettbreite bei 11 px, im Browser gemessen am 25.09.2026: «Ausbildung» 80, «Versicherung» 90,
+  // «Finanzen» 68 px → ≈ 6,2 px je Zeichen + 18 px (Polster, Farbpunkt, Abstand). Höhe 15 px.
+  const LABEL = { basis: 'Basis', wohnen: 'Wohnen', finanzen: 'Finanzen', versicherungen: 'Versicherung', ausbildung: 'Ausbildung', behoerden: 'Behörden', notfall: 'Notfall' };
+  const a = AUSSCHNITT.schmal, breite = 296, s = breite / a.w, hoehe = a.h * s, K = 26, H = 15;
+  const kasten = (st) => {
+    const x = (st.x - a.x) * s, y = (st.y - a.y) * s, w = LABEL[st.key].length * 6.2 + 18;
+    return {
+      rechts: [x + K / 2 + 4, y - H / 2, w, H], links: [x - K / 2 - 4 - w, y - H / 2, w, H],
+      unten: [x - w / 2, y + K / 2 + 3, w, H], oben: [x - w / 2, y - K / 2 - 3 - H, w, H],
+      untenrechts: [x - K / 2 - 4, y + K / 2 + 3, w, H], obenrechts: [x - K / 2 - 4, y - K / 2 - 3 - H, w, H],
+    }[st.seite.schmal];
+  };
+  const knopf = (st) => [(st.x - a.x) * s - K / 2, (st.y - a.y) * s - K / 2, K, K];
+  const ueber = ([x1, y1, w1, h1], [x2, y2, w2, h2]) => x1 < x2 + w2 && x2 < x1 + w1 && y1 < y2 + h2 && y2 < y1 + h1;
+  it('jedes Etikett liegt im Bild', () => {
+    for (const st of STATIONEN) {
+      const [x, y, w, h] = kasten(st);
+      expect(x >= 0 && y >= 0 && x + w <= breite && y + h <= hoehe, st.key).toBe(true);
+    }
+  });
+  it('kein Etikett liegt auf einem anderen Etikett oder einem fremden Knopf', () => {
+    STATIONEN.forEach((st, i) => STATIONEN.forEach((an, j) => {
+      if (i === j) return;
+      if (j > i) expect(ueber(kasten(st), kasten(an)), `${st.key} ↔ ${an.key}`).toBe(false);
+      expect(ueber(kasten(st), knopf(an)), `${st.key} auf Knopf ${an.key}`).toBe(false);
+    }));
+  });
+});
+
 describe('Berge · Wegstücke verbinden die Stationen', () => {
   const zahlen = (d) => d.match(/-?\d+(\.\d+)?/g).map(Number);
   it('sechs Stücke für sieben Stationen', () => {
