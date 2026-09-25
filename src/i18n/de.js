@@ -1482,6 +1482,10 @@ export default {
     notStarted: { sie: 'Ihr Weg beginnt hier', du: 'Dein Weg beginnt hier' },
     status: '{started} von {total} begonnen',
     allDone: 'Alle Bereiche ausgefüllt',
+    // Beschriftung der Fortschritts-Kreise im Berg-Hero (25.09.2026)
+    begonnen: 'begonnen',
+    abgeschlossen: 'abgeschlossen',
+    ausgefuellt: 'ausgefüllt',
   },
 
   guidedStart: {
