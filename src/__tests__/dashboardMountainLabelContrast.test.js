@@ -83,8 +83,10 @@ describe('K41 · Berg-Beschriftung: mid auf der eigenen Fläche trägt AA', () =
 // 'mountain-label' (der eigentliche Kontrast-Fehler) unbemerkt zurückkommt, und
 // dass die Kursiv-Unterscheidung («noch nicht begonnen» = Form, nicht nur Farbe)
 // wieder verschwindet.
-describe('K41 · Quell-Scan (Dashboard.jsx, mountain-label)', () => {
-  const src = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
+// Seit 25.09.2026 wohnen die Berge in components/BergLandschaft.jsx (Landschaft aus der
+// Codex-Illustration); das Etikett zog mit, die Regel bleibt dieselbe.
+describe('K41 · Quell-Scan (BergLandschaft.jsx, mountain-label)', () => {
+  const src = readFileSync(new URL('../components/BergLandschaft.jsx', import.meta.url), 'utf8');
   const start = src.indexOf("className: 'mountain-label'");
   const block = src.slice(start, start + 1700);
 

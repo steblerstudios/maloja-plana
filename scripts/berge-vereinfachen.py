@@ -11,7 +11,7 @@ Was dieses Skript tut, damit es sich jederzeit nachbauen lässt:
   2. Jede Fläche bekommt einen Rand in der eigenen Farbe (3 px) — sonst blitzen
      zwischen den unabhängig vereinfachten Flächen helle Fugen durch.
   3. Eine dunkle Fassung: dieselben 17 Töne, Reihenfolge der Helligkeit bleibt,
-     zusammengelegt auf 12–32 % Helligkeit; die fast weissen Himmelstöne verlieren
+     zusammengelegt auf 15–42 % Helligkeit; die fast weissen Himmelstöne verlieren
      fast alle Sättigung, sonst kippen sie ins Senfgelb.
 
 Aufruf:  python3 scripts/berge-vereinfachen.py <quelle.svg>
@@ -65,7 +65,7 @@ def vereinfache(d):
 def dunkel(hexfarbe):
     r, g, b = (int(hexfarbe[i:i + 2], 16) / 255 for i in (1, 3, 5))
     h, l, s = colorsys.rgb_to_hls(r, g, b)
-    l2 = 0.12 + (l - 0.28) / (0.97 - 0.28) * 0.20
+    l2 = 0.15 + (l - 0.28) / (0.97 - 0.28) * 0.27
     r, g, b = colorsys.hls_to_rgb(h, max(0.1, l2), s * (0.7 if l < 0.8 else 0.12))
     return '#%02x%02x%02x' % tuple(round(c * 255) for c in (r, g, b))
 

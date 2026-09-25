@@ -12,20 +12,20 @@ import landschaftDunkel from '../assets/berge/landschaft-dunkel.svg?url';
 const BILD = { w: 1100, h: 788 };
 // Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur die Strasse, damit die
 // Stationen am Handy weit genug auseinanderliegen (≥ 44 px Abstand bei 28-px-Knöpfen).
-const AUSSCHNITT = {
+export const AUSSCHNITT = {
   breit: { x: 0, y: 80, w: 1100, h: 708 },
   schmal: { x: 60, y: 360, w: 580, h: 410 },
 };
-const SCHMAL_AB = 520; // px Breite des Rahmens
+export const SCHMAL_AB = 520; // px Breite des Rahmens
 
 export const STATIONEN = [
   { key: 'basis', x: 540, y: 712, seite: 'rechts' },
   { key: 'wohnen', x: 566, y: 648, seite: 'rechts' },
   { key: 'finanzen', x: 390, y: 620, seite: 'unten' },
   { key: 'versicherungen', x: 235, y: 578, seite: 'unten' },
-  { key: 'ausbildung', x: 138, y: 541, seite: 'links' },
-  { key: 'behoerden', x: 190, y: 471, seite: 'links' },
-  { key: 'notfall', x: 305, y: 418, seite: 'rechts' },
+  { key: 'ausbildung', x: 138, y: 541, seite: 'unten' },
+  { key: 'behoerden', x: 276, y: 486, seite: 'links' },
+  { key: 'notfall', x: 318, y: 404, seite: 'rechts' },
 ];
 
 // Zwischenpunkte, damit der gegangene Weg der Strasse folgt statt quer durch den Wald.
@@ -34,8 +34,8 @@ const ZWISCHEN = [
   [[530, 616], [470, 612]],
   [[310, 600]],
   [[182, 560]],
-  [[160, 516], [178, 490]],
-  [[208, 448], [250, 434]],
+  [[200, 552], [250, 540], [270, 512]],
+  [[284, 452]],
 ];
 
 // Catmull-Rom → kubische Bézier, einmal beim Laden: ein Pfad je Wegstück (Station i → i+1).
