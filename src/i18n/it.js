@@ -5038,7 +5038,7 @@ export default {
     brutto: 'lordo',
     nettoGeschaetzt: '≈ netto CHF {value} (stimato)',
     bruttoGeschaetzt: '≈ lordo CHF {value} (stimato)',
-    knapp: 'Al limite — da verificare con il salario netto esatto.',
+    knapp: 'Al limite — la stima non considera l’AINP né l’imposta alla fonte; da verificare con il salario netto esatto.',
   },
   einkommensart: {
     offenBrutto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il salario lordo.',

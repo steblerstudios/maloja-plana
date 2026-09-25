@@ -116,3 +116,17 @@ describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
     expect(render({ data: profil(Math.round(bedarf * 1.03)) })).not.toContain('einkommensfeld.knapp');
   });
 });
+
+describe('istKnapp — einseitige Schwelle (Fachprüfung 25.09.2026)', () => {
+  it('97 %–110 % des Bedarfs, ohne Alter bis 115 %', async () => {
+    const { istKnapp } = await import('../components/EinkommenFeld.jsx');
+    const sh = (q) => ({ totalBedarf: 3000, income: 3000 * q });
+    expect(istKnapp(sh(0.96))).toBe(false);
+    expect(istKnapp(sh(0.97))).toBe(true);
+    expect(istKnapp(sh(1.10))).toBe(true);
+    expect(istKnapp(sh(1.12))).toBe(false);
+    expect(istKnapp(sh(1.12), true)).toBe(true);
+    expect(istKnapp(sh(1.16), true)).toBe(false);
+    expect(istKnapp(null)).toBe(false);
+  });
+});

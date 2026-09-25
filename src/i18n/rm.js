@@ -4383,7 +4383,7 @@ export default {
     brutto: 'brut',
     nettoGeschaetzt: '≈ net CHF {value} (stimà)',
     bruttoGeschaetzt: '≈ brut CHF {value} (stimà)',
-    knapp: 'Stretg — controllar cun la paja netta exacta.',
+    knapp: 'Stretg — la stimaziun quinta senza AINP ed senza taglia a la funtauna; controllar cun la paja netta exacta.',
   },
   einkommensart: {
     offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',

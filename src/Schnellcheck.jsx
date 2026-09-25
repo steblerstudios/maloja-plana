@@ -87,7 +87,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   try {
     if (canton && numIncome > 0) belegState = praemienBelegState(probe);
     if (canton && numIncome > 0 && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
-    if (e.geschaetzt && numRent > 0) knappSoz = istKnapp(calculateSozialhilfe(probe));
+    if (e.geschaetzt && numRent > 0) knappSoz = istKnapp(calculateSozialhilfe(probe), e.ohneAlter);
   } catch { /* Orientierung, nie blockierend */ }
 
   const monetary = benefits.filter(b => !b.qualitative && b.monthly > 0);

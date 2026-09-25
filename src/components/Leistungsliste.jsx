@@ -48,7 +48,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     if (annual > 0 && rentContext) {
       const sh = calculateSozialhilfe(probe);
       // Knapp: ist das Netto nur geschätzt und liegt es nahe am Bedarf, kann die Schätzung kippen.
-      knappSoz = e.geschaetzt && istKnapp(sh);
+      knappSoz = e.geschaetzt && istKnapp(sh, e.ohneAlter);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.

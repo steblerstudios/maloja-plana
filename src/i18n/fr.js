@@ -5060,7 +5060,7 @@ export default {
     brutto: 'brut',
     nettoGeschaetzt: '≈ net CHF {value} (estimé)',
     bruttoGeschaetzt: '≈ brut CHF {value} (estimé)',
-    knapp: 'Juste — à vérifier avec le salaire net exact.',
+    knapp: 'Juste — l’estimation ne tient pas compte de l’AANP ni de l’impôt à la source ; à vérifier avec le salaire net exact.',
   },
   einkommensart: {
     offenBrutto: 'Le profil n’indique pas si le salaire est brut ou net — il n’est donc pas repris ici. Veuillez saisir le salaire brut.',

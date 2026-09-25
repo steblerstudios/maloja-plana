@@ -5093,7 +5093,7 @@ export default {
     brutto: 'brutto',
     nettoGeschaetzt: '≈ netto CHF {value} (geschätzt)',
     bruttoGeschaetzt: '≈ brutto CHF {value} (geschätzt)',
-    knapp: 'Knapp — mit dem genauen Nettolohn nachprüfen.',
+    knapp: 'Knapp — die Schätzung rechnet ohne NBU und Quellensteuer; mit dem genauen Nettolohn nachprüfen.',
   },
   einkommensart: {
     offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',

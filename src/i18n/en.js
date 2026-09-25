@@ -5060,7 +5060,7 @@ export default {
     brutto: 'gross',
     nettoGeschaetzt: '≈ net CHF {value} (estimated)',
     bruttoGeschaetzt: '≈ gross CHF {value} (estimated)',
-    knapp: 'Close — check again with your exact net pay.',
+    knapp: 'Close — the estimate leaves out accident insurance (NBU) and withholding tax; check again with your exact net pay.',
   },
   einkommensart: {
     offenBrutto: 'Your profile doesn’t say whether the salary is gross or net — so it isn’t carried over here. Please enter your gross salary.',
