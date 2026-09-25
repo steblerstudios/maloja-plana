@@ -19,6 +19,42 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🧾 **Nachtrag 25.09., 12:40 — Sitzung «Deployment follow-up» (24.09. 18:50 bis 25.09.): Deploy 0.1.40 belegt, K123/K124/K125 vorgezogen und gebaut. Alle Merges auf ausdrückliches Wort von Stebler Studios («sauber mergen»), je Squash, vorher gegen das aktuelle `main` getestet.**
+>
+> **Stand, gemessen 25.09.2026 12:35** (`bash scripts/stand-jetzt.sh`): main = `cbb6447` · live = `0a80d71`
+> (0.1.40-beta, gebaut 25.09. 11:47, **`sauber: true`**) · 5 Commits dazwischen · offen: #361, #351 (Entwürfe
+> anderer Sitzungen). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> | PR | Was | Wirkung |
+> |---|---|---|
+> | #328 | statische Seiten: `apple-touch-icon.png` wie die App | live |
+> | #329 | Stand-Nachtrag Deploy 24.09. | Doku |
+> | #330 | Rundgang-«×» 44 × 44 (vorher 28; Regel ist ≥ 24, «wo es geht 44» — Verbesserung, kein Fehler) | live |
+> | #331 | HRegV Art. 38/117 gelesen, F0 verweist | Doku |
+> | #333 · #338 | **K125**: Kinderabzug im Konkubinat, alle 26 Kantone im Rohtext; ZH, LU, AI, NW, SH, SO, TI, VS ohne Kantonszahl (teilen hälftig, Zahl wäre zu tief); FR/GE behalten sie (Einverdiener-Ausnahme amtlich) | live |
+> | #334 · #343 | **K123**: AHV-Nummer stand live in drei QR, obwohl die Bauliste das Gegenteil sagte → Option B: Notfall-/Organspende-QR ohne, KK-Karte mit Kästchen (Standard aus) | live seit 25.09. 11:47 |
+> | #335 | **K124**: rm-Anrede-Schuld 299 → 25 (`TODO(rm)`, provisorisch) | live |
+> | #359 | K123 **Wiedervorlage Oktober** (Entscheid Stebler Studios 25.09.) | Doku |
+>
+> **Offen:**
+> 1. **K123 im Oktober nochmals besprechen** — Erinnerung als geplante Aufgabe am 1.10. 09:00
+>    (`maloja-k123-wiedervorlage-oktober`, nur lesen, bereitet eine Gesprächsvorlage vor).
+> 2. **Handtests** (Stebler Studios): QR am Telefon scannen — Notfall, Organspende, KK-Karte ohne/mit
+>    Häkchen (der Inhalt der gezeichneten Codes ist nicht maschinell geprüft) · Notfall-QR mit Kamera (K121) ·
+>    Rundgang am iPhone · Testerin fragen, ob «Mit ‹…› beginnen» ihr «und jetzt?» beantwortet.
+> 3. **K124-Rest:** 25 rm-Verbformen offen; `gepaeck.intro` steht in rm auf Französisch · rm-Gegenlese allgemein.
+> 4. **K125-Rest:** NE (Wahlrecht, Quelle 2016) und AR (Kann-Vorschrift) zeigen eine Zahl, im Quellenblatt als
+>    unsicher — in der App unsichtbar. Bund: FR-Merkblatt wendet die Einverdiener-Ausnahme evtl. auch bei der
+>    DBSt an (nicht belegt); die Annahme «gleich hoch oder höher» bleibt richtig.
+> 5. **Nebenbefund:** `docs/legal/dsfa-kurzfassung.md` nennt DSG Art. 5 Bst. c **Ziff. 4** für soziale Hilfe —
+>    laut Fedlex **Ziff. 6** (Ziff. 4 = biometrische Daten). Nicht behoben.
+> 6. Remote-Zweig `fix/k123-ahv-nur-auf-wunsch` (gemergt) steht noch — Löschen nur auf Zuruf.
+>
+> **Ausserhalb dieses Repos** (stebler-studios, lokal committet, nicht gepusht/deployt): Studio-Impressum
+> Handelsregister-Satz mit OR Art. 936 / HRegV Art. 38 belegt (`a1eb288`) · Fragen Juristin 3a geschärft,
+> aufgehobener Art. 36 HRegV korrigiert (`21c0b55`). Neu für den Adress-Entscheid: HRegV Art. 117 Abs. 2 —
+> das Rechtsdomizil kann eine **c/o-Adresse** sein.
+
 > ✅ **Nachtrag 25.09., 11:50 — DEPLOYT: live = `main` = `0a80d71` (0.1.40-beta), live gegengeprüft.**
 >
 > **Stand, gemessen 25.09.2026 11:48** (`bash scripts/stand-jetzt.sh`): main = `0a80d71` · live = `0a80d71`
