@@ -58,6 +58,15 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 | Baum oder Obstgarten · zwei Bäume verschmelzen | §2 | braucht nur ein Mockup, kein Bau |
 | Sechs Meinungs-Entscheide (E4), vor allem Preis/Paywall | §11 | Preis bestimmt, was Maloja nach aussen verspricht |
 | Bottom-Nav oder Hamburger | §6 | gehört zur Kapitel-Frage |
+| Dashboard entschlacken: 11 Abschnitte, 4 «hier anfangen»-Blöcke → Einstiege, nächster Schritt, eigene Übersicht; **Suche sichtbar** statt im Werkzeug-Raster | §6 | zwei Aussenstimmen sagen dasselbe (Codex-Audit 24.09., Tester-Feedback 25.09. in #361) |
+| Installationshinweis steht über dem Hero, vor dem Nutzen — später anbieten? | §10 | im Browser bestätigt; klein, aber ein Platz-Entscheid |
+| Bildwelten neben dem Berg (Obstgarten, Gepäck, Reserve-Tank, Schutzschild): Sachbegriff voranstellen? | §1 | gehört zur Gamification-Frage oben |
+| Silbentrennung in der Bergnavigation («Versiche-rung») — K18 war bewusst, die Nebenwirkung ist echt | §8 | nur ansehen und entscheiden |
+
+*Herkunft der vier Dashboard-Zeilen oben:* eine UX-Durchsicht von Codex (24.09.2026), jeder
+Befund am Code geprüft. Was ein **Fehler** war, ist gebaut und live (#344): IPV ohne Sackgassen
+(Kanton, Geburtsdatum, PLZ/Ort und Prämie direkt im Rechner), «Vorname ergänzen» statt «Vorname»,
+Kacheln ohne unbelegten Frankenbetrag. Hier stehen nur die **Entscheide**.
 
 ### Oktober — bauen (klein)
 
@@ -80,6 +89,7 @@ Abschiedsagentur, plaant).
 
 | Idee | § | hängt an |
 |---|---|---|
+| Kontraste im Dunkelmodus **messen** (Karten, Rahmen, Sekundärtext, Interaktionszustände) — das Audit hat nur geschätzt | §8 | `a11y-pruefer` |
 | ✅ **Grauzonen sammeln** — erledigt 25.09.: [`GRAUZONEN.md`](GRAUZONEN.md), 19 Fälle (14 belegt, 5 teilweise); drei live falsche Sätze daraus behoben (#347), EO-Betreuung 14 → 98 Taggelder (#350) | §0 | Bau der Entscheidungsbäume im Winter |
 | Übersetzer:innen / Partnerorganisation für Asyl-Sprachen suchen | §11 | Stebler Studios, Kontakt nach aussen |
 | Fachaussagen vom 19.07. belegen (KK-Wechsel mit Schulden, Kündigungstermine, Rückforderungen) | §5 | Quellen; `swiss-precision-pruefer` |
