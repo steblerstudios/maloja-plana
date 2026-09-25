@@ -1754,7 +1754,7 @@ export default {
     glanceSaved: 'Ultimo salvataggio',
     glanceNeverSaved: 'Ancora nessun file di backup creato',
     nextUpAction: 'Completare: {feld}',
-    nextUpCta: 'Completa ora', // gefüllter Knopf im «Was ist jetzt dran?» (Versuch 25.09.)
+    nextUpCta: 'Ora', // Verb steht schon im Titel (Completare: …), 25.09.
     nextUpWeiter: 'Continua con {name}',
     tipsTitle: 'Consigli per iniziare:',
     tip1: { sie: 'Inizi con il capitolo "Dati personali"', du: 'Inizia con il capitolo "Dati personali"' },
@@ -4586,6 +4586,15 @@ export default {
     tachoReadoutAbove: 'Finora CHF {costs} quest\'anno — sopra il break-even (CHF {be}). Quest\'anno la franchigia bassa (CHF {low}) sarebbe stata più conveniente.',
     tachoOrientation: { sie: 'Non appena registra le spese sanitarie, la lancetta mostra a che punto è quest\'anno.', du: 'Non appena registri le spese sanitarie, la lancetta mostra a che punto sei quest\'anno.' },
     tachoTrackLink: 'Registrare le spese sanitarie',
+    kreuzAchse: 'Spese sanitarie all’anno',
+    kreuzKosten: 'Costi all’anno',
+    kreuzLinie: 'Franchigia {franchise}',
+    kreuzBisher: 'finora',
+    kreuzHochrechnung: 'Proiezione',
+    kreuzHochrechnungText: 'Proiettato sull’intero anno, sarebbero circa CHF {value} — una stima approssimativa: le spese sanitarie arrivano spesso in modo irregolare.',
+    kreuzOrientation: { sie: 'Appena registra spese sanitarie, un tratto mostra a che punto è nell’anno.', du: 'Appena registri spese sanitarie, un tratto mostra a che punto sei nell’anno.' },
+    kreuzTooltip: 'A CHF {c}: franchigia {low} ≈ CHF {tief} · franchigia {high} ≈ CHF {hoch}',
+    kreuzAria: 'Costi totali all’anno per la franchigia {low} e {high}; le linee si incrociano al pareggio di CHF {be}.',
     reserveCheck_strong: { sie: 'La Sua riserva (CHF {savings}) copre ampiamente questo caso peggiore — persino due volte. La franchigia più alta è del tutto sostenibile per Lei.', du: 'La tua riserva (CHF {savings}) copre ampiamente questo caso peggiore — persino due volte. La franchigia più alta è del tutto sostenibile per te.' },
     reserveCheck_ok: { sie: 'La Sua riserva (CHF {savings}) copre il caso peggiore una volta. Un cuscinetto per due anni (CHF {ideal}) sarebbe ancora più tranquillo.', du: 'La tua riserva (CHF {savings}) copre il caso peggiore una volta. Un cuscinetto per due anni (CHF {ideal}) sarebbe ancora più tranquillo.' },
     reserveCheck_low: { sie: 'La Sua riserva (CHF {savings}) è inferiore al caso peggiore (CHF {need}). Una franchigia più bassa Le dà più sicurezza finché il cuscinetto non è pronto.', du: 'La tua riserva (CHF {savings}) è inferiore al caso peggiore (CHF {need}). Una franchigia più bassa ti dà più sicurezza finché il cuscinetto non è pronto.' },
@@ -4684,8 +4693,11 @@ export default {
   instrumente: {
     title: { sie: 'I Suoi strumenti', du: 'I tuoi strumenti' },
     intro: { sie: 'Quattro controlli tranquilli a colpo d\'occhio — ne tocchi uno.', du: 'Quattro controlli tranquilli a colpo d\'occhio — toccane uno.' },
-    tacho: 'Tachimetro della franchigia',
+    tacho: 'Croce della franchigia',
     tachoSub: 'alta o bassa — cosa conviene?',
+    kreuzPasst: { sie: 'La Sua franchigia va bene', du: 'La tua franchigia va bene' },
+    kreuzWechsel: 'Proposta: {franchise} dal 1° gennaio',
+    kreuzWechselPolster: 'Proposta: {franchise}, se la riserva basta',
     kompass: 'Bussola delle prestazioni',
     kompassFound: '{n} vie possibili',
     kompassFoundOne: 'una via possibile',
@@ -4694,6 +4706,8 @@ export default {
     tankMonths: '{months} mesi di riserva',
     schild: 'Scudo di protezione',
     schildCount: '{covered}/{total} coperte',
+    steuer: 'Colonna fiscale',
+    steuerBetrag: 'Imposta federale ≈ CHF {value} / anno',
     setup: 'toccare per configurare',
   },
   schutzschild: {
@@ -4777,7 +4791,7 @@ export default {
     resultTitle: 'Con questi dati potrebbe sussistere un diritto a:',
     monat: 'mese',
     barHint: 'Sgravio mensile stimato — orientamento approssimativo, senza garanzia.',
-    ipvSubsumed: 'La riduzione dei premi (circa {amount} / mese) abbassa già il premio della cassa malati — con l’aiuto sociale questa parte è già compresa nel fabbisogno sopra, non è un importo aggiuntivo.',
+    ipvSubsumed: { sie: 'Finché riceve l’aiuto sociale, la riduzione dei premi viene computata – nessun importo aggiuntivo. Quando l’aiuto sociale termina, riduce di nuovo direttamente il Suo premio; il servizio sociale Le dirà se occorre una domanda.', du: 'Finché ricevi l’aiuto sociale, la riduzione dei premi viene computata – nessun importo aggiuntivo. Quando l’aiuto sociale termina, riduce di nuovo direttamente il tuo premio; il servizio sociale ti dirà se occorre una domanda.' },
     ipvEnthalten: 'compresa nell’aiuto sociale',
     ipv: 'Riduzione dei premi',
     ipvNote: 'Riduzione cantonale del premio della cassa malati.',
@@ -5025,6 +5039,15 @@ export default {
   },
 
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
+  einkommensfeld: {
+    label: 'Reddito mensile',
+    art: 'Tipo di reddito',
+    netto: 'netto',
+    brutto: 'lordo',
+    nettoGeschaetzt: '≈ netto CHF {value} (stimato)',
+    bruttoGeschaetzt: '≈ lordo CHF {value} (stimato)',
+    knapp: 'Al limite — la stima non considera l’AINP né l’imposta alla fonte; da verificare con il salario netto esatto.',
+  },
   einkommensart: {
     offenBrutto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il salario lordo.',
     offenNetto: 'Nel profilo non è indicato se il salario è lordo o netto — per questo non viene ripreso qui. Inserire il reddito netto.',

@@ -131,7 +131,8 @@ const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
 const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
@@ -1043,6 +1044,17 @@ const AppInner = ({ demo }) => {
     + encodeURIComponent('Maloja Plana Beta Feedback')
     + '&body=' + encodeURIComponent(feedbackBody);
 
+  // Die Leistungs-Zeile hat seit 25.09.2026 einen festen Ort: die letzte Zeile JEDER Seite,
+  // direkt über der Fusszeile (Entscheid Stebler Studios). Nicht IN der Fusszeile — die
+  // steht im Web fest unten, der Satz hätte sie dort dauerhaft auf 130 px aufgebläht.
+  // Stand vorher nur auf der leeren Übersicht, oben.
+  const leistungEl = React.createElement('p', {
+    style: {
+      width: '100%', maxWidth: contentMax, margin: space.lg + 'px auto 0',
+      boxSizing: 'border-box', color: palette.mid, fontSize: text.xs, lineHeight: leading.relaxed,
+    },
+  }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')));
+
   // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
   // Scroll-Inhalt (kein fixer zweiter Balken über dem Boden-Anker).
   const footerEl = React.createElement('footer', {
@@ -1593,6 +1605,7 @@ const AppInner = ({ demo }) => {
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),
+      leistungEl,
       // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
       isMobile && footerEl
     ),

@@ -327,6 +327,13 @@ const _edit = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'no
   React.createElement('line', { x1: '14', y1: '5', x2: '19', y2: '10' })
 );
 
+// Smartphone — «Auf den Startbildschirm legen» (Karte im Bergpanorama und Menü, 25.09.2026).
+// Vorher zeigte das Menü den Telefonhörer («anrufen») und die Karte am Computer einen Bildschirm.
+const _handy = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '6.5', y: '2.5', width: '11', height: '19', rx: '2' }),
+  React.createElement('path', { d: 'M11 18.5h2' })
+);
+
 const _phone = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 5 2 L 9 2 L 11 7 L 8 9 Q 10 14 14 16 L 16 13 L 21 15 L 21 19 Q 21 22 17 22 Q 5 20 2 8 Q 2 4 5 2 Z' })
 );
@@ -417,6 +424,7 @@ zeichenErgaenzen({
   legal: _legal,
   edit: _edit,
   phone: _phone,
+  handy: _handy,
   recurring: _recurring,
   lock: _lock,
   globe: _globe,

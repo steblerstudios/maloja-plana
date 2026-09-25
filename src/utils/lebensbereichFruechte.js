@@ -39,6 +39,29 @@ export const astFarben = (chapters, palette, isDarkMode) => {
   );
 };
 
+// Knopf in der Bereichsfarbe (Entscheid 25.09.2026): Schrift weiss oder dunkel, je
+// nachdem, was auf dieser Fläche mehr Kontrast hat. Reicht keine für WCAG-AA (4.5:1,
+// Knopfschrift ist klein), bleibt der Knopf beim allgemeinen Sand.
+const luminanz = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const v = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+export const kontrast = (a, b) => {
+  const la = luminanz(a), lb = luminanz(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+};
+export const bereichsKnopf = (farbe, palette) => {
+  const schrift = [palette.onSand, '#FFFFFF']
+    .map((c) => [c, /^#[0-9a-f]{6}$/i.test(farbe || '') ? kontrast(farbe, c) : 0])
+    .sort((a, b) => b[1] - a[1])[0];
+  return schrift[1] >= 4.5
+    ? { background: farbe, color: schrift[0] }
+    : { background: palette.sand, color: palette.onSand };
+};
+
 // Reife-Stufe der Frucht folgt derselben Vier-Stufen-Logik wie das Kapitel:
 // Knospe · Blüte · junge Frucht · reife Frucht.
 const STUFE = { leer: 1, begonnen: 2, grundordnung: 3, vertieft: 4 };

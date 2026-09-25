@@ -6,7 +6,7 @@ import { LIGHT_PALETTE, DARK_PALETTE, applyColorBlind } from '../config/constant
 import { astFarben } from '../utils/lebensbereichFruechte.js';
 import {
   STATIONEN, WEGSTUECKE, WEG_VON, AUSSCHNITT, SCHMAL_AB, kontrast, mitKontrast, bildPalette,
-  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit, TITEL_GRUEN, DUNST, mitKontrastZu,
+  ETIKETT_SCHRIFT, etikettGrund, ausschnittBreit, OBERKANTE_MAX, TITEL_GRUEN, DUNST, mitKontrastZu,
 } from '../components/BergLandschaft.jsx';
 import BergLandschaft from '../components/BergLandschaft.jsx';
 
@@ -392,8 +392,8 @@ describe('Berge · Fortschritt in hell und dunkel', () => {
     expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThan(kontrast(LIGHT_PALETTE.sageDeep, DUNST.farbe));
     expect(kontrast(TITEL_GRUEN, DUNST.farbe)).toBeGreaterThanOrEqual(4.5);
   });
-  it('Dunst nur am Handy (hochkant, kleinstes quer), nicht am Computer', () => {
-    expect(src).toMatch(/const mitDunst = schmal \|\| breite < DUNST_UNTER_BREITE;/);
+  it('Dunst am Handy (hochkant, kleinstes quer) und am Computer nur, wenn oben Himmel fehlt', () => {
+    expect(src).toMatch(/const mitDunst = schmal \|\| breite < DUNST_UNTER_BREITE \|\| a\.y > 0;/);
     expect(src).toMatch(/return \[mitDunst && React\.createElement\('div'/);
   });
   it('Pille: die Zahl steht im Kreis', () => {
@@ -402,20 +402,29 @@ describe('Berge · Fortschritt in hell und dunkel', () => {
   });
 });
 
-// Flache, breite Fenster (Laptops, 25.09.2026): der Himmel wird nie weggeschnitten — der
-// Ausschnitt reicht immer von 0 bis 740; das Bild ist dort höher als das Fenster (gewollt).
-describe('Berge · flache Fenster: Himmel bleibt, Bild darf höher sein als das Fenster', () => {
-  for (const [w, h] of [[1351, 650], [1265, 650], [1009, 600], [1905, 700], [2545, 600], [1265, 800], [1905, 1080]]) {
-    it(`${w}×${h}: Ausschnitt beginnt oben (Himmel), volle Bildbreite, alle Stationen drin`, () => {
+// Flache, breite Fenster (Entscheid 25.09.2026 abends, dreht den Mittags-Entscheid): randlos UND
+// der ganze Berg im Fenster — unten hat Vorrang. Oben fällt Himmel weg, bis die Unterkante am
+// Fensterrand liegt; höchstens bis OBERKANTE_MAX (Titel und oberste Station behalten Platz).
+describe('Berge · flache Fenster: unten passt ins Fenster, oben weicht der Himmel', () => {
+  for (const [w, h] of [[1366, 577], [1265, 577], [1009, 527], [1905, 627], [2545, 527], [1265, 727], [1905, 1007], [1440, 827]]) {
+    it(`${w}×${h} frei: volle Bildbreite, Unterkante drin, alle Stationen drin`, () => {
       const a = ausschnittBreit(w, h);
-      expect(a.y).toBe(0);
       expect(a.x).toBe(0);
       expect(a.w).toBe(1100);
-      expect(a.h).toBeGreaterThanOrEqual(740);
-      for (const st of STATIONEN) expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
+      expect(a.y + a.h).toBeGreaterThanOrEqual(740);            // Kreise unter Finanzen drin
+      expect(a.y).toBeLessThanOrEqual(OBERKANTE_MAX);
+      for (const st of STATIONEN) {
+        expect(st.y - 30, st.key).toBeGreaterThanOrEqual(a.y);
+        expect(st.y + 30, st.key).toBeLessThanOrEqual(a.y + a.h);
+      }
+      // Passt, solange die Grenze nicht greift: Bildhöhe ≤ freie Fensterhöhe (1 px Rundung).
+      if (a.y < OBERKANTE_MAX) expect((a.h * w) / 1100).toBeLessThanOrEqual(h + 1);
     });
   }
-  it('keine Spiegelbilder, kein Dunst am Computer', () => {
+  it('passt das Bild ohnehin, bleibt der Himmel ganz', () => {
+    expect(ausschnittBreit(1265, 1000).y).toBe(0);
+  });
+  it('keine Spiegelbilder', () => {
     expect(src).not.toMatch(/scale\(-1 1\)/);
   });
 });

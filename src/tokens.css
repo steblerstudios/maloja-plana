@@ -265,7 +265,10 @@ html { overflow-x: clip; }
   .mp-berg-buehne {
     animation: mp-berg-verschwimmen linear both;
     animation-timeline: scroll(root);
-    animation-range: 0 70vh;
+    /* Erst schauen, dann zurücktreten (Rückmeldung Stebler Studios, 25.09.): der Berg bleibt
+       scharf, bis die Seite gut ein Drittel des Fensters hochgeschoben ist — vorher war er auf
+       grossen Bildschirmen weich, bevor man ihn ganz gesehen hatte (Bereich 0–70vh). */
+    animation-range: 35vh 105vh;
   }
   /* Die Maske sitzt auf dem BILD, nicht auf der Hülle: eine Maske schneidet alles ab, was
      über ihr Element hinausragt — auf der Hülle (Spaltenbreite) war der Berg plötzlich
