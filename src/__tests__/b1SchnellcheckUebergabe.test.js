@@ -7,7 +7,7 @@ import { calculateIPV } from '../config/cantonalData.js';
 import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
-import { QuickCheck } from '../Dashboard.jsx';
+import { QuickCheck } from '../components/Leistungsliste.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // B-1 (BUGS.md) · Entscheid E22 vom 16.09.2026

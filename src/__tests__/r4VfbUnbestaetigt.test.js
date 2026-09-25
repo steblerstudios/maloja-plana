@@ -63,7 +63,8 @@ describe('Anzeige: der Hinweis steht einmal, auch unter dem Freibetrag', () => {
     }
   });
   it('Schnellcheck und Dashboard zeigen eine leise Zeile beim Sozialhilfe-Betrag', () => {
-    for (const f of ['../Schnellcheck.jsx', '../Dashboard.jsx']) {
+    // Die Dashboard-Liste liegt seit 25.09.2026 in components/Leistungsliste.jsx (lazy).
+    for (const f of ['../Schnellcheck.jsx', '../components/Leistungsliste.jsx']) {
       const s = quelle(f);
       expect(s, f).toContain('vfbUnbestaetigt');
       expect(s, f).toContain('assetLimitUnconfirmedShort');

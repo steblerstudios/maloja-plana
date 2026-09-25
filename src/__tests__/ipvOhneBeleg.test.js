@@ -9,7 +9,7 @@ import { Schnellcheck } from '../Schnellcheck.jsx';
 import { SozialhilfeView } from '../SozialhilfeView.jsx';
 import { FinanzUebersicht, druckAbschnitte } from '../FinanzUebersicht.jsx';
 import { KKLastCard } from '../KKLastCard.jsx';
-import { QuickCheck } from '../Dashboard.jsx';
+import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { buildIpvDokument } from '../premiumCalc.js';
 import { calculateMonthlyBudget, createBudgetReport } from '../budgetSync.js';
 import { leiteKategorienAb } from '../exportVorschau.js';

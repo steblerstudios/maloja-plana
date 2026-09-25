@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV, calculateSozialhilfe } from '../config/cantonalData.js';
 import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
-import { QuickCheck } from '../Dashboard.jsx';
+import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { zahl } from '../utils/geld.js';
 
 // ─────────────────────────────────────────────────────────────
