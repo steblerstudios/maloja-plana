@@ -3,7 +3,8 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
-import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from './data/stipendienData.js';
+import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE, stipendienErgebnis } from './data/stipendienData.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
@@ -109,7 +110,9 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
           color: resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold,
           size: 10, style: { display: 'inline-block', verticalAlign: '-1px', marginRight: '6px' },
         }),
-        t(resultKey))
+        t(resultKey)),
+      // O3: die Art des Ergebnisses — Vorprüfung, mit der Zahl der noch offenen Fragen.
+      React.createElement(ErgebnisArt, { palette, t, ergebnis: stipendienErgebnis({ status, scope }) })
     ),
 
     // Wer kann beantragen?

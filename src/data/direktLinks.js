@@ -60,7 +60,9 @@ export const DIREKTLINKS = [
     name: { de: 'Überbrückungsleistungen (ÜL)', en: 'Bridge benefits', fr: 'Prestations transitoires' },
     beschreibung: { de: 'Für ältere Arbeitslose ab 60 Jahren', en: 'For older unemployed persons from age 60', fr: 'Pour les chômeurs âgés dès 60 ans' },
     url: 'https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/uela.html',
-    antragsstelle: { de: 'Kantonale AHV-Zweigstelle', en: 'Cantonal OASI branch', fr: 'Agence cantonale AVS' },
+    // ÜLG Art. 19: zuständig sind die EL-Stellen des Wohnkantons (ELG Art. 21 Abs. 2),
+    // nicht die AHV-Zweigstelle (Fachprüfung 24.09.2026).
+    antragsstelle: { de: 'EL-Stelle des Wohnkantons', en: 'Supplementary-benefits office of your canton', fr: 'Organe PC du canton de domicile' },
   },
   {
     id: 'familienzulagen',

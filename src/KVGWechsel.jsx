@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addTodo } from './utils/merkliste.js';
+import { werktagAmOderDavor } from './utils/fristen.js';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { hinweisZeichen } from './IconSystem.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -17,7 +18,8 @@ const nextNov30 = () => {
   const year = now.getFullYear();
   const nov30 = new Date(year, 10, 30);
   const y = now <= nov30 ? year : year + 1;
-  return `${y}-11-30`;
+  // Samstag/Sonntag → Werktag davor (BAG, priminfo FAQ). Früher schadet nie.
+  return werktagAmOderDavor(`${y}-11-30`);
 };
 
 export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
@@ -150,7 +152,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     // Der Wechselpfad führt an eine Versicherung heran; darum hier derselbe
     // Orientierungs-Hinweis, den die übrigen Ablauf-Ansichten schon tragen
     // (alpha.noAdviceHint, geprüft 23.09.2026 in allen fünf Sprachen).
-    React.createElement(AblaufFooter, { palette, notes: [t('kvgWechsel.specialRight'), t('alpha.noAdviceHint'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('kvgWechsel.quelle'), notes: [t('kvgWechsel.specialRight'), t('alpha.noAdviceHint'), t('trust.localOnly')] })
   );
 };
 

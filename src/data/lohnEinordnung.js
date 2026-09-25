@@ -32,6 +32,7 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 // Krankheit zurück — siehe `mindestlohnBoden`.
 import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT } from './lohnCheck.js';
 import { nettoZuBruttoRichtwert } from './ahvRechner.js';
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 
 export const LOHN_REFERENZ = {
   median: LSE_VERTEILUNG.median,
@@ -180,4 +181,22 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
     scaleMin: SCALE_MIN,
     scaleMax: SCALE_MAX,
   };
+}
+
+// O3 — Ergebnis-Art der Lohn-Einordnung: ORIENTIERUNG. Das Instrument ordnet den Lohn in die
+// BFS-Lohnverteilung ein (Median, Zehntel) — eine Grössenordnung, keine Rechnung nach Regel für den
+// Einzelfall. Der Mindestlohn-Hinweis darin ist schärfer, aber nur ein Teil; für das Instrument als
+// Ganzes gilt die vorsichtigere Art. Bei Netto schätzt es das Brutto (nettoZuBruttoRichtwert).
+// Fehlend: was das Instrument zum Schweigen bringt (siehe lohnBandState und LohnEinordnung.jsx).
+//   einkommen       ohne Lohn nichts einzuordnen
+//   einkommensart   ohne Brutto/Netto kein Vergleich (alle Bezugsmasse sind brutto)
+//   wochenstunden   ohne Stunden keine Hochrechnung auf Vollzeit
+export function lohnEinordnungErgebnis({ income, incomeType, hoursPerWeek }) {
+  return ergebnis(ERGEBNIS_ART.ORIENTIERUNG, {
+    fehlend: fehlendeAngaben({
+      einkommen: num(income) > 0,
+      einkommensart: incomeType === 'brutto' || incomeType === 'netto',
+      wochenstunden: num(hoursPerWeek) > 0,
+    }),
+  });
 }
