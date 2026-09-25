@@ -63,6 +63,7 @@ Einmal sauber definiert → überall konsistent verwendet. Eine Funktion = ein I
 | Löschen | _(prüfen — sanft!)_ | `_delete` | ✓ |
 | Hochladen | Pfeil hoch | `_upload` | ✓ |
 | Herunterladen | Pfeil runter | `_download` | ✓ |
+| Sicherung / Speichern | Doppel-Dokument mit Pfeil hinein | `_sicherung` | ✓ (25.09.2026) |
 | Scannen | QR / Barcode | `_qr`, `_barcode` | ✓ |
 | Erledigt / Erfolg | Häkchen | `_check`, `_success` | ⚠️ zwei fast gleich |
 | Hinweis | _(sanft, nie alarmierend — siehe Voice)_ | `_warning` | ⚠️ Ton prüfen |
@@ -162,7 +163,7 @@ Schild + Name** ist sicher. (Kein Rechtsrat.)
 
 - **Uhr 3×** (Frist · Kalender · Zeit&Absenzen) → Uhr = nur «Frist/Zeit», Kalender = Datumsblatt
 - **Sackmesser** = Dashboard → Export = eigenes Icon (Couvert+Pfeil)
-- **Baum** bei Backup UND Vorsorge → Baum = Vorsorge; **Backup = eigenes Bild (offen)**
+- **Baum** bei Backup UND Vorsorge → Baum = Vorsorge; **Backup = eigenes Bild** → gezeichnet 25.09.2026 als `_sicherung` (IconKern)
 - **Post/Bahnhofsuhr** generisch (kein «DIE POST»-Logo, kein SBB-Lollipop-Zeiger)
 - Gesundheit-/Dokumente-Cluster final entwirren
 
@@ -226,7 +227,7 @@ C = Emotional/Kultur (Easter Eggs, abschaltbar). Alle in **Granit**-Palette.
 | Charts / Analysen | Schoggi-Tafel | rechteckig, **kein Toblerone** |
 | Import | Couvert + Pfeil rein | generisch, **kein Post-Logo** |
 | Export / Teilen | Couvert + Pfeil raus | generisch |
-| Backup | Doppel-Dokument | **keine Wolke** (local-first) |
+| Backup | Doppel-Dokument (`_sicherung`) | **keine Wolke** (local-first) |
 | Einstellungen | Zahnrad | |
 | Hilfe / Support | Rettungsring | |
 | Suche · Filter | Lupe · Trichter | |

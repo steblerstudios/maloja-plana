@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
+import PrimaryButton from './components/PrimaryButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
@@ -900,8 +901,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
       if (daysSince <= 7) return null;
       const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
+      // 25.09.2026: Sicherungs-Zeichen links + gefüllter Knopf (vorher nackter Textlink,
+      // Stebler Studios: «sollte ein CTA haben und ein Icon»). Knopf = der EINE PrimaryButton.
       return React.createElement('div', {
         style: {
+          display: 'flex', alignItems: 'flex-start', gap: space.sm + 'px',
           marginBottom: space.xl,
           padding: '16px 20px',
           background: palette.sageMist || palette.sage + '08',
@@ -909,18 +913,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           border: '1px solid ' + palette.sage + '25',
         }
       },
-        React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: 0 }
-        }, reason + ' ' + t('dashboard.exportReminder')),
-        React.createElement('button', {
-          onClick: () => onNavigate('export'),
-          style: {
-            // War 19 px hoch; 8 px Polsterung statt der 6 px Aussenabstand darüber.
-            background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
-            fontSize: text.sm, color: palette.sageDeep || palette.sage,
-            fontFamily: 'inherit', fontWeight: weight.medium,
-          }
-        }, t('dashboard.exportReminderAction'))
+        React.createElement('span', {
+          'aria-hidden': 'true',
+          style: { display: 'block', width: '22px', height: '22px', flexShrink: 0, marginTop: '1px', color: palette.sageDeep || palette.sage },
+        }, Icons.sicherung()),
+        React.createElement('div', { style: { minWidth: 0 } },
+          React.createElement('div', {
+            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+          }, reason + ' ' + t('dashboard.exportReminder')),
+          React.createElement(PrimaryButton, {
+            palette, onClick: () => onNavigate('export'),
+            style: { minHeight: '44px' },
+          }, t('dashboard.exportReminderAction'), ' ›')
+        )
       );
     })(),
 
