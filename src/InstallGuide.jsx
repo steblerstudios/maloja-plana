@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
-import { Icon, zurueckZeichen, aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
+import { Icon, aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { GERAETE, aktuellesGeraet, laeuftAlsApp } from './utils/geraetErkennung.js';
 // Eine Quelle für «jetzt installieren» — sie liegt beim Dashboard-Hinweis,
 // weil beide Nutzer nachgeladen sind und nichts davon ins Startbundle darf.
@@ -101,14 +101,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWe
   const andere = GERAETE.filter((g) => g !== geraet);
 
   return React.createElement('div', { style: { maxWidth: '600px', margin: '0 auto' } },
-    React.createElement('button', {
-      onClick: () => onNavigate('dashboard'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: text.sm, padding: '0 0 ' + space.md + 'px 0',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs + 'px',
-      },
-    }, zurueckZeichen(), t('common.back')),
+    // Kein eigener «Zurück»: darüber steht schon «Übersicht» (main.jsx) mit demselben Ziel.
 
     React.createElement(PageTitle, {
       palette,

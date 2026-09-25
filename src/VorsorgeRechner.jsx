@@ -15,7 +15,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
-import { jahreslohnAusProfil, lohnIstNetto } from './utils/jahreslohnAusProfil.js';
+import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -46,6 +46,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
   // Bruttojahreslohn aus den Finanzen (inkl. 13.), nicht bei netto erfasstem Lohn (utils/jahreslohnAusProfil.js).
   const nettoHinterlegt = lohnIstNetto(data.finanzen) && Number(data.finanzen?.monthlyIncome) > 0;
+  const basisOffen = lohnBasisOffen(data.finanzen);
   const [einkommen, setEinkommen] = useState(() => jahreslohnAusProfil(data.finanzen));
   const [beitragsjahre, setBeitragsjahre] = useState('');
   const [erziehungsjahre, setErziehungsjahre] = useState('');
@@ -422,7 +423,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // Input fields
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
-        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : t('vr.einkommenHint') }),
+        field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint') }),
         field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(parsedBeitragsjahre), width: '80px', min: 1, max: 44 }),
         field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 63, max: 70 })
       ),
@@ -638,7 +639,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const xticks = []; for (let a = Math.ceil(START / 10) * 10; a <= AXIS_END; a += 10) xticks.push(a);
         const yticks = [0, 0.5, 1].map((f) => maxY * f);
         const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
-          React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: col, display: 'inline-block' } }), label);
+          React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: radius.hair, background: col, display: 'inline-block' } }), label);
         // Monatliche Rente ab Rücktritt — macht alle vier Säulen VERGLEICHBAR:
         // AHV/BVG sind lebenslange Renten; 3a/3b sind Kapital, hier transparent auf
         // eine Monatsrente umgelegt (Kapital gleichmässig verteilt bis Alter 85).
@@ -663,7 +664,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               key: label, style: { width: pctOf(v).toFixed(1) + '%', background: col, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
               pctOf(v) >= 16 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, label) : null) : null;
             const legendDot = (col, label, amount) => amount > 0 ? React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
-              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '2px', background: col, display: 'inline-block' } }),
+              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: radius.hair, background: col, display: 'inline-block' } }),
               label + ' CHF ' + fmt(amount) + ' / ' + t('vr.monat')) : null;
             const kapitalRente = s3aMonat > 0 || s3bMonat > 0;
             return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },

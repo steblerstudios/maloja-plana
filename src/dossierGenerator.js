@@ -485,6 +485,31 @@ function getNotfallSections(data, chapters, t) {
   return sections;
 }
 
+// ─── K123 · Was in den Notfall-QR darf ──────────────────
+// Entscheid Stebler Studios 24.09.2026 (Option B, docs/entscheide/K123-ahv-im-qr.md): die
+// AHV-Nummer gehört NICHT in den Notfall-QR. Ein Code wird gezeigt, fotografiert, weitergegeben
+// und ist nicht widerrufbar; das gedruckte Dossier behält die Nummer. ERLAUBNIS-, nicht
+// Verbotsliste: ein neues Dossier-Feld kommt erst in den Code, wenn es hier steht.
+export const NOTFALL_QR_FELDER = Object.freeze([
+  'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
+  'notfall.emergencyContact', 'notfall.emergencyPhone',
+  'notfall.bloodType', 'notfall.allergies', 'notfall.medications', 'notfall.chronicDiseases',
+  'notfall.doctor', 'notfall.doctorPhone', 'notfall.hospital',
+  'notfall.organDonor', 'notfall.patientenverfuegung', 'notfall.vorsorgeauftrag', 'notfall.bestattungswuensche',
+  'versicherungen.kkInsurer', 'versicherungen.kkCardNumber',
+]);
+
+// Abschnitte für den Notfall-QR: Reihenfolge Medizin zuerst (Entscheid 17.09.2026), nur Felder
+// aus NOTFALL_QR_FELDER, leere Abschnitte fallen weg.
+const NOTFALL_QR_REIHENFOLGE = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
+export function notfallQrAbschnitte(sections) {
+  const rang = key => { const i = NOTFALL_QR_REIHENFOLGE.indexOf(key); return i === -1 ? NOTFALL_QR_REIHENFOLGE.length : i; };
+  return [...sections]
+    .sort((a, b) => rang(a.key) - rang(b.key))
+    .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }))
+    .filter(s => s.rows.length > 0);
+}
+
 // ─── Notfall Preview Data (for React rendering) ─────────
 
 export function getNotfallDossierPreview(data, chapters, t) {
@@ -726,8 +751,16 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
       { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
       { label: t('sozialhilfe.deductIncome'), value: '− ' + formatCHF(sozialhilfe.income) },
+      // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
+      sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
       { label: t('sozialhilfe.deficit'), value: formatCHF(sozialhilfe.deficit) + t('common.perMonth'), bold: true },
-    ].filter(r => r.value);
+    ].filter(r => r && r.value);
+    // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
+    const notes = [
+      sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
+      sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
+      sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
+    ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
       : t('sozialhilfe.notEntitled');
@@ -738,6 +771,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       status,
       statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
       statusOk: sozialhilfe.eligible,
+      notes,
     });
   }
 
@@ -928,6 +962,8 @@ export function generateBehoerdenJSON(data, calculations, t) {
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.income || 0,
+      efb: sozialhilfe.efb || 0,
+      efbEntscheidet: !!sozialhilfe.efbEntscheidet,
       deficit: sozialhilfe.deficit || 0,
       householdSize: sozialhilfe.householdSize || 1,
     };
@@ -1009,6 +1045,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
             </tr>
           `).join('')}
         </table>` : ''}
+        ${(s.notes || []).map(n => `<p class="bd-note">${esc(n)}</p>`).join('')}
       </div>
     `).join('');
 
@@ -1068,6 +1105,12 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       margin-bottom: 10px;
       padding-bottom: 4px;
       border-bottom: 1px solid ${DRUCK.linie};
+    }
+    .bd-note {
+      font-size: 11px;
+      color: ${DRUCK.grau};
+      margin: 6px 0 0;
+      line-height: 1.4;
     }
     .bd-status {
       font-size: 13px;

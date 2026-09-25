@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
+import { berechneSozialhilfe, sozialhilfeErgebnis } from './data/sozialhilfeRechner.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -33,6 +34,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   const [vermoegen, setVermoegen] = useState(vorbefuellt.vermoegen);
   const [erwerbstaetig, setErwerbstaetig] = useState(vorbefuellt.erwerbstaetig);
   const [integration, setIntegration] = useState(false);
+  // Erwerbsunkosten (SKOS-RL C.6.3): belegte Mehrkosten der Arbeit. Das Profil kennt sie nicht,
+  // darum leer; gerechnet wird nur mit einem eingetragenen Betrag (data/sozialhilfeKern.js).
+  const [erwerbsunkosten, setErwerbsunkosten] = useState('');
 
   const result = useMemo(() => {
     const m = Number(miete) || 0;
@@ -45,6 +49,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       wohnform,
       miete: m,
       krankenkassePraemie: k,
+      erwerbsunkosten: erwerbstaetig ? Number(erwerbsunkosten) || 0 : 0,
       erwerbseinkommen: Number(einkommen) || 0,
       andereEinkuenfte: Number(andereEinkuenfte) || 0,
       vermoegen: Number(vermoegen) || 0,
@@ -52,7 +57,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       integrationsMassnahme: integration,
       kanton,
     });
-  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration, kanton]);
+  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, erwerbsunkosten, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration, kanton]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -167,7 +172,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.inputRow },
         field('sh.einkommen', einkommen, setEinkommen, '0',
           nettoBruttoMismatch ? t('sh.nettoBruttoHint')
+            : vorbefuellt.hauptBasisOffen ? t('einkommensart.offenNetto')
             : vorbefuellt.nebenerwerbBrutto ? t('sh.nebenerwerbBruttoHint')
+            : vorbefuellt.nebenerwerbBasisOffen ? t('einkommensart.nebenOffen')
             : vorbefuellt.einkommenMitNebenerwerb ? t('sh.ausProfilHint') : null),
         field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
           vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
@@ -175,6 +182,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       ),
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },
         toggle('sh.erwerbstaetig', erwerbstaetig, setErwerbstaetig),
+        erwerbstaetig && React.createElement('div', { style: { marginLeft: '24px', marginBottom: space.sm + 'px' } },
+          field('sh.erwerbsunkosten', erwerbsunkosten, setErwerbsunkosten, '0', t('sh.erwerbsunkostenHint'))
+        ),
         toggle('sh.integration', integration, setIntegration),
         React.createElement('div', { style: { ...s.hint, marginTop: '2px', marginLeft: '24px' } }, t('sh.integrationHint'))
       )
@@ -199,6 +209,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         ),
         result.hatAnspruch && result.izu > 0 && React.createElement('div', { style: s.hint },
           t('sh.inklusiveIzu') + ': CHF ' + fmt(result.izu)
+        ),
+        // Erst der Einkommensfreibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
+        !result.hatAnspruch && result.efbEntscheidet && React.createElement('div', { style: s.hint },
+          t('sozialhilfe.efbEntscheidet')
         ),
         // R4: der Anspruch hängt am Freibetrag (Vermögen darunter) — ist er kantonal nicht
         // bestätigt, hier leise sagen (über dem Freibetrag steht es unten beim Vermögen).
@@ -230,6 +244,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             React.createElement('td', { style: s.td }, t('sh.kvgLabel')),
             React.createElement('td', { style: s.tdRight }, fmt(result.kvgPraemie))
           ),
+          result.erwerbsunkosten > 0 && React.createElement('tr', null,
+            React.createElement('td', { style: s.td }, t('sh.erwerbsunkostenZeile')),
+            React.createElement('td', { style: s.tdRight }, fmt(result.erwerbsunkosten))
+          ),
           React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, fontWeight: weight.semi } }, t('sh.bedarf')),
             React.createElement('td', { style: { ...s.tdRight, fontWeight: weight.semi } }, fmt(result.bedarf))
@@ -238,11 +256,15 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             React.createElement('td', { style: s.td }, t('sh.einkommenTotal')),
             React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.totalEinkommen))
           ),
-          result.efb > 0 && React.createElement('tr', null,
+          // Freibetrag nur, wenn eine Lücke bleibt (er gilt im Bezug) — sonst ginge die Tabelle nicht auf.
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { style: { ...s.td, color: palette.sageDeep } }, t('sh.efbLabel')),
             React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + fmt(result.efb))
           ),
-          result.totalEinkommen > 0 && React.createElement('tr', null,
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
+            React.createElement('td', { colSpan: 2, style: { ...s.td, ...s.hint, paddingTop: 0 } }, t('sozialhilfe.efbGeschaetzt'))
+          ),
+          result.efb > 0 && result.sozialhilfeAnspruch > 0 && React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.anrechenbar')),
             React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.anrechenbaresEinkommen))
           ),
@@ -264,6 +286,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
     !result && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('sh.eingeben')),
 
+    // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026), leere Felder zählen als fehlend.
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }) }),
     React.createElement('div', { style: s.source }, renderSource(t('sh.source'), null, t))
   );
 };

@@ -10,6 +10,8 @@
 
 import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+import { EFB_PARAMS, einkommensfreibetrag, sozialhilfeBilanz } from './sozialhilfeKern.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
 
@@ -26,7 +28,7 @@ const GBL_TABELLE = [
 ];
 const GBL_PRO_WEITERE = 216;
 
-// Integrationszulage (IZU) – SKOS C.6.1
+// Integrationszulage (IZU) – SKOS-RL C.6.7 (die frühere Angabe «C.6.1» war die falsche Nummer)
 // Für besondere Integrationsleistungen (z.B. regelmässige Freiwilligenarbeit,
 // Programme, Praktika): CHF 100–300/Monat, im Ermessen der Sozialbehörde.
 // Wir rechnen konservativ mit dem garantierten Mindestbetrag (nie über-versprechen).
@@ -34,10 +36,9 @@ const IZU_MIN = 100;
 const IZU_MAX = 300;
 const IZU_STANDARD = IZU_MIN;
 
-// Einkommensfreibetrag (EFB) – SKOS C.6.2
-const EFB_PAUSCHAL = 400;
-const EFB_ANTEIL = 0.33;
-const EFB_MAX = 700;
+// Einkommensfreibetrag (EFB) – SKOS-RL D.2. Formel, Quellen und was daran unsicher ist, stehen in
+// data/sozialhilfeKern.js; von dort kommen auch die Werte, damit beide Rechenwege gleich rechnen.
+const { anteil: EFB_ANTEIL, max: EFB_MAX } = EFB_PARAMS;
 
 // Medizinische Grundversorgung – SKOS C.5
 const FRANCHISE_STANDARD = 300;
@@ -51,7 +52,6 @@ export const SKOS_PARAMS = {
   izuMin: IZU_MIN,
   izuMax: IZU_MAX,
   izuStandard: IZU_STANDARD,
-  efbPauschal: EFB_PAUSCHAL,
   efbAnteil: Math.round(EFB_ANTEIL * 100),
   efbMax: EFB_MAX,
   franchiseStandard: FRANCHISE_STANDARD,
@@ -66,11 +66,7 @@ export function grundbedarfFuerHaushalt(personen) {
   return GBL_TABELLE[7] + (personen - 7) * GBL_PRO_WEITERE;
 }
 
-export function einkommensfreibetrag(erwerbseinkommen) {
-  if (erwerbseinkommen <= 0) return 0;
-  const efb = EFB_PAUSCHAL + (erwerbseinkommen - EFB_PAUSCHAL) * EFB_ANTEIL;
-  return Math.min(Math.max(0, Math.round(efb)), EFB_MAX);
-}
+export { einkommensfreibetrag };
 
 // Vermögensfreibetrag je Kanton: Tabelle, Belege und Formel stehen seit K67 in
 // data/vermoegensfreibetragKanton.js (hält das Hauptbundle klein). Hier nur weitergereicht.
@@ -122,6 +118,7 @@ export function berechneSozialhilfe({
   kinderImHaushalt = 0,
   miete = 0,
   krankenkassePraemie = 0,
+  erwerbsunkosten = 0, // belegte Mehrkosten der Arbeit, SKOS-RL C.6.3 (data/sozialhilfeKern.js)
   erwerbseinkommen = 0,
   andereEinkuenfte = 0,
   vermoegen = 0,
@@ -136,22 +133,18 @@ export function berechneSozialhilfe({
   const wohnkosten = Math.max(0, miete);
   const kvgPraemie = Math.max(0, krankenkassePraemie);
 
-  const bedarf = gbl + wohnkosten + kvgPraemie;
-
   let izu = 0;
   if (integrationsMassnahme && !erwerbstaetig) {
     izu = IZU_STANDARD;
   }
 
-  let efb = 0;
-  if (erwerbstaetig && erwerbseinkommen > 0) {
-    efb = einkommensfreibetrag(erwerbseinkommen);
-  }
-
-  const totalEinkommen = Math.max(0, erwerbseinkommen) + Math.max(0, andereEinkuenfte);
-  const anrechenbaresEinkommen = Math.max(0, totalEinkommen - efb);
-
-  const sozialhilfeAnspruch = Math.max(0, bedarf - anrechenbaresEinkommen);
+  // Bedarf, Erwerbsunkosten, Freibetrag und Lücke: dieselbe Rechnung wie die Schnellrechnung.
+  const bilanz = sozialhilfeBilanz({
+    grundbedarf: gbl, wohnkosten, kvgPraemie, erwerbsunkosten,
+    erwerbseinkommen, andereEinkuenfte, erwerbstaetig, kanton,
+  });
+  const { bedarf, efb, totalEinkommen, anrechenbaresEinkommen, efbEntscheidet } = bilanz;
+  const sozialhilfeAnspruch = bilanz.luecke;
   const totalUnterstuetzung = sozialhilfeAnspruch + izu;
 
   // Vermögensfreibetrag je Kanton (ohne Kanton: SKOS-Empfehlung D.3.1) — vereinheitlichter Helper
@@ -167,8 +160,10 @@ export function berechneSozialhilfe({
     gblProPerson: Math.round(gbl / haushaltGroesse),
     wohnkosten,
     kvgPraemie,
+    erwerbsunkosten: bilanz.erwerbsunkosten,
     bedarf,
     efb,
+    efbEntscheidet,
     izu,
     totalEinkommen,
     anrechenbaresEinkommen,
@@ -235,3 +230,32 @@ export function berechneArmutsgrenze({ grundbedarf, effektiveWohnkosten = 0, per
 
 // Der Brutto-Richtwert aus einem Netto-Lohn (AHV/ALV + geschätzte PK) lebt in
 // data/ahvRechner.js (nettoZuBruttoRichtwert) — dort, wo die BVG-Bausteine sind.
+
+// O3 — Ergebnis-Art des SKOS-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
+// Grundbedarf und Vermögensfreibetrag folgen Richtlinien und Kantonsrecht, aber: Miete ohne
+// Mietzins-Obergrenze der Gemeinde, KVG-Prämie ohne Prämienverbilligung, keine medizinische
+// Grundversorgung und von den situationsbedingten Leistungen nur die Erwerbsunkosten (C.6.3, nur wenn
+// eingetragen), Einkommensfreibetrag und Integrationszulage für alle Kantone gleich, und der
+// Freibetrag zählt schon beim Eintritt (SKOS-Empfehlung, kantonal verschieden: data/sozialhilfeKern.js).
+// Der Sozialdienst rechnet anders.
+//
+// Fehlend: ein LEERES Feld fehlt, eine eingetragene 0 ist eine Antwort (heute macht der Rechner aus
+// «leer» still 0 — beim Einkommen und Vermögen zu hoch, bei Miete oder Prämie zu tief).
+//   miete, kvgPraemie      je einzeln — gerechnet wird schon, sobald eines von beiden da ist
+//   erwerbseinkommen       leer → zählt als 0 → Anspruch zu hoch
+//   vermoegen              leer → zählt als 0 → Freibetrag nie überschritten
+//   kanton                 nur wenn Vermögen erfasst ist: ohne Kanton gilt der SKOS-Standardfreibetrag
+//   erwerbsunkosten        nur bei Erwerbstätigkeit: leer → Bedarf zu tief (C.6.3); eine 0 ist eine Antwort
+const leer = (v) => v == null || String(v).trim() === '';
+export function sozialhilfeErgebnis({ miete, kvgPraemie, erwerbseinkommen, vermoegen, kanton, erwerbstaetig = false, erwerbsunkosten }) {
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, {
+    fehlend: fehlendeAngaben({
+      miete: !leer(miete),
+      kvgPraemie: !leer(kvgPraemie),
+      erwerbseinkommen: !leer(erwerbseinkommen),
+      vermoegen: !leer(vermoegen),
+      kanton: !(Number(vermoegen) > 0) || !!kanton,
+      erwerbsunkosten: !erwerbstaetig || !leer(erwerbsunkosten),
+    }),
+  });
+}

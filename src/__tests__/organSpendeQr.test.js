@@ -102,10 +102,10 @@ describe('Organspende-QR als vCard', () => {
     expect(felderVon(v)['TEL;TYPE=CELL']).toBe('079 123 45 67');
   });
 
-  it('maskiert die AHV-Nummer nicht weg und zerlegt sie nicht in Felder', () => {
+  it('trägt keine AHV-Nummer (K123, Entscheid 24.09.2026) und bleibt eine einzige NOTE', () => {
     const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: {} });
     expect(v.split('\r\n').filter(z => z.startsWith('NOTE:')).length).toBe(1);
-    expect(notizVon(v)).toContain('756.1234.5678.90');
+    expect(v).not.toContain('756.1234.5678.90');
   });
 
   it('gibt jeden der drei Status als Wort wieder', () => {

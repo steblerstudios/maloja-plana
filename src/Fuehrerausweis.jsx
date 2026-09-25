@@ -57,7 +57,7 @@ export const Fuehrerausweis = ({ palette, t, onNavigate }) => {
       React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.relatedUmzug'), onClick: () => onNavigate('umzug') }),
       React.createElement(AblaufLink, { palette, label: t('fuehrerausweis.relatedPension'), onClick: () => onNavigate('pensionierung') })
     ),
-    React.createElement(AblaufFooter, { palette, notes: [t('fuehrerausweis.footerSource'), t('fuehrerausweis.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('fuehrerausweis.quelle'), notes: [t('fuehrerausweis.footerNote'), t('trust.localOnly')] })
   );
 };
 

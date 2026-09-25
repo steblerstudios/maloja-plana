@@ -33,6 +33,10 @@ export const DEMO_DATA = {
   },
   finanzen: {
     monthlyIncome: '6200',
+    // Netto, damit Steuern, Sozialhilfe und Armutsgrenze in der Demo rechnen; ALV/EO/Vorsorge
+    // zeigen dafür den Brutto-Hinweis. Ohne Art füllte seit #357 kein Rechner mehr vor
+    // (Entscheid Stebler Studios 25.09.2026).
+    incomeType: 'netto',
     employer: 'Kantonsspital Zürich',
     employmentType: 'employed',
     startDate: '2019-04-01',

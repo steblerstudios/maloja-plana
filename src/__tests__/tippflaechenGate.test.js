@@ -7,6 +7,7 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import ErrorBoundary from '../ErrorBoundary.jsx';
 import { InstallHinweis } from '../InstallHinweis.jsx';
 import { NotfallpassBlatt } from '../NotfallpassBlatt.jsx';
+import { Brotkrume } from '../components/Brotkrume.jsx';
 import { Tour } from '../Tour.jsx';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters } from '../config/constants.js';
 
@@ -42,11 +43,16 @@ describe('Tippflächen', () => {
     }
   });
 
-  it('NotfallpassBlatt: Zurück-Knopf mindestens 44 hoch', () => {
-    const html = renderToStaticMarkup(React.createElement(NotfallpassBlatt, { palette: LIGHT_PALETTE, t, data: {}, chapters: getChapters(t), onNavigate: () => {} }));
-    const m = html.match(/<button[^>]*>(?:(?!<\/button>).)*notfallpass\.zurueck/);
+  // Seit 25.09.2026 ist der Weg zurück aus dem Notfallpass die Brotkrume (main.jsx), nicht mehr
+  // ein eigener Knopf im Blatt. Die Zusage bleibt: dieser Weg ist mindestens 44 hoch.
+  it('Notfallpass: der Weg zurück (Brotkrume) mindestens 44 hoch', () => {
+    const html = renderToStaticMarkup(React.createElement(Brotkrume, { palette: LIGHT_PALETTE, t, view: 'notfallpass', onNavigate: () => {} }));
+    const m = html.match(/<button[^>]*>(?:(?!<\/button>).)*chapters\.notfall\.title/);
     expect(m).not.toBeNull();
     mindestens(m[0].match(/<button[^>]*>/)[0], 'min-height', 44);
+    // und das Blatt selbst trägt keinen zweiten Zurück-Knopf mehr
+    const blatt = renderToStaticMarkup(React.createElement(NotfallpassBlatt, { palette: LIGHT_PALETTE, t, data: {}, chapters: getChapters(t), onNavigate: () => {} }));
+    expect(blatt).not.toContain('notfallpass.zurueck');
   });
 
   it('Fehlerschirm: «Try again» und «Reload» mindestens 44 hoch, wie der Melde-Link', () => {

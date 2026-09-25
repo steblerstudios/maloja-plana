@@ -4,10 +4,12 @@ import { jahreslohnAusProfil, lohnIstNetto } from '../jahreslohnAusProfil.js';
 // EO, AHV und BVG rechnen mit dem Bruttojahreslohn inkl. 13. — ein Nettolohn ist die falsche Basis.
 describe('jahreslohnAusProfil', () => {
   it.each([
-    [{ monthlyIncome: 5000 }, '60000'],
+    // Ohne gewählte Einkommensart: nicht vorbefüllen (Predeploy-Gate 25.09.2026, vorher '60000').
+    [{ monthlyIncome: 5000 }, ''],
     [{ monthlyIncome: '5000', incomeType: 'brutto' }, '60000'],
     [{ monthlyIncome: 5000, incomeType: 'brutto', dreizehnter: 'yes' }, '65000'],
-    [{ monthlyIncome: 5000, dreizehnter: 'no' }, '60000'],
+    [{ monthlyIncome: 5000, dreizehnter: 'no' }, ''],
+    [{ monthlyIncome: 5000, incomeType: 'brutto', dreizehnter: 'no' }, '60000'],
     [{ monthlyIncome: 5000, incomeType: 'netto' }, ''],
     [{ monthlyIncome: 5000, incomeType: 'netto', dreizehnter: 'yes' }, ''],
     [{ monthlyIncome: '' }, ''],

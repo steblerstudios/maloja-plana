@@ -138,7 +138,7 @@ describe('SKOS_PARAMS', () => {
   it('exports version and key constants', () => {
     expect(SKOS_DATA_VERSION).toBe('2026-01');
     expect(SKOS_PARAMS.gblEinperson).toBe(1061);
-    expect(SKOS_PARAMS.efbMax).toBe(700);
+    expect(SKOS_PARAMS.efbMax).toBe(400); // vorsichtig, Regel BS (data/sozialhilfeKern.js)
     expect(SKOS_PARAMS.izuStandard).toBe(100);
     expect(SKOS_PARAMS.franchiseStandard).toBe(300);
   });
@@ -172,13 +172,16 @@ describe('einkommensfreibetrag', () => {
     expect(einkommensfreibetrag(-500)).toBe(0);
   });
 
-  it('calculates EFB with 33% above CHF 400', () => {
-    const efb = einkommensfreibetrag(1000);
-    expect(efb).toBe(598); // 400 + (1000-400)*0.33 = 598
+  it('ein Drittel des Erwerbseinkommens (BS URL 2026 Ziff. 12.1)', () => {
+    expect(einkommensfreibetrag(900)).toBe(300);
   });
 
-  it('caps EFB at CHF 700', () => {
-    expect(einkommensfreibetrag(5000)).toBe(700);
+  it('höchstens 400 (BS; SKOS-Untergrenze für eine Vollanstellung, D.2 Abs. 3)', () => {
+    expect(einkommensfreibetrag(5000)).toBe(400);
+  });
+
+  it('nie höher als der Lohn selbst (Fachprüfung zu PR #389)', () => {
+    for (const lohn of [1, 100, 300, 399]) expect(einkommensfreibetrag(lohn)).toBeLessThan(lohn + 1);
   });
 });
 

@@ -104,12 +104,15 @@ const extractKKDataFromText = (text) => {
   return result;
 };
 
-export const generateKKQRCode = (kkData) => {
+// K123 (Entscheid Stebler Studios 24.09.2026, Option B): die AHV-Nummer kommt nur auf
+// ausdrücklichen Wunsch in den Code (`mitAhv`, Standard aus). Das Lesen (parseKKQRCode) bleibt
+// unverändert — ein älterer Code mit Nummer wird weiter übernommen.
+export const generateKKQRCode = (kkData, { mitAhv = false } = {}) => {
   const qrData = JSON.stringify({
     type: 'KK_CARD',
     insurer: kkData.insurer,
     cardNumber: kkData.cardNumber,
-    ahv: kkData.ahv,
+    ...(mitAhv ? { ahv: kkData.ahv } : {}),
     franchise: kkData.franchise,
     model: kkData.model
   });

@@ -62,7 +62,11 @@ export const GEPRUEFT = 'September 2026';
 // Das misst die eigene Vermutung, nicht den Bestand. Die Adressen unten
 // stammen aus dem Sprachumschalter der Quellseiten selbst.
 //
-//   priminfo      de ✓ fr ✓ it ✓ en ✓   — gleicher Slug in allen Sprachen
+//   priminfo      de ✓ fr ✓ it ✓         — gleicher Slug; `/en/praemien` liefert
+//                                          seit spätestens 24.09.2026 die deutsche
+//                                          Seite (lang="de", deutscher Titel), genau
+//                                          wie das erfundene `/xx/praemien` → en
+//                                          entfernt, die Seite sagt «German only».
 //   ahvMerkblatt  de ✓ fr ✓ it ✓ en ✓   — Endung .d/.f/.i/.e
 //   skosRechner   de ✓ fr ✓             — der Umschalter bietet NUR DE und FR
 //   estvRechner   de ✓                  — kein Sprachumschalter auffindbar
@@ -122,7 +126,6 @@ export const QUELLEN = {
     sprachen: {
       fr: 'https://www.priminfo.admin.ch/fr/praemien',
       it: 'https://www.priminfo.admin.ch/it/praemien',
-      en: 'https://www.priminfo.admin.ch/en/praemien',
     },
     texte: {
       fr: 'Calculateur de primes de l’Office fédéral de la santé publique (Priminfo)',

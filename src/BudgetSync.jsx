@@ -328,7 +328,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
 
     // IPV relief (shown only when eligible)
     budget.ipvRelief > 0 && budget.expenses.healthInsurance > 0 && React.createElement('div', {
-      style: { marginTop: space.xs, padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: text.sm, lineHeight: leading.normal }
+      style: { marginTop: space.xs, padding: '8px 12px', background: palette.up, borderRadius: radius.xs, fontSize: text.sm, lineHeight: leading.normal }
     },
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', color: palette.mid } },
         React.createElement('span', null, t('budgetSync.ipvRelief')),
@@ -344,7 +344,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
     bvgAhvTotal > 0 && React.createElement('div', {
       style: {
         marginTop: space.sm, padding: '8px 12px', background: palette.up,
-        borderRadius: '4px', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
+        borderRadius: radius.xs, fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
     }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')) + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 

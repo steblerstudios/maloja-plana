@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { berechneTaggeld, ALV_PARAMS } from './data/alvRechner.js';
+import { berechneTaggeld, alvErgebnis, ALV_PARAMS } from './data/alvRechner.js';
+import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { zahl, betrag } from './utils/geld.js';
+import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 
 function currentAge(dateStr) {
   if (!dateStr) return null;
@@ -19,16 +21,19 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const householdChildren = (data.basis?.household?.children || []).length;
 
   // Monatslohn aus den Finanzen vorbefüllen (überschreibbar) — nicht zweimal eingeben.
-  // ALV-Taggeld basiert auf dem BRUTTO-Lohn: ist das Einkommen als Netto hinterlegt,
-  // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
-  const bruttoNettoMismatch = data.finanzen?.incomeType === 'netto';
-  const [bruttolohn, setBruttolohn] = useState((data.finanzen?.monthlyIncome && !bruttoNettoMismatch) ? String(data.finanzen.monthlyIncome) : '');
+  // ALV-Taggeld basiert auf dem BRUTTO-Lohn: nur vorbefüllen, wenn er als Brutto hinterlegt ist.
+  // Netto oder ohne gewählte Art → leer, mit ruhigem Hinweis am Feld (utils/jahreslohnAusProfil.js).
+  const bruttoNettoMismatch = lohnBasis(data.finanzen) === 'netto';
+  const basisOffen = lohnBasisOffen(data.finanzen);
+  const [bruttolohn, setBruttolohn] = useState((data.finanzen?.monthlyIncome && lohnBasis(data.finanzen) === 'brutto') ? String(data.finanzen.monthlyIncome) : '');
   const [hatKinder, setHatKinder] = useState(householdChildren > 0);
   const [beitragsmonate, setBeitragsmonate] = useState('');
   const [ivGrad40, setIvGrad40] = useState(false);
 
   const parsedLohn = Number(String(bruttolohn).replace(',', '.')) || 0;
   const parsedMonate = Number(beitragsmonate) || 0;
+  // O3: die Art des Ergebnisses als festes Feld — Schätzung, dazu die Zahl der fehlenden Angaben.
+  const art = alvErgebnis({ bruttolohn: parsedLohn, beitragsmonate: parsedMonate, alter });
 
   const result = useMemo(() => {
     if (parsedLohn <= 0) return null;
@@ -108,7 +113,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     // ── Eingaben ──
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
-        numField(t('alv.bruttolohn'), bruttolohn, setBruttolohn, { placeholder: '6000', sublabel: bruttoNettoMismatch ? t('alv.bruttoNettoHint') : t('alv.bruttolohnHint'), width: '180px' }),
+        numField(t('alv.bruttolohn'), bruttolohn, setBruttolohn, { placeholder: '6000', sublabel: bruttoNettoMismatch ? t('alv.bruttoNettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('alv.bruttolohnHint'), width: '180px' }),
         numField(t('alv.beitragsmonate'), beitragsmonate, setBeitragsmonate, { placeholder: '12', sublabel: t('alv.beitragsmonateHint'), width: '120px', min: 0, max: 24 })
       ),
       React.createElement('div', { style: s.row },
@@ -139,6 +144,9 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
       result.gedeckelt && React.createElement('div', { style: s.hint }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
       React.createElement('div', { style: s.disclaimer }, t('alv.disclaimer'))
     ),
+
+    // ── Art des Ergebnisses (O3) — auch ohne Eingabe, damit sichtbar ist, was fehlt ──
+    React.createElement(ErgebnisArt, { palette, t, ergebnis: art, style: { marginTop: 0, marginBottom: space.md + 'px' } }),
 
     // ── Anmeldung / RAV ──
     React.createElement('div', { style: { ...s.section, background: palette.sky + '14', border: '1px solid ' + palette.sky + '44' } },

@@ -1,4 +1,5 @@
-// Asyl-Orientierung — verifizierte Grunddaten (Stand 2025).
+// Asyl-Orientierung — verifizierte Grunddaten (Stand September 2026; Fristen, Familiennachzug
+// und Reisen am 24.09.2026 gegen den Gesetzeswortlaut geprüft, Rechtsprüfung).
 // Quellen: SEM (sem.admin.ch), Schweizerische Flüchtlingshilfe (fluechtlingshilfe.ch),
 // humanrights.ch, kantonale Migrationsämter.
 // ACHTUNG: Orientierung, KEINE Rechtsberatung. Massgebend sind SEM und die
@@ -51,17 +52,22 @@ export const ASYL_PROCESS = ['gesuch', 'baz', 'verfahren', 'entscheid', 'beschwe
 // Rechte im Verfahren (Beschreibung in i18n asyl.rights.<key>).
 // Verifiziert (fluechtlingshilfe.ch / SEM): unentgeltliche Rechtsvertretung wird
 // im Bundesasylzentrum zugewiesen; Anspruch auf Anhörung mit Dolmetschen;
-// Beschwerdefristen kurz (beschleunigt 7 Arbeitstage, erweitert 30 Tage).
+// Beschwerdefristen kurz: Nichteintreten (auch Dublin) 5 Arbeitstage, beschleunigt 7 Arbeitstage,
+// erweitert 30 Tage (AsylG Art. 108 Abs. 1–3). Die 5 Tage fehlten bis 24.09.2026 — wer einen
+// Nichteintretensentscheid hatte und «7 Arbeitstage» las, verpasste die Frist.
 export const ASYL_RIGHTS = ['rechtsvertretung', 'anhoerung', 'beschwerde'];
 
 // «Mein Status im Alltag»: pro Status (n/s/f/b) die wichtigsten Alltagsfragen.
 // Texte in i18n asyl.alltag.<status>.<dim>, Dimensions-Labels asyl.alltag.dim.<dim>.
 // Verifiziert (SEM erwerbstaetige_asylbereich, fluechtlingshilfe.ch):
 //  - Arbeit: N nur mit Bewilligung (nicht im BAZ); F/B/S erlaubt, Meldeverfahren.
-//  - Familiennachzug: B privilegiert (Ehepartner+min. Kinder); F nach ~3 J. Wartefrist
-//    + Bedingungen; N nicht im Verfahren; S Ehepartner+Kinder, ebenfalls Status S.
-//  - Reisen: B Reisedokument (nie Herkunftsland); F Pass beim SEM, Rückreisevisum nur
-//    aus triftigen Gründen; N nur ausnahmsweise; S frei ins Ausland und zurück.
+//  - Familiennachzug: B privilegiert (Ehepartner+min. Kinder); F frühestens 3 J. nach
+//    Anordnung der vorläufigen Aufnahme + Bedingungen a–e (AIG Art. 85c); N nicht im Verfahren; S Ehepartner+Kinder, ebenfalls Status S.
+//  - Reisen: B Reisedokument (nie Herkunftsland); F Pass beim SEM, Reisedokument in den
+//    ersten 3 J. nur aus wichtigen Gründen, danach bis 30 T./Jahr, Heimatstaat nur
+//    ausnahmsweise (RDV Art. 9 Abs. 4, 6); N nur ausnahmsweise; S wegen Ukraine ohne
+//    Reisebewilligung, solange der Schutz besteht (RDV Art. 9 Abs. 8, seit 20.08.2026),
+//    übrige S sinngemäss wie F (Abs. 7).
 export const ASYL_ALLTAG_DIMS = ['arbeit', 'familie', 'reisen'];
 
 // ── Kantonale/regionale Asyl-Rechtsberatung ──
@@ -111,4 +117,4 @@ export function counselingForCanton(canton) {
   return id ? { id, ...ASYL_COUNSELING[id] } : null;
 }
 
-export const ASYL_DATA_VERSION = '2025';
+export const ASYL_DATA_VERSION = '2026';

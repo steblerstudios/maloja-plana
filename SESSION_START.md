@@ -19,6 +19,145 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🧮 **Nachtrag 25.09., 20:55 — Sitzung «Sozialhilfe eine Wahrheit»: Schnellrechnung und SKOS-Rechner teilen einen Kern (#389), gemergt auf ausdrückliches Wort von Stebler Studios («gerne mergen»), Squash.**
+>
+> **Stand, gemessen 25.09.2026 20:53** (`bash scripts/stand-jetzt.sh`): main = `1dc1f69` (20:53) · live = `bb9448c`
+> (0.1.40-beta, gebaut 25.09. 19:06) · 5 Commits dazwischen · offen: #388, #351 (Entwürfe). **#389 ist NICHT live.**
+> Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> | Was | Wo |
+> |---|---|
+> | Ein Kern für Bedarf ↔ Einkommen: `sozialhilfeBilanz`, `einkommensfreibetrag`, `istErwerbstaetig` (ohne Importe, `cantonalData.js` liegt im Startbündel) | `src/data/sozialhilfeKern.js` |
+> | Erwerbsunkosten (**SKOS-RL C.6.3**, nicht C.6.1) im Bedarf — Feld im Rechner; Profil hat keins → Hinweis in der Schnellrechnung | `SozialhilfeRechner.jsx`, `SozialhilfeView.jsx` |
+> | Eintritt vorsichtig **ohne** Einkommensfreibetrag (**D.2**, nicht C.6.2); belegt: **ZH** ohne (Handbuch 6.2.05, Stand 1.3.2024), **BS** 200 Fr. Abzug (URL WSU 2026 Ziff. 4.3); sonst Flag `efbEntscheidet` («möglich, Kanton entscheidet») | Kern |
+> | Betrag bei Anspruch mit EFB = **⅓ Lohn, max 400** (Regel BS = SKOS-Untergrenze), nie über dem Lohn; ersetzt die unbelegte Formel 400 + 33 %/max 700 | Kern, `sozialhilfeRechner.js` |
+> | Behörden-Dossier: EFB-Zeile + Vorbehalte (`notes` je Abschnitt, neu), JSON mit `efb`/`efbEntscheidet` · Pegel mit angerechnetem Einkommen | `dossierGenerator.js`, `BehoerdenDossier.jsx`, `data/pegel.js` |
+> | Quellen im Wortlaut gelesen: SKOS-RL Fassung 1.1.2021 + Synopse 2. Etappe (C.6.3/D.2 per 1.1.2026 unverändert) | Kopf von `sozialhilfeKern.js` |
+>
+> **Belegt:** 18 Regel-Tests `sozialhilfeKern.test.js` (Gleichheit über 26 Kantone, ZH/BS, EFB ≤ Lohn, Dossier, Pegel); Mutationsprobe 7 rot auf altem Code, 13 rot auf dem Stand vor der Prüfer-Runde. Auf dem mit `main` zusammengeführten Stand **4116 Tests grün**, Build ok, Startbündel **62,22 / 65 kB**, CI grün. swiss-precision- und rechts-pruefer: je 3 Blocker gefunden, alle eingearbeitet. Vorschau (Beispiel ZH): 2400 → 461 Fr. mit «geschätzt», 2600 → kein Anspruch ohne Vorbehalt.
+>
+> **Offen:**
+> 1. **Deploy** (Stebler Studios) → danach live prüfen: Sozialhilfe-Seite + Rechner + Dossier.
+> 2. **Netto/Brutto:** Schnellrechnung prüft `incomeType` nicht; der Schnellcheck fragt sogar «brutto» ab — wirkt jetzt auch auf den EFB (unter 1200 Fr.).
+> 3. **«Möglich» in Listen:** Leistungsliste/Schnellcheck/Instrumente zeigen bei `efbEntscheidet` nichts — Entscheid offen.
+> 4. Nicht abgebildet: Lernende (D.2 Erl. b), 13. Monatslohn beim EFB (BS zählt ihn), EFB über 400 nur mit belegten Kantonswerten. RM-Texte `TODO(rm)`.
+
+> 🏔️ **Nachtrag 25.09., 16:15 — Sitzung «Maloja Dashboard Berge Variante»: Dashboard-Berge als gemalte Malojapass-Landschaft (#365), gemergt auf ausdrückliches Wort von Stebler Studios («jetzt darfst du mergen») und LIVE.**
+>
+> **Stand, gemessen 25.09.2026 16:10** (`bash scripts/stand-jetzt.sh`): main = `63c6f80` (15:33) · live = `3ec7515`
+> (0.1.40-beta, gebaut 25.09. 15:00, `sauber: true`) = genau der Merge von #365 · 5 Commits dazwischen (#370 #372 #373
+> #369 #371) · offen: #375, #374, #351 (Entwürfe). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Live belegt (curl 16:12):** das ausgelieferte Bündel `index-Cds39Suk.js` verweist auf `landschaft-DFaLDuw5.webp`,
+> die Datei antwortet 200 mit **89 042 Bytes** (= die Datei im Repo); erfundener Name → 404. **Nicht** im Browser auf der
+> Live-Seite angesehen (Aufruf in dieser Sitzung verweigert) → FEATURES steht auf `deployed`, nicht `verified-live`.
+>
+> | Was | Wo |
+> |---|---|
+> | Landschaft: eigene Malojapass-Fotos → Codex-Illustration → WebP 1482 × 1062, 87 KB (alle Details; die vereinfachte SVG verlor sie) | `src/assets/berge/landschaft.webp`, Herkunft `_QUELLE.md` |
+> | Bild bleibt im **Dunkelmodus hell**; Stationen/Etiketten tragen immer die helle Palette (Farbenblind-Modus gilt weiter) | `bildPalette()` |
+> | Route nach Vorgabe Stebler Studios: Basis links → Wohnen (Mittelstreifen) → hinter den Tannen → Finanzen (U-Kurve) → Versicherungen (zwischen den Tannen) → obere Strasse zurück, an der Basis verdeckt → Ausbildung → Behörden (im S) → unter der oberen Strasse durch → Notfall (rechte Strasse) | `STATIONEN`, `WEGSTUECKE` |
+> | Stationen in Kapitelfarbe, Zeichen auf ≥ 3:1 abgedunkelt; Etikett-Seiten errechnet (keine Überschneidung breit 656–736, schmal 296–496 px) | `BergLandschaft.jsx` |
+> | Jede Vorgabe als Test, jeder per Mutationsprobe rot gesehen | `bergLandschaft.test.js` |
+>
+> **Nachtrag 17:06** (`stand-jetzt.sh`): **#374 «Berg-Hero» gemergt** 17:04 → main = `5b4ae89` (randlos, Titel im
+> Himmel, Kreise, farbige Stationen; darin auch das senkrechte Stück Behörden → Busch, `5aa9a88`, Behörden-Etikett «links»
+> mit Ausweichen). **Nicht deployt** — live weiter `3ec7515`, 6 Commits dazwischen. ⚠️ **Hauptbündel 64,69 von 65 kB**
+> (Probe-Merge der #374-Sitzung): nur noch ~0,3 kB Luft für weitere Dashboard-Änderungen.
+>
+> **Offen:**
+> 1. ~~Folge-PR #374~~ **erledigt 17:04** (siehe oben). Ursprünglich: #374 «Berg-Hero» (andere Sitzung) baut `BergLandschaft.jsx` weiter (randlos, Titel im Himmel). Dort
+>    einzubauen: Wunsch von Stebler Studios **«senkrechtes Stück von Behörden das S hinunter bis zum Busch»** (`WEGSTUECKE[5]`) — Daten
+>    übergeben, auf `4450726` geprüft 3988/3988. ⚠️ Das Behörden-Etikett «unten» deckt dieses Stück; die Seite muss #374
+>    im Layout lösen. (Ein zuerst falsch verstandenes waagrechtes Stück kam als `040fc30` rein und ist per `4450726` zurück.)
+> 2. **Live im Browser ansehen** (Stebler Studios): Berge hell/dunkel/Handy auf malojaplana.ch → dann FEATURES auf `verified-live`.
+> 3. Etiketten nur für **Deutsch** auf Überschneidung geprüft — fr/it haben längere Kapitelnamen.
+> 4. Leerer Rest-Ordner `_werkbank/berge-landschaft` (nur `.vite`-Cache, 8 KB) — Löschen wurde der Sitzung verweigert.
+
+> 🧾 **Nachtrag 25.09., 12:40 — Sitzung «Deployment follow-up» (24.09. 18:50 bis 25.09.): Deploy 0.1.40 belegt, K123/K124/K125 vorgezogen und gebaut. Alle Merges auf ausdrückliches Wort von Stebler Studios («sauber mergen»), je Squash, vorher gegen das aktuelle `main` getestet.**
+>
+> **Stand, gemessen 25.09.2026 12:35** (`bash scripts/stand-jetzt.sh`): main = `cbb6447` · live = `0a80d71`
+> (0.1.40-beta, gebaut 25.09. 11:47, **`sauber: true`**) · 5 Commits dazwischen · offen: #361, #351 (Entwürfe
+> anderer Sitzungen). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> | PR | Was | Wirkung |
+> |---|---|---|
+> | #328 | statische Seiten: `apple-touch-icon.png` wie die App | live |
+> | #329 | Stand-Nachtrag Deploy 24.09. | Doku |
+> | #330 | Rundgang-«×» 44 × 44 (vorher 28; Regel ist ≥ 24, «wo es geht 44» — Verbesserung, kein Fehler) | live |
+> | #331 | HRegV Art. 38/117 gelesen, F0 verweist | Doku |
+> | #333 · #338 | **K125**: Kinderabzug im Konkubinat, alle 26 Kantone im Rohtext; ZH, LU, AI, NW, SH, SO, TI, VS ohne Kantonszahl (teilen hälftig, Zahl wäre zu tief); FR/GE behalten sie (Einverdiener-Ausnahme amtlich) | live |
+> | #334 · #343 | **K123**: AHV-Nummer stand live in drei QR, obwohl die Bauliste das Gegenteil sagte → Option B: Notfall-/Organspende-QR ohne, KK-Karte mit Kästchen (Standard aus) | live seit 25.09. 11:47 |
+> | #335 | **K124**: rm-Anrede-Schuld 299 → 25 (`TODO(rm)`, provisorisch) | live |
+> | #359 | K123 **Wiedervorlage Oktober** (Entscheid Stebler Studios 25.09.) | Doku |
+>
+> **Offen:**
+> 1. **K123 im Oktober nochmals besprechen** — Erinnerung als geplante Aufgabe am 1.10. 09:00
+>    (`maloja-k123-wiedervorlage-oktober`, nur lesen, bereitet eine Gesprächsvorlage vor).
+> 2. **Handtests** (Stebler Studios): QR am Telefon scannen — Notfall, Organspende, KK-Karte ohne/mit
+>    Häkchen (der Inhalt der gezeichneten Codes ist nicht maschinell geprüft) · Notfall-QR mit Kamera (K121) ·
+>    Rundgang am iPhone · Testerin fragen, ob «Mit ‹…› beginnen» ihr «und jetzt?» beantwortet.
+> 3. **K124-Rest:** 25 rm-Verbformen offen; `gepaeck.intro` steht in rm auf Französisch · rm-Gegenlese allgemein.
+> 4. **K125-Rest:** NE (Wahlrecht, Quelle 2016) und AR (Kann-Vorschrift) zeigen eine Zahl, im Quellenblatt als
+>    unsicher — in der App unsichtbar. Bund: FR-Merkblatt wendet die Einverdiener-Ausnahme evtl. auch bei der
+>    DBSt an (nicht belegt); die Annahme «gleich hoch oder höher» bleibt richtig.
+> 5. **Nebenbefund:** `docs/legal/dsfa-kurzfassung.md` nennt DSG Art. 5 Bst. c **Ziff. 4** für soziale Hilfe —
+>    laut Fedlex **Ziff. 6** (Ziff. 4 = biometrische Daten). Nicht behoben.
+> 6. Remote-Zweig `fix/k123-ahv-nur-auf-wunsch` (gemergt) steht noch — Löschen nur auf Zuruf.
+>
+> **Ausserhalb dieses Repos** (stebler-studios, lokal committet, nicht gepusht/deployt): Studio-Impressum
+> Handelsregister-Satz mit OR Art. 936 / HRegV Art. 38 belegt (`a1eb288`) · Fragen Juristin 3a geschärft,
+> aufgehobener Art. 36 HRegV korrigiert (`21c0b55`). Neu für den Adress-Entscheid: HRegV Art. 117 Abs. 2 —
+> das Rechtsdomizil kann eine **c/o-Adresse** sein.
+
+> ✅ **Nachtrag 25.09., 11:50 — DEPLOYT: live = `main` = `0a80d71` (0.1.40-beta), live gegengeprüft.**
+>
+> **Stand, gemessen 25.09.2026 11:48** (`bash scripts/stand-jetzt.sh`): main = `0a80d71` · live = `0a80d71`
+> (gebaut 11:47, `version.json` `sauber: true`) · **live = main** · offen nur #351 (Flyer, Entwurf).
+> **Beleg:** Live-Startdatei `index-CWn0DZjG.js` = frischer `main`-Build; Sprachdatei `de-oT6wlmCW.js` 200,
+> erfundener Name 404. Deploy durch Stebler Studios nach Predeploy-Gate (Marke `0a80d71`).
+>
+> **Mit diesem Deploy live** (74 + 5 Commits über dem alten Live-Stand `d47dc32`): #340 #342 #349 #352 (Links,
+> Fristen ab Ereignis, 34 Abläufe) · #355 Reste · #357 Einkommensart · #343 **AHV-Nummer im QR nur auf Wunsch**
+> · #345 O3 · #347 ALV/Trennung · #350 EO 98 Taggelder · #354 Herzensempfehlungen · #356 .htaccess-Abschrift.
+>
+> **Rauchtest live (Browser, Demo «Ohne Code»):** #/zuzug Einreise 20.09.2026 → Gemeinde 04.10.2026,
+> Führerausweis 19.09.2027 ✓ · #/ergaenzungsleistungen Verfügung 10.09.2026 → 10.03.2027, neuer Satz ✓ ·
+> #/dienst, #/wohnunggekuendigt ✓ · EO-Menü ohne «Dienst» ✓ · ALV/EO/Vorsorge/Sozialhilfe ohne Einkommensart:
+> leer + Hinweis ✓ · Suche «Heirat» ✓. Notfall-QR ohne AHV nur per Test belegt, nicht live gescannt.
+>
+> ⚠️ **Live aufgefallen:** das Demo-Profil (`src/config/demoData.js:35`) hat `monthlyIncome` ohne `incomeType` —
+> die Demo zeigt darum in vier Rechnern leere Felder mit Hinweis. Offene ⚠️ aus dem Gate:
+> `PRUEFUNG-links-ablaeufe-2026-09-24.md` (ausserhalb des Repos), Teil 8.
+
+> ✅ **Nachtrag 25.09., 02:30 — Links, Quellen, Abläufe: vier gestapelte PRs gemergt, jeder auf ausdrückliches Wort von Stebler Studios («merge sauber»). Nicht deployt.**
+>
+> **Stand, gemessen 25.09.2026 02:29** (`bash scripts/stand-jetzt.sh`): `main` = `0e1edee` · live = `d47dc32`
+> (0.1.40-beta) · **36 Commits** zwischen live und main · offene PRs (alle Entwurf, fremde Sitzungen):
+> #351 · #350 · #347 · #346 · #345 · #343 · #337.
+>
+> **Gemergt, der Reihe nach** (Merge-Commits, CI auf `main` nach jedem grün):
+> - **#340** `20119ff` — Links geprüft (340 + 15 Adressen), KVG-Art.-7-ELI korrigiert, AHV/Priminfo/Opferhilfe
+>   je Sprache, Mieterverband «schlichtet nicht»; `ABLAEUFE`-Register (Dashboard + Suche aus einer Liste —
+>   18 von 19 Abläufen waren unfindbar); Quellen-Zeile in jedem Ablauf; RAV-Spätestens-Termin.
+> - **#342** `f5986e6` — **Fristen ab dem Ereignis statt ab heute** (10 Knöpfe; `EreignisFrist`,
+>   `utils/fristen.js` nach OR 77, «nie später als das Gesetz») + 13 Textkorrekturen am Gesetzeswortlaut.
+> - **#349** `131d300` — 5 neue Abläufe (Neu in der Schweiz, Einbürgerung, Quellensteuer, Wohnung gekündigt,
+>   Ausgesteuert), Gepäck vollständig (Wächter), 15 belegte Korrekturen — 🔴 **112 «ohne SIM» war falsch**,
+>   🔴 **Asyl 5 Arbeitstage fehlten**; KVG 30.11. Werktag davor.
+> - **#352** `0e1edee` — 10 weitere Abläufe (**34** insgesamt): Vorsorgeauftrag & Patientenverfügung, EL
+>   beantragen, Zusammenziehen, Adoption, Wegzug, Pass/ID, Betreibungsauszug, Lehre, 18 werden, Dienst;
+>   🔴 Patientenverfügung «handschriftlich» falsch (ZGB 371), 🔴 Ausweis «5 Jahre» falsch (VAwG 5); EL-Verweise
+>   auf den EL-Ablauf (ELG 21 VI); Verbände-Gruppe statt «Ombudsstellen» für Mieterverband/Konsumentenschutz.
+>
+> **Belegt:** CI `build` grün auf jedem der vier Merge-Commits · lokal 207 Dateien / 3807 Tests · Build ·
+> size-limit 61,09 / 65 kB · PII-Scan vor jedem Push · alle neuen Abläufe im Browser (Demo-Modus) geöffnet.
+>
+> **Nicht erledigt / offen:** Deploy (Stebler Studios) · rm-Fassungen aller `TODO(rm)` · EO-Betreuung
+> 98 Taggelder liegt als **#350** (fremde Sitzung) · Wiedervorlagen **VAwG 01.11.2026**, **BVV 3 Art. 2
+> 01.06.2027**, **EOG 01.07.2027**. Vollständiger Prüfbericht mit allen Befunden und Belegen:
+> `~/Claude/Projects/maloja plana/PRUEFUNG-links-ablaeufe-2026-09-24.md` (ausserhalb des Repos).
+
 > ✅ **Nachtrag 24.09., 19:15 — 0.1.40-beta ist live. Deploy durch Stebler Studios, 18:48.**
 >
 > **Stand, gemessen 24.09.2026 19:06** (`bash scripts/stand-jetzt.sh`): `main` = `d47dc32` (#327) ·

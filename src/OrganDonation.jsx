@@ -44,12 +44,12 @@ export function organSpendeVcard({ t, data = {}, status, organs = {} }) {
   if (freitext) gewaehlt.push(freitext);
 
   const blutgruppe = String(data.notfall?.bloodType ?? '').trim();
-  const ahv = String(data.basis?.ahv ?? '').trim();
 
   const zeilen = [t('organ.title') + ':', '  ' + t('organ.status') + ': ' + statusText];
   if (gewaehlt.length) zeilen.push('  ' + t('organ.organsAndTissue') + ': ' + gewaehlt.join(', '));
   if (blutgruppe) zeilen.push('  ' + t('notfallSummary.bloodType') + ': ' + blutgruppe);
-  if (ahv) zeilen.push('  ' + t('chapters.basis.fields.ahv') + ': ' + ahv);
+  // K123 (Entscheid Stebler Studios 24.09.2026): keine AHV-Nummer im Organspende-QR — er trägt
+  // Gesundheitsangaben, wird gezeigt und fotografiert und ist nicht widerrufbar.
 
   return vcardBauen({
     name: getFullName(data.basis) || t('organ.title'),

@@ -1,5 +1,9 @@
 # Grundstück & zwei Modi — die visuelle Vision
 
+> **Detailblatt zu [`../IDEEN.md`](../IDEEN.md) §2** (seit 24.09.2026). Die Landkarte zählt
+> die Visionen auf, dieses Blatt führt eine aus. Offen ist dort ein Widerspruch: House of
+> Life (19.07.) schliesst Gamification aus, dieses Blatt erlaubt sie als abschaltbare Haut.
+
 > **Status:** Vision / Design-Kanon (noch nicht gebaut). Diese Datei ist die *eine*
 > Quelle für die räumliche Metapher und das Verhältnis von Normal- zu Spiel-Modus.
 > Bei Widerspruch zu älteren Skizzen gilt diese Datei.

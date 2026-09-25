@@ -12,6 +12,7 @@ import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Icons } from '../IconSystem.jsx';
+import { muenzenBereit } from '../IconKern.jsx';
 
 const wurzel = (html) => html.match(/^<svg\b[^>]*>/)?.[0] ?? '';
 
@@ -38,7 +39,9 @@ describe('Zeichen aus dem Register sind versteckt', () => {
     }
   });
 
-  it('direkter Aufruf ohne <Icon> — so wie Dashboard, MobileNav und Baum3D es tun', () => {
+  it('direkter Aufruf ohne <Icon> — so wie Dashboard, MobileNav und Baum3D es tun', async () => {
+    // Die Münzen kommen nachgeladen (IconKern, 25.09.2026): erst warten, dann prüfen.
+    await muenzenBereit();
     const html = renderToStaticMarkup(
       React.createElement('button', null, 'Pensionierung', React.createElement('div', null, Icons.behoerden())),
     );

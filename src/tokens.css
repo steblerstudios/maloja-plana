@@ -138,6 +138,15 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Leises Einblenden beim Ansichtswechsel (utils/einblenden.js, 25.09.2026).
+   Nur Deckkraft — kein transform, sonst würde <main> während der Animation zum
+   Bezugsrahmen für position:fixed darin. Verstummt mit dem Block für reduzierte
+   Bewegung unten (Gerät und Schalter in der App). Nutzt das vorhandene fadeIn.
+   Wächter: einblenden.test.js */
+.mp-einblenden {
+  animation: fadeIn var(--mp-duration-normal) var(--mp-ease-default);
+}
+
 /* Ruhiges „Atmen" für den Lade-Zustand (CalmLoader) — langsam, kein Zappeln.
    Wird bei prefers-reduced-motion automatisch still (globaler Block unten). */
 @keyframes mp-breathe {
@@ -206,6 +215,111 @@ textarea:focus-visible,
   outline: 2px solid var(--mp-focus) !important;
   outline-offset: 2px !important;
   z-index: 1;
+}
+
+/* Nichts darf die Seite seitlich scrollbar machen (u.a. der Nebel unter .mp-blatt, der mit
+   100vw eine klassische Scrollleiste mitzählt). `clip`, nicht `hidden`: clip macht keinen
+   Scroll-Container, position: sticky funktioniert weiter. */
+html { overflow-x: clip; }
+
+/* ─── Berg als Bühne, Seite als Blatt (Übersicht, Vorschau 25.09.2026) ──
+   Der Berg bleibt stehen, die Seite schiebt sich darüber. Keine Parallaxe: der Berg
+   bewegt sich gar nicht, nur das Blatt kommt — darum auch bei reduzierter Bewegung ruhig.
+   `top` setzt Dashboard.jsx (bergKleben), weil es von der Bildhöhe abhängt. */
+.mp-berg-buehne {
+  position: sticky;
+  z-index: 0;
+}
+.mp-blatt {
+  position: relative;
+  z-index: 1;
+  /* Kein harter Rand, kein Schatten: die Seitenfarbe steigt wie Nebel über den Berg
+     (Verlauf in Dashboard.jsx). Mit Kante und Schatten wirkte das Blatt im Dunkeln
+     wie ein schwarzer Rahmen um die Karten (Rückmeldung Stebler Studios, 25.09.). */
+  padding-top: var(--mp-space-xl);
+}
+/* Zwischen den Kacheln ist die Seite durchsichtig: man sieht direkt auf den Berg, der
+   beim Scrollen selbst weich wird (unten, .mp-berg-buehne). Kein Glas, das mitwandert
+   (Rückmeldung Stebler Studios, 25.09.). */
+
+/* Der Berg verschwimmt, je weiter man scrollt — er tritt in den Hintergrund. An die
+   Scroll-Position gekoppelt vom Browser selbst (scroll-driven animation), ohne Code im
+   Hauptbündel. Browser ohne diese Fähigkeit zeigen ihn einfach scharf. */
+/* Der untere Rand läuft weich aus — aber erst, während der Berg zurücktritt: oben, scharf,
+   bleiben die Fortschritts-Kreise am Bildrand voll sichtbar (Auslauf 0 px), hinten sind es
+   ~100 px. Als registrierte Eigenschaft, damit der Browser die Länge stufenlos animiert. */
+@property --mp-berg-auslauf {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+@keyframes mp-berg-verschwimmen {
+  from { filter: blur(0); --mp-berg-auslauf: 0px; }
+  to   { filter: blur(10px) opacity(0.22); --mp-berg-auslauf: 100px; }
+}
+/* Wie weit der Berg zurücktritt — gemessen 25.09.2026 am Bild selbst (Leinwand, gleicher
+   Filter, schlechteste Stelle): bei 22 % Deckkraft erreicht normale Schrift über dem Berg
+   dunkel ≥ 5,7:1 und hell ≥ 9:1. Graue Kleinschrift schafft das bei KEINER sichtbaren
+   Deckkraft (hell schon auf leerer Seite nur 4,5:1) — sie hält der Schein unten. */
+@supports (animation-timeline: scroll()) {
+  .mp-berg-buehne {
+    animation: mp-berg-verschwimmen linear both;
+    animation-timeline: scroll(root);
+    /* Erst schauen, dann zurücktreten (Rückmeldung Stebler Studios, 25.09.): der Berg bleibt
+       scharf, bis die Seite gut ein Drittel des Fensters hochgeschoben ist — vorher war er auf
+       grossen Bildschirmen weich, bevor man ihn ganz gesehen hatte (Bereich 0–70vh). */
+    animation-range: 35vh 105vh;
+  }
+  /* Die Maske sitzt auf dem BILD, nicht auf der Hülle: eine Maske schneidet alles ab, was
+     über ihr Element hinausragt — auf der Hülle (Spaltenbreite) war der Berg plötzlich
+     nicht mehr randlos. Der Wert kommt per Vererbung von der Hülle. */
+  .mp-berg-buehne > * {
+    -webkit-mask-image: linear-gradient(#000 calc(100% - var(--mp-berg-auslauf)), transparent);
+    mask-image: linear-gradient(#000 calc(100% - var(--mp-berg-auslauf)), transparent);
+  }
+}
+/* Bei reduzierter Bewegung bleibt der Berg scharf und ruhig (Gerät und App-Schalter).
+   Ausdrücklich hier: der globale Block setzt nur Dauern, und die gelten für eine
+   Scroll-Zeitachse nicht zuverlässig. */
+@media (prefers-reduced-motion: reduce) { .mp-berg-buehne { animation: none; } }
+:root[data-reduce-motion="1"] .mp-berg-buehne { animation: none; }
+/* Wer weniger Transparenz eingestellt hat, bekommt eine deckende Seite. */
+@media (prefers-reduced-transparency: reduce) {
+  .mp-blatt::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 100vw; margin-left: -50vw;
+    background: linear-gradient(transparent, var(--mp-seite) var(--mp-space-xl));
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+/* Abschnitte ohne eigene Kachel («Ihr Alltag», Instrumente, Tipps …) bleiben
+   durchsichtig (Rückmeldung Stebler Studios, 25.09.: keine schwarzen Flächen). Lesbar
+   bleiben sie auf zwei Wegen: der Berg tritt beim Scrollen stark zurück (unten), und
+   die Schrift trägt einen weichen Schein in Seitenfarbe — Nebel um die Buchstaben, keine
+   Fläche. Kacheln (Farbe inline) und Hüllen um Kacheln sind ausgenommen. */
+.mp-blatt > :not([style*="background"]):not(:has(> [style*="background"])) {
+  text-shadow: 0 0 2px var(--mp-seite), 0 0 6px var(--mp-seite), 0 0 14px var(--mp-seite);
+}
+
+/* ─── Hover für Weg-Knöpfe (Zurück, Querverweise) ──────────
+   Bis 25.09.2026 gab es in der App KEINE Hover-Regel in CSS; Hover stand nur dort,
+   wo er per onMouseEnter von Hand gebaut war (22 Stellen). «Übersicht», die
+   Querverweise in den Kapiteln und die «→»-Verweise der Abläufe zeigten beim
+   Drüberfahren nichts ausser dem Zeiger.
+   Jetzt eine Regel: unterstreichen. Keine Farbe, keine Deckkraft — der Kontrast
+   bleibt, wie er ist. Nur auf Geräten mit echtem Zeiger (hover: hover), damit auf
+   dem Handy nach einem Tipp nichts unterstrichen hängen bleibt.
+   Wächter: src/__tests__/hoverWege.test.js */
+@media (hover: hover) {
+  .mp-link:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
 }
 
 /* ─── Datei-Auswahl: das Feld ist unsichtbar, der Ring sitzt am Label ──

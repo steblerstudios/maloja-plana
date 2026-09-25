@@ -5,6 +5,7 @@
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
+import { sozialhilfeBilanz, istErwerbstaetig } from '../data/sozialhilfeKern.js';
 
 // PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
@@ -317,12 +318,22 @@ export function getGrundbedarf(householdSize) {
   return SKOS_GRUNDBEDARF[7] + (householdSize - 7) * SKOS_GBL_PRO_WEITERE;
 }
 
-// Sozialhilfe-Berechnung (SKOS-basiert, kantonal angepasst)
+// Sozialhilfe-Schnellrechnung (SKOS-basiert, kantonal angepasst), Ergebnis-Art SCHÄTZUNG.
+// Bedarf ↔ Einkommen rechnet data/sozialhilfeKern.js, derselbe Kern wie im ausführlichen Rechner
+// (dort stehen die Quellen). Die Schnellrechnung bringt nur mit, was das Profil hergibt:
+// - Erwerbseinkommen = Monatslohn + Nebenerwerb. Freibetrag (SKOS-RL D.2) nur bei Erwerbstätigkeit.
+//   Der Lohn der Partnerin oder des Partners zählt als andere Einkunft ohne Freibetrag, wie im Rechner.
+// - Erwerbsunkosten (SKOS-RL C.6.3): das Profil hat dafür kein Feld, deshalb 0. Bei Erwerbstätigen
+//   ist der Bedarf also zu tief; `erwerbsunkostenOffen` sagt das der Anzeige, und im Rechner
+//   lassen sie sich eintragen.
+// - Eintritt vorsichtig ohne Freibetrag (ausser ZH/BS mit belegter Regel). `efbEntscheidet`: erst
+//   der Freibetrag ergäbe einen Anspruch — ob er beim Eintritt zählt, regelt der Kanton.
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   const householdSize = hh.householdSize;
-  const income = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome;
+  const erwerbseinkommen = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0);
+  const erwerbstaetig = istErwerbstaetig(data.finanzen);
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
@@ -332,8 +343,13 @@ export function calculateSozialhilfe(data) {
   const effectiveRent = Math.min(rent + utilities, rentLimit);
   const effectiveKK = kkPremium;
 
-  const totalBedarf = grundbedarf + effectiveRent + effectiveKK;
-  const deficit = totalBedarf - income;
+  const bilanz = sozialhilfeBilanz({
+    grundbedarf, wohnkosten: effectiveRent, kvgPraemie: effectiveKK,
+    erwerbseinkommen, andereEinkuenfte: hh.partnerIncome, erwerbstaetig, kanton: canton,
+  });
+  const totalBedarf = bilanz.bedarf;
+  const income = bilanz.totalEinkommen;
+  const deficit = bilanz.luecke;
 
   // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
   // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
@@ -350,7 +366,12 @@ export function calculateSozialhilfe(data) {
     effectiveKK,
     totalBedarf,
     income,
-    deficit: Math.max(0, deficit),
+    efb: bilanz.efb,
+    anrechenbaresEinkommen: bilanz.anrechenbaresEinkommen,
+    efbEntscheidet: bilanz.efbEntscheidet,
+    erwerbstaetig,
+    erwerbsunkostenOffen: erwerbstaetig,
+    deficit,
     eligible: deficit > 0,
     vermoegen,
     vermoegensfreibetrag,
@@ -364,7 +385,7 @@ export function calculateSozialhilfe(data) {
     isRetired: hh.isRetired,
     canton,
     noteKey: deficit > 0 ? 'sozialhilfeCalc.entitled' : 'sozialhilfeCalc.notEntitled',
-    noteParams: deficit > 0 ? { value: Math.max(0, deficit).toFixed(0) } : {},
+    noteParams: deficit > 0 ? { value: deficit.toFixed(0) } : {},
   };
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
+import { PFADE } from './config/brotkrumePfade.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -19,13 +20,16 @@ import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
-import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
+import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle } from './utils/hashRouter.js';
+import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
 import Dashboard from './Dashboard.jsx';
 const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
-import OverdueBanner from './OverdueBanner.jsx';
+// Nachgeladen (25.09.2026): das Hauptbundle hatte 20 B Luft, die Startbildschirm-Karte im Panorama
+// brauchte mehr. Der Hinweis erscheint nur bei fälligen Erinnerungen.
+const OverdueBanner = React.lazy(() => import('./OverdueBanner.jsx'));
 import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
@@ -86,6 +90,21 @@ const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
 const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 const BetreibungErhalten = React.lazy(() => import('./BetreibungErhalten.jsx'));
+const Dienst = React.lazy(() => import('./Dienst.jsx'));
+const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
+const Lehre = React.lazy(() => import('./Lehre.jsx'));
+const BetreibungsAuszug = React.lazy(() => import('./BetreibungsAuszug.jsx'));
+const Ausweis = React.lazy(() => import('./Ausweis.jsx'));
+const Wegzug = React.lazy(() => import('./Wegzug.jsx'));
+const Adoption = React.lazy(() => import('./Adoption.jsx'));
+const Zusammenziehen = React.lazy(() => import('./Zusammenziehen.jsx'));
+const Ergaenzungsleistungen = React.lazy(() => import('./Ergaenzungsleistungen.jsx'));
+const Vorsorgeauftrag = React.lazy(() => import('./Vorsorgeauftrag.jsx'));
+const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
+const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
+const Aussteuerung = React.lazy(() => import('./Aussteuerung.jsx'));
+const Quellensteuer = React.lazy(() => import('./Quellensteuer.jsx'));
+const WohnungGekuendigt = React.lazy(() => import('./WohnungGekuendigt.jsx'));
 const Selbstaendigkeit = React.lazy(() => import('./Selbstaendigkeit.jsx'));
 const Heirat = React.lazy(() => import('./Heirat.jsx'));
 const KindBekommen = React.lazy(() => import('./KindBekommen.jsx'));
@@ -112,7 +131,8 @@ const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
 const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
@@ -179,7 +199,7 @@ const LanguageSwitcher = ({ palette }) => {
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',
-        border: '1px solid ' + palette.border, borderRadius: '6px',
+        border: '1px solid ' + palette.border, borderRadius: radius.sm,
         paddingBlock: '5px', paddingInlineStart: '30px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
@@ -215,7 +235,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       color: vorlesen.enabled ? palette.sand : palette.mid,
       // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
       border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
-      borderRadius: '4px',
+      borderRadius: radius.xs,
       cursor: 'pointer',
       fontSize: '11px',
       lineHeight: 1,
@@ -581,6 +601,11 @@ const AppInner = ({ demo }) => {
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
 
+  // Woher man in die aktuelle Ansicht kam (Entscheid 25.09.2026: Brotkrume + Herkunft).
+  // Steht im Verlaufs-Eintrag, nicht nur hier — darum überlebt es Neuladen und
+  // stimmt nach der Zurück-Taste des Browsers wieder.
+  const [herkunft, setHerkunft] = useState(() => leseHerkunft());
+
   // ─── Hash routing: sync URL when view changes ─────────────
   const isFirstRender = React.useRef(true);
   useEffect(() => {
@@ -592,11 +617,22 @@ const AppInner = ({ demo }) => {
     } else {
       setHash(view, chapterIdx);
     }
+    setHerkunft(leseHerkunft());
+  }, [view, activeChapter]);
+
+  // ─── Leises Einblenden beim Ansichtswechsel (utils/einblenden.js) ─
+  // Nicht beim ersten Bild, nicht nach «Zurück» (dort gilt die gemerkte Stelle).
+  // Eine Markierung: true = erstes Bild oder nach «Zurück» → still; sonst einblenden.
+  const stillBleiben = React.useRef(true);
+  useEffect(() => {
+    blendeEin(document.getElementById('mp-main'), { zurueck: stillBleiben.current });
+    stillBleiben.current = false;
   }, [view, activeChapter]);
 
   // ─── Hash routing: listen for browser back/forward ────────
   useEffect(() => {
     const cleanup = onHashChange((parsed) => {
+      stillBleiben.current = true;
       // startTransition: das Ziel kann ein noch nicht geladener Lazy-Chunk sein — so darf
       // React den Suspense-Fallback (CalmLoader) zeigen statt „suspended on sync input" zu werfen.
       startTransition(() => {
@@ -606,7 +642,13 @@ const AppInner = ({ demo }) => {
           setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
         }
         setView(parsed.view);
+        setHerkunft(leseHerkunft());
       });
+      // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
+      // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
+      if (parsed.stelle !== null) {
+        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: parsed.stelle, behavior: 'instant' })));
+      }
     });
     return cleanup;
   }, [chapters.length]);
@@ -839,6 +881,8 @@ const AppInner = ({ demo }) => {
   };
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
+    merkeStelle();
+    stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
     setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
@@ -1000,6 +1044,17 @@ const AppInner = ({ demo }) => {
     + encodeURIComponent('Maloja Plana Beta Feedback')
     + '&body=' + encodeURIComponent(feedbackBody);
 
+  // Die Leistungs-Zeile hat seit 25.09.2026 einen festen Ort: die letzte Zeile JEDER Seite,
+  // direkt über der Fusszeile (Entscheid Stebler Studios). Nicht IN der Fusszeile — die
+  // steht im Web fest unten, der Satz hätte sie dort dauerhaft auf 130 px aufgebläht.
+  // Stand vorher nur auf der leeren Übersicht, oben.
+  const leistungEl = React.createElement('p', {
+    style: {
+      width: '100%', maxWidth: contentMax, margin: space.lg + 'px auto 0',
+      boxSizing: 'border-box', color: palette.mid, fontSize: text.xs, lineHeight: leading.relaxed,
+    },
+  }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')));
+
   // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
   // Scroll-Inhalt (kein fixer zweiter Balken über dem Boden-Anker).
   const footerEl = React.createElement('footer', {
@@ -1130,7 +1185,9 @@ const AppInner = ({ demo }) => {
         style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, letterSpacing: '0.3px', display: 'flex' }
       },
         React.createElement('button', {
-          onClick: () => setView('dashboard'),
+          // handleNavigate, nicht setView: sonst springt die Seite nicht nach oben (gemessen von
+          // der Sitzung «Rückkehr, Laden und Hover-Flow»: Übersicht landete bei scrollY 2494).
+          onClick: () => handleNavigate('dashboard'),
           'aria-label': t('common.appName'),
           style: {
             font: 'inherit', color: 'inherit', letterSpacing: 'inherit',
@@ -1304,10 +1361,17 @@ const AppInner = ({ demo }) => {
     // Hinweis) permanent stehen, statt wegzuscrollen. Jetzt scrollt die Seite; klebend
     // bleibt nur der Kopf (position: sticky), und die Reiter darin hängen sich per
     // --mp-kopf-h darunter.
-    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
-      view !== 'dashboard' && React.createElement('button', {
-        onClick: () => setView('dashboard'),
+    // Auf der Übersicht ohne Abstand oben: das Bergpanorama schliesst direkt an die Kopfzeile bzw.
+    // den Beispiel-Balken an (Entscheid 25.09.2026).
+    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: (view === 'dashboard' ? '0' : '24px') + ' 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
+      // In den fünf Unter-Ansichten zeichnet die Ansicht selbst die Brotkrume (components/
+      // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
+      // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
+      // sprang die Seite dabei nicht nach oben, und der Fokus blieb stehen.
+      view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
+        onClick: () => handleNavigate('dashboard'),
         'aria-label': t('nav.backToDashboard'),
+        className: 'mp-link',
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,
@@ -1315,6 +1379,22 @@ const AppInner = ({ demo }) => {
           display: 'flex', alignItems: 'center', gap: '6px',
         },
       }, zurueckZeichen(), t('nav.backToDashboard')),
+      // «Zurück zu Kapitel …» — nur, wenn man aus einem Kapitel über einen Querverweis
+      // hierher kam (Entscheid 25.09.2026: die Brotkrume zeigt die feste Ordnung, diese
+      // Zeile den eigenen Weg). history.back(), nicht handleNavigate: der Verlauf bleibt
+      // derselbe wie mit der Zurück-Taste, und man landet an der Stelle im Kapitel, an der
+      // man den Querverweis angetippt hat (merkeStelle/onHashChange, nicht der Browser).
+      view !== 'chapter' && herkunft && herkunft.view === 'chapter' && chapters[herkunft.chapterIndex] && React.createElement('button', {
+        type: 'button',
+        className: 'mp-link',
+        onClick: () => window.history.back(),
+        style: {
+          background: 'none', border: 'none', cursor: 'pointer',
+          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
+          color: palette.mid, fontFamily: 'inherit',
+          display: 'flex', alignItems: 'center', gap: '6px',
+        },
+      }, zurueckZeichen(), t('nav.zurueckZu', { name: chapters[herkunft.chapterIndex].title })),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
         style: {
@@ -1330,16 +1410,18 @@ const AppInner = ({ demo }) => {
         React.createElement(StorageWarning, { palette, t }),
         // handleNavigate, nicht setView: nur so springt die Seite nach oben und der Fokus
         // auf <main> — seit das Dokument scrollt (#296), landete man sonst mitten im Kalender.
-        React.createElement(OverdueBanner, { palette, t, onNavigate: handleNavigate }),
-        // Der Weg auf den Startbildschirm. Eigene, nachgeladene Datei:
-        // das Hauptbundle hat 60 Byte Luft unter dem size-limit, der Kasten
-        // kostet 290 B. Begründung ausführlich in InstallHinweis.jsx.
         React.createElement(React.Suspense, { fallback: null },
-          React.createElement(InstallHinweis, {
-            palette, t, onNavigate: handleNavigate, installPrompt,
-            onPromptWeg: () => setInstallPrompt(null),
-          })),
+          React.createElement(OverdueBanner, { palette, t, onNavigate: handleNavigate })),
         React.createElement(Dashboard, {
+          // Der Weg auf den Startbildschirm: kleine Karte rechts oben im Bergpanorama (seit
+          // 25.09.2026, vorher ein Kasten über den Bergen). Eigene, nachgeladene Datei — das
+          // Hauptbundle hat kaum Luft. Begründung in InstallHinweis.jsx.
+          // Als Funktion: die Landschaft sagt, ob sie im schmalen (Handy-)Ausschnitt steht.
+          installKarte: (klein) => React.createElement(React.Suspense, { fallback: null },
+            React.createElement(InstallHinweis, {
+              palette, t, onNavigate: handleNavigate, installPrompt, klein,
+              onPromptWeg: () => setInstallPrompt(null),
+            })),
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
           completion: calculateCompletion(),
@@ -1454,6 +1536,21 @@ const AppInner = ({ demo }) => {
         view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'betreibung' && React.createElement(BetreibungErhalten, { palette, t, onNavigate: handleNavigate }),
+        view === 'dienst' && React.createElement(Dienst, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'volljaehrig' && React.createElement(Volljaehrig, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'lehre' && React.createElement(Lehre, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'betreibungsauszug' && React.createElement(BetreibungsAuszug, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'ausweis' && React.createElement(Ausweis, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'wegzug' && React.createElement(Wegzug, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'adoption' && React.createElement(Adoption, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'zusammenziehen' && React.createElement(Zusammenziehen, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'ergaenzungsleistungen' && React.createElement(Ergaenzungsleistungen, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'aussteuerung' && React.createElement(Aussteuerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
         view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
         view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate }),
@@ -1508,6 +1605,7 @@ const AppInner = ({ demo }) => {
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),
+      leistungEl,
       // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
       isMobile && footerEl
     ),

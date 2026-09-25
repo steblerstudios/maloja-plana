@@ -7,7 +7,7 @@ import { calculateIPV } from '../config/cantonalData.js';
 import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
-import { QuickCheck } from '../Dashboard.jsx';
+import { QuickCheck } from '../components/Leistungsliste.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // B-1 (BUGS.md) · Entscheid E22 vom 16.09.2026
@@ -54,7 +54,7 @@ afterEach(() => vi.restoreAllMocks());
 describe('B-1 · der Klick im Schnellcheck nimmt die eingetippten Zahlen mit', () => {
   it('die Zeile «Prämienverbilligung» übergibt Einkommen, Miete und Prämie an den IPV-Rechner', () => {
     // Im Schnellcheck steht, was die Person eingetippt hat: 3000 / 1100 / 380.
-    const schnellcheckStand = profil({ monthlyIncome: 3000 });
+    const schnellcheckStand = profil({ monthlyIncome: 3000, incomeType: 'netto' });
     schnellcheckStand.wohnen = { rentAmount: 1100 };
     schnellcheckStand.versicherungen = { kkPremium: 380 };
     const onNavigate = vi.fn();
@@ -69,16 +69,26 @@ describe('B-1 · der Klick im Schnellcheck nimmt die eingetippten Zahlen mit', (
 
   it('auch der Schnell-Check auf dem Dashboard übergibt sein Einkommen', () => {
     const onNavigate = vi.fn();
-    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000 }), onNavigate });
+    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000, incomeType: 'netto' }), onNavigate });
     const zeile = gesehen.find((e) => e.typ === 'button' && e.p.key === 'ipv');
     expect(zeile).toBeTruthy();
     zeile.p.onClick();
     expect(onNavigate).toHaveBeenCalledWith('premium', undefined, { schnellcheck: { monthlyIncome: 3000 } });
   });
 
+  it('Dashboard: eine aus BRUTTO geschätzte Zahl geht nicht als Übergabe mit (25.09.2026)', () => {
+    const onNavigate = vi.fn();
+    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000, incomeType: 'brutto' }), onNavigate });
+    const zeile = gesehen.find((e) => e.typ === 'button' && e.p.key === 'ipv');
+    expect(zeile).toBeTruthy();
+    zeile.p.onClick();
+    expect(onNavigate).toHaveBeenCalledWith('premium');
+    expect(onNavigate.mock.calls[0]).toHaveLength(1);
+  });
+
   it('andere Zeilen im Schnellcheck tragen keine Übergabe', () => {
     const onNavigate = vi.fn();
-    const stand = profil({ monthlyIncome: 800 });
+    const stand = profil({ monthlyIncome: 800, incomeType: 'netto' });
     const { gesehen } = renderMitProps(Schnellcheck, { data: stand, onNavigate });
     const soz = gesehen.find((e) => e.typ === 'button' && e.p.key === 'soz');
     expect(soz).toBeTruthy();

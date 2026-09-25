@@ -83,8 +83,10 @@ describe('K41 · Berg-Beschriftung: mid auf der eigenen Fläche trägt AA', () =
 // 'mountain-label' (der eigentliche Kontrast-Fehler) unbemerkt zurückkommt, und
 // dass die Kursiv-Unterscheidung («noch nicht begonnen» = Form, nicht nur Farbe)
 // wieder verschwindet.
-describe('K41 · Quell-Scan (Dashboard.jsx, mountain-label)', () => {
-  const src = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
+// Seit 25.09.2026 wohnen die Berge in components/BergLandschaft.jsx (Landschaft aus der
+// Codex-Illustration); das Etikett zog mit, die Regel bleibt dieselbe.
+describe('K41 · Quell-Scan (BergLandschaft.jsx, mountain-label)', () => {
+  const src = readFileSync(new URL('../components/BergLandschaft.jsx', import.meta.url), 'utf8');
   const start = src.indexOf("className: 'mountain-label'");
   const block = src.slice(start, start + 1700);
 
@@ -96,8 +98,14 @@ describe('K41 · Quell-Scan (Dashboard.jsx, mountain-label)', () => {
     expect(block).not.toMatch(/opacity:\s*maturity/);
   });
 
-  it('eine eigene, undurchsichtige Fläche trägt den Kontrast (background: palette.surface)', () => {
-    expect(block).toMatch(/background:\s*palette\.surface/);
+  it('eine eigene, undurchsichtige Fläche trägt den Kontrast', () => {
+    // Seit 25.09.2026 (später am Tag) trägt das Etikett die Kapitelfarbe als Grund, weiss
+    // beschriftet: etikettGrund(farbe) dunkelt jede Farbe ab, bis Weiss ≥ 4.5:1 trägt — belegt
+    // in bergLandschaft.test.js für alle Kapitelfarben in allen vier Modi. Die Regel bleibt:
+    // eine eigene, volle Fläche, keine Deckkraft.
+    expect(block).toMatch(/background:\s*etikettGrund\(farbe\)/);
+    expect(block).toMatch(/color:\s*ETIKETT_SCHRIFT/);
+    expect(block).not.toMatch(/opacity/);
   });
 
   it('«noch nicht begonnen» bleibt über Form erkennbar (fontStyle, nicht nur Farbe)', () => {

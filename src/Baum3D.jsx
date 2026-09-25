@@ -1,3 +1,4 @@
+import { radius } from './config/tokens.js';
 import React from 'react';
 import * as THREE from 'three';
 import { createRoot } from 'react-dom/client';
@@ -852,7 +853,7 @@ export default function Baum3D({
       'aria-label': ariaLabel,
       'aria-describedby': hinweisId,
       style: {
-        width: '100%', height: hoehe + 'px', borderRadius: '12px', overflow: 'hidden',
+        width: '100%', height: hoehe + 'px', borderRadius: radius.md, overflow: 'hidden',
         // Himmel aus der Palette, nicht aus einem Fantasie-Blau: der Kasten soll
         // wie ein Teil der Seite wirken, nicht wie ein eingeklebtes Fenster.
         background: palette
@@ -909,7 +910,7 @@ export default function Baum3D({
           React.createElement('span', {
             style: {
               display: 'inline-flex', alignItems: 'center', gap: '5px',
-              padding: '3px 9px 3px 5px', borderRadius: '999px',
+              padding: '3px 9px 3px 5px', borderRadius: radius.full,
               fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
               // Hier entsteht die Tiefe: vorne der volle Text-Ton, hinten der
               // Sekundär-Ton. Beide sind in constants.js gegen `surface` geprüft
@@ -964,7 +965,7 @@ export default function Baum3D({
           React.createElement('span', {
             style: {
               display: 'inline-flex', alignItems: 'center', gap: '3px',
-              padding: '2px 8px 2px 4px', borderRadius: '999px',
+              padding: '2px 8px 2px 4px', borderRadius: radius.full,
               fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.25, whiteSpace: 'nowrap',
               // Deckender Grund statt 8 % Farbschleier: dahinter liegt die
               // bewegte 3D-Szene, gegen die kein Kontrast garantiert wäre.

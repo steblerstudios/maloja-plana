@@ -73,6 +73,18 @@ Datei; dafür hat das Studio einen eigenen Weg.
   `index-8FolD38L.js` vom 22.09. Erst nach dem Deploy wandert die Zeile nach «Zuletzt behoben»,
   mit Bundle-Name und Uhrzeit wie bei B-1 bis B-4.
 
+- 2026-09-25 · **B-6** · **Rumantsch zeigt beim Gepäck einen französischen Einleitungstext.**
+  `src/i18n/rm.js`, Schlüssel `gepaeck.intro`, beginnt mit «Chaque domaine de la vie est un
+  équipement dans le sac à dos …» — also Französisch statt Rumantsch. Gefunden am 24.09.2026
+  von der K124-Sitzung (#335), dort **bewusst nicht angefasst**, weil K124 nur die Anrede
+  nachzog. Am 25.09.2026, 13:45, auf `main` (`cbb6447`) nachgesehen: steht noch so da, wortgleich mit
+  `fr.js`, und wird in `src/Gepaeck.jsx:201` angezeigt. **Im Code belegt, im Browser nicht
+  angesehen.**
+  Nachstellen: Sprache Rumantsch wählen, «Gepäck» öffnen. Fix braucht einen echten
+  rätoromanischen Satz (Gegenlese durch einen Menschen, wie K124) — nicht aus dem Französischen
+  ableiten. Test-Vorschlag: kein rm-Wert darf wörtlich gleich dem fr-Wert sein, ausser auf einer
+  begründeten Ausnahmeliste.
+
 ## Geprüft — kein offener Bug (2026-07-08)
 
 Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich: keiner ist ein Bug. Festgehalten, damit sie nicht als Phantome wiederkommen.

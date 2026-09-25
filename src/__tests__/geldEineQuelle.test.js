@@ -66,13 +66,15 @@ describe('eine Quelle', () => {
     expect(treffer).toEqual([]);
   });
   // Jeder Text, der auf «CHF » endet ('CHF ', '~ CHF ', ': CHF ', 'Max: CHF ' …) und mit einem
-  // Ausdruck verbunden wird, der nicht durch einen Formatierer läuft. Erlaubnisliste:
-  // der Text-Export (zipExport.js) schreibt Rohwerte wie eingegeben — eigene Frage, offen.
+  // Ausdruck verbunden wird, der nicht durch einen Formatierer läuft — auch in Vorlagen
+  // (`CHF ${…}`). Die Ausnahme für den Text-Export ist seit 25.09.2026 weg: er formatiert jetzt.
   it('kein «CHF » vor einer rohen Zahl', () => {
-    const FORMATIERER = /^(betrag|chfBetrag|zahl|fmt|fmtCHF|formatCHF|fmtAmount|formatAmount|num|num1|chf|t)\(/;
+    const FORMATIERER = /^(betrag|chfBetrag|zahl|fmt|fmtCHF|formatCHF|fmtAmount|formatAmount|num|num1|chf|t|wahl|geld)\(/; // wahl: Beschriftung aus dem Wörterbuch (Franchise «2’500»)
     const treffer = zeilen().filter(([o, z]) => {
-      if (o.startsWith('utils/geld.js') || o.startsWith('zipExport.js')) return false;
-      return [...z.matchAll(/CHF ['"]\s*\+\s*([^,;)]+)/g)].some((m) => !FORMATIERER.test(m[1].trim()) && !/^franchiseValue\(/.test(m[1].trim()));
+      if (o.startsWith('utils/geld.js')) return false;
+      const verkettet = [...z.matchAll(/CHF ['"]\s*\+\s*([^,;)]+)/g)].map((m) => m[1].trim());
+      const vorlage = [...z.matchAll(/CHF \$\{([^}]+)\}/g)].map((m) => m[1].trim());
+      return [...verkettet, ...vorlage].some((a) => !FORMATIERER.test(a) && !/^franchiseValue\(/.test(a));
     }).map(([o]) => o);
     expect(treffer).toEqual([]);
   });

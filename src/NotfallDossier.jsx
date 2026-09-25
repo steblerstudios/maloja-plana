@@ -3,11 +3,12 @@ import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { qrNotfallVcard, qrZeichnen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { getFullName } from './config/constants.js';
-import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
-import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { getNotfallDossierPreview, generateNotfallDossier, notfallQrAbschnitte } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -25,9 +26,8 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   // K80: in UTF-8-Bytes gekürzt (ein Umlaut zählt doppelt). Reihenfolge im Code: Medizin zuerst
   // (Entscheid Stebler Studios, 17.09.2026) — das gedruckte Dossier bleibt in seiner Reihenfolge.
   // Was nicht hineinpasst, nennt der Code am Ende selbst.
-  const qrReihenfolge = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
-  const rang = key => { const i = qrReihenfolge.indexOf(key); return i === -1 ? qrReihenfolge.length : i; };
-  const qrAbschnitte = [...preview.sections].sort((a, b) => rang(a.key) - rang(b.key));
+  // K123: nur Felder aus NOTFALL_QR_FELDER — die AHV-Nummer bleibt auf dem Papier, nicht im Code.
+  const qrAbschnitte = notfallQrAbschnitte(preview.sections);
 
   // Die Notfallnummer steht zusätzlich in einem eigenen TEL-Feld: auf der Kontaktkarte ist
   // sie damit WÄHLBAR statt abzutippen.
@@ -115,15 +115,8 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     style: { maxWidth: '520px' }
   },
 
-    React.createElement('button', {
-      onClick: () => onNavigate('unterlagen'),
-      style: {
-        background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
-      }
-    }, zurueckZeichen(), t('notfallDossier.back')),
-
+    // Ein Weg zurück: die Brotkrume (Entscheid 25.09.2026) statt eines eigenen Zurück-Knopfs.
+    React.createElement(Brotkrume, { palette, t, view: 'notfalldossier', onNavigate }),
     React.createElement('div', {
       style: {
         background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,

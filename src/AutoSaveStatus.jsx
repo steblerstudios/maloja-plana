@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { text, weight, ease, duration } from './config/tokens.js';
+import { text, weight, ease, duration, radius } from './config/tokens.js';
 import { hinweisZeichen } from './IconKern.jsx';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, fremdGeaendert }) => {
@@ -25,7 +25,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError, frem
       bottom: '16px',
       right: '16px',
       padding: '6px 12px',
-      borderRadius: '4px',
+      borderRadius: radius.xs,
       fontSize: text.sm,
       fontWeight: weight.medium,
       color: saveError ? (palette.roseDeep || palette.rose) : palette.mid,
