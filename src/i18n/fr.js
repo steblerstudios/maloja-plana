@@ -4720,6 +4720,7 @@ export default {
     intro: 'Ce que la loi exige — et ce qui vaut la peine en plus.',
     pflichtTitle: 'Obligatoire',
     pflichtNote: 'Exigé par la loi.',
+    bvgUnklar: 'Caisse de pension : obligatoire dès un salaire annuel brut de CHF {schwelle}. Aucun salaire brut n’est saisi — le certificat de salaire indique si elle s’applique ici.',
     empfohlenTitle: 'Recommandé',
     empfohlenNote: 'Facultatif, mais utile.',
     kk: 'Assurance-maladie',

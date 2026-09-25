@@ -5315,6 +5315,7 @@ export default {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',
     pflichtNote: 'Prescrit da la lescha.',
+    bvgUnklar: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. I n’è betg registrada ina paja bruta — il certificat da salari mussa sch’ella vala qua.', // TODO(rm): provisorisch
     empfohlenTitle: 'Recumandà',
     empfohlenNote: 'Facultativ, ma sensà.',
     kk: 'Assicuranza da malsauns',

@@ -11,7 +11,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
-import { jahreseinkommenFuerSchild } from './data/schutzschild.js';
+import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
@@ -1579,8 +1579,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     chapter.key === 'versicherungen' &&
       React.createElement(Schutzschild, {
         palette, t, versicherungen: data,
-        employed: allData?.finanzen?.employmentType === 'employed',
-        annualIncome: jahreseinkommenFuerSchild(allData?.finanzen),
+        ...schildOptionen(allData),
       }),
 
     // ─── Contextual orientation hints (Helvetia layer) ──────

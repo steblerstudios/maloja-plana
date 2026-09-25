@@ -3,6 +3,7 @@ import { schildState } from '../data/schutzschild.js';
 import { shieldPath } from './shieldShape.js';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
 import { hinweisZeichen } from '../IconSystem.jsx';
+import { zahl } from '../utils/geld.js';
 
 // Versicherungs-Schutzschild: zwei Wappen nebeneinander — „Pflicht" (gesetzlich)
 // und „Empfohlen" (freiwillig). Jedes füllt sich nach seinem Deckungsgrad, mit
@@ -32,8 +33,8 @@ const shieldSvg = (palette, group, clipId, label) => {
   );
 };
 
-export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome }) => {
-  const st = schildState(versicherungen || {}, { employed, annualIncome });
+export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, lohnBasis }) => {
+  const st = schildState(versicherungen || {}, { employed, annualIncome, lohnBasis });
   if (!st.touched) return null;
   const h = React.createElement;
 
@@ -66,7 +67,10 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
     h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.lg + 'px', alignItems: 'flex-start' } },
       groupBlock(st.pflicht, 'pflichtTitle', 'schild-pflicht', t('schutzschild.pflichtNote')),
       groupBlock(st.empfohlen, 'empfohlenTitle', 'schild-empfohlen', t('schutzschild.empfohlenNote'))
-    )
+    ),
+    // Pensionskasse: Pflicht ab Bruttolohn-Schwelle; erfasst ist kein Bruttolohn → offen, nicht still weg.
+    st.bvgUnklar && h('p', { style: { fontSize: text.xs, color: palette.mid, margin: space.md + 'px 0 0', lineHeight: leading.normal, textAlign: 'center' } },
+      hinweisZeichen(), t('schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) }))
   );
 };
 

@@ -4697,6 +4697,7 @@ export default {
     intro: 'Ciò che la legge richiede — e ciò che conviene avere in più.',
     pflichtTitle: 'Obbligatorio',
     pflichtNote: 'Prescritto dalla legge.',
+    bvgUnklar: 'Cassa pensioni: obbligatoria da un salario annuo lordo di CHF {schwelle}. Non è registrato un salario lordo — il certificato di salario indica se vale qui.',
     empfohlenTitle: 'Consigliato',
     empfohlenNote: 'Facoltativo, ma sensato.',
     kk: 'Assicurazione malattia',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { schildState, jahreseinkommenFuerSchild } from '../data/schutzschild.js';
+import { schildState, schildOptionen } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
@@ -70,10 +70,7 @@ const miniShield = (palette, fraction) => {
 export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
-  const shield = schildState(v, {
-    employed: data?.finanzen?.employmentType === 'employed',
-    annualIncome: jahreseinkommenFuerSchild(data?.finanzen),
-  });
+  const shield = schildState(v, schildOptionen(data));
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
   // Kompass-Peilung: Leistungszahl wie im Schnellcheck (gleiche Gates, gleiche Engine).

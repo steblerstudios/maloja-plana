@@ -4720,6 +4720,7 @@ export default {
     intro: 'What the law requires — and what else is worth having.',
     pflichtTitle: 'Required',
     pflichtNote: 'Mandatory by law.',
+    bvgUnklar: 'Pension fund: mandatory from a gross annual salary of CHF {schwelle}. No gross salary is recorded — the salary certificate shows whether it applies here.',
     empfohlenTitle: 'Recommended',
     empfohlenNote: 'Optional, but sensible.',
     kk: 'Health insurance',

@@ -4752,6 +4752,7 @@ export default {
     intro: 'Was das Gesetz verlangt — und was sich zusätzlich lohnt.',
     pflichtTitle: 'Pflicht',
     pflichtNote: 'Gesetzlich vorgeschrieben.',
+    bvgUnklar: 'Pensionskasse: Pflicht ab einem Bruttojahreslohn von CHF {schwelle}. Erfasst ist kein Bruttolohn — ob sie hier dazugehört, zeigt der Lohnausweis.',
     empfohlenTitle: 'Empfohlen',
     empfohlenNote: 'Freiwillig, aber sinnvoll.',
     kk: 'Krankenversicherung',
