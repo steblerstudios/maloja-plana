@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icons from '../IconKern.jsx';
+import { PageTitle } from './Heading.jsx';
 import { text, weight, radius, ease, duration } from '../config/tokens.js';
 import { LIGHT_PALETTE, applyColorBlind } from '../config/constants.js';
 import { astFarben } from '../utils/lebensbereichFruechte.js';
@@ -12,11 +13,13 @@ import landschaft from '../assets/berge/landschaft.webp?url';
 // Die Passstrasse steigt in Kehren von unten rechts nach oben links; die Kapitel sitzen der
 // Reihe nach auf ihr — Basis unten, Notfall oben.
 const BILD = { w: 1100, h: 788 };
-// Breit: fast das ganze Bild (oben etwas Himmel weg). Schmal: nur das Strassennetz, damit die
-// Stationen am Handy weit genug auseinanderliegen.
+// Breit: das ganze Bild — seit dem Hero (25.09.2026) mit dem ganzen Himmel, in dem der Titel
+// steht. Schmal: das Strassennetz, damit die Stationen am Handy weit genug auseinanderliegen,
+// nach oben erweitert bis in die blassen Gipfel (Platz für den Titel). Die Breite und damit
+// der Massstab bleiben gleich — Stationen und Etiketten liegen zueinander wie zuvor.
 export const AUSSCHNITT = {
-  breit: { x: 0, y: 80, w: 1100, h: 708 },
-  schmal: { x: 110, y: 370, w: 490, h: 340 },
+  breit: { x: 0, y: 0, w: 1100, h: 788 },
+  schmal: { x: 110, y: 130, w: 490, h: 580 },
 };
 export const SCHMAL_AB = 520; // px Breite des Rahmens
 
@@ -97,7 +100,7 @@ export const mitKontrast = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, fortschrittText, prozent }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschrittText, prozent }) => {
   const rahmen = useRef(null);
   const [schmal, setSchmal] = useState(false);
   const [bildFehlt, setBildFehlt] = useState(false);
@@ -122,7 +125,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     'data-tour': 'berge',
     ref: rahmen,
     style: {
-      margin: '20px -8px 28px -8px', position: 'relative', lineHeight: 0,
+      margin: '8px -8px 24px -8px', position: 'relative', lineHeight: 0,
       aspectRatio: `${a.w} / ${a.h}`,
       borderRadius: radius.md, overflow: 'hidden',
       // Ladezustand und Fehlerfall: eine ruhige Fläche in Bildgrösse, nichts springt.
@@ -189,6 +192,21 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
       ),
     ),
+    // Der Anspruch als Titel im Himmel (Hero, seit 25.09.2026). Mittig, weil links oben der
+    // dunkle Hang ins Bild ragt. Dunkler Text der hellen Palette auf hellem Himmel und blassen
+    // Gipfeln; ein heller Schein dahinter hält ihn lesbar, wo er einen Gipfel streift — keine
+    // Deckkraft auf dem Text (K41).
+    titel && React.createElement(PageTitle, {
+      palette: p,
+      'data-testid': 'berg-titel',
+      style: {
+        position: 'absolute', top: schmal ? '14px' : '22px', left: '50%', transform: 'translateX(-50%)',
+        width: schmal ? '88%' : '84%', textAlign: 'center',
+        fontSize: schmal ? '24px' : '30px', lineHeight: 1.15, letterSpacing: '-0.3px',
+        color: p.text, textShadow: `0 0 14px ${p.surface}, 0 0 4px ${p.surface}`,
+        textWrap: 'balance',
+      },
+    }, titel),
     // Fortschritt im Bild, unten (seit 25.09.2026, vorher eine Zeile über dem Bild): links der
     // Stand («7 von 7 begonnen»), rechts die Prozentzahl. Am Handy (< SCHMAL_AB) liegt unten
     // rechts die Station Finanzen — dort rückt die Prozentzahl direkt neben den Stand (gemessen

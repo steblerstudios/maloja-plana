@@ -244,3 +244,21 @@ describe('Berge · Fortschritt im Bild', () => {
     expect(block).not.toMatch(/opacity/);
   });
 });
+
+// Seit 25.09.2026 ist die Landschaft der Hero und trägt den Anspruch als Titel im Himmel.
+// Gemessen im Browser an den Bildpunkten hinter dem Text (320–736 px): schlechtester Punkt
+// 3,2:1, grosse fette Schrift braucht 3:1 (WCAG 1.4.3). Das gilt nur, solange der Text selbst
+// voll deckt — darum hier: keine Deckkraft am Titel, dunkler Text der hellen Palette.
+describe('Berge · Titel im Himmel', () => {
+  it('der Titel trägt keine Deckkraft und die Textfarbe der hellen Palette', () => {
+    const block = src.slice(src.indexOf("'data-testid': 'berg-titel'"), src.indexOf('}, titel)'));
+    expect(block.length).toBeGreaterThan(100);
+    expect(block).toContain('color: p.text');
+    expect(block).not.toMatch(/opacity/);
+  });
+
+  it('die Ausschnitte reichen oben in den Himmel (breit) bzw. in die Gipfel (schmal)', () => {
+    expect(AUSSCHNITT.breit.y).toBe(0);
+    expect(AUSSCHNITT.schmal.y).toBeLessThanOrEqual(130);
+  });
+});
