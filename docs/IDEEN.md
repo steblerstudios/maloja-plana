@@ -54,7 +54,8 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 | Entscheid | § | Warum jetzt |
 |---|---|---|
 | Kern: Ordner oder Ereignisse · zusammen mit der Kapitel-Architektur und der App-Struktur | §0, §6 | davon hängt ab, wie der ganze Winter gebaut wird |
-| Gamification: House of Life gegenüber Grundstück-Blatt | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
+| Gamification: House of Life gegenüber Grundstück-Blatt · dazu die **Berg-Bilder bei 20–100 %** auf dem Dashboard (§15) | §1, §2 | davon hängt die ganze Spalte «irgendwann/Welt» ab |
+| UI/UX aus den Runden 3–5: **Löschen ohne Rückgängig** (15 Knöpfe) · **Ladehinweis** beim Nachladen — *vor Oktober ansehen* · ~~zwei Zurück-Knöpfe~~ ✅ Brotkrume (25.09.) | §15 | der Dokumenten-Tresor löscht endgültig — der einzige Weg zu Datenverlust ohne Netz |
 | Baum oder Obstgarten · zwei Bäume verschmelzen | §2 | braucht nur ein Mockup, kein Bau |
 | Sechs Meinungs-Entscheide (E4), vor allem Preis/Paywall | §11 | Preis bestimmt, was Maloja nach aussen verspricht |
 | Bottom-Nav oder Hamburger | §6 | gehört zur Kapitel-Frage |
@@ -434,6 +435,52 @@ heute nur verlinkt (Ressourcen), nicht angebunden.
   FAQ `a1`/`a3`, CSP). Solche Bausteine immer zusammen mit Rechts- und Sicherheits-Prüfer planen.
 
 ---
+
+## 15 · UI/UX-Entscheide aus den Runden 3–5 (25.09.2026)
+
+*Was in den Runden 3–5 (#332, #336, #341, #364) ein **Fehler** war, ist gebaut und live. Hier
+stehen nur die **Gestaltungsfragen**, die übrig blieben — je mit Befund am Code, Varianten
+und einem Vorschlag von Claude. Die **vier «hier anfangen»-Blöcke** stehen nicht hier, sondern
+oben in der Zeile «Dashboard entschlacken» (Codex-Audit, #363) — dieselbe Frage, ein Ort.*
+
+**Löschen ohne Rückgängig.** 15 Knöpfe in 12 Bereichen löschen sofort und ohne Nachfrage (am Code nachgezählt 25.09.): Dokumente im Tresor
+(`DocumentTresor` → `main.jsx`, **endgültig** aus dem Gerätespeicher), Kalender, KVG-Belege,
+Merkliste, Schulden (3×), Jobs, Sprachen, Säule 3a, Einzelposten, Ärzt:innen, Medikamente (2×),
+Erkrankungen. Ein «Rückgängig» gibt es nirgends (die Treffer für «rückgängig» sind Abhaken und Kommentare). Die ruhige Vorlage für Schweres existiert
+(`components/DatenLoeschen.jsx`: erklären, ankreuzen, bestätigen).
+- A · **Nachfrage** vor jedem Löschen — sicher, aber elf neue Dialoge.
+- B · **Sofort löschen, «Entfernt · Rückgängig»** einige Sekunden lang — ruhig, kein Dialog.
+- C · **Mischform:** B für Listen-Einträge, A nur beim Tresor (dort ist die Datei weg).
+- *Vorschlag: C.* Aufwand B: S (ein gemeinsamer Hinweis-Baustein); Tresor: M (das Löschen im
+  Gerätespeicher muss bis zum Ablauf des Hinweises warten).
+
+**Zwei Zurück-Knöpfe.** In Lebensmappe, Behörden-Dossier, Notfall-Dossier, Briefe und
+Notfallpass steht oben «Übersicht» (global, `main.jsx`) **und** ein eigener Knopf «Zurück zu
+Meine Unterlagen» bzw. «Zurück zum Notfall» — zwei Wege mit verschiedenem Ziel.
+- A · den globalen Knopf dort ausblenden · B · beide zu einer **Brotkrume** zusammenfassen
+  («Übersicht › Meine Unterlagen › Dossier») · C · lassen.
+- ✅ **Entschieden 25.09.2026 (Stebler Studios): B, die Brotkrume.** Wird gebaut (eigener PR),
+  unabhängig von «Bottom-Nav oder Hamburger».
+
+**Ladehinweis beim Nachladen.** Sechs Teile in den Kapiteln (Ärzt:innen, Säule 3a, Medikamente,
+Sprachen, Erkrankungen, Jobs) und die Einstellungs-Schublade zeigen beim ersten Öffnen kurz
+**nichts** (`fallback: null`). Der vorhandene `CalmLoader` hat 160 px Mindesthöhe und keine
+Verzögerung — er würde bei kurzem Laden als grosser Block aufblitzen.
+- A · lassen · B · kleiner Platzhalter mit fester Höhe, **erst nach ~300 ms** sichtbar.
+- *Vorschlag: A, bis es jemand bemerkt.* Die Ladezeit auf einem langsamen Handy ist **nicht
+  gemessen** — erst messen, dann bauen.
+
+**Berg-Bilder bei 20–100 %.** Am Fortschritts-Berg erscheinen je nach Ausfüllgrad Tannen,
+Edelweiss, Gipfelkreuz, Matterhorn, Kuh, Uhr, Schoggi, Sonne, Fahne (`Dashboard.jsx`, ~Z. 612–680). Dezent
+(keine Einblendung, kein Ton) — aber strukturell «mehr ausgefüllt = mehr Belohnung».
+- A · behalten · B · auf 2–3 Stufen reduzieren · C · weglassen · D · als abschaltbare «Haut».
+- *Vorschlag:* folgt aus dem Gamification-Entscheid oben — «keine Gamification» → C,
+  «abschaltbare Haut» → D.
+
+**Kleinkram ohne Eile** (Token-Hygiene, bewusst nicht angefasst, weil sichtbar): `radius.pill`
+gibt es nicht — 4 Stellen fallen seit jeher auf 10 px zurück, ein echter Pillen-Radius würde das
+Aussehen ändern · 13× `text.xs - 1` / `text.body + 1` statt einer Skalenstufe · 16 verschiedene
+Deckkraft-Suffixe ohne Token.
 
 ## Nächste Schritte (gemeinsam gewählt)
 
