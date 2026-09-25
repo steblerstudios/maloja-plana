@@ -196,6 +196,15 @@ describe('Berge · Wegstücke verbinden die Stationen', () => {
     const xs = zahlen(WEGSTUECKE[3]).filter((_, k) => k % 2 === 0 && _ > 205);
     expect(Math.min(...xs)).toBeLessThanOrEqual(335);
   });
+  it('von Wohnen führt EINE Linie bis zur Tanne (kein abgesetztes Stückchen dazwischen)', () => {
+    const teile = WEGSTUECKE[1].split('M').filter(Boolean).map((t) => zahlen('M' + t));
+    const vorDerTanne = teile.filter((z) => z[0] < 420);
+    expect(vorDerTanne).toHaveLength(1);
+  });
+  it('zwischen Tanne und Behörden liegt der Weg auf der Fahrbahnmitte, nicht am oberen Rand', () => {
+    const z = zahlen(WEGSTUECKE[3]);
+    for (let k = 0; k < z.length; k += 2) if (z[k] >= 325 && z[k] <= 370) expect(z[k + 1], `x ${z[k]}`).toBeGreaterThan(600);
+  });
   it('das Stück unten in der U-Kurve zwischen den Tannen ist da', () => {
     expect(zahlen(WEGSTUECKE[1]).some((v, k, z) => k % 2 === 0 && v > 420 && v < 470 && z[k + 1] > 715)).toBe(true);
   });
