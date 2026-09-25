@@ -1,4 +1,5 @@
 import { BVG_PARAMS } from './ahvRechner.js';
+import { hauptlohnMonate } from '../utils/dreizehnter.js';
 
 // Reine Logik für den Versicherungs-Schutzschild — kein React, damit testbar.
 // ZWEI Schilde, weil das Gesetz zwei Dinge unterscheidet:
@@ -13,6 +14,17 @@ import { BVG_PARAMS } from './ahvRechner.js';
 // Eine offene Absicherung ist ein ruhiger Hinweis, kein Alarm.
 //
 // v = data.versicherungen; opts = { employed, annualIncome }
+//
+// Das Jahreseinkommen für die BVG-Eintrittsschwelle — für beide Aufrufer (Kapitel Versicherungen,
+// Instrumente-Panel) nur hier. Die Schwelle misst den AHV-Jahreslohn, der 13. Monatslohn gehört
+// dazu (BVG Art. 7 Abs. 2 i. V. m. AHVG Art. 5 Abs. 2): dieselbe Regel wie Steuer und IPV
+// (utils/dreizehnter.js). Vorher ×12 — mit 13. knapp unter der Schwelle fiel die BVG-Pflicht weg.
+// ⚠️ Offen, bewusst nicht hier gelöst: die Schwelle ist BRUTTO, `monthlyIncome` oft netto
+// (incomeType). Netto liegt tiefer — über der Schwelle ist die Pflicht damit sicher, knapp
+// darunter nicht auszuschliessen.
+export function jahreseinkommenFuerSchild(finanzen = {}) {
+  return (Number(finanzen?.monthlyIncome) || 0) * hauptlohnMonate(finanzen?.dreizehnter);
+}
 const has = (x) => x != null && String(x).trim() !== '';
 
 function groupStat(list) {

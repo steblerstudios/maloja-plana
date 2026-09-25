@@ -1,5 +1,5 @@
 import React from 'react';
-import { schildState } from '../data/schutzschild.js';
+import { schildState, jahreseinkommenFuerSchild } from '../data/schutzschild.js';
 import { reserveTankState } from '../data/reserveTank.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
@@ -72,7 +72,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   const v = data?.versicherungen || {};
   const shield = schildState(v, {
     employed: data?.finanzen?.employmentType === 'employed',
-    annualIncome: (Number(data?.finanzen?.monthlyIncome) || 0) * 12,
+    annualIncome: jahreseinkommenFuerSchild(data?.finanzen),
   });
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
