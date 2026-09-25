@@ -98,9 +98,14 @@ describe('K41 · Quell-Scan (BergLandschaft.jsx, mountain-label)', () => {
     expect(block).not.toMatch(/opacity:\s*maturity/);
   });
 
-  it('eine eigene, undurchsichtige Fläche trägt den Kontrast (background: palette.surface)', () => {
-    // Seit 25.09.2026 heisst die Palette dort `p` (immer die helle, das Bild bleibt hell).
-    expect(block).toMatch(/background:\s*(palette|p)\.surface/);
+  it('eine eigene, undurchsichtige Fläche trägt den Kontrast', () => {
+    // Seit 25.09.2026 (später am Tag) trägt das Etikett die Kapitelfarbe als Grund, weiss
+    // beschriftet: etikettGrund(farbe) dunkelt jede Farbe ab, bis Weiss ≥ 4.5:1 trägt — belegt
+    // in bergLandschaft.test.js für alle Kapitelfarben in allen vier Modi. Die Regel bleibt:
+    // eine eigene, volle Fläche, keine Deckkraft.
+    expect(block).toMatch(/background:\s*etikettGrund\(farbe\)/);
+    expect(block).toMatch(/color:\s*ETIKETT_SCHRIFT/);
+    expect(block).not.toMatch(/opacity/);
   });
 
   it('«noch nicht begonnen» bleibt über Form erkennbar (fontStyle, nicht nur Farbe)', () => {
