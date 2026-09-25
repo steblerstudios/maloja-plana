@@ -1241,8 +1241,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
           ] },
           // «Asyl & Migration» stand hier ein zweites Mal — dasselbe Ziel wie in
-          // «Lebensereignisse». Dort bleibt es: die Gruppe ist standardmässig offen
-          // (gi === 0) und «Bewilligung & Fristen» ist der richtige Nachbar.
+          // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
+          // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
           { label: t('dashboard.toolGroups.support'), items: [
             { label: t('lebenszustaende.pageTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
           ] },
@@ -1274,7 +1274,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         ];
         return React.createElement(React.Fragment, null,
           ...groups.map((g, gi) => React.createElement('details', {
-            key: 'tg-' + gi, open: gi === 0,
+            // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
+            // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
+            key: 'tg-' + gi,
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {

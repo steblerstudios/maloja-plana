@@ -24,8 +24,20 @@ export const GrundordnungFelder = ({ palette, fields, onSelectChapter }) => {
     lastChapter = f.chapterTitle;
     const IconFn = Icons[f.chapterKey];
     return React.createElement(React.Fragment, { key: f.key },
-      showHeader && React.createElement('div', {
-        style: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px' }
+      // Tester-Feedback 25.09.2026: nur die Felder waren anklickbar, die Kapitel-Kopfzeile
+      // nicht. Sie führt jetzt ins selbe Kapitel wie ihre Felder.
+      showHeader && React.createElement('button', {
+        type: 'button',
+        onClick: () => onSelectChapter(f.chapterIdx),
+        style: {
+          display: 'flex', alignItems: 'center', gap: '6px', width: '100%',
+          padding: '2px 8px 2px 0', background: 'none', border: 'none', borderRadius: radius.sm,
+          cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left',
+          fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px',
+          transition: `background ${duration.fast}ms ${ease}`,
+        },
+        onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+        onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
       },
         IconFn && React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', width: '14px', height: '14px', flexShrink: 0 } }, IconFn()),
         React.createElement('span', null, f.chapterTitle)

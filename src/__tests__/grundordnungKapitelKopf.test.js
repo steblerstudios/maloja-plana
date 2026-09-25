@@ -65,3 +65,31 @@ describe('Grundordnung · Kapitel-Kopfzeile', () => {
     expect(kopfIcons.length).toBe(kapitel);
   });
 });
+
+// ─────────────────────────────────────────────────────────────
+// Tester-Feedback 25.09.2026: «nur die Unterpunkte sind anklickbar (Vorname),
+// nicht die oberen wie Persönliche Basis». Die Zusage: jede Kapitel-Kopfzeile
+// ist ein Knopf und führt ins Kapitel ihrer Felder.
+// ─────────────────────────────────────────────────────────────
+describe('Grundordnung · Kapitel-Kopfzeile ist anklickbar', () => {
+  it('jede Kopfzeile ist ein <button> und öffnet ihr Kapitel', () => {
+    const aufrufe = [];
+    const knoten = GrundordnungFelder({ palette, fields, onSelectChapter: (i) => aufrufe.push(i) });
+    const koepfe = knoten.map((frag) => frag.props.children[0]).filter(Boolean);
+    const erwartet = [...new Map(fields.map((f) => [f.chapterTitle, f.chapterIdx])).values()];
+    expect(koepfe.length).toBe(erwartet.length);
+    expect(koepfe.length).toBeGreaterThan(1);
+    for (const kopf of koepfe) {
+      expect(kopf.type).toBe('button');
+      expect(kopf.props.type).toBe('button');
+      kopf.props.onClick();
+    }
+    expect(aufrufe).toEqual(erwartet);
+  });
+
+  it('als HTML: so viele Knöpfe wie Kopfzeilen plus Felder', () => {
+    const html = zeichne();
+    const kapitel = new Set(fields.map((f) => f.chapterTitle)).size;
+    expect((html.match(/<button/g) || []).length).toBe(fields.length + kapitel);
+  });
+});
