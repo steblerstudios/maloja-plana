@@ -129,7 +129,7 @@ export function ipvBernRechnen({ region, personen, me }) {
 //   Steuerdaten abweichen. Die App fragt den Zuzug nicht ab; der angezeigte Vorbehalt
 //   (`ipv.vorbehaltBE`) nennt diesen Personen deshalb ein Basisjahr, das für sie nicht gilt.
 //   (Befund Fachprüfung 23.09.2026, zweite Runde.)
-//   Näherung: korrigiertes Reineinkommen = Erwerbs-, Neben- und Renteneinkommen × 12 plus die
+//   Näherung: korrigiertes Reineinkommen = Hauptlohn × 12 (× 13 mit 13. Monatslohn), Neben- und Renteneinkommen × 12 plus die
 //   Säule-3a-Einzahlung (KKVV Art. 9 Abs. 2 i. V. m. dem Berechnungsschema, Ziffer 1.1).
 //   Amtlich zählt das Reineinkommen aus den Steuerdaten; es fehlen also die Berufsauslagen und
 //   die übrigen Aufrechnungen, und das Vermögen ist hier nur die Summe der erfassten Werte,

@@ -3,6 +3,7 @@
 // entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
 // unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
+import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 
@@ -368,6 +369,15 @@ export function calculateSozialhilfe(data) {
   };
 }
 
+// Das Jahreseinkommen der Muster-Kantone (und des IPV-Pegels, data/pegel.js — derselbe Wert,
+// sonst stünde der Pegel neben einer anderen Grenze-Rechnung).
+// 13. Monatslohn: dieselbe Regel wie im Steuerrechner und in den Kantonsmodulen (utils/dreizehnter.js),
+// nur für den Hauptlohn. Das Partnereinkommen bleibt ×12 — nach seinem 13. fragt die App nicht.
+export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
+  return Number(data?.finanzen?.monthlyIncome || 0) * hauptlohnMonate(data?.finanzen?.dreizehnter)
+    + (Number(data?.finanzen?.sideIncome || 0) + (hh.partnerIncome || 0)) * 12;
+}
+
 // Kantonale IPV-Berechnung — einkommensabhängig
 // Modell: linearer Abbau der Verbilligung zwischen 0 und maxIncome.
 // Bei Einkommen = 0 → voller Betrag, bei maxIncome → 0.
@@ -381,7 +391,17 @@ export function calculateSozialhilfe(data) {
 // in vielen Kantonen nachweislich falsch, docs/sources/ipv-kantone-2026.md, PR #161):
 // immer derselbe neutrale Hinweis, weder «wahrscheinlich» noch «nicht berechtigt», und
 // ohne cantonData (auch der Verfahrens-Hinweis je Kanton ist unbelegt).
+//   annahmen.ohneDreizehnten  wie im Steuerrechner (steuernFuerProfil): ein Betrag steht, der
+//                    Hauptlohn ist erfasst, die Frage nach dem 13. Monatslohn aber offen — gerechnet
+//                    ×12. Mit 13. läge das Einkommen 7,7 % höher und die Verbilligung tiefer.
 export function calculateIPV(data) {
+  const r = ipvRechnen(data);
+  if (!r.eligible) return r;
+  const ohneDreizehnten = Number(data.finanzen?.monthlyIncome) > 0 && dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
+  return { ...r, annahmen: { ohneDreizehnten } };
+}
+
+function ipvRechnen(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
   // K118: ohne (erkannten) Kanton ist der Anspruch UNBEKANNT, nicht 0. Dieselbe Form wie ein
@@ -390,7 +410,7 @@ export function calculateIPV(data) {
   if (!ipvData) return { eligible: false, belegt: false, amount: null, anspruchMoeglich: false, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const hh = getHouseholdInfo(data);
-  const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome) * 12;
+  const income = ipvJahreseinkommen(data, hh);
   const childrenCount = hh.childrenCount;
   // Junge Erwachsene 19–25 in Ausbildung haben in den meisten Kantonen eine
   // eigene (oft höhere) IPV-Kategorie. Die Kinderverbilligung hier gilt für

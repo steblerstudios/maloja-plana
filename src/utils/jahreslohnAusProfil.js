@@ -11,6 +11,8 @@
 //   hier als brutto und im Sozialhilfe-Rechner als netto — dieselbe leere Angabe, zwei Auslegungen
 //   (Predeploy-Gate 25.09.2026). Eine geratene Basis liegt in einem der Rechner immer falsch.
 
+import { hauptlohnMonate } from './dreizehnter.js';
+
 // Die eine Stelle, an der die Basis des Hauptlohns gelesen wird — ALV, EO, AHV/BVG und
 // Sozialhilfe fragen alle hier: 'brutto' | 'netto' | null (nicht gewählt).
 export const lohnBasis = (finanzen) =>
@@ -25,5 +27,5 @@ export function jahreslohnAusProfil(finanzen) {
   if (lohnBasis(finanzen) !== 'brutto') return '';
   const m = Number(finanzen?.monthlyIncome);
   if (!Number.isFinite(m) || m <= 0) return '';
-  return String(Math.round(m * (finanzen?.dreizehnter === 'yes' ? 13 : 12)));
+  return String(Math.round(m * hauptlohnMonate(finanzen?.dreizehnter)));
 }

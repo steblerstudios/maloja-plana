@@ -137,7 +137,7 @@ export function ipvAargauRechnen({ personen, me, praemien = null }) {
 //   Eigenes Alter unbekannt oder nicht sicher über 25 — junge Erwachsene werden nach
 //     § 9 Abs. 3 KVGG unter Umständen mit den Eltern eingestuft.
 //   Anspruchsjahr vorbei (Jahres-Riegel).
-//   Näherung: bereinigtes steuerbares Einkommen = Erwerbs-, Neben- und Renteneinkommen × 12
+//   Näherung: bereinigtes steuerbares Einkommen = Hauptlohn × 12 (× 13 mit 13. Monatslohn), Neben- und Renteneinkommen × 12
 //   plus die Säule-3a-Einzahlung (§ 6 Abs. 3 lit. b KVGG rechnet den Säule-3a-Abzug auf).
 //   Amtlich zählen die Steuerfaktoren des Steuerjahres 2023; es fehlen also die amtlichen
 //   Abzüge (Berufsauslagen, Versicherungs- und Sozialabzüge), und das Vermögen ist hier nur

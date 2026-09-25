@@ -22,6 +22,7 @@ import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
+import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 
 const HAUPTORTE = {
   AG: 'Aarau',
@@ -361,13 +362,8 @@ function direktKinderAbweichend(kinder, direktKinder) {
 // die Standardabzüge der ESTV nicht gemessen sind. «employed» und ohne Angabe: wie gemessen.
 export const ERWERBSART_OHNE_SCHAETZUNG = Object.freeze({ retired: 'rente', selfEmployed: 'selbstaendig', freelance: 'selbstaendig' });
 
-// R4: Frage «13. Monatslohn?» im Finanzen-Kapitel (Optionen yes/no). Dieselben Schreibweisen wie
-// hatDreizehnten()/dreizehnterAngegeben() in src/data/lohnCheck.js. Leer ist nicht «nein».
-export function dreizehnterStatus(v) {
-  if (v === true || v === 'yes' || v === 'ja') return 'ja';
-  if (v === false || v === 'no' || v === 'nein') return 'nein';
-  return 'offen';
-}
+// R4: Frage «13. Monatslohn?» — die Regel steht in src/utils/dreizehnter.js (auch die IPV liest sie).
+export { dreizehnterStatus };
 
 // R4: Wurde das Partnereinkommen beantwortet? ChapterView legt household.partnerIncome erst an,
 // wenn etwas eingetippt wird (Wert als Text); ein geleertes Feld ist ''. «0» ist eine Antwort.
@@ -395,7 +391,7 @@ export function steuerEingabenAusDaten(data = {}) {
   const dreizehnter = dreizehnterStatus(f.dreizehnter);
   return {
     kanton: steuerkantonVorbelegung(data),
-    nettolohnJahr: (Number(f.monthlyIncome) || 0) * (dreizehnter === 'ja' ? 13 : 12) + neben * 12,
+    nettolohnJahr: (Number(f.monthlyIncome) || 0) * hauptlohnMonate(f.dreizehnter) + neben * 12,
     dreizehnter,
     direktSteuerbar: data?.taxData?.useEnteredTaxable === false ? 0 : (Number(f.taxableIncome) || 0),
     einkommensart: f.incomeType === 'brutto' || (neben > 0 && f.sideIncomeType === 'brutto') ? 'brutto' : (f.incomeType || null),

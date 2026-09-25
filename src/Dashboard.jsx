@@ -13,6 +13,7 @@ import { aufklappZeichen } from './IconKern.jsx';
 import { ABLAEUFE } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { zahl, betrag } from './utils/geld.js';
+import { hauptlohnMonate } from './utils/dreizehnter.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -103,7 +104,8 @@ function buildSnippet(chapterKey, chData, allData, t) {
 
 export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
-  const annual = (Number(income) || 0) * 12;
+  // Mit dem 13. Monatslohn aus dem Profil — dieselbe Regel wie calculateIPV (utils/dreizehnter.js).
+  const annual = (Number(income) || 0) * hauptlohnMonate(data?.finanzen?.dreizehnter);
   const canton = data?.basis?.canton;
   const fmt = (v) => zahl(v, { hoechstens: 2 });
 
