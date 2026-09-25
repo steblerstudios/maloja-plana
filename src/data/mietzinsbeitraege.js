@@ -78,6 +78,9 @@ const PROGRAMS = {
         // Wohnungen»). Entscheid Stebler Studios 25.09.2026: der Rechner FRAGT danach (wohnen.wfgWohnung,
         // 'ja' | 'nein' | 'weissNicht'). «nein» → kein Anspruch; offen/«weiss nicht» → Hinweis beim Ergebnis.
         wfgFrage: true,
+        // Merkblatt Sept. 2025: zwischen 50'000 und 60'000 nur, wenn die Miete nach Verbilligung 25 %
+        // des Einkommens übersteigt. Die App kennt die Miete VOR Verbilligung → nur ein Hinweis.
+        mietbelastung: { ab: 50000, anteil: 0.25 },
         bedingungKey: 'mietzinsView.bedingung_ZG',
         noteKey: 'mietzinsView.cantonNote_ZG', stand: '2026',
         url: 'https://zg.ch/de/soziales/wohnungswesen/foerderinstrumente/fuer-privatpersonen' },
@@ -100,11 +103,16 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
     return h.offen ? null : bsObergrenze(h.personen, h.kinder);
   }
   let limit = program.incomeLimit;
-  if (program.incomePerChild) limit += program.incomePerChild * childrenCount;
+  // ZG: +2'500 je MINDERJÄHRIGES Kind; volljährige «Kinder» zählen als erwachsene Personen
+  // (Merkblatt Sept. 2025; Abschluss-Prüfung 25.09.2026 — vorher bekam jedes Kind +2'500 und
+  // nie +20'000, bis 17'500 zu streng). Ohne Altersangabe: minderjährig.
+  const volljaehrig = children ? children.filter((c) => Number(c?.age) >= 18).length : 0;
+  const minderjaehrig = childrenCount - volljaehrig;
+  if (program.incomePerChild) limit += program.incomePerChild * minderjaehrig;
   if (program.incomePerAdult) {
     // ZG-Regel: Basisgrenze gilt für zwei Erwachsene, Zuschlag erst ab der 3. Person
     // („Für mehr als zwei erwachsene Personen … +20'000 je weitere Person", ZG-Merkblatt).
-    const adults = Math.max(1, householdSize - childrenCount);
+    const adults = Math.max(1, householdSize - childrenCount) + volljaehrig;
     limit += program.incomePerAdult * Math.max(0, adults - 2);
   }
   return limit;

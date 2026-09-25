@@ -230,10 +230,12 @@ describe('Mietzinsbeiträge: Haushaltseinkommen', () => {
     expect(html).toContain('mietzinsView.result_incomeHigh');
     expect(html).not.toContain('mietzinsView.konkubinatPartner');
   });
-  it('Konkubinat: nicht eingerechnet, aber die Zahl mit Partnereinkommen genannt', async () => {
+  // Abschluss-Prüfung 25.09.2026: in BS zählt die zweite Person ohne Ehe (noch) nicht — Grenze ohne sie
+  // (1 Person, 51 750), die Zahlen mit ihr (Einkommen 60 000, Grenze 54 000) stehen im Hinweis.
+  it('Konkubinat: nicht eingerechnet, Grenze ohne die Person, beide Zahlen mit ihr genannt', async () => {
     const html = await render({ maritalStatus: 'cohabiting', adults: 2, partnerIncome: 2000 });
-    expect(html).toContain('mietzinsView.result_likely(36’000|54’000)');
-    expect(html).toContain('mietzinsView.konkubinatPartner(60’000)');
+    expect(html).toContain('mietzinsView.result_likely(36’000|51’750)');
+    expect(html).toContain('mietzinsView.konkubinatPartnerGrenze(60’000|54’000)');
   });
 });
 
@@ -397,5 +399,45 @@ describe('Mietzinsbeiträge BS: Frage «in Erstausbildung?»', () => {
     const finde = (n) => { if (!n || typeof n !== 'object') return null; if (Array.isArray(n)) { for (const c of n) { const r = finde(c); if (r) return r; } return null; } if (n.props?.id === 'mz-ausb-1') return n; for (const c of [].concat(n.props?.children || [])) { const r = finde(c); if (r) return r; } return null; };
     finde(el).props.onChange({ target: { value: 'ja' } });
     expect(aufrufe).toEqual([['basis', 'household', { adults: 1, children: [{ age: 5 }, { age: 20, name: 'Lea', erstausbildung: 'ja' }] }]]);
+  });
+});
+
+// Abschluss-Prüfung (swiss-precision) 25.09.2026 — die «sollte»-Punkte als Regeln.
+describe('Abschluss-Prüfung #388', () => {
+  const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const render = async (canton, basis, finanzen = {}, wohnen = {}) => {
+    const { MietzinsOrientierung } = await import('../../MietzinsOrientierung.jsx');
+    const data = { basis: { canton, maritalStatus: 'single', household: { adults: 1, children: [] }, ...basis }, finanzen: { monthlyIncome: 3000, dreizehnter: NEIN, ...finanzen }, wohnen: { rentAmount: 1200, ...wohnen } };
+    return renderToStaticMarkup(React.createElement(MietzinsOrientierung, { palette, t, data }));
+  };
+  it('zweite Person mit Einkommen ohne Zivilstand: Hinweis, nicht still weg', async () => {
+    const html = await render('ZG', { maritalStatus: '', household: { adults: 2, children: [], partnerIncome: '1500' } });
+    expect(html).toContain('mietzinsView.konkubinatPartner(54’000)');
+  });
+  it('verheiratet ohne Angabe zum Partnereinkommen: Annahme sichtbar; mit Angabe nicht', async () => {
+    expect(await render('ZG', { maritalStatus: 'married', household: { adults: 2, children: [] } })).toContain('mietzinsView.partnerOffen');
+    expect(await render('ZG', { maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '0' } })).not.toContain('mietzinsView.partnerOffen');
+  });
+  it('ZG: volljähriges Kind zählt als erwachsene Person (nicht +2 500)', async () => {
+    const { getMietzinsbeitraege, mietzinsIncomeLimit } = await import('../../data/mietzinsbeitraege.js');
+    const zg = getMietzinsbeitraege('ZG');
+    // 2 Erwachsene + 1 Kind (20): 3 Erwachsene → 60 000 + 20 000
+    expect(mietzinsIncomeLimit(zg, 3, 1, [{ age: 20 }])).toBe(80000);
+    expect(mietzinsIncomeLimit(zg, 3, 1, [{ age: 5 }])).toBe(62500);
+  });
+  it('ZG 50–60 000 mit tiefer Miete: Hinweis Mietbelastung', async () => {
+    expect(await render('ZG', {}, { monthlyIncome: 4500 }, { rentAmount: 900 })).toContain('mietzinsView.mietbelastungZG');
+    expect(await render('ZG', {}, { monthlyIncome: 3000 }, { rentAmount: 900 })).not.toContain('mietzinsView.mietbelastungZG');
+  });
+  it('Schutzschild: brutto, 13. offen, erst ×13 über der Schwelle → offen mit eigenem Grund', async () => {
+    const { schildState, schildOptionen } = await import('../../data/schutzschild.js');
+    const { BVG_PARAMS } = await import('../../data/ahvRechner.js');
+    const m = BVG_PARAMS.eintrittsschwelle / 12.5;
+    const st = schildState({ kkInsurer: 'X' }, schildOptionen({ finanzen: { employmentType: 'employed', monthlyIncome: m, incomeType: 'brutto' } }));
+    expect(st.bvgUnklar).toBe(true);
+    expect(st.bvgUnklarGrund).toBe('dreizehnter');
+    const nein = schildState({ kkInsurer: 'X' }, schildOptionen({ finanzen: { employmentType: 'employed', monthlyIncome: m, incomeType: 'brutto', dreizehnter: 'no' } }));
+    expect(nein.bvgUnklar).toBe(false);
   });
 });

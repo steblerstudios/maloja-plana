@@ -13,6 +13,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
 import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
+import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -50,14 +51,24 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const eigenesJahr = Math.round(monthlyIncome * hauptlohnMonate(data?.finanzen?.dreizehnter)
     + (parseFloat(data?.finanzen?.sideIncome) || 0) * 12);
   const annualIncome = eigenesJahr + (partnerZaehlt ? Math.round(partnerMonat * 12) : 0);
-  const konkubinatMitPartner = !partnerZaehlt && data?.basis?.maritalStatus === 'cohabiting' && partnerMonat > 0
+  // Nicht verheiratet, aber eine zweite Person mit Einkommen im Haushalt (Konkubinat, ohne Zivilstand,
+  // Wohngemeinschaft): nicht eingerechnet, die Zahl mit ihr steht daneben (Abschluss-Prüfung 25.09.2026 —
+  // vorher nur bei «cohabiting», sonst fiel sie still weg).
+  const konkubinatMitPartner = !partnerZaehlt && partnerMonat > 0
     ? eigenesJahr + Math.round(partnerMonat * 12) : null;
+  // Verheiratet, Partnereinkommen nicht beantwortet: gerechnet ohne — wie «Alleinverdiener» bei der Steuer.
+  const partnerRoh = partnerEinkommenRoh(data?.basis);
+  const partnerOffen = partnerZaehlt && (partnerRoh === undefined || partnerRoh === null || String(partnerRoh).trim() === '');
   const ohneDreizehnten = monthlyIncome > 0 && dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen';
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
-  const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount, hh.children || []) : null;
+  // BS ohne Ehe: die zweite erwachsene Person gehört (noch) nicht zur Haushaltseinheit — Grenze ohne sie,
+  // passend zum Einkommen ohne sie; die Grenze mit ihr nennt der Hinweis (vorher bis 2'250 zu grosszügig).
+  const ohneZweitePerson = info?.limitFormel === 'bs' && !partnerZaehlt && (hh.adults || 1) >= 2 ? 1 : 0;
+  const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize - ohneZweitePerson, childrenCount, hh.children || []) : null;
+  const grenzeMitPartner = ohneZweitePerson && hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount, hh.children || []) : null;
   // BS: jemand zwischen 18 und 24 im Haushalt — ob in Erstausbildung, entscheidet, ob er zählt.
-  const bsJungOffen = info?.limitFormel === 'bs' && bsHaushalt(householdSize - childrenCount, hh.children || []).offen;
+  const bsJungOffen = info?.limitFormel === 'bs' && bsHaushalt(householdSize - ohneZweitePerson - childrenCount, hh.children || []).offen;
 
   // ZG: gilt nur für WFG-Wohnungen — die Antwort steht in wohnen.wfgWohnung (Frage unten im Schnellcheck).
   const wfg = data?.wohnen?.wfgWohnung;
@@ -160,9 +171,17 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         // der Lohn, mit dem hier gerechnet wird. Knapp über der Grenze kann es reichen.
         assessment && assessment.key === 'incomeHigh' && info.einkommensBasis && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t(info.einkommensBasis === 'steuerbar' ? 'mietzinsView.steuerbarTiefer' : 'mietzinsView.massgebendTiefer')),
-        // Konkubinat: ob das Partnereinkommen zählt, entscheidet die Stelle — die Zahl mit ihm steht daneben.
+        // Ohne Ehe: ob das Einkommen der zweiten Person zählt, entscheidet die Stelle — die Zahlen mit ihr stehen daneben.
         assessment && (assessment.key === 'likely' || assessment.key === 'incomeHigh') && konkubinatMitPartner != null && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),
+          hinweisZeichen(), grenzeMitPartner != null
+            ? t('mietzinsView.konkubinatPartnerGrenze', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }), grenze: zahl(grenzeMitPartner, { hoechstens: 2 }) })
+            : t('mietzinsView.konkubinatPartner', { mit: zahl(konkubinatMitPartner, { hoechstens: 2 }) })),
+        // Verheiratet ohne Angabe zum Partnereinkommen: gerechnet ohne — sichtbar.
+        assessment && assessment.key === 'likely' && partnerOffen && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.partnerOffen')),
+        // ZG 50'000–60'000: nur bei Mietbelastung über 25 % (nach Verbilligung) — hier nur mit Miete vor Verbilligung prüfbar.
+        assessment && assessment.key === 'likely' && info.mietbelastung && annualIncome > info.mietbelastung.ab && rentMonthly * 12 <= info.mietbelastung.anteil * annualIncome && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
+          hinweisZeichen(), t('mietzinsView.mietbelastungZG')),
         React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
         rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },

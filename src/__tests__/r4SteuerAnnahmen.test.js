@@ -42,8 +42,10 @@ const { getBehoerdenDossierPreview, generateBehoerdenJSON } = await import('../d
 const { renderToStaticMarkup } = await import('react-dom/server');
 const React = (await import('react')).default;
 const {
-  steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, dreizehnterStatus,
+  steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil,
 } = await import('../data/kantonaleSteuerdaten.js');
+// Die Regel steht seit 25.09.2026 in utils/dreizehnter.js (eine Quelle für Steuer, IPV, EO).
+const { dreizehnterStatus } = await import('../utils/dreizehnter.js');
 
 const lies = (datei) => JSON.parse(readFileSync(new URL('../../docs/sources/' + datei, import.meta.url), 'utf-8'));
 const abzuege = lies('nettolohn-abzuege-2026.messpunkte.json');

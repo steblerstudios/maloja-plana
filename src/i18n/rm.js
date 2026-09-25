@@ -5160,7 +5160,10 @@ export default {
     result_municipalLimit: 'Qua na datti nagin limit fix d’entradas: el vegn quintà per chasada (basegn da viver, premia da la cassa da malsauns, fitg, tgira d’uffants) e fixà da la vischnanca da domicil. Sch’i dat in dretg, scleresch la vischnanca.', // TODO(rm): provisorisch
     steuerbarTiefer: 'Il chantun cumpareglia las entradas taxablas da la davosa taxaziun — suenter las deducziuns èn ellas savens pli bassas ch’il salari net. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
     massgebendTiefer: 'Il chantun quinta cun l’entrada decisiva suenter las deducziuns (plus 10 % da la facultad sur la franchisa) — ella è savens pli bassa ch’il salari. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
-    konkubinatPartner: 'En il concubinat quinta l’entrada da la persuna partenaria tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
+    konkubinatPartner: 'L’entrada da la segunda persuna creschida n’è betg quintada: senza matrimoni quinta ella tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
+    konkubinatPartnerGrenze: 'L’entrada da la segunda persuna creschida n’è betg quintada ed il limit è quintà senza ella: senza matrimoni quinta ella a Basilea-Citad pir cun uffants cuminaivels u suenter tschintg onns da convivenza. Quintada, fiss l’entrada da la chasada CHF {mit} ed il limit var. CHF {grenze} — sch’ella quinta, scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    partnerOffen: 'Quintà senza l’entrada dal consort u da la consorta — l’indicaziun manca anc (chapitel Basa persunala, chasada). Cun ina entrada è l’entrada da la chasada pli auta.', // TODO(rm): provisorisch
+    mietbelastungZG: 'Tranter CHF 50’000 e 60’000 dat Zug mo ina contribuziun, sche la fittanza suenter la reducziun surpassa 25 % da l’entrada — qua è ella gia avant sut quai.', // TODO(rm): provisorisch
     basis: 'Basa: entrada CHF {income}/onn · fittanza CHF {rent}/mais · chasada {size} pers.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.' },
@@ -5177,7 +5180,7 @@ export default {
     rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
     cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
     cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
-    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza e onn, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
+    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
     cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF 60’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25 % da l’entrada. Facultad netta fin CHF 144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
@@ -5366,6 +5369,7 @@ export default {
     pflichtTitle: 'Obligatoric',
     pflichtNote: 'Prescrit da la lescha.',
     bvgUnklar: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. I n’è betg registrada ina paja bruta — il certificat da salari mussa sch’ella vala qua.', // TODO(rm): provisorisch
+    bvgUnklar13: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. Cun ina 13avla paja fiss la paja sura — l’indicaziun manca anc (chapitel Finanzas & daners).', // TODO(rm): provisorisch
     empfohlenTitle: 'Recumandà',
     empfohlenNote: 'Facultativ, ma sensà.',
     kk: 'Assicuranza da malsauns',

@@ -363,7 +363,6 @@ function direktKinderAbweichend(kinder, direktKinder) {
 export const ERWERBSART_OHNE_SCHAETZUNG = Object.freeze({ retired: 'rente', selfEmployed: 'selbstaendig', freelance: 'selbstaendig' });
 
 // R4: Frage «13. Monatslohn?» — die Regel steht in src/utils/dreizehnter.js (auch die IPV liest sie).
-export { dreizehnterStatus };
 
 // R4: Wurde das Partnereinkommen beantwortet? ChapterView legt household.partnerIncome erst an,
 // wenn etwas eingetippt wird (Wert als Text); ein geleertes Feld ist ''. «0» ist eine Antwort.

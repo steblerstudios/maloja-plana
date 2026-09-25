@@ -1,5 +1,5 @@
 import { BVG_PARAMS } from './ahvRechner.js';
-import { hauptlohnMonate } from '../utils/dreizehnter.js';
+import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { lohnBasis } from '../utils/jahreslohnAusProfil.js';
 
 // Reine Logik für den Versicherungs-Schutzschild — kein React, damit testbar.
@@ -32,6 +32,9 @@ export function schildOptionen(data = {}) {
   return {
     employed: data?.finanzen?.employmentType === 'employed',
     annualIncome: jahreseinkommenFuerSchild(data?.finanzen),
+    // 13. offen: ×12 gerechnet. Läge erst ×13 über der Schwelle, ist die Pflicht offen, nicht weg.
+    annualIncomeMit13: dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen'
+      ? (Number(data?.finanzen?.monthlyIncome) || 0) * 13 : null,
     lohnBasis: lohnBasis(data?.finanzen),
   };
 }
@@ -56,7 +59,11 @@ export function schildState(v = {}, opts = {}) {
   const bvgErfasst = has(v.bvgInsurer) || Number(v.bvgContribution) > 0 || Number(v.bvgBalance) > 0;
   // Unter der Schwelle, aber nicht als Brutto erfasst: ob die Pflicht besteht, ist offen (siehe oben).
   // Nicht als Lücke gezählt (keine falsche Lücke), aber benannt. Ist eine Kasse erfasst, erübrigt es sich.
-  const bvgUnklar = employed && !bvgPflicht && einkommen > 0 && opts.lohnBasis !== 'brutto' && !bvgErfasst;
+  const bvgUnklarBasis = employed && !bvgPflicht && einkommen > 0 && opts.lohnBasis !== 'brutto' && !bvgErfasst;
+  // Abschluss-Prüfung 25.09.2026: Brutto, 13. offen, ×12 knapp unter, ×13 über der Schwelle → offen.
+  const bvgUnklar13 = employed && !bvgPflicht && !bvgErfasst && Number(opts.annualIncomeMit13) >= BVG_PARAMS.eintrittsschwelle;
+  const bvgUnklar = bvgUnklarBasis || bvgUnklar13;
+  const bvgUnklarGrund = bvgUnklar13 && !bvgUnklarBasis ? 'dreizehnter' : bvgUnklarBasis ? 'basis' : null;
 
   const pflicht = groupStat([
     { key: 'kk', covered: has(v.kkInsurer), applicable: true },
@@ -78,5 +85,5 @@ export function schildState(v = {}, opts = {}) {
   const total = pflicht.total + empfohlen.total;
   const overall = { covered, total, fraction: total ? covered / total : 0 };
 
-  return { pflicht, empfohlen, overall, touched, bvgUnklar, bvgSchwelle: BVG_PARAMS.eintrittsschwelle };
+  return { pflicht, empfohlen, overall, touched, bvgUnklar, bvgUnklarGrund, bvgSchwelle: BVG_PARAMS.eintrittsschwelle };
 }

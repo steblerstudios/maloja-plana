@@ -33,8 +33,8 @@ const shieldSvg = (palette, group, clipId, label) => {
   );
 };
 
-export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, lohnBasis }) => {
-  const st = schildState(versicherungen || {}, { employed, annualIncome, lohnBasis });
+export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, annualIncomeMit13, lohnBasis }) => {
+  const st = schildState(versicherungen || {}, { employed, annualIncome, annualIncomeMit13, lohnBasis });
   if (!st.touched) return null;
   const h = React.createElement;
 
@@ -70,7 +70,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
     ),
     // Pensionskasse: Pflicht ab Bruttolohn-Schwelle; erfasst ist kein Bruttolohn → offen, nicht still weg.
     st.bvgUnklar && h('p', { style: { fontSize: text.xs, color: palette.mid, margin: space.md + 'px 0 0', lineHeight: leading.normal, textAlign: 'center' } },
-      hinweisZeichen(), t('schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) }))
+      hinweisZeichen(), t(st.bvgUnklarGrund === 'dreizehnter' ? 'schutzschild.bvgUnklar13' : 'schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) }))
   );
 };
 
