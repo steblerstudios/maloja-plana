@@ -316,9 +316,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       // Knapp über der Handy-Grenze (520–655 px) ist das Bild niedrig und Wohnen liegt nahe am
       // unteren linken Rand — dort kleinere Kreise (gemessen: sonst berührt «begonnen» Wohnen).
       const eng = !schmal && breite < 656;
-      // Breit, aber kleiner Massstab (Handy quer, kleines Tablet): unten links liegt Wohnen zu
-      // nah — dort stehen alle Kreise zusammen unten rechts (gemessen 568–844 px quer).
-      const alleRechts = !schmal && breite > 0 && breite / a.w < ENG_UNTER.breit;
+      // Breit, aber flach (Handy quer): dann liegt Wohnen so nah am unteren Rand, dass «begonnen»
+      // darauf läge — nur dann stehen alle Kreise zusammen unten rechts. Gemessen: Platz unter
+      // Wohnen ≥ ~118 px (Tablet, Desktop) reicht links, ≤ ~93 px (568–844 px quer) nicht.
+      const wohnen = STATIONEN.find((st) => st.key === 'wohnen');
+      const platzUnterWohnen = breite > 0 ? (a.y + a.h - wohnen.y) * (breite / a.w) : Infinity;
+      const alleRechts = !schmal && platzUnterWohnen < 105;
       const d = schmal ? 38 : eng ? 32 : 46;
       const kachel = {
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: eng ? '2px' : '3px',
