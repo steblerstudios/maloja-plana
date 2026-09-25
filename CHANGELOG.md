@@ -17,7 +17,7 @@ kommt der Changelog immer mit, nie doppelt.*
   je Kapitel eine aufklappbare Zeile mit den Grundordnungs-Feldern und «Öffnen». Am Handy
   stehen Titel, Balken und Status untereinander.
 - **Werkzeuge & Features: alle Gruppen starten eingeklappt**, auch «Lebensereignisse» (34 Einträge).
-- **Rundgang begrüsst mit «Maloja Plana»** statt «Maloja» (5 Sprachen, auch die Screenreader-Beschriftung).
+- **Rundgang begrüsst mit «Maloja Plana»** statt «Maloja» (5 Sprachen, auch die Screenreader-Beschriftung). Italienisch geschlechtsneutral: «Le diamo / Ti diamo il benvenuto» statt «Benvenuto».
 
 ## [0.1.40-beta] — 2026-09-24
 

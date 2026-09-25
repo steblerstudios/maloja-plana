@@ -250,12 +250,16 @@ Abschiedsagentur, plaant).
 - **Tester-Feedback vom 25.09.2026** (eine Testerin, Dashboard). Stand je Punkt:
   - ✅ **Kapitel anklickbar**: vorher waren nur die Felder («Vorname») Knöpfe, nicht
     «Persönliche Basis». Heute ist jede Kapitelzeile ein Knopf (s. nächster Punkt).
-    Offen: ein Feld öffnet das Kapitel, springt aber nicht zum Feld.
+    **→ Oktober:** ein Feld öffnet das Kapitel, springt aber nicht zum Feld (Tipp auf
+    «PLZ» → Kapitel Wohnen, oben). Gewünscht: hinscrollen + Fokus ins Feld. Gilt ebenso
+    für «Was ist jetzt dran? → … ergänzen». Kein bestehender Mechanismus, eigener Umbau.
   - ✅ **Werkzeuge: Lebensereignisse startet eingeklappt**, wie alle anderen Gruppen.
     Die Instrumente bleiben auf dem Dashboard (so gewünscht).
   - ✅/❓ **«Warum nicht *Willkommen bei Maloja Plana*?»**: Entscheid 25.09.: im Produkt
-    heisst es **«Maloja Plana»**. Der Rundgang begrüsst jetzt so (5 Sprachen). Offen:
-    ob auch über dem Claim auf dem Dashboard ein Gruss steht.
+    heisst es **«Maloja Plana»**. Der Rundgang begrüsst jetzt so (5 Sprachen; Italienisch
+    neu geschlechtsneutral «Le diamo / Ti diamo il benvenuto» statt «Benvenuto»).
+    **→ Oktober:** ob auch über dem Claim auf dem Dashboard ein Gruss steht (Vorschlag:
+    nur beim ersten Besuch, er kostet am Handy Platz über dem Berg).
   - ✅ **Fortschritt + Grundordnung sind eine Karte, von Anfang an sichtbar**: eine
     Zeile je Kapitel, aufklappbar, darin die Grundordnungs-Felder dieses Kapitels und
     «Öffnen». Der Abschnitt «Detaillierter Fortschritt» ist weg. Die Karte bleibt ein
