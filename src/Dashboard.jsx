@@ -913,13 +913,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           border: '1px solid ' + palette.sage + '25',
         }
       },
-        React.createElement('div', { style: { minWidth: 0 } },
+        React.createElement('div', { style: { minWidth: 0, display: 'flex', flexDirection: 'column' } },
           React.createElement('div', {
             style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
           }, reason + ' ' + t('dashboard.exportReminder')),
           React.createElement(PrimaryButton, {
             palette, onClick: () => onNavigate('export'),
-            style: { minHeight: '44px' },
+            style: { minHeight: '44px', alignSelf: 'flex-end' }, // rechtsbündig, 25.09.2026
             icon: React.createElement('span', {
               'aria-hidden': 'true',
               style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand },
