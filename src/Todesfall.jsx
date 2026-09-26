@@ -24,7 +24,9 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('todesfall.step2Text'))
     ),
     React.createElement(AblaufStep, { palette, title: t('todesfall.step3Title') },
-      React.createElement('p', { style: s.stepText }, t('todesfall.step3Text'))
+      React.createElement('p', { style: s.stepText }, t('todesfall.step3Text')),
+      // Mitteilungs-Brief, vorgewählt (26.09.2026) — mit dem Erbschafts-Hinweis im Briefgenerator.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.deathNotice'), onClick: () => onNavigate('briefe', undefined, 'deathNotice') })
     ),
     // Eigener „Aufstockung"-Schritt (wie Pensionierung#4/IV#3): das EL-Icon markiert
     // konsistent den finanziellen Auffangnetz-Schritt. Hinterbliebenenrente + EL,

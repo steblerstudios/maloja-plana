@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender } from './briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
+import { istVorbei } from './utils/fristen.js';
+import { formatDE } from './utils/helpers.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -15,7 +17,124 @@ import { Brotkrume } from './components/Brotkrume.jsx';
 // Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
 const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
 // Brieftypen, die sich auf eine konkrete Anstellung beziehen (Haupt- oder Nebenerwerb).
-const JOB_TEMPLATES = ['wageClaim', 'unpaidWage'];
+const JOB_TEMPLATES = ['wageClaim', 'unpaidWage', 'workReference', 'dismissalObjection'];
+
+// ─── Lebensereignis-Briefe: Hinweise und Angaben (26.09.2026) ───
+// Die Hinweise stehen VOR dem Formular: bei Rechtsvorschlag und Todesfall ist die Frist
+// bzw. die Erbschafts-Falle wichtiger als der Brief selbst. Gold wie die Fristen in AsylView.
+const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElement('div', {
+  role: 'note',
+  style: {
+    padding: '14px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
+    borderRadius: radius.sm, marginBottom: space.md,
+  },
+},
+  React.createElement('div', {
+    style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.goldDeep, marginBottom: space.xs },
+  }, hinweisZeichen(icon), title),
+  zeilen.filter(Boolean).map((z, i) => React.createElement('p', {
+    key: i,
+    style: { fontSize: textTokens.sm, color: palette.text, lineHeight: leading.normal, margin: i ? space.xs + 'px 0 0' : 0, fontWeight: z.stark ? weight.semi : undefined },
+  }, z.text || z)),
+);
+
+function lebensereignisHinweis(selected, a, palette, t) {
+  if (selected === 'debtObjection') {
+    const k = 'briefe.debtObjection.frist.';
+    const frist = rechtsvorschlagFrist(a.zustelldatum);
+    const datum = frist
+      ? { text: t(istVorbei(frist) ? k + 'vorbei' : k + 'datum', { date: formatDE(frist) }), stark: true }
+      : t(k + 'ohne');
+    return hinweisBox(palette, t(k + 'title'), [t(k + 'text'), datum, t(k + 'muendlich'), t(k + 'post')], 'calendar');
+  }
+  if (selected === 'dismissalObjection') {
+    const k = 'briefe.dismissalObjection.frist.';
+    const klage = klageFrist336b(a.ende);
+    return hinweisBox(palette, t(k + 'title'), [
+      t(k + 'einsprache'),
+      a.ende && klage ? { text: t(k + 'einspracheDatum', { date: formatDE(a.ende) }), stark: true } : null,
+      t(k + 'klage'),
+      klage ? { text: t(k + 'klageDatum', { date: formatDE(klage) }), stark: true } : null,
+      t(k + 'fristlos'),
+      t(k + 'beratung'),
+    ], 'calendar');
+  }
+  if (selected === 'deathNotice') {
+    const k = 'briefe.deathNotice.erbe.';
+    return hinweisBox(palette, t(k + 'title'), [t(k + 'text'), { text: t(k + 'brief'), stark: true }, t(k + 'miete')]);
+  }
+  if (selected === 'workReference') {
+    return hinweisBox(palette, t('briefe.workReference.title'), [t('briefe.workReference.hinweis')]);
+  }
+  return null;
+}
+
+// Angaben-Formular aus BRIEF_ANGABEN — dieselbe Liste, aus der der Generator liest.
+function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
+  const felder = BRIEF_ANGABEN[selected];
+  if (!felder) return null;
+  const a = leseAngaben(selected, roh);
+  const set = (key, v) => setRoh(r => ({ ...r, [key]: v }));
+  const base = (f) => `briefe.${selected}.felder.${f.key}`;
+  const labelStil = { display: 'block', fontSize: textTokens.sm, color: palette.text, fontWeight: weight.medium, marginBottom: space.xs };
+  const inputStil = {
+    width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: radius.sm,
+    border: '1px solid ' + palette.border, background: palette.surface, color: palette.text,
+    fontSize: textTokens.sm, fontFamily: 'inherit',
+  };
+  const zeile = { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) };
+  const sichtbar = felder.filter(f => feldSichtbar(f, a));
+  return React.createElement('div', {
+    style: { padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md },
+  },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.text, marginBottom: space.xs } }, t('briefe.angaben.title')),
+    React.createElement('div', { style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm } }, t('briefe.angaben.intro')),
+    React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md } },
+      sichtbar.map(f => {
+        const id = `brief-${selected}-${f.key}`;
+        const hilfeKey = base(f) + '.hilfe';
+        const hilfe = t(hilfeKey) !== hilfeKey ? React.createElement('div', { id: id + '-hilfe', style: { fontSize: textTokens.xs, color: palette.mid, lineHeight: leading.normal, marginTop: space.xs } }, t(hilfeKey)) : null;
+        if (f.type === 'wahl') {
+          return React.createElement('fieldset', { key: f.key, style: { border: 'none', padding: 0, margin: 0 } },
+            React.createElement('legend', { style: { ...labelStil, padding: 0 } }, t(base(f) + '.label')),
+            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px' } },
+              f.optionen.map(o => React.createElement('label', { key: o, style: zeile },
+                React.createElement('input', { type: 'radio', name: id, checked: a[f.key] === o, onChange: () => set(f.key, o), style: { flexShrink: 0 } }),
+                React.createElement('span', { style: { color: palette.text } }, t(base(f) + '.' + o))
+              ))
+            )
+          );
+        }
+        if (f.type === 'ja') {
+          return React.createElement('label', { key: f.key, style: { ...zeile, alignItems: 'flex-start' } },
+            React.createElement('input', { type: 'checkbox', checked: a[f.key], onChange: (e) => set(f.key, e.target.checked), style: { marginTop: '3px', flexShrink: 0 } }),
+            React.createElement('span', { style: { color: palette.text } }, t(base(f) + '.label'))
+          );
+        }
+        return React.createElement('div', { key: f.key },
+          React.createElement('label', { htmlFor: id, style: labelStil }, t(base(f) + '.label')),
+          React.createElement('input', {
+            id,
+            type: f.type === 'date' ? 'date' : 'text',
+            inputMode: f.type === 'betrag' ? 'decimal' : undefined,
+            value: roh[f.key] == null ? '' : String(roh[f.key]),
+            onChange: (e) => set(f.key, e.target.value),
+            'aria-describedby': hilfe ? id + '-hilfe' : undefined,
+            autoComplete: 'off',
+            style: inputStil,
+          }),
+          hilfe,
+          // Betrag: zeigen, was im Brief steht — eine falsch gelesene Zahl fiele sonst erst
+          // beim Betreibungsamt auf (Fach-Prüfer 26.09.2026).
+          f.type === 'betrag' && String(roh[f.key] == null ? '' : roh[f.key]).trim() !== '' && React.createElement('div', {
+            'aria-live': 'polite',
+            style: { fontSize: textTokens.xs, color: a[f.key] > 0 ? palette.text : palette.goldDeep, lineHeight: leading.normal, marginTop: space.xs, fontWeight: weight.medium },
+          }, a[f.key] > 0 ? t('briefe.angaben.betragErkannt', { amount: zahl(a[f.key], { stellen: Number.isInteger(a[f.key]) ? 0 : 2 }) }) : t('briefe.angaben.betragUnklar'))
+        );
+      })
+    )
+  );
+}
 // FIX A: getrennte Reminder-Notiz je Weg — wageClaim → Kontrollstelle,
 // unpaidWage → Schlichtungsbehörde/Arbeitsgericht (nicht dieselbe Stelle).
 const REMINDER_NOTES_KEY = { wageClaim: 'briefe.wageReminder.notesWageClaim', unpaidWage: 'briefe.wageReminder.notesUnpaid' };
@@ -53,6 +172,10 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   // Vorlagenwechsel setzt die Anstellungs-Wahl zurück — sonst trüge ein neuer Brief
   // stillschweigend die Wahl des vorherigen.
   useEffect(() => { setJobKey('main'); }, [selected]);
+  // Eingetippte Angaben der Lebensereignis-Briefe — nur im Speicher dieser Ansicht, nie
+  // gespeichert. Ein Vorlagenwechsel leert sie (sonst trüge ein neuer Brief alte Nummern).
+  const [angaben, setAngaben] = useState({});
+  useEffect(() => { setAngaben({}); }, [selected]);
   // Für den Reklamationsbrief: vom Nutzer gewählte Belege (kein Auto-Raten).
   const [belegIds, setBelegIds] = useState([]);
   // Geführter „was stimmt nicht"-Schritt: gewählte Beanstandungsgründe.
@@ -70,7 +193,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
     // `briefCanRender`: eine ruhende Vorlage (WAGECLAIM_BEREIT=false) wird nicht gedruckt,
     // auch nicht über einen Deep-Link auf `selected` (Predeploy-Runde 8, dritte Prüfung).
     if (!selected || !briefCanRender(selected)) return;
-    const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey });
+    const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey, angaben });
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     setPrinted(true);
@@ -93,7 +216,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
 
   // Vorschau nur für Vorlagen, die auch angeboten werden dürfen — sonst rendert ein
   // Deep-Link auf 'wageClaim' den ruhenden Anschuldigungsbrief (Predeploy-Runde 8, dritte Prüfung).
-  const previewHtml = (selected && briefCanRender(selected)) ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey }) : '';
+  const previewHtml = (selected && briefCanRender(selected)) ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey, angaben }) : '';
 
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }
@@ -175,6 +298,10 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
         ))
       )
     ),
+
+    // Lebensereignis-Briefe: erst der Hinweis (Frist / Erbschaft), dann die Angaben.
+    selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t),
+    selected && angabenFormular(selected, angaben, setAngaben, palette, t, isMobile),
 
     // Grund-Auswahl — geführter „was stimmt nicht"-Schritt: die gewählten Gründe
     // werden im Brief als klare Beanstandung ausformuliert (statt Platzhalter).
@@ -276,7 +403,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
     selected && exportVorschau && React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement(ExportVorschau, {
         palette, t, art: 'brief',
-        quelle: { data, templateKey: selected, belegeCount: reklamationBelege.length, job: jobKey },
+        quelle: { data, templateKey: selected, belegeCount: reklamationBelege.length, job: jobKey, angabenEingetippt: angabenEingetippt(selected, angaben) },
         onWeiter: () => { setExportVorschau(false); handlePrint(); },
         onZurueck: () => setExportVorschau(false),
       })

@@ -4205,6 +4205,141 @@ export default {
       legalNote: 'Basa: exigibladad dal salari (OR art. 323). Sch’il pajament na succeda betg, maina la via tras l’autoritad da conciliaziun en chaussas da dretg da lavur u il tribunal da lavur al lieu da lavur, eventualmain tras ina execuziun. Ina retenziun da la lavur (OR art. 82) u ina disditga immediata è mo cussegliabla suenter avair consultà in post spezialisà. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
       reminderTitle: 'Resposta spetgada — salari nunpajà',
     },
+    // ─── Brevs per eveniments da la vita (26.09.2026) — funtaunas en de.js.
+    angaben: {
+      title: 'Indicaziuns per quest brev', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      intro: 'Questas indicaziuns stattan mo en il brev e na vegnan betg memorisadas. Champs vids restan marcads en il brev cun «[per plaschair cumplettar]».', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      betragErkannt: 'En il brev stat: CHF {amount}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      betragUnklar: 'Quest import na pudain nus betg leger segir — en il brev resta «[per plaschair cumplettar]». Mo cifras, p.ex. 1250.50 u 1\'250.50.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    ablaufLink: {
+      workReference: 'Brev: dumandar in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      dismissalObjection: 'Brev: protesta cunter la disditga', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      debtObjection: 'Brev: far opposiziun cunter in cumond da pajament', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      deathNotice: 'Brev: annunziar in cas da mort', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    workReference: {
+      title: 'Dumandar in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Dumandar tar il patrun in attestat intermediar u final — u mo ina conferma da lavur.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        art: {
+          label: { sie: 'Tge giavischais Vus?', du: 'Tge giavischas ti?' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          voll: 'Attestat da lavur: gener e durada, prestaziuns e cumportament', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          bestaetigung: 'Conferma da lavur: mo gener e durada', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+        zeitpunkt: {
+          label: 'Mument', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          zwischen: 'Attestat intermediar — l’engaschament cuntinuescha', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          schluss: 'Attestat final — l’engaschament finescha u è finì', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+      },
+      hinweis: { sie: 'In attestat pudais Vus dumandar da tut temp — durant l’engaschament e suenter (OR art. 330a al. 1). La conferma da lavur numna mo il gener e la durada da l’engaschament; ella vegn emessa sin Voss giavisch explicit empè da l’attestat (al. 2).', du: 'In attestat pos ti dumandar da tut temp — durant l’engaschament e suenter (OR art. 330a al. 1). La conferma da lavur numna mo il gener e la durada da l’engaschament; ella vegn emessa sin tes giavisch explicit empè da l’attestat (al. 2).' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      subject: {
+        zwischen: 'Dumonda d’in attestat da lavur intermediar', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        schluss: 'Dumonda d’in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        bestaetigung: 'Dumonda d’ina conferma da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body: {
+        zwischen: 'cun quai As prej jau d’in attestat da lavur intermediar che s’exprima davart il gener e la durada da mes lavurar sco er davart mias prestaziuns e mes cumportament.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        schluss: 'cun quai As prej jau d’in attestat da lavur che s’exprima davart il gener e la durada da mes lavurar sco er davart mias prestaziuns e mes cumportament.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        bestaetigung: 'cun quai As prej jau d’ina conferma da lavur. Ella duai sa restrenscher a las indicaziuns davart il gener e la durada da mes lavurar.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      body2: 'Jau As engraziel ordavant per la tramessa e stun gugent a disposiziun per dumondas.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Basa: OR art. 330a. In attestat po vegnir dumandà da tut temp. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    dismissalObjection: {
+      title: 'Protesta cunter la disditga', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Protesta en scrit tar il patrun, sch’ina disditga pudess esser abusiva — avant la fin dal termin da disditga.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        kuendigungsdatum: { label: 'Data dal brev da disditga' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        ende: { label: 'Fin da la relaziun da lavur tenor la disditga (mo per ils termins — na stat betg en il brev)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        begruendung: { label: 'Dumandar a medem temp ina motivaziun en scrit da la disditga (OR art. 335 al. 2)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        einschaetzung: {
+          label: { sie: 'Vossa stimaziun (facultativ)', du: 'Tia stimaziun (facultativ)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          hilfe: { sie: 'Cumpara en il brev explicitamain sco Vossa stimaziun, betg sco fatg. Formulai ella objectivamain e senza reproschas; nums ed accusas na tutgan betg en quest brev. Laschar vid è tuttina valid — la protesta na basegna nagina motivaziun.', du: 'Cumpara en il brev explicitamain sco tia stimaziun, betg sco fatg. Formulescha ella objectivamain e senza reproschas; nums ed accusas na tutgan betg en quest brev. Laschar vid è tuttina valid — la protesta na basegna nagina motivaziun.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+      },
+      frist: {
+        title: 'Dus termins', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        einsprache: { sie: 'La protesta sto esser en scrit tar il patrun il pli tard fin a la fin dal termin da disditga (OR art. 336b al. 1). Tramettai ella baud e recumandà.', du: 'La protesta sto esser en scrit tar il patrun il pli tard fin a la fin dal termin da disditga (OR art. 336b al. 1). Trametta ella baud e recumandà.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        einspracheDatum: 'Fin tenor l’endataziun: {date} — la protesta sto esser tar il patrun il pli tard quest di, meglier bler pli baud.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        klage: 'Sche las partidas na sa cunvegnan betg davart la cuntinuaziun, sto vegnir fatga pendenta ina plant entaifer 180 dis suenter la fin da la relaziun da lavur, uschiglio scada il dretg sin indemnisaziun (OR art. 336b al. 2). Pendenta è ella gia cun la dumonda a l’autoritad da conciliaziun (ZPO art. 62 al. 1).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        klageDatum: 'Ultim di tenor noss quint: {date}. Sche la fin sa spustescha (per exempel pervia da malsogna, OR art. 336c), è il termin pli tard — nus quintain intenziunadamain senza prolungaziun. Sche la disditga è vegnida dada durant ina malsogna, in accident u ina gravidanza, po ella schizunt esser nunvalaivla (OR art. 336c al. 2) — lura meglier tschertgar cussegl.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        fristlos: 'Tar ina relaschada immediata valan autras reglas — lura main tschertgar cussegl.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        beratung: 'Cussegl porschan sindicats, posts da cussegliaziun giuridica e l’autoritad da conciliaziun en chaussas da dretg da lavur dal chantun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      subject: 'Protesta cunter la disditga dals {date}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body1: 'cun quai fatsch jau protesta cunter la disditga da mia relaziun da lavur dals {date} en il senn da l’art. 336b OR. Jau na sun betg d’accord cun la disditga.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      einschaetzung: 'Tenor mia stimaziun pudess la disditga star en connex cun il suandant: {text}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      begruendung: 'A medem temp As prej jau da motivar la disditga en scrit (art. 335 al. 2 OR).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body2: 'Jau sun gugent pront da discurrer cun Vus davart la cuntinuaziun da la relaziun da lavur.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Basa: OR art. 336b (protesta) ed art. 335 al. 2 (motivaziun). La protesta n’annullescha betg la disditga. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    debtObjection: {
+      title: 'Far opposiziun (Rechtsvorschlag)', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Contestar in cumond da pajament — entaifer 10 dis suenter la consegna, senza motivaziun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        betreibungsnummer: { label: 'Numer da la scussiun (stat sin il cumond da pajament)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        zustelldatum: { label: 'Di da la consegna dal cumond da pajament' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        glaeubiger: { label: 'Partida che scuda (stat sin il cumond da pajament)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        umfang: {
+          label: { sie: 'Tge contestais Vus?', du: 'Tge contestas ti?' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          ganz: 'L’entira pretensiun', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          teil: 'Mo ina part da la pretensiun', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+        neuesVermoegen: { label: 'Suenter in concurs pli baud: contestar dad esser vegnì tar nova facultad (SchKG art. 75 al. 2)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        teilbetrag: {
+          label: 'Import contestà en CHF', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          hilfe: 'Indicar exactamain l’import contestà — uschiglio vala l’entira pretensiun sco contestada (SchKG art. 74 al. 2).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+      },
+      frist: {
+        title: 'Termin: 10 dis suenter la consegna', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        text: 'L’opposiziun sto vegnir declerada a l’uffizi da scussiun entaifer 10 dis suenter la consegna dal cumond da pajament; il di da la consegna na vegn betg quintà (SchKG art. 74 al. 1, art. 31 en connex cun ZPO art. 142 al. 1).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        muendlich: 'I va er senza brev: immediatamain a bucca a la persuna che consegna il cumond da pajament, u entaifer il termin a bucca a l’uffizi da scussiun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        post: { sie: 'En scrit basta quai, sch’il brev è consegnà a la Posta svizra il pli tard l’ultim di dal termin (SchKG art. 31, ZPO art. 143 al. 1). Tramettai el recumandà — la quittanza è Voss mussament.', du: 'En scrit basta quai, sch’il brev è consegnà a la Posta svizra il pli tard l’ultim di dal termin (SchKG art. 31, ZPO art. 143 al. 1). Trametta el recumandà — la quittanza è tes mussament.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        datum: 'Ultim di tenor noss quint: {date}. Fin d’emna, dis da festa e vacanzas da scussiun pon prolungar il termin — nus quintain intenziunadamain senza; pli baud n’è mai fallà.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        vorbei: { sie: 'Tenor noss quint è il termin forsa scadì ils {date}. Fin d’emna, dis da festa u vacanzas da scussiun al pon avair prolungà. Dumandai immediatamain tar l’uffizi da scussiun e faschai en cas da dubi tuttina opposiziun.', du: 'Tenor noss quint è il termin forsa scadì ils {date}. Fin d’emna, dis da festa u vacanzas da scussiun al pon avair prolungà. Dumonda immediatamain tar l’uffizi da scussiun e fa en cas da dubi tuttina opposiziun.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        ohne: { sie: 'Endatai sutvart il di da la consegna, lura mussain nus l’ultim di dal termin.', du: 'Endatescha sutvart il di da la consegna, lura mussain nus l’ultim di dal termin.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      recipient: '[Uffizi da scussiun — l’adressa stat sin il cumond da pajament]', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      subject: 'Opposiziun — scussiun nr. {number}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body1: 'en la scussiun nr. {number} m’è vegnì consegnà ils {date} in cumond da pajament. Partida che scuda: {creditor}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      ganz: 'Cun quai fatsch jau opposiziun cunter l’entira pretensiun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      teil: 'Cun quai fatsch jau opposiziun cunter ina part da la pretensiun. Contestà è in import da CHF {amount}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      neuesVermoegen: 'Ultra da quai contestesch jau dad esser vegnì/vegnida tar nova facultad (art. 75 al. 2 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      bescheinigung: 'Jau As prej da ma confermar ch’jau hai fatg opposiziun (art. 74 al. 3 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Basa: SchKG art. 74 e 75. L’opposiziun na basegna nagina motivaziun. Suenter in concurs pli baud vala: tgi che contesta dad esser vegnì tar nova facultad, sto declerar quai explicitamain en l’opposiziun (SchKG art. 75 al. 2). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    deathNotice: {
+      title: 'Annunziar in cas da mort', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Communitgar in cas da mort ad ina assicuranza, ina banca, ina administraziun u in purschider d’abunaments e dumandar co ch’i va vinavant.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        verstorben: { label: 'Num da la persuna morta' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        todesdatum: { label: 'Data da la mort' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        vertragsnummer: { label: 'Numer da contract, da client u da polissa' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      erbe: {
+        title: 'Impurtant uschè ditg che l’ierta è averta', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        text: 'Tgi che s’maschaida avant la scadenza dal termin da renunzia en las fatschentas da l’ierta, fa acziuns che van sur la simpla administraziun ora, u prenda u zuppa chaussas da l’ierta, na po betg pli renunziar a l’ierta (ZGB art. 571 al. 2) — per exempel tgi che paja debits ord la relaschada, renconuscha pretensiuns u dispona da la facultad da la persuna morta. Tge ch’è anc «simpla administraziun», dumonda ins en cas da dubi tar l’autoritad d’ierta. Il termin importa trais mais; per ertavels legals cumenza el per regla, cur ch’els vegnan a savair da la mort, per ertavels instituids cun la communicaziun uffiziala (ZGB art. 567).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        brief: { sie: 'Quest brev è perquai ina simpla communicaziun cun dumondas. Na cumplettai el betg cun ina empermischun da pajament, ina disditga u in’instrucziun — en cas da dubi dumandai l’emprim tar l’autoritad d’ierta u tar in post spezialisà.', du: 'Quest brev è perquai ina simpla communicaziun cun dumondas. Na cumpletta el betg cun ina empermischun da pajament, ina disditga u in’instrucziun — en cas da dubi dumonda l’emprim tar l’autoritad d’ierta u tar in post spezialisà.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        miete: 'Contract da fittanza: ils ertavels pon desdir cun il termin legal sin il proxim termin legal (OR art. 266i). Ils ertavels ageschan per regla communablamain (ZGB art. 602 al. 2). Sch’igl è raschunaivel da far quai avant la decisiun davart l’ierta, sclerescha ins meglier ordavant cun l’autoritad cumpetenta u cun in post spezialisà — questa templata na desda perquai betg.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      subject: 'Communicaziun d’in cas da mort — {name}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body1: 'jau As communitgesch che {name} è mort/a ils {date}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      reference: 'Numer da contract u da client: {number}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body2: 'As prej jau da ma communitgar tge documents che Vus duvrais e co ch’il contract po vegnir terminà. Ultra da quai As prej jau d’ina survista dal stadi al di da la mort (per exempel in extract dal conto) resp. d’in eventual quint final.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      vorbehalt: 'Questa scrittira è ina communicaziun. Ella na cuntegna nagina disditga, nagina decleraziun davart l’ierta e nagina renconuschientscha da pretensiuns.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Remartga: simpla communicaziun — nagina empermischun da pajament, nagina disditga, nagina disposiziun da facultad (ZGB art. 571 al. 2). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
     wageReminder: {
       title: 'Notar il termin en il chalender',
       text: { sie: 'Nus pudain notar il termin da resposta ({frist}, en {days} dis) en Voss chalender — cun in avis in di avant.', du: 'Nus pudain notar il termin da resposta ({frist}, en {days} dis) en tes chalender — cun in avis in di avant.' },
@@ -5001,6 +5136,7 @@ export default {
         belege: 'Quittanzas tschernidas ({count})',
         arbeitgeber: 'Patrun ed adressa',
         lohn: 'Datas da salari',
+        briefAngaben: 'Indicaziuns dal formular dal brev (numers, datas, nums)', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
         // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
         ipvErgebnis: 'Reducziun da premias stimada (RIP)',
         ipvOrientierung: 'Stimaziun da la reducziun da premias (senza import)', // TODO(rm): provisorisch

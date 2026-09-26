@@ -6,9 +6,11 @@
 //   getLetterTemplates(t) → array of template definitions
 //   generateLetter(templateKey, data, t, options) → HTML string for print
 //     options.belege (optional) → für kkReklamation: gewählte kkBelege ({datum,betrag})
-//     options.job    (optional) → für wageClaim/unpaidWage: 'main' (Vorgabe) | 'side'.
-//                                 Bestimmt Empfänger UND Zahlen — ein Brief über den
-//                                 Nebenjob darf nie den Hauptlohn nennen.
+//     options.job    (optional) → für wageClaim/unpaidWage/workReference/dismissalObjection:
+//                                 'main' (Vorgabe) | 'side'. Bestimmt Empfänger UND Zahlen —
+//                                 ein Brief über den Nebenjob darf nie den Hauptlohn nennen.
+//     options.angaben (optional) → eingetippte Angaben der Lebensereignis-Briefe
+//                                 (siehe BRIEF_ANGABEN); nicht gespeichert.
 
 import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
@@ -16,6 +18,7 @@ import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './dat
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { zahl } from './utils/geld.js';
+import { plusTage } from './utils/fristen.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
 // (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
@@ -199,6 +202,41 @@ export function getLetterTemplates(t, data) {
       icon: 'money',
       legalRef: 'OR Art. 323',
       chapter: 'finanzen',
+    },
+    // ─── Lebensereignisse (Entscheid Stebler Studios 26.09.2026) ───
+    // Gesetzesstellen am Wortlaut geprüft (lexfind-PDF, 26.09.2026): OR Stand 1.1.2026,
+    // SchKG Stand 1.1.2026, ZPO Stand 1.7.2026, ZGB Stand 1.7.2026.
+    {
+      key: 'workReference',
+      title: t('briefe.workReference.title'),
+      description: t('briefe.workReference.description'),
+      icon: 'document',
+      legalRef: 'OR Art. 330a',
+      chapter: 'finanzen',
+    },
+    {
+      key: 'dismissalObjection',
+      title: t('briefe.dismissalObjection.title'),
+      description: t('briefe.dismissalObjection.description'),
+      icon: 'document',
+      legalRef: 'OR Art. 336b',
+      chapter: 'finanzen',
+    },
+    {
+      key: 'debtObjection',
+      title: t('briefe.debtObjection.title'),
+      description: t('briefe.debtObjection.description'),
+      icon: 'behoerden',
+      legalRef: 'SchKG Art. 74',
+      chapter: 'behoerden',
+    },
+    {
+      key: 'deathNotice',
+      title: t('briefe.deathNotice.title'),
+      description: t('briefe.deathNotice.description'),
+      icon: 'document',
+      legalRef: 'ZGB Art. 571',
+      chapter: 'behoerden',
     },
   ];
   // 🔴 wageClaim nur anbieten, wenn der Kanton einen gesetzlichen Mindestlohn hat.
@@ -624,9 +662,236 @@ function generateUnpaidWage(data, t, options = {}) {
   `, t);
 }
 
+// ─── Lebensereignis-Briefe (26.09.2026) ───────────────────
+//
+// Diese vier Briefe brauchen Angaben, die NICHT im Profil stehen (Betreibungsnummer,
+// Todesdatum …). Die Person tippt sie im Briefgenerator ein; sie werden nicht gespeichert,
+// nur in den Brief gesetzt (`options.angaben`). Fehlt eine Angabe, steht «[bitte ergänzen]» —
+// nie ein geratener Wert. Wahlfelder haben eine Vorgabe, damit der Brief immer vollständig ist.
+//
+// Feldtypen: 'text' · 'date' (ISO aus <input type="date">) · 'betrag' · 'wahl' (optionen)
+// · 'ja' (Ankreuzfeld). `nurWenn` blendet ein Feld nur bei einer bestimmten Wahl ein.
+export const BRIEF_ANGABEN = {
+  workReference: [
+    { key: 'art', type: 'wahl', optionen: ['voll', 'bestaetigung'], vorgabe: 'voll' },
+    { key: 'zeitpunkt', type: 'wahl', optionen: ['zwischen', 'schluss'], vorgabe: 'zwischen', nurWenn: { art: 'voll' } },
+  ],
+  dismissalObjection: [
+    { key: 'kuendigungsdatum', type: 'date' },
+    // Nur für die Frist-Anzeige in der App — steht nicht im Brief.
+    { key: 'ende', type: 'date', nurFrist: true },
+    { key: 'begruendung', type: 'ja', vorgabe: true },
+    { key: 'einschaetzung', type: 'text' },
+  ],
+  debtObjection: [
+    { key: 'betreibungsnummer', type: 'text' },
+    { key: 'zustelldatum', type: 'date' },
+    { key: 'glaeubiger', type: 'text' },
+    { key: 'umfang', type: 'wahl', optionen: ['ganz', 'teil'], vorgabe: 'ganz' },
+    { key: 'teilbetrag', type: 'betrag', nurWenn: { umfang: 'teil' } },
+    // SchKG Art. 75 Abs. 2: nach einem Konkurs muss die Einrede «kein neues Vermögen» IM
+    // Rechtsvorschlag stehen, sonst ist sie verwirkt (Rechts-Prüfer 26.09.2026). Vorgabe aus.
+    { key: 'neuesVermoegen', type: 'ja', vorgabe: false },
+  ],
+  deathNotice: [
+    { key: 'verstorben', type: 'text' },
+    { key: 'todesdatum', type: 'date' },
+    { key: 'vertragsnummer', type: 'text' },
+  ],
+};
+
+// Bestrittener Betrag aus einer Texteingabe — STRENG (Fach-Prüfer 26.09.2026, Blocker):
+// `parseFloat("1'234.50")` ergab 1, und «CHF 1» im Rechtsvorschlag hiesse «nur 1 Franken
+// bestritten» (SchKG Art. 74 Abs. 2). Erlaubt: Schweizer Tausender-Apostroph (' ’ ‘),
+// Leerzeichen, «CHF», Endung «.-»/«.–», EIN Dezimaltrenner (Punkt oder Komma) mit höchstens
+// zwei Stellen. Alles Mehrdeutige (z. B. «1.234,50») → 0 = Platzhalter statt falscher Zahl.
+export function leseBetrag(v) {
+  let x = String(v == null ? '' : v).replace(/CHF|Fr\./gi, '').replace(/[\s'’‘\u00a0\u202f]/g, '');
+  x = x.replace(/[.,][-–—]$/, '');
+  if (!/^\d+([.,]\d{1,2})?$/.test(x)) return 0;
+  const n = parseFloat(x.replace(',', '.'));
+  return n > 0 ? n : 0;
+}
+
+// Ist ein Feld bei den aktuellen Angaben sichtbar (nurWenn)?
+export function feldSichtbar(f, a) {
+  return !f.nurWenn || Object.entries(f.nurWenn).every(([k, v]) => a[k] === v);
+}
+
+// Angaben einer Vorlage lesen: Vorgaben einsetzen, Text trimmen, ungültige Wahl → Vorgabe.
+export function leseAngaben(templateKey, roh) {
+  const felder = BRIEF_ANGABEN[templateKey] || [];
+  const r = roh && typeof roh === 'object' ? roh : {};
+  const out = {};
+  for (const f of felder) {
+    const v = r[f.key];
+    if (f.type === 'wahl') out[f.key] = f.optionen.includes(v) ? v : f.vorgabe;
+    else if (f.type === 'ja') out[f.key] = typeof v === 'boolean' ? v : !!f.vorgabe;
+    else if (f.type === 'betrag') out[f.key] = leseBetrag(v);
+    else out[f.key] = String(v == null ? '' : v).trim();
+  }
+  return out;
+}
+
+// Hat die Person etwas EINGETIPPT (Text, Datum, Betrag)? Wahlfelder und Ankreuzfelder haben
+// immer eine Vorgabe und tragen keine persönliche Angabe — sie zählen nicht. Quelle für die
+// Export-Vorschau (Kategorie 'briefAngaben').
+// Nur Felder, die im Brief STEHEN: ausgeblendete (nurWenn) und reine Frist-Felder (nurFrist)
+// zählen nicht (Fach-Prüfer 26.09.2026).
+export function angabenEingetippt(templateKey, roh) {
+  const r = roh && typeof roh === 'object' ? roh : {};
+  const a = leseAngaben(templateKey, r);
+  return (BRIEF_ANGABEN[templateKey] || [])
+    .filter(f => f.type !== 'wahl' && f.type !== 'ja' && !f.nurFrist && feldSichtbar(f, a))
+    .some(f => String(r[f.key] == null ? '' : r[f.key]).trim() !== '');
+}
+
+// Gemeinsames Gerüst der vier Briefe: Absender, Empfänger, Ort/Datum, Betreff, Absätze,
+// Unterschrift, Bildschirm-Hinweis. `absaetze` sind KLARTEXT — esc() genau einmal hier.
+function briefGeruest(data, t, { recipientHtml, subject, absaetze, legalNote }) {
+  const sender = senderBlock(data);
+  const city = data.wohnen?.city || '';
+  const dateStr = today();
+  const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
+  const name = getFullName(data.basis);
+  return wrapLetter(`
+    <div class="sender">${sender || fillHint(t)}</div>
+    <div class="recipient">${recipientHtml}</div>
+    <div class="date-line">${cityDate}</div>
+    <div class="subject">${esc(subject)}</div>
+    <div class="body-text">
+      ${absaetze.filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('\n      ')}
+    </div>
+    <div class="signature">${name ? esc(name) : fillHint(t)}</div>
+    ${legalNote ? `<div class="legal-note">${esc(legalNote)}</div>` : ''}
+  `, t);
+}
+
+// (c) Arbeitszeugnis anfordern — OR Art. 330a. Abs. 1: Vollzeugnis (Art und Dauer,
+// Leistungen und Verhalten), jederzeit. Abs. 2: auf besonderes Verlangen nur Art und Dauer
+// (Arbeitsbestätigung). Zwischen- oder Schlusszeugnis ist keine Gesetzesunterscheidung,
+// sondern der Zeitpunkt — «jederzeit» deckt beides.
+function generateWorkReference(data, t, options = {}) {
+  const a = leseAngaben('workReference', options.angaben);
+  const job = getJob(data, options.job);
+  const k = 'briefe.workReference.';
+  const variante = a.art === 'bestaetigung' ? 'bestaetigung' : a.zeitpunkt;
+  return briefGeruest(data, t, {
+    recipientHtml: employerRecipient(job, t),
+    subject: t(k + 'subject.' + variante),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body.' + variante),
+      t(k + 'body2'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
+// (d) Einsprache gegen die Kündigung — OR Art. 336b Abs. 1: schriftlich, beim Kündigenden,
+// längstens bis zum Ende der Kündigungsfrist. Optional zugleich die schriftliche Begründung
+// verlangen (OR Art. 335 Abs. 2). 🛑 Der Brief behauptet KEINEN Missbrauchsgrund als
+// Tatsache: die Einsprache braucht keine Begründung, und eine Tatsachenbehauptung per
+// Einschreiben an den Arbeitgeber ist nicht rückholbar. Eine eigene Einschätzung erscheint
+// nur, wenn die Person sie eingibt — und dann ausdrücklich als Einschätzung.
+// Klagefrist OR Art. 336b Abs. 2: «innert 180 Tagen nach Beendigung des Arbeitsverhältnisses».
+// Gerechnet ab dem Ende, das die Person eingibt; Tag des Endes zählt nicht mit (ZPO Art. 142
+// Abs. 1 sinngemäss). Verschiebt sich das Ende (OR Art. 336c), liegt die echte Frist später —
+// die angezeigte ist dann zu früh, nie zu spät.
+export function klageFrist336b(endeIso) {
+  return plusTage(endeIso, 180);
+}
+
+function generateDismissalObjection(data, t, options = {}) {
+  const a = leseAngaben('dismissalObjection', options.angaben);
+  const job = getJob(data, options.job);
+  const k = 'briefe.dismissalObjection.';
+  const datum = formatDate(a.kuendigungsdatum) || t('briefe.fillIn');
+  return briefGeruest(data, t, {
+    recipientHtml: employerRecipient(job, t),
+    subject: t(k + 'subject', { date: datum }),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body1', { date: datum }),
+      a.einschaetzung ? t(k + 'einschaetzung', { text: a.einschaetzung }) : '',
+      a.begruendung ? t(k + 'begruendung') : '',
+      t(k + 'body2'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
+// (e) Rechtsvorschlag — SchKG Art. 74. Abs. 1: sofort beim Überbringer oder innert zehn
+// Tagen nach der Zustellung beim Betreibungsamt, mündlich oder schriftlich. Abs. 2: bei
+// Teilbestreitung den bestrittenen Betrag genau angeben. Abs. 3: Bescheinigung gebührenfrei
+// auf Verlangen. Art. 75 Abs. 1: keine Begründung nötig — der Brief gibt darum keine.
+// Einhaltung der Frist: SchKG Art. 31 verweist auf die ZPO; Art. 32 Abs. 1 SchKG ist
+// aufgehoben. ZPO Art. 143 Abs. 1: Postaufgabe am letzten Tag genügt.
+export function rechtsvorschlagFrist(zustelldatumIso) {
+  // NIE SPÄTER ALS DAS GESETZ (utils/fristen.js): Tag der Zustellung zählt nicht mit,
+  // Verlängerungen (Wochenende, Feiertag, Betreibungsferien) rechnen wir bewusst nicht ein.
+  return plusTage(zustelldatumIso, 10);
+}
+
+function generateDebtObjection(data, t, options = {}) {
+  const a = leseAngaben('debtObjection', options.angaben);
+  const k = 'briefe.debtObjection.';
+  const fill = t('briefe.fillIn');
+  const nummer = a.betreibungsnummer || fill;
+  const datum = formatDate(a.zustelldatum) || fill;
+  const glaeubiger = a.glaeubiger || fill;
+  const teil = a.umfang === 'teil';
+  return briefGeruest(data, t, {
+    recipientHtml: `<div class="placeholder">${esc(t(k + 'recipient'))}</div>`,
+    subject: t(k + 'subject', { number: nummer }),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body1', { number: nummer, date: datum, creditor: glaeubiger }),
+      // Der bestrittene Betrag muss «genau» sein (Abs. 2): mit Rappen zweistellig, ganze Franken ohne.
+      teil ? t(k + 'teil', { amount: a.teilbetrag > 0 ? zahl(a.teilbetrag, { stellen: Number.isInteger(a.teilbetrag) ? 0 : 2 }) : fill }) : t(k + 'ganz'),
+      a.neuesVermoegen ? t(k + 'neuesVermoegen') : '',
+      t(k + 'bescheinigung'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
+// (f) Todesfall melden — Absender ist die angehörige Person in eigenem Namen.
+// 🛑 ZGB Art. 571 Abs. 2: Wer sich vor Ablauf der Ausschlagungsfrist (drei Monate,
+// ZGB Art. 567) in die Erbschaft einmischt, kann sie nicht mehr ausschlagen. Der Brief ist
+// darum eine reine MITTEILUNG mit Fragen: keine Zahlungszusage, keine Anerkennung von
+// Forderungen, keine Kündigung, keine Weisung über Vermögen, keine Rolle «als Erbin/Erbe».
+// Eine Mietkündigung durch die Erben (OR Art. 266i) bleibt ein App-Hinweis, kein Brieftext.
+function generateDeathNotice(data, t, options = {}) {
+  const a = leseAngaben('deathNotice', options.angaben);
+  const k = 'briefe.deathNotice.';
+  const fill = t('briefe.fillIn');
+  const name = a.verstorben || fill;
+  return briefGeruest(data, t, {
+    recipientHtml: `<div class="placeholder">${recipientPlaceholder(t)}</div>`,
+    subject: t(k + 'subject', { name }),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body1', { name, date: formatDate(a.todesdatum) || fill }),
+      t(k + 'reference', { number: a.vertragsnummer || fill }),
+      t(k + 'body2'),
+      t(k + 'vorbehalt'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
 // ─── Public API ───────────────────────────────────────────
 
 const GENERATORS = {
+  workReference: generateWorkReference,
+  dismissalObjection: generateDismissalObjection,
+  debtObjection: generateDebtObjection,
+  deathNotice: generateDeathNotice,
   leaseTermination: generateLeaseTermination,
   addressChange: generateAddressChange,
   taxExtension: generateTaxExtension,
