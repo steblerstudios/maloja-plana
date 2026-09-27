@@ -173,6 +173,14 @@ describe('Ablauf «Mahnung erhalten»', () => {
     expect(html).not.toMatch(/mahnung\.[a-zA-Z]|briefe\.[a-zA-Z]/);
     for (const k of ['paymentReminder', 'claimDispute', 'installmentRequest']) expect(html).toContain(de.briefe.ablaufLink[k]);
   });
+  it.each(['fr', 'it', 'en', 'rm'])('%s: rendert ohne rohe Schlüssel und ohne Platzhalter-Reste', (lang) => {
+    for (const anrede of ['sie', 'du']) {
+      const tl = createT(ALL, lang, anrede);
+      const h = renderToStaticMarkup(React.createElement(MahnungErhalten, { palette: LIGHT_PALETTE, t: tl, onNavigate: () => {} }));
+      expect(h, `${lang}/${anrede}`).not.toMatch(/mahnung\.[a-zA-Z]|briefe\.[a-zA-Z]|\[object Object\]/);
+      expect(h, `${lang}/${anrede}`).toContain('257');
+    }
+  });
   it('Miete: 30 Tage Frist bei Wohnungen (OR Art. 257d) steht drin', () => {
     expect(html).toContain('mindestens 30 Tage');
     expect(html).toContain('OR Art. 257d');
