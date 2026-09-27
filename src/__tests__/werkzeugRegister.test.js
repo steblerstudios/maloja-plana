@@ -94,12 +94,19 @@ describe('Werkzeug-Register: ein Eintrag je Werkzeug', () => {
 });
 
 describe('Portemonnaie und Aussenfach', () => {
-  it('Portemonnaie ist der 7. Gegenstand und trägt die acht Geld-Werkzeuge', () => {
+  it('Portemonnaie ist der 7. Gegenstand und trägt die Geld-Werkzeuge (inkl. ALV und EO, 27.09.)', () => {
     expect(GEGENSTAND_KEYS).toHaveLength(7);
     expect(GEGENSTAND_KEYS).toContain('geld');
     expect(werkzeugeImFach('geld').map(werkzeugKey).sort()).toEqual(
-      ['budget', 'finanzuebersicht', 'mindestlohn', 'schulden', 'sozialhilfe', 'sync', 'tax', 'taxImport'],
+      ['alv', 'budget', 'eo', 'finanzuebersicht', 'mindestlohn', 'schulden', 'sozialhilfe', 'sync', 'tax', 'taxImport'],
     );
+  });
+
+  it('Mahnung und Betreibung sind Wege im Portemonnaie, nicht mehr in der Werkzeugrolle (27.09.)', () => {
+    const wege = (key) => GEGENSTAENDE.find((g) => g.key === key).wege.map((w) => w.view);
+    expect(wege('geld')).toEqual(['mahnung', 'betreibung']);
+    expect(wege('arbeit')).not.toContain('mahnung');
+    expect(wege('arbeit')).not.toContain('betreibung');
   });
 
   it('Arztkoffer und Feldflasche tragen ihre Werkzeuge laut Zuordnungstabelle', () => {

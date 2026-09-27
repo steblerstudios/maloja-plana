@@ -47,10 +47,10 @@ export const WERKZEUGE = [
   // ── Feldflasche (Alter) ──
   { view: 'vorsorge', nav: 'nav.vorsorge', sub: 'nav.sub.vorsorge', icon: 'vorsorge', fach: 'alter', aliases: ['ahv', 'bvg', 'pension', '3a', 'avs'] },
 
-  // ── Nicht in der Zuordnungstabelle, bisher nur über die Suche erreichbar ──
-  // (Vorschau-Vorschlag, offene Frage im PR.)
-  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'family', fach: 'arbeit', aliases: ['alv', 'arbeitslos', 'rav'] },
-  { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', fach: 'familie', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
+  // ── Geldleistungen, bisher nur über die Suche erreichbar ──
+  // Entscheid Stebler Studios 27.09.2026: ALV-Taggeld und EO ins Portemonnaie.
+  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'family', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav'] },
+  { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', fach: 'geld', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
 
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
   // Die drei für den Alltag stehen zusätzlich im Menü (gleicher Name, gleiches Zeichen);
