@@ -1303,7 +1303,6 @@ export default {
     zurueckZu: 'Back to {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Overview',
     tools: 'Tools',
-    moreTools: 'More tools',
     advanced: 'Advanced',
     notifications: 'Notifications',
     installApp: 'Install as an app',

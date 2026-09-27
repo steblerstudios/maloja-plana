@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { GEGENSTAENDE, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
-import { WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
-// VORSCHAU-VARIANTEN — vor dem Merge entfernen
-import { aktuelleVarianten, werkzeugeFuerVariante } from './utils/vorschauVarianten.js';
+import { werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
@@ -20,10 +18,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [packed, setPacked] = useState(!reduce);   // gepackt → packt sich beim Öffnen einmal aus
   const [openKey, setOpenKey] = useState(null);     // ein Gegenstand offen (ruhiges Akkordeon)
-  // VORSCHAU-VARIANTEN — vor dem Merge entfernen (Standard = Stand der Vorschau)
-  const variante = aktuelleVarianten();
-  const register = werkzeugeFuerVariante(WERKZEUGE, variante);
-  const imFach = (fach) => werkzeugeImFach(fach, register);
+  const imFach = (fach) => werkzeugeImFach(fach);
 
   useEffect(() => {
     if (reduce) return undefined;
@@ -277,12 +272,12 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // ── Aussenfach «Ablegen und ordnen» ─────────────────────────────────────────
   // Kein Lebensbereich, sondern das Fach aussen am Rucksack: immer offen, leise abgesetzt
   // (gestrichelter Rand, Grund `up`), damit es nicht wie ein achter Gegenstand wirkt.
-  // Gewählt 27.09.2026: ganz oben, vor den Gegenständen (Vorschau-Schalter `platz`).
+  // Gewählt 27.09.2026: ganz oben, vor den Gegenständen — und zusätzlich als achte Karte.
   const aussen = imFach(AUSSENFACH);
   const aussenfach = h('section', {
     'aria-labelledby': 'gepaeck-aussenfach',
     style: {
-      marginTop: variante.platz === 'oben' ? 0 : space.lg + 'px', marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
+      marginTop: 0, marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
       background: palette.up, border: '1px dashed ' + palette.border,
       opacity: packed ? 0 : 1, transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : GEGENSTAENDE.length * 60) + 'ms',
     },
@@ -337,11 +332,10 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, maxWidth: '680px', margin: '0 0 ' + space.md + 'px 0' } }, t('gepaeck.intro')),
     h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: space.lg + 'px' } }, bag, toggle),
     obenEintraege,
-    variante.platz === 'oben' ? aussenfach : null,
+    aussenfach,
     h('div', {
       style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.md + 'px', alignItems: 'start' },
     }, GEGENSTAENDE.map((g, i) => card(g, i)).concat([aussenKarte])),
-    variante.platz === 'unten' ? aussenfach : null,
     h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, maxWidth: '680px', marginTop: space.lg + 'px' } }, t('gepaeck.legend')),
   );
 };

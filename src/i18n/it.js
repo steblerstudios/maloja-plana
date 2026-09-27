@@ -1303,7 +1303,6 @@ export default {
     zurueckZu: 'Torna a {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Pannello',
     tools: 'Strumenti',
-    moreTools: 'Altri strumenti',
     advanced: 'Avanzato',
     tresor: 'Archivio documenti',
     kkScanner: 'Scanner assicurazione',

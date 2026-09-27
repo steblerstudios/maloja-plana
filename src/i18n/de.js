@@ -1303,7 +1303,6 @@ export default {
     zurueckZu: 'Zurück zu {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Übersicht',
     tools: 'Werkzeuge',
-    moreTools: 'Weitere Werkzeuge',
     advanced: 'Erweitert',
     tresor: 'Dokumentenablage',
     kkScanner: 'KK-Scanner',
