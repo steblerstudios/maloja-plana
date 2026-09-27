@@ -71,6 +71,9 @@ function lebensereignisHinweis(selected, a, palette, t) {
       a.ende && klage ? { text: t(k + (istVorbei(a.ende) ? 'einspracheVorbei' : 'einspracheDatum'), { date: formatDE(a.ende) }), stark: true } : null,
       t(k + 'klage'),
       klage ? { text: t(k + (istVorbei(klage) ? 'klageVorbei' : 'klageDatum'), { date: formatDE(klage) }), stark: true } : null,
+      // Nachprüfung 27.09.2026 (Fach + Recht): Einsprache verpasst, Klagefrist läuft noch → das
+      // Klage-Datum darf keinen Weg vortäuschen, den es ohne Einsprache nicht gibt (OR 336b Abs. 1).
+      a.ende && klage && istVorbei(a.ende) && !istVorbei(klage) ? { text: t(k + 'klageNurMitEinsprache'), stark: true } : null,
       t(k + 'fristlos'),
       t(k + 'beratung'),
     ], 'calendar');

@@ -41,6 +41,12 @@ describe('Einsprache gegen die Kündigung: vergangenes Ende', () => {
     expect(html).not.toContain('muss spätestens an diesem Tag');
     expect(html).toContain('möglicherweise abgelaufen'); // 180 Tage nach 15.01.2020 auch vorbei
   });
+  it('Einsprache verpasst, Klagefrist läuft noch → Hinweis, dass die Klage die Einsprache voraussetzt', () => {
+    const vor = new Date(Date.now() - 20 * 864e5).toISOString().slice(0, 10);
+    const html = render({ initialTemplate: 'dismissalObjection', initialAngaben: { ende: vor } });
+    expect(html).toContain('möglicherweise zu spät');
+    expect(html).toContain('setzt voraus, dass die Einsprache rechtzeitig');
+  });
   it('Ende in der Zukunft → die bisherige Angabe', () => {
     const html = render({ initialTemplate: 'dismissalObjection', initialAngaben: { ende: '2099-06-30' } });
     expect(html).toContain('muss spätestens an diesem Tag');
@@ -50,7 +56,7 @@ describe('Einsprache gegen die Kündigung: vergangenes Ende', () => {
 
 describe('Rechtsvorschlag: Amtssprache', () => {
   it('der Hinweis nennt die Amtssprache des Betreibungsamts', () => {
-    expect(render({ initialTemplate: 'debtObjection' })).toContain('Amtssprache des Betreibungsamts');
+    expect(render({ initialTemplate: 'debtObjection' })).toContain('in einer Amtssprache des Betreibungsamts');
   });
 });
 
