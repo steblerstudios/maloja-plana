@@ -59,6 +59,8 @@ export const ABLAEUFE = [
   { view: 'todesfall', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
+// Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
+// sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
 export const SEARCH_VIEWS = [
   // Alle Werkzeuge — aus dem einen Werkzeug-Register (data/werkzeugRegister.js,
   // Vorschau 27.09.2026). Vorher standen sie hier ein zweites Mal von Hand.

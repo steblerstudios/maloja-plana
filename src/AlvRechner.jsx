@@ -7,6 +7,7 @@ import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { zahl, betrag } from './utils/geld.js';
 import { lohnBasis, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 function currentAge(dateStr) {
   if (!dateStr) return null;
@@ -107,7 +108,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     );
 
   return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'family', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('alv.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('alv'), size: 22 }), style: { marginBottom: space.md + 'px' } }, t('alv.title')),
     React.createElement('p', { style: s.intro }, t('alv.intro')),
 
     // ── Eingaben ──

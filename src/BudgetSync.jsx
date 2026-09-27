@@ -14,6 +14,7 @@ import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -274,7 +275,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
   },
 
     // Title
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('budgetSync.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('sync'), size: 22 }), style: { marginBottom: space.md + 'px' } }, t('budgetSync.title')),
 
     // === Income section ===
     budget.incomeDetail.net > 0 && React.createElement('div', { style: itemLineStyle },
