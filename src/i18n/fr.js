@@ -2234,6 +2234,8 @@ export default {
   },
 
   chapterView: {
+    // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
+    abschnitt: { aendern: 'modifier', fertig: 'terminé', ergaenzen: 'compléter', leer: 'encore vide', aendernAria: 'Modifier {name}', fertigAria: '{name} terminé' },
     benefitsLabel: { sie: 'Vos données alimentent :', du: 'Tes données alimentent :' },
     emptyState: { sie: 'Encore vide — quelques indications suffisent pour que Maloja travaille pour vous.', du: 'Encore vide — quelques indications suffisent pour que Maloja travaille pour toi.' },
     emptyStateHint: { sie: 'Vous pouvez compléter à tout moment. Rien ne doit être fait d\'un coup.', du: 'Tu peux compléter à tout moment. Rien ne doit être fait d\'un coup.' },

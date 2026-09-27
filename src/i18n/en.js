@@ -2234,6 +2234,8 @@ export default {
   },
 
   chapterView: {
+    // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
+    abschnitt: { aendern: 'edit', fertig: 'done', ergaenzen: 'add', leer: 'nothing yet', aendernAria: 'Edit {name}', fertigAria: '{name} done' },
     benefitsLabel: 'Your data feeds into:',
     emptyState: 'Empty for now — a few entries and Maloja starts working for you.',
     emptyStateHint: 'You can add more any time. Nothing needs to be done all at once.',

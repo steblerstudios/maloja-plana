@@ -784,11 +784,12 @@ function MirrorSection({ title, rows, palette }) {
   );
 }
 
-export const MirrorCards = ({ chapterKey, data, allData, palette, t }) => {
+export const MirrorCards = ({ chapterKey, data, allData, palette, t, nurSatz = false }) => {
   if (!hasMinData(chapterKey, data)) return null;
 
   const sentence = buildLifeSentence(chapterKey, data, allData, t);
-  const sections = buildMirrorSections(chapterKey, data, t, allData);
+  // nurSatz: die Kapitelseite zeigt die Werte selbst als Abschnittsliste (27.09.2026).
+  const sections = nurSatz ? [] : buildMirrorSections(chapterKey, data, t, allData);
 
   if (!sentence && sections.length === 0) return null;
 
