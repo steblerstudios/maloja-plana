@@ -22,7 +22,8 @@ const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
 const JOB_TEMPLATES = ['wageClaim', 'unpaidWage', 'workReference', 'dismissalObjection'];
 // Deploy-Gate 27.09.2026 (Rechts-Prüfer): der rm-Brieftext dieser vier ist noch nicht
 // gegengelesen → der BRIEF kommt auf Deutsch, die Ansicht bleibt rätoromanisch.
-const BRIEF_DEUTSCH_BEI_RM = ['workReference', 'dismissalObjection', 'debtObjection', 'deathNotice'];
+// Mahnung-Briefe (27.09.2026): rm-Fassung fehlt noch ganz → gleich behandelt.
+const BRIEF_DEUTSCH_BEI_RM = ['workReference', 'dismissalObjection', 'debtObjection', 'deathNotice', 'paymentReminder', 'claimDispute', 'installmentRequest'];
 // Übersetzer für den BRIEF (nicht die Ansicht). `geladen` nur für Unit-Tests.
 export function briefUebersetzer({ lang, anrede, selected, t, geladen }) {
   if (lang !== 'rm' || !BRIEF_DEUTSCH_BEI_RM.includes(selected)) return t;
@@ -81,6 +82,20 @@ function lebensereignisHinweis(selected, a, palette, t) {
   if (selected === 'deathNotice') {
     const k = 'briefe.deathNotice.erbe.';
     return hinweisBox(palette, t(k + 'title'), [t(k + 'text'), { text: t(k + 'brief'), stark: true }, t(k + 'miete')]);
+  }
+  // Mahnung (27.09.2026): die Anerkennungs-Falle steht VOR dem Ratengesuch (OR Art. 135 Ziff. 1),
+  // und beim Bestreiten der Hinweis, dass ein Zahlungsbefehl einen anderen Weg braucht.
+  if (selected === 'installmentRequest') {
+    const k = 'briefe.installmentRequest.hinweis.';
+    return hinweisBox(palette, t(k + 'title'), [{ text: t(k + 'anerkennung'), stark: true }, t(k + 'budget')]);
+  }
+  if (selected === 'claimDispute') {
+    const k = 'briefe.claimDispute.hinweis.';
+    return hinweisBox(palette, t(k + 'title'), [t(k + 'text'), { text: t(k + 'zahlungsbefehl'), stark: true }]);
+  }
+  if (selected === 'paymentReminder') {
+    const k = 'briefe.paymentReminder.hinweis.';
+    return hinweisBox(palette, t(k + 'title'), [t(k + 'text')]);
   }
   if (selected === 'workReference') {
     return hinweisBox(palette, t('briefe.workReference.title'), [t('briefe.workReference.hinweis')]);
