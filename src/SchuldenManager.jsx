@@ -290,7 +290,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('div', { id: 'plan-rate-hilfe', style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('schulden.plan.rateHilfe')),
           React.createElement('div', { role: 'status', 'aria-live': 'polite', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
             !plan ? t('schulden.plan.ohne')
-              : !plan.machbar ? t(plan.grund === 'zins' ? 'schulden.plan.zuWenig' : 'schulden.plan.zuLang', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), zins: betrag(plan.zinsErsterMonat || 0, { stellen: 2 }) })
+              : !plan.machbar ? t(plan.grund === 'zins' ? 'schulden.plan.zuWenig' : 'schulden.plan.zuLang', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), zins: betrag(plan.zinsMonat || 0, { stellen: 2 }) })
               : [
                 React.createElement('p', { key: 'e', style: { margin: 0 } }, t('schulden.plan.ergebnis', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), monate: String(plan.monate), zins: betrag(plan.zinsTotal, { stellen: 2 }) })),
                 React.createElement('ol', { key: 'l', style: { margin: space.xs + 'px 0 0', paddingInlineStart: '20px', fontSize: text.xs, color: palette.mid } },

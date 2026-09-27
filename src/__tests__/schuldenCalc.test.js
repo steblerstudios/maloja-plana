@@ -62,7 +62,17 @@ describe('createDebtPlan', () => {
   });
   it('Rate deckt nicht einmal die Zinsen → nicht machbar statt Endlos-Plan', () => {
     const p = createDebtPlan([{ id: 1, amount: 100000, interestRate: 12, status: 'open' }], 500);
-    expect(p).toEqual({ machbar: false, grund: 'zins', zinsErsterMonat: 1000 });
+    expect(p).toEqual({ machbar: false, grund: 'zins', zinsMonat: 1000 });
+  });
+  it('Zinsen übersteigen die Rate erst später → trotzdem «reicht nicht für die Zinsen»', () => {
+    // Fall des Fach-Prüfers: Miete 20'000 zinslos zuerst, Kredit 20'000 zu 15 % wächst derweil.
+    const p = createDebtPlan([
+      { id: 1, creditor: 'Miete', amount: 20000, status: 'open', category: 'wohnen' },
+      { id: 2, creditor: 'Kredit', amount: 20000, interestRate: 15, status: 'open', category: 'kredit' },
+    ], 300);
+    expect(p.machbar).toBe(false);
+    expect(p.grund).toBe('zins');
+    expect(p.zinsMonat).toBeGreaterThanOrEqual(300);
   });
   it('knapp über den Zinsen → dauert zu lange, ehrlich gemeldet', () => {
     const p = createDebtPlan([{ id: 1, amount: 100000, interestRate: 12, status: 'open' }], 1001);
@@ -78,6 +88,9 @@ describe('createDebtPlan', () => {
 describe('calculateBetreibungsRegisterImpact', () => {
   it('ohne Einkommen keine Zahl (vorher: geteilt durch 1 → «kritisch»)', () => {
     expect(calculateBetreibungsRegisterImpact([{ amount: 3000 }], 0)).toEqual({ totalDebt: 3000, monatseinkommen: null });
+  });
+  it('bezahlte oder erledigte Betreibungen zählen nicht mit', () => {
+    expect(calculateBetreibungsRegisterImpact([{ amount: 3000, status: 'open' }, { amount: 900, status: 'paid' }, { amount: 50, status: 'erledigt' }], 3000).totalDebt).toBe(3000);
   });
   it('mit Einkommen: wie viele Monatseinkommen, ohne Wertung', () => {
     expect(calculateBetreibungsRegisterImpact([{ amount: 3000 }, { amount: 1500 }], 3000)).toEqual({ totalDebt: 4500, monatseinkommen: 1.5 });

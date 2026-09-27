@@ -37,7 +37,7 @@ const rappen = (x) => Math.round(x * 100) / 100;
 // (Stufe, dann Lawine/Schneeball). Vereinfacht: die ganze Rate geht an die erste offene Schuld,
 // die Zinsen der übrigen laufen weiter (Jahressatz / 12, einfach je Monat). Keine Gebühren.
 // Ergebnis: { machbar: true, monate, zinsTotal, reihenfolge[{id, creditor, monat}] }
-//        oder { machbar: false, grund: 'zins', zinsErsterMonat } | { machbar: false, grund: 'dauer' }
+//        oder { machbar: false, grund: 'zins', zinsMonat } | { machbar: false, grund: 'dauer' }
 //        oder null (keine Rate, keine offene Schuld).
 export const PLAN_MAX_MONATE = 360;
 export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
@@ -59,7 +59,9 @@ export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
       d.rest += z;
       zinsMonat += z;
     }
-    if (monat === 1 && zinsMonat >= rate) return { machbar: false, grund: 'zins', zinsErsterMonat: rappen(zinsMonat) };
+    // Jeden Monat prüfen, nicht nur im ersten (Fach-Prüfer 27.09.): wächst eine verzinste Schuld,
+    // während eine zinslose abbezahlt wird, übersteigen die Zinsen die Rate erst später.
+    if (zinsMonat >= rate) return { machbar: false, grund: 'zins', zinsMonat: rappen(zinsMonat) };
     zinsTotal += zinsMonat;
     let budget = rate;
     for (const d of offen) {
@@ -78,8 +80,11 @@ export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
 // wurde durch 1 geteilt und «kritisch» gemeldet; die Schwellen 10/25/50 % und die Wertungen
 // («unter Kontrolle», «ernst») hatten keine Quelle. Jetzt nur eine neutrale Zahl, und nur mit
 // Einkommen: wie viele Monatseinkommen die erfassten Betreibungen ausmachen.
+// Bezahlte/erledigte Betreibungen zählen nicht mit (Fach-Prüfer 27.09.2026).
 export const calculateBetreibungsRegisterImpact = (registerEntries, monthlyIncome) => {
-  const totalDebt = (registerEntries || []).reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+  const totalDebt = (registerEntries || [])
+    .filter(e => e.status !== 'paid' && e.status !== 'erledigt')
+    .reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
   const income = Number(monthlyIncome) || 0;
   return {
     totalDebt,
@@ -104,7 +109,9 @@ export const formatVerlustschein = (verlustschein) => {
 
 // Konsequenz-orientierte Reihenfolge. Belegt 27.09.2026 (vorher nur «CH-Schuldenberatungs-
 // Praxis» ohne Quelle): schuldeninfo.ch «Weiterleben mit Schulden» (2011): zuerst die
-// lebensnotwendigen Rechnungen — Wohnungsmiete, Krankenkasse, Alimente, Heiz- und Kochenergie.
+// LAUFENDEN lebensnotwendigen Rechnungen — Wohnungsmiete, Krankenkasse, Alimente, Heiz- und
+// Kochenergie. Für RÜCKSTÄNDE tragen die Folgen: Miete → Kündigung (OR 257d), Krankenkasse →
+// Betreibung (KVG 64a).
 // Caritas, Ratgeber Schuldensanierung: Bussen und Geldstrafen müssen auch in einer Sanierung
 // zu 100 % bezahlt werden → ebenfalls vorne. Steuern: laufende Steuern gehören ins Budget
 // (Caritas); ein Erlass der Bundessteuer nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4).
@@ -127,6 +134,7 @@ export const prioritizeDebts = (debts, method = 'lawine') => {
         ? Number(a.amount || 0) - Number(b.amount || 0)
         : Number(b.interestRate || 0) - Number(a.interestRate || 0);
     }
+    // Innerhalb der Stufen 1 und 2: grösster Betrag zuerst — eigene Entscheidung, keine Quelle.
     return Number(b.amount || 0) - Number(a.amount || 0);
   }).map(d => ({ ...d, tier: tierOf(d) }));
 };
