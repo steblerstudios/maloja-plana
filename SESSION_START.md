@@ -19,6 +19,22 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🟢 **Nachtrag 27.09., 14:13 — Deploy-Tor bestanden: `main` = `3c4706e`, Marke `.maloja/predeploy-ok` = `3c4706e` (12:12 UTC), NICHT live** (live = `80262b6`).
+>
+> **Umfang:** #409, #410, #408 (Mahnung/Schulden), #414 (Werkzeuge im Rucksack), #421 (Gate-Korrekturen) — 6 Commits über live.
+> **Mechanik:** 4427 Tests grün (vor #421-Merge gemessen, #421 selbst 4403 + #414) · Build · SEO 0/0 · Startbündel 63,4/65 kB · PII ·
+> ESTV 156/156 ohne Abweichung · CSP unverändert · keine neuen Abhängigkeiten · neue Texte in den Sprach-Chunks. Chunk-Warnung >500 kB
+> gab es schon beim Live-Stand (Sprachdateien, nachgeladen).
+> **Prüfer:** 10 Prüfer auf `73aee2f` (Sicherheit/a11y/Design ganze App, übrige auf dem Diff) + Nachprüfung #414 (Sicherheit, a11y,
+> Design+Code-Review): **0 Blocker**. Umgesetzt in #421: Datenverlust im Schuldenmanager nach «Beispiel verlassen» (älter als #408) ·
+> Ratengesuch «sie begleichen» · Du-Form · Zinsrechner-Meldungen · a11y Raten-Feld. Rechtsberatungs-Hinweis war schon da.
+> **Geparkt (⚠️, kein Blocker):** Menü-Suche findet «Organspende» nicht mehr (#414; Suche-Ansicht findet sie) · «Was steht mir zu?» vs.
+> «Lebenssituationen» · Aussenfach doppelt im Gepäck · Aussenfach-Chips beim ersten Einblenden per Tab erreichbar · aktiver Zustand
+> bei `chapter`-Einträgen im Menü · Abbau-Plan überladen (Steuer-Kasten immer, Verlustschein-Text vor dem Knopf) · Schritt 4 Mahnung
+> lang · K48 H8–H10 (drei neue Briefe) · Doku-Drift ABLAEUFE G3 · Token-Hygiene · `leseBetrag` → `utils/geld.js`.
+> **Deploy:** Stebler Studios, `bash deploy.sh` im Haupt-Checkout (steht auf `3c4706e`). Danach live gegen frischen Build prüfen,
+> FEATURES auf `verified-live`. `/code-review ultra` (billed) liegt bei Stebler Studios.
+
 > ✅ **Nachtrag 27.09., 13:31 — #408 gemergt (Squash, auf Wunsch von Stebler Studios): `main` = `73aee2f`, NICHT live** (live = `80262b6`).
 > `main`-Baum = geprüfter Zweig-Stand `fd40373` (`git diff` leer). **Nach dem Merge kollidiert #416** (Hauptknopf Werkzeuge)
 > in `src/SchuldenManager.jsx` mit `main` — dort `main` hineinmergen. #414 kollidierte schon vorher (Vorschau, nicht mergen).
