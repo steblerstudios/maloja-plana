@@ -49,6 +49,13 @@ describe('Abschnittsliste', () => {
     expect(html).toMatch(/<input/);
   });
 
+  it('offener Abschnitt zeigt auch «mehr Felder» ohne eigene Überschrift (steuerbares Einkommen)', () => {
+    const label = kapitel('finanzen').fields.find((f) => f.k === 'taxableIncome').label;
+    expect(label).toBeTruthy();
+    const html = render('finanzen', DEMO_DATA.finanzen, { anfangsOffen: 'alle' });
+    expect(html).toContain(label);
+  });
+
   it('kein Vorspann mehr: keine «Ihre Daten fliessen in»-Chips', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     expect(html).not.toContain(t('chapterView.benefitsLabel'));
