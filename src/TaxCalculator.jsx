@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PrimaryButton from './components/PrimaryButton.jsx';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
@@ -185,6 +184,16 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     setAnsage(steuerAnsageText(t, teileJetzt ? teileJetzt.split('|') : []));
   }
 
+  const buttonStyle = {
+    padding: '10px 16px',
+    background: palette.sand,
+    color: palette.onSand,
+    border: 'none',
+    borderRadius: radius.sm,
+    cursor: 'pointer',
+    fontWeight: weight.semi,
+    fontSize: text.sm
+  };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'money', size: 22 }), style: { marginBottom: space.sm } }, t('tax.title')),
@@ -411,8 +420,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
       React.createElement('div', { 'data-testid': 'tarifvergleich-ohne-zahl', style: { fontSize: text.sm, color: palette.mid } }, t(VERGLEICH_OHNE_ZAHL_TEXT[ohneVergleich] || 'tax.saeulen.nurGeschaetzt'))
     ),
 
-    // Der eine Hauptknopf der Seite (Seitenrundgang 27.09.2026: vorher nachgebauter Sand-Knopf).
-    React.createElement(PrimaryButton, { palette, onClick: handleSave, icon: hinweisZeichen('kaestchen'), style: { width: '100%', minHeight: '44px' } }, t('tax.saveData')),
+    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
     React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand }),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PrimaryButton from './components/PrimaryButton.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
@@ -520,12 +519,16 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         )
       ),
 
-      // Actions — EIN Hauptknopf (Online-Antrag), die zwei anderen ruhig (Seitenrundgang
+      // Actions — EIN lauter Knopf (Online-Antrag), die zwei anderen ruhig (Seitenrundgang
       // 27.09.2026: vorher drei gefüllte Flächen, «Dokument» in skyDeep genauso laut).
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' } },
-        React.createElement(PrimaryButton, {
-          palette, onClick: handleApplyOnline, disabled: !anspruchMoeglich,
-          style: { minHeight: '44px', ...(anspruchMoeglich ? null : gesperrtStil) },
+        // Bleibt ein eigener Knopf statt PrimaryButton: gesperrt gilt der Stil aus K53
+        // (gestrichelt, ohne Deckkraft) — PrimaryButton dimmt über opacity.
+        React.createElement('button', {
+          type: 'button',
+          onClick: handleApplyOnline,
+          disabled: !anspruchMoeglich,
+          style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
         },
           // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
           // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
