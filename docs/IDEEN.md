@@ -323,7 +323,7 @@ Abschiedsagentur, plaant).
     Zahlungsbefehl**), Kantons- und Gemeindesteuern → kantonales Steueramt.
   - **Offen (Ideen, je vor dem Bau belegen):** Brücke zu «Gezahlt/offen» pro Arztrechnung ·
     kantonale Steuer-Regeln (Erlass, Zahlungserleichterung) je Kanton belegen
-    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
+    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · ~~Rate aus dem Budget, Bussen, Verlustscheine, Mahngebühren~~ *(gebaut 27.09. abends, #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
     rm-Fassung von Ablauf und Briefen.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).
 - 🌱 **Generatoren fürs Lebensende** *⟨Eingang 19.07.⟩* — Vorsorgeauftrag, Testament,

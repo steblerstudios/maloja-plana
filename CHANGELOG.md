@@ -31,6 +31,12 @@ kommt der Changelog immer mit, nie doppelt.*
   statt endloser Liste. Betreibungsregister ohne Wertungen und Schwellen ohne Quelle. Reihenfolge
   belegt (schuldeninfo.ch, Caritas), neu ein belegter Steuer-Hinweis (DBG 33/34, StHG 9/13).
   Erste Tests für `schuldenCalc.js`.
+- **Abbau-Plan: Monatsrate aus dem Budget** — vorgeschlagen, wenn der Lohn netto erfasst ist und
+  Wohnen, Krankenkasse und Lebensmittel im Budget stehen; heutige Schuldenraten zählen als verfügbar;
+  überschreibbar. **Bussen und Geldstrafen** (StGB 35/36/79a/106: Raten, Ersatzfreiheitsstrafe,
+  gemeinnützige Arbeit), **Verlustscheine** (SchKG 149/149a/265: zinsfrei, 20 Jahre, Löschung nach
+  Tilgung) und ein belegter Hinweis zu **Mahn- und Inkassogebühren** (in der Regel nicht geschuldet,
+  nur wenn beziffert vereinbart; K-Tipp, SRF) — dazu im Bestreitungsbrief der Grund «nur Gebühren».
 
 ### Geändert
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
