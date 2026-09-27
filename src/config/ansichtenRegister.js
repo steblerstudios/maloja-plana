@@ -48,7 +48,7 @@ export const ABLAEUFE = [
   { view: 'aussteuerung', bereich: 'arbeit', nav: 'nav.aussteuerung', sub: 'nav.sub.aussteuerung', icon: 'lebenslauf', aliases: ['ausgesteuert', 'aussteuerung', 'arbeitslos', 'taggeld', 'überbrückungsleistung', 'fin de droits', 'esaurimento', 'benefits exhausted'] },
   { view: 'zuzug', bereich: 'behoerden', nav: 'nav.zuzug', sub: 'nav.sub.zuzug', icon: 'behoerden', aliases: ['zuzug', 'einreise', 'ausland', 'neu in der schweiz', 'anmeldung', 'expat', 'arrivée', 'arrivo', 'moving to switzerland'] },
   { view: 'einbuergerung', bereich: 'behoerden', nav: 'nav.einbuergerung', sub: 'nav.sub.einbuergerung', icon: 'behoerden', aliases: ['einbürgerung', 'einbuergerung', 'schweizer pass', 'bürgerrecht', 'naturalisation', 'naturalizzazione', 'citizenship'] },
-  { view: 'vorsorgeauftrag', bereich: 'vorsorge', nav: 'nav.vorsorgeauftrag', sub: 'nav.sub.vorsorgeauftrag', icon: 'document', aliases: ['vorsorgeauftrag', 'patientenverfügung', 'urteilsunfähigkeit', 'kesb', 'mandat pour cause d’inaptitude', 'directives anticipées', 'mandato precauzionale', 'direttive del paziente', 'advance directive', 'power of attorney'] },
+  { view: 'vorsorgeauftrag', bereich: 'vorsorge', nav: 'nav.vorsorgeauftrag', sub: 'nav.sub.vorsorgeauftrag', icon: 'document', aliases: ['vorsorgeauftrag', 'patientenverfügung', 'urteilsunfähigkeit', 'kesb', 'mandat pour cause d’inaptitude', 'directives anticipées', 'mandato precauzionale', 'direttive del paziente', 'advance directive', 'power of attorney', 'testament', 'erbe'] },
   { view: 'ergaenzungsleistungen', bereich: 'vorsorge', nav: 'nav.ergaenzungsleistungen', sub: 'nav.sub.ergaenzungsleistungen', icon: 'vorsorge', aliases: ['ergänzungsleistungen', 'el', 'el anmelden', 'prestations complémentaires', 'pc avs ai', 'prestazioni complementari', 'supplementary benefits', 'heimeintritt', 'vermögensschwelle'] },
   { view: 'zusammenziehen', bereich: 'wohnen', nav: 'nav.zusammenziehen', sub: 'nav.sub.zusammenziehen', icon: 'home', aliases: ['zusammenziehen', 'konkubinat', 'ohne trauschein', 'konkubinatsvertrag', 'concubinage', 'vivre ensemble', 'concubinato', 'convivenza', 'cohabitation', 'moving in together'] },
   { view: 'adoption', bereich: 'familie', nav: 'nav.adoption', sub: 'nav.sub.adoption', icon: 'family', aliases: ['adoption', 'adoptieren', 'stiefkindadoption', 'adoptionsurlaub', 'adopter', 'congé d’adoption', 'adozione', 'congedo di adozione', 'adopt'] },
@@ -71,6 +71,7 @@ export const SEARCH_VIEWS = [
   // stehen hier; ihr Platz im Rucksack steht in data/gepaeck.js.
   { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ausbildung', aliases: ['stipendien', 'scholarship'] },
   { view: 'organ', nav: 'nav.organDonation', icon: 'health', aliases: ['organspende', 'spende', 'organ', 'donation'] },
+  { view: 'bestattung', nav: 'nav.bestattung', icon: 'document', aliases: ['bestattung', 'beerdigung', 'kremation', 'abdankung', 'obsèques', 'funerale', 'funeral'] },
   // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
   // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
   // sucht, sucht mit genau diesen Wörtern.

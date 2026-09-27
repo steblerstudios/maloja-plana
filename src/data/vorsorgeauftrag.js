@@ -35,11 +35,15 @@ export function abweichendeVertretung(va, pv) {
   return !!a && !!b && a !== b;
 }
 
-const personZusatz = (p, t) => [
-  leer(p.beziehung) ? null : String(p.beziehung).trim(),
-  datumCH(p.geburt) ? t('va.doc.geboren', { datum: datumCH(p.geburt) }) : null,
-  leer(p.adresse) ? null : String(p.adresse).trim(),
-].filter(Boolean).join(', ');
+// « (Schwester, geboren am …, Adresse)» — mit Klammern nur, wenn es etwas gibt.
+const personZusatz = (p, t) => {
+  const teile = [
+    leer(p.beziehung) ? null : String(p.beziehung).trim(),
+    datumCH(p.geburt) ? t('va.doc.geboren', { datum: datumCH(p.geburt) }) : null,
+    leer(p.adresse) ? null : String(p.adresse).trim(),
+  ].filter(Boolean);
+  return teile.length ? ' (' + teile.join(', ') + ')' : '';
+};
 
 export function vorlage(antworten, daten, t) {
   const a = antworten || {};
