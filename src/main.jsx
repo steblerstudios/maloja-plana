@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE } from './config/brotkrumePfade.js';
+import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -608,6 +609,10 @@ const AppInner = ({ demo }) => {
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
+  // Kapitel-Seiten: der Hintergrund hinter der Karte leicht in der Bereichsfarbe
+  // (Entscheid 27.09.2026, utils/lebensbereichFruechte.js). Sonst palette.bg wie bisher.
+  const kapitelFarbe = view === 'chapter' && chapters[activeChapter] ? kapitelBereichsfarbe(chapters[activeChapter].key, palette, isDarkMode) : null;
+  const seitenGrund = kapitelFarbe ? kapitelFarbe.grund : palette.bg;
 
   // Woher man in die aktuelle Ansicht kam (Entscheid 25.09.2026: Brotkrume + Herkunft).
   // Steht im Verlaufs-Eintrag, nicht nur hier — darum überlebt es Neuladen und
@@ -1128,7 +1133,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
