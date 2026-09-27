@@ -3530,7 +3530,7 @@ export default {
         },
       },
       hinweis: {
-        title: 'Avant de proposer des acomptes',
+        title: { sie: 'Avant de proposer des acomptes', du: 'Avant de proposer des acomptes' },
         anerkennung: { sie: 'Une demande de paiement échelonné et tout acompte valent reconnaissance de la dette — le délai de prescription recommence à courir (CO art. 135, ch. 1, art. 137, al. 1). Ne proposez des acomptes que si la créance est correcte.', du: 'Une demande de paiement échelonné et tout acompte valent reconnaissance de la dette — le délai de prescription recommence à courir (CO art. 135, ch. 1, art. 137, al. 1). Ne propose des acomptes que si la créance est correcte.' },
         budget: { sie: 'Le créancier n’est pas obligé d’accepter. Demandez une confirmation écrite et, si plusieurs créances sont ouvertes, faites appel à un service de désendettement.', du: 'Le créancier n’est pas obligé d’accepter. Demande une confirmation écrite et, si plusieurs créances sont ouvertes, fais appel à un service de désendettement.' },
       },
