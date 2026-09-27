@@ -320,7 +320,7 @@ export default {
     step2Hinweis: 'La couverture par l’ancien employeur prend fin le {date} (LAA art. 3).',
     step1DateLabel: 'Fin des rapports de travail (selon la résiliation)',
     step1DateHint: 'S’inscrire au plus tard le {date} si l’indemnité est demandée dès cette date (LACI art. 17). Plus tôt, c’est mieux — l’inscription est aussi possible en ligne sur travail.swiss.',
-    step1Button: 'Délai « Inscription ORP » dans le calendrier ({date})',
+    step1Button: 'Rappel « Dernier jour pour s’inscrire à l’ORP » dans le calendrier ({date})',
     reminderRavTitle: 'Inscription à l’ORP — au plus tard aujourd’hui',
     quelle: 'Sources : [[LACI art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/fr#art_17]], [[OACI art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/fr#art_19]], [[LAA art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/fr#art_3]] (vérifié en septembre 2026).',
     title: 'Perte d\'emploi — que faire ?',

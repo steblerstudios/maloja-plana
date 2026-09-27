@@ -320,7 +320,7 @@ export default {
     step2Hinweis: 'Die Deckung über den alten Arbeitgeber endet am {date} (UVG Art. 3).',
     step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
     step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
-    step1Button: 'Frist «Anmeldung RAV» in den Kalender ({date})',
+    step1Button: 'Erinnerung «Spätester Tag für die RAV-Anmeldung» in den Kalender ({date})',
     reminderRavTitle: 'RAV-Anmeldung — spätestens heute',
     quelle: 'Quellen: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (geprüft im September 2026).',
     title: 'Stelle verloren — was tun?',
