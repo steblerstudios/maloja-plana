@@ -460,12 +460,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
       }, t('dashboard.nextUpReassure')),
       (() => {
-        const reminders = loadReminders();
+        // Neben den Erinnerungen auch die Steuerfrist aus dem Kapitel Behörden — bis
+        // 27.09.2026 stand hier «keine offene», während das Kapitel dieselbe Frist
+        // «in 3 Tagen» zeigte. Sie ist die einzige Frist, die ein Kapitel als Datum führt.
         const today = inDays(0);
-        const upcoming = reminders
-          .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
+        const steuerfrist = data.behoerden && data.behoerden.taxFilingDeadline;
+        const kandidaten = loadReminders().filter((r) => !r.done && r.dueDate);
+        if (steuerfrist) kandidaten.push({ title: t('behördenStatus.taxDeadline'), dueDate: steuerfrist });
+        const upcoming = kandidaten
+          .filter((r) => r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
-        const fmt = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        // Lokal gelesen (new Date('2026-09-30') ist UTC-Mitternacht) und in der App-Sprache,
+        // nicht in der des Browsers.
+        const fmt = (iso) => { try { const [j, m, d] = iso.split('-').map(Number); return new Date(j, m - 1, d).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'short' }); } catch { return iso; } };
         const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
         const part = (label, value) => React.createElement('span', null,
           React.createElement('span', { style: { color: palette.soft } }, label + ' '),
