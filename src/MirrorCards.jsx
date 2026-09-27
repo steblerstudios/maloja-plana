@@ -12,6 +12,7 @@ import { text, weight, space, radius, leading, shadow } from './config/tokens.js
 import { Icon } from './IconSystem.jsx';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { betrag } from './utils/geld.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -391,7 +392,7 @@ function buildNotfallSections(data, t) {
   // Section: Gesundheitsdaten (status only — no content)
   const healthRows = [];
   if (data.bloodType && data.bloodType !== 'unknown' && data.bloodType !== '') {
-    healthRows.push({ label: t('mirror.notfall.bloodType'), value: data.bloodType });
+    healthRows.push({ label: t('mirror.notfall.bloodType'), value: blutgruppeLabel(data.bloodType, t) });
   }
   if (data.allergies) healthRows.push({ label: t('mirror.notfall.allergiesRecorded'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
   if (data.medications) healthRows.push({ label: t('mirror.notfall.medicationsRecorded'), value: React.createElement(Icon, { name: 'check', size: 14 }) });

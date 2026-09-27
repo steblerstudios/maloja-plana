@@ -13,6 +13,8 @@ import { aufklappZeichen } from './IconKern.jsx';
 import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
+import { auswahlLabel } from './utils/auswahlLabel.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -75,8 +77,8 @@ function buildSnippet(chapterKey, chData, allData, t) {
     const parts = [chData.kkInsurer];
     const prem = fmtCHF(chData.kkPremium);
     if (prem) parts.push(prem);
-    if (chData.franchise) parts.push(t('synthesis.franchise', { value: chData.franchise }));
-    if (chData.kkModel) parts.push(chData.kkModel);
+    if (chData.franchise) parts.push(t('synthesis.franchise', { value: auswahlLabel('versicherungen', 'franchise', chData.franchise, t) }));
+    if (chData.kkModel) parts.push(auswahlLabel('versicherungen', 'kkModel', chData.kkModel, t));
     return parts.join(', ') + '.';
   }
   if (chapterKey === 'ausbildung') {
@@ -97,7 +99,7 @@ function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'notfall') {
     if (!chData.emergencyContact) return null;
     const parts = [t('synthesis.emergencyContact', { name: chData.emergencyContact })];
-    if (chData.bloodType) parts.push(t('synthesis.bloodType', { type: chData.bloodType }));
+    if (blutgruppeLabel(chData.bloodType)) parts.push(t('synthesis.bloodType', { type: blutgruppeLabel(chData.bloodType, t) }));
     if (chData.allergies) parts.push(chData.allergies);
     return parts.join(' · ') + '.';
   }
@@ -459,12 +461,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
       }, t('dashboard.nextUpReassure')),
       (() => {
-        const reminders = loadReminders();
+        // Neben den Erinnerungen auch die Steuerfrist aus dem Kapitel Behörden — bis
+        // 27.09.2026 stand hier «keine offene», während das Kapitel dieselbe Frist
+        // «in 3 Tagen» zeigte. Sie ist die einzige Frist, die ein Kapitel als Datum führt.
         const today = inDays(0);
-        const upcoming = reminders
-          .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
+        const steuerfrist = data.behoerden && data.behoerden.taxFilingDeadline;
+        const kandidaten = loadReminders().filter((r) => !r.done && r.dueDate);
+        if (steuerfrist) kandidaten.push({ title: t('behördenStatus.taxDeadline'), dueDate: steuerfrist });
+        const upcoming = kandidaten
+          .filter((r) => r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
-        const fmt = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        // Lokal gelesen (new Date('2026-09-30') ist UTC-Mitternacht) und in der App-Sprache,
+        // nicht in der des Browsers.
+        const fmt = (iso) => { try { const [j, m, d] = iso.split('-').map(Number); return new Date(j, m - 1, d).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'short' }); } catch { return iso; } };
         const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
         const part = (label, value) => React.createElement('span', null,
           React.createElement('span', { style: { color: palette.soft } }, label + ' '),
@@ -878,11 +887,27 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
           ] },
         ];
+        // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus
+        // «Lebensereignisse» in einen Ablauf ging und «Übersicht» antippt, soll die
+        // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
+        // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
+        const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
+        let offen = [];
+        try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
+        const merkeGruppe = (gi, istOffen) => {
+          try {
+            const rest = offen.filter((i) => i !== gi);
+            offen = istOffen ? rest.concat(gi) : rest;
+            sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
+          } catch { /* ohne Speicher: nichts merken */ }
+        };
         return React.createElement(React.Fragment, null,
           ...groups.map((g, gi) => React.createElement('details', {
             // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
             // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
             key: 'tg-' + gi,
+            open: Array.isArray(offen) && offen.includes(gi),
+            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
