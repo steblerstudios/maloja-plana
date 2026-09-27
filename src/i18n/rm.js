@@ -2899,6 +2899,23 @@ export default {
       title: 'Bussen und Geldstrafen',
       quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.
+    // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    bild: {
+      offen: 'Noch offen',
+      ueberfaellig: 'Fälligkeit überschritten: {amount}',
+      ohneDatum: 'Ohne Fälligkeitsdatum: {amount}',
+      bezahlt: 'Bereits bezahlt: {amount}',
+      balkenLabel: 'Noch offen, nach Reihenfolge',
+      naechstes: 'Als Erstes in der Reihenfolge: {name}.',
+      achse: 'Monat',
+      imMonat: 'im {n}. Monat',
+      vonBis: 'Monat {von} bis {bis}',
+      zeitachseLabel: 'Wann welche Forderung bezahlt wäre',
+      stufenTitel: 'Wo jede Forderung steht',
+      stufeOffen: 'Stand nicht erfasst',
+      ausForderungen: 'Unter «Schulden» ist bei {namen} ein Zahlungsbefehl vermerkt. Hier lässt sich die Betreibung dazu erfassen.',
+    },
     stufe: { // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       label: 'Stand',
       keine: 'Keine Angabe',

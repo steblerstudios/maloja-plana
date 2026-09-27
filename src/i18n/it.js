@@ -1298,7 +1298,7 @@ export default {
     saving: 'Salvataggio...',
     skipToContent: 'Vai al contenuto',
     saved: 'Salvato',
-    savedTemporary: 'Ripreso — solo per ora, non salvato in modo duraturo.',
+    savedTemporary: 'Applicato — solo per ora, non salvato in modo duraturo.',
     saveError: 'Impossibile salvare — verificare lo spazio disponibile.',
     fremdGeaendert: 'Modificato in un\'altra finestra. Per non sovrascrivere nulla, questa finestra non salva più.',
     notSaved: 'Non salvato',
@@ -3156,6 +3156,22 @@ export default {
     bussen: {
       title: 'Multe e pene pecuniarie',
       quelle: 'Fonti: [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_35]], [[CP art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_36]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_106]] (verificato a settembre 2026).',
+    },
+    // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    bild: {
+      offen: 'Ancora aperto',
+      ueberfaellig: 'Scadenza superata: {amount}',
+      ohneDatum: 'Senza data di scadenza: {amount}',
+      bezahlt: 'Già pagato: {amount}',
+      balkenLabel: 'Ancora aperto, per ordine',
+      naechstes: 'Primo nell’ordine: {name}.',
+      achse: 'Mese',
+      imMonat: 'al {n}° mese',
+      vonBis: 'dal mese {von} al {bis}',
+      zeitachseLabel: 'Quando ogni debito sarebbe saldato',
+      stufenTitel: 'A che punto è ogni credito',
+      stufeOffen: 'Stato non registrato',
+      ausForderungen: 'Sotto «Debiti» è annotato un precetto esecutivo per {namen}. Qui si può registrare l’esecuzione.',
     },
     stufe: {
       label: 'Stadio',
