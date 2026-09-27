@@ -25,7 +25,7 @@ describe('GitHub Actions auf feste Commits gepinnt', () => {
 
   it('jede `uses:` zeigt auf einen 40-stelligen Hash und nennt die Version', () => {
     const ungepinnt = usesZeilen()
-      .filter(({ zeile }) => !/uses:\s*[\w.-]+\/[\w.\/-]+@[0-9a-f]{40}\s+#\s*v\d/.test(zeile))
+      .filter(({ zeile }) => !/uses:\s*[\w.-]+\/[\w./-]+@[0-9a-f]{40}\s+#\s*v\d/.test(zeile))
       .map(({ datei, nr, zeile }) => `${datei}:${nr} ${zeile.trim()}`);
     expect(ungepinnt).toEqual([]);
   });

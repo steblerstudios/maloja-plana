@@ -459,7 +459,7 @@ describe('Berge · Stations-Knöpfe in hell und dunkel', () => {
     const gold = '#C4A870';
     const hell = mitKontrastZu(gold, DARK_PALETTE.surface, 3);
     expect(luminanzVon(hell)).toBeGreaterThanOrEqual(luminanzVon(gold));
-    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hell.slice(i, i + 2), 16));
+    const [r, , b] = [1, 3, 5].map((i) => parseInt(hell.slice(i, i + 2), 16));
     expect(r).toBeGreaterThan(b);
   });
 });

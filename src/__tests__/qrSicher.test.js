@@ -342,7 +342,7 @@ describe('vCard · Zeilenfaltung', () => {
 
   it('hält jede Zeile unter 76 Oktetten, auch mit Umlauten', () => {
     const notiz = 'Allergien: Nüsse, Pollen. Medikamente: eine absichtlich sehr lange Zeile mit Ümlauten, die weit über fünfundsiebzig Oktette hinausgeht';
-    const vcard = vcardBauen({ name: 'Sophie Stebler', tel: '079 000 00 00', notiz });
+    const vcard = vcardBauen({ name: 'Maria Muster', tel: '079 000 00 00', notiz });
     for (const zeile of vcard.split('\r\n')) expect(oktette(zeile)).toBeLessThanOrEqual(75);
   });
 
@@ -368,8 +368,24 @@ describe('vCard · Zeilenfaltung', () => {
 
   it('wiegt die Faltung mit: die fertige Karte bleibt unter der Grenze', () => {
     const abschnitte = [{ titel: 'Notfall', rows: Array.from({ length: 30 }, (_, i) => ({ label: 'Feld ' + i, value: 'Wert mit Ümlaut ' + i })) }];
-    const { text, bytes } = qrNotfallVcard(abschnitte, { name: 'Sophie Stebler', tel: '079 000 00 00' });
+    const { text, bytes } = qrNotfallVcard(abschnitte, { name: 'Maria Muster', tel: '079 000 00 00' });
     expect(bytes).toBeLessThanOrEqual(QR_MAX_BYTES_VCARD);
     for (const zeile of text.split('\r\n')) expect(oktette(zeile)).toBeLessThanOrEqual(75);
+  });
+});
+
+// vcardMaskieren war importiert, aber nie direkt geprüft (eslint no-unused-vars, 27.09.2026).
+// Es schützt jeden Wert im Notfall-QR: ein «;» oder «,» im Namen oder in der Notiz würde sonst
+// ein vCard-Feld teilen, ein Zeilenumbruch eine neue Eigenschaft beginnen (RFC 6350 §3.4).
+describe('vcardMaskieren', () => {
+  it('maskiert Backslash zuerst, dann Semikolon, Komma und Zeilenumbruch', () => {
+    expect(vcardMaskieren('a\\b')).toBe('a\\\\b');
+    expect(vcardMaskieren('Muster; Maria')).toBe('Muster\\; Maria');
+    expect(vcardMaskieren('Penicillin, Nüsse')).toBe('Penicillin\\, Nüsse');
+    expect(vcardMaskieren('Zeile 1\r\nZeile 2\rZeile 3')).toBe('Zeile 1\\nZeile 2\\nZeile 3');
+  });
+  it('leere und fehlende Werte ergeben einen leeren Text', () => {
+    expect(vcardMaskieren(undefined)).toBe('');
+    expect(vcardMaskieren(null)).toBe('');
   });
 });
