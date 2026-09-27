@@ -587,6 +587,11 @@ const AppInner = ({ demo }) => {
   // Im Beispiel landen Speichern-Knöpfe der Rechner in der Beispiel-Kopie (nur im
   // Arbeitsspeicher) — vorher mischten sie Beispielwerte in den echten Stand.
   const writeData = demoMode ? setDemoData : sandboxActive ? setSandboxData : setData;
+  // Welcher Datenstand ist aktiv? Als `key` an Ansichten, die Daten in eigenen Zustand kopieren
+  // und selbst zurückschreiben (Schuldenmanager). Deploy-Gate 27.09.2026: nach «Beispiel verlassen»
+  // blieb der Schuldenmanager eingehängt, hielt die Beispiel-Listen und schrieb sie beim nächsten
+  // Speichern über die ECHTEN Schulden, Betreibungen und Verlustscheine.
+  const datenModus = demoMode && demoData ? 'beispiel' : sandboxActive ? 'probe' : 'echt';
   // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
   // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
   const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
@@ -1504,6 +1509,7 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
+          key: datenModus,
           palette, t,
           data: activeData,
           onNavigate: handleNavigate,
@@ -1579,7 +1585,7 @@ const AppInner = ({ demo }) => {
         view === 'ansprueche' && React.createElement(AnspruchLandkarte, { palette, t, onNavigate: handleNavigate }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
-        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
@@ -1608,6 +1614,7 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
+          onNotifications: () => handleNavigate('notifications'),
           demoMode,
         }),
       )),

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { leseBetrag } from './briefGenerator.js';
-import { verzugszins, SATZ_GESETZ } from './utils/verzugszins.js';
+import { verzugszins, zinsEingabeStatus, SATZ_GESETZ } from './utils/verzugszins.js';
 import { zahl } from './utils/geld.js';
 import { text, radius, space, weight } from './config/tokens.js';
 
@@ -26,6 +26,7 @@ const ZinsRechner = ({ palette, t }) => {
   const [seit, setSeit] = useState('');
   const [satz, setSatz] = useState(String(SATZ_GESETZ));
   const r = verzugszins({ betrag: leseBetrag(betrag), satz, seit });
+  const status = zinsEingabeStatus({ betrag: leseBetrag(betrag), satz, seit });
   const feld = { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box', width: '100%', maxWidth: '220px' };
   const label = { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' };
   const hilfe = { fontSize: text.xs, color: palette.mid, margin: space.xs + 'px 0 0' };
@@ -41,7 +42,7 @@ const ZinsRechner = ({ palette, t }) => {
     ...eingabe('mahnung-zins-satz', t('mahnung.zins.satz'), satz, setSatz, 'text', { inputMode: 'decimal', autoComplete: 'off', 'aria-describedby': 'mahnung-zins-satz-hilfe' }),
     React.createElement('p', { id: 'mahnung-zins-satz-hilfe', style: hilfe }, t('mahnung.zins.satzHilfe')),
     React.createElement('p', { role: 'status', 'aria-live': 'polite', style: { ...s.stepText, marginTop: space.sm + 'px', color: palette.text } },
-      r ? t('mahnung.zins.ergebnis', { tage: String(r.tage), satz: zahl(r.satz, { hoechstens: 3 }), z365: zahl(r.zins365, { stellen: 2 }), z360: zahl(r.zins360, { stellen: 2 }) }) : t('mahnung.zins.ohne'))
+      r ? t('mahnung.zins.ergebnis', { tage: String(r.tage), satz: zahl(r.satz, { hoechstens: 3 }), z365: zahl(r.zins365, { stellen: 2 }), z360: zahl(r.zins360, { stellen: 2 }) }) : t(status === 'satz' ? 'mahnung.zins.satzUngueltig' : status === 'zukunft' ? 'mahnung.zins.nochNicht' : 'mahnung.zins.ohne'))
   );
 };
 

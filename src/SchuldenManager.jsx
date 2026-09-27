@@ -305,15 +305,18 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
             ' ', t('schulden.plan.rateHilfe'),
             budgetRate.grund === 'ok' && ' ' + t('schulden.plan.reserve'),
             budgetRate.grund === 'ok' && budgetRate.steuerFehlt && ' ' + t('schulden.plan.steuerFehlt'),
-            budgetRate.grund === 'ok' && budgetRate.heutigeRaten > 0 && ' ' + t('schulden.plan.heutigeRaten', { amount: betrag(budgetRate.heutigeRaten, { hoechstens: 2 }) }),
-            budgetRate.grund === 'ok' && leseBetrag(planRate) !== budgetRate.vorschlag && React.createElement('button', {
-              type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)),
-              style: { display: 'inline', marginInlineStart: '6px', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },
-            }, t('schulden.plan.zurueck')),
-            budgetRate.grund !== 'ok' && onNavigate && React.createElement('button', {
-              type: 'button', onClick: () => onNavigate('budget'),
-              style: { display: 'inline', marginInlineStart: '6px', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },
-            }, t('schulden.plan.zumBudget'))
+            budgetRate.grund === 'ok' && budgetRate.heutigeRaten > 0 && ' ' + t('schulden.plan.heutigeRaten', { amount: betrag(budgetRate.heutigeRaten, { hoechstens: 2 }) })
+          ),
+          // Bedienelemente ausserhalb des aria-describedby-Ziels (a11y-Prüfer 27.09.2026).
+          React.createElement('div', { style: { fontSize: text.xs, marginBottom: space.sm } },
+              budgetRate.grund === 'ok' && leseBetrag(planRate) !== budgetRate.vorschlag && React.createElement('button', {
+                type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)),
+                style: { display: 'inline', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },
+              }, t('schulden.plan.zurueck')),
+              budgetRate.grund !== 'ok' && onNavigate && React.createElement('button', {
+                type: 'button', onClick: () => onNavigate('budget'),
+                style: { display: 'inline', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },
+              }, t('schulden.plan.zumBudget'))
           ),
           React.createElement('div', { role: 'status', 'aria-live': 'polite', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
             !plan ? t('schulden.plan.ohne')

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { verzugszins, tageZwischen, leseSatz, SATZ_GESETZ } from '../verzugszins.js';
+import { verzugszins, tageZwischen, leseSatz, zinsEingabeStatus, SATZ_GESETZ } from '../verzugszins.js';
 
 // OR Art. 104 Abs. 1 (5 % für das Jahr), Abs. 2 (höherer Vertragssatz), Art. 105 Abs. 3
 // (kein Zinseszins). Tageszählung nicht im Gesetz → 365 und 360 nebeneinander.
@@ -37,6 +37,16 @@ describe('Verzugszins — Annäherung', () => {
     expect(leseSatz('7,5')).toBe(7.5);
     expect(leseSatz('0')).toBeNull();
     expect(leseSatz('31')).toBeNull();
-    expect(leseSatz('5%')).toBeNull();
+    expect(leseSatz('5%')).toBe(5);
+    expect(leseSatz('7,5 %')).toBe(7.5);
+    expect(leseSatz('5 Prozent')).toBeNull();
+  });
+  it('Status sagt, warum nichts gerechnet wird (Deploy-Gate 27.09.)', () => {
+    expect(zinsEingabeStatus({ betrag: 0, seit: '2026-01-01', bis: '2026-09-27' })).toBe('fehlt');
+    expect(zinsEingabeStatus({ betrag: 100, seit: '', bis: '2026-09-27' })).toBe('fehlt');
+    expect(zinsEingabeStatus({ betrag: 100, satz: '50', seit: '2026-01-01', bis: '2026-09-27' })).toBe('satz');
+    expect(zinsEingabeStatus({ betrag: 100, seit: '2026-09-27', bis: '2026-09-27' })).toBe('zukunft');
+    expect(zinsEingabeStatus({ betrag: 100, seit: '2026-10-01', bis: '2026-09-27' })).toBe('zukunft');
+    expect(zinsEingabeStatus({ betrag: 100, satz: '5 %', seit: '2026-01-01', bis: '2026-09-27' })).toBe('ok');
   });
 });
