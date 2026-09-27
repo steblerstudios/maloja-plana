@@ -231,3 +231,21 @@ describe('Rückweg zur Mahnung (27.09.2026)', () => {
     expect(keys.indexOf('mahnung')).toBeLessThan(keys.indexOf('betreibung'));
   });
 });
+
+describe('Steuern und Verzugszins-Rechner im Ablauf (27.09.2026)', () => {
+  const html = renderToStaticMarkup(React.createElement(MahnungErhalten, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+  it('Steuer-Erlass nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4)', () => {
+    expect(html).toContain('DBG Art. 167 Abs. 1 und 4');
+    expect(html).toContain('vor der Zustellung eines Zahlungsbefehls');
+    expect(html).toContain('kantonales Recht');
+  });
+  it('Rechner: leer → Hinweis, kein Betrag; Satz steht auf 5', () => {
+    expect(html).toContain(de.mahnung.zins.ohne);
+    expect(html).toMatch(/id="mahnung-zins-satz"[^>]*value="5"/);
+    expect(html).toContain('for="mahnung-zins-betrag"');
+  });
+  it.each(['fr', 'it', 'en', 'rm'])('%s: Quellenzeile nennt DBG/LIFD 167', (lang) => {
+    const q = ALL[lang].mahnung.quelle;
+    expect(q).toMatch(/(DBG|LIFD) (Art\.|art\.) 167\|https:\/\/www\.fedlex\.admin\.ch\/eli\/cc\/1991\/1184_1184_1184\/(de|fr|it)#art_167/);
+  });
+});
