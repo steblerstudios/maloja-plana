@@ -1792,7 +1792,6 @@ export default {
     anspruchTitle: 'A cosa ho diritto?',
     anspruchIntro: 'Spesso si ha diritto a più di quanto si pensi. Una panoramica tranquilla — senza impegno né giudizio.',
     anspruchMoeglich: 'Diritto possibile',
-    anspruchAlleLink: 'Tutte le prestazioni in panoramica',
     nextUpTitle: 'Qual è il prossimo passo?',
     nextUpAllDone: 'La base c’è — bene così.',
     nextUpReassure: { sie: 'Solo un suggerimento — il ritmo lo decide Lei.', du: 'Solo un suggerimento — il ritmo lo decidi tu.' },

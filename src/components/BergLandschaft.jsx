@@ -117,13 +117,13 @@ export const STATIONEN = [
 // zuerst der Wanderrucksack, später der Finanzbaum, das dritte ist offen. Kein Weg,
 // kein Fortschrittsring: es sind Zugänge, keine Stationen. Die Plätze sind aus dem Bild gelesen
 // (Mitte der Fahrbahn); was darauf steht, gibt das Dashboard über `talStationen` (Reihenfolge =
-// Platz). Am Handy liegt das Tal ausserhalb des Ausschnitts, und auf der Passstrasse ist kein
-// Platz frei (gemessen 27.09.2026: links vor der Basis stiess das Etikett an «Behörden») —
-// dort erscheinen sie nicht; `schmal` bleibt für einen späteren Ort.
+// Platz). Nur am Computer: am Handy liegt das Tal ausserhalb des Ausschnitts, und auf der
+// Passstrasse ist kein Platz frei (gemessen 27.09.2026: links vor der Basis stiess das Etikett
+// an «Behörden») — dort steht der Wanderrucksack in der unteren Leiste.
 export const TAL_PLAETZE = [
-  { breit: { x: 822, y: 560, seite: 'rechts' }, schmal: null },
-  { breit: { x: 927, y: 555, seite: 'rechts' }, schmal: null },
-  { breit: { x: 1003, y: 580, seite: 'links' }, schmal: null },
+  { x: 822, y: 560, seite: 'rechts' },
+  { x: 927, y: 555, seite: 'rechts' },
+  { x: 1003, y: 580, seite: 'links' },
 ];
 
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
@@ -575,19 +575,11 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     }),
     // Zeichen auf den Tal-Strassen (TAL_PLAETZE): gleiche Scheibe wie eine Station im Zustand
     // «Skizze», aber durchgezogener Rand statt Fortschrittsring — ein Zugang, kein Kapitel.
-    talStationen.slice(0, TAL_PLAETZE.length).map((st, i) => {
-      const ort = TAL_PLAETZE[i][modus];
-      if (!ort) return null;
-      const sz = schmal ? 26 : 30;
-      const iconSz = schmal ? 15 : 17;
+    !schmal && talStationen.slice(0, TAL_PLAETZE.length).map((st, i) => {
+      const ort = TAL_PLAETZE[i];
+      const sz = 30;
       const farbe = st.farbe || p.gold;
       const zeichen = mitKontrastZu(farbe, ui.surface, 3);
-      const abstand = sz / 2 + 4 + 'px';
-      const etikettOrt = {
-        rechts: { left: abstand, top: '50%', transform: 'translateY(-50%)' },
-        links: { right: abstand, top: '50%', transform: 'translateY(-50%)' },
-        obenrechts: { bottom: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
-      }[ort.seite];
       return React.createElement('div', {
         key: 'tal-' + st.key, 'data-tal': st.key,
         style: { position: 'absolute', ...imRahmen(ort.x, ort.y), width: 0, height: 0 },
@@ -598,23 +590,23 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
             position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
             width: sz + 'px', height: sz + 'px', padding: 0,
             borderRadius: '50%', background: ui.surface, color: zeichen,
-            border: (schmal ? 2.5 : 3) + 'px solid ' + zeichen,
+            border: '3px solid ' + zeichen,
             display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
             boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
             transition: `transform ${duration.cinematic}ms ${ease}`,
           },
           onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
-        }, React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px' } }, st.zeichen())),
+        }, React.createElement('div', { style: { width: '17px', height: '17px' } }, st.zeichen())),
         React.createElement('span', {
           className: 'mountain-label', lang, 'aria-hidden': 'true',
           style: {
             // display wie bei den Stationen: überschreibt die alte Regel in index.html, die
             // Etiketten unter 480 px ausblendet (die Stationen tragen es ebenso inline).
-            position: 'absolute', ...etikettOrt, whiteSpace: 'nowrap', pointerEvents: 'none',
-            display: 'flex', alignItems: 'center',
-            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
-            background: etikettGrund(farbe), padding: schmal ? '1px 6px' : '2px 7px', borderRadius: radius.sm,
+            position: 'absolute', [ort.seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
+            whiteSpace: 'nowrap', pointerEvents: 'none', display: 'flex', alignItems: 'center',
+            fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
+            background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.sm,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
           },
         }, st.label)

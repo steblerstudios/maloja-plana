@@ -1799,7 +1799,6 @@ export default {
     anspruchTitle: 'Was steht mir zu?',
     anspruchIntro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier ein ruhiger Überblick — unverbindlich, ohne Bewertung.',
     anspruchMoeglich: 'Anspruch möglich',
-    anspruchAlleLink: 'Alle Ansprüche im Überblick',
     nextUpTitle: 'Was ist jetzt dran?',
     nextUpAllDone: 'Die Grundordnung steht — schön.',
     nextUpReassure: { sie: 'Nur ein Vorschlag — Sie bestimmen das Tempo.', du: 'Nur ein Vorschlag — Du bestimmst das Tempo.' },

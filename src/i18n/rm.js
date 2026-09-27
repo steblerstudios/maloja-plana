@@ -1887,7 +1887,6 @@ export default {
     anspruchTitle: 'A tge hai jau dretg?',
     anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
     anspruchMoeglich: 'Dretg pussaivel',
-    anspruchAlleLink: 'Tuttas prestaziuns en survista',
     nextUpTitle: 'Tge è ussa da far?',
     nextUpAllDone: 'Tia basa è en plaz — bel.',
     nextUpReassure: { sie: 'Mo ina proposta — Vus fixais il tempo.', du: 'Mo ina proposta — ti fixeschas il tempo.' },

@@ -286,7 +286,8 @@ const bottomIcon = (name, color, size) => {
       }, day)
     );
   }
-  // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?») und Lupe (Suche).
+  // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?», hier im Startbündel
+  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B) und Lupe.
   if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
   if (name === 'search') return React.createElement('svg', common, React.createElement('circle', { cx: 11, cy: 11, r: 6 }), P('M15.5 15.5 L20 20'));
   if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));

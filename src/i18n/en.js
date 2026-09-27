@@ -1792,7 +1792,6 @@ export default {
     anspruchTitle: 'What am I entitled to?',
     anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',
     anspruchMoeglich: 'May be eligible',
-    anspruchAlleLink: 'All entitlements at a glance',
     nextUpTitle: 'What’s next?',
     nextUpAllDone: 'Your foundation is in place — lovely.',
     nextUpReassure: 'Just a suggestion — you set the pace.',

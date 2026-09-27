@@ -1793,7 +1793,6 @@ export default {
     anspruchTitle: 'À quoi ai-je droit ?',
     anspruchIntro: 'Bien des prestations existent sans qu’on le sache. Un aperçu tranquille — sans engagement ni jugement.',
     anspruchMoeglich: 'Droit possible',
-    anspruchAlleLink: 'Toutes les prestations en aperçu',
     nextUpTitle: 'Quelle est la prochaine étape ?',
     nextUpAllDone: 'La base est en place — parfait.',
     nextUpReassure: { sie: 'Juste une suggestion — c’est vous qui donnez le rythme.', du: 'Juste une suggestion — c’est toi qui donnes le rythme.' },
