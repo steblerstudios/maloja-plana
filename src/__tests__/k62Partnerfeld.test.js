@@ -13,7 +13,7 @@ import { ChapterViewComplete, zeigtPartnereinkommen, zurErwachsenenErfassung, ER
 const t = (k) => k;
 const basis = getChapters(t).find((c) => c.key === 'basis');
 const render = (data) => renderToStaticMarkup(React.createElement(ChapterViewComplete, {
-  palette: LIGHT_PALETTE, t, chapter: basis, data, allData: { basis: data },
+  palette: LIGHT_PALETTE, t, anfangsOffen: 'alle', chapter: basis, data, allData: { basis: data },
   onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
 }));
 const hatFeld = (html) => /<input[^>]*id="hh-partner-income"/.test(html);

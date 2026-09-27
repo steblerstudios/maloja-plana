@@ -2240,6 +2240,8 @@ export default {
   },
 
   chapterView: {
+    // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
+    abschnitt: { aendern: 'ändern', fertig: 'fertig', ergaenzen: 'ergänzen', leer: 'noch leer', aendernAria: '{name} ändern', fertigAria: '{name} fertig' },
     benefitsLabel: { sie: 'Ihre Daten fliessen in:', du: 'Deine Daten fliessen in:' },
     emptyState: { sie: 'Noch leer — ein paar Angaben genügen, und Maloja arbeitet für Sie.', du: 'Noch leer — ein paar Angaben genügen, und Maloja arbeitet für Dich.' },
     emptyStateHint: { sie: 'Sie können jederzeit ergänzen. Nichts muss auf einmal erledigt werden.', du: 'Du kannst jederzeit ergänzen. Nichts muss auf einmal erledigt werden.' },

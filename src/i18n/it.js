@@ -2234,6 +2234,8 @@ export default {
   },
 
   chapterView: {
+    // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
+    abschnitt: { aendern: 'modificare', fertig: 'fatto', ergaenzen: 'completare', leer: 'ancora vuoto', aendernAria: 'Modificare {name}', fertigAria: '{name} fatto' },
     benefitsLabel: { sie: 'I Suoi dati confluiscono in:', du: 'I tuoi dati confluiscono in:' },
     fields: 'Dati',
     documents: 'Documenti',

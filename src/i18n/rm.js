@@ -3495,6 +3495,8 @@ export default {
   },
 
   chapterView: {
+    // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
+    abschnitt: { aendern: 'midar', fertig: 'fatg', ergaenzen: 'cumplettar', leer: 'anc vid', aendernAria: 'Midar {name}', fertigAria: '{name} fatg' },
     benefitsLabel: { sie: 'Vossas datas flueschan en:', du: 'Tes datas flueschan en:' },
     emptyState: { sie: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Vus.', du: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Tai.' },
     emptyStateHint: { sie: 'Vus pudais adina cumplettar. Nagut sto vegnir fatg en ina giada.', du: 'Ti pos adina cumplettar. Nagut sto vegnir fatg en ina giada.' },

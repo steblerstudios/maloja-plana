@@ -11,6 +11,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
+import { betrag } from './utils/geld.js';
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
@@ -18,10 +19,9 @@ import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenloh
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
-import { openPrintWindow, escapeHtml } from './utils/helpers.js';
+import { openPrintWindow, escapeHtml, formatDE } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
-import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -83,7 +83,7 @@ export function zurErwachsenenErfassung(doc = typeof document !== 'undefined' ? 
   return true;
 }
 
-export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
+export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -97,17 +97,28 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  // Themen-Reiter: die benannten Sektionen der primären Felder (Person/Kontakt/…),
-  // damit man im Kapitel springen kann statt hochzuscrollen (Testperson A #1).
-  const [activeSection, setActiveSection] = useState(null);
-  const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
-  // Auch benannte Sektionen unter „mehr Felder" (z.B. Vorsorge / 3. Säule) bekommen
-  // einen Reiter, damit sie auffindbar sind statt im aufklappbaren Teil zu verschwinden
-  // (Stebler Studios, Braindump #21). Ein Klick klappt den Sekundär-Teil auf und springt hin.
-  const secondarySections = chapter.fields.filter((f) => f.secondary && f.section).map((f) => ({ name: f.section, k: f.k, secondary: true }));
-  const sectionTabs = [...primarySections, ...secondarySections];
-
-  const hasSecondaryFields = chapter.fields.some(f => f.secondary);
+  // Abschnittsliste: welche Abschnitte gerade als Formular offen sind (Schlüssel = erstes Feld).
+  // (Die klebenden Themen-Reiter samt Scroll-Spy entfielen am 27.09.2026 — die Abschnitte
+  // stehen jetzt selbst als kurze Liste da.)
+  // Offen starten die Abschnitte, in denen etwas fehlt, das zählt (ein leeres Feld der
+  // Grundordnung) oder ein Hinweis ansteht («zweite Person fehlt») — so sieht eine neue
+  // Person gleich die Felder, und kein Hinweis verschwindet hinter «ändern ›».
+  // `anfangsOffen: 'alle'` öffnet alles (Tests des Formulars).
+  const abschnitteAnfang = () => {
+    const d = data || {};
+    const offen = {};
+    let key = null;
+    chapter.fields.forEach((f) => {
+      if (f.section || key === null) key = f.k;
+      const leerGrundordnung = f.mvo && !feldHatWert(d, f.k) && !trifftNichtZu(d, f.k);
+      const hinweis = f.type === 'household' && zweitePersonFehlt(Number(d.household && d.household.adults) || 1, d.maritalStatus);
+      if (anfangsOffen === 'alle' || leerGrundordnung || hinweis) offen[key] = true;
+    });
+    return offen;
+  };
+  const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
+  // Kapitelwechsel ohne Neuaufbau: die Regel gilt fürs neue Kapitel neu.
+  useEffect(() => { setOffeneAbschnitte(abschnitteAnfang()); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => feldHatWert(data, f.k));
   const storageKey = 'or5_disclosure_' + chapter.key;
   const [showSecondary, setShowSecondary] = useState(() => {
@@ -130,51 +141,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Export-Vorschau (K20) vor der Notfallkarte: erst zeigen, was im Dokument steht.
   const [kartenVorschau, setKartenVorschau] = useState(false);
 
-  // Scroll-Spy: hebt den Reiter der Sektion hervor, die man gerade liest.
-  // Nicht per schmalem Intersection-Band (die Sektionsköpfe sind dünn und rutschen
-  // zwischen den Scrollpositionen durch → Highlight blinkt nur kurz auf). Stattdessen:
-  // aktiv ist der zuletzt überschrittene Kopf oberhalb einer Linie knapp unter dem
-  // klebenden Reiter — so bleibt die aktuelle Sektion durchgehend markiert.
-  useEffect(() => {
-    setActiveSection(null);
-    if (sectionTabs.length < 2) return;
-    // Das Dokument scrollt, nicht mehr #mp-main — die Linie misst deshalb ab dem
-    // Fensterrand. Sie liegt knapp unter der klebenden Kopfzeile plus dem klebenden
-    // Reiter darunter; die Kopfhöhe kommt aus --mp-kopf-h (main.jsx misst sie).
-    const kopfHoehe = () => {
-      const roh = getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h');
-      const zahl = parseFloat(roh);
-      return Number.isFinite(zahl) ? zahl : 73;
-    };
-    const compute = () => {
-      const anchors = document.querySelectorAll('[data-section-k]');
-      if (!anchors.length) return;
-      const line = kopfHoehe() + 120;
-      let current = anchors[0].getAttribute('data-section-k');
-      for (const el of anchors) {
-        if (el.getBoundingClientRect().top <= line) current = el.getAttribute('data-section-k');
-        else break;
-      }
-      setActiveSection(current);
-    };
-    compute();
-    window.addEventListener('scroll', compute, { passive: true });
-    window.addEventListener('resize', compute);
-    return () => { window.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
-  }, [chapter.key, expandedSection, showSecondary, sectionTabs.length]);
-
-  // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
-  // Hervorhebung immer sichtbar bleibt, auch wenn der Reiter rechts ausserhalb liegt.
-  useEffect(() => {
-    if (!activeSection) return;
-    const tl = document.querySelector('[data-section-tablist]');
-    const btn = tl && tl.querySelector('[data-section-tab="' + activeSection + '"]');
-    if (!tl || !btn) return;
-    const b = btn.getBoundingClientRect(), t = tl.getBoundingClientRect();
-    if (b.left < t.left + 4 || b.right > t.right - 4) {
-      tl.scrollBy({ left: (b.left + b.width / 2) - (t.left + t.width / 2), behavior: 'smooth' });
-    }
-  }, [activeSection]);
 
   useEffect(() => {
     let timer;
@@ -1131,9 +1097,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const isNotfall = chapter.key === 'notfall';
   const hasContact = isNotfall && data.emergencyContact;
   const hasBlood = isNotfall && data.bloodType && data.bloodType !== 'unknown' && data.bloodType !== '';
-  const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'];
-  const hasVorsorge = isNotfall && vorsorgeKeys.some(k => data[k]);
-  const showSummary = hasContact || hasBlood || hasVorsorge;
   const hasDoctors = Array.isArray(data.doctorsList) && data.doctorsList.some(d => d.name);
   const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || (Array.isArray(data.medicationsList) && data.medicationsList.some(m => m.name)) || hasDoctors || data.doctor);
 
@@ -1800,6 +1763,90 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           return elements;
         };
 
+  // ─── Abschnittsliste (Entscheid Stebler Studios 27.09.2026, Probe an Finanzen) ──────
+  // Jeder Wert steht EINMAL da: Abschnitte als ruhige Liste; «ändern ›» macht genau diesen
+  // Abschnitt an Ort und Stelle zum Formular — mit denselben Feldern und Querverweisen wie
+  // vorher (feldElemente). Leere Abschnitte gestrichelt mit «ergänzen ›». Vorher standen
+  // dieselben Zahlen als Satz, als Tabelle und im Formular — Finanzen 8681 px hoch.
+  const abschnittWert = (f) => {
+    const v = data[f.k];
+    if (trifftNichtZu(data, f.k)) return tr('naZustand.markieren');
+    if (f.type === 'household') {
+      const h = v || {};
+      const kinder = Array.isArray(h.children) ? h.children.length : 0;
+      return tr('chapters.basis.fields.household.adults') + ' ' + (Number(h.adults) || 1) + ' · ' + tr('chapters.basis.fields.household.children') + ' ' + kinder;
+    }
+    if (f.type === 'currency') {
+      const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
+      return betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+    }
+    if (Array.isArray(f.options) && f.options.length) {
+      const o = f.options.find((x) => String(x.value) === String(v));
+      return o ? o.label : String(v);
+    }
+    if (f.type === 'date') return formatDE(v);
+    return String(v);
+  };
+  const abschnittGefuellt = (f) => (f.type === 'household' ? !!data.household : (feldHatWert(data, f.k) || trifftNichtZu(data, f.k)));
+  const abschnittsliste = () => {
+    const gruppen = [];
+    chapter.fields.forEach((f) => {
+      if (f.section || gruppen.length === 0) gruppen.push({ key: f.k, titel: f.section || chapter.title, intro: f.sectionIntro, sek: !!f.secondary, felder: [] });
+      gruppen[gruppen.length - 1].felder.push(f);
+    });
+    const karte = (g) => {
+      const gefuellt = g.felder.filter(abschnittGefuellt);
+      const offen = !!offeneAbschnitte[g.key];
+      const leer = gefuellt.length === 0;
+      const umschalten = () => setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
+      const liste = g.felder.filter((f) => !!f.secondary === g.sek);
+      return React.createElement('section', {
+        key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel,
+        style: {
+          scrollMarginTop: 'var(--mp-sprungabstand)',
+          border: offen ? '1.5px solid ' + palette.sand : (leer ? '1px dashed ' + palette.border : '1px solid ' + palette.border + 'AA'),
+          borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px',
+          background: leer && !offen ? 'transparent' : palette.up,
+        },
+      },
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px' } },
+          React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: leer && !offen ? palette.mid : palette.text } }, g.titel),
+          React.createElement('button', {
+            type: 'button', className: 'mp-link', onClick: umschalten, 'aria-expanded': offen,
+            'aria-label': tr(offen ? 'chapterView.abschnitt.fertigAria' : 'chapterView.abschnitt.aendernAria', { name: g.titel }),
+            style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: offen ? palette.mid : palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' },
+          }, offen
+            ? React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, tr('chapterView.abschnitt.fertig'), React.createElement(Icon, { name: 'check', size: 14 }))
+            : tr(leer ? 'chapterView.abschnitt.ergaenzen' : 'chapterView.abschnitt.aendern') + ' ›')
+        ),
+        offen
+          ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingBottom: space.sm + 'px' } },
+              demoMode && React.createElement('p', { key: 'demo', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, tr('demo.readOnlyHint')),
+              g.intro && React.createElement('p', { key: 'intro', style: { gridColumn: '1 / -1', fontSize: text.sm, color: palette.mid, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px' } }, g.intro),
+              ...liste.map((f, i, arr) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(g.sek ? feldElementeSek(f, i, arr, true) : feldElemente(f, i, arr, true)))))
+          : (leer
+              ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+                  gefuellt.flatMap((f) => [
+                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
+                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
+                  ])))
+      );
+    };
+    const haupt = gruppen.filter((g) => !g.sek);
+    const sekMitDaten = gruppen.filter((g) => g.sek && g.felder.some(abschnittGefuellt));
+    const sekLeer = gruppen.filter((g) => g.sek && !g.felder.some(abschnittGefuellt));
+    return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginBottom: space.lg + 'px' } },
+      ...haupt.map(karte),
+      ...sekMitDaten.map(karte),
+      sekLeer.length > 0 && React.createElement('button', {
+        key: 'mehr', type: 'button', onClick: toggleSecondary, 'aria-expanded': showSecondary,
+        style: { alignSelf: 'flex-start', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text, padding: '8px 16px', minHeight: '44px', fontFamily: 'inherit' },
+      }, tr('chapterView.disclosure.' + chapter.key + (showSecondary ? '.less' : '.more'))),
+      ...(showSecondary ? sekLeer.map(karte) : [])
+    );
+  };
+
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
     // Header — expressive chapter entrance with landscape continuity
     React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
@@ -1811,49 +1858,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
 
-    demoMode && React.createElement('div', {
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        marginBottom: space.md + 'px',
-        background: palette.sand + '15',
-        borderRadius: radius.sm,
-        border: '1px solid ' + palette.sand + '25',
-        fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
-      }
-    }, tr('demo.readOnlyHint')),
+    // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt
+    // (Abschnittsliste) — oben war er Vorspann vor jedem Inhalt.
 
-    // "Was Du davon hast" — shows which tools benefit from this chapter's data (before fields)
-    (() => {
-      const benefitsKey = 'chapters.' + chapter.key + '.benefits';
-      const benefits = tr(benefitsKey);
-      if (benefits === benefitsKey || !Array.isArray(benefits)) return null;
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px',
-          padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sand + '0C',
-          borderRadius: radius.sm,
-          border: '1px solid ' + palette.sand + '20',
-          display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px',
-        }
-      },
-        React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.mid, marginRight: '2px' }
-        }, tr('chapterView.benefitsLabel')),
-        benefits.map((b, i) =>
-          React.createElement('span', {
-            key: i,
-            style: {
-              fontSize: text.xs, color: palette.sageDeep,
-              padding: '2px 8px',
-              background: palette.sage + '0D',
-              borderRadius: radius.sm,
-              whiteSpace: 'nowrap',
-            }
-          }, b)
-        )
-      );
-    })(),
+    // «Ihre Daten fliessen in …» (Chips) entfiel am 27.09.2026: Vorspann vor dem Inhalt.
+    // Die Wege zu den Werkzeugen stehen als Querverweise an den Feldern selbst.
 
     // Ankunftsmoment — calm acknowledgment on first data entry
     !demoMode && showAnkunft && React.createElement('div', {
@@ -1872,63 +1881,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ),
 
     // Living mirror layer — life sentence + mirror cards
-    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
+    // Nur der Satz — die Tabellen wiederholten, was die Abschnittsliste zeigt (27.09.2026).
+    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr, nurSatz: true }),
 
-    // Notfallübergabe — calm structured summary when enough data is present
-    isNotfall && showSummary && (() => {
-      const sections = [];
-      if (data.emergencyContact) {
-        const rows = [data.emergencyContact];
-        if (data.emergencyPhone) rows.push(data.emergencyPhone);
-        sections.push({ title: tr('notfallSummary.handoverContact'), rows: rows });
-      } else if (keineKontaktperson(data)) {
-        sections.push({ title: tr('notfallSummary.handoverContact'), rows: [tr('naZustand.keineKontaktperson')] });
-      }
-      const medRows = [];
-      if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + data.bloodType);
-      if (data.allergies) medRows.push(tr('notfallSummary.handoverAllergies'));
-      const medList2 = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
-      if (medList2.length) medRows.push(tr('notfallSummary.handoverMedications') + ': ' + medList2.map(m => m.name).join(', '));
-      else if (data.medications) medRows.push(tr('notfallSummary.handoverMedications'));
-      const dList2 = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
-      if (dList2.length) medRows.push(tr('notfallSummary.handoverChronic') + ': ' + dList2.map(d => d.name).join(', '));
-      else if (data.chronicDiseases) medRows.push(tr('notfallSummary.handoverChronic'));
-      if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), rows: medRows });
-      const careRows = [];
-      const docList3 = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
-      if (docList3.length) docList3.forEach(d => careRows.push(d.name + (d.phone ? ' · ' + d.phone : '')));
-      else if (data.doctor) careRows.push(data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : ''));
-      if (data.hospital) careRows.push(data.hospital);
-      if (careRows.length) sections.push({ title: tr('notfallSummary.handoverCare'), rows: careRows });
-      const provRows = [];
-      if (data.patientenverfuegung && data.patientenverfuegung !== 'no') provRows.push(tr('notfallSummary.patientenverfuegung'));
-      if (data.vorsorgeauftrag && data.vorsorgeauftrag !== 'no') provRows.push(tr('notfallSummary.vorsorgeauftrag'));
-      if (data.bestattungswuensche && data.bestattungswuensche !== 'no') provRows.push(tr('notfallSummary.bestattungswuensche'));
-      if (provRows.length) sections.push({ title: tr('notfallSummary.handoverProvision'), rows: provRows });
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('notfallSummary.handoverIntro')),
-        ...sections.map((sec, i) =>
-          React.createElement('div', { key: i, style: { marginBottom: i < sections.length - 1 ? space.sm + 'px' : 0 } },
-            React.createElement('div', {
-              style: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: space.xs }
-            }, sec.title),
-            ...sec.rows.map((row, j) =>
-              React.createElement('div', { key: j, style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } }, row)
-            )
-          )
-        )
-      );
-    })(),
+    // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
     // Notfallkarte export — quiet text link (below mirror cards)
     isNotfall && hasMedical && React.createElement('div', {
@@ -1956,53 +1912,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       })
     ),
 
-    // Versicherungsübersicht — coverage overview when at least one field is filled
-    chapter.key === 'versicherungen' && (() => {
-      const areas = [
-        { key: 'kvg', fields: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber'] },
-        { key: 'bvg', fields: ['bvgInsurer', 'bvgContribution'] },
-        { key: 'uvg', fields: ['uvg'] },
-        { key: 'haftpflicht', fields: ['liabilityInsurance', 'liabilityAmount'] },
-        { key: 'hausrat', fields: ['householdInsurance', 'householdInsuranceAmount'] },
-        { key: 'reise', fields: ['travelInsurance'] },
-        { key: 'cyber', fields: ['cyberInsurance'] },
-        { key: 'fahrzeug', fields: ['autoInsurance', 'autoInsuranceAmount'] },
-        { key: 'ahv', fields: ['ahvContribution'] },
-      ];
-      const hasAny = areas.some(a => a.fields.some(f => data[f]));
-      if (!hasAny) return null;
-      const erfasst = tr('versicherungsübersicht.erfasst');
-      const nicht = tr('versicherungsübersicht.nichtErfasst');
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('versicherungsübersicht.intro')),
-        ...areas.map((area, i) => {
-          const filled = area.fields.some(f => data[f]);
-          return React.createElement('div', {
-            key: i,
-            style: {
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '6px 0',
-              borderBottom: i < areas.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
-            }
-          },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('versicherungsübersicht.' + area.key)),
-            React.createElement('span', {
-              style: { fontSize: text.sm, color: filled ? palette.sageDeep || palette.sage : palette.mid, fontStyle: filled ? 'normal' : 'italic' }
-            }, filled ? erfasst : nicht)
-          );
-        })
-      );
-    })(),
+    // Versicherungsübersicht entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
     // Behörden-Zeitstatus — temporal overview of official matters
     chapter.key === 'behoerden' && (() => {
@@ -2247,58 +2157,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       }, tr('chapterView.documents'))
     ),
 
-    // Fields Tab
+    // Fields Tab — seit 27.09.2026 die Abschnittsliste (abschnittsliste oben).
     expandedSection === 'fields' && React.createElement('div', null,
-      // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
-      sectionTabs.length >= 2 && React.createElement(ScrollFadeStrip, {
-        palette,
-        role: 'tablist',
-        'data-section-tablist': '1',
-        'aria-label': tr('chapterView.sectionNav'),
-        containerStyle: {
-          // Seit das Dokument scrollt (statt #mp-main), ist der Bezugspunkt fürs Kleben
-          // der Fensterrand — und dort klebt bereits die Kopfzeile. Der Reiter hängt sich
-          // deshalb unter deren gemessene Höhe (--mp-kopf-h, gesetzt in main.jsx), sonst
-          // verschwände er dahinter. Vorher stand hier -24px als Ausgleich für das
-          // padding-top des alten Scroll-Containers; das gibt es nicht mehr.
-          position: 'sticky', top: 'var(--mp-kopf-h, 73px)', zIndex: 5,
-          marginBottom: space.md + 'px',
-          background: palette.surface,
-          borderBottom: '1px solid ' + palette.border + '55',
-        },
-        style: {
-          // Einzeilig + horizontal scrollbar statt Umbruch: spart Sticky-Höhe bei
-          // vielen Sektionen; die Leiste bleibt ruhig, statt zwei Reihen zu füllen.
-          display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px',
-          overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
-          padding: space.sm + 'px 0',
-        },
-      },
-        sectionTabs.map((s) => {
-          const on = activeSection === s.k;
-          const jump = () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-          return React.createElement('button', {
-            key: s.k,
-            'data-section-tab': s.k,
-            // Sekundär-Reiter: erst „mehr Felder" aufklappen, dann hinspringen
-            // (das Ziel existiert erst nach dem Aufklappen im DOM).
-            onClick: s.secondary
-              ? () => { if (!showSecondary) { setShowSecondary(true); try { localStorage.setItem(storageKey, 'true'); } catch {} requestAnimationFrame(() => requestAnimationFrame(jump)); } else { jump(); } }
-              : jump,
-            'aria-current': on ? 'true' : undefined,
-            style: {
-              flexShrink: 0,
-              padding: '5px 12px', borderRadius: radius.md,
-              border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
-              background: on ? palette.sage + '18' : 'transparent',
-              color: on ? (palette.sageDeep || palette.text) : palette.mid,
-              fontSize: text.xs, fontWeight: on ? weight.medium : weight.normal,
-              fontFamily: 'inherit', cursor: 'pointer', whiteSpace: 'nowrap',
-              transition: 'background 160ms ease, border-color 160ms ease',
-            },
-          }, s.name);
-        })
-      ),
       filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
@@ -2311,56 +2171,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           tr('trust.chapterTrust')
         )
       ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
-        chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => feldElemente(field, idx, primaryFields))
-      ),
-
-      // Progressive disclosure toggle
-      hasSecondaryFields && React.createElement('div', {
-        style: {
-          marginTop: space.lg,
-          paddingTop: '16px',
-          borderTop: '1px solid ' + palette.border,
-          textAlign: 'center',
-        }
-      },
-        React.createElement('button', {
-          onClick: toggleSecondary,
-          'aria-expanded': showSecondary,
-          style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px',
-            fontSize: text.sm, color: palette.text, letterSpacing: '0.3px',
-            padding: '8px 16px',
-            fontFamily: fontFamily,
-          }
-        },
-          React.createElement('span', null,
-            showSecondary
-              ? tr('chapterView.disclosure.' + chapter.key + '.less')
-              : tr('chapterView.disclosure.' + chapter.key + '.more')
-          ),
-          // Aufklapp-Pfeil — dreht beim Öffnen (macht klar: es kommen mehr Felder, keine Info).
-          React.createElement('span', {
-            'aria-hidden': 'true',
-            style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: showSecondary ? 'rotate(180deg)' : 'none', color: palette.mid },
-          },
-            React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-              React.createElement('polyline', { points: '6 9 12 15 18 9' })
-            )
-          )
-        ),
-        !showSecondary && secondaryHasData && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sageDeep, marginTop: space.xs }
-        }, tr('chapterView.disclosure.' + chapter.key + '.hint'))
-      ),
-
-      // Secondary fields
-      hasSecondaryFields && showSecondary && React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', marginTop: space.sm }
-      },
-        chapter.fields.filter(f => f.secondary).map((field, idx, secFields) => feldElementeSek(field, idx, secFields))
-      )
+      abschnittsliste()
     ),
 
     // Documents Tab
