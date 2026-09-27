@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { GEGENSTAENDE, gegenstandReadiness } from './data/gepaeck.js';
+import { GEGENSTAENDE, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
+import { werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
+import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
 // Mein Gepäck — die Rucksack-Ansicht der Lebensereignisse. Ein Rucksack packt sich
@@ -8,11 +10,15 @@ import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 // Einen Gegenstand aufklappen, hineinschauen: die Wege darin. Ein Weg führt in seinen
 // bestehenden geführten Ablauf. Ruhig, barrierefrei, separat von Baum und Obstgarten.
 
-export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
+// Vorschau 27.09.2026 («alle drei in einem, im Rucksack»): jeder Gegenstand trägt
+// Wege UND Werkzeuge (aus data/werkzeugRegister.js); dazu der 7. Gegenstand
+// Portemonnaie und das Aussenfach «Ablegen und ordnen».
+export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) => {
   const h = React.createElement;
   const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [packed, setPacked] = useState(!reduce);   // gepackt → packt sich beim Öffnen einmal aus
   const [openKey, setOpenKey] = useState(null);     // ein Gegenstand offen (ruhiges Akkordeon)
+  const imFach = (fach) => werkzeugeImFach(fach);
 
   useEffect(() => {
     if (reduce) return undefined;
@@ -27,6 +33,11 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
     oxblood: isDarkMode ? '#A65A4A' : '#8C4A3C', steel: isDarkMode ? '#8A9298' : '#9AA3A8',
     wood: isDarkMode ? '#8A6242' : '#9C6B4A', woodLo: isDarkMode ? '#6E4E34' : '#B4894F',
   };
+
+  // Versiegelter Brief: im Dunkeln war das Papier = Kartenfläche (1,0 : 1), der Rand
+  // 1,13 : 1 — sichtbar nur das Siegel. Dunkel jetzt eigene Töne (BRIEF_DUNKEL,
+  // Werte und Kontrast-Test in data/gepaeck.js); hell unverändert (27.09.2026).
+  const B = isDarkMode ? BRIEF_DUNKEL : { papier: M.paper, rand: M.stroke, siegel: M.oxblood };
 
   // ── Gegenstands-Illustrationen (48er viewBox, gefüllt) ──────────────────────
   const ill = (name) => {
@@ -68,11 +79,33 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
       h('path', { key: 4, d: 'M20 30h8M20 34h8', stroke: M.line, strokeWidth: 1 }),
       h('rect', { key: 5, x: 21, y: 16, width: 6, height: 4, rx: 1, fill: M.brass }),
     ]);
+    // Portemonnaie (27.09.2026, Entscheid «eigene Illustration»): im Stil der anderen —
+    // Leder-Körper mit Rand (stroke), Falz- und Nahtlinie (line), Laschen-Druckknopf aus
+    // Messing, eine Note in Wachsleinen. Leder = dieselben Holz-/Ledertöne wie die Kiste.
+    // Eigene Silhouette (polygrafin 27.09.: nicht die 34×22-Fläche der Werkzeugrolle):
+    // schmalerer Körper, die Lasche ragt rechts hinaus — die Form trägt, nicht die Farbe.
+    if (name === 'wallet') return wrap([
+      h('rect', { key: 1, x: 11, y: 12, width: 20, height: 8, rx: 1.5, fill: M.canvas, stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 2, d: 'M14 15.5h8', stroke: M.line, strokeWidth: 1 }),
+      h('rect', { key: 3, x: 8, y: 17, width: 29, height: 20, rx: 3, fill: M.wood, stroke: M.stroke, strokeWidth: 1 }),
+      h('path', { key: 4, d: 'M8 22h29', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 5, d: 'M11 33h11', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 6, d: 'M30 22h9q3 0 3 3v2q0 3-3 3h-9q-3 0-3-3v-2q0-3 3-3z', fill: M.woodLo, stroke: M.stroke, strokeWidth: 1 }),
+      h('circle', { key: 7, cx: 31, cy: 26, r: 2.2, fill: M.brass }),
+    ]);
+    // Aussenfach als Karte (nur Vorschau-Variante platz=karte): die aufgesetzte Tasche des
+    // Rucksacks — Wachsleinen mit Messing-Riemen, wie die Fronttasche des grossen Rucksacks.
+    if (name === 'pocket') return wrap([
+      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 24, rx: 4, fill: M.canvas, stroke: M.stroke, strokeWidth: 1 }),
+      h('path', { key: 2, d: 'M8 21q16 5 32 0', fill: 'none', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 3, d: 'M12 28h24', stroke: M.brass, strokeWidth: 2, strokeLinecap: 'round' }),
+      h('circle', { key: 4, cx: 24, cy: 28, r: 2.4, fill: M.brass }),
+    ]);
     return wrap([
-      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 22, rx: 2, fill: M.paper, stroke: M.stroke, strokeWidth: 1 }),
+      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 22, rx: 2, fill: B.papier, stroke: B.rand, strokeWidth: 1 }),
       h('path', { key: 2, d: 'M8 15l16 12 16-12', fill: 'none', stroke: M.line, strokeWidth: 1.4 }),
-      h('circle', { key: 3, cx: 24, cy: 30, r: 4.5, fill: M.oxblood }),
-      h('path', { key: 4, d: 'M22.5 30l1.2 1.2 2-2.2', stroke: M.paper, strokeWidth: 1.2, fill: 'none', strokeLinecap: 'round' }),
+      h('circle', { key: 3, cx: 24, cy: 30, r: 4.5, fill: B.siegel }),
+      h('path', { key: 4, d: 'M22.5 30l1.2 1.2 2-2.2', stroke: B.papier, strokeWidth: 1.2, fill: 'none', strokeLinecap: 'round' }),
     ]);
   };
 
@@ -111,14 +144,17 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
   }, packed ? t('gepaeck.unpack') : t('gepaeck.pack'));
 
   // ── Ein Weg (Ereignis) → führt in seinen bestehenden Ablauf ─────────────────
+  const chipStyle = {
+    display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'left', minHeight: '44px',
+    // Ränder einzeln (nicht `border` + `borderLeft`): gemischt warnt React beim Farbwechsel.
+    background: palette.surface, borderTop: '1px solid ' + palette.border, borderRight: '1px solid ' + palette.border,
+    borderBottom: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sage,
+    borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
+    cursor: 'pointer', fontFamily: 'inherit', color: palette.text,
+  };
   const chip = (w) => h('button', {
     key: w.key, onClick: () => onNavigate(w.view),
-    style: {
-      display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'left',
-      background: palette.surface, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sage,
-      borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
-      cursor: 'pointer', fontFamily: 'inherit', transition: 'transform 160ms ' + ease,
-    },
+    style: { ...chipStyle, transition: 'transform 160ms ' + ease },
   },
     h('span', {
       style: {
@@ -130,9 +166,43 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
     h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('gepaeck.w.' + w.key)),
   );
 
+  // ── Ein Werkzeug (aus dem Register) → führt in seine Ansicht ────────────────
+  // Gleiches Zeichen wie im Menü und in der Suche (Icon-System), gleicher Name (nav-Key).
+  // Der Unterschied zum Weg ist leise: Rechner-Linie in Messing statt Salbei.
+  const oeffne = (w) => {
+    if (w.view === 'chapter') {
+      const idx = (chapters || []).findIndex((c) => c.key === w.kapitel);
+      if (idx >= 0) onNavigate('chapter', idx);
+      return;
+    }
+    onNavigate(w.view);
+  };
+  const werkzeugChip = (w) => {
+    const IconFn = Icons[w.icon];
+    return h('button', {
+      key: werkzeugKey(w), onClick: () => oeffne(w),
+      style: { ...chipStyle, borderLeft: '3px solid ' + palette.gold },
+    },
+      h('span', {
+        'aria-hidden': 'true',
+        style: {
+          width: '26px', height: '26px', borderRadius: radius.sm, flexShrink: 0, boxSizing: 'border-box', padding: '5px',
+          background: palette.up, border: '1px solid ' + palette.border, color: palette.mid,
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        },
+      }, IconFn ? IconFn() : null),
+      h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t(w.nav)),
+    );
+  };
+
+  // Kleine Zwischenzeile im offenen Gegenstand, nur wenn beides drinliegt.
+  const fachZeile = (key) => h('p', {
+    style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 ' + space.xs + 'px 2px', letterSpacing: '0.3px' },
+  }, t(key));
+
   // ── Ein Gegenstand (Karte, aufklappbar) ─────────────────────────────────────
   // Reife-Pünktchen: ein Punkt je geprüftem Feld, gefüllt = erfasst (echte Daten).
-  const dots = (r) => h('span', {
+  const dots = (r) => r.total === 0 ? null : h('span', {
     role: 'img', 'aria-label': t('gepaeck.packed', { done: r.done, total: r.total }),
     style: { display: 'inline-flex', gap: '3px', marginTop: '5px' },
   }, Array.from({ length: r.total }, (_, k) => h('span', {
@@ -143,7 +213,12 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
   const card = (g, i) => {
     const open = openKey === g.key;
     const count = g.wege.length;
-    const r = gegenstandReadiness(g.key, data);
+    const werkzeuge = imFach(g.key);
+    const r = g.titel ? { done: 0, total: 0 } : gegenstandReadiness(g.key, data);
+    const inhalt = [
+      count ? (count === 1 ? t('gepaeck.wegeOne') : t('gepaeck.wege', { n: count })) : null,
+      werkzeuge.length ? (werkzeuge.length === 1 ? t('gepaeck.werkzeugeOne') : t('gepaeck.werkzeuge', { n: werkzeuge.length })) : null,
+    ].filter(Boolean).join(' · ');
     return h('div', {
       key: g.key,
       style: {
@@ -153,7 +228,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
       },
     },
       h('button', {
-        onClick: () => setOpenKey(open ? null : g.key), 'aria-expanded': open,
+        onClick: () => setOpenKey(open ? null : g.key), 'aria-expanded': open, 'aria-controls': 'gepaeck-fach-' + g.key,
         style: {
           display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'left',
           background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', padding: space.sm + 'px ' + space.md + 'px',
@@ -161,9 +236,9 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
       },
         h('span', { style: { flexShrink: 0 } }, ill(g.ill)),
         h('span', { style: { flex: 1, minWidth: 0 } },
-          h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('gepaeck.obj.' + g.key)),
+          h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t(g.titel || 'gepaeck.obj.' + g.key)),
           h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } },
-            t('gepaeck.objSub.' + g.key) + ' · ' + (count === 1 ? t('gepaeck.wegeOne') : t('gepaeck.wege', { n: count }))),
+            (g.sub ? t(g.sub) : t('gepaeck.objSub.' + g.key) + (inhalt ? ' · ' + inhalt : ''))),
           dots(r),
         ),
         h('span', {
@@ -176,17 +251,73 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
         }, h('svg', { viewBox: '0 0 24 24', width: 13, height: 13, fill: 'none', stroke: '#3a2c14', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, h('path', { d: 'M6 9l6 6 6-6' }))),
       ),
       h('div', {
+        id: 'gepaeck-fach-' + g.key,
         style: {
-          maxHeight: open ? '520px' : '0', opacity: open ? 1 : 0, overflow: 'hidden',
-          transition: 'max-height 400ms ' + ease + ', opacity 260ms ' + ease,
+          maxHeight: open ? '960px' : '0', opacity: open ? 1 : 0, overflow: 'hidden',
+          transition: 'max-height 400ms ' + ease + ', opacity 260ms ' + ease + ', visibility 400ms',
           background: palette.up, margin: '0 ' + space.sm + 'px', borderRadius: radius.sm,
+          // Zugeklappt nicht mehr per Tab erreichbar (vorher lagen die Wege unsichtbar im Tab-Pfad).
+          visibility: open ? 'visible' : 'hidden',
         },
       },
         h('div', { style: { padding: space.sm + 'px ' + space.sm + 'px ' + space.xs + 'px', borderTop: '1px dashed ' + palette.border, marginBottom: open ? space.sm + 'px' : 0 } },
-          g.wege.map((w) => chip(w))),
+          count && werkzeuge.length ? fachZeile('gepaeck.wegeTitel') : null,
+          g.wege.map((w) => chip(w)),
+          count && werkzeuge.length ? fachZeile('gepaeck.werkzeugeTitel') : null,
+          werkzeuge.map((w) => werkzeugChip(w))),
       ),
     );
   };
+
+  // ── Aussenfach «Ablegen und ordnen» ─────────────────────────────────────────
+  // Kein Lebensbereich, sondern das Fach aussen am Rucksack: immer offen, leise abgesetzt
+  // (gestrichelter Rand, Grund `up`), damit es nicht wie ein achter Gegenstand wirkt.
+  // Gewählt 27.09.2026: ganz oben, vor den Gegenständen — und zusätzlich als achte Karte.
+  const aussen = imFach(AUSSENFACH);
+  const aussenfach = h('section', {
+    'aria-labelledby': 'gepaeck-aussenfach',
+    style: {
+      marginTop: 0, marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
+      background: palette.up, border: '1px dashed ' + palette.border,
+      opacity: packed ? 0 : 1, transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : GEGENSTAENDE.length * 60) + 'ms',
+    },
+  },
+    // Kopf mit der eigenen Taschen-Zeichnung (gewählt 27.09.2026) — gleiche Anordnung wie
+    // der Kopf eines Gegenstands, aber ohne Aufklapp-Knopf: das Aussenfach ist immer offen.
+    h('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
+      h('span', { style: { flexShrink: 0 } }, ill('pocket')),
+      h('span', { style: { flex: 1, minWidth: 0 } },
+        h('h2', { id: 'gepaeck-aussenfach', style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: 0 } }, t('gepaeck.aussenfach')),
+        h('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: '1px 0 0' } }, t('gepaeck.aussenfachSub')))),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', columnGap: space.sm + 'px', rowGap: 0 } },
+      aussen.map((w) => werkzeugChip(w))),
+  );
+
+  // ── Aussenfach zusätzlich als achte, zuklappbare Karte (Wunsch 27.09.2026) ──────
+  // Gleicher Inhalt wie das offene Aussenfach oben: dieselbe Karte wie ein Gegenstand,
+  // ihr Inhalt kommt über `imFach(AUSSENFACH)` aus demselben Register — keine zweite Liste.
+  const aussenKarte = card({ key: AUSSENFACH, ill: 'pocket', wege: [], titel: 'gepaeck.aussenfachKarte', sub: 'gepaeck.aussenfachKarteSub' }, GEGENSTAENDE.length);
+  // «Was steht mir zu?» als eigener Eintrag über den Gegenständen (gewählt 27.09.2026;
+  // bleibt nach dem Entfernen des Schalters — liest das Fach OBEN aus dem Register).
+  const oben = imFach(OBEN);
+  const obenEintraege = oben.length ? h('div', { style: { marginBottom: space.md + 'px' } },
+    oben.map((w) => h('button', {
+      key: werkzeugKey(w), type: 'button', onClick: () => oeffne(w),
+      style: {
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left',
+        // Leise (27.09.): keine zweite Kastenfläche direkt über dem Aussenfach — nur eine
+        // Zeile mit Haarlinie, damit oben nicht zwei Kästen übereinander stehen.
+        padding: space.sm + 'px 2px', background: 'transparent', color: palette.text,
+        borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid ' + palette.border,
+        borderRadius: 0, cursor: 'pointer', fontFamily: 'inherit',
+      },
+    },
+      h('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', flexShrink: 0, color: palette.sageDeep } }, (Icons[w.icon] || Icons.document)()),
+      h('span', { style: { flex: 1, minWidth: 0 } },
+        h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('dashboard.anspruchTitle')),
+        w.sub ? h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } }, t(w.sub)) : null),
+      h('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'),
+    ))) : null;
 
   const backpackIcon = h('svg', { viewBox: '0 0 24 24', width: 22, height: 22, fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
     h('path', { d: 'M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z' }),
@@ -200,9 +331,11 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
     h(PageTitle, { palette, icon: backpackIcon, style: { marginBottom: space.sm + 'px' } }, t('gepaeck.title')),
     h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, maxWidth: '680px', margin: '0 0 ' + space.md + 'px 0' } }, t('gepaeck.intro')),
     h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: space.lg + 'px' } }, bag, toggle),
+    obenEintraege,
+    aussenfach,
     h('div', {
       style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.md + 'px', alignItems: 'start' },
-    }, GEGENSTAENDE.map((g, i) => card(g, i))),
+    }, GEGENSTAENDE.map((g, i) => card(g, i)).concat([aussenKarte])),
     h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, maxWidth: '680px', marginTop: space.lg + 'px' } }, t('gepaeck.legend')),
   );
 };
