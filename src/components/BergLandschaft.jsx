@@ -114,13 +114,14 @@ export const STATIONEN = [
 ];
 
 // Die drei Strassen rechts im Tal (27.09.2026): Plätze für Zeichen ausserhalb der Kapitel —
-// zuerst der Rucksack («Mein Gepäck»), später der Finanzbaum, das dritte ist offen. Kein Weg,
+// zuerst der Wanderrucksack, später der Finanzbaum, das dritte ist offen. Kein Weg,
 // kein Fortschrittsring: es sind Zugänge, keine Stationen. Die Plätze sind aus dem Bild gelesen
 // (Mitte der Fahrbahn); was darauf steht, gibt das Dashboard über `talStationen` (Reihenfolge =
-// Platz). Am Handy liegt das Tal ausserhalb des Ausschnitts — dort gilt je Platz ein eigener Ort
-// auf der Passstrasse, wo kein Weg läuft (erster: das Stück links vor der Basis).
+// Platz). Am Handy liegt das Tal ausserhalb des Ausschnitts, und auf der Passstrasse ist kein
+// Platz frei (gemessen 27.09.2026: links vor der Basis stiess das Etikett an «Behörden») —
+// dort erscheinen sie nicht; `schmal` bleibt für einen späteren Ort.
 export const TAL_PLAETZE = [
-  { breit: { x: 822, y: 560, seite: 'rechts' }, schmal: { x: 138, y: 540, seite: 'obenrechts' } },
+  { breit: { x: 822, y: 560, seite: 'rechts' }, schmal: null },
   { breit: { x: 927, y: 555, seite: 'rechts' }, schmal: null },
   { breit: { x: 1003, y: 580, seite: 'links' }, schmal: null },
 ];

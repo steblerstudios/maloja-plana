@@ -5735,9 +5735,9 @@ export default {
     b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   gepaeck: {
-    title: 'Mon bagage',
+    title: 'Sac à dos de randonnée',
     intro: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.',
-    link: 'Mon bagage',
+    link: 'Sac à dos de randonnée',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
     pack: 'Remballer',

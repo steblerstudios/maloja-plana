@@ -508,7 +508,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
     // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
     // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
-    // Rechts im Kopf «Mein Gepäck» (gewählt 27.09.2026) — Gegenstück zum Leistungs-Kompass
+    // Rechts im Kopf der Wanderrucksack (gewählt 27.09.2026; bis dahin «Mein Gepäck») — Gegenstück zum Leistungs-Kompass
     // über den Leistungen: Beschriftung links, Zeichnung rechts. Der Datenschutz-Satz
     // rückt dafür unter den Titel.
     (() => {

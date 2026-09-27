@@ -5111,9 +5111,9 @@ export default {
     b: { wohnen: 'Home', finanzen: 'Finances', person: 'Person', versicherungen: 'Insurance', gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension', bildung: 'Education', notfall: 'Emergency', behoerden: 'Authorities' },
   },
   gepaeck: {
-    title: 'My kit',
+    title: 'Hiking backpack',
     intro: 'Each area of life is a piece of gear in the backpack. Unpack it, open an item — inside are the paths through life. A path leads into its guided flow.',
-    link: 'My kit',
+    link: 'Hiking backpack',
     ctaSub: 'Life events as gear — unpack, look inside.',
     unpack: 'Unpack',
     pack: 'Pack up again',

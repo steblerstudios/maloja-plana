@@ -5145,9 +5145,9 @@ export default {
     b: { wohnen: 'Wohnen', finanzen: 'Finanzen', person: 'Person', versicherungen: 'Versicherung', gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge', bildung: 'Bildung', notfall: 'Notfall', behoerden: 'Behörden' },
   },
   gepaeck: {
-    title: 'Mein Gepäck',
+    title: 'Wanderrucksack',
     intro: { sie: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Packen Sie aus, öffnen Sie einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.', du: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Pack aus, öffne einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.' },
-    link: 'Mein Gepäck',
+    link: 'Wanderrucksack',
     ctaSub: 'Lebensereignisse als Ausrüstung — auspacken, hineinschauen.',
     unpack: 'Auspacken',
     pack: 'Wieder einpacken',
