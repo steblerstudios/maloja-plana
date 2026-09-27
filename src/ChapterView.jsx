@@ -36,6 +36,7 @@ import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from '
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
+import { abschnittGruppen } from './utils/abschnitte.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -109,13 +110,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const abschnitteAnfang = () => {
     const d = data || {};
     const offen = {};
-    let key = null;
-    chapter.fields.forEach((f) => {
-      if (f.section || key === null) key = f.k;
+    abschnittGruppen(chapter.fields, chapter.title).forEach((g) => g.felder.forEach((f) => {
       const leerGrundordnung = f.mvo && !feldHatWert(d, f.k) && !trifftNichtZu(d, f.k);
       const hinweis = f.type === 'household' && zweitePersonFehlt(Number(d.household && d.household.adults) || 1, d.maritalStatus);
-      if (anfangsOffen === 'alle' || leerGrundordnung || hinweis) offen[key] = true;
-    });
+      if (anfangsOffen === 'alle' || leerGrundordnung || hinweis) offen[g.key] = true;
+    }));
     return offen;
   };
   const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
@@ -1791,17 +1790,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   };
   const abschnittGefuellt = (f) => (f.type === 'household' ? !!data.household : (feldHatWert(data, f.k) || trifftNichtZu(data, f.k)));
   const abschnittsliste = () => {
-    const gruppen = [];
-    chapter.fields.forEach((f) => {
-      if (f.section || gruppen.length === 0) gruppen.push({ key: f.k, titel: f.section || chapter.title, intro: f.sectionIntro, sek: !!f.secondary, felder: [] });
-      gruppen[gruppen.length - 1].felder.push(f);
-    });
+    const gruppen = abschnittGruppen(chapter.fields, chapter.title);
     const karte = (g) => {
       const gefuellt = g.felder.filter(abschnittGefuellt);
       const offen = !!offeneAbschnitte[g.key];
       const leer = gefuellt.length === 0;
       const umschalten = () => setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
-      const liste = g.felder.filter((f) => !!f.secondary === g.sek);
+      // Alle Felder des Abschnitts — jedes mit dem Baustein seiner Art (Haupt / «mehr Felder»).
+      const liste = g.felder;
       return React.createElement('section', {
         key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel,
         style: {
@@ -1825,7 +1821,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingBottom: space.sm + 'px' } },
               demoMode && React.createElement('p', { key: 'demo', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, tr('demo.readOnlyHint')),
               g.intro && React.createElement('p', { key: 'intro', style: { gridColumn: '1 / -1', fontSize: text.sm, color: palette.mid, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px' } }, g.intro),
-              ...liste.map((f, i, arr) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(g.sek ? feldElementeSek(f, i, arr, true) : feldElemente(f, i, arr, true)))))
+              ...liste.map((f, i, arr) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f, i, arr, true) : feldElemente(f, i, arr, true)))))
           : (leer
               ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
               : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
