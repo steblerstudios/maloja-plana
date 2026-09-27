@@ -2142,7 +2142,7 @@ export default {
       },
       hints: {
         patientenverfuegung: { sie: 'Istruzioni per il trattamento medico se non si è in grado di comunicare. Codice civile svizzero art. 370-373.', du: 'Istruzioni per il trattamento medico se non si è in grado di comunicare. Codice civile svizzero art. 370-373.' },
-        vorsorgeauftrag: { sie: 'Designa una persona di fiducia per agire in Suo nome in caso di incapacità. Deve essere registrato presso il comune.', du: 'Designa una persona di fiducia per agire in tuo nome in caso di incapacità. Deve essere registrato presso il comune.' },
+        vorsorgeauftrag: { sie: 'Designa una persona di fiducia per agire in Suo nome in caso di incapacità. Su richiesta, l’ufficio dello stato civile registra che esiste e dove è depositato.', du: 'Designa una persona di fiducia per agire in tuo nome in caso di incapacità. Su richiesta, l’ufficio dello stato civile registra che esiste e dove è depositato.' },
         bestattungswuensche: { sie: 'I Suoi desideri personali riguardo la sepoltura o la cremazione. Non vincolante legalmente, ma importante per la famiglia.', du: 'I tuoi desideri personali riguardo la sepoltura o la cremazione. Non vincolante legalmente, ma importante per la famiglia.' },
       },
       docs: {

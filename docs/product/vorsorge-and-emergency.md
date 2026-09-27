@@ -14,8 +14,8 @@ End-of-life and emergency planning documents are among the most important — an
 ### Vorsorgeauftrag (Lasting Power of Attorney)
 - **What**: Designates a person to act on behalf of the individual if they lose capacity
 - **Legal basis**: Swiss Civil Code Art. 360-369
-- **Special**: Must be registered with the municipality (Gemeinde) to be valid
-- **Future workflow**: Reminder to register with municipality after upload
+- **Special**: Registration is voluntary: on request, the civil registry office (Zivilstandsamt) records that it exists and where it is kept (ZGB Art. 361 para. 3). Validity depends on form (handwritten or notarised, Art. 361 para. 1), not on registration
+- **Future workflow**: Optional hint after upload that it can be recorded with the civil registry office
 
 ### Bestattungsverordnung (Burial Instructions)
 - **What**: Personal wishes regarding burial or cremation

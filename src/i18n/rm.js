@@ -2274,7 +2274,8 @@ export default {
       },
       hints: {
         patientenverfuegung: { sie: "Instrucziuns per il tractament medical, sche Vus na pudais betg pli exprimer Voss giavischs. CC art. 370-373.", du: "Instrucziuns per il tractament medical, sche Ti na pos betg pli exprimer Tes giavischs. CC art. 370-373." },
-        vorsorgeauftrag: { sie: "Determinescha ina persuna da confidonza che agischa per Vus en cas d'incapacitad da giuditgar. Sto vegnir registrà tar la vischnanca.", du: "Determinescha ina persuna da confidonza che agischa per Tai en cas d'incapacitad da giuditgar. Sto vegnir registrà tar la vischnanca." },
+        // TODO(rm): provisorisch — Gegenlese (Hinweis Vorsorgeauftrag korrigiert, ZGB Art. 361 Abs. 3, 27.09.2026)
+        vorsorgeauftrag: { sie: "Determinescha ina persuna da confidonza che agischa per Vus en cas d'incapacitad da giuditgar. Sin dumonda inscriva l'uffizi da stadi civil ch'el exista e nua ch'el è deponì.", du: "Determinescha ina persuna da confidonza che agischa per Tai en cas d'incapacitad da giuditgar. Sin dumonda inscriva l'uffizi da stadi civil ch'el exista e nua ch'el è deponì." },
         bestattungswuensche: { sie: 'Voss giavischs persunals per la sepultura u la cremaziun. Betg giuridicamain vinculant, ma impurtant per la famiglia.', du: 'Tes giavischs persunals per la sepultura u la cremaziun. Betg giuridicamain vinculant, ma impurtant per la famiglia.' },
       },
       docs: {

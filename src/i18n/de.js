@@ -2148,7 +2148,7 @@ export default {
       },
       hints: {
         patientenverfuegung: { sie: 'Anweisungen für medizinische Behandlung, wenn Sie sich nicht äussern können. ZGB Art. 370-373.', du: 'Anweisungen für medizinische Behandlung, wenn Du Dich nicht äussern kannst. ZGB Art. 370-373.' },
-        vorsorgeauftrag: { sie: 'Bestimmt eine Vertrauensperson, die für Sie handelt, wenn Sie urteilsunfähig werden. Muss bei der Gemeinde registriert werden.', du: 'Bestimmt eine Vertrauensperson, die für Dich handelt, wenn Du urteilsunfähig wirst. Muss bei der Gemeinde registriert werden.' },
+        vorsorgeauftrag: { sie: 'Bestimmt eine Vertrauensperson, die für Sie handelt, wenn Sie urteilsunfähig werden. Auf Wunsch trägt das Zivilstandsamt ein, dass es ihn gibt und wo er liegt.', du: 'Bestimmt eine Vertrauensperson, die für Dich handelt, wenn Du urteilsunfähig wirst. Auf Wunsch trägt das Zivilstandsamt ein, dass es ihn gibt und wo er liegt.' },
         bestattungswuensche: { sie: 'Ihre persönlichen Wünsche für Bestattung oder Kremation. Nicht rechtlich bindend, aber wichtig für die Familie.', du: 'Deine persönlichen Wünsche für Bestattung oder Kremation. Nicht rechtlich bindend, aber wichtig für die Familie.' },
       },
       docs: {

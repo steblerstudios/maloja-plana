@@ -2142,7 +2142,7 @@ export default {
       },
       hints: {
         patientenverfuegung: { sie: 'Instructions pour le traitement médical si vous ne pouvez pas communiquer. Code civil suisse art. 370-373.', du: 'Instructions pour le traitement médical si tu ne peux pas communiquer. Code civil suisse art. 370-373.' },
-        vorsorgeauftrag: { sie: 'Désigne une personne de confiance pour agir en votre nom en cas d\'incapacité. Doit être enregistré auprès de la commune.', du: 'Désigne une personne de confiance pour agir en ton nom en cas d\'incapacité. Doit être enregistré auprès de la commune.' },
+        vorsorgeauftrag: { sie: 'Désigne une personne de confiance pour agir en votre nom en cas d\'incapacité. Sur demande, l’office de l’état civil inscrit qu’il existe et où il est déposé.', du: 'Désigne une personne de confiance pour agir en ton nom en cas d\'incapacité. Sur demande, l’office de l’état civil inscrit qu’il existe et où il est déposé.' },
         bestattungswuensche: { sie: 'Vos souhaits personnels concernant l\'inhumation ou la crémation. Non contraignant juridiquement, mais important pour la famille.', du: 'Tes souhaits personnels concernant l\'inhumation ou la crémation. Non contraignant juridiquement, mais important pour la famille.' },
       },
       docs: {
