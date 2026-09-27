@@ -8,7 +8,8 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { leseBetrag } from '../briefGenerator.js';
 import { createT, deutschT, I18nContext } from '../i18n/index.js';
-import BriefGenerator from '../BriefGenerator.jsx';
+import BriefGenerator, { briefUebersetzer } from '../BriefGenerator.jsx';
+import { generateLetter } from '../briefGenerator.js';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -66,6 +67,16 @@ describe('rm: Brieftext auf Deutsch bis zur Gegenlese', () => {
     expect(mitRm).toContain(rm.briefe.angaben.rmDeutsch);
     const mitDe = render({ initialTemplate: 'deathNotice' }, { lang: 'de', anrede: 'sie' });
     expect(mitDe).not.toContain(de.briefe.angaben.rmDeutsch);
+  });
+  it('der gedruckte Brief ist in rm deutsch, die übrigen Vorlagen bleiben rm', () => {
+    const tRm = createT(ALL, 'rm', 'sie');
+    const tB = briefUebersetzer({ lang: 'rm', anrede: 'sie', selected: 'debtObjection', t: tRm, geladen: { de, rm } });
+    const ohneDatum = (h) => h.replace(/\d{2}\.\d{2}\.\d{4}/g, '');
+    const brief = ohneDatum(generateLetter('debtObjection', {}, tB, { angaben: {} }));
+    expect(brief).toBe(ohneDatum(generateLetter('debtObjection', {}, t, { angaben: {} })));
+    expect(brief).not.toBe(ohneDatum(generateLetter('debtObjection', {}, tRm, { angaben: {} })));
+    expect(briefUebersetzer({ lang: 'rm', anrede: 'sie', selected: 'leaseTermination', t: tRm, geladen: { de, rm } })).toBe(tRm);
+    expect(briefUebersetzer({ lang: 'de', anrede: 'sie', selected: 'debtObjection', t, geladen: { de, rm } })).toBe(t);
   });
   it('beide Brief-Aufrufe nutzen den Brief-Übersetzer', () => {
     const src = fs.readFileSync(path.join(__dirname, '..', 'BriefGenerator.jsx'), 'utf8');

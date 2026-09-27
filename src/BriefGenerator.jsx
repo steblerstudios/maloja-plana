@@ -23,6 +23,11 @@ const JOB_TEMPLATES = ['wageClaim', 'unpaidWage', 'workReference', 'dismissalObj
 // Deploy-Gate 27.09.2026 (Rechts-Prüfer): der rm-Brieftext dieser vier ist noch nicht
 // gegengelesen → der BRIEF kommt auf Deutsch, die Ansicht bleibt rätoromanisch.
 const BRIEF_DEUTSCH_BEI_RM = ['workReference', 'dismissalObjection', 'debtObjection', 'deathNotice'];
+// Übersetzer für den BRIEF (nicht die Ansicht). `geladen` nur für Unit-Tests.
+export function briefUebersetzer({ lang, anrede, selected, t, geladen }) {
+  if (lang !== 'rm' || !BRIEF_DEUTSCH_BEI_RM.includes(selected)) return t;
+  return (geladen ? deutschT(anrede, geladen) : deutschT(anrede)) || t;
+}
 
 // ─── Lebensereignis-Briefe: Hinweise und Angaben (26.09.2026) ───
 // Die Hinweise stehen VOR dem Formular: bei Rechtsvorschlag und Todesfall ist die Frist
@@ -225,7 +230,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
 
   const i18n = useContext(I18nContext);
   const briefDeutsch = i18n?.lang === 'rm' && BRIEF_DEUTSCH_BEI_RM.includes(selected);
-  const tBrief = (briefDeutsch && deutschT(i18n.anrede)) || t;
+  const tBrief = briefUebersetzer({ lang: i18n?.lang, anrede: i18n?.anrede, selected, t });
 
   const templates = getLetterTemplates(t, data);
   const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
