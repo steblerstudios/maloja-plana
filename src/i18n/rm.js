@@ -1196,6 +1196,33 @@ export default {
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. Aufgebote, Formulare und Zuständigkeiten liegen beim Kanton (Kreiskommando) und bei der Vollzugsstelle für den Zivildienst. Sätze und Beträge gelten mit Stand September 2026 und ändern sich — der Erwerbsersatz ab Juli 2027. Dies ist Orientierung, keine Rechtsberatung.',
     quelle: 'Quellen: [[BV Art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_59]], [[MG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_7]], [[MG Art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_9]], [[ZDG Art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_1]], [[ZDG Art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_17]], [[EOG Art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_9]], [[OR Art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_336_c]], [[WPEG Art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_13]], [[WPEG Art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_30]] (geprüft im September 2026).',
   },
+  // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+  mahnung: {
+    title: 'Mahnung erhalten — was tun?',
+    intro: 'Eine Mahnung ist eine Erinnerung, noch keine Betreibung. Jetzt ist der Spielraum am grössten: prüfen, nachfragen, Raten vorschlagen. Hier der ruhige Überblick.',
+    step1Title: '1 · Was eine Mahnung bedeutet',
+    step1Text: { sie: 'Ist eine Rechnung fällig, setzt die Mahnung Sie in Verzug; war ein fester Zahltag vereinbart, sind Sie schon ab diesem Tag in Verzug (OR Art. 102). Eine Betreibung ist das noch nicht — sie beginnt erst mit einem Zahlungsbefehl des Betreibungsamts (SchKG Art. 38 Abs. 2). Die Zahlungsfrist auf der Mahnung setzt der Gläubiger, nicht das Gesetz. Melden Sie sich innerhalb dieser Frist — das hält die meisten Wege offen.', du: 'Ist eine Rechnung fällig, setzt die Mahnung dich in Verzug; war ein fester Zahltag vereinbart, bist du schon ab diesem Tag in Verzug (OR Art. 102). Eine Betreibung ist das noch nicht — sie beginnt erst mit einem Zahlungsbefehl des Betreibungsamts (SchKG Art. 38 Abs. 2). Die Zahlungsfrist auf der Mahnung setzt der Gläubiger, nicht das Gesetz. Melde dich innerhalb dieser Frist — das hält die meisten Wege offen.' },
+    step1LinkBetreibung: 'Schon ein Zahlungsbefehl gekommen? Betreibung erhalten',
+    step2Title: '2 · Stimmt die Forderung?',
+    step2Text: { sie: 'Vergleichen Sie Betrag, Rechnungsnummer und Leistung mit Ihren Unterlagen. Haben Sie schon bezahlt, schicken Sie den Zahlungsbeleg. Ist etwas unklar oder falsch, bestreiten Sie die Forderung schriftlich und verlangen Sie eine Aufstellung — so können Sie später belegen, dass Sie reagiert haben.', du: 'Vergleiche Betrag, Rechnungsnummer und Leistung mit deinen Unterlagen. Hast du schon bezahlt, schick den Zahlungsbeleg. Ist etwas unklar oder falsch, bestreite die Forderung schriftlich und verlange eine Aufstellung — so kannst du später belegen, dass du reagiert hast.' },
+    step2Verjaehrung: 'Ist die Forderung sehr alt, kann sie verjährt sein: die meisten nach zehn Jahren, zum Beispiel Mietzinse sowie Handwerker- und Arztrechnungen nach fünf Jahren, jeweils ab Fälligkeit (OR Art. 127, 128, 130). Die Verjährung zählt nur, wenn man sich darauf beruft (OR Art. 142). Und: Wer die Forderung anerkennt — auch mit einer kleinen Anzahlung —, lässt die Verjährung neu beginnen (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Bei alten Forderungen darum zuerst prüfen oder beraten lassen, dann zahlen.',
+    step3Title: '3 · Was dazukommen darf',
+    step3Text: { sie: 'Sind Sie mit einer Geldschuld in Verzug, darf der Gläubiger Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1) — auf 1000 Franken sind das rund 4 Franken im Monat. Zins auf Verzugszins ist nicht erlaubt (OR Art. 105 Abs. 3). Eine Mahngebühr nennt das Obligationenrecht nicht; einen Schaden, der über den Verzugszins hinausgeht, regelt es gesondert (OR Art. 106). Verlangt jemand Mahn- oder Inkassogebühren, dürfen Sie fragen, worauf sie sich stützen — etwa auf Ihren Vertrag oder die AGB. Eine Schuldenberatung hilft bei der Einschätzung.', du: 'Bist du mit einer Geldschuld in Verzug, darf der Gläubiger Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1) — auf 1000 Franken sind das rund 4 Franken im Monat. Zins auf Verzugszins ist nicht erlaubt (OR Art. 105 Abs. 3). Eine Mahngebühr nennt das Obligationenrecht nicht; einen Schaden, der über den Verzugszins hinausgeht, regelt es gesondert (OR Art. 106). Verlangt jemand Mahn- oder Inkassogebühren, darfst du fragen, worauf sie sich stützen — etwa auf deinen Vertrag oder die AGB. Eine Schuldenberatung hilft bei der Einschätzung.' },
+    step3LinkSchulden: 'Offene Forderungen ordnen',
+    step4Title: '4 · Miete und Krankenkasse: hier gelten feste Regeln',
+    step4Miete: { sie: 'Miete: Ist Mietzins oder Nebenkosten im Rückstand, kann die Vermieterschaft Ihnen schriftlich eine Zahlungsfrist setzen und die Kündigung androhen. Bei einer Wohnung beträgt diese Frist mindestens 30 Tage. Zahlen Sie innert der Frist nicht, kann sie mit einer Frist von mindestens 30 Tagen auf Ende eines Monats kündigen (OR Art. 257d). Eine solche Mahnung geht allen anderen vor.', du: 'Miete: Ist Mietzins oder Nebenkosten im Rückstand, kann die Vermieterschaft dir schriftlich eine Zahlungsfrist setzen und die Kündigung androhen. Bei einer Wohnung beträgt diese Frist mindestens 30 Tage. Zahlst du innert der Frist nicht, kann sie mit einer Frist von mindestens 30 Tagen auf Ende eines Monats kündigen (OR Art. 257d). Eine solche Mahnung geht allen anderen vor.' },
+    step4LinkWohnung: 'Wohnung gekündigt?',
+    step4Kk: { sie: 'Krankenkasse: Bei Prämien und Kostenbeteiligungen kommt zuerst mindestens eine schriftliche Mahnung, dann eine Zahlungsaufforderung mit 30 Tagen Nachfrist und einem Hinweis auf die Folgen. Bleibt die Zahlung aus, muss die Kasse die Betreibung einleiten (KVG Art. 64a Abs. 1–2). Auf fälligen Prämien beträgt der Verzugszins 5 % pro Jahr (KVV Art. 105a). Bearbeitungsgebühren darf sie nur verlangen, wenn Sie den Mehraufwand verschuldet haben und ihre allgemeinen Bestimmungen das vorsehen — und nur bis zu den Höchstbeträgen des EDI (KVV Art. 105b Abs. 2). Solange Ausstände offen sind, können Sie die Kasse in der Regel nicht wechseln (KVG Art. 64a Abs. 6).', du: 'Krankenkasse: Bei Prämien und Kostenbeteiligungen kommt zuerst mindestens eine schriftliche Mahnung, dann eine Zahlungsaufforderung mit 30 Tagen Nachfrist und einem Hinweis auf die Folgen. Bleibt die Zahlung aus, muss die Kasse die Betreibung einleiten (KVG Art. 64a Abs. 1–2). Auf fälligen Prämien beträgt der Verzugszins 5 % pro Jahr (KVV Art. 105a). Bearbeitungsgebühren darf sie nur verlangen, wenn du den Mehraufwand verschuldet hast und ihre allgemeinen Bestimmungen das vorsehen — und nur bis zu den Höchstbeträgen des EDI (KVV Art. 105b Abs. 2). Solange Ausstände offen sind, kannst du die Kasse in der Regel nicht wechseln (KVG Art. 64a Abs. 6).' },
+    step4LinkIpv: 'Prämienverbilligung prüfen',
+    step5Title: '5 · Nicht auf einmal zahlen können?',
+    step5Text: { sie: 'Fragen Sie früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlagen Sie nur Raten vor, die Ihr Budget auch in einem schwierigen Monat trägt, und bitten Sie um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird.', du: 'Frag früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlag nur Raten vor, die dein Budget auch in einem schwierigen Monat trägt, und bitte um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird.' },
+    step5LinkBudget: 'Budget ansehen',
+    step5LinkBeratung: 'Schuldenberatung finden',
+    step6Title: { sie: '6 · Umgekehrt: Ihnen schuldet jemand Geld', du: '6 · Umgekehrt: dir schuldet jemand Geld' },
+    step6Text: { sie: 'Mit einer Mahnung setzen Sie die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann können Sie Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginnen Sie freundlich mit einer Zahlungserinnerung, setzen Sie eine klare Frist und schicken Sie die Mahnung so, dass Sie den Versand belegen können.', du: 'Mit einer Mahnung setzt du die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann kannst du Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginne freundlich mit einer Zahlungserinnerung, setz eine klare Frist und schick die Mahnung so, dass du den Versand belegen kannst.' },
+    footerNote: 'Quai è orientaziun, betg cussegl giuridic. Eine Mahnung ist kein Urteil und keine Betreibung. Dies ist Orientierung, keine Rechtsberatung. Bei Schulden hilft eine Schuldenberatung.',
+    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]] (geprüft im September 2026).',
+  },
   betreibung: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     fristVorbei: { sie: 'Die 10 Tage sind am {date} abgelaufen. Fragen Sie beim Betreibungsamt nach, was jetzt noch möglich ist.', du: 'Die 10 Tage sind am {date} abgelaufen. Frag beim Betreibungsamt nach, was jetzt noch möglich ist.' },
@@ -1591,6 +1618,7 @@ export default {
     privacyNote: { sie: 'Naginas datas bandunan Voss apparat.', du: 'Naginas datas bandunan Tes apparat.' },
     kkerst: 'Cassa da malsauns — emprima giada',
     pensionierung: 'Pensiunament',
+    mahnung: 'Mahnung erhalten', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     betreibung: 'Scussiun retschavida',
     dienst: 'Militär- oder Zivildienst',
     volljaehrig: '18 werden',
@@ -1623,6 +1651,7 @@ export default {
       arztkoffer: { sie: 'Voss utensils da sanadad en ina valisch da medi', du: 'Tes utensils da sanadad en ina valisch da medi' },
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
+      mahnung: 'Prüfen, bestreiten, Raten anfragen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       betreibung: 'Reagir cun calma',
       dienst: 'Rekrutierung, Zivildienst, EO, Ersatz',
       volljaehrig: 'Verträge, Krankenkasse, Steuern, Stimme',
@@ -4220,6 +4249,9 @@ export default {
       dismissalObjection: 'Brev: protesta cunter la disditga', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       debtObjection: 'Brev: far opposiziun cunter in cumond da pajament', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       deathNotice: 'Brev: annunziar in cas da mort', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      paymentReminder: 'Brief: Mahnung schreiben', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      claimDispute: 'Brief: Forderung bestreiten', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      installmentRequest: 'Brief: Ratenzahlung vorschlagen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     },
     workReference: {
       title: 'Dumandar in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
@@ -4327,6 +4359,139 @@ export default {
       bescheinigung: 'Jau As prej da ma confermar ch’jau hai fatg opposiziun (art. 74 al. 3 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
       legalNote: 'Basa: SchKG art. 74 e 75. L’opposiziun na basegna nagina motivaziun. Suenter in concurs pli baud vala: tgi che contesta dad esser vegnì tar nova facultad, sto declerar quai explicitamain en l’opposiziun (SchKG art. 75 al. 2). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+    paymentReminder: {
+      title: 'Mahnung schreiben',
+      description: { sie: 'Jemand schuldet Ihnen Geld? Freundlich erinnern oder mahnen — mit klarer Frist.', du: 'Jemand schuldet dir Geld? Freundlich erinnern oder mahnen — mit klarer Frist.' },
+      felder: {
+        stufe: {
+          label: 'Wie deutlich soll der Brief sein?',
+          erinnerung: 'Freundliche Zahlungserinnerung (zuerst)',
+          mahnung: 'Mahnung mit Verzugszins und Hinweis auf die Betreibung',
+        },
+        grund: {
+          label: 'Wofür ist das Geld geschuldet?',
+          hilfe: 'Zum Beispiel: «Darlehen vom 3. März 2026» oder «Rechnung Nr. 17 vom 12. Juni 2026».',
+        },
+        betrag: {
+          label: 'Offener Betrag in CHF',
+        },
+        faellig: {
+          label: 'Fällig seit',
+        },
+        frist: {
+          label: 'Neue Zahlungsfrist ab heute',
+          '10': '10 Tage',
+          '20': '20 Tage',
+          '30': '30 Tage',
+        },
+        zahlungsweg: {
+          label: 'Zahlungsverbindung (freiwillig)',
+          hilfe: { sie: 'Zum Beispiel Ihre IBAN. Wird nicht gespeichert, nur in den Brief gesetzt.', du: 'Zum Beispiel deine IBAN. Wird nicht gespeichert, nur in den Brief gesetzt.' },
+        },
+      },
+      hinweis: {
+        title: 'Zuerst freundlich',
+        text: { sie: 'Oft ist eine Zahlung einfach untergegangen. Beginnen Sie mit einer Zahlungserinnerung; die Mahnung mit Verzugszins ist der zweite Schritt. Schicken Sie den Brief so, dass Sie den Versand belegen können, und behalten Sie eine Kopie.', du: 'Oft ist eine Zahlung einfach untergegangen. Beginne mit einer Zahlungserinnerung; die Mahnung mit Verzugszins ist der zweite Schritt. Schick den Brief so, dass du den Versand belegen kannst, und behalte eine Kopie.' },
+      },
+      recipient: '[Name und Adresse der Schuldnerin oder des Schuldners]',
+      subject: {
+        erinnerung: 'Zahlungserinnerung — {reason}',
+        mahnung: 'Mahnung — {reason}',
+      },
+      salutation: 'Guten Tag,',
+      body1: 'für {reason} ist der Betrag von CHF {amount} seit dem {date} fällig. Bis heute habe ich keine Zahlung erhalten.',
+      frist: {
+        erinnerung: 'Vielleicht ist die Zahlung untergegangen. Ich bitte Sie, den Betrag bis zum {date} zu überweisen.',
+        mahnung: 'Ich fordere Sie auf, den Betrag bis spätestens am {date} zu bezahlen.',
+      },
+      zahlungsweg: 'Zahlungsverbindung: {text}',
+      zins: 'Ich behalte mir vor, Verzugszins von 5 % pro Jahr zu verlangen (Art. 104 Abs. 1 OR).',
+      weitere: 'Geht die Zahlung bis dahin nicht ein, werde ich weitere Schritte prüfen, namentlich die Betreibung.',
+      bereitsBezahlt: 'Falls sich Ihre Zahlung mit diesem Schreiben gekreuzt hat, betrachten Sie es bitte als gegenstandslos.',
+      closing: 'Freundliche Grüsse',
+      legalNote: 'Grundlage: OR Art. 102 und 104. Mit der Mahnung gerät die Person in Verzug, sofern die Forderung fällig ist; war ein fester Zahltag vereinbart, schon ab diesem Tag. Ab Verzug kann Verzugszins von 5 % pro Jahr verlangt werden. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+    },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+    claimDispute: {
+      title: 'Forderung bestreiten',
+      description: 'Auf eine Mahnung antworten, wenn die Rechnung nicht stimmt oder schon bezahlt ist — und Unterlagen verlangen.',
+      felder: {
+        rechnungsnummer: {
+          label: 'Rechnungs- oder Referenznummer (steht auf der Mahnung)',
+        },
+        rechnungsdatum: {
+          label: 'Datum der Rechnung',
+        },
+        umfang: {
+          label: { sie: 'Was bestreiten Sie?', du: 'Was bestreitest du?' },
+          ganz: 'Die ganze Forderung',
+          teil: 'Nur einen Teil der Forderung',
+        },
+        teilbetrag: {
+          label: 'Bestrittener Betrag in CHF',
+        },
+        grund: {
+          label: 'Warum?',
+          unklar: 'Die Forderung ist nicht nachvollziehbar — Unterlagen verlangen',
+          bezahlt: 'Schon bezahlt — Kopie des Zahlungsbelegs beilegen',
+        },
+        einschaetzung: {
+          label: { sie: 'Ihre Einschätzung (freiwillig)', du: 'Deine Einschätzung (freiwillig)' },
+          hilfe: 'Erscheint im Brief ausdrücklich als Einschätzung, nicht als Tatsache.',
+        },
+      },
+      hinweis: {
+        title: 'Bestreiten ist kein Rechtsvorschlag',
+        text: { sie: 'Mit diesem Brief halten Sie fest, dass Sie die Forderung bestreiten, und verlangen Unterlagen. Eine Betreibung kann der Gläubiger trotzdem einleiten.', du: 'Mit diesem Brief hältst du fest, dass du die Forderung bestreitest, und verlangst Unterlagen. Eine Betreibung kann der Gläubiger trotzdem einleiten.' },
+        zahlungsbefehl: 'Liegt schon ein Zahlungsbefehl vor, zählen 10 Tage ab Zustellung: Dann braucht es den Rechtsvorschlag beim Betreibungsamt (SchKG Art. 74), nicht diesen Brief.',
+      },
+      subject: 'Ihre Mahnung — Rechnung Nr. {number} vom {date}',
+      salutation: 'Sehr geehrte Damen und Herren,',
+      body1: 'ich habe Ihre Mahnung zur Rechnung Nr. {number} vom {date} erhalten.',
+      ganz: 'Ich bestreite diese Forderung.',
+      teil: 'Ich bestreite diese Forderung im Umfang von CHF {amount}.',
+      grund: {
+        unklar: 'Sie ist für mich nicht nachvollziehbar. Bitte senden Sie mir eine detaillierte Aufstellung und die Unterlagen, auf die sich die Forderung stützt.',
+        bezahlt: 'Nach meinen Unterlagen habe ich diesen Betrag bereits bezahlt. Eine Kopie des Zahlungsbelegs liegt bei.',
+      },
+      einschaetzung: 'Meine Einschätzung: {text}',
+      body2: 'Bis zur Klärung bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
+      closing: 'Freundliche Grüsse',
+      legalNote: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+    },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+    installmentRequest: {
+      title: 'Ratenzahlung vorschlagen',
+      description: { sie: 'Eine offene Rechnung in Raten begleichen — einen Vorschlag machen, den Ihr Budget trägt.', du: 'Eine offene Rechnung in Raten begleichen — einen Vorschlag machen, den dein Budget trägt.' },
+      felder: {
+        rechnungsnummer: {
+          label: 'Rechnungs- oder Referenznummer (steht auf der Mahnung)',
+        },
+        betrag: {
+          label: 'Offener Betrag in CHF (laut Mahnung)',
+        },
+        rate: {
+          label: 'Monatliche Rate in CHF',
+          hilfe: { sie: 'Nur so viel, wie Ihr Budget auch in einem schwierigen Monat trägt.', du: 'Nur so viel, wie dein Budget auch in einem schwierigen Monat trägt.' },
+        },
+        ab: {
+          label: 'Erste Rate am',
+        },
+      },
+      hinweis: {
+        title: { sie: 'Bevor Sie Raten vorschlagen', du: 'Bevor du Raten vorschlägst' },
+        anerkennung: { sie: 'Ein Ratengesuch und jede Anzahlung gelten als Anerkennung der Forderung — die Verjährung beginnt damit neu (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Schlagen Sie Raten nur vor, wenn die Forderung stimmt.', du: 'Ein Ratengesuch und jede Anzahlung gelten als Anerkennung der Forderung — die Verjährung beginnt damit neu (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Schlag Raten nur vor, wenn die Forderung stimmt.' },
+        budget: { sie: 'Der Gläubiger muss nicht zustimmen. Bitten Sie um eine schriftliche Bestätigung, und ziehen Sie bei mehreren offenen Forderungen eine Schuldenberatung bei.', du: 'Der Gläubiger muss nicht zustimmen. Bitte um eine schriftliche Bestätigung, und zieh bei mehreren offenen Forderungen eine Schuldenberatung bei.' },
+      },
+      subject: 'Gesuch um Ratenzahlung — Rechnung Nr. {number}',
+      salutation: 'Sehr geehrte Damen und Herren,',
+      body1: 'ich habe Ihre Mahnung zur Rechnung Nr. {number} über CHF {amount} erhalten. Den Betrag kann ich zurzeit nicht auf einmal bezahlen.',
+      body2: 'Ich schlage Ihnen vor, ihn in monatlichen Raten von CHF {rate} zu begleichen, erstmals am {date}.',
+      body3: 'Bitte bestätigen Sie mir diese Vereinbarung schriftlich. Solange ich die Raten wie vereinbart bezahle, bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
+      closing: 'Freundliche Grüsse',
+      legalNote: 'Ein Ratengesuch ist ein Vorschlag; gültig ist, was der Gläubiger bestätigt. Es gilt als Anerkennung der Forderung (OR Art. 135 Ziff. 1). Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung.',
     },
     deathNotice: {
       title: 'Annunziar in cas da mort', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
@@ -5487,7 +5652,7 @@ export default {
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée' },
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu' },
-    w: { dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
+    w: { mahnung: 'Mahnung erhalten', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
