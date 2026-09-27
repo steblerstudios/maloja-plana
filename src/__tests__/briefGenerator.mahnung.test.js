@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { generateLetter, getLetterTemplates, BRIEF_ANGABEN, briefCanRender, mahnFrist, angabenEingetippt } from '../briefGenerator.js';
+import { generateLetter, getLetterTemplates, BRIEF_ANGABEN, briefCanRender, mahnFrist, angabenEingetippt, feldSichtbar } from '../briefGenerator.js';
 import BriefGenerator, { briefUebersetzer } from '../BriefGenerator.jsx';
 import { MahnungErhalten } from '../MahnungErhalten.jsx';
 import { BetreibungErhalten } from '../BetreibungErhalten.jsx';
@@ -210,26 +210,41 @@ describe('Ablauf «Mahnung erhalten»', () => {
     expect(html).toContain('OR Art. 257d');
   });
   it('Mahngebühren (27.09., Auftrag Stebler Studios): in der Regel nicht geschuldet — mit Quelle und Weg', () => {
-    expect(html).toContain('Mahn- und Inkassogebühren müssen Sie in der Regel nicht bezahlen');
+    expect(html).toContain('Das Obligationenrecht sieht keine Mahngebühr vor');
+    expect(html).toContain('in der Regel nicht bezahlen');
     expect(html).toContain('K-Tipp Rechtsschutz');
-    expect(html).toContain('OR Art. 86 Abs. 1');
-    // nicht absolut: Ausnahmen (Krankenkasse KVV 105b, Vereinbarung) bleiben genannt
-    expect(html).toContain('nur, wenn sie vorher im Vertrag vereinbart wurden');
-    expect(html).toContain('Ausnahmen bei Krankenkasse');
+    // nicht absolut: Zustimmung, OR 85 (Anrechnung), Betreibungskosten SchKG 68, öffentliche Stellen
+    expect(html).toContain('ausdrücklich zugestimmt');
+    expect(html).toContain('OR Art. 85 Abs. 1');
+    expect(html).toContain('SchKG Art. 68 Abs. 1');
+    expect(html).toContain('Behörden und öffentlichen Stellen');
   });
   it('Bussen: Raten, Ersatzfreiheitsstrafe, gemeinnützige Arbeit — belegt', () => {
     expect(html).toContain('StGB Art. 35 Abs. 1');
     expect(html).toContain('Art. 106 Abs. 2 und 4');
     expect(html).toContain('Art. 79a Abs. 1 und 4');
+    expect(html).toContain('Art. 79a Abs. 2'); // nach der Umwandlung keine gemeinnützige Arbeit mehr
   });
   it('Verlustschein: zinsfrei (SchKG 149 Abs. 4)', () => {
     expect(html).toContain('Zinsen sind darauf keine geschuldet (Art. 149 Abs. 4)');
   });
-  it('Bestreitungsbrief: Grund «nur Gebühren»', () => {
-    const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang: 'teil', teilbetrag: '30', grund: 'gebuehren' } }));
-    expect(k).toContain('im Umfang von CHF 30');
-    expect(k).toContain('nicht vereinbart');
-    expect(k).not.toMatch(/anerkenne|begleiche/i);
+  it('Bestreitungsbrief «nur Gebühren»: eigener Satz, kein Widerspruch zur ganzen Forderung', () => {
+    // Auch wenn noch «ganz»/«teil» aus einer früheren Wahl übrig ist: bei «nur Gebühren» zählt es nicht.
+    for (const umfang of ['ganz', 'teil']) {
+      const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang, teilbetrag: '999', grund: 'gebuehren', gebuehrenbetrag: '30' } }));
+      expect(k).toContain('Mahn- bzw. Inkassogebühren von CHF 30');
+      expect(k).not.toContain('Ich bestreite diese Forderung');
+      expect(k).not.toContain('übrigen Betrag');
+      expect(k).not.toContain('999');
+      expect(k).not.toMatch(/anerkenne|begleiche/i);
+    }
+  });
+  it('Formular: bei «nur Gebühren» kein Umfang, dafür das Gebührenfeld', () => {
+    const a = { grund: 'gebuehren', umfang: 'teil' };
+    const sichtbar = BRIEF_ANGABEN.claimDispute.filter(f => feldSichtbar(f, a)).map(f => f.key);
+    expect(sichtbar).toContain('gebuehrenbetrag');
+    expect(sichtbar).not.toContain('umfang');
+    expect(sichtbar).not.toContain('teilbetrag');
   });
 });
 

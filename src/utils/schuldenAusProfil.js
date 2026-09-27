@@ -31,7 +31,7 @@ export function betreibungsHinweis(status, betreibung) {
 //   als netto — steht er als brutto oder ohne Angabe da, kein Vorschlag (wie FinanzUebersicht bei
 //   der Armutsgrenze). Ohne Miete/Hypothek, Krankenkasse und Lebensmittel wäre fast alles «frei»
 //   → kein Vorschlag, sondern der Hinweis, was fehlt. Der 13. Monatslohn zählt nicht mit (das
-//   Budget ist ×12) — der Vorschlag ist eher vorsichtig.
+//   Budget ist ×12). Keine Reserve eingerechnet — darum rät der Text, die Rate tiefer anzusetzen.
 export function rateAusBudget(data) {
   const f = data?.finanzen || {};
   const n = (v) => { const x = Number(v); return Number.isFinite(x) ? x : 0; };
@@ -48,5 +48,11 @@ export function rateAusBudget(data) {
   const ausgabenOhneRaten = n(b.totalExpenses) - n(e.debtPayments);
   const frei = n(b.income) - ausgabenOhneRaten;
   if (!(frei >= 10)) return { grund: 'nichtsUebrig', einnahmen: n(b.income), ausgaben: ausgabenOhneRaten };
-  return { grund: 'ok', vorschlag: Math.floor(frei / 10) * 10, einnahmen: n(b.income), ausgaben: ausgabenOhneRaten };
+  // Rechts-Prüfer 27.09.: eher zu hoch als vorsichtig — ohne Reserve, Steuern fehlen oft, und die
+  // heutigen Schuldenraten können Raten für Schulden ausserhalb der Liste enthalten. Kein Abzug
+  // erfunden, sondern offen gesagt: steuerFehlt / heutigeRaten steuern zusätzliche Hinweise.
+  return {
+    grund: 'ok', vorschlag: Math.floor(frei / 10) * 10, einnahmen: n(b.income), ausgaben: ausgabenOhneRaten,
+    steuerFehlt: !(n(e.tax) > 0), heutigeRaten: n(e.debtPayments),
+  };
 }

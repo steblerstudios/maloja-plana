@@ -303,6 +303,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
                 ? t('schulden.plan.budgetFehlt', { was: budgetRate.fehlend.map(k => t('schulden.plan.fehlt.' + k)).join(', ') })
                 : t('schulden.plan.budget.' + budgetRate.grund),
             ' ', t('schulden.plan.rateHilfe'),
+            budgetRate.grund === 'ok' && ' ' + t('schulden.plan.reserve'),
+            budgetRate.grund === 'ok' && budgetRate.steuerFehlt && ' ' + t('schulden.plan.steuerFehlt'),
+            budgetRate.grund === 'ok' && budgetRate.heutigeRaten > 0 && ' ' + t('schulden.plan.heutigeRaten', { amount: betrag(budgetRate.heutigeRaten, { hoechstens: 2 }) }),
             budgetRate.grund === 'ok' && leseBetrag(planRate) !== budgetRate.vorschlag && React.createElement('button', {
               type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)),
               style: { display: 'inline', marginInlineStart: '6px', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },

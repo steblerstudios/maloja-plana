@@ -42,6 +42,8 @@ describe('rateAusBudget — Vorschlag für den Abbau-Plan (27.09.2026)', () => {
     expect(r.grund).toBe('ok');
     expect(r.ausgaben).toBe(2850); // 1800 + 450 + 600, die 300 Schuldenraten zählen nicht als Ausgabe
     expect(r.vorschlag).toBe(2150);
+    expect(r.steuerFehlt).toBe(true); // keine Steuer erfasst → Hinweis
+    expect(r.heutigeRaten).toBe(300);
     expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, monthlyIncome: 5005.5 } }).vorschlag).toBe(2150);
   });
   it('nur netto: brutto oder ohne Angabe → kein Vorschlag', () => {
