@@ -203,6 +203,13 @@ export · calendar · notifications · settings · legal
 - **Crosslinks:** 🔗 → `budget`/`finanzuebersicht` (Tragbarkeit) · 🔗 → `direktlinks` (Betreibungsamt/Schuldenberatung) · 🔗 → `sozialhilfe`.
 - **Nächste Aktion:** Crosslink `SchuldenManager` → `budget`/`finanzuebersicht` (Schulden im Gesamtbudget verankern).
 
+#### E3a · Mahnung erhalten *(neu 27.09.2026)*
+- **Bausteine:** `mahnung`/`MahnungErhalten` · Briefe `paymentReminder`, `claimDispute`, `installmentRequest` (`briefGenerator.js`).
+- **Verwendet?** ✅ im Register `ABLAEUFE`, in Suche, Dashboard und Gepäck (Arbeit, neben «Betreibung erhalten»).
+- **Crosslinks:** 🔗 → `betreibung` (Zahlungsbefehl schon da) · `schulden` · `wohnunggekuendigt` (OR 257d) · `premium` (IPV) · `budget` · `direktlinks` (Schuldenberatung) · `briefe` (drei Vorlagen, vorgewählt).
+- **Lücken:** 🟡 keine Frist-Knöpfe, bewusst (Gläubiger-Frist; Beginn der KK-Nachfrist nicht im Gesetz) · 🟡 kein Rückweg aus `betreibung`/`schulden` hierher · 🟡 rm = deutscher Rückfall.
+- **Nächste Aktion:** siehe `IDEEN.md` §5 «Mahnung» (Offen).
+
 #### E4 · Sozialhilfe beantragen
 - **Bausteine:** `sozialhilfe`/`SozialhilfeView` · `SozialhilfeRechner` (SKOS).
 - **Verwendet?** 🟡 `SozialhilfeView.jsx` verlinkt → `finanzuebersicht` (`SozialhilfeView.jsx:197`); der Rechner `SozialhilfeRechner.jsx` selbst hat **0 onNavigate**. Orientierung da, Antrags-Faden fehlt.

@@ -111,6 +111,7 @@ Abschiedsagentur, plaant).
 | Budget: Ziele und Richtwerte · Haushalt genauer erfassen · Hausrat → Hauswert | §5 | Keine-Doppel-Eingabe-Audit |
 | Zukunftsrechner-Reste · Kreditkarten · Säule 3b · «Lohnt sich ein Umzug?» | §5 | — |
 | KK-Rechnung stimmt nicht · UVG-Brief · Führerschein · Stiftungen und Härtefonds | §5 | Generatoren-Muster |
+| Mahnung weiterführen: Verzugszins-Rechner · Mahnstufen-Zeitleiste im Schuldenmanager · Steuer-Mahnung je Kanton | §5 | Entwurfs-PR «Mahnung» (27.09.) gemergt; je Punkt Quelle |
 | Berechtigungs-Landkarte je Kanton · Befreiungen · AHV-Beitragsjahre | §3 | Kantons-Belege (K30/K32) |
 | Vergünstigungen weiterer Kantone · eigener Bereich für Beeinträchtigungen · Screening-Abgleich (Faden 3-II) | §3, §5 | je Quelle einzeln belegen |
 | Keine-Doppel-Eingabe-Audit · Drei-Schritt-Standard · Robustheits-Checkliste · Quellen-Audit | §6, §7 | O1, O4 |
@@ -299,6 +300,28 @@ Abschiedsagentur, plaant).
 - 🌱 **„Lohnt sich ein Umzug?"-Check** (Steuerfuss + Miete + KK gemeindeübergreifend, würdevoll).
 - 🌱 **Faden 3-II** — persönlicher Screening-Intervall-Abgleich (nur belegbar, mit Evidenzqualität).
 - 🌱 **Ablauf „KK-Rechnung stimmt nicht"** (+ Beanstandungs-/Einsprache-Brief) · **„Gezahlt/offen"-Ablauf pro Arztrechnung**.
+- 🔨 **Mahnung — erhalten und selbst mahnen** *⟨Stebler Studios 27.09.2026: «das Thema Mahnung
+  abdecken»; Auswahl «beides» (erhalten + selbst mahnen) und «Konzept + gleich bauen»⟩*
+  - **Warum:** Die App kannte die Betreibung (Rechtsvorschlag, Auszug, Schuldenplan), aber nicht
+    die Stufe davor. Bei der Mahnung ist der Spielraum am grössten — prüfen, bestreiten, Raten
+    anfragen —, und hier wird die häufigste Falle gestellt: eine Anzahlung ist Anerkennung.
+  - **Gebaut (Entwurfs-PR, 27.09.):** Ablauf «Mahnung erhalten» (`mahnung`, 6 Schritte:
+    einordnen · stimmt die Forderung + Verjährung · was dazukommen darf · Miete und Krankenkasse
+    · Raten · umgekehrt selbst mahnen) und drei Briefe: **Mahnung schreiben** (Erinnerung oder
+    Mahnung), **Forderung bestreiten**, **Ratenzahlung vorschlagen**. Grundlagen am Wortlaut:
+    OR 102, 104–106, 127/128/130, 135/137, 142, 257d · SchKG 38 · KVG 64a · KVV 105a/105b.
+  - **Leitplanken (bewusst so):** kein Frist-Knopf im Ablauf (die Zahlungsfrist setzt der
+    Gläubiger; beim Beginn der KK-Nachfrist schweigt das Gesetz) · zu Mahn- und Inkassogebühren
+    **keine** Rechtsbehauptung, nur die Frage nach der Grundlage (das OR nennt keine Mahngebühr)
+    · der Mahnbrief **behält** Verzugszins nur vor, er rechnet keinen aus · der Bestreitungsbrief
+    anerkennt nichts, auch nicht «den Rest» · die Anerkennungs-Warnung steht **vor** dem
+    Ratengesuch.
+  - **Offen (Ideen, je vor dem Bau belegen):** Verzugszins-Rechner (ab welchem Tag, welche
+    Tageszählung) · Mahnstufen als Zeitleiste im Schuldenmanager (Mahnung → Zahlungsaufforderung
+    → Zahlungsbefehl), Brücke zu «Gezahlt/offen» pro Arztrechnung · Lebenszustand «Verschuldet
+    oder in Betreibung» → Mahnung-Ablauf · Steuer-Mahnung und Zahlungserleichterung (kantonal)
+    · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
+    rm-Fassung von Ablauf und Briefen.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).
 - 🌱 **Generatoren fürs Lebensende** *⟨Eingang 19.07.⟩* — Vorsorgeauftrag, Testament,
   Bestattungsauftrag; evtl. bei der Gemeinde hinterlegen (gemeinde- und kantonsabhängig).
