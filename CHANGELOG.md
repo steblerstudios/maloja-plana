@@ -11,6 +11,18 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.42-beta] — 2026-09-27
+
+*Ein Fix seit `0.1.41-beta` (`4685c20`): #434. Gemessen und am echten iPhone geprüft.*
+
+### Behoben
+- **QR-Codes scharf gezeichnet — der Notfall-QR öffnet am iPhone wieder die Kontaktkarte** (#434).
+  Die Bibliothek zeichnete 180 × 180 Bildpunkte, auf Retina-Bildschirmen doppelt so gross und
+  weichgezeichnet angezeigt (97 Module = 1,9 px je Modul); die Kamera erkannte den Code, öffnete aber
+  nichts. Jetzt ganze Gerätepixel je Modul (mind. 2) und `image-rendering: pixelated`, für alle QR
+  (Notfall, KK-Karte, Organspende, Flyer — der Flyer druckt dadurch auch schärfer). Ursache in zwei
+  Versuchen am Telefon getrennt: der Inhalt (BOM, Zeilenfaltung) war es nicht, die Darstellung schon.
+
 ## [0.1.41-beta] — 2026-09-27
 
 *Alles seit `0.1.40-beta` (Tag auf `d47dc32`, 24.09.), nachgezogen gegen
