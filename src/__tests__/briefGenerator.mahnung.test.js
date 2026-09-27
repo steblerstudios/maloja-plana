@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { generateLetter, getLetterTemplates, BRIEF_ANGABEN, briefCanRender, mahnFrist, angabenEingetippt } from '../briefGenerator.js';
 import BriefGenerator, { briefUebersetzer } from '../BriefGenerator.jsx';
 import { MahnungErhalten } from '../MahnungErhalten.jsx';
-import { LIGHT_PALETTE } from '../config/theme.js';
+import { LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -23,6 +23,8 @@ const FILL = '[bitte ergänzen]';
 const NEU = ['paymentReminder', 'claimDispute', 'installmentRequest'];
 const person = { basis: { firstName: 'Alex', lastName: 'Muster' }, wohnen: { address: 'Seeweg 1', postalCode: '4051', city: 'Basel' } };
 
+// Nur ab <body>: der Kopf trägt Stil-Regeln, keine Brieftexte (wie briefGenerator.lebensereignisse.test.js).
+const brief = (html) => html.split('<body>')[1];
 const koerper = (html) => html.match(/<div class="body-text">([\s\S]*?)<\/div>/)[1];
 const betreff = (html) => html.match(/<div class="subject">([\s\S]*?)<\/div>/)[1];
 const hinweis = (html) => (html.match(/<div class="legal-note">([\s\S]*?)<\/div>/) || [, ''])[1];
@@ -43,7 +45,7 @@ describe('Mahnung-Briefe — angeboten und renderbar', () => {
     expect(ref.installmentRequest).toBe(''); // OR 135 ist die Warnung, nicht die Grundlage
   });
   it.each(NEU)('%s: ohne Angaben — Platzhalter, keine rohen Schlüssel', (key) => {
-    const html = generateLetter(key, {}, t);
+    const html = brief(generateLetter(key, {}, t));
     expect(html).toContain(FILL);
     expect(html).not.toMatch(/briefe\.[a-zA-Z]/);
     expect(html).not.toMatch(/\{[a-z]+\}/);
@@ -53,7 +55,7 @@ describe('Mahnung-Briefe — angeboten und renderbar', () => {
   it.each(['fr', 'it', 'en', 'rm'])('%s: alle drei Briefe ohne rohe Schlüssel', (lang) => {
     const tl = createT(ALL, lang, 'sie');
     for (const key of NEU) {
-      const html = generateLetter(key, person, tl, { angaben: { betrag: '120', rate: '40' } });
+      const html = brief(generateLetter(key, person, tl, { angaben: { betrag: '120', rate: '40' } }));
       expect(html, `${lang}/${key}`).not.toMatch(/briefe\.[a-zA-Z]/);
       expect(html, `${lang}/${key}`).not.toMatch(/\{[a-z]+\}/);
     }
