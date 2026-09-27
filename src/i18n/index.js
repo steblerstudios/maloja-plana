@@ -382,4 +382,13 @@ export function rueckfallT(geladen = cache) {
   };
 }
 
+// Deploy-Gate 27.09.2026 · Übersetzer für Deutsch, für einen BRIEFTEXT, dessen Übersetzung
+// noch nicht gegengelesen ist (rm, vier Lebensereignis-Briefe): ein versendeter Brief mit
+// Frist-Folge soll nicht in einer ungeprüften Fassung rausgehen. Deutsch ist als
+// Rückfall-Sprache immer geladen; fehlt es trotzdem → null, der Aufrufer bleibt bei seinem t.
+// `geladen` nur für Unit-Tests.
+export function deutschT(anrede, geladen = cache) {
+  return geladen[FALLBACK_LANG] ? createT(geladen, FALLBACK_LANG, anrede === 'du' ? 'du' : 'sie') : null;
+}
+
 export { SUPPORTED as SUPPORTED_LANGUAGES };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
@@ -13,17 +13,29 @@ import { addReminder } from './utils/reminders.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
+import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
+import { I18nContext, deutschT } from './i18n/index.js';
 
 // Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
 const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
 // Brieftypen, die sich auf eine konkrete Anstellung beziehen (Haupt- oder Nebenerwerb).
 const JOB_TEMPLATES = ['wageClaim', 'unpaidWage', 'workReference', 'dismissalObjection'];
+// Deploy-Gate 27.09.2026 (Rechts-Prüfer): der rm-Brieftext dieser vier ist noch nicht
+// gegengelesen → der BRIEF kommt auf Deutsch, die Ansicht bleibt rätoromanisch.
+const BRIEF_DEUTSCH_BEI_RM = ['workReference', 'dismissalObjection', 'debtObjection', 'deathNotice'];
+// Übersetzer für den BRIEF (nicht die Ansicht). `geladen` nur für Unit-Tests.
+export function briefUebersetzer({ lang, anrede, selected, t, geladen }) {
+  if (lang !== 'rm' || !BRIEF_DEUTSCH_BEI_RM.includes(selected)) return t;
+  return (geladen ? deutschT(anrede, geladen) : deutschT(anrede)) || t;
+}
 
 // ─── Lebensereignis-Briefe: Hinweise und Angaben (26.09.2026) ───
 // Die Hinweise stehen VOR dem Formular: bei Rechtsvorschlag und Todesfall ist die Frist
 // bzw. die Erbschafts-Falle wichtiger als der Brief selbst. Gold wie die Fristen in AsylView.
+// Deploy-Gate 27.09.2026 (a11y): `id` + `tabIndex: -1` — Ziel des Fokus beim Sprung aus einem
+// Ablauf; die fett gesetzten Zeilen (Fristen) werden bei jeder Änderung höflich vorgelesen.
 const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElement('div', {
-  role: 'note',
+  role: 'note', id: 'brief-hinweis', tabIndex: -1,
   style: {
     padding: '14px 16px', background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66',
     borderRadius: radius.sm, marginBottom: space.md,
@@ -36,6 +48,8 @@ const hinweisBox = (palette, title, zeilen, icon = 'info') => React.createElemen
     key: i,
     style: { fontSize: textTokens.sm, color: palette.text, lineHeight: leading.normal, margin: i ? space.xs + 'px 0 0' : 0, fontWeight: z.stark ? weight.semi : undefined },
   }, z.text || z)),
+  React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle },
+    zeilen.filter((z) => z && z.stark).map((z) => z.text).join(' ')),
 );
 
 function lebensereignisHinweis(selected, a, palette, t) {
@@ -45,16 +59,21 @@ function lebensereignisHinweis(selected, a, palette, t) {
     const datum = frist
       ? { text: t(istVorbei(frist) ? k + 'vorbei' : k + 'datum', { date: formatDE(frist) }), stark: true }
       : t(k + 'ohne');
-    return hinweisBox(palette, t(k + 'title'), [t(k + 'text'), datum, t(k + 'muendlich'), t(k + 'post')], 'calendar');
+    return hinweisBox(palette, t(k + 'title'), [t(k + 'text'), datum, t(k + 'muendlich'), t(k + 'post'), t(k + 'sprache')], 'calendar');
   }
   if (selected === 'dismissalObjection') {
     const k = 'briefe.dismissalObjection.frist.';
     const klage = klageFrist336b(a.ende);
     return hinweisBox(palette, t(k + 'title'), [
       t(k + 'einsprache'),
-      a.ende && klage ? { text: t(k + 'einspracheDatum', { date: formatDE(a.ende) }), stark: true } : null,
+      // Deploy-Gate 27.09.2026 (Fach-Prüfer): ein vergangenes Ende wird nicht mehr als
+      // «spätestens an diesem Tag» angezeigt, sondern als «möglicherweise zu spät».
+      a.ende && klage ? { text: t(k + (istVorbei(a.ende) ? 'einspracheVorbei' : 'einspracheDatum'), { date: formatDE(a.ende) }), stark: true } : null,
       t(k + 'klage'),
-      klage ? { text: t(k + 'klageDatum', { date: formatDE(klage) }), stark: true } : null,
+      klage ? { text: t(k + (istVorbei(klage) ? 'klageVorbei' : 'klageDatum'), { date: formatDE(klage) }), stark: true } : null,
+      // Nachprüfung 27.09.2026 (Fach + Recht): Einsprache verpasst, Klagefrist läuft noch → das
+      // Klage-Datum darf keinen Weg vortäuschen, den es ohne Einsprache nicht gibt (OR 336b Abs. 1).
+      a.ende && klage && istVorbei(a.ende) && !istVorbei(klage) ? { text: t(k + 'klageNurMitEinsprache'), stark: true } : null,
       t(k + 'fristlos'),
       t(k + 'beratung'),
     ], 'calendar');
@@ -186,6 +205,10 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         try { gespeichert = localStorage.getItem('or5_reducemotion') === '1'; } catch { /* Speicher gesperrt → Systemeinstellung */ }
         const reduce = gespeichert || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        // Deploy-Gate 27.09.2026 (a11y): der Fokus folgt dem Sprung — sonst begann ein
+        // Screenreader weiter oben bei der Vorlagen-Liste.
+        const hinweis = document.getElementById('brief-hinweis');
+        if (hinweis) hinweis.focus({ preventScroll: true });
       });
     });
     return () => { cancelAnimationFrame(id1); if (id2) cancelAnimationFrame(id2); };
@@ -208,6 +231,10 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   const [reasons, setReasons] = useState([]);
   const REKLAMATION_GRUENDE = ['nichtErhalten', 'doppelt', 'falscherBetrag', 'franchiseSelbstbehalt', 'nichtGedeckt', 'falschePerson'];
 
+  const i18n = useContext(I18nContext);
+  const briefDeutsch = i18n?.lang === 'rm' && BRIEF_DEUTSCH_BEI_RM.includes(selected);
+  const tBrief = briefUebersetzer({ lang: i18n?.lang, anrede: i18n?.anrede, selected, t });
+
   const templates = getLetterTemplates(t, data);
   const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
 
@@ -219,7 +246,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     // `briefCanRender`: eine ruhende Vorlage (WAGECLAIM_BEREIT=false) wird nicht gedruckt,
     // auch nicht über einen Deep-Link auf `selected` (Predeploy-Runde 8, dritte Prüfung).
     if (!selected || !briefCanRender(selected)) return;
-    const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey, angaben });
+    const html = generateLetter(selected, data, tBrief, { belege: reklamationBelege, reasons, job: jobKey, angaben });
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     setPrinted(true);
@@ -242,7 +269,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
 
   // Vorschau nur für Vorlagen, die auch angeboten werden dürfen — sonst rendert ein
   // Deep-Link auf 'wageClaim' den ruhenden Anschuldigungsbrief (Predeploy-Runde 8, dritte Prüfung).
-  const previewHtml = (selected && briefCanRender(selected)) ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey, angaben }) : '';
+  const previewHtml = (selected && briefCanRender(selected)) ? generateLetter(selected, data, tBrief, { belege: reklamationBelege, reasons, job: jobKey, angaben }) : '';
 
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }
@@ -331,6 +358,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
 
     // Lebensereignis-Briefe: erst der Hinweis (Frist / Erbschaft), dann die Angaben.
     selected && lebensereignisHinweis(selected, leseAngaben(selected, angaben), palette, t),
+    briefDeutsch && React.createElement('p', {
+      style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, margin: '0 0 ' + space.md + 'px' },
+    }, t('briefe.angaben.rmDeutsch')),
     selected && angabenFormular(selected, angaben, setAngaben, palette, t, isMobile),
 
     // Grund-Auswahl — geführter „was stimmt nicht"-Schritt: die gewählten Gründe

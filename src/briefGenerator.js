@@ -707,11 +707,15 @@ export const BRIEF_ANGABEN = {
 // bestritten» (SchKG Art. 74 Abs. 2). Erlaubt: Schweizer Tausender-Apostroph (' ’ ‘),
 // Leerzeichen, «CHF», Endung «.-»/«.–», EIN Dezimaltrenner (Punkt oder Komma) mit höchstens
 // zwei Stellen. Alles Mehrdeutige (z. B. «1.234,50») → 0 = Platzhalter statt falscher Zahl.
+// Deploy-Gate 27.09.2026: Trennzeichen nur zwischen DREIERGRUPPEN — «12'50» (gemeint 12.50)
+// ergab vorher 1250 und damit einen falschen bestrittenen Betrag. Jetzt: Platzhalter.
+const BETRAG_ROH = /^\d+([.,]\d{1,2})?$/;
+const BETRAG_GRUPPEN = /^\d{1,3}(?:['’‘ \u00a0\u202f]\d{3})+([.,]\d{1,2})?$/;
 export function leseBetrag(v) {
-  let x = String(v == null ? '' : v).replace(/CHF|Fr\./gi, '').replace(/[\s'’‘\u00a0\u202f]/g, '');
-  x = x.replace(/[.,][-–—]$/, '');
-  if (!/^\d+([.,]\d{1,2})?$/.test(x)) return 0;
-  const n = parseFloat(x.replace(',', '.'));
+  let x = String(v == null ? '' : v).replace(/CHF|Fr\./gi, '').trim();
+  x = x.replace(/[.,][-–—]$/, '').trim();
+  if (!BETRAG_ROH.test(x) && !BETRAG_GRUPPEN.test(x)) return 0;
+  const n = parseFloat(x.replace(/['’‘ \u00a0\u202f]/g, '').replace(',', '.'));
   return n > 0 ? n : 0;
 }
 
