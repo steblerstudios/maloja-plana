@@ -320,7 +320,7 @@ export default {
     step2Hinweis: 'La copertura tramite il vecchio datore di lavoro termina il {date} (LAINF art. 3).',
     step1DateLabel: 'Fine del rapporto di lavoro (secondo la disdetta)',
     step1DateHint: 'Iscriversi al più tardi il {date} se l’indennità è richiesta da quella data (LADI art. 17). Prima è meglio — l’iscrizione è possibile anche online su lavoro.swiss.',
-    step1Button: 'Scadenza «Iscrizione URC» nel calendario ({date})',
+    step1Button: 'Promemoria «Ultimo giorno per iscriversi all’URC» nel calendario ({date})',
     reminderRavTitle: 'Iscrizione all’URC — al più tardi oggi',
     quelle: 'Fonti: [[LADI art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/it#art_17]], [[OADI art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/it#art_19]], [[LAINF art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/it#art_3]] (verificato a settembre 2026).',
     title: 'Perso il lavoro — cosa fare?',

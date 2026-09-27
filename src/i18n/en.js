@@ -320,7 +320,7 @@ export default {
     step2Hinweis: 'Cover through your former employer ends on {date} (UVG Art. 3).',
     step1DateLabel: 'End of employment (as stated in the notice)',
     step1DateHint: 'Register by {date} at the latest if you claim daily allowance from then on (AVIG Art. 17). Earlier is better — you can also register online at arbeit.swiss.',
-    step1Button: 'Add deadline “Register with RAV” to calendar ({date})',
+    step1Button: 'Add reminder “Latest day to register with the RAV” to calendar ({date})',
     reminderRavTitle: 'Register with the RAV — today at the latest',
     quelle: 'Sources: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (German text where no English exists, checked September 2026).',
     title: 'Lost your job — what to do?',
