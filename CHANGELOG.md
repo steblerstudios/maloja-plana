@@ -18,6 +18,8 @@ kommt der Changelog immer mit, nie doppelt.*
   (KVG 64a), Raten, selbst mahnen. Dazu drei Briefe: Mahnung schreiben, Forderung bestreiten,
   Ratenzahlung vorschlagen (mit der Anerkennungs-Warnung vor dem Formular). 5 Sprachen, rm als
   deutscher Rückfall. Grundlagen am Wortlaut (Fedlex, 27.09.2026). Damit **35** Abläufe.
+  Rückweg: «Betreibung erhalten», der Schuldenmanager und der Lebenszustand «Verschuldet oder
+  in Betreibung» verweisen auf die Mahnung.
 
 ### Geändert
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).

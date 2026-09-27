@@ -4,6 +4,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { generateLetter, getLetterTemplates, BRIEF_ANGABEN, briefCanRender, mahnFrist, angabenEingetippt } from '../briefGenerator.js';
 import BriefGenerator, { briefUebersetzer } from '../BriefGenerator.jsx';
 import { MahnungErhalten } from '../MahnungErhalten.jsx';
+import { BetreibungErhalten } from '../BetreibungErhalten.jsx';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { LEBENSZUSTAENDE } from '../data/lebenszustaende.js';
 import { LIGHT_PALETTE } from '../config/constants.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -208,5 +212,22 @@ describe('Ablauf «Mahnung erhalten»', () => {
   it('keine Behauptung, Mahngebühren seien verboten oder erlaubt — nur die Frage nach der Grundlage', () => {
     expect(html).toContain('worauf sie sich stützen');
     expect(html).not.toMatch(/Mahngebühren sind (nicht )?(erlaubt|verboten|unzulässig)/);
+  });
+});
+
+describe('Rückweg zur Mahnung (27.09.2026)', () => {
+  it('«Betreibung erhalten» führt zurück zur Mahnung', () => {
+    const ziele = [];
+    const h = renderToStaticMarkup(React.createElement(BetreibungErhalten, { palette: LIGHT_PALETTE, t, onNavigate: (v) => ziele.push(v) }));
+    expect(h).toContain(de.betreibung.step2LinkMahnung);
+  });
+  it('Schuldenmanager verlinkt die Mahnung', () => {
+    const src = readFileSync(resolve(__dirname, '..', 'SchuldenManager.jsx'), 'utf8');
+    expect(src).toMatch(/onNavigate\('mahnung'\)/);
+  });
+  it('Lebenszustand «Verschuldet» nennt die Mahnung vor der Betreibung', () => {
+    const keys = LEBENSZUSTAENDE.find(z => z.key === 'verschuldet').berechtigungen.map(b => b.key);
+    expect(keys).toContain('mahnung');
+    expect(keys.indexOf('mahnung')).toBeLessThan(keys.indexOf('betreibung'));
   });
 });

@@ -158,6 +158,7 @@ export default {
       intro: 'La dette isole, pourtant des droits clairs et une aide gratuite existent — plus tôt on y recourt, plus il reste de marge pour respirer.',
       berechtigungen: {
         schuldenberatung: { titel: 'Conseil en désendettement gratuit', text: 'Un service reconnu de désendettement aide gratuitement et en toute confidentialité — il y a un bureau dans chaque canton. Y aller tôt garde plus d’options ouvertes.' },
+        mahnung: { titel: 'Rappel reçu', text: 'Un rappel n’est pas encore une poursuite — c’est maintenant que la marge de manœuvre est la plus grande : vérifier, contester ou proposer des acomptes.' },
         betreibung: { titel: 'Comprendre la poursuite', text: 'Une poursuite est une procédure avec des étapes et des délais clairs — les connaître calmement transforme la peur en quelque chose sur quoi agir.' },
         existenzminimum: { titel: 'Protéger le minimum vital', text: 'Lors d’une saisie sur salaire, un minimum vital reste intouchable par la loi — un budget clair aide à le voir et à le défendre.' },
         sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre plus l’essentiel, l’aide sociale peut compléter — un droit, pas de la charité, et indépendant des dettes elles-mêmes.' },
@@ -1070,6 +1071,7 @@ export default {
     step2Title: '2 · La créance est-elle correcte ?',
     step2Text: { sie: 'Si la créance est fondée, vous pouvez payer ou convenir d’un paiement échelonné avec le créancier — c’est souvent possible. Si elle est en tout ou en partie injustifiée, faites opposition ; le créancier devra alors prouver la créance en justice. Gardez une vue d’ensemble des créances ouvertes.', du: 'Si la créance est fondée, tu peux payer ou convenir d’un paiement échelonné avec le créancier — c’est souvent possible. Si elle est en tout ou en partie injustifiée, fais opposition ; le créancier devra alors prouver la créance en justice. Garde une vue d’ensemble des créances ouvertes.' },
     step2Link: 'Organiser les dettes',
+    step2LinkMahnung: 'Pas encore de commandement de payer, seulement un rappel ? Rappel reçu',
     step3Title: '3 · Protéger le budget & se faire conseiller',
     step3Text: { sie: 'Votre minimum vital est protégé et ne peut être saisi. Le conseil en désendettement est gratuit et confidentiel — il aide à trouver une voie avant que la poursuite ne devienne un acte de défaut de biens. Plus tôt, plus de marge de manœuvre. Si l’endettement devient une situation durable, vous n’êtes pas seul — la situation de vie « endetté ou aux poursuites » rassemble d’autres soutiens (aide sociale, remise d’impôt) calmement en un endroit.', du: 'Ton minimum vital est protégé et ne peut être saisi. Le conseil en désendettement est gratuit et confidentiel — il aide à trouver une voie avant que la poursuite ne devienne un acte de défaut de biens. Plus tôt, plus de marge de manœuvre. Si l’endettement devient une situation durable, tu n’es pas seul — la situation de vie « endetté ou aux poursuites » rassemble d’autres soutiens (aide sociale, remise d’impôt) calmement en un endroit.' },
     step3Link: 'Voir le budget',
@@ -3136,6 +3138,7 @@ export default {
     helpTitle: { sie: 'Vous n\'êtes pas seul·e face à cela', du: 'Tu n\'es pas seul·e face à cela' },
     helpBody: 'Un service reconnu de conseil en désendettement aide gratuitement et en toute confidentialité — Conseil en désendettement Suisse et Caritas ont un bureau dans chaque canton.',
     situationLink: 'Voir la situation « endetté ou aux poursuites »',
+    mahnungLink: 'Rappel reçu — que faire ?',
   },
 
   cv: {

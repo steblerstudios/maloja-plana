@@ -210,7 +210,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement(ExternerLink, { t, href: 'https://schulden.ch', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
         ),
         onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
-          React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') })
+          React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') }),
+          React.createElement(AblaufLink, { palette, label: t('schulden.mahnungLink'), onClick: () => onNavigate('mahnung') })
         )
       ),
 

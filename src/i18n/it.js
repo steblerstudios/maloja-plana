@@ -158,6 +158,7 @@ export default {
       intro: 'Il debito fa sentire soli, eppure esistono diritti chiari e aiuto gratuito — prima li si accoglie, più spazio resta per respirare.',
       berechtigungen: {
         schuldenberatung: { titel: 'Consulenza debiti gratuita', text: 'Un servizio riconosciuto di consulenza debiti aiuta gratuitamente e in modo riservato — c’è uno sportello in ogni cantone. Andarci presto tiene aperte più possibilità.' },
+        mahnung: { titel: 'Sollecito ricevuto', text: 'Un sollecito non è ancora un’esecuzione — ora il margine di manovra è il più ampio: verificare, contestare o proporre delle rate.' },
         betreibung: { titel: 'Capire l’esecuzione', text: 'Un’esecuzione è una procedura con passi e termini chiari — conoscerli con calma trasforma la paura in qualcosa su cui agire.' },
         existenzminimum: { titel: 'Proteggere il minimo vitale', text: 'In un pignoramento del salario un minimo vitale resta intoccabile per legge — un budget chiaro aiuta a vederlo e a difenderlo.' },
         sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre più l’essenziale, l’aiuto sociale può integrare — un diritto, non carità, e indipendente dai debiti stessi.' },
@@ -1070,6 +1071,7 @@ export default {
     step2Title: '2 · Il credito è corretto?',
     step2Text: { sie: 'Se il credito è fondato, può pagare o concordare un pagamento rateale con il creditore — spesso è possibile. Se è del tutto o in parte ingiustificato, faccia opposizione; il creditore dovrà allora provare il credito in tribunale. Tenga d’occhio i crediti aperti.', du: 'Se il credito è fondato, puoi pagare o concordare un pagamento rateale con il creditore — spesso è possibile. Se è del tutto o in parte ingiustificato, fai opposizione; il creditore dovrà allora provare il credito in tribunale. Tieni d’occhio i crediti aperti.' },
     step2Link: 'Organizza i debiti',
+    step2LinkMahnung: 'Non ancora un precetto esecutivo, solo un sollecito? Sollecito ricevuto',
     step3Title: '3 · Proteggere il budget & chiedere consiglio',
     step3Text: { sie: 'Il Suo minimo vitale è protetto e non può essere pignorato. La consulenza per il debito è gratuita e confidenziale — aiuta a trovare una via prima che l’esecuzione diventi un attestato di carenza beni. Prima è, più margine c’è. Se l’indebitamento diventa una situazione duratura, non è solo — lo stato di vita «indebitato o in esecuzione» raccoglie ulteriori sostegni (aiuto sociale, condono fiscale) con calma in un luogo.', du: 'Il tuo minimo vitale è protetto e non può essere pignorato. La consulenza per il debito è gratuita e confidenziale — aiuta a trovare una via prima che l’esecuzione diventi un attestato di carenza beni. Prima è, più margine c’è. Se l’indebitamento diventa una situazione duratura, non sei solo — lo stato di vita «indebitato o in esecuzione» raccoglie ulteriori sostegni (aiuto sociale, condono fiscale) con calma in un luogo.' },
     step3Link: 'Vedi il budget',
@@ -3094,6 +3096,7 @@ export default {
     helpTitle: { sie: 'Non deve affrontarlo da solo/a', du: 'Non devi affrontarlo da solo/a' },
     helpBody: 'Un servizio riconosciuto di consulenza sui debiti aiuta gratuitamente e in modo confidenziale — Consulenza debiti Svizzera e Caritas hanno uno sportello in ogni cantone.',
     situationLink: 'Vedi la situazione «indebitato o in esecuzione»',
+    mahnungLink: 'Sollecito ricevuto — che fare?',
   },
 
   lohnEinordnung: {

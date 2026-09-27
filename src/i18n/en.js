@@ -158,6 +158,7 @@ export default {
       intro: 'Debt feels isolating, yet clear rights and free help exist — the earlier you reach for them, the more room there is to breathe.',
       berechtigungen: {
         schuldenberatung: { titel: 'Free debt counselling', text: 'A recognised debt counselling service helps free of charge and confidentially — there is an office in every canton. Going early keeps more options open.' },
+        mahnung: { titel: 'Payment reminder received', text: 'A reminder is not yet debt collection — now you have the most room to act: check, dispute or propose instalments.' },
         betreibung: { titel: 'Understanding debt collection', text: 'A Betreibung is a process with clear steps and deadlines — knowing them calmly turns fear into something you can act on.' },
         existenzminimum: { titel: 'Protecting your minimum for living', text: 'During a wage seizure a protected minimum stays untouchable by law — a clear budget helps you see and defend it.' },
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income no longer covers the basics, social assistance can top it up — a right, not charity, and independent of the debt itself.' },
@@ -1070,6 +1071,7 @@ export default {
     step2Title: '2 · Is the claim correct?',
     step2Text: 'If the claim is valid, you can pay or agree on instalments with the creditor — that is often possible. If it is wholly or partly unjustified, file an objection; the creditor must then prove the claim in court. Keep an overview of open claims.',
     step2Link: 'Organise debts',
+    step2LinkMahnung: 'No payment order yet, only a reminder? Payment reminder received',
     step3Title: '3 · Protect your budget & get advice',
     step3Text: 'Your subsistence minimum is protected and cannot be seized. Debt counselling is free and confidential — it helps find a way before the collection becomes a certificate of loss. The earlier, the more room to manoeuvre. If debt is becoming an ongoing situation, you are not alone — the life situation “in debt or in collection” gathers further support (social assistance, tax relief) calmly in one place.',
     step3Link: 'View budget',
@@ -3136,6 +3138,7 @@ export default {
     helpTitle: 'You don\'t have to face this alone',
     helpBody: 'A recognised debt counselling service helps free of charge and confidentially — Debt Counselling Switzerland and Caritas have an office in every canton.',
     situationLink: 'View the “in debt or in collection” situation',
+    mahnungLink: 'Payment reminder received — what now?',
   },
 
   cv: {

@@ -318,9 +318,8 @@ Abschiedsagentur, plaant).
     Ratengesuch.
   - **Offen (Ideen, je vor dem Bau belegen):** Verzugszins-Rechner (ab welchem Tag, welche
     Tageszählung) · Mahnstufen als Zeitleiste im Schuldenmanager (Mahnung → Zahlungsaufforderung
-    → Zahlungsbefehl), Brücke zu «Gezahlt/offen» pro Arztrechnung · Lebenszustand «Verschuldet
-    oder in Betreibung» → Mahnung-Ablauf · Steuer-Mahnung und Zahlungserleichterung (kantonal)
-    · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
+    → Zahlungsbefehl), Brücke zu «Gezahlt/offen» pro Arztrechnung · Steuer-Mahnung und Zahlungserleichterung (kantonal)
+    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
     rm-Fassung von Ablauf und Briefen.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).
 - 🌱 **Generatoren fürs Lebensende** *⟨Eingang 19.07.⟩* — Vorsorgeauftrag, Testament,

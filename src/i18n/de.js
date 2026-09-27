@@ -158,6 +158,7 @@ export default {
       intro: 'Schulden fühlen sich einsam an, doch es gibt klare Rechte und kostenlose Hilfe — je früher man sie annimmt, desto mehr Luft bleibt.',
       berechtigungen: {
         schuldenberatung: { titel: 'Kostenlose Schuldenberatung', text: 'Eine anerkannte Schuldenberatung hilft kostenlos und vertraulich — in jedem Kanton gibt es eine Stelle. Früh hingehen hält mehr Wege offen.' },
+        mahnung: { titel: 'Mahnung erhalten', text: 'Eine Mahnung ist noch keine Betreibung — jetzt ist der Spielraum am grössten: prüfen, bestreiten oder Raten vorschlagen.' },
         betreibung: { titel: 'Betreibung verstehen', text: 'Eine Betreibung ist ein Ablauf mit klaren Schritten und Fristen — sie ruhig zu kennen macht aus Angst etwas Handhabbares.' },
         existenzminimum: { titel: 'Existenzminimum schützen', text: 'Bei einer Lohnpfändung bleibt ein geschütztes Existenzminimum von Gesetzes wegen unantastbar — ein klares Budget hilft, es zu sehen und zu wahren.' },
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht mehr deckt, kann die Sozialhilfe aufstocken — ein Recht, keine Fürsorge, und unabhängig von den Schulden selbst.' },
@@ -1070,6 +1071,7 @@ export default {
     step2Title: '2 · Stimmt die Forderung?',
     step2Text: { sie: 'Ist die Forderung berechtigt, können Sie zahlen oder mit dem Gläubiger eine Ratenzahlung vereinbaren — das ist oft möglich. Ist sie ganz oder teilweise unberechtigt, erheben Sie Rechtsvorschlag; dann muss der Gläubiger den Anspruch vor Gericht beweisen. Behalten Sie den Überblick über offene Forderungen.', du: 'Ist die Forderung berechtigt, kannst du zahlen oder mit dem Gläubiger eine Ratenzahlung vereinbaren — das ist oft möglich. Ist sie ganz oder teilweise unberechtigt, erhebst du Rechtsvorschlag; dann muss der Gläubiger den Anspruch vor Gericht beweisen. Behalte den Überblick über offene Forderungen.' },
     step2Link: 'Schulden ordnen',
+    step2LinkMahnung: 'Noch kein Zahlungsbefehl, erst eine Mahnung? Mahnung erhalten',
     step3Title: '3 · Budget schützen & Beratung holen',
     step3Text: { sie: 'Ihr Existenzminimum ist geschützt und darf nicht gepfändet werden. Eine Schuldenberatung ist kostenlos und vertraulich — sie hilft, einen Weg zu finden, bevor aus der Betreibung ein Verlustschein wird. Je früher, desto mehr Spielraum. Wird die Verschuldung zu einer andauernden Situation, sind Sie nicht allein — der Lebenszustand „Verschuldet oder in Betreibung" sammelt weitere Unterstützung (Sozialhilfe, Steuererlass) ruhig an einem Ort.', du: 'Dein Existenzminimum ist geschützt und darf nicht gepfändet werden. Eine Schuldenberatung ist kostenlos und vertraulich — sie hilft, einen Weg zu finden, bevor aus der Betreibung ein Verlustschein wird. Je früher, desto mehr Spielraum. Wird die Verschuldung zu einer andauernden Situation, bist du nicht allein — der Lebenszustand „Verschuldet oder in Betreibung" sammelt weitere Unterstützung (Sozialhilfe, Steuererlass) ruhig an einem Ort.' },
     step3Link: 'Budget ansehen',
@@ -3160,6 +3162,7 @@ export default {
     helpTitle: { sie: 'Sie müssen da nicht allein durch', du: 'Du musst da nicht allein durch' },
     helpBody: 'Eine anerkannte Schuldenberatung hilft kostenlos und vertraulich weiter — die Schuldenberatung Schweiz und die Caritas haben in jedem Kanton eine Fachstelle.',
     situationLink: 'Situation „Verschuldet oder in Betreibung" ansehen',
+    mahnungLink: 'Mahnung erhalten — was tun?',
   },
 
   cv: {

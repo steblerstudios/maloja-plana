@@ -190,6 +190,7 @@ export default {
       intro: 'Ils debits fan sentir sulet, dentant datti dretgs clers ed agid gratuit — pli baud ch’ins als acceptescha, pli blera aria resta.',
       berechtigungen: {
         schuldenberatung: { titel: 'Cussegliaziun da debits gratuita', text: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — i dat in post en mintga chantun. Ir baud tegna dapli vias avertas.' },
+        mahnung: { titel: 'Mahnung erhalten', text: 'Eine Mahnung ist noch keine Betreibung — jetzt ist der Spielraum am grössten: prüfen, bestreiten oder Raten vorschlagen.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
         betreibung: { titel: 'Chapir la scussiun', text: 'Ina scussiun è ina procedura cun pass e termins clers — als enconuscher cun calma fa ord la tema insatge maneabel.' },
         existenzminimum: { titel: 'Proteger il minimum d’existenza', text: 'Tar in impegnament dal salari resta in minimum d’existenza protegì intangibel tenor lescha — in budget cler gida a al vesair ed a al mantegnair.' },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sche l’entrada na cuvra betg pli il pli necessari, po l’agid social cumplettar — in dretg, betg carezza, ed independent dals debits sezs.' },
@@ -1245,6 +1246,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step2Text: { sie: 'Sche la pretensiun è fundada, pudais Vus pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, faschais Vus opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegnai la survista da las pretensiuns avertas.', du: 'Sche la pretensiun è fundada, pos ti pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, fas ti opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegna la survista da las pretensiuns avertas.' },
     step2Link: 'Ordinar las debitas',
+    step2LinkMahnung: 'Noch kein Zahlungsbefehl, erst eine Mahnung? Mahnung erhalten', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     step3Title: '3 · Proteger il budget & tschertgar cussegl',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step3Text: { sie: 'Voss minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’essas Vus betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.', du: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.' },
@@ -2833,6 +2835,7 @@ export default {
     helpTitle: { sie: 'Vus na stuais betg far quai sulet/a', du: 'Ti na stos betg far quai sulet/a' },
     helpBody: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — la Cussegliaziun da debits Svizra e la Caritas han in post en mintga chantun.',
     situationLink: 'Guardar la situaziun «indebità u en scussiun»',
+    mahnungLink: 'Mahnung erhalten — was tun?', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
   },
 
   organ: {
