@@ -19,6 +19,17 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🏷️ **Nachtrag 27.09., 18:00 — LIVE = `4685c20` = Release 0.1.41-beta (Deploy Stebler Studios 17:45), Tag `v0.1.41-beta` = Live.**
+>
+> **Belegt:** `version.json` `4685c200…`/`0.1.41-beta`/`sauber: true` (Gegenprobe 404) · `index-BK47DFm2.js` und `de-BW-nfuQ1.js`
+> live bytegleich mit dem Build · Tag von `deploy.sh` gesetzt (17:45) · K85: fünf Einstiegsdateien `no-cache`, Assets `immutable`.
+> Rauchtest live (Beispiel ohne Code): Basis 3 / Finanzen 7 Abschnitte, Schuldenmanager, Mahnung, 0 Konsolenfehler.
+> **Seit `bbde468`:** #429 Stand-Doku · #430 toter Code (MirrorCards −474, ChapterView −96; Startbündel unverändert, Kapitel-Chunk
+> −3,1 kB gzip; von/bis-Tests) · #431 Release (CHANGELOG seit 0.1.40 nachgezogen, RAV-Knopf «Erinnerung «Spätester Tag für die
+> RAV-Anmeldung»», K48 C4/C5). Vor dem Deploy: 4499 Tests, 64,58/65 kB, Browser 7 Kapitel ohne Fehler.
+> **September-Abnahme:** Tor (3) und (5) belegt (Studio-Repo `FAHRPLAN-bis-2026-09-30.md`); Tor (4) braucht ein Telefon.
+> 🔑 **Entscheid 27.09.:** Konten ab Oktober (ADR-002 umgekehrt) — K48 C4 rückt nach vorn. Startbündel nur 0,42 kB frei → vor dem Konten-Bau Platz suchen.
+
 > 🚀 **Nachtrag 27.09., 16:44 — LIVE = `bbde468` (0.1.40-beta, Deploy durch Stebler Studios 16:39).**
 >
 > **Belegt:** `version.json` `commit` = `bbde4685…`, `sauber: true` (Gegenprobe erfundene Datei → 404) · Startdatei

@@ -19,6 +19,9 @@
 **Stand:** 2026-09-25 23:15 · **Live:** `cb37254` (0.1.40-beta) = `main`, Startdatei **`index-DK_NVU1m.js`** = frischer `main`-Build von `cb37254`, `version.json` `sauber: true`, gebaut 25.09. 23:09. Deploy durch Stebler Studios; `scripts/check-deploy.sh`: 132 Assets erreichbar. Nachtrag in SESSION_START.md (25.09. 23:15).
 
 *Vorheriger Stand (bleibt als Beleg):*
+**Stand:** 2026-09-27 18:00 · **Live:** `4685c20` = **0.1.41-beta**, Tag `v0.1.41-beta` = Live, Startdatei `index-BK47DFm2.js` = Build. Rauchtest siehe SESSION_START.md (Nachtrag 18:00).
+
+*Vorheriger Stand (bleibt als Beleg):*
 **Stand:** 2026-09-27 16:44 · **Live:** `bbde468` (0.1.40-beta), Startdatei **`index-y8hG_kEV.js`** = frischer `main`-Build, `de-B_2_fm0g.js` bytegleich, `version.json` `sauber: true`. Deploy durch Stebler Studios 16:39 nach Deploy-Tor 2; Rauchtest siehe SESSION_START.md (Nachtrag 27.09., 16:44).
 
 *Vorheriger Stand (bleibt als Beleg):*
