@@ -61,6 +61,23 @@ Zwei Vorlagen in `src/briefGenerator.js`:
 > hat den Entscheid noch nicht ausgesprochen; dieser Zettel gilt bis dahin als Vorschlag, nicht
 > als Beschluss.*
 
+## Stand 26.09.2026 — Beschluss E1: bis Winter geparkt
+
+> **Entschieden** (Stebler Studios, Auswahl-Dialog 26.09.2026): `wageClaim` bleibt aus, bis Winter.
+> Damit ist der Zettel oben kein Vorschlag mehr, sondern Beschluss.
+>
+> **Korrektur zum Stand 15.09.:** Die vier 🔴 aus Runde 8 sind im Code **behoben** (geprüft 26.09.
+> gegen `main`): nur «brutto» trägt einen Befund unter dem Mindestlohn (`lohnCheck.js:140-156`) ·
+> kein Brief bei `ok` (`briefGenerator.js:234`) · Betrag und Zeitraum «bitte ergänzen»
+> (`briefGenerator.js:578-595`) · GE/TI/JU am 15.07. amtlich geprüft (`lohnRechtsstellen.js`).
+> Die Datenfrage «13. Monat im LSE-Median» ist für den Lohnvergleich gelöst (×13/12,
+> `lohnEinordnung.js:140-144`).
+>
+> **Der Sperrgrund heute** ist allein der zweite Teil: der Befund kennt die **Ausnahmen** nicht
+> (Lehre, Praktikum, unter 18, GAV in TI/JU), und **GE hat drei Sätze**, der Code kennt den höchsten.
+> Die GE-Ferienjob-Regel ist rechtlich ungeklärt (`lohnCheck.js:55-61`). Weg zurück: Ausnahmen
+> erfragen → GE-Sätze unterscheiden → Prüfer → Schalter. Grösse **L**.
+
 ## Fix-Register (aus dem Predeploy-Review 2026-07-14 — beim Neuaufbau direkt einbauen)
 
 **🔴 BLOCKER (swiss-precision) — einziges echtes Haftungsrisiko in einem versendbaren Brief:**

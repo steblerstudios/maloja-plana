@@ -43,4 +43,15 @@ describe('K101 · QR-Hinweis an allen drei QR-Stellen', () => {
       expect(wert.length, lang).toBeGreaterThan(40);
     }
   });
+
+  // K123-Wiedervorlage (Entscheid Stebler Studios, 26.09.2026): Die Codes sind vCards (#264 —
+  // sonst zeigt die Kamera nichts an). Darum bietet das Telefon beim Scannen «Kontakt
+  // hinzufügen» an, und Medikamente & Co. landen im fremden Adressbuch. Der Hinweis sagt das.
+  it('der Hinweis nennt das Speichern als Kontakt, in allen fünf Sprachen', { timeout: 30_000 }, async () => {
+    const wort = { de: /Kontakt.*Adressbuch/, fr: /contact.*carnet d’adresses/, it: /contatto.*rubrica/, en: /contact.*address book/, rm: /contact.*adressas/ };
+    for (const [lang, muster] of Object.entries(wort)) {
+      const { default: tr } = await import(`../i18n/${lang}.js`);
+      expect(tr.notfallDossier.qrHint, lang).toMatch(muster);
+    }
+  });
 });
