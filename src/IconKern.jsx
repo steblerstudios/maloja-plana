@@ -296,7 +296,7 @@ const _sicherung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
   React.createElement('polyline', { points: '8,15.5 10.5,18 13,15.5' })
 );
 
-const _document =() => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+const _document = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 6 2 L 6 22 L 18 22 L 18 8 L 12 2 Z' }),
   React.createElement('path', { d: 'M 12 2 L 12 8 L 18 8', fill: 'none', stroke: 'white', strokeWidth: '1' })
 );

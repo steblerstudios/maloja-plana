@@ -68,7 +68,7 @@ Zwei Vorlagen in `src/briefGenerator.js`:
 >
 > **Korrektur zum Stand 15.09.:** Die vier 🔴 aus Runde 8 sind im Code **behoben** (geprüft 26.09.
 > gegen `main`): nur «brutto» trägt einen Befund unter dem Mindestlohn (`lohnCheck.js:140-156`) ·
-> kein Brief bei `ok` (`briefGenerator.js:234`) · Betrag und Zeitraum «bitte ergänzen»
+> kein Brief bei `ok` (`briefGenerator.js:274`, `darfWageClaim`) · Betrag und Zeitraum «bitte ergänzen»
 > (`briefGenerator.js:578-595`) · GE/TI/JU am 15.07. amtlich geprüft (`lohnRechtsstellen.js`).
 > Die Datenfrage «13. Monat im LSE-Median» ist für den Lohnvergleich gelöst (×13/12,
 > `lohnEinordnung.js:140-144`).
