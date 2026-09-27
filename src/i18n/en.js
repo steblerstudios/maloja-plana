@@ -3115,7 +3115,7 @@ export default {
     alreadyPaid: 'Already paid',
     debtRegisterAnalysis: 'Debt register — overview',
     addDebt: 'Add new debt',
-    addBetreibung: 'Add debt enforcement',
+    addBetreibung: 'Add debt collection',
     addVerlustschein: 'Add certificate of loss',
     moreDetails: 'More details',
     statusField: 'Status',
@@ -3201,6 +3201,22 @@ export default {
     bussen: {
       title: 'Fines and monetary penalties',
       quelle: 'Sources: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (German text where no English exists, checked September 2026).',
+    },
+    // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    bild: {
+      offen: 'Still open',
+      ueberfaellig: 'Past due date: {amount}',
+      ohneDatum: 'No due date: {amount}',
+      bezahlt: 'Already paid: {amount}',
+      balkenLabel: 'Still open, by order',
+      naechstes: 'First in the order: {name}.',
+      achse: 'Month',
+      imMonat: 'in month {n}',
+      vonBis: 'month {von} to {bis}',
+      zeitachseLabel: 'When each debt would be paid off',
+      stufenTitel: 'Where each debt stands',
+      stufeOffen: 'Status not recorded',
+      ausForderungen: 'Under “Debts”, a payment order is noted for {namen}. The debt collection can be recorded here.',
     },
     stufe: {
       label: 'Stage',

@@ -1300,7 +1300,7 @@ export default {
     saving: 'Enregistrement...',
     skipToContent: 'Aller au contenu',
     saved: 'Enregistré',
-    savedTemporary: 'Repris — pour l’instant seulement, rien n’est enregistré durablement.',
+    savedTemporary: 'Pris en compte — pour l’instant seulement, rien n’est enregistré durablement.',
     saveError: 'Enregistrement impossible — veuillez vérifier l\'espace disponible.',
     fremdGeaendert: 'Modifié dans une autre fenêtre. Pour ne rien y écraser, cette fenêtre n\'enregistre plus.',
     notSaved: 'Non enregistré',
@@ -3201,6 +3201,22 @@ export default {
     bussen: {
       title: 'Amendes et peines pécuniaires',
       quelle: 'Sources : [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_35]], [[CP art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_36]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_106]] (vérifié en septembre 2026).',
+    },
+    // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    bild: {
+      offen: 'Encore ouvert',
+      ueberfaellig: 'Échéance dépassée : {amount}',
+      ohneDatum: 'Sans date d’échéance : {amount}',
+      bezahlt: 'Déjà payé : {amount}',
+      balkenLabel: 'Encore ouvert, par ordre',
+      naechstes: 'En premier dans l’ordre : {name}.',
+      achse: 'Mois',
+      imMonat: 'au mois {n}',
+      vonBis: 'mois {von} à {bis}',
+      zeitachseLabel: 'Quand chaque dette serait payée',
+      stufenTitel: 'Où en est chaque créance',
+      stufeOffen: 'État non saisi',
+      ausForderungen: 'Sous « Dettes », un commandement de payer est noté pour {namen}. La poursuite peut être saisie ici.',
     },
     stufe: {
       label: 'Stade',

@@ -45,7 +45,8 @@ const rappen = (x) => Math.round(x * 100) / 100;
 // Jetzt je offene Schuld mit ihrem eigenen Satz, in der Reihenfolge von `prioritizeDebts`
 // (Stufe, dann Lawine/Schneeball). Vereinfacht: die ganze Rate geht an die erste offene Schuld,
 // die Zinsen der übrigen laufen weiter (Jahressatz / 12, einfach je Monat). Keine Gebühren.
-// Ergebnis: { machbar: true, monate, zinsTotal, reihenfolge[{id, creditor, monat}] }
+// Ergebnis: { machbar: true, monate, zinsTotal, reihenfolge[{id, creditor, monat, von, bis}] }
+//        von/bis: Stelle auf der Zeitachse in Monaten (0 = Beginn), für die Abbau-Zeitachse.
 //        oder { machbar: false, grund: 'zins', zinsMonat } | { machbar: false, grund: 'dauer' }
 //        oder null (keine Rate, keine offene Schuld).
 export const PLAN_MAX_MONATE = 360;
@@ -57,6 +58,8 @@ export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
   if (!(rate > 0) || offen.length === 0) return null;
 
   const fertig = {};
+  const von = {};
+  const bis = {};
   let monat = 0;
   let zinsTotal = 0;
   while (offen.some(d => d.rest > 0) && monat < PLAN_MAX_MONATE) {
@@ -76,13 +79,14 @@ export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
     for (const d of offen) {
       if (d.rest <= 0 || budget <= 0) continue;
       const teil = Math.min(budget, d.rest);
+      if (von[d.id] === undefined) von[d.id] = monat - 1 + (rate - budget) / rate;
       d.rest -= teil;
       budget -= teil;
-      if (d.rest < 0.005) { d.rest = 0; fertig[d.id] = monat; }
+      if (d.rest < 0.005) { d.rest = 0; fertig[d.id] = monat; bis[d.id] = monat - 1 + (rate - budget) / rate; }
     }
   }
   if (offen.some(d => d.rest > 0)) return { machbar: false, grund: 'dauer' };
-  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, monat: fertig[d.id] })) };
+  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, monat: fertig[d.id], von: von[d.id], bis: bis[d.id] })) };
 };
 
 // Betreibungen im Verhältnis zum Einkommen — überarbeitet 27.09.2026. Vorher: ohne Einkommen
