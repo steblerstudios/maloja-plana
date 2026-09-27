@@ -11,6 +11,33 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Mahnung — erhalten und selbst mahnen** (27.09.2026). Ablauf «Mahnung erhalten» als Stufe
+  vor der Betreibung: einordnen (Verzug ≠ Betreibung), Forderung prüfen und Verjährung,
+  Verzugszins 5 % und die Frage nach Gebühren, Sonderfälle Miete (OR 257d) und Krankenkasse
+  (KVG 64a), Raten, selbst mahnen. Dazu drei Briefe: Mahnung schreiben, Forderung bestreiten,
+  Ratenzahlung vorschlagen (mit der Anerkennungs-Warnung vor dem Formular). 5 Sprachen, rm als
+  deutscher Rückfall. Grundlagen am Wortlaut (Fedlex, 27.09.2026). Damit **35** Abläufe.
+  Rückweg: «Betreibung erhalten», der Schuldenmanager und der Lebenszustand «Verschuldet oder
+  in Betreibung» verweisen auf die Mahnung. Dazu ein **Verzugszins-Rechner** (Richtwert, 365 und
+  360 Tage), **Steuern** im Ablauf (direkte Bundessteuer: Zahlungserleichterung, Erlass nur vor dem
+  Zahlungsbefehl, DBG 166/167) und die **Mahnstufe je Forderung** im Schuldenmanager.
+
+### Behoben
+- **Schuldenmanager: Abbau-Plan und Übersicht rechnen richtig** (27.09.2026). «Gesamtschulden» ohne
+  Bezahltes; Schulden ohne Datum nicht mehr «bald fällig»; «Überfällig» zählt auch den gewählten
+  Status. Der Zahlungsplan (fest CHF 500, ein Zinssatz für alles, Endlos-Plan bei zu kleiner Rate)
+  ist ersetzt durch einen Richtwert mit eigener Rate, je Schuld ihr Zins, ehrlich «reicht nicht»
+  statt endloser Liste. Betreibungsregister ohne Wertungen und Schwellen ohne Quelle. Reihenfolge
+  belegt (schuldeninfo.ch, Caritas), neu ein belegter Steuer-Hinweis (DBG 33/34, StHG 9/13).
+  Erste Tests für `schuldenCalc.js`.
+- **Abbau-Plan: Monatsrate aus dem Budget** — vorgeschlagen, wenn der Lohn netto erfasst ist und
+  Wohnen, Krankenkasse und Lebensmittel im Budget stehen; heutige Schuldenraten zählen als verfügbar;
+  überschreibbar. **Bussen und Geldstrafen** (StGB 35/36/79a/106: Raten, Ersatzfreiheitsstrafe,
+  gemeinnützige Arbeit), **Verlustscheine** (SchKG 149/149a/265: zinsfrei, 20 Jahre, Löschung nach
+  Tilgung) und ein belegter Hinweis zu **Mahn- und Inkassogebühren** (in der Regel nicht geschuldet,
+  nur wenn beziffert vereinbart; K-Tipp, SRF) — dazu im Bestreitungsbrief der Grund «nur Gebühren».
+
 ### Geändert
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
   Vorher zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt»; jetzt offen,

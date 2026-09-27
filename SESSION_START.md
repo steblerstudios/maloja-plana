@@ -19,6 +19,27 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 📬 **Nachtrag 27.09., 13:26 — Mahnung (Entwurfs-PR #408, `feat/mahnung-2026-09-27`), nicht gemergt, nicht live.**
+>
+> **Stand, gemessen 27.09.2026 13:26** (`bash scripts/stand-jetzt.sh`): main = `6c24111d` (11:03) · live = `80262b6e` · 3 Commits
+> zwischen live und main · offen: #408, #411–#418, #351 (alle Entwurf). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Auf #408 (Zweig-Spitze `5a7810d`):** Ablauf «Mahnung erhalten» (`#/mahnung`, 6 Schritte inkl. Miete OR 257d, Krankenkasse
+> KVG 64a, Bussen StGB 35/79a/106, Steuern DBG 2/163–167, Verzugszins-Rechner) · Briefe Mahnung schreiben / Forderung bestreiten
+> (inkl. «nur Gebühren») / Ratenzahlung vorschlagen · Schuldenmanager: Mahnstufe je Forderung, Übersicht und Abbau-Plan neu
+> gerechnet (Rate aus dem Budget, Zins je Schuld, «reicht nicht»), Betreibungsregister ohne Wertungen, Verlustschein- und
+> Steuer-Kasten · Rückwege aus Betreibung/Schuldenmanager/Lebenszustand. **Belegt:** 239 Dateien / 4400 Tests grün, Build ok,
+> 62,95 / 65 kB, PII sauber, CI grün; 3 Rechts- und 3 Fachprüfungen ohne Blocker, alle «sollte» eingebaut; Browser-Proben im
+> Demo-Modus. Gesetze am Wortlaut (Fedlex-Filestore via SPARQL, 27.09.).
+>
+> **Entscheide Stebler Studios 27.09.:** Mahnung «beides» (erhalten + selbst mahnen) · Rate aus dem Budget · Mahngebühren-Hinweis
+> «in der Regel nicht geschuldet» (K-Tipp 2022, SRF 2025) · Brief «nur Gebühren» nennt die Zahlung der Forderung · Stufenleiste
+> «guter Anfang».
+>
+> **Nächste Runde:** Schulden & Rechnungen gesamthaft + Dataviz (`docs/IDEEN.md` §5, Horizont «Oktober — bauen»). **Achtung:**
+> #417 (Geld-Formatierung überall) berührt vermutlich dieselben Dateien — nach dem Merge der einen die andere nachziehen.
+> **rm:** Ablauf, Briefe und Schulden-Texte als deutscher Rückfall mit `TODO(rm)`.
+
 > 🚀 **Nachtrag 27.09., 10:20 — Deploy durch Stebler Studios: live = `main` = `80262b6`.**
 >
 > **Stand, gemessen 27.09.2026 10:14** (`bash scripts/stand-jetzt.sh`): main = `80262b6` (10:11) · live = `80262b6`

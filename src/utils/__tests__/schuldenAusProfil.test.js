@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { darlehenVorschlag, betreibungsHinweis } from '../schuldenAusProfil.js';
+import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from '../schuldenAusProfil.js';
 
 describe('darlehenVorschlag — «Persönliche Darlehen» nicht nochmals eintippen', () => {
   it('leere Liste + Darlehen im Profil → Kredit-Vorschlag', () => {
@@ -28,5 +28,36 @@ describe('betreibungsHinweis — Registerstand nur als Hinweis, nie automatisch'
   it('eben angelegter, leerer Eintrag → noch kein Hinweis', () => {
     expect(betreibungsHinweis('', [{ creditor: '  ', amount: 0, status: 'active' }])).toBe(false);
     expect(betreibungsHinweis('', [])).toBe(false);
+  });
+});
+
+describe('rateAusBudget — Vorschlag für den Abbau-Plan (27.09.2026)', () => {
+  const basis = {
+    finanzen: { monthlyIncome: 5000, incomeType: 'netto', groceries: 600, debtPayments: 300 },
+    wohnen: { rentAmount: 1800 },
+    versicherungen: { kkPremium: 450 },
+  };
+  it('Einnahmen minus Ausgaben ohne heutige Schuldenraten, auf 10 abgerundet', () => {
+    const r = rateAusBudget(basis);
+    expect(r.grund).toBe('ok');
+    expect(r.ausgaben).toBe(2850); // 1800 + 450 + 600, die 300 Schuldenraten zählen nicht als Ausgabe
+    expect(r.vorschlag).toBe(2150);
+    expect(r.steuerFehlt).toBe(true); // keine Steuer erfasst → Hinweis
+    expect(r.heutigeRaten).toBe(300);
+    expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, monthlyIncome: 5005.5 } }).vorschlag).toBe(2150);
+  });
+  it('nur netto: brutto oder ohne Angabe → kein Vorschlag', () => {
+    expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, incomeType: 'brutto' } }).grund).toBe('keinNetto');
+    expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, incomeType: '' } }).grund).toBe('keinNetto');
+  });
+  it('ohne Wohnen, Krankenkasse oder Lebensmittel → sagt, was fehlt', () => {
+    const r = rateAusBudget({ finanzen: { monthlyIncome: 5000, incomeType: 'netto' } });
+    expect(r).toEqual({ grund: 'unvollstaendig', fehlend: ['wohnen', 'krankenkasse', 'lebensmittel'] });
+  });
+  it('nichts übrig → kein Vorschlag', () => {
+    expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, monthlyIncome: 2800 } }).grund).toBe('nichtsUebrig');
+  });
+  it('ohne Einkommen', () => {
+    expect(rateAusBudget({}).grund).toBe('keinEinkommen');
   });
 });
