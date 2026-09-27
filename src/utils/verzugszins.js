@@ -23,12 +23,22 @@ export function tageZwischen(vonIso, bisIso) {
   return Math.round((utc(b) - utc(a)) / 86400000);
 }
 
-// Satz aus der Eingabe (Komma oder Punkt) — nur 0 < Satz ≤ SATZ_MAX, sonst null.
+// Satz aus der Eingabe (Komma oder Punkt, «5 %» erlaubt) — nur 0 < Satz ≤ SATZ_MAX, sonst null.
 export function leseSatz(v) {
-  const s = String(v == null ? '' : v).trim().replace(',', '.');
+  const s = String(v == null ? '' : v).trim().replace(/\s*%$/, '').replace(',', '.');
   if (!/^\d+(\.\d{1,3})?$/.test(s)) return null;
   const n = parseFloat(s);
   return n > 0 && n <= SATZ_MAX ? n : null;
+}
+
+// Warum rechnet der Rechner nicht? Für eine ehrliche Meldung statt immer «eintragen»
+// (Deploy-Gate 27.09.2026): 'fehlt' | 'satz' | 'zukunft' | 'ok'.
+export function zinsEingabeStatus({ betrag, satz = SATZ_GESETZ, seit, bis = heuteIso() }) {
+  if (!(betrag > 0) || !leseDatum(seit)) return 'fehlt';
+  const p = typeof satz === 'number' ? satz : leseSatz(satz);
+  if (!p) return 'satz';
+  if (!(tageZwischen(seit, bis) > 0)) return 'zukunft';
+  return 'ok';
 }
 
 // { tage, zins365, zins360 } oder null (ungültige Eingabe, Beginn in der Zukunft, 0 Tage).

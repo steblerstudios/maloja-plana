@@ -1050,6 +1050,8 @@ export default {
       satzHilfe: '5 %, unless the contract provides for a higher rate (OR Art. 104). Taxes have their own rate.',
       ergebnis: 'For {tage} days at {satz} %: about CHF {z365} (counting 365 days a year) or CHF {z360} (counting 360). The Code of Obligations does not fix the day count; some creditors count 30 days per month, so the amount may differ slightly. No interest on interest (OR Art. 105 para. 3).',
       ohne: 'Enter amount and date to see an estimate. Nothing is saved.',
+      satzUngueltig: 'Enter the rate as a number, e.g. 5 — at most 30.',
+      nochNicht: 'As of today no day of default has passed yet — no default interest has accrued.',
     },
     step4Title: '4 · Rent, health insurance, fines, taxes: fixed rules apply',
     step4Miete: 'Rent: if rent or service charges are overdue, the landlord may set you a written payment deadline and warn that the lease will otherwise be terminated. For a flat, this deadline is at least 30 days. If you do not pay within it, the landlord may terminate with at least 30 days’ notice to the end of a month (OR Art. 257d). Deal with a reminder like this first — your home is at stake.',
