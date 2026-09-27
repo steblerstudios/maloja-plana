@@ -274,7 +274,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   const aussenfach = h('section', {
     'aria-labelledby': 'gepaeck-aussenfach',
     style: {
-      marginTop: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
+      marginTop: space.lg + 'px', marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
       background: palette.up, border: '1px dashed ' + palette.border,
       opacity: packed ? 0 : 1, transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : GEGENSTAENDE.length * 60) + 'ms',
     },
@@ -301,7 +301,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     },
       h('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', flexShrink: 0, color: palette.sageDeep } }, Icons[w.icon] ? Icons[w.icon]() : null),
       h('span', { style: { flex: 1, minWidth: 0 } },
-        h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('nav.anspruch')),
+        h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('dashboard.anspruchTitle')),
         w.sub ? h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } }, t(w.sub)) : null),
       h('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'),
     ))) : null;
