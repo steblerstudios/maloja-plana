@@ -26,6 +26,8 @@ export const EINSTELLUNGEN = 'einstellungen';
 // Eigener Eintrag über den Gegenständen: «Was steht mir zu?» (gewählt 27.09.2026).
 export const OBEN = 'oben';
 
+// Zeichen (Seitenrundgang 27.09.2026): ALV «work» statt «family» (war EO), Offizielle
+// Links «globe», Flyer «qr» statt dreimal «dokumentTresor». Wächter: zeichenEineQuelle.test.js.
 export const WERKZEUGE = [
   // ── Portemonnaie (Geld) — Entscheid 25.09.2026 ──
   { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot'] },
@@ -49,7 +51,7 @@ export const WERKZEUGE = [
 
   // ── Geldleistungen, bisher nur über die Suche erreichbar ──
   // Entscheid Stebler Studios 27.09.2026: ALV-Taggeld und EO ins Portemonnaie.
-  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'family', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav'] },
+  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'work', fach: 'geld', aliases: ['alv', 'arbeitslos', 'rav'] },
   { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', fach: 'geld', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
 
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
@@ -60,8 +62,8 @@ export const WERKZEUGE = [
   { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
   { view: 'unterlagen', nav: 'nav.unterlagen', sub: 'nav.sub.unterlagen', icon: 'documents', fach: AUSSENFACH, aliases: ['unterlagen', 'documents'] },
   { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', fach: AUSSENFACH, aliases: ['cv', 'lebenslauf', 'resume'] },
-  { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'dokumentTresor', fach: AUSSENFACH, aliases: ['links', 'behoerden', 'amt'] },
-  { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'dokumentTresor', fach: AUSSENFACH, aliases: ['qr', 'teilen', 'share', 'flyer'] },
+  { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'globe', fach: AUSSENFACH, aliases: ['links', 'behoerden', 'amt'] },
+  { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'qr', fach: AUSSENFACH, aliases: ['qr', 'teilen', 'share', 'flyer'] },
   { view: 'charts', nav: 'nav.charts', icon: 'chartsSchoko', fach: AUSSENFACH, aliases: ['charts', 'diagramme', 'statistik', 'grafik'] },
   // Gewählt 27.09.2026: Lebenssituationen als «Was steht mir zu?» über den Gegenständen
   // (und im Menü); die Arztkoffer-Ansicht «Gesundheit» im Gegenstand Arztkoffer.

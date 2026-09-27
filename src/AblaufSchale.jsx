@@ -7,10 +7,11 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { renderSource } from './utils/renderSource.js';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
+import PrimaryButton from './components/PrimaryButton.jsx';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
-// war der Zusatzversicherungs-Wechsel; heute bauen alle Abläufe ausser AsylView darauf (24 im Register, Stand 24.09.2026), auch der
+// war der Zusatzversicherungs-Wechsel; heute bauen alle Abläufe ausser AsylView darauf (34 im Register, Stand 27.09.2026), auch der
 // KVG-Wechsel (Stand 24.09.2026). Nur AsylView hat seine eigene Gliederung.
 // Bewusst schlanke Primitiven statt einer config-getriebenen Engine (keine Über-Abstraktion).
 
@@ -20,8 +21,9 @@ const styles = (palette) => ({
   intro: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.lg + 'px' },
   stepTitle: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: space.lg + 'px 0 ' + space.xs + 'px 0' },
   stepText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed },
-  link: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' },
-  primaryBtn: { background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', padding: '10px 16px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, borderRadius: radius.sm, marginTop: space.sm + 'px' },
+  // Querverweis: 44 px Tippziel (Seitenrundgang 27.09.2026 — vorher padding 0, rund 20 px
+  // hoch); der Abstand nach oben entfällt dafür, die Zeilenhöhe trägt ihn.
+  link: { display: 'flex', alignItems: 'center', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
   done: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px' },
   warn: { fontSize: text.sm, color: palette.goldDeep, marginTop: space.xs + 'px' },
   note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
@@ -32,7 +34,9 @@ const styles = (palette) => ({
 export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.wrap },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: icon || 'insurance', size: 22 }), style: { marginBottom: space.sm + 'px' } }, title),
+    // Kein Rückfall-Zeichen mehr (bis 27.09.2026 'insurance'): ein Ablauf ohne Zeichen zeigt
+    // keines, statt still das der Versicherung. Wächter: zeichenEineQuelle.test.js.
+    React.createElement(PageTitle, { palette, icon: icon ? React.createElement(Icon, { name: icon, size: 22 }) : null, style: { marginBottom: space.sm + 'px' } }, title),
     intro ? React.createElement('p', { style: s.intro },
       React.createElement(GlossarText, { palette }, intro)) : null,
     children
@@ -52,12 +56,17 @@ export const AblaufStep = ({ palette, title, icon, children }) => {
 // Crosslink-Knopf „→ Label" → onNavigate-Ziel.
 export const AblaufLink = ({ palette, label, onClick }) => {
   const s = styles(palette);
-  return React.createElement('button', { className: 'mp-link', style: s.link, onClick }, label);
+  return React.createElement('button', { type: 'button', className: 'mp-link', style: s.link, onClick }, label,
+    React.createElement('span', { 'aria-hidden': 'true', style: { marginInlineStart: '4px' } }, '›'));
 };
 
 // Frist-in-Kalender-Knopf: legt beim Klick eine Erinnerung an, zeigt danach Bestätigung.
 // onSaved (optional): wird nach erfolgreichem Speichern aufgerufen — z.B. um zusätzlich
 // ein Merkliste-Todo anzulegen (KVG-Faden).
+// Der Frist-Knopf ist der Hauptknopf seines Schritts (PrimaryButton mit Kalender-Zeichen,
+// Seitenrundgang 27.09.2026 — vorher ein nachgebauter Sand-Knopf). Zwei Fristen im selben
+// Ablauf (Dienst, Wegzug, Zuzug, EL, Stelle verloren) gehören zu zwei Ereignissen und
+// erscheinen erst mit dem eigenen Datum — darum bleiben beide Hauptknöpfe.
 export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
   const s = styles(palette);
   const [done, setDone] = useState(false);
@@ -70,7 +79,9 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
         : null
     );
   }
-  return React.createElement('button', { style: s.primaryBtn, onClick: handle }, buttonLabel);
+  const zeichen = React.createElement(Icon, { name: 'calendar', size: 16 });
+  const basis = { minHeight: '44px', boxSizing: 'border-box', marginTop: space.sm + 'px', textAlign: 'left' };
+  return React.createElement(PrimaryButton, { palette, onClick: handle, icon: zeichen, style: basis }, buttonLabel);
 };
 
 // Frist ab einem Ereignis, das die Person selbst angibt (Zustellung, Geburt,
@@ -93,7 +104,7 @@ export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey,
     !ohneFeld && React.createElement('label', { htmlFor: id, style: { fontSize: text.sm, color: palette.mid, display: 'block', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, t(labelKey)),
     !ohneFeld && React.createElement('input', {
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
-      style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
+      style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
     ziel && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } },
       t(vorbei ? vorbeiKey : hinweisKey, { date: formatDE(ziel) })),

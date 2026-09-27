@@ -59,6 +59,8 @@ export const ABLAEUFE = [
   { view: 'todesfall', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
+// Die Zeichen der Werkzeuge stehen seit #414 in data/werkzeugRegister.js; die Köpfe holen
+// sie über ansichtIkon() von hier (Seitenrundgang 27.09.2026, Wächter zeichenEineQuelle.test.js).
 export const SEARCH_VIEWS = [
   // Alle Werkzeuge — aus dem einen Werkzeug-Register (data/werkzeugRegister.js,
   // Vorschau 27.09.2026). Vorher standen sie hier ein zweites Mal von Hand.
@@ -75,9 +77,50 @@ export const SEARCH_VIEWS = [
   { view: 'installApp', nav: 'nav.installApp', sub: 'nav.sub.installApp', icon: 'download', aliases: ['install', 'installieren', 'app', 'pwa', 'homescreen', 'startbildschirm', 'herunterladen', 'download'] },
 ];
 
+// Name einer Ansicht für «Zurück zu …» (main.jsx) — der i18n-Schlüssel, nicht der Text.
+// Seitenrundgang 27.09.2026: «Zurück zu …» gab es nur nach einem Kapitel; wer aus der
+// Finanz-Übersicht in die Steuer kam, aus der Suche in einen Treffer oder von einem
+// Ablauf in den nächsten, fand nur «Übersicht» — den Anfang des Dashboards.
+// Ansichten ohne Namen hier bekommen kein «Zurück zu …», nur «Übersicht».
+const WEITERE_NAMEN = {
+  search: 'nav.search',
+  settings: 'nav.settings',
+  ansprueche: 'anspruch.pageTitle',
+  situationen: 'lebenszustaende.pageTitle',
+  schnellcheck: 'schnellcheck.title',
+  notfalleinstieg: 'chapters.notfall.title',
+  notfallkarte: 'notfallkarte.title',
+  gesundheit: 'arztkoffer.title',
+  briefe: 'briefe.title',
+  obstgarten: 'obstgarten.title',
+  gepaeck: 'gepaeck.title',
+  legal: 'legal.title',
+  mietzins: 'nav.mietzins',
+};
+export const ansichtName = (view) => {
+  const e = SEARCH_VIEWS.find((v) => v.view === view);
+  return (e && e.nav) || WEITERE_NAMEN[view] || null;
+};
+
 // Piktogramm einer Ansicht — mit Rückfall, damit ein unbekannter Schlüssel
 // nichts umwirft.
 export const ansichtIkon = (view, rueckfall = 'document') => {
   const e = SEARCH_VIEWS.find((v) => v.view === view);
   return (e && e.icon) || rueckfall;
+};
+
+// Der Name hinter «Zurück zu …» für die aktuelle Herkunft — oder null, wenn keine Zeile
+// erscheinen soll: Direkteinstieg, Herkunft Übersicht (dafür steht «Übersicht» schon da),
+// dieselbe Ansicht, Kapitel → Kapitel («Nächstes Thema» ist ein Vorwärtsweg; so war es
+// vor dem 27.09.2026 auch) oder eine Ansicht ohne Namen im Register.
+export const herkunftName = (herkunft, view, chapters, t) => {
+  if (!herkunft || herkunft.view === 'dashboard' || herkunft.view === view) return null;
+  if (herkunft.view === 'chapter') {
+    const ch = chapters && chapters[herkunft.chapterIndex];
+    return (ch && ch.title) || null;
+  }
+  const key = ansichtName(herkunft.view);
+  if (!key || typeof t !== 'function') return null;
+  const text = t(key);
+  return typeof text === 'string' && text && text !== key ? text : null;
 };

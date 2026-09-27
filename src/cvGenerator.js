@@ -2,6 +2,7 @@
 import { getFullName } from './config/constants.js';
 import { escapeHtml } from './utils/helpers.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
+import { auswahlLabel } from './utils/auswahlLabel.js';
 
 export const generateCVTemplate = (data, t) => {
   return {
@@ -14,7 +15,7 @@ export const generateCVTemplate = (data, t) => {
     },
     personal: {
       dateOfBirth: data.basis?.dateOfBirth || '',
-      nationality: data.basis?.nationality || '',
+      nationality: auswahlLabel('basis', 'nationality', data.basis?.nationality, t),
       // Der Lebenslauf zeigt den Text der Sprache, nicht den gespeicherten Schlüssel («married»).
       maritalStatus: zivilstandLabel(data.basis?.maritalStatus, t)
     },
@@ -33,7 +34,7 @@ export const generateCVTemplate = (data, t) => {
       }))
     },
     education: {
-      highest: data.ausbildung?.educationLevel || '',
+      highest: auswahlLabel('ausbildung', 'educationLevel', data.ausbildung?.educationLevel, t),
       school: data.ausbildung?.schoolName || '',
       efz: data.ausbildung?.efzNumber || '',
       certifications: data.ausbildung?.certifications || ''
@@ -180,7 +181,7 @@ export const downloadCVAsHTML = (cvData, t) => {
 // JSON Resume (jsonresume.org) — maschinenlesbarer, ATS-tauglicher Standard.
 // Bewusst ohne Geburtsdatum/Zivilstand (Datensparsamkeit + anti-diskriminierend).
 // Exportiert für die Export-Vorschau (K20): sie liest dasselbe Objekt, das downloadCVAsJSON schreibt.
-export const generateJSONResume = (data, _t) => {
+export const generateJSONResume = (data, t) => {
   const b = data.basis || {};
   const w = data.wohnen || {};
   const a = data.ausbildung || {};
@@ -198,7 +199,7 @@ export const generateJSONResume = (data, _t) => {
   });
   const education = (a.schoolName || a.educationLevel) ? [{
     institution: a.schoolName || '',
-    studyType: a.educationLevel || '',
+    studyType: auswahlLabel('ausbildung', 'educationLevel', a.educationLevel, t),
     area: a.certifications || '',
   }] : [];
   return {

@@ -3,6 +3,7 @@
 // Lazy-loads only the active language to reduce initial bundle size
 
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { zahl } from '../utils/geld.js';
 
 const STORAGE_KEY = 'or5_lang';
 const SUPPORTED = ['en', 'de', 'fr', 'it', 'rm'];
@@ -76,7 +77,19 @@ export function createT(translations, lang, anrede) {
     }
 
     if (params && typeof val === 'string') {
-      return val.replace(/\{(\w+)\}/g, (_, k) => (params[k] !== undefined ? params[k] : '{' + k + '}'));
+      // Steht «CHF » vor dem Platzhalter und kommt eine Zahl, formatiert t() sie selbst
+      // (utils/geld.js: Apostroph, zwei Stellen nur wenn nötig). Befund Seitenrundgang
+      // 27.09.2026: rund zwanzig Aufrufer gaben rohe Zahlen — «CHF 64000», «ca. CHF 2160/Jahr».
+      // Schon formatierte Texte («1’500») bleiben, wie sie sind; ohne «CHF» davor (Jahre,
+      // Prozente, Anzahlen) wird nichts angefasst.
+      return val.replace(/(CHF[\s\u00a0\u202f]?)?\{(\w+)\}/g, (_, chf, k) => {
+        const v = params[k];
+        if (v === undefined) return (chf || '') + '{' + k + '}';
+        if (chf && typeof v === 'number' && Number.isFinite(v)) {
+          return chf + zahl(v, Number.isInteger(v) ? {} : { stellen: 2 });
+        }
+        return (chf || '') + v;
+      });
     }
     return val;
   };
