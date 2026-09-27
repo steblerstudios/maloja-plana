@@ -133,8 +133,18 @@ Beim Laden verarbeitet der Hoster (Infomaniak, CH) technische Daten. § 5 der
 Erklärung nennt das. Reicht die Formulierung?
 
 **C4. Was ändert sich, wenn ein Backend dazukommt?**
-Zurzeit nicht geplant, aber Kunden-Stages und Synchronisation stehen im Raum.
-→ *Was hängt daran:* ob eine Architekturentscheidung juristische Folgekosten hat.
+~~Zurzeit nicht geplant, aber Kunden-Stages und Synchronisation stehen im Raum.~~
+**Seit 27.09.2026 geplant:** Entscheid Stebler Studios — Konten kommen ab Oktober 2026; das *Wie*
+(Server, Umfang, freiwillig oder nicht) ist noch offen. Damit fallen voraussichtlich C0 und C1 in
+ihrer heutigen Form: mit Konten bearbeitet Stebler Studios Personendaten selbst (Art. 5 lit. j).
+→ *Was hängt daran:* Datenschutzerklärung, Bearbeitungsverzeichnis, DSFA (C2) und jede Aussage
+«bleibt auf Ihrem Gerät» in App, Erklärseiten und Flyer. **Rückt nach vorn** — vor dem Konten-Bau klären.
+
+**C5. Braucht es eine Einwilligungs-Verwaltung (Backlog LEG-005)?**
+Idee aus dem Backlog: Zustimmung zur Datenbearbeitung granular erteilen und jederzeit widerrufen.
+Heute rein lokal, ohne Konto — ob das nötig ist, ist eine Rechtsfrage, keine Bau-Frage
+(Entscheid Stebler Studios 27.09.2026: auf diese Liste). Mit Konten (C4) stellt sie sich neu.
+→ *Was hängt daran:* ob vor oder mit den Konten ein Einwilligungs-Dialog gebaut werden muss.
 
 ---
 
