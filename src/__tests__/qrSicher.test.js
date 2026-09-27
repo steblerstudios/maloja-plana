@@ -9,6 +9,7 @@ let QRCode;
 let qrKuerzen;
 let qrNotfallText;
 let qrZeichnen;
+let qrRaster;
 let gesetzt = [];
 let utf8Laenge;
 let QR_MAX_BYTES;
@@ -30,7 +31,7 @@ beforeAll(async () => {
   };
   ({ default: QRCode } = await import('../vendor/qrcodejs.js'));
   ({
-    qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES,
+    qrKuerzen, qrNotfallText, qrZeichnen, qrRaster, utf8Laenge, QR_MAX_BYTES,
     vcardMaskieren, vcardBauen, vcardFalten, qrNotfallVcard, QR_MAX_BYTES_VCARD, QR_DUNKEL, QR_HELL,
   } = await import('../utils/qrSicher.js'));
 });
@@ -279,6 +280,25 @@ describe('QR-Farben kommen nie aus dem Thema', () => {
       if (/color(Dark|Light):\s*palette\./.test(src)) treffer.push(datei);
     }
     expect(treffer).toEqual([]);
+  });
+});
+
+describe('qrRaster — ganze Gerätepixel je Modul (QR-Versuch 3b, 27.09.2026)', () => {
+  it('Notfall-QR (97 Module, 180 px) auf Retina: 4 Gerätepixel je Modul, nicht 1,9', () => {
+    expect(qrRaster(97, 180, 2)).toEqual({ proModul: 4, css: 194 });
+  });
+  it('immer ganze Pixel und mindestens 2 je Modul, auf jedem Bildschirm', () => {
+    for (const dpr of [1, 1.5, 2, 3]) {
+      for (const [n, b] of [[25, 160], [57, 180], [97, 180], [97, 200], [121, 180]]) {
+        const { proModul, css } = qrRaster(n, b, dpr);
+        expect(Number.isInteger(proModul), `${n}/${b}@${dpr}`).toBe(true);
+        expect(proModul).toBeGreaterThanOrEqual(2);
+        expect(css * dpr).toBeCloseTo(n * proModul);
+      }
+    }
+  });
+  it('fehlende Pixeldichte zählt als 1', () => {
+    expect(qrRaster(97, 180, 0)).toEqual(qrRaster(97, 180, 1));
   });
 });
 
