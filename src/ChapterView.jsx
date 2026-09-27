@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
 import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, getFileExpiryHint, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
@@ -1160,7 +1161,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     }
     const medRows = [];
     const medFelder = [];
-    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
+    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(blutgruppeLabel(data.bloodType, tr)) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
     if (data.allergies) { medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>'); medFelder.push(tr('chapters.notfall.fields.allergies')); }
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
     if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
@@ -1307,7 +1308,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         sections.push({ title: tr('notfallSummary.handoverContact'), rows: [tr('naZustand.keineKontaktperson')] });
       }
       const medRows = [];
-      if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + data.bloodType);
+      if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + blutgruppeLabel(data.bloodType, tr));
       if (data.allergies) medRows.push(tr('notfallSummary.handoverAllergies'));
       const medList2 = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
       if (medList2.length) medRows.push(tr('notfallSummary.handoverMedications') + ': ' + medList2.map(m => m.name).join(', '));
