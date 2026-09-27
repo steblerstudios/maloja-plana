@@ -14,7 +14,7 @@ import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
-import { miniRucksack } from './components/miniRucksack.js';
+import { miniRucksack, rucksackZeichen } from './components/miniRucksack.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
@@ -359,6 +359,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       // Immer mitgegeben, auch unter 10 % (Entscheid Stebler Studios 25.09.2026; vorher erst
       // ab 10 %). Ob der Kreis steht, entscheidet BergLandschaft: sobald etwas begonnen ist.
       prozent: Number.isFinite(completion) ? Math.round(completion) : 0,
+      // Zeichen auf den drei Tal-Strassen (27.09.2026): zuerst der Rucksack; später der
+      // Finanzbaum, das dritte ist offen — je ein Eintrag hier, der Platz folgt der Reihenfolge.
+      talStationen: [
+        { key: 'gepaeck', label: t('gepaeck.link'), zeichen: rucksackZeichen, farbe: palette.gold, onClick: () => onNavigate('gepaeck') },
+      ],
     })),
 
     React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },

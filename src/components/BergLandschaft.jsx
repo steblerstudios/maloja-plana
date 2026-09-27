@@ -113,6 +113,18 @@ export const STATIONEN = [
   { key: 'notfall', x: 424, y: 526.5, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
+// Die drei Strassen rechts im Tal (27.09.2026): Plätze für Zeichen ausserhalb der Kapitel —
+// zuerst der Rucksack («Mein Gepäck»), später der Finanzbaum, das dritte ist offen. Kein Weg,
+// kein Fortschrittsring: es sind Zugänge, keine Stationen. Die Plätze sind aus dem Bild gelesen
+// (Mitte der Fahrbahn); was darauf steht, gibt das Dashboard über `talStationen` (Reihenfolge =
+// Platz). Am Handy liegt das Tal ausserhalb des Ausschnitts — dort gilt je Platz ein eigener Ort
+// auf der Passstrasse, wo kein Weg läuft (erster: das Stück links vor der Basis).
+export const TAL_PLAETZE = [
+  { breit: { x: 822, y: 560, seite: 'rechts' }, schmal: { x: 138, y: 540, seite: 'obenrechts' } },
+  { breit: { x: 927, y: 555, seite: 'rechts' }, schmal: null },
+  { breit: { x: 1003, y: 580, seite: 'links' }, schmal: null },
+];
+
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
 // durchgehende Route, also immer von der vorigen Station. Nur sichtbare Fahrbahn, je Lauf ein
 // eigener Unterpfad (M … C …).
@@ -197,7 +209,7 @@ export const mitKontrastZu = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke, talStationen = [] }) => {
   const rahmen = useRef(null);
   const huelle = useRef(null);
   // Höhe des Titels (umbricht je nach Sprache und Breite) — der Dunst wächst mit.
@@ -558,6 +570,50 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           // Seit 25.09.2026 trägt das Etikett selbst die Kapitelfarbe (weisse Schrift) — der
           // Farbpunkt davor ist damit überflüssig. Das Wort trägt, die Farbe ergänzt.
           shortLabel)
+      );
+    }),
+    // Zeichen auf den Tal-Strassen (TAL_PLAETZE): gleiche Scheibe wie eine Station im Zustand
+    // «Skizze», aber durchgezogener Rand statt Fortschrittsring — ein Zugang, kein Kapitel.
+    talStationen.slice(0, TAL_PLAETZE.length).map((st, i) => {
+      const ort = TAL_PLAETZE[i][modus];
+      if (!ort) return null;
+      const sz = schmal ? 26 : 30;
+      const iconSz = schmal ? 15 : 17;
+      const farbe = st.farbe || p.gold;
+      const zeichen = mitKontrastZu(farbe, ui.surface, 3);
+      const abstand = sz / 2 + 4 + 'px';
+      const etikettOrt = {
+        rechts: { left: abstand, top: '50%', transform: 'translateY(-50%)' },
+        links: { right: abstand, top: '50%', transform: 'translateY(-50%)' },
+        obenrechts: { bottom: sz / 2 + 3 + 'px', left: -(sz / 2 + 4) + 'px' },
+      }[ort.seite];
+      return React.createElement('div', {
+        key: 'tal-' + st.key, 'data-tal': st.key,
+        style: { position: 'absolute', ...imRahmen(ort.x, ort.y), width: 0, height: 0 },
+      },
+        React.createElement('button', {
+          type: 'button', onClick: st.onClick, 'aria-label': st.label,
+          style: {
+            position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
+            width: sz + 'px', height: sz + 'px', padding: 0,
+            borderRadius: '50%', background: ui.surface, color: zeichen,
+            border: (schmal ? 2.5 : 3) + 'px solid ' + zeichen,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
+            transition: `transform ${duration.cinematic}ms ${ease}`,
+          },
+          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
+          onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
+        }, React.createElement('div', { style: { width: iconSz + 'px', height: iconSz + 'px' } }, st.zeichen())),
+        React.createElement('span', {
+          className: 'mountain-label', lang, 'aria-hidden': 'true',
+          style: {
+            position: 'absolute', ...etikettOrt, whiteSpace: 'nowrap', pointerEvents: 'none',
+            fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
+            background: etikettGrund(farbe), padding: schmal ? '1px 6px' : '2px 7px', borderRadius: radius.sm,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+          },
+        }, st.label)
       );
     })
   ));
