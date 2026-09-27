@@ -119,7 +119,6 @@ const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
 const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const Schnellcheck = React.lazy(() => import('./Schnellcheck.jsx').then(m => ({ default: m.Schnellcheck })));
-const AnspruchLandkarte = React.lazy(() => import('./AnspruchLandkarte.jsx').then(m => ({ default: m.AnspruchLandkarte })));
 const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
 const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
 const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
@@ -1613,8 +1612,9 @@ const AppInner = ({ demo }) => {
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'schnellcheck' && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'ansprueche' && React.createElement(AnspruchLandkarte, { palette, t, onNavigate: handleNavigate }),
+        // Seit 27.09.2026 eine Seite: Leistungs-Kompass und Anspruchs-Landkarte zusammen.
+        // Beide alten Adressen bleiben gültig und zeigen dasselbe.
+        (view === 'schnellcheck' || view === 'ansprueche') && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate, mitLandkarte: true }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
