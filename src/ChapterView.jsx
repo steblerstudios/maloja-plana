@@ -1191,55 +1191,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
   // Die Elemente eines Feldes (Abschnittskopf, Feld, Querverweise) — herausgelöst am
   // 27.09.2026, damit die Abschnittsliste beim «ändern ›» dieselben Felder UND dieselben
-  // Querverweise zeigt wie das Formular. `ohneKopf`: der Abschnittskopf kommt vom Aufrufer.
-  const feldElemente = (field, idx, primaryFields, ohneKopf = false) => {
+  // Querverweise zeigt wie das Formular. Den Abschnittskopf setzt der Aufrufer.
+  const feldElemente = (field) => {
           const elements = [];
-          if (field.section && !ohneKopf) {
-            const isFirst = idx === 0 || !primaryFields.slice(0, idx).some(f => f.section);
-            elements.push(
-              React.createElement('div', {
-                key: 'section-' + field.k,
-                id: 'mp-section-' + field.k,
-                'data-section-k': field.k,
-                role: 'presentation',
-                'aria-label': field.section,
-                style: {
-                  gridColumn: '1 / -1',
-                  // Eine Quelle für den Sprungabstand (tokens.css) — vorher 52 px,
-                  // gerechnet auf den alten Scroll-Container #mp-main.
-                  scrollMarginTop: 'var(--mp-sprungabstand)',
-                  marginTop: isFirst ? 0 : space['2xl'] + 'px',
-                  paddingTop: isFirst ? 0 : space.lg + 'px',
-                  borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
-                  fontSize: text.sm,
-                  fontWeight: weight.medium,
-                  color: palette.sageDeep || palette.mid,
-                  letterSpacing: '0.4px',
-                  marginBottom: space.sm + 'px',
-                }
-              }, field.section)
-            );
-            if (field.sectionIntro) {
-              elements.push(
-                React.createElement('p', {
-                  key: 'sectionIntro-' + field.k,
-                  style: {
-                    gridColumn: '1 / -1',
-                    fontSize: text.sm,
-                    color: palette.sageDeep || palette.sage,
-                    fontStyle: 'italic',
-                    lineHeight: leading.relaxed,
-                    margin: '0 0 12px 0',
-                    maxWidth: '420px',
-                    background: palette.sageMist || 'transparent',
-                    padding: space.sm + 'px ' + space.md + 'px',
-                    borderRadius: radius.sm,
-                    borderLeft: '3px solid ' + palette.sage + '40',
-                  }
-                }, field.sectionIntro)
-              );
-            }
-          }
           elements.push(renderFeldMitNa(field));
           // Das Piktogramm des ZIELS, aus dem Register der Suche — keine zweite Liste
           // (21.09.2026). Ein Querverweis ohne Zeichen sah aus wie jeder andere; mit
@@ -1709,54 +1663,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           }
           return elements;
         };
-  const feldElementeSek = (field, idx, secFields, ohneKopf = false) => {
+  const feldElementeSek = (field) => {
           const elements = [];
-          if (field.section && !ohneKopf) {
-            const isFirst = idx === 0 || !secFields.slice(0, idx).some(f => f.section);
-            elements.push(
-              React.createElement('div', {
-                key: 'section-' + field.k,
-                id: 'mp-section-' + field.k,
-                'data-section-k': field.k,
-                role: 'presentation',
-                'aria-label': field.section,
-                style: {
-                  // scroll-margin, damit Kopfzeile und klebender Reiter das Ziel nicht
-                  // verdecken — eine Quelle (tokens.css), vorher 64 px inline.
-                  scrollMarginTop: 'var(--mp-sprungabstand)',
-                  gridColumn: '1 / -1',
-                  marginTop: isFirst ? '8px' : space['2xl'] + 'px',
-                  paddingTop: isFirst ? 0 : space.lg + 'px',
-                  borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
-                  fontSize: text.sm,
-                  fontWeight: weight.medium,
-                  color: palette.sageDeep || palette.mid,
-                  letterSpacing: '0.4px',
-                  marginBottom: space.sm + 'px',
-                }
-              }, field.section)
-            );
-            if (field.sectionIntro) {
-              elements.push(
-                React.createElement('p', {
-                  key: 'sectionIntro-' + field.k,
-                  style: {
-                    gridColumn: '1 / -1',
-                    fontSize: text.sm,
-                    color: palette.sageDeep || palette.sage,
-                    fontStyle: 'italic',
-                    lineHeight: leading.relaxed,
-                    margin: '0 0 12px 0',
-                    maxWidth: '420px',
-                    background: palette.sageMist || 'transparent',
-                    padding: space.sm + 'px ' + space.md + 'px',
-                    borderRadius: radius.sm,
-                    borderLeft: '3px solid ' + palette.sage + '40',
-                  }
-                }, field.sectionIntro)
-              );
-            }
-          }
           elements.push(renderFeldMitNa(field));
           if (field.k === 'vorsorgeauftrag' && chapter.key === 'notfall') {
             elements.push(renderBeistandWegweiser());
@@ -1821,7 +1729,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingBottom: space.sm + 'px' } },
               demoMode && React.createElement('p', { key: 'demo', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, tr('demo.readOnlyHint')),
               g.intro && React.createElement('p', { key: 'intro', style: { gridColumn: '1 / -1', fontSize: text.sm, color: palette.mid, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px' } }, g.intro),
-              ...liste.map((f, i, arr) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f, i, arr, true) : feldElemente(f, i, arr, true)))))
+              ...liste.map((f) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f) : feldElemente(f)))))
           : (leer
               ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
               : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
@@ -1880,7 +1788,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Living mirror layer — life sentence + mirror cards
     // Nur der Satz — die Tabellen wiederholten, was die Abschnittsliste zeigt (27.09.2026).
-    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr, nurSatz: true }),
+    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
 
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 

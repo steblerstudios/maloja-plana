@@ -82,6 +82,33 @@ describe('createDebtPlan', () => {
     expect(p).toEqual({ machbar: false, grund: 'dauer' });
     expect(PLAN_MAX_MONATE).toBe(360);
   });
+  // von/bis: Monate als Bruch für die Abbau-Zeitachse. Nachgerechnet am Code (27.09.2026):
+  // Monat 1: 100 an A (Rest 50). Monat 2: 50 an A → A fertig bei 1,5; 50 an B → B beginnt bei 1,5.
+  // Monat 3: 50 an B → B fertig bei 2,5.
+  it('von/bis je Schuld: 150 + 100 bei Rate 100 ohne Zins → A 0–1,5, B 1,5–2,5', () => {
+    const p = createDebtPlan([
+      { id: 1, creditor: 'A', amount: 150, status: 'open' },
+      { id: 2, creditor: 'B', amount: 100, status: 'open' },
+    ], 100);
+    expect(p.machbar).toBe(true);
+    expect(p.monate).toBe(3);
+    expect(p.reihenfolge).toEqual([
+      { id: 1, creditor: 'A', monat: 2, von: 0, bis: 1.5 },
+      { id: 2, creditor: 'B', monat: 3, von: 1.5, bis: 2.5 },
+    ]);
+  });
+  it('von/bis: Schuld wird genau am Monatsende fertig → bis ganzzahlig, die nächste beginnt dort', () => {
+    // Monat 1+2: je 100 an A → A fertig mit Budget 0 → bis 2. Monat 3: B von 2 bis 3.
+    const p = createDebtPlan([
+      { id: 1, creditor: 'A', amount: 200, status: 'open' },
+      { id: 2, creditor: 'B', amount: 100, status: 'open' },
+    ], 100);
+    expect(p.monate).toBe(3);
+    expect(p.reihenfolge).toEqual([
+      { id: 1, creditor: 'A', monat: 2, von: 0, bis: 2 },
+      { id: 2, creditor: 'B', monat: 3, von: 2, bis: 3 },
+    ]);
+  });
   it('ohne Rate oder ohne offene Schuld → nichts', () => {
     expect(createDebtPlan([{ id: 1, amount: 100, status: 'open' }], 0)).toBeNull();
     expect(createDebtPlan([{ id: 1, amount: 100, status: 'paid' }], 50)).toBeNull();
