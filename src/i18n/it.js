@@ -1344,7 +1344,6 @@ export default {
     zurueckZu: 'Torna a {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Pannello',
     tools: 'Strumenti',
-    moreTools: 'Altri strumenti',
     advanced: 'Avanzato',
     tresor: 'Archivio documenti',
     kkScanner: 'Scanner assicurazione',
@@ -5074,10 +5073,21 @@ export default {
     pack: 'Rifare il bagaglio',
     wege: '{n} percorsi',
     wegeOne: '1 percorso',
+    // Werkzeug-Vorschau 27.09.2026: Werkzeuge im Gepäck, Portemonnaie, Aussenfach.
+    werkzeuge: '{n} strumenti',
+    werkzeugeOne: '1 strumento',
+    wegeTitel: 'Percorsi',
+    werkzeugeTitel: 'Strumenti',
+    aussenfach: 'Tasca esterna · Archiviare e ordinare',
+    aussenfachSub: 'Documenti, appuntamenti e liste — a portata di mano, fuori dallo zaino.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Tasca esterna',
+    aussenfachKarteSub: 'Gli stessi strumenti, da riporre',
+    menuAlle: 'Tutti gli strumenti nel bagaglio',
     packed: '{done} di {total} inseriti',
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',
-    obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata' },
-    objSub: { wohnen: 'Arrivare & abitare', arbeit: 'Lavoro & reddito', familie: 'Famiglia & relazione', gesundheit: 'Salute & assicurazione', alter: 'Età & previdenza', abschied: 'Congedo' },
+    obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata', geld: 'Portamonete' },
+    objSub: { wohnen: 'Arrivare & abitare', arbeit: 'Lavoro & reddito', familie: 'Famiglia & relazione', gesundheit: 'Salute & assicurazione', alter: 'Età & previdenza', abschied: 'Congedo', geld: 'Denaro & imposte' },
     w: { mahnung: 'Sollecito ricevuto', dienst: 'Servizio militare o civile', volljaehrig: 'Compiere 18 anni', lehre: 'Iniziare un tirocinio', betreibungsauszug: 'Ordinare un estratto esecuzioni', ausweis: 'Passaporto o carta d’identità', wegzug: 'Partenza all’estero', adoption: 'Adozione', zusammenziehen: 'Andare a vivere insieme senza essere sposati', ergaenzungsleistungen: 'Chiedere le prestazioni complementari', vorsorgeauftrag: 'Mandato precauzionale e direttive del paziente', einbuergerung: 'Naturalizzazione', aussteuerung: 'Esaurimento del diritto', quellensteuer: 'Imposta alla fonte', wohnunggekuendigt: 'Disdetta dell’appartamento', umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', mietzins: 'Verificare l’affitto', fuehrerausweis: 'Licenza di condurre', asyl: 'Asilo e protezione', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', betreibung: 'Precetto esecutivo', stipendien: 'Formazione & borse di studio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', kkerst: 'Cassa malati per la prima volta', zusatz: 'Cambiare assicurazione complementare', iv: 'Invalidità (AI)', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso', organ: 'Donazione di organi' },
   },
   instrumente: {

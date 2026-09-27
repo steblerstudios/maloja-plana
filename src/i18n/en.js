@@ -1344,7 +1344,6 @@ export default {
     zurueckZu: 'Back to {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Overview',
     tools: 'Tools',
-    moreTools: 'More tools',
     advanced: 'Advanced',
     notifications: 'Notifications',
     installApp: 'Install as an app',
@@ -5097,10 +5096,21 @@ export default {
     pack: 'Pack up again',
     wege: '{n} paths',
     wegeOne: '1 path',
+    // Werkzeug-Vorschau 27.09.2026: Werkzeuge im Gepäck, Portemonnaie, Aussenfach.
+    werkzeuge: '{n} tools',
+    werkzeugeOne: '1 tool',
+    wegeTitel: 'Paths',
+    werkzeugeTitel: 'Tools',
+    aussenfach: 'Outer pocket · File and organise',
+    aussenfachSub: 'Documents, dates and lists — close at hand on the outside of the pack.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Outer pocket',
+    aussenfachKarteSub: 'The same tools, packed away',
+    menuAlle: 'All tools in my kit',
     packed: '{done} of {total} on file',
     legend: 'Every area a real object — keyring, doctor’s bag, tool roll. A path leads into its guided flow. Alongside the tree and the orchard.',
-    obj: { wohnen: 'Keyring', arbeit: 'Tool roll', familie: 'Keepsake box', gesundheit: 'Doctor’s bag', alter: 'Field flask', abschied: 'Sealed letter' },
-    objSub: { wohnen: 'Arriving & living', arbeit: 'Work & income', familie: 'Family & relationship', gesundheit: 'Health & insurance', alter: 'Age & pension', abschied: 'Farewell' },
+    obj: { wohnen: 'Keyring', arbeit: 'Tool roll', familie: 'Keepsake box', gesundheit: 'Doctor’s bag', alter: 'Field flask', abschied: 'Sealed letter', geld: 'Wallet' },
+    objSub: { wohnen: 'Arriving & living', arbeit: 'Work & income', familie: 'Family & relationship', gesundheit: 'Health & insurance', alter: 'Age & pension', abschied: 'Farewell', geld: 'Money & taxes' },
     w: { mahnung: 'Payment reminder received', dienst: 'Military or civilian service', volljaehrig: 'Turning 18', lehre: 'Starting an apprenticeship', betreibungsauszug: 'Ordering a debt enforcement extract', ausweis: 'Passport or identity card', wegzug: 'Moving abroad', adoption: 'Adoption', zusammenziehen: 'Moving in together unmarried', ergaenzungsleistungen: 'Applying for supplementary benefits', vorsorgeauftrag: 'Advance care mandate & advance directive', einbuergerung: 'Naturalisation', aussteuerung: 'Benefits exhausted', quellensteuer: 'Withholding tax', wohnunggekuendigt: 'Flat notice received', umzug: 'Moving', neuch: 'New to Switzerland', bewilligung: 'Residence & permit', mietzins: 'Check your rent', fuehrerausweis: 'Driving licence', asyl: 'Asylum & protection', job: 'First job', stelleweg: 'Job loss', selbst: 'Becoming self-employed', betreibung: 'Debt-collection notice', stipendien: 'Education & grants', heirat: 'Marriage', geburt: 'Birth', trennung: 'Separation', unfall: 'Illness or accident', kkwechsel: 'Changing health insurer', kkerst: 'Health insurance for the first time', zusatz: 'Switch supplementary insurance', iv: 'Disability (IV)', pension: 'Retirement', pflege: 'When care is needed', todesfall: 'Death of a loved one', organ: 'Organ donation' },
   },
   instrumente: {

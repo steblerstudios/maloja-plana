@@ -1344,7 +1344,6 @@ export default {
     zurueckZu: 'Zurück zu {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Übersicht',
     tools: 'Werkzeuge',
-    moreTools: 'Weitere Werkzeuge',
     advanced: 'Erweitert',
     tresor: 'Dokumentenablage',
     kkScanner: 'KK-Scanner',
@@ -5131,10 +5130,21 @@ export default {
     pack: 'Wieder einpacken',
     wege: '{n} Wege',
     wegeOne: '1 Weg',
+    // Werkzeug-Vorschau 27.09.2026: Werkzeuge im Gepäck, Portemonnaie, Aussenfach.
+    werkzeuge: '{n} Werkzeuge',
+    werkzeugeOne: '1 Werkzeug',
+    wegeTitel: 'Wege',
+    werkzeugeTitel: 'Werkzeuge',
+    aussenfach: 'Aussenfach · Ablegen und ordnen',
+    aussenfachSub: 'Unterlagen, Termine und Listen — griffbereit aussen am Rucksack.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Aussenfach',
+    aussenfachKarteSub: 'Dieselben Werkzeuge, zum Einpacken',
+    menuAlle: 'Alle Werkzeuge im Gepäck',
     packed: '{done} von {total} erfasst',
     legend: 'Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.',
-    obj: { wohnen: 'Schlüsselbund', arbeit: 'Werkzeugrolle', familie: 'Erinnerungskiste', gesundheit: 'Arztkoffer', alter: 'Feldflasche', abschied: 'Versiegelter Brief' },
-    objSub: { wohnen: 'Ankommen & Wohnen', arbeit: 'Arbeit & Einkommen', familie: 'Familie & Beziehung', gesundheit: 'Gesundheit & Kasse', alter: 'Alter & Vorsorge', abschied: 'Abschied' },
+    obj: { wohnen: 'Schlüsselbund', arbeit: 'Werkzeugrolle', familie: 'Erinnerungskiste', gesundheit: 'Arztkoffer', alter: 'Feldflasche', abschied: 'Versiegelter Brief', geld: 'Portemonnaie' },
+    objSub: { wohnen: 'Ankommen & Wohnen', arbeit: 'Arbeit & Einkommen', familie: 'Familie & Beziehung', gesundheit: 'Gesundheit & Kasse', alter: 'Alter & Vorsorge', abschied: 'Abschied', geld: 'Geld & Steuern' },
     w: { mahnung: 'Mahnung erhalten', dienst: 'Militär- oder Zivildienst', volljaehrig: '18 werden', lehre: 'Lehre beginnen', betreibungsauszug: 'Betreibungsauszug bestellen', ausweis: 'Pass oder Identitätskarte', wegzug: 'Wegzug ins Ausland', adoption: 'Adoption', zusammenziehen: 'Zusammenziehen ohne Trauschein', ergaenzungsleistungen: 'Ergänzungsleistungen beantragen', vorsorgeauftrag: 'Vorsorgeauftrag & Patientenverfügung', einbuergerung: 'Einbürgerung', aussteuerung: 'Ausgesteuert', quellensteuer: 'Quellensteuer', wohnunggekuendigt: 'Wohnung gekündigt', umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', mietzins: 'Mietzins prüfen', fuehrerausweis: 'Führerausweis', asyl: 'Asyl & Schutz', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', betreibung: 'Betreibung erhalten', stipendien: 'Ausbildung & Stipendien', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', kkerst: 'Krankenkasse zum ersten Mal', zusatz: 'Zusatzversicherung wechseln', iv: 'Invalidität (IV)', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall', organ: 'Organspende' },
   },
   instrumente: {
