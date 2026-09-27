@@ -150,7 +150,7 @@ const fmtAmount = (n) => {
   return isFinite(num) ? zahl(num, { hoechstens: 2 }) : String(n);
 };
 
-const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
+const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initialAngaben }) => {
   const isMobile = useIsMobile();
   const [selected, setSelected] = useState(initialTemplate || null);
   const [preview, setPreview] = useState(false);
@@ -174,8 +174,12 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   useEffect(() => { setJobKey('main'); }, [selected]);
   // Eingetippte Angaben der Lebensereignis-Briefe — nur im Speicher dieser Ansicht, nie
   // gespeichert. Ein Vorlagenwechsel leert sie (sonst trüge ein neuer Brief alte Nummern).
-  const [angaben, setAngaben] = useState({});
-  useEffect(() => { setAngaben({}); }, [selected]);
+  const [angaben, setAngaben] = useState(() => (initialTemplate && initialAngaben ? { ...initialAngaben } : {}));
+  // Ausnahme: die vorgewählte Vorlage übernimmt, was der Ablauf mitgibt (Zustelldatum aus
+  // «Betreibung erhalten», 27.09.2026) — eine Rechnung, ein Datum.
+  useEffect(() => {
+    setAngaben(selected && selected === initialTemplate && initialAngaben ? { ...initialAngaben } : {});
+  }, [selected, initialTemplate, initialAngaben]);
   // Für den Reklamationsbrief: vom Nutzer gewählte Belege (kein Auto-Raten).
   const [belegIds, setBelegIds] = useState([]);
   // Geführter „was stimmt nicht"-Schritt: gewählte Beanstandungsgründe.

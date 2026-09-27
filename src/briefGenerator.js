@@ -235,7 +235,9 @@ export function getLetterTemplates(t, data) {
       title: t('briefe.deathNotice.title'),
       description: t('briefe.deathNotice.description'),
       icon: 'document',
-      legalRef: 'ZGB Art. 571',
+      // Keine Gesetzesstelle auf der Karte: ZGB 571 ist der Grund für die Warnung, nicht die
+      // Grundlage des Briefs (Rechts-Prüfer 26.09.; Entscheid Stebler Studios 27.09.2026).
+      legalRef: '',
       chapter: 'behoerden',
     },
   ];

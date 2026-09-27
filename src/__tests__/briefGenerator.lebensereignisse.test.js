@@ -37,7 +37,7 @@ describe('Lebensereignis-Briefe — angeboten, renderbar, mit Gesetzesstelle', (
   it.each(NEU)('%s steht in der Liste, mit legalRef und Kapitel', (key) => {
     const v = liste.find(x => x.key === key);
     expect(v).toBeTruthy();
-    expect(v.legalRef).toMatch(/Art\. \d/);
+    if (key !== 'deathNotice') expect(v.legalRef).toMatch(/Art\. \d/);
     expect(v.chapter).toBeTruthy();
     expect(v.title).not.toMatch(/^briefe\./);
     expect(briefCanRender(key)).toBe(true);
@@ -47,7 +47,7 @@ describe('Lebensereignis-Briefe — angeboten, renderbar, mit Gesetzesstelle', (
     expect(ref.workReference).toBe('OR Art. 330a');
     expect(ref.dismissalObjection).toBe('OR Art. 336b');
     expect(ref.debtObjection).toBe('SchKG Art. 74');
-    expect(ref.deathNotice).toBe('ZGB Art. 571');
+    expect(ref.deathNotice).toBe(''); // Warnung, nicht Grundlage (27.09.2026)
   });
   it.each(NEU)('%s: ohne Daten und Angaben — nur Platzhalter, keine rohen Schlüssel', (key) => {
     const html = brief(generateLetter(key, {}, t));
@@ -330,5 +330,40 @@ describe('Sie/Du — Hinweise folgen der Anrede, der Brief bleibt «Sie» an die
     const a = generateLetter(key, person, t, { angaben: { einschaetzung: 'x' } });
     const b = generateLetter(key, person, tDu, { angaben: { einschaetzung: 'x' } });
     expect(koerper(a)).toBe(koerper(b));
+  });
+});
+
+// 27.09.2026 (Entscheid Stebler Studios): «Betreibung erhalten» gibt das Zustelldatum an den
+// Rechtsvorschlag-Brief weiter — eine Rechnung, ein Datum statt zwei getrennter Eingaben.
+describe('Zustelldatum aus dem Ablauf «Betreibung erhalten»', () => {
+  it('der vorgewählte Brief übernimmt das Datum und zeigt die Frist', async () => {
+    const { renderToString } = await import('react-dom/server');
+    const React = (await import('react')).default;
+    const { default: BriefGenerator } = await import('../BriefGenerator.jsx');
+    const { LIGHT_PALETTE } = await import('../config/constants.js');
+    const html = renderToString(React.createElement(BriefGenerator, {
+      palette: LIGHT_PALETTE, t, data: {}, onNavigate: () => {},
+      initialTemplate: 'debtObjection', initialAngaben: { zustelldatum: '2026-09-21' },
+    }));
+    expect(html).toContain('value="2026-09-21"');
+    expect(html).toContain('01.10.2026'); // 21.09. + 10 Tage
+  });
+  it('ohne mitgegebenes Datum bleibt das Feld leer', async () => {
+    const { renderToString } = await import('react-dom/server');
+    const React = (await import('react')).default;
+    const { default: BriefGenerator } = await import('../BriefGenerator.jsx');
+    const { LIGHT_PALETTE } = await import('../config/constants.js');
+    const html = renderToString(React.createElement(BriefGenerator, {
+      palette: LIGHT_PALETTE, t, data: {}, onNavigate: () => {}, initialTemplate: 'debtObjection',
+    }));
+    expect(html).not.toContain('value="2026-09-21"');
+  });
+  it('der Ablauf gibt Vorlage und Datum mit, main.jsx reicht beides weiter', () => {
+    const fs = require('fs'); const path = require('path');
+    const ablauf = fs.readFileSync(path.join(__dirname, '..', 'BetreibungErhalten.jsx'), 'utf8');
+    expect(ablauf).toMatch(/onNavigate\('briefe', undefined, \{ template: 'debtObjection', angaben: zustelldatum \? \{ zustelldatum \}/);
+    expect(ablauf).toMatch(/wert: zustelldatum, onWert: setZustelldatum/);
+    const main = fs.readFileSync(path.join(__dirname, '..', 'main.jsx'), 'utf8');
+    expect(main).toContain('initialAngaben: briefInitialAngaben');
   });
 });

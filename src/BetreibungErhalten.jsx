@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage } from './utils/fristen.js';
 
@@ -11,6 +11,8 @@ import { plusTage } from './utils/fristen.js';
 
 export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
+  // Zustelldatum hier gehalten, damit der Rechtsvorschlag-Brief dasselbe Datum übernimmt.
+  const [zustelldatum, setZustelldatum] = useState('');
 
   return React.createElement(AblaufContainer, {
     palette, icon: 'behoerden',
@@ -25,9 +27,10 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
         labelKey: 'betreibung.fristLabel', hinweisKey: 'betreibung.fristHinweis', vorbeiKey: 'betreibung.fristVorbei',
         buttonKey: 'betreibung.step1Button', doneKey: 'betreibung.step1Done', calendarKey: 'betreibung.step1CalendarLink',
         reminderTitle: t('betreibung.reminderTitle'), category: 'admin',
+        wert: zustelldatum, onWert: setZustelldatum,
       }),
       // Rechtsvorschlag als Brief, vorgewählt (26.09.2026).
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.debtObjection'), onClick: () => onNavigate('briefe', undefined, 'debtObjection') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.debtObjection'), onClick: () => onNavigate('briefe', undefined, { template: 'debtObjection', angaben: zustelldatum ? { zustelldatum } : null }) })
     ),
 
     // Schritt 2 — Stimmt die Forderung? (zahlen/Raten vs. Rechtsvorschlag)

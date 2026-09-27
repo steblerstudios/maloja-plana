@@ -544,6 +544,8 @@ const AppInner = ({ demo }) => {
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
   const [briefInitialTemplate, setBriefInitialTemplate] = useState(null);
+  // Angaben, die ein Ablauf dem vorgewählten Brief mitgibt (z. B. Zustelldatum) — nur im Speicher.
+  const [briefInitialAngaben, setBriefInitialAngaben] = useState(null);
   // B-1/E22: Zahlen aus dem Schnellcheck, mit denen der IPV-Rechner rechnet (nie im Profil).
   const [ipvUebergabe, setIpvUebergabe] = useState(null);
   const [lastSave, setLastSave] = useState(null);
@@ -898,7 +900,10 @@ const AppInner = ({ demo }) => {
       setKvgInitialTab(extra || 'katalog');
     }
     if (viewName === 'briefe') {
-      setBriefInitialTemplate(extra || null);
+      // `extra`: Vorlagen-Schlüssel, oder { template, angaben } aus einem Ablauf.
+      const vorwahl = extra && typeof extra === 'object' ? extra : { template: extra };
+      setBriefInitialTemplate(vorwahl.template || null);
+      setBriefInitialAngaben(vorwahl.angaben || null);
     }
     // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
     startTransition(() => setView(viewName));
@@ -1586,7 +1591,7 @@ const AppInner = ({ demo }) => {
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate }),
+        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
