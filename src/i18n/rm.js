@@ -4525,7 +4525,7 @@ export default {
       einschaetzung: 'Meine Einschätzung: {text}',
       body2: 'Bis zur Klärung bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
       closing: 'Freundliche Grüsse',
-      legalNote: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreiten Sie nur einen Teil, klären Sie mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+      legalNote: { sie: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreiten Sie nur einen Teil, klären Sie mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreitest du nur einen Teil, klär mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' },
       legalNoteGebuehren: { sie: 'Mit diesem Brief anerkennen Sie die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerken Sie bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Mit diesem Brief anerkennst du die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerk bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       rest: 'Zum übrigen Betrag äussere ich mich nach Erhalt der Unterlagen; eine Anerkennung ist damit nicht verbunden.',
     },
@@ -4556,7 +4556,7 @@ export default {
       subject: 'Gesuch um Ratenzahlung — Rechnung Nr. {number}',
       salutation: 'Sehr geehrte Damen und Herren,',
       body1: 'ich habe Ihre Mahnung zur Rechnung Nr. {number} erhalten. Die Hauptforderung von CHF {amount} kann ich zurzeit nicht auf einmal bezahlen.',
-      body2: 'Ich schlage Ihnen vor, ihn in monatlichen Raten von CHF {rate} zu begleichen, erstmals am {date}.',
+      body2: 'Ich schlage Ihnen vor, sie in monatlichen Raten von CHF {rate} zu begleichen, erstmals am {date}.',
       body3: 'Bitte bestätigen Sie mir diesen Vorschlag schriftlich. Solange ich die Raten wie vereinbart bezahle, bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
       closing: 'Freundliche Grüsse',
       legalNote: 'Ein Ratengesuch ist ein Vorschlag; gültig ist, was der Gläubiger bestätigt. Jede Anzahlung gilt als Anerkennung der Forderung (OR Art. 135 Ziff. 1); auch das Gesuch kann so gewertet werden. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung.',
