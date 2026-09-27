@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { GEGENSTAENDE, gegenstandReadiness } from './data/gepaeck.js';
+import { GEGENSTAENDE, gegenstandReadiness, BRIEF_DUNKEL } from './data/gepaeck.js';
 import { WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 // VORSCHAU-VARIANTEN — vor dem Merge entfernen
 import { aktuelleVarianten, werkzeugeFuerVariante } from './utils/vorschauVarianten.js';
@@ -38,6 +38,11 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     oxblood: isDarkMode ? '#A65A4A' : '#8C4A3C', steel: isDarkMode ? '#8A9298' : '#9AA3A8',
     wood: isDarkMode ? '#8A6242' : '#9C6B4A', woodLo: isDarkMode ? '#6E4E34' : '#B4894F',
   };
+
+  // Versiegelter Brief: im Dunkeln war das Papier = Kartenfläche (1,0 : 1), der Rand
+  // 1,13 : 1 — sichtbar nur das Siegel. Dunkel jetzt eigene Töne (BRIEF_DUNKEL,
+  // Werte und Kontrast-Test in data/gepaeck.js); hell unverändert (27.09.2026).
+  const B = isDarkMode ? BRIEF_DUNKEL : { papier: M.paper, rand: M.stroke, siegel: M.oxblood };
 
   // ── Gegenstands-Illustrationen (48er viewBox, gefüllt) ──────────────────────
   const ill = (name) => {
@@ -102,10 +107,10 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       h('circle', { key: 4, cx: 24, cy: 28, r: 2.4, fill: M.brass }),
     ]);
     return wrap([
-      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 22, rx: 2, fill: M.paper, stroke: M.stroke, strokeWidth: 1 }),
+      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 22, rx: 2, fill: B.papier, stroke: B.rand, strokeWidth: 1 }),
       h('path', { key: 2, d: 'M8 15l16 12 16-12', fill: 'none', stroke: M.line, strokeWidth: 1.4 }),
-      h('circle', { key: 3, cx: 24, cy: 30, r: 4.5, fill: M.oxblood }),
-      h('path', { key: 4, d: 'M22.5 30l1.2 1.2 2-2.2', stroke: M.paper, strokeWidth: 1.2, fill: 'none', strokeLinecap: 'round' }),
+      h('circle', { key: 3, cx: 24, cy: 30, r: 4.5, fill: B.siegel }),
+      h('path', { key: 4, d: 'M22.5 30l1.2 1.2 2-2.2', stroke: B.papier, strokeWidth: 1.2, fill: 'none', strokeLinecap: 'round' }),
     ]);
   };
 
