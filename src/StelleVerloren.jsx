@@ -85,6 +85,9 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
     // Schritt 4 — Arbeitszeugnis & Unterlagen
     React.createElement(AblaufStep, { palette, title: t('stelleVerloren.step4Title') },
       React.createElement('p', { style: s.stepText }, t('stelleVerloren.step4Text')),
+      // Briefe aus dem Briefgenerator, vorgewählt (26.09.2026): Zeugnis und Einsprache.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.workReference'), onClick: () => onNavigate('briefe', undefined, 'workReference') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.dismissalObjection'), onClick: () => onNavigate('briefe', undefined, 'dismissalObjection') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('stelleVerloren.step4Link'), onClick: () => onNavigate('tresor', undefined, 'finanzen') })
     ),
 

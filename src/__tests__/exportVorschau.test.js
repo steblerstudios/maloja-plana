@@ -5,6 +5,7 @@ import { buildIpvDokument } from '../premiumCalc.js';
 import { createBudgetReport } from '../budgetSync.js';
 import { generateCVTemplate, generateJSONResume } from '../cvGenerator.js';
 import { buildICS } from '../utils/icsExport.js';
+import { angabenEingetippt } from '../briefGenerator.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -122,6 +123,21 @@ describe('Dossiers und Brief (Druck)', () => {
     const lohn = { finanzen: { employer: 'Firma AG', monthlyIncome: 4000, sideEmployer: '', sideIncome: 0 } };
     expect(ids(leiteKategorienAb('brief', { data: lohn, templateKey: 'unpaidWage', job: 'main' }))).toEqual(['arbeitgeber', 'lohn']);
     expect(ids(leiteKategorienAb('brief', { data: lohn, templateKey: 'unpaidWage', job: 'side' }))).toEqual([]);
+  });
+
+  // Lebensereignis-Briefe (26.09.2026): Arbeitgeber aus dem Profil, eingetippte Angaben eigens.
+  it('Brief: Zeugnis/Einsprache nennen den Arbeitgeber, aber nie den Lohn', () => {
+    const lohn = { finanzen: { employer: 'Firma AG', monthlyIncome: 4000 } };
+    for (const templateKey of ['workReference', 'dismissalObjection']) {
+      expect(ids(leiteKategorienAb('brief', { data: lohn, templateKey, job: 'main' }))).toEqual(['arbeitgeber']);
+    }
+  });
+  it('Brief: eingetippte Angaben erscheinen als eigene Kategorie — Wahlfelder allein nicht', () => {
+    const q = (templateKey, angaben) => ({ data: {}, templateKey, angabenEingetippt: angabenEingetippt(templateKey, angaben) });
+    expect(ids(leiteKategorienAb('brief', q('debtObjection', { betreibungsnummer: '123' })))).toEqual(['briefAngaben']);
+    expect(ids(leiteKategorienAb('brief', q('debtObjection', { umfang: 'teil', betreibungsnummer: '  ' })))).toEqual([]);
+    expect(ids(leiteKategorienAb('brief', q('dismissalObjection', { begruendung: false })))).toEqual([]);
+    expect(ids(leiteKategorienAb('brief', q('deathNotice', {})))).toEqual([]);
   });
 });
 
@@ -247,7 +263,7 @@ describe('Druck mit Namen im Titel (Finanzübersicht)', () => {
 describe('i18n: jede Kategorie hat einen Text in allen 5 Sprachen', () => {
   const alle = ['weitere', 'ahv', 'gesundheit', 'dokumenteListe', 'dokumenteInhalt', 'termine', 'kontakte',
     'merkliste', 'einstellungen', 'person', 'adresse', 'berechnungen', 'name', 'kanton', 'versicherung',
-    'belege', 'arbeitgeber', 'lohn',
+    'belege', 'arbeitgeber', 'lohn', 'briefAngaben',
     // K20
     'ipvErgebnis', 'einkommen', 'ausgaben', 'schulden', 'haushalt', 'kontakt', 'persoenlich',
     'beruf', 'ausbildung', 'sprachen', 'kalenderTermine'];
