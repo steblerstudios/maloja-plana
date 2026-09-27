@@ -741,10 +741,13 @@ export const BRIEF_ANGABEN = {
   claimDispute: [
     { key: 'rechnungsnummer', type: 'text' },
     { key: 'rechnungsdatum', type: 'date' },
-    { key: 'umfang', type: 'wahl', optionen: ['ganz', 'teil'], vorgabe: 'ganz' },
-    { key: 'teilbetrag', type: 'betrag', nurWenn: { umfang: 'teil' } },
     // 'gebuehren' (27.09.2026): nur Mahn-/Inkassogebühren bestreiten — nicht vereinbart (K-Tipp, SRF).
+    // Der Grund steht VOR dem Umfang: bei «nur Gebühren» gibt es keinen Umfang (Rechts-Prüfer
+    // 27.09.: «Ich bestreite diese Forderung» + «nur die Gebühren» widersprach sich im selben Brief).
     { key: 'grund', type: 'wahl', optionen: ['unklar', 'bezahlt', 'gebuehren'], vorgabe: 'unklar' },
+    { key: 'umfang', type: 'wahl', optionen: ['ganz', 'teil'], vorgabe: 'ganz', nichtWenn: { grund: 'gebuehren' } },
+    { key: 'teilbetrag', type: 'betrag', nurWenn: { umfang: 'teil' }, nichtWenn: { grund: 'gebuehren' } },
+    { key: 'gebuehrenbetrag', type: 'betrag', nurWenn: { grund: 'gebuehren' } },
     { key: 'einschaetzung', type: 'text' },
   ],
   installmentRequest: [
@@ -772,9 +775,11 @@ export function leseBetrag(v) {
   return n > 0 ? n : 0;
 }
 
-// Ist ein Feld bei den aktuellen Angaben sichtbar (nurWenn)?
+// Ist ein Feld bei den aktuellen Angaben sichtbar (nurWenn: alle gleich; nichtWenn: keines gleich)?
 export function feldSichtbar(f, a) {
-  return !f.nurWenn || Object.entries(f.nurWenn).every(([k, v]) => a[k] === v);
+  if (f.nurWenn && !Object.entries(f.nurWenn).every(([k, v]) => a[k] === v)) return false;
+  if (f.nichtWenn && Object.entries(f.nichtWenn).some(([k, v]) => a[k] === v)) return false;
+  return true;
 }
 
 // Angaben einer Vorlage lesen: Vorgaben einsetzen, Text trimmen, ungültige Wahl → Vorgabe.
@@ -992,6 +997,7 @@ function generatePaymentReminder(data, t, options = {}) {
 function generateClaimDispute(data, t, options = {}) {
   const a = leseAngaben('claimDispute', options.angaben);
   const k = 'briefe.claimDispute.';
+  const nurGebuehren = a.grund === 'gebuehren';
   const fill = t('briefe.fillIn');
   const nummer = a.rechnungsnummer || fill;
   const datum = formatDate(a.rechnungsdatum) || fill;
@@ -1001,9 +1007,11 @@ function generateClaimDispute(data, t, options = {}) {
     absaetze: [
       t(k + 'salutation'),
       t(k + 'body1', { number: nummer, date: datum }),
-      a.umfang === 'teil' ? t(k + 'teil', { amount: franken(a.teilbetrag, fill) }) : t(k + 'ganz'),
+      // Nur Gebühren: eigener Satz, kein Umfang, kein «Rest» (der Ablauf rät, die Forderung zu zahlen).
+      nurGebuehren ? t(k + 'gebuehrenSatz', { amount: franken(a.gebuehrenbetrag, fill) })
+        : a.umfang === 'teil' ? t(k + 'teil', { amount: franken(a.teilbetrag, fill) }) : t(k + 'ganz'),
       // Teilbestreitung: ausdrücklich KEINE Anerkennung des Rests (Rechts-Prüfer 27.09.2026).
-      a.umfang === 'teil' ? t(k + 'rest') : '',
+      !nurGebuehren && a.umfang === 'teil' ? t(k + 'rest') : '',
       t(k + 'grund.' + a.grund),
       a.einschaetzung ? t(k + 'einschaetzung', { text: a.einschaetzung }) : '',
       t(k + 'body2'),
