@@ -49,7 +49,7 @@ describe('Fehler werden gezeigt, nicht verschluckt', () => {
   it('Speichern und leeres Foto melden sich in einer Status-Region', () => {
     expect(quelle).toMatch(/setGespeichert\(true\)/);
     // Seit 24.09. abends über den gemeinsamen Baustein (GespeichertZeile), nicht mehr inline.
-    expect(quelle).toMatch(/createElement\(GespeichertZeile, \{ palette, t, sichtbar: gespeichert \}\)/);
+    expect(quelle).toMatch(/createElement\(GespeichertZeile, \{ palette, t, sichtbar: gespeichert[ ,]/);
     expect(quelle).toMatch(/nichtsGelesen && !scanning && React\.createElement\('p', \{\s*role: 'status'/);
   });
 });

@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, PLAN_MAX_MONATE } from '../schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein } from '../schuldenCalc.js';
+import { alsIsoDatum } from '../utils/fristen.js';
+import fs from 'node:fs';
+import path from 'node:path';
 import de from '../i18n/de.js';
 
 // Erste Tests für schuldenCalc.js (27.09.2026). Jeder Fall hier war vorher ein Fehler:
@@ -134,5 +137,60 @@ describe('Texte Abbau-Plan, Steuern und Raten (27.09.2026)', () => {
   it('Wertungen ohne Quelle sind weg', () => {
     expect(de.debtLevels).toBeUndefined();
     expect(de.debtRecommendations).toBeUndefined();
+  });
+});
+
+// Fehler aus dem Rundgang 27.09.2026 nachmittags.
+describe('istUeberfaellig — eine Regel für Übersicht und Karte', () => {
+  it('Fälligkeit vorbei, Status «offen» → überfällig (vorher sagte die Karte «Offen»)', () => {
+    expect(istUeberfaellig({ status: 'open', dueDate: '2026-09-10' }, HEUTE)).toBe(true);
+  });
+  it('der Fälligkeitstag selbst ist noch nicht überfällig', () => {
+    expect(istUeberfaellig({ status: 'open', dueDate: HEUTE }, HEUTE)).toBe(false);
+  });
+  it('bezahlt ist nie überfällig, «Überfällig» ohne Datum schon', () => {
+    expect(istUeberfaellig({ status: 'paid', dueDate: '2026-01-01' }, HEUTE)).toBe(false);
+    expect(istUeberfaellig({ status: 'overdue' }, HEUTE)).toBe(true);
+  });
+  it('die Übersicht zählt genau, was die Karte «überfällig» nennt', () => {
+    const debts = [
+      { status: 'open', dueDate: '2026-09-10', amount: 300 },
+      { status: 'overdue', amount: 1840 },
+      { status: 'open', dueDate: '2026-10-31', amount: 3200 },
+      { status: 'open', amount: 4500 },
+    ];
+    const karte = debts.filter(d => istUeberfaellig(d, HEUTE)).reduce((s, d) => s + d.amount, 0);
+    expect(calculateDebtStatus(debts, HEUTE).overdue).toBe(karte);
+    expect(karte).toBe(2140);
+  });
+  it('die Karte im Schuldenmanager fragt istUeberfaellig, nicht nur den Status', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '..', 'SchuldenManager.jsx'), 'utf8');
+    expect(q).toMatch(/statusLabel = \(d\) => [^\n]*istUeberfaellig\(d\)/);
+    expect(q).toMatch(/statusLabel\(debt\)/);
+  });
+});
+
+describe('Betreibung und Verlustschein — Datum und Status lesbar', () => {
+  it('neue Verlustscheine tragen ein ISO-Datum', () => {
+    expect(formatVerlustschein({}).date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+  it('alte Einträge «27.9.2026» erscheinen im Datumsfeld', () => {
+    expect(alsIsoDatum('27.9.2026')).toBe('2026-09-27');
+    expect(alsIsoDatum('2026-09-27')).toBe('2026-09-27');
+    expect(alsIsoDatum('31.2.2026')).toBe('');
+    expect(alsIsoDatum(undefined)).toBe('');
+  });
+  it('der Schuldenmanager legt ISO und «open» an, liest alte Werte über alsIsoDatum', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '..', 'SchuldenManager.jsx'), 'utf8');
+    expect(q).not.toMatch(/toLocaleDateString\('de-CH'\)/);
+    expect(q).not.toMatch(/status: 'active'/);
+    expect(q).toMatch(/value: alsIsoDatum\(entry\.registerDate\)/);
+    expect(q).toMatch(/value: alsIsoDatum\(entry\.date\)/);
+  });
+  it('die Knöpfe heissen nach dem, was sie anlegen', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '..', 'SchuldenManager.jsx'), 'utf8');
+    expect(q).toMatch(/handleAddBetreibung[^\n]*t\('schulden\.addBetreibung'\)/);
+    expect(q).toMatch(/handleAddVerlustschein[^\n]*t\('schulden\.addVerlustschein'\)/);
+    expect(de.schulden.addBetreibung).toBe('Betreibung erfassen');
   });
 });

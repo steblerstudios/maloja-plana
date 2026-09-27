@@ -76,7 +76,7 @@ export const steuerAnsageText = (t, teile) => teile.length
   ? t('tax.ansageHinweis', { teile: teile.map((k) => t(TEIL_TEXT[k])).join(', ') })
   : t('tax.ansageZahlen');
 
-export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
+export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig }) => {
   const isMobile = useIsMobile();
   const hh = getHouseholdInfo(data);
   const deductions = [
@@ -421,7 +421,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     ),
 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
-    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand }),
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig }),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
       hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.disclaimer'))

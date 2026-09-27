@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig } from './schuldenCalc.js';
+import { heuteIso, alsIsoDatum } from './utils/fristen.js';
 import { renderSource } from './utils/renderSource.js';
 import { formatDE } from './utils/helpers.js';
 import { leseBetrag } from './briefGenerator.js';
@@ -45,7 +46,8 @@ export const MahnstufenLeiste = ({ debt, palette, t, inputStyle, onChange, onNav
   );
 };
 
-export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
+// `vorlaeufig`: Beispiel oder Ausprobieren — Änderungen liegen nur im Arbeitsspeicher (main.jsx).
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig }) => {
   const vorlesen = useVorlesenContext();
   const [view, setView] = useState('overview');
   const [schulden, setSchulden] = useState(data.schulden || []);
@@ -73,7 +75,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       interestRate: Number(newDebt.interestRate) || 0,
       status: newDebt.status,
       category: newDebt.category || 'sonstige',
-      createdAt: new Date().toLocaleDateString('de-CH')
+      createdAt: heuteIso()
     };
 
     setSchulden([...schulden, debt]);
@@ -85,8 +87,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       id: Date.now(),
       creditor: '',
       amount: 0,
-      registerDate: new Date().toLocaleDateString('de-CH'),
-      status: 'active',
+      registerDate: heuteIso(),
+      status: 'open',
       documentFile: null
     };
     setBetreibung([...betreibung, entry]);
@@ -105,9 +107,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       debtor: '',
       amount: 0,
       creditor: '',
-      date: new Date().toLocaleDateString('de-CH'),
       court: '',
-      status: 'active'
+      status: 'open'
     });
     setVerlustscheine([...verlustscheine, entry]);
   };
@@ -200,7 +201,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     quelleKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t(quelleKey), null, t))
   );
 
-  const statusLabel = (s) => s === 'paid' ? t('schulden.statusPaid') : s === 'overdue' ? t('schulden.overdue') : t('schulden.statusOpen');
+  const statusLabel = (d) => d.status === 'paid' ? t('schulden.statusPaid') : istUeberfaellig(d) ? t('schulden.overdue') : t('schulden.statusOpen');
   const tabs = [
     { key: 'overview', icon: 'dashboard', label: t('schulden.overview') },
     { key: 'debts', icon: 'debt', label: t('schulden.debts') },
@@ -386,10 +387,10 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, debt.creditor),
-            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, betrag(debt.amount, { stellen: 2 }))
+            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : istUeberfaellig(debt) ? palette.roseDeep : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
-            (debt.dueDate ? formatDE(debt.dueDate) + ' · ' : '') + statusLabel(debt.status)
+            (debt.dueDate ? formatDE(debt.dueDate) + ' · ' : '') + statusLabel(debt)
           ),
           // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
@@ -402,7 +403,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     view === 'betreibung' && React.createElement('div', { role: 'tabpanel' },
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.debtCollection')),
 
-      React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
+      React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addBetreibung')),
       // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
       betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
         hinweisZeichen(), t('schulden.registerHinweis'), ' ',
@@ -410,12 +411,13 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       ),
 
       betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
-        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },
+        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'paid' || entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },
           React.createElement('input', { type: 'text', value: entry.creditor, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
             React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } }),
-            React.createElement('input', { type: 'date', value: entry.registerDate || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), 'aria-label': t('schulden.registerDate'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
-            React.createElement('select', { value: entry.status, onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), 'aria-label': t('schulden.statusField'), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
+            React.createElement('input', { type: 'date', value: alsIsoDatum(entry.registerDate), onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), 'aria-label': t('schulden.registerDate'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
+            // Bis 27.09.2026 legte der Knopf 'active' an — keine der Optionen; gilt als offen.
+            React.createElement('select', { value: entry.status === 'paid' ? 'paid' : 'open', onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), 'aria-label': t('schulden.statusField'), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
               React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
               React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
             )
@@ -431,7 +433,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
       // Was ein Verlustschein bedeutet (SchKG 149, 149a, 265) — 27.09.2026.
       erklaerKasten('vs', t('schulden.verlustschein.title'), 'schulden.verlustschein.text', 'schulden.verlustschein.quelle'),
 
-      React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.lossReceipts')),
+      React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addVerlustschein')),
 
       verlustscheine.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'document', size: 26, color: palette.mid }), title: t('schulden.emptyVerlustschein') }) : React.createElement('div', null,
         verlustscheine.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
@@ -444,7 +446,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
             React.createElement('input', { type: 'text', value: entry.court || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'court', e.target.value), placeholder: t('schulden.court'), 'aria-label': t('schulden.court'), style: { ...inputStyle, flex: '1 1 160px', marginBottom: 0 } })
           ),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
-            React.createElement('input', { type: 'date', value: entry.date || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'date', e.target.value), 'aria-label': t('schulden.date'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
+            React.createElement('input', { type: 'date', value: alsIsoDatum(entry.date), onChange: (e) => handleUpdateVerlustschein(entry.id, 'date', e.target.value), 'aria-label': t('schulden.date'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
             React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
           )
         ))
@@ -459,7 +461,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
     // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
     // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
-    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert })
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig })
   );
 };
 

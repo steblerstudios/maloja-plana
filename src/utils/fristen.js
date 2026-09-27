@@ -51,6 +51,17 @@ export const plusMonate = (iso, n) => {
 
 export const heuteIso = () => zuIso(new Date());
 
+// Für `<input type="date">`, das nur ISO liest. Bis 27.09.2026 legte der Schuldenmanager
+// Betreibungen und Verlustscheine mit `toLocaleDateString('de-CH')` an («27.9.2026») —
+// das Feld blieb leer. Alte Einträge werden hier gelesen; Unlesbares ergibt ''.
+export const alsIsoDatum = (wert) => {
+  if (leseDatum(wert)) return wert;
+  const m = /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.exec(String(wert || '').trim());
+  if (!m) return '';
+  const iso = `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+  return leseDatum(iso) ? iso : '';
+};
+
 // Liegt die Frist schon hinter uns? (Der letzte Tag selbst zählt noch.)
 export const istVorbei = (fristIso, heute = heuteIso()) => !!fristIso && fristIso < heute;
 

@@ -1541,6 +1541,8 @@ export default {
     saving: 'Memorisar...',
     skipToContent: 'Siglir al cuntegn',
     saved: 'Memorisà',
+    // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
+    savedTemporary: 'Übernommen — nur für jetzt, nicht dauerhaft gespeichert.',
     saveError: 'Betg pussaivel da memorisar — controllar per plaschair il spazi.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     fremdGeaendert: 'Midà en in\'autra fanestra. Per che nagut na vegnia surscrit là, na memorisescha questa fanestra betg pli.',
@@ -2808,6 +2810,10 @@ export default {
     alreadyPaid: 'Gia pajà',
     debtRegisterAnalysis: 'Register da scussiun — survista',
     addDebt: 'Agiuntar in nov debit',
+    // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
+    addBetreibung: 'Betreibung erfassen',
+    // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
+    addVerlustschein: 'Verlustschein erfassen',
     moreDetails: 'Ulteriuras indicaziuns',
     statusField: 'Status',
     needInfo: 'Per plaschair agiuntar creditur ed import.',

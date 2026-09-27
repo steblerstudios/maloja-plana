@@ -594,6 +594,8 @@ const AppInner = ({ demo }) => {
   // blieb der Schuldenmanager eingehängt, hielt die Beispiel-Listen und schrieb sie beim nächsten
   // Speichern über die ECHTEN Schulden, Betreibungen und Verlustscheine.
   const datenModus = demoMode && demoData ? 'beispiel' : sandboxActive ? 'probe' : 'echt';
+  // Für «Gespeichert»-Zeilen: in beiden Fällen bleibt nichts dauerhaft (GespeichertZeile).
+  const vorlaeufig = demoMode || !!sandboxActive;
   // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
   // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
   const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
@@ -1509,7 +1511,7 @@ const AppInner = ({ demo }) => {
           isDarkMode
         }),
         view === 'kk' && React.createElement(KKScanner, {
-          palette, t, data: activeData,
+          palette, t, data: activeData, vorlaeufig,
           onSave: (kkData) => {
             const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
             writeData(prev => {
@@ -1540,19 +1542,19 @@ const AppInner = ({ demo }) => {
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
           key: datenModus,
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onNavigate: handleNavigate,
           onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
