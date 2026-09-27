@@ -11,6 +11,13 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Vorsorgeauftrag: Hinweis nennt das Zivilstandsamt statt der Gemeinde** (#438). Der Feld-Hinweis im
+  Kapitel Vorsorge sagte in allen fünf Sprachen «Muss bei der Gemeinde registriert werden». Nach ZGB
+  Art. 361 Abs. 3 trägt das Zivilstandsamt **auf Antrag** ein, dass es ihn gibt und wo er liegt — freiwillig,
+  keine Gültigkeitsbedingung. Wortlaut wie der fachgeprüfte Wegweiser (`step3Text`); rm provisorisch (`TODO(rm)`).
+  Dieselbe Falschaussage in `docs/product/` nachgezogen. Befund der Rechtsprüfung vom 27.09.2026.
+
 ## [0.1.42-beta] — 2026-09-27
 
 *Ein Fix seit `0.1.41-beta` (`4685c20`): #434. Gemessen und am echten iPhone geprüft.*
