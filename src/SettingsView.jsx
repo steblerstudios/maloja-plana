@@ -13,11 +13,11 @@ import { DatenLoeschen } from './components/DatenLoeschen.jsx';
 // (Anzeige & Sprache / Barrierefreiheit) via settingsGroups.js, geteilt mit
 // der Einstellungs-Schublade.
 
-export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demoMode }) => {
+export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, onNotifications, demoMode }) => {
   const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px' };
   const list = (controls || []).filter(Boolean);
   const actionBtn = {
-    display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%',
+    display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px',
     padding: space.sm + 'px ' + space.md + 'px', marginTop: space.sm + 'px',
     background: 'transparent', color: palette.text, textAlign: 'start',
     border: '1px solid ' + palette.border, borderRadius: radius.sm,
@@ -65,7 +65,13 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demo
       React.createElement('button', { onClick: onExport, style: actionBtn },
         React.createElement(Icon, { name: 'download', size: 16, color: palette.mid }),
         React.createElement('span', null, t('nav.export'))
-      )
+      ),
+      // Werkzeug-Vorschau 27.09.2026: Benachrichtigungen stehen nicht mehr im Menü,
+      // sondern hier bei den Einstellungen (neben Export).
+      onNotifications ? React.createElement('button', { onClick: onNotifications, style: actionBtn },
+        React.createElement(Icon, { name: 'cowbell', size: 16, color: palette.mid }),
+        React.createElement('span', null, t('nav.notifications'))
+      ) : null
     ),
 
     // ── E18 · Alle Daten auf diesem Gerät löschen (eigene Karte, ruhig am Ende) ──

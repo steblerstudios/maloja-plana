@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE } from './config/brotkrumePfade.js';
+import { herkunftName } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -90,6 +91,7 @@ const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
 const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 const BetreibungErhalten = React.lazy(() => import('./BetreibungErhalten.jsx'));
+const MahnungErhalten = React.lazy(() => import('./MahnungErhalten.jsx'));
 const Dienst = React.lazy(() => import('./Dienst.jsx'));
 const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
 const Lehre = React.lazy(() => import('./Lehre.jsx'));
@@ -586,6 +588,11 @@ const AppInner = ({ demo }) => {
   // Im Beispiel landen Speichern-Knöpfe der Rechner in der Beispiel-Kopie (nur im
   // Arbeitsspeicher) — vorher mischten sie Beispielwerte in den echten Stand.
   const writeData = demoMode ? setDemoData : sandboxActive ? setSandboxData : setData;
+  // Welcher Datenstand ist aktiv? Als `key` an Ansichten, die Daten in eigenen Zustand kopieren
+  // und selbst zurückschreiben (Schuldenmanager). Deploy-Gate 27.09.2026: nach «Beispiel verlassen»
+  // blieb der Schuldenmanager eingehängt, hielt die Beispiel-Listen und schrieb sie beim nächsten
+  // Speichern über die ECHTEN Schulden, Betreibungen und Verlustscheine.
+  const datenModus = demoMode && demoData ? 'beispiel' : sandboxActive ? 'probe' : 'echt';
   // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
   // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
   const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
@@ -648,8 +655,24 @@ const AppInner = ({ demo }) => {
       });
       // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
       // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
+      // Die Übersicht lädt Teile nach (BergDetail, Leistungen, Instrumente): nach zwei
+      // Frames ist sie noch zu kurz, die Stelle wurde gekappt — gemessen 27.09.2026: bei
+      // 4081 px verlassen, bei 955 px gelandet. Darum nachfassen, bis die Stelle erreicht
+      // ist (höchstens 1,5 s) — und sofort aufhören, sobald die Person selbst scrollt.
       if (parsed.stelle !== null) {
-        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: parsed.stelle, behavior: 'instant' })));
+        const ziel = parsed.stelle;
+        const bis = performance.now() + 1500;
+        let aus = false;
+        const halt = () => { aus = true; };
+        const opts = { once: true, passive: true };
+        ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.addEventListener(ev, halt, opts));
+        const fassen = () => {
+          if (aus) return;
+          window.scrollTo({ top: ziel, behavior: 'instant' });
+          if (Math.abs(window.scrollY - ziel) > 2 && performance.now() < bis) requestAnimationFrame(fassen);
+          else ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.removeEventListener(ev, halt, opts));
+        };
+        requestAnimationFrame(() => requestAnimationFrame(fassen));
       }
     });
     return cleanup;
@@ -1373,33 +1396,41 @@ const AppInner = ({ demo }) => {
       // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
       // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
       // sprang die Seite dabei nicht nach oben, und der Fokus blieb stehen.
+      // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
+      // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
+      // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
       view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
-        onClick: () => handleNavigate('dashboard'),
+        onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,
-          color: palette.mid, fontFamily: 'inherit',
-          display: 'flex', alignItems: 'center', gap: '6px',
-        },
-      }, zurueckZeichen(), t('nav.backToDashboard')),
-      // «Zurück zu Kapitel …» — nur, wenn man aus einem Kapitel über einen Querverweis
-      // hierher kam (Entscheid 25.09.2026: die Brotkrume zeigt die feste Ordnung, diese
-      // Zeile den eigenen Weg). history.back(), nicht handleNavigate: der Verlauf bleibt
-      // derselbe wie mit der Zurück-Taste, und man landet an der Stelle im Kapitel, an der
-      // man den Querverweis angetippt hat (merkeStelle/onHashChange, nicht der Browser).
-      view !== 'chapter' && herkunft && herkunft.view === 'chapter' && chapters[herkunft.chapterIndex] && React.createElement('button', {
-        type: 'button',
-        className: 'mp-link',
-        onClick: () => window.history.back(),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
           color: palette.mid, fontFamily: 'inherit',
           display: 'flex', alignItems: 'center', gap: '6px',
         },
-      }, zurueckZeichen(), t('nav.zurueckZu', { name: chapters[herkunft.chapterIndex].title })),
+      }, zurueckZeichen(), t('nav.backToDashboard')),
+      // «Zurück zu …» — wenn man über einen Querverweis hierher kam (Entscheid 25.09.2026:
+      // die Brotkrume zeigt die feste Ordnung, diese Zeile den eigenen Weg). Bis 27.09.2026
+      // nur nach einem Kapitel; jetzt nach jeder Ansicht mit Namen (ansichtName), z. B.
+      // Finanz-Übersicht → Steuer, Suche → Treffer, Heirat → Kind bekommen.
+      // history.back(), nicht handleNavigate: der Verlauf bleibt derselbe wie mit der
+      // Zurück-Taste, und man landet an der Stelle, an der man den Querverweis angetippt
+      // hat (merkeStelle/onHashChange, nicht der Browser).
+      (() => {
+        const name = herkunftName(herkunft, view, chapters, t);
+        return name && React.createElement('button', {
+          type: 'button',
+          className: 'mp-link',
+          onClick: () => window.history.back(),
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer',
+            padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
+            color: palette.mid, fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', gap: '6px',
+          },
+        }, zurueckZeichen(), t('nav.zurueckZu', { name }));
+      })(),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
         style: {
@@ -1503,6 +1534,7 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
+          key: datenModus,
           palette, t,
           data: activeData,
           onNavigate: handleNavigate,
@@ -1540,6 +1572,7 @@ const AppInner = ({ demo }) => {
         view === 'stelleverloren' && React.createElement(StelleVerloren, { palette, t, onNavigate: handleNavigate }),
         view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'mahnung' && React.createElement(MahnungErhalten, { palette, t, onNavigate: handleNavigate }),
         view === 'betreibung' && React.createElement(BetreibungErhalten, { palette, t, onNavigate: handleNavigate }),
         view === 'dienst' && React.createElement(Dienst, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'volljaehrig' && React.createElement(Volljaehrig, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1577,7 +1610,7 @@ const AppInner = ({ demo }) => {
         view === 'ansprueche' && React.createElement(AnspruchLandkarte, { palette, t, onNavigate: handleNavigate }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
-        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
@@ -1606,6 +1639,7 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
+          onNotifications: () => handleNavigate('notifications'),
           demoMode,
         }),
       )),
