@@ -99,7 +99,7 @@ export const Kreditkarte = ({ palette, t, data, onUpdateData }) => {
           React.createElement('span', null, t('kreditkarteView.posten_' + p.key)),
           React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, (p.plus ? '+ ' : '− ') + betrag(p.wert, Number.isInteger(p.wert) ? {} : { stellen: 2 }))
         ),
-        React.createElement('div', { 'aria-hidden': true, style: { height: '6px', borderRadius: radius.hair + 'px', marginTop: '3px', width: Math.max(2, Math.round((p.wert / max) * 100)) + '%', background: p.plus ? palette.sage : palette.border } })
+        React.createElement('div', { 'aria-hidden': true, style: { height: '6px', borderRadius: radius.hair + 'px', marginTop: '3px', width: Math.max(2, Math.round((p.wert / max) * 100)) + '%', background: p.plus ? palette.sage : palette.soft } })
       ))
     );
   };
