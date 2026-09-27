@@ -27,7 +27,7 @@ const person = { basis: { firstName: 'Alex', lastName: 'Muster' }, wohnen: { add
 const brief = (html) => html.split('<body>')[1];
 const koerper = (html) => html.match(/<div class="body-text">([\s\S]*?)<\/div>/)[1];
 const betreff = (html) => html.match(/<div class="subject">([\s\S]*?)<\/div>/)[1];
-const hinweis = (html) => (html.match(/<div class="legal-note">([\s\S]*?)<\/div>/) || [, ''])[1];
+const hinweis = (html) => { const m = html.match(/<div class="legal-note">([\s\S]*?)<\/div>/); return m ? m[1] : ''; };
 
 describe('Mahnung-Briefe — angeboten und renderbar', () => {
   const liste = getLetterTemplates(t, person);
