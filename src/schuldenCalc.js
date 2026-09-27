@@ -1,70 +1,89 @@
+import { heuteIso, leseDatum } from './utils/fristen.js';
+
 // Schulden Manager und Betreibungsregister
 
-export const calculateDebtStatus = (debts) => {
-  let totalDebt = 0;
+// Übersicht der Schulden — überarbeitet 27.09.2026 (Befund Stebler Studios: «wie gehts dem Abbau-Plan?»).
+// Vorher: «Gesamtschulden» zählte Bezahltes mit, «Bald fällig» nahm jede Schuld OHNE Datum auf
+// (new Date('') ist ungültig, jeder Vergleich false), und der Status «Überfällig» zählte nicht.
+// Jetzt: offen = nicht bezahlt; überfällig = Status «overdue» ODER Datum vor heute;
+// noch nicht fällig = gültiges Datum ab heute; der Rest ist «offen ohne Fälligkeitsdatum».
+// Datum als ISO-Text verglichen (Eingabe aus <input type="date">), ungültig = ohne Datum.
+export const calculateDebtStatus = (debts, heute = heuteIso()) => {
+  let offen = 0;
   let overdue = 0;
   let upcoming = 0;
+  let ohneDatum = 0;
   let paid = 0;
 
-  for (const debt of debts) {
-    const amount = Number(debt.amount || 0);
-    const dueDate = new Date(debt.dueDate);
-    const today = new Date();
+  for (const debt of debts || []) {
+    const amount = Number(debt.amount) || 0;
+    if (debt.status === 'paid') { paid += amount; continue; }
+    offen += amount;
+    const due = leseDatum(debt.dueDate) ? debt.dueDate : null;
+    if (debt.status === 'overdue' || (due && due < heute)) overdue += amount;
+    else if (due) upcoming += amount;
+    else ohneDatum += amount;
+  }
 
-    totalDebt += amount;
+  return { totalDebt: offen, overdue, upcoming, ohneDatum, paid, remaining: offen };
+};
 
-    if (debt.status === 'paid') {
-      paid += amount;
-    } else if (dueDate < today) {
-      overdue += amount;
-    } else {
-      upcoming += amount;
+const rappen = (x) => Math.round(x * 100) / 100;
+
+// Abbau-Plan als Richtwert — überarbeitet 27.09.2026. Vorher: fest CHF 500/Monat, EIN Zinssatz
+// (der der ersten Schuld) für die Summe inkl. Bezahltem, und reichte die Rate nicht für die
+// Zinsen, lief die Schleife 240 Monate mit wachsender Schuld weiter.
+// Jetzt je offene Schuld mit ihrem eigenen Satz, in der Reihenfolge von `prioritizeDebts`
+// (Stufe, dann Lawine/Schneeball). Vereinfacht: die ganze Rate geht an die erste offene Schuld,
+// die Zinsen der übrigen laufen weiter (Jahressatz / 12, einfach je Monat). Keine Gebühren.
+// Ergebnis: { machbar: true, monate, zinsTotal, reihenfolge[{id, creditor, monat}] }
+//        oder { machbar: false, grund: 'zins', zinsErsterMonat } | { machbar: false, grund: 'dauer' }
+//        oder null (keine Rate, keine offene Schuld).
+export const PLAN_MAX_MONATE = 360;
+export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
+  const rate = Number(monthlyPayment);
+  const offen = prioritizeDebts(debts, method)
+    .map(d => ({ id: d.id, creditor: d.creditor, rest: Number(d.amount) || 0, zins: Math.max(0, Number(d.interestRate) || 0) }))
+    .filter(d => d.rest > 0);
+  if (!(rate > 0) || offen.length === 0) return null;
+
+  const fertig = {};
+  let monat = 0;
+  let zinsTotal = 0;
+  while (offen.some(d => d.rest > 0) && monat < PLAN_MAX_MONATE) {
+    monat++;
+    let zinsMonat = 0;
+    for (const d of offen) {
+      if (d.rest <= 0) continue;
+      const z = d.rest * d.zins / 100 / 12;
+      d.rest += z;
+      zinsMonat += z;
+    }
+    if (monat === 1 && zinsMonat >= rate) return { machbar: false, grund: 'zins', zinsErsterMonat: rappen(zinsMonat) };
+    zinsTotal += zinsMonat;
+    let budget = rate;
+    for (const d of offen) {
+      if (d.rest <= 0 || budget <= 0) continue;
+      const teil = Math.min(budget, d.rest);
+      d.rest -= teil;
+      budget -= teil;
+      if (d.rest < 0.005) { d.rest = 0; fertig[d.id] = monat; }
     }
   }
-
-  return { totalDebt, overdue, upcoming, paid, remaining: totalDebt - paid };
+  if (offen.some(d => d.rest > 0)) return { machbar: false, grund: 'dauer' };
+  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, monat: fertig[d.id] })) };
 };
 
-
-export const createDebtPlan = (totalDebt, monthlyPayment, interestRate = 0) => {
-  const plan = [];
-  let remaining = totalDebt;
-  let month = 0;
-
-  while (remaining > 0 && month < 240) {
-    const interest = (remaining * (interestRate / 100)) / 12;
-    const principal = Math.min(monthlyPayment - interest, remaining);
-    remaining -= principal;
-
-    plan.push({
-      month: month + 1,
-      payment: (principal + interest).toFixed(2),
-      principal: principal.toFixed(2),
-      interest: interest.toFixed(2),
-      remaining: Math.max(0, remaining).toFixed(2)
-    });
-
-    month++;
-  }
-
-  return plan;
-};
-
-
-export const calculateBetreibungsRegisterImpact = (registerEntries, income) => {
-  const totalDebt = registerEntries.reduce((sum, e) => sum + Number(e.amount || 0), 0);
-  const debtToIncomeRatio = (totalDebt / income * 100).toFixed(1);
-  
-  let severity = 'low';
-  if (debtToIncomeRatio > 50) severity = 'critical';
-  else if (debtToIncomeRatio > 25) severity = 'high';
-  else if (debtToIncomeRatio > 10) severity = 'medium';
-
+// Betreibungen im Verhältnis zum Einkommen — überarbeitet 27.09.2026. Vorher: ohne Einkommen
+// wurde durch 1 geteilt und «kritisch» gemeldet; die Schwellen 10/25/50 % und die Wertungen
+// («unter Kontrolle», «ernst») hatten keine Quelle. Jetzt nur eine neutrale Zahl, und nur mit
+// Einkommen: wie viele Monatseinkommen die erfassten Betreibungen ausmachen.
+export const calculateBetreibungsRegisterImpact = (registerEntries, monthlyIncome) => {
+  const totalDebt = (registerEntries || []).reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+  const income = Number(monthlyIncome) || 0;
   return {
     totalDebt,
-    debtToIncomeRatio: parseFloat(debtToIncomeRatio),
-    severity,
-    recommendationKey: 'debtRecommendations.' + severity,
+    monatseinkommen: income > 0 ? Math.round((totalDebt / income) * 10) / 10 : null,
   };
 };
 
@@ -83,11 +102,14 @@ export const formatVerlustschein = (verlustschein) => {
   };
 };
 
-// Konsequenz-orientierte Reihenfolge (CH-Schuldenberatungs-Praxis): existenz-
-// sichernde/privilegierte Schulden zuerst (Wohnen, Krankenkasse, Alimente,
-// Bussen), dann amtliche (Steuern), dann die übrigen — diese nach gewählter
-// Methode (Lawine = höchster Zins zuerst; Schneeball = kleinster Betrag zuerst).
-// Reine Orientierung, keine Beratung.
+// Konsequenz-orientierte Reihenfolge. Belegt 27.09.2026 (vorher nur «CH-Schuldenberatungs-
+// Praxis» ohne Quelle): schuldeninfo.ch «Weiterleben mit Schulden» (2011): zuerst die
+// lebensnotwendigen Rechnungen — Wohnungsmiete, Krankenkasse, Alimente, Heiz- und Kochenergie.
+// Caritas, Ratgeber Schuldensanierung: Bussen und Geldstrafen müssen auch in einer Sanierung
+// zu 100 % bezahlt werden → ebenfalls vorne. Steuern: laufende Steuern gehören ins Budget
+// (Caritas); ein Erlass der Bundessteuer nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4).
+// Danach die übrigen nach Methode (Lawine = höchster Zins zuerst; Schneeball = kleinster
+// Betrag zuerst). Reine Orientierung, keine Beratung.
 const CATEGORY_TIER = {
   wohnen: 1, krankenkasse: 1, alimente: 1, bussen: 1,
   steuern: 2,

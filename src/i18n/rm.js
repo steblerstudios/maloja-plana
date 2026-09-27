@@ -1228,13 +1228,13 @@ export default {
     step4Steuer: 'Steuern: Die direkte Bundessteuer ist innert 30 Tagen nach Fälligkeit zu bezahlen; danach läuft ein Verzugszins, den das Eidgenössische Finanzdepartement festlegt (DBG Art. 163, 164). Ist die Zahlung eine erhebliche Härte, kann die Bezugsbehörde die Frist erstrecken oder Raten bewilligen (DBG Art. 166). In einer Notlage ist ein Erlass möglich — ein Erlassgesuch wird aber nur behandelt, wenn es eingereicht wird, bevor für diese Steuer ein Zahlungsbefehl zugestellt ist (DBG Art. 167 Abs. 1 und 4). Darum früh fragen. Zuständig ist auch für die Bundessteuer das kantonale Steueramt (DBG Art. 2). Für Kantons- und Gemeindesteuern gilt kantonales Recht — auch dazu, bis wann ein Erlassgesuch möglich ist.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     step4LinkSteuer: 'Steuern ansehen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     step5Title: '5 · Nicht auf einmal zahlen können?',
-    step5Text: { sie: 'Fragen Sie früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlagen Sie nur Raten vor, die Ihr Budget auch in einem schwierigen Monat trägt, und bitten Sie um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird.', du: 'Frag früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlag nur Raten vor, die dein Budget auch in einem schwierigen Monat trägt, und bitte um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird.' },
+    step5Text: { sie: 'Fragen Sie früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlagen Sie nur Raten vor, die Ihr Budget auch in einem schwierigen Monat trägt, und bitten Sie um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird. Reicht das Einkommen auf Dauer nicht für das Nötige, raten Schuldenberatungen, zuerst die laufenden Rechnungen wie Miete und Krankenkasse zu bezahlen und keine Ratenvereinbarungen oder Schuldanerkennungen zu unterschreiben — neue Rückstände wiegen schwerer als alte.', du: 'Frag früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlag nur Raten vor, die dein Budget auch in einem schwierigen Monat trägt, und bitte um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird. Reicht das Einkommen auf Dauer nicht für das Nötige, raten Schuldenberatungen, zuerst die laufenden Rechnungen wie Miete und Krankenkasse zu bezahlen und keine Ratenvereinbarungen oder Schuldanerkennungen zu unterschreiben — neue Rückstände wiegen schwerer als alte.' },
     step5LinkBudget: 'Budget ansehen',
     step5LinkBeratung: 'Schuldenberatung finden',
     step6Title: { sie: '6 · Umgekehrt: Ihnen schuldet jemand Geld', du: '6 · Umgekehrt: dir schuldet jemand Geld' },
     step6Text: { sie: 'Mit einer Mahnung setzen Sie die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann können Sie Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginnen Sie freundlich mit einer Zahlungserinnerung, setzen Sie eine klare Frist und schicken Sie die Mahnung so, dass Sie den Versand belegen können.', du: 'Mit einer Mahnung setzt du die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann kannst du Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginne freundlich mit einer Zahlungserinnerung, setz eine klare Frist und schick die Mahnung so, dass du den Versand belegen kannst.' },
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. Eine Mahnung ist kein Urteil und keine Betreibung. Dies ist Orientierung, keine Rechtsberatung. Bei Schulden hilft eine Schuldenberatung.',
-    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]] (geprüft im September 2026).',
+    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]] (geprüft im September 2026).',
   },
   betreibung: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
@@ -2805,7 +2805,6 @@ export default {
     dueSoon: 'Bainprest scadent',
     alreadyPaid: 'Gia pajà',
     debtRegisterAnalysis: 'Register da scussiun — survista',
-    debtRatio: "Part da l'entrada",
     addDebt: 'Agiuntar in nov debit',
     moreDetails: 'Ulteriuras indicaziuns',
     statusField: 'Status',
@@ -2822,8 +2821,6 @@ export default {
     date: 'Data',
     statusOpen: 'Avert',
     statusPaid: 'Pajà',
-    paymentPlan: 'Far in plan da pajament',
-    paymentPlanTitle: 'Plan da pajament (CHF {amount}/mais)',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
@@ -2840,14 +2837,33 @@ export default {
     tier1: 'Existenzial / prioritar',
     tier2: 'Uffizial',
     tier3: 'Auters',
-    tier1Reason: 'Reglar l\'emprim — patg, cassa da malsauns, alimentaziun e multas han las consequenzas las pli gravas.',
-    tier2Reason: 'Tractar prest — taglias betg pajadas pon manar a l\'execuziun.',
+    tier1Reason: 'Möglichst zuerst: Miete und Nebenkosten, Krankenkasse, Alimente — die laufenden lebensnotwendigen Rechnungen, wie es die Schuldenberatung rät. Bussen und Geldstrafen gehören dazu, weil sie auch in einer Schuldensanierung ganz bezahlt werden müssen.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    tier2Reason: 'Bald angehen — ein Erlass der Bundessteuer ist nur möglich, solange für diese Steuer kein Zahlungsbefehl zugestellt ist (DBG Art. 167 Abs. 4).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     tier3Reason: 'En la successiun tschernida.',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     helpTitle: { sie: 'Vus na stuais betg far quai sulet/a', du: 'Ti na stos betg far quai sulet/a' },
     helpBody: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — la Cussegliaziun da debits Svizra e la Caritas han in post en mintga chantun.',
     situationLink: 'Guardar la situaziun «indebità u en scussiun»',
     mahnungLink: 'Mahnung erhalten — was tun?', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    notYetDue: 'Noch nicht fällig', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    noDueDate: 'Offen, ohne Fälligkeitsdatum', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    betreibungSumme: 'Erfasste Betreibungen: {amount} — das sind rund {monate} Monatseinkommen.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    betreibungOhneEinkommen: 'Erfasste Betreibungen: {amount}. Mit einem Einkommen im Kapitel Finanzen zeigen wir, wie vielen Monatseinkommen das entspricht.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    plan: {
+      rateLabel: { sie: 'Wie viel können Sie monatlich für Schulden einsetzen? (CHF)', du: 'Wie viel kannst du monatlich für Schulden einsetzen? (CHF)' },
+      rateHilfe: 'Nur was nach Miete, Krankenkasse und dem Lebensbedarf übrig bleibt.',
+      ohne: 'Betrag eintragen, dann erscheint ein Richtwert.',
+      ergebnis: 'Mit {rate} pro Monat wären diese Schulden nach rund {monate} Monaten bezahlt; Zinsen insgesamt rund {zins}.',
+      zuWenig: '{rate} pro Monat reichen nicht einmal für die Zinsen (rund {zins} im ersten Monat) — die Schulden würden wachsen. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      zuLang: 'Mit {rate} pro Monat dauert es länger als 30 Jahre. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      fertigIn: '{name}: bezahlt nach rund {monate} Monaten',
+      vereinfacht: 'Richtwert, vereinfacht: Die ganze Rate geht jeweils an die erste offene Schuld in der Reihenfolge oben; die Zinsen der übrigen laufen weiter. Gebühren und Verzugszinsen sind nicht eingerechnet.',
+    }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    steuer: {
+      title: 'Und die Steuern?',
+      text: { sie: 'Zinsen auf Schulden — etwa für einen Kredit oder die Kreditkarte — lassen sich vom Einkommen abziehen, bis zur Höhe der Vermögenserträge plus 50’000 Franken (DBG Art. 33 Abs. 1 Bst. a; für die Kantons- und Gemeindesteuern StHG Art. 9 Abs. 2 Bst. a). Die Rückzahlung selbst ist nicht abziehbar (DBG Art. 34 Bst. c); Betreibungskosten und Mahngebühren stehen nicht unter den Abzügen. Ob Verzugszinsen als Schuldzinsen gelten, sagt das Gesetz nicht ausdrücklich — fragen Sie beim Steueramt. Bei der Vermögenssteuer der Kantone mindern Schulden das steuerbare Reinvermögen (StHG Art. 13 Abs. 1).', du: 'Zinsen auf Schulden — etwa für einen Kredit oder die Kreditkarte — lassen sich vom Einkommen abziehen, bis zur Höhe der Vermögenserträge plus 50’000 Franken (DBG Art. 33 Abs. 1 Bst. a; für die Kantons- und Gemeindesteuern StHG Art. 9 Abs. 2 Bst. a). Die Rückzahlung selbst ist nicht abziehbar (DBG Art. 34 Bst. c); Betreibungskosten und Mahngebühren stehen nicht unter den Abzügen. Ob Verzugszinsen als Schuldzinsen gelten, sagt das Gesetz nicht ausdrücklich — frag beim Steueramt. Bei der Vermögenssteuer der Kantone mindern Schulden das steuerbare Reinvermögen (StHG Art. 13 Abs. 1).' },
+    }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    planQuelle: 'Quellen: [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, Ratgeber Schuldensanierung|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[DBG Art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_33]], [[DBG Art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_34]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[StHG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_9]], [[StHG Art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_13]] (gelesen im September 2026).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     stufe: { // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       label: 'Stand',
       keine: 'Keine Angabe',
@@ -3776,19 +3792,7 @@ export default {
     unknown: 'Durada da validitad nunenconuschenta',
   },
 
-  debtLevels: {
-    low: 'bass',
-    medium: 'mesaun',
-    high: 'aut',
-    critical: 'critic',
-  },
 
-  debtRecommendations: {
-    low: 'Ils debits èn sut controlla. Cuntinuar da pajar regularmain.',
-    medium: 'Ils debits duessian vegnir reducids. Far in plan da pajament.',
-    high: "Ils debits èn considerabels. Cussegliaziun spezialisada vegn recumandada.",
-    critical: "La situaziun da debits è seriusa. Ina cussegliaziun da debits po gidar ussa.", // TODO(rm): Gegenlese Muttersprache
-  },
 
   debtValidation: {
     creditorRequired: 'Creditur necessari',
@@ -4510,7 +4514,7 @@ export default {
       hinweis: {
         title: { sie: 'Bevor Sie Raten vorschlagen', du: 'Bevor du Raten vorschlägst' },
         anerkennung: { sie: 'Jede Anzahlung gilt als Anerkennung der Forderung — die Verjährung beginnt damit neu (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Auch ein Ratengesuch kann als Anerkennung gewertet werden. Schlagen Sie Raten nur vor, wenn die Forderung stimmt.', du: 'Jede Anzahlung gilt als Anerkennung der Forderung — die Verjährung beginnt damit neu (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Auch ein Ratengesuch kann als Anerkennung gewertet werden. Schlag Raten nur vor, wenn die Forderung stimmt.' },
-        budget: { sie: 'Der Gläubiger muss nicht zustimmen. Ohne andere Abmachung läuft der Verzugszins auf dem offenen Betrag weiter (OR Art. 104 Abs. 1). Bitten Sie um eine schriftliche Bestätigung, und ziehen Sie bei mehreren offenen Forderungen eine Schuldenberatung bei.', du: 'Der Gläubiger muss nicht zustimmen. Ohne andere Abmachung läuft der Verzugszins auf dem offenen Betrag weiter (OR Art. 104 Abs. 1). Bitte um eine schriftliche Bestätigung, und zieh bei mehreren offenen Forderungen eine Schuldenberatung bei.' },
+        budget: { sie: 'Der Gläubiger muss nicht zustimmen. Ohne andere Abmachung läuft der Verzugszins auf dem offenen Betrag weiter (OR Art. 104 Abs. 1). Bitten Sie um eine schriftliche Bestätigung, und ziehen Sie bei mehreren offenen Forderungen eine Schuldenberatung bei. Reicht das Einkommen auf Dauer nicht für das Nötige, raten Schuldenberatungen von Ratenvereinbarungen ab — zuerst die laufenden Rechnungen.', du: 'Der Gläubiger muss nicht zustimmen. Ohne andere Abmachung läuft der Verzugszins auf dem offenen Betrag weiter (OR Art. 104 Abs. 1). Bitte um eine schriftliche Bestätigung, und zieh bei mehreren offenen Forderungen eine Schuldenberatung bei. Reicht das Einkommen auf Dauer nicht für das Nötige, raten Schuldenberatungen von Ratenvereinbarungen ab — zuerst die laufenden Rechnungen.' },
       },
       subject: 'Gesuch um Ratenzahlung — Rechnung Nr. {number}',
       salutation: 'Sehr geehrte Damen und Herren,',

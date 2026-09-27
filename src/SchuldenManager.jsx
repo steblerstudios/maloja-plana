@@ -3,6 +3,9 @@ import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
+import { renderSource } from './utils/renderSource.js';
+import { formatDE } from './utils/helpers.js';
+import { leseBetrag } from './briefGenerator.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { LegendenMarke } from './components/LegendenMarke.jsx';
@@ -10,7 +13,7 @@ import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
-import { betrag } from './utils/geld.js';
+import { betrag, zahl } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
@@ -51,7 +54,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   // Nicht zweimal eingeben: «Persönliche Darlehen» aus dem Kapitel Finanzen, solange noch keine Schuld erfasst ist.
   const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
   const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
-  const [debtPlan, setDebtPlan] = useState(null);
+  // Abbau-Plan: Rate als Text (Schweizer Schreibweise erlaubt), gelesen wie im Briefgenerator.
+  const [planRate, setPlanRate] = useState('');
   const [method, setMethod] = useState('lawine');
   const [formError, setFormError] = useState(false);
 
@@ -142,7 +146,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const debtStatus = calculateDebtStatus(schulden);
   const prioritized = prioritizeDebts(schulden, method);
   const income = Number(data.finanzen?.monthlyIncome || 0);
-  const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income || 1);
+  const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income);
+  const plan = createDebtPlan(schulden, leseBetrag(planRate), method);
 
   const cardStyle = {
     padding: space.md,
@@ -211,9 +216,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         [
           ['totalDebt', debtStatus.totalDebt],
           ['overdue', debtStatus.overdue],
-          ['dueSoon', debtStatus.upcoming],
+          ['notYetDue', debtStatus.upcoming],
+          // Nur zeigen, wenn es sie gibt — sonst eine Null-Zeile ohne Nutzen.
+          debtStatus.ohneDatum > 0 ? ['noDueDate', debtStatus.ohneDatum] : null,
           ['alreadyPaid', debtStatus.paid],
-        ].map(([key, val], i, arr) =>
+        ].filter(Boolean).map(([key, val], i, arr) =>
           React.createElement('div', { key, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, padding: space.sm + 'px ' + space.md + 'px', borderBottom: i < arr.length - 1 ? '1px solid ' + palette.border + '55' : 'none', fontSize: text.sm } },
             React.createElement('span', { style: { color: palette.mid } }, t('schulden.' + key)),
             React.createElement('span', { style: { fontWeight: weight.medium, color: palette.text } }, betrag(val, { stellen: 2 }))
@@ -223,10 +230,13 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
       betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm } }, t('schulden.debtRegisterAnalysis')),
-        React.createElement('div', { style: { fontSize: text.sm, marginBottom: space.sm } },
-          t('schulden.debtRatio') + ': ' + betreibungImpact.debtToIncomeRatio + '% (' + t('debtLevels.' + betreibungImpact.severity) + ')'
+        // Neutral statt Wertung (27.09.2026): keine Schwellen ohne Quelle, ohne Einkommen keine Zahl.
+        React.createElement('div', { style: { fontSize: text.sm, marginBottom: space.sm, color: palette.text } },
+          betreibungImpact.monatseinkommen !== null
+            ? t('schulden.betreibungSumme', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }), monate: zahl(betreibungImpact.monatseinkommen, { hoechstens: 1 }) })
+            : t('schulden.betreibungOhneEinkommen', { amount: betrag(betreibungImpact.totalDebt, { stellen: 2 }) })
         ),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, t(betreibungImpact.recommendationKey))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, t('schulden.helpBody'))
       )
     ),
 
@@ -270,7 +280,33 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
             React.createElement('div', { style: { display: 'inline-block', fontSize: text.xs, fontWeight: weight.semi, color: tierColor, marginBottom: '4px' } }, React.createElement(LegendenMarke, { form: 'punkt', color: tierColor, palette }), tierLabel),
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, tierReason)
           );
-        })
+        }),
+
+        // Richtwert: wie lange mit einer eigenen Monatsrate (27.09.2026, ersetzt den festen
+        // 500-Franken-Plan im Schulden-Tab). Rechnung in schuldenCalc.createDebtPlan.
+        React.createElement('div', { style: { marginTop: space.md, padding: space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm } },
+          React.createElement('label', { htmlFor: 'plan-rate', style: { display: 'block', fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.plan.rateLabel')),
+          React.createElement('input', { id: 'plan-rate', type: 'text', inputMode: 'decimal', autoComplete: 'off', value: planRate, onChange: (e) => setPlanRate(e.target.value), 'aria-describedby': 'plan-rate-hilfe', style: { ...inputStyle, maxWidth: '220px', marginBottom: space.xs } }),
+          React.createElement('div', { id: 'plan-rate-hilfe', style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('schulden.plan.rateHilfe')),
+          React.createElement('div', { role: 'status', 'aria-live': 'polite', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
+            !plan ? t('schulden.plan.ohne')
+              : !plan.machbar ? t(plan.grund === 'zins' ? 'schulden.plan.zuWenig' : 'schulden.plan.zuLang', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), zins: betrag(plan.zinsErsterMonat || 0, { stellen: 2 }) })
+              : [
+                React.createElement('p', { key: 'e', style: { margin: 0 } }, t('schulden.plan.ergebnis', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), monate: String(plan.monate), zins: betrag(plan.zinsTotal, { stellen: 2 }) })),
+                React.createElement('ol', { key: 'l', style: { margin: space.xs + 'px 0 0', paddingInlineStart: '20px', fontSize: text.xs, color: palette.mid } },
+                  plan.reihenfolge.map(r => React.createElement('li', { key: r.id }, t('schulden.plan.fertigIn', { name: r.creditor || '—', monate: String(r.monat) })))),
+              ]
+          ),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: 1.5 } }, t('schulden.plan.vereinfacht'))
+        ),
+
+        // Steuern und Schulden (27.09.2026, Frage Stebler Studios): belegt an DBG/StHG.
+        React.createElement('div', { style: { marginTop: space.md, padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm } },
+          React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.steuer.title')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } }, t('schulden.steuer.text'))
+        ),
+
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: 1.5 } }, renderSource(t('schulden.planQuelle'), null, t))
       )
     ),
 
@@ -313,23 +349,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
-            (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)
+            (debt.dueDate ? formatDE(debt.dueDate) + ' · ' : '') + statusLabel(debt.status)
           ),
-          // Mahnstufe: Rechnung → Mahnung → Zahlungsbefehl. Form + Text statt nur Farbe (● erreicht,
-          // ○ noch nicht), die aktuelle Stufe fett und mit aria-current.
+          // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
           React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: { ...buttonStyle, background: palette.rose } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
-        ))
-      ),
-
-      schulden.some(d => d.interestRate > 0) && React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('button', { onClick: () => setDebtPlan(createDebtPlan(debtStatus.totalDebt, 500, schulden[0]?.interestRate || 0)), style: buttonStyle }, React.createElement(Icon, { name: 'rechner', size: 14 }), t('schulden.paymentPlan'))
-      ),
-
-      debtPlan && React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, maxHeight: '400px', overflowY: 'auto' } },
-        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, t('schulden.paymentPlanTitle', { amount: 500 })),
-        debtPlan.slice(0, 12).map((month, idx) => React.createElement('div', { key: idx, style: { fontSize: text.xs, padding: space.xs, borderBottom: '1px solid ' + palette.border } },
-          '#' + month.month + ': ' + betrag(month.payment, { hoechstens: 2 }) + ' (' + t('budgetSync.remaining') + ': ' + betrag(month.remaining, { hoechstens: 2 }) + ')'
         ))
       )
     ),
