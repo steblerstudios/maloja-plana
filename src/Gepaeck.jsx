@@ -206,7 +206,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       },
     },
       h('button', {
-        onClick: () => setOpenKey(open ? null : g.key), 'aria-expanded': open,
+        onClick: () => setOpenKey(open ? null : g.key), 'aria-expanded': open, 'aria-controls': 'gepaeck-fach-' + g.key,
         style: {
           display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'left',
           background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', padding: space.sm + 'px ' + space.md + 'px',
@@ -216,7 +216,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
         h('span', { style: { flex: 1, minWidth: 0 } },
           h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('gepaeck.obj.' + g.key)),
           h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } },
-            t('gepaeck.objSub.' + g.key) + ' · ' + inhalt),
+            t('gepaeck.objSub.' + g.key) + (inhalt ? ' · ' + inhalt : '')),
           dots(r),
         ),
         h('span', {
@@ -229,6 +229,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
         }, h('svg', { viewBox: '0 0 24 24', width: 13, height: 13, fill: 'none', stroke: '#3a2c14', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, h('path', { d: 'M6 9l6 6 6-6' }))),
       ),
       h('div', {
+        id: 'gepaeck-fach-' + g.key,
         style: {
           maxHeight: open ? '960px' : '0', opacity: open ? 1 : 0, overflow: 'hidden',
           transition: 'max-height 400ms ' + ease + ', opacity 260ms ' + ease + ', visibility 400ms',
