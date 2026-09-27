@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE } from './config/brotkrumePfade.js';
+import { herkunftName } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -1373,33 +1374,41 @@ const AppInner = ({ demo }) => {
       // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
       // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
       // sprang die Seite dabei nicht nach oben, und der Fokus blieb stehen.
+      // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
+      // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
+      // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
       view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
-        onClick: () => handleNavigate('dashboard'),
+        onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,
-          color: palette.mid, fontFamily: 'inherit',
-          display: 'flex', alignItems: 'center', gap: '6px',
-        },
-      }, zurueckZeichen(), t('nav.backToDashboard')),
-      // «Zurück zu Kapitel …» — nur, wenn man aus einem Kapitel über einen Querverweis
-      // hierher kam (Entscheid 25.09.2026: die Brotkrume zeigt die feste Ordnung, diese
-      // Zeile den eigenen Weg). history.back(), nicht handleNavigate: der Verlauf bleibt
-      // derselbe wie mit der Zurück-Taste, und man landet an der Stelle im Kapitel, an der
-      // man den Querverweis angetippt hat (merkeStelle/onHashChange, nicht der Browser).
-      view !== 'chapter' && herkunft && herkunft.view === 'chapter' && chapters[herkunft.chapterIndex] && React.createElement('button', {
-        type: 'button',
-        className: 'mp-link',
-        onClick: () => window.history.back(),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
           color: palette.mid, fontFamily: 'inherit',
           display: 'flex', alignItems: 'center', gap: '6px',
         },
-      }, zurueckZeichen(), t('nav.zurueckZu', { name: chapters[herkunft.chapterIndex].title })),
+      }, zurueckZeichen(), t('nav.backToDashboard')),
+      // «Zurück zu …» — wenn man über einen Querverweis hierher kam (Entscheid 25.09.2026:
+      // die Brotkrume zeigt die feste Ordnung, diese Zeile den eigenen Weg). Bis 27.09.2026
+      // nur nach einem Kapitel; jetzt nach jeder Ansicht mit Namen (ansichtName), z. B.
+      // Finanz-Übersicht → Steuer, Suche → Treffer, Heirat → Kind bekommen.
+      // history.back(), nicht handleNavigate: der Verlauf bleibt derselbe wie mit der
+      // Zurück-Taste, und man landet an der Stelle, an der man den Querverweis angetippt
+      // hat (merkeStelle/onHashChange, nicht der Browser).
+      (() => {
+        const name = herkunftName(herkunft, view, chapters, t);
+        return name && React.createElement('button', {
+          type: 'button',
+          className: 'mp-link',
+          onClick: () => window.history.back(),
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer',
+            padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
+            color: palette.mid, fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', gap: '6px',
+          },
+        }, zurueckZeichen(), t('nav.zurueckZu', { name }));
+      })(),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
         style: {
