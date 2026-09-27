@@ -70,9 +70,11 @@ describe('ein Weg zurück', () => {
   it('InstallGuide trägt keinen zweiten Zurück-Knopf unter «Übersicht»', () => {
     expect(lies('InstallGuide.jsx')).not.toMatch(/onNavigate\('dashboard'\)/);
   });
+  // Seit 27.09.2026: kam man von der Übersicht, führt «Übersicht» per history.back() an die
+  // alte Stelle zurück; sonst weiter über handleNavigate (Sprung nach oben, Fokus).
   it('main.jsx lässt in diesen Ansichten «Übersicht» weg und navigiert sonst über handleNavigate', () => {
     const main = lies('main.jsx');
-    expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && React\.createElement\('button', \{\s*onClick: \(\) => handleNavigate\('dashboard'\)/);
+    expect(main).toMatch(/view !== 'dashboard' && !PFADE\[view\] && React\.createElement\('button', \{\s*onClick: \(\) => \(herkunft && herkunft\.view === 'dashboard' \? window\.history\.back\(\) : handleNavigate\('dashboard'\)\)/);
   });
   it('die Darstellung liegt NICHT im Hauptbündel: main.jsx importiert nur die Pfade', () => {
     const main = lies('main.jsx');

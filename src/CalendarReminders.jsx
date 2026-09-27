@@ -10,6 +10,7 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { anspruchSignaleListe } from './data/anspruchSignale.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { ZielHinweis } from './components/ExternerLink.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -256,7 +257,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'cowbell', size: 22 }), style: { marginBottom: space.md } }, t('calendar.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('calendar'), size: 22 }), style: { marginBottom: space.md } }, t('calendar.title')),
 
     // Möglicherweise für dich (Anspruch-Signale, Variante C, #4.4): ruhiger Hinweis
     // auf gedeckte Ansprüche — dieselbe ehrliche Logik wie der Ring am Baum. Kein

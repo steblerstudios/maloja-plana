@@ -10,6 +10,8 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
+import PrimaryButton from './components/PrimaryButton.jsx';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
 import { Schutzschild } from './components/Schutzschild.jsx';
@@ -1124,7 +1126,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     }
     const medRows = [];
     const medFelder = [];
-    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
+    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(blutgruppeLabel(data.bloodType, tr)) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
     if (data.allergies) { medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>'); medFelder.push(tr('chapters.notfall.fields.allergies')); }
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
     if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
@@ -2294,24 +2296,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ),
 
     // Nächstes Thema — Testperson A: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
-    nextChapter && onNext ? React.createElement('button', {
-      type: 'button',
-      onClick: onNext,
-      style: {
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
-        width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
-        marginTop: space.xl + 'px', padding: space.md + 'px ' + space.lg + 'px',
-        background: palette.surface, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, color: palette.text,
-        transition: 'background 160ms ease, border-color 160ms ease',
-      },
-      onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
-      onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
-    },
-      React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
-        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
-        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
-      ),
+    // Seit 27.09.2026 (Seitenrundgang) als der eine Hauptknopf «Weiter mit … ›», wie auf
+    // der Übersicht — vorher eine stille Karte, die neben den Feldern kaum als Weg las.
+    nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
+      React.createElement(PrimaryButton, {
+        palette, onClick: onNext,
+        style: { minHeight: '44px', boxSizing: 'border-box' },
+      }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›'),
     ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present
