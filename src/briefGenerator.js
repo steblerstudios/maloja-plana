@@ -18,7 +18,7 @@ import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './dat
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { zahl } from './utils/geld.js';
-import { plusTage } from './utils/fristen.js';
+import { plusTage, heuteIso } from './utils/fristen.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
 // (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
@@ -239,6 +239,34 @@ export function getLetterTemplates(t, data) {
       // Grundlage des Briefs (Rechts-Prüfer 26.09.; Entscheid Stebler Studios 27.09.2026).
       legalRef: '',
       chapter: 'behoerden',
+    },
+    // ─── Mahnung (Entscheid Stebler Studios 27.09.2026: «beides» — erhalten und selbst mahnen) ───
+    // Gesetzesstellen am Wortlaut geprüft (Fedlex-Filestore, 27.09.2026): OR Stand 1.1.2026.
+    {
+      key: 'paymentReminder',
+      title: t('briefe.paymentReminder.title'),
+      description: t('briefe.paymentReminder.description'),
+      icon: 'money',
+      legalRef: 'OR Art. 102',
+      chapter: 'finanzen',
+    },
+    {
+      key: 'claimDispute',
+      title: t('briefe.claimDispute.title'),
+      description: t('briefe.claimDispute.description'),
+      icon: 'document',
+      legalRef: '',
+      chapter: 'finanzen',
+    },
+    {
+      key: 'installmentRequest',
+      title: t('briefe.installmentRequest.title'),
+      description: t('briefe.installmentRequest.description'),
+      icon: 'money',
+      // Keine Gesetzesstelle auf der Karte: OR 135 ist der Grund für die Warnung, nicht die
+      // Grundlage des Briefs (gleiches Muster wie deathNotice/ZGB 571).
+      legalRef: '',
+      chapter: 'finanzen',
     },
   ];
   // 🔴 wageClaim nur anbieten, wenn der Kanton einen gesetzlichen Mindestlohn hat.
@@ -666,7 +694,7 @@ function generateUnpaidWage(data, t, options = {}) {
 
 // ─── Lebensereignis-Briefe (26.09.2026) ───────────────────
 //
-// Diese vier Briefe brauchen Angaben, die NICHT im Profil stehen (Betreibungsnummer,
+// Diese Briefe brauchen Angaben, die NICHT im Profil stehen (Betreibungsnummer,
 // Todesdatum …). Die Person tippt sie im Briefgenerator ein; sie werden nicht gespeichert,
 // nur in den Brief gesetzt (`options.angaben`). Fehlt eine Angabe, steht «[bitte ergänzen]» —
 // nie ein geratener Wert. Wahlfelder haben eine Vorgabe, damit der Brief immer vollständig ist.
@@ -699,6 +727,30 @@ export const BRIEF_ANGABEN = {
     { key: 'verstorben', type: 'text' },
     { key: 'todesdatum', type: 'date' },
     { key: 'vertragsnummer', type: 'text' },
+  ],
+  // ─── Mahnung (27.09.2026) ───
+  paymentReminder: [
+    { key: 'stufe', type: 'wahl', optionen: ['erinnerung', 'mahnung'], vorgabe: 'erinnerung' },
+    { key: 'grund', type: 'text' },
+    { key: 'betrag', type: 'betrag' },
+    { key: 'faellig', type: 'date' },
+    // Zahlungsfrist in Tagen ab heute — vom Gläubiger gesetzt, keine gesetzliche Frist.
+    { key: 'frist', type: 'wahl', optionen: ['10', '20', '30'], vorgabe: '20' },
+    { key: 'zahlungsweg', type: 'text' },
+  ],
+  claimDispute: [
+    { key: 'rechnungsnummer', type: 'text' },
+    { key: 'rechnungsdatum', type: 'date' },
+    { key: 'umfang', type: 'wahl', optionen: ['ganz', 'teil'], vorgabe: 'ganz' },
+    { key: 'teilbetrag', type: 'betrag', nurWenn: { umfang: 'teil' } },
+    { key: 'grund', type: 'wahl', optionen: ['unklar', 'bezahlt'], vorgabe: 'unklar' },
+    { key: 'einschaetzung', type: 'text' },
+  ],
+  installmentRequest: [
+    { key: 'rechnungsnummer', type: 'text' },
+    { key: 'betrag', type: 'betrag' },
+    { key: 'rate', type: 'betrag' },
+    { key: 'ab', type: 'date' },
   ],
 };
 
@@ -891,6 +943,97 @@ function generateDeathNotice(data, t, options = {}) {
   });
 }
 
+// ─── Mahnung (27.09.2026) ─────────────────────────────────
+// Betrag im Brief: ganze Franken ohne, sonst mit Rappen (wie beim Rechtsvorschlag).
+const franken = (n, fill) => (n > 0 ? zahl(n, { stellen: Number.isInteger(n) ? 0 : 2 }) : fill);
+
+// Zahlungsfrist der eigenen Mahnung: heute + gewählte Tage. Keine gesetzliche Frist — der
+// Gläubiger setzt sie selbst; darum darf sie hier ab HEUTE laufen (anders als Ablauf-Fristen).
+export function mahnFrist(tage, heute = heuteIso()) {
+  const n = parseInt(tage, 10);
+  return n > 0 ? plusTage(heute, n) : null;
+}
+
+// (g) Selbst mahnen — OR Art. 102 Abs. 1: Mit der Mahnung gerät der Schuldner einer FÄLLIGEN
+// Forderung in Verzug; ab dann Verzugszins 5 % pro Jahr (Art. 104 Abs. 1). 🛑 Der Brief
+// BEHAUPTET keinen aufgelaufenen Zinsbetrag und kein Verzugsdatum (Verfalltag nach Abs. 2 kennt
+// die App nicht) — er behält den Zins nur vor. Stufe «erinnerung» ohne Zins und ohne
+// Betreibungs-Hinweis: freundlich zuerst.
+function generatePaymentReminder(data, t, options = {}) {
+  const a = leseAngaben('paymentReminder', options.angaben);
+  const k = 'briefe.paymentReminder.';
+  const fill = t('briefe.fillIn');
+  const grund = a.grund || fill;
+  const frist = formatDate(mahnFrist(a.frist)) || fill;
+  const mahnung = a.stufe === 'mahnung';
+  return briefGeruest(data, t, {
+    recipientHtml: `<div class="placeholder">${esc(t(k + 'recipient'))}</div>`,
+    subject: t(k + 'subject.' + a.stufe, { reason: grund }),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body1', { reason: grund, amount: franken(a.betrag, fill), date: formatDate(a.faellig) || fill }),
+      t(k + 'frist.' + a.stufe, { date: frist }),
+      a.zahlungsweg ? t(k + 'zahlungsweg', { text: a.zahlungsweg }) : '',
+      mahnung ? t(k + 'zins') : '',
+      mahnung ? t(k + 'weitere') : '',
+      t(k + 'bereitsBezahlt'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
+// (h) Forderung bestreiten — keine eigene Gesetzesgrundlage und keine Formvorschrift. Der
+// Brief erklärt die Bestreitung und verlangt Unterlagen; er erkennt NICHTS an (OR Art. 135
+// Ziff. 1 — darum kein «den Rest zahle ich», auch nicht bei Teilbestreitung). «bereits
+// bezahlt» ist eine Aussage der Person selbst (Wahlfeld), eine Einschätzung erscheint nur als
+// solche. Er ist kein Rechtsvorschlag: gegen einen Zahlungsbefehl hilft nur SchKG Art. 74.
+function generateClaimDispute(data, t, options = {}) {
+  const a = leseAngaben('claimDispute', options.angaben);
+  const k = 'briefe.claimDispute.';
+  const fill = t('briefe.fillIn');
+  const nummer = a.rechnungsnummer || fill;
+  const datum = formatDate(a.rechnungsdatum) || fill;
+  return briefGeruest(data, t, {
+    recipientHtml: `<div class="placeholder">${recipientPlaceholder(t)}</div>`,
+    subject: t(k + 'subject', { number: nummer, date: datum }),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body1', { number: nummer, date: datum }),
+      a.umfang === 'teil' ? t(k + 'teil', { amount: franken(a.teilbetrag, fill) }) : t(k + 'ganz'),
+      t(k + 'grund.' + a.grund),
+      a.einschaetzung ? t(k + 'einschaetzung', { text: a.einschaetzung }) : '',
+      t(k + 'body2'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
+// (i) Ratenzahlung vorschlagen — ein Vorschlag, keine Vereinbarung: der Gläubiger muss nicht
+// zustimmen, darum bittet der Brief um schriftliche Bestätigung. 🛑 Ein Ratengesuch und jede
+// Anzahlung sind Anerkennung (OR Art. 135 Ziff. 1) — die Verjährung beginnt neu (Art. 137
+// Abs. 1). Die Warnung steht VOR dem Formular (BriefGenerator.jsx) und im Bildschirm-Hinweis.
+// Keine Rechnung «Anzahl Raten»: Verzugszins und Gebühren kennt die App nicht.
+function generateInstallmentRequest(data, t, options = {}) {
+  const a = leseAngaben('installmentRequest', options.angaben);
+  const k = 'briefe.installmentRequest.';
+  const fill = t('briefe.fillIn');
+  const nummer = a.rechnungsnummer || fill;
+  return briefGeruest(data, t, {
+    recipientHtml: `<div class="placeholder">${recipientPlaceholder(t)}</div>`,
+    subject: t(k + 'subject', { number: nummer }),
+    absaetze: [
+      t(k + 'salutation'),
+      t(k + 'body1', { number: nummer, amount: franken(a.betrag, fill) }),
+      t(k + 'body2', { rate: franken(a.rate, fill), date: formatDate(a.ab) || fill }),
+      t(k + 'body3'),
+      t(k + 'closing'),
+    ],
+    legalNote: t(k + 'legalNote'),
+  });
+}
+
 // ─── Public API ───────────────────────────────────────────
 
 const GENERATORS = {
@@ -898,6 +1041,9 @@ const GENERATORS = {
   dismissalObjection: generateDismissalObjection,
   debtObjection: generateDebtObjection,
   deathNotice: generateDeathNotice,
+  paymentReminder: generatePaymentReminder,
+  claimDispute: generateClaimDispute,
+  installmentRequest: generateInstallmentRequest,
   leaseTermination: generateLeaseTermination,
   addressChange: generateAddressChange,
   taxExtension: generateTaxExtension,
