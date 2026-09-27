@@ -3185,6 +3185,8 @@ export default {
       zuWenig: '{rate} pro Monat reichen nicht für die Zinsen (rund {zins} pro Monat) — die Schulden würden wachsen. Eine Schuldenberatung hilft, einen Weg zu finden.',
       zuLang: 'Mit {rate} pro Monat dauert es länger als 30 Jahre. Eine Schuldenberatung hilft, einen Weg zu finden.',
       fertigIn: '{name}: bezahlt nach rund {monate} Monaten',
+      ergebnisEins: 'Mit {rate} pro Monat wären diese Schulden in rund einem Monat bezahlt; Zinsen insgesamt rund {zins}.',
+      fertigInEins: '{name}: bezahlt in rund einem Monat',
       vereinfacht: 'Richtwert, vereinfacht: Die ganze Rate geht jeweils an die erste offene Schuld in der Reihenfolge oben; die Zinsen der übrigen laufen weiter. Gebühren und Verzugszinsen sind nicht eingerechnet.',
       ausBudget: { sie: 'Vorschlag aus Ihrem Budget: Einnahmen {einnahmen} minus Ausgaben {ausgaben} (ohne die heutigen Schuldenraten) — rund {vorschlag}.', du: 'Vorschlag aus deinem Budget: Einnahmen {einnahmen} minus Ausgaben {ausgaben} (ohne die heutigen Schuldenraten) — rund {vorschlag}.' },
       budgetFehlt: 'Für einen Vorschlag aus dem Budget fehlt noch: {was}.',

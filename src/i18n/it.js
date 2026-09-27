@@ -3119,6 +3119,8 @@ export default {
       zuWenig: '{rate} al mese non bastano per gli interessi (circa {zins} al mese) — i debiti aumenterebbero. Una consulenza in materia di debiti aiuta a trovare una via.',
       zuLang: 'Con {rate} al mese ci vorrebbero più di 30 anni. Una consulenza in materia di debiti aiuta a trovare una via.',
       fertigIn: '{name}: pagato dopo circa {monate} mesi',
+      ergebnisEins: 'Con {rate} al mese questi debiti sarebbero pagati in circa un mese; interessi in totale circa {zins}.',
+      fertigInEins: '{name}: pagato in circa un mese',
       vereinfacht: 'Valore indicativo, semplificato: tutta la rata va ogni volta al primo debito aperto nell’ordine sopra; gli interessi degli altri continuano a decorrere. Spese e interessi moratori non inclusi.',
       ausBudget: { sie: 'Proposta dal Suo budget: entrate {einnahmen} meno uscite {ausgaben} (senza le rate di debito attuali) — circa {vorschlag}.', du: 'Proposta dal tuo budget: entrate {einnahmen} meno uscite {ausgaben} (senza le rate di debito attuali) — circa {vorschlag}.' },
       budgetFehlt: 'Per una proposta dal budget manca ancora: {was}.',

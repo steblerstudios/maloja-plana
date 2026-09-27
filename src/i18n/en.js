@@ -3161,6 +3161,8 @@ export default {
       zuWenig: '{rate} a month does not cover the interest (about {zins} a month) — the debts would grow. A debt advice service can help find a way.',
       zuLang: 'With {rate} a month it would take more than 30 years. A debt advice service can help find a way.',
       fertigIn: '{name}: paid off after about {monate} months',
+      ergebnisEins: 'With {rate} a month, these debts would be paid off in about one month; interest in total about {zins}.',
+      fertigInEins: '{name}: paid off in about one month',
       vereinfacht: 'Estimate, simplified: the whole amount always goes to the first open debt in the order above; interest on the others keeps running. Fees and default interest are not included.',
       ausBudget: 'Suggestion from your budget: income {einnahmen} minus expenses {ausgaben} (without your current debt repayments) — about {vorschlag}.',
       budgetFehlt: 'For a suggestion from the budget, this is still missing: {was}.',

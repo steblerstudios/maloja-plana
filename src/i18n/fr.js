@@ -3161,6 +3161,8 @@ export default {
       zuWenig: '{rate} par mois ne suffisent pas pour les intérêts (environ {zins} par mois) — les dettes augmenteraient. Un service de désendettement aide à trouver une solution.',
       zuLang: 'Avec {rate} par mois, il faudrait plus de 30 ans. Un service de désendettement aide à trouver une solution.',
       fertigIn: '{name} : payé après environ {monate} mois',
+      ergebnisEins: 'Avec {rate} par mois, ces dettes seraient payées en environ un mois ; intérêts au total environ {zins}.',
+      fertigInEins: '{name} : payé en environ un mois',
       vereinfacht: 'Valeur indicative, simplifiée : tout le montant va chaque fois à la première dette ouverte dans l’ordre ci-dessus ; les intérêts des autres continuent de courir. Frais et intérêts moratoires non compris.',
       ausBudget: { sie: 'Proposition tirée de votre budget : revenus {einnahmen} moins dépenses {ausgaben} (sans les remboursements de dettes actuels) — environ {vorschlag}.', du: 'Proposition tirée de ton budget : revenus {einnahmen} moins dépenses {ausgaben} (sans les remboursements de dettes actuels) — environ {vorschlag}.' },
       budgetFehlt: 'Pour une proposition tirée du budget, il manque encore : {was}.',
