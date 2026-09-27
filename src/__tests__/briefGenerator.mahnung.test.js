@@ -209,9 +209,27 @@ describe('Ablauf «Mahnung erhalten»', () => {
     expect(html).toContain('mindestens 30 Tage');
     expect(html).toContain('OR Art. 257d');
   });
-  it('keine Behauptung, Mahngebühren seien verboten oder erlaubt — nur die Frage nach der Grundlage', () => {
-    expect(html).toContain('worauf sie sich stützen');
-    expect(html).not.toMatch(/Mahngebühren sind (nicht )?(erlaubt|verboten|unzulässig)/);
+  it('Mahngebühren (27.09., Auftrag Stebler Studios): in der Regel nicht geschuldet — mit Quelle und Weg', () => {
+    expect(html).toContain('Mahn- und Inkassogebühren müssen Sie in der Regel nicht bezahlen');
+    expect(html).toContain('K-Tipp Rechtsschutz');
+    expect(html).toContain('OR Art. 86 Abs. 1');
+    // nicht absolut: Ausnahmen (Krankenkasse KVV 105b, Vereinbarung) bleiben genannt
+    expect(html).toContain('nur, wenn sie vorher im Vertrag vereinbart wurden');
+    expect(html).toContain('Ausnahmen bei Krankenkasse');
+  });
+  it('Bussen: Raten, Ersatzfreiheitsstrafe, gemeinnützige Arbeit — belegt', () => {
+    expect(html).toContain('StGB Art. 35 Abs. 1');
+    expect(html).toContain('Art. 106 Abs. 2 und 4');
+    expect(html).toContain('Art. 79a Abs. 1 und 4');
+  });
+  it('Verlustschein: zinsfrei (SchKG 149 Abs. 4)', () => {
+    expect(html).toContain('Zinsen sind darauf keine geschuldet (Art. 149 Abs. 4)');
+  });
+  it('Bestreitungsbrief: Grund «nur Gebühren»', () => {
+    const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang: 'teil', teilbetrag: '30', grund: 'gebuehren' } }));
+    expect(k).toContain('im Umfang von CHF 30');
+    expect(k).toContain('nicht vereinbart');
+    expect(k).not.toMatch(/anerkenne|begleiche/i);
   });
 });
 
