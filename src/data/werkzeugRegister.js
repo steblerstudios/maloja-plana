@@ -72,7 +72,7 @@ export const WERKZEUGE = [
 export const werkzeugKey = (w) => w.key || w.view;
 
 // Werkzeuge eines Fachs, in Register-Reihenfolge.
-export const werkzeugeImFach = (fach) => WERKZEUGE.filter((w) => w.fach === fach);
+export const werkzeugeImFach = (fach, liste = WERKZEUGE) => liste.filter((w) => w.fach === fach);
 
 // Die Einträge, die zusätzlich im Menü stehen.
 export const MENUE_WERKZEUGE = WERKZEUGE.filter((w) => w.imMenue);

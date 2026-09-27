@@ -144,3 +144,39 @@ describe('Nichts wird unerreichbar', () => {
     expect(nav).not.toMatch(/key: 'finanzuebersicht', label:/);
   });
 });
+
+// VORSCHAU-VARIANTEN — vor dem Merge entfernen (samt src/utils/vorschauVarianten.js).
+import { leseVarianten, werkzeugeFuerVariante, PLAETZE, INHALTE, MENUE_ZUSAETZE, OBEN, STANDARD } from '../utils/vorschauVarianten.js';
+
+describe('Vorschau-Varianten (nur zum Vergleichen)', () => {
+  it('ohne Parameter gilt der Stand der Vorschau; Unbekanntes fällt auf den Standard zurück', () => {
+    expect(leseVarianten('')).toEqual(STANDARD);
+    expect(leseVarianten('?platz=seitlich&inhalt=x&menue=foo')).toEqual(STANDARD);
+    expect(leseVarianten('?platz=karte&inhalt=beide&menue=steuern,lebens,steuern'))
+      .toEqual({ platz: 'karte', inhalt: 'beide', menue: ['steuern', 'lebens'] });
+    expect(werkzeugeFuerVariante(WERKZEUGE, STANDARD)).toEqual(WERKZEUGE);
+  });
+
+  const teilmengen = (xs) => xs.reduce((acc, x) => acc.concat(acc.map((a) => [...a, x])), [[]]);
+  const kombis = [];
+  for (const platz of PLAETZE) for (const inhalt of INHALTE) for (const menue of teilmengen(Object.keys(MENUE_ZUSAETZE))) kombis.push({ platz, inhalt, menue });
+
+  it(`keine der ${3 * 3 * 8} Kombinationen verliert eine Ansicht`, () => {
+    const heute = [...new Set([...HEUTE_IM_MENUE, ...HEUTE_AUF_DEM_DASHBOARD])];
+    const erlaubt = new Set([...GEGENSTAND_KEYS, AUSSENFACH, EINSTELLUNGEN, OBEN]);
+    for (const v of kombis) {
+      const liste = werkzeugeFuerVariante(WERKZEUGE, v);
+      expect(liste).toHaveLength(WERKZEUGE.length);
+      for (const w of liste) expect(erlaubt.has(w.fach), `${JSON.stringify(v)}: ${werkzeugKey(w)} → ${w.fach}`).toBe(true);
+      const nachher = new Set([
+        ...alleWege().map((w) => w.view),
+        ...liste.map(werkzeugKey), // Gepäck (jedes Fach inkl. oben) oder Einstellungen
+        ...liste.filter((w) => w.imMenue).map(werkzeugKey), 'gepaeck', 'settings',
+      ]);
+      const verloren = heute.filter((x) => !nachher.has(x));
+      expect(verloren, JSON.stringify(v) + ' verliert ' + verloren.join(', ')).toEqual([]);
+      // Jeder Menüeintrag liegt auch im Gepäck (nie nur unter Einstellungen).
+      for (const w of liste.filter((x) => x.imMenue)) expect(w.fach).not.toBe(EINSTELLUNGEN);
+    }
+  });
+});

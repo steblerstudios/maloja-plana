@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { GEGENSTAENDE, gegenstandReadiness } from './data/gepaeck.js';
-import { werkzeugeImFach, werkzeugKey, AUSSENFACH } from './data/werkzeugRegister.js';
+import { WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH } from './data/werkzeugRegister.js';
+// VORSCHAU-VARIANTEN — vor dem Merge entfernen
+import { aktuelleVarianten, werkzeugeFuerVariante, OBEN } from './utils/vorschauVarianten.js';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
@@ -18,6 +20,10 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [packed, setPacked] = useState(!reduce);   // gepackt → packt sich beim Öffnen einmal aus
   const [openKey, setOpenKey] = useState(null);     // ein Gegenstand offen (ruhiges Akkordeon)
+  // VORSCHAU-VARIANTEN — vor dem Merge entfernen (Standard = Stand der Vorschau)
+  const variante = aktuelleVarianten();
+  const register = werkzeugeFuerVariante(WERKZEUGE, variante);
+  const imFach = (fach) => werkzeugeImFach(fach, register);
 
   useEffect(() => {
     if (reduce) return undefined;
@@ -73,12 +79,26 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       h('path', { key: 4, d: 'M20 30h8M20 34h8', stroke: M.line, strokeWidth: 1 }),
       h('rect', { key: 5, x: 21, y: 16, width: 6, height: 4, rx: 1, fill: M.brass }),
     ]);
-    // Portemonnaie: kein eigenes Bild gezeichnet — das bestehende Zeichen «budgetWallet»
-    // aus dem Icon-System, in Leder getönt (offene Gestaltungsfrage im PR).
-    if (name === 'wallet') return h('span', {
-      'aria-hidden': 'true',
-      style: { display: 'block', width: '42px', height: '42px', padding: '5px', boxSizing: 'border-box', color: M.wood },
-    }, Icons.budgetWallet());
+    // Portemonnaie (27.09.2026, Entscheid «eigene Illustration»): im Stil der anderen —
+    // Leder-Körper mit Rand (stroke), Falz- und Nahtlinie (line), Laschen-Druckknopf aus
+    // Messing, eine Note in Wachsleinen. Leder = dieselben Holz-/Ledertöne wie die Kiste.
+    if (name === 'wallet') return wrap([
+      h('rect', { key: 1, x: 12, y: 11, width: 22, height: 9, rx: 1.5, fill: M.canvas }),
+      h('path', { key: 2, d: 'M15 14.5h9', stroke: M.line, strokeWidth: 1 }),
+      h('rect', { key: 3, x: 7, y: 16, width: 34, height: 22, rx: 4, fill: M.wood, stroke: M.stroke, strokeWidth: 1 }),
+      h('path', { key: 4, d: 'M7 21h34', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 5, d: 'M11 34h12', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 6, d: 'M41 23H30q-3 0-3 3v2q0 3 3 3h11z', fill: M.woodLo, stroke: M.line, strokeWidth: 1 }),
+      h('circle', { key: 7, cx: 31, cy: 27, r: 2.2, fill: M.brass }),
+    ]);
+    // Aussenfach als Karte (nur Vorschau-Variante platz=karte): die aufgesetzte Tasche des
+    // Rucksacks — Wachsleinen mit Messing-Riemen, wie die Fronttasche des grossen Rucksacks.
+    if (name === 'pocket') return wrap([
+      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 24, rx: 7, fill: M.canvas, stroke: M.stroke, strokeWidth: 1 }),
+      h('path', { key: 2, d: 'M8 22q16 5 32 0', fill: 'none', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 3, d: 'M12 28h24', stroke: M.brass, strokeWidth: 2, strokeLinecap: 'round' }),
+      h('circle', { key: 4, cx: 24, cy: 28, r: 2.4, fill: M.brass }),
+    ]);
     return wrap([
       h('rect', { key: 1, x: 8, y: 14, width: 32, height: 22, rx: 2, fill: M.paper, stroke: M.stroke, strokeWidth: 1 }),
       h('path', { key: 2, d: 'M8 15l16 12 16-12', fill: 'none', stroke: M.line, strokeWidth: 1.4 }),
@@ -191,8 +211,8 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   const card = (g, i) => {
     const open = openKey === g.key;
     const count = g.wege.length;
-    const werkzeuge = werkzeugeImFach(g.key);
-    const r = gegenstandReadiness(g.key, data);
+    const werkzeuge = imFach(g.key);
+    const r = g.titel ? { done: 0, total: 0 } : gegenstandReadiness(g.key, data);
     const inhalt = [
       count ? (count === 1 ? t('gepaeck.wegeOne') : t('gepaeck.wege', { n: count })) : null,
       werkzeuge.length ? (werkzeuge.length === 1 ? t('gepaeck.werkzeugeOne') : t('gepaeck.werkzeuge', { n: werkzeuge.length })) : null,
@@ -214,9 +234,9 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       },
         h('span', { style: { flexShrink: 0 } }, ill(g.ill)),
         h('span', { style: { flex: 1, minWidth: 0 } },
-          h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('gepaeck.obj.' + g.key)),
+          h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t(g.titel || 'gepaeck.obj.' + g.key)),
           h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } },
-            t('gepaeck.objSub.' + g.key) + (inhalt ? ' · ' + inhalt : '')),
+            (g.sub ? t(g.sub) : t('gepaeck.objSub.' + g.key) + (inhalt ? ' · ' + inhalt : ''))),
           dots(r),
         ),
         h('span', {
@@ -250,7 +270,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // ── Aussenfach «Ablegen und ordnen» ─────────────────────────────────────────
   // Kein Lebensbereich, sondern das Fach aussen am Rucksack: immer offen, leise abgesetzt
   // (gestrichelter Rand, Grund `up`), damit es nicht wie ein achter Gegenstand wirkt.
-  const aussen = werkzeugeImFach(AUSSENFACH);
+  const aussen = imFach(AUSSENFACH);
   const aussenfach = h('section', {
     'aria-labelledby': 'gepaeck-aussenfach',
     style: {
@@ -261,9 +281,30 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   },
     h('h2', { id: 'gepaeck-aussenfach', style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: 0 } }, t('gepaeck.aussenfach')),
     h('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: '2px 0 ' + space.sm + 'px' } }, t('gepaeck.aussenfachSub')),
-    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', columnGap: space.sm + 'px' } },
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', columnGap: space.sm + 'px', rowGap: 0 } },
       aussen.map((w) => werkzeugChip(w))),
   );
+
+  // ── VORSCHAU-VARIANTEN — vor dem Merge entfernen ────────────────────────────
+  // platz=karte: das Aussenfach als achte, zuklappbare Karte (gleiche Karte wie ein Gegenstand).
+  const aussenKarte = card({ key: AUSSENFACH, ill: 'pocket', wege: [], titel: 'gepaeck.aussenfach', sub: 'gepaeck.aussenfachSub' }, GEGENSTAENDE.length);
+  // inhalt=beide: «Was steht mir zu?» als eigener Eintrag über den Gegenständen.
+  const oben = imFach(OBEN);
+  const obenEintraege = oben.length ? h('div', { style: { marginBottom: space.md + 'px' } },
+    oben.map((w) => h('button', {
+      key: werkzeugKey(w), type: 'button', onClick: () => oeffne(w),
+      style: {
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left',
+        padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, color: palette.text,
+        border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+      },
+    },
+      h('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', flexShrink: 0, color: palette.sageDeep } }, Icons[w.icon] ? Icons[w.icon]() : null),
+      h('span', { style: { flex: 1, minWidth: 0 } },
+        h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('nav.anspruch')),
+        w.sub ? h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } }, t(w.sub)) : null),
+      h('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'),
+    ))) : null;
 
   const backpackIcon = h('svg', { viewBox: '0 0 24 24', width: 22, height: 22, fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
     h('path', { d: 'M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z' }),
@@ -277,10 +318,12 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     h(PageTitle, { palette, icon: backpackIcon, style: { marginBottom: space.sm + 'px' } }, t('gepaeck.title')),
     h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, maxWidth: '680px', margin: '0 0 ' + space.md + 'px 0' } }, t('gepaeck.intro')),
     h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: space.lg + 'px' } }, bag, toggle),
+    obenEintraege,
+    variante.platz === 'oben' ? aussenfach : null,
     h('div', {
       style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.md + 'px', alignItems: 'start' },
-    }, GEGENSTAENDE.map((g, i) => card(g, i))),
-    aussenfach,
+    }, GEGENSTAENDE.map((g, i) => card(g, i)).concat(variante.platz === 'karte' ? [aussenKarte] : [])),
+    variante.platz === 'unten' ? aussenfach : null,
     h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, maxWidth: '680px', marginTop: space.lg + 'px' } }, t('gepaeck.legend')),
   );
 };
