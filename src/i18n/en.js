@@ -3578,6 +3578,7 @@ export default {
       ganz: 'I dispute this claim.',
       teil: 'I dispute this claim in the amount of CHF {amount}.',
       gebuehrenSatz: 'I dispute the reminder or collection fees charged of CHF {amount}.',
+      zahlungForderung: 'I will pay the claim itself together with default interest; my payment does not cover the disputed fees.',
       grund: {
         unklar: 'I cannot follow it. Please send me a detailed breakdown and the documents on which the claim is based.',
         bezahlt: 'According to my records, I have already paid this amount. A copy of the proof of payment is enclosed.',
@@ -3587,6 +3588,7 @@ export default {
       body2: 'Until this has been clarified, I ask you to refrain from further reminders and fees and from debt collection.',
       closing: 'Kind regards',
       legalNote: 'This letter does not acknowledge the claim. It records the dispute but does not prevent debt collection: if a payment order arrives, the 10-day deadline for an objection applies (SchKG Art. 74). If you only dispute part of the claim, check with an advice service whether the rest could count as acknowledged. This template is guidance, not legal advice. Registered mail recommended.',
+      legalNoteGebuehren: 'With this letter you acknowledge the claim itself (OR Art. 135 no. 1) — only the fees are disputed. Note “claim and default interest, fees disputed” with the payment. This template is guidance, not legal advice. Registered mail recommended.',
       rest: 'I will comment on the remaining amount once I have received the documents; this does not constitute acknowledgement.',
     },
     installmentRequest: {

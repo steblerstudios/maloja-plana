@@ -1012,12 +1012,16 @@ function generateClaimDispute(data, t, options = {}) {
         : a.umfang === 'teil' ? t(k + 'teil', { amount: franken(a.teilbetrag, fill) }) : t(k + 'ganz'),
       // Teilbestreitung: ausdrücklich KEINE Anerkennung des Rests (Rechts-Prüfer 27.09.2026).
       !nurGebuehren && a.umfang === 'teil' ? t(k + 'rest') : '',
+      // Entscheid Stebler Studios 27.09.2026: bei «nur Gebühren» die Zahlung der Forderung erwähnen.
+      // Das ist eine Anerkennung (OR Art. 135 Ziff. 1), die durch das Zahlen ohnehin entsteht —
+      // darum sagt es der Bildschirm-Hinweis (legalNoteGebuehren) offen.
+      nurGebuehren ? t(k + 'zahlungForderung') : '',
       t(k + 'grund.' + a.grund),
       a.einschaetzung ? t(k + 'einschaetzung', { text: a.einschaetzung }) : '',
       t(k + 'body2'),
       t(k + 'closing'),
     ],
-    legalNote: t(k + 'legalNote'),
+    legalNote: t(k + (nurGebuehren ? 'legalNoteGebuehren' : 'legalNote')),
   });
 }
 

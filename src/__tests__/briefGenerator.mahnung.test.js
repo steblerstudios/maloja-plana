@@ -236,8 +236,18 @@ describe('Ablauf «Mahnung erhalten»', () => {
       expect(k).not.toContain('Ich bestreite diese Forderung');
       expect(k).not.toContain('übrigen Betrag');
       expect(k).not.toContain('999');
-      expect(k).not.toMatch(/anerkenne|begleiche/i);
+      // Entscheid Stebler Studios: die Zahlung der Forderung wird erwähnt — und der Hinweis sagt offen,
+      // dass das eine Anerkennung ist (OR 135 Ziff. 1).
+      expect(k).toContain('Die Forderung selbst samt Verzugszins begleiche ich');
+      const html = generateLetter('claimDispute', person, t, { angaben: { grund: 'gebuehren' } });
+      expect(hinweis(html)).toContain('anerkennen Sie die Forderung selbst');
+      expect(hinweis(html)).not.toContain('erkennt die Forderung nicht an');
     }
+  });
+  it('ohne «nur Gebühren» bleibt es bei «erkennt nicht an» und ohne Zahlungssatz', () => {
+    const html = generateLetter('claimDispute', person, t, { angaben: {} });
+    expect(koerper(html)).not.toContain('begleiche');
+    expect(hinweis(html)).toContain('erkennt die Forderung nicht an');
   });
   it('Formular: bei «nur Gebühren» kein Umfang, dafür das Gebührenfeld', () => {
     const a = { grund: 'gebuehren', umfang: 'teil' };

@@ -3613,6 +3613,7 @@ export default {
       ganz: 'Ich bestreite diese Forderung.',
       teil: 'Ich bestreite diese Forderung im Umfang von CHF {amount}.',
       gebuehrenSatz: 'Ich bestreite die verlangten Mahn- bzw. Inkassogebühren von CHF {amount}.',
+      zahlungForderung: 'Die Forderung selbst samt Verzugszins begleiche ich; meine Zahlung betrifft nicht die bestrittenen Gebühren.',
       grund: {
         unklar: 'Sie ist für mich nicht nachvollziehbar. Bitte senden Sie mir eine detaillierte Aufstellung und die Unterlagen, auf die sich die Forderung stützt.',
         bezahlt: 'Nach meinen Unterlagen habe ich diesen Betrag bereits bezahlt. Eine Kopie des Zahlungsbelegs liegt bei.',
@@ -3622,6 +3623,7 @@ export default {
       body2: 'Bis zur Klärung bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
       closing: 'Freundliche Grüsse',
       legalNote: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreiten Sie nur einen Teil, klären Sie mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+      legalNoteGebuehren: { sie: 'Mit diesem Brief anerkennen Sie die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerken Sie bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Mit diesem Brief anerkennst du die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerk bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' },
       rest: 'Zum übrigen Betrag äussere ich mich nach Erhalt der Unterlagen; eine Anerkennung ist damit nicht verbunden.',
     },
     installmentRequest: {

@@ -3578,6 +3578,7 @@ export default {
       ganz: 'Contesto questo credito.',
       teil: 'Contesto questo credito per un importo di CHF {amount}.',
       gebuehrenSatz: 'Contesto le spese di sollecito o d’incasso richieste di CHF {amount}.',
+      zahlungForderung: 'Salderò il credito stesso con gli interessi moratori; il mio pagamento non riguarda le spese contestate.',
       grund: {
         unklar: 'Per me non è comprensibile. Vi prego di inviarmi un conteggio dettagliato e i documenti su cui si fonda il credito.',
         bezahlt: 'Secondo i miei documenti ho già pagato questo importo. Allego una copia della ricevuta di pagamento.',
@@ -3587,6 +3588,7 @@ export default {
       body2: 'In attesa di un chiarimento, Vi prego di astenerVi da ulteriori solleciti e spese e da un’esecuzione.',
       closing: 'Distinti saluti',
       legalNote: 'Questa lettera non riconosce il credito. Registra la contestazione, ma non impedisce un’esecuzione: se arriva un precetto esecutivo, vale il termine di 10 giorni per l’opposizione (LEF art. 74). Se contesta solo una parte, chiarisca con un servizio di consulenza se il resto potrebbe valere come riconosciuto. Questo modello è un aiuto d’orientamento, non una consulenza giuridica. Si consiglia la raccomandata.',
+      legalNoteGebuehren: { sie: 'Con questa lettera Lei riconosce il credito stesso (CO art. 135 n. 1) — contestate sono solo le spese. Indichi al pagamento «credito e interessi moratori, spese contestate». Questo modello è un aiuto d’orientamento, non una consulenza giuridica. Si consiglia la raccomandata.', du: 'Con questa lettera riconosci il credito stesso (CO art. 135 n. 1) — contestate sono solo le spese. Indica al pagamento «credito e interessi moratori, spese contestate». Questo modello è un aiuto d’orientamento, non una consulenza giuridica. Si consiglia la raccomandata.' },
       rest: 'Mi esprimerò sull’importo restante dopo aver ricevuto i documenti; ciò non costituisce un riconoscimento.',
     },
     installmentRequest: {

@@ -3578,6 +3578,7 @@ export default {
       ganz: 'Je conteste cette créance.',
       teil: 'Je conteste cette créance à hauteur de CHF {amount}.',
       gebuehrenSatz: 'Je conteste les frais de rappel ou d’encaissement réclamés de CHF {amount}.',
+      zahlungForderung: 'Je règle la créance elle-même avec l’intérêt moratoire ; mon paiement ne concerne pas les frais contestés.',
       grund: {
         unklar: 'Elle n’est pas compréhensible pour moi. Je vous prie de m’envoyer un décompte détaillé et les documents sur lesquels la créance se fonde.',
         bezahlt: 'Selon mes documents, j’ai déjà payé ce montant. Vous trouverez ci-joint une copie de la preuve de paiement.',
@@ -3587,6 +3588,7 @@ export default {
       body2: 'Dans l’attente d’une clarification, je vous prie de renoncer à d’autres rappels et frais ainsi qu’à une poursuite.',
       closing: 'Meilleures salutations',
       legalNote: 'Cette lettre ne reconnaît pas la créance. Elle consigne la contestation, mais n’empêche pas une poursuite : si un commandement de payer arrive, le délai de 10 jours pour former opposition s’applique (LP art. 74). Si vous ne contestez qu’une partie, clarifiez avec un service de conseil si le solde pourrait être considéré comme reconnu. Ce modèle est une aide d’orientation, pas un conseil juridique. Envoi recommandé conseillé.',
+      legalNoteGebuehren: { sie: 'Par cette lettre, vous reconnaissez la créance elle-même (CO art. 135, ch. 1) — seuls les frais sont contestés. Indiquez lors du paiement « créance et intérêt moratoire, frais contestés ». Ce modèle est une aide d’orientation, pas un conseil juridique. Envoi recommandé conseillé.', du: 'Par cette lettre, tu reconnais la créance elle-même (CO art. 135, ch. 1) — seuls les frais sont contestés. Indique lors du paiement « créance et intérêt moratoire, frais contestés ». Ce modèle est une aide d’orientation, pas un conseil juridique. Envoi recommandé conseillé.' },
       rest: 'Je me prononcerai sur le solde après réception des justificatifs ; cela ne vaut pas reconnaissance.',
     },
     installmentRequest: {
