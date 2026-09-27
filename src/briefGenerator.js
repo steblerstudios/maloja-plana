@@ -743,7 +743,8 @@ export const BRIEF_ANGABEN = {
     { key: 'rechnungsdatum', type: 'date' },
     { key: 'umfang', type: 'wahl', optionen: ['ganz', 'teil'], vorgabe: 'ganz' },
     { key: 'teilbetrag', type: 'betrag', nurWenn: { umfang: 'teil' } },
-    { key: 'grund', type: 'wahl', optionen: ['unklar', 'bezahlt'], vorgabe: 'unklar' },
+    // 'gebuehren' (27.09.2026): nur Mahn-/Inkassogebühren bestreiten — nicht vereinbart (K-Tipp, SRF).
+    { key: 'grund', type: 'wahl', optionen: ['unklar', 'bezahlt', 'gebuehren'], vorgabe: 'unklar' },
     { key: 'einschaetzung', type: 'text' },
   ],
   installmentRequest: [

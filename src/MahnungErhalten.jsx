@@ -80,6 +80,8 @@ export const MahnungErhalten = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step4LinkWohnung'), onClick: () => onNavigate('wohnunggekuendigt') }),
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('mahnung.step4Kk')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step4LinkIpv'), onClick: () => onNavigate('premium') }),
+      // Bussen und Geldstrafen (27.09.2026): StGB 35, 36, 79a, 106.
+      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('mahnung.step4Bussen')),
       // Steuern (27.09.2026): DBG 163/164/166/167 — Erlass nur VOR dem Zahlungsbefehl (167 Abs. 4).
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('mahnung.step4Steuer')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step4LinkSteuer'), onClick: () => onNavigate('tax') })

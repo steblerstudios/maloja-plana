@@ -187,6 +187,13 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     fontSize: text.xs
   };
 
+  // Ruhiger Erklärkasten mit Titel, Text und Quellenzeile (Verlustscheine, Bussen — 27.09.2026).
+  const erklaerKasten = (key, titel, textKey, quelleKey) => React.createElement('div', { key, style: { padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md } },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, titel),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } }, t(textKey)),
+    quelleKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t(quelleKey), null, t))
+  );
+
   const statusLabel = (s) => s === 'paid' ? t('schulden.statusPaid') : s === 'overdue' ? t('schulden.overdue') : t('schulden.statusOpen');
   const tabs = [
     { key: 'overview', icon: 'dashboard', label: t('schulden.overview') },
@@ -317,6 +324,10 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: 1.5 } }, t('schulden.plan.vereinfacht'))
         ),
 
+        // Bussen und Geldstrafen (StGB 35, 36, 79a, 106) — nur, wenn eine offene Busse erfasst ist.
+        prioritized.some(d => d.category === 'bussen') && React.createElement('div', { style: { marginTop: space.md } },
+          erklaerKasten('bu', t('schulden.bussen.title'), 'mahnung.step4Bussen', 'schulden.bussen.quelle')),
+
         // Steuern und Schulden (27.09.2026, Frage Stebler Studios): belegt an DBG/StHG.
         React.createElement('div', { style: { marginTop: space.md, padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm } },
           React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.steuer.title')),
@@ -405,6 +416,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     // Verlustscheine View
     view === 'verlustscheine' && React.createElement('div', { role: 'tabpanel' },
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.lossReceipts')),
+      // Was ein Verlustschein bedeutet (SchKG 149, 149a, 265) — 27.09.2026.
+      erklaerKasten('vs', t('schulden.verlustschein.title'), 'schulden.verlustschein.text', 'schulden.verlustschein.quelle'),
 
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.lossReceipts')),
 
