@@ -14,6 +14,7 @@ import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
+import { miniRucksack } from './components/miniRucksack.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
@@ -502,7 +503,25 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
     // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
     // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
-    React.createElement('div', {
+    // PROBE 27.09.2026 — drei Varianten für den Rucksack, umschaltbar über ?rucksack=a|b|c
+    // (a: in der Finanz-Karte · b: rechts im Titel · c: zweite Karte). Ohne Parameter
+    // bleibt alles wie bisher. Vor dem Mergen auf die gewählte Variante zurückbauen.
+    (() => {
+      let v = null;
+      try { v = new URLSearchParams(window.location.search).get('rucksack'); } catch (e) { v = null; }
+      // Gegenstück zum Leistungs-Kompass: Beschriftung links, Zeichnung rechts.
+      const rucksackKnopf = (key) => React.createElement('button', {
+        key, type: 'button', onClick: () => onNavigate('gepaeck'),
+        style: {
+          display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0', flexShrink: 0,
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'right',
+        },
+      },
+        React.createElement('span', { style: { minWidth: 0 } },
+          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('gepaeck.link')),
+          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } }, t('gepaeck.unpack'))),
+        miniRucksack(palette));
+      return React.createElement('div', {
       'data-tour': 'anspruch',
       // Kein Kasten im Kasten (Grundsatz 25.09.2026, Vorbild «Ihr Alltag»): die Einträge
       // tragen eigene Rahmen, der Abschnitt selbst hat nur Luft — 48 px nach aussen.
@@ -511,13 +530,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }
     },
       React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: v === 'b' ? 'center' : 'baseline', gap: space.md + 'px', marginBottom: space.md }
       },
-        React.createElement(PanelTitle, {
-          palette,
-          style: { margin: 0, letterSpacing: '-0.2px' }
-        }, t('dashboard.anspruchTitle')),
-        React.createElement('div', {
+        v === 'b'
+          ? React.createElement('div', { style: { minWidth: 0 } },
+              React.createElement(PanelTitle, { palette, style: { margin: 0, letterSpacing: '-0.2px' } }, t('dashboard.anspruchTitle')),
+              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.sageDeep, marginTop: '2px' } }, t('dashboard.highlightPrivacy')))
+          : React.createElement(PanelTitle, {
+              palette,
+              style: { margin: 0, letterSpacing: '-0.2px' }
+            }, t('dashboard.anspruchTitle')),
+        v === 'b' ? rucksackKnopf('rucksack-titel') : React.createElement('div', {
           // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
           style: { fontSize: text.xs - 1, color: palette.sageDeep }
         }, t('dashboard.highlightPrivacy'))
@@ -572,9 +595,35 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         };
         const primary = items.find(i => i.primary);
         const rest = items.filter(i => !i.primary);
+        // A: die Finanz-Karte trägt rechts oben den Rucksack. Zwei Knöpfe in einem Rahmen
+        // (Knopf im Knopf wäre ungültiges HTML).
+        const primaryA = primary && React.createElement('div', {
+          style: {
+            display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: space.md + 'px', flexWrap: 'wrap',
+            border: '1px solid ' + palette.sand + '30', background: palette.sand + '08', borderRadius: radius.md, padding: '8px 20px 8px 0',
+          }
+        },
+          React.createElement('div', { style: { flex: '1 1 220px', minWidth: 0 } },
+            React.cloneElement(renderItem(primary), { style: { ...renderItem(primary).props.style, border: 'none', background: 'transparent', width: '100%', padding: '10px 0 10px 20px' }, onMouseEnter: undefined, onMouseLeave: undefined })),
+          rucksackKnopf('rucksack-karte'));
+        // C: zweite Karte daneben — «Mein Gepäck», gleicher Rahmen wie die Finanz-Karte.
+        const karteC = React.createElement('button', {
+          key: 'gepaeck-karte', type: 'button', onClick: () => onNavigate('gepaeck'),
+          style: {
+            display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', padding: '18px 20px',
+            background: palette.sand + '08', border: '1px solid ' + palette.sand + '30', borderRadius: radius.md,
+            cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', color: palette.text,
+          },
+        },
+          React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+            React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('gepaeck.link')),
+            React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '4px', lineHeight: leading.relaxed } }, t('gepaeck.ctaSub'))),
+          miniRucksack(palette));
         return React.createElement(React.Fragment, null,
           // Die Finanz-Übersicht bleibt der eine grosse Einstieg — sie fasst alles zusammen.
-          primary && renderItem(primary),
+          v === 'a' ? primaryA
+            : v === 'c' ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.sm + 'px' } }, primary && renderItem(primary), karteC)
+            : primary && renderItem(primary),
           // Eigene Suspense-Grenze wie bei den Instrumenten.
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(QuickCheck, { palette, t, onNavigate, data })),
@@ -628,7 +677,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           )
         )
       )
-    ),
+    );
+    })(),
 
     // ─── Life chapters — moved up: the core action, immediately visible ──
     React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
