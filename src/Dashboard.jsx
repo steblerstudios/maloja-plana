@@ -603,18 +603,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           // Eigene Suspense-Grenze wie bei den Instrumenten.
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(QuickCheck, { palette, t, onNavigate, data })),
-          // Der Weg weiter — «Alle Ansprüche» ist seit 27.09.2026 Karte oben.
-          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.lg + 'px', marginTop: space.sm } },
-            ...[['situationen', t('lebenszustaende.dashboardLink')]].map(([view, label]) =>
-              React.createElement('button', {
-                key: view,
-                onClick: () => onNavigate(view),
-                style: {
-                  // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
-                  background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
-                  fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-                },
-              }, label))),
+          // Der Weg weiter — seit 27.09.2026 nur noch einer («Alle Ansprüche» führt über den
+          // Leistungs-Kompass auf dieselbe Seite).
+          React.createElement('button', {
+            onClick: () => onNavigate('situationen'),
+            style: {
+              // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+              display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', marginTop: space.sm,
+              fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+            },
+          }, t('lebenszustaende.dashboardLink')),
           // Deine Instrumente — seit 25.09.2026 im selben Block, nach den Leistungen
           // (Wunsch 25.09.: erst was zusteht, dann der eigene Stand).
           // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
@@ -790,35 +788,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ),
     ),
 
-    // Zugang zum Gepäck — Lebensereignisse als Ausrüstung, neben Baum und Obstgarten.
-    React.createElement('button', {
-      onClick: () => onNavigate('gepaeck'),
-      'aria-label': t('gepaeck.link'),
-      style: {
-        display: 'flex', alignItems: 'center', gap: space.sm + 'px',
-        width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'linear-gradient(' + palette.gold + '10,' + palette.gold + '10),' + palette.bg, border: '1px solid ' + palette.gold + '2e',
-        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
-        transition: `background ${duration.normal}ms ${ease}`,
-      },
-    },
-      React.createElement('span', {
-        style: {
-          width: '34px', height: '34px', borderRadius: '50%',
-          background: palette.gold + '22', color: palette.sandDeep,
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-        },
-      }, React.createElement('span', { style: { display: 'block', width: '18px', height: '18px' } }, rucksackZeichen())),
-      React.createElement('span', { style: { flex: 1, minWidth: 0 } },
-        React.createElement('span', {
-          style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text },
-        }, t('gepaeck.link')),
-        React.createElement('span', {
-          style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
-        }, t('gepaeck.ctaSub')),
-      ),
-    ),
+    // Der goldene Gepäck-Knopf, der hier stand, ist seit 27.09.2026 weg: der Wanderrucksack
+    // steht oben rechts in «Was steht mir zu?», im Panorama und am Handy in der unteren Leiste
+    // (und das Startbündel brauchte den Platz — Grenze 65 kB).
 
 
     // ─── Tools — calm grid ─────────────────────────────────

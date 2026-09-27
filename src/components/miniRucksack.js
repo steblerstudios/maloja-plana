@@ -14,5 +14,5 @@ export const rucksackZeichen = () => React.createElement('svg', {
 // Wanderrucksack (bis 27.09.2026 «Mein Gepäck») im Block «Was steht mir zu?». Dieselbe
 // Zeichnung wie der Gepäck-Zugang weiter unten, auf die 32 px des Kompasses gebracht.
 export const miniRucksack = (palette) => React.createElement('span', {
-  'aria-hidden': true, style: { display: 'block', width: '32px', height: '32px', color: palette.sandDeep || palette.mid },
+  'aria-hidden': true, style: { display: 'block', width: '32px', height: '32px', color: palette.sandDeep },
 }, rucksackZeichen());

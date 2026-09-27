@@ -120,10 +120,11 @@ export const STATIONEN = [
 // Platz). Nur am Computer: am Handy liegt das Tal ausserhalb des Ausschnitts, und auf der
 // Passstrasse ist kein Platz frei (gemessen 27.09.2026: links vor der Basis stiess das Etikett
 // an «Behörden») — dort steht der Wanderrucksack in der unteren Leiste.
+// Die zwei weiteren Plätze, aus dem Bild gelesen — erst eintragen, wenn ihr Zeichen kommt
+// (Startbündel, Grenze 65 kB): mittlere Strasse { x: 927, y: 555, seite: 'rechts' },
+// rechte Strasse { x: 1003, y: 580, seite: 'links' }.
 export const TAL_PLAETZE = [
   { x: 822, y: 560, seite: 'rechts' },
-  { x: 927, y: 555, seite: 'rechts' },
-  { x: 1003, y: 580, seite: 'links' },
 ];
 
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
@@ -578,10 +579,10 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
     !schmal && talStationen.slice(0, TAL_PLAETZE.length).map((st, i) => {
       const ort = TAL_PLAETZE[i];
       const sz = 30;
-      const farbe = st.farbe || p.gold;
+      const farbe = st.farbe; // Pflicht vom Dashboard (Startbündel: kein Rückfall)
       const zeichen = mitKontrastZu(farbe, ui.surface, 3);
       return React.createElement('div', {
-        key: 'tal-' + st.key, 'data-tal': st.key,
+        key: st.key,
         style: { position: 'absolute', ...imRahmen(ort.x, ort.y), width: 0, height: 0 },
       },
         React.createElement('button', {
@@ -599,12 +600,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
         }, React.createElement('div', { style: { width: '17px', height: '17px' } }, st.zeichen())),
         React.createElement('span', {
-          className: 'mountain-label', lang, 'aria-hidden': 'true',
+          className: 'mountain-label', 'aria-hidden': 'true',
           style: {
             // display wie bei den Stationen: überschreibt die alte Regel in index.html, die
             // Etiketten unter 480 px ausblendet (die Stationen tragen es ebenso inline).
             position: 'absolute', [ort.seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
-            whiteSpace: 'nowrap', pointerEvents: 'none', display: 'flex', alignItems: 'center',
+            whiteSpace: 'nowrap', pointerEvents: 'none', display: 'block',
             fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
             background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.sm,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
