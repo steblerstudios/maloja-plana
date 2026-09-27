@@ -75,6 +75,9 @@ export const GEGENSTAENDE = [
       { key: 'organ', view: 'organ', g: ['M12 20c4-2.6 7-6 7-9.5A3.7 3.7 0 0 0 12 8a3.7 3.7 0 0 0-7 2.5C5 14 8 17.4 12 20z', 'M12 11v4', 'M10 13h4'] },
     ],
   },
+  // Portemonnaie (Vorschau 27.09.2026, Entscheid 25.09.): trägt nur Werkzeuge, keine
+  // Wege — die liegen in data/werkzeugRegister.js mit `fach: 'geld'`.
+  { key: 'geld', ill: 'wallet', wege: [] },
 ];
 
 // Flache Liste aller Wege — für Tests und einfache Iteration.
@@ -105,6 +108,8 @@ const CHECKS = {
   gesundheit: (d) => [d?.versicherungen?.kkInsurer, d?.versicherungen?.franchise, d?.versicherungen?.kkPremium, d?.notfall?.doctor],
   alter: (d) => [d?.versicherungen?.bvgInsurer, d?.finanzen?.pension3a, d?.versicherungen?.bvgBalance, d?.vorsorge?.ikAuszug],
   abschied: (d) => [d?.behoerden?.willMade, d?.notfall?.patientenverfuegung, d?.notfall?.vorsorgeauftrag, d?.notfall?.organDonor],
+  // Steuern, Haushaltsbudget, Sparziel, Bankverbindung — was die Geld-Werkzeuge lesen.
+  geld: (d) => [d?.finanzen?.monthlyTax, d?.finanzen?.groceries, d?.finanzen?.savingsGoal, d?.finanzen?.bankName],
 };
 
 // { done, total } — done = erfüllte echte Felder, total = geprüfte Felder.
