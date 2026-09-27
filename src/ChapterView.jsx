@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
+import PrimaryButton from './components/PrimaryButton.jsx';
 import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, getFileExpiryHint, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
@@ -2474,24 +2475,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ),
 
     // Nächstes Thema — Testperson A: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
-    nextChapter && onNext ? React.createElement('button', {
-      type: 'button',
-      onClick: onNext,
-      style: {
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
-        width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
-        marginTop: space.xl + 'px', padding: space.md + 'px ' + space.lg + 'px',
-        background: palette.surface, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, color: palette.text,
-        transition: 'background 160ms ease, border-color 160ms ease',
-      },
-      onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
-      onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
-    },
-      React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
-        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
-        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
-      ),
+    // Seit 27.09.2026 (Seitenrundgang) als der eine Hauptknopf «Weiter mit … ›», wie auf
+    // der Übersicht — vorher eine stille Karte, die neben den Feldern kaum als Weg las.
+    nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
+      React.createElement(PrimaryButton, {
+        palette, onClick: onNext,
+        style: { minHeight: '44px', boxSizing: 'border-box' },
+      }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›'),
     ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present
