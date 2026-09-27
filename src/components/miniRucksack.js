@@ -1,9 +1,6 @@
 import React from 'react';
 
-// Mini-Rucksack (Glyph ohne Text) — Gegenstück zum Mini-Kompass: steht als Zugang
-// zum Wanderrucksack (bis 27.09.2026 «Mein Gepäck») im Block «Was steht mir zu?» (gewählt 27.09.2026). Dieselbe Zeichnung
-// wie der Gepäck-Zugang weiter unten, auf die 32 px des Kompasses gebracht.
-// Dieselbe Zeichnung in Kapitel-Zeichen-Art: füllt ihren Behälter, Farbe von aussen
+// Die Rucksack-Zeichnung in Kapitel-Zeichen-Art: füllt ihren Behälter, Farbe von aussen
 // (currentColor) — für den Kreis auf der Tal-Strasse im Bergpanorama (27.09.2026).
 export const rucksackZeichen = () => React.createElement('svg', {
   viewBox: '0 0 24 24', width: '100%', height: '100%', 'aria-hidden': true, fill: 'none',
@@ -13,6 +10,9 @@ export const rucksackZeichen = () => React.createElement('svg', {
   React.createElement('path', { d: 'M9 8a3 3 0 0 1 6 0' }),
   React.createElement('path', { d: 'M9 14h6' }));
 
+// Mini-Rucksack (Glyph ohne Text) — Gegenstück zum Mini-Kompass: steht als Zugang zum
+// Wanderrucksack (bis 27.09.2026 «Mein Gepäck») im Block «Was steht mir zu?». Dieselbe
+// Zeichnung wie der Gepäck-Zugang weiter unten, auf die 32 px des Kompasses gebracht.
 export const miniRucksack = (palette) => {
   const h = React.createElement;
   return h('svg', { viewBox: '0 0 24 24', width: 32, height: 32, 'aria-hidden': true, fill: 'none', stroke: palette.sandDeep || palette.mid, strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' },

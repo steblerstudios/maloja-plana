@@ -1385,6 +1385,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Aggiungi',
     anspruch: 'Diritti',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Zaino',
     capDokument: 'Documento',
     capBeleg: 'Ricevuta',
     capFrist: 'Scadenza',

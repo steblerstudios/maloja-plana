@@ -1628,6 +1628,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Agiuntar',
     anspruch: 'Dretgs',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Sac à dos',
     capDokument: 'Document',
     capBeleg: 'Quittanza',
     capFrist: 'Termin',

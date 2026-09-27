@@ -286,6 +286,9 @@ const bottomIcon = (name, color, size) => {
       }, day)
     );
   }
+  // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?») und Lupe (Suche).
+  if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
+  if (name === 'search') return React.createElement('svg', common, React.createElement('circle', { cx: 11, cy: 11, r: 6 }), P('M15.5 15.5 L20 20'));
   if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
@@ -376,9 +379,11 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
-      // in der Mitte (bei 5 Slots vertauschen nur die zwei Paare aussen).
+      // in der Mitte. Seit 27.09.2026 drei je Seite: links Wanderrucksack neben der
+      // Übersicht, rechts die Suche zwischen Anspruch und Menü.
       ...(() => {
         const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
+        const leftR = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
         const left2 = slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') });
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
@@ -393,10 +398,11 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
           )
         );
         const right1 = slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
+        const rightS = slot({ key: 'search', label: t('nav.search'), icon: 'search', active: view === 'search', onClick: () => onNavigate('search') });
         const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
         return leftHand
-          ? [right2, right1, center, left2, left1]
-          : [left1, left2, center, right1, right2];
+          ? [right2, rightS, right1, center, left2, leftR, left1]
+          : [left1, leftR, left2, center, right1, rightS, right2];
       })()
     )
   );
