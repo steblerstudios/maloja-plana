@@ -15,6 +15,8 @@ import { keineKontaktperson } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { organListe } from './utils/organspende.js';
+
 
 // ─── Druckfarben (K53) ────────────────────────────────────
 // Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
@@ -415,6 +417,11 @@ function getNotfallSections(data, chapters, t) {
   const sel = (chapterKey, fieldKey) => resolveSelect(chapters, chapterKey, fieldKey, d(chapterKey, fieldKey));
   const dt = (chapterKey, fieldKey) => formatDate(d(chapterKey, fieldKey));
   const lbl = (chapterKey, fieldKey) => fieldLabel(chapters, chapterKey, fieldKey);
+  // «Nur bestimmte Organe» ohne die Organe hilft Angehörigen nicht — die Liste gehört dazu.
+  const organWert = () => {
+    const liste = d('notfall', 'organDonor') === 'partial' ? organListe(t, data.organDonation) : [];
+    return sel('notfall', 'organDonor') + (liste.length ? ': ' + liste.join(', ') : '');
+  };
 
   const sections = [
     {
@@ -458,7 +465,7 @@ function getNotfallSections(data, chapters, t) {
       key: 'provision',
       title: t('notfallDossier.sectionProvision'),
       rows: [
-        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: sel('notfall', 'organDonor') },
+        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: organWert() },
         { feld: 'notfall.patientenverfuegung', label: lbl('notfall', 'patientenverfuegung'), value: sel('notfall', 'patientenverfuegung') },
         { feld: 'notfall.vorsorgeauftrag', label: lbl('notfall', 'vorsorgeauftrag'), value: sel('notfall', 'vorsorgeauftrag') },
         { feld: 'notfall.bestattungswuensche', label: lbl('notfall', 'bestattungswuensche'), value: sel('notfall', 'bestattungswuensche') },

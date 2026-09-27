@@ -3,6 +3,7 @@ import { getFullName, getChapters } from './config/constants.js';
 import { betrag } from './utils/geld.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
 import { inDays } from './utils/helpers.js';
+import { organListe } from './utils/organspende.js';
 
 export const prepareDataForExport = (data, docs = []) => {
   return {
@@ -22,6 +23,7 @@ export const prepareDataForExport = (data, docs = []) => {
       behoerden: data.behoerden,
       notfall: data.notfall
     },
+    organDonation: data.organDonation,
     documents: {
       count: docs.length,
       list: docs.map(d => ({
@@ -44,6 +46,9 @@ const generateZipManifest = (data, t) => {
   // erfasst» ist aber keine Null. Jetzt: Beschriftung aus derselben Kapiteldefinition wie das
   // Formular (getChapters), Beträge über utils/geld.js, Leeres als «—».
   const kapitel = t ? getChapters(t) : [];
+  // Bei «nur bestimmte» die Organe dazu — sonst wüsste niemand, welche gemeint sind.
+  const organe = t && data.chapters.notfall?.organDonor === 'partial' ? organListe(t, data.organDonation) : [];
+  const organZusatz = organe.length ? ': ' + organe.join(', ') : '';
   const wahl = (kap, k, wert, sonst = dash) => {
     if (wert === undefined || wert === null || wert === '') return sonst;
     const feld = kapitel.find((c) => c.key === kap)?.fields.find((f) => f.k === k);
@@ -102,7 +107,7 @@ ${m('chNotfall')}
    - ${m('bloodType')}: ${wahl('notfall', 'bloodType', data.chapters.notfall?.bloodType)}
    - ${m('emergencyContact')}: ${data.chapters.notfall?.emergencyContact || (keineKontaktperson(data.chapters.notfall) && t ? t('naZustand.keineKontaktperson') : dash)}
    - ${m('allergies')}: ${data.chapters.notfall?.allergies || dash}
-   - ${m('organDonor')}: ${wahl('notfall', 'organDonor', data.chapters.notfall?.organDonor, m('unknown'))}
+   - ${m('organDonor')}: ${wahl('notfall', 'organDonor', data.chapters.notfall?.organDonor, m('unknown'))}${organZusatz}
 
 ${m('documents', { count: data.documents.count })}:
 ──────────────────────────────────────

@@ -111,7 +111,7 @@ const CHECKS = {
   familie: (d) => [d?.basis?.maritalStatus, d?.basis?.household?.children, d?.finanzen?.familienzulagen, d?.finanzen?.alimenteReceived || d?.finanzen?.alimentePaid],
   gesundheit: (d) => [d?.versicherungen?.kkInsurer, d?.versicherungen?.franchise, d?.versicherungen?.kkPremium, d?.notfall?.doctor],
   alter: (d) => [d?.versicherungen?.bvgInsurer, d?.finanzen?.pension3a, d?.versicherungen?.bvgBalance, d?.vorsorge?.ikAuszug],
-  abschied: (d) => [d?.behoerden?.willMade, d?.notfall?.patientenverfuegung, d?.notfall?.vorsorgeauftrag, d?.notfall?.organDonor],
+  abschied: (d) => [d?.behoerden?.willMade, d?.notfall?.patientenverfuegung, d?.notfall?.vorsorgeauftrag, d?.notfall?.organDonor === 'undecided' ? '' : d?.notfall?.organDonor],
   // Steuern, Haushaltsbudget, Sparziel, Bankverbindung — was die Geld-Werkzeuge lesen.
   geld: (d) => [d?.finanzen?.monthlyTax, d?.finanzen?.groceries, d?.finanzen?.savingsGoal, d?.finanzen?.bankName],
 };
