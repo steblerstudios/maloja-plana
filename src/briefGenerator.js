@@ -985,7 +985,7 @@ function generatePaymentReminder(data, t, options = {}) {
 
 // (h) Forderung bestreiten — keine eigene Gesetzesgrundlage und keine Formvorschrift. Der
 // Brief erklärt die Bestreitung und verlangt Unterlagen; er erkennt NICHTS an (OR Art. 135
-// Ziff. 1 — darum kein «den Rest zahle ich», auch nicht bei Teilbestreitung). «bereits
+// Ziff. 1 — darum kein «den Rest zahle ich»; bei Teilbestreitung sagt `rest` das ausdrücklich). «bereits
 // bezahlt» ist eine Aussage der Person selbst (Wahlfeld), eine Einschätzung erscheint nur als
 // solche. Er ist kein Rechtsvorschlag: gegen einen Zahlungsbefehl hilft nur SchKG Art. 74.
 function generateClaimDispute(data, t, options = {}) {
@@ -1001,6 +1001,8 @@ function generateClaimDispute(data, t, options = {}) {
       t(k + 'salutation'),
       t(k + 'body1', { number: nummer, date: datum }),
       a.umfang === 'teil' ? t(k + 'teil', { amount: franken(a.teilbetrag, fill) }) : t(k + 'ganz'),
+      // Teilbestreitung: ausdrücklich KEINE Anerkennung des Rests (Rechts-Prüfer 27.09.2026).
+      a.umfang === 'teil' ? t(k + 'rest') : '',
       t(k + 'grund.' + a.grund),
       a.einschaetzung ? t(k + 'einschaetzung', { text: a.einschaetzung }) : '',
       t(k + 'body2'),
@@ -1011,9 +1013,11 @@ function generateClaimDispute(data, t, options = {}) {
 }
 
 // (i) Ratenzahlung vorschlagen — ein Vorschlag, keine Vereinbarung: der Gläubiger muss nicht
-// zustimmen, darum bittet der Brief um schriftliche Bestätigung. 🛑 Ein Ratengesuch und jede
-// Anzahlung sind Anerkennung (OR Art. 135 Ziff. 1) — die Verjährung beginnt neu (Art. 137
-// Abs. 1). Die Warnung steht VOR dem Formular (BriefGenerator.jsx) und im Bildschirm-Hinweis.
+// zustimmen, darum bittet der Brief um schriftliche Bestätigung. 🛑 Jede Anzahlung ist
+// Anerkennung (OR Art. 135 Ziff. 1, Wortlaut) — die Verjährung beginnt neu (Art. 137 Abs. 1);
+// ein Ratengesuch KANN so gewertet werden (Auslegung, nicht Wortlaut — Prüfer 27.09.2026).
+// Die Warnung steht VOR dem Formular (BriefGenerator.jsx) und im Bildschirm-Hinweis. Der Brief
+// betrifft nur die Hauptforderung; nach Gebühren fragt er, statt sie mit anzuerkennen.
 // Keine Rechnung «Anzahl Raten»: Verzugszins und Gebühren kennt die App nicht.
 function generateInstallmentRequest(data, t, options = {}) {
   const a = leseAngaben('installmentRequest', options.angaben);
@@ -1027,6 +1031,8 @@ function generateInstallmentRequest(data, t, options = {}) {
       t(k + 'salutation'),
       t(k + 'body1', { number: nummer, amount: franken(a.betrag, fill) }),
       t(k + 'body2', { rate: franken(a.rate, fill), date: formatDate(a.ab) || fill }),
+      // Nur die Hauptforderung — Gebühren, die Schritt 3 hinterfragen lässt, nicht mit anerkennen.
+      t(k + 'gebuehren'),
       t(k + 'body3'),
       t(k + 'closing'),
     ],

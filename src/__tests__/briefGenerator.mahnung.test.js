@@ -111,10 +111,13 @@ describe('claimDispute — bestreiten, nichts anerkennen', () => {
     // OR Art. 135 Ziff. 1: keine Anerkennung, auch keine des «Rests».
     expect(k).not.toMatch(/anerkenn|begleiche|bezahle ich|zahle ich/i);
   });
-  it('Teilbestreitung nennt den Betrag genau — und anerkennt den Rest NICHT', () => {
+  it('Teilbestreitung nennt den Betrag genau — und sagt ausdrücklich: keine Anerkennung des Rests', () => {
     const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang: 'teil', teilbetrag: '80.50' } }));
     expect(k).toContain('im Umfang von CHF 80.50');
-    expect(k).not.toMatch(/anerkenn|übrigen|restlich/i);
+    expect(k).toContain('eine Anerkennung ist damit nicht verbunden');
+    expect(k).not.toMatch(/anerkenne|begleiche|bezahle ich|zahle ich/i);
+    // ganze Bestreitung braucht den Rest-Satz nicht
+    expect(koerper(generateLetter('claimDispute', person, t, { angaben: {} }))).not.toContain('übrigen Betrag');
   });
   it('mehrdeutiger Betrag → Platzhalter statt falscher Zahl', () => {
     const k = koerper(generateLetter('claimDispute', person, t, { angaben: { umfang: 'teil', teilbetrag: '1.234,50' } }));
@@ -140,6 +143,13 @@ describe('installmentRequest — Vorschlag, Anerkennungs-Falle vorne', () => {
     expect(k).toContain('Raten von CHF 150');
     expect(k).toContain('31.10.2026');
     expect(k).toContain('schriftlich');
+  });
+  it('betrifft nur die Hauptforderung — Gebühren werden erfragt, nicht mit anerkannt', () => {
+    const k = koerper(generateLetter('installmentRequest', person, t, { angaben: { betrag: '900', rate: '150' } }));
+    expect(k).toContain('Die Hauptforderung von CHF 900');
+    expect(k).toContain('bitte ich Sie um deren Grundlage');
+    expect(k).toContain('diesen Vorschlag');
+    expect(k).not.toContain('Vereinbarung schriftlich');
   });
   it('keine Rechnung «Anzahl Raten» — Zins und Gebühren kennt die App nicht', () => {
     const k = koerper(generateLetter('installmentRequest', person, t, { angaben: { betrag: '900', rate: '150' } }));
@@ -180,6 +190,16 @@ describe('Ablauf «Mahnung erhalten»', () => {
       expect(h, `${lang}/${anrede}`).not.toMatch(/mahnung\.[a-zA-Z]|briefe\.[a-zA-Z]|\[object Object\]/);
       expect(h, `${lang}/${anrede}`).toContain('257');
     }
+  });
+  it('Nachprüfung 27.09.: 5 % sind kein Höchstsatz, Verlustschein 20 Jahre, Verzug «nach Ablauf», Prämien-Liste', () => {
+    expect(html).toContain('OR Art. 104 Abs. 1–2');
+    expect(html).toContain('SchKG Art. 149a Abs. 1');
+    expect(html).toContain('OR Art. 137 Abs. 2');
+    expect(html).toContain('KVG Art. 64a Abs. 7');
+    expect(html).toContain('nach Ablauf dieses Tages');
+    expect(html).not.toContain('ab diesem Tag');
+    // Ratengesuch: «kann» als Anerkennung gewertet werden — der Wortlaut nennt nur Anzahlungen
+    expect(de.briefe.installmentRequest.hinweis.anerkennung.sie).toMatch(/Ratengesuch kann/);
   });
   it('Miete: 30 Tage Frist bei Wohnungen (OR Art. 257d) steht drin', () => {
     expect(html).toContain('mindestens 30 Tage');

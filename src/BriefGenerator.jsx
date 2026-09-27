@@ -136,7 +136,9 @@ function angabenFormular(selected, roh, setRoh, palette, t, isMobile) {
                 React.createElement('input', { type: 'radio', name: id, checked: a[f.key] === o, onChange: () => set(f.key, o), style: { flexShrink: 0 } }),
                 React.createElement('span', { style: { color: palette.text } }, t(base(f) + '.' + o))
               ))
-            )
+            ),
+            // Hilfe auch bei Wahlfeldern (Mahnung 27.09.2026: Fristwahl bei Einschreiben).
+            hilfe
           );
         }
         if (f.type === 'ja') {

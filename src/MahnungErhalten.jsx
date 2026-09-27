@@ -6,7 +6,8 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 // Jede Aussage am Gesetzeswortlaut (Fedlex-Filestore, gelesen 27.09.2026): OR Stand
 // 1.1.2026 (Fassungen 1.10.2026 und 1.7.2027 für diese Artikel wortgleich), SchKG Stand
 // 1.1.2026, KVG Stand 1.7.2026, KVV Stand 1.8.2026. «Mahngebühr» kommt im OR nicht vor
-// (Volltextsuche in der Fassung 1.1.2026: 0 Treffer).
+// (Volltextsuche in der Fassung 1.1.2026: 0 Treffer). Nachprüfung 27.09.2026 (Rechts- + Fach-
+// Prüfer): 104 Abs. 2, 102 Abs. 2 «mit Ablauf», SchKG 149a, OR 137 Abs. 2, KVG 64a Abs. 7 ergänzt.
 // Bewusst OHNE Frist-Knopf: die Zahlungsfrist einer Mahnung setzt der Gläubiger, nicht das
 // Gesetz; die 30-Tage-Nachfrist der Krankenkasse steht auf der Zahlungsaufforderung selbst
 // (KVG Art. 64a Abs. 1) — ab welchem Tag sie läuft, sagt das Gesetz nicht, also rechnen wir nicht.
