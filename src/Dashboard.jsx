@@ -543,13 +543,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       (() => {
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
-          // Zweite grosse Karte daneben (gewählt 27.09.2026): alle Ansprüche — vorher ein
-          // Textlink unter der Leistungsliste, der dafür wegfällt.
-          { label: t('anspruch.pageTitle'), sub: t('dashboard.highlightAnspruecheSub'), view: 'ansprueche', icon: 'search', primary: true },
+          // Zweite grosse Karte daneben (gewählt 27.09.2026): die Notfallkarte — vorher klein
+          // unter der Linie. Die Ansprüche erreicht man über den Leistungs-Kompass.
+          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall', primary: true },
           // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
-          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
           !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
         ].filter(Boolean);
         const renderItem = (item) => {
@@ -591,7 +590,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const primaries = items.filter(i => i.primary);
         const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
-          // Zwei grosse Einstiege nebeneinander: Finanz-Übersicht und alle Ansprüche.
+          // Zwei grosse Einstiege nebeneinander: Finanz-Übersicht und Notfallkarte.
           // Auf dem Handy untereinander (auto-fit).
           React.createElement('div', {
             style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.sm + 'px' }
@@ -617,7 +616,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
-          React.createElement('div', {
+          // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
+          // nichts, dann auch keine leere Linie.
+          rest.length > 0 && React.createElement('div', {
             style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
           }, rest.map(renderItem))
         );

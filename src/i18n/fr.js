@@ -1815,7 +1815,6 @@ export default {
     fieldsCount: '{filled}/{total} champs',
     highlightFinanz: 'Aperçu financier',
     highlightFinanzSub: 'Impôts, RDP, aide sociale, PC — tout en un coup d\'œil.',
-    highlightAnspruecheSub: 'Selon le revenu, la situation et les événements — toutes les prestations possibles.',
     highlightIpv: 'Vérifier la réduction de primes',
     highlightIpvSub: { sie: 'Dépend du canton et du revenu — vous saisissez les deux directement dans le calculateur.', du: 'Dépend du canton et du revenu — tu saisis les deux directement dans le calculateur.' },
     highlightSozialhilfe: 'Orientation aide sociale',

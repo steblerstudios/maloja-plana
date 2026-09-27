@@ -1909,7 +1909,6 @@ export default {
     fieldsCount: '{filled}/{total} champs',
     highlightFinanz: 'Survista da finanzas',
     highlightFinanzSub: 'Taglia, IPV, agid social, PC — tut en ina egliada.',
-    highlightAnspruecheSub: 'Tenor l’entrada, la situaziun ed eveniments — tut las prestaziuns pussaivlas.',
     highlightIpv: 'Examinar il dretg IPV',
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
     highlightSozialhilfe: 'Orientaziun agid social',

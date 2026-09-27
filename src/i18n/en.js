@@ -1814,7 +1814,6 @@ export default {
     fieldsCount: '{filled}/{total} fields',
     highlightFinanz: 'Financial overview',
     highlightFinanzSub: 'Tax, premium reduction, social assistance, EL — all at a glance.',
-    highlightAnspruecheSub: 'By income, life situation and event — every possible entitlement.',
     highlightIpv: 'Check premium reduction',
     highlightIpvSub: 'Depends on canton and income — enter both right here in the calculator.',
     highlightSozialhilfe: 'Social assistance overview',

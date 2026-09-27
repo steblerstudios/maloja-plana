@@ -1821,7 +1821,6 @@ export default {
     fieldsCount: '{filled}/{total} Felder',
     highlightFinanz: 'Finanz-Übersicht',
     highlightFinanzSub: 'Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.',
-    highlightAnspruecheSub: 'Nach Einkommen, Lebenslage und Ereignis — alle möglichen Ansprüche.',
     highlightIpv: 'IPV-Anspruch prüfen',
     highlightIpvSub: { sie: 'Hängt von Kanton und Einkommen ab — beides geben Sie direkt im Rechner ein.', du: 'Hängt von Kanton und Einkommen ab — beides gibst Du direkt im Rechner ein.' },
     highlightSozialhilfe: 'Sozialhilfe-Orientierung',
