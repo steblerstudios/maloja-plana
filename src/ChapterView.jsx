@@ -12,6 +12,7 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
+import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
@@ -1223,14 +1224,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     notfall: { bg: palette.rose + '0A', border: palette.rose, icon: palette.roseDeep },
   };
   const accent = chapterAccent[chapter.key] || chapterAccent.basis;
+  // Titel und Zeichen in der Bereichsfarbe, lesbar gemacht (Entscheid 27.09.2026).
+  const bereichsfarbe = kapitelBereichsfarbe(chapter.key, palette, isDarkMode);
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
     // Header — expressive chapter entrance with landscape continuity
     React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
-      React.createElement('div', { style: { marginBottom: space.md + 'px', color: accent.icon } },
+      React.createElement('div', { style: { marginBottom: space.md + 'px', color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
         React.createElement(Icon, { name: chapter.key, size: 48 })
       ),
-      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px' } }, chapter.title),
+      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px', ...(bereichsfarbe ? { color: bereichsfarbe.schrift } : {}) } }, chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
