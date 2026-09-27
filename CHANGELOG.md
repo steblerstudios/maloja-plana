@@ -11,7 +11,34 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.41-beta] — 2026-09-27
+
+*Alles seit `0.1.40-beta` (Tag auf `d47dc32`, 24.09.), nachgezogen gegen
+`git log v0.1.40-beta..HEAD` (PR #328 bis #430, 164 Commits). Drei Zwischen-Deploys liefen noch
+unter der Nummer 0.1.40-beta (25.09. `0a80d71`, 27.09. `80262b6` und `bbde468`); dieses Release
+gibt dem Stand die eigene Nummer, damit Tag und Live-Stand wieder übereinstimmen. Der Tag wird erst
+nach dem Deploy gesetzt. **Gemergt ist nicht live.** Die Einträge unten waren im «Unreleased» nur
+zum Teil gesammelt; ergänzt nach den PR-Titeln, je mit Nummer.*
+
 ### Neu
+- **Vier Briefe zu Lebensereignissen** (#404–#406): Arbeitszeugnis anfordern (OR 330a), Einsprache
+  gegen die Kündigung (OR 336b), Rechtsvorschlag (SchKG 74), Todesfall einer Stelle melden. Vorwahl
+  aus einem Ablauf springt zum Formular.
+- **Schulden & Rechnungen als Bilder** (#422, #428): «noch offen» als Balken nach Vorrang-Stufe (mit
+  Rappen wie die Karten), Abbau-Plan als Zeitachse, «Wo jede Forderung steht» — ohne Rot, Text neben
+  jedem Bild.
+- **Werkzeuge im Rucksack** (#414): ein Register für Menü, Suche und Dashboard, Geld im Portemonnaie,
+  «Ablegen & Ordnen» im Aussenfach und im Menü (#411).
+- **Dashboard als Berglandschaft** (#365, #372, #374, #383–#385, #390): gemalter Malojapass,
+  Fortschritt unten im Bild, Prozent-Kreis immer sichtbar; Startbildschirm-Hinweis als Karte im
+  Panorama (#379), «So geht es» als Hauptknopf (#373).
+- **Zurückfinden** (#367, #369, #413): Brotkrume statt zwei Zurück-Knöpfen, «Zurück zu …» nach jeder
+  benannten Ansicht, «Übersicht» an die alte Stelle.
+- **Ein Hauptknopf je Seite** (#415, #416): Kapitelende «Weiter mit … ›», Frist-Knopf als Hauptknopf,
+  in den Werkzeugen ein lauter Knopf.
+- **Sozialhilfe-Rechner: Wohnform** (#348): familienähnlich anteilig, Zweck-WG −10 % (SKOS C.3.1/C.3.2).
+- **QR: Hinweis «als Kontakt speichern»** (#403) für Notfall-, KK- und Organspende-QR.
+- **Leises Einblenden beim Ansichtswechsel** (#377).
 - **Mahnung — erhalten und selbst mahnen** (27.09.2026). Ablauf «Mahnung erhalten» als Stufe
   vor der Betreibung: einordnen (Verzug ≠ Betreibung), Forderung prüfen und Verjährung,
   Verzugszins 5 % und die Frage nach Gebühren, Sonderfälle Miete (OR 257d) und Krankenkasse
@@ -24,6 +51,26 @@ kommt der Changelog immer mit, nie doppelt.*
   Zahlungsbefehl, DBG 166/167) und die **Mahnstufe je Forderung** im Schuldenmanager.
 
 ### Behoben
+- **Kapitel Finanzen: steuerbares Einkommen wieder bearbeitbar** (#427). Die Abschnittsliste zeigte
+  beim «ändern ›» ein «mehr Felder»-Feld ohne eigene Überschrift nicht an.
+- **Schulden** (#420, #421): Knopftexte Betreibung/Verlustschein, Datum in alten Einträgen, «überfällig»
+  eine Regel für Übersicht und Karte, «nur für jetzt» statt «Gespeichert» im Beispiel; kein
+  Datenverlust mehr nach «Beispiel verlassen».
+- **Seitenrundgang** (#412): rohe Auswahlwerte (Blutgruppe u. a., auch im Organspende-QR),
+  Anspruch-Check-Zurück, Dashboard «keine Frist» trotz Steuerfrist.
+- **Geld** (#417, #341): `t()` formatiert Zahlen hinter «CHF» selbst; Geldbeträge aus einer Quelle,
+  Datum nach Schweizer Uhr.
+- **Nicht zweimal eingeben** (#339): Vorbefüllung aus dem Profil, Budget-Felder, Steuer-Import.
+- **Sozialhilfe: eine Wahrheit** (#389, #395): Schnellrechnung mit Einkommensfreibetrag (SKOS D.2) und
+  Erwerbsunkosten (C.6.3); brutto im Profil nach derselben Regel wie das Dashboard.
+- **IPV und 13. Monatslohn** (#388, #399): eine Regel; Mietzinsbeiträge gegen die Quellen 2026.
+- **Konkubinat mit Kindern** (#338, K125): acht Kantone ohne Kantonszahl (Kinderabzug hälftig).
+- **UI/UX-Runden 3–5 und Codex-Befunde** (#332, #336, #341, #344): Screenreader, Tastatur, Schulden
+  sofort gespeichert, IPV ohne Sackgassen, Kacheln ohne Frankenbetrag.
+- **Kleineres**: Text-Export lesbar (#364) · Kassen-Tabelle auf 375 px (#381) · Rundungen aus der
+  Skala (#375) · Rundgang-«×» 44 px (#330) · statische Seiten mit App-Icon (#328) · rm-Anrede,
+  Schuld-Liste 299 → 25 (#335) · Notfallkarte drucken als echter Knopf (#428) · Befunde der
+  Deploy-Tore 25.09. und 27.09. (#393, #406, #421, #427, #428).
 - **Schuldenmanager: Abbau-Plan und Übersicht rechnen richtig** (27.09.2026). «Gesamtschulden» ohne
   Bezahltes; Schulden ohne Datum nicht mehr «bald fällig»; «Überfällig» zählt auch den gewählten
   Status. Der Zahlungsplan (fest CHF 500, ein Zinssatz für alles, Endlos-Plan bei zu kleiner Rate)
@@ -39,12 +86,29 @@ kommt der Changelog immer mit, nie doppelt.*
   nur wenn beziffert vereinbart; K-Tipp, SRF) — dazu im Bestreitungsbrief der Grund «nur Gebühren».
 
 ### Geändert
+- **Kapitel als Abschnittsliste** (#425): jeder Wert einmal, «ändern ›» macht genau diesen Abschnitt
+  an Ort und Stelle zu Feldern; Kapitel und Abläufe in der Farbe ihres Lebensbereichs (#423, #424).
+- **Frist-Knöpfe in einem Muster** (#426, #428): «Frist/Erinnerung «…» in den Kalender (Datum)».
+  Zusatzversicherung kündigen und Anmeldung RAV sind «Erinnerung» (Kündigungstermin laut Police bzw.
+  «spätester Tag», AVIG Art. 17 — keine Ausschlussfrist).
+- **Dashboard** (#370, #378, #380, #387): «Was ist jetzt dran?» unter der Landschaft mit Hauptknopf und
+  Bereichsfarbe, «Was steht mir zu?» als ein Block; Zeichen aus dem Register (#418); Weg-Knöpfe
+  unterstreichen beim Drüberfahren (#371).
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
   Vorher zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt»; jetzt offen,
   je Kapitel eine aufklappbare Zeile mit den Grundordnungs-Feldern und «Öffnen». Am Handy
   stehen Titel, Balken und Status untereinander.
 - **Werkzeuge & Features: alle Gruppen starten eingeklappt**, auch «Lebensereignisse» (34 Einträge).
 - **Rundgang begrüsst mit «Maloja Plana»** statt «Maloja» (5 Sprachen, auch die Screenreader-Beschriftung). Italienisch geschlechtsneutral: «Le diamo / Ti diamo il benvenuto» statt «Benvenuto».
+
+### Sicherheit
+- GitHub-Actions auf feste Commits gepinnt, Service Worker nur für den eigenen Server (#396).
+
+### Intern
+- Münz-Illustrationen nachgeladen, 2,4 kB Luft im Startbündel (#382) · toter Code aus
+  `MirrorCards.jsx`/`ChapterView.jsx` entfernt, Kapitel-Chunk −3,1 kB gzip, Startbündel unverändert
+  (#430) · Lint grün, neue Tests (#409, #430) · Doku und Stand-Nachträge (#329, #331, #333, #334,
+  #346, #359, #362, #363, #366, #368, #376, #391, #397, #401, #407, #410, #429).
 
 ## [0.1.40-beta] — 2026-09-24
 
