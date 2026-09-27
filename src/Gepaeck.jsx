@@ -124,7 +124,9 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // ── Ein Weg (Ereignis) → führt in seinen bestehenden Ablauf ─────────────────
   const chipStyle = {
     display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', textAlign: 'left', minHeight: '44px',
-    background: palette.surface, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sage,
+    // Ränder einzeln (nicht `border` + `borderLeft`): gemischt warnt React beim Farbwechsel.
+    background: palette.surface, borderTop: '1px solid ' + palette.border, borderRight: '1px solid ' + palette.border,
+    borderBottom: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sage,
     borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', marginBottom: space.xs + 'px',
     cursor: 'pointer', fontFamily: 'inherit', color: palette.text,
   };
