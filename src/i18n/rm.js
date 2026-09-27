@@ -2848,6 +2848,15 @@ export default {
     helpBody: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — la Cussegliaziun da debits Svizra e la Caritas han in post en mintga chantun.',
     situationLink: 'Guardar la situaziun «indebità u en scussiun»',
     mahnungLink: 'Mahnung erhalten — was tun?', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    stufe: { // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      label: 'Stand',
+      keine: 'Keine Angabe',
+      rechnung: 'Rechnung offen',
+      mahnung: 'Mahnung erhalten',
+      zahlungsbefehl: 'Zahlungsbefehl erhalten',
+      linkMahnung: 'Mahnung erhalten — was tun?',
+      linkZahlungsbefehl: 'Zahlungsbefehl erhalten — 10 Tage für den Rechtsvorschlag',
+    },
   },
 
   organ: {

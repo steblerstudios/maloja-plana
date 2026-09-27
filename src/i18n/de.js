@@ -3175,6 +3175,15 @@ export default {
     helpBody: 'Eine anerkannte Schuldenberatung hilft kostenlos und vertraulich weiter — die Schuldenberatung Schweiz und die Caritas haben in jedem Kanton eine Fachstelle.',
     situationLink: 'Situation „Verschuldet oder in Betreibung" ansehen',
     mahnungLink: 'Mahnung erhalten — was tun?',
+    stufe: {
+      label: 'Stand',
+      keine: 'Keine Angabe',
+      rechnung: 'Rechnung offen',
+      mahnung: 'Mahnung erhalten',
+      zahlungsbefehl: 'Zahlungsbefehl erhalten',
+      linkMahnung: 'Mahnung erhalten — was tun?',
+      linkZahlungsbefehl: 'Zahlungsbefehl erhalten — 10 Tage für den Rechtsvorschlag',
+    },
   },
 
   cv: {

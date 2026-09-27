@@ -3151,6 +3151,15 @@ export default {
     helpBody: 'Un service reconnu de conseil en désendettement aide gratuitement et en toute confidentialité — Conseil en désendettement Suisse et Caritas ont un bureau dans chaque canton.',
     situationLink: 'Voir la situation « endetté ou aux poursuites »',
     mahnungLink: 'Rappel reçu — que faire ?',
+    stufe: {
+      label: 'Stade',
+      keine: 'Non indiqué',
+      rechnung: 'Facture ouverte',
+      mahnung: 'Rappel reçu',
+      zahlungsbefehl: 'Commandement de payer reçu',
+      linkMahnung: 'Rappel reçu — que faire ?',
+      linkZahlungsbefehl: 'Commandement de payer reçu — 10 jours pour former opposition',
+    },
   },
 
   cv: {

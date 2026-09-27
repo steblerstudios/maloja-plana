@@ -3109,6 +3109,15 @@ export default {
     helpBody: 'Un servizio riconosciuto di consulenza sui debiti aiuta gratuitamente e in modo confidenziale — Consulenza debiti Svizzera e Caritas hanno uno sportello in ogni cantone.',
     situationLink: 'Vedi la situazione «indebitato o in esecuzione»',
     mahnungLink: 'Sollecito ricevuto — che fare?',
+    stufe: {
+      label: 'Stadio',
+      keine: 'Nessuna indicazione',
+      rechnung: 'Fattura aperta',
+      mahnung: 'Sollecito ricevuto',
+      zahlungsbefehl: 'Precetto esecutivo ricevuto',
+      linkMahnung: 'Sollecito ricevuto — che fare?',
+      linkZahlungsbefehl: 'Precetto esecutivo ricevuto — 10 giorni per l’opposizione',
+    },
   },
 
   lohnEinordnung: {

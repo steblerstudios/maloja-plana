@@ -13,6 +13,32 @@ import { AblaufLink } from './AblaufSchale.jsx';
 import { betrag } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
+import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
+
+// Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl. Form + Text statt
+// nur Farbe (gefüllter Punkt = erreicht, Ring = noch nicht; keine Text-Piktogramme, siehe
+// glyphenImText.test.js), die aktuelle Stufe fett und mit aria-current. Dazu der ruhige Weg.
+export const MahnstufenLeiste = ({ debt, palette, t, inputStyle, onChange, onNavigate }) => {
+  const stufe = leseStufe(debt.stufe);
+  const erreicht = MAHNSTUFEN.indexOf(stufe);
+  const weg = naechsterWeg(debt);
+  const id = 'stufe-' + debt.id;
+  const punkt = (voll) => React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', marginRight: '6px', verticalAlign: '1px', border: '1.5px solid ' + (voll ? palette.text : palette.mid), background: voll ? palette.text : 'transparent', boxSizing: 'border-box' } });
+  return React.createElement('div', { style: { marginBottom: space.sm } },
+    React.createElement('label', { htmlFor: id, style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('schulden.stufe.label')),
+    React.createElement('select', { id, value: stufe, onChange: (e) => onChange(leseStufe(e.target.value)), style: { ...inputStyle, width: 'auto', maxWidth: '100%', marginBottom: space.xs, fontSize: text.sm } },
+      React.createElement('option', { value: '' }, t('schulden.stufe.keine')),
+      MAHNSTUFEN.map(k => React.createElement('option', { key: k, value: k }, t('schulden.stufe.' + k)))
+    ),
+    erreicht >= 0 && React.createElement('ol', { 'aria-label': t('schulden.stufe.label'), style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px', listStyle: 'none', padding: 0, margin: space.xs + 'px 0', fontSize: text.xs } },
+      MAHNSTUFEN.map((k, i) => React.createElement('li', {
+        key: k, 'aria-current': i === erreicht ? 'step' : undefined,
+        style: { color: i <= erreicht ? palette.text : palette.mid, fontWeight: i === erreicht ? weight.semi : undefined },
+      }, punkt(i <= erreicht), t('schulden.stufe.' + k)))
+    ),
+    weg && onNavigate && React.createElement(AblaufLink, { palette, label: t(weg.key), onClick: () => onNavigate(weg.view) })
+  );
+};
 
 export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -84,6 +110,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
   const handleDeleteVerlustschein = (id) => {
     setVerlustscheine(verlustscheine.filter(e => e.id !== id));
+  };
+
+  // Mahnstufe nachtragen (27.09.2026): eine Forderung wandert von der Rechnung zur Mahnung.
+  const handleUpdateDebt = (id, field, value) => {
+    setSchulden(schulden.map(d => d.id === id ? { ...d, [field]: value } : d));
   };
 
   const handleDeleteDebt = (id) => {
@@ -282,6 +313,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)
           ),
+          // Mahnstufe: Rechnung → Mahnung → Zahlungsbefehl. Form + Text statt nur Farbe (● erreicht,
+          // ○ noch nicht), die aktuelle Stufe fett und mit aria-current.
+          debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
           React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: { ...buttonStyle, background: palette.rose } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       ),

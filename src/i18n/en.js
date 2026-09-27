@@ -3151,6 +3151,15 @@ export default {
     helpBody: 'A recognised debt counselling service helps free of charge and confidentially — Debt Counselling Switzerland and Caritas have an office in every canton.',
     situationLink: 'View the “in debt or in collection” situation',
     mahnungLink: 'Payment reminder received — what now?',
+    stufe: {
+      label: 'Stage',
+      keine: 'Not specified',
+      rechnung: 'Invoice open',
+      mahnung: 'Reminder received',
+      zahlungsbefehl: 'Payment order received',
+      linkMahnung: 'Payment reminder received — what now?',
+      linkZahlungsbefehl: 'Payment order received — 10 days to object',
+    },
   },
 
   cv: {
