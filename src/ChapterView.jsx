@@ -1880,7 +1880,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Living mirror layer — life sentence + mirror cards
     // Nur der Satz — die Tabellen wiederholten, was die Abschnittsliste zeigt (27.09.2026).
-    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr, nurSatz: true }),
+    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
 
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
