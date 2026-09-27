@@ -19,7 +19,26 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
-> 📬 **Nachtrag 27.09., 13:26 — Mahnung (Entwurfs-PR #408, `feat/mahnung-2026-09-27`), nicht gemergt, nicht live.**
+> 🚀 **Nachtrag 27.09., 16:44 — LIVE = `bbde468` (0.1.40-beta, Deploy durch Stebler Studios 16:39).**
+>
+> **Belegt:** `version.json` `commit` = `bbde4685…`, `sauber: true` (Gegenprobe erfundene Datei → 404) · Startdatei
+> `index-y8hG_kEV.js` = frischer `main`-Build · Sprach-Chunk `de-B_2_fm0g.js` live **bytegleich** mit dem Build, neue Texte drin
+> («Wo jede Forderung steht», «Erinnerung «Zusatzversicherung kündigen»», «… in den Kalender»).
+> **Rauchtest live** (Beispiel ohne Code): Kapitel Finanzen → «Einkommen ändern» zeigt «Steuerbares Einkommen» (#427) · `#/mahnung`
+> lädt · Schuldenmanager mit Reitern inkl. Abbau-Plan · keine Konsolenfehler.
+> **Umfang (21 Commits über `80262b6`):** #407 #409 #410 #408 #414 #421 (Mahnung/Schulden, Gate 1) · #412 #413 #415 #416 #417 #418
+> #423 #424 #425 #426 #411 (Seitenrundgang) · #420 #422 (Schulden-Fehler + Dataviz) · #427 #428 (Gate 2).
+> **Deploy-Tor 2 auf `37f21a2`:** Mechanik grün (4494 Tests, Lint, Build, SEO 0/0, 64,56/65 kB, PII, CSP, ESTV 156/156 gleich) ·
+> 10 Prüfer (Sicherheit/a11y/Gestalt ganze App, übrige auf `3c4706e..HEAD`). **1 🔴** (selbst belegt): Abschnittsliste #425 filterte
+> `taxableIncome` aus dem offenen Abschnitt → **#427**. Drei ⚠️ → **#428** (Zusatz-Knopf «Erinnerung» statt «Frist», Notfallkarte
+> als `<button>`, Schulden-Balken mit Rappen). Endstand erneut gemessen: 4497 Tests, 64,56/65 kB. Marke = `bbde468`.
+> **Geparkt (kein Blocker):** `createDebtPlan` von/bis ohne eigenen Test · `MirrorCards.jsx` zur Hälfte tot seit #425 (nur noch
+> `buildLifeSentence`) · tote Kopf-Zweige in `feldElemente`/`feldElementeSek` (`ohneKopf` immer an) · Regel «Bereichsfarbe = Identität,
+> Sand = Handlung» nicht im Farbsystem-Blatt · RAV-Knopf «Frist» vs. «Erinnerung» (AVIG 17, Entscheid) · `schuldenCalc` Kommentar
+> «einfach» rechnet Zinseszins (Richtwert) · rm: neue Schulden-Texte ohne `TODO(rm)` · iframe `sandbox` Brief-Vorschau.
+> **Offen:** #419 durch diesen Nachtrag überholt (schliessen) · #351 Flyer (Probedruck).
+
+> 📬 **Nachtrag 27.09., 13:26 — Mahnung (Entwurfs-PR #408, `feat/mahnung-2026-09-27`), — Stand vor dem Merge (bleibt als Beleg).**
 >
 > **Stand, gemessen 27.09.2026 13:26** (`bash scripts/stand-jetzt.sh`): main = `6c24111d` (11:03) · live = `80262b6e` · 3 Commits
 > zwischen live und main · offen: #408, #411–#418, #351 (alle Entwurf). Die Zeile altert — vor dem Weiterarbeiten neu messen.
