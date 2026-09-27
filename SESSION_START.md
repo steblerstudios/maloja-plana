@@ -19,7 +19,12 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
-> 📬 **Nachtrag 27.09., 13:26 — Mahnung (Entwurfs-PR #408, `feat/mahnung-2026-09-27`), nicht gemergt, nicht live.**
+> ✅ **Nachtrag 27.09., 13:31 — #408 gemergt (Squash, auf Wunsch von Stebler Studios): `main` = `73aee2f`, NICHT live** (live = `80262b6`).
+> `main`-Baum = geprüfter Zweig-Stand `fd40373` (`git diff` leer). **Nach dem Merge kollidiert #416** (Hauptknopf Werkzeuge)
+> in `src/SchuldenManager.jsx` mit `main` — dort `main` hineinmergen. #414 kollidierte schon vorher (Vorschau, nicht mergen).
+> Nächster Schritt: Deploy-Tor (`/maloja-predeploy`) und Deploy durch Stebler Studios, danach FEATURES auf `verified-live`.
+
+> 📬 **Nachtrag 27.09., 13:26 — Mahnung (Entwurfs-PR #408, `feat/mahnung-2026-09-27`), — Stand vor dem Merge (bleibt als Beleg).**
 >
 > **Stand, gemessen 27.09.2026 13:26** (`bash scripts/stand-jetzt.sh`): main = `6c24111d` (11:03) · live = `80262b6e` · 3 Commits
 > zwischen live und main · offen: #408, #411–#418, #351 (alle Entwurf). Die Zeile altert — vor dem Weiterarbeiten neu messen.
