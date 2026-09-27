@@ -543,6 +543,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       (() => {
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
+          // Zweite grosse Karte daneben (gewählt 27.09.2026): alle Ansprüche — vorher ein
+          // Textlink unter der Leistungsliste, der dafür wegfällt.
+          { label: t('anspruch.pageTitle'), sub: t('dashboard.highlightAnspruecheSub'), view: 'ansprueche', icon: 'search', primary: true },
           // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
@@ -585,17 +588,20 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             )
           );
         };
-        const primary = items.find(i => i.primary);
+        const primaries = items.filter(i => i.primary);
         const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
-          // Die Finanz-Übersicht bleibt der eine grosse Einstieg — sie fasst alles zusammen.
-          primary && renderItem(primary),
+          // Zwei grosse Einstiege nebeneinander: Finanz-Übersicht und alle Ansprüche.
+          // Auf dem Handy untereinander (auto-fit).
+          React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.sm + 'px' }
+          }, primaries.map(renderItem)),
           // Eigene Suspense-Grenze wie bei den Instrumenten.
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(QuickCheck, { palette, t, onNavigate, data })),
-          // Die zwei Wege weiter — nebeneinander, in einer Zeile.
+          // Der Weg weiter — «Alle Ansprüche» ist seit 27.09.2026 Karte oben.
           React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.lg + 'px', marginTop: space.sm } },
-            ...[['ansprueche', t('dashboard.anspruchAlleLink')], ['situationen', t('lebenszustaende.dashboardLink')]].map(([view, label]) =>
+            ...[['situationen', t('lebenszustaende.dashboardLink')]].map(([view, label]) =>
               React.createElement('button', {
                 key: view,
                 onClick: () => onNavigate(view),
