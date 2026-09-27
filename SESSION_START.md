@@ -19,6 +19,28 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🚀 **Nachtrag 27.09., 10:20 — Deploy durch Stebler Studios: live = `main` = `80262b6`.**
+>
+> **Stand, gemessen 27.09.2026 10:14** (`bash scripts/stand-jetzt.sh`): main = `80262b6` (10:11) · live = `80262b6`
+> (0.1.40-beta, gebaut 27.09. 10:13) · live = main · offen: #351 (Entwurf). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Belegt:** Live-`index-zHEb9d7h.js` == frischer Build von `80262b6`; Gegenprobe `index-GIBTESNICHT.js` → 404 ·
+> `scripts/check-deploy.sh`: 140 Assets erreichbar · Rauchtest auf malojaplana.ch (Beispielprofil): vier neue Brief-Karten,
+> Betreibung → Zustellung 25.09. → «Brief: Rechtsvorschlag erheben» → Datum übernommen, Frist 05.10.2026, Fokus auf dem
+> Hinweis, Amtssprache-Satz; QR-Hinweis «Adressbuch» im Notfall-Dossier; keine Konsolenfehler.
+>
+> **Damit live:** #402 Sicherungs-Knopf · #403 QR-Hinweis + Doku Entscheid-Runde · #404 vier Briefe · #405 Sprung zum Formular ·
+> #406 Gate-Korrekturen. **Deploy-Tor** auf `80262b6`: Mechanik (4300 Tests, SEO 0/0, 62,73/65 kB, PII, ESTV 156/156) +
+> 8 Prüfer über ganze App bzw. Diff + 2 Nachprüfer, 0 Blocker; Marke `.maloja/predeploy-ok` = `80262b6`.
+>
+> **Entscheide dieser Sitzung** (Stebler Studios): Entscheid-Runde Oktober vorgezogen (Bauliste §28) · Briefgenerator «jetzt»,
+> alle vier Briefe · Todesfall-Karte ohne Gesetzesstelle · Zustelldatum übernehmen · vor dem Deploy Gate-Punkte 1–5 beheben.
+>
+> **Offen, nächster PR:** Browser-Zurück bringt alte Vorwahl samt Datum · Rechtsvorschlag-Frist an zwei Stellen · `sandbox`
+> fürs Vorschau-iframe · px statt `space`-Tokens im Formular · EN-Texte ohne Sie/Du-Objekte · Doku-Zitat
+> `briefGenerator.js:234` in `TASK_befund-brief-lohn.md` · `IconKern.jsx:290` · eslint-Fehler `workflowsGepinnt.test.js:28`.
+> **rm:** 645+ Markierungen, Arbeitsliste ausserhalb des Repos. **Tag:** `v0.1.40-beta` steht weiter nicht auf dem Live-Stand — Tag nur auf Wort.
+
 > 🚀 **Nachtrag 25.09., 23:15 — Deploy durch Stebler Studios: live = `main` = `cb37254`.**
 >
 > **Stand, gemessen 25.09.2026 23:15** (`bash scripts/stand-jetzt.sh`): main = `cb37254` (23:04) · live = `cb37254`
