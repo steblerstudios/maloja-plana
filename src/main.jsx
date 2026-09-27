@@ -649,8 +649,24 @@ const AppInner = ({ demo }) => {
       });
       // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
       // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
+      // Die Übersicht lädt Teile nach (BergDetail, Leistungen, Instrumente): nach zwei
+      // Frames ist sie noch zu kurz, die Stelle wurde gekappt — gemessen 27.09.2026: bei
+      // 4081 px verlassen, bei 955 px gelandet. Darum nachfassen, bis die Stelle erreicht
+      // ist (höchstens 1,5 s) — und sofort aufhören, sobald die Person selbst scrollt.
       if (parsed.stelle !== null) {
-        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: parsed.stelle, behavior: 'instant' })));
+        const ziel = parsed.stelle;
+        const bis = performance.now() + 1500;
+        let aus = false;
+        const halt = () => { aus = true; };
+        const opts = { once: true, passive: true };
+        ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.addEventListener(ev, halt, opts));
+        const fassen = () => {
+          if (aus) return;
+          window.scrollTo({ top: ziel, behavior: 'instant' });
+          if (Math.abs(window.scrollY - ziel) > 2 && performance.now() < bis) requestAnimationFrame(fassen);
+          else ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.removeEventListener(ev, halt, opts));
+        };
+        requestAnimationFrame(() => requestAnimationFrame(fassen));
       }
     });
     return cleanup;

@@ -866,11 +866,27 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
           ] },
         ];
+        // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus
+        // «Lebensereignisse» in einen Ablauf ging und «Übersicht» antippt, soll die
+        // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
+        // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
+        const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
+        let offen = [];
+        try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
+        const merkeGruppe = (gi, istOffen) => {
+          try {
+            const rest = offen.filter((i) => i !== gi);
+            offen = istOffen ? rest.concat(gi) : rest;
+            sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
+          } catch { /* ohne Speicher: nichts merken */ }
+        };
         return React.createElement(React.Fragment, null,
           ...groups.map((g, gi) => React.createElement('details', {
             // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
             // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
             key: 'tg-' + gi,
+            open: Array.isArray(offen) && offen.includes(gi),
+            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
