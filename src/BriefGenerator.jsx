@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender, BRIEF_ANGABEN, leseAngaben, angabenEingetippt, feldSichtbar, rechtsvorschlagFrist, klageFrist336b } from './briefGenerator.js';
@@ -169,6 +169,28 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
     if (initialTemplate) { setSelected(initialTemplate); setPreview(false); setPrinted(false); setReminderAdded(false); }
   }, [initialTemplate]);
 
+  // Vorwahl aus einem Ablauf («→ Brief: Rechtsvorschlag erheben»): die Ansicht hat nur eine
+  // Spalte, das Formular steht unter der Vorlagen-Liste. Ohne Sprung sah man nur die Liste und
+  // merkte nicht, dass der Brief schon offen ist (27.09.2026). Zwei Frames Abstand, weil
+  // `handleNavigate` im nächsten Frame noch ganz nach oben scrollt. Eigene Wahl per Karte
+  // springt NICHT — dort hat die Person selbst geklickt und sieht, was aufgeht.
+  const formAnfangRef = useRef(null);
+  useEffect(() => {
+    if (!initialTemplate) return undefined;
+    let id2;
+    const id1 = requestAnimationFrame(() => {
+      id2 = requestAnimationFrame(() => {
+        const el = formAnfangRef.current;
+        if (!el || typeof el.scrollIntoView !== 'function') return;
+        let gespeichert = false;
+        try { gespeichert = localStorage.getItem('or5_reducemotion') === '1'; } catch { /* Speicher gesperrt → Systemeinstellung */ }
+        const reduce = gespeichert || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      });
+    });
+    return () => { cancelAnimationFrame(id1); if (id2) cancelAnimationFrame(id2); };
+  }, [initialTemplate]);
+
   // Vorlagenwechsel setzt die Anstellungs-Wahl zurück — sonst trüge ein neuer Brief
   // stillschweigend die Wahl des vorherigen.
   useEffect(() => { setJobKey('main'); }, [selected]);
@@ -267,6 +289,10 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
         )
       ))
     ),
+
+    // Sprungziel für die Vorwahl aus einem Ablauf (siehe `formAnfangRef`). Der Abstand zur
+    // klebenden Kopfzeile kommt aus tokens.css (wie in Lebenssituationen).
+    React.createElement('div', { ref: formAnfangRef, 'aria-hidden': 'true', style: { scrollMarginTop: 'var(--mp-sprungabstand)' } }),
 
     // Anstellungs-Auswahl — erscheint NUR, wenn wirklich ein Nebenerwerb erfasst ist.
     // Wer einen Job hat, sieht hier nichts: kein Klick für die Mehrheit. Die Wahl steuert
