@@ -5,7 +5,8 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 // Stebler Studios. Hier ist der Spielraum am grössten: prüfen, bestreiten, Raten anfragen.
 // Jede Aussage am Gesetzeswortlaut (Fedlex-Filestore, gelesen 27.09.2026): OR Stand
 // 1.1.2026 (Fassungen 1.10.2026 und 1.7.2027 für diese Artikel wortgleich), SchKG Stand
-// 1.1.2026, KVG Stand 1.7.2026, KVV Stand 1.8.2026.
+// 1.1.2026, KVG Stand 1.7.2026, KVV Stand 1.8.2026. «Mahngebühr» kommt im OR nicht vor
+// (Volltextsuche in der Fassung 1.1.2026: 0 Treffer).
 // Bewusst OHNE Frist-Knopf: die Zahlungsfrist einer Mahnung setzt der Gläubiger, nicht das
 // Gesetz; die 30-Tage-Nachfrist der Krankenkasse steht auf der Zahlungsaufforderung selbst
 // (KVG Art. 64a Abs. 1) — ab welchem Tag sie läuft, sagt das Gesetz nicht, also rechnen wir nicht.
@@ -39,9 +40,12 @@ export const MahnungErhalten = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step3LinkSchulden'), onClick: () => onNavigate('schulden') })
     ),
 
-    // Schritt 4 — Krankenkasse: festes Verfahren (KVG 64a, KVV 105b) + IPV
+    // Schritt 4 — Zwei Sonderfälle mit festen Regeln: Miete (OR 257d, Kündigungsandrohung)
+    // und Krankenkasse (KVG 64a, KVV 105a/105b) + IPV
     React.createElement(AblaufStep, { palette, title: t('mahnung.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('mahnung.step4Text')),
+      React.createElement('p', { style: s.stepText }, t('mahnung.step4Miete')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step4LinkWohnung'), onClick: () => onNavigate('wohnunggekuendigt') }),
+      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('mahnung.step4Kk')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step4LinkIpv'), onClick: () => onNavigate('premium') })
     ),
 
