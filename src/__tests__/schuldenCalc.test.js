@@ -118,13 +118,18 @@ describe('Texte Abbau-Plan, Steuern und Raten (27.09.2026)', () => {
   });
   it('Stufen belegt: Bussen mit Begründung, Steuern mit DBG 167 Abs. 4, Quelle im Plan', () => {
     expect(de.schulden.tier1Reason).toContain('ganz bezahlt');
+    // Rückstände mit ihren Folgen begründet, nicht mit der Empfehlung für laufende Rechnungen
+    expect(de.schulden.tier1Reason).toContain('OR Art. 257d');
+    expect(de.schulden.tier1Reason).toContain('Laufende Rechnungen');
+    expect(de.schulden.steuer.text.sie).toContain('StHG Art. 9 Abs. 4');
+    expect(de.schulden.steuer.text.sie).toContain('Bei privaten Schulden');
     expect(de.schulden.tier2Reason).toContain('DBG Art. 167 Abs. 4');
     expect(de.schulden.planQuelle).toContain('schuldeninfo.ch');
     expect(de.schulden.planQuelle).toContain('caritas');
   });
   it('Wer dauerhaft zu wenig hat: keine Ratenvereinbarung — im Ablauf und vor dem Ratengesuch', () => {
     expect(de.mahnung.step5Text.sie).toContain('keine Ratenvereinbarungen oder Schuldanerkennungen');
-    expect(de.briefe.installmentRequest.hinweis.budget.du).toContain('raten Schuldenberatungen von Ratenvereinbarungen ab');
+    expect(de.briefe.installmentRequest.hinweis.budget.du).toContain('von Ratenvereinbarungen ab');
   });
   it('Wertungen ohne Quelle sind weg', () => {
     expect(de.debtLevels).toBeUndefined();
