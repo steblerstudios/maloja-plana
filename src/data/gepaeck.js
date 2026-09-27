@@ -34,8 +34,6 @@ export const GEGENSTAENDE = [
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
       { key: 'stelleweg', view: 'stelleverloren', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M12 7v5l3 2'] },
       { key: 'selbst', view: 'selbstaendigkeit', g: ['M13 3L4 14h6l-1 7 9-11h-6z'] },
-      { key: 'mahnung', view: 'mahnung', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M12 16.5v.01'] },
-      { key: 'betreibung', view: 'betreibung', g: ['M5 3h10l4 4v14H5z', 'M15 3v4h4', 'M8 12h8', 'M8 16h5'] },
       { key: 'stipendien', view: 'stipendien', g: ['M3 8l9-4 9 4-9 4z', 'M7 11v4c0 1.2 2.2 2 5 2s5-.8 5-2v-4', 'M21 8v4.5'] },
     ],
   },
@@ -76,6 +74,14 @@ export const GEGENSTAENDE = [
       { key: 'organ', view: 'organ', g: ['M12 20c4-2.6 7-6 7-9.5A3.7 3.7 0 0 0 12 8a3.7 3.7 0 0 0-7 2.5C5 14 8 17.4 12 20z', 'M12 11v4', 'M10 13h4'] },
     ],
   },
+  // Portemonnaie (Entscheid 25.09.2026): trägt die Geld-Werkzeuge aus
+  // data/werkzeugRegister.js (`fach: 'geld'`) und — Entscheid 27.09.2026 — die Wege
+  // «Mahnung erhalten» und «Betreibung erhalten» (vorher Werkzeugrolle).
+  { key: 'geld', ill: 'wallet', wege: [
+      { key: 'mahnung', view: 'mahnung', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M12 16.5v.01'] },
+      { key: 'betreibung', view: 'betreibung', g: ['M5 3h10l4 4v14H5z', 'M15 3v4h4', 'M8 12h8', 'M8 16h5'] },
+    ],
+  },
 ];
 
 // Flache Liste aller Wege — für Tests und einfache Iteration.
@@ -106,6 +112,8 @@ const CHECKS = {
   gesundheit: (d) => [d?.versicherungen?.kkInsurer, d?.versicherungen?.franchise, d?.versicherungen?.kkPremium, d?.notfall?.doctor],
   alter: (d) => [d?.versicherungen?.bvgInsurer, d?.finanzen?.pension3a, d?.versicherungen?.bvgBalance, d?.vorsorge?.ikAuszug],
   abschied: (d) => [d?.behoerden?.willMade, d?.notfall?.patientenverfuegung, d?.notfall?.vorsorgeauftrag, d?.notfall?.organDonor],
+  // Steuern, Haushaltsbudget, Sparziel, Bankverbindung — was die Geld-Werkzeuge lesen.
+  geld: (d) => [d?.finanzen?.monthlyTax, d?.finanzen?.groceries, d?.finanzen?.savingsGoal, d?.finanzen?.bankName],
 };
 
 // { done, total } — done = erfüllte echte Felder, total = geprüfte Felder.
@@ -115,3 +123,11 @@ export const gegenstandReadiness = (gegenstandKey, data) => {
   const vals = fn(data || {});
   return { done: vals.filter(filled).length, total: vals.length };
 };
+
+// ── Versiegelter Brief im Dunkelmodus (27.09.2026) ──────────────────────────
+// Vorher: Papier = palette.surface (Kartenfläche) → Brief-Form 1,0 : 1, Rand 1,13 : 1,
+// Siegel 2,86 : 1. Jetzt eigene Töne, WCAG 1.4.11 (≥ 3 : 1) — gehalten von
+// gepaeckBriefKontrast.test.js. Helligkeit wie die übrigen Dunkel-Töne (Papier ≈ Stahl
+// der Feldflasche, Luminanz ~0,28; polygrafin 27.09.: #B9B2A5 war ein heller Fleck),
+// darum ein dunkles Siegel, das sich vom Papier abhebt, auf dem es sitzt.
+export const BRIEF_DUNKEL = { papier: '#958F84', rand: '#A8A296', siegel: '#62302A' };

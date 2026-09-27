@@ -1219,6 +1219,8 @@ export default {
       satzHilfe: '5 %, ausser der Vertrag sieht einen höheren Satz vor (OR Art. 104). Für Steuern gilt ein eigener Satz.',
       ergebnis: 'Für {tage} Tage zu {satz} %: rund CHF {z365} (mit 365 Tagen im Jahr gerechnet) oder CHF {z360} (mit 360). Das OR legt die Tageszählung nicht fest; manche Gläubiger rechnen jeden Monat mit 30 Tagen, dann weicht der Betrag leicht ab. Kein Zins auf Zins (OR Art. 105 Abs. 3).',
       ohne: 'Betrag und Datum eintragen, dann erscheint ein Richtwert. Nichts wird gespeichert.',
+      satzUngueltig: 'Zinssatz bitte als Zahl, zum Beispiel 5 — höchstens 30.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      nochNicht: 'Bis heute ist noch kein Tag im Verzug vergangen — es ist noch kein Verzugszins aufgelaufen.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     },
     step4Title: '4 · Miete, Krankenkasse, Bussen, Steuern: hier gelten feste Regeln', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     step4Miete: { sie: 'Miete: Ist Mietzins oder Nebenkosten im Rückstand, kann die Vermieterschaft Ihnen schriftlich eine Zahlungsfrist setzen und die Kündigung androhen. Bei einer Wohnung beträgt diese Frist mindestens 30 Tage. Zahlen Sie innert der Frist nicht, kann sie mit einer Frist von mindestens 30 Tagen auf Ende eines Monats kündigen (OR Art. 257d). Behandeln Sie eine solche Mahnung zuerst — es geht um die Wohnung.', du: 'Miete: Ist Mietzins oder Nebenkosten im Rückstand, kann die Vermieterschaft dir schriftlich eine Zahlungsfrist setzen und die Kündigung androhen. Bei einer Wohnung beträgt diese Frist mindestens 30 Tage. Zahlst du innert der Frist nicht, kann sie mit einer Frist von mindestens 30 Tagen auf Ende eines Monats kündigen (OR Art. 257d). Behandle eine solche Mahnung zuerst — es geht um die Wohnung.' },
@@ -1588,7 +1590,6 @@ export default {
     zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
-    moreTools: 'Ulteriurs utensils',
     advanced: 'Avanzà',
     tresor: 'Deposita da documents',
     kkScanner: 'Scanner cassa da malsauns',
@@ -4531,7 +4532,7 @@ export default {
       einschaetzung: 'Meine Einschätzung: {text}',
       body2: 'Bis zur Klärung bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
       closing: 'Freundliche Grüsse',
-      legalNote: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreiten Sie nur einen Teil, klären Sie mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+      legalNote: { sie: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreiten Sie nur einen Teil, klären Sie mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreitest du nur einen Teil, klär mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' },
       legalNoteGebuehren: { sie: 'Mit diesem Brief anerkennen Sie die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerken Sie bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Mit diesem Brief anerkennst du die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerk bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       rest: 'Zum übrigen Betrag äussere ich mich nach Erhalt der Unterlagen; eine Anerkennung ist damit nicht verbunden.',
     },
@@ -4562,7 +4563,7 @@ export default {
       subject: 'Gesuch um Ratenzahlung — Rechnung Nr. {number}',
       salutation: 'Sehr geehrte Damen und Herren,',
       body1: 'ich habe Ihre Mahnung zur Rechnung Nr. {number} erhalten. Die Hauptforderung von CHF {amount} kann ich zurzeit nicht auf einmal bezahlen.',
-      body2: 'Ich schlage Ihnen vor, ihn in monatlichen Raten von CHF {rate} zu begleichen, erstmals am {date}.',
+      body2: 'Ich schlage Ihnen vor, sie in monatlichen Raten von CHF {rate} zu begleichen, erstmals am {date}.',
       body3: 'Bitte bestätigen Sie mir diesen Vorschlag schriftlich. Solange ich die Raten wie vereinbart bezahle, bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
       closing: 'Freundliche Grüsse',
       legalNote: 'Ein Ratengesuch ist ein Vorschlag; gültig ist, was der Gläubiger bestätigt. Jede Anzahlung gilt als Anerkennung der Forderung (OR Art. 135 Ziff. 1); auch das Gesuch kann so gewertet werden. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung.',
@@ -5723,10 +5724,24 @@ export default {
     pack: 'Remballer',
     wege: '{n} chemins',
     wegeOne: '1 chemin',
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    // Werkzeug-Vorschau 27.09.2026: Werkzeuge im Gepäck, Portemonnaie, Aussenfach.
+    werkzeuge: '{n} utensils',
+    werkzeugeOne: '1 utensil',
+    wegeTitel: 'Vias',
+    werkzeugeTitel: 'Utensils',
+    aussenfach: 'Tastga dadora · Deponer ed ordinar',
+    aussenfachSub: 'Documents, termins e glistas — a maun, dadora vi dal satg.',
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Tastga dadora',
+    aussenfachKarteSub: 'Ils medems utensils, per pachetar',
+    menuAlle: 'Tut ils utensils en il bagagi',
     packed: '{done} sur {total} renseignés',
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
-    obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée' },
-    objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu' },
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Buorsa' },
+    objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Daners & taglias' },
     w: { mahnung: 'Mahnung erhalten', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {

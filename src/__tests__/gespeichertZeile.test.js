@@ -44,7 +44,7 @@ describe('GespeichertZeile', () => {
     const main = fs.readFileSync(path.resolve(__dirname, '..', 'main.jsx'), 'utf8');
     expect(main).toMatch(/const vorlaeufig = demoMode \|\| !!sandboxActive;/);
     for (const d of ['KKScanner', 'OrganDonation', 'TaxCalculator', 'SchuldenManager']) {
-      expect(main, d).toMatch(new RegExp('createElement\\(' + d + ', \\{\\s*palette, t,[^}]*vorlaeufig'));
+      expect(main, d).toMatch(new RegExp('createElement\\(' + d + ', \\{[^}]*palette, t,[^}]*vorlaeufig'));
       const q = fs.readFileSync(path.resolve(__dirname, '..', d + '.jsx'), 'utf8');
       expect(q, d).toMatch(/createElement\(GespeichertZeile, \{[^}]*vorlaeufig/);
     }
