@@ -1,6 +1,7 @@
 # K48 — Fragen an die Jurist:in
 
-> **Stand: 23.09.2026**, Code-Stand `main` `2f15946`.
+> **Stand: 27.09.2026**, Code-Stand live = `80262b6` (Abschnitt H neu).
+> Vorher: 23.09.2026, `main` `2f15946`.
 > Ergänzt 23.09.2026 um F5–F7 (EU-Produkthaftung, Cyber Resilience Act, AGPL § 13)
 > und G1–G4 (freiwillige Unterstützungsbeiträge).
 > Zweck: Die juristische Durchsicht vorbereiten, damit die Zeit in die **Fragen**
@@ -65,6 +66,8 @@ rechnet weiter mit alten Werten. Ist das leichte oder grobe Fahrlässigkeit?
 das ist Bauarbeit, keine Textarbeit.
 
 **A3. Ist der Brief-Generator noch Vorlage oder schon Rechtsdienstleistung?**
+*(Seit 27.09.2026 live dazu: Rechtsvorschlag, Einsprache gegen die Kündigung,
+Arbeitszeugnis anfordern, Todesfall melden — Einzelfragen in Abschnitt H.)*
 Er erstellt u. a. Einsprachen gegen Verfügungen der Krankenkasse mit Fristangabe
 (ATSG Art. 52), Lohnforderungen (OR Art. 322/323) und Kündigungen — teilweise mit
 vorausgefüllten persönlichen Daten.
@@ -305,6 +308,84 @@ QR-Rechnung als statisches Bild — die aber Name und Adresse der Empfängerin i
 
 ---
 
+## H · Neu seit 27.09.2026 — vier Briefe zu Lebensereignissen und die QR-Codes
+
+Live seit 27.09.2026 (`80262b6`). Jede Vorlage zeigt **vor** dem Formular einen
+Hinweis-Kasten mit den Fristen, füllt nie einen Wert, der nicht eingetippt wurde
+(sonst «[bitte ergänzen]»), speichert die eingetippten Angaben **nicht** und trägt
+den Bildschirm-Hinweis «Orientierungshilfe, keine Rechtsberatung» (nicht im
+gedruckten Brief). Wortlaut der zitierten Artikel an lexfind-PDF gelesen (OR/SchKG
+Stand 1.1.2026, ZPO/ZGB Stand 1.7.2026). Recht und Fachlogik je dreimal geprüft (Bau, Deploy-Tor, Nachprüfung) vor dem
+Deploy, 0 Blocker — das ersetzt keine juristische Durchsicht.
+
+**H1. Rechtsvorschlag (SchKG Art. 74/75).**
+Die App rechnet die 10 Tage ab dem eingetippten Zustelldatum **ohne** Verlängerung
+(Wochenende, Feiertage, Betreibungsferien) und sagt das; liegt der Tag zurück, heisst
+es «möglicherweise abgelaufen — sofort beim Amt nachfragen». Ein Ankreuzfeld (Standard
+aus) erhebt die Einrede nach **Art. 75 Abs. 2** («kein neues Vermögen»).
+Fragen: Trägt die Formulierung der Einrede? Und: Verlässt sich jemand auf das
+angezeigte Datum und verpasst die Frist trotzdem — wo läge da unsere Verantwortung,
+wenn das Datum nie später als das Gesetz ist?
+→ *Was hängt daran:* ob die Vorlage so bleiben kann oder nur als Muster ohne Datum.
+
+**H2. Rechtsvorschlag in einer anderen Sprache.**
+Der Brief erscheint in der Sprache der App (de/fr/it/en; rm vorerst auf Deutsch). Der
+Hinweis rät heute: «in einer Amtssprache des Betreibungsamts» schreiben, sonst vorher
+beim Amt nachfragen oder mündlich erklären.
+Frage: Muss ein Betreibungsamt einen schriftlichen Rechtsvorschlag in einer anderen
+Landessprache oder auf Englisch entgegennehmen, und zählt er dann fristwahrend?
+→ *Was hängt daran:* ob der Brief für den Rechtsvorschlag auf die Amtssprache des
+gewählten Kantons festgelegt werden muss.
+
+**H3. Todesfall einer Stelle melden (ZGB Art. 567/571, OR Art. 266i).**
+Absender ist eine angehörige Person in eigenem Namen. Der Brief teilt den Todesfall
+mit und **fragt** nach dem weiteren Vorgehen, den nötigen Unterlagen und einer
+Schlussabrechnung. Er sagt ausdrücklich: keine Kündigung, keine Erklärung zur
+Erbschaft, keine Anerkennung von Forderungen. Die Kündigung eines Mietvertrags (OR
+Art. 266i) steht nur als Hinweis in der App, nicht im Brief.
+Fragen: Kann schon diese Mitteilung oder die Bitte um Kontoauszug als Einmischung
+(ZGB Art. 571 Abs. 2) gelten? Ist die Kündigung eines Mietvertrags vor dem Entscheid
+über die Erbschaft riskant — sollte der Hinweis deutlicher davon abraten?
+→ *Was hängt daran:* der Wortlaut des Briefs und des Warnkastens.
+
+**H4. Einsprache gegen die Kündigung (OR Art. 336b, 335 Abs. 2).**
+Der Brief lehnt die Kündigung schriftlich ab, erklärt die Bereitschaft zur Fortsetzung
+und verlangt auf Wunsch die Begründung. Ein freies Feld nimmt eine **eigene
+Einschätzung** auf (als Einschätzung formuliert, Hilfetext: sachlich, ohne Namen und
+Anschuldigungen).
+Fragen: Genügt die Form für Art. 336b Abs. 1? Und: Schreibt jemand trotzdem einen
+Vorwurf in das freie Feld — trägt die Anbieterin der Vorlage dafür etwas mit?
+→ *Was hängt daran:* ob das freie Feld bleibt.
+
+**H5. Arbeitszeugnis anfordern (OR Art. 330a).**
+Voll- oder Arbeitsbestätigung, Zwischen- oder Schlusszeugnis. Wir sehen hier kein
+besonderes Risiko; nur zur Vollständigkeit bei A3.
+
+**H6. AHV-Nummer im QR-Code (K123, `docs/entscheide/K123-ahv-im-qr.md`).**
+Seit 25.09.2026 steht die AHV-Nummer nie im Notfall- und Organspende-QR und auf der
+KK-Karte nur, wenn die Person das Kästchen setzt (Standard aus).
+1. Ist es eine «systematische Verwendung» im Sinne von **AHVG Art. 153b**, wenn eine
+   App die Nummer mit Personendaten strukturiert **auf dem Gerät der Person** speichert
+   und in einen QR schreibt, ohne dass die Anbieterin sie je sieht? Wer wäre dann
+   «Verwender» (Art. 153c Abs. 1 nennt nur Behörden, Beauftragte, Bildung, VVG-Versicherer,
+   GAV-Kontrollorgane; Art. 153i Abs. 1 Strafnorm)?
+2. Verlangt die Datensparsamkeit (DSG), die Nummer standardmässig **nicht** in einen
+   weitergebbaren Code zu schreiben, wenn die Person sie selbst erfasst hat?
+→ *Was hängt daran:* ob das Kästchen bleibt oder die Nummer ganz aus den Codes fällt.
+
+**H7. Gesundheitsdaten im fremden Adressbuch.**
+Die QR-Codes sind vCards, weil die normale Kamera nur so etwas anzeigt (am Gerät
+gemessen). Folge: Das Telefon der scannenden Person bietet an, die Angaben —
+Medikamente, Allergien, Notfallkontakt — als **Kontakt zu speichern**; dann liegen
+sie in deren Adressbuch und allenfalls deren Cloud. Seit 27.09.2026 sagt ein Satz
+neben jedem QR genau das.
+Frage: Genügt dieser Hinweis (DSG Art. 6 Abs. 2 Verhältnismässigkeit; Art. 5 lit. c
+Ziff. 2 besonders schützenswert), oder braucht es eine andere Bauform (z. B. einen
+zweiten, kleineren Code nur mit Name und Notfallnummer)?
+→ *Was hängt daran:* die Bauform des Notfall-QR.
+
+---
+
 ## Unterlagen, die bereitliegen
 
 | Dokument | Inhalt |
@@ -332,6 +413,9 @@ QR-Rechnung als statisches Bild — die aber Name und Adresse der Empfängerin i
 4. **D1** (SKOS) — betrifft ein gebautes Kernstück
 5. **C1–C3** (Datenschutz) — Position ist dokumentiert, Risiko wirkt klein
 6. **E1** (Marke) — wichtig, aber nicht dringend
+
+**H1–H4** (neue Briefe) gehören zu A3 und sind **live** — sie rücken mit A1–A3 nach vorn.
+**H6–H7** (QR) hängen an einem Entscheid im Oktober (K123-Wiedervorlage).
 
 **G1–G2** (Unterstützungsbeiträge) rücken nach vorn, sobald ein Unterstützen-Knopf
 gebaut werden soll — sie sind die Bedingung dafür, nicht eine Folge davon.
