@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PrimaryButton from './components/PrimaryButton.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, CANTONAL_IPV, CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
@@ -125,6 +126,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       border: opts.primary ? 'none' : '1px solid ' + palette.border,
     },
   }, label);
+
+  // Zweitknopf: Umriss, kein Primär-Gewicht (neben dem einen PrimaryButton).
+  const ruhigerKnopf = {
+    display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
+    padding: '10px 16px', background: 'none', color: palette.text, border: '1px solid ' + palette.border,
+    borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm,
+  };
 
   // Jahr wählen beim Eintragen der Verfügung — klein, zwei Möglichkeiten.
   const jahrWahl = () => React.createElement('label', {
@@ -512,12 +520,12 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         )
       ),
 
-      // Actions
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: space.sm } },
-        React.createElement('button', {
-          onClick: handleApplyOnline,
-          disabled: !anspruchMoeglich,
-          style: { padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+      // Actions — EIN Hauptknopf (Online-Antrag), die zwei anderen ruhig (Seitenrundgang
+      // 27.09.2026: vorher drei gefüllte Flächen, «Dokument» in skyDeep genauso laut).
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' } },
+        React.createElement(PrimaryButton, {
+          palette, onClick: handleApplyOnline, disabled: !anspruchMoeglich,
+          style: { minHeight: '44px', ...(anspruchMoeglich ? null : gesperrtStil) },
         },
           // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
           // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
@@ -525,13 +533,15 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           t('premium.applyOnline')
         ),
         React.createElement('button', {
+          type: 'button',
           onClick: () => setIpvVorschau(true),
           disabled: !anspruchMoeglich,
-          style: { padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+          style: { ...ruhigerKnopf, ...(anspruchMoeglich ? null : gesperrtStil) }
         }, hinweisZeichen('kaestchen'), t('premium.document')),
         React.createElement('button', {
+          type: 'button',
           onClick: () => setShowCalculation(false),
-          style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { ...ruhigerKnopf, color: palette.mid }
         }, hinweisZeichen('kreuz'), t('common.close'))
       ),
 
