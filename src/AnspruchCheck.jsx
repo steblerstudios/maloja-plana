@@ -150,9 +150,13 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
   );
 
   // Sekundär-Aktion (Zurück): ruhiger Umriss-Button, kein Primär-Gewicht.
-  const secondaryBtn = (label, onClick) => React.createElement('button', {
+  // Zeichen und Text als zwei Argumente: bis 27.09.2026 wurde die Funktion mit drei
+  // aufgerufen (Zeichen, Text, Handler) — der Text landete als onClick, der Knopf zeigte
+  // nur den Pfeil und tat nichts.
+  const secondaryBtn = (zeichen, label, onClick) => React.createElement('button', {
     type: 'button', onClick,
     style: {
+      display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px',
       padding: '10px 16px', borderRadius: radius.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
       fontSize: text.sm, fontWeight: weight.medium,
       border: '1px solid ' + palette.border + '66', background: 'transparent', color: palette.mid,
@@ -160,7 +164,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     },
     onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sage + '55'; },
     onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '66'; },
-  }, label);
+  }, zeichen, label);
 
   return React.createElement('div', { style: { maxWidth: '640px' } },
     indicator,

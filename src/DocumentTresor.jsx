@@ -4,6 +4,7 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 const getDaysUntilExpiry = (expiryDate) => {
   const today = new Date();
@@ -212,7 +213,7 @@ export const DocumentTresor = ({
     style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     // Title with folder icon
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('tresor.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('tresor'), size: 22 }), style: { marginBottom: space.md + 'px' } }, t('tresor.title')),
 
     // Ordner status — warm language
     React.createElement('div', {
