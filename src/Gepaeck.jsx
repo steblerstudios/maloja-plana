@@ -82,20 +82,22 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     // Portemonnaie (27.09.2026, Entscheid «eigene Illustration»): im Stil der anderen —
     // Leder-Körper mit Rand (stroke), Falz- und Nahtlinie (line), Laschen-Druckknopf aus
     // Messing, eine Note in Wachsleinen. Leder = dieselben Holz-/Ledertöne wie die Kiste.
+    // Eigene Silhouette (polygrafin 27.09.: nicht die 34×22-Fläche der Werkzeugrolle):
+    // schmalerer Körper, die Lasche ragt rechts hinaus — die Form trägt, nicht die Farbe.
     if (name === 'wallet') return wrap([
-      h('rect', { key: 1, x: 12, y: 11, width: 22, height: 9, rx: 1.5, fill: M.canvas }),
-      h('path', { key: 2, d: 'M15 14.5h9', stroke: M.line, strokeWidth: 1 }),
-      h('rect', { key: 3, x: 7, y: 16, width: 34, height: 22, rx: 4, fill: M.wood, stroke: M.stroke, strokeWidth: 1 }),
-      h('path', { key: 4, d: 'M7 21h34', stroke: M.line, strokeWidth: 1 }),
-      h('path', { key: 5, d: 'M11 34h12', stroke: M.line, strokeWidth: 1 }),
-      h('path', { key: 6, d: 'M41 23H30q-3 0-3 3v2q0 3 3 3h11z', fill: M.woodLo, stroke: M.line, strokeWidth: 1 }),
-      h('circle', { key: 7, cx: 31, cy: 27, r: 2.2, fill: M.brass }),
+      h('rect', { key: 1, x: 11, y: 12, width: 20, height: 8, rx: 1.5, fill: M.canvas, stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 2, d: 'M14 15.5h8', stroke: M.line, strokeWidth: 1 }),
+      h('rect', { key: 3, x: 8, y: 17, width: 29, height: 20, rx: 3, fill: M.wood, stroke: M.stroke, strokeWidth: 1 }),
+      h('path', { key: 4, d: 'M8 22h29', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 5, d: 'M11 33h11', stroke: M.line, strokeWidth: 1 }),
+      h('path', { key: 6, d: 'M30 22h9q3 0 3 3v2q0 3-3 3h-9q-3 0-3-3v-2q0-3 3-3z', fill: M.woodLo, stroke: M.stroke, strokeWidth: 1 }),
+      h('circle', { key: 7, cx: 31, cy: 26, r: 2.2, fill: M.brass }),
     ]);
     // Aussenfach als Karte (nur Vorschau-Variante platz=karte): die aufgesetzte Tasche des
     // Rucksacks — Wachsleinen mit Messing-Riemen, wie die Fronttasche des grossen Rucksacks.
     if (name === 'pocket') return wrap([
-      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 24, rx: 7, fill: M.canvas, stroke: M.stroke, strokeWidth: 1 }),
-      h('path', { key: 2, d: 'M8 22q16 5 32 0', fill: 'none', stroke: M.line, strokeWidth: 1 }),
+      h('rect', { key: 1, x: 8, y: 14, width: 32, height: 24, rx: 4, fill: M.canvas, stroke: M.stroke, strokeWidth: 1 }),
+      h('path', { key: 2, d: 'M8 21q16 5 32 0', fill: 'none', stroke: M.line, strokeWidth: 1 }),
       h('path', { key: 3, d: 'M12 28h24', stroke: M.brass, strokeWidth: 2, strokeLinecap: 'round' }),
       h('circle', { key: 4, cx: 24, cy: 28, r: 2.4, fill: M.brass }),
     ]);
