@@ -1,6 +1,9 @@
 import React from 'react';
 import { text, weight, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
+
+// Wie die Karten im Schuldenmanager: mit Rappen, sonst ergeben Summe und Karten verschiedene Zahlen.
+const chf = (x) => betrag(x, { stellen: 2 });
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { AblaufLink } from '../AblaufSchale.jsx';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from '../utils/mahnstufe.js';
@@ -34,18 +37,18 @@ export const OffenBalken = ({ palette, t, prioritized, status }) => {
   const total = teile.reduce((a, x) => a + x.summe, 0);
   const erste = prioritized[0];
   const nebenzeile = [
-    status.overdue > 0 && t('schulden.bild.ueberfaellig', { amount: betrag(status.overdue) }),
-    status.ohneDatum > 0 && t('schulden.bild.ohneDatum', { amount: betrag(status.ohneDatum) }),
-    status.paid > 0 && t('schulden.bild.bezahlt', { amount: betrag(status.paid) }),
+    status.overdue > 0 && t('schulden.bild.ueberfaellig', { amount: chf(status.overdue) }),
+    status.ohneDatum > 0 && t('schulden.bild.ohneDatum', { amount: chf(status.ohneDatum) }),
+    status.paid > 0 && t('schulden.bild.bezahlt', { amount: chf(status.paid) }),
   ].filter(Boolean).join(' · ');
   return React.createElement('div', { style: { marginBottom: space.lg } },
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, marginBottom: space.sm } },
       React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('schulden.bild.offen')),
-      React.createElement('span', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, betrag(total))
+      React.createElement('span', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, fontVariantNumeric: 'tabular-nums' } }, chf(total))
     ),
     total > 0 && React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', gap: '2px', marginBottom: space.sm } },
       teile.map((x, i) => React.createElement('div', {
-        key: x.tier, title: t(tierLabelKey(x.tier)) + ': ' + betrag(x.summe),
+        key: x.tier, title: t(tierLabelKey(x.tier)) + ': ' + chf(x.summe),
         style: { flex: x.summe + ' 1 0', minWidth: '4px', height: '14px', background: ton(palette, x.tier),
           borderRadius: [i === 0, i === teile.length - 1, i === teile.length - 1, i === 0].map(r => (r ? radius.xs : 0) + 'px').join(' ') },
       }))
@@ -54,7 +57,7 @@ export const OffenBalken = ({ palette, t, prioritized, status }) => {
       teile.map(x => React.createElement('li', { key: x.tier },
         React.createElement(LegendenMarke, { form: 'fuellung', color: ton(palette, x.tier), palette }),
         t(tierLabelKey(x.tier)) + ' ',
-        React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, betrag(x.summe))
+        React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, chf(x.summe))
       ))
     ),
     nebenzeile && React.createElement('div', { style: { borderTop: '1px solid ' + palette.border, marginTop: space.md, paddingTop: space.sm, fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, nebenzeile),

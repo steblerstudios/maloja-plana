@@ -1888,12 +1888,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     isNotfall && hasMedical && React.createElement('div', {
       style: { marginBottom: space.md }
     },
-      React.createElement('span', {
+      // Echter Knopf: Enter UND Leertaste, ohne eigenes Tastatur-Handling.
+      React.createElement('button', {
+        type: 'button',
         onClick: () => setKartenVorschau(true),
-        role: 'button',
-        tabIndex: 0,
-        onKeyDown: (e) => { if (e.key === 'Enter') setKartenVorschau(true); },
         style: {
+          background: 'none', border: 'none', padding: 0, fontFamily: 'inherit',
           fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
           borderBottom: '1px solid ' + palette.border,
           paddingBottom: '1px',
