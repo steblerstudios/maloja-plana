@@ -2142,7 +2142,7 @@ export default {
       },
       hints: {
         patientenverfuegung: 'Instructions for medical treatment if you cannot communicate. Swiss Civil Code Art. 370-373.',
-        vorsorgeauftrag: 'Designates someone to act on your behalf if you lose capacity. Must be registered with your municipality.',
+        vorsorgeauftrag: 'Designates someone to act on your behalf if you lose capacity. On request, the civil registry office records that it exists and where it is kept.',
         bestattungswuensche: 'Your personal wishes regarding burial or cremation. Not legally binding, but important for family.',
       },
       docs: {
