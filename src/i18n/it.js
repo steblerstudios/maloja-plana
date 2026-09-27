@@ -2657,7 +2657,6 @@ export default {
       healthInfoRecorded: 'Informazioni sanitarie registrate',
       statusYes: 'Disponibile',
       statusNo: 'Non ancora',
-      statusDeclined: 'Rifiutato',
       contactSentence: 'Una persona di contatto di emergenza è registrata.',
       contactAndDoctor: 'Una persona di contatto di emergenza è registrata. Un medico di famiglia è indicato.',
       contactAndProvision: 'Una persona di contatto di emergenza è registrata. Le disposizioni di previdenza sono registrate.',
@@ -3686,6 +3685,10 @@ export default {
     bagQuelle: 'UFSP: consenso esplicito o presunto',
     // Hinweis 27.09.2026: die IT-Seite des UFSP nennt fürs Inkrafttreten «primo semestre del 2027», die DE-/FR-Seiten und die Registerseite «1. Halbjahr 2028» — wir folgen der Mehrheit (2028).
     bagUrl: 'https://www.bag.admin.ch/it/donazione-di-organi-modello-del-consenso-o-modello-del-consenso-presunto',
+    vertrauensperson: 'Persona di fiducia (nome e telefono)',
+    vertrauenspersonKurz: 'Persona di fiducia',
+    vertrauenspersonHinweis: { sie: 'Si accordi con la persona sul fatto che figuri qui. Nome e numero compaiono nel codice QR della donazione di organi e nel dossier d\'emergenza.', du: 'Accordati con la persona sul fatto che figuri qui. Nome e numero compaiono nel codice QR della donazione di organi e nel dossier d\'emergenza.' },
+    keineOrganeGewaehlt: { sie: 'Nessun organo selezionato finora. La preghiamo di indicare quali organi e tessuti desidera donare — altrimenti in caso d\'emergenza nessuno sa quali siano.', du: 'Nessun organo selezionato finora. Indica quali organi e tessuti desideri donare — altrimenti in caso d\'emergenza nessuno sa quali siano.' },
     bitteBestaetigen: { sie: 'Nel capitolo Emergenza era indicato «Donatore di organi registrato: sì». Questo non dice di quali organi si tratta. La preghiamo di scegliere di nuovo la Sua decisione e di salvarla.', du: 'Nel capitolo Emergenza era indicato «Donatore di organi registrato: sì». Questo non dice di quali organi si tratta. Scegli di nuovo la tua decisione e salvala.' },
     bitteBestaetigenWiderspruch: { sie: 'Prima c\'erano due indicazioni contraddittorie: «Donatore di organi registrato: sì» nel capitolo Emergenza, «Rifiutato» su questa pagina. La preghiamo di scegliere di nuovo la Sua decisione e di salvarla.', du: 'Prima c\'erano due indicazioni contraddittorie: «Donatore di organi registrato: sì» nel capitolo Emergenza, «Rifiutato» su questa pagina. Scegli di nuovo la tua decisione e salvala.' },
     wirkung: { sie: 'Maloja non è un registro. La Sua decisione vale se la si trova: sulla tessera di donatore, nelle direttive anticipate — e se i Suoi congiunti la conoscono.', du: 'Maloja non è un registro. La tua decisione vale se la si trova: sulla tessera di donatore, nelle direttive anticipate — e se i tuoi congiunti la conoscono.' },

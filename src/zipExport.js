@@ -47,7 +47,10 @@ const generateZipManifest = (data, t) => {
   // Formular (getChapters), Beträge über utils/geld.js, Leeres als «—».
   const kapitel = t ? getChapters(t) : [];
   // Bei «nur bestimmte» die Organe dazu — sonst wüsste niemand, welche gemeint sind.
-  const organe = t && data.chapters.notfall?.organDonor === 'partial' ? organListe(t, data.organDonation) : [];
+  const organWahl = data.chapters.notfall?.organDonor;
+  const vertrauensperson = String(data.chapters.notfall?.organVertrauensperson ?? '').trim();
+  const organe = !t ? [] : organWahl === 'partial' ? organListe(t, data.organDonation)
+    : organWahl === 'delegated' && vertrauensperson ? [vertrauensperson] : [];
   const organZusatz = organe.length ? ': ' + organe.join(', ') : '';
   const wahl = (kap, k, wert, sonst = dash) => {
     if (wert === undefined || wert === null || wert === '') return sonst;
