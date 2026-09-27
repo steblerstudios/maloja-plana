@@ -199,6 +199,7 @@ export · calendar · notifications · settings · legal
 #### E3 · Schulden / Betreibung
 - **Bausteine:** `schulden`/`SchuldenManager` (+ `schuldenCalc.js`: `createDebtPlan`, `calculateBetreibungsRegisterImpact`, `createBetreibungsAuszugTemplate`).
 - **Verwendet?** 🟡 fachlich reich (Schuldenplan, Betreibungsregister-Wirkung, Verlustschein), aber `SchuldenManager.jsx` hat **0 onNavigate** — komplette Insel.
+- **⟨Nachtrag 27.09.2026⟩** Keine Insel mehr (Situation, Mahnung, Kapitel Behörden, Mahnstufen-Wege). Abbau-Plan neu gerechnet (eigene Rate, Zins je Schuld, «reicht nicht»), Übersicht korrigiert, Reihenfolge belegt, Steuer-Hinweis; Tests `schuldenCalc.test.js`.
 - **Lücken:** 🔴 Sanierungs-/Abzahlungsplan erzeugt keine wiederkehrenden Zahlungs-Erinnerungen in `calendar` · 🔴 keine Verkettung zur Schuldenberatung (Orientierung) · 🔴 G3 (Betreibungsauszug bestellen) nicht angebunden obwohl `createBetreibungsAuszugTemplate` existiert.
 - **Crosslinks:** 🔗 → `budget`/`finanzuebersicht` (Tragbarkeit) · 🔗 → `direktlinks` (Betreibungsamt/Schuldenberatung) · 🔗 → `sozialhilfe`.
 - **Nächste Aktion:** Crosslink `SchuldenManager` → `budget`/`finanzuebersicht` (Schulden im Gesamtbudget verankern).

@@ -23,6 +23,15 @@ kommt der Changelog immer mit, nie doppelt.*
   360 Tage), **Steuern** im Ablauf (direkte Bundessteuer: Zahlungserleichterung, Erlass nur vor dem
   Zahlungsbefehl, DBG 166/167) und die **Mahnstufe je Forderung** im Schuldenmanager.
 
+### Behoben
+- **Schuldenmanager: Abbau-Plan und Übersicht rechnen richtig** (27.09.2026). «Gesamtschulden» ohne
+  Bezahltes; Schulden ohne Datum nicht mehr «bald fällig»; «Überfällig» zählt auch den gewählten
+  Status. Der Zahlungsplan (fest CHF 500, ein Zinssatz für alles, Endlos-Plan bei zu kleiner Rate)
+  ist ersetzt durch einen Richtwert mit eigener Rate, je Schuld ihr Zins, ehrlich «reicht nicht»
+  statt endloser Liste. Betreibungsregister ohne Wertungen und Schwellen ohne Quelle. Reihenfolge
+  belegt (schuldeninfo.ch, Caritas), neu ein belegter Steuer-Hinweis (DBG 33/34, StHG 9/13).
+  Erste Tests für `schuldenCalc.js`.
+
 ### Geändert
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
   Vorher zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt»; jetzt offen,
