@@ -14,7 +14,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
 import { betrag, zahl } from './utils/geld.js';
-import { darlehenVorschlag, betreibungsHinweis } from './utils/schuldenAusProfil.js';
+import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
 
@@ -55,7 +55,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
   const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
   // Abbau-Plan: Rate als Text (Schweizer Schreibweise erlaubt), gelesen wie im Briefgenerator.
-  const [planRate, setPlanRate] = useState('');
+  // Vorschlag aus dem Budget (27.09.2026) — nur auf gleicher Basis, sonst leer mit Hinweis.
+  const [budgetRate] = useState(() => rateAusBudget(data));
+  const [planRate, setPlanRate] = useState(() => (budgetRate.grund === 'ok' ? String(budgetRate.vorschlag) : ''));
   const [method, setMethod] = useState('lawine');
   const [formError, setFormError] = useState(false);
 
@@ -287,7 +289,22 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('div', { style: { marginTop: space.md, padding: space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm } },
           React.createElement('label', { htmlFor: 'plan-rate', style: { display: 'block', fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.plan.rateLabel')),
           React.createElement('input', { id: 'plan-rate', type: 'text', inputMode: 'decimal', autoComplete: 'off', value: planRate, onChange: (e) => setPlanRate(e.target.value), 'aria-describedby': 'plan-rate-hilfe', style: { ...inputStyle, maxWidth: '220px', marginBottom: space.xs } }),
-          React.createElement('div', { id: 'plan-rate-hilfe', style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('schulden.plan.rateHilfe')),
+          React.createElement('div', { id: 'plan-rate-hilfe', style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, lineHeight: 1.5 } },
+            budgetRate.grund === 'ok'
+              ? t('schulden.plan.ausBudget', { einnahmen: betrag(budgetRate.einnahmen, { hoechstens: 2 }), ausgaben: betrag(budgetRate.ausgaben, { hoechstens: 2 }), vorschlag: betrag(budgetRate.vorschlag) })
+              : budgetRate.grund === 'unvollstaendig'
+                ? t('schulden.plan.budgetFehlt', { was: budgetRate.fehlend.map(k => t('schulden.plan.fehlt.' + k)).join(', ') })
+                : t('schulden.plan.budget.' + budgetRate.grund),
+            ' ', t('schulden.plan.rateHilfe'),
+            budgetRate.grund === 'ok' && leseBetrag(planRate) !== budgetRate.vorschlag && React.createElement('button', {
+              type: 'button', onClick: () => setPlanRate(String(budgetRate.vorschlag)),
+              style: { display: 'inline', marginInlineStart: '6px', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },
+            }, t('schulden.plan.zurueck')),
+            budgetRate.grund !== 'ok' && onNavigate && React.createElement('button', {
+              type: 'button', onClick: () => onNavigate('budget'),
+              style: { display: 'inline', marginInlineStart: '6px', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit' },
+            }, t('schulden.plan.zumBudget'))
+          ),
           React.createElement('div', { role: 'status', 'aria-live': 'polite', style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 } },
             !plan ? t('schulden.plan.ohne')
               : !plan.machbar ? t(plan.grund === 'zins' ? 'schulden.plan.zuWenig' : 'schulden.plan.zuLang', { rate: betrag(leseBetrag(planRate), { hoechstens: 2 }), zins: betrag(plan.zinsMonat || 0, { stellen: 2 }) })
