@@ -7,6 +7,7 @@ import { renderSource } from './utils/renderSource.js';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
+import { AblaufLink } from './AblaufSchale.jsx';
 
 export const AsylView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -160,23 +161,13 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
 
     // ── Nächste Schritte: ruhige Crosslinks zu Dokumenten & Notfall ──
     onNavigate && React.createElement('div', { key: 'next-steps' },
-      React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.nextStepsTitle')),
-      React.createElement('button', {
-        style: { ...s.crosslink, marginTop: space.xs + 'px' },
-        onClick: () => onNavigate('kkerst'),
-      }, t('asyl.linkKkErst')),
-      React.createElement('button', {
-        style: { ...s.crosslink, marginTop: space.xs + 'px' },
-        onClick: () => onNavigate('tresor'),
-      }, t('asyl.linkDocs')),
-      React.createElement('button', {
-        style: { ...s.crosslink, marginTop: space.xs + 'px' },
-        onClick: () => onNavigate('notfalleinstieg'),
-      }, t('asyl.linkEmergency')),
-      React.createElement('button', {
-        style: { ...s.crosslink, marginTop: space.xs + 'px' },
-        onClick: () => onNavigate('vorsorge'),
-      }, t('asyl.linkAhvIntl'))
+      // Seit 27.09.2026 (Seitenrundgang) dieselben ruhigen Querverweise wie in allen
+      // Abläufen — vorher vier gefüllte, gleich laute Flächen.
+      React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs + 'px' } }, t('asyl.nextStepsTitle')),
+      React.createElement(AblaufLink, { palette, label: t('asyl.linkKkErst'), onClick: () => onNavigate('kkerst') }),
+      React.createElement(AblaufLink, { palette, label: t('asyl.linkDocs'), onClick: () => onNavigate('tresor') }),
+      React.createElement(AblaufLink, { palette, label: t('asyl.linkEmergency'), onClick: () => onNavigate('notfalleinstieg') }),
+      React.createElement(AblaufLink, { palette, label: t('asyl.linkAhvIntl'), onClick: () => onNavigate('vorsorge') })
     ),
 
     // Quellen — dieselbe Zeile, die die anderen Abläufe im Fuss tragen (24.09.2026).
