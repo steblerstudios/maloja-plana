@@ -100,9 +100,9 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
     setGespeichertAls(stand);
   };
 
-  const buttonStyle = {
-    padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
-  };
+  // Zweitknopf neben dem einen PrimaryButton (Speichern) — Seitenrundgang 27.09.2026:
+  // der QR-Knopf stand in Salbei gefüllt genauso laut darunter.
+  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   const statusButtonStyle = {
     // color explizit: Buttons erben color nicht (UA-Reset auf schwarz) → sonst war
@@ -149,7 +149,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, hinweisZeichen(), t('organ.generateQr')),
+      React.createElement('button', { type: 'button', onClick: handleGenerateQR, style: { ...zweitKnopf, width: '100%' } }, hinweisZeichen(), t('organ.generateQr')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
       React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, qrAnsage)
