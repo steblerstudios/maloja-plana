@@ -58,7 +58,7 @@ export function organSpendeVcard({ t, data = {}, status, organs = {} }) {
   });
 }
 
-export const OrganDonation = ({ palette, t, data, onSave }) => {
+export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
   const [status, setStatus] = useState(data.organStatus || 'registered');
   const [organs, setOrgans] = useState(data.organDonation || {
     heart: false, lungs: false, liver: false, kidneys: false,
@@ -148,7 +148,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         })),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
-      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
+      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, hinweisZeichen(), t('organ.generateQr')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).

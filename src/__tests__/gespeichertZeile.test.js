@@ -11,8 +11,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { GespeichertZeile } from '../components/GespeichertZeile.jsx';
 
 const palette = { sageDeep: '#3a5a4a', sage: '#8fb0a0' };
-const t = (k) => (k === 'common.saved' ? 'Gespeichert' : k);
-const zeile = (sichtbar) => renderToStaticMarkup(React.createElement(GespeichertZeile, { palette, t, sichtbar }));
+const t = (k) => (k === 'common.saved' ? 'Gespeichert' : k === 'common.savedTemporary' ? 'Übernommen — nur für jetzt' : k);
+const zeile = (sichtbar, vorlaeufig) => renderToStaticMarkup(React.createElement(GespeichertZeile, { palette, t, sichtbar, vorlaeufig }));
 
 describe('GespeichertZeile', () => {
   it('steht auch leer als Status-Region im DOM', () => {
@@ -33,6 +33,20 @@ describe('GespeichertZeile', () => {
       const q = fs.readFileSync(path.resolve(__dirname, '..', d), 'utf8');
       expect(q, d).toMatch(/sichtbar: gespeichertAls === stand/);
       expect(q, d).toMatch(/setGespeichertAls\(stand\)/);
+    }
+  });
+  // 27.09.2026: im Beispiel sagte die Zeile «Gespeichert», der Banner «nichts wird gespeichert».
+  it('sagt im Beispiel und beim Ausprobieren nicht «Gespeichert»', () => {
+    expect(zeile(true, true)).not.toContain('Gespeichert');
+    expect(zeile(true, true)).toContain('Übernommen');
+  });
+  it('main.jsx reicht «vorlaeufig» an alle vier Ansichten, und jede gibt es weiter', () => {
+    const main = fs.readFileSync(path.resolve(__dirname, '..', 'main.jsx'), 'utf8');
+    expect(main).toMatch(/const vorlaeufig = demoMode \|\| !!sandboxActive;/);
+    for (const d of ['KKScanner', 'OrganDonation', 'TaxCalculator', 'SchuldenManager']) {
+      expect(main, d).toMatch(new RegExp('createElement\\(' + d + ', \\{\\s*palette, t,[^}]*vorlaeufig'));
+      const q = fs.readFileSync(path.resolve(__dirname, '..', d + '.jsx'), 'utf8');
+      expect(q, d).toMatch(/createElement\(GespeichertZeile, \{[^}]*vorlaeufig/);
     }
   });
 });

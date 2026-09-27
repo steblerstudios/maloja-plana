@@ -48,7 +48,7 @@ export function kkNotfallVcard({ t, kkData = {}, mitAhv = false }) {
   });
 }
 
-export const KKScanner = ({ palette, t, data, onSave }) => {
+export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
   const [scanMode, setScanMode] = useState('upload');
   const franchiseToNumber = (key) => key ? key.replace('f', '') : '';
   const [kkData, setKKData] = useState({
@@ -275,7 +275,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         style: { margin: '0 0 12px', padding: '10px 12px 10px 28px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
       }, fehler.map(f => React.createElement('li', { key: f }, f))),
       React.createElement('button', { onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, style: { ...buttonStyle, width: '100%' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save')),
-      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert }),
+      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly'))
     ),
 

@@ -9,7 +9,9 @@ import { text, weight, space } from '../config/tokens.js';
 // füllt: eine Region, die MIT ihrem Text erscheint, sagen Screenreader oft nicht an.
 // `sichtbar` entscheidet die Ansicht — z. B. «gespeicherter Stand == aktueller Stand»,
 // damit die Zeile verschwindet, sobald man danach wieder etwas ändert.
-export const GespeichertZeile = ({ palette, t, sichtbar, style }) => React.createElement('p', {
+// `vorlaeufig` (27.09.2026): im Beispiel und beim Ausprobieren liegt die Änderung nur im
+// Arbeitsspeicher — dort sagte die Zeile «Gespeichert», der Banner «nichts wird gespeichert».
+export const GespeichertZeile = ({ palette, t, sichtbar, vorlaeufig, style }) => React.createElement('p', {
   role: 'status',
   style: {
     margin: sichtbar ? space.sm + 'px 0 0' : 0,
@@ -17,4 +19,4 @@ export const GespeichertZeile = ({ palette, t, sichtbar, style }) => React.creat
     color: palette.sageDeep || palette.sage,
     ...style,
   },
-}, sichtbar ? [hinweisZeichen('check', 12, 'z'), t('common.saved')] : null);
+}, sichtbar ? [hinweisZeichen('check', 12, 'z'), t(vorlaeufig ? 'common.savedTemporary' : 'common.saved')] : null);

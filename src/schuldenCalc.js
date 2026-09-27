@@ -8,6 +8,15 @@ import { heuteIso, leseDatum } from './utils/fristen.js';
 // Jetzt: offen = nicht bezahlt; überfällig = Status «overdue» ODER Datum vor heute;
 // noch nicht fällig = gültiges Datum ab heute; der Rest ist «offen ohne Fälligkeitsdatum».
 // Datum als ISO-Text verglichen (Eingabe aus <input type="date">), ungültig = ohne Datum.
+// Überfällig = so erfasst ODER Fälligkeit vorbei. Eine Regel für Übersicht und Karte:
+// bis 27.09.2026 zählte die Übersicht eine Busse mit vergangenem Datum als überfällig,
+// ihre Karte sagte «Offen».
+export const istUeberfaellig = (debt, heute = heuteIso()) => {
+  if (!debt || debt.status === 'paid') return false;
+  if (debt.status === 'overdue') return true;
+  return !!leseDatum(debt.dueDate) && debt.dueDate < heute;
+};
+
 export const calculateDebtStatus = (debts, heute = heuteIso()) => {
   let offen = 0;
   let overdue = 0;
@@ -20,7 +29,7 @@ export const calculateDebtStatus = (debts, heute = heuteIso()) => {
     if (debt.status === 'paid') { paid += amount; continue; }
     offen += amount;
     const due = leseDatum(debt.dueDate) ? debt.dueDate : null;
-    if (debt.status === 'overdue' || (due && due < heute)) overdue += amount;
+    if (istUeberfaellig(debt, heute)) overdue += amount;
     else if (due) upcoming += amount;
     else ohneDatum += amount;
   }
@@ -95,7 +104,7 @@ export const calculateBetreibungsRegisterImpact = (registerEntries, monthlyIncom
 export const formatVerlustschein = (verlustschein) => {
   return {
     id: verlustschein.id || Date.now(),
-    date: verlustschein.date || new Date().toLocaleDateString('de-CH'),
+    date: verlustschein.date || heuteIso(),
     debtor: verlustschein.debtor || '',
     amount: Number(verlustschein.amount || 0),
     creditor: verlustschein.creditor || '',

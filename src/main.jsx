@@ -587,6 +587,8 @@ const AppInner = ({ demo }) => {
   // Im Beispiel landen Speichern-Knöpfe der Rechner in der Beispiel-Kopie (nur im
   // Arbeitsspeicher) — vorher mischten sie Beispielwerte in den echten Stand.
   const writeData = demoMode ? setDemoData : sandboxActive ? setSandboxData : setData;
+  // Für «Gespeichert»-Zeilen: in beiden Fällen bleibt nichts dauerhaft (GespeichertZeile).
+  const vorlaeufig = demoMode || !!sandboxActive;
   // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
   // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
   const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
@@ -1474,7 +1476,7 @@ const AppInner = ({ demo }) => {
           isDarkMode
         }),
         view === 'kk' && React.createElement(KKScanner, {
-          palette, t, data: activeData,
+          palette, t, data: activeData, vorlaeufig,
           onSave: (kkData) => {
             const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
             writeData(prev => {
@@ -1504,19 +1506,19 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onNavigate: handleNavigate,
           onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
