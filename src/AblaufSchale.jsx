@@ -7,6 +7,10 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { renderSource } from './utils/renderSource.js';
 import { istVorbei } from './utils/fristen.js';
 import { formatDE } from './utils/helpers.js';
+import { parseHash } from './utils/hashRouter.js';
+import { ablaufBereich } from './config/ansichtenRegister.js';
+import { bereichColor } from './data/lebensbereiche.js';
+import { kontrast, lesbareFarbe } from './utils/lebensbereichFruechte.js';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -29,10 +33,26 @@ const styles = (palette) => ({
 });
 
 // Container mit Kopf (Icon + Titel + Intro) und beliebigen Schritt-Kindern.
+// Farbe des Lebensbereichs für den offenen Ablauf (Entscheid Stebler Studios 27.09.2026):
+// Balken oben und Zeichen im Kopf. Welcher Ablauf offen ist, sagt die Adresse — so muss
+// keiner der 33 Abläufe etwas mitgeben; die Zuordnung steht im Register (ABLAEUFE.bereich).
+const ablaufFarbe = (palette) => {
+  // Ohne Browser (Server-Render in den Tests) gibt es keine Adresse — dann keine Farbe.
+  let ansicht = null;
+  try { ansicht = typeof window !== 'undefined' ? parseHash() : null; } catch { ansicht = null; }
+  const key = ansicht && ablaufBereich(ansicht.view);
+  if (!key) return null;
+  const dunkel = kontrast(palette.bg, '#FFFFFF') > kontrast(palette.bg, '#000000');
+  const farbe = bereichColor(key, dunkel);
+  // Das Zeichen ist Grafik: 3:1 (WCAG 1.4.11) genügt.
+  return farbe ? { balken: farbe, zeichen: lesbareFarbe(farbe, palette.surface || palette.bg, dunkel, 3) } : null;
+};
+
 export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
   const s = styles(palette);
-  return React.createElement('div', { style: s.wrap },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: icon || 'insurance', size: 22 }), style: { marginBottom: space.sm + 'px' } }, title),
+  const farbe = ablaufFarbe(palette);
+  return React.createElement('div', { style: farbe ? { ...s.wrap, borderTop: '4px solid ' + farbe.balken, paddingTop: space.md + 'px' } : s.wrap },
+    React.createElement(PageTitle, { palette, icon: React.createElement('span', { style: { display: 'inline-flex', color: farbe ? farbe.zeichen : undefined } }, React.createElement(Icon, { name: icon || 'insurance', size: 22 })), style: { marginBottom: space.sm + 'px' } }, title),
     intro ? React.createElement('p', { style: s.intro },
       React.createElement(GlossarText, { palette }, intro)) : null,
     children
