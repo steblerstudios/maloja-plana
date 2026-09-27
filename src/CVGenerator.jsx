@@ -5,6 +5,7 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { ZielHinweis } from './components/ExternerLink.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
   const [preview, setPreview] = useState(false);
@@ -21,7 +22,7 @@ export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md } }, t('cv.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('cv'), size: 22 }), style: { marginBottom: space.md } }, t('cv.title')),
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: space.md } },
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },

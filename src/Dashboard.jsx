@@ -10,7 +10,7 @@ import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFr
 import { useT } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
-import { ABLAEUFE } from './config/ansichtenRegister.js';
+import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 
@@ -798,7 +798,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.toolsSubtitle')),
       (() => {
         const renderTool = (tool) => {
-          const IconFn = Icons[tool.icon];
+          // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
+          // Offizielle Links und Flyer trugen hier noch das Tresor-Zeichen); sonst das eigene.
+          const IconFn = Icons[tool.view ? ansichtIkon(tool.view, tool.icon) : tool.icon];
           const iconPx = simpleView ? '40px' : '20px';
           return React.createElement('button', {
             key: tool.key || tool.view,

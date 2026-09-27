@@ -56,6 +56,9 @@ export const ABLAEUFE = [
   { view: 'todesfall', nav: 'nav.todesfall', sub: 'nav.sub.todesfall', icon: 'document', aliases: ['todesfall', 'tod', 'gestorben', 'erbe', 'nachlass', 'décès', 'decesso', 'death'] },
 ];
 
+// Zeichen je Werkzeug (Seitenrundgang 27.09.2026): ALV trug «family» wie der Erwerbsersatz,
+// Offizielle Links und Flyer dasselbe «dokumentTresor» wie der Tresor. Die Köpfe der
+// Werkzeuge holen ihr Zeichen über ansichtIkon() von hier — Wächter: zeichenEineQuelle.test.js.
 export const SEARCH_VIEWS = [
   { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', aliases: ['todo', 'merkliste'] },
   { view: 'calendar', nav: 'nav.calendar', sub: 'nav.sub.calendar', icon: 'calendar', aliases: ['ical', 'ics', 'termine'] },
@@ -67,12 +70,12 @@ export const SEARCH_VIEWS = [
   { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ausbildung', aliases: ['stipendien', 'scholarship'] },
   { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', aliases: ['steuer', 'tax', 'impot'] },
   { view: 'sozialhilfe', nav: 'nav.sozialhilfe', sub: 'nav.sub.sozialhilfe', icon: 'sozialhilfe', aliases: ['skos', 'sozialhilfe', 'aide sociale'] },
-  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'family', aliases: ['alv', 'arbeitslos', 'rav'] },
-  { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'dokumentTresor', aliases: ['links', 'behoerden', 'amt'] },
+  { view: 'alv', nav: 'nav.alv', sub: 'nav.sub.alv', icon: 'work', aliases: ['alv', 'arbeitslos', 'rav'] },
+  { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'globe', aliases: ['links', 'behoerden', 'amt'] },
   { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'dokumentTresor', aliases: ['dokumente', 'documents', 'tresor'] },
   { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', aliases: ['cv', 'lebenslauf', 'resume'] },
   { view: 'unterlagen', nav: 'nav.unterlagen', sub: 'nav.sub.unterlagen', icon: 'documents', aliases: ['unterlagen', 'documents'] },
-  { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'dokumentTresor', aliases: ['qr', 'teilen', 'share', 'flyer'] },
+  { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'qr', aliases: ['qr', 'teilen', 'share', 'flyer'] },
   // Bisher nicht auffindbar, obwohl über Dashboard/Menü erreichbar (Audit #17).
   // `sub` ist optional — nicht jedes Werkzeug hat einen Beschreibungs-Key.
   { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', aliases: ['finanzübersicht', 'übersicht', 'finanzen', 'overview'] },

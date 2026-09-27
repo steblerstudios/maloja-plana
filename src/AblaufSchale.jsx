@@ -32,7 +32,9 @@ const styles = (palette) => ({
 export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.wrap },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: icon || 'insurance', size: 22 }), style: { marginBottom: space.sm + 'px' } }, title),
+    // Kein Rückfall-Zeichen mehr (bis 27.09.2026 'insurance'): ein Ablauf ohne Zeichen zeigt
+    // keines, statt still das der Versicherung. Wächter: zeichenEineQuelle.test.js.
+    React.createElement(PageTitle, { palette, icon: icon ? React.createElement(Icon, { name: icon, size: 22 }) : null, style: { marginBottom: space.sm + 'px' } }, title),
     intro ? React.createElement('p', { style: s.intro },
       React.createElement(GlossarText, { palette }, intro)) : null,
     children
