@@ -9,8 +9,9 @@
 //   nav/sub  — Label- und Untertitel-Schlüssel (bestehende i18n, nichts Neues)
 //   icon     — Zeichen aus dem Icon-System (dasselbe in Menü, Gepäck und Suche)
 //   fach     — wo es im Rucksack liegt: ein Gegenstand aus `gepaeck.js`,
-//              'aussenfach' (Ablegen und ordnen) oder 'einstellungen'
-//   imMenue  — steht es zusätzlich im Menü?
+//              'aussenfach' (Ablegen und ordnen), 'oben' (eigener Eintrag über den
+//              Gegenständen) oder 'einstellungen'
+//   imMenue  — steht es zusätzlich im Menü? Als Zahl = Platz im Menü (1 zuoberst).
 //   aliases  — Suchwörter (die Suche liest dieses Register, siehe ansichtenRegister.js)
 //
 // Die Lebensereignis-Wege (inkl. Mietzins, Stipendien, Organspende) bleiben in
@@ -22,15 +23,17 @@
 
 export const AUSSENFACH = 'aussenfach';
 export const EINSTELLUNGEN = 'einstellungen';
+// Eigener Eintrag über den Gegenständen: «Was steht mir zu?» (gewählt 27.09.2026).
+export const OBEN = 'oben';
 
 export const WERKZEUGE = [
   // ── Portemonnaie (Geld) — Entscheid 25.09.2026 ──
-  { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', aliases: ['steuer', 'tax', 'impot'] },
+  { view: 'tax', nav: 'nav.taxes', sub: 'nav.sub.taxes', icon: 'money', fach: 'geld', imMenue: 4, aliases: ['steuer', 'tax', 'impot'] },
   { view: 'taxImport', nav: 'nav.taxImport', sub: 'nav.sub.taxImport', icon: 'document', fach: 'geld', aliases: ['steuerimport', 'import', 'steuererklärung'] },
   { view: 'budget', nav: 'nav.budget', icon: 'csv', fach: 'geld', aliases: ['budget', 'haushalt', 'ausgaben'] },
   { view: 'sync', nav: 'nav.budgetSync', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben'] },
   { view: 'schulden', nav: 'nav.debts', icon: 'debt', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
-  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', fach: 'geld', aliases: ['finanzübersicht', 'übersicht', 'finanzen', 'overview'] },
+  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', fach: 'geld', imMenue: 5, aliases: ['finanzübersicht', 'übersicht', 'finanzen', 'overview'] },
   // Kein eigener View: führt ins Kapitel Finanzen (wie bisher auf dem Dashboard).
   { key: 'mindestlohn', view: 'chapter', kapitel: 'finanzen', nav: 'nav.mindestlohn', sub: 'nav.sub.mindestlohn', icon: 'money', fach: 'geld', suche: false },
   { view: 'sozialhilfe', nav: 'nav.sozialhilfe', sub: 'nav.sub.sozialhilfe', icon: 'sozialhilfe', fach: 'geld', aliases: ['skos', 'sozialhilfe', 'aide sociale'] },
@@ -50,17 +53,20 @@ export const WERKZEUGE = [
   { view: 'eo', nav: 'nav.eo', sub: 'nav.sub.eo', icon: 'family', fach: 'familie', aliases: ['eo', 'mutterschaft', 'vaterschaft'] },
 
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
-  // Die drei für den Alltag stehen zusätzlich im Menü (gleicher Name, gleiches Zeichen).
-  { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'dokumentTresor', fach: AUSSENFACH, imMenue: true, aliases: ['dokumente', 'documents', 'tresor'] },
-  { view: 'calendar', nav: 'nav.calendar', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: true, aliases: ['ical', 'ics', 'termine'] },
-  { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: true, aliases: ['todo', 'merkliste'] },
+  // Die drei für den Alltag stehen zusätzlich im Menü (gleicher Name, gleiches Zeichen);
+  // dahinter im Menü: Steuern · Finanz-Übersicht · Lebenssituationen (gewählt 27.09.2026).
+  { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'dokumentTresor', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor'] },
+  { view: 'calendar', nav: 'nav.calendar', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: 2, aliases: ['ical', 'ics', 'termine'] },
+  { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
   { view: 'unterlagen', nav: 'nav.unterlagen', sub: 'nav.sub.unterlagen', icon: 'documents', fach: AUSSENFACH, aliases: ['unterlagen', 'documents'] },
   { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', fach: AUSSENFACH, aliases: ['cv', 'lebenslauf', 'resume'] },
   { view: 'direktlinks', nav: 'nav.direktlinks', sub: 'nav.sub.direktlinks', icon: 'dokumentTresor', fach: AUSSENFACH, aliases: ['links', 'behoerden', 'amt'] },
   { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'dokumentTresor', fach: AUSSENFACH, aliases: ['qr', 'teilen', 'share', 'flyer'] },
   { view: 'charts', nav: 'nav.charts', icon: 'chartsSchoko', fach: AUSSENFACH, aliases: ['charts', 'diagramme', 'statistik', 'grafik'] },
-  { view: 'situationen', nav: 'lebenszustaende.pageTitle', sub: 'lebenszustaende.pageSub', icon: 'health', fach: AUSSENFACH, suche: false },
-  { view: 'gesundheit', nav: 'nav.arztkoffer', sub: 'nav.sub.arztkoffer', icon: 'health', fach: AUSSENFACH, suche: false },
+  // Gewählt 27.09.2026: Lebenssituationen als «Was steht mir zu?» über den Gegenständen
+  // (und im Menü); die Arztkoffer-Ansicht «Gesundheit» im Gegenstand Arztkoffer.
+  { view: 'situationen', nav: 'lebenszustaende.pageTitle', sub: 'lebenszustaende.pageSub', icon: 'health', fach: OBEN, imMenue: 6, suche: false },
+  { view: 'gesundheit', nav: 'nav.arztkoffer', sub: 'nav.sub.arztkoffer', icon: 'health', fach: 'gesundheit', suche: false },
   { view: 'search', nav: 'nav.search', sub: 'nav.sub.search', icon: 'search', fach: AUSSENFACH, suche: false },
 
   // ── Unter Einstellungen (nicht im Rucksack) ──
@@ -75,7 +81,7 @@ export const werkzeugKey = (w) => w.key || w.view;
 export const werkzeugeImFach = (fach, liste = WERKZEUGE) => liste.filter((w) => w.fach === fach);
 
 // Die Einträge, die zusätzlich im Menü stehen.
-export const MENUE_WERKZEUGE = WERKZEUGE.filter((w) => w.imMenue);
+export const MENUE_WERKZEUGE = WERKZEUGE.filter((w) => w.imMenue).sort((a, b) => a.imMenue - b.imMenue);
 
 // Für die Suche: nur Einträge mit eigenem View und Suchwörtern.
 export const SUCHBARE_WERKZEUGE = WERKZEUGE.filter((w) => w.suche !== false && w.view !== 'chapter');

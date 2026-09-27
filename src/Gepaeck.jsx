@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { GEGENSTAENDE, gegenstandReadiness } from './data/gepaeck.js';
-import { WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH } from './data/werkzeugRegister.js';
+import { WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, OBEN } from './data/werkzeugRegister.js';
 // VORSCHAU-VARIANTEN — vor dem Merge entfernen
-import { aktuelleVarianten, werkzeugeFuerVariante, OBEN } from './utils/vorschauVarianten.js';
+import { aktuelleVarianten, werkzeugeFuerVariante } from './utils/vorschauVarianten.js';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
@@ -272,17 +272,23 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // ── Aussenfach «Ablegen und ordnen» ─────────────────────────────────────────
   // Kein Lebensbereich, sondern das Fach aussen am Rucksack: immer offen, leise abgesetzt
   // (gestrichelter Rand, Grund `up`), damit es nicht wie ein achter Gegenstand wirkt.
+  // Gewählt 27.09.2026: ganz oben, vor den Gegenständen (Vorschau-Schalter `platz`).
   const aussen = imFach(AUSSENFACH);
   const aussenfach = h('section', {
     'aria-labelledby': 'gepaeck-aussenfach',
     style: {
-      marginTop: space.lg + 'px', marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
+      marginTop: variante.platz === 'oben' ? 0 : space.lg + 'px', marginBottom: space.lg + 'px', padding: space.md + 'px', borderRadius: radius.md,
       background: palette.up, border: '1px dashed ' + palette.border,
       opacity: packed ? 0 : 1, transition: 'opacity 480ms ' + ease + ' ' + (packed ? 0 : GEGENSTAENDE.length * 60) + 'ms',
     },
   },
-    h('h2', { id: 'gepaeck-aussenfach', style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: 0 } }, t('gepaeck.aussenfach')),
-    h('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: '2px 0 ' + space.sm + 'px' } }, t('gepaeck.aussenfachSub')),
+    // Kopf mit der eigenen Taschen-Zeichnung (gewählt 27.09.2026) — gleiche Anordnung wie
+    // der Kopf eines Gegenstands, aber ohne Aufklapp-Knopf: das Aussenfach ist immer offen.
+    h('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
+      h('span', { style: { flexShrink: 0 } }, ill('pocket')),
+      h('span', { style: { flex: 1, minWidth: 0 } },
+        h('h2', { id: 'gepaeck-aussenfach', style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: 0 } }, t('gepaeck.aussenfach')),
+        h('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, margin: '1px 0 0' } }, t('gepaeck.aussenfachSub')))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', columnGap: space.sm + 'px', rowGap: 0 } },
       aussen.map((w) => werkzeugChip(w))),
   );
@@ -290,15 +296,19 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // ── VORSCHAU-VARIANTEN — vor dem Merge entfernen ────────────────────────────
   // platz=karte: das Aussenfach als achte, zuklappbare Karte (gleiche Karte wie ein Gegenstand).
   const aussenKarte = card({ key: AUSSENFACH, ill: 'pocket', wege: [], titel: 'gepaeck.aussenfach', sub: 'gepaeck.aussenfachSub' }, GEGENSTAENDE.length);
-  // inhalt=beide: «Was steht mir zu?» als eigener Eintrag über den Gegenständen.
+  // «Was steht mir zu?» als eigener Eintrag über den Gegenständen (gewählt 27.09.2026;
+  // bleibt nach dem Entfernen des Schalters — liest das Fach OBEN aus dem Register).
   const oben = imFach(OBEN);
   const obenEintraege = oben.length ? h('div', { style: { marginBottom: space.md + 'px' } },
     oben.map((w) => h('button', {
       key: werkzeugKey(w), type: 'button', onClick: () => oeffne(w),
       style: {
         display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left',
-        padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, color: palette.text,
-        border: '1px solid ' + palette.border, borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+        // Leise (27.09.): keine zweite Kastenfläche direkt über dem Aussenfach — nur eine
+        // Zeile mit Haarlinie, damit oben nicht zwei Kästen übereinander stehen.
+        padding: space.sm + 'px 2px', background: 'transparent', color: palette.text,
+        borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid ' + palette.border,
+        borderRadius: 0, cursor: 'pointer', fontFamily: 'inherit',
       },
     },
       h('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', flexShrink: 0, color: palette.sageDeep } }, Icons[w.icon] ? Icons[w.icon]() : null),

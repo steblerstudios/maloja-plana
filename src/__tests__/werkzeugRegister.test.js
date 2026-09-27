@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, EINSTELLUNGEN } from '../data/werkzeugRegister.js';
+import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugeImFach, werkzeugKey, AUSSENFACH, EINSTELLUNGEN, OBEN } from '../data/werkzeugRegister.js';
 import { GEGENSTAENDE, alleWege } from '../data/gepaeck.js';
 import { VALID_VIEWS } from '../utils/hashRouter.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
@@ -59,8 +59,8 @@ describe('Werkzeug-Register: ein Eintrag je Werkzeug', () => {
     }
   });
 
-  it('jedes Fach ist ein Gegenstand, das Aussenfach oder die Einstellungen', () => {
-    const erlaubt = new Set([...GEGENSTAND_KEYS, AUSSENFACH, EINSTELLUNGEN]);
+  it('jedes Fach ist ein Gegenstand, das Aussenfach, «oben» oder die Einstellungen', () => {
+    const erlaubt = new Set([...GEGENSTAND_KEYS, AUSSENFACH, OBEN, EINSTELLUNGEN]);
     for (const w of WERKZEUGE) expect(erlaubt.has(w.fach), `${werkzeugKey(w)}: Fach ${w.fach}`).toBe(true);
   });
 
@@ -73,8 +73,14 @@ describe('Werkzeug-Register: ein Eintrag je Werkzeug', () => {
     }
   });
 
-  it('im Menü stehen genau die drei für den Alltag (Entscheid 27.09.)', () => {
-    expect(MENUE_WERKZEUGE.map(werkzeugKey).sort()).toEqual(['calendar', 'merkliste', 'tresor']);
+  it('im Menü stehen genau die sechs gewählten, in dieser Reihenfolge (Entscheid 27.09.)', () => {
+    expect(MENUE_WERKZEUGE.map(werkzeugKey)).toEqual(['tresor', 'calendar', 'merkliste', 'tax', 'finanzuebersicht', 'situationen']);
+    const plaetze = MENUE_WERKZEUGE.map((w) => w.imMenue);
+    expect(new Set(plaetze).size, 'Menü-Plätze doppelt').toBe(plaetze.length);
+  });
+
+  it('«Was steht mir zu?» steht als eigener Eintrag über den Gegenständen und führt zu den Lebenssituationen', () => {
+    expect(werkzeugeImFach(OBEN).map((w) => w.view)).toEqual(['situationen']);
   });
 
   it('jeder Label-Schlüssel löst in allen 5 Sprachen auf', () => {
@@ -97,7 +103,7 @@ describe('Portemonnaie und Aussenfach', () => {
   });
 
   it('Arztkoffer und Feldflasche tragen ihre Werkzeuge laut Zuordnungstabelle', () => {
-    expect(werkzeugeImFach('gesundheit').map(werkzeugKey).sort()).toEqual(['kk', 'kvg', 'praemien', 'premium']);
+    expect(werkzeugeImFach('gesundheit').map(werkzeugKey).sort()).toEqual(['gesundheit', 'kk', 'kvg', 'praemien', 'premium']);
     expect(werkzeugeImFach('alter').map(werkzeugKey)).toEqual(['vorsorge']);
   });
 
@@ -139,19 +145,22 @@ describe('Nichts wird unerreichbar', () => {
 
   it('das Menü liest aus dem Register, nicht aus einer eigenen Liste', () => {
     const nav = readFileSync(new URL('../MobileNav.jsx', import.meta.url), 'utf8');
-    expect(nav).toContain('MENUE_WERKZEUGE');
+    expect(nav).toContain("from './data/werkzeugRegister.js'");
+    expect(nav).toMatch(/\.filter\(\(w\) => w\.imMenue\)/);
     // Die alte Handliste begann mit diesem Eintrag — sie darf nicht zurückkommen.
     expect(nav).not.toMatch(/key: 'finanzuebersicht', label:/);
   });
 });
 
 // VORSCHAU-VARIANTEN — vor dem Merge entfernen (samt src/utils/vorschauVarianten.js).
-import { leseVarianten, werkzeugeFuerVariante, PLAETZE, INHALTE, MENUE_ZUSAETZE, OBEN, STANDARD } from '../utils/vorschauVarianten.js';
+import { leseVarianten, werkzeugeFuerVariante, PLAETZE, INHALTE, MENUE_ZUSAETZE, STANDARD } from '../utils/vorschauVarianten.js';
 
 describe('Vorschau-Varianten (nur zum Vergleichen)', () => {
   it('ohne Parameter gilt der Stand der Vorschau; Unbekanntes fällt auf den Standard zurück', () => {
     expect(leseVarianten('')).toEqual(STANDARD);
-    expect(leseVarianten('?platz=seitlich&inhalt=x&menue=foo')).toEqual(STANDARD);
+    expect(leseVarianten('?platz=seitlich&inhalt=x')).toEqual(STANDARD);
+    expect(leseVarianten('?menue=').menue).toEqual([]);
+    expect(leseVarianten('?menue=foo').menue).toEqual([]);
     expect(leseVarianten('?platz=karte&inhalt=beide&menue=steuern,lebens,steuern'))
       .toEqual({ platz: 'karte', inhalt: 'beide', menue: ['steuern', 'lebens'] });
     expect(werkzeugeFuerVariante(WERKZEUGE, STANDARD)).toEqual(WERKZEUGE);

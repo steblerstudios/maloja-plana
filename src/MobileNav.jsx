@@ -3,9 +3,10 @@ import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
-import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
+// Nach dem Merge liest das Menü MENUE_WERKZEUGE direkt (heute über die Varianten-Kopie).
+import { WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
 // VORSCHAU-VARIANTEN — vor dem Merge entfernen
-import { aktuelleVarianten, MENUE_ZUSAETZE } from './utils/vorschauVarianten.js';
+import { aktuelleVarianten, werkzeugeFuerVariante } from './utils/vorschauVarianten.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
@@ -271,10 +272,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           onClose();
         };
         const alsEintrag = (w) => ({ key: werkzeugKey(w), view: w.view, label: t(w.nav), icon: w.icon, aliases: w.aliases || [], go: () => oeffne(w) });
-        // VORSCHAU-VARIANTEN — vor dem Merge entfernen: `?menue=steuern,finanz,lebens` hängt
-        // diese Einträge nach den drei festen an (gleicher Eintrag wie im Gepäck).
-        const zusatz = aktuelleVarianten().menue.map((k) => WERKZEUGE.find((w) => w.view === MENUE_ZUSAETZE[k])).filter(Boolean);
-        const menueWerkzeuge = [...MENUE_WERKZEUGE, ...zusatz].map(alsEintrag);
+        // VORSCHAU-VARIANTEN — vor dem Merge entfernen: ohne Parameter ist das genau
+        // MENUE_WERKZEUGE; `?menue=…` nimmt Zusätze heraus. Nach dem Merge: nur MENUE_WERKZEUGE.
+        const menueListe = werkzeugeFuerVariante(WERKZEUGE, aktuelleVarianten())
+          .filter((w) => w.imMenue).sort((a, b) => a.imMenue - b.imMenue);
+        const menueWerkzeuge = menueListe.map(alsEintrag);
         const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), icon: rucksack, aliases: [], go: () => { onNavigate('gepaeck'); onClose(); } };
         const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), icon: 'settings', aliases: [], go: () => { onNavigate('settings'); onClose(); } };
         // Die Suche im Menü findet weiterhin ALLE Werkzeuge (auch die im Gepäck).
