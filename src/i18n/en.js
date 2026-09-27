@@ -5103,6 +5103,9 @@ export default {
     werkzeugeTitel: 'Tools',
     aussenfach: 'Outer pocket · File and organise',
     aussenfachSub: 'Documents, dates and lists — close at hand on the outside of the pack.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Outer pocket',
+    aussenfachKarteSub: 'The same tools, packed away',
     menuAlle: 'All tools in my kit',
     packed: '{done} of {total} on file',
     legend: 'Every area a real object — keyring, doctor’s bag, tool roll. A path leads into its guided flow. Alongside the tree and the orchard.',

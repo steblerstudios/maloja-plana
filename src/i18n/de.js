@@ -5137,6 +5137,9 @@ export default {
     werkzeugeTitel: 'Werkzeuge',
     aussenfach: 'Aussenfach · Ablegen und ordnen',
     aussenfachSub: 'Unterlagen, Termine und Listen — griffbereit aussen am Rucksack.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Aussenfach',
+    aussenfachKarteSub: 'Dieselben Werkzeuge, zum Einpacken',
     menuAlle: 'Alle Werkzeuge im Gepäck',
     packed: '{done} von {total} erfasst',
     legend: 'Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.',

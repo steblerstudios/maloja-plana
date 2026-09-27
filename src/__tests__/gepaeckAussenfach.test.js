@@ -35,6 +35,11 @@ describe('Aussenfach: offen oben und als achte Karte', () => {
     expect(karte).toEqual(erwartet);
   });
 
+  it('die Karte hat einen eigenen, kurzen Namen (sonst wirkt sie wie ein Doppel)', () => {
+    expect(html).toContain('gepaeck.aussenfachKarte<');
+    expect(html).toContain('gepaeck.aussenfachKarteSub<');
+  });
+
   it('das offene Aussenfach steht vor den Gegenständen, die Karte nach dem Portemonnaie', () => {
     const offen = html.indexOf('aria-labelledby="gepaeck-aussenfach"');
     const erste = html.indexOf('aria-controls="gepaeck-fach-' + GEGENSTAENDE[0].key + '"');

@@ -5103,6 +5103,9 @@ export default {
     werkzeugeTitel: 'Outils',
     aussenfach: 'Poche extérieure · Classer et ranger',
     aussenfachSub: 'Documents, rendez-vous et listes — à portée de main, à l’extérieur du sac.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Poche extérieure',
+    aussenfachKarteSub: 'Les mêmes outils, à ranger',
     menuAlle: 'Tous les outils dans le bagage',
     packed: '{done} sur {total} renseignés',
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',

@@ -120,7 +120,7 @@ describe('Portemonnaie und Aussenfach', () => {
         expect(present(resolve(dict, 'gepaeck.obj.' + g)), `${lang}: gepaeck.obj.${g}`).toBe(true);
         expect(present(resolve(dict, 'gepaeck.objSub.' + g)), `${lang}: gepaeck.objSub.${g}`).toBe(true);
       }
-      for (const k of ['werkzeuge', 'werkzeugeOne', 'wegeTitel', 'werkzeugeTitel', 'aussenfach', 'aussenfachSub', 'menuAlle']) {
+      for (const k of ['werkzeuge', 'werkzeugeOne', 'wegeTitel', 'werkzeugeTitel', 'aussenfach', 'aussenfachSub', 'aussenfachKarte', 'aussenfachKarteSub', 'menuAlle']) {
         expect(present(resolve(dict, 'gepaeck.' + k)), `${lang}: gepaeck.${k}`).toBe(true);
       }
     }

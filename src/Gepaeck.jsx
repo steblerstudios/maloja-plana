@@ -296,7 +296,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // ── Aussenfach zusätzlich als achte, zuklappbare Karte (Wunsch 27.09.2026) ──────
   // Gleicher Inhalt wie das offene Aussenfach oben: dieselbe Karte wie ein Gegenstand,
   // ihr Inhalt kommt über `imFach(AUSSENFACH)` aus demselben Register — keine zweite Liste.
-  const aussenKarte = card({ key: AUSSENFACH, ill: 'pocket', wege: [], titel: 'gepaeck.aussenfach', sub: 'gepaeck.aussenfachSub' }, GEGENSTAENDE.length);
+  const aussenKarte = card({ key: AUSSENFACH, ill: 'pocket', wege: [], titel: 'gepaeck.aussenfachKarte', sub: 'gepaeck.aussenfachKarteSub' }, GEGENSTAENDE.length);
   // «Was steht mir zu?» als eigener Eintrag über den Gegenständen (gewählt 27.09.2026;
   // bleibt nach dem Entfernen des Schalters — liest das Fach OBEN aus dem Register).
   const oben = imFach(OBEN);

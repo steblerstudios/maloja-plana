@@ -5080,6 +5080,9 @@ export default {
     werkzeugeTitel: 'Strumenti',
     aussenfach: 'Tasca esterna · Archiviare e ordinare',
     aussenfachSub: 'Documenti, appuntamenti e liste — a portata di mano, fuori dallo zaino.',
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Tasca esterna',
+    aussenfachKarteSub: 'Gli stessi strumenti, da riporre',
     menuAlle: 'Tutti gli strumenti nel bagaglio',
     packed: '{done} di {total} inseriti',
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',

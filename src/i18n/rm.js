@@ -5724,6 +5724,10 @@ export default {
     werkzeugeTitel: 'Utensils',
     aussenfach: 'Tastga dadora · Deponer ed ordinar',
     aussenfachSub: 'Documents, termins e glistas — a maun, dadora vi dal satg.',
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Tastga dadora',
+    aussenfachKarteSub: 'Ils medems utensils, per pachetar',
     menuAlle: 'Tut ils utensils en il bagagi',
     packed: '{done} sur {total} renseignés',
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
