@@ -2457,7 +2457,7 @@ export default {
       movedTitle: 'Tut en la biblioteca',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
       movedText: { sie: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattais Vus ussa radunadas en la biblioteca.', du: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattas ti ussa radunadas en la biblioteca.' },
-      movedCta: '→ Tar la biblioteca',
+      movedCta: 'Tar la biblioteca',
       secure1: "Per il barat segir cun autoritads e posts spezialisadas recumandain nus:",
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Messenger svizzer, criptà end-to-end, utilisabel senza numer da telefon.' },
       secureSafe: { name: 'SecureSafe', url: 'https://www.securesafe.com', desc: 'Tresor svizzer da datas per pleds-clav e documents (protecziun dal secret bancari).' },

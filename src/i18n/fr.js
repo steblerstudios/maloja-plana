@@ -2463,7 +2463,7 @@ export default {
     resources: {
       movedTitle: 'Tout dans la bibliothèque',
       movedText: { sie: 'Ces ressources — canaux sécurisés, services de conseil et de médiation, pétitions et recommandations de cœur — sont désormais réunies dans la bibliothèque.', du: 'Ces ressources — canaux sécurisés, services de conseil et de médiation, pétitions et recommandations de cœur — sont désormais réunies dans la bibliothèque.' },
-      movedCta: '→ Vers la bibliothèque',
+      movedCta: 'Vers la bibliothèque',
       secure1: 'Pour les échanges sécurisés avec les autorités et professionnels, nous recommandons :',
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Messagerie suisse, chiffrement de bout en bout, utilisable sans numéro.' },
       secureSafe: { name: 'SecureSafe', url: 'https://www.securesafe.com', desc: 'Coffre-fort suisse pour mots de passe et documents (protection du secret bancaire).' },

@@ -2470,7 +2470,7 @@ export default {
     resources: {
       movedTitle: 'Alles in der Bibliothek',
       movedText: { sie: 'Diese Ressourcen — sichere Kanäle, Beratungs- und Ombudsstellen, Petitionen und die Herzensempfehlungen — finden Sie jetzt gebündelt in der Bibliothek.', du: 'Diese Ressourcen — sichere Kanäle, Beratungs- und Ombudsstellen, Petitionen und die Herzensempfehlungen — findest du jetzt gebündelt in der Bibliothek.' },
-      movedCta: '→ Zur Bibliothek',
+      movedCta: 'Zur Bibliothek',
       secure1: 'Für den sicheren Austausch mit Behörden und Fachstellen empfehlen wir:',
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Schweizer Messenger, Ende-zu-Ende verschlüsselt, ohne Telefonnummer nutzbar.' },
       secureSafe: { name: 'SecureSafe', url: 'https://www.securesafe.com', desc: 'Schweizer Datentresor für Passwörter und Dokumente (Bankgeheimnis-Schutz).' },

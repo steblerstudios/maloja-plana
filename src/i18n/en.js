@@ -2463,7 +2463,7 @@ export default {
     resources: {
       movedTitle: 'Everything in the library',
       movedText: 'These resources — secure channels, advice and ombudsman services, petitions and the heartfelt recommendations — are now gathered in the library.',
-      movedCta: '→ To the library',
+      movedCta: 'To the library',
       secure1: 'For secure exchange with authorities and professionals, we recommend:',
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Swiss messenger, end-to-end encrypted, usable without phone number.' },
       secureSafe: { name: 'SecureSafe', url: 'https://www.securesafe.com', desc: 'Swiss data vault for passwords and documents (banking secrecy protection).' },

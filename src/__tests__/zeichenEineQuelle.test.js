@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { ABLAEUFE, SEARCH_VIEWS } from '../config/ansichtenRegister.js';
+import { ABLAEUFE, SEARCH_VIEWS, ansichtIkon } from '../config/ansichtenRegister.js';
 import { Icons } from '../IconKern.jsx';
 import '../IconSystem.jsx';
 
@@ -59,5 +59,55 @@ describe('Zeichen aus einer Quelle', () => {
       geprueft++;
     }
     expect(geprueft).toBeGreaterThanOrEqual(15);
+  });
+});
+
+describe('Kein Zeichen aus dem Rückfall', () => {
+  // 27.09.2026: `ansichtIkon(view, rueckfall)` gibt für eine Ansicht ohne Eintrag
+  // still den Rückfall zurück. Ein fehlendes Zeichen fällt dann nicht als Lücke auf,
+  // sondern steht als falsches Bild da: der Querverweis «Notfallkarte» zielt auf
+  // `notfalleinstieg`, das nirgends ein Zeichen hatte — und trug darum `external`,
+  // das Zeichen für «verlässt Maloja», an einem Knopf, der in Maloja bleibt.
+  const R = '__RUECKFALL__';
+
+  // Querverweise in ChapterView: crosslinkBtn('schlüssel', 'ansicht', …) und die
+  // Einträge ['schlüssel', 'ansicht', 'nav.crosslink.…'] in crosslinkBundle.
+  const querverweisZiele = () => {
+    const src = lies('ChapterView.jsx');
+    return [
+      ...[...src.matchAll(/crosslinkBtn\(\s*'[^']+',\s*'([^']+)'/g)].map((m) => m[1]),
+      ...[...src.matchAll(/\[\s*'[^']+',\s*'([^']+)',\s*'nav\.crosslink\./g)].map((m) => m[1]),
+    ];
+  };
+
+  // Feste Aufrufe `ansichtIkon('ansicht'` im ganzen Baum (Seitenköpfe der Werkzeuge).
+  const festeAufrufe = () => {
+    const alle = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) return e.name === '__tests__' || e.name === 'i18n' ? [] : alle(p);
+      return /\.jsx?$/.test(e.name) ? [p] : [];
+    });
+    return alle(SRC).flatMap((f) =>
+      [...fs.readFileSync(f, 'utf8').matchAll(/ansichtIkon\(\s*'([^']+)'/g)].map((m) => m[1]));
+  };
+
+  it('findet die Ziele überhaupt (sonst prüft der Test die leere Menge)', () => {
+    expect(querverweisZiele().length).toBeGreaterThanOrEqual(10);
+    expect(festeAufrufe().length).toBeGreaterThanOrEqual(8);
+  });
+
+  it('jedes Querverweis-Ziel hat ein eigenes Zeichen', () => {
+    const ohne = [...new Set(querverweisZiele())].filter((v) => ansichtIkon(v, R) === R);
+    expect(ohne).toEqual([]);
+  });
+
+  it('jede fest genannte Ansicht hat ein eigenes Zeichen', () => {
+    const ohne = [...new Set(festeAufrufe())].filter((v) => ansichtIkon(v, R) === R);
+    expect(ohne).toEqual([]);
+  });
+
+  it('jedes eigene Zeichen gibt es im Register', () => {
+    const ziele = [...new Set([...querverweisZiele(), ...festeAufrufe()])];
+    expect(ziele.filter((v) => !Icons[ansichtIkon(v, R)])).toEqual([]);
   });
 });
