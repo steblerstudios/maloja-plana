@@ -608,7 +608,10 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
         React.createElement('span', {
           className: 'mountain-label', lang, 'aria-hidden': 'true',
           style: {
+            // display wie bei den Stationen: überschreibt die alte Regel in index.html, die
+            // Etiketten unter 480 px ausblendet (die Stationen tragen es ebenso inline).
             position: 'absolute', ...etikettOrt, whiteSpace: 'nowrap', pointerEvents: 'none',
+            display: 'flex', alignItems: 'center',
             fontSize: schmal ? '11px' : text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
             background: etikettGrund(farbe), padding: schmal ? '1px 6px' : '2px 7px', borderRadius: radius.sm,
             boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
