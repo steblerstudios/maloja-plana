@@ -196,7 +196,7 @@ export default {
     step3Link: 'To the letter templates',
     step4Title: '4 · Secure the deadline',
     step4Text: 'Many supplementary policies are cancelled 3 months before year-end — so by the end of September {year}. Check the exact deadline in your policy.',
-    step4Button: 'Add deadline “Cancel supplementary insurance” to calendar ({date})',
+    step4Button: 'Add reminder “Cancel supplementary insurance” to calendar ({date})',
     step4Done: 'Noted in the calendar.',
     step4CalendarLink: 'To the calendar',
     policeLink: 'File the policy',

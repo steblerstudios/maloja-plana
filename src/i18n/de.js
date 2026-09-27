@@ -196,7 +196,7 @@ export default {
     step3Link: 'Zu den Briefvorlagen',
     step4Title: '4 · Frist sichern',
     step4Text: { sie: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfen Sie die genaue Frist in Ihrer Police.', du: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfe die genaue Frist in deiner Police.' },
-    step4Button: 'Frist «Zusatzversicherung kündigen» in den Kalender ({date})',
+    step4Button: 'Erinnerung «Zusatzversicherung kündigen» in den Kalender ({date})',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',

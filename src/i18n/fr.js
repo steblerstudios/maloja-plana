@@ -196,7 +196,7 @@ export default {
     step3Link: 'Vers les modèles de lettres',
     step4Title: '4 · Sécuriser le délai',
     step4Text: { sie: 'Beaucoup de complémentaires se résilient 3 mois avant la fin de l\'année — donc d\'ici fin septembre {year}. Vérifiez le délai exact dans votre police.', du: 'Beaucoup de complémentaires se résilient 3 mois avant la fin de l\'année — donc d\'ici fin septembre {year}. Vérifie le délai exact dans ta police.' },
-    step4Button: 'Délai « Résilier l’assurance complémentaire » dans le calendrier ({date})',
+    step4Button: 'Rappel « Résilier l’assurance complémentaire » dans le calendrier ({date})',
     step4Done: 'Noté dans le calendrier.',
     step4CalendarLink: 'Vers le calendrier',
     policeLink: 'Classer la police',

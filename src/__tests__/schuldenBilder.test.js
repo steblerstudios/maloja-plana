@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createDebtPlan, prioritizeDebts, calculateDebtStatus } from '../schuldenCalc.js';
 import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, summenJeStufe, STUFEN_TON, zeitraum } from '../components/SchuldenBilder.jsx';
 import { LIGHT_PALETTE as palette, DARK_PALETTE } from '../config/constants.js';
+import { betrag } from '../utils/geld.js';
 
 const t = (k, v) => k + (v ? JSON.stringify(v) : '');
 const HEUTE = '2026-09-27';
@@ -22,6 +23,16 @@ const debts = [
 const prioritized = prioritizeDebts(debts);
 
 describe('A · summenJeStufe / OffenBalken', () => {
+  it('Summen mit Rappen wie die Karten — Total und Teile ergeben dieselben Zahlen', () => {
+    const rappen = [
+      { id: 1, creditor: 'Krankenkasse', amount: 100.5, status: 'open', category: 'krankenkasse' },
+      { id: 2, creditor: 'Kreditkarte', amount: 200.5, status: 'open', category: 'kredit' },
+    ];
+    const html = renderToStaticMarkup(React.createElement(OffenBalken, { palette, t, prioritized: prioritizeDebts(rappen), status: calculateDebtStatus(rappen, HEUTE) }));
+    expect(html).toContain(betrag(301, { stellen: 2 }));
+    expect(html).toContain(betrag(100.5, { stellen: 2 }));
+    expect(html).not.toContain('>' + betrag(301) + '<');
+  });
   it('teilt nur Offenes nach Stufe; die Summe ist «noch offen»', () => {
     expect(summenJeStufe(prioritized)).toEqual([{ tier: 1, summe: 2140 }, { tier: 2, summe: 3200 }, { tier: 3, summe: 4500 }]);
     expect(calculateDebtStatus(debts, HEUTE).totalDebt).toBe(9840);

@@ -196,7 +196,7 @@ export default {
     step3Link: 'Ai modelli di lettera',
     step4Title: '4 · Assicurare il termine',
     step4Text: { sie: 'Molte complementari si disdicono 3 mesi prima della fine dell\'anno — quindi entro fine settembre {year}. Verifichi il termine esatto nella Sua polizza.', du: 'Molte complementari si disdicono 3 mesi prima della fine dell\'anno — quindi entro fine settembre {year}. Verifica il termine esatto nella tua polizza.' },
-    step4Button: 'Scadenza «Disdire l’assicurazione complementare» nel calendario ({date})',
+    step4Button: 'Promemoria «Disdire l’assicurazione complementare» nel calendario ({date})',
     step4Done: 'Annotato nel calendario.',
     step4CalendarLink: 'Al calendario',
     policeLink: 'Archivia la polizza',
