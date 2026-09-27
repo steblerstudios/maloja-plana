@@ -6,6 +6,7 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // Bücherregal mit mehreren Etagen: jede Kategorie (und jedes Sonderthema) ist ein
 // Buch, dessen Rücken auf einem Regalbrett steht. Ein Klick klappt das Buch unter
@@ -226,7 +227,7 @@ export const DirektLinks = ({ palette, t, data }) => {
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'dokumentTresor', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('dl.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('direktlinks'), size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('dl.title')),
     React.createElement('p', { style: s.intro }, t('dl.shelfIntro')),
 
     // Das Regal mit mehreren Etagen. Das aufgeschlagene Buch erscheint unter seiner Etage.

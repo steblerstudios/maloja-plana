@@ -41,6 +41,7 @@ export const MahnstufenLeiste = ({ debt, palette, t, inputStyle, onChange, onNav
   );
 };
 
+// `vorlaeufig`: Beispiel oder Ausprobieren — Änderungen liegen nur im Arbeitsspeicher (main.jsx).
 export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig }) => {
   const vorlesen = useVorlesenContext();
   const [view, setView] = useState('overview');

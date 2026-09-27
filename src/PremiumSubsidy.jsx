@@ -19,6 +19,7 @@ import { text, weight, radius , space } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag, zahl } from './utils/geld.js';
 import { geburtsjahr } from './config/kantonsModell.js';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
 const fmtCHF = (n) => betrag(n || 0);
@@ -305,7 +306,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // income isn't yet, we still show the canton-specific info and prompt for income.
   if (!canton) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
       // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
@@ -338,7 +339,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   }
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // Anspruch & Aufenthaltsbewilligung — ruhige Orientierung für Neuzuzüger:innen, kein Verdikt
