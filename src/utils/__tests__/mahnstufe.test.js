@@ -31,6 +31,8 @@ describe('Mahnstufe', () => {
     expect(html).toContain('aria-current="step"');
     expect(html).toMatch(/aria-current="step"[^>]*>.*Mahnung erhalten/);
     expect(html).toContain(de.schulden.stufe.linkMahnung);
+    expect(html).toContain('aria-describedby="stufe-1-hilfe"');
+    expect(de.schulden.stufe.linkZahlungsbefehl).toContain('ab Zustellung');
     expect(html).not.toMatch(/[●○→]/);
   });
   it('ohne Angabe: nur die Auswahl, keine Leiste, kein Weg', () => {

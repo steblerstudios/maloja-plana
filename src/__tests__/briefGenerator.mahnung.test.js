@@ -236,7 +236,9 @@ describe('Steuern und Verzugszins-Rechner im Ablauf (27.09.2026)', () => {
   const html = renderToStaticMarkup(React.createElement(MahnungErhalten, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
   it('Steuer-Erlass nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4)', () => {
     expect(html).toContain('DBG Art. 167 Abs. 1 und 4');
-    expect(html).toContain('vor der Zustellung eines Zahlungsbefehls');
+    expect(html).toContain('bevor für diese Steuer ein Zahlungsbefehl zugestellt ist');
+    expect(html).not.toContain('eines Zahlungsbefehls');
+    expect(html).toContain('DBG Art. 2');
     expect(html).toContain('kantonales Recht');
   });
   it('Rechner: leer → Hinweis, kein Betrag; Satz steht auf 5', () => {
