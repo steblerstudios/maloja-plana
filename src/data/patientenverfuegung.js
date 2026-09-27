@@ -17,8 +17,9 @@ import { escapeHtml as esc } from '../utils/helpers.js';
 export const OFFEN = 'offen';
 
 // art: 'eine' (eine Antwort) · 'mehrere' · 'text' · 'gruppe' (mehrere Teilfragen) · 'personen'
+// Darstellung: components/FragenAblauf.jsx (zusatz = Feld unter einer Auswahl, einzeilig = kurzes Textfeld).
 export const FRAGEN = [
-  { key: 'bestehend', art: 'eine', optionen: ['nein', 'ersetzt', 'ergaenzt'] },
+  { key: 'bestehend', art: 'eine', optionen: ['nein', 'ersetzt', 'ergaenzt'], zusatz: { bei: 'ergaenzt', key: 'bestehendDatum', typ: 'date' } },
   { key: 'werte', art: 'text' },
   { key: 'therapieziel', art: 'eine', optionen: ['verlaengern', 'lebensqualitaet', OFFEN] },
   { key: 'situationen', art: 'mehrere', optionen: ['notfall', 'bewusstlos', 'demenz', 'endphase'] },
@@ -29,12 +30,12 @@ export const FRAGEN = [
   { key: 'sedierung', art: 'eine', optionen: ['ja', 'nein', OFFEN] },
   { key: 'ortBegleitung', art: 'text' },
   { key: 'organe', art: 'gruppe', teile: [
-    { key: 'organspende', optionen: ['ja', 'nein', 'bestimmte', OFFEN] },
+    { key: 'organspende', optionen: ['ja', 'nein', 'bestimmte', OFFEN], zusatz: { bei: 'bestimmte', key: 'organeListe', typ: 'text' } },
     { key: 'obduktion', optionen: ['ja', 'nein', OFFEN] },
     { key: 'forschung', optionen: ['ja', 'nein', OFFEN] },
   ] },
   { key: 'vertretung', art: 'personen', rollen: ['vertretung', 'ersatz'] },
-  { key: 'original', art: 'text' },
+  { key: 'original', art: 'text', einzeilig: true },
 ];
 
 const ENTSCHEIDE = ['reanimation', 'lebensverlaengernd', 'ernaehrung', 'linderung', 'sedierung'];
