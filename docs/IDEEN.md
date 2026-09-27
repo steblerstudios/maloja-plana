@@ -111,7 +111,7 @@ Abschiedsagentur, plaant).
 | Budget: Ziele und Richtwerte · Haushalt genauer erfassen · Hausrat → Hauswert | §5 | Keine-Doppel-Eingabe-Audit |
 | Zukunftsrechner-Reste · Kreditkarten · Säule 3b · «Lohnt sich ein Umzug?» | §5 | — |
 | KK-Rechnung stimmt nicht · UVG-Brief · Führerschein · Stiftungen und Härtefonds | §5 | Generatoren-Muster |
-| Mahnung weiterführen: Verzugszins-Rechner · Mahnstufen-Zeitleiste im Schuldenmanager · Steuer-Mahnung je Kanton | §5 | Entwurfs-PR «Mahnung» (27.09.) gemergt; je Punkt Quelle |
+| Mahnung weiterführen: kantonale Steuer-Regeln je Kanton · «Gezahlt/offen» pro Arztrechnung | §5 | Entwurfs-PR «Mahnung» #408 gemergt; je Kanton Quelle |
 | Berechtigungs-Landkarte je Kanton · Befreiungen · AHV-Beitragsjahre | §3 | Kantons-Belege (K30/K32) |
 | Vergünstigungen weiterer Kantone · eigener Bereich für Beeinträchtigungen · Screening-Abgleich (Faden 3-II) | §3, §5 | je Quelle einzeln belegen |
 | Keine-Doppel-Eingabe-Audit · Drei-Schritt-Standard · Robustheits-Checkliste · Quellen-Audit | §6, §7 | O1, O4 |
@@ -316,9 +316,13 @@ Abschiedsagentur, plaant).
     · der Mahnbrief **behält** Verzugszins nur vor, er rechnet keinen aus · der Bestreitungsbrief
     anerkennt nichts, auch nicht «den Rest» · die Anerkennungs-Warnung steht **vor** dem
     Ratengesuch.
-  - **Offen (Ideen, je vor dem Bau belegen):** Verzugszins-Rechner (ab welchem Tag, welche
-    Tageszählung) · Mahnstufen als Zeitleiste im Schuldenmanager (Mahnung → Zahlungsaufforderung
-    → Zahlungsbefehl), Brücke zu «Gezahlt/offen» pro Arztrechnung · Steuer-Mahnung und Zahlungserleichterung (kantonal)
+  - **Gebaut 27.09. nachmittags (Stebler Studios «1-3», #408):** Verzugszins-Rechner im Ablauf
+    (Annäherung, 365 **und** 360 Tage nebeneinander — die Tageszählung steht nicht im Gesetz) ·
+    Mahnstufe je Forderung im Schuldenmanager (Rechnung → Mahnung → Zahlungsbefehl, mit nächstem
+    Weg) · Steuern im Ablauf: direkte Bundessteuer (DBG 163/164/166/167 — **Erlass nur vor dem
+    Zahlungsbefehl**), Kantons- und Gemeindesteuern → kantonales Steueramt.
+  - **Offen (Ideen, je vor dem Bau belegen):** Brücke zu «Gezahlt/offen» pro Arztrechnung ·
+    kantonale Steuer-Regeln (Erlass, Zahlungserleichterung) je Kanton belegen
     · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
     rm-Fassung von Ablauf und Briefen.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).

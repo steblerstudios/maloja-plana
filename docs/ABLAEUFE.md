@@ -208,6 +208,7 @@ export · calendar · notifications · settings · legal
 - **Verwendet?** ✅ im Register `ABLAEUFE`, in Suche, Dashboard und Gepäck (Arbeit, neben «Betreibung erhalten»).
 - **Crosslinks:** 🔗 → `betreibung` (Zahlungsbefehl schon da) · `schulden` · `wohnunggekuendigt` (OR 257d) · `premium` (IPV) · `budget` · `direktlinks` (Schuldenberatung) · `briefe` (drei Vorlagen, vorgewählt).
 - **Lücken:** 🟡 keine Frist-Knöpfe, bewusst (Gläubiger-Frist; Beginn der KK-Nachfrist nicht im Gesetz) · ✅ Rückweg aus `betreibung` (Schritt 2), `schulden` (Plan) und Lebenszustand «Verschuldet» (27.09.) · 🟡 rm = deutscher Rückfall.
+- **Seit 27.09. nachmittags:** Verzugszins-Rechner (Schritt 3), Steuern DBG 163–167 (Schritt 4), Mahnstufe je Forderung im Schuldenmanager (`utils/mahnstufe.js`).
 - **Nächste Aktion:** siehe `IDEEN.md` §5 «Mahnung» (Offen).
 
 #### E4 · Sozialhilfe beantragen

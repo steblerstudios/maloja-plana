@@ -19,7 +19,9 @@ kommt der Changelog immer mit, nie doppelt.*
   Ratenzahlung vorschlagen (mit der Anerkennungs-Warnung vor dem Formular). 5 Sprachen, rm als
   deutscher Rückfall. Grundlagen am Wortlaut (Fedlex, 27.09.2026). Damit **35** Abläufe.
   Rückweg: «Betreibung erhalten», der Schuldenmanager und der Lebenszustand «Verschuldet oder
-  in Betreibung» verweisen auf die Mahnung.
+  in Betreibung» verweisen auf die Mahnung. Dazu ein **Verzugszins-Rechner** (Richtwert, 365 und
+  360 Tage), **Steuern** im Ablauf (direkte Bundessteuer: Zahlungserleichterung, Erlass nur vor dem
+  Zahlungsbefehl, DBG 166/167) und die **Mahnstufe je Forderung** im Schuldenmanager.
 
 ### Geändert
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
