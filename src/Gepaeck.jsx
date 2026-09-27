@@ -293,8 +293,9 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
       aussen.map((w) => werkzeugChip(w))),
   );
 
-  // ── VORSCHAU-VARIANTEN — vor dem Merge entfernen ────────────────────────────
-  // platz=karte: das Aussenfach als achte, zuklappbare Karte (gleiche Karte wie ein Gegenstand).
+  // ── Aussenfach zusätzlich als achte, zuklappbare Karte (Wunsch 27.09.2026) ──────
+  // Gleicher Inhalt wie das offene Aussenfach oben: dieselbe Karte wie ein Gegenstand,
+  // ihr Inhalt kommt über `imFach(AUSSENFACH)` aus demselben Register — keine zweite Liste.
   const aussenKarte = card({ key: AUSSENFACH, ill: 'pocket', wege: [], titel: 'gepaeck.aussenfach', sub: 'gepaeck.aussenfachSub' }, GEGENSTAENDE.length);
   // «Was steht mir zu?» als eigener Eintrag über den Gegenständen (gewählt 27.09.2026;
   // bleibt nach dem Entfernen des Schalters — liest das Fach OBEN aus dem Register).
@@ -334,7 +335,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
     variante.platz === 'oben' ? aussenfach : null,
     h('div', {
       style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.md + 'px', alignItems: 'start' },
-    }, GEGENSTAENDE.map((g, i) => card(g, i)).concat(variante.platz === 'karte' ? [aussenKarte] : [])),
+    }, GEGENSTAENDE.map((g, i) => card(g, i)).concat([aussenKarte])),
     variante.platz === 'unten' ? aussenfach : null,
     h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, maxWidth: '680px', marginTop: space.lg + 'px' } }, t('gepaeck.legend')),
   );
