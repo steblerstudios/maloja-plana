@@ -11,6 +11,14 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Mahnung — erhalten und selbst mahnen** (27.09.2026). Ablauf «Mahnung erhalten» als Stufe
+  vor der Betreibung: einordnen (Verzug ≠ Betreibung), Forderung prüfen und Verjährung,
+  Verzugszins 5 % und die Frage nach Gebühren, Sonderfälle Miete (OR 257d) und Krankenkasse
+  (KVG 64a), Raten, selbst mahnen. Dazu drei Briefe: Mahnung schreiben, Forderung bestreiten,
+  Ratenzahlung vorschlagen (mit der Anerkennungs-Warnung vor dem Formular). 5 Sprachen, rm als
+  deutscher Rückfall. Grundlagen am Wortlaut (Fedlex, 27.09.2026). Damit **35** Abläufe.
+
 ### Geändert
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
   Vorher zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt»; jetzt offen,
