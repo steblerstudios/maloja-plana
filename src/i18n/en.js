@@ -4154,7 +4154,7 @@ export default {
     sectionInsurance: 'Insurance',
     footerPrivacy: 'This dossier contains personal health information. Please store it carefully.',
     qrTitle: 'Emergency QR for first responders',
-    qrHint: 'Scannable with any smartphone — the code holds only text, no link. It is not encrypted: anyone who scans it can read everything in it. To carry it along, take a screenshot or print this page.',
+    qrHint: 'Scannable with any smartphone — the code holds only text, no link. It is not encrypted: anyone who scans it can read everything in it. To carry it along, take a screenshot or print this page. When scanned, the phone often offers to save the details as a contact — they then end up in the address book of whoever scans it.',
     qrGekuerzt: 'The QR code holds a short version: not all details fit, and the code lists what is missing at the end. The full details are only in the dossier below.',
     qrNichtEnthalten: 'Not included, see dossier',
     qrFehler: 'The QR code could not be created. All details are listed in full in the dossier below.',
