@@ -796,6 +796,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
       }, t('dashboard.toolsSubtitle')),
+      // Werkzeug-Vorschau 27.09.2026: die flache Liste bleibt vorerst (die Hervorhebungen
+      // sind ein eigener, offener Entscheid) — der Weg zu ALLEN Werkzeugen führt ins Gepäck.
+      React.createElement('button', {
+        type: 'button', onClick: () => onNavigate('gepaeck'),
+        style: {
+          display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 2px', margin: '0 0 ' + space.sm + 'px',
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
+        },
+      }, t('gepaeck.menuAlle'), ' ›'),
       (() => {
         const renderTool = (tool) => {
           // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
