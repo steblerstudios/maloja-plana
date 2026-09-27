@@ -311,7 +311,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
         borderRadius: 0, cursor: 'pointer', fontFamily: 'inherit',
       },
     },
-      h('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', flexShrink: 0, color: palette.sageDeep } }, Icons[w.icon] ? Icons[w.icon]() : null),
+      h('span', { 'aria-hidden': 'true', style: { width: '22px', height: '22px', flexShrink: 0, color: palette.sageDeep } }, (Icons[w.icon] || Icons.document)()),
       h('span', { style: { flex: 1, minWidth: 0 } },
         h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('dashboard.anspruchTitle')),
         w.sub ? h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } }, t(w.sub)) : null),
