@@ -5,11 +5,13 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { ZielHinweis } from './components/ExternerLink.jsx';
+import PrimaryButton from './components/PrimaryButton.jsx';
 
 export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
   const [preview, setPreview] = useState(false);
   // Export-Vorschau (K20): null | 'html' | 'json' — erst zeigen, was in der Datei steht.
   const [vorschau, setVorschau] = useState(null);
+  const zweitKnopf = { flex: 1, minHeight: '44px', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
   // Abschnitts-Überschriften optisch in Versalien, aber im Markup normale
   // Schreibweise (Screenreader liest Wörter statt Buchstaben) — text-transform.
   const headStyle = { textTransform: 'uppercase', letterSpacing: '0.5px' };
@@ -42,21 +44,25 @@ export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
       )
     ),
 
-    React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: vorschau ? 0 : space.md } },
+    // EIN Hauptknopf: der Lebenslauf als Datei (Seitenrundgang 27.09.2026 — vorher standen
+    // «Vorschau» in Sand und «HTML» in Salbei gleich laut nebeneinander).
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: vorschau ? 0 : space.md } },
+      React.createElement(PrimaryButton, {
+        palette, onClick: () => setVorschau('html'),
+        style: { flex: 1, minHeight: '44px' },
+      }, React.createElement(ZielHinweis, { t, art: 'download' }), t('cv.downloadHtml')),
       React.createElement('button', {
+        type: 'button',
         onClick: () => setPreview(!preview),
-        style: { flex: 1, padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+        style: zweitKnopf,
       }, preview
         ? React.createElement(React.Fragment, null, hinweisZeichen('kreuz'), t('common.close'))
         : t('cv.preview')),
       React.createElement('button', {
-        onClick: () => setVorschau('html'),
-        style: { flex: 1, padding: '10px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-      }, React.createElement(ZielHinweis, { t, art: 'download' }), t('cv.downloadHtml')),
-      React.createElement('button', {
+        type: 'button',
         onClick: () => setVorschau('json'),
         title: t('cv.downloadJsonHint'),
-        style: { flex: 1, padding: '10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+        style: zweitKnopf,
       }, '{ } ' + t('cv.downloadJson'))
     ),
 

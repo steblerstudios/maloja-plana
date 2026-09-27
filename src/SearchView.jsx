@@ -12,7 +12,10 @@ import { SEARCH_VIEWS } from './config/ansichtenRegister.js';
 export { SEARCH_VIEWS } from './config/ansichtenRegister.js';
 
 export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
-  const [query, setQuery] = useState('');
+  // Die Anfrage gilt für die Sitzung: nach «Zurück zu Suche» steht sie wieder da, samt
+  // Treffern (Seitenrundgang 27.09.2026). Fehlt der Speicher, beginnt die Suche leer.
+  const [query, setQueryState] = useState(() => { try { return sessionStorage.getItem('mp_suche') || ''; } catch { return ''; } });
+  const setQuery = (v) => { setQueryState(v); try { sessionStorage.setItem('mp_suche', v); } catch { /* ohne Speicher */ } };
   const q = query.trim().toLowerCase();
 
   const hit = (parts) => !q || parts.some(p => (p || '').toLowerCase().includes(q));

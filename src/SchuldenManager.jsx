@@ -180,8 +180,14 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     borderRadius: radius.sm,
     cursor: 'pointer',
     fontWeight: weight.semi,
-    fontSize: text.xs
+    fontSize: text.xs,
+    minHeight: '44px', boxSizing: 'border-box',
   };
+  // Löschen ist kein Hauptknopf (Seitenrundgang 27.09.2026): vorher gefüllt
+  // in Rose, so laut wie «+ Schuld erfassen». Jetzt Umriss mit
+  // roséfarbenem Text als Hinweis, nicht als Alarm.
+  const zweitKnopf = { ...buttonStyle, background: 'transparent', color: palette.text, border: '1px solid ' + palette.border };
+  const loeschKnopf = { ...zweitKnopf, color: palette.roseDeep || palette.rose };
 
   // Ruhiger Erklärkasten mit Titel, Text und Quellenzeile (Verlustscheine, Bussen — 27.09.2026).
   const erklaerKasten = (key, titel, textKey, quelleKey) => React.createElement('div', { key, style: { padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.md } },
@@ -190,8 +196,6 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     quelleKey && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, renderSource(t(quelleKey), null, t))
   );
 
-  // Entfernen: leise statt roter Fläche (Dataviz-Runde 27.09.: keine Alarmfarbe auf Schulden).
-  const leiseKnopf = { ...buttonStyle, background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, fontWeight: weight.medium };
   const linkKnopf = { display: 'inline', background: 'none', border: 'none', padding: 0, color: palette.sageDeep, textDecoration: 'underline', cursor: 'pointer', font: 'inherit', fontSize: text.xs };
   const detailsStil = { padding: space.sm + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.sm, marginBottom: space.sm };
   const summaryStil = { cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text };
@@ -371,7 +375,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           ),
           // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
-          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: leiseKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
+          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       )
     ),
@@ -404,7 +408,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
               React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
             )
           ),
-          React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...leiseKnopf, marginTop: space.xs } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
+          React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...loeschKnopf, marginTop: space.xs } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       )
     ),
@@ -429,7 +433,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           ),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
             React.createElement('input', { type: 'date', value: alsIsoDatum(entry.date), onChange: (e) => handleUpdateVerlustschein(entry.id, 'date', e.target.value), 'aria-label': t('schulden.date'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
-            React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: leiseKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
+            React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
           )
         ))
       )

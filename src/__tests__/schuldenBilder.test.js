@@ -73,10 +73,13 @@ describe('C · MahnstufenUebersicht', () => {
 
 describe('Schuldenmanager nach der Runde', () => {
   const q = fs.readFileSync(path.resolve(__dirname, '..', 'SchuldenManager.jsx'), 'utf8');
-  it('kein Rot auf Beträgen und Entfernen-Knöpfen (roseDeep bleibt nur für Formularfehler)', () => {
-    expect(q).not.toMatch(/palette\.rose\b/);
-    expect(q.match(/palette\.roseDeep/g)).toHaveLength(1);
-    expect(q).toMatch(/role: 'alert'[^\n]*palette\.roseDeep/);
+  // Beträge ohne Rot (Dataviz-Runde 27.09.). Entfernen nutzt den gemeinsamen loeschKnopf aus dem
+  // Hauptknopf-System (#416): Zweitknopf ohne rote Fläche, nur der Text trägt die Warnfarbe.
+  it('kein Rot auf Beträgen; Entfernen über den gemeinsamen loeschKnopf, keine rote Fläche', () => {
+    expect(q).not.toMatch(/background: palette\.rose/);
+    expect(q).not.toMatch(/istUeberfaellig\(debt\) \? palette\.roseDeep/);
+    expect(q).toMatch(/color: debt\.status === 'paid' \? \(palette\.sageDeep \|\| palette\.sage\) : palette\.text/);
+    expect(q.match(/style: (\{ \.\.\.)?loeschKnopf/g)).toHaveLength(3);
   });
   it('die Begründung einer Stufe steht einmal je Stufe, nicht je Forderung', () => {
     expect(q).not.toMatch(/tier1Reason'\)/);
