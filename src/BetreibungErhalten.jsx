@@ -36,7 +36,9 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
     // Schritt 2 — Stimmt die Forderung? (zahlen/Raten vs. Rechtsvorschlag)
     React.createElement(AblaufStep, { palette, title: t('betreibung.step2Title') },
       React.createElement('p', { style: s.stepText }, t('betreibung.step2Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('betreibung.step2Link'), onClick: () => onNavigate('schulden') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('betreibung.step2Link'), onClick: () => onNavigate('schulden') }),
+      // Rückweg zur Stufe davor (27.09.2026): wer erst eine Mahnung hat, ist hier zu früh.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('betreibung.step2LinkMahnung'), onClick: () => onNavigate('mahnung') })
     ),
 
     // Schritt 3 — Budget/Existenzminimum schützen + kostenlose Beratung + Brücke zum

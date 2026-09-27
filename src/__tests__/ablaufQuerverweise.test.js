@@ -12,7 +12,7 @@ import { LEBENSZUSTAENDE } from '../data/lebenszustaende.js';
 const DATEI = {
   kkerst: 'KKErstAnmeldung.jsx', kvgwechsel: 'KVGWechsel.jsx', zusatzwechsel: 'ZusatzWechsel.jsx',
   neuerjob: 'NeuerJob.jsx', stelleverloren: 'StelleVerloren.jsx', unfallkrankheit: 'UnfallKrankheit.jsx',
-  umzug: 'UmzugAblauf.jsx', pensionierung: 'Pensionierung.jsx', betreibung: 'BetreibungErhalten.jsx',
+  umzug: 'UmzugAblauf.jsx', pensionierung: 'Pensionierung.jsx', betreibung: 'BetreibungErhalten.jsx', mahnung: 'MahnungErhalten.jsx',
   selbstaendigkeit: 'Selbstaendigkeit.jsx', heirat: 'Heirat.jsx', kind: 'KindBekommen.jsx',
   trennung: 'Trennung.jsx', bewilligung: 'BewilligungFristen.jsx', fuehrerausweis: 'Fuehrerausweis.jsx',
   asyl: 'AsylView.jsx', dienst: 'Dienst.jsx', volljaehrig: 'Volljaehrig.jsx', lehre: 'Lehre.jsx', betreibungsauszug: 'BetreibungsAuszug.jsx', ausweis: 'Ausweis.jsx', wegzug: 'Wegzug.jsx', adoption: 'Adoption.jsx', zusammenziehen: 'Zusammenziehen.jsx', ergaenzungsleistungen: 'Ergaenzungsleistungen.jsx', vorsorgeauftrag: 'Vorsorgeauftrag.jsx', einbuergerung: 'Einbuergerung.jsx', zuzug: 'ZuzugAusland.jsx', aussteuerung: 'Aussteuerung.jsx', quellensteuer: 'Quellensteuer.jsx', wohnunggekuendigt: 'WohnungGekuendigt.jsx', iv: 'IvVerfahren.jsx', pflege: 'PflegeAblauf.jsx', todesfall: 'Todesfall.jsx',

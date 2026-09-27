@@ -78,6 +78,7 @@ Kacheln ohne unbelegten Frankenbetrag. Hier stehen nur die **Entscheide**.
 | Karten **Stufe 1**: Link «In OpenStreetMap öffnen» | §14 | Muster `ExternerLink` |
 | Herzensempfehlungen: pflegewegweiser.ch und David-Rau-App prüfen und ergänzen (die übrigen 26 sind drin) | §9 | je Angebot prüfen, ob es noch besteht |
 | Schwarz-Weiss-Modus: ist der vorhandene Graustufen-Schalter das Gewünschte? | §4 | nur ansehen und entscheiden |
+| **Schulden & Rechnungen gesamthaft + Dataviz** (nächste Sitzung, Wunsch 27.09. abends) | §5 | #408 (Mahnung, Schuldenmanager); Design zuerst, Mockup |
 
 *Korrektur 24.09. spätabends, am Code nachgesehen:* «Vor dem Wechsel prüfen» (KVG und
 Zusatz, `checkIntro`) und «Das verlässt dein Gerät» (`ExportVorschau` in elf Ansichten) sind
@@ -111,6 +112,7 @@ Abschiedsagentur, plaant).
 | Budget: Ziele und Richtwerte · Haushalt genauer erfassen · Hausrat → Hauswert | §5 | Keine-Doppel-Eingabe-Audit |
 | Zukunftsrechner-Reste · Kreditkarten · Säule 3b · «Lohnt sich ein Umzug?» | §5 | — |
 | KK-Rechnung stimmt nicht · UVG-Brief · Führerschein · Stiftungen und Härtefonds | §5 | Generatoren-Muster |
+| Mahnung weiterführen: kantonale Steuer-Regeln je Kanton · «Gezahlt/offen» pro Arztrechnung | §5 | Entwurfs-PR «Mahnung» #408 gemergt; je Kanton Quelle |
 | Berechtigungs-Landkarte je Kanton · Befreiungen · AHV-Beitragsjahre | §3 | Kantons-Belege (K30/K32) |
 | Vergünstigungen weiterer Kantone · eigener Bereich für Beeinträchtigungen · Screening-Abgleich (Faden 3-II) | §3, §5 | je Quelle einzeln belegen |
 | Keine-Doppel-Eingabe-Audit · Drei-Schritt-Standard · Robustheits-Checkliste · Quellen-Audit | §6, §7 | O1, O4 |
@@ -299,6 +301,43 @@ Abschiedsagentur, plaant).
 - 🌱 **„Lohnt sich ein Umzug?"-Check** (Steuerfuss + Miete + KK gemeindeübergreifend, würdevoll).
 - 🌱 **Faden 3-II** — persönlicher Screening-Intervall-Abgleich (nur belegbar, mit Evidenzqualität).
 - 🌱 **Ablauf „KK-Rechnung stimmt nicht"** (+ Beanstandungs-/Einsprache-Brief) · **„Gezahlt/offen"-Ablauf pro Arztrechnung**.
+- 🔨 **Mahnung — erhalten und selbst mahnen** *⟨Stebler Studios 27.09.2026: «das Thema Mahnung
+  abdecken»; Auswahl «beides» (erhalten + selbst mahnen) und «Konzept + gleich bauen»⟩*
+  - **Warum:** Die App kannte die Betreibung (Rechtsvorschlag, Auszug, Schuldenplan), aber nicht
+    die Stufe davor. Bei der Mahnung ist der Spielraum am grössten — prüfen, bestreiten, Raten
+    anfragen —, und hier wird die häufigste Falle gestellt: eine Anzahlung ist Anerkennung.
+  - **Gebaut (Entwurfs-PR, 27.09.):** Ablauf «Mahnung erhalten» (`mahnung`, 6 Schritte:
+    einordnen · stimmt die Forderung + Verjährung · was dazukommen darf · Miete und Krankenkasse
+    · Raten · umgekehrt selbst mahnen) und drei Briefe: **Mahnung schreiben** (Erinnerung oder
+    Mahnung), **Forderung bestreiten**, **Ratenzahlung vorschlagen**. Grundlagen am Wortlaut:
+    OR 102, 104–106, 127/128/130, 135/137, 142, 257d · SchKG 38 · KVG 64a · KVV 105a/105b.
+  - **Leitplanken (bewusst so):** kein Frist-Knopf im Ablauf (die Zahlungsfrist setzt der
+    Gläubiger; beim Beginn der KK-Nachfrist schweigt das Gesetz) · zu Mahn- und Inkassogebühren
+    **keine** Rechtsbehauptung, nur die Frage nach der Grundlage (das OR nennt keine Mahngebühr)
+    · der Mahnbrief **behält** Verzugszins nur vor, er rechnet keinen aus · der Bestreitungsbrief
+    anerkennt nichts, auch nicht «den Rest» · die Anerkennungs-Warnung steht **vor** dem
+    Ratengesuch.
+  - **Gebaut 27.09. nachmittags (Stebler Studios «1-3», #408):** Verzugszins-Rechner im Ablauf
+    (Annäherung, 365 **und** 360 Tage nebeneinander — die Tageszählung steht nicht im Gesetz) ·
+    Mahnstufe je Forderung im Schuldenmanager (Rechnung → Mahnung → Zahlungsbefehl, mit nächstem
+    Weg) · Steuern im Ablauf: direkte Bundessteuer (DBG 163/164/166/167 — **Erlass nur vor dem
+    Zahlungsbefehl**), Kantons- und Gemeindesteuern → kantonales Steueramt.
+  - **Offen (Ideen, je vor dem Bau belegen):** Brücke zu «Gezahlt/offen» pro Arztrechnung ·
+    kantonale Steuer-Regeln (Erlass, Zahlungserleichterung) je Kanton belegen
+    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · ~~Rate aus dem Budget, Bussen, Verlustscheine, Mahngebühren~~ *(gebaut 27.09. abends, #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
+    rm-Fassung von Ablauf und Briefen.
+  - **Mahnstufen-Leiste** (Schuldenmanager, je Forderung: Stand-Auswahl + Leiste Rechnung → Mahnung
+    → Zahlungsbefehl + nächster Weg): ohne Mockup gebaut; Stebler Studios 27.09. abends: **«guter
+    Anfang»** — Gestaltung wird in der Runde «Schulden & Rechnungen gesamthaft» (unten) weitergedacht.
+  - **Entscheid 27.09.:** Der Brief «nur Gebühren» nennt die Zahlung der Forderung; der Hinweis sagt
+    offen, dass das eine Anerkennung ist (OR 135 Ziff. 1).
+- 🌱 **Schulden & Rechnungen gesamthaft anschauen — und sauberer, visueller darstellen (Dataviz)**
+  *⟨Stebler Studios 27.09. abends: «danach uns schulden und rechnungen gerne komplett anschauen und
+  auch ein wenig mit dataviz dinge sauberer und visueller darstellen»⟩* — der ganze Schuldenmanager
+  (Übersicht, Schulden, Abbau-Plan, Betreibung, Verlustscheine) plus Mahnung-Ablauf als eine Runde:
+  was gehört wohin, was ist doppelt, wo hilft ein Bild statt Text (z. B. Abbau-Plan als ruhige
+  Zeitachse, Anteil je Stufe, Mahnstufen). Design zuerst, gemeinsam (Mockup), Haltung ruhig und ohne
+  Wertung (keine roten Alarm-Zahlen). Grundlage: Stand #408.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).
 - 🌱 **Generatoren fürs Lebensende** *⟨Eingang 19.07.⟩* — Vorsorgeauftrag, Testament,
   Bestattungsauftrag; evtl. bei der Gemeinde hinterlegen (gemeinde- und kantonsabhängig).

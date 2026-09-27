@@ -34,6 +34,7 @@ export const GEGENSTAENDE = [
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
       { key: 'stelleweg', view: 'stelleverloren', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M12 7v5l3 2'] },
       { key: 'selbst', view: 'selbstaendigkeit', g: ['M13 3L4 14h6l-1 7 9-11h-6z'] },
+      { key: 'mahnung', view: 'mahnung', g: ['M4 6h16v12H4z', 'M4 7l8 6 8-6', 'M12 16.5v.01'] },
       { key: 'betreibung', view: 'betreibung', g: ['M5 3h10l4 4v14H5z', 'M15 3v4h4', 'M8 12h8', 'M8 16h5'] },
       { key: 'stipendien', view: 'stipendien', g: ['M3 8l9-4 9 4-9 4z', 'M7 11v4c0 1.2 2.2 2 5 2s5-.8 5-2v-4', 'M21 8v4.5'] },
     ],
