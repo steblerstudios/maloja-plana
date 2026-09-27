@@ -13,6 +13,7 @@ import { aufklappZeichen } from './IconKern.jsx';
 import { ABLAEUFE } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -97,7 +98,7 @@ function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'notfall') {
     if (!chData.emergencyContact) return null;
     const parts = [t('synthesis.emergencyContact', { name: chData.emergencyContact })];
-    if (chData.bloodType) parts.push(t('synthesis.bloodType', { type: chData.bloodType }));
+    if (blutgruppeLabel(chData.bloodType)) parts.push(t('synthesis.bloodType', { type: blutgruppeLabel(chData.bloodType, t) }));
     if (chData.allergies) parts.push(chData.allergies);
     return parts.join(' · ') + '.';
   }

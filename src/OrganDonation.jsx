@@ -7,6 +7,7 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 
 export const organOptionen = (t) => [
@@ -43,7 +44,7 @@ export function organSpendeVcard({ t, data = {}, status, organs = {} }) {
   const freitext = String(organs.other ?? '').trim();
   if (freitext) gewaehlt.push(freitext);
 
-  const blutgruppe = String(data.notfall?.bloodType ?? '').trim();
+  const blutgruppe = blutgruppeLabel(data.notfall?.bloodType, t);
 
   const zeilen = [t('organ.title') + ':', '  ' + t('organ.status') + ': ' + statusText];
   if (gewaehlt.length) zeilen.push('  ' + t('organ.organsAndTissue') + ': ' + gewaehlt.join(', '));
