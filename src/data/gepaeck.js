@@ -124,5 +124,7 @@ export const gegenstandReadiness = (gegenstandKey, data) => {
 // ── Versiegelter Brief im Dunkelmodus (27.09.2026) ──────────────────────────
 // Vorher: Papier = palette.surface (Kartenfläche) → Brief-Form 1,0 : 1, Rand 1,13 : 1,
 // Siegel 2,86 : 1. Jetzt eigene Töne, WCAG 1.4.11 (≥ 3 : 1) — gehalten von
-// gepaeckBriefKontrast.test.js. Das Siegel nimmt den Oxblood-Ton des Hellmodus.
-export const BRIEF_DUNKEL = { papier: '#B9B2A5', rand: '#DDD6C9', siegel: '#8C4A3C' };
+// gepaeckBriefKontrast.test.js. Helligkeit wie die übrigen Dunkel-Töne (Papier ≈ Stahl
+// der Feldflasche, Luminanz ~0,28; polygrafin 27.09.: #B9B2A5 war ein heller Fleck),
+// darum ein dunkles Siegel, das sich vom Papier abhebt, auf dem es sitzt.
+export const BRIEF_DUNKEL = { papier: '#958F84', rand: '#A8A296', siegel: '#62302A' };
