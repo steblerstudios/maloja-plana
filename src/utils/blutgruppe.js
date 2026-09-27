@@ -1,3 +1,5 @@
+import { auswahlLabel } from './auswahlLabel.js';
+
 // ─── Blutgruppe: gespeicherter Schlüssel → Anzeige ───────────────────────────
 // Gespeichert wird der Auswahl-Schlüssel (`aPos`, `abNeg` …), angezeigt werden muss
 // das Etikett (`A+`, `AB−`). Befund 27.09.2026: an fünf Stellen stand der rohe
@@ -9,8 +11,5 @@
 export function blutgruppeLabel(wert, t) {
   const w = String(wert ?? '').trim();
   if (!w || w === 'unknown') return '';
-  if (typeof t !== 'function') return w;
-  const schluessel = 'chapters.notfall.fields.bloodType.options.' + w;
-  const text = t(schluessel);
-  return typeof text === 'string' && text && text !== schluessel ? text : w;
+  return auswahlLabel('notfall', 'bloodType', w, t);
 }

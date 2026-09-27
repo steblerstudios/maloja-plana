@@ -14,6 +14,7 @@ import { ABLAEUFE } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
+import { auswahlLabel } from './utils/auswahlLabel.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -76,8 +77,8 @@ function buildSnippet(chapterKey, chData, allData, t) {
     const parts = [chData.kkInsurer];
     const prem = fmtCHF(chData.kkPremium);
     if (prem) parts.push(prem);
-    if (chData.franchise) parts.push(t('synthesis.franchise', { value: chData.franchise }));
-    if (chData.kkModel) parts.push(chData.kkModel);
+    if (chData.franchise) parts.push(t('synthesis.franchise', { value: auswahlLabel('versicherungen', 'franchise', chData.franchise, t) }));
+    if (chData.kkModel) parts.push(auswahlLabel('versicherungen', 'kkModel', chData.kkModel, t));
     return parts.join(', ') + '.';
   }
   if (chapterKey === 'ausbildung') {
