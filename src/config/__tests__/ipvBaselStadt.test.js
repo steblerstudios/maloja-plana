@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import {
   IPV_BS, BS_HYPOTHETISCH_SCHWELLE, bsGrenzen, bsGruppe, bsVermoegensanteil, ipvBaselStadtRechnen,
-  bsWochenstunden, bsHypothetischesEinkommen, bsModell,
+  bsWochenstunden, bsHypothetischesEinkommen, bsModell, bsPensumStunden,
 } from '../ipvBaselStadt.js';
 import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
@@ -368,6 +368,31 @@ describe('K31 calculateIPV für BS (App-Angaben → Modell)', () => {
     });
     it('Selbständige: Stunden zählen nicht, unter 28 800 keine Zahl (§ 23 Abs. 1 lit. d unbekannt)', () => {
       expect(calculateIPV(person({ monthlyIncome: 2000, stunden: '42', finanzen: { employmentType: 'selfEmployed' } }))).toMatchObject({ offen: 'bsHypothetisch' });
+    });
+  });
+
+  describe('🛑 Re-Review #473 N1: Pensum aus Haupt- UND Nebenerwerb', () => {
+    it('bsPensumStunden: Stunden zusammenzählen; Nebenerwerb ohne Stunden → unbekannt', () => {
+      expect(bsPensumStunden({ workHoursPerWeek: '20' }, { monthlyIncome: 1800, sideIncome: 900, sideHoursPerWeek: '15' })).toBe(35);
+      expect(bsPensumStunden({ workHoursPerWeek: '20' }, { monthlyIncome: 1800, sideIncome: 900 })).toBe(null);
+      expect(bsPensumStunden({ workHoursPerWeek: '20' }, { monthlyIncome: 1800, sideIncome: 0, sideHoursPerWeek: '15' })).toBe(20);
+      expect(bsPensumStunden({}, { monthlyIncome: 1800, sideIncome: 900, sideHoursPerWeek: '15' })).toBe(null);
+      expect(bsPensumStunden({}, { monthlyIncome: 0, sideIncome: 900, sideHoursPerWeek: '15' })).toBe(15);
+      expect(bsPensumStunden({}, {})).toBe(null);
+    });
+    it('20 Std. Haupt- + 15 Std. Nebenerwerb = 35 Std. (83 %): keine Anrechnung → 210 statt der Rechnung mit 20 Std.', () => {
+      // 1 800 + 900 = 2 700/Monat = 32 400 → Gruppe 09 → 210. Nur mit den 20 Std. des Haupterwerbs
+      // kämen (80 % − 20/42) × 36 000 = 11 657 dazu.
+      const r = calculateIPV(person({ monthlyIncome: 1800, stunden: '20', finanzen: { sideIncome: 900, sideHoursPerWeek: '15' } }));
+      expect(r).toMatchObject({ eligible: true, gruppe: 9, amount: 210 });
+      expect(r.zusatzVorbehaltKey).toBeUndefined();
+      const vorher = calculateIPV(person({ monthlyIncome: 2700, stunden: '20' }));
+      expect(vorher.zusatzVorbehaltKey).toBe('ipv.bsHypothetischGerechnet');
+      expect(vorher.amount).toBeLessThan(r.amount);
+    });
+    it('Nebenerwerb ohne Stunden: Pensum unbekannt → Schwelle 28 800 (darüber mit Hinweis, darunter keine Zahl)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 1800, stunden: '20', finanzen: { sideIncome: 900 } }))).toMatchObject({ amount: 210, zusatzVorbehaltKey: 'ipv.bsPensumAngenommen' });
+      expect(calculateIPV(person({ monthlyIncome: 1500, stunden: '20', finanzen: { sideIncome: 800 } }))).toMatchObject({ offen: 'bsHypothetisch' });
     });
   });
 

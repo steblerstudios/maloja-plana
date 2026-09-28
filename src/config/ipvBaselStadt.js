@@ -47,7 +47,8 @@
 //    Differenz (in Prozenten) zwischen der effektiven Erwerbstätigkeit und dem in Abs. 1 genannten
 //    Mindesterwerbstätigkeitsgrad (80 bzw. 160 Prozent) angerechnet. 100 Prozent entsprechen dabei
 //    einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» Sind die Arbeitsstunden pro
-//    Woche erfasst (`ausbildung.workHoursPerWeek`), rechnet die App das Pensum daraus und rechnet
+//    Woche erfasst (`ausbildung.workHoursPerWeek`, beim Nebenerwerb dazu `finanzen.sideHoursPerWeek`
+//    — `bsPensumStunden`), rechnet die App das Pensum daraus und rechnet
 //    die Differenz an; sonst gilt die gewählte Schwelle 28'800 (siehe `bsHypothetisch` unten).
 //    ⟨korrigiert 28.09.2026, Fachprüfung B2: hier stand «Den Beschäftigungsgrad kennt die App
 //    nicht» — die Wochenstunden sind erfasst.⟩
@@ -246,6 +247,26 @@ export function bsWochenstunden(wert) {
   return Number.isFinite(h) && h > 0 && h <= WOCHENSTUNDEN_OBERGRENZE ? h : null;
 }
 
+// Die Wochenstunden ALLER Erwerbe, die im Einkommen zählen — oder `null`, wenn das Pensum damit
+// nicht bekannt ist. ⟨28.09.2026, Re-Review #473 N1: vorher nur `ausbildung.workHoursPerWeek`;
+// der Nebenerwerb zählte im Einkommen mit, seine Stunden (`finanzen.sideHoursPerWeek`) nicht —
+// 20 Std. Haupt- + 15 Std. Nebenerwerb galten als 48 % statt 83 %, und die App rechnete 11'657
+// hypothetisch hinzu (26 statt 179 im Monat).⟩
+//   · Haupterwerb: Stunden erfasst, oder kein Lohn und keine Stunden (dann zählt nur der Nebenerwerb).
+//   · Nebenerwerb (`sideIncome` > 0): seine Stunden müssen erfasst sein, sonst ist das Pensum
+//     unbekannt → `null` (die App rechnet dann mit der Schwelle 28'800, wie ohne Stunden).
+//   · Stunden ohne Nebeneinkommen zählen nicht (kein Erwerb, der im Einkommen steht).
+export function bsPensumStunden(ausbildung, finanzen) {
+  const f = finanzen || {};
+  const haupt = bsWochenstunden(ausbildung?.workHoursPerWeek);
+  const hatHauptlohn = Number(f.monthlyIncome) > 0;
+  const hatNebenerwerb = Number(f.sideIncome) > 0;
+  const neben = hatNebenerwerb ? bsWochenstunden(f.sideHoursPerWeek) : 0;
+  if (neben === null) return null;
+  if (haupt === null && (hatHauptlohn || !hatNebenerwerb)) return null;
+  return (haupt || 0) + neben;
+}
+
 // SoHaV § 24 Abs. 2 [3]: Differenz zwischen dem Pensum und 80 %, × 36'000. Pensum = Stunden ÷ 42
 // (gewählt), höchstens 100 %.
 export function bsHypothetischesEinkommen(stunden) {
@@ -323,7 +344,8 @@ export function ipvBaselStadt(data, hh, ipvData, youngAdultsCount, orientierung)
   const kleinesKind = kinderJahre.some((a) => a < IPV_BS.betreuungBisAlter);
   const ausnahme = ueber60 || kleinesKind;
   const selbstaendig = ['selfEmployed', 'freelance'].includes(f.employmentType);
-  const stunden = bsWochenstunden(data.ausbildung?.workHoursPerWeek);
+  // Haupt- und Nebenerwerb zusammen (N1); Nebenerwerb ohne Stunden → Pensum unbekannt.
+  const stunden = bsPensumStunden(data.ausbildung, f);
   let hypothetisch = 0;
   let zusatzVorbehaltKey = null;
   if (!ausnahme) {
