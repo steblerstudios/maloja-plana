@@ -228,7 +228,6 @@ export function ipvObwalden(data, hh, ipvData, youngAdultsCount, orientierung) {
     return ergebnisOhneAnspruch({
       ...gemeinsam,
       noteKey: r.grund === 'mindestbetrag' ? 'ipv.owUnterMindestbetrag' : 'ipv.owKeinAnspruch',
-      noteParams: { grenze: r.grenze },
     });
   }
   // Art. 10 Abs. 3/7 [3]: für 2026 Antrag bis 31. Mai 2026, danach verwirkt.
