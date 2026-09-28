@@ -55,11 +55,17 @@
 //    Fassung, [4]); seit 01.06.2026 steht dort «30. April». Verpasst ⇒ verwirkt (Art. 10 Abs. 7).
 //    Darum `anmeldefristVorbei`.
 //
-// 5. DER SELBSTBEHALT 2026 HAT KEINE OBERGRENZE. Die Fassung des EG KVG seit 01.04.2026 nennt
-//    einen Rahmen «zwischen 9,0 und 12,0 Prozent» — der Beschluss [1] vom 26.03.2026 fiel aber
-//    unter der vorherigen Fassung, die keinen Rahmen kannte, und der Rechner [5] deckelt auch
-//    nicht. Ab 60 000 liegt der Satz darum über 12 % (⟨korrigiert 28.09.2026 gegenüber der
-//    Recherche vom 16.09., die den neuen Rahmen schon für 2026 las⟩).
+// 5. 🛑 ÜBER 60 000 GIBT ES ZWEI GELTENDE TEXTE — dort keine Zahl, wo es darauf ankommt.
+//    Der Beschluss [1] (26.03.2026) steigert den Satz ohne Obergrenze; ab 60 000 liegt er über
+//    12 %. Seit 01.04.2026 sagt das EG KVG [2] Art. 2 Abs. 2 aber «zwischen 9,0 und 12,0 Prozent»,
+//    ohne Übergangsbestimmung — und die Verfügungen 2026 ergehen erst danach. Welche Regel die
+//    Ausgleichskasse anwendet, sagt keine Quelle (der Rechner [5] deckelt nicht, ist aber ein
+//    Rechner). ⟨Fachprüfung #476, B2, 28.09.2026: hier stand vorher als Tatsache «Der Selbstbehalt
+//    2026 hat keine Obergrenze», weil der Beschluss unter der alten Fassung fiel. Daraus folgt
+//    nicht, welches Recht auf Verfügungen nach dem 01.04. angewendet wird.⟩ Darum: liegt der Satz
+//    über 12 % UND hängt der Betrag davon ab, zeigt die App keine Zahl (`owSelbstbehaltRahmen`).
+//    Betroffen sind nur Haushalte mit Kindern (ohne Kinder endet der Anspruch bei 50 000);
+//    die Differenz wäre bis rund 1 125 Franken im Jahr. Frage 9/6 an die AK Obwalden.
 //
 // GEWÄHLT, NICHT BELEGT (je im Test benannt):
 //   · Steigerung stetig (je Franken 0,0001 Punkte), nicht in 100er-Stufen — wie der Rechner [5];
@@ -67,9 +73,12 @@
 //   · Rundung «aufzurunden … auf fünf Rappen» (Art. 14 Abs. 4) je Person, wie die Aufteilung.
 //   · Mindestbetrag 100 (Art. 14 Abs. 6, «Beiträge») auf der Summe, nicht je Person — wirkt nur,
 //     wenn ein einzelner Anteil unter 100 liegt, die Summe darüber; Unterschied < 100 im Jahr.
-//   · Kinder mit Jahrgang 2008 (18 im Anspruchsjahr) rechnet die App nicht: Art. 5 Abs. 2 [3]
-//     zählt sie als Kinder, das Merkblatt [4] lässt «Jugendliche (ab Jahrgang 2008)» einen
-//     eigenen Antrag stellen. Wo zwei amtliche Texte auseinandergehen: keine Zahl.
+//   · Kinder mit Jahrgang 2008 (18 im Anspruchsjahr) rechnet die App nicht. Über den STATUS sind
+//     sich EV Art. 5 Abs. 2 [3] und Merkblatt [4] einig (Kind, Richtprämie 1'380); offen ist, ob
+//     es im Antrag der Eltern mitzählt — das Merkblatt lässt «Jugendliche (ab Jahrgang 2008)»
+//     einen eigenen Antrag stellen. Grund `kind18`. ⟨Fachprüfung #476, K1: vorher stand hier
+//     «Widerspruch». Der echte Textwiderspruch liegt bei Jahrgang 2007 — am 1.1.2026 18 Jahre,
+//     nach EV Kind, nach Merkblatt junge erwachsene Person; die App rechnet beides nicht.⟩
 //
 // BEWUSST NICHT GEBAUT (wie in den anderen Kantonen):
 //   · Paare und mehrere Erwachsene — Gesamtanspruch (Art. 6 Abs. 3 [3]), zweites Einkommen fehlt.
@@ -109,6 +118,12 @@ export const IPV_OW = {
   mindestanspruch: { grenze: 50000, kind: 0.8, abViertemKind: 1.0 },
   // Art. 7a lit. h [3]: «Fr. 7 000.– pro Kind» (lit. g 7 000 für Ehepaare — nicht gebaut).
   kinderabzug: 7000,
+  // Art. 7a lit. d [3] i. V. m. StG Art. 35 Abs. 1 lit. g [6] (Fassung 2024): Versicherungsprämien
+  // «bis zum Gesamtbetrag von … Fr. 1 700.– für die übrigen Steuerpflichtigen», erhöht «um Fr. 700.-
+  // für jedes Kind». Genommen ist der tiefere Satz (die Erhöhung «um die Hälfte» ohne Beiträge nach
+  // lit. d/e setzt voraus, dass keine AHV-/BVG-Beiträge bezahlt werden — das weiss die App nicht).
+  // ⟨Fachprüfung #476, W4⟩
+  versicherungsabzug: { alleinstehend: 1700, jeKind: 700 },
   // Art. 7a lit. i [3]: «10 Prozent des steuerbaren Vermögens (Art. 43 bis 54 StG)».
   vermoegenAnteil: 0.10,
   // Art. 54 Abs. 1 StG [6], Fassung 2024: «c. für alle andern Steuerpflichtigen Fr. 25 000.–»,
@@ -133,8 +148,9 @@ export function owJahrAufgerundet(jahresbetrag) {
 }
 
 // Die Rechnung selbst — ohne App-Daten. `ae` = anrechenbares Einkommen (nach Kinderabzug).
-// Liefert Jahresbeträge in CHF, ungerundet.
-export function ipvObwaldenRechnen({ kinderZahl = 0, ae }) {
+// `satzDeckel` (Prozentpunkte, optional): die Lesart «Rahmen 9–12 %» des EG KVG seit 01.04.2026 —
+// nur für den Vergleich, siehe Kopf Punkt 5. Liefert Jahresbeträge in CHF, ungerundet.
+export function ipvObwaldenRechnen({ kinderZahl = 0, ae, satzDeckel = Infinity }) {
   const p = IPV_OW;
   const r = p.richtpraemie;
   const ae0 = Math.max(0, ae);
@@ -144,7 +160,7 @@ export function ipvObwaldenRechnen({ kinderZahl = 0, ae }) {
   // Art. 7 Abs. 1 [3]: «weniger als» — an der Grenze selbst schon kein Anspruch.
   if (ae0 >= grenze) return { ...leer, grund: 'ueberGrenze' };
 
-  const prozent = owSelbstbehaltProzent(ae0);
+  const prozent = Math.min(owSelbstbehaltProzent(ae0), satzDeckel);
   const allgemein = Math.max(0, maximal - (prozent / 100) * ae0);
   // Art. 14 Abs. 2 [3]: Aufteilung «wie sich die kantonalen Richtprämien zusammensetzen».
   const anteilKindRoh = maximal > 0 ? (allgemein * r.k) / maximal : 0;
@@ -193,8 +209,9 @@ export function ipvObwalden(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Alter im Anspruchsjahr, eingetippt ein Jahr dazu (vorsichtig an der Grenze).
   const kinderJahre = kinderAlter(kinder, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
-  // 🛑 Jahrgang 2008 (18 im Anspruchsjahr) und älter: keine Zahl — siehe Kopf, «gewählt».
-  if (kinderJahre.some((a) => a > 17)) return orientierung('haushalt');
+  // 🛑 Jahrgang 2008 (18 im Anspruchsjahr) und älter: keine Zahl — siehe Kopf, «gewählt». Eigener
+  // Grund: die Person ist allein, «haushalt» (Paare) wäre der falsche Satz (Fachprüfung #476, W3).
+  if (kinderJahre.some((a) => a > 17)) return orientierung('kind18');
 
   if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
 
@@ -208,15 +225,25 @@ export function ipvObwalden(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Alimente kennt die App (`finanzen.alimentePaid`, monatlich) — abgezogen seit 28.09.2026, nach
   // dem Befund W1 der Fachprüfung am gleichen Punkt in Uri (#464). Unlesbar/negativ = 0.
   const unterhaltJahr = 12 * Math.max(0, Number(f.alimentePaid) || 0);
+  // EG KVG Art. 2 Abs. 5 [2]: höchstens die geschuldeten Prämien — und die Prämie braucht auch der
+  // Versicherungsabzug, darum schon hier.
+  const praemie = praemieJahr(data);
+  if (praemieFehlt(praemie)) return orientierung('praemie');
+  // Versicherungsabzug: bezahlt ist mindestens die eigene Prämie; abgezogen höchstens der Rahmen.
+  const versicherung = Math.min(praemie,
+    IPV_OW.versicherungsabzug.alleinstehend + IPV_OW.versicherungsabzug.jeKind * kinderZahl);
   const ae = Math.max(0, einkommenJahr(f, SAEULE_3A.voll)
     - unterhaltJahr
+    - versicherung
     + IPV_OW.vermoegenAnteil * steuerbaresVermoegen
     - IPV_OW.kinderabzug * kinderZahl);
 
   const r = ipvObwaldenRechnen({ kinderZahl, ae });
-  // EG KVG Art. 2 Abs. 5 [2]: höchstens die geschuldeten Prämien.
-  const praemie = praemieJahr(data);
-  if (praemieFehlt(praemie)) return orientierung('praemie');
+  // 🛑 Kopf Punkt 5: über 12 % zwei geltende Texte. Keine Zahl, wenn der Betrag davon abhängt.
+  if (owSelbstbehaltProzent(ae) > 12) {
+    const gedeckelt = ipvObwaldenRechnen({ kinderZahl, ae, satzDeckel: 12 });
+    if (Math.abs(gedeckelt.total - r.total) > 0.005) return orientierung('owSelbstbehaltRahmen');
+  }
 
   // Rundung wie ausbezahlt (Art. 14 Abs. 4), je Person; der Deckel NACH der Rundung, nur auf den
   // Anteil der erwachsenen Person (die Kinderprämien kennt die App nicht).
@@ -245,8 +272,9 @@ export function ipvObwalden(data, hh, ipvData, youngAdultsCount, orientierung) {
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
     extra: {
       ...gemeinsam.extra, anmeldefristVorbei: fristVorbei,
-      // Wo nichts abgezogen wird, sagen Budget und KK-Karte den Obwaldner Grund, nicht den Luzerner.
-      fristKeys: { hinweisKey: 'ipv.owFristNichtAbgezogen', budgetKey: 'budget.ipvHintOwFristVorbei' },
+      // Wo nichts abgezogen wird, sagen KK-Karte, Prämien-Beleg und Budget den Obwaldner Grund
+      // (verwirkt, nicht anteilig) — Weg wie FR: `fristHinweisKey` in data/ipvAbzug.js.
+      fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen',
     },
     noteKey: fristVorbei ? 'ipv.owFristVorbei' : 'ipv.owFristLaeuft',
     noteParams: { jahr, folgejahr: jahr + 1 },

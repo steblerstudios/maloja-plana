@@ -32,17 +32,17 @@ describe('K31 IPV-Rechner, Kanton Obwalden', () => {
   });
   afterEach(() => { vi.useRealTimers(); });
 
-  it('zeigt den Betrag: 20 000 im Jahr → 3 119/Jahr, 260/Monat', () => {
+  it('zeigt den Betrag: 20 000 im Jahr → 3 280/Jahr, 273/Monat', () => {
     const html = render(profil(20000 / 12));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 3’119');
-    expect(html).toContain('CHF 260');
+    expect(html).toContain('CHF 3’280');
+    expect(html).toContain('CHF 273');
   });
 
   it('ohne erfasste Prämie: keine Zahl, sondern der Grund', () => {
     const html = render(profil(20000 / 12, { kkPremium: null }));
     expect(html).toContain('ipv.offenGrund.praemie');
-    expect(html).not.toContain('CHF 3’119');
+    expect(html).not.toContain('CHF 3’280');
   });
 
   it('die publizierte Grenze (anrechenbares Einkommen), keine Musterwerte', () => {
@@ -64,6 +64,12 @@ describe('K31 IPV-Rechner, Kanton Obwalden', () => {
     expect(render(profil(2000))).toMatch(/ipv\.owFrist(Vorbei|Laeuft)\(2026\|2027\)/);
   });
 
+  it('nach der Frist nennt der Prämien-Beleg den Obwaldner Grund, nicht den Luzerner (B1)', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
+    const { praemienBelegState } = await import('../data/praemienBeleg.js');
+    expect(praemienBelegState(profil(2000))).toMatchObject({ mode: 'fristVorbei', noteKey: 'ipv.owFristNichtAbgezogen' });
+  });
+
   it('nach der Frist nennt die KK-Karte den Obwaldner Grund, nicht den Luzerner', () => {
     vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
     const html = renderToStaticMarkup(React.createElement(KKLastCard, { palette, t, data: profil(2000) }));
@@ -72,8 +78,8 @@ describe('K31 IPV-Rechner, Kanton Obwalden', () => {
   });
 
   it('unter dem Mindestbetrag und über der Grenze: je ein eigener Satz', () => {
-    expect(render(profil(47000 / 12))).toContain('ipv.owKeinAnspruch');
-    const band = render(profil(46500 / 12));
+    expect(render(profil(49000 / 12))).toContain('ipv.owKeinAnspruch');
+    const band = render(profil(48200 / 12));
     expect(band).toContain('ipv.owUnterMindestbetrag');
     expect(band).not.toContain('ipv.incomeAboveLimit');
   });
@@ -85,7 +91,12 @@ describe('K31 IPV-Rechner, Kanton Obwalden', () => {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      expect(typeof texte.budget.ipvHintOwFristVorbei, `${sprache}.js: budget.ipvHintOwFristVorbei`).toBe('string');
+      // B1: der Budget-Hinweis ist der ipv-Satz (Weg FR); einen eigenen Budget-Schlüssel gibt es nicht mehr.
+      expect(texte.budget.ipvHintOwFristVorbei).toBeUndefined();
+      // Verwirkt, nicht anteilig (EV Art. 10 Abs. 7) — der Luzerner «nur die Prämien danach» darf nicht stehen.
+      expect(texte.ipv.owFristNichtAbgezogen).toMatch(/31/);
+      for (const k of ['owSelbstbehaltRahmen', 'kind18']) expect(texte.ipv.offenGrund[k]?.length, `${sprache}: offenGrund.${k}`).toBeGreaterThan(60);
+      expect(texte.ipv.vorbehaltOW, `${sprache}: W1 anrechenbar`).toMatch(/50[’', ]?000/);
       expect(texte.ipv.vorbehaltOW).toContain('{basisjahr}');
       expect(texte.ipv.offenGrund.ausbildung?.length, `${sprache}: offenGrund.ausbildung`).toBeGreaterThan(60);
       for (const k of ['owFristVorbei']) for (const p of ['{jahr}', '{folgejahr}']) expect(texte.ipv[k], `${sprache}: ${k} ${p}`).toContain(p);
