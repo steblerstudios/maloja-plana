@@ -298,55 +298,6 @@ Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkomme
 
 **Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
 01.01.2027 zeigt die App für NE keinen Betrag mehr.
-## 21 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle
-
-*Aufgenommen 28.09.2026 beim Einbau von BS (K31). Entwurf — **nicht gesendet**.*
-
-**Worum es geht:** Tabelle und Beiträge 2026 stehen vollständig in Anhang 2 der KVO (SG 834.410),
-das Einkommen im Harmonisierungsgesetz (SoHaG, SG 890.700) und seiner Verordnung (SoHaV,
-SG 890.710). Das Berechnungsbeispiel des ASB (4 Personen, 62'000 → Gruppe 5) rechnen wir Zahl
-für Zahl nach. Offen bleiben Punkte, die die App nur mit einer eigenen Annahme rechnen könnte.
-
-**Frage 1 — Gruppe 09, Erwachsene mit alternativem Modell:** Anhang 2 der KVO nennt **240**, die
-Beitragstabelle «Einkommensgruppen, -grenzen und IPV-Beiträge ab 1. Januar 2026» **230**. Wir
-folgen der Verordnung (240 ist auch der Abstand von 30 Franken, den alle anderen Gruppen haben).
-Welcher Betrag wird ausbezahlt?
-
-**Frage 2 — hypothetisches Einkommen:** SoHaV § 24 Abs. 2 lautet: «Als hypothetisches
-Erwerbseinkommen wird die Differenz (in Prozenten) zwischen der effektiven Erwerbstätigkeit und dem
-in Abs. 1 genannten Mindesterwerbstätigkeitsgrad (80 bzw. 160 Prozent) angerechnet. 100 Prozent
-entsprechen dabei einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» Sind die
-Wochenstunden erfasst, rechnet die App das Pensum als Stunden ÷ 42 und rechnet die Differenz zu
-80 % an (21 Std. → 50 % → 30 % × 36'000 = 10'800). Sind sie nicht erfasst, zeigt sie unter einem
-Erwerbseinkommen von 28'800 keinen Betrag (ausser über 60 oder mit einem Kind unter 16) und nennt
-darüber die 80-%-Annahme bei der Zahl. Drei Rückfragen: Mit welcher Wochenstundenzahl setzen Sie
-100 % an? Gibt es eine Praxis bei Vollzeit mit einem Lohn unter 28'800? Und gilt «das 60. Altersjahr
-überschritten» (§ 23 lit. a) ab dem 60. oder ab dem 61. Geburtstag?
-⟨korrigiert 28.09.2026 nach der Fachprüfung: hier stand «Nach SoHaV § 24 wird Alleinstehenden unter
-80 % die Differenz zu 36'000 netto angerechnet» — das gab den Wortlaut falsch wieder (angerechnet
-wird die Differenz in PROZENTEN, nicht bis 36'000 aufgefüllt), und die Wochenstunden kannte die
-App sehr wohl.⟩
-
-**Frage 3 — Gruppengrenzen:** § 22 Abs. 1 KVO gewährt Beiträge, wenn das Einkommen die
-Leistungsgrenze «nicht übersteigt». Gilt dasselbe für die Grenzen zwischen den Gruppen — gehört
-ein Einkommen von genau 23'125 (1 Person) zu Gruppe 01?
-
-**Frage 4 — Zuschlag für alternative Modelle (§ 21 Abs. 1bis KVO):** Das ASB «kann die für den
-Zuschlag zu berücksichtigenden Versicherungsmodelle von einem Mindestrabatt … abhängig machen».
-Gibt es diesen Mindestrabatt 2026, und wie hoch ist er? Das Merkblatt 01.2026 nennt keinen. Die App
-rechnet bei erfasstem Hausarzt-, HMO-, Telmed- oder Apothekenmodell mit Zuschlag und sagt «sofern die
-Police eingereicht ist; das Amt kann einen Mindestrabatt verlangen».
-
-**Frage 5 — Alter:** KVO und SoHaV nennen für die Altersklassen keinen Stichtag. Welcher Zeitpunkt
-entscheidet für eine Person, die im Anspruchsjahr 26 wird? Wir zeigen für diesen Jahrgang derzeit
-keinen Betrag.
-
-**Stand:** BS ist für 2026 gebaut (Entwurfs-PR, K31). Die KVO-Fassung ab 01.01.2027
-(Beschluss 15.09.2026) ist publiziert, trägt aber noch den Anhang 2 vom 21.10.2025 — die
-Beiträge 2027 stehen aus. Ab 01.01.2027 zeigt die App für BS keinen Betrag mehr.
-
----
-
 ## 10 · SVA Graubünden — Selbstbehalt-Satz, Kinder-Vergleich, Deckel und Alter
 
 **Wo:** KPVG (BR 542.100) Art. 8 Abs. 2–4; VOzKPVG (BR 542.120) Art. 17, 22; Wegleitung IPV 2026.
@@ -396,6 +347,192 @@ keine; die App zeigt darum auch kleine Beträge.
 
 **Stand:** GR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 lagen am 28.09.2026 nicht vor;
 ab 01.01.2027 zeigt die App für GR keinen Betrag mehr.
+
+---
+
+## 11 · Amt für Gesundheit Thurgau — wo findet eine Person ihre «einfache Steuer zu 100 %»?
+
+**Wo:** TG KVV (RB 832.10) § 14; Merkblatt «Information zur Prämienverbilligung 2026».
+
+Der Kanton knüpft die Prämienverbilligung an die einfache satzbestimmende Steuer zu 100 % per
+1. Januar (provisorische Steuerdaten des Vorjahres), nicht an das Einkommen. Die App kennt diese
+Zahl nicht und zeigt darum keinen Betrag, sondern die Ansätze.
+
+**Frage 1:** Auf welchem Dokument steht diese Zahl für die versicherte Person (provisorische
+Steuerrechnung, Veranlagungsverfügung, Steuerportal)? Dann könnte die App gezielt danach fragen.
+
+**Frage 2:** Junge Erwachsene, die sich **nicht** in Ausbildung befinden: gelten für sie die
+Kategorien A–C wie für Erwachsene?
+
+**Stand:** TG ist für 2026 belegt und gebaut, zeigt bewusst keine Zahl (Entwurfs-PR, K31).
+
+---
+
+## 14 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
+
+*Aufgenommen 28.09.2026 beim Einbau von TI. Entwurf — **nicht gesendet**.*
+
+**Wo:** LCAMal (RL 853.100) Art. 31, 32a, 37; RLCAMal (RL 853.110) Art. 17, 18; Decreto RL 870.130;
+Istruzioni RIPAM 2026.
+
+**Frage 1 — RDM:** Art. 32a nennt «50% del limite di fabbisogno, senza computo della pigione, ai sensi
+della Laps». Ist das für eine Einzelperson 2026 die «soglia d'intervento» nach Laps Art. 10 und Decreto
+870.130, also 18'709 (RDM = 3,8 × 50 % × 18'709 = 35'547.10)? Die Istruzioni nennen 18'709 als «limite di
+fabbisogno esistenziale», RLCAMal Art. 18 regelt das Jahr — wörtlich gleichgesetzt ist es nirgends.
+
+**Frage 2 — Berufsauslagen:** Ist die Pauschale von 4'000 für jede UR mit einer hauptberuflich
+angestellten Person fest, oder zählt der tatsächliche Abzug nach LT, höchstens 4'000?
+
+**Frage 3 — Kinder:** Wie wird nach RLCAMal Art. 17 Abs. 2 aufgeteilt, wenn die UR-Verbilligung 80 % des
+PMR der Minderjährigen übersteigt — erhalten diese genau 80 % und die übrigen Personen den Rest nach PMR?
+Davon hängen der Deckel (Art. 37 Abs. 3) und der Mindestbetrag je Person (Art. 21) ab.
+
+**Frage 4 — Ziffer 10.3:** Die Istruzioni nennen für die Sozialabzüge (CS) die Ziffern «10.1, 10.2 e
+10.3» der Veranlagung. Ist 10.3 die Säule 3a? LCAMal Art. 31 Abs. 1 lit. d zählt die CS abschliessend
+auf («AVS, AI, IPG, AD, AINP, LPP») — die App rechnet darum ohne 3a-Abzug; zieht das IAS sie ab, liegt
+die Zahl für 3a-Sparende zu tief.
+
+**Stand:** TI ist für 2026 für Alleinstehende gebaut (Entwurfs-PR, K31); Haushalte mit Kindern und Paare
+zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüttert.
+
+---
+
+## 15 · Service de l'assurance-maladie (SAM) Genève — Deckel je Person, Familienzulagen, Kind aus dem Vorjahr, Rundung
+
+*Nummer: zuerst 8, dann 9, dann 10 — nach den Merges von UR (#464), NE (#478) und GR (#467) mit Nummer 15 festgelegt (Koordination; 11 = TG, 14 = TI). Eine parallele Sitzung nummerierte GE zwischenzeitlich als 12 — der Block ist hier zusammengeführt.*
+
+*Aufgenommen 28.09.2026 beim Einbau von GE, nachgeführt am Abend nach Fach-, Rechtsprüfung und Abgleich.
+Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Gruppengrenzen (Art. 21 LaLAMal), Beträge 2026 (Barème «BAREME SUBSIDES 2026»,
+Communiqué des Conseil d'Etat vom 5.11.2025) und die Untergrenzen für den Antrag (Tabelle des SAM
+auf ge.ch) stehen vollständig; jede Zelle des Barème rechnen wir nach. Vier Punkte bleiben.
+
+~~**Frage 1 — Arrêté d'indexation 2026:** Wo ist der Arrêté publiziert?~~ ⟨**erledigt 28.09.2026 abends:**
+Communiqué hebdomadaire du Conseil d'Etat vom 5.11.2025, «Indexation des subsides d'assurance-maladie
+pour 2026» — Erwachsene 8,7 %, junge Erwachsene 5,3 %, Kinder 10,9 %, Basis 2024, mit Tabelle aller
+Beträge. Damit sind auch die Gruppe-9-Beträge 67 und 106 erklärt; ein Einheitssatz hätte 66 und 109
+ergeben.⟩
+
+~~**Frage 2 — Untergrenze für Alleinerziehende:** Paar-Zeile (20 000 + 3 000) oder Zeile «assuré seul»
+(15 000 + 3 000)?~~ ⟨**erledigt 28.09.2026 abends:** ge.ch, «Revenus 2024 (RDU 2026) particulièrement bas»
+(Stand 18.09.2026): «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants
+27'000 · Couple avec 1 enfant 23'000». Die App rechnete am Nachmittag mit 23'000 — korrigiert.⟩
+
+**Frage 3 — Deckel Art. 22 al. 4 LaLAMal:** «Le montant des subsides accordés ne peut dépasser
+le montant de la prime effective de l'assuré.» Wir lesen das **je versicherte Person** und
+begrenzen den Erwachsenenbetrag auf die erfasste Prämie der erwachsenen Person; die
+Kinderbeträge (132 / 67) begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind. Ist das
+die Praxis des SAM?
+
+**Frage 4 — Familienzulagen im RDU:** LRDU Art. 4 al. 1 lit. a verweist auf LIPP Art. 18, und
+dessen al. 1 zählt «les allocations» zum Erwerbseinkommen. Sind damit auch die Kinder- und
+Ausbildungszulagen gemeint (wie im Bundesrecht, sie stehen auf dem Lohnausweis)? Die App rechnet
+sie heute in keinem Kanton; ein Rahmen-Umbau ist geplant und braucht diese Antwort für Genf.
+
+**Frage 5 — Kind aus dem Vorjahr:** Art. 13C RaLAMal regelt den Fall, dass die Familie «en cours
+d'année» wächst. Gilt der schriftliche Antrag auch für ein Kind mit **Jahrgang 2025**, das in der
+Veranlagung 2024 noch nicht steht, im Anspruchsjahr 2026 aber schon da war — oder erfasst es
+der SAM automatisch aus den Zivilstandsdaten? Bis zur Antwort warnt die App in beiden Fällen.
+
+**Frage 6 — Rundung:** Wird der RDU für die Gruppenzuordnung auf ganze Franken gerundet? Wir
+vergleichen ungerundet (30'000.50 liegt über 30'000).
+
+**Stand:** GE ist für 2026 gebaut (Entwurfs-PR #469, K31). Das Barème 2027 war am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
+
+---
+
+## 17 · Ausgleichskasse Obwalden — Jahrgang 2008, Mindestbetrag, Stufen und die Grenze mit Kindern
+
+*Aufgenommen 28.09.2026 beim Einbau von OW. Entwurf — **nicht gesendet**.*
+
+*Nummer 17 (28.09.2026 spätabends, vorher 9): 9 ist NE, 10 GR, 11–15 reserviert, 16 NW.*
+
+**Worum es geht:** Selbstbehalt 2026 (KRB GDB 851.12), Richtprämien (Merkblatt 2026) und die
+Rechenregeln (EV KVG GDB 851.11) sind gelesen; die App rechnet danach. Ein durchgerechnetes
+Beispiel mit Franken-Ergebnis haben wir nicht gefunden. Fünf Punkte lesen wir nicht eindeutig.
+
+**Frage 1 — Jahrgang 2008:** EV Art. 5 Abs. 2 zählt als Kind, wer am 1. Januar 18 oder jünger ist;
+das Merkblatt 2026 lässt «Jugendliche (ab Jahrgang 2008)» einen eigenen Antrag stellen. Zählt ein
+Kind mit Jahrgang 2008 im Antrag der Eltern mit (Richtprämie 1'380, Mindestanspruch 80 %)? Die App
+zeigt bis zur Antwort keinen Betrag.
+
+**Frage 2 — Mindestbetrag Art. 14 Abs. 6:** «Beiträge unter Fr. 100.–» — gilt das für den ganzen
+Anspruch der Verfügung oder je Person/Versicherer? Die App prüft die Summe.
+
+**Frage 3 — Steigerung des Selbstbehalts:** «pro Fr. 100.– … um je 0,01 Prozent» — stetig (wie der
+Online-Rechner) oder in ganzen 100er-Stufen? Unterschied höchstens rund 5 Franken im Jahr.
+
+**Frage 4 — Grenze mit Kindern:** Art. 7 Abs. 2 sagt «erhöht sich das anrechenbare Einkommen um
+Fr. 25 000.–»; Merkblatt und Rechner lesen es als Grenze 75'000. Ist das so gemeint?
+
+**Frage 5 — Rundung und Aufteilung:** Art. 14 Abs. 4 rundet «auf fünf Rappen» auf. Gilt das je
+Person (nach der Aufteilung Art. 14 Abs. 2) oder für den ganzen Betrag?
+
+**Frage 1b — Jahrgang 2007:** Diese Personen sind am 1. Januar 2026 18 Jahre alt, nach EV Art. 5
+Abs. 2 also noch Kind (Richtprämie 1'380); das Merkblatt führt sie unter «Junge Erwachsene mit
+Jahrgang 2001 bis 2007» (3'570). Welche Richtprämie gilt? Die App rechnet den Fall heute nicht.
+
+**Frage 6 — Rahmen 9–12 % (EG KVG Art. 2 Abs. 2 seit 01.04.2026):** Der Kantonsratsbeschluss vom
+26.03.2026 (GDB 851.12) lässt den Selbstbehalt ohne Obergrenze steigen; ab einem anrechenbaren
+Einkommen von 60'000 liegt er über 12 %. Seit dem 1. April 2026 nennt das Gesetz aber einen Rahmen
+«zwischen 9,0 und 12,0 Prozent», ohne Übergangsbestimmung. Gilt dieser Rahmen für die Verfügungen
+zum Anspruchsjahr 2026? Betroffen sind Haushalte mit Kindern und anrechenbarem Einkommen zwischen
+60'000 und 75'000; der Unterschied beträgt bis rund 1'125 Franken im Jahr. Bis zur Antwort zeigt die
+App dort keinen Betrag, wo es darauf ankommt.
+
+**Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
+zeigt die App für OW keinen Betrag.
+
+---
+
+## 21 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle
+
+*Aufgenommen 28.09.2026 beim Einbau von BS (K31). Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Tabelle und Beiträge 2026 stehen vollständig in Anhang 2 der KVO (SG 834.410),
+das Einkommen im Harmonisierungsgesetz (SoHaG, SG 890.700) und seiner Verordnung (SoHaV,
+SG 890.710). Das Berechnungsbeispiel des ASB (4 Personen, 62'000 → Gruppe 5) rechnen wir Zahl
+für Zahl nach. Offen bleiben Punkte, die die App nur mit einer eigenen Annahme rechnen könnte.
+
+**Frage 1 — Gruppe 09, Erwachsene mit alternativem Modell:** Anhang 2 der KVO nennt **240**, die
+Beitragstabelle «Einkommensgruppen, -grenzen und IPV-Beiträge ab 1. Januar 2026» **230**. Wir
+folgen der Verordnung (240 ist auch der Abstand von 30 Franken, den alle anderen Gruppen haben).
+Welcher Betrag wird ausbezahlt?
+
+**Frage 2 — hypothetisches Einkommen:** SoHaV § 24 Abs. 2 lautet: «Als hypothetisches
+Erwerbseinkommen wird die Differenz (in Prozenten) zwischen der effektiven Erwerbstätigkeit und dem
+in Abs. 1 genannten Mindesterwerbstätigkeitsgrad (80 bzw. 160 Prozent) angerechnet. 100 Prozent
+entsprechen dabei einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» Sind die
+Wochenstunden erfasst, rechnet die App das Pensum als Stunden ÷ 42 und rechnet die Differenz zu
+80 % an (21 Std. → 50 % → 30 % × 36'000 = 10'800). Sind sie nicht erfasst, zeigt sie unter einem
+Erwerbseinkommen von 28'800 keinen Betrag (ausser über 60 oder mit einem Kind unter 16) und nennt
+darüber die 80-%-Annahme bei der Zahl. Drei Rückfragen: Mit welcher Wochenstundenzahl setzen Sie
+100 % an? Gibt es eine Praxis bei Vollzeit mit einem Lohn unter 28'800? Und gilt «das 60. Altersjahr
+überschritten» (§ 23 lit. a) ab dem 60. oder ab dem 61. Geburtstag?
+⟨korrigiert 28.09.2026 nach der Fachprüfung: hier stand «Nach SoHaV § 24 wird Alleinstehenden unter
+80 % die Differenz zu 36'000 netto angerechnet» — das gab den Wortlaut falsch wieder (angerechnet
+wird die Differenz in PROZENTEN, nicht bis 36'000 aufgefüllt), und die Wochenstunden kannte die
+App sehr wohl.⟩
+
+**Frage 3 — Gruppengrenzen:** § 22 Abs. 1 KVO gewährt Beiträge, wenn das Einkommen die
+Leistungsgrenze «nicht übersteigt». Gilt dasselbe für die Grenzen zwischen den Gruppen — gehört
+ein Einkommen von genau 23'125 (1 Person) zu Gruppe 01?
+
+**Frage 4 — Zuschlag für alternative Modelle (§ 21 Abs. 1bis KVO):** Das ASB «kann die für den
+Zuschlag zu berücksichtigenden Versicherungsmodelle von einem Mindestrabatt … abhängig machen».
+Gibt es diesen Mindestrabatt 2026, und wie hoch ist er? Das Merkblatt 01.2026 nennt keinen. Die App
+rechnet bei erfasstem Hausarzt-, HMO-, Telmed- oder Apothekenmodell mit Zuschlag und sagt «sofern die
+Police eingereicht ist; das Amt kann einen Mindestrabatt verlangen».
+
+**Frage 5 — Alter:** KVO und SoHaV nennen für die Altersklassen keinen Stichtag. Welcher Zeitpunkt
+entscheidet für eine Person, die im Anspruchsjahr 26 wird? Wir zeigen für diesen Jahrgang derzeit
+keinen Betrag.
+
+**Stand:** BS ist für 2026 gebaut (Entwurfs-PR, K31). Die KVO-Fassung ab 01.01.2027
+(Beschluss 15.09.2026) ist publiziert, trägt aber noch den Anhang 2 vom 21.10.2025 — die
+Beiträge 2027 stehen aus. Ab 01.01.2027 zeigt die App für BS keinen Betrag mehr.
 
 ---
 

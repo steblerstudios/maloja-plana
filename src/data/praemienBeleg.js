@@ -17,7 +17,7 @@
 //
 // Was abgezogen wird, entscheidet allein data/ipvAbzug.js — hier nur Darstellung und Deckel.
 import { calculateIPV } from '../config/cantonalData.js';
-import { ipvAbzug, IPV_ABZUG_GRUND } from './ipvAbzug.js';
+import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './ipvAbzug.js';
 
 export function praemienBelegState(data) {
   const canton = data?.basis?.canton || '';
@@ -48,7 +48,7 @@ export function praemienBelegState(data) {
     return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false };
   }
   if (abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI) {
-    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: 'ipv.luFristNichtAbgezogen', noteParams: abzug.frist };
+    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: fristHinweisKey(ipv), noteParams: abzug.frist };
   }
   if (abzug.grund === IPV_ABZUG_GRUND.GESUCH_NOETIG) {
     return { show: true, mode: 'gesuch', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: ipv.gesuchNichtAbgezogenKey || 'ipv.orientierungOffen' };
