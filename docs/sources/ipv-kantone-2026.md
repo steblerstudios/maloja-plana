@@ -921,6 +921,29 @@ auf 1'000 (Art. 55 Abs. 3 StG, Wirkung < 13 Franken im Jahr).
 Rundungsrichtung · Aufteilung ausserhalb des Mehr-Versicherer-Falls · Stichtag für das Alter
 (Jahrgang 2000).
 
+### Nachtrag 28.09.2026, abends — Fachprüfung PR #464 umgesetzt
+
+- **Unterhaltsbeiträge (W1):** Art. 7 Abs. 2 lit. c zählt sie unter den Abzügen auf (Rechenblatt
+  Zeile 25, Steuerziffern 2540–2560). Die App kennt `finanzen.alimentePaid` (monatlich) und zieht
+  seither 12 × diesen Betrag ab, **vor** dem Boden 0 der Nettoeinkünfte (R28), der Vermögensanteil
+  kommt danach dazu. Vorher: 1'000/Monat → 1'020 Fr. im Jahr zu wenig.
+- **Gründe ohne Zahl (W3):** Jahrgang 2000 → `offenGrund.stichtagAlter`; 19–25 → `offenGrund.ausbildung`
+  (Art. 4 Abs. 6: junge Erwachsene werden eigenständig gerechnet, der Mindestanspruch hängt an der
+  Ausbildung am 1. Januar, Formular 2026 Frage 4). Vorher las man «Geburtsdatum fehlt» und «mit dem
+  Einkommen der Eltern» — beides für Uri falsch.
+- **Fristen (W4):** `vorbehaltUR` nennt den Antrag auf Neuberechnung bis 31. Dezember des
+  Anspruchsjahres (Art. 7 Abs. 3, Art. 11 Abs. 1, Formular «Anmeldefrist: 31. Dezember 2026»);
+  `urAutomatisch` nennt die Quellenbesteuerten (Art. 11 Abs. 2: 30. April; Art. 7 Abs. 4: 75 %).
+- **Kein Deckel ist belegt (K1):** KVV Art. 106c Abs. 5bis (in Kraft seit 01.01.2024), gelesen am
+  28.09.2026 im Fedlex-Filestore (`…/eli/cc/1995/3867_3867_3867/20260101/de/pdf-a/…` → 200, PDF
+  1'342'590 B; derselbe Pfad mit `20260102` → HTML-Hülle 77'151 B): Versicherer zahlt die Differenz
+  aus; kantonale Deckel vorbehalten. `KEIN_PRAEMIENDECKEL.UR` sagt das jetzt, Frage 8/1 erledigt.
+- **Vorjahreswert Selbstbehalt (K5):** die Medienmitteilung vom 18.12.2025 nennt für 2025 «9,75 %»,
+  die vom 02.07.2026 «9,25 Prozent im Vorjahr». Wert 2026 (8,5 %) in beiden gleich; der Wert 2025
+  bleibt widersprüchlich und wird nirgends verwendet.
+- **Nicht geändert (W2, Rahmen):** `rohesEinkommenJahr` liest `alimenteReceived`, `familienzulagen`,
+  `incomeType` nicht — Entscheid für alle Kantone bei Stebler Studios.
+
 ---
 
 ## SZ — Schwyz

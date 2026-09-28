@@ -249,10 +249,15 @@ in der Medienmitteilung vom 18.12.2025 und im Berechnungsformular 2026 der SVS; 
 das Formular Zelle für Zelle nach. Ein durchgerechnetes Beispiel mit Zahlen haben wir nicht
 gefunden. Vier Punkte stehen weder im Reglement noch im Formular eindeutig.
 
-**Frage 1 — Deckel auf die eigene Prämie:** Das Reglement begrenzt die Verbilligung nur bei
+~~**Frage 1 — Deckel auf die eigene Prämie:** Das Reglement begrenzt die Verbilligung nur bei
 EL-Beziehenden auf die tatsächliche Prämie (Art. 4 Abs. 4). Gilt für alle anderen eine
 Begrenzung, wenn die eigene Prämie (z. B. mit hoher Franchise) tiefer ist als der errechnete
-Betrag? Die App deckelt heute **nicht** (wie in St.Gallen, Abschnitt 5).
+Betrag? Die App deckelt heute **nicht** (wie in St.Gallen, Abschnitt 5).~~
+⟨**erledigt 28.09.2026, belegt** (Fachprüfung, K1): KVV Art. 106c Abs. 5bis (SR 832.102, in Kraft
+seit 01.01.2024) — der Versicherer «bezahlt der versicherten Person den Differenzbetrag innerhalb
+von 60 Tagen nach der Meldung der Prämienverbilligung durch den Kanton aus. Kantonale Regelungen,
+wonach die Prämie höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben
+vorbehalten.» Uri hat keine solche Regelung. Die Frage muss nicht gestellt werden.⟩
 
 **Frage 2 — Rundung:** Art. 14 Abs. 3: «auf fünf Rappen zu runden». Wird kaufmännisch gerundet
 (83.33 → 83.35, 83.42 → 83.40) oder immer auf? Die App rundet kaufmännisch.
