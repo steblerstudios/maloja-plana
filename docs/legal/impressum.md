@@ -1,5 +1,9 @@
 # Impressum — Maloja Plana
 
+> **Nicht die verbindliche Fassung.** Verbindlich sind die veröffentlichten Texte: `malojaplana.ch/rechtliches/`
+> für Website und Erklärseiten, «Impressum» in der App (`src/i18n/*.js`, `legal.imprint`) für die Anwendung.
+> Diese Datei ist Arbeitsfassung und Herkunftsnachweis (festgehalten 28.09.2026, Schutz-Durchgang).
+
 *Angeglichen an die App (`legal.imprint`) und an `/rechtliches/` am 24.09.2026. Bis dahin stand
 hier «Gemäss Art. 3 Abs. 1 lit. s UWG» — eine Vollständigkeits-Behauptung, die die öffentliche
 Seite seit dem 23.09. nicht mehr trägt (Frage F0, `k48-fragen-juristin.md`).*

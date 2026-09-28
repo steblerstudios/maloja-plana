@@ -265,7 +265,7 @@ export const SONDERSEITEN = [
       'Chi sta dietro Maloja Plana, quali dati vengono raccolti alla consultazione di queste pagine e per che cosa i calcolatori espressamente non rispondono.',
     brotkrume: 'Note legali',
     vorspann:
-      'Questa pagina vale per malojaplana.ch e per le pagine esplicative pubbliche. Per l’applicazione stessa vale inoltre l’informativa dettagliata sulla protezione dei dati, che figura nell’applicazione sotto «Protezione dei dati e note legali» — anch’essa senza codice d’accesso.',
+      'Questa pagina vale per malojaplana.ch e per le pagine esplicative pubbliche. Per l’applicazione stessa vale inoltre l’informativa dettagliata sulla protezione dei dati, che figura nell’applicazione sotto «Protezione dei dati e note legali» — anch’essa senza codice d’accesso. Fanno fede le versioni pubblicate: questa pagina per malojaplana.ch e le pagine esplicative, il testo nell’applicazione per l’applicazione. Le versioni di lavoro nel codice sorgente pubblico (docs/legal) sono bozze e documentazione d’origine, non la versione vincolante.',
     abschnitte: [
       {
         titel: 'Fornitrice',
