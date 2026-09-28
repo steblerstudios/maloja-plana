@@ -1225,10 +1225,10 @@ App: maxIncome 45'000, subsidySingle 2'250, linearer Abbau. Belegt ist für eine
 
 ## GL — Glarus
 
-**Beurteilung:** teilweise
+**Beurteilung:** teilweise ⟨überholt 28.09.2026: gebaut (PR #487), Richtprämien amtlich gelesen — siehe «Korrekturen» unten⟩
 **Modell (kurz):** Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie
 **Zuständig / Weg:** Kantonale Steuerverwaltung Glarus, Fachstelle IPV. Antrag jedes Jahr (Papier oder my.gl.ch), Frist 31. Januar 2026; später eingereichte Anträge gelten erst ab dem Folgemonat. EL-/Sozialhilfebeziehende ohne Antrag.
-**Gültigkeit:** 2026 definitiv für Modell und Sätze (PVV Stand 01.01.2020, Merkblatt 2026); Richtprämien 2026 in Franken nicht in einer kantonalen Quelle gelesen (nur abgeleitet)
+**Gültigkeit:** 2026 definitiv für Modell und Sätze (PVV Stand 01.01.2020, Merkblatt 2026); Richtprämien 2026 in Franken nicht in einer kantonalen Quelle gelesen (nur abgeleitet) ⟨überholt 28.09.2026: amtlich publiziert, Fachstelle IPV 18.11.2025, 5'447 / 3'896 / 1'500⟩
 
 ### Rechenmodell
 > «Die Prämienverbilligung entspricht der Differenz zwischen Richtprämie und Selbstbehalt, höchstens aber der effektiven Jahresprämie für die obligatorische Krankenpflegeversicherung der anspruchsberechtigten Person.» — EG KVG Art. 14 Abs. 1, Quelle [2]
@@ -1273,7 +1273,7 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat, Hinweis «automatisch aus
 ### Offen / nicht gefunden
 - ~~Kantonal publizierte Richtprämien 2026 in Franken (laut Merkblatt im Amtsblatt, im Online-Schalter und in der Zeitung «Fridolin»): Die HTML-Seiten von gl.ch antworten auf Abruf mit **HTTP 403** («Zugriff verweigert»), auch https://www.gl.ch/verwaltung/finanzen-und-gesundheit/steuern/individuelle-praemienverbilligung-ipv.html/502. Nur die PDFs waren lesbar; das Anmeldeformular 2026 enthält keine Beträge.~~ ⟨korrigiert 28.09.2026: gl.ch antwortet wieder mit HTTP 200. Die Richtprämien 2026 stehen im Online-Schalter der Steuerverwaltung (Ordner «IPV Prämienverbilligung / 2026», Dokument «03 Richtprämien 2026», Fachstelle IPV, 18.11.2025): **5'447 / 3'896 / 1'500** — amtlich gerundet, die Ableitung 5'446.80 unten ist damit überholt.⟩
 - ~~Stufenlogik: … nicht durch einen Rechner oder ein Rechenbeispiel bestätigt.~~ ⟨korrigiert 28.09.2026: bestätigt durch die amtlichen Berechnungsbeispiele 2026 (35'000 × 9 % = 3'150; 65'000 × 12 % = 7'800) — der Satz gilt auf das ganze Einkommen.⟩
-- EG KVG ist in der aktuellen Fassung «in Kraft seit: 01.01.2023 bis: 31.12.2026»; eine Umstellung auf automatische IPV (Landsgemeinde 2026) ist in Pressemitteilungen von gl.ch angekündigt, aber wegen 403 nicht gelesen. Für 2027 neu prüfen.
+- EG KVG ist in der aktuellen Fassung «in Kraft seit: 01.01.2023 bis: 31.12.2026»; eine Umstellung auf automatische IPV (Landsgemeinde 2026) ist in Pressemitteilungen von gl.ch angekündigt, aber wegen 403 nicht gelesen. Für 2027 neu prüfen. ⟨gelesen 28.09.2026: Version 2686 («Stand 1. Januar 2028») Art. 17 Abs. 1 «stellt die zuständige kantonale Verwaltungsbehörde eine Verfügung zu» — automatisch erst ab 2028; 2027 (Version 2683) bleibt beim Antrag. Der 403 kam von der WAF-Drosselung von gl.ch (ohne Browser-Kennung bzw. nach rund zehn Abrufen), nicht von fehlenden Seiten.⟩
 - Der Grenzbetrag 85'000 steht im Merkblatt nur für Kinder; das Gesetz knüpft beide Mindestansprüche (Kinder und junge Erwachsene in Ausbildung) daran.
 
 ### Quellen
@@ -1336,7 +1336,9 @@ und Renteneinkommen × 12 (≈ Total der Einkünfte; die 3a bleibt drin — `SAE
 + 10 % des erfassten Vermögens über 76'300 (mit Kindern 152'600 + 25'400 je Kind) − 5'000 je Kind.
 Selbstbehalt = Satz der Stufe × ganzes Einkommen; Betrag = Summe der Richtprämien − Selbstbehalt,
 verteilt im Verhältnis der Richtprämien, Anteil der erwachsenen Person auf ihre Prämie gedeckelt,
-unter 12 je Person nichts. Keine Prämienregion, keine publizierte Einkommensgrenze. Nach dem
+unter 12 je Person nichts (nach dem Deckel). ⟨28.09.2026, Fachprüfung #487: bezahlte Alimente × 12 werden
+abgezogen (PVV Art. 3 Abs. 1 lit. c «Alimente für die geschiedenen oder getrennt lebenden Ehepartner und
+für minderjährige Kinder», selbst gelesen, Version 2130); die 12-Franken-Regel gilt jetzt nach dem Deckel.⟩ Keine Prämienregion, keine publizierte Einkommensgrenze. Nach dem
 31. Januar setzt die App `anmeldefristVorbei` (Budget und KK-Last-Karte ziehen dann nichts ab und
 nennen den Glarner Satz `ipv.glFristNichtAbgezogen`).
 
@@ -1345,7 +1347,12 @@ Stufengrenzen inklusive (Frage 23.2) · Vermögensfreibetrag ohne IV-Zuschlag (F
 
 **Bewusst nicht gebaut:** Paare, eingetragene Partnerschaft, Konkubinat (Gesamtanspruch); junge
 Erwachsene in Ausbildung und Kinder, die im Anspruchsjahr 18 werden; Quellenbesteuerte; EL- und
-Sozialhilfebeziehende (von Amtes wegen); Liegenschaften (Unterhalt +, Eigenmietwert −); Alimente.
+Sozialhilfebeziehende (von Amtes wegen); Liegenschaften (Unterhalt +, Eigenmietwert −); ~~Alimente~~
+⟨korrigiert 28.09.2026: bezahlte Alimente sind gebaut⟩. Mit Richtung (steht auch in `vorbehaltGL`):
+erhaltene Alimente und Familienzulagen nicht eingerechnet — EG KVG/PVV nennen sie nicht (Frage 23.4) —
+→ Zahl ZU HOCH · Schulden nicht vom Vermögen abgezogen (StG Art. 45: Reinvermögen) → ZU TIEF ·
+Kinderanteil nicht auf die Kinderprämie gedeckelt → ZU HOCH · Zuzug im Anspruchsjahr (EG KVG Art. 11
+Abs. 2: Berechtigung erst ab dem Folgejahr) → ZU HOCH · IV-Freibetrag, brutto erfasster Lohn → ZU TIEF.
 
 ---
 
