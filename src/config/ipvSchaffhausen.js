@@ -78,7 +78,8 @@
 //     zu tief, bei günstigem Kassenmodell zu hoch.
 //   · Aufteilung «mit Kindern»: der Kinderanteil kann über die Kinderprämie steigen (bei anrechenbarem
 //     Einkommen unter ≈ 31'700); der Überschuss geht nach § 17 Abs. 2 [1] zurück — der Betrag ist dann
-//     bis gegen 400 Fr./Kind/Jahr zu hoch.
+//     um mehrere hundert Fr./Kind/Jahr zu hoch, umso mehr, je tiefer die Kinderprämie. ⟨28.09.2026:
+//     hier stand «bis gegen 400» — das ist keine Obergrenze, der Überschuss wächst mit tieferer Prämie.⟩
 //   · Mindestanspruch nur mit Anspruch nach § 10: gilt das Bundesrecht (Art. 65 Abs. 1bis KVG) über
 //     den Nullpunkt hinaus, sagt die App Familien knapp darüber zu Unrecht «kein Anspruch» — zu tief.
 //

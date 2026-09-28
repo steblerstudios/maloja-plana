@@ -99,7 +99,11 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
     expect(de.vorbehaltSH).toMatch(/eher zu tief/);
     expect(de.vorbehaltSH).toMatch(/Unterhaltsbeiträge/);
     expect(de.shKeinAnspruch).toMatch(/kann darum ein Anspruch bestehen/);
-    expect(de.shKinderVorbehalt).toMatch(/400 Franken/);
+    // Richtung statt Zahl: der Überschuss über der Kinderprämie hat keine feste Obergrenze (28.09.2026).
+    expect(de.shKinderVorbehalt).toMatch(/zu hoch, umso mehr, je tiefer die Kinderprämie/);
+    expect(de.shKinderVorbehalt).not.toMatch(/\d+ Franken je Kind/);
+    // FRAGEN § 24 ist ein Entwurf, nicht gesendet.
+    expect(de.shKinderVorbehalt).toMatch(/Frage an die SVA Schaffhausen ist vorbereitet/);
     expect(render(profil(4000, { children: [{ age: 5 }] }))).toContain('ipv.shKinderVorbehalt');
     expect(render(profil(3000))).not.toContain('ipv.shKinderVorbehalt');
   }, 30000);

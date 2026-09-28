@@ -483,7 +483,8 @@ zu Unrecht «kein Anspruch» (zu tief, 1'109.60 bzw. 1'036 je Kind).
 
 **Frage 7 — Deckel beim Kind (Fachprüfung #471 W3):** Wird der Anteil eines Kindes auf seine eigene
 Prämie begrenzt (§ 17 Abs. 2)? In der Lesart «Rest mit Kindern verteilt» kann er über der
-Kinderprämie liegen — die App wäre dann bis gegen 400 Franken je Kind und Jahr zu hoch.
+Kinderprämie liegen — die App wäre dann um mehrere hundert Franken je Kind und Jahr zu hoch, umso mehr,
+je tiefer die Kinderprämie.
 
 **Frage 8 — Entlastungsabzug und Säule 3a (Fachprüfung #471 K8):** Wird der Entlastungsabzug am
 steuerlichen Reineinkommen (nach dem 3a-Abzug) gemessen oder am Einkommen nach der Aufrechnung nach
