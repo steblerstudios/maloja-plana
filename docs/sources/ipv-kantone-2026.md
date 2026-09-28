@@ -2918,3 +2918,24 @@ nicht den kantonalen, und kein bestimmtes Jahr).
 - Weg: Prüfung von Amtes wegen nach der Veranlagung 2024, sonst Gesuch bis 31.12.2026 — `noteKey` von «Antrag beim Service de l'action sociale» auf `ipv.noteAutoTaxData` korrigiert.
 - 2027: am 28.09.2026 nicht publiziert (das Arrêté gilt nur für 2026).
 
+#### Nachtrag nach der Fachprüfung #483 (28.09.2026, Verdikt «mergen»)
+
+- **Riegel:** Nach dem Jahres-Riegel zeigt die App direkt den Jura-Grund — auch für Paare, ohne Geburtsdatum,
+  mit Kind über 18 oder viel Vermögen. Vorher stand dort ein Eingabefeld «Geburtsdatum», nach dem trotzdem
+  keine Zahl kam, und die Jura-Auskunft fehlte. Die Riegel stehen als `juRiegel` für den Tag, an dem die Zahl kommt.
+- **Vermögen:** ECAS, «RPI 2026 – Premier critère d'éligibilité : seuil de fortune» (gelesen 28.09.2026):
+  «La fortune entrant en considération peut correspondre aux titres, comptes bancaires, actions en bourse,
+  actions et parts sociales non cotées …, soit les éléments figurant au chiffre 740 de la taxation fiscale
+  jurassienne.» → `juRiegel` vergleicht nur Wertschriften + Bankguthaben, nicht Bargeld/Fahrzeuge; eigener
+  Grund `vermoegenJU` (Text folgt, wenn der Riegel angeschlossen wird). Genau 150'000: Ordonnance «supérieure à»
+  vs. ECAS «inférieure à» — benannt, der Code folgt der Ordonnance.
+- **Text** (5 Sprachen): Entscheid **oder Fragebogen** (gilt erst ausgefüllt und unterschrieben als Antrag,
+  Ordonnance Art. 15 al. 2) · Gesuch muss **vor dem 31. Dezember eingetroffen** sein (ECAS «devra nous parvenir
+  avant le 31 décembre»; Art. 22 al. 8 «au plus tard jusqu'au 31 décembre») · Berechnung auf der
+  Vorjahres-Veranlagung bei tieferem Einkommen, bei Stellenverlust auch unterjährig (Art. 22 al. 1/2; ECAS
+  «2025 sur demande en cas de baisse du revenu déterminant») · amtlich Veranlagte ausgeschlossen (Art. 13 lit. b).
+- **Begründung korrigiert:** AG rechnet ebenfalls mit einer Steuergrösse nach Abzügen. Der Grund für «keine
+  Zahl» ist die gemessene Lücke netto → steuerbar (rund 7'000–10'000, also 7–10 der 27 Erwachsenen-Stufen;
+  bei Alleinerziehenden über 20), nicht «linear gegen Stufen».
+- **Deckel** (Ordonnance Art. 20, höchstens die Jahresprämie) im Modulkopf für später benannt.
+
