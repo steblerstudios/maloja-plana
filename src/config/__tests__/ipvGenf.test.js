@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest';
 import { IPV_GE, ipvGenfRechnen, geGrenzen, geAntragUnter, geBerufskostenPauschale, geRdu } from '../ipvGenf.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
 
@@ -215,12 +215,15 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     await import('../ipvGenf.js');
     await new Promise((r) => setTimeout(r, 0));
   });
+  // Fester Tag vor der Frist (30.11.), damit die Hinweise nicht vom Kalender abhängen. Nur Date
+  // gefälscht — Timer laufen echt (das Laden der Module oben braucht sie).
+  beforeEach(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-09-28T12:00:00')); });
   afterEach(() => { vi.useRealTimers(); });
 
-  const person = ({ monthlyIncome = 0, plz = '1204', city = 'Genève', children = [], dob = '1980-05-01', kkPremium = 500, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, plz = '1204', city = 'Genève', children = [], dob = '1980-05-01', kkPremium = 500, finanzen = {}, basis = {}, wohnen = {} } = {}) => ({
     basis: { canton: 'GE', dateOfBirth: dob, maritalStatus: 'single', household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
-    wohnen: { postalCode: plz, city },
+    wohnen: { postalCode: plz, city, ...wohnen },
     versicherungen: kkPremium != null ? { kkPremium } : {},
   });
 
@@ -232,15 +235,18 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     const r = calculateIPV(person());
     expect(r).toMatchObject({
       belegt: true, eligible: true, amount: 348, annual: 4176, maxAnnual: 4176, reductionPercent: 100,
-      canton: 'GE', jahr: 2026, basisjahr: 2024, vorbehaltKey: 'ipv.vorbehaltGE', jahrOhneRegionKey: 'ipv.jahrGE',
+      canton: 'GE', jahr: 2026, basisjahr: 2024, vorbehaltKey: 'ipv.vorbehaltGE', jahrKey: 'ipv.jahrGE',
     });
     expect(r.region).toBeUndefined();
+    // Das Feld heisst wie in UR/SZ/NE `jahrKey` (Ruling 28.09.2026); der alte Name ist weg.
+    expect(r).not.toHaveProperty('jahrOhneRegionKey');
     expect(r.cantonData.maxIncome).toBe(50000);
     // RDU 0 liegt unter 15 000: der Kanton prüft NICHT automatisch — Antrag mit Nachweis vor dem
     // 30. November (Art. 10 Abs. 4–6, Art. 10A [3]). Für genau die ärmste Gruppe. Und derselbe
     // Bildschirm darf dann nicht «Automatisch» und «Berechtigt» sagen (Rechtsprüfung 28.09.2026).
     expect(r.noteKey).toBe('ipv.geAntragNoetig');
-    expect(r.noteParams).toEqual({ value: 15000, jahr: 2026 });
+    // K2: {value} mit Tausendertrennung (utils/geld.js zahl()).
+    expect(r.noteParams).toEqual({ value: '15’000', jahr: 2026 });
     expect(r.antragNoetig).toBe(true);
     expect(r.cantonData.noteKey).toBe('ipv.geWegAntrag');
   });
@@ -374,7 +380,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
 
   it('Alleinerziehend, 1 Kind, Einkommen 0: 348 + 132 = 480/Monat, «Max.» = Erwachsenengrenze 121 000, Antrag unter 23 000 mit Vorbehalt', () => {
     const r = calculateIPV(person({ children: [{ birthDate: '2015-01-01' }] }));
-    expect(r).toMatchObject({ amount: 480, annual: 5760, maxAnnual: 5760, noteKey: 'ipv.geAntragNoetigKinder', noteParams: { value: 23000, jahr: 2026 }, antragNoetig: true });
+    expect(r).toMatchObject({ amount: 480, annual: 5760, maxAnnual: 5760, noteKey: 'ipv.geAntragNoetigKinder', noteParams: { value: '23’000', jahr: 2026 }, antragNoetig: true });
     // Fachprüfung 28.09.2026: 151 000 ist nur die Grenze des Kinderbeitrags (Gruppe 9).
     expect(r.cantonData.maxIncome).toBe(121000);
   });
@@ -392,7 +398,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
   it('Gruppe 9: über Gruppe 8 nur noch der Kinderbeitrag 67, mit eigenem Hinweis (Art. 21 Abs. 5/7 [2])', () => {
     // 1 Kind: Gruppe 8 endet bei 121 000, Gruppe 9 bei 151 000. 10 500 × 12 = 126 000 − 1 700 = 124 300.
     const r = calculateIPV(person({ monthlyIncome: 10500, children: [{ birthDate: '2015-01-01' }] }));
-    expect(r).toMatchObject({ eligible: true, amount: 67, annual: 804, noteKey: 'ipv.geNurKinder', noteParams: { value: 151000 } });
+    expect(r).toMatchObject({ eligible: true, amount: 67, annual: 804, noteKey: 'ipv.geNurKinder', noteParams: { value: '151’000' } });
     expect(r.cantonData.maxIncome).toBe(121000);
     // Deckel auf die Prämie der erwachsenen Person greift hier nicht — ihr Anteil ist 0.
     expect(calculateIPV(person({ monthlyIncome: 10500, children: [{ birthDate: '2015-01-01' }], kkPremium: 30 })).annual).toBe(804);
@@ -445,6 +451,11 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     ['Kind ab 19 (junge Erwachsene, Art. 21 Abs. 6: nur auf Antrag)', { children: [{ age: 19 }] }, 'geJungeErwachsene'],
     ['Kind Jahrgang 2007 — am 1. Januar 2026 volljährig', { children: [{ birthDate: '2007-12-01' }] }, 'geJungeErwachsene'],
     ['negatives Einkommen', { monthlyIncome: -1000 }, 'einkommenNegativ'],
+    // W2 (Fachprüfung PR #469): Wohneigentum → keine Zahl (Steuerwert unbekannt, brutto ohne Hypothek).
+    ['Wohneigentum mit eingetragenem Wert', { monthlyIncome: 2000, wohnen: { propertyValue: 400000 } }, 'wohneigentumGE'],
+    ['Wohneigentum mit kleinem Wert — auch dann keine Zahl', { monthlyIncome: 2000, wohnen: { propertyValue: 1 } }, 'wohneigentumGE'],
+    ['Hypothek Festzins ohne eingetragenen Wert', { monthlyIncome: 2000, wohnen: { mortgageStatus: 'fixedRate' } }, 'wohneigentumGE'],
+    ['Hypothek variabel ohne eingetragenen Wert', { monthlyIncome: 2000, wohnen: { mortgageStatus: 'variable' } }, 'wohneigentumGE'],
   ])('%s: Orientierung statt Betrag', (_, opts, grund) => {
     const r = calculateIPV(person(opts));
     expect(r).toMatchObject({ belegt: false, eligible: false, amount: null, noteKey: 'ipv.orientierungOffen', offen: grund });
@@ -463,6 +474,22 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ plz: '', city: '' }))).toMatchObject({ eligible: true, amount: 348 });
   });
 
+  it('Wohneigentum: «keine Hypothek» und leerer oder 0-Wert rechnen weiter (W2)', () => {
+    expect(calculateIPV(person({ monthlyIncome: 2000, wohnen: { mortgageStatus: 'no', propertyValue: '' } }))).toMatchObject({ belegt: true, amount: 348 });
+    expect(calculateIPV(person({ monthlyIncome: 2000, wohnen: { propertyValue: 0 } }))).toMatchObject({ belegt: true, amount: 348 });
+  });
+
+  it('B1: kein Genfer Ergebnis trägt noch «noteAutoSam»; die Karte sagt «in der Regel automatisch» oder «Antrag»', () => {
+    const faelle = [person(), person({ monthlyIncome: 2000 }), person({ monthlyIncome: 4500 }),
+      person({ monthlyIncome: 10500, children: [{ age: 5 }] }), person({ children: [{ age: 5 }] })];
+    for (const f of faelle) {
+      const r = calculateIPV(f);
+      expect(JSON.stringify(r)).not.toContain('noteAutoSam');
+      expect(r.cantonData.noteKey).toMatch(/^ipv\.geWeg(Automatisch|Antrag)$/);
+    }
+    expect(CANTONAL_IPV.GE.noteKey).toBe('ipv.geWegAutomatisch');
+  });
+
   describe('Antragsfrist 30. November (RaLAMal Art. 10A [3]) — nur für die Antragsfälle', () => {
     it('vor dem 30.11.: Antrag nötig, Frist läuft — nichts wird als «vorbei» markiert', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-29T12:00:00'));
@@ -473,7 +500,8 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
 
     it('am 30.11. ist es zu spät («avant le 30 novembre»): Frist-Satz und anmeldefristVorbei', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-30T00:00:01'));
-      expect(calculateIPV(person())).toMatchObject({ noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: 15000, jahr: 2026, folgejahr: 2027 }, anmeldefristVorbei: true, antragNoetig: true });
+      expect(calculateIPV(person())).toMatchObject({ noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: '15’000', jahr: 2026, folgejahr: 2027 }, anmeldefristVorbei: true, antragNoetig: true,
+        fristNichtAbgezogenKey: 'ipv.geFristNichtAbgezogen' });
       // der automatische Fall kennt keine Frist
       expect(calculateIPV(person({ monthlyIncome: 2000 })).anmeldefristVorbei).toBeUndefined();
     });
@@ -486,8 +514,10 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
       const kind = [{ birthDate: '2015-01-01' }];
       // Rente 20 000 (keine Pauschale): unter 23 000, über 18 000
       const band = calculateIPV(person({ children: kind, finanzen: { ahvRente: 20000 / 12 } }));
-      expect(band).toMatchObject({ noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: 23000, jahr: 2026, folgejahr: 2027 } });
+      expect(band).toMatchObject({ noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: '23’000', jahr: 2026, folgejahr: 2027 } });
       expect(band.anmeldefristVorbei).toBeUndefined();
+      // B2: wo nichts aus dem Budget genommen wird, braucht es auch keinen Frist-Text dort.
+      expect(band.fristNichtAbgezogenKey).toBeUndefined();
       // Rente 17 000: unter beiden Lesarten
       expect(calculateIPV(person({ children: kind, finanzen: { ahvRente: 17000 / 12 } })).anmeldefristVorbei).toBe(true);
     });
