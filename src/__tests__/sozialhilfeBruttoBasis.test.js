@@ -40,7 +40,7 @@ describe('Sozialhilfe: brutto im Profil wird wie auf dem Dashboard umgerechnet',
     const sh = calculateSozialhilfe(p);
     expect(sh.eligible).toBe(true);                                   // 2700 brutto ≈ 2502 netto < Bedarf
     expect(sozialhilfePegelState(p).mode).toBe('gap');
-    expect(anspruchSignale(p).behoerden || []).toContainEqual({ key: 'sozialhilfe', view: 'sozialhilfe' });
+    expect(anspruchSignale(p).behoerden || []).toContainEqual(expect.objectContaining({ key: 'sozialhilfe', view: 'sozialhilfe' }));
     const html = renderToStaticMarkup(React.createElement(QuickCheck, { palette, t, onNavigate: () => {}, data: p }));
     expect(html).toContain('dashboard.anspruchMoeglich');
   });

@@ -376,7 +376,7 @@ export function generateLebensmappe(data, chapters, t, documents) {
       ${esc(t('lebensmappe.footerCredit'))}
     </div>
 
-    <button class="lm-print-btn" onclick="window.print()">
+    <button class="lm-print-btn" data-druck onclick="window.print()">
       ${esc(t('lebensmappe.printAction'))}
     </button>
   </div>
@@ -704,7 +704,7 @@ export function generateNotfallDossier(data, chapters, t) {
       ${esc(t('notfallDossier.footerCredit'))}
     </div>
 
-    <button class="nd-print-btn" onclick="window.print()">
+    <button class="nd-print-btn" data-druck onclick="window.print()">
       ${esc(t('notfallDossier.printAction'))}
     </button>
   </div>
@@ -1208,7 +1208,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       ${esc(t('behoerdenDossier.footerCredit'))}
     </div>
 
-    <button class="bd-print-btn" onclick="window.print()">
+    <button class="bd-print-btn" data-druck onclick="window.print()">
       ${esc(t('behoerdenDossier.printAction'))}
     </button>
   </div>
