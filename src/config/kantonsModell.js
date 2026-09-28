@@ -52,8 +52,11 @@ export function vermoegenSumme(f) {
 //                        FR: Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13), Codes 4.110–4.140
 //                            (Säule 3a = Code 4.130 der Freiburger Steuererklärung)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
-//   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
-//                        KKVV Art. 6 Abs. 4 lit. i
+//   bisBundesMaximum     BE, SO — nur bis zum bundesrechtlichen Maximum für Unselbständige.
+//                        BE: KKVV Art. 6 Abs. 4 lit. i
+//                        SO: § 69 Abs. 1 lit. e SV (BGS 831.2) — «maximal bis zur Höhe des
+//                            zulässigen Höchstabzuges gemäss Art. 7 Absatz 1 Buchstabe a … BVV 3».
+//                            Dort steht ausdrücklich lit. a, also die Lesart (b) unten (28.09.2026).
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
@@ -139,8 +142,8 @@ export const SAEULE_3A = Object.freeze({
 
   bisBundesMaximum: Object.freeze({
     name: 'bisBundesMaximum',
-    kantone: 'BE',
-    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025)',
+    kantone: 'BE, SO',
+    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025) · SO § 69 Abs. 1 lit. e SV (BGS 831.2, Stand 01.04.2026)',
     // Wortlaut an der Quelle, abgerufen 23.09.2026 aus der bernischen Erlass-Sammlung
     // (https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1):
     //   «Beiträge an die gebundene Selbstvorsorge (Säule 3a) bis zum nach Bundesrecht
