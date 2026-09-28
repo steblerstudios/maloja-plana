@@ -41,7 +41,7 @@ sind. Dieses Dokument ändert keinen Code.
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
 | ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | abbildbar | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
-| SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
+| SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise — **gebaut (PR #SO-PR), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Eckpunkte der linearen Skala nicht publiziert sind (nur «kein Anspruch», wo sicher) | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | abbildbar | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
@@ -1162,7 +1162,7 @@ App: maxIncome 48'000, subsidySingle 2'400, linearer Abbau. Belegt ist für eine
 
 ## SO — Solothurn
 
-**Beurteilung:** teilweise
+**Beurteilung:** teilweise — **in der App gebaut 28.09.2026 (K31), zeigt bewusst keinen Betrag**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000
 **Zuständig / Weg:** Ausgleichskasse Solothurn (AKSO); Antragsformular wird ab Januar 2026 an voraussichtlich Berechtigte versandt (aus Steuerdaten), Rücksendung innert 30 Tagen, sonst verwirkt; Quellenbesteuerte: Antrag bis 31.12. des Anspruchsjahres
 **Gültigkeit:** 2026 definitiv (Parameter-Verfügung Departement des Innern vom 27.01.2026)
@@ -1206,7 +1206,7 @@ Die App führt `maxIncome` 48'000 und `subsidySingle` 2'400 mit linearem Abbau; 
 
 ### Offen / nicht gefunden
 - Ankerpunkte der linearen Eigenanteil-Skala (vermutlich 10 % bei MGE 0 bis 16 % bei 74'000) sind nicht wörtlich publiziert — nur «10% bis 16%» und «linear».
-- Periode der Richtprämien (Monat/Jahr) nicht ausdrücklich genannt; Grössenordnung spricht für Monat.
+- ~~Periode der Richtprämien (Monat/Jahr) nicht ausdrücklich genannt; Grössenordnung spricht für Monat.~~ ⟨geklärt 28.09.2026: Monat — Botschaft SGB 0226/2025, «monatlichen Durchschnittsprämien 2026», siehe Nachprüfung unten⟩
 - Genaue Rechenformel (Summe der Richtprämien des Haushalts × 12 minus Eigenanteil × MGE? Reihenfolge Kinder/junge Erwachsene) nicht wörtlich publiziert. Der AKSO-Online-Rechner (provisorische Berechnung) zeigt nur die Eingabemaske, keine Formel.
 - Keine eigene Vermögensgrenze gefunden; Vermögen wirkt über den 50 %-Anteil im MGE.
 
@@ -1216,6 +1216,67 @@ Die App führt `maxIncome` 48'000 und `subsidySingle` 2'400 mit linearem Abbau; 
 3. Sozialgesetz (SG), BGS 831.1, §§ 86–91, Kanton Solothurn, Fassung in Kraft seit 01.09.2026. https://bgs.so.ch/api/de/versions/5665/pdf_file (Eintrag: https://bgs.so.ch/app/de/texts_of_law/831.1) — abgerufen 16.09.2026
 4. Merkblatt Individuelle Prämienverbilligung (IPV) 2026, Ausgleichskasse des Kantons Solothurn, ohne Datum (2026). https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/Merkblatt-IPV-2026.pdf und Seite https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv — abgerufen 16.09.2026
 5. Medienmitteilung «Anpassungen bei der individuellen Prämienverbilligung», Staatskanzlei Kanton Solothurn, 27.05.2025. https://so.ch/verwaltung/staatskanzlei/medien/medienmitteilung/news/anpassungen-bei-der-individuellen-praemienverbilligung/ — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe.
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf` | 200, 79'771 B, PDF | `…/2099-01-27-Verfuegung-…pdf` → **404** |
+| `https://bgs.so.ch/api/de/texts_of_law/831.2/show_as_json` (SV) · `…/831.1/…` (SG) | 200, 504'482 B · 200, 1'064'584 B | `…/831.29/…` → **404**, 0 B |
+| `https://bgs.so.ch/api/de/versions/5624/pdf_file` (SV) · `…/5665/pdf_file` (SG) | 200, 1'499'179 B · 200, 3'048'634 B | `…/versions/999999/pdf_file` → **404**, 0 B |
+| `https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/Merkblatt-IPV-2026.pdf` | 200, 24'985 B (erstellt 18.12.2025) | `…Merkblatt-IPV-2099.pdf` → **404** |
+| `https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
+| `https://so.ch/fileadmin/internet/pd/PD-Downloadcenter/Geschaefte/2025/2025-226_SGB-praemienverbilligung/0226-2025.pdf` (Botschaft SGB 0226/2025) | 200, 107'682 B (erstellt 28.10.2025) | — (über die Suche gefunden, nicht abgeleitet) |
+
+**Fassungen:** SV BGS 831.2 «Aktuelle Version in Kraft seit: 01.04.2026 (Beschlussdatum: 26.01.2026)»,
+keine künftige Version. SG BGS 831.1 «in Kraft seit: 01.09.2026 bis: 31.12.2026 (Beschlussdatum:
+05.05.2026)», **eine künftige Version** erfasst (ab 2027, nicht ausgewertet). Parameter-Verfügung DDI
+«Vorgaben vom 27. Januar 2026». Werte 2027: keine gefunden.
+
+**Die Einheit der Richtprämien — geklärt.** Botschaft des Regierungsrates SGB 0226/2025 (RRB Nr.
+2025/1755, 28.10.2025), Ziff. 2, Tabelle 1: «Die monatlichen Durchschnittsprämien 2026 präsentieren
+sich für den Kanton Solothurn wie folgt: … Erwachsene 602.00 · Junge Erwachsene 435.00 · Kinder
+139.00», und Ziff. 4.3: «Der Abschlag wird auf 30% festgelegt.» Die Verfügung nennt dieselben
+Durchschnittsprämien neben den Richtprämien → **422 / 305 / 98 sind Monatsbeträge** (602 × 70 % =
+421.40, 435 × 70 % = 304.50, 139 × 70 % = 97.30, je aufgerundet). ⟨Am 16.09. offen: «Periode … nicht
+ausdrücklich genannt; Grössenordnung spricht für Monat».⟩
+
+**Die Eckpunkte der Eigenanteil-Skala — weiterhin nicht publiziert.** Verfügung Ziff. 2: «Eigenanteile
+in % des massgebenden Einkommens: 10% bis 16%.» § 70 Abs. 1 SV: «Anspruch auf Prämienverbilligung hat,
+wer über ein massgebendes Einkommen von 0 bis 84'000 Franken verfügt. Die prozentualen Eigenanteile
+werden abhängig von der Höhe des massgebenden Einkommens im Rahmen von 6 bis 12% linear festgelegt.»
+Dass 10 % bei 0 und 16 % beim Grenzwert 74'000 gelten, liegt nahe, steht aber nirgends. Auch die
+Botschaft nennt nur «Eigenanteil: 9%-15%» (provisorisch, vor der Verfügung). Der Online-Rechner der
+AKSO rechnet serverseitig (`formcheck`) — **nicht** gefüttert. Ein amtliches Berechnungsbeispiel gibt
+es nicht.
+
+**Weitere Wortlaute:**
+> § 69 Abs. 1 lit. e SV: «Aufrechnung der Beiträge an Einrichtungen der gebundenen Selbstvorsorge (Säule 3a) maximal bis zur Höhe des zulässigen Höchstabzuges gemäss Art. 7 Absatz 1 Buchstabe a der Verordnung über die steuerliche Abzugsberechtigung für Beiträge an anerkannte Vorsorgeformen (BVV 3)» — ⟨am 16.09. mit «[…]» gekürzt; der Deckel steht im Wortlaut⟩. In der App: Regel `bisBundesMaximum` wie BE (in `kantonsModell.js` um SO ergänzt).
+
+> § 70 Abs. 3 SV: «Prämienverbilligungsbeiträge unter 240 Franken pro Anspruchsjahr und erwachsener anspruchsberechtigter Person werden nicht ausbezahlt.»
+
+> § 87 Abs. 2/3 SG: Gesamtanspruch gemeinsam Besteuerter; «Massgebend sind die persönlichen und familiären Verhältnisse am 1. Januar des Anspruchsjahres.» · § 89 Abs. 3: «Personen, welche nach Ermessen steuerlich veranlagt werden, haben keinen Anspruch auf Prämienverbilligung.» · § 90 Abs. 2: bei wesentlich abweichendem späterem Einkommen «Antrag auf Nachvergütung … oder von Amtes wegen eine Rückerstattung».
+
+> Merkblatt 2026: Antrag «innerhalb von 30 Tagen ab Zustellung», sonst verwirkt; junge Erwachsene «Jahrgänge 2001 - 2007»; «Die Auszahlung der IPV erfolgt rückwirkend per 1. Januar direkt an Ihre Krankenkasse»; «Ist die Prämienverbilligung höher als die tatsächlich geschuldete Krankenkassenprämie, wird nur die effektive Prämie verbilligt.»
+
+Quellenbesteuerte (nicht gebaut): Merkblatt QS 2026 (April 2026): massgebend 75 % des Bruttoeinkommens,
+«Maximal bezugsberechtigtes Bruttoeinkommen: eine erwachsene Person CHF 50'666.00». Das entspräche
+einem massgebenden Einkommen von rund 38'000 — ein Hinweis, dass der Anspruch für Alleinstehende weit
+unter 74'000 endet, aber kein Beleg für die Skala (eigenes Reglement BGS 832.215 von 2002).
+
+**Was die App daraus macht (`src/config/ipvSolothurn.js`):** keine Zahl (`soSkalaUnklar`), ausser
+«kein Anspruch», wo er für jeden Satz zwischen 10 und 16 % gilt: ohne Kinder ab massgebendem
+Einkommen 50'640 (422 × 12 / 10 %), immer über 74'000. `maxIncome` null (74'000 ist nicht die Grenze,
+bis zu der ein Betrag besteht). Für die 3a im Band 7'056–7'258 zählt die Untergrenze des Einkommens.
+
+**Bewusst nicht gebaut:** Paare und Konkubinat mit Kindern · junge Erwachsene · Quellenbesteuerte,
+EL, Sozialhilfe, Härtefälle, Ermessensveranlagte · Pension/Kapitalabfindungen/Geschäftsverluste/
+Zuwendungen/Liegenschaftskosten (§ 69 lit. a–d, f SV) · Werte 2027 (SG hat eine künftige Fassung).
+
+**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 10):** Eckpunkte der linearen Skala · Rundung der
+Richtprämie (aufgerundet?) · wie die Auszahlungslimite bei Kindern wirkt · ein Berechnungsbeispiel.
 
 ---
 

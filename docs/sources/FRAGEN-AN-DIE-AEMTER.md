@@ -238,6 +238,35 @@ den Kinderanteil begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind
 **Stand:** LU ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 sind **nicht** eingebaut —
 die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU keinen Betrag mehr.
 
+
+---
+
+## 10 · Ausgleichskasse Solothurn / Departement des Innern — die lineare Eigenanteil-Skala
+
+*Aufgenommen 28.09.2026 beim Einbau von SO. Entwurf — **nicht gesendet**. (Nummer vorläufig:
+parallel entstehen weitere Kantonsabschnitte; beim Zusammenführen neu nummerieren.)*
+
+**Worum es geht:** Die Parameter-Verfügung vom 27.01.2026 nennt «Eigenanteile in % des massgebenden
+Einkommens: 10% bis 16%», § 70 Abs. 1 SV sagt, sie würden «abhängig von der Höhe des massgebenden
+Einkommens … linear festgelegt». Richtprämien (monatlich, bestätigt durch die Botschaft SGB 0226/2025),
+Grenzwert 74'000, Vermögensanteil 50 % und Auszahlungslimite 240 sind klar. Ohne die Eckpunkte der
+Skala zeigt die App für Solothurn **keinen Betrag** — bei 30'000 massgebendem Einkommen läge der
+Eigenanteil je nach Lesart zwischen 3'000 und 4'800 Franken.
+
+**Frage 1 — Eckpunkte:** Gilt 10 % bei einem massgebenden Einkommen von 0 und 16 % beim Grenzwert
+74'000 — oder andere Eckpunkte? Wird der Satz stufenlos oder in Schritten angepasst?
+
+**Frage 2 — Rundung:** Die Richtprämien 422 / 305 / 98 entsprechen 70 % der Durchschnittsprämien,
+**aufgerundet** auf Franken. Ist das die Regel? Wird der Anspruch selbst gerundet (Franken, Monat)?
+
+**Frage 3 — Auszahlungslimite bei Familien:** «unter 240 Franken pro Anspruchsjahr und erwachsener
+anspruchsberechtigter Person» — gilt das auf dem Gesamtanspruch der Familie oder je Person?
+
+**Frage 4 — Beispiel:** Gibt es ein amtliches Berechnungsbeispiel für 2026?
+
+**Stand:** SO ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag, nur «kein Anspruch»,
+wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rechnet die App.
+
 ---
 
 ## Warum überhaupt fragen
