@@ -51,7 +51,7 @@ sind. Dieses Dokument ändert keinen Code.
 | GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | gebaut (PR #467; Kinder bis 80'000 ohne Zahl, Lesart offen) | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
 | AG | Aargau | Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie | abbildbar | <https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes> |
 | TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0 nach Abzug der steuerfreien Beträge, StG § 53) | teilweise — belegt, gebaut ohne Zahl (PR #474, Steuerbetrag fehlt der App) | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
-| TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
+| TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar — gebaut für Alleinstehende (PR #484) | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | gebaut (PR #478) — ~~mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge~~ ⟨28.09.2026: aufgelöst, der Unterschied ist der Décret RSN 821.104⟩ | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
@@ -2434,7 +2434,7 @@ Junge Erwachsene nicht in Ausbildung: im Merkblatt nicht geregelt.
 
 ## TI — Ticino
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **gebaut für Alleinstehende, an der Quelle nachgeprüft 28.09.2026** (siehe «Nachprüfung 28.09.2026» unten)
 **Modell (kurz):** Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze
 **Zuständig / Weg:** Istituto delle assicurazioni sociali (IAS), Servizio sussidi assicurazione malattia · Antrag (Erneuerungs- oder Antragsformular, auch online); EL-/Laps-Beziehende von Amtes wegen · Anspruch ab Folgemonat der Einreichung, ab Januar 2026 nur bei Einreichung bis 31.12.2025
 **Gültigkeit:** 2026 definitiv (Decreto esecutivo 19.11.2025, gültig 1.1.–31.12.2026; LCAMal Stand 1.1.2026)
@@ -2483,7 +2483,7 @@ Abgeleitet (eigene Rechnung aus [1]+[4], nicht amtlich publiziert, nur zur Plaus
 - RDM Paar ohne Kinder = 3.8 × 50 % × (18'709 + 9'215) = CHF 53'055.60.
 - Höchstbetrag Einzelperson Erwachsen bei RD = 0: 8'016 × 76.5 % = CHF 6'132.24/Jahr (begrenzt auf die effektive Prämie, art. 37 cpv. 3).
 
-⚠️ Annahme: Dass «limite di fabbisogno … ai sensi della Laps» in art. 32a der «soglia d’intervento» nach Laps art. 10 / Decreto 870.130 entspricht, schliesse ich aus dem identischen Betrag 18'709 in [3]. Der Zusatz «senza computo della pigione» ist in [4] nicht ausdrücklich erwähnt. Vor Umsetzung mit dem IAS-Simulator (www.iasticino.ch) gegenprüfen.
+⚠️ Annahme: Dass «limite di fabbisogno … ai sensi della Laps» in art. 32a der «soglia d’intervento» nach Laps art. 10 / Decreto 870.130 entspricht, schliesse ich aus dem identischen Betrag 18'709 in [3]. ⟨korrigiert 28.09.2026: nicht mehr nur aus dem Betrag geschlossen — siehe «Nachprüfung 28.09.2026» unten (RLCAMal Art. 18 unter dem Titel «soglie Laps», IAS Ziff. 1.3, Decreto 870.130). Der IAS-Simulator wurde bewusst nicht gefüttert.⟩ Der Zusatz «senza computo della pigione» ist in [4] nicht ausdrücklich erwähnt. Vor Umsetzung mit dem IAS-Simulator (www.iasticino.ch) gegenprüfen.
 
 ### Massgebendes Einkommen
 > «Per principio, il RD è determinato a partire dai dati accertati del calcolo dell’imponibile per l’imposta cantonale IC 2023 (notifica di tassazione).» — Quelle [3] Ziff. 1.2
@@ -2497,7 +2497,7 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt ist ein q
 
 ### Offen / nicht gefunden
 - Ob der Zusatz «senza computo della pigione» die Laps-Schwelle 18'709 weiter verändert: im Decreto 870.130 nicht erwähnt (siehe Annahme oben). Gegenprobe mit dem IAS-Simulator steht aus.
-- Regolamento RLCAMal (853.110) nicht im Wortlaut geprüft (Verteilung, Mindestbetrag). Die Angaben dazu stammen aus dem IAS-Merkblatt [3].
+- Regolamento RLCAMal (853.110) nicht im Wortlaut geprüft (Verteilung, Mindestbetrag). Die Angaben dazu stammen aus dem IAS-Merkblatt [3]. ⟨erledigt 28.09.2026: RLCAMal Art. 11, 17, 18, 21 im Wortlaut gelesen, siehe unten.⟩
 - Keine amtliche Tabelle mit ausgerechneten Einkommensgrenzen je Haushaltsgrösse gefunden. Das IAS verweist auf den Simulator.
 
 ### Quellen
@@ -2506,6 +2506,78 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt ist ein q
 3. Istruzioni per la richiesta di riduzione di premio (sussidio) nell'assicurazione malattie (RIPAM) per l’anno 2026, IAS, Dicembre 2025 (inhaltsgleich: Informazioni periodiche RIPAM 2026, «Informazioni valide dal 1° gennaio 2026»). https://www4.ti.ch/fileadmin/DSS/IAS/pdf/approfondimenti/Istruzioni_per_la_richiesta_di_RIPAM_2026.pdf · https://www4.ti.ch/fileadmin/DSS/IAS/pdf/informazioni_periodiche/2026_Info_periodiche_RIPAM.pdf — abgerufen 16.09.2026
 4. Decreto esecutivo sull’armonizzazione e il coordinamento delle prestazioni sociali, RL 870.130, Consiglio di Stato, 25.09.2024 (Stand 1.1.2025, «Per gli anni 2025 e 2026»). https://m3.ti.ch/CAN/RLeggi/public/index.php/raccolta-leggi/legge-piatta/num/829 — abgerufen 16.09.2026
 5. Scheda RIPAM, IAS (Frist «Entro il 31 dicembre dell'anno che precede quello di richiesta»). https://www4.ti.ch/dss/ias/prestazioni-e-contributi/scheda/p/s/dettaglio/riduzione-dei-premi-dellassicurazione-malattia-ripam-1/riduzione-dei-premi-dellassicurazione-malattia-ripam — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App) — gebaut für Alleinstehende
+
+An der Quelle nachgeprüft **28.09.2026** mit `curl` (HTML der Raccolta delle leggi, PDF mit `pdftotext -layout`).
+Gegenprobe der Raccolta: erfundene Nummer `…/numLegge/853.999` → «L'atto normativo cercato non è contenuto nella
+Raccolta delle leggi»; `…/legge-piatta/num/99863` → «L'atto normativo cercato non è presente!» — das Werkzeug misst.
+
+| Quelle | Abruf | Fassung |
+|---|---|---|
+| LCAMal RL 853.100 — `m3.ti.ch/…/nuovafinestra/atto/370/volume//numLegge/853.100` | HTTP 200, 371'719 Bytes | «(stato 1° gennaio 2026)», «ULTIMO AGGIORNAMENTO: 18.09.2026 (Bollettino Ufficiale: 32/2026)» |
+| Decreto esecutivo RL 853.310 — `…/legge-piatta/num/863` | HTTP 200 | vom 19.11.2025, «(stato 1° gennaio 2026)», gültig bis 31.12.2026, BU 2025, 315; voller Text = Art. 1–3 |
+| RLCAMal RL 853.110 — `…/legge-piatta/num/371` | HTTP 200 | vom 29.05.2012, «(stato 1° gennaio 2025)» |
+| Decreto esecutivo RL 870.130 — `…/legge-piatta/num/829` | HTTP 200 | vom 25.09.2024, «(stato 1° gennaio 2025)», «Per gli anni 2025 e 2026» |
+| Laps RL 870.100 — `…/legge-piatta/num/340` | HTTP 200 | vom 05.06.2000, «(stato 1° agosto 2026)» |
+| IAS Istruzioni RIPAM 2026 — `www4.ti.ch/…/Istruzioni_per_la_richiesta_di_RIPAM_2026.pdf` | HTTP 200, 160'885 Bytes | «Dicembre 2025», PDF erstellt 17.12.2025; Gegenprobe `…_2099.pdf` → 404 |
+| IAS Informazioni periodiche RIPAM 2026 | HTTP 200, 156'112 Bytes | «Informazioni valide dal 1° gennaio 2026», inhaltsgleich |
+
+**Bestätigt (Wortlaut wie oben):** Art. 31, 32a, 34, 35, 37 Abs. 1–2, 43a LCAMal; PMR 8'016 / 6'143 / 1'827 und
+Steuerperiode 2023 (Decreto 853.310); Schwelle 18'709 / 9'215 / 6'869 / 5'253 / 5'233 (Decreto 870.130); 120 Fr. je
+Mitglied (RLCAMal Art. 21, «(art. 39 LCAMal)»). Der Decreto 2026 ändert die Konstanten (Art. 40 lit. c) **nicht**.
+
+**Neu gelesen:**
+- Art. 37 Abs. 3 LCAMal: «L'importo di riduzione dei premi non può oltrepassare l'ammontare del premio effettivo a
+  carico dei membri dell'unità di riferimento.» → Deckel auf die Prämie (für die ganze UR).
+- Art. 25 Abs. 2/3 LCAMal: Antrag bis Ende des Vorjahres ⇒ ab 1. Januar; später im Anspruchsjahr ⇒ ab dem Folgemonat.
+- Art. 27 LCAMal und RLCAMal Art. 11: Personen bis 30, ledig, ohne Kinder, Einkommen unter der Bedarfsgrenze und in
+  Erstausbildung gehören zur UR der Eltern.
+- RLCAMal Art. 17: Aufteilung nach PMR; Minderjährige und junge Erwachsene in Ausbildung zuerst (80 % / 50 %).
+- **RLCAMal Art. 18** (Titel «Limite di fabbisogno minimo (art. 32a LCAMal)»): «Il limite di fabbisogno minimo ai
+  sensi della Laps corrisponde a quello valido per l'anno precedente all'anno di competenza.»
+- Laps Art. 10: «La soglia d'intervento corrisponde alla somma di: a) per il titolare del diritto: fr. 17'441.– …»
+  (Gesetzeswert, durch Decreto 870.130 für 2025/2026 auf 18'709 angehoben); Art. 9: Wohnkosten als eigene Ausgabe.
+  Den Ausdruck «limite di fabbisogno» verwendet die Laps selbst **nicht**.
+- IAS: «Le spese professionali sono riconosciute per un importo annuo forfettario massimo di CHF 4'000 alle UR nelle
+  quali almeno un membro esercita un'attività salariata a titolo principale. Se la somma dei redditi (netti) … è
+  inferiore al forfait di CHF 4'000, le spese professionali sono riconosciute unicamente fino all'ammontare di tale
+  reddito.» — und: Altersgrenzen der PMR-Kategorien «adulto: dall'anno seguente al compimento dei 25 anni».
+
+**Zuordnung RDM** ⟨Offen seit 16.09.: «Zuordnung 18'709 nur aus dem IAS-Merkblatt geschlossen»⟩ — jetzt aus drei
+amtlichen Texten gestützt: RLCAMal Art. 18 (Jahr) + Decreto 870.130 (Betrag 18'709) + IAS «limite di fabbisogno
+esistenziale definito ai sensi della Laps (per il 2026 corrisponde a CHF 18'709 annui)»; die Laps führt Wohnkosten
+getrennt (Art. 9), die Schwelle ist also «ohne Miete». Wörtlich gleichgesetzt sind «limite di fabbisogno» (Art. 32a)
+und «soglia d'intervento» (Laps Art. 10) aber nirgends → gebaut, im Vorbehalt genannt, Frage 14 ans IAS.
+RDM Einzelperson = 3.8 × 50 % × 18'709 = **35'547.10**.
+
+**Amtliches Berechnungsbeispiel:** keines gefunden; das IAS verweist auf seinen Simulator (nicht gefüttert).
+Prüfstein: Handrechnungen, z. B. angestellt, 3'000 netto/Monat: RD = 36'000 − 8'016 − 4'000 = 23'984 → Normbetrag
+8'016 × (1 − 23'984²/35'547.10²) = 4'366.84 → × 76,5 % = **3'340.63** (App: 3'341/Jahr, 278/Monat).
+
+**Gebaut:** nur Alleinstehende (UR = 1 Person, erwachsen). Näherungen: RL − CS = Nettoeinkommen der App (Sozialabzüge
+inkl. BVG sind im Nettolohn abgezogen) + erhaltene Alimente; Vermögen = erfasste Posten; bezahlte Alimente
+(`alimentePaid`); Berufsauslagen-Pauschale 4'000 (bis zum Lohn), wenn ein Hauptlohn erfasst und der Anstellungstyp
+«Angestellt» oder leer ist (**gewählt**). **Nicht gebaut:** Kinder und Paare (`tiKinder`, `haushalt`), mögliche UR der
+Eltern (`tiEltern`: bis 30 — vorsichtig Jahrgang ≥ Anspruchsjahr − 32 — und Einkommen unter 18'709), Schuldzinsen,
+Quellenbesteuerte, EL/Laps/Sozialhilfe. `anmeldefristVorbei` bewusst nicht gesetzt (die lesenden Stellen zeigen heute
+den Luzerner Satz) — das Budget zieht darum den ganzen Jahresbetrag ab.
+
+**Werte 2027:** am 28.09.2026 nicht publiziert (Decreto 2026 gilt bis 31.12.2026). Ab 01.01.2027 Grund `jahr`.
+
+### Nachtrag 28.09.2026 abends — Fachprüfung PR #484 eingearbeitet
+
+- **Frist (Blocker):** LCAMal Art. 25 Abs. 3 + IAS Ziff. 2 («Solo se la domanda … entro il 31 dicembre 2025, il diritto
+  alla RIPAM può essere concesso da gennaio 2026») → das Ergebnis setzt `anmeldefristVorbei` und
+  `fristNichtAbgezogenKey: 'ipv.tiFristNichtAbgezogen'`; Budget, KK-Last-Karte und Prämien-Beleg ziehen nach der Frist
+  nichts ab (Leser-Mechanismus zeichengleich aus FR `8ee1904b`).
+- **Stärkste Brücke für die RDM-Zuordnung:** RLCAMal, «Capitolo sesto — Anno di riferimento delle soglie Laps»,
+  darunter Art. 18 «Limite di fabbisogno minimo (art. 32a LCAMal)». Der Vorbehalt sagt jetzt «bestätigt ist sie vom
+  IAS noch nicht, die Frage liegt bereit» (die Frage 14 ist ein Entwurf, nicht gesendet).
+- **Berufsauslagen:** nur bei Anstellungstyp «Angestellt»; leer → ohne Abzug, mit Zusatz-Vorbehalt (Betrag bei
+  Anstellung höher). Vorher galt leer als angestellt (+1'009 Fr./Jahr für Selbständige ohne Angabe).
+- **Richtung im Vorbehalt:** fehlende Schuldzinsen und Schulden ⇒ der Betrag liegt eher zu tief.
+- **Säule 3a:** `SAEULE_3A.voll` um TI ergänzt (Beleg Art. 31 Abs. 1 lit. d); offen: Ziffer 10.3 (Frage 14.4).
 
 ---
 
