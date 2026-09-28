@@ -14,22 +14,31 @@ import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 import { plzModul, preloadPLZModul } from './kantonPLZ.js';
 export { cantonFromPLZ, gemeindeFromPLZ, CANTON_CODES, getCantonName } from './kantonPLZ.js';
 
-let _zhModule = null;
-let _beModule = null;
-let _agModule = null;
-let _sgModule = null;
-let _luModule = null;
+// K31: das Register der kantonalen Prämienverbilligungs-Modelle. Je Kanton ein eigenes, nachgeladenes
+// Modul (eigener Chunk, hält die Startdatei klein); `fn` ist der Name der Einstiegsfunktion darin.
+// Bis 28.09.2026 stand hier je Kanton ein eigener `if`-Block mit eigener Modul-Variable — bei fünf
+// Kantonen lesbar, bei 26 nicht mehr, und jeder Block kostete Startbündel (65-kB-Deckel, npm run size).
+// Ein neuer Kanton trägt sich hier mit EINER Zeile ein; die Reihenfolge der Riegel, die Formel und
+// die Vorbehalte bleiben im Kantonsmodul (config/kantonsModell.js erklärt, was gemeinsam ist).
+//
+//   brauchtPLZ: false  — nur, wo der Kanton keine Prämienregion kennt und darum nicht auf die
+//                        PLZ-Daten wartet (AG: V KVGG § 4 Abs. 1, kantonsweiter Durchschnitt).
+//                        Ohne Angabe wartet der Kanton auf Modul UND PLZ-Daten.
+export const IPV_MODULE = {
+  ZH: { laden: () => import('./ipvZuerich.js'), fn: 'ipvZuerich' },
+  BE: { laden: () => import('./ipvBern.js'), fn: 'ipvBern' },
+  AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
+  SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
+  LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+};
+const _module = {};
 
-// K31: die Kantonsmodelle der Prämienverbilligung brauchen die Gemeinde und liegen darum im
-// selben Moment nach wie die PLZ-Daten (je ein eigener Chunk, hält das Hauptbundle klein).
+// Die Kantonsmodelle liegen im selben Moment nach wie die PLZ-Daten. Ein Ladefehler bleibt still:
+// dann zeigt der Kanton die Orientierung «laden», nie einen geratenen Betrag.
 export function preloadIPVModelle() {
-  if (!_zhModule) import('./ipvZuerich.js').then(m => { _zhModule = m; }).catch(() => {});
-  if (!_beModule) import('./ipvBern.js').then(m => { _beModule = m; }).catch(() => {});
-  // AG braucht die Gemeinde NICHT (kein Prämienregionen-Modell, V KVGG § 4 Abs. 1), lädt aber
-  // im selben Moment mit — ein Chunk, damit das Hauptbundle klein bleibt.
-  if (!_agModule) import('./ipvAargau.js').then(m => { _agModule = m; }).catch(() => {});
-  if (!_sgModule) import('./ipvStGallen.js').then(m => { _sgModule = m; }).catch(() => {});
-  if (!_luModule) import('./ipvLuzern.js').then(m => { _luModule = m; }).catch(() => {});
+  for (const [kt, m] of Object.entries(IPV_MODULE)) {
+    if (!_module[kt]) m.laden().then(mod => { _module[kt] = mod; }).catch(() => {});
+  }
 }
 
 // PLZ-Modul aktiv vorladen UND die Kantonsmodelle — wie bisher, für alle, die von hier importieren.
@@ -299,30 +308,15 @@ function ipvRechnen(data) {
     anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton, ...(offen && { offen }),
   });
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
-  // K31: ZH, BE, AG, SG und LU rechnen nach ihrem eigenen amtlichen Modell (config/ipvZuerich.js,
-  // config/ipvBern.js, config/ipvAargau.js, config/ipvStGallen.js bzw. config/ipvLuzern.js). Solange PLZ-Daten und
-  // Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
-  if (canton === 'ZH') {
-    if (!_zhModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
-    return _zhModule.ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
-  }
-  if (canton === 'BE') {
-    if (!_beModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
-    return _beModule.ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
-  }
-  // AG kennt keine Prämienregionen (V KVGG § 4 Abs. 1: kantonsweiter Durchschnitt), darum
-  // wartet es auch nicht auf die PLZ-Daten — nur auf sein eigenes Modul.
-  if (canton === 'AG') {
-    if (!_agModule) { preloadPLZ(); return orientierung('laden'); }
-    return _agModule.ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung);
-  }
-  if (canton === 'SG') {
-    if (!_sgModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
-    return _sgModule.ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
-  }
-  if (canton === 'LU') {
-    if (!_luModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
-    return _luModule.ipvLuzern(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
+  // K31: ein Kanton mit Modul im Register IPV_MODULE rechnet nach seinem eigenen amtlichen Modell.
+  // Solange PLZ-Daten (wo gebraucht) und Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie
+  // ein geratener Betrag. Ein belegter Kanton OHNE Modul fällt auf den Muster-Abbau unten zurück —
+  // das ist heute keiner (Wächter: cantonalData.test.js), und so soll es bleiben.
+  const modul = IPV_MODULE[canton];
+  if (modul) {
+    const plz = plzModul();
+    if (!_module[canton] || (modul.brauchtPLZ !== false && !plz)) { preloadPLZ(); return orientierung('laden'); }
+    return _module[canton][modul.fn](data, hh, ipvData, youngAdultsCount, orientierung, plz ? plz.lookupPLZ : undefined);
   }
 
   let maxAnnualSubsidy;
