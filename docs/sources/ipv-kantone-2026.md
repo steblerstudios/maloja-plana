@@ -37,7 +37,7 @@ sind. Dieses Dokument ändert keinen Code.
 | UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | abbildbar | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
 | SZ | Schwyz | Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % | teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert) | <https://www.sz.ch/public/upload/assets/6155/361_100.pdf> |
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
-| NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
+| NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | gebaut (PR #…) — Familien im mehrdeutigen Band ohne Zahl | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
 | ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | abbildbar | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
@@ -918,7 +918,7 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat. Belegt ist für eine erwa
 
 ## NW — Nidwalden
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, Familien teilweise ohne Zahl; siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 %
 **Zuständig / Weg:** Ausgleichskasse Nidwalden, Stans. Antrag (Formular oder online), Frist 30. April 2026 (Poststempel); mutmasslich Berechtigte erhalten das Formular bis Ende März 2026 zugestellt. EL-Beziehende (AHV/IV) brauchen keinen Antrag.
 **Gültigkeit:** 2026 definitiv (Verordnung vom 09.12.2025, in Kraft seit 01.01.2026)
@@ -961,14 +961,86 @@ Wörtlich zum Grenzwert junge Erwachsene: «Übersteigt das Reineinkommen eines 
 App: maxIncome 45'000, subsidySingle 2'250, linearer Abbau. Belegt ist für eine erwachsene Einzelperson ohne Vermögen: CHF 5'400 bei Steuerwerten 0, Abbau um 10 Rappen je Franken, null bei Summe der Steuerwerte CHF 54'000 (Auszahlung erst ab CHF 100, also praktisch bis 53'000). Die App gibt also einen zu tiefen Höchstbetrag und eine zu tiefe Grenze an. Die Grenze gilt zudem nicht für das Einkommen allein, sondern für die Steuerwerte inkl. 20 % des Reinvermögens.
 
 ### Offen / nicht gefunden
-- Online-Rechner der AK NW (https://www.aknw.ch/online-services/online-rechner/provisorische-berechnung-des-anspruchs-auf-praemienverbilligung) nicht geöffnet; für das Modell nicht nötig.
+- Online-Rechner der AK NW (https://www.aknw.ch/online-services/online-rechner/provisorische-berechnung-des-anspruchs-auf-praemienverbilligung) nicht geöffnet; für das Modell nicht nötig. ⟨28.09.2026: Seite gelesen (200, Gegenprobe 404) — die Rechnung läuft auf dem Server (`actions/calculators/calculation/formcheck`), im Quelltext steht keine Formel; nicht abgeschickt⟩
 - Ob für junge Erwachsene ohne Ausbildung Besonderes gilt: nur die allgemeine Regel (Richtprämie CHF 3'912 minus Selbstbehalt) belegt.
-- Wie Kinder in der allgemeinen IPV genau verrechnet werden (Reihenfolge der Sonder- und der allgemeinen IPV), ist nur allgemein belegt («wird diese zusätzlich ausgerichtet»).
+- Wie Kinder in der allgemeinen IPV genau verrechnet werden (Reihenfolge der Sonder- und der allgemeinen IPV), ist nur allgemein belegt («wird diese zusätzlich ausgerichtet»). ⟨28.09.2026: bleibt offen — drei Lesarten, siehe unten; die App zeigt dort keine Zahl⟩
 
 ### Quellen
 1. NG 742.111 Verordnung zur Prämienverbilligung für das Jahr 2026, Regierungsrat Nidwalden, vom 09.12.2025, in Kraft seit 01.01.2026. https://gesetze.nw.ch/app/de/texts_of_law/742.111 (Text über https://gesetze.nw.ch/api/de/texts_of_law/742.111/show_as_json) — abgerufen 16.09.2026
 2. NG 742.1 Einführungsgesetz zum Bundesgesetz über die Krankenversicherung (kKVG) vom 25.10.2006, aktuelle Fassung. https://gesetze.nw.ch/app/de/texts_of_law/742.1 (Text über https://gesetze.nw.ch/api/de/texts_of_law/742.1/show_as_json) — abgerufen 16.09.2026
 3. Merkblatt «Prämienverbilligung 2026 im Kanton Nidwalden», Ausgleichskasse Nidwalden, Stand Februar 2026. https://www.aknw.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/IPV-OKP-KVGRegress/Merkblatt-Praemienverbilligung-2026.pdf — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe:
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://gesetze.nw.ch/api/de/texts_of_law/742.111/show_as_json` | 200, 16'379 B | `…/742.199/…` → **404**, 0 B |
+| `https://gesetze.nw.ch/api/de/texts_of_law/742.1/show_as_json` | 200, 243'752 B | (gleiche Route) |
+| `https://gesetze.nw.ch/api/de/texts_of_law/521.1/show_as_json` (StG) | 200 | (gleiche Route) |
+| `https://www.aknw.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/IPV-OKP-KVGRegress/Merkblatt-Praemienverbilligung-2026.pdf` | 200, 1'972'479 B, PDF (erstellt 29.01.2026, «im Februar 2026») | `…-2099.pdf` → **404** |
+| `https://www.aknw.ch/dienstleistungen/praemienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
+
+**Fassungen:** NG 742.111 «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 09.12.2025)».
+NG 742.1 «Aktuelle Version in Kraft seit: 31.12.2025 (Beschlussdatum: 09.04.2025)». NG 521.1 aktuell
+seit 01.01.2026.
+
+**NG 742.111** (Wortlaut): § 1 «Der Selbstbehalt für das Jahr 2026 beträgt 10 Prozent.» / «Der für die
+Berechnung des Selbstbehalts massgebende Anteil des anrechenbaren Reinvermögens beträgt 20 Prozent.» ·
+§ 2 Abs. 2 «Die Richtprämien für die übrigen Personen betragen für Erwachsene Fr. 5'400.–, für junge
+Erwachsene Fr. 3'912.– und für Kinder Fr. 1'260.–.» · § 3 Steuerperiode 2024, sonst 2023 · § 4
+Quellensteuer 80 %, Periode 2025 · § 5 «Beträge unter Fr. 100.– sind von der Auszahlung ausgeschlossen.»
+
+**NG 742.1 kKVG** (Wortlaut, soweit gebaut): Art. 12 Abs. 1 «Die Prämien werden im Rahmen der
+Richtprämien verbilligt, soweit sie den Selbstbehalt übersteigen.» Abs. 2: Summe aus «1. dem gesamten
+Reineinkommen; 2. 80 Prozent des im vereinfachten Verfahren abgerechneten Bruttolohns …; 3. dem Einkauf
+in die berufliche Vorsorge; 4. der Aufrechnung der Abzüge aus Teileinkünfteverfahren; 5. der Aufrechnung
+des Abzugs für Liegenschaftsunterhalt, abzüglich 15 Prozent der Erträge privater Liegenschaften; und
+6. dem jährlich festgelegten Prozentsatz des gesamten Reinvermögens» — **keine 3a-Aufrechnung**. ·
+Art. 14 Abs. 1/2 (Kinder, siehe unten) · Art. 16 Abs. 2 Gesamtanspruch · Art. 17 Abs. 1 «am 1. Januar»,
+Abs. 2 «Geburten und Todesfälle werden bis Ende Kalenderjahr berücksichtigt.» · Art. 20a «Die Höhe der
+Prämienverbilligung darf die tatsächlich geschuldete Prämie … nicht übersteigen.» · Art. 22 Abs. 1 «bis
+zum 30. April des Kalenderjahres», Abs. 3 Neugeborene drei Monate, Abs. 6 «verwirkt» · Art. 28 Abs. 1
+Rückforderung «bei den Personen, welche sie bezogen haben».
+
+**NG 521.1 StG** Art. 35 Abs. 1: von den Einkünften abgezogen werden u. a. «3. die Unterhaltsbeiträge …»
+und «5. Einlagen, Prämien und Beiträge … aus anerkannten Formen der gebundenen Selbstvorsorge» —
+beide sind also im Reineinkommen (Code 330) schon abgezogen.
+
+**Merkblatt 2026** (Textlayer): Jahrgänge «Erwachsene Jahrgang 2000 und älter Fr. 5'400.– · Junge
+Erwachsene Jahrgang 2001 – 2007 Fr. 3'912.– · Kinder und Jugendliche Jahrgang 2008 und jünger Fr. 1'260.–»
+· «Reineinkommen (Code 330 der Veranlagungsverfügung) samt Aufrechnungen* und 20 Prozent des
+Reinvermögens (Code 470)» · «bis spätestens am 30. April 2026 (Poststempel)… Später eingereichte Gesuche
+werden nicht mehr berücksichtigt.» · «Einzig Rentner und Rentnerinnen, die am 1.1. 2026
+Ergänzungsleistungen zur AHV / IV erhalten haben, müssen keine Anmeldung ausfüllen.» · Plafonierung
+«erfolgt durch den Krankenversicherer» · «Beiträge unter CHF 100 werden nicht ausbezahlt.»
+
+**🛑 Die Kinder-Regel — drei Lesarten.** Art. 14 Abs. 1: 80 % der Richtprämie, «sofern die Summe der
+Steuerwerte der Eltern … Fr. 100'000.– nicht übersteigt». Abs. 2: «Besteht nach Berücksichtigung der
+besonderen Prämienverbilligung weiterhin ein Anspruch auf allgemeine Prämienverbilligung für die Kinder,
+wird diese zusätzlich ausgerichtet.» Das Merkblatt wiederholt den Satz wörtlich; ein Beispiel gibt es
+nicht, der Rechner läuft auf dem Server. Eigene Rechnung, Einelternhaushalt, ein Kind, Steuerwerte 30'000:
+(a) wie LU/UR (Kind mit den restlichen 20 % in der allgemeinen Rechnung; gleichwertig max(80 %, Summe −
+Selbstbehalt)) → **3'660** · (b) je Kind das Höhere aus 80 % und seinem Anteil → **3'975.57** · (c) 80 % plus
+Anteil, gedeckelt auf die Richtprämie → **4'227.57**. Alle drei fallen zusammen, wo die Summe der
+Richtprämien den Selbstbehalt nicht übersteigt. **Die App rechnet nur dort** (und über 100'000); darunter
+zeigt sie keine Zahl (`offenGrund.mindestanspruch`) — wie ZH in seinem strittigen Band.
+
+**Werte 2027:** am 28.09.2026 keine Verordnung für 2027 publiziert gefunden.
+
+**Gewählt, nicht belegt:** Mindestbetrag auf der Summe · keine Rundung (keine Regel gefunden) · Erwachsen
+nach Jahrgangstabelle («2000 und älter», `imAnspruchsjahr`) · 3a ohne Deckel auf das Bundesmaximum (siehe
+`SAEULE_3A.abgezogen`).
+
+**Rahmen:** neue Regel `SAEULE_3A.abgezogen` (NW) mit Riegel `widerlegt` (3a > Einkommen oder über ein
+Jahr hinaus → `saeule3aUeberEinkommen`). Frist-Hinweise für Budget/KK-Karte über `fristKeys` wie OW.
+
+**Bewusst nicht gebaut:** Paare · junge Erwachsene (Art. 15; Grund `ausbildung`) · Quellenbesteuerte, EL,
+Sozialhilfe, Zuzug aus dem Ausland · Aufrechnungen Ziff. 2–5 · übrige Abzüge im Reineinkommen
+(Berufskosten usw. — Betrag eher **zu tief**, Vorbehalt sagt es) · Kürzung für Neugeborene (zählen ganz).
+
+**Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 10.
 
 ---
 

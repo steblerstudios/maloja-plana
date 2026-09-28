@@ -240,6 +240,32 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 10 · Ausgleichskasse Nidwalden — Kinder: besondere und allgemeine Prämienverbilligung
+
+*Aufgenommen 28.09.2026 beim Einbau von NW. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Selbstbehalt, Richtprämien und Steuerwerte 2026 stehen in NG 742.111 und NG 742.1;
+die App rechnet danach für Alleinstehende. Für Familien fehlt uns eine Regel.
+
+**Frage 1 — Kinder (Art. 14 Abs. 2 kKVG):** «Besteht nach Berücksichtigung der besonderen
+Prämienverbilligung weiterhin ein Anspruch auf allgemeine Prämienverbilligung für die Kinder, wird diese
+zusätzlich ausgerichtet.» Wie wird gerechnet? Beispiel: ein Elternteil, ein Kind, Summe der Steuerwerte
+30'000, Richtprämien 5'400 / 1'260, Selbstbehalt 3'000. Wir sehen drei Lesarten: (a) das Kind zählt in
+der allgemeinen Rechnung nur mit 20 % → 3'660; (b) das Kind erhält das Höhere aus 80 % und seinem
+Anteil → 3'975.60; (c) 80 % plus sein Anteil, höchstens die Richtprämie → 4'227.60. Welche gilt? Bis
+zur Antwort zeigt die App Familien in diesem Bereich keinen Betrag.
+
+**Frage 2 — Mindestbetrag (§ 5 der Verordnung 2026):** «Beträge unter Fr. 100.–» — je Person oder
+für den ganzen Anspruch? Die App prüft die Summe.
+
+**Frage 3 — Rundung:** Gibt es eine Rundungsregel für die Auszahlung (z. B. Monatsbetrag auf
+5 Rappen)? Wir haben keine gefunden und rechnen auf ganze Franken im Jahr.
+
+**Stand:** NW ist für 2026 gebaut (Entwurfs-PR, K31) — ohne Zahl für Familien, bei denen Frage 1
+entscheidet. Werte 2027 nicht publiziert; ab 01.01.2027 zeigt die App für NW keinen Betrag.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
