@@ -216,10 +216,11 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  // Seit 28.09.2026 setzen auch Obwalden (EV KVG Art. 10), Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484)
-  // und Freiburg (ORP Art. 2 al. 1, sobald gemergt) die Frist.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, OW, TI) und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvObwalden.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
+  // Seit 28.09.2026 setzen auch Genf (RaLAMal Art. 10A: nur die Antragsfälle, vor dem 30. November),
+  // Obwalden (EV KVG Art. 10), Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484) und Freiburg
+  // (ORP Art. 2 al. 1, sobald gemergt) die Frist.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, GE, OW, TI) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvGenf.js', 'config/ipvObwalden.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
