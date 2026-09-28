@@ -4,6 +4,7 @@ import { getFullName } from './config/constants.js';
 import { calculateIPV } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
+import { haushaltsEinnahmen } from './data/haushaltsEinnahmen.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
@@ -90,10 +91,8 @@ export const BUDGET_PRICE_TREND = {
 };
 
 const syncBudgetFromChapters = (data) => {
-  const netIncome = Number(data.finanzen?.monthlyIncome || 0);
-  const familienzulagen = Number(data.finanzen?.familienzulagen || 0);
-  const alimenteReceived = Number(data.finanzen?.alimenteReceived || 0);
-  const totalIncome = netIncome + familienzulagen + alimenteReceived;
+  // Einnahmen des ganzen Haushalts — dieselbe Summe wie die Finanzübersicht (data/haushaltsEinnahmen.js).
+  const einnahmen = haushaltsEinnahmen(data);
 
   // IPV relief (reduces health insurance cost, not an income)
   const ipv = calculateIPV(data);
@@ -112,12 +111,20 @@ const syncBudgetFromChapters = (data) => {
   const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
-    income: totalIncome,
+    income: einnahmen.total,
+    // `net` heisst historisch so, ist aber der eigene Lohn in der erfassten Art (`lohnArt`).
     incomeDetail: {
-      net: netIncome,
-      familienzulagen,
-      alimenteReceived,
+      net: einnahmen.lohn,
+      lohnArt: einnahmen.lohnArt,
+      neben: einnahmen.neben,
+      nebenArt: einnahmen.nebenArt,
+      partner: einnahmen.partner,
+      familienzulagen: einnahmen.familienzulagen,
+      alimenteReceived: einnahmen.alimente,
     },
+    // Ein Lohn ist brutto erfasst: `remaining` ist dann kein Geld auf dem Konto — die Anzeigen
+    // zeigen statt «Verfügbar» die Frage nach dem Netto.
+    bruttoDabei: einnahmen.bruttoDabei,
     ipvRelief,
     ipvVerfuegung,
     ipvVerfuegungUnzugeordnet,
