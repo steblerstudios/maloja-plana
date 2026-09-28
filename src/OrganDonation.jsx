@@ -40,6 +40,8 @@ export function organSpendeVcard({ t, data = {}, status, organs = {} }) {
   const blutgruppe = blutgruppeLabel(data.notfall?.bloodType, t);
 
   const zeilen = [t('organ.title') + ':', '  ' + t('organ.status') + ': ' + statusText];
+  const vertrauensperson = status === 'delegated' ? String(data.notfall?.organVertrauensperson ?? '').trim() : '';
+  if (vertrauensperson) zeilen.push('  ' + t('organ.vertrauenspersonKurz') + ': ' + vertrauensperson);
   if (gewaehlt.length) zeilen.push('  ' + t('organ.organsAndTissue') + ': ' + gewaehlt.join(', '));
   if (blutgruppe) zeilen.push('  ' + t('notfallSummary.bloodType') + ': ' + blutgruppe);
   // K123 (Entscheid Stebler Studios 24.09.2026): keine AHV-Nummer im Organspende-QR — er trägt
@@ -60,6 +62,9 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
     heart: false, lungs: false, liver: false, kidneys: false,
     pancreas: false, corneas: false, bone: false, tissue: false, other: ''
   });
+  // Wer entscheidet, wenn der Entscheid übertragen ist — ohne Namen hilft «Vertrauensperson»
+  // im Notfall niemandem (Fachprüfung 27.09.2026). Lebt im Kapitel Notfall neben dem Entscheid.
+  const [vertrauensperson, setVertrauensperson] = useState(data.notfall?.organVertrauensperson || '');
   const [qrGenerated, setQRGenerated] = useState(false);
   const [qrFehler, setQrFehler] = useState(false);
   const [qrAnsage, setQrAnsage] = useState('');
@@ -72,7 +77,7 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
   };
 
   const handleGenerateQR = () => {
-    const qrData = organSpendeVcard({ t, data, status, organs });
+    const qrData = organSpendeVcard({ t, data: { ...data, notfall: { ...(data.notfall || {}), organVertrauensperson: vertrauensperson } }, status, organs });
 
     setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
@@ -90,12 +95,15 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
   // «Gespeichert» gilt, solange der Stand dem gespeicherten gleicht — ändert man danach
   // etwas, verschwindet es wieder. Bis 24.09.2026 speicherte der Knopf ohne ein Wort.
   const [gespeichertAls, setGespeichertAls] = useState(null);
-  const stand = JSON.stringify({ organDonor: status, organDonation: organs });
+  const stand = JSON.stringify({ organDonor: status, organDonation: organs, vertrauensperson });
   const handleSave = () => {
     // Der Entscheid gehört ins Kapitel Notfall; main.jsx legt die Teile obenauf, darum hier
     // das ganze Kapitel mitgeben (nachgeladene Komponente — das Startbündel bleibt unberührt).
     const notfall = { ...(data.notfall || {}) };
     if (status) notfall.organDonor = status; else delete notfall.organDonor;
+    // Der Name gilt nur zusammen mit «Vertrauensperson» — sonst stünde er ohne Bedeutung im Dossier.
+    const name = vertrauensperson.trim();
+    if (status === 'delegated' && name) notfall.organVertrauensperson = name; else delete notfall.organVertrauensperson;
     const vorV5 = data._organspendeVorV5;
     onSave({ notfall, organDonation: organs, ...(vorV5?.bitteBestaetigen && status ? { _organspendeVorV5: { ...vorV5, bitteBestaetigen: false } } : {}) });
     setGespeichertAls(stand);
@@ -145,6 +153,19 @@ export const OrganDonation = ({ palette, t, data, onSave, vorlaeufig }) => {
           onChange: (e) => setOrgans(prev => ({ ...prev, other: e.target.value })),
           style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
         })),
+
+      status === 'delegated' && React.createElement(LabeledField, { palette, label: t('organ.vertrauensperson'), style: { marginBottom: 0 } },
+        React.createElement('input', {
+          // 80 Zeichen: der Organspende-QR bricht über 640 Byte ab, statt zu kürzen.
+          type: 'text', value: vertrauensperson, autoComplete: 'off', maxLength: 80,
+          onChange: (e) => setVertrauensperson(e.target.value),
+          style: { width: '100%', padding: space.sm, marginBottom: space.xs, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
+        })),
+
+      // Daten einer Drittperson in einem Ausweis, der gezeigt und fotografiert wird: vorher absprechen.
+      status === 'delegated' && React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 12px', lineHeight: leading.normal } }, t('organ.vertrauenspersonHinweis')),
+      // «Nur bestimmte» ohne ein einziges Organ sagt niemandem, welche gemeint sind.
+      status === 'partial' && organListe(t, organs).length === 0 && React.createElement('p', { style: { fontSize: text.sm, color: palette.text, background: palette.up, padding: '10px 12px', borderRadius: radius.sm, margin: '0 0 12px', lineHeight: leading.normal } }, hinweisZeichen(), t('organ.keineOrganeGewaehlt')),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
       React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichertAls === stand, vorlaeufig, style: { margin: gespeichertAls === stand ? '0 0 12px' : 0 } }),
