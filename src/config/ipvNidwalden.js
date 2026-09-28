@@ -209,7 +209,7 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   if (!(annual > 0)) {
     return ergebnisOhneAnspruch({
       ...gemeinsam,
-      noteKey: r.grund === 'mindestbetrag' ? 'ipv.nwUnterMindestbetrag' : 'ipv.nwKeinAnspruch',
+      noteKey: r.grund === 'mindestbetrag' || (!r.grund && summe > 0) ? 'ipv.nwUnterMindestbetrag' : 'ipv.nwKeinAnspruch',
     });
   }
   // Art. 22 Abs. 1/6 [2]: Gesuch bis 30. April des Anspruchsjahres, sonst verwirkt.
