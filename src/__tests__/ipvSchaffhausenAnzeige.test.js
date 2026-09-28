@@ -90,7 +90,8 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
       }
       expect(texte.ipv.shFristVorbei, `${sprache}: Platzhalter`).toContain('{folgejahr}');
     }
-  });
+    // Fünf Sprachdateien nachladen dauert unter Last der ganzen Suite über 5 s (gemessen 28.09.2026).
+  }, 30000);
 
   it('Paare, Kinder ohne Alter und unbekannte PLZ: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(3000), basis: { ...profil(3000).basis, maritalStatus: 'married' } });
