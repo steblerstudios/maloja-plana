@@ -1853,6 +1853,23 @@ der Grenze.
 **Werte 2027:** am 28.09.2026 nicht publiziert (Wegleitung trägt 2026, API ohne künftige Version). Ab 01.01.2027
 zeigt die App für GR keinen Betrag (`jahrVorbei`).
 
+### Nachtrag 28.09.2026 abends — Fachprüfung PR #467 eingearbeitet
+
+- **Alter:** ⟨korrigiert⟩ Oben steht «Alter nach `ERWACHSEN.mangelsStichtag` (kein Stichtag …)». Der Online-Rechner der
+  SVA (`https://www.sva.gr.ch/ipv.html`, gelesen 28.09.2026, nur GET, nichts abgeschickt) nennt die Jahrgänge:
+  «Anzahl junge Erwachsene (Jahrgang 2001 - 2007)», «Anzahl Kinder (Jahrgang 2008 - 2026)». Die App rechnet jetzt nach
+  `ERWACHSEN.imAnspruchsjahr` (wie AG, LU): Jahrgang 2000 ist 2026 erwachsen.
+- **Lesart Selbstbehalt:** ⟨korrigiert⟩ «Bei 40'000 ergibt das 2'316, nach der Tranchen-Lesart wären es 3'066» stimmt;
+  der Unterschied wächst aber über 40'000 auf konstant **1'150 Fr.**, und zwischen 59'160 und 70'660 (R1) sagt die App
+  «kein Anspruch», wo nach der Tranchen-Lesart einer bestünde. Richtung: zu tief. Vorbehalt und «kein Anspruch»-Satz
+  nennen das jetzt in der Anzeige.
+- **Kinder-Vergleich:** die Wegleitung, Abschnitt «Gesamtanspruch», «Bei Personen im Gesamtanspruch werden die
+  anrechenbaren Einkommen sowie die Richtprämien aller Personen zusammengezählt», stützt die Haushalt-Lesart (die
+  tiefere Zahl). Unterschied bis 2'411 (drei Kinder, 60'000). Weiterhin ohne Zahl (`grKinder`).
+- **BVG-Beitrag:** ist keiner erfasst, zeigt die Anzeige den Zusatz-Vorbehalt `ipv.vorbehaltGRbvg` (Betrag sonst zu
+  hoch, Beispiel der Prüfung: 2'352 statt 1'716).
+- **Deckel:** nur kantonales Recht geprüft; Bundesrecht (KVG Art. 65 / KVV) nicht gelesen — in Frage 8.3 ergänzt.
+
 ---
 
 ## AG — Aargau

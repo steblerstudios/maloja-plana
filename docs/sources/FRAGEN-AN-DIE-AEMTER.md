@@ -250,24 +250,34 @@ mit Daten gefüttert.
 10 000 Franken 5 Prozent, bis 20 000 Franken 6,5 Prozent …» Wir lesen: EIN Satz je Kategorie, auf
 das ganze anrechenbare Einkommen (bei 40'000: 9 % × 40'000 = 3'600; bei 40'001: 10 % = 4'000.10).
 Oder wird wie bei einem Steuertarif je Tranche gerechnet (bei 40'000: 2'850)? Der Unterschied
-beträgt bis 750 Franken im Jahr. Die App rechnet nach der ersten Lesart und sagt es dazu.
+beträgt 150 / 450 / 750 Franken in den Kategorien bis 40'000 und darüber **1'150 Franken** im Jahr;
+zwischen 59'160 und 70'660 (Region 1) zeigt die App «kein Anspruch», wo nach der Tranchen-Lesart
+einer bestünde. ⟨korrigiert 28.09.2026 nach der Fachprüfung #467: hier stand «bis 750 Franken».⟩
+Die App rechnet nach der ersten Lesart und sagt in der Anzeige, dass sie im Zweifel zu tief liegt.
 
 **Frage 2 — Kinder: Vergleich für den Haushalt oder je Kind?** Art. 8 Abs. 4: «Zur Auszahlung
 gelangt der höhere der gemäss den Absätzen 2 und 3 berechneten Beträge.» Wird der ganze
 Haushaltsbetrag nach Abs. 2 mit der Summe der Kinderbeträge nach Abs. 3 verglichen — oder erhält
 jedes Kind mindestens seinen Betrag nach Abs. 3, und die erwachsene Person ihren Anteil nach
-Abs. 2? Beispiel Region 1, ein Kind, anrechenbares Einkommen 30'000: 4'920 gegen 5'380.33. Bis zur
+Abs. 2? Beispiel Region 1, ein Kind, anrechenbares Einkommen 30'000: 4'920 gegen 5'380.33; bei
+drei Kindern und 60'000 bis 2'411 Franken. Die Wegleitung 2026 («Gesamtanspruch»: «… werden die
+anrechenbaren Einkommen sowie die Richtprämien aller Personen zusammengezählt») stützt eher den
+Haushalt — die tiefere Zahl. Bis zur
 Antwort zeigt die App für Haushalte mit Kindern bis 80'000 keinen Betrag, wo die beiden
 Lesarten auseinandergehen.
 
 **Frage 3 — Deckel:** KPVG und VOzKPVG begrenzen die Verbilligung nicht auf die tatsächlich
 bezahlte Prämie. Was geschieht, wenn die eigene Prämie tiefer ist als die Verbilligung der
-Richtprämie? Die App deckelt bis zur Antwort nicht (wie SG).
+Richtprämie? Die App deckelt bis zur Antwort nicht (wie SG). Geprüft ist nur das kantonale Recht;
+ob Bundesrecht (Auszahlung an den Versicherer, KVG Art. 65 / KVV) den Betrag an der geschuldeten
+Prämie begrenzt, haben wir nicht gelesen — gehört zur Frage.
 
-**Frage 4 — Alter:** Die Wegleitung nennt «Erwachsene ab 26. Altersjahr», «junge Erwachsene
+~~**Frage 4 — Alter:** Die Wegleitung nennt «Erwachsene ab 26. Altersjahr», «junge Erwachsene
 19 - 25 Jahre», «Kinder bis und mit 18. Altersjahr», aber keine Jahrgänge und keinen Stichtag.
 Zählt das Alter am 1. Januar, am 31. Dezember oder der Jahrgang? Die App rechnet nur für
-Personen, die das ganze Anspruchsjahr über 25 sind.
+Personen, die das ganze Anspruchsjahr über 25 sind.~~ ⟨beantwortet 28.09.2026 aus der Quelle,
+Fachprüfung #467: der Online-Rechner der SVA 2026 (`sva.gr.ch/ipv.html`) führt «junge Erwachsene
+(Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». Die App rechnet jetzt nach Jahrgang.⟩
 
 **Frage 5 — geringfügige Beträge:** Art. 11 Abs. 5 und Art. 16 Abs. 4 KPVG erlauben, geringfügige
 Beträge nicht auszuzahlen. Gibt es für 2026 eine solche Grenze? In VOzKPVG und Wegleitung steht
