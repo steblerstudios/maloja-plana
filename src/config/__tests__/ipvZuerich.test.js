@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_ZH, ipvZuerichRechnen, zhRegion } from '../ipvZuerich.js';
+import { IPV_ZH, IPV_ZH_2027, IPV_ZH_JAHRE, ipvZuerichRechnen, zhRegion, zhWerte } from '../ipvZuerich.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, CANTON_CODES, getHouseholdInfo } from '../cantonalData.js';
 import { getRegion } from '../../data/praemienRegionen.js';
 import { calculateIPVAlt } from './calculateIPV-v0.1.37.js';
@@ -52,6 +52,105 @@ describe('K31 ZH-Modell gegen die amtliche Tabelle der Einkommensgrenzen 2026 [A
       }
     }
   }
+});
+
+// ── Anspruchsjahr 2027 (vorbereitet 28.09.2026) ─────────────────────────────────────────────
+// Quellen, abgerufen 2026-09-28 (Wortlaute: docs/sources/ipv-kantone-2026.md, ZH, «Vorbereitung 2027»):
+//  [F] RRB Nr. 303/2026 vom 18.03.2026 (IPV 2027, Eckwerte erste Phase), Dispositiv I–VI,
+//      https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2026/303/RRB-2026-0303.pdf
+//  [G] SVA Zürich, «Prämienverbilligung 2027: Einkommensgrenzen 2027»,
+//      https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2027/einkommensgrenzen-2027.html
+//  [B] wie oben («Leistung»): «Für das Jahr 2027 gelten folgende Eigenanteile: 11.8 … 9.4 Prozent».
+// [G] wörtlich abgeschrieben, unabhängig von der Kopie im Modul — beide müssen übereinstimmen.
+const TABELLE_G_2027 = {
+  einzel: {
+    1: { j: [42620, 71200, 71210, 85500], e: [59420, 73700, 88000, 102300] },
+    2: { j: [39045, 71200, 71200, 78170], e: [54235, 71200, 80315, 93360] },
+    3: { j: [36185, 71200, 71200, 72630], e: [50570, 71200, 74860, 86990] },
+  },
+  verheiratet: {
+    1: { j: [67900, 78280, 90670, 102050], e: [94670, 106040, 117420, 128820] },
+    2: { j: [62205, 72590, 82980, 93360], e: [86410, 96790, 107180, 117600] },
+    3: { j: [57650, 71200, 77000, 86680], e: [80575, 90240, 99920, 109600] },
+  },
+};
+
+// 🛑 ATTRAPPE, keine amtliche Zahl. Die Referenzprämie und die Durchschnittsprämien 2027 sind
+// am 28.09.2026 nicht publiziert. Um die Mechanik (Jahreswechsel, Satz 2027, Stichtag,
+// Tabellen-Grenze) zu prüfen, wird hier 70 % und die Tabelle 2026 eingesetzt — nur im Test,
+// nur für die Dauer eines Falls. Erwartete Beträge sind darum keine Aussage über 2027.
+const ATTRAPPE_2027 = { referenz: 0.7, rdp: IPV_ZH.rdp };
+function mitAttrappe2027(fn) {
+  const alt = { referenz: IPV_ZH_2027.referenz, rdp: IPV_ZH_2027.rdp };
+  Object.assign(IPV_ZH_2027, ATTRAPPE_2027);
+  try { return fn(); } finally { Object.assign(IPV_ZH_2027, alt); }
+}
+
+describe('K31 ZH 2027: Werte wörtlich an der Quelle', () => {
+  it('Eigenanteil 2027 [B]: 9.4 % übrige, 11.8 % Verheiratete (provisorisch nach [F] Disp. VI)', () => {
+    expect(IPV_ZH_2027.satz).toEqual({ uebrige: 0.094, verheiratet: 0.118 });
+  });
+  it('[F] Disp. II: massgebende Prämie 83 % (2026: 84 %)', () => {
+    expect(IPV_ZH_2027.massgebend).toBe(0.83);
+    expect(IPV_ZH.massgebend).toBe(0.84);
+  });
+  it('[F] Disp. III.1 Familiengrenze 71 200, Disp. IV Abzugsquote 60 %, Disp. I Vermögen 150 000 / 300 000', () => {
+    expect(IPV_ZH_2027.familienGrenze).toBe(71200);
+    expect(IPV_ZH_2027.abzugsquote).toBe(0.6);
+    expect(IPV_ZH_2027.vermoegen.grenze).toEqual([150000, 300000]);
+  });
+  it('Referenzprämie und Durchschnittsprämien 2027 sind NICHT publiziert → null, nicht geraten', () => {
+    expect(IPV_ZH_2027.referenz).toBeNull();
+    expect(IPV_ZH_2027.rdp).toBeNull();
+  });
+  it('Einkommensgrenzen 2027 [G] wörtlich im Modul', () => {
+    expect(IPV_ZH_2027.grenzen).toEqual(TABELLE_G_2027);
+  });
+});
+
+describe('K31 ZH: Werte je Jahr', () => {
+  it('2026 → Datensatz 2026 (unverändert), 2027 → noch keiner (unvollständig), 2025/2028 → keiner', () => {
+    expect(zhWerte(2026)).toBe(IPV_ZH);
+    expect(IPV_ZH_JAHRE[2027]).toBe(IPV_ZH_2027);
+    expect(zhWerte(2027)).toBeNull();
+    expect(zhWerte(2025)).toBeNull();
+    expect(zhWerte(2028)).toBeNull();
+  });
+  it('sobald 2027 vollständig ist, wird es gewählt (Attrappe)', () => {
+    mitAttrappe2027(() => expect(zhWerte(2027)).toBe(IPV_ZH_2027));
+    expect(zhWerte(2027)).toBeNull(); // Attrappe wieder weg
+  });
+});
+
+// Die Sache hinter dem Exaktheits-Test: 2026 IST die Grenze der Nullpunkt der Formel (36 Zellen
+// oben, exakt). 2027 ist sie es nicht — die publizierten Zahlen liegen 5 bis 48 Franken unter
+// «Summe ÷ Satz» (mit den Werten der Notiz vom 19.09.), eine Zelle 1 022 Franken, ohne
+// erkennbare Rundungsregel (Quellenblatt). Darum gilt für 2027: angezeigt wird die
+// publizierte Zahl, nie die gerechnete — geprüft an allen 48 Zellen, unabhängig davon, welche
+// Durchschnittsprämie später eingesetzt wird.
+describe('K31 ZH 2027: angezeigte Grenze = publizierte Tabelle [G], nicht die Formel', () => {
+  for (const [stand, proRegion] of Object.entries(TABELLE_G_2027)) {
+    for (const region of REGIONEN) {
+      for (const alter of ['j', 'e']) {
+        proRegion[region][alter].forEach((grenze, kinder) => {
+          it(`${stand}, Region ${region}, ${alter}, ${kinder} Kind(er): CHF ${grenze}`, () => {
+            const personen = [...Array(stand === 'verheiratet' ? 2 : 1).fill(alter), ...Array(kinder).fill('k')];
+            const werte = { ...IPV_ZH_2027, ...ATTRAPPE_2027 };
+            const r = ipvZuerichRechnen({ region, verheiratet: stand === 'verheiratet', personen, me: grenze, werte });
+            expect(r.grenze).toBe(grenze);
+          });
+        });
+      }
+    }
+  }
+  it('ohne Tabellenzelle (4 Kinder) bleibt es beim Nullpunkt der Formel wie 2026', () => {
+    const werte = { ...IPV_ZH_2027, ...ATTRAPPE_2027 };
+    const r = ipvZuerichRechnen({ region: 1, verheiratet: false, personen: ['e', 'k', 'k', 'k', 'k'], me: 0, werte });
+    expect(r.grenze).toBe(Math.round((0.7 * 12 * (640 + 4 * 154)) / 0.094));
+  });
+  it('2026 hat keine Tabelle im Datensatz: dort bleibt die Formel massgebend', () => {
+    expect(IPV_ZH.grenzen).toBeUndefined();
+  });
 });
 
 describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', () => {
@@ -253,6 +352,40 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     it('ab 2027 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
       expect(calculateIPV(person({}))).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
+    });
+
+    // Jahreswechsel mit befülltem 2027 (ATTRAPPE, siehe oben): ab 01.01.2027 rechnet dieselbe
+    // Person mit dem Satz 2027, dem Stichtag 31.12.2026 und der Tabellen-Grenze 2027 —
+    // am 31.12.2026 bleibt alles bei 2026.
+    it('Jahreswechsel mit Attrappe: 31.12.2026 → Werte 2026, 01.01.2027 → Werte 2027', () => {
+      mitAttrappe2027(() => {
+        vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T23:59:00'));
+        const alt = calculateIPV(person({ monthlyIncome: 2500 }));
+        expect(alt).toMatchObject({ jahr: 2026, annual: 2856 }); // 5 376 − 8.4 % × 30 000
+        expect(alt.cantonData.maxIncome).toBe(64000);
+        vi.setSystemTime(new Date('2027-01-01T00:01:00'));
+        const neu = calculateIPV(person({ monthlyIncome: 2500 }));
+        expect(neu).toMatchObject({ jahr: 2027, annual: 2556 }); // 5 376 − 9.4 % × 30 000 (Attrappe)
+        expect(neu.cantonData.maxIncome).toBe(59420); // [G], nicht 5 376 / 9.4 % = 57 191
+      });
+    });
+
+    it('Stichtag wandert mit: Jahrgang 2000 ist am 31.12.2026 26 → 2027 erwachsen (Attrappe)', () => {
+      mitAttrappe2027(() => {
+        vi.useFakeTimers(); vi.setSystemTime(new Date('2026-06-01T12:00:00'));
+        expect(calculateIPV(person({ dob: '2000-12-31' }))).toMatchObject({ offen: 'alter' });
+        vi.setSystemTime(new Date('2027-06-01T12:00:00'));
+        expect(calculateIPV(person({ dob: '2000-12-31' }))).toMatchObject({ belegt: true, jahr: 2027 });
+      });
+    });
+
+    it('Kinder-Mindestanspruch 2027 mit 83 % [F] Disp. II (Attrappe)', () => {
+      mitAttrappe2027(() => {
+        vi.useFakeTimers(); vi.setSystemTime(new Date('2027-06-01T12:00:00'));
+        // Region 1, 1 Kind, 60 000: Gruppe 6 669.60 − 9.4 % × 60 000 = 1 029.60
+        const r = calculateIPV(person({ monthlyIncome: 5000, children: [{ age: 5 }] }));
+        expect(r.annual).toBe(Math.round(1029.6 * 5376 / 6669.6 + 0.8 * 0.83 * 154 * 12));
+      });
     });
   });
 
