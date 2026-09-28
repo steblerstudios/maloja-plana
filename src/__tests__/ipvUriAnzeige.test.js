@@ -86,7 +86,8 @@ describe('K31 IPV-Rechner, Kanton Uri', () => {
       expect(texte.ipv.vorbehaltUR, `${sprache}: Platzhalter`).toContain('{basisjahr}');
       for (const p of ['{jahr}', '{basisjahr}', '{vorjahr}']) expect(texte.ipv.urAutomatisch, `${sprache}: ${p}`).toContain(p);
     }
-  });
+  // Fünf Sprachdateien laden dauert unter Last (parallele Läufe) gemessen gut 5 s — der Standard.
+  }, 30000);
 
   it('Paare und Kinder ohne Alter: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(2000), basis: { ...profil(2000).basis, maritalStatus: 'married' } });
