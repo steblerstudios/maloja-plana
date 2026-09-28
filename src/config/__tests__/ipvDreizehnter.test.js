@@ -71,13 +71,14 @@ const KANTONE = [
   ['AG', '5000', 'Aarau'],
   ['SG', '9000', 'St.Gallen'],
   ['LU', '6003', 'Luzern'],
+  ['VS', '1950', 'Sion'],
 ];
 
-describe('calculateIPV in den fünf Kantonsmodulen', () => {
+describe('calculateIPV in den Kantonsmodulen', () => {
   beforeAll(async () => {
     preloadPLZ();
     await import('../../data/plzGemeinde.js');
-    await Promise.all(['ipvZuerich', 'ipvBern', 'ipvAargau', 'ipvStGallen', 'ipvLuzern'].map((m) => import(`../${m}.js`)));
+    await Promise.all(['ipvZuerich', 'ipvBern', 'ipvAargau', 'ipvStGallen', 'ipvLuzern', 'ipvWallis'].map((m) => import(`../${m}.js`)));
     await new Promise((r) => setTimeout(r, 0));
   });
 
