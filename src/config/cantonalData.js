@@ -31,6 +31,7 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -113,7 +114,12 @@ export const CANTONAL_IPV = {
     beleg: { quelle: 'SRL 866a · SRL 866 · WAS Ausgleichskasse Luzern — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-23' } },
   UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice', beleg: null },
   SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
-  OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // OW (K31): eigenes Modell in config/ipvObwalden.js (Richtprämien minus linear-progressiver
+  // Selbstbehalt, harte Grenze 50 000 / mit Kindern 75 000 anrechenbares Einkommen, eine Region).
+  // Die Grenze hängt am Haushalt, darum steht sie im Ergebnis, nicht hier. Antrag bei der
+  // Ausgleichskasse Obwalden (GDB 851.11 Art. 10).
+  OW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'GDB 851.12 · GDB 851.11 · GDB 851.1 · Ausgleichskasse Obwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },

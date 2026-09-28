@@ -114,8 +114,10 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU, VD',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03)',
+    // OW (28.09.2026): Art. 7a GDB 851.11 zieht vom Total der Einkünfte nur aufgezählte Posten ab;
+    // die 3a (Art. 35 Abs. 1 lit. e StG) ist nicht darunter — sie bleibt voll im Einkommen.
+    kantone: 'ZH, SG, LU, VD, OW',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · OW Art. 7a GDB 851.11',
     nichtAufgerechnet: () => 0,
   }),
 
