@@ -42,8 +42,11 @@ export function vermoegenSumme(f) {
 //                        VD: LHPS (BLV 850.03) art. 6 al. 2 lit. a, «majoré des montants affectés
 //                            aux formes reconnues de prévoyance individuelle liée (3e pilier A)»
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
-//   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
-//                        KKVV Art. 6 Abs. 4 lit. i
+//   bisBundesMaximum     BE, VS — nur bis zum bundesrechtlichen Maximum für Unselbständige.
+//                        BE: KKVV Art. 6 Abs. 4 lit. i
+//                        VS: VüIPV (SGS 832.105) Art. 8 Abs. 1 lit. a, «bis zum Maximalbetrag des
+//                            Angestelltenlohns». Das Wallis rechnet nur, wo der Deckel NICHT beisst
+//                            (das Merkblatt der Ausgleichskasse nennt keinen Deckel — ipvWallis.js).
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
@@ -121,8 +124,8 @@ export const SAEULE_3A = Object.freeze({
 
   bisBundesMaximum: Object.freeze({
     name: 'bisBundesMaximum',
-    kantone: 'BE',
-    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025)',
+    kantone: 'BE, VS',
+    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025) · VS Art. 8 Abs. 1 lit. a VüIPV (SGS 832.105, Stand 01.05.2026)',
     // Wortlaut an der Quelle, abgerufen 23.09.2026 aus der bernischen Erlass-Sammlung
     // (https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1):
     //   «Beiträge an die gebundene Selbstvorsorge (Säule 3a) bis zum nach Bundesrecht

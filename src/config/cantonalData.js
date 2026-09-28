@@ -31,6 +31,7 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  VS: { laden: () => import('./ipvWallis.js'), fn: 'ipvWallis' },
 };
 const _module = {};
 
@@ -141,7 +142,11 @@ export const CANTONAL_IPV = {
   // Der Weg ist ein Antrag (Notice OVAM 2026 Ziff. 4), nicht die automatische Prüfung via Steuerdaten.
   VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',
     beleg: { quelle: 'Arrêté CE VD du 17.12.2025 (subsides 2026) · RLVLAMal (BLV 832.01.1) · LVLAMal (BLV 832.01) · LHPS (BLV 850.03) · OVAM — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
+  // VS (K31): eigenes Modell in config/ipvWallis.js (degressive Skala 70 … 5 % der regionalen
+  // Referenzprämie, Kinder 80 %). Die Grenze hängt am Haushalt und wird im Modul gesetzt. Der Weg ist
+  // automatisch über die Steuerdaten (Ausgleichskasse), nicht ein Antrag bei der Dienststelle.
+  VS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'VüIPV VS (SGS 832.105) · Einkommenstabelle 2026 · Ausgleichskasse des Kantons Wallis — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
