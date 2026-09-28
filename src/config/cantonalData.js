@@ -117,7 +117,7 @@ export const CANTONAL_IPV = {
   // nur unter einer Grenze aus EL-Lebensbedarf und EL-Mietzins). Die SVA veröffentlicht nur das
   // «minimale Höchsteinkommen» (Mietzinsregion 3) — keine Grenze für die Person, darum maxIncome null.
   // Durchführungsstelle seit 01.01.2026 die Sozialversicherungsanstalt Schwyz (§ 16 EGzKVG).
-  SZ: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SZ' },
+  SZ: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'Schwyz' },
     beleg: { quelle: 'EGzKVG SZ (SRSZ 361.100) · KRBzEGzKVG (SRSZ 361.110) · VVzEGzKVG (SRSZ 361.111) · SVA Schwyz — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
   NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },

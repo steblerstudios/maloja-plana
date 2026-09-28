@@ -66,10 +66,14 @@
 //   · Quellenbesteuerte (§ 5 [3]: 80 % des Bruttolohns), EL-Beziehende (§ 6 Abs. 1 [3], von
 //     Amtes wegen) und Sozialhilfebeziehende (§ 6 Abs. 3 [3]: tatsächliche Prämie, höchstens die
 //     Richtprämie).
-//   · vom anrechenbaren Einkommen: ausserordentlicher Liegenschaftsunterhalt und Einkäufe in die
-//     2. Säule (§ 7 Abs. 2 lit. b/c [1]) — die App erfasst sie nicht; jede Auslassung SENKT das
-//     Einkommen und erhöht den Betrag. Umgekehrt fehlen die übrigen Abzüge der direkten
-//     Bundessteuer (Berufsauslagen, Versicherungsabzüge …): das HEBT das Einkommen.
+//   · vom anrechenbaren Einkommen: ausserordentlicher Liegenschaftsunterhalt (§ 7 Abs. 2 lit. b
+//     [1]) — die App erfasst ihn nicht; das SENKT das Einkommen und erhöht den Betrag. Die Einkäufe
+//     in die 2. Säule (lit. c) wirken dagegen NEUTRAL: das Reineinkommen hat sie abgezogen, lit. c
+//     rechnet sie wieder auf, und im Nettoeinkommen der App stecken sie ohnehin.
+//     ⟨korrigiert 28.09.2026, Fachprüfung #470 💡 4: hier stand, auch die Einkäufe SENKTEN das
+//     Einkommen.⟩ Umgekehrt fehlen die übrigen Abzüge der direkten Bundessteuer (Berufsauslagen,
+//     Versicherungsabzüge …): das HEBT das Einkommen der App über das amtliche — darum sagt
+//     `ipv.szKeinAnspruch`, dass knapp über dem Nullpunkt trotzdem ein Anspruch bestehen kann.
 //   · die Anpassung bei wesentlich geänderten Verhältnissen (§ 10 [3], auf Antrag) — der
 //     Vorbehalt nennt sie.
 import {
@@ -98,6 +102,15 @@ export const IPV_SZ = {
   // [4] «Höchsteinkommen», Spalte Alleinstehende, ohne Kind bis 4 Kinder — «die minimalen
   // Höchsteinkommen im Kanton Schwyz (für Kinder unter 11 Jahren, Mietzinsregion 3)».
   hoechsteinkommenMinimal: [43554, 56052, 65845, 74343, 80161],
+  // [4] zweite Tabelle: «Darüber hinaus haben Kinder bis zum 18. Altersjahr Anspruch auf eine
+  // Verbilligung von mindestens 80% der Richtprämie … Dafür gelten folgende Höchstgrenzen»,
+  // Alleinstehende 0–4 Kinder — ebenfalls die minimalen Werte (Mietzinsregion 3, Kinder unter 11).
+  // Darunter ist der Anspruch DER KINDER in jeder Gemeinde sicher; den Gesamtbetrag gibt sie nicht.
+  // Für beide Tabellen gilt: «ab dem 5. Kind erhöht sich der Höchstwert weiter» — der Wert für
+  // 4 Kinder ist darum eine belegte Untergrenze für 5 und mehr.
+  // (Fachprüfung #470 ⚠️ 1, 28.09.2026: die zweite Tabelle fehlte, der Grund-Text klang für
+  // Familien wie «vielleicht gar kein Anspruch».)
+  hoechsteinkommenKinderMinimal: [43554, 63117, 74491.25, 84306.75, 91222.25],
   // § 7a Abs. 1 [3]: Kinder «um mindestens 80 Prozent».
   mindestanteilKind: 0.8,
   // § 18 Abs. 2 [1]: «Beiträge von gesamthaft weniger als 50 Franken im Jahr werden nicht
@@ -161,8 +174,10 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
   if (UEBER_18(kinderJahre)) return orientierung('haushalt');
   const kinderZahl = kinderJahre.length;
-  // Ab dem 5. Kind ist kein Höchsteinkommen veröffentlicht [4].
-  if (kinderZahl >= p.hoechsteinkommenMinimal.length) return orientierung('szGrenzeMietzinsregion');
+  // Ab dem 5. Kind ist kein eigener Wert veröffentlicht, nur «erhöht sich … weiter» [4]: der Wert
+  // für 4 Kinder ist eine belegte Untergrenze. ⟨Bis zur Fachprüfung #470 hier: ab 5 Kindern immer
+  // `szGrenzeMietzinsregion` — auch bei 6'000 Einkommen, mit dem falschen Satz «liegt über».⟩
+  const tabelle = Math.min(kinderZahl, p.hoechsteinkommenMinimal.length - 1);
 
   const vermoegen = vermoegenSumme(f);
   const vermoegenNachFreibetrag = Math.max(0, vermoegen - p.freibetrag.erwachsen - p.freibetrag.kind * kinderZahl);
@@ -176,10 +191,13 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   // § 7 Abs. 1 [1]: Reineinkommen der direkten Bundessteuer — die Säule 3a ist darin abgezogen
   // und wird NICHT aufgerechnet (Regel `imReineinkommenAbgezogen` im Rahmen). Die Bemessung
   // stützt sich auf die jüngste rechtskräftige Veranlagung, höchstens drei Jahre zurück (§ 9
-  // Abs. 1 [3]) — für 2026 also eine der Steuerperioden 2023–2025.
-  const jahre = { bemessungsjahre: [jahr - 3, jahr - 2, jahr - 1], anspruchsjahr: jahr };
+  // Abs. 1 [3]), die «am 1. April des dem Anspruchsjahr vorangehenden Jahres im Kanton vorliegt»
+  // (§ 8 Abs. 1 [1]) — für 2026 also 2023 oder 2024, nicht 2025. Sicher abgezogen ist darum
+  // min(7'056, 20 % des Netto-Erwerbseinkommens); darüber keine Zahl.
+  // ⟨28.09.2026, Fachprüfung #470 💡 5: vorher 2023–2025; ohne Wirkung, das Minimum war dasselbe.⟩
+  const jahre = { bemessungsjahre: [jahr - 3, jahr - 2], anspruchsjahr: jahr };
   const regel = SAEULE_3A.imReineinkommenAbgezogen;
-  if (regel.widerlegt(f, jahre)) return orientierung('saeule3aAbzugUnklar');
+  if (regel.widerlegt(f, rohesEinkommenJahr(f), jahre)) return orientierung('saeule3aAbzugUnklar');
   const me = Math.max(0, einkommenJahr(f, regel, jahre) + p.vermoegenAnteil * vermoegenNachFreibetrag);
 
   const r = ipvSchwyzRechnen({ personen: ['e', ...kinderJahre.map(() => 'k')], me });
@@ -195,8 +213,16 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
   }
   // § 5 Abs. 1 lit. c [1]: «kleiner ist als» — am minimalen Höchsteinkommen selbst also nicht
   // mehr sicher. Darüber hängt der Anspruch an Mietzinsregion und Kinderalter.
-  if (me >= p.hoechsteinkommenMinimal[kinderZahl]) return orientierung('szGrenzeMietzinsregion');
-  if (r.mindestUnklar) return orientierung('mindestanspruch');
+  if (kinderZahl === 0) {
+    if (me >= p.hoechsteinkommenMinimal[0]) return orientierung('szGrenzeMietzinsregion');
+  } else {
+    // Mit Kindern: über der Kinder-Tabelle ist gar nichts sicher; darunter sicher der Anspruch der
+    // Kinder auf mindestens 80 % (§ 5 Abs. 2 [1], § 7a [3], zweite Tabelle [4]) — aber nicht der
+    // Gesamtbetrag (Mietzinsregion über der ersten Tabelle, Verteilung des Mindestanspruchs
+    // darunter). Dann ein eigener Grund, der das Sichere sagt, statt «vielleicht kein Anspruch».
+    if (me >= p.hoechsteinkommenKinderMinimal[tabelle]) return orientierung('szGrenzeMietzinsregion');
+    if (me >= p.hoechsteinkommenMinimal[tabelle] || r.mindestUnklar) return orientierung('szKinderMindestanspruch');
+  }
 
   // § 10 Abs. 1 [1]: höchstens die «tatsächlich geschuldeten Prämien». Die App kennt nur die
   // Prämie der erwachsenen Person — nur deren Anteil wird gedeckelt (`deckelnProPerson`).

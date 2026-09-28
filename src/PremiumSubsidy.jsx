@@ -426,7 +426,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ),
 
     // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton
-    // nach seinem eigenen Modell gerechnet wurde (heute ZH, BE und AG). Eine konkrete Zahl ohne ihr Jahr
+    // nach seinem eigenen Modell gerechnet wurde (alle Kantone im Register IPV_MODULE). Eine konkrete Zahl ohne ihr Jahr
     // und ohne den Rückzahlungs-Vorbehalt wäre zu selbstsicher (Fachprüfung 20.09.2026).
     ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
       // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der

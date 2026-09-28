@@ -29,7 +29,7 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die drei Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (seit 28.09.2026 vier) — benannt und belegt, NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
@@ -51,7 +51,7 @@ export function vermoegenSumme(f) {
 //                        (SRSZ 361.100) zählt die Aufrechnungen abschliessend auf, die 3a
 //                        fehlt darin. ⇒ Abzug = die ganze Einzahlung, soweit sicher abziehbar.
 //
-// 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
+// 🛑 EINE DIESER REGELN (`schwelleOhneSaeule2`) WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
 // wird beim nächsten Kanton nicht kopiert. `schwelleOhneSaeule2` gibt `0` zurück wie `voll`,
 // aber aus einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
@@ -350,7 +350,10 @@ export const SAEULE_3A = Object.freeze({
     nichtAufgerechnet: (f) => betrag3a(f),
     // Widerlegt, wenn die Einzahlung über dem sicher Abziehbaren liegt oder über ein Jahr
     // hinausreicht (Altdaten, siehe `ueberEinJahrHinaus`). Ohne Einzahlung nie.
-    widerlegt: (f, jahre) => {
+    // Dieselbe Signatur wie `bisBundesMaximum.widerlegt(f, jahresEinkommen, jahre)`, damit ein
+    // kopierter Aufruf nicht still das Einkommen als `jahre` übergibt (Fachprüfung #470 💡 3).
+    // `jahresEinkommen` braucht diese Regel nicht: die 20-%-Grenze liest das Erwerbseinkommen selbst.
+    widerlegt: (f, jahresEinkommen, jahre) => {
       if (betrag3a(f) <= 0) return false;
       const sicher = SAEULE_3A_SZ_SICHER(f, jahre);
       return sicher === null || betrag3a(f) > sicher || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
