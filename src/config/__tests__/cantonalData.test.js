@@ -142,14 +142,14 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
 
 // K31: ZH ist seit 19.09.2026 belegt, BE und AG seit 20.09.2026 — alle drei mit eigenem
 // Modell (Tests in ipvZuerich.test.js, ipvBern.test.js bzw. ipvAargau.test.js).
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'NW'];
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'JU', 'NW'];
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 11 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO und NW mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 10 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU und NW mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    expect(UNBELEGT).toHaveLength(11);
+    expect(UNBELEGT).toHaveLength(10);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
   });

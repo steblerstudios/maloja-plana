@@ -31,6 +31,8 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  // JU: keine Prämienregion — und das Modul zeigt bewusst keine Zahl (steuerbares Einkommen fehlt).
+  JU: { laden: () => import('./ipvJura.js'), fn: 'ipvJura', brauchtPLZ: false },
   UR: { laden: () => import('./ipvUri.js'), fn: 'ipvUri', brauchtPLZ: false },
   NE: { laden: () => import('./ipvNeuchatel.js'), fn: 'ipvNeuchatel', brauchtPLZ: false },
   // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
@@ -196,7 +198,11 @@ export const CANTONAL_IPV = {
   // Antragsfall (Rechtsprüfung 28.09.2026: vorher stand hier `ipv.noteAutoSam` ohne Einschränkung).
   GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.geWegAutomatisch',
     beleg: { quelle: 'LaLAMal (rsGE J 3 05) Art. 21/22 · RaLAMal (rsGE J 3 05.01) Art. 9–10A · LRDU (rsGE J 4 06) Art. 8 · Barème subsides 2026, Service de l\'assurance-maladie (SAM) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
+  // JU (K31): Modell in config/ipvJura.js (Stufentabelle in 1'000er-Schritten). Massgebend ist das
+  // steuerbare Einkommen der Veranlagung 2024, das die App nicht kennt — darum zeigt JU bewusst
+  // KEINE Zahl, sondern die Orientierung mit Grund. Weg: Prüfung von Amtes wegen durch die ECAS.
+  JU: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'Arrêté RPI 2026 (RSJU 832.115.1) · Ordonnance RSJU 832.115 · Caisse de compensation JU (ECAS) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
 };
 
 // Mietzins-Limite (bis zu welcher Miete die Sozialhilfe die Wohnkosten anrechnet): die App kennt
