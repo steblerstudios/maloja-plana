@@ -149,7 +149,7 @@ describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
   it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 14 null, ZH, BE, AG, SG, LU, VD, UR, NE, GR, TG, TI und GE mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    expect(UNBELEGT).toHaveLength(15);
+    expect(UNBELEGT).toHaveLength(14);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
   });

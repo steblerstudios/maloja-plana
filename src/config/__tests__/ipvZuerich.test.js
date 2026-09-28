@@ -144,8 +144,8 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GR
     }
   }
 
-  it(`15 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
-    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(15);
+  it(`14 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(14);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 
