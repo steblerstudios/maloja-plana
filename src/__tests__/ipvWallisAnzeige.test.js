@@ -74,6 +74,8 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
   it('über der Grenze, Quellensteuer, junge Erwachsene: je ein eigener Satz', () => {
     expect(render(profil(38501 / 12))).toContain('ipv.vsKeinAnspruch');
     expect(render({ ...profil(2000), ausbildung: { workPermit: 'b' } })).toContain('ipv.offenGrund.vsQuellensteuer');
+    expect(render({ ...profil(2000), ausbildung: { workPermit: 'g' } })).toContain('ipv.offenGrund.vsGrenzgaenger');
+    expect(render(profil(1000, { finanzen: { alimentePaid: 1500 } }))).toContain('ipv.offenGrund.vsUnterhaltUeberEinkommen');
     expect(render({ ...profil(2000), basis: { ...profil(2000).basis, dateOfBirth: '2002-03-01' } })).toContain('ipv.offenGrund.vsJungeErwachsene');
     expect(render(profil(62000 / 12, { children: [{ age: 5 }] }))).not.toContain('ipv.offenGrund.mindestanspruch');
     expect(render(profil(2000, { children: [{ birthDate: '2026-02-01' }] }))).toContain('ipv.offenGrund.kindImJahrGeboren');
@@ -87,7 +89,7 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
       expect(texte.ipv.vorbehaltVS).toContain('{basisjahr}');
-      for (const g of ['kindImJahrGeboren', 'saeule3aStrittig', 'vsQuellensteuer', 'vsJungeErwachsene']) {
+      for (const g of ['kindImJahrGeboren', 'saeule3aStrittig', 'vsQuellensteuer', 'vsJungeErwachsene', 'vsGrenzgaenger', 'vsUnterhaltUeberEinkommen']) {
         expect(typeof texte.ipv.offenGrund[g], `${sprache}: offenGrund.${g}`).toBe('string');
         expect(texte.ipv.offenGrund[g].length).toBeGreaterThan(40);
       }

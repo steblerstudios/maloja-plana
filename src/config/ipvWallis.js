@@ -88,9 +88,15 @@
 //
 // BEWUSST NICHT GEBAUT
 //   · Ehepaare, Konkubinat, mehrere Erwachsene (das zweite Einkommen fehlt der App).
-//   · Personen von 20 bis 25 (einzeln gerechnet, Referenzprämie «Junge Erw.», Zusatz bis 50 % bei
-//     Ausbildung nach Art. 6 Abs. 3 [1]) — eigener Grund `vsJungeErwachsene` (nicht `alter`: das
+//   · Personen unter 26 (Stichtag 31.12. des Vorjahres): ab 20 einzeln gerechnet (Art. 3 Abs. 3 [1]),
+//     Referenzprämie «Junge Erw.», Zusatz bis 50 % bei Ausbildung nur 21–25 (Art. 6 Abs. 3 [1]); unter
+//     20 Teil der Familie der Eltern (Art. 9 Abs. 1), 18–20 ohne denselben Wohnort wie die Eltern auf
+//     eigenes Gesuch (Art. 9 Abs. 2) — eigener Grund `vsJungeErwachsene` (nicht `alter`: das
 //     Geburtsdatum fehlt nicht, und das Elterneinkommen zählt im Wallis ab 20 gerade NICHT).
+//   · GRENZGÄNGER:INNEN (Ausweis G): Wohnsitz im Ausland, Art. 3 Abs. 1 lit. b [1] verlangt Wohnsitz im
+//     Wallis am 1. Januar, bilaterale Abkommen vorbehalten → `orientierung('vsGrenzgaenger')`.
+//   · Bezahlte Unterhaltsbeiträge, die das ganze übrige massgebende Einkommen aufzehren →
+//     `orientierung('vsUnterhaltUeberEinkommen')` statt Einkommen 0 und Höchstsatz.
 //   · QUELLENBESTEUERTE (Ausweis B, L; auch N, F — kennt die App nicht): nicht automatisch erfasst,
 //     Gesuch bis 31. Dezember ([3], [5] Ziff. 6.2), anderes Einkommen (80 % brutto, Art. 8 Abs. 5 [1])
 //     → `orientierung('vsQuellensteuer')` aus `ausbildung.workPermit` (Fachprüfung #477, B2).
@@ -197,15 +203,23 @@ export function ipvWallis(data, hh, ipvData, youngAdultsCount, orientierung, loo
   // 28.09.2026 nichts publiziert.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
+  // Ausweis G = Grenzgängerbewilligung, Wohnsitz im Ausland. Art. 3 Abs. 1 lit. b [1]: Anspruch nur,
+  // wer «am 1. Januar … im Wallis wohnhaft» ist, «Vorbehalten bleiben … die bilateralen Abkommen
+  // (EU und EFTA)». Was für Grenzgänger:innen gilt, rechnet die App nicht — keine Zahl.
+  // ⟨Integration 28.09.2026: vorher rechnete G wie Wohnsitz im Wallis.⟩
+  const bewilligung = String(data.ausbildung?.workPermit || '').toLowerCase();
+  if (bewilligung === 'g') return orientierung('vsGrenzgaenger');
   const geburt = geburtsjahr(b);
   if (!geburt) return orientierung('alter');
-  // Unter 26 (nach `mangelsStichtag`): im Wallis wird, wer am 31.12. des Vorjahres 20 ist, EINZELN
-  // gerechnet (Art. 3 Abs. 3 [1]) — mit der Referenzprämie «Junge Erw.» und allenfalls dem Zusatz
-  // bis 50 % in Ausbildung (Art. 6 Abs. 3). Das baut die App nicht; eigener Grund statt `alter`.
+  // Unter 26 (nach `mangelsStichtag`) keine Zahl, eigener Grund statt `alter`. Der Text nennt BEIDE
+  // Gruppen im Band: wer am 31.12. des Vorjahres 20 ist, wird EINZELN gerechnet (Art. 3 Abs. 3 [1]) —
+  // Referenzprämie «Junge Erw.», Zusatz bis 50 % in Ausbildung erst von 21 bis 25 (Art. 6 Abs. 3);
+  // wer jünger ist, zählt zur Familie der Eltern (Art. 9 Abs. 1), mit 18–20 ohne denselben Wohnort
+  // wie die Eltern auf eigenes Gesuch (Art. 9 Abs. 2). ⟨Integration 28.09.2026: vorher nannte der
+  // Text nur «20 bis 25», obwohl auch allein lebende 18-/19-Jährige hier landen.⟩
   if (!ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('vsJungeErwachsene');
   // Quellenbesteuerte: nicht automatisch, Gesuch bis 31.12. ([3], [5] Ziff. 6.2). Die App kennt die
   // Bewilligung (`ausbildung.workPermit`); B und L sind in der Regel quellenbesteuert.
-  const bewilligung = String(data.ausbildung?.workPermit || '').toLowerCase();
   if (bewilligung === 'b' || bewilligung === 'l') return orientierung('vsQuellensteuer');
   // Alter im Anspruchsjahr, beim eingetippten Alter ein Jahr dazu (wie BE/SG/LU).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
@@ -239,9 +253,14 @@ export function ipvWallis(data, hh, ipvData, youngAdultsCount, orientierung, loo
   // Art. 8 Abs. 1 [1]: Nettoeinkommen vor Ziffer 2400 (inkl. erhaltene Unterhaltsbeiträge und
   // Familienzulagen, [6]) + 5 % Nettovermögen − bezahlte Unterhaltsbeiträge (lit. b). Siehe Kopf, 3.
   const monat = (k) => Math.max(0, Number(f[k]) || 0) * 12;
-  const me = Math.max(0, einkommenJahr(f, SAEULE_3A.bisBundesMaximum, jahre)
+  const meRoh = einkommenJahr(f, SAEULE_3A.bisBundesMaximum, jahre)
     + monat('alimenteReceived') + monat('familienzulagen')
-    + IPV_VS.vermoegenAnteil * vermoegen - monat('alimentePaid'));
+    + IPV_VS.vermoegenAnteil * vermoegen - monat('alimentePaid');
+  // Bleibt nach dem Abzug der bezahlten Unterhaltsbeiträge nichts übrig, fiele das Einkommen auf 0
+  // und die App zeigte den Höchstsatz (70 %, 4'712 in Region 1) — ein Vertipper oder ein Fall, den
+  // die App nicht kennt, keine Zahl. Riegel wie `einkommenNegativ`. ⟨Integration 28.09.2026⟩
+  if (monat('alimentePaid') > 0 && meRoh <= 0) return orientierung('vsUnterhaltUeberEinkommen');
+  const me = Math.max(0, meRoh);
 
   const r = ipvWallisRechnen({ region, kinderZahl, me });
 

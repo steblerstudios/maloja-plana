@@ -2907,6 +2907,20 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt für eine
 - **Lesart** «≤ Grenze» belegt ([5] Ziff. 4.1, Art. 2 Abs. 2).
 - Fragen an die Ausgleichskasse: ~~Nr. 10 (8 = Uri, 9 = FR)~~ **§ 27** (Integration 28.09.2026); Frage 1 beantwortet, neu Frage 5 (31.12. vs. 2 Jahre).
 
+**Nachträge bei der Integration (28.09.2026)** — VüIPV [1] erneut gelesen: `lex.vs.ch/api/de/versions/3609/pdf_file`
+→ 200, «Stand 01.05.2026», `pdftotext`.
+- **Unter 26:** `vsJungeErwachsene` griff auch für allein lebende 18-/19-Jährige, der Text nannte nur «20 bis 25»
+  und den Zuschlag ohne Altersgrenze. Der Text nennt jetzt beide Gruppen und den Zuschlag erst ab 21:
+  > «Versicherte, die am 31. Dezember des Jahres vor der gewährten Prämienverbilligung 20 Jahre alt sind, werden individuell behandelt. Vorbehalten bleibt Artikel 9 Absatz 2.» — Art. 3 Abs. 3
+  >
+  > «Junge Erwachsene zwischen 21 und 25 Jahren, die sich noch in Ausbildung befinden und denen eine Prämienverbilligung von weniger als 50 Prozent gewährt wird, können bei der Ausgleichskasse des Kantons Wallis … zusätzliche finanzielle Unterstützung bis zu 50 Prozent der durchschnittlichen Referenzprämie beantragen.» — Art. 6 Abs. 3
+  >
+  > «Zur Berechnung der finanziellen Unterstützung der Eltern werden Kinder bis zum 20. Altersjahr mit einbezogen.» · «Personen zwischen 18 und 20 Jahren, die nicht denselben gesetzlichen und steuerlichen Wohnort wie die Eltern haben, können eine individuelle Prämienverbilligung beantragen.» — Art. 9 Abs. 1 und 2
+- **Ausweis G:** rechnete wie Wohnsitz im Wallis → keine Zahl, Grund `vsGrenzgaenger`:
+  > «am 1. Januar des Jahres, für das eine individuelle Prämienverbilligung angestrebt wird, im Wallis wohnhaft sind. Vorbehalten bleiben von Bundesrecht vorgesehene Vorgaben namentlich im Bereich der bilateralen Abkommen (EU und EFTA)» — Art. 3 Abs. 1 lit. b
+- **Bezahlte Alimente ≥ übriges massgebendes Einkommen:** vorher auf 0 geklemmt → Höchstsatz 4'712 → jetzt keine
+  Zahl, Grund `vsUnterhaltUeberEinkommen` (Riegel wie `einkommenNegativ`).
+
 ---
 
 ## NE — Neuchâtel

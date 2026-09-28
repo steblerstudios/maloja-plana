@@ -285,5 +285,40 @@ describe('K31 calculateIPV für VS (App-Angaben → Modell)', () => {
     for (const w of ['b', 'l', 'B']) expect(calculateIPV({ ...person({}), ausbildung: { workPermit: w } })).toMatchObject({ belegt: false, amount: null, offen: 'vsQuellensteuer' });
     for (const w of ['c', 'swiss', '', undefined]) expect(calculateIPV({ ...person({}), ausbildung: { workPermit: w } }).belegt).toBe(true);
   });
+
+  // Integration 28.09.2026 — drei Kleinigkeiten aus der Steuer-Sitzung.
+  describe('Integration: junge Erwachsene, Ausweis G, Unterhalt über dem Einkommen', () => {
+    it('allein lebende 18-/19-Jährige landen im selben Grund — der Text nennt sie (Art. 9 Abs. 1/2) und den Zuschlag erst ab 21 (Art. 6 Abs. 3)', async () => {
+      // 31.12.2025: Jg. 2006 ist 19, Jg. 2007 ist 18 — beide unter 20, also Familie der Eltern.
+      expect(calculateIPV(person({ dob: '2006-04-01' }))).toMatchObject({ belegt: false, amount: null, offen: 'vsJungeErwachsene' });
+      expect(calculateIPV(person({ dob: '2007-11-30' }))).toMatchObject({ belegt: false, amount: null, offen: 'vsJungeErwachsene' });
+      const { default: de } = await import('../../i18n/de.js');
+      const text = de.ipv.offenGrund.vsJungeErwachsene;
+      expect(text).toContain('20 bis 25');
+      expect(text).toContain('von 21 bis 25');
+      expect(text).toContain('18 bis 20');
+      expect(text).not.toMatch(/20 bis 25 Jahre alt ist, wird im Wallis einzeln gerechnet/);
+    });
+
+    it('Ausweis G: Wohnsitz im Ausland (Art. 3 Abs. 1 lit. b) — keine Zahl, auch für junge Erwachsene', () => {
+      for (const w of ['g', 'G']) {
+        expect(calculateIPV({ ...person({}), ausbildung: { workPermit: w } })).toMatchObject({ belegt: false, amount: null, offen: 'vsGrenzgaenger' });
+      }
+      expect(calculateIPV({ ...person({ dob: '2003-05-01' }), ausbildung: { workPermit: 'g' } })).toMatchObject({ offen: 'vsGrenzgaenger' });
+    });
+
+    it('bezahlte Alimente zehren das Einkommen auf: keine Zahl statt Höchstsatz 4 712', () => {
+      // 12 000 − 12 × 1 500 = −6 000 → vorher auf 0 geklemmt → 70 % = 4 712
+      expect(calculateIPV(person({ monthlyIncome: 1000, finanzen: { alimentePaid: 1500 } }))).toMatchObject({ belegt: false, amount: null, offen: 'vsUnterhaltUeberEinkommen' });
+      // genau aufgezehrt: ebenso keine Zahl
+      expect(calculateIPV(person({ monthlyIncome: 1000, finanzen: { alimentePaid: 1000 } }))).toMatchObject({ offen: 'vsUnterhaltUeberEinkommen' });
+      // ein Franken übrig: rechnet
+      expect(calculateIPV(person({ monthlyIncome: 1000, finanzen: { alimentePaid: 1000 - 1 / 12 } })).annual).toBe(4712);
+      // Vermögen trägt das Einkommen (5 % von 200 000 = 10 000): rechnet
+      expect(calculateIPV(person({ monthlyIncome: 1000, finanzen: { alimentePaid: 1500, savingsAccount: 200000 } })).belegt).toBe(true);
+      // ohne bezahlte Alimente bleibt Einkommen 0 wie bisher: 70 %
+      expect(calculateIPV(person({ monthlyIncome: 0 })).annual).toBe(4712);
+    });
+  });
 });
 
