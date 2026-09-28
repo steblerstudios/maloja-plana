@@ -45,6 +45,8 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   abzugOhneSaeule2     BS — kein Zuschlag auf eine Steuergrösse, sondern ein Abzug von den
+//                        Einnahmen, und nur OHNE Säule 2. SoHaV § 17 Abs. 1 lit. a/b (SG 890.710)
 //
 // 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
@@ -306,6 +308,32 @@ export const SAEULE_3A = Object.freeze({
     // Die Rechnung steht bereit, damit sie beim Entscheid nicht neu erfunden wird.
     schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     nichtAufgerechnet: () => 0,
+  }),
+
+  // ⟨28.09.2026, K31 BS⟩ Die vierte Regel — und die erste, die NICHT auf einer Steuergrösse
+  // aufsetzt. Basel-Stadt rechnet die Prämienverbilligung über das Harmonisierungsgesetz
+  // Sozialleistungen: massgeblich sind die EINNAHMEN der Haushaltseinheit, bereinigt um die
+  // anerkannten Abzüge (SoHaG § 7 Abs. 2, SG 890.700). Wortlaut an der Quelle, abgerufen
+  // 28.09.2026 über die API der Gesetzessammlung (Version 5476, in Kraft seit 01.07.2021):
+  //   SoHaV § 17 Abs. 1 lit. a: «Beiträge an die Säule 3a (gebundene Selbstvorsorge) können
+  //     von Personen abgezogen werden, welche keiner zweiten Säule angehören.»
+  //   lit. b (selbständig Erwerbende): «… sowie an die Säule 3a, sofern keine obligatorische
+  //     oder freiwillige zweite Säule besteht.»
+  // Also umgekehrt zu ZH/SG/LU: dort wird die 3a immer zugerechnet, hier wird sie nur OHNE
+  // zweite Säule abgezogen. Das Nettoeinkommen der App trägt die 3a (siehe `einkommenJahr`):
+  //   mit zweiter Säule  ⇒ kein Abzug, der App-Wert ist richtig  (`nichtAufgerechnet` = 0)
+  //   ohne zweite Säule  ⇒ die ganze Einzahlung kommt weg       (`ohneSaeule2`)
+  // 🛑 Welcher Fall gilt, weiss die App nicht sicher — dieselbe fehlende Angabe wie bei
+  // `schwelleOhneSaeule2` (AG). Anders als dort wird hier NICHT still der eine Fall gerechnet:
+  // ipvBaselStadt.js rechnet beide und zeigt nur dann eine Zahl, wenn beide dieselbe
+  // Beitragsgruppe ergeben oder ein Pensionskassenbeitrag erfasst ist. Grund: BS rechnet in
+  // Stufen, ein Abzug von wenigen tausend Franken verschiebt den Betrag um eine ganze Gruppe.
+  abzugOhneSaeule2: Object.freeze({
+    name: 'abzugOhneSaeule2',
+    kantone: 'BS',
+    beleg: 'SoHaV BS § 17 Abs. 1 lit. a und b (SG 890.710, in Kraft seit 01.07.2021)',
+    nichtAufgerechnet: () => 0,
+    ohneSaeule2: (f) => betrag3a(f),
   }),
 });
 
