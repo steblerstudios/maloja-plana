@@ -53,7 +53,7 @@ sind. Dieses Dokument ändert keinen Code.
 | TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0 nach Abzug der steuerfreien Beträge, StG § 53) | teilweise — belegt, gebaut ohne Zahl (PR #474, Steuerbetrag fehlt der App) | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar — gebaut für Alleinstehende (PR #484) | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
-| VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
+| VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | gebaut (PR #477, nachgeprüft 28.09.2026) | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | gebaut (PR #478) — ~~mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge~~ ⟨28.09.2026: aufgelöst, der Unterschied ist der Décret RSN 821.104⟩ | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
 | GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | **gebaut 28.09.2026 (K31, PR #469)** | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
 | JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | gebaut, zeigt bewusst keine Zahl (PR #483, nachgeprüft 28.09.2026: steuerbares Einkommen fehlt der App) | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
@@ -3435,7 +3435,7 @@ Hinweis und die Anzeige; siehe PR).
 
 ## VS — Wallis / Valais
 
-**Beurteilung:** abbildbar
+**Beurteilung:** ~~abbildbar~~ gebaut (K31, PR #477; an der Quelle nachgeprüft 28.09.2026)
 **Modell (kurz):** Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %.
 **Zuständig / Weg:** Ausgleichskasse des Kantons Wallis; **automatisch** aufgrund der Steuerveranlagung 2024 (Mitteilung Ende Februar 2026). Quellenbesteuerte (Ausweis B, F, L, N) und neue C-Bewilligungen stellen ein Gesuch bis spätestens 31.12.2026. Ohne Entscheid: begründetes Gesuch, rückwirkend 2 Jahre.
 **Gültigkeit:** 2026. Die Tabelle heisst im Dateititel «Echelle définitive RIP 2026» (19.12.2025). Der Medienanhang vom 3.2.2026 bezeichnet die Sätze als «(Provisorisch)» und weicht in einer Zelle ab (siehe Offen).
@@ -3522,7 +3522,7 @@ Einkommen von Kindern bis 20 im selben Wohnsitz zählt nicht mit (Art. 8 Abs. 1t
 App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt für eine alleinstehende Person ohne Kind: Anspruch endet über 38'500 (massgebendes Einkommen). Der Höchstbetrag ist 70 % der Referenzprämie, abgeleitet CHF 4'712 (Region I) bzw. 4'040 (Region II) pro Jahr. Der Abbau erfolgt stufenweise in 7 Klassen, nicht linear.
 
 ### Offen / nicht gefunden
-- **Widerspruch in amtlichen Unterlagen:** Kinderzeile «Alleinstehende mit 1 Kind» = **63'000** in der Einkommenstabelle [3] (Dateititel «Echelle définitive RIP 2026», 19.12.2025), aber **61'000** im Medienanhang [4] (3.2.2026, Spalte «Subventionsansatz (Provisorisch)»). Alle anderen geprüften Zellen stimmen überein. Vor Umsetzung bei der Ausgleichskasse klären. Bis dahin gilt [3], weil die Ausgleichskasse diese Datei als «Vollständige Einkommenstabelle 2026» verlinkt.
+- ⟨aufgelöst 28.09.2026, siehe Nachtrag Fachprüfung #477⟩ **Widerspruch in amtlichen Unterlagen:** Kinderzeile «Alleinstehende mit 1 Kind» = **63'000** in der Einkommenstabelle [3] (Dateititel «Echelle définitive RIP 2026», 19.12.2025), aber **61'000** im Medienanhang [4] (3.2.2026, Spalte «Subventionsansatz (Provisorisch)»). Alle anderen geprüften Zellen stimmen überein. Vor Umsetzung bei der Ausgleichskasse klären. Bis dahin gilt [3], weil die Ausgleichskasse diese Datei als «Vollständige Einkommenstabelle 2026» verlinkt.
 - Der Staatsratsbeschluss selbst (Art. 7 VüIPV) wurde nicht im Wortlaut gefunden. Die Zahlen stammen aus den Unterlagen der Ausgleichskasse und des Kantons. Eine Amtsblatt-Veröffentlichung 2026 (Art. 23) wurde nicht gefunden, nur die von 2025 (nicht geöffnet).
 - Wie der Satz für junge Erwachsene (Referenzprämie «Junge Erw.») bestimmt wird: Die Tabelle hat nur die Zeilen «Erwachsene» und «Kinder». Vermutlich gilt für junge Erwachsene ab 20 die Erwachsenenzeile mit der Referenzprämie «Junge Erw.». Das ist nicht wörtlich belegt.
 - Die Lesart «erste nicht überschrittene Grenze = Satz» ist aus dem Tabellenaufbau abgeleitet, nicht wörtlich belegt.
@@ -3533,6 +3533,97 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt für eine
 2. Prämienverbilligung (IPV), Ausgleichskasse des Kantons Wallis, ohne Datumsangabe (Inhalt für 2026). https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html — abgerufen 16.09.2026
 3. Einkommenstabelle zur Berechnung der Krankenkassensubventionen 2026 (PDF-Titel «Echelle définitive RIP 2026 - F+D»), Ausgleichskasse des Kantons Wallis, erstellt 19.12.2025. https://www.ahvwallis.ch/Htdocs/Files/v/998819276e6a3d4d72971862e9c685628b0b29b732860905db939232a7de9cda.pdf/Vollstaendige-Einkommenstabelle-2026.pdf — abgerufen 16.09.2026
 4. Individuelle Prämienverbilligung (IPV) 2026 im Wallis — Anhang zur Medienmitteilung vom 3. Februar 2026, Kanton Wallis (PDF erstellt 23.03.2026). https://www.vs.ch/documents/8841577/8881906/PP+Anhang+an+die+Medienmitteilung+IPV+2024.pdf/c29a188b-8096-d1e8-743d-657ac8ed9807?t=1703232568501&v=1.3 — abgerufen 16.09.2026. Referenzprämien-Folie auch als https://www.ahvwallis.ch/Htdocs/Files/v/8d3d15d310e5aa9490b3d8e4c130fa9b39cd184fce902d836a6c849d0a17fca8.pdf/2026-02-03---Individuelle-Praemienverbilligung.pdf
+
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+**An der Quelle nachgeprüft 28.09.2026**, jede Zahl des Moduls `src/config/ipvWallis.js` heute gelesen:
+
+| Quelle | Fassung | Weg | Gegenprobe |
+|---|---|---|---|
+| VüIPV SGS 832.105 | «Aktuelle Version in Kraft seit: 01.05.2026 (Beschlussdatum: 20.05.2026)», Version 3609, `future_versions` leer | `https://lex.vs.ch/api/de/texts_of_law/832.105` → 200; PDF `…/api/de/versions/3609/pdf_file` → 200, 18 S. | `…/texts_of_law/832.999` → 404, 0 Bytes |
+| Einkommenstabelle 2026 [3] | PDF-Titel «Echelle définitive RIP 2026 - F+D», erstellt 19.12.2025 | Link auf der Seite der Ausgleichskasse, am 28.09.2026 unverändert; **Werte am Seitenbild geprüft** (gerendert mit `pdftoppm`), Textlayer stimmt überein | — |
+| Seite «Prämienverbilligung» der Ausgleichskasse [2] | Inhalt 2026 | `ahvwallis.ch/de/…/Praemienverbilligung.html` → 200 | — |
+| Anhang Medienmitteilung 3.2.2026 [4] | PDF erstellt 23.03.2026, Spalte «(Provisorisch)» | → 200 | — |
+| EDI-Durchschnittsprämien 2026 | Anhang Ziff. 2 | (siehe FR) | ID-Gegenprobe → 404 |
+| BFS-Gemeindeverzeichnis | 01.01.2026 | API → 200 | → 404 |
+
+**Wortlaute, die der Code zitiert** (VüIPV, Stand 01.05.2026):
+
+> «Als Versicherte in bescheidenen wirtschaftlichen Verhältnissen gelten Personen, deren massgebendes Einkommen gleich oder kleiner ist als die in der vorliegenden Verordnung in Artikel 7 vom Staatsrat festgelegte Einkommensgrenze.» — Art. 2 Abs. 2
+>
+> «Versicherte, die am 31. Dezember des Jahres vor der gewährten Prämienverbilligung 20 Jahre alt sind, werden individuell behandelt.» — Art. 3 Abs. 3
+>
+> «Massgebend ist das familiäre Verhältnis am 31. Dezember des Vorjahres …» · «Abweichend zu Absatz 2 wird die neue familiäre Situation ab Beginn des Monats, in dem ein Kind geboren oder adoptiert wird, berücksichtigt.» — Art. 10 Abs. 2/2bis
+>
+> «Personen, … die keinen Entscheid über die Gewährung einer individuellen Prämienverbilligung erhalten, müssen bei der Ausgleichskasse ein begründetes Gesuch einreichen. Die Frist beträgt rückwirkend 2 Jahre …» — Art. 11 Abs. 2
+>
+> Seite der Ausgleichskasse [2], Berechnungsschema: «Reineinkommen vor den persönlichen Abzügen (Ziffer 2400*) + 5% des aufgewerteten Nettovermögens + negative Einkommen aus Liegenschaften … + Beiträge der gebundenen Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220) ./. bezahlte Unterhaltsbeiträge (Ziffer 2531) ./. erhaltene Kapitalleistungen … = massgebendes Einkommen»
+
+**Korrekturen und Ergänzungen zum Stand 16.09.:**
+- Die 63'000 (Kinderzeile, allein, 1 Kind) sind am **Seitenbild** der Einkommenstabelle bestätigt; der Medienanhang (Folie 8) zeigt 61'000. Der Widerspruch bleibt → die App zeigt in diesem Band **keine Zahl** (`orientierung('mindestanspruch')`), Frage an die Ausgleichskasse `FRAGEN-AN-DIE-AEMTER.md` ~~Nr. 9 (vorläufig)~~ § 27. Eine Frage zu VS stand dort bisher **nicht**.
+- **Neu gefunden: Säule 3a.** Art. 8 Abs. 1 lit. a rechnet 3a «bis zum Maximalbetrag des Angestelltenlohns» dazu, die Seite der Ausgleichskasse ohne Obergrenze. Unter dem Maximum rechnen beide gleich; darüber zeigt die App keine Zahl (`saeule3aStrittig`). Regel `SAEULE_3A.bisBundesMaximum` nennt jetzt «BE, VS».
+- **Neu: bezahlte Unterhaltsbeiträge** werden abgezogen (Art. 8 Abs. 1 lit. b, Ziffer 2531) — die App kennt `alimentePaid` und zieht es ab.
+- Referenzprämien nachgerechnet nach Art. 5 Abs. 2 (EDI × 0,95, gerundet): 561/401/133 und 481/359/110 — stimmt.
+- Regionen: [4] beschreibt Region 2 als «Gemeinden des Oberwallis, Anniviers, Evolène, Hérémence, Mont-Noble, Saint-Martin und Vex». Gegen das BFS-Verzeichnis (Bezirke Brig, Goms, Leuk, Raron, Visp = 63 Gemeinden) + die sechs genannten = 69 Gemeinden; die BAG-Daten der App führen genau diese 69 in Region 2, die übrigen 53 in Region 1 (Test).
+- Der Staatsratsbeschluss nach Art. 7 bleibt unauffindbar (Amtsblatt 2026: nur «Krankenkassenprämien 2026» vom 02.10.2025 mit dem Budget, nicht die Skala).
+- **Weg:** automatisch (Entscheid Ende Februar); `noteKey` von «Antrag bei Dienststelle für Gesundheit» auf `ipv.noteAutoTaxData` korrigiert. Quellenbesteuerte stellen ein Gesuch bis 31.12.2026 (nicht gebaut). Neue Berechtigte senden eine Kopie der Police.
+- **Kein amtliches Rechenbeispiel** mit Franken gefunden. Prüfstein ist die Tabelle selbst: jede der 80 Zellen wörtlich im Test, jede Grenze an der Kante und einen Franken darüber.
+
+**Gewählt, nicht belegt:** Lesart «erste nicht überschrittene Grenze» (gestützt auf Art. 2 Abs. 2) · Alter `mangelsStichtag` · Rundung (Jahressumme auf Franken).
+
+**Bewusst nicht gebaut:** Ehepaare/Konkubinat · Personen 20–25 · Kinder über 18 und im Anspruchsjahr geborene Kinder (`kindImJahrGeboren`) · über 9 Kinder · EL/Sozialhilfe (100 %) · Quellenbesteuerte · Ermessenseinschätzung · Neuberechnung bei 30 % Rückgang (im Vorbehalt genannt) · Kapitalleistungen, Liegenschaftsverluste, Auslandelemente · kein Mindestbetrag gefunden.
+
+**2027:** am 28.09.2026 nicht publiziert. Ab 01.01.2027 keine Zahl (`jahrVorbei`).
+
+
+### Nachtrag nach der Fachprüfung #477 (28.09.2026, Verdikt «erst beheben» → behoben)
+
+**Neue Quellen, heute selbst gelesen:**
+- [5] Dienststelle für Gesundheitswesen, «Modalités de subventionnement des primes d'assurance-maladie 2026»
+  (Datei «Directives et BO - RIP 2026_fr», PDF erstellt 22.12.2025),
+  <https://www.vs.ch/documents/8841577/8881906/Directives+et+BO+-+RIP+2026_fr.pdf/0fa8dbfc-4049-4dcd-7795-d662e75ab422?t=1767607967668&v=2.1>
+  → 200, 114'603 Bytes, 6 S.
+- [6] Kantonale Steuerverwaltung, «Wegleitung Zusammenfassung 2024» (Steuerjahr 2024 = Bemessungsjahr),
+  <https://www.vs.ch/documents/508074/36083053/Guide_simplifi%C3%A9_2024_D.pdf/07c812f7-5eea-82c7-3435-809ce4b9c252?t=1736164914951> → 200.
+
+**Wortlaute** (Originalsprache):
+> «En complément aux limites précitées, les enfants des personnes seules dont le revenu est compris entre CHF 60'125.- et CHF 63'000.- ont droit à un subside de 80%.» — [5] Ziff. 4.1
+>
+> «Les personnes ne figurant pas au fichier fiscal (titulaires d'un permis B, L, N ou F) devront présenter une requête de subvention personnelle pour 2026. … Ces demandes devront être déposées auprès de la Caisse de compensation du canton du Valais pour le 31 décembre 2026 au plus tard.» — [5] Ziff. 6.2
+>
+> «Revenu net avant les déductions personnelles (chiffre 2400) + 5% de la fortune revalorisée nette … + les cotisations à des formes reconnues de prévoyance liée (pilier 3a) … ./. les pensions alimentaires versées ./. les prestations en capital reçues» — [5] Ziff. 6.1 · «Les dettes fiscales et les déductions forfaitaires sont déduites.» — Ziff. 6.3
+>
+> «220 Kinder- und Familienzulagen — Die von Bund und Kanton entrichteten Kinder- und Familienzulagen sind steuerpflichtig (Art. 13 StG)» · «1410+1420 Unterhaltsbeiträge — Vom getrennt lebenden oder geschiedenen Partner erhaltene Zahlungen» — [6]
+
+**Behoben:**
+- **B1 (Ruling):** Erhaltene Unterhaltsbeiträge und Familienzulagen zählen zum Einkommen (sie liegen vor Ziffer
+  2400), bezahlte werden abgezogen — das VS-Modul liest alle drei Felder selbst. Beispiel der Prüfung
+  (1 Kind, 3'000 netto, 300 Zulagen, 800 Alimente): **2'623** statt 5'989. Ein Rahmen-PR muss VS ausnehmen.
+- **B2:** Ausweis B oder L (`ausbildung.workPermit`) → keine Zahl, Grund `vsQuellensteuer` (Gesuch bis 31.12.).
+  N und F kennt die App nicht; neue C-Bewilligungen erkennt sie nicht — beides nennt der Vorbehalt.
+- **Kinderzeile 1 Kind = 63'000:** ~~«Widerspruch … Bei der Ausgleichskasse klären.»~~ ⟨aufgelöst⟩ [5] Ziff. 4.1 und
+  der FR-Medienanhang nennen 63'000; nur die DE-Fassung 61'000. Kein Band ohne Zahl mehr, Grenze wird angezeigt.
+- **Vorbehalt:** Police für neue Berechtigte, 31.12. für Gesuche/Sondergesuche, EL/Sozialhilfe 100 %, beide
+  Richtungen der Näherung (ohne Berufsauslagen/Schulden eher zu tief; Alimente/Zulagen eingerechnet).
+- **21–25:** eigener Grund `vsJungeErwachsene` statt `alter`.
+- **Säule 3a:** «keine Zahl» bleibt — auch [5] Ziff. 6.1 nennt die 3a ohne Obergrenze; Verordnung gegen beide Vollzugsstellen.
+- **Lesart** «≤ Grenze» belegt ([5] Ziff. 4.1, Art. 2 Abs. 2).
+- Fragen an die Ausgleichskasse: ~~Nr. 10 (8 = Uri, 9 = FR)~~ **§ 27** (Integration 28.09.2026); Frage 1 beantwortet, neu Frage 5 (31.12. vs. 2 Jahre).
+
+**Nachträge bei der Integration (28.09.2026)** — VüIPV [1] erneut gelesen: `lex.vs.ch/api/de/versions/3609/pdf_file`
+→ 200, «Stand 01.05.2026», `pdftotext`.
+- **Unter 26:** `vsJungeErwachsene` griff auch für allein lebende 18-/19-Jährige, der Text nannte nur «20 bis 25»
+  und den Zuschlag ohne Altersgrenze. Der Text nennt jetzt beide Gruppen und den Zuschlag erst ab 21:
+  > «Versicherte, die am 31. Dezember des Jahres vor der gewährten Prämienverbilligung 20 Jahre alt sind, werden individuell behandelt. Vorbehalten bleibt Artikel 9 Absatz 2.» — Art. 3 Abs. 3
+  >
+  > «Junge Erwachsene zwischen 21 und 25 Jahren, die sich noch in Ausbildung befinden und denen eine Prämienverbilligung von weniger als 50 Prozent gewährt wird, können bei der Ausgleichskasse des Kantons Wallis … zusätzliche finanzielle Unterstützung bis zu 50 Prozent der durchschnittlichen Referenzprämie beantragen.» — Art. 6 Abs. 3
+  >
+  > «Zur Berechnung der finanziellen Unterstützung der Eltern werden Kinder bis zum 20. Altersjahr mit einbezogen.» · «Personen zwischen 18 und 20 Jahren, die nicht denselben gesetzlichen und steuerlichen Wohnort wie die Eltern haben, können eine individuelle Prämienverbilligung beantragen.» — Art. 9 Abs. 1 und 2
+- **Ausweis G:** rechnete wie Wohnsitz im Wallis → keine Zahl, Grund `vsGrenzgaenger`:
+  > «am 1. Januar des Jahres, für das eine individuelle Prämienverbilligung angestrebt wird, im Wallis wohnhaft sind. Vorbehalten bleiben von Bundesrecht vorgesehene Vorgaben namentlich im Bereich der bilateralen Abkommen (EU und EFTA)» — Art. 3 Abs. 1 lit. b
+- **Bezahlte Alimente ≥ übriges massgebendes Einkommen:** vorher auf 0 geklemmt → Höchstsatz 4'712 → jetzt keine
+  Zahl, Grund `vsUnterhaltUeberEinkommen` (Riegel wie `einkommenNegativ`).
 
 ---
 

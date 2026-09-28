@@ -49,6 +49,7 @@ export const IPV_MODULE = {
   SH: { laden: () => import('./ipvSchaffhausen.js'), fn: 'ipvSchaffhausen' },
   AR: { laden: () => import('./ipvAppenzellAusserrhoden.js'), fn: 'ipvAppenzellAusserrhoden', brauchtPLZ: false },
   AI: { laden: () => import('./ipvAppenzellInnerrhoden.js'), fn: 'ipvAppenzellInnerrhoden', brauchtPLZ: false },
+  VS: { laden: () => import('./ipvWallis.js'), fn: 'ipvWallis' },
 };
 const _module = {};
 
@@ -207,7 +208,11 @@ export const CANTONAL_IPV = {
   // Der Weg ist ein Antrag (Notice OVAM 2026 Ziff. 4), nicht die automatische Prüfung via Steuerdaten.
   VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',
     beleg: { quelle: 'Arrêté CE VD du 17.12.2025 (subsides 2026) · RLVLAMal (BLV 832.01.1) · LVLAMal (BLV 832.01) · LHPS (BLV 850.03) · OVAM — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
+  // VS (K31): eigenes Modell in config/ipvWallis.js (degressive Skala 70 … 5 % der regionalen
+  // Referenzprämie, Kinder 80 %). Die Grenze hängt am Haushalt und wird im Modul gesetzt. Der Weg ist
+  // automatisch über die Steuerdaten (Ausgleichskasse), nicht ein Antrag bei der Dienststelle.
+  VS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'VüIPV VS (SGS 832.105) · Einkommenstabelle 2026 · Modalités RIP 2026 (Dienststelle für Gesundheitswesen) · Ausgleichskasse des Kantons Wallis — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // NE (K31): Klassen S1–S15, Grenzen je Kinderzahl (Annexe RSN 821.102) — keine Einzelwerte.
   // Weg: automatisch nach der Veranlagung, neu Berechtigte mit Antwortschein innert 30 Tagen (RALILAMal Art. 31).
   NE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoOcab',

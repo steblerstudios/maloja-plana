@@ -245,7 +245,7 @@ describe('Eingaben lesen', () => {
   describe('SAEULE_3A: die drei Zurechnungsregeln', () => {
     it('jede Regel nennt ihre Kantone und ihren Beleg', () => {
       expect(SAEULE_3A.voll.kantone).toBe('ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI');
-      expect(SAEULE_3A.bisBundesMaximum.kantone).toBe('BE, SO');
+      expect(SAEULE_3A.bisBundesMaximum.kantone).toBe('BE, SO, VS');
       expect(SAEULE_3A.schwelleOhneSaeule2.kantone).toBe('AG');
       for (const r of Object.values(SAEULE_3A)) expect(r.beleg).toMatch(/Art\.|§/);
     });
