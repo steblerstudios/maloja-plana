@@ -45,6 +45,7 @@ export const IPV_MODULE = {
   OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
   SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
   NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
+  ZG: { laden: () => import('./ipvZug.js'), fn: 'ipvZug', brauchtPLZ: false },
   GL: { laden: () => import('./ipvGlarus.js'), fn: 'ipvGlarus', brauchtPLZ: false },
 };
 const _module = {};
@@ -148,7 +149,12 @@ export const CANTONAL_IPV = {
   // automatisch — der Musterwert sagte bis 28.09.2026 «automatisch via Steuerdaten».
   GL: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyGl',
     beleg: { quelle: 'EG KVG GL (GS VIII D/21/1) · PVV (VIII D/21/3) · VV PV (VIII D/21/2) · Kantonale Steuerverwaltung GL, Fachstelle IPV — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // ZG (K31): eigenes Modell in config/ipvZug.js (Richtprämien minus 8 % Selbstbehalt, Kürzung ab
+  // 70'000, kein Anspruch über 89'900 — eine Grenze für alle, RRB 2025 Ziff. 1.5). ZG rechnet einen
+  // Betrag; «kein Anspruch» nur auf einer Untergrenze des Reineinkommens. maxIncome null: die 89'900
+  // gelten für das massgebende Einkommen, nicht für den erfassten Lohn.
+  ZG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'IPVG ZG (BGS 842.6) · V IPVG (BGS 842.61) · Ausgleichskasse Zug — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
   // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
   // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
