@@ -28,6 +28,10 @@
 //   [6] Fachstelle IPV, Merkblatt 2026 (Antrag bis 31. Januar 2026, Konkubinat Gesamtbetrag).
 //   [7] Steuergesetz GL, GS VI C/1/1, Version 2445 (Stand 01.01.2024) Art. 45: steuerfreie
 //       Beträge Vermögen 76'300 / 152'600 / je Kind 25'400 — Steuerperiode 2024 = Bemessungsjahr.
+//       Art. 17 Abs. 1, 23 Abs. 1 Ziff. 6, 24, 25 Abs. 1, 31 Ziff. 3: was zum Total der Einkünfte
+//       gehört (gelesen 28.09.2026, `versions/2445/pdf_file_with_annexes`, «Version in Kraft von:
+//       01.01.2024 bis: 31.12.2024 (Beschlussdatum: 03.10.2023)»; Gegenprobe `versions/99999` → 404
+//       und `VI C/1/77` → 404; Wortlaut in Version 2668 «in Kraft seit: 01.01.2026» gleich).
 //
 // ⟨korrigiert 28.09.2026⟩ Die Erhebung vom 16.09. hatte die Richtprämien nur abgeleitet
 // (85 % × 6'408 = 5'446.80), weil gl.ch mit 403 antwortete. Amtlich publiziert sind sie
@@ -52,10 +56,18 @@
 //     ⟨korrigiert 28.09.2026, Fachprüfung #487 ⚠️1: hier stand auch «Alimente (−)». BEZAHLTE
 //     Alimente zieht die App jetzt ab — [2] Art. 3 Abs. 1 lit. c nennt sie ausdrücklich, siehe
 //     `glAnrechenbaresEinkommen`.⟩
-//   · ERHALTENE Alimente und Familienzulagen: EG KVG und PVV nennen sie nicht ausdrücklich; sie
+//   · ~~ERHALTENE Alimente und Familienzulagen: EG KVG und PVV nennen sie nicht ausdrücklich; sie
 //     stecken im «Total der Einkünfte» ([1] Art. 15 Abs. 1) nur über das Steuerrecht. Die App
 //     rechnet sie NICHT zu — mit ihnen fiele der Betrag tiefer aus (Richtung: hier ZU HOCH);
-//     `vorbehaltGL` sagt es bei der Zahl.
+//     `vorbehaltGL` sagt es bei der Zahl.~~ ⟨überholt 28.09.2026, Re-Review #487 🛑 R1: sie werden
+//     jetzt GERECHNET — siehe «TOTAL DER EINKÜNFTE» unten.⟩
+//   · Bezahlte Alimente an VOLLJÄHRIGE Kinder: [2] Art. 3 Abs. 1 lit. c nennt nur Ehegatten und
+//     minderjährige Kinder; die App fragt nicht, an wen, und zieht alle erfassten bezahlten
+//     Alimente ab — bei Alimenten an volljährige Kinder ist der Betrag hier ZU HOCH.
+//   · Bezahlte Alimente über dem Einkommen: das anrechenbare Einkommen fällt auf 0, und die App
+//     zeigt die volle Richtprämie (höchstens die eigene Prämie). Das ist die Rechnung des Erlasses
+//     ([2] Art. 3 zieht ohne Untergrenze ab; [1] Art. 15 kennt kein negatives Einkommen) — kein
+//     Riegel, wie BL. Eine Fehleingabe (Jahres- statt Monatsbetrag) ergibt hier eine zu hohe Zahl.
 //   · Schulden: steuerbar ist das REINvermögen ([7] Art. 45); `vermoegenSumme` zieht keine Schulden
 //     ab — über dem Freibetrag fällt der Betrag dadurch zu tief aus.
 //   · Kinderanteil: gedeckelt wird nur der Anteil der erwachsenen Person (Rahmen `deckelnProPerson`);
@@ -65,6 +77,23 @@
 //     App kennt den Zuzug nicht; für Zugezogene ist die Zahl dieses Jahr ZU HOCH (Anspruch 0).
 //   · Brutto erfasster Lohn wird wie netto gerechnet (Rahmen) — der Betrag fällt dann zu tief aus.
 //   · Neugeborene im Anspruchsjahr zählen nicht ([1] Art. 11 Abs. 2) — sie werden weggelassen.
+//
+// TOTAL DER EINKÜNFTE ⟨Re-Review #487 🛑 R1, 28.09.2026⟩: [1] Art. 15 Abs. 1 misst am «Total der
+// Einkünfte» der Steuerveranlagung (Ziffer 215 laut [5]), also VOR den allgemeinen Abzügen. Das
+// Steuergesetz [7] (Version 2445, Steuerperiode 2024; Wortlaut in Version 2668, Stand 01.01.2026,
+// gleich) zählt dazu ausdrücklich:
+//   · Art. 23 Abs. 1 Ziff. 6: «Unterhaltsbeiträge, die ein Steuerpflichtiger bei Scheidung,
+//     gerichtlicher oder tatsächlicher Trennung für sich erhält, sowie Unterhaltsbeiträge, die ein
+//     Elternteil für die unter seiner elterlichen Sorge oder Obhut stehenden Kinder erhält»
+//     (Art. 24 Ziff. 7 nimmt sie von den steuerfreien Leistungen ausdrücklich aus);
+//   · Art. 17 Abs. 1: alle Einkünfte aus Arbeitsverhältnis «mit Einschluss der Nebeneinkünfte,
+//     wie … Zulagen …» — Art. 24 (steuerfrei) nennt Familienzulagen nicht.
+// Abgezogen wird erst danach (Art. 25 Abs. 1: «von den gesamten steuerbaren Einkünften … die
+// allgemeinen Abzüge gemäss Artikel 31»; bezahlte Alimente dort Ziff. 3) — darum nennt [2] Art. 3
+// lit. c nur die BEZAHLTEN. Die App rechnet `finanzen.alimenteReceived` und
+// `finanzen.familienzulagen` (monatlich, × 12) zum Total der Einkünfte; unlesbar oder negativ = 0,
+// wie beim Abzug. Steckt die Kinderzulage schon im erfassten Nettolohn, zählt sie doppelt (Betrag
+// hier zu tief) — `vorbehaltGL` sagt es, wie NW.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -113,12 +142,18 @@ export function glSatz(ae) {
 // oder getrennt lebenden Ehepartner und für minderjährige Kinder» (`alimenteBezahlt`, CHF/Jahr).
 // GEWÄHLT: die erfassten bezahlten Alimente gelten als solche (die App fragt nicht, an wen).
 // ⟨28.09.2026, Fachprüfung #487 ⚠️1⟩
-export function glAnrechenbaresEinkommen({ totalEinkuenfte, vermoegen, kinderZahl, alimenteBezahlt = 0 }) {
+// Zum Total der Einkünfte gehören erhaltene Alimente ([7] Art. 23 Abs. 1 Ziff. 6) und
+// Familienzulagen ([7] Art. 17 Abs. 1 «Zulagen») — `alimenteErhalten`, `familienzulagen` (CHF/Jahr).
+// ⟨28.09.2026, Re-Review #487 🛑 R1⟩
+export function glAnrechenbaresEinkommen({
+  totalEinkuenfte, vermoegen, kinderZahl, alimenteBezahlt = 0, alimenteErhalten = 0, familienzulagen = 0,
+}) {
   const p = IPV_GL;
   const frei = (kinderZahl > 0 ? p.vermoegenFrei.alleinMitKindern : p.vermoegenFrei.allein)
     + p.vermoegenFrei.jeKind * kinderZahl;
   const steuerbar = Math.max(0, Math.max(0, vermoegen) - frei);
-  return Math.max(0, totalEinkuenfte + p.vermoegenAnteil * steuerbar - p.kinderabzug * kinderZahl
+  const total = totalEinkuenfte + Math.max(0, alimenteErhalten) + Math.max(0, familienzulagen);
+  return Math.max(0, total + p.vermoegenAnteil * steuerbar - p.kinderabzug * kinderZahl
     - Math.max(0, alimenteBezahlt));
 }
 
@@ -189,12 +224,16 @@ export function ipvGlarus(data, hh, ipvData, youngAdultsCount, orientierung) {
 
   const roh = rohesEinkommenJahr(f);
   if (roh < 0) return orientierung('einkommenNegativ');
+  // Monatlich erfasst; unlesbar oder negativ ⇒ 0 (wie Uri, BL, BS).
+  const jaehrlich = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x * 12 : 0; };
   const ae = glAnrechenbaresEinkommen({
     totalEinkuenfte: einkommenJahr(f, SAEULE_3A.totalDerEinkuenfte),
     vermoegen: vermoegenSumme(f),
     kinderZahl,
-    // Monatlich erfasst; unlesbar oder negativ ⇒ 0 (wie Uri, BL, BS).
-    alimenteBezahlt: (() => { const x = Number(f.alimentePaid); return Number.isFinite(x) && x > 0 ? x * 12 : 0; })(),
+    alimenteBezahlt: jaehrlich(f.alimentePaid),
+    // [7] Art. 23 Abs. 1 Ziff. 6 und Art. 17 Abs. 1 — siehe Kopf «TOTAL DER EINKÜNFTE».
+    alimenteErhalten: jaehrlich(f.alimenteReceived),
+    familienzulagen: jaehrlich(f.familienzulagen),
   });
 
   // [1] Art. 14 Abs. 1: «höchstens aber der effektiven Jahresprämie … der anspruchsberechtigten

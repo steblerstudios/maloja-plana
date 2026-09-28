@@ -665,10 +665,18 @@ Wirkung heute, gemessen: 1 Elternteil + 1 Kind sieht eine Zahl nur bis netto run
 **Frage 2 — Stufengrenzen:** Gilt der Satz von 9 % noch bei einem anrechenbaren Einkommen von genau
 40'000 («bis 40 000 Franken»)? Wir rechnen «bis und mit».
 
-**Frage 4 — erhaltene Alimente und Familienzulagen:** PVV Art. 3 lit. c zieht bezahlte Alimente ab
+~~**Frage 4 — erhaltene Alimente und Familienzulagen:** PVV Art. 3 lit. c zieht bezahlte Alimente ab
 (die App tut das). Erhaltene Alimente und Familienzulagen nennen EG KVG und PVV nicht; zählen sie
 über das «Total der Einkünfte» (EG KVG Art. 15 Abs. 1) aus der Steuerveranlagung mit? Die App rechnet
-sie heute nicht zu und sagt bei der Zahl, dass sie damit zu hoch sein kann.
+sie heute nicht zu und sagt bei der Zahl, dass sie damit zu hoch sein kann.~~
+⟨**beantwortet 28.09.2026 an der Quelle — Frage zurückgezogen, nicht senden** (Re-Review #487, 🛑 R1):
+Das «Total der Einkünfte» ist die Ziffer 215 der Steuerveranlagung. Das Steuergesetz (GS VI C/1/1,
+Version 2445, «Version in Kraft von: 01.01.2024 bis: 31.12.2024», gelesen über
+`gesetze.gl.ch/api/de/versions/2445/pdf_file_with_annexes`, Gegenprobe `versions/99999` → 404) zählt
+erhaltene Unterhaltsbeiträge ausdrücklich zu den steuerbaren Einkünften (Art. 23 Abs. 1 Ziff. 6) und
+«Zulagen» zu den Einkünften aus Arbeitsverhältnis (Art. 17 Abs. 1); abgezogen wird erst danach
+(Art. 25 Abs. 1, bezahlte Unterhaltsbeiträge Art. 31 Ziff. 3). Die App rechnet beide seither zum
+Total der Einkünfte. Wortlaut in Version 2668 (seit 01.01.2026) gleich.⟩
 
 **Frage 3 — Vermögensfreibetrag bei IV-Rente:** Das Steuergesetz (Art. 45 Ziff. 4) gewährt ab einer
 halben IV-Rente weitere 25'400. Die App kennt den IV-Grad nicht und rechnet ohne — ist das für die

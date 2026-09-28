@@ -1450,7 +1450,22 @@ Selbstbehalt = Satz der Stufe × ganzes Einkommen; Betrag = Summe der Richtpräm
 verteilt im Verhältnis der Richtprämien, Anteil der erwachsenen Person auf ihre Prämie gedeckelt,
 unter 12 je Person nichts (nach dem Deckel). ⟨28.09.2026, Fachprüfung #487: bezahlte Alimente × 12 werden
 abgezogen (PVV Art. 3 Abs. 1 lit. c «Alimente für die geschiedenen oder getrennt lebenden Ehepartner und
-für minderjährige Kinder», selbst gelesen, Version 2130); die 12-Franken-Regel gilt jetzt nach dem Deckel.⟩ Keine Prämienregion, keine publizierte Einkommensgrenze. Nach dem
+für minderjährige Kinder», selbst gelesen, Version 2130); die 12-Franken-Regel gilt jetzt nach dem Deckel.⟩
+⟨28.09.2026, Re-Review #487 🛑 R1: **erhaltene Alimente × 12 und Familienzulagen × 12 werden zum Total der
+Einkünfte gerechnet.** Die Fachstelle nimmt das «Total der Einkünfte» aus der Veranlagung (Ziffer 215,
+Erläuterungen 2026); das Steuergesetz GS VI C/1/1 (Version 2445, «Version in Kraft von: 01.01.2024 bis:
+31.12.2024 (Beschlussdatum: 03.10.2023)», gelesen 28.09.2026 über
+`gesetze.gl.ch/api/de/versions/2445/pdf_file_with_annexes`; Gegenprobe `versions/99999` → 404,
+`texts_of_law/VI C/1/77` → 404; Wortlaut in Version 2668, seit 01.01.2026, gleich) sagt wörtlich:
+Art. 23 Abs. 1 Ziff. 6 «Unterhaltsbeiträge, die ein Steuerpflichtiger bei Scheidung, gerichtlicher oder
+tatsächlicher Trennung für sich erhält, sowie Unterhaltsbeiträge, die ein Elternteil für die unter seiner
+elterlichen Sorge oder Obhut stehenden Kinder erhält» · Art. 17 Abs. 1 «alle Einkünfte aus … Arbeitsverhältnis
+mit Einschluss der Nebeneinkünfte, wie … Zulagen …» · Art. 24 (steuerfrei) nennt Familienzulagen nicht und
+nimmt die Unterhaltsbeiträge nach Art. 23 Ziff. 6 in Ziff. 7 ausdrücklich aus · Art. 25 Abs. 1: Abzüge
+«von den gesamten steuerbaren Einkünften», bezahlte Unterhaltsbeiträge Art. 31 Ziff. 3 — darum nennt PVV
+Art. 3 lit. c nur die bezahlten. Unlesbar oder negativ = 0. Beispiel (Test): alleinerziehend, 1 Kind,
+1'500 netto + 800 Alimente + 230 Zulagen → 18'000 + 9'600 + 2'760 − 5'000 = 25'360 → die Lesarten der
+Kindergarantie gehen auseinander (4'665 vs. 4'857) → keine Zahl (vorher 5'777).⟩ Keine Prämienregion, keine publizierte Einkommensgrenze. Nach dem
 31. Januar setzt die App `anmeldefristVorbei` (Budget und KK-Last-Karte ziehen dann nichts ab und
 nennen den Glarner Satz `ipv.glFristNichtAbgezogen`).
 
@@ -1461,8 +1476,12 @@ Stufengrenzen inklusive (Frage 23.2) · Vermögensfreibetrag ohne IV-Zuschlag (F
 Erwachsene in Ausbildung und Kinder, die im Anspruchsjahr 18 werden; Quellenbesteuerte; EL- und
 Sozialhilfebeziehende (von Amtes wegen); Liegenschaften (Unterhalt +, Eigenmietwert −); ~~Alimente~~
 ⟨korrigiert 28.09.2026: bezahlte Alimente sind gebaut⟩. Mit Richtung (steht auch in `vorbehaltGL`):
-erhaltene Alimente und Familienzulagen nicht eingerechnet — EG KVG/PVV nennen sie nicht (Frage 23.4) —
-→ Zahl ZU HOCH · Schulden nicht vom Vermögen abgezogen (StG Art. 45: Reinvermögen) → ZU TIEF ·
+~~erhaltene Alimente und Familienzulagen nicht eingerechnet — EG KVG/PVV nennen sie nicht (Frage 23.4) —
+→ Zahl ZU HOCH~~ ⟨überholt 28.09.2026, Re-Review #487 🛑 R1: gerechnet, Frage 23.4 an der Quelle
+beantwortet (s. o.); neu: Familienzulage schon im erfassten Nettolohn → doppelt gezählt → ZU TIEF⟩ ·
+bezahlte Alimente an volljährige Kinder (PVV Art. 3 lit. c nennt nur Ehegatten und minderjährige Kinder;
+die App fragt nicht, an wen) → ZU HOCH · bezahlte Alimente über dem Einkommen → anrechenbares Einkommen 0,
+volle Richtprämie (Rechnung des Erlasses, kein Riegel) · Schulden nicht vom Vermögen abgezogen (StG Art. 45: Reinvermögen) → ZU TIEF ·
 Kinderanteil nicht auf die Kinderprämie gedeckelt → ZU HOCH · Zuzug im Anspruchsjahr (EG KVG Art. 11
 Abs. 2: Berechtigung erst ab dem Folgejahr) → ZU HOCH · IV-Freibetrag, brutto erfasster Lohn → ZU TIEF.
 

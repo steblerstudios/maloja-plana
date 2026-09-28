@@ -186,10 +186,6 @@ describe('K31 calculateIPV für GL (App-Angaben → Modell)', () => {
       expect(calculateIPV(person({ finanzen: { alimentePaid: -500 } })).annual).toBe(3287);
       expect(glAnrechenbaresEinkommen({ totalEinkuenfte: 24000, vermoegen: 0, kinderZahl: 0, alimenteBezahlt: 6000 })).toBe(18000);
     });
-    it('⚠️1 erhaltene Alimente und Familienzulagen: NICHT eingerechnet (Erlass nennt sie nicht) — Vorbehalt sagt es', () => {
-      const r = calculateIPV(person({ finanzen: { alimenteReceived: 800, familienzulagen: 230 } }));
-      expect(r).toMatchObject({ annual: 3287, vorbehaltKey: 'ipv.vorbehaltGL' });
-    });
     it('⚠️2 [3] Art. 9 Abs. 3 nach dem Deckel: Prämie 10.80/Jahr → nichts ausgerichtet, Grund «Mindestbetrag»; 12.00 → 12', () => {
       expect(calculateIPV(person({ kkPremium: 0.9 }))).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.glUnterMindestbetrag' });
       expect(calculateIPV(person({ kkPremium: 1 }))).toMatchObject({ eligible: true, annual: 12 });
@@ -199,6 +195,43 @@ describe('K31 calculateIPV für GL (App-Angaben → Modell)', () => {
       expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85000 }).varianten.b.kind).toBeCloseTo(1200, 9);
       expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85001 })).toMatchObject({ garantie: false });
       expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85001 }).varianten.b.kind).toBe(0);
+    });
+  });
+
+  // Re-Review #487 🛑 R1: EG KVG Art. 15 Abs. 1 «Total der Einkünfte»; StG GL (Version 2445)
+  // Art. 23 Abs. 1 Ziff. 6 (erhaltene Unterhaltsbeiträge) und Art. 17 Abs. 1 («Zulagen»).
+  // ⟨überholt: hier stand der Test «erhaltene Alimente und Familienzulagen: NICHT eingerechnet».⟩
+  describe('Re-Review #487 🛑 R1 — erhaltene Alimente und Familienzulagen im Total der Einkünfte', () => {
+    it('Rechenkern: 18 000 + 9 600 Alimente + 2 760 Zulagen − 5 000 Kinderabzug = 25 360', () => {
+      expect(glAnrechenbaresEinkommen({ totalEinkuenfte: 18000, vermoegen: 0, kinderZahl: 1, alimenteErhalten: 9600, familienzulagen: 2760 })).toBe(25360);
+      expect(glAnrechenbaresEinkommen({ totalEinkuenfte: 18000, vermoegen: 0, kinderZahl: 1, alimenteErhalten: 9600 })).toBe(22600);
+      expect(glAnrechenbaresEinkommen({ totalEinkuenfte: 18000, vermoegen: 0, kinderZahl: 1, familienzulagen: 2760 })).toBe(15760);
+      expect(glAnrechenbaresEinkommen({ totalEinkuenfte: 18000, vermoegen: 0, kinderZahl: 1, alimenteErhalten: -9600, familienzulagen: -2760 })).toBe(13000);
+    });
+    it('erhaltene Alimente allein (StG Art. 23 Abs. 1 Ziff. 6): 24 000 + 9 600 = 33 600 → 5 447 − 3 024 = 2 423', () => {
+      expect(calculateIPV(person({ finanzen: { alimenteReceived: 800 } })).annual).toBe(2423);
+    });
+    it('Familienzulagen allein (StG Art. 17 Abs. 1 «Zulagen»): 24 000 + 2 760 = 26 760 → 5 447 − 2 408.40 = 3 039', () => {
+      expect(calculateIPV(person({ finanzen: { familienzulagen: 230 } })).annual).toBe(3039);
+    });
+    it('unlesbar oder negativ zählt 0 (wie beim Abzug)', () => {
+      expect(calculateIPV(person({ finanzen: { alimenteReceived: 'x', familienzulagen: 'y' } })).annual).toBe(3287);
+      expect(calculateIPV(person({ finanzen: { alimenteReceived: -800, familienzulagen: -230 } })).annual).toBe(3287);
+    });
+    it('🛑 der Fall der Prüfung: alleinerziehend, 1 Kind (2018), 1 500 netto + 800 Alimente + 230 Zulagen → AE 25 360 → Lesarten auseinander → keine Zahl', () => {
+      const kind = [{ birthDate: '2018-04-01' }];
+      // Ohne die beiden Felder: AE 13 000 → 5 777 (beide Lesarten gleich).
+      expect(calculateIPV(person({ monthlyIncome: 1500, children: kind })).annual).toBe(5777);
+      // Mit ihnen: 25 360 × 9 % = 2 282.40; Differenz 4 664.60; Kinderanteil 1 007.18 < 1 200.
+      const r = ipvGlarusRechnen({ kinderZahl: 1, ae: 25360 });
+      expect(r.differenz).toBeCloseTo(4664.6, 9);
+      expect(r.varianten.a.kind).toBeCloseTo(1200, 9);
+      expect(r.varianten.b.erwachsen + r.varianten.b.kind).toBeCloseTo(4857.42, 1);
+      expect(calculateIPV(person({ monthlyIncome: 1500, children: kind, finanzen: { alimenteReceived: 800, familienzulagen: 230 } })))
+        .toMatchObject({ belegt: false, amount: null, offen: 'mindestanspruch' });
+    });
+    it('bezahlte Alimente über dem Einkommen: AE 0 → volle Richtprämie (Rechnung des Erlasses, kein Riegel)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 3000, kkPremium: 500, finanzen: { alimentePaid: 5000 } })).annual).toBe(5447);
     });
   });
 
