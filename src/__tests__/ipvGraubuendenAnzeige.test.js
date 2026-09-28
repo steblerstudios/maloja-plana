@@ -90,7 +90,9 @@ describe('K31 IPV-Rechner, Kanton Graubünden', () => {
       expect(texte.ipv.grFristLaeuft, `${sprache}: Platzhalter`).toContain('{jahr}');
       expect(typeof texte.ipv.offenGrund.grKinder, `${sprache}: offenGrund.grKinder`).toBe('string');
     }
-  });
+  // Fünf Sprachdateien dynamisch laden dauert unter Last länger als die 5 s Vorgabe (gemessen
+  // 28.09.2026 bei parallelen Läufen: 5 044 ms) — die Prüfung selbst ist nicht zeitkritisch.
+  }, 30000);
 
   it('Paare und unbekannte PLZ: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(2500), basis: { ...profil(2500).basis, maritalStatus: 'married' } });
