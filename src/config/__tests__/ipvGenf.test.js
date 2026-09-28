@@ -341,6 +341,15 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 4000, children: kind, finanzen: { familienzulagen: 400 } })).amount).toBe(480);
   });
 
+  // Re-Review 28.09.2026 (W-b): die Pauschale gilt nur für unselbständige Erwerbstätigkeit (LIPP Art. 29).
+  it('Berufskosten-Pauschale nur bei Anstellung: selbständig oder freiberuflich rechnet ohne', () => {
+    // 2 550 × 12 = 30 600: angestellt −918 → 29 682 (Gruppe 1); selbständig 30 600 (Gruppe 2)
+    expect(calculateIPV(person({ monthlyIncome: 2550, finanzen: { employmentType: 'employed' } })).amount).toBe(348);
+    expect(calculateIPV(person({ monthlyIncome: 2550 })).amount).toBe(348);                       // ohne Angabe wie angestellt (gewählt)
+    expect(calculateIPV(person({ monthlyIncome: 2550, finanzen: { employmentType: 'selfEmployed' } })).amount).toBe(294);
+    expect(calculateIPV(person({ monthlyIncome: 2550, finanzen: { employmentType: 'freelance' } })).amount).toBe(294);
+  });
+
   it('Berufskosten-Pauschale wirkt durch die App: 5 000/Monat → 60 000 − 1 700 = 58 300 (Grenze 57 000 mit 2 Kindern: Gruppe 2)', () => {
     const kinder = [{ age: 5 }, { age: 8 }];
     expect(calculateIPV(person({ monthlyIncome: 5000, children: kinder })).amount).toBe(558);
