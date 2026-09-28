@@ -1188,7 +1188,25 @@ Jahr hinaus → `saeule3aUeberEinkommen`). Frist-Hinweise für Budget/KK-Karte �
 Sozialhilfe, Zuzug aus dem Ausland · Aufrechnungen Ziff. 2–5 · übrige Abzüge im Reineinkommen
 (Berufskosten usw. — Betrag eher **zu tief**, Vorbehalt sagt es) · Kürzung für Neugeborene (zählen ganz).
 
-**Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 10.
+**Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 16 ⟨bis 28.09. spätabends «10»; umnummeriert, 10 ist GR⟩.
+
+**Nachtrag 28.09.2026, spätabends — Fachprüfung #486 umgesetzt:**
+- **W2:** erhaltene Unterhaltsbeiträge werden eingerechnet — StG NW Art. 26 Abs. 1 Ziff. 6 (Wortlaut
+  in den Fassungen 01.01.2023–31.12.2024, `versions/1107`, und seit 01.01.2026 gleich): «Unterhaltsbeiträge,
+  die eine steuerpflichtige Person bei Scheidung, gerichtlicher oder tatsächlicher Trennung für sich
+  erhält sowie Unterhaltsbeiträge, die ein Elternteil für die unter seiner elterlichen Sorge oder Obhut
+  stehenden Kinder erhält.» Familienzulagen nennt Art. 26 **nicht** (sie fallen als «Zulagen» unter
+  Art. 18 Abs. 1, Lohn) — nicht eigens gerechnet, Vorbehalt nennt beide Richtungen.
+  Beispiel: 20'000 + 1'500/Monat erhalten → Steuerwerte 38'000 → **1'600** (vorher 3'400).
+- **K8:** Art. 35 Abs. 1 Ziff. 3/5 in der Fassung 2023–2024 gelesen — gleich wie 2026.
+- **W3:** Neugeborene 2026 zählen nur ab dem Geburtsmonat (gewählt; Frage 16/4). Dezember → 84, unter
+  dem Mindestbetrag.
+- **W1:** `origin/main` gemergt (UR, NE, später GR), Zähler nachgeführt.
+- **Frist:** Weg wie FR (`fristNichtAbgezogenKey`, `fristHinweisKey`) — KK-Karte, Prämien-Beleg und Budget
+  nennen Nidwalden; der eigene Budget-Schlüssel ist weg.
+- **K5:** unlesbares Einkommen/Vermögen → keine Zahl (`offenGrund.eingabeUnlesbar`); LU verhält sich
+  gleich (dort nur notiert), VD zeigt dafür 30 Fr./Monat (Beifund, nicht hier).
+- **K3:** `nwFristLaeuft` nennt die Fristerstreckung (Art. 22 Abs. 7) und den EL-Stichtag 1. Januar.
 
 ---
 
