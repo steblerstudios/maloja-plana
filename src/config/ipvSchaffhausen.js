@@ -73,6 +73,23 @@
 //     («kein Betrag») und § 13bis Abs. 2 («entsprechend erhöht») — keine Zahl.
 //   · Rundung: keine Regel gefunden; gerundet auf ganze Franken wie ZH/SG/AG.
 //
+// RICHTUNG DER KINDER-LESARTEN (Fachprüfung #471 W3/W5, sichtbar in `ipv.shKinderVorbehalt`):
+//   · Basis Richtprämie statt effektiver Kinderprämie: bei Durchschnittsprämie rund 22 Fr./Kind/Jahr
+//     zu tief, bei günstigem Kassenmodell zu hoch.
+//   · Aufteilung «mit Kindern»: der Kinderanteil kann über die Kinderprämie steigen (bei anrechenbarem
+//     Einkommen unter ≈ 31'700); der Überschuss geht nach § 17 Abs. 2 [1] zurück — der Betrag ist dann
+//     bis gegen 400 Fr./Kind/Jahr zu hoch.
+//   · Mindestanspruch nur mit Anspruch nach § 10: gilt das Bundesrecht (Art. 65 Abs. 1bis KVG) über
+//     den Nullpunkt hinaus, sagt die App Familien knapp darüber zu Unrecht «kein Anspruch» — zu tief.
+//
+// RICHTUNG DER NÄHERUNG (Fachprüfung #471 W1/W2, sichtbar in `ipv.vorbehaltSH`/`ipv.shKeinAnspruch`):
+//   · Netto statt Reineinkommen: Berufskosten (mind. 2'000) und Versicherungsabzug (3'750) fehlen; im
+//     Band des Entlastungsabzugs wirkt jeder Franken mit ≈ 0,21 statt 0,15 — der Betrag ist eher ZU TIEF
+//     (36'000 netto: App 1'222, mit diesen Abzügen ≈ 2'377), «kein Anspruch» kann falsch sein.
+//   · Unterhaltsbeiträge (StG Art. 25 lit. f / Art. 35 Abs. 1 lit. c): erhaltene fehlen (Betrag zu hoch,
+//     gerade bei Alleinerziehenden), bezahlte werden nicht abgezogen (Betrag zu tief). Nicht gerechnet —
+//     Rahmen-PR für alle Kantone folgt.
+//
 // BEWUSST NICHT GEBAUT (wie in den anderen Kantonen):
 //   · Paare und mehrere Erwachsene — «Gemeinsam besteuerte Personen haben einen
 //     gemeinschaftlichen Anspruch» (§ 9 Abs. 2 [1]); das zweite Einkommen fehlt der App.
@@ -230,7 +247,10 @@ export function ipvSchaffhausen(data, hh, ipvData, youngAdultsCount, orientierun
   // wer im Anspruchsjahr 26 wird. Dieselbe Regel wie LU und AG, hier mit der amtlichen
   // Jahrgangstabelle für GENAU dieses Anspruchsjahr belegt.
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
+  if (!geburt) return orientierung('alter');
+  // Jahrgänge 2001–2007 sind junge Erwachsene: ihr Anspruch hängt an Ausbildung und Haushalt, nicht am
+  // Geburtsdatum — eigener Grund statt «es fehlt ein Geburtsdatum» (Fachprüfung #471 K1, wie UR).
+  if (!ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung(jahr - geburt >= 19 ? 'ausbildung' : 'alter');
   // § 9 Abs. 3 [1]: massgebend sind «die persönlichen Verhältnisse am 1. Januar»; [4]: «Kinder,
   // die nach dem 1. Januar 2026 zur Welt gekommen sind, dürfen nicht aufgeführt werden.»
   const kinder = (hh.children || []).filter((c) => !(/^\d{4}-\d{2}-\d{2}/.test(c.birthDate || '')
@@ -240,7 +260,7 @@ export function ipvSchaffhausen(data, hh, ipvData, youngAdultsCount, orientierun
   const kinderJahre = kinderAlter(kinder, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
   // Über 18: junge Erwachsene sind bewusst nicht gebaut (siehe Kopf).
-  if (UEBER_18(kinderJahre)) return orientierung('haushalt');
+  if (UEBER_18(kinderJahre)) return orientierung('ausbildung');
 
   const { region } = regionAusPLZ({ data, kanton: 'SH', lookupPLZ, regionFn: shRegion });
   if (!region) return orientierung('region');
@@ -295,7 +315,10 @@ export function ipvSchaffhausen(data, hh, ipvData, youngAdultsCount, orientierun
   const cantonData = { ...ipvData, maxIncome: null };
   const basisjahr = jahr - IPV_SH.basisjahrAbstand;
   const gemeinsam = {
-    canton: 'SH', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltSH', extra: { region, basisjahr },
+    canton: 'SH', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltSH',
+    // Mit Kindern ein zweiter Vorbehalt: die zwei offenen Kinder-Lesarten und ihre Richtung
+    // (Fachprüfung #471 W3/W5) — nur dort, wo er zutrifft.
+    extra: { region, basisjahr, ...(kinderZahl > 0 ? { zusatzVorbehaltKey: 'ipv.shKinderVorbehalt' } : {}) },
   };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({
@@ -303,14 +326,17 @@ export function ipvSchaffhausen(data, hh, ipvData, youngAdultsCount, orientierun
       noteKey: r.grund === 'mindestbetrag' ? 'ipv.shUnterMindestbetrag' : 'ipv.shKeinAnspruch',
     });
   }
-  // § 15 Abs. 3 [1]: ohne Antrag in der Frist ist der Anspruch verwirkt; die Frist 2026 lief bis
-  // 30.04.2026 (§ A1-3 [2]). 🛑 `anmeldefristVorbei` wird hier bewusst NICHT gesetzt: die Leser
-  // (data/ipvAbzug.js → KKLastCard, praemienBeleg) zeigen dann den Luzerner Text
-  // `ipv.luFristNichtAbgezogen` («31. Oktober»), der für Schaffhausen falsch wäre. Wie AG —
-  // offener Punkt im PR.
+  // § 15 Abs. 3 [1]: «Wird innerhalb der gesetzten Frist kein Antrag eingereicht, ist der Anspruch
+  // auf Prämienverbilligung verwirkt»; § 14 Abs. 3 ebenso für zugestellte Formulare. Frist 2026:
+  // 30.04.2026 (§ A1-3 [2]). Danach zieht die App im Budget, in der KK-Last-Karte und im
+  // Prämienbeleg nichts mehr ab (data/ipvAbzug.js) und sagt warum — mit dem eigenen Text
+  // `ipv.shFristNichtAbgezogen` (Leser wie FR: `fristNichtAbgezogenKey`).
+  // ⟨Fachprüfung #471 B1: hier stand, `anmeldefristVorbei` werde bewusst NICHT gesetzt, weil die
+  // Leser nur den Luzerner Text kannten. Das Budget zog dadurch einen verwirkten Betrag ab.⟩
   const fristVorbei = new Date() > new Date(`${IPV_SH.frist.ordentlich}T23:59:59`);
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
+    extra: { ...gemeinsam.extra, anmeldefristVorbei: fristVorbei, fristNichtAbgezogenKey: 'ipv.shFristNichtAbgezogen' },
     noteKey: fristVorbei ? 'ipv.shFristVorbei' : 'ipv.shFristLaeuft',
     noteParams: { jahr, folgejahr: jahr + 1 },
   });
