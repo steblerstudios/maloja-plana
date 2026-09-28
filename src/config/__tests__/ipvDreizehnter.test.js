@@ -71,6 +71,7 @@ const KANTONE = [
   ['AG', '5000', 'Aarau'],
   ['SG', '9000', 'St.Gallen'],
   ['LU', '6003', 'Luzern'],
+  ['UR', '6460', 'Altdorf'],
   ['NW', '6370', 'Stans'],
 ];
 
@@ -78,7 +79,7 @@ describe('calculateIPV in den fünf Kantonsmodulen', () => {
   beforeAll(async () => {
     preloadPLZ();
     await import('../../data/plzGemeinde.js');
-    await Promise.all(['ipvZuerich', 'ipvBern', 'ipvAargau', 'ipvStGallen', 'ipvLuzern', 'ipvNidwalden'].map((m) => import(`../${m}.js`)));
+    await Promise.all(['ipvZuerich', 'ipvBern', 'ipvAargau', 'ipvStGallen', 'ipvLuzern', 'ipvUri', 'ipvNidwalden'].map((m) => import(`../${m}.js`)));
     await new Promise((r) => setTimeout(r, 0));
   });
 

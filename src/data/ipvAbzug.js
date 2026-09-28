@@ -12,6 +12,9 @@
 //                           Betrag, nie mehr als die Schätzung (nur wenn dabei > 0 herauskommt)
 //             'geschaetzt'  amtlich belegter Kanton, Anspruch, nichts spricht dagegen
 //             'fristVorbei' Anspruch geschätzt, aber die Anmeldefrist ist abgelaufen → 0
+//             'gesuchNoetig' Anspruch geschätzt, aber der Kanton stuft womöglich nur auf Gesuch ein
+//                           (NE, RSN 821.102 Art. 16, Band über der Schwelle) → 0; den Text nennt
+//                           das Ergebnis selbst (`gesuchNichtAbgezogenKey`)
 //             'keiner'      kein Anspruch, kein belegter Kanton oder kein Betrag → 0
 //   frist   → { jahr, vorjahr } nur bei 'fristVorbei' (Parameter für den Hinweis-Text)
 //
@@ -42,7 +45,7 @@ import { readIpvStatus, IPV_STATUS } from './ipvStatus.js';
 
 export const IPV_ABZUG_GRUND = {
   BESTAETIGT: 'bestaetigt', VERFUEGUNG_UNZUGEORDNET: 'verfuegungUnzugeordnet',
-  GESCHAETZT: 'geschaetzt', FRIST_VORBEI: 'fristVorbei', KEINER: 'keiner',
+  GESCHAETZT: 'geschaetzt', FRIST_VORBEI: 'fristVorbei', GESUCH_NOETIG: 'gesuchNoetig', KEINER: 'keiner',
 };
 
 // Wofür eine eingetragene Verfügung steht — gelesen von ipvAbzug und von der Seite
@@ -78,6 +81,11 @@ function schaetzungsAbzug(ipv) {
     // `fristKeys` (OW/NW, 28.09.2026): ein Kanton mit eigener Frist bringt seine Sätze mit — ohne
     // stünde bei jedem Kanton der Luzerner Satz («31. Oktober»). Ohne Angabe bleibt es LU.
     return { betrag: 0, grund: IPV_ABZUG_GRUND.FRIST_VORBEI, frist: { jahr: ipv.jahr, vorjahr: ipv.jahr - 1, ...(ipv.fristKeys || {}) } };
+  }
+  // Wo die Einstufung nicht sicher von selbst kommt, wird nichts abgezogen — die App weiss nicht,
+  // ob ein Gesuch gestellt ist. Eine eingetragene Verfügung gilt davor (siehe ipvAbzug unten).
+  if (ipv.gesuchNoetig === true) {
+    return { betrag: 0, grund: IPV_ABZUG_GRUND.GESUCH_NOETIG, frist: null };
   }
   const betrag = Math.max(0, Number(ipv.amount) || 0);
   return { betrag, grund: betrag > 0 ? IPV_ABZUG_GRUND.GESCHAETZT : IPV_ABZUG_GRUND.KEINER, frist: null };

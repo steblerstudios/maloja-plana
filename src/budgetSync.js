@@ -101,6 +101,8 @@ const syncBudgetFromChapters = (data) => {
   // Unbelegt bleibt es beim Hinweis ohne Betrag (ipvOrientierung).
   const abzug = ipvAbzug(data, ipv);
   const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
+  // NE im Band über der Art.-16-Schwelle: nichts abgezogen, der Hinweis sagt warum (Schlüssel aus dem Ergebnis).
+  const ipvGesuchHinweisKey = abzug.grund === IPV_ABZUG_GRUND.GESUCH_NOETIG ? (ipv.gesuchNichtAbgezogenKey || null) : null;
   const ipvRelief = abzug.betrag;
   // Abgezogen wird der Betrag einer gültigen Verfügung — dann sagt der Hinweis «laut Verfügung»,
   // nicht «möglicherweise Anspruch».
@@ -131,6 +133,7 @@ const syncBudgetFromChapters = (data) => {
     ipvVerfuegungUnzugeordnet,
     ipvOrientierung,
     ipvAnmeldefristVorbei,
+    ipvGesuchHinweisKey,
     expenses: {}
   };
 
@@ -259,6 +262,11 @@ const getBudgetRecommendations = (budget, t) => {
     recommendations.push({
       level: 'info',
       text: t ? t(budget.ipvAnmeldefristVorbei.budgetKey || 'budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction: not deducted, the registration deadline has passed.'
+    });
+  } else if (budget.ipvGesuchHinweisKey) {
+    recommendations.push({
+      level: 'info',
+      text: t ? t(budget.ipvGesuchHinweisKey) : 'Premium reduction: not deducted, the canton may only classify on application.'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({
