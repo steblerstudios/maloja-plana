@@ -14,9 +14,14 @@
 //       01.01.2026 (Beschlussdatum: 18.11.2025)». § 5: Richtprämien · § 6 Abs. 2: kein
 //       Mindestbetrag · § 9 Abs. 1 lit. a: Erwachsene ab dem 1. Januar nach dem 25. Altersjahr ·
 //       § 10: Antragsformular von Amtes wegen.
-//   [4] Steuerverwaltung BL, «Wegleitung zur Steuererklärung 2024»: Ziffer 100 (Nettolohn),
-//       Ziffer 399 (Zwischentotal), Ziffer 610 (Säule 3a), Ziffern 900/905 (steuerfreie Beträge
-//       Vermögen), Ziffer 750 (Kinderabzug Staatssteuer).
+//   [4] Steuerverwaltung BL, «Wegleitung zur Steuererklärung 2024» (2 W 2024 240917,
+//       bl-api.webcloud7.ch/…/unselbstaendig-erwerbende-2024/wegleitung-zur-steuererklarung_int_2_w_2024_240917.pdf,
+//       mit curl und Browser-Kennung HTTP 200 am 28.09.2026; ohne Kennung antwortet der Server
+//       mit 403): Ziffer 100 (Nettolohn), 310/320 (erhaltene Unterhaltsbeiträge), 380 (übrige
+//       Einkünfte, Familienzulagen), Ziffer 399 (Zwischentotal), Ziffer 610 (Säule 3a),
+//       Ziffern 900/905 (steuerfreie Beträge Vermögen), Ziffer 750 (Kinderabzug Staatssteuer).
+//   [6] Steuergesetz BL (SGS 331) § 50 Abs. 1 lit. a/b: steuerfreie Beträge 180'000 / 90'000
+//       (Primärquelle zu [4] Ziffern 900/905; Fachprüfung 28.09.2026, K3).
 //   [5] SVA BL, Seiten «Ordentlicher Anspruch» und «IPV Online-Rechner» (2026): Formular von
 //       Amtes wegen, Frist 1 Jahr; Rechner: «Zwischentotal der steuerbaren Einkünfte 399».
 // 🛑 KEIN AMTLICHES BERECHNUNGSBEISPIEL GEFUNDEN. Die SVA publiziert nur den Online-Rechner,
@@ -29,8 +34,12 @@
 // (allein 31'000); darüber fällt der Anspruch ganz weg, ohne Auslaufzone.
 //
 // WAS BASEL-LANDSCHAFT VON DEN BISHERIGEN KANTONEN UNTERSCHEIDET
-// 1. DIE OBERGRENZE IST EINE KLIPPE. Bei 31'000 massgebendem Einkommen bleiben noch 2'193.50
-//    im Jahr — bei 31'001 nichts mehr ([2] § 1: «anspruchsabschliessende Obergrenze»).
+// 1. DIE OBERGRENZE IST EINE KLIPPE ([2] § 1: «anspruchsabschliessende Obergrenze»). Knapp
+//    darunter bleiben rund 2'190 im Jahr, darüber nichts.
+//    ⟨korrigiert 28.09.2026, Fachprüfung W2: hier stand «bei 31'000 … 2'193.50 — bei 31'001
+//    nichts». Der amtliche Rechner der SVA (sva_onlinecalculator.js, Knopf «check») rechnet
+//    `einkommen - obergrenze >= 0` → «NEIN», also schon bei GENAU 31'000 kein Anspruch. Das passt
+//    zu «anspruchsabschliessend»; die App folgt jetzt der ausführenden Stelle.⟩
 // 2. GEMESSEN VOR DEN ABZÜGEN: Zwischentotal der steuerbaren Einkünfte (Ziffer 399) — Nettolohn
 //    nach AHV/ALV/PK/NBU ([4] Ziffer 100), noch ohne Berufsauslagen, Versicherungs- und
 //    3a-Abzug. Das liegt nahe am Nettoeinkommen der App; `SAEULE_3A.nichtAbgezogen`.
@@ -48,8 +57,12 @@
 //     des Vor-Vorjahres und zählen erst auf Gesuch ([1] § 9a) — die App zeigt dann keine Zahl.
 //   · Quellenbesteuerte ([3] § 18c), Zuziehende ([3] §§ 13, 14 — Veranlagung des früheren
 //     Kantons), Sozialhilfe ([3] § 4), Personen in der EU/EFTA.
-//   · Einkünfte aus Liegenschaften ([1] § 9 Abs. 1 lit. a/Abs. 2) und Unterhaltsbeiträge
-//     (lit. c) — die App erfasst sie nicht.
+//   · Einkünfte aus Liegenschaften ([1] § 9 Abs. 1 lit. a/Abs. 2) — die App erfasst sie nicht.
+//     ⟨korrigiert 28.09.2026, Fachprüfung B2: hier stand auch «und Unterhaltsbeiträge (lit. c)
+//     — die App erfasst sie nicht». Falsch: `alimentePaid`, `alimenteReceived` und
+//     `familienzulagen` sind erfasst, und BL RECHNET SIE JETZT SELBST (siehe `blZwischentotal`).⟩
+//   · Schulden: steuerbar ist das REINvermögen ([6] § 50); `vermoegenSumme` zieht keine
+//     Schulden ab — über 90'000 fällt der Betrag dadurch zu tief aus (Fachprüfung K4).
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -79,10 +92,31 @@ export const IPV_BL = {
   // für welches bei der Staatssteuer ein Kinderabzug gewährt wird».
   vermoegenAnteil: 0.2,
   kinderabzug: 5000,
-  // [4] Ziffern 900/905 (Wegleitung 2024 = Bemessungsjahr für 2026): steuerfreier Betrag
+  // [6] § 50 Abs. 1 und [4] Ziffern 900/905 (Wegleitung 2024 = Bemessungsjahr für 2026): steuerfreier Betrag
   // «CHF 180’000 für … Einelternfamilien», «CHF 90’000 für alle anderen».
   vermoegenFrei: { allein: 90000, einelternfamilie: 180000 },
 };
+
+// Zwischentotal der steuerbaren Einkünfte (Ziffer 399) aus den App-Angaben, dazu der Abzug der
+// geleisteten Unterhaltsbeiträge nach [1] § 9 Abs. 1 lit. c. ⟨28.09.2026, Fachprüfung B2⟩
+//   · Lohn, Nebenerwerb, Renten: `einkommenJahr` — die 3a ist in Ziffer 399 nicht abgezogen
+//     (`SAEULE_3A.nichtAbgezogen`, Abzug 0).
+//   · erhaltene Unterhaltsbeiträge (`alimenteReceived`): [4] Ziffern 310/320 — steuerbare
+//     Einkünfte vor Ziffer 399; StG BL § 24 lit. f.
+//   · Familienzulagen (`familienzulagen`): [4] Ziffer 100 («Zulagen» im Lohn) bzw. Ziffer 380
+//     («Familienzulagen … in der Ziffer 380 ‹übrige Einkünfte› zu deklarieren») — beides vor 399.
+//     Die App führt sie wie data/haushaltsEinnahmen.js ZUSÄTZLICH zum Lohn.
+//   · bezahlte Unterhaltsbeiträge (`alimentePaid`): [1] § 9 Abs. 1 lit. c «vermindert um …
+//     geleistete Unterhaltsbeiträge, für die bei der Staatsteuer ein Abzug gewährt wird».
+//     GEWÄHLT: der Abzug gilt als gewährt (Regelfall bei Alimenten an Ex-Ehegatten und
+//     minderjährige Kinder; ob er im Einzelfall gewährt wurde, weiss die App nicht).
+// Unlesbar oder negativ ⇒ 0, wie in Uri. Das Ergebnis darf unter 0 fallen; der Boden liegt in
+// `blMassgebendesEinkommen`.
+export function blZwischentotal(f) {
+  const monatlich = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x * 12 : 0; };
+  return einkommenJahr(f, SAEULE_3A.nichtAbgezogen)
+    + monatlich(f.alimenteReceived) + monatlich(f.familienzulagen) - monatlich(f.alimentePaid);
+}
 
 // Obergrenze nach [2] § 1 für eine erwachsene Person mit `kinderZahl` Kindern.
 export function blObergrenze(kinderZahl) {
@@ -109,8 +143,9 @@ export function blMassgebendesEinkommen({ zwischentotal, vermoegen, kinderZahl }
 //       die Kinder erhalten zuerst ihren Mindestanteil, der Rest geht an die erwachsene Person.
 //   (b) «Boden je Kind»: die Differenz wird im Verhältnis der Richtprämien verteilt, und jedes
 //       Kind erhält mindestens 80 % seiner Richtprämie — zusätzlich zum Anteil der Erwachsenen.
-// Bei einer erwachsenen Person mit einem Kind und 40'000 Einkommen liegen sie 536 Franken
-// auseinander. Die App rechnet beide und zeigt eine Zahl nur, wo sie übereinstimmen
+// Der Abstand wächst mit dem Einkommen: 1 Kind, 40'000 → 536; 1 Kind, 51'000 → 791; 2 Kinder,
+// 68'000 → 1'644 Franken (Fachprüfung K1, am Modul nachgerechnet). (a) ist immer ≤ (b), also
+// unter beiden Lesarten eine Untergrenze. Die App rechnet beide und zeigt eine Zahl nur, wo sie übereinstimmen
 // (`unklar`); sonst keine Zahl, und die Frage liegt bei der SVA BL.
 export function ipvBaselLandschaftRechnen({ kinderZahl = 0, me }) {
   const p = IPV_BL;
@@ -119,7 +154,8 @@ export function ipvBaselLandschaftRechnen({ kinderZahl = 0, me }) {
   const grenze = blObergrenze(kinderZahl);
   const me0 = Math.max(0, me);
   const summe = rpE + kinderZahl * rpK;
-  if (me0 > grenze) {
+  // «anspruchsabschliessend» — ab der Grenze kein Anspruch, wie der SVA-Rechner (siehe Kopf).
+  if (me0 >= grenze) {
     return { grenze, ueberGrenze: true, total: 0, erwachsenenAnteil: 0, maximal: summe, unklar: false, varianten: null };
   }
   const differenz = Math.max(0, summe - p.prozentanteil * me0);
@@ -175,9 +211,8 @@ export function ipvBaselLandschaft(data, hh, ipvData, youngAdultsCount, orientie
 
   const roh = rohesEinkommenJahr(f);
   if (roh < 0) return orientierung('einkommenNegativ');
-  // Zwischentotal (Ziffer 399): die 3a ist dort nicht abgezogen — `nichtAbgezogen` (Abzug 0).
   const me = blMassgebendesEinkommen({
-    zwischentotal: einkommenJahr(f, SAEULE_3A.nichtAbgezogen),
+    zwischentotal: blZwischentotal(f),
     vermoegen: vermoegenSumme(f),
     kinderZahl,
   });
@@ -193,7 +228,9 @@ export function ipvBaselLandschaft(data, hh, ipvData, youngAdultsCount, orientie
     extra: { basisjahr, jahrKey: 'ipv.jahrBL' },
   };
   if (r.ueberGrenze) {
-    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.blKeinAnspruch', noteParams: { grenze: zahl(r.grenze) } });
+    // Fachprüfung W1: der Satz nennt die Veranlagung {basisjahr} — verglichen wird das heutige
+    // Einkommen mit einer Klippe, knapp darüber ist «kein Anspruch» eine Aussage über eine Näherung.
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.blKeinAnspruch', noteParams: { grenze: zahl(r.grenze), basisjahr } });
   }
   // Beide Lesarten der Kinder-Mindestverbilligung nach dem Deckel — nur wenn sie denselben
   // Betrag ergeben, steht eine Zahl.

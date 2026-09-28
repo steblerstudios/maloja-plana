@@ -55,9 +55,9 @@ describe('K31 BL: Rechnung [1] § 8 Abs. 2 — Richtprämie minus 7,75 %', () =>
   it('Handrechnung: 20 000 → 4 596 − 1 550 = 3 046', () => {
     expect(ipvBaselLandschaftRechnen({ me: 20000 }).total).toBeCloseTo(3046, 9);
   });
-  it('🛑 die Obergrenze ist eine Klippe: 31 000 → 2 193.50, 31 001 → nichts', () => {
-    expect(ipvBaselLandschaftRechnen({ me: 31000 }).total).toBeCloseTo(2193.5, 9);
-    expect(ipvBaselLandschaftRechnen({ me: 31001 })).toMatchObject({ ueberGrenze: true, total: 0, grenze: 31000 });
+  it('🛑 die Obergrenze ist eine Klippe und «anspruchsabschliessend»: 30 999 → 2 193.58, 31 000 → nichts (wie der SVA-Rechner)', () => {
+    expect(ipvBaselLandschaftRechnen({ me: 30999 }).total).toBeCloseTo(4596 - 0.0775 * 30999, 9);
+    expect(ipvBaselLandschaftRechnen({ me: 31000 })).toMatchObject({ ueberGrenze: true, total: 0, grenze: 31000 });
   });
   it('mit Kind: beide Lesarten gleich, solange der Kinderanteil über 80 % liegt', () => {
     const r = ipvBaselLandschaftRechnen({ kinderZahl: 1, me: 10000 });
@@ -68,7 +68,7 @@ describe('K31 BL: Rechnung [1] § 8 Abs. 2 — Richtprämie minus 7,75 %', () =>
   });
   it('🛑 mit Kind, Kinderanteil unter 80 %: die Lesarten gehen um 536 auseinander', () => {
     const r = ipvBaselLandschaftRechnen({ kinderZahl: 1, me: 40000 });
-    // Differenz 6 564 − 3 100 = 3 464; (a) 3 464 · (b) 2 425.39 + 1 574.40 = 3 999.79
+    // Differenz 6 564 − 3 100 = 3 464; (a) 3 464 · (b) 2 425.43 + 1 574.40 = 3 999.83
     expect(r.varianten.a.total).toBeCloseTo(3464, 6);
     expect(r.varianten.b.total).toBeCloseTo(3464 * 4596 / 6564 + 0.8 * 1968, 6);
     expect(Math.round(r.varianten.b.total - r.varianten.a.total)).toBe(536);
@@ -175,6 +175,31 @@ describe('K31 calculateIPV für BL (App-Angaben → Modell)', () => {
 
   it('negatives Einkommen: keine Zahl', () => {
     expect(calculateIPV(person({ monthlyIncome: -2000 }))).toMatchObject({ offen: 'einkommenNegativ' });
+  });
+
+  describe('🛑 Fachprüfung B2: Unterhaltsbeiträge und Familienzulagen im Zwischentotal', () => {
+    it('bezahlt (EG KVG § 9 Abs. 1 lit. c): 2 800 − 1 000 → 21 600 → 2 922 (vorher «kein Anspruch»)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2800, finanzen: { alimentePaid: 1000 } }))).toMatchObject({ eligible: true, annual: 2922 });
+      expect(calculateIPV(person({ monthlyIncome: 2800 }))).toMatchObject({ eligible: false, noteKey: 'ipv.blKeinAnspruch' });
+    });
+    it('erhalten (Wegleitung Ziffern 310/320): 2 000 + 1 000 → 36 000 → kein Anspruch (vorher 2 736)', () => {
+      expect(calculateIPV(person({ finanzen: { alimenteReceived: 1000 } }))).toMatchObject({ eligible: false, noteKey: 'ipv.blKeinAnspruch' });
+    });
+    it('Familienzulagen (Ziffer 100/380): 2 000 + 200 → 26 400 → 4 596 − 2 046 = 2 550', () => {
+      expect(calculateIPV(person({ finanzen: { familienzulagen: 200 } })).annual).toBe(2550);
+    });
+    it('unlesbar oder negativ zählt nicht', () => {
+      expect(calculateIPV(person({ finanzen: { alimenteReceived: 'abc', familienzulagen: -5, alimentePaid: 'x' } })).annual).toBe(2736);
+    });
+    it('die Obergrenze gilt ab genau 31 000: 2 583 × 12 = 30 996 rechnet, 31 000 nicht', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2583 })).annual).toBe(2194);
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { familienzulagen: 83.34 } })).eligible).toBe(false);
+    });
+  });
+
+  it('💡 K2: der Deckel macht die Lesarten gleich — dann steht die Zahl (Prämie 150, 1 Kind, 25 000 → 3 374)', () => {
+    const r = calculateIPV(person({ monthlyIncome: 2500, kkPremium: 150, children: [{ birthDate: '2020-03-01' }] }));
+    expect(r).toMatchObject({ eligible: true, annual: 3374 });
   });
 
   describe('Jahres-Riegel', () => {

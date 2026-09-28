@@ -63,7 +63,7 @@ describe('K31 IPV-Rechner, Kanton Basel-Landschaft', () => {
 
   it('über der Obergrenze: der eigene Satz mit der Grenze', () => {
     const html = render(profil(2584));
-    expect(html).toContain('ipv.blKeinAnspruch(' + geldZahl(31000) + ')');
+    expect(html).toContain('ipv.blKeinAnspruch(' + geldZahl(31000) + '|2024)');
     expect(html).not.toContain('ipv.incomeAboveLimit');
   });
 
