@@ -19,6 +19,12 @@
 //       des Vorjahres · § 15 Abs. 2bis: Differenzen unter Fr. 30 bei der Neubemessung.
 //   [2] Amt für Gesundheit TG, «Information zur Prämienverbilligung 2026», PDF vom 16.12.2025:
 //       dieselben Ansätze als Tabelle (Kat. A–D), Jahrgänge, Antragsverfahren, Frist 31.12.2026.
+//   [3] Steuergesetz TG (StG, RB 640.1), Rechtsbuch-Version 2929, «in Kraft seit 01.01.2025 bis
+//       31.12.2028», gelesen 28.09.2026: § 6 Abs. 1 «Die nach den gesetzlichen Steuersätzen
+//       berechnete Steuer … gilt als einfache Steuer zu 100 Prozent» · § 53 Abs. 1 steuerfreie
+//       Beträge vom Reinvermögen: 200'000 (ungetrennte Ehe) / 100'000 (übrige) / +100'000 je Kind.
+//       «Ohne steuerbares Vermögen» heisst also: Reinvermögen nach diesen Beträgen ≤ 0 — nicht
+//       «kein Erspartes». Der Grund-Text sagt es (Fachprüfung #474, ⚠️ 1).
 //
 // DAS MODELL IN EINEM SATZ
 // Wer per 1. Januar nach den provisorischen Steuerdaten des Vorjahres eine einfache Steuer zu
@@ -78,7 +84,9 @@ export function ipvThurgauRechnen({ einfacheSteuer, steuerbaresVermoegen, kinder
 export function ipvThurgau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Die Ansätze beschliesst der Regierungsrat jährlich (§ 14 [1] wurde für jedes Jahr seit 2015
   // geändert). Ab dem 01.01. des Folgejahres: der Grund «jahr», weil der Grund-Text unten die
-  // Beträge 2026 nennt.
+  // Beträge 2026 nennt. ⚠️ Dessen Satz «rechnet die App wieder» stimmt für TG auch mit neuen
+  // Werten nicht (Fachprüfung #474, 💡 1) — bewusst so gelassen: der gemeinsame Text gilt für
+  // alle Kantone, und ab 2027 sind die TG-Ansätze im Grund-Text ohnehin zu erneuern.
   if (jahrVorbei(IPV_TG.jahr)) return orientierung('jahr');
   return orientierung('tgSteuerbetrag');
 }

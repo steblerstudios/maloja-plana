@@ -49,7 +49,14 @@ describe('K31 IPV-Rechner, Kanton Thurgau', () => {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
       const g = texte.ipv.offenGrund.tgSteuerbetrag;
       expect(typeof g, `${sprache}: offenGrund.tgSteuerbetrag`).toBe('string');
-      for (const z of ['3 408', '2 556', '1 704', '1 236', '1 600', '400', '600', '800', '31']) expect(g, `${sprache}: ${z}`).toContain(z);
+      for (const z of ['3 408', '2 556', '1 704', '1 236', '1 600', '100 000', '200 000', '30', 'Krankenkassenkontrollstelle']) expect(g, `${sprache}: ${z}`).toContain(z);
+      // Mit Kontext gepinnt (Prüfung #474, 💡 2): «600» steckt sonst schon in «1 600», «31» fast überall.
+      const kontext = {
+        de: ['Fr. 400 ', 'Fr. 600 ', 'Fr. 800 ', '31. Dezember'], en: ['CHF 400,', 'CHF 600,', 'CHF 800,', '31 December'],
+        fr: ['400 francs', ' 600 francs, 2', '800 francs', '31 décembre'], it: ['400 franchi', ' 600 franchi, 2', '800 franchi', '31 dicembre'],
+        rm: ['fr. 400 ', 'fr. 600 ', 'fr. 800 ', '31 da december'],
+      }[sprache];
+      for (const z of kontext) expect(g, `${sprache}: «${z}»`).toContain(z);
       expect(typeof texte.ipv.noteApplyKkKontrollstelle, `${sprache}: noteApplyKkKontrollstelle`).toBe('string');
     }
   }, 30000);

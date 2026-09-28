@@ -50,7 +50,7 @@ sind. Dieses Dokument ändert keinen Code.
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
 | GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | abbildbar | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
 | AG | Aargau | Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie | abbildbar | <https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes> |
-| TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0) | teilweise — belegt, gebaut ohne Zahl (PR #474, Steuerbetrag fehlt der App) | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
+| TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0 nach Abzug der steuerfreien Beträge, StG § 53) | teilweise — belegt, gebaut ohne Zahl (PR #474, Steuerbetrag fehlt der App) | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
@@ -2071,6 +2071,20 @@ Die Übersichtszeile oben («Zuständig / Weg») war richtig.
 Junge Erwachsene nicht in Ausbildung: im Merkblatt nicht geregelt.
 
 **Werte 2027:** am 28.09.2026 nicht publiziert (keine künftige Version im Rechtsbuch). Ab 01.01.2027 Grund `jahr`.
+
+### Nachtrag 28.09.2026 abends — Fachprüfung PR #474 eingearbeitet
+
+- **«ohne steuerbares Vermögen (Fr. 0)»** ⟨präzisiert⟩: gemeint ist das steuerbare Vermögen nach den steuerfreien
+  Beträgen. TG StG (RB 640.1), Rechtsbuch-Version 2929, in Kraft 01.01.2025–31.12.2028, selbst gelesen 28.09.2026:
+  § 53 Abs. 1 «Vom Reinvermögen werden abgezogen: 1. bei Steuerpflichtigen in ungetrennter Ehe Fr. 200'000 2. bei allen
+  übrigen Steuerpflichtigen Fr. 100'000 3. für jedes nicht selbständig besteuerte Kind zusätzlich Fr. 100'000». Die
+  Anzeige nennt die Beträge.
+- **«einfache Steuer»** ⟨Offen-Punkt geschlossen⟩: StG § 6 Abs. 1 «Die nach den gesetzlichen Steuersätzen berechnete
+  Steuer von Einkommen, Vermögen, Gewinn und Kapital gilt als einfache Steuer zu 100 Prozent.»
+- **Kein Formular erhalten:** TG KVV § 15 Abs. 2 (Neubemessung innert 30 Tagen ab rechtskräftiger Feststellung, u. a.
+  gestützt auf die definitive Steuerschlussrechnung) und Merkblatt («Wurde in den Vorjahren nicht automatisch ein
+  Antragsformular zugestellt …», «Eine Neubemessung von Amtes wegen ist nicht zulässig») — steht jetzt im Grund-Text.
+- «provisorische» Steuerdaten ergänzt; in fr/it/en/rm steht der Amtsname «Krankenkassenkontrollstelle» in Klammern.
 
 ---
 
