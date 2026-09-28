@@ -196,11 +196,11 @@ describe('K31 calculateIPV für GR (App-Angaben → Modell)', () => {
   });
   afterEach(() => { vi.useRealTimers(); });
 
-  const person = ({ monthlyIncome = 0, plz = '7000', city = '', children = [], dob = '1980-05-01', kkPremium = 450, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, plz = '7000', city = '', children = [], dob = '1980-05-01', kkPremium = 450, finanzen = {}, basis = {}, versicherungen = {} } = {}) => ({
     basis: { canton: 'GR', dateOfBirth: dob, maritalStatus: 'single', household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: plz, city },
-    versicherungen: kkPremium != null ? { kkPremium } : {},
+    versicherungen: { ...(kkPremium != null ? { kkPremium } : {}), ...versicherungen },
   });
 
   it('belegt, mit Quelle; keine Musterwerte, keine Grenze', () => {
@@ -254,14 +254,22 @@ describe('K31 calculateIPV für GR (App-Angaben → Modell)', () => {
   it('Art. 8a Abs. 1 lit. d: der erfasste BVG-Beitrag wird zugerechnet', () => {
     // 24 000 → 8 % → 3 996; mit 300/Monat BVG 27 600 → 8 % → 3 708
     expect(calculateIPV(person({ monthlyIncome: 2000 })).annual).toBe(3996);
-    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 300 } })).annual).toBe(3708);
+    // Das Feld liegt im Kapitel «versicherungen» (config/constants.js FIELD_KEYS) — dort, wo die App es speichert.
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: 300 } })).annual).toBe(3708);
+    // Gegenprobe: derselbe Wert unter «finanzen» (dort gibt es das Feld nicht) bewirkt nichts.
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 300 } })).annual).toBe(3996);
     // Leer oder unlesbar zählt 0, nie NaN
-    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 'abc' } })).annual).toBe(3996);
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: 'abc' } })).annual).toBe(3996);
   });
 
   it('🛑 ohne erfassten BVG-Beitrag: Zusatz-Vorbehalt in der Anzeige (Betrag sonst zu hoch)', () => {
     expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ zusatzVorbehaltKey: 'ipv.vorbehaltGRbvg' });
-    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 300 } })).zusatzVorbehaltKey).toBeUndefined();
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: 300 } })).zusatzVorbehaltKey).toBeUndefined();
+    // Eine erfasste 0 heisst «keine Pensionskasse» — dann ist nichts vergessen.
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: 0 } })).zusatzVorbehaltKey).toBeUndefined();
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: '' } })).zusatzVorbehaltKey).toBe('ipv.vorbehaltGRbvg');
+    // Gegenprobe: ein Wert unter «finanzen» zählt nicht als erfasst.
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 300 } })).zusatzVorbehaltKey).toBe('ipv.vorbehaltGRbvg');
     // Ohne Lohn gibt es keinen BVG-Abzug zu vermissen.
     expect(calculateIPV(person({ monthlyIncome: 0 })).zusatzVorbehaltKey).toBeUndefined();
     // Auch beim «kein Anspruch» — dort kann das fehlende Feld die Aussage ebenfalls kippen.

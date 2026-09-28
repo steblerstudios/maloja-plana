@@ -432,8 +432,9 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       (Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
-// Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am
-// aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen.
+// Anspruchsjahr 2026 rechnen AG, LU und GR für den Jahrgang 2000, die anderen nicht. Gemessen am
+// aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen. ⟨nachgetragen 28.09.2026 nach dem
+// Re-Review #467: hier stand nur AG; LU (23.09.) und GR (28.09.) rechnen seither ebenso.⟩
 //
 // 🛑 `abEndeVorjahr` und `mangelsStichtag` sind absichtlich zwei Namen für dieselbe Rechnung.
 // Sonst schreibt der nächste Kanton «belegt», wo «vorsichtig gewählt» gemeint war — und ein

@@ -22,7 +22,7 @@ const profil = (monthlyIncome, extra = {}) => ({
   basis: { canton: 'GR', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: extra.children || [] } },
   finanzen: { monthlyIncome, ...(extra.finanzen || {}) },
   wohnen: { postalCode: extra.plz || '7000', city: extra.city || 'Chur', rentAmount: 1200 },
-  versicherungen: extra.kkPremium !== undefined ? (extra.kkPremium === null ? {} : { kkPremium: extra.kkPremium }) : { kkPremium: 450 },
+  versicherungen: { ...(extra.kkPremium !== undefined ? (extra.kkPremium === null ? {} : { kkPremium: extra.kkPremium }) : { kkPremium: 450 }), ...(extra.versicherungen || {}) },
 });
 
 describe('K31 IPV-Rechner, Kanton Graubünden', () => {
@@ -65,7 +65,7 @@ describe('K31 IPV-Rechner, Kanton Graubünden', () => {
 
   it('ohne erfassten BVG-Beitrag steht der Zusatz-Vorbehalt dabei, mit Beitrag nicht', () => {
     expect(render(profil(2500))).toContain('ipv.vorbehaltGRbvg');
-    expect(render(profil(2500, { finanzen: { bvgContribution: 200 } }))).not.toContain('ipv.vorbehaltGRbvg');
+    expect(render(profil(2500, { versicherungen: { bvgContribution: 200 } }))).not.toContain('ipv.vorbehaltGRbvg');
   });
 
   it('die Anmeldefrist steht beim Betrag', () => {

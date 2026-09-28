@@ -226,11 +226,15 @@ export function ipvGraubuenden(data, hh, ipvData, youngAdultsCount, orientierung
   // Art. 8a Abs. 1 [1]: satzbestimmendes steuerbares Einkommen, zuzüglich
   //   lit. a  10 % des Reinvermögens (nicht negativ),
   //   lit. d  die Beiträge an die berufliche Vorsorge — die App führt den laufenden BVG-Beitrag
-  //           als Monatsbetrag «nur zur Übersicht» (er ist im Nettolohn schon abgezogen, i18n
+  //           im Kapitel Versicherungen als Monatsbetrag «nur zur Übersicht» (er ist im Nettolohn schon abgezogen, i18n
   //           `bvgContribution`). Erfasst wird er darum hier zugerechnet; leer heisst «nicht
   //           erfasst» und zählt 0 — dann liegt das Einkommen zu tief und der Betrag zu hoch.
   //   lit. e  die Säule 3a — steckt im Nettoeinkommen schon, Regel `voll`, kein Zuschlag.
-  const bvgJahr = Math.max(0, Number(f.bvgContribution) || 0) * 12;
+  // 🛑 Das Feld gehört zum Kapitel VERSICHERUNGEN (config/constants.js, FIELD_KEYS.versicherungen),
+  // nicht zu den Finanzen. ⟨korrigiert 28.09.2026 nach dem Re-Review #467: zuerst stand hier
+  // `f.bvgContribution` — ein Pfad, den es in der App nicht gibt; ein erfasster Beitrag zählte nie.⟩
+  const bvgRoh = data.versicherungen?.bvgContribution;
+  const bvgJahr = Math.max(0, Number(bvgRoh) || 0) * 12;
   const me = einkommenJahr(f, SAEULE_3A.voll) + bvgJahr + IPV_GR.vermoegenAnteil * Math.max(0, vermoegen);
 
   const r = ipvGraubuendenRechnen({ region, kinderZahl, me });
@@ -251,7 +255,9 @@ export function ipvGraubuenden(data, hh, ipvData, youngAdultsCount, orientierung
   // Pensionskasse liegt das Einkommen dann zu tief und der Betrag ZU HOCH (Fachprüfung #467:
   // 3'300 netto/Monat → 2'352 statt 1'716 mit 200 BVG, über eine Kategoriengrenze). Das gehört
   // in die Anzeige, nicht nur hierher: Zusatz-Vorbehalt, sobald ein Lohn erfasst ist.
-  const bvgFehlt = Number(f.monthlyIncome) > 0 && !(Number(f.bvgContribution) > 0);
+  // Nur wenn das Feld wirklich LEER ist — eine erfasste 0 heisst «keine Pensionskasse».
+  const bvgLeer = bvgRoh === undefined || bvgRoh === null || String(bvgRoh).trim() === '';
+  const bvgFehlt = Number(f.monthlyIncome) > 0 && bvgLeer;
   const gemeinsam = {
     canton: 'GR', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltGR',
     extra: { region, basisjahr, ...(bvgFehlt ? { zusatzVorbehaltKey: 'ipv.vorbehaltGRbvg' } : {}) },
