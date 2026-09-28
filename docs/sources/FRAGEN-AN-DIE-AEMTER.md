@@ -240,6 +240,24 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 9 · Amt für Gesundheit Thurgau — wo findet eine Person ihre «einfache Steuer zu 100 %»?
+
+**Wo:** TG KVV (RB 832.10) § 14; Merkblatt «Information zur Prämienverbilligung 2026».
+
+Der Kanton knüpft die Prämienverbilligung an die einfache satzbestimmende Steuer zu 100 % per
+1. Januar (provisorische Steuerdaten des Vorjahres), nicht an das Einkommen. Die App kennt diese
+Zahl nicht und zeigt darum keinen Betrag, sondern die Ansätze.
+
+**Frage 1:** Auf welchem Dokument steht diese Zahl für die versicherte Person (provisorische
+Steuerrechnung, Veranlagungsverfügung, Steuerportal)? Dann könnte die App gezielt danach fragen.
+
+**Frage 2:** Junge Erwachsene, die sich **nicht** in Ausbildung befinden: gelten für sie die
+Kategorien A–C wie für Erwachsene?
+
+**Stand:** TG ist für 2026 belegt und gebaut, zeigt bewusst keine Zahl (Entwurfs-PR, K31).
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für

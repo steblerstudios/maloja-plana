@@ -50,7 +50,7 @@ sind. Dieses Dokument ändert keinen Code.
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
 | GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | abbildbar | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
 | AG | Aargau | Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie | abbildbar | <https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes> |
-| TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0) | teilweise | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
+| TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0) | teilweise — belegt, gebaut ohne Zahl (PR #TG, Steuerbetrag fehlt der App) | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
@@ -1980,7 +1980,7 @@ wörtlich in § 10 Abs. 4 KVGG.
 
 ## TG — Thurgau
 
-**Beurteilung:** teilweise
+**Beurteilung:** teilweise — **belegt, an der Quelle nachgeprüft 28.09.2026, zeigt bewusst keine Zahl** (siehe «Nachprüfung 28.09.2026» unten)
 **Modell (kurz):** Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0)
 **Zuständig / Weg:** Krankenkassenkontrollstelle der Wohnsitzgemeinde (Grenzgänger: Gemeinde des Arbeitsorts); reines Antragsprinzip, jährlich; Gemeinde stellt Berechtigten im Frühjahr ein Formular zu; Frist 31.12.2026, sonst verfällt der Anspruch
 **Gültigkeit:** 2026 definitiv (TG KVV § 14, Version in Kraft seit 01.01.2026; Merkblatt Amt für Gesundheit vom 16.12.2025)
@@ -2034,6 +2034,43 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Thurg
 2. Information zur Prämienverbilligung 2026, Kanton Thurgau, Amt für Gesundheit, PDF vom 16.12.2025. https://gesundheit.tg.ch/public/upload/assets/183453/Merkblatt%20IPV%202026.pdf — abgerufen 16.09.2026
 3. «192.8 Millionen Franken für die individuelle Prämienverbilligung», Medienmitteilung Kanton Thurgau, 27.11.2025. https://www.tg.ch/news.html/485/news/76767 — abgerufen 16.09.2026 (nur Hinweis)
 4. Prämienverbilligung, Amt für Gesundheit Kanton Thurgau (Übersichtsseite). https://gesundheit.tg.ch/bevoelkerung/krankenversicherung/praemienverbilligung.html/5578 — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App) — belegt, zeigt bewusst keine Zahl
+
+An der Quelle nachgeprüft **28.09.2026**, Abrufe mit `curl`, PDFs mit `pdftotext -layout`.
+
+| Quelle | Abruf | Fassung | Gegenprobe |
+|---|---|---|---|
+| TG KVV, RB 832.10 — `https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes` | HTTP 200, 364'334 Bytes | «Krankenversicherungsverordnung (TG KVV) vom 20. Dezember 2011 (Stand 1. Januar 2026)»; API `…/api/de/texts_of_law/832.10`: `current_version` 3027, «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 31.03.2026)», keine künftige Version. § 14 Abs. 1 Ziff. 1–3 und 5 laut Änderungstabelle zuletzt geändert 25.11.2025 (48/2025), in Kraft 01.01.2026 | `…/versions/99999/…` → HTTP 404, 0 Bytes; `…/texts_of_law/832.99` → HTTP 404 |
+| Merkblatt «Information zur Prämienverbilligung 2026», Amt für Gesundheit — `https://gesundheit.tg.ch/public/upload/assets/183453/Merkblatt%20IPV%202026.pdf` | HTTP 200, 126'823 Bytes | PDF erstellt 16.12.2025 | `…/Merkblatt%20IPV%202099.pdf` → HTTP 404 (HTML-Fehlerseite) |
+
+**Bestätigt (Wortlaut wie oben):** § 14 Abs. 1 Ziff. 1–3, 5–7 (Beträge 3'408 / 2'556 / 1'704 / 1'236 / 6'132 /
+1'236), § 14 Ziff. 4 aufgehoben, § 15 Abs. 1 («per 1. Januar aufgrund der Steuerdaten des Vorjahres»), § 15 Abs. 2bis
+(Differenzen unter Fr. 30), Merkblatt: Kat. A–D, Kinder Jahrgang 2008–2025, junge Erwachsene in Ausbildung Jahrgang
+2001–2007 (50 %, max. Fr. 2'376), «Das unterzeichnete Formular ist bis zum 31. Dezember 2026 bei der
+Krankenkassenkontrollstelle der zuständigen Gemeinde einzureichen. Wird diese Frist verpasst, verfällt der Anspruch.»
+
+**Neu gelesen:** § 18 Abs. 1 TG KVV: «Bei leiblichen Eltern im Konkubinat sind die steuerlichen Verhältnisse der
+Mutter …» massgebend (Kinder). Merkblatt: EL-Beziehende erhalten eine Prämienpauschale, «Ein IPV-Antrag ist nicht
+notwendig».
+
+**Warum keine Zahl — geprüft, nicht angenommen:** Die App hat kein Feld für die einfache Steuer zu 100 %. Ihr
+Steuerrechner (`data/kantonaleSteuerdaten.js`) schätzt die Kantons- und Gemeindesteuer am Hauptort aus einer
+interpolierten Stütztabelle des ESTV-Rechners, nach eigenem Kopf «grobe Schätzung»; die einfache Steuer ist eine
+andere Grösse (vor den Steuerfüssen, auf dem satzbestimmenden Einkommen), und das steuerbare Vermögen des Vorjahres
+kennt die App ebenfalls nicht. Eine Stufe hängt an ein paar Franken Steuer und ist bis Fr. 3'408 wert. → Modul
+`ipvThurgau.js` mit der Rechnung nach § 14 (getestet gegen die Tabelle), Register, Beleg — Anzeige in jeder Lage
+`orientierung('tgSteuerbetrag')` mit den amtlichen Ansätzen im Text. Ob ein Feld «einfache Steuer» kommt, ist ein
+Produktentscheid von Stebler Studios.
+
+**Korrektur:** ⟨korrigiert 28.09.2026⟩ In `CANTONAL_IPV` stand für TG `noteApplySva` («Antrag bei SVA TG»). Zuständig
+ist laut Merkblatt die Krankenkassenkontrollstelle der Wohnsitzgemeinde → neuer Schlüssel `noteApplyKkKontrollstelle`.
+Die Übersichtszeile oben («Zuständig / Weg») war richtig.
+
+**Offen (unverändert):** «Steht auf der Steuerrechnung» ist nicht nachgeprüft — die App sagt es darum nicht.
+Junge Erwachsene nicht in Ausbildung: im Merkblatt nicht geregelt.
+
+**Werte 2027:** am 28.09.2026 nicht publiziert (keine künftige Version im Rechtsbuch). Ab 01.01.2027 Grund `jahr`.
 
 ---
 
