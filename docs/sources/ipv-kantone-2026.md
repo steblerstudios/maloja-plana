@@ -1278,6 +1278,34 @@ Zuwendungen/Liegenschaftskosten (§ 69 lit. a–d, f SV) · Werte 2027 (SG hat e
 **Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 10):** Eckpunkte der linearen Skala · Rundung der
 Richtprämie (aufgerundet?) · wie die Auszahlungslimite bei Kindern wirkt · ein Berechnungsbeispiel.
 
+**Fachprüfung #481 (28.09.2026 abends) — Fixrunde 1:**
+- 🛑 B1: Das Vermögen zählt jetzt zu 50 % **nach den Sozialabzügen** — SG § 89 Abs. 2 lit. a «Anteil des
+  steuerbaren Vermögens»; Steuergesetz BGS 614.11 («Aktuelle Version in Kraft seit: 01.01.2025
+  (Beschlussdatum: 03.09.2024)», `bgs.so.ch/api/de/versions/5504/pdf_file` 200, Gegenprobe `…/614.119/…`
+  → 404), § 71 Abs. 1: «a) 100’000 Franken für in ungetrennter Ehe lebende Steuerpflichtige sowie für
+  verwitwete, getrennt lebende, geschiedene und ledige Steuerpflichtige, die allein mit Kindern
+  zusammenleben …; b) 60'000 Franken für die andern Steuerpflichtigen; c) 20'000 Franken für jedes Kind …»;
+  Abs. 2: verdoppelt für AHV/IV-Rentenberechtigte «mit ungenügendem Reineinkommen und einem Reinvermögen von
+  nicht mehr als 200’000 Franken». Die App nimmt für die Untergrenze die Verdoppelung an, sobald eine AHV/IV-
+  Rente erfasst ist, und zieht erfasste Schulden (Kreditkarte, Darlehen) ab. ~~50 % der erfassten
+  Brutto-Posten~~ ⟨korrigiert: falsches «kein Anspruch» für Rentnerin 30'000 + 45'000 Erspartes, Lohn
+  2'500/Mt + 45'000, Alleinerziehende 5'000/Mt + Kind + 30'000⟩.
+- ⚠️ W1: `soKeinAnspruch` sagt, dass die Ausgleichskasse mit dem satzbestimmenden Einkommen nach Abzügen
+  rechnet (meist tiefer) und verweist auf den Online-Rechner. Bei erfassten **bezahlten Unterhaltsbeiträgen**
+  (`alimentePaid`) sagt die App nie «kein Anspruch» — sie sind abziehbar, im Rahmen der App aber noch nicht
+  abgezogen (Rahmen-Befund, alle Kantone).
+- ⚠️ W2: SV § 75 Abs. 2 (Wortlaut an der Quelle, Versions-PDF 5624): «Versicherte, die kein
+  Antragsformular erhalten haben … können bei der Ausgleichskasse bis spätestens am 31. Juli des
+  Anspruchsjahres ein entsprechendes Gesuch stellen. Bei Fristversäumnis verwirkt der Anspruch … Vorbehalten
+  bleiben … Personen, die per 31. Juli des Anspruchsjahres noch keine rechtskräftige Steuerveranlagung
+  erhalten haben.» Abs. 3: Formular «innert 30 Tagen seit Zustellung». Quellenbesteuerte: Merkblatt QS 2026
+  «Die letzte Frist für den Bezug des Antrags ist der 31. Dezember des Anspruchsjahres». Neuer Grund
+  `soSkalaUnklarFristVorbei` ab 1. August; `anmeldefristVorbei` am «kein Anspruch»-Ergebnis.
+- Rechner-Seite der AKSO (gelesen 28.09.2026): «Zahlen aus der Steuerperiode 2024», Felder «Total
+  satzbestimmendes Einkommen (Steuerveranlagung 2024, Ziffer 690)» und «… Vermögen (… Ziffer 990)» —
+  Beleg für das Bemessungsjahr (K4) und für den Text (K2). Die Rundung der Richtprämien ist als
+  Plausibilitätsprobe benannt, nicht als Regel (K1).
+
 ---
 
 ## BS — Basel-Stadt

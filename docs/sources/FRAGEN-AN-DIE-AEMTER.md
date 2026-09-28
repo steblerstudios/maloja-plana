@@ -264,6 +264,10 @@ anspruchsberechtigter Person» — gilt das auf dem Gesamtanspruch der Familie o
 
 **Frage 4 — Beispiel:** Gibt es ein amtliches Berechnungsbeispiel für 2026?
 
+**Frage 5 — Vermögen (Ziffer 990):** Ist das «satzbestimmende Vermögen» (Ziffer 990), das der Online-Rechner
+abfragt, das Vermögen **nach** den Sozialabzügen des § 71 StG (60'000 / 100'000 / +20'000 je Kind)? SG § 89
+Abs. 2 lit. a spricht vom «steuerbaren Vermögen»; die App rechnet so (Fachprüfung 28.09.2026).
+
 **Stand:** SO ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag, nur «kein Anspruch»,
 wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rechnet die App.
 
