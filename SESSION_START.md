@@ -43,6 +43,19 @@
 > 🛑 **Offen:** Deploy (Hand Stebler Studios) — mit ihm gehen #438–#453 zusammen live · ärztliche Gegenlese PV
 > (Oktober) · rm-Gegenlese #452 · #351 Flyer-Konflikt auflösen.
 
+> 🚀 **Nachtrag 28.09., 15:11 — LIVE = `c739364d` = `main`. Deploy durch Stebler Studios um 15:07.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:11): main = `c739364d` · live = `c739364d` (0.1.44-beta, gebaut 15:07) ·
+> **live = main** · offen: #351 (Entwurf). `version.json`: `sauber: true`, Ziel PRODUKTION. Startdatei `index-Cf1Zpfvx.js`.
+> `scripts/check-deploy.sh`: **128 Assets erreichbar**, Gegenprobe erfundener Name → **404**.
+> **Neu live mit diesem Deploy:** #438 #439 (Vorsorgeauftrag-Hinweis Zivilstandsamt) · #441 #442 Organspende-Zustimmungsregelung ·
+> #443 Vorsorgeauftrag-Vorlage, Bestattungswünsche, Testament-Wegweiser · #447 #448 Doku · #449–#453 Finanzübersicht-Durchsicht
+> inkl. `[object Object]`-Fix · #454 Doku. Alles, was seit 11:42 in `main` kam.
+> ⚠️ **Tag `v0.1.44-beta` zeigt weiter auf `1cb36b1f`** (Deploy 11:42) — `package.json` blieb bei 0.1.44-beta, darum hat
+> `deploy.sh` keinen neuen Tag gesetzt. Der Abschnitt `[Unreleased]` im CHANGELOG ist damit **live unter 0.1.44-beta**.
+> Beim nächsten Release (0.1.45-beta) Version heben und `[Unreleased]` schliessen; bis dahin gilt: **Tag ≠ Live.**
+> **Nicht geprüft:** Browser-Durchklick der neuen Seiten live. Remote-Zweige: 147 gemergte gelöscht (Liste im Stamm), 8 bleiben.
+
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
 > ⚖️ **Nachtrag 27.09., 21:05 — #438 gemergt (`138717e5`), NICHT live. Live bleibt `4197501d` = 0.1.42-beta.**
