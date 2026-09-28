@@ -123,7 +123,6 @@ describe('K31 calculateIPV für NW (App-Angaben → Modell)', () => {
 
   it('bezahlte Alimente: im Reineinkommen abgezogen (StG Art. 35 Abs. 1 Ziff. 3) — 1 000/Monat → 3 600 statt 2 400', () => {
     expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 1000 } })).annual).toBe(3600);
-    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 'abc' } })).annual).toBe(2400);
   });
 
   it('Vermögen: 20 % des GANZEN Reinvermögens, ohne Freibetrag', () => {
@@ -154,23 +153,44 @@ describe('K31 calculateIPV für NW (App-Angaben → Modell)', () => {
   });
 
   it('ein im Anspruchsjahr geborenes Kind zählt (Art. 17 Abs. 2) — aber nur ab dem Geburtsmonat (W3, Art. 20a)', () => {
-    // März: 10 Monate → 1 008 × 10/12 = 840 · Juli: 6 Monate → 504 · Dezember: 1 Monat → 84, unter 100
+    // März: 10 Monate → 1 008 × 10/12 = 840 · Juli: 6 Monate → 504 · Dezember: 1 Monat → 84.
     expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-03-01' }] }))).toMatchObject({ eligible: true, annual: 840 });
     expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-07-15' }] }))).toMatchObject({ eligible: true, annual: 504 });
+    // Re-Review #486: § 5 [1] gilt dem ungekürzten Anspruch (1 008), nicht dem Monatsanteil —
+    // der Versicherer deckelt danach auf die geschuldete Prämie. Also 84, nicht «wird nicht ausbezahlt».
     expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-12-01' }] })))
-      .toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.nwUnterMindestbetrag' });
+      .toMatchObject({ belegt: true, eligible: true, annual: 84, amount: 7 });
     // Gegenprobe: 2025 geboren → ganzes Jahr.
     expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2025-12-01' }] })).annual).toBe(1008);
   });
 
   it('erhaltene Alimente zählen zum Reineinkommen (StG Art. 26 Abs. 1 Ziff. 6, W2): 20 000 + 1 500/Monat → 1 600', () => {
     expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { alimenteReceived: 1500 } })).annual).toBe(1600);
-    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { alimenteReceived: 'abc' } })).annual).toBe(3400);
+  });
+
+  it('Familienzulagen zählen zum Reineinkommen (StG Art. 19 Abs. 1, Art. 20 Abs. 1 «Zulagen»; N1)', () => {
+    // 2 Kinder, 97 000 + 480/Monat = 102 760 > 100 000: keine besondere Prämienverbilligung;
+    // allgemein 5 400 + 2 × 1 260 = 7 920 < 10 276 → nichts. Ohne die Zulagen hätte die App 2 016 gezeigt.
+    const zweiKinder = [{ age: 5 }, { age: 8 }];
+    expect(calculateIPV(person({ monthlyIncome: 97000 / 12, children: zweiKinder })).annual).toBe(2016);
+    expect(calculateIPV(person({ monthlyIncome: 97000 / 12, children: zweiKinder, finanzen: { familienzulagen: 480 } })))
+      .toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.nwKeinAnspruch' });
+    // Ohne Kinder linear: 20 000 + 200/Monat = 22 400 → 5 400 − 2 240 = 3 160.
+    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { familienzulagen: 200 } })).annual).toBe(3160);
+    // Leer zählt 0.
+    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { familienzulagen: '' } })).annual).toBe(3400);
   });
 
   it('unlesbares Einkommen oder Vermögen: keine Zahl statt «kein Anspruch» (K5)', () => {
     expect(calculateIPV(person({ monthlyIncome: 'abc' }))).toMatchObject({ belegt: false, amount: null, offen: 'eingabeUnlesbar' });
     expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { savingsAccount: 'x' } }))).toMatchObject({ belegt: false, offen: 'eingabeUnlesbar' });
+  });
+
+  it('unlesbare Alimente oder Familienzulagen: keine Zahl statt still 0 (Re-Review #486)', () => {
+    for (const k of ['alimentePaid', 'alimenteReceived', 'familienzulagen']) {
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { [k]: 'abc' } })), k)
+        .toMatchObject({ belegt: false, amount: null, offen: 'eingabeUnlesbar' });
+    }
   });
 
   it('negatives Einkommen: keine Zahl', () => {

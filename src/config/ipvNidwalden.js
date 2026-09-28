@@ -18,7 +18,10 @@
 //       Februar 2026 — Jahrgänge, Code 330/470, Aufrechnungen, Frist «30. April 2026
 //       (Poststempel)».
 //   [4] NG 521.1 Steuergesetz, Art. 35 Abs. 1 Ziff. 3 (Unterhaltsbeiträge) und Ziff. 5 (Säule 3a):
-//       beide sind im Reineinkommen abgezogen.
+//       beide sind im Reineinkommen abgezogen. Art. 19 Abs. 1 / Art. 20 Abs. 1 (Zulagen) und
+//       Art. 26 Abs. 1 Ziff. 6 (erhaltene Unterhaltsbeiträge): steuerbar. «Aktuelle Version in
+//       Kraft seit: 01.01.2026 (Beschlussdatum: 02.12.2025)»; Fassung 01.01.2023–31.12.2024
+//       (`versions/1107`, Bemessungsjahr 2024) für diese Artikel gleich.
 //   Kein amtlich durchgerechnetes Beispiel gefunden; der Online-Rechner der AK rechnet auf dem
 //   Server (Formular) und wurde bewusst nicht abgeschickt.
 //
@@ -56,7 +59,8 @@
 // 5. PLAFONIERUNG (Art. 20a [2]) — auf die eigene Prämie, nur der Anteil der erwachsenen Person.
 //
 // GEWÄHLT, NICHT BELEGT:
-//   · Mindestbetrag 100 ([1] § 5, «Beträge») auf der Summe, nicht je Person.
+//   · Mindestbetrag 100 ([1] § 5, «Beträge») auf der Summe, nicht je Person — und auf dem
+//     ungekürzten Anspruch (siehe Neugeborene unten), nicht auf dem Monatsanteil.
 //   · Keine Rundung: Gesetz und Verordnung nennen keine; die App rechnet auf ganze Franken im Jahr.
 //   · Erwachsen nach der Jahrgangstabelle des Merkblatts («Jahrgang 2000 und älter»),
 //     `imAnspruchsjahr`; Kinder «Jahrgang 2008 und jünger».
@@ -78,13 +82,27 @@
 //     aber nur für die Monate ab dem Geburtsmonat — GEWÄHLT: Prämie geschuldet ab dem
 //     Geburtsmonat (nicht am KVG gelesen); der Monatsanteil (höchstens 80 % der Richtprämie, 84)
 //     liegt unter der Kinder-Richtprämie je Monat (105), der Deckel wirkt also über die Monate.
+//     ⟨Re-Review #486, 28.09.2026: bis dahin prüfte die App den Mindestbetrag § 5 [1] ein zweites
+//     Mal NACH der Monatskürzung — Geburt im Dezember → 84 → «wird nicht ausbezahlt».⟩ Jetzt: die
+//     Kasse rechnet den Anspruch ungekürzt (1 008); § 5 greift dort, nicht auf dem Monatsanteil.
+//     Die Kürzung ist der Deckel auf die geschuldete Prämie (Art. 20a [2]), den der Versicherer
+//     beim Verrechnen anwendet — Dezember zeigt darum 84.
 //
 // ERHALTENE UNTERHALTSBEITRÄGE ⟨Fachprüfung #486, W2⟩: StG Art. 26 Abs. 1 Ziff. 6 [4] (Fassungen
 //   2023–2024 und seit 2026 gleich) zählt sie zu den steuerbaren Einkünften, also zum Reineinkommen.
 //   Die App rechnet `finanzen.alimenteReceived` (monatlich) darum hinzu — wie sie die bezahlten
-//   (Art. 35 Abs. 1 Ziff. 3) abzieht. Familienzulagen nennt Art. 26 nicht; sie gehören als
-//   «Zulagen» zum Lohn (Art. 18 Abs. 1) — ob sie im Monatslohn der App schon stecken, ist eine
-//   Rahmenfrage; nicht gerechnet, der Vorbehalt nennt beide Richtungen.
+//   (Art. 35 Abs. 1 Ziff. 3) abzieht.
+//
+// FAMILIENZULAGEN ⟨Re-Review #486, N1, 28.09.2026: bis dahin stand hier «Art. 26 nennt sie nicht,
+//   sie gehören als ‹Zulagen› zum Lohn (Art. 18 Abs. 1) — nicht gerechnet». Art. 18 ist die
+//   Steuerbefreiung nach Gaststaatgesetz, das Zitat war falsch; und «nicht genannt» hiess nicht
+//   «nicht steuerbar».⟩ StG [4] Art. 19 Abs. 1: «Der Einkommenssteuer unterliegen alle
+//   wiederkehrenden und einmaligen Einkünfte»; Art. 20 Abs. 1: steuerbar sind die Einkünfte aus
+//   unselbstständiger Erwerbstätigkeit «mit Einschluss der Nebeneinkünfte wie … Zulagen»; Art. 27
+//   (steuerfrei) nennt sie nicht. Wortlaut in der Fassung 2023–2024 (`versions/1107`) und seit
+//   01.01.2026 (`versions/1468`) gleich. Sie stecken also im Reineinkommen (Merkblatt [3]: Code
+//   330) — die App rechnet `finanzen.familienzulagen` (monatlich) hinzu. Steckt die Kinderzulage
+//   schon im erfassten Nettolohn, zählt sie doppelt (Betrag zu tief); der Vorbehalt sagt es, wie VS.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -165,7 +183,11 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
 
   // 🛑 Unlesbare Beträge (Altdaten, «abc») ergäben NaN — und NaN liefe als «über der Grenze» in
   // «kein Anspruch». Keine Zahl ist hier die ehrliche Antwort (Fachprüfung #486, K5).
-  if (!Number.isFinite(rohesEinkommenJahr(f)) || !Number.isFinite(vermoegenSumme(f))) return orientierung('eingabeUnlesbar');
+  // Ebenso die drei Zusatzfelder, die NW selbst liest (bezahlte/erhaltene Alimente,
+  // Familienzulagen): «abc» zählte sonst still als 0 (Re-Review #486). Leer bleibt 0.
+  const zusatz = [f.alimentePaid, f.alimenteReceived, f.familienzulagen];
+  const zusatzUnlesbar = zusatz.some((x) => x != null && x !== '' && !Number.isFinite(Number(x)));
+  if (!Number.isFinite(rohesEinkommenJahr(f)) || !Number.isFinite(vermoegenSumme(f)) || zusatzUnlesbar) return orientierung('eingabeUnlesbar');
   if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
   const jahre = { bemessungsjahr: jahr - IPV_NW.basisjahrAbstand, anspruchsjahr: jahr };
   // Die 3a wird ganz herausgenommen — das trägt nur, wenn sie aus dem erfassten Einkommen stammt.
@@ -177,7 +199,9 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   const unterhaltJahr = 12 * Math.max(0, Number(f.alimentePaid) || 0);
   // StG Art. 26 Abs. 1 Ziff. 6 [4]: erhaltene Unterhaltsbeiträge sind Einkünfte (monatlich erfasst).
   const unterhaltErhaltenJahr = 12 * Math.max(0, Number(f.alimenteReceived) || 0);
-  const reineinkommen = Math.max(0, einkommenJahr(f, SAEULE_3A.abgezogen, jahre) - unterhaltJahr + unterhaltErhaltenJahr);
+  // StG Art. 19 Abs. 1 / Art. 20 Abs. 1 [4]: Familienzulagen sind steuerbare «Zulagen» (siehe Kopf).
+  const zulagenJahr = 12 * Math.max(0, Number(f.familienzulagen) || 0);
+  const reineinkommen = Math.max(0, einkommenJahr(f, SAEULE_3A.abgezogen, jahre) - unterhaltJahr + unterhaltErhaltenJahr + zulagenJahr);
   // Art. 12 Abs. 2 Ziff. 6 [2]: Prozentsatz «des gesamten Reinvermögens» — ohne Freibetrag.
   const sw = reineinkommen + IPV_NW.vermoegenAnteil * vermoegenSumme(f);
 
@@ -196,8 +220,9 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   const kinderTeilGekuerzt = kinderZahl > 0
     ? monateJeKind.reduce((s, mo) => s + (kinderTeil / kinderZahl) * (mo / 12), 0) : 0;
   const summe = r.anteilErwachsen + kinderTeilGekuerzt;
-  // Mindestbetrag § 5 [1] nach der Kürzung erneut: 100 bleibt die Schwelle.
-  const annual = r.grund || summe < IPV_NW.mindestbetrag ? 0 : deckelnProPerson(summe, r.anteilErwachsen, praemie);
+  // Mindestbetrag § 5 [1] nur auf dem ungekürzten Anspruch (`r.grund`); die Monatskürzung ist der
+  // Deckel des Versicherers (Art. 20a [2]) und fällt nicht erneut unter § 5 (Re-Review #486).
+  const annual = r.grund ? 0 : deckelnProPerson(summe, r.anteilErwachsen, praemie);
   const maxAnnual = deckelnProPerson(r.maximal, IPV_NW.richtpraemie.e, praemie);
   // Keine publizierte Einkommensgrenze für Erwachsene; die 100 000 betreffen nur die Kinder.
   const cantonData = { ...ipvData, maxIncome: null };
@@ -209,7 +234,7 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   if (!(annual > 0)) {
     return ergebnisOhneAnspruch({
       ...gemeinsam,
-      noteKey: r.grund === 'mindestbetrag' || (!r.grund && summe > 0) ? 'ipv.nwUnterMindestbetrag' : 'ipv.nwKeinAnspruch',
+      noteKey: r.grund === 'mindestbetrag' ? 'ipv.nwUnterMindestbetrag' : 'ipv.nwKeinAnspruch',
     });
   }
   // Art. 22 Abs. 1/6 [2]: Gesuch bis 30. April des Anspruchsjahres, sonst verwirkt.
