@@ -37,11 +37,11 @@ sind. Dieses Dokument ändert keinen Code.
 | UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | gebaut (PR #464) | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
 | SZ | Schwyz | Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % | teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert) | <https://www.sz.ch/public/upload/assets/6155/361_100.pdf> |
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | gebaut (PR #476) | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
-| NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
+| NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | gebaut (PR #486) — Familien im mehrdeutigen Band ohne Zahl | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
-| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
+| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | ~~teilweise — gebaut (PR #475), zeigt bewusst keinen Betrag~~ ⟨korrigiert 28.09.2026 abends⟩ **gebaut (PR #475), rechnet** — eine Grenze für alle (RRB 2025) | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | abbildbar | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
-| SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
+| SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise — **gebaut (PR #481), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Eckpunkte der linearen Skala nicht publiziert sind (nur «kein Anspruch», wo sicher) | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | gebaut (PR #479) | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | abbildbar | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
@@ -55,8 +55,8 @@ sind. Dieses Dokument ändert keinen Code.
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | gebaut (PR #478) — ~~mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge~~ ⟨28.09.2026: aufgelöst, der Unterschied ist der Décret RSN 821.104⟩ | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
-| GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
-| JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
+| GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | **gebaut 28.09.2026 (K31, PR #469)** | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
+| JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | gebaut, zeigt bewusst keine Zahl (PR #483, nachgeprüft 28.09.2026: steuerbares Einkommen fehlt der App) | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
 
 ## Auffällige Befunde
 
@@ -155,7 +155,7 @@ teuerste Region):
 | VD | 54'000 | 3'000 | 50'000 (revenu déterminant) | 3'972 (331/Monat, ordentlicher Subside; dazu allenfalls subside spécifique) |
 | VS | 45'000 | 2'400 | 38'500 | 4'712 (Region I) · 4'040 (Region II), abgel. aus 70 % der Referenzprämie |
 | NE | 48'000 | 2'400 | 50'600 | 7'332 (611/Monat, S1) |
-| GE | 60'000 | 3'600 | 50'000 | 4'176 (348/Monat, G1) |
+| GE | ~~60'000~~ → null (Modul setzt 50'000 / 151'000 + 6'000 je weiteres Kind) | ~~3'600~~ → null | 50'000 | 4'176 (348/Monat, G1) — **gebaut 28.09.2026** |
 | JU | 42'000 | 2'100 | 26'999 | 2'700 (225/Monat) |
 
 ---
@@ -1169,7 +1169,7 @@ Neuzuzüger · die amtlichen Abzüge Art. 7a lit. b–f, j, k (Betrag eher zu ti
 
 ## NW — Nidwalden
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, Familien teilweise ohne Zahl; siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 %
 **Zuständig / Weg:** Ausgleichskasse Nidwalden, Stans. Antrag (Formular oder online), Frist 30. April 2026 (Poststempel); mutmasslich Berechtigte erhalten das Formular bis Ende März 2026 zugestellt. EL-Beziehende (AHV/IV) brauchen keinen Antrag.
 **Gültigkeit:** 2026 definitiv (Verordnung vom 09.12.2025, in Kraft seit 01.01.2026)
@@ -1212,14 +1212,126 @@ Wörtlich zum Grenzwert junge Erwachsene: «Übersteigt das Reineinkommen eines 
 App: maxIncome 45'000, subsidySingle 2'250, linearer Abbau. Belegt ist für eine erwachsene Einzelperson ohne Vermögen: CHF 5'400 bei Steuerwerten 0, Abbau um 10 Rappen je Franken, null bei Summe der Steuerwerte CHF 54'000 (Auszahlung erst ab CHF 100, also praktisch bis 53'000). Die App gibt also einen zu tiefen Höchstbetrag und eine zu tiefe Grenze an. Die Grenze gilt zudem nicht für das Einkommen allein, sondern für die Steuerwerte inkl. 20 % des Reinvermögens.
 
 ### Offen / nicht gefunden
-- Online-Rechner der AK NW (https://www.aknw.ch/online-services/online-rechner/provisorische-berechnung-des-anspruchs-auf-praemienverbilligung) nicht geöffnet; für das Modell nicht nötig.
+- Online-Rechner der AK NW (https://www.aknw.ch/online-services/online-rechner/provisorische-berechnung-des-anspruchs-auf-praemienverbilligung) nicht geöffnet; für das Modell nicht nötig. ⟨28.09.2026: Seite gelesen (200, Gegenprobe 404) — die Rechnung läuft auf dem Server (`actions/calculators/calculation/formcheck`), im Quelltext steht keine Formel; nicht abgeschickt⟩
 - Ob für junge Erwachsene ohne Ausbildung Besonderes gilt: nur die allgemeine Regel (Richtprämie CHF 3'912 minus Selbstbehalt) belegt.
-- Wie Kinder in der allgemeinen IPV genau verrechnet werden (Reihenfolge der Sonder- und der allgemeinen IPV), ist nur allgemein belegt («wird diese zusätzlich ausgerichtet»).
+- Wie Kinder in der allgemeinen IPV genau verrechnet werden (Reihenfolge der Sonder- und der allgemeinen IPV), ist nur allgemein belegt («wird diese zusätzlich ausgerichtet»). ⟨28.09.2026: bleibt offen — drei Lesarten, siehe unten; die App zeigt dort keine Zahl⟩
 
 ### Quellen
 1. NG 742.111 Verordnung zur Prämienverbilligung für das Jahr 2026, Regierungsrat Nidwalden, vom 09.12.2025, in Kraft seit 01.01.2026. https://gesetze.nw.ch/app/de/texts_of_law/742.111 (Text über https://gesetze.nw.ch/api/de/texts_of_law/742.111/show_as_json) — abgerufen 16.09.2026
 2. NG 742.1 Einführungsgesetz zum Bundesgesetz über die Krankenversicherung (kKVG) vom 25.10.2006, aktuelle Fassung. https://gesetze.nw.ch/app/de/texts_of_law/742.1 (Text über https://gesetze.nw.ch/api/de/texts_of_law/742.1/show_as_json) — abgerufen 16.09.2026
 3. Merkblatt «Prämienverbilligung 2026 im Kanton Nidwalden», Ausgleichskasse Nidwalden, Stand Februar 2026. https://www.aknw.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/IPV-OKP-KVGRegress/Merkblatt-Praemienverbilligung-2026.pdf — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe:
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://gesetze.nw.ch/api/de/texts_of_law/742.111/show_as_json` | 200, 16'379 B | `…/742.199/…` → **404**, 0 B |
+| `https://gesetze.nw.ch/api/de/texts_of_law/742.1/show_as_json` | 200, 243'752 B | (gleiche Route) |
+| `https://gesetze.nw.ch/api/de/texts_of_law/521.1/show_as_json` (StG) | 200 | (gleiche Route) |
+| `https://www.aknw.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/IPV-OKP-KVGRegress/Merkblatt-Praemienverbilligung-2026.pdf` | 200, 1'972'479 B, PDF (erstellt 29.01.2026, «im Februar 2026») | `…-2099.pdf` → **404** |
+| `https://www.aknw.ch/dienstleistungen/praemienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
+
+**Fassungen:** NG 742.111 «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 09.12.2025)».
+NG 742.1 «Aktuelle Version in Kraft seit: 31.12.2025 (Beschlussdatum: 09.04.2025)». NG 521.1 aktuell
+seit 01.01.2026.
+
+**NG 742.111** (Wortlaut): § 1 «Der Selbstbehalt für das Jahr 2026 beträgt 10 Prozent.» / «Der für die
+Berechnung des Selbstbehalts massgebende Anteil des anrechenbaren Reinvermögens beträgt 20 Prozent.» ·
+§ 2 Abs. 2 «Die Richtprämien für die übrigen Personen betragen für Erwachsene Fr. 5'400.–, für junge
+Erwachsene Fr. 3'912.– und für Kinder Fr. 1'260.–.» · § 3 Steuerperiode 2024, sonst 2023 · § 4
+Quellensteuer 80 %, Periode 2025 · § 5 «Beträge unter Fr. 100.– sind von der Auszahlung ausgeschlossen.»
+
+**NG 742.1 kKVG** (Wortlaut, soweit gebaut): Art. 12 Abs. 1 «Die Prämien werden im Rahmen der
+Richtprämien verbilligt, soweit sie den Selbstbehalt übersteigen.» Abs. 2: Summe aus «1. dem gesamten
+Reineinkommen; 2. 80 Prozent des im vereinfachten Verfahren abgerechneten Bruttolohns …; 3. dem Einkauf
+in die berufliche Vorsorge; 4. der Aufrechnung der Abzüge aus Teileinkünfteverfahren; 5. der Aufrechnung
+des Abzugs für Liegenschaftsunterhalt, abzüglich 15 Prozent der Erträge privater Liegenschaften; und
+6. dem jährlich festgelegten Prozentsatz des gesamten Reinvermögens» — **keine 3a-Aufrechnung**. ·
+Art. 14 Abs. 1/2 (Kinder, siehe unten) · Art. 16 Abs. 2 Gesamtanspruch · Art. 17 Abs. 1 «am 1. Januar»,
+Abs. 2 «Geburten und Todesfälle werden bis Ende Kalenderjahr berücksichtigt.» · Art. 20a «Die Höhe der
+Prämienverbilligung darf die tatsächlich geschuldete Prämie … nicht übersteigen.» · Art. 22 Abs. 1 «bis
+zum 30. April des Kalenderjahres», Abs. 3 Neugeborene drei Monate, Abs. 6 «verwirkt» · Art. 28 Abs. 1
+Rückforderung «bei den Personen, welche sie bezogen haben».
+
+**NG 521.1 StG** Art. 35 Abs. 1: von den Einkünften abgezogen werden u. a. «3. die Unterhaltsbeiträge …»
+und «5. Einlagen, Prämien und Beiträge … aus anerkannten Formen der gebundenen Selbstvorsorge» —
+beide sind also im Reineinkommen (Code 330) schon abgezogen.
+
+**Merkblatt 2026** (Textlayer): Jahrgänge «Erwachsene Jahrgang 2000 und älter Fr. 5'400.– · Junge
+Erwachsene Jahrgang 2001 – 2007 Fr. 3'912.– · Kinder und Jugendliche Jahrgang 2008 und jünger Fr. 1'260.–»
+· «Reineinkommen (Code 330 der Veranlagungsverfügung) samt Aufrechnungen* und 20 Prozent des
+Reinvermögens (Code 470)» · «bis spätestens am 30. April 2026 (Poststempel)… Später eingereichte Gesuche
+werden nicht mehr berücksichtigt.» · «Einzig Rentner und Rentnerinnen, die am 1.1. 2026
+Ergänzungsleistungen zur AHV / IV erhalten haben, müssen keine Anmeldung ausfüllen.» · Plafonierung
+«erfolgt durch den Krankenversicherer» · «Beiträge unter CHF 100 werden nicht ausbezahlt.»
+
+**🛑 Die Kinder-Regel — drei Lesarten.** Art. 14 Abs. 1: 80 % der Richtprämie, «sofern die Summe der
+Steuerwerte der Eltern … Fr. 100'000.– nicht übersteigt». Abs. 2: «Besteht nach Berücksichtigung der
+besonderen Prämienverbilligung weiterhin ein Anspruch auf allgemeine Prämienverbilligung für die Kinder,
+wird diese zusätzlich ausgerichtet.» Das Merkblatt wiederholt den Satz wörtlich; ein Beispiel gibt es
+nicht, der Rechner läuft auf dem Server. Eigene Rechnung, Einelternhaushalt, ein Kind, Steuerwerte 30'000:
+(a) wie LU/UR (Kind mit den restlichen 20 % in der allgemeinen Rechnung; gleichwertig max(80 %, Summe −
+Selbstbehalt)) → **3'660** · (b) je Kind das Höhere aus 80 % und seinem Anteil → **3'975.57** · (c) 80 % plus
+Anteil, gedeckelt auf die Richtprämie → **4'227.57**. Alle drei fallen zusammen, wo die Summe der
+Richtprämien den Selbstbehalt nicht übersteigt. **Die App rechnet nur dort** (und über 100'000); darunter
+zeigt sie keine Zahl (`offenGrund.mindestanspruch`) — wie ZH in seinem strittigen Band.
+
+**Werte 2027:** am 28.09.2026 keine Verordnung für 2027 publiziert gefunden.
+
+**Gewählt, nicht belegt:** Mindestbetrag auf der Summe · keine Rundung (keine Regel gefunden) · Erwachsen
+nach Jahrgangstabelle («2000 und älter», `imAnspruchsjahr`) · 3a ohne Deckel auf das Bundesmaximum (siehe
+`SAEULE_3A.abgezogen`).
+
+**Rahmen:** neue Regel `SAEULE_3A.abgezogen` (NW) mit Riegel `widerlegt` (3a > Einkommen oder über ein
+Jahr hinaus → `saeule3aUeberEinkommen`). Frist-Hinweise für Budget/KK-Karte über `fristKeys` wie OW.
+
+**Bewusst nicht gebaut:** Paare · junge Erwachsene (Art. 15; Grund `ausbildung`) · Quellenbesteuerte, EL,
+Sozialhilfe, Zuzug aus dem Ausland · Aufrechnungen Ziff. 2–5 · übrige Abzüge im Reineinkommen
+(Berufskosten usw. — Betrag eher **zu tief**, Vorbehalt sagt es) · Kürzung für Neugeborene (zählen ganz).
+
+**Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 16 ⟨bis 28.09. spätabends «10»; umnummeriert, 10 ist GR⟩.
+
+**Nachtrag 28.09.2026, spätabends — Fachprüfung #486 umgesetzt:**
+- **W2:** erhaltene Unterhaltsbeiträge werden eingerechnet — StG NW Art. 26 Abs. 1 Ziff. 6 (Wortlaut
+  in den Fassungen 01.01.2023–31.12.2024, `versions/1107`, und seit 01.01.2026 gleich): «Unterhaltsbeiträge,
+  die eine steuerpflichtige Person bei Scheidung, gerichtlicher oder tatsächlicher Trennung für sich
+  erhält sowie Unterhaltsbeiträge, die ein Elternteil für die unter seiner elterlichen Sorge oder Obhut
+  stehenden Kinder erhält.» ~~Familienzulagen nennt Art. 26 **nicht** (sie fallen als «Zulagen» unter
+  Art. 18 Abs. 1, Lohn) — nicht eigens gerechnet, Vorbehalt nennt beide Richtungen.~~ ⟨korrigiert
+  28.09.2026, Re-Review #486 N1: Art. 18 ist die Steuerbefreiung nach Gaststaatgesetz; «in Art. 26 nicht
+  genannt» heisst nicht «nicht steuerbar» — siehe Fixrunde 2 unten.⟩
+  Beispiel: 20'000 + 1'500/Monat erhalten → Steuerwerte 38'000 → **1'600** (vorher 3'400).
+- **K8:** Art. 35 Abs. 1 Ziff. 3/5 in der Fassung 2023–2024 gelesen — gleich wie 2026.
+- **W3:** Neugeborene 2026 zählen nur ab dem Geburtsmonat (gewählt; Frage 16/4). Dezember → 84, unter
+  dem Mindestbetrag.
+- **W1:** `origin/main` gemergt (UR, NE, später GR), Zähler nachgeführt.
+- **Frist:** Weg wie FR (`fristNichtAbgezogenKey`, `fristHinweisKey`) — KK-Karte, Prämien-Beleg und Budget
+  nennen Nidwalden; der eigene Budget-Schlüssel ist weg.
+- **K5:** unlesbares Einkommen/Vermögen → keine Zahl (`offenGrund.eingabeUnlesbar`); LU verhält sich
+  gleich (dort nur notiert), VD zeigt dafür 30 Fr./Monat (Beifund, nicht hier).
+- **K3:** `nwFristLaeuft` nennt die Fristerstreckung (Art. 22 Abs. 7) und den EL-Stichtag 1. Januar.
+
+**Nachtrag 28.09.2026, nachts — Re-Review #486 (Fixrunde 2):**
+- **N1 Familienzulagen:** an der Quelle gelesen 28.09.2026 über die API
+  (`https://gesetze.nw.ch/api/de/texts_of_law/521.1/show_as_json` → 200, 1,26 MB; erfundene 521.199 → 404),
+  «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 02.12.2025)», und als PDF die Fassung
+  01.01.2023–31.12.2024 (`/api/de/versions/1107/pdf_file` → 200; erfundene `versions/99999` → 404),
+  «Stand 1. Januar 2023» — Bemessungsjahr 2024. Wortlaut in beiden gleich:
+  Art. 19 Abs. 1 «Der Einkommenssteuer unterliegen alle wiederkehrenden und einmaligen Einkünfte.» ·
+  Art. 20 Abs. 1 «Steuerbar sind alle Einkünfte aus unselbstständiger Erwerbstätigkeit mit Einschluss der
+  Nebeneinkünfte wie Entschädigungen für Sonderleistungen, Provisionen, Zulagen, …». Art. 27 (steuerfrei)
+  nennt Familien- oder Kinderzulagen nicht (Volltext beider Fassungen: kein Treffer auf «Familienzulage»/
+  «Kinderzulage»). Folge: sie stecken im Reineinkommen (Merkblatt: Code 330); die App rechnet
+  `12 × familienzulagen` hinzu. Prüfstein: 2 Kinder, 97'000 + 480/Monat → Steuerwerte 102'760 > 100'000,
+  keine besondere Prämienverbilligung; allgemein 7'920 − 10'276 < 0 → **0** (vorher 2'016). Vorbehalt in
+  5 Sprachen: eingerechnet; steckt die Kinderzulage schon im erfassten Nettolohn, zählt sie doppelt (wie VS).
+- **W3 Dezember-Geburt:** § 5 der Verordnung (Mindestbetrag 100) gilt nur dem **ungekürzten** Anspruch
+  (1'008); die Monatskürzung ist der Deckel auf die geschuldete Prämie (Art. 20a kKVG), den der Versicherer
+  anwendet. Dezember → **84** (vorher «wird nicht ausbezahlt»).
+- **Unlesbare Zusatzfelder:** bezahlte/erhaltene Alimente und Familienzulagen = «abc» → keine Zahl
+  (`offenGrund.eingabeUnlesbar`) statt still 0.
 
 ---
 
@@ -1288,8 +1400,8 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat, Hinweis «automatisch aus
 
 ## ZG — Zug
 
-**Beurteilung:** teilweise
-**Modell (kurz):** Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 %
+**Beurteilung:** ~~teilweise — in der App gebaut 28.09.2026 (K31), zeigt bewusst keinen Betrag~~ ⟨korrigiert 28.09.2026 abends, Fachprüfung #475: **abbildbar — gebaut, rechnet**; siehe «Fachprüfung #475 — Fixrunde 1» unten⟩
+**Modell (kurz):** Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; ~~tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden)~~ ⟨korrigiert: eine Grenze für alle, RRB 2025 Ziff. 1.5⟩; Kinder/junge Erw. in Ausbildung mind. 80 % / 50 %
 **Zuständig / Weg:** Ausgleichskasse Zug (Durchführung), Gemeindestellen (Eingang Papierformular). Antrag nötig (online mit Login aus dem Schreiben oder Papier), Frist 30. April 2026 (abgelaufen); EL-Beziehende automatisch.
 **Gültigkeit:** 2026 definitiv (Werte vom Regierungsrat für 2026 festgelegt, laut Broschüre Stand Dezember 2025)
 
@@ -1343,6 +1455,139 @@ App: maxIncome 60'000, subsidySingle 3'600, linearer Abbau. Belegt ist für eine
 4. Online-Rechner «Prämienverbilligung 2026 – provisorische Berechnung als Einzelperson», Ausgleichskasse Zug. https://www.akzug.ch/online-services/online-rechner/praemienverbilligung-2026-provisorische-berechnung-des-anspruches/praemienverbilligung-2025-provisorische-berechnung-als-einzelperson — abgerufen 16.09.2026 (nur Eingabefelder gelesen)
 5. Medienmitteilung «Gezielte Zusatzentlastung bei den Krankenkassenprämien», Kanton Zug, 26.01.2026. https://zg.ch/news/news~_2026_1_gezielte-zusatzentlastung-bei-den-krankenkassenpraemien~.html — abgerufen 16.09.2026
 6. Webseite «Prämienverbilligung (IPV)», Ausgleichskasse Zug (Frist 30.04.2026 abgelaufen). https://www.akzug.ch/dienstleistungen/praemienverbilligung — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe (erfundene Adresse muss anders
+antworten).
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf` | 200, 942'695 B, PDF (erstellt 12.12.2025) | `…Broschuere_IPV_2099.pdf` → **404** |
+| `https://bgs.zg.ch/api/de/texts_of_law/842.6/show_as_json` | 200, 107'311 B | `…/842.69/…` → **404**, 0 B |
+| `https://bgs.zg.ch/api/de/texts_of_law/842.61/show_as_json` | 200, 13'842 B | (dieselbe Gegenprobe) |
+| `https://bgs.zg.ch/api/de/versions/2661/pdf_file` (IPVG) · `…/2185/pdf_file` (V IPVG) | 200, 400'522 B · 200, 164'973 B | `…/versions/999999/pdf_file` → **404**, 0 B |
+| `https://www.akzug.ch/dienstleistungen/praemienverbilligung` | 200 | `…praemienverbilligungxyz` → **404** |
+| `https://www.akzug.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/Praemienverbilligung/Grafik-IPV_2026_neu.pdf` | 200, 1'657'526 B (nur Ablaufgrafik, keine Grenzwerte) | `…Grafik-IPV_2099_neu.pdf` → **404** |
+
+**Fassungen:** IPVG BGS 842.6 «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum:
+11.04.2024)», Stand 1. Januar 2025. V IPVG BGS 842.61 «Aktuelle Version in Kraft seit: 01.01.2021
+(Beschlussdatum: 15.12.2020)». Broschüre 2026 der Ausgleichskasse Zug, PDF erstellt 12.12.2025.
+Werte 2027: keine gefunden.
+
+**Neu gelesen (Wortlaut):**
+> IPVG § 4 Abs. 3: «Massgebend sind die persönlichen und familiären Verhältnisse am 1. Januar des Jahres, für welches Prämienverbilligung beansprucht wird.»
+
+> IPVG § 6 Abs. 2/3: «Massgebend für die Berechnung der Prämienverbilligung sind die Steuerfaktoren der rechtskräftigen Veranlagung der vorletzten Steuerperiode beziehungsweise der letzten Steuerperiode für neu zugezogene Personen.» — «Der Regierungsrat kann die Auszahlung von minimalen Prämienbeiträgen ausschliessen und Obergrenzen für das massgebende Einkommen festlegen, ab denen nur noch ein reduzierter oder kein Anspruch mehr auf Prämienverbilligung besteht.»
+
+> IPVG § 7bis Abs. 2: «Steht mehreren Personen ein nicht reduzierter Gesamtanspruch zu, so wird für Kinder und junge Erwachsene in Ausbildung mindestens die Hälfte der für sie massgebenden Prämie verbilligt.»
+
+> IPVG § 11 Abs. 1/2: Bescheinigung und Versicherungsnachweis «bis 30. April bei jener Gemeinde …, wo sie am 1. Januar des Jahres Wohnsitz hatten» — «Verspätet eingereichte Gesuche können berücksichtigt werden, wenn sie bis 30. September gestellt werden und wichtige Gründe vorliegen.»
+
+> IPVG § 18 Abs. 1: «Ungerechtfertigt bezogene Prämienbeiträge sind zurückzuerstatten. Die Ausgleichskasse macht die Rückforderung geltend.»
+
+> V IPVG § 1 Abs. 1: Reineinkommen, «b) zuzüglich 10 % des Reinvermögens …; b1) zuzüglich allfällig abgezogener, freiwilliger Einkäufe in die 2. Säule …; c) zuzüglich allfällig abgezogener Beiträge an die gebundene Selbstvorsorge (Säule 3a) …; c1) … Liegenschaftsunterhaltskosten …, soweit diese 20 % … übersteigen; d) abzüglich Kinderabzug in der Höhe von 8500 Franken pro Kind.»
+
+Broschüre 2026: alle Zahlen der Tabelle oben im Textlayer wiedergefunden (Richtprämien, 8 %,
+70'000 / 89'900, 0,5 % je 100 mit Aufrundung, Mindestgarantie 80 % / 50 % nur bei «nicht reduzierter
+Verbilligung», Frist 30. April 2026, unter 50 Franken keine Auszahlung, Veranlagung 2024, Kinder
+«Jahrgang 2008 – 2025», junge Erwachsene «2001 – 2007»).
+
+**Bestätigt offen:** «Die Grenzwerte für das massgebende Einkommen fallen bei Einzelpersonen und
+gewissen Haushalten mit nur einer erwachsenen Person tiefer aus.» — keine Zahl, auch nicht in der
+Ablaufgrafik, im Merkblatt-Verzeichnis (nur Broschüre und Gemeindestellen-Liste) oder in der
+Medienmitteilung vom 26.01.2026 («Der Regierungsrat hat die Parameter … festgelegt»). Der
+Regierungsratsbeschluss ist nicht in der BGS erfasst. Den Online-Rechner (serverseitig,
+`actions/calculators/calculation/formcheck`) haben wir **nicht** mit Werten gefüttert. Die
+«Berechnungsvorlage in diesem Dokument» enthält die Broschüre nicht (zwei Bilder: Titel, Schluss).
+
+~~**Ein amtliches Berechnungsbeispiel gibt es nicht.**~~ ⟨korrigiert: die Broschüre 2025, S. 7/8, hat zwei — siehe Fixrunde unten⟩ Prüfstein der Tests sind die Wortlaute von
+S. 5 als Handrechnung (Nullpunkt 4'984.80 / 8 % = 62'310, Kürzungsfaktor mit Aufrundung).
+
+**Was die App daraus macht (`src/config/ipvZug.js`):** ⟨korrigiert 28.09.2026 abends, Fachprüfung #475 und
+Fixrunde 2: der folgende Absatz ist überholt — ZG rechnet einen Betrag für Einzelpersonen und Familien, siehe
+«Fixrunde 1» und «Fixrunde 2» unten⟩ Die App rechnet nur Haushalte mit einer
+erwachsenen Person — genau die Gruppe mit den unbekannten Grenzen. Darum zeigt ZG **für niemanden
+einen Betrag** (`zgGrenzeEinzelperson`), ausser «kein Anspruch», wo er sicher ist: ohne Kinder ab
+massgebendem Einkommen 62'310 (Richtprämie ≤ 8 %), mit Kindern über 89'900. Säule 3a: Regel `voll`
+(V IPVG § 1 lit. c, in `kantonsModell.js` eingetragen). `maxIncome` null.
+
+**Bewusst nicht gebaut:** Paare, Konkubinat, mehrere Erwachsene · junge Erwachsene · Quellen-
+besteuerte, EL, Sozialhilfe, Mutterschaftsbeiträge · BVG-Einkäufe und Liegenschaftsunterhalt ·
+Mindestgarantie der Kinder (nur bei nicht reduziertem Anspruch, und Gesetz 50 % gegen Broschüre 80 %).
+
+**Fachprüfung #475 — Fixrunde 1 (28.09.2026 abends):** Die Aussagen «Bestätigt offen», «Was die App
+daraus macht» und die Fragen unten sind **überholt** und bleiben als Beleg stehen.
+- **Beschluss 2025 an der Quelle gelesen:** Regierungsrat Zug, Sitzung vom 26. November 2024,
+  «Prämienverbilligung 2025» (`https://cdn.zg.ch/dam/jcr:e30a2229-fec0-4fd2-8c93-bbf68758b247/RRB%20IPV%202025.pdf`
+  → 200, 82'584 B; gleichlautend `akzug.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/Praemienverbilligung/2025-IPV_Regierungsratsbeschluss_kurz.pdf`
+  → 200, Gegenprobe `…/2099-IPV_…` → 404). Ziff. 1.5: «Pro 100 Franken, die das massgebende Einkommen die
+  Grenze von 70 000 Franken übersteigt, wird der ordentliche Anspruch auf Prämienverbilligung um
+  0,5 Prozent reduziert. … Übersteigt das massgebende Einkommen 89 900 Franken, besteht kein Anspruch»
+  — **eine Grenze, ohne Unterscheidung nach Haushalt**. Ziff. 1.6: «Steht mehreren Personen ein nicht
+  reduzierter Gesamtanspruch zu, so wird für Kinder mindestens 80 Prozent … verbilligt. Beträgt der
+  gemäss § 6 IPVG berechnete Gesamtanspruch weniger als dieser Mindestanspruch, so wird der
+  Mindestanspruch vergütet.» Ziff. 3: Veröffentlichung im Amtsblatt.
+- **Beschluss 2026 nicht gefunden** (`…/2026-IPV_Regierungsratsbeschluss_kurz.pdf` → 404 — eine geratene
+  Adresse, kein Negativbefund über die Sache). Die Werte 2026 stammen aus der Broschüre 2026, die
+  Struktur aus dem Beschluss 2025. Frage 5.
+- **Broschüre 2025** (`akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2025_low.pdf` → 200, PDF 07.01.2025,
+  12 S.) S. 7/8: Beispiel 1 «Alleinstehende Person ohne Kinder»: 25'000 + 500 + 1'000 + 2'000 = 28'500 →
+  2'280 → **Anspruch 3'354.40**; Beispiel 2 Familie: 42'800 → 3'424; 17'814 → 14'390; Mindestgarantie
+  1'958.60 + 2'102.40 = 4'061 → **«Anspruch (höherer Betrag)» 14'390**. Beide rechnet die App mit den
+  Werten 2025 auf den Rappen nach. Derselbe Satz «bei Einzelpersonen … tiefer» steht auch hier — er
+  beschreibt die Formel (Nullpunkt Einzelperson 4'984.80 / 8 % = **62'310**, mit einem Kind 77'610).
+- **Deckel:** keiner (IPVG nur § 7 Abs. 3, Sozialhilfe); KVV Art. 106c Abs. 5bis (SR 832.102, Stand
+  01.01.2026, Fedlex-Filestore PDF 200, 1'342'590 B; Datum 20260102 → HTML-Hülle 77'151 B) selbst gelesen:
+  «Er bezahlt der versicherten Person den Differenzbetrag … aus. Kantonale Regelungen, wonach die Prämie
+  höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben vorbehalten.» → `KEIN_PRAEMIENDECKEL.ZG`.
+- **Näherung (B2):** «Kein Anspruch» und «unter 50» nur, wenn es auch nach dem Versicherungsabzug gilt —
+  Steuergesetz Zug BGS 632.1, «Version in Kraft von: 01.01.2024 bis: 31.12.2025» (`bgs.zg.ch/api/de/versions/2510/pdf_file`
+  → 200), § 30 lit. g: «bis zum Gesamtbetrag von: 6000 Franken für verheiratete Personen …; 3000 Franken
+  für die übrigen steuerpflichtigen Personen … Diese Abzüge erhöhen sich um 1000 Franken für jedes Kind»
+  (höchstens die erfasste Prämie). Sonst Grund `zgNaeherung`. Bei erfassten bezahlten Alimenten nie ein Verdikt.
+- **Gesuch:** § 11 IPVG (30. April; verspätet bis 30. September aus wichtigen Gründen) — im Budget wird
+  nichts abgezogen (`gesuchNoetig`, wie NE); Frist-Sätze `zgFristLaeuft` / `zgFristVorbei`.
+- Kind mit Geburtsjahr im Anspruchsjahr zählt nicht (§ 4 Abs. 3 IPVG, Broschüre «2008 – 2025»).
+
+**Fixrunde 2 nach dem Re-Review #475 (28.09.2026 spätabends):**
+- ~~Untergrenze nur mit dem Versicherungsabzug «höchstens die erfasste Prämie»~~ ⟨korrigiert: ohne erfasste
+  Prämie war der Abzug 0⟩ — jetzt **immer** der volle Satz nach § 30 lit. g (3'000; ohne Beiträge nach lit. d/e,
+  d. h. ohne Lohn, um die Hälfte höher: 4'500; + 1'000 je Kind), denn auch Lebens-, Unfallprämien und Sparzinsen
+  zählen.
+- **Berufskosten** an der Quelle gelesen: StG Zug BGS 632.1, «Stand 1. Januar 2024» (`bgs.zg.ch/api/de/versions/2510/pdf_file`
+  → 200, 3'276'596 B; Gegenprobe `…/versions/9999991/pdf_file` → 404, 0 B) § 25 Abs. 1 lit. a: Fahrkosten «bis zu
+  einem Maximalbetrag von 6000 Franken», Abs. 2: «Für die Berufskosten nach Abs. 1 Bst. b und c werden
+  Pauschalansätze festgelegt» — festgelegt von der Steuerverwaltung (V StG BGS 632.11 § 10, «Stand 1. Januar 2022»,
+  `…/versions/2286/pdf_file_with_annexes` → 200). Die Ansätze: Steuerverwaltung Zug, «Wegleitung zur Steuererklärung
+  für natürliche Personen» 2024 (`zg.ch/dam/jcr:f2658eeb-c8c6-45d9-989c-908ce1a9c4ba/Wegleitung_2024_StKtZug_A4_20241022.pdf`
+  → 200, 644'449 B, PDF; Gegenprobe mit erfundener Kennung → 404), S. 32: «Der Abzug beträgt 3 % des Nettolohnes,
+  mindestens Fr. 2 000.– und höchstens Fr. 4 000.– pro Jahr. Beträgt Ihr Einkommen weniger als Fr. 2 000.– pro Jahr,
+  entspricht der zulässige Abzug diesem geringeren Einkommen.» · Fahrkosten «Fr. 6 000.– (Kantons- und
+  Gemeindesteuern)» · S. 33 Verpflegung «bei regelmässiger auswärtiger Verpflegung Fr. 3 200.– im Jahr». Das
+  Steuerbuch auf zg.ch leitet auf `wissen.zg.ch` um und lieferte roh für echte und erfundene Seiten dieselbe
+  Hülle (402'238 B) — **kein Beleg**, nicht verwendet.
+- **Untergrenze des Verdikts** jetzt: massgebendes Einkommen − (bei Lohn: Pauschale 3 % [2'000–4'000] + 6'000
+  Fahrkosten + 3'200 Verpflegung) − Versicherungsabzug voll − bezahlte Unterhaltsbeiträge ×12 (§ 30 lit. c) −
+  erfasste Kinderbetreuung ×12, höchstens 25'000 je Kind unter 14 im Basisjahr (§ 30 lit. l). Einzelperson ohne
+  Kinder: «kein Anspruch» erst ab rund 76'200 Nettolohn (≈ 6'350/Monat) statt ab 62'310. Nicht darin (unbeschränkt
+  oder unbekannt): nachgewiesene höhere Berufskosten, Weiterbildung (lit. n, bis 12'000), Krankheitskosten (§ 31),
+  Spenden, Schuldzinsen. «Unter dem Mindestbetrag» als Verdikt ist damit praktisch nicht mehr erreichbar.
+- **Erhaltene Unterhaltsbeiträge und Familienzulagen** zählen jetzt zum massgebenden Einkommen: StG § 22 Abs. 1
+  lit. f («Unterhaltsbeiträge, die eine steuerpflichtige Person bei Scheidung … für sich erhält, sowie
+  Unterhaltsbeiträge, die ein Elternteil für die unter seiner elterlichen Sorge oder Obhut stehenden Kinder
+  erhält») und § 16 Abs. 1 («Zulagen»), Wegleitung 2024 Code 155 («Kinder- und Familienzulagen …, welche direkt
+  von der Ausgleichskasse ausgerichtet und nicht bereits im Erwerbseinkommen … berücksichtigt worden sind»).
+  Prüffall: 1 Kind, 4'000 + 1'500 Alimente + 300 Zulagen → ME 61'100 → **1'320.80** (vorher 3'048.80). Bezahlte
+  Alimente mindern nur die Untergrenze, nicht den Betrag (§ 30 lit. c gilt nur für Ex-Ehegatten und minderjährige
+  Kinder; das App-Feld unterscheidet das nicht). Der Vorbehalt nennt beide Richtungen und die Doppelzählung,
+  wenn Zulagen schon im Nettolohn stecken.
+- **«Berechtigt»** mit Häkchen trotz Gesuchspflicht (§ 11 IPVG) → `antragNoetig` wie GE: «Möglicher Betrag — nur
+  auf Antrag».
+
+~~**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 9):** Grenzen für Einzelpersonen und «gewisse» Haushalte
+mit einer erwachsenen Person · welche Haushalte das sind · Mindestgarantie 80 % (Broschüre) gegen
+«mindestens die Hälfte» (§ 7bis) · Parameter-Beschluss des Regierungsrats 2026.~~ ⟨neu: FRAGEN-AN-DIE-AEMTER.md § 20 — Beschluss 2026, Bedeutung des Broschüren-Satzes, verspätete Gesuche⟩
 
 ---
 
@@ -1413,7 +1658,7 @@ App: maxIncome 48'000, subsidySingle 2'400, linearer Abbau. Belegt ist für eine
 
 ## SO — Solothurn
 
-**Beurteilung:** teilweise
+**Beurteilung:** teilweise — **in der App gebaut 28.09.2026 (K31), zeigt bewusst keinen Betrag**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000
 **Zuständig / Weg:** Ausgleichskasse Solothurn (AKSO); Antragsformular wird ab Januar 2026 an voraussichtlich Berechtigte versandt (aus Steuerdaten), Rücksendung innert 30 Tagen, sonst verwirkt; Quellenbesteuerte: Antrag bis 31.12. des Anspruchsjahres
 **Gültigkeit:** 2026 definitiv (Parameter-Verfügung Departement des Innern vom 27.01.2026)
@@ -1457,7 +1702,7 @@ Die App führt `maxIncome` 48'000 und `subsidySingle` 2'400 mit linearem Abbau; 
 
 ### Offen / nicht gefunden
 - Ankerpunkte der linearen Eigenanteil-Skala (vermutlich 10 % bei MGE 0 bis 16 % bei 74'000) sind nicht wörtlich publiziert — nur «10% bis 16%» und «linear».
-- Periode der Richtprämien (Monat/Jahr) nicht ausdrücklich genannt; Grössenordnung spricht für Monat.
+- ~~Periode der Richtprämien (Monat/Jahr) nicht ausdrücklich genannt; Grössenordnung spricht für Monat.~~ ⟨geklärt 28.09.2026: Monat — Botschaft SGB 0226/2025, «monatlichen Durchschnittsprämien 2026», siehe Nachprüfung unten⟩
 - Genaue Rechenformel (Summe der Richtprämien des Haushalts × 12 minus Eigenanteil × MGE? Reihenfolge Kinder/junge Erwachsene) nicht wörtlich publiziert. Der AKSO-Online-Rechner (provisorische Berechnung) zeigt nur die Eingabemaske, keine Formel.
 - Keine eigene Vermögensgrenze gefunden; Vermögen wirkt über den 50 %-Anteil im MGE.
 
@@ -1467,6 +1712,95 @@ Die App führt `maxIncome` 48'000 und `subsidySingle` 2'400 mit linearem Abbau; 
 3. Sozialgesetz (SG), BGS 831.1, §§ 86–91, Kanton Solothurn, Fassung in Kraft seit 01.09.2026. https://bgs.so.ch/api/de/versions/5665/pdf_file (Eintrag: https://bgs.so.ch/app/de/texts_of_law/831.1) — abgerufen 16.09.2026
 4. Merkblatt Individuelle Prämienverbilligung (IPV) 2026, Ausgleichskasse des Kantons Solothurn, ohne Datum (2026). https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/Merkblatt-IPV-2026.pdf und Seite https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv — abgerufen 16.09.2026
 5. Medienmitteilung «Anpassungen bei der individuellen Prämienverbilligung», Staatskanzlei Kanton Solothurn, 27.05.2025. https://so.ch/verwaltung/staatskanzlei/medien/medienmitteilung/news/anpassungen-bei-der-individuellen-praemienverbilligung/ — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe.
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf` | 200, 79'771 B, PDF | `…/2099-01-27-Verfuegung-…pdf` → **404** |
+| `https://bgs.so.ch/api/de/texts_of_law/831.2/show_as_json` (SV) · `…/831.1/…` (SG) | 200, 504'482 B · 200, 1'064'584 B | `…/831.29/…` → **404**, 0 B |
+| `https://bgs.so.ch/api/de/versions/5624/pdf_file` (SV) · `…/5665/pdf_file` (SG) | 200, 1'499'179 B · 200, 3'048'634 B | `…/versions/999999/pdf_file` → **404**, 0 B |
+| `https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/Merkblatt-IPV-2026.pdf` | 200, 24'985 B (erstellt 18.12.2025) | `…Merkblatt-IPV-2099.pdf` → **404** |
+| `https://www.akso.ch/dienstleistungen/praemienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
+| `https://so.ch/fileadmin/internet/pd/PD-Downloadcenter/Geschaefte/2025/2025-226_SGB-praemienverbilligung/0226-2025.pdf` (Botschaft SGB 0226/2025) | 200, 107'682 B (erstellt 28.10.2025) | — (über die Suche gefunden, nicht abgeleitet) |
+
+**Fassungen:** SV BGS 831.2 «Aktuelle Version in Kraft seit: 01.04.2026 (Beschlussdatum: 26.01.2026)»,
+keine künftige Version. SG BGS 831.1 «in Kraft seit: 01.09.2026 bis: 31.12.2026 (Beschlussdatum:
+05.05.2026)», **eine künftige Version** erfasst (ab 2027, nicht ausgewertet). Parameter-Verfügung DDI
+«Vorgaben vom 27. Januar 2026». Werte 2027: keine gefunden.
+
+**Die Einheit der Richtprämien — geklärt.** Botschaft des Regierungsrates SGB 0226/2025 (RRB Nr.
+2025/1755, 28.10.2025), Ziff. 2, Tabelle 1: «Die monatlichen Durchschnittsprämien 2026 präsentieren
+sich für den Kanton Solothurn wie folgt: … Erwachsene 602.00 · Junge Erwachsene 435.00 · Kinder
+139.00», und Ziff. 4.3: «Der Abschlag wird auf 30% festgelegt.» Die Verfügung nennt dieselben
+Durchschnittsprämien neben den Richtprämien → **422 / 305 / 98 sind Monatsbeträge** (602 × 70 % =
+421.40, 435 × 70 % = 304.50, 139 × 70 % = 97.30, je aufgerundet). ⟨Am 16.09. offen: «Periode … nicht
+ausdrücklich genannt; Grössenordnung spricht für Monat».⟩
+
+**Die Eckpunkte der Eigenanteil-Skala — weiterhin nicht publiziert.** Verfügung Ziff. 2: «Eigenanteile
+in % des massgebenden Einkommens: 10% bis 16%.» § 70 Abs. 1 SV: «Anspruch auf Prämienverbilligung hat,
+wer über ein massgebendes Einkommen von 0 bis 84'000 Franken verfügt. Die prozentualen Eigenanteile
+werden abhängig von der Höhe des massgebenden Einkommens im Rahmen von 6 bis 12% linear festgelegt.»
+Dass 10 % bei 0 und 16 % beim Grenzwert 74'000 gelten, liegt nahe, steht aber nirgends. Auch die
+Botschaft nennt nur «Eigenanteil: 9%-15%» (provisorisch, vor der Verfügung). Der Online-Rechner der
+AKSO rechnet serverseitig (`formcheck`) — **nicht** gefüttert. Ein amtliches Berechnungsbeispiel gibt
+es nicht.
+
+**Weitere Wortlaute:**
+> § 69 Abs. 1 lit. e SV: «Aufrechnung der Beiträge an Einrichtungen der gebundenen Selbstvorsorge (Säule 3a) maximal bis zur Höhe des zulässigen Höchstabzuges gemäss Art. 7 Absatz 1 Buchstabe a der Verordnung über die steuerliche Abzugsberechtigung für Beiträge an anerkannte Vorsorgeformen (BVV 3)» — ⟨am 16.09. mit «[…]» gekürzt; der Deckel steht im Wortlaut⟩. In der App: Regel `bisBundesMaximum` wie BE (in `kantonsModell.js` um SO ergänzt).
+
+> § 70 Abs. 3 SV: «Prämienverbilligungsbeiträge unter 240 Franken pro Anspruchsjahr und erwachsener anspruchsberechtigter Person werden nicht ausbezahlt.»
+
+> § 87 Abs. 2/3 SG: Gesamtanspruch gemeinsam Besteuerter; «Massgebend sind die persönlichen und familiären Verhältnisse am 1. Januar des Anspruchsjahres.» · § 89 Abs. 3: «Personen, welche nach Ermessen steuerlich veranlagt werden, haben keinen Anspruch auf Prämienverbilligung.» · § 90 Abs. 2: bei wesentlich abweichendem späterem Einkommen «Antrag auf Nachvergütung … oder von Amtes wegen eine Rückerstattung».
+
+> Merkblatt 2026: Antrag «innerhalb von 30 Tagen ab Zustellung», sonst verwirkt; junge Erwachsene «Jahrgänge 2001 - 2007»; «Die Auszahlung der IPV erfolgt rückwirkend per 1. Januar direkt an Ihre Krankenkasse»; «Ist die Prämienverbilligung höher als die tatsächlich geschuldete Krankenkassenprämie, wird nur die effektive Prämie verbilligt.»
+
+Quellenbesteuerte (nicht gebaut): Merkblatt QS 2026 (April 2026): massgebend 75 % des Bruttoeinkommens,
+«Maximal bezugsberechtigtes Bruttoeinkommen: eine erwachsene Person CHF 50'666.00». Das entspräche
+einem massgebenden Einkommen von rund 38'000 — ein Hinweis, dass der Anspruch für Alleinstehende weit
+unter 74'000 endet, aber kein Beleg für die Skala (eigenes Reglement BGS 832.215 von 2002).
+
+**Was die App daraus macht (`src/config/ipvSolothurn.js`):** keine Zahl (`soSkalaUnklar`), ausser
+«kein Anspruch», wo er für jeden Satz zwischen 10 und 16 % gilt: ohne Kinder ab massgebendem
+Einkommen 50'640 (422 × 12 / 10 %), immer über 74'000. `maxIncome` null (74'000 ist nicht die Grenze,
+bis zu der ein Betrag besteht). Für die 3a im Band 7'056–7'258 zählt die Untergrenze des Einkommens.
+
+**Bewusst nicht gebaut:** Paare und Konkubinat mit Kindern · junge Erwachsene · Quellenbesteuerte,
+EL, Sozialhilfe, Härtefälle, Ermessensveranlagte · Pension/Kapitalabfindungen/Geschäftsverluste/
+Zuwendungen/Liegenschaftskosten (§ 69 lit. a–d, f SV) · Werte 2027 (SG hat eine künftige Fassung).
+
+**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 19):** Eckpunkte der linearen Skala · Rundung der
+Richtprämie (aufgerundet?) · wie die Auszahlungslimite bei Kindern wirkt · ein Berechnungsbeispiel.
+
+**Fachprüfung #481 (28.09.2026 abends) — Fixrunde 1:**
+- 🛑 B1: Das Vermögen zählt jetzt zu 50 % **nach den Sozialabzügen** — SG § 89 Abs. 2 lit. a «Anteil des
+  steuerbaren Vermögens»; Steuergesetz BGS 614.11 («Aktuelle Version in Kraft seit: 01.01.2025
+  (Beschlussdatum: 03.09.2024)», `bgs.so.ch/api/de/versions/5504/pdf_file` 200, Gegenprobe `…/614.119/…`
+  → 404), § 71 Abs. 1: «a) 100’000 Franken für in ungetrennter Ehe lebende Steuerpflichtige sowie für
+  verwitwete, getrennt lebende, geschiedene und ledige Steuerpflichtige, die allein mit Kindern
+  zusammenleben …; b) 60'000 Franken für die andern Steuerpflichtigen; c) 20'000 Franken für jedes Kind …»;
+  Abs. 2: verdoppelt für AHV/IV-Rentenberechtigte «mit ungenügendem Reineinkommen und einem Reinvermögen von
+  nicht mehr als 200’000 Franken». Die App nimmt für die Untergrenze die Verdoppelung an, sobald eine AHV/IV-
+  Rente erfasst ist, und zieht erfasste Schulden (Kreditkarte, Darlehen) ab. ~~50 % der erfassten
+  Brutto-Posten~~ ⟨korrigiert: falsches «kein Anspruch» für Rentnerin 30'000 + 45'000 Erspartes, Lohn
+  2'500/Mt + 45'000, Alleinerziehende 5'000/Mt + Kind + 30'000⟩.
+- ⚠️ W1: `soKeinAnspruch` sagt, dass die Ausgleichskasse mit dem satzbestimmenden Einkommen nach Abzügen
+  rechnet (meist tiefer) und verweist auf den Online-Rechner. Bei erfassten **bezahlten Unterhaltsbeiträgen**
+  (`alimentePaid`) sagt die App nie «kein Anspruch» — sie sind abziehbar, im Rahmen der App aber noch nicht
+  abgezogen (Rahmen-Befund, alle Kantone).
+- ⚠️ W2: SV § 75 Abs. 2 (Wortlaut an der Quelle, Versions-PDF 5624): «Versicherte, die kein
+  Antragsformular erhalten haben … können bei der Ausgleichskasse bis spätestens am 31. Juli des
+  Anspruchsjahres ein entsprechendes Gesuch stellen. Bei Fristversäumnis verwirkt der Anspruch … Vorbehalten
+  bleiben … Personen, die per 31. Juli des Anspruchsjahres noch keine rechtskräftige Steuerveranlagung
+  erhalten haben.» Abs. 3: Formular «innert 30 Tagen seit Zustellung». Quellenbesteuerte: Merkblatt QS 2026
+  «Die letzte Frist für den Bezug des Antrags ist der 31. Dezember des Anspruchsjahres». Neuer Grund
+  `soSkalaUnklarFristVorbei` ab 1. August; `anmeldefristVorbei` am «kein Anspruch»-Ergebnis.
+- Rechner-Seite der AKSO (gelesen 28.09.2026): «Zahlen aus der Steuerperiode 2024», Felder «Total
+  satzbestimmendes Einkommen (Steuerveranlagung 2024, Ziffer 690)» und «… Vermögen (… Ziffer 990)» —
+  Beleg für das Bemessungsjahr (K4) und für den Text (K2). Die Rundung der Richtprämien ist als
+  Plausibilitätsprobe benannt, nicht als Regel (K1).
 
 ---
 
@@ -3187,7 +3521,7 @@ Fachprüfung (swiss-precision-pruefer): **Erlass + Dekret zusammen rechnen best�
 
 ## GE — Genève
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht
 **Zuständig / Weg:** Service de l'assurance-maladie (SAM); grundsätzlich automatisch aufgrund der Steuerveranlagung von vor zwei Jahren (2024); Antrag nötig u. a. für junge Erwachsene (Jg. 2001–2007), Quellenbesteuerte, Zuzüger 2025/2026, sehr tiefe RDU (< 15'000 allein / < 20'000 Paar), Brutto-Einkommen > 200'000 oder Brutto-Vermögen > 250'000; Frist: vor dem 30. November des Anspruchsjahres
 **Gültigkeit:** 2026 definitiv (Barème 2026 des Kantons; Gesetzesbeträge 2024 indexiert)
@@ -3243,24 +3577,54 @@ Abzüge nach Art. 5 LRDU u. a. Säule-3a/2.-Säule-Beiträge, NBU-Prämien, Beru
 ### Abweichung zur App
 App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Belegte Vergleichswerte: Person allein ohne Kind max. RDU 50'000, Höchstbetrag 348 CHF/Monat (= 4'176 CHF/Jahr) in 8 festen Stufen (nicht linear); Kinderbetrag in G1–G8 konstant 132 CHF/Monat, junge Erwachsene 231 CHF/Monat.
 
+### Nachprüfung 28.09.2026 (Einbau in die App, `src/config/ipvGenf.js`)
+
+Alle Zahlen oben heute an der Quelle neu gelesen, jeder Abruf mit Gegenprobe: `ge.ch/document/99999999/telecharger` → 404 (HTML), `silgeneve.ch/legis/data/rsg_j9_99.htm` → 404, 0 Bytes; die echten Adressen liefern 200 mit verschiedenen Inhalten (SHA-256 je Datei verschieden). Fassungen unverändert gegenüber dem 16.09.: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal und LRDU «au 1er janvier 2025». Barème-PDF [1]: eine Seite, **Textlayer vorhanden** (pdftotext), PDF-Metadaten «erstellt 11.02.2026», Dokumentseite «Date de publication 21 avril 2026». **Keine Korrektur** an den Tabellen oben nötig — jede Zelle des Barème (fünf Haushaltszeilen mit einer erwachsenen Person, je 8 bzw. 9 Gruppen: Grenze, Grenze + 1, Haushaltssumme) ist in `ipvGenf.test.js` gepinnt.
+
+**Ergänzungen aus der Lektüre:**
+- **Alter:** Barème [1], Fussnote: «Sont considérés comme jeunes adultes, les personnes nées entre 2001 et 2007.» LaLAMal Art. 20 al. 3 lit. b: «les assurés ayant atteint leur majorité avant le 1er janvier de l'année civile et jusqu'à 25 ans révolus». ⇒ erwachsen für 2026 ist Jahrgang 2000 und älter (Regel `ERWACHSEN.imAnspruchsjahr`, belegt); Kinder = Jahrgänge ab 2008 («enfants mineurs à charge», Art. 21 al. 5, Art. 22 al. 2 LaLAMal). ⟨korrigiert 28.09.2026 abends, Rechts- und Fachprüfung: hier stand «Stichtag Alter: RaLAMal Art. 10 al. 8» — der Wortlaut lautet vollständig «**Pour l'application de l'alinéa 7**, est déterminant l'âge de l'assuré le 1er janvier de l'année d'ouverture du droit aux subsides», gilt also nur für junge Erwachsene. Das Ergebnis trägt sich über Art. 20 al. 3 lit. b und das Barème.⟩
+- **Negativer RDU:** RaLAMal Art. 9A — «est considéré comme équivalent à zéro».
+- **Indexierung — belegt (Abgleich der Cockpit-Sitzung, 28.09.2026 abends):** Communiqué hebdomadaire du Conseil d'Etat du 5 novembre 2025 [8], «Indexation des subsides d'assurance-maladie pour 2026», «indice de base: 2024»: «adultes: 8,7% · jeunes adultes (âgés de 19 à 25 ans le 31 décembre de l'année concernée): 5,3% · enfants: 10,9%», mit Tabelle aller Beträge 2024 → 2026 (320 → 348 … 50 → 55; Gruppe 9 jeunes adultes 100 → 106; enfants 60 → 67). Jeder Betrag = Gesetzesbetrag × (1 + Satz), aufgerundet (RaLAMal Art. 9B al. 1 «arrondis au franc supérieur»); der Test rechnet alle zehn nach. ⟨Hier stand am Nachmittag «Arrêté nicht gefunden», ein Faktor 1,0875 für die Erwachsenen und die Vermutung «Kinder und junge Erwachsene folgen eigenen Durchschnittsprämien» — mit drei Sätzen statt einem ist alles erklärt. Frage 15.1 und 15.4 (vorher 8.1/8.4, dann 10.1/10.4) sind damit erledigt.⟩
+- **RDU-Posten, die die App kennt (Fachprüfung 28.09.2026, Blocker — die erste Fassung nahm nur Lohn, Nebenerwerb und Renten und behauptete, alle Auslassungen wirkten in dieselbe Richtung):** gebaut sind die Berufskosten-Pauschale −3 % des Hauptlohns, min. 600, max. 1'700 (LIPP Art. 29 al. 2 via LRDU Art. 5 al. 1 lit. d; ohne sie sah eine Person mit 15'000–15'600 Netto «automatisch», obwohl ihr RDU unter 15'000 liegt) und das Säule-3b-Guthaben als Vermögen (LRDU Art. 6 lit. f «assurances-vie … pour leur valeur de rachat»; lit. g nimmt das Vorsorgekapital 3a aus). **Nicht gebaut, weil Rahmen-Ruling der Runde 28.09.2026** (derselbe Befund in UR, GE, VS, NE, SO — kein Kantonsmodul liest die Felder; ein Rahmen-PR nach den Merges und vor dem Deploy rechnet sie für alle, mit benannter Regel je Kanton): Familienzulagen (LIPP Art. 18 al. 1 «y compris … les allocations» — ob die Kinder-/Ausbildungszulagen gemeint sind: Frage 15.4), erhaltene Alimente (LRDU Art. 4 al. 1 lit. c «les pensions alimentaires»; LIPP Art. 26 lit. e) — beides hebt den RDU; bezahlte Unterhaltsbeiträge (Art. 5 lit. f) und Kinderbetreuung (lit. e, LIPP Art. 35) — beides senkt ihn. Der Vorbehalt `ipv.vorbehaltGE` nennt die vier Posten als «erfasst, hier nicht eingerechnet». ⟨Zwischen 18:53 und 20:30 rechnete das Modul Alimente und Familienzulagen selbst (`5d6f8373`) — zurückgebaut.⟩ Es fehlen weiter: Schulden (Art. 7 lit. b), Krankheitskosten über 5 % (lit. h), Nebenerwerbs-Pauschale (LIPP Art. 29A: 20 %, 800–2'400) — Richtung «RDU zu hoch».
+- **Untergrenze für den Antrag — belegt (Abgleich 28.09.2026 abends):** ge.ch, «Revenus 2024 (RDU 2026) particulièrement bas» [9], Stand 18.09.2026: «Personne seule 15'000 · avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants 27'000 · Couple seul sans enfant 20'000 · avec 1 enfant 23'000 · …», Frist «avant le 30 novembre 2026», Antrag mit Formular und Belegen. ⟨Am Nachmittag rechnete das Modul Alleinerziehende mit der Paar-Zeile (23'000) und nannte das «gewählt» — falsch: RDU 18'000–22'999 bekam «nur auf Antrag» und nach dem 30.11. «tritt nicht ein». Korrigiert, Frage 10.2 erledigt.⟩
+- **Vermutung bei Bruttovermögen > 250'000 / Bruttoeinkommen > 200'000:** ge.ch, «Revenu brut sup. à 200'000 ou fortune brute sup. à 250'000» [10], Stand 18.09.2026: «Revenu déterminant 2026 = (revenu brut 2024 * 0.95) + (fortune brute 2024 /15)», Antrag per Brief «avant le 30 novembre 2026» (= RaLAMal Art. 10 al. 3). Steht jetzt im Text `vermoegenAntragGE`. **Wohneigentum** (Fachprüfung W2): LRDU Art. 6 lit. a zählt «tous les immeubles» zum Vermögen, RaLAMal Art. 10 al. 1 zum Bruttovermögen nach Steuerwert ohne Abattement — die Hypothek zählt nicht dagegen. Die App kennt nur `propertyValue` (Verkehrswert) und `mortgageStatus`; mit Liegenschaft ist die 250'000-Vermutung meist erreicht ⇒ keine Zahl, Grund `wohneigentumGE` (eine erfasste Hypothek gilt als Eigentum — **gewählt**, warnt eher zu oft).
+- **Neuberechnung bei Verschlechterung, Kind im Laufe des Jahres, Verbesserung (RaLAMal Art. 13B–13E; Fachprüfung 28.09.2026 — «Art. 9–12 gelesen» hatte sie ausgelassen):** Art. 13B al. 1–5: «durablement» = «depuis plus de 6 mois», «notable» = «diminution de 20% ou plus du revenu déterminant actualisé», «demande écrite», «avant le 30 novembre … si l'aggravation … se produit durant le deuxième semestre … jusqu'au 30 juin de l'année suivante». Art. 13C: «groupe familial s'agrandit en cours d'année d'un ou de plusieurs enfants mineurs» → schriftlicher Antrag, Fristen wie 13B al. 5 (App: Hinweis `ipv.geAntragKindNeu` bei Jahrgang > Basisjahr; ob das auch für Jahrgang 2025 gilt: Frage 15.5). Art. 13D: 13B gilt analog für die Vermutungsfälle nach Art. 20 al. 2/3. Art. 13E al. 1/2: Verbesserung «sans délai» melden; ab «10 000 francs» über dem aktualisierten RDU «indûment touchés», Rückerstattung nach Art. 33. Alles im Vorbehalt `ipv.vorbehaltGE`.
+- **Anzeige «Max. Einkommen»** zeigt mit Kindern die Grenze der Gruppe 8 (Erwachsenenbeitrag, z. B. 121'000 bei einem Kind); Gruppe 9 (151'000) nennt nur `geNurKinder`. ⟨Fachprüfung 28.09.2026: vorher 151'000, die Grenze nur des Kinderbeitrags.⟩
+- **Säule 3a im RDU:** LRDU Art. 5 al. 1 lit. a verweist auf «article 31, lettre a, LIPP», lit. c auf «article 31, lettre b, LIPP». LIPP (rsGE D 3 08, Stand 01.01.2026) Art. 31: lit. a = AHV/IV/EO/ALV/UVG-Beiträge, lit. b = berufliche Vorsorge, **lit. c = gebundene Selbstvorsorge (3a)** — lit. c ist in der LRDU **nicht** genannt. ⟨korrigiert 28.09.2026: oben unter «Massgebendes Einkommen» steht «Abzüge nach Art. 5 LRDU u. a. Säule-3a/2.-Säule-Beiträge» — die **3a** gehört nicht dazu, nur die 2. Säule. Der Satz bleibt als Beleg stehen.⟩ Folge für die App: das Nettoeinkommen trägt die 3a bereits und ist damit für Genf richtig (Regel `SAEULE_3A.voll`, Abzug 0).
+- **Vermögen im RDU:** LRDU Art. 6 (Bruttovermögen inkl. Liegenschaften, Wertschriften, Bargeld/Konten, Rückkaufswerte; ohne Hausrat und Vorsorgekapital) minus Art. 7 (Schulden). Die App kennt nur `securitiesValue` + `otherAssets` + `savingsAccount` ohne Schulden — der RDU-Zuschlag (1/15) fällt tendenziell **zu hoch** aus, der Betrag zu tief.
+- **Rückerstattung:** LaLAMal Art. 33 — «Les subsides indûment touchés doivent être restitués» (Beleg für `ipv.vorbehaltGE`).
+- **Antragsfälle** (ge.ch [5], Stand 9. Juli 2026, und RaLAMal Art. 10): junge Erwachsene 2001–2007, Quellenbesteuerte 2024, Zuzug 2025/2026, RDU 2024 unter 15'000 allein / 20'000 Paar (+3'000 je Unterhaltspflicht), Bruttoeinkommen > 200'000 oder Bruttovermögen > 250'000, keine Veranlagung 2024 / Ermessensveranlagung, veränderte Lage. Frist Art. 10A: «avant le 30 novembre de l'année d'ouverture du droit».
+
+**Was die App rechnet (Stand nach Fach-, Rechtsprüfung und Abgleich, 28.09.2026 abends):** eine erwachsene Person (Jahrgang ≤ 2000) allein oder mit minderjährigen Kindern (Jahrgang ≥ 2008), ohne Wohneigentum; RDU = Nettoeinkommen (Hauptlohn × 12 bzw. × 13, Neben- und Renteneinkommen × 12) − Berufskosten-Pauschale (3 % des Hauptlohns, 600–1'700) + (erfasstes Vermögen + Säule-3b-Guthaben) ÷ 15; Gruppe nach Art. 21 (mit Kindern: Paar-Spalte + 6'000 je Kind, Art. 21 al. 2 und 4), Beträge nach Barème [1], Gruppe 9 nur Kinder; «kein Anspruch» vor dem Prämien-Riegel; Deckel auf die erfasste Prämie der erwachsenen Person (Art. 22 al. 4); «Max. Einkommen» = Grenze der Gruppe 8. Verfahrens-Hinweis «in der Regel automatisch» (ge.ch nennt Antragsfälle, die die App nicht erfragt). Unter 15'000 + 3'000 je Kind (SAM-Tabelle [9]): Überschrift «Möglicher Betrag — nur auf Antrag», Karte «Antrag nötig», Hinweis mit Frist «vor dem 30. November»; ab dem 30.11. ein Frist-Satz mit den Ausnahmen (13B al. 5, 11D al. 2), `anmeldefristVorbei` und der Genfer Text `geFristNichtAbgezogen` in den drei Lesern (KK-Last-Karte, Prämien-Beleg, Budget — Mechanismus `fristNichtAbgezogenKey` wie FR). Kind mit Jahrgang nach dem Basisjahr: gerechnet, Hinweis «nur auf schriftlichen Antrag» (Art. 13C). Junge Erwachsene (eigene Person 2001–2007 oder Kind über 18 im Haushalt): Orientierung mit Grund `geJungeErwachsene` (nur auf Antrag, Frist 30.11.). Anzeige-Feld `jahrKey` (wie UR/NE).
+
+**Bewusst nicht gebaut:** Paare, eingetragene Partnerschaften, Konkubinat (mit und ohne gemeinsames Kind; RaLAMal Art. 9 addiert die RDU), junge Erwachsene (eigener Betrag 231/106, RDU der Eltern + eigener bei gemeinsamem Wohnsitz oder eigenem RDU < 15'000, RaLAMal Art. 10 al. 7 lit. a/b), Quellenbesteuerte (Art. 24 LaLAMal, Art. 12 RaLAMal), Zuzug (Art. 25 LaLAMal), EL-/PCFam-/Sozialhilfe-Beziehende (Art. 22 al. 7–9 LaLAMal, Art. 11A–11C RaLAMal), im Ausland Wohnende (Art. 24A), Ermessensveranlagte (Art. 27 lit. b), die Vermutung beim Bruttoeinkommen > 200'000 (Art. 10 al. 2 RaLAMal — die App kennt das Brutto nicht sicher; über jeder Grenze ohnehin; die App rechnet nach Art. 21 al. 8 auch über vier Kinder hinaus), die Ersatzrechnung «Brutto × 0,95 + 1/15 Bruttovermögen» (Art. 10 al. 3), die Neuberechnung nach Art. 13B (die App kennt den RDU 2024 nicht und kann −20 % nicht feststellen; Bedingungen und Fristen stehen im Vorbehalt), Rundung des RDU (ungerundet verglichen — gewählt, keine Quelle).
+
 ### Offen / nicht gefunden
-- Der Indexierungs-Arrêté des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht separat gefunden; die Beträge stammen aus dem amtlichen Barème-PDF des Kantons [1]. Silgeneve-Stände: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal «au 1er janvier 2025» — Gesetzestext enthält die unindexierten Beträge (320/270/…/50).
-- Die Seite «Barèmes» (ge.ch/informations-generales-subside-assurance-maladie/baremes) lieferte per curl HTTP 403 («Zone sécurisée»); das verlinkte Dokument war frei abrufbar.
+- ~~Der Indexierungs-Arrêté des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht separat gefunden~~; die Beträge stammen aus dem amtlichen Barème-PDF des Kantons [1]. Silgeneve-Stände: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal «au 1er janvier 2025» — Gesetzestext enthält die unindexierten Beträge (320/270/…/50). ⟨28.09.2026 abends: **gefunden** — Communiqué du Conseil d'Etat vom 5.11.2025 [8], siehe «Indexierung» oben.⟩
+- Die Seite «Barèmes» (ge.ch/informations-generales-subside-assurance-maladie/baremes) lieferte per curl HTTP 403 («Zone sécurisée»); das verlinkte Dokument war frei abrufbar. ⟨28.09.2026: die Dokumentseite `ge.ch/document/baremes-categories-2026-subsides-assurance-maladie` liefert 200 und verlinkt das PDF.⟩
 - Beträge für PC-AVS/AI-, PCFam- und Sozialhilfe-Beziehende (Durchschnittsprämie) nicht erfasst.
+- ~~Ob die Gleichstellung «Person mit Unterhaltspflicht = Paar» (Art. 21 al. 4 LaLAMal) auch für die Untergrenzen von RaLAMal Art. 10 al. 4/5 gilt (15'000 / 20'000): nicht gefunden~~ ⟨28.09.2026 abends: **gilt nicht** — SAM-Tabelle [9]: Alleinerziehende 15'000 + 3'000 je Kind.⟩
+- Offen bleibt (Frage 15 in `FRAGEN-AN-DIE-AEMTER.md`): Deckel je Person · Familienzulagen als «allocations» · Kind mit Jahrgang 2025 (Art. 13C) · Rundung des RDU.
+- Kein amtliches Rechenbeispiel mit Einzelfall gefunden; Prüfstein sind die Haushaltssummen des Barème [1] (z. B. «Personne seule + 2 enfants, Groupe 3: fr. 504.00» = 240 + 2 × 132).
 
 ### Quellen
-1. BAREME SUBSIDES 2026 (PDF, Dokumentseite «Barèmes et catégories 2026 pour les subsides d'assurance-maladie»), République et canton de Genève, Date de publication 21 avril 2026. https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie → https://www.ge.ch/document/43271/telecharger — abgerufen 16.09.2026
-2. Loi d'application de la loi fédérale sur l'assurance-maladie (LaLAMal), rsGE J 3 05, Dernières modifications au 2 novembre 2024. https://silgeneve.ch/legis/data/rsg_j3_05.htm — abgerufen 16.09.2026
-3. Règlement d'exécution de la LaLAMal (RaLAMal), rsGE J 3 05.01, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j3_05p01.htm — abgerufen 16.09.2026
-4. Loi sur le revenu déterminant unifié (LRDU), rsGE J 4 06, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j4_06.htm — abgerufen 16.09.2026
-5. Demander un subside d'assurance-maladie 2026, ge.ch (SAM), Dernière mise à jour 9 juillet 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026 — abgerufen 16.09.2026
-6. Informations générales sur le subside de l'assurance-maladie, ge.ch, Dernière mise à jour 28 mai 2026. https://www.ge.ch/informations-generales-subside-assurance-maladie — abgerufen 16.09.2026
+1. BAREME SUBSIDES 2026 (PDF, Dokumentseite «Barèmes et catégories 2026 pour les subsides d'assurance-maladie»), République et canton de Genève, Date de publication 21 avril 2026 (PDF-Metadaten: erstellt 11.02.2026). https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie → https://www.ge.ch/document/43271/telecharger — abgerufen 16.09.2026, erneut 28.09.2026 (44'794 Bytes, Textlayer)
+2. Loi d'application de la loi fédérale sur l'assurance-maladie (LaLAMal), rsGE J 3 05, Dernières modifications au 2 novembre 2024. https://silgeneve.ch/legis/data/rsg_j3_05.htm — abgerufen 16.09.2026, erneut 28.09.2026 (Art. 19–27, 33 gelesen)
+3. Règlement d'exécution de la LaLAMal (RaLAMal), rsGE J 3 05.01, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j3_05p01.htm — abgerufen 16.09.2026, erneut 28.09.2026 (Art. 9–12 gelesen)
+4. Loi sur le revenu déterminant unifié (LRDU), rsGE J 4 06, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j4_06.htm — abgerufen 16.09.2026, erneut 28.09.2026 (Art. 3–10 gelesen)
+5. Demander un subside d'assurance-maladie 2026, ge.ch (SAM), Dernière mise à jour 9 juillet 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026 — abgerufen 16.09.2026, erneut 28.09.2026
+6. Informations générales sur le subside de l'assurance-maladie, ge.ch, Dernière mise à jour 28 mai 2026. https://www.ge.ch/informations-generales-subside-assurance-maladie — abgerufen 16.09.2026, erneut 28.09.2026
+7. Loi sur l'imposition des personnes physiques (LIPP), rsGE D 3 08, Dernières modifications au 1er janvier 2026, Art. 18, 26, 29, 31. https://silgeneve.ch/legis/data/rsg_d3_08.htm — abgerufen 28.09.2026
+   ⟨28.09.2026: Modul `ipvGenf.js` und Text oben nummerieren jetzt wie diese Liste (vorher im Modul [6] = Communiqué, im Text [6]/[7] = die Unterseiten 9/10).⟩
+8. Communiqué hebdomadaire du Conseil d'Etat du 5 novembre 2025, «Indexation des subsides d'assurance-maladie pour 2026», République et canton de Genève. https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-5-novembre-2025 — abgerufen 28.09.2026 (Cockpit-Sitzung 19:10, hier 20:35)
+9. ge.ch, «Revenus 2024 (RDU 2026) particulièrement bas», Unterseite von [5], Dernière mise à jour 18 septembre 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026/revenus-2024-rdu-2026-particulierement-bas — abgerufen 28.09.2026 (Gegenprobe `…-bas-xyz` → 404). ⟨Im Text oben als «[6] SAM-Tabelle» zitiert.⟩
+10. ge.ch, «Revenu brut sup. à 200'000 ou fortune brute sup. à 250'000», Unterseite von [5], Dernière mise à jour 18 septembre 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026/revenu-brut-sup-200-000-fortune-brute-sup-250-000 — abgerufen 28.09.2026 ⟨im Text oben als [7] zitiert⟩
 
 ---
 
 ## JU — Jura
 
-**Beurteilung:** abbildbar
+**Beurteilung:** ~~abbildbar~~ gebaut, zeigt bewusst keine Zahl (K31, PR #483; nachgeprüft 28.09.2026)
 **Modell (kurz):** Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999
 **Zuständig / Weg:** Caisse de compensation du canton du Jura (ECAS); von Amtes wegen nach definitiver Veranlagung 2024 (Entscheid oder Fragebogen); sonst Antrag bis 31.12.2026 (Eingang ECAS); Antrag nötig u. a. für Quellenbesteuerte, Konkubinatspaare mit gemeinsamem Kind, Personen < 25 in Ausbildung (über die Eltern); amtlich Veranlagte ausgeschlossen
 **Gültigkeit:** 2026 definitiv (Arrêté vom 28.10.2025, gültig 1.1.–31.12.2026)
@@ -3358,3 +3722,64 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 3. Communiqué «Subsides des primes de l'assurance-maladie dans le canton du Jura pour 2026», République et Canton du Jura, 30.10.2025. https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Subsides-des-primes-de-l-assurance-maladie-dans-le-canton-du-Jura-pour-2026.html — abgerufen 16.09.2026
 4. Réduction des primes d'assurance-maladie (RPI) - Informations générales 2026, ECAS Jura. https://www.ecasjura.ch/fr/Assurances/Assurance-maladie/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026.html — abgerufen 16.09.2026
 5. Modèle médecin de famille, maladie et accident, pour les adultes (Primes 2026), ECAS Jura. https://www.ecasjura.ch/Htdocs/Files/v/6ea884aaab5803991c5901a89b1e2072c8caa7d882fb86c9ceb069f7a68a898d.pdf/MED-adultes-avec-risque-accidents.pdf?download=1 — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App) — Ergebnis: bewusst keine Zahl
+
+**An der Quelle nachgeprüft 28.09.2026:**
+
+| Quelle | Fassung | Weg | Gegenprobe |
+|---|---|---|---|
+| Arrêté RSJU 832.115.1 «pour l'année 2026» + Annexe 1/2 | du 28 octobre 2025, gültig 01.01.–31.12.2026 (Art. 5) | ECAS-PDF → 200, 584'363 Bytes, 5 S.; **S. 1–3 Scan ohne Textlayer, am Seitenbild gelesen**; S. 4 (Tabelle) am Seitenbild geprüft: sichtbar «pour l'année 2026», Textlayer zusätzlich verdeckt «2025», alle Zahlen gleich | erfundener Datei-Hash → HTTP 410; derselbe Hash mit anderem Dateinamen → dieselbe Datei (der Name ist Dekor, die Messung hängt am Hash) |
+| Ordonnance RSJU 832.115 | «valable dès 01.01.2026» | ECAS-PDF → 200, 12 S., Textlayer | wie oben |
+| ECAS «RPI – Informations générales 2026» | Seite, 28.09.2026 | → 200 | — |
+
+**Wortlaute, die über das Ergebnis entscheiden** (Originalsprache):
+
+> «le revenu imposable taxé définitivement pour l'année fiscale 2024 sert de base de calcul.» — Arrêté Art. 1 al. 1
+>
+> «Le revenu imposable selon avis de taxation (chiffre 690) subit les corrections suivantes : … j) augmentation des cotisations au 3e pilier (chiffres 520 et 520c).» — Arrêté Art. 1 al. 4
+>
+> «Les déductions suivantes corrigent le revenu imposable : a) par contribuable marié, veuf, divorcé ou séparé, sans enfant à charge fr. 5 000.- b) par couple marié, personne veuve, divorcée, séparée ou célibataire, au bénéfice d'une déduction fiscale pour "enfants à charge" (chiffre 620) fr. 10 000.- c) par enfant à charge … pour les deux premiers enfants fr. 4 000.- – à partir du troisième enfant fr. 6 000.-» — Arrêté Art. 1 al. 5
+>
+> «Le revenu déterminant ne correspond pas au revenu imposable ; il correspond au revenu déterminant unifié selon le droit en matière de réduction des primes d'assurance-maladie.» — ECAS, Informations générales 2026 (zum Familienzuschlag)
+>
+> «Le droit aux subsides est étudié d'office si vous avez reçu votre décision fiscale pour l'année 2024. … Si vous n'êtes pas taxés pour 2024 avant décembre 2026 ou si vous n'obtenez pas de courrier de notre part après avoir été taxé pour 2024 dans les 30 jours suivant la taxation, nous vous prions de bien vouloir déposer une requête, qui devra nous parvenir avant le 31 décembre 2026.» — ECAS
+
+**Entscheid:** Massgebend ist das **steuerbare** Einkommen (nach allen Steuerabzügen), nicht ein Rein- oder
+Nettoeinkommen. Die App kennt nur das Nettoeinkommen; jeder Steuerabzug, den sie nicht kennt, hebt das
+Einkommen. Bei Stufen von 1'000 Franken (Erwachsene 10–20 CHF/Monat je Stufe) und dem Ende für Erwachsene
+bei 26'999 ergäbe das zu tiefe Beträge und «kein Anspruch», wo einer besteht. Darum zeigt die App für JU
+**in jeder Lage** eine Orientierung mit dem neuen Grund `steuerbaresEinkommen` (PR #483). Modul,
+Tabelle, Abzüge und Familienzuschlag sind gebaut und getestet (`src/config/ipvJura.js`), damit die Rechnung
+steht, sobald Stebler Studios entscheidet, ob die App das steuerbare Einkommen der Veranlagung erfragt
+(Produktentscheid; das bestehende Feld `taxableIncome` meint laut Steuerrechner den Wert der **Bundessteuer**,
+nicht den kantonalen, und kein bestimmtes Jahr).
+
+**Korrekturen zum Stand 16.09.:**
+- ~~«Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024) … abbildbar»~~ ⟨korrigiert 28.09.2026⟩ Tabelle bestätigt; **abbildbar nur mit dem steuerbaren Einkommen**, das die App nicht hat.
+- Die Kinderspalte (100) gilt für «Enfants de moins de 18 ans révolus»; 16- und 17-Jährige **ohne Ausbildung** fallen in die Spalte «Mineurs de 16 à 18 ans» (45 → 10). Das stand oben nicht.
+- Art. 1 al. 5 lit. a (5'000) gilt nur für «marié, veuf, divorcé ou séparé» ohne Kind — **nicht** für Ledige.
+- Weg: Prüfung von Amtes wegen nach der Veranlagung 2024, sonst Gesuch bis 31.12.2026 — `noteKey` von «Antrag beim Service de l'action sociale» auf `ipv.noteAutoTaxData` korrigiert.
+- 2027: am 28.09.2026 nicht publiziert (das Arrêté gilt nur für 2026).
+
+#### Nachtrag nach der Fachprüfung #483 (28.09.2026, Verdikt «mergen»)
+
+- **Riegel:** Nach dem Jahres-Riegel zeigt die App direkt den Jura-Grund — auch für Paare, ohne Geburtsdatum,
+  mit Kind über 18 oder viel Vermögen. Vorher stand dort ein Eingabefeld «Geburtsdatum», nach dem trotzdem
+  keine Zahl kam, und die Jura-Auskunft fehlte. Die Riegel stehen als `juRiegel` für den Tag, an dem die Zahl kommt.
+- **Vermögen:** ECAS, «RPI 2026 – Premier critère d'éligibilité : seuil de fortune» (gelesen 28.09.2026):
+  «La fortune entrant en considération peut correspondre aux titres, comptes bancaires, actions en bourse,
+  actions et parts sociales non cotées …, soit les éléments figurant au chiffre 740 de la taxation fiscale
+  jurassienne.» → `juRiegel` vergleicht nur Wertschriften + Bankguthaben, nicht Bargeld/Fahrzeuge; eigener
+  Grund `vermoegenJU` (Text folgt, wenn der Riegel angeschlossen wird). Genau 150'000: Ordonnance «supérieure à»
+  vs. ECAS «inférieure à» — benannt, der Code folgt der Ordonnance; Frage an die ECAS: `FRAGEN-AN-DIE-AEMTER.md` § 13 (auch «avant» vs. «au plus tard» beim 31.12.). Text `offenGrund.vermoegenJU` in 5 Sprachen angelegt.
+- **Text** (5 Sprachen): Entscheid **oder Fragebogen** (gilt erst ausgefüllt und unterschrieben als Antrag,
+  Ordonnance Art. 15 al. 2) · Gesuch muss **vor dem 31. Dezember eingetroffen** sein (ECAS «devra nous parvenir
+  avant le 31 décembre»; Art. 22 al. 8 «au plus tard jusqu'au 31 décembre») · Berechnung auf der
+  Vorjahres-Veranlagung bei tieferem Einkommen, bei Stellenverlust auch unterjährig (Art. 22 al. 1/2; ECAS
+  «2025 sur demande en cas de baisse du revenu déterminant») · amtlich Veranlagte ausgeschlossen (Art. 13 lit. b).
+- **Begründung korrigiert:** AG rechnet ebenfalls mit einer Steuergrösse nach Abzügen. Der Grund für «keine
+  Zahl» ist die gemessene Lücke netto → steuerbar (rund 7'000–10'000, also 7–10 der 27 Erwachsenen-Stufen;
+  bei Alleinerziehenden über 20), nicht «linear gegen Stufen».
+- **Deckel** (Ordonnance Art. 20, höchstens die Jahresprämie) im Modulkopf für später benannt.
+

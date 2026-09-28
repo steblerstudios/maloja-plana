@@ -31,14 +31,21 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  // JU: keine Prämienregion — und das Modul zeigt bewusst keine Zahl (steuerbares Einkommen fehlt).
+  JU: { laden: () => import('./ipvJura.js'), fn: 'ipvJura', brauchtPLZ: false },
   UR: { laden: () => import('./ipvUri.js'), fn: 'ipvUri', brauchtPLZ: false },
   NE: { laden: () => import('./ipvNeuchatel.js'), fn: 'ipvNeuchatel', brauchtPLZ: false },
+  // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
+  GE: { laden: () => import('./ipvGenf.js'), fn: 'ipvGenf', brauchtPLZ: false },
   GR: { laden: () => import('./ipvGraubuenden.js'), fn: 'ipvGraubuenden' },
   // TG rechnet nach dem Steuerbetrag, nicht nach Region oder Einkommen — und zeigt bewusst keine Zahl.
   TG: { laden: () => import('./ipvThurgau.js'), fn: 'ipvThurgau', brauchtPLZ: false },
   // TI kennt Prämienregionen, rechnet aber mit einem kantonsweiten PMR (LCAMal Art. 28 Abs. 2).
   TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
   OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
+  SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
+  NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
+  ZG: { laden: () => import('./ipvZug.js'), fn: 'ipvZug', brauchtPLZ: false },
   BL: { laden: () => import('./ipvBaselLandschaft.js'), fn: 'ipvBaselLandschaft', brauchtPLZ: false },
 };
 const _module = {};
@@ -132,11 +139,25 @@ export const CANTONAL_IPV = {
   // Ausgleichskasse Obwalden (GDB 851.11 Art. 10).
   OW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
     beleg: { quelle: 'GDB 851.12 · GDB 851.11 · GDB 851.1 · Ausgleichskasse Obwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // NW (K31): eigenes Modell in config/ipvNidwalden.js (Richtprämie minus 10 % der Summe der
+  // Steuerwerte, eine Region). Keine publizierte Einkommensgrenze für Erwachsene — die 100 000
+  // gelten nur für die Kinder. Gesuch bei der Ausgleichskasse Nidwalden bis 30. April (kKVG Art. 22).
+  NW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'NG 742.111 · NG 742.1 · Ausgleichskasse Nidwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
-  ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // ZG (K31): eigenes Modell in config/ipvZug.js (Richtprämien minus 8 % Selbstbehalt, Kürzung ab
+  // 70'000, kein Anspruch über 89'900 — eine Grenze für alle, RRB 2025 Ziff. 1.5). ZG rechnet einen
+  // Betrag; «kein Anspruch» nur auf einer Untergrenze des Reineinkommens. maxIncome null: die 89'900
+  // gelten für das massgebende Einkommen, nicht für den erfassten Lohn.
+  ZG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'IPVG ZG (BGS 842.6) · V IPVG (BGS 842.61) · Ausgleichskasse Zug — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
-  SO: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
+  // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
+  // nur «kein Anspruch», wo er sicher ist. Der Grenzwert 74'000 ist amtlich, aber keine Grenze, bis
+  // zu der ein Betrag bestünde (für Alleinstehende endet er viel früher) — darum maxIncome null.
+  SO: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'Parameter IPV 2026 DDI SO (27.01.2026) · SV (BGS 831.2) · SG (BGS 831.1) · AKSO — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   // BL (K31): eigenes Modell in config/ipvBaselLandschaft.js (Richtprämie minus 7,75 %, harte
   // Obergrenze nach Dekret SGS 362.1). Die Obergrenze hängt an der Kinderzahl — sie steht im Ergebnis.
@@ -179,8 +200,19 @@ export const CANTONAL_IPV = {
   // Weg: automatisch nach der Veranlagung, neu Berechtigte mit Antwortschein innert 30 Tagen (RALILAMal Art. 31).
   NE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoOcab',
     beleg: { quelle: 'RSN 821.102 · Décret RSN 821.104 · LILAMal (RSN 821.10) · RALILAMal (RSN 821.101) · OCAB — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
-  JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
+  // GE (K31): eigenes Modell in config/ipvGenf.js (acht Gruppen nach RDU mit festen Monatsbeträgen,
+  // Gruppe 9 nur für Kinder). Die Grenze ist amtlich publiziert (LaLAMal Art. 21) und hängt an der
+  // Haushaltsform — das Modul setzt sie je Fall; hier darum null wie in BE.
+  // noteKey: «in der Regel automatisch» — ge.ch nennt Antragsfälle, die die App nicht erfragt
+  // (Zuzug, Quellensteuer, fehlende Veranlagung, veränderte Lage); das Modul überschreibt ihn im
+  // Antragsfall (Rechtsprüfung 28.09.2026: vorher stand hier `ipv.noteAutoSam` ohne Einschränkung).
+  GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.geWegAutomatisch',
+    beleg: { quelle: 'LaLAMal (rsGE J 3 05) Art. 21/22 · RaLAMal (rsGE J 3 05.01) Art. 9–10A · LRDU (rsGE J 4 06) Art. 8 · Barème subsides 2026, Service de l\'assurance-maladie (SAM) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+  // JU (K31): Modell in config/ipvJura.js (Stufentabelle in 1'000er-Schritten). Massgebend ist das
+  // steuerbare Einkommen der Veranlagung 2024, das die App nicht kennt — darum zeigt JU bewusst
+  // KEINE Zahl, sondern die Orientierung mit Grund. Weg: Prüfung von Amtes wegen durch die ECAS.
+  JU: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'Arrêté RPI 2026 (RSJU 832.115.1) · Ordonnance RSJU 832.115 · Caisse de compensation JU (ECAS) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
 };
 
 // Mietzins-Limite (bis zu welcher Miete die Sozialhilfe die Wohnkosten anrechnet): die App kennt

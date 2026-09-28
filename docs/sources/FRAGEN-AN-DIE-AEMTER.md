@@ -238,6 +238,7 @@ den Kinderanteil begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind
 **Stand:** LU ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 sind **nicht** eingebaut —
 die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU keinen Betrag mehr.
 
+
 ---
 
 ## 8 · Sozialversicherungsstelle Uri — Deckel, Rundung, Aufteilung und das Alter
@@ -368,6 +369,30 @@ Kategorien A–C wie für Erwachsene?
 
 ---
 
+## 13 · Caisse de compensation du canton du Jura (ECAS) — Vermögensgrenze genau 150'000, Eingang der Frist
+
+*Aufgenommen 28.09.2026 beim Einbau von JU (Fachprüfung #483, 💡 9 und ⚠️ 3d). Entwurf — **nicht gesendet**.
+Nummer 13 (Integration 28.09.2026; § 12 = FR auf dessen Zweig).*
+
+**Worum es geht:** Die App zeigt für den Jura bewusst keine Zahl (massgebend ist das steuerbare Einkommen,
+das sie nicht kennt). Zwei Punkte betreffen aber die Texte und den Tag, an dem sie rechnet:
+
+**Question 1 — fortune de 150'000 francs exactement:** L'ordonnance (RSJU 832.115, art. 7a al. 1) exclut
+les assurés dont la fortune déterminante est «supérieure à 150 000 francs»; la page «RPI 2026 – seuil de
+fortune» de la Caisse indique que la fortune «doit être inférieure à 150 000 francs». Une fortune
+(chiffre 740) de 150'000 francs exactement donne-t-elle droit à la réduction ? (Die App folgt der
+Ordonnance: genau 150'000 schliesst nicht aus.)
+
+**Question 2 — délai du 31 décembre:** La page «Informations générales 2026» écrit que la requête
+«devra nous parvenir avant le 31 décembre 2026», l'ordonnance (art. 22 al. 8) «au plus tard jusqu'au
+31 décembre». Une requête reçue le 31 décembre est-elle encore dans le délai ? (Die App sagt vorsichtig:
+«vor dem 31. Dezember eingetroffen».)
+
+**Stand:** JU ist für 2026 gebaut und zeigt bewusst keine Zahl (Entwurfs-PR #483, K31). Ab 01.01.2027 gilt
+das Arrêté 2026 nicht mehr.
+
+---
+
 ## 14 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
 
 *Aufgenommen 28.09.2026 beim Einbau von TI. Entwurf — **nicht gesendet**.*
@@ -394,6 +419,92 @@ die Zahl für 3a-Sparende zu tief.
 
 **Stand:** TI ist für 2026 für Alleinstehende gebaut (Entwurfs-PR, K31); Haushalte mit Kindern und Paare
 zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüttert.
+
+---
+
+## 15 · Service de l'assurance-maladie (SAM) Genève — Deckel je Person, Familienzulagen, Kind aus dem Vorjahr, Rundung
+
+*Nummer: zuerst 8, dann 9, dann 10 — nach den Merges von UR (#464), NE (#478) und GR (#467) mit Nummer 15 festgelegt (Koordination; 11 = TG, 14 = TI). Eine parallele Sitzung nummerierte GE zwischenzeitlich als 12 — der Block ist hier zusammengeführt.*
+
+*Aufgenommen 28.09.2026 beim Einbau von GE, nachgeführt am Abend nach Fach-, Rechtsprüfung und Abgleich.
+Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Gruppengrenzen (Art. 21 LaLAMal), Beträge 2026 (Barème «BAREME SUBSIDES 2026»,
+Communiqué des Conseil d'Etat vom 5.11.2025) und die Untergrenzen für den Antrag (Tabelle des SAM
+auf ge.ch) stehen vollständig; jede Zelle des Barème rechnen wir nach. Vier Punkte bleiben.
+
+~~**Frage 1 — Arrêté d'indexation 2026:** Wo ist der Arrêté publiziert?~~ ⟨**erledigt 28.09.2026 abends:**
+Communiqué hebdomadaire du Conseil d'Etat vom 5.11.2025, «Indexation des subsides d'assurance-maladie
+pour 2026» — Erwachsene 8,7 %, junge Erwachsene 5,3 %, Kinder 10,9 %, Basis 2024, mit Tabelle aller
+Beträge. Damit sind auch die Gruppe-9-Beträge 67 und 106 erklärt; ein Einheitssatz hätte 66 und 109
+ergeben.⟩
+
+~~**Frage 2 — Untergrenze für Alleinerziehende:** Paar-Zeile (20 000 + 3 000) oder Zeile «assuré seul»
+(15 000 + 3 000)?~~ ⟨**erledigt 28.09.2026 abends:** ge.ch, «Revenus 2024 (RDU 2026) particulièrement bas»
+(Stand 18.09.2026): «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants
+27'000 · Couple avec 1 enfant 23'000». Die App rechnete am Nachmittag mit 23'000 — korrigiert.⟩
+
+**Frage 3 — Deckel Art. 22 al. 4 LaLAMal:** «Le montant des subsides accordés ne peut dépasser
+le montant de la prime effective de l'assuré.» Wir lesen das **je versicherte Person** und
+begrenzen den Erwachsenenbetrag auf die erfasste Prämie der erwachsenen Person; die
+Kinderbeträge (132 / 67) begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind. Ist das
+die Praxis des SAM?
+
+**Frage 4 — Familienzulagen im RDU:** LRDU Art. 4 al. 1 lit. a verweist auf LIPP Art. 18, und
+dessen al. 1 zählt «les allocations» zum Erwerbseinkommen. Sind damit auch die Kinder- und
+Ausbildungszulagen gemeint (wie im Bundesrecht, sie stehen auf dem Lohnausweis)? Die App rechnet
+sie heute in keinem Kanton; ein Rahmen-Umbau ist geplant und braucht diese Antwort für Genf.
+
+**Frage 5 — Kind aus dem Vorjahr:** Art. 13C RaLAMal regelt den Fall, dass die Familie «en cours
+d'année» wächst. Gilt der schriftliche Antrag auch für ein Kind mit **Jahrgang 2025**, das in der
+Veranlagung 2024 noch nicht steht, im Anspruchsjahr 2026 aber schon da war — oder erfasst es
+der SAM automatisch aus den Zivilstandsdaten? Bis zur Antwort warnt die App in beiden Fällen.
+
+**Frage 6 — Rundung:** Wird der RDU für die Gruppenzuordnung auf ganze Franken gerundet? Wir
+vergleichen ungerundet (30'000.50 liegt über 30'000).
+
+**Stand:** GE ist für 2026 gebaut (Entwurfs-PR #469, K31). Das Barème 2027 war am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
+
+---
+
+## 16 · Ausgleichskasse Nidwalden — Kinder: besondere und allgemeine Prämienverbilligung
+
+*Aufgenommen 28.09.2026 beim Einbau von NW. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Selbstbehalt, Richtprämien und Steuerwerte 2026 stehen in NG 742.111 und NG 742.1;
+die App rechnet danach für Alleinstehende. Für Familien fehlt uns eine Regel.
+
+*Nummer 16 (28.09.2026 spätabends): 10 ist GR, 11–15 sind für TG, FR, JU, TI, GE reserviert.*
+
+**Frage 1 — Kinder (Art. 14 Abs. 2 kKVG):** «Besteht nach Berücksichtigung der besonderen
+Prämienverbilligung weiterhin ein Anspruch auf allgemeine Prämienverbilligung für die Kinder, wird diese
+zusätzlich ausgerichtet.» Wie wird gerechnet? Beispiel: ein Elternteil, ein Kind, Summe der Steuerwerte
+30'000, Richtprämien 5'400 / 1'260, Selbstbehalt 3'000. Wir sehen drei Lesarten: (a) das Kind zählt in
+der allgemeinen Rechnung nur mit 20 % → 3'660; (b) das Kind erhält das Höhere aus 80 % und seinem
+Anteil → 3'975.60; (c) 80 % plus sein Anteil, höchstens die Richtprämie → 4'227.60. Welche gilt? Bis
+zur Antwort zeigt die App Familien in diesem Bereich keinen Betrag.
+
+**Frage 2 — Mindestbetrag (§ 5 der Verordnung 2026):** «Beträge unter Fr. 100.–» — je Person oder
+für den ganzen Anspruch? Die App prüft die Summe.
+
+**Frage 3 — Rundung:** Gibt es eine Rundungsregel für die Auszahlung (z. B. Monatsbetrag auf
+5 Rappen)? Wir haben keine gefunden und rechnen auf ganze Franken im Jahr.
+
+*Hinweis zu Frage 1 (Fachprüfung #486, K1, keine Entscheidung):* Art. 15 Abs. 2 sagt für junge
+Erwachsene «Besteht … ein **höherer** Anspruch …, wird **dieser Betrag** ausgerichtet» (eine
+Max-Regel); Art. 14 Abs. 2 sagt «weiterhin … **zusätzlich**». Der Wortlaut spricht eher gegen (b).
+Auch (a) ist nicht sicher eine Untergrenze: zählt das Kind in der allgemeinen Rechnung gar nicht,
+ergäbe das Beispiel 3'408.
+
+**Frage 4 — Neugeborene (Art. 17 Abs. 2 und Art. 20a kKVG):** Ein 2026 geborenes Kind zählt «bis Ende
+Kalenderjahr». Wird sein Anteil für die Monate vor der Geburt gekürzt (Prämie erst ab Geburt
+geschuldet)? Die App rechnet anteilig ab dem Geburtsmonat. Den Mindestbetrag (Frage 2) prüft sie
+auf dem ungekürzten Anspruch, nicht auf dem Monatsanteil — Geburt im Dezember: 84 statt keiner
+Auszahlung. Stimmt diese Reihenfolge?
+
+**Stand:** NW ist für 2026 gebaut (Entwurfs-PR, K31) — ohne Zahl für Familien, bei denen Frage 1
+entscheidet. Werte 2027 nicht publiziert; ab 01.01.2027 zeigt die App für NW keinen Betrag.
 
 ---
 
@@ -438,6 +549,88 @@ App dort keinen Betrag, wo es darauf ankommt.
 
 **Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
 zeigt die App für OW keinen Betrag.
+
+## 19 · Ausgleichskasse Solothurn / Departement des Innern — die lineare Eigenanteil-Skala
+
+*Aufgenommen 28.09.2026 beim Einbau von SO. Entwurf — **nicht gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, TG 11 … SZ 18, SO 19, ZG 20.)*
+
+**Worum es geht:** Die Parameter-Verfügung vom 27.01.2026 nennt «Eigenanteile in % des massgebenden
+Einkommens: 10% bis 16%», § 70 Abs. 1 SV sagt, sie würden «abhängig von der Höhe des massgebenden
+Einkommens … linear festgelegt». Richtprämien (monatlich, bestätigt durch die Botschaft SGB 0226/2025),
+Grenzwert 74'000, Vermögensanteil 50 % und Auszahlungslimite 240 sind klar. Ohne die Eckpunkte der
+Skala zeigt die App für Solothurn **keinen Betrag** — bei 30'000 massgebendem Einkommen läge der
+Eigenanteil je nach Lesart zwischen 3'000 und 4'800 Franken.
+
+**Frage 1 — Eckpunkte:** Gilt 10 % bei einem massgebenden Einkommen von 0 und 16 % beim Grenzwert
+74'000 — oder andere Eckpunkte? Wird der Satz stufenlos oder in Schritten angepasst?
+
+**Frage 2 — Rundung:** Die Richtprämien 422 / 305 / 98 entsprechen 70 % der Durchschnittsprämien,
+**aufgerundet** auf Franken. Ist das die Regel? Wird der Anspruch selbst gerundet (Franken, Monat)?
+
+**Frage 3 — Auszahlungslimite bei Familien:** «unter 240 Franken pro Anspruchsjahr und erwachsener
+anspruchsberechtigter Person» — gilt das auf dem Gesamtanspruch der Familie oder je Person?
+
+**Frage 4 — Beispiel:** Gibt es ein amtliches Berechnungsbeispiel für 2026?
+
+**Frage 5 — Vermögen (Ziffer 990):** Ist das «satzbestimmende Vermögen» (Ziffer 990), das der Online-Rechner
+abfragt, das Vermögen **nach** den Sozialabzügen des § 71 StG (60'000 / 100'000 / +20'000 je Kind)? SG § 89
+Abs. 2 lit. a spricht vom «steuerbaren Vermögen»; die App rechnet so (Fachprüfung 28.09.2026).
+
+**Stand:** SO ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag, nur «kein Anspruch»,
+wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rechnet die App.
+
+---
+
+## 20 · Ausgleichskasse Zug — der Beschluss 2026 und die Frist
+
+*Aufgenommen 28.09.2026 beim Einbau von ZG, nach der Fachprüfung neu gefasst. Entwurf — **nicht
+gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, … SZ 18, SO 19, ZG 20.)*
+
+**Worum es geht:** Die Broschüre «Prämienverbilligung 2026 im Kanton Zug» nennt Richtprämien,
+Selbstbehalt 8 % und die Grenzen 70'000 / 89'900 — und dazu: «Die Grenzwerte für das massgebende
+Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer
+aus.» Die App rechnet heute nur Haushalte mit einer erwachsenen Person. Solange diese Grenzen
+fehlen, zeigt sie für Zug **keinen Betrag**, nur «kein Anspruch», wo er sicher ist.
+
+⟨Fachprüfung #475, 28.09.2026 abends: Fragen 1–4 in dieser Form sind **überholt** und bleiben als
+Beleg stehen. Die Regierungsratsbeschlüsse 2024 und 2025 kennen **eine** Grenze für alle (Ziff. 1.5),
+die Broschüre 2025 rechnet eine Einzelperson ohne weitere Grenze; der Satz «bei Einzelpersonen …
+tiefer» beschreibt die Formel (Nullpunkt 62'310). Frage 3 beantwortet RRB 2025 Ziff. 1.6 (80 %,
+gestützt auf § 7bis Abs. 2 IPVG i. V. m. Art. 65 Abs. 1bis KVG), Frage 4 Ziff. 3 (Amtsblatt).
+Die App rechnet jetzt. Offen bleiben die Fragen 5–7 unten.⟩
+
+~~**Frage 1 — Grenzen 2026:** Ab welchem massgebenden Einkommen beginnt für Einzelpersonen die
+Kürzung, und wo liegt die Obergrenze? Gilt dieselbe Kürzung (0,5 % je angefangene 100 Franken)?~~
+
+~~**Frage 2 — «gewisse Haushalte»:** Welche Haushalte mit einer erwachsenen Person haben die tieferen
+Grenzen, welche die Haushaltsgrenzen (z. B. alleinerziehend mit Kindern)?~~
+
+~~**Frage 3 — Mindestgarantie Kinder:** Die Broschüre nennt «mindestens 80 % der Richtprämie», § 7bis
+Abs. 2 IPVG «mindestens die Hälfte der für sie massgebenden Prämie». Worauf stützt sich die 80 %?~~
+
+~~**Frage 4 — Beschluss:** Ist der Regierungsratsbeschluss mit den Parametern 2026 veröffentlicht
+(Amtsblatt)? In der BGS ist er nicht erfasst.~~
+
+**Frage 5 — Beschluss 2026:** Der Beschluss mit den Parametern 2026 liegt uns nicht vor (akzug.ch
+führt die Kurzfassungen 2023–2025, für 2026 nicht; zg.ch zeigt noch 2025). Gilt Ziff. 1.5 für 2026
+unverändert — eine Grenze für alle, ohne eigene Grenzen für Einzelpersonen? Wo ist er veröffentlicht?
+
+**Frage 6 — der Satz in der Broschüre:** «Die Grenzwerte … fallen bei Einzelpersonen und gewissen
+Haushalten mit nur einer erwachsenen Person tiefer aus.» Ist damit gemeint, dass die Formel bei ihnen
+früher auf null fällt (Einzelperson 62'310, mit einem Kind 77'610)?
+
+**Frage 7 — verspätete Gesuche:** § 11 Abs. 2 IPVG lässt Gesuche bis 30. September zu, «wenn …
+wichtige Gründe vorliegen»; die Website schreibt, nach dem 30. April sei keine Anmeldung mehr
+möglich. Welche Gründe gelten als wichtig?
+
+**Stand:** ZG ist gebaut (Entwurfs-PR #475) und rechnet nach den Werten der Broschüre 2026 und der
+Struktur des Beschlusses 2025. «Kein Anspruch» sagt die App nur auf einer Untergrenze des
+Reineinkommens (⟨Fixrunde 2⟩ Versicherungsabzug § 30 lit. g StG voll, Berufskosten-Pauschale,
+Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Wegleitung 2024 der
+Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
+zum Einkommen.
+
+---
 
 ## 22 · SVA Basel-Landschaft — Mindestanteil der Kinder und Kinder nach dem Bemessungsjahr
 

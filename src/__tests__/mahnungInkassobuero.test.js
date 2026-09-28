@@ -25,7 +25,8 @@ describe('Mahnung Schritt 3 — Inkassobüro', () => {
       expect(fassungen.length, lang).toBeGreaterThan(0);
       for (const s of fassungen) {
         expect(s, lang).toMatch(/27/);
-        expect(s, lang).toMatch(/Vollmacht|power of attorney|procuration|procura/);
+        // rm: «plainpudair» (Vollmacht), seit der rm-Fassung vom 28.09.2026 — vorher deutscher Rückfall
+        expect(s, lang).toMatch(/Vollmacht|power of attorney|procuration|procura|plainpudair/);
       }
     }
   });
