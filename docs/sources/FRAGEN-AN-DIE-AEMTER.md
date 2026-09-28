@@ -266,6 +266,10 @@ quel niveau — par mois et par personne, ou par année ? Wir runden die Jahress
 (art. 3 al. 3 let. a ORP, «enfant mineur») jusqu'à la fin de l'année, ou seulement jusqu'au mois
 de ses 18 ans (art. 5 al. 4 ORP) ? Solange das offen ist, zeigt die App für Haushalte mit einem
 Kind, das im Anspruchsjahr 18 wird, keinen Betrag.
+*Zwei Stellen, die fast antworten (nachgetragen nach der Fachprüfung, K1):* das Mémento Ziff. 8.1
+nennt die Kinderprämie «pour un enfant jusqu'à et y compris 18 ans», und Ziff. 5 verlangt eine
+Ausbildungsbestätigung erst «pour les enfants à charge âgés de 19 à 25 ans». Das spricht dafür,
+dass ein 18-jähriges Kind das ganze Jahr als Kind zählt — belegt ist es nicht.
 
 **Stand:** FR ist für 2026 gebaut (Entwurfs-PR, K31). Das Mémento 2027 war am 28.09.2026 nicht
 publiziert. Ab 01.01.2027 zeigt die App für FR keinen Betrag mehr.

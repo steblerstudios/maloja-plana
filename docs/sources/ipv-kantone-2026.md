@@ -1195,7 +1195,9 @@ Der Test `ipvFreiburg.test.js` trägt den Wortlaut und hält die Konstante dageg
 (codes 4.110 à 4.140)» wieder auf. Code 4.130 ist in der Freiburger Steuererklärung «Formes
 reconnues de prévoyance individuelle liée (3e pilier a)» — gelesen in den «Instructions générales»
 des Service cantonal des contributions, **Ausgabe Januar 2022 (Steuerjahr 2021)**, abgelegt bei der
-Stadt Freiburg (`ville-fribourg.ch/…/instructions-generales-concernant-la-declaration-d-impots_1.pdf`).
+Stadt Freiburg: <https://www.ville-fribourg.ch/sites/default/files/2022-05/instructions-generales-concernant-la-declaration-d-impots_1.pdf>
+— abgerufen 28.09.2026, HTTP 200, 1'047'979 Bytes, Wortlaut S. 23–24 «Code 4.130 Formes reconnues de
+prévoyance individuelle liée (3e pilier a)». (Volle Adresse nachgetragen nach der Fachprüfung, K3.)
 Eine neuere Ausgabe auf fr.ch war am 28.09.2026 nicht auffindbar (der gefundene Link lieferte 404).
 Die Codes sind seit der ORP 2011 dieselben. Folge: Regel `SAEULE_3A.voll` (die 3a steckt im
 Nettoeinkommen der App schon, kein Zuschlag).
@@ -1237,6 +1239,29 @@ Freiburger Hinweis (`ipv.frFristNichtAbgezogen`), nicht dem Luzerner.
 
 **2027:** Mémento 2027 am 28.09.2026 auf der ECAS-Seite nicht publiziert; ORP ohne künftige Version.
 Ab 01.01.2027 zeigt die App für FR keine Zahl (`jahrVorbei`).
+
+### Nachtrag nach der Fachprüfung #472 (28.09.2026, swiss-precision-pruefer: «mergen», jede Zahl bestätigt)
+
+- **W4 Erwachsen:** ~~«Stichtag fürs Alter: weder ORP noch Mémento nennen einen» (`mangelsStichtag`)~~ ⟨korrigiert⟩
+  ORP Art. 3 al. 3 lit. b/c «jeune personne adulte … jusqu'à l'année de ses 25 ans» und Mémento Ziff. 8.1
+  «jeune adulte âgé de 19 à 25 ans» sind eine Jahrgangsregel → `ERWACHSEN.imAnspruchsjahr` (Jahrgang 2000
+  ist 2026 erwachsen), belegt, eingetragen in `kantonsModell.js`.
+- **W3:** Kinder ab 18 im Anspruchsjahr → eigener Grund `offenGrund.kindVolljaehrig` statt `haushalt`.
+- **W1:** «Kein Anspruch» sagt jetzt, in welche Richtung die Näherung irrt (Einkommen eher zu hoch, weil
+  die Veranlagung Abzüge abzieht, die der App fehlen — ORP Art. 5 al. 1) und empfiehlt nahe der Grenze
+  die Prüfung (Klippe bei Familien: 1 Kind knapp unter 57'400 → 1'373.88, darüber 0).
+- **W2/K5:** Der Frist-Text nennt fürs Folgejahr den Beginn frühestens im Antragsmonat (Art. 7a, Mémento
+  Ziff. 4), die Ausnahmen nur für Ereignisse **nach** dem 31. August (Art. 2 al. 2 «après cette
+  échéance») und die zweite Gruppe von Amtes wegen (Antrag im Vorjahr, Entscheid ausstehend, Ziff. 7).
+- **W5 (Ruling):** Der Frist-Hinweis wird an EINER Stelle gewählt (`fristHinweisKey`, data/ipvAbzug.js):
+  eigener Schlüssel des Kantons → Luzerner Text nur für LU → sonst neutral (`ipv.fristNichtAbgezogen`,
+  `budget.ipvHintFristVorbei`). Wächter: jedes `config/ipv*.js` ausser LU, das `anmeldefristVorbei`
+  setzt, muss `fristNichtAbgezogenKey` setzen.
+- **K2:** Zitat Art. 2 al. 1 auf den ORP-Wortlaut («Celle-ci n'entre pas en matière …») korrigiert.
+- **K4:** im Modulkopf benannt: Vermögen ohne Schulden (nach unten), 3a bei Selbständigen (nach unten),
+  im Jahr geborene Kinder ganzjährig (nach oben, selten).
+- **K7** (Anzeige «Max. Einkommen» meint das massgebende Einkommen, nicht den Lohn): gemeinsamer Text
+  `premium.maxIncome` aller Kantone — nicht in diesem PR geändert, als Hinweis an die Koordination.
 
 ---
 
