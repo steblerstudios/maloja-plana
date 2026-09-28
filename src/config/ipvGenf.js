@@ -252,7 +252,7 @@ export function ipvGenfRechnen({ rdu, kinderZahl = 0 }) {
 // «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants 27'000».
 // ⟨28.09.2026 abends: bis dahin rechnete das Modul Alleinerziehende mit der Paar-Zeile (20'000 +
 // 3'000 = 23'000) und nannte das «gewählt» — die Cockpit-Sitzung fand die SAM-Tabelle, die Frage
-// ist damit beantwortet (FRAGEN-AN-DIE-AEMTER.md, Frage 8.2). Folge der alten Lesart: RDU
+// ist damit beantwortet (FRAGEN-AN-DIE-AEMTER.md, Frage 12.2). Folge der alten Lesart: RDU
 // 18'000–22'999 bekam «nur auf Antrag» und nach dem 30.11. «tritt nicht ein» — falsch für genau
 // diese Gruppe. Die zwei Lesarten `vorsichtig`/`sicher` sind weg.⟩
 export function geAntragUnter(kinderZahl) {
@@ -405,7 +405,7 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   } else if (kindNachBasisjahr) {
     // Art. 13C [3]: Fristen wie 13B Abs. 5 — vor dem 30.11., bei Zuwachs im 2. Halbjahr bis 30.06.
     // des Folgejahres. Ob das auch für ein Kind aus dem VORJAHR (Jahrgang 2025) gilt, sagt der Text
-    // nicht (Frage 8); der Hinweis warnt in beiden Fällen.
+    // nicht (Frage 12); der Hinweis warnt in beiden Fällen.
     noteKey = 'ipv.geAntragKindNeu'; noteParams = { basisjahr, jahr, folgejahr: jahr + 1 };
   } else if (r.nurKinder) {
     noteKey = 'ipv.geNurKinder'; noteParams = { value: r.grenze };

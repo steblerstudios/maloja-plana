@@ -433,7 +433,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     const r = calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2026-03-01' }] }));
     expect(r).toMatchObject({ amount: 480, noteKey: 'ipv.geAntragKindNeu', noteParams: { basisjahr: 2024, jahr: 2026, folgejahr: 2027 }, antragNoetig: true });
     expect(r.cantonData.noteKey).toBe('ipv.geWegAntrag');
-    // Jahrgang 2025 ebenso (Frage 8, ob das der SAM so sieht); eingetipptes Alter 1 ebenso
+    // Jahrgang 2025 ebenso (Frage 12, ob das der SAM so sieht); eingetipptes Alter 1 ebenso
     expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2025-06-01' }] })).noteKey).toBe('ipv.geAntragKindNeu');
     expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ age: 1 }] })).noteKey).toBe('ipv.geAntragKindNeu');
     // Jahrgang 2024 steht in der Veranlagung: automatisch
