@@ -29,11 +29,10 @@ Kinder 80% - 63'000 70'125 78'125 84'125 90'125 96'125 102'125 108'125 114'125`;
     const erwachsene = zeilen.slice(0, 7).map((z) => [Number(z[0].replace('%', '')), z.slice(1).map(Number)]);
     expect(IPV_VS.skalaAllein).toEqual(erwachsene);
   });
-  it('Kinderzeile 80 %: «-» ohne Kind, 63 000 mit einem Kind (nicht 61 000)', () => {
+  it('Kinderzeile 80 %: «-» ohne Kind, 63 000 mit einem Kind — auch [5] Directives 2026 Ziff. 4.1', () => {
     const k = zeilen[7].slice(2).map((x) => (x === '-' ? null : Number(x)));
     expect(IPV_VS.kinderAllein).toEqual(k);
     expect(IPV_VS.kinderSatz).toBe(80);
-    expect(IPV_VS.kinderAlleinEinKindMedienanhang).toBe(61000);
   });
   it('Zuschläge je Kind laut Tabellenkopf: 12 000 / 10 000 / 8 000 / 6 000 — ab dem 1. Kind zur Basis «mit Kind»', () => {
     for (const [, g] of IPV_VS.skalaAllein) {
@@ -83,16 +82,17 @@ describe('K31 VS: Rechnung', () => {
     expect(r.satz).toBe(50);
     expect(r.total).toBeCloseTo(0.5 * 561 * 12 + 0.8 * 133 * 12, 9);
   });
-  it('ein Kind, 60 500: Erwachsene nichts mehr (5 % bis 60 125), Kind noch 80 % — unstrittig unter 61 000', () => {
+  it('ein Kind, 60 500: Erwachsene nichts mehr (5 % bis 60 125), Kind noch 80 %', () => {
     const r = ipvWallisRechnen({ region: 1, kinderZahl: 1, me: 60500 });
-    expect(r).toMatchObject({ satz: null, kinderGilt: true, strittig: false });
+    expect(r).toMatchObject({ satz: null, kinderGilt: true });
     expect(r.total).toBeCloseTo(0.8 * 133 * 12, 9);
   });
-  it('🛑 ein Kind, 61 001 bis 63 000: strittig (Tabelle 63 000, Medienanhang 61 000)', () => {
-    expect(ipvWallisRechnen({ region: 1, kinderZahl: 1, me: 61000 }).strittig).toBe(false);
-    expect(ipvWallisRechnen({ region: 1, kinderZahl: 1, me: 61001 }).strittig).toBe(true);
-    expect(ipvWallisRechnen({ region: 1, kinderZahl: 1, me: 63000 }).strittig).toBe(true);
-    expect(ipvWallisRechnen({ region: 1, kinderZahl: 1, me: 63001 })).toMatchObject({ strittig: false, total: 0 });
+  // ⟨gedreht 28.09.2026, Fachprüfung #477 ⚠️ 1⟩ Vorher «strittig» zwischen 61 001 und 63 000 (DE-
+  // Medienanhang 61 000). [5] Ziff. 4.1: «entre CHF 60'125.- et CHF 63'000.-» → 63 000 gilt.
+  it('ein Kind, 61 001 bis 63 000: Kind 80 % (Directives 2026 «entre 60 125 et 63 000»); 63 001: nichts', () => {
+    for (const me of [61001, 62000, 63000]) expect(ipvWallisRechnen({ region: 1, kinderZahl: 1, me }).total).toBeCloseTo(0.8 * 133 * 12, 9);
+    expect(ipvWallisRechnen({ region: 2, kinderZahl: 1, me: 63000 }).total).toBeCloseTo(1056, 9);
+    expect(ipvWallisRechnen({ region: 1, kinderZahl: 1, me: 63001 })).toMatchObject({ total: 0 });
   });
   it('zwei Kinder: Kinderzeile = 5-%-Zeile (70 125)', () => {
     expect(ipvWallisRechnen({ region: 2, kinderZahl: 2, me: 70125 }).total).toBeCloseTo(0.05 * 481 * 12 + 2 * 0.8 * 110 * 12, 9);
@@ -174,18 +174,18 @@ describe('K31 calculateIPV für VS (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, offen: 'praemie' });
   });
 
-  it('mit einem Kind, 40 000: 3 366 + 1 276.80 = 4 643; keine Grenze in der Anzeige (Zelle strittig)', () => {
+  it('mit einem Kind, 40 000: 3 366 + 1 276.80 = 4 643; Grenze 63 000 in der Anzeige', () => {
     const r = calculateIPV(person({ monthlyIncome: 40000 / 12, children: [{ age: 5 }] }));
     expect(r).toMatchObject({ eligible: true, annual: 4643 });
-    expect(r.cantonData.maxIncome).toBe(null);
+    expect(r.cantonData.maxIncome).toBe(63000);
   });
 
   it('mit zwei Kindern: Grenze 70 125 in der Anzeige', () => {
     expect(calculateIPV(person({ monthlyIncome: 40000 / 12, children: [{ age: 5 }, { age: 7 }] })).cantonData.maxIncome).toBe(70125);
   });
 
-  it('🛑 ein Kind, 62 000: keine Zahl (63 000 gegen 61 000)', () => {
-    expect(calculateIPV(person({ monthlyIncome: 62000 / 12, children: [{ age: 5 }] }))).toMatchObject({ belegt: false, offen: 'mindestanspruch' });
+  it('ein Kind, 62 000: das Kind erhält 80 % — 1 277 (vorher keine Zahl)', () => {
+    expect(calculateIPV(person({ monthlyIncome: 62000 / 12, children: [{ age: 5 }] }))).toMatchObject({ belegt: true, eligible: true, annual: 1277 });
   });
 
   it('über der obersten Grenze: kein Anspruch, ohne Zahl im Satz', () => {
@@ -226,7 +226,10 @@ describe('K31 calculateIPV für VS (App-Angaben → Modell)', () => {
 
   it('Alter mangels Stichtag; Kinder bis 18; im Anspruchsjahr geborene Kinder: keine Zahl', () => {
     expect(calculateIPV(person({ dob: '1999-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2000-01-01' }))).toMatchObject({ offen: 'alter' });
+    // Fachprüfung #477 ⚠️ 3: nicht «alter» (das Geburtsdatum fehlt nicht), eigener Grund.
+    expect(calculateIPV(person({ dob: '2000-01-01' }))).toMatchObject({ offen: 'vsJungeErwachsene' });
+    expect(calculateIPV(person({ dob: '2003-05-01' }))).toMatchObject({ offen: 'vsJungeErwachsene' });
+    expect(calculateIPV(person({ dob: '' }))).toMatchObject({ offen: 'alter' });
     expect(calculateIPV(person({ children: [{ birthDate: '2008-06-01' }] })).belegt).toBe(true);
     expect(calculateIPV(person({ children: [{ birthDate: '2007-06-01' }] }))).toMatchObject({ offen: 'haushalt' });
     expect(calculateIPV(person({ children: [{ birthDate: '2026-03-01' }] }))).toMatchObject({ offen: 'kindImJahrGeboren' });
@@ -249,4 +252,38 @@ describe('K31 calculateIPV für VS (App-Angaben → Modell)', () => {
     vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
     expect(calculateIPV(person({}))).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
   });
+
+  // Fachprüfung #477 B1 (Ruling): erhaltene Alimente und Familienzulagen zählen (Art. 8 Abs. 1,
+  // Wegleitung 2024 Ziff. 220 und 1410/1420), bezahlte werden abgezogen.
+  describe('Unterhalt und Familienzulagen (B1)', () => {
+    it('Beispiel der Prüfung: 1 Kind, 3 000 netto, 300 Zulagen, 800 Alimente → 49 200 → 2 623 statt 5 989', () => {
+      const ohne = calculateIPV(person({ monthlyIncome: 3000, children: [{ age: 5 }] }));
+      expect(ohne.annual).toBe(5989);
+      const mit = calculateIPV(person({ monthlyIncome: 3000, children: [{ age: 5 }], finanzen: { familienzulagen: 300, alimenteReceived: 800 } }));
+      // 36 000 + 3 600 + 9 600 = 49 200: über der 30-%-Grenze 49 188 → 20 %, Kind 80 %
+      expect(mit.annual).toBe(Math.round(0.2 * 561 * 12 + 0.8 * 133 * 12));
+      expect(mit.annual).toBe(2623);
+    });
+    it('je Feld einzeln: Familienzulagen zählen', () => {
+      // 20 000 + 12 × 250 = 23 000 → 50 % statt 70 %
+      expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { familienzulagen: 250 } })).annual).toBe(3366);
+    });
+    it('je Feld einzeln: erhaltene Alimente zählen', () => {
+      expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { alimenteReceived: 250 } })).annual).toBe(3366);
+    });
+    it('je Feld einzeln: bezahlte Alimente werden abgezogen — und heben erhaltene auf', () => {
+      expect(calculateIPV(person({ monthlyIncome: 23000 / 12, finanzen: { alimentePaid: 250 } })).annual).toBe(4712);
+      expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { alimenteReceived: 250, alimentePaid: 250 } })).annual).toBe(4712);
+    });
+    it('unlesbare oder negative Werte zählen als 0', () => {
+      expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { familienzulagen: 'abc', alimenteReceived: -50 } })).annual).toBe(4712);
+    });
+  });
+
+  // Fachprüfung #477 B2: Quellenbesteuerte stellen ein Gesuch bis 31.12. (Directives 2026 Ziff. 6.2).
+  it('Ausweis B oder L: Gesuch statt Zahl; C, Schweiz, ohne Angabe: rechnet', () => {
+    for (const w of ['b', 'l', 'B']) expect(calculateIPV({ ...person({}), ausbildung: { workPermit: w } })).toMatchObject({ belegt: false, amount: null, offen: 'vsQuellensteuer' });
+    for (const w of ['c', 'swiss', '', undefined]) expect(calculateIPV({ ...person({}), ausbildung: { workPermit: w } }).belegt).toBe(true);
+  });
 });
+

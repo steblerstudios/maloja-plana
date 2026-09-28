@@ -14,7 +14,7 @@ import rm from '../i18n/rm.js';
 // K31 — der IPV-Rechner zeigt für VS den Betrag nach der degressiven Skala (VüIPV SGS 832.105,
 // Einkommenstabelle 2026). Was hier sichtbar sein muss:
 //   1. ein Betrag nur MIT erfasster Prämie (Art. 6 Abs. 6: höchstens die tatsächliche Prämie).
-//   2. die oberste Grenze des Haushalts aus der Tabelle — aber keine bei einem Kind (Zelle strittig)
+//   2. die oberste Grenze des Haushalts aus der Tabelle — mit einem Kind 63 000 (Directives 2026)
 //      und keine alten Musterwerte (45 000 / 2 400).
 //   3. Prämienregion und Vorbehalt mit Basisjahr 2024; Weg automatisch, keine Anmeldefrist.
 
@@ -55,8 +55,8 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
     expect(render(profil(2000))).toContain('premium.maxIncome(' + geldZahl(38500));
     expect(render(profil(2000, { children: [{ age: 5 }, { age: 8 }] }))).toContain('premium.maxIncome(' + geldZahl(70125));
     const einKind = render(profil(2000, { children: [{ age: 5 }] }));
-    expect(einKind).not.toContain('premium.maxIncome');
-    for (const z of [63000, 61000, 45000]) expect(einKind).not.toContain(geldZahl(z));
+    expect(einKind).toContain('premium.maxIncome(' + geldZahl(63000));
+    for (const z of [61000, 45000]) expect(einKind).not.toContain(geldZahl(z));
   });
 
   it('Prämienregion, Walliser Vorbehalt mit Basisjahr 2024, Weg automatisch', () => {
@@ -71,10 +71,11 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
     expect(ipvAbzug(profil(20000 / 12))).toMatchObject({ betrag: 393, grund: 'geschaetzt' });
   });
 
-  it('über der Grenze und strittige Zelle: je ein eigener Satz', () => {
+  it('über der Grenze, Quellensteuer, junge Erwachsene: je ein eigener Satz', () => {
     expect(render(profil(38501 / 12))).toContain('ipv.vsKeinAnspruch');
-    const strittig = render(profil(62000 / 12, { children: [{ age: 5 }] }));
-    expect(strittig).toContain('ipv.offenGrund.mindestanspruch');
+    expect(render({ ...profil(2000), ausbildung: { workPermit: 'b' } })).toContain('ipv.offenGrund.vsQuellensteuer');
+    expect(render({ ...profil(2000), basis: { ...profil(2000).basis, dateOfBirth: '2002-03-01' } })).toContain('ipv.offenGrund.vsJungeErwachsene');
+    expect(render(profil(62000 / 12, { children: [{ age: 5 }] }))).not.toContain('ipv.offenGrund.mindestanspruch');
     expect(render(profil(2000, { children: [{ birthDate: '2026-02-01' }] }))).toContain('ipv.offenGrund.kindImJahrGeboren');
     expect(render(profil(4000, { finanzen: { pension3a: 10000 } }))).toContain('ipv.offenGrund.saeule3aStrittig');
   });
@@ -86,7 +87,7 @@ describe('K31 IPV-Rechner, Kanton Wallis', () => {
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
       expect(texte.ipv.vorbehaltVS).toContain('{basisjahr}');
-      for (const g of ['kindImJahrGeboren', 'saeule3aStrittig']) {
+      for (const g of ['kindImJahrGeboren', 'saeule3aStrittig', 'vsQuellensteuer', 'vsJungeErwachsene']) {
         expect(typeof texte.ipv.offenGrund[g], `${sprache}: offenGrund.${g}`).toBe('string');
         expect(texte.ipv.offenGrund[g].length).toBeGreaterThan(40);
       }
