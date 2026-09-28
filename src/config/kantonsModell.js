@@ -35,12 +35,15 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD, GR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, UR, NE, GR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//                        (UR: kein Abzug der 3a vom PV-Einkommen, rechnerisch dasselbe.)
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
 //                        VD: LHPS (BLV 850.03) art. 6 al. 2 lit. a, «majoré des montants affectés
 //                            aux formes reconnues de prévoyance individuelle liée (3e pilier A)»
+//                        NE: Art. 12 al. 1 lit. a RSN 821.102 — revenu effectif «sous seules
+//                            déductions» von 6.4/6.5/6.7/6.10; die 3a wird nie abgezogen
 //                        GR: Art. 8a Abs. 1 lit. e KPVG (BR 542.100)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
@@ -115,8 +118,11 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU, VD, GR',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100)',
+    // UR (28.09.2026): nicht als Zurechnung, sondern weil Art. 7 Abs. 2 lit. c RB 20.2213 die
+    // Abzüge vom PV-Einkommen abschliessend aufzählt und die 3a nicht darunter ist — sie bleibt
+    // also voll im Einkommen. Rechnerisch dasselbe: Abzug 0.
+    kantone: 'ZH, SG, LU, VD, UR, NE, GR',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100)',
     nichtAufgerechnet: () => 0,
   }),
 
@@ -405,6 +411,13 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
   SG: 'sGS 331.538 und sGS 331.111 kennen keine Begrenzung auf die fakturierte Prämie — '
     + 'die Verbilligung bemisst sich allein an der kantonalen Referenzprämie. '
     + 'Offene Frage an die SVA St.Gallen: was gilt, wenn die eigene Prämie tiefer ist?',
+  // UR (28.09.2026): RB 20.2213 begrenzt nur für EL-Beziehende auf die tatsächliche Prämie
+  // (Art. 4 Abs. 4); für alle anderen steht kein Deckel, auch nicht im Rechenblatt der SVS.
+  // Fachprüfung 28.09.2026 (K1): belegt über KVV Art. 106c Abs. 5bis (seit 01.01.2024).
+  UR: 'RB 20.2213 begrenzt die Verbilligung nur bei EL-Beziehenden auf die tatsächliche Prämie '
+    + '(Art. 4 Abs. 4); für alle anderen nennen weder Reglement noch Berechnungsformular der SVS '
+    + 'einen Deckel. Bundesrechtlich zahlt der Versicherer die Differenz aus, kantonale Deckel '
+    + 'bleiben vorbehalten (KVV Art. 106c Abs. 5bis) — Uri hat keinen.',
   // Gemessen 28.09.2026 über den vollen Text von KPVG (BR 542.100, Version 3445) und VOzKPVG
   // (BR 542.120, Version 3606): «effektiv», «tatsächlich», «höchstens» kommen nicht vor.
   GR: 'KPVG (BR 542.100) und VOzKPVG (BR 542.120) kennen keine Begrenzung auf die tatsächlich '
@@ -419,7 +432,7 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //
 //   abEndeVorjahr       ZH — ausdrücklich im Erlass: § 8 EG KVG, «für das ganze Jahr das
 //                       Alter am Ende des Vorjahres massgebend». BELEGT.
-//   mangelsStichtag     BE, VD, SG — rechnerisch dasselbe wie oben, aber aus einem anderen
+//   mangelsStichtag     BE, VD, SG, UR — rechnerisch dasselbe wie oben, aber aus einem anderen
 //                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
 //                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe
 //                       ist. GEWÄHLT, nicht belegt — und jederzeit zu überdenken, wenn eine

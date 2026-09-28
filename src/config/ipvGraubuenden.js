@@ -46,7 +46,7 @@
 //    sagt die App «kein Anspruch», wo nach der Tranchen-Lesart einer bestünde. Die Richtung ist
 //    also ZU TIEF — nicht die vorsichtige Seite. ⟨korrigiert 28.09.2026 nach der Fachprüfung
 //    #467: hier stand «bis 750»; das gilt nur bis 40'000.⟩ Frage an die SVA: FRAGEN-AN-DIE-
-//    AEMTER.md, 8. Der Vorbehalt und der «kein Anspruch»-Satz der Anzeige nennen Lesart und
+//    AEMTER.md, 10. Der Vorbehalt und der «kein Anspruch»-Satz der Anzeige nennen Lesart und
 //    Richtung (`ipv.vorbehaltGR`, `ipv.grKeinAnspruch`).
 //
 // 2. KEIN DECKEL AUF DIE EFFEKTIVE PRÄMIE. Weder [1] noch [2] begrenzen die Verbilligung auf die
@@ -67,7 +67,7 @@
 //    tiefere Zahl. Folge, offen gesagt: Alleinerziehende bis rund 73'000 (R1, ein Kind) sehen
 //    keine Zahl. Die App rechnet mit Kindern darum nur dort, wo beide
 //    dasselbe ergeben (über 80'000, oder wo der allgemeine Anteil des Kindes ohnehin höher ist) —
-//    sonst `orientierung('grKinder')`. Frage an die SVA: FRAGEN-AN-DIE-AEMTER.md, 8.
+//    sonst `orientierung('grKinder')`. Frage an die SVA: FRAGEN-AN-DIE-AEMTER.md, 10.
 //
 // BEWUSST NICHT GEBAUT:
 //   · Paare und mehrere Erwachsene — gemeinsam Besteuerte haben einen Gesamtanspruch (Art. 6 [1]),

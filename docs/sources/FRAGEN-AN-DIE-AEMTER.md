@@ -240,7 +240,68 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
-## 8 · SVA Graubünden — Selbstbehalt-Satz, Kinder-Vergleich, Deckel und Alter
+## 8 · Sozialversicherungsstelle Uri — Deckel, Rundung, Aufteilung und das Alter
+
+*Aufgenommen 28.09.2026 beim Einbau von UR. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Formel und Zahlen 2026 stehen im Prämienverbilligungsreglement (RB 20.2213),
+in der Medienmitteilung vom 18.12.2025 und im Berechnungsformular 2026 der SVS; die App rechnet
+das Formular Zelle für Zelle nach. Ein durchgerechnetes Beispiel mit Zahlen haben wir nicht
+gefunden. Vier Punkte stehen weder im Reglement noch im Formular eindeutig.
+
+~~**Frage 1 — Deckel auf die eigene Prämie:** Das Reglement begrenzt die Verbilligung nur bei
+EL-Beziehenden auf die tatsächliche Prämie (Art. 4 Abs. 4). Gilt für alle anderen eine
+Begrenzung, wenn die eigene Prämie (z. B. mit hoher Franchise) tiefer ist als der errechnete
+Betrag? Die App deckelt heute **nicht** (wie in St.Gallen, Abschnitt 5).~~
+⟨**erledigt 28.09.2026, belegt** (Fachprüfung, K1): KVV Art. 106c Abs. 5bis (SR 832.102, in Kraft
+seit 01.01.2024) — der Versicherer «bezahlt der versicherten Person den Differenzbetrag innerhalb
+von 60 Tagen nach der Meldung der Prämienverbilligung durch den Kanton aus. Kantonale Regelungen,
+wonach die Prämie höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben
+vorbehalten.» Uri hat keine solche Regelung. Die Frage muss nicht gestellt werden.⟩
+
+**Frage 2 — Rundung:** Art. 14 Abs. 3: «auf fünf Rappen zu runden». Wird kaufmännisch gerundet
+(83.33 → 83.35, 83.42 → 83.40) oder immer auf? Die App rundet kaufmännisch.
+
+**Frage 3 — Aufteilung:** Um je Person runden zu können, teilt die App den allgemeinen Anspruch
+nach Art. 14 Abs. 2 im Verhältnis der **anrechenbaren** Richtprämien auf (Kind mit 20 % =
+220.80); das Kinderminimum von 80 % geht ganz an das Kind. Gilt diese Aufteilung auch, wenn alle
+im selben Haushalt bei **einem** Versicherer sind?
+
+**Frage 4 — Alter:** Art. 5 nennt «Erwachsene (26 Jahre und älter)», aber keinen Stichtag. Gilt
+der 1. Januar (Art. 3 Abs. 3) oder der Jahrgang, wie beim Antragsformular für die Kinder
+(«Jahrgänge 2008 – 2025»)? Betroffen ist für 2026 der Jahrgang 2000; die App zeigt dort keine Zahl.
+
+**Stand:** UR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 waren am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für UR keinen Betrag mehr.
+
+---
+
+## 9 · OCAB Neuenburg — Wahlfranchise, Nahtstellen und das revenu effectif
+
+*Aufgenommen 28.09.2026 beim Einbau von NE. Entwurf — **nicht gesendet**.*
+
+**Vorbemerkung:** Der am 16.09. notierte Widerspruch zwischen Kantonsseite und RSN 821.102 (ab S3)
+ist geklärt — es ist der Décret RSN 821.104 vom 2.12.2025, den das OCAB-Blatt «Normes 2026»
+ausdrücklich mitrechnet. Keine Frage mehr.
+
+**Frage 1 — Wahlfranchise:** Die Beträge werden «du même taux que le rabais accordé par
+l'assureur» gekürzt. Gilt der Satz der eigenen Kasse der versicherten Person (so liest sich das
+Beispiel), und rundet das OCAB auf 5 Rappen (450 × (1 − 2,92 %) = 436.86 → 436.85)? Ohne den
+Rabattsatz zeigt die App bei Franchise über 300 keinen Betrag.
+
+**Frage 2 — Nahtstellen:** Die Annexe schreibt «à 22'800», die Kantonsseite «jusqu'à 22'800» und
+dann «22'800 à 23'940». Gehört ein revenu déterminant von genau 22'800 zu S1 (so rechnet die App,
+nach Art. 3 al. 1 «égal ou inférieur») oder zu S2?
+
+**Frage 3 — revenu effectif:** Ist in Ziffer 5.5 der Steuererklärung der Lohn **netto** nach
+Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkommen dafür ein.
+
+**Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
+01.01.2027 zeigt die App für NE keinen Betrag mehr.
+
+---
+
+## 10 · SVA Graubünden — Selbstbehalt-Satz, Kinder-Vergleich, Deckel und Alter
 
 **Wo:** KPVG (BR 542.100) Art. 8 Abs. 2–4; VOzKPVG (BR 542.120) Art. 17, 22; Wegleitung IPV 2026.
 Ein amtliches Berechnungsbeispiel haben wir nicht gefunden; der Online-Rechner wurde bewusst nicht
@@ -271,6 +332,10 @@ bezahlte Prämie. Was geschieht, wenn die eigene Prämie tiefer ist als die Verb
 Richtprämie? Die App deckelt bis zur Antwort nicht (wie SG). Geprüft ist nur das kantonale Recht;
 ob Bundesrecht (Auszahlung an den Versicherer, KVG Art. 65 / KVV) den Betrag an der geschuldeten
 Prämie begrenzt, haben wir nicht gelesen — gehört zur Frage.
+⟨Hinweis 28.09.2026 bei der Integration: Für Uri ist die bundesrechtliche Seite inzwischen belegt,
+siehe Abschnitt 8, Frage 1, und `KEIN_PRAEMIENDECKEL.UR` in `src/config/kantonsModell.js` (KVV
+Art. 106c Abs. 5bis: der Versicherer zahlt die Differenz aus, kantonale Deckel bleiben vorbehalten).
+Für GR hier nicht selbst nachgelesen; offen bleibt, ob Graubünden einen solchen kantonalen Deckel kennt.⟩
 
 ~~**Frage 4 — Alter:** Die Wegleitung nennt «Erwachsene ab 26. Altersjahr», «junge Erwachsene
 19 - 25 Jahre», «Kinder bis und mit 18. Altersjahr», aber keine Jahrgänge und keinen Stichtag.
