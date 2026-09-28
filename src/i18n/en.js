@@ -1354,6 +1354,7 @@ export default {
     bestattung: 'Funeral wishes',
     patientenverfuegung: 'Create an advance directive',
     kreditkarte: 'Credit card: worth it?',
+    stundenlohn: 'Hourly wage: what am I owed?',
     zurueckZu: 'Back to {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Overview',
     tools: 'Tools',
@@ -1435,6 +1436,7 @@ export default {
     sub: {
       patientenverfuegung: 'In questions, to print',
       kreditkarte: 'Costs and benefits per year',
+      stundenlohn: 'Base pay, holidays and supplements, separately',
       installApp: 'Add it to your home screen',
       arztkoffer: 'Your health tools in one doctor’s case',
       kkerst: 'Get insured when new to Switzerland',

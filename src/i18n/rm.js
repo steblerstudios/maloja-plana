@@ -1597,6 +1597,7 @@ export default {
     bestattung: 'Giavischs da sepultura',
     patientenverfuegung: 'Far ina disposiziun da pazient',
     kreditkarte: 'Carta da credit: vala la paina?',
+    stundenlohn: 'Salari per ura: tge ma tutga?',
     zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
@@ -1678,6 +1679,7 @@ export default {
     sub: {
       patientenverfuegung: 'En dumondas, per stampar',
       kreditkarte: 'Custs ed avantatgs per onn',
+      stundenlohn: 'Salari da basa, vacanzas e supplements separads',
       installApp: 'Metter sin il homescreen',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       arztkoffer: { sie: 'Voss utensils da sanadad en ina valisch da medi', du: 'Tes utensils da sanadad en ina valisch da medi' },

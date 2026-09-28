@@ -1354,6 +1354,7 @@ export default {
     bestattung: 'Souhaits funéraires',
     patientenverfuegung: 'Rédiger des directives anticipées',
     kreditkarte: 'Carte de crédit : rentable ?',
+    stundenlohn: 'Salaire horaire : à quoi ai-je droit ?',
     zurueckZu: 'Retour à {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Tableau de bord',
     tools: 'Outils',
@@ -1435,6 +1436,7 @@ export default {
     sub: {
       patientenverfuegung: 'En questions, à imprimer',
       kreditkarte: 'Coûts et avantages par année',
+      stundenlohn: 'Salaire de base, vacances et suppléments séparés',
       installApp: "Ajouter à l'écran d'accueil",
       arztkoffer: { sie: 'Vos outils santé dans une trousse médicale', du: 'Tes outils santé dans une trousse médicale' },
       kkerst: 'S’assurer en arrivant en Suisse',

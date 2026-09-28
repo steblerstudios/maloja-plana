@@ -103,7 +103,9 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
         + ' ' + t('lohnCheck.ausnahmen') + ' '
         + t('stundenlohnView.ml_stelle', { stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
-      // Städte Zürich und Winterthur: Mindestlohn gültig, aber nicht in Kraft (BGer 2C_28/2025, 12.5.2026).
+      // Städte Zürich und Winterthur: städtische Mindestlohn-Beschlüsse. Stand der Rechtslage im Repo
+      // NICHT belegt (Notiz aus der Werkbank: «BGer 2C_28/2025, 12.5.2026» — Volltext nicht gelesen).
+      // Der Text `ml_zhHinweis` behauptet darum nichts über Gültigkeit, er verweist an die Stadt.
       case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName }) + (e.kanton === 'ZH' ? ' ' + t('stundenlohnView.ml_zhHinweis') : '');
       default: return t('stundenlohnView.ml_keinKanton');
     }
