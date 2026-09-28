@@ -61,6 +61,8 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   nichtAbgezogen       BL — gemessen vor allen Abzügen (Zwischentotal Ziffer 399), die 3a
+//                        wird dort nie abgezogen. EG KVG BL § 9 Abs. 1 (SGS 362)
 //
 // 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
@@ -332,6 +334,25 @@ export const SAEULE_3A = Object.freeze({
     nichtAufgerechnet: () => 0,
   }),
 
+  // ⟨28.09.2026, K31 BL⟩ Basel-Landschaft rechnet die 3a weder zu noch ab — sie wird dort gar
+  // nie abgezogen, weil das massgebende Einkommen VOR den Abzügen gemessen wird:
+  //   EG KVG BL § 9 Abs. 1 (SGS 362, Version in Kraft seit 01.04.2023): «Das massgebende
+  //   Jahreseinkommen entspricht dem Zwischentotal der steuerbaren Einkünfte (ohne Einkünfte
+  //   aus Liegenschaften) vermehrt um …»
+  // Das Zwischentotal ist Ziffer 399 der Steuererklärung BL (Online-Rechner der SVA BL:
+  // «Zwischentotal der steuerbaren Einkünfte 399 Nettoeinkommen»); die Säule 3a ist dort ein
+  // Abzug unter Ziffer 610, also NACH Ziffer 399 (Wegleitung zur Steuererklärung 2024 der
+  // Steuerverwaltung BL, Ziffern 399 und 610, gelesen 28.09.2026). Die 3a steckt damit im
+  // massgebenden Einkommen — wie im Nettoeinkommen der App. Rechnerisch dasselbe wie `voll`,
+  // aber aus einem anderen Grund; darum ein eigener Name (siehe `ERWACHSEN`: zwei Namen für
+  // dieselbe Rechnung, damit der Grund lesbar bleibt).
+  nichtAbgezogen: Object.freeze({
+    name: 'nichtAbgezogen',
+    kantone: 'BL',
+    beleg: 'EG KVG BL § 9 Abs. 1 (SGS 362) · Wegleitung Steuererklärung BL 2024, Ziffern 399 und 610',
+    nichtAufgerechnet: () => 0,
+  }),
+
   // ⟨NW, 28.09.2026⟩ Die vierte Regel — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
   // (Code 330), und dort ist die 3a abgezogen (StG NW Art. 35 Abs. 1 Ziff. 5, NG 521.1). Rechnet
   // der Kanton sie wieder auf, stünde sie unter den Aufrechnungen von Art. 12 Abs. 2 kKVG
@@ -499,9 +520,12 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       (Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». (28.09.2026)
 //                       TI — IAS, Istruzioni RIPAM 2026 Ziff. 1.2: «adulto: dall'anno seguente al
 //                       compimento dei 25 anni». (28.09.2026)
+//                       BL — im Erlass: PVV (SGS 362.12) § 9 Abs. 1 lit. a, Erwachsene sind
+//                       «Personen ab dem 1. Januar nach Vollendung des 25. Altersjahres».
+//                       BELEGT. (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
-// Anspruchsjahr 2026 rechnen AG, LU, GR und TI für den Jahrgang 2000, die anderen nicht. Gemessen am
+// Anspruchsjahr 2026 rechnen AG, LU, GR, TI und BL für den Jahrgang 2000, die anderen nicht. Gemessen am
 // aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen. ⟨nachgetragen 28.09.2026 nach dem
 // Re-Review #467: hier stand nur AG; LU (23.09.), GR und TI (28.09.) rechnen seither ebenso.⟩
 //
