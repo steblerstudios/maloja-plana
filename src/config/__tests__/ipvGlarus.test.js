@@ -179,6 +179,29 @@ describe('K31 calculateIPV für GL (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: -2000 }))).toMatchObject({ offen: 'einkommenNegativ' });
   });
 
+  describe('Fachprüfung #487 — Alimente, 12-Franken-Regel, Kante 85 000', () => {
+    it('⚠️1 bezahlte Alimente (PVV Art. 3 lit. c): 24 000 − 6 000 = 18 000 → 5 447 − 1 620 = 3 827 (vorher 3 287)', () => {
+      expect(calculateIPV(person({ finanzen: { alimentePaid: 500 } })).annual).toBe(3827);
+      expect(calculateIPV(person({ finanzen: { alimentePaid: 'x' } })).annual).toBe(3287);
+      expect(calculateIPV(person({ finanzen: { alimentePaid: -500 } })).annual).toBe(3287);
+      expect(glAnrechenbaresEinkommen({ totalEinkuenfte: 24000, vermoegen: 0, kinderZahl: 0, alimenteBezahlt: 6000 })).toBe(18000);
+    });
+    it('⚠️1 erhaltene Alimente und Familienzulagen: NICHT eingerechnet (Erlass nennt sie nicht) — Vorbehalt sagt es', () => {
+      const r = calculateIPV(person({ finanzen: { alimenteReceived: 800, familienzulagen: 230 } }));
+      expect(r).toMatchObject({ annual: 3287, vorbehaltKey: 'ipv.vorbehaltGL' });
+    });
+    it('⚠️2 [3] Art. 9 Abs. 3 nach dem Deckel: Prämie 10.80/Jahr → nichts ausgerichtet, Grund «Mindestbetrag»; 12.00 → 12', () => {
+      expect(calculateIPV(person({ kkPremium: 0.9 }))).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.glUnterMindestbetrag' });
+      expect(calculateIPV(person({ kkPremium: 1 }))).toMatchObject({ eligible: true, annual: 12 });
+    });
+    it('⚠️2 Kindergarantie bis und mit 85 000 ([2] Art. 4 «nicht übersteigt»): 85 000 ja, 85 001 nein', () => {
+      expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85000 })).toMatchObject({ garantie: true });
+      expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85000 }).varianten.b.kind).toBeCloseTo(1200, 9);
+      expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85001 })).toMatchObject({ garantie: false });
+      expect(ipvGlarusRechnen({ kinderZahl: 1, ae: 85001 }).varianten.b.kind).toBe(0);
+    });
+  });
+
   describe('Frist [3] Art. 6 und Jahres-Riegel', () => {
     it('bis 31.01.2026: die Frist läuft', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-01-15T12:00:00'));
@@ -187,6 +210,12 @@ describe('K31 calculateIPV für GL (App-Angaben → Modell)', () => {
     it('danach: Frist vorbei — Budget zieht nichts ab und sagt es mit dem Glarner Satz', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
       expect(calculateIPV(person())).toMatchObject({ noteKey: 'ipv.glFristVorbei', anmeldefristVorbei: true, fristNichtAbgezogenKey: 'ipv.glFristNichtAbgezogen' });
+    });
+    it('⚠️2 Kante: 31.01.2026 23:59 läuft noch, 01.02.2026 00:00:01 vorbei', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-01-31T23:59:00'));
+      expect(calculateIPV(person())).toMatchObject({ noteKey: 'ipv.glFristLaeuft', anmeldefristVorbei: false });
+      vi.setSystemTime(new Date('2026-02-01T00:00:01'));
+      expect(calculateIPV(person())).toMatchObject({ noteKey: 'ipv.glFristVorbei', anmeldefristVorbei: true });
     });
     it('ab 2027 keine Zahl mehr', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
