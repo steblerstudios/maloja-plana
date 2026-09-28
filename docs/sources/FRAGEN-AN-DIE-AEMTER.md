@@ -228,6 +228,44 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 8 · SVA Graubünden — Selbstbehalt-Satz, Kinder-Vergleich, Deckel und Alter
+
+**Wo:** KPVG (BR 542.100) Art. 8 Abs. 2–4; VOzKPVG (BR 542.120) Art. 17, 22; Wegleitung IPV 2026.
+Ein amtliches Berechnungsbeispiel haben wir nicht gefunden; der Online-Rechner wurde bewusst nicht
+mit Daten gefüttert.
+
+**Frage 1 — Satz aufs ganze Einkommen?** «Der Selbstbehalt beträgt für anrechenbare Einkommen bis
+10 000 Franken 5 Prozent, bis 20 000 Franken 6,5 Prozent …» Wir lesen: EIN Satz je Kategorie, auf
+das ganze anrechenbare Einkommen (bei 40'000: 9 % × 40'000 = 3'600; bei 40'001: 10 % = 4'000.10).
+Oder wird wie bei einem Steuertarif je Tranche gerechnet (bei 40'000: 2'850)? Der Unterschied
+beträgt bis 750 Franken im Jahr. Die App rechnet nach der ersten Lesart und sagt es dazu.
+
+**Frage 2 — Kinder: Vergleich für den Haushalt oder je Kind?** Art. 8 Abs. 4: «Zur Auszahlung
+gelangt der höhere der gemäss den Absätzen 2 und 3 berechneten Beträge.» Wird der ganze
+Haushaltsbetrag nach Abs. 2 mit der Summe der Kinderbeträge nach Abs. 3 verglichen — oder erhält
+jedes Kind mindestens seinen Betrag nach Abs. 3, und die erwachsene Person ihren Anteil nach
+Abs. 2? Beispiel Region 1, ein Kind, anrechenbares Einkommen 30'000: 4'920 gegen 5'380.33. Bis zur
+Antwort zeigt die App für Haushalte mit Kindern bis 80'000 keinen Betrag, wo die beiden
+Lesarten auseinandergehen.
+
+**Frage 3 — Deckel:** KPVG und VOzKPVG begrenzen die Verbilligung nicht auf die tatsächlich
+bezahlte Prämie. Was geschieht, wenn die eigene Prämie tiefer ist als die Verbilligung der
+Richtprämie? Die App deckelt bis zur Antwort nicht (wie SG).
+
+**Frage 4 — Alter:** Die Wegleitung nennt «Erwachsene ab 26. Altersjahr», «junge Erwachsene
+19 - 25 Jahre», «Kinder bis und mit 18. Altersjahr», aber keine Jahrgänge und keinen Stichtag.
+Zählt das Alter am 1. Januar, am 31. Dezember oder der Jahrgang? Die App rechnet nur für
+Personen, die das ganze Anspruchsjahr über 25 sind.
+
+**Frage 5 — geringfügige Beträge:** Art. 11 Abs. 5 und Art. 16 Abs. 4 KPVG erlauben, geringfügige
+Beträge nicht auszuzahlen. Gibt es für 2026 eine solche Grenze? In VOzKPVG und Wegleitung steht
+keine; die App zeigt darum auch kleine Beträge.
+
+**Stand:** GR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 lagen am 28.09.2026 nicht vor;
+ab 01.01.2027 zeigt die App für GR keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
