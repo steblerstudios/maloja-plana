@@ -2567,7 +2567,7 @@ Gebaut ist die **erwachsene Person ab 26, allein, mit 0–10 minderjährigen Kin
 |---|---|---|---|
 | [1] | Arrêté RSN 821.102 du 12.11.2025 | «État au 1er janvier 2026», FO 2025 No 47, PDF erzeugt 06.01.2026, SHA-256 `aaa6ad61…` | rsn.ne.ch-PDF 200, 197'335 Bytes; erfundene Nummer 821.109 → 404. Die Kopie unter `books/20261/` ist byte-gleich. |
 | [2] | **Décret RSN 821.104 du 2.12.2025** instituant des subsides extraordinaires … pour l'année 2026 (Grand Conseil) | «État au 15 janvier 2026», FO 2025 No 50, promulgiert 14.01.2026, in Kraft 15.01.2026, «caduc de plein droit le 31 décembre 2027» | rsn.ne.ch-PDF 200 = Lexfind tolv 258772 (gleiche Grösse). Tabelle Art. 4 im Textlayer verschoben — **am Seitenbild gelesen** (pdftoppm, Seite 2) |
-| [3] | OCAB, «Normes de classification valables en 2026», Réf. OCAB25-006 | publiziert 11.12.2025 | ne.ch-PDF 200, 5 Seiten |
+| [3] | OCAB, «Normes de classification valables en 2026», Réf. OCAB25-006 — <https://www.ne.ch/sites/default/files/2026-01/Normes%202026_02.12.2025_0.pdf> | publiziert 11.12.2025 | ne.ch-PDF 200, 5 Seiten |
 | [4] | LILAMal RSN 821.10 | «Etat au 1er janvier 2026» | rsn.ne.ch-PDF 200 |
 | [5] | RALILAMal RSN 821.101 | «État au 1er janvier 2026» | rsn.ne.ch-PDF 200 |
 | [6] | LAMal SR 832.10 | «État le 1er juillet 2026» | Fedlex-SPARQL nennt die Fassung 2026-07-01; Filestore-PDF 200 (1'054'273 Bytes), erfundenes Datum → HTML-Hülle 9'148 Bytes |
@@ -2620,6 +2620,31 @@ Ausbildung (Art. 6–8, 15) · PC-/Sozialhilfe-Beziehende · Quellenbesteuerte, 
 Selbständige · Wahlfranchise-Kürzung · Abzüge 6.4/6.5/6.7/6.10 (Einkommen zu hoch, Betrag eher zu
 tief — eine Klasse ist 1'140 Franken breit) · Mietertrag · Anspruchsbeginn nach Art. 17 ·
 Rückforderung nach Art. 21 (im Vorbehalt genannt).
+
+### Fixrunde 1 nach der Fachprüfung 28.09.2026 (PR #478)
+
+Fachprüfung (swiss-precision-pruefer): **Erlass + Dekret zusammen rechnen bestätigt.** Behoben:
+- **Blocker 2 — Selbständige:** RALILAMal Art. 30 al. 1/3 («perçoivent un subside chaque année sur
+  demande», Gesuch beim GSR innert 12 Monaten). `employmentType` `selfEmployed`/`freelance` ⇒
+  `offen: 'neIndependant'` statt einer Zahl mit dem Weg «automatisch».
+- **Blocker 1 — nur Text:** `familienzulagen`, `alimenteReceived` (gehören zum revenu effectif) und
+  `alimentePaid` (Ziff. 6.10 abziehbar) liest der gemeinsame `rohesEinkommenJahr` nicht. Das betrifft
+  alle Module und wird in einem eigenen Rahmen-PR behoben. ~~«Unterhaltsbeiträge; die App kennt sie
+  nicht»~~ ⟨korrigiert 28.09.2026⟩ — `vorbehaltNE` sagt jetzt: erfasste Familienzulagen und erhaltene
+  Unterhaltsbeiträge fliessen noch nicht ein (Betrag zu hoch), bezahlte werden noch nicht abgezogen
+  (Betrag zu tief). Rechenkern unverändert.
+- **Wichtig 3 — Art. 16 nach Abzügen:** Band von **2'000 Franken** über der Schwelle (GEWÄHLT, nicht
+  amtlich) ⇒ Zahl mit Hinweis `ipv.neRevenuMinimumNahe` (Gesuch beim GSR). Richtungssatz im
+  Vorbehalt eingeschränkt («meist eher zu tief; knapp über 15'000 kann es umgekehrt sein»).
+- **Wichtig 4 — Kinderanteil:** Vorbehalt nennt 160/Monat je Kind und die Kürzung bei tieferer
+  Kinderprämie oder Wahlfranchise.
+- **Kann 3:** «mehr als 20 Prozent» (Art. 21 al. 2 «dépasse 20%»). **Kann 4:** Personen unter 26 mit
+  Geburtsdatum ⇒ eigener Grund `neJeuneAdulte` (Ledige 19–25 ohne Kind nur auf Gesuch, Art. 16 al. 1,
+  OCAB Fall B). **Kann 5:** `maxAnnual` mit Kindern gepinnt, alle elf Grenzzeilen (0–10 Kinder).
+  **Kann 2:** URL OCAB oben. **Kann 6:** Vermögen = erfasste Posten ohne Schulden; ob Ziff. 6.16
+  Schulden abzieht, nicht gelesen — als Annahme im Modulkopf.
+- **Offen, Produktentscheid (Kann 1):** bei Franchise über 300 statt keiner Zahl «höchstens CHF X
+  (bei Franchise 300)» zeigen — nie in Budget/Abzug/Dossier. Nicht gebaut.
 
 ---
 
