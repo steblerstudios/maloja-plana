@@ -221,6 +221,10 @@ export function ipvSchwyz(data, hh, ipvData, youngAdultsCount, orientierung) {
     // Gesamtbetrag (Mietzinsregion über der ersten Tabelle, Verteilung des Mindestanspruchs
     // darunter). Dann ein eigener Grund, der das Sichere sagt, statt «vielleicht kein Anspruch».
     if (me >= p.hoechsteinkommenKinderMinimal[tabelle]) return orientierung('szGrenzeMietzinsregion');
+    // ⚠️ Die erste Tabelle ändert hier heute nichts: mit Kindern ist `mindestUnklar` schon ab rund
+    // 12'500 (1 Kind) bis 21'800 (5 Kinder) wahr, weit unter 56'052. Sie steht da, damit die Regel
+    // stimmt, sobald die SVA die Verteilung beantwortet (Frage 2) und `mindestUnklar` wegfällt.
+    // (Mutationsprobe 28.09.2026: `[tabelle]` → `[0]` bleibt grün — aus diesem Grund.)
     if (me >= p.hoechsteinkommenMinimal[tabelle] || r.mindestUnklar) return orientierung('szKinderMindestanspruch');
   }
 

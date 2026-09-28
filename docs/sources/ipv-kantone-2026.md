@@ -870,7 +870,7 @@ der Abruf als Beleg.
 | `https://www.sz.ch/public/upload/assets/82770/361_110.pdf?fp=1` (KRBzEGzKVG) | 200, 432'592 B, PDF | `…/82770/361_119.pdf` → **404**, HTML |
 | `https://www.sz.ch/public/upload/assets/6017/361_111.pdf?fp=20` (VVzEGzKVG) | 200, 63'895 B, PDF | `…/6017/361_119.pdf` → **404**, HTML |
 | `https://www.sz.ch/kanton/gesetze/systematische-gesetzsammlung.html/8756-8757-10021-11689` (Verzeichnis mit den drei Links) | 200, 247'026 B | `…-99999` → **404** |
-| `https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Grenzwerte-IPV-2026.pdf` | 200, 386'777 B, PDF (erstellt 05.11.2025) | `…Grenzwerte-IPV-2099.pdf` → **404** |
+| `https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Grenzwerte-IPV-2026.pdf` | 200, 386'777 B, PDF (erstellt 05.11.2025, geändert 21.04.2026) | `…Grenzwerte-IPV-2099.pdf` → **404** |
 | `https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Merkblatt-IPV-2027.pdf` | 200, 8'577'242 B, PDF (erstellt 23.03.2026) | `…Merkblatt-IPV-2099.pdf` → **404** |
 | `https://www.sva-sz.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
 
@@ -965,13 +965,30 @@ nicht die Grenze der Person, sondern die tiefste im Kanton.
 
 **Bewusst nicht gebaut:** Paare, Konkubinat, mehrere Erwachsene · junge Erwachsene (Jg. 2001–2007),
 allein oder mit den Eltern · Quellenbesteuerte (§ 5 VVzEGzKVG, 80 % des Bruttolohns), EL- und
-Sozialhilfebeziehende · ao. Liegenschaftsunterhalt und Einkäufe 2. Säule (nicht erfasst; senkt das
-Einkommen der App) · Anpassung bei geänderten Verhältnissen (§ 10 VVzEGzKVG; im Vorbehalt genannt) ·
+Sozialhilfebeziehende · ao. Liegenschaftsunterhalt (nicht erfasst; senkt das Einkommen der App) und
+Einkäufe 2. Säule (nicht erfasst; ~~senkt das Einkommen der App~~ ⟨korrigiert 28.09.2026: neutral —
+im Reineinkommen abgezogen, nach lit. c wieder aufgerechnet, im Nettoeinkommen der App enthalten⟩) · Anpassung bei geänderten Verhältnissen (§ 10 VVzEGzKVG; im Vorbehalt genannt) ·
 Werte 2027.
 
 **Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 8):** Höchsteinkommen je Mietzinsregion und Gemeindeliste
 · Verteilung des Kinder-Mindestanspruchs · Stichtag 1. April/1. Januar · Deckel je Person oder
 Haushalt · Rückwirkung einer späten Anmeldung.
+
+**Fachprüfung #470 (28.09.2026 abends) — Fixrunde 1:**
+- ⚠️ 1: Die **zweite Tabelle** der Grenzwerte 2026 («Darüber hinaus haben Kinder bis zum 18. Altersjahr
+  Anspruch auf eine Verbilligung von mindestens 80% der Richtprämie … Dafür gelten folgende
+  Höchstgrenzen»: Alleinstehende 43'554 / 63'117 / 74'491.25 / 84'306.75 / 91'222.25) ist jetzt Konstante
+  (`hoechsteinkommenKinderMinimal`). Unter ihr zeigt die App für Familien den neuen Grund
+  `szKinderMindestanspruch` («für die Kinder besteht in jeder Gemeinde ein Anspruch»); ab 5 Kindern gilt
+  der Wert für 4 Kinder als belegte Untergrenze («ab dem 5. Kind erhöht sich der Höchstwert weiter»).
+  Der Grund `szGrenzeMietzinsregion` sagt nicht mehr «liegt über dem tiefsten Grenzwert».
+- ⚠️ 2: `szKeinAnspruch` nennt, dass die SVA mit dem (meist tieferen) Reineinkommen rechnet und unter
+  50'760 trotzdem ein Anspruch bestehen kann; «im Zweifel Antrag» (Grenzwerte 2026).
+- ⚠️ 3: 604.71 → **604.69** (3'836.50 × 1'285.20 / 8'154).
+- ⚠️ 4: `vorbehaltSZ` nennt Verordnung (§ 10 VVzEGzKVG) **und** Merkblatt («Änderungen … nach dem
+  1. Januar … erst in den Folgejahren») und verweist an die SVA; Frage 6.
+- 💡 3-a-Schwelle präzisiert: sicher abgezogen ist **min(7'056, 20 % des Netto-Erwerbseinkommens)**
+  (Bemessungsjahre 2023/2024 — 2025 liegt am 1. April 2025 nach § 8 Abs. 1 EGzKVG nicht vor).
 
 ---
 
