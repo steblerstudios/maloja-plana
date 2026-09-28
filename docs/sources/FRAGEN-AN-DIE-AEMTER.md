@@ -228,6 +228,38 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 8 · Service de l'assurance-maladie (SAM) Genève — der Arrêté 2026, die Untergrenze und der Deckel
+
+*Aufgenommen 28.09.2026 beim Einbau von GE. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Gruppengrenzen (Art. 21 LaLAMal) und Beträge 2026 (Barème «BAREME SUBSIDES
+2026») stehen vollständig; jede Zelle des Barème rechnen wir nach. Drei Punkte finden wir nicht
+im Erlass.
+
+**Frage 1 — Arrêté d'indexation 2026:** Art. 9B RaLAMal lässt die Beträge von Art. 22 LaLAMal
+jährlich «par voie d'arrêté» indexieren. Die Beträge 2026 (348 / 294 / 240 / 196 / 164 / 120 /
+87 / 55; Kind 132 / 67; junge Erwachsene 231 / 106) haben wir nur aus dem Barème. Wo ist der
+Arrêté des Conseil d'Etat publiziert (Datum, Fundstelle)? Unsere Gegenprobe: alle acht
+Erwachsenenbeträge ergeben sich aus den Gesetzesbeträgen mit dem Faktor 1,0875, aufgerundet.
+
+**Frage 2 — Untergrenze für Alleinerziehende:** Art. 10 al. 4/5 RaLAMal nennt «assuré seul, sans
+charge légale 15 000» und «couple, sans charge légale 20 000», «majorés de 3 000 francs par
+charge légale». Gilt für eine **alleinstehende Person mit Kind** die Paar-Zeile (20 000 + 3 000),
+wie Art. 21 al. 4 LaLAMal es für die Gruppengrenzen vorsieht, oder die Zeile «assuré seul»
+(15 000 + 3 000)? Wir warnen ab der höheren Schwelle (23 000 bei einem Kind), weil ein
+unnötiger Antrag nichts kostet und ein fehlender den Jahresanspruch.
+
+**Frage 3 — Deckel Art. 22 al. 4 LaLAMal:** «Le montant des subsides accordés ne peut dépasser
+le montant de la prime effective de l'assuré.» Wir lesen das **je versicherte Person** und
+begrenzen den Erwachsenenbetrag auf die erfasste Prämie der erwachsenen Person; die
+Kinderbeträge (132 / 67) begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind. Ist das
+die Praxis des SAM?
+
+**Stand:** GE ist für 2026 gebaut (Entwurfs-PR, K31). Das Barème 2027 war am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für

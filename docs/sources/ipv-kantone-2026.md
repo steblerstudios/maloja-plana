@@ -55,7 +55,7 @@ sind. Dieses Dokument ändert keinen Code.
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | abbildbar | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | abbildbar (mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge, siehe «Offen») | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
-| GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
+| GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | **gebaut 28.09.2026 (K31, Zweig feat/ipv-ge-2026-09-28)** | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
 | JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
 
 ## Auffällige Befunde
@@ -155,7 +155,7 @@ teuerste Region):
 | VD | 54'000 | 3'000 | 50'000 (revenu déterminant) | 3'972 (331/Monat, ordentlicher Subside; dazu allenfalls subside spécifique) |
 | VS | 45'000 | 2'400 | 38'500 | 4'712 (Region I) · 4'040 (Region II), abgel. aus 70 % der Referenzprämie |
 | NE | 48'000 | 2'400 | 50'600 | 7'332 (611/Monat, S1) |
-| GE | 60'000 | 3'600 | 50'000 | 4'176 (348/Monat, G1) |
+| GE | ~~60'000~~ → null (Modul setzt 50'000 / 151'000 + 6'000 je weiteres Kind) | ~~3'600~~ → null | 50'000 | 4'176 (348/Monat, G1) — **gebaut 28.09.2026** |
 | JU | 42'000 | 2'100 | 26'999 | 2'700 (225/Monat) |
 
 ---
@@ -2399,7 +2399,7 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 
 ## GE — Genève
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht
 **Zuständig / Weg:** Service de l'assurance-maladie (SAM); grundsätzlich automatisch aufgrund der Steuerveranlagung von vor zwei Jahren (2024); Antrag nötig u. a. für junge Erwachsene (Jg. 2001–2007), Quellenbesteuerte, Zuzüger 2025/2026, sehr tiefe RDU (< 15'000 allein / < 20'000 Paar), Brutto-Einkommen > 200'000 oder Brutto-Vermögen > 250'000; Frist: vor dem 30. November des Anspruchsjahres
 **Gültigkeit:** 2026 definitiv (Barème 2026 des Kantons; Gesetzesbeträge 2024 indexiert)
@@ -2455,18 +2455,38 @@ Abzüge nach Art. 5 LRDU u. a. Säule-3a/2.-Säule-Beiträge, NBU-Prämien, Beru
 ### Abweichung zur App
 App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Belegte Vergleichswerte: Person allein ohne Kind max. RDU 50'000, Höchstbetrag 348 CHF/Monat (= 4'176 CHF/Jahr) in 8 festen Stufen (nicht linear); Kinderbetrag in G1–G8 konstant 132 CHF/Monat, junge Erwachsene 231 CHF/Monat.
 
+### Nachprüfung 28.09.2026 (Einbau in die App, `src/config/ipvGenf.js`)
+
+Alle Zahlen oben heute an der Quelle neu gelesen, jeder Abruf mit Gegenprobe: `ge.ch/document/99999999/telecharger` → 404 (HTML), `silgeneve.ch/legis/data/rsg_j9_99.htm` → 404, 0 Bytes; die echten Adressen liefern 200 mit verschiedenen Inhalten (SHA-256 je Datei verschieden). Fassungen unverändert gegenüber dem 16.09.: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal und LRDU «au 1er janvier 2025». Barème-PDF [1]: eine Seite, **Textlayer vorhanden** (pdftotext), PDF-Metadaten «erstellt 11.02.2026», Dokumentseite «Date de publication 21 avril 2026». **Keine Korrektur** an den Tabellen oben nötig — jede Zelle des Barème (fünf Haushaltszeilen mit einer erwachsenen Person, je 8 bzw. 9 Gruppen: Grenze, Grenze + 1, Haushaltssumme) ist in `ipvGenf.test.js` gepinnt.
+
+**Ergänzungen aus der Lektüre:**
+- **Stichtag Alter:** RaLAMal Art. 10 al. 8 — «est déterminant l'âge de l'assuré le 1er janvier de l'année d'ouverture du droit». Barème [1], Fussnote: «Sont considérés comme jeunes adultes, les personnes nées entre 2001 et 2007.» ⇒ erwachsen für 2026 ist Jahrgang 2000 und älter (Regel `ERWACHSEN.imAnspruchsjahr`, belegt); Kinder = Jahrgänge ab 2008 («enfants mineurs à charge», Art. 21 al. 5, Art. 22 al. 2 LaLAMal).
+- **Negativer RDU:** RaLAMal Art. 9A — «est considéré comme équivalent à zéro».
+- **Indexierung:** RaLAMal Art. 9B al. 1 — Basis sind die Beträge «en vigueur en décembre 2024» in Art. 22 al. 1, 2 lit. b und 3 lit. b LaLAMal, «arrondis au franc supérieur». Gegenprobe: alle acht Erwachsenenbeträge 2026 = Gesetzesbetrag × 1,0875, aufgerundet (320 → 348, 270 → 294, 220 → 240, 180 → 196, 150 → 164, 110 → 120, 80 → 87, 50 → 55). Kinder (60 → 67) und junge Erwachsene (100 → 106) folgen eigenen Durchschnittsprämien.
+- **Säule 3a im RDU:** LRDU Art. 5 al. 1 lit. a verweist auf «article 31, lettre a, LIPP», lit. c auf «article 31, lettre b, LIPP». LIPP (rsGE D 3 08, Stand 01.01.2026) Art. 31: lit. a = AHV/IV/EO/ALV/UVG-Beiträge, lit. b = berufliche Vorsorge, **lit. c = gebundene Selbstvorsorge (3a)** — lit. c ist in der LRDU **nicht** genannt. ⟨korrigiert 28.09.2026: oben unter «Massgebendes Einkommen» steht «Abzüge nach Art. 5 LRDU u. a. Säule-3a/2.-Säule-Beiträge» — die **3a** gehört nicht dazu, nur die 2. Säule. Der Satz bleibt als Beleg stehen.⟩ Folge für die App: das Nettoeinkommen trägt die 3a bereits und ist damit für Genf richtig (Regel `SAEULE_3A.voll`, Abzug 0).
+- **Vermögen im RDU:** LRDU Art. 6 (Bruttovermögen inkl. Liegenschaften, Wertschriften, Bargeld/Konten, Rückkaufswerte; ohne Hausrat und Vorsorgekapital) minus Art. 7 (Schulden). Die App kennt nur `securitiesValue` + `otherAssets` + `savingsAccount` ohne Schulden — der RDU-Zuschlag (1/15) fällt tendenziell **zu hoch** aus, der Betrag zu tief.
+- **Rückerstattung:** LaLAMal Art. 33 — «Les subsides indûment touchés doivent être restitués» (Beleg für `ipv.vorbehaltGE`).
+- **Antragsfälle** (ge.ch [5], Stand 9. Juli 2026, und RaLAMal Art. 10): junge Erwachsene 2001–2007, Quellenbesteuerte 2024, Zuzug 2025/2026, RDU 2024 unter 15'000 allein / 20'000 Paar (+3'000 je Unterhaltspflicht), Bruttoeinkommen > 200'000 oder Bruttovermögen > 250'000, keine Veranlagung 2024 / Ermessensveranlagung, veränderte Lage. Frist Art. 10A: «avant le 30 novembre de l'année d'ouverture du droit».
+
+**Was die App rechnet:** eine erwachsene Person (Jahrgang ≤ 2000) allein oder mit minderjährigen Kindern (Jahrgang ≥ 2008), RDU = Nettoeinkommen (Hauptlohn × 12 bzw. × 13, Neben- und Renteneinkommen × 12) + erfasstes Vermögen ÷ 15; Gruppe nach Art. 21 (mit Kindern: Paar-Spalte + 6'000 je Kind, Art. 21 al. 2 und 4), Beträge nach Barème [1], Gruppe 9 nur Kinder; Deckel auf die erfasste Prämie der erwachsenen Person (Art. 22 al. 4). Unter 15'000 (allein) bzw. 20'000 + 3'000 je Kind (Paar-Zeile, **gewählte Lesart** von Art. 21 al. 4 für RaLAMal Art. 10 al. 4/5): Hinweis «Antrag nötig vor dem 30. November».
+
+**Bewusst nicht gebaut:** Paare, eingetragene Partnerschaften, Konkubinat (mit und ohne gemeinsames Kind; RaLAMal Art. 9 addiert die RDU), junge Erwachsene (eigener Betrag 231/106, RDU der Eltern + eigener, RaLAMal Art. 10 al. 7), Quellenbesteuerte (Art. 24 LaLAMal, Art. 12 RaLAMal), Zuzug (Art. 25 LaLAMal), EL-/PCFam-/Sozialhilfe-Beziehende (Art. 22 al. 7–9 LaLAMal, Art. 11A–11C RaLAMal), im Ausland Wohnende (Art. 24A), Ermessensveranlagte (Art. 27 lit. b), die Vermutung beim Bruttoeinkommen > 200'000 (Art. 10 al. 2 RaLAMal — die App kennt das Brutto nicht sicher; über jeder Grenze ohnehin), die Ersatzrechnung «Brutto × 0,95 + 1/15 Bruttovermögen» (Art. 10 al. 3), die RDU-Aktualisierung (LRDU Art. 10).
+
 ### Offen / nicht gefunden
-- Der Indexierungs-Arrêté des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht separat gefunden; die Beträge stammen aus dem amtlichen Barème-PDF des Kantons [1]. Silgeneve-Stände: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal «au 1er janvier 2025» — Gesetzestext enthält die unindexierten Beträge (320/270/…/50).
-- Die Seite «Barèmes» (ge.ch/informations-generales-subside-assurance-maladie/baremes) lieferte per curl HTTP 403 («Zone sécurisée»); das verlinkte Dokument war frei abrufbar.
+- Der Indexierungs-Arrêté des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht separat gefunden; die Beträge stammen aus dem amtlichen Barème-PDF des Kantons [1]. Silgeneve-Stände: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal «au 1er janvier 2025» — Gesetzestext enthält die unindexierten Beträge (320/270/…/50). ⟨28.09.2026: weiterhin nicht gefunden; Frage 8 in `FRAGEN-AN-DIE-AEMTER.md`. Presseberichte nennen dieselben Beträge, sind aber keine Quelle.⟩
+- Die Seite «Barèmes» (ge.ch/informations-generales-subside-assurance-maladie/baremes) lieferte per curl HTTP 403 («Zone sécurisée»); das verlinkte Dokument war frei abrufbar. ⟨28.09.2026: die Dokumentseite `ge.ch/document/baremes-categories-2026-subsides-assurance-maladie` liefert 200 und verlinkt das PDF.⟩
 - Beträge für PC-AVS/AI-, PCFam- und Sozialhilfe-Beziehende (Durchschnittsprämie) nicht erfasst.
+- Ob die Gleichstellung «Person mit Unterhaltspflicht = Paar» (Art. 21 al. 4 LaLAMal) auch für die Untergrenzen von RaLAMal Art. 10 al. 4/5 gilt (15'000 / 20'000): nicht gefunden — Frage 8.
+- Kein amtliches Rechenbeispiel mit Einzelfall gefunden; Prüfstein sind die Haushaltssummen des Barème [1] (z. B. «Personne seule + 2 enfants, Groupe 3: fr. 504.00» = 240 + 2 × 132).
 
 ### Quellen
-1. BAREME SUBSIDES 2026 (PDF, Dokumentseite «Barèmes et catégories 2026 pour les subsides d'assurance-maladie»), République et canton de Genève, Date de publication 21 avril 2026. https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie → https://www.ge.ch/document/43271/telecharger — abgerufen 16.09.2026
-2. Loi d'application de la loi fédérale sur l'assurance-maladie (LaLAMal), rsGE J 3 05, Dernières modifications au 2 novembre 2024. https://silgeneve.ch/legis/data/rsg_j3_05.htm — abgerufen 16.09.2026
-3. Règlement d'exécution de la LaLAMal (RaLAMal), rsGE J 3 05.01, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j3_05p01.htm — abgerufen 16.09.2026
-4. Loi sur le revenu déterminant unifié (LRDU), rsGE J 4 06, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j4_06.htm — abgerufen 16.09.2026
-5. Demander un subside d'assurance-maladie 2026, ge.ch (SAM), Dernière mise à jour 9 juillet 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026 — abgerufen 16.09.2026
-6. Informations générales sur le subside de l'assurance-maladie, ge.ch, Dernière mise à jour 28 mai 2026. https://www.ge.ch/informations-generales-subside-assurance-maladie — abgerufen 16.09.2026
+1. BAREME SUBSIDES 2026 (PDF, Dokumentseite «Barèmes et catégories 2026 pour les subsides d'assurance-maladie»), République et canton de Genève, Date de publication 21 avril 2026 (PDF-Metadaten: erstellt 11.02.2026). https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie → https://www.ge.ch/document/43271/telecharger — abgerufen 16.09.2026, erneut 28.09.2026 (44'794 Bytes, Textlayer)
+2. Loi d'application de la loi fédérale sur l'assurance-maladie (LaLAMal), rsGE J 3 05, Dernières modifications au 2 novembre 2024. https://silgeneve.ch/legis/data/rsg_j3_05.htm — abgerufen 16.09.2026, erneut 28.09.2026 (Art. 19–27, 33 gelesen)
+3. Règlement d'exécution de la LaLAMal (RaLAMal), rsGE J 3 05.01, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j3_05p01.htm — abgerufen 16.09.2026, erneut 28.09.2026 (Art. 9–12 gelesen)
+4. Loi sur le revenu déterminant unifié (LRDU), rsGE J 4 06, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j4_06.htm — abgerufen 16.09.2026, erneut 28.09.2026 (Art. 3–10 gelesen)
+5. Demander un subside d'assurance-maladie 2026, ge.ch (SAM), Dernière mise à jour 9 juillet 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026 — abgerufen 16.09.2026, erneut 28.09.2026
+6. Informations générales sur le subside de l'assurance-maladie, ge.ch, Dernière mise à jour 28 mai 2026. https://www.ge.ch/informations-generales-subside-assurance-maladie — abgerufen 16.09.2026, erneut 28.09.2026
+7. Loi sur l'imposition des personnes physiques (LIPP), rsGE D 3 08, Dernières modifications au 1er janvier 2026, Art. 31 (nur für die 3a-Frage). https://silgeneve.ch/legis/data/rsg_d3_08.htm — abgerufen 28.09.2026
 
 ---
 
