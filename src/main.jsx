@@ -105,6 +105,7 @@ const Zusammenziehen = React.lazy(() => import('./Zusammenziehen.jsx'));
 const Ergaenzungsleistungen = React.lazy(() => import('./Ergaenzungsleistungen.jsx'));
 const Vorsorgeauftrag = React.lazy(() => import('./Vorsorgeauftrag.jsx'));
 const Patientenverfuegung = React.lazy(() => import('./Patientenverfuegung.jsx'));
+const Bestattung = React.lazy(() => import('./Bestattung.jsx'));
 const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
 const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
 const Aussteuerung = React.lazy(() => import('./Aussteuerung.jsx'));
@@ -1599,8 +1600,9 @@ const AppInner = ({ demo }) => {
         view === 'adoption' && React.createElement(Adoption, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zusammenziehen' && React.createElement(Zusammenziehen, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'ergaenzungsleistungen' && React.createElement(Ergaenzungsleistungen, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, lang, data: activeData, chapters, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
+        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
         view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'aussteuerung' && React.createElement(Aussteuerung, { palette, t, data: activeData, onNavigate: handleNavigate }),

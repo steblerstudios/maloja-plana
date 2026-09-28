@@ -71,6 +71,7 @@ export const GEGENSTAENDE = [
     key: 'abschied', ill: 'letter',
     wege: [
       { key: 'todesfall', view: 'todesfall', g: ['M3 6h18v12H3z', 'M3 7l9 6 9-6'] },
+      { key: 'bestattung', view: 'bestattung', g: ['M12 21v-8', 'M12 13c-3 0-5-2-5-5 3 0 5 2 5 5z', 'M12 13c3 0 5-2 5-5-3 0-5 2-5 5z', 'M8 21h8'] },
       { key: 'organ', view: 'organ', g: ['M12 20c4-2.6 7-6 7-9.5A3.7 3.7 0 0 0 12 8a3.7 3.7 0 0 0-7 2.5C5 14 8 17.4 12 20z', 'M12 11v4', 'M10 13h4'] },
     ],
   },

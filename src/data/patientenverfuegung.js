@@ -17,8 +17,9 @@ import { escapeHtml as esc } from '../utils/helpers.js';
 export const OFFEN = 'offen';
 
 // art: 'eine' (eine Antwort) · 'mehrere' · 'text' · 'gruppe' (mehrere Teilfragen) · 'personen'
+// Darstellung: components/FragenAblauf.jsx (zusatz = Feld unter einer Auswahl, einzeilig = kurzes Textfeld).
 export const FRAGEN = [
-  { key: 'bestehend', art: 'eine', optionen: ['nein', 'ersetzt', 'ergaenzt'] },
+  { key: 'bestehend', art: 'eine', optionen: ['nein', 'ersetzt', 'ergaenzt'], zusatz: { bei: 'ergaenzt', key: 'bestehendDatum', typ: 'date' } },
   { key: 'werte', art: 'text' },
   { key: 'therapieziel', art: 'eine', optionen: ['verlaengern', 'lebensqualitaet', OFFEN] },
   { key: 'situationen', art: 'mehrere', optionen: ['notfall', 'bewusstlos', 'demenz', 'endphase'] },
@@ -29,19 +30,19 @@ export const FRAGEN = [
   { key: 'sedierung', art: 'eine', optionen: ['ja', 'nein', OFFEN] },
   { key: 'ortBegleitung', art: 'text' },
   { key: 'organe', art: 'gruppe', teile: [
-    { key: 'organspende', optionen: ['ja', 'nein', 'bestimmte', OFFEN] },
+    { key: 'organspende', optionen: ['ja', 'nein', 'bestimmte', OFFEN], zusatz: { bei: 'bestimmte', key: 'organeListe', typ: 'text' } },
     { key: 'obduktion', optionen: ['ja', 'nein', OFFEN] },
     { key: 'forschung', optionen: ['ja', 'nein', OFFEN] },
   ] },
   { key: 'vertretung', art: 'personen', rollen: ['vertretung', 'ersatz'] },
-  { key: 'original', art: 'text' },
+  { key: 'original', art: 'text', einzeilig: true },
 ];
 
 const ENTSCHEIDE = ['reanimation', 'lebensverlaengernd', 'ernaehrung', 'linderung', 'sedierung'];
-const LUECKE = '__________';
+export const LUECKE = '__________';
 
-const leer = (v) => v === undefined || v === null || String(v).trim() === '';
-const datumCH = (iso) => {
+export const leer = (v) => v === undefined || v === null || String(v).trim() === '';
+export const datumCH = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || '').trim());
   return m ? m[3] + '.' + m[2] + '.' + m[1] : '';
 };
@@ -104,22 +105,19 @@ const TINTE = '#1C1A17';
 const GRAU = '#6B6560';
 const RAND = '#DDD8D0';
 
-export function dokumentHtml(antworten, daten, t, lang = 'de') {
-  const d = dokument(antworten, daten, t);
-  const feld = (label, wert) => `<div class="pv-feld"><span class="pv-label">${esc(label)}</span><span class="pv-wert">${esc(wert) || '&nbsp;'}</span></div>`;
-  const abschnitt = (s) => `<section><h2>${esc(s.titel)}</h2>`
-    + s.zeilen.map((z) => `<p>${esc(z)}</p>`).join('')
-    + (s.personen || []).map((p) => `<p class="pv-person"><strong>${esc(t('pv.doc.rolle_' + p.rolle))}</strong><br>`
-      + [p.name, p.beziehung, p.telefon].filter(Boolean).map(esc).join(' · ') + '</p>').join('')
-    + '</section>';
-  const linie = (label) => `<div class="pv-linie"><span></span><em>${esc(label)}</em></div>`;
+// Gemeinsame Druckhilfen — auch für Vorsorgeauftrag-Vorlage und Bestattungswünsche.
+export const druckFeld = (label, wert) => `<div class="pv-feld"><span class="pv-label">${esc(label)}</span><span class="pv-wert">${esc(wert) || '&nbsp;'}</span></div>`;
+export const druckLinie = (label) => `<div class="pv-linie"><span></span><em>${esc(label)}</em></div>`;
 
+// Ein Druckblatt: Dokument, danach (eigene Seite) das Begleitblatt mit Hinweisen und dem Druckknopf.
+// `koerper` ist fertiges, bereits escaptes HTML; `begleitPunkte` sind Klartexte.
+export function druckSeite({ lang = 'de', titel, koerper, begleitTitel, begleitPunkte, druckLabel, zusatzCss = '' }) {
   return `<!DOCTYPE html>
 <html lang="${esc(lang)}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(t('pv.doc.titel'))}</title>
+<title>${esc(titel)}</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: Georgia, 'Times New Roman', serif; font-size: 12pt; line-height: 1.55; color: ${TINTE}; background: #fff; padding: 32px 20px; }
@@ -138,14 +136,34 @@ export function dokumentHtml(antworten, daten, t, lang = 'de') {
   .pv-begleitblatt li { margin: 0 0 6px 18px; }
   .pv-druck { display: block; margin: 32px auto 0; padding: 10px 20px; font: inherit; border: 1px solid ${RAND}; background: #F5F2EE; color: ${TINTE}; border-radius: 6px; cursor: pointer; }
   @media print { .pv-druck { display: none; } body { padding: 0; } }
+${zusatzCss}
 </style>
 </head>
 <body>
-<div class="pv-blatt">
+${koerper}
+<div class="pv-blatt pv-begleitblatt">
+<h2>${esc(begleitTitel)}</h2>
+<ul>
+${begleitPunkte.filter(Boolean).map((b) => `<li>${esc(b)}</li>`).join('\n')}
+</ul>
+<button class="pv-druck" onclick="window.print()">${esc(druckLabel)}</button>
+</div>
+</body>
+</html>`;
+}
+
+export function dokumentHtml(antworten, daten, t, lang = 'de') {
+  const d = dokument(antworten, daten, t);
+  const abschnitt = (s) => `<section><h2>${esc(s.titel)}</h2>`
+    + s.zeilen.map((z) => `<p>${esc(z)}</p>`).join('')
+    + (s.personen || []).map((p) => `<p class="pv-person"><strong>${esc(t('pv.doc.rolle_' + p.rolle))}</strong><br>`
+      + [p.name, p.beziehung, p.telefon].filter(Boolean).map(esc).join(' · ') + '</p>').join('')
+    + '</section>';
+  const koerper = `<div class="pv-blatt">
 <h1>${esc(t('pv.doc.titel'))}</h1>
-${feld(t('pv.doc.name'), d.person.name)}
-${feld(t('pv.doc.geburt'), d.person.geburt)}
-${feld(t('pv.doc.adresse'), d.person.adresse)}
+${druckFeld(t('pv.doc.name'), d.person.name)}
+${druckFeld(t('pv.doc.geburt'), d.person.geburt)}
+${druckFeld(t('pv.doc.adresse'), d.person.adresse)}
 <section>
 <p>${esc(t('pv.doc.urteilsfaehig'))}</p>
 <p>${esc(t('pv.doc.gilt'))}${d.situationen.length ? ' ' + esc(t('pv.doc.giltInsbesondere')) : ''}</p>
@@ -153,22 +171,12 @@ ${d.situationen.length ? '<ul>' + d.situationen.map((s) => `<li style="margin-le
 </section>
 ${d.abschnitte.map(abschnitt).join('\n')}
 ${d.bestehendSatz ? `<p style="margin-top:18px">${esc(d.bestehendSatz)}</p>` : ''}
-<div class="pv-linien">${linie(t('pv.doc.ort'))}${linie(t('pv.doc.datum'))}</div>
-<div class="pv-linien">${linie(t('pv.doc.unterschrift'))}</div>
-</div>
-<div class="pv-blatt pv-begleitblatt">
-<h2>${esc(t('pv.begleit.titel'))}</h2>
-<ul>
-<li>${esc(t('pv.begleit.ungueltig'))}</li>
-<li>${esc(t('pv.begleit.urteilsfaehig'))}</li>
-<li>${esc(t('pv.begleit.besprechen'))}</li>
-<li>${esc(t('pv.begleit.karte'))}</li>
-${d.original ? `<li>${esc(t('pv.begleit.original', { ort: d.original }))}</li>` : ''}
-<li>${esc(t('pv.begleit.neueFassung'))}</li>
-<li>${esc(t('pv.begleit.keineBeratung'))}</li>
-</ul>
-<button class="pv-druck" onclick="window.print()">${esc(t('pv.ui.drucken'))}</button>
-</div>
-</body>
-</html>`;
+<div class="pv-linien">${druckLinie(t('pv.doc.ort'))}${druckLinie(t('pv.doc.datum'))}</div>
+<div class="pv-linien">${druckLinie(t('pv.doc.unterschrift'))}</div>
+</div>`;
+  return druckSeite({
+    lang, titel: t('pv.doc.titel'), koerper, begleitTitel: t('pv.begleit.titel'), druckLabel: t('pv.ui.drucken'),
+    begleitPunkte: [t('pv.begleit.ungueltig'), t('pv.begleit.urteilsfaehig'), t('pv.begleit.besprechen'), t('pv.begleit.karte'),
+      d.original ? t('pv.begleit.original', { ort: d.original }) : null, t('pv.begleit.neueFassung'), t('pv.begleit.keineBeratung')],
+  });
 }
