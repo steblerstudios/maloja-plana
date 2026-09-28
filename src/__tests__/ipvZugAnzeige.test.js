@@ -31,7 +31,8 @@ describe('K31 IPV-Rechner, Kanton Zug', () => {
 
   it('Einzelperson, 30 000 im Jahr: Betrag 2 585/Jahr, 215/Monat, ohne Grenze und ohne Musterwerte', () => {
     const html = render(profil(2500));
-    expect(html).toContain('premium.eligible');
+    // Gesuch Pflicht (§ 11 IPVG): «Möglicher Betrag — nur auf Antrag» statt «Berechtigt» mit Häkchen
+    expect(html).toContain('premium.eligibleAntrag');
     expect(html).toContain('CHF 2’585');
     expect(html).toContain('CHF 215');
     expect(html).not.toContain('premium.maxIncome');

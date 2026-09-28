@@ -417,7 +417,11 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle')),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } }, hinweisZeichen('check'), t('premium.eligible')),
+      // «Berechtigt» stimmt nicht, wo der Kanton den Anspruch nur auf Antrag prüft (GE unter der
+      // RDU-Untergrenze): dann eine Überschrift, die den Antrag nennt, ohne Häkchen — sonst stünde
+      // «Berechtigt» neben «prüft nicht automatisch» (Rechtsprüfung 28.09.2026).
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } },
+        hinweisZeichen(ipvResult.antragNoetig ? undefined : 'check'), t(ipvResult.antragNoetig ? 'premium.eligibleAntrag' : 'premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams)),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
@@ -432,7 +436,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der
       // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
       // `jahrKey`: ein Kanton ohne Prämienregionen, der nicht der Aargau ist, bringt seinen eigenen
-      // Satz mit (UR, NE, 28.09.2026) — `ipv.jahrOhneRegion` nennt den Aargau beim Namen.
+      // Satz mit (UR, NE, OW, 28.09.2026) — `ipv.jahrOhneRegion` nennt den Aargau beim Namen.
       React.createElement('div', null, ipvResult.jahrKey
         ? t(ipvResult.jahrKey, { jahr: ipvResult.jahr })
         : ipvResult.region

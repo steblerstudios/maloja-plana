@@ -10,7 +10,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ, calculateIPV } from '../config/cantonalData.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { praemienBelegState } from '../data/praemienBeleg.js';
-import { ipvAbzug } from '../data/ipvAbzug.js';
+import { ipvAbzug, fristHinweisKey } from '../data/ipvAbzug.js';
 import { KKLastCard } from '../KKLastCard.jsx';
 import { PraemienBeleg } from '../components/PraemienBeleg.jsx';
 import FinanzUebersicht from '../FinanzUebersicht.jsx';
@@ -216,9 +216,66 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  it('die Frist-Angabe lesen nur das Luzerner Modul und ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'data/ipvAbzug.js'];
+  // Seit 28.09.2026 setzen auch Genf (RaLAMal Art. 10A: nur die Antragsfälle, vor dem 30. November),
+  // Obwalden (EV KVG Art. 10), Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484) und Freiburg
+  // (ORP Art. 2 al. 1, sobald gemergt) die Frist.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, GE, OW, TI) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvGenf.js', 'config/ipvObwalden.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
+  });
+});
+
+// Ruling nach der Fachprüfung #472 (28.09.2026): der Frist-Hinweis ist kantonal. Jedes Kantonsmodul,
+// das `anmeldefristVorbei` setzt, nennt seinen eigenen Hinweis (`fristNichtAbgezogenKey`) — einzig LU
+// darf ohne, weil die drei Leser für LU den Luzerner Text kennen. Ein neuer Kanton mit Frist ohne
+// eigenen Schlüssel fiele sonst auf den neutralen Text; hier wird er ROT, bevor das passiert.
+describe('Wächter · Frist-Hinweis je Kanton', () => {
+  const OHNE_EIGENEN_SCHLUESSEL = ['config/ipvLuzern.js'];
+  const module = () => quellen().filter((p) => /^config\/ipv[A-Z]\w*\.js$/.test(rel(p)));
+
+  it('der Scan findet die Kantonsmodule', () => {
+    expect(module().map(rel)).toContain('config/ipvObwalden.js');
+    expect(module().map(rel)).toContain('config/ipvLuzern.js');
+  });
+
+  it('jedes Modul, das die Frist setzt, nennt seinen Hinweis-Schlüssel — ausser LU', () => {
+    const fehlt = module()
+      .filter((p) => /\banmeldefristVorbei\b/.test(code(p)) && !OHNE_EIGENEN_SCHLUESSEL.includes(rel(p)))
+      .filter((p) => !/\bfristNichtAbgezogenKey\s*:\s*'ipv\.\w+'/.test(code(p)))
+      .map(rel);
+    expect(fehlt).toEqual([]);
+  });
+
+  it('Gegenprobe: das Muster erkennt ein Modul ohne Schlüssel', () => {
+    const ohne = "extra: { anmeldefristVorbei: fristVorbei }";
+    const mit = "extra: { anmeldefristVorbei: fristVorbei, fristNichtAbgezogenKey: 'ipv.xyFristNichtAbgezogen' }";
+    expect(/\bfristNichtAbgezogenKey\s*:\s*'ipv\.\w+'/.test(ohne)).toBe(false);
+    expect(/\bfristNichtAbgezogenKey\s*:\s*'ipv\.\w+'/.test(mit)).toBe(true);
+  });
+
+  it('die Leser: eigener Schlüssel vor LU, LU nur für LU, sonst neutral', () => {
+    expect(fristHinweisKey({ canton: 'OW', fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen' })).toBe('ipv.owFristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'OW', fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen' }, 'budget')).toBe('ipv.owFristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'LU' })).toBe('ipv.luFristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'LU' }, 'budget')).toBe('budget.ipvHintLuFristVorbei');
+    expect(fristHinweisKey({ canton: 'GE' })).toBe('ipv.fristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'GE' }, 'budget')).toBe('budget.ipvHintFristVorbei');
+    expect(fristHinweisKey(null)).toBe('ipv.fristNichtAbgezogen');
+  });
+
+  it('die Leser tragen den Luzerner Text nicht mehr selbst', () => {
+    for (const l of LESER) {
+      const c = code(path.join(SRC, l));
+      expect(/luFristNichtAbgezogen|ipvHintLuFristVorbei/.test(c), l).toBe(false);
+      expect(c, l).toMatch(/\bfristHinweisKey\(/);
+    }
+  });
+
+  it('die neutralen Texte gibt es in allen fünf Sprachen, mit {jahr}', () => {
+    for (const s of [de, en, fr, itSprache, rm]) {
+      expect(s.ipv.fristNichtAbgezogen).toContain('{jahr}');
+      expect(s.budget.ipvHintFristVorbei).toContain('{jahr}');
+    }
   });
 });
