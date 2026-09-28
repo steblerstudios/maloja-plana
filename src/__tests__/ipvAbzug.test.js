@@ -216,10 +216,10 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  // Seit 28.09.2026 setzen auch Freiburg (ORP Art. 2 al. 1: Antrag bis 31. August) und das Tessin
-  // (LCAMal Art. 25 Abs. 3, Fachprüfung #484) die Frist.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, FR, TI) und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvFreiburg.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
+  // Seit 28.09.2026 setzen auch Freiburg (ORP Art. 2 al. 1: Antrag bis 31. August), Obwalden
+  // (EV KVG Art. 10) und das Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484) die Frist.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, FR, OW, TI) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvFreiburg.js', 'config/ipvObwalden.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
@@ -235,6 +235,7 @@ describe('Wächter · Frist-Hinweis je Kanton', () => {
 
   it('der Scan findet die Kantonsmodule', () => {
     expect(module().map(rel)).toContain('config/ipvFreiburg.js');
+    expect(module().map(rel)).toContain('config/ipvObwalden.js');
     expect(module().map(rel)).toContain('config/ipvLuzern.js');
   });
 
@@ -256,6 +257,8 @@ describe('Wächter · Frist-Hinweis je Kanton', () => {
   it('die Leser: eigener Schlüssel vor LU, LU nur für LU, sonst neutral', () => {
     expect(fristHinweisKey({ canton: 'FR', fristNichtAbgezogenKey: 'ipv.frFristNichtAbgezogen' })).toBe('ipv.frFristNichtAbgezogen');
     expect(fristHinweisKey({ canton: 'FR', fristNichtAbgezogenKey: 'ipv.frFristNichtAbgezogen' }, 'budget')).toBe('ipv.frFristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'OW', fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen' })).toBe('ipv.owFristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'OW', fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen' }, 'budget')).toBe('ipv.owFristNichtAbgezogen');
     expect(fristHinweisKey({ canton: 'LU' })).toBe('ipv.luFristNichtAbgezogen');
     expect(fristHinweisKey({ canton: 'LU' }, 'budget')).toBe('budget.ipvHintLuFristVorbei');
     expect(fristHinweisKey({ canton: 'GE' })).toBe('ipv.fristNichtAbgezogen');
