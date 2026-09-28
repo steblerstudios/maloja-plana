@@ -500,6 +500,28 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ dob: '1999-12-31' })).annual).toBe(5376);
   });
 
+  // KVG Art. 16a Abs. 1 / KVV Art. 91 Abs. 3: Kind ist, wer am 31.12. des Anspruchsjahrs höchstens
+  // 18 ist. Die SVA führt für 2026 «Junge Erwachsene (Jahrgang 2001 bis 2007)». Jahrgang 2007 darf
+  // 2026 also nicht als Kind rechnen (vorher tat es das: Alter am 31.12.2025 = 18). Fachprüfung 28.09.
+  it.each([
+    ['Kind Jahrgang 2007 (im Anspruchsjahr 19)', { children: [{ birthDate: '2007-12-31' }] }],
+    ['Kind eingetippt 18 (Jahrgang unklar: 2007 oder 2008)', { children: [{ age: 18 }] }],
+  ])('%s: Orientierung statt Kinder-Betrag', (_, opts) => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-06-15T12:00:00'));
+    try {
+      expect(calculateIPV(person(opts))).toMatchObject({ belegt: false, amount: null, offen: 'haushalt' });
+    } finally { vi.useRealTimers(); }
+  });
+  it.each([
+    ['Kind Jahrgang 2008 (im Anspruchsjahr 18)', { children: [{ birthDate: '2008-01-01' }] }],
+    ['Kind eingetippt 17', { children: [{ age: 17 }] }],
+  ])('%s: rechnet weiter als Kind', (_, opts) => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-06-15T12:00:00'));
+    try {
+      expect(calculateIPV(person(opts)).amount).not.toBeNull();
+    } finally { vi.useRealTimers(); }
+  });
+
   // Ein Kind ohne Geburtsdatum kommt in der App mit `age: 0` an (Vorbelegung, Alt-Daten-Migration).
   // Das heisst «nicht erfasst» und darf keinen Betrag erzeugen — sonst zahlt eine Annahme mit.
   it.each([

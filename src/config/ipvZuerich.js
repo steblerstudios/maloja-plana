@@ -198,6 +198,16 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   const kinder = kinderAlter(hh.children, stichjahr, 0);
   if (ALTER_UNERFASST(kinder)) return orientierung('alter');
   if (UEBER_18(kinder)) return orientierung('haushalt');
+  // Altersgruppe der Prämie (Kind / junge Erwachsene) nach KVG Art. 16a Abs. 1 und KVV Art. 91
+  // Abs. 3: das Alter am 31.12. DES ANSPRUCHSJAHRS, also der Jahrgang — so teilt auch die SVA
+  // ein («Junge Erwachsene (Jahrgang 2001 bis 2007)» für 2026). Mit dem Alter am Ende des
+  // Vorjahres (oben) galt Jahrgang 2007 im Jahr 2026 noch als Kind und bekam Kinder-
+  // Durchschnittsprämie, Kinder-Mindestanspruch und die Familiengrenze für «ausschliesslich
+  // minderjährige Kinder» — ein Betrag auf der falschen Gruppe (Fachprüfung 28.09.2026). Darum
+  // hier zusätzlich: wird ein Kind im Anspruchsjahr 19, keine Zahl. Eingetippt (undatiert) +1,
+  // die vorsichtige Seite wie in BE. Ob § 8 EG KVG die Prämien-Altersgruppe meint, ist eine
+  // offene Frage an die SVA; bis dahin gilt die Seite, die keinen falschen Betrag zeigt.
+  if (UEBER_18(kinderAlter(hh.children, jahr, 1))) return orientierung('haushalt');
 
   const { region } = regionAusPLZ({ data, kanton: 'ZH', lookupPLZ, regionFn: zhRegion });
   if (!region) return orientierung('region');
