@@ -43,16 +43,23 @@
 //    `SAEULE_3A.abzugOhneSaeule2` in kantonsModell.js. Ob eine Pensionskasse besteht, weiss
 //    die App nicht sicher; darum werden hier beide Fälle gerechnet (siehe `bsSaeule3a` unten).
 //
-// 3. HYPOTHETISCHES EINKOMMEN. Wer weniger arbeitet als zumutbar (Alleinstehende unter 80 %),
-//    dem rechnet das ASB die Differenz an: «100 Prozent entsprechen dabei einem jährlichen
-//    Mindesterwerbseinkommen von CHF 36'000 (netto)» (SoHaV § 24 Abs. 2). Den Beschäftigungs-
-//    grad kennt die App nicht — siehe den Riegel `bsHypothetisch` unten.
+// 3. HYPOTHETISCHES EINKOMMEN. SoHaV § 24 Abs. 2: «Als hypothetisches Erwerbseinkommen wird die
+//    Differenz (in Prozenten) zwischen der effektiven Erwerbstätigkeit und dem in Abs. 1 genannten
+//    Mindesterwerbstätigkeitsgrad (80 bzw. 160 Prozent) angerechnet. 100 Prozent entsprechen dabei
+//    einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» Sind die Arbeitsstunden pro
+//    Woche erfasst (`ausbildung.workHoursPerWeek`), rechnet die App das Pensum daraus und rechnet
+//    die Differenz an; sonst gilt die gewählte Schwelle 28'800 (siehe `bsHypothetisch` unten).
+//    ⟨korrigiert 28.09.2026, Fachprüfung B2: hier stand «Den Beschäftigungsgrad kennt die App
+//    nicht» — die Wochenstunden sind erfasst.⟩
 //
 // 4. ZUSCHLAG FÜR ALTERNATIVE VERSICHERUNGSMODELLE (KVO § 21 Abs. 1bis, Tabelle T 4): bis
-//    Fr. 30 im Monat mehr für Erwachsene. Ob er zusteht, hängt am Modell UND an einem vom ASB
-//    festgelegten Mindestrabatt, der nicht publiziert ist. Das Feld `kkModel` der App reicht
-//    dafür nicht. Darum rechnet die App den Standard-Beitrag (T 3) und NENNT den Betrag mit
-//    Zuschlag im Hinweis daneben — beide Zahlen stehen in der Tabelle, geraten wird keine.
+//    Fr. 30 im Monat mehr für Erwachsene. Das ASB «kann» ihn von einem Mindestrabatt abhängig
+//    machen; das Merkblatt 01.2026 nennt keinen, nur den jährlichen Nachweis mit der Police.
+//    ⟨geändert 28.09.2026, Fachprüfung W4: vorher immer T 3 als Hauptzahl⟩ Die App liest das
+//    erfasste Modell (`versicherungen.kkModel`):
+//      Hausarzt, HMO, Telmed, Apotheke  → Hauptzahl aus T 4, Hinweis «sofern die Police …»
+//      Standard (freie Arztwahl)        → Hauptzahl aus T 3, ohne Zuschlag-Satz
+//      leer, Basic, Comfort (mehrdeutig) → Hauptzahl aus T 3, der Betrag mit Zuschlag daneben
 //
 // 5. KEINE VERMÖGENSGRENZE, nur ein Vermögensanteil (ein Zehntel über den Freibeträgen,
 //    SoHaV § 28), und KEINE FRIST: der Anspruch beginnt im Monat nach dem Antrag ([5]).
@@ -69,8 +76,14 @@
 //     und junge Erwachsene allgemein — die App rechnet nur für Erwachsene.
 //   · Quellenbesteuerte, EL-Beziehende (die EL zählt zum massgeblichen Einkommen, SoHaG § 6
 //     Abs. 2 lit. dd), Sozialhilfe (Subrogation, KVO § 24), Personen nach Art. 65a KVG.
-//   · Einnahmen, die die App nicht erfasst: Familienzulagen, sofern nicht im Nettolohn;
-//     Unterhaltsbeiträge; Vermögenserträge (Freibetrag Fr. 500, SoHaV § 18 Abs. 2);
+//   · ⟨korrigiert 28.09.2026, Fachprüfung B1: hier stand «Einnahmen, die die App nicht erfasst:
+//     Familienzulagen, sofern nicht im Nettolohn; Unterhaltsbeiträge; …». Falsch — die App
+//     erfasst `finanzen.familienzulagen`, `alimenteReceived` und `alimentePaid`, und BS RECHNET
+//     SIE JETZT SELBST: SoHaV § 16 Abs. 1 lit. c Ziff. 3 (Familienzulagen) und Ziff. 6
+//     (Unterhaltsbeiträge) als Einnahmen, § 17 Abs. 1 lit. c/ca bezahlte Unterhaltsbeiträge als
+//     Abzug. Die Familienzulagen zählen wie in der App-eigenen Haushaltsrechnung
+//     (data/haushaltsEinnahmen.js) ZUSÄTZLICH zum Lohn.⟩
+//     Nicht erfasst bleiben: Vermögenserträge (Freibetrag Fr. 500, SoHaV § 18 Abs. 2);
 //     Stipendien, Alimentenbevorschussung, Mietzinsbeiträge (SoHaG § 6 Abs. 2 lit. d).
 //     Liegenschaften zählen zu 25 % des Steuerwerts (SoHaV § 29 Abs. 3) — die App kennt
 //     nur die Summe der erfassten Posten.
@@ -84,6 +97,7 @@ import {
 } from './kantonsModell.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { zahl } from '../utils/geld.js';
+import { VOLLZEIT_STUNDEN_WOCHE, WOCHENSTUNDEN_OBERGRENZE } from '../data/lohnCheck.js';
 
 // Werte 2026, wörtlich aus [1] Anhang 2. Beträge in CHF; Grenzen je Jahr, Beiträge je Monat.
 export const IPV_BS = {
@@ -130,8 +144,10 @@ export const IPV_BS = {
   },
   // T 4 — dieselben Beiträge «in einer besonderen Versicherungsform gemäss Art. 62 Abs. 1 KVG
   // und § 21 Abs. 1bis KVO». 🛑 Gruppe 09, Erwachsene: die Verordnung [1] sagt 240, die
-  // Beitragstabelle des ASB [4] 230. Es gilt die Verordnung; 240 ist auch der Abstand von
-  // 30 Franken, den alle Gruppen 01–21 haben. Die Frage steht in FRAGEN-AN-DIE-AEMTER.md.
+  // Beitragstabelle des ASB [4] 230. Es gilt die Verordnung; 240 druckt auch der «Bericht über
+  // die Prämienverbilligung 2026» des DWSU (Oktober 2025, S. 10, Anhang 2 «Stand per 1. Januar
+  // 2026»), und 240 ist der Abstand von 30 Franken, den alle Gruppen 01–21 haben. Die Frage steht
+  // in FRAGEN-AN-DIE-AEMTER.md.
   alternativ: {
     erwachsene: [474, 445, 415, 382, 355, 326, 296, 267, 240, 209, 178, 148, 121, 91, 73, 67, 63, 60, 56, 53, 50, 26],
     jungeErwachsene: [335, 314, 295, 272, 253, 238, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 235, 229],
@@ -145,6 +161,10 @@ export const IPV_BS = {
   // § 25 Abs. 1 lit. a nennt dieselbe Zahl für Selbständige: «CHF 28'800 (netto) (80 Prozent
   // von CHF 36'000)».
   hypothetisch: { vollzeitNetto: 36000, mindestgrad: 0.8 },
+  // GEWÄHLT, nicht belegt: 100 % = 42 Stunden pro Woche. SoHaV und KVO nennen keine Stundenzahl;
+  // 42 ist die Vollzeit-Norm, mit der die App auch den Mindestlohn prüft (data/lohnCheck.js).
+  // Bei einer tieferen Norm (etwa 40) wäre das Pensum höher und die Anrechnung kleiner.
+  vollzeitStunden: VOLLZEIT_STUNDEN_WOCHE,
   // SoHaV § 23 Abs. 1 lit. a [3]: kein hypothetisches Einkommen, wenn «eine Person das
   // 60. Altersjahr überschritten» hat. § 22 Abs. 1 lit. a: die überwiegende Betreuung eigener
   // Kinder «bis zur Vollendung des 16. Altersjahres» ist einer Erwerbstätigkeit gleichgestellt.
@@ -170,7 +190,8 @@ export function bsGrenzen(personen) {
 // grenze. «bis und mit»: § 22 Abs. 1 [1] gewährt Beiträge, wenn das Einkommen die Grenze
 // «nicht übersteigt» — die App liest die übrigen Gruppengrenzen gleich. Das amtliche Beispiel
 // [4] (62'000 bei 4 PH → Gruppe 5, weil 61'000 < 62'000 ≤ 63'000) liegt nicht auf einer Grenze;
-// die Lesart ist darum gewählt, nicht am Beispiel bestätigt.
+// die Lesart ist darum gewählt, nicht am Beispiel bestätigt. Gestützt wird sie vom DWSU-Bericht
+// 2026, S. 4: «Für die Einkommensgruppe 22 liegt die Obergrenze bei 49'375».
 export function bsGruppe(me, personen) {
   const i = bsGrenzen(personen).findIndex((g) => Math.max(0, me) <= g);
   return i === -1 ? null : i;
@@ -189,7 +210,11 @@ export function ipvBaselStadtRechnen({ personen, me }) {
     .filter((c) => !nur || c === nur)
     .reduce((s, c) => s + tabelle[kat[c]][i], 0);
   if (gruppe === null) {
-    return { gruppe, grenze, monat: 0, monatAlternativ: 0, annual: 0, erwachseneAnnual: 0, maximal: summe(IPV_BS.standard, 0) * 12, erwachseneMaximal: summe(IPV_BS.standard, 0, 'e') * 12, annualAlternativ: 0, erwachseneAnnualAlternativ: 0 };
+    return {
+      gruppe, grenze, monat: 0, monatAlternativ: 0, annual: 0, erwachseneAnnual: 0, annualAlternativ: 0, erwachseneAnnualAlternativ: 0,
+      maximal: summe(IPV_BS.standard, 0) * 12, erwachseneMaximal: summe(IPV_BS.standard, 0, 'e') * 12,
+      maximalAlternativ: summe(IPV_BS.alternativ, 0) * 12, erwachseneMaximalAlternativ: summe(IPV_BS.alternativ, 0, 'e') * 12,
+    };
   }
   const monat = summe(IPV_BS.standard, gruppe);
   const monatAlternativ = summe(IPV_BS.alternativ, gruppe);
@@ -202,6 +227,8 @@ export function ipvBaselStadtRechnen({ personen, me }) {
     // Vergleichsgrösse «höchstens möglich»: Gruppe 01 ohne Zuschlag.
     maximal: summe(IPV_BS.standard, 0) * 12,
     erwachseneMaximal: summe(IPV_BS.standard, 0, 'e') * 12,
+    maximalAlternativ: summe(IPV_BS.alternativ, 0) * 12,
+    erwachseneMaximalAlternativ: summe(IPV_BS.alternativ, 0, 'e') * 12,
   };
 }
 
@@ -210,6 +237,32 @@ export function bsVermoegensanteil(vermoegen, kinderZahl, paar = false) {
   const v = IPV_BS.vermoegen;
   const frei = (paar ? v.paar : v.alleinstehend) + v.jeKind * kinderZahl;
   return v.anteil * Math.max(0, Math.max(0, vermoegen) - frei);
+}
+
+// Erfasste Wochenstunden (Textfeld, Komma erlaubt — wie ChapterView). Nur 0 < h ≤ 60
+// (WOCHENSTUNDEN_OBERGRENZE der App) gilt als Angabe; sonst `null` = «nicht erfasst».
+export function bsWochenstunden(wert) {
+  const h = parseFloat(String(wert ?? '').replace(',', '.'));
+  return Number.isFinite(h) && h > 0 && h <= WOCHENSTUNDEN_OBERGRENZE ? h : null;
+}
+
+// SoHaV § 24 Abs. 2 [3]: Differenz zwischen dem Pensum und 80 %, × 36'000. Pensum = Stunden ÷ 42
+// (gewählt), höchstens 100 %.
+export function bsHypothetischesEinkommen(stunden) {
+  const p = IPV_BS.hypothetisch;
+  const grad = Math.min(1, stunden / IPV_BS.vollzeitStunden);
+  return Math.max(0, p.mindestgrad - grad) * p.vollzeitNetto;
+}
+
+// Das erfasste Versicherungsmodell → 'alternativ' (besondere Versicherungsform nach Art. 62 Abs. 1
+// KVG: eingeschränkte Wahl der Leistungserbringer), 'standard' (freie Arztwahl) oder null
+// (leer oder mehrdeutig: «Basic»/«Comfort» sind Produktnamen der Versicherer, kein Modell).
+// Klein geschrieben verglichen: der Kartenscanner schreibt «Standard», das Formular «standard».
+export function bsModell(kkModel) {
+  const m = String(kkModel || '').trim().toLowerCase();
+  if (['hausarzt', 'hmo', 'telmed', 'apotheke'].includes(m)) return 'alternativ';
+  if (m === 'standard') return 'standard';
+  return null;
 }
 
 // Aufruf aus calculateIPV (config/cantonalData.js) für BS mit Beleg. Die App rechnet nur, wo
@@ -241,25 +294,57 @@ export function ipvBaselStadt(data, hh, ipvData, youngAdultsCount, orientierung)
   const roh = rohesEinkommenJahr(f);
   if (roh < 0) return orientierung('einkommenNegativ');
 
-  // 🛑 HYPOTHETISCHES EINKOMMEN (SoHaV §§ 19–25 [3]). Alleinstehenden, die nicht mindestens
-  // 80 % arbeiten, rechnet das ASB die Differenz zu 36'000 netto an; Selbständigen mindestens
-  // 28'800. Den Beschäftigungsgrad kennt die App nicht. GEWÄHLT, nicht belegt: unter
-  // 28'800 Erwerbseinkommen im Jahr — dem Betrag, den die Verordnung selbst einer
-  // 80-%-Tätigkeit gleichsetzt — zeigt die App keine Zahl, ausser eine Ausnahme ist aus den
-  // Angaben SICHER erkennbar:
+  // 🛑 HYPOTHETISCHES EINKOMMEN (SoHaV §§ 19–25 [3]). § 24 Abs. 1 lit. a: bei einer «allein
+  // stehende[n]/allein erziehende[n] Person», die «nicht mindestens einer Erwerbstätigkeit von
+  // 80 Prozent nachgeht», wird die Differenz in Prozenten zum Grad von 80 % angerechnet, und
+  // «100 Prozent entsprechen dabei … CHF 36'000 (netto)» (§ 24 Abs. 2) — bei 50 % also
+  // 30 % × 36'000 = 10'800, nicht «bis 36'000 aufgefüllt». Selbständigen wird nach § 25 Abs. 1
+  // lit. a mindestens 28'800 angerechnet.
+  // Keine Anrechnung, wenn eine Ausnahme aus den Angaben SICHER erkennbar ist:
   //   · älter als 60 (§ 23 Abs. 1 lit. a, «das 60. Altersjahr überschritten»). Beide Lesarten
   //     («60 vollendet» oder «älter als 60») sind erfüllt, wenn die Person am Ende des
   //     Vorjahres mindestens 61 war — so rechnet die App, vorsichtig.
   //   · ein Kind, das im ganzen Anspruchsjahr unter 16 ist (§ 22 Abs. 1 lit. a, überwiegende
   //     Betreuung — bei einer alleinerziehenden Person angenommen, nicht geprüft).
-  // Ohne diesen Riegel zeigte die App gerade dort den HÖCHSTEN Betrag, wo das Amt am
-  // wahrscheinlichsten ein Einkommen hinzurechnet: 10'000 im Jahr ⇒ Gruppe 01, 444 im Monat;
-  // mit einem Pensum von 20 % rechnet das ASB 21'600 dazu ⇒ Gruppe 08, 237 im Monat.
-  // Über der Schwelle rechnet die App — der Vorbehalt nennt die Regel.
+  // ⟨28.09.2026, Fachprüfung B2: vorher hiess es «Den Beschäftigungsgrad kennt die App nicht»,
+  // und über 28'800 rechnete die App still mit Vollzeit — 21 Std./Woche und 30'000 gaben 266
+  // statt 37 im Monat.⟩ Jetzt, für Angestellte:
+  //   · Wochenstunden erfasst → Pensum = Stunden ÷ 42 (Vollzeit-Norm GEWÄHLT, siehe IPV_BS),
+  //     und die Differenz zu 80 % wird nach § 24 Abs. 2 angerechnet. Weitere Ausnahmen, die die
+  //     App nicht kennt (Ausbildung, Krankheit, Arbeitslosentaggeld, IV-Rente), nennt der
+  //     Zusatzhinweis — die Zahl liegt für diese Personen zu tief.
+  //   · keine Wochenstunden → GEWÄHLT: unter 28'800 Erwerbseinkommen (der Betrag, den die
+  //     Verordnung selbst 80 % gleichsetzt) keine Zahl; darüber gerechnet wie bei 80 %, und der
+  //     Zusatzhinweis sagt das bei der Zahl (Fachprüfung W1).
+  // Selbständige: wie ohne Wochenstunden (die ersten drei Jahre sind nach § 23 Abs. 1 lit. d
+  // ausgenommen — das weiss die App nicht, darum unter 28'800 keine Zahl statt einer Anrechnung).
   const erwerb = Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12;
   const ueber60 = (jahr - 1) - geburt >= IPV_BS.rechtfertigungAlter + 1;
   const kleinesKind = kinderJahre.some((a) => a < IPV_BS.betreuungBisAlter);
-  if (erwerb < BS_HYPOTHETISCH_SCHWELLE && !ueber60 && !kleinesKind) return orientierung('bsHypothetisch');
+  const ausnahme = ueber60 || kleinesKind;
+  const selbstaendig = ['selfEmployed', 'freelance'].includes(f.employmentType);
+  const stunden = bsWochenstunden(data.ausbildung?.workHoursPerWeek);
+  let hypothetisch = 0;
+  let zusatzVorbehaltKey = null;
+  if (!ausnahme) {
+    if (!selbstaendig && stunden !== null) {
+      hypothetisch = bsHypothetischesEinkommen(stunden);
+      if (hypothetisch > 0) zusatzVorbehaltKey = 'ipv.bsHypothetischGerechnet';
+    } else {
+      if (erwerb < BS_HYPOTHETISCH_SCHWELLE) return orientierung('bsHypothetisch');
+      zusatzVorbehaltKey = 'ipv.bsPensumAngenommen';
+    }
+  }
+
+  // ⟨28.09.2026, Fachprüfung B1⟩ SoHaV § 16 Abs. 1 lit. c [3]: Einnahmen sind auch «(3)
+  // Familienzulagen (wie Kinder-, Ausbildungs-, Unterhaltszulagen usw.)» und «(6)
+  // familienrechtliche Unterhaltsbeiträge»; § 17 Abs. 1 lit. c/ca zieht bezahlte
+  // «familienrechtliche Unterhaltsbeiträge» ab. Die App erfasst alle drei monatlich; die
+  // Familienzulagen zählen wie in data/haushaltsEinnahmen.js ZUSÄTZLICH zum Lohn (der Feld-
+  // Hinweis und `vorbehaltBS` sagen: nicht doppelt eintragen, wenn sie im Lohn stecken).
+  // Unlesbar oder negativ ⇒ 0 (wie Uri).
+  const monatlich = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x * 12 : 0; };
+  const unterhalt = monatlich(f.familienzulagen) + monatlich(f.alimenteReceived) - monatlich(f.alimentePaid);
 
   // SoHaV § 28 [3]: Vermögensanteil. Keine Vermögensgrenze — anders als LU, SG, ZH.
   const anteil = bsVermoegensanteil(vermoegenSumme(f), kinderZahl);
@@ -271,8 +356,9 @@ export function ipvBaselStadt(data, hh, ipvData, youngAdultsCount, orientierung)
   // GEWÄHLT: ein erfasster Beitrag (`versicherungen.bvgContribution` > 0) gilt als Beleg für
   // eine zweite Säule. Ein leeres Feld heisst «nicht erfasst», nicht «keine Pensionskasse».
   const regel = SAEULE_3A.abzugOhneSaeule2;
-  const meMit = Math.max(0, roh - regel.nichtAufgerechnet(f) + anteil);
-  const meOhne = Math.max(0, roh - regel.ohneSaeule2(f) + anteil);
+  const basis = roh + unterhalt + hypothetisch + anteil;
+  const meMit = Math.max(0, basis - regel.nichtAufgerechnet(f));
+  const meOhne = Math.max(0, basis - regel.ohneSaeule2(f));
   const saeule2Erfasst = Number(data.versicherungen?.bvgContribution) > 0;
   if (!saeule2Erfasst && bsGruppe(meMit, personen.length) !== bsGruppe(meOhne, personen.length)) {
     return orientierung('bsSaeule3a');
@@ -298,14 +384,24 @@ export function ipvBaselStadt(data, hh, ipvData, youngAdultsCount, orientierung)
   }
   // Der Deckel pro Person (kantonsModell.js): nur der Anteil der erwachsenen Person wird auf
   // ihre Prämie begrenzt, die Kinderanteile bleiben — ihre Prämien kennt die App nicht.
-  const annual = deckelnProPerson(r.annual, r.erwachseneAnnual, praemie);
-  const maxAnnual = deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie);
-  const annualAlternativ = deckelnProPerson(r.annualAlternativ, r.erwachseneAnnualAlternativ, praemie);
+  // Beide Tabellen (T 3 / T 4) gedeckelt; welche die Hauptzahl ist, entscheidet das Modell (W4).
+  const standard = {
+    annual: deckelnProPerson(r.annual, r.erwachseneAnnual, praemie),
+    maxAnnual: deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie),
+  };
+  const alternativ = {
+    annual: deckelnProPerson(r.annualAlternativ, r.erwachseneAnnualAlternativ, praemie),
+    maxAnnual: deckelnProPerson(r.maximalAlternativ, r.erwachseneMaximalAlternativ, praemie),
+  };
+  const modell = bsModell(data.versicherungen?.kkModel);
+  const haupt = modell === 'alternativ' ? alternativ : standard;
+  // KVO § 15 Abs. 1 [1]: nur «auf Antrag»; [5]: «ab dem Monat nach der Antragstellung».
+  const noteKey = modell === 'alternativ' ? 'ipv.bsAntragAvm'
+    : modell === 'standard' ? 'ipv.bsAntragStandard' : 'ipv.bsAntrag';
   return ergebnisMitAnspruch({
-    ...gemeinsam, annual, maxAnnual, youngAdultsCount,
-    // KVO § 15 Abs. 1 [1]: nur «auf Antrag»; [5]: «ab dem Monat nach der Antragstellung».
-    // Der Hinweis nennt dazu den Betrag MIT Zuschlag (T 4) — beide aus der Tabelle.
-    noteKey: 'ipv.bsAntrag',
-    noteParams: { monat: Math.round(annual / 12), monatAlternativ: Math.round(annualAlternativ / 12) },
+    ...gemeinsam, annual: haupt.annual, maxAnnual: haupt.maxAnnual, youngAdultsCount,
+    extra: { ...gemeinsam.extra, ...(zusatzVorbehaltKey ? { zusatzVorbehaltKey } : {}) },
+    noteKey,
+    noteParams: { monat: Math.round(standard.annual / 12), monatAlternativ: Math.round(alternativ.annual / 12) },
   });
 }
