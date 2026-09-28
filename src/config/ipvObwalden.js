@@ -181,7 +181,11 @@ export function ipvObwalden(data, hh, ipvData, youngAdultsCount, orientierung) {
   // dieses Anspruchsjahr, also `imAnspruchsjahr` wie LU. (Der Rechner [5] zählt schon 25-Jährige
   // als erwachsen; das Merkblatt nicht — die App folgt der engeren Lesart.)
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
+  if (!geburt) return orientierung('alter');
+  // Junge Erwachsene (Jahrgang 2001–2007 [4]) stellen einen eigenen Antrag; ihr Mindestanspruch
+  // hängt an der Ausbildung (Art. 7 Abs. 3 [3]), die die App nicht kennt. Eigener Grund statt
+  // «alter» («Geburtsdatum fehlt / mit den Eltern») — Befund W3 der Fachprüfung zu Uri (#464).
+  if (!ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung(jahr - geburt >= 19 ? 'ausbildung' : 'alter');
   // Ein im Anspruchsjahr geborenes Kind zählt erst im Folgejahr (Art. 6 Abs. 2 [3]: Verhältnisse
   // am 1. Januar, Änderungen «im Folgejahr berücksichtigt»).
   const kinder = (hh.children || []).filter((c) => !(/^\d{4}-/.test(c.birthDate || '')
@@ -200,7 +204,12 @@ export function ipvObwalden(data, hh, ipvData, youngAdultsCount, orientierung) {
   // lit. e StG fehlt in der Liste) — sie bleibt im Einkommen: Regel `voll`.
   const steuerbaresVermoegen = Math.max(0, vermoegenSumme(f)
     - IPV_OW.steuerfreierBetrag.alleinstehend - IPV_OW.steuerfreierBetrag.jeKind * kinderZahl);
+  // Art. 7a lit. c [3]: «unter Abzug der Unterhaltsbeiträge und dauernden Lasten». Die bezahlten
+  // Alimente kennt die App (`finanzen.alimentePaid`, monatlich) — abgezogen seit 28.09.2026, nach
+  // dem Befund W1 der Fachprüfung am gleichen Punkt in Uri (#464). Unlesbar/negativ = 0.
+  const unterhaltJahr = 12 * Math.max(0, Number(f.alimentePaid) || 0);
   const ae = Math.max(0, einkommenJahr(f, SAEULE_3A.voll)
+    - unterhaltJahr
     + IPV_OW.vermoegenAnteil * steuerbaresVermoegen
     - IPV_OW.kinderabzug * kinderZahl);
 

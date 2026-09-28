@@ -192,9 +192,20 @@ describe('K31 calculateIPV für OW (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: -500 }))).toMatchObject({ belegt: false, offen: 'einkommenNegativ' });
   });
 
-  it('Alter nach Jahrgang [4] («Erwachsene ab Jahrgang 2000»): 2000 rechnet, 2001 nicht', () => {
+  it('Alter nach Jahrgang [4] («Erwachsene ab Jahrgang 2000»): 2000 rechnet; 2001–2007 Grund «ausbildung»', () => {
     expect(calculateIPV(person({ dob: '2000-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
+    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'ausbildung' });
+    expect(calculateIPV(person({ dob: '2007-12-31' }))).toMatchObject({ belegt: false, offen: 'ausbildung' });
+    expect(calculateIPV(person({ dob: '2008-06-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
+    expect(calculateIPV(person({ dob: '' }))).toMatchObject({ belegt: false, offen: 'alter' });
+  });
+
+  it('bezahlte Alimente: Art. 7a lit. c [3] zieht Unterhaltsbeiträge ab', () => {
+    // 30 000 → 5 018.40 − 2 850 = 2 168.40 → 180.70 × 12 = 2 168.40 → 2 168
+    // mit 12 000 Alimente: 18 000 → 5 018.40 − 1 710 = 3 308.40 → 275.70 × 12 → 3 308
+    expect(calculateIPV(person({ monthlyIncome: 2500 })).annual).toBe(2168);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 1000 } })).annual).toBe(3308);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 'abc' } })).annual).toBe(2168);
   });
 
   it('Kinder: Jahrgang 2009 rechnet; Jahrgang 2008 nicht (EV Art. 5 und Merkblatt gehen auseinander)', () => {

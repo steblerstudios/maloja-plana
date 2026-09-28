@@ -87,6 +87,7 @@ describe('K31 IPV-Rechner, Kanton Obwalden', () => {
       }
       expect(typeof texte.budget.ipvHintOwFristVorbei, `${sprache}.js: budget.ipvHintOwFristVorbei`).toBe('string');
       expect(texte.ipv.vorbehaltOW).toContain('{basisjahr}');
+      expect(texte.ipv.offenGrund.ausbildung?.length, `${sprache}: offenGrund.ausbildung`).toBeGreaterThan(60);
       for (const k of ['owFristVorbei']) for (const p of ['{jahr}', '{folgejahr}']) expect(texte.ipv[k], `${sprache}: ${k} ${p}`).toContain(p);
     }
   // Fünf Sprachdateien laden dauert unter Last (parallele Läufe) gemessen gut 5 s.
