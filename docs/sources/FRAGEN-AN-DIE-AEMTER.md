@@ -397,6 +397,48 @@ zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüt
 
 ---
 
+## 17 · Ausgleichskasse Obwalden — Jahrgang 2008, Mindestbetrag, Stufen und die Grenze mit Kindern
+
+*Aufgenommen 28.09.2026 beim Einbau von OW. Entwurf — **nicht gesendet**.*
+
+*Nummer 17 (28.09.2026 spätabends, vorher 9): 9 ist NE, 10 GR, 11–15 reserviert, 16 NW.*
+
+**Worum es geht:** Selbstbehalt 2026 (KRB GDB 851.12), Richtprämien (Merkblatt 2026) und die
+Rechenregeln (EV KVG GDB 851.11) sind gelesen; die App rechnet danach. Ein durchgerechnetes
+Beispiel mit Franken-Ergebnis haben wir nicht gefunden. Fünf Punkte lesen wir nicht eindeutig.
+
+**Frage 1 — Jahrgang 2008:** EV Art. 5 Abs. 2 zählt als Kind, wer am 1. Januar 18 oder jünger ist;
+das Merkblatt 2026 lässt «Jugendliche (ab Jahrgang 2008)» einen eigenen Antrag stellen. Zählt ein
+Kind mit Jahrgang 2008 im Antrag der Eltern mit (Richtprämie 1'380, Mindestanspruch 80 %)? Die App
+zeigt bis zur Antwort keinen Betrag.
+
+**Frage 2 — Mindestbetrag Art. 14 Abs. 6:** «Beiträge unter Fr. 100.–» — gilt das für den ganzen
+Anspruch der Verfügung oder je Person/Versicherer? Die App prüft die Summe.
+
+**Frage 3 — Steigerung des Selbstbehalts:** «pro Fr. 100.– … um je 0,01 Prozent» — stetig (wie der
+Online-Rechner) oder in ganzen 100er-Stufen? Unterschied höchstens rund 5 Franken im Jahr.
+
+**Frage 4 — Grenze mit Kindern:** Art. 7 Abs. 2 sagt «erhöht sich das anrechenbare Einkommen um
+Fr. 25 000.–»; Merkblatt und Rechner lesen es als Grenze 75'000. Ist das so gemeint?
+
+**Frage 5 — Rundung und Aufteilung:** Art. 14 Abs. 4 rundet «auf fünf Rappen» auf. Gilt das je
+Person (nach der Aufteilung Art. 14 Abs. 2) oder für den ganzen Betrag?
+
+**Frage 1b — Jahrgang 2007:** Diese Personen sind am 1. Januar 2026 18 Jahre alt, nach EV Art. 5
+Abs. 2 also noch Kind (Richtprämie 1'380); das Merkblatt führt sie unter «Junge Erwachsene mit
+Jahrgang 2001 bis 2007» (3'570). Welche Richtprämie gilt? Die App rechnet den Fall heute nicht.
+
+**Frage 6 — Rahmen 9–12 % (EG KVG Art. 2 Abs. 2 seit 01.04.2026):** Der Kantonsratsbeschluss vom
+26.03.2026 (GDB 851.12) lässt den Selbstbehalt ohne Obergrenze steigen; ab einem anrechenbaren
+Einkommen von 60'000 liegt er über 12 %. Seit dem 1. April 2026 nennt das Gesetz aber einen Rahmen
+«zwischen 9,0 und 12,0 Prozent», ohne Übergangsbestimmung. Gilt dieser Rahmen für die Verfügungen
+zum Anspruchsjahr 2026? Betroffen sind Haushalte mit Kindern und anrechenbarem Einkommen zwischen
+60'000 und 75'000; der Unterschied beträgt bis rund 1'125 Franken im Jahr. Bis zur Antwort zeigt die
+App dort keinen Betrag, wo es darauf ankommt.
+
+**Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
+zeigt die App für OW keinen Betrag.
+
 ## 22 · SVA Basel-Landschaft — Mindestanteil der Kinder und Kinder nach dem Bemessungsjahr
 
 *Aufgenommen 28.09.2026 beim Einbau von BL (K31). Entwurf — **nicht gesendet**. (Nummer 22 nach der
