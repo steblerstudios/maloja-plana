@@ -31,6 +31,21 @@ kommt der Changelog immer mit, nie doppelt.*
   war unbelegt → «schriftlich festhalten … Was möglich ist, regeln Kanton und Gemeinde».
 - **Fragen-Ablauf als gemeinsamer Baustein** (`components/FragenAblauf.jsx`, #443) für die drei
   Dokumente. Startbündel nach #440 + #443: 61,24 / 65 kB (`npm run size`).
+- **Steuer-Karte der Finanzübersicht nennt die eigene Angabe** neben der Schätzung (#451). Wer sein
+  steuerbares Einkommen selbst eingetragen hat, sieht diesen Wert, nicht nur die Rechnung daraus.
+- **Miet-Balken vergleicht Nettomiete mit BFS-Nettomiete** (#450) — vorher stand die eigene Bruttomiete
+  gegen einen Netto-Vergleichswert; der Balken war systematisch zu hoch.
+- **Kantonale Mietzins-Limiten entfernt, wo sie unbelegt waren** (#452): 26 Kantonswerte ohne Quelle raus,
+  belegt bleiben die IPV-Angaben von 5 Kantonen. Testament-Hinweis nach ZGB 505 Abs. 2 (Hinterlegung).
+- **Budget: Einnahmen des ganzen Haushalts** (#453) — Partner/in und Nebenerwerb zählen mit; Raten-Vorschlag
+  im Schuldenmanager rechnet ohne brutto erfassten Nebenerwerb; Monatsbudget in der Finanzübersicht =
+  Budget-Seite, bei Bruttolohn kein «frei verfügbar». Startbündel nach #449–#453: 61,11 / 65 kB.
+
+### Behoben
+- **Wochenstunden über 60 gelten als unplausibel** (#449). Die Demo-Eingabe «80 Std.» halbierte den
+  Stundenlohn und hätte einen falschen Mindestlohn-Brief ausgelöst. Grenze 60 ist gewählt, nicht belegt.
+- **BVG-Hinweis auf der Budget-Seite zeigte «[object Object] (CHF …)»** (#453) — seit 21.09. (`6edd2f8b`) war
+  ein React-Element mit `+` an einen String gehängt; der Betrag ist jetzt ein eigenes Kind.
 
 ## [0.1.44-beta] — 2026-09-28
 
