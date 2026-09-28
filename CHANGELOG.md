@@ -12,7 +12,7 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
-- **Prämienverbilligung Waadt nach amtlichem Modell 2026** (K31, sechster Kanton). «Subside
+- **Prämienverbilligung Waadt nach amtlichem Modell 2026** (#463, K31, sechster Kanton). «Subside
   ordinaire» nach Arrêté du Conseil d’État vom 17.12.2025 und RLVLAMal art. 21, gebaut für
   26+ allein, 26+ mit Kind(ern) und Kinder 0–18; das Formelbild der Verordnung wurde am 28.09.
   aus der BLV extrahiert und gelesen, das amtliche Beispiel der Notice geht auf den Franken auf.
