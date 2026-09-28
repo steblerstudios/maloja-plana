@@ -34,7 +34,7 @@ sind. Dieses Dokument ändert keinen Code.
 | ZH | Zürich | Referenzprämie (70 % der regionalen Durchschnittsprämie) minus Eigenanteil 8,4 % (Alleinstehende/Alleinerziehende) bzw. 10,5 % (Verheiratete) des massgebenden Einkommens; 3 Prämienregionen; Vermögensgrenze 150'000 / 300'000 | abbildbar | <https://svazurich.ch/unsere-produkte/weitere-produkte/krankenversicherung--kvg-/praemienverbilligung/leistung.html> |
 | BE | Bern | Stufentabelle: fester Monatsbetrag je Prämienregion (3), Altersgruppe und Einkommensstufe (bis 9'000 / 17'000 / 25'000 / 35'000; Familien bis 45'000); Kinder und junge Erwachsene in Ausbildung Pauschalbetrag | abbildbar | <https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Berechnungsschema%202026_de.pdf> |
 | LU | Luzern | Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind) | abbildbar | <https://srl.lu.ch/app/de/texts_of_law/866a> |
-| UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | abbildbar | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
+| UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | gebaut (PR #464) | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
 | SZ | Schwyz | Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % | teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert) | <https://www.sz.ch/public/upload/assets/6155/361_100.pdf> |
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
@@ -739,7 +739,7 @@ der WAS-Quelle weiter oben.
 
 ## UR — Uri
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt
 **Zuständig / Weg:** Sozialversicherungsstelle Uri (SVS Uri), Altdorf; automatisch von Amtes wegen für ordentlich Besteuerte mit Wohnsitz Uri am 1. Januar (Basis: Steuerveranlagung 2024); Antrag nötig für Quellenbesteuerte (bis 30. April des Anspruchsjahrs) und Zuzüger aus dem Ausland (bis 30. Juni); Auszahlung an die Krankenkasse
 **Gültigkeit:** 2026 definitiv (Steuerungsgrössen in der Medienmitteilung vom 18.12.2025, bestätigt durch das amtliche Berechnungsformular 2026)
@@ -781,13 +781,15 @@ Eigene Rechnung (kein Zitat): Einzelperson Erwachsene ohne Vermögen — Anspruc
 > «Grundlage für die Berechnung bildet die rechtskräftige Steuerveranlagung des Steuerjahrs, das dem Anspruchsjahr zwei Jahre vorausgeht.» — Art. 7 Abs. 3, Quelle [1]
 
 Hinweis: Uri zieht **keine** Sozialabzüge und keine BVG-/3a-Abzüge ab (Einkünfte minus nur die genannten Positionen) — das PV-Einkommen liegt damit nahe am Bruttoeinkommen minus Berufskosten.
+⟨28.09.2026: «nahe am Bruttoeinkommen» ist zu stark. «Einkünfte» (Steuerziffern 1000–1700 im Rechenblatt der SVS) sind bei Angestellten die Nettolöhne laut Lohnausweis, also nach den AHV-/ALV-/BVG-Beiträgen — Annahme, nicht an einer Urner Wegleitung geprüft. Richtig bleibt: die Säule 3a wird nicht abgezogen.⟩
 
 ### Abweichung zur App
 Der heutige App-Wert (maxIncome/subsidySingle UR) lag dem Unteragenten nicht vor. Belegte Vergleichsgrössen: Einzelperson — voller Betrag 4'368 CHF/Jahr, Nullpunkt rechnerisch ≈ 51'388 PV-Einkommen; Uri rechnet tatsächlich linear, das App-Modell passt strukturell, wenn maxIncome = Richtprämie / 0,085 gesetzt wird.
+⟨28.09.2026: gebaut ist nicht der Muster-Abbau mit abgeleitetem `maxIncome`, sondern das Modell selbst (`src/config/ipvUri.js`); `maxIncome` bleibt `null`, weil Uri keine Einkommensgrenze als Zahl publiziert — die 51'388 wären unsere Rechnung.⟩
 
 ### Offen / nicht gefunden
 - Der Regierungsratsbeschluss selbst (Festlegung der Steuerungsgrössen 2026) nicht gefunden; Zahlen aus der Medienmitteilung der Direktion und dem amtlichen Berechnungsformular der SVS Uri.
-- Rundungsregeln und Mindestauszahlungsbetrag nicht geprüft (Rest des Reglements ab Art. 12 nicht ausgewertet).
+- ~~Rundungsregeln und Mindestauszahlungsbetrag nicht geprüft (Rest des Reglements ab Art. 12 nicht ausgewertet).~~ ⟨erledigt 28.09.2026: Art. 14 Abs. 3 rundet den Monatsbetrag je Person auf fünf Rappen; einen Mindestbetrag kennt das Reglement nicht — siehe unten⟩
 
 ### Quellen
 1. Reglement über die Prämienverbilligung für die Krankenpflege-Grundversicherung (Prämienverbilligungsreglement), RB 20.2213, Kanton Uri, Version in Kraft seit 01.11.2024 (Beschlussdatum 24.09.2024). https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213 (Daten über https://rechtsbuch.ur.ch/api/de/texts_of_law/20.2213/show_as_json) — abgerufen 16.09.2026
@@ -795,6 +797,152 @@ Der heutige App-Wert (maxIncome/subsidySingle UR) lag dem Unteragenten nicht vor
 3. Berechnung Prämienverbilligung 2026 (Excel-Berechnungsformular), Sozialversicherungsstelle Uri. https://www.svsuri.ch/uploads/PDF-sonstige/SVS.Uri.IPV.Berechnungsformular_2026.xlsx — abgerufen 16.09.2026 (verlinkt auf https://www.svsuri.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv)
 4. Medienmitteilung «Deutlich mehr Urner Haushalte erhalten Prämienverbilligungen», Kanton Uri, 02.07.2026. https://www.ur.ch/mmdirektionen/136717 — abgerufen 16.09.2026
 5. Prämienverbilligung (IPV) — Anmeldung und Fristen, Sozialversicherungsstelle Uri, Stand ohne Datum. https://www.svsuri.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, **jede mit Gegenprobe** (erfundene Variante muss etwas
+anderes liefern):
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://rechtsbuch.ur.ch/api/de/texts_of_law/20.2213/show_as_json` | 200, 55'437 B, JSON | `…/20.2299/…` → **404**, 0 B |
+| `https://www.svsuri.ch/uploads/PDF-sonstige/SVS.Uri.IPV.Berechnungsformular_2026.xlsx` | 200, 20'125 B, xlsx | `…_2099.xlsx` → **404**, HTML |
+| `https://www.ur.ch/mmdirektionen/131963` (Medienmitteilung 18.12.2025) | 200 | `…/9999999` → **404** |
+| `https://www.svsuri.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
+| `https://www.svsuri.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/IPV-OKP/SVS.Uri_Antrag.Praemienverbilligung.2026.pdf` | 200, 121'655 B, PDF | `…2099.pdf` → **404** |
+| `https://rechtsbuch.ur.ch/api/de/texts_of_law/3.2211/versions/1087/show_as_json` (StG, Fassung 2025) | 200, JSON | `…/versions/9999999/…` → **500**, 0 B |
+
+🛑 Wie bei SRL und BELEX: die `/app/…`-Adresse des Rechtsbuchs ist eine Hülle; Beleg ist das JSON
+der API (`selected_version`). **Fassung Reglement:** «Aktuelle Version in Kraft seit: 01.11.2024
+(Beschlussdatum: 24.09.2024)», `future_versions`: 0, Änderungstabelle: nur «Erstfassung».
+
+**Reglement RB 20.2213** (Wortlaut, soweit gebaut):
+
+> Art. 3 Abs. 1: «Personen, die gemeinsam besteuert werden, haben einen Gesamtanspruch auf Prämienverbilligung.»
+
+> Art. 3 Abs. 3: «Abgesehen von der Grundlage für das PV-Einkommen nach Artikel 7 Absatz 3 sind die persönlichen und familiären Verhältnisse am 1. Januar des Anspruchsjahrs massgebend. Im Verlaufe des Jahrs eingetretene Änderungen werden im Folgejahr berücksichtigt. …»
+
+> Art. 4 Abs. 2: «Ein Anspruch auf Prämienverbilligung besteht, soweit die anrechenbaren Prämien einen vom Regierungsrat festzulegenden Prozentsatz des PV-Einkommens übersteigen.»
+
+> Art. 4 Abs. 3: «Bis zur Obergrenze des mittleren PV-Einkommens werden die Prämien von Kindern um mindestens 80 Prozent und die Prämien von jungen Erwachsenen in Ausbildung um mindestens 50 Prozent verbilligt. Der Regierungsrat legt die Obergrenze fest. Für minderjährige Kinder wird der Mindestanspruch auf Prämienverbilligung automatisch berechnet.»
+
+> Art. 4 Abs. 4: «Für Personen, die Ergänzungsleistungen zur AHV/IV beziehen, entspricht die Prämienverbilligung der vollen vom Bund festgelegten kantonalen Durchschnittsprämie, höchstens jedoch der tatsächlichen Prämie.»
+
+> Art. 4 Abs. 6: «Junge Erwachsene werden im Jahr nach dem erfüllten 18. Altersjahr eigenständig (unabhängig vom Einkommen der Eltern) berechnet.»
+
+> Art. 5 Abs. 1: Richtprämien für «a) Erwachsene (26 Jahre und älter) b) junge Erwachsene (19 bis 25 Jahre) c) Kinder und Jugendliche (18 Jahre und jünger)».
+
+> Art. 6 Abs. 3: «Bis zur Obergrenze des mittleren PV-Einkommens sind für Kinder höchstens 20 Prozent der Richtprämie und für junge Erwachsene in Ausbildung höchstens 50 Prozent der Richtprämie massgebend.»
+
+> Art. 7 Abs. 1: «Bei ordentlich besteuerten Personen bestimmt sich das PV-Einkommen aufgrund der massgebenden Nettoeinkünfte zuzüglich eines vom Regierungsrat festzulegenden Anteils des steuerbaren Vermögens.»
+
+> Art. 7 Abs. 2 lit. c: «abzüglich: Liegenschaftsunterhalt und Schuldzinsen bis maximal zur Höhe des Liegenschaftsertrags, Berufskosten, berufsorientierte Aus- und Weiterbildungskosten, Unterhaltsbeiträge und Rentenleistungen, Krankheits- und Unfallkosten, behinderungsbedingte Kosten» — **abschliessend; die Säule 3a steht nicht darin.**
+
+> Art. 7 Abs. 3: «Grundlage für die Berechnung bildet die rechtskräftige Steuerveranlagung des Steuerjahrs, das dem Anspruchsjahr zwei Jahre vorausgeht. Wesentliche Änderungen der wirtschaftlichen Verhältnisse zwischen der verwendeten Steuerveranlagung und dem 31. Dezember vor dem Anspruchsjahr werden auf Antrag berücksichtigt. Als wesentlich gelten Änderungen der massgebenden Nettoeinkünfte um mindestens 25 Prozent. Für Neuzuziehende oder neu in die Steuerpflicht Eintretende ist die Steuerperiode des Zuzugs- oder Eintrittsjahrs massgebend.»
+
+> Art. 10 Abs. 1: «Aufgrund der relevanten Steuerziffern prüft die Sozialversicherungsstelle Uri automatisch die Anspruchsvoraussetzungen und berechnet die Prämienverbilligung.»
+
+> Art. 11 Abs. 2/3: Quellenbesteuerte «bis zum 30. April des Anspruchsjahrs»; aus dem Ausland Zugezogene «bis zum 30. Juni des Anspruchsjahrs».
+
+> Art. 14 Abs. 2: «Muss die Prämienverbilligung an verschiedene Versicherer ausbezahlt werden, wird die Prämienverbilligung im Verhältnis der für die Berechnung anrechenbaren Richtprämien auf die Versicherer aufgeteilt. Der garantierte Mindestanspruch für Kinder und junge Erwachsene in Ausbildung ist immer an den Versicherer auszuzahlen, bei dem diese versichert sind.»
+
+> Art. 14 Abs. 3: «Die monatliche Prämienverbilligung ist je berechtigte Person auf fünf Rappen zu runden.»
+
+> Art. 18 Abs. 1: «Leistungen aufgrund dieses Reglements, die zu Unrecht ausgerichtet wurden, fordert die Sozialversicherungsstelle Uri von den Versicherern zurück.»
+
+**Nicht im Reglement (gesucht im ganzen Text, Art. 1–20):** keine Vermögensgrenze, kein
+Mindestbetrag, kein Deckel auf die tatsächliche Prämie ausser bei EL (Art. 4 Abs. 4).
+
+**Medienmitteilung 18.12.2025** (Text der Seite, Abschnitt «Urner Steuerungsgrössen für die
+Prämienverbilligung 2026 (in Klammern Werte 2025)»): «Erwachsene (26 Jahre und älter) Fr. 4'368
+(Fr. 4'164) · Junge Erwachsene (19-25 Jahre) Fr. 2'844 (Fr. 2'724) · Kinder/Jugendliche (bis 18
+Jahre) Fr. 1'104 (Fr. 1'068) · Anrechnung des steuerbaren Vermögens 15 Prozent (unverändert) ·
+Selbstbehalt des PV-Einkommens 8,5 Prozent (9,75 %) · Obergrenze des mittleren PV-Einkommens 1)
+Fr. 90'000 (unverändert)» — Fussnote 1: «Bis und mit einem Prämienverbilligungseinkommen von
+90'000 Franken werden die Prämien von Kindern um mindestens 80 Prozent verbilligt. Liegt das
+PV-Einkommen höher, entfällt diese Mindestgarantie; es erfolgt dann die ordentliche Berechnung
+der individuellen Prämienverbilligung.» Dazu: «Wer keinen Entscheid der Sozialversicherungsstelle
+Uri erhält, hat entweder keinen Anspruch auf Prämienverbilligung oder es liegen noch keine
+rechtskräftig veranlagten Steuerdaten für 2024 vor.»
+
+**Berechnungsformular 2026 der SVS** (xlsx, ein Blatt «Berechnungsformular», mit `openpyxl`
+ausgelesen, Formeln und Werte). 🛑 **Kein durchgerechnetes Beispiel** — alle Eingabezellen sind
+leer, der Anspruch steht auf 0. Prüfstein ist darum das Blatt selbst: M6 = 90000 · O30 = 0.15 ·
+I39 = 4368 · I40/I41 = 2844 · I42 = 1104 · I46 = 0.085 ·
+M42 `=IF(M45<=M6,I42*C42*0.2,I42*C42)` · R42 `=IF(M45<=M6,I42*C42*0.8,0)` ·
+M41/R41 dasselbe mit 0.5 für junge Erwachsene in Ausbildung · O43 `=SUM(M39:M42)` ·
+O46 `=I46*M45*-1` · R47 `=IF(SUM(O43:O46)>0,SUM(O43:O46),0)` · R49 `=SUM(R41:R47)` ·
+R28 `=IF(AA28>=0,AA28*1,0)` (Nettoeinkünfte nie negativ) · Steuerziffer 4800 «steuerbares
+Vermögen». Das Blatt teilt nicht auf Personen auf, rundet nicht und deckelt nicht.
+Der Test `src/config/__tests__/ipvUri.test.js` schreibt diese Zellen als zweite, unabhängige
+Rechnung nach und vergleicht sie über ein Raster (12 Einkommen × 5 Kinderzahlen × 1–2 Erwachsene).
+
+**Steuergesetz RB 3.2211** — «steuerbar» heisst nach den Sozialabzügen:
+> Art. 55 Abs. 1: «Zur Ermittlung des steuerbaren Vermögens werden vom Reinvermögen die Sozialabzüge nach Artikel 56 abgezogen.»
+> Art. 56 Abs. 1 (Fassung 2025, in Kraft 01.01.–31.12.2025): «b) 105'800 Franken für alle übrigen steuerpflichtigen Personen · c) 31'700 Franken für jedes nicht selbstständig besteuerte Kind» (Fassung 2026: lit. c 31'800).
+Die Fassung 2024 (Steuerperiode des PV-Einkommens 2026) ist im Rechtsbuch nicht mehr abrufbar;
+die Änderungstabelle nach Artikel führt für Art. 56 Abs. 1 lit. b keine Änderung und für lit. c
+nur die auf 01.01.2026 — die Werte 2025 galten also auch 2024 (Schluss aus der Tabelle, nicht
+an der Fassung 2024 gelesen).
+
+**Antragsformular 2026** (PDF, Textlayer): «Kinder bis zum 18. Altersjahr (Jahrgänge 2008 –
+2025)»; «Anmeldefrist: 31. Dezember 2026»; «Sind Sie zwischen 19 und 25 Jahre alt und standen Sie
+am 1. Januar des Anspruchsjahrs in Ausbildung?». **SVS-Webseite:** «Wer im Vorjahr zum
+Anspruchsjahr in den Kanton Uri zieht und in bescheidenen finanziellen Verhältnissen lebt, muss
+sich im ersten Anspruchsjahr für die Prämienverbilligung anmelden (… bis spätestens 31.
+Dezember …)».
+
+**Werte 2027:** am 28.09.2026 weder auf der SVS-Seite noch als Medienmitteilung gefunden (die
+2026er kam am 18.12.2025). Ab 01.01.2027 zeigt die App für UR keinen Betrag mehr (`jahr`).
+
+**Was gebaut ist (eigene Ableitung, kein Zitat):**
+- PV-Einkommen = max(0, Nettoeinkommen der App) + 15 % × max(0, erfasstes Vermögen − 105'800 −
+  31'700 je Kind). Beispiel: 150'000 Erspartes, 20'000 Einkommen → 26'630 → 2'104 im Jahr.
+- Aufteilung auf die Personen nach Art. 14 Abs. 2 (anrechenbare Richtprämien: Erwachsene 4'368,
+  Kind 20 % = 220.80), weil Art. 14 Abs. 3 je Person rundet; Kinderminimum beim Kind.
+- Rundung «auf fünf Rappen zu runden» **kaufmännisch** (ohne Richtung im Wortlaut — anders als
+  LU, «runden wir auf»): 2'668 → 222.33 → **222.35** im Monat.
+- Alter: **gewählt** `mangelsStichtag` (Jahrgang 1999 und älter). Nach Jahrgang wäre der Jahrgang
+  2000 erwachsen, nach Stichtag 1. Januar (Art. 3 Abs. 3) nur der 1.1.2000 — dort keine Zahl.
+- Ein im Anspruchsjahr geborenes Kind zählt nicht (Art. 3 Abs. 3, Formular «Jahrgänge 2008 – 2025»).
+- **Kein Prämiendeckel** (`KEIN_PRAEMIENDECKEL.UR`), keine Vermögensgrenze, kein Mindestbetrag.
+- Von Amtes wegen: keine Anmeldefrist, `anmeldefristVorbei` wird nicht gesetzt; der Hinweis
+  `ipv.urAutomatisch` nennt die Ausnahmen (Zuzug im Vorjahr: bis 31. Dezember selbst anmelden).
+- Anzeige: `ipv.jahrUR` statt `ipv.jahrOhneRegion` (dieser Satz nennt den Aargau).
+
+**Bewusst nicht gebaut:** Paare und Konkubinat (Art. 3 Abs. 1/2) · junge Erwachsene 19–25 ·
+Quellenbesteuerte (Art. 7 Abs. 4), EL (Art. 4 Abs. 4), Sozialhilfe (Art. 4 Abs. 5, Art. 8) ·
+Neuzuziehende (Art. 7 Abs. 3 Satz 4) und Härtefälle (Art. 9) · Liegenschaftseinkünfte ·
+die amtlichen Abzüge vom PV-Einkommen (Berufskosten usw.; der Vorbehalt `ipv.vorbehaltUR` sagt,
+dass der amtliche Betrag deshalb höher ausfallen kann) · Abrundung des steuerbaren Vermögens
+auf 1'000 (Art. 55 Abs. 3 StG, Wirkung < 13 Franken im Jahr).
+
+**Neu offen (in `FRAGEN-AN-DIE-AEMTER.md`, Abschnitt «SVS Uri»):** Deckel auf die eigene Prämie ·
+Rundungsrichtung · Aufteilung ausserhalb des Mehr-Versicherer-Falls · Stichtag für das Alter
+(Jahrgang 2000).
+
+### Nachtrag 28.09.2026, abends — Fachprüfung PR #464 umgesetzt
+
+- **Unterhaltsbeiträge (W1):** Art. 7 Abs. 2 lit. c zählt sie unter den Abzügen auf (Rechenblatt
+  Zeile 25, Steuerziffern 2540–2560). Die App kennt `finanzen.alimentePaid` (monatlich) und zieht
+  seither 12 × diesen Betrag ab, **vor** dem Boden 0 der Nettoeinkünfte (R28), der Vermögensanteil
+  kommt danach dazu. Vorher: 1'000/Monat → 1'020 Fr. im Jahr zu wenig.
+- **Gründe ohne Zahl (W3):** Jahrgang 2000 → `offenGrund.stichtagAlter`; 19–25 → `offenGrund.ausbildung`
+  (Art. 4 Abs. 6: junge Erwachsene werden eigenständig gerechnet, der Mindestanspruch hängt an der
+  Ausbildung am 1. Januar, Formular 2026 Frage 4). Vorher las man «Geburtsdatum fehlt» und «mit dem
+  Einkommen der Eltern» — beides für Uri falsch.
+- **Fristen (W4):** `vorbehaltUR` nennt den Antrag auf Neuberechnung bis 31. Dezember des
+  Anspruchsjahres (Art. 7 Abs. 3, Art. 11 Abs. 1, Formular «Anmeldefrist: 31. Dezember 2026»);
+  `urAutomatisch` nennt die Quellenbesteuerten (Art. 11 Abs. 2: 30. April; Art. 7 Abs. 4: 75 %).
+- **Kein Deckel ist belegt (K1):** KVV Art. 106c Abs. 5bis (in Kraft seit 01.01.2024), gelesen am
+  28.09.2026 im Fedlex-Filestore (`…/eli/cc/1995/3867_3867_3867/20260101/de/pdf-a/…` → 200, PDF
+  1'342'590 B; derselbe Pfad mit `20260102` → HTML-Hülle 77'151 B): Versicherer zahlt die Differenz
+  aus; kantonale Deckel vorbehalten. `KEIN_PRAEMIENDECKEL.UR` sagt das jetzt, Frage 8/1 erledigt.
+- **Vorjahreswert Selbstbehalt (K5):** die Medienmitteilung vom 18.12.2025 nennt für 2025 «9,75 %»,
+  die vom 02.07.2026 «9,25 Prozent im Vorjahr». Wert 2026 (8,5 %) in beiden gleich; der Wert 2025
+  bleibt widersprüchlich und wird nirgends verwendet.
+- **Nicht geändert (W2, Rahmen):** `rohesEinkommenJahr` liest `alimenteReceived`, `familienzulagen`,
+  `incomeType` nicht — Entscheid für alle Kantone bei Stebler Studios.
 
 ---
 
@@ -2622,9 +2770,9 @@ Alle Zahlen oben heute an der Quelle neu gelesen, jeder Abruf mit Gegenprobe: `g
 **Ergänzungen aus der Lektüre:**
 - **Alter:** Barème [1], Fussnote: «Sont considérés comme jeunes adultes, les personnes nées entre 2001 et 2007.» LaLAMal Art. 20 al. 3 lit. b: «les assurés ayant atteint leur majorité avant le 1er janvier de l'année civile et jusqu'à 25 ans révolus». ⇒ erwachsen für 2026 ist Jahrgang 2000 und älter (Regel `ERWACHSEN.imAnspruchsjahr`, belegt); Kinder = Jahrgänge ab 2008 («enfants mineurs à charge», Art. 21 al. 5, Art. 22 al. 2 LaLAMal). ⟨korrigiert 28.09.2026 abends, Rechts- und Fachprüfung: hier stand «Stichtag Alter: RaLAMal Art. 10 al. 8» — der Wortlaut lautet vollständig «**Pour l'application de l'alinéa 7**, est déterminant l'âge de l'assuré le 1er janvier de l'année d'ouverture du droit aux subsides», gilt also nur für junge Erwachsene. Das Ergebnis trägt sich über Art. 20 al. 3 lit. b und das Barème.⟩
 - **Negativer RDU:** RaLAMal Art. 9A — «est considéré comme équivalent à zéro».
-- **Indexierung:** RaLAMal Art. 9B al. 1 — Basis sind die Beträge «en vigueur en décembre 2024» in Art. 22 al. 1, 2 lit. b und 3 lit. b LaLAMal, «arrondis au franc supérieur», für alle «sur la base de l'augmentation de la prime moyenne communiquée par l'Office fédéral de la santé publique». Gegenprobe: alle acht Erwachsenenbeträge 2026 = Gesetzesbetrag × 1,0875, aufgerundet (320 → 348, 270 → 294, 220 → 240, 180 → 196, 150 → 164, 110 → 120, 80 → 87, 50 → 55). ⟨korrigiert 28.09.2026 abends: hier stand «Kinder (60 → 67) und junge Erwachsene (100 → 106) folgen eigenen Durchschnittsprämien» — das war eine Vermutung. Mit demselben Faktor ergäben sich 66 und 109; warum das Barème 67 und 106 nennt, erklärt keine gelesene Quelle. Dazu LaLAMal Art. 22 al. 10 mit einer weiteren Indexierungsregel («prime moyenne cantonale»), nicht ausgewertet. → Frage 8.⟩
-- **RDU-Posten, die die App kennt (Fachprüfung 28.09.2026, Blocker — die erste Fassung nahm nur Lohn, Nebenerwerb und Renten):** erhaltene Alimente ×12 (LRDU Art. 4 al. 1 lit. c «les pensions alimentaires»; LIPP Art. 26 lit. e), Familienzulagen ×12 (LIPP Art. 18 al. 1 «y compris … les allocations» — dass die Kinder-/Ausbildungszulagen gemeint sind, ist **gewählt**, Frage 8), Berufskosten-Pauschale −3 % des unselbständigen Erwerbseinkommens, min. 600, max. 1'700 (LIPP Art. 29 al. 2 via LRDU Art. 5 al. 1 lit. d; ohne sie sah eine Person mit 15'000–15'600 Netto «automatisch», obwohl ihr RDU unter 15'000 liegt), Säule-3b-Guthaben als Vermögen (LRDU Art. 6 lit. f «assurances-vie … pour leur valeur de rachat»; lit. g nimmt das Vorsorgekapital 3a aus). Es fehlen weiter: Schulden (Art. 7 lit. b), Kinderbetreuung (Art. 5 lit. e), bezahlte Unterhaltsbeiträge (lit. f), Krankheitskosten über 5 % (lit. h), Nebenerwerbs-Pauschale (LIPP Art. 29A) — alle in Richtung «RDU zu hoch».
-- **Neuberechnung bei Verschlechterung, Kind im Laufe des Jahres, Verbesserung (RaLAMal Art. 13B–13E; Fachprüfung 28.09.2026 — «Art. 9–12 gelesen» hatte sie ausgelassen):** Art. 13B al. 1–5: «durablement» = «depuis plus de 6 mois», «notable» = «diminution de 20% ou plus du revenu déterminant actualisé», «demande écrite», «avant le 30 novembre … si l'aggravation … se produit durant le deuxième semestre … jusqu'au 30 juin de l'année suivante». Art. 13C: «groupe familial s'agrandit en cours d'année d'un ou de plusieurs enfants mineurs» → schriftlicher Antrag, Fristen wie 13B al. 5 (App: Hinweis `ipv.geAntragKindNeu` bei Jahrgang > Basisjahr; ob das auch für Jahrgang 2025 gilt: Frage 8). Art. 13D: 13B gilt analog für die Vermutungsfälle nach Art. 20 al. 2/3. Art. 13E al. 1/2: Verbesserung «sans délai» melden; ab «10 000 francs» über dem aktualisierten RDU «indûment touchés», Rückerstattung nach Art. 33. Alles im Vorbehalt `ipv.vorbehaltGE`.
+- **Indexierung:** RaLAMal Art. 9B al. 1 — Basis sind die Beträge «en vigueur en décembre 2024» in Art. 22 al. 1, 2 lit. b und 3 lit. b LaLAMal, «arrondis au franc supérieur», für alle «sur la base de l'augmentation de la prime moyenne communiquée par l'Office fédéral de la santé publique». Gegenprobe: alle acht Erwachsenenbeträge 2026 = Gesetzesbetrag × 1,0875, aufgerundet (320 → 348, 270 → 294, 220 → 240, 180 → 196, 150 → 164, 110 → 120, 80 → 87, 50 → 55). ⟨korrigiert 28.09.2026 abends: hier stand «Kinder (60 → 67) und junge Erwachsene (100 → 106) folgen eigenen Durchschnittsprämien» — das war eine Vermutung. Mit demselben Faktor ergäben sich 66 und 109; warum das Barème 67 und 106 nennt, erklärt keine gelesene Quelle. Dazu LaLAMal Art. 22 al. 10 mit einer weiteren Indexierungsregel («prime moyenne cantonale»), nicht ausgewertet. → Frage 9.⟩
+- **RDU-Posten, die die App kennt (Fachprüfung 28.09.2026, Blocker — die erste Fassung nahm nur Lohn, Nebenerwerb und Renten):** erhaltene Alimente ×12 (LRDU Art. 4 al. 1 lit. c «les pensions alimentaires»; LIPP Art. 26 lit. e), Familienzulagen ×12 (LIPP Art. 18 al. 1 «y compris … les allocations» — dass die Kinder-/Ausbildungszulagen gemeint sind, ist **gewählt**, Frage 9), Berufskosten-Pauschale −3 % des unselbständigen Erwerbseinkommens, min. 600, max. 1'700 (LIPP Art. 29 al. 2 via LRDU Art. 5 al. 1 lit. d; ohne sie sah eine Person mit 15'000–15'600 Netto «automatisch», obwohl ihr RDU unter 15'000 liegt), Säule-3b-Guthaben als Vermögen (LRDU Art. 6 lit. f «assurances-vie … pour leur valeur de rachat»; lit. g nimmt das Vorsorgekapital 3a aus). Es fehlen weiter: Schulden (Art. 7 lit. b), Kinderbetreuung (Art. 5 lit. e), bezahlte Unterhaltsbeiträge (lit. f), Krankheitskosten über 5 % (lit. h), Nebenerwerbs-Pauschale (LIPP Art. 29A) — alle in Richtung «RDU zu hoch».
+- **Neuberechnung bei Verschlechterung, Kind im Laufe des Jahres, Verbesserung (RaLAMal Art. 13B–13E; Fachprüfung 28.09.2026 — «Art. 9–12 gelesen» hatte sie ausgelassen):** Art. 13B al. 1–5: «durablement» = «depuis plus de 6 mois», «notable» = «diminution de 20% ou plus du revenu déterminant actualisé», «demande écrite», «avant le 30 novembre … si l'aggravation … se produit durant le deuxième semestre … jusqu'au 30 juin de l'année suivante». Art. 13C: «groupe familial s'agrandit en cours d'année d'un ou de plusieurs enfants mineurs» → schriftlicher Antrag, Fristen wie 13B al. 5 (App: Hinweis `ipv.geAntragKindNeu` bei Jahrgang > Basisjahr; ob das auch für Jahrgang 2025 gilt: Frage 9). Art. 13D: 13B gilt analog für die Vermutungsfälle nach Art. 20 al. 2/3. Art. 13E al. 1/2: Verbesserung «sans délai» melden; ab «10 000 francs» über dem aktualisierten RDU «indûment touchés», Rückerstattung nach Art. 33. Alles im Vorbehalt `ipv.vorbehaltGE`.
 - **Anzeige «Max. Einkommen»** zeigt mit Kindern die Grenze der Gruppe 8 (Erwachsenenbeitrag, z. B. 121'000 bei einem Kind); Gruppe 9 (151'000) nennt nur `geNurKinder`. ⟨Fachprüfung 28.09.2026: vorher 151'000, die Grenze nur des Kinderbeitrags.⟩
 - **Säule 3a im RDU:** LRDU Art. 5 al. 1 lit. a verweist auf «article 31, lettre a, LIPP», lit. c auf «article 31, lettre b, LIPP». LIPP (rsGE D 3 08, Stand 01.01.2026) Art. 31: lit. a = AHV/IV/EO/ALV/UVG-Beiträge, lit. b = berufliche Vorsorge, **lit. c = gebundene Selbstvorsorge (3a)** — lit. c ist in der LRDU **nicht** genannt. ⟨korrigiert 28.09.2026: oben unter «Massgebendes Einkommen» steht «Abzüge nach Art. 5 LRDU u. a. Säule-3a/2.-Säule-Beiträge» — die **3a** gehört nicht dazu, nur die 2. Säule. Der Satz bleibt als Beleg stehen.⟩ Folge für die App: das Nettoeinkommen trägt die 3a bereits und ist damit für Genf richtig (Regel `SAEULE_3A.voll`, Abzug 0).
 - **Vermögen im RDU:** LRDU Art. 6 (Bruttovermögen inkl. Liegenschaften, Wertschriften, Bargeld/Konten, Rückkaufswerte; ohne Hausrat und Vorsorgekapital) minus Art. 7 (Schulden). Die App kennt nur `securitiesValue` + `otherAssets` + `savingsAccount` ohne Schulden — der RDU-Zuschlag (1/15) fällt tendenziell **zu hoch** aus, der Betrag zu tief.
@@ -2636,10 +2784,10 @@ Alle Zahlen oben heute an der Quelle neu gelesen, jeder Abruf mit Gegenprobe: `g
 **Bewusst nicht gebaut:** Paare, eingetragene Partnerschaften, Konkubinat (mit und ohne gemeinsames Kind; RaLAMal Art. 9 addiert die RDU), junge Erwachsene (eigener Betrag 231/106, RDU der Eltern + eigener bei gemeinsamem Wohnsitz oder eigenem RDU < 15'000, RaLAMal Art. 10 al. 7 lit. a/b), Quellenbesteuerte (Art. 24 LaLAMal, Art. 12 RaLAMal), Zuzug (Art. 25 LaLAMal), EL-/PCFam-/Sozialhilfe-Beziehende (Art. 22 al. 7–9 LaLAMal, Art. 11A–11C RaLAMal), im Ausland Wohnende (Art. 24A), Ermessensveranlagte (Art. 27 lit. b), die Vermutung beim Bruttoeinkommen > 200'000 (Art. 10 al. 2 RaLAMal — die App kennt das Brutto nicht sicher; über jeder Grenze ohnehin; die App rechnet nach Art. 21 al. 8 auch über vier Kinder hinaus), die Ersatzrechnung «Brutto × 0,95 + 1/15 Bruttovermögen» (Art. 10 al. 3), die Neuberechnung nach Art. 13B (die App kennt den RDU 2024 nicht und kann −20 % nicht feststellen; Bedingungen und Fristen stehen im Vorbehalt), Rundung des RDU (ungerundet verglichen — gewählt, keine Quelle).
 
 ### Offen / nicht gefunden
-- Der Indexierungs-Arrêté des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht separat gefunden; die Beträge stammen aus dem amtlichen Barème-PDF des Kantons [1]. Silgeneve-Stände: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal «au 1er janvier 2025» — Gesetzestext enthält die unindexierten Beträge (320/270/…/50). ⟨28.09.2026: weiterhin nicht gefunden; Frage 8 in `FRAGEN-AN-DIE-AEMTER.md`. Presseberichte nennen dieselben Beträge, sind aber keine Quelle.⟩
+- Der Indexierungs-Arrêté des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht separat gefunden; die Beträge stammen aus dem amtlichen Barème-PDF des Kantons [1]. Silgeneve-Stände: LaLAMal «Dernières modifications au 2 novembre 2024», RaLAMal «au 1er janvier 2025» — Gesetzestext enthält die unindexierten Beträge (320/270/…/50). ⟨28.09.2026: weiterhin nicht gefunden; Frage 9 in `FRAGEN-AN-DIE-AEMTER.md`. Presseberichte nennen dieselben Beträge, sind aber keine Quelle.⟩
 - Die Seite «Barèmes» (ge.ch/informations-generales-subside-assurance-maladie/baremes) lieferte per curl HTTP 403 («Zone sécurisée»); das verlinkte Dokument war frei abrufbar. ⟨28.09.2026: die Dokumentseite `ge.ch/document/baremes-categories-2026-subsides-assurance-maladie` liefert 200 und verlinkt das PDF.⟩
 - Beträge für PC-AVS/AI-, PCFam- und Sozialhilfe-Beziehende (Durchschnittsprämie) nicht erfasst.
-- Ob die Gleichstellung «Person mit Unterhaltspflicht = Paar» (Art. 21 al. 4 LaLAMal) auch für die Untergrenzen von RaLAMal Art. 10 al. 4/5 gilt (15'000 / 20'000): nicht gefunden — Frage 8.
+- Ob die Gleichstellung «Person mit Unterhaltspflicht = Paar» (Art. 21 al. 4 LaLAMal) auch für die Untergrenzen von RaLAMal Art. 10 al. 4/5 gilt (15'000 / 20'000): nicht gefunden — Frage 9.
 - Kein amtliches Rechenbeispiel mit Einzelfall gefunden; Prüfstein sind die Haushaltssummen des Barème [1] (z. B. «Personne seule + 2 enfants, Groupe 3: fr. 504.00» = 240 + 2 × 132).
 
 ### Quellen

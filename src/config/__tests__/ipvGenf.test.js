@@ -63,7 +63,7 @@ describe('K31 GE: die Konstanten 2026, wörtlich aus [1], [2], [3], [7]', () => 
   // Art. 9B [3]: die Gesetzesbeträge (Art. 22 Abs. 1 [2], Stand Dezember 2024) werden jährlich
   // indexiert und «arrondis au franc supérieur». Den Arrêté 2026 haben wir nicht; dass alle acht
   // Erwachsenenbeträge aus EINEM Faktor folgen, ist die Gegenprobe, die wir haben. Die Beträge der
-  // Gruppe 9 (60 → 67, 100 → 106) folgen ihm NICHT — das steht im Modulkopf und in Frage 8.
+  // Gruppe 9 (60 → 67, 100 → 106) folgen ihm NICHT — das steht im Modulkopf und in Frage 9.
   it('alle acht Erwachsenenbeträge 2026 = Gesetzesbetrag × 1,0875, aufgerundet — Gruppe 9 nicht', () => {
     expect(IPV_GE.gesetzErwachsene).toEqual([320, 270, 220, 180, 150, 110, 80, 50]);
     IPV_GE.gesetzErwachsene.forEach((g, i) => {
@@ -331,7 +331,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
   });
 
   // LIPP Art. 18 Abs. 1 [7]: «les allocations» — GEWÄHLT, dass die Familienzulagen gemeint sind
-  // (Frage 8). Weglassen hiesse zu hoch, also Rückforderungsseite.
+  // (Frage 9). Weglassen hiesse zu hoch, also Rückforderungsseite.
   it('Familienzulagen zählen zum RDU: 400/Monat = 4 800', () => {
     const kind = [{ birthDate: '2015-01-01' }];
     // 4 000 → 46 560; + 4 800 = 51 360 → Gruppe 2
@@ -413,7 +413,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     const r = calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2026-03-01' }] }));
     expect(r).toMatchObject({ amount: 480, noteKey: 'ipv.geAntragKindNeu', noteParams: { basisjahr: 2024, jahr: 2026, folgejahr: 2027 }, antragNoetig: true });
     expect(r.cantonData.noteKey).toBe('ipv.geWegAntrag');
-    // Jahrgang 2025 ebenso (Frage 8, ob das der SAM so sieht); eingetipptes Alter 1 ebenso
+    // Jahrgang 2025 ebenso (Frage 9, ob das der SAM so sieht); eingetipptes Alter 1 ebenso
     expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2025-06-01' }] })).noteKey).toBe('ipv.geAntragKindNeu');
     expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ age: 1 }] })).noteKey).toBe('ipv.geAntragKindNeu');
     // Jahrgang 2024 steht in der Veranlagung: automatisch

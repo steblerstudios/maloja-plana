@@ -71,13 +71,13 @@
 // 4. DIE GESETZESBETRÄGE STEHEN NICHT IM GESETZ. Art. 22 [2] nennt 320 … 50 Franken (Stand Dezember
 //    2024); Art. 9B [3] lässt sie jährlich per Arrêté indexieren und auf den Franken aufrunden. Die
 //    Beträge 2026 (348 … 55) stehen im Barème [1]. Den Arrêté selbst haben wir nicht gefunden
-//    (docs/sources/FRAGEN-AN-DIE-AEMTER.md, Frage 8). Gegenprobe, die wir haben: alle acht
+//    (docs/sources/FRAGEN-AN-DIE-AEMTER.md, Frage 9). Gegenprobe, die wir haben: alle acht
 //    Erwachsenenbeträge ergeben sich aus den Gesetzesbeträgen mit EINEM Faktor 1,0875, aufgerundet
 //    (320 × 1,0875 = 348.00 · 270 × 1,0875 = 293.63 → 294 · … · 50 × 1,0875 = 54.38 → 55); der
 //    Test hält das fest. Die Beträge für Kinder (60 → 67) und junge Erwachsene (100 → 106) in
 //    Gruppe 9 folgen NICHT diesem Faktor (66 bzw. 109 wären es) — Art. 9B Abs. 1 [3] nennt für
 //    alle dieselbe Durchschnittsprämie. Warum sie abweichen, erklärt keine der gelesenen Quellen;
-//    wir nehmen die Barème-Zahlen und fragen (FRAGEN-AN-DIE-AEMTER.md, Frage 8). ⟨Rechtsprüfung
+//    wir nehmen die Barème-Zahlen und fragen (FRAGEN-AN-DIE-AEMTER.md, Frage 9). ⟨Rechtsprüfung
 //    28.09.2026: hier stand vorher «eigene Durchschnittsprämie je Kategorie» als Tatsache —
 //    das war eine Vermutung.⟩
 //
@@ -97,7 +97,7 @@
 //   + Familienzulagen ×12 — LIPP Art. 18 Abs. 1 [7] zählt zum Erwerbseinkommen «les allocations»;
 //     die App führt `familienzulagen` («pro Monat»). Dass damit die Kinder- und Ausbildungszulagen
 //     gemeint sind, entspricht dem Bundesrecht (sie stehen auf dem Lohnausweis), der Genfer Wortlaut
-//     nennt sie nicht ausdrücklich — GEWÄHLT, Frage 8 an das SAM. Weglassen hiesse: mit Kindern
+//     nennt sie nicht ausdrücklich — GEWÄHLT, Frage 9 an das SAM. Weglassen hiesse: mit Kindern
 //     eine bis mehrere Gruppen zu hoch (die Paar-Spalte ist 10'000 breit), und der Betrag ginge über
 //     data/ipvAbzug.js ins Budget.
 //   − Berufskosten pauschal 3 % des unselbständigen Erwerbseinkommens, mindestens 600, höchstens
@@ -228,7 +228,7 @@ export function ipvGenfRechnen({ rdu, kinderZahl = 0 }) {
 // RDU-Untergrenze, unter der der Kanton den Anspruch NICHT automatisch prüft (RaLAMal Art. 10
 // Abs. 4/5 [3]). Der Text nennt nur «assuré seul, sans charge légale» und «couple, sans charge
 // légale», je +3'000 «par charge légale». Für eine alleinstehende Person MIT Kind gibt es zwei
-// Lesarten, und der Text entscheidet sie nicht (FRAGEN-AN-DIE-AEMTER.md, Frage 8):
+// Lesarten, und der Text entscheidet sie nicht (FRAGEN-AN-DIE-AEMTER.md, Frage 9):
 //   `vorsichtig`  Paar-Zeile + 3'000 je Kind (Gleichstellung wie Art. 21 Abs. 4 [2]) — warnt
 //                 häufiger. Damit wird der HINWEIS gesetzt: ein unnötiger Antrag kostet nichts,
 //                 ein fehlender den ganzen Jahresanspruch.
@@ -379,7 +379,7 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   } else if (kindNachBasisjahr) {
     // Art. 13C [3]: Fristen wie 13B Abs. 5 — vor dem 30.11., bei Zuwachs im 2. Halbjahr bis 30.06.
     // des Folgejahres. Ob das auch für ein Kind aus dem VORJAHR (Jahrgang 2025) gilt, sagt der Text
-    // nicht (Frage 8); der Hinweis warnt in beiden Fällen.
+    // nicht (Frage 9); der Hinweis warnt in beiden Fällen.
     noteKey = 'ipv.geAntragKindNeu'; noteParams = { basisjahr, jahr, folgejahr: jahr + 1 };
   } else if (r.nurKinder) {
     noteKey = 'ipv.geNurKinder'; noteParams = { value: r.grenze };
