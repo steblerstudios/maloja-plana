@@ -240,6 +240,34 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 10 · Gesundheitsamt Appenzell Innerrhoden — Stufen, steuerpflichtiges Einkommen, Kinder
+
+*Aufgenommen 28.09.2026 beim Einbau von AI. Entwurf — **nicht gesendet**. (Nummer vorläufig;
+parallel werden weitere Kantone eingetragen.)*
+
+**Worum es geht:** Der StKB IPV (GS 832.501, in Kraft seit 01.01.2026) und das Merkblatt 2026 sind
+vollständig; alle vier Berechnungsbeispiele des Merkblatts rechnen wir auf den Franken nach. Drei
+Punkte bleiben, weil die Beispiele sie nicht zeigen.
+
+**Frage 1 — Stufen:** «dazwischen steigt der Selbstbehalt schrittweise um 0.125% pro Fr. 1'000.--».
+Gilt die Stufe je **volle** Fr. 1'000 über 45'000 (bei 60'500 also 8,875 %) oder je **angefangene**
+(9,000 %)? Wir rechnen mit vollen Tausendern.
+
+**Frage 2 — «steuerpflichtiges Gesamteinkommen»:** Ist das das steuerbare Einkommen nach Abzug der
+Sozialabzüge (Kinderabzug Art. 37 StG), auf 100 Franken abgerundet? Wir rechnen so.
+
+**Frage 3 — Kinder ohne Anspruch aus der Formel:** Werden Kinder bis 75'000 auch dann auf 80 %
+angehoben, wenn die Richtprämien des Haushalts den Selbstbehalt nicht übersteigen? Art. 5 Abs. 5 knüpft
+nur an das Einkommen; wir rechnen so (Kinderanteil 827 Franken).
+
+**Frage 4 — Rundung:** Das Beispiel mit 75'000 rundet den Selbstbehalt 8'062.50 auf 8'062 ab und füllt
+die Kinder auf 827 statt 827.20 auf. Ist «auf ganze Franken abrunden» die Regel?
+
+**Stand:** AI ist für 2026 gebaut (Entwurfs-PR, K31). Ab 01.01.2027 zeigt die App für AI keinen Betrag
+mehr, bis die Werte 2027 eingearbeitet sind.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
