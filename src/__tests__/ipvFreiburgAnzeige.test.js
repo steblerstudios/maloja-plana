@@ -9,6 +9,7 @@ import { PraemienBeleg } from '../components/PraemienBeleg.jsx';
 import { praemienBelegState } from '../data/praemienBeleg.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { ipvAbzug } from '../data/ipvAbzug.js';
+import FinanzUebersicht from '../FinanzUebersicht.jsx';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
 import fr from '../i18n/fr.js';
@@ -107,6 +108,7 @@ describe('K31 IPV-Rechner, Kanton Freiburg', () => {
       expect(texte.ipv.frKeinAnspruch).toContain('{value}');
       for (const k of ['frFristLaeuft', 'frFristVorbei', 'frFristNichtAbgezogen']) expect(texte.ipv[k]).toContain('{jahr}');
       expect(texte.ipv.frFristVorbei).toContain('{folgejahr}');
+      expect(typeof texte.ipv.offenGrund.kindVolljaehrig, `${sprache}: offenGrund.kindVolljaehrig`).toBe('string');
     }
   });
 });
@@ -132,6 +134,13 @@ describe('K31 FR nach der Antragsfrist: nirgends abgezogen, Freiburger Hinweis i
     expect(karte).not.toContain('kkLast.ipvRelief');
     expect(praemienBelegState(profil(20000 / 12))).toMatchObject({ mode: 'fristVorbei', verbilligung: 0, noteKey: 'ipv.frFristNichtAbgezogen' });
     expect(beleg(profil(20000 / 12))).not.toContain('ipv.luFristNichtAbgezogen');
+  });
+  // Fachprüfung #472, K6: der FR-Pfad der Finanzübersicht (Anspruch bleibt, Frist-Satz daneben).
+  it('Finanzübersicht: der Anspruch bleibt stehen, der Freiburger Frist-Satz daneben', () => {
+    am('2026-09-28T12:00:00');
+    const html = renderToStaticMarkup(React.createElement(FinanzUebersicht, { palette, t, data: profil(20000 / 12), onNavigate: () => {} }));
+    expect(html).toContain('ipv.frFristVorbei(2026|2027)');
+    expect(html).not.toContain('ipv.luFristVorbei');
   });
   it('Budget: nichts abgezogen, der Freiburger Hinweis', () => {
     am('2026-09-28T12:00:00');

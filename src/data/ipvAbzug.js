@@ -15,6 +15,16 @@
 //             'keiner'      kein Anspruch, kein belegter Kanton oder kein Betrag → 0
 //   frist   → { jahr, vorjahr } nur bei 'fristVorbei' (Parameter für den Hinweis-Text)
 //
+// Kantone mit Anmelde- oder Antragsfrist setzen `anmeldefristVorbei` (Wächter: ipvAbzug.test.js):
+//   LU (config/ipvLuzern.js) — Anmeldung bis 31. Oktober des VORJAHRES, siehe unten.
+//   FR (config/ipvFreiburg.js) — ORP RSF 842.1.13 Art. 2 al. 1: Antrag bis 31. August des
+//      Anspruchsjahres; danach tritt die Kasse nur noch in Ausnahmefällen ein. Von Amtes wegen
+//      geprüft werden bisherige Beziehende und Anträge des Vorjahres ohne Entscheid — die App
+//      erkennt beide nicht, darum auch hier 0 nach der Frist (Weg: «Verfügung erhalten»).
+// Welcher HINWEIS dazu steht, sagt `fristHinweisKey` unten: jeder Kanton ausser LU nennt seinen
+// eigenen Schlüssel (`fristNichtAbgezogenKey` im Ergebnis); fehlt er, ein neutraler Text — nie
+// still der Luzerner (Ruling nach der Fachprüfung #472, 28.09.2026).
+//
 // Luzern (K31, config/ipvLuzern.js): SRL 866 § 12 Abs. 2/3 — Anmeldung bis 31. Oktober des
 // Vorjahres; wer später kommt, erhält nur die Prämien verbilligt, «die nach der Gesuchstellung
 // fällig werden». Ob und wann angemeldet wurde, weiss die App nicht — darum nach der Frist 0,
@@ -79,6 +89,17 @@ function schaetzungsAbzug(ipv) {
   }
   const betrag = Math.max(0, Number(ipv.amount) || 0);
   return { betrag, grund: betrag > 0 ? IPV_ABZUG_GRUND.GESCHAETZT : IPV_ABZUG_GRUND.KEINER, frist: null };
+}
+
+// Der Hinweis-Schlüssel zur abgelaufenen Frist — EINE Stelle für alle drei Leser (KK-Last-Karte,
+// Prämien-Beleg, Budget). `ort`: 'ipv' (Karte, Beleg) oder 'budget'.
+//   Kanton nennt seinen Schlüssel → dieser (er gilt für beide Orte)
+//   LU ohne eigenen Schlüssel     → die Luzerner Texte (Frist 31. Oktober des Vorjahres)
+//   sonst                         → neutral, ohne Datum
+export function fristHinweisKey(ipv, ort = 'ipv') {
+  if (ipv && ipv.fristNichtAbgezogenKey) return ipv.fristNichtAbgezogenKey;
+  if (ipv && ipv.canton === 'LU') return ort === 'budget' ? 'budget.ipvHintLuFristVorbei' : 'ipv.luFristNichtAbgezogen';
+  return ort === 'budget' ? 'budget.ipvHintFristVorbei' : 'ipv.fristNichtAbgezogen';
 }
 
 // `ipv` darf mitgegeben werden, wenn der Leser calculateIPV schon gerechnet hat (gleiches Ergebnis,
