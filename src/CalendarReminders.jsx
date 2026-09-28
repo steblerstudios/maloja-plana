@@ -280,7 +280,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
           },
         },
           React.createElement('span', { 'aria-hidden': 'true', style: { width: '8px', height: '8px', borderRadius: '50%', background: palette.sage, flexShrink: 0 } }),
-          React.createElement('span', { style: { flex: 1, minWidth: 0 } }, t('anspruch.items.' + sig.key + '.label'))
+          React.createElement('span', { style: { flex: 1, minWidth: 0 } }, t('anspruch.items.' + sig.key + '.label')
+            + (sig.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : ''))
         ))
       );
     })(),
