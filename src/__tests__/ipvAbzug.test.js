@@ -216,9 +216,10 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  // OW/NW (28.09.2026): weitere Kantone mit verwirkender Antragsfrist.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Frist und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvNidwalden.js', 'data/ipvAbzug.js'];
+  // Seit 28.09.2026 setzen auch Nidwalden (kKVG Art. 22), Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484)
+  // und — sobald gemergt — Obwalden und Freiburg die Frist.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, NW, TI) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvNidwalden.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });

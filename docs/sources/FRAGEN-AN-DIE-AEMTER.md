@@ -371,6 +371,35 @@ Kategorien A–C wie für Erwachsene?
 
 ---
 
+## 14 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
+
+*Aufgenommen 28.09.2026 beim Einbau von TI. Entwurf — **nicht gesendet**.*
+
+**Wo:** LCAMal (RL 853.100) Art. 31, 32a, 37; RLCAMal (RL 853.110) Art. 17, 18; Decreto RL 870.130;
+Istruzioni RIPAM 2026.
+
+**Frage 1 — RDM:** Art. 32a nennt «50% del limite di fabbisogno, senza computo della pigione, ai sensi
+della Laps». Ist das für eine Einzelperson 2026 die «soglia d'intervento» nach Laps Art. 10 und Decreto
+870.130, also 18'709 (RDM = 3,8 × 50 % × 18'709 = 35'547.10)? Die Istruzioni nennen 18'709 als «limite di
+fabbisogno esistenziale», RLCAMal Art. 18 regelt das Jahr — wörtlich gleichgesetzt ist es nirgends.
+
+**Frage 2 — Berufsauslagen:** Ist die Pauschale von 4'000 für jede UR mit einer hauptberuflich
+angestellten Person fest, oder zählt der tatsächliche Abzug nach LT, höchstens 4'000?
+
+**Frage 3 — Kinder:** Wie wird nach RLCAMal Art. 17 Abs. 2 aufgeteilt, wenn die UR-Verbilligung 80 % des
+PMR der Minderjährigen übersteigt — erhalten diese genau 80 % und die übrigen Personen den Rest nach PMR?
+Davon hängen der Deckel (Art. 37 Abs. 3) und der Mindestbetrag je Person (Art. 21) ab.
+
+**Frage 4 — Ziffer 10.3:** Die Istruzioni nennen für die Sozialabzüge (CS) die Ziffern «10.1, 10.2 e
+10.3» der Veranlagung. Ist 10.3 die Säule 3a? LCAMal Art. 31 Abs. 1 lit. d zählt die CS abschliessend
+auf («AVS, AI, IPG, AD, AINP, LPP») — die App rechnet darum ohne 3a-Abzug; zieht das IAS sie ab, liegt
+die Zahl für 3a-Sparende zu tief.
+
+**Stand:** TI ist für 2026 für Alleinstehende gebaut (Entwurfs-PR, K31); Haushalte mit Kindern und Paare
+zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüttert.
+
+---
+
 ## 16 · Ausgleichskasse Nidwalden — Kinder: besondere und allgemeine Prämienverbilligung
 
 *Aufgenommen 28.09.2026 beim Einbau von NW. Entwurf — **nicht gesendet**.*
