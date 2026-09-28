@@ -372,6 +372,41 @@ Kategorien A–C wie für Erwachsene?
 
 ---
 
+## 12 · Caisse de compensation du canton de Fribourg (ECAS) — Rundung des Abstands, Rundung des Betrags, Kinder mit 18
+
+*Aufgenommen 28.09.2026 beim Einbau von FR. Entwurf — **nicht gesendet**. Nummer 12 (Integration 28.09.2026: 8 UR, 9 NE, 10 GR, 11 TG; zuerst als 8, dann 9 notiert).*
+
+**Worum es geht:** Grenzen, Stufentabelle und Durchschnittsprämien 2026 stehen vollständig in der
+ORP (RSF 842.1.13, Art. 3, 5, 6, Annexe 1) und im Mémento 2026. Das Rechenbeispiel des Mémentos
+(Ehepaar + 2 Kinder, 62'000 gegen 93'000 → 33.33 % → 35.71 % / 80 %) rechnen wir nach. Drei
+Punkte stehen in keiner der Unterlagen:
+
+**Question 1 — arrondi de l'écart:** La tabelle de l'annexe 1 progresse par centièmes de pour-cent
+(«de 0,01 % jusqu'à 1,02 %», «de 1,03 % jusqu'à 2,03 %» …) et l'exemple du mémento indique
+«33.33%». Comment l'écart est-il arrondi avant d'appliquer la tabelle — au centième le plus proche
+ou par troncature ? (Wir runden kaufmännisch; der Unterschied ist höchstens eine Stufe, rund
+CHF 74 im Jahr in Region 1, in einem Band von wenigen Franken Einkommen.)
+Und: un revenu déterminant inférieur à la limite de moins de 0,005 % (arrondi à 0,00 %) donne-t-il
+droit à 1 % (texte du mémento, «de moins de 1.03% inférieur») ? Wir rechnen 1 %.
+
+**Question 2 — arrondi du montant:** Le taux est appliqué à la prime moyenne mensuelle (p. ex.
+32,46 % × 569 = 184,70 par mois). Le montant versé est-il arrondi (au franc, aux 5 centimes) et à
+quel niveau — par mois et par personne, ou par année ? Wir runden die Jahressumme auf Franken.
+
+**Question 3 — enfant qui atteint 18 ans pendant l'année:** Est-il compté comme «enfant à charge»
+(art. 3 al. 3 let. a ORP, «enfant mineur») jusqu'à la fin de l'année, ou seulement jusqu'au mois
+de ses 18 ans (art. 5 al. 4 ORP) ? Solange das offen ist, zeigt die App für Haushalte mit einem
+Kind, das im Anspruchsjahr 18 wird, keinen Betrag.
+*Zwei Stellen, die fast antworten (nachgetragen nach der Fachprüfung, K1):* das Mémento Ziff. 8.1
+nennt die Kinderprämie «pour un enfant jusqu'à et y compris 18 ans», und Ziff. 5 verlangt eine
+Ausbildungsbestätigung erst «pour les enfants à charge âgés de 19 à 25 ans». Das spricht dafür,
+dass ein 18-jähriges Kind das ganze Jahr als Kind zählt — belegt ist es nicht.
+
+**Stand:** FR ist für 2026 gebaut (Entwurfs-PR, K31). Das Mémento 2027 war am 28.09.2026 nicht
+publiziert. Ab 01.01.2027 zeigt die App für FR keinen Betrag mehr.
+
+---
+
 ## 13 · Caisse de compensation du canton du Jura (ECAS) — Vermögensgrenze genau 150'000, Eingang der Frist
 
 *Aufgenommen 28.09.2026 beim Einbau von JU (Fachprüfung #483, 💡 9 und ⚠️ 3d). Entwurf — **nicht gesendet**.

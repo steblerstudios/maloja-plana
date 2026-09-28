@@ -30,6 +30,7 @@ export const IPV_MODULE = {
   AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+  FR: { laden: () => import('./ipvFreiburg.js'), fn: 'ipvFreiburg' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
   // JU: keine Prämienregion — und das Modul zeigt bewusst keine Zahl (steuerbares Einkommen fehlt).
   JU: { laden: () => import('./ipvJura.js'), fn: 'ipvJura', brauchtPLZ: false },
@@ -139,7 +140,11 @@ export const CANTONAL_IPV = {
   NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
-  FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
+  // FR (K31): eigenes Modell in config/ipvFreiburg.js (Prozent der regionalen Durchschnittsprämie
+  // nach dem Abstand zur Einkommensgrenze, 60 Stufen). Die Grenze hängt am Haushalt und wird im
+  // Modul gesetzt (sie ist amtlich als Zahl publiziert); hier darum keine Einzelwerte.
+  FR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation',
+    beleg: { quelle: 'ORP FR (RSF 842.1.13) · LALAMal (RSF 842.1.1) · Caisse de compensation FR (ECAS) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
   // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
   // nur «kein Anspruch», wo er sicher ist. Der Grenzwert 74'000 ist amtlich, aber keine Grenze, bis

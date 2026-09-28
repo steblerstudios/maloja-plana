@@ -40,7 +40,7 @@ sind. Dieses Dokument ändert keinen Code.
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
 | ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
-| FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | abbildbar | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
+| FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | gebaut (PR #472, nachgeprüft 28.09.2026) | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise — **gebaut (PR #481), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Eckpunkte der linearen Skala nicht publiziert sind (nur «kein Anspruch», wo sicher) | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
@@ -1348,7 +1348,7 @@ App: maxIncome 60'000, subsidySingle 3'600, linearer Abbau. Belegt ist für eine
 
 ## FR — Freiburg / Fribourg
 
-**Beurteilung:** abbildbar
+**Beurteilung:** ~~abbildbar~~ gebaut (K31, PR #472; an der Quelle nachgeprüft 28.09.2026)
 **Modell (kurz):** Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen
 **Zuständig / Weg:** Caisse cantonale de compensation AVS (ECAS), Givisiez. Antrag (Formular «Demande de réduction des primes 2026» oder online), Frist 31. August 2026 (Eingang); Anspruch frühestens ab dem Monat der Einreichung. Bisherige Bezügerinnen und Bezüger werden von Amtes wegen geprüft; EL-Beziehende ohne Antrag.
 **Gültigkeit:** 2026 definitiv (Mémento 2026; ORP-Fassung in Kraft seit 01.01.2024; Durchschnittsprämien 2026 im Mémento)
@@ -1408,6 +1408,111 @@ App: maxIncome 48'000, subsidySingle 2'400, linearer Abbau. Belegt ist für eine
 3. RSF 842.1.1 Loi d'application de la loi fédérale sur l'assurance-maladie (LALAMal), du 24.11.1995. https://bdlf.fr.ch/app/fr/texts_of_law/842.1.1 — abgerufen 16.09.2026
 4. «Demande de réduction des primes pour l'année 2026» (Formular, Frist 31.08.2026), ECAS. https://www.ecasfr.ch/Htdocs/Files/v/6141.pdf — abgerufen 16.09.2026; Übersichtsseite https://www.ecasfr.ch/fr/Assurances/Reduction-des-primes-d-assurance-maladie/Reduction-des-primes-d-assurance-maladie.html — abgerufen 16.09.2026
 5. Verordnung des EDI über die Durchschnittsprämien der Krankenpflegeversicherung für die Berechnung der EL und ÜL, Anhang (Art. 3), Inkrafttreten 1. Januar 2026, Ziff. 2 (FR). https://www.bsv.admin.ch/dam/de/sd-web/juMQ1SfoExDq/DE%20Anhang%20(Art.%203)%20Durchschnittspr%C3%A4mien%202026.pdf — abgerufen 16.09.2026 (nur Plausibilitätsprobe)
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+**An der Quelle nachgeprüft 28.09.2026**, alle Zahlen des Moduls `src/config/ipvFreiburg.js` heute gelesen:
+
+| Quelle | Fassung | Weg | Gegenprobe |
+|---|---|---|---|
+| ORP RSF 842.1.13 mit Annexe 1 | «Version actuelle en vigueur depuis le 01.01.2024 (Date d'adoption: 09.10.2023)», Version 8445, `future_versions` leer | `https://bdlf.fr.ch/api/fr/versions/8445/pdf_file_with_annexes` → HTTP 200, 289'036 Bytes, 10 S.; Metadaten über `…/api/fr/texts_of_law/842.1.13` | `…/versions/9999999/…` → HTTP 404, 0 Bytes; `…/texts_of_law/842.1.99` → 404 |
+| LALAMal RSF 842.1.1 | «Version actuelle en vigueur depuis le 01.01.2017», Version 6350, keine künftige | `…/api/fr/versions/6350/pdf_file` → 200 | wie oben |
+| Mémento RPI 2026 (ECAS) | 6 S., Fusszeile «06.2023/ECAS» (Vorlage), Inhalt 2026 | Link auf der RPI-Seite der ECAS, 28.09.2026 unverändert; 194'767 Bytes | — |
+| «Lissage des taux (60 paliers)» (ECAS) | ohne Datum | `assets.caisseavsfr.ch/…/6120.pdf/grille_lissage_des_taux_paliers_f.pdf` → 200 | — |
+| EDI-Durchschnittsprämien 2026, Anhang | Inkrafttreten 1.1.2026 | BSV-PDF → 200 | 🛑 Dateiname ist Dekor: derselbe Pfad mit «2099» im Namen liefert dieselben 252'367 Bytes. Gemessen wird die ID: `…/zzZZ1SfoExDq/x.pdf` → 404 |
+| BFS Amtliches Gemeindeverzeichnis | Stichtag 01.01.2026 | `agvchapp.bfs.admin.ch/api/communes/snapshot?date=01-01-2026` → 200, CSV | `…/snapshotX…` → 404 |
+
+**Wortlaute, die der Code zitiert** (Originalsprache):
+
+> «Ont droit à la réduction des primes les assuré-e-s ou les familles qui ont un revenu déterminant annuel inférieur à: a) 37'000 francs pour les personnes seules sans enfant; b) 43'400 francs pour les personnes seules avec un ou plusieurs enfants à charge; c) 65'000 francs pour les couples mariés et les partenaires enregistrés.» · «A ces montants s'ajoutent 14'000 francs par enfant à charge.» — ORP Art. 3 al. 1/2
+>
+> «Est considéré-e comme enfant à charge: a) un enfant mineur pour qui il existe une obligation d'entretien; b) une jeune personne adulte en formation … jusqu'à l'année de ses 25 ans …» — ORP Art. 3 al. 3
+>
+> «N'ont pas droit à la réduction des primes: a) les assuré e s ou les familles dont le revenu net (code 4.910) excède 150'000 francs ou dont la fortune imposable (code 7.910) excède 250'000 francs; b) les personnes faisant l'objet d'une taxation fiscale d'office.» — ORP Art. 4 al. 1
+>
+> «Pour les enfants, le taux de la réduction s'élève au minimum à 80 % de la prime moyenne régionale …» · «Le montant de la prime moyenne pris en compte équivaut à 93 % de celui qui est fixé par le Département fédéral de l'intérieur … arrondi au franc supérieur.» · «La réduction ne peut pas dépasser 100 % de la prime nette due par l'assuré-e pour l'assurance obligatoire des soins.» — ORP Art. 6 al. 2–4
+>
+> «La demande de réduction des primes doit être présentée au plus tard le 31 août de l'année en cours … Celle-ci n'entre pas en matière sur les demandes présentées après cette échéance.» — ORP Art. 2 al. 1; Ausnahmen al. 2 (aide sociale matérielle, arrivée de l'étranger, suppression des PC)
+>
+> «Le droit à la réduction naît … au plus tôt le premier jour du mois du dépôt de la demande» — ORP Art. 7a
+>
+> «Ont droit à une réduction minimale de 1% les assurés qui ont un revenu déterminant de moins de 1.03% inférieur à la limite légale applicable» — Mémento Ziff. 8
+
+**Stufentabelle:** Annexe 1 der ORP, Mémento Ziff. 12.1 und die «Lissage des taux» der ECAS sind
+zeichengleich (maschinell verglichen: je 59 Zeilen «de … jusqu'à …» + «de 60,01 % ou plus 65,00 %»).
+Der Test `ipvFreiburg.test.js` trägt den Wortlaut und hält die Konstante dagegen.
+
+**Säule 3a:** ORP Art. 5 al. 1 lit. a Ziff. 1 rechnet «les primes et cotisations d'assurance
+(codes 4.110 à 4.140)» wieder auf. Code 4.130 ist in der Freiburger Steuererklärung «Formes
+reconnues de prévoyance individuelle liée (3e pilier a)» — gelesen in den «Instructions générales»
+des Service cantonal des contributions, **Ausgabe Januar 2022 (Steuerjahr 2021)**, abgelegt bei der
+Stadt Freiburg: <https://www.ville-fribourg.ch/sites/default/files/2022-05/instructions-generales-concernant-la-declaration-d-impots_1.pdf>
+— abgerufen 28.09.2026, HTTP 200, 1'047'979 Bytes, Wortlaut S. 23–24 «Code 4.130 Formes reconnues de
+prévoyance individuelle liée (3e pilier a)». (Volle Adresse nachgetragen nach der Fachprüfung, K3.)
+Eine neuere Ausgabe auf fr.ch war am 28.09.2026 nicht auffindbar (der gefundene Link lieferte 404).
+Die Codes sind seit der ORP 2011 dieselben. Folge: Regel `SAEULE_3A.voll` (die 3a steckt im
+Nettoeinkommen der App schon, kein Zuschlag).
+
+**Prämienregionen gegen die Bezirke:** Das Mémento definiert Region 1 als «district de la Sarine»,
+Region 2 als die sechs übrigen Bezirke. Gegen das BFS-Gemeindeverzeichnis 01.01.2026 (119
+Gemeinden): alle 25 Saane-Gemeinden stehen in den BAG-Daten der App in Region 1, alle übrigen in
+Region 2 — bis auf **Fétigny-Ménières (BFS 2056)**, Fusion auf 2026, die in den BAG-Daten noch
+fehlt (dort noch Fétigny 2016 und Ménières 2027, beide Region 2). Das Modul ordnet 2056 ausdrücklich
+Region 2 zu (Bezirk Broye). «Staatswald Galm» (BFS 2391, gemeindefrei) hat keine Region → keine Zahl.
+
+**Durchschnittsprämien 2026** (Mémento Ziff. 8.1) nachgerechnet nach ORP Art. 6 al. 3: 93 % × EDI
+÷ 12, aufgerundet — 7'332 → 569, 5'352 → 415, 1'752 → 136, 6'756 → 524, 4'968 → 386, 1'596 → 124.
+Alle sechs stimmen. ⟨korrigiert 28.09.2026: oben steht «Kein eigener Staatsratsbeschluss … gelesen»
+— bleibt richtig; die Beträge folgen aber aus der ORP selbst, nicht nur aus dem Mémento.⟩
+
+**Prüfstein (amtliches Beispiel, Mémento Ziff. 8):** Ehepaar + 2 Kinder, Grenze 93'000, massgebend
+62'000 → Abstand 33.33 % → Eltern 35.71 %, Kinder 80 %. Der Test rechnet jede dieser Zahlen nach.
+Das Beispiel nennt **keine Frankenbeträge**; die Frankenwerte im Test sind eigene Rechnung.
+Handrechnungen im Test: Einzelperson Region 1, 20'000 → 45.95 % → 49,81 % × 569 × 12 = 3'401.03;
+Einkommen 0 → 65 % → 4'438.20 (Region 2: 4'087.20); 1 Kind, 40'000 → Grenze 57'400 → 30.31 % →
+32,46 % + Kind 80 % × 136 × 12.
+
+**Gewählt, nicht belegt** (Fragen an die ECAS, `FRAGEN-AN-DIE-AEMTER.md` § 12 — zuerst als 8, dann 9 notiert): Rundung des
+Abstands auf Hundertstel (kaufmännisch) · unter 0,005 % Abstand gilt 1 % (Mémento-Text) · Rundung
+des Betrags (Jahressumme auf Franken) · Kinder, die im Anspruchsjahr 18 werden: keine Zahl ·
+Alter mangels Stichtag (`ERWACHSEN.mangelsStichtag`).
+
+**Bewusst nicht gebaut:** Paare/Konkubinat/mehrere Erwachsene · eigene Anträge von 19- bis
+25-Jährigen und junge Erwachsene in Ausbildung als Kind (Mindestsatz 50 %) · Kinder ab 18 ·
+Quellenbesteuerte (Art. 5 al. 2: 80 % Brutto) · amtlich Veranlagte · Selbständige (Art. 5 al. 1
+lit. b) · Zuzug (al. 8) · Neuberechnung bei 30 % Abweichung (al. 7, steht im Vorbehalt) ·
+EL/Sozialhilfe · Schuldzinsen > 30'000 und Liegenschaftsunterhalt > 15'000.
+Kein Mindestbetrag (in ORP, LALAMal und Mémento keiner gefunden).
+
+**Frist in der App:** Nach dem 31. August des Anspruchsjahres setzt das Modul
+`anmeldefristVorbei` — Budget, KK-Last-Karte und Prämien-Beleg ziehen dann nichts ab, mit einem
+Freiburger Hinweis (`ipv.frFristNichtAbgezogen`), nicht dem Luzerner.
+
+**2027:** Mémento 2027 am 28.09.2026 auf der ECAS-Seite nicht publiziert; ORP ohne künftige Version.
+Ab 01.01.2027 zeigt die App für FR keine Zahl (`jahrVorbei`).
+
+### Nachtrag nach der Fachprüfung #472 (28.09.2026, swiss-precision-pruefer: «mergen», jede Zahl bestätigt)
+
+- **W4 Erwachsen:** ~~«Stichtag fürs Alter: weder ORP noch Mémento nennen einen» (`mangelsStichtag`)~~ ⟨korrigiert⟩
+  ORP Art. 3 al. 3 lit. b/c «jeune personne adulte … jusqu'à l'année de ses 25 ans» und Mémento Ziff. 8.1
+  «jeune adulte âgé de 19 à 25 ans» sind eine Jahrgangsregel → `ERWACHSEN.imAnspruchsjahr` (Jahrgang 2000
+  ist 2026 erwachsen), belegt, eingetragen in `kantonsModell.js`.
+- **W3:** Kinder ab 18 im Anspruchsjahr → eigener Grund `offenGrund.kindVolljaehrig` statt `haushalt`.
+- **W1:** «Kein Anspruch» sagt jetzt, in welche Richtung die Näherung irrt (Einkommen eher zu hoch, weil
+  die Veranlagung Abzüge abzieht, die der App fehlen — ORP Art. 5 al. 1) und empfiehlt nahe der Grenze
+  die Prüfung (Klippe bei Familien: 1 Kind knapp unter 57'400 → 1'373.88, darüber 0).
+- **W2/K5:** Der Frist-Text nennt fürs Folgejahr den Beginn frühestens im Antragsmonat (Art. 7a, Mémento
+  Ziff. 4), die Ausnahmen nur für Ereignisse **nach** dem 31. August (Art. 2 al. 2 «après cette
+  échéance») und die zweite Gruppe von Amtes wegen (Antrag im Vorjahr, Entscheid ausstehend, Ziff. 7).
+- **W5 (Ruling):** Der Frist-Hinweis wird an EINER Stelle gewählt (`fristHinweisKey`, data/ipvAbzug.js):
+  eigener Schlüssel des Kantons → Luzerner Text nur für LU → sonst neutral (`ipv.fristNichtAbgezogen`,
+  `budget.ipvHintFristVorbei`). Wächter: jedes `config/ipv*.js` ausser LU, das `anmeldefristVorbei`
+  setzt, muss `fristNichtAbgezogenKey` setzen.
+- **K2:** Zitat Art. 2 al. 1 auf den ORP-Wortlaut («Celle-ci n'entre pas en matière …») korrigiert.
+- **K4:** im Modulkopf benannt: Vermögen ohne Schulden (nach unten), 3a bei Selbständigen (nach unten),
+  im Jahr geborene Kinder ganzjährig (nach oben, selten).
+- **K7** (Anzeige «Max. Einkommen» meint das massgebende Einkommen, nicht den Lohn): gemeinsamer Text
+  `premium.maxIncome` aller Kantone — nicht in diesem PR geändert, als Hinweis an die Koordination.
 
 ---
 

@@ -35,7 +35,7 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        (UR: kein Abzug der 3a vom PV-Einkommen, rechnerisch dasselbe.)
 //                        (GE aus dem Gegengrund: im RDU wird die 3a gar nicht erst abgezogen.)
 //                        (TI: die Abzüge vom verfügbaren Einkommen sind abschliessend aufgezählt,
@@ -48,6 +48,9 @@ export function vermoegenSumme(f) {
 //                        NE: Art. 12 al. 1 lit. a RSN 821.102 — revenu effectif «sous seules
 //                            déductions» von 6.4/6.5/6.7/6.10; die 3a wird nie abgezogen
 //                        GR: Art. 8a Abs. 1 lit. e KPVG (BR 542.100)
+//                        OW: Art. 7a GDB 851.11 (Abzüge abschliessend aufgezählt, keine 3a)
+//                        FR: Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13), Codes 4.110–4.140
+//                            (Säule 3a = Code 4.130 der Freiburger Steuererklärung)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE, SO — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        BE: KKVV Art. 6 Abs. 4 lit. i
@@ -130,8 +133,8 @@ export const SAEULE_3A = Object.freeze({
     // GE (28.09.2026, ipvGenf.js): dasselbe Ergebnis aus dem GEGENTEILIGEN Grund — die 3a wird im
     // RDU gar nicht erst abgezogen; LRDU Art. 5 Abs. 1 (rsGE J 4 06) nennt LIPP Art. 31 lit. a und b,
     // nicht lit. c (gebundene Selbstvorsorge). Wo nichts abgezogen wurde, ist nichts aufzurechnen.
-    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU',
+    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13)',
     // OW (28.09.2026): Art. 7a GDB 851.11 zieht vom Total der Einkünfte nur aufgezählte Posten ab;
     // die 3a (Art. 35 Abs. 1 lit. e StG) ist nicht darunter — sie bleibt voll im Einkommen.
     nichtAufgerechnet: () => 0,
@@ -461,9 +464,12 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       (Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». (28.09.2026)
 //                       TI — IAS, Istruzioni RIPAM 2026 Ziff. 1.2: «adulto: dall'anno seguente al
 //                       compimento dei 25 anni». (28.09.2026)
+//                       FR — ORP (RSF 842.1.13) Art. 3 al. 3 lit. b/c: «jeune personne adulte …
+//                       jusqu'à l'année de ses 25 ans»; Mémento RPI 2026 Ziff. 8.1: «jeune adulte
+//                       âgé de 19 à 25 ans». (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
-// Anspruchsjahr 2026 rechnen AG, LU, GR und TI für den Jahrgang 2000, die anderen nicht. Gemessen am
+// Anspruchsjahr 2026 rechnen AG, LU, GR, TI und FR für den Jahrgang 2000, die anderen nicht. Gemessen am
 // aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen. ⟨nachgetragen 28.09.2026 nach dem
 // Re-Review #467: hier stand nur AG; LU (23.09.), GR und TI (28.09.) rechnen seither ebenso.⟩
 //
