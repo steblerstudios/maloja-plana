@@ -5,13 +5,15 @@ import { preloadPLZ } from '../config/cantonalData.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { KKLastCard } from '../KKLastCard.jsx';
 
-// K31 — der IPV-Rechner zeigt für OW den Betrag nach GDB 851.12 / 851.11.
+// K31 — der IPV-Rechner zeigt für NW den Betrag nach NG 742.111 / 742.1.
 // Was hier sichtbar sein muss:
-//   1. ein Betrag nur MIT erfasster Prämie (EG KVG Art. 2 Abs. 5 deckelt auf die Prämie).
-//   2. die publizierte Grenze (50 000 bzw. 75 000 anrechenbares Einkommen), keine Musterwerte.
+//   1. ein Betrag nur MIT erfasster Prämie (kKVG Art. 20a).
+//   2. keine Einkommensgrenze (nicht als Zahl publiziert; die 100 000 gelten nur für Kinder),
+//      keine Musterwerte.
 //   3. KEINE Prämienregion und nicht der Aargauer Satz, sondern `ipv.jahrNW`; Basisjahr 2024.
-//   4. die Antragsfrist 31. Mai (EV Art. 10) — und nach der Frist nennt die KK-Karte Nidwalden,
-//      nicht den Luzerner Satz.
+//   4. die Antragsfrist 30. April (kKVG Art. 22) — und nach der Frist nennt die KK-Karte
+//      Nidwalden, nicht den Luzerner Satz.
+//   5. Familien, bei denen die Kinder-Regel mehrdeutig ist: keine Zahl, Grund «mindestanspruch».
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
@@ -69,7 +71,7 @@ describe('K31 IPV-Rechner, Kanton Nidwalden', () => {
     expect(render(profil(2000))).toMatch(/ipv\.nwFrist(Vorbei|Laeuft)\(2026\|2027\)/);
   });
 
-  it('nach der Frist nennt die KK-Karte den Obwaldner Grund, nicht den Luzerner', () => {
+  it('nach der Frist nennt die KK-Karte den Nidwaldner Grund, nicht den Luzerner', () => {
     vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
     const html = renderToStaticMarkup(React.createElement(KKLastCard, { palette, t, data: profil(2000) }));
     expect(html).toContain('ipv.nwFristNichtAbgezogen');
@@ -83,10 +85,10 @@ describe('K31 IPV-Rechner, Kanton Nidwalden', () => {
     expect(band).not.toContain('ipv.incomeAboveLimit');
   });
 
-  it('kein roher Schlüssel bleibt stehen: alle OW-Texte in allen fünf Sprachen', async () => {
+  it('kein roher Schlüssel bleibt stehen: alle NW-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['jahrOW', 'vorbehaltOW', 'owKeinAnspruch', 'owUnterMindestbetrag', 'nwFristLaeuft', 'nwFristVorbei', 'nwFristNichtAbgezogen']) {
+      for (const k of ['jahrNW', 'vorbehaltNW', 'nwKeinAnspruch', 'nwUnterMindestbetrag', 'nwFristLaeuft', 'nwFristVorbei', 'nwFristNichtAbgezogen']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
