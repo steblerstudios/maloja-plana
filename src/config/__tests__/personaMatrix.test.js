@@ -4,7 +4,6 @@ import {
   calculateSozialhilfe,
   calculateIPV,
   checkELEligibility,
-  getRentLimit,
   getGrundbedarf,
 } from '../cantonalData.js';
 import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
@@ -84,13 +83,12 @@ describe('Persona-Matrix: Sozialhilfe-Logik für jede Person plausibel', () => {
     const problems = [];
     for (const p of MATRIX) {
       const r = calculateSozialhilfe(p.data);
-      if (![r.grundbedarf, r.effectiveRent, r.rentLimit, r.totalBedarf, r.income, r.deficit].every(finite)) {
+      if (![r.grundbedarf, r.effectiveRent, r.totalBedarf, r.income, r.deficit].every(finite)) {
         problems.push(`${p.id}: nicht-finite Zahl ${JSON.stringify(r)}`);
         continue;
       }
       if (r.deficit < 0) problems.push(`${p.id}: deficit < 0 (${r.deficit})`);
       if (r.eligible !== (r.deficit > 0)) problems.push(`${p.id}: eligible/deficit inkonsistent (${r.eligible}/${r.deficit})`);
-      if (r.effectiveRent > r.rentLimit) problems.push(`${p.id}: effectiveRent > rentLimit`);
       if (r.effectiveRent > 1400 + 150) problems.push(`${p.id}: effectiveRent über tatsächlicher Miete`);
     }
     expect(problems).toEqual([]);
@@ -184,15 +182,11 @@ describe('Persona-Matrix: EL nur für AHV/IV-Beziehende', () => {
 });
 
 describe('Persona-Matrix: Haushalts-Hilfsfunktionen robust für 1–10 Personen', () => {
-  it('getGrundbedarf und getRentLimit liefern für jede Grösse positive endliche Werte', () => {
+  it('getGrundbedarf liefert für jede Grösse positive endliche Werte', () => {
     const problems = [];
     for (let size = 1; size <= 10; size++) {
       const gb = getGrundbedarf(size);
       if (!finite(gb) || gb <= 0) problems.push(`getGrundbedarf(${size})=${gb}`);
-      for (const canton of CANTON_CODES) {
-        const rl = getRentLimit(canton, size);
-        if (!finite(rl) || rl <= 0) problems.push(`getRentLimit(${canton},${size})=${rl}`);
-      }
     }
     expect(problems).toEqual([]);
   });

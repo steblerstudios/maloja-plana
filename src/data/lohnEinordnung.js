@@ -30,7 +30,7 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 // (derselbe Wert wie Kapitel/Brief). Die SKALA/Marke rechnet durchgehend auf der LSE-Norm
 // (40 Std.). Wer die 182 für die Marke oder `incomeFTE` verwendet, holt die Zwei-Welten-
 // Krankheit zurück — siehe `mindestlohnBoden`.
-import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT } from './lohnCheck.js';
+import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel } from './lohnCheck.js';
 import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 
@@ -98,7 +98,10 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
 
   if (lohn <= 0) return { show: false };
 
-  const hoursKnown = stunden > 0;
+  // Über der Plausibilitätsgrenze (lohnCheck.js) gelten die Stunden als unbekannt — keine
+  // Hochrechnung, kein Urteil; die Anzeige fragt nach (meist ein Pensum in Prozent).
+  const stundenUnplausibel = wochenstundenUnplausibel(stunden);
+  const hoursKnown = stunden > 0 && !stundenUnplausibel;
 
   // JEDES Bezugsmass auf diesem Barometer ist BRUTTO: der BFS-Median ist ein
   // „Bruttomedianlohn", der kantonale Mindestlohn ein Brutto-Stundenlohn. Ein Netto-Lohn
@@ -165,6 +168,7 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
     partTime,
     overFullTime,
     hoursKnown,
+    stundenUnplausibel,
     basisKnown,
     comparable,
     einkommensart: incomeType || null,
@@ -196,7 +200,7 @@ export function lohnEinordnungErgebnis({ income, incomeType, hoursPerWeek }) {
     fehlend: fehlendeAngaben({
       einkommen: num(income) > 0,
       einkommensart: incomeType === 'brutto' || incomeType === 'netto',
-      wochenstunden: num(hoursPerWeek) > 0,
+      wochenstunden: num(hoursPerWeek) > 0 && !wochenstundenUnplausibel(hoursPerWeek),
     }),
   });
 }

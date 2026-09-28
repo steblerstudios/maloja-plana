@@ -131,7 +131,7 @@ de   k=betreibungsStatus type="select" orientation~e6595be7 label~c61133fe optio
 de   k=courtCases type="select" label~bd0cc30a options=2 optWerte~2bfd19fd optLabels~b50f42dc
 de   k=legalRepresentative type="text" section~5dca6923 label~70fd3696 sectionIntro~c8e6925b
 de   k=representativePhone type="tel" label~fe6ae533
-de   k=willMade type="select" orientation~12ec713c link~2c2317f6 label~aa1af562 options=4 optWerte~ba1da0c9 optLabels~d0eae07a
+de   k=willMade type="select" orientation~07493aae link~2c2317f6 label~aa1af562 options=4 optWerte~ba1da0c9 optLabels~d0eae07a
 de   doc k=betreibungsauszug label~0e973d0c
 de   doc k=will label~aa111790
 de   doc k=power_of_attorney label~264c7d29
@@ -286,7 +286,7 @@ fr   k=betreibungsStatus type="select" orientation~b0ad3f5c label~c62055f5 optio
 fr   k=courtCases type="select" label~20b9d4a7 options=2 optWerte~2bfd19fd optLabels~b74e5823
 fr   k=legalRepresentative type="text" section~47681fdc label~43eca758 sectionIntro~3196baa2
 fr   k=representativePhone type="tel" label~7bbf8cc7
-fr   k=willMade type="select" orientation~8136a05a link~5ffebf04 label~197789ff options=4 optWerte~ba1da0c9 optLabels~fd0a5449
+fr   k=willMade type="select" orientation~cb49009f link~5ffebf04 label~197789ff options=4 optWerte~ba1da0c9 optLabels~fd0a5449
 fr   doc k=betreibungsauszug label~5030071d
 fr   doc k=will label~aa111790
 fr   doc k=power_of_attorney label~f0cdd99b
@@ -441,7 +441,7 @@ it   k=betreibungsStatus type="select" orientation~006a04a4 label~baffea7a optio
 it   k=courtCases type="select" label~9a2ca8f9 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=legalRepresentative type="text" section~5a3eab11 label~1e82eb05 sectionIntro~c1f06288
 it   k=representativePhone type="tel" label~d0a1d1cf
-it   k=willMade type="select" orientation~9046ffd9 link~d56f10b4 label~4c267d0b options=4 optWerte~ba1da0c9 optLabels~9e43a748
+it   k=willMade type="select" orientation~490c26eb link~d56f10b4 label~4c267d0b options=4 optWerte~ba1da0c9 optLabels~9e43a748
 it   doc k=betreibungsauszug label~bc93e2f7
 it   doc k=will label~b7e8c66d
 it   doc k=power_of_attorney label~c432f491
@@ -596,7 +596,7 @@ en   k=betreibungsStatus type="select" orientation~7c8e1bd0 label~905897fd optio
 en   k=courtCases type="select" label~b9e95469 options=2 optWerte~2bfd19fd optLabels~ea0983bd
 en   k=legalRepresentative type="text" section~587e9830 label~15b541c3 sectionIntro~6ce32e48
 en   k=representativePhone type="tel" label~34c50bfb
-en   k=willMade type="select" orientation~67c2c711 link~ef3beccd label~53f4e27a options=4 optWerte~ba1da0c9 optLabels~54d770bb
+en   k=willMade type="select" orientation~41d1a32b link~ef3beccd label~53f4e27a options=4 optWerte~ba1da0c9 optLabels~54d770bb
 en   doc k=betreibungsauszug label~4bc008c4
 en   doc k=will label~903cb9ad
 en   doc k=power_of_attorney label~9d16cfd7

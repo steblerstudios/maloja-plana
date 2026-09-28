@@ -3445,6 +3445,8 @@ export default {
     healthCosts: 'Custs da sanadad (LAMal)',
     healthCostsDetail: 'Quints dal medi pajads {year}',
     healthCostsOpen: 'anc avert: {amount}',
+    taxMonthlyCompare: { sie: '≈ {estimate} per mais stimà · Vossa indicaziun en il budget: {angabe} per mais.', du: '≈ {estimate} per mais stimà · Tia indicaziun en il budget: {angabe} per mais.' },
+    taxOwnFigure: { sie: 'Vossa indicaziun en il budget: {angabe} per mais.', du: 'Tia indicaziun en il budget: {angabe} per mais.' },
     canton: 'Chantun',
     taxes: 'Taglientas',
     ipv: 'Reducziun da premias (IPV)',
@@ -3830,6 +3832,7 @@ export default {
     fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },
+    hoursImplausibleNote: { sie: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatai per plaschair Vossas uras d'emna — fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatescha per plaschair tias uras d'emna — fin lura na quintain nus betg cun quai." },
     aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
     source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}, incl. 13avel salari proporziunal).',
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
@@ -4006,7 +4009,9 @@ export default {
     skosCalculation: 'Calculaziun dal basegn COSAS',
     basicNeeds: 'Basegn fundamental (COSAS)',
     housingCosts: "Custs d'abitar (effectivs)",
-    rentLimit: 'Limita da tschains chantun',
+    rentLimitUnbekannt: { sie: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da Voss lieu da domicil — il servetsch social cumpetent la enconuscha.', du: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da tes lieu da domicil — il servetsch social cumpetent la enconuscha.' },
+    rentLimitDossier: 'Quintada è l’entira fittanza cun ils custs accessorics. Quant che vegn renconuschì, dependa da la limita da fittanza al lieu da domicil; l’app na la enconuscha betg.',
+    mitGanzerMiete: 'stimà cun l’entira fittanza',
     healthInsurance: 'Cassa da malsauns (LAMal)',
     totalNeeds: 'Basegn total',
     deductIncome: 'Deducziun: Entrada',
@@ -6026,8 +6031,6 @@ export default {
     result_needIncome: { sie: 'Endatai Vossa entrada, lura pudain nus stimar il dretg pli precis.', du: 'Endatescha tia entrada, lura pudain nus stimar il dretg pli precis.' },
     enterIncomeLink: 'Endatar l\'entrada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    rentWithin: { sie: 'Vossa fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).', du: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).' },
-    rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
     cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
     cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
     cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch

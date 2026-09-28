@@ -31,11 +31,17 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
   const householdSize = hh.householdSize || 1;
 
   const monthlyIncome = parseFloat(data?.finanzen?.monthlyIncome) || 0;
-  const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
+  // Zwei Grössen, zwei Fragen: der Balken vergleicht die NETTOMIETE mit der BFS-Nettomiete
+  // (data/mietpreise.js, ohne Nebenkosten) — wie das Budget. Die Wohnkosten-Zeile darunter
+  // zählt die Nebenkosten mit; sie heisst «Wohnkosten». Bis 28.09.2026 füllte die Summe
+  // auch den Balken («Ihre Miete: CHF 1830» unter der Quelle «Nettomiete»).
+  const nettoMiete = parseFloat(data?.wohnen?.rentAmount) || 0;
+  const rentMonthly = nettoMiete + (parseFloat(data?.wohnen?.utilities) || 0);
 
   if (!canton || rentMonthly <= 0) return null;
 
-  const rentComparison = getRentComparison(canton, { rooms: data?.wohnen?.rooms, householdSize });
+  // Ohne Nettomiete (z. B. Eigentum, nur Nebenkosten erfasst) kein Miet-Balken.
+  const rentComparison = nettoMiete > 0 ? getRentComparison(canton, { rooms: data?.wohnen?.rooms, householdSize }) : null;
   const rentSharePct = monthlyIncome > 0 ? Math.round((rentMonthly / monthlyIncome) * 100) : null;
   // Die Drittel-Faustregel als Miet-Betrag — nur mit Einkommen bestimmbar.
   const drittel = monthlyIncome > 0 ? Math.round(monthlyIncome / 3) : 0;
@@ -48,7 +54,7 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
     }, t('mietzinsView.compareTitle')),
 
     rentComparison && React.createElement(RegionalBarometer, {
-      palette, t, comparison: rentComparison, userValue: rentMonthly || null, kind: 'rent',
+      palette, t, comparison: rentComparison, userValue: nettoMiete, kind: 'rent',
       // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
       fillColor: bereichFillColor('wohnen', isDarkMode),
       thresholdValue: drittel,

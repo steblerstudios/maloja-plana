@@ -773,6 +773,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
+      sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
     ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
@@ -899,7 +900,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
 // Die Kennungen sind Teil des Formats: nie umbenennen, nur neue dazunehmen.
 // Die App liest diese Datei nicht wieder ein (Stand 17.09.2026: kein Import-Pfad). Wer später einen
 // Leser baut: Dateien 1.0 tragen an denselben Stellen Strings statt Objekte.
-export const DOSSIER_JSON_VERSION = '1.1';
+// 1.2 (28.09.2026): calculations.sozialhilfe.rentLimit entfällt (unbelegte Kantonstabelle entfernt),
+// effectiveRent ist die ganze erfasste Miete mit Nebenkosten, ohne Limite.
+export const DOSSIER_JSON_VERSION = '1.2';
 // Schlüssel = Name des Textes unter behoerdenDossier.jsonTexte, Wert = Kennung in der Datei.
 export const STEUER_KENNUNG = Object.freeze({
   basisEstv: 'estv_standardabzuege',
@@ -976,7 +979,6 @@ export function generateBehoerdenJSON(data, calculations, t) {
       eligible: !!sozialhilfe.eligible,
       grundbedarf: sozialhilfe.grundbedarf || 0,
       effectiveRent: sozialhilfe.effectiveRent || 0,
-      rentLimit: sozialhilfe.rentLimit || 0,
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.income || 0,

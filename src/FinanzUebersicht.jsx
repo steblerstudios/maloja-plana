@@ -106,7 +106,7 @@ export const druckAbschnitte = (t, w) => {
   if (ipvAnnahmen.length) {
     zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
-  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
@@ -202,6 +202,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   // R4: Annahmen hinter der Zahl (13. Monatslohn offen, Alleinverdiener-Ehepaar).
   const annahmen = steuern ? steuern.annahmen : null;
   const annahmenSatz = taxResult ? annahmenTexte(t, annahmen).join(' ') : '';
+  // Die Budget-Bilanz unten zieht die EIGENE Angabe ab (`finanzen.monthlyTax`), die Karte
+  // schätzt — die Karte nennt darum beide (Entscheid 28.09.2026, Variante A). Den Monatswert
+  // der Schätzung nur mit Kantonszahl: eine reine Bundessteuer neben der vollen eigenen
+  // Steuer läse sich wie eine Abweichung, die keine ist.
+  const eigeneSteuer = Number(data.finanzen?.monthlyTax || 0);
+  const steuerAngabeSatz = eigeneSteuer <= 0 ? ''
+    : kantonal
+      ? t('finanzUebersicht.taxMonthlyCompare', { estimate: formatCHF(Math.round(kantonal.total / 12)), angabe: formatCHF(eigeneSteuer) })
+      : t('finanzUebersicht.taxOwnFigure', { angabe: formatCHF(eigeneSteuer) });
 
   const hasData = income > 0;
 
@@ -435,10 +444,11 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
           ? '~ ' + formatCHF(taxResult.steuer) + ' ' + t('common.perYear') + ' (' + t('tax.federalOnly') + ')'
           : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
       statusColor: palette.text,
-      detail: kantonal
+      detail: [steuerAngabeSatz, kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION }) + (annahmenSatz ? ' ' + annahmenSatz : '')
         : steuerOhneZahl ? (steuerkanton && ERKLAERT_IN_ORIENTIERUNG.includes(steuerOhneZahl) ? null : bundOhneZahlText(t, steuerOhneZahl))
           : [!steuerkanton ? t('finanzUebersicht.selectCanton') : '', annahmenSatz].filter(Boolean).join(' ') || null,
+      ].filter(Boolean).join(' ') || null,
       onClick: () => onNavigate('tax'),
     }),
     // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,
@@ -485,6 +495,8 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       title: t('finanzUebersicht.sozialhilfe'),
       status: sozialhilfe.eligible
         ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
+          // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
+          + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
         // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
         : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
       statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),

@@ -134,44 +134,13 @@ export const CANTONAL_IPV = {
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };
 
-// Kantonale Mietzinsbeiträge / Wohnkosten-Limits (SKOS-Richtlinien + kantonale Anpassungen)
-export const CANTONAL_RENT_LIMITS = {
-  ZH: { single: 1300, couple: 1550, family3: 1750, family4: 1900, note: 'Stadt Zürich höher' },
-  BE: { single: 1100, couple: 1350, family3: 1500, family4: 1650, note: 'Unterschied Stadt/Land' },
-  LU: { single: 1150, couple: 1350, family3: 1550, family4: 1700 },
-  UR: { single: 1000, couple: 1200, family3: 1350, family4: 1500 },
-  SZ: { single: 1200, couple: 1400, family3: 1600, family4: 1750 },
-  OW: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  NW: { single: 1100, couple: 1300, family3: 1450, family4: 1600 },
-  GL: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  ZG: { single: 1400, couple: 1650, family3: 1850, family4: 2000 },
-  FR: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  SO: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  BS: { single: 1350, couple: 1600, family3: 1800, family4: 1950 },
-  BL: { single: 1150, couple: 1350, family3: 1550, family4: 1700 },
-  SH: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  AR: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  AI: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  SG: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  GR: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  AG: { single: 1100, couple: 1300, family3: 1500, family4: 1650 },
-  TG: { single: 1000, couple: 1200, family3: 1350, family4: 1500 },
-  TI: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  VD: { single: 1300, couple: 1500, family3: 1700, family4: 1900 },
-  VS: { single: 1000, couple: 1200, family3: 1350, family4: 1500 },
-  NE: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  GE: { single: 1500, couple: 1750, family3: 2000, family4: 2200 },
-  JU: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  _default: { single: 1100, couple: 1300, family3: 1500, family4: 1650 },
-};
-
-export function getRentLimit(canton, householdSize) {
-  const limits = CANTONAL_RENT_LIMITS[canton] || CANTONAL_RENT_LIMITS._default;
-  if (householdSize <= 1) return limits.single;
-  if (householdSize === 2) return limits.couple;
-  if (householdSize === 3) return limits.family3;
-  return limits.family4;
-}
+// Mietzins-Limite (bis zu welcher Miete die Sozialhilfe die Wohnkosten anrechnet): die App kennt
+// sie NICHT. Bis 28.09.2026 stand hier eine Tabelle mit 26 Kantonen (CANTONAL_RENT_LIMITS,
+// getRentLimit) — ohne Quelle und ohne Stand seit dem ersten Commit, angezeigt als «kantonale
+// Mietzins-Limite» und in der Schnellrechnung als Deckel der Wohnkosten. Die Limiten legen meist
+// die Gemeinden fest, nicht der Kanton. Weggelassen, nicht vereinheitlicht: wer sie belegt, führt
+// sie je Gemeinde mit `beleg` ein (Bauart wie CANTONAL_IPV) — nicht als Kantonswert zurück.
+// Wächter: src/config/__tests__/mietzinslimiteUnbelegt.test.js
 
 // SKOS-Grundbedarf für den Lebensunterhalt (GBL), Stand 2025/2026 (SKOS-RL C.3.1)
 // Quelle: SKOS, bestätigt via Sozialhilfehandbuch Kanton ZH + AG. Ab 8 Personen + CHF 216/Person.
@@ -219,8 +188,9 @@ export function calculateSozialhilfe(data) {
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
 
   const grundbedarf = getGrundbedarf(householdSize);
-  const rentLimit = getRentLimit(canton, householdSize);
-  const effectiveRent = Math.min(rent + utilities, rentLimit);
+  // Die ganze erfasste Miete, ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
+  // (siehe oben). Die Anzeige sagt das, statt eine Zahl zu erfinden.
+  const effectiveRent = rent + utilities;
   const effectiveKK = kkPremium;
 
   const bilanz = sozialhilfeBilanz({
@@ -242,7 +212,6 @@ export function calculateSozialhilfe(data) {
   return {
     grundbedarf,
     effectiveRent,
-    rentLimit,
     effectiveKK,
     totalBedarf,
     income,
