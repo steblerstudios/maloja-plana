@@ -1518,16 +1518,16 @@ Prämie gedeckelt (§ 22 Abs. 2 KVO). Keine Prämienregion, keine Vermögensgren
 (in KVO und SoHaV keiner gefunden; Gruppe 22 zahlt 17 im Monat).
 
 **Gewählt, nicht belegt (steht so im Code und im PR):**
-- Gruppengrenze «bis und mit» (analog «nicht übersteigt», § 22 Abs. 1 KVO) — Frage 11.3.
+- Gruppengrenze «bis und mit» (analog «nicht übersteigt», § 22 Abs. 1 KVO) — Frage 21.3.
 - **Hypothetisches Einkommen:** unter 28'800 Erwerbseinkommen im Jahr keine Zahl, ausser die Person
   ist am Ende des Vorjahres mindestens 61 oder betreut ein Kind, das im ganzen Anspruchsjahr unter 16
-  ist — Frage 11.2. Darüber rechnet die App; der Vorbehalt nennt die 80-%-Regel.
+  ist — Frage 21.2. Darüber rechnet die App; der Vorbehalt nennt die 80-%-Regel.
 - **Säule 3a:** beide Fälle (mit/ohne zweite Säule) gerechnet; ein erfasster Pensionskassenbeitrag
   (`versicherungen.bvgContribution` > 0) gilt als Beleg für eine zweite Säule; weichen die Gruppen
   sonst ab, keine Zahl (`offenGrund.bsSaeule3a`).
 - **Zuschlag AVM (T 4):** nicht gerechnet, sondern als zweite Zahl im Hinweis genannt — das Feld
-  `kkModel` reicht nicht, weil der Mindestrabatt (§ 21 Abs. 1bis) nicht publiziert ist — Frage 11.4.
-- Alter: erwachsen erst, wenn am Ende des Vorjahres 26 (`ERWACHSEN.mangelsStichtag`, wie BE/SG) — Frage 11.5.
+  `kkModel` reicht nicht, weil der Mindestrabatt (§ 21 Abs. 1bis) nicht publiziert ist — Frage 21.4.
+- Alter: erwachsen erst, wenn am Ende des Vorjahres 26 (`ERWACHSEN.mangelsStichtag`, wie BE/SG) — Frage 21.5.
 
 **Bewusst nicht gebaut:** Paare, eingetragene Partnerschaft, Konkubinat; volljährige Kinder in
 Erstausbildung (gehören zur Haushaltseinheit, Ausbildung nicht erfasst); Antragstellende unter 25;

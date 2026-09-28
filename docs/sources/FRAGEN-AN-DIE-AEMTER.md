@@ -298,7 +298,7 @@ Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkomme
 
 **Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
 01.01.2027 zeigt die App für NE keinen Betrag mehr.
-## 11 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle
+## 21 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle
 
 *Aufgenommen 28.09.2026 beim Einbau von BS (K31). Entwurf — **nicht gesendet**.*
 
