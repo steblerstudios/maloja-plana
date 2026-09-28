@@ -64,7 +64,7 @@ Rechenbeispiel, bei dem das massgebende Einkommen zwischen C und A liegt?
 1–5 stimmen mit der Abschrift, die Exponenten stehen ausserhalb der geschweiften Klammer. Die
 Frage nach einem zweiten Rechenbeispiel IM Innern einer Kurve bleibt, weil ein Bild keine
 maschinenlesbare Quelle ist. Der Stand «bewusst nicht eingereicht» ist durch den Auftrag «alle
-26 bis Oktober» (Stebler Studios, 28.09.2026) aufgehoben; VD liegt jetzt als Entwurfs-PR vor.
+26 bis Oktober» (Stebler Studios, 28.09.2026) aufgehoben; VD liegt jetzt als Entwurfs-PR #466 vor.
 
 **Zweite Frage (neu, 28.09.2026) — Beispiel des subside spécifique:** Die Notice nennt für die
 Familie mit vier Personen in Region 1 «primes de référence, soit 16'836.-». Aus art. 13 al. 2 des
