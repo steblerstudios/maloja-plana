@@ -103,7 +103,8 @@ describe('K31 calculateIPV für TI (App-Angaben → Modell)', () => {
 
   const person = ({ monthlyIncome = 0, dob = '1980-05-01', kkPremium = 450, children = [], finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'TI', dateOfBirth: dob, maritalStatus: 'single', household: { adults: 1, children }, ...basis },
-    finanzen: { monthlyIncome, ...finanzen },
+    // Angestellt, wo nicht anders gesagt — nur dann zieht der Kanton Berufsauslagen ab.
+    finanzen: { monthlyIncome, employmentType: 'employed', ...finanzen },
     wohnen: { postalCode: '6900', city: 'Lugano' },
     versicherungen: kkPremium != null ? { kkPremium } : {},
   });
@@ -123,7 +124,26 @@ describe('K31 calculateIPV für TI (App-Angaben → Modell)', () => {
     });
     expect(r.region).toBeUndefined();
     expect(r.cantonData.maxIncome).toBe(null);
-    expect(r.anmeldefristVorbei).toBeUndefined();
+    expect(r.zusatzVorbehaltKey).toBeUndefined();
+  });
+
+  it('⚠️ Anstellungstyp leer: OHNE Berufsauslagen (2 332) und mit Zusatz-Vorbehalt «bei Anstellung höher»', () => {
+    expect(calculateIPV(person({ monthlyIncome: 3000, finanzen: { employmentType: undefined } })))
+      .toMatchObject({ annual: 2332, zusatzVorbehaltKey: 'ipv.vorbehaltTIangestellt' });
+    expect(calculateIPV(person({ monthlyIncome: 3000, finanzen: { employmentType: '' } })).annual).toBe(2332);
+    // ohne Lohn gibt es keine Berufsauslagen zu vermissen
+    expect(calculateIPV(person({ finanzen: { employmentType: undefined, ahvRente: 3000 } })).zusatzVorbehaltKey).toBeUndefined();
+  });
+
+  it('Berufsauslagen höchstens bis zum Lohn ([3] Art. 15 Abs. 2 / [5])', () => {
+    // Lohn 250/Monat = 3 000/Jahr → Abzug 3 000, nicht 4 000; dazu Rente 2 500/Monat = 30 000.
+    // RD = 33 000 − 8 016 − 3 000 = 21 984 → 0,765 × 8 016 × (1 − 21 984² / 35 547.1²) = 3 786.80 → 3 787
+    expect(calculateIPV(person({ monthlyIncome: 250, finanzen: { ahvRente: 2500 } })).annual).toBe(3787);
+  });
+
+  it('Mindestbetrag nach dem Deckel: Prämie 8/Monat = 96/Jahr < 120 → nichts ausbezahlt', () => {
+    expect(calculateIPV(person({ monthlyIncome: 3000, kkPremium: 8 })))
+      .toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.tiUnterMindestbetrag' });
   });
 
   it('Berufsauslagen nur für Angestellte: Rente oder selbständig → ohne Pauschale, 2 332', () => {
@@ -158,6 +178,9 @@ describe('K31 calculateIPV für TI (App-Angaben → Modell)', () => {
   it('Art. 27 [1]: bis 30 und kleines Einkommen — vielleicht UR der Eltern, keine Zahl', () => {
     expect(calculateIPV(person({ monthlyIncome: 1000, dob: '1998-01-01' }))).toMatchObject({ belegt: false, offen: 'tiEltern' });
     expect(calculateIPV(person({ monthlyIncome: 1000, dob: '1994-06-01' }))).toMatchObject({ offen: 'tiEltern' });
+    // Grenzwert: «inferiore al limite» — genau 18 709 ist nicht darunter, wird also gerechnet.
+    expect(calculateIPV(person({ monthlyIncome: 18709 / 12, dob: '1998-01-01' })).belegt).toBe(true);
+    expect(calculateIPV(person({ monthlyIncome: 18708 / 12, dob: '1998-01-01' }))).toMatchObject({ offen: 'tiEltern' });
     // über der Bedarfsgrenze 18 709 oder älter: gerechnet
     expect(calculateIPV(person({ monthlyIncome: 2000, dob: '1998-01-01', kkPremium: 500 }))).toMatchObject({ belegt: true, annual: 5435 });
     // 12 000 − 8 016 − 4 000 < 0 → RD 0 → 6 132.24, gedeckelt auf die Prämie 5 400
@@ -178,7 +201,9 @@ describe('K31 calculateIPV für TI (App-Angaben → Modell)', () => {
     });
     it('im Anspruchsjahr: Frist für Januar vorbei, Betrag bleibt', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
-      expect(calculateIPV(person({ monthlyIncome: 3000 }))).toMatchObject({ annual: 3341, noteKey: 'ipv.tiFristVorbei' });
+      expect(calculateIPV(person({ monthlyIncome: 3000 }))).toMatchObject({
+        annual: 3341, noteKey: 'ipv.tiFristVorbei', anmeldefristVorbei: true, fristNichtAbgezogenKey: 'ipv.tiFristNichtAbgezogen',
+      });
     });
     it('ab 2027 keine Zahl mehr', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));

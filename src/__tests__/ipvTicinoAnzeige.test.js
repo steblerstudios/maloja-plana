@@ -18,7 +18,7 @@ const render = (data) => renderToStaticMarkup(React.createElement(PremiumSubsidy
 
 const profil = (monthlyIncome, extra = {}) => ({
   basis: { canton: 'TI', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: extra.children || [] } },
-  finanzen: { monthlyIncome },
+  finanzen: { monthlyIncome, employmentType: 'employed' },
   wohnen: { postalCode: '6900', city: 'Lugano', rentAmount: 1200 },
   versicherungen: extra.kkPremium === null ? {} : { kkPremium: extra.kkPremium ?? 450 },
 });
