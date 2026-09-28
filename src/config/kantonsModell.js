@@ -419,6 +419,14 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
     + '(Art. 4 Abs. 4); für alle anderen nennen weder Reglement noch Berechnungsformular der SVS '
     + 'einen Deckel. Bundesrechtlich zahlt der Versicherer die Differenz aus, kantonale Deckel '
     + 'bleiben vorbehalten (KVV Art. 106c Abs. 5bis) — Uri hat keinen.',
+  // ZG (28.09.2026, Fachprüfung #475): IPVG (BGS 842.6) begrenzt nur bei Sozialhilfe «höchstens
+  // jedoch bis zur massgebenden Prämie» (§ 7 Abs. 3); weder Gesetz, Verordnung, RRB 2025 noch die
+  // Broschüre 2026 nennen sonst einen Deckel. KVV Art. 106c Abs. 5bis selbst gelesen (Fedlex,
+  // Stand 01.01.2026): Differenz an die versicherte Person, kantonale Deckel vorbehalten.
+  ZG: 'IPVG (BGS 842.6) begrenzt die Verbilligung nur bei Sozialhilfe auf die massgebende Prämie '
+    + '(§ 7 Abs. 3); sonst nennen weder Gesetz, Verordnung noch RRB einen Deckel. Bundesrechtlich '
+    + 'zahlt der Versicherer die Differenz aus, kantonale Deckel bleiben vorbehalten (KVV Art. 106c '
+    + 'Abs. 5bis) — Zug hat keinen.',
 });
 
 // ─── Regeln, die kantonal VERSCHIEDEN sind — benannt statt vereinheitlicht ─────
