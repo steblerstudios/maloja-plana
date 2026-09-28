@@ -31,6 +31,13 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  UR: { laden: () => import('./ipvUri.js'), fn: 'ipvUri', brauchtPLZ: false },
+  NE: { laden: () => import('./ipvNeuchatel.js'), fn: 'ipvNeuchatel', brauchtPLZ: false },
+  GR: { laden: () => import('./ipvGraubuenden.js'), fn: 'ipvGraubuenden' },
+  // TG rechnet nach dem Steuerbetrag, nicht nach Region oder Einkommen — und zeigt bewusst keine Zahl.
+  TG: { laden: () => import('./ipvThurgau.js'), fn: 'ipvThurgau', brauchtPLZ: false },
+  // TI kennt Prämienregionen, rechnet aber mit einem kantonsweiten PMR (LCAMal Art. 28 Abs. 2).
+  TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
   AI: { laden: () => import('./ipvAppenzellInnerrhoden.js'), fn: 'ipvAppenzellInnerrhoden', brauchtPLZ: false },
 };
 const _module = {};
@@ -112,7 +119,11 @@ export const CANTONAL_IPV = {
   // Erwachsene, darum maxIncome null wie in SG und AG.
   LU: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation',
     beleg: { quelle: 'SRL 866a · SRL 866 · WAS Ausgleichskasse Luzern — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-23' } },
-  UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice', beleg: null },
+  // UR (K31): eigenes Modell in config/ipvUri.js (Richtprämien minus 8,5 % des PV-Einkommens, eine
+  // Prämienregion). Von Amtes wegen aus den Steuerdaten (Art. 10 RB 20.2213). Keine publizierte
+  // Einkommensgrenze — die 90'000 gelten nur für den Mindestanspruch der Kinder.
+  UR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'RB 20.2213 · Steuerungsgrössen 2026 (GSUD Uri) · SVS Uri — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
   NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
@@ -134,20 +145,35 @@ export const CANTONAL_IPV = {
   // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.
   SG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' },
     beleg: { quelle: 'sGS 331.538 · sGS 331.111 · SVA St.Gallen — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
-  GR: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' }, beleg: null },
+  // GR (K31): eigenes Modell in config/ipvGraubuenden.js (Richtprämie der Region minus Selbstbehalt,
+  // dessen Satz nach Einkommenskategorien von 5 % auf 10 % steigt). Keine publizierte Grenze für
+  // Erwachsene — die Grenzen in Art. 8 Abs. 3 KPVG betreffen nur Kinder —, darum maxIncome null.
+  GR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' },
+    beleg: { quelle: 'KPVG (BR 542.100) · VOzKPVG (BR 542.120) · SVA Graubünden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // AG (K31): eigenes Modell in config/ipvAargau.js (Richtprämie minus 17,5 % des massgebenden
   // Einkommens). Keine Prämienregionen; die Einkommensgrenze nach § 5 Abs. 5 KVGG publiziert
   // der Kanton nicht als Zahl, darum bleibt maxIncome null und die Anzeige nennt keine Grenze.
   AG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AG' },
     beleg: { quelle: 'KVGG AG (SAR 837.200) · V KVGG (SAR 837.211) · SVA Aargau — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
-  TG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'TG' }, beleg: null },
-  TI: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas', beleg: null },
+  // TG (K31): Modul config/ipvThurgau.js. Feste Ansätze nach der einfachen Steuer zu 100 % (TG KVV
+  // § 14), nicht nach dem Einkommen — die App kennt diese Steuerzahl nicht und zeigt darum bewusst
+  // keinen Betrag (Grund `tgSteuerbetrag`). Keine Einkommensgrenze in Franken, darum maxIncome null.
+  // Antrag bei der Krankenkassenkontrollstelle der Gemeinde, nicht bei einer SVA (Merkblatt 2026).
+  TG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyKkKontrollstelle',
+    beleg: { quelle: 'TG KVV (RB 832.10) § 14–15 · Amt für Gesundheit TG — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+  // TI (K31): eigenes Modell in config/ipvTicino.js (PMR − PMR × RD²/RDM², × 76,5 %). Keine
+  // publizierte Einkommensgrenze — das IAS verweist auf seinen Rechner —, darum maxIncome null.
+  TI: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas',
+    beleg: { quelle: 'LCAMal (RL 853.100) · RL 853.310 · RLCAMal (RL 853.110) · RL 870.130 · IAS — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // VD (K31): Grenze und Höchstbetrag hängen an der Kategorie (Arrêté 2026 art. 2) — keine Einzelwerte.
   // Der Weg ist ein Antrag (Notice OVAM 2026 Ziff. 4), nicht die automatische Prüfung via Steuerdaten.
   VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',
     beleg: { quelle: 'Arrêté CE VD du 17.12.2025 (subsides 2026) · RLVLAMal (BLV 832.01.1) · LVLAMal (BLV 832.01) · LHPS (BLV 850.03) · OVAM — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
-  NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // NE (K31): Klassen S1–S15, Grenzen je Kinderzahl (Annexe RSN 821.102) — keine Einzelwerte.
+  // Weg: automatisch nach der Veranlagung, neu Berechtigte mit Antwortschein innert 30 Tagen (RALILAMal Art. 31).
+  NE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoOcab',
+    beleg: { quelle: 'RSN 821.102 · Décret RSN 821.104 · LILAMal (RSN 821.10) · RALILAMal (RSN 821.101) · OCAB — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };

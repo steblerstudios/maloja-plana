@@ -12,6 +12,8 @@
 //                  Betrag, nur der neutrale Hinweis «Anspruch und Höhe legt der Kanton fest»
 //   fristVorbei  → Anspruch geschätzt, aber die Anmeldefrist ist vorbei (Luzern, SRL 866
 //                  § 12 Abs. 3): kein Abzug, die Prämie bleibt ganz selbst, dazu der Grund
+//   gesuch       → Anspruch geschätzt, aber die Einstufung kommt womöglich nur auf Gesuch (NE,
+//                  Band über der Art.-16-Schwelle): kein Abzug, dazu der Grund aus dem Ergebnis
 //
 // Was abgezogen wird, entscheidet allein data/ipvAbzug.js — hier nur Darstellung und Deckel.
 import { calculateIPV } from '../config/cantonalData.js';
@@ -46,7 +48,10 @@ export function praemienBelegState(data) {
     return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false };
   }
   if (abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI) {
-    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: 'ipv.luFristNichtAbgezogen', noteParams: abzug.frist };
+    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: ipv.fristNichtAbgezogenKey || 'ipv.luFristNichtAbgezogen', noteParams: abzug.frist };
+  }
+  if (abzug.grund === IPV_ABZUG_GRUND.GESUCH_NOETIG) {
+    return { show: true, mode: 'gesuch', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: ipv.gesuchNichtAbgezogenKey || 'ipv.orientierungOffen' };
   }
   // Altbestand ohne Kanton/Jahr: der Betrag ist gedeckelt an der Verfügung — der Beleg sagt
   // «Verfügung ohne Jahr» statt «geschätzt», aber keinen Stempel.

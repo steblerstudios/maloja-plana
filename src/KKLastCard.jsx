@@ -40,6 +40,8 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
   const abzug = ipvAbzug(data, ipv);
   const ipvAmount = Math.min(premium, abzug.betrag);
   const fristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI;
+  // NE im Band über der Art.-16-Schwelle: nichts abgezogen; den Satz nennt das Ergebnis.
+  const gesuchText = abzug.grund === IPV_ABZUG_GRUND.GESUCH_NOETIG ? ipv.gesuchNichtAbgezogenKey : null;
   const netPremium = Math.max(0, premium - ipvAmount);
   const netShare = (netPremium / income) * 100;
   const netShareRounded = Math.round(netShare * 10) / 10;
@@ -76,9 +78,13 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     showFairness && ipvAmount > 0 && React.createElement('div', { style: { fontSize: text.sm, color: palette.skyDeep, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
       t('kkLast.ipvRelief', { ipv: ipvAmount, share: netShareRounded })
     ),
-    // Luzern nach der Anmeldefrist: statt der Abzugszeile der Grund, warum nichts abgezogen ist.
+    // Nach der Anmeldefrist (LU, FR): statt der Abzugszeile der Grund, warum nichts abgezogen ist.
+    // Der Text ist kantonal — das Ergebnis nennt seinen Schlüssel; ohne ihn gilt der Luzerner.
     showFairness && fristVorbei && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
-      t('ipv.luFristNichtAbgezogen', abzug.frist)
+      t(ipv.fristNichtAbgezogenKey || 'ipv.luFristNichtAbgezogen', abzug.frist)
+    ),
+    showFairness && gesuchText && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
+      t(gesuchText)
     ),
     showFairness && ipvAmount === 0 && ipv && !ipv.eligible && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
       ipv.belegt === false ? t(ipv.noteKey, ipv.noteParams) : t('kkLast.ipvNoClaim')

@@ -240,10 +240,170 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
-## 10 · Gesundheitsamt Appenzell Innerrhoden — Stufen, steuerpflichtiges Einkommen, Kinder
+## 8 · Sozialversicherungsstelle Uri — Deckel, Rundung, Aufteilung und das Alter
 
-*Aufgenommen 28.09.2026 beim Einbau von AI. Entwurf — **nicht gesendet**. (Nummer vorläufig;
-parallel werden weitere Kantone eingetragen.)*
+*Aufgenommen 28.09.2026 beim Einbau von UR. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Formel und Zahlen 2026 stehen im Prämienverbilligungsreglement (RB 20.2213),
+in der Medienmitteilung vom 18.12.2025 und im Berechnungsformular 2026 der SVS; die App rechnet
+das Formular Zelle für Zelle nach. Ein durchgerechnetes Beispiel mit Zahlen haben wir nicht
+gefunden. Vier Punkte stehen weder im Reglement noch im Formular eindeutig.
+
+~~**Frage 1 — Deckel auf die eigene Prämie:** Das Reglement begrenzt die Verbilligung nur bei
+EL-Beziehenden auf die tatsächliche Prämie (Art. 4 Abs. 4). Gilt für alle anderen eine
+Begrenzung, wenn die eigene Prämie (z. B. mit hoher Franchise) tiefer ist als der errechnete
+Betrag? Die App deckelt heute **nicht** (wie in St.Gallen, Abschnitt 5).~~
+⟨**erledigt 28.09.2026, belegt** (Fachprüfung, K1): KVV Art. 106c Abs. 5bis (SR 832.102, in Kraft
+seit 01.01.2024) — der Versicherer «bezahlt der versicherten Person den Differenzbetrag innerhalb
+von 60 Tagen nach der Meldung der Prämienverbilligung durch den Kanton aus. Kantonale Regelungen,
+wonach die Prämie höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben
+vorbehalten.» Uri hat keine solche Regelung. Die Frage muss nicht gestellt werden.⟩
+
+**Frage 2 — Rundung:** Art. 14 Abs. 3: «auf fünf Rappen zu runden». Wird kaufmännisch gerundet
+(83.33 → 83.35, 83.42 → 83.40) oder immer auf? Die App rundet kaufmännisch.
+
+**Frage 3 — Aufteilung:** Um je Person runden zu können, teilt die App den allgemeinen Anspruch
+nach Art. 14 Abs. 2 im Verhältnis der **anrechenbaren** Richtprämien auf (Kind mit 20 % =
+220.80); das Kinderminimum von 80 % geht ganz an das Kind. Gilt diese Aufteilung auch, wenn alle
+im selben Haushalt bei **einem** Versicherer sind?
+
+**Frage 4 — Alter:** Art. 5 nennt «Erwachsene (26 Jahre und älter)», aber keinen Stichtag. Gilt
+der 1. Januar (Art. 3 Abs. 3) oder der Jahrgang, wie beim Antragsformular für die Kinder
+(«Jahrgänge 2008 – 2025»)? Betroffen ist für 2026 der Jahrgang 2000; die App zeigt dort keine Zahl.
+
+**Stand:** UR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 waren am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für UR keinen Betrag mehr.
+
+---
+
+## 9 · OCAB Neuenburg — Wahlfranchise, Nahtstellen und das revenu effectif
+
+*Aufgenommen 28.09.2026 beim Einbau von NE. Entwurf — **nicht gesendet**.*
+
+**Vorbemerkung:** Der am 16.09. notierte Widerspruch zwischen Kantonsseite und RSN 821.102 (ab S3)
+ist geklärt — es ist der Décret RSN 821.104 vom 2.12.2025, den das OCAB-Blatt «Normes 2026»
+ausdrücklich mitrechnet. Keine Frage mehr.
+
+**Frage 1 — Wahlfranchise:** Die Beträge werden «du même taux que le rabais accordé par
+l'assureur» gekürzt. Gilt der Satz der eigenen Kasse der versicherten Person (so liest sich das
+Beispiel), und rundet das OCAB auf 5 Rappen (450 × (1 − 2,92 %) = 436.86 → 436.85)? Ohne den
+Rabattsatz zeigt die App bei Franchise über 300 keinen Betrag.
+
+**Frage 2 — Nahtstellen:** Die Annexe schreibt «à 22'800», die Kantonsseite «jusqu'à 22'800» und
+dann «22'800 à 23'940». Gehört ein revenu déterminant von genau 22'800 zu S1 (so rechnet die App,
+nach Art. 3 al. 1 «égal ou inférieur») oder zu S2?
+
+**Frage 3 — revenu effectif:** Ist in Ziffer 5.5 der Steuererklärung der Lohn **netto** nach
+Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkommen dafür ein.
+
+**Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
+01.01.2027 zeigt die App für NE keinen Betrag mehr.
+
+---
+
+## 10 · SVA Graubünden — Selbstbehalt-Satz, Kinder-Vergleich, Deckel und Alter
+
+**Wo:** KPVG (BR 542.100) Art. 8 Abs. 2–4; VOzKPVG (BR 542.120) Art. 17, 22; Wegleitung IPV 2026.
+Ein amtliches Berechnungsbeispiel haben wir nicht gefunden; der Online-Rechner wurde bewusst nicht
+mit Daten gefüttert.
+
+**Frage 1 — Satz aufs ganze Einkommen?** «Der Selbstbehalt beträgt für anrechenbare Einkommen bis
+10 000 Franken 5 Prozent, bis 20 000 Franken 6,5 Prozent …» Wir lesen: EIN Satz je Kategorie, auf
+das ganze anrechenbare Einkommen (bei 40'000: 9 % × 40'000 = 3'600; bei 40'001: 10 % = 4'000.10).
+Oder wird wie bei einem Steuertarif je Tranche gerechnet (bei 40'000: 2'850)? Der Unterschied
+beträgt 150 / 450 / 750 Franken in den Kategorien bis 40'000 und darüber **1'150 Franken** im Jahr;
+zwischen 59'160 und 70'660 (Region 1) zeigt die App «kein Anspruch», wo nach der Tranchen-Lesart
+einer bestünde. ⟨korrigiert 28.09.2026 nach der Fachprüfung #467: hier stand «bis 750 Franken».⟩
+Die App rechnet nach der ersten Lesart und sagt in der Anzeige, dass sie im Zweifel zu tief liegt.
+
+**Frage 2 — Kinder: Vergleich für den Haushalt oder je Kind?** Art. 8 Abs. 4: «Zur Auszahlung
+gelangt der höhere der gemäss den Absätzen 2 und 3 berechneten Beträge.» Wird der ganze
+Haushaltsbetrag nach Abs. 2 mit der Summe der Kinderbeträge nach Abs. 3 verglichen — oder erhält
+jedes Kind mindestens seinen Betrag nach Abs. 3, und die erwachsene Person ihren Anteil nach
+Abs. 2? Beispiel Region 1, ein Kind, anrechenbares Einkommen 30'000: 4'920 gegen 5'380.33; bei
+drei Kindern und 60'000 bis 2'411 Franken. Die Wegleitung 2026 («Gesamtanspruch»: «… werden die
+anrechenbaren Einkommen sowie die Richtprämien aller Personen zusammengezählt») stützt eher den
+Haushalt — die tiefere Zahl. Bis zur
+Antwort zeigt die App für Haushalte mit Kindern bis 80'000 keinen Betrag, wo die beiden
+Lesarten auseinandergehen.
+
+**Frage 3 — Deckel:** KPVG und VOzKPVG begrenzen die Verbilligung nicht auf die tatsächlich
+bezahlte Prämie. Was geschieht, wenn die eigene Prämie tiefer ist als die Verbilligung der
+Richtprämie? Die App deckelt bis zur Antwort nicht (wie SG). Geprüft ist nur das kantonale Recht;
+ob Bundesrecht (Auszahlung an den Versicherer, KVG Art. 65 / KVV) den Betrag an der geschuldeten
+Prämie begrenzt, haben wir nicht gelesen — gehört zur Frage.
+⟨Hinweis 28.09.2026 bei der Integration: Für Uri ist die bundesrechtliche Seite inzwischen belegt,
+siehe Abschnitt 8, Frage 1, und `KEIN_PRAEMIENDECKEL.UR` in `src/config/kantonsModell.js` (KVV
+Art. 106c Abs. 5bis: der Versicherer zahlt die Differenz aus, kantonale Deckel bleiben vorbehalten).
+Für GR hier nicht selbst nachgelesen; offen bleibt, ob Graubünden einen solchen kantonalen Deckel kennt.⟩
+
+~~**Frage 4 — Alter:** Die Wegleitung nennt «Erwachsene ab 26. Altersjahr», «junge Erwachsene
+19 - 25 Jahre», «Kinder bis und mit 18. Altersjahr», aber keine Jahrgänge und keinen Stichtag.
+Zählt das Alter am 1. Januar, am 31. Dezember oder der Jahrgang? Die App rechnet nur für
+Personen, die das ganze Anspruchsjahr über 25 sind.~~ ⟨beantwortet 28.09.2026 aus der Quelle,
+Fachprüfung #467: der Online-Rechner der SVA 2026 (`sva.gr.ch/ipv.html`) führt «junge Erwachsene
+(Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». Die App rechnet jetzt nach Jahrgang.⟩
+
+**Frage 5 — geringfügige Beträge:** Art. 11 Abs. 5 und Art. 16 Abs. 4 KPVG erlauben, geringfügige
+Beträge nicht auszuzahlen. Gibt es für 2026 eine solche Grenze? In VOzKPVG und Wegleitung steht
+keine; die App zeigt darum auch kleine Beträge.
+
+**Stand:** GR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 lagen am 28.09.2026 nicht vor;
+ab 01.01.2027 zeigt die App für GR keinen Betrag mehr.
+
+---
+
+## 11 · Amt für Gesundheit Thurgau — wo findet eine Person ihre «einfache Steuer zu 100 %»?
+
+**Wo:** TG KVV (RB 832.10) § 14; Merkblatt «Information zur Prämienverbilligung 2026».
+
+Der Kanton knüpft die Prämienverbilligung an die einfache satzbestimmende Steuer zu 100 % per
+1. Januar (provisorische Steuerdaten des Vorjahres), nicht an das Einkommen. Die App kennt diese
+Zahl nicht und zeigt darum keinen Betrag, sondern die Ansätze.
+
+**Frage 1:** Auf welchem Dokument steht diese Zahl für die versicherte Person (provisorische
+Steuerrechnung, Veranlagungsverfügung, Steuerportal)? Dann könnte die App gezielt danach fragen.
+
+**Frage 2:** Junge Erwachsene, die sich **nicht** in Ausbildung befinden: gelten für sie die
+Kategorien A–C wie für Erwachsene?
+
+**Stand:** TG ist für 2026 belegt und gebaut, zeigt bewusst keine Zahl (Entwurfs-PR, K31).
+
+---
+
+## 14 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
+
+*Aufgenommen 28.09.2026 beim Einbau von TI. Entwurf — **nicht gesendet**.*
+
+**Wo:** LCAMal (RL 853.100) Art. 31, 32a, 37; RLCAMal (RL 853.110) Art. 17, 18; Decreto RL 870.130;
+Istruzioni RIPAM 2026.
+
+**Frage 1 — RDM:** Art. 32a nennt «50% del limite di fabbisogno, senza computo della pigione, ai sensi
+della Laps». Ist das für eine Einzelperson 2026 die «soglia d'intervento» nach Laps Art. 10 und Decreto
+870.130, also 18'709 (RDM = 3,8 × 50 % × 18'709 = 35'547.10)? Die Istruzioni nennen 18'709 als «limite di
+fabbisogno esistenziale», RLCAMal Art. 18 regelt das Jahr — wörtlich gleichgesetzt ist es nirgends.
+
+**Frage 2 — Berufsauslagen:** Ist die Pauschale von 4'000 für jede UR mit einer hauptberuflich
+angestellten Person fest, oder zählt der tatsächliche Abzug nach LT, höchstens 4'000?
+
+**Frage 3 — Kinder:** Wie wird nach RLCAMal Art. 17 Abs. 2 aufgeteilt, wenn die UR-Verbilligung 80 % des
+PMR der Minderjährigen übersteigt — erhalten diese genau 80 % und die übrigen Personen den Rest nach PMR?
+Davon hängen der Deckel (Art. 37 Abs. 3) und der Mindestbetrag je Person (Art. 21) ab.
+
+**Frage 4 — Ziffer 10.3:** Die Istruzioni nennen für die Sozialabzüge (CS) die Ziffern «10.1, 10.2 e
+10.3» der Veranlagung. Ist 10.3 die Säule 3a? LCAMal Art. 31 Abs. 1 lit. d zählt die CS abschliessend
+auf («AVS, AI, IPG, AD, AINP, LPP») — die App rechnet darum ohne 3a-Abzug; zieht das IAS sie ab, liegt
+die Zahl für 3a-Sparende zu tief.
+
+**Stand:** TI ist für 2026 für Alleinstehende gebaut (Entwurfs-PR, K31); Haushalte mit Kindern und Paare
+zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüttert.
+
+---
+
+## 26 · Gesundheitsamt Appenzell Innerrhoden — Stufen, steuerpflichtiges Einkommen, Kinder
+
+*Aufgenommen 28.09.2026 beim Einbau von AI. Entwurf — **nicht gesendet**. (Nummer 26, zugeteilt
+28.09.2026 abends; vorher 10.)*
 
 **Worum es geht:** Der StKB IPV (GS 832.501, in Kraft seit 01.01.2026) und das Merkblatt 2026 sind
 vollständig; alle vier Berechnungsbeispiele des Merkblatts rechnen wir auf den Franken nach. Drei
