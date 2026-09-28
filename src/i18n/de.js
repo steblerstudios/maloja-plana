@@ -3999,6 +3999,13 @@ export default {
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.
+    // K31 AR (28.09.2026): EG zum KVG bGS 833.14 Art. 12, 13, 20–22; V zum KVG bGS 833.141 Art. 7, 10, 13; Merkblatt SOVAR 2026.
+    jahrAR: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Appenzell Ausserrhoden gilt dieselbe Richtprämie im ganzen Kanton — es gibt keine Prämienregionen.',
+    vorbehaltAR: 'Im Kanton Appenzell Ausserrhoden ist die letzte rechtskräftige Steuerveranlagung die Grundlage — das steuerbare Einkommen, nicht das heutige Einkommen. Weicht das massgebende Einkommen um mehr als 20 Prozent ab, kann innert sechs Monaten nach Rechtskraft der Veranlagung eine Nachvergütung beantragt werden, oder die Ausgleichskasse fordert von Amtes wegen zurück. Zu Unrecht bezogene Prämienverbilligung ist zurückzuerstatten.',
+    arKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Der Selbstbehalt — 46 Prozent des Einkommens über dem allgemeinen Lebensbedarf — ist mindestens so hoch wie die Richtprämie, oder das massgebende Einkommen liegt über der kantonalen Obergrenze.',
+    arUnterMindestbetrag: 'Nach dieser Rechnung bestünde ein Anspruch, er wird aber nicht ausbezahlt: Der Kanton Appenzell Ausserrhoden zahlt keine Beträge unter 20 Franken aus.',
+    arFristLaeuft: 'Die Prämienverbilligung muss im Kanton Appenzell Ausserrhoden jedes Jahr beantragt werden — für {jahr} vom 1. Januar bis zum 31. März {jahr}, bei den Sozialversicherungen Appenzell Ausserrhoden (SOVAR). Wer mutmasslich Anspruch hat, wird angeschrieben. Wer die Frist verpasst, verliert den Anspruch für dieses Jahr. Wer Ergänzungsleistungen bezieht, braucht keinen Antrag.',
+    arFristVorbei: 'Die Antragsfrist für {jahr} lief vom 1. Januar bis zum 31. März {jahr}; in Härtefällen konnte die Ausgleichskasse sie bis zum 30. April verlängern. Danach ist der Anspruch für {jahr} verwirkt. Der Betrag hier zeigt, worum es geht. Für {folgejahr} läuft die Frist bis zum 31. März {folgejahr}; die Werte für {folgejahr} sind noch nicht beschlossen. Wer Ergänzungsleistungen bezieht, braucht keinen Antrag.',
     offenGrund: {
       haushalt: 'Für Paare und Haushalte mit mehreren Erwachsenen rechnet die App noch nicht: Dafür fehlen das Alter und die Einkünfte der zweiten Person.',
       alter: 'Für die Rechnung fehlt ein Geburtsdatum — auch bei den Kindern. Junge Erwachsene in Ausbildung werden zudem mit dem Einkommen der Eltern gerechnet, das hier nicht erfasst ist.',
@@ -4012,6 +4019,9 @@ export default {
       praemie: 'Für die Rechnung fehlt die Krankenkassenprämie. Die Verbilligung ist höchstens so hoch wie die Prämie selbst — ohne sie wäre die Zahl hier die Obergrenze, nicht der Anspruch.',
       einkommenNegativ: 'Das erfasste Einkommen ist negativ. Damit lässt sich keine Verbilligung berechnen — bitte den Betrag im Kapitel Finanzen prüfen.',
       saeule3aUeberEinkommen: 'Die erfasste Einzahlung in die Säule 3a ist höher als die erfassten Einkünfte des Jahres — oder sie verteilt sich auf mehrere Jahre. Dann lässt sich nicht sagen, welcher Teil in den Einkünften schon enthalten ist, und die Zahl wäre zu hoch. Bitte prüfen: Gefragt ist die Einzahlung eines Jahres, nicht der Kontostand und nicht die Summe mehrerer Jahre.',
+      kindNachStichtag: 'Ein Kind ist erst nach dem 1. Januar des Anspruchsjahres geboren. Massgebend sind die Verhältnisse am 1. Januar, und für das Kind beginnt der Anspruch erst im Monat nach der Geburt. Wie das zusammen gerechnet wird, lässt sich hier nicht sicher sagen.',
+      saeule2Unbekannt: 'Wie die Einzahlung in die Säule 3a zählt, hängt in diesem Kanton davon ab, ob eine Pensionskasse besteht. Das ist hier nicht erfasst — mit einem BVG-Beitrag im Kapitel Versicherungen rechnet die App.',
+      praemieFranchise: 'Die Verbilligung ist in diesem Kanton höchstens so hoch wie die Prämie mit der ordentlichen Franchise von 300 Franken und mit Unfalldeckung — nicht wie die erfasste Prämie. Der gerechnete Betrag liegt über der erfassten Prämie; welche Obergrenze gilt, hängt an einer Prämie, die hier nicht erfasst ist.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },
