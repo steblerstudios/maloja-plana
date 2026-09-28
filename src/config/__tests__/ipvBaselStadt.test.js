@@ -396,6 +396,22 @@ describe('K31 calculateIPV für BS (App-Angaben → Modell)', () => {
     });
   });
 
+  describe('🛑 Re-Review #473 N4: Stunden ohne Erwerbseinkommen', () => {
+    it('bsPensumStunden: Stunden ohne Haupt- und Nebeneinkommen → Pensum unbekannt', () => {
+      expect(bsPensumStunden({ workHoursPerWeek: '42' }, { monthlyIncome: 0 })).toBe(null);
+      expect(bsPensumStunden({ workHoursPerWeek: '42' }, {})).toBe(null);
+      // Stunden des Haupterwerbs ohne Hauptlohn zählen nicht — wie Nebenstunden ohne Nebeneinkommen.
+      expect(bsPensumStunden({ workHoursPerWeek: '42' }, { monthlyIncome: 0, sideIncome: 500, sideHoursPerWeek: '10' })).toBe(10);
+    });
+    it('42 Std., Lohn 0: keine Zahl (vorher Pensum 100 % → 444; das Amt rechnet 0 % + 28 800 → 296)', () => {
+      const r = calculateIPV(person({ monthlyIncome: 0, stunden: '42' }));
+      expect(r).toMatchObject({ offen: 'bsHypothetisch' });
+      expect(r.amount ?? null).toBe(null);
+      // Gegenprobe: mit Lohn rechnet dieselbe Stundenzahl weiter.
+      expect(calculateIPV(person({ monthlyIncome: 3000, stunden: '42' }))).toMatchObject({ eligible: true, amount: 118 });
+    });
+  });
+
   describe('⚠️ Fachprüfung W4: Zuschlag für alternative Modelle nach dem erfassten Modell', () => {
     it('bsModell: Hausarzt/HMO/Telmed/Apotheke alternativ, Standard standard, Basic/Comfort/leer offen', () => {
       expect(['hausarzt', 'hmo', 'telmed', 'apotheke'].map(bsModell)).toEqual(Array(4).fill('alternativ'));

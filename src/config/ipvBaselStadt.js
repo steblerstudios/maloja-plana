@@ -252,19 +252,25 @@ export function bsWochenstunden(wert) {
 // der Nebenerwerb zählte im Einkommen mit, seine Stunden (`finanzen.sideHoursPerWeek`) nicht —
 // 20 Std. Haupt- + 15 Std. Nebenerwerb galten als 48 % statt 83 %, und die App rechnete 11'657
 // hypothetisch hinzu (26 statt 179 im Monat).⟩
-//   · Haupterwerb: Stunden erfasst, oder kein Lohn und keine Stunden (dann zählt nur der Nebenerwerb).
+//   · Haupterwerb (`monthlyIncome` > 0): seine Stunden müssen erfasst sein, sonst `null`.
 //   · Nebenerwerb (`sideIncome` > 0): seine Stunden müssen erfasst sein, sonst ist das Pensum
 //     unbekannt → `null` (die App rechnet dann mit der Schwelle 28'800, wie ohne Stunden).
-//   · Stunden ohne Nebeneinkommen zählen nicht (kein Erwerb, der im Einkommen steht).
+//   · Stunden ohne das zugehörige Einkommen zählen nicht (kein Erwerb, der im Einkommen steht) —
+//     beim Nebenerwerb wie beim Haupterwerb.
+//   · Weder Haupt- noch Nebeneinkommen → `null`, auch wenn Stunden erfasst sind. ⟨28.09.2026,
+//     Re-Review #473 N4: vorher galten 42 Std. ohne Lohn als Pensum 100 %, die Anrechnung fiel
+//     weg und die App zeigte 444 im Monat; das Amt rechnet 0 % Pensum, + 28'800 → 296. Welche
+//     Ausnahme (Ausbildung, Krankheit, Taggeld …) vorliegt, weiss die App nicht — darum keine
+//     Zahl statt einer Anrechnung.⟩
 export function bsPensumStunden(ausbildung, finanzen) {
   const f = finanzen || {};
-  const haupt = bsWochenstunden(ausbildung?.workHoursPerWeek);
   const hatHauptlohn = Number(f.monthlyIncome) > 0;
   const hatNebenerwerb = Number(f.sideIncome) > 0;
+  if (!hatHauptlohn && !hatNebenerwerb) return null;
+  const haupt = hatHauptlohn ? bsWochenstunden(ausbildung?.workHoursPerWeek) : 0;
   const neben = hatNebenerwerb ? bsWochenstunden(f.sideHoursPerWeek) : 0;
-  if (neben === null) return null;
-  if (haupt === null && (hatHauptlohn || !hatNebenerwerb)) return null;
-  return (haupt || 0) + neben;
+  if (haupt === null || neben === null) return null;
+  return haupt + neben;
 }
 
 // SoHaV § 24 Abs. 2 [3]: Differenz zwischen dem Pensum und 80 %, × 36'000. Pensum = Stunden ÷ 42
