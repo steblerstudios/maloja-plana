@@ -104,7 +104,9 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
       expect(texte.ipv.bsKeinAnspruch, `${sprache}: Platzhalter`).toContain('{grenze}');
       expect(texte.ipv.jahrBS, `${sprache}: Platzhalter`).toContain('{jahr}');
     }
-  });
+  // Fünf Sprachdateien laden dauert unter Last länger als die 5 s Vorgabe (gemessen 28.09.2026,
+  // Last 40–90 bei parallelen Sitzungen) — der Test prüft Inhalt, nicht Tempo.
+  }, 30000);
 
   it('Paare und Kinder ohne Alter: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(3000), basis: { ...profil(3000).basis, maritalStatus: 'married' } });
