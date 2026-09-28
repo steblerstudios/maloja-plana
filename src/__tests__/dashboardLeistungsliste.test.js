@@ -2,9 +2,16 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV, calculateSozialhilfe } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { zahl } from '../utils/geld.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // Leistungsliste auf dem Dashboard (25.09.2026): Schnell-Check und Leistungen sind

@@ -1,11 +1,18 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { schildState } from '../data/schutzschild.js';
 import { BVG_PARAMS } from '../data/ahvRechner.js';
 import { MietzinsOrientierung } from '../MietzinsOrientierung.jsx';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // Die «Kann»-Punkte der Abschlussprüfung zu #388 (swiss-precision, 25.09.2026) als Regeln.
 const t = (k, p) => (p && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);

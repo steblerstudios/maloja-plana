@@ -1,7 +1,14 @@
-import { describe, it, expect, onTestFinished } from 'vitest';
+import { describe, it, expect, onTestFinished, beforeAll, afterAll } from 'vitest';
 import { mapTaxFields } from '../taxImport.js';
 import { calculateSozialhilfe, calculateIPV } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // Einkommens-Modell: Nebenerwerb (sideIncome) + steuerbares

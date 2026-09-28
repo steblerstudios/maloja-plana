@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { CANTONAL_LINKS } from '../data/direktLinks.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
@@ -15,6 +15,13 @@ import { calculateMonthlyBudget, createBudgetReport } from '../budgetSync.js';
 import { leiteKategorienAb } from '../exportVorschau.js';
 import { getBehoerdenDossierPreview, generateBehoerdenJSON } from '../dossierGenerator.js';
 import { anspruchSignale } from '../data/anspruchSignale.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // E9 (Entscheid 16.09.2026, Bau-Liste M13): Die kantonalen IPV-Werte sind
@@ -74,10 +81,12 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
   });
 
   it('Verfahrens-Hinweis je Kanton ist ausgeblendet, der Link zur Stelle bleibt', () => {
-    const html = render(PremiumSubsidy, { data: profil({ basis: { canton: 'GL', household: { adults: 1, children: [] } } }), onUpdateData: () => {} });
+    // Der Muster-Kanton trägt `noteAutoTaxData` (bis 28.09.2026 lief das mit GL, dessen Zeile es
+    // fälschlich sagte); unbelegt darf der Satz nicht erscheinen.
+    const html = render(PremiumSubsidy, { data: profil(), onUpdateData: () => {} });
     expect(html).not.toContain('premium.note');
     expect(html).not.toContain('ipv.noteAutoTaxData');
-    expect(html).toContain('href="' + CANTONAL_LINKS.GL.ipv + '"');
+    expect(html).toContain('href="' + CANTONAL_LINKS.GE.ipv + '"');
   });
 
   it('IPV-Rechner: Orientierung + Link zur kantonalen Stelle, kein Betrag, kein Verdikt, keine Grenze', () => {

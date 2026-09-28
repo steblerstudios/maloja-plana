@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV, ipvJahreseinkommen, preloadPLZ } from '../cantonalData.js';
@@ -6,8 +6,15 @@ import { rohesEinkommenJahr, einkommenJahr, SAEULE_3A } from '../kantonsModell.j
 import { steuerEingabenAusDaten } from '../../data/kantonaleSteuerdaten.js';
 import { jahreslohnAusProfil } from '../../utils/jahreslohnAusProfil.js';
 import { pegelState } from '../../data/pegel.js';
-import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from './ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../../PremiumSubsidy.jsx';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // Befund Fachprüfung 25.09.2026 (PR #380): die IPV rechnete das Jahreseinkommen immer ×12.
 // Wer einen 13. Monatslohn erhält, hat 8,3 % mehr (13/12) — die Verbilligung fiel zu hoch aus.

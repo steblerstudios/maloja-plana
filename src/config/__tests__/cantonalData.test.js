@@ -2,7 +2,14 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { SKOS_GRUNDBEDARF, getGrundbedarf, calculateSozialhilfe, calculateIPV, checkELEligibility, CANTONAL_IPV, CANTON_CODES, IPV_MODULE } from '../cantonalData.js';
 import { grundbedarfFuerHaushalt, berechneSozialhilfe } from '../../data/sozialhilfeRechner.js';
 import { vermoegensfreibetragUnbestaetigt } from '../../data/vermoegensfreibetragUnbestaetigt.js';
-import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton, MUSTERWERTE } from './ipvBelegtSimulieren.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 describe('SKOS_GRUNDBEDARF (cantonalData)', () => {
   it('matches the official SKOS GBL 2025/2026 scale (SKOS-RL C.3.1)', () => {
@@ -221,7 +228,8 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
   let zuruecksetzen;
   beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
   afterAll(() => zuruecksetzen());
-  const zh = CANTONAL_IPV.GE;
+  // Die Musterwerte aus dem Helfer, nicht aus der Kantonszeile (die wird erst im beforeAll ersetzt).
+  const zh = MUSTERWERTE;
   const ipv = (overrides = {}) => calculateIPV({
     basis: { canton: 'GE' },
     finanzen: {},
