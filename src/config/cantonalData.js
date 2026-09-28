@@ -33,11 +33,14 @@ export const IPV_MODULE = {
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
   UR: { laden: () => import('./ipvUri.js'), fn: 'ipvUri', brauchtPLZ: false },
   NE: { laden: () => import('./ipvNeuchatel.js'), fn: 'ipvNeuchatel', brauchtPLZ: false },
+  // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
+  GE: { laden: () => import('./ipvGenf.js'), fn: 'ipvGenf', brauchtPLZ: false },
   GR: { laden: () => import('./ipvGraubuenden.js'), fn: 'ipvGraubuenden' },
   // TG rechnet nach dem Steuerbetrag, nicht nach Region oder Einkommen — und zeigt bewusst keine Zahl.
   TG: { laden: () => import('./ipvThurgau.js'), fn: 'ipvThurgau', brauchtPLZ: false },
   // TI kennt Prämienregionen, rechnet aber mit einem kantonsweiten PMR (LCAMal Art. 28 Abs. 2).
   TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
+  OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
   NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
 };
 const _module = {};
@@ -125,7 +128,12 @@ export const CANTONAL_IPV = {
   UR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
     beleg: { quelle: 'RB 20.2213 · Steuerungsgrössen 2026 (GSUD Uri) · SVS Uri — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
-  OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // OW (K31): eigenes Modell in config/ipvObwalden.js (Richtprämien minus linear-progressiver
+  // Selbstbehalt, harte Grenze 50 000 / mit Kindern 75 000 anrechenbares Einkommen, eine Region).
+  // Die Grenze hängt am Haushalt, darum steht sie im Ergebnis, nicht hier. Antrag bei der
+  // Ausgleichskasse Obwalden (GDB 851.11 Art. 10).
+  OW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'GDB 851.12 · GDB 851.11 · GDB 851.1 · Ausgleichskasse Obwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // NW (K31): eigenes Modell in config/ipvNidwalden.js (Richtprämie minus 10 % der Summe der
   // Steuerwerte, eine Region). Keine publizierte Einkommensgrenze für Erwachsene — die 100 000
   // gelten nur für die Kinder. Gesuch bei der Ausgleichskasse Nidwalden bis 30. April (kKVG Art. 22).
@@ -174,7 +182,14 @@ export const CANTONAL_IPV = {
   // Weg: automatisch nach der Veranlagung, neu Berechtigte mit Antwortschein innert 30 Tagen (RALILAMal Art. 31).
   NE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoOcab',
     beleg: { quelle: 'RSN 821.102 · Décret RSN 821.104 · LILAMal (RSN 821.10) · RALILAMal (RSN 821.101) · OCAB — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
+  // GE (K31): eigenes Modell in config/ipvGenf.js (acht Gruppen nach RDU mit festen Monatsbeträgen,
+  // Gruppe 9 nur für Kinder). Die Grenze ist amtlich publiziert (LaLAMal Art. 21) und hängt an der
+  // Haushaltsform — das Modul setzt sie je Fall; hier darum null wie in BE.
+  // noteKey: «in der Regel automatisch» — ge.ch nennt Antragsfälle, die die App nicht erfragt
+  // (Zuzug, Quellensteuer, fehlende Veranlagung, veränderte Lage); das Modul überschreibt ihn im
+  // Antragsfall (Rechtsprüfung 28.09.2026: vorher stand hier `ipv.noteAutoSam` ohne Einschränkung).
+  GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.geWegAutomatisch',
+    beleg: { quelle: 'LaLAMal (rsGE J 3 05) Art. 21/22 · RaLAMal (rsGE J 3 05.01) Art. 9–10A · LRDU (rsGE J 4 06) Art. 8 · Barème subsides 2026, Service de l\'assurance-maladie (SAM) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };
 

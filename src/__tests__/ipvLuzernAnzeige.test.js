@@ -90,7 +90,7 @@ describe('K31 IPV-Rechner, Kanton Luzern', () => {
         expect(texte.ipv[k], `${sprache}: Platzhalter`).toContain('{vorjahr}');
       }
     }
-  });
+  }, 30000); // fünf Sprachdateien laden — unter Last mehr als 5 s (28.09.2026)
 
   it('Paare, Kinder ohne Alter und unbekannte PLZ: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(2000), basis: { ...profil(2000).basis, maritalStatus: 'married' } });
