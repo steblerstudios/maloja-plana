@@ -17,6 +17,18 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🩺 **Nachtrag 28.09., 11:55 — Vorsorge + Kreditkarte gemergt; LIVE = `1cb36b1f` (0.1.44-beta, gebaut 11:42) enthält die Patientenverfügung.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 11:52): main = `3e1b60d6` · live = `1cb36b1f` · 10 Commits dazwischen · offen: #351 (Entwurf).
+> **Gemergt:** #437 Kreditkarte (`2ac40ba6`) · #440 Patientenverfügung in Fragen (`1cb36b1f`) · #443 Vorsorgeauftrag-Vorlage,
+> Bestattungswünsche, Testament-Wegweiser, Bestattungs-Hinweis korrigiert (`5a60d4c4`) · #447 Changelog (`3e1b60d6`).
+> #445 (Startbündel) **geschlossen** — derselbe Umbau kam mit #433 als `config/kantonPLZ.js`. Startbündel auf main **61,24 / 65 kB**.
+> **Belegt:** 4630 Tests grün (lokal, auf dem #443-Stand = main) · CI grün je PR · live `version.json` = `1cb36b1f`, Gegenprobe 404,
+> Chunk `Patientenverfuegung-*.js` ausgeliefert. #443 ist **nicht** live.
+> 🛑 **Offen:** ärztliche Gegenlese PV-Fragen 3–9 — Entscheid Stebler Studios 28.09.: im Oktober mit den Mails
+> (Studio-Repo `FAHRPLAN-oktober-2026.md`, Woche 4). PV ist damit **vor** der Gegenlese live → Entscheid offen, ob
+> `#/patientenverfuegung` bis dahin verborgen wird. rm-Texte von #437/#440/#443 provisorisch.
+
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
 > ⚖️ **Nachtrag 27.09., 21:05 — #438 gemergt (`138717e5`), NICHT live. Live bleibt `4197501d` = 0.1.42-beta.**
