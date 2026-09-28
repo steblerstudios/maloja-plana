@@ -10,6 +10,7 @@ import { preloadPLZ, calculateIPV } from '../config/cantonalData.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { praemienBelegState } from '../data/praemienBeleg.js';
 import { ipvAbzug } from '../data/ipvAbzug.js';
+import { musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from '../data/ipvStatus.js';
 import { KKLastCard } from '../KKLastCard.jsx';
 import FinanzUebersicht, { druckAbschnitte } from '../FinanzUebersicht.jsx';
@@ -96,10 +97,16 @@ describe('Verfügung aus einem anderen Kanton: kein Abzug aus der Verfügung', (
     expect(calculateMonthlyBudget(d, t).ipvRelief).toBe(0);
     expect(praemienBelegState(d)).toMatchObject({ mode: 'fristVorbei', verbilligung: 0, confirmed: false });
   });
-  it('LU-Verfügung, Wohnkanton jetzt BS (unbelegt) → keine Zahl', () => {
+  it('LU-Verfügung, Wohnkanton jetzt ein unbelegter Kanton → keine Zahl', () => {
+    // ⟨28.09.2026, Integration BS⟩ bis hier stand BS als unbelegter Kanton — BS ist seither belegt.
+    // Synthetischer Test-Kanton «TT» (Muster-Helfer), damit kein künftiges Kantonsmodell diesen Test umdeutet.
     am(SEPT_2026);
-    const d = person('BS', verfuegung(200, 'LU', 2026));
-    expect(ipvAbzug(d)).toMatchObject({ betrag: 0, grund: 'keiner' });
+    const zurueck = musterKanton('TT');
+    try {
+      const d = person('TT', verfuegung(200, 'LU', 2026));
+      expect(calculateIPV(d).belegt).toBe(false);
+      expect(ipvAbzug(d)).toMatchObject({ betrag: 0, grund: 'keiner' });
+    } finally { zurueck(); }
   });
   // Runde 4: Altbestand zieht höchstens den Verfügungsbetrag ab, nie mehr als die Schätzung —
   // in LU nach der Frist ist das 0 (Details: ipvAltVerfuegung.test.js).
@@ -120,9 +127,15 @@ describe('Verfügung laufendes Jahr, aktueller Kanton: ihr Betrag wird abgezogen
     expect(kk(d)).toContain('kkLast.ipvRelief(200|');
     expect(praemienBelegState(d)).toMatchObject({ verbilligung: 200, confirmed: true });
   });
-  it('BS (unbelegt) 2026 im September 2026: die Verfügung liefert den Betrag', () => {
+  it('unbelegter Kanton 2026 im September 2026: die Verfügung liefert den Betrag', () => {
+    // ⟨28.09.2026, Integration BS⟩ bis hier stand BS als unbelegter Kanton — BS ist seither belegt.
+    // Synthetischer Test-Kanton «TT» (Muster-Helfer), damit kein künftiges Kantonsmodell diesen Test umdeutet.
     am(SEPT_2026);
-    expect(ipvAbzug(person('BS', verfuegung(150, 'BS', 2026)))).toMatchObject({ betrag: 150, grund: 'bestaetigt' });
+    const zurueck = musterKanton('TT');
+    try {
+      expect(calculateIPV(person('TT')).belegt).toBe(false);
+      expect(ipvAbzug(person('TT', verfuegung(150, 'TT', 2026)))).toMatchObject({ betrag: 150, grund: 'bestaetigt' });
+    } finally { zurueck(); }
   });
 });
 

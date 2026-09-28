@@ -24,17 +24,25 @@ export function kantoneBelegtSimulieren(kantone = Object.keys(CANTONAL_IPV)) {
 // Darum macht dieser Helfer aus dem genannten Kanton für die Dauer des Tests einen Muster-Kanton:
 // Musterwerte fest (die bisherigen GE-Musterwerte), Modul ausgeblendet, Beleg nach Wunsch.
 // Gibt eine Funktion zurück, die Zeile und Register-Eintrag wiederherstellt.
+// ⟨28.09.2026, Integration BS auf main 50dd0593⟩ Auch ein Code, den es nicht gibt, geht: mit
+// `musterKanton('TT')` entsteht ein synthetischer, unbelegter Test-Kanton (wie in
+// anspruchInstrumente.test.js), und das Zurücksetzen entfernt ihn wieder ganz — sonst bliebe
+// `CANTONAL_IPV.TT = undefined` stehen und Object.keys(CANTONAL_IPV) zählte 27. Für Tests, die
+// einen UNBELEGTEN Kanton brauchen: bis heute stand dort BS, und jeder echte Kanton bekommt
+// irgendwann sein Modell (zuletzt bleiben BL und GL).
 export const MUSTERWERTE = Object.freeze({
   maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800,
   modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
 });
 export function musterKanton(kanton = 'GE', { belegt = false } = {}) {
+  const gab = Object.prototype.hasOwnProperty.call(CANTONAL_IPV, kanton);
   const zeile = CANTONAL_IPV[kanton];
   const modul = IPV_MODULE[kanton];
   CANTONAL_IPV[kanton] = { ...MUSTERWERTE, beleg: belegt ? { quelle: TEST_QUELLE, stand: 'Test' } : null };
   delete IPV_MODULE[kanton];
   return () => {
-    CANTONAL_IPV[kanton] = zeile;
+    if (gab) CANTONAL_IPV[kanton] = zeile;
+    else delete CANTONAL_IPV[kanton];
     if (modul) IPV_MODULE[kanton] = modul;
   };
 }
