@@ -236,12 +236,11 @@ export function ipvGraubuenden(data, hh, ipvData, youngAdultsCount, orientierung
   }
   // Art. 14 Abs. 1 [2]: Anmeldung «bis spätestens Ende des anspruchsberechtigten Jahres»; [3]:
   // Posteingang bei der SVA bis 31.12.2026; Art. 10 lit. a [1]: sonst verwirkt. Die Frist endet
-  // mit dem Anspruchsjahr — danach greift ohnehin `jahrVorbei`. Der Wert steht trotzdem da, damit
-  // data/ipvAbzug.js ihn wie bei den anderen Kantonen liest.
-  const fristVorbei = new Date() > new Date(`${jahr}-12-31T23:59:59`);
+  // mit dem Anspruchsjahr, und danach greift ohnehin `jahrVorbei` — solange hier eine Zahl steht,
+  // läuft die Frist also IMMER. Darum kein `anmeldefristVorbei` (es wäre nie wahr; data/ipvAbzug.js
+  // zieht den Betrag ab, wie bei den Kantonen ohne Vorjahresfrist) und nur ein Hinweis-Satz.
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
-    extra: { ...gemeinsam.extra, anmeldefristVorbei: fristVorbei },
     noteKey: 'ipv.grFristLaeuft',
     noteParams: { jahr },
   });

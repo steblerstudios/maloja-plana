@@ -216,8 +216,9 @@ describe('K31 calculateIPV für GR (App-Angaben → Modell)', () => {
     expect(r).toMatchObject({
       belegt: true, eligible: true, annual: 3516, amount: 293, maxAnnual: 5916,
       region: 1, basisjahr: 2025, jahr: 2026, vorbehaltKey: 'ipv.vorbehaltGR', noteKey: 'ipv.grFristLaeuft',
-      anmeldefristVorbei: false,
     });
+    // Die Frist endet mit dem Anspruchsjahr — solange eine Zahl steht, läuft sie (siehe Modul).
+    expect(r.anmeldefristVorbei).toBeUndefined();
     expect(r.cantonData.maxIncome).toBe(null);
   });
 
@@ -297,7 +298,7 @@ describe('K31 calculateIPV für GR (App-Angaben → Modell)', () => {
   describe('Frist und Jahres-Riegel', () => {
     it('im Anspruchsjahr läuft die Anmeldefrist bis 31.12. (Art. 14 Abs. 1 VOzKPVG)', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T12:00:00'));
-      expect(calculateIPV(person({ monthlyIncome: 2500 }))).toMatchObject({ noteKey: 'ipv.grFristLaeuft', noteParams: { jahr: 2026 }, anmeldefristVorbei: false });
+      expect(calculateIPV(person({ monthlyIncome: 2500 }))).toMatchObject({ noteKey: 'ipv.grFristLaeuft', noteParams: { jahr: 2026 } });
     });
     it('ab 2027 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
