@@ -13,7 +13,9 @@
 //   RRB Nr. 297/2025, Dispositiv I–IV: Vermögensgrenzen, massgebende Prämie 84 % der RDP,
 //     Familiengrenze 70 500 (nur minderjährige Kinder), Abzugsquote 60 % darüber.
 // Gegenprobe: alle 36 Einkommensgrenzen 2026 der SVA ergeben sich exakt aus diesen Werten
-// (src/config/__tests__/ipvZuerich.test.js).
+// (src/config/__tests__/ipvZuerich.test.js). Für 2027 nicht — dort gilt die publizierte
+// Tabelle als Datum (IPV_ZH_2027.grenzen). 2027 ist vorbereitet, rechnet aber erst, wenn
+// Referenzprämie und Durchschnittsprämien 2027 amtlich publiziert sind (Stand 28.09.2026).
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -34,6 +36,62 @@ export const IPV_ZH = {
   vermoegen: { grenze: [150000, 300000], freibetrag: [75000, 150000], anteil: 0.1 },
 };
 
+// Anspruchsjahr 2027 — vorbereitet, rechnet aber NOCH NICHT (Stand 28.09.2026).
+// Alles hier ist heute an der Quelle gelesen; was fehlt, steht als `null` und hält den
+// Jahres-Riegel zu. Wortlaute und Abrufdaten: docs/sources/ipv-kantone-2026.md, Abschnitt ZH,
+// «Vorbereitung 2027 (28.09.2026)».
+//   satz       SVA Zürich «Leistung»: «Für das Jahr 2027 gelten folgende Eigenanteile: 11.8 Prozent
+//              für Verheiratete … 9.4 Prozent für Alleinstehende und Alleinerziehende». Nach RRB
+//              Nr. 303/2026 Disp. VI von der Gesundheitsdirektion PROVISORISCH festgesetzt; der
+//              Regierungsrat legt ihn «im September 2026 … definitiv» fest (Erw. 4, 6).
+//   referenz   null: RRB 303/2026 Erw. 3f ermächtigt die Gesundheitsdirektion, «eine höhere
+//              Referenzprämie provisorisch festzulegen»; die Zahl für 2027 ist nirgends publiziert
+//              (die SVA-Seite sagt nur «ab dem Jahr 2026 neu 70 Prozent»).
+//   rdp        null: die SVA-Tabelle «Regionale Durchschnittsprämien» zeigt am 28.09.2026 nur 2026.
+//              Die Werte 665/607/566 aus der Notiz vom 19.09. sind heute an keiner amtlichen
+//              Stelle nachzulesen — darum nicht übernommen.
+//   massgebend RRB 303/2026 Disp. II: 83 % der regionalen Durchschnittsprämien 2027 (2026: 84 %).
+//   familienGrenze, abzugsquote  RRB 303/2026 Disp. III.1 (71 200) und Disp. IV (60 %).
+//   vermoegen  RRB 303/2026 Disp. I: dieselben Obergrenzen wie 2026. Freibeträge und 10 %-Anteil:
+//              SVA «Leistung» (ohne Jahresangabe, unverändert gegenüber 2026).
+//   grenzen    SVA «Einkommensgrenzen 2027», wörtlich. Sie sind NICHT exakt «Summe ÷ Satz»
+//              (siehe Quellenblatt) — darum zeigt die App für 2027 die publizierte Zahl, nie
+//              eine selbst gerechnete. e = Erwachsene (älter 25), j = junge Erwachsene (18–25);
+//              Spalten: keine Kinder / 1 / 2 / 3 Kinder.
+export const IPV_ZH_2027 = {
+  jahr: 2027,
+  referenz: null,
+  satz: { verheiratet: 0.118, uebrige: 0.094 },
+  rdp: null,
+  massgebend: 0.83,
+  mindestKind: 0.8,
+  familienGrenze: 71200,
+  abzugsquote: 0.6,
+  vermoegen: { grenze: [150000, 300000], freibetrag: [75000, 150000], anteil: 0.1 },
+  grenzen: {
+    einzel: {
+      1: { j: [42620, 71200, 71210, 85500], e: [59420, 73700, 88000, 102300] },
+      2: { j: [39045, 71200, 71200, 78170], e: [54235, 71200, 80315, 93360] },
+      3: { j: [36185, 71200, 71200, 72630], e: [50570, 71200, 74860, 86990] },
+    },
+    verheiratet: {
+      1: { j: [67900, 78280, 90670, 102050], e: [94670, 106040, 117420, 128820] },
+      2: { j: [62205, 72590, 82980, 93360], e: [86410, 96790, 107180, 117600] },
+      3: { j: [57650, 71200, 77000, 86680], e: [80575, 90240, 99920, 109600] },
+    },
+  },
+};
+
+// Werte je Anspruchsjahr. Gewählt wird nach dem Kalenderjahr (die App zeigt immer das
+// laufende Anspruchsjahr). Fehlt ein Jahr oder ist es unvollständig, rechnet die App nicht —
+// das ist der Jahres-Riegel, jetzt je Jahr statt fest an 2026.
+export const IPV_ZH_JAHRE = { 2026: IPV_ZH, 2027: IPV_ZH_2027 };
+
+export function zhWerte(jahr = new Date().getFullYear()) {
+  const w = IPV_ZH_JAHRE[jahr];
+  return w && w.referenz != null && w.rdp != null ? w : null;
+}
+
 // BAG-Prämienregionen ZH (Stand 2026, wie src/data/praemienRegionen.js; Guard-Test hält beide
 // gleich): Region 1 = Stadt Zürich, Region 2 = diese BFS-Nummern, alle übrigen ZH-Gemeinden Region 3.
 const REGION_2 = [54, 62, 66, 69, 96, 97, 131, 135, 138, 141, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 230, 243, 247, 250, 293, 295];
@@ -48,8 +106,18 @@ export function zhRegion(bfsNr) {
 // `unklar`, wenn das Ergebnis vom Abbau des Kinder-Mindestanspruchs über der Familiengrenze
 // abhängt: RRB 297/2025 Disp. IV lässt offen, ob die 60 % je Kind oder je Familie abgezogen
 // werden — dann rechnet die App bewusst nicht.
-export function ipvZuerichRechnen({ region, verheiratet, personen, me }) {
-  const p = IPV_ZH;
+// Tabellenzelle der SVA, sofern das Jahr eine hat und der Haushalt darin vorkommt (0–3 Kinder,
+// alle Erwachsenen derselben Altersgruppe). Sonst null → Nullpunkt der Formel wie 2026.
+function publizierteGrenze(p, { region, verheiratet, personen, kinder }) {
+  const erw = personen.filter((c) => c !== 'k');
+  if (!p.grenzen || kinder > 3 || !erw.every((c) => c === erw[0])) return null;
+  return p.grenzen[verheiratet ? 'verheiratet' : 'einzel']?.[region]?.[erw[0]]?.[kinder] ?? null;
+}
+
+// `werte`: Datensatz des Anspruchsjahres (Vorgabe 2026). Hat er eine publizierte Grenzentabelle
+// (ab 2027), ist `grenze` die Tabellenzahl — die Formel trifft sie dort nicht exakt.
+export function ipvZuerichRechnen({ region, verheiratet, personen, me, werte = IPV_ZH }) {
+  const p = werte;
   const rdp = p.rdp[region];
   const satz = verheiratet ? p.satz.verheiratet : p.satz.uebrige;
   const refs = personen.map((c) => p.referenz * rdp[c] * 12);
@@ -79,7 +147,8 @@ export function ipvZuerichRechnen({ region, verheiratet, personen, me }) {
     maximal: summe,
     // Obergrenze desselben Anteils — die Referenzprämien der erwachsenen Personen.
     erwachseneMaximal: personen.reduce((s, c, i) => (c === 'e' ? s + refs[i] : s), 0),
-    grenze: Math.round(Math.max(summe / satz, kinder ? p.familienGrenze : 0)),
+    grenze: publizierteGrenze(p, { region, verheiratet, personen, kinder })
+      ?? Math.round(Math.max(summe / satz, kinder ? p.familienGrenze : 0)),
     unklar: kinder > 0 && bindet && me0 > p.familienGrenze && me0 < p.familienGrenze + (kinder * mindest) / p.abzugsquote,
   };
 }
@@ -101,7 +170,12 @@ export function ipvZuerichRechnen({ region, verheiratet, personen, me }) {
 export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lookupPLZ) {
   const b = data.basis || {};
   const f = data.finanzen || {};
-  const jahr = IPV_ZH.jahr;
+  // Anspruchsjahr = laufendes Kalenderjahr. Werte je Jahr aus IPV_ZH_JAHRE; fehlt das Jahr
+  // oder ist es unvollständig (2027: Referenzprämie und Durchschnittsprämien noch nicht
+  // publiziert), bleibt der Jahres-Riegel zu — dieselbe Orientierung wie bisher ab 01.01.2027.
+  const werte = zhWerte();
+  if (!werte) return orientierung('jahr');
+  const jahr = werte.jahr;
   // § 8 EG KVG: «Richten sich die Prämienverbilligungsbeiträge nach dem Alter der
   // anspruchsberechtigten Person, ist für das ganze Jahr das Alter am Ende des Vorjahres
   // massgebend.» Für das Anspruchsjahr 2026 zählt also das Alter am 31.12.2025 — darum
@@ -111,7 +185,9 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   const stichjahr = jahr - 1;
   // Die Riegel bis zur Prämie stehen im gemeinsamen Rahmen (config/kantonsModell.js) —
   // Reihenfolge und Gründe bleiben hier sichtbar, die Regeln selbst sind dort einmal belegt.
-  // Eigenanteil und Durchschnittsprämien ändern jährlich (2027: 9,4/11,8 % statt 8,4/10,5 %).
+  // Eigenanteil und Durchschnittsprämien ändern jährlich; die Auswahl oben nimmt den Datensatz
+  // des laufenden Jahres. Dieser Riegel bleibt als zweite Sicherung stehen, falls je ein
+  // Datensatz eines vergangenen Jahres hereingereicht wird.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   const geburt = geburtsjahr(b);
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
@@ -128,7 +204,7 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
 
   const gruppe = kinder.length > 0 ? 1 : 0;
   const vermoegen = vermoegenSumme(f);
-  if (vermoegen > IPV_ZH.vermoegen.grenze[gruppe]) return orientierung('vermoegen');
+  if (vermoegen > werte.vermoegen.grenze[gruppe]) return orientierung('vermoegen');
   // § 5 Abs. 1 lit. b EG KVG: Beiträge an die gebundene Selbstvorsorge (Säule 3a) werden dem
   // massgebenden Einkommen HINZUGERECHNET — unbedingt, ohne Schwelle und ohne Deckel.
   // Die Zurechnung erfolgt auf «Einkünfte − Abzüge», wo die 3a bereits abgezogen ist; das
@@ -136,9 +212,9 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   // (Befund Fachprüfung 20.09.2026, korrigiert am selben Tag: vorher wurde sie ein zweites
   // Mal addiert — 252.–/Jahr zu wenig bei 3'000 Einzahlung, 1'008.– bei 12'000.)
   const me = einkommenJahr(f, SAEULE_3A.voll)
-    + IPV_ZH.vermoegen.anteil * Math.max(0, vermoegen - IPV_ZH.vermoegen.freibetrag[gruppe]);
+    + werte.vermoegen.anteil * Math.max(0, vermoegen - werte.vermoegen.freibetrag[gruppe]);
 
-  const r = ipvZuerichRechnen({ region, verheiratet: false, personen: ['e', ...kinder.map(() => 'k')], me });
+  const r = ipvZuerichRechnen({ region, verheiratet: false, personen: ['e', ...kinder.map(() => 'k')], me, werte });
   if (r.unklar) return orientierung('mindestanspruch');
   // § 4 Abs. 3 EG KVG: höchstens die Bruttoprämie — nur bei einer Person ist die erfasste Prämie ihre eigene.
   const praemie = praemieJahr(data);
