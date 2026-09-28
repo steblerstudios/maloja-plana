@@ -11,6 +11,26 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.44-beta] — 2026-09-28
+
+*Ein PR seit `0.1.43-beta` (`92d2cfe`): #433. Startbündel 61,03 / 65 kB (`npm run size`, auf `0096626`).
+**Gemergt ist nicht live** — der Tag kommt erst nach dem Deploy.*
+
+### Neu
+- **Wanderrucksack und «Was steht mir zu?» neu geordnet** (#433). «Mein Gepäck» heisst jetzt
+  **Wanderrucksack** (5 Sprachen) und sitzt oben rechts im Block «Was steht mir zu?», am Computer
+  zusätzlich als Kreis auf der linken Tal-Strasse des Bergpanoramas. Die **Notfallkarte** ist die
+  zweite grosse Karte neben der Finanz-Übersicht. **Leistungs-Kompass und «Ansprüche im Überblick»
+  sind eine Seite** (`#/schnellcheck` = `#/ansprueche`): oben die eigenen Zahlen, darunter die ganze
+  Anspruchs-Landkarte. Am Handy eine **untere Leiste mit sechs Plätzen** (Übersicht · Rucksack ·
+  Kalender | + | Anspruch · Suche · Menü). Der untere Gepäck-Knopf auf dem Dashboard ist weg.
+
+### Geändert
+- **Startdatei 4,35 kB kleiner** (#433). Die PLZ-Funktionen liegen neu in `config/kantonPLZ.js`;
+  vorher zog `main.jsx` über sie die ganze `cantonalData.js` samt IPV-, Sozialhilfe- und EL-Rechnung
+  in die Startdatei. Die Rechnungen laden jetzt als eigener Chunk nach, im selben Moment wie bisher
+  die IPV-Kantonsmodelle. Ein Test hält die Startdatei frei von `cantonalData.js`.
+
 ## [0.1.43-beta] — 2026-09-28
 
 *Alles seit `0.1.42-beta` (Tag auf `4197501`): #436–#439, #441, #442. #438/#439 laufen schon seit dem
