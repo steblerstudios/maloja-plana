@@ -59,11 +59,27 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+// Druck-Knöpfe im Druckfenster verdrahten. Das Fenster ist about:blank und erbt die
+// CSP der App (script-src 'self') — ein Inline-Handler wie onclick="window.print()"
+// wird dort blockiert, der Knopf tat nichts (gemessen 25.09.2026 in der Konsole).
+// Darum hängt die App den Druck von aussen an. Das onclick bleibt im HTML stehen,
+// weil es in einer gespeicherten Datei (ohne CSP) weiter gilt; hier wird es entfernt,
+// damit kein Browser zwei Druckdialoge öffnet.
+export function druckKnoepfeVerdrahten(win) {
+  const knoepfe = win.document.querySelectorAll('[data-druck]');
+  knoepfe.forEach((k) => {
+    k.removeAttribute('onclick');
+    k.addEventListener('click', () => { win.focus(); win.print(); });
+  });
+  return knoepfe.length;
+}
+
 export function openPrintWindow(html) {
   const win = window.open('', '_blank');
   if (win) {
     win.document.write(html);
     win.document.close();
+    druckKnoepfeVerdrahten(win);
     return win;
   }
   const blob = new Blob([html], { type: 'text/html' });
