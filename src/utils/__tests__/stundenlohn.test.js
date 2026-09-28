@@ -121,8 +121,11 @@ describe('Schwellen: Pensionskasse und Unfallversicherung', () => {
   });
 
   it('BVG: genau auf der Schwelle ist noch nicht versichert (Art. 2: «mehr als»)', () => {
-    // 22 680 / 52 / 20 = 21.8076… → Grundlohn so wählen, dass es aufgeht: 21.81 × 20 × 52 = 22 682
-    expect(stundenlohnRechnen({ betrag: '21.8', ferienForm: 'bezahlt', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' }).bvg).toBe('darunter');
+    // Genau auf die Schwelle: 21.81 × 19.998 × 52 = 22 680.3 → gerundet 22 680.
+    const genau = stundenlohnRechnen({ betrag: '21.81', ferienForm: 'bezahlt', wochenstunden: '19.998', dreizehnter: 'nein', feiertag: 'nein' });
+    expect(genau.jahreslohn).toBe(22680);
+    expect(genau.bvg).toBe('darunter');
+    // 21.81 × 20 × 52 = 22 682 → einen Schritt darüber
     expect(stundenlohnRechnen({ betrag: '21.81', ferienForm: 'bezahlt', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' }).bvg).toBe('obligatorisch');
   });
 
