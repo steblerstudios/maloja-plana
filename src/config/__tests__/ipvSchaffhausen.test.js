@@ -3,6 +3,9 @@ import {
   IPV_SH, ipvSchaffhausenRechnen, shRegion, shEntlastungsabzug, shAnrechenbaresEinkommen,
 } from '../ipvSchaffhausen.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from '../../data/ipvAbzug.js';
+import { praemienBelegState } from '../../data/praemienBeleg.js';
+import { calculateMonthlyBudget } from '../../budgetSync.js';
 
 // K31 — Prämienverbilligung Kanton Schaffhausen 2026.
 // Quellen (an der Quelle gelesen 28.09.2026), Wortlaute in docs/sources/ipv-kantone-2026.md,
@@ -259,6 +262,12 @@ describe('K31 calculateIPV für SH (App-Angaben → Modell)', () => {
     expect(r.maxAnnual).toBe(4767);
   });
 
+  it('mit Kindern ein zweiter Vorbehalt (offene Kinder-Lesarten, Fachprüfung #471 W3/W5), ohne Kinder nicht', () => {
+    expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ age: 5 }] }))).toMatchObject({ zusatzVorbehaltKey: 'ipv.shKinderVorbehalt' });
+    expect(calculateIPV(person({ monthlyIncome: 60000 / 12, children: [{ age: 5 }] }))).toMatchObject({ amount: 0, zusatzVorbehaltKey: 'ipv.shKinderVorbehalt' });
+    expect(calculateIPV(person({ monthlyIncome: 3000 })).zusatzVorbehaltKey).toBeUndefined();
+  });
+
   it('mit Kind: der Kinder-Mindestanspruch hebt den Betrag (56 000 netto → 1 110)', () => {
     expect(calculateIPV(person({ monthlyIncome: 56000 / 12, children: [{ age: 5 }] }))).toMatchObject({ eligible: true, annual: 1110 });
   });
@@ -283,14 +292,16 @@ describe('K31 calculateIPV für SH (App-Angaben → Modell)', () => {
 
   it('Alter nach Jahrgang § A1-1 [2]: 2000 ist erwachsen, 2001 nicht', () => {
     expect(calculateIPV(person({ dob: '2000-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
+    // Fachprüfung #471 K1: Jahrgang 2001–2007 ist ein junger Erwachsener — nicht «es fehlt ein Geburtsdatum».
+    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'ausbildung' });
+    expect(calculateIPV(person({ dob: '2010-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
     expect(calculateIPV(person({ dob: '' }))).toMatchObject({ belegt: false, offen: 'alter' });
   });
 
   it('Kinder «Jahrgänge 2008 und jünger»; das eingetippte Alter zählt im Anspruchsjahr eins mehr', () => {
     expect(calculateIPV(person({ children: [{ birthDate: '2008-12-31' }] })).belegt).toBe(true);
-    expect(calculateIPV(person({ children: [{ birthDate: '2007-12-31' }] }))).toMatchObject({ offen: 'haushalt' });
-    expect(calculateIPV(person({ children: [{ age: 18 }] }))).toMatchObject({ offen: 'haushalt' });
+    expect(calculateIPV(person({ children: [{ birthDate: '2007-12-31' }] }))).toMatchObject({ offen: 'ausbildung' });
+    expect(calculateIPV(person({ children: [{ age: 18 }] }))).toMatchObject({ offen: 'ausbildung' });
     expect(calculateIPV(person({ children: [{ age: 17 }] })).belegt).toBe(true);
   });
 
@@ -315,7 +326,22 @@ describe('K31 calculateIPV für SH (App-Angaben → Modell)', () => {
       const r = calculateIPV(person({ monthlyIncome: 3000 }));
       expect(r).toMatchObject({ noteKey: 'ipv.shFristVorbei', annual: 1222 });
       // bewusst nicht gesetzt: die Leser zeigen sonst den Luzerner Fristtext (siehe Modulkopf)
-      expect(r.anmeldefristVorbei).toBeUndefined();
+      // Fachprüfung #471 B1: nach der Frist verwirkt (Dekret § 15 Abs. 3) — die Leser ziehen nichts ab.
+      expect(r).toMatchObject({ anmeldefristVorbei: true, fristNichtAbgezogenKey: 'ipv.shFristNichtAbgezogen' });
+    });
+    it('bis 30.04.: nichts zurückgehalten — der geschätzte Betrag wird abgezogen', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-04-30T12:00:00'));
+      expect(calculateIPV(person({ monthlyIncome: 3000 })).anmeldefristVorbei).toBe(false);
+      expect(ipvAbzug(person({ monthlyIncome: 3000 }))).toMatchObject({ grund: IPV_ABZUG_GRUND.GESCHAETZT, betrag: 102 });
+    });
+    it('nach der Frist: Abzug, Prämienbeleg und Budget ziehen nichts ab und nennen den SH-Text', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
+      const d = person({ monthlyIncome: 3000 });
+      expect(ipvAbzug(d)).toMatchObject({ grund: IPV_ABZUG_GRUND.FRIST_VORBEI, betrag: 0, frist: { jahr: 2026, vorjahr: 2025 } });
+      expect(praemienBelegState(d)).toMatchObject({ mode: 'fristVorbei', verbilligung: 0, noteKey: 'ipv.shFristNichtAbgezogen' });
+      const texte = JSON.stringify(calculateMonthlyBudget(d, (k) => k).recommendations);
+      expect(texte).toContain('ipv.shFristNichtAbgezogen');
+      expect(texte).not.toContain('budget.ipvHintLuFristVorbei');
     });
     it('ab 2027 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));

@@ -80,7 +80,7 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
   it('kein roher Schlüssel bleibt stehen: alle SH-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['vorbehaltSH', 'shKeinAnspruch', 'shUnterMindestbetrag', 'shFristLaeuft', 'shFristVorbei']) {
+      for (const k of ['vorbehaltSH', 'shKeinAnspruch', 'shUnterMindestbetrag', 'shFristLaeuft', 'shFristVorbei', 'shFristNichtAbgezogen', 'shKinderVorbehalt']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
@@ -91,6 +91,17 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
       expect(texte.ipv.shFristVorbei, `${sprache}: Platzhalter`).toContain('{folgejahr}');
     }
     // Fünf Sprachdateien nachladen dauert unter Last der ganzen Suite über 5 s (gemessen 28.09.2026).
+  }, 30000);
+
+  // Fachprüfung #471 W1/W2/W3/W5: Richtung sichtbar, Unterhalt genannt, Kinder-Vorbehalt nur mit Kindern.
+  it('die Texte nennen die Richtung; mit Kindern steht der Kinder-Vorbehalt dabei', async () => {
+    const de = (await import('../i18n/de.js')).default.ipv;
+    expect(de.vorbehaltSH).toMatch(/eher zu tief/);
+    expect(de.vorbehaltSH).toMatch(/Unterhaltsbeiträge/);
+    expect(de.shKeinAnspruch).toMatch(/kann darum ein Anspruch bestehen/);
+    expect(de.shKinderVorbehalt).toMatch(/400 Franken/);
+    expect(render(profil(4000, { children: [{ age: 5 }] }))).toContain('ipv.shKinderVorbehalt');
+    expect(render(profil(3000))).not.toContain('ipv.shKinderVorbehalt');
   }, 30000);
 
   it('Paare, Kinder ohne Alter und unbekannte PLZ: Orientierung mit Grund statt Zahl', () => {
