@@ -10,7 +10,7 @@ import { version as APP_VERSION } from '../package.json';
 import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './config/constants.js';
 // DEMO_DATA wird lazy geladen (nur im Beispiel-Modus gebraucht) — hält den ~3 KB
 // grossen Demo-Datensatz aus dem eager index-Chunk (Byte-Budget).
-import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
+import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/kantonPLZ.js';
 import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
