@@ -5017,6 +5017,8 @@ export default {
     healthCosts: 'Frais de santé (LAMal)',
     healthCostsDetail: 'Factures médicales payées {year}',
     healthCostsOpen: 'encore ouvert : {amount}',
+    taxMonthlyCompare: { sie: '≈ {estimate} par mois estimés · Votre indication dans le budget : {angabe} par mois.', du: '≈ {estimate} par mois estimés · Ton indication dans le budget : {angabe} par mois.' },
+    taxOwnFigure: { sie: 'Votre indication dans le budget : {angabe} par mois.', du: 'Ton indication dans le budget : {angabe} par mois.' },
     canton: 'Canton',
     taxes: 'Impôts',
     ipv: 'Réduction de primes (RDP)',
