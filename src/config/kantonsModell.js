@@ -409,9 +409,11 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
     + 'Offene Frage an die SVA St.Gallen: was gilt, wenn die eigene Prämie tiefer ist?',
   // UR (28.09.2026): RB 20.2213 begrenzt nur für EL-Beziehende auf die tatsächliche Prämie
   // (Art. 4 Abs. 4); für alle anderen steht kein Deckel, auch nicht im Rechenblatt der SVS.
+  // Fachprüfung 28.09.2026 (K1): belegt über KVV Art. 106c Abs. 5bis (seit 01.01.2024).
   UR: 'RB 20.2213 begrenzt die Verbilligung nur bei EL-Beziehenden auf die tatsächliche Prämie '
     + '(Art. 4 Abs. 4); für alle anderen nennen weder Reglement noch Berechnungsformular der SVS '
-    + 'einen Deckel. Offene Frage an die SVS Uri: was gilt, wenn die eigene Prämie tiefer ist?',
+    + 'einen Deckel. Bundesrechtlich zahlt der Versicherer die Differenz aus, kantonale Deckel '
+    + 'bleiben vorbehalten (KVV Art. 106c Abs. 5bis) — Uri hat keinen.',
 });
 
 // ─── Regeln, die kantonal VERSCHIEDEN sind — benannt statt vereinheitlicht ─────
@@ -421,7 +423,7 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //
 //   abEndeVorjahr       ZH — ausdrücklich im Erlass: § 8 EG KVG, «für das ganze Jahr das
 //                       Alter am Ende des Vorjahres massgebend». BELEGT.
-//   mangelsStichtag     BE, VD, SG — rechnerisch dasselbe wie oben, aber aus einem anderen
+//   mangelsStichtag     BE, VD, SG, UR — rechnerisch dasselbe wie oben, aber aus einem anderen
 //                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
 //                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe
 //                       ist. GEWÄHLT, nicht belegt — und jederzeit zu überdenken, wenn eine

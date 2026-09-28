@@ -51,8 +51,12 @@
 //
 // 3. KEIN DECKEL AUF DIE EIGENE PRÄMIE im Reglement — ausser für EL-Beziehende (Art. 4 Abs. 4
 //    [1]: «höchstens jedoch der tatsächlichen Prämie»). Für alle anderen steht er nirgends,
-//    auch nicht im Rechenblatt [3]. Darum wie SG `KEIN_PRAEMIENDECKEL.UR` statt `praemieFehlt`,
-//    mit Frage an die SVS Uri.
+//    auch nicht im Rechenblatt [3]. Darum `KEIN_PRAEMIENDECKEL.UR` statt `praemieFehlt`.
+//    ⟨Fachprüfung 28.09.2026 (K1): das ist BELEGT, nicht nur gewählt — KVV Art. 106c Abs. 5bis
+//    (SR 832.102, in Kraft seit 01.01.2024, gelesen im Fedlex-Filestore, Stand 01.01.2026): der
+//    Versicherer «bezahlt der versicherten Person den Differenzbetrag innerhalb von 60 Tagen …
+//    aus. Kantonale Regelungen, wonach die Prämie höchstens bis zu ihrem vollen Umfang verbilligt
+//    werden kann …, bleiben vorbehalten.» Uri hat keine solche Regelung.⟩
 //
 // 4. VON AMTES WEGEN, NICHT AUF ANTRAG (Art. 10 [1]). Ordentlich Besteuerte mit Wohnsitz Uri am
 //    1. Januar erhalten den Entscheid ohne Anmeldung; darum KEIN `anmeldefristVorbei` (es gibt
@@ -61,9 +65,12 @@
 // 5. DAS PV-EINKOMMEN ZIEHT FAST NICHTS AB. Art. 7 Abs. 2 [1] zählt die Abzüge abschliessend auf:
 //    Liegenschaftsaufwand bis zum Ertrag, Berufskosten, Weiterbildung, Unterhaltsbeiträge,
 //    Krankheits-, Unfall- und behinderungsbedingte Kosten. Die Säule 3a steht NICHT darin — sie
-//    bleibt im Einkommen, Regel `SAEULE_3A.voll`. Von diesen Abzügen kennt die App keinen:
-//    Das Nettoeinkommen der App liegt darum über dem amtlichen PV-Einkommen, der Betrag hier
-//    UNTER dem amtlichen (am deutlichsten wegen der Berufskosten). Der Vorbehalt sagt es.
+//    bleibt im Einkommen, Regel `SAEULE_3A.voll`. Von diesen Abzügen kennt die App nur die
+//    bezahlten Unterhaltsbeiträge (`finanzen.alimentePaid`, monatlich) — die zieht sie ab
+//    ⟨seit Fachprüfung 28.09.2026, W1: vorher nicht, 1'000/Monat kosteten 1'020 Fr. im Jahr⟩.
+//    Die übrigen fehlen: das Nettoeinkommen der App liegt darum über dem amtlichen
+//    PV-Einkommen, der Betrag hier UNTER dem amtlichen (am deutlichsten wegen der
+//    Berufskosten). Der Vorbehalt sagt es.
 //    Näherung, nicht an einer Urner Wegleitung geprüft: «Einkünfte» (Steuerziffern 1000–1700
 //    in [3]) sind bei Angestellten die Nettolöhne laut Lohnausweis — dem entspricht der
 //    Monatslohn «was auf dem Konto ankommt» der App.
@@ -180,8 +187,21 @@ export function ipvUri(data, hh, ipvData, youngAdultsCount, orientierung) {
   // ab, das Antragsformular [5] rechnet bei Kindern nach Jahrgang. Nach beiden Lesarten ist
   // erwachsen, wer bis 1999 geboren ist; beim Jahrgang 2000 gehen sie auseinander. Darum
   // `mangelsStichtag` — GEWÄHLT, nicht belegt: wer im Anspruchsjahr 26 wird, erhält keine Zahl.
+  // Drei Gründe, drei Sätze (Fachprüfung 28.09.2026, W3 — vorher sagte `alter` allen, das
+  // Geburtsdatum fehle und junge Erwachsene würden mit den Eltern gerechnet; in Uri werden sie
+  // aber «eigenständig» gerechnet, Art. 4 Abs. 6 [1]):
+  //   · kein Geburtsdatum                    → `alter`
+  //   · 19–25 im Anspruchsjahr               → `ausbildung` (Mindestanspruch 50 % hängt an einer
+  //                                            Ausbildung am 1. Januar, Formular 2026 Frage 4)
+  //   · 26 im Anspruchsjahr (Jahrgang 2000)  → `stichtagAlter`
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
+  if (!geburt) return orientierung('alter');
+  if (!ERWACHSEN.mangelsStichtag(jahr, geburt)) {
+    const alterImJahr = jahr - geburt;
+    if (alterImJahr === 26) return orientierung('stichtagAlter');
+    if (alterImJahr >= 19) return orientierung('ausbildung');
+    return orientierung('alter');
+  }
   // Kinder: das Antragsformular 2026 [5] fragt nach «Kinder bis zum 18. Altersjahr (Jahrgänge
   // 2008 – 2025)», Art. 4 Abs. 6 [1] rechnet junge Erwachsene «im Jahr nach dem erfüllten
   // 18. Altersjahr» eigenständig — also das Alter IM Anspruchsjahr, beim eingetippten Alter
@@ -209,7 +229,11 @@ export function ipvUri(data, hh, ipvData, youngAdultsCount, orientierung) {
     - IPV_UR.vermoegenSozialabzug.alleinstehend - IPV_UR.vermoegenSozialabzug.jeKind * kinderZahl);
   // Art. 7 Abs. 2 [1] zieht die Säule 3a nicht ab: sie bleibt im Einkommen, und im
   // Nettoeinkommen der App steckt sie schon — Regel `voll`, kein weiterer Zuschlag.
-  const pv = Math.max(0, einkommenJahr(f, SAEULE_3A.voll))
+  // Art. 7 Abs. 2 lit. c [1] zieht «Unterhaltsbeiträge» ab ([3] Zeile 25, Steuerziffern
+  // 2540–2560). Das Profilfeld ist ein Monatsbetrag. Unlesbar oder negativ zählt als 0.
+  // Der Boden 0 kommt NACH dem Abzug, wie im Rechenblatt ([3] R28 auf AA28).
+  const unterhaltJahr = 12 * Math.max(0, Number(f.alimentePaid) || 0);
+  const pv = Math.max(0, einkommenJahr(f, SAEULE_3A.voll) - unterhaltJahr)
     + IPV_UR.vermoegenAnteil * steuerbaresVermoegen;
 
   // 🛑 Hier ruft ein Kanton mit Deckel `praemieFehlt`. Uri nicht — begründet in
