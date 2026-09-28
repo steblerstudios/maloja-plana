@@ -101,7 +101,7 @@ const syncBudgetFromChapters = (data) => {
   // Unbelegt bleibt es beim Hinweis ohne Betrag (ipvOrientierung).
   const abzug = ipvAbzug(data, ipv);
   const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
-  // Der Hinweis dazu ist kantonal (LU: 31. Oktober des Vorjahres · FR: 31. August des Jahres) —
+  // Der Hinweis dazu ist kantonal (LU: 31. Oktober des Vorjahres · FR: 31. August des Jahres · TI: siehe ipvTicino.js) —
   // welcher, entscheidet data/ipvAbzug.js (`fristHinweisKey`), nicht diese Stelle.
   const ipvAnmeldefristHinweisKey = ipvAnmeldefristVorbei ? fristHinweisKey(ipv, 'budget') : null;
   // NE im Band über der Art.-16-Schwelle: nichts abgezogen, der Hinweis sagt warum (Schlüssel aus dem Ergebnis).
