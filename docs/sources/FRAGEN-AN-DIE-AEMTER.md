@@ -424,6 +424,52 @@ zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüt
 
 ---
 
+## 15 · Service de l'assurance-maladie (SAM) Genève — Deckel je Person, Familienzulagen, Kind aus dem Vorjahr, Rundung
+
+*Nummer: zuerst 8, dann 9, dann 10 — nach den Merges von UR (#464), NE (#478) und GR (#467) mit Nummer 15 festgelegt (Koordination; 11 = TG, 14 = TI). Eine parallele Sitzung nummerierte GE zwischenzeitlich als 12 — der Block ist hier zusammengeführt.*
+
+*Aufgenommen 28.09.2026 beim Einbau von GE, nachgeführt am Abend nach Fach-, Rechtsprüfung und Abgleich.
+Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Gruppengrenzen (Art. 21 LaLAMal), Beträge 2026 (Barème «BAREME SUBSIDES 2026»,
+Communiqué des Conseil d'Etat vom 5.11.2025) und die Untergrenzen für den Antrag (Tabelle des SAM
+auf ge.ch) stehen vollständig; jede Zelle des Barème rechnen wir nach. Vier Punkte bleiben.
+
+~~**Frage 1 — Arrêté d'indexation 2026:** Wo ist der Arrêté publiziert?~~ ⟨**erledigt 28.09.2026 abends:**
+Communiqué hebdomadaire du Conseil d'Etat vom 5.11.2025, «Indexation des subsides d'assurance-maladie
+pour 2026» — Erwachsene 8,7 %, junge Erwachsene 5,3 %, Kinder 10,9 %, Basis 2024, mit Tabelle aller
+Beträge. Damit sind auch die Gruppe-9-Beträge 67 und 106 erklärt; ein Einheitssatz hätte 66 und 109
+ergeben.⟩
+
+~~**Frage 2 — Untergrenze für Alleinerziehende:** Paar-Zeile (20 000 + 3 000) oder Zeile «assuré seul»
+(15 000 + 3 000)?~~ ⟨**erledigt 28.09.2026 abends:** ge.ch, «Revenus 2024 (RDU 2026) particulièrement bas»
+(Stand 18.09.2026): «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants
+27'000 · Couple avec 1 enfant 23'000». Die App rechnete am Nachmittag mit 23'000 — korrigiert.⟩
+
+**Frage 3 — Deckel Art. 22 al. 4 LaLAMal:** «Le montant des subsides accordés ne peut dépasser
+le montant de la prime effective de l'assuré.» Wir lesen das **je versicherte Person** und
+begrenzen den Erwachsenenbetrag auf die erfasste Prämie der erwachsenen Person; die
+Kinderbeträge (132 / 67) begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind. Ist das
+die Praxis des SAM?
+
+**Frage 4 — Familienzulagen im RDU:** LRDU Art. 4 al. 1 lit. a verweist auf LIPP Art. 18, und
+dessen al. 1 zählt «les allocations» zum Erwerbseinkommen. Sind damit auch die Kinder- und
+Ausbildungszulagen gemeint (wie im Bundesrecht, sie stehen auf dem Lohnausweis)? Die App rechnet
+sie heute in keinem Kanton; ein Rahmen-Umbau ist geplant und braucht diese Antwort für Genf.
+
+**Frage 5 — Kind aus dem Vorjahr:** Art. 13C RaLAMal regelt den Fall, dass die Familie «en cours
+d'année» wächst. Gilt der schriftliche Antrag auch für ein Kind mit **Jahrgang 2025**, das in der
+Veranlagung 2024 noch nicht steht, im Anspruchsjahr 2026 aber schon da war — oder erfasst es
+der SAM automatisch aus den Zivilstandsdaten? Bis zur Antwort warnt die App in beiden Fällen.
+
+**Frage 6 — Rundung:** Wird der RDU für die Gruppenzuordnung auf ganze Franken gerundet? Wir
+vergleichen ungerundet (30'000.50 liegt über 30'000).
+
+**Stand:** GE ist für 2026 gebaut (Entwurfs-PR #469, K31). Das Barème 2027 war am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
+
+---
+
 ## 17 · Ausgleichskasse Obwalden — Jahrgang 2008, Mindestbetrag, Stufen und die Grenze mit Kindern
 
 *Aufgenommen 28.09.2026 beim Einbau von OW. Entwurf — **nicht gesendet**.*
