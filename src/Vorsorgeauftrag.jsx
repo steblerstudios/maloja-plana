@@ -26,7 +26,8 @@ export const Vorsorgeauftrag = ({ palette, t, chapters, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step3Text'))
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step4Text'))
+      React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step4Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('vorsorgeauftrag.step4LinkPv'), onClick: () => onNavigate('patientenverfuegung') })
     ),
     React.createElement(AblaufStep, { palette, title: t('vorsorgeauftrag.step5Title') },
       React.createElement('p', { style: s.stepText }, t('vorsorgeauftrag.step5Text')),

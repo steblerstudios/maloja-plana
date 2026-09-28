@@ -110,7 +110,7 @@ describe('Portemonnaie und Aussenfach', () => {
   });
 
   it('Arztkoffer und Feldflasche tragen ihre Werkzeuge laut Zuordnungstabelle', () => {
-    expect(werkzeugeImFach('gesundheit').map(werkzeugKey).sort()).toEqual(['gesundheit', 'kk', 'kvg', 'praemien', 'premium']);
+    expect(werkzeugeImFach('gesundheit').map(werkzeugKey).sort()).toEqual(['gesundheit', 'kk', 'kvg', 'patientenverfuegung', 'praemien', 'premium']);
     expect(werkzeugeImFach('alter').map(werkzeugKey)).toEqual(['vorsorge']);
   });
 

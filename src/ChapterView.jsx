@@ -1675,6 +1675,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           if (field.k === 'vorsorgeauftrag' && chapter.key === 'notfall') {
             elements.push(renderBeistandWegweiser());
           }
+          // Patientenverfügung in Fragen erstellen (27.09.2026) — immer, auch wenn schon «Ja».
+          if (field.k === 'patientenverfuegung' && chapter.key === 'notfall' && onNavigate) {
+            elements.push(React.createElement('button', {
+              key: 'crosslink-pv', type: 'button', className: 'mp-link',
+              onClick: () => onNavigate('patientenverfuegung'),
+              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
+            }, tr('nav.crosslink.pvHint') + ' ›'));
+          }
           return elements;
         };
 
