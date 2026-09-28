@@ -80,6 +80,15 @@ describe('K31 IPV-Rechner, Kanton Zug', () => {
       expect(texte.ipv.offenGrund.zgGrenzeEinzelperson).toBeUndefined();
       // W3: 89 900 gilt für alle, nicht «für Haushalte»
       expect(texte.ipv.zgKeinAnspruch).not.toMatch(/Haushalt|ménages|economie domestiche|households|chasadas/i);
+      // Fixrunde 2 (B3): der Vorbehalt nennt beide Richtungen und die Doppelzählung der Zulagen
+      const v = texte.ipv.vorbehaltZG;
+      expect(v, `${sprache}: zu tief`).toMatch({ de: /eher zu tief/, fr: /plutôt trop bas/, it: /piuttosto troppo basso/, en: /tends to be too low/, rm: /plitost memia bass/ }[sprache]);
+      expect(v, `${sprache}: zu hoch`).toMatch({ de: /zu hoch/, fr: /trop élevé/, it: /troppo alto/, en: /too high/, rm: /memia aut/ }[sprache]);
+      expect(v, `${sprache}: doppelt`).toMatch({ de: /doppelt/, fr: /deux fois/, it: /due volte/, en: /count twice/, rm: /duas giadas/ }[sprache]);
     }
+    // 💡 en: Reineinkommen und das erfasste Einkommen heissen nicht beide «net income»
+    const en = (await import('../i18n/en.js')).default.ipv;
+    for (const k of ['vorbehaltZG', 'zgKeinAnspruch', 'zgUnterMindestbetrag']) expect(en[k], k).not.toMatch(/net income/);
+    expect(en.offenGrund.zgNaeherung).not.toMatch(/net income/);
   });
 });
