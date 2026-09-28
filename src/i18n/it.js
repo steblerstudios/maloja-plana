@@ -3226,6 +3226,7 @@ export default {
     fteNote: 'Tempo parziale ({hours} ore/settimana): proiettato al 100% fa CHF {fte} (registrato: CHF {actual}). Solo così il confronto con la mediana a tempo pieno è lecito.',
     overFteNote: 'Più di un tempo pieno ({hours} ore/settimana): convertito a 40 ore fa CHF {fte} (registrato: CHF {actual}). Solo così il confronto con la mediana a tempo pieno è lecito.',
     hoursUnknownNote: { sie: 'Senza le Sue ore settimanali il Suo salario non può essere confrontato con la mediana a tempo pieno — le inserisca e lo collochiamo.', du: 'Senza le tue ore settimanali il tuo salario non può essere confrontato con la mediana a tempo pieno — inseriscile e lo collochiamo.' },
+    hoursImplausibleNote: { sie: "{hours} ore settimanali sono insolitamente tante. Si tratta forse di un grado d'occupazione in percentuale? In tal caso inserisca le ore settimanali — fino ad allora non ne teniamo conto.", du: "{hours} ore settimanali sono insolitamente tante. Si tratta forse di un grado d'occupazione in percentuale? In tal caso inserisci le ore settimanali — fino ad allora non ne teniamo conto." },
     aria: 'Salario CHF {amount}, mediana svizzera CHF {median}.',
     source: 'Fonte: [[UST|www.bfs.admin.ch]], Rilevazione svizzera della struttura dei salari {jahr} (mediana CHF {median}, incl. 13esima proporzionale).',
     empty: { sie: 'Appena il Suo reddito è registrato, lo collochiamo qui con calma.', du: 'Appena il tuo reddito è registrato, lo collochiamo qui con calma.' },

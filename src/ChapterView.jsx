@@ -17,7 +17,7 @@ import { betrag } from './utils/geld.js';
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
+import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
@@ -1303,7 +1303,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           }
           if (field.k === 'workHoursPerWeek' && chapter.key === 'ausbildung') {
             const hrs = parseFloat(String(data.workHoursPerWeek || '').replace(',', '.')) || 0;
-            if (hrs > 0) {
+            // Über der Plausibilitätsgrenze (lohnCheck.js) keine Umrechnung, sondern die Frage
+            // nach dem Pensum — Barometer und Mindestlohn-Prüfung rechnen dann nicht mit.
+            if (wochenstundenUnplausibel(hrs)) {
+              elements.push(
+                React.createElement('div', {
+                  key: 'hours-implausible',
+                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                }, tr('lohnEinordnung.hoursImplausibleNote', { hours: String(hrs) }))
+              );
+            } else if (hrs > 0) {
               const perMonth = stundenAufMonat(hrs);
               const perYear = stundenAufJahr(hrs);
               const kanton = allData && allData.basis && allData.basis.canton;
