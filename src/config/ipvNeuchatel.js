@@ -247,7 +247,13 @@ export function ipvNeuchatel(data, hh, ipvData, youngAdultsCount, orientierung) 
     // Keine Prämienregion: eigener Satz statt des Aargauer `jahrOhneRegion`.
     extra: {
       basisjahr: IPV_NE.basisjahr, jahrKey: 'ipv.jahrNE', klasse: r.klasse,
-      ...(nahSchwelle ? { zusatzVorbehaltKey: 'ipv.neRevenuMinimumNahe' } : {}),
+      // Im Band kommt die Einstufung womöglich nicht automatisch ([1] Art. 16). Dann zieht
+      // data/ipvAbzug.js nichts ab (Budget, KK-Last-Karte, Prämienbeleg), und die Leser nennen den
+      // Grund — Muster wie die Anmeldefrist in LU/FR (Re-Review 28.09.2026).
+      ...(nahSchwelle ? {
+        zusatzVorbehaltKey: 'ipv.neRevenuMinimumNahe',
+        gesuchNoetig: true, gesuchNichtAbgezogenKey: 'ipv.neGesuchNichtAbgezogen',
+      } : {}),
     },
   };
   if (annual <= 0) {
