@@ -324,8 +324,8 @@ Abschiedsagentur, plaant).
     Zahlungsbefehl**), Kantons- und Gemeindesteuern → kantonales Steueramt.
   - **Offen (Ideen, je vor dem Bau belegen):** Brücke zu «Gezahlt/offen» pro Arztrechnung ·
     kantonale Steuer-Regeln (Erlass, Zahlungserleichterung) je Kanton belegen
-    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · ~~Rate aus dem Budget, Bussen, Verlustscheine, Mahngebühren~~ *(gebaut 27.09. abends, #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
-    rm-Fassung von Ablauf und Briefen.
+    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · ~~Rate aus dem Budget, Bussen, Verlustscheine, Mahngebühren~~ *(gebaut 27.09. abends, #408)* · ~~Inkassobüros: eine belegte Quelle statt eigener Einschätzung~~ *(gebaut 28.09.: Absatz in Schritt 3 — Vollmacht/Abtretung verlangen, geschuldet nur Forderung + Verzugszins + berechtigte Betreibungskosten; Quelle ist die **Berner** Schuldenberatung, schuldeninfo.ch «Inkassobüros» 04.2024, nicht der Dachverband — dort gibt es kein Merkblatt dazu, geprüft 28.09.; dazu SchKG Art. 27 Abs. 2 im Wortlaut der Konsolidierung 1.1.2026)* ·
+    rm-Fassung von Ablauf und Briefen (Oktober, mit der Gegenlese aller rm-Rückfälle — 131 Stellen in `rm.js`, die Mahnung ist eine davon).
   - **Mahnstufen-Leiste** (Schuldenmanager, je Forderung: Stand-Auswahl + Leiste Rechnung → Mahnung
     → Zahlungsbefehl + nächster Weg): ohne Mockup gebaut; Stebler Studios 27.09. abends: **«guter
     Anfang»** — Gestaltung wird in der Runde «Schulden & Rechnungen gesamthaft» (unten) weitergedacht.
