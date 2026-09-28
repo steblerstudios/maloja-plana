@@ -41,7 +41,7 @@ describe('taxImport: Nebenerwerb → sideIncome (Jahreswert /12)', () => {
 
 describe('Berechtigungslogik: Nebenerwerb zählt als Einkommen', () => {
   const base = {
-    basis: { canton: 'VD', household: { adults: 1, children: [] } }, // (BS seit 28.09.2026 mit eigenem Modell, darum VD — gleiche Musterwerte 54 000 / 3 000 / 6 000 / 1 500)
+    basis: { canton: 'GE', household: { adults: 1, children: [] } }, // (BS und VD seit 28.09.2026 mit eigenem Modell, darum GE — noch ohne Modul; Musterwerte 60 000 / 3 600 / 7 200 / 1 800)
     finanzen: { monthlyIncome: 2000 },
     wohnen: { rentAmount: 1100, utilities: 100 },
     versicherungen: { kkPremium: 320 },
@@ -54,8 +54,8 @@ describe('Berechtigungslogik: Nebenerwerb zählt als Einkommen', () => {
     expect(mit.deficit).toBeLessThan(ohne.deficit);
   });
 
-  it('IPV-Beitrag sinkt (oder gleich), wenn Nebenerwerb dazukommt (VD belegt simuliert, E9; bis 23.09.2026 LU, bis 28.09.2026 BS — beide seither mit eigenem Modell)', () => {
-    const zuruecksetzen = kantoneBelegtSimulieren(['VD']);
+  it('IPV-Beitrag sinkt (oder gleich), wenn Nebenerwerb dazukommt (GE belegt simuliert, E9; bis 23.09.2026 LU, bis 28.09.2026 BS — beide seither mit eigenem Modell, VD ebenso)', () => {
+    const zuruecksetzen = kantoneBelegtSimulieren(['GE']);
     onTestFinished(zuruecksetzen);
     const ohne = calculateIPV(base);
     const mit = calculateIPV({ ...base, finanzen: { ...base.finanzen, sideIncome: 800 } });

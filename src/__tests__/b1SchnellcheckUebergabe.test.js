@@ -43,7 +43,7 @@ const textVon = (e) => e.kinder.flat().filter((k) => typeof k === 'string').join
 
 // Das Profil: Kanton Bern, 5000/Monat (BUGS.md B-1, Nachstell-Variante 4).
 const profil = (finanzen = { monthlyIncome: 5000 }) => ({
-  basis: { canton: 'VD', household: { adults: 1, children: [] } }, // (BS seit 28.09.2026 mit eigenem Modell, darum VD — gleiche Musterwerte 54 000 / 3 000 / 6 000 / 1 500)
+  basis: { canton: 'GE', household: { adults: 1, children: [] } }, // (BS und VD seit 28.09.2026 mit eigenem Modell, darum GE — noch ohne Modul; Musterwerte 60 000 / 3 600 / 7 200 / 1 800)
   finanzen,
   wohnen: { rentAmount: 1400 },
   versicherungen: { kkPremium: 420 },
@@ -114,7 +114,7 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
     expect(html).toContain('premium.schnellcheckGerechnet');
     expect(html).toContain('premium.schnellcheckProfilBleibt');
     expect(html).toContain('premium.schnellcheckUebernehmen');
-    // VD ist nicht amtlich belegt (E9; bis 28.09.2026 BS): neutrale Orientierung, kein Betrag. (Bis 23.09.2026 LU.)
+    // GE ist nicht amtlich belegt (E9; bis 28.09.2026 BS): neutrale Orientierung, kein Betrag. (Bis 23.09.2026 LU.)
     // Dass mit 3000 statt 5000 gerechnet wird, zeigt der Test mit belegtem Kanton unten.
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('CHF 3');
@@ -157,7 +157,7 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
 
   describe('mit belegtem Kanton (simuliert): der Betrag ist der für die Schnellcheck-Zahl', () => {
     let zuruecksetzen;
-    beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['VD']); });
+    beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
     afterAll(() => zuruecksetzen());
 
     it('zeigt den Betrag für 3000, nicht «nicht berechtigt» für 5000', () => {

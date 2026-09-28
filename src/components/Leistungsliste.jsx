@@ -61,7 +61,9 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) found.soz = {
         monthly: sh.deficit,
         // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
-        detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
+        detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
+          // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt).
+          + (sh.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : ''),
       };
       // Sonst trotzdem eine Aussage (Wunsch 25.09.2026: «gleich dazuschreiben, ob einem
       // etwas zusteht»), sachlich statt als Urteil: Einkommen gegen SKOS-Bedarf, als Pegel.

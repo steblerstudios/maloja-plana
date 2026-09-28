@@ -64,6 +64,8 @@ Vorschlag von Claude, kein Beschluss — geändert wird er hier, durch Stebler S
 | Bildwelten neben dem Berg (Obstgarten, Gepäck, Reserve-Tank, Schutzschild): Sachbegriff voranstellen? | §1 | gehört zur Gamification-Frage oben |
 | Silbentrennung in der Bergnavigation («Versiche-rung») — K18 war bewusst, die Nebenwirkung ist echt | §8 | nur ansehen und entscheiden |
 | Briefgenerator auf Lebensereignisse ausweiten (aus «Befund → Brief» beim Lohn, `unpaidWage`/`wageClaim`) — ob, und vor oder nach dem Generatoren-Muster (Winter) | §5 | Stebler Studios 25.09.: «im Oktober entscheiden»; wartet seit dem Eingang 19.07. |
+| **Miet-Faustregel belegen** (`mietzinsView.rentShareGuide`, `MietVergleich.jsx`, «!» im `RegionalBarometer` an drei Orten): die Quellen messen Verschiedenes — Mieterverband, Glossar «Solvenz»: *Mietzins* ≤ ⅓ des Einkommens (Vermieter-Grenze) · Budgetberatung Schweiz, `budgetberatung.ch/wohnen`: *Wohnkosten* (mit NK) ≤ ¼ der Nettoeinnahmen, der Drittel nur «weit verbreitete Auffassung» · BWO Mietbelastung: > 25 % im unteren Einkommensbereich kritisch. Vorschlag C: Balken behält das «!» bei ⅓, die Wohnkosten-Zeile nennt beide Regeln mit Quelle; D wäre ein Band ¼–⅓ auf dem Balken (neues Encoding, Doku) | §5, §7 | Stebler Studios 28.09.: «vorerst so lassen, im Oktober anschauen» — Skizze A–D lag vor; dazu: KK-Belege ohne Datum zählen ins laufende Jahr (gleiche Regel im KVG-Tracker, Konvention) |
+| **Zwei archivierte Zweige wieder aufnehmen?** Beim Zweig-Aufräumen 28.09. als Git-Tags gesichert, Zweige gelöscht: `archiv/vorgaenge-1-0-entwurf-2026-09-22` (Vorgänge-Registry + Tests + Produkt-Entwurf = **O12**; belegt Migration v4→v5, main hat v5 inzwischen für die Organspende → beim Wiederaufnehmen v6) · `archiv/k31-ipv-vd-2026-09-20` (Prämienverbilligung Waadt nach Arrêté 2026, `ipvVaud.js` = **K31**; VD auf main weiter `beleg: null`). Abrufen: `git checkout -b <name> <tag>` | §5 | Stebler Studios 28.09.: «archivieren oder was auch immer» — die Arbeit liegt nirgends sonst |
 
 *Herkunft der vier Dashboard-Zeilen oben:* eine UX-Durchsicht von Codex (24.09.2026), jeder
 Befund am Code geprüft. Was ein **Fehler** war, ist gebaut und live (#344): IPV ohne Sackgassen
@@ -324,8 +326,8 @@ Abschiedsagentur, plaant).
     Zahlungsbefehl**), Kantons- und Gemeindesteuern → kantonales Steueramt.
   - **Offen (Ideen, je vor dem Bau belegen):** Brücke zu «Gezahlt/offen» pro Arztrechnung ·
     kantonale Steuer-Regeln (Erlass, Zahlungserleichterung) je Kanton belegen
-    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · ~~Rate aus dem Budget, Bussen, Verlustscheine, Mahngebühren~~ *(gebaut 27.09. abends, #408)* · Inkassobüros: eine belegte Quelle (Schuldenberatung Schweiz) statt eigener Einschätzung ·
-    rm-Fassung von Ablauf und Briefen.
+    · ~~Rückweg aus Betreibung/Schuldenmanager/Lebenszustand~~ *(gebaut 27.09., #408)* · ~~Rate aus dem Budget, Bussen, Verlustscheine, Mahngebühren~~ *(gebaut 27.09. abends, #408)* · ~~Inkassobüros: eine belegte Quelle statt eigener Einschätzung~~ *(gebaut 28.09.: Absatz in Schritt 3 — Vollmacht/Abtretung verlangen, geschuldet nur Forderung + Verzugszins + berechtigte Betreibungskosten; Quelle ist die **Berner** Schuldenberatung, schuldeninfo.ch «Inkassobüros» 04.2024, nicht der Dachverband — dort gibt es kein Merkblatt dazu, geprüft 28.09.; dazu SchKG Art. 27 Abs. 2 im Wortlaut der Konsolidierung 1.1.2026)* ·
+    rm-Fassung von Ablauf und Briefen (Oktober, mit der Gegenlese aller rm-Rückfälle — 131 Stellen in `rm.js`, die Mahnung ist eine davon).
   - **Mahnstufen-Leiste** (Schuldenmanager, je Forderung: Stand-Auswahl + Leiste Rechnung → Mahnung
     → Zahlungsbefehl + nächster Weg): ohne Mockup gebaut; Stebler Studios 27.09. abends: **«guter
     Anfang»** — Gestaltung wird in der Runde «Schulden & Rechnungen gesamthaft» (unten) weitergedacht.
