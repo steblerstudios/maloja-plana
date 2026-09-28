@@ -65,7 +65,7 @@
 //    nicht, welches Recht auf Verfügungen nach dem 01.04. angewendet wird.⟩ Darum: liegt der Satz
 //    über 12 % UND hängt der Betrag davon ab, zeigt die App keine Zahl (`owSelbstbehaltRahmen`).
 //    Betroffen sind nur Haushalte mit Kindern (ohne Kinder endet der Anspruch bei 50 000);
-//    die Differenz wäre bis rund 1 125 Franken im Jahr. Frage 9/6 an die AK Obwalden.
+//    die Differenz wäre bis rund 1 125 Franken im Jahr. Frage 17/6 an die AK Obwalden.
 //
 // GEWÄHLT, NICHT BELEGT (je im Test benannt):
 //   · Steigerung stetig (je Franken 0,0001 Punkte), nicht in 100er-Stufen — wie der Rechner [5];
