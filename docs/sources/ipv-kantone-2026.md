@@ -1538,6 +1538,26 @@ des Steuerwerts; Zuzug im laufenden Jahr (§ 16 KVO); Erhöhung der Mindesterwer
 Einzelfall (§ 27 SoHaV); Erwerbstätigkeitssurrogate, die die App nicht kennt (Ausbildung,
 Krankheit, Arbeitslosentaggeld, IV-Rente) — diese Personen sehen unter 28'800 keine Zahl.
 
+**Fixrunde 28.09.2026 abends (Fachprüfung PR #473, «erst beheben»):**
+- ⟨korrigiert⟩ Oben steht bei «Bewusst nicht gebaut»: «nicht erfasste Einnahmen (Familienzulagen ausserhalb
+  des Nettolohns, Unterhaltsbeiträge, …)». **Falsch** — die App erfasst `finanzen.familienzulagen`,
+  `alimenteReceived` und `alimentePaid`. BS rechnet sie jetzt selbst: SoHaV § 16 Abs. 1 lit. c Ziff. 3
+  («Familienzulagen (wie Kinder-, Ausbildungs-, Unterhaltszulagen usw.)») und Ziff. 6
+  («familienrechtliche Unterhaltsbeiträge») als Einnahmen, § 17 Abs. 1 lit. c/ca bezahlte als Abzug.
+  Beispiel der Prüfung: alleinerziehend, 3'000 + 800 Alimente → 420 statt 601; 1'000 bezahlt → 444 statt 266.
+- ⟨korrigiert⟩ «Den Beschäftigungsgrad kennt die App nicht» — falsch, `ausbildung.workHoursPerWeek` ist
+  erfasst. Hypothetisches Einkommen jetzt nach SoHaV § 24 Abs. 2 am Pensum (Stunden ÷ 42, **gewählt**:
+  die Vollzeit-Norm der App aus `data/lohnCheck.js`; SoHaV nennt keine Stundenzahl). 21 Std., 30'000 →
+  +10'800 → Gruppe 16 → 37 statt 266. Ohne Stunden bleibt die Schwelle 28'800, und bei der Zahl steht die
+  80-%-Annahme (`ipv.bsPensumAngenommen`).
+- AVM-Zuschlag: das Merkblatt 01.2026 nennt keinen Mindestrabatt; mit erfasstem Hausarzt-/HMO-/Telmed-/
+  Apothekenmodell ist die Hauptzahl jetzt aus T 4 («sofern die Police eingereicht ist»), mit «Standard»
+  aus T 3; leer/Basic/Comfort wie bisher mit beiden Zahlen.
+- Gruppe 09 = 240 zusätzlich durch den DWSU-Bericht 2026 (S. 10) gestützt; «Obergrenze» der Gruppe durch
+  denselben Bericht (S. 4).
+- Nicht in diesem PR (Rahmen): ein brutto erfasster Lohn wird wie in allen IPV-Modulen als netto
+  gerechnet (Fachprüfung W6).
+
 ---
 
 ## BL — Basel-Landschaft

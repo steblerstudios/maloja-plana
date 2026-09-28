@@ -312,12 +312,20 @@ Beitragstabelle «Einkommensgruppen, -grenzen und IPV-Beiträge ab 1. Januar 202
 folgen der Verordnung (240 ist auch der Abstand von 30 Franken, den alle anderen Gruppen haben).
 Welcher Betrag wird ausbezahlt?
 
-**Frage 2 — hypothetisches Einkommen:** Nach SoHaV § 24 wird Alleinstehenden unter 80 % die
-Differenz zu 36'000 netto angerechnet. Die App kennt den Beschäftigungsgrad nicht und zeigt darum
-unter einem Erwerbseinkommen von 28'800 im Jahr keinen Betrag, ausser die Person ist über 60 oder
-betreut ein Kind unter 16. Ist diese Schwelle aus Ihrer Sicht vertretbar — oder gibt es eine
-Praxis (z. B. bei Mindestlohn-Vollzeit unter 28'800), die wir kennen sollten? Und: Gilt «das
-60. Altersjahr überschritten» (§ 23 lit. a) ab dem 60. oder ab dem 61. Geburtstag?
+**Frage 2 — hypothetisches Einkommen:** SoHaV § 24 Abs. 2 lautet: «Als hypothetisches
+Erwerbseinkommen wird die Differenz (in Prozenten) zwischen der effektiven Erwerbstätigkeit und dem
+in Abs. 1 genannten Mindesterwerbstätigkeitsgrad (80 bzw. 160 Prozent) angerechnet. 100 Prozent
+entsprechen dabei einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» Sind die
+Wochenstunden erfasst, rechnet die App das Pensum als Stunden ÷ 42 und rechnet die Differenz zu
+80 % an (21 Std. → 50 % → 30 % × 36'000 = 10'800). Sind sie nicht erfasst, zeigt sie unter einem
+Erwerbseinkommen von 28'800 keinen Betrag (ausser über 60 oder mit einem Kind unter 16) und nennt
+darüber die 80-%-Annahme bei der Zahl. Drei Rückfragen: Mit welcher Wochenstundenzahl setzen Sie
+100 % an? Gibt es eine Praxis bei Vollzeit mit einem Lohn unter 28'800? Und gilt «das 60. Altersjahr
+überschritten» (§ 23 lit. a) ab dem 60. oder ab dem 61. Geburtstag?
+⟨korrigiert 28.09.2026 nach der Fachprüfung: hier stand «Nach SoHaV § 24 wird Alleinstehenden unter
+80 % die Differenz zu 36'000 netto angerechnet» — das gab den Wortlaut falsch wieder (angerechnet
+wird die Differenz in PROZENTEN, nicht bis 36'000 aufgefüllt), und die Wochenstunden kannte die
+App sehr wohl.⟩
 
 **Frage 3 — Gruppengrenzen:** § 22 Abs. 1 KVO gewährt Beiträge, wenn das Einkommen die
 Leistungsgrenze «nicht übersteigt». Gilt dasselbe für die Grenzen zwischen den Gruppen — gehört
@@ -325,8 +333,9 @@ ein Einkommen von genau 23'125 (1 Person) zu Gruppe 01?
 
 **Frage 4 — Zuschlag für alternative Modelle (§ 21 Abs. 1bis KVO):** Das ASB «kann die für den
 Zuschlag zu berücksichtigenden Versicherungsmodelle von einem Mindestrabatt … abhängig machen».
-Gibt es diesen Mindestrabatt 2026, und wie hoch ist er? Solange das offen ist, nennt die App den
-Betrag mit Zuschlag nur als zweite Zahl im Hinweis.
+Gibt es diesen Mindestrabatt 2026, und wie hoch ist er? Das Merkblatt 01.2026 nennt keinen. Die App
+rechnet bei erfasstem Hausarzt-, HMO-, Telmed- oder Apothekenmodell mit Zuschlag und sagt «sofern die
+Police eingereicht ist; das Amt kann einen Mindestrabatt verlangen».
 
 **Frage 5 — Alter:** KVO und SoHaV nennen für die Altersklassen keinen Stichtag. Welcher Zeitpunkt
 entscheidet für eine Person, die im Anspruchsjahr 26 wird? Wir zeigen für diesen Jahrgang derzeit
