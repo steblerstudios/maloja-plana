@@ -50,6 +50,13 @@ describe('rateAusBudget — Vorschlag für den Abbau-Plan (27.09.2026)', () => {
     expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, incomeType: 'brutto' } }).grund).toBe('keinNetto');
     expect(rateAusBudget({ ...basis, finanzen: { ...basis.finanzen, incomeType: '' } }).grund).toBe('keinNetto');
   });
+  // Seit 28.09.2026 zählt das Budget den Nebenerwerb mit — ein brutto erfasster Nebenerwerb
+  // würde den Vorschlag sonst um die Lohnabzüge zu hoch ansetzen.
+  it('Nebenerwerb brutto → kein Vorschlag; netto → zählt mit', () => {
+    const mitNeben = (art) => ({ ...basis, finanzen: { ...basis.finanzen, sideIncome: 1000, sideIncomeType: art } });
+    expect(rateAusBudget(mitNeben('brutto')).grund).toBe('keinNetto');
+    expect(rateAusBudget(mitNeben('netto')).vorschlag).toBe(3150);
+  });
   it('ohne Wohnen, Krankenkasse oder Lebensmittel → sagt, was fehlt', () => {
     const r = rateAusBudget({ finanzen: { monthlyIncome: 5000, incomeType: 'netto' } });
     expect(r).toEqual({ grund: 'unvollstaendig', fehlend: ['wohnen', 'krankenkasse', 'lebensmittel'] });

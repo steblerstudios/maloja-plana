@@ -5332,6 +5332,12 @@ export default {
     incomeNet: 'Entrada netta',
     incomeFamilienzulagen: 'Supplements da famiglia',
     incomeAlimente: 'Aliments retschavids',
+    incomeGross: 'Salari brut',
+    incomeSalary: 'Salari',
+    incomeSide: 'Gudogn accessoric',
+    incomeSideGross: 'Gudogn accessoric (brut)',
+    incomePartner: 'Salari net partenari/a',
+    availableNeedsNetto: { sie: "In salari è endatà sco salari brut — AVS, AD e cassa da pensiun n'èn anc betg deducids. Cun il salari net (certificat da salari u extract dal conto) quintain nus, tge che resta liber.", du: "In salari è endatà sco salari brut — AVS, AD e cassa da pensiun n'èn anc betg deducids. Cun il salari net (certificat da salari u extract dal conto) quintain nus, tge che resta liber." },
     ipvRelief: 'Reducziun IPV',
     ipvEffective: 'Grevezza effectiva',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
