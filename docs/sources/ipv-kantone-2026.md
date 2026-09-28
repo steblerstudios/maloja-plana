@@ -1289,7 +1289,9 @@ Regierungsratsbeschluss ist nicht in der BGS erfasst. Den Online-Rechner (server
 ~~**Ein amtliches Berechnungsbeispiel gibt es nicht.**~~ ⟨korrigiert: die Broschüre 2025, S. 7/8, hat zwei — siehe Fixrunde unten⟩ Prüfstein der Tests sind die Wortlaute von
 S. 5 als Handrechnung (Nullpunkt 4'984.80 / 8 % = 62'310, Kürzungsfaktor mit Aufrundung).
 
-**Was die App daraus macht (`src/config/ipvZug.js`):** Die App rechnet nur Haushalte mit einer
+**Was die App daraus macht (`src/config/ipvZug.js`):** ⟨korrigiert 28.09.2026 abends, Fachprüfung #475 und
+Fixrunde 2: der folgende Absatz ist überholt — ZG rechnet einen Betrag für Einzelpersonen und Familien, siehe
+«Fixrunde 1» und «Fixrunde 2» unten⟩ Die App rechnet nur Haushalte mit einer
 erwachsenen Person — genau die Gruppe mit den unbekannten Grenzen. Darum zeigt ZG **für niemanden
 einen Betrag** (`zgGrenzeEinzelperson`), ausser «kein Anspruch», wo er sicher ist: ohne Kinder ab
 massgebendem Einkommen 62'310 (Richtprämie ≤ 8 %), mit Kindern über 89'900. Säule 3a: Regel `voll`
@@ -1332,6 +1334,41 @@ daraus macht» und die Fragen unten sind **überholt** und bleiben als Beleg ste
 - **Gesuch:** § 11 IPVG (30. April; verspätet bis 30. September aus wichtigen Gründen) — im Budget wird
   nichts abgezogen (`gesuchNoetig`, wie NE); Frist-Sätze `zgFristLaeuft` / `zgFristVorbei`.
 - Kind mit Geburtsjahr im Anspruchsjahr zählt nicht (§ 4 Abs. 3 IPVG, Broschüre «2008 – 2025»).
+
+**Fixrunde 2 nach dem Re-Review #475 (28.09.2026 spätabends):**
+- ~~Untergrenze nur mit dem Versicherungsabzug «höchstens die erfasste Prämie»~~ ⟨korrigiert: ohne erfasste
+  Prämie war der Abzug 0⟩ — jetzt **immer** der volle Satz nach § 30 lit. g (3'000; ohne Beiträge nach lit. d/e,
+  d. h. ohne Lohn, um die Hälfte höher: 4'500; + 1'000 je Kind), denn auch Lebens-, Unfallprämien und Sparzinsen
+  zählen.
+- **Berufskosten** an der Quelle gelesen: StG Zug BGS 632.1, «Stand 1. Januar 2024» (`bgs.zg.ch/api/de/versions/2510/pdf_file`
+  → 200, 3'276'596 B; Gegenprobe `…/versions/9999991/pdf_file` → 404, 0 B) § 25 Abs. 1 lit. a: Fahrkosten «bis zu
+  einem Maximalbetrag von 6000 Franken», Abs. 2: «Für die Berufskosten nach Abs. 1 Bst. b und c werden
+  Pauschalansätze festgelegt» — festgelegt von der Steuerverwaltung (V StG BGS 632.11 § 10, «Stand 1. Januar 2022»,
+  `…/versions/2286/pdf_file_with_annexes` → 200). Die Ansätze: Steuerverwaltung Zug, «Wegleitung zur Steuererklärung
+  für natürliche Personen» 2024 (`zg.ch/dam/jcr:f2658eeb-c8c6-45d9-989c-908ce1a9c4ba/Wegleitung_2024_StKtZug_A4_20241022.pdf`
+  → 200, 644'449 B, PDF; Gegenprobe mit erfundener Kennung → 404), S. 32: «Der Abzug beträgt 3 % des Nettolohnes,
+  mindestens Fr. 2 000.– und höchstens Fr. 4 000.– pro Jahr. Beträgt Ihr Einkommen weniger als Fr. 2 000.– pro Jahr,
+  entspricht der zulässige Abzug diesem geringeren Einkommen.» · Fahrkosten «Fr. 6 000.– (Kantons- und
+  Gemeindesteuern)» · S. 33 Verpflegung «bei regelmässiger auswärtiger Verpflegung Fr. 3 200.– im Jahr». Das
+  Steuerbuch auf zg.ch leitet auf `wissen.zg.ch` um und lieferte roh für echte und erfundene Seiten dieselbe
+  Hülle (402'238 B) — **kein Beleg**, nicht verwendet.
+- **Untergrenze des Verdikts** jetzt: massgebendes Einkommen − (bei Lohn: Pauschale 3 % [2'000–4'000] + 6'000
+  Fahrkosten + 3'200 Verpflegung) − Versicherungsabzug voll − bezahlte Unterhaltsbeiträge ×12 (§ 30 lit. c) −
+  erfasste Kinderbetreuung ×12, höchstens 25'000 je Kind unter 14 im Basisjahr (§ 30 lit. l). Einzelperson ohne
+  Kinder: «kein Anspruch» erst ab rund 76'200 Nettolohn (≈ 6'350/Monat) statt ab 62'310. Nicht darin (unbeschränkt
+  oder unbekannt): nachgewiesene höhere Berufskosten, Weiterbildung (lit. n, bis 12'000), Krankheitskosten (§ 31),
+  Spenden, Schuldzinsen. «Unter dem Mindestbetrag» als Verdikt ist damit praktisch nicht mehr erreichbar.
+- **Erhaltene Unterhaltsbeiträge und Familienzulagen** zählen jetzt zum massgebenden Einkommen: StG § 22 Abs. 1
+  lit. f («Unterhaltsbeiträge, die eine steuerpflichtige Person bei Scheidung … für sich erhält, sowie
+  Unterhaltsbeiträge, die ein Elternteil für die unter seiner elterlichen Sorge oder Obhut stehenden Kinder
+  erhält») und § 16 Abs. 1 («Zulagen»), Wegleitung 2024 Code 155 («Kinder- und Familienzulagen …, welche direkt
+  von der Ausgleichskasse ausgerichtet und nicht bereits im Erwerbseinkommen … berücksichtigt worden sind»).
+  Prüffall: 1 Kind, 4'000 + 1'500 Alimente + 300 Zulagen → ME 61'100 → **1'320.80** (vorher 3'048.80). Bezahlte
+  Alimente mindern nur die Untergrenze, nicht den Betrag (§ 30 lit. c gilt nur für Ex-Ehegatten und minderjährige
+  Kinder; das App-Feld unterscheidet das nicht). Der Vorbehalt nennt beide Richtungen und die Doppelzählung,
+  wenn Zulagen schon im Nettolohn stecken.
+- **«Berechtigt»** mit Häkchen trotz Gesuchspflicht (§ 11 IPVG) → `antragNoetig` wie GE: «Möglicher Betrag — nur
+  auf Antrag».
 
 ~~**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 9):** Grenzen für Einzelpersonen und «gewisse» Haushalte
 mit einer erwachsenen Person · welche Haushalte das sind · Mindestgarantie 80 % (Broschüre) gegen
