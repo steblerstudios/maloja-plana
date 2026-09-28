@@ -182,8 +182,11 @@ export function ipvFreiburgRechnen({ region, kinderZahl = 0, me, paar = false })
   // me nie negativ: ein negatives Einkommen liegt 100 % unter der Grenze — oberste Stufe.
   const me0 = Math.max(0, me);
   const satz = frSatz(me0, grenze);
-  const maximalErwachsen = dp.e * 12;
-  const maximal = erwachsene * maximalErwachsen + kinderZahl * dp.k * 12;
+  // Vergleichsgrösse «höchstens möglich»: die oberste Stufe (65 %) bzw. 80 % für Kinder —
+  // nicht die ganze Durchschnittsprämie, die Freiburg nie ganz verbilligt.
+  const hoechstsatz = p.stufen[p.stufen.length - 1][1];
+  const maximalErwachsen = (hoechstsatz / 100) * dp.e * 12;
+  const maximal = erwachsene * maximalErwachsen + kinderZahl * (p.kinderMindestsatz / 100) * dp.k * 12;
   if (satz === null) {
     return { satz: null, kinderSatz: null, grenze, abstand: frAbstand(me0, grenze), total: 0, anteilErwachsen: 0, anteilKind: 0, maximal, maximalErwachsen };
   }
