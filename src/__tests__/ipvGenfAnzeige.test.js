@@ -76,7 +76,7 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
   // und «Berechtigt» als Überschrift — neben dem Satz «prüft nicht automatisch».
   it('unter 15 000 RDU: Antragshinweis mit Grenze und Jahr, Karte «Antrag nötig», Überschrift ohne «Berechtigt»', () => {
     const html = render(profil(1000));
-    expect(html).toContain('ipv.geAntragNoetig(15000|2026)');
+    expect(html).toContain('ipv.geAntragNoetig(' + geldZahl(15000) + '|2026)');
     expect(html).toContain('premium.note(ipv.geWegAntrag)');
     expect(html).toContain('premium.eligibleAntrag');
     expect(html).not.toMatch(/premium\.eligible[^A]/);
@@ -100,11 +100,11 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     const html = render(profil(10500, { children: [{ age: 5 }] }));
     expect(html).toContain('premium.eligible');
     expect(html).toContain('CHF 67');
-    expect(html).toContain('ipv.geNurKinder(151000)');
+    expect(html).toContain('ipv.geNurKinder(' + geldZahl(151000) + ')');
   });
 
   it('über der Grenze: «Einkommen über Grenze» mit der amtlichen Zahl', () => {
-    expect(render(profil(4500))).toContain('ipv.incomeAboveLimit(50000)');
+    expect(render(profil(4500))).toContain('ipv.incomeAboveLimit(' + geldZahl(50000) + ')');
   });
 
   it('kein roher Schlüssel bleibt stehen: alle GE-Texte in allen fünf Sprachen', async () => {
@@ -187,5 +187,33 @@ describe('K31 GE nach der Antragsfrist (1.12.2026): nirgends abgezogen, Genfer T
     am('2026-09-28T12:00:00');
     expect(praemienBelegState(arm()).mode).not.toBe('fristVorbei');
     expect(calculateMonthlyBudget(arm(), t).ipvAnmeldefristHinweisKey ?? null).toBeNull();
+  });
+});
+
+// Schluss-Re-Review PR #469 (28.09.2026): beim Konsolidieren gingen zwei Sätze des Weg-Textes und die
+// Tausendertrennung verloren; `noteAutoSam` blieb als toter Schlüssel. Hier festgehalten.
+describe('K31 GE — Weg-Satz, Tausendertrennung, kein noteAutoSam (fünf Sprachen)', () => {
+  const SPRACHEN = ['de', 'fr', 'it', 'en', 'rm'];
+  const muster = {
+    de: { tief: /15 000 Franken allein/, heute: /heutige Einkommen/, frist: /vor dem 30\. November des Anspruchsjahres/ },
+    fr: { tief: /15 000 francs pour une personne seule/, heute: /revenu actuel/, frist: /avant le 30 novembre de l’année du droit/ },
+    it: { tief: /15 000 franchi per una persona sola/, heute: /reddito attuale/, frist: /prima del 30 novembre dell’anno di diritto/ },
+    en: { tief: /CHF 15,000 for a single person/, heute: /current income/, frist: /before 30 November of the entitlement year/ },
+    rm: { tief: /15 000 francs per ina persuna suletta/, heute: /entrada dad oz/, frist: /avant ils 30 da november da l’onn da dretg/ },
+  };
+  it('geWegAutomatisch nennt das tiefe RDU des Bemessungsjahres, das heutige Einkommen und die Frist', async () => {
+    for (const sprache of SPRACHEN) {
+      const w = (await import(`../i18n/${sprache}.js`)).default.ipv.geWegAutomatisch;
+      for (const [was, re] of Object.entries(muster[sprache])) expect(w, `${sprache}: ${was}`).toMatch(re);
+    }
+  });
+  it('ipv.noteAutoSam gibt es in keiner Sprache mehr', async () => {
+    for (const sprache of SPRACHEN) {
+      expect((await import(`../i18n/${sprache}.js`)).default.ipv.noteAutoSam, sprache).toBeUndefined();
+    }
+  });
+  it('die Genfer Hinweise mit einem Betrag tragen {value} — formatiert kommt er aus dem Modul (zahl(), gepinnt in ipvGenf.test.js)', async () => {
+    const de = (await import('../i18n/de.js')).default.ipv;
+    for (const k of ['geAntragNoetig', 'geAntragFristVorbei', 'geNurKinder']) expect(de[k], k).toContain('{value}');
   });
 });

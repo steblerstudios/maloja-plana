@@ -249,7 +249,8 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     // 30. November (Art. 10 Abs. 4–6, Art. 10A [3]). Für genau die ärmste Gruppe. Und derselbe
     // Bildschirm darf dann nicht «Automatisch» und «Berechtigt» sagen (Rechtsprüfung 28.09.2026).
     expect(r.noteKey).toBe('ipv.geAntragNoetig');
-    expect(r.noteParams).toEqual({ value: 15000, jahr: 2026 });
+    // K2: {value} mit Tausendertrennung (utils/geld.js zahl()), nie roh hinter «CHF».
+    expect(r.noteParams).toEqual({ value: '15’000', jahr: 2026 });
     expect(r.antragNoetig).toBe(true);
     expect(r.cantonData.noteKey).toBe('ipv.geWegAntrag');
   });
@@ -294,7 +295,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
   it('über der Grenze: kein Anspruch, die amtliche Grenze 50 000 wird genannt', () => {
     expect(rduAusLohn(4296)).toBeGreaterThan(50000);
     expect(calculateIPV(person({ monthlyIncome: 4296 }))).toMatchObject({
-      belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: 50000 },
+      belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: '50’000' },
     });
   });
 
@@ -391,7 +392,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
 
   it('Alleinerziehend, 1 Kind, Einkommen 0: 348 + 132 = 480/Monat, «Max.» = Erwachsenengrenze 121 000, Antrag unter 18 000 [5]', () => {
     const r = calculateIPV(person({ children: [{ birthDate: '2015-01-01' }] }));
-    expect(r).toMatchObject({ amount: 480, annual: 5760, maxAnnual: 5760, noteKey: 'ipv.geAntragNoetig', noteParams: { value: 18000, jahr: 2026 }, antragNoetig: true });
+    expect(r).toMatchObject({ amount: 480, annual: 5760, maxAnnual: 5760, noteKey: 'ipv.geAntragNoetig', noteParams: { value: '18’000', jahr: 2026 }, antragNoetig: true });
     // Rente 20 000 mit einem Kind: über 18 000 → automatisch (nach der alten Paar-Lesart wäre es «Antrag» gewesen)
     expect(calculateIPV(person({ children: [{ birthDate: '2015-01-01' }], finanzen: { ahvRente: 20000 / 12 } })).noteKey).toBe('ipv.geWegAutomatisch');
     expect(calculateIPV(person({ children: [{ birthDate: '2015-01-01' }], finanzen: { ahvRente: 17999 / 12 } })).noteKey).toBe('ipv.geAntragNoetig');
@@ -412,14 +413,14 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
   it('Gruppe 9: über Gruppe 8 nur noch der Kinderbeitrag 67, mit eigenem Hinweis (Art. 21 Abs. 5/7 [2])', () => {
     // 1 Kind: Gruppe 8 endet bei 121 000, Gruppe 9 bei 151 000. 10 500 × 12 = 126 000 − 1 700 = 124 300.
     const r = calculateIPV(person({ monthlyIncome: 10500, children: [{ birthDate: '2015-01-01' }] }));
-    expect(r).toMatchObject({ eligible: true, amount: 67, annual: 804, noteKey: 'ipv.geNurKinder', noteParams: { value: 151000 } });
+    expect(r).toMatchObject({ eligible: true, amount: 67, annual: 804, noteKey: 'ipv.geNurKinder', noteParams: { value: '151’000' } });
     expect(r.cantonData.maxIncome).toBe(121000);
     // Deckel auf die Prämie der erwachsenen Person greift hier nicht — ihr Anteil ist 0.
     expect(calculateIPV(person({ monthlyIncome: 10500, children: [{ birthDate: '2015-01-01' }], kkPremium: 30 })).annual).toBe(804);
     // 12 725 × 12 = 152 700 − 1 700 = 151 000 noch Gruppe 9; 12 726 → 151 012 nichts mehr
     expect(calculateIPV(person({ monthlyIncome: 12725, children: [{ age: 5 }] })).amount).toBe(67);
     expect(calculateIPV(person({ monthlyIncome: 12726, children: [{ age: 5 }] })))
-      .toMatchObject({ eligible: false, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: 151000 } });
+      .toMatchObject({ eligible: false, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: '151’000' } });
   });
 
   it('Prämien-Deckel wirkt auch mit Kind, aber nur auf den Erwachsenen-Anteil', () => {
@@ -495,7 +496,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     it('am 30.11. ist es zu spät («avant le 30 novembre»): Frist-Satz, anmeldefristVorbei und der Genfer Leser-Schlüssel', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-30T00:00:01'));
       expect(calculateIPV(person())).toMatchObject({
-        noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: 15000, jahr: 2026, folgejahr: 2027 },
+        noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: '15’000', jahr: 2026, folgejahr: 2027 },
         anmeldefristVorbei: true, antragNoetig: true, fristNichtAbgezogenKey: 'ipv.geFristNichtAbgezogen',
       });
       // der automatische Fall kennt keine Frist und keinen Leser-Schlüssel
