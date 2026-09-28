@@ -152,32 +152,40 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
 const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'BS'];
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
+// GE ist seit #469 selbst belegt; der Muster-Helfer oben macht es für diese Datei zum Muster-Kanton.
+// Die Register-Tests prüfen den ECHTEN Stand — darum für sie kurz zurück, danach wieder Muster.
+// ⟨28.09.2026, Merge von main (GE #469) in feat/ipv-bs⟩
+const echterStand = (fn) => async () => {
+  musterZurueck();
+  try { await fn(); } finally { musterZurueck = musterKanton('GE'); }
+};
+
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 12 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW und BS mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 12 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW und BS mit Quelle', echterStand(() => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
     expect(UNBELEGT).toHaveLength(12);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
-  });
+  }));
 
   // Register und Beleg gehören zusammen: ein belegter Kanton OHNE Modul fiele auf den Muster-Abbau
   // zurück (den kein Kanton so kennt), ein Modul OHNE Beleg würde nie aufgerufen. Beides wäre still.
-  it('IPV_MODULE: genau die belegten Kantone haben ein Modul, mit Lader und Einstiegsfunktion', () => {
+  it('IPV_MODULE: genau die belegten Kantone haben ein Modul, mit Lader und Einstiegsfunktion', echterStand(() => {
     const belegt = Object.keys(CANTONAL_IPV).filter((k) => CANTONAL_IPV[k].beleg && CANTONAL_IPV[k].beleg.quelle).sort();
     expect(Object.keys(IPV_MODULE).sort()).toEqual(belegt);
     for (const [k, m] of Object.entries(IPV_MODULE)) {
       expect(typeof m.laden, k).toBe('function');
       expect(typeof m.fn, k).toBe('string');
     }
-  });
+  }));
 
-  it('IPV_MODULE: jeder Lader liefert ein Modul mit der genannten Einstiegsfunktion', async () => {
+  it('IPV_MODULE: jeder Lader liefert ein Modul mit der genannten Einstiegsfunktion', echterStand(async () => {
     for (const [k, m] of Object.entries(IPV_MODULE)) {
       const mod = await m.laden();
       expect(typeof mod[m.fn], `${k}.${m.fn}`).toBe('function');
     }
-  });
+  }));
 
   it.each(UNBELEGT)('%s: kein Betrag, kein «berechtigt», keine Grenze — tief und hoch dieselbe Ausgabe', (canton) => {
     const ausgabe = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } });
