@@ -116,7 +116,9 @@ export function ipvSchwyzRechnen({ personen, me }) {
   // me nie negativ: sonst wüchse der Betrag über die Summe der Richtprämien hinaus, was § 10
   // Abs. 1 [1] («Differenz zwischen der Richtprämie und dem Selbstbehalt») nicht zulässt.
   const selbstbehalt = p.selbstbehalt * Math.max(0, me);
-  const differenz = Math.max(0, summe - selbstbehalt);
+  // Auf Rappen gerundet, wie die Beispiele [5] rechnen: sonst bliebe am Nullpunkt (50'760) ein
+  // Gleitkomma-Rest von 1e-12 übrig und zählte als «Anspruch unter dem Mindestbetrag».
+  const differenz = Math.max(0, Math.round((summe - selbstbehalt) * 100) / 100);
   const anteil = summe > 0 ? differenz / summe : 0;
   // Unklar, sobald ein Kind anteilig unter 80 % fiele (siehe Kopf). Junge Erwachsene sind hier
   // nicht gebaut; für die Beispiele genügt die Differenz.
