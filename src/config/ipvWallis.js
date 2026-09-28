@@ -23,8 +23,20 @@
 //       Spaltenüberschrift «(Provisorisch)», Region 1/2, Referenzprämien.
 //   Gegenprobe Referenzprämien: EDI-Durchschnittsprämien 2026, VS 7'092 / 5'064 / 1'680 und
 //   6'072 / 4'536 / 1'392 im Jahr; × 0,95 ÷ 12, gerundet = 561 / 401 / 133 und 481 / 359 / 110.
+//   [5] Dienststelle für Gesundheitswesen, «Modalités de subventionnement des primes d'assurance-
+//       maladie 2026» (Datei «Directives et BO - RIP 2026_fr», PDF erstellt 22.12.2025), die
+//       jährliche Publikation nach Art. 23 [1]; gelesen 28.09.2026 (nach der Fachprüfung #477).
+//       Ziff. 4.1: Sätze, Grenzen, «les enfants des personnes seules dont le revenu est compris entre
+//       CHF 60'125.- et CHF 63'000.- ont droit à un subside de 80%» · Ziff. 4.3: Sozialhilfe jährlich
+//       mit Gesuch, 100 % · Ziff. 6.1: Berechnungsschema · Ziff. 6.2: Quellenbesteuerte (B, L, N, F)
+//       «devront présenter une requête … pour le 31 décembre 2026 au plus tard» · Ziff. 6.3: Schulden
+//       werden abgezogen · Ziff. 7: Sondergesuche «avant le 31 décembre 2026».
+//   [6] Kantonale Steuerverwaltung, «Wegleitung Zusammenfassung 2024» (Steuerjahr 2024 = Bemessungs-
+//       jahr): Ziff. 220 «Die von Bund und Kanton entrichteten Kinder- und Familienzulagen sind
+//       steuerpflichtig (Art. 13 StG)» · Ziff. 1410+1420 «Unterhaltsbeiträge … erhaltene Zahlungen».
+//       Beide liegen im Einkommen VOR Ziffer 2400.
 //   Der Staatsratsbeschluss nach Art. 7 [1] selbst wurde NICHT gefunden (Amtsblatt 2026 ohne
-//   Veröffentlichung dazu, gesucht 28.09.2026) — die Zahlen stammen aus [2], [3], [4].
+//   Veröffentlichung dazu, gesucht 28.09.2026) — die Zahlen stammen aus [2]–[5].
 //
 // DAS MODELL IN EINEM SATZ
 // Die Einkommenstabelle ordnet dem massgebenden Einkommen einen von sieben Sätzen zu (70, 50, 40,
@@ -37,26 +49,38 @@
 //    daten 2024 und teilt es Ende Februar mit ([3]). Wer keinen Entscheid erhält, reicht ein
 //    begründetes Gesuch ein, rückwirkend höchstens zwei Jahre (Art. 11 Abs. 2 [1]). Darum keine
 //    Anmeldefrist in der App (`anmeldefristVorbei` wird nicht gesetzt).
-// 3. BEZAHLTE UNTERHALTSBEITRÄGE werden vom Einkommen ABGEZOGEN (Art. 8 Abs. 1 lit. b [1]) —
-//    die App kennt sie (`alimentePaid`, im Monat) und zieht sie ab.
+// 3. UNTERHALT UND FAMILIENZULAGEN RECHNET DAS WALLIS-MODUL SELBST (Fachprüfung #477, B1, Ruling):
+//    bezahlte Unterhaltsbeiträge werden ABGEZOGEN (Art. 8 Abs. 1 lit. b [1], [5] Ziff. 6.1);
+//    ERHALTENE Unterhaltsbeiträge und Familienzulagen zählen ZUM Einkommen — beide sind Teil des
+//    «Nettoeinkommens vor den persönlichen Abzügen (Ziffer 2400)» (Art. 8 Abs. 1 [1]; [6] Ziff. 220
+//    und 1410/1420; Medienanhang [4] Folie 10: «Andere Einkommen (… Unterhaltsbeiträge …)»).
+//    Der gemeinsame Rahmen (`rohesEinkommenJahr`) kennt die drei Felder nicht; VS liest
+//    `alimentePaid`, `alimenteReceived` und `familienzulagen` darum hier (je × 12, Monatsfelder).
+//    Ein Rahmen-PR, der sie allgemein einführt, muss VS ausnehmen, sonst zählen sie doppelt.
+//    ⚠️ Enthält der erfasste Nettolohn die Kinderzulagen schon (manche Lohnabrechnungen führen sie
+//    mit), zählen sie hier doppelt — das Einkommen fiele zu hoch, der Betrag zu tief.
+//    ⟨vorher 28.09.2026: nur `alimentePaid` abgezogen — Alleinerziehende mit Zulagen und Alimenten
+//    bekamen bis 3'366 im Jahr zu viel (Fachprüfung: 5'989 statt 2'623).⟩
 //
-// 🛑 EIN WIDERSPRUCH ZWISCHEN ZWEI AMTLICHEN QUELLEN — dort keine Zahl
-//   Kinderzeile «Alleinstehende mit 1 Kind»: [2] 63'000, [4] 61'000 (alle übrigen Zellen gleich).
-//   Liegt das Einkommen einer alleinstehenden Person mit einem Kind zwischen 61'001 und 63'000,
-//   hängt der Kinderanteil (80 % × 133 × 12 = 1'276.80 in Region 1) allein an dieser Zelle —
-//   dann `orientierung('mindestanspruch')`. Frage an die Ausgleichskasse: FRAGEN-AN-DIE-AEMTER.md.
-//   Die Anzeige nennt für diesen Haushalt darum auch keine Grenze.
+// KINDERZEILE «ALLEINSTEHENDE MIT 1 KIND» = 63'000 ⟨aufgelöst 28.09.2026 nach der Fachprüfung #477⟩
+//   Hier stand ein Widerspruch: [2] 63'000, deutscher Medienanhang [4] 61'000; dazwischen zeigte die
+//   App keine Zahl. Die jährliche Publikation der Dienststelle [5] Ziff. 4.1 nennt ausdrücklich
+//   «entre CHF 60'125.- et CHF 63'000.-», der französische Medienanhang ebenfalls 63'000. Drei
+//   Quellen gegen eine Übertragung — es gilt 63'000, und die Anzeige nennt die Grenze auch mit Kind.
 //
 // 🛑 SÄULE 3A — Erlass und Merkblatt sagen es verschieden
 //   [1] Art. 8 Abs. 1 lit. a: dazugerechnet werden die 3a-Beiträge «bis zum Maximalbetrag des
 //   Angestelltenlohns» — dieselbe Regel wie BE (`SAEULE_3A.bisBundesMaximum`). [3] rechnet die
-//   Beiträge (Ziffern 2210/2220) OHNE Obergrenze dazu. Unter dem Maximum rechnen beide gleich (das
+//   Beiträge (Ziffern 2210/2220) OHNE Obergrenze dazu, ebenso die Dienststelle [5] Ziff. 6.1 — es
+//   widersprechen sich also die Verordnung und BEIDE Vollzugsstellen (auch schon in der für die
+//   Entscheide 2026 geltenden Vorgängerfassung). Unter dem Maximum rechnen alle gleich (das
 //   Nettoeinkommen der App trägt die 3a schon). Darüber — nur Personen ohne 2. Säule — keine Zahl
 //   (`orientierung('saeule3aStrittig')`).
 //
 // GEWÄHLT, NICHT BELEGT
-//   · Lesart der Tabelle: es gilt die erste Zeile, deren Grenze das Einkommen nicht übersteigt
-//     («gleich oder kleiner», Art. 2 Abs. 2 [1]). Die Tabelle selbst erklärt ihre Lesart nicht.
+//   · ⟨belegt, nicht mehr nur gewählt⟩ Lesart der Tabelle: es gilt die erste Zeile, deren Grenze das
+//     Einkommen nicht übersteigt — Art. 2 Abs. 2 [1] «gleich oder kleiner», [5] Ziff. 4.1 «limites
+//     maximales de revenus … qui permettent d'obtenir un subside».
 //   · Alter: `ERWACHSEN.mangelsStichtag` — der Stichtag 31.12. des Vorjahres (Art. 10 Abs. 2 [1])
 //     gilt für die Familie, einen für die Prämien-Alterskategorie nennt der Erlass nicht.
 //   · Rundung: nicht publiziert; Satz × Monatsprämie × 12 je Person, Summe auf Franken.
@@ -64,7 +88,13 @@
 // BEWUSST NICHT GEBAUT
 //   · Ehepaare, Konkubinat, mehrere Erwachsene (das zweite Einkommen fehlt der App).
 //   · Personen von 20 bis 25 (einzeln gerechnet, Referenzprämie «Junge Erw.», Zusatz bis 50 % bei
-//     Ausbildung nach Art. 6 Abs. 3 [1]) — Ausbildungsstatus fehlt.
+//     Ausbildung nach Art. 6 Abs. 3 [1]) — eigener Grund `vsJungeErwachsene` (nicht `alter`: das
+//     Geburtsdatum fehlt nicht, und das Elterneinkommen zählt im Wallis ab 20 gerade NICHT).
+//   · QUELLENBESTEUERTE (Ausweis B, L; auch N, F — kennt die App nicht): nicht automatisch erfasst,
+//     Gesuch bis 31. Dezember ([3], [5] Ziff. 6.2), anderes Einkommen (80 % brutto, Art. 8 Abs. 5 [1])
+//     → `orientierung('vsQuellensteuer')` aus `ausbildung.workPermit` (Fachprüfung #477, B2).
+//     Personen mit NEUER C-Bewilligung (2025) müssen ebenfalls beantragen — erkennt die App nicht; der
+//     Vorbehalt nennt es.
 //   · Kinder über 18 (19/20-Jährige zählen zur Familie, aber mit der Prämie junger Erwachsener) und
 //     Kinder, die im Anspruchsjahr geboren sind (zählen erst ab dem Geburtsmonat, Art. 10 Abs. 2bis).
 //   · mehr als 9 Kinder (die Tabelle [2] endet bei 9).
@@ -73,7 +103,9 @@
 //     30 % Einkommensrückgang (Art. 10 Abs. 5, steht im Vorbehalt), Härtefälle (Art. 4).
 //   · Vom Einkommen: negative Liegenschaftserträge, Verluste Selbständiger, Kapitalleistungen,
 //     Auslandelemente. Umgekehrt fehlen der App die Abzüge vor Ziffer 2400 (Berufsauslagen,
-//     Schuldzinsen): das Einkommen fällt zu HOCH aus, der Betrag zu TIEF (`ipv.naeherung`).
+//     Schuldzinsen) und beim Vermögen die Schulden ([5] Ziff. 6.3): das Einkommen fällt zu HOCH aus,
+//     der Betrag zu TIEF. Der Vorbehalt nennt beide Richtungen (Fachprüfung #477, ⚠️ 4).
+//   · Alimente an volljährige Kinder zählen nur auf Sondergesuch ([5] Ziff. 7.5) — die App zieht alle ab.
 //   · Kein Mindestbetrag (in [1]–[4] keiner gefunden).
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
@@ -104,12 +136,11 @@ export const IPV_VS = {
     [10, [35583, 56479, 66479, 74479, 80479, 86479, 92479, 98479, 104479, 110479]],
     [5, [38500, 60125, 70125, 78125, 84125, 90125, 96125, 102125, 108125, 114125]],
   ],
-  // [2] Zeile «Kinder 80%» der Alleinstehenden. Index 0: «-» (ohne Kind).
+  // [2] Zeile «Kinder 80%» der Alleinstehenden. Index 0: «-» (ohne Kind). Index 1 = 63'000 auch in
+  // [5] Ziff. 4.1 («entre CHF 60'125.- et CHF 63'000.-»); nur der deutsche Medienanhang [4] zeigt 61'000.
   kinderAllein: [null, 63000, 70125, 78125, 84125, 90125, 96125, 102125, 108125, 114125],
   // Art. 6 Abs. 2 [1]: «nicht weniger als 80 Prozent der durchschnittlichen Referenzprämie».
   kinderSatz: 80,
-  // 🛑 [4] nennt für «Alleinstehende mit 1 Kind», Kinderzeile, 61'000 statt 63'000.
-  kinderAlleinEinKindMedienanhang: 61000,
   // [3]: «Versicherte oder Familien, deren neu eingeschätztes Bruttovermögen von CHF 1 Million
   // übersteigt, haben kein Anrecht auf Subventionen (vom Staatsrat festgelegter Betrag).»
   vermoegensgrenze: 1000000,
@@ -145,11 +176,9 @@ export function ipvWallisRechnen({ region, kinderZahl = 0, me }) {
   const kinderGilt = kinderZahl > 0 && me0 <= kinderGrenze;
   const anteilErwachsen = satz === null ? 0 : (satz / 100) * rp.e * 12;
   const anteilKind = kinderGilt ? (p.kinderSatz / 100) * rp.k * 12 : 0;
-  // 🛑 Die strittige Zelle: nur ein Kind, Einkommen zwischen den beiden Lesarten.
-  const strittig = kinderZahl === 1 && me0 > p.kinderAlleinEinKindMedienanhang && me0 <= kinderGrenze;
   const maximalErwachsen = (p.skalaAllein[0][0] / 100) * rp.e * 12;
   return {
-    satz, kinderGilt, strittig, anteilErwachsen, anteilKind,
+    satz, kinderGilt, anteilErwachsen, anteilKind,
     total: anteilErwachsen + kinderZahl * anteilKind,
     maximalErwachsen,
     maximal: maximalErwachsen + kinderZahl * (p.kinderSatz / 100) * rp.k * 12,
@@ -168,7 +197,15 @@ export function ipvWallis(data, hh, ipvData, youngAdultsCount, orientierung, loo
   if (jahrVorbei(jahr)) return orientierung('jahr');
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
+  if (!geburt) return orientierung('alter');
+  // Unter 26 (nach `mangelsStichtag`): im Wallis wird, wer am 31.12. des Vorjahres 20 ist, EINZELN
+  // gerechnet (Art. 3 Abs. 3 [1]) — mit der Referenzprämie «Junge Erw.» und allenfalls dem Zusatz
+  // bis 50 % in Ausbildung (Art. 6 Abs. 3). Das baut die App nicht; eigener Grund statt `alter`.
+  if (!ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('vsJungeErwachsene');
+  // Quellenbesteuerte: nicht automatisch, Gesuch bis 31.12. ([3], [5] Ziff. 6.2). Die App kennt die
+  // Bewilligung (`ausbildung.workPermit`); B und L sind in der Regel quellenbesteuert.
+  const bewilligung = String(data.ausbildung?.workPermit || '').toLowerCase();
+  if (bewilligung === 'b' || bewilligung === 'l') return orientierung('vsQuellensteuer');
   // Alter im Anspruchsjahr, beim eingetippten Alter ein Jahr dazu (wie BE/SG/LU).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
@@ -198,18 +235,19 @@ export function ipvWallis(data, hh, ipvData, youngAdultsCount, orientierung, loo
   // Über dem Maximum widersprechen sich Erlass [1] und Merkblatt [3] — keine Zahl (siehe Kopf).
   if (SAEULE_3A.bisBundesMaximum.nichtAufgerechnet(f, jahre) > 0) return orientierung('saeule3aStrittig');
 
-  // Art. 8 Abs. 1 [1]: Nettoeinkommen + 5 % Nettovermögen − bezahlte Unterhaltsbeiträge (lit. b).
-  const unterhaltBezahlt = Math.max(0, Number(f.alimentePaid) || 0) * 12;
+  // Art. 8 Abs. 1 [1]: Nettoeinkommen vor Ziffer 2400 (inkl. erhaltene Unterhaltsbeiträge und
+  // Familienzulagen, [6]) + 5 % Nettovermögen − bezahlte Unterhaltsbeiträge (lit. b). Siehe Kopf, 3.
+  const monat = (k) => Math.max(0, Number(f[k]) || 0) * 12;
   const me = Math.max(0, einkommenJahr(f, SAEULE_3A.bisBundesMaximum, jahre)
-    + IPV_VS.vermoegenAnteil * vermoegen - unterhaltBezahlt);
+    + monat('alimenteReceived') + monat('familienzulagen')
+    + IPV_VS.vermoegenAnteil * vermoegen - monat('alimentePaid'));
 
   const r = ipvWallisRechnen({ region, kinderZahl, me });
-  if (r.strittig) return orientierung('mindestanspruch');
 
   const basisjahr = jahr - IPV_VS.basisjahrAbstand;
-  // Die Grenzen sind amtlich als Tabelle publiziert ([2]) — die Anzeige nennt die oberste des
-  // Haushalts. Nicht bei einem Kind: dort ist genau diese Zahl strittig (63'000 / 61'000).
-  const cantonData = { ...ipvData, maxIncome: kinderZahl === 1 ? null : r.grenze };
+  // Die Grenzen sind amtlich als Tabelle publiziert ([2], [5]) — die Anzeige nennt die oberste des
+  // Haushalts, seit der Auflösung 63'000 auch mit einem Kind.
+  const cantonData = { ...ipvData, maxIncome: r.grenze };
   const gemeinsam = {
     canton: 'VS', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltVS', extra: { region, basisjahr },
   };
