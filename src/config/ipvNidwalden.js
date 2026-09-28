@@ -51,7 +51,7 @@
 //    (`mindestanspruch`), wie ZH in seinem strittigen Band. Frage an die AK Nidwalden.
 //
 // 4. ANTRAG MIT VERWIRKUNG bis 30. April (Art. 22 Abs. 1/6 [2]). Darum `anmeldefristVorbei` und
-//    die Nidwaldner Frist-Hinweise für Budget und KK-Karte (`fristKeys`).
+//    den Nidwaldner Frist-Hinweis für KK-Karte, Prämien-Beleg und Budget (`fristNichtAbgezogenKey`).
 //
 // 5. PLAFONIERUNG (Art. 20a [2]) — auf die eigene Prämie, nur der Anteil der erwachsenen Person.
 //
@@ -71,10 +71,20 @@
 //     Ziff. 2–5) — nicht erfasst. Und die übrigen Abzüge im Reineinkommen (Berufskosten,
 //     Versicherungsabzug usw.): das Einkommen der App liegt darum eher zu HOCH, der Betrag eher
 //     zu TIEF. Der Vorbehalt sagt es.
-//   · ein im Anspruchsjahr geborenes Kind zählt mit (Art. 17 Abs. 2 [2]: Geburten «bis Ende
-//     Kalenderjahr» berücksichtigt, Gesuch binnen drei Monaten, Art. 22 Abs. 3) — ohne Kürzung
-//     für die Monate vor der Geburt (Kinderprämien kennt die App ohnehin nicht, Kinderanteil
-//     ungedeckelt).
+//   · ⟨Fachprüfung #486, W3, 28.09.2026: bis dahin stand hier «ein im Anspruchsjahr geborenes Kind
+//     zählt mit … ohne Kürzung für die Monate vor der Geburt». Das ergab bei einer Geburt im
+//     Dezember den ganzen Jahresbetrag, obwohl Art. 20a [2] auf die geschuldete Prämie deckelt.⟩
+//     Jetzt: das Kind zählt (Art. 17 Abs. 2 [2]: Geburten «bis Ende Kalenderjahr»), sein Anteil
+//     aber nur für die Monate ab dem Geburtsmonat — GEWÄHLT: Prämie geschuldet ab dem
+//     Geburtsmonat (nicht am KVG gelesen); der Monatsanteil (höchstens 80 % der Richtprämie, 84)
+//     liegt unter der Kinder-Richtprämie je Monat (105), der Deckel wirkt also über die Monate.
+//
+// ERHALTENE UNTERHALTSBEITRÄGE ⟨Fachprüfung #486, W2⟩: StG Art. 26 Abs. 1 Ziff. 6 [4] (Fassungen
+//   2023–2024 und seit 2026 gleich) zählt sie zu den steuerbaren Einkünften, also zum Reineinkommen.
+//   Die App rechnet `finanzen.alimenteReceived` (monatlich) darum hinzu — wie sie die bezahlten
+//   (Art. 35 Abs. 1 Ziff. 3) abzieht. Familienzulagen nennt Art. 26 nicht; sie gehören als
+//   «Zulagen» zum Lohn (Art. 18 Abs. 1) — ob sie im Monatslohn der App schon stecken, ist eine
+//   Rahmenfrage; nicht gerechnet, der Vorbehalt nennt beide Richtungen.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -153,6 +163,9 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
   if (UEBER_18(kinderJahre)) return orientierung('haushalt');
 
+  // 🛑 Unlesbare Beträge (Altdaten, «abc») ergäben NaN — und NaN liefe als «über der Grenze» in
+  // «kein Anspruch». Keine Zahl ist hier die ehrliche Antwort (Fachprüfung #486, K5).
+  if (!Number.isFinite(rohesEinkommenJahr(f)) || !Number.isFinite(vermoegenSumme(f))) return orientierung('eingabeUnlesbar');
   if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
   const jahre = { bemessungsjahr: jahr - IPV_NW.basisjahrAbstand, anspruchsjahr: jahr };
   // Die 3a wird ganz herausgenommen — das trägt nur, wenn sie aus dem erfassten Einkommen stammt.
@@ -162,7 +175,9 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   // Reineinkommen ≈ Nettoeinkommen − 3a (Regel `abgezogen`) − bezahlte Unterhaltsbeiträge
   // (StG Art. 35 Abs. 1 Ziff. 3 [4]; Profilfeld monatlich, unlesbar/negativ = 0).
   const unterhaltJahr = 12 * Math.max(0, Number(f.alimentePaid) || 0);
-  const reineinkommen = Math.max(0, einkommenJahr(f, SAEULE_3A.abgezogen, jahre) - unterhaltJahr);
+  // StG Art. 26 Abs. 1 Ziff. 6 [4]: erhaltene Unterhaltsbeiträge sind Einkünfte (monatlich erfasst).
+  const unterhaltErhaltenJahr = 12 * Math.max(0, Number(f.alimenteReceived) || 0);
+  const reineinkommen = Math.max(0, einkommenJahr(f, SAEULE_3A.abgezogen, jahre) - unterhaltJahr + unterhaltErhaltenJahr);
   // Art. 12 Abs. 2 Ziff. 6 [2]: Prozentsatz «des gesamten Reinvermögens» — ohne Freibetrag.
   const sw = reineinkommen + IPV_NW.vermoegenAnteil * vermoegenSumme(f);
 
@@ -172,7 +187,17 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
   const praemie = praemieJahr(data);
   if (praemieFehlt(praemie)) return orientierung('praemie');
 
-  const annual = r.grund ? 0 : deckelnProPerson(r.total, r.anteilErwachsen, praemie);
+  // Kinderanteil für im Anspruchsjahr geborene Kinder nur ab dem Geburtsmonat (siehe Kopf).
+  const monateJeKind = (hh.children || []).map((c) => {
+    const m = /^(\d{4})-(\d{2})/.exec(c.birthDate || '');
+    return m && Number(m[1]) === jahr ? 13 - Number(m[2]) : 12;
+  });
+  const kinderTeil = r.total - r.anteilErwachsen;
+  const kinderTeilGekuerzt = kinderZahl > 0
+    ? monateJeKind.reduce((s, mo) => s + (kinderTeil / kinderZahl) * (mo / 12), 0) : 0;
+  const summe = r.anteilErwachsen + kinderTeilGekuerzt;
+  // Mindestbetrag § 5 [1] nach der Kürzung erneut: 100 bleibt die Schwelle.
+  const annual = r.grund || summe < IPV_NW.mindestbetrag ? 0 : deckelnProPerson(summe, r.anteilErwachsen, praemie);
   const maxAnnual = deckelnProPerson(r.maximal, IPV_NW.richtpraemie.e, praemie);
   // Keine publizierte Einkommensgrenze für Erwachsene; die 100 000 betreffen nur die Kinder.
   const cantonData = { ...ipvData, maxIncome: null };
@@ -193,7 +218,9 @@ export function ipvNidwalden(data, hh, ipvData, youngAdultsCount, orientierung) 
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
     extra: {
       ...gemeinsam.extra, anmeldefristVorbei: fristVorbei,
-      fristKeys: { hinweisKey: 'ipv.nwFristNichtAbgezogen', budgetKey: 'budget.ipvHintNwFristVorbei' },
+      // KK-Karte, Prämien-Beleg und Budget nennen den Nidwaldner Grund (verwirkt) — Weg wie FR:
+      // `fristHinweisKey` in data/ipvAbzug.js.
+      fristNichtAbgezogenKey: 'ipv.nwFristNichtAbgezogen',
     },
     noteKey: fristVorbei ? 'ipv.nwFristVorbei' : 'ipv.nwFristLaeuft',
     noteParams: { jahr, folgejahr: jahr + 1 },
