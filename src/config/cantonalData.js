@@ -32,6 +32,7 @@ export const IPV_MODULE = {
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   SZ: { laden: () => import('./ipvSchwyz.js'), fn: 'ipvSchwyz', brauchtPLZ: false },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  UR: { laden: () => import('./ipvUri.js'), fn: 'ipvUri', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -112,7 +113,11 @@ export const CANTONAL_IPV = {
   // Erwachsene, darum maxIncome null wie in SG und AG.
   LU: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation',
     beleg: { quelle: 'SRL 866a · SRL 866 · WAS Ausgleichskasse Luzern — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-23' } },
-  UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice', beleg: null },
+  // UR (K31): eigenes Modell in config/ipvUri.js (Richtprämien minus 8,5 % des PV-Einkommens, eine
+  // Prämienregion). Von Amtes wegen aus den Steuerdaten (Art. 10 RB 20.2213). Keine publizierte
+  // Einkommensgrenze — die 90'000 gelten nur für den Mindestanspruch der Kinder.
+  UR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'RB 20.2213 · Steuerungsgrössen 2026 (GSUD Uri) · SVS Uri — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // SZ (K31): eigenes Modell in config/ipvSchwyz.js (Richtprämie minus 11 % Selbstbehalt; Anspruch
   // nur unter einer Grenze aus EL-Lebensbedarf und EL-Mietzins). Die SVA veröffentlicht nur das
   // «minimale Höchsteinkommen» (Mietzinsregion 3) — keine Grenze für die Person, darum maxIncome null.
