@@ -44,6 +44,17 @@ describe('K31 IPV-Rechner, Kanton Jura', () => {
     }
   });
 
+  // Fachprüfung #483 ⚠️ 1: keine Sackgasse — kein Eingabefeld «Geburtsdatum», wenn ohnehin keine Zahl kommt.
+  it('ohne Geburtsdatum und als Paar: der Jura-Grund, kein Eingabefeld', () => {
+    const ohne = render({ ...profil(1500), basis: { ...profil(1500).basis, dateOfBirth: '' } });
+    expect(ohne).toContain('ipv.offenGrund.steuerbaresEinkommen');
+    expect(ohne).not.toContain('ipv.offenGrund.alter');
+    expect(ohne).not.toContain('chapters.basis.fields.dateOfBirth');
+    const paar = render({ ...profil(1500), basis: { ...profil(1500).basis, maritalStatus: 'married' } });
+    expect(paar).toContain('ipv.offenGrund.steuerbaresEinkommen');
+    expect(paar).not.toContain('ipv.offenGrund.haushalt');
+  });
+
   it('nichts wird von der Prämie abgezogen', () => {
     expect(ipvAbzug(profil(1500))).toMatchObject({ betrag: 0, grund: 'keiner' });
   });
@@ -52,6 +63,9 @@ describe('K31 IPV-Rechner, Kanton Jura', () => {
     for (const [sprache, s] of Object.entries({ de, fr, it: itSprache, en, rm })) {
       expect(typeof s.ipv.offenGrund.steuerbaresEinkommen, sprache).toBe('string');
       expect(s.ipv.offenGrund.steuerbaresEinkommen.length).toBeGreaterThan(80);
+      // Fachprüfung #483 ⚠️ 3: Frist mit «31», 30 Tage — die Zahlen stehen in jeder Sprache.
+      expect(s.ipv.offenGrund.steuerbaresEinkommen, sprache).toMatch(/31/);
+      expect(s.ipv.offenGrund.steuerbaresEinkommen, sprache).toMatch(/30/);
     }
   });
 });

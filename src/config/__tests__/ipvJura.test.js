@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_JU, ipvJuraRechnen, juStufe, juMassgebend } from '../ipvJura.js';
+import { IPV_JU, ipvJuraRechnen, juStufe, juMassgebend, juRiegel } from '../ipvJura.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
 
 // K31 — Prämienverbilligung Kanton Jura 2026.
@@ -130,18 +130,47 @@ describe('K31 calculateIPV für JU: bewusst keine Zahl, mit Grund', () => {
     expect(calculateIPV(person({ children: [{ age: 4 }, { age: 9 }] }))).toMatchObject({ amount: null, offen: 'steuerbaresEinkommen' });
   });
 
-  it('die Riegel davor sagen ihren eigenen Grund', () => {
-    expect(calculateIPV(person({ basis: { maritalStatus: 'married' } }))).toMatchObject({ offen: 'haushalt' });
-    expect(calculateIPV(person({ basis: { maritalStatus: 'cohabiting' } }))).toMatchObject({ offen: 'haushalt' });
-    expect(calculateIPV(person({ dob: '2003-01-01' }))).toMatchObject({ offen: 'alter' });
-    expect(calculateIPV(person({ children: [{ age: 0 }] }))).toMatchObject({ offen: 'alter' });
-    expect(calculateIPV(person({ children: [{ age: 19 }] }))).toMatchObject({ offen: 'haushalt' });
-    expect(calculateIPV(person({ finanzen: { securitiesValue: 150001 } }))).toMatchObject({ offen: 'vermoegen' });
-    expect(calculateIPV(person({ finanzen: { securitiesValue: 150000 } }))).toMatchObject({ offen: 'steuerbaresEinkommen' });
+  // ⟨umgestellt 28.09.2026, Fachprüfung #483 ⚠️ 1⟩ Vorher sagten Paar, Alter, Kind und Vermögen
+  // ihren eigenen Grund — mit Eingabefeld «Geburtsdatum», nach dem trotzdem keine Zahl kam, und ohne
+  // die Jura-Auskunft. Jetzt: in JEDER Lage der Jura-Grund.
+  it('auch Paare, fehlendes Geburtsdatum, Kinder über 18 und viel Vermögen: der Jura-Grund', () => {
+    for (const p of [
+      person({ basis: { maritalStatus: 'married' } }),
+      person({ basis: { maritalStatus: 'cohabiting' } }),
+      person({ dob: '' }),
+      person({ dob: '2003-01-01' }),
+      person({ children: [{ age: 0 }] }),
+      person({ children: [{ age: 19 }] }),
+      person({ finanzen: { securitiesValue: 500000 } }),
+    ]) expect(calculateIPV(p)).toMatchObject({ belegt: false, amount: null, offen: 'steuerbaresEinkommen' });
   });
 
   it('ab 2027: Grund «jahr»', () => {
     vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
     expect(calculateIPV(person({}))).toMatchObject({ amount: null, offen: 'jahr' });
+  });
+});
+
+describe('K31 JU: die Riegel für den Tag, an dem die Zahl kommt (juRiegel, heute nicht aufgerufen)', () => {
+  const d = ({ dob = '1980-05-01', children = [], finanzen = {}, basis = {} } = {}) => ({
+    basis: { canton: 'JU', dateOfBirth: dob, maritalStatus: 'single', household: { adults: 1, children }, ...basis },
+    finanzen,
+  });
+  const hh = (x) => ({ adults: x.basis.household.adults, children: x.basis.household.children });
+  const r = (x) => juRiegel(x, hh(x));
+
+  it('Reihenfolge des Erlasses: Haushalt, Alter, Kinder, Vermögen', () => {
+    expect(r(d())).toBe(null);
+    expect(r(d({ basis: { maritalStatus: 'married' } }))).toBe('haushalt');
+    expect(r(d({ dob: '' }))).toBe('alter');
+    expect(r(d({ children: [{ age: 0 }] }))).toBe('alter');
+    expect(r(d({ children: [{ age: 19 }] }))).toBe('haushalt');
+  });
+
+  it('Vermögen: nur Ziffer 740 — Wertschriften und Bankguthaben, nicht Bargeld/Fahrzeuge (ECAS «seuil de fortune»)', () => {
+    expect(r(d({ finanzen: { securitiesValue: 100000, savingsAccount: 50000 } }))).toBe(null);
+    expect(r(d({ finanzen: { securitiesValue: 100000, savingsAccount: 50001 } }))).toBe('vermoegenJU');
+    // 60 000 erspart + 100 000 «übriges Vermögen»: nach Ziffer 740 unter der Grenze.
+    expect(r(d({ finanzen: { savingsAccount: 60000, otherAssets: 100000 } }))).toBe(null);
   });
 });
