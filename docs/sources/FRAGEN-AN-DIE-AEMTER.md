@@ -431,7 +431,9 @@ ergäbe das Beispiel 3'408.
 
 **Frage 4 — Neugeborene (Art. 17 Abs. 2 und Art. 20a kKVG):** Ein 2026 geborenes Kind zählt «bis Ende
 Kalenderjahr». Wird sein Anteil für die Monate vor der Geburt gekürzt (Prämie erst ab Geburt
-geschuldet)? Die App rechnet anteilig ab dem Geburtsmonat.
+geschuldet)? Die App rechnet anteilig ab dem Geburtsmonat. Den Mindestbetrag (Frage 2) prüft sie
+auf dem ungekürzten Anspruch, nicht auf dem Monatsanteil — Geburt im Dezember: 84 statt keiner
+Auszahlung. Stimmt diese Reihenfolge?
 
 **Stand:** NW ist für 2026 gebaut (Entwurfs-PR, K31) — ohne Zahl für Familien, bei denen Frage 1
 entscheidet. Werte 2027 nicht publiziert; ab 01.01.2027 zeigt die App für NW keinen Betrag.

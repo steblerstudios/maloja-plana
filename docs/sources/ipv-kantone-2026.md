@@ -1195,8 +1195,10 @@ Sozialhilfe, Zuzug aus dem Ausland · Aufrechnungen Ziff. 2–5 · übrige Abzü
   in den Fassungen 01.01.2023–31.12.2024, `versions/1107`, und seit 01.01.2026 gleich): «Unterhaltsbeiträge,
   die eine steuerpflichtige Person bei Scheidung, gerichtlicher oder tatsächlicher Trennung für sich
   erhält sowie Unterhaltsbeiträge, die ein Elternteil für die unter seiner elterlichen Sorge oder Obhut
-  stehenden Kinder erhält.» Familienzulagen nennt Art. 26 **nicht** (sie fallen als «Zulagen» unter
-  Art. 18 Abs. 1, Lohn) — nicht eigens gerechnet, Vorbehalt nennt beide Richtungen.
+  stehenden Kinder erhält.» ~~Familienzulagen nennt Art. 26 **nicht** (sie fallen als «Zulagen» unter
+  Art. 18 Abs. 1, Lohn) — nicht eigens gerechnet, Vorbehalt nennt beide Richtungen.~~ ⟨korrigiert
+  28.09.2026, Re-Review #486 N1: Art. 18 ist die Steuerbefreiung nach Gaststaatgesetz; «in Art. 26 nicht
+  genannt» heisst nicht «nicht steuerbar» — siehe Fixrunde 2 unten.⟩
   Beispiel: 20'000 + 1'500/Monat erhalten → Steuerwerte 38'000 → **1'600** (vorher 3'400).
 - **K8:** Art. 35 Abs. 1 Ziff. 3/5 in der Fassung 2023–2024 gelesen — gleich wie 2026.
 - **W3:** Neugeborene 2026 zählen nur ab dem Geburtsmonat (gewählt; Frage 16/4). Dezember → 84, unter
@@ -1207,6 +1209,26 @@ Sozialhilfe, Zuzug aus dem Ausland · Aufrechnungen Ziff. 2–5 · übrige Abzü
 - **K5:** unlesbares Einkommen/Vermögen → keine Zahl (`offenGrund.eingabeUnlesbar`); LU verhält sich
   gleich (dort nur notiert), VD zeigt dafür 30 Fr./Monat (Beifund, nicht hier).
 - **K3:** `nwFristLaeuft` nennt die Fristerstreckung (Art. 22 Abs. 7) und den EL-Stichtag 1. Januar.
+
+**Nachtrag 28.09.2026, nachts — Re-Review #486 (Fixrunde 2):**
+- **N1 Familienzulagen:** an der Quelle gelesen 28.09.2026 über die API
+  (`https://gesetze.nw.ch/api/de/texts_of_law/521.1/show_as_json` → 200, 1,26 MB; erfundene 521.199 → 404),
+  «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 02.12.2025)», und als PDF die Fassung
+  01.01.2023–31.12.2024 (`/api/de/versions/1107/pdf_file` → 200; erfundene `versions/99999` → 404),
+  «Stand 1. Januar 2023» — Bemessungsjahr 2024. Wortlaut in beiden gleich:
+  Art. 19 Abs. 1 «Der Einkommenssteuer unterliegen alle wiederkehrenden und einmaligen Einkünfte.» ·
+  Art. 20 Abs. 1 «Steuerbar sind alle Einkünfte aus unselbstständiger Erwerbstätigkeit mit Einschluss der
+  Nebeneinkünfte wie Entschädigungen für Sonderleistungen, Provisionen, Zulagen, …». Art. 27 (steuerfrei)
+  nennt Familien- oder Kinderzulagen nicht (Volltext beider Fassungen: kein Treffer auf «Familienzulage»/
+  «Kinderzulage»). Folge: sie stecken im Reineinkommen (Merkblatt: Code 330); die App rechnet
+  `12 × familienzulagen` hinzu. Prüfstein: 2 Kinder, 97'000 + 480/Monat → Steuerwerte 102'760 > 100'000,
+  keine besondere Prämienverbilligung; allgemein 7'920 − 10'276 < 0 → **0** (vorher 2'016). Vorbehalt in
+  5 Sprachen: eingerechnet; steckt die Kinderzulage schon im erfassten Nettolohn, zählt sie doppelt (wie VS).
+- **W3 Dezember-Geburt:** § 5 der Verordnung (Mindestbetrag 100) gilt nur dem **ungekürzten** Anspruch
+  (1'008); die Monatskürzung ist der Deckel auf die geschuldete Prämie (Art. 20a kKVG), den der Versicherer
+  anwendet. Dezember → **84** (vorher «wird nicht ausbezahlt»).
+- **Unlesbare Zusatzfelder:** bezahlte/erhaltene Alimente und Familienzulagen = «abc» → keine Zahl
+  (`offenGrund.eingabeUnlesbar`) statt still 0.
 
 ---
 
