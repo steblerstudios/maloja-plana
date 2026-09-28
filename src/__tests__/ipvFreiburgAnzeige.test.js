@@ -9,6 +9,11 @@ import { PraemienBeleg } from '../components/PraemienBeleg.jsx';
 import { praemienBelegState } from '../data/praemienBeleg.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { ipvAbzug } from '../data/ipvAbzug.js';
+import de from '../i18n/de.js';
+import en from '../i18n/en.js';
+import fr from '../i18n/fr.js';
+import itSprache from '../i18n/it.js';
+import rm from '../i18n/rm.js';
 
 // K31 — der IPV-Rechner zeigt für FR den Betrag nach dem Stufenmodell der ORP (RSF 842.1.13).
 // Was hier sichtbar sein muss:
@@ -89,9 +94,10 @@ describe('K31 IPV-Rechner, Kanton Freiburg', () => {
     expect(render(profil(2000, { plz: '0000', city: 'Nirgendwo' }))).toContain('ipv.orientierungOffen');
   });
 
-  it('kein roher Schlüssel bleibt stehen: alle FR-Texte in allen fünf Sprachen', async () => {
-    for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
-      const texte = (await import(`../i18n/${sprache}.js`)).default;
+  // Statisch importiert (wie ipvAbzug.test.js): der dynamische Import aller fünf Sprachdateien
+  // lief in der Mutationsprobe unter Last in den 5-s-Timeout.
+  it('kein roher Schlüssel bleibt stehen: alle FR-Texte in allen fünf Sprachen', () => {
+    for (const [sprache, texte] of Object.entries({ de, fr, it: itSprache, en, rm })) {
       for (const k of ['vorbehaltFR', 'frKeinAnspruch', 'frFristLaeuft', 'frFristVorbei', 'frFristNichtAbgezogen']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
