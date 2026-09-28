@@ -78,8 +78,8 @@
 //   · Quellenbesteuerte (Art. 8 Abs. 2: 75 % des Bruttoerwerbseinkommens, pro rata), EL- und
 //     Sozialhilfebeziehende (Art. 8 Abs. 1: volle Richtprämie), Härtefälle (Art. 8 Abs. 4),
 //     Neuzuzüger (Art. 7 Abs. 6 Satz 2).
-//   · die amtlichen Abzüge vom anrechenbaren Einkommen (Art. 7a lit. b–f, k: Berufsauslagen,
-//     Unterhalt, Versicherungsabzug, Krankheits- und Betreuungskosten, Schuldzinsen) — die App
+//   · die amtlichen Abzüge vom anrechenbaren Einkommen (Art. 7a lit. b, d–f, k: Berufsauslagen,
+//     Versicherungsabzug, Krankheits- und Betreuungskosten, Schuldzinsen; lit. c Unterhalt zieht sie ab) — die App
 //     kennt sie nicht; das Einkommen liegt darum eher zu HOCH, der Betrag eher zu TIEF. Der
 //     Vorbehalt sagt es. Liegenschaftsverluste (lit. j) ebenso.
 import {

@@ -998,6 +998,10 @@ Neuzuzüger · die amtlichen Abzüge Art. 7a lit. b–f, j, k (Betrag eher zu ti
 
 **Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 9.
 
+**Nachtrag 28.09.2026, abends (Befunde der Uri-Prüfung #464 übertragen):** bezahlte Alimente
+(`finanzen.alimentePaid` × 12) werden jetzt nach Art. 7a lit. c abgezogen; junge Erwachsene
+(Jahrgang 2001–2007) zeigen den Grund `offenGrund.ausbildung` statt «alter».
+
 ---
 
 ## NW — Nidwalden
