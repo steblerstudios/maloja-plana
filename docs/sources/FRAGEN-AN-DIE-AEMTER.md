@@ -265,6 +265,18 @@ Fr. 25 000.–»; Merkblatt und Rechner lesen es als Grenze 75'000. Ist das so g
 **Frage 5 — Rundung und Aufteilung:** Art. 14 Abs. 4 rundet «auf fünf Rappen» auf. Gilt das je
 Person (nach der Aufteilung Art. 14 Abs. 2) oder für den ganzen Betrag?
 
+**Frage 1b — Jahrgang 2007:** Diese Personen sind am 1. Januar 2026 18 Jahre alt, nach EV Art. 5
+Abs. 2 also noch Kind (Richtprämie 1'380); das Merkblatt führt sie unter «Junge Erwachsene mit
+Jahrgang 2001 bis 2007» (3'570). Welche Richtprämie gilt? Die App rechnet den Fall heute nicht.
+
+**Frage 6 — Rahmen 9–12 % (EG KVG Art. 2 Abs. 2 seit 01.04.2026):** Der Kantonsratsbeschluss vom
+26.03.2026 (GDB 851.12) lässt den Selbstbehalt ohne Obergrenze steigen; ab einem anrechenbaren
+Einkommen von 60'000 liegt er über 12 %. Seit dem 1. April 2026 nennt das Gesetz aber einen Rahmen
+«zwischen 9,0 und 12,0 Prozent», ohne Übergangsbestimmung. Gilt dieser Rahmen für die Verfügungen
+zum Anspruchsjahr 2026? Betroffen sind Haushalte mit Kindern und anrechenbarem Einkommen zwischen
+60'000 und 75'000; der Unterschied beträgt bis rund 1'125 Franken im Jahr. Bis zur Antwort zeigt die
+App dort keinen Betrag, wo es darauf ankommt.
+
 **Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
 zeigt die App für OW keinen Betrag.
 

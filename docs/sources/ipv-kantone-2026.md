@@ -905,7 +905,8 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat. Belegt ist für eine erwa
 - Richtprämien 2026 nur im Merkblatt [4] gefunden, kein eigener Beschluss mit den Frankenbeträgen (Rechtsgrundlage: 85 % bzw. 100 % der EDI-Durchschnittsprämie, [3] Art. 5).
 - Frist: Die heute geltende EV-Fassung (in Kraft seit 01.06.2026) nennt den 30. April; für 2026 nennen Merkblatt und Website den 31. Mai 2026. Für 2027 ist mit dem 30. April zu rechnen (nicht separat bestätigt).
 - EG KVG (Fassung ab 01.04.2026) weist die Festlegung des Selbstbehalts künftig dem Regierungsrat «jeweils im Vorjahr» zu; für 2026 hat noch der Kantonsrat beschlossen.
-- ⟨korrigiert 28.09.2026⟩ Oben (Rechenmodell) steht aus der Fassung ab 01.04.2026 «beträgt zwischen 9,0 und 12,0 Prozent». Der Beschluss 2026 (26.03.2026) fiel unter der Fassung **bis 31.03.2026**, die **keinen** Rahmen nennt («vom Kantonsrat jährlich … abschliessend festgelegt»). Für 2026 gibt es darum keine Obergrenze von 12 %; ab 60'000 liegt der Satz darüber.
+- ~~⟨korrigiert 28.09.2026⟩ Oben (Rechenmodell) steht aus der Fassung ab 01.04.2026 «beträgt zwischen 9,0 und 12,0 Prozent». Der Beschluss 2026 (26.03.2026) fiel unter der Fassung **bis 31.03.2026**, die **keinen** Rahmen nennt («vom Kantonsrat jährlich … abschliessend festgelegt»). Für 2026 gibt es darum keine Obergrenze von 12 %; ab 60'000 liegt der Satz darüber.~~
+  ⟨korrigiert nach Fachprüfung #476 (B2), 28.09.2026 abends: Der Satz war selbst eine Auslegung. Richtig ist: der Beschluss fiel unter der alten Fassung **und** seit 01.04.2026 gilt der Rahmen 9–12 % ohne Übergangsbestimmung, die Verfügungen 2026 ergehen danach. Zwei geltende Texte — die App zeigt dort, wo der Unterschied den Betrag ändert (Haushalte mit Kindern, AE über 60'000), keine Zahl (`offenGrund.owSelbstbehaltRahmen`); Frage 9/6 an die AK Obwalden.⟩
 - Merkblatt-Variante ohne Datum (IPV26_Merkblatt.pdf) antwortet mit HTTP 404; verwendet wurde die Fassung «Stand Januar 2026».
 
 ### Quellen
@@ -997,6 +998,20 @@ Luzerner Satz.
 Neuzuzüger · die amtlichen Abzüge Art. 7a lit. b–f, j, k (Betrag eher zu tief; Vorbehalt sagt es).
 
 **Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 9.
+
+**Nachtrag 28.09.2026, spätabends — Fachprüfung #476 umgesetzt:**
+- **B1:** Nach dem 31. Mai zeigte der Prämien-Beleg (Schnellcheck) den Luzerner Satz. Jetzt nennen alle
+  drei Leser (KK-Karte, Prämien-Beleg, Budget) den Obwaldner Satz — Weg wie FR (`fristNichtAbgezogenKey`,
+  `fristHinweisKey` in `data/ipvAbzug.js`); Anspruch **verwirkt** (EV Art. 10 Abs. 7), nicht anteilig.
+- **B2:** 12-%-Frage offen statt gebaut (siehe Korrektur oben).
+- **W1/W2:** Vorbehalt: die Grenze gilt für das anrechenbare Einkommen, nicht den Lohn; erhaltene
+  Alimente und Familienzulagen sind nicht eingerechnet (Betrag kann auch tiefer ausfallen).
+- **W3:** Kind Jahrgang 2008 → Grund `kind18` statt «Paare».
+- **W4:** Versicherungsabzug gerechnet: StG Art. 35 Abs. 1 lit. g (Fassung 2024) «bis zum Gesamtbetrag
+  von … Fr. 1 700.– für die übrigen Steuerpflichtigen», «um Fr. 700.- für jedes Kind» — abgezogen
+  min(eigene Jahresprämie, 1'700 + 700 je Kind). Beispiel 20'000 → 3'280 statt 3'119.
+- **K1–K5:** Jahrgang 2008 kein «Widerspruch» (Frage 1b zu 2007); `ausbildung` «je nach Einkommen»;
+  «noch nicht eingearbeitet»; Prüfhinweis im «kein Anspruch»; «besondere Gründe» in `owFristLaeuft`.
 
 **Nachtrag 28.09.2026, abends (Befunde der Uri-Prüfung #464 übertragen):** bezahlte Alimente
 (`finanzen.alimentePaid` × 12) werden jetzt nach Art. 7a lit. c abgezogen; junge Erwachsene
