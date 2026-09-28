@@ -99,7 +99,7 @@ export function paletteAusSpeicher(storage) {
   return applyColorBlind(dunkel ? DARK_PALETTE : LIGHT_PALETTE, laden('or5_colorblind') === '1');
 }
 
-import { getCantonName, CANTON_CODES } from './cantonalData.js';
+import { getCantonName, CANTON_CODES } from './kantonBasis.js';
 const cantonOptions = (t) => CANTON_CODES.map(c => ({ value: c, label: getCantonName(c, t) }));
 
 // Helper: create select options from translation keys

@@ -3,7 +3,7 @@ import Icons from './IconKern.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
 import PrimaryButton from './components/PrimaryButton.jsx';
-import { getCantonName } from './config/cantonalData.js';
+import { getCantonName } from './config/kantonBasis.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
