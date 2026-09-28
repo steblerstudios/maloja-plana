@@ -2999,6 +2999,7 @@ export default {
     // Kein „wir nehmen Vollzeit an" mehr — genau diese Annahme erzeugte den Fehlalarm.
     // Ohne Stunden gibt es keine Einordnung, sondern eine ruhige Einladung.
     hoursUnknownNote: { sie: 'Ohne Ihre Wochenstunden lässt sich Ihr Lohn nicht mit dem Vollzeit-Median vergleichen — tragen Sie sie ein, dann ordnen wir ihn ein.', du: 'Ohne Deine Wochenstunden lässt sich Dein Lohn nicht mit dem Vollzeit-Median vergleichen — trag sie ein, dann ordnen wir ihn ein.' },
+    hoursImplausibleNote: { sie: '{hours} Stunden pro Woche sind ungewöhnlich viele. Ist vielleicht ein Pensum in Prozent gemeint? Dann tragen Sie bitte die Wochenstunden ein — bis dahin rechnen wir nicht damit.', du: '{hours} Stunden pro Woche sind ungewöhnlich viele. Ist vielleicht ein Pensum in Prozent gemeint? Dann trag bitte die Wochenstunden ein — bis dahin rechnen wir nicht damit.' },
     aria: 'Lohn CHF {amount}, Schweizer Median CHF {median}.',
     source: 'Quelle: [[BFS|www.bfs.admin.ch]], Lohnstrukturerhebung {jahr} (Median CHF {median}, inkl. anteiligem 13. Monatslohn).',
     empty: { sie: 'Sobald Ihr Einkommen erfasst ist, ordnen wir es hier ruhig ein.', du: 'Sobald Dein Einkommen erfasst ist, ordnen wir es hier ruhig ein.' },

@@ -2985,6 +2985,7 @@ export default {
     fteNote: 'Part-time ({hours} hrs/week): extrapolated to 100% that is CHF {fte} (recorded: CHF {actual}). Only this makes the comparison with the full-time median valid.',
     overFteNote: 'More than full time ({hours} hrs/week): converted to 40 hrs that is CHF {fte} (recorded: CHF {actual}). Only this makes the comparison with the full-time median valid.',
     hoursUnknownNote: 'Without your weekly hours your wage cannot be compared with the full-time median — add them and we will place it.',
+    hoursImplausibleNote: '{hours} hours a week is unusually high. Did you mean a workload percentage? Then please enter your weekly hours — until then we leave them out.',
     aria: 'Wage CHF {amount}, Swiss median CHF {median}.',
     source: 'Source: [[FSO|www.bfs.admin.ch]], Swiss Earnings Structure Survey {jahr} (median CHF {median}, incl. pro-rata 13th salary).',
     empty: 'Once your income is recorded, we will place it here calmly.',
