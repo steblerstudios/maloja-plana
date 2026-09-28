@@ -228,6 +228,44 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 8 · SVA Schaffhausen — Kinder-Mindestanspruch, Aufteilung, Rundung
+
+*Aufgenommen 28.09.2026 beim Einbau von SH. Entwurf — **nicht gesendet**. (Nummer vorläufig;
+parallel werden weitere Kantone eingetragen.)*
+
+**Worum es geht:** Formel und Zahlen 2026 stehen im Dekret (SHR 832.110 §§ 10–13bis) und im
+Anhang 1 der Verordnung (SHR 832.111). Ein Berechnungsbeispiel gibt es weder im Merkblatt 2026
+noch auf svash.ch. Die Versand-Grenzwerte (§ A1-2) rechnen wir als Nullpunkt der Formel auf den
+Franken nach — das belegt Selbstbehalt und Richtprämien, nicht aber die folgenden Punkte.
+
+**Frage 1 — Kinder, Basis der 80 %:** Werden die «Prämien der Kinder um mindestens 80 Prozent»
+(Merkblatt, § 13bis Dekret) auf die **Richtprämie** des Kindes (2026: 1'387 / 1'295) gerechnet
+oder auf seine **effektive** Prämie? Wir rechnen mit der Richtprämie — das Antragsformular fragt
+nach der Krankenkasse, nicht nach der Prämie.
+
+**Frage 2 — Aufteilung des Rests (§ 13bis Abs. 1):** «Die verbleibenden Mittel werden anteilig
+entsprechend der Höhe der anrechenbaren Prämie auf die mitbetroffenen Angehörigen des Haushalts
+verteilt.» Zählen die Kinder dabei **mit** (sie erhalten dann mehr als 80 %), oder geht der Rest
+nur an die übrigen Personen? Die Summe ändert sich nicht, wohl aber der Anteil der erwachsenen
+Person — und damit, ob deren eigene Prämie als Obergrenze greift. Geben beide Lesarten einen
+anderen Betrag, zeigt die App keinen.
+
+**Frage 3 — Kinder und Fr. 100:** Liegt die Differenz über 0, aber unter Fr. 100, sagt § 13
+Abs. 2 «kein Betrag», § 13bis Abs. 2 aber «entsprechend erhöht», bis die Kinder 80 % erhalten.
+Was gilt? Die App zeigt in diesem schmalen Band keinen Betrag.
+
+**Frage 4 — Rundung:** Auf welche Einheit wird der verfügte Betrag gerundet? Wir runden den
+Jahresbetrag auf ganze Franken.
+
+**Frage 5 — Website:** Die Seite «Berechnung» (svash.ch/ipv/berechnung) zeigt am 28.09.2026 noch
+die Richtprämien 2025 und die Steuerwerte 2023; die FAQ nennt «bis spätestens 30. April 2025».
+Das Merkblatt 2026 und die Verordnung sind nachgeführt.
+
+**Stand:** SH ist für 2026 gebaut (Entwurfs-PR, K31). Ein Anhang für 2027 ist am 28.09.2026 nicht
+publiziert. Ab 01.01.2027 zeigt die App für SH keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
