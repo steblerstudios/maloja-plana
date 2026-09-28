@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import {
   IPV_BS, BS_HYPOTHETISCH_SCHWELLE, bsGrenzen, bsGruppe, bsVermoegensanteil, ipvBaselStadtRechnen,
+  bsWochenstunden, bsHypothetischesEinkommen, bsModell,
 } from '../ipvBaselStadt.js';
 import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
@@ -173,11 +174,12 @@ describe('K31 calculateIPV für BS (App-Angaben → Modell)', () => {
   });
   afterEach(() => { vi.useRealTimers(); });
 
-  const person = ({ monthlyIncome = 3000, children = [], dob = '1980-05-01', kkPremium = 500, finanzen = {}, basis = {}, versicherungen = {} } = {}) => ({
+  const person = ({ monthlyIncome = 3000, children = [], dob = '1980-05-01', kkPremium = 500, finanzen = {}, basis = {}, versicherungen = {}, stunden } = {}) => ({
     basis: { canton: 'BS', dateOfBirth: dob, maritalStatus: 'single', household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: '4051', city: 'Basel' },
     versicherungen: { ...(kkPremium != null ? { kkPremium } : {}), ...versicherungen },
+    ...(stunden !== undefined ? { ausbildung: { workHoursPerWeek: stunden } } : {}),
   });
 
   it('im Register, ohne PLZ-Abhängigkeit (keine Prämienregion)', () => {
@@ -313,6 +315,85 @@ describe('K31 calculateIPV für BS (App-Angaben → Modell)', () => {
     // → 108 000 in Gruppe 17. Leistungsgrenze 115 000 + 4 000 = 119 000.
     expect(r).toMatchObject({ eligible: true, gruppe: 17 });
     expect(r.cantonData.maxIncome).toBe(119000);
+  });
+
+  describe('🛑 Fachprüfung B1: Alimente und Familienzulagen (SoHaV § 16 Abs. 1 lit. c Ziff. 3/6, § 17 Abs. 1 lit. c)', () => {
+    it('alleinerziehend, Kind 8, 3 000 + 800 Alimente erhalten = 45 600 → 2 PH Gruppe 06 → 296 + 124 = 420 (vorher 601)', () => {
+      const r = calculateIPV(person({ children: [{ birthDate: '2018-03-01' }], finanzen: { alimenteReceived: 800 } }));
+      expect(r).toMatchObject({ eligible: true, gruppe: 6, amount: 420 });
+    });
+    it('dazu 215 Familienzulagen ausserhalb des Lohns = 48 180 → Gruppe 07 → 266 + 124 = 390', () => {
+      const r = calculateIPV(person({ children: [{ birthDate: '2018-03-01' }], finanzen: { alimenteReceived: 800, familienzulagen: 215 } }));
+      expect(r).toMatchObject({ gruppe: 7, amount: 390 });
+    });
+    it('allein, 2 500 − 1 000 Alimente bezahlt = 18 000 → Gruppe 01 → 444 (vorher 266)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 1000 } }))).toMatchObject({ gruppe: 1, amount: 444 });
+    });
+    it('unlesbar oder negativ zählt nicht', () => {
+      expect(calculateIPV(person({ finanzen: { alimenteReceived: 'abc', familienzulagen: -200, alimentePaid: 'x' } }))).toMatchObject({ amount: 118, gruppe: 12 });
+    });
+  });
+
+  describe('🛑 Fachprüfung B2: hypothetisches Einkommen am Pensum (SoHaV § 24 Abs. 2)', () => {
+    it('die Hilfen: Stunden lesen, Pensum ÷ 42 (gewählt), Differenz zu 80 % × 36 000', () => {
+      expect(IPV_BS.vollzeitStunden).toBe(42);
+      expect(bsWochenstunden('21,5')).toBe(21.5);
+      expect(bsWochenstunden('0')).toBe(null);
+      expect(bsWochenstunden('100')).toBe(null);
+      expect(bsWochenstunden('')).toBe(null);
+      expect(bsHypothetischesEinkommen(21)).toBeCloseTo(10800, 9);
+      expect(bsHypothetischesEinkommen(42)).toBe(0);
+      expect(bsHypothetischesEinkommen(33.6)).toBeCloseTo(0, 9);
+    });
+    it('21 Std./Woche, 30 000: + 10 800 → 40 800 → Gruppe 16 → 37 (vorher 266), mit Hinweis', () => {
+      const r = calculateIPV(person({ monthlyIncome: 2500, stunden: '21' }));
+      expect(r).toMatchObject({ eligible: true, gruppe: 16, amount: 37, zusatzVorbehaltKey: 'ipv.bsHypothetischGerechnet' });
+    });
+    it('Vollzeit (42 Std.) mit tiefem Lohn: keine Anrechnung, auch unter 28 800 eine Zahl', () => {
+      // 24 000 → Gruppe 02 (23 125 < 24 000 ≤ 24 375) → 415
+      const r = calculateIPV(person({ monthlyIncome: 2000, stunden: '42' }));
+      expect(r).toMatchObject({ eligible: true, gruppe: 2, amount: 415 });
+      expect(r.zusatzVorbehaltKey).toBeUndefined();
+    });
+    it('34 Std. (über 80 %): keine Anrechnung', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2500, stunden: '34' }))).toMatchObject({ gruppe: 7, amount: 266 });
+    });
+    it('ohne Stunden: über 28 800 gerechnet wie bei 80 % — und der Hinweis sagt es bei der Zahl (W1)', () => {
+      expect(calculateIPV(person())).toMatchObject({ amount: 118, zusatzVorbehaltKey: 'ipv.bsPensumAngenommen' });
+    });
+    it('Ausnahme Kind unter 16: keine Anrechnung trotz 10 Std.', () => {
+      const r = calculateIPV(person({ monthlyIncome: 2500, stunden: '10', children: [{ birthDate: '2018-03-01' }] }));
+      expect(r).toMatchObject({ eligible: true, gruppe: 1 });
+      expect(r.zusatzVorbehaltKey).toBeUndefined();
+    });
+    it('Selbständige: Stunden zählen nicht, unter 28 800 keine Zahl (§ 23 Abs. 1 lit. d unbekannt)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2000, stunden: '42', finanzen: { employmentType: 'selfEmployed' } }))).toMatchObject({ offen: 'bsHypothetisch' });
+    });
+  });
+
+  describe('⚠️ Fachprüfung W4: Zuschlag für alternative Modelle nach dem erfassten Modell', () => {
+    it('bsModell: Hausarzt/HMO/Telmed/Apotheke alternativ, Standard standard, Basic/Comfort/leer offen', () => {
+      expect(['hausarzt', 'hmo', 'telmed', 'apotheke'].map(bsModell)).toEqual(Array(4).fill('alternativ'));
+      expect(bsModell('Standard')).toBe('standard');
+      expect(bsModell('standard')).toBe('standard');
+      expect(bsModell('Basic')).toBe(null);
+      expect(bsModell('comfort')).toBe(null);
+      expect(bsModell('')).toBe(null);
+    });
+    it('Hausarzt: Hauptzahl aus T 4 (Gruppe 12: 148), eigener Hinweis', () => {
+      const r = calculateIPV(person({ versicherungen: { kkModel: 'hausarzt' } }));
+      expect(r).toMatchObject({ amount: 148, annual: 148 * 12, maxAnnual: 474 * 12, noteKey: 'ipv.bsAntragAvm', noteParams: { monat: 118, monatAlternativ: 148 } });
+    });
+    it('Standard: Hauptzahl aus T 3 (118), ohne Zuschlag-Satz', () => {
+      expect(calculateIPV(person({ versicherungen: { kkModel: 'Standard' } }))).toMatchObject({ amount: 118, noteKey: 'ipv.bsAntragStandard' });
+    });
+    it('Basic (mehrdeutig): wie bisher T 3 und beide Zahlen im Hinweis', () => {
+      expect(calculateIPV(person({ versicherungen: { kkModel: 'basic' } }))).toMatchObject({ amount: 118, noteKey: 'ipv.bsAntrag' });
+    });
+    it('💡 K1: auch der Betrag mit Zuschlag ist auf die Prämie gedeckelt', () => {
+      expect(calculateIPV(person({ kkPremium: 100 }))).toMatchObject({ noteParams: { monat: 100, monatAlternativ: 100 } });
+      expect(calculateIPV(person({ kkPremium: 100, versicherungen: { kkModel: 'hmo' } }))).toMatchObject({ amount: 100, annual: 1200 });
+    });
   });
 
   describe('Jahres-Riegel', () => {
