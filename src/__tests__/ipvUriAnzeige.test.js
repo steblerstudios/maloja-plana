@@ -84,10 +84,23 @@ describe('K31 IPV-Rechner, Kanton Uri', () => {
       }
       expect(texte.ipv.jahrUR, `${sprache}: Platzhalter`).toContain('{jahr}');
       expect(texte.ipv.vorbehaltUR, `${sprache}: Platzhalter`).toContain('{basisjahr}');
+      // Fachprüfung 28.09.2026 (W4): Antrag auf Neuberechnung bis 31. Dezember {jahr}; Quellenbesteuerte 30. April.
+      expect(texte.ipv.vorbehaltUR, `${sprache}: Frist Neuberechnung`).toMatch(/31.*\{jahr\}/);
+      expect(texte.ipv.urAutomatisch, `${sprache}: Frist Quellensteuer`).toMatch(/30.*\{jahr\}/);
+      // W1: die Alimente sind abgezogen — der Text darf nicht mehr sagen, sie seien nicht erfasst.
+      expect(texte.ipv.vorbehaltUR).not.toMatch(/Unterhaltsbeiträge ab, die hier nicht erfasst/);
+      // W3: eigene Gründe statt «alter».
+      for (const k of ['ausbildung', 'stichtagAlter']) expect(texte.ipv.offenGrund[k]?.length, `${sprache}: offenGrund.${k}`).toBeGreaterThan(60);
       for (const p of ['{jahr}', '{basisjahr}', '{vorjahr}']) expect(texte.ipv.urAutomatisch, `${sprache}: ${p}`).toContain(p);
     }
   // Fünf Sprachdateien laden dauert unter Last (parallele Läufe) gemessen gut 5 s — der Standard.
   }, 30000);
+
+  it('junge Erwachsene: der Grund «ausbildung» erscheint, nicht «alter» (W3)', () => {
+    const html = render({ ...profil(2000), basis: { ...profil(2000).basis, dateOfBirth: '2004-06-15' } });
+    expect(html).toContain('ipv.offenGrund.ausbildung');
+    expect(html).not.toContain('ipv.offenGrund.alter');
+  });
 
   it('Paare und Kinder ohne Alter: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(2000), basis: { ...profil(2000).basis, maritalStatus: 'married' } });

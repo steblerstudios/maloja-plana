@@ -70,6 +70,8 @@ describe('K31 UR: die Steuerungsgrössen 2026 stehen so in [2] und [3]', () => {
     expect(SAEULE_3A.voll.kantone).toMatch(/UR/);
     expect(SAEULE_3A.voll.beleg).toMatch(/RB 20\.2213/);
     expect(KEIN_PRAEMIENDECKEL.UR).toMatch(/Art\. 4 Abs\. 4/);
+    // Fachprüfung 28.09.2026 (K1): bundesrechtlich belegt — der Versicherer zahlt die Differenz aus.
+    expect(KEIN_PRAEMIENDECKEL.UR).toMatch(/KVV Art\. 106c Abs\. 5bis/);
   });
 });
 
@@ -228,11 +230,30 @@ describe('K31 calculateIPV für UR (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: -500 }))).toMatchObject({ belegt: false, amount: null, offen: 'einkommenNegativ' });
   });
 
-  it('Alter (gewählt, mangelsStichtag): Jahrgang 1999 rechnet, Jahrgang 2000 nicht', () => {
+  it('Alter (gewählt, mangelsStichtag): Jahrgang 1999 rechnet; Jahrgang 2000 mit eigenem Grund (W3)', () => {
     expect(calculateIPV(person({ dob: '1999-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2000-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
-    expect(calculateIPV(person({ dob: '2000-12-31' }))).toMatchObject({ belegt: false, offen: 'alter' });
+    expect(calculateIPV(person({ dob: '2000-01-01' }))).toMatchObject({ belegt: false, offen: 'stichtagAlter' });
+    expect(calculateIPV(person({ dob: '2000-12-31' }))).toMatchObject({ belegt: false, offen: 'stichtagAlter' });
     expect(calculateIPV(person({ dob: '' }))).toMatchObject({ belegt: false, offen: 'alter' });
+  });
+
+  it('junge Erwachsene 19–25: Grund «ausbildung», nicht «Geburtsdatum fehlt / Eltern» (Art. 4 Abs. 6: eigenständig)', () => {
+    for (const dob of ['2001-01-01', '2004-06-15', '2007-12-31']) {
+      expect(calculateIPV(person({ dob }))).toMatchObject({ belegt: false, amount: null, offen: 'ausbildung' });
+    }
+    // Unter 19 (minderjährig im Anspruchsjahr): weiter der allgemeine Grund.
+    expect(calculateIPV(person({ dob: '2008-03-01' }))).toMatchObject({ offen: 'alter' });
+  });
+
+  it('bezahlte Alimente: Art. 7 Abs. 2 lit. c zieht Unterhaltsbeiträge ab (W1) — 1 000/Monat = 1 020 Fr. im Jahr mehr', () => {
+    // 30 000 → 4 368 − 2 550 = 1 818 · mit 12 000 Alimente: 18 000 → 4 368 − 1 530 = 2 838
+    expect(calculateIPV(person({ monthlyIncome: 2500 })).annual).toBe(1818);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 1000 } })).annual).toBe(2838);
+    // Mehr Alimente als Einkommen: das Rechenblatt setzt die Nettoeinkünfte auf 0 ([3] R28) — volle Richtprämie.
+    expect(calculateIPV(person({ monthlyIncome: 800, finanzen: { alimentePaid: 1000 } })).annual).toBe(4368);
+    // Unlesbar oder negativ zählt als 0.
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 'abc' } })).annual).toBe(1818);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: -500 } })).annual).toBe(1818);
   });
 
   it('Kinder nach Jahrgang [5] (2008–2025); das eingetippte Alter zählt im Anspruchsjahr eins mehr', () => {
@@ -251,6 +272,15 @@ describe('K31 calculateIPV für UR (App-Angaben → Modell)', () => {
     expect(neugeboren.maxAnnual).toBe(4368);
     // Gegenprobe: im Dezember 2025 geboren zählt es.
     expect(calculateIPV(person({ monthlyIncome: 40000 / 12, children: [{ birthDate: '2025-12-01' }] })).annual).toBe(2072);
+  });
+
+  it('Neugeborenes und Vermögen (K6): es erhöht auch den Vermögens-Sozialabzug nicht', () => {
+    // 137 500 Vermögen: ohne Kind 31 700 steuerbar (→ + 4 755 PV), mit gezähltem Kind 0.
+    const finanzen = { savingsAccount: 137500 };
+    const ohne = calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen }));
+    const neu = calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen, children: [{ birthDate: '2026-02-01' }] }));
+    expect(neu.annual).toBe(ohne.annual);
+    expect(ohne.annual).toBeLessThan(2668);
   });
 
   it('Paare, Konkubinat und mehrere Erwachsene: Orientierung mit Grund', () => {
