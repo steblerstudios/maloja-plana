@@ -31,6 +31,7 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  AR: { laden: () => import('./ipvAppenzellAusserrhoden.js'), fn: 'ipvAppenzellAusserrhoden', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -122,7 +123,12 @@ export const CANTONAL_IPV = {
   BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' }, beleg: null },
   SH: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyAhvBranchShort', beleg: null },
-  AR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' }, beleg: null },
+  // AR (K31): eigenes Modell in config/ipvAppenzellAusserrhoden.js (Richtprämie minus 46 % über dem
+  // allgemeinen Lebensbedarf, harte Obergrenzen). Eine Prämienregion. Die Obergrenze des massgebenden
+  // Einkommens ist als Zahl publiziert (Alleinstehende 35'000, Merkblatt SOVAR 2026); je Haushalt
+  // setzt sie das Modul.
+  AR: { maxIncome: 35000, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' },
+    beleg: { quelle: 'EG zum KVG AR (bGS 833.14) · V zum KVG (bGS 833.141) · SOVAR Merkblatt 2026 — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   AI: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
   // SG (K31): eigenes Modell in config/ipvStGallen.js (Referenzprämie minus Belastungsgrenze,
   // deren Satz MIT dem Einkommen steigt). Der Kanton publiziert keine Einkommensgrenze als

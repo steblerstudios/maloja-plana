@@ -309,6 +309,23 @@ export const SAEULE_3A = Object.freeze({
     schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     nichtAufgerechnet: () => 0,
   }),
+
+  // AR (K31, 28.09.2026): wie AG hängt die Zurechnung an der Säule-2-Zugehörigkeit — aber mit einem
+  // festen FREIBETRAG statt einer Schwelle in Prozent, darum eine eigene Regel und nicht
+  // `schwelleOhneSaeule2` umgebogen. Wortlaut (bGS 833.141 Art. 5 Abs. 1 lit. a): «der Betrag an die
+  // Säule 3a von Personen, die keiner Vorsorgeeinrichtung nach Art. 80 [BVG] angehören, der
+  // 10 000 Franken übersteigt». Für Personen MIT Vorsorgeeinrichtung gilt `voll` (bGS 833.14
+  // Art. 19 Abs. 1 lit. a). Diese Regel beschreibt nur den Fall OHNE.
+  // 🛑 Wie in AG weiss die App nicht sicher, welcher Fall vorliegt. ipvAppenzellAusserrhoden.js
+  // rechnet darum beide Fälle und zeigt keine Zahl, wenn sie verschieden ausfallen — ausser ein
+  // BVG-Beitrag ist erfasst, dann ist die Zugehörigkeit positiv belegt.
+  freibetragOhneSaeule2: Object.freeze({
+    name: 'freibetragOhneSaeule2',
+    kantone: 'AR',
+    beleg: 'Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a V zum KVG (bGS 833.141)',
+    freibetrag: 10000,
+    nichtAufgerechnet: (f) => Math.min(betrag3a(f), 10000),
+  }),
 });
 
 // 🛑 SÄULE 3A — WARUM HIER NICHTS MEHR AUFGERECHNET WIRD (Befund Fachprüfung 20.09.2026)

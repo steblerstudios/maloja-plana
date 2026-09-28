@@ -89,8 +89,8 @@
 //     ERHÖHEN. Die amtlichen Abzüge vor dem Reineinkommen (Berufsauslagen, Versicherungsabzug)
 //     fehlen umgekehrt — dann ist das Einkommen hier zu hoch.
 import {
-  vermoegenSumme, rohesEinkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -124,9 +124,6 @@ export const IPV_AR = {
   kinderabzugSteuer: { bis4: 5300, bis15: 7400, ab15: 11600 },
   // GEWÄHLT: das Steuerjahr der «letzten rechtskräftigen Steuerveranlagung» (siehe Kopf).
   steuerjahr: 2024,
-  // Art. 5 Abs. 1 lit. a [2]: 3a von Personen ohne Vorsorgeeinrichtung nur, soweit sie «10 000
-  // Franken übersteigt».
-  saeule3aFreiOhneBV: 10000,
   // Art. 13 Abs. 1 [2]: «Beträge unter 20 Franken werden nicht ausbezahlt.»
   mindestbetrag: 20,
   // Art. 10 [2]; [3]: «vom 1. Januar 2026 bis 31. März 2026».
@@ -226,12 +223,12 @@ export function ipvAppenzellAusserrhoden(data, hh, ipvData, youngAdultsCount, or
   const roh = rohesEinkommenJahr(f);
   if (!(roh >= 0)) return orientierung('einkommenNegativ');
   // Säule 3a (Art. 19 Abs. 1 lit. a/b [1], Art. 5 Abs. 1 lit. a [2]). Das Nettoeinkommen der App
-  // trägt die Einzahlung schon; mit Vorsorgeeinrichtung bleibt sie ganz drin, ohne wird der Teil bis
-  // 10'000 wieder abgezogen.
+  // trägt die Einzahlung schon; mit Vorsorgeeinrichtung bleibt sie ganz drin (`voll`), ohne wird
+  // der Teil bis 10'000 wieder abgezogen (`freibetragOhneSaeule2`, config/kantonsModell.js).
   const saeule3a = Math.max(0, Number(f.pension3a) || 0);
   const bvBekannt = Number(v.bvgContribution) > 0;
-  const massgebend = (mitBV) => roh - kinderabzug - (mitBV ? 0 : Math.min(saeule3a, IPV_AR.saeule3aFreiOhneBV))
-    + IPV_AR.vermoegenAnteil * steuerbaresVermoegen;
+  const massgebend = (mitBV) => einkommenJahr(f, mitBV ? SAEULE_3A.voll : SAEULE_3A.freibetragOhneSaeule2)
+    - kinderabzug + IPV_AR.vermoegenAnteil * steuerbaresVermoegen;
   const r = ipvAppenzellAusserrhodenRechnen({ me: massgebend(true), kinderZahl });
   if (!bvBekannt && saeule3a > 0) {
     const ohneBV = ipvAppenzellAusserrhodenRechnen({ me: massgebend(false), kinderZahl });
