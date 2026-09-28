@@ -55,8 +55,14 @@ describe('K31 IPV-Rechner, Kanton Zug', () => {
     expect(html).not.toContain('premium.notEligible');
   });
 
-  it('deutlich darüber: «kein Anspruch» mit dem Zuger Satz', () => {
+  it('🛑 Re-Review B2: 6 000 im Monat noch kein «Nicht berechtigt» (Berufskosten-Pauschale in der Untergrenze)', () => {
     const html = render(profil(6000));
+    expect(html).toContain('ipv.offenGrund.zgNaeherung');
+    expect(html).not.toContain('premium.notEligible');
+  });
+
+  it('deutlich darüber: «kein Anspruch» mit dem Zuger Satz', () => {
+    const html = render(profil(6500));
     expect(html).toContain('ipv.zgKeinAnspruch');
     expect(html).not.toContain('ipv.incomeAboveLimit');
   });
