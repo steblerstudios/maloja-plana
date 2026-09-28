@@ -47,6 +47,20 @@ describe('K31 VD: Eckpunkte der drei gebauten Kategorien [4] art. 21 al. 1', () 
     expect(vdSubsideMonat('e', 39999.99)).toBeCloseTo(30, 4);
   });
 
+  // Formelbild gelesen (28.09.2026, zwei Sitzungen unabhängig): der Exponent steht AUSSEN am
+  // Klammerausdruck, das Quadrat innen am Bruch. Genau in der Mitte zwischen C1 und A1 ist der
+  // Bruch ½, das Quadrat ¼, die Klammer ¾, und ¾^2.5 = 0.4871… — ein Wert, den keine andere
+  // Stellung des Exponenten trifft ((¾)² = 0.5625 · 1 − ½^5 = 0.96875). Die Eckpunkte allein
+  // können das nicht unterscheiden; dieser Test pinnt den Verlauf im Innern der Kurve.
+  it('a) die Stellung des Exponenten: bei RD = 28 500 gilt 30 + 301 × (¾)^2.5 = 176.62', () => {
+    expect(vdSubsideMonat('e', 28500)).toBeCloseTo(30 + 301 * Math.pow(0.75, 2.5), 9);
+    expect(vdSubsideMonat('e', 28500)).toBeCloseTo(176.62, 1);
+  });
+
+  it('b) Formel 2 ist mit R2 = 1 linear: bei halbem C2 liegt der Betrag genau in der Mitte von D2 und F2', () => {
+    expect(vdSubsideMonat('ef', 12100)).toBeCloseTo(318, 9);
+  });
+
   it('b) 26+ mit Kind(ern): 336 bei Einkommen 0, 300 bei C2, 20 bei A2, null über B2', () => {
     expect(vdSubsideMonat('ef', 0)).toBe(336);
     expect(vdSubsideMonat('ef', 24200)).toBeCloseTo(300, 9);
