@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { LOHN_REFERENZ, mindestlohnBoden, lohnBandState, SCALE_MIN, SCALE_MAX } from '../lohnEinordnung.js';
 import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../branchenLohn.js';
 import { CHAPTER_KEYS, FIELD_KEYS } from '../../config/constants.js';
+import { WOCHENSTUNDEN_OBERGRENZE } from '../lohnCheck.js';
+import { DEMO_DATA } from '../../config/demoData.js';
 
 describe('lohnEinordnung', () => {
   // Alle drei Werte stehen wörtlich in der BFS-Medienmitteilung vom 25.11.2025
@@ -237,6 +239,31 @@ describe('lohnEinordnung', () => {
       expect(s.basisKnown).toBe(false);
       const zielKapitelKey = !s.basisKnown ? 'finanzen' : 'ausbildung';
       expect(zielKapitelKey).toBe('finanzen');
+    });
+  });
+
+  // Die Beispielperson trug seit dem 15.06. «80» (gemeint: 80 % Pensum) — das Barometer
+  // halbierte ihren Lohn und setzte ihn unter den Median.
+  describe('unplausible Wochenstunden', () => {
+    it('80 Std. gelten als unbekannt: keine Hochrechnung, kein Urteil', () => {
+      const s = lohnBandState({ income: 6800, canton: 'ZH', hoursPerWeek: '80', incomeType: 'brutto' });
+      expect(s.stundenUnplausibel).toBe(true);
+      expect(s.hoursKnown).toBe(false);
+      expect(s.incomeFTE).toBe(6800);
+      expect(s.rel).toBeNull();
+    });
+    it('auch kein Mindestlohn-Alarm auf halbierten Stunden', () => {
+      const s = lohnBandState({ income: 4000, canton: 'BS', hoursPerWeek: 80, incomeType: 'brutto', dreizehnter: 'no' });
+      expect(s.mlBreached).toBe(false);
+    });
+    it('Gegenprobe: 45 Std. bleiben bekannt und werden auf 40 umgerechnet', () => {
+      const s = lohnBandState({ income: 6750, canton: 'ZH', hoursPerWeek: 45, incomeType: 'brutto' });
+      expect(s.stundenUnplausibel).toBe(false);
+      expect(s.hoursKnown).toBe(true);
+      expect(s.incomeFTE).toBe(6000);
+    });
+    it('die Beispieldaten tragen plausible Wochenstunden', () => {
+      expect(Number(DEMO_DATA.ausbildung.workHoursPerWeek)).toBeLessThanOrEqual(WOCHENSTUNDEN_OBERGRENZE);
     });
   });
 });

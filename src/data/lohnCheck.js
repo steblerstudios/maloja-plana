@@ -129,6 +129,17 @@ export function stundenAufMonat(stundenProWoche) {
   return Math.round((w * 52 / 12) * 10) / 10;
 }
 
+// Plausibilitätsgrenze für das freie Feld «Arbeitsstunden pro Woche». KEIN Gesetzeswert:
+// sie fängt den häufigen Eintrag eines Pensums in Prozent («80» für 80 %) ab. Mit 80 Std.
+// gerechnet halbiert sich der Stundenlohn — ein korrekt bezahlter Lohn erschiene «unter
+// Mindestlohn», samt Brief an den Arbeitgeber. Darüber rechnet niemand mit den Stunden;
+// die Oberfläche fragt nach. (Beispieldaten trugen seit 15.06.2026 genau diese «80».)
+export const WOCHENSTUNDEN_OBERGRENZE = 60;
+
+export function wochenstundenUnplausibel(stundenProWoche) {
+  return (Number(String(stundenProWoche ?? '').replace(',', '.')) || 0) > WOCHENSTUNDEN_OBERGRENZE;
+}
+
 export function stundenAufJahr(stundenProWoche) {
   const w = Number(stundenProWoche) || 0;
   return Math.round(w * 52);
@@ -195,6 +206,8 @@ function dreizehnterAngegeben(v) {
 
 export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkommensart, dreizehnter) {
   const lohn = Number(monatslohnChf) || 0;
+  // Vor jeder Rechnung: ein Pensum in Prozent im Stundenfeld ergäbe einen Falsch-Alarm.
+  if (wochenstundenUnplausibel(stundenProWoche)) return { status: 'stundenUnplausibel' };
   const stundenMonat = stundenAufMonat(stundenProWoche);
   if (lohn <= 0 || stundenMonat <= 0) return { status: 'unvollstaendig' };
 

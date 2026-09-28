@@ -7,6 +7,8 @@ import {
   reduzierterBoden13,
   alleMindestlohnKantone,
   LOHNCHECK_DATA_VERSION,
+  WOCHENSTUNDEN_OBERGRENZE,
+  wochenstundenUnplausibel,
 } from '../lohnCheck.js';
 
 describe('lohnCheck', () => {
@@ -168,6 +170,26 @@ describe('lohnCheck', () => {
     it('über dem vollen Boden ist der 13. irrelevant → ok', () => {
       expect(pruefeStundenlohn(4500, 40, 'GE', 'brutto', 'yes').status).toBe('ok');
       expect(pruefeStundenlohn(4500, 40, 'GE', 'brutto').status).toBe('ok');
+    });
+  });
+
+  // «80» im Stundenfeld heisst meist «80 % Pensum». Mit 80 Std. gerechnet halbiert sich der
+  // Stundenlohn — und ein korrekt bezahlter Lohn erschiene «unter Mindestlohn», mit Brief an
+  // den Arbeitgeber. Über der Grenze rechnet die Prüfung darum gar nicht.
+  describe('unplausible Wochenstunden', () => {
+    it('BS, CHF 4000 brutto, «80» eingetragen → kein Mindestlohn-Befund', () => {
+      const r = pruefeStundenlohn(4000, 80, 'BS', 'brutto', 'no');
+      expect(r.status).toBe('stundenUnplausibel');
+      expect(r.lohnStunde).toBeUndefined();
+    });
+    it('die Grenze selbst gilt noch als plausibel, darüber nicht', () => {
+      expect(wochenstundenUnplausibel(WOCHENSTUNDEN_OBERGRENZE)).toBe(false);
+      expect(wochenstundenUnplausibel(WOCHENSTUNDEN_OBERGRENZE + 1)).toBe(true);
+      expect(wochenstundenUnplausibel('80')).toBe(true);
+      expect(wochenstundenUnplausibel('')).toBe(false);
+    });
+    it('Gegenprobe: 42 Std. rechnen weiter wie bisher', () => {
+      expect(pruefeStundenlohn(4000, 42, 'BS', 'brutto', 'no').status).not.toBe('stundenUnplausibel');
     });
   });
 });
