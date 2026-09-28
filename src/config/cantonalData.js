@@ -31,6 +31,8 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  // JU: keine Prämienregion — und das Modul zeigt bewusst keine Zahl (steuerbares Einkommen fehlt).
+  JU: { laden: () => import('./ipvJura.js'), fn: 'ipvJura', brauchtPLZ: false },
   UR: { laden: () => import('./ipvUri.js'), fn: 'ipvUri', brauchtPLZ: false },
   NE: { laden: () => import('./ipvNeuchatel.js'), fn: 'ipvNeuchatel', brauchtPLZ: false },
   // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
@@ -41,6 +43,7 @@ export const IPV_MODULE = {
   // TI kennt Prämienregionen, rechnet aber mit einem kantonsweiten PMR (LCAMal Art. 28 Abs. 2).
   TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
   OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
+  SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
   AI: { laden: () => import('./ipvAppenzellInnerrhoden.js'), fn: 'ipvAppenzellInnerrhoden', brauchtPLZ: false },
 };
 const _module = {};
@@ -138,7 +141,12 @@ export const CANTONAL_IPV = {
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
-  SO: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
+  // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
+  // nur «kein Anspruch», wo er sicher ist. Der Grenzwert 74'000 ist amtlich, aber keine Grenze, bis
+  // zu der ein Betrag bestünde (für Alleinstehende endet er viel früher) — darum maxIncome null.
+  SO: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'Parameter IPV 2026 DDI SO (27.01.2026) · SV (BGS 831.2) · SG (BGS 831.1) · AKSO — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' }, beleg: null },
   SH: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyAhvBranchShort', beleg: null },
@@ -190,7 +198,11 @@ export const CANTONAL_IPV = {
   // Antragsfall (Rechtsprüfung 28.09.2026: vorher stand hier `ipv.noteAutoSam` ohne Einschränkung).
   GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.geWegAutomatisch',
     beleg: { quelle: 'LaLAMal (rsGE J 3 05) Art. 21/22 · RaLAMal (rsGE J 3 05.01) Art. 9–10A · LRDU (rsGE J 4 06) Art. 8 · Barème subsides 2026, Service de l\'assurance-maladie (SAM) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
+  // JU (K31): Modell in config/ipvJura.js (Stufentabelle in 1'000er-Schritten). Massgebend ist das
+  // steuerbare Einkommen der Veranlagung 2024, das die App nicht kennt — darum zeigt JU bewusst
+  // KEINE Zahl, sondern die Orientierung mit Grund. Weg: Prüfung von Amtes wegen durch die ECAS.
+  JU: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'Arrêté RPI 2026 (RSJU 832.115.1) · Ordonnance RSJU 832.115 · Caisse de compensation JU (ECAS) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
 };
 
 // Mietzins-Limite (bis zu welcher Miete die Sozialhilfe die Wohnkosten anrechnet): die App kennt

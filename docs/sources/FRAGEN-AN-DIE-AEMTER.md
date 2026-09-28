@@ -238,6 +238,7 @@ den Kinderanteil begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind
 **Stand:** LU ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 sind **nicht** eingebaut —
 die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU keinen Betrag mehr.
 
+
 ---
 
 ## 8 · Sozialversicherungsstelle Uri — Deckel, Rundung, Aufteilung und das Alter
@@ -371,6 +372,30 @@ Kategorien A–C wie für Erwachsene?
 
 ---
 
+## 13 · Caisse de compensation du canton du Jura (ECAS) — Vermögensgrenze genau 150'000, Eingang der Frist
+
+*Aufgenommen 28.09.2026 beim Einbau von JU (Fachprüfung #483, 💡 9 und ⚠️ 3d). Entwurf — **nicht gesendet**.
+Nummer 13 (Integration 28.09.2026; § 12 = FR auf dessen Zweig).*
+
+**Worum es geht:** Die App zeigt für den Jura bewusst keine Zahl (massgebend ist das steuerbare Einkommen,
+das sie nicht kennt). Zwei Punkte betreffen aber die Texte und den Tag, an dem sie rechnet:
+
+**Question 1 — fortune de 150'000 francs exactement:** L'ordonnance (RSJU 832.115, art. 7a al. 1) exclut
+les assurés dont la fortune déterminante est «supérieure à 150 000 francs»; la page «RPI 2026 – seuil de
+fortune» de la Caisse indique que la fortune «doit être inférieure à 150 000 francs». Une fortune
+(chiffre 740) de 150'000 francs exactement donne-t-elle droit à la réduction ? (Die App folgt der
+Ordonnance: genau 150'000 schliesst nicht aus.)
+
+**Question 2 — délai du 31 décembre:** La page «Informations générales 2026» écrit que la requête
+«devra nous parvenir avant le 31 décembre 2026», l'ordonnance (art. 22 al. 8) «au plus tard jusqu'au
+31 décembre». Une requête reçue le 31 décembre est-elle encore dans le délai ? (Die App sagt vorsichtig:
+«vor dem 31. Dezember eingetroffen».)
+
+**Stand:** JU ist für 2026 gebaut und zeigt bewusst keine Zahl (Entwurfs-PR #483, K31). Ab 01.01.2027 gilt
+das Arrêté 2026 nicht mehr.
+
+---
+
 ## 14 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
 
 *Aufgenommen 28.09.2026 beim Einbau von TI. Entwurf — **nicht gesendet**.*
@@ -487,6 +512,37 @@ App dort keinen Betrag, wo es darauf ankommt.
 
 **Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
 zeigt die App für OW keinen Betrag.
+
+---
+
+## 19 · Ausgleichskasse Solothurn / Departement des Innern — die lineare Eigenanteil-Skala
+
+*Aufgenommen 28.09.2026 beim Einbau von SO. Entwurf — **nicht gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, TG 11 … SZ 18, SO 19, ZG 20.)*
+
+**Worum es geht:** Die Parameter-Verfügung vom 27.01.2026 nennt «Eigenanteile in % des massgebenden
+Einkommens: 10% bis 16%», § 70 Abs. 1 SV sagt, sie würden «abhängig von der Höhe des massgebenden
+Einkommens … linear festgelegt». Richtprämien (monatlich, bestätigt durch die Botschaft SGB 0226/2025),
+Grenzwert 74'000, Vermögensanteil 50 % und Auszahlungslimite 240 sind klar. Ohne die Eckpunkte der
+Skala zeigt die App für Solothurn **keinen Betrag** — bei 30'000 massgebendem Einkommen läge der
+Eigenanteil je nach Lesart zwischen 3'000 und 4'800 Franken.
+
+**Frage 1 — Eckpunkte:** Gilt 10 % bei einem massgebenden Einkommen von 0 und 16 % beim Grenzwert
+74'000 — oder andere Eckpunkte? Wird der Satz stufenlos oder in Schritten angepasst?
+
+**Frage 2 — Rundung:** Die Richtprämien 422 / 305 / 98 entsprechen 70 % der Durchschnittsprämien,
+**aufgerundet** auf Franken. Ist das die Regel? Wird der Anspruch selbst gerundet (Franken, Monat)?
+
+**Frage 3 — Auszahlungslimite bei Familien:** «unter 240 Franken pro Anspruchsjahr und erwachsener
+anspruchsberechtigter Person» — gilt das auf dem Gesamtanspruch der Familie oder je Person?
+
+**Frage 4 — Beispiel:** Gibt es ein amtliches Berechnungsbeispiel für 2026?
+
+**Frage 5 — Vermögen (Ziffer 990):** Ist das «satzbestimmende Vermögen» (Ziffer 990), das der Online-Rechner
+abfragt, das Vermögen **nach** den Sozialabzügen des § 71 StG (60'000 / 100'000 / +20'000 je Kind)? SG § 89
+Abs. 2 lit. a spricht vom «steuerbaren Vermögen»; die App rechnet so (Fachprüfung 28.09.2026).
+
+**Stand:** SO ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag, nur «kein Anspruch»,
+wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rechnet die App.
 
 ---
 
