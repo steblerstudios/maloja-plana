@@ -1,5 +1,9 @@
 # Datenschutzerklärung — Maloja Plana
 
+> **Nicht die verbindliche Fassung.** Verbindlich sind die veröffentlichten Texte: `malojaplana.ch/rechtliches/`
+> für Website und Erklärseiten, «Datenschutz & Rechtliches» in der App (`src/i18n/*.js`, `legal.privacy`) für
+> die Anwendung. Diese Datei ist Arbeitsfassung und Herkunftsnachweis (festgehalten 28.09.2026, Schutz-Durchgang).
+
 **Gemäss neuem Datenschutzgesetz (nDSG), in Kraft seit 1. September 2023**
 **Stand: 24.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
 

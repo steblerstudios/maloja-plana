@@ -56,6 +56,8 @@ export function vermoegenSumme(f) {
 //                        SO: § 69 Abs. 1 lit. e SV (BGS 831.2) — «maximal bis zur Höhe des
 //                            zulässigen Höchstabzuges gemäss Art. 7 Absatz 1 Buchstabe a … BVV 3».
 //                            Dort steht ausdrücklich lit. a, also die Lesart (b) unten (28.09.2026).
+//   abgezogen            NW — gar nicht aufgerechnet: gemessen wird am Reineinkommen, in dem sie
+//                        abgezogen ist. Art. 12 Abs. 2 kKVG (NG 742.1) ⇒ Abzug = die ganze Einzahlung.
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
@@ -328,6 +330,32 @@ export const SAEULE_3A = Object.freeze({
     // Die Rechnung steht bereit, damit sie beim Entscheid nicht neu erfunden wird.
     schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     nichtAufgerechnet: () => 0,
+  }),
+
+  // ⟨NW, 28.09.2026⟩ Die vierte Regel — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
+  // (Code 330), und dort ist die 3a abgezogen (StG NW Art. 35 Abs. 1 Ziff. 5, NG 521.1). Rechnet
+  // der Kanton sie wieder auf, stünde sie unter den Aufrechnungen von Art. 12 Abs. 2 kKVG
+  // (NG 742.1) — dort stehen BGSA-Lohn, BVG-Einkauf, Teileinkünfte, Liegenschaftsunterhalt und
+  // Reinvermögen, die 3a nicht. Also bleibt sie ABGEZOGEN, und die App muss die ganze Einzahlung
+  // aus ihrem Nettoeinkommen herausnehmen.
+  // ⚠️ Kein Deckel auf das Bundesmaximum: eine Einzahlung darüber wäre gesetzwidrig und im
+  // Reineinkommen nicht abgezogen. Der Betrag ist der des laufenden Jahres (siehe `betrag3a`);
+  // zwischen den Jahresmaxima (2024: 7'056, 2026: 7'258) zieht die App bis 202 Franken zu viel ab
+  // — Wirkung höchstens 20 Franken im Jahr, auf der zu hohen Seite.
+  abgezogen: Object.freeze({
+    name: 'abgezogen',
+    kantone: 'NW',
+    beleg: 'NW Art. 12 Abs. 2 kKVG (NG 742.1) — Reineinkommen ohne 3a-Aufrechnung; StG NW Art. 35 Abs. 1 Ziff. 5 (NG 521.1)',
+    nichtAufgerechnet: (f) => betrag3a(f),
+    // Wie bei `bisBundesMaximum`, nur ab dem ersten Franken: eine Einzahlung, die grösser ist als
+    // das ganze erfasste Einkommen, stammt nicht daraus (oder es steht der Kontostand im Feld) —
+    // der Abzug zöge das Einkommen ins Negative und die App zeigte den Höchstbetrag. Ebenso ein
+    // Wert, der über die grösste Summe eines einzelnen Jahres hinausreicht.
+    widerlegt: (f, jahresEinkommen, jahre) => {
+      if (!(betrag3a(f) > 0)) return false;
+      const ueberEinkommen = Number.isFinite(jahresEinkommen) && betrag3a(f) > Math.max(0, jahresEinkommen);
+      return ueberEinkommen || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
+    },
   }),
 });
 
