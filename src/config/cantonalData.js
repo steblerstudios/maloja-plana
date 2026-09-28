@@ -48,6 +48,7 @@ export const IPV_MODULE = {
   SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
   SH: { laden: () => import('./ipvSchaffhausen.js'), fn: 'ipvSchaffhausen' },
   AR: { laden: () => import('./ipvAppenzellAusserrhoden.js'), fn: 'ipvAppenzellAusserrhoden', brauchtPLZ: false },
+  AI: { laden: () => import('./ipvAppenzellInnerrhoden.js'), fn: 'ipvAppenzellInnerrhoden', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -172,7 +173,11 @@ export const CANTONAL_IPV = {
   // setzt sie das Modul. Antrag bei der AHV-Zweigstelle der Wohngemeinde (V zum KVG Art. 10 Abs. 1).
   AR: { maxIncome: 35000, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAhvBranch',
     beleg: { quelle: 'EG zum KVG AR (bGS 833.14) · V zum KVG (bGS 833.141) · SOVAR Merkblatt 2026 — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  AI: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // AI (K31): eigenes Modell in config/ipvAppenzellInnerrhoden.js (Richtprämie minus gestufter
+  // Selbstbehalt 7–12 %). Eine Prämienregion, keine publizierte Einkommensgrenze. Kein Antrag: das
+  // Gesundheitsamt ermittelt von Amtes wegen (StKB IPV Art. 10), darum noteAutoTaxData statt «Sozialamt».
+  AI: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'StKB IPV AI (GS 832.501) · Gesundheitsamt AI Merkblatt 2026 — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // SG (K31): eigenes Modell in config/ipvStGallen.js (Referenzprämie minus Belastungsgrenze,
   // deren Satz MIT dem Einkommen steigt). Der Kanton publiziert keine Einkommensgrenze als
   // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.

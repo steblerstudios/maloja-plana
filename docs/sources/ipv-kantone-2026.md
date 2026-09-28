@@ -46,7 +46,7 @@ sind. Dieses Dokument ändert keinen Code.
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | gebaut (PR #471, an der Quelle nachgeprüft 28.09.2026) | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
 | AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | gebaut (PR #480, an der Quelle nachgeprüft 28.09.2026) | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
-| AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | abbildbar | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
+| AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | gebaut (PR #485, an der Quelle nachgeprüft 28.09.2026) | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
 | GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | gebaut (PR #467; Kinder bis 80'000 ohne Zahl, Lesart offen) | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
 | AG | Aargau | Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie | abbildbar | <https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes> |
@@ -2326,12 +2326,88 @@ Quellensteuerpflichtige ohne ordentliche Veranlagung: «Bruttoeinkommen reduzier
 Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben; belegter Vergleichswert: Einzelperson erhält bei MGE 0 die volle Richtprämie Fr. 4'640 und nicht linear abnehmend, sondern 4'640 − gestufter Selbstbehalt; eine feste Einkommensgrenze gibt es in AI nicht (Nullpunkt Einzelperson rechnerisch ca. Fr. 55'000–56'000 MGE). Der lineare App-Abbau bildet die Stufenlogik nicht ab.
 
 ### Offen / nicht gefunden
-- Standeskommissionsbeschluss GS 832.501 (Rechtsgrundlage, Art. 5 Abs. 5 StKB) nicht selbst geöffnet; Werte stammen aus dem amtlichen Merkblatt, das auf den StKB verweist.
+- ~~Standeskommissionsbeschluss GS 832.501 (Rechtsgrundlage, Art. 5 Abs. 5 StKB) nicht selbst geöffnet; Werte stammen aus dem amtlichen Merkblatt, das auf den StKB verweist.~~ ⟨erledigt 28.09.2026, siehe Nachprüfung⟩
 - Ob die 0,125-%-Stufe auf angefangene oder volle Fr. 1'000 wirkt, ist im Merkblatt nur über die Beispiele (60'000 → 15 Stufen, 75'000 → 30 Stufen) erkennbar; für Zwischenwerte (z. B. 60'500) nicht wörtlich geregelt.
 - Keine separate Vermögensgrenze publiziert (nur 10 %-Anrechnung).
 
 ### Quellen
 1. Merkblatt zur individuellen Prämienverbilligung (IPV) 2026 (AI 511.2-34.5-1358131), Kanton Appenzell Innerrhoden, Gesundheitsamt, Stand PDF 09.12.2025. https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf — abgerufen 16.09.2026 (HTTP 200, per curl + pdftotext gelesen)
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App — `src/config/ipvAppenzellInnerrhoden.js`)
+
+**An der Quelle nachgeprüft 28.09.2026.** Messweg: API-Route `ai.clex.ch/api/de/texts_of_law/<nr>` und
+`…/api/de/versions/<id>/pdf_file(_with_annexes)`, Gegenprobe `texts_of_law/832.599` → 404,
+`versions/99999999` → 404; Merkblatt über `curl` + `pdftotext` (gleiche Adresse wie oben, HTTP 200,
+PDF 09.12.2025), ~~Gegenprobe «Merkblatt IPV 2099» → 404.~~ ⟨korrigiert 28.09.2026 nach der
+Fachprüfung #485: die Gegenprobe, die 404 lieferte, hatte den **Objektpfad** geändert
+(`…/merkblatt-ipv-2099/@@download/file/…`). Nur den **Dateinamen** zu ändern misst nichts — der Server
+ignoriert ihn und liefert HTTP 200 mit derselben Datei (in der Prüfung byte-identisch gemessen). Gültige
+Gegenprobe: Objektpfad `merkblatt-ipv-2099` → 404. Dazu: der Link zeigt auf einen Ablageort mit dem Namen
+`merkblatt-ipv-2024`, der offenbar jährlich überschrieben wird — nach der nächsten Aktualisierung liefert er
+still das Merkblatt 2027. Massgebend für 2026 ist AI 511.2-34.5-1358131, PDF vom 09.12.2025.⟩
+
+**Fassungen:**
+- StKB IPV GS 832.501: «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 02.12.2025)»,
+  Version 2395, «Stand 1. Januar 2026»; keine künftige Version (2027 nicht publiziert).
+- Steuergesetz GS 640.000: «Aktuelle Version in Kraft seit: 01.01.2024 (Beschlussdatum: 30.04.2023)», Version 2302.
+
+**Wortlaut StKB (neu gelesen, die Zahlen oben bestätigt):**
+> «Die anrechenbaren Prämien werden verbilligt, soweit sie den von der Standeskommission im Anhang
+> jährlich festzulegenden Prozentsatz der Summe übersteigen, die sich aus dem massgebenden
+> Gesamteinkommen ergibt.» · Abs. 1bis: «Die Prämienverbilligung wird höchstens in der Höhe der
+> effektiven Prämienlast gewährt.» · Abs. 2: «… die rechtskräftige definitive Steuerveranlagung im
+> Kanton Appenzell I.Rh. des Vorvorjahres zum Anspruchsjahr …» · Abs. 5: Anhebung Kinder 80 % /
+> junge Erwachsene in Ausbildung 50 % «sofern das massgebende Gesamteinkommen Fr. 75'000.-- nicht
+> übersteigt» · Abs. 6: «ab einem Anspruch oder Gesamtanspruch von Fr. 100.-- pro Jahr» — Art. 5
+
+> «Bezüglich der familiären und wirtschaftlichen Verhältnisse und des Wohnsitzes gilt als Stichtag der
+> 1. Januar …» (Abs. 4) · «Der Gesamtanspruch … wird im Verhältnis der Richtprämien auf die
+> berechtigten Personen aufgeteilt.» (Abs. 5) — Art. 3
+
+> «Bei Personen mit einer Änderung des Zivilstandes im Vorjahr und bei Erwachsenen, deren
+> massgebendes Gesamteinkommen im Vorvorjahr des Anspruchsjahres unter Fr. 12'000.-- lag, wird … auf
+> die rechtskräftige definitive Steuerveranlagung für das Vorjahr gewartet …» — Art. 6 Abs. 5
+
+> Anhang A1-1: «1. Die Richtprämien betragen für das Jahr 2026: a) für Kinder (Jahrgang 2008 und
+> jünger) Fr. 1'034.--; b) für junge Erwachsene (Jahrgang 2001 bis 2007) Fr. 3'446.--; c) für
+> Erwachsene (Jahrgang 2000 und älter) Fr. 4'640.--. 2. … a) 7% bei einem massgebenden
+> Gesamteinkommen unter Fr. 45'000.--; b) 12% bei … Fr. 85'000.-- und darüber; c) dazwischen steigt
+> der Selbstbehalt schrittweise um 0.125% pro Fr. 1'000.-- von 7% auf 12%.»
+> ⟨Anmerkung: der StKB sagt «unter 45'000», das Merkblatt «bis und mit 45'000» — bei genau 45'000
+> ergeben beide 7 %, keine Stufe.⟩
+
+**Steuergesetz:** Art. 37 Abs. 1 lit. a «als Kinderabzug Fr. 6'000.-- für das erste und zweite und
+Fr. 8'000.-- für jedes weitere … Kind» · Art. 38 Abs. 5 «Das steuerbare Gesamteinkommen wird auf die
+nächsten hundert Franken abgerundet.» · Art. 45 Abs. 1 «a) für jeden Steuerpflichtigen Fr. 50'000.--;
+b) für jedes minderjährige … Kind … zusätzlich Fr. 20'000.--», Abs. 3 auf 1'000 abgerundet.
+
+**Prüfstein — alle vier Beispiele des Merkblatts (Ziff. 3.4) im Test Zahl für Zahl:** 20'000 → 1'400 /
+**3'240** · Eltern + 2 Kinder, 60'000 → 11'348 − 5'325 = 6'023 + 556 = **6'579** · + junger Erwachsener
+in Ausbildung, 75'000 → 14'794 − 8'062 = 6'732 + 867 = **7'599** · junger Erwachsener allein, 25'000 →
+1'696 + 27 = **1'723**. Daraus abgeleitet (nicht zitiert): Selbstbehalt auf Franken **abgerundet**
+(8'062.50 → 8'062), Anteile nach Art. 3 Abs. 5 auf Franken gerundet, Anhebung bis zum ganzen Franken
+unter 80 % (827 statt 827.20).
+
+**Prämienregion:** eine (BAG-Daten: alle 5 AI-Gemeinden Region 0) — ohne PLZ, eigener Satz `ipv.jahrAI`.
+
+**Gewählt, nicht belegt** (FRAGEN-AN-DIE-AEMTER.md, Punkt 26 — ⟨umnummeriert 28.09.2026 abends, vorher 10⟩): Stufen je volle Fr. 1'000 ·
+«steuerpflichtiges Gesamteinkommen» = steuerbares Einkommen nach Kinderabzug · Anhebung der Kinder bis
+75'000 auch ohne Anspruch aus der Formel · Rundung.
+
+**Nachtrag Fachprüfung #485 (28.09.2026):** erhaltene Alimente und Familienzulagen sind im Kanton
+Einkommen (StG AI Art. 26 Abs. 1 lit. f, Art. 20 Abs. 1), fliessen in der App aber noch in keinem Kanton
+ein — der Betrag ist dann zu hoch (Beispiel der Prüfung: 800 Alimente + 200 Zulage im Monat → 1'184 Fr./Jahr
+zu viel). Nicht gerechnet (Rahmen-PR folgt), aber im sichtbaren Vorbehalt `ipv.vorbehaltAI` genannt. Ebenso
+dort neu: alle drei gewählten Lesarten fallen zugunsten der Person aus — «der verfügte Betrag kann eher
+tiefer ausfallen».
+
+**Bewusst nicht gebaut:** Paare/Ehegatten/Konkubinat mit Kind · junge Erwachsene und Kinder über 18
+(Gesamtanspruch nach Art. 3 Abs. 3 mit eigenem Einkommen unter 12'000) · Quellenbesteuerte, Art. 65a
+KVG, EL, Sozialhilfe · Aufrechnungen Art. 5 Abs. 3 lit. c, e–g.
+
+**Folge:** `CANTONAL_IPV.AI` → `maxIncome` null (keine publizierte Grenze; «ca. 55'000–56'000» oben ist
+eigene Rechnung), Musterwerte entfernt, `noteKey` von «Antrag bei Sozialamt» auf «Automatische Prüfung
+via Steuerdaten» (Merkblatt Ziff. 1: «Es muss kein Antrag gestellt werden»; StKB Art. 10).
 
 ---
 

@@ -35,7 +35,7 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        (UR: kein Abzug der 3a vom PV-Einkommen, rechnerisch dasselbe.)
 //                        (GE aus dem Gegengrund: im RDU wird die 3a gar nicht erst abgezogen.)
 //                        (TI: die Abzüge vom verfügbaren Einkommen sind abschliessend aufgezählt,
@@ -52,6 +52,7 @@ export function vermoegenSumme(f) {
 //                        FR: Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13), Codes 4.110–4.140
 //                            (Säule 3a = Code 4.130 der Freiburger Steuererklärung)
 //                        SH: § 12 Abs. 1 lit. e Dekret (SHR 832.110)
+//                        AI: Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE, SO — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        BE: KKVV Art. 6 Abs. 4 lit. i
@@ -140,8 +141,8 @@ export const SAEULE_3A = Object.freeze({
     // GE (28.09.2026, ipvGenf.js): dasselbe Ergebnis aus dem GEGENTEILIGEN Grund — die 3a wird im
     // RDU gar nicht erst abgezogen; LRDU Art. 5 Abs. 1 (rsGE J 4 06) nennt LIPP Art. 31 lit. a und b,
     // nicht lit. c (gebundene Selbstvorsorge). Wo nichts abgezogen wurde, ist nichts aufzurechnen.
-    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13) · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110)',
+    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13) · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110) · AI Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)',
     // OW (28.09.2026): Art. 7a GDB 851.11 zieht vom Total der Einkünfte nur aufgezählte Posten ab;
     // die 3a (Art. 35 Abs. 1 lit. e StG) ist nicht darunter — sie bleibt voll im Einkommen.
     nichtAufgerechnet: () => 0,
