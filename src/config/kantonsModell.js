@@ -61,6 +61,8 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   totalDerEinkuenfte   GL — gemessen am Total der Einkünfte, vor allen Abzügen; die 3a wird
+//                        dort nie abgezogen. EG KVG GL Art. 15 Abs. 1 (GS VIII D/21/1)
 //
 // 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
@@ -332,6 +334,21 @@ export const SAEULE_3A = Object.freeze({
     nichtAufgerechnet: () => 0,
   }),
 
+  // ⟨28.09.2026, K31 GL⟩ Glarus misst am «Total der Einkünfte» — VOR allen Abzügen:
+  //   EG KVG GL (GS VIII D/21/1) Art. 15 Abs. 1: «Das anrechenbare Einkommen bestimmt sich nach
+  //   dem Total der Einkünfte, erhöht um einen vom Landrat festgelegten Anteil des steuerbaren
+  //   Vermögens.» Die Fachstelle IPV nennt dafür Ziffer 215 der Veranlagung («Erläuterungen und
+  //   Berechnungsbeispiele zur IPV 2026»); die Säule 3a ist in der Wegleitung zur
+  //   Steuererklärung 2024 ein Abzug unter Ziffer 11, nach den Einkünften (Ziffern 1–7).
+  // Die 3a steckt also im anrechenbaren Einkommen — wie im Nettoeinkommen der App. Rechnerisch
+  // wie `voll`, aber aus einem anderen Grund; darum ein eigener Name.
+  totalDerEinkuenfte: Object.freeze({
+    name: 'totalDerEinkuenfte',
+    kantone: 'GL',
+    beleg: 'EG KVG GL Art. 15 Abs. 1 (GS VIII D/21/1) · Wegleitung Steuererklärung GL 2024, Ziffern 1–7 und 11',
+    nichtAufgerechnet: () => 0,
+  }),
+
   // ⟨NW, 28.09.2026⟩ Die vierte Regel — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
   // (Code 330), und dort ist die 3a abgezogen (StG NW Art. 35 Abs. 1 Ziff. 5, NG 521.1). Rechnet
   // der Kanton sie wieder auf, stünde sie unter den Aufrechnungen von Art. 12 Abs. 2 kKVG
@@ -481,6 +498,9 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //
 //   abEndeVorjahr       ZH — ausdrücklich im Erlass: § 8 EG KVG, «für das ganze Jahr das
 //                       Alter am Ende des Vorjahres massgebend». BELEGT.
+//                       GL — EG KVG GL Art. 12 Abs. 2: «Die persönlichen und familiären
+//                       Verhältnisse bestimmen sich nach den Gegebenheiten am 31. Dezember des
+//                       Vorjahres»; VV PV Art. 10: Erwachsene «über 25 Jahre». BELEGT (28.09.2026).
 //   mangelsStichtag     BE, VD, SG, UR — rechnerisch dasselbe wie oben, aber aus einem anderen
 //                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
 //                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe

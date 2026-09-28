@@ -46,6 +46,7 @@ export const IPV_MODULE = {
   SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
   NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
   ZG: { laden: () => import('./ipvZug.js'), fn: 'ipvZug', brauchtPLZ: false },
+  GL: { laden: () => import('./ipvGlarus.js'), fn: 'ipvGlarus', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -143,7 +144,11 @@ export const CANTONAL_IPV = {
   // gelten nur für die Kinder. Gesuch bei der Ausgleichskasse Nidwalden bis 30. April (kKVG Art. 22).
   NW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
     beleg: { quelle: 'NG 742.111 · NG 742.1 · Ausgleichskasse Nidwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // GL (K31): eigenes Modell in config/ipvGlarus.js (Richtprämie minus Selbstbehalt 9–14 % in
+  // Stufen). Keine publizierte Einkommensgrenze. Weg: Antrag bis 31. Januar (VV PV Art. 6), nicht
+  // automatisch — der Musterwert sagte bis 28.09.2026 «automatisch via Steuerdaten».
+  GL: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyGl',
+    beleg: { quelle: 'EG KVG GL (GS VIII D/21/1) · PVV (VIII D/21/3) · VV PV (VIII D/21/2) · Kantonale Steuerverwaltung GL, Fachstelle IPV — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // ZG (K31): eigenes Modell in config/ipvZug.js (Richtprämien minus 8 % Selbstbehalt, Kürzung ab
   // 70'000, kein Anspruch über 89'900 — eine Grenze für alle, RRB 2025 Ziff. 1.5). ZG rechnet einen
   // Betrag; «kein Anspruch» nur auf einer Untergrenze des Reineinkommens. maxIncome null: die 89'900
