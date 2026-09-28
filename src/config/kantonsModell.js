@@ -29,13 +29,13 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die drei Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (seit 28.09.2026 sechs) — benannt und belegt, NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, ZG — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI, ZG — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        (UR: kein Abzug der 3a vom PV-Einkommen, rechnerisch dasselbe.)
 //                        (GE aus dem Gegengrund: im RDU wird die 3a gar nicht erst abgezogen.)
 //                        (TI: die Abzüge vom verfügbaren Einkommen sind abschliessend aufgezählt,
@@ -48,14 +48,22 @@ export function vermoegenSumme(f) {
 //                        NE: Art. 12 al. 1 lit. a RSN 821.102 — revenu effectif «sous seules
 //                            déductions» von 6.4/6.5/6.7/6.10; die 3a wird nie abgezogen
 //                        GR: Art. 8a Abs. 1 lit. e KPVG (BR 542.100)
+//                        OW: Art. 7a GDB 851.11 (Abzüge abschliessend aufgezählt, keine 3a)
+//                        FR: Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13), Codes 4.110–4.140
+//                            (Säule 3a = Code 4.130 der Freiburger Steuererklärung)
+//                        SH: § 12 Abs. 1 lit. e Dekret (SHR 832.110)
+//                        AI: Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)
 //                        ZG: § 1 Abs. 1 lit. c V IPVG (BGS 842.61), «zuzüglich allfällig
 //                            abgezogener Beiträge an die gebundene Selbstvorsorge (Säule 3a)»
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
-//   bisBundesMaximum     BE, SO — nur bis zum bundesrechtlichen Maximum für Unselbständige.
+//   bisBundesMaximum     BE, SO, VS — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        BE: KKVV Art. 6 Abs. 4 lit. i
 //                        SO: § 69 Abs. 1 lit. e SV (BGS 831.2) — «maximal bis zur Höhe des
 //                            zulässigen Höchstabzuges gemäss Art. 7 Absatz 1 Buchstabe a … BVV 3».
 //                            Dort steht ausdrücklich lit. a, also die Lesart (b) unten (28.09.2026).
+//                        VS: VüIPV (SGS 832.105) Art. 8 Abs. 1 lit. a, «bis zum Maximalbetrag des
+//                            Angestelltenlohns». Das Wallis rechnet nur, wo der Deckel NICHT beisst
+//                            (das Merkblatt der Ausgleichskasse nennt keinen Deckel — ipvWallis.js).
 //   abgezogen            NW — gar nicht aufgerechnet: gemessen wird am Reineinkommen, in dem sie
 //                        abgezogen ist. Art. 12 Abs. 2 kKVG (NG 742.1) ⇒ Abzug = die ganze Einzahlung.
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
@@ -63,8 +71,14 @@ export function vermoegenSumme(f) {
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
 //   totalDerEinkuenfte   GL — gemessen am Total der Einkünfte, vor allen Abzügen; die 3a wird
 //                        dort nie abgezogen. EG KVG GL Art. 15 Abs. 1 (GS VIII D/21/1)
+//   imReineinkommenAbgezogen  SZ (28.09.2026) — GAR KEINE Zurechnung: § 7 Abs. 2 EGzKVG
+//                        (SRSZ 361.100) zählt die Aufrechnungen abschliessend auf, die 3a
+//                        fehlt darin. ⇒ Abzug = die ganze Einzahlung, soweit sicher abziehbar.
+//   freibetragOhneSaeule2 AR — ohne Säule 2 nur der Teil über 10'000 (fester Freibetrag).
+//                        Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a
+//                        V zum KVG (bGS 833.141). Mit Säule 2 gilt dort `voll`.
 //
-// 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
+// 🛑 EINE DIESER REGELN (`schwelleOhneSaeule2`) WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
 // wird beim nächsten Kanton nicht kopiert. `schwelleOhneSaeule2` gibt `0` zurück wie `voll`,
 // aber aus einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
@@ -136,8 +150,8 @@ export const SAEULE_3A = Object.freeze({
     // GE (28.09.2026, ipvGenf.js): dasselbe Ergebnis aus dem GEGENTEILIGEN Grund — die 3a wird im
     // RDU gar nicht erst abgezogen; LRDU Art. 5 Abs. 1 (rsGE J 4 06) nennt LIPP Art. 31 lit. a und b,
     // nicht lit. c (gebundene Selbstvorsorge). Wo nichts abgezogen wurde, ist nichts aufzurechnen.
-    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, ZG',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · ZG § 1 Abs. 1 lit. c V IPVG (BGS 842.61)',
+    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI, ZG',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13) · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110) · AI Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501) · ZG § 1 Abs. 1 lit. c V IPVG (BGS 842.61)',
     // OW (28.09.2026): Art. 7a GDB 851.11 zieht vom Total der Einkünfte nur aufgezählte Posten ab;
     // die 3a (Art. 35 Abs. 1 lit. e StG) ist nicht darunter — sie bleibt voll im Einkommen.
     nichtAufgerechnet: () => 0,
@@ -145,8 +159,8 @@ export const SAEULE_3A = Object.freeze({
 
   bisBundesMaximum: Object.freeze({
     name: 'bisBundesMaximum',
-    kantone: 'BE, SO',
-    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025) · SO § 69 Abs. 1 lit. e SV (BGS 831.2, Stand 01.04.2026)',
+    kantone: 'BE, SO, VS',
+    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025) · SO § 69 Abs. 1 lit. e SV (BGS 831.2, Stand 01.04.2026) · VS Art. 8 Abs. 1 lit. a VüIPV (SGS 832.105, Stand 01.05.2026)',
     // Wortlaut an der Quelle, abgerufen 23.09.2026 aus der bernischen Erlass-Sammlung
     // (https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1):
     //   «Beiträge an die gebundene Selbstvorsorge (Säule 3a) bis zum nach Bundesrecht
@@ -349,7 +363,72 @@ export const SAEULE_3A = Object.freeze({
     nichtAufgerechnet: () => 0,
   }),
 
-  // ⟨NW, 28.09.2026⟩ Die vierte Regel — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
+  // ⟨28.09.2026, K31 SZ⟩ Die vierte Regel — und die erste, die GAR NICHT aufrechnet.
+  // Schwyz nimmt das Reineinkommen der direkten Bundessteuer und erhöht es abschliessend um
+  // drei Posten (§ 7 Abs. 2 EGzKVG, SRSZ 361.100, Stand 1.2.2026, an der Quelle gelesen
+  // 28.09.2026): «a) 10% des Reinvermögens …; b) die Abzüge für den ausserordentlichen
+  // Liegenschaftsunterhalt; c) die Einkäufe in die berufliche Vorsorge (2. Säule).» Die
+  // Säule 3a steht nicht darin; das Merkblatt der SVA Schwyz (IPV 2027, Stand März 2026)
+  // zählt dieselben Aufrechnungen auf, ebenfalls ohne 3a. Im Reineinkommen ist sie
+  // abgezogen — das Nettoeinkommen der App trägt sie aber voll. Also muss sie hier HERAUS.
+  //
+  // 🛑 WIE VIEL davon im Reineinkommen abgezogen WURDE, hängt am Bundesrecht (BVV 3 Art. 7):
+  // mit Pensionskasse bis zum festen Maximum, ohne Pensionskasse 20 % des
+  // Erwerbseinkommens. Ob eine Pensionskasse besteht, weiss die App nicht (dieselbe Lücke
+  // wie bei `schwelleOhneSaeule2`). Sicher abgezogen ist darum nur, was UNTER BEIDEN Grenzen
+  // liegt: dem kleinsten Maximum der in Frage kommenden Bemessungsjahre und 20 % des
+  // erfassten Erwerbseinkommens. Nur so viel zieht die Regel ab; liegt die Einzahlung
+  // darüber, ist die Herleitung `widerlegt` und der Kanton zeigt keine Zahl.
+  // Das Erwerbseinkommen ist hier das NETTO erfasste (Hauptlohn und Nebenerwerb) — das
+  // amtliche ist das AHV-pflichtige, also höher. Die Grenze liegt damit eher zu tief: es
+  // gibt eher einmal zu oft keine Zahl, nie eine zu hohe.
+  // Nicht gebaut: ein Teilabzug bis zur sicheren Grenze. Er wäre eine Untergrenze, keine
+  // Zahl — und eine zu tiefe Zahl ist nicht die vorsichtige Seite (Block bei `einkommenJahr`).
+  imReineinkommenAbgezogen: Object.freeze({
+    name: 'imReineinkommenAbgezogen',
+    kantone: 'SZ',
+    beleg: '§ 7 Abs. 1/2 EGzKVG SZ (SRSZ 361.100, Stand 1.2.2026): Reineinkommen DBG, erhöht nur um Vermögensanteil, ao. Liegenschaftsunterhalt und Einkäufe 2. Säule',
+    // `jahre` = `{ bemessungsjahre: [...], anspruchsjahr }` — Schwyz stellt auf «die jüngste
+    // rechtskräftige Steuerveranlagung» ab, die höchstens drei Jahre zurückliegt (§ 9 Abs. 1
+    // VVzEGzKVG), also auf eines von mehreren Jahren. `null`, wenn eines davon nicht belegt ist.
+    sicherAbziehbar: (f, jahre) => {
+      const maxima = (jahre?.bemessungsjahre || []).map((j) => saeule3aMaximum(j));
+      if (!maxima.length || maxima.some((m) => m === null)) return null;
+      const erwerb = Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12;
+      return Math.max(0, Math.min(...maxima, 0.2 * erwerb));
+    },
+    nichtAufgerechnet: (f) => betrag3a(f),
+    // Widerlegt, wenn die Einzahlung über dem sicher Abziehbaren liegt oder über ein Jahr
+    // hinausreicht (Altdaten, siehe `ueberEinJahrHinaus`). Ohne Einzahlung nie.
+    // Dieselbe Signatur wie `bisBundesMaximum.widerlegt(f, jahresEinkommen, jahre)`, damit ein
+    // kopierter Aufruf nicht still das Einkommen als `jahre` übergibt (Fachprüfung #470 💡 3).
+    // `jahresEinkommen` braucht diese Regel nicht: die 20-%-Grenze liest das Erwerbseinkommen selbst.
+    widerlegt: (f, jahresEinkommen, jahre) => {
+      if (betrag3a(f) <= 0) return false;
+      const sicher = SAEULE_3A_SZ_SICHER(f, jahre);
+      return sicher === null || betrag3a(f) > sicher || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
+    },
+  }),
+
+  // AR (K31, 28.09.2026): wie AG hängt die Zurechnung an der Säule-2-Zugehörigkeit — aber mit einem
+  // festen FREIBETRAG statt einer Schwelle in Prozent, darum eine eigene Regel und nicht
+  // `schwelleOhneSaeule2` umgebogen. Wortlaut (bGS 833.141 Art. 5 Abs. 1 lit. a): «der Betrag an die
+  // Säule 3a von Personen, die keiner Vorsorgeeinrichtung nach Art. 80 [BVG] angehören, der
+  // 10 000 Franken übersteigt». Für Personen MIT Vorsorgeeinrichtung gilt `voll` (bGS 833.14
+  // Art. 19 Abs. 1 lit. a). Diese Regel beschreibt nur den Fall OHNE.
+  // 🛑 Wie in AG weiss die App nicht sicher, welcher Fall vorliegt. ipvAppenzellAusserrhoden.js
+  // rechnet darum beide Fälle und zeigt keine Zahl, wenn sie verschieden ausfallen — ausser ein
+  // BVG-Beitrag ist erfasst, dann ist die Zugehörigkeit positiv belegt.
+  freibetragOhneSaeule2: Object.freeze({
+    name: 'freibetragOhneSaeule2',
+    kantone: 'AR',
+    beleg: 'Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a V zum KVG (bGS 833.141)',
+    freibetrag: 10000,
+    nichtAufgerechnet: (f) => Math.min(betrag3a(f), 10000),
+  }),
+
+  // ⟨NW, 28.09.2026⟩ Die siebte Regel (auf NW als vierte gebaut; SZ `imReineinkommenAbgezogen` und
+  // AR `freibetragOhneSaeule2` kamen in der Sammel-Integration dazu, GL `totalDerEinkuenfte` mit #487) — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
   // (Code 330), und dort ist die 3a abgezogen (StG NW Art. 35 Abs. 1 Ziff. 5, NG 521.1). Rechnet
   // der Kanton sie wieder auf, stünde sie unter den Aufrechnungen von Art. 12 Abs. 2 kKVG
   // (NG 742.1) — dort stehen BGSA-Lohn, BVG-Einkauf, Teileinkünfte, Liegenschaftsunterhalt und
@@ -375,6 +454,12 @@ export const SAEULE_3A = Object.freeze({
     },
   }),
 });
+
+// Eigene Konstante, weil `widerlegt` oben auf `sicherAbziehbar` derselben Regel zugreift und
+// das eingefrorene Objekt beim Anlegen noch nicht existiert.
+function SAEULE_3A_SZ_SICHER(f, jahre) {
+  return SAEULE_3A.imReineinkommenAbgezogen.sicherAbziehbar(f, jahre);
+}
 
 // 🛑 SÄULE 3A — WARUM HIER NICHTS MEHR AUFGERECHNET WIRD (Befund Fachprüfung 20.09.2026)
 //
@@ -501,7 +586,7 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       GL — EG KVG GL Art. 12 Abs. 2: «Die persönlichen und familiären
 //                       Verhältnisse bestimmen sich nach den Gegebenheiten am 31. Dezember des
 //                       Vorjahres»; VV PV Art. 10: Erwachsene «über 25 Jahre». BELEGT (28.09.2026).
-//   mangelsStichtag     BE, VD, SG, UR — rechnerisch dasselbe wie oben, aber aus einem anderen
+//   mangelsStichtag     BE, VD, SG, UR, VS, JU — rechnerisch dasselbe wie oben, aber aus einem anderen
 //                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
 //                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe
 //                       ist. GEWÄHLT, nicht belegt — und jederzeit zu überdenken, wenn eine
@@ -519,11 +604,25 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       (Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». (28.09.2026)
 //                       TI — IAS, Istruzioni RIPAM 2026 Ziff. 1.2: «adulto: dall'anno seguente al
 //                       compimento dei 25 anni». (28.09.2026)
+//                       FR — ORP (RSF 842.1.13) Art. 3 al. 3 lit. b/c: «jeune personne adulte …
+//                       jusqu'à l'année de ses 25 ans»; Mémento RPI 2026 Ziff. 8.1: «jeune adulte
+//                       âgé de 19 à 25 ans». (28.09.2026)
+//                       SH — Verordnung SHR 832.111 § A1-1: «Personen der Jahrgänge 2000 und
+//                       älter» für 2026. (28.09.2026)
+//                       SZ — SVA Schwyz, «Richtprämien … Für das Jahr 2026»: «Erwachsene (ab
+//                       Jahrgang 2000)». (28.09.2026, ipvSchwyz.js [4])
+//                       AR — SOVAR-Antrag 2026: «Für Personen mit Jahrgang 2001 oder jünger …»;
+//                       Jahrgang 2000 und älter ist erwachsen. (28.09.2026, ipvAppenzellAusserrhoden.js [5])
+//                       AI — StKB IPV Anhang A1-1 Ziff. 1 lit. c: «Erwachsene (Jahrgang 2000 und
+//                       älter)». (28.09.2026, ipvAppenzellInnerrhoden.js [1])
+//                       (NW, OW, NE, SO und ZG rufen dieselbe Regel; ihre Belege stehen im Modulkopf.)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
-// Anspruchsjahr 2026 rechnen AG, LU, GR und TI für den Jahrgang 2000, die anderen nicht. Gemessen am
+// Anspruchsjahr 2026 rechnen AG, LU, GR, TI und FR für den Jahrgang 2000, die anderen nicht. Gemessen am
 // aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen. ⟨nachgetragen 28.09.2026 nach dem
 // Re-Review #467: hier stand nur AG; LU (23.09.), GR und TI (28.09.) rechnen seither ebenso.⟩
+// ⟨Sammel-Integration 28.09.2026: nach dem Quelltext rufen ausserdem SH, SZ, AR und AI sowie NW, OW,
+// NE, SO, GE und ZG `imAnspruchsjahr` — hier nicht nachgemessen, nur aus dem Aufruf gelesen.⟩
 //
 // 🛑 `abEndeVorjahr` und `mangelsStichtag` sind absichtlich zwei Namen für dieselbe Rechnung.
 // Sonst schreibt der nächste Kanton «belegt», wo «vorsichtig gewählt» gemeint war — und ein

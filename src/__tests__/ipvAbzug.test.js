@@ -216,12 +216,16 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  // Seit 28.09.2026 setzen auch Genf (RaLAMal Art. 10A: nur die Antragsfälle, vor dem 30. November),
-  // Obwalden (EV KVG Art. 10), Nidwalden (kKVG Art. 22), Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484),
-  // Glarus (VV PV Art. 6 Abs. 1: bis 31. Januar des Anspruchsjahres) und Freiburg (ORP Art. 2 al. 1,
-  // sobald gemergt) die Frist.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, GE, OW, NW, TI, GL) und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvGenf.js', 'config/ipvObwalden.js', 'config/ipvNidwalden.js', 'config/ipvTicino.js', 'config/ipvGlarus.js', 'data/ipvAbzug.js'];
+  // Seit 28.09.2026 setzen auch Freiburg (ORP Art. 2 al. 1: Antrag bis 31. August), Genf (RaLAMal
+  // Art. 10A: nur die Antragsfälle, vor dem 30. November), Obwalden (EV KVG Art. 10), Nidwalden
+  // (kKVG Art. 22), das Tessin (LCAMal Art. 25 Abs. 3, Fachprüfung #484), Schaffhausen (Dekret
+  // SHR 832.110 § 15 Abs. 3 — ohne Antrag bis 30. April verwirkt, Fachprüfung #471, eigener
+  // Hinweis-Schlüssel `ipv.shFristNichtAbgezogen`) und Appenzell Ausserrhoden (V zum KVG Art. 10,
+  // EG Art. 22 — bis 31. März, danach verwirkt; Fachprüfung #480; eigener Hinweis-Schlüssel
+  // `ipv.arFristNichtAbgezogen`) und Glarus (VV PV Art. 6 Abs. 1: bis 31. Januar des Anspruchsjahres,
+  // danach nur die Prämien ab dem Folgemonat; Hinweis-Schlüssel `ipv.glFristNichtAbgezogen`) die Frist.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, FR, GE, OW, NW, TI, SH, AR, GL) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvFreiburg.js', 'config/ipvGenf.js', 'config/ipvObwalden.js', 'config/ipvNidwalden.js', 'config/ipvTicino.js', 'config/ipvSchaffhausen.js', 'config/ipvAppenzellAusserrhoden.js', 'config/ipvGlarus.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
@@ -236,6 +240,7 @@ describe('Wächter · Frist-Hinweis je Kanton', () => {
   const module = () => quellen().filter((p) => /^config\/ipv[A-Z]\w*\.js$/.test(rel(p)));
 
   it('der Scan findet die Kantonsmodule', () => {
+    expect(module().map(rel)).toContain('config/ipvFreiburg.js');
     expect(module().map(rel)).toContain('config/ipvObwalden.js');
     expect(module().map(rel)).toContain('config/ipvNidwalden.js');
     expect(module().map(rel)).toContain('config/ipvLuzern.js');
@@ -257,6 +262,8 @@ describe('Wächter · Frist-Hinweis je Kanton', () => {
   });
 
   it('die Leser: eigener Schlüssel vor LU, LU nur für LU, sonst neutral', () => {
+    expect(fristHinweisKey({ canton: 'FR', fristNichtAbgezogenKey: 'ipv.frFristNichtAbgezogen' })).toBe('ipv.frFristNichtAbgezogen');
+    expect(fristHinweisKey({ canton: 'FR', fristNichtAbgezogenKey: 'ipv.frFristNichtAbgezogen' }, 'budget')).toBe('ipv.frFristNichtAbgezogen');
     expect(fristHinweisKey({ canton: 'OW', fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen' })).toBe('ipv.owFristNichtAbgezogen');
     expect(fristHinweisKey({ canton: 'OW', fristNichtAbgezogenKey: 'ipv.owFristNichtAbgezogen' }, 'budget')).toBe('ipv.owFristNichtAbgezogen');
     expect(fristHinweisKey({ canton: 'NW', fristNichtAbgezogenKey: 'ipv.nwFristNichtAbgezogen' })).toBe('ipv.nwFristNichtAbgezogen');
