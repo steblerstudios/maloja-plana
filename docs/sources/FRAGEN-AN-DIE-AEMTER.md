@@ -364,20 +364,28 @@ Obergrenze.
 Differenzrechnung nach § 8 Abs. 2 zusammen? (a) Der Haushalt erhält mindestens «Kinderzahl × 80 %
 der Kinder-Richtprämie» (Boden auf dem Ganzen), oder (b) der Betrag wird im Verhältnis der
 Richtprämien verteilt und jedes Kind erhält mindestens 80 % zusätzlich zum Anteil der
-erwachsenen Person? Bei einer erwachsenen Person mit einem Kind und 40'000 massgebendem
-Einkommen liegen die Lesarten 536 Franken auseinander. Bis zur Antwort zeigt die App dort, wo
-sie abweichen, keinen Betrag.
+erwachsenen Person? Der Abstand wächst mit dem Einkommen: 1 Kind, 40'000 → 536 Franken; 1 Kind,
+51'000 → 791; 2 Kinder, 68'000 → 1'644. ⟨korrigiert 28.09.2026 nach der Fachprüfung: hier stand nur
+«536»⟩ Bis zur Antwort zeigt die App dort, wo sie abweichen, keinen Betrag. Die Landratsvorlage
+2019/458 («Erhöhung Mindestanspruch für Kinder») könnte die Frage klären; wir haben sie noch nicht
+gelesen. *Produktfrage an Stebler Studios (nicht an die SVA):* (a) ist unter beiden Lesarten eine
+Untergrenze — soll die App Familien statt «keine Zahl» ein «mindestens CHF …» zeigen?
 
 **Frage 2 — Aufteilung und Deckel (§ 8 Abs. 2bis):** Gilt «darf die tatsächlich bezahlte Prämie
 nicht übersteigen» je Person oder für die Berechnungseinheit? Wie wird der Betrag auf die
 Personen verteilt?
 
-**Frage 3 — Kinder, die nach dem Bemessungsjahr geboren sind:** Ein Kind, das 2025 geboren ist,
-steht nicht in der Veranlagung 2024. Zählt es für 2026 nur auf Gesuch nach § 9a EG KVG — und ein
-Kind, das 2026 geboren wird, gar nicht? Die App zeigt in diesen Fällen heute keinen Betrag.
+**Frage 3 — Kinder, die nach dem Bemessungsjahr geboren sind:** ~~Zählt es für 2026 nur auf
+Gesuch …?~~ ⟨grösstenteils beantwortet 28.09.2026⟩ PVV § 18 Abs. 4bis: «Neugeborene Kinder werden ab
+Beginn des Geburtsmonats berücksichtigt»; Gesuch bis 31. Dezember des Anspruchsjahres (§ 18 Abs. 2);
+die SVA-Seite «Häufige Fragen» sagt für «Geburt Kinder im letzten oder aktuellen Jahr»: Gesuch online
+mit der Police des Kindes. Offen bleibt nur, wie der Betrag für das Geburtsjahr anteilig gerechnet
+wird — darum zeigt die App weiter keinen Betrag, nennt aber jetzt Frist und Stelle.
 
-**Frage 4 — Obergrenze:** Besteht bei einem massgebenden Einkommen von genau 31'000 noch ein
-Anspruch («anspruchsabschliessende Obergrenze»)? Wir rechnen «bis und mit».
+**Frage 4 — Obergrenze:** ⟨umgestellt 28.09.2026⟩ Der Quelltext Ihres Online-Rechners
+(`sva_onlinecalculator.js`) antwortet bei `einkommen − obergrenze >= 0` mit «NEIN», also schon bei
+genau 31'000. Die App rechnet jetzt ebenso («ab der Grenze kein Anspruch»). Bitte bestätigen, dass die
+Verfügung so rechnet. (Vorher: «Wir rechnen ‹bis und mit›».)
 
 **Stand:** BL ist für 2026 gebaut (Entwurfs-PR, K31). Ab 01.01.2027 zeigt die App für BL keinen
 Betrag mehr, bis die Richtprämien 2027 eingearbeitet sind.

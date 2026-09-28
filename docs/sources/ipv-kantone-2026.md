@@ -1567,6 +1567,23 @@ die Kinderzuordnung hängt am Kinderabzug); junge Erwachsene (§ 8 Abs. 1bis, PV
 Quellenbesteuerte (PVV § 18c); Zuziehende (PVV §§ 13/14); Sozialhilfe; Einkünfte aus
 Liegenschaften und Unterhaltsbeiträge (§ 9 Abs. 1 lit. a/c).
 
+**Fixrunde 28.09.2026 abends (Fachprüfung PR #479, «erst beheben»):**
+- ⟨korrigiert⟩ «Liegenschaften und Unterhaltsbeiträge (lit. c) — die App erfasst sie nicht» war falsch.
+  BL rechnet jetzt `alimentePaid` als Abzug (EG KVG § 9 Abs. 1 lit. c; «Abzug gewährt» **gewählt**:
+  Regelfall), `alimenteReceived` (Wegleitung 2024 Ziffern 310/320, StG § 24 lit. f) und `familienzulagen`
+  (Wegleitung Ziffer 100 «Zulagen» bzw. 380 «Familienzulagen … übrige Einkünfte») als Einkünfte vor
+  Ziffer 399. Die Wegleitung 2024 ist mit curl und Browser-Kennung lesbar (HTTP 200; ohne Kennung 403):
+  `bl-api.webcloud7.ch/…/unselbstaendig-erwerbende-2024/wegleitung-zur-steuererklarung_int_2_w_2024_240917.pdf`.
+  Prüfbeispiele: 2'800 − 1'000 bezahlt → **2'922** (vorher «kein Anspruch»); 2'000 + 1'000 erhalten →
+  **kein Anspruch** (vorher 2'736).
+- ⟨korrigiert⟩ Obergrenze: «bei 31'000 → 2'193.50» war gegen den amtlichen Rechner der SVA (`math >= 0` →
+  «NEIN»). Jetzt «ab der Grenze kein Anspruch» — Frage 22.4 um Bestätigung.
+- Freibeträge zusätzlich belegt: StG BL § 50 Abs. 1 lit. a/b (180'000 / 90'000). Schulden (Reinvermögen)
+  als bewusst nicht gebaut benannt.
+- Texte: «kein Anspruch» nennt die Veranlagung {basisjahr} (Näherung an der Klippe); Gesuchsfrist
+  31. Dezember (PVV § 18 Abs. 2) in Vorbehalt und Neugeborenen-Grund; Kinderanteil ungedeckelt benannt.
+- Lesarten Kinder-80 %: Abstand wächst bis 1'644 (nicht «536»), (a) ist Untergrenze — Produktfrage in 22.1.
+
 ---
 
 ## SH — Schaffhausen
