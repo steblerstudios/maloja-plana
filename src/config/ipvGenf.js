@@ -83,10 +83,11 @@
 //
 // SÄULE 3A — WARUM HIER DIE REGEL `voll` GILT, AUS EINEM ANDEREN GRUND ALS IN ZH/SG/LU
 // Dort rechnet der Kanton die 3a dem Steuereinkommen wieder ZU. In Genf wird sie im RDU gar nicht
-// erst ABGEZOGEN: LRDU Art. 5 Abs. 1 [4] nennt die Vorsorgeabzüge nach «article 31, lettre a, LIPP»
-// (lit. a: AHV/IV/EO/ALV/UVG-Beiträge) und «article 31, lettre b, LIPP» (lit. c: berufliche
-// Vorsorge) — nicht Art. 31 lit. c LIPP [7], die gebundene Selbstvorsorge. Das Nettoeinkommen der
-// App trägt die 3a bereits (Block bei `einkommenJahr` in kantonsModell.js); für Genf ist das genau
+// erst ABGEZOGEN: LRDU Art. 5 Abs. 1 lit. a [4] verweist auf «article 31, lettre a, LIPP» (LIPP
+// Art. 31 lit. a: AHV/IV/EO/ALV/UVG-Beiträge), LRDU lit. c auf «article 31, lettre b, LIPP» (LIPP
+// Art. 31 lit. b: berufliche Vorsorge) — nicht auf LIPP Art. 31 lit. c [7], die gebundene
+// Selbstvorsorge. ⟨Fachprüfung PR #469, K1: hier waren die Buchstaben von LRDU und LIPP
+// vermischt.⟩ Das Nettoeinkommen der App trägt die 3a bereits (Block bei `einkommenJahr` in kantonsModell.js); für Genf ist das genau
 // richtig, Abzug 0.
 //
 // WAS DER RDU DER APP SONST NOCH ENTHÄLT — UND WAS IHM FEHLT (Fachprüfung 28.09.2026: die erste
@@ -124,6 +125,9 @@
 //     Darum ein eigener Grund `geJungeErwachsene`, der die Frist nennt — als eigene Person wie als
 //     Kind über 18 im Haushalt (Art. 21 Abs. 6 [2]). ⟨Fachprüfung 28.09.2026: vorher `alter` bzw.
 //     `haushalt`, und die Person las «Für die Rechnung fehlt ein Geburtsdatum», obwohl es da war.⟩
+//   · Wohneigentum (LRDU Art. 6 lit. a [4]; RaLAMal Art. 10 Abs. 1 [3]: Bruttovermögen nach
+//     Steuerwert, ohne Abzug der Hypothek). Die App kennt nur einen selbst eingetragenen Wert —
+//     keine Zahl, Grund `wohneigentumGE` (Antrag nötig, sobald das Bruttovermögen 250'000 übersteigt).
 //   · Quellenbesteuerte (Art. 24 [2], Art. 12 [3]: Antrag, RDU nach Art. 9 Abs. 2 LRDU), Zuzug 2025/26
 //     (Art. 25 [2]), EL- und Sozialhilfe-Beziehende (Art. 22 Abs. 7–9 [2]: Durchschnittsprämie),
 //     Grenzgängerinnen und im Ausland Wohnende (Art. 24A [2]), Ermessensveranlagte (Art. 27 lit. b).
@@ -143,6 +147,7 @@ import {
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
+import { zahl } from '../utils/geld.js';
 
 // Werte 2026, wörtlich aus [1], [2] und [3]. Grenzen sind Jahresbeträge des RDU, Beträge Monatsbeträge.
 export const IPV_GE = {
@@ -257,6 +262,12 @@ export function geRdu({ netto, erwerb, alimente = 0, familienzulagen = 0, vermoe
   return netto + alimente + familienzulagen - geBerufskostenPauschale(erwerb) + IPV_GE.vermoegenAnteil * Math.max(0, vermoegen);
 }
 
+// Wohneigentum erfasst? Ein eingetragener Liegenschaftswert oder eine Hypothek (Profil `wohnen`).
+export function hatWohneigentum(wohnen) {
+  const w = wohnen || {};
+  return Number(w.propertyValue) > 0 || w.mortgageStatus === 'fixedRate' || w.mortgageStatus === 'variable';
+}
+
 // Aufruf aus calculateIPV (config/cantonalData.js) für GE mit Beleg. Die App rechnet nur, wo ihre
 // Angaben dafür reichen; sonst dieselbe Orientierung wie ein unbelegter Kanton, mit Grund in `offen`.
 // `lookupPLZ` wird nicht gebraucht (keine Prämienregion) und darum nicht entgegengenommen.
@@ -308,6 +319,13 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Ausschluss, aber nur auf begründeten Antrag mit Nachweis (Art. 23 Abs. 5 [2]). Die App kennt
   // nur die erfassten Posten, nicht das steuerliche Bruttovermögen — darum ein eigener Grund.
   if (vermoegen > IPV_GE.vermoegenBruttoGrenze) return orientierung('vermoegenAntragGE');
+  // Wohneigentum zählt zum Bruttovermögen (LRDU Art. 6 lit. a [4]; RaLAMal Art. 10 Abs. 1 [3]:
+  // «telle que retenue par l'administration fiscale», das Abattement für Immobilien «n'est pas pris
+  // en compte», brutto = ohne Abzug der Hypothek). Die App kennt nur einen selbst eingetragenen
+  // Wert, nicht den Steuerwert — damit rechnen wir nicht, sonst stünde bei einer Eigentümerin ein
+  // Betrag mit «in der Regel automatisch», wo amtlich ein Antrag nötig sein kann. Eine erfasste
+  // Hypothek zeigt Eigentum auch ohne eingetragenen Wert (GEWÄHLT). Fachprüfung PR #469, W2.
+  if (hatWohneigentum(data.wohnen)) return orientierung('wohneigentumGE');
   // Ein negatives Einkommen ist ein Vertipper, kein Einkommen (BE, Fachprüfung 23.09.2026). Art. 9A
   // [3] setzt einen negativen RDU zwar auf 0 — der meint aber Geschäftsverluste, die die App nicht
   // erfasst, nicht ein Minuszeichen im Lohnfeld. Ohne den Riegel ergäbe der Vertipper Gruppe 1.
@@ -362,7 +380,9 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   const gemeinsam = {
     canton: 'GE', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltGE',
     // Keine Prämienregion: die Anzeige zeigt statt «Prämienregion undefined» den Genfer Satz.
-    extra: { basisjahr, jahrOhneRegionKey: 'ipv.jahrGE' },
+    // `jahrKey` heisst das Feld in allen Kantonen ohne Region (UR, SZ, NE …); vorher
+    // `jahrOhneRegionKey` — umbenannt 28.09.2026, Verhalten gleich.
+    extra: { basisjahr, jahrKey: 'ipv.jahrGE' },
   };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze } });
@@ -373,16 +393,17 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // gewählten Grenze —, sonst Gruppe 9, sonst der Weg des Kantons.
   let noteKey, noteParams;
   if (antragWegenRdu && fristVorbei) {
-    noteKey = 'ipv.geAntragFristVorbei'; noteParams = { value: antragGrenze, jahr, folgejahr: jahr + 1 };
+    noteKey = 'ipv.geAntragFristVorbei'; noteParams = { value: zahl(antragGrenze), jahr, folgejahr: jahr + 1 };
   } else if (antragWegenRdu) {
-    noteKey = kinderZahl > 0 ? 'ipv.geAntragNoetigKinder' : 'ipv.geAntragNoetig'; noteParams = { value: antragGrenze, jahr };
+    // K2: Beträge mit Tausendertrennung (utils/geld.js), wie die Anzeige sie sonst setzt.
+    noteKey = kinderZahl > 0 ? 'ipv.geAntragNoetigKinder' : 'ipv.geAntragNoetig'; noteParams = { value: zahl(antragGrenze), jahr };
   } else if (kindNachBasisjahr) {
     // Art. 13C [3]: Fristen wie 13B Abs. 5 — vor dem 30.11., bei Zuwachs im 2. Halbjahr bis 30.06.
     // des Folgejahres. Ob das auch für ein Kind aus dem VORJAHR (Jahrgang 2025) gilt, sagt der Text
     // nicht (Frage 9); der Hinweis warnt in beiden Fällen.
     noteKey = 'ipv.geAntragKindNeu'; noteParams = { basisjahr, jahr, folgejahr: jahr + 1 };
   } else if (r.nurKinder) {
-    noteKey = 'ipv.geNurKinder'; noteParams = { value: r.grenze };
+    noteKey = 'ipv.geNurKinder'; noteParams = { value: zahl(r.grenze) };
   } else {
     noteKey = ipvData.noteKey; noteParams = ipvData.noteParams || {};
   }
@@ -396,6 +417,9 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
       ...gemeinsam.extra,
       ...(antragNoetig ? { antragNoetig: true } : {}),
       ...(antragSicher && fristVorbei ? { anmeldefristVorbei: true } : {}),
+      // Der Text dazu in Budget, KK-Last-Karte und Prämien-Beleg ist der Genfer, nicht der
+      // Luzerner (derselbe Mechanismus wie FR — Fachprüfung PR #469, B2).
+      ...(antragSicher ? { fristNichtAbgezogenKey: 'ipv.geFristNichtAbgezogen' } : {}),
     },
   });
 }
