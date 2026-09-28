@@ -11,6 +11,17 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Prämienverbilligung Waadt nach amtlichem Modell 2026** (K31, sechster Kanton). «Subside
+  ordinaire» nach Arrêté du Conseil d’État vom 17.12.2025 und RLVLAMal art. 21, gebaut für
+  26+ allein, 26+ mit Kind(ern) und Kinder 0–18; jede Zahl am 28.09. an der Quelle neu gelesen,
+  das Formelbild der Verordnung aus der BLV extrahiert und gelesen, das amtliche Beispiel der
+  Notice geht auf den Franken auf. Antragsweg OVAM/AAS statt «automatisch via Steuerdaten»,
+  eigener Vorbehalt, Hinweis ohne Betrag auf den «subside spécifique». Paare, 19–25-Jährige und
+  Sonderkategorien zeigen bewusst keine Zahl. Alle 5 Sprachen (rm provisorisch).
+- **Kantonsmodelle als Register** (#459): ein Eintrag je Kanton in `IPV_MODULE` statt eines
+  `if`-Blocks — Vorbereitung für die übrigen Kantone.
+
 ## [0.1.45-beta] — 2026-09-28
 
 *Alles seit `0.1.44-beta` (Tag auf `1cb36b1f`): #440, #443, #449–#453, #455, #457, #458, #351, #460–#462
