@@ -115,10 +115,10 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
 });
 
 // Erweitert 20.09.2026 um BE und AG (zweiter und vierter Kanton mit eigenem Modell), danach
-// um SG, am 23.09.2026 um LU und am 28.09.2026 um VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW und ZG: unverändert bleiben jetzt 9 der 26 Kantone.
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'JU', 'NW', 'ZG'];
+// um SG, am 23.09.2026 um LU und am 28.09.2026 um VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI und VS: unverändert bleiben jetzt 3 der 26 Kantone.
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'JU', 'NW', 'ZG', 'FR', 'SZ', 'SH', 'AR', 'AI', 'VS'];
 
-describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW und ZG rechnen exakt wie v0.1.37-beta', () => {
+describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI und VS rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
     { adults: 1, children: [] }, { adults: 2, children: [], partnerIncome: 1500 },
     { adults: 1, children: [{ age: 5 }] }, { adults: 2, children: [{ age: 3 }, { age: 20 }] },
@@ -144,8 +144,8 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GE
     }
   }
 
-  it(`9 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
-    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(9);
+  it(`3 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(3);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 

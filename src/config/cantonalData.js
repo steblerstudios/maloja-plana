@@ -30,6 +30,8 @@ export const IPV_MODULE = {
   AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+  FR: { laden: () => import('./ipvFreiburg.js'), fn: 'ipvFreiburg' },
+  SZ: { laden: () => import('./ipvSchwyz.js'), fn: 'ipvSchwyz', brauchtPLZ: false },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
   // JU: keine Prämienregion — und das Modul zeigt bewusst keine Zahl (steuerbares Einkommen fehlt).
   JU: { laden: () => import('./ipvJura.js'), fn: 'ipvJura', brauchtPLZ: false },
@@ -44,6 +46,10 @@ export const IPV_MODULE = {
   TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
   OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
   SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
+  SH: { laden: () => import('./ipvSchaffhausen.js'), fn: 'ipvSchaffhausen' },
+  AR: { laden: () => import('./ipvAppenzellAusserrhoden.js'), fn: 'ipvAppenzellAusserrhoden', brauchtPLZ: false },
+  AI: { laden: () => import('./ipvAppenzellInnerrhoden.js'), fn: 'ipvAppenzellInnerrhoden', brauchtPLZ: false },
+  VS: { laden: () => import('./ipvWallis.js'), fn: 'ipvWallis' },
   NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
   ZG: { laden: () => import('./ipvZug.js'), fn: 'ipvZug', brauchtPLZ: false },
 };
@@ -131,7 +137,12 @@ export const CANTONAL_IPV = {
   // Einkommensgrenze — die 90'000 gelten nur für den Mindestanspruch der Kinder.
   UR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
     beleg: { quelle: 'RB 20.2213 · Steuerungsgrössen 2026 (GSUD Uri) · SVS Uri — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // SZ (K31): eigenes Modell in config/ipvSchwyz.js (Richtprämie minus 11 % Selbstbehalt; Anspruch
+  // nur unter einer Grenze aus EL-Lebensbedarf und EL-Mietzins). Die SVA veröffentlicht nur das
+  // «minimale Höchsteinkommen» (Mietzinsregion 3) — keine Grenze für die Person, darum maxIncome null.
+  // Durchführungsstelle seit 01.01.2026 die Sozialversicherungsanstalt Schwyz (§ 16 EGzKVG).
+  SZ: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'Schwyz' },
+    beleg: { quelle: 'EGzKVG SZ (SRSZ 361.100) · KRBzEGzKVG (SRSZ 361.110) · VVzEGzKVG (SRSZ 361.111) · SVA Schwyz — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // OW (K31): eigenes Modell in config/ipvObwalden.js (Richtprämien minus linear-progressiver
   // Selbstbehalt, harte Grenze 50 000 / mit Kindern 75 000 anrechenbares Einkommen, eine Region).
   // Die Grenze hängt am Haushalt, darum steht sie im Ergebnis, nicht hier. Antrag bei der
@@ -150,7 +161,11 @@ export const CANTONAL_IPV = {
   // gelten für das massgebende Einkommen, nicht für den erfassten Lohn.
   ZG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
     beleg: { quelle: 'IPVG ZG (BGS 842.6) · V IPVG (BGS 842.61) · Ausgleichskasse Zug — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
+  // FR (K31): eigenes Modell in config/ipvFreiburg.js (Prozent der regionalen Durchschnittsprämie
+  // nach dem Abstand zur Einkommensgrenze, 60 Stufen). Die Grenze hängt am Haushalt und wird im
+  // Modul gesetzt (sie ist amtlich als Zahl publiziert); hier darum keine Einzelwerte.
+  FR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation',
+    beleg: { quelle: 'ORP FR (RSF 842.1.13) · LALAMal (RSF 842.1.1) · Caisse de compensation FR (ECAS) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
   // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
   // nur «kein Anspruch», wo er sicher ist. Der Grenzwert 74'000 ist amtlich, aber keine Grenze, bis
@@ -159,9 +174,22 @@ export const CANTONAL_IPV = {
     beleg: { quelle: 'Parameter IPV 2026 DDI SO (27.01.2026) · SV (BGS 831.2) · SG (BGS 831.1) · AKSO — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' }, beleg: null },
-  SH: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyAhvBranchShort', beleg: null },
-  AR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' }, beleg: null },
-  AI: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // SH (K31): eigenes Modell in config/ipvSchaffhausen.js (Richtprämien minus 15 % des anrechenbaren
+  // Einkommens, höchstens 65 %). Die Versand-Grenzwerte der Verordnung sind keine Anspruchsgrenze,
+  // darum maxIncome null. Antrag bei der SVA Schaffhausen (Dekret § 15), nicht bei der Gemeinde.
+  SH: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SH' },
+    beleg: { quelle: 'SHR 832.110 · SHR 832.111 Anhang 1 · SHR 641.100 · SVA Schaffhausen — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+  // AR (K31): eigenes Modell in config/ipvAppenzellAusserrhoden.js (Richtprämie minus 46 % über dem
+  // allgemeinen Lebensbedarf, harte Obergrenzen). Eine Prämienregion. Die Obergrenze des massgebenden
+  // Einkommens ist als Zahl publiziert (Alleinstehende 35'000, Merkblatt SOVAR 2026); je Haushalt
+  // setzt sie das Modul. Antrag bei der AHV-Zweigstelle der Wohngemeinde (V zum KVG Art. 10 Abs. 1).
+  AR: { maxIncome: 35000, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAhvBranch',
+    beleg: { quelle: 'EG zum KVG AR (bGS 833.14) · V zum KVG (bGS 833.141) · SOVAR Merkblatt 2026 — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+  // AI (K31): eigenes Modell in config/ipvAppenzellInnerrhoden.js (Richtprämie minus gestufter
+  // Selbstbehalt 7–12 %). Eine Prämienregion, keine publizierte Einkommensgrenze. Kein Antrag: das
+  // Gesundheitsamt ermittelt von Amtes wegen (StKB IPV Art. 10), darum noteAutoTaxData statt «Sozialamt».
+  AI: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'StKB IPV AI (GS 832.501) · Gesundheitsamt AI Merkblatt 2026 — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // SG (K31): eigenes Modell in config/ipvStGallen.js (Referenzprämie minus Belastungsgrenze,
   // deren Satz MIT dem Einkommen steigt). Der Kanton publiziert keine Einkommensgrenze als
   // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.
@@ -191,7 +219,11 @@ export const CANTONAL_IPV = {
   // Der Weg ist ein Antrag (Notice OVAM 2026 Ziff. 4), nicht die automatische Prüfung via Steuerdaten.
   VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',
     beleg: { quelle: 'Arrêté CE VD du 17.12.2025 (subsides 2026) · RLVLAMal (BLV 832.01.1) · LVLAMal (BLV 832.01) · LHPS (BLV 850.03) · OVAM — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
+  // VS (K31): eigenes Modell in config/ipvWallis.js (degressive Skala 70 … 5 % der regionalen
+  // Referenzprämie, Kinder 80 %). Die Grenze hängt am Haushalt und wird im Modul gesetzt. Der Weg ist
+  // automatisch über die Steuerdaten (Ausgleichskasse), nicht ein Antrag bei der Dienststelle.
+  VS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'VüIPV VS (SGS 832.105) · Einkommenstabelle 2026 · Modalités RIP 2026 (Dienststelle für Gesundheitswesen) · Ausgleichskasse des Kantons Wallis — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // NE (K31): Klassen S1–S15, Grenzen je Kinderzahl (Annexe RSN 821.102) — keine Einzelwerte.
   // Weg: automatisch nach der Veranlagung, neu Berechtigte mit Antwortschein innert 30 Tagen (RALILAMal Art. 31).
   NE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoOcab',
