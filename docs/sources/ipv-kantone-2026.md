@@ -39,7 +39,7 @@ sind. Dieses Dokument ändert keinen Code.
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
-| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
+| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise — **gebaut (PR #ZG-PR), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Einzelpersonen-Grenze nicht beziffert ist (nur «kein Anspruch», wo sicher) | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | abbildbar | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
@@ -1037,7 +1037,7 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat, Hinweis «automatisch aus
 
 ## ZG — Zug
 
-**Beurteilung:** teilweise
+**Beurteilung:** teilweise — **in der App gebaut 28.09.2026 (K31), zeigt bewusst keinen Betrag**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 %
 **Zuständig / Weg:** Ausgleichskasse Zug (Durchführung), Gemeindestellen (Eingang Papierformular). Antrag nötig (online mit Login aus dem Schreiben oder Papier), Frist 30. April 2026 (abgelaufen); EL-Beziehende automatisch.
 **Gültigkeit:** 2026 definitiv (Werte vom Regierungsrat für 2026 festgelegt, laut Broschüre Stand Dezember 2025)
@@ -1092,6 +1092,68 @@ App: maxIncome 60'000, subsidySingle 3'600, linearer Abbau. Belegt ist für eine
 4. Online-Rechner «Prämienverbilligung 2026 – provisorische Berechnung als Einzelperson», Ausgleichskasse Zug. https://www.akzug.ch/online-services/online-rechner/praemienverbilligung-2026-provisorische-berechnung-des-anspruches/praemienverbilligung-2025-provisorische-berechnung-als-einzelperson — abgerufen 16.09.2026 (nur Eingabefelder gelesen)
 5. Medienmitteilung «Gezielte Zusatzentlastung bei den Krankenkassenprämien», Kanton Zug, 26.01.2026. https://zg.ch/news/news~_2026_1_gezielte-zusatzentlastung-bei-den-krankenkassenpraemien~.html — abgerufen 16.09.2026
 6. Webseite «Prämienverbilligung (IPV)», Ausgleichskasse Zug (Frist 30.04.2026 abgelaufen). https://www.akzug.ch/dienstleistungen/praemienverbilligung — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe (erfundene Adresse muss anders
+antworten).
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf` | 200, 942'695 B, PDF (erstellt 12.12.2025) | `…Broschuere_IPV_2099.pdf` → **404** |
+| `https://bgs.zg.ch/api/de/texts_of_law/842.6/show_as_json` | 200, 107'311 B | `…/842.69/…` → **404**, 0 B |
+| `https://bgs.zg.ch/api/de/texts_of_law/842.61/show_as_json` | 200, 13'842 B | (dieselbe Gegenprobe) |
+| `https://bgs.zg.ch/api/de/versions/2661/pdf_file` (IPVG) · `…/2185/pdf_file` (V IPVG) | 200, 400'522 B · 200, 164'973 B | `…/versions/999999/pdf_file` → **404**, 0 B |
+| `https://www.akzug.ch/dienstleistungen/praemienverbilligung` | 200 | `…praemienverbilligungxyz` → **404** |
+| `https://www.akzug.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/Praemienverbilligung/Grafik-IPV_2026_neu.pdf` | 200, 1'657'526 B (nur Ablaufgrafik, keine Grenzwerte) | `…Grafik-IPV_2099_neu.pdf` → **404** |
+
+**Fassungen:** IPVG BGS 842.6 «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum:
+11.04.2024)», Stand 1. Januar 2025. V IPVG BGS 842.61 «Aktuelle Version in Kraft seit: 01.01.2021
+(Beschlussdatum: 15.12.2020)». Broschüre 2026 der Ausgleichskasse Zug, PDF erstellt 12.12.2025.
+Werte 2027: keine gefunden.
+
+**Neu gelesen (Wortlaut):**
+> IPVG § 4 Abs. 3: «Massgebend sind die persönlichen und familiären Verhältnisse am 1. Januar des Jahres, für welches Prämienverbilligung beansprucht wird.»
+
+> IPVG § 6 Abs. 2/3: «Massgebend für die Berechnung der Prämienverbilligung sind die Steuerfaktoren der rechtskräftigen Veranlagung der vorletzten Steuerperiode beziehungsweise der letzten Steuerperiode für neu zugezogene Personen.» — «Der Regierungsrat kann die Auszahlung von minimalen Prämienbeiträgen ausschliessen und Obergrenzen für das massgebende Einkommen festlegen, ab denen nur noch ein reduzierter oder kein Anspruch mehr auf Prämienverbilligung besteht.»
+
+> IPVG § 7bis Abs. 2: «Steht mehreren Personen ein nicht reduzierter Gesamtanspruch zu, so wird für Kinder und junge Erwachsene in Ausbildung mindestens die Hälfte der für sie massgebenden Prämie verbilligt.»
+
+> IPVG § 11 Abs. 1/2: Bescheinigung und Versicherungsnachweis «bis 30. April bei jener Gemeinde …, wo sie am 1. Januar des Jahres Wohnsitz hatten» — «Verspätet eingereichte Gesuche können berücksichtigt werden, wenn sie bis 30. September gestellt werden und wichtige Gründe vorliegen.»
+
+> IPVG § 18 Abs. 1: «Ungerechtfertigt bezogene Prämienbeiträge sind zurückzuerstatten. Die Ausgleichskasse macht die Rückforderung geltend.»
+
+> V IPVG § 1 Abs. 1: Reineinkommen, «b) zuzüglich 10 % des Reinvermögens …; b1) zuzüglich allfällig abgezogener, freiwilliger Einkäufe in die 2. Säule …; c) zuzüglich allfällig abgezogener Beiträge an die gebundene Selbstvorsorge (Säule 3a) …; c1) … Liegenschaftsunterhaltskosten …, soweit diese 20 % … übersteigen; d) abzüglich Kinderabzug in der Höhe von 8500 Franken pro Kind.»
+
+Broschüre 2026: alle Zahlen der Tabelle oben im Textlayer wiedergefunden (Richtprämien, 8 %,
+70'000 / 89'900, 0,5 % je 100 mit Aufrundung, Mindestgarantie 80 % / 50 % nur bei «nicht reduzierter
+Verbilligung», Frist 30. April 2026, unter 50 Franken keine Auszahlung, Veranlagung 2024, Kinder
+«Jahrgang 2008 – 2025», junge Erwachsene «2001 – 2007»).
+
+**Bestätigt offen:** «Die Grenzwerte für das massgebende Einkommen fallen bei Einzelpersonen und
+gewissen Haushalten mit nur einer erwachsenen Person tiefer aus.» — keine Zahl, auch nicht in der
+Ablaufgrafik, im Merkblatt-Verzeichnis (nur Broschüre und Gemeindestellen-Liste) oder in der
+Medienmitteilung vom 26.01.2026 («Der Regierungsrat hat die Parameter … festgelegt»). Der
+Regierungsratsbeschluss ist nicht in der BGS erfasst. Den Online-Rechner (serverseitig,
+`actions/calculators/calculation/formcheck`) haben wir **nicht** mit Werten gefüttert. Die
+«Berechnungsvorlage in diesem Dokument» enthält die Broschüre nicht (zwei Bilder: Titel, Schluss).
+
+**Ein amtliches Berechnungsbeispiel gibt es nicht.** Prüfstein der Tests sind die Wortlaute von
+S. 5 als Handrechnung (Nullpunkt 4'984.80 / 8 % = 62'310, Kürzungsfaktor mit Aufrundung).
+
+**Was die App daraus macht (`src/config/ipvZug.js`):** Die App rechnet nur Haushalte mit einer
+erwachsenen Person — genau die Gruppe mit den unbekannten Grenzen. Darum zeigt ZG **für niemanden
+einen Betrag** (`zgGrenzeEinzelperson`), ausser «kein Anspruch», wo er sicher ist: ohne Kinder ab
+massgebendem Einkommen 62'310 (Richtprämie ≤ 8 %), mit Kindern über 89'900. Säule 3a: Regel `voll`
+(V IPVG § 1 lit. c, in `kantonsModell.js` eingetragen). `maxIncome` null.
+
+**Bewusst nicht gebaut:** Paare, Konkubinat, mehrere Erwachsene · junge Erwachsene · Quellen-
+besteuerte, EL, Sozialhilfe, Mutterschaftsbeiträge · BVG-Einkäufe und Liegenschaftsunterhalt ·
+Mindestgarantie der Kinder (nur bei nicht reduziertem Anspruch, und Gesetz 50 % gegen Broschüre 80 %).
+
+**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 9):** Grenzen für Einzelpersonen und «gewisse» Haushalte
+mit einer erwachsenen Person · welche Haushalte das sind · Mindestgarantie 80 % (Broschüre) gegen
+«mindestens die Hälfte» (§ 7bis) · Parameter-Beschluss des Regierungsrats 2026.
 
 ---
 

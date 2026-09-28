@@ -238,6 +238,35 @@ den Kinderanteil begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind
 **Stand:** LU ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 sind **nicht** eingebaut —
 die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU keinen Betrag mehr.
 
+
+---
+
+## 9 · Ausgleichskasse Zug — die Einkommensgrenzen für Einzelpersonen
+
+*Aufgenommen 28.09.2026 beim Einbau von ZG. Entwurf — **nicht gesendet**. (Nummer vorläufig:
+parallel entstehen weitere Kantonsabschnitte; beim Zusammenführen neu nummerieren.)*
+
+**Worum es geht:** Die Broschüre «Prämienverbilligung 2026 im Kanton Zug» nennt Richtprämien,
+Selbstbehalt 8 % und die Grenzen 70'000 / 89'900 — und dazu: «Die Grenzwerte für das massgebende
+Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer
+aus.» Die App rechnet heute nur Haushalte mit einer erwachsenen Person. Solange diese Grenzen
+fehlen, zeigt sie für Zug **keinen Betrag**, nur «kein Anspruch», wo er sicher ist.
+
+**Frage 1 — Grenzen 2026:** Ab welchem massgebenden Einkommen beginnt für Einzelpersonen die
+Kürzung, und wo liegt die Obergrenze? Gilt dieselbe Kürzung (0,5 % je angefangene 100 Franken)?
+
+**Frage 2 — «gewisse Haushalte»:** Welche Haushalte mit einer erwachsenen Person haben die tieferen
+Grenzen, welche die Haushaltsgrenzen (z. B. alleinerziehend mit Kindern)?
+
+**Frage 3 — Mindestgarantie Kinder:** Die Broschüre nennt «mindestens 80 % der Richtprämie», § 7bis
+Abs. 2 IPVG «mindestens die Hälfte der für sie massgebenden Prämie». Worauf stützt sich die 80 %?
+
+**Frage 4 — Beschluss:** Ist der Regierungsratsbeschluss mit den Parametern 2026 veröffentlicht
+(Amtsblatt)? In der BGS ist er nicht erfasst.
+
+**Stand:** ZG ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag. Mit der Antwort auf
+Frage 1 und 2 rechnet die App, ohne dass das Modell neu gebaut werden muss (`ipvZugRechnen`).
+
 ---
 
 ## Warum überhaupt fragen
