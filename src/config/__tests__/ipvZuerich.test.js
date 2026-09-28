@@ -144,8 +144,8 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GR
     }
   }
 
-// um SG, am 23.09.2026 um LU und am 28.09.2026 um VD, UR, NE, GE, GR, TG und TI: unverändert bleiben jetzt 14 der 26 Kantone.
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI'];
+  it(`14 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(14);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 
