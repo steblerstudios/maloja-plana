@@ -42,6 +42,7 @@ export const IPV_MODULE = {
   // TI kennt Prämienregionen, rechnet aber mit einem kantonsweiten PMR (LCAMal Art. 28 Abs. 2).
   TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
   OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
+  SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -138,7 +139,12 @@ export const CANTONAL_IPV = {
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
-  SO: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
+  // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
+  // nur «kein Anspruch», wo er sicher ist. Der Grenzwert 74'000 ist amtlich, aber keine Grenze, bis
+  // zu der ein Betrag bestünde (für Alleinstehende endet er viel früher) — darum maxIncome null.
+  SO: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'Parameter IPV 2026 DDI SO (27.01.2026) · SV (BGS 831.2) · SG (BGS 831.1) · AKSO — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // BS (K31): eigenes Modell in config/ipvBaselStadt.js (Stufentabelle nach KVO Anhang 2). Die
   // Leistungsgrenze ist publiziert, hängt aber an der Haushaltsgrösse — sie steht im Ergebnis.
   // Weg: Antrag beim Amt für Sozialbeiträge (KVO § 15), nicht automatisch.
