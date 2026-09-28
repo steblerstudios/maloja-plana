@@ -251,6 +251,10 @@ describe('K31 calculateIPV für UR (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 1000 } })).annual).toBe(2838);
     // Mehr Alimente als Einkommen: das Rechenblatt setzt die Nettoeinkünfte auf 0 ([3] R28) — volle Richtprämie.
     expect(calculateIPV(person({ monthlyIncome: 800, finanzen: { alimentePaid: 1000 } })).annual).toBe(4368);
+    // Der Boden 0 gilt für die Nettoeinkünfte, BEVOR der Vermögensanteil dazukommt: ein Überschuss
+    // an Alimenten frisst nicht den Vermögensanteil. 150 000 → 44 200 steuerbar → 6 630 PV
+    // → 4 368 − 563.55 = 3 804.45 → 317.05 × 12 = 3 804.60 → 3 805 (falsch wäre 4 009).
+    expect(calculateIPV(person({ monthlyIncome: 800, finanzen: { alimentePaid: 1000, savingsAccount: 150000 } })).annual).toBe(3805);
     // Unlesbar oder negativ zählt als 0.
     expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: 'abc' } })).annual).toBe(1818);
     expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { alimentePaid: -500 } })).annual).toBe(1818);
