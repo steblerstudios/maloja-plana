@@ -35,10 +35,12 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, FR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, FR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
+//                        VD: LHPS (BLV 850.03) art. 6 al. 2 lit. a, «majoré des montants affectés
+//                            aux formes reconnues de prévoyance individuelle liée (3e pilier A)»
 //                        FR: Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13), Codes 4.110–4.140
 //                            (Säule 3a = Code 4.130 der Freiburger Steuererklärung)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
@@ -114,8 +116,8 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU, FR',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13)',
+    kantone: 'ZH, SG, LU, VD, FR',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13)',
     nichtAufgerechnet: () => 0,
   }),
 

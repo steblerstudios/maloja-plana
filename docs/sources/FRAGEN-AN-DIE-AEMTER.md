@@ -60,6 +60,18 @@ Rechenbeispiel, bei dem das massgebende Einkommen zwischen C und A liegt?
 **Stand:** Waadt ist gebaut und getestet, aber **bewusst nicht eingereicht**, bis das geklärt ist
 (Entscheid Stebler Studios, 20.09.2026). Der Zweig `feat/k31-ipv-vd` liegt lokal.
 
+**Nachtrag 28.09.2026 (Port auf den Rahmen):** Das Formelbild wurde am Bild gelesen — Formeln
+1–5 stimmen mit der Abschrift, die Exponenten stehen ausserhalb der geschweiften Klammer. Die
+Frage nach einem zweiten Rechenbeispiel IM Innern einer Kurve bleibt, weil ein Bild keine
+maschinenlesbare Quelle ist. Der Stand «bewusst nicht eingereicht» ist durch den Auftrag «alle
+26 bis Oktober» (Stebler Studios, 28.09.2026) aufgehoben; VD liegt jetzt als Entwurfs-PR vor.
+
+**Zweite Frage (neu, 28.09.2026) — Beispiel des subside spécifique:** Die Notice nennt für die
+Familie mit vier Personen in Region 1 «primes de référence, soit 16'836.-». Aus art. 13 al. 2 des
+Arrêté 2026 ergeben sich für RDU 76'000 aber 2 × 563 + 2 × 161 = 1'448 im Monat, also 17'376 im
+Jahr. Stammt die Zahl aus einem früheren Wertsatz (Arrêté vom 1.10.2025)? Für die App ohne
+Folge — sie rechnet den spezifischen Subside nicht —, aber der Hinweis stützt sich auf art. 13.
+
 ---
 
 ## 4 · SVA Aargau — die Werte 2027 stehen auf der Website, nicht im Erlass

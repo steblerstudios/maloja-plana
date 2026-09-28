@@ -31,6 +31,7 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   FR: { laden: () => import('./ipvFreiburg.js'), fn: 'ipvFreiburg' },
+  VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
 };
 const _module = {};
 
@@ -141,7 +142,10 @@ export const CANTONAL_IPV = {
     beleg: { quelle: 'KVGG AG (SAR 837.200) · V KVGG (SAR 837.211) · SVA Aargau — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   TG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'TG' }, beleg: null },
   TI: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas', beleg: null },
-  VD: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // VD (K31): Grenze und Höchstbetrag hängen an der Kategorie (Arrêté 2026 art. 2) — keine Einzelwerte.
+  // Der Weg ist ein Antrag (Notice OVAM 2026 Ziff. 4), nicht die automatische Prüfung via Steuerdaten.
+  VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',
+    beleg: { quelle: 'Arrêté CE VD du 17.12.2025 (subsides 2026) · RLVLAMal (BLV 832.01.1) · LVLAMal (BLV 832.01) · LHPS (BLV 850.03) · OVAM — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
   NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
@@ -238,6 +242,9 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     deficit,
     eligible: deficit > 0,
+    // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
+    // Mietzins-Limite, siehe oben). Jeder Leser setzt dann `sozialhilfe.mitGanzerMiete` dazu.
+    mitGanzerMiete: deficit > 0 && effectiveRent > 0,
     vermoegen,
     vermoegensfreibetrag,
     vermoegenUeberFreibetrag,
