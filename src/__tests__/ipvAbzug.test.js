@@ -216,8 +216,9 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  it('die Frist-Angabe lesen nur das Luzerner Modul und ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'data/ipvAbzug.js'];
+  // OW (28.09.2026): zweiter Kanton mit verwirkender Antragsfrist (GDB 851.11 Art. 10 Abs. 7).
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Frist (LU, OW) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvObwalden.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
