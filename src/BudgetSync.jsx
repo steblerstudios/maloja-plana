@@ -341,7 +341,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         marginTop: space.sm, padding: '8px 12px', background: palette.up,
         borderRadius: radius.xs, fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
-    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')) + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
+    // Betrag als eigenes Kind — ein React-Element mit «+» an einen String gehängt ergab seit
+    // 21.09.2026 (6edd2f8b) «[object Object] (CHF 420)».
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')), ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
     // Separator before total
     React.createElement('div', { style: { ...separatorStyle, borderTopWidth: '2px' } }),
