@@ -260,7 +260,7 @@ nach Art. 3 al. 1 «égal ou inférieur») oder zu S2?
 **Frage 3 — revenu effectif:** Ist in Ziffer 5.5 der Steuererklärung der Lohn **netto** nach
 Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkommen dafür ein.
 
-**Stand:** NE ist für 2026 gebaut (Entwurfs-PR #NE-PR, K31). Werte 2027 nicht eingebaut; ab
+**Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
 01.01.2027 zeigt die App für NE keinen Betrag mehr.
 
 ---
