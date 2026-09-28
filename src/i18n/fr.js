@@ -2814,7 +2814,7 @@ export default {
     noEntitlementNote: { sie: 'Votre revenu couvre les besoins calculés — c\'est un bon point de départ.', du: 'Ton revenu couvre les besoins calculés — c\'est un bon point de départ.' },
     ipvSection: 'Réduction de primes (IPV)',
     elSection: 'Prestations complémentaires (PC)',
-    elOnlyAhvIv: 'Les PC sont réservées aux bénéficiaires AVS/AI',
+    elOnlyAhvIv: 'Les PC ne s’appliquent qu’avec une prestation AVS/AI',
     elPossible: 'Droit possible',
     totalIncome: 'Revenu total : CHF {value}',
     totalExpenses: 'Dépenses totales : CHF {value}',
@@ -3972,7 +3972,7 @@ export default {
 
   elCalc: {
     possible: 'Droit possible aux prestations complémentaires — vérifier auprès de l\'agence AVS',
-    onlyAhvIv: 'PC uniquement pour les bénéficiaires AVS/AI',
+    onlyAhvIv: 'PC uniquement avec une prestation AVS/AI',
   },
 
   error: {
@@ -4757,7 +4757,7 @@ export default {
     sectionIPV: 'Réduction de primes (IPV)',
     sectionEL: 'Prestations complémentaires (PC)',
     sectionSteuern: 'Orientation impôt fédéral',
-    elNotApplicable: 'Non applicable (uniquement pour les bénéficiaires AVS/AI)',
+    elNotApplicable: 'Non applicable (uniquement avec une prestation AVS/AI)',
     footerPrivacy: 'Ce document a été créé localement. Aucune donnée n\'a été transmise.',
     footerCredit: 'Maloja Plana — Classeur de vie suisse (Open Source)',
     empty: { sie: 'Remplissez d\'abord vos données personnelles et financières pour que le dossier puisse être généré.', du: 'Remplis d\'abord tes données personnelles et financières pour que le dossier puisse être généré.' },

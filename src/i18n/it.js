@@ -2814,7 +2814,7 @@ export default {
     noEntitlementNote: { sie: 'Il Suo reddito copre il fabbisogno calcolato — è un buon punto di partenza.', du: 'Il tuo reddito copre il fabbisogno calcolato — è un buon punto di partenza.' },
     ipvSection: 'Riduzione dei premi (IPV)',
     elSection: 'Prestazioni complementari (PC)',
-    elOnlyAhvIv: 'Le PC sono riservate ai beneficiari AVS/AI',
+    elOnlyAhvIv: 'Le PC si applicano solo con una prestazione AVS/AI',
     elPossible: 'Possibile diritto',
     totalIncome: 'Reddito totale: CHF {value}',
     totalExpenses: 'Uscite totali: CHF {value}',
@@ -3973,7 +3973,7 @@ export default {
 
   elCalc: {
     possible: 'Possibile diritto alle prestazioni complementari — verificare presso l\'agenzia AVS',
-    onlyAhvIv: 'PC solo per beneficiari AVS/AI',
+    onlyAhvIv: 'PC solo con una prestazione AVS/AI',
   },
 
   error: {
@@ -4734,7 +4734,7 @@ export default {
     sectionIPV: 'Riduzione dei premi (IPV)',
     sectionEL: 'Prestazioni complementari (PC)',
     sectionSteuern: 'Orientamento imposta federale',
-    elNotApplicable: 'Non applicabile (solo per beneficiari AVS/AI)',
+    elNotApplicable: 'Non applicabile (solo con una prestazione AVS/AI)',
     footerPrivacy: 'Questo documento è stato creato localmente. Nessun dato è stato trasmesso.',
     footerCredit: 'Maloja Plana — Organizzatore di vita svizzero (Open Source)',
     empty: { sie: 'Compili prima i Suoi dati personali e finanziari affinché il dossier possa essere generato.', du: 'Compila prima i tuoi dati personali e finanziari affinché il dossier possa essere generato.' },

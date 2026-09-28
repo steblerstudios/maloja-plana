@@ -3428,7 +3428,7 @@ export default {
     sectionIPV: 'Reducziun da premias (IPV)',
     sectionEL: 'Prestaziuns cumplementaras (PC)',
     sectionSteuern: 'Orientaziun taglia federala',
-    elNotApplicable: 'Betg applitgabel (mo per benefiziaris AVS/AI)',
+    elNotApplicable: 'Betg applitgabel (mo cun ina prestaziun AVS/AI)',
     footerPrivacy: 'Quest document è vegnì creà localmain. Naginas datas èn vegnidas tramessas.',
     footerCredit: 'Maloja Plana — Organisatur svizzer da vita (Open Source)',
     empty: { sie: 'Emplenai emprim Vossas indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.', du: 'Emplenescha emprim Tias indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.' },
@@ -3907,7 +3907,7 @@ export default {
 
   elCalc: {
     possible: 'Eventual dretg a prestaziuns cumplementaras — examinar la dumonda tar la filiala AVS',
-    onlyAhvIv: 'PC mo per benefiziaris AVS/AI',
+    onlyAhvIv: 'PC mo cun ina prestaziun AVS/AI',
   },
 
   docReminder: {
@@ -4022,7 +4022,7 @@ export default {
     noEntitlementNote: { sie: "Vossa entrada cuvra il basegn calculà — quai è ina buna posiziun da partenza.", du: "Tia entrada cuvra il basegn calculà — quai è ina buna posiziun da partenza." },
     ipvSection: 'Reducziun da premias (IPV)',
     elSection: 'Prestaziuns cumplementaras (PC)',
-    elOnlyAhvIv: 'PC mo per benefiziaris AVS/AI',
+    elOnlyAhvIv: 'PC mo cun ina prestaziun AVS/AI',
     elPossible: 'Dretg pussaivel',
     totalIncome: 'Entrada totala: CHF {value}',
     totalExpenses: 'Expensas: CHF {value}',

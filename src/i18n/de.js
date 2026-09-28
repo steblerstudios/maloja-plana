@@ -2822,7 +2822,7 @@ export default {
     noEntitlementNote: { sie: 'Ihr Einkommen deckt den berechneten Bedarf — das ist eine gute Ausgangslage.', du: 'Dein Einkommen deckt den berechneten Bedarf — das ist eine gute Ausgangslage.' },
     ipvSection: 'Prämienverbilligung (IPV)',
     elSection: 'Ergänzungsleistungen (EL)',
-    elOnlyAhvIv: 'EL nur für AHV/IV-Bezüger',
+    elOnlyAhvIv: 'EL nur bei AHV- oder IV-Leistung',
     elPossible: 'Möglicher Anspruch',
     totalIncome: 'Gesamteinkommen: CHF {value}',
     totalExpenses: 'Ausgaben: CHF {value}',
@@ -4018,7 +4018,7 @@ export default {
 
   elCalc: {
     possible: 'Möglicher Anspruch auf Ergänzungsleistungen — Antrag bei AHV-Zweigstelle prüfen',
-    onlyAhvIv: 'EL nur für AHV/IV-Bezüger',
+    onlyAhvIv: 'EL nur bei AHV- oder IV-Leistung',
   },
 
   error: {
@@ -4779,7 +4779,7 @@ export default {
     sectionIPV: 'Prämienverbilligung (IPV)',
     sectionEL: 'Ergänzungsleistungen (EL)',
     sectionSteuern: 'Bundessteuer-Orientierung',
-    elNotApplicable: 'Nicht anwendbar (nur für AHV/IV-Bezüger)',
+    elNotApplicable: 'Nicht anwendbar (nur bei AHV- oder IV-Leistung)',
     footerPrivacy: 'Dieses Dokument wurde lokal erstellt. Keine Daten wurden übermittelt.',
     footerCredit: 'Maloja Plana — Schweizer Lebensordner (Open Source)',
     empty: { sie: 'Füllen Sie zuerst Ihre persönlichen Angaben und Finanzen aus, damit das Dossier erstellt werden kann.', du: 'Fülle zuerst Deine persönlichen Angaben und Finanzen aus, damit das Dossier erstellt werden kann.' },
