@@ -3027,6 +3027,7 @@ export default {
     jahrRegion: 'Quint per l’onn da dretg {jahr}, regiun da premias {region}.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     jahrOhneRegion: 'Quint per l’onn da dretg {jahr}. En il chantun Argovia vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
+    jahrBL: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Champagna vala la premia da referenza tuttina en tut il chantun — ella na dependa betg dal lieu da domicil.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
@@ -3049,6 +3050,9 @@ export default {
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
+    vorbehaltBL: 'En il chantun Basilea-Champagna è la basa la taxaziun fiscala definitiva {basisjahr} — pli exactamain il total intermediar da las entradas taxablas —, betg l’entrada dad oz. Sche l’entrada è sa midada l’onn precedent per dapli che 20 pertschient u sche la chasada è sa midada, vegn la reducziun adattada sin dumonda. Tgi ch’è taxabel en il chantun pir dapi curt, fa atgna dumonda. Imports pajads a tort ston vegnir restituids.',
+    blKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa la limita superiura da CHF {grenze} per onn ch’il chantun Basilea-Champagna fixescha per questa chasada. Sur quella croda la reducziun dal tuttafatg.',
+    blAntrag: 'En il chantun Basilea-Champagna tramet la SVA Basel-Landschaft d’uffizi il formular da dumonda cun l’import quintà, uschespert che la taxaziun {basisjahr} è definitiva. El sto vegnir returnà suttascrit entaifer in onn, uschiglio croda il dretg. Tgi che na survegn nagin formular, fa sez ina dumonda en scrit fin ils 31 da december {jahr}.',
     // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
     noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
     vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda — ils mais avant na vegnan betg pajads retroactivamain. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
@@ -3069,6 +3073,7 @@ export default {
       praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
       einkommenNegativ: 'L’entrada registrada è negativa. Uschia na sa lascha calcular nagina reducziun — controllai per plaschair l’import en il chapitel Finanzas.',
       saeule3aUeberEinkommen: 'Il pajament en la 3. pitga A è pli aut che las entradas registradas da l’onn — u el sa repartescha sin plirs onns. Lura na sa lascha betg dir, tge part ch’è gia cuntegnida en las entradas, e la cifra fiss memia auta. Per plaschair controllar: dumandà è il pajament d’in onn, betg il stadi dal conto e betg la summa da plirs onns.',
+      blKindNeu: 'In uffant è forsa naschì suenter l’onn, da la quala taxaziun fiscala dumbra en il chantun Basilea-Champagna. El vegn lura resguardà mo sin dumonda — perquai na quinta l’app betg qua. Cun la data da naschientscha da l’uffant sa lascha quai sclerir.',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },
