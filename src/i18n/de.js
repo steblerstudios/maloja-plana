@@ -4059,6 +4059,7 @@ export default {
     noteApplyAhvBranchShort: 'Antrag bei AHV-Zweigstelle',
     noteApplyCompensation: 'Antrag bei Ausgleichskasse',
     noteApplySocialOffice: 'Antrag bei Sozialamt',
+    noteApplyAsb: 'Antrag beim Amt für Sozialbeiträge',
     noteApplyHealthOffice: 'Antrag beim Amt für Gesundheit',
     noteApplyHealthService: 'Antrag bei Dienststelle für Gesundheit',
     noteApplyCantonalCompensation: 'Antrag bei kantonaler Ausgleichskasse',
@@ -4081,6 +4082,7 @@ export default {
     jahrRegion: 'Gerechnet für das Anspruchsjahr {jahr}, Prämienregion {region}.',
     // AG kennt keine Prämienregionen: die Richtprämie gilt kantonsweit (V KVGG § 4 Abs. 1).
     jahrOhneRegion: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Aargau gilt dieselbe Richtprämie im ganzen Kanton — es gibt keine Prämienregionen.',
+    jahrBS: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Basel-Stadt hängen die Beiträge nicht vom Wohnort ab — sie gelten im ganzen Kanton gleich.',
     vorbehalt: 'Der Kanton kann die Berechnungsgrundlagen im Laufe des Jahres noch anpassen. Verbindlich wird der Anspruch erst mit den definitiven Steuerfaktoren {jahr}; zu viel bezogene Beträge sind zurückzuzahlen.',
     // BE rechnet mit den Steuerdaten des Vorvorjahres (KKVV Art. 7 Abs. 1) — der ZH-Satz wäre hier falsch.
     vorbehaltBE: 'Im Kanton Bern ist die definitive Veranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Wer heute deutlich weniger verdient, muss eine Neubeurteilung beantragen. Zu viel bezogene Beträge sind zurückzuzahlen.',
@@ -4105,6 +4107,9 @@ export default {
     luFristLaeuft: 'Die Prämienverbilligung muss im Kanton Luzern jedes Jahr neu angemeldet werden — für {jahr} bis zum 31. Oktober {vorjahr}, bei der WAS Ausgleichskasse Luzern. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die danach fällig werden. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristVorbei: 'Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich erst jetzt anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden — rückwirkend geht es nicht. Der Betrag hier zeigt den ganzen Jahresanspruch. Für {folgejahr} läuft die Frist bis zum 31. Oktober {jahr}; die Werte für {folgejahr} sind noch nicht beschlossen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristNichtAbgezogen: 'Prämienverbilligung Luzern: hier nicht abgezogen. Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden. Ist die Verfügung da, lässt sich ihr Betrag bei der Prämienverbilligung unter «Verfügung erhalten» eintragen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
+    vorbehaltBS: 'Im Kanton Basel-Stadt rechnet das Amt für Sozialbeiträge grundsätzlich mit der letzten Steuerveranlagung; weichen Einkommen oder Vermögen heute um mindestens 20 Prozent davon ab, zählen die aktuellen Unterlagen. Zum Haushalt gehören auch Kinder bis 25 in Erstausbildung. Wer allein lebt und weniger als 80 Prozent arbeitet, dem rechnet das Amt ein hypothetisches Einkommen an — ausser etwa bei der Betreuung von Kindern unter 16, in Ausbildung, bei Krankheit, mit Arbeitslosentaggeld oder über 60. Dann fällt der Betrag tiefer aus. Zu Unrecht bezogene Beiträge sind zurückzuerstatten.',
+    bsKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Das massgebliche Einkommen liegt über der Leistungsgrenze von CHF {grenze} im Jahr, die im Kanton Basel-Stadt für einen Haushalt dieser Grösse gilt.',
+    bsAntrag: 'Die Prämienverbilligung gibt es im Kanton Basel-Stadt nur auf Antrag beim Amt für Sozialbeiträge. Sie beginnt im Monat nach dem Antrag — ein früher Antrag lohnt sich also. Der Betrag hier gilt für das Standardmodell der Grundversicherung. Wer in einem alternativen Modell versichert ist (etwa Hausarzt, HMO oder Telmed) und das mit der Police nachweist, erhält einen Zuschlag: dann sind es CHF {monatAlternativ} statt CHF {monat} im Monat.',
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.
@@ -4121,6 +4126,8 @@ export default {
       praemie: 'Für die Rechnung fehlt die Krankenkassenprämie. Die Verbilligung ist höchstens so hoch wie die Prämie selbst — ohne sie wäre die Zahl hier die Obergrenze, nicht der Anspruch.',
       einkommenNegativ: 'Das erfasste Einkommen ist negativ. Damit lässt sich keine Verbilligung berechnen — bitte den Betrag im Kapitel Finanzen prüfen.',
       saeule3aUeberEinkommen: 'Die erfasste Einzahlung in die Säule 3a ist höher als die erfassten Einkünfte des Jahres — oder sie verteilt sich auf mehrere Jahre. Dann lässt sich nicht sagen, welcher Teil in den Einkünften schon enthalten ist, und die Zahl wäre zu hoch. Bitte prüfen: Gefragt ist die Einzahlung eines Jahres, nicht der Kontostand und nicht die Summe mehrerer Jahre.',
+      bsHypothetisch: 'Im Kanton Basel-Stadt rechnet das Amt für Sozialbeiträge Alleinstehenden, die weniger als 80 Prozent arbeiten, ein hypothetisches Einkommen an; eine volle Stelle zählt dabei mit 36 000 Franken netto im Jahr. Ausnahmen gelten etwa bei der Betreuung von Kindern unter 16, in Ausbildung, bei Krankheit oder IV-Rente, mit Arbeitslosentaggeld und über 60. Den Beschäftigungsgrad kennt die App nicht, und bei einem Erwerbseinkommen unter 28 800 Franken im Jahr kann dieser Zuschlag den Betrag stark senken. Darum steht hier keine Zahl.',
+      bsSaeule3a: 'Im Kanton Basel-Stadt wird die Einzahlung in die Säule 3a nur dann vom Einkommen abgezogen, wenn keine Pensionskasse besteht. Ob eine besteht, ist hier nicht erfasst — und in diesem Fall entscheidet es über die Beitragsgruppe. Wer einer Pensionskasse angehört, kann den Beitrag im Kapitel «Versicherungen & Vorsorge» eintragen; dann rechnet die App.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },
