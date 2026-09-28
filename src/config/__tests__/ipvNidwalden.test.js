@@ -4,6 +4,7 @@ import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
 import { ipvAbzug } from '../../data/ipvAbzug.js';
 import { calculateMonthlyBudget } from '../../budgetSync.js';
+import { praemienBelegState } from '../../data/praemienBeleg.js';
 
 // K31 — Prämienverbilligung Kanton Nidwalden 2026.
 // Quellen (an der Quelle gelesen 28.09.2026), Wortlaute in docs/sources/ipv-kantone-2026.md,
@@ -152,8 +153,24 @@ describe('K31 calculateIPV für NW (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ age: 5 }], kkPremium: 10 })).annual).toBe(1008);
   });
 
-  it('ein im Anspruchsjahr geborenes Kind zählt (Art. 17 Abs. 2: Geburten bis Ende Kalenderjahr)', () => {
-    expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-03-01' }] }))).toMatchObject({ eligible: true, annual: 1008 });
+  it('ein im Anspruchsjahr geborenes Kind zählt (Art. 17 Abs. 2) — aber nur ab dem Geburtsmonat (W3, Art. 20a)', () => {
+    // März: 10 Monate → 1 008 × 10/12 = 840 · Juli: 6 Monate → 504 · Dezember: 1 Monat → 84, unter 100
+    expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-03-01' }] }))).toMatchObject({ eligible: true, annual: 840 });
+    expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-07-15' }] }))).toMatchObject({ eligible: true, annual: 504 });
+    expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2026-12-01' }] })))
+      .toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.nwUnterMindestbetrag' });
+    // Gegenprobe: 2025 geboren → ganzes Jahr.
+    expect(calculateIPV(person({ monthlyIncome: 70000 / 12, children: [{ birthDate: '2025-12-01' }] })).annual).toBe(1008);
+  });
+
+  it('erhaltene Alimente zählen zum Reineinkommen (StG Art. 26 Abs. 1 Ziff. 6, W2): 20 000 + 1 500/Monat → 1 600', () => {
+    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { alimenteReceived: 1500 } })).annual).toBe(1600);
+    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, finanzen: { alimenteReceived: 'abc' } })).annual).toBe(3400);
+  });
+
+  it('unlesbares Einkommen oder Vermögen: keine Zahl statt «kein Anspruch» (K5)', () => {
+    expect(calculateIPV(person({ monthlyIncome: 'abc' }))).toMatchObject({ belegt: false, amount: null, offen: 'eingabeUnlesbar' });
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { savingsAccount: 'x' } }))).toMatchObject({ belegt: false, offen: 'eingabeUnlesbar' });
   });
 
   it('negatives Einkommen: keine Zahl', () => {
@@ -191,11 +208,14 @@ describe('K31 calculateIPV für NW (App-Angaben → Modell)', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-05-01T12:00:00'));
       const d = person({ monthlyIncome: 20000 / 12 });
       expect(calculateIPV(d)).toMatchObject({ noteKey: 'ipv.nwFristVorbei', anmeldefristVorbei: true });
-      expect(ipvAbzug(d)).toMatchObject({ betrag: 0, grund: 'fristVorbei', frist: { hinweisKey: 'ipv.nwFristNichtAbgezogen', budgetKey: 'budget.ipvHintNwFristVorbei' } });
+      expect(calculateIPV(d)).toMatchObject({ fristNichtAbgezogenKey: 'ipv.nwFristNichtAbgezogen' });
+      expect(ipvAbzug(d)).toMatchObject({ betrag: 0, grund: 'fristVorbei', frist: { jahr: 2026, vorjahr: 2025 } });
+      // Alle drei Leser (Weg wie FR, fristHinweisKey): Prämien-Beleg, Budget — KK-Karte im Anzeige-Test.
+      expect(praemienBelegState(d)).toMatchObject({ mode: 'fristVorbei', noteKey: 'ipv.nwFristNichtAbgezogen' });
       const t = (k, p) => (p ? `${k}(${Object.values(p).join('|')})` : k);
       const texte = calculateMonthlyBudget(d, t).recommendations.map((x) => x.text);
-      expect(texte.some((x) => x.startsWith('budget.ipvHintNwFristVorbei('))).toBe(true);
-      expect(texte.some((x) => x.startsWith('budget.ipvHintLuFristVorbei'))).toBe(false);
+      expect(texte.some((x) => x.startsWith('ipv.nwFristNichtAbgezogen('))).toBe(true);
+      expect(texte.some((x) => /LuFrist|luFrist/.test(x))).toBe(false);
     });
     it('ab 2027 keine Zahl mehr', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));

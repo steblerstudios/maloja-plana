@@ -71,6 +71,12 @@ describe('K31 IPV-Rechner, Kanton Nidwalden', () => {
     expect(render(profil(2000))).toMatch(/ipv\.nwFrist(Vorbei|Laeuft)\(2026\|2027\)/);
   });
 
+  it('nach der Frist nennt der Prämien-Beleg den Nidwaldner Grund, nicht den Luzerner', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
+    const { praemienBelegState } = await import('../data/praemienBeleg.js');
+    expect(praemienBelegState(profil(2000))).toMatchObject({ mode: 'fristVorbei', noteKey: 'ipv.nwFristNichtAbgezogen' });
+  });
+
   it('nach der Frist nennt die KK-Karte den Nidwaldner Grund, nicht den Luzerner', () => {
     vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
     const html = renderToStaticMarkup(React.createElement(KKLastCard, { palette, t, data: profil(2000) }));
@@ -92,7 +98,10 @@ describe('K31 IPV-Rechner, Kanton Nidwalden', () => {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      expect(typeof texte.budget.ipvHintNwFristVorbei, `${sprache}.js: budget.ipvHintNwFristVorbei`).toBe('string');
+      // Weg FR: kein eigener Budget-Schlüssel mehr, der ipv-Satz gilt auch im Budget.
+      expect(texte.budget.ipvHintNwFristVorbei).toBeUndefined();
+      expect(texte.ipv.offenGrund.eingabeUnlesbar?.length, `${sprache}: offenGrund.eingabeUnlesbar`).toBeGreaterThan(60);
+      expect(texte.ipv.nwFristLaeuft, `${sprache}: Erstreckung 60`).toMatch(/60/);
       expect(texte.ipv.vorbehaltNW).toContain('{basisjahr}');
       expect(texte.ipv.offenGrund.ausbildung?.length, `${sprache}: offenGrund.ausbildung`).toBeGreaterThan(60);
       expect(texte.ipv.offenGrund.ausbildung?.length, `${sprache}: offenGrund.ausbildung`).toBeGreaterThan(60);
