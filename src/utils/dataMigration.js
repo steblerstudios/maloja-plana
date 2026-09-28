@@ -9,7 +9,9 @@
 //   3. Unknown versions are left untouched (no silent corruption)
 //   4. Failures leave original data intact
 
-export const CURRENT_DATA_VERSION = 4;
+import { organspendeMigrieren } from './organspendeMigration.js';
+
+export const CURRENT_DATA_VERSION = 5;
 
 // ─── Migration functions ────────────────────────────────────
 // Each takes a data object at version N and returns version N+1.
@@ -71,6 +73,12 @@ const migrations = {
       delete behoerden.taxFillingDeadline;
     }
     return { ...data, behoerden, _version: 4, _migratedAt: new Date().toISOString() };
+  },
+
+  // v4 → v5: Organspende — eine Wahrheit in notfall.organDonor (organStatus wird überführt,
+  // alte Werte bleiben in _organspendeVorV5). Regeln in utils/organspende.js.
+  4: (data) => {
+    return { ...organspendeMigrieren(data), _version: 5, _migratedAt: new Date().toISOString() };
   },
 };
 

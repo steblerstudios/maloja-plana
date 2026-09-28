@@ -105,11 +105,21 @@ export const ansichtName = (view) => {
   return (e && e.nav) || WEITERE_NAMEN[view] || null;
 };
 
+// Zeichen für Ansichten, die ein Querverweis ansteuert, die aber nicht in der Suche
+// stehen — Gegenstück zu WEITERE_NAMEN. 27.09.2026: `notfalleinstieg` hatte keines,
+// und der Querverweis «Notfallkarte» trug darum das Rückfall-Zeichen `external`
+// («verlässt Maloja»). Die Seite trägt den Titel des Notfall-Kapitels, also auch
+// dessen Zeichen. Wächter: zeichenEineQuelle.test.js («Kein Zeichen aus dem Rückfall»).
+const WEITERE_ZEICHEN = {
+  notfalleinstieg: 'notfall',
+};
+
 // Piktogramm einer Ansicht — mit Rückfall, damit ein unbekannter Schlüssel
-// nichts umwirft.
+// nichts umwirft. Der Rückfall verdeckt eine Lücke, statt sie zu zeigen; darum
+// prüft der Wächter oben, dass jedes bekannte Ziel ohne ihn auskommt.
 export const ansichtIkon = (view, rueckfall = 'document') => {
   const e = SEARCH_VIEWS.find((v) => v.view === view);
-  return (e && e.icon) || rueckfall;
+  return (e && e.icon) || WEITERE_ZEICHEN[view] || rueckfall;
 };
 
 // Lebensbereich eines Ablaufs — oder null.
