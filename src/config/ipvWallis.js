@@ -59,6 +59,7 @@
 //    Ein Rahmen-PR, der sie allgemein einführt, muss VS ausnehmen, sonst zählen sie doppelt.
 //    ⚠️ Enthält der erfasste Nettolohn die Kinderzulagen schon (manche Lohnabrechnungen führen sie
 //    mit), zählen sie hier doppelt — das Einkommen fiele zu hoch, der Betrag zu tief.
+//    Der angezeigte Vorbehalt (`ipv.vorbehaltVS`) sagt das (Koordination 28.09.2026).
 //    ⟨vorher 28.09.2026: nur `alimentePaid` abgezogen — Alleinerziehende mit Zulagen und Alimenten
 //    bekamen bis 3'366 im Jahr zu viel (Fachprüfung: 5'989 statt 2'623).⟩
 //
