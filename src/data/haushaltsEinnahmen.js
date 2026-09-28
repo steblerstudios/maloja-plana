@@ -30,3 +30,19 @@ export function haushaltsEinnahmen(data = {}) {
     bruttoDabei: (lohn > 0 && lohnArt === 'brutto') || (neben > 0 && nebenArt === 'brutto'),
   };
 }
+
+// Die Zeilen der Aufschlüsselung (i18n-Schlüssel + Betrag), nur die mit Betrag — eine Liste für
+// Budget-Seite, Finanzübersicht und Ausdruck. Der Lohn trägt seine erfasste Art im Namen:
+// «Nettoeinkommen» stand bis 28.09.2026 auch über einem Bruttolohn.
+export function einnahmenZeilen(e) {
+  if (!e) return [];
+  const lohnKey = e.lohnArt === 'netto' ? 'budgetSync.incomeNet'
+    : e.lohnArt === 'brutto' ? 'budgetSync.incomeGross' : 'budgetSync.incomeSalary';
+  return [
+    { key: lohnKey, betrag: e.lohn },
+    { key: e.nebenArt === 'brutto' ? 'budgetSync.incomeSideGross' : 'budgetSync.incomeSide', betrag: e.neben },
+    { key: 'budgetSync.incomePartner', betrag: e.partner },
+    { key: 'budgetSync.incomeFamilienzulagen', betrag: e.familienzulagen },
+    { key: 'budgetSync.incomeAlimente', betrag: e.alimente },
+  ].filter(z => z.betrag > 0);
+}

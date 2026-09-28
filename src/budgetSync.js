@@ -125,6 +125,7 @@ const syncBudgetFromChapters = (data) => {
     // Ein Lohn ist brutto erfasst: `remaining` ist dann kein Geld auf dem Konto — die Anzeigen
     // zeigen statt «Verfügbar» die Frage nach dem Netto.
     bruttoDabei: einnahmen.bruttoDabei,
+    einnahmen,
     ipvRelief,
     ipvVerfuegung,
     ipvVerfuegungUnzugeordnet,
@@ -214,21 +215,24 @@ const getBudgetRecommendations = (budget, t) => {
   }
 
   const totalExpensesPercentage = budget.income > 0 ? (budget.totalExpenses / budget.income) * 100 : 0;
-  if (totalExpensesPercentage > 90) {
+  // Brutto erfasst: «knapp», «im Minus» und «ruhig» wären Urteile über einen Betrag, der so nie auf
+  // dem Konto liegt — die Anzeige fragt stattdessen nach dem Netto (28.09.2026).
+  const saldoUrteil = !budget.bruttoDabei;
+  if (saldoUrteil && totalExpensesPercentage > 90) {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.budgetTight') : 'Your budget is tight. Free budget counselling is available — for example through Caritas or your local municipality.'
     });
   }
 
-  if (budget.remaining < 0) {
+  if (saldoUrteil && budget.remaining < 0) {
     recommendations.push({
       level: 'info',
       text: t ? t('budget.deficitInfo') : 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.'
     });
   }
 
-  if (budget.income > 0 && budget.remaining >= 0 && totalExpensesPercentage <= 90) {
+  if (saldoUrteil && budget.income > 0 && budget.remaining >= 0 && totalExpensesPercentage <= 90) {
     recommendations.push({
       level: 'calm',
       text: t ? t('budget.budgetCalm') : 'You have an overview of your finances. Every step counts.'
