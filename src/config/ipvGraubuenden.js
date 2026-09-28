@@ -19,6 +19,10 @@
 //       Vorschuss 65 %, Meldefrist 31.12.2026 (Posteingang).
 //   [4] SVA Graubünden, «Individuelle Prämienverbilligung (IPV) Prämienregionen Jahr 2026», PDF
 //       vom 07.01.2026: Gemeindeliste der drei Regionen.
+//   [5] SVA Graubünden, Online-Rechner «Berechnung Individuelle Prämienverbilligung (IPV) Jahr
+//       2026» (https://www.sva.gr.ch/ipv.html, gelesen 28.09.2026, nur angesehen, NICHTS
+//       abgeschickt): «Anzahl junge Erwachsene (Jahrgang 2001 - 2007)», «Anzahl Kinder
+//       (Jahrgang 2008 - 2026)» — die Jahrgangs-Grenzen fürs Alter.
 //   🛑 Ein amtliches Berechnungsbeispiel gibt es nicht — weder in [3] noch auf den Seiten der
 //   SVA. Die SVA verweist auf ihren Online-Rechner; den füttert die App bewusst nicht. Der
 //   Prüfstein der Tests sind darum die Tabellenwerte von [3] und Handrechnungen am Wortlaut.
@@ -37,8 +41,13 @@
 //    40'001 steigt der Selbstbehalt darum um rund 400 Franken. 🛑 Das ist die Lesart des Wortlauts
 //    («Er erhöht sich … um je 1 Prozentpunkt» — der Selbstbehalt IST ein Satz), kein amtliches
 //    Beispiel. Die Gegenlesart (Tranchen wie bei einem Steuertarif) ergäbe über 10'000 einen
-//    TIEFEREN Selbstbehalt und einen höheren Betrag. Frage an die SVA: FRAGEN-AN-DIE-AEMTER.md, 8.
-//    Der Vorbehalt in der Anzeige sagt es.
+//    TIEFEREN Selbstbehalt und einen höheren Betrag: 150 / 450 / 750 Fr. in den Kategorien bis
+//    40'000, darüber konstant 1'150 Fr. im Jahr; zwischen dem Nullpunkt 59'160 und 70'660 (R1)
+//    sagt die App «kein Anspruch», wo nach der Tranchen-Lesart einer bestünde. Die Richtung ist
+//    also ZU TIEF — nicht die vorsichtige Seite. ⟨korrigiert 28.09.2026 nach der Fachprüfung
+//    #467: hier stand «bis 750»; das gilt nur bis 40'000.⟩ Frage an die SVA: FRAGEN-AN-DIE-
+//    AEMTER.md, 8. Der Vorbehalt und der «kein Anspruch»-Satz der Anzeige nennen Lesart und
+//    Richtung (`ipv.vorbehaltGR`, `ipv.grKeinAnspruch`).
 //
 // 2. KEIN DECKEL AUF DIE EFFEKTIVE PRÄMIE. Weder [1] noch [2] begrenzen die Verbilligung auf die
 //    tatsächlich bezahlte Prämie (gemessen 28.09.2026 über den vollen Text beider Erlasse, Suche
@@ -51,15 +60,22 @@
 //    «der höhere der gemäss den Absätzen 2 und 3 berechneten Beträge» zur Auszahlung. 🛑 OFFEN ist,
 //    ob dieser Vergleich für den ganzen Haushalt gilt (Gesamtanspruch, Art. 6 [1] und Art. 17
 //    Abs. 2 [2]: die massgebende Prämie ist die SUMME) oder je Kind. Die beiden Lesarten liegen bis
-//    weit über tausend Franken auseinander. Die App rechnet mit Kindern darum nur dort, wo beide
+//    weit über tausend Franken auseinander (nachgerechnet bis 2'411: drei Kinder, 60'000). Der
+//    Text stützt eher den Haushalt: [3], Abschnitt «Gesamtanspruch»: «Bei Personen im
+//    Gesamtanspruch werden die anrechenbaren Einkommen sowie die Richtprämien aller Personen
+//    zusammengezählt», und Abs. 4 spricht von ZWEI Beträgen. Die Haushalt-Lesart ist die
+//    tiefere Zahl. Folge, offen gesagt: Alleinerziehende bis rund 73'000 (R1, ein Kind) sehen
+//    keine Zahl. Die App rechnet mit Kindern darum nur dort, wo beide
 //    dasselbe ergeben (über 80'000, oder wo der allgemeine Anteil des Kindes ohnehin höher ist) —
 //    sonst `orientierung('grKinder')`. Frage an die SVA: FRAGEN-AN-DIE-AEMTER.md, 8.
 //
 // BEWUSST NICHT GEBAUT:
 //   · Paare und mehrere Erwachsene — gemeinsam Besteuerte haben einen Gesamtanspruch (Art. 6 [1]),
 //     das zweite Einkommen fehlt der App.
-//   · junge Erwachsene 19–25: Richtprämie und Kinder-Vergleichsrechnung hängen an einer Ausbildung
-//     (Art. 8 Abs. 3 [1], Art. 13 [2]), die die App nicht erfasst.
+//   · junge Erwachsene 19–25 (Jahrgang 2001–2007 [5]): ihre Richtprämie (4'368 in R1) gilt für
+//     alle, aber die Kinder-Vergleichsrechnung und der selbständige Anspruch hängen an einer
+//     Ausbildung (Art. 8 Abs. 3 [1], Art. 13 [2]), die die App nicht erfasst. ⟨präzisiert nach
+//     der Fachprüfung #467: hier stand, auch die Richtprämie hänge an der Ausbildung.⟩
 //   · Quellenbesteuerte (Art. 9 Abs. 4 [1], Art. 18 [2]: Einkommen nach Art. 99 StG), Bezügerinnen
 //     und Bezüger von EL, Sozialhilfe oder Mutterschaftsbeiträgen (Art. 9 Abs. 1 [1]: volle
 //     Verbilligung).
@@ -183,13 +199,16 @@ export function ipvGraubuenden(data, hh, ipvData, youngAdultsCount, orientierung
   // lag am 28.09.2026 nicht vor. Ab dem 01.01. des Folgejahres lieber keine Zahl.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
-  // Weder [1] noch [2] nennen einen Stichtag fürs Alter; [3] nennt «Erwachsene ab 26.
-  // Altersjahr» ohne Jahrgänge. Darum gewählt, nicht belegt: `mangelsStichtag` wie BE und SG —
-  // nur wer das ganze Jahr über 25 ist, wird gerechnet (Frage an die SVA: FRAGEN, 8).
+  // Alter nach Jahrgang: der Online-Rechner der SVA [5] führt 2026 «junge Erwachsene (Jahrgang
+  // 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)» — erwachsen ist also, wer im Anspruchsjahr
+  // 26 wird (Jahrgang 2000 und älter), dieselbe Regel wie AG und LU (`imAnspruchsjahr`).
+  // ⟨korrigiert 28.09.2026 nach der Fachprüfung #467: zuerst stand hier `mangelsStichtag`,
+  // weil weder Erlass noch Wegleitung Jahrgänge nennen; der Rechner tut es. Jahrgang 2000 fiel
+  // dadurch unnötig heraus.⟩
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
-  // Kinder «bis und mit 18. Altersjahr» [3]: Alter im Anspruchsjahr, beim eingetippten Alter ein
-  // Jahr dazu (vorsichtig an der 18, wie BE, SG, LU).
+  if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
+  // Kinder «bis und mit 18. Altersjahr» [3], Jahrgang 2008–2026 [5]: Alter im Anspruchsjahr
+  // höchstens 18, beim eingetippten Alter ein Jahr dazu (vorsichtig an der 18, wie BE, SG, LU).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
   if (UEBER_18(kinderJahre)) return orientierung('haushalt');
@@ -228,8 +247,14 @@ export function ipvGraubuenden(data, hh, ipvData, youngAdultsCount, orientierung
   // Art. 8 Abs. 3 [1] betreffen nur die Kinder.
   const cantonData = { ...ipvData, maxIncome: null };
   const basisjahr = jahr - IPV_GR.basisjahrAbstand;
+  // 🛑 Art. 8a Abs. 1 lit. d [1]: ist kein BVG-Beitrag erfasst, zählt er 0 — bei Angestellten mit
+  // Pensionskasse liegt das Einkommen dann zu tief und der Betrag ZU HOCH (Fachprüfung #467:
+  // 3'300 netto/Monat → 2'352 statt 1'716 mit 200 BVG, über eine Kategoriengrenze). Das gehört
+  // in die Anzeige, nicht nur hierher: Zusatz-Vorbehalt, sobald ein Lohn erfasst ist.
+  const bvgFehlt = Number(f.monthlyIncome) > 0 && !(Number(f.bvgContribution) > 0);
   const gemeinsam = {
-    canton: 'GR', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltGR', extra: { region, basisjahr },
+    canton: 'GR', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltGR',
+    extra: { region, basisjahr, ...(bvgFehlt ? { zusatzVorbehaltKey: 'ipv.vorbehaltGRbvg' } : {}) },
   };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.grKeinAnspruch' });

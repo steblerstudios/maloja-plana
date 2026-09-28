@@ -130,7 +130,7 @@ describe('K31 GR: Kinder Art. 8 Abs. 3/4 [1] — nur wo beide Lesarten dasselbe 
   });
   it('bei 25 % entscheidet der allgemeine Anteil des Kindes: drei Kinder unklar, vier nicht', () => {
     // 76 000: Selbstbehalt 7 600; Kind 25 % × 1 404 = 351.
-    // 3 Kinder: 2 528 × 1 404 / 10 128 = 350.46 < 351 → die Lesarten gehen auseinander.
+    // 3 Kinder: 2 528 × 1 404 / 10 128 = 350.44 < 351 → die Lesarten gehen auseinander.
     expect(ipvGraubuendenRechnen({ region: 1, kinderZahl: 3, me: 76000 }).unklar).toBe(true);
     // 4 Kinder: 3 932 × 1 404 / 11 532 = 478.72 > 351 → gleich, 3 932.
     const r = ipvGraubuendenRechnen({ region: 1, kinderZahl: 4, me: 76000 });
@@ -259,15 +259,36 @@ describe('K31 calculateIPV für GR (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 'abc' } })).annual).toBe(3996);
   });
 
+  it('🛑 ohne erfassten BVG-Beitrag: Zusatz-Vorbehalt in der Anzeige (Betrag sonst zu hoch)', () => {
+    expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ zusatzVorbehaltKey: 'ipv.vorbehaltGRbvg' });
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 300 } })).zusatzVorbehaltKey).toBeUndefined();
+    // Ohne Lohn gibt es keinen BVG-Abzug zu vermissen.
+    expect(calculateIPV(person({ monthlyIncome: 0 })).zusatzVorbehaltKey).toBeUndefined();
+    // Auch beim «kein Anspruch» — dort kann das fehlende Feld die Aussage ebenfalls kippen.
+    expect(calculateIPV(person({ monthlyIncome: 60000 / 12 }))).toMatchObject({ eligible: false, zusatzVorbehaltKey: 'ipv.vorbehaltGRbvg' });
+  });
+
+  it('Rundung auf den Franken, nicht abgeschnitten und nicht aufgerundet', () => {
+    // 10 001 → 5 916 − 6,5 % × 10 001 = 5 265.935 → 5 266 (floor gäbe 5 265)
+    expect(calculateIPV(person({ monthlyIncome: 10001 / 12 })).annual).toBe(5266);
+    // 10 009 → 5 916 − 650.585 = 5 265.415 → 5 265 (ceil gäbe 5 266)
+    expect(calculateIPV(person({ monthlyIncome: 10009 / 12 })).annual).toBe(5265);
+  });
+
+  it('negative Vermögensposten zählen nicht ins Einkommen (lit. a: «soweit der Wert nicht negativ ist»)', () => {
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { savingsAccount: -50000 } })).annual).toBe(3516);
+  });
+
   it('Säule 3a: zählt voll (Art. 8a Abs. 1 lit. e) — und steckt schon im Nettoeinkommen', () => {
     const ohne = calculateIPV(person({ monthlyIncome: 2000, finanzen: { pension3a: 0 } })).annual;
     const mit = calculateIPV(person({ monthlyIncome: 2000, finanzen: { pension3a: 7258 } })).annual;
     expect(mit).toBe(ohne);
   });
 
-  it('Alter: wer das ganze Jahr über 25 ist, wird gerechnet (Jahrgang 1999), Jahrgang 2000 nicht', () => {
+  it('Alter nach Jahrgang [5]: 2000 ist erwachsen, 2001 junger Erwachsener (Online-Rechner der SVA 2026)', () => {
     expect(calculateIPV(person({ dob: '1999-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2000-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
+    expect(calculateIPV(person({ dob: '2000-12-31' })).belegt).toBe(true);
+    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
     expect(calculateIPV(person({ dob: '' }))).toMatchObject({ offen: 'alter' });
   });
 

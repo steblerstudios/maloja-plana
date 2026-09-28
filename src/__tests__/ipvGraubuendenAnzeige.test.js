@@ -63,6 +63,11 @@ describe('K31 IPV-Rechner, Kanton Graubünden', () => {
     expect(render(profil(2500, { plz: '7130', city: 'Ilanz/Glion' }))).toContain('ipv.jahrRegion(2026|3)');
   });
 
+  it('ohne erfassten BVG-Beitrag steht der Zusatz-Vorbehalt dabei, mit Beitrag nicht', () => {
+    expect(render(profil(2500))).toContain('ipv.vorbehaltGRbvg');
+    expect(render(profil(2500, { finanzen: { bvgContribution: 200 } }))).not.toContain('ipv.vorbehaltGRbvg');
+  });
+
   it('die Anmeldefrist steht beim Betrag', () => {
     expect(render(profil(2500))).toContain('ipv.grFristLaeuft(2026)');
   });
@@ -82,7 +87,7 @@ describe('K31 IPV-Rechner, Kanton Graubünden', () => {
   it('kein roher Schlüssel bleibt stehen: alle GR-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['vorbehaltGR', 'grKeinAnspruch', 'grFristLaeuft']) {
+      for (const k of ['vorbehaltGR', 'grKeinAnspruch', 'grFristLaeuft', 'vorbehaltGRbvg']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }

@@ -428,6 +428,8 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
 //                       LU — die WAS führt für 2026 «Erwachsene (ab Jahrgang 2000)» in ihrer
 //                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
+//                       GR — der Online-Rechner der SVA Graubünden 2026 führt «junge Erwachsene
+//                       (Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am
