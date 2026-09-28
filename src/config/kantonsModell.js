@@ -39,6 +39,9 @@ export function vermoegenSumme(f) {
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
+//                        GE — gleiche Wirkung, anderer Weg: das RDU zieht die 3a gar nicht erst
+//                        ab. Art. 5 Abs. 1 lit. a/c LRDU (rsGE J 4 06) übernehmen aus Art. 31
+//                        LIPP (D 3 08) nur lit. a und b, nicht lit. c (3a). (28.09.2026)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        KKVV Art. 6 Abs. 4 lit. i
@@ -112,8 +115,8 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866)',
+    kantone: 'ZH, SG, LU, GE',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · GE Art. 5 Abs. 1 LRDU (rsGE J 4 06) ohne Art. 31 lit. c LIPP',
     nichtAufgerechnet: () => 0,
   }),
 

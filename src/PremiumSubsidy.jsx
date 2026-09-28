@@ -433,7 +433,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
       React.createElement('div', null, ipvResult.region
         ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
-        : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
+        // Ein Kanton ohne Prämienregion bringt seinen eigenen Satz mit (`jahrKey`, z. B. GE); der
+        // Aargau-Satz `jahrOhneRegion` nennt den Aargau und gälte sonst still für andere (K31 GE).
+        : t(ipvResult.jahrKey || 'ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
       React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
       // Der Vorbehalt ist kantonsspezifisch: BE rechnet mit den Steuerdaten des Vorvorjahres
       // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres, AG mit denen von vor DREI

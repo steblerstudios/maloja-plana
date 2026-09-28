@@ -30,6 +30,8 @@ export const IPV_MODULE = {
   AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+  // GE: keine Prämienregion (Tarif «Barème subsides 2026»; BAG: eine Region) — wartet nicht auf PLZ.
+  GE: { laden: () => import('./ipvGeneve.js'), fn: 'ipvGeneve', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -139,7 +141,11 @@ export const CANTONAL_IPV = {
   VD: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
   NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
-  GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
+  // GE (K31): eigenes Modell in config/ipvGeneve.js (acht Gruppen nach RDU, fester Betrag je Person).
+  // Die Grenzen publiziert Genf als Zahl (Art. 21 LaLAMal) — sie hängen aber vom Haushalt ab und
+  // stehen darum im Ergebnis, nicht hier.
+  GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam',
+    beleg: { quelle: 'LaLAMal (rsGE J 3 05) · RaLAMal (J 3 05.01) · LRDU (J 4 06) · Barème subsides 2026, SAM Genève — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };
 
