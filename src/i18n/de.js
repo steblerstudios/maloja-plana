@@ -3999,6 +3999,12 @@ export default {
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.
+    // K31 AI (28.09.2026): StKB IPV GS 832.501 Art. 5, 6, 10, 11a, 13 und Anhang A1-1; Merkblatt Gesundheitsamt 2026.
+    jahrAI: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Appenzell Innerrhoden gilt dieselbe Richtprämie im ganzen Kanton — es gibt keine Prämienregionen.',
+    vorbehaltAI: 'Im Kanton Appenzell Innerrhoden ist die definitive Steuerveranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Lag das massgebende Einkommen im Vorvorjahr unter 12 000 Franken oder hat sich der Zivilstand im Vorjahr geändert, zählt die Veranlagung des Vorjahres. Zu Unrecht ausgerichtete Beträge sind zurückzuerstatten.',
+    aiKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Die Richtprämie liegt nicht über dem Selbstbehalt von 7 bis 12 Prozent des massgebenden Einkommens. Der Kanton Appenzell Innerrhoden veröffentlicht dazu keine Einkommensgrenze als Zahl — sie ergibt sich erst aus der Rechnung.',
+    aiUnterMindestbetrag: 'Nach dieser Rechnung bestünde ein Anspruch, er wird aber nicht ausbezahlt: Der Kanton Appenzell Innerrhoden richtet die Prämienverbilligung erst ab 100 Franken im Jahr aus.',
+    aiAutomatisch: 'Im Kanton Appenzell Innerrhoden braucht es dafür keinen Antrag: Das Gesundheitsamt ermittelt die Berechtigten für {jahr} aus den Steuerdaten und stellt eine Verfügung zu. Wer keine erhält und einen Anspruch sieht, kann sie schriftlich verlangen. Wer bis zur Verfügung auf die Verbilligung angewiesen ist, kann eine provisorische beantragen.',
     offenGrund: {
       haushalt: 'Für Paare und Haushalte mit mehreren Erwachsenen rechnet die App noch nicht: Dafür fehlen das Alter und die Einkünfte der zweiten Person.',
       alter: 'Für die Rechnung fehlt ein Geburtsdatum — auch bei den Kindern. Junge Erwachsene in Ausbildung werden zudem mit dem Einkommen der Eltern gerechnet, das hier nicht erfasst ist.',
