@@ -240,6 +240,36 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 10 · Kantonale Steuerverwaltung Glarus, Fachstelle IPV — Kindergarantie im Berechnungsbeispiel
+
+*Aufgenommen 28.09.2026 beim Einbau von GL (K31). Entwurf — **nicht gesendet**. (Nummer 10, weil die
+Zweige BS und BL gleichzeitig Nr. 8 und 9 belegen.)*
+
+**Worum es geht:** Formel, Selbstbehalte und die Richtprämien 2026 (5'447 / 3'896 / 1'500, Mitteilung
+der Fachstelle vom 18.11.2025) stehen vollständig in EG KVG, PVV, VV PV und den Unterlagen der
+Fachstelle. Beide amtlichen Berechnungsbeispiele rechnen wir auf den Franken nach.
+
+**Frage 1 — Kindergarantie im Beispiel «Eltern mit 2 Kindern»:** Das Beispiel (anrechenbares
+Einkommen 65'000, 12 %) ergibt CHF 6'094. Der Satz direkt darunter sagt, dass Kinder bis 85'000
+mindestens 80 % der Richtprämie erhalten (Art. 16 Abs. 3 EG KVG). Verteilt man 6'094 nach VV PV
+Art. 9 Abs. 1 im Verhältnis der Richtprämien, erhält jedes Kind 657.90 — weniger als 80 % von
+1'500 (1'200). Gilt dann (a) «Kinder erhalten 1'200, die Eltern den Rest» (Total 6'094), oder
+(b) «Kinder erhalten 1'200 zusätzlich zum Anteil der Eltern» (Total 7'178)? Bis zur Antwort zeigt
+die App dort, wo die Lesarten abweichen, keinen Betrag.
+
+**Frage 2 — Stufengrenzen:** Gilt der Satz von 9 % noch bei einem anrechenbaren Einkommen von genau
+40'000 («bis 40 000 Franken»)? Wir rechnen «bis und mit».
+
+**Frage 3 — Vermögensfreibetrag bei IV-Rente:** Das Steuergesetz (Art. 45 Ziff. 4) gewährt ab einer
+halben IV-Rente weitere 25'400. Die App kennt den IV-Grad nicht und rechnet ohne — ist das für die
+IPV-Berechnung (10 % des steuerbaren Vermögens) so übernommen?
+
+**Stand:** GL ist für 2026 gebaut (Entwurfs-PR, K31). Die EG-KVG-Fassung 2027 (Landsgemeinde
+03.05.2026) behält den Antrag; ab 2028 gilt eine weitere Fassung. Ab 01.01.2027 zeigt die App für
+GL keinen Betrag mehr, bis die Richtprämien 2027 eingearbeitet sind.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
