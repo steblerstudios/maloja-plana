@@ -292,3 +292,23 @@ neue Stellen nehmen `hinweisZeichen()`.
 weniger (`praefix` ruft `rechner` und `kaestchen` auf — beide stehen auf der
 Abbau-Liste). Erst die Glyphen, dann neu messen. Zahlen und Hergang:
 [`MESSUNG-startdatei-65kb-2026-09-20.md`](MESSUNG-startdatei-65kb-2026-09-20.md).
+
+### ⟨Nachtrag 27.09.2026⟩ Zwei Lücken, die die Wächter nicht sahen
+
+Eine zweite Messung — jedes Zeichen in allen Dateien, dazu ein Laufzeit-Abgleich aller
+Icon-Felder in `data/`, `config/`, `utils/` gegen das Register — fand zwei Stellen:
+
+- **Die Sprachdateien waren ganz ausgenommen.** Richtig für den Pfeil *im* Satz, aber so
+  überlebte `legal.resources.movedCta: '→ Zur Bibliothek'` in allen fünf Sprachen — ein
+  Wegweiser auf einem Knopf, der in Maloja bleibt. Jetzt gilt in `i18n/`: **kein Text
+  beginnt oder endet mit einem Pfeil** (`glyphenImText.test.js`).
+- **Ein Rückfall-Zeichen verdeckt eine Lücke, statt sie zu zeigen.** `ansichtIkon(view,
+  rueckfall)` gab für `notfalleinstieg` still den Rückfall zurück — in `ChapterView` war das
+  `external`. Der Querverweis «Notfallkarte» trug darum das Zeichen «verlässt Maloja».
+  Ein fehlendes Bild fällt auf, ein falsches nicht. Jetzt muss jedes Querverweis-Ziel und
+  jede fest genannte Ansicht **ohne Rückfall** ein Zeichen finden (`zeichenEineQuelle.test.js`);
+  Ansichten ausserhalb der Suche stehen in `WEITERE_ZEICHEN`.
+
+Bestätigt ohne Befund: 384 feste Icon-Namen und 97 Icon-Felder in den Daten treffen alle
+das Register; im Code sichtbar bleiben nur die bekannten `✓ ⓘ •`. **Grenze:** 116 Stellen
+bilden den Namen zur Laufzeit — geprüft sind ihre Datenquellen, nicht jeder Pfad einzeln.

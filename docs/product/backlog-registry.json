@@ -78,7 +78,7 @@
       "requires_external_interface": false,
       "requires_ai": false,
       "export_required": true,
-      "notes": "Swiss Civil Code Art. 360-369. Must be registered with municipality to be valid."
+      "notes": "Swiss Civil Code Art. 360-369. Registration is voluntary: on request the civil registry office records existence and place of deposit (Art. 361 para. 3); not a validity requirement."
     },
     {
       "id": "MP-GEN-004",

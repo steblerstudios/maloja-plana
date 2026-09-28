@@ -19,6 +19,16 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ⚖️ **Nachtrag 27.09., 21:05 — #438 gemergt (`138717e5`), NICHT live. Live bleibt `4197501d` = 0.1.42-beta.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 21:05): main = `138717e5` · live = `4197501d` · 1 Commit dazwischen · offen: #437 #436 #433 #351 (Entwurf).
+> **#438:** Feld-Hinweis `vorsorgeauftrag` sagte «Muss bei der Gemeinde registriert werden» (de/en/fr/it/rm) — falsch nach ZGB 361 Abs. 3
+> (Zivilstandsamt, auf Antrag, freiwillig). Korrigiert nach dem Wortlaut von `vorsorgeauftrag.step3Text`; rm mit `TODO(rm)`. Suche über alle
+> Sprachen: keine weitere Stelle im Code; dieselbe Aussage in `docs/product/` mitkorrigiert. `kapitelAbdruck.txt`: genau 5 `hint`-Summen.
+> **Belegt:** 4502/4502 Tests (7 von 8 Läufen; 1 Lauf mit 1 Fehlschlag, nicht reproduziert, Datei nicht erfasst) · i18n 57/57 · Gap-Scan gleich
+> wie vorher · PII sauber · CI grün · Squash-Merge auf Zuruf Stebler Studios.
+> **Offen:** Deploy (Stebler Studios) · rm-Gegenlese · Wackel-Test beobachten (bei nächstem Rot Dateinamen festhalten).
+
 > 🏷️ **Nachtrag 27.09., 18:00 — LIVE = `4685c20` = Release 0.1.41-beta (Deploy Stebler Studios 17:45), Tag `v0.1.41-beta` = Live.**
 >
 > **Belegt:** `version.json` `4685c200…`/`0.1.41-beta`/`sauber: true` (Gegenprobe 404) · `index-BK47DFm2.js` und `de-BW-nfuQ1.js`

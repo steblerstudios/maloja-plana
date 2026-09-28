@@ -35,6 +35,7 @@ export const WERKZEUGE = [
   { view: 'budget', nav: 'nav.budget', icon: 'csv', fach: 'geld', aliases: ['budget', 'haushalt', 'ausgaben'] },
   { view: 'sync', nav: 'nav.budgetSync', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', fach: 'geld', aliases: ['budget', 'sync', 'ausgaben'] },
   { view: 'schulden', nav: 'nav.debts', icon: 'debt', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
+  { view: 'kreditkarte', nav: 'nav.kreditkarte', sub: 'nav.sub.kreditkarte', icon: 'money', fach: 'geld', aliases: ['kreditkarte', 'cashback', 'jahresgebühr', 'credit card', 'carte de crédit', 'carta di credito'] },
   { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', fach: 'geld', imMenue: 5, aliases: ['finanzübersicht', 'übersicht', 'finanzen', 'overview'] },
   // Kein eigener View: führt ins Kapitel Finanzen (wie bisher auf dem Dashboard).
   { key: 'mindestlohn', view: 'chapter', kapitel: 'finanzen', nav: 'nav.mindestlohn', sub: 'nav.sub.mindestlohn', icon: 'money', fach: 'geld', suche: false },

@@ -217,3 +217,28 @@ describe('Template-Strings · die Schicht, die die beiden Zählungen oben nicht 
     expect([...ERLAUBT].filter((k) => !da.has(k))).toEqual([]);
   });
 });
+
+describe('Sprachdateien · kein Wegweiser-Pfeil am Rand eines Textes', () => {
+  // Stand 27.09.2026. Alle Zählungen oben nehmen `i18n/` aus, weil der Pfeil dort
+  // meist Typografie im Satz ist («CHF 250/Mt. → ca. CHF 3'000/Jahr»). Am ANFANG
+  // oder ENDE eines Textes ist er aber ein Wegweiser — und die fielen am 20.09.
+  // ersatzlos weg (docs/ICON_KONVENTION.md: «weiter, bleibt hier → keines»).
+  // Übersehen hatte die Ausnahme `legal.resources.movedCta: '→ Zur Bibliothek'`,
+  // in allen fünf Sprachen, auf einem Knopf, der in Maloja bleibt.
+  const I18N = path.join(SRC, 'i18n');
+  const amRand = () => fs.readdirSync(I18N).filter((f) => /^[a-z]{2}\.js$/.test(f)).flatMap((f) =>
+    fs.readFileSync(path.join(I18N, f), 'utf8').split('\n').flatMap((zeile, i) =>
+      [...zeile.matchAll(/'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)"/g)]
+        .map((m) => (m[1] ?? m[2]).trim())
+        .filter((s) => /^[→←↗]|[→←↗]$/.test(s))
+        .map((s) => `${f}:${i + 1} ${s}`)));
+
+  it('liest die Sprachdateien überhaupt (sonst prüft der Test die leere Menge)', () => {
+    const pfeile = fs.readFileSync(path.join(I18N, 'de.js'), 'utf8').match(/→/g) || [];
+    expect(pfeile.length).toBeGreaterThan(10);
+  });
+
+  it('kein Text beginnt oder endet mit einem Pfeil', () => {
+    expect(amRand()).toEqual([]);
+  });
+});

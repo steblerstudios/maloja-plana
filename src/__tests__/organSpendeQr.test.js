@@ -31,9 +31,12 @@ afterAll(() => { for (const k of gesetzt) delete globalThis[k]; gesetzt = []; })
 const t = (k) => ({
   'organ.title': 'Organspende',
   'organ.status': 'Status',
-  'organ.registered': 'Registriert',
-  'organ.notRegistered': 'Nicht registriert',
-  'organ.declined': 'Abgelehnt',
+  'organ.nichtFestgehalten': 'Noch nicht festgehalten',
+  'chapters.notfall.fields.organDonor.options.yes': 'Zustimmung — alle',
+  'chapters.notfall.fields.organDonor.options.partial': 'Zustimmung — nur bestimmte',
+  'chapters.notfall.fields.organDonor.options.declined': 'Ablehnung',
+  'chapters.notfall.fields.organDonor.options.delegated': 'Vertrauensperson',
+  'chapters.notfall.fields.organDonor.options.undecided': 'Noch nicht entschieden',
   'organ.organsAndTissue': 'Organe und Gewebe',
   'organ.heart': 'Herz',
   'organ.lungs': 'Lunge',
@@ -69,13 +72,13 @@ const basisDaten = {
 
 describe('Organspende-QR als vCard', () => {
   it('ist eine vCard, keine JSON-Zeichenkette', () => {
-    const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: {} });
+    const v = organSpendeVcard({ t, data: basisDaten, status: 'yes', organs: {} });
     expect(v.startsWith('BEGIN:VCARD')).toBe(true);
     expect(() => JSON.parse(v)).toThrow();
   });
 
   it('nennt die Organe in Wörtern, nicht als Schlüssel', () => {
-    const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: { heart: true, kidneys: true } });
+    const v = organSpendeVcard({ t, data: basisDaten, status: 'partial', organs: { heart: true, kidneys: true } });
     const notiz = notizVon(v);
     expect(notiz).toContain('Herz');
     expect(notiz).toContain('Nieren');
@@ -84,7 +87,7 @@ describe('Organspende-QR als vCard', () => {
   });
 
   it('trägt den Freitext mit seinem Inhalt — nicht als das Wort «other»', () => {
-    const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: { other: 'Haut' } });
+    const v = organSpendeVcard({ t, data: basisDaten, status: 'partial', organs: { other: 'Haut' } });
     const notiz = notizVon(v);
     expect(notiz).toContain('Haut');
     expect(notiz).not.toContain('other');
@@ -93,24 +96,32 @@ describe('Organspende-QR als vCard', () => {
   it('lässt eine Angabe aus alten Daten stehen, auch wenn ihr Wort fehlt', () => {
     // `pancreas` hat in keiner Sprache ein Etikett und ist in der Oberfläche nicht wählbar.
     // Auf einem Notfall-Ausweis wird trotzdem nichts stillschweigend weggelassen.
-    const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: { pancreas: true } });
+    const v = organSpendeVcard({ t, data: basisDaten, status: 'partial', organs: { pancreas: true } });
     expect(notizVon(v)).toContain('pancreas');
   });
 
   it('führt die Telefonnummer als eigenes Feld — damit sie wählbar ist', () => {
-    const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: {} });
+    const v = organSpendeVcard({ t, data: basisDaten, status: 'yes', organs: {} });
     expect(felderVon(v)['TEL;TYPE=CELL']).toBe('079 123 45 67');
   });
 
   it('trägt keine AHV-Nummer (K123, Entscheid 24.09.2026) und bleibt eine einzige NOTE', () => {
-    const v = organSpendeVcard({ t, data: basisDaten, status: 'registered', organs: {} });
+    const v = organSpendeVcard({ t, data: basisDaten, status: 'yes', organs: {} });
     expect(v.split('\r\n').filter(z => z.startsWith('NOTE:')).length).toBe(1);
     expect(v).not.toContain('756.1234.5678.90');
   });
 
-  it('gibt jeden der drei Status als Wort wieder', () => {
-    for (const [status, wort] of [['registered', 'Registriert'], ['not_registered', 'Nicht registriert'], ['declined', 'Abgelehnt']]) {
+  it('gibt jeden Entscheid als Wort wieder — und ohne Entscheid keinen erfundenen', () => {
+    for (const [status, wort] of [['yes', 'Zustimmung — alle'], ['partial', 'Zustimmung — nur bestimmte'], ['declined', 'Ablehnung'], ['delegated', 'Vertrauensperson'], ['undecided', 'Noch nicht entschieden'], ['', 'Noch nicht festgehalten'], [undefined, 'Noch nicht festgehalten'], ['registered', 'Noch nicht festgehalten']]) {
       expect(notizVon(organSpendeVcard({ t, data: basisDaten, status, organs: {} }))).toContain(wort);
+    }
+  });
+
+  it('nennt Organe nur bei «nur bestimmte» — bei Zustimmung für alle oder Ablehnung wäre eine Liste ein Widerspruch', () => {
+    for (const status of ['yes', 'declined', 'delegated', 'undecided', '']) {
+      const notiz = notizVon(organSpendeVcard({ t, data: basisDaten, status, organs: { heart: true, other: 'Haut' } }));
+      expect(notiz).not.toContain('Herz');
+      expect(notiz).not.toContain('Haut');
     }
   });
 
