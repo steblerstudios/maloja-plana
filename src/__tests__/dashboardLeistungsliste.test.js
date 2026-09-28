@@ -24,7 +24,7 @@ const render = (props) => renderToStaticMarkup(React.createElement(QuickCheck, {
 const betrag = (n) => '≈ CHF ' + zahl(n, { hoechstens: 2 });
 
 const profil = (monthlyIncome) => ({
-  basis: { canton: 'BS', household: { adults: 1, children: [] } },
+  basis: { canton: 'VD', household: { adults: 1, children: [] } }, // (BS seit 28.09.2026 mit eigenem Modell, darum VD — gleiche Musterwerte 54 000 / 3 000 / 6 000 / 1 500)
   finanzen: { monthlyIncome, incomeType: 'netto' },
   wohnen: { rentAmount: 1000 },
   versicherungen: { kkPremium: 450 },
@@ -32,7 +32,7 @@ const profil = (monthlyIncome) => ({
 
 describe('Dashboard-Leistungsliste · IPV und Sozialhilfe', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['VD']); });
   afterAll(() => zuruecksetzen());
 
   it('Voraussetzung: bei 1000/Monat greifen beide', () => {
@@ -85,7 +85,7 @@ describe('Instrument Steuer-Säulen', () => {
 // ─────────────────────────────────────────────────────────────
 describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['VD']); });
   afterAll(() => zuruecksetzen());
 
   it('Art offen: Feld leer, Hinweis statt Rechnung', () => {
@@ -110,7 +110,7 @@ describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
   });
 
   it('brutto nahe am Bedarf: «knapp» — bei netto nicht', () => {
-    // Bedarf BS, 1 Person, Miete 1000, KK 450 → Netto knapp darunter
+    // Bedarf VD, 1 Person, Miete 1000, KK 450 → Netto knapp darunter
     const bedarf = calculateSozialhilfe(profil(0)).totalBedarf;
     // 3 % über dem Bedarf: innerhalb der Knapp-Schwelle, aber nicht gleich (Gegenprobe mit Schwelle 0 → rot)
     const brutto = Math.round(bedarf * 1.03 / 0.936);   // unter der BVG-Schwelle: netto = brutto × 0.936

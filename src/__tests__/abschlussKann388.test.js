@@ -35,9 +35,10 @@ describe('Mietzins BS: Referenzalter und Kinder ohne Alter sichtbar', () => {
 
 describe('Schnellcheck: IPV-Jahreseinkommen wie die IPV (inkl. Nebenerwerb)', () => {
   it('nennt Hauptlohn × 12 + Nebenerwerb × 12, nicht nur den Hauptlohn', () => {
-    const zurueck = kantoneBelegtSimulieren(['BS']);
+    // (BS seit 28.09.2026 mit eigenem Modell, darum VD — gleiche Musterwerte 54 000 / 3 000 / 6 000 / 1 500)
+    const zurueck = kantoneBelegtSimulieren(['VD']);
     try {
-      const data = { basis: { canton: 'BS', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
+      const data = { basis: { canton: 'VD', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
         finanzen: { monthlyIncome: 3500, incomeType: 'netto', sideIncome: 500, dreizehnter: 'no' }, wohnen: { rentAmount: 1200 }, versicherungen: { kkPremium: 400 } };
       const html = renderToStaticMarkup(React.createElement(QuickCheck, { palette, t, data, onNavigate: () => {} }));
       // Einkommen ohne Sozialhilfe-Anspruch, sonst zeigt die Zeile «in der Sozialhilfe enthalten».

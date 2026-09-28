@@ -114,13 +114,14 @@ describe('calculateIPV in den fünf Kantonsmodulen', () => {
 
 describe('calculateIPV in einem Muster-Kanton (Beleg simuliert)', () => {
   it('«ja» mit 2 160/Monat = «nein» mit 2 340/Monat, auch im IPV-Pegel', () => {
-    const zurueck = kantoneBelegtSimulieren(['BS']);
+    // (BS seit 28.09.2026 mit eigenem Modell, darum VD — gleiche Musterwerte 54 000 / 3 000 / 6 000 / 1 500)
+    const zurueck = kantoneBelegtSimulieren(['VD']);
     try {
-      const mit13 = profil('BS', '4051', 'Basel', 2160, JA);
-      const gleichesJahr = profil('BS', '4051', 'Basel', 2340, NEIN);
+      const mit13 = profil('VD', '1003', 'Lausanne', 2160, JA);
+      const gleichesJahr = profil('VD', '1003', 'Lausanne', 2340, NEIN);
       expect(calculateIPV(mit13).eligible).toBe(true);
       expect(calculateIPV(mit13)).toEqual(calculateIPV(gleichesJahr));
-      expect(calculateIPV(mit13).annual).toBeLessThan(calculateIPV(profil('BS', '4051', 'Basel', 2160, NEIN)).annual);
+      expect(calculateIPV(mit13).annual).toBeLessThan(calculateIPV(profil('VD', '1003', 'Lausanne', 2160, NEIN)).annual);
       // Der Pegel steht neben derselben Grenze — also dasselbe Einkommen.
       expect(pegelState(mit13).income).toBe(2160 * 13);
       // Partnereinkommen: immer ×12, und das Ergebnis sagt es dazu (nach dem 13. der zweiten
@@ -193,11 +194,11 @@ describe('Schutzschild: BVG-Eintrittsschwelle mit 13. Monatslohn', () => {
 
 describe('IPV-Rechner zeigt die Partner-Annahme', () => {
   it('nur mit Partnereinkommen', () => {
-    const zurueck = kantoneBelegtSimulieren(['BS']);
+    const zurueck = kantoneBelegtSimulieren(['VD']);
     try {
       const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
       const render = (data) => renderToStaticMarkup(React.createElement(PremiumSubsidy, { palette, t: (k) => k, data, onUpdateData: () => {} }));
-      const allein = profil('BS', '4051', 'Basel', 2160, JA);
+      const allein = profil('VD', '1003', 'Lausanne', 2160, JA);
       const paar = { ...allein, basis: { ...allein.basis, maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '1000' } } };
       expect(render(paar)).toContain('ipv.annahmePartnerOhneDreizehnten');
       expect(render(allein)).not.toContain('ipv.annahmePartnerOhneDreizehnten');
