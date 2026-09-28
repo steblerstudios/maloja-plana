@@ -119,7 +119,7 @@ describe('K31 calculateIPV für TI (App-Angaben → Modell)', () => {
     const r = calculateIPV(person({ monthlyIncome: 3000 }));
     expect(r).toMatchObject({
       belegt: true, eligible: true, annual: 3341, amount: 278, maxAnnual: 5400,
-      basisjahr: 2023, jahr: 2026, vorbehaltKey: 'ipv.vorbehaltTI', jahrTextKey: 'ipv.jahrTessin',
+      basisjahr: 2023, jahr: 2026, vorbehaltKey: 'ipv.vorbehaltTI', jahrKey: 'ipv.jahrTessin',
     });
     expect(r.region).toBeUndefined();
     expect(r.cantonData.maxIncome).toBe(null);

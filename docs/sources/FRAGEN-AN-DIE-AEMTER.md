@@ -240,6 +240,42 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 8 · Sozialversicherungsstelle Uri — Deckel, Rundung, Aufteilung und das Alter
+
+*Aufgenommen 28.09.2026 beim Einbau von UR. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Formel und Zahlen 2026 stehen im Prämienverbilligungsreglement (RB 20.2213),
+in der Medienmitteilung vom 18.12.2025 und im Berechnungsformular 2026 der SVS; die App rechnet
+das Formular Zelle für Zelle nach. Ein durchgerechnetes Beispiel mit Zahlen haben wir nicht
+gefunden. Vier Punkte stehen weder im Reglement noch im Formular eindeutig.
+
+~~**Frage 1 — Deckel auf die eigene Prämie:** Das Reglement begrenzt die Verbilligung nur bei
+EL-Beziehenden auf die tatsächliche Prämie (Art. 4 Abs. 4). Gilt für alle anderen eine
+Begrenzung, wenn die eigene Prämie (z. B. mit hoher Franchise) tiefer ist als der errechnete
+Betrag? Die App deckelt heute **nicht** (wie in St.Gallen, Abschnitt 5).~~
+⟨**erledigt 28.09.2026, belegt** (Fachprüfung, K1): KVV Art. 106c Abs. 5bis (SR 832.102, in Kraft
+seit 01.01.2024) — der Versicherer «bezahlt der versicherten Person den Differenzbetrag innerhalb
+von 60 Tagen nach der Meldung der Prämienverbilligung durch den Kanton aus. Kantonale Regelungen,
+wonach die Prämie höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben
+vorbehalten.» Uri hat keine solche Regelung. Die Frage muss nicht gestellt werden.⟩
+
+**Frage 2 — Rundung:** Art. 14 Abs. 3: «auf fünf Rappen zu runden». Wird kaufmännisch gerundet
+(83.33 → 83.35, 83.42 → 83.40) oder immer auf? Die App rundet kaufmännisch.
+
+**Frage 3 — Aufteilung:** Um je Person runden zu können, teilt die App den allgemeinen Anspruch
+nach Art. 14 Abs. 2 im Verhältnis der **anrechenbaren** Richtprämien auf (Kind mit 20 % =
+220.80); das Kinderminimum von 80 % geht ganz an das Kind. Gilt diese Aufteilung auch, wenn alle
+im selben Haushalt bei **einem** Versicherer sind?
+
+**Frage 4 — Alter:** Art. 5 nennt «Erwachsene (26 Jahre und älter)», aber keinen Stichtag. Gilt
+der 1. Januar (Art. 3 Abs. 3) oder der Jahrgang, wie beim Antragsformular für die Kinder
+(«Jahrgänge 2008 – 2025»)? Betroffen ist für 2026 der Jahrgang 2000; die App zeigt dort keine Zahl.
+
+**Stand:** UR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 waren am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für UR keinen Betrag mehr.
+
+---
+
 ## 10 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
 
 **Wo:** LCAMal (RL 853.100) Art. 31, 32a, 37; RLCAMal (RL 853.110) Art. 17, 18; Decreto RL 870.130;

@@ -200,7 +200,7 @@ export function ipvTicino(data, hh, ipvData, youngAdultsCount, orientierung) {
   const cantonData = { ...ipvData, maxIncome: null };
   const gemeinsam = {
     canton: 'TI', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltTI',
-    extra: { basisjahr: IPV_TI.basisjahr, jahrTextKey: 'ipv.jahrTessin' },
+    extra: { basisjahr: IPV_TI.basisjahr, jahrKey: 'ipv.jahrTessin' },
   };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({
