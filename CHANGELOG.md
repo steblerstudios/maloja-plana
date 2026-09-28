@@ -11,7 +11,52 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.44-beta] — 2026-09-28
+
+*Ein PR seit `0.1.43-beta` (`92d2cfe`): #433. Startbündel 61,03 / 65 kB (`npm run size`, auf `0096626`).
+**Gemergt ist nicht live** — der Tag kommt erst nach dem Deploy.*
+
+### Neu
+- **Wanderrucksack und «Was steht mir zu?» neu geordnet** (#433). «Mein Gepäck» heisst jetzt
+  **Wanderrucksack** (5 Sprachen) und sitzt oben rechts im Block «Was steht mir zu?», am Computer
+  zusätzlich als Kreis auf der linken Tal-Strasse des Bergpanoramas. Die **Notfallkarte** ist die
+  zweite grosse Karte neben der Finanz-Übersicht. **Leistungs-Kompass und «Ansprüche im Überblick»
+  sind eine Seite** (`#/schnellcheck` = `#/ansprueche`): oben die eigenen Zahlen, darunter die ganze
+  Anspruchs-Landkarte. Am Handy eine **untere Leiste mit sechs Plätzen** (Übersicht · Rucksack ·
+  Kalender | + | Anspruch · Suche · Menü). Der untere Gepäck-Knopf auf dem Dashboard ist weg.
+
+### Geändert
+- **Startdatei 4,35 kB kleiner** (#433). Die PLZ-Funktionen liegen neu in `config/kantonPLZ.js`;
+  vorher zog `main.jsx` über sie die ganze `cantonalData.js` samt IPV-, Sozialhilfe- und EL-Rechnung
+  in die Startdatei. Die Rechnungen laden jetzt als eigener Chunk nach, im selben Moment wie bisher
+  die IPV-Kantonsmodelle. Ein Test hält die Startdatei frei von `cantonalData.js`.
+
+## [0.1.43-beta] — 2026-09-28
+
+*Alles seit `0.1.42-beta` (Tag auf `4197501`): #436–#439, #441, #442. #438/#439 laufen schon seit dem
+Zwischen-Deploy vom 28.09. 11:00 (`f11ae37`) unter der alten Nummer; dieses Release gibt dem Stand
+wieder eine eigene. Startbündel 64,94 / 65 kB (`npm run size`, gemessen auf `2ac40ba`). **Gemergt ist
+nicht live** — der Tag kommt erst nach dem Deploy.*
+
+### Neu
+- **Kreditkarte: «Lohnt sich meine Karte?»** (#437). Neue Ansicht `#/kreditkarte`: Jahresgebühr,
+  Ausgaben (Fremdwährung, Zinsen) und Vorteile (Cashback, Punkte, Versicherungen) werden gegeneinander
+  gerechnet; das Ergebnis steht in einem Satz («bringt / kostet etwa CHF X im Jahr»). Nur eigene Angaben,
+  keine Kartenempfehlung. Versicherungen zählen nur, wenn man sie sonst selbst abschliessen würde.
+  Mehrere Karten möglich (`finanzen.kreditkarten`); rm provisorisch.
+
 ### Behoben
+- **Organspende nach der Zustimmungsregelung, ohne vorausgewählten Entscheid** (#441, #442). Die Seite
+  zeigte ohne gespeicherte Wahl «Registriert». Neu die fünf Möglichkeiten, die das BAG heute nennt
+  (Zustimmung alle · nur bestimmte · Ablehnung · Vertrauensperson · noch nicht entschieden), mit
+  Rechtsstand, Datum und BAG-Link. Eine Wahrheit `notfall.organDonor` für Seite, Kapitel, Dossier,
+  Export, Notfall-QR und Wanderrucksack; Migration v4→v5, ein altes «Ja» wird **nicht** zu «alle
+  Organe», sondern leer mit Bitte um Bestätigung (alte Werte bleiben in `_organspendeVorV5`). Name der
+  Vertrauensperson im Organspende-QR, Dossier und Export, bewusst nicht im allgemeinen Notfall-QR.
+  «Widersprochen» entfernt. Befund der Fachprüfung vom 27.09.2026.
+- **Zwei Lücken der Zeichen-Wächter geschlossen** (#436). Der Wegweiser-Pfeil in «→ Zur Bibliothek»
+  (5 Sprachen) ist weg, und der Querverweis «Notfallkarte» zeigte still das Zeichen «verlässt Maloja».
+  Zwei neue Wächter-Tests, beide vor der Korrektur rot gesehen.
 - **Vorsorgeauftrag: Hinweis nennt das Zivilstandsamt statt der Gemeinde** (#438). Der Feld-Hinweis im
   Kapitel Vorsorge sagte in allen fünf Sprachen «Muss bei der Gemeinde registriert werden». Nach ZGB
   Art. 361 Abs. 3 trägt das Zivilstandsamt **auf Antrag** ein, dass es ihn gibt und wo er liegt — freiwillig,

@@ -1388,6 +1388,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Ajouter',
     anspruch: 'Droits',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Sac à dos',
     capDokument: 'Document',
     capBeleg: 'Justificatif',
     capFrist: 'Échéance',
@@ -1798,7 +1800,6 @@ export default {
     anspruchTitle: 'À quoi ai-je droit ?',
     anspruchIntro: 'Bien des prestations existent sans qu’on le sache. Un aperçu tranquille — sans engagement ni jugement.',
     anspruchMoeglich: 'Droit possible',
-    anspruchAlleLink: 'Toutes les prestations en aperçu',
     nextUpTitle: 'Quelle est la prochaine étape ?',
     nextUpAllDone: 'La base est en place — parfait.',
     nextUpReassure: { sie: 'Juste une suggestion — c’est vous qui donnez le rythme.', du: 'Juste une suggestion — c’est toi qui donnes le rythme.' },
@@ -5332,9 +5333,9 @@ export default {
     b: { wohnen: 'Logement', finanzen: 'Finances', person: 'Personne', versicherungen: 'Assurance', gesundheit: 'Santé', arbeit: 'Travail', familie: 'Famille', vorsorge: 'Prévoyance', bildung: 'Formation', notfall: 'Urgence', behoerden: 'Autorités' },
   },
   gepaeck: {
-    title: 'Mon bagage',
+    title: 'Sac à dos de randonnée',
     intro: { sie: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.', du: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballe, ouvre un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.' },
-    link: 'Mon bagage',
+    link: 'Sac à dos de randonnée',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
     pack: 'Remballer',
