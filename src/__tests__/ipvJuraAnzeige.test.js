@@ -63,6 +63,9 @@ describe('K31 IPV-Rechner, Kanton Jura', () => {
     for (const [sprache, s] of Object.entries({ de, fr, it: itSprache, en, rm })) {
       expect(typeof s.ipv.offenGrund.steuerbaresEinkommen, sprache).toBe('string');
       expect(s.ipv.offenGrund.steuerbaresEinkommen.length).toBeGreaterThan(80);
+      // Kein leerer Schlüssel für den späteren Riegel (Koordination 28.09.2026).
+      expect(s.ipv.offenGrund.vermoegenJU, sprache).toMatch(/740/);
+      expect(s.ipv.offenGrund.vermoegenJU, sprache).toMatch(/150/);
       // Fachprüfung #483 ⚠️ 3: Frist mit «31», 30 Tage — die Zahlen stehen in jeder Sprache.
       expect(s.ipv.offenGrund.steuerbaresEinkommen, sprache).toMatch(/31/);
       expect(s.ipv.offenGrund.steuerbaresEinkommen, sprache).toMatch(/30/);

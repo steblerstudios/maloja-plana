@@ -50,7 +50,7 @@
 //     de sa prime annuelle» → dann `praemieFehlt` + `deckelnProPerson` wie in den anderen Kantonen.
 //   · Genau 150'000 Vermögen: die Ordonnance (Art. 7a) schliesst aus, was «supérieure à 150 000»
 //     ist; die ECAS schreibt «doit être inférieure à 150 000 francs». Bei genau 150'000 widersprechen
-//     sich die beiden — `juRiegel` folgt der Ordonnance (`>`).
+//     sich die beiden — `juRiegel` folgt der Ordonnance (`>`). Frage: FRAGEN-AN-DIE-AEMTER.md § 13.
 //
 // BEWUSST NICHT GEBAUT (auch wenn die Zahl käme): Paare/Konkubinat (Einkommen und Vermögen der
 // zweiten Person, Art. 8a [2]) · Personen unter 25 und Kinder 16–18 ohne Ausbildung (Ausbildung
@@ -148,7 +148,7 @@ export function juRiegel(data, hh) {
   // Wertschriften und Bankguthaben — nicht `otherAssets` (Bargeld, Fahrzeuge …), anders als
   // `vermoegenSumme` (Fachprüfung #483, ⚠️ 2). Eigener Grund: «steuerbares Gesamtvermögen» wäre hier falsch.
   const ziffer740 = Number(f.securitiesValue || 0) + Number(f.savingsAccount || 0);
-  // Der Text `ipv.offenGrund.vermoegenJU` (Ziffer 740) entsteht, wenn `juRiegel` angeschlossen wird.
+  // Text: `ipv.offenGrund.vermoegenJU` (5 Sprachen, angelegt 28.09.2026 — heute noch nicht angezeigt).
   if (ziffer740 > IPV_JU.vermoegensgrenze) return 'vermoegenJU';
   return null;
 }
