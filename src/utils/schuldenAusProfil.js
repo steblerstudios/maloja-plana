@@ -39,6 +39,8 @@ export function rateAusBudget(data) {
   if (!(lohn > 0)) return { grund: 'keinEinkommen' };
   if (f.incomeType !== 'netto') return { grund: 'keinNetto' };
   const b = calculateMonthlyBudget(data, (k) => k);
+  // Seit 28.09.2026 zählt das Budget auch den Nebenerwerb — brutto erfasst gehört er nicht in die Rate.
+  if (b.bruttoDabei) return { grund: 'keinNetto' };
   const e = b.expenses || {};
   const fehlend = [];
   if (!(n(e.rent) > 0 || n(e.mortgage) > 0)) fehlend.push('wohnen');
