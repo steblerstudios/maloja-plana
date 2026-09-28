@@ -45,7 +45,7 @@ export const WERKZEUGE = [
   { view: 'premium', nav: 'nav.kvgIpv', sub: 'nav.sub.kvgIpv', icon: 'praemienverbilligung', fach: 'gesundheit', aliases: ['ipv', 'pv'] },
   { view: 'praemien', nav: 'nav.praemien', sub: 'nav.sub.praemien', icon: 'insurance', fach: 'gesundheit', aliases: ['praemien', 'kvg'] },
   { view: 'kvg', nav: 'nav.kvgLeistungen', sub: 'nav.sub.kvgLeistungen', icon: 'health', fach: 'gesundheit', aliases: ['kvg', 'leistungen'] },
-  { view: 'patientenverfuegung', nav: 'nav.patientenverfuegung', sub: 'nav.sub.patientenverfuegung', icon: 'document', fach: 'gesundheit', aliases: ['patientenverfügung', 'directives anticipées', 'direttive del paziente', 'advance directive', 'reanimation'] },
+  { view: 'patientenverfuegung', nav: 'nav.patientenverfuegung', sub: 'nav.sub.patientenverfuegung', icon: 'document', fach: 'gesundheit', aliases: ['patientenverfügung', 'reanimation'] },
   { view: 'kk', nav: 'nav.kkScanner', icon: 'barcode', fach: 'gesundheit', aliases: ['kk', 'krankenkasse', 'scanner', 'qr', 'prämie'] },
 
   // ── Feldflasche (Alter) ──
