@@ -2,7 +2,8 @@
 //
 // Belege (an der Quelle gelesen 28.09.2026; Gesetzessammlung über die API gesetze.gl.ch,
 // Gegenprobe erfundene Nummer «VIII D/21/77» → HTTP 404; Dokumente der Fachstelle IPV über den
-// Online-Schalter gl.ch, Gegenprobe erfundenes Asset → HTTP 404). Wortlaute in
+// Online-Schalter gl.ch, Gegenprobe erfundenes Asset → HTTP 404; bei der Fachprüfung 28.09. eine
+// 403-WAF-Seite — gl.ch drosselt Abrufe ohne Browser-Kennung, die Seiten fehlen nicht). Wortlaute in
 // docs/sources/ipv-kantone-2026.md, Abschnitt GL:
 //   [1] Einführungsgesetz zum KVG (EG KVG), GS VIII D/21/1, Version 2376 «in Kraft seit:
 //       01.01.2023 bis: 31.12.2026». Art. 10: Gesamtanspruch (auch eheähnliche Gemeinschaft) ·
@@ -45,9 +46,24 @@
 //     im Anspruchsjahr 18 werden (eigener Anspruch, [3] Art. 17).
 //   · Quellenbesteuerte (kein Anspruch bzw. Bruttoeinkommen, [1] Art. 9 Abs. 3 / Art. 16 Abs. 2),
 //     EL- und Sozialhilfebeziehende (von Amtes wegen, [3] Art. 20), Personen im Ausland.
-//   · Liegenschaften (Unterhaltskosten +, Eigenmietwert −), Alimente (−) [2] Art. 2/3; der
-//     zusätzliche Vermögensfreibetrag bei halber IV-Rente [7] Art. 45 Ziff. 4 (die App kennt den
-//     IV-Grad nicht — mit IV-Rente und Vermögen über 76'300 fällt der Betrag hier zu tief aus).
+//   · Liegenschaften (Unterhaltskosten +, Eigenmietwert −) [2] Art. 2/3; der zusätzliche
+//     Vermögensfreibetrag bei halber IV-Rente [7] Art. 45 Ziff. 4 (die App kennt den IV-Grad
+//     nicht — mit IV-Rente und Vermögen über 76'300 fällt der Betrag hier zu tief aus).
+//     ⟨korrigiert 28.09.2026, Fachprüfung #487 ⚠️1: hier stand auch «Alimente (−)». BEZAHLTE
+//     Alimente zieht die App jetzt ab — [2] Art. 3 Abs. 1 lit. c nennt sie ausdrücklich, siehe
+//     `glAnrechenbaresEinkommen`.⟩
+//   · ERHALTENE Alimente und Familienzulagen: EG KVG und PVV nennen sie nicht ausdrücklich; sie
+//     stecken im «Total der Einkünfte» ([1] Art. 15 Abs. 1) nur über das Steuerrecht. Die App
+//     rechnet sie NICHT zu — mit ihnen fiele der Betrag tiefer aus (Richtung: hier ZU HOCH);
+//     `vorbehaltGL` sagt es bei der Zahl.
+//   · Schulden: steuerbar ist das REINvermögen ([7] Art. 45); `vermoegenSumme` zieht keine Schulden
+//     ab — über dem Freibetrag fällt der Betrag dadurch zu tief aus.
+//   · Kinderanteil: gedeckelt wird nur der Anteil der erwachsenen Person (Rahmen `deckelnProPerson`);
+//     [1] Art. 14 Abs. 1 deckelt je Person — bei einer günstigen Kinderprämie ist die Zahl ZU HOCH.
+//   · Zuzug im Anspruchsjahr: «Für … Personen, die im Kanton Glarus Wohnsitz nehmen, beginnt die
+//     Berechtigung am 1. Januar des auf … den Zuzug folgenden Jahres» ([1] Art. 11 Abs. 2) — die
+//     App kennt den Zuzug nicht; für Zugezogene ist die Zahl dieses Jahr ZU HOCH (Anspruch 0).
+//   · Brutto erfasster Lohn wird wie netto gerechnet (Rahmen) — der Betrag fällt dann zu tief aus.
 //   · Neugeborene im Anspruchsjahr zählen nicht ([1] Art. 11 Abs. 2) — sie werden weggelassen.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
@@ -93,12 +109,17 @@ export function glSatz(ae) {
 }
 
 // Anrechenbares Einkommen nach [1] Art. 15, [2] Art. 2/3.
-export function glAnrechenbaresEinkommen({ totalEinkuenfte, vermoegen, kinderZahl }) {
+// [2] Art. 3 Abs. 1 lit. c: vom Total der Einkünfte abzuziehen sind «Alimente für die geschiedenen
+// oder getrennt lebenden Ehepartner und für minderjährige Kinder» (`alimenteBezahlt`, CHF/Jahr).
+// GEWÄHLT: die erfassten bezahlten Alimente gelten als solche (die App fragt nicht, an wen).
+// ⟨28.09.2026, Fachprüfung #487 ⚠️1⟩
+export function glAnrechenbaresEinkommen({ totalEinkuenfte, vermoegen, kinderZahl, alimenteBezahlt = 0 }) {
   const p = IPV_GL;
   const frei = (kinderZahl > 0 ? p.vermoegenFrei.alleinMitKindern : p.vermoegenFrei.allein)
     + p.vermoegenFrei.jeKind * kinderZahl;
   const steuerbar = Math.max(0, Math.max(0, vermoegen) - frei);
-  return Math.max(0, totalEinkuenfte + p.vermoegenAnteil * steuerbar - p.kinderabzug * kinderZahl);
+  return Math.max(0, totalEinkuenfte + p.vermoegenAnteil * steuerbar - p.kinderabzug * kinderZahl
+    - Math.max(0, alimenteBezahlt));
 }
 
 // Reine Rechnung — ohne App-Daten, damit die Tests die amtlichen Beispiele [5] nachrechnen.
@@ -172,6 +193,8 @@ export function ipvGlarus(data, hh, ipvData, youngAdultsCount, orientierung) {
     totalEinkuenfte: einkommenJahr(f, SAEULE_3A.totalDerEinkuenfte),
     vermoegen: vermoegenSumme(f),
     kinderZahl,
+    // Monatlich erfasst; unlesbar oder negativ ⇒ 0 (wie Uri, BL, BS).
+    alimenteBezahlt: (() => { const x = Number(f.alimentePaid); return Number.isFinite(x) && x > 0 ? x * 12 : 0; })(),
   });
 
   // [1] Art. 14 Abs. 1: «höchstens aber der effektiven Jahresprämie … der anspruchsberechtigten
@@ -180,7 +203,10 @@ export function ipvGlarus(data, hh, ipvData, youngAdultsCount, orientierung) {
   if (praemieFehlt(praemie)) return orientierung('praemie');
 
   const r = ipvGlarusRechnen({ kinderZahl, ae });
-  const nachDeckel = (v) => Math.round(Math.min(proPerson(v.erwachsen), praemie) + kinderZahl * proPerson(v.kind));
+  // [3] Art. 9 Abs. 3 zählt, was an den Versicherer geht — also NACH dem Deckel: eine Prämie unter
+  // 12 Franken im Jahr ergibt keine Auszahlung. ⟨28.09.2026, Fachprüfung #487 ⚠️2: vorher vor dem
+  // Deckel, und die Regel war in keinem erreichbaren Fall wirksam (Mutant überlebte).⟩
+  const nachDeckel = (v) => Math.round(proPerson(Math.min(v.erwachsen, praemie)) + kinderZahl * proPerson(v.kind));
   const va = nachDeckel(r.varianten.a);
   const vb = nachDeckel(r.varianten.b);
   if (va !== vb) return orientierung('mindestanspruch');
@@ -194,7 +220,7 @@ export function ipvGlarus(data, hh, ipvData, youngAdultsCount, orientierung) {
     extra: { basisjahr, jahrKey: 'ipv.jahrGL' },
   };
   if (annual <= 0) {
-    const roheSumme = r.varianten.b.erwachsen + kinderZahl * r.varianten.b.kind;
+    const roheSumme = Math.min(r.varianten.b.erwachsen, praemie) + kinderZahl * r.varianten.b.kind;
     return ergebnisOhneAnspruch({
       ...gemeinsam,
       noteKey: roheSumme > 0 ? 'ipv.glUnterMindestbetrag' : 'ipv.glKeinAnspruch',
