@@ -242,12 +242,13 @@ export function qrZeichnen(el, text, optionen = {}) {
   const inhalt = String(text ?? '');
   if (!inhalt || utf8Laenge(inhalt) > maxBytes) return false;
   try {
-    new QRCode(el, {
+    const qr = new QRCode(el, {
       correctLevel: QRCode.CorrectLevel.M,
       colorDark: QR_DUNKEL, colorLight: QR_HELL,
       ...rest,
       text: inhalt,
     });
+    scharfZeichnen(el, qr, rest);
   } catch {
     el.innerHTML = '';
     attributeAufraeumen(el);
@@ -260,6 +261,49 @@ export function qrZeichnen(el, text, optionen = {}) {
     el.setAttribute('aria-label', beschriftung);
   }
   return true;
+}
+
+// Ganze Gerätepixel je Modul für einen QR mit `module` Modulen, der etwa `breite` CSS-Pixel
+// breit sein soll. Mindestens 2 Gerätepixel je Modul.
+//
+// Gemessen 27.09.2026 (QR-Versuche 3 und 3b, iPhone, Retina-Bildschirm): die Bibliothek zeichnet
+// 180 × 180 Bildpunkte, der Bildschirm zeigt sie doppelt so gross und weichgezeichnet —
+// 97 Module auf 180 px sind 1,9 px je Modul, die Kanten verschwimmen. Der Notfall-QR wurde
+// «erkannt, aber nichts passiert»; derselbe Inhalt scharf gezeichnet (4 bzw. 6 Gerätepixel je
+// Modul) öffnete die Kontaktkarte. BOM und Zeilenfaltung waren es nicht (Versuch 3: über Kreuz).
+export function qrRaster(module, breite, dpr = 1) {
+  const d = dpr > 0 ? dpr : 1;
+  const proModul = Math.max(2, Math.round((breite * d) / module));
+  return { proModul, css: (module * proModul) / d };
+}
+
+// Ersetzt das Bild der Bibliothek durch ein scharfes: ganze Gerätepixel je Modul, ohne
+// Weichzeichnen. Ohne Modell oder ohne Canvas (Tests, alte Browser) bleibt das Bild der
+// Bibliothek stehen — lieber ein weiches Bild als keins.
+function scharfZeichnen(el, qr, { width = 256, colorDark = QR_DUNKEL, colorLight = QR_HELL } = {}) {
+  const modell = qr && qr._oQRCode;
+  if (!modell || typeof modell.getModuleCount !== 'function') return;
+  if (typeof document === 'undefined' || typeof document.createElement !== 'function') return;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas && typeof canvas.getContext === 'function' ? canvas.getContext('2d') : null;
+  if (!ctx) return;
+  const n = modell.getModuleCount();
+  const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+  const { proModul, css } = qrRaster(n, width, dpr);
+  canvas.width = canvas.height = n * proModul;
+  Object.assign(canvas.style, {
+    display: 'block', width: css + 'px', height: 'auto', maxWidth: '100%', imageRendering: 'pixelated',
+  });
+  ctx.fillStyle = colorLight;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = colorDark;
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (modell.isDark(r, c)) ctx.fillRect(c * proModul, r * proModul, proModul, proModul);
+    }
+  }
+  el.innerHTML = '';
+  el.appendChild(canvas);
 }
 
 function attributeAufraeumen(el) {

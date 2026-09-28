@@ -1198,7 +1198,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           // Das Piktogramm des ZIELS, aus dem Register der Suche — keine zweite Liste
           // (21.09.2026). Ein Querverweis ohne Zeichen sah aus wie jeder andere; mit
           // dem Zeichen seines Ziels sagt er auf einen Blick, wohin er führt.
-          const zielIkon = (view) => ansichtIkon(view, 'external');
+          // Kein Rückfall auf `external` (27.09.2026): jeder Querverweis hier bleibt
+          // in Maloja (`onNavigate`), das Hinaus-Zeichen wäre an ihm immer falsch.
+          const zielIkon = (view) => ansichtIkon(view);
           const crosslinkBtn = (key, view, textKey) => onNavigate && elements.push(
             React.createElement('button', {
               key: 'crosslink-' + key,
@@ -1653,6 +1655,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 }
               }, t('nav.crosslink.addressInWohnen'))
             );
+          }
+          // Kreditkarte vorhanden → «Lohnt sich die Karte?» (Rechner, 27.09.2026).
+          if (field.k === 'creditCard' && chapter.key === 'finanzen' && (data.creditCard === 'one' || data.creditCard === 'multiple')) {
+            crosslinkBtn('kreditkarte', 'kreditkarte', 'nav.crosslink.kreditkarteHint');
           }
           if (field.k === 'kkModel' && chapter.key === 'versicherungen') {
             crosslinkBtn('kkModel', 'praemien', 'nav.crosslink.kkModelHint');

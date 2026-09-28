@@ -11,6 +11,50 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.43-beta] — 2026-09-28
+
+*Alles seit `0.1.42-beta` (Tag auf `4197501`): #436–#439, #441, #442. #438/#439 laufen schon seit dem
+Zwischen-Deploy vom 28.09. 11:00 (`f11ae37`) unter der alten Nummer; dieses Release gibt dem Stand
+wieder eine eigene. Startbündel 64,94 / 65 kB (`npm run size`, gemessen auf `2ac40ba`). **Gemergt ist
+nicht live** — der Tag kommt erst nach dem Deploy.*
+
+### Neu
+- **Kreditkarte: «Lohnt sich meine Karte?»** (#437). Neue Ansicht `#/kreditkarte`: Jahresgebühr,
+  Ausgaben (Fremdwährung, Zinsen) und Vorteile (Cashback, Punkte, Versicherungen) werden gegeneinander
+  gerechnet; das Ergebnis steht in einem Satz («bringt / kostet etwa CHF X im Jahr»). Nur eigene Angaben,
+  keine Kartenempfehlung. Versicherungen zählen nur, wenn man sie sonst selbst abschliessen würde.
+  Mehrere Karten möglich (`finanzen.kreditkarten`); rm provisorisch.
+
+### Behoben
+- **Organspende nach der Zustimmungsregelung, ohne vorausgewählten Entscheid** (#441, #442). Die Seite
+  zeigte ohne gespeicherte Wahl «Registriert». Neu die fünf Möglichkeiten, die das BAG heute nennt
+  (Zustimmung alle · nur bestimmte · Ablehnung · Vertrauensperson · noch nicht entschieden), mit
+  Rechtsstand, Datum und BAG-Link. Eine Wahrheit `notfall.organDonor` für Seite, Kapitel, Dossier,
+  Export, Notfall-QR und Wanderrucksack; Migration v4→v5, ein altes «Ja» wird **nicht** zu «alle
+  Organe», sondern leer mit Bitte um Bestätigung (alte Werte bleiben in `_organspendeVorV5`). Name der
+  Vertrauensperson im Organspende-QR, Dossier und Export, bewusst nicht im allgemeinen Notfall-QR.
+  «Widersprochen» entfernt. Befund der Fachprüfung vom 27.09.2026.
+- **Zwei Lücken der Zeichen-Wächter geschlossen** (#436). Der Wegweiser-Pfeil in «→ Zur Bibliothek»
+  (5 Sprachen) ist weg, und der Querverweis «Notfallkarte» zeigte still das Zeichen «verlässt Maloja».
+  Zwei neue Wächter-Tests, beide vor der Korrektur rot gesehen.
+- **Vorsorgeauftrag: Hinweis nennt das Zivilstandsamt statt der Gemeinde** (#438). Der Feld-Hinweis im
+  Kapitel Vorsorge sagte in allen fünf Sprachen «Muss bei der Gemeinde registriert werden». Nach ZGB
+  Art. 361 Abs. 3 trägt das Zivilstandsamt **auf Antrag** ein, dass es ihn gibt und wo er liegt — freiwillig,
+  keine Gültigkeitsbedingung. Wortlaut wie der fachgeprüfte Wegweiser (`step3Text`); rm provisorisch (`TODO(rm)`).
+  Dieselbe Falschaussage in `docs/product/` nachgezogen. Befund der Rechtsprüfung vom 27.09.2026.
+
+## [0.1.42-beta] — 2026-09-27
+
+*Ein Fix seit `0.1.41-beta` (`4685c20`): #434. Gemessen und am echten iPhone geprüft.*
+
+### Behoben
+- **QR-Codes scharf gezeichnet — der Notfall-QR öffnet am iPhone wieder die Kontaktkarte** (#434).
+  Die Bibliothek zeichnete 180 × 180 Bildpunkte, auf Retina-Bildschirmen doppelt so gross und
+  weichgezeichnet angezeigt (97 Module = 1,9 px je Modul); die Kamera erkannte den Code, öffnete aber
+  nichts. Jetzt ganze Gerätepixel je Modul (mind. 2) und `image-rendering: pixelated`, für alle QR
+  (Notfall, KK-Karte, Organspende, Flyer — der Flyer druckt dadurch auch schärfer). Ursache in zwei
+  Versuchen am Telefon getrennt: der Inhalt (BOM, Zeilenfaltung) war es nicht, die Darstellung schon.
+
 ## [0.1.41-beta] — 2026-09-27
 
 *Alles seit `0.1.40-beta` (Tag auf `d47dc32`, 24.09.), nachgezogen gegen
