@@ -216,10 +216,11 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  // Seit 28.09.2026 setzt auch Schaffhausen die Frist (Dekret SHR 832.110 § 15 Abs. 3: ohne Antrag bis
-  // 30. April verwirkt) — mit eigenem Hinweis-Schlüssel `ipv.shFristNichtAbgezogen`.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, SH) und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvSchaffhausen.js', 'data/ipvAbzug.js'];
+  // TI (28.09.2026, Fachprüfung #484): LCAMal Art. 25 Abs. 3 — nach der Frist erst ab dem Folgemonat.
+  // SH (28.09.2026, Fachprüfung #471): Dekret SHR 832.110 § 15 Abs. 3 — ohne Antrag bis 30. April verwirkt,
+  // mit eigenem Hinweis-Schlüssel `ipv.shFristNichtAbgezogen`.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, TI, SH) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvTicino.js', 'config/ipvSchaffhausen.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
