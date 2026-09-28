@@ -1777,6 +1777,82 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 2. Gesetz über die Krankenversicherung und die Prämienverbilligung (KPVG, BR 542.100), Kanton Graubünden, aktuelle Version in Kraft seit 01.01.2025. https://www.gr-lex.gr.ch/api/de/versions/3445/pdf_file_with_annexes (kanonisch https://www.gr-lex.gr.ch/app/de/texts_of_law/542.100) — abgerufen 16.09.2026
 3. Verordnung zum Gesetz über die Krankenversicherung und die Prämienverbilligung (VOzKPVG, BR 542.120), Stand 1.1.2026. https://www.gr-lex.gr.ch/api/de/versions/3606/pdf_file_with_annexes — abgerufen 16.09.2026
 
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+An der Quelle nachgeprüft **28.09.2026**. Alle Abrufe mit `curl`, PDFs mit `pdftotext -layout`.
+
+**Fassungen und Gegenproben**
+
+| Quelle | Abruf | Fassung | Gegenprobe |
+|---|---|---|---|
+| KPVG, BR 542.100 — `https://www.gr-lex.gr.ch/api/de/versions/3445/pdf_file_with_annexes` | HTTP 200, 569'455 Bytes, 12 Seiten | «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum: 14.06.2022)», keine künftige Version (API `…/api/de/texts_of_law/542.100`: `current_version` 3445, `future_versions` leer) | erfundene Version `…/versions/99999/…` → HTTP 404, 0 Bytes; erfundene Nummer `…/texts_of_law/542.999` → HTTP 404 |
+| VOzKPVG, BR 542.120 — `…/api/de/versions/3606/pdf_file_with_annexes` | HTTP 200, 486'815 Bytes, 12 Seiten | «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 16.12.2025)», keine künftige Version | wie oben |
+| Wegleitung IPV 2026, SVA — `https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf` | HTTP 200, 148'376 Bytes | PDF erstellt 05.01.2026 | erfundener Name `…/ipv_wegleitung_xq.pdf` → HTTP 404 |
+| Prämienregionen 2026, SVA — `https://www.sva.gr.ch/files/sva/dienstleistungen/07_ipv/ipv_praemienregion_d.pdf` | HTTP 200, 72'610 Bytes, 1 Seite | «Prämienregionen Jahr 2026», PDF erstellt 07.01.2026 | — (Liste Zeile für Zeile gegen die BAG-Daten der App, siehe unten) |
+
+**Bestätigt (Wortlaut wie oben):** Art. 8 Abs. 1–4 KPVG, Art. 8a Abs. 1 lit. a–g, Art. 6 Abs. 1 (Gesamtanspruch),
+Art. 7 Abs. 1 (Abstufung nach Regionen), Art. 17 Abs. 1 VOzKPVG (Durchschnittsprämien − 10 %, aufgerundet). Die
+Richtprämien der Wegleitung (5'916 / 5'532 / 5'232 · 4'368 / 4'092 / 3'912 · 1'404 / 1'320 / 1'248) und die beiden
+Selbstbehalt-Tabellen stehen im Textlayer, nicht als Bild. Der Grosse Rat hat nach Art. 8 Abs. 5 nichts erhöht: die
+Wegleitung 2026 nennt die gesetzlichen Stufen unverändert.
+
+**Neu gelesen, vorher nicht erfasst:**
+- Art. 14 Abs. 1 VOzKPVG: «Personen mit Wohnsitz im Kanton haben das Anmeldeformular bis spätestens Ende des
+  anspruchsberechtigten Jahres bei der AHV-Zweigstelle ihrer Wohngemeinde einzureichen.» Abs. 2: «Personen, die von
+  Amtes wegen eine Mitteilung über die Vorschusszahlung erhalten, gelten als angemeldet.»
+- Art. 10 lit. a KPVG: Ansprüche verwirken, «wenn die Anmeldung nicht innerhalb der vorgeschriebenen Fristen
+  eingereicht wird».
+- Art. 22 Abs. 3 VOzKPVG: «Ein Gesamtanspruch wird den Versicherern anteilmässig im Verhältnis zur Summe der für die
+  Berechnung des Anspruchs auf Prämienverbilligung massgebenden Richtprämien ausbezahlt.»
+- Art. 13 Abs. 2 KPVG: unrechtmässig bezogene Leistungen können innert fünf Jahren zurückgefordert werden; die
+  Wegleitung: Nachzahlungen und Rückforderungen laufen über den Krankenversicherer.
+- **Mindestbetrag:** Art. 11 Abs. 5 und Art. 16 Abs. 4 KPVG: «Die Regierung kann die Auszahlung geringfügiger
+  Beträge ausschliessen.» In der VOzKPVG und in der Wegleitung steht **keine** solche Grenze (Suche nach
+  «geringfügig» über beide Volltexte: nur die zwei Gesetzesstellen). ⟨Der Eintrag «Mindestbetrag … nicht gefunden»
+  oben bleibt richtig; die Ermächtigung ist jetzt benannt.⟩
+- **Deckel auf die effektive Prämie:** weder KPVG noch VOzKPVG enthalten eine Begrenzung. Suche nach «effektiv»,
+  «tatsächlich», «höchstens», «übersteig» über beide Volltexte: nur Art. 8 Abs. 1 («soweit sie … Selbstbehalt
+  übersteigen») und Art. 11 Abs. 2 (Vorschuss) treffen. Gleiche Lage wie SG → `KEIN_PRAEMIENDECKEL.GR`.
+
+**Prämienregionen:** Die SVA-Liste (100 Gemeinden) ist Zeile für Zeile gegen die BAG-Daten der App
+(`data/praemienRegionen.js`) abgeglichen — **0 Abweichungen**. 14 Gemeinden führt die SVA unter einer Kurzform (Roveredo,
+S.Vittore, Conters i.P., Schmitten, Sedrun-Tujetsch, Seewis i.P., Sils i.D., Sils i.E./Segl, Sta. Maria i.C., Ilanz,
+Klosters-Serneus, LaPunt-Chamues-Ch, Zillis, Medel/Lucm. Curaglia); alle liegen in derselben Region wie beim BAG. Der
+Test `ipvGraubuenden.test.js` hält die Liste wörtlich fest.
+
+**Amtliches Berechnungsbeispiel:** keines gefunden — nicht in der Wegleitung 2026, nicht auf `sva.gr.ch/ipv.html`,
+nicht in der Wegleitung 2015 (dort nur der Satz, dass für Kinder und junge Erwachsene «zusätzlich zur ordentlichen
+Berechnung mit einer Vergleichsrechnung abgeglichen» wird). Der Online-Rechner der SVA rechnet serverseitig; er wurde
+nur angesehen (GET), **nicht** mit Daten gefüttert.
+
+**Zwei Lesarten, die die Quellen nicht entscheiden** (→ `FRAGEN-AN-DIE-AEMTER.md`, Frage 8):
+1. *Satz aufs ganze Einkommen oder je Tranche?* ⟨Offen seit 16.09., siehe «Offen / nicht gefunden»⟩ Die App rechnet
+   mit dem Satz aufs **ganze** anrechenbare Einkommen: «Der Selbstbehalt beträgt für anrechenbare Einkommen bis
+   10 000 Franken 5 Prozent … Er erhöht sich … um je 1 Prozentpunkt» — der Selbstbehalt *ist* ein Satz je Kategorie,
+   und die Wegleitung stellt ihn als eine Zeile je Einkommenskategorie dar. Gebaut, mit Vorbehalt in der Anzeige
+   (`ipv.vorbehaltGR`). Bei 40'000 ergibt das 2'316, nach der Tranchen-Lesart wären es 3'066.
+2. *Kinder-Vergleich für den Haushalt oder je Kind?* Art. 8 Abs. 4: «der höhere der gemäss den Absätzen 2 und 3
+   berechneten Beträge». Für den Gesamtanspruch ist die massgebende Prämie die Summe (Art. 17 Abs. 2 VOzKPVG), das
+   spricht für den Haushalt; Abs. 3 («Die massgebenden Prämien für Kinder … werden … um 100 Prozent» verbilligt)
+   spricht für jedes Kind. Beispiel Region 1, ein Kind, 30'000: Haushalt 4'920, je Kind 5'380.33. **Nicht gebaut:**
+   die App rechnet mit Kindern nur, wo beide Lesarten dasselbe ergeben (über 80'000, oder wo der allgemeine Anteil
+   des Kindes den Kinder-Satz schon übersteigt), sonst `orientierung('grKinder')`.
+
+**Bewusst nicht gebaut:** Paare/Gesamtanspruch · junge Erwachsene in Ausbildung · Quellenbesteuerte · EL-,
+Sozialhilfe- und Mutterschaftsbeitrags-Beziehende · von Art. 8a Abs. 1: lit. b, c, f, g, BVG-Einkäufe (lit. d) und
+Einkommen im vereinfachten Abrechnungsverfahren · alle Steuerabzüge (die App kennt das satzbestimmende steuerbare
+Einkommen nicht) · Vorschuss (65 %). **Gebaut von Art. 8a Abs. 1:** lit. a (10 % der erfassten Vermögensposten),
+lit. d (laufender BVG-Beitrag, wenn erfasst — das Feld «BVG-Beitrag monatlich» ist im Nettolohn schon abgezogen),
+lit. e (Säule 3a, steckt im Nettoeinkommen, Regel `voll`).
+
+**Gewählt, nicht belegt:** Alter nach `ERWACHSEN.mangelsStichtag` (kein Stichtag in KPVG/VOzKPVG; die Wegleitung
+sagt «Erwachsene ab 26. Altersjahr» ohne Jahrgänge) · Rundung auf den Franken im Jahr (keine Rundungsregel
+gefunden) · Kategoriengrenze «bis und mit» auf den Franken genau, Beträge dazwischen (40'000.50) gelten als über
+der Grenze.
+
+**Werte 2027:** am 28.09.2026 nicht publiziert (Wegleitung trägt 2026, API ohne künftige Version). Ab 01.01.2027
+zeigt die App für GR keinen Betrag (`jahrVorbei`).
+
 ---
 
 ## AG — Aargau
