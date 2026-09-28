@@ -9,10 +9,19 @@
 // …), fehlt ihr, und das Einkommen fiele zu HOCH aus. In einer Tabelle mit Stufen von 1'000
 // Franken (Erwachsene 10–20 CHF im Monat je Stufe) und dem Ende für Erwachsene bei 26'999 hiesse
 // das: zu tiefe Beträge und «kein Anspruch», wo einer besteht — nach dem Block bei
-// `einkommenJahr` (kantonsModell.js) NICHT die vorsichtige Seite. Anders als AG und BE, wo die
-// Näherung über das Nettoeinkommen läuft: dort ist die Grösse das Rein- bzw. bereinigte
-// Einkommen und die Rechnung linear bzw. in Stufen von 8'000–10'000 Franken. Die Ausgleichskasse
-// sagt es selbst: «Le revenu déterminant ne correspond pas au revenu imposable» [4].
+// `einkommenJahr` (kantonsModell.js) NICHT die vorsichtige Seite.
+// ⟨korrigiert 28.09.2026 nach der Fachprüfung #483, ⚠️ 4 — hier stand: «Anders als AG und BE, wo die
+// Näherung über das Nettoeinkommen läuft: dort ist die Grösse das Rein- bzw. bereinigte Einkommen
+// und die Rechnung linear bzw. in Stufen von 8'000–10'000 Franken.» Das beschrieb AG falsch: AG
+// rechnet ebenfalls mit einer Steuergrösse NACH Abzügen (bereinigtes steuerbares Einkommen, § 6
+// Abs. 2 KVGG), und AG und BE tragen dieselbe Fehlerrichtung (Einkommen zu hoch, Betrag zu tief).⟩
+// Der tragfähige Unterschied ist die GRÖSSE DER LÜCKE im Verhältnis zum schmalen Anspruchsband:
+// Netto → steuerbar sind im Jura für eine angestellte Person rund 7'000–10'000 Franken
+// (Berufsauslagen, Mahlzeiten, Fahrkosten, Versicherungsabzug — Guide général 2025 des Service des
+// contributions, gemessen in der Fachprüfung), also 7–10 der 27 Stufen, in denen Erwachsene
+// überhaupt etwas erhalten; bei Alleinerziehenden (Abzüge je Kind) über 20 Stufen. Eine Näherung
+// würde gut ein Drittel des Bandes auf «kein Anspruch» setzen. Die Ausgleichskasse sagt es selbst:
+// «Le revenu déterminant ne correspond pas au revenu imposable» [3].
 // Rechnen würde das Modul sofort, sobald die App das steuerbare Einkommen der Veranlagung kennt —
 // ein neues Feld ist ein Produktentscheid von Stebler Studios (PR, Bericht).
 //
@@ -36,12 +45,19 @@
 // 1'000 Franken; jede Stufe hat einen festen Monatsbetrag je Personenkategorie (Erwachsene 225 →
 // 15 bis 26'999; Kinder 100 bis 52'999), dazu für Eltern mit Erwerb ein Familienzuschlag bis 17'999.
 //
+// FÜR DEN TAG, AN DEM DIE ZAHL KOMMT (Fachprüfung #483, 💡 8/9):
+//   · Ordonnance Art. 20 [2]: «La réduction annuelle accordée à un assuré ne peut dépasser le montant
+//     de sa prime annuelle» → dann `praemieFehlt` + `deckelnProPerson` wie in den anderen Kantonen.
+//   · Genau 150'000 Vermögen: die Ordonnance (Art. 7a) schliesst aus, was «supérieure à 150 000»
+//     ist; die ECAS schreibt «doit être inférieure à 150 000 francs». Bei genau 150'000 widersprechen
+//     sich die beiden — `juRiegel` folgt der Ordonnance (`>`).
+//
 // BEWUSST NICHT GEBAUT (auch wenn die Zahl käme): Paare/Konkubinat (Einkommen und Vermögen der
 // zweiten Person, Art. 8a [2]) · Personen unter 25 und Kinder 16–18 ohne Ausbildung (Ausbildung
 // fehlt der App) · Quellenbesteuerte (Art. 8 Abs. 3 [2]) · amtlich Veranlagte (Art. 13 lit. b) ·
 // EL/Sozialhilfe (volle Prämie, Art. 10) · Zuzug (Art. 22 Abs. 5) · Moutier (Art. 1 Abs. 8 [1]).
 import {
-  vermoegenSumme, geburtsjahr, jahrVorbei, mehrereErwachsene, ERWACHSEN,
+  geburtsjahr, jahrVorbei, mehrereErwachsene, ERWACHSEN,
   kinderAlter, ALTER_UNERFASST, UEBER_18,
 } from './kantonsModell.js';
 
@@ -110,23 +126,37 @@ export function ipvJuraRechnen({ revenuDeterminant, kinderZahl = 0, erwerb = fal
   return { stufe, erwachsen, kind, zuschlag, monat, jahr: monat * 12 };
 }
 
-// Aufruf aus calculateIPV (config/cantonalData.js) über das Register IPV_MODULE.
-// Die Riegel laufen trotzdem in der Reihenfolge des Erlasses — so sagt die App den Grund, der
-// zuerst greift (Paar, Alter, Vermögen …), und erst zuletzt den Grund, der immer greift.
-export function ipvJura(data, hh, ipvData, youngAdultsCount, orientierung) {
+// Die Riegel für den Tag, an dem die Zahl kommt — in der Reihenfolge des Erlasses. HEUTE NICHT
+// AUFGERUFEN (Fachprüfung #483, ⚠️ 1): solange JU ohnehin keine Zahl zeigt, hätten sie nur
+// Sackgassen erzeugt (ein Eingabefeld «Geburtsdatum», nach dem trotzdem keine Zahl kommt) und die
+// Jura-Auskunft (Prüfung von Amtes wegen, Frist) hinter einem allgemeinen Satz versteckt.
+// Liefert den Grund oder `null`.
+export function juRiegel(data, hh) {
   const b = data.basis || {};
   const f = data.finanzen || {};
   const jahr = IPV_JU.jahr;
-  // Art. 5 [1]: gilt «jusqu'au 31 décembre 2026».
-  if (jahrVorbei(jahr)) return orientierung('jahr');
-  if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
+  if (mehrereErwachsene(hh, b)) return 'haushalt';
   // Arrêté und Verordnung nennen keinen Stichtag fürs Alter — gewählt wie BE/SG.
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
+  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return 'alter';
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
-  if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
-  if (UEBER_18(kinderJahre)) return orientierung('haushalt');
-  // Art. 7a [2]: über 150'000 kein Anspruch; die App kennt nur die erfassten Posten.
-  if (vermoegenSumme(f) > IPV_JU.vermoegensgrenze) return orientierung('vermoegen');
+  if (ALTER_UNERFASST(kinderJahre)) return 'alter';
+  if (UEBER_18(kinderJahre)) return 'haushalt';
+  // Art. 7a [2] / Art. 1 al. 2 [1]: massgebend sind «les titres et autres placements de capitaux
+  // selon avis de taxation (chiffre 740)»; die ECAS («seuil de fortune», 28.09.2026): «titres,
+  // comptes bancaires, actions en bourse, actions et parts sociales non cotées». Darum NUR
+  // Wertschriften und Bankguthaben — nicht `otherAssets` (Bargeld, Fahrzeuge …), anders als
+  // `vermoegenSumme` (Fachprüfung #483, ⚠️ 2). Eigener Grund: «steuerbares Gesamtvermögen» wäre hier falsch.
+  const ziffer740 = Number(f.securitiesValue || 0) + Number(f.savingsAccount || 0);
+  // Der Text `ipv.offenGrund.vermoegenJU` (Ziffer 740) entsteht, wenn `juRiegel` angeschlossen wird.
+  if (ziffer740 > IPV_JU.vermoegensgrenze) return 'vermoegenJU';
+  return null;
+}
+
+// Aufruf aus calculateIPV (config/cantonalData.js) über das Register IPV_MODULE.
+// Nach dem Jahres-Riegel direkt die Orientierung mit dem Jura-Grund — in JEDER Lage.
+export function ipvJura(data, hh, ipvData, youngAdultsCount, orientierung) {
+  // Art. 5 [1]: gilt «jusqu'au 31 décembre 2026».
+  if (jahrVorbei(IPV_JU.jahr)) return orientierung('jahr');
   return orientierung('steuerbaresEinkommen');
 }
