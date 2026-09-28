@@ -148,12 +148,12 @@ describe('K31 calculateIPV für SO (App-Angaben → Modell)', () => {
     it('bis 31.07.: der Grund nennt die Frist als laufend', () => {
       vi.setSystemTime(new Date('2026-07-31T20:00:00'));
       expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ offen: 'soSkalaUnklar' });
-      expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch', anmeldefristVorbei: false });
+      expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch', vorbehaltKey: 'ipv.vorbehaltSO' });
     });
     it('ab 01.08.: eigener Grund mit «Frist vorbei», Quellenbesteuerte bis 31.12.', () => {
       vi.setSystemTime(new Date('2026-08-01T08:00:00'));
       expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ offen: 'soSkalaUnklarFristVorbei' });
-      expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch', anmeldefristVorbei: true });
+      expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch', vorbehaltKey: 'ipv.vorbehaltSO' });
     });
   });
 

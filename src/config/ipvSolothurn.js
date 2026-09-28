@@ -175,6 +175,9 @@ export function ipvSolothurn(data, hh, ipvData, youngAdultsCount, orientierung) 
   return ergebnisOhneAnspruch({
     canton: 'SO', cantonData: { ...ipvData, maxIncome: null }, jahr,
     vorbehaltKey: 'ipv.vorbehaltSO', noteKey: 'ipv.soKeinAnspruch',
-    extra: { jahrKey: 'ipv.jahrEineRegion', anmeldefristVorbei: fristVorbei },
+    // Kein `anmeldefristVorbei`: SO zeigt nie einen Betrag, `ipvAbzug` hätte nichts zu verhindern — und
+    // der Wächter in ipvAbzug.test.js lässt das Feld bewusst nur dort zu, wo es wirkt. Die Frist
+    // steht darum im Grund-Text (`soSkalaUnklarFristVorbei`) und im Vorbehalt.
+    extra: { jahrKey: 'ipv.jahrEineRegion' },
   });
 }
