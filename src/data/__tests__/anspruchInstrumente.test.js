@@ -6,7 +6,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { sozialhilfePegelState } from '../pegel.js';
 import { praemienBelegState } from '../praemienBeleg.js';
-import { calculateSozialhilfe, calculateIPV } from '../../config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, CANTONAL_IPV } from '../../config/cantonalData.js';
 import { kantoneBelegtSimulieren } from '../../config/__tests__/ipvBelegtSimulieren.js';
 
 describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
@@ -55,10 +55,18 @@ describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
   });
 });
 
+// ⟨28.09.2026, Fachprüfung #475 W1⟩ Bis dahin stand hier ein echter Kanton (erst ZG, dann GE) als
+// «unbelegter Muster-Kanton» — und jeder Kanton, der ein eigenes Modell bekam, brach diese Tests.
+// Jetzt ein Test-Kanton «TT» mit den alten Musterwerten (60 000 / 3 600 / 7 200 / 1 800), nur für
+// diese Datei angelegt und danach wieder entfernt. Kein Produktionscode kennt ihn.
+const TEST_KANTON = 'TT';
+beforeAll(() => {
+  CANTONAL_IPV[TEST_KANTON] = { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null };
+});
+afterAll(() => { delete CANTONAL_IPV[TEST_KANTON]; });
+
 describe('praemienBelegState — E9: Kanton nicht amtlich belegt', () => {
-  // ⟨28.09.2026⟩ bis dahin ZG — seit K31 hat ZG ein eigenes Modell. GE trägt dieselben
-  // Musterwerte (60 000 / 3 600); wer GE baut, braucht hier wieder einen Kanton ohne Modell.
-  const base = { basis: { canton: 'GE' }, finanzen: { monthlyIncome: 500 }, versicherungen: { kkPremium: 200 } };
+  const base = { basis: { canton: TEST_KANTON }, finanzen: { monthlyIncome: 500 }, versicherungen: { kkPremium: 200 } };
 
   it('zeigt eine Orientierung ohne Betrag statt einer Verbilligung', () => {
     const state = praemienBelegState(base);
@@ -78,12 +86,12 @@ describe('praemienBelegState — E9: Kanton nicht amtlich belegt', () => {
 
 describe('praemienBelegState — Verbilligung nie über der Prämie (B2, belegter Kanton simuliert)', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren([TEST_KANTON]); });
   afterAll(() => zuruecksetzen());
-  // GE (bis 28.09.2026 ZG, siehe oben), Einperson, tiefes Einkommen → hohe IPV (Muster-Abbau);
+  // Test-Kanton (siehe oben), Einperson, tiefes Einkommen → hohe IPV (Muster-Abbau);
   // niedrige Prämie eingetragen.
   const base = {
-    basis: { canton: 'GE' },
+    basis: { canton: TEST_KANTON },
     finanzen: { monthlyIncome: 500 },
     versicherungen: { kkPremium: 200 },
   };
@@ -116,12 +124,12 @@ describe('praemienBelegState — Verbilligung nie über der Prämie (B2, belegte
   });
 
   it('ist "over" bei Einkommen über der Grenze', () => {
-    const data = { ...base, finanzen: { monthlyIncome: 6000 } }; // 72k/Jahr > 60k Muster-Grenze GE
+    const data = { ...base, finanzen: { monthlyIncome: 6000 } }; // 72k/Jahr > 60k Muster-Grenze des Test-Kantons
     expect(praemienBelegState(data).mode).toBe('over');
   });
 
   it('ist "empty" ohne Kanton oder Einkommen', () => {
     expect(praemienBelegState({ basis: { canton: '' }, finanzen: { monthlyIncome: 500 } }).mode).toBe('empty');
-    expect(praemienBelegState({ basis: { canton: 'ZG' }, finanzen: { monthlyIncome: 0 } }).mode).toBe('empty');
+    expect(praemienBelegState({ basis: { canton: TEST_KANTON }, finanzen: { monthlyIncome: 0 } }).mode).toBe('empty');
   });
 });
