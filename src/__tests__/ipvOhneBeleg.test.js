@@ -74,10 +74,12 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
   });
 
   it('Verfahrens-Hinweis je Kanton ist ausgeblendet, der Link zur Stelle bleibt', () => {
-    const html = render(PremiumSubsidy, { data: profil({ basis: { canton: 'GL', household: { adults: 1, children: [] } } }), onUpdateData: () => {} });
+    // Bis 28.09.2026 mit GL (dessen Musterzeile fälschlich «automatisch» sagte); GL rechnet seither
+    // nach eigenem Modell. NE trägt dieselbe Musterzeile und ist noch unbelegt.
+    const html = render(PremiumSubsidy, { data: profil({ basis: { canton: 'NE', household: { adults: 1, children: [] } } }), onUpdateData: () => {} });
     expect(html).not.toContain('premium.note');
     expect(html).not.toContain('ipv.noteAutoTaxData');
-    expect(html).toContain('href="' + CANTONAL_LINKS.GL.ipv + '"');
+    expect(html).toContain('href="' + CANTONAL_LINKS.NE.ipv + '"');
   });
 
   it('IPV-Rechner: Orientierung + Link zur kantonalen Stelle, kein Betrag, kein Verdikt, keine Grenze', () => {
