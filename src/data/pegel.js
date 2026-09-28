@@ -83,5 +83,7 @@ export function sozialhilfePegelState(data) {
   return {
     show: true, variant: 'aufstockung', mode, fraction,
     income, bedarf, amount: mode === 'gap' ? deficit : 0, canton, vermoegenUeber,
+    // Betrag mit der ganzen Miete gerechnet (keine Mietzins-Limite bekannt) — die Anzeige sagt es.
+    mitGanzerMiete: mode === 'gap' && !!sh?.mitGanzerMiete,
   };
 }

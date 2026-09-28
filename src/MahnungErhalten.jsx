@@ -70,6 +70,9 @@ export const MahnungErhalten = ({ palette, t, onNavigate }) => {
     // Schritt 3 — Was dazukommen darf (Verzugszins 5 %, kein Zinseszins, Gebühren nur mit Grundlage)
     React.createElement(AblaufStep, { palette, title: t('mahnung.step3Title') },
       React.createElement('p', { style: s.stepText }, t('mahnung.step3Text')),
+      // Inkassobüro statt Gläubiger: Vollmacht verlangen, nur Forderung + Zins + Betreibungskosten
+      // (schuldeninfo.ch «Inkassobüros» 04.2024; SchKG Art. 27 Abs. 2, Fassung 1.1.2018)
+      React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('mahnung.step3Inkasso')),
       React.createElement(ZinsRechner, { palette, t }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('mahnung.step3LinkSchulden'), onClick: () => onNavigate('schulden') })
     ),

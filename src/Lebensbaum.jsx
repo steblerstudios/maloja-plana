@@ -201,7 +201,8 @@ export const Lebensbaum = ({ palette, t, data, text, weight, space, radius, onNa
           // Der Anspruch beim Namen (Variante B): Ring-Klick führt zum benannten
           // Anspruch — bei genau einem Signal direkt in sein Zuhause, sonst in die
           // Anspruchs-Landkarte. Ohne Anspruch bleibt die Frucht bei ihrem Kapitel.
-          const anspruchLabel = hasAnspruch ? t('anspruch.items.' + sigList[0].key + '.label') : null;
+          const anspruchLabel = hasAnspruch ? t('anspruch.items.' + sigList[0].key + '.label')
+            + (sigList[0].mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : null;
           const anspruchGo = hasAnspruch
             ? () => (sigList.length === 1 && sigList[0].view ? onNavigate(sigList[0].view) : onNavigate('ansprueche'))
             : null;

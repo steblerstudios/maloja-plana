@@ -74,7 +74,9 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitL
         key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
         label: t('nav.sozialhilfe'), monthly: sh.deficit,
         // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
-        note: t('schnellcheck.sozNote') + (sh.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
+        note: t('schnellcheck.sozNote') + (sh.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : '')
+          // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — beim Betrag dazusagen.
+          + (sh.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : ''),
       });
     }
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
