@@ -240,6 +240,40 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 9 · SVA Basel-Landschaft — Mindestanteil der Kinder und Kinder nach dem Bemessungsjahr
+
+*Aufgenommen 28.09.2026 beim Einbau von BL (K31). Entwurf — **nicht gesendet**. (Nummer 9, weil der
+BS-Zweig gleichzeitig Nr. 8 belegt.)*
+
+**Worum es geht:** Formel, Richtprämien, Prozentanteil und Obergrenzen 2026 stehen vollständig im
+EG KVG (SGS 362), im Dekret (SGS 362.1) und in der PVV (SGS 362.12). Ein amtliches
+Berechnungsbeispiel mit Beträgen haben wir nicht gefunden; der Online-Rechner prüft nur die
+Obergrenze.
+
+**Frage 1 — Kinder mindestens 80 % (§ 8 Abs. 3 EG KVG):** Wie wirkt der Mindestanteil mit der
+Differenzrechnung nach § 8 Abs. 2 zusammen? (a) Der Haushalt erhält mindestens «Kinderzahl × 80 %
+der Kinder-Richtprämie» (Boden auf dem Ganzen), oder (b) der Betrag wird im Verhältnis der
+Richtprämien verteilt und jedes Kind erhält mindestens 80 % zusätzlich zum Anteil der
+erwachsenen Person? Bei einer erwachsenen Person mit einem Kind und 40'000 massgebendem
+Einkommen liegen die Lesarten 536 Franken auseinander. Bis zur Antwort zeigt die App dort, wo
+sie abweichen, keinen Betrag.
+
+**Frage 2 — Aufteilung und Deckel (§ 8 Abs. 2bis):** Gilt «darf die tatsächlich bezahlte Prämie
+nicht übersteigen» je Person oder für die Berechnungseinheit? Wie wird der Betrag auf die
+Personen verteilt?
+
+**Frage 3 — Kinder, die nach dem Bemessungsjahr geboren sind:** Ein Kind, das 2025 geboren ist,
+steht nicht in der Veranlagung 2024. Zählt es für 2026 nur auf Gesuch nach § 9a EG KVG — und ein
+Kind, das 2026 geboren wird, gar nicht? Die App zeigt in diesen Fällen heute keinen Betrag.
+
+**Frage 4 — Obergrenze:** Besteht bei einem massgebenden Einkommen von genau 31'000 noch ein
+Anspruch («anspruchsabschliessende Obergrenze»)? Wir rechnen «bis und mit».
+
+**Stand:** BL ist für 2026 gebaut (Entwurfs-PR, K31). Ab 01.01.2027 zeigt die App für BL keinen
+Betrag mehr, bis die Richtprämien 2027 eingearbeitet sind.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
