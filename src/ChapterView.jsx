@@ -1165,7 +1165,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       '.card{border:1px solid #ddd;border-radius:8px;padding:24px;background:#fff}h1{font-size:20px;font-weight:500;margin:0 0 4px;letter-spacing:0.3px}' +
       '.subtitle{font-size:13px;color:#888;margin:0 0 20px;font-style:italic}.footer{margin-top:20px;padding-top:12px;border-top:1px solid #eee;font-size:11px;color:#aaa}' +
       '.no-print{text-align:center;margin-bottom:24px}@media print{.no-print{display:none}}</style></head><body>' +
-      '<div class="no-print"><button onclick="window.print()" style="padding:8px 20px;font-size:14px;border:1px solid #ccc;border-radius:6px;background:#f8f7f5;cursor:pointer">' + tr('notfallSummary.printCard') + '</button></div>' +
+      '<div class="no-print"><button data-druck onclick="window.print()" style="padding:8px 20px;font-size:14px;border:1px solid #ccc;border-radius:6px;background:#f8f7f5;cursor:pointer">' + tr('notfallSummary.printCard') + '</button></div>' +
       '<div class="card"><h1>' + tr('notfallSummary.cardTitle') + '</h1>' +
       '<p class="subtitle">' + tr('notfallSummary.handoverIntro') + '</p>' +
       sectionHtml +
