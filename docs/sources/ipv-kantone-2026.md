@@ -53,7 +53,7 @@ sind. Dieses Dokument ändert keinen Code.
 | TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0) | teilweise | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
-| VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
+| VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | gebaut (PR #PRNUMMER, nachgeprüft 28.09.2026) | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | abbildbar (mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge, siehe «Offen») | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
 | GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
 | JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
@@ -2367,7 +2367,7 @@ Hinweis und die Anzeige; siehe PR).
 
 ## VS — Wallis / Valais
 
-**Beurteilung:** abbildbar
+**Beurteilung:** ~~abbildbar~~ gebaut (K31, PR #PRNUMMER; an der Quelle nachgeprüft 28.09.2026)
 **Modell (kurz):** Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %.
 **Zuständig / Weg:** Ausgleichskasse des Kantons Wallis; **automatisch** aufgrund der Steuerveranlagung 2024 (Mitteilung Ende Februar 2026). Quellenbesteuerte (Ausweis B, F, L, N) und neue C-Bewilligungen stellen ein Gesuch bis spätestens 31.12.2026. Ohne Entscheid: begründetes Gesuch, rückwirkend 2 Jahre.
 **Gültigkeit:** 2026. Die Tabelle heisst im Dateititel «Echelle définitive RIP 2026» (19.12.2025). Der Medienanhang vom 3.2.2026 bezeichnet die Sätze als «(Provisorisch)» und weicht in einer Zelle ab (siehe Offen).
@@ -2465,6 +2465,48 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt für eine
 2. Prämienverbilligung (IPV), Ausgleichskasse des Kantons Wallis, ohne Datumsangabe (Inhalt für 2026). https://www.ahvwallis.ch/de/Versicherungen/IPV-Pramienverbilligungen-in-der-Krankenversicherung/Pramienverbilligung/Praemienverbilligung.html — abgerufen 16.09.2026
 3. Einkommenstabelle zur Berechnung der Krankenkassensubventionen 2026 (PDF-Titel «Echelle définitive RIP 2026 - F+D»), Ausgleichskasse des Kantons Wallis, erstellt 19.12.2025. https://www.ahvwallis.ch/Htdocs/Files/v/998819276e6a3d4d72971862e9c685628b0b29b732860905db939232a7de9cda.pdf/Vollstaendige-Einkommenstabelle-2026.pdf — abgerufen 16.09.2026
 4. Individuelle Prämienverbilligung (IPV) 2026 im Wallis — Anhang zur Medienmitteilung vom 3. Februar 2026, Kanton Wallis (PDF erstellt 23.03.2026). https://www.vs.ch/documents/8841577/8881906/PP+Anhang+an+die+Medienmitteilung+IPV+2024.pdf/c29a188b-8096-d1e8-743d-657ac8ed9807?t=1703232568501&v=1.3 — abgerufen 16.09.2026. Referenzprämien-Folie auch als https://www.ahvwallis.ch/Htdocs/Files/v/8d3d15d310e5aa9490b3d8e4c130fa9b39cd184fce902d836a6c849d0a17fca8.pdf/2026-02-03---Individuelle-Praemienverbilligung.pdf
+
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+**An der Quelle nachgeprüft 28.09.2026**, jede Zahl des Moduls `src/config/ipvWallis.js` heute gelesen:
+
+| Quelle | Fassung | Weg | Gegenprobe |
+|---|---|---|---|
+| VüIPV SGS 832.105 | «Aktuelle Version in Kraft seit: 01.05.2026 (Beschlussdatum: 20.05.2026)», Version 3609, `future_versions` leer | `https://lex.vs.ch/api/de/texts_of_law/832.105` → 200; PDF `…/api/de/versions/3609/pdf_file` → 200, 18 S. | `…/texts_of_law/832.999` → 404, 0 Bytes |
+| Einkommenstabelle 2026 [3] | PDF-Titel «Echelle définitive RIP 2026 - F+D», erstellt 19.12.2025 | Link auf der Seite der Ausgleichskasse, am 28.09.2026 unverändert; **Werte am Seitenbild geprüft** (gerendert mit `pdftoppm`), Textlayer stimmt überein | — |
+| Seite «Prämienverbilligung» der Ausgleichskasse [2] | Inhalt 2026 | `ahvwallis.ch/de/…/Praemienverbilligung.html` → 200 | — |
+| Anhang Medienmitteilung 3.2.2026 [4] | PDF erstellt 23.03.2026, Spalte «(Provisorisch)» | → 200 | — |
+| EDI-Durchschnittsprämien 2026 | Anhang Ziff. 2 | (siehe FR) | ID-Gegenprobe → 404 |
+| BFS-Gemeindeverzeichnis | 01.01.2026 | API → 200 | → 404 |
+
+**Wortlaute, die der Code zitiert** (VüIPV, Stand 01.05.2026):
+
+> «Als Versicherte in bescheidenen wirtschaftlichen Verhältnissen gelten Personen, deren massgebendes Einkommen gleich oder kleiner ist als die in der vorliegenden Verordnung in Artikel 7 vom Staatsrat festgelegte Einkommensgrenze.» — Art. 2 Abs. 2
+>
+> «Versicherte, die am 31. Dezember des Jahres vor der gewährten Prämienverbilligung 20 Jahre alt sind, werden individuell behandelt.» — Art. 3 Abs. 3
+>
+> «Massgebend ist das familiäre Verhältnis am 31. Dezember des Vorjahres …» · «Abweichend zu Absatz 2 wird die neue familiäre Situation ab Beginn des Monats, in dem ein Kind geboren oder adoptiert wird, berücksichtigt.» — Art. 10 Abs. 2/2bis
+>
+> «Personen, … die keinen Entscheid über die Gewährung einer individuellen Prämienverbilligung erhalten, müssen bei der Ausgleichskasse ein begründetes Gesuch einreichen. Die Frist beträgt rückwirkend 2 Jahre …» — Art. 11 Abs. 2
+>
+> Seite der Ausgleichskasse [2], Berechnungsschema: «Reineinkommen vor den persönlichen Abzügen (Ziffer 2400*) + 5% des aufgewerteten Nettovermögens + negative Einkommen aus Liegenschaften … + Beiträge der gebundenen Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220) ./. bezahlte Unterhaltsbeiträge (Ziffer 2531) ./. erhaltene Kapitalleistungen … = massgebendes Einkommen»
+
+**Korrekturen und Ergänzungen zum Stand 16.09.:**
+- Die 63'000 (Kinderzeile, allein, 1 Kind) sind am **Seitenbild** der Einkommenstabelle bestätigt; der Medienanhang (Folie 8) zeigt 61'000. Der Widerspruch bleibt → die App zeigt in diesem Band **keine Zahl** (`orientierung('mindestanspruch')`), Frage an die Ausgleichskasse `FRAGEN-AN-DIE-AEMTER.md` Nr. 9 (vorläufig). Eine Frage zu VS stand dort bisher **nicht**.
+- **Neu gefunden: Säule 3a.** Art. 8 Abs. 1 lit. a rechnet 3a «bis zum Maximalbetrag des Angestelltenlohns» dazu, die Seite der Ausgleichskasse ohne Obergrenze. Unter dem Maximum rechnen beide gleich; darüber zeigt die App keine Zahl (`saeule3aStrittig`). Regel `SAEULE_3A.bisBundesMaximum` nennt jetzt «BE, VS».
+- **Neu: bezahlte Unterhaltsbeiträge** werden abgezogen (Art. 8 Abs. 1 lit. b, Ziffer 2531) — die App kennt `alimentePaid` und zieht es ab.
+- Referenzprämien nachgerechnet nach Art. 5 Abs. 2 (EDI × 0,95, gerundet): 561/401/133 und 481/359/110 — stimmt.
+- Regionen: [4] beschreibt Region 2 als «Gemeinden des Oberwallis, Anniviers, Evolène, Hérémence, Mont-Noble, Saint-Martin und Vex». Gegen das BFS-Verzeichnis (Bezirke Brig, Goms, Leuk, Raron, Visp = 63 Gemeinden) + die sechs genannten = 69 Gemeinden; die BAG-Daten der App führen genau diese 69 in Region 2, die übrigen 53 in Region 1 (Test).
+- Der Staatsratsbeschluss nach Art. 7 bleibt unauffindbar (Amtsblatt 2026: nur «Krankenkassenprämien 2026» vom 02.10.2025 mit dem Budget, nicht die Skala).
+- **Weg:** automatisch (Entscheid Ende Februar); `noteKey` von «Antrag bei Dienststelle für Gesundheit» auf `ipv.noteAutoTaxData` korrigiert. Quellenbesteuerte stellen ein Gesuch bis 31.12.2026 (nicht gebaut). Neue Berechtigte senden eine Kopie der Police.
+- **Kein amtliches Rechenbeispiel** mit Franken gefunden. Prüfstein ist die Tabelle selbst: jede der 80 Zellen wörtlich im Test, jede Grenze an der Kante und einen Franken darüber.
+
+**Gewählt, nicht belegt:** Lesart «erste nicht überschrittene Grenze» (gestützt auf Art. 2 Abs. 2) · Alter `mangelsStichtag` · Rundung (Jahressumme auf Franken).
+
+**Bewusst nicht gebaut:** Ehepaare/Konkubinat · Personen 20–25 · Kinder über 18 und im Anspruchsjahr geborene Kinder (`kindImJahrGeboren`) · über 9 Kinder · EL/Sozialhilfe (100 %) · Quellenbesteuerte · Ermessenseinschätzung · Neuberechnung bei 30 % Rückgang (im Vorbehalt genannt) · Kapitalleistungen, Liegenschaftsverluste, Auslandelemente · kein Mindestbetrag gefunden.
+
+**2027:** am 28.09.2026 nicht publiziert. Ab 01.01.2027 keine Zahl (`jahrVorbei`).
 
 ---
 
