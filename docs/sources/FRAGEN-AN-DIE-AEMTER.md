@@ -240,6 +240,36 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 9 · Ausgleichskasse Obwalden — Jahrgang 2008, Mindestbetrag, Stufen und die Grenze mit Kindern
+
+*Aufgenommen 28.09.2026 beim Einbau von OW. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Selbstbehalt 2026 (KRB GDB 851.12), Richtprämien (Merkblatt 2026) und die
+Rechenregeln (EV KVG GDB 851.11) sind gelesen; die App rechnet danach. Ein durchgerechnetes
+Beispiel mit Franken-Ergebnis haben wir nicht gefunden. Fünf Punkte lesen wir nicht eindeutig.
+
+**Frage 1 — Jahrgang 2008:** EV Art. 5 Abs. 2 zählt als Kind, wer am 1. Januar 18 oder jünger ist;
+das Merkblatt 2026 lässt «Jugendliche (ab Jahrgang 2008)» einen eigenen Antrag stellen. Zählt ein
+Kind mit Jahrgang 2008 im Antrag der Eltern mit (Richtprämie 1'380, Mindestanspruch 80 %)? Die App
+zeigt bis zur Antwort keinen Betrag.
+
+**Frage 2 — Mindestbetrag Art. 14 Abs. 6:** «Beiträge unter Fr. 100.–» — gilt das für den ganzen
+Anspruch der Verfügung oder je Person/Versicherer? Die App prüft die Summe.
+
+**Frage 3 — Steigerung des Selbstbehalts:** «pro Fr. 100.– … um je 0,01 Prozent» — stetig (wie der
+Online-Rechner) oder in ganzen 100er-Stufen? Unterschied höchstens rund 5 Franken im Jahr.
+
+**Frage 4 — Grenze mit Kindern:** Art. 7 Abs. 2 sagt «erhöht sich das anrechenbare Einkommen um
+Fr. 25 000.–»; Merkblatt und Rechner lesen es als Grenze 75'000. Ist das so gemeint?
+
+**Frage 5 — Rundung und Aufteilung:** Art. 14 Abs. 4 rundet «auf fünf Rappen» auf. Gilt das je
+Person (nach der Aufteilung Art. 14 Abs. 2) oder für den ganzen Betrag?
+
+**Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
+zeigt die App für OW keinen Betrag.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für

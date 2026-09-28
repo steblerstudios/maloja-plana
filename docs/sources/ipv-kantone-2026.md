@@ -36,7 +36,7 @@ sind. Dieses Dokument ändert keinen Code.
 | LU | Luzern | Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind) | abbildbar | <https://srl.lu.ch/app/de/texts_of_law/866a> |
 | UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | abbildbar | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
 | SZ | Schwyz | Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % | teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert) | <https://www.sz.ch/public/upload/assets/6155/361_100.pdf> |
-| OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
+| OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | gebaut (PR #…) | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
 | ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
@@ -861,7 +861,7 @@ Der heutige App-Wert (maxIncome/subsidySingle SZ) lag dem Unteragenten nicht vor
 
 ## OW — Obwalden
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **in der App gebaut 28.09.2026 (K31)**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 %
 **Zuständig / Weg:** Ausgleichskasse Obwalden (Sarnen). Antrag nötig (Einladung/Online-Formular); Frist 2026: 31. Mai 2026 (laut Merkblatt und Website abgelaufen), sonst verwirkt. EL- und Sozialhilfebeziehende ohne Antrag.
 **Gültigkeit:** 2026 definitiv (Kantonsratsbeschluss vom 26.03.2026, rückwirkend in Kraft 01.01.2026; Richtprämien laut Merkblatt Stand Januar 2026)
@@ -901,10 +901,11 @@ Rechenweg (abgeleitet): Selbstbehalt-% = 9,5 % bei AE ≤ 35'000, sonst 9,5 % + 
 App: maxIncome 42'000, subsidySingle 2'100, modelFlat. Belegt ist für eine erwachsene Einzelperson: bis CHF 5'018.40 (bei AE 0), Abbau nicht linear bis zu einer Grenze, sondern über einen progressiven Selbstbehalt; der Anspruch endet rechnerisch bei rund AE 46'900 (harte Grenze 50'000, mit Kindern 75'000). App-Höchstbetrag und Grenze sind damit zu tief, das Modell falsch bezeichnet.
 
 ### Offen / nicht gefunden
-- Ob die Selbstbehalt-Steigerung stufenweise je volle CHF 100 oder stetig gerechnet wird: Wortlaut «pro Fr. 100.–» lässt beides zu; Rechner https://www.akow.ch/ipv-rechner nicht geöffnet.
+- Ob die Selbstbehalt-Steigerung stufenweise je volle CHF 100 oder stetig gerechnet wird: Wortlaut «pro Fr. 100.–» lässt beides zu; Rechner https://www.akow.ch/ipv-rechner nicht geöffnet. ⟨28.09.2026: Rechner-Quelltext gelesen — er rechnet stetig (`incomeDifference/100`, ohne Abrundung); die App folgt ihm, gewählt⟩
 - Richtprämien 2026 nur im Merkblatt [4] gefunden, kein eigener Beschluss mit den Frankenbeträgen (Rechtsgrundlage: 85 % bzw. 100 % der EDI-Durchschnittsprämie, [3] Art. 5).
 - Frist: Die heute geltende EV-Fassung (in Kraft seit 01.06.2026) nennt den 30. April; für 2026 nennen Merkblatt und Website den 31. Mai 2026. Für 2027 ist mit dem 30. April zu rechnen (nicht separat bestätigt).
 - EG KVG (Fassung ab 01.04.2026) weist die Festlegung des Selbstbehalts künftig dem Regierungsrat «jeweils im Vorjahr» zu; für 2026 hat noch der Kantonsrat beschlossen.
+- ⟨korrigiert 28.09.2026⟩ Oben (Rechenmodell) steht aus der Fassung ab 01.04.2026 «beträgt zwischen 9,0 und 12,0 Prozent». Der Beschluss 2026 (26.03.2026) fiel unter der Fassung **bis 31.03.2026**, die **keinen** Rahmen nennt («vom Kantonsrat jährlich … abschliessend festgelegt»). Für 2026 gibt es darum keine Obergrenze von 12 %; ab 60'000 liegt der Satz darüber.
 - Merkblatt-Variante ohne Datum (IPV26_Merkblatt.pdf) antwortet mit HTTP 404; verwendet wurde die Fassung «Stand Januar 2026».
 
 ### Quellen
@@ -913,6 +914,89 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat. Belegt ist für eine erwa
 3. GDB 851.11 Verordnung zum Einführungsgesetz zum Krankenversicherungsgesetz (EV KVG) vom 28.01.1999, Fassung in Kraft seit 01.06.2026. https://gdb.ow.ch/app/de/texts_of_law/851.11 — abgerufen 16.09.2026
 4. Merkblatt «Prämienverbilligung 2026», Ausgleichskasse / IV-Stelle Obwalden, Stand Januar 2026. https://www.akow.ch/uploads/PDF-Formulare-Merkblaetter/IPV/IPV26_Merkblatt_2026-01.pdf — abgerufen 16.09.2026
 5. Webseite Prämienverbilligung, Ausgleichskasse Obwalden (Frist 31.05.2026 abgelaufen). https://www.akow.ch/ipv — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe:
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://gdb.ow.ch/api/de/texts_of_law/851.12/show_as_json` | 200, 22'527 B | `…/851.99/…` → **404**, 0 B |
+| `https://gdb.ow.ch/api/de/texts_of_law/851.1/show_as_json` · `…/851.1/versions/1694/…` | 200 | — (gleiche Route) |
+| `https://gdb.ow.ch/api/de/texts_of_law/851.11/show_as_json` · `…/851.11/versions/1966/…` | 200 | `…/versions/9999999/…` → **500**, 0 B |
+| `https://gdb.ow.ch/api/de/texts_of_law/641.4/versions/1836/show_as_json` (StG 2024) | 200 | — |
+| `https://www.akow.ch/uploads/PDF-Formulare-Merkblaetter/IPV/IPV26_Merkblatt_2026-01.pdf` | 200, 180'403 B, PDF (erstellt 03.02.2026) | `…_2099-01.pdf` → **404** |
+| `https://www.akow.ch/ipv` · `https://www.akow.ch/ipv-rechner` | 200 | `…/ipvxyz` → **404** |
+
+**Fassungen:** KRB 851.12 «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 26.03.2026)»,
+Erstfassung, keine künftige. EG KVG 851.1: aktuell seit 01.04.2026; Vorfassung 01.01.2022–31.03.2026
+gelesen. EV KVG 851.11: aktuell seit 01.06.2026; Vorfassung 18.12.2025–31.05.2026 gelesen — Art. 7,
+7a und 14 **zeichengleich**, Art. 10 Abs. 3 verschieden (31. Mai → 30. April).
+
+**KRB 851.12** Ziff. 1: «Der Selbstbehalt gemäss Art. 2 Abs. 2 des Einführungsgesetzes zum
+Krankenversicherungsgesetz beträgt für 2026 bis Fr. 35 000.– anrechenbares Einkommen 9,50 Prozent,
+danach steigt der Selbstbehalt pro Fr. 100.– anrechenbares Einkommen um je 0,01 Prozent.»
+
+**EG KVG** Art. 2 Abs. 2 (Fassung bis 31.03.2026): «Der Selbstbehalt entspricht einem bestimmten
+Prozentsatz des anrechenbaren Einkommens. Der Prozentsatz verläuft linear und steigt ab einer
+bestimmten Grenze des anrechenbaren Einkommens an (linear-progressives System). Er wird vom
+Kantonsrat jährlich durch Kantonsratsbeschluss abschliessend festgelegt.» — Art. 2 Abs. 5 (beide
+Fassungen): «Die Prämienverbilligung darf, vorbehältlich bundesrechtlicher Vorgaben, die im
+Anspruchsjahr geschuldeten Prämien für die obligatorische Krankenpflegeversicherung nicht
+übersteigen.»
+
+**EV KVG** (Wortlaut, soweit gebaut):
+> Art. 5 Abs. 1/2: Richtprämien Erwachsene und junge Erwachsene «85 Prozent der vom Eidgenössischen Departement des Innern festgelegten kantonalen Durchschnittsprämien»; Kinder, «welche am 1. Januar des Anspruchsjahres 18 Jahre und jünger sind», 100 %.
+> Art. 6 Abs. 2: «Massgebend … sind die persönlichen und familiären Verhältnisse am 1. Januar … Im Laufe des Jahres eingetretene Änderungen werden im Folgejahr berücksichtigt.» Abs. 3: Gesamtanspruch der gemeinsam Besteuerten.
+> Art. 7 Abs. 1: «… soweit die kantonale Richtprämie den gesetzlichen Selbstbehalt des anrechenbaren Einkommens übersteigt und das anrechenbare Einkommen weniger als Fr. 50 000.– beträgt.» Abs. 2: «Für Personen, welche Anspruch auf eine Prämienverbilligung für Kinder haben, erhöht sich das anrechenbare Einkommen um Fr. 25 000.–.» Abs. 4: unter 50 000 «mindestens … 80 Prozent der kantonalen Richtprämie (Mindestanspruch) pro Kind». Abs. 5: unter 50 000 «ab dem vierten Kind die maximale Prämienverbilligung». Abs. 6: «die vorletzte Steuerperiode».
+> Art. 7a: Total der Einkünfte; Abzüge lit. b–f (Berufsauslagen, Unterhalt/dauernde Lasten, Versicherungsprämien und Sparzinsen, Krankheit/Unfall/Invalidität, Kinderbetreuung); lit. g 7 000 Ehepaare; lit. h «7 000.– pro Kind»; lit. i «Aufrechnung von 10 Prozent des steuerbaren Vermögens (Art. 43 bis 54 StG)»; lit. j Liegenschaftsverlust; lit. k Schuldzinsen bis zu den Liegenschaftseinkünften. **Die Säule 3a (Art. 35 Abs. 1 lit. e StG) ist nicht unter den Abzügen.**
+> Art. 8 Abs. 5: 25 % weniger Einkommen im Jahr nach der Bemessung zählt nur mit begründetem Gesuch «innert 30 Tagen seit Zustellung der Verfügung».
+> Art. 10 Abs. 3: Fassung bis 31.05.2026 «bis 31. Mai des Jahres, für das die Prämienverbilligung geltend gemacht wird»; seit 01.06.2026 «bis 30. April». Abs. 7: nicht fristgerecht ⇒ «verwirkt», ausser besondere Gründe.
+> Art. 14 Abs. 2: Aufteilung «im gleichen Verhältnis … wie sich die kantonalen Richtprämien zusammensetzen». Abs. 3: der Mindestanspruch geht an den Versicherer der Kinder; «Kommt auf diese Weise die Auszahlung des Mindestanspruches zum Tragen, so sind die übrigen Prämienverbilligungen gemäss Absatz 2 anteilsmässig zu kürzen.» Abs. 4: «… so auf den Betrag aufzurunden, dass er einer monatlichen Prämienverbilligung entspricht, welche auf fünf Rappen gerundet ist.» Abs. 6: «Beiträge unter Fr. 100.– werden nicht ausbezahlt.»
+> Art. 16 Abs. 1: «Unrechtmässig ausbezahlte Prämienbeiträge sind von der Person, Behörde oder Stelle zurückzuerstatten, welche sie bezogen hat.»
+
+**Nicht in EG/EV:** keine Vermögensgrenze.
+
+**StG 641.4** Art. 54 Abs. 1 (Fassung 2024): «a. für Ehegatten … Fr. 50 000.–; b. … Fr. 10 000.– für
+jedes Kind; c. für alle andern Steuerpflichtigen Fr. 25 000.–» (lit. b zuletzt geändert 01.01.2016).
+
+**Merkblatt 2026** (Textlayer): «Einsendeschluss: 31. Mai 2026 — Senden Sie das Anmeldeformular nach
+dieser Frist ein, ist der Anspruch verwirkt.» · Richtprämien «Erwachsene ab Jahrgang 2000 5'018.40 ·
+Junge Erwachsene mit Jahrgang 2001 bis 2007 3'570.00 · Kinder und Jugendliche bis Jahrgang 2008
+1'380.00» · «Bei einem anrechenbaren Einkommen von 45'000 Franken beträgt er beispielsweise 10.5%» ·
+«Ehepaare oder Familien mit Kindern (Jahrgang 2009 oder jünger) reichen einen gemeinsamen Antrag …
+Jugendliche (ab Jahrgang 2008) reichen einen eigenen Antrag ein.» · «Grundlage … ist die definitive
+Steuerveranlagung 2024.» · EL und wirtschaftliche Sozialhilfe: kein Anmeldeformular. (Der Satz «Der
+Selbstbehalt wurde auf 9.5% festgesetzt (Stand 2025 …)» ist durch den KRB vom 26.03.2026 überholt —
+gleicher Wert.)
+
+**Rechner der AK Obwalden** (Seitenquelltext, nicht ausgefüllt): `window.ipv_settings = {"year":2026,
+"prev_year":2024,"benchmark":{"adult":"5'018.40","teen":"3'570","children":"1'380"},
+"taxable_income_limit":35000,"deductible_base_percentage":9.5,"increase_unit_percentage":0.01,
+"bracket_amount":100,"deductible_pro_person":"7'000"}`; Schwelle `hasChildren?75000:50000`;
+Steigerung `incomeDifference/100*0.01` (stetig); Kinder in der Summe der Richtprämien **voll**. Kein
+Mindestanspruch, keine Rundung im Rechner. Der Rechner nimmt «10 % des Reinvermögens», die EV
+«des steuerbaren Vermögens» — die App folgt der EV.
+
+**Prüfstein:** kein amtlich durchgerechnetes Beispiel mit Franken-Ergebnis gefunden (Merkblatt nur
+Kontrollwert 10,5 % bei 45'000). Die Tests prüfen diesen Kontrollwert, Handrechnungen (20'000 →
+3'118.40 · 35'000 → 1'693.40 · 45'000 → 293.40 · Kind 40'000 → 2'398.40 · vier Kinder 30'000 →
+7'688.40) und jede Grenze einzeln.
+
+**Werte 2027:** am 28.09.2026 nicht publiziert gefunden. Ab 01.01.2027 zeigt die App für OW keinen Betrag.
+
+**Gewählt, nicht belegt:** stetige Steigerung (Rechner) · Rundung und Aufteilung je Person ·
+Mindestbetrag auf der Summe · Jahrgang 2008 ohne Zahl (EV Art. 5 Abs. 2 vs. Merkblatt) · Grenze 75'000
+nach Merkblatt/Rechner (Wortlaut Art. 7 Abs. 2 «erhöht sich das anrechenbare Einkommen»).
+
+**Ausserhalb des Moduls:** Nach dem 31. Mai sagen Budget und KK-Karte jetzt den Obwaldner Grund
+(`fristKeys` → `ipv.owFristNichtAbgezogen`, `budget.ipvHintOwFristVorbei`); vorher gab es dort nur den
+Luzerner Satz.
+
+**Bewusst nicht gebaut:** Paare · junge Erwachsene · Quellenbesteuerte, EL, Sozialhilfe, Härtefälle,
+Neuzuzüger · die amtlichen Abzüge Art. 7a lit. b–f, j, k (Betrag eher zu tief; Vorbehalt sagt es).
+
+**Neu offen:** `FRAGEN-AN-DIE-AEMTER.md` Abschnitt 9.
 
 ---
 
