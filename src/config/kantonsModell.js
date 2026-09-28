@@ -35,8 +35,10 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD, UR, NE, GR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, UR, NE, GR, TI — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        (UR: kein Abzug der 3a vom PV-Einkommen, rechnerisch dasselbe.)
+//                        (TI: die Abzüge vom verfügbaren Einkommen sind abschliessend aufgezählt,
+//                        LCAMal Art. 31 Abs. 1 lit. d «AVS, AI, IPG, AD, AINP, LPP» — keine 3a.)
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
@@ -123,8 +125,8 @@ export const SAEULE_3A = Object.freeze({
     // UR (28.09.2026): nicht als Zurechnung, sondern weil Art. 7 Abs. 2 lit. c RB 20.2213 die
     // Abzüge vom PV-Einkommen abschliessend aufzählt und die 3a nicht darunter ist — sie bleibt
     // also voll im Einkommen. Rechnerisch dasselbe: Abzug 0.
-    kantone: 'ZH, SG, LU, VD, UR, NE, GR',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100)',
+    kantone: 'ZH, SG, LU, VD, UR, NE, GR, TI',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100)',
     nichtAufgerechnet: () => 0,
   }),
 
@@ -464,14 +466,16 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
 //                       GR — der Online-Rechner der SVA Graubünden 2026 führt «junge Erwachsene
 //                       (Jahrgang 2001 - 2007)» und «Kinder (Jahrgang 2008 - 2026)». (28.09.2026)
+//                       TI — IAS, Istruzioni RIPAM 2026 Ziff. 1.2: «adulto: dall'anno seguente al
+//                       compimento dei 25 anni». (28.09.2026)
 //                       BL — im Erlass: PVV (SGS 362.12) § 9 Abs. 1 lit. a, Erwachsene sind
 //                       «Personen ab dem 1. Januar nach Vollendung des 25. Altersjahres».
 //                       BELEGT. (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
-// Anspruchsjahr 2026 rechnen AG, LU und GR für den Jahrgang 2000, die anderen nicht. Gemessen am
+// Anspruchsjahr 2026 rechnen AG, LU, GR, TI und BL für den Jahrgang 2000, die anderen nicht. Gemessen am
 // aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen. ⟨nachgetragen 28.09.2026 nach dem
-// Re-Review #467: hier stand nur AG; LU (23.09.) und GR (28.09.) rechnen seither ebenso.⟩
+// Re-Review #467: hier stand nur AG; LU (23.09.), GR und TI (28.09.) rechnen seither ebenso.⟩
 //
 // 🛑 `abEndeVorjahr` und `mangelsStichtag` sind absichtlich zwei Namen für dieselbe Rechnung.
 // Sonst schreibt der nächste Kanton «belegt», wo «vorsichtig gewählt» gemeint war — und ein
