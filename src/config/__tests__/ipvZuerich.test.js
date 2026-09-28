@@ -79,9 +79,9 @@ const TABELLE_G_2027 = {
 // am 28.09.2026 nicht publiziert. Um die Mechanik (Jahreswechsel, Satz 2027, Stichtag,
 // Tabellen-Grenze) zu prüfen, wird hier 70 % und die Tabelle 2026 eingesetzt — nur im Test,
 // nur für die Dauer eines Falls. Erwartete Beträge sind darum keine Aussage über 2027.
-const ATTRAPPE_2027 = { referenz: 0.7, rdp: IPV_ZH.rdp };
+const ATTRAPPE_2027 = { referenz: 0.7, rdp: IPV_ZH.rdp, satzProvisorisch: false };
 function mitAttrappe2027(fn) {
-  const alt = { referenz: IPV_ZH_2027.referenz, rdp: IPV_ZH_2027.rdp };
+  const alt = { referenz: IPV_ZH_2027.referenz, rdp: IPV_ZH_2027.rdp, satzProvisorisch: IPV_ZH_2027.satzProvisorisch };
   Object.assign(IPV_ZH_2027, ATTRAPPE_2027);
   try { return fn(); } finally { Object.assign(IPV_ZH_2027, alt); }
 }
@@ -119,6 +119,12 @@ describe('K31 ZH: Werte je Jahr', () => {
   it('sobald 2027 vollständig ist, wird es gewählt (Attrappe)', () => {
     mitAttrappe2027(() => expect(zhWerte(2027)).toBe(IPV_ZH_2027));
     expect(zhWerte(2027)).toBeNull(); // Attrappe wieder weg
+  });
+  it('provisorischer Eigenanteil hält 2027 zu, auch wenn Referenz und Durchschnittsprämien da sind', () => {
+    const alt = { referenz: IPV_ZH_2027.referenz, rdp: IPV_ZH_2027.rdp };
+    Object.assign(IPV_ZH_2027, { referenz: ATTRAPPE_2027.referenz, rdp: ATTRAPPE_2027.rdp });
+    try { expect(zhWerte(2027)).toBeNull(); } finally { Object.assign(IPV_ZH_2027, alt); }
+    expect(IPV_ZH_2027.satzProvisorisch).toBe(true);
   });
 });
 

@@ -297,7 +297,7 @@ vermerkt.
 
 6. RRB Nr. 297/2025, Krankenversicherung (IPV 2026; Eckwerte erste Phase), Kanton Zürich. https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/297/RRB-2025-0297.pdf — abgerufen 19.09.2026
 7. Einführungsgesetz zum Krankenversicherungsgesetz (EG KVG), LS 832.01, Fassung «1. 10. 23 - 122». https://www.notes.zh.ch/appl/zhlex_r.nsf/WebView/B1FF7F0CFD47699AC12589F20029EC6C/$File/832.01_29.4.19_122.pdf — abgerufen 19.09.2026
-8. Prämienverbilligung 2027: Einkommensgrenzen 2027, SVA Zürich. https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2027/einkommensgrenzen-2027.html — abgerufen 19.09.2026
+8. Prämienverbilligung 2027: Einkommensgrenzen 2027, SVA Zürich. https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2027/einkommensgrenzen-2027.html — abgerufen 19.09.2026, erneut 28.09.2026
 
 ### Vorbereitung 2027 (28.09.2026, Werte je Jahr im Code)
 

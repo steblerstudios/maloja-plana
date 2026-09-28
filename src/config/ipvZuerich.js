@@ -61,6 +61,10 @@ export const IPV_ZH = {
 export const IPV_ZH_2027 = {
   jahr: 2027,
   referenz: null,
+  // Provisorisch (RRB 303/2026 Disp. VI; definitiv «im September 2026», Erw. 4). Solange das
+  // hier `true` steht, rechnet 2027 nicht — auch wenn Referenz und Durchschnittsprämien schon
+  // eingetragen sind. Erst mit dem definitiven Beschluss auf `false` setzen (Fachprüfung 28.09.).
+  satzProvisorisch: true,
   satz: { verheiratet: 0.118, uebrige: 0.094 },
   rdp: null,
   massgebend: 0.83,
@@ -89,7 +93,7 @@ export const IPV_ZH_JAHRE = { 2026: IPV_ZH, 2027: IPV_ZH_2027 };
 
 export function zhWerte(jahr = new Date().getFullYear()) {
   const w = IPV_ZH_JAHRE[jahr];
-  return w && w.referenz != null && w.rdp != null ? w : null;
+  return w && w.referenz != null && w.rdp != null && !w.satzProvisorisch ? w : null;
 }
 
 // BAG-Prämienregionen ZH (Stand 2026, wie src/data/praemienRegionen.js; Guard-Test hält beide
