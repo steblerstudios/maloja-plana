@@ -33,7 +33,8 @@ describe('K31 IPV-Rechner, Kanton Solothurn', () => {
   it('tiefes Einkommen: kein Betrag, der Grund «Skala nicht veröffentlicht»', () => {
     const html = render(profil(2000));
     expect(html).toContain('ipv.orientierungOffen');
-    expect(html).toContain('ipv.offenGrund.soSkalaUnklar');
+    // Vor oder nach dem 31. Juli ein anderer Satz (§ 75 Abs. 2 SV) — beide sind «Skala unklar».
+    expect(html).toMatch(/ipv\.offenGrund\.soSkalaUnklar(FristVorbei)?/);
     expect(html).not.toContain('premium.eligible');
     expect(html).not.toContain('premium.maxIncome');
     for (const z of [48000, 2400, 74000, 50640]) {
@@ -58,7 +59,11 @@ describe('K31 IPV-Rechner, Kanton Solothurn', () => {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      expect(typeof texte.ipv.offenGrund.soSkalaUnklar, `${sprache}: offenGrund.soSkalaUnklar`).toBe('string');
+      for (const k of ['soSkalaUnklar', 'soSkalaUnklarFristVorbei']) {
+        expect(typeof texte.ipv.offenGrund[k], `${sprache}: offenGrund.${k}`).toBe('string');
+        // § 75 Abs. 2 SV: 31. Juli; Merkblatt QS 2026: 31. Dezember (Fachprüfung #481 W2)
+        expect(texte.ipv.offenGrund[k]).toMatch(/31/);
+      }
       expect(texte.ipv.jahrEineRegion).not.toMatch(/Aargau|Argovi|Argovia/);
     }
   });

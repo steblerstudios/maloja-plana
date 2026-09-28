@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_SO, ipvSolothurnSpanne } from '../ipvSolothurn.js';
+import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest';
+import { IPV_SO, ipvSolothurnSpanne, soSteuerbaresVermoegen } from '../ipvSolothurn.js';
 import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
 
@@ -25,11 +25,25 @@ describe('K31 SO: die Zahlen 2026, wörtlich aus [1]', () => {
   it('Richtprämien 422 / 305 / 98 — Monatsbeträge', () => {
     expect(IPV_SO.richtpraemieMonat).toEqual({ e: 422, j: 305, k: 98 });
   });
-  it('[4]: Einheit = Monat — die monatlichen Durchschnittsprämien 602 / 435 / 139 minus 30 %, aufgerundet', () => {
+  // Die EINHEIT belegt der Wortlaut ([4] «monatlichen Durchschnittsprämien»), nicht diese Rechnung.
+  // Plausibilitätsprobe, keine Regel: die Werte 2025 (578/424/132 → 422/310/96) lassen sich mit
+  // Aufrunden und einem Satz NICHT erzeugen (Fachprüfung #481 K1) — wie gerundet wird, ist offen (Frage 2).
+  it('Plausibilität [4]: 602 / 435 / 139 minus 30 % ergeben, aufgerundet, die Monatswerte 2026', () => {
     // «Der Abschlag wird auf 30% festgelegt» ([4]); 602 × 0,7 = 421.40 → 422 usw.
     expect(Math.ceil(602 * 0.7)).toBe(IPV_SO.richtpraemieMonat.e);
     expect(Math.ceil(435 * 0.7)).toBe(IPV_SO.richtpraemieMonat.j);
     expect(Math.ceil(139 * 0.7)).toBe(IPV_SO.richtpraemieMonat.k);
+  });
+  it('§ 71 StG [6]: Sozialabzüge vom Reinvermögen 60 000 / 100 000 (allein mit Kindern) / +20 000 je Kind', () => {
+    expect(IPV_SO.sozialabzugVermoegen).toEqual({ mitKindern: 100000, uebrige: 60000, jeKind: 20000, verdoppelnBis: 200000 });
+    expect(soSteuerbaresVermoegen({ savingsAccount: 45000 }, 0)).toBe(0);
+    expect(soSteuerbaresVermoegen({ savingsAccount: 70000 }, 0)).toBe(10000);
+    expect(soSteuerbaresVermoegen({ savingsAccount: 150000 }, 1)).toBe(30000);
+    // erfasste Schulden mindern das Reinvermögen
+    expect(soSteuerbaresVermoegen({ savingsAccount: 100000, loans: 30000 }, 0)).toBe(10000);
+    // Abs. 2: AHV/IV-Rente und Reinvermögen bis 200 000 → verdoppelt (Untergrenze)
+    expect(soSteuerbaresVermoegen({ savingsAccount: 150000, ahvRente: 1800 }, 0)).toBe(30000);
+    expect(soSteuerbaresVermoegen({ savingsAccount: 250000, ahvRente: 1800 }, 0)).toBe(190000);
   });
   it('Eigenanteile 10 %–16 %, Grenzwert 74 000, Vermögensanteil 50 %, Auszahlungslimite 240', () => {
     expect(IPV_SO.eigenanteil).toEqual({ von: 0.10, bis: 0.16 });
@@ -75,6 +89,8 @@ describe('K31 calculateIPV für SO (App-Angaben → Modell)', () => {
     await import('../ipvSolothurn.js');
     await new Promise((r) => setTimeout(r, 0));
   });
+  // Vor dem 31. Juli, damit der Grund «Frist läuft» heisst; die Frist selbst hat eigene Tests unten.
+  beforeEach(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-06-15T12:00:00')); });
   afterEach(() => { vi.useRealTimers(); });
 
   const person = ({ monthlyIncome = 0, children = [], dob = '1980-05-01', kkPremium = 400, finanzen = {}, basis = {} } = {}) => ({
@@ -102,9 +118,55 @@ describe('K31 calculateIPV für SO (App-Angaben → Modell)', () => {
     expect(r.cantonData.maxIncome).toBe(null);
   });
 
-  it('50 % des Vermögens zählen zum massgebenden Einkommen', () => {
-    expect(calculateIPV(person({ monthlyIncome: 40000 / 12, finanzen: { savingsAccount: 21280 } }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch' });
-    expect(calculateIPV(person({ monthlyIncome: 40000 / 12, finanzen: { savingsAccount: 21200 } }))).toMatchObject({ offen: 'soSkalaUnklar' });
+  it('50 % des STEUERBAREN Vermögens — erst über dem Sozialabzug 60 000 (§ 89 Abs. 2 SG, § 71 StG)', () => {
+    // ⟨bis Fachprüfung #481 B1: 50 % der Brutto-Posten; 21 280 Erspartes gaben schon «kein Anspruch»⟩
+    expect(calculateIPV(person({ monthlyIncome: 40000 / 12, finanzen: { savingsAccount: 21280 } }))).toMatchObject({ offen: 'soSkalaUnklar' });
+    expect(calculateIPV(person({ monthlyIncome: 40000 / 12, finanzen: { savingsAccount: 81280 } }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 40000 / 12, finanzen: { savingsAccount: 81200 } }))).toMatchObject({ offen: 'soSkalaUnklar' });
+  });
+
+  describe('🛑 Fachprüfung #481 B1: die drei Fälle, in denen die App falsch «kein Anspruch» sagte', () => {
+    it('Rentnerin allein, AHV 1 800 + BVG 700 im Monat, Sparkonto 45 000 → keine Aussage «kein Anspruch»', () => {
+      const r = calculateIPV(person({ finanzen: { ahvRente: 1800, bvgRente: 700, savingsAccount: 45000 } }));
+      expect(r).toMatchObject({ belegt: false, offen: 'soSkalaUnklar' });
+    });
+    it('Lohn 2 500 im Monat, Sparkonto 45 000', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { savingsAccount: 45000 } }))).toMatchObject({ offen: 'soSkalaUnklar' });
+    });
+    it('alleinerziehend, Lohn 5 000, ein Kind Jahrgang 2016, Sparkonto 30 000 → Kind unter 74 000, kein «kein Anspruch»', () => {
+      expect(calculateIPV(person({ monthlyIncome: 5000, children: [{ birthDate: '2016-04-01' }], finanzen: { savingsAccount: 30000 } })))
+        .toMatchObject({ offen: 'soSkalaUnklar' });
+    });
+  });
+
+  it('⚠️ W1: bezahlte Unterhaltsbeiträge sind abziehbar, im App-Einkommen aber nicht abgezogen → nie «kein Anspruch»', () => {
+    expect(calculateIPV(person({ monthlyIncome: 4300 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 4300, finanzen: { alimentePaid: 1500 } }))).toMatchObject({ belegt: false, offen: 'soSkalaUnklar' });
+  });
+
+  describe('⚠️ W2: Selbstanmeldung bis 31. Juli (§ 75 Abs. 2 SV)', () => {
+    it('bis 31.07.: der Grund nennt die Frist als laufend', () => {
+      vi.setSystemTime(new Date('2026-07-31T20:00:00'));
+      expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ offen: 'soSkalaUnklar' });
+      expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch', anmeldefristVorbei: false });
+    });
+    it('ab 01.08.: eigener Grund mit «Frist vorbei», Quellenbesteuerte bis 31.12.', () => {
+      vi.setSystemTime(new Date('2026-08-01T08:00:00'));
+      expect(calculateIPV(person({ monthlyIncome: 2000 }))).toMatchObject({ offen: 'soSkalaUnklarFristVorbei' });
+      expect(calculateIPV(person({ monthlyIncome: 8000 }))).toMatchObject({ noteKey: 'ipv.soKeinAnspruch', anmeldefristVorbei: true });
+    });
+  });
+
+  it('K7: nie ein Betrag — Durchlauf über Einkommen, Kinder und Vermögen', () => {
+    for (const jahresEinkommen of [0, 12000, 30000, 45000, 50640, 60000, 74000, 90000, 150000]) {
+      for (const kinder of [0, 1, 3]) {
+        for (const savingsAccount of [0, 50000, 200000]) {
+          const r = calculateIPV(person({ monthlyIncome: jahresEinkommen / 12, children: Array.from({ length: kinder }, () => ({ age: 6 })), finanzen: { savingsAccount } }));
+          expect(r.amount === null || r.amount === 0, `${jahresEinkommen}/${kinder}/${savingsAccount}`).toBe(true);
+          expect(r.eligible).toBe(false);
+        }
+      }
+    }
   });
 
   it('Säule 3a: bis 7 056 steckt sie im Einkommen; im Band bis 7 258 zählt die Untergrenze', () => {
