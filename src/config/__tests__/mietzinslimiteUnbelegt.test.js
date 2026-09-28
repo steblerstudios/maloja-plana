@@ -38,3 +38,27 @@ describe('Mietzins-Limite: keine unbelegten Kantonswerte', () => {
     }
   });
 });
+
+// Wo der geschätzte Betrag das Haus verlässt (Druck der Finanzübersicht, Behörden-Dossier), steht dabei,
+// dass mit der ganzen Miete gerechnet wurde (Fachprüfung 28.09.2026).
+import { calculateIPV } from '../cantonalData.js';
+import { ipvAbzug } from '../../data/ipvAbzug.js';
+import { druckAbschnitte } from '../../FinanzUebersicht.jsx';
+import { getBehoerdenDossierPreview } from '../../dossierGenerator.js';
+
+describe('Mietzins-Limite: der Betrag sagt, dass die ganze Miete drin ist', () => {
+  const t = (k) => k;
+  const arm = profil('BE', 1800, 150);
+
+  it('Druck der Finanzübersicht: Zusatz beim Betrag', () => {
+    const w = { income: 0, canton: 'BE', ipv: calculateIPV(arm), ipvAbzug: ipvAbzug(arm), sozialhilfe: calculateSozialhilfe(arm), el: {} };
+    const zeile = druckAbschnitte(t, w).flatMap((a) => a.zeilen).find((z) => z.label === 'finanzUebersicht.sozialhilfe').html;
+    expect(zeile).toContain('sozialhilfe.mitGanzerMiete');
+  });
+
+  it('Behörden-Dossier: Hinweis in den Notizen der Sozialhilfe', () => {
+    const preview = getBehoerdenDossierPreview(arm, [], t, { sozialhilfe: calculateSozialhilfe(arm) });
+    const abschnitt = preview.sections.find((s) => s.key === 'sozialhilfe');
+    expect(abschnitt.notes).toContain('sozialhilfe.rentLimitDossier');
+  });
+});
