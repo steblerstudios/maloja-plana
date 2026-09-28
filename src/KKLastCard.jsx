@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { calculateIPV } from './config/cantonalData.js';
-import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
+import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
@@ -81,7 +81,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     // Nach der Anmeldefrist (LU, FR): statt der Abzugszeile der Grund, warum nichts abgezogen ist.
     // Der Text ist kantonal — das Ergebnis nennt seinen Schlüssel; ohne ihn gilt der Luzerner.
     showFairness && fristVorbei && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
-      t(ipv.fristNichtAbgezogenKey || 'ipv.luFristNichtAbgezogen', abzug.frist)
+      t(fristHinweisKey(ipv), abzug.frist)
     ),
     showFairness && gesuchText && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
       t(gesuchText)
