@@ -45,6 +45,8 @@ export const IPV_MODULE = {
   TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
   OW: { laden: () => import('./ipvObwalden.js'), fn: 'ipvObwalden', brauchtPLZ: false },
   SO: { laden: () => import('./ipvSolothurn.js'), fn: 'ipvSolothurn', brauchtPLZ: false },
+  NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
+  ZG: { laden: () => import('./ipvZug.js'), fn: 'ipvZug', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -137,9 +139,18 @@ export const CANTONAL_IPV = {
   // Ausgleichskasse Obwalden (GDB 851.11 Art. 10).
   OW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
     beleg: { quelle: 'GDB 851.12 · GDB 851.11 · GDB 851.1 · Ausgleichskasse Obwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // NW (K31): eigenes Modell in config/ipvNidwalden.js (Richtprämie minus 10 % der Summe der
+  // Steuerwerte, eine Region). Keine publizierte Einkommensgrenze für Erwachsene — die 100 000
+  // gelten nur für die Kinder. Gesuch bei der Ausgleichskasse Nidwalden bis 30. April (kKVG Art. 22).
+  NW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'NG 742.111 · NG 742.1 · Ausgleichskasse Nidwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
-  ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // ZG (K31): eigenes Modell in config/ipvZug.js (Richtprämien minus 8 % Selbstbehalt, Kürzung ab
+  // 70'000, kein Anspruch über 89'900 — eine Grenze für alle, RRB 2025 Ziff. 1.5). ZG rechnet einen
+  // Betrag; «kein Anspruch» nur auf einer Untergrenze des Reineinkommens. maxIncome null: die 89'900
+  // gelten für das massgebende Einkommen, nicht für den erfassten Lohn.
+  ZG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'IPVG ZG (BGS 842.6) · V IPVG (BGS 842.61) · Ausgleichskasse Zug — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
   // SO (K31): eigenes Modell in config/ipvSolothurn.js (Richtprämie minus Eigenanteil 10–16 %, linear).
   // Die Eckpunkte der linearen Skala sind nicht veröffentlicht — darum zeigt SO heute keinen Betrag,
