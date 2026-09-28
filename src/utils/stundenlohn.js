@@ -18,6 +18,23 @@
 
 import { pruefeStundenlohn, stundenAufMonat, wochenstundenUnplausibel } from '../data/lohnCheck.js';
 import { BVG_EINTRITTSSCHWELLE_JAHR } from '../data/lohnAbzuege.js';
+import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from '../data/ergebnisArt.js';
+
+// O3 — Schätzung: amtliche Eckwerte (OR, UVV, BVG, kantonaler Mindestlohn), aber mit Annahmen,
+// die keine Stelle macht (gleiche Stunden übers Jahr, 13. als Zwölftel des Grundlohns).
+// Fehlend ist, ohne was die Rechnung nur halb steht.
+export function stundenlohnErgebnis(eingabe) {
+  const e = eingabe || {};
+  const w = lies(e.wochenstunden);
+  return ergebnis(ERGEBNIS_ART.SCHAETZUNG, {
+    fehlend: fehlendeAngaben({
+      stundenlohn: lies(e.betrag) > 0,
+      wochenstunden: w > 0 && !wochenstundenUnplausibel(e.wochenstunden),
+      kanton: !!e.kanton,
+      ferienform: FERIEN_FORMEN.includes(e.ferienForm) && e.ferienForm !== 'unklar',
+    }),
+  });
+}
 
 // Art des Arbeitsverhältnisses — bestimmt, welche Hinweise und Fragen dazukommen.
 export const ARTEN = ['fest', 'abrufEcht', 'abrufUnecht', 'befristet', 'temporaer', 'hausdienst'];
