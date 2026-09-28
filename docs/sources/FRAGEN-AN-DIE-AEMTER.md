@@ -550,6 +550,58 @@ zeigt die App für OW keinen Betrag.
 
 ---
 
+## 18 · SVA Schwyz — Grenze je Mietzinsregion, Kinder-Mindestanspruch, Stichtag
+
+*Aufgenommen 28.09.2026 beim Einbau von SZ. Entwurf — **nicht gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, TG 11 … SZ 18, SO 19, ZG 20.)*
+
+**Worum es geht:** Formel und Zahlen 2026 sind belegt — EGzKVG (SRSZ 361.100), der
+Kantonsratsbeschluss mit dem Selbstbehalt von 11 % (SRSZ 361.110, § 1) und die Richtprämien 2026
+der SVA. Die drei Beispiele im Merkblatt 2027 rechnen wir auf den Rappen nach. Offen bleiben
+Punkte, an denen der Betrag für manche Menschen hängt; dort zeigt die App heute **keine Zahl**.
+
+**Frage 1 — Höchsteinkommen je Mietzinsregion:** § 5 Abs. 1 lit. c EGzKVG knüpft den Anspruch
+an Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins. Veröffentlicht sind nur die «minimalen
+Höchsteinkommen … (für Kinder unter 11 Jahren, Mietzinsregion 3)», z. B. 43'554 für
+Alleinstehende ohne Kind. Gibt es eine amtliche Tabelle der Höchsteinkommen 2026 für die
+Mietzinsregionen 1 und 2 und für Kinder ab 11 — und eine Liste, welche Schwyzer Gemeinde in
+welcher EL-Mietzinsregion liegt? Bis dahin zeigt die App zwischen 43'554 und dem Nullpunkt der
+Formel (50'760) keinen Betrag, weil er in Region 3 null wäre und in den anderen nicht.
+
+**Frage 2 — Mindestanspruch der Kinder (§ 10 Abs. 2 EGzKVG, § 7a VVzEGzKVG):** Im Beispiel 3
+des Merkblatts (alleinstehend, zwei Kinder, anrechenbares Einkommen 39'250) steht als
+Prämienverbilligung die Differenz 3'836.50, darunter «Die SVA Schwyz prüft in jedem Einzelfall,
+dass die Prämien für Kinder um mindestens 80 Prozent … verbilligt werden.» Anteilig nach
+Richtprämie verteilt erhielte jedes Kind 604.69, also 47 % seiner Richtprämie. ⟨korrigiert 28.09.2026: hier stand 604.71⟩ Wird dann **je
+Kind auf 80 % erhöht** (Gesamtbetrag rund 4'683), oder wird der **Gesamtbetrag** mit der Summe
+der Kinder-Mindestbeträge verglichen (dann bleibt es bei 3'836.50)? Bis zur Antwort rechnet die
+App mit Kindern nur, solange jedes Kind anteilig ohnehin 80 % erhält.
+
+**Frage 3 — Stichtag der persönlichen Verhältnisse:** § 12 Abs. 1 EGzKVG nennt «den 1. April des
+dem Anspruchsjahr vorangehenden Jahres», das Merkblatt 2026/2027 «den 1. Januar» des
+Anspruchsjahres. Welcher gilt — für Alter, Haushalt und Wohnsitz? (Für das Alter stützt sich die
+App auf die Jahrgänge in «Richtprämien 2026»: Erwachsene ab Jahrgang 2000.)
+
+**Frage 4 — Deckel § 10 Abs. 1 EGzKVG:** Gilt «darf die tatsächlich geschuldeten Prämien …
+nicht übersteigen» je Person oder für den Haushalt? Die App kennt nur die Prämie der erwachsenen
+Person und begrenzt deren Anteil.
+
+**Frage 6 — Änderung der Verhältnisse im Anspruchsjahr:** § 10 VVzEGzKVG: «Wesentliche Änderungen
+der wirtschaftlichen Verhältnisse zwischen der letzten rechtskräftigen Steuerveranlagung und dem
+31. Dezember des Anspruchsjahres werden auf Antrag berücksichtigt» (mindestens 10 %, Antrag bis
+31. März des Folgejahres). Das Merkblatt 2026/2027 sagt: «Änderungen der wirtschaftlichen
+Verhältnisse nach dem 1. Januar … können erst in den Folgejahren berücksichtigt werden.» Welche
+Regel gilt für eine Person, deren Einkommen im Laufe des Anspruchsjahres um mehr als 10 % sinkt?
+(Die App nennt heute beide Aussagen und verweist an die SVA.)
+
+**Frage 5 — späte Anmeldung:** Die Website sagt zur Frist 31.12.2026: «Je nach Anmeldeeingang
+erhalten Sie die Prämienverbilligung möglicherweise rückwirkend per 1. Januar 2026.» Wovon hängt
+es ab, ob der ganze Jahresbetrag gewährt wird?
+
+**Stand:** SZ ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 erscheinen laut SVA «ab
+Anfang November 2026»; ab 01.01.2027 zeigt die App für SZ keinen Betrag mehr.
+
+---
+
 ## 19 · Ausgleichskasse Solothurn / Departement des Innern — die lineare Eigenanteil-Skala
 
 *Aufgenommen 28.09.2026 beim Einbau von SO. Entwurf — **nicht gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, TG 11 … SZ 18, SO 19, ZG 20.)*

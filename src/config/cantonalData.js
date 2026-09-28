@@ -31,6 +31,7 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   FR: { laden: () => import('./ipvFreiburg.js'), fn: 'ipvFreiburg' },
+  SZ: { laden: () => import('./ipvSchwyz.js'), fn: 'ipvSchwyz', brauchtPLZ: false },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
   // JU: keine Prämienregion — und das Modul zeigt bewusst keine Zahl (steuerbares Einkommen fehlt).
   JU: { laden: () => import('./ipvJura.js'), fn: 'ipvJura', brauchtPLZ: false },
@@ -130,7 +131,12 @@ export const CANTONAL_IPV = {
   // Einkommensgrenze — die 90'000 gelten nur für den Mindestanspruch der Kinder.
   UR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
     beleg: { quelle: 'RB 20.2213 · Steuerungsgrössen 2026 (GSUD Uri) · SVS Uri — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
+  // SZ (K31): eigenes Modell in config/ipvSchwyz.js (Richtprämie minus 11 % Selbstbehalt; Anspruch
+  // nur unter einer Grenze aus EL-Lebensbedarf und EL-Mietzins). Die SVA veröffentlicht nur das
+  // «minimale Höchsteinkommen» (Mietzinsregion 3) — keine Grenze für die Person, darum maxIncome null.
+  // Durchführungsstelle seit 01.01.2026 die Sozialversicherungsanstalt Schwyz (§ 16 EGzKVG).
+  SZ: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'Schwyz' },
+    beleg: { quelle: 'EGzKVG SZ (SRSZ 361.100) · KRBzEGzKVG (SRSZ 361.110) · VVzEGzKVG (SRSZ 361.111) · SVA Schwyz — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // OW (K31): eigenes Modell in config/ipvObwalden.js (Richtprämien minus linear-progressiver
   // Selbstbehalt, harte Grenze 50 000 / mit Kindern 75 000 anrechenbares Einkommen, eine Region).
   // Die Grenze hängt am Haushalt, darum steht sie im Ergebnis, nicht hier. Antrag bei der

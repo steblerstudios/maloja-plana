@@ -29,7 +29,7 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die drei Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (seit 28.09.2026 vier) — benannt und belegt, NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
@@ -60,8 +60,11 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   imReineinkommenAbgezogen  SZ (28.09.2026) — GAR KEINE Zurechnung: § 7 Abs. 2 EGzKVG
+//                        (SRSZ 361.100) zählt die Aufrechnungen abschliessend auf, die 3a
+//                        fehlt darin. ⇒ Abzug = die ganze Einzahlung, soweit sicher abziehbar.
 //
-// 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
+// 🛑 EINE DIESER REGELN (`schwelleOhneSaeule2`) WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
 // wird beim nächsten Kanton nicht kopiert. `schwelleOhneSaeule2` gibt `0` zurück wie `voll`,
 // aber aus einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
@@ -330,7 +333,60 @@ export const SAEULE_3A = Object.freeze({
     schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     nichtAufgerechnet: () => 0,
   }),
+
+  // ⟨28.09.2026, K31 SZ⟩ Die vierte Regel — und die erste, die GAR NICHT aufrechnet.
+  // Schwyz nimmt das Reineinkommen der direkten Bundessteuer und erhöht es abschliessend um
+  // drei Posten (§ 7 Abs. 2 EGzKVG, SRSZ 361.100, Stand 1.2.2026, an der Quelle gelesen
+  // 28.09.2026): «a) 10% des Reinvermögens …; b) die Abzüge für den ausserordentlichen
+  // Liegenschaftsunterhalt; c) die Einkäufe in die berufliche Vorsorge (2. Säule).» Die
+  // Säule 3a steht nicht darin; das Merkblatt der SVA Schwyz (IPV 2027, Stand März 2026)
+  // zählt dieselben Aufrechnungen auf, ebenfalls ohne 3a. Im Reineinkommen ist sie
+  // abgezogen — das Nettoeinkommen der App trägt sie aber voll. Also muss sie hier HERAUS.
+  //
+  // 🛑 WIE VIEL davon im Reineinkommen abgezogen WURDE, hängt am Bundesrecht (BVV 3 Art. 7):
+  // mit Pensionskasse bis zum festen Maximum, ohne Pensionskasse 20 % des
+  // Erwerbseinkommens. Ob eine Pensionskasse besteht, weiss die App nicht (dieselbe Lücke
+  // wie bei `schwelleOhneSaeule2`). Sicher abgezogen ist darum nur, was UNTER BEIDEN Grenzen
+  // liegt: dem kleinsten Maximum der in Frage kommenden Bemessungsjahre und 20 % des
+  // erfassten Erwerbseinkommens. Nur so viel zieht die Regel ab; liegt die Einzahlung
+  // darüber, ist die Herleitung `widerlegt` und der Kanton zeigt keine Zahl.
+  // Das Erwerbseinkommen ist hier das NETTO erfasste (Hauptlohn und Nebenerwerb) — das
+  // amtliche ist das AHV-pflichtige, also höher. Die Grenze liegt damit eher zu tief: es
+  // gibt eher einmal zu oft keine Zahl, nie eine zu hohe.
+  // Nicht gebaut: ein Teilabzug bis zur sicheren Grenze. Er wäre eine Untergrenze, keine
+  // Zahl — und eine zu tiefe Zahl ist nicht die vorsichtige Seite (Block bei `einkommenJahr`).
+  imReineinkommenAbgezogen: Object.freeze({
+    name: 'imReineinkommenAbgezogen',
+    kantone: 'SZ',
+    beleg: '§ 7 Abs. 1/2 EGzKVG SZ (SRSZ 361.100, Stand 1.2.2026): Reineinkommen DBG, erhöht nur um Vermögensanteil, ao. Liegenschaftsunterhalt und Einkäufe 2. Säule',
+    // `jahre` = `{ bemessungsjahre: [...], anspruchsjahr }` — Schwyz stellt auf «die jüngste
+    // rechtskräftige Steuerveranlagung» ab, die höchstens drei Jahre zurückliegt (§ 9 Abs. 1
+    // VVzEGzKVG), also auf eines von mehreren Jahren. `null`, wenn eines davon nicht belegt ist.
+    sicherAbziehbar: (f, jahre) => {
+      const maxima = (jahre?.bemessungsjahre || []).map((j) => saeule3aMaximum(j));
+      if (!maxima.length || maxima.some((m) => m === null)) return null;
+      const erwerb = Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12;
+      return Math.max(0, Math.min(...maxima, 0.2 * erwerb));
+    },
+    nichtAufgerechnet: (f) => betrag3a(f),
+    // Widerlegt, wenn die Einzahlung über dem sicher Abziehbaren liegt oder über ein Jahr
+    // hinausreicht (Altdaten, siehe `ueberEinJahrHinaus`). Ohne Einzahlung nie.
+    // Dieselbe Signatur wie `bisBundesMaximum.widerlegt(f, jahresEinkommen, jahre)`, damit ein
+    // kopierter Aufruf nicht still das Einkommen als `jahre` übergibt (Fachprüfung #470 💡 3).
+    // `jahresEinkommen` braucht diese Regel nicht: die 20-%-Grenze liest das Erwerbseinkommen selbst.
+    widerlegt: (f, jahresEinkommen, jahre) => {
+      if (betrag3a(f) <= 0) return false;
+      const sicher = SAEULE_3A_SZ_SICHER(f, jahre);
+      return sicher === null || betrag3a(f) > sicher || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
+    },
+  }),
 });
+
+// Eigene Konstante, weil `widerlegt` oben auf `sicherAbziehbar` derselben Regel zugreift und
+// das eingefrorene Objekt beim Anlegen noch nicht existiert.
+function SAEULE_3A_SZ_SICHER(f, jahre) {
+  return SAEULE_3A.imReineinkommenAbgezogen.sicherAbziehbar(f, jahre);
+}
 
 // 🛑 SÄULE 3A — WARUM HIER NICHTS MEHR AUFGERECHNET WIRD (Befund Fachprüfung 20.09.2026)
 //
