@@ -240,26 +240,86 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
-## 8 · Service de l'assurance-maladie (SAM) Genève — der Arrêté 2026, die Untergrenze und der Deckel
+## 8 · Sozialversicherungsstelle Uri — Deckel, Rundung, Aufteilung und das Alter
 
-*Aufgenommen 28.09.2026 beim Einbau von GE. Entwurf — **nicht gesendet**.*
+*Aufgenommen 28.09.2026 beim Einbau von UR. Entwurf — **nicht gesendet**.*
 
-**Worum es geht:** Gruppengrenzen (Art. 21 LaLAMal) und Beträge 2026 (Barème «BAREME SUBSIDES
-2026») stehen vollständig; jede Zelle des Barème rechnen wir nach. Drei Punkte finden wir nicht
-im Erlass.
+**Worum es geht:** Formel und Zahlen 2026 stehen im Prämienverbilligungsreglement (RB 20.2213),
+in der Medienmitteilung vom 18.12.2025 und im Berechnungsformular 2026 der SVS; die App rechnet
+das Formular Zelle für Zelle nach. Ein durchgerechnetes Beispiel mit Zahlen haben wir nicht
+gefunden. Vier Punkte stehen weder im Reglement noch im Formular eindeutig.
 
-**Frage 1 — Arrêté d'indexation 2026:** Art. 9B RaLAMal lässt die Beträge von Art. 22 LaLAMal
-jährlich «par voie d'arrêté» indexieren. Die Beträge 2026 (348 / 294 / 240 / 196 / 164 / 120 /
-87 / 55; Kind 132 / 67; junge Erwachsene 231 / 106) haben wir nur aus dem Barème. Wo ist der
-Arrêté des Conseil d'Etat publiziert (Datum, Fundstelle)? Unsere Gegenprobe: alle acht
-Erwachsenenbeträge ergeben sich aus den Gesetzesbeträgen mit dem Faktor 1,0875, aufgerundet.
+~~**Frage 1 — Deckel auf die eigene Prämie:** Das Reglement begrenzt die Verbilligung nur bei
+EL-Beziehenden auf die tatsächliche Prämie (Art. 4 Abs. 4). Gilt für alle anderen eine
+Begrenzung, wenn die eigene Prämie (z. B. mit hoher Franchise) tiefer ist als der errechnete
+Betrag? Die App deckelt heute **nicht** (wie in St.Gallen, Abschnitt 5).~~
+⟨**erledigt 28.09.2026, belegt** (Fachprüfung, K1): KVV Art. 106c Abs. 5bis (SR 832.102, in Kraft
+seit 01.01.2024) — der Versicherer «bezahlt der versicherten Person den Differenzbetrag innerhalb
+von 60 Tagen nach der Meldung der Prämienverbilligung durch den Kanton aus. Kantonale Regelungen,
+wonach die Prämie höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben
+vorbehalten.» Uri hat keine solche Regelung. Die Frage muss nicht gestellt werden.⟩
 
-**Frage 2 — Untergrenze für Alleinerziehende:** Art. 10 al. 4/5 RaLAMal nennt «assuré seul, sans
-charge légale 15 000» und «couple, sans charge légale 20 000», «majorés de 3 000 francs par
-charge légale». Gilt für eine **alleinstehende Person mit Kind** die Paar-Zeile (20 000 + 3 000),
-wie Art. 21 al. 4 LaLAMal es für die Gruppengrenzen vorsieht, oder die Zeile «assuré seul»
-(15 000 + 3 000)? Wir warnen ab der höheren Schwelle (23 000 bei einem Kind), weil ein
-unnötiger Antrag nichts kostet und ein fehlender den Jahresanspruch.
+**Frage 2 — Rundung:** Art. 14 Abs. 3: «auf fünf Rappen zu runden». Wird kaufmännisch gerundet
+(83.33 → 83.35, 83.42 → 83.40) oder immer auf? Die App rundet kaufmännisch.
+
+**Frage 3 — Aufteilung:** Um je Person runden zu können, teilt die App den allgemeinen Anspruch
+nach Art. 14 Abs. 2 im Verhältnis der **anrechenbaren** Richtprämien auf (Kind mit 20 % =
+220.80); das Kinderminimum von 80 % geht ganz an das Kind. Gilt diese Aufteilung auch, wenn alle
+im selben Haushalt bei **einem** Versicherer sind?
+
+**Frage 4 — Alter:** Art. 5 nennt «Erwachsene (26 Jahre und älter)», aber keinen Stichtag. Gilt
+der 1. Januar (Art. 3 Abs. 3) oder der Jahrgang, wie beim Antragsformular für die Kinder
+(«Jahrgänge 2008 – 2025»)? Betroffen ist für 2026 der Jahrgang 2000; die App zeigt dort keine Zahl.
+
+**Stand:** UR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 waren am 28.09.2026 nicht
+publiziert; ab 01.01.2027 zeigt die App für UR keinen Betrag mehr.
+
+---
+
+## 9 · OCAB Neuenburg — Wahlfranchise, Nahtstellen und das revenu effectif
+
+*Aufgenommen 28.09.2026 beim Einbau von NE. Entwurf — **nicht gesendet**.*
+
+**Vorbemerkung:** Der am 16.09. notierte Widerspruch zwischen Kantonsseite und RSN 821.102 (ab S3)
+ist geklärt — es ist der Décret RSN 821.104 vom 2.12.2025, den das OCAB-Blatt «Normes 2026»
+ausdrücklich mitrechnet. Keine Frage mehr.
+
+**Frage 1 — Wahlfranchise:** Die Beträge werden «du même taux que le rabais accordé par
+l'assureur» gekürzt. Gilt der Satz der eigenen Kasse der versicherten Person (so liest sich das
+Beispiel), und rundet das OCAB auf 5 Rappen (450 × (1 − 2,92 %) = 436.86 → 436.85)? Ohne den
+Rabattsatz zeigt die App bei Franchise über 300 keinen Betrag.
+
+**Frage 2 — Nahtstellen:** Die Annexe schreibt «à 22'800», die Kantonsseite «jusqu'à 22'800» und
+dann «22'800 à 23'940». Gehört ein revenu déterminant von genau 22'800 zu S1 (so rechnet die App,
+nach Art. 3 al. 1 «égal ou inférieur») oder zu S2?
+
+**Frage 3 — revenu effectif:** Ist in Ziffer 5.5 der Steuererklärung der Lohn **netto** nach
+Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkommen dafür ein.
+
+**Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
+01.01.2027 zeigt die App für NE keinen Betrag mehr.
+
+---
+
+## 10 · Service de l'assurance-maladie (SAM) Genève — Deckel je Person, Familienzulagen, Kind aus dem Vorjahr, Rundung
+
+*Aufgenommen 28.09.2026 beim Einbau von GE, nachgeführt am Abend nach Fach-, Rechtsprüfung und Abgleich.
+Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Gruppengrenzen (Art. 21 LaLAMal), Beträge 2026 (Barème «BAREME SUBSIDES 2026»,
+Communiqué des Conseil d'Etat vom 5.11.2025) und die Untergrenzen für den Antrag (Tabelle des SAM
+auf ge.ch) stehen vollständig; jede Zelle des Barème rechnen wir nach. Vier Punkte bleiben.
+
+~~**Frage 1 — Arrêté d'indexation 2026:** Wo ist der Arrêté publiziert?~~ ⟨**erledigt 28.09.2026 abends:**
+Communiqué hebdomadaire du Conseil d'Etat vom 5.11.2025, «Indexation des subsides d'assurance-maladie
+pour 2026» — Erwachsene 8,7 %, junge Erwachsene 5,3 %, Kinder 10,9 %, Basis 2024, mit Tabelle aller
+Beträge. Damit sind auch die Gruppe-9-Beträge 67 und 106 erklärt; ein Einheitssatz hätte 66 und 109
+ergeben.⟩
+
+~~**Frage 2 — Untergrenze für Alleinerziehende:** Paar-Zeile (20 000 + 3 000) oder Zeile «assuré seul»
+(15 000 + 3 000)?~~ ⟨**erledigt 28.09.2026 abends:** ge.ch, «Revenus 2024 (RDU 2026) particulièrement bas»
+(Stand 18.09.2026): «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants
+27'000 · Couple avec 1 enfant 23'000». Die App rechnete am Nachmittag mit 23'000 — korrigiert.⟩
 
 **Frage 3 — Deckel Art. 22 al. 4 LaLAMal:** «Le montant des subsides accordés ne peut dépasser
 le montant de la prime effective de l'assuré.» Wir lesen das **je versicherte Person** und
@@ -267,24 +327,17 @@ begrenzen den Erwachsenenbetrag auf die erfasste Prämie der erwachsenen Person;
 Kinderbeträge (132 / 67) begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind. Ist das
 die Praxis des SAM?
 
-*Ergänzt 28.09.2026 abends nach der Fach- und Rechtsprüfung:*
+**Frage 4 — Familienzulagen im RDU:** LRDU Art. 4 al. 1 lit. a verweist auf LIPP Art. 18, und
+dessen al. 1 zählt «les allocations» zum Erwerbseinkommen. Sind damit auch die Kinder- und
+Ausbildungszulagen gemeint (wie im Bundesrecht, sie stehen auf dem Lohnausweis)? Die App rechnet
+sie heute in keinem Kanton; ein Rahmen-Umbau ist geplant und braucht diese Antwort für Genf.
 
-**Frage 4 — Gruppe 9 im Arrêté:** Mit dem Faktor 1,0875 ergäben die Gesetzesbeträge der Gruppe 9
-(Art. 22 al. 2 lit. b: 60; al. 3 lit. b: 100) 66 und 109 Franken, das Barème nennt **67 und 106**.
-Art. 9B al. 1 RaLAMal nennt für alle dieselbe «prime moyenne». Welche Basis gilt für diese
-beiden Beträge — und welche Rolle spielt Art. 22 al. 10 LaLAMal («prime moyenne cantonale»)?
-
-**Frage 5 — Familienzulagen im RDU:** LRDU Art. 4 al. 1 lit. a verweist auf LIPP Art. 18, und
-dessen al. 1 zählt «les allocations» zum Erwerbseinkommen. Wir nehmen an, dass damit auch die
-Kinder- und Ausbildungszulagen gemeint sind (wie im Bundesrecht, sie stehen auf dem
-Lohnausweis) und rechnen sie in den RDU. Ist das richtig?
-
-**Frage 6 — Kind aus dem Vorjahr:** Art. 13C RaLAMal regelt den Fall, dass die Familie «en cours
+**Frage 5 — Kind aus dem Vorjahr:** Art. 13C RaLAMal regelt den Fall, dass die Familie «en cours
 d'année» wächst. Gilt der schriftliche Antrag auch für ein Kind mit **Jahrgang 2025**, das in der
 Veranlagung 2024 noch nicht steht, im Anspruchsjahr 2026 aber schon da war — oder erfasst es
 der SAM automatisch aus den Zivilstandsdaten? Bis zur Antwort warnt die App in beiden Fällen.
 
-**Frage 7 — Rundung:** Wird der RDU für die Gruppenzuordnung auf ganze Franken gerundet? Wir
+**Frage 6 — Rundung:** Wird der RDU für die Gruppenzuordnung auf ganze Franken gerundet? Wir
 vergleichen ungerundet (30'000.50 liegt über 30'000).
 
 **Stand:** GE ist für 2026 gebaut (Entwurfs-PR #469, K31). Das Barème 2027 war am 28.09.2026 nicht
