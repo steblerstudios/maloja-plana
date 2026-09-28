@@ -11,6 +11,7 @@ import { praemienBelegState } from './data/praemienBeleg.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
+import { LandkarteGruppen } from './AnspruchLandkarte.jsx';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
 // Angaben — auto vorbelegt aus dem Profil, hier frei anpassbar zum Ausprobieren —
@@ -18,7 +19,10 @@ import { betrag } from './utils/geld.js';
 // ein „Nein"-Verdikt (Würde). Dieselbe Engine wie die Voll-Tools (calculateIPV/
 // calculateSozialhilfe/checkELEligibility), damit Schnellcheck und Rechner nie
 // widersprüchliche Zahlen zeigen.
-export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) => {
+// mitLandkarte (seit 27.09.2026): die eine Seite «Ansprüche im Überblick» — unter dem
+// Ergebnis die ganze Landkarte statt der zwei Wegweiser-Listen. Ohne (Schritt 1 im
+// geführten Anspruch-Check) bleibt alles wie vorher.
+export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange, mitLandkarte = false }) => {
   const canton = data?.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   // Brutto oder netto (EinkommenFeld, wie auf dem Dashboard); gerechnet wird mit netto.
@@ -204,7 +208,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   }, label);
 
   return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('schnellcheck.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t(mitLandkarte ? 'anspruch.pageTitle' : 'schnellcheck.title')),
     React.createElement('p', { style: s.intro }, t('schnellcheck.intro')),
 
     // Angaben — auto vorbelegt, frei anpassbar
@@ -259,9 +263,19 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         )
       : React.createElement('div', { style: { ...s.section, color: palette.mid, fontSize: text.sm } }, t('schnellcheck.enterIncome')),
 
+    // Zusammengelegt: die ganze Landkarte — ohne was oben schon gerechnet steht
+    // (Schlüssel der Landkarte: ipv, sozialhilfe, el). Sie deckt die zwei Listen
+    // darunter vollständig ab (Situationen, Stipendien, Mietzins, IV, ALV, EO, Kinder).
+    mitLandkarte && React.createElement('div', { style: { marginTop: space.lg + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.md + 'px' } }, t('schnellcheck.moreWays')),
+      React.createElement(LandkarteGruppen, {
+        palette, t, onNavigate,
+        ohne: benefits.map((b) => ({ ipv: 'ipv', soz: 'sozialhilfe', el: 'el' })[b.key]).filter(Boolean),
+      })),
+
     // Weitere Wege (versteckte Berechtigungen / Stipendien) — immer sichtbar,
     // weil vieles nicht rein einkommensabhängig ist.
-    React.createElement('div', { style: { marginTop: space.lg + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
+    !mitLandkarte && React.createElement('div', { style: { marginTop: space.lg + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, t('schnellcheck.moreWays')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px', alignItems: 'flex-start' } },
         wegeItem('situationen', t('schnellcheck.waySituationen')),
@@ -273,7 +287,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // Lage-abhängige Leistungen: hängen nicht am Einkommen, sondern an einer
     // Lebenslage → nur Wegweiser, keine Berechnung (Ehrlichkeit/Haftung). Genau
     // die Trennung, die der Schnellcheck sonst nur implizit macht, sichtbar gemacht.
-    React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
+    !mitLandkarte && React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, t('schnellcheck.lageTitle')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed } }, t('schnellcheck.lageIntro')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px', alignItems: 'flex-start' } },

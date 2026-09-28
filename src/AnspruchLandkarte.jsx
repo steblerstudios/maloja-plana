@@ -1,16 +1,17 @@
 import React from 'react';
-import { PageTitle } from './components/Heading.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { ANSPRUCH_GRUPPEN } from './data/anspruchLandkarte.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 
 // Anspruchs-Landkarte (#4.4.1): ruhiger Überblick über alle möglichen
-// Berechtigungen, gruppiert nach Auslöser. Erweiterung der Dashboard-Sektion
-// „Was steht mir zu?", keine vierte Tür — jeder Punkt öffnet sein bestehendes
+// Berechtigungen, gruppiert nach Auslöser. Seit 27.09.2026 keine eigene Seite mehr,
+// sondern der untere Teil des Leistungs-Kompasses (Schnellcheck mit mitLandkarte):
+// oben die eigenen Zahlen, darunter was es sonst gibt. Jeder Punkt öffnet sein bestehendes
 // Zuhause. Nur POSITIVE Orientierung, kein Verdikt (Würde). Bewusst KEIN
 // GlossarText auf den Labels — die Karte ist selbst ein Button/Link, und ein
 // verschachtelter Glossar-Button wäre ungültiges HTML; die Sub-Zeile erklärt.
-export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
+// `ohne`: Schlüssel, die der Schnellcheck darüber schon mit Zahlen zeigt — hier nicht doppelt.
+export const LandkarteGruppen = ({ palette, t, onNavigate, ohne = [] }) => {
   const card = (item) => {
     const base = 'anspruch.items.' + item.key;
     const titel = t(base + '.label');
@@ -49,25 +50,13 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
         }, inner);
   };
 
-  return React.createElement('div', { style: { maxWidth: '640px' } },
-    React.createElement(PageTitle, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruch.pageTitle')),
-    React.createElement('p', {
-      style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
-    }, t('anspruch.intro')),
+  // Leere Gruppen fallen weg — z. B. wenn oben schon alles Einkommensabhängige steht.
+  const gruppen = ANSPRUCH_GRUPPEN
+    .map((g) => ({ ...g, items: g.items.filter((i) => !ohne.includes(i.key)) }))
+    .filter((g) => g.items.length > 0);
 
-    // Wer lieber geführt Schritt für Schritt durchgeht (Zahlen → Lebenslage),
-    // findet hier die Brücke — die Liste unten bleibt für den freien Überblick.
-    React.createElement('button', {
-      type: 'button',
-      onClick: () => onNavigate('anspruchcheck'),
-      style: {
-        display: 'block', marginBottom: space.lg + 'px', background: 'none', border: 'none',
-        padding: 0, cursor: 'pointer', fontFamily: 'inherit',
-        fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage,
-      },
-    }, t('anspruch.gefuehrtLink')),
-
-    ANSPRUCH_GRUPPEN.map((gruppe) =>
+  return React.createElement(React.Fragment, null,
+    gruppen.map((gruppe) =>
       React.createElement('div', { key: gruppe.key, style: { marginBottom: space.xl + 'px' } },
         React.createElement('h3', {
           style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, letterSpacing: '0.3px', margin: '0 0 2px 0' }
@@ -79,10 +68,19 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
       )
     ),
 
+    // Wer lieber geführt Schritt für Schritt durchgeht (Zahlen → Lebenslage).
+    React.createElement('button', {
+      type: 'button',
+      onClick: () => onNavigate('anspruchcheck'),
+      style: {
+        display: 'block', minHeight: '44px', background: 'none', border: 'none',
+        padding: 0, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left',
+        fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage,
+      },
+    }, t('anspruch.gefuehrtLink')),
+
     React.createElement('p', {
-      style: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px', fontStyle: 'italic', lineHeight: leading.relaxed }
+      style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', fontStyle: 'italic', lineHeight: leading.relaxed }
     }, t('anspruch.footNote'))
   );
 };
-
-export default AnspruchLandkarte;

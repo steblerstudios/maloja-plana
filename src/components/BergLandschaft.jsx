@@ -113,6 +113,20 @@ export const STATIONEN = [
   { key: 'notfall', x: 424, y: 526.5, seite: { breit: 'rechts', schmal: 'rechts' } },
 ];
 
+// Die drei Strassen rechts im Tal (27.09.2026): Plätze für Zeichen ausserhalb der Kapitel —
+// zuerst der Wanderrucksack, später der Finanzbaum, das dritte ist offen. Kein Weg,
+// kein Fortschrittsring: es sind Zugänge, keine Stationen. Die Plätze sind aus dem Bild gelesen
+// (Mitte der Fahrbahn); was darauf steht, gibt das Dashboard über `talStationen` (Reihenfolge =
+// Platz). Nur am Computer: am Handy liegt das Tal ausserhalb des Ausschnitts, und auf der
+// Passstrasse ist kein Platz frei (gemessen 27.09.2026: links vor der Basis stiess das Etikett
+// an «Behörden») — dort steht der Wanderrucksack in der unteren Leiste.
+// Die zwei weiteren Plätze, aus dem Bild gelesen — erst eintragen, wenn ihr Zeichen kommt
+// (Startbündel, Grenze 65 kB): mittlere Strasse { x: 927, y: 555, seite: 'rechts' },
+// rechte Strasse { x: 1003, y: 580, seite: 'links' }.
+export const TAL_PLAETZE = [
+  { x: 822, y: 560, seite: 'rechts' },
+];
+
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
 // durchgehende Route, also immer von der vorigen Station. Nur sichtbare Fahrbahn, je Lauf ein
 // eigener Unterpfad (M … C …).
@@ -197,7 +211,7 @@ export const mitKontrastZu = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke, talStationen = [] }) => {
   const rahmen = useRef(null);
   const huelle = useRef(null);
   // Höhe des Titels (umbricht je nach Sprache und Breite) — der Dunst wächst mit.
@@ -558,6 +572,45 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           // Seit 25.09.2026 trägt das Etikett selbst die Kapitelfarbe (weisse Schrift) — der
           // Farbpunkt davor ist damit überflüssig. Das Wort trägt, die Farbe ergänzt.
           shortLabel)
+      );
+    }),
+    // Zeichen auf den Tal-Strassen (TAL_PLAETZE): gleiche Scheibe wie eine Station im Zustand
+    // «Skizze», aber durchgezogener Rand statt Fortschrittsring — ein Zugang, kein Kapitel.
+    !schmal && talStationen.slice(0, TAL_PLAETZE.length).map((st, i) => {
+      const ort = TAL_PLAETZE[i];
+      const sz = 30;
+      const farbe = st.farbe; // Pflicht vom Dashboard (Startbündel: kein Rückfall)
+      const zeichen = mitKontrastZu(farbe, ui.surface, 3);
+      return React.createElement('div', {
+        key: st.key,
+        style: { position: 'absolute', ...imRahmen(ort.x, ort.y), width: 0, height: 0 },
+      },
+        React.createElement('button', {
+          type: 'button', onClick: st.onClick, 'aria-label': st.label,
+          style: {
+            position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
+            width: sz + 'px', height: sz + 'px', padding: 0,
+            borderRadius: '50%', background: ui.surface, color: zeichen,
+            border: '3px solid ' + zeichen,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
+            transition: `transform ${duration.cinematic}ms ${ease}`,
+          },
+          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
+          onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
+        }, React.createElement('div', { style: { width: '17px', height: '17px' } }, st.zeichen())),
+        React.createElement('span', {
+          className: 'mountain-label', 'aria-hidden': 'true',
+          style: {
+            // display wie bei den Stationen: überschreibt die alte Regel in index.html, die
+            // Etiketten unter 480 px ausblendet (die Stationen tragen es ebenso inline).
+            position: 'absolute', [ort.seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
+            whiteSpace: 'nowrap', pointerEvents: 'none', display: 'block',
+            fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
+            background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.sm,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+          },
+        }, st.label)
       );
     })
   ));

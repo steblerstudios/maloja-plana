@@ -1394,6 +1394,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Add',
     anspruch: 'Rights',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Backpack',
     capDokument: 'Document',
     capBeleg: 'Receipt',
     capFrist: 'Deadline',
@@ -1804,7 +1806,6 @@ export default {
     anspruchTitle: 'What am I entitled to?',
     anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',
     anspruchMoeglich: 'May be eligible',
-    anspruchAlleLink: 'All entitlements at a glance',
     nextUpTitle: 'What’s next?',
     nextUpAllDone: 'Your foundation is in place — lovely.',
     nextUpReassure: 'Just a suggestion — you set the pace.',
@@ -5538,9 +5539,9 @@ export default {
     b: { wohnen: 'Home', finanzen: 'Finances', person: 'Person', versicherungen: 'Insurance', gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension', bildung: 'Education', notfall: 'Emergency', behoerden: 'Authorities' },
   },
   gepaeck: {
-    title: 'My kit',
+    title: 'Hiking backpack',
     intro: 'Each area of life is a piece of gear in the backpack. Unpack it, open an item — inside are the paths through life. A path leads into its guided flow.',
-    link: 'My kit',
+    link: 'Hiking backpack',
     ctaSub: 'Life events as gear — unpack, look inside.',
     unpack: 'Unpack',
     pack: 'Pack up again',

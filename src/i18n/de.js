@@ -1394,6 +1394,8 @@ export default {
     menu: 'Menü',
     erfassen: 'Erfassen',
     anspruch: 'Anspruch',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Rucksack',
     capDokument: 'Dokument',
     capBeleg: 'Beleg',
     capFrist: 'Frist',
@@ -1811,7 +1813,6 @@ export default {
     anspruchTitle: 'Was steht mir zu?',
     anspruchIntro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier ein ruhiger Überblick — unverbindlich, ohne Bewertung.',
     anspruchMoeglich: 'Anspruch möglich',
-    anspruchAlleLink: 'Alle Ansprüche im Überblick',
     nextUpTitle: 'Was ist jetzt dran?',
     nextUpAllDone: 'Die Grundordnung steht — schön.',
     nextUpReassure: { sie: 'Nur ein Vorschlag — Sie bestimmen das Tempo.', du: 'Nur ein Vorschlag — Du bestimmst das Tempo.' },
@@ -5573,9 +5574,9 @@ export default {
     b: { wohnen: 'Wohnen', finanzen: 'Finanzen', person: 'Person', versicherungen: 'Versicherung', gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge', bildung: 'Bildung', notfall: 'Notfall', behoerden: 'Behörden' },
   },
   gepaeck: {
-    title: 'Mein Gepäck',
+    title: 'Wanderrucksack',
     intro: { sie: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Packen Sie aus, öffnen Sie einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.', du: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Pack aus, öffne einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.' },
-    link: 'Mein Gepäck',
+    link: 'Wanderrucksack',
     ctaSub: 'Lebensereignisse als Ausrüstung — auspacken, hineinschauen.',
     unpack: 'Auspacken',
     pack: 'Wieder einpacken',

@@ -90,7 +90,7 @@ const WEITERE_NAMEN = {
   settings: 'nav.settings',
   ansprueche: 'anspruch.pageTitle',
   situationen: 'lebenszustaende.pageTitle',
-  schnellcheck: 'schnellcheck.title',
+  schnellcheck: 'anspruch.pageTitle', // seit 27.09.2026 dieselbe Seite wie «ansprueche»
   notfalleinstieg: 'chapters.notfall.title',
   notfallkarte: 'notfallkarte.title',
   gesundheit: 'arztkoffer.title',
