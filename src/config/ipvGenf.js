@@ -37,22 +37,25 @@
 //       justifiés par l'intéressé»).
 //   [5] ge.ch, «Demander un subside d'assurance-maladie 2026» (SAM), Stand 9. Juli 2026: «en principe
 //       accordé automatiquement sur la base du revenu d'il y a deux ans»; Liste der Antragsfälle.
-//       Unterseite «Revenus 2024 (RDU 2026) particulièrement bas» (Stand 18.09.2026) mit der Tabelle
-//       der Untergrenzen: «Personne seule 15'000 · avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants
-//       24'000 · 4 enfants 27'000 · Couple seul sans enfant 20'000 · avec 1 enfant 23'000 …», Frist
-//       «avant le 30 novembre 2026». Unterseite «Revenu brut sup. à 200'000 ou fortune brute sup. à
-//       250'000» (18.09.2026): «Revenu déterminant 2026 = (revenu brut 2024 * 0.95) + (fortune brute
-//       2024 /15)», Antrag per Brief vor dem 30. November 2026.
-//   [6] ge.ch, «Communiqué hebdomadaire du Conseil d'Etat du 5 novembre 2025» — «Indexation des subsides
-//       d'assurance-maladie pour 2026», «indice de base: 2024»: adultes 8,7 %, jeunes adultes 5,3 %,
-//       enfants 10,9 %, mit Tabelle aller Beträge 2024 → 2026 (320 → 348 … 50 → 55; 100 → 106; 60 → 67).
-//       Das ist der Arrêté-Beleg, der am Nachmittag noch fehlte.
+//   [6] ge.ch, «Informations générales sur le subside de l'assurance-maladie», Stand 28. Mai 2026.
 //   [7] Loi sur l'imposition des personnes physiques (LIPP), rsGE D 3 08, Stand 01.01.2026:
 //       Art. 18 Abs. 1 (unselbständiges Erwerbseinkommen «y compris … les allocations»), Art. 26
 //       lit. e (erhaltene Alimente und Kinderunterhaltsbeiträge), Art. 29 Abs. 2 (Berufskosten
 //       pauschal «3% du revenu … minimum de 600 francs et … maximum de 1 700 francs»), Art. 31
 //       (Vorsorgeabzüge — für die Frage, ob die Säule 3a im RDU abziehbar ist).
-//   (Nummerierung wie im Quellenblatt docs/sources/ipv-kantone-2026.md, Abschnitt GE.)
+//   [8] ge.ch, «Communiqué hebdomadaire du Conseil d'Etat du 5 novembre 2025» — «Indexation des subsides
+//       d'assurance-maladie pour 2026», «indice de base: 2024»: adultes 8,7 %, jeunes adultes 5,3 %,
+//       enfants 10,9 %, mit Tabelle aller Beträge 2024 → 2026 (320 → 348 … 50 → 55; 100 → 106; 60 → 67).
+//       Das ist der Arrêté-Beleg, der am Nachmittag noch fehlte.
+//   [9] ge.ch, Unterseite von [5] «Revenus 2024 (RDU 2026) particulièrement bas» (Stand 18.09.2026), Tabelle
+//       der Untergrenzen: «Personne seule 15'000 · avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants
+//       24'000 · 4 enfants 27'000 · Couple seul sans enfant 20'000 · avec 1 enfant 23'000 …», Frist
+//       «avant le 30 novembre 2026».
+//   [10] ge.ch, Unterseite von [5] «Revenu brut sup. à 200'000 ou fortune brute sup. à
+//       250'000» (18.09.2026): «Revenu déterminant 2026 = (revenu brut 2024 * 0.95) + (fortune brute
+//       2024 /15)», Antrag per Brief vor dem 30. November 2026.
+//   (Nummerierung wie die Quellenliste im Quellenblatt docs/sources/ipv-kantone-2026.md, Abschnitt GE —
+//   angeglichen 28.09.2026: vorher hiess hier das Communiqué [6] und die Unterseiten hingen an [5].)
 //
 // DAS MODELL IN EINEM SATZ
 // Der Kanton ordnet den Haushalt nach seinem RDU (revenu déterminant unifié: Einkommen plus ein
@@ -80,18 +83,19 @@
 // 4. DIE GESETZESBETRÄGE STEHEN NICHT IM GESETZ. Art. 22 [2] nennt 320 … 50 Franken (Stand Dezember
 //    2024); Art. 9B [3] lässt sie jährlich per Arrêté indexieren und auf den Franken aufrunden. Die
 //    Beträge 2026 (348 … 55) stehen im Barème [1] und im Communiqué des Conseil d'Etat vom
-//    5.11.2025 [6]: drei Indexsätze auf Basis 2024 — Erwachsene 8,7 %, junge Erwachsene 5,3 %,
+//    5.11.2025 [8]: drei Indexsätze auf Basis 2024 — Erwachsene 8,7 %, junge Erwachsene 5,3 %,
 //    Kinder 10,9 % —, jeder Betrag aufgerundet (320 × 1,087 = 347.84 → 348 · … · 50 × 1,087 = 54.35
 //    → 55 · 100 × 1,053 = 105.3 → 106 · 60 × 1,109 = 66.54 → 67); der Test rechnet alle zehn nach.
 //    ⟨28.09.2026 abends: am Nachmittag stand hier «Arrêté nicht gefunden» und ein Faktor 1,0875 für
-//    die Erwachsenen — das Communiqué [6] fand die Cockpit-Sitzung, und es erklärt auch Gruppe 9.⟩
+//    die Erwachsenen — das Communiqué [8] fand die Cockpit-Sitzung, und es erklärt auch Gruppe 9.⟩
 //
 // SÄULE 3A — WARUM HIER DIE REGEL `voll` GILT, AUS EINEM ANDEREN GRUND ALS IN ZH/SG/LU
 // Dort rechnet der Kanton die 3a dem Steuereinkommen wieder ZU. In Genf wird sie im RDU gar nicht
-// erst ABGEZOGEN: LRDU Art. 5 Abs. 1 [4] nennt die Vorsorgeabzüge nach «article 31, lettre a, LIPP»
-// (lit. a: AHV/IV/EO/ALV/UVG-Beiträge) und «article 31, lettre b, LIPP» (lit. c: berufliche
-// Vorsorge) — nicht Art. 31 lit. c LIPP [7], die gebundene Selbstvorsorge. Das Nettoeinkommen der
-// App trägt die 3a bereits (Block bei `einkommenJahr` in kantonsModell.js); für Genf ist das genau
+// erst ABGEZOGEN: LRDU Art. 5 Abs. 1 lit. a [4] verweist auf «article 31, lettre a, LIPP» (LIPP
+// Art. 31 lit. a: AHV/IV/EO/ALV/UVG-Beiträge), LRDU lit. c auf «article 31, lettre b, LIPP» (LIPP
+// Art. 31 lit. b: berufliche Vorsorge) — nicht auf LIPP Art. 31 lit. c [7], die gebundene
+// Selbstvorsorge. ⟨Fachprüfung PR #469, K1: hier waren die Buchstaben von LRDU und LIPP vermischt.⟩
+// Das Nettoeinkommen der App trägt die 3a bereits (Block bei `einkommenJahr` in kantonsModell.js); für Genf ist das genau
 // richtig, Abzug 0.
 //
 // WAS DER RDU DER APP SONST NOCH ENTHÄLT — UND WAS IHM FEHLT (Fachprüfung 28.09.2026: die erste
@@ -158,6 +162,7 @@ import {
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
+import { zahl } from '../utils/geld.js';
 
 // Werte 2026, wörtlich aus [1], [2] und [3]. Grenzen sind Jahresbeträge des RDU, Beträge Monatsbeträge.
 export const IPV_GE = {
@@ -178,7 +183,7 @@ export const IPV_GE = {
   // Dezember 2024: 320 / 270 / 220 / 180 / 150 / 110 / 80 / 50 — indexiert nach Art. 9B [3].)
   erwachsene: [348, 294, 240, 196, 164, 120, 87, 55],
   gesetzErwachsene: [320, 270, 220, 180, 150, 110, 80, 50],
-  // Communiqué des Conseil d'Etat vom 5.11.2025 [6]: «adultes: 8,7% · jeunes adultes … 5,3% ·
+  // Communiqué des Conseil d'Etat vom 5.11.2025 [8]: «adultes: 8,7% · jeunes adultes … 5,3% ·
   // enfants: 10,9%», «indice de base: 2024». Gesetzesbeträge Gruppe 9: Art. 22 Abs. 2 lit. b (60)
   // und Abs. 3 lit. b (100) [2].
   indexierung: { erwachsene: 0.087, jungeErwachsene: 0.053, kinder: 0.109 },
@@ -199,7 +204,7 @@ export const IPV_GE = {
   // bescheiden», Subsid nur auf begründeten Antrag (Art. 20 Abs. 2, Art. 23 Abs. 5 [2]).
   vermoegenBruttoGrenze: 250000,
   // RaLAMal Art. 10 Abs. 4/5 [3]: unter diesen RDU-Beträgen ebenfalls Vermutung «nicht bescheiden»
-  // (ausser bei Sozialhilfe) ⇒ Antrag mit Nachweis der Lebenshaltung. Die Tabelle des SAM [5]
+  // (ausser bei Sozialhilfe) ⇒ Antrag mit Nachweis der Lebenshaltung. Die Tabelle des SAM [9]
   // («Personne seule avec 1 enfant 18'000», «Couple avec 1 enfant 23'000») zeigt: die Zeile
   // «assuré seul» gilt auch für Alleinerziehende — +3'000 je Kind, NICHT die Paar-Zeile.
   antragUnter: { allein: 15000, paar: 20000, jeUnterhaltspflicht: 3000 },
@@ -248,7 +253,7 @@ export function ipvGenfRechnen({ rdu, kinderZahl = 0 }) {
 }
 
 // RDU-Untergrenze, unter der der Kanton den Anspruch NICHT automatisch prüft (RaLAMal Art. 10
-// Abs. 4/5 [3]): 15'000 für eine Person allein, +3'000 je Kind — die Tabelle des SAM [5] nennt
+// Abs. 4/5 [3]): 15'000 für eine Person allein, +3'000 je Kind — die Tabelle des SAM [9] nennt
 // «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants 27'000».
 // ⟨28.09.2026 abends: bis dahin rechnete das Modul Alleinerziehende mit der Paar-Zeile (20'000 +
 // 3'000 = 23'000) und nannte das «gewählt» — die Cockpit-Sitzung fand die SAM-Tabelle, die Frage
@@ -381,7 +386,7 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Über der letzten Grenze: kein Anspruch — und zwar VOR dem Prämien-Riegel, sonst hiesse es
   // «Prämie fehlt», wo gar nichts zu deckeln wäre (Abgleich 28.09.2026).
   if (r.annual <= 0) {
-    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze } });
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: zahl(r.grenze) } });
   }
 
   // Art. 22 Abs. 4 [2]: «Le montant des subsides accordés ne peut dépasser le montant de la prime
@@ -399,16 +404,17 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Bemessungsjahr, sonst Gruppe 9, sonst der Weg des Kantons.
   let noteKey, noteParams;
   if (antragWegenRdu && fristVorbei) {
-    noteKey = 'ipv.geAntragFristVorbei'; noteParams = { value: antragGrenze, jahr, folgejahr: jahr + 1 };
+    noteKey = 'ipv.geAntragFristVorbei'; noteParams = { value: zahl(antragGrenze), jahr, folgejahr: jahr + 1 };
   } else if (antragWegenRdu) {
-    noteKey = 'ipv.geAntragNoetig'; noteParams = { value: antragGrenze, jahr };
+    // K2: {value} mit Tausendertrennung (utils/geld.js), nie als rohe Zahl hinter «CHF».
+    noteKey = 'ipv.geAntragNoetig'; noteParams = { value: zahl(antragGrenze), jahr };
   } else if (kindNachBasisjahr) {
     // Art. 13C [3]: Fristen wie 13B Abs. 5 — vor dem 30.11., bei Zuwachs im 2. Halbjahr bis 30.06.
     // des Folgejahres. Ob das auch für ein Kind aus dem VORJAHR (Jahrgang 2025) gilt, sagt der Text
     // nicht (FRAGEN-AN-DIE-AEMTER.md, Frage 15.5); der Hinweis warnt in beiden Fällen.
     noteKey = 'ipv.geAntragKindNeu'; noteParams = { basisjahr, jahr, folgejahr: jahr + 1 };
   } else if (r.nurKinder) {
-    noteKey = 'ipv.geNurKinder'; noteParams = { value: r.grenze };
+    noteKey = 'ipv.geNurKinder'; noteParams = { value: zahl(r.grenze) };
   } else {
     noteKey = ipvData.noteKey; noteParams = ipvData.noteParams || {};
   }
