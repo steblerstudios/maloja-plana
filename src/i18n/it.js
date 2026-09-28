@@ -4036,7 +4036,7 @@ export default {
       owSelbstbehaltRahmen: 'Con questo reddito computabile la franchigia nel Cantone di Obvaldo supera il 12 per cento secondo la decisione per il 2026. Dal 1° aprile 2026 la legge fissa però un intervallo dal 9 al 12 per cento. Quale regola valga per le decisioni 2026 è aperto — perciò qui non c’è alcuna cifra. L’Ausgleichskasse Obwalden fornisce informazioni.',
       kind18: 'Un figlio compie 18 anni nell’anno di diritto o è più grande. Se conta ancora nella domanda dei genitori dipende dalle regole cantonali su età e formazione; l’app non calcola questo caso. L’ufficio cantonale fornisce informazioni.',
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
-      eingabeUnlesbar: 'Un importo registrato per il reddito o la sostanza non può essere letto come numero. Così non si può calcolare alcuna riduzione — si prega di verificare i dati nel capitolo Finanze.',
+      eingabeUnlesbar: 'Un importo registrato — per il reddito, la sostanza, i contributi di mantenimento o gli assegni familiari — non può essere letto come numero. Così non si può calcolare alcuna riduzione — si prega di verificare i dati nel capitolo Finanze.',
       laden: 'Le basi si stanno ancora caricando.',
     },
   },

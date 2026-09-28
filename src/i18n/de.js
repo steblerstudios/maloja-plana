@@ -4086,7 +4086,7 @@ export default {
       owSelbstbehaltRahmen: 'Bei diesem anrechenbaren Einkommen liegt der Selbstbehalt im Kanton Obwalden nach dem Beschluss für 2026 über 12 Prozent. Seit dem 1. April 2026 nennt das Gesetz aber einen Rahmen von 9 bis 12 Prozent. Welche Regel für die Verfügungen 2026 gilt, ist offen — darum steht hier keine Zahl. Die Ausgleichskasse Obwalden gibt Auskunft.',
       kind18: 'Ein Kind wird im Anspruchsjahr 18 oder ist älter. Ob es dann noch im Antrag der Eltern mitzählt, regelt der Kanton je nach Alter und Ausbildung; diesen Fall rechnet die App nicht. Die kantonale Stelle gibt Auskunft.',
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
-      eingabeUnlesbar: 'Ein erfasster Betrag beim Einkommen oder Vermögen lässt sich nicht als Zahl lesen. Damit lässt sich keine Verbilligung berechnen — bitte die Angaben im Kapitel Finanzen prüfen.',
+      eingabeUnlesbar: 'Ein erfasster Betrag — beim Einkommen, beim Vermögen, bei Unterhaltsbeiträgen oder Familienzulagen — lässt sich nicht als Zahl lesen. Damit lässt sich keine Verbilligung berechnen — bitte die Angaben im Kapitel Finanzen prüfen.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },

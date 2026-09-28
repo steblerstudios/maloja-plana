@@ -4035,7 +4035,7 @@ export default {
       owSelbstbehaltRahmen: 'Pour ce revenu déterminant, la franchise dans le canton d’Obwald dépasse 12 % selon la décision pour 2026. Depuis le 1er avril 2026, la loi fixe toutefois une fourchette de 9 à 12 %. La règle applicable aux décisions 2026 n’est pas claire — c’est pourquoi aucun montant n’est indiqué ici. L’Ausgleichskasse Obwalden renseigne.',
       kind18: 'Un enfant atteint 18 ans dans l’année de droit ou est plus âgé. S’il compte encore dans la demande des parents dépend des règles cantonales sur l’âge et la formation ; l’application ne calcule pas ce cas. L’office cantonal renseigne.',
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
-      eingabeUnlesbar: 'Un montant saisi pour le revenu ou la fortune ne peut pas être lu comme un nombre. Aucune réduction ne peut être calculée ainsi — merci de vérifier les indications dans le chapitre Finances.',
+      eingabeUnlesbar: 'Un montant saisi — pour le revenu, la fortune, les contributions d’entretien ou les allocations familiales — ne peut pas être lu comme un nombre. Aucune réduction ne peut être calculée ainsi — merci de vérifier les indications dans le chapitre Finances.',
       laden: 'Les bases sont encore en cours de chargement.',
     },
   },

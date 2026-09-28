@@ -4035,7 +4035,7 @@ export default {
       owSelbstbehaltRahmen: 'At this relevant income the deductible in the canton of Obwalden exceeds 12 per cent under the 2026 decision. Since 1 April 2026, however, the law sets a range of 9 to 12 per cent. Which rule applies to the 2026 decisions is open — so no figure is shown here. The Ausgleichskasse Obwalden can advise.',
       kind18: 'A child turns 18 in the entitlement year or is older. Whether it still counts in the parents’ application depends on the canton’s rules on age and education; the app does not calculate this case. The cantonal office can advise.',
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch».
-      eingabeUnlesbar: 'An amount recorded for income or assets cannot be read as a number. No reduction can be calculated from it — please check the entries in the Finances chapter.',
+      eingabeUnlesbar: 'An amount recorded — for income, assets, maintenance payments or family allowances — cannot be read as a number. No reduction can be calculated from it — please check the entries in the Finances chapter.',
       laden: 'The basis is still loading.',
     },
   },

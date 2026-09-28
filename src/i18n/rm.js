@@ -3141,7 +3141,7 @@ export default {
       owSelbstbehaltRahmen: 'Cun questa entrada imputabla è la franchisa en il chantun Sursilvania tenor la decisiun per il 2026 pli auta che 12 pertschient. Dapi il 1. d’avrigl 2026 numna la lescha dentant ina rama da 9 fin 12 pertschient. Tgenina regla che vala per las disposiziuns 2026 è avert — perquai na stat qua nagina cifra. L’Ausgleichskasse Obwalden dat infurmaziuns.',
       kind18: 'In uffant cumplenescha 18 onns en l’onn da dretg u è pli vegl. Sch’el dumbra lura anc en la dumonda dals geniturs, regla il chantun tenor vegliadetgna e furmaziun; quest cas na quinta l’app betg. Il post chantunal dat infurmaziuns.',
       // NW (Fachprüfung #486, K5, 28.09.2026): unlesbare Beträge → keine Zahl statt «kein Anspruch». — TODO(rm): provisorisch, Gegenlese offen
-      eingabeUnlesbar: 'In import registrà tar l’entrada u la facultad na sa lascha betg leger sco cifra. Uschia na sa lascha quintar nagina reducziun — per plaschair controllar las indicaziuns en il chapitel Finanzas.',
+      eingabeUnlesbar: 'In import registrà — tar l’entrada, la facultad, las contribuziuns da mantegniment u las allocaziuns per famiglias — na sa lascha betg leger sco cifra. Uschia na sa lascha quintar nagina reducziun — per plaschair controllar las indicaziuns en il chapitel Finanzas.',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },
