@@ -31,7 +31,7 @@
 //       (geändert 08.09.2026) — dieselben Beträge wie [3].
 //
 // 🛑 DER WIDERSPRUCH VOM 16.09.2026 IST AUFGELÖST — nicht durch eine Antwort, sondern durch eine
-// zweite Rechtsgrundlage. Die Kantonsseite [7] nannte ab S3 höhere Beträge als [1] (Erwachsene S3
+// zweite Rechtsgrundlage (in der Fachprüfung vom 28.09.2026 bestätigt). Die Kantonsseite [7] nannte ab S3 höhere Beträge als [1] (Erwachsene S3
 // 515 statt 514, S15 41 statt 26). Der Unterschied ist genau der ausserordentliche Subside des
 // Grossen Rates [2]; das OCAB-Blatt [3] überschreibt seine Tabelle ausdrücklich mit «Arrêté …
 // + Décret …». Die App rechnet darum [1] + [2]. Wer nur [1] rechnete, läge ab S3 bis CHF 15 im
@@ -41,7 +41,7 @@
 // Ein amtliches Rechenbeispiel einer Einstufung gibt es nicht (das einzige Beispiel in [3] zeigt
 // die Kürzung bei Wahlfranchise, die hier bewusst nicht gerechnet wird). Geprüft wird darum jede
 // Zahl über ZWEI unabhängige amtliche Wege: Beträge [1] + [2] = Tabelle [3] = Seite [7], für alle
-// 15 Klassen; Grenzen Annexe [1] = [3] für 0–3 Kinder vollständig.
+// 15 Klassen; Grenzen Annexe [1] = [3] für alle elf Zeilen (0–10 Kinder) maschinell verglichen.
 //
 // DAS MODELL IN EINEM SATZ
 // Das revenu déterminant (revenu effectif der Veranlagung 2025 plus 30 % des Vermögens über einem
@@ -63,14 +63,30 @@
 //   · Paare, Konkubinat (eigene Tabelle, [1] Art. 10) — das zweite Einkommen fehlt der App.
 //   · junge Erwachsene 19–25 und Personen in Ausbildung ([1] Art. 6–8, 15): Ausbildungsstatus fehlt.
 //   · PC-AVS/AI- und Sozialhilfe-Beziehende (eigene Beträge 687/590), Quellenbesteuerte, amtlich
-//     Veranlagte, Selbständige (Gesuch jedes Jahr, [5] Art. 30).
+//     Veranlagte.
+//   · Selbständige und Freiberufliche: «perçoivent un subside chaque année sur demande», Gesuch
+//     beim GSR innert 12 Monaten ([5] Art. 30 al. 1/3) — Orientierung `neIndependant`, keine Zahl
+//     mit dem Weg «automatisch». ⟨Fachprüfung 28.09.2026, Blocker 2: stand hier als «nicht gebaut»,
+//     der Riegel fehlte aber — Selbständige bekamen eine Zahl.⟩
+//   · Personen unter 26 (junge Erwachsene, eigene Tabelle; Ledige 19–25 ohne Kind nur auf Gesuch,
+//     [1] Art. 16 al. 1, [3] Fall B) — Orientierung `neJeuneAdulte`.
 //   · die Kürzung bei Wahlfranchise (Satz des Versicherers unbekannt) — dann keine Zahl.
 //   · vom revenu déterminant [1] Art. 12: Berufsauslagen (6.4, bis 10'000), Nebenerwerbs-
-//     auslagen (6.5, bis 2'400), Unterhaltsbeiträge (6.10), AHV-Beiträge Nichterwerbstätiger
-//     (6.7) — die App kennt sie nicht; das Einkommen liegt damit ZU HOCH, der Betrag eher zu tief.
-//     Mietertrag und Eigenmietwert ebenso nicht.
-//   · der Anspruchsbeginn (je nach Abgabe der Steuererklärung, [1] Art. 17) und die Rückforderung
-//     bei 20 % Abweichung ([1] Art. 21) — beides steht im Vorbehalt.
+//     auslagen (6.5, bis 2'400), AHV-Beiträge Nichterwerbstätiger (6.7) — die App kennt sie
+//     nicht; das Einkommen liegt damit zu hoch, der Betrag eher zu tief. Mietertrag ebenso nicht.
+//   · 🛑 DREI ERFASSTE FELDER FLIESSEN NOCH NICHT EIN (Fachprüfung 28.09.2026, Blocker 1):
+//     `familienzulagen` und `alimenteReceived` gehören zum revenu effectif (Betrag hier dann ZU
+//     HOCH), `alimentePaid` ist nach Ziff. 6.10 abziehbar (Betrag hier dann ZU TIEF). Der Fehler
+//     sitzt im gemeinsamen `rohesEinkommenJahr` (kantonsModell.js) und betrifft alle Module; er
+//     wird in einem eigenen Rahmen-PR für alle Kantone behoben. Bis dahin sagt es `vorbehaltNE`.
+//   · Vermögen: `vermoegenSumme` = erfasste Posten OHNE Schulden. Ob Ziff. 6.16 der Steuererklärung
+//     die Schulden schon abzieht, ist nicht gelesen — ANNAHME, dass die erfassten Posten der
+//     fortune effective nahekommen.
+//   · der Anspruchsbeginn (je nach Abgabe der Steuererklärung, [1] Art. 17) und die Rückforderung,
+//     wenn die Abweichung 20 % «dépasse» ([1] Art. 21 al. 2) — beides steht im Vorbehalt.
+//   · der Kinderanteil wird weder auf die Kinderprämie gedeckelt ([4] Art. 14 al. 4) noch bei
+//     Wahlfranchise des Kindes gekürzt — die App kennt die Kinderprämien nicht; gerechnet wird
+//     160 je Kind, der Vorbehalt sagt es.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -112,6 +128,13 @@ export const IPV_NE = {
   // [1] Art. 16 al. 1/3: revenu effectif «inférieur à 15'000 francs pour une personne seule»,
   // «augmentée de 3'000 francs par enfant mineur à charge».
   revenuMinimum: { allein: 15000, jeKind: 3000 },
+  // 🛑 GEWÄHLT, nicht belegt (Fachprüfung 28.09.2026, Wichtig 3): Art. 16 misst am revenu
+  // effectif NACH den Abzügen 6.4/6.5/6.7/6.10, die App vor ihnen. Wer knapp über der Schwelle
+  // liegt, kann nach Berufsauslagen darunter fallen — dann stuft der Kanton nicht automatisch ein.
+  // In einem Band von 2'000 Franken über der Schwelle steht darum ein Hinweis auf das Gesuch beim
+  // GSR neben der Zahl. Die Breite ist geschätzt (typische Berufsauslagen bei diesen Einkommen),
+  // nicht amtlich.
+  revenuMinimumBand: 2000,
   // [1] Art. 11 al. 1: Beträge «pour la franchise annuelle au sens de l'article 103, alinéa 1 de
   // l'ordonnance sur l'assurance-maladie» — die ordentliche Franchise.
   franchiseOrdentlich: 300,
@@ -171,10 +194,18 @@ export function ipvNeuchatel(data, hh, ipvData, youngAdultsCount, orientierung) 
   if (jahrVorbei(jahr)) return orientierung('jahr');
   // Paare und Konkubinat ([1] Art. 10 mit LHaCoPS art. 3 al. 1 lit. d) haben eigene Grenzen.
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
+  // [5] Art. 30 al. 1/3: Selbständige «perçoivent un subside chaque année sur demande» — jedes Jahr
+  // ein Gesuch beim GSR innert 12 Monaten, kein Automatismus (OCAB [3], S. 4). Eine Zahl mit dem
+  // Weg «automatisch» wäre hier falsch. `employmentType` wie im Kapitel Finanzen.
+  if (f.employmentType === 'selfEmployed' || f.employmentType === 'freelance') return orientierung('neIndependant');
   // Erwachsen «dès le début de l'année civile des 26 ans» ([1] Art. 7 al. 1; Art. 6 al. 1:
   // jeune adulte bis «fin de l'année civile des 25 ans»). BELEGT — dieselbe Regel wie AG/LU.
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
+  if (!geburt) return orientierung('alter');
+  // Unter 26 mit erfasstem Geburtsdatum fehlt keine Angabe — es gilt eine andere Tabelle (junge
+  // Erwachsene), und Ledige 19–25 ohne Kind erhalten nur auf Gesuch ([1] Art. 16 al. 1, [3] Fall B).
+  // Eigener Grund statt «Geburtsdatum fehlt» (Fachprüfung 28.09.2026, Kann 4).
+  if (!ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung(jahr - geburt >= 19 ? 'neJeuneAdulte' : 'alter');
   // Kind «0 à 18 ans (fin de l'année civile des 18 ans)» ([1] Art. 5 al. 1) — also das Alter im
   // Anspruchsjahr; beim eingetippten Alter ein Jahr dazu (vorsichtig an der 18, wie BE/LU/VD).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
@@ -203,6 +234,8 @@ export function ipvNeuchatel(data, hh, ipvData, youngAdultsCount, orientierung) 
   if (praemieFehlt(praemie)) return orientierung('praemie');
 
   // Keine Vermögensgrenze — das Vermögen geht nur zu 30 % ins revenu déterminant ein.
+  const schwelle = IPV_NE.revenuMinimum.allein + IPV_NE.revenuMinimum.jeKind * kinderZahl;
+  const nahSchwelle = revenuEffectif < schwelle + IPV_NE.revenuMinimumBand;
   const rd = neRevenuDeterminant({ revenuEffectif, vermoegen: vermoegenSumme(f), kinderZahl });
   const r = ipvNeuchatelRechnen({ kinderZahl, rd });
   const annual = deckelnProPerson(r.annual, r.erwachseneAnnual, praemie);
@@ -212,7 +245,10 @@ export function ipvNeuchatel(data, hh, ipvData, youngAdultsCount, orientierung) 
   const gemeinsam = {
     canton: 'NE', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltNE',
     // Keine Prämienregion: eigener Satz statt des Aargauer `jahrOhneRegion`.
-    extra: { basisjahr: IPV_NE.basisjahr, jahrKey: 'ipv.jahrNE', klasse: r.klasse },
+    extra: {
+      basisjahr: IPV_NE.basisjahr, jahrKey: 'ipv.jahrNE', klasse: r.klasse,
+      ...(nahSchwelle ? { zusatzVorbehaltKey: 'ipv.neRevenuMinimumNahe' } : {}),
+    },
   };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.neKeinAnspruch', noteParams: { value: r.grenze } });
