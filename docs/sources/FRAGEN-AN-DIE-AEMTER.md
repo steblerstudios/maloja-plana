@@ -228,6 +228,46 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 8 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle
+
+*Aufgenommen 28.09.2026 beim Einbau von BS (K31). Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Tabelle und Beiträge 2026 stehen vollständig in Anhang 2 der KVO (SG 834.410),
+das Einkommen im Harmonisierungsgesetz (SoHaG, SG 890.700) und seiner Verordnung (SoHaV,
+SG 890.710). Das Berechnungsbeispiel des ASB (4 Personen, 62'000 → Gruppe 5) rechnen wir Zahl
+für Zahl nach. Offen bleiben Punkte, die die App nur mit einer eigenen Annahme rechnen könnte.
+
+**Frage 1 — Gruppe 09, Erwachsene mit alternativem Modell:** Anhang 2 der KVO nennt **240**, die
+Beitragstabelle «Einkommensgruppen, -grenzen und IPV-Beiträge ab 1. Januar 2026» **230**. Wir
+folgen der Verordnung (240 ist auch der Abstand von 30 Franken, den alle anderen Gruppen haben).
+Welcher Betrag wird ausbezahlt?
+
+**Frage 2 — hypothetisches Einkommen:** Nach SoHaV § 24 wird Alleinstehenden unter 80 % die
+Differenz zu 36'000 netto angerechnet. Die App kennt den Beschäftigungsgrad nicht und zeigt darum
+unter einem Erwerbseinkommen von 28'800 im Jahr keinen Betrag, ausser die Person ist über 60 oder
+betreut ein Kind unter 16. Ist diese Schwelle aus Ihrer Sicht vertretbar — oder gibt es eine
+Praxis (z. B. bei Mindestlohn-Vollzeit unter 28'800), die wir kennen sollten? Und: Gilt «das
+60. Altersjahr überschritten» (§ 23 lit. a) ab dem 60. oder ab dem 61. Geburtstag?
+
+**Frage 3 — Gruppengrenzen:** § 22 Abs. 1 KVO gewährt Beiträge, wenn das Einkommen die
+Leistungsgrenze «nicht übersteigt». Gilt dasselbe für die Grenzen zwischen den Gruppen — gehört
+ein Einkommen von genau 23'125 (1 Person) zu Gruppe 01?
+
+**Frage 4 — Zuschlag für alternative Modelle (§ 21 Abs. 1bis KVO):** Das ASB «kann die für den
+Zuschlag zu berücksichtigenden Versicherungsmodelle von einem Mindestrabatt … abhängig machen».
+Gibt es diesen Mindestrabatt 2026, und wie hoch ist er? Solange das offen ist, nennt die App den
+Betrag mit Zuschlag nur als zweite Zahl im Hinweis.
+
+**Frage 5 — Alter:** KVO und SoHaV nennen für die Altersklassen keinen Stichtag. Welcher Zeitpunkt
+entscheidet für eine Person, die im Anspruchsjahr 26 wird? Wir zeigen für diesen Jahrgang derzeit
+keinen Betrag.
+
+**Stand:** BS ist für 2026 gebaut (Entwurfs-PR, K31). Die KVO-Fassung ab 01.01.2027
+(Beschluss 15.09.2026) ist publiziert, trägt aber noch den Anhang 2 vom 21.10.2025 — die
+Beiträge 2027 stehen aus. Ab 01.01.2027 zeigt die App für BS keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
