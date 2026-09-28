@@ -30,6 +30,7 @@ export const IPV_MODULE = {
   AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+  BS: { laden: () => import('./ipvBaselStadt.js'), fn: 'ipvBaselStadt', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -118,7 +119,11 @@ export const CANTONAL_IPV = {
   ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },
   SO: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
-  BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // BS (K31): eigenes Modell in config/ipvBaselStadt.js (Stufentabelle nach KVO Anhang 2). Die
+  // Leistungsgrenze ist publiziert, hängt aber an der Haushaltsgrösse — sie steht im Ergebnis.
+  // Weg: Antrag beim Amt für Sozialbeiträge (KVO § 15), nicht automatisch.
+  BS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAsb',
+    beleg: { quelle: 'KVO BS (SG 834.410) · SoHaG (SG 890.700) · SoHaV (SG 890.710) · Amt für Sozialbeiträge BS — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' }, beleg: null },
   SH: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyAhvBranchShort', beleg: null },
   AR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' }, beleg: null },
