@@ -216,10 +216,11 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  // Seit 28.09.2026 setzt auch Appenzell Ausserrhoden die Frist (V zum KVG Art. 10, EG Art. 22: bis
-  // 31. März, danach verwirkt) — mit eigenem Hinweis-Schlüssel `ipv.arFristNichtAbgezogen`.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, AR) und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvAppenzellAusserrhoden.js', 'data/ipvAbzug.js'];
+  // TI (28.09.2026, Fachprüfung #484): LCAMal Art. 25 Abs. 3 — nach der Frist erst ab dem Folgemonat.
+  // AR (28.09.2026, Fachprüfung #480): V zum KVG Art. 10, EG Art. 22 — bis 31. März, danach verwirkt;
+  // eigener Hinweis-Schlüssel `ipv.arFristNichtAbgezogen`.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, TI, AR) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvTicino.js', 'config/ipvAppenzellAusserrhoden.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
