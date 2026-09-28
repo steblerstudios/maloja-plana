@@ -41,6 +41,7 @@ export function vermoegenSumme(f) {
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
 //                        VD: LHPS (BLV 850.03) art. 6 al. 2 lit. a, «majoré des montants affectés
 //                            aux formes reconnues de prévoyance individuelle liée (3e pilier A)»
+//                        AI: Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        KKVV Art. 6 Abs. 4 lit. i
@@ -114,8 +115,8 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU, VD',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03)',
+    kantone: 'ZH, SG, LU, VD, AI',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · AI Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)',
     nichtAufgerechnet: () => 0,
   }),
 
