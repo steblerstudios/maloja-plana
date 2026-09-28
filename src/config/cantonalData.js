@@ -126,8 +126,8 @@ export const CANTONAL_IPV = {
   // AR (K31): eigenes Modell in config/ipvAppenzellAusserrhoden.js (Richtprämie minus 46 % über dem
   // allgemeinen Lebensbedarf, harte Obergrenzen). Eine Prämienregion. Die Obergrenze des massgebenden
   // Einkommens ist als Zahl publiziert (Alleinstehende 35'000, Merkblatt SOVAR 2026); je Haushalt
-  // setzt sie das Modul.
-  AR: { maxIncome: 35000, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' },
+  // setzt sie das Modul. Antrag bei der AHV-Zweigstelle der Wohngemeinde (V zum KVG Art. 10 Abs. 1).
+  AR: { maxIncome: 35000, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAhvBranch',
     beleg: { quelle: 'EG zum KVG AR (bGS 833.14) · V zum KVG (bGS 833.141) · SOVAR Merkblatt 2026 — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   AI: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
   // SG (K31): eigenes Modell in config/ipvStGallen.js (Referenzprämie minus Belastungsgrenze,

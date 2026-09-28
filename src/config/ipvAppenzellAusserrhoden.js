@@ -70,9 +70,11 @@
 //     Prozentsatzes verbilligt»). Übersteigt der Selbstbehalt die Richtprämie der erwachsenen Person,
 //     widerspricht dem Art. 16 Abs. 1 lit. c [1] («einen Selbstbehalt aufweist, der die Richtprämie
 //     nicht übersteigt») — in diesem Band keine Zahl.
-//   · Säule 3a: wer einen BVG-Beitrag erfasst hat, gehört einer Vorsorgeeinrichtung an (volle
-//     Aufrechnung, Art. 19 Abs. 1 lit. a [1]). Ohne diese Angabe wird mit und ohne Vorsorgeeinrichtung
-//     gerechnet (Art. 5 Abs. 1 lit. a [2]: nur über 10'000) — ergibt das verschiedene Beträge, keine Zahl.
+//   · Säule 3a: wer einen BVG-Beitrag über 0 erfasst hat, gehört einer Vorsorgeeinrichtung an (volle
+//     Aufrechnung, Art. 19 Abs. 1 lit. a [1]); wer ausdrücklich 0 erfasst hat, gehört keiner an (nur
+//     über 10'000, Art. 5 Abs. 1 lit. a [2]) — so liest es auch GR. Leer heisst «nicht erfasst»: dann
+//     wird mit und ohne gerechnet, und ergibt das verschiedene Beträge, keine Zahl.
+//     ⟨Fachprüfung #480 W4: vorher gab es für Personen ohne Pensionskasse keinen Ausweg.⟩
 //   · Rundung auf ganze Franken.
 //
 // BEWUSST NICHT GEBAUT:
@@ -226,10 +228,15 @@ export function ipvAppenzellAusserrhoden(data, hh, ipvData, youngAdultsCount, or
   // trägt die Einzahlung schon; mit Vorsorgeeinrichtung bleibt sie ganz drin (`voll`), ohne wird
   // der Teil bis 10'000 wieder abgezogen (`freibetragOhneSaeule2`, config/kantonsModell.js).
   const saeule3a = Math.max(0, Number(f.pension3a) || 0);
-  const bvBekannt = Number(v.bvgContribution) > 0;
-  const massgebend = (mitBV) => einkommenJahr(f, mitBV ? SAEULE_3A.voll : SAEULE_3A.freibetragOhneSaeule2)
+  // Erfasster BVG-Beitrag über 0 → Vorsorgeeinrichtung; ausdrücklich 0 → keine; leer → unbekannt.
+  const bvgRoh = v.bvgContribution;
+  const bvgLeer = bvgRoh === undefined || bvgRoh === null || String(bvgRoh).trim() === '';
+  const bvgWert = Number(bvgRoh);
+  const bvBekannt = !bvgLeer && Number.isFinite(bvgWert);
+  const mitBV = bvBekannt && bvgWert > 0;
+  const massgebend = (mitVorsorge) => einkommenJahr(f, mitVorsorge ? SAEULE_3A.voll : SAEULE_3A.freibetragOhneSaeule2)
     - kinderabzug + IPV_AR.vermoegenAnteil * steuerbaresVermoegen;
-  const r = ipvAppenzellAusserrhodenRechnen({ me: massgebend(true), kinderZahl });
+  const r = ipvAppenzellAusserrhodenRechnen({ me: massgebend(bvBekannt ? mitBV : true), kinderZahl });
   if (!bvBekannt && saeule3a > 0) {
     const ohneBV = ipvAppenzellAusserrhodenRechnen({ me: massgebend(false), kinderZahl });
     if (Math.round(ohneBV.total) !== Math.round(r.total) || ohneBV.unklar !== r.unklar) {
@@ -249,8 +256,9 @@ export function ipvAppenzellAusserrhoden(data, hh, ipvData, youngAdultsCount, or
   const annual = Math.round(r.total);
   // «höchstens möglich»: bei Einkommen 0 wäre es die ganze Richtprämie — aber höchstens bis zum
   // unbekannten Deckel; die erfasste Prämie ist die untere Schranke dafür.
-  const maxAnnual = Math.round(Math.max(annual, Math.min(IPV_AR.richtpraemie.e, Math.max(praemie, r.erwachsen)))
-    + kinderZahl * IPV_AR.kinderBetrag);
+  // ⟨Fachprüfung #480 K3: vorher an der erfassten Prämie gedeckelt — die ist aber nur die untere
+  // Schranke des Deckels, «höchstens möglich» fiel dadurch zu tief aus.⟩
+  const maxAnnual = Math.round(IPV_AR.richtpraemie.e + kinderZahl * IPV_AR.kinderBetrag);
 
   // Die Obergrenze des massgebenden Einkommens ist amtlich als Zahl publiziert [3] — je Haushalt.
   const cantonData = { ...ipvData, maxIncome: r.obergrenze };
@@ -262,11 +270,15 @@ export function ipvAppenzellAusserrhoden(data, hh, ipvData, youngAdultsCount, or
       noteKey: r.grund === 'mindestbetrag' ? 'ipv.arUnterMindestbetrag' : 'ipv.arKeinAnspruch',
     });
   }
-  // Art. 22 Abs. 2 lit. a [1]: nach der Frist verwirkt. 🛑 `anmeldefristVorbei` bewusst NICHT
-  // gesetzt — die Leser zeigen sonst den Luzerner Fristtext (siehe ipvSchaffhausen.js, wie AG).
+  // Art. 22 Abs. 2 lit. a [1]: nach der Frist verwirkt. Dann zieht die App im Budget, in der
+  // KK-Last-Karte und im Prämienbeleg nichts ab (data/ipvAbzug.js) und sagt warum — mit dem eigenen
+  // Text `ipv.arFristNichtAbgezogen` (Leser wie in FR: `fristNichtAbgezogenKey`).
+  // ⟨Fachprüfung #480 W2: vorher bewusst nicht gesetzt, weil die Leser nur den Luzerner Text kannten;
+  // das Budget zog dadurch seit dem 31.03. einen verwirkten Betrag ab.⟩
   const fristVorbei = new Date() > new Date(`${IPV_AR.frist.ordentlich}T23:59:59`);
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
+    extra: { ...gemeinsam.extra, anmeldefristVorbei: fristVorbei, fristNichtAbgezogenKey: 'ipv.arFristNichtAbgezogen' },
     noteKey: fristVorbei ? 'ipv.arFristVorbei' : 'ipv.arFristLaeuft',
     noteParams: { jahr, folgejahr: jahr + 1 },
   });

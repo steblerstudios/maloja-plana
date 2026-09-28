@@ -1572,6 +1572,22 @@ Musterwerte entfernt; `noteKey` bleibt «Antrag bei SVA AR» (Formular 2026: «b
 Sozialversicherungen Appenzell Ausserrhoden einreichen»; Art. 10 V nennt noch die
 Gemeindezweigstelle — Frage 6).
 
+**Nachtrag Fachprüfung #480 (28.09.2026 abends):**
+- ⟨korrigiert⟩ Antragsstelle: `noteKey` jetzt «Antrag bei AHV-Zweigstelle Gemeinde» und `arFristLaeuft`
+  «bei der AHV-Zweigstelle der Wohngemeinde» (V Art. 10 Abs. 1); die SOVAR schreibt mutmasslich Berechtigte an
+  (Medienmitteilung 12.12.2025). Das Formular mit der SOVAR als Stelle gilt nur bei Zuzug aus dem Ausland.
+- Richtung der Näherung jetzt sichtbar: die App rechnet mit dem Nettoeinkommen, das steuerbare Einkommen ist
+  wegen Berufskosten und Versicherungsabzug (StG Art. 35 Abs. 1 lit. g, bis Fr. 2'700) meist tiefer — mit 46 %
+  Selbstbehalt wirkt das stark (Prüfung: 30'000 netto → App 1'733, mit −2'700 schon 2'975). `vorbehaltAR` und
+  `arKeinAnspruch` sagen «eher höher» und «ein Antrag lohnt sich». Nicht gerechnet (Produktentscheid).
+- Frist: `anmeldefristVorbei` jetzt gesetzt, mit eigenem Text `ipv.arFristNichtAbgezogen` (Leser wie FR,
+  `fristNichtAbgezogenKey`). Budget, KK-Last und Prämienbeleg ziehen nach dem 31.03. nichts mehr ab.
+- Säule 2: ein ausdrücklich erfasster BVG-Beitrag 0 gilt als «keine Pensionskasse» (wie GR), leer bleibt unbekannt.
+- `offenGrund.praemieFranchise` nennt die belegte Untergrenze («mindestens so hoch wie die erfasste Prämie»).
+  Eine Anzeige als Spanne «mindestens/höchstens» wäre ein neuer Zustand — Produktentscheid, im PR notiert.
+- «höchstens möglich» = Richtprämie + Kinderbetrag, nicht mehr an der erfassten Prämie gedeckelt.
+- `arFristVorbei` nennt die Ausnahme Zuzug aus dem Ausland (V Art. 6 Abs. 1 lit. b).
+
 ---
 
 ## AI — Appenzell Innerrhoden

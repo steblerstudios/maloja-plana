@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import { IPV_AR, ipvAppenzellAusserrhodenRechnen, arKinderabzugSteuer } from '../ipvAppenzellAusserrhoden.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
+import { ipvAbzug, IPV_ABZUG_GRUND } from '../../data/ipvAbzug.js';
+import { praemienBelegState } from '../../data/praemienBeleg.js';
+import { calculateMonthlyBudget } from '../../budgetSync.js';
 
 // K31 — Prämienverbilligung Kanton Appenzell Ausserrhoden 2026.
 // Quellen (an der Quelle gelesen 28.09.2026), Wortlaute in docs/sources/ipv-kantone-2026.md,
@@ -155,6 +158,13 @@ describe('K31 calculateIPV für AR (App-Angaben → Modell)', () => {
   it('Säule 3a: ohne Angabe zur Pensionskasse und mit Unterschied keine Zahl; mit BVG-Beitrag voll', () => {
     expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { pension3a: 3000 } }))).toMatchObject({ belegt: false, offen: 'saeule2Unbekannt' });
     expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: '300' } }))).toMatchObject({ belegt: true, annual: 4493 });
+    // Fachprüfung #480 W4: ausdrücklich 0 erfasst = keine Pensionskasse → 3a bis 10 000 abgezogen:
+    // 24 000 − 3 000 = 21 000 → 6 025.20 − 46 % × 330 = 5 873.40. Leer bleibt unbekannt.
+    expect(calculateIPV(person({ monthlyIncome: 2000, kkPremium: 520, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: '0' } }))).toMatchObject({ belegt: true, annual: 5873 });
+    expect(calculateIPV(person({ monthlyIncome: 2000, kkPremium: 520, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: 0 } }))).toMatchObject({ belegt: true, annual: 5873 });
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: '' } }))).toMatchObject({ belegt: false, offen: 'saeule2Unbekannt' });
+    // Ohne 3a ändert die Angabe nichts.
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: '0' } }))).toMatchObject({ belegt: true, annual: 4493 });
     // Unter dem Lebensbedarf ändert die 3a nichts — dann bleibt die Zahl.
     expect(calculateIPV(person({ monthlyIncome: 1500, kkPremium: 520, finanzen: { pension3a: 2000 } }))).toMatchObject({ belegt: true, annual: 6025 });
   });
@@ -167,7 +177,8 @@ describe('K31 calculateIPV für AR (App-Angaben → Modell)', () => {
     const r = calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2019-06-01' }] }));
     expect(r).toMatchObject({ eligible: true, annual: 3646 });
     expect(r.cantonData.maxIncome).toBe(46200);
-    expect(r.maxAnnual).toBe(Math.round(Math.min(6025.2, 5400) + 1114.8));
+    // «höchstens möglich» = Richtprämie + Kinderbetrag (Fachprüfung #480 K3: nicht an der erfassten Prämie deckeln).
+    expect(r.maxAnnual).toBe(Math.round(6025.2 + 1114.8));
   });
 
   it('mit einem Kind knapp unter der Obergrenze: 1 116; knapp darüber: nichts; im Band dazwischen keine Zahl', () => {
@@ -215,8 +226,25 @@ describe('K31 calculateIPV für AR (App-Angaben → Modell)', () => {
     it('ab 01.04.2026 vorbei — der Betrag bleibt, der Satz sagt es', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-04-01T12:00:00'));
       const r = calculateIPV(person({ monthlyIncome: 2000 }));
-      expect(r).toMatchObject({ noteKey: 'ipv.arFristVorbei', annual: 4493 });
-      expect(r.anmeldefristVorbei).toBeUndefined();
+      expect(r).toMatchObject({ noteKey: 'ipv.arFristVorbei', annual: 4493, anmeldefristVorbei: true, fristNichtAbgezogenKey: 'ipv.arFristNichtAbgezogen' });
+    });
+    it('bis 31.03.: die Frist läuft — nichts wird zurückgehalten', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-03-31T12:00:00'));
+      expect(calculateIPV(person({ monthlyIncome: 2000 })).anmeldefristVorbei).toBe(false);
+      expect(ipvAbzug(person({ monthlyIncome: 2000 }))).toMatchObject({ grund: IPV_ABZUG_GRUND.GESCHAETZT, betrag: 374 });
+    });
+    // Fachprüfung #480 W2: nach der Frist (verwirkt, EG Art. 22 Abs. 2 lit. a) zieht keiner der drei
+    // Leser den geschätzten Betrag ab, und jeder nennt den Appenzeller Text — nicht den Luzerner.
+    it('nach der Frist: Budget, Prämienbeleg und Abzug ziehen nichts ab und nennen den AR-Text', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-09-28T12:00:00'));
+      const d = person({ monthlyIncome: 2000 });
+      expect(ipvAbzug(d)).toMatchObject({ grund: IPV_ABZUG_GRUND.FRIST_VORBEI, betrag: 0, frist: { jahr: 2026, vorjahr: 2025 } });
+      expect(praemienBelegState(d)).toMatchObject({ mode: 'fristVorbei', verbilligung: 0, noteKey: 'ipv.arFristNichtAbgezogen' });
+      const t = (k) => k;
+      const budget = calculateMonthlyBudget(d, t);
+      const texte = JSON.stringify(budget.recommendations);
+      expect(texte).toContain('ipv.arFristNichtAbgezogen');
+      expect(texte).not.toContain('budget.ipvHintLuFristVorbei');
     });
     it('ab 2027 keine Zahl mehr', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));

@@ -29,7 +29,7 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die drei Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (heute vier) — benannt und belegt, NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
@@ -47,6 +47,9 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   freibetragOhneSaeule2 AR — ohne Säule 2 nur der Teil über 10'000 (fester Freibetrag).
+//                        Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a
+//                        V zum KVG (bGS 833.141). Mit Säule 2 gilt dort `voll`.
 //
 // 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,

@@ -73,17 +73,27 @@ describe('K31 IPV-Rechner, Kanton Appenzell Ausserrhoden', () => {
   it('kein roher Schlüssel bleibt stehen: alle AR-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['jahrAR', 'vorbehaltAR', 'arKeinAnspruch', 'arUnterMindestbetrag', 'arFristLaeuft', 'arFristVorbei']) {
+      for (const k of ['jahrAR', 'vorbehaltAR', 'arKeinAnspruch', 'arUnterMindestbetrag', 'arFristLaeuft', 'arFristVorbei', 'arFristNichtAbgezogen']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
       for (const k of ['kindNachStichtag', 'saeule2Unbekannt', 'praemieFranchise']) {
         expect(typeof texte.ipv.offenGrund[k], `${sprache}.js: ipv.offenGrund.${k} fehlt`).toBe('string');
       }
-      for (const k of ['jahrAR', 'arFristLaeuft', 'arFristVorbei']) expect(texte.ipv[k], `${sprache}: Platzhalter`).toContain('{jahr}');
+      for (const k of ['jahrAR', 'arFristLaeuft', 'arFristVorbei', 'arFristNichtAbgezogen']) expect(texte.ipv[k], `${sprache}: Platzhalter`).toContain('{jahr}');
       expect(texte.ipv.arFristVorbei, `${sprache}: Platzhalter`).toContain('{folgejahr}');
     }
     // Fünf Sprachdateien nachladen dauert unter Last der ganzen Suite über 5 s (gemessen 28.09.2026).
+  }, 30000);
+
+  // Fachprüfung #480 B1/W1/W3/W4: Richtung, Antrag lohnt sich, Untergrenze, Ausweg, Antragsstelle.
+  it('die Texte nennen die Richtung und was eine Person tun kann', async () => {
+    const de = (await import('../i18n/de.js')).default.ipv;
+    expect(de.vorbehaltAR).toMatch(/eher höher/);
+    expect(de.arKeinAnspruch).toMatch(/Antrag lohnt sich/);
+    expect(de.offenGrund.praemieFranchise).toMatch(/mindestens so hoch wie die erfasste Prämie/);
+    expect(de.offenGrund.saeule2Unbekannt).toMatch(/oder 0/);
+    expect(de.arFristLaeuft).toMatch(/AHV-Zweigstelle der Wohngemeinde/);
   }, 30000);
 
   it('Paare und Kinder ohne Alter: Orientierung mit Grund statt Zahl', () => {

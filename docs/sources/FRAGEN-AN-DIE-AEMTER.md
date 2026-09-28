@@ -274,6 +274,9 @@ Anspruch ab dem Folgemonat; Art. 16 Abs. 2 EG: Verhältnisse am 1. Januar)?
 
 **Frage 6 — Verfahren:** Art. 10 V nennt die AHV-Gemeindezweigstelle, das Antragsformular 2026 die
 SOVAR. Welche Stelle gilt?
+⟨28.09.2026, nach der Fachprüfung #480: das Formular, das die SOVAR nennt, ist das für **Zuzug aus dem
+Ausland**. Die Anzeige nennt jetzt die AHV-Zweigstelle der Wohngemeinde (Art. 10 Abs. 1 V) und dass die
+SOVAR mutmasslich Berechtigte anschreibt (Medienmitteilung 12.12.2025). Die Frage bleibt zur Bestätigung.⟩
 
 **Stand:** AR ist für 2026 gebaut (Entwurfs-PR, K31). Die Teilrevision des EG zum KVG liegt beim
 Kantonsrat; für 2027 neu prüfen. Ab 01.01.2027 zeigt die App für AR keinen Betrag mehr.
