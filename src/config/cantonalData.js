@@ -224,6 +224,9 @@ export function calculateSozialhilfe(data) {
     erwerbsunkostenOffen: erwerbstaetig,
     deficit,
     eligible: deficit > 0,
+    // Eine Wahrheit für die Anzeigen: ein Betrag/Anspruch, in dem die ganze Miete steckt (keine
+    // Mietzins-Limite, siehe oben). Jeder Leser setzt dann `sozialhilfe.mitGanzerMiete` dazu.
+    mitGanzerMiete: deficit > 0 && effectiveRent > 0,
     vermoegen,
     vermoegensfreibetrag,
     vermoegenUeberFreibetrag,
