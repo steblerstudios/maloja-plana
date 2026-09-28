@@ -35,7 +35,10 @@
 // 18'709 für die berechtigte Person). Und das IAS selbst nennt den «limite di fabbisogno
 // esistenziale definito ai sensi della Laps (per il 2026 corrisponde a CHF 18'709 annui)» [5].
 // Drei amtliche Texte, die dieselbe Zahl tragen; der Satz «limite di fabbisogno = soglia
-// d'intervento» steht aber nirgends wörtlich. Frage ans IAS: FRAGEN-AN-DIE-AEMTER.md, 10.
+// d'intervento» steht aber nirgends wörtlich. Die stärkste Brücke (Fachprüfung #484): [3] setzt
+// Art. 18 «Limite di fabbisogno minimo (art. 32a LCAMal)» unter den Titel «Capitolo sesto — Anno
+// di riferimento delle SOGLIE Laps». Frage ans IAS: FRAGEN-AN-DIE-AEMTER.md, 10 (Entwurf, nicht
+// gesendet — der Vorbehalt sagt «bestätigt ist sie noch nicht», nicht «ist nachgefragt»).
 // Der IAS-Rechner (Gegenprobe) wurde bewusst NICHT mit Daten gefüttert.
 //
 // DAS MODELL IN EINEM SATZ
@@ -58,7 +61,10 @@
 //     Aufteilung nach [3] Art. 17 entscheidet über den Mindestbetrag je Person. → `tiKinder`.
 //   · junge Personen bis 30 mit kleinem Einkommen, die in Erstausbildung stehen: sie gehören
 //     zur UR der Eltern (Art. 27 [1], [3] Art. 11). Die App kennt die Ausbildung nicht. → `tiEltern`.
-//   · Quellenbesteuerte, EL-, Laps- und Sozialhilfe-Beziehende (Art. 42/43 [1]: von Amtes wegen).
+//   · EL- und Laps-Beziehende (Art. 42/43 [1]: ohne Antrag, Laps sogar mit dem vollen Betrag nach
+//     Art. 34) und Sozialhilfe. ⟨korrigiert nach Fachprüfung #484: hier stand auch
+//     «Quellenbesteuerte … von Amtes wegen». Sie stellen den Antrag wie alle (IAS Ziff. 2), ihr RD
+//     kommt aus der aktuellen Lage ([3] Art. 14) — die App rechnet sie wie Veranlagte.⟩
 //   · Schuldzinsen (Art. 31 lit. g [1]) — die App erfasst sie nicht; das HEBT das Einkommen und
 //     SENKT den Betrag. Ebenso: Bruttoeinkommen aus Liegenschaften, Vermögen = erfasste Posten.
 //   · die monatliche Auszahlung ab dem Folgemonat nach einem späten Antrag (Art. 25 Abs. 3 [1]);
@@ -169,11 +175,13 @@ export function ipvTicino(data, hh, ipvData, youngAdultsCount, orientierung) {
   }
 
   // Art. 31 lit. f [1] mit [5]: Pauschale bis 4'000, wenn eine Person der UR hauptberuflich
-  // angestellt ist, höchstens bis zum Lohn. GEWÄHLT: angestellt, wenn ein Hauptlohn erfasst und
-  // der Anstellungstyp «Angestellt» oder leer ist (das Feld heisst Lohn). Selbständige,
-  // Freischaffende, Rentner: keine Pauschale.
+  // angestellt ist, höchstens bis zum Lohn. Nur wenn der Anstellungstyp «Angestellt» erfasst ist.
+  // ⟨korrigiert nach Fachprüfung #484, ⚠️ 3: zuerst galt auch ein LEERER Typ als angestellt — für
+  // Selbständige ohne Angabe +1'009 Fr./Jahr zu hoch (3'000 netto). Jetzt ohne Abzug, und die
+  // Anzeige sagt, dass der Betrag bei einer Anstellung HÖHER wäre (`vorbehaltTIangestellt`).⟩
   const lohn = Number(f.monthlyIncome) > 0 ? rohesEinkommenJahr({ monthlyIncome: f.monthlyIncome, dreizehnter: f.dreizehnter }) : 0;
-  const angestellt = lohn > 0 && (!f.employmentType || f.employmentType === 'employed');
+  const angestellt = lohn > 0 && f.employmentType === 'employed';
+  const typOffen = lohn > 0 && !f.employmentType;
   const berufsauslagen = angestellt ? Math.min(IPV_TI.berufsauslagenMax, lohn) : 0;
   const rd = tiVerfuegbaresEinkommen({
     einkommenNachSozialabzuegen: einkommen,
@@ -200,20 +208,26 @@ export function ipvTicino(data, hh, ipvData, youngAdultsCount, orientierung) {
   const cantonData = { ...ipvData, maxIncome: null };
   const gemeinsam = {
     canton: 'TI', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltTI',
-    extra: { basisjahr: IPV_TI.basisjahr, jahrKey: 'ipv.jahrTessin' },
+    extra: {
+      basisjahr: IPV_TI.basisjahr, jahrKey: 'ipv.jahrTessin',
+      ...(typOffen ? { zusatzVorbehaltKey: 'ipv.vorbehaltTIangestellt' } : {}),
+    },
   };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({
       ...gemeinsam, noteKey: grund === 'mindestbetrag' ? 'ipv.tiUnterMindestbetrag' : 'ipv.tiKeinAnspruch',
     });
   }
-  // Art. 25 Abs. 2/3 [1]: Antrag bis Ende des Vorjahres ⇒ ab Januar; später im Jahr ⇒ ab dem
-  // Folgemonat. 🛑 `anmeldefristVorbei` setzt TI bewusst NICHT: die Stellen, die es lesen
-  // (KKLastCard, praemienBeleg), zeigen heute den Luzerner Satz `ipv.luFristNichtAbgezogen`.
-  // Folge: das Budget zieht den ganzen Jahresbetrag ab, auch wenn erst spät beantragt wird.
+  // Art. 25 Abs. 2/3 [1]: Antrag bis Ende des Vorjahres ⇒ ab Januar; später im Jahr ⇒ erst ab dem
+  // Folgemonat ([5] Ziff. 2: «Solo se la domanda … entro il 31 dicembre 2025, il diritto … da
+  // gennaio 2026»). Nach der Frist zieht darum nirgends etwas von der Prämie ab (data/ipvAbzug.js,
+  // wie LU und FR), und die Leser zeigen den Tessiner Satz (`fristNichtAbgezogenKey`).
+  // ⟨korrigiert nach Fachprüfung #484, Blocker 1: zuerst bewusst nicht gesetzt, weil die Leser nur
+  // den Luzerner Text kannten — das Budget zog 3'341 statt höchstens ~835 ab.⟩
   const fristVorbei = new Date() > new Date(`${jahr - 1}-12-31T23:59:59`);
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
+    extra: { ...gemeinsam.extra, anmeldefristVorbei: fristVorbei, fristNichtAbgezogenKey: 'ipv.tiFristNichtAbgezogen' },
     noteKey: fristVorbei ? 'ipv.tiFristVorbei' : 'ipv.tiFristLaeuft',
     noteParams: { jahr, vorjahr: jahr - 1, folgejahr: jahr + 1 },
   });
