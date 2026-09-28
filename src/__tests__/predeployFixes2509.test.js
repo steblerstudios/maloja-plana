@@ -12,9 +12,10 @@ const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777
 const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '(' + Object.values(p).join('|') + ')' : k);
 const render = (data) => renderToStaticMarkup(React.createElement(QuickCheck, { palette, t, onNavigate: () => {}, data }));
 
-describe('Freibetrag-Fall: offen statt «keine Aufstockung nötig»', () => {
+  // Beispiel der Fachprüfung: BE, allein, KK 400, netto 2650. Die Prüfung rechnete mit Miete 1300,
+  // gedeckelt auf die unbelegte BE-Limite 1100; die gibt es seit 28.09.2026 nicht mehr — darum 1100.
   // Beispiel der Fachprüfung: BE, allein, Miete 1300, KK 400, netto 2650.
-  const p = { basis: { canton: 'BE', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 2650, incomeType: 'netto', employmentType: 'employed' }, wohnen: { rentAmount: 1300 }, versicherungen: { kkPremium: 400 } };
+  const p = { basis: { canton: 'BE', household: { adults: 1, children: [] } }, finanzen: { monthlyIncome: 2650, incomeType: 'netto', employmentType: 'employed' }, wohnen: { rentAmount: 1100 }, versicherungen: { kkPremium: 400 } };
   it('Voraussetzung: ohne Freibetrag gedeckt, mit Freibetrag möglich', () => {
     const sh = calculateSozialhilfe(p);
     expect(sh.eligible).toBe(false);
