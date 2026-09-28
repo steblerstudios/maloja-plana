@@ -332,7 +332,7 @@ degressive Skala 2026) veröffentlicht? Im Amtsblatt 2026 haben wir ihn nicht ge
 Publikation nach Art. 23 («Modalités … 2026», 22.12.2025). Genügt sie als Grundlage?
 
 **Frage 4 — Rundung:** ~~Gilt der Satz der ersten Zeile, deren Grenze das massgebende Einkommen nicht
-übersteigt?~~ ⟨belegt: Art. 2 Abs. 2 «gleich oder kleiner» und «Modalités» Ziff. 4.1 «limites maximales⟩
+übersteigt?~~ ⟨belegt: Art. 2 Abs. 2 «gleich oder kleiner» und «Modalités» Ziff. 4.1 «limites maximales»⟩
 Wird der Betrag je Monat und Person gerundet?
 
 **Frage 5 — Frist für Gesuche ohne Entscheid:** Die «Modalités 2026» nennen für Sondergesuche und
