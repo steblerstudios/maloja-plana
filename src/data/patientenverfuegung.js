@@ -146,7 +146,7 @@ ${koerper}
 <ul>
 ${begleitPunkte.filter(Boolean).map((b) => `<li>${esc(b)}</li>`).join('\n')}
 </ul>
-<button class="pv-druck" onclick="window.print()">${esc(druckLabel)}</button>
+<button class="pv-druck" data-druck onclick="window.print()">${esc(druckLabel)}</button>
 </div>
 </body>
 </html>`;
