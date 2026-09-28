@@ -88,7 +88,8 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         Row(t('sozialhilfe.basicNeeds'), formatCHF(sozialhilfe.grundbedarf)),
         Row(t('sozialhilfe.housingCosts'), formatCHF(sozialhilfe.effectiveRent)),
-        Row(t('sozialhilfe.rentLimit'), formatCHF(sozialhilfe.rentLimit), palette.mid),
+        // Ganze Miete eingerechnet: die Mietzins-Limite der Gemeinde kennt die App nicht (cantonalData.js).
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } }, t('sozialhilfe.rentLimitUnbekannt')),
         Row(t('sozialhilfe.healthInsurance'), formatCHF(sozialhilfe.effectiveKK)),
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: text.sm, fontWeight: weight.bold, borderTop: '1px solid ' + palette.border, marginTop: space.xs } },
           React.createElement('span', null, t('sozialhilfe.totalNeeds')),

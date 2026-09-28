@@ -976,7 +976,6 @@ export function generateBehoerdenJSON(data, calculations, t) {
       eligible: !!sozialhilfe.eligible,
       grundbedarf: sozialhilfe.grundbedarf || 0,
       effectiveRent: sozialhilfe.effectiveRent || 0,
-      rentLimit: sozialhilfe.rentLimit || 0,
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.income || 0,

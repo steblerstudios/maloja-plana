@@ -5,7 +5,7 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, bsHaushalt, istJungErwachsen } from './data/mietzinsbeitraege.js';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
-import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
+import { getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { renderSource } from './utils/renderSource.js';
@@ -18,7 +18,8 @@ import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
 // erfassten Beträgen (Einkommen, Miete, Haushalt) gegen recherchierte, belegte Kanton-Eckwerte
-// (data/mietzinsbeitraege.js) und die kantonale Mietzins-Limite (getRentLimit, SKOS-belegt).
+// (data/mietzinsbeitraege.js). Den Vergleich mit einer «kantonalen Mietzins-Limite» gibt es seit
+// 28.09.2026 nicht mehr: die Tabelle war unbelegt (siehe config/cantonalData.js).
 // Bewusst eine EINSCHÄTZUNG, keine verbindliche Zusage — die Programme sind kantonal/kommunal
 // fragmentiert; verbindlich ist immer die kantonale Stelle (würdevoll, keine falsche Hoffnung).
 export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateData, isDarkMode }) => {
@@ -61,7 +62,6 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const partnerOffen = partnerZaehlt && (partnerRoh === undefined || partnerRoh === null || String(partnerRoh).trim() === '');
   const ohneDreizehnten = monthlyIncome > 0 && dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen';
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
-  const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
   // BS ohne Ehe: die zweite erwachsene Person gehört (noch) nicht zur Haushaltseinheit — Grenze ohne sie,
   // passend zum Einkommen ohne sie; die Grenze mit ihr nennt der Hinweis (vorher bis 2'250 zu grosszügig).
   const ohneZweitePerson = info?.limitFormel === 'bs' && !partnerZaehlt && (hh.adults || 1) >= 2 ? 1 : 0;
@@ -190,9 +190,6 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         assessment && assessment.key === 'likely' && info.mietbelastung && annualIncome > info.mietbelastung.ab && rentMonthly * 12 <= info.mietbelastung.anteil * annualIncome && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.mietbelastungZG')),
         React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
-        // Mietzins-Limite-Vergleich (belegte kantonale Limite).
-        rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
-          hinweisZeichen(), t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: zahl(rentLimit, { hoechstens: 2 }), size: householdSize })),
         assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('mietzinsView.enterIncomeLink'))
       ),
 
