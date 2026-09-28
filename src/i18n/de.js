@@ -3996,6 +3996,11 @@ export default {
     vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des zweiten Monats nach dem Antrag — für die Monate davor gibt es nichts rückwirkend. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
     vdKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch auf den ordentlichen Subside: Das massgebende Einkommen (revenu déterminant) liegt über CHF {value}, der Grenze des Kantons Waadt für diese Haushaltsform.',
     vdSpezifischerSubside: 'Die erfasste Prämie ist hoch im Verhältnis zum Einkommen. Der Kanton Waadt gewährt zusätzlich einen spezifischen Subside, wenn die Prämien nach Abzug der ordentlichen Verbilligung mehr als 10 Prozent des massgebenden Einkommens ausmachen. Wie hoch er wäre, rechnet die App nicht — dafür braucht es die Prämien aller Personen im Haushalt. Das OVAM prüft ihn beim Antrag mit.',
+    // K31 NE (28.09.2026): RSN 821.102 + Décret RSN 821.104; RALILAMal Art. 31, 36.
+    noteAutoOcab: 'Automatische Prüfung nach der Steuerveranlagung (OCAB); wer neu Anspruch hat, bestätigt ihn mit dem Antwortschein innert 30 Tagen',
+    jahrNE: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Neuenburg gilt derselbe Betrag im ganzen Kanton — es gibt keine Prämienregionen.',
+    vorbehaltNE: 'Im Kanton Neuenburg ist die Steuerveranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Abgezogen werden dort unter anderem Berufsauslagen bis 10 000 Franken und Unterhaltsbeiträge; die App kennt sie nicht, rechnet das Einkommen also eher zu hoch und den Betrag eher zu tief — schon 1 140 Franken können eine Klasse ausmachen. Der Betrag enthält den ausserordentlichen Zuschlag 2026 des Grossen Rates. Wer neu Anspruch hat, muss den Antwortschein des OCAB innert 30 Tagen zurückschicken, sonst verfällt der Anspruch. Weicht die spätere Veranlagung um mindestens 20 Prozent ab, kann der Kanton zu viel Bezogenes zurückfordern.',
+    neKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Das massgebende Einkommen liegt über CHF {value}, der obersten Grenze des Kantons Neuenburg für diesen Haushalt.',
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.
@@ -4012,6 +4017,8 @@ export default {
       praemie: 'Für die Rechnung fehlt die Krankenkassenprämie. Die Verbilligung ist höchstens so hoch wie die Prämie selbst — ohne sie wäre die Zahl hier die Obergrenze, nicht der Anspruch.',
       einkommenNegativ: 'Das erfasste Einkommen ist negativ. Damit lässt sich keine Verbilligung berechnen — bitte den Betrag im Kapitel Finanzen prüfen.',
       saeule3aUeberEinkommen: 'Die erfasste Einzahlung in die Säule 3a ist höher als die erfassten Einkünfte des Jahres — oder sie verteilt sich auf mehrere Jahre. Dann lässt sich nicht sagen, welcher Teil in den Einkünften schon enthalten ist, und die Zahl wäre zu hoch. Bitte prüfen: Gefragt ist die Einzahlung eines Jahres, nicht der Kontostand und nicht die Summe mehrerer Jahre.',
+      neRevenuMinimum: 'Liegt das Einkommen unter 15 000 Franken (plus 3 000 Franken je minderjähriges Kind), stuft der Kanton Neuenburg nicht automatisch ein: Eine Verbilligung gibt es dann nur auf Gesuch beim Guichet social régional (GSR). Das lohnt sich zu prüfen — gerade bei knappem Budget.',
+      neFranchise: 'Im Kanton Neuenburg wird die Verbilligung um denselben Prozentsatz gekürzt, den die Krankenkasse als Rabatt für eine höhere Franchise gewährt. Diesen Satz kennt die App nicht; sie rechnet nur mit der Franchise von 300 Franken. Die Franchise lässt sich im Kapitel «Versicherungen & Vorsorge» angeben.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },

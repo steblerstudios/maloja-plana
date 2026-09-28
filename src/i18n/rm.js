@@ -3054,6 +3054,11 @@ export default {
     vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda — ils mais avant na vegnan betg pajads retroactivamain. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
     vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF {value}, la limita dal chantun Vad per quest tip da chasada.',
     vdSpezifischerSubside: 'La premia registrada è auta en relaziun cun l’entrada. Il chantun Vad conceda ultra da quai in subsidi specific, sche las premias surpassan, suenter la deducziun dal subsidi ordinari, 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovri las premias da tut las persunas da la chasada. L’OVAM al examinescha tar la dumonda.',
+    // TODO(rm): provisorisch — Gegenlese (K31 NE, 28.09.2026)
+    noteAutoOcab: 'Examinaziun automatica suenter la taxaziun fiscala (OCAB); tgi che ha nov in dretg al conferma cun il cupun da resposta entaifer 30 dis',
+    jahrNE: 'Quintà per l’onn da dretg {jahr}. En il chantun Neuchâtel vala il medem import en l’entir chantun — i na dat naginas regiuns da premias.',
+    vorbehaltNE: 'En il chantun Neuchâtel è la taxaziun fiscala {basisjahr} la basa, betg l’entrada dad oz. Deducids vegnan là tranter auter ils custs professiunals fin 10 000 francs e las contribuziuns da mantegniment; l’applicaziun n’als enconuscha betg, quinta pia l’entrada pli gugent memia auta e l’import pli gugent memia bass — gia 1 140 francs pon far ora ina classa. L’import cuntegna il supplement extraordinari 2026 dal Cussegl grond. Tgi che ha nov in dretg sto trametter enavos il cupun da resposta da l’OCAB entaifer 30 dis, uschiglio croda il dretg. Sche la taxaziun posteriura divergia per almain 20 pertschient, po il chantun pretender enavos quai che è vegnì retschavì memia bler.',
+    neKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa CHF {value}, la limita suprema dal chantun Neuchâtel per questa chasada.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
@@ -3069,6 +3074,8 @@ export default {
       praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
       einkommenNegativ: 'L’entrada registrada è negativa. Uschia na sa lascha calcular nagina reducziun — controllai per plaschair l’import en il chapitel Finanzas.',
       saeule3aUeberEinkommen: 'Il pajament en la 3. pitga A è pli aut che las entradas registradas da l’onn — u el sa repartescha sin plirs onns. Lura na sa lascha betg dir, tge part ch’è gia cuntegnida en las entradas, e la cifra fiss memia auta. Per plaschair controllar: dumandà è il pajament d’in onn, betg il stadi dal conto e betg la summa da plirs onns.',
+      neRevenuMinimum: 'Sche l’entrada effectiva è sut 15 000 francs (plus 3 000 francs per uffant minorenn), na classifitgescha il chantun Neuchâtel betg automaticamain: ina reducziun dat i lura mo sin dumonda tar il guichet social régional (GSR). Quai vala la paina da verifitgar — spezialmain cun in budget stretg.',
+      neFranchise: 'En il chantun Neuchâtel vegn la reducziun reducida per il medem pertschient sco il rabat che la cassa da malsauns conceda per ina franchisa pli auta. Quest pertschient na enconuscha l’applicaziun betg; ella quinta mo cun la franchisa da 300 francs. La franchisa sa lascha endatar en il chapitel «Assicuranzas & prevenziun».',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },
