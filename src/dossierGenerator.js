@@ -15,6 +15,8 @@ import { keineKontaktperson } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { organListe } from './utils/organspende.js';
+
 
 // ─── Druckfarben (K53) ────────────────────────────────────
 // Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
@@ -415,6 +417,14 @@ function getNotfallSections(data, chapters, t) {
   const sel = (chapterKey, fieldKey) => resolveSelect(chapters, chapterKey, fieldKey, d(chapterKey, fieldKey));
   const dt = (chapterKey, fieldKey) => formatDate(d(chapterKey, fieldKey));
   const lbl = (chapterKey, fieldKey) => fieldLabel(chapters, chapterKey, fieldKey);
+  // «Nur bestimmte Organe» ohne die Organe hilft Angehörigen nicht — die Liste gehört dazu.
+  const organWert = () => {
+    const liste = d('notfall', 'organDonor') === 'partial' ? organListe(t, data.organDonation) : [];
+    return sel('notfall', 'organDonor') + (liste.length ? ': ' + liste.join(', ') : '');
+  };
+  // Bei «Vertrauensperson» gehört der Name dazu, sonst weiss niemand, wen man fragen soll —
+  // als EIGENE Zeile: so entscheidet NOTFALL_QR_FELDER bewusst, ob er in den Notfall-QR darf.
+  const vertrauensperson = () => d('notfall', 'organDonor') === 'delegated' ? String(d('notfall', 'organVertrauensperson')).trim() : '';
 
   const sections = [
     {
@@ -458,7 +468,8 @@ function getNotfallSections(data, chapters, t) {
       key: 'provision',
       title: t('notfallDossier.sectionProvision'),
       rows: [
-        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: sel('notfall', 'organDonor') },
+        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: organWert() },
+        { feld: 'notfall.organVertrauensperson', label: t('organ.vertrauenspersonKurz'), value: vertrauensperson() },
         { feld: 'notfall.patientenverfuegung', label: lbl('notfall', 'patientenverfuegung'), value: sel('notfall', 'patientenverfuegung') },
         { feld: 'notfall.vorsorgeauftrag', label: lbl('notfall', 'vorsorgeauftrag'), value: sel('notfall', 'vorsorgeauftrag') },
         { feld: 'notfall.bestattungswuensche', label: lbl('notfall', 'bestattungswuensche'), value: sel('notfall', 'bestattungswuensche') },
@@ -490,6 +501,8 @@ function getNotfallSections(data, chapters, t) {
 // AHV-Nummer gehört NICHT in den Notfall-QR. Ein Code wird gezeigt, fotografiert, weitergegeben
 // und ist nicht widerrufbar; das gedruckte Dossier behält die Nummer. ERLAUBNIS-, nicht
 // Verbotsliste: ein neues Dossier-Feld kommt erst in den Code, wenn es hier steht.
+// Bewusst NICHT hier (27.09.2026): notfall.organVertrauensperson — Name und Nummer einer
+// Drittperson stehen im gedruckten Dossier und im Organspende-QR, nicht im allgemeinen Notfall-QR.
 export const NOTFALL_QR_FELDER = Object.freeze([
   'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
   'notfall.emergencyContact', 'notfall.emergencyPhone',

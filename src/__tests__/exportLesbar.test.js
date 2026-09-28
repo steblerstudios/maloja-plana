@@ -33,7 +33,7 @@ describe('Text-Export', () => {
     expect(voll).toContain('Lehre EFZ');
     expect(voll).toContain('Keine Einträge');
     expect(voll).toContain('Ja Holografisches');
-    expect(voll).toContain('Widersprochen');
+    expect(voll).toContain('Ablehnung'); // Organspende seit 27.09.2026: Zustimmungsregelung, nicht «Widersprochen»
     for (const roh of ['apprenticeship', 'handwritten', 'declined']) expect(voll).not.toContain(roh);
   });
 
