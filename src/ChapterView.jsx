@@ -1656,6 +1656,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               }, t('nav.crosslink.addressInWohnen'))
             );
           }
+          // Kreditkarte vorhanden → «Lohnt sich die Karte?» (Rechner, 27.09.2026).
+          if (field.k === 'creditCard' && chapter.key === 'finanzen' && (data.creditCard === 'one' || data.creditCard === 'multiple')) {
+            crosslinkBtn('kreditkarte', 'kreditkarte', 'nav.crosslink.kreditkarteHint');
+          }
           if (field.k === 'kkModel' && chapter.key === 'versicherungen') {
             crosslinkBtn('kkModel', 'praemien', 'nav.crosslink.kkModelHint');
           }

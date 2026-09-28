@@ -78,6 +78,7 @@ const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx')
 const NotfallpassBlatt = React.lazy(() => import('./NotfallpassBlatt.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
+const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
 const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
@@ -1564,6 +1565,7 @@ const AppInner = ({ demo }) => {
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
+        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Design-Vorschau des Tresor-LockScreens (nur DEV; onUnlock ist ein Stub —
         // Passphrase „test1234" = Erfolg, sonst Fehler). Noch NICHT an secureStore verdrahtet.

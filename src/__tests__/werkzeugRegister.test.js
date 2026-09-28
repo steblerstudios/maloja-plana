@@ -98,7 +98,7 @@ describe('Portemonnaie und Aussenfach', () => {
     expect(GEGENSTAND_KEYS).toHaveLength(7);
     expect(GEGENSTAND_KEYS).toContain('geld');
     expect(werkzeugeImFach('geld').map(werkzeugKey).sort()).toEqual(
-      ['alv', 'budget', 'eo', 'finanzuebersicht', 'mindestlohn', 'schulden', 'sozialhilfe', 'sync', 'tax', 'taxImport'],
+      ['alv', 'budget', 'eo', 'finanzuebersicht', 'kreditkarte', 'mindestlohn', 'schulden', 'sozialhilfe', 'sync', 'tax', 'taxImport'],
     );
   });
 
