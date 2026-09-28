@@ -16,7 +16,7 @@ const render = (data) => renderToStaticMarkup(React.createElement(PremiumSubsidy
 
 const profil = (monthlyIncome, over = {}) => ({
   basis: { canton: 'NE', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: [] }, ...(over.basis || {}) },
-  finanzen: { monthlyIncome },
+  finanzen: { monthlyIncome, ...(over.finanzen || {}) },
   wohnen: { postalCode: '2000', city: 'Neuchâtel', rentAmount: 1200 },
   versicherungen: { kkPremium: 600, franchise: '300', ...(over.versicherungen || {}) },
 });
@@ -47,6 +47,23 @@ describe('K31 IPV-Rechner, Kanton Neuenburg', () => {
     expect(html).toContain('ipv.vorbehaltNE(2026|2025)');
   });
 
+  it('knapp über 15 000: Zahl und Hinweis auf das Gesuch beim GSR', () => {
+    const html = render(profil(16000 / 12));
+    expect(html).toContain('premium.eligible');
+    expect(html).toContain('ipv.neRevenuMinimumNahe');
+    expect(render(profil(2000))).not.toContain('ipv.neRevenuMinimumNahe');
+  });
+
+  it('Vorbehalt nennt die drei noch nicht eingerechneten Felder, die 160 je Kind und «mehr als 20 %»', async () => {
+    const de = (await import('../i18n/de.js')).default.ipv.vorbehaltNE;
+    expect(de).toMatch(/Familienzulagen/);
+    expect(de).toMatch(/erhaltene Unterhaltsbeiträge fliessen hier noch nicht ein/);
+    expect(de).toMatch(/bezahlte Unterhaltsbeiträge werden noch nicht abgezogen/);
+    expect(de).toMatch(/160 Franken/);
+    expect(de).toMatch(/mehr als 20 Prozent/);
+    expect(de).not.toMatch(/Unterhaltsbeiträge; die App kennt sie nicht/);
+  }, 20000);
+
   it('über der Grenze: eigener Satz mit der Grenze 50 600', () => {
     const html = render(profil(6000));
     expect(html).toContain('ipv.neKeinAnspruch(50600)');
@@ -57,6 +74,8 @@ describe('K31 IPV-Rechner, Kanton Neuenburg', () => {
     ['Franchise 2 500', { versicherungen: { franchise: '2500' } }, 'ipv.offenGrund.neFranchise'],
     ['Einkommen unter 15 000', { monthly: 1000 }, 'ipv.offenGrund.neRevenuMinimum'],
     ['Paar', { basis: { household: { adults: 2, children: [] } } }, 'ipv.offenGrund.haushalt'],
+    ['selbständig', { finanzen: { employmentType: 'selfEmployed' } }, 'ipv.offenGrund.neIndependant'],
+    ['unter 26', { basis: { dateOfBirth: '2003-05-01' } }, 'ipv.offenGrund.neJeuneAdulte'],
   ])('%s: nennt den Grund, kein Betrag', (_, patch, grundKey) => {
     const html = render(profil(patch.monthly ?? 2000, patch));
     expect(html).toContain('ipv.orientierungOffen');
@@ -72,7 +91,8 @@ describe('K31 IPV-Rechner, Kanton Neuenburg', () => {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      for (const k of ['neRevenuMinimum', 'neFranchise']) expect(texte.ipv.offenGrund[k].length, `${sprache}: offenGrund.${k}`).toBeGreaterThan(40);
+      expect(texte.ipv.neRevenuMinimumNahe.length).toBeGreaterThan(40);
+      for (const k of ['neRevenuMinimum', 'neFranchise', 'neIndependant', 'neJeuneAdulte']) expect(texte.ipv.offenGrund[k].length, `${sprache}: offenGrund.${k}`).toBeGreaterThan(40);
       expect(texte.ipv.vorbehaltNE, `${sprache}: Platzhalter`).toContain('{basisjahr}');
       expect(texte.ipv.jahrNE).toContain('{jahr}');
       expect(texte.ipv.neKeinAnspruch).toContain('{value}');

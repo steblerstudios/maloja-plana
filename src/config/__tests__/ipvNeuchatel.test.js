@@ -59,6 +59,10 @@ describe('K31 NE: Grenzen der Annexe [1] (= [3])', () => {
     expect(IPV_NE.grenzen).toHaveLength(11);
     for (let k = 1; k <= 10; k++) expect(IPV_NE.grenzen[k]).toHaveLength(15);
   });
+  it('alle elf Zeilen (0–10 Kinder): oberste Grenzen wie Annexe/OCAB', () => {
+    expect(IPV_NE.grenzen.map((g) => g.at(-1))).toEqual([50600, 65089, 72824, 80560, 88295, 96030, 103765, 111500, 119236, 126971, 134706]);
+    expect(IPV_NE.grenzen.map((g) => g[0])).toEqual([22800, 33000, 40800, 46800, 51600, 54600, 57600, 60600, 63600, 66600, 69600]);
+  });
   it('jede Tabelle steigt streng — sonst wäre eine Klasse leer', () => {
     for (const g of IPV_NE.grenzen) for (let i = 1; i < g.length; i++) expect(g[i]).toBeGreaterThan(g[i - 1]);
   });
@@ -133,9 +137,10 @@ describe('K31 calculateIPV für NE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 40000 / 12 }))).toMatchObject({ amount: 110, klasse: 10 });
   });
 
-  it('mit einem Kind: 36 000 → S4 → 450 + 3 + 160 = 613, Grenze 65 089', () => {
+  it('mit einem Kind: 36 000 → S4 → 450 + 3 + 160 = 613, Grenze 65 089, höchstens (611 + 160) × 12', () => {
     const r = calculateIPV(person({ monthlyIncome: 3000, children: [{ birthDate: '2016-03-01' }] }));
-    expect(r).toMatchObject({ amount: 613, annual: 7356, klasse: 4 });
+    expect(r).toMatchObject({ amount: 613, annual: 7356, klasse: 4, maxAnnual: (611 + 160) * 12 });
+    expect(calculateIPV(person({ monthlyIncome: 3000, children: [{ age: 5 }, { age: 8 }] })).maxAnnual).toBe((611 + 2 * 160) * 12);
     expect(r.cantonData.maxIncome).toBe(65089);
   });
 
@@ -184,8 +189,31 @@ describe('K31 calculateIPV für NE (App-Angaben → Modell)', () => {
 
   it('Alter nach Kalenderjahr ([1] Art. 6/7): Jahrgang 2000 ist 2026 erwachsen, 2001 nicht', () => {
     expect(calculateIPV(person({ dob: '2000-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
+    // Fachprüfung 28.09.2026, Kann 4: mit erfasstem Geburtsdatum fehlt keine Angabe — eigener Grund.
+    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'neJeuneAdulte' });
+    expect(calculateIPV(person({ dob: '2007-06-01' }))).toMatchObject({ offen: 'neJeuneAdulte' });
+    expect(calculateIPV(person({ dob: '2010-06-01' }))).toMatchObject({ offen: 'alter' });
     expect(calculateIPV(person({ dob: '' }))).toMatchObject({ offen: 'alter' });
+  });
+
+  // Fachprüfung 28.09.2026, Blocker 2 — RALILAMal Art. 30 al. 1/3: jedes Jahr ein Gesuch beim GSR.
+  it('Selbständige und Freiberufliche: keine Zahl mit dem Weg «automatisch», sondern Grund neIndependant', () => {
+    expect(calculateIPV(person({ finanzen: { employmentType: 'selfEmployed' } }))).toMatchObject({ belegt: false, amount: null, offen: 'neIndependant' });
+    expect(calculateIPV(person({ finanzen: { employmentType: 'freelance' } }))).toMatchObject({ offen: 'neIndependant' });
+    expect(calculateIPV(person({ finanzen: { employmentType: 'employed' } }))).toMatchObject({ amount: 515, noteKey: 'ipv.noteAutoOcab' });
+    expect(calculateIPV(person({ finanzen: { employmentType: 'retired' } })).amount).toBe(515);
+  });
+
+  // Fachprüfung 28.09.2026, Wichtig 3 — Art. 16 misst NACH den Abzügen; Band 2 000 gewählt.
+  it('knapp über der Art.-16-Schwelle: Zahl mit Hinweis auf das Gesuch beim GSR, darüber ohne', () => {
+    expect(calculateIPV(person({ monthlyIncome: 16000 / 12 }))).toMatchObject({ amount: 611, zusatzVorbehaltKey: 'ipv.neRevenuMinimumNahe' });
+    expect(calculateIPV(person({ monthlyIncome: 16999 / 12 })).zusatzVorbehaltKey).toBe('ipv.neRevenuMinimumNahe');
+    expect(calculateIPV(person({ monthlyIncome: 17000 / 12 })).zusatzVorbehaltKey).toBeUndefined();
+    // mit einem Kind liegt die Schwelle bei 18 000, das Band bis 20 000
+    const kind = [{ birthDate: '2016-03-01' }];
+    expect(calculateIPV(person({ monthlyIncome: 19999 / 12, children: kind })).zusatzVorbehaltKey).toBe('ipv.neRevenuMinimumNahe');
+    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, children: kind })).zusatzVorbehaltKey).toBeUndefined();
+    expect(IPV_NE.revenuMinimumBand).toBe(2000);
   });
 
   it('Kinder «0 à 18 ans (fin de l’année civile des 18 ans)» ([1] Art. 5): 2008 ja, 2007 nein', () => {
