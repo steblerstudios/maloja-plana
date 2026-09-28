@@ -112,8 +112,11 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866)',
+    // UR (28.09.2026): nicht als Zurechnung, sondern weil Art. 7 Abs. 2 lit. c RB 20.2213 die
+    // Abzüge vom PV-Einkommen abschliessend aufzählt und die 3a nicht darunter ist — sie bleibt
+    // also voll im Einkommen. Rechnerisch dasselbe: Abzug 0.
+    kantone: 'ZH, SG, LU, UR',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · UR Art. 7 Abs. 2 RB 20.2213',
     nichtAufgerechnet: () => 0,
   }),
 
@@ -402,6 +405,11 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
   SG: 'sGS 331.538 und sGS 331.111 kennen keine Begrenzung auf die fakturierte Prämie — '
     + 'die Verbilligung bemisst sich allein an der kantonalen Referenzprämie. '
     + 'Offene Frage an die SVA St.Gallen: was gilt, wenn die eigene Prämie tiefer ist?',
+  // UR (28.09.2026): RB 20.2213 begrenzt nur für EL-Beziehende auf die tatsächliche Prämie
+  // (Art. 4 Abs. 4); für alle anderen steht kein Deckel, auch nicht im Rechenblatt der SVS.
+  UR: 'RB 20.2213 begrenzt die Verbilligung nur bei EL-Beziehenden auf die tatsächliche Prämie '
+    + '(Art. 4 Abs. 4); für alle anderen nennen weder Reglement noch Berechnungsformular der SVS '
+    + 'einen Deckel. Offene Frage an die SVS Uri: was gilt, wenn die eigene Prämie tiefer ist?',
 });
 
 // ─── Regeln, die kantonal VERSCHIEDEN sind — benannt statt vereinheitlicht ─────
