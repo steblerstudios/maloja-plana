@@ -240,6 +240,39 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 9 · Ausgleichskasse des Kantons Wallis — eine Tabellenzelle, die Säule 3a, der Staatsratsbeschluss
+
+*Aufgenommen 28.09.2026 beim Einbau von VS. Entwurf — **nicht gesendet**. Nummer vorläufig (FR trägt
+auf seinem Zweig die 8); die Reihenfolge wird beim Zusammenführen festgelegt.*
+
+**Worum es geht:** Referenzprämien, Sätze und Grenzen 2026 stehen in der «Einkommenstabelle zur
+Berechnung der Krankenkassensubventionen 2026» (Echelle définitive RIP 2026, 19.12.2025) und —
+mit dem Vermerk «(Provisorisch)» — im Anhang zur Medienmitteilung vom 3. Februar 2026. Die App
+rechnet nach der Tabelle. Ein amtliches Rechenbeispiel mit Franken haben wir nicht gefunden.
+
+**Frage 1 — Kinderzeile «Alleinstehende mit 1 Kind»:** Die Einkommenstabelle nennt **63'000**, der
+Medienanhang **61'000**; alle anderen Zellen stimmen überein. Welcher Wert gilt 2026? Bis zur
+Antwort zeigt die App für eine alleinstehende Person mit einem Kind zwischen 61'001 und 63'000
+keinen Betrag (Unterschied: 80 % der Kinder-Referenzprämie, CHF 1'276.80 im Jahr in Region I).
+
+**Frage 2 — Säule 3a:** Art. 8 Abs. 1 lit. a VüIPV rechnet die Beiträge «bis zum Maximalbetrag des
+Angestelltenlohns» dazu; die Seite der Ausgleichskasse zählt «Beiträge der gebundenen
+Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220)» ohne Obergrenze. Gilt die Obergrenze — und wenn
+ja, das Maximum mit 2. Säule des Steuerjahres x − 2 (2024: CHF 7'056)? Bis zur Antwort zeigt die App
+bei Einzahlungen über dem Maximum keinen Betrag.
+
+**Frage 3 — Staatsratsbeschluss:** Wo ist der Beschluss nach Art. 7 VüIPV (Einkommensgrenzen und
+degressive Skala 2026) veröffentlicht? Im Amtsblatt 2026 haben wir ihn nicht gefunden.
+
+**Frage 4 — Lesart und Rundung:** Gilt der Satz der ersten Zeile, deren Grenze das massgebende
+Einkommen nicht übersteigt (Art. 2 Abs. 2: «gleich oder kleiner»)? Wird der Betrag je Monat und
+Person gerundet?
+
+**Stand:** VS ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 am 28.09.2026 nicht publiziert;
+ab 01.01.2027 zeigt die App für VS keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
