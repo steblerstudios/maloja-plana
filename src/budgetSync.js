@@ -2,7 +2,7 @@
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
 import { getFullName } from './config/constants.js';
 import { calculateIPV } from './config/cantonalData.js';
-import { ipvAbzug, IPV_ABZUG_GRUND } from './data/ipvAbzug.js';
+import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 import { haushaltsEinnahmen } from './data/haushaltsEinnahmen.js';
 
@@ -101,6 +101,11 @@ const syncBudgetFromChapters = (data) => {
   // Unbelegt bleibt es beim Hinweis ohne Betrag (ipvOrientierung).
   const abzug = ipvAbzug(data, ipv);
   const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
+  // NE im Band über der Art.-16-Schwelle: nichts abgezogen, der Hinweis sagt warum (Schlüssel aus dem Ergebnis).
+  const ipvGesuchHinweisKey = abzug.grund === IPV_ABZUG_GRUND.GESUCH_NOETIG ? (ipv.gesuchNichtAbgezogenKey || null) : null;
+  // Der Hinweis dazu ist kantonal (LU: 31. Oktober des Vorjahres · FR: 31. August des Jahres) —
+  // welcher, entscheidet data/ipvAbzug.js (`fristHinweisKey`), nicht diese Stelle.
+  const ipvAnmeldefristHinweisKey = ipvAnmeldefristVorbei ? fristHinweisKey(ipv, 'budget') : null;
   const ipvRelief = abzug.betrag;
   // Abgezogen wird der Betrag einer gültigen Verfügung — dann sagt der Hinweis «laut Verfügung»,
   // nicht «möglicherweise Anspruch».
@@ -131,6 +136,8 @@ const syncBudgetFromChapters = (data) => {
     ipvVerfuegungUnzugeordnet,
     ipvOrientierung,
     ipvAnmeldefristVorbei,
+    ipvGesuchHinweisKey,
+    ipvAnmeldefristHinweisKey,
     expenses: {}
   };
 
@@ -258,7 +265,12 @@ const getBudgetRecommendations = (budget, t) => {
   } else if (budget.ipvAnmeldefristVorbei) {
     recommendations.push({
       level: 'info',
-      text: t ? t('budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction Lucerne: not deducted, the registration deadline has passed.'
+      text: t ? t(budget.ipvAnmeldefristHinweisKey || 'budget.ipvHintFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction: not deducted, the application deadline has passed.'
+    });
+  } else if (budget.ipvGesuchHinweisKey) {
+    recommendations.push({
+      level: 'info',
+      text: t ? t(budget.ipvGesuchHinweisKey) : 'Premium reduction: not deducted, the canton may only classify on application.'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({

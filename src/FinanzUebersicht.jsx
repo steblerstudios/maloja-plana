@@ -339,8 +339,6 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       // Barometer, Netto-Nutzerinnen diesen Befund — sie schliessen einander praktisch
       // aus (ein incomeType), darum kein Gedränge.
       const f = data.finanzen || {};
-      const sideIncome = Number(f.sideIncome || 0);
-      const sideNettoOk = sideIncome <= 0 || f.sideIncomeType === 'netto';
       const rentKnown = Number(data.wohnen?.rentAmount || 0) > 0;
       const geb = data.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
       const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
@@ -350,11 +348,14 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         effektiveWohnkosten: sozialhilfe.effectiveRent,
         personenAb16,
       });
-      const nettoHaushalt = income + (sideNettoOk ? sideIncome : 0) + (hh.partnerIncome || 0)
-        + Number(f.familienzulagen || 0) + Number(f.alimenteReceived || 0);
-      const verfuegbar = Math.max(0, nettoHaushalt - Number(f.monthlyTax || 0)
+      // Einnahmen des Haushalts = dieselbe Summe wie das Monatsbudget unten (budgetSync.js →
+      // data/haushaltsEinnahmen.js). Bis 28.09.2026 rechnete der Befund eine eigene Summe und
+      // verstummte bei jedem Nebenerwerb ohne Angabe der Art; jetzt sperrt nur ein ausdrückliches
+      // «brutto» (bruttoDabei), wie im Budget — ohne Art zählt der Betrag, was das Einkommen eher
+      // über- als unterschätzt (sichere Richtung, kein Fehlalarm).
+      const verfuegbar = Math.max(0, totalIncome - Number(f.monthlyTax || 0)
         - Number(data.versicherungen?.kkPremium || 0) - Number(f.alimentePaid || 0));
-      const unterArmutsgrenze = f.incomeType === 'netto' && sideNettoOk && rentKnown
+      const unterArmutsgrenze = f.incomeType === 'netto' && !bruttoDabei && rentKnown
         && armutsgrenze > 0 && verfuegbar < armutsgrenze;
       return React.createElement('div', {
         style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
@@ -507,13 +508,17 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
     hasData && React.createElement(StatusCard, {
       palette, icon: 'legal',
       title: t('finanzUebersicht.el'),
+      // checkELEligibility (config/cantonalData.js) liefert `elCalc.onlyAhvIv`; bis 28.09.2026
+      // verglich die Karte mit `el.onlyAhvIv` und zeigte darum immer «Nicht anwendbar» — ohne
+      // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
       status: el.eligible
         ? t('sozialhilfe.elPossible')
-        : el.noteKey === 'el.onlyAhvIv'
+        : el.noteKey === 'elCalc.onlyAhvIv'
           ? t('sozialhilfe.elOnlyAhvIv')
           : t('finanzUebersicht.notApplicable'),
       statusColor: el.eligible ? (palette.goldDeep || palette.gold) : palette.mid,
       detail: el.eligible ? formatCHF(el.deficit) + ' ' + t('common.perMonth') : null,
+      onClick: () => onNavigate('ergaenzungsleistungen'),
     }),
 
     hasData && hasAssets && React.createElement(StatusCard, {

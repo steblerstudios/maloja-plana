@@ -1215,6 +1215,7 @@ export default {
     step2Verjaehrung: { sie: 'Ist die Forderung sehr alt, kann sie verjährt sein: die meisten nach zehn Jahren, zum Beispiel Mietzinse sowie Handwerker- und Arztrechnungen nach fünf Jahren, jeweils ab Fälligkeit (OR Art. 127, 128, 130). Eine Forderung aus einem Verlustschein verjährt aber erst 20 Jahre nach dessen Ausstellung (SchKG Art. 149a Abs. 1); Zinsen sind darauf keine geschuldet (Art. 149 Abs. 4). Das Gericht berücksichtigt die Verjährung nicht von sich aus — man muss sie selbst geltend machen (OR Art. 142). Jede Anzahlung gilt als Anerkennung und lässt die Verjährung neu beginnen (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Unterschreiben Sie keine Schuldanerkennung, bevor die Forderung geprüft ist: Wird sie durch eine Urkunde anerkannt, beträgt die neue Verjährungsfrist immer zehn Jahre (OR Art. 137 Abs. 2). Bei alten Forderungen darum zuerst prüfen oder beraten lassen, dann zahlen.', du: 'Ist die Forderung sehr alt, kann sie verjährt sein: die meisten nach zehn Jahren, zum Beispiel Mietzinse sowie Handwerker- und Arztrechnungen nach fünf Jahren, jeweils ab Fälligkeit (OR Art. 127, 128, 130). Eine Forderung aus einem Verlustschein verjährt aber erst 20 Jahre nach dessen Ausstellung (SchKG Art. 149a Abs. 1); Zinsen sind darauf keine geschuldet (Art. 149 Abs. 4). Das Gericht berücksichtigt die Verjährung nicht von sich aus — man muss sie selbst geltend machen (OR Art. 142). Jede Anzahlung gilt als Anerkennung und lässt die Verjährung neu beginnen (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Unterschreib keine Schuldanerkennung, bevor die Forderung geprüft ist: Wird sie durch eine Urkunde anerkannt, beträgt die neue Verjährungsfrist immer zehn Jahre (OR Art. 137 Abs. 2). Bei alten Forderungen darum zuerst prüfen oder beraten lassen, dann zahlen.' },
     step3Title: '3 · Was dazukommen darf',
     step3Text: { sie: 'Sind Sie mit einer Geldschuld in Verzug, darf der Gläubiger Verzugszins verlangen: 5 % pro Jahr, oder einen höheren Zins, wenn der Vertrag ihn vorsieht (OR Art. 104 Abs. 1–2) — 5 % auf 1000 Franken sind rund 4 Franken im Monat. Zins auf Verzugszins ist nicht erlaubt (OR Art. 105 Abs. 3). Das Obligationenrecht sieht keine Mahngebühr vor. Mahn- und Inkassogebühren müssen Sie darum in der Regel nicht bezahlen: Geschuldet sind sie nur, wenn Sie ihnen vorher ausdrücklich zugestimmt haben, etwa in den Vertragsbedingungen — nach K-Tipp Rechtsschutz mit einem bezifferten Betrag (K-Tipp Rechtsschutz; SRF Kassensturz). Sonst schulden Sie die Forderung und den Verzugszins. Bezahlen Sie diese, vermerken Sie bei der Zahlung Rechnungsnummer und «Forderung und Verzugszins, Gebühren bestritten», und bestreiten Sie die Gebühren schriftlich — der Brief «Forderung bestreiten» hat dafür eine eigene Auswahl. Waren die Gebühren doch vereinbart, darf der Gläubiger die Zahlung zuerst auf Zinsen und Kosten anrechnen, und es bleibt ein Rest offen (OR Art. 85 Abs. 1). Haben Sie beim selben Gläubiger mehrere Rechnungen, bestimmen Sie bei der Zahlung, welche Sie begleichen (OR Art. 86 Abs. 1). Ob darüber hinaus ein Schaden geschuldet ist (OR Art. 106), ist oft strittig; eine Schuldenberatung hilft bei der Einschätzung. Etwas anderes sind Betreibungskosten: Die trägt der Schuldner (SchKG Art. 68 Abs. 1). Bei Behörden und öffentlichen Stellen, etwa der Krankenkasse (Schritt 4), können gesetzliche Gebühren gelten.', du: 'Bist du mit einer Geldschuld in Verzug, darf der Gläubiger Verzugszins verlangen: 5 % pro Jahr, oder einen höheren Zins, wenn der Vertrag ihn vorsieht (OR Art. 104 Abs. 1–2) — 5 % auf 1000 Franken sind rund 4 Franken im Monat. Zins auf Verzugszins ist nicht erlaubt (OR Art. 105 Abs. 3). Das Obligationenrecht sieht keine Mahngebühr vor. Mahn- und Inkassogebühren musst du darum in der Regel nicht bezahlen: Geschuldet sind sie nur, wenn du ihnen vorher ausdrücklich zugestimmt hast, etwa in den Vertragsbedingungen — nach K-Tipp Rechtsschutz mit einem bezifferten Betrag (K-Tipp Rechtsschutz; SRF Kassensturz). Sonst schuldest du die Forderung und den Verzugszins. Bezahl diese, vermerk bei der Zahlung Rechnungsnummer und «Forderung und Verzugszins, Gebühren bestritten», und bestreite die Gebühren schriftlich — der Brief «Forderung bestreiten» hat dafür eine eigene Auswahl. Waren die Gebühren doch vereinbart, darf der Gläubiger die Zahlung zuerst auf Zinsen und Kosten anrechnen, und es bleibt ein Rest offen (OR Art. 85 Abs. 1). Hast du beim selben Gläubiger mehrere Rechnungen, bestimmst du bei der Zahlung, welche du begleichst (OR Art. 86 Abs. 1). Ob darüber hinaus ein Schaden geschuldet ist (OR Art. 106), ist oft strittig; eine Schuldenberatung hilft bei der Einschätzung. Etwas anderes sind Betreibungskosten: Die trägt der Schuldner (SchKG Art. 68 Abs. 1). Bei Behörden und öffentlichen Stellen, etwa der Krankenkasse (Schritt 4), können gesetzliche Gebühren gelten.' },
+    step3Inkasso: { sie: 'Meldet sich statt des Gläubigers ein Inkassobüro, verlangen Sie zuerst den Nachweis, dass es die Forderung geltend machen darf: eine Vollmacht oder eine Abtretungserklärung des ursprünglichen Gläubigers. Nach der Berner Schuldenberatung bleiben auch dann nur die ursprüngliche Forderung, der Verzugszins und die Kosten einer berechtigten Betreibung geschuldet — ausser Sie haben weiteren Gebühren vorher ausdrücklich zugestimmt (siehe oben); Posten wie «Verzugsschaden», «Rechtsberater» oder «diverse Auslagen» sind nach ihr nicht geschuldet. Vertritt das Inkassobüro den Gläubiger vor dem Betreibungsamt, dürfen die Kosten dieser Vertretung nicht Ihnen überbunden werden (SchKG Art. 27 Abs. 2).', du: 'Meldet sich statt des Gläubigers ein Inkassobüro, verlang zuerst den Nachweis, dass es die Forderung geltend machen darf: eine Vollmacht oder eine Abtretungserklärung des ursprünglichen Gläubigers. Nach der Berner Schuldenberatung bleiben auch dann nur die ursprüngliche Forderung, der Verzugszins und die Kosten einer berechtigten Betreibung geschuldet — ausser du hast weiteren Gebühren vorher ausdrücklich zugestimmt (siehe oben); Posten wie «Verzugsschaden», «Rechtsberater» oder «diverse Auslagen» sind nach ihr nicht geschuldet. Vertritt das Inkassobüro den Gläubiger vor dem Betreibungsamt, dürfen die Kosten dieser Vertretung nicht dir überbunden werden (SchKG Art. 27 Abs. 2).' }, // TODO(rm): provisorisch — deutscher Rückfall (28.09.2026)
     step3LinkSchulden: 'Offene Forderungen ordnen',
     zins: { // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       title: 'Verzugszins überschlagen',
@@ -1243,7 +1244,7 @@ export default {
     step6Title: { sie: '6 · Umgekehrt: Ihnen schuldet jemand Geld', du: '6 · Umgekehrt: dir schuldet jemand Geld' },
     step6Text: { sie: 'Mit einer Mahnung setzen Sie die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann können Sie Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginnen Sie freundlich mit einer Zahlungserinnerung, setzen Sie eine klare Frist und schicken Sie die Mahnung so, dass Sie den Versand belegen können.', du: 'Mit einer Mahnung setzt du die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann kannst du Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginne freundlich mit einer Zahlungserinnerung, setz eine klare Frist und schick die Mahnung so, dass du den Versand belegen kannst.' },
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. Eine Mahnung ist kein Urteil und keine Betreibung. Dies ist Orientierung, keine Rechtsberatung. Bei Schulden hilft eine Schuldenberatung.',
-    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz, «Muss ich die Mahngebühren zahlen?» (2022)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz, Inkassogebühren (2025)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]] (geprüft im September 2026).',
+    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz, «Muss ich die Mahngebühren zahlen?» (2022)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz, Inkassogebühren (2025)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]], [[schuldeninfo.ch (Berner Schuldenberatung), Stichwort «Inkassobüros» (04.2024)|https://www.schuldeninfo.ch/Schulden-ABC.html#inkassob]], [[SchKG Art. 27|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_27]] (geprüft im September 2026).',
   },
   betreibung: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
@@ -3010,7 +3011,6 @@ export default {
     noteApplyIas: "Dumonda tar l'Istituto delle assicurazioni sociali (IAS)",
     noteApplySocialAction: "Dumonda tar il Service de l'action sociale",
     noteAutoTaxData: 'Examinaziun automatica via datas da taglia',
-    noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
     annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
@@ -3048,6 +3048,61 @@ export default {
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
+    jahrEineRegion: 'Quint per l’onn da dretg {jahr}. En quest chantun vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',  // TODO(rm): Gegenlese
+    vorbehaltSO: 'En il chantun Soloturn è la basa l’ultima taxaziun fiscala giuridicamain valaivla (entrada decisiva per la tariffa e facultad taxabla), betg l’entrada dad oz. Sche l’entrada fixada pli tard definitivamain divergescha considerablamain, sa lascha dumandar en il medem onn chalendar ina bunificaziun supplementara — u la cassa da cumpensaziun pretenda enavos quai ch’è vegnì retratg memia bler. Per s’annunziar sez senza formular da dumonda è il termin ils 31 da fanadur da l’onn da dretg; per persunas taxadas a la funtauna ils 31 da december.',  // TODO(rm): Gegenlese
+    soKeinAnspruch: 'Tenor las indicaziuns registradas n’exista nagin dretg: l’entrada decisiva è sur la valur limita da 74 000 francs, u gia la part atgna la pli bassa da 10 pertschient è almain uschè auta sco las premias da referenza da l’onn. La cassa da cumpensaziun quinta dentant cun l’entrada decisiva per la tariffa da la taxaziun fiscala, suenter deducziuns sco custs professiunals, premias d’assicuranza e contribuziuns da mantegniment — ella è per il solit pli bassa che l’entrada netta registrada qua. Tgi che ha grondas deducziuns, controllescha il dretg cun il quintader online da la cassa da cumpensaziun da Soloturn.',  // TODO(rm): Gegenlese
+    // K31 TG (28.09.2026) — rm provisorisch, Gegenlese offen.
+    noteApplyKkKontrollstelle: 'Dumonda tar il post da controlla da la cassa da malsauns da la vischnanca (Krankenkassenkontrollstelle)',
+    // K31 TI (28.09.2026) — rm provisorisch, Gegenlese offen.
+    jahrTessin: 'Quintà per l’onn da dretg {jahr}. En il chantun Tessin vala ina premia da referenza chantunala unica (premio medio di riferimento) — la regiun da premias na giauga nagina rolla per la reducziun.',
+    vorbehaltTI: 'En il chantun Tessin è la taxaziun da la taglia chantunala {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Sche l’entrada è sa midada dapi lura, po l’IAS sin dumonda quintar cun la situaziun actuala. L’applicaziun deducescha da l’entrada la premia da referenza e, tar ina lavur emploiada, in import pauschal fin 4000 francs per custs professiunals. Tschains passivs e debits n’enconuscha ella betg: tgi ch’ha quels, survegn plitost dapli. La reducziun è il pli aut uschè auta sco la premia. La limita da basegn, da la quala la quintada dependa, ha l’applicaziun cumponì da trais texts uffizials; l’IAS n’ha anc betg confermà quai, la dumonda è preparada.', // TODO(rm): provisorisch — Gegenlese
+    vorbehaltTIangestellt: 'Quintà senza deducziun per custs professiunals — en il profil n’è registrà nagin tip d’emploi. Tar ina lavur emploiada deducescha il chantun Tessin fin 4000 francs, e la reducziun è pli auta. Il tip d’emploi po vegnir tschernì en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch — Gegenlese
+    tiFristNichtAbgezogen: 'Reducziun da premias Tessin: betg deducida qua. Il termin per ina reducziun a partir da schaner {jahr} è scadì ils 31 da december {vorjahr}; tgi che fa la dumonda pli tard, survegn ella pir a partir dal mais suenter la dumonda. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras, prestaziuns Laps u agid social na sto betg far ina dumonda.', // TODO(rm): provisorisch — Gegenlese
+    tiKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada disponibla cuntanscha la limita, fin a la quala il chantun Tessin reducescha premias. L’IAS na publitgescha nagina limita d’entrada sco cifra; el renviescha a ses simulatur.',
+    tiUnterMindestbetrag: 'Tenor questa quintada existiss in dretg, el na vegn dentant betg pajà: il chantun Tessin na paja naginas reducziuns da premias sut 120 francs per persuna ed onn.',
+    tiFristLaeuft: 'Per ina reducziun a partir da schaner {jahr} sto la dumonda vegnir inoltrada tar l’IAS (Servizio sussidi assicurazione malattia) fin ils 31 da december {vorjahr}; decisiv è il bul da la posta. Sch’ella vegn inoltrada pli tard, vala la reducziun a partir dal mais suenter la dumonda. Tgi che survegn prestaziuns cumplementaras, prestaziuns Laps u agid social na sto betg far ina dumonda.', // TODO(rm): provisorisch — Gegenlese
+    tiFristVorbei: 'Il termin per ina reducziun a partir da schaner {jahr} è scadì ils 31 da december {vorjahr} (bul da la posta). Tgi che fa ussa la dumonda tar l’IAS, survegn la reducziun a partir dal mais suenter la dumonda — per l’onn current betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} cura il termin fin ils 31 da december {jahr}. Tgi che survegn prestaziuns cumplementaras, prestaziuns Laps u agid social na sto betg far ina dumonda.', // TODO(rm): provisorisch — Gegenlese
+    fristNichtAbgezogen: 'Reducziun da premias: betg deducida qua. Il termin da dumonda u d’annunzia per {jahr} è scadì, e Maloja na sa betg sch’ina dumonda è vegnida inoltrada a temp. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
+    // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
+    noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
+    vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda — ils mais avant na vegnan betg pajads retroactivamain. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
+    vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF {value}, la limita dal chantun Vad per quest tip da chasada.',
+    vdSpezifischerSubside: 'La premia registrada è auta en relaziun cun l’entrada. Il chantun Vad conceda ultra da quai in subsidi specific, sche las premias surpassan, suenter la deducziun dal subsidi ordinari, 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovri las premias da tut las persunas da la chasada. L’OVAM al examinescha tar la dumonda.',
+    // K31 UR (28.09.2026) — TODO(rm): provisorisch, Gegenlese offen
+    jahrUR: 'Quint per l’onn da dretg {jahr}. En il chantun Uri vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
+    vorbehaltUR: 'En il chantun Uri è la basa la taxaziun fiscala giuridicamain valaivla {basisjahr} — dus onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura considerablamain pli pauc (per almain in quart fin la fin da l’onn precedent), survegn l’adattaziun mo sin dumonda tar la Sozialversicherungsstelle Uri, il pli tard ils 31 da december {jahr}. Il post deducescha ultra da quai las spesas professiunalas, da furmaziun supplementara, da malsogna e cundiziunadas d’in impediment che na vegnan betg registradas qua; ses import po perquai esser pli aut. Contribuziuns da mantegniment pajadas èn qua gia deducidas. Sche la reducziun è pli auta che l’atgna premia, paja la cassa da malsauns la differenza entaifer 60 dis, suenter la cumpensaziun cun pretensiuns avertas da l’assicuranza da basa. Imports pajads a tort vegnan pretendids enavos da la cassa da malsauns.',
+    urKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: las premias da referenza imputablas na surpassan betg 8,5 pertschient da l’entrada decisiva per la reducziun da premias. Il chantun Uri na publitgescha nagina limita d’entrada sco cifra — ella resulta pir da la quintada.',
+    urAutomatisch: 'En il chantun Uri na dovri nagina dumonda: tgi che abita il 1. da schaner {jahr} en il chantun e paja la taglia en la procedura ordinaria, retschaiva automaticamain la decisiun da la Sozialversicherungsstelle Uri, quintada sin basa da la taxaziun {basisjahr}. La reducziun vegn pajada directamain a la cassa da malsauns. Tgi ch’è sa transferì il {vorjahr} en il chantun Uri, sto s’annunziar sez per il {jahr}, il pli tard ils 31 da december {jahr}. Sch’i na vegn nagina decisiun, n’exista nagin dretg — u la taxaziun {basisjahr} n’è anc betg giuridicamain valaivla. Persunas che pajan la taglia a la funtauna ston s’annunziar sezzas fin ils 30 d’avrigl {jahr}; per ellas quinta il chantun cun 75 pertschient da l’entrada, sin la quala vegn incassada la taglia a la funtauna — la cifra qua na vala betg per ellas.',
+    // TODO(rm): provisorisch — Gegenlese (K31 NE, 28.09.2026)
+    noteAutoOcab: 'Examinaziun automatica suenter la taxaziun fiscala (OCAB); tgi che ha nov in dretg al conferma cun il cupun da resposta entaifer 30 dis',
+    jahrNE: 'Quintà per l’onn da dretg {jahr}. En il chantun Neuchâtel vala il medem import en l’entir chantun — i na dat naginas regiuns da premias.',
+    vorbehaltNE: 'En il chantun Neuchâtel è la taxaziun fiscala {basisjahr} la basa, betg l’entrada dad oz. Là vegnan deducids ils custs professiunals (fin 10 000 francs); l’applicaziun n’als enconuscha betg e quinta perquai per il solit l’import pli gugent memia bass — ina classa è mo 1 140 francs lada. Pauc sur 15 000 francs po quai esser il cuntrari: sche l’entrada croda suenter questas deducziuns sut la limita, na classifitgescha il chantun betg automaticamain. Supplements da famiglia e contribuziuns da mantegniment retschavidas registradas na vegnan anc betg resguardadas qua (l’import è lura memia aut); contribuziuns da mantegniment pajadas na vegnan anc betg deducidas (l’import è lura memia bass). Per uffants èn quintads 160 francs al mais; cun ina premia pli bassa u cun ina franchisa facultativa da l’uffant dat quai tant main. L’import cuntegna il supplement extraordinari 2026 dal Cussegl grond. Tgi che ha nov in dretg sto trametter enavos il cupun da resposta da l’OCAB entaifer 30 dis, uschiglio croda il dretg. Sche la taxaziun posteriura divergia per dapli che 20 pertschient, po il chantun pretender enavos quai che è vegnì retschavì memia bler.',
+    neGesuchNichtAbgezogen: 'Reducziun da premias Neuchâtel: qua betg deducida. L’entrada è pauc sur la limita da 15 000 francs; sche ella croda suenter la deducziun dals custs professiunals sut la limita, na classifitgescha il chantun betg automaticamain — la reducziun dat i lura mo sin dumonda tar il guichet social régional (GSR).',
+    neRevenuMinimumNahe: 'L’entrada registrada è pauc sur la limita neuchâteloise da 15 000 francs (plus 3 000 francs per uffant minorenn). Decisiva è l’entrada suenter la deducziun dals custs professiunals — sche quella croda sut la limita, na classifitgescha il chantun betg automaticamain e la reducziun dat i mo sin dumonda tar il guichet social régional (GSR).',
+    neKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva surpassa CHF {value}, la limita suprema dal chantun Neuchâtel per questa chasada.',
+    // K31 GE (28.09.2026): LaLAMal rsGE J 3 05 Art. 20–23, 33 · RaLAMal J 3 05.01 Art. 10, 10A, 11D · LRDU J 4 06 Art. 8–10. TODO(rm): provisorisch — Gegenlese
+    jahrGE: 'Quint per l’onn da dretg {jahr}. En il chantun Genevra na dependa l’import betg d’ina regiun da premias: imports mensils fixs per gruppa d’entrada, ils medems en tut il chantun. In franc dapli po far ina gruppa entira.',
+    vorbehaltGE: 'En il chantun Genevra è la basa l’entrada decisiva unifitgada (revenu déterminant unifié, RDU) da l’ultima taxaziun fiscala definitiva — per regla la taxaziun {basisjahr}, betg l’entrada dad oz. In quindeschavel da la facultad vegn quintà latiers. Supplements da famiglia, alimentaziuns retschavidas e pajadas e custs da tgira d’uffants registrads n’èn qua anc betg quintads — els pon spustar l’import ensi u engiu. Sch’il l’entrada decisiva è dapi la taxaziun sa reducida permanentamain (dapli che sis mais) per almain 20 pertschient, po ina nova quintada vegnir dumandada en scrit tar il Service de l’assurance-maladie (SAM) — avant ils 30 da november {jahr}; sche la pegiuraziun capita en il segund mez onn, fin ils 30 da zercladur da l’onn suandant. Tgi che ha survegnì ina tala nova quintada, sto annunziar immediat al SAM ina meglieraziun. Liant è mo l’attestaziun dal SAM. Imports retschavids a tort ston vegnir restituids; in relasch è en tscherts cas pussaivel.', // TODO(rm): provisorisch — Gegenlese
+    geWegAutomatisch: 'Per regla automaticamain tras il Service de l’assurance-maladie (SAM) sin basa da la taxaziun fiscala. Ina dumonda è tranter auter necessaria en cas d’arrivada a Genevra l’onn precedent u l’onn da dretg, d’imposiziun a la funtauna, senza taxaziun per l’onn da referenza u en cas da situaziun midada. Medemamain en cas d’ina entrada decisiva (RDU) fitg bassa en l’onn da referenza — sut 15 000 francs per ina persuna suletta, sut 20 000 francs per in pèr, 3 000 francs dapli per uffant —, era sche l’entrada dad oz, cun la quala vegn quintà qua, è pli auta. En cas d’arrivada, d’imposiziun a la funtauna e d’ina entrada fitg bassa sto la dumonda arrivar tar il SAM avant ils 30 da november da l’onn da dretg.',
+    geWegAntrag: 'Dumonda necessaria tar il Service de l’assurance-maladie (SAM) — vesair l’indicaziun sper l’import.',
+    geAntragNoetig: 'Attenziun: cun ina entrada decisiva (RDU) sut CHF {value} presuma il chantun Genevra che las relaziuns na sajan betg modestas e n’examinescha il dretg betg automaticamain — cun excepziun da l’agid social. La reducziun da las premias sto vegnir dumandada tar il Service de l’assurance-maladie (SAM), cun formular e cumprovas, avant ils 30 da november {jahr}. Il SAM n’entra betg en dumondas tardivas.', // TODO(rm): provisorisch — Gegenlese
+    geAntragFristVorbei: 'Cun ina entrada decisiva (RDU) sut CHF {value} examinescha il chantun Genevra il dretg mo sin dumonda — e la dumonda per {jahr} stueva arrivar tar il SAM avant ils 30 da november {jahr}. Il SAM n’entra betg en dumondas tardivas. Duas excepziuns: sche la situaziun è sa pegiurada pir en il segund mez onn, dura il termin fin ils 30 da zercladur {folgejahr}; sche la taxaziun è vegnida notifitgada pir suenter ils 30 da november, avant ils 31 da december {jahr}. L’import qua mussa, da tge ch’i sa tracta.', // TODO(rm): provisorisch — Gegenlese
+    geFristNichtAbgezogen: 'Reducziun da premias Genevra: betg deducida qua. Cun ina entrada decisiva bassa dovri ina dumonda tar il Service de l’assurance-maladie (SAM) avant ils 30 da november {jahr}; il SAM n’entra betg en dumondas tardivas (excepziuns: pegiuraziun en il segund mez onn, taxaziun tardiva). Sche la dumonda è vegnida fatga a temp, po l’import da l’attestaziun vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida».', // TODO(rm): provisorisch — Gegenlese
+    geAntragKindNeu: 'Attenziun: in uffant ch’è vegnì en la famiglia suenter l’onn da referenza {basisjahr} n’è anc betg en la taxaziun. Il chantun Genevra al resguarda mo sin dumonda en scrit tar il Service de l’assurance-maladie (SAM) — avant ils 30 da november {jahr}; sch’il uffant è vegnì en il segund mez onn, fin ils 30 da zercladur {folgejahr}. L’import qua è quintà cun l’uffant.',
+    geNurKinder: 'L’entrada decisiva è sur l’ultima gruppa per creschids. Il chantun Genevra paja lura mo pli la contribuziun per uffants minorens (gruppa 9), fin ad in RDU da {value} francs.',
+    // K31 GR (28.09.2026) — rm provisorisch, Gegenlese offen.
+    vorbehaltGR: 'En il chantun Grischun èn las datas fiscalas definitivas {basisjahr} la basa — l’entrada imponibla decisiva per la tariffa, betg l’entrada dad oz. Sche la taxaziun n’è anc betg avant maun, po la SVA dal Grischun l’emprim pajar in anticip da 65 pertschient. Reducida vegn la premia da referenza da la regiun da premias, betg la premia effectivamain pajada. L’applicaziun applitgescha il procentual da la part atgna sin l’entira entrada imputabla; quai n’è betg confermà uffizialmain. Sche la SVA quinta per stgalims, è l’import pli aut — sur 40 000 francs fin 1150 francs per onn. Imports retschavids memia bler vegnan pretendids enavos per la cassa da malsauns.',
+    grKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg la part atgna da 5 fin 10 pertschient da l’entrada imputabla. Quai n’è betg definitiv. L’applicaziun applitgescha il procentual sin l’entira entrada; sche la SVA quinta per stgalims, exista anc in dretg fin ad ina entrada da var 64 000 fin 71 000 francs, tenor la regiun da premias. Ultra da quai quinta la SVA cun l’entrada imponibla suenter las deducziuns, che è per il solit pli bassa. Ina annunzia tar la SVA dal Grischun fin ils 31 da december sclerescha quai.',
+    vorbehaltGRbvg: 'Quintà senza contribuziun a la cassa da pensiun — en il profil n’è registrada nagina. Sch’i vegn deducida ina dal salari, quinta il chantun Grischun quella tar l’entrada, e la reducziun è pli bassa, mintgatant per pliras tschientinas francs. La contribuziun mensila stat sin il quint da salari e po vegnir registrada en il chapitel «Assicuranzas & prevenziun». Tgi che n’ha nagina cassa da pensiun, registrescha 0.',
+    grFristLaeuft: 'En il chantun Grischun sto la reducziun da las premias vegnir annunziada mintga onn da nov — per {jahr} fin ils 31 da december {jahr}, tar la filiala AVS da la vischnanca da domicil u online tar la SVA dal Grischun. Decisiva è l’entrada da la posta; tgi che mancanta il termin, perda il dretg per quest onn. Tgi che ha survegnì ina communicaziun davart in pajament anticipà, vala sco annunzià. Cun prestaziuns cumplementaras è la reducziun da las premias gia cumpigliada en las PC.',
+    // K31 OW (28.09.2026) — TODO(rm): provisorisch, Gegenlese offen
+    jahrOW: 'Quint per l’onn da dretg {jahr}. En il chantun Sursilvania vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
+    vorbehaltOW: 'En il chantun Sursilvania è la basa la taxaziun fiscala definitiva {basisjahr} — dus onns avant l’onn da dretg, betg l’entrada dad oz. La limita da 50 000 francs (cun uffants 75 000 francs) vala per l’entrada imputabla suenter las deducziuns, betg per il salari. L’Ausgleichskasse Obwalden deducescha ultra da quai las spesas professiunalas sco er las spesas da malsogna e da tgira che na vegnan betg registradas qua; ses import po perquai esser pli aut. Contribuziuns da mantegniment pajadas e la deducziun per assicuranzas (almain 1 700 francs) èn qua gia deducidas. Contribuziuns da mantegniment retschavidas ed allocaziuns per famiglias na vegnan betg quintadas qua; ses import po perquai er esser pli bass. Sche l’entrada imputabla è sa reducida per 25 pertschient en l’onn suenter la taxaziun, vegn quai resguardà mo cun ina dumonda motivada entaifer 30 dis suenter la retschavida da la disposiziun. Contribuziuns pajadas a tort ston vegnir restituidas.',
+    owKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: u la premia da referenza na surpassa betg la franchisa, u l’entrada imputabla cuntanscha la limita da 50 000 francs (cun uffants 75 000 francs). Il 2026 importa la franchisa 9,5 pertschient e crescha a partir d’ina entrada imputabla da 35 000 francs. Datiers da la limita vala la paina da far examinar tar l’Ausgleichskasse Obwalden — ella deducescha posiziuns che mancan qua.',
+    owUnterMindestbetrag: 'Tenor questa quintada existiss in dretg, ma el na vegn betg pajà: en il chantun Sursilvania na vegnan contribuziuns sut 100 francs betg pajadas.',
+    owFristLaeuft: 'En il chantun Sursilvania sto la reducziun da premias vegnir dumandada mintga onn — per il {jahr} fin ils 31 da matg {jahr}, tar l’Ausgleichskasse Obwalden. Tgi che mancanta il termin, perda il dretg per quest onn, auter che sch’i dat motivs spezials. Tgi che retschaiva prestaziuns supplementaras u agid social na sto far nagina dumonda.',
+    owFristVorbei: 'Il termin da dumonda per il {jahr} è scadì ils 31 da matg {jahr}. Senza dumonda ad ura è il dretg per quest onn scadì, auter che sch’i dat motivs spezials. L’import qua mussa, per tge ch’i va. Per il {folgejahr} tramet l’Ausgleichskasse Obwalden las datas d’access fin la fin da december {jahr}; tgi che n’als retschaiva betg, po als dumandar là. Tenor l’ordinaziun valaivla è il termin per il {folgejahr} ils 30 d’avrigl {folgejahr}; las valurs per il {folgejahr} n’èn anc betg integradas qua. Tgi che retschaiva prestaziuns supplementaras u agid social na sto far nagina dumonda.',
+    owFristNichtAbgezogen: 'Reducziun da premias Sursilvania: qua betg deducida. Il termin da dumonda per il {jahr} è scadì ils 31 da matg {jahr}; suenter è il dretg scadì. Cura che la disposiziun è arrivada, sa lascha ses import endatar tar la reducziun da premias sut «Disposiziun retschavida». Tgi che retschaiva prestaziuns supplementaras u agid social na sto far nagina dumonda.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
@@ -3063,6 +3118,27 @@ export default {
       praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
       einkommenNegativ: 'L’entrada registrada è negativa. Uschia na sa lascha calcular nagina reducziun — controllai per plaschair l’import en il chapitel Finanzas.',
       saeule3aUeberEinkommen: 'Il pajament en la 3. pitga A è pli aut che las entradas registradas da l’onn — u el sa repartescha sin plirs onns. Lura na sa lascha betg dir, tge part ch’è gia cuntegnida en las entradas, e la cifra fiss memia auta. Per plaschair controllar: dumandà è il pajament d’in onn, betg il stadi dal conto e betg la summa da plirs onns.',
+      steuerbaresEinkommen: 'En il chantun Giura quinta l’entrada imponibla da la taxaziun fiscala definitiva da avant dus onns — suenter tut las deducziuns fiscalas —, curregida tenor las reglas chantunalas. Questa entrada na enconuscha l’app betg; quintada a basa da la paga netta fiss ella memia auta, e l’import fiss memia bass u crudass davent. La Cassa da cumpensaziun dal chantun Giura examinescha il dretg d’uffizi, uschespert che la taxaziun è avant maun, e tramet ina decisiun u in questiunari — il questiunari vala pir sco dumonda, sch’el è emplenì e suttascrit. Sch’i na vegn nagina brev entaifer 30 dis suenter la taxaziun, è ina dumonda necessaria; ella sto esser arrivada tar la Cassa da cumpensaziun avant ils 31 da december. Sche l’entrada è sa sbassada dapi lura, po vegnir pretendida ina quintada a basa da la taxaziun da l’onn precedent, en cas da perdita da la plazza er durant l’onn. Tgi ch’è vegnì taxà d’uffizi senza avair inoltrà ina decleraziun da taglia, n’ha nagin dretg.', // TODO(rm): provisorisch — Gegenlese (K31 JU Nachtrag 28.09.2026)
+      vermoegenJU: 'En il chantun Giura n’exista nagin dretg, sche la facultad tenor la cifra 740 da la taxaziun fiscala surpassa 150 000 francs. Là vegnan quintads titels ed avairs da banca — betg daners en bar, vehichels u il rest da la facultad. Ils titels ed ils spargns registrads surpassan questa limita.', // TODO(rm): provisorisch — Gegenlese (K31 JU Integration 28.09.2026)
+      soSkalaUnklar: 'En il chantun Soloturn crescha la part atgna linearmain cun l’entrada da 10 fin 16 pertschient. Tar tge entrada che vala tge tariffa, na numna il chantun betg en sias directivas — senza quai na sa lascha l’import betg quintar qua. Il quintader online da la cassa da cumpensaziun da Soloturn dumonda per quai l’entrada e la facultad decisivas per la tariffa da la taxaziun 2024 (cifras 690 e 990). Per uffants vala fin ad ina entrada decisiva da 74 000 francs ina reducziun minimala da 80 pertschient da lur premia da referenza. Tgi che ha survegnì in formular da dumonda, al returna entaifer 30 dis; tgi che n’ha survegnì nagin, po s’annunziar sez fin ils 31 da fanadur, persunas taxadas a la funtauna fin ils 31 da december.',  // TODO(rm): Gegenlese
+      soSkalaUnklarFristVorbei: 'En il chantun Soloturn crescha la part atgna linearmain cun l’entrada da 10 fin 16 pertschient. Tar tge entrada che vala tge tariffa, na numna il chantun betg en sias directivas — senza quai na sa lascha l’import betg quintar qua. Per uffants vala fin ad ina entrada decisiva da 74 000 francs ina reducziun minimala da 80 pertschient da lur premia da referenza. Attenziun termin: tgi che n’ha survegnì per quest onn nagin formular da dumonda, pudeva s’annunziar sez mo fin ils 31 da fanadur; suenter scada il dretg — auter che la taxaziun fiscala n’era fin lura anc betg giuridicamain valaivla. Persunas taxadas a la funtauna pon inoltrar la dumonda fin ils 31 da december. Tgi che ha survegnì in formular, al returna entaifer 30 dis.',  // TODO(rm): Gegenlese
+      // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
+      ausbildung: 'Per giuvenils creschids (19 fin 25 onns) dependa la reducziun da quai, sch’ina furmaziun è stada en vigur il 1. da schaner — lura vala, tenor l’entrada, in dretg minimal. L’app na registrescha betg quai, perquai na stat qua nagina cifra; il post chantunal dat infurmaziuns.',
+      stichtagAlter: 'Tgi che cumplenescha 26 onns en l’onn da dretg, vala tenor la data da referenza anc sco giuvna persuna creschida u gia sco persuna creschida — cun premias da referenza differentas. Il chantun na numna nagina data da referenza explicita per la vegliadetgna, perquai na stat qua nagina cifra.',
+      neRevenuMinimum: 'Sche l’entrada effectiva è sut 15 000 francs (plus 3 000 francs per uffant minorenn), na classifitgescha il chantun Neuchâtel betg automaticamain: ina reducziun dat i lura mo sin dumonda tar il guichet social régional (GSR). Quai vala la paina da verifitgar — spezialmain cun in budget stretg.',
+      neFranchise: 'En il chantun Neuchâtel vegn la reducziun reducida per il medem pertschient sco il rabat che la cassa da malsauns conceda per ina franchisa pli auta. Quest pertschient na enconuscha l’applicaziun betg; ella quinta mo cun la franchisa da 300 francs. La franchisa sa lascha endatar en il chapitel «Assicuranzas & prevenziun».',
+      neIndependant: 'Persunas cun activitad independenta na retschaivan la reducziun en il chantun Neuchâtel betg automaticamain: ellas ston la dumandar mintg’onn tar il guichet social régional (GSR), entaifer 12 mais suenter la communicaziun da l’OCAB. Per questa via na quinta l’applicaziun nagin import.',
+      neJeuneAdulte: 'Per persunas sut 26 onns ha il chantun Neuchâtel agens imports che l’applicaziun na quinta anc betg. Persunas nunmaridadas tranter 19 e 25 onns senza uffants retschaivan ultra da quai ina reducziun mo sin dumonda tar il guichet social régional (GSR).',
+      geJungeErwachsene: 'Giuvens creschids (per il 2026 ils annadis 2001 fin 2007) survegnan en il chantun Genevra ina contribuziun atgna — en cas da domicil cuminaivel cun ils geniturs u d’ina atgna entrada decisiva sut 15 000 francs quintada cun l’entrada dals geniturs plus l’atgna — e mo sin dumonda tar il Service de l’assurance-maladie (SAM), avant ils 30 da november da l’onn da dretg, uschiglio scada il dretg per l’onn. Questa quintada na fa l’applicaziun betg.', // TODO(rm): provisorisch — Gegenlese
+      wohneigentumGE: 'Cun proprietad d’abitar quinta il chantun Genevra l’immobiglia tenor sia valur fiscala a la facultad bruta — senza deducir l’ipoteca. Sche la facultad bruta surpassa 250 000 francs, n’examinescha il chantun betg automaticamain: la reducziun da las premias sto lura vegnir dumandada tar il Service de l’assurance-maladie (SAM), avant ils 30 da november da l’onn da dretg. L’applicaziun na conuscha betg la valur fiscala, perquai nagina cifra qua.', // TODO(rm): provisorisch — Gegenlese
+      vermoegenAntragGE: 'Sur ina facultad bruta da 250 000 francs presuma il chantun Genevra che las relaziuns na sajan betg modestas. Quai n’è nagina exclusiun: la reducziun da las premias è lura pussaivla mo sin dumonda motivada tar il Service de l’assurance-maladie (SAM), per brev, avant ils 30 da november da l’onn da dretg. Il chantun quinta lura cun 95 pertschient da l’entrada bruta plus in quindeschavel da la facultad bruta. Decisiva è la facultad bruta fiscala, che n’è betg registrada cumplettamain qua.', // TODO(rm): provisorisch — Gegenlese
+      grKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Grischun en quest sectur d’entradas anc betg: la lescha na fixescha betg, sche la reducziun speziala da las premias dals uffants vegn cumparegliada per l’entira chasada u per mintga uffant separadamain. La differenza po surpassar 2000 francs per onn; la dumonda è pendenta tar la SVA dal Grischun. S’annunziar fin ils 31 da december vala tuttina la paina.',
+      tgSteuerbetrag: 'En il chantun Turgovia na dependa la reducziun da las premias betg da l’entrada, mabain da la taglia simpla a 100 % tenor las datas fiscalas provisoricas da l’onn precedent — e mo sche na resta nagina facultad imponibla. Imponibel è pir quai che resta suenter ils imports libers da taglia: fr. 100 000 per persunas solitaras, fr. 200 000 per persunas maridadas, ultra da quai fr. 100 000 per uffant. Per il 2026 datti imports fixs: cun ina taglia simpla fin fr. 400 fr. 3 408, fin fr. 600 fr. 2 556, fin fr. 800 fr. 1 704; per uffants fr. 1 236, sche la taglia simpla dals geniturs na surpassa betg fr. 1 600. Questa cifra da taglia na enconuscha l’applicaziun betg, perquai na stat qua nagin import. La vischnanca eruescha las persunas autorisadas e las trametta la primavaira in formular da dumonda; el sto vegnir inoltrà fin ils 31 da december tar il post da controlla da la cassa da malsauns da la vischnanca (Krankenkassenkontrollstelle), uschiglio scada il dretg. Tgi che n’ha survegnì nagin formular, po dumandar entaifer 30 dis suenter il quint final da taglia definitiv ina nova valitaziun tar la Krankenkassenkontrollstelle — d’uffizi na capita quai betg.',
+      tiKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Tessin anc betg: la reducziun vegn quintada là per l’entira chasada ed è limitada a la summa da tut las premias effectivamain pajadas. Las premias dals uffants n’èn betg registradas qua.', // TODO(rm): provisorisch — Gegenlese
+      tiEltern: 'Tgi che ha il pli 30 onns, gudogna pauc e fa ina emprima scolaziun, vegn quintà en il chantun Tessin ensemen cun ils geniturs. Sche quai è il cas, na sa l’applicaziun betg — perquai na stat qua nagina cifra. L’IAS dat infurmaziuns.', // TODO(rm): provisorisch — Gegenlese
+      // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz. — TODO(rm): provisorisch, Gegenlese offen
+      owSelbstbehaltRahmen: 'Cun questa entrada imputabla è la franchisa en il chantun Sursilvania tenor la decisiun per il 2026 pli auta che 12 pertschient. Dapi il 1. d’avrigl 2026 numna la lescha dentant ina rama da 9 fin 12 pertschient. Tgenina regla che vala per las disposiziuns 2026 è avert — perquai na stat qua nagina cifra. L’Ausgleichskasse Obwalden dat infurmaziuns.',
+      kind18: 'In uffant cumplenescha 18 onns en l’onn da dretg u è pli vegl. Sch’el dumbra lura anc en la dumonda dals geniturs, regla il chantun tenor vegliadetgna e furmaziun; quest cas na quinta l’app betg. Il post chantunal dat infurmaziuns.',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },
@@ -3427,7 +3503,7 @@ export default {
     sectionIPV: 'Reducziun da premias (IPV)',
     sectionEL: 'Prestaziuns cumplementaras (PC)',
     sectionSteuern: 'Orientaziun taglia federala',
-    elNotApplicable: 'Betg applitgabel (mo per benefiziaris AVS/AI)',
+    elNotApplicable: 'Betg applitgabel (mo cun ina prestaziun AVS/AI)',
     footerPrivacy: 'Quest document è vegnì creà localmain. Naginas datas èn vegnidas tramessas.',
     footerCredit: 'Maloja Plana — Organisatur svizzer da vita (Open Source)',
     empty: { sie: 'Emplenai emprim Vossas indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.', du: 'Emplenescha emprim Tias indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.' },
@@ -3606,6 +3682,7 @@ export default {
     ipvHintVerfuegungUnzugeordnet: { sie: 'Reducziun da premias (IPV): CHF {amount}/mais deducids en il budget — al pli la summa da Vossa decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; Vus pudais l’attribuir sut «Reducziun da premias».', du: 'Reducziun da premias (IPV): CHF {amount}/mais deducids en il budget — al pli la summa da tia decisiun, mai dapli che la stima. En la decisiun mancan chantun ed onn; ti pos l’attribuir sut «Reducziun da premias».' }, // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     ipvHintOhneBetrag: 'Reducziun da premias (IPV): dretg ed import decida il chantun. Cunzunt cun in budget stretg vala la paina dad examinar.', // TODO(rm): provisorisch
     ipvHintLuFristVorbei: 'Reducziun da premias Lucerna: betg deducida en il budget. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Il budget na sa betg, sche e cura che l’annunzia è succedida — cun ina annunzia a temp vala l’entir dretg annual.', // TODO(rm): provisorisch — Gegenlese (Gate 24.09.2026)
+    ipvHintFristVorbei: 'Reducziun da premias: betg deducida en il budget. Il termin da dumonda u d’annunzia per {jahr} è scadì, ed il budget na sa betg sch’ina dumonda è vegnida inoltrada a temp. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias.', // TODO(rm): provisorisch — Gegenlese (K31 FR Nachtrag 28.09.2026)
     sozialhilfeHint: { sie: "Vossa entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.", du: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita." },
     elHint: { sie: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Vossa filiala AVS As cussegliescha gratuitamain.", du: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Tia filiala AVS Ta cussegliescha gratuitamain." },
   },
@@ -3906,7 +3983,7 @@ export default {
 
   elCalc: {
     possible: 'Eventual dretg a prestaziuns cumplementaras — examinar la dumonda tar la filiala AVS',
-    onlyAhvIv: 'PC mo per benefiziaris AVS/AI',
+    onlyAhvIv: 'PC mo cun ina prestaziun AVS/AI',
   },
 
   docReminder: {
@@ -3969,6 +4046,7 @@ export default {
     feldImProfil: { sie: 'Vegn er memorisà en Voss profil e vala dapertut.', du: 'Vegn er memorisà en tes profil e vala dapertut.' },
     enterIncome: { sie: 'Voss chantun è vegnì surpiglià. Endatai ussa Vossa entrada mensila qua per calcular Vossa reducziun da premias.', du: 'Tes chantun è vegnì surpiglià. Endatescha ussa Tia entrada mensila qua per calcular Tia reducziun da premias.' },
     eligible: 'Autorisà',
+    eligibleAntrag: 'Import pussaivel — mo sin dumonda',
     disclaimer: "Agid d'orientaziun. Il dretg effectiv vegn examinà da la post cumpetenta.",
     notEligible: 'Betg autorisà',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (B-1, 16.09.2026).
@@ -4021,7 +4099,7 @@ export default {
     noEntitlementNote: { sie: "Vossa entrada cuvra il basegn calculà — quai è ina buna posiziun da partenza.", du: "Tia entrada cuvra il basegn calculà — quai è ina buna posiziun da partenza." },
     ipvSection: 'Reducziun da premias (IPV)',
     elSection: 'Prestaziuns cumplementaras (PC)',
-    elOnlyAhvIv: 'PC mo per benefiziaris AVS/AI',
+    elOnlyAhvIv: 'PC mo cun ina prestaziun AVS/AI',
     elPossible: 'Dretg pussaivel',
     totalIncome: 'Entrada totala: CHF {value}',
     totalExpenses: 'Expensas: CHF {value}',
@@ -5116,16 +5194,6 @@ export default {
 
   mirror: {
     basis: {
-      person: 'Persuna',
-      contact: 'Contact',
-      name: 'Num',
-      dateOfBirth: 'Data da naschientscha',
-      canton: 'Chantun',
-      maritalStatus: 'Stadi civil',
-      household: 'Menaschi',
-      phone: 'Telefon',
-      email: 'E-mail',
-      pronouns: 'Pronoms',
       born: 'naschì/da {year}',
       livingIn: 'domicilià/ada en il chantun {canton}',
       householdAlone: 'viva sulet/a',
@@ -5134,16 +5202,6 @@ export default {
       householdWithChildren: '{count} creschids, {childCount} uffants ({ages})',
     },
     wohnen: {
-      home: 'Chasa',
-      costs: 'Custs',
-      address: 'Adressa',
-      moveInDate: 'Entrà/ada',
-      duration: "Durada d'abitar",
-      rent: 'Tschains',
-      utilities: 'Custs accessorics',
-      totalCost: "Total custs d'abitar",
-      residenceType: "Furma d'abitar",
-      mortgage: 'Ipoteca',
       since: "Durada d'abitar {duration}",
       rentOnly: 'Tschains mensil {rent}',
       rentAndUtils: 'Tschains mensil {rent} plus {utilities} custs accessorics',
@@ -5154,82 +5212,19 @@ export default {
       durationFull: '{years} onns, {months} mais',
     },
     finanzen: {
-      incomeTitle: 'Entrada',
-      income: 'Entrada',
-      employer: 'Patrun',
-      employment: 'Engaschament',
-      expensesTitle: 'Expensas mensialas',
-      housing: 'Abitar',
-      healthInsurance: 'Cassa da malsauns',
-      tax: 'Taglia',
-      groceries: 'Vivondas & menaschi',
-      communication: 'Internet & telefon',
-      mobility: 'Mobilitad',
-      childcare: "Tgira d'uffants",
-      otherInsurance: 'Ulteriuras assicuranzas',
-      savingsTitle: 'Spargn & prevenziun',
-      savingsGoal: 'Finamira da spargn',
-      pension3a: 'Pitga 3a',
-      creditCard: 'Carta da credit',
-      investmentFunds: "Fonds d'investiziun",
-      loansTitle: 'Credits',
-      loansOpen2: 'Credits averts',
       incomeOnly: 'Entrada mensiala {income}',
       incomeAt: 'Entrada mensiala {income} tar {employer}',
       expensesRecorded: 'Expensas mensialas registradas {amount}',
       loansOpen: 'Credits averts {amount}',
-      familienzulagen: 'Supplements da famiglia',
-      alimenteReceived: 'Aliments retschavids',
-      alimentePaid: 'Aliments pajads',
-      debtPayments: 'Ratas da debits',
-      obligationsTitle: 'Obligaziuns',
       remainsPositive: 'I restan {amount}',
       remainsNegative: 'I mancan {amount}',
       remainsZero: "Las entradas e las expensas registradas s'equilibreschan",
-      diffTitle: 'Marz mensil',
-      diffLabel: 'Differenza',
-      diffPositiveShort: 'restan',
-      diffNegativeShort: 'mancan',
-      diffZeroShort: 'Equilibrà',
     },
     behoerden: {
-      taxSituation: 'Situaziun da taglia',
-      taxCanton: 'Chantun da taglia',
-      taxId: 'Numer da taglia',
-      taxDeadline: 'Decleraziun da taglia scada',
-      pendingReturns: 'Decleraziuns da taglia avantatgas',
-      legalSituation: 'Situaziun giuridica',
-      betreibung: 'Register da scussiun',
-      betreibungsamt: 'Uffizi da scussiun',
-      courtCases: 'Process giudizials',
-      representation: 'Represchentanza',
-      legalRep: 'Assistenza giuridica',
-      legalRepPhone: 'Telefon',
-      provision: 'Prevenziun',
-      will: 'Testament',
       taxCantonSentence: { sie: 'Voss affars da taglia curran via il chantun {canton}.', du: 'Tes affars da taglia curran via il chantun {canton}.' },
       taxCantonWithRep: 'Chantun da taglia {canton}. Ina assistenza giuridica è deponida.',
     },
     notfall: {
-      emergencyContact: "Contact d'urgenza",
-      contactName: 'Persuna da contact',
-      contactPhone: 'Telefon',
-      medicalCare: 'Tractament medical',
-      doctor: 'Medi da chasa',
-      doctorPhone: 'Telefon',
-      hospital: 'Clinica',
-      provision: 'Prevenziun',
-      patientenverfuegung: 'Disposiziun dal pazient',
-      vorsorgeauftrag: 'Mandat da prevenziun',
-      bestattungswuensche: 'Giavischs da sepultura',
-      organDonor: "Donaziun d'organs",
-      healthData: 'Datas da sanadad',
-      bloodType: 'Gruppa da sang',
-      allergiesRecorded: 'Allergias registradas',
-      medicationsRecorded: 'Medicaments registrads',
-      healthInfoRecorded: 'Infurmaziuns da sanadad registradas',
-      statusYes: 'Avant maun',
-      statusNo: 'Anc avert',
       contactSentence: "Per il cas d'urgenza è ina persuna da contact deponida.",
       contactAndDoctor: "Per il cas d'urgenza è ina persuna da contact deponida. In medi da chasa è registrà.",
       contactAndProvision: "Per il cas d'urgenza è ina persuna da contact deponida. Indicaziuns da prevenziun èn registradas.",
@@ -5237,43 +5232,11 @@ export default {
       contactAndHealth: "Per il cas d'urgenza è ina persuna da contact deponida. Infurmaziuns da sanadad èn registradas.",
     },
     versicherungen: {
-      basicInsurance: 'Assicuranza da basa',
-      insurer: 'Cassa da malsauns',
-      model: 'Model',
-      franchise: 'Franschisa',
-      premium: 'Premia',
-      accident: "Assicuranza d'accidents",
-      occupational: 'Prevenziun professiunala',
-      bvg: 'Cassa da pensiun',
-      bvgContribution: 'Contribuziun LPP',
-      additional: 'Ulteriuras assicuranzas',
-      liability: 'Responsabladad civila',
-      household: 'Menaschi',
-      travel: 'Viadi',
-      cyber: 'Cyber',
-      auto: 'Vehichel',
-      ahv: 'Contribuziun AVS',
-      social: 'Assicuranzas socialas',
       insurerSentence: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa." },
       insurerAndFranchise: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}." },
       insurerFranchiseBvg: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}. Ina cassa da pensiun è deponida.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa. Franschisa CHF {franchise}. Ina cassa da pensiun è deponida." },
-      perMonth: '/mais',
-      perYear: '/onn',
     },
     ausbildung: {
-      education: 'Furmaziun',
-      school: 'Scola/instituziun',
-      level: 'Diplom',
-      certifications: 'Certificats',
-      work: 'Professiun',
-      employer: 'Patrun',
-      jobTitle: 'Professiun',
-      since: 'Engaschà/ada dapi',
-      hoursPerWeek: "Uras per l'emna",
-      permit: 'Dimora',
-      workPermit: 'Permissiun',
-      languagesTitle: 'Linguas',
-      languages: 'Linguas',
       jobSentence: 'Actualmain activ/a sco {job} tar {employer}.',
       jobOnly: 'Actualmain activ/a sco {job}.',
       employerOnly: 'Emploià/ada tar {employer}.',
@@ -6718,6 +6681,17 @@ export default {
     shareText: "Maloja Plana — tia survista calma da la vita en Svizra. Privat, offline-abel, gratuit.", // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     copied: "Link copià",
     langHint: "Il flyer vegn creà en la lingua tschernida actualmain. Per in'autra lingua, mida l'emprim la lingua sura.",
+    printHint: "Format A5, vart davant e vart davos. Tscherni «dubla vart» en il dialog da stampa per avair omaduas varts sin in fegl.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    backTitle: "In lieu quiet per Voss proxims pass.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step1Title: "Ordinar ils documents.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step1Text: "Avair en egl en in sulet lieu las indicaziuns ed ils documents impurtants.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step2Title: "Examinar las pussaivladads.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step2Text: "Chattar orientaziun davart las taglias, la reducziun da premias ed ulteriuras prestaziuns da sustegn.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step3Title: "Esser preparà per il mintgadi.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    step3Text: "Preparar ina carta d'urgenza e tegnair a maun ils contacts impurtants.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    startTitle: "Cumenzai cun in pitschen pass.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    startText: "Avri Maloja Plana e tscherni il tema ch'è impurtant per Vus en quest mument.", // TODO(rm): Flyer A5 25.09., Gegenlese
+    disclaimer: "Ils cuntegns servan a l'orientaziun. Els na remplazzan nagin cussegliament giuridic u finanzial individual. Verifitgai las indicaziuns tar il post cumpetent.", // TODO(rm): Flyer A5 25.09., Gegenlese
   },
   alv: {
     title: "Indemnisaziun da dischoccupaziun",
