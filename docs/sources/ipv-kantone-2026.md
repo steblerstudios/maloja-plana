@@ -44,7 +44,7 @@ sind. Dieses Dokument ändert keinen Code.
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
-| SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | abbildbar | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
+| SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | gebaut (PR #SHPR, an der Quelle nachgeprüft 28.09.2026) | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
 | AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | abbildbar | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
 | AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | abbildbar | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
@@ -1421,8 +1421,8 @@ Eigene Nachrechnung (kein Beleg): Die Versand-Grenzwerte entsprechen Richtprämi
 Die App führt `maxIncome` 45'000 und `subsidySingle` 2'250 (Modell «flat»); belegt ist für eine Einzelperson (Region 1) ein Höchstbetrag von 3'865.55 Fr. (65 % von 5'947) mit Abbau um 15 % des anrechenbaren Einkommens bis Nullpunkt ca. 39'647 — kein Pauschalbetrag.
 
 ### Offen / nicht gefunden
-- Entlastungsabzug nach Art. 37 Abs. 1 Bst. d Steuergesetz (Beträge) nicht nachgeschlagen — für die App-Vereinfachung nötig.
-- Jahrgangs-Abgrenzung: Anhang nennt für Erwachsene «Jahrgänge 2000 und älter», für junge Erwachsene «2001 – 2007», die Versandgrenzen aber «Jahrgang 2001 bis 2005» plus «Kind Jahrgang 2006 / 2007» (gemeinschaftlicher Anspruch mit Eltern).
+- ~~Entlastungsabzug nach Art. 37 Abs. 1 Bst. d Steuergesetz (Beträge) nicht nachgeschlagen — für die App-Vereinfachung nötig.~~ ⟨erledigt 28.09.2026, siehe «Nachprüfung 28.09.2026»⟩
+- Jahrgangs-Abgrenzung: Anhang nennt für Erwachsene «Jahrgänge 2000 und älter», für junge Erwachsene «2001 – 2007», die Versandgrenzen aber «Jahrgang 2001 bis 2005» plus «Kind Jahrgang 2006 / 2007» (gemeinschaftlicher Anspruch mit Eltern). ⟨28.09.2026: aufgelöst durch das Merkblatt 2026 — Jahrgänge 2006/2007 haben in der Regel einen gemeinschaftlichen Anspruch mit den Eltern (Dekret § 9 Abs. 2: «bis zum vollendeten 20. Altersjahr»), einen eigenen erst ab einem Jahreseinkommen 2026 von CHF 37'600; für die App ohne Folge, junge Erwachsene sind nicht gebaut⟩
 - SVA-Seite «Berechnung» (Quelle [5]) ist nicht auf 2026 nachgeführt (Richtprämien 2025, Steuerjahr 2023).
 
 ### Quellen
@@ -1431,6 +1431,105 @@ Die App führt `maxIncome` 45'000 und `subsidySingle` 2'250 (Modell «flat»); b
 3. Krankenversicherungsgesetz, SHR 832.100, Art. 1, Version in Kraft seit 01.01.2014. https://rechtsbuch.sh.ch/api/de/versions/1383/pdf_file — abgerufen 16.09.2026
 4. «Aus den Verhandlungen des Regierungsrates vom 18. November 2025», Staatskanzlei Schaffhausen (Medienmitteilung). https://sh.ch/CMS/get/file/e85a1e0a-bb32-4954-b114-30bf8b4dbc21 — abgerufen 16.09.2026
 5. Berechnung (IPV), SVA Schaffhausen (Stand: noch Werte 2025). https://www.svash.ch/ipv/berechnung/ und Anmeldung https://www.svash.ch/ipv/anmeldung/ — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App — `src/config/ipvSchaffhausen.js`)
+
+**An der Quelle nachgeprüft 28.09.2026**, jede Zahl des Moduls. Messweg: API-Route der
+Erlass-Sammlung (`rechtsbuch.sh.ch/api/de/texts_of_law/<nr>` und `…/api/de/versions/<id>/pdf_file`),
+Gegenprobe mit erfundener Nummer (`texts_of_law/832.199` → HTTP 404, `versions/999999` → HTTP 404);
+Merkblatt und Wegleitung als PDF über `curl` + `pdftotext`, Gegenprobe `zul99-merkblatt.pdf` → 404.
+
+**Fassungen (abgerufen 28.09.2026):**
+- Dekret SHR 832.110: «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum: 02.12.2024)»,
+  Version 1927, «Stand 1. Januar 2025». Keine künftige Version.
+- Verordnung SHR 832.111: «Aktuelle Version in Kraft seit: 01.08.2026 (Beschlussdatum: 28.04.2026)»,
+  Version 2086 ⟨korrigiert: die Quelle [1] oben nannte schon «Stand 1. August 2026», die Änderung vom
+  28.04.2026 betrifft aber nur § 1 und nicht die Prämienverbilligung⟩. Anhang 1 «Durchführung der
+  Prämienverbilligung im Jahre 2026», alle Werte «18.11.2025 / 01.01.2026 geändert, 2025-25».
+  **Ein Anhang für 2027 ist nicht publiziert** (keine künftige Version).
+- Steuergesetz SHR 641.100: Versionen 1967 (01.01.2024), 2022 (01.01.2025), 2078 (01.01.2026) und
+  2079 (künftig, 01.01.2027) — Art. 37 Abs. 1 lit. d und Art. 48 Abs. 1 in allen vier wortgleich.
+  Art. 240 Abs. 2: «Art. 37 Abs. 1 lit. d in der Fassung vom 8. November 2021 kommt für die
+  Steuerperioden 2022 bis 2029 zur Anwendung».
+- SVA Schaffhausen, «Merkblatt zum Anmeldeformular für die individuelle Prämienverbilligung 2026»,
+  https://svash.ch/wp-content/uploads/zul01-merkblatt.pdf (PDF erstellt 10.12.2025, geändert 22.01.2026).
+- Kantonale Steuerverwaltung, «Wegleitung zur Steuererklärung 2022», Tabelle Entlastungsabzug S. 37,
+  https://sh.ch/CMS/get/file/c2891941-45ab-4eb7-8b15-daed3b71ff33 (eine Wegleitung 2024 lag nicht als
+  PDF vor; das als «Steuererklärung 2024» verlinkte PDF ist das Merkblatt für Todesfälle).
+
+**Bestätigt (wörtlich wie oben):** § 10 (15 %), § 11, § 12 Abs. 1 lit. a–e, § 12 Abs. 2–4, § 13
+Abs. 1–3, § 13bis, alle Richtprämien § A1-1, alle Versand-Grenzwerte § A1-2, alle Fristen § A1-3.
+
+**Neu gelesen:**
+> «Vom Reineinkommen werden als steuerfreie Beträge abgezogen: […] d) als Entlastungsabzug: 1. für
+> Personen, die eine AHV-Rente beziehen […], Fr. 14'100.00 für in ungetrennter Ehe lebende
+> Steuerpflichtige mit einem Reineinkommen bis Fr. 25'200.00, Fr. 7'050.00 für Alleinstehende mit
+> einem Reineinkommen bis Fr. 16'800.00. Für je Fr. 800.00 Reineinkommen mehr beträgt der Abzug
+> Fr. 300.00 weniger» — Art. 37 Abs. 1 SHR 641.100
+
+Die Tabelle der Steuerverwaltung liest «für je Fr. 800 mehr» als **je angefangene 800**:
+«Reineinkommen bis 16'800 → Abzug für Rentner 7'050», «bis 17'600 → 6'750», «bis 18'400 → 6'450» …
+«bis 35'200 → 150». Nach § 12 Abs. 1 lit. b Dekret gelten diese Rentner-Ansätze für alle, die
+Paar-Ansätze auch für Alleinerziehende.
+
+> «Vom Reinvermögen werden für die Berechnung des steuerpflichtigen Vermögens abgezogen: […]
+> b) Fr. 50'000.00 für die übrigen Steuerpflichtigen c) Fr. 30'000.00 zusätzlich für jedes nicht
+> selbständig besteuerte Kind, für das ein Kinderabzug gewährt wird» — Art. 48 Abs. 1 SHR 641.100
+
+> «Beiträge, welche die Höhe der Prämie übersteigen, sind der auszahlenden Stelle zurückzuerstatten.»
+> — § 17 Abs. 2 Dekret · Merkblatt 2026: «Übersteigt die Prämienverbilligung die effektive Prämie der
+> obligatorischen Krankenversicherung, so geht der Überschuss an das SVA Schaffhausen zurück.»
+> · svash.ch/ipv/berechnung: «Die Prämienverbilligung wird im Maximum bis zur effektiven Prämie der
+> Grundversicherung vergütet.» ⇒ Deckel auf die Prämie (`praemieFehlt`, `deckelnProPerson`).
+
+> «Der Selbstbehalt beträgt 15 Prozent des anrechenbaren Einkommens, im Minimum aber 35 Prozent der
+> gesamten Richtprämien.» — Merkblatt 2026 (dieselbe Regel wie § 13 Abs. 3 Dekret, 65 %)
+
+> «Gemäss Bundesgesetz über die Krankenversicherung müssen bei einem Anspruch auf Prämienverbilligung
+> die Prämien der Kinder um mindestens 80 Prozent und diejenigen der jungen Erwachsenen in Ausbildung
+> um mindestens 50 Prozent verbilligt werden. Dies kann zu einer Umverteilung der Prämienverbilligung
+> innerhalb der Familie und wenn notwendig zu einer Erhöhung des Gesamtanspruchs führen.» — Merkblatt 2026
+
+> «Kinder, die nach dem 1. Januar 2026 zur Welt gekommen sind, dürfen nicht aufgeführt werden.» ·
+> «Die Anträge müssen bis 30. April 2026 beim SVA eingereicht werden.» — Merkblatt 2026
+
+> «Die Eingabefrist für Anträge auf Prämienverbilligung 2026 endete am 30. April 2026.» —
+> svash.ch, Formulare Prämienverbilligung, abgerufen 28.09.2026
+
+**Weiterhin nicht nachgeführt (28.09.2026):** svash.ch/ipv/berechnung zeigt die Richtprämien 2025 und
+«die endgültigen Steuerwerte des Jahres 2023»; die FAQ nennt «bis spätestens 30. April 2025».
+
+**Prüfstein (kein amtliches Berechnungsbeispiel gefunden):** die zehn Versand-Grenzwerte § A1-2 sind
+genau Richtprämie ÷ 15 %, aufgerundet — 5'947 → 39'647 · 3'879 → 25'860 · 2 × 5'947 → 79'294 ·
+1'387 → 9'247 · 5'620 → 37'467 · 3'618 → 24'120 · 2 × 5'620 → 74'934 · 1'295 → 8'634. Im Test
+Zahl für Zahl nachgerechnet. Sie prüfen Selbstbehalt und Richtprämien, **nicht** das anrechenbare
+Einkommen.
+
+**Handrechnung (eigene, kein Beleg), Region 1, alleinstehend, ohne Vermögen und 3a:**
+Nettoeinkommen 36'000 → − 4'500 Grundabzug − 0 Entlastungsabzug (Reineinkommen über 35'200) =
+31'500 → 5'947 − 15 % × 31'500 = **1'222**. Nettoeinkommen 20'000 → − 4'500 − 5'850 = 9'650 →
+5'947 − 1'447.50 = 4'499.50, gedeckelt auf 65 % × 5'947 = **3'865.55**.
+
+**Prämienregionen:** BAG-Daten der App (`data/praemienRegionen.js`, release-2026-04-30) gegen
+Verordnung § A1-1 und Merkblatt vollständig abgeglichen: 26 Gemeinden, Region 1 genau Schaffhausen
+(BFS 2939) und Neuhausen am Rheinfall (2937), alle übrigen Region 2 — 0 Abweichungen.
+
+**Gewählt, nicht belegt** (Fragen an die SVA: FRAGEN-AN-DIE-AEMTER.md, Punkt 8):
+- Kinder-Mindestanspruch 80 % auf die **Richtprämie** des Kindes, sobald nach § 10 ein Anspruch besteht.
+- Aufteilung des Rests nach § 13bis Abs. 1 mit oder ohne Kinder: geben beide Lesarten mit dem Deckel
+  auf die eigene Prämie verschiedene Beträge, zeigt die App keinen (`offen: 'mindestanspruch'`).
+- Mit Kindern und Differenz zwischen 0 und Fr. 100: keine Zahl (§ 13 Abs. 2 gegen § 13bis Abs. 2).
+- Steuerliches Reineinkommen für den Entlastungsabzug = Nettoeinkommen − erfasste 3a-Einzahlung.
+- Rundung auf ganze Franken (keine Regel gefunden).
+
+**Bewusst nicht gebaut:** Paare/Konkubinat/mehrere Erwachsene · junge Erwachsene und Kinder über 18 ·
+Quellenbesteuerte, Grenzgänger:innen, EL- und Sozialhilfebeziehende · Negativsaldo aus Grundeigentum
+und Zuwendungen (§ 12 Abs. 1 lit. d/e) · `anmeldefristVorbei` (die Leser zeigen sonst den Luzerner
+Fristtext — offen im PR).
+
+**Folge:** `CANTONAL_IPV.SH` → `maxIncome` null (die Versand-Grenzwerte sind keine Anspruchsgrenze),
+Musterwerte entfernt, `noteKey` von «Antrag bei AHV-Zweigstelle» auf «Antrag bei SVA SH» (Dekret
+§ 15: Antrag bei der AHV-Ausgleichskasse).
 
 ---
 
