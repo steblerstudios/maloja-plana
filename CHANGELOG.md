@@ -11,6 +11,27 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Patientenverfügung in Fragen** (#440, `#/patientenverfuegung`). 13 Fragen, eine pro Seite, jede mit
+  «Weiss ich noch nicht» und «Warum wird das gefragt?»; am Schluss Vorschau und Druckdokument mit
+  separatem Begleitblatt. Datum und Unterschrift nur von Hand, kein Standardwert (auch keine
+  Organspende aus einem anderen Eintrag), «ergänzt» nennt das Datum der früheren Verfügung (ZGB 362
+  Abs. 3). Geprüft am Wortlaut (rechts- und swiss-precision-pruefer, 27.09.). 🛑 **Vor dem Deploy:
+  ärztliche Gegenlese der Fragen 3–9.**
+- **Vorsorgeauftrag: Vorlage zum Abschreiben** (#443, im Vorsorge-Wegweiser). Sechs Fragen, danach ein
+  Text zum Abschreiben von Hand; der Ausdruck selbst ist ausdrücklich kein Vorsorgeauftrag (ZGB 361).
+  Hinweis, wenn Vorsorgeauftrag und Patientenverfügung verschiedene Personen nennen.
+- **Bestattungswünsche** (#443, `#/bestattung`): acht Fragen, Vorschau, Druck; «Den Angehörigen
+  überlassen» als eigener Wunsch; keine Frage nach der Konfession.
+- **Testament-Wegweiser** (#443, Schritt 6 im Vorsorge-Wegweiser) — Formen, Pflichtteil, Beratung;
+  bewusst kein Generator.
+
+### Geändert
+- **Hinweis «Bestattungswünsche» im Notfall-Kapitel** (5 Sprachen, #443): «Nicht rechtlich bindend»
+  war unbelegt → «schriftlich festhalten … Was möglich ist, regeln Kanton und Gemeinde».
+- **Fragen-Ablauf als gemeinsamer Baustein** (`components/FragenAblauf.jsx`, #443) für die drei
+  Dokumente. Startbündel nach #440 + #443: 61,24 / 65 kB (`npm run size`).
+
 ## [0.1.44-beta] — 2026-09-28
 
 *Ein PR seit `0.1.43-beta` (`92d2cfe`): #433. Startbündel 61,03 / 65 kB (`npm run size`, auf `0096626`).
