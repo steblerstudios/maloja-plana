@@ -21,7 +21,13 @@
 //       Einkünfte, Familienzulagen), Ziffer 399 (Zwischentotal), Ziffer 610 (Säule 3a),
 //       Ziffern 900/905 (steuerfreie Beträge Vermögen), Ziffer 750 (Kinderabzug Staatssteuer).
 //   [6] Steuergesetz BL (SGS 331) § 50 Abs. 1 lit. a/b: steuerfreie Beträge 180'000 / 90'000
-//       (Primärquelle zu [4] Ziffern 900/905; Fachprüfung 28.09.2026, K3).
+//       (Primärquelle zu [4] Ziffern 900/905; Fachprüfung 28.09.2026, K3). § 24 Abs. 1:
+//       steuerbar sind lit. a Einkünfte aus unselbständiger Erwerbstätigkeit «mit Einschluss …
+//       Zulagen», lit. c «Einkünfte aus Sozialversicherungs- und Ausgleichskassen», lit. f
+//       «Unterhaltsbeiträge, die der geschiedene oder getrennt lebende Ehegatte für sich und die
+//       unter seiner elterlichen Sorge stehenden Kinder erhält». Version 3502 («Stand 1. Januar
+//       2023»), bl.clex.ch/api/de/versions/3502/pdf_file, gelesen 28.09.2026 (Version 99999 → 404).
+//       Damit sind Familienzulagen und erhaltene Alimente am Gesetz belegt, auch ohne [4].
 //   [5] SVA BL, Seiten «Ordentlicher Anspruch» und «IPV Online-Rechner» (2026): Formular von
 //       Amtes wegen, Frist 1 Jahr; Rechner: «Zwischentotal der steuerbaren Einkünfte 399».
 // 🛑 KEIN AMTLICHES BERECHNUNGSBEISPIEL GEFUNDEN. Die SVA publiziert nur den Online-Rechner,
@@ -102,8 +108,8 @@ export const IPV_BL = {
 //   · Lohn, Nebenerwerb, Renten: `einkommenJahr` — die 3a ist in Ziffer 399 nicht abgezogen
 //     (`SAEULE_3A.nichtAbgezogen`, Abzug 0).
 //   · erhaltene Unterhaltsbeiträge (`alimenteReceived`): [4] Ziffern 310/320 — steuerbare
-//     Einkünfte vor Ziffer 399; StG BL § 24 lit. f.
-//   · Familienzulagen (`familienzulagen`): [4] Ziffer 100 («Zulagen» im Lohn) bzw. Ziffer 380
+//     Einkünfte vor Ziffer 399; [6] § 24 Abs. 1 lit. f.
+//   · Familienzulagen (`familienzulagen`): [6] § 24 Abs. 1 lit. a/c; [4] Ziffer 100 («Zulagen» im Lohn) bzw. Ziffer 380
 //     («Familienzulagen … in der Ziffer 380 ‹übrige Einkünfte› zu deklarieren») — beides vor 399.
 //     Die App führt sie wie data/haushaltsEinnahmen.js ZUSÄTZLICH zum Lohn.
 //   · bezahlte Unterhaltsbeiträge (`alimentePaid`): [1] § 9 Abs. 1 lit. c «vermindert um …
