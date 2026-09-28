@@ -1562,7 +1562,13 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben; belegter Verg
 **An der Quelle nachgeprüft 28.09.2026.** Messweg: API-Route `ai.clex.ch/api/de/texts_of_law/<nr>` und
 `…/api/de/versions/<id>/pdf_file(_with_annexes)`, Gegenprobe `texts_of_law/832.599` → 404,
 `versions/99999999` → 404; Merkblatt über `curl` + `pdftotext` (gleiche Adresse wie oben, HTTP 200,
-PDF 09.12.2025), Gegenprobe «Merkblatt IPV 2099» → 404.
+PDF 09.12.2025), ~~Gegenprobe «Merkblatt IPV 2099» → 404.~~ ⟨korrigiert 28.09.2026 nach der
+Fachprüfung #485: die Gegenprobe, die 404 lieferte, hatte den **Objektpfad** geändert
+(`…/merkblatt-ipv-2099/@@download/file/…`). Nur den **Dateinamen** zu ändern misst nichts — der Server
+ignoriert ihn und liefert HTTP 200 mit derselben Datei (in der Prüfung byte-identisch gemessen). Gültige
+Gegenprobe: Objektpfad `merkblatt-ipv-2099` → 404. Dazu: der Link zeigt auf einen Ablageort mit dem Namen
+`merkblatt-ipv-2024`, der offenbar jährlich überschrieben wird — nach der nächsten Aktualisierung liefert er
+still das Merkblatt 2027. Massgebend für 2026 ist AI 511.2-34.5-1358131, PDF vom 09.12.2025.⟩
 
 **Fassungen:**
 - StKB IPV GS 832.501: «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 02.12.2025)»,
@@ -1611,6 +1617,13 @@ unter 80 % (827 statt 827.20).
 **Gewählt, nicht belegt** (FRAGEN-AN-DIE-AEMTER.md, Punkt 10): Stufen je volle Fr. 1'000 ·
 «steuerpflichtiges Gesamteinkommen» = steuerbares Einkommen nach Kinderabzug · Anhebung der Kinder bis
 75'000 auch ohne Anspruch aus der Formel · Rundung.
+
+**Nachtrag Fachprüfung #485 (28.09.2026):** erhaltene Alimente und Familienzulagen sind im Kanton
+Einkommen (StG AI Art. 26 Abs. 1 lit. f, Art. 20 Abs. 1), fliessen in der App aber noch in keinem Kanton
+ein — der Betrag ist dann zu hoch (Beispiel der Prüfung: 800 Alimente + 200 Zulage im Monat → 1'184 Fr./Jahr
+zu viel). Nicht gerechnet (Rahmen-PR folgt), aber im sichtbaren Vorbehalt `ipv.vorbehaltAI` genannt. Ebenso
+dort neu: alle drei gewählten Lesarten fallen zugunsten der Person aus — «der verfügte Betrag kann eher
+tiefer ausfallen».
 
 **Bewusst nicht gebaut:** Paare/Ehegatten/Konkubinat mit Kind · junge Erwachsene und Kinder über 18
 (Gesamtanspruch nach Art. 3 Abs. 3 mit eigenem Einkommen unter 12'000) · Quellenbesteuerte, Art. 65a

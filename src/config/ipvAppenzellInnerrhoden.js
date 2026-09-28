@@ -50,6 +50,16 @@
 //     Art. 3 Abs. 3 [1] (eigenes Einkommen unter 12'000, Veranlagung des Vorjahres) fehlen der App.
 //   · Quellenbesteuerte (Art. 6 Abs. 1 [1]: Einkommen minus 20 %), Personen nach Art. 65a KVG,
 //     EL-Beziehende (Art. 6 Abs. 2) und Sozialhilfebeziehende (Art. 6 Abs. 2bis: volle Richtprämie).
+//   · erhaltene Alimente und Familienzulagen: steuerbar (StG AI Art. 26 Abs. 1 lit. f, Art. 20 Abs. 1),
+//     von der App erfasst (`alimenteReceived`, `familienzulagen`), fliessen aber nicht ins Einkommen —
+//     der gemeinsame Rahmen (`rohesEinkommenJahr`) kennt sie in keinem Kanton. Betrag dann ZU HOCH
+//     (Fachprüfung #485: 800 Alimente + 200 Zulage im Monat → 1'184 Fr./Jahr zu viel). Rahmen-PR folgt;
+//     der Vorbehalt `ipv.vorbehaltAI` sagt es der Person.
+//   · StKB Art. 6 Abs. 4 [1]: kein Anspruch u. a., wenn «Familienmitglieder oder Dritte vollständig für
+//     den Lebensunterhalt aufkommen» (lit. c) — die App erfasst das nicht; bei Einkommen 0 zeigt sie
+//     die volle Richtprämie, die nur bei Sozialhilfe sicher gilt.
+//   · Richtung der drei gewählten Lesarten (siehe oben): alle drei zugunsten der Person — der
+//     Vorbehalt sagt «eher tiefer».
 //   · vom massgebenden Gesamteinkommen (Art. 5 Abs. 3 lit. c, e–g [1]): Liegenschaftskosten über dem
 //     Pauschalabzug, Einkaufsbeiträge, Schwarzarbeit-Einkünfte, Einkünfte nach Art. 22ter/23 StG — die
 //     App erfasst sie nicht; jede würde das Einkommen ERHÖHEN. Die amtlichen Abzüge vor dem
@@ -159,7 +169,6 @@ export function ipvAppenzellInnerrhoden(data, hh, ipvData, youngAdultsCount, ori
   const kinderJahre = kinderAlter(kinder, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
   if (UEBER_18(kinderJahre)) return orientierung('haushalt');
-  const kinderZahl = kinderJahre.length;
 
   const roh = rohesEinkommenJahr(f);
   if (!(roh >= 0)) return orientierung('einkommenNegativ');

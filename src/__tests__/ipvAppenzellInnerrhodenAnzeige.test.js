@@ -57,6 +57,13 @@ describe('K31 IPV-Rechner, Kanton Appenzell Innerrhoden', () => {
     expect(html).toContain('ipv.vorbehaltAI(2026|2024)');
   });
 
+  it('der Vorbehalt nennt Alimente/Familienzulagen und dass der Betrag eher zu hoch ist (Fachprüfung #485)', async () => {
+    const de = (await import('../i18n/de.js')).default.ipv.vorbehaltAI;
+    expect(de).toMatch(/Alimente/);
+    expect(de).toMatch(/Familienzulagen/);
+    expect(de).toMatch(/eher tiefer/);
+  }, 30000);
+
   it('kein Anspruch und unter dem Mindestbetrag: je ein eigener Satz', () => {
     expect(render(profil(56000 / 12))).toContain('ipv.aiKeinAnspruch');
     const band = render(profil(55900 / 12));
@@ -72,6 +79,8 @@ describe('K31 IPV-Rechner, Kanton Appenzell Innerrhoden', () => {
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
       expect(texte.ipv.vorbehaltAI, `${sprache}: Platzhalter`).toContain('{basisjahr}');
+      // Fachprüfung #485: der Vorbehalt nennt die fehlenden Alimente/Zulagen und die Richtung.
+      expect(texte.ipv.vorbehaltAI.length, `${sprache}: Vorbehalt zu kurz`).toBeGreaterThan(450);
       for (const k of ['jahrAI', 'aiAutomatisch']) expect(texte.ipv[k], `${sprache}: Platzhalter`).toContain('{jahr}');
     }
     // Fünf Sprachdateien nachladen dauert unter Last der ganzen Suite über 5 s (gemessen 28.09.2026).
