@@ -35,7 +35,7 @@ sind. Dieses Dokument ändert keinen Code.
 | BE | Bern | Stufentabelle: fester Monatsbetrag je Prämienregion (3), Altersgruppe und Einkommensstufe (bis 9'000 / 17'000 / 25'000 / 35'000; Familien bis 45'000); Kinder und junge Erwachsene in Ausbildung Pauschalbetrag | abbildbar | <https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Berechnungsschema%202026_de.pdf> |
 | LU | Luzern | Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind) | abbildbar | <https://srl.lu.ch/app/de/texts_of_law/866a> |
 | UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | abbildbar | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
-| SZ | Schwyz | Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % | teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert) | <https://www.sz.ch/public/upload/assets/6155/361_100.pdf> |
+| SZ | Schwyz | Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % | teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert) — **gebaut (PR #SZ-PR), 28.09.2026**; zeigt zwischen minimalem Höchsteinkommen und Nullpunkt bewusst keine Zahl | <https://www.sz.ch/public/upload/assets/6155/361_100.pdf> |
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
@@ -84,9 +84,10 @@ sind. Dieses Dokument ändert keinen Code.
   unter «Berechnungsbasis für die Prämienverbilligung 2027». Die Rechtssammlung (V KVGG, Anhang 1)
   nennt für 2026 Fr. 5'830 und 17,5 % — an der Quelle nachgeprüft und übernommen. Dass die
   SVA-Werte 2027 betreffen, ist eine Vermutung.
-- **SZ:** Die 11 % Selbstbehalt stehen in den Merkblättern der Ausgleichskasse; der festlegende
-  Kantonsratsbeschluss wurde nicht gefunden. Einkommensgrenzen sind nur für Mietzinsregion 3
-  publiziert.
+- **SZ:** ~~Die 11 % Selbstbehalt stehen in den Merkblättern der Ausgleichskasse; der festlegende
+  Kantonsratsbeschluss wurde nicht gefunden.~~ ⟨korrigiert 28.09.2026: der Kantonsratsbeschluss
+  SRSZ 361.110 ist gefunden und nennt in § 1 «11%», siehe Abschnitt SZ, Nachprüfung 28.09.2026⟩
+  Einkommensgrenzen sind nur für Mietzinsregion 3 publiziert.
 - **VS:** Einkommenstabelle der Ausgleichskasse («Echelle définitive RIP 2026», 19.12.2025) nennt
   für «Alleinstehende mit 1 Kind», Kinderzeile, 63'000; der Medienanhang vom 03.02.2026 (Sätze
   «provisorisch») nennt 61'000. An der Tabelle nachgeprüft (63'000). Bei der Ausgleichskasse
@@ -800,7 +801,7 @@ Der heutige App-Wert (maxIncome/subsidySingle UR) lag dem Unteragenten nicht vor
 
 ## SZ — Schwyz
 
-**Beurteilung:** teilweise (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert)
+**Beurteilung:** teilweise — **in der App gebaut 28.09.2026 (K31)**, siehe «Nachprüfung 28.09.2026» unten (Betragsformel und alle Zahlen 2026 belegt; die Anspruchsgrenze hängt aber von EL-Lebensbedarf und EL-Mietzinsregion ab und ist amtlich nur als «minimales Höchsteinkommen» für Mietzinsregion 3 / Kinder unter 11 publiziert)
 **Modell (kurz):** Richtprämie (90 % der EL-Durchschnittsprämie, eine Region) minus Selbstbehalt 11 % des anrechenbaren Einkommens; Anspruch nur, wenn das anrechenbare Einkommen unter Durchschnittsprämie + EL-Lebensbedarf + EL-Mietzins liegt (Stufe/Klippe, kein Auslaufen auf 0); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %
 **Zuständig / Weg:** Ausgleichskasse Schwyz (SVA Schwyz); Anmeldung ein Jahr im Voraus (Start April 2025 für 2026); Vorjahresbezüger automatisch angemeldet, mögliche Neuberechtigte erhalten Formular; Anmelde- und Verwirkungsfrist 2026: 31. Dezember 2026 (online «IPV Digital» oder Post); Beträge unter Fr. 50 verfallen
 **Gültigkeit:** 2026 definitiv (Richtprämien und Grenzwerte 2026 publiziert); Gesetzesrevision (u. a. Selbstbehalt 11 → 10 %) laut Kanton erst ab 2028 geplant — nicht belegt geprüft
@@ -845,7 +846,7 @@ Plausibilität: 43'554 − 43'314 (Wert 2025 im Merkblatt 2026) = 240 = 6'204 �
 Der heutige App-Wert (maxIncome/subsidySingle SZ) lag dem Unteragenten nicht vor. Belegte Vergleichsgrössen: Einzelperson — voller Betrag 5'583.60 CHF/Jahr, Höchsteinkommen (minimal) 43'554. Ein linearer Abbau auf 0 bei maxIncome bildet Schwyz falsch ab: der Abbau beträgt 11 % je Franken und bricht an der Grenze mit einem Restbetrag (~790 CHF) ab.
 
 ### Offen / nicht gefunden
-- Kantonsratsbeschluss zum EGzKVG (KRBzEGzKVG, SRSZ 361.110), in dem der Selbstbehalt festgelegt ist, nicht geöffnet (geratene Asset-Adressen auf sz.ch → HTTP 403; keine direkte Quelle gefunden). 11 % stützt sich auf die amtlichen Merkblätter 2026 und 2027 der Ausgleichskasse.
+- ~~Kantonsratsbeschluss zum EGzKVG (KRBzEGzKVG, SRSZ 361.110), in dem der Selbstbehalt festgelegt ist, nicht geöffnet (geratene Asset-Adressen auf sz.ch → HTTP 403; keine direkte Quelle gefunden). 11 % stützt sich auf die amtlichen Merkblätter 2026 und 2027 der Ausgleichskasse.~~ ⟨korrigiert 28.09.2026: über die Systematische Gesetzsammlung sz.ch gefunden und gelesen, § 1 «11%» — siehe Nachprüfung unten⟩
 - Höchsteinkommen für andere Mietzinsregionen und Kinder über 11 nicht publiziert gefunden; sie ergeben sich aus den EL-Beträgen (Lebensbedarf, Mietzinsmaxima je Region) des Bundes — für die App müssten diese separat amtlich belegt werden.
 - Merkblatt 2026 [3] (Stand März 2025) nennt noch die Werte 2025 (Durchschnittsprämien, Höchsteinkommen); massgebend für 2026 sind die Grenzwerte [2].
 - Gesetzesrevision (RRB 503/2025, Gegenvorschlag zur Volksinitiative) nicht ausgewertet; betrifft nach Hinweisen erst 2028.
@@ -856,6 +857,121 @@ Der heutige App-Wert (maxIncome/subsidySingle SZ) lag dem Unteragenten nicht vor
 3. 2026 Prämienverbilligung im Kanton Schwyz — Informationen / Berechnungshilfen, Ausgleichskasse Schwyz, Stand März 2025 (PDF). https://www.sva-sz.ch/uploads/Dateien/Formulare/Individuelle-Praemienverbilligung-IPV/2026-Praemienverbilligung-Kanton-Schwyz.pdf — abgerufen 16.09.2026
 4. Merkblatt Prämienverbilligung 2027, Ausgleichskasse Schwyz (PDF; Beispielrechnung mit Richtprämie 5'583.60 und 11 %). https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Merkblatt-IPV-2027.pdf — abgerufen 16.09.2026
 5. Prämienverbilligung (IPV), SVA Schwyz (Frist 31.12.2026). https://www.sva-sz.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen (`curl`, dann `pdftotext -layout`). **Gegenprobe je
+Adresse** mit einer erfundenen Variante — nur wo echt und erfunden verschieden antworten, gilt
+der Abruf als Beleg.
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.sz.ch/public/upload/assets/6155/361_100.pdf` (EGzKVG) | 200, 190'863 B, PDF | `…/6155/361_199.pdf` → **404**, HTML |
+| `https://www.sz.ch/public/upload/assets/82770/361_110.pdf?fp=1` (KRBzEGzKVG) | 200, 432'592 B, PDF | `…/82770/361_119.pdf` → **404**, HTML |
+| `https://www.sz.ch/public/upload/assets/6017/361_111.pdf?fp=20` (VVzEGzKVG) | 200, 63'895 B, PDF | `…/6017/361_119.pdf` → **404**, HTML |
+| `https://www.sz.ch/kanton/gesetze/systematische-gesetzsammlung.html/8756-8757-10021-11689` (Verzeichnis mit den drei Links) | 200, 247'026 B | `…-99999` → **404** |
+| `https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Grenzwerte-IPV-2026.pdf` | 200, 386'777 B, PDF (erstellt 05.11.2025) | `…Grenzwerte-IPV-2099.pdf` → **404** |
+| `https://www.sva-sz.ch/uploads/Dateien/Merkblaetter/Individuelle-Praemienverbilligung/Merkblatt-IPV-2027.pdf` | 200, 8'577'242 B, PDF (erstellt 23.03.2026) | `…Merkblatt-IPV-2099.pdf` → **404** |
+| `https://www.sva-sz.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv` | 200 | `…-ipvxyz` → **404** |
+
+**Fassungen:** EGzKVG «SRSZ 1.2.2026», letzte Änderung vom 21. Mai 2025, in Kraft 1. Januar 2026
+(Fussnote 53). KRBzEGzKVG «SRSZ 1.2.2019», § 1 «Fassung vom 6. September 2017», in Kraft
+1. Januar 2019. VVzEGzKVG «SRSZ 1.2.2026», letzte Änderung vom 10. Dezember 2025, in Kraft
+1. Januar 2026. Werte 2027: laut Merkblatt 2027 «ab Anfang November 2026» — am 28.09.2026 **nicht**
+publiziert.
+
+**Der Selbstbehalt — jetzt im Erlass belegt** (KRBzEGzKVG, SRSZ 361.110):
+> § 1: «Der Selbstbehalt des anrechenbaren Einkommens gemäss § 6 Abs. 1 des Gesetzes beträgt 11%.»
+
+Gefunden über die Systematische Gesetzsammlung auf sz.ch (Kapitel 361), nicht über eine geratene
+Adresse. Die Zuständigkeit steht in § 14 Abs. 1 EGzKVG: «Der Kantonsrat legt die Höhe des
+Selbstbehaltes (§ 6 Abs. 1) fest.» Der RRB Nr. 503/2025 (24.06.2025) nennt den Beschluss als
+geltendes Recht und kündigt eine Überprüfung im Zuge des Bundes-Gegenvorschlags an — für 2026
+ohne Wirkung.
+
+**EGzKVG** (Wortlaut, soweit gebaut):
+> § 5 Abs. 1: Anspruch haben Personen, «c) deren anrechenbares Einkommen kleiner ist als die Summe der kantonalen Durchschnittsprämie und der anerkannten Ausgaben gemäss dem Bundesgesetz über Ergänzungsleistungen … für den allgemeinen Lebensbedarf und für den Mietzins, und d) deren Reinvermögen nach Abzug der Vermögensfreibeträge gemäss § 7 Abs. 2 und 3 bei Alleinstehenden und Alleinerziehenden Fr. 250 000.-- und bei Verheirateten Fr. 500 000.-- nicht übersteigt.»
+
+> § 6 Abs. 1: «Berechtigte Personen erhalten Prämienverbilligung, wenn deren Richtprämie einen bestimmten Prozentsatz des anrechenbaren Einkommens (Selbstbehalt) übersteigt.»
+
+> § 7 Abs. 1/2: «Als Grundlage des anrechenbaren Einkommens gilt das Reineinkommen gemäss dem Bundesgesetz über die direkte Bundessteuer. Dieses wird erhöht um: a) 10% des Reinvermögens, von welchem Freibeträge von Fr. 25 000.-- pro erwachsene Person und Fr. 15 000.-- je Kind abgezogen werden; b) die Abzüge für den ausserordentlichen Liegenschaftsunterhalt; c) die Einkäufe in die berufliche Vorsorge (2. Säule).»
+
+> § 9: «Die Richtprämien entsprechen 90% der Durchschnittsprämien gemäss der jeweils anwendbaren Verordnung des Eidgenössischen Departements des Innern über die kantonalen Durchschnittsprämien …»
+
+> § 10 Abs. 1/2: «Die Höhe der Prämienverbilligung entspricht der Differenz zwischen der Richtprämie und dem Selbstbehalt und darf die tatsächlich geschuldeten Prämien für die Krankenpflege-Grundversicherung nicht übersteigen.» — «Deckt der Betrag … bei Kindern … den Mindestanspruch gemäss § 6 Abs. 2 nicht, so wird die Prämienverbilligung bis zum Mindestanspruch erhöht.»
+
+> § 12 Abs. 1: «Der Anspruch auf Prämienverbilligung beurteilt sich nach den persönlichen Verhältnissen am 1. April des dem Anspruchsjahr vorangehenden Jahres.»
+
+> § 17 Abs. 1/2/4: «Wer Prämienverbilligung beansprucht, hat bei der Durchführungsstelle spätestens bis Ende des Anspruchsjahres ein Gesuch einzureichen.» — «Ansprüche, die nach Ablauf der Frist geltend gemacht werden, sind verwirkt.» — Vorjahresbezüger «gelten von Amtes wegen für das Anspruchsjahr als angemeldet».
+
+> § 18 Abs. 2: «Beiträge von gesamthaft weniger als 50 Franken im Jahr werden nicht ausbezahlt und verfallen.»
+
+> § 19 Abs. 1: «Leistungen nach diesem Gesetz, die zu Unrecht ausgerichtet wurden, sind bei dem Krankenversicherer zurückzufordern, dem sie ausbezahlt wurden.»
+
+**VVzEGzKVG** (Wortlaut, soweit gebaut): § 7a Abs. 1: Richtprämien für Kinder «um mindestens
+80 Prozent verbilligt» · § 9 Abs. 1: «die jüngste rechtskräftige Steuerveranlagung, die eine maximal
+drei Jahre vor dem Beginn des Anspruchsjahres zurückliegende Steuerperiode … betrifft» · § 10:
+wesentliche Änderungen (mindestens 10 Prozent) «auf Antrag», Antrag «spätestens bis 31. März des
+dem Anspruchsjahr folgenden Jahres».
+
+**SVA Schwyz, «Prämienverbilligung 2026 — Durchschnittsprämien, Richtprämien, Kriterien
+Grenzwerte»** — alle Zahlen der Tabelle oben am 28.09.2026 im Textlayer wiedergefunden:
+Richtprämien «Erwachsene (ab Jahrgang 2000) Fr. 5‘583.60 · Junge Erwachsene (Jahrgang 2001 - 2007)
+Fr. 3‘931.20 · Kinder (Jahrgang 2008 und jünger) Fr. 1‘285.20»; Freibeträge; Vermögensobergrenzen;
+«Höchsteinkommen» Alleinstehende 43'554 / 56'052 / 65'845 / 74'343 / 80'161; Hinweis: «Die
+aufgeführten Werte betreffen die minimalen Höchsteinkommen im Kanton Schwyz (für Kinder unter
+11 Jahren, Mietzinsregion 3).» und «Im Zweifelsfall empfehlen wir Ihnen, einen Antrag auf
+Prämienverbilligung einzureichen.»
+
+**Prüfstein — Merkblatt «Prämienverbilligung 2027» (Stand 23.03.2026), rechnet mit den Werten
+2026** (5'583.60 / 1'285.20 / 3'931.20 und 11 %). Die App rechnet alle drei Beispiele auf den
+Rappen nach (Test `src/config/__tests__/ipvSchwyz.test.js`):
+- Beispiel 1, alleinstehend: 25'000 + 10 % × (35'000 − 25'000) = **26'000** → Selbstbehalt **2'860** →
+  **2'723.60**. Durch die App (Nettolohn 25'000, Sparkonto 35'000, Prämie 450/Monat): **2'724/Jahr**.
+- Beispiel 2, Ehepaar + Kind + junge erwachsene Person in Ausbildung: **62'000** → **6'820**;
+  Richtprämien **16'383.60** → **9'563.60** (nur die reine Rechnung; Paare baut die App nicht).
+- Beispiel 3, alleinstehend + zwei Kinder: **39'250** → **4'317.50**; **8'154.00** → **3'836.50**.
+  Darunter nur: «Die SVA Schwyz prüft in jedem Einzelfall, dass die Prämien für Kinder um
+  mindestens 80 Prozent … verbilligt werden.» Anteilig verteilt wären die Kinder bei 47 % —
+  ob dann erhöht wird, zeigt das Beispiel nicht (Frage 2 an die SVA).
+- Plausibilität der Grenze: 43'554 − 43'314 (Wert 2025 im Merkblatt 2026) = 240 = 6'204 − 5'964.
+
+**Korrekturen und Ergänzungen zum 16.09.:**
+- Selbstbehalt: ~~«Kantonsratsbeschluss … nicht gefunden»~~ ⟨korrigiert: SRSZ 361.110 § 1, siehe oben⟩.
+- **Säule 3a: wird NICHT aufgerechnet.** § 7 Abs. 2 EGzKVG zählt die Aufrechnungen abschliessend auf
+  (Vermögensanteil, ao. Liegenschaftsunterhalt, Einkäufe 2. Säule); das Merkblatt nennt dieselben.
+  Im Reineinkommen DBG ist die 3a abgezogen, im Nettoeinkommen der App nicht — die App zieht sie
+  darum ab, soweit sie sicher abziehbar ist (neue Regel `SAEULE_3A.imReineinkommenAbgezogen` in
+  `src/config/kantonsModell.js`). Darüber keine Zahl (`saeule3aAbzugUnklar`).
+- Durchführungsstelle ist seit 01.01.2026 die **Sozialversicherungsanstalt Schwyz (SVA Schwyz)**
+  (§ 16 Abs. 1 EGzKVG, Fassung 21.05.2025); das Merkblatt 2026 sprach noch von der
+  «Ausgleichskasse Schwyz». `noteKey` darum `ipv.noteApplySva` statt `noteApplyCompensation`.
+- Anmeldung: ~~«Anmeldung ein Jahr im Voraus»~~ ⟨präzisiert: § 17 Abs. 1 EGzKVG — Gesuch
+  «spätestens bis Ende des Anspruchsjahres», danach verwirkt; das Merkblatt empfiehlt die Anmeldung
+  bis Herbst des Vorjahres, damit die Verbilligung ab Januar wirkt⟩. Website: «möglicherweise
+  rückwirkend per 1. Januar 2026».
+- Stichtag: § 12 Abs. 1 EGzKVG «1. April des … vorangehenden Jahres» gegen Merkblatt «1. Januar»
+  — Widerspruch, Frage 3 an die SVA. Das Alter nimmt die App aus der Jahrgangstabelle.
+- Merkblatt 2026 (Stand März 2025) enthält die Werte **2025** (Richtprämie 5'367.60 in den
+  Beispielen) — nicht verwenden; die Werte 2026 stehen im Grenzwerte-Blatt und im Merkblatt 2027.
+
+**Was die App daraus macht (`src/config/ipvSchwyz.js`):** rechnet für eine erwachsene Person mit
+bis zu vier Kindern, wenn das anrechenbare Einkommen **unter dem minimalen Höchsteinkommen** liegt.
+Ohne Kinder über dem Nullpunkt (5'583.60 / 11 % = 50'760): «kein Anspruch», gleich in welcher
+Region. Dazwischen und ab dem 5. Kind: **keine Zahl** (`szGrenzeMietzinsregion`) — die Grenze der
+Gemeinde hängt an der EL-Mietzinsregion, die die App nicht belegt kennt. Mit Kindern nur, solange
+jedes Kind anteilig 80 % erhält; sonst `mindestanspruch`. `maxIncome` bleibt `null`: 43'554 ist
+nicht die Grenze der Person, sondern die tiefste im Kanton.
+
+**Bewusst nicht gebaut:** Paare, Konkubinat, mehrere Erwachsene · junge Erwachsene (Jg. 2001–2007),
+allein oder mit den Eltern · Quellenbesteuerte (§ 5 VVzEGzKVG, 80 % des Bruttolohns), EL- und
+Sozialhilfebeziehende · ao. Liegenschaftsunterhalt und Einkäufe 2. Säule (nicht erfasst; senkt das
+Einkommen der App) · Anpassung bei geänderten Verhältnissen (§ 10 VVzEGzKVG; im Vorbehalt genannt) ·
+Werte 2027.
+
+**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 8):** Höchsteinkommen je Mietzinsregion und Gemeindeliste
+· Verteilung des Kinder-Mindestanspruchs · Stichtag 1. April/1. Januar · Deckel je Person oder
+Haushalt · Rückwirkung einer späten Anmeldung.
 
 ---
 
