@@ -6,7 +6,7 @@ import { text, weight, radius, space, leading } from './config/tokens.js';
 import { CANTON_CODES, getCantonName } from './config/kantonPLZ.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { betrag } from './utils/geld.js';
-import { stundenlohnRechnen, stundenlohnErgebnis, ARTEN, FERIEN_FORMEN, ANTWORTEN } from './utils/stundenlohn.js';
+import { stundenlohnRechnen, stundenlohnErgebnis, lies, ARTEN, FERIEN_FORMEN, ANTWORTEN } from './utils/stundenlohn.js';
 
 // «Was steht mir im Stundenlohn zu?» — Wunsch Stebler Studios 25.09.2026.
 // Flächen: A Anstellung · B Lohn · C Ferien und Zuschläge · D die Rechnung · E Einordnung
@@ -81,7 +81,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       React.createElement('span', null, label),
       React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, zahlText(wert)));
     return React.createElement('div', { key, style: { marginBottom: space.md + 'px' } },
-      r.ferienForm === 'unklar' && React.createElement('div', { style: { ...titelStil, fontSize: text.sm } }, t('stundenlohnView.lesart_' + key, { betrag: zahlText(Number(String(e.betrag).replace(',', '.'))) })),
+      r.ferienForm === 'unklar' && React.createElement('div', { style: { ...titelStil, fontSize: text.sm } }, t('stundenlohnView.lesart_' + key, { betrag: zahlText(lies(e.betrag)) })),
       zeilen.map((z) => zeile(z.text || t('stundenlohnView.zeile_' + z.k), z.wert)),
       zeile(t('stundenlohnView.zeile_total'), l.total, true),
       r.monat && React.createElement('p', { style: hinweisStil }, t('stundenlohnView.proMonat', { betrag: betrag(r.monat[key]), stunden: r.wochenstunden }))
@@ -103,7 +103,8 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
         + ' ' + t('lohnCheck.ausnahmen') + ' '
         + t('stundenlohnView.ml_stelle', { stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
-      case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName });
+      // Städte Zürich und Winterthur: Mindestlohn gültig, aber nicht in Kraft (BGer 2C_28/2025, 12.5.2026).
+      case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName }) + (e.kanton === 'ZH' ? ' ' + t('stundenlohnView.ml_zhHinweis') : '');
       default: return t('stundenlohnView.ml_keinKanton');
     }
   };
