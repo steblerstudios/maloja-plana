@@ -3049,6 +3049,8 @@ export default {
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
+    // K31 TG (28.09.2026) — rm provisorisch, Gegenlese offen.
+    noteApplyKkKontrollstelle: 'Dumonda tar il post da controlla da la cassa da malsauns da la vischnanca',
     // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
     noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
     vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda — ils mais avant na vegnan betg pajads retroactivamain. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
@@ -3069,6 +3071,7 @@ export default {
       praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
       einkommenNegativ: 'L’entrada registrada è negativa. Uschia na sa lascha calcular nagina reducziun — controllai per plaschair l’import en il chapitel Finanzas.',
       saeule3aUeberEinkommen: 'Il pajament en la 3. pitga A è pli aut che las entradas registradas da l’onn — u el sa repartescha sin plirs onns. Lura na sa lascha betg dir, tge part ch’è gia cuntegnida en las entradas, e la cifra fiss memia auta. Per plaschair controllar: dumandà è il pajament d’in onn, betg il stadi dal conto e betg la summa da plirs onns.',
+      tgSteuerbetrag: 'En il chantun Turgovia na dependa la reducziun da las premias betg da l’entrada, mabain da la taglia simpla a 100 % tenor las datas fiscalas da l’onn precedent — e quai mo senza facultad imponibla. Per il 2026 datti imports fixs: cun ina taglia simpla fin fr. 400 fr. 3 408, fin fr. 600 fr. 2 556, fin fr. 800 fr. 1 704; per uffants fr. 1 236, sche la taglia simpla dals geniturs na surpassa betg fr. 1 600. Questa cifra da taglia na enconuscha l’applicaziun betg, perquai na stat qua nagin import. La vischnanca eruescha las persunas autorisadas e las trametta la primavaira in formular da dumonda; el sto vegnir inoltrà fin ils 31 da december tar il post da controlla da la cassa da malsauns da la vischnanca, uschiglio scada il dretg.',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },
