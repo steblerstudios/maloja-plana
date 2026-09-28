@@ -208,7 +208,8 @@ export function berechneExistenzminimum({ haushaltGroesse = 1, miete = 0, kranke
 // ── BFS-Armutsgrenze (absolute Armut) ────────────────────────────────────────
 // Methodik BFS (in Anlehnung an die SKOS-Richtlinien): die Armutsgrenze eines
 // Haushalts = Grundbedarf für den Lebensunterhalt (SKOS C.3.1) + effektive
-// Wohnkosten (bis zur kantonalen Obergrenze) + CHF 100/Monat pro Person ab 16.
+// Wohnkosten + CHF 100/Monat pro Person ab 16. (Die App kennt keine Mietzins-Obergrenze; bis
+// 28.09.2026 kam hier ein unbelegter Kantonsdeckel an, siehe config/cantonalData.js.)
 // Verglichen wird sie mit dem VERFÜGBAREN Haushaltseinkommen — davon sind
 // KK-Prämien, Sozialabgaben, Steuern und Alimente VORGÄNGIG abgezogen; die
 // KK-Prämie gehört also NICHT in die Armutsgrenze (anders als beim Existenz-

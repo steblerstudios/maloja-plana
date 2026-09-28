@@ -4009,7 +4009,9 @@ export default {
     skosCalculation: 'Calculaziun dal basegn COSAS',
     basicNeeds: 'Basegn fundamental (COSAS)',
     housingCosts: "Custs d'abitar (effectivs)",
-    rentLimit: 'Limita da tschains chantun',
+    rentLimitUnbekannt: { sie: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da Voss lieu da domicil — il servetsch social cumpetent la enconuscha.', du: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da tes lieu da domicil — il servetsch social cumpetent la enconuscha.' },
+    rentLimitDossier: 'Quintada è l’entira fittanza cun ils custs accessorics. Quant che vegn renconuschì, dependa da la limita da fittanza al lieu da domicil; l’app na la enconuscha betg.',
+    mitGanzerMiete: 'stimà cun l’entira fittanza',
     healthInsurance: 'Cassa da malsauns (LAMal)',
     totalNeeds: 'Basegn total',
     deductIncome: 'Deducziun: Entrada',
@@ -6023,8 +6025,6 @@ export default {
     result_needIncome: { sie: 'Endatai Vossa entrada, lura pudain nus stimar il dretg pli precis.', du: 'Endatescha tia entrada, lura pudain nus stimar il dretg pli precis.' },
     enterIncomeLink: 'Endatar l\'entrada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    rentWithin: { sie: 'Vossa fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).', du: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).' },
-    rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
     cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
     cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
     cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
