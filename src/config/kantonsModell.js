@@ -124,8 +124,10 @@ export const SAEULE_3A = Object.freeze({
     // UR (28.09.2026): nicht als Zurechnung, sondern weil Art. 7 Abs. 2 lit. c RB 20.2213 die
     // Abzüge vom PV-Einkommen abschliessend aufzählt und die 3a nicht darunter ist — sie bleibt
     // also voll im Einkommen. Rechnerisch dasselbe: Abzug 0.
-    kantone: 'ZH, SG, LU, VD, UR, NE, GR, TI, SH',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110)',
+    kantone: 'ZH, SG, LU, VD, UR, NE, GR, TI, OW, SH',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110)',
+    // OW (28.09.2026): Art. 7a GDB 851.11 zieht vom Total der Einkünfte nur aufgezählte Posten ab;
+    // die 3a (Art. 35 Abs. 1 lit. e StG) ist nicht darunter — sie bleibt voll im Einkommen.
     nichtAufgerechnet: () => 0,
   }),
 
