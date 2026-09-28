@@ -92,6 +92,7 @@ import {
   kinderAlter, ALTER_UNERFASST, UEBER_18, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
+import { zahl } from '../utils/geld.js';
 
 // Werte 2026, wörtlich aus [1], [2], [3]. Beträge in CHF pro MONAT und Person.
 export const IPV_GE = {
@@ -226,7 +227,7 @@ export function ipvGeneve(data, hh, ipvData, youngAdultsCount, orientierung) {
     extra: { basisjahr, gruppe: r.gruppe, jahrKey: 'ipv.jahrGE' },
   };
   if (!r.gruppe) {
-    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.geKeinAnspruch', noteParams: { grenze: r.grenze } });
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.geKeinAnspruch', noteParams: { grenze: zahl(r.grenze) } });
   }
 
   // Art. 22 Abs. 4 [2]: höchstens die effektive Prämie «de l'assuré» — also je Person. Die App
@@ -250,6 +251,6 @@ export function ipvGeneve(data, hh, ipvData, youngAdultsCount, orientierung) {
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
     extra: { ...gemeinsam.extra, ...(fristVorbei ? { anmeldefristVorbei: true } : {}) },
     noteKey: antragNoetig ? (fristVorbei ? 'ipv.geAntragFristVorbei' : 'ipv.geAntragNoetig') : ipvData.noteKey,
-    noteParams: antragNoetig ? { grenze: tiefGrenze, jahr } : (ipvData.noteParams || {}),
+    noteParams: antragNoetig ? { grenze: zahl(tiefGrenze), jahr } : (ipvData.noteParams || {}),
   });
 }
