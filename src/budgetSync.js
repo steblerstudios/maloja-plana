@@ -258,7 +258,7 @@ const getBudgetRecommendations = (budget, t) => {
   } else if (budget.ipvAnmeldefristVorbei) {
     recommendations.push({
       level: 'info',
-      text: t ? t('budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction Lucerne: not deducted, the registration deadline has passed.'
+      text: t ? t(budget.ipvAnmeldefristVorbei.budgetKey || 'budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction: not deducted, the registration deadline has passed.'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({

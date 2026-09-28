@@ -31,6 +31,7 @@ export const IPV_MODULE = {
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
+  NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -114,7 +115,11 @@ export const CANTONAL_IPV = {
   UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice', beleg: null },
   SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
-  NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
+  // NW (K31): eigenes Modell in config/ipvNidwalden.js (Richtprämie minus 10 % der Summe der
+  // Steuerwerte, eine Region). Keine publizierte Einkommensgrenze für Erwachsene — die 100 000
+  // gelten nur für die Kinder. Gesuch bei der Ausgleichskasse Nidwalden bis 30. April (kKVG Art. 22).
+  NW: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
+    beleg: { quelle: 'NG 742.111 · NG 742.1 · Ausgleichskasse Nidwalden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation', beleg: null },

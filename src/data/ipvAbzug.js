@@ -75,7 +75,9 @@ function schaetzungsAbzug(ipv) {
     return { betrag: 0, grund: IPV_ABZUG_GRUND.KEINER, frist: null };
   }
   if (ipv.anmeldefristVorbei === true) {
-    return { betrag: 0, grund: IPV_ABZUG_GRUND.FRIST_VORBEI, frist: { jahr: ipv.jahr, vorjahr: ipv.jahr - 1 } };
+    // `fristKeys` (OW/NW, 28.09.2026): ein Kanton mit eigener Frist bringt seine Sätze mit — ohne
+    // stünde bei jedem Kanton der Luzerner Satz («31. Oktober»). Ohne Angabe bleibt es LU.
+    return { betrag: 0, grund: IPV_ABZUG_GRUND.FRIST_VORBEI, frist: { jahr: ipv.jahr, vorjahr: ipv.jahr - 1, ...(ipv.fristKeys || {}) } };
   }
   const betrag = Math.max(0, Number(ipv.amount) || 0);
   return { betrag, grund: betrag > 0 ? IPV_ABZUG_GRUND.GESCHAETZT : IPV_ABZUG_GRUND.KEINER, frist: null };
