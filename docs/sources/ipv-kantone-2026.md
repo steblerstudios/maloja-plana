@@ -54,7 +54,7 @@ sind. Dieses Dokument ändert keinen Code.
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
-| NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | abbildbar (mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge, siehe «Offen») | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
+| NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | gebaut (PR #NE-PR) — ~~mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge~~ ⟨28.09.2026: aufgelöst, der Unterschied ist der Décret RSN 821.104⟩ | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
 | GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
 | JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
 
@@ -73,7 +73,7 @@ sind. Dieses Dokument ändert keinen Code.
 - **NE:** Widerspruch zwischen Kantonsseite «Classifications et montants» (geändert 08.09.2026)
   und dem Erlass RSN 821.102 ab Klasse S3 (z. B. Erwachsene S3: Seite 515, Erlass 514). An beiden
   Quellen nachgeprüft. Kein Änderungsbeschluss gefunden. **Verbindlich bis auf Weiteres der
-  Erlass**; beim OCAB nachfragen.
+  Erlass**; beim OCAB nachfragen. ⟨28.09.2026: **aufgelöst** — die höheren Beträge der Seite sind Arrêté RSN 821.102 **plus** die ausserordentlichen Subsides des Grossen Rates (Décret RSN 821.104 vom 2.12.2025). Das OCAB-Blatt «Normes de classification valables en 2026» überschreibt seine Tabelle mit «Arrêté du 12.11.2025 (CE) + Décret du 02.12.2025 (GC)». Die App rechnet die Summe.⟩
 - **GE:** Beträge stammen aus dem amtlichen Tarif-PDF «Barème subsides 2026»; der
   Indexierungsbeschluss des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht gefunden. Der
   Gesetzestext enthält noch die nicht indexierten Beträge.
@@ -2543,9 +2543,9 @@ Zusätzlich: Abzüge 6.4 max. 10'000, 6.5 max. 2'400 (Art. 12 al. 5); Geschäfts
 App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Belegte Vergleichswerte: Erwachsene/r allein ohne Kind max. revenu déterminant 50'600, Höchstbetrag S1 611 CHF/Monat (= 7'332 CHF/Jahr), in 15 Stufen und nicht linear abnehmend — ein linearer Abbau bildet NE nicht ab.
 
 ### Offen / nicht gefunden
-- **Widerspruch Webseite ↔ Erlass:** Die Seite «Classifications et montants» [2] (Drupal-Metadatum «Modified: 08/09/2026») nennt für Junge Erwachsene / Erwachsene ab S3 andere Beträge als der Erlass und das PDF vom 28.11.2025, z. B. Erwachsene S3 **515** (Erlass 514), S4 453 (450), S10 110 (96), S15 **41** (26); Junge Erw. S15 30 (19); Junge Erw. in Ausbildung S15 124 (116); Erw. in Ausbildung S12 515 (514), S15 166 (154). S1, S2 und Referenzprämien stimmen überein. Kein Änderungsbeschluss gefunden (CE-Kurzinformation 6.7.2026 [5] erwähnt nur Nachtragskredite und «prorogation des mesures transitoires» ohne Zahlen). Die Seite sagt selbst, sie basiere auf dem Arrêté. → Verbindlich ist bis auf Weiteres RSN 821.102; beim OCAB nachfragen, ob eine Änderung (z. B. Erhöhung per Mitte 2026) beschlossen ist.
+- **Widerspruch Webseite ↔ Erlass:** Die Seite «Classifications et montants» [2] (Drupal-Metadatum «Modified: 08/09/2026») nennt für Junge Erwachsene / Erwachsene ab S3 andere Beträge als der Erlass und das PDF vom 28.11.2025, z. B. Erwachsene S3 **515** (Erlass 514), S4 453 (450), S10 110 (96), S15 **41** (26); Junge Erw. S15 30 (19); Junge Erw. in Ausbildung S15 124 (116); Erw. in Ausbildung S12 515 (514), S15 166 (154). S1, S2 und Referenzprämien stimmen überein. Kein Änderungsbeschluss gefunden (CE-Kurzinformation 6.7.2026 [5] erwähnt nur Nachtragskredite und «prorogation des mesures transitoires» ohne Zahlen). Die Seite sagt selbst, sie basiere auf dem Arrêté. → Verbindlich ist bis auf Weiteres RSN 821.102; beim OCAB nachfragen, ob eine Änderung (z. B. Erhöhung per Mitte 2026) beschlossen ist. ⟨28.09.2026: aufgelöst, siehe Nachprüfung 28.09.2026 — kein Widerspruch, sondern eine zweite Rechtsgrundlage⟩
 - Merkblatt «Subsides à l'assurance-maladie, informations détaillées (20251202)» nicht geöffnet.
-- Die Klassen gelten als Höchstbetrag; der Subside ist auf die effektive Prämie begrenzt (Art. 11 al. 2 für besondere Versicherungsformen) — genaue Kappungsregel (RALILAMal) nicht separat geprüft.
+- Die Klassen gelten als Höchstbetrag; der Subside ist auf die effektive Prämie begrenzt (Art. 11 al. 2 für besondere Versicherungsformen) — genaue Kappungsregel (RALILAMal) nicht separat geprüft. ⟨28.09.2026: geprüft — LILAMal Art. 14 al. 4 «Le montant du subside ne peut être supérieur à la prime exigée par l'assureur»; Art. 11 al. 2 betrifft nicht den Deckel, sondern die **Kürzung bei Wahlfranchise** (LAMal Art. 62 al. 2 lit. a)⟩
 
 ### Quellen
 1. Arrêté fixant les normes de classification et le montant des subsides en matière d'assurance-maladie obligatoire des soins pour l'année 2026 (RSN 821.102), Conseil d'État NE, vom 12.11.2025, État au 1er janvier 2026, FO 2025 No 47. https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf — abgerufen 16.09.2026
@@ -2554,6 +2554,72 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 4. Communiqué «Subsides à l'assurance-maladie 2026 : maintien des mesures et introduction d'un nouveau modèle d'octroi», État de Neuchâtel, 28.11.2025. https://www.ne.ch/communiques-de-presse/subsides-lassurance-maladie-2026-maintien-des-mesures-et-introduction-dun-nouveau-modele-doctroi — abgerufen 16.09.2026
 5. Informations brèves de la séance du Conseil d'État du 6 juillet 2026, État de Neuchâtel. https://www.ne.ch/communiques-de-presse/informations-breves-de-la-seance-du-conseil-detat-du-6-juillet-2026 — abgerufen 16.09.2026
 6. Subsides assurance-maladie (LAMal) — Verfahren/Coupon-réponse/FAQ, État de Neuchâtel. https://www.ne.ch/themes/social/assurance-maladie/subsides-assurance-maladie-lamal — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Gebaut in `src/config/ipvNeuchatel.js` (Stufentabelle wie BE, auf `kantonsModell.js`), Tests in
+`src/config/__tests__/ipvNeuchatel.test.js` und `src/__tests__/ipvNeuchatelAnzeige.test.js`.
+Gebaut ist die **erwachsene Person ab 26, allein, mit 0–10 minderjährigen Kindern**.
+
+**Quellen, heute gelesen (curl + `pdftotext -layout`, Gegenprobe je Weg):**
+
+| # | Quelle | Fassung | Weg · Gegenprobe |
+|---|---|---|---|
+| [1] | Arrêté RSN 821.102 du 12.11.2025 | «État au 1er janvier 2026», FO 2025 No 47, PDF erzeugt 06.01.2026, SHA-256 `aaa6ad61…` | rsn.ne.ch-PDF 200, 197'335 Bytes; erfundene Nummer 821.109 → 404. Die Kopie unter `books/20261/` ist byte-gleich. |
+| [2] | **Décret RSN 821.104 du 2.12.2025** instituant des subsides extraordinaires … pour l'année 2026 (Grand Conseil) | «État au 15 janvier 2026», FO 2025 No 50, promulgiert 14.01.2026, in Kraft 15.01.2026, «caduc de plein droit le 31 décembre 2027» | rsn.ne.ch-PDF 200 = Lexfind tolv 258772 (gleiche Grösse). Tabelle Art. 4 im Textlayer verschoben — **am Seitenbild gelesen** (pdftoppm, Seite 2) |
+| [3] | OCAB, «Normes de classification valables en 2026», Réf. OCAB25-006 | publiziert 11.12.2025 | ne.ch-PDF 200, 5 Seiten |
+| [4] | LILAMal RSN 821.10 | «Etat au 1er janvier 2026» | rsn.ne.ch-PDF 200 |
+| [5] | RALILAMal RSN 821.101 | «État au 1er janvier 2026» | rsn.ne.ch-PDF 200 |
+| [6] | LAMal SR 832.10 | «État le 1er juillet 2026» | Fedlex-SPARQL nennt die Fassung 2026-07-01; Filestore-PDF 200 (1'054'273 Bytes), erfundenes Datum → HTML-Hülle 9'148 Bytes |
+| [7] | ne.ch «Classifications et montants» | «dateModified 08/09/2026» | Seite 200; erfundener Pfad → 404 |
+| [8] | ne.ch «Subsides assurance-maladie (LAMal)» | «dateModified 17/09/2026» | Seite 200 |
+
+**Der Widerspruch vom 16.09. ist aufgelöst.** Der Grosse Rat hat am 2.12.2025 — drei Wochen nach
+dem Arrêté — ausserordentliche Subsides beschlossen [2]. Art. 3 al. 2: «Ils viennent augmenter les
+montants maximums des subsides prévus par l'article 11 de l'ANO 2026, le subside total accordé ne
+pouvant être supérieur à la prime exigée par l'assureur.» Art. 6 al. 1: «simplement ajoutés aux
+subsides ordinaires», al. 2: ohne Gesuch. Zuschläge Erwachsene ab 26 (Art. 4 al. 1, am Seitenbild):
+S1 – · S2 – · S3 1 · S4 3 · S5 4 · S6 6 · S7 8 · S8 10 · S9 12 · S10 14 · S11 14 · S12 14 · S13 15 ·
+S14 14 · S15 15. **[1] + [2] ergibt Zeile für Zeile die Tabelle des OCAB [3] und der Seite [7]:**
+611 · 579 · 515 · 453 · 390 · 328 · 272 · 216 · 166 · 110 · 91 · 78 · 66 · 53 · 41 (auch junge
+Erwachsene und Personen in Ausbildung gehen auf, nicht gebaut). Die App rechnet die Summe. Wer
+nur [1] rechnete, läge ab S3 bis CHF 15 im Monat zu tief.
+
+**Weitere Befunde, heute gelesen:**
+- **Kürzung bei Wahlfranchise:** [1] Art. 11 al. 2 und [2] Art. 4 al. 2 — die Beträge «sont
+  diminués dans la même mesure que les réductions accordées par les assureurs en cas de formes
+  particulières d'assurances au sens de l'article 62, alinéa 2, lettre a LAMal»; LAMal Art. 62
+  al. 2 lit. a [6] ist die höhere Kostenbeteiligung gegen Prämienrabatt (Wahlfranchise). Das OCAB
+  [3] präzisiert: «diminués du même taux que le rabais accordé par l'assureur» und rechnet ein
+  Beispiel (450.– bei Franchise 300; bei 2'500 und Rabatt −32,24 % 304.90). Den Rabatt kennt die
+  App nicht ⇒ **Zahl nur bei Franchise 300**, sonst `offen: 'neFranchise'`. Das OCAB-Beispiel ist
+  der einzige amtliche Rechenfall; er betrifft genau diesen nicht gebauten Teil.
+- **Deckel:** LILAMal Art. 14 al. 4 [4] und [2] Art. 3 al. 2.
+- **Unter 15'000 nur auf Gesuch:** [1] Art. 16 (revenu effectif < 15'000 allein, +3'000 je Kind)
+  und RALILAMal Art. 36 [5] ⇒ `offen: 'neRevenuMinimum'` mit dem Weg zum GSR.
+- **Alter:** [1] Art. 6/7 nach Kalenderjahr («fin de l'année civile des 25 ans», «dès le début de
+  l'année civile des 26 ans»), [8]: «Dès le 1er janvier de l'année de vos 26 ans» ⇒
+  `ERWACHSEN.imAnspruchsjahr`, **belegt**. Kind [1] Art. 5 «fin de l'année civile des 18 ans».
+- **Säule 3a:** [1] Art. 12 al. 1 lit. a «sous seules déductions» von 6.4, 6.5, 6.7, 6.10 — die 3a
+  ist nicht darunter ⇒ Regel `SAEULE_3A.voll` (NE dort eingetragen).
+- **Weg:** «Automaticité mixte» [8], RALILAMal Art. 31 [5]: Bisherige automatisch; neu
+  Berechtigte erhalten einen Coupon-réponse und bestätigen «dans un délai de 30 jours», sonst
+  verfällt der Anspruch. `noteKey` neu `ipv.noteAutoOcab` (vorher «Automatische Prüfung via
+  Steuerdaten» — für neu Berechtigte unvollständig).
+- **Grenzen** Annexe [1] = [3] für die Tabelle «adulte seul», 0–10 Kinder, vollständig verglichen.
+- **Werte 2027:** am 28.09.2026 nicht publiziert. Jahres-Riegel ab 01.01.2027; der Décret [2]
+  gilt ohnehin nur für die Monate 2026.
+
+**Gewählt, nicht belegt:** Klassengrenzen einschliesslich ([1] Art. 3 «égal ou inférieur»; die
+Seite [7] schreibt «22'800 à 23'940», die Nahtstelle ist dort doppelt genannt) · revenu effectif
+Ziff. 5.5 ≈ Nettoeinkommen der App (Annahme: Lohn netto laut Lohnausweis) · Kind ohne Geburtsdatum
++1 Jahr (vorsichtig an der 18).
+
+**Bewusst nicht gebaut:** Paare/Konkubinat (eigene Tabellen) · junge Erwachsene und Personen in
+Ausbildung (Art. 6–8, 15) · PC-/Sozialhilfe-Beziehende · Quellenbesteuerte, amtlich Veranlagte,
+Selbständige · Wahlfranchise-Kürzung · Abzüge 6.4/6.5/6.7/6.10 (Einkommen zu hoch, Betrag eher zu
+tief — eine Klasse ist 1'140 Franken breit) · Mietertrag · Anspruchsbeginn nach Art. 17 ·
+Rückforderung nach Art. 21 (im Vorbehalt genannt).
 
 ---
 

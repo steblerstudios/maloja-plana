@@ -240,6 +240,31 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 8 · OCAB Neuenburg — Wahlfranchise, Nahtstellen und das revenu effectif
+
+*Aufgenommen 28.09.2026 beim Einbau von NE. Entwurf — **nicht gesendet**.*
+
+**Vorbemerkung:** Der am 16.09. notierte Widerspruch zwischen Kantonsseite und RSN 821.102 (ab S3)
+ist geklärt — es ist der Décret RSN 821.104 vom 2.12.2025, den das OCAB-Blatt «Normes 2026»
+ausdrücklich mitrechnet. Keine Frage mehr.
+
+**Frage 1 — Wahlfranchise:** Die Beträge werden «du même taux que le rabais accordé par
+l'assureur» gekürzt. Gilt der Satz der eigenen Kasse der versicherten Person (so liest sich das
+Beispiel), und rundet das OCAB auf 5 Rappen (450 × (1 − 2,92 %) = 436.86 → 436.85)? Ohne den
+Rabattsatz zeigt die App bei Franchise über 300 keinen Betrag.
+
+**Frage 2 — Nahtstellen:** Die Annexe schreibt «à 22'800», die Kantonsseite «jusqu'à 22'800» und
+dann «22'800 à 23'940». Gehört ein revenu déterminant von genau 22'800 zu S1 (so rechnet die App,
+nach Art. 3 al. 1 «égal ou inférieur») oder zu S2?
+
+**Frage 3 — revenu effectif:** Ist in Ziffer 5.5 der Steuererklärung der Lohn **netto** nach
+Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkommen dafür ein.
+
+**Stand:** NE ist für 2026 gebaut (Entwurfs-PR #NE-PR, K31). Werte 2027 nicht eingebaut; ab
+01.01.2027 zeigt die App für NE keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
