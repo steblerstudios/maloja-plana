@@ -1386,6 +1386,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Aggiungi',
     anspruch: 'Diritti',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Zaino',
     capDokument: 'Documento',
     capBeleg: 'Ricevuta',
     capFrist: 'Scadenza',
@@ -1793,7 +1795,6 @@ export default {
     anspruchTitle: 'A cosa ho diritto?',
     anspruchIntro: 'Spesso si ha diritto a più di quanto si pensi. Una panoramica tranquilla — senza impegno né giudizio.',
     anspruchMoeglich: 'Diritto possibile',
-    anspruchAlleLink: 'Tutte le prestazioni in panoramica',
     nextUpTitle: 'Qual è il prossimo passo?',
     nextUpAllDone: 'La base c’è — bene così.',
     nextUpReassure: { sie: 'Solo un suggerimento — il ritmo lo decide Lei.', du: 'Solo un suggerimento — il ritmo lo decidi tu.' },
@@ -5147,9 +5148,9 @@ export default {
     b: { wohnen: 'Abitare', finanzen: 'Finanze', person: 'Persona', versicherungen: 'Assicurazione', gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza', bildung: 'Formazione', notfall: 'Emergenza', behoerden: 'Autorità' },
   },
   gepaeck: {
-    title: 'Il mio bagaglio',
+    title: 'Zaino da escursione',
     intro: { sie: 'Ogni ambito della vita è un attrezzo nello zaino. Disfaccia il bagaglio, apra un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.', du: 'Ogni ambito della vita è un attrezzo nello zaino. Disfa il bagaglio, apri un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.' },
-    link: 'Il mio bagaglio',
+    link: 'Zaino da escursione',
     ctaSub: 'Gli eventi della vita come attrezzatura — disfare, guardare dentro.',
     unpack: 'Disfare',
     pack: 'Rifare il bagaglio',

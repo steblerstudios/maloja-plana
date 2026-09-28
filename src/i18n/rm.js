@@ -1629,6 +1629,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Agiuntar',
     anspruch: 'Dretgs',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Sac à dos',
     capDokument: 'Document',
     capBeleg: 'Quittanza',
     capFrist: 'Termin',
@@ -1888,7 +1890,6 @@ export default {
     anspruchTitle: 'A tge hai jau dretg?',
     anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
     anspruchMoeglich: 'Dretg pussaivel',
-    anspruchAlleLink: 'Tuttas prestaziuns en survista',
     nextUpTitle: 'Tge è ussa da far?',
     nextUpAllDone: 'Tia basa è en plaz — bel.',
     nextUpReassure: { sie: 'Mo ina proposta — Vus fixais il tempo.', du: 'Mo ina proposta — ti fixeschas il tempo.' },
@@ -5797,9 +5798,9 @@ export default {
     b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   gepaeck: {
-    title: 'Mon bagage',
+    title: 'Sac à dos de randonnée',
     intro: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.',
-    link: 'Mon bagage',
+    link: 'Sac à dos de randonnée',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
     pack: 'Remballer',

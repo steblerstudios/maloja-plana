@@ -37,7 +37,7 @@ const MUSTER = [
 const AUSNAHMEN = new Set([
   // Boden-Anker am Handy: zeichnet seine Icons selbst (`bottomIcon`), bewusst
   // als Referenz-Set der Outline-Icons (docs/ICON_KONVENTION.md).
-  ...['file', 'receipt', 'calendarToday', 'pencil', 'sackmesser', 'gift', 'menu']
+  ...['file', 'receipt', 'calendarToday', 'pencil', 'sackmesser', 'gift', 'menu', 'rucksack', 'search']
     .map((n) => `main.jsx:${n}`),
   // Browser-Benachrichtigung: ein Bildpfad, kein Icon-Name.
   'notifications.js:/icon-192.png',
