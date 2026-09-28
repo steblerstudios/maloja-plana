@@ -38,7 +38,7 @@
 // WAS OBWALDEN VON DEN BISHERIGEN KANTONEN UNTERSCHEIDET
 //
 // 1. HARTE EINKOMMENSGRENZE, publiziert als Zahl (Art. 7 Abs. 1/2 [3], [4]). Für Alleinstehende
-//    ohne Kinder wirkt sie nie (die Formel ist schon bei ≈ 46 928 bei null); mit Kindern schon —
+//    ohne Kinder wirkt sie nie (die Formel ist schon bei ≈ 46 931 bei null); mit Kindern schon —
 //    ab fünf Kindern bricht der Anspruch an der Grenze ab. Darum `maxIncome` im Ergebnis:
 //    50 000 bzw. 75 000 anrechenbares Einkommen.
 //
