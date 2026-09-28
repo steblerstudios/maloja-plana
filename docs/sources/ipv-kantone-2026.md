@@ -56,7 +56,7 @@ sind. Dieses Dokument ändert keinen Code.
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | abbildbar (mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge, siehe «Offen») | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
 | GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
-| JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
+| JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | gebaut, zeigt bewusst keine Zahl (PR #PRNUMMER, nachgeprüft 28.09.2026: steuerbares Einkommen fehlt der App) | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
 
 ## Auffällige Befunde
 
@@ -2632,7 +2632,7 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 
 ## JU — Jura
 
-**Beurteilung:** abbildbar
+**Beurteilung:** ~~abbildbar~~ gebaut, zeigt bewusst keine Zahl (K31, PR #PRNUMMER; nachgeprüft 28.09.2026)
 **Modell (kurz):** Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999
 **Zuständig / Weg:** Caisse de compensation du canton du Jura (ECAS); von Amtes wegen nach definitiver Veranlagung 2024 (Entscheid oder Fragebogen); sonst Antrag bis 31.12.2026 (Eingang ECAS); Antrag nötig u. a. für Quellenbesteuerte, Konkubinatspaare mit gemeinsamem Kind, Personen < 25 in Ausbildung (über die Eltern); amtlich Veranlagte ausgeschlossen
 **Gültigkeit:** 2026 definitiv (Arrêté vom 28.10.2025, gültig 1.1.–31.12.2026)
@@ -2730,3 +2730,43 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 3. Communiqué «Subsides des primes de l'assurance-maladie dans le canton du Jura pour 2026», République et Canton du Jura, 30.10.2025. https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Subsides-des-primes-de-l-assurance-maladie-dans-le-canton-du-Jura-pour-2026.html — abgerufen 16.09.2026
 4. Réduction des primes d'assurance-maladie (RPI) - Informations générales 2026, ECAS Jura. https://www.ecasjura.ch/fr/Assurances/Assurance-maladie/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026.html — abgerufen 16.09.2026
 5. Modèle médecin de famille, maladie et accident, pour les adultes (Primes 2026), ECAS Jura. https://www.ecasjura.ch/Htdocs/Files/v/6ea884aaab5803991c5901a89b1e2072c8caa7d882fb86c9ceb069f7a68a898d.pdf/MED-adultes-avec-risque-accidents.pdf?download=1 — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App) — Ergebnis: bewusst keine Zahl
+
+**An der Quelle nachgeprüft 28.09.2026:**
+
+| Quelle | Fassung | Weg | Gegenprobe |
+|---|---|---|---|
+| Arrêté RSJU 832.115.1 «pour l'année 2026» + Annexe 1/2 | du 28 octobre 2025, gültig 01.01.–31.12.2026 (Art. 5) | ECAS-PDF → 200, 584'363 Bytes, 5 S.; **S. 1–3 Scan ohne Textlayer, am Seitenbild gelesen**; S. 4 (Tabelle) am Seitenbild geprüft: sichtbar «pour l'année 2026», Textlayer zusätzlich verdeckt «2025», alle Zahlen gleich | erfundener Datei-Hash → HTTP 410; derselbe Hash mit anderem Dateinamen → dieselbe Datei (der Name ist Dekor, die Messung hängt am Hash) |
+| Ordonnance RSJU 832.115 | «valable dès 01.01.2026» | ECAS-PDF → 200, 12 S., Textlayer | wie oben |
+| ECAS «RPI – Informations générales 2026» | Seite, 28.09.2026 | → 200 | — |
+
+**Wortlaute, die über das Ergebnis entscheiden** (Originalsprache):
+
+> «le revenu imposable taxé définitivement pour l'année fiscale 2024 sert de base de calcul.» — Arrêté Art. 1 al. 1
+>
+> «Le revenu imposable selon avis de taxation (chiffre 690) subit les corrections suivantes : … j) augmentation des cotisations au 3e pilier (chiffres 520 et 520c).» — Arrêté Art. 1 al. 4
+>
+> «Les déductions suivantes corrigent le revenu imposable : a) par contribuable marié, veuf, divorcé ou séparé, sans enfant à charge fr. 5 000.- b) par couple marié, personne veuve, divorcée, séparée ou célibataire, au bénéfice d'une déduction fiscale pour "enfants à charge" (chiffre 620) fr. 10 000.- c) par enfant à charge … pour les deux premiers enfants fr. 4 000.- – à partir du troisième enfant fr. 6 000.-» — Arrêté Art. 1 al. 5
+>
+> «Le revenu déterminant ne correspond pas au revenu imposable ; il correspond au revenu déterminant unifié selon le droit en matière de réduction des primes d'assurance-maladie.» — ECAS, Informations générales 2026 (zum Familienzuschlag)
+>
+> «Le droit aux subsides est étudié d'office si vous avez reçu votre décision fiscale pour l'année 2024. … Si vous n'êtes pas taxés pour 2024 avant décembre 2026 ou si vous n'obtenez pas de courrier de notre part après avoir été taxé pour 2024 dans les 30 jours suivant la taxation, nous vous prions de bien vouloir déposer une requête, qui devra nous parvenir avant le 31 décembre 2026.» — ECAS
+
+**Entscheid:** Massgebend ist das **steuerbare** Einkommen (nach allen Steuerabzügen), nicht ein Rein- oder
+Nettoeinkommen. Die App kennt nur das Nettoeinkommen; jeder Steuerabzug, den sie nicht kennt, hebt das
+Einkommen. Bei Stufen von 1'000 Franken (Erwachsene 10–20 CHF/Monat je Stufe) und dem Ende für Erwachsene
+bei 26'999 ergäbe das zu tiefe Beträge und «kein Anspruch», wo einer besteht. Darum zeigt die App für JU
+**in jeder Lage** eine Orientierung mit dem neuen Grund `steuerbaresEinkommen` (PR #PRNUMMER). Modul,
+Tabelle, Abzüge und Familienzuschlag sind gebaut und getestet (`src/config/ipvJura.js`), damit die Rechnung
+steht, sobald Stebler Studios entscheidet, ob die App das steuerbare Einkommen der Veranlagung erfragt
+(Produktentscheid; das bestehende Feld `taxableIncome` meint laut Steuerrechner den Wert der **Bundessteuer**,
+nicht den kantonalen, und kein bestimmtes Jahr).
+
+**Korrekturen zum Stand 16.09.:**
+- ~~«Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024) … abbildbar»~~ ⟨korrigiert 28.09.2026⟩ Tabelle bestätigt; **abbildbar nur mit dem steuerbaren Einkommen**, das die App nicht hat.
+- Die Kinderspalte (100) gilt für «Enfants de moins de 18 ans révolus»; 16- und 17-Jährige **ohne Ausbildung** fallen in die Spalte «Mineurs de 16 à 18 ans» (45 → 10). Das stand oben nicht.
+- Art. 1 al. 5 lit. a (5'000) gilt nur für «marié, veuf, divorcé ou séparé» ohne Kind — **nicht** für Ledige.
+- Weg: Prüfung von Amtes wegen nach der Veranlagung 2024, sonst Gesuch bis 31.12.2026 — `noteKey` von «Antrag beim Service de l'action sociale» auf `ipv.noteAutoTaxData` korrigiert.
+- 2027: am 28.09.2026 nicht publiziert (das Arrêté gilt nur für 2026).
+
