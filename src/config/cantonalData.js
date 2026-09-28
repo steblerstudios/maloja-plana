@@ -3,132 +3,26 @@
 // entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
 // unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
 import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
+import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 import { sozialhilfeBilanz, istErwerbstaetig } from '../data/sozialhilfeKern.js';
+import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 
-// PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
-const PLZ_RANGES = [
-  { from: 1000, to: 1099, canton: 'VD' },
-  { from: 1100, to: 1199, canton: 'VD' },
-  { from: 1200, to: 1299, canton: 'GE' },
-  { from: 1300, to: 1399, canton: 'VD' },
-  { from: 1400, to: 1499, canton: 'VD' },
-  { from: 1500, to: 1599, canton: 'VD' },
-  { from: 1600, to: 1699, canton: 'FR' },
-  { from: 1700, to: 1799, canton: 'FR' },
-  { from: 1800, to: 1899, canton: 'VD' },
-  { from: 1900, to: 1999, canton: 'VS' },
-  { from: 2000, to: 2099, canton: 'NE' },
-  { from: 2100, to: 2199, canton: 'NE' },
-  { from: 2200, to: 2299, canton: 'NE' },
-  { from: 2300, to: 2399, canton: 'NE' },
-  { from: 2400, to: 2499, canton: 'NE' },
-  { from: 2500, to: 2599, canton: 'BE' },
-  { from: 2600, to: 2699, canton: 'BE' },
-  { from: 2700, to: 2799, canton: 'JU' },
-  { from: 2800, to: 2899, canton: 'JU' },
-  { from: 2900, to: 2999, canton: 'JU' },
-  { from: 3000, to: 3199, canton: 'BE' },
-  { from: 3200, to: 3299, canton: 'BE' },
-  { from: 3300, to: 3399, canton: 'BE' },
-  { from: 3400, to: 3499, canton: 'BE' },
-  { from: 3500, to: 3599, canton: 'BE' },
-  { from: 3600, to: 3699, canton: 'BE' },
-  { from: 3700, to: 3799, canton: 'BE' },
-  { from: 3800, to: 3899, canton: 'BE' },
-  { from: 3900, to: 3999, canton: 'VS' },
-  { from: 4000, to: 4099, canton: 'BS' },
-  { from: 4100, to: 4199, canton: 'BL' },
-  { from: 4200, to: 4299, canton: 'BL' },
-  { from: 4300, to: 4399, canton: 'SO' },
-  { from: 4400, to: 4499, canton: 'SO' },
-  { from: 4500, to: 4599, canton: 'SO' },
-  { from: 4600, to: 4699, canton: 'SO' },
-  { from: 4700, to: 4799, canton: 'SO' },
-  { from: 4800, to: 4899, canton: 'AG' },
-  { from: 4900, to: 4999, canton: 'SO' },
-  { from: 5000, to: 5099, canton: 'AG' },
-  { from: 5100, to: 5199, canton: 'AG' },
-  { from: 5200, to: 5299, canton: 'AG' },
-  { from: 5300, to: 5399, canton: 'AG' },
-  { from: 5400, to: 5499, canton: 'AG' },
-  { from: 5500, to: 5599, canton: 'AG' },
-  { from: 5600, to: 5699, canton: 'AG' },
-  { from: 5700, to: 5799, canton: 'AG' },
-  { from: 5800, to: 5899, canton: 'AG' },
-  { from: 5900, to: 5999, canton: 'AG' },
-  { from: 6000, to: 6099, canton: 'LU' },
-  { from: 6100, to: 6199, canton: 'LU' },
-  { from: 6200, to: 6249, canton: 'LU' },
-  { from: 6250, to: 6299, canton: 'LU' },
-  { from: 6300, to: 6399, canton: 'ZG' },
-  { from: 6400, to: 6449, canton: 'SZ' },
-  { from: 6450, to: 6499, canton: 'UR' },
-  { from: 6500, to: 6599, canton: 'TI' },
-  { from: 6600, to: 6699, canton: 'TI' },
-  { from: 6700, to: 6799, canton: 'TI' },
-  { from: 6800, to: 6899, canton: 'TI' },
-  { from: 6900, to: 6999, canton: 'TI' },
-  { from: 7000, to: 7099, canton: 'GR' },
-  { from: 7100, to: 7199, canton: 'GR' },
-  { from: 7200, to: 7299, canton: 'GR' },
-  { from: 7300, to: 7399, canton: 'GR' },
-  { from: 7400, to: 7499, canton: 'GR' },
-  { from: 7500, to: 7599, canton: 'GR' },
-  { from: 7600, to: 7699, canton: 'GR' },
-  { from: 7700, to: 7799, canton: 'GR' },
-  { from: 8000, to: 8099, canton: 'ZH' },
-  { from: 8100, to: 8199, canton: 'ZH' },
-  { from: 8200, to: 8299, canton: 'SH' },
-  { from: 8300, to: 8399, canton: 'ZH' },
-  { from: 8400, to: 8499, canton: 'ZH' },
-  { from: 8500, to: 8599, canton: 'TG' },
-  { from: 8600, to: 8699, canton: 'ZH' },
-  { from: 8700, to: 8799, canton: 'ZH' },
-  { from: 8800, to: 8899, canton: 'SZ' },
-  { from: 8900, to: 8999, canton: 'AG' },
-  { from: 9000, to: 9099, canton: 'SG' },
-  { from: 9100, to: 9199, canton: 'AI' },
-  { from: 9200, to: 9299, canton: 'SG' },
-  { from: 9300, to: 9399, canton: 'SG' },
-  { from: 9400, to: 9499, canton: 'SG' },
-  { from: 9500, to: 9599, canton: 'SG' },
-  { from: 9600, to: 9699, canton: 'SG' },
-  { from: 9700, to: 9799, canton: 'AR' },
-  { from: 9800, to: 9899, canton: 'SG' },
-  { from: 9900, to: 9999, canton: 'SG' },
-];
+// PLZ → Kanton/Gemeinde, Kantonscodes und -namen liegen seit 28.09.2026 in kantonPLZ.js (klein, für
+// die Startdatei). Hier nur weitergereicht, damit bestehende Importe gültig bleiben.
+import { plzModul, preloadPLZModul } from './kantonPLZ.js';
+export { cantonFromPLZ, gemeindeFromPLZ, CANTON_CODES, getCantonName } from './kantonPLZ.js';
 
-let _plzModule = null;
 let _zhModule = null;
 let _beModule = null;
 let _agModule = null;
 let _sgModule = null;
 let _luModule = null;
 
-export function cantonFromPLZ(plz) {
-  const num = parseInt(plz, 10);
-  if (isNaN(num) || num < 1000 || num > 9999) return null;
-
-  if (_plzModule) {
-    const precise = _plzModule.cantonFromPLZPrecise(plz);
-    if (precise) return precise;
-  } else {
-    import('../data/plzGemeinde.js').then(m => { _plzModule = m; });
-  }
-
-  const match = PLZ_RANGES.find(r => num >= r.from && num <= r.to);
-  return match ? match.canton : null;
-}
-
-// PLZ-Modul aktiv vorladen UND `_plzModule` setzen (anders als ein roher dynamic import,
-// der nur den Cache wärmt). So greifen präzise Kanton- und Gemeinde-Lookups schon beim
-// ersten PLZ-Eintrag.
-export function preloadPLZ() {
-  if (!_plzModule) import('../data/plzGemeinde.js').then(m => { _plzModule = m; }).catch(() => {});
-  // K31: die Kantonsmodelle der Prämienverbilligung brauchen die Gemeinde und liegen darum im
-  // selben Moment nach (je ein eigener Chunk, hält das Hauptbundle klein).
+// K31: die Kantonsmodelle der Prämienverbilligung brauchen die Gemeinde und liegen darum im
+// selben Moment nach wie die PLZ-Daten (je ein eigener Chunk, hält das Hauptbundle klein).
+export function preloadIPVModelle() {
   if (!_zhModule) import('./ipvZuerich.js').then(m => { _zhModule = m; }).catch(() => {});
   if (!_beModule) import('./ipvBern.js').then(m => { _beModule = m; }).catch(() => {});
   // AG braucht die Gemeinde NICHT (kein Prämienregionen-Modell, V KVGG § 4 Abs. 1), lädt aber
@@ -138,29 +32,10 @@ export function preloadPLZ() {
   if (!_luModule) import('./ipvLuzern.js').then(m => { _luModule = m; }).catch(() => {});
 }
 
-// Primäre Gemeinde aus PLZ (lokal). Braucht das geladene PLZ-Modul; vorher null
-// (kein Range-Fallback für Namen). Stösst den Lazy-Load an wie cantonFromPLZ.
-export function gemeindeFromPLZ(plz) {
-  const num = parseInt(plz, 10);
-  if (isNaN(num) || num < 1000 || num > 9999) return null;
-  if (_plzModule) {
-    const primary = _plzModule.primaryGemeinde(plz);
-    return primary ? primary.gemeinde : null;
-  }
-  import('../data/plzGemeinde.js').then(m => { _plzModule = m; });
-  return null;
-}
-
-export const CANTON_CODES = [
-  'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR',
-  'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG',
-  'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'
-];
-
-export function getCantonName(code, t) {
-  if (!code) return '';
-  if (t) return t('cantons.' + code) || code;
-  return code;
+// PLZ-Modul aktiv vorladen UND die Kantonsmodelle — wie bisher, für alle, die von hier importieren.
+export function preloadPLZ() {
+  preloadPLZModul();
+  preloadIPVModelle();
 }
 
 // ─── Household helper ─────────────────────────────────────
@@ -259,44 +134,13 @@ export const CANTONAL_IPV = {
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };
 
-// Kantonale Mietzinsbeiträge / Wohnkosten-Limits (SKOS-Richtlinien + kantonale Anpassungen)
-export const CANTONAL_RENT_LIMITS = {
-  ZH: { single: 1300, couple: 1550, family3: 1750, family4: 1900, note: 'Stadt Zürich höher' },
-  BE: { single: 1100, couple: 1350, family3: 1500, family4: 1650, note: 'Unterschied Stadt/Land' },
-  LU: { single: 1150, couple: 1350, family3: 1550, family4: 1700 },
-  UR: { single: 1000, couple: 1200, family3: 1350, family4: 1500 },
-  SZ: { single: 1200, couple: 1400, family3: 1600, family4: 1750 },
-  OW: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  NW: { single: 1100, couple: 1300, family3: 1450, family4: 1600 },
-  GL: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  ZG: { single: 1400, couple: 1650, family3: 1850, family4: 2000 },
-  FR: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  SO: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  BS: { single: 1350, couple: 1600, family3: 1800, family4: 1950 },
-  BL: { single: 1150, couple: 1350, family3: 1550, family4: 1700 },
-  SH: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  AR: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  AI: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  SG: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  GR: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  AG: { single: 1100, couple: 1300, family3: 1500, family4: 1650 },
-  TG: { single: 1000, couple: 1200, family3: 1350, family4: 1500 },
-  TI: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  VD: { single: 1300, couple: 1500, family3: 1700, family4: 1900 },
-  VS: { single: 1000, couple: 1200, family3: 1350, family4: 1500 },
-  NE: { single: 1050, couple: 1250, family3: 1400, family4: 1550 },
-  GE: { single: 1500, couple: 1750, family3: 2000, family4: 2200 },
-  JU: { single: 950, couple: 1150, family3: 1300, family4: 1450 },
-  _default: { single: 1100, couple: 1300, family3: 1500, family4: 1650 },
-};
-
-export function getRentLimit(canton, householdSize) {
-  const limits = CANTONAL_RENT_LIMITS[canton] || CANTONAL_RENT_LIMITS._default;
-  if (householdSize <= 1) return limits.single;
-  if (householdSize === 2) return limits.couple;
-  if (householdSize === 3) return limits.family3;
-  return limits.family4;
-}
+// Mietzins-Limite (bis zu welcher Miete die Sozialhilfe die Wohnkosten anrechnet): die App kennt
+// sie NICHT. Bis 28.09.2026 stand hier eine Tabelle mit 26 Kantonen (CANTONAL_RENT_LIMITS,
+// getRentLimit) — ohne Quelle und ohne Stand seit dem ersten Commit, angezeigt als «kantonale
+// Mietzins-Limite» und in der Schnellrechnung als Deckel der Wohnkosten. Die Limiten legen meist
+// die Gemeinden fest, nicht der Kanton. Weggelassen, nicht vereinheitlicht: wer sie belegt, führt
+// sie je Gemeinde mit `beleg` ein (Bauart wie CANTONAL_IPV) — nicht als Kantonswert zurück.
+// Wächter: src/config/__tests__/mietzinslimiteUnbelegt.test.js
 
 // SKOS-Grundbedarf für den Lebensunterhalt (GBL), Stand 2025/2026 (SKOS-RL C.3.1)
 // Quelle: SKOS, bestätigt via Sozialhilfehandbuch Kanton ZH + AG. Ab 8 Personen + CHF 216/Person.
@@ -332,15 +176,21 @@ export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   const householdSize = hh.householdSize;
-  const erwerbseinkommen = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0);
+  // Brutto im Profil → Netto-Richtwert (eine Regel mit dem Dashboard, utils/nettoAusProfil.js;
+  // Predeploy 25.09.2026). Vorher galt jeder Monatslohn hier als netto, auch ein brutto erfasster.
+  const haupt = nettoMonatAusProfil(data.finanzen?.monthlyIncome, data.finanzen?.incomeType, data.basis);
+  const neben = nettoMonatAusProfil(data.finanzen?.sideIncome, data.finanzen?.sideIncomeType, data.basis);
+  const erwerbseinkommen = haupt.netto + neben.netto;
+  const einkommenGeschaetzt = haupt.geschaetzt || neben.geschaetzt;
   const erwerbstaetig = istErwerbstaetig(data.finanzen);
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
 
   const grundbedarf = getGrundbedarf(householdSize);
-  const rentLimit = getRentLimit(canton, householdSize);
-  const effectiveRent = Math.min(rent + utilities, rentLimit);
+  // Die ganze erfasste Miete, ohne Deckel: die Mietzins-Limite der Gemeinde kennt die App nicht
+  // (siehe oben). Die Anzeige sagt das, statt eine Zahl zu erfinden.
+  const effectiveRent = rent + utilities;
   const effectiveKK = kkPremium;
 
   const bilanz = sozialhilfeBilanz({
@@ -362,13 +212,14 @@ export function calculateSozialhilfe(data) {
   return {
     grundbedarf,
     effectiveRent,
-    rentLimit,
     effectiveKK,
     totalBedarf,
     income,
     efb: bilanz.efb,
     anrechenbaresEinkommen: bilanz.anrechenbaresEinkommen,
     efbEntscheidet: bilanz.efbEntscheidet,
+    // Einkommen aus brutto geschätzt (Anzeige: «≈ … (geschätzt)»).
+    einkommenGeschaetzt,
     erwerbstaetig,
     erwerbsunkostenOffen: erwerbstaetig,
     deficit,
@@ -389,6 +240,15 @@ export function calculateSozialhilfe(data) {
   };
 }
 
+// Das Jahreseinkommen der Muster-Kantone (und des IPV-Pegels, data/pegel.js — derselbe Wert,
+// sonst stünde der Pegel neben einer anderen Grenze-Rechnung).
+// 13. Monatslohn: dieselbe Regel wie im Steuerrechner und in den Kantonsmodulen (utils/dreizehnter.js),
+// nur für den Hauptlohn. Das Partnereinkommen bleibt ×12 — nach seinem 13. fragt die App nicht.
+export function ipvJahreseinkommen(data, hh = getHouseholdInfo(data)) {
+  return Number(data?.finanzen?.monthlyIncome || 0) * hauptlohnMonate(data?.finanzen?.dreizehnter)
+    + (Number(data?.finanzen?.sideIncome || 0) + (hh.partnerIncome || 0)) * 12;
+}
+
 // Kantonale IPV-Berechnung — einkommensabhängig
 // Modell: linearer Abbau der Verbilligung zwischen 0 und maxIncome.
 // Bei Einkommen = 0 → voller Betrag, bei maxIncome → 0.
@@ -402,7 +262,20 @@ export function calculateSozialhilfe(data) {
 // in vielen Kantonen nachweislich falsch, docs/sources/ipv-kantone-2026.md, PR #161):
 // immer derselbe neutrale Hinweis, weder «wahrscheinlich» noch «nicht berechtigt», und
 // ohne cantonData (auch der Verfahrens-Hinweis je Kanton ist unbelegt).
+//   annahmen.ohneDreizehnten  wie im Steuerrechner (steuernFuerProfil): ein Betrag steht, der
+//                    Hauptlohn ist erfasst, die Frage nach dem 13. Monatslohn aber offen — gerechnet
+//                    ×12. Mit 13. läge das Einkommen 8,3 % höher (13/12) und die Verbilligung tiefer.
+//   annahmen.partnerOhneDreizehnten  Partnereinkommen erfasst — immer ×12 gerechnet (keine Frage dazu).
 export function calculateIPV(data) {
+  const r = ipvRechnen(data);
+  if (!r.eligible) return r;
+  const ohneDreizehnten = Number(data.finanzen?.monthlyIncome) > 0 && dreizehnterStatus(data.finanzen?.dreizehnter) === 'offen';
+  // Das Partnereinkommen zählt ×12 — nach dem 13. der zweiten Person fragt die App nicht.
+  const partnerOhneDreizehnten = getHouseholdInfo(data).partnerIncome > 0;
+  return { ...r, annahmen: { ohneDreizehnten, partnerOhneDreizehnten } };
+}
+
+function ipvRechnen(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
   // K118: ohne (erkannten) Kanton ist der Anspruch UNBEKANNT, nicht 0. Dieselbe Form wie ein
@@ -411,7 +284,7 @@ export function calculateIPV(data) {
   if (!ipvData) return { eligible: false, belegt: false, amount: null, anspruchMoeglich: false, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const hh = getHouseholdInfo(data);
-  const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome) * 12;
+  const income = ipvJahreseinkommen(data, hh);
   const childrenCount = hh.childrenCount;
   // Junge Erwachsene 19–25 in Ausbildung haben in den meisten Kantonen eine
   // eigene (oft höhere) IPV-Kategorie. Die Kinderverbilligung hier gilt für
@@ -430,12 +303,12 @@ export function calculateIPV(data) {
   // config/ipvBern.js, config/ipvAargau.js, config/ipvStGallen.js bzw. config/ipvLuzern.js). Solange PLZ-Daten und
   // Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
   if (canton === 'ZH') {
-    if (!_zhModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
-    return _zhModule.ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
+    if (!_zhModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
+    return _zhModule.ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
   }
   if (canton === 'BE') {
-    if (!_beModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
-    return _beModule.ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
+    if (!_beModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
+    return _beModule.ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
   }
   // AG kennt keine Prämienregionen (V KVGG § 4 Abs. 1: kantonsweiter Durchschnitt), darum
   // wartet es auch nicht auf die PLZ-Daten — nur auf sein eigenes Modul.
@@ -444,12 +317,12 @@ export function calculateIPV(data) {
     return _agModule.ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung);
   }
   if (canton === 'SG') {
-    if (!_sgModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
-    return _sgModule.ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
+    if (!_sgModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
+    return _sgModule.ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
   }
   if (canton === 'LU') {
-    if (!_luModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
-    return _luModule.ipvLuzern(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
+    if (!_luModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
+    return _luModule.ipvLuzern(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
   }
 
   let maxAnnualSubsidy;

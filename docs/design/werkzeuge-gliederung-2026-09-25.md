@@ -109,8 +109,15 @@ Achtung Namensgleichheit: die Werkzeug-Ansicht «Gesundheit» (`view: 'gesundhei
 `nav.arztkoffer`) und der Gegenstand «Arztkoffer» im Gepäck sind zwei verschiedene Dinge.
 
 ### Offene Entscheide
-1. **Geld:** neuer Gegenstand (z. B. Portemonnaie) für die Finanz-Werkzeuge — ja/nein, welcher?
-2. **Ablegen & Ordnen:** Aussenfach im Rucksack, oder bleiben sie direkt im Menü?
+1. ✅ **Geld: Portemonnaie** (Entscheid 25.09.) — siebter Gegenstand, trägt Steuern, Steuer-Import,
+   Budget, Budget-Sync, Schulden, Finanz-Übersicht, Mindestlohn-Check, Sozialhilfe.
+2. ✅ **Ablegen & Ordnen: beides** (Entscheid 27.09.) — im Rucksack ein **Aussenfach «Ablegen und
+   ordnen»** mit allen diesen Werkzeugen (Dokumentenablage, Meine Unterlagen, Kalender, Merkliste,
+   Lebenslauf, Offizielle Links, Flyer, Charts …), und **zusätzlich im Menü** die drei für den Alltag:
+   **Dokumentenablage · Kalender · Merkliste**. Bedingung: **ein Register** — jedes Werkzeug hat genau
+   einen Eintrag mit Fach und «auch im Menü»; Menü, Suche, Dashboard und Gepäck lesen daraus. Gleicher
+   Name und gleiches Zeichen an beiden Orten. Ein Test hält fest: jeder Menüeintrag liegt auch im Gepäck.
+   Erst als Vorschau-Zweig bauen und gemeinsam anschauen, dann entscheiden, ob er gemergt wird.
 3. **Die 5 Hervorhebungen auf dem Dashboard:** noch offen. Vorschlag: vorerst unverändert
    lassen — der Umbau hängt nicht davon ab — und im Oktober mit neuem Tester-Feedback entscheiden.
 

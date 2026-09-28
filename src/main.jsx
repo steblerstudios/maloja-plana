@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE } from './config/brotkrumePfade.js';
+import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
+import { herkunftName } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -8,7 +10,7 @@ import { version as APP_VERSION } from '../package.json';
 import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './config/constants.js';
 // DEMO_DATA wird lazy geladen (nur im Beispiel-Modus gebraucht) — hält den ~3 KB
 // grossen Demo-Datensatz aus dem eager index-Chunk (Byte-Budget).
-import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
+import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/kantonPLZ.js';
 import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
@@ -76,6 +78,7 @@ const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx')
 const NotfallpassBlatt = React.lazy(() => import('./NotfallpassBlatt.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
+const Kreditkarte = React.lazy(() => import('./Kreditkarte.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
 const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
 // Nur Design-Vorschau (Phase 2b-UI, noch NICHT verdrahtet). Vollständig DEV-gated
@@ -90,6 +93,7 @@ const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
 const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 const BetreibungErhalten = React.lazy(() => import('./BetreibungErhalten.jsx'));
+const MahnungErhalten = React.lazy(() => import('./MahnungErhalten.jsx'));
 const Dienst = React.lazy(() => import('./Dienst.jsx'));
 const Volljaehrig = React.lazy(() => import('./Volljaehrig.jsx'));
 const Lehre = React.lazy(() => import('./Lehre.jsx'));
@@ -100,6 +104,8 @@ const Adoption = React.lazy(() => import('./Adoption.jsx'));
 const Zusammenziehen = React.lazy(() => import('./Zusammenziehen.jsx'));
 const Ergaenzungsleistungen = React.lazy(() => import('./Ergaenzungsleistungen.jsx'));
 const Vorsorgeauftrag = React.lazy(() => import('./Vorsorgeauftrag.jsx'));
+const Patientenverfuegung = React.lazy(() => import('./Patientenverfuegung.jsx'));
+const Bestattung = React.lazy(() => import('./Bestattung.jsx'));
 const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
 const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
 const Aussteuerung = React.lazy(() => import('./Aussteuerung.jsx'));
@@ -116,7 +122,6 @@ const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
 const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const Schnellcheck = React.lazy(() => import('./Schnellcheck.jsx').then(m => ({ default: m.Schnellcheck })));
-const AnspruchLandkarte = React.lazy(() => import('./AnspruchLandkarte.jsx').then(m => ({ default: m.AnspruchLandkarte })));
 const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
 const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
 const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
@@ -284,6 +289,10 @@ const bottomIcon = (name, color, size) => {
       }, day)
     );
   }
+  // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?», hier im Startbündel
+  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B) und Lupe.
+  if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
+  if (name === 'search') return React.createElement('svg', common, React.createElement('circle', { cx: 11, cy: 11, r: 6 }), P('M15.5 15.5 L20 20'));
   if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
@@ -374,9 +383,11 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
-      // in der Mitte (bei 5 Slots vertauschen nur die zwei Paare aussen).
+      // in der Mitte. Seit 27.09.2026 drei je Seite: links Wanderrucksack neben der
+      // Übersicht, rechts die Suche zwischen Anspruch und Menü.
       ...(() => {
         const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
+        const leftR = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
         const left2 = slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') });
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
@@ -391,10 +402,11 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
           )
         );
         const right1 = slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
+        const rightS = slot({ key: 'search', label: t('nav.search'), icon: 'search', active: view === 'search', onClick: () => onNavigate('search') });
         const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
         return leftHand
-          ? [right2, right1, center, left2, left1]
-          : [left1, left2, center, right1, right2];
+          ? [right2, rightS, right1, center, left2, leftR, left1]
+          : [left1, leftR, left2, center, right1, rightS, right2];
       })()
     )
   );
@@ -544,6 +556,8 @@ const AppInner = ({ demo }) => {
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
   const [briefInitialTemplate, setBriefInitialTemplate] = useState(null);
+  // Angaben, die ein Ablauf dem vorgewählten Brief mitgibt (z. B. Zustelldatum) — nur im Speicher.
+  const [briefInitialAngaben, setBriefInitialAngaben] = useState(null);
   // B-1/E22: Zahlen aus dem Schnellcheck, mit denen der IPV-Rechner rechnet (nie im Profil).
   const [ipvUebergabe, setIpvUebergabe] = useState(null);
   const [lastSave, setLastSave] = useState(null);
@@ -584,6 +598,13 @@ const AppInner = ({ demo }) => {
   // Im Beispiel landen Speichern-Knöpfe der Rechner in der Beispiel-Kopie (nur im
   // Arbeitsspeicher) — vorher mischten sie Beispielwerte in den echten Stand.
   const writeData = demoMode ? setDemoData : sandboxActive ? setSandboxData : setData;
+  // Welcher Datenstand ist aktiv? Als `key` an Ansichten, die Daten in eigenen Zustand kopieren
+  // und selbst zurückschreiben (Schuldenmanager). Deploy-Gate 27.09.2026: nach «Beispiel verlassen»
+  // blieb der Schuldenmanager eingehängt, hielt die Beispiel-Listen und schrieb sie beim nächsten
+  // Speichern über die ECHTEN Schulden, Betreibungen und Verlustscheine.
+  const datenModus = demoMode && demoData ? 'beispiel' : sandboxActive ? 'probe' : 'echt';
+  // Für «Gespeichert»-Zeilen: in beiden Fällen bleibt nichts dauerhaft (GespeichertZeile).
+  const vorlaeufig = demoMode || !!sandboxActive;
   // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
   // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
   const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
@@ -600,6 +621,10 @@ const AppInner = ({ demo }) => {
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
+  // Kapitel-Seiten: der Hintergrund hinter der Karte leicht in der Bereichsfarbe
+  // (Entscheid 27.09.2026, utils/lebensbereichFruechte.js). Sonst palette.bg wie bisher.
+  const kapitelFarbe = view === 'chapter' && chapters[activeChapter] ? kapitelBereichsfarbe(chapters[activeChapter].key, palette, isDarkMode) : null;
+  const seitenGrund = kapitelFarbe ? kapitelFarbe.grund : palette.bg;
 
   // Woher man in die aktuelle Ansicht kam (Entscheid 25.09.2026: Brotkrume + Herkunft).
   // Steht im Verlaufs-Eintrag, nicht nur hier — darum überlebt es Neuladen und
@@ -646,8 +671,24 @@ const AppInner = ({ demo }) => {
       });
       // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
       // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
+      // Die Übersicht lädt Teile nach (BergDetail, Leistungen, Instrumente): nach zwei
+      // Frames ist sie noch zu kurz, die Stelle wurde gekappt — gemessen 27.09.2026: bei
+      // 4081 px verlassen, bei 955 px gelandet. Darum nachfassen, bis die Stelle erreicht
+      // ist (höchstens 1,5 s) — und sofort aufhören, sobald die Person selbst scrollt.
       if (parsed.stelle !== null) {
-        requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: parsed.stelle, behavior: 'instant' })));
+        const ziel = parsed.stelle;
+        const bis = performance.now() + 1500;
+        let aus = false;
+        const halt = () => { aus = true; };
+        const opts = { once: true, passive: true };
+        ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.addEventListener(ev, halt, opts));
+        const fassen = () => {
+          if (aus) return;
+          window.scrollTo({ top: ziel, behavior: 'instant' });
+          if (Math.abs(window.scrollY - ziel) > 2 && performance.now() < bis) requestAnimationFrame(fassen);
+          else ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.removeEventListener(ev, halt, opts));
+        };
+        requestAnimationFrame(() => requestAnimationFrame(fassen));
       }
     });
     return cleanup;
@@ -898,7 +939,10 @@ const AppInner = ({ demo }) => {
       setKvgInitialTab(extra || 'katalog');
     }
     if (viewName === 'briefe') {
-      setBriefInitialTemplate(extra || null);
+      // `extra`: Vorlagen-Schlüssel, oder { template, angaben } aus einem Ablauf.
+      const vorwahl = extra && typeof extra === 'object' ? extra : { template: extra };
+      setBriefInitialTemplate(vorwahl.template || null);
+      setBriefInitialAngaben(vorwahl.angaben || null);
     }
     // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
     startTransition(() => setView(viewName));
@@ -1117,7 +1161,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
@@ -1368,33 +1412,41 @@ const AppInner = ({ demo }) => {
       // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
       // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
       // sprang die Seite dabei nicht nach oben, und der Fokus blieb stehen.
+      // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
+      // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
+      // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
       view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
-        onClick: () => handleNavigate('dashboard'),
+        onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,
-          color: palette.mid, fontFamily: 'inherit',
-          display: 'flex', alignItems: 'center', gap: '6px',
-        },
-      }, zurueckZeichen(), t('nav.backToDashboard')),
-      // «Zurück zu Kapitel …» — nur, wenn man aus einem Kapitel über einen Querverweis
-      // hierher kam (Entscheid 25.09.2026: die Brotkrume zeigt die feste Ordnung, diese
-      // Zeile den eigenen Weg). history.back(), nicht handleNavigate: der Verlauf bleibt
-      // derselbe wie mit der Zurück-Taste, und man landet an der Stelle im Kapitel, an der
-      // man den Querverweis angetippt hat (merkeStelle/onHashChange, nicht der Browser).
-      view !== 'chapter' && herkunft && herkunft.view === 'chapter' && chapters[herkunft.chapterIndex] && React.createElement('button', {
-        type: 'button',
-        className: 'mp-link',
-        onClick: () => window.history.back(),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
           color: palette.mid, fontFamily: 'inherit',
           display: 'flex', alignItems: 'center', gap: '6px',
         },
-      }, zurueckZeichen(), t('nav.zurueckZu', { name: chapters[herkunft.chapterIndex].title })),
+      }, zurueckZeichen(), t('nav.backToDashboard')),
+      // «Zurück zu …» — wenn man über einen Querverweis hierher kam (Entscheid 25.09.2026:
+      // die Brotkrume zeigt die feste Ordnung, diese Zeile den eigenen Weg). Bis 27.09.2026
+      // nur nach einem Kapitel; jetzt nach jeder Ansicht mit Namen (ansichtName), z. B.
+      // Finanz-Übersicht → Steuer, Suche → Treffer, Heirat → Kind bekommen.
+      // history.back(), nicht handleNavigate: der Verlauf bleibt derselbe wie mit der
+      // Zurück-Taste, und man landet an der Stelle, an der man den Querverweis angetippt
+      // hat (merkeStelle/onHashChange, nicht der Browser).
+      (() => {
+        const name = herkunftName(herkunft, view, chapters, t);
+        return name && React.createElement('button', {
+          type: 'button',
+          className: 'mp-link',
+          onClick: () => window.history.back(),
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer',
+            padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm, minHeight: '44px',
+            color: palette.mid, fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', gap: '6px',
+          },
+        }, zurueckZeichen(), t('nav.zurueckZu', { name }));
+      })(),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
         style: {
@@ -1468,7 +1520,7 @@ const AppInner = ({ demo }) => {
           isDarkMode
         }),
         view === 'kk' && React.createElement(KKScanner, {
-          palette, t, data: activeData,
+          palette, t, data: activeData, vorlaeufig,
           onSave: (kkData) => {
             const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
             writeData(prev => {
@@ -1498,19 +1550,20 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
-          palette, t,
+          key: datenModus,
+          palette, t, vorlaeufig,
           data: activeData,
           onNavigate: handleNavigate,
           onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
-          palette, t,
+          palette, t, vorlaeufig,
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
@@ -1519,7 +1572,8 @@ const AppInner = ({ demo }) => {
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
-        view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
+        view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         // Design-Vorschau des Tresor-LockScreens (nur DEV; onUnlock ist ein Stub —
         // Passphrase „test1234" = Erfolg, sonst Fehler). Noch NICHT an secureStore verdrahtet.
@@ -1535,6 +1589,7 @@ const AppInner = ({ demo }) => {
         view === 'stelleverloren' && React.createElement(StelleVerloren, { palette, t, onNavigate: handleNavigate }),
         view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'mahnung' && React.createElement(MahnungErhalten, { palette, t, onNavigate: handleNavigate }),
         view === 'betreibung' && React.createElement(BetreibungErhalten, { palette, t, onNavigate: handleNavigate }),
         view === 'dienst' && React.createElement(Dienst, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'volljaehrig' && React.createElement(Volljaehrig, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1545,7 +1600,9 @@ const AppInner = ({ demo }) => {
         view === 'adoption' && React.createElement(Adoption, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zusammenziehen' && React.createElement(Zusammenziehen, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'ergaenzungsleistungen' && React.createElement(Ergaenzungsleistungen, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'vorsorgeauftrag' && React.createElement(Vorsorgeauftrag, { palette, t, lang, data: activeData, chapters, onNavigate: handleNavigate, onUpdateData: updateData }),
+        view === 'patientenverfuegung' && React.createElement(Patientenverfuegung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
+        view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
         view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'aussteuerung' && React.createElement(Aussteuerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1568,11 +1625,12 @@ const AppInner = ({ demo }) => {
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'schnellcheck' && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'ansprueche' && React.createElement(AnspruchLandkarte, { palette, t, onNavigate: handleNavigate }),
+        // Seit 27.09.2026 eine Seite: Leistungs-Kompass und Anspruchs-Landkarte zusammen.
+        // Beide alten Adressen bleiben gültig und zeigen dasselbe.
+        (view === 'schnellcheck' || view === 'ansprueche') && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate, mitLandkarte: true }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
-        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
@@ -1586,7 +1644,7 @@ const AppInner = ({ demo }) => {
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate }),
+        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
@@ -1601,6 +1659,7 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
+          onNotifications: () => handleNavigate('notifications'),
           demoMode,
         }),
       )),

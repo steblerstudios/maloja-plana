@@ -159,6 +159,7 @@ export const LEBENSZUSTAENDE = [
     zeigeRegionaleAngebote: true, // Existenzminimum-Lage → KulturLegi-berechtigt (würdevolle Entlastung)
     berechtigungen: [
       { key: 'schuldenberatung', view: 'schulden',    quelle: 'Schuldenberatung CH / Caritas', stand: '2026' },
+      { key: 'mahnung',          view: 'mahnung',     quelle: 'OR / SchKG',                    stand: '2026' },
       { key: 'betreibung',       view: 'betreibung',  quelle: 'SchKG',                         stand: '2026' },
       { key: 'existenzminimum',  view: 'budget',      quelle: 'SchKG',                         stand: '2026' },
       { key: 'sozialhilfe',      view: 'sozialhilfe', quelle: 'SKOS',                          stand: '2026' },

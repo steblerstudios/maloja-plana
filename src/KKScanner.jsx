@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PrimaryButton from './components/PrimaryButton.jsx';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { useDateiAblage } from './hooks/useDateiAblage.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
@@ -48,7 +49,7 @@ export function kkNotfallVcard({ t, kkData = {}, mitAhv = false }) {
   });
 }
 
-export const KKScanner = ({ palette, t, data, onSave }) => {
+export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
   const [scanMode, setScanMode] = useState('upload');
   const franchiseToNumber = (key) => key ? key.replace('f', '') : '';
   const [kkData, setKKData] = useState({
@@ -170,11 +171,9 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
-  const buttonStyle = {
-    // inline-flex + gap: das Präfix-Icon (Haken) sitzt mittig neben dem Text.
-    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-    padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
-  };
+  // Ein Hauptknopf (PrimaryButton: Speichern, Übernehmen), alles andere ruhig im Umriss
+  // (Seitenrundgang 27.09.2026 — vorher Sand, Salbei und Grau gefüllt nebeneinander).
+  const zweitKnopf = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm };
 
   // «oder hier hinziehen» stand schon da — jetzt tut die Fläche es auch.
   const [ablageProps, ablageAktiv] = useDateiAblage(handleFileUpload);
@@ -257,13 +256,15 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
           React.createElement('div', { style: { textAlign: 'center', color: palette.sageDeep, fontWeight: weight.medium } }, t('kkScanner.conflictScanned'))
         ),
         React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.md } },
-          React.createElement('button', {
+          React.createElement(PrimaryButton, {
+            palette,
             onClick: () => { setKKData(prev => ({ ...prev, ...conflicts.scanned })); setConflicts(null); },
-            style: { ...buttonStyle, flex: 1, background: palette.sageBtn, color: '#fff' }
+            style: { flex: 1, minHeight: '44px' }
           }, t('kkScanner.conflictAccept')),
           React.createElement('button', {
+            type: 'button',
             onClick: () => setConflicts(null),
-            style: { ...buttonStyle, flex: 1, background: palette.mid }
+            style: { ...zweitKnopf, flex: 1 }
           }, t('kkScanner.conflictKeep'))
         )
       ),
@@ -274,8 +275,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         id: 'kk-fehler', role: 'alert',
         style: { margin: '0 0 12px', padding: '10px 12px 10px 28px', background: palette.up, border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.text, fontSize: text.sm, lineHeight: leading.normal },
       }, fehler.map(f => React.createElement('li', { key: f }, f))),
-      React.createElement('button', { onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, style: { ...buttonStyle, width: '100%' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save')),
-      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert }),
+      React.createElement(PrimaryButton, { palette, onClick: handleSave, 'aria-describedby': fehler.length > 0 ? 'kk-fehler' : undefined, icon: React.createElement(Icon, { name: 'check', size: 14 }), style: { width: '100%', minHeight: '44px' } }, t('common.save')),
+      React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly'))
     ),
 
@@ -313,7 +314,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
           React.createElement('span', { style: { display: 'block', color: palette.mid, fontSize: text.xs } }, t('kkScanner.ahvImQrHinweis'))
         )
       ),
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, hinweisZeichen(), t('kkScanner.qrBarcode')),
+      React.createElement('button', { type: 'button', onClick: handleGenerateQR, style: { ...zweitKnopf, width: '100%', marginBottom: '12px' } }, hinweisZeichen(), t('kkScanner.qrBarcode')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
       React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, qrAnsage),

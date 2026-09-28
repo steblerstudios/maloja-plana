@@ -39,8 +39,8 @@ describe('E40 · Behörden-JSON mit Kennung und übersetztem Text', () => {
 
   it('Deutsch: Kennungen und Texte', () => {
     const d = generateBehoerdenJSON(p, r, tFuer('de'));
-    expect(d.version).toBe('1.1');
-    expect(DOSSIER_JSON_VERSION).toBe('1.1');
+    expect(d.version).toBe('1.2');
+    expect(DOSSIER_JSON_VERSION).toBe('1.2');
     expect(d.textLanguage).toBe('de');
     const tax = d.calculations.tax;
     expect(tax.taxableIncomeBasis).toEqual({ code: 'estv_standardabzuege', text: 'Geschätzt: Nettolohn abzüglich der Standardabzüge des ESTV-Steuerrechners 2026', dataVersion: '2026' });

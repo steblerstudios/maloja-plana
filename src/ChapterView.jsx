@@ -10,16 +10,20 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
+import PrimaryButton from './components/PrimaryButton.jsx';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
+import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
+import { betrag } from './utils/geld.js';
 import { Schutzschild } from './components/Schutzschild.jsx';
+import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
-import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
+import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
-import { openPrintWindow, escapeHtml } from './utils/helpers.js';
+import { openPrintWindow, escapeHtml, formatDE } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
-import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -32,6 +36,7 @@ import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from '
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
+import { abschnittGruppen } from './utils/abschnitte.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -81,7 +86,7 @@ export function zurErwachsenenErfassung(doc = typeof document !== 'undefined' ? 
   return true;
 }
 
-export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
+export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -95,17 +100,26 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  // Themen-Reiter: die benannten Sektionen der primären Felder (Person/Kontakt/…),
-  // damit man im Kapitel springen kann statt hochzuscrollen (Testperson A #1).
-  const [activeSection, setActiveSection] = useState(null);
-  const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
-  // Auch benannte Sektionen unter „mehr Felder" (z.B. Vorsorge / 3. Säule) bekommen
-  // einen Reiter, damit sie auffindbar sind statt im aufklappbaren Teil zu verschwinden
-  // (Stebler Studios, Braindump #21). Ein Klick klappt den Sekundär-Teil auf und springt hin.
-  const secondarySections = chapter.fields.filter((f) => f.secondary && f.section).map((f) => ({ name: f.section, k: f.k, secondary: true }));
-  const sectionTabs = [...primarySections, ...secondarySections];
-
-  const hasSecondaryFields = chapter.fields.some(f => f.secondary);
+  // Abschnittsliste: welche Abschnitte gerade als Formular offen sind (Schlüssel = erstes Feld).
+  // (Die klebenden Themen-Reiter samt Scroll-Spy entfielen am 27.09.2026 — die Abschnitte
+  // stehen jetzt selbst als kurze Liste da.)
+  // Offen starten die Abschnitte, in denen etwas fehlt, das zählt (ein leeres Feld der
+  // Grundordnung) oder ein Hinweis ansteht («zweite Person fehlt») — so sieht eine neue
+  // Person gleich die Felder, und kein Hinweis verschwindet hinter «ändern ›».
+  // `anfangsOffen: 'alle'` öffnet alles (Tests des Formulars).
+  const abschnitteAnfang = () => {
+    const d = data || {};
+    const offen = {};
+    abschnittGruppen(chapter.fields, chapter.title).forEach((g) => g.felder.forEach((f) => {
+      const leerGrundordnung = f.mvo && !feldHatWert(d, f.k) && !trifftNichtZu(d, f.k);
+      const hinweis = f.type === 'household' && zweitePersonFehlt(Number(d.household && d.household.adults) || 1, d.maritalStatus);
+      if (anfangsOffen === 'alle' || leerGrundordnung || hinweis) offen[g.key] = true;
+    }));
+    return offen;
+  };
+  const [offeneAbschnitte, setOffeneAbschnitte] = useState(abschnitteAnfang);
+  // Kapitelwechsel ohne Neuaufbau: die Regel gilt fürs neue Kapitel neu.
+  useEffect(() => { setOffeneAbschnitte(abschnitteAnfang()); }, [chapter.key]); // eslint-disable-line react-hooks/exhaustive-deps
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => feldHatWert(data, f.k));
   const storageKey = 'or5_disclosure_' + chapter.key;
   const [showSecondary, setShowSecondary] = useState(() => {
@@ -128,51 +142,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Export-Vorschau (K20) vor der Notfallkarte: erst zeigen, was im Dokument steht.
   const [kartenVorschau, setKartenVorschau] = useState(false);
 
-  // Scroll-Spy: hebt den Reiter der Sektion hervor, die man gerade liest.
-  // Nicht per schmalem Intersection-Band (die Sektionsköpfe sind dünn und rutschen
-  // zwischen den Scrollpositionen durch → Highlight blinkt nur kurz auf). Stattdessen:
-  // aktiv ist der zuletzt überschrittene Kopf oberhalb einer Linie knapp unter dem
-  // klebenden Reiter — so bleibt die aktuelle Sektion durchgehend markiert.
-  useEffect(() => {
-    setActiveSection(null);
-    if (sectionTabs.length < 2) return;
-    // Das Dokument scrollt, nicht mehr #mp-main — die Linie misst deshalb ab dem
-    // Fensterrand. Sie liegt knapp unter der klebenden Kopfzeile plus dem klebenden
-    // Reiter darunter; die Kopfhöhe kommt aus --mp-kopf-h (main.jsx misst sie).
-    const kopfHoehe = () => {
-      const roh = getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h');
-      const zahl = parseFloat(roh);
-      return Number.isFinite(zahl) ? zahl : 73;
-    };
-    const compute = () => {
-      const anchors = document.querySelectorAll('[data-section-k]');
-      if (!anchors.length) return;
-      const line = kopfHoehe() + 120;
-      let current = anchors[0].getAttribute('data-section-k');
-      for (const el of anchors) {
-        if (el.getBoundingClientRect().top <= line) current = el.getAttribute('data-section-k');
-        else break;
-      }
-      setActiveSection(current);
-    };
-    compute();
-    window.addEventListener('scroll', compute, { passive: true });
-    window.addEventListener('resize', compute);
-    return () => { window.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
-  }, [chapter.key, expandedSection, showSecondary, sectionTabs.length]);
-
-  // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
-  // Hervorhebung immer sichtbar bleibt, auch wenn der Reiter rechts ausserhalb liegt.
-  useEffect(() => {
-    if (!activeSection) return;
-    const tl = document.querySelector('[data-section-tablist]');
-    const btn = tl && tl.querySelector('[data-section-tab="' + activeSection + '"]');
-    if (!tl || !btn) return;
-    const b = btn.getBoundingClientRect(), t = tl.getBoundingClientRect();
-    if (b.left < t.left + 4 || b.right > t.right - 4) {
-      tl.scrollBy({ left: (b.left + b.width / 2) - (t.left + t.width / 2), behavior: 'smooth' });
-    }
-  }, [activeSection]);
 
   useEffect(() => {
     let timer;
@@ -1129,9 +1098,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const isNotfall = chapter.key === 'notfall';
   const hasContact = isNotfall && data.emergencyContact;
   const hasBlood = isNotfall && data.bloodType && data.bloodType !== 'unknown' && data.bloodType !== '';
-  const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'];
-  const hasVorsorge = isNotfall && vorsorgeKeys.some(k => data[k]);
-  const showSummary = hasContact || hasBlood || hasVorsorge;
   const hasDoctors = Array.isArray(data.doctorsList) && data.doctorsList.some(d => d.name);
   const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || (Array.isArray(data.medicationsList) && data.medicationsList.some(m => m.name)) || hasDoctors || data.doctor);
 
@@ -1159,7 +1125,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     }
     const medRows = [];
     const medFelder = [];
-    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
+    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(blutgruppeLabel(data.bloodType, tr)) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
     if (data.allergies) { medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>'); medFelder.push(tr('chapters.notfall.fields.allergies')); }
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
     if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
@@ -1220,573 +1186,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     notfall: { bg: palette.rose + '0A', border: palette.rose, icon: palette.roseDeep },
   };
   const accent = chapterAccent[chapter.key] || chapterAccent.basis;
+  // Titel und Zeichen in der Bereichsfarbe, lesbar gemacht (Entscheid 27.09.2026).
+  const bereichsfarbe = kapitelBereichsfarbe(chapter.key, palette, isDarkMode);
 
-  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
-    // Header — expressive chapter entrance with landscape continuity
-    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
-      React.createElement('div', { style: { marginBottom: space.md + 'px', color: accent.icon } },
-        React.createElement(Icon, { name: chapter.key, size: 48 })
-      ),
-      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px' } }, chapter.title),
-      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
-    ),
-
-    demoMode && React.createElement('div', {
-      style: {
-        padding: space.sm + 'px ' + space.md + 'px',
-        marginBottom: space.md + 'px',
-        background: palette.sand + '15',
-        borderRadius: radius.sm,
-        border: '1px solid ' + palette.sand + '25',
-        fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
-      }
-    }, tr('demo.readOnlyHint')),
-
-    // "Was Du davon hast" — shows which tools benefit from this chapter's data (before fields)
-    (() => {
-      const benefitsKey = 'chapters.' + chapter.key + '.benefits';
-      const benefits = tr(benefitsKey);
-      if (benefits === benefitsKey || !Array.isArray(benefits)) return null;
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px',
-          padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sand + '0C',
-          borderRadius: radius.sm,
-          border: '1px solid ' + palette.sand + '20',
-          display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px',
-        }
-      },
-        React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.mid, marginRight: '2px' }
-        }, tr('chapterView.benefitsLabel')),
-        benefits.map((b, i) =>
-          React.createElement('span', {
-            key: i,
-            style: {
-              fontSize: text.xs, color: palette.sageDeep,
-              padding: '2px 8px',
-              background: palette.sage + '0D',
-              borderRadius: radius.sm,
-              whiteSpace: 'nowrap',
-            }
-          }, b)
-        )
-      );
-    })(),
-
-    // Ankunftsmoment — calm acknowledgment on first data entry
-    !demoMode && showAnkunft && React.createElement('div', {
-      style: {
-        textAlign: 'center', padding: space.md + 'px ' + space.lg + 'px',
-        marginBottom: space.md + 'px',
-        background: palette.sageDew || palette.sage + '08',
-        borderRadius: radius.md,
-        border: '1px solid ' + palette.sage + '25',
-        animation: 'fadeIn 0.8s ease',
-      }
-    },
-      React.createElement('div', {
-        style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, fontStyle: 'italic' }
-      }, tr('ankunft.' + chapter.key))
-    ),
-
-    // Living mirror layer — life sentence + mirror cards
-    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
-
-    // Notfallübergabe — calm structured summary when enough data is present
-    isNotfall && showSummary && (() => {
-      const sections = [];
-      if (data.emergencyContact) {
-        const rows = [data.emergencyContact];
-        if (data.emergencyPhone) rows.push(data.emergencyPhone);
-        sections.push({ title: tr('notfallSummary.handoverContact'), rows: rows });
-      } else if (keineKontaktperson(data)) {
-        sections.push({ title: tr('notfallSummary.handoverContact'), rows: [tr('naZustand.keineKontaktperson')] });
-      }
-      const medRows = [];
-      if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + data.bloodType);
-      if (data.allergies) medRows.push(tr('notfallSummary.handoverAllergies'));
-      const medList2 = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
-      if (medList2.length) medRows.push(tr('notfallSummary.handoverMedications') + ': ' + medList2.map(m => m.name).join(', '));
-      else if (data.medications) medRows.push(tr('notfallSummary.handoverMedications'));
-      const dList2 = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
-      if (dList2.length) medRows.push(tr('notfallSummary.handoverChronic') + ': ' + dList2.map(d => d.name).join(', '));
-      else if (data.chronicDiseases) medRows.push(tr('notfallSummary.handoverChronic'));
-      if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), rows: medRows });
-      const careRows = [];
-      const docList3 = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
-      if (docList3.length) docList3.forEach(d => careRows.push(d.name + (d.phone ? ' · ' + d.phone : '')));
-      else if (data.doctor) careRows.push(data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : ''));
-      if (data.hospital) careRows.push(data.hospital);
-      if (careRows.length) sections.push({ title: tr('notfallSummary.handoverCare'), rows: careRows });
-      const provRows = [];
-      if (data.patientenverfuegung && data.patientenverfuegung !== 'no') provRows.push(tr('notfallSummary.patientenverfuegung'));
-      if (data.vorsorgeauftrag && data.vorsorgeauftrag !== 'no') provRows.push(tr('notfallSummary.vorsorgeauftrag'));
-      if (data.bestattungswuensche && data.bestattungswuensche !== 'no') provRows.push(tr('notfallSummary.bestattungswuensche'));
-      if (provRows.length) sections.push({ title: tr('notfallSummary.handoverProvision'), rows: provRows });
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('notfallSummary.handoverIntro')),
-        ...sections.map((sec, i) =>
-          React.createElement('div', { key: i, style: { marginBottom: i < sections.length - 1 ? space.sm + 'px' : 0 } },
-            React.createElement('div', {
-              style: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: space.xs }
-            }, sec.title),
-            ...sec.rows.map((row, j) =>
-              React.createElement('div', { key: j, style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } }, row)
-            )
-          )
-        )
-      );
-    })(),
-
-    // Notfallkarte export — quiet text link (below mirror cards)
-    isNotfall && hasMedical && React.createElement('div', {
-      style: { marginBottom: space.md }
-    },
-      React.createElement('span', {
-        onClick: () => setKartenVorschau(true),
-        role: 'button',
-        tabIndex: 0,
-        onKeyDown: (e) => { if (e.key === 'Enter') setKartenVorschau(true); },
-        style: {
-          fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
-          borderBottom: '1px solid ' + palette.border,
-          paddingBottom: '1px',
-        }
-      }, hinweisZeichen('kaestchen'), tr('notfallSummary.printCard')),
-
-      // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
-      // Abschnitte der Karte mit Feldnamen, nie mit Werten.
-      kartenVorschau && React.createElement(ExportVorschau, {
-        palette, t: tr, art: 'dossier',
-        quelle: { abschnitte: notfallkarteAbschnitte().map(s => ({ titel: s.title, felder: s.felder })) },
-        onWeiter: () => { setKartenVorschau(false); handleSaveCard(); },
-        onZurueck: () => setKartenVorschau(false),
-      })
-    ),
-
-    // Versicherungsübersicht — coverage overview when at least one field is filled
-    chapter.key === 'versicherungen' && (() => {
-      const areas = [
-        { key: 'kvg', fields: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber'] },
-        { key: 'bvg', fields: ['bvgInsurer', 'bvgContribution'] },
-        { key: 'uvg', fields: ['uvg'] },
-        { key: 'haftpflicht', fields: ['liabilityInsurance', 'liabilityAmount'] },
-        { key: 'hausrat', fields: ['householdInsurance', 'householdInsuranceAmount'] },
-        { key: 'reise', fields: ['travelInsurance'] },
-        { key: 'cyber', fields: ['cyberInsurance'] },
-        { key: 'fahrzeug', fields: ['autoInsurance', 'autoInsuranceAmount'] },
-        { key: 'ahv', fields: ['ahvContribution'] },
-      ];
-      const hasAny = areas.some(a => a.fields.some(f => data[f]));
-      if (!hasAny) return null;
-      const erfasst = tr('versicherungsübersicht.erfasst');
-      const nicht = tr('versicherungsübersicht.nichtErfasst');
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('versicherungsübersicht.intro')),
-        ...areas.map((area, i) => {
-          const filled = area.fields.some(f => data[f]);
-          return React.createElement('div', {
-            key: i,
-            style: {
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '6px 0',
-              borderBottom: i < areas.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
-            }
-          },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('versicherungsübersicht.' + area.key)),
-            React.createElement('span', {
-              style: { fontSize: text.sm, color: filled ? palette.sageDeep || palette.sage : palette.mid, fontStyle: filled ? 'normal' : 'italic' }
-            }, filled ? erfasst : nicht)
-          );
-        })
-      );
-    })(),
-
-    // Behörden-Zeitstatus — temporal overview of official matters
-    chapter.key === 'behoerden' && (() => {
-      const rows = [];
-      if (data.taxFilingDeadline) {
-        const deadline = new Date(data.taxFilingDeadline);
-        const now = new Date();
-        const diffMs = deadline.getTime() - now.getTime();
-        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-        let relative;
-        if (diffDays === 0) relative = tr('behördenStatus.today');
-        else if (diffDays > 0 && diffDays < 60) relative = tr('behördenStatus.inDays').replace('{n}', diffDays);
-        else if (diffDays >= 60) relative = tr('behördenStatus.inMonths').replace('{n}', Math.round(diffDays / 30));
-        else if (diffDays > -60) relative = tr('behördenStatus.agoDays').replace('{n}', Math.abs(diffDays));
-        else relative = tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
-        const formatted = deadline.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
-        rows.push({ label: tr('behördenStatus.taxDeadline'), value: formatted + ' (' + relative + ')' });
-      }
-      if (data.pendingTaxReturns) rows.push({ label: tr('behördenStatus.pendingReturns'), value: data.pendingTaxReturns });
-      if (data.betreibungsStatus) {
-        const opts = { none: tr('chapters.behoerden.fields.betreibungsStatus.options.none') || data.betreibungsStatus, entries: tr('chapters.behoerden.fields.betreibungsStatus.options.entries') || data.betreibungsStatus, unknown: tr('chapters.behoerden.fields.betreibungsStatus.options.unknown') || data.betreibungsStatus };
-        rows.push({ label: tr('behördenStatus.betreibung'), value: opts[data.betreibungsStatus] || data.betreibungsStatus });
-      }
-      if (data.courtCases) {
-        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || data.courtCases) : (tr('chapters.behoerden.fields.courtCases.options.no') || data.courtCases);
-        rows.push({ label: tr('behördenStatus.courtCases'), value: val });
-      }
-      if (data.willMade) {
-        const wOpts = { no: tr('chapters.behoerden.fields.willMade.options.no'), handwritten: tr('chapters.behoerden.fields.willMade.options.handwritten'), public: tr('chapters.behoerden.fields.willMade.options.public'), inProgress: tr('chapters.behoerden.fields.willMade.options.inProgress') };
-        rows.push({ label: tr('behördenStatus.will'), value: wOpts[data.willMade] || data.willMade });
-      }
-      if (data.legalRepresentative) rows.push({ label: tr('behördenStatus.legalRep'), value: data.legalRepresentative });
-      if (rows.length === 0) return null;
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('behördenStatus.intro')),
-        ...rows.map((row, i) =>
-          React.createElement('div', {
-            key: i,
-            style: {
-              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-              padding: '6px 0',
-              borderBottom: i < rows.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
-            }
-          },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
-            React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
-          )
-        )
-      );
-    })(),
-
-    // Behörden-Checkliste — interactive checklist for common official tasks
-    chapter.key === 'behoerden' && (() => {
-      const items = [
-        { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
-        { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
-        { id: 'wohnsitzbestaetigung', key: 'checklist.wohnsitzbestaetigung' },
-        { id: 'ausweisRenewal', key: 'checklist.ausweisRenewal' },
-        { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
-        { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
-      ];
-      const checked = checklistChecked;
-      const toggle = (id) => {
-        const next = { ...checked, [id]: !checked[id] };
-        setChecklistChecked(next);
-        try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch {}
-      };
-      const done = items.filter(i => checked[i.id]).length;
-      return React.createElement('details', {
-        style: { marginBottom: space.lg + 'px' }
-      },
-        React.createElement('summary', {
-          style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' }
-        }, hinweisZeichen('kaestchen'), tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
-        React.createElement('div', {
-          style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginTop: space.xs + 'px' }
-        },
-          React.createElement('p', {
-            style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed }
-          }, tr('checklist.intro')),
-          ...items.map(item =>
-            React.createElement('label', {
-              key: item.id,
-              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm, ...(isMobile ? { minHeight: '44px' } : {}) }
-            },
-              React.createElement('input', {
-                type: 'checkbox',
-                checked: !!checked[item.id],
-                onChange: () => toggle(item.id),
-                style: { accentColor: palette.sand, flexShrink: 0 }
-              }),
-              React.createElement('span', {
-                style: { color: checked[item.id] ? palette.mid : palette.text, textDecoration: checked[item.id] ? 'line-through' : 'none' }
-              }, tr(item.key))
-            )
-          )
-        )
-      );
-    })(),
-
-    // Wohnkostenanteil — housing cost share when both costs and income are recorded
-    chapter.key === 'wohnen' && allData && (() => {
-      const rent = parseFloat(data.rentAmount) || 0;
-      const util = parseFloat(data.utilities) || 0;
-      const wohnkosten = rent + util;
-      if (wohnkosten <= 0) return null;
-      const fin = allData.finanzen || {};
-      const income = (parseFloat(fin.monthlyIncome) || 0) + (parseFloat(fin.familienzulagen) || 0) + (parseFloat(fin.alimenteReceived) || 0);
-      if (income <= 0) return null;
-      const pct = ((wohnkosten / income) * 100).toFixed(1).replace(/\.0$/, '');
-      const fmt = (v) => zahl(v);
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('wohnkostenanteil.intro')),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.housing')),
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(wohnkosten) + ' ' + tr('wohnkostenanteil.perMonth'))
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.income')),
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(income) + ' ' + tr('wohnkostenanteil.perMonth'))
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0' } },
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, tr('wohnkostenanteil.share')),
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, pct + ' %')
-        )
-      );
-    })(),
-
-    // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
-    // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
-    // solange nichts erfasst ist.
-    chapter.key === 'versicherungen' &&
-      React.createElement(Schutzschild, {
-        palette, t, versicherungen: data,
-        employed: allData?.finanzen?.employmentType === 'employed',
-        annualIncome: (Number(allData?.finanzen?.monthlyIncome) || 0) * 12,
-      }),
-
-    // ─── Contextual orientation hints (Helvetia layer) ──────
-    // IPV: shown in finanzen when income + canton exist
-    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
-          border: '1px solid ' + palette.sage + '25',
-          borderLeft: '3px solid ' + palette.sage + '50',
-          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
-        }
-      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
-    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
-      React.createElement('button', {
-        className: 'mp-link',
-        onClick: () => onNavigate('finanzuebersicht'),
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || palette.up,
-          border: 'none', borderRadius: radius.sm,
-          fontSize: text.sm, color: palette.sageDeep || palette.mid,
-          cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', width: '100%',
-        }
-      }, t('nav.crosslink.finanzuebersichtHint')),
-
-    // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
-    // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
-    // null aus der Komponente). `data: allData`, weil das Barometer basis.canton + ausbildung.workHoursPerWeek
-    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen
-    // Feld — `aktuellesKapitel` verhindert dabei den Klick ins eigene Kapitel (Einkommensart liegt hier).
-    chapter.key === 'finanzen' && allData && Number(allData.finanzen?.monthlyIncome) > 0 &&
-      // Rahmen wie am anderen Einbettungsort (FinanzUebersicht): `palette.up` ohne Rand — derselbe
-      // Baustein soll überall gleich sitzen. Bewusst NICHT die Sage-Hinweisfarbe der Nachbarkarten:
-      // das Barometer ist ein Instrument, kein Hinweis.
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.up, borderRadius: radius.sm,
-        }
-      },
-        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: chapter.key })
-      ),
-
-    // Familienzulagen: shown in basis when children exist
-    chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
-          border: '1px solid ' + palette.sage + '25',
-          borderLeft: '3px solid ' + palette.sage + '50',
-          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
-        }
-      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextFamilienzulagen'))),
-
-    // Tabs
-    // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
-    // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
-    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
-      React.createElement('button', {
-        onClick: () => setExpandedSection('fields'),
-        style: {
-          padding: space.sm + 'px ' + space.md + 'px',
-          background: expandedSection === 'fields' ? palette.sand : 'transparent',
-          color: expandedSection === 'fields' ? '#000' : palette.text,
-          border: 'none',
-          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
-          cursor: 'pointer',
-          fontWeight: weight.semi,
-          fontSize: text.sm
-        }
-      }, tr('chapterView.fields')),
-      React.createElement('button', {
-        onClick: () => setExpandedSection('documents'),
-        style: {
-          padding: space.sm + 'px ' + space.md + 'px',
-          background: expandedSection === 'documents' ? palette.sand : 'transparent',
-          color: expandedSection === 'documents' ? '#000' : palette.text,
-          border: 'none',
-          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
-          cursor: 'pointer',
-          fontWeight: weight.semi,
-          fontSize: text.sm
-        }
-      }, tr('chapterView.documents'))
-    ),
-
-    // Fields Tab
-    expandedSection === 'fields' && React.createElement('div', null,
-      // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
-      sectionTabs.length >= 2 && React.createElement(ScrollFadeStrip, {
-        palette,
-        role: 'tablist',
-        'data-section-tablist': '1',
-        'aria-label': tr('chapterView.sectionNav'),
-        containerStyle: {
-          // Seit das Dokument scrollt (statt #mp-main), ist der Bezugspunkt fürs Kleben
-          // der Fensterrand — und dort klebt bereits die Kopfzeile. Der Reiter hängt sich
-          // deshalb unter deren gemessene Höhe (--mp-kopf-h, gesetzt in main.jsx), sonst
-          // verschwände er dahinter. Vorher stand hier -24px als Ausgleich für das
-          // padding-top des alten Scroll-Containers; das gibt es nicht mehr.
-          position: 'sticky', top: 'var(--mp-kopf-h, 73px)', zIndex: 5,
-          marginBottom: space.md + 'px',
-          background: palette.surface,
-          borderBottom: '1px solid ' + palette.border + '55',
-        },
-        style: {
-          // Einzeilig + horizontal scrollbar statt Umbruch: spart Sticky-Höhe bei
-          // vielen Sektionen; die Leiste bleibt ruhig, statt zwei Reihen zu füllen.
-          display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px',
-          overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
-          padding: space.sm + 'px 0',
-        },
-      },
-        sectionTabs.map((s) => {
-          const on = activeSection === s.k;
-          const jump = () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-          return React.createElement('button', {
-            key: s.k,
-            'data-section-tab': s.k,
-            // Sekundär-Reiter: erst „mehr Felder" aufklappen, dann hinspringen
-            // (das Ziel existiert erst nach dem Aufklappen im DOM).
-            onClick: s.secondary
-              ? () => { if (!showSecondary) { setShowSecondary(true); try { localStorage.setItem(storageKey, 'true'); } catch {} requestAnimationFrame(() => requestAnimationFrame(jump)); } else { jump(); } }
-              : jump,
-            'aria-current': on ? 'true' : undefined,
-            style: {
-              flexShrink: 0,
-              padding: '5px 12px', borderRadius: radius.md,
-              border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
-              background: on ? palette.sage + '18' : 'transparent',
-              color: on ? (palette.sageDeep || palette.text) : palette.mid,
-              fontSize: text.xs, fontWeight: on ? weight.medium : weight.normal,
-              fontFamily: 'inherit', cursor: 'pointer', whiteSpace: 'nowrap',
-              transition: 'background 160ms ease, border-color 160ms ease',
-            },
-          }, s.name);
-        })
-      ),
-      filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
-        React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
-          (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
-        ),
-        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 10px 0' } },
-          (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
-        ),
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep } },  // kein opacity: 0.8 ergab 3.85:1 hell
-          React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
-          tr('trust.chapterTrust')
-        )
-      ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
-        chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => {
+  // Die Elemente eines Feldes (Abschnittskopf, Feld, Querverweise) — herausgelöst am
+  // 27.09.2026, damit die Abschnittsliste beim «ändern ›» dieselben Felder UND dieselben
+  // Querverweise zeigt wie das Formular. Den Abschnittskopf setzt der Aufrufer.
+  const feldElemente = (field) => {
           const elements = [];
-          if (field.section) {
-            const isFirst = idx === 0 || !primaryFields.slice(0, idx).some(f => f.section);
-            elements.push(
-              React.createElement('div', {
-                key: 'section-' + field.k,
-                id: 'mp-section-' + field.k,
-                'data-section-k': field.k,
-                role: 'presentation',
-                'aria-label': field.section,
-                style: {
-                  gridColumn: '1 / -1',
-                  // Eine Quelle für den Sprungabstand (tokens.css) — vorher 52 px,
-                  // gerechnet auf den alten Scroll-Container #mp-main.
-                  scrollMarginTop: 'var(--mp-sprungabstand)',
-                  marginTop: isFirst ? 0 : space['2xl'] + 'px',
-                  paddingTop: isFirst ? 0 : space.lg + 'px',
-                  borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
-                  fontSize: text.sm,
-                  fontWeight: weight.medium,
-                  color: palette.sageDeep || palette.mid,
-                  letterSpacing: '0.4px',
-                  marginBottom: space.sm + 'px',
-                }
-              }, field.section)
-            );
-            if (field.sectionIntro) {
-              elements.push(
-                React.createElement('p', {
-                  key: 'sectionIntro-' + field.k,
-                  style: {
-                    gridColumn: '1 / -1',
-                    fontSize: text.sm,
-                    color: palette.sageDeep || palette.sage,
-                    fontStyle: 'italic',
-                    lineHeight: leading.relaxed,
-                    margin: '0 0 12px 0',
-                    maxWidth: '420px',
-                    background: palette.sageMist || 'transparent',
-                    padding: space.sm + 'px ' + space.md + 'px',
-                    borderRadius: radius.sm,
-                    borderLeft: '3px solid ' + palette.sage + '40',
-                  }
-                }, field.sectionIntro)
-              );
-            }
-          }
           elements.push(renderFeldMitNa(field));
           // Das Piktogramm des ZIELS, aus dem Register der Suche — keine zweite Liste
           // (21.09.2026). Ein Querverweis ohne Zeichen sah aus wie jeder andere; mit
           // dem Zeichen seines Ziels sagt er auf einen Blick, wohin er führt.
-          const zielIkon = (view) => ansichtIkon(view, 'external');
+          // Kein Rückfall auf `external` (27.09.2026): jeder Querverweis hier bleibt
+          // in Maloja (`onNavigate`), das Hinaus-Zeichen wäre an ihm immer falsch.
+          const zielIkon = (view) => ansichtIkon(view);
           const crosslinkBtn = (key, view, textKey) => onNavigate && elements.push(
             React.createElement('button', {
               key: 'crosslink-' + key,
@@ -1889,7 +1303,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           }
           if (field.k === 'workHoursPerWeek' && chapter.key === 'ausbildung') {
             const hrs = parseFloat(String(data.workHoursPerWeek || '').replace(',', '.')) || 0;
-            if (hrs > 0) {
+            // Über der Plausibilitätsgrenze (lohnCheck.js) keine Umrechnung, sondern die Frage
+            // nach dem Pensum — Barometer und Mindestlohn-Prüfung rechnen dann nicht mit.
+            if (wochenstundenUnplausibel(hrs)) {
+              elements.push(
+                React.createElement('div', {
+                  key: 'hours-implausible',
+                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                }, tr('lohnEinordnung.hoursImplausibleNote', { hours: String(hrs) }))
+              );
+            } else if (hrs > 0) {
               const perMonth = stundenAufMonat(hrs);
               const perYear = stundenAufJahr(hrs);
               const kanton = allData && allData.basis && allData.basis.canton;
@@ -2242,6 +1665,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               }, t('nav.crosslink.addressInWohnen'))
             );
           }
+          // Kreditkarte vorhanden → «Lohnt sich die Karte?» (Rechner, 27.09.2026).
+          if (field.k === 'creditCard' && chapter.key === 'finanzen' && (data.creditCard === 'one' || data.creditCard === 'multiple')) {
+            crosslinkBtn('kreditkarte', 'kreditkarte', 'nav.crosslink.kreditkarteHint');
+          }
           if (field.k === 'kkModel' && chapter.key === 'versicherungen') {
             crosslinkBtn('kkModel', 'praemien', 'nav.crosslink.kkModelHint');
           }
@@ -2250,108 +1677,438 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             crosslinkBtn('notfallkarte', 'notfalleinstieg', 'nav.crosslink.notfallkarteHint');
           }
           return elements;
-        })
-      ),
-
-      // Progressive disclosure toggle
-      hasSecondaryFields && React.createElement('div', {
-        style: {
-          marginTop: space.lg,
-          paddingTop: '16px',
-          borderTop: '1px solid ' + palette.border,
-          textAlign: 'center',
-        }
-      },
-        React.createElement('button', {
-          onClick: toggleSecondary,
-          'aria-expanded': showSecondary,
-          style: {
-            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px',
-            fontSize: text.sm, color: palette.text, letterSpacing: '0.3px',
-            padding: '8px 16px',
-            fontFamily: fontFamily,
-          }
-        },
-          React.createElement('span', null,
-            showSecondary
-              ? tr('chapterView.disclosure.' + chapter.key + '.less')
-              : tr('chapterView.disclosure.' + chapter.key + '.more')
-          ),
-          // Aufklapp-Pfeil — dreht beim Öffnen (macht klar: es kommen mehr Felder, keine Info).
-          React.createElement('span', {
-            'aria-hidden': 'true',
-            style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: showSecondary ? 'rotate(180deg)' : 'none', color: palette.mid },
-          },
-            React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
-              React.createElement('polyline', { points: '6 9 12 15 18 9' })
-            )
-          )
-        ),
-        !showSecondary && secondaryHasData && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sageDeep, marginTop: space.xs }
-        }, tr('chapterView.disclosure.' + chapter.key + '.hint'))
-      ),
-
-      // Secondary fields
-      hasSecondaryFields && showSecondary && React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', marginTop: space.sm }
-      },
-        chapter.fields.filter(f => f.secondary).map((field, idx, secFields) => {
+        };
+  const feldElementeSek = (field) => {
           const elements = [];
-          if (field.section) {
-            const isFirst = idx === 0 || !secFields.slice(0, idx).some(f => f.section);
-            elements.push(
-              React.createElement('div', {
-                key: 'section-' + field.k,
-                id: 'mp-section-' + field.k,
-                'data-section-k': field.k,
-                role: 'presentation',
-                'aria-label': field.section,
-                style: {
-                  // scroll-margin, damit Kopfzeile und klebender Reiter das Ziel nicht
-                  // verdecken — eine Quelle (tokens.css), vorher 64 px inline.
-                  scrollMarginTop: 'var(--mp-sprungabstand)',
-                  gridColumn: '1 / -1',
-                  marginTop: isFirst ? '8px' : space['2xl'] + 'px',
-                  paddingTop: isFirst ? 0 : space.lg + 'px',
-                  borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
-                  fontSize: text.sm,
-                  fontWeight: weight.medium,
-                  color: palette.sageDeep || palette.mid,
-                  letterSpacing: '0.4px',
-                  marginBottom: space.sm + 'px',
-                }
-              }, field.section)
-            );
-            if (field.sectionIntro) {
-              elements.push(
-                React.createElement('p', {
-                  key: 'sectionIntro-' + field.k,
-                  style: {
-                    gridColumn: '1 / -1',
-                    fontSize: text.sm,
-                    color: palette.sageDeep || palette.sage,
-                    fontStyle: 'italic',
-                    lineHeight: leading.relaxed,
-                    margin: '0 0 12px 0',
-                    maxWidth: '420px',
-                    background: palette.sageMist || 'transparent',
-                    padding: space.sm + 'px ' + space.md + 'px',
-                    borderRadius: radius.sm,
-                    borderLeft: '3px solid ' + palette.sage + '40',
-                  }
-                }, field.sectionIntro)
-              );
-            }
-          }
           elements.push(renderFeldMitNa(field));
           if (field.k === 'vorsorgeauftrag' && chapter.key === 'notfall') {
             elements.push(renderBeistandWegweiser());
           }
+          // Bestattungswünsche in Fragen festhalten (27.09.2026).
+          if (field.k === 'bestattungswuensche' && chapter.key === 'notfall' && onNavigate) {
+            elements.push(React.createElement('button', {
+              key: 'crosslink-bw', type: 'button', className: 'mp-link',
+              onClick: () => onNavigate('bestattung'),
+              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
+            }, tr('nav.crosslink.bwHint') + ' ›'));
+          }
+          // Patientenverfügung in Fragen erstellen (27.09.2026) — immer, auch wenn schon «Ja».
+          if (field.k === 'patientenverfuegung' && chapter.key === 'notfall' && onNavigate) {
+            elements.push(React.createElement('button', {
+              key: 'crosslink-pv', type: 'button', className: 'mp-link',
+              onClick: () => onNavigate('patientenverfuegung'),
+              style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', marginBottom: space.sm + 'px' },
+            }, tr('nav.crosslink.pvHint') + ' ›'));
+          }
           return elements;
-        })
-      )
+        };
+
+  // ─── Abschnittsliste (Entscheid Stebler Studios 27.09.2026, Probe an Finanzen) ──────
+  // Jeder Wert steht EINMAL da: Abschnitte als ruhige Liste; «ändern ›» macht genau diesen
+  // Abschnitt an Ort und Stelle zum Formular — mit denselben Feldern und Querverweisen wie
+  // vorher (feldElemente). Leere Abschnitte gestrichelt mit «ergänzen ›». Vorher standen
+  // dieselben Zahlen als Satz, als Tabelle und im Formular — Finanzen 8681 px hoch.
+  const abschnittWert = (f) => {
+    const v = data[f.k];
+    if (trifftNichtZu(data, f.k)) return tr('naZustand.markieren');
+    if (f.type === 'household') {
+      const h = v || {};
+      const kinder = Array.isArray(h.children) ? h.children.length : 0;
+      return tr('chapters.basis.fields.household.adults') + ' ' + (Number(h.adults) || 1) + ' · ' + tr('chapters.basis.fields.household.children') + ' ' + kinder;
+    }
+    if (f.type === 'currency') {
+      const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
+      return betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+    }
+    if (Array.isArray(f.options) && f.options.length) {
+      const o = f.options.find((x) => String(x.value) === String(v));
+      return o ? o.label : String(v);
+    }
+    if (f.type === 'date') return formatDE(v);
+    return String(v);
+  };
+  const abschnittGefuellt = (f) => (f.type === 'household' ? !!data.household : (feldHatWert(data, f.k) || trifftNichtZu(data, f.k)));
+  const abschnittsliste = () => {
+    const gruppen = abschnittGruppen(chapter.fields, chapter.title);
+    const karte = (g) => {
+      const gefuellt = g.felder.filter(abschnittGefuellt);
+      const offen = !!offeneAbschnitte[g.key];
+      const leer = gefuellt.length === 0;
+      const umschalten = () => setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
+      // Alle Felder des Abschnitts — jedes mit dem Baustein seiner Art (Haupt / «mehr Felder»).
+      const liste = g.felder;
+      return React.createElement('section', {
+        key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel,
+        style: {
+          scrollMarginTop: 'var(--mp-sprungabstand)',
+          border: offen ? '1.5px solid ' + palette.sand : (leer ? '1px dashed ' + palette.border : '1px solid ' + palette.border + 'AA'),
+          borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px',
+          background: leer && !offen ? 'transparent' : palette.up,
+        },
+      },
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px' } },
+          React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: leer && !offen ? palette.mid : palette.text } }, g.titel),
+          React.createElement('button', {
+            type: 'button', className: 'mp-link', onClick: umschalten, 'aria-expanded': offen,
+            'aria-label': tr(offen ? 'chapterView.abschnitt.fertigAria' : 'chapterView.abschnitt.aendernAria', { name: g.titel }),
+            style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: offen ? palette.mid : palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' },
+          }, offen
+            ? React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, tr('chapterView.abschnitt.fertig'), React.createElement(Icon, { name: 'check', size: 14 }))
+            : tr(leer ? 'chapterView.abschnitt.ergaenzen' : 'chapterView.abschnitt.aendern') + ' ›')
+        ),
+        offen
+          ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingBottom: space.sm + 'px' } },
+              demoMode && React.createElement('p', { key: 'demo', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, tr('demo.readOnlyHint')),
+              g.intro && React.createElement('p', { key: 'intro', style: { gridColumn: '1 / -1', fontSize: text.sm, color: palette.mid, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px' } }, g.intro),
+              ...liste.map((f) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f) : feldElemente(f)))))
+          : (leer
+              ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+                  gefuellt.flatMap((f) => [
+                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
+                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
+                  ])))
+      );
+    };
+    const haupt = gruppen.filter((g) => !g.sek);
+    const sekMitDaten = gruppen.filter((g) => g.sek && g.felder.some(abschnittGefuellt));
+    const sekLeer = gruppen.filter((g) => g.sek && !g.felder.some(abschnittGefuellt));
+    return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginBottom: space.lg + 'px' } },
+      ...haupt.map(karte),
+      ...sekMitDaten.map(karte),
+      sekLeer.length > 0 && React.createElement('button', {
+        key: 'mehr', type: 'button', onClick: toggleSecondary, 'aria-expanded': showSecondary,
+        style: { alignSelf: 'flex-start', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text, padding: '8px 16px', minHeight: '44px', fontFamily: 'inherit' },
+      }, tr('chapterView.disclosure.' + chapter.key + (showSecondary ? '.less' : '.more'))),
+      ...(showSecondary ? sekLeer.map(karte) : [])
+    );
+  };
+
+  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
+    // Header — expressive chapter entrance with landscape continuity
+    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
+      React.createElement('div', { style: { marginBottom: space.md + 'px', color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
+        React.createElement(Icon, { name: chapter.key, size: 48 })
+      ),
+      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px', ...(bereichsfarbe ? { color: bereichsfarbe.schrift } : {}) } }, chapter.title),
+      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
+      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
+    ),
+
+    // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt
+    // (Abschnittsliste) — oben war er Vorspann vor jedem Inhalt.
+
+    // «Ihre Daten fliessen in …» (Chips) entfiel am 27.09.2026: Vorspann vor dem Inhalt.
+    // Die Wege zu den Werkzeugen stehen als Querverweise an den Feldern selbst.
+
+    // Ankunftsmoment — calm acknowledgment on first data entry
+    !demoMode && showAnkunft && React.createElement('div', {
+      style: {
+        textAlign: 'center', padding: space.md + 'px ' + space.lg + 'px',
+        marginBottom: space.md + 'px',
+        background: palette.sageDew || palette.sage + '08',
+        borderRadius: radius.md,
+        border: '1px solid ' + palette.sage + '25',
+        animation: 'fadeIn 0.8s ease',
+      }
+    },
+      React.createElement('div', {
+        style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, fontStyle: 'italic' }
+      }, tr('ankunft.' + chapter.key))
+    ),
+
+    // Living mirror layer — life sentence + mirror cards
+    // Nur der Satz — die Tabellen wiederholten, was die Abschnittsliste zeigt (27.09.2026).
+    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
+
+    // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
+
+    // Notfallkarte export — quiet text link (below mirror cards)
+    isNotfall && hasMedical && React.createElement('div', {
+      style: { marginBottom: space.md }
+    },
+      // Echter Knopf: Enter UND Leertaste, ohne eigenes Tastatur-Handling.
+      React.createElement('button', {
+        type: 'button',
+        onClick: () => setKartenVorschau(true),
+        style: {
+          background: 'none', border: 'none', padding: 0, fontFamily: 'inherit',
+          fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
+          borderBottom: '1px solid ' + palette.border,
+          paddingBottom: '1px',
+        }
+      }, hinweisZeichen('kaestchen'), tr('notfallSummary.printCard')),
+
+      // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
+      // Abschnitte der Karte mit Feldnamen, nie mit Werten.
+      kartenVorschau && React.createElement(ExportVorschau, {
+        palette, t: tr, art: 'dossier',
+        quelle: { abschnitte: notfallkarteAbschnitte().map(s => ({ titel: s.title, felder: s.felder })) },
+        onWeiter: () => { setKartenVorschau(false); handleSaveCard(); },
+        onZurueck: () => setKartenVorschau(false),
+      })
+    ),
+
+    // Versicherungsübersicht entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
+
+    // Behörden-Zeitstatus — temporal overview of official matters
+    chapter.key === 'behoerden' && (() => {
+      const rows = [];
+      if (data.taxFilingDeadline) {
+        const deadline = new Date(data.taxFilingDeadline);
+        const now = new Date();
+        const diffMs = deadline.getTime() - now.getTime();
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+        let relative;
+        if (diffDays === 0) relative = tr('behördenStatus.today');
+        else if (diffDays > 0 && diffDays < 60) relative = tr('behördenStatus.inDays').replace('{n}', diffDays);
+        else if (diffDays >= 60) relative = tr('behördenStatus.inMonths').replace('{n}', Math.round(diffDays / 30));
+        else if (diffDays > -60) relative = tr('behördenStatus.agoDays').replace('{n}', Math.abs(diffDays));
+        else relative = tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
+        const formatted = deadline.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+        rows.push({ label: tr('behördenStatus.taxDeadline'), value: formatted + ' (' + relative + ')' });
+      }
+      if (data.pendingTaxReturns) rows.push({ label: tr('behördenStatus.pendingReturns'), value: data.pendingTaxReturns });
+      if (data.betreibungsStatus) {
+        const opts = { none: tr('chapters.behoerden.fields.betreibungsStatus.options.none') || data.betreibungsStatus, entries: tr('chapters.behoerden.fields.betreibungsStatus.options.entries') || data.betreibungsStatus, unknown: tr('chapters.behoerden.fields.betreibungsStatus.options.unknown') || data.betreibungsStatus };
+        rows.push({ label: tr('behördenStatus.betreibung'), value: opts[data.betreibungsStatus] || data.betreibungsStatus });
+      }
+      if (data.courtCases) {
+        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || data.courtCases) : (tr('chapters.behoerden.fields.courtCases.options.no') || data.courtCases);
+        rows.push({ label: tr('behördenStatus.courtCases'), value: val });
+      }
+      if (data.willMade) {
+        const wOpts = { no: tr('chapters.behoerden.fields.willMade.options.no'), handwritten: tr('chapters.behoerden.fields.willMade.options.handwritten'), public: tr('chapters.behoerden.fields.willMade.options.public'), inProgress: tr('chapters.behoerden.fields.willMade.options.inProgress') };
+        rows.push({ label: tr('behördenStatus.will'), value: wOpts[data.willMade] || data.willMade });
+      }
+      if (data.legalRepresentative) rows.push({ label: tr('behördenStatus.legalRep'), value: data.legalRepresentative });
+      if (rows.length === 0) return null;
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.lg + 'px',
+          padding: space.md + 'px',
+          background: palette.surface,
+          border: '1px solid ' + palette.border + '66',
+          borderRadius: radius.md,
+        }
+      },
+        React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
+        }, tr('behördenStatus.intro')),
+        ...rows.map((row, i) =>
+          React.createElement('div', {
+            key: i,
+            style: {
+              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+              padding: '6px 0',
+              borderBottom: i < rows.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
+            }
+          },
+            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
+            React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
+          )
+        )
+      );
+    })(),
+
+    // Behörden-Checkliste — interactive checklist for common official tasks
+    chapter.key === 'behoerden' && (() => {
+      const items = [
+        { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
+        { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
+        { id: 'wohnsitzbestaetigung', key: 'checklist.wohnsitzbestaetigung' },
+        { id: 'ausweisRenewal', key: 'checklist.ausweisRenewal' },
+        { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
+        { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
+      ];
+      const checked = checklistChecked;
+      const toggle = (id) => {
+        const next = { ...checked, [id]: !checked[id] };
+        setChecklistChecked(next);
+        try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch {}
+      };
+      const done = items.filter(i => checked[i.id]).length;
+      return React.createElement('details', {
+        style: { marginBottom: space.lg + 'px' }
+      },
+        React.createElement('summary', {
+          style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' }
+        }, hinweisZeichen('kaestchen'), tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
+        React.createElement('div', {
+          style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginTop: space.xs + 'px' }
+        },
+          React.createElement('p', {
+            style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed }
+          }, tr('checklist.intro')),
+          ...items.map(item =>
+            React.createElement('label', {
+              key: item.id,
+              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm, ...(isMobile ? { minHeight: '44px' } : {}) }
+            },
+              React.createElement('input', {
+                type: 'checkbox',
+                checked: !!checked[item.id],
+                onChange: () => toggle(item.id),
+                style: { accentColor: palette.sand, flexShrink: 0 }
+              }),
+              React.createElement('span', {
+                style: { color: checked[item.id] ? palette.mid : palette.text, textDecoration: checked[item.id] ? 'line-through' : 'none' }
+              }, tr(item.key))
+            )
+          )
+        )
+      );
+    })(),
+
+    // Wohnkostenanteil — housing cost share when both costs and income are recorded
+    chapter.key === 'wohnen' && allData && (() => {
+      const rent = parseFloat(data.rentAmount) || 0;
+      const util = parseFloat(data.utilities) || 0;
+      const wohnkosten = rent + util;
+      if (wohnkosten <= 0) return null;
+      const fin = allData.finanzen || {};
+      const income = (parseFloat(fin.monthlyIncome) || 0) + (parseFloat(fin.familienzulagen) || 0) + (parseFloat(fin.alimenteReceived) || 0);
+      if (income <= 0) return null;
+      const pct = ((wohnkosten / income) * 100).toFixed(1).replace(/\.0$/, '');
+      const fmt = (v) => zahl(v);
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.lg + 'px',
+          padding: space.md + 'px',
+          background: palette.surface,
+          border: '1px solid ' + palette.border + '66',
+          borderRadius: radius.md,
+        }
+      },
+        React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
+        }, tr('wohnkostenanteil.intro')),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.housing')),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(wohnkosten) + ' ' + tr('wohnkostenanteil.perMonth'))
+        ),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.income')),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(income) + ' ' + tr('wohnkostenanteil.perMonth'))
+        ),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0' } },
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, tr('wohnkostenanteil.share')),
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, pct + ' %')
+        )
+      );
+    })(),
+
+    // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
+    // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
+    // solange nichts erfasst ist.
+    chapter.key === 'versicherungen' &&
+      React.createElement(Schutzschild, {
+        palette, t, versicherungen: data,
+        ...schildOptionen(allData),
+      }),
+
+    // ─── Contextual orientation hints (Helvetia layer) ──────
+    // IPV: shown in finanzen when income + canton exist
+    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
+      React.createElement('div', {
+        style: {
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
+          border: '1px solid ' + palette.sage + '25',
+          borderLeft: '3px solid ' + palette.sage + '50',
+          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
+        }
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
+    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
+      React.createElement('button', {
+        className: 'mp-link',
+        onClick: () => onNavigate('finanzuebersicht'),
+        style: {
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sageMist || palette.up,
+          border: 'none', borderRadius: radius.sm,
+          fontSize: text.sm, color: palette.sageDeep || palette.mid,
+          cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', width: '100%',
+        }
+      }, t('nav.crosslink.finanzuebersichtHint')),
+
+    // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
+    // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
+    // null aus der Komponente). `data: allData`, weil das Barometer basis.canton + ausbildung.workHoursPerWeek
+    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen
+    // Feld — `aktuellesKapitel` verhindert dabei den Klick ins eigene Kapitel (Einkommensart liegt hier).
+    chapter.key === 'finanzen' && allData && Number(allData.finanzen?.monthlyIncome) > 0 &&
+      // Rahmen wie am anderen Einbettungsort (FinanzUebersicht): `palette.up` ohne Rand — derselbe
+      // Baustein soll überall gleich sitzen. Bewusst NICHT die Sage-Hinweisfarbe der Nachbarkarten:
+      // das Barometer ist ein Instrument, kein Hinweis.
+      React.createElement('div', {
+        style: {
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.up, borderRadius: radius.sm,
+        }
+      },
+        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: chapter.key })
+      ),
+
+    // Familienzulagen: shown in basis when children exist
+    chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
+      React.createElement('div', {
+        style: {
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
+          border: '1px solid ' + palette.sage + '25',
+          borderLeft: '3px solid ' + palette.sage + '50',
+          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
+        }
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextFamilienzulagen'))),
+
+    // Tabs
+    // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
+    // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
+    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
+      React.createElement('button', {
+        onClick: () => setExpandedSection('fields'),
+        style: {
+          padding: space.sm + 'px ' + space.md + 'px',
+          background: expandedSection === 'fields' ? palette.sand : 'transparent',
+          color: expandedSection === 'fields' ? '#000' : palette.text,
+          border: 'none',
+          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
+          cursor: 'pointer',
+          fontWeight: weight.semi,
+          fontSize: text.sm
+        }
+      }, tr('chapterView.fields')),
+      React.createElement('button', {
+        onClick: () => setExpandedSection('documents'),
+        style: {
+          padding: space.sm + 'px ' + space.md + 'px',
+          background: expandedSection === 'documents' ? palette.sand : 'transparent',
+          color: expandedSection === 'documents' ? '#000' : palette.text,
+          border: 'none',
+          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
+          cursor: 'pointer',
+          fontWeight: weight.semi,
+          fontSize: text.sm
+        }
+      }, tr('chapterView.documents'))
+    ),
+
+    // Fields Tab — seit 27.09.2026 die Abschnittsliste (abschnittsliste oben).
+    expandedSection === 'fields' && React.createElement('div', null,
+      filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
+        React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
+          (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
+        ),
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 10px 0' } },
+          (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
+        ),
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep } },  // kein opacity: 0.8 ergab 3.85:1 hell
+          React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
+          tr('trust.chapterTrust')
+        )
+      ),
+      abschnittsliste()
     ),
 
     // Documents Tab
@@ -2474,24 +2231,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ),
 
     // Nächstes Thema — Testperson A: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
-    nextChapter && onNext ? React.createElement('button', {
-      type: 'button',
-      onClick: onNext,
-      style: {
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
-        width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
-        marginTop: space.xl + 'px', padding: space.md + 'px ' + space.lg + 'px',
-        background: palette.surface, border: '1px solid ' + palette.border,
-        borderRadius: radius.md, color: palette.text,
-        transition: 'background 160ms ease, border-color 160ms ease',
-      },
-      onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
-      onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
-    },
-      React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
-        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
-        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
-      ),
+    // Seit 27.09.2026 (Seitenrundgang) als der eine Hauptknopf «Weiter mit … ›», wie auf
+    // der Übersicht — vorher eine stille Karte, die neben den Feldern kaum als Weg las.
+    nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
+      React.createElement(PrimaryButton, {
+        palette, onClick: onNext,
+        style: { minHeight: '44px', boxSizing: 'border-box' },
+      }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›'),
     ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present

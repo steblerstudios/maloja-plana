@@ -131,7 +131,7 @@ de   k=betreibungsStatus type="select" orientation~e6595be7 label~c61133fe optio
 de   k=courtCases type="select" label~bd0cc30a options=2 optWerte~2bfd19fd optLabels~b50f42dc
 de   k=legalRepresentative type="text" section~5dca6923 label~70fd3696 sectionIntro~c8e6925b
 de   k=representativePhone type="tel" label~fe6ae533
-de   k=willMade type="select" orientation~12ec713c link~2c2317f6 label~aa1af562 options=4 optWerte~ba1da0c9 optLabels~d0eae07a
+de   k=willMade type="select" orientation~07493aae link~2c2317f6 label~aa1af562 options=4 optWerte~ba1da0c9 optLabels~d0eae07a
 de   doc k=betreibungsauszug label~0e973d0c
 de   doc k=will label~aa111790
 de   doc k=power_of_attorney label~264c7d29
@@ -146,10 +146,10 @@ de   k=chronicDiseases type="textarea" label~a2e0f5ce
 de   k=doctor type="text" section~3a28348b label~5bf93fcf sectionIntro~fae0cb62
 de   k=doctorPhone type="tel" label~b805a4e9
 de   k=hospital type="text" label~28a433c8
-de   k=organDonor type="select" section~7074ad60 label~cf2fb2f6 sectionIntro~4686df9d options=3 optWerte~5703751f optLabels~012a5dcd weitere=secondary
+de   k=organDonor type="select" section~7074ad60 label~59c6fcb5 sectionIntro~4686df9d options=5 optWerte~7020aec1 optLabels~a5728f00 weitere=secondary
 de   k=patientenverfuegung type="select" orientation~d5934d33 link~3fad1fbd hint~3420c2e1 label~1f306ca3 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
-de   k=vorsorgeauftrag type="select" orientation~e17779e7 hint~99417e17 label~9bf8b758 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
-de   k=bestattungswuensche type="select" hint~7b40ff07 label~6d81a204 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
+de   k=vorsorgeauftrag type="select" orientation~e17779e7 hint~af5a3360 label~9bf8b758 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
+de   k=bestattungswuensche type="select" hint~188d6096 label~6d81a204 options=2 optWerte~ed5d4f23 optLabels~b65290ae weitere=secondary
 de   doc k=advance_directive label~05956eff
 de   doc k=organ_card label~173ef4d5
 de   doc k=blood_card label~5220626f
@@ -286,7 +286,7 @@ fr   k=betreibungsStatus type="select" orientation~b0ad3f5c label~c62055f5 optio
 fr   k=courtCases type="select" label~20b9d4a7 options=2 optWerte~2bfd19fd optLabels~b74e5823
 fr   k=legalRepresentative type="text" section~47681fdc label~43eca758 sectionIntro~3196baa2
 fr   k=representativePhone type="tel" label~7bbf8cc7
-fr   k=willMade type="select" orientation~8136a05a link~5ffebf04 label~197789ff options=4 optWerte~ba1da0c9 optLabels~fd0a5449
+fr   k=willMade type="select" orientation~cb49009f link~5ffebf04 label~197789ff options=4 optWerte~ba1da0c9 optLabels~fd0a5449
 fr   doc k=betreibungsauszug label~5030071d
 fr   doc k=will label~aa111790
 fr   doc k=power_of_attorney label~f0cdd99b
@@ -301,10 +301,10 @@ fr   k=chronicDiseases type="textarea" label~8bbdbea2
 fr   k=doctor type="text" section~0c503b47 label~ca3df85b sectionIntro~ebb1d025
 fr   k=doctorPhone type="tel" label~35c819af
 fr   k=hospital type="text" label~625996ae
-fr   k=organDonor type="select" section~e44d35b2 label~e466d103 sectionIntro~f31f5299 options=3 optWerte~5703751f optLabels~c3ec2f9d weitere=secondary
+fr   k=organDonor type="select" section~e44d35b2 label~dbe0732b sectionIntro~f31f5299 options=5 optWerte~7020aec1 optLabels~cfafb2ba weitere=secondary
 fr   k=patientenverfuegung type="select" orientation~f2822acf link~361b792c hint~d143b29a label~9956aacb options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
-fr   k=vorsorgeauftrag type="select" orientation~aeb9d379 hint~2025a9d3 label~d06cac12 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
-fr   k=bestattungswuensche type="select" hint~e3332b91 label~86c51b39 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
+fr   k=vorsorgeauftrag type="select" orientation~aeb9d379 hint~924f6e39 label~d06cac12 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
+fr   k=bestattungswuensche type="select" hint~06046825 label~86c51b39 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
 fr   doc k=advance_directive label~e44d35b2
 fr   doc k=organ_card label~d9344d20
 fr   doc k=blood_card label~7300bd74
@@ -441,7 +441,7 @@ it   k=betreibungsStatus type="select" orientation~006a04a4 label~baffea7a optio
 it   k=courtCases type="select" label~9a2ca8f9 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
 it   k=legalRepresentative type="text" section~5a3eab11 label~1e82eb05 sectionIntro~c1f06288
 it   k=representativePhone type="tel" label~d0a1d1cf
-it   k=willMade type="select" orientation~9046ffd9 link~d56f10b4 label~4c267d0b options=4 optWerte~ba1da0c9 optLabels~9e43a748
+it   k=willMade type="select" orientation~490c26eb link~d56f10b4 label~4c267d0b options=4 optWerte~ba1da0c9 optLabels~9e43a748
 it   doc k=betreibungsauszug label~bc93e2f7
 it   doc k=will label~b7e8c66d
 it   doc k=power_of_attorney label~c432f491
@@ -456,10 +456,10 @@ it   k=chronicDiseases type="textarea" label~fea4e791
 it   k=doctor type="text" section~f198b1cd label~d578256d sectionIntro~b2afb76b
 it   k=doctorPhone type="tel" label~6aa5ea13
 it   k=hospital type="text" label~7b926a78
-it   k=organDonor type="select" section~9b700c11 label~32650b1f sectionIntro~4ce2e7a2 options=3 optWerte~5703751f optLabels~b3e414dc weitere=secondary
+it   k=organDonor type="select" section~9b700c11 label~afaa36a3 sectionIntro~4ce2e7a2 options=5 optWerte~7020aec1 optLabels~aeb97878 weitere=secondary
 it   k=patientenverfuegung type="select" orientation~14c9e3b1 link~6994aaab hint~8e7ba057 label~df632c6a options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
-it   k=vorsorgeauftrag type="select" orientation~9818162d hint~5bfb39c3 label~143d53a6 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
-it   k=bestattungswuensche type="select" hint~beb13941 label~7bba6303 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
+it   k=vorsorgeauftrag type="select" orientation~9818162d hint~0514a3ca label~143d53a6 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
+it   k=bestattungswuensche type="select" hint~c5ab5793 label~7bba6303 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
 it   doc k=advance_directive label~9b700c11
 it   doc k=organ_card label~a329f71a
 it   doc k=blood_card label~34152ed1
@@ -596,7 +596,7 @@ en   k=betreibungsStatus type="select" orientation~7c8e1bd0 label~905897fd optio
 en   k=courtCases type="select" label~b9e95469 options=2 optWerte~2bfd19fd optLabels~ea0983bd
 en   k=legalRepresentative type="text" section~587e9830 label~15b541c3 sectionIntro~6ce32e48
 en   k=representativePhone type="tel" label~34c50bfb
-en   k=willMade type="select" orientation~67c2c711 link~ef3beccd label~53f4e27a options=4 optWerte~ba1da0c9 optLabels~54d770bb
+en   k=willMade type="select" orientation~41d1a32b link~ef3beccd label~53f4e27a options=4 optWerte~ba1da0c9 optLabels~54d770bb
 en   doc k=betreibungsauszug label~4bc008c4
 en   doc k=will label~903cb9ad
 en   doc k=power_of_attorney label~9d16cfd7
@@ -611,10 +611,10 @@ en   k=chronicDiseases type="textarea" label~4b032299
 en   k=doctor type="text" section~351601dd label~e51dab88 sectionIntro~d63848d3
 en   k=doctorPhone type="tel" label~49650b66
 en   k=hospital type="text" label~38c19e90
-en   k=organDonor type="select" section~a5fe76f5 label~5577f89f sectionIntro~1d4c2fe2 options=3 optWerte~5703751f optLabels~ab4da33f weitere=secondary
+en   k=organDonor type="select" section~a5fe76f5 label~7facd0c2 sectionIntro~1d4c2fe2 options=5 optWerte~7020aec1 optLabels~225a5d02 weitere=secondary
 en   k=patientenverfuegung type="select" orientation~7796bc16 link~2f871eb7 hint~bc4bc8b4 label~67e42b26 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
-en   k=vorsorgeauftrag type="select" orientation~6125201c hint~7f43e7e1 label~1e34ab98 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
-en   k=bestattungswuensche type="select" hint~32af9fea label~4f7f8f65 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=vorsorgeauftrag type="select" orientation~6125201c hint~1980a25e label~1e34ab98 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=bestattungswuensche type="select" hint~668c42ca label~4f7f8f65 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
 en   doc k=advance_directive label~4ef71a24
 en   doc k=organ_card label~269afc58
 en   doc k=blood_card label~76ec1811
@@ -766,10 +766,10 @@ rm   k=chronicDiseases type="textarea" label~5fd1cb1e
 rm   k=doctor type="text" section~349f10cb label~058b8411 sectionIntro~3c4142db
 rm   k=doctorPhone type="tel" label~fa642349
 rm   k=hospital type="text" label~62c0b242
-rm   k=organDonor type="select" section~9067c1a5 label~86e3d1e0 sectionIntro~4686df9d options=4 optWerte~3fb1ad2a optLabels~9169ccaf weitere=secondary
+rm   k=organDonor type="select" section~9067c1a5 label~a492285b sectionIntro~4686df9d options=5 optWerte~7020aec1 optLabels~7d9f7c4f weitere=secondary
 rm   k=patientenverfuegung type="select" orientation~d5934d33 link~3fad1fbd hint~7fd023e6 label~3a34ad40 options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
-rm   k=vorsorgeauftrag type="select" orientation~e17779e7 hint~e21398f6 label~1020900b options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
-rm   k=bestattungswuensche type="select" hint~e7d52593 label~d2ea1648 options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
+rm   k=vorsorgeauftrag type="select" orientation~e17779e7 hint~a6c15f34 label~1020900b options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
+rm   k=bestattungswuensche type="select" hint~3be73053 label~d2ea1648 options=2 optWerte~ed5d4f23 optLabels~5e3acdd8 weitere=secondary
 rm   doc k=advance_directive label~1b62ec66
 rm   doc k=organ_card label~d1ce2e30
 rm   doc k=blood_card label~a820fa54

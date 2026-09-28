@@ -44,7 +44,8 @@ const alleFormen = (v) => (typeof v === 'string' ? [v] : Object.values(v || {}))
 describe('Codex-Audit: Texte in allen fünf Sprachen', () => {
   for (const [lang, d] of Object.entries(sprachen)) {
     it(lang + ': die Einstiegs-Kacheln nennen keinen Frankenbetrag', () => {
-      for (const k of ['highlightTaxSub', 'highlightIpvSub']) {
+      // highlightTaxSub entfernt (Bundessteuer-Kachel → Instrument Steuer-Säule, 25.09.2026).
+      for (const k of ['highlightIpvSub']) {
         const formen = alleFormen(d.dashboard[k]);
         expect(formen.length).toBeGreaterThan(0);
         for (const s of formen) expect(s).not.toMatch(/CHF|\d{3}/);

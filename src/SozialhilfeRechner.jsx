@@ -11,7 +11,6 @@ import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const isMobile = useIsMobile();
-  const household = data?.basis?.household;
   // Kanton aus dem Profil → kantonaler Vermögensfreibetrag (ohne Kanton: SKOS-Empfehlung).
   const kanton = data?.basis?.canton || '';
   const vorbefuellt = useMemo(() => sozialhilfeVorbefuellung(data), [data]);

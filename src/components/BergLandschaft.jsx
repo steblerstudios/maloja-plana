@@ -55,6 +55,11 @@ const UNTERKANTE = 740;  // Bild-Einheiten: Platz unter Finanzen für die Kreise
 // y 479) Platz behalten; bei noch flacheren Fenstern scrollt man den Rest. Fehlt Himmel, trägt
 // der Titel den Dunst (mitDunst).
 export const OBERKANTE_MAX = 300; // Bild-Einheiten
+// Die neun Berg-Bilder, die mit dem Ausfüllstand erscheinen (Tannen ab 20 % … Fahne bei 100 %),
+// sind bis zum Gamification-Entscheid im Oktober ausgeschaltet (Stebler Studios, 25.09.2026;
+// docs/IDEEN.md «Oktober — entscheiden», §15 «Berg-Bilder bei 20–100 %»). Der goldene Weg zu
+// begonnenen Kapiteln bleibt — er ist Orientierung, keine Belohnung. Wieder einschalten: true.
+export const BERG_BILDER = false;
 export const ausschnittBreit = (rahmenBreite, fensterHoehe) => {
   const voll = AUSSCHNITT.breit;
   if (!rahmenBreite || !fensterHoehe) return voll;
@@ -106,6 +111,20 @@ export const STATIONEN = [
   // an das Ausbildung-Etikett; verdeckt das Ende des Zulaufs) — das neue senkrechte Stück bleibt frei.
   { key: 'behoerden', x: 290, y: 513, seite: { breit: 'links', schmal: 'links', eng: { breit: 'obenrechts', schmal: 'obenlinks' } } },
   { key: 'notfall', x: 424, y: 526.5, seite: { breit: 'rechts', schmal: 'rechts' } },
+];
+
+// Die drei Strassen rechts im Tal (27.09.2026): Plätze für Zeichen ausserhalb der Kapitel —
+// zuerst der Wanderrucksack, später der Finanzbaum, das dritte ist offen. Kein Weg,
+// kein Fortschrittsring: es sind Zugänge, keine Stationen. Die Plätze sind aus dem Bild gelesen
+// (Mitte der Fahrbahn); was darauf steht, gibt das Dashboard über `talStationen` (Reihenfolge =
+// Platz). Nur am Computer: am Handy liegt das Tal ausserhalb des Ausschnitts, und auf der
+// Passstrasse ist kein Platz frei (gemessen 27.09.2026: links vor der Basis stiess das Etikett
+// an «Behörden») — dort steht der Wanderrucksack in der unteren Leiste.
+// Die zwei weiteren Plätze, aus dem Bild gelesen — erst eintragen, wenn ihr Zeichen kommt
+// (Startbündel, Grenze 65 kB): mittlere Strasse { x: 927, y: 555, seite: 'rechts' },
+// rechte Strasse { x: 1003, y: 580, seite: 'links' }.
+export const TAL_PLAETZE = [
+  { x: 822, y: 560, seite: 'rechts' },
 ];
 
 // Wegstück i gehört zum Kapitel i+1 und führt von Station WEG_VON[i] zu dessen Station — eine
@@ -192,7 +211,7 @@ export const mitKontrastZu = (hex, grund, ziel = 3) => {
 // am Modus. Der Farbenblind-Modus gilt trotzdem.
 export const bildPalette = (palette) => applyColorBlind(LIGHT_PALETTE, !!palette.colorBlind);
 
-const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke }) => {
+const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onSelectChapter, lang, hyphenStyle, titel, fortschritt, fortschrittLabels, prozent, ecke, talStationen = [] }) => {
   const rahmen = useRef(null);
   const huelle = useRef(null);
   // Höhe des Titels (umbricht je nach Sprache und Breite) — der Dunst wächst mit.
@@ -311,39 +330,39 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
                React.createElement('path', { key: 'w', d, stroke: p.sand, strokeWidth: 5 })]
             : React.createElement('path', { d, stroke: p.sageDeep, strokeWidth: 3, strokeDasharray: '0.1 9' }));
       }),
-      // ─── Überraschungen mit dem Fortschritt (wie bisher, neu verortet) ───
-      completion >= 20 && React.createElement('g', { key: 'tannen', fill: p.sageDeep, style: s(20, 0.8, 30) },
+      // ─── Überraschungen mit dem Fortschritt (wie bisher, neu verortet) — bis Oktober aus, s. BERG_BILDER ───
+      BERG_BILDER && completion >= 20 && React.createElement('g', { key: 'tannen', fill: p.sageDeep, style: s(20, 0.8, 30) },
         React.createElement('path', { d: 'M 842 548 L 852 520 L 862 548 Z' }),
         React.createElement('path', { d: 'M 862 552 L 870 530 L 878 552 Z' }),
       ),
-      completion >= 35 && React.createElement('g', { key: 'edelweiss', style: s(35, 0.9, 20) },
+      BERG_BILDER && completion >= 35 && React.createElement('g', { key: 'edelweiss', style: s(35, 0.9, 20) },
         React.createElement('circle', { cx: 452, cy: 548, r: 4.5, fill: '#fff' }),
         React.createElement('circle', { cx: 452, cy: 548, r: 1.8, fill: p.sand }),
         React.createElement('circle', { cx: 610, cy: 590, r: 4, fill: '#fff' }),
         React.createElement('circle', { cx: 610, cy: 590, r: 1.5, fill: p.sand }),
       ),
-      completion >= 45 && completion < 100 && React.createElement('g', { key: 'gipfelkreuz', stroke: p.mid, strokeWidth: 1.8, style: s(45, 0.8, 20) },
+      BERG_BILDER && completion >= 45 && completion < 100 && React.createElement('g', { key: 'gipfelkreuz', stroke: p.mid, strokeWidth: 1.8, style: s(45, 0.8, 20) },
         React.createElement('line', { x1: 598, y1: 176, x2: 598, y2: 198 }),
         React.createElement('line', { x1: 591, y1: 182, x2: 605, y2: 182 }),
       ),
-      completion >= 55 && React.createElement('path', { key: 'matterhorn',
+      BERG_BILDER && completion >= 55 && React.createElement('path', { key: 'matterhorn',
         d: 'M 912 170 L 926 134 L 932 146 L 942 170 Z', fill: p.sageDeep, style: s(55, 0.35, 60) }),
-      completion >= 65 && React.createElement('g', { key: 'kuh', fill: p.text, style: s(65, 0.55, 20) },
+      BERG_BILDER && completion >= 65 && React.createElement('g', { key: 'kuh', fill: p.text, style: s(65, 0.55, 20) },
         React.createElement('ellipse', { cx: 700, cy: 560, rx: 8, ry: 4.6 }),
         React.createElement('ellipse', { cx: 692, cy: 556, rx: 3.2, ry: 2.6 }),
         React.createElement('rect', { x: 694, y: 563, width: 1.4, height: 6 }),
         React.createElement('rect', { x: 704, y: 563, width: 1.4, height: 6 }),
       ),
-      completion >= 75 && React.createElement('g', { key: 'uhr', fill: 'none', stroke: p.mid, style: s(75, 0.6, 15) },
+      BERG_BILDER && completion >= 75 && React.createElement('g', { key: 'uhr', fill: 'none', stroke: p.mid, style: s(75, 0.6, 15) },
         React.createElement('circle', { cx: 150, cy: 150, r: 7, strokeWidth: 1.2 }),
         React.createElement('line', { x1: 150, y1: 150, x2: 150, y2: 145.5, strokeWidth: 1 }),
         React.createElement('line', { x1: 150, y1: 150, x2: 153.5, y2: 151.5, strokeWidth: 0.8 }),
       ),
-      completion >= 85 && React.createElement('path', { key: 'schoggi',
+      BERG_BILDER && completion >= 85 && React.createElement('path', { key: 'schoggi',
         d: 'M 760 600 L 768 586 L 776 600 L 784 586 L 792 600 Z', fill: p.sand, style: s(85, 0.7, 10) }),
-      completion >= 95 && React.createElement('circle', { key: 'sonne',
+      BERG_BILDER && completion >= 95 && React.createElement('circle', { key: 'sonne',
         cx: 250, cy: 130, r: 22, fill: p.sand, style: { opacity: 0.35, transition: 'opacity 1.5s ease' } }),
-      completion >= 100 && React.createElement('g', { key: 'fahne' },
+      BERG_BILDER && completion >= 100 && React.createElement('g', { key: 'fahne' },
         React.createElement('line', { x1: 598, y1: 172, x2: 598, y2: 198, stroke: p.mid, strokeWidth: 1.6 }),
         React.createElement('rect', { x: 599, y: 172, width: 15, height: 10, rx: 0.8, fill: '#d42b2b' }),
         React.createElement('path', { d: 'M 606.5 174 L 606.5 180 M 603.5 177 L 609.5 177', fill: 'none', stroke: '#fff', strokeWidth: 1.8 }),
@@ -553,6 +572,45 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           // Seit 25.09.2026 trägt das Etikett selbst die Kapitelfarbe (weisse Schrift) — der
           // Farbpunkt davor ist damit überflüssig. Das Wort trägt, die Farbe ergänzt.
           shortLabel)
+      );
+    }),
+    // Zeichen auf den Tal-Strassen (TAL_PLAETZE): gleiche Scheibe wie eine Station im Zustand
+    // «Skizze», aber durchgezogener Rand statt Fortschrittsring — ein Zugang, kein Kapitel.
+    !schmal && talStationen.slice(0, TAL_PLAETZE.length).map((st, i) => {
+      const ort = TAL_PLAETZE[i];
+      const sz = 30;
+      const farbe = st.farbe; // Pflicht vom Dashboard (Startbündel: kein Rückfall)
+      const zeichen = mitKontrastZu(farbe, ui.surface, 3);
+      return React.createElement('div', {
+        key: st.key,
+        style: { position: 'absolute', ...imRahmen(ort.x, ort.y), width: 0, height: 0 },
+      },
+        React.createElement('button', {
+          type: 'button', onClick: st.onClick, 'aria-label': st.label,
+          style: {
+            position: 'absolute', left: -sz / 2 + 'px', top: -sz / 2 + 'px',
+            width: sz + 'px', height: sz + 'px', padding: 0,
+            borderRadius: '50%', background: ui.surface, color: zeichen,
+            border: '3px solid ' + zeichen,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
+            transition: `transform ${duration.cinematic}ms ${ease}`,
+          },
+          onMouseEnter: (e) => { e.currentTarget.style.transform = 'scale(1.08)'; },
+          onMouseLeave: (e) => { e.currentTarget.style.transform = 'scale(1)'; },
+        }, React.createElement('div', { style: { width: '17px', height: '17px' } }, st.zeichen())),
+        React.createElement('span', {
+          className: 'mountain-label', 'aria-hidden': 'true',
+          style: {
+            // display wie bei den Stationen: überschreibt die alte Regel in index.html, die
+            // Etiketten unter 480 px ausblendet (die Stationen tragen es ebenso inline).
+            position: 'absolute', [ort.seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
+            whiteSpace: 'nowrap', pointerEvents: 'none', display: 'block',
+            fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
+            background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.sm,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+          },
+        }, st.label)
       );
     })
   ));

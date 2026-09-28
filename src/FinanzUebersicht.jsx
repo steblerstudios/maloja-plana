@@ -1,4 +1,5 @@
 import React from 'react';
+import PrimaryButton from './components/PrimaryButton.jsx';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -21,11 +22,18 @@ import { lohnBandState } from './data/lohnEinordnung.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
-import { monthlyExpenses } from './data/haushaltskosten.js';
+import { calculateMonthlyBudget } from './budgetSync.js';
+import { einnahmenZeilen } from './data/haushaltsEinnahmen.js';
 import { renderSource } from './utils/renderSource.js';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag } from './utils/geld.js';
+
+// IPV-Annahmen hinter einem geschätzten Betrag (cantonalData.js calculateIPV), in fester Reihenfolge.
+const ipvAnnahmenTexte = (t, a) => [
+  a?.ohneDreizehnten && t('ipv.annahmeOhneDreizehnten'),
+  a?.partnerOhneDreizehnten && t('ipv.annahmePartnerOhneDreizehnten'),
+].filter(Boolean);
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -93,7 +101,12 @@ export const druckAbschnitte = (t, w) => {
     ? fmt(w.ipvAbzug.betrag) + ' ' + t('common.perMonth') + ' (' + t(ipvVerfuegt ? 'finanzUebersicht.ipvLautVerfuegung' : 'finanzUebersicht.ipvVerfuegungOhneJahr') + ')'
     : w.ipv.eligible ? fmt(w.ipv.amount) + ' ' + t('common.perMonth') : null;
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipvBetragText ? '✓ ' + ipvBetragText : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
-  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  // Geschätzter Betrag bei offener Frage nach dem 13. Monatslohn: die Annahme gehört dazu (wie bei der Steuer).
+  const ipvAnnahmen = !ipvVerfuegt && !ipvOhneJahr && w.ipv.eligible ? ipvAnnahmenTexte(t, w.ipv.annahmen) : [];
+  if (ipvAnnahmen.length) {
+    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + ipvAnnahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
+  }
+  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') + (w.sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') : w.sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
   if (w.hasAssets) {
@@ -113,7 +126,9 @@ export const druckAbschnitte = (t, w) => {
       zeilen: [
         { label: t('finanzUebersicht.totalIncome'), html: '<tr><td>' + t('finanzUebersicht.totalIncome') + '</td><td class="r">' + fmt(w.totalIncome) + '</td></tr>' },
         { label: t('finanzUebersicht.totalExpenses'), html: '<tr><td>' + t('finanzUebersicht.totalExpenses') + '</td><td class="r">− ' + fmt(w.totalExpenses) + '</td></tr>' },
-        { label: t('finanzUebersicht.freeAmount'), html: '<tr class="total"><td>' + t('finanzUebersicht.freeAmount') + '</td><td class="r ' + (w.freeAmount >= 0 ? 'pos' : 'neg') + '">' + fmt(w.freeAmount) + '</td></tr>' },
+        w.bruttoDabei
+          ? { label: t('finanzUebersicht.freeAmount'), html: '<tr class="total"><td colspan="2" style="font-weight:400;font-size:12px;color:#6B6560">' + escapeHtml(t('budgetSync.availableNeedsNetto')) + '</td></tr>' }
+          : { label: t('finanzUebersicht.freeAmount'), html: '<tr class="total"><td>' + t('finanzUebersicht.freeAmount') + '</td><td class="r ' + (w.freeAmount >= 0 ? 'pos' : 'neg') + '">' + fmt(w.freeAmount) + '</td></tr>' },
       ],
     });
   }
@@ -187,6 +202,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   // R4: Annahmen hinter der Zahl (13. Monatslohn offen, Alleinverdiener-Ehepaar).
   const annahmen = steuern ? steuern.annahmen : null;
   const annahmenSatz = taxResult ? annahmenTexte(t, annahmen).join(' ') : '';
+  // Die Budget-Bilanz unten zieht die EIGENE Angabe ab (`finanzen.monthlyTax`), die Karte
+  // schätzt — die Karte nennt darum beide (Entscheid 28.09.2026, Variante A). Den Monatswert
+  // der Schätzung nur mit Kantonszahl: eine reine Bundessteuer neben der vollen eigenen
+  // Steuer läse sich wie eine Abweichung, die keine ist.
+  const eigeneSteuer = Number(data.finanzen?.monthlyTax || 0);
+  const steuerAngabeSatz = eigeneSteuer <= 0 ? ''
+    : kantonal
+      ? t('finanzUebersicht.taxMonthlyCompare', { estimate: formatCHF(Math.round(kantonal.total / 12)), angabe: formatCHF(eigeneSteuer) })
+      : t('finanzUebersicht.taxOwnFigure', { angabe: formatCHF(eigeneSteuer) });
 
   const hasData = income > 0;
 
@@ -208,15 +232,22 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   const totalAssets = securitiesValue + otherAssets + savingsAccount;
   const hasAssets = totalAssets > 0;
 
-  const totalExpenses = monthlyExpenses(data);
-  const totalIncome = income + Number(data.finanzen?.familienzulagen || 0) + Number(data.finanzen?.alimenteReceived || 0);
-  const freeAmount = totalIncome - totalExpenses;
+  // Monatsbudget: dieselben Zahlen wie die Budget-Seite (budgetSync.js) — Einnahmen des ganzen
+  // Haushalts, Ausgaben inkl. Hypothek, Gebäudeversicherung und 3a. Bis 28.09.2026 rechnete die
+  // Übersicht selbst: nur der eigene Lohn, und ohne diese drei Ausgaben (data/haushaltskosten.js).
+  const budget = calculateMonthlyBudget(data, t);
+  const totalExpenses = budget.totalExpenses;
+  const totalIncome = budget.income;
+  const freeAmount = budget.remaining;
   const hasExpenses = totalExpenses > 0;
+  // Ein Lohn ist brutto erfasst → kein «frei verfügbar», sondern die Frage nach dem Netto.
+  const bruttoDabei = budget.bruttoDabei;
+  const einnahmen = einnahmenZeilen(budget.einnahmen);
 
   // Die Werte, die gedruckt werden — auch die Quelle der Export-Vorschau (K20).
   const druckWerte = {
     income, canton, taxResult, steuerOhneZahl, kantonal, annahmen, ipv, ipvAbzug: ipvAbzugWert, sozialhilfe, el,
-    totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten,
+    totalIncome, totalExpenses, freeAmount, hasExpenses, bruttoDabei, totalAssets, hasAssets, gesundheitskosten,
   };
 
   const handlePrint = () => {
@@ -262,14 +293,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm } },
         t('finanzUebersicht.noData')
       ),
-      React.createElement('button', {
-        onClick: () => onNavigate('chapter', 2),
-        style: {
-          padding: '8px 16px', background: palette.sand, color: palette.onSand,
-          border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        }
-      }, t('finanzUebersicht.enterIncome'))
+      React.createElement(PrimaryButton, {
+        palette, onClick: () => onNavigate('chapter', 2), style: { minHeight: '44px' },
+      }, t('finanzUebersicht.enterIncome'), ' ›')
     ),
 
     hasData && React.createElement('div', {
@@ -278,8 +304,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         border: '1px solid ' + palette.sand + '25', marginBottom: '16px',
       }
     },
+      // Mit der erfassten Art im Namen (Nettoeinkommen / Bruttolohn / Lohn) — wie im Monatsbudget.
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } },
-        t('finanzUebersicht.monthlyIncome')
+        t(einnahmen[0] ? einnahmen[0].key : 'finanzUebersicht.monthlyIncome')
       ),
       React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi } },
         formatCHF(income) + ' ' + t('common.perMonth')
@@ -417,10 +444,11 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
           ? '~ ' + formatCHF(taxResult.steuer) + ' ' + t('common.perYear') + ' (' + t('tax.federalOnly') + ')'
           : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
       statusColor: palette.text,
-      detail: kantonal
+      detail: [steuerAngabeSatz, kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION }) + (annahmenSatz ? ' ' + annahmenSatz : '')
         : steuerOhneZahl ? (steuerkanton && ERKLAERT_IN_ORIENTIERUNG.includes(steuerOhneZahl) ? null : bundOhneZahlText(t, steuerOhneZahl))
           : [!steuerkanton ? t('finanzUebersicht.selectCanton') : '', annahmenSatz].filter(Boolean).join(' ') || null,
+      ].filter(Boolean).join(' ') || null,
       onClick: () => onNavigate('tax'),
     }),
     // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,
@@ -448,6 +476,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         ? t('finanzUebersicht.ipvVerfuegungOhneJahr')
         : ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
+          + ipvAnnahmenTexte(t, ipv.annahmen).map((x) => '. ' + x).join('')
         : ipv.belegt === false
           ? t(ipv.noteKey, ipv.noteParams)
           // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht
@@ -466,7 +495,10 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       title: t('finanzUebersicht.sozialhilfe'),
       status: sozialhilfe.eligible
         ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
-        : t('sozialhilfe.notEntitled'),
+          // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
+          + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
+        // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
+        : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
       statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
       detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf) + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
       onClick: () => onNavigate('sozialhilfe'),
@@ -508,8 +540,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
 
     hasData && hasExpenses && React.createElement('div', {
       style: {
-        padding: '16px', background: freeAmount >= 0 ? palette.sage + '12' : palette.rose + '12',
-        borderRadius: radius.sm, border: '1px solid ' + (freeAmount >= 0 ? palette.sage + '30' : palette.rose + '30'),
+        // Brutto: kein Saldo, also auch keine Saldo-Farbe.
+        padding: '16px', background: bruttoDabei ? palette.up : freeAmount >= 0 ? palette.sage + '12' : palette.rose + '12',
+        borderRadius: radius.sm, border: '1px solid ' + (bruttoDabei ? palette.border : freeAmount >= 0 ? palette.sage + '30' : palette.rose + '30'),
         marginBottom: '16px',
       }
     },
@@ -522,6 +555,16 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         React.createElement('span', { style: { fontSize: text.sm } }, t('finanzUebersicht.totalIncome')),
         React.createElement('span', { style: { fontWeight: weight.semi, fontSize: text.sm } }, formatCHF(totalIncome))
       ),
+      // Aufschlüsselung, sobald mehr als der eigene Lohn zählt — sichtbar, was mitgerechnet ist.
+      einnahmen.length > 1 && React.createElement('div', { style: { margin: '-4px 0 8px', paddingLeft: space.sm + 'px' } },
+        einnahmen.map(z => React.createElement('div', {
+          key: z.key,
+          style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal },
+        },
+          React.createElement('span', null, t(z.key)),
+          React.createElement('span', null, formatCHF(z.betrag))
+        ))
+      ),
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }
       },
@@ -531,11 +574,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       React.createElement('div', {
         style: { borderTop: '1px solid ' + palette.border, paddingTop: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }
       },
-        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } }, t('finanzUebersicht.freeAmount')),
-        React.createElement('span', {
+        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('finanzUebersicht.freeAmount')),
+        !bruttoDabei && React.createElement('span', {
           style: { fontSize: text.lg, fontWeight: weight.semi, color: freeAmount >= 0 ? (palette.sageDeep || palette.sage) : (palette.roseDeep || palette.rose) }
         }, formatCHF(freeAmount))
-      )
+      ),
+      bruttoDabei && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginTop: space.xs + 'px' } },
+        t('budgetSync.availableNeedsNetto'))
     ),
 
     // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? (Instrument über

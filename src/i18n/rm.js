@@ -190,6 +190,7 @@ export default {
       intro: 'Ils debits fan sentir sulet, dentant datti dretgs clers ed agid gratuit — pli baud ch’ins als acceptescha, pli blera aria resta.',
       berechtigungen: {
         schuldenberatung: { titel: 'Cussegliaziun da debits gratuita', text: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — i dat in post en mintga chantun. Ir baud tegna dapli vias avertas.' },
+        mahnung: { titel: 'Mahnung erhalten', text: 'Eine Mahnung ist noch keine Betreibung — jetzt ist der Spielraum am grössten: prüfen, bestreiten oder Raten vorschlagen.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
         betreibung: { titel: 'Chapir la scussiun', text: 'Ina scussiun è ina procedura cun pass e termins clers — als enconuscher cun calma fa ord la tema insatge maneabel.' },
         existenzminimum: { titel: 'Proteger il minimum d’existenza', text: 'Tar in impegnament dal salari resta in minimum d’existenza protegì intangibel tenor lescha — in budget cler gida a al vesair ed a al mantegnair.' },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sche l’entrada na cuvra betg pli il pli necessari, po l’agid social cumplettar — in dretg, betg carezza, ed independent dals debits sezs.' },
@@ -241,7 +242,7 @@ export default {
     step4Title: '4 · Frist sichern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step4Text: { sie: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfen Sie die genaue Frist in Ihrer Police.', du: 'Viele Zusatzversicherungen kündigt man 3 Monate aufs Jahresende — also bis Ende September {year}. Prüfe die genaue Frist in deiner Police.' },
-    step4Button: 'Frist {date} in den Kalender',
+    step4Button: 'Termin «Desdir l’assicuranza supplementara» en il chalender ({date})',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',
@@ -290,7 +291,7 @@ export default {
     linkMietzins: 'Verifitgar ils contributs da fittanza',
     linkAddressChange: 'Crear ina brev da midada d’adressa',
     linkKkErst: 'Nov en Svizra? Cassa da malsauns per l’emprima giada',
-    step2Button: 'Frist {date} in den Kalender',
+    step2Button: 'Termin «Annunzia a la vischnanca» en il chalender ({date})',
     step2Done: 'Im Kalender notiert.',
     step2CalendarLink: 'Zum Kalender',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
@@ -387,7 +388,7 @@ export default {
     step5Title: '5 · Probezeit & Ferien',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step5Text: { sie: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notieren Sie sich das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).', du: 'Während der Probezeit gilt eine kürzere Kündigungsfrist — notier dir das Probezeit-Ende. Ferienanspruch: mindestens 4 Wochen pro Jahr (5 Wochen bis 20 Jahre).' },
-    step5Button: 'Probezeit-Ende {date} merken',
+    step5Button: 'Promemoria «Fin da la temporada d’emprova» en il chalender ({date})',
     step5Done: 'Im Kalender notiert.',
     step5CalendarLink: 'Zum Kalender',
     reminderTitle: 'Probezeit-Ende prüfen',
@@ -408,7 +409,7 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     step1DateLabel: 'Ende des Arbeitsverhältnisses (laut Kündigung)',
     step1DateHint: 'Spätestens am {date} anmelden, wenn ab dann Taggeld beansprucht wird (AVIG Art. 17). Früher ist besser — die Anmeldung geht auch online über arbeit.swiss.',
-    step1Button: 'Spätestens-Termin RAV merken ({date})',
+    step1Button: 'Termin «Annunzia URC» en il chalender ({date})',
     reminderRavTitle: 'RAV-Anmeldung — spätestens heute',
     quelle: 'Quellen: [[AVIG Art. 17|https://www.fedlex.admin.ch/eli/cc/1982/2184_2184_2184/de#art_17]], [[AVIV Art. 19|https://www.fedlex.admin.ch/eli/cc/1983/1205_1205_1205/de#art_19]], [[UVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_3]] (geprüft im September 2026).',
     title: 'Stelle verloren — was tun?',
@@ -421,7 +422,7 @@ export default {
     step2Title: '2 · Versicherungen — die unsichtbare Lücke',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step2Text: { sie: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehen Sie danach Arbeitslosentaggeld, sind Sie über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.', du: 'Die Unfalldeckung über den alten Arbeitgeber endet mit dem 31. Tag nach dem Ende des Lohnanspruchs. Beziehst du danach Arbeitslosentaggeld, bist du über die Arbeitslosenversicherung weiter gegen Unfall versichert. Sonst den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.' },
-    step2Button: 'Frist „Unfalldeckung“ merken ({date})',
+    step2Button: 'Termin «Unfalldeckung» en il chalender ({date})',
     step2Done: 'Frist im Kalender gespeichert.',
     step2CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Unfall in Krankenkasse einschliessen — Deckung endet',
@@ -466,7 +467,7 @@ export default {
     step4Title: '5 · Ierta & lubientscha',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step4Text: 'Für den Nachlass braucht es je nach Situation einen Erbschein; ein Testament wird von der zuständigen Behörde eröffnet — welche das ist, regelt der Kanton (ZGB Art. 557). Wichtig: Ist der Nachlass überschuldet, kann das Erbe innert drei Monaten ausgeschlagen werden — sonst übernimmt man die Schulden mit. Bei Unsicherheit lieber früh beraten lassen.',
-    step4Button: 'Memorisar il termin «Examinar/refusar l’ierta» ({date})',
+    step4Button: 'Termin «Examinar/refusar l’ierta» en il chalender ({date})',
     step4Done: 'Termin memorisà en il chalender.',
     step4CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Examinar l’ierta — refusa pussaivla entaifer 3 mais',
@@ -520,7 +521,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step2Text: { sie: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melden Sie sich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40 % Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).', du: 'Zeichnet sich ab, dass die Einschränkung länger dauert, melde dich früh bei der IV (Früherfassung). Die IV setzt zuerst auf Eingliederung — „Eingliederung vor Rente“ —, diese Massnahmen kommen früh. Eine Rente ist erst möglich, wenn die Eingliederung nicht reicht, nach einem Jahr mit durchschnittlich mindestens 40 % Arbeitsunfähigkeit und frühestens sechs Monate nach der Anmeldung (IVG Art. 28, 29).' },
-    step2Button: 'Memorisar il termin «Examinar l’annunzia AI» ({date})',
+    step2Button: 'Promemoria «Examinar l’annunzia AI» en il chalender ({date})',
     step2Done: 'Termin memorisà en il chalender.',
     step2CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Examinar l’annunzia AI / la detecziun precoza',
@@ -548,7 +549,7 @@ export default {
     step1Title: '1 · Renovar a temp',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'Fai la dumonda da renovaziun var dus fin trais mais avant la scadenza, tar la vischnanca u l’uffizi chantunal da migraziun. L’autorisaziun na sa renova betg da sasezza. Tgi che emblida il termin ristga largias en il dretg da dimora — notai perquai bain la data da scadenza.', du: 'Fai la dumonda da renovaziun var dus fin trais mais avant la scadenza, tar la vischnanca u l’uffizi chantunal da migraziun. L’autorisaziun na sa renova betg da sasezza. Tgi che emblida il termin ristga largias en il dretg da dimora — nota perquai bain la data da scadenza.' },
-    step1Button: 'Memorisar il termin «Renovar l’autorisaziun» ({date})',
+    step1Button: 'Termin «Renovar l’autorisaziun» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Renovar l’autorisaziun da dimora a temp',
@@ -585,7 +586,7 @@ export default {
     step2Link: 'Al dossier da las autoritads',
     step3Title: '3 · A partir da 75: controlla medicinala',
     step3Text: 'A partir da tes 75avel anniversari fa part mintga dus onns ina controlla medicinala da traffic. L’invit vegn dal chantun — i giova d’avair il termin en egl.',
-    step3Button: 'Memorisar «controlla medicinala»',
+    step3Button: 'Promemoria «Controlla medicinala» en il chalender',
     step3Done: 'Regurdientscha memorisada en il chalender.',
     step3CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Controlla medicinala da traffic (a partir da 75, mintga 2 onns)',
@@ -609,7 +610,7 @@ export default {
     step1Title: '1 · Annunziar la maridaglia',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai Vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.', du: 'Avant la maridaglia maina l’uffizi da stadi civil ina procedura da preparaziun. Annunziai vus baud e tegnai pronts documents d’identitad, attestaziun da domicil e, tenor derivanza, ulteriurs documents. Per burgais esters po quai durar pli ditg — e per ina partenaria u in partenari ester po la maridaglia esser il motiv per in reconjunctiun famigliara ed ina permissiun da dimora.' },
-    step1Button: 'Memorisar il termin «Annunziar la maridaglia» ({date})',
+    step1Button: 'Promemoria «Annunziar la maridaglia» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     step1LinkBewilligung: 'Guardar la permissiun da dimora & ils termins',
@@ -647,7 +648,7 @@ export default {
     step2Title: '2 · Assicurar l’uffant',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step2Text: { sie: 'Assicurai l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Vus avais libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.', du: 'Assicurescha l’uffant tar ina cassa da malsauns entaifer trais mais suenter la naschientscha — la cuvretga vala lura retroactivamain dapi la naschientscha. Ti has libra tscherna; ina cumparegliaziun vala savens la paina, surtut per assicuranzas cumplementaras per uffants.' },
-    step2Button: 'Memorisar il termin «Assicurar l’uffant» ({date})',
+    step2Button: 'Termin «Assicurar l’uffant» en il chalender ({date})',
     step2Done: 'Termin memorisà en il chalender.',
     step2CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Annunziar l’uffant a la cassa da malsauns — termin da 3 mais',
@@ -707,7 +708,7 @@ export default {
     step1Title: '1 · Laschar renconuscher tes status AVS',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'L’activitad independenta cumenza uffizialmain cura che Vossa cassa da cumpensaziun AVS As renconuscha sco independent. Annunziai Vus baud e tegnai pronts facturas, mandats e Voss concept d’interpresa — la cassa controllescha sche Vus lavurais propi sin agen ristg.', du: 'L’activitad independenta cumenza uffizialmain cura che tia cassa da cumpensaziun AVS at renconuscha sco independent. Annunzia’t baud e tegna pronts facturas, mandats e tes concept d’interpresa — la cassa controllescha sche ti lavuras propi sin agen ristg.' },
-    step1Button: 'Memorisar il termin «S’annunziar a l’AVS» ({date})',
+    step1Button: 'Promemoria «S’annunziar a l’AVS» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'S’annunziar sco independent tar la cassa da cumpensaziun AVS',
@@ -737,7 +738,7 @@ export default {
     fristHinweis: { sie: 'Die 30 Tage enden am {date} (OR Art. 273). Als Empfang gilt, wenn die Kündigung in Ihren Bereich gelangt ist — bei einem Einschreiben nicht erst der Tag, an dem Sie es auf der Post holen. Fällt der letzte Tag auf ein Wochenende oder einen Feiertag, kann die Frist länger sein; das rechnen wir nicht ein. Reichen Sie so ein, dass das Gesuch spätestens an diesem Tag bei der Schlichtungsbehörde ist.', du: 'Die 30 Tage enden am {date} (OR Art. 273). Als Empfang gilt, wenn die Kündigung in deinen Bereich gelangt ist — bei einem Einschreiben nicht erst der Tag, an dem du es auf der Post holst. Fällt der letzte Tag auf ein Wochenende oder einen Feiertag, kann die Frist länger sein; das rechnen wir nicht ein. Reiche so ein, dass das Gesuch spätestens an diesem Tag bei der Schlichtungsbehörde ist.' },
     fristVorbei: { sie: 'Die 30 Tage waren am {date} vorbei. Fragen Sie trotzdem sofort bei der Schlichtungsbehörde nach — sie ist in Mietsachen auch Rechtsberatungsstelle (ZPO Art. 201) und sagt, was jetzt noch möglich ist.', du: 'Die 30 Tage waren am {date} vorbei. Frag trotzdem sofort bei der Schlichtungsbehörde nach — sie ist in Mietsachen auch Rechtsberatungsstelle (ZPO Art. 201) und sagt, was jetzt noch möglich ist.' },
     step1Befristet: { sie: 'Bei einem befristeten Mietvertrag gilt für die Erstreckung eine andere Frist: spätestens 60 Tage vor Ablauf der Vertragsdauer (OR Art. 273 Abs. 2 Bst. b).', du: 'Bei einem befristeten Mietvertrag gilt für die Erstreckung eine andere Frist: spätestens 60 Tage vor Ablauf der Vertragsdauer (OR Art. 273 Abs. 2 Bst. b).' },
-    step1Button: 'Frist „Kündigung anfechten“ merken ({date})',
+    step1Button: 'Termin «Kündigung anfechten» en il chalender ({date})',
     step1Done: 'Frist im Kalender gespeichert.',
     step1CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Wohnungskündigung — Schlichtungsbehörde, 30-Tage-Frist',
@@ -777,7 +778,7 @@ export default {
     fristLabel: 'Ein Datum aus dem betreffenden Steuerjahr (z. B. einer Lohnabrechnung)',
     fristHinweis: { sie: 'Antrag oder Formular-Anforderung bis am {date} bei der kantonalen Steuerbehörde einreichen (DBG Art. 89a, Art. 89 Abs. 4). Verlassen Sie die Schweiz vorher, endet die Frist schon mit der Abmeldung.', du: 'Antrag oder Formular-Anforderung bis am {date} bei der kantonalen Steuerbehörde einreichen (DBG Art. 89a, Art. 89 Abs. 4). Verlässt du die Schweiz vorher, endet die Frist schon mit der Abmeldung.' },
     fristVorbei: { sie: 'Die Frist für dieses Steuerjahr endete am {date}. Für ein späteres Steuerjahr gilt wieder der 31. März des Folgejahres — fragen Sie bei der kantonalen Steuerbehörde nach.', du: 'Die Frist für dieses Steuerjahr endete am {date}. Für ein späteres Steuerjahr gilt wieder der 31. März des Folgejahres — frag bei der kantonalen Steuerbehörde nach.' },
-    step4Button: 'Frist „Quellensteuer-Antrag“ merken ({date})',
+    step4Button: 'Termin «Quellensteuer-Antrag» en il chalender ({date})',
     step4Done: 'Frist im Kalender gespeichert.',
     step4CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Quellensteuer: nachträgliche ordentliche Veranlagung — Frist 31. März',
@@ -801,7 +802,7 @@ export default {
     fristLabel: { sie: 'Letzter Tag, für den Sie Taggeld erhalten haben (laut Abrechnung der Arbeitslosenkasse)', du: 'Letzter Tag, für den du Taggeld erhalten hast (laut Abrechnung der Arbeitslosenkasse)' },
     fristHinweis: { sie: 'Die Unfalldeckung über die Arbeitslosenversicherung endet am {date} (UVG Art. 3). Melden Sie es vorher der Krankenkasse.', du: 'Die Unfalldeckung über die Arbeitslosenversicherung endet am {date} (UVG Art. 3). Melde es vorher der Krankenkasse.' },
     fristVorbei: { sie: 'Die Unfalldeckung über die Arbeitslosenversicherung endete am {date}. Melden Sie es jetzt der Krankenkasse, falls noch nicht geschehen.', du: 'Die Unfalldeckung über die Arbeitslosenversicherung endete am {date}. Melde es jetzt der Krankenkasse, falls noch nicht geschehen.' },
-    step2Button: 'Frist „Unfall in Krankenkasse“ merken ({date})',
+    step2Button: 'Termin «Unfall in Krankenkasse» en il chalender ({date})',
     step2Done: 'Frist im Kalender gespeichert.',
     step2CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Krankenkasse: Unfalldeckung wieder aufnehmen — Deckung über die ALV endet',
@@ -830,7 +831,7 @@ export default {
     fristLabel: 'Tag der Einreise in die Schweiz',
     fristHinweis: 'Anmelden bis spätestens {date}, 14 Tage nach der Einreise (VZAE Art. 10). Wer vorher zu arbeiten beginnt: schon vor dem ersten Arbeitstag (AIG Art. 12).',
     fristVorbei: { sie: 'Die 14 Tage waren am {date} vorbei. Melden Sie sich trotzdem sofort an — die Gemeinde sagt, was nun gilt.', du: 'Die 14 Tage waren am {date} vorbei. Melde dich trotzdem sofort an — die Gemeinde sagt, was nun gilt.' },
-    step1Button: 'Frist „Anmeldung Gemeinde“ merken ({date})',
+    step1Button: 'Termin «Anmeldung Gemeinde» en il chalender ({date})',
     step1Done: 'Frist im Kalender gespeichert.',
     step1CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Bei der Wohngemeinde anmelden (14 Tage nach Einreise)',
@@ -849,7 +850,7 @@ export default {
     step4Text: { sie: 'Mit Ihrem gültigen ausländischen Führerausweis dürfen Sie zuerst weiterfahren. Wohnen Sie aber seit zwölf Monaten in der Schweiz, brauchen Sie einen schweizerischen Ausweis (VZV Art. 42). Den Umtausch beantragen Sie beim kantonalen Strassenverkehrsamt; in der Regel gehört eine Kontrollfahrt dazu, die nicht wiederholt werden kann (VZV Art. 44). Für Ausweise aus manchen Staaten kann darauf verzichtet werden — ob das für Ihren gilt, sagt das Strassenverkehrsamt. Beantragen Sie den Umtausch früh.', du: 'Mit deinem gültigen ausländischen Führerausweis darfst du zuerst weiterfahren. Wohnst du aber seit zwölf Monaten in der Schweiz, brauchst du einen schweizerischen Ausweis (VZV Art. 42). Den Umtausch beantragst du beim kantonalen Strassenverkehrsamt; in der Regel gehört eine Kontrollfahrt dazu, die nicht wiederholt werden kann (VZV Art. 44). Für Ausweise aus manchen Staaten kann darauf verzichtet werden — ob das für deinen gilt, sagt das Strassenverkehrsamt. Beantrag den Umtausch früh.' },
     fristHinweisFa: 'Spätestens am {date} sollte der schweizerische Ausweis da sein — nach zwölf Monaten Wohnsitz genügt der ausländische nicht mehr (VZV Art. 42).',
     fristVorbeiFa: { sie: 'Die zwölf Monate waren am {date} um. Waren Sie seither nicht länger als drei Monate am Stück im Ausland, brauchen Sie jetzt den schweizerischen Ausweis — melden Sie sich beim Strassenverkehrsamt.', du: 'Die zwölf Monate waren am {date} um. Warst du seither nicht länger als drei Monate am Stück im Ausland, brauchst du jetzt den schweizerischen Ausweis — melde dich beim Strassenverkehrsamt.' },
-    step4Button: 'Frist „Führerausweis umtauschen“ merken ({date})',
+    step4Button: 'Termin «Führerausweis umtauschen» en il chalender ({date})',
     step4Done: 'Frist im Kalender gespeichert.',
     reminderTitleFa: 'Ausländischen Führerausweis umtauschen (12 Monate nach Zuzug)',
     step4Link: 'Führerausweis: was sonst noch gilt',
@@ -885,6 +886,12 @@ export default {
   },
   // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
   vorsorgeauftrag: {
+    vorlageLink: 'Far in model per copiar',
+    step6Title: '6 · Il testament — tge che vala suenter la mort',
+    step6Text: 'In testament po far, tgi che ha 18 onns ed è abel da giuditgar (CC art. 467). Scrit a maun munta: dal cumenzament fin a la fin a maun, cun onn, mais e di, e suttascrit (art. 505 al. 1). Public munta: tar ina persuna da documentaziun, cun dus perdittas (art. 499). A bucca è quai mo pussaivel en circumstanzas extraordinarias, avant dus perdittas (art. 506). In testament scrit a maun po vegnir deponì tar in uffizi (art. 505 al. 2). Descendents, conjugals e partenaris registrads han ina part obligatorica: la mesadad da lur dretg d’ierta legal (art. 470 s.).',
+    step6Warn: 'Maloja na fa nagin testament: parts obligatoricas, dretg matrimonial e furma dependan da l’atgna situaziun da famiglia. Cussegl porschan notariats ed advocatura.',
+    step6LinkBw: 'Fixar ils giavischs da sepultura',
+    step4LinkPv: 'Far ina disposiziun da pazient en dumondas',
     title: 'Vorsorgeauftrag und Patientenverfügung',
     intro: 'Niemand denkt gern daran, einmal nicht mehr selbst entscheiden zu können. Wer es heute ordnet, nimmt den Nächsten später viel ab — und bestimmt selbst, wer handelt und was medizinisch gelten soll. Hier der ruhige Überblick in fünf Schritten.',
     step1Title: '1 · Wer handelt, wenn nichts geregelt ist?',
@@ -920,14 +927,14 @@ export default {
     fristLabel: 'Verfügung über die AHV- oder IV-Rente (oder deren Änderung) erhalten am — bei einem Einschreiben: der Tag der Abholungseinladung',
     fristHinweis: { sie: 'Melden Sie sich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem Sie die Rente angemeldet haben — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.', du: 'Melde dich bis am {date} an, dann beginnt die EL schon mit dem Monat, in dem du die Rente angemeldet hast — frühestens mit dem Rentenanspruch (ELV Art. 22). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.' },
     fristVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.' },
-    step3Button: 'Frist „EL rückwirkend anmelden“ merken ({date})',
+    step3Button: 'Termin «EL rückwirkend anmelden» en il chalender ({date})',
     step3Done: 'Frist im Kalender gespeichert.',
     step3CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Ergänzungsleistungen — Anmeldung innert 6 Monaten nach Rentenverfügung',
     heimLabel: 'Eintritt ins Heim oder Spital am',
     heimHinweis: { sie: 'Melden Sie sich bis am {date} an, dann besteht der Anspruch ab dem Monat des Eintritts (ELG Art. 12 Abs. 2).', du: 'Melde dich bis am {date} an, dann besteht der Anspruch ab dem Monat des Eintritts (ELG Art. 12 Abs. 2).' },
     heimVorbei: { sie: 'Die sechs Monate waren am {date} vorbei. Anmelden können Sie sich trotzdem: Die EL beginnt dann mit dem Monat Ihrer Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.', du: 'Die sechs Monate waren am {date} vorbei. Anmelden kannst du dich trotzdem: Die EL beginnt dann mit dem Monat deiner Anmeldung (ELG Art. 12) — darum am besten noch diesen Monat.' },
-    heimButton: 'Frist „EL nach Heimeintritt“ merken ({date})',
+    heimButton: 'Termin «EL nach Heimeintritt» en il chalender ({date})',
     heimReminderTitle: 'Ergänzungsleistungen — Anmeldung innert 6 Monaten nach Heim- oder Spitaleintritt',
     step3LinkPension: 'Zum Ablauf Pensionierung',
     step3LinkIv: 'Zum Ablauf Krankheit & IV',
@@ -986,7 +993,7 @@ export default {
     fristLabel: { sie: 'Kind aufgenommen am (Tag, an dem das Kind zu Ihnen kam)', du: 'Kind aufgenommen am (Tag, an dem das Kind zu dir kam)' },
     fristHinweis: { sie: 'Adoptionsurlaub und Entschädigung müssen bis spätestens am {date} bezogen sein — innerhalb eines Jahres ab dem Tag der Aufnahme (EOG Art. 16u; OR Art. 329j). Sprechen Sie die Daten früh mit Ihrem Arbeitgeber ab.', du: 'Adoptionsurlaub und Entschädigung müssen bis spätestens am {date} bezogen sein — innerhalb eines Jahres ab dem Tag der Aufnahme (EOG Art. 16u; OR Art. 329j). Sprich die Daten früh mit deinem Arbeitgeber ab.' },
     fristVorbei: { sie: 'Das Jahr ab der Aufnahme war am {date} vorbei. Fragen Sie bei Ihrer Ausgleichskasse nach, was jetzt noch möglich ist.', du: 'Das Jahr ab der Aufnahme war am {date} vorbei. Frag bei deiner Ausgleichskasse nach, was jetzt noch möglich ist.' },
-    step5Button: 'Frist „Adoptionsurlaub beziehen“ merken ({date})',
+    step5Button: 'Termin «Adoptionsurlaub beziehen» en il chalender ({date})',
     step5Done: 'Frist im Kalender gespeichert.',
     step5CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Adoption — Urlaub und EO-Entschädigung innert 1 Jahr ab Aufnahme',
@@ -1015,7 +1022,7 @@ export default {
     fristLabel: { sie: 'Wegzugsdatum (der Tag, an dem Sie die Schweiz verlassen bzw. auf den Sie sich abmelden)', du: 'Wegzugsdatum (der Tag, an dem du die Schweiz verlässt bzw. auf den du dich abmeldest)' },
     fristHinweis: { sie: 'Das gilt nur, wenn Sie beitreten können: als Schweizer Staatsangehörige oder Staatsangehörige der EU/EFTA, nicht bei einem Wegzug in einen EU/EFTA-Staat und nach mindestens fünf aufeinanderfolgenden Jahren obligatorischer Versicherung unmittelbar davor (AHVG Art. 2 Abs. 1). Dann sollte die Beitrittserklärung spätestens am {date} bei der Schweizerischen Ausgleichskasse sein (VFV Art. 8 Abs. 1). Gerechnet ab dem Wegzug — endet Ihre obligatorische Versicherung später, ist die echte Frist länger. Früher ist nie falsch.', du: 'Das gilt nur, wenn du beitreten kannst: als Schweizer Staatsangehörige oder Staatsangehöriger der EU/EFTA, nicht bei einem Wegzug in einen EU/EFTA-Staat und nach mindestens fünf aufeinanderfolgenden Jahren obligatorischer Versicherung unmittelbar davor (AHVG Art. 2 Abs. 1). Dann sollte die Beitrittserklärung spätestens am {date} bei der Schweizerischen Ausgleichskasse sein (VFV Art. 8 Abs. 1). Gerechnet ab dem Wegzug — endet deine obligatorische Versicherung später, ist die echte Frist länger. Früher ist nie falsch.' },
     fristVorbei: { sie: 'Die Jahresfrist war am {date} vorbei, gerechnet ab dem Wegzug. Endete Ihre obligatorische Versicherung später, kann sie noch laufen — fragen Sie sofort bei der Schweizerischen Ausgleichskasse nach.', du: 'Die Jahresfrist war am {date} vorbei, gerechnet ab dem Wegzug. Endete deine obligatorische Versicherung später, kann sie noch laufen — frag sofort bei der Schweizerischen Ausgleichskasse nach.' },
-    step3Button: 'Frist «Freiwillige AHV» merken ({date})',
+    step3Button: 'Termin «Freiwillige AHV» en il chalender ({date})',
     step3Done: 'Frist im Kalender gespeichert.',
     step3CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Freiwillige AHV — Beitrittserklärung (1-Jahres-Frist)',
@@ -1027,7 +1034,7 @@ export default {
     fristRueckLabel: 'Kapital ausbezahlt am (steht auf der Abrechnung der Kasse oder Stiftung)',
     fristRueckHinweis: { sie: 'Antrag auf Rückerstattung (direkte Bundessteuer) spätestens am {date} bei der kantonalen Steuerbehörde (QStV Art. 19 Abs. 2). Legen Sie die Bestätigung Ihres Wohnsitzstaats bei. Für die Kantons- und Gemeindesteuer kann eine andere Frist gelten.', du: 'Antrag auf Rückerstattung (direkte Bundessteuer) spätestens am {date} bei der kantonalen Steuerbehörde (QStV Art. 19 Abs. 2). Leg die Bestätigung deines Wohnsitzstaats bei. Für die Kantons- und Gemeindesteuer kann eine andere Frist gelten.' },
     fristRueckVorbei: { sie: 'Die drei Jahre waren am {date} vorbei. Fragen Sie trotzdem bei der kantonalen Steuerbehörde nach, was noch möglich ist.', du: 'Die drei Jahre waren am {date} vorbei. Frag trotzdem bei der kantonalen Steuerbehörde nach, was noch möglich ist.' },
-    step4Button: 'Frist «Quellensteuer zurückfordern» merken ({date})',
+    step4Button: 'Termin «Quellensteuer zurückfordern» en il chalender ({date})',
     step4Done: 'Frist im Kalender gespeichert.',
     step4CalendarLink: 'Im Kalender ansehen',
     reminderRueckTitle: 'Quellensteuer auf Vorsorgekapital — Rückerstattung beantragen (3 Jahre)',
@@ -1060,7 +1067,7 @@ export default {
     fristLabel: 'Ausweis erhalten am',
     fristHinweis: { sie: 'Melden Sie Mängel spätestens am {date}, dann ist die Frist sicher gewahrt. Das Gesetz gibt 30 Arbeitstage (VAwG Art. 52 Abs. 1) — wir rechnen vorsichtig mit Kalendertagen, die echte Frist ist länger.', du: 'Melde Mängel spätestens am {date}, dann ist die Frist sicher gewahrt. Das Gesetz gibt 30 Arbeitstage (VAwG Art. 52 Abs. 1) — wir rechnen vorsichtig mit Kalendertagen, die echte Frist ist länger.' },
     fristVorbei: { sie: 'Die vorsichtig gerechneten 30 Tage waren am {date} vorbei. Die gesetzlichen 30 Arbeitstage können noch laufen — melden Sie den Mangel sofort der ausstellenden Stelle.', du: 'Die vorsichtig gerechneten 30 Tage waren am {date} vorbei. Die gesetzlichen 30 Arbeitstage können noch laufen — melde den Mangel sofort der ausstellenden Stelle.' },
-    step4Button: 'Frist «Ausweis auf Fehler prüfen» merken ({date})',
+    step4Button: 'Termin «Ausweis auf Fehler prüfen» en il chalender ({date})',
     step4Done: 'Frist im Kalender gespeichert.',
     step4CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Neuer Ausweis — auf Fehler prüfen und Mängel melden',
@@ -1134,7 +1141,7 @@ export default {
     fristLabel: 'Vertrag unterschrieben am',
     fristHinweis: { sie: 'Gerechnet ab der Unterschrift muss der schriftliche Widerruf spätestens am {date} der Post oder der Kreditgeberin übergeben sein (KKG Art. 16 Abs. 1 und 2). Haben Sie Ihre Vertragskopie erst später erhalten, beginnen die 14 Tage erst dann — dieses Datum ist also nie zu spät. Wochenenden und Feiertage rechnen wir nicht ein; früher ist nie falsch.', du: 'Gerechnet ab der Unterschrift muss der schriftliche Widerruf spätestens am {date} der Post oder der Kreditgeberin übergeben sein (KKG Art. 16 Abs. 1 und 2). Hast du deine Vertragskopie erst später erhalten, beginnen die 14 Tage erst dann — dieses Datum ist also nie zu spät. Wochenenden und Feiertage rechnen wir nicht ein; früher ist nie falsch.' },
     fristVorbei: { sie: 'Die 14 Tage ab der Unterschrift waren am {date} vorbei. Haben Sie die Vertragskopie erst später erhalten, zählen die 14 Tage ab jenem Tag (KKG Art. 16 Abs. 2). Sonst fragen Sie bei einer Schuldenberatung nach, was jetzt noch möglich ist.', du: 'Die 14 Tage ab der Unterschrift waren am {date} vorbei. Hast du die Vertragskopie erst später erhalten, zählen die 14 Tage ab jenem Tag (KKG Art. 16 Abs. 2). Sonst frag bei einer Schuldenberatung nach, was jetzt noch möglich ist.' },
-    step1Button: 'Frist «Widerruf Konsumkredit» merken ({date})',
+    step1Button: 'Termin «Widerruf Konsumkredit» en il chalender ({date})',
     step1Done: 'Frist im Kalender gespeichert.',
     step1CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Konsumkredit/Leasing — letzter Tag für den Widerruf',
@@ -1174,7 +1181,7 @@ export default {
     fristLabel: 'Beginn des nächsten Dienstes (Aufgebot)',
     fristHinweis: { sie: 'Reichen Sie das Gesuch bis spätestens am {date} ein, dann müssen Sie in der Regel nicht einrücken, bis darüber rechtskräftig entschieden ist (ZDG Art. 17 Abs. 1). Ein späteres Gesuch ist möglich, befreit aber bis zum Zulassungsentscheid nicht vom Dienst. Wir rechnen einen Tag früher als drei Monate — früher ist nie falsch.', du: 'Reiche das Gesuch bis spätestens am {date} ein, dann musst du in der Regel nicht einrücken, bis darüber rechtskräftig entschieden ist (ZDG Art. 17 Abs. 1). Ein späteres Gesuch ist möglich, befreit aber bis zum Zulassungsentscheid nicht vom Dienst. Wir rechnen einen Tag früher als drei Monate — früher ist nie falsch.' },
     fristVorbei: { sie: 'Der {date} ist vorbei. Sie können das Gesuch trotzdem jederzeit stellen — rücken Sie aber ein, bis der Entscheid da ist (ZDG Art. 16, Art. 17 Abs. 1).', du: 'Der {date} ist vorbei. Du kannst das Gesuch trotzdem jederzeit stellen — rück aber ein, bis der Entscheid da ist (ZDG Art. 16, Art. 17 Abs. 1).' },
-    step3Button: 'Frist «Zivildienst-Gesuch» merken ({date})',
+    step3Button: 'Termin «Zivildienst-Gesuch» en il chalender ({date})',
     step3Done: 'Frist im Kalender gespeichert.',
     step3CalendarLink: 'Im Kalender ansehen',
     reminderTitle: 'Zivildienst — Gesuch 3 Monate vor dem nächsten Dienst',
@@ -1188,13 +1195,55 @@ export default {
     ersatzLabel: 'Veranlagungsverfügung erhalten am',
     ersatzHinweis: 'Eine Einsprache muss bis am {date} schriftlich bei der kantonalen Veranlagungsbehörde sein, mit einem bestimmten Antrag und den Tatsachen, die ihn begründen (WPEG Art. 30 Abs. 1 und 2). Das Einspracheverfahren ist kostenfrei (WPEG Art. 30 Abs. 5). Wochenenden und Feiertage rechnen wir nicht ein — früher ist nie falsch.',
     ersatzVorbei: { sie: 'Die 30 Tage waren am {date} vorbei. Fragen Sie bei der kantonalen Behörde für den Wehrpflichtersatz nach, was noch möglich ist.', du: 'Die 30 Tage waren am {date} vorbei. Frag bei der kantonalen Behörde für den Wehrpflichtersatz nach, was noch möglich ist.' },
-    step5Button: 'Frist «Einsprache Wehrpflichtersatz» merken ({date})',
+    step5Button: 'Termin «Einsprache Wehrpflichtersatz» en il chalender ({date})',
     step5Done: 'Frist im Kalender gespeichert.',
     step5CalendarLink: 'Im Kalender ansehen',
     ersatzReminderTitle: 'Wehrpflichtersatz — Einsprachefrist 30 Tage',
     step5Link: 'Steuern und Einkommen im Blick',
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. Aufgebote, Formulare und Zuständigkeiten liegen beim Kanton (Kreiskommando) und bei der Vollzugsstelle für den Zivildienst. Sätze und Beträge gelten mit Stand September 2026 und ändern sich — der Erwerbsersatz ab Juli 2027. Dies ist Orientierung, keine Rechtsberatung.',
     quelle: 'Quellen: [[BV Art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_59]], [[MG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_7]], [[MG Art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_9]], [[ZDG Art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_1]], [[ZDG Art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_17]], [[EOG Art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_9]], [[OR Art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_336_c]], [[WPEG Art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_13]], [[WPEG Art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_30]] (geprüft im September 2026).',
+  },
+  // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+  mahnung: {
+    title: 'Mahnung erhalten — was tun?',
+    intro: 'Eine Mahnung ist eine Erinnerung, noch keine Betreibung. Jetzt ist der Spielraum am grössten: prüfen, nachfragen, Raten vorschlagen. Hier der ruhige Überblick.',
+    step1Title: '1 · Was eine Mahnung bedeutet',
+    step1Text: { sie: 'Ist eine Rechnung fällig, setzt die Mahnung Sie in Verzug; war ein fester Zahltag vereinbart, sind Sie schon nach Ablauf dieses Tages in Verzug (OR Art. 102). Eine Betreibung ist das noch nicht — sie beginnt erst mit einem Zahlungsbefehl des Betreibungsamts (SchKG Art. 38 Abs. 2). Die Zahlungsfrist auf der Mahnung setzt der Gläubiger, nicht das Gesetz (Ausnahmen: Miete und Krankenkasse, siehe Schritt 4). Melden Sie sich innerhalb dieser Frist — das hält die meisten Wege offen.', du: 'Ist eine Rechnung fällig, setzt die Mahnung dich in Verzug; war ein fester Zahltag vereinbart, bist du schon nach Ablauf dieses Tages in Verzug (OR Art. 102). Eine Betreibung ist das noch nicht — sie beginnt erst mit einem Zahlungsbefehl des Betreibungsamts (SchKG Art. 38 Abs. 2). Die Zahlungsfrist auf der Mahnung setzt der Gläubiger, nicht das Gesetz (Ausnahmen: Miete und Krankenkasse, siehe Schritt 4). Melde dich innerhalb dieser Frist — das hält die meisten Wege offen.' },
+    step1LinkBetreibung: 'Schon ein Zahlungsbefehl gekommen? Betreibung erhalten',
+    step2Title: '2 · Stimmt die Forderung?',
+    step2Text: { sie: 'Vergleichen Sie Betrag, Rechnungsnummer und Leistung mit Ihren Unterlagen. Haben Sie schon bezahlt, schicken Sie den Zahlungsbeleg. Ist etwas unklar oder falsch, bestreiten Sie die Forderung schriftlich und verlangen Sie eine Aufstellung — so können Sie später belegen, dass Sie reagiert haben.', du: 'Vergleiche Betrag, Rechnungsnummer und Leistung mit deinen Unterlagen. Hast du schon bezahlt, schick den Zahlungsbeleg. Ist etwas unklar oder falsch, bestreite die Forderung schriftlich und verlange eine Aufstellung — so kannst du später belegen, dass du reagiert hast.' },
+    step2Verjaehrung: { sie: 'Ist die Forderung sehr alt, kann sie verjährt sein: die meisten nach zehn Jahren, zum Beispiel Mietzinse sowie Handwerker- und Arztrechnungen nach fünf Jahren, jeweils ab Fälligkeit (OR Art. 127, 128, 130). Eine Forderung aus einem Verlustschein verjährt aber erst 20 Jahre nach dessen Ausstellung (SchKG Art. 149a Abs. 1); Zinsen sind darauf keine geschuldet (Art. 149 Abs. 4). Das Gericht berücksichtigt die Verjährung nicht von sich aus — man muss sie selbst geltend machen (OR Art. 142). Jede Anzahlung gilt als Anerkennung und lässt die Verjährung neu beginnen (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Unterschreiben Sie keine Schuldanerkennung, bevor die Forderung geprüft ist: Wird sie durch eine Urkunde anerkannt, beträgt die neue Verjährungsfrist immer zehn Jahre (OR Art. 137 Abs. 2). Bei alten Forderungen darum zuerst prüfen oder beraten lassen, dann zahlen.', du: 'Ist die Forderung sehr alt, kann sie verjährt sein: die meisten nach zehn Jahren, zum Beispiel Mietzinse sowie Handwerker- und Arztrechnungen nach fünf Jahren, jeweils ab Fälligkeit (OR Art. 127, 128, 130). Eine Forderung aus einem Verlustschein verjährt aber erst 20 Jahre nach dessen Ausstellung (SchKG Art. 149a Abs. 1); Zinsen sind darauf keine geschuldet (Art. 149 Abs. 4). Das Gericht berücksichtigt die Verjährung nicht von sich aus — man muss sie selbst geltend machen (OR Art. 142). Jede Anzahlung gilt als Anerkennung und lässt die Verjährung neu beginnen (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Unterschreib keine Schuldanerkennung, bevor die Forderung geprüft ist: Wird sie durch eine Urkunde anerkannt, beträgt die neue Verjährungsfrist immer zehn Jahre (OR Art. 137 Abs. 2). Bei alten Forderungen darum zuerst prüfen oder beraten lassen, dann zahlen.' },
+    step3Title: '3 · Was dazukommen darf',
+    step3Text: { sie: 'Sind Sie mit einer Geldschuld in Verzug, darf der Gläubiger Verzugszins verlangen: 5 % pro Jahr, oder einen höheren Zins, wenn der Vertrag ihn vorsieht (OR Art. 104 Abs. 1–2) — 5 % auf 1000 Franken sind rund 4 Franken im Monat. Zins auf Verzugszins ist nicht erlaubt (OR Art. 105 Abs. 3). Das Obligationenrecht sieht keine Mahngebühr vor. Mahn- und Inkassogebühren müssen Sie darum in der Regel nicht bezahlen: Geschuldet sind sie nur, wenn Sie ihnen vorher ausdrücklich zugestimmt haben, etwa in den Vertragsbedingungen — nach K-Tipp Rechtsschutz mit einem bezifferten Betrag (K-Tipp Rechtsschutz; SRF Kassensturz). Sonst schulden Sie die Forderung und den Verzugszins. Bezahlen Sie diese, vermerken Sie bei der Zahlung Rechnungsnummer und «Forderung und Verzugszins, Gebühren bestritten», und bestreiten Sie die Gebühren schriftlich — der Brief «Forderung bestreiten» hat dafür eine eigene Auswahl. Waren die Gebühren doch vereinbart, darf der Gläubiger die Zahlung zuerst auf Zinsen und Kosten anrechnen, und es bleibt ein Rest offen (OR Art. 85 Abs. 1). Haben Sie beim selben Gläubiger mehrere Rechnungen, bestimmen Sie bei der Zahlung, welche Sie begleichen (OR Art. 86 Abs. 1). Ob darüber hinaus ein Schaden geschuldet ist (OR Art. 106), ist oft strittig; eine Schuldenberatung hilft bei der Einschätzung. Etwas anderes sind Betreibungskosten: Die trägt der Schuldner (SchKG Art. 68 Abs. 1). Bei Behörden und öffentlichen Stellen, etwa der Krankenkasse (Schritt 4), können gesetzliche Gebühren gelten.', du: 'Bist du mit einer Geldschuld in Verzug, darf der Gläubiger Verzugszins verlangen: 5 % pro Jahr, oder einen höheren Zins, wenn der Vertrag ihn vorsieht (OR Art. 104 Abs. 1–2) — 5 % auf 1000 Franken sind rund 4 Franken im Monat. Zins auf Verzugszins ist nicht erlaubt (OR Art. 105 Abs. 3). Das Obligationenrecht sieht keine Mahngebühr vor. Mahn- und Inkassogebühren musst du darum in der Regel nicht bezahlen: Geschuldet sind sie nur, wenn du ihnen vorher ausdrücklich zugestimmt hast, etwa in den Vertragsbedingungen — nach K-Tipp Rechtsschutz mit einem bezifferten Betrag (K-Tipp Rechtsschutz; SRF Kassensturz). Sonst schuldest du die Forderung und den Verzugszins. Bezahl diese, vermerk bei der Zahlung Rechnungsnummer und «Forderung und Verzugszins, Gebühren bestritten», und bestreite die Gebühren schriftlich — der Brief «Forderung bestreiten» hat dafür eine eigene Auswahl. Waren die Gebühren doch vereinbart, darf der Gläubiger die Zahlung zuerst auf Zinsen und Kosten anrechnen, und es bleibt ein Rest offen (OR Art. 85 Abs. 1). Hast du beim selben Gläubiger mehrere Rechnungen, bestimmst du bei der Zahlung, welche du begleichst (OR Art. 86 Abs. 1). Ob darüber hinaus ein Schaden geschuldet ist (OR Art. 106), ist oft strittig; eine Schuldenberatung hilft bei der Einschätzung. Etwas anderes sind Betreibungskosten: Die trägt der Schuldner (SchKG Art. 68 Abs. 1). Bei Behörden und öffentlichen Stellen, etwa der Krankenkasse (Schritt 4), können gesetzliche Gebühren gelten.' },
+    step3LinkSchulden: 'Offene Forderungen ordnen',
+    zins: { // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      title: 'Verzugszins überschlagen',
+      betrag: 'Offener Betrag in CHF',
+      seit: 'In Verzug seit',
+      seitHilfe: 'Der Tag, an dem die Mahnung ankam, oder der vereinbarte Zahltag (Schritt 1).',
+      satz: 'Zinssatz in % pro Jahr',
+      satzHilfe: '5 %, ausser der Vertrag sieht einen höheren Satz vor (OR Art. 104). Für Steuern gilt ein eigener Satz.',
+      ergebnis: 'Für {tage} Tage zu {satz} %: rund CHF {z365} (mit 365 Tagen im Jahr gerechnet) oder CHF {z360} (mit 360). Das OR legt die Tageszählung nicht fest; manche Gläubiger rechnen jeden Monat mit 30 Tagen, dann weicht der Betrag leicht ab. Kein Zins auf Zins (OR Art. 105 Abs. 3).',
+      ohne: 'Betrag und Datum eintragen, dann erscheint ein Richtwert. Nichts wird gespeichert.',
+      satzUngueltig: 'Zinssatz bitte als Zahl, zum Beispiel 5 — höchstens 30.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      nochNicht: 'Bis heute ist noch kein Tag im Verzug vergangen — es ist noch kein Verzugszins aufgelaufen.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    },
+    step4Title: '4 · Miete, Krankenkasse, Bussen, Steuern: hier gelten feste Regeln', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    step4Miete: { sie: 'Miete: Ist Mietzins oder Nebenkosten im Rückstand, kann die Vermieterschaft Ihnen schriftlich eine Zahlungsfrist setzen und die Kündigung androhen. Bei einer Wohnung beträgt diese Frist mindestens 30 Tage. Zahlen Sie innert der Frist nicht, kann sie mit einer Frist von mindestens 30 Tagen auf Ende eines Monats kündigen (OR Art. 257d). Behandeln Sie eine solche Mahnung zuerst — es geht um die Wohnung.', du: 'Miete: Ist Mietzins oder Nebenkosten im Rückstand, kann die Vermieterschaft dir schriftlich eine Zahlungsfrist setzen und die Kündigung androhen. Bei einer Wohnung beträgt diese Frist mindestens 30 Tage. Zahlst du innert der Frist nicht, kann sie mit einer Frist von mindestens 30 Tagen auf Ende eines Monats kündigen (OR Art. 257d). Behandle eine solche Mahnung zuerst — es geht um die Wohnung.' },
+    step4LinkWohnung: 'Wohnung gekündigt?',
+    step4Kk: { sie: 'Krankenkasse: Bei Prämien und Kostenbeteiligungen kommt zuerst mindestens eine schriftliche Mahnung, dann eine Zahlungsaufforderung mit 30 Tagen Nachfrist und einem Hinweis auf die Folgen. Bleibt die Zahlung aus, muss die Kasse die Betreibung einleiten (KVG Art. 64a Abs. 1–2). Auf fälligen Prämien beträgt der Verzugszins 5 % pro Jahr (KVV Art. 105a). Bearbeitungsgebühren darf sie nur verlangen, wenn Sie den Mehraufwand verschuldet haben und ihre allgemeinen Bestimmungen das vorsehen — und nur bis zu den Höchstbeträgen des EDI (KVV Art. 105b Abs. 2). Solange Ausstände offen sind, können Sie die Kasse in der Regel nicht wechseln (KVG Art. 64a Abs. 6). Einige Kantone führen zudem eine Liste säumiger Prämienzahlender: Wer trotz Betreibung nicht zahlt, dem schiebt die Kasse dann die Kostenübernahme auf — ausser bei Notfällen (KVG Art. 64a Abs. 7).', du: 'Krankenkasse: Bei Prämien und Kostenbeteiligungen kommt zuerst mindestens eine schriftliche Mahnung, dann eine Zahlungsaufforderung mit 30 Tagen Nachfrist und einem Hinweis auf die Folgen. Bleibt die Zahlung aus, muss die Kasse die Betreibung einleiten (KVG Art. 64a Abs. 1–2). Auf fälligen Prämien beträgt der Verzugszins 5 % pro Jahr (KVV Art. 105a). Bearbeitungsgebühren darf sie nur verlangen, wenn du den Mehraufwand verschuldet hast und ihre allgemeinen Bestimmungen das vorsehen — und nur bis zu den Höchstbeträgen des EDI (KVV Art. 105b Abs. 2). Solange Ausstände offen sind, kannst du die Kasse in der Regel nicht wechseln (KVG Art. 64a Abs. 6). Einige Kantone führen zudem eine Liste säumiger Prämienzahlender: Wer trotz Betreibung nicht zahlt, dem schiebt die Kasse dann die Kostenübernahme auf — ausser bei Notfällen (KVG Art. 64a Abs. 7).' },
+    step4LinkIpv: 'Prämienverbilligung prüfen',
+    step4Bussen: 'Bussen und Geldstrafen: Die Vollzugsbehörde setzt eine Zahlungsfrist von einem bis sechs Monaten; sie kann Raten anordnen und auf Gesuch die Frist verlängern (StGB Art. 35 Abs. 1, für Bussen Art. 106 Abs. 5). Wird eine Busse schuldhaft nicht bezahlt, tritt an ihre Stelle eine Ersatzfreiheitsstrafe; sie entfällt, soweit die Busse nachträglich bezahlt wird (Art. 106 Abs. 2 und 4). Auf Gesuch kann eine Busse oder Geldstrafe auch als gemeinnützige Arbeit geleistet werden, sofern keine Flucht- oder Rückfallgefahr besteht; vier Stunden entsprechen einem Tagessatz bzw. einem Tag Ersatzfreiheitsstrafe (Art. 79a Abs. 1 und 4). Darum früh bei der Behörde nach Raten, mehr Zeit oder gemeinnütziger Arbeit fragen. Für Ordnungsbussen, etwa im Strassenverkehr, gelten eigene Regeln. Ist die Busse schon in eine Ersatzfreiheitsstrafe umgewandelt, ist gemeinnützige Arbeit nicht mehr möglich (Art. 79a Abs. 2) — darum vorher fragen.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    step4Steuer: 'Steuern: Die direkte Bundessteuer ist innert 30 Tagen nach Fälligkeit zu bezahlen; danach läuft ein Verzugszins, den das Eidgenössische Finanzdepartement festlegt (DBG Art. 163, 164). Ist die Zahlung eine erhebliche Härte, kann die Bezugsbehörde die Frist erstrecken oder Raten bewilligen (DBG Art. 166). In einer Notlage ist ein Erlass möglich — ein Erlassgesuch wird aber nur behandelt, wenn es eingereicht wird, bevor für diese Steuer ein Zahlungsbefehl zugestellt ist (DBG Art. 167 Abs. 1 und 4). Darum früh fragen. Zuständig ist auch für die Bundessteuer das kantonale Steueramt (DBG Art. 2). Für Kantons- und Gemeindesteuern gilt kantonales Recht — auch dazu, bis wann ein Erlassgesuch möglich ist.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    step4LinkSteuer: 'Steuern ansehen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    step5Title: '5 · Nicht auf einmal zahlen können?',
+    step5Text: { sie: 'Fragen Sie früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlagen Sie nur Raten vor, die Ihr Budget auch in einem schwierigen Monat trägt, und bitten Sie um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird. Reicht das Einkommen auf Dauer nicht für das Nötige, rät die Schuldenberatung (schuldeninfo.ch), zuerst die laufenden Rechnungen wie Miete und Krankenkasse zu bezahlen und keine Ratenvereinbarungen oder Schuldanerkennungen zu unterschreiben — neue Rückstände wiegen schwerer als alte.', du: 'Frag früh nach einer Ratenzahlung oder einem Aufschub — das ist oft möglich, wenn man sich meldet. Schlag nur Raten vor, die dein Budget auch in einem schwierigen Monat trägt, und bitte um eine schriftliche Bestätigung. Kommen mehrere Mahnungen zusammen, hilft eine Schuldenberatung, den Überblick zu gewinnen — bevor eine Betreibung daraus wird. Reicht das Einkommen auf Dauer nicht für das Nötige, rät die Schuldenberatung (schuldeninfo.ch), zuerst die laufenden Rechnungen wie Miete und Krankenkasse zu bezahlen und keine Ratenvereinbarungen oder Schuldanerkennungen zu unterschreiben — neue Rückstände wiegen schwerer als alte.' },
+    step5LinkBudget: 'Budget ansehen',
+    step5LinkBeratung: 'Schuldenberatung finden',
+    step6Title: { sie: '6 · Umgekehrt: Ihnen schuldet jemand Geld', du: '6 · Umgekehrt: dir schuldet jemand Geld' },
+    step6Text: { sie: 'Mit einer Mahnung setzen Sie die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann können Sie Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginnen Sie freundlich mit einer Zahlungserinnerung, setzen Sie eine klare Frist und schicken Sie die Mahnung so, dass Sie den Versand belegen können.', du: 'Mit einer Mahnung setzt du die Person in Verzug, sofern die Forderung fällig ist (OR Art. 102 Abs. 1); ab dann kannst du Verzugszins von 5 % pro Jahr verlangen (OR Art. 104 Abs. 1). Beginne freundlich mit einer Zahlungserinnerung, setz eine klare Frist und schick die Mahnung so, dass du den Versand belegen kannst.' },
+    footerNote: 'Quai è orientaziun, betg cussegl giuridic. Eine Mahnung ist kein Urteil und keine Betreibung. Dies ist Orientierung, keine Rechtsberatung. Bei Schulden hilft eine Schuldenberatung.',
+    quelle: 'Quellen: [[OR Art. 102|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_102]], [[OR Art. 104|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_104]], [[OR Art. 105|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_105]], [[OR Art. 106|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_106]], [[OR Art. 127|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_127]], [[OR Art. 128|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_128]], [[OR Art. 130|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_130]], [[OR Art. 135|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_135]], [[OR Art. 137|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_137]], [[OR Art. 142|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_142]], [[OR Art. 257d|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_257_d]], [[SchKG Art. 38|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_38]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[KVG Art. 64a|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_64_a]], [[KVV Art. 105a|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_a]], [[KVV Art. 105b|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_105_b]], [[DBG Art. 2|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_2]], [[DBG Art. 163|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_163]], [[DBG Art. 164|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_164]], [[DBG Art. 166|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_166]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[OR Art. 85|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_85]], [[SchKG Art. 68|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68]], [[OR Art. 86|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_86]], [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]], [[K-Tipp Rechtsschutz, «Muss ich die Mahngebühren zahlen?» (2022)|https://www.ktipprechtsschutz.ch/service/ihre-rechte/muss-ich-die-mahngebuehren/]], [[SRF Kassensturz, Inkassogebühren (2025)|https://www.srf.ch/sendungen/kassensturz-espresso/rechtsfragen/kaufrecht/inkassogebuehren-keine-rechnung-bekommen-muss-ich-inkassogebuehren-bezahlen]] (geprüft im September 2026).',
   },
   betreibung: {
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
@@ -1210,7 +1259,7 @@ export default {
     step1Title: { sie: '1 · Restar calm — Vus avais 10 dis', du: '1 · Restar calm — ti has 10 dis' },
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step1Text: { sie: 'Mit dem Zahlungsbefehl beginnt eine Frist von 10 Tagen. In dieser Zeit können Sie beim Betreibungsamt „Rechtsvorschlag“ erheben — mündlich am Schalter oder schriftlich, ohne Begründung. Das stoppt die Betreibung vorerst. Stimmt die Forderung am Ende, tragen Sie die Betreibungskosten und allenfalls die Kosten eines Gerichtsverfahrens (SchKG Art. 68).', du: 'Mit dem Zahlungsbefehl beginnt eine Frist von 10 Tagen. In dieser Zeit kannst du beim Betreibungsamt „Rechtsvorschlag“ erheben — mündlich am Schalter oder schriftlich, ohne Begründung. Das stoppt die Betreibung vorerst. Stimmt die Forderung am Ende, trägst du die Betreibungskosten und allenfalls die Kosten eines Gerichtsverfahrens (SchKG Art. 68).' },
-    step1Button: 'Memorisar il termin «Far opposiziun» ({date})',
+    step1Button: 'Termin «Far opposiziun» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Far opposiziun — termin da 10 dis',
@@ -1218,6 +1267,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step2Text: { sie: 'Sche la pretensiun è fundada, pudais Vus pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, faschais Vus opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegnai la survista da las pretensiuns avertas.', du: 'Sche la pretensiun è fundada, pos ti pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, fas ti opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegna la survista da las pretensiuns avertas.' },
     step2Link: 'Ordinar las debitas',
+    step2LinkMahnung: 'Noch kein Zahlungsbefehl, erst eine Mahnung? Mahnung erhalten', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     step3Title: '3 · Proteger il budget & tschertgar cussegl',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step3Text: { sie: 'Voss minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’essas Vus betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.', du: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.' },
@@ -1236,7 +1286,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step1Text: { sie: 'Die AHV-Rente kommt nicht automatisch — Sie müssen sie bei Ihrer Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist möglich, kürzt die Rente aber lebenslang.', du: 'Die AHV-Rente kommt nicht automatisch — du musst sie bei deiner Ausgleichskasse anmelden, etwa drei bis vier Monate vor der Pensionierung (Merkblatt 3.01). Das Referenzalter ist 65 Jahre; für Frauen der Jahrgänge 1961 bis 1963 liegt es wegen der Übergangsregelung etwas tiefer. Ein Vorbezug ist möglich, kürzt die Rente aber lebenslang.' },
-    step1Button: 'Memorisar il termin «S’annunziar a l’AVS» ({date})',
+    step1Button: 'Termin «S’annunziar a l’AVS» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Dumandar la renta AVS — a temp avant il pensiunament',
@@ -1278,7 +1328,7 @@ export default {
     step1Title: '1 · S’assicurar entaifer 3 mais',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step1Text: { sie: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche Vus As annunziais a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche Vus emblidais il termin, vegn attribuida ina cassa, cun eventuals supplements.', du: 'Tgi che vegn en Svizra sto far ina assicuranza da malsauns entaifer trais mais. Sche ti t’annunzias a temp, vala la cuvretga retroactivamain dapi l’emprim di — naginas largias. Sche ti emblidas il termin, vegn attribuida ina cassa, cun eventuals supplements.' },
-    step1Button: 'Memorisar il termin «Far l’assicuranza» ({date})',
+    step1Button: 'Termin «Far l’assicuranza» en il chalender ({date})',
     step1Done: 'Termin memorisà en il chalender.',
     step1CalendarLink: 'Guardar en il chalender',
     reminderTitle: 'Far l’assicuranza da malsauns — termin da 3 mais',
@@ -1359,7 +1409,7 @@ export default {
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step4Text: { sie: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Werktag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Werktag davor (BAG). Leg dir die Frist in den Kalender.' },
-    step4Button: 'Frist {date} in den Kalender',
+    step4Button: 'Termin «Desdir la cassa da malsauns» en il chalender ({date})',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',
@@ -1497,6 +1547,8 @@ export default {
     saving: 'Memorisar...',
     skipToContent: 'Siglir al cuntegn',
     saved: 'Memorisà',
+    // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
+    savedTemporary: 'Übernommen — nur für jetzt, nicht dauerhaft gespeichert.',
     saveError: 'Betg pussaivel da memorisar — controllar per plaschair il spazi.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     fremdGeaendert: 'Midà en in\'autra fanestra. Per che nagut na vegnia surscrit là, na memorisescha questa fanestra betg pli.',
@@ -1541,10 +1593,12 @@ export default {
   },
 
   nav: {
+    bestattung: 'Giavischs da sepultura',
+    patientenverfuegung: 'Far ina disposiziun da pazient',
+    kreditkarte: 'Carta da credit: vala la paina?',
     zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
-    moreTools: 'Ulteriurs utensils',
     advanced: 'Avanzà',
     tresor: 'Deposita da documents',
     kkScanner: 'Scanner cassa da malsauns',
@@ -1583,6 +1637,8 @@ export default {
     menu: 'Menu',
     erfassen: 'Agiuntar',
     anspruch: 'Dretgs',
+    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    rucksack: 'Sac à dos',
     capDokument: 'Document',
     capBeleg: 'Quittanza',
     capFrist: 'Termin',
@@ -1591,6 +1647,7 @@ export default {
     privacyNote: { sie: 'Naginas datas bandunan Voss apparat.', du: 'Naginas datas bandunan Tes apparat.' },
     kkerst: 'Cassa da malsauns — emprima giada',
     pensionierung: 'Pensiunament',
+    mahnung: 'Mahnung erhalten', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     betreibung: 'Scussiun retschavida',
     dienst: 'Militär- oder Zivildienst',
     volljaehrig: '18 werden',
@@ -1618,11 +1675,14 @@ export default {
     todesfall: 'In mortori en il conturn',
     arztkoffer: 'Sanadad',
     sub: {
+      patientenverfuegung: 'En dumondas, per stampar',
+      kreditkarte: 'Custs ed avantatgs per onn',
       installApp: 'Metter sin il homescreen',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       arztkoffer: { sie: 'Voss utensils da sanadad en ina valisch da medi', du: 'Tes utensils da sanadad en ina valisch da medi' },
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
+      mahnung: 'Prüfen, bestreiten, Raten anfragen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       betreibung: 'Reagir cun calma',
       dienst: 'Rekrutierung, Zivildienst, EO, Ersatz',
       volljaehrig: 'Verträge, Krankenkasse, Steuern, Stimme',
@@ -1680,6 +1740,9 @@ export default {
     },
     mindestlohn: 'Salari minimal',
     crosslink: {
+      bwHint: 'Fixar ils giavischs da sepultura en dumondas',
+      pvHint: 'Far ina disposiziun da pazient en dumondas',
+      kreditkarteHint: 'Vala la carta la paina? Calcular custs ed avantatgs',
       relatedTitle: 'Utensils correspundents',
       ipvHint: { sie: 'Premias autas? Examinai Voss dretg IPV', du: 'Premias autas? Examinescha Tes dretg IPV' },
       taxHint: 'Stimar la taglia federala',
@@ -1838,7 +1901,6 @@ export default {
     anspruchTitle: 'A tge hai jau dretg?',
     anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
     anspruchMoeglich: 'Dretg pussaivel',
-    anspruchAlleLink: 'Tuttas prestaziuns en survista',
     nextUpTitle: 'Tge è ussa da far?',
     nextUpAllDone: 'Tia basa è en plaz — bel.',
     nextUpReassure: { sie: 'Mo ina proposta — Vus fixais il tempo.', du: 'Mo ina proposta — ti fixeschas il tempo.' },
@@ -1860,11 +1922,8 @@ export default {
     exportReminderOld: { sie: 'Vossa ultima segirezza è pli veglia che ina emna.', du: 'Tia ultima segirezza è pli veglia che ina emna.' },
     openChapter: 'Avrir',
     fieldsCount: '{filled}/{total} champs',
-    highlightTitle: { sie: 'Tge pudais Vus far qua immediat?', du: 'Tge pos Ti far qua immediat?' },
     highlightFinanz: 'Survista da finanzas',
     highlightFinanzSub: 'Taglia, IPV, agid social, PC — tut en ina egliada.',
-    highlightTax: 'Stimar la taglia federala, senza obligaziun',
-    highlightTaxSub: 'Ina emprima orientaziun en 30 secundas — liant è pir la taxaziun.',
     highlightIpv: 'Examinar il dretg IPV',
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
     highlightSozialhilfe: 'Orientaziun agid social',
@@ -1878,7 +1937,6 @@ export default {
     quickCheckAllLeistungen: 'Verifitgar tuttas prestaziuns',
     quickCheckIncome: 'Entrada per mais (brut)',
     quickCheckResult: "Tar CHF {income}/onn: reducziun pussaivla da ca. CHF {amount}/onn.",
-    quickCheckNoResult: "Tar questa entrada n'exista probablamain nagin dretg.",
     quickCheckHint: "Orientaziun grossa — l'import exact dependa dal chantun.",
     quickCheckMore: 'Tar il calculatur IPV cumplet',
     quickCheckPlaceholder: 'p.ex. 4500',
@@ -2218,7 +2276,8 @@ export default {
         doctor: 'Medi da chasa',
         doctorPhone: 'Telefon medi',
         hospital: 'Clinica preferida',
-        organDonor: { label: "Donatur d'organs?", options: { yes: 'Gea', no: 'Na', declined: 'Refusà', undecided: 'Betg decidì' } },
+        // TODO(rm): provisorisch — Gegenlese (Organspende-Entscheid neu, 27.09.2026)
+        organDonor: { label: "Decisiun davart la donaziun d'organs", options: { yes: 'Consentiment — tut ils organs e taissì', partial: 'Consentiment — mo tscherts organs e taissì', declined: 'Refus', delegated: 'Decisiun surdada ad ina persuna da confidenza', undecided: 'Betg decidì' } },
         patientenverfuegung: { label: 'Disposiziun dal pazient avant maun?', options: { yes: 'Gea', no: 'Anc betg' } },
         vorsorgeauftrag: { label: 'Mandat da prevenziun avant maun?', options: { yes: 'Gea', no: 'Anc betg' } },
         bestattungswuensche: { label: 'Giavischs da sepultura notads?', options: { yes: 'Gea', no: 'Anc betg' } },
@@ -2231,8 +2290,9 @@ export default {
       },
       hints: {
         patientenverfuegung: { sie: "Instrucziuns per il tractament medical, sche Vus na pudais betg pli exprimer Voss giavischs. CC art. 370-373.", du: "Instrucziuns per il tractament medical, sche Ti na pos betg pli exprimer Tes giavischs. CC art. 370-373." },
-        vorsorgeauftrag: { sie: "Determinescha ina persuna da confidonza che agischa per Vus en cas d'incapacitad da giuditgar. Sto vegnir registrà tar la vischnanca.", du: "Determinescha ina persuna da confidonza che agischa per Tai en cas d'incapacitad da giuditgar. Sto vegnir registrà tar la vischnanca." },
-        bestattungswuensche: { sie: 'Voss giavischs persunals per la sepultura u la cremaziun. Betg giuridicamain vinculant, ma impurtant per la famiglia.', du: 'Tes giavischs persunals per la sepultura u la cremaziun. Betg giuridicamain vinculant, ma impurtant per la famiglia.' },
+        // TODO(rm): provisorisch — Gegenlese (Hinweis Vorsorgeauftrag korrigiert, ZGB Art. 361 Abs. 3, 27.09.2026)
+        vorsorgeauftrag: { sie: "Determinescha ina persuna da confidonza che agischa per Vus en cas d'incapacitad da giuditgar. Sin dumonda inscriva l'uffizi da stadi civil ch'el exista e nua ch'el è deponì.", du: "Determinescha ina persuna da confidonza che agischa per Tai en cas d'incapacitad da giuditgar. Sin dumonda inscriva l'uffizi da stadi civil ch'el exista e nua ch'el è deponì." },
+        bestattungswuensche: { sie: 'Voss giavischs per la sepultura u la cremaziun: als fixar en scrit e dir als confamigliars nua ch’els sa chattan. Tge ch’è pussaivel reglan il chantun e la vischnanca.', du: 'Tes giavischs per la sepultura u la cremaziun: als fixar en scrit e dir als confamigliars nua ch’els sa chattan. Tge ch’è pussaivel reglan il chantun e la vischnanca.' },
       },
       docs: {
         advance_directive: 'Disposiziun dal pazient',
@@ -2414,7 +2474,7 @@ export default {
       movedTitle: 'Tut en la biblioteca',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
       movedText: { sie: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattais Vus ussa radunadas en la biblioteca.', du: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattas ti ussa radunadas en la biblioteca.' },
-      movedCta: '→ Tar la biblioteca',
+      movedCta: 'Tar la biblioteca',
       secure1: "Per il barat segir cun autoritads e posts spezialisadas recumandain nus:",
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Messenger svizzer, criptà end-to-end, utilisabel senza numer da telefon.' },
       secureSafe: { name: 'SecureSafe', url: 'https://www.securesafe.com', desc: 'Tresor svizzer da datas per pleds-clav e documents (protecziun dal secret bancari).' },
@@ -2766,8 +2826,11 @@ export default {
     dueSoon: 'Bainprest scadent',
     alreadyPaid: 'Gia pajà',
     debtRegisterAnalysis: 'Register da scussiun — survista',
-    debtRatio: "Part da l'entrada",
     addDebt: 'Agiuntar in nov debit',
+    // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
+    addBetreibung: 'Betreibung erfassen',
+    // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
+    addVerlustschein: 'Verlustschein erfassen',
     moreDetails: 'Ulteriuras indicaziuns',
     statusField: 'Status',
     needInfo: 'Per plaschair agiuntar creditur ed import.',
@@ -2783,8 +2846,6 @@ export default {
     date: 'Data',
     statusOpen: 'Avert',
     statusPaid: 'Pajà',
-    paymentPlan: 'Far in plan da pajament',
-    paymentPlanTitle: 'Plan da pajament (CHF {amount}/mais)',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
@@ -2801,21 +2862,106 @@ export default {
     tier1: 'Existenzial / prioritar',
     tier2: 'Uffizial',
     tier3: 'Auters',
-    tier1Reason: 'Reglar l\'emprim — patg, cassa da malsauns, alimentaziun e multas han las consequenzas las pli gravas.',
-    tier2Reason: 'Tractar prest — taglias betg pajadas pon manar a l\'execuziun.',
+    tier1Reason: 'Laufende Rechnungen für Miete, Krankenkasse und Alimente gehen vor — so rät es die Schuldenberatung (schuldeninfo.ch). Bei Rückständen wiegen die Folgen hier am schwersten: bei der Miete droht nach einer schriftlichen Frist die Kündigung (OR Art. 257d), bei der Krankenkasse die Betreibung (KVG Art. 64a). Bussen und Geldstrafen gehören dazu, weil sie auch in einer Schuldensanierung ganz bezahlt werden müssen (Caritas).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    tier2Reason: 'Bald angehen — ein Erlassgesuch für die Bundessteuer wird nur behandelt, wenn es vor dem Zahlungsbefehl für diese Steuer eingereicht ist (DBG Art. 167 Abs. 4). Für Kantons- und Gemeindesteuern gilt kantonales Recht.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     tier3Reason: 'En la successiun tschernida.',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     helpTitle: { sie: 'Vus na stuais betg far quai sulet/a', du: 'Ti na stos betg far quai sulet/a' },
     helpBody: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — la Cussegliaziun da debits Svizra e la Caritas han in post en mintga chantun.',
     situationLink: 'Guardar la situaziun «indebità u en scussiun»',
+    mahnungLink: 'Mahnung erhalten — was tun?', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    notYetDue: 'Noch nicht fällig', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    noDueDate: 'Offen, ohne Fälligkeitsdatum', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    betreibungSumme: 'Erfasste offene Betreibungen: {amount} — das sind rund {monate} Monatseinkommen (so wie im Kapitel Finanzen erfasst).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    betreibungOhneEinkommen: 'Erfasste Betreibungen: {amount}. Mit einem Einkommen im Kapitel Finanzen zeigen wir, wie vielen Monatseinkommen das entspricht.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    plan: {
+      rateLabel: { sie: 'Wie viel können Sie monatlich für Schulden einsetzen? (CHF)', du: 'Wie viel kannst du monatlich für Schulden einsetzen? (CHF)' },
+      rateHilfe: 'Nur was nach Miete, Krankenkasse und dem Lebensbedarf übrig bleibt.',
+      ohne: 'Betrag eintragen, dann erscheint ein Richtwert.',
+      ergebnis: 'Mit {rate} pro Monat wären diese Schulden nach rund {monate} Monaten bezahlt; Zinsen insgesamt rund {zins}.',
+      zuWenig: '{rate} pro Monat reichen nicht für die Zinsen (rund {zins} pro Monat) — die Schulden würden wachsen. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      zuLang: 'Mit {rate} pro Monat dauert es länger als 30 Jahre. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      fertigIn: '{name}: bezahlt nach rund {monate} Monaten',
+      ergebnisEins: 'Mit {rate} pro Monat wären diese Schulden in rund einem Monat bezahlt; Zinsen insgesamt rund {zins}.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      fertigInEins: '{name}: bezahlt in rund einem Monat', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      vereinfacht: 'Richtwert, vereinfacht: Die ganze Rate geht jeweils an die erste offene Schuld in der Reihenfolge oben; die Zinsen der übrigen laufen weiter. Gebühren und Verzugszinsen sind nicht eingerechnet.',
+      ausBudget: { sie: 'Vorschlag aus Ihrem Budget: Einnahmen {einnahmen} minus Ausgaben {ausgaben} (ohne die heutigen Schuldenraten) — rund {vorschlag}.', du: 'Vorschlag aus deinem Budget: Einnahmen {einnahmen} minus Ausgaben {ausgaben} (ohne die heutigen Schuldenraten) — rund {vorschlag}.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      budgetFehlt: 'Für einen Vorschlag aus dem Budget fehlt noch: {was}.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      fehlt: {
+        wohnen: 'Miete oder Hypothek',
+        krankenkasse: 'Krankenkassenprämie',
+        lebensmittel: 'Lebensmittel',
+      }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      budget: {
+        keinEinkommen: 'Mit einem Einkommen im Budget schlagen wir hier einen Betrag vor.',
+        keinNetto: 'Einen Vorschlag aus dem Budget machen wir nur, wenn der Lohn als Nettolohn erfasst ist.',
+        nichtsUebrig: 'Laut Budget bleibt nach den laufenden Ausgaben nichts für Schulden übrig. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      zurueck: 'Vorschlag wieder einsetzen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      zumBudget: 'Budget ergänzen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      reserve: { sie: 'Eine Reserve für Unvorhergesehenes ist nicht eingerechnet — setzen Sie die Rate lieber etwas tiefer an, damit Sie sie halten können.', du: 'Eine Reserve für Unvorhergesehenes ist nicht eingerechnet — setz die Rate lieber etwas tiefer an, damit du sie halten kannst.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      steuerFehlt: { sie: 'Steuern sind im Budget nicht erfasst; ziehen Sie sie noch ab — ausser sie werden schon vom Lohn abgezogen (Quellensteuer).', du: 'Steuern sind im Budget nicht erfasst; zieh sie noch ab — ausser sie werden schon vom Lohn abgezogen (Quellensteuer).' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      heutigeRaten: { sie: 'Ihre heutigen Schuldenraten ({amount}) sind als verfügbar gezählt; enthalten sie Raten für Schulden, die nicht in dieser Liste stehen (etwa Leasing), ziehen Sie diese ab.', du: 'Deine heutigen Schuldenraten ({amount}) sind als verfügbar gezählt; enthalten sie Raten für Schulden, die nicht in dieser Liste stehen (etwa Leasing), zieh diese ab.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    steuer: {
+      title: 'Und die Steuern?',
+      text: { sie: 'Private Schuldzinsen — etwa für einen Kredit oder die Kreditkarte — lassen sich vom Einkommen abziehen, bis zur Höhe der steuerbaren Vermögenserträge plus 50’000 Franken (DBG Art. 33 Abs. 1 Bst. a; für die Kantons- und Gemeindesteuern StHG Art. 9 Abs. 2 Bst. a). Die Rückzahlung selbst ist nicht abziehbar (DBG Art. 34 Bst. c). Bei privaten Schulden sind auch Betreibungskosten und Mahngebühren nicht abziehbar (DBG Art. 34; StHG Art. 9 Abs. 4). Ob Verzugszinsen als Schuldzinsen gelten, sagt das Gesetz nicht ausdrücklich — fragen Sie beim Steueramt. Für die Vermögenssteuer der Kantone ist das Reinvermögen steuerbar, also das Vermögen abzüglich der Schulden (StHG Art. 13 Abs. 1).', du: 'Private Schuldzinsen — etwa für einen Kredit oder die Kreditkarte — lassen sich vom Einkommen abziehen, bis zur Höhe der steuerbaren Vermögenserträge plus 50’000 Franken (DBG Art. 33 Abs. 1 Bst. a; für die Kantons- und Gemeindesteuern StHG Art. 9 Abs. 2 Bst. a). Die Rückzahlung selbst ist nicht abziehbar (DBG Art. 34 Bst. c). Bei privaten Schulden sind auch Betreibungskosten und Mahngebühren nicht abziehbar (DBG Art. 34; StHG Art. 9 Abs. 4). Ob Verzugszinsen als Schuldzinsen gelten, sagt das Gesetz nicht ausdrücklich — frag beim Steueramt. Für die Vermögenssteuer der Kantone ist das Reinvermögen steuerbar, also das Vermögen abzüglich der Schulden (StHG Art. 13 Abs. 1).' },
+    }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    planQuelle: 'Quellen: [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, Ratgeber Schuldensanierung|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[DBG Art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_33]], [[DBG Art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_34]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[StHG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_9]], [[StHG Art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_13]] (gelesen im September 2026).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    verlustschein: {
+      title: 'Was ein Verlustschein bedeutet',
+      text: { sie: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Zinsen sind darauf keine geschuldet (Abs. 4) — verlangt jemand Zinsen auf einen Verlustschein, dürfen Sie darauf hinweisen. Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen können Sie jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn Sie zu neuem Vermögen gekommen sind (Art. 265 Abs. 2) — das müssen Sie mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.', du: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Zinsen sind darauf keine geschuldet (Abs. 4) — verlangt jemand Zinsen auf einen Verlustschein, darfst du darauf hinweisen. Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen kannst du jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn du zu neuem Vermögen gekommen bist (Art. 265 Abs. 2) — das musst du mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.' },
+      quelle: 'Quellen: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (geprüft im September 2026).',
+    }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    bussen: {
+      title: 'Bussen und Geldstrafen',
+      quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',
+    }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.
+    // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    bild: {
+      offen: 'Noch offen',
+      ueberfaellig: 'Fälligkeit überschritten: {amount}',
+      ohneDatum: 'Ohne Fälligkeitsdatum: {amount}',
+      bezahlt: 'Bereits bezahlt: {amount}',
+      balkenLabel: 'Noch offen, nach Reihenfolge',
+      naechstes: 'Als Erstes in der Reihenfolge: {name}.',
+      achse: 'Monat',
+      imMonat: 'im {n}. Monat',
+      vonBis: 'Monat {von} bis {bis}',
+      zeitachseLabel: 'Wann welche Forderung bezahlt wäre',
+      stufenTitel: 'Wo jede Forderung steht',
+      stufeOffen: 'Stand nicht erfasst',
+      ausForderungen: 'Unter «Schulden» ist bei {namen} ein Zahlungsbefehl vermerkt. Hier lässt sich die Betreibung dazu erfassen.',
+    },
+    stufe: { // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      label: 'Stand',
+      keine: 'Keine Angabe',
+      rechnung: 'Rechnung offen',
+      mahnung: 'Mahnung erhalten',
+      zahlungsbefehl: 'Zahlungsbefehl erhalten',
+      linkMahnung: 'Mahnung erhalten — was tun?',
+      linkZahlungsbefehl: 'Zahlungsbefehl erhalten — 10 Tage ab Zustellung für den Rechtsvorschlag',
+      hilfe: 'Auch eine Zahlungsaufforderung der Krankenkasse gilt hier als Mahnung.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    },
   },
 
   organ: {
     title: "Donaziun d'organs",
-    status: 'Status',
-    registered: 'Registrà',
-    notRegistered: 'Betg registrà',
-    declined: 'Refusà',
+    status: 'Decisiun',
+    // TODO(rm): provisorisch — Gegenlese (Organspende-Entscheid neu, 27.09.2026)
+    nichtFestgehalten: 'Anc betg fixà',
+    rechtsstand: "Stadi dals 27.09.2026: En Svizra vala la regulaziun da consentiment extendida. Sch'i n'è nagina decisiun fixada, vegnan dumandads ils proxims confamigliars. La regulaziun d'opposiziun ed in register naziunal èn decidids, ma anc betg en vigur; l'UFSP fa quint cun il register en il segund semester 2027 e cun la regulaziun d'opposiziun a partir dal emprim semester 2028. Controllai per plaschair il stadi actual tar l'UFSP.",
+    bagQuelle: "UFSP: consentiment u opposiziun",
+    bagUrl: 'https://www.bag.admin.ch/de/organspende-zustimmungsregelung-oder-widerspruchsregelung',
+    vertrauensperson: 'Persuna da confidenza (num e telefon)',
+    vertrauenspersonKurz: 'Persuna da confidenza',
+    vertrauenspersonHinweis: { sie: "Discurri cun la persuna ch'ella stat qua. Num e numer cumparan en il code QR da la donaziun d'organs ed en il dossier d'urgenza.", du: "Discurra cun la persuna ch'ella stat qua. Num e numer cumparan en il code QR da la donaziun d'organs ed en il dossier d'urgenza." },
+    keineOrganeGewaehlt: { sie: "Anc nagin organ marcà. Tscherni per plaschair tge organs e taissì che Vus vulais donar — uschiglio na sa nagin en cas d'urgenza tge ch'è manegià.", du: "Anc nagin organ marcà. Tscherna per plaschair tge organs e taissì che ti vuls donar — uschiglio na sa nagin en cas d'urgenza tge ch'è manegià." },
+    bitteBestaetigen: { sie: "En il chapitel Urgenza steva pli baud «Donatur d'organs: gea». Quai na di betg tge organs che èn manegiads. Tscherni per plaschair danovamain Vossa decisiun e memorisai ella.", du: "En il chapitel Urgenza steva pli baud «Donatur d'organs: gea». Quai na di betg tge organs che èn manegiads. Tscherna per plaschair danovamain tia decisiun e memorisescha ella." },
+    bitteBestaetigenWiderspruch: { sie: "Pli baud stevan qua duas indicaziuns che sa cuntradin: «Donatur d'organs: gea» en il chapitel Urgenza, «Refusà» sin questa pagina. Tscherni per plaschair danovamain Vossa decisiun e memorisai ella.", du: "Pli baud stevan qua duas indicaziuns che sa cuntradin: «Donatur d'organs: gea» en il chapitel Urgenza, «Refusà» sin questa pagina. Tscherna per plaschair danovamain tia decisiun e memorisescha ella." },
+    wirkung: { sie: "Maloja n'è nagin register. Vossa decisiun vala, sch'ins la chatta: sin la carta da donaziun, en la disposiziun dal pazient — e sche voss confamigliars la enconuschan.", du: "Maloja n'è nagin register. Tia decisiun vala, sch'ins la chatta: sin la carta da donaziun, en la disposiziun dal pazient — e sche tes confamigliars la enconuschan." },
+    speicherort: 'Maloja memorisescha oz questas indicaziuns en la memoria da quest navigatur.',
     organsAndTissue: 'Organs & taissì',
     heart: 'Cor',
     lungs: 'Pulmuns',
@@ -2867,6 +3013,9 @@ export default {
     noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
+    annahmeOhneDreizehnten: 'Quintà senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è l’entrada annuala pli auta e la reducziun pli bassa u nulla. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    ohneDreizehntenKurz: 'quintà senza 13avla paja', // TODO(rm): provisorisch
+    annahmePartnerOhneDreizehnten: 'L’entrada da la segunda persuna è quintada senza 13avla paja — Maloja na dumonda betg quai. Sche ella survegn ina, è la reducziun pli bassa u nulla.', // TODO(rm): provisorisch
     incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
@@ -3097,7 +3246,8 @@ export default {
     footerPrivacy: "Quest dossier cuntegna infurmaziuns persunalas da sanadad. Per plaschair conservar cun attenziun.",
     qrTitle: 'QR d’urgenza per ils squadruns da salvament',
     // TODO(rm): Deploy-Gate 0.1.36 provisorisch — von Muttersprachler:in gegenlesen.
-    qrHint: 'Scannabel cun mintga smartphone — il code cuntegna mo text, nagina colliaziun. El n’è betg criptà: tgi che al scanna, po leger tut las indicaziuns en el. Per al purtar cun sai, far in screenshot u stampar questa pagina.',
+    // TODO(rm): provisorisch — Gegenlese (Satz «Kontakt speichern» neu, 26.09.2026)
+    qrHint: 'Scannabel cun mintga smartphone — il code cuntegna mo text, nagina colliaziun. El n’è betg criptà: tgi che al scanna, po leger tut las indicaziuns en el. Per al purtar cun sai, far in screenshot u stampar questa pagina. Cun scannar, porscha il telefon savens da memorisar las indicaziuns sco contact — lura èn ellas en il cudeschet d’adressas da la persuna che scanna.',
     // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
     qrGekuerzt: 'Il code QR cuntegna ina versiun scursanida: betg tut las indicaziuns han plaz, ed il code numna a la fin tge che manca. Cumplettas èn ellas mo en il dossier sutvart.',
     qrNichtEnthalten: 'Betg cuntegnì, guardar il dossier',
@@ -3263,6 +3413,7 @@ export default {
       basisDirekt: "Endatà (entrada taxabla, taglia federala directa)", // TODO(rm): provisorisch
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
+      annahmePartnerOhneDreizehnten: "Entrada da la segunda persuna quintada senza 13avla paja", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
       annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       annahmeKinderabzugKonkubinat: "Concubinat cun uffants: entira deducziun per uffants quintada tar la persuna (mesadad cun autoritad parentala cuminaivla, circular AFC nr. 30, cifra 14.8.1)", // TODO(rm): provisorisch
@@ -3294,6 +3445,8 @@ export default {
     healthCosts: 'Custs da sanadad (LAMal)',
     healthCostsDetail: 'Quints dal medi pajads {year}',
     healthCostsOpen: 'anc avert: {amount}',
+    taxMonthlyCompare: { sie: '≈ {estimate} per mais stimà · Vossa indicaziun en il budget: {angabe} per mais.', du: '≈ {estimate} per mais stimà · Tia indicaziun en il budget: {angabe} per mais.' },
+    taxOwnFigure: { sie: 'Vossa indicaziun en il budget: {angabe} per mais.', du: 'Tia indicaziun en il budget: {angabe} per mais.' },
     canton: 'Chantun',
     taxes: 'Taglientas',
     ipv: 'Reducziun da premias (IPV)',
@@ -3394,6 +3547,8 @@ export default {
   },
 
   chapterView: {
+    // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
+    abschnitt: { aendern: 'midar', fertig: 'fatg', ergaenzen: 'cumplettar', leer: 'anc vid', aendernAria: 'Midar {name}', fertigAria: '{name} fatg' },
     benefitsLabel: { sie: 'Vossas datas flueschan en:', du: 'Tes datas flueschan en:' },
     emptyState: { sie: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Vus.', du: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Tai.' },
     emptyStateHint: { sie: 'Vus pudais adina cumplettar. Nagut sto vegnir fatg en ina giada.', du: 'Ti pos adina cumplettar. Nagut sto vegnir fatg en ina giada.' },
@@ -3677,6 +3832,7 @@ export default {
     fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },
+    hoursImplausibleNote: { sie: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatai per plaschair Vossas uras d'emna — fin lura na quintain nus betg cun quai.", du: "{hours} uras per emna èn nunusitadamain bleras. Èsi forsa manegià in pensum en pertschient? Lura endatescha per plaschair tias uras d'emna — fin lura na quintain nus betg cun quai." },
     aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
     source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}, incl. 13avel salari proporziunal).',
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
@@ -3721,19 +3877,7 @@ export default {
     unknown: 'Durada da validitad nunenconuschenta',
   },
 
-  debtLevels: {
-    low: 'bass',
-    medium: 'mesaun',
-    high: 'aut',
-    critical: 'critic',
-  },
 
-  debtRecommendations: {
-    low: 'Ils debits èn sut controlla. Cuntinuar da pajar regularmain.',
-    medium: 'Ils debits duessian vegnir reducids. Far in plan da pajament.',
-    high: "Ils debits èn considerabels. Cussegliaziun spezialisada vegn recumandada.",
-    critical: "La situaziun da debits è seriusa. Ina cussegliaziun da debits po gidar ussa.", // TODO(rm): Gegenlese Muttersprache
-  },
 
   debtValidation: {
     creditorRequired: 'Creditur necessari',
@@ -3865,7 +4009,9 @@ export default {
     skosCalculation: 'Calculaziun dal basegn COSAS',
     basicNeeds: 'Basegn fundamental (COSAS)',
     housingCosts: "Custs d'abitar (effectivs)",
-    rentLimit: 'Limita da tschains chantun',
+    rentLimitUnbekannt: { sie: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da Voss lieu da domicil — il servetsch social cumpetent la enconuscha.', du: 'Qua è quintada l’entira fittanza cun ils custs accessorics. Quant che l’agid social renconuscha, dependa da la limita da fittanza da tes lieu da domicil — il servetsch social cumpetent la enconuscha.' },
+    rentLimitDossier: 'Quintada è l’entira fittanza cun ils custs accessorics. Quant che vegn renconuschì, dependa da la limita da fittanza al lieu da domicil; l’app na la enconuscha betg.',
+    mitGanzerMiete: 'stimà cun l’entira fittanza',
     healthInsurance: 'Cassa da malsauns (LAMal)',
     totalNeeds: 'Basegn total',
     deductIncome: 'Deducziun: Entrada',
@@ -4204,6 +4350,298 @@ export default {
       closing: 'Cordials salids',
       legalNote: 'Basa: exigibladad dal salari (OR art. 323). Sch’il pajament na succeda betg, maina la via tras l’autoritad da conciliaziun en chaussas da dretg da lavur u il tribunal da lavur al lieu da lavur, eventualmain tras ina execuziun. Ina retenziun da la lavur (OR art. 82) u ina disditga immediata è mo cussegliabla suenter avair consultà in post spezialisà. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
       reminderTitle: 'Resposta spetgada — salari nunpajà',
+    },
+    // ─── Brevs per eveniments da la vita (26.09.2026) — funtaunas en de.js.
+    angaben: {
+      title: 'Indicaziuns per quest brev', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      intro: 'Questas indicaziuns stattan mo en il brev e na vegnan betg memorisadas. Champs vids restan marcads en il brev cun «[per plaschair cumplettar]».', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      betragErkannt: 'En il brev stat: CHF {amount}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      betragUnklar: 'Quest import na pudain nus betg leger segir — en il brev resta «[per plaschair cumplettar]». Mo cifras, p.ex. 1250.50 u 1\'250.50.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      // TODO(rm): provisorisch — Gegenlese (Deploy-Gate 27.09.2026)
+      rmDeutsch: 'Quest brev n’è anc betg vegnì controllà per rumantsch. Il brev sez vegn perquai fatg per tudestg.',
+    },
+    ablaufLink: {
+      workReference: 'Brev: dumandar in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      dismissalObjection: 'Brev: protesta cunter la disditga', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      debtObjection: 'Brev: far opposiziun cunter in cumond da pajament', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      deathNotice: 'Brev: annunziar in cas da mort', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      paymentReminder: 'Brief: Mahnung schreiben', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      claimDispute: 'Brief: Forderung bestreiten', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      installmentRequest: 'Brief: Ratenzahlung vorschlagen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    },
+    workReference: {
+      title: 'Dumandar in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Dumandar tar il patrun in attestat intermediar u final — u mo ina conferma da lavur.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        art: {
+          label: { sie: 'Tge giavischais Vus?', du: 'Tge giavischas ti?' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          voll: 'Attestat da lavur: gener e durada, prestaziuns e cumportament', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          bestaetigung: 'Conferma da lavur: mo gener e durada', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+        zeitpunkt: {
+          label: 'Mument', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          zwischen: 'Attestat intermediar — l’engaschament cuntinuescha', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          schluss: 'Attestat final — l’engaschament finescha u è finì', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+      },
+      hinweis: { sie: 'In attestat pudais Vus dumandar da tut temp — durant l’engaschament e suenter (OR art. 330a al. 1). La conferma da lavur numna mo il gener e la durada da l’engaschament; ella vegn emessa sin Voss giavisch explicit empè da l’attestat (al. 2).', du: 'In attestat pos ti dumandar da tut temp — durant l’engaschament e suenter (OR art. 330a al. 1). La conferma da lavur numna mo il gener e la durada da l’engaschament; ella vegn emessa sin tes giavisch explicit empè da l’attestat (al. 2).' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      subject: {
+        zwischen: 'Dumonda d’in attestat da lavur intermediar', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        schluss: 'Dumonda d’in attestat da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        bestaetigung: 'Dumonda d’ina conferma da lavur', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body: {
+        zwischen: 'cun quai As prej jau d’in attestat da lavur intermediar che s’exprima davart il gener e la durada da mes lavurar sco er davart mias prestaziuns e mes cumportament.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        schluss: 'cun quai As prej jau d’in attestat da lavur che s’exprima davart il gener e la durada da mes lavurar sco er davart mias prestaziuns e mes cumportament.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        bestaetigung: 'cun quai As prej jau d’ina conferma da lavur. Ella duai sa restrenscher a las indicaziuns davart il gener e la durada da mes lavurar.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      body2: 'Jau As engraziel ordavant per la tramessa e stun gugent a disposiziun per dumondas.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Basa: OR art. 330a. In attestat po vegnir dumandà da tut temp. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    dismissalObjection: {
+      title: 'Protesta cunter la disditga', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Protesta en scrit tar il patrun, sch’ina disditga pudess esser abusiva — avant la fin dal termin da disditga.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        kuendigungsdatum: { label: 'Data dal brev da disditga' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        ende: { label: 'Fin da la relaziun da lavur tenor la disditga (mo per ils termins — na stat betg en il brev)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        begruendung: { label: 'Dumandar a medem temp ina motivaziun en scrit da la disditga (OR art. 335 al. 2)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        einschaetzung: {
+          label: { sie: 'Vossa stimaziun (facultativ)', du: 'Tia stimaziun (facultativ)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          hilfe: { sie: 'Cumpara en il brev explicitamain sco Vossa stimaziun, betg sco fatg. Formulai ella objectivamain e senza reproschas; nums ed accusas na tutgan betg en quest brev. Laschar vid è tuttina valid — la protesta na basegna nagina motivaziun.', du: 'Cumpara en il brev explicitamain sco tia stimaziun, betg sco fatg. Formulescha ella objectivamain e senza reproschas; nums ed accusas na tutgan betg en quest brev. Laschar vid è tuttina valid — la protesta na basegna nagina motivaziun.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+      },
+      frist: {
+        title: 'Dus termins', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        einsprache: { sie: 'La protesta sto esser en scrit tar il patrun il pli tard fin a la fin dal termin da disditga (OR art. 336b al. 1). Tramettai ella baud e recumandà.', du: 'La protesta sto esser en scrit tar il patrun il pli tard fin a la fin dal termin da disditga (OR art. 336b al. 1). Trametta ella baud e recumandà.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        einspracheDatum: 'Fin tenor l’endataziun: {date} — la protesta sto esser tar il patrun il pli tard quest di, meglier bler pli baud.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        // TODO(rm): provisorisch — Gegenlese (Deploy-Gate 27.09.2026)
+        einspracheVorbei: { sie: 'Fin tenor l’endataziun: {date} — tenor noss quint è quest di passà. Ina protesta vegniss pia forsa memia tard (OR art. 336b al. 1). Laschai As cussegliar immediatamain, avant che trametter insatge.', du: 'Fin tenor l’endataziun: {date} — tenor noss quint è quest di passà. Ina protesta vegniss pia forsa memia tard (OR art. 336b al. 1). Lascha ta cussegliar immediatamain, avant che trametter insatge.' },
+        klage: 'Sche las partidas na sa cunvegnan betg davart la cuntinuaziun, sto vegnir fatga pendenta ina plant entaifer 180 dis suenter la fin da la relaziun da lavur, uschiglio scada il dretg sin indemnisaziun (OR art. 336b al. 2). Pendenta è ella gia cun la dumonda a l’autoritad da conciliaziun (ZPO art. 62 al. 1).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        klageDatum: 'Ultim di tenor noss quint: {date}. Sche la fin sa spustescha (per exempel pervia da malsogna, OR art. 336c), è il termin pli tard — nus quintain intenziunadamain senza prolungaziun. Sche la disditga è vegnida dada durant ina malsogna, in accident u ina gravidanza, po ella schizunt esser nunvalaivla (OR art. 336c al. 2) — lura meglier tschertgar cussegl.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        // TODO(rm): provisorisch — Gegenlese (Deploy-Gate 27.09.2026)
+        klageVorbei: { sie: 'Tenor noss quint era l’ultim di il {date}. Il termin per la plant è pia forsa scadì (OR art. 336b al. 2). Laschai As cussegliar immediatamain.', du: 'Tenor noss quint era l’ultim di il {date}. Il termin per la plant è pia forsa scadì (OR art. 336b al. 2). Lascha ta cussegliar immediatamain.' },
+        // TODO(rm): provisorisch — Gegenlese (Deploy-Gate 27.09.2026)
+        klageNurMitEinsprache: 'La plant per indemnisaziun premetta che la protesta saja stada a temp tar il patrun (OR art. 336b al. 1). Sch’ella è vegnida manchentada, na gida questa data betg pli — meglier sa laschar cussegliar immediatamain.',
+        fristlos: 'Tar ina relaschada immediata valan autras reglas — lura main tschertgar cussegl.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        beratung: 'Cussegl porschan sindicats, posts da cussegliaziun giuridica e l’autoritad da conciliaziun en chaussas da dretg da lavur dal chantun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      subject: 'Protesta cunter la disditga dals {date}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body1: 'cun quai fatsch jau protesta cunter la disditga da mia relaziun da lavur dals {date} en il senn da l’art. 336b OR. Jau na sun betg d’accord cun la disditga.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      einschaetzung: 'Tenor mia stimaziun pudess la disditga star en connex cun il suandant: {text}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      begruendung: 'A medem temp As prej jau da motivar la disditga en scrit (art. 335 al. 2 OR).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body2: 'Jau sun gugent pront da discurrer cun Vus davart la cuntinuaziun da la relaziun da lavur.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Basa: OR art. 336b (protesta) ed art. 335 al. 2 (motivaziun). La protesta n’annullescha betg la disditga. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    debtObjection: {
+      title: 'Far opposiziun (Rechtsvorschlag)', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Contestar in cumond da pajament — entaifer 10 dis suenter la consegna, senza motivaziun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        betreibungsnummer: { label: 'Numer da la scussiun (stat sin il cumond da pajament)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        zustelldatum: { label: 'Di da la consegna dal cumond da pajament' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        glaeubiger: { label: 'Partida che scuda (stat sin il cumond da pajament)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        umfang: {
+          label: { sie: 'Tge contestais Vus?', du: 'Tge contestas ti?' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          ganz: 'L’entira pretensiun', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          teil: 'Mo ina part da la pretensiun', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+        neuesVermoegen: { label: 'Suenter in concurs pli baud: contestar dad esser vegnì tar nova facultad (SchKG art. 75 al. 2)' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        teilbetrag: {
+          label: 'Import contestà en CHF', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+          hilfe: 'Indicar exactamain l’import contestà — uschiglio vala l’entira pretensiun sco contestada (SchKG art. 74 al. 2).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        },
+      },
+      frist: {
+        title: 'Termin: 10 dis suenter la consegna', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        text: 'L’opposiziun sto vegnir declerada a l’uffizi da scussiun entaifer 10 dis suenter la consegna dal cumond da pajament; il di da la consegna na vegn betg quintà (SchKG art. 74 al. 1, art. 31 en connex cun ZPO art. 142 al. 1).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        muendlich: 'I va er senza brev: immediatamain a bucca a la persuna che consegna il cumond da pajament, u entaifer il termin a bucca a l’uffizi da scussiun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        post: { sie: 'En scrit basta quai, sch’il brev è consegnà a la Posta svizra il pli tard l’ultim di dal termin (SchKG art. 31, ZPO art. 143 al. 1). Tramettai el recumandà — la quittanza è Voss mussament.', du: 'En scrit basta quai, sch’il brev è consegnà a la Posta svizra il pli tard l’ultim di dal termin (SchKG art. 31, ZPO art. 143 al. 1). Trametta el recumandà — la quittanza è tes mussament.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        // TODO(rm): provisorisch — Gegenlese (Deploy-Gate 27.09.2026)
+        sprache: { sie: 'Scrivai l’opposiziun en ina lingua uffiziala da l’uffizi da scussiun. Sch’il brev è en in’autra lingua, dumandai l’emprim a l’uffizi, sch’el l’accepta — u declerai l’opposiziun a bucca.', du: 'Scriva l’opposiziun en ina lingua uffiziala da l’uffizi da scussiun. Sch’il brev è en in’autra lingua, dumonda l’emprim a l’uffizi, sch’el l’accepta — u decleria l’opposiziun a bucca.' },
+        datum: 'Ultim di tenor noss quint: {date}. Fin d’emna, dis da festa e vacanzas da scussiun pon prolungar il termin — nus quintain intenziunadamain senza; pli baud n’è mai fallà.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        vorbei: { sie: 'Tenor noss quint è il termin forsa scadì ils {date}. Fin d’emna, dis da festa u vacanzas da scussiun al pon avair prolungà. Dumandai immediatamain tar l’uffizi da scussiun e faschai en cas da dubi tuttina opposiziun.', du: 'Tenor noss quint è il termin forsa scadì ils {date}. Fin d’emna, dis da festa u vacanzas da scussiun al pon avair prolungà. Dumonda immediatamain tar l’uffizi da scussiun e fa en cas da dubi tuttina opposiziun.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        ohne: { sie: 'Endatai sutvart il di da la consegna, lura mussain nus l’ultim di dal termin.', du: 'Endatescha sutvart il di da la consegna, lura mussain nus l’ultim di dal termin.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      recipient: '[Uffizi da scussiun — l’adressa stat sin il cumond da pajament]', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      subject: 'Opposiziun — scussiun nr. {number}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body1: 'en la scussiun nr. {number} m’è vegnì consegnà ils {date} in cumond da pajament. Partida che scuda: {creditor}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      ganz: 'Cun quai fatsch jau opposiziun cunter l’entira pretensiun.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      teil: 'Cun quai fatsch jau opposiziun cunter ina part da la pretensiun. Contestà è in import da CHF {amount}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      neuesVermoegen: 'Ultra da quai contestesch jau dad esser vegnì/vegnida tar nova facultad (art. 75 al. 2 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      bescheinigung: 'Jau As prej da ma confermar ch’jau hai fatg opposiziun (art. 74 al. 3 SchKG).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Basa: SchKG art. 74 e 75. L’opposiziun na basegna nagina motivaziun. Suenter in concurs pli baud vala: tgi che contesta dad esser vegnì tar nova facultad, sto declerar quai explicitamain en l’opposiziun (SchKG art. 75 al. 2). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+    },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+    paymentReminder: {
+      title: 'Mahnung schreiben',
+      description: { sie: 'Jemand schuldet Ihnen Geld? Freundlich erinnern oder mahnen — mit klarer Frist.', du: 'Jemand schuldet dir Geld? Freundlich erinnern oder mahnen — mit klarer Frist.' },
+      felder: {
+        stufe: {
+          label: 'Wie deutlich soll der Brief sein?',
+          erinnerung: 'Freundliche Zahlungserinnerung (zuerst)',
+          mahnung: 'Mahnung mit Verzugszins und Hinweis auf die Betreibung',
+        },
+        grund: {
+          label: 'Wofür ist das Geld geschuldet?',
+          hilfe: 'Zum Beispiel: «Rechnung Nr. 17 vom 12. Juni 2026» oder «Anteil Ferienwohnung Juli 2026».',
+        },
+        betrag: {
+          label: 'Offener Betrag in CHF',
+        },
+        faellig: {
+          label: 'Fällig seit',
+        },
+        frist: {
+          label: 'Neue Zahlungsfrist ab heute',
+          '10': '10 Tage',
+          '20': '20 Tage',
+          '30': '30 Tage',
+          hilfe: 'Bei Einschreiben lieber 20 oder 30 Tage — die Zustellung kann dauern.',
+        },
+        zahlungsweg: {
+          label: 'Zahlungsverbindung (freiwillig)',
+          hilfe: { sie: 'Zum Beispiel Ihre IBAN. Wird nicht gespeichert, nur in den Brief gesetzt.', du: 'Zum Beispiel deine IBAN. Wird nicht gespeichert, nur in den Brief gesetzt.' },
+        },
+      },
+      hinweis: {
+        title: 'Zuerst freundlich',
+        text: { sie: 'Oft ist eine Zahlung einfach untergegangen. Beginnen Sie mit einer Zahlungserinnerung; auch sie ist schon eine Mahnung im Sinn von OR Art. 102. Die Mahnung mit Verzugszins ist der zweite Schritt. Ein Darlehen ohne vereinbarten Rückzahlungstermin muss erst innert sechs Wochen ab der ersten Aufforderung zurückbezahlt werden (OR Art. 318) — setzen Sie dann keine kürzere Frist. Schicken Sie den Brief so, dass Sie den Versand belegen können, und behalten Sie eine Kopie.', du: 'Oft ist eine Zahlung einfach untergegangen. Beginne mit einer Zahlungserinnerung; auch sie ist schon eine Mahnung im Sinn von OR Art. 102. Die Mahnung mit Verzugszins ist der zweite Schritt. Ein Darlehen ohne vereinbarten Rückzahlungstermin muss erst innert sechs Wochen ab der ersten Aufforderung zurückbezahlt werden (OR Art. 318) — setz dann keine kürzere Frist. Schick den Brief so, dass du den Versand belegen kannst, und behalte eine Kopie.' },
+      },
+      recipient: '[Name und Adresse der Schuldnerin oder des Schuldners]',
+      subject: {
+        erinnerung: 'Zahlungserinnerung — {reason}',
+        mahnung: 'Mahnung — {reason}',
+      },
+      salutation: 'Guten Tag,',
+      body1: 'für {reason} ist der Betrag von CHF {amount} seit dem {date} fällig. Bis heute habe ich keine Zahlung erhalten.',
+      frist: {
+        erinnerung: 'Vielleicht ist die Zahlung untergegangen. Ich bitte Sie, den Betrag bis zum {date} zu überweisen.',
+        mahnung: 'Ich fordere Sie auf, den Betrag bis spätestens am {date} zu bezahlen.',
+      },
+      zahlungsweg: 'Zahlungsverbindung: {text}',
+      zins: 'Ich behalte mir vor, Verzugszins von 5 % pro Jahr zu verlangen (Art. 104 Abs. 1 OR).',
+      weitere: 'Geht die Zahlung bis dahin nicht ein, werde ich weitere Schritte prüfen, namentlich die Betreibung.',
+      bereitsBezahlt: 'Falls sich Ihre Zahlung mit diesem Schreiben gekreuzt hat, betrachten Sie es bitte als gegenstandslos.',
+      closing: 'Freundliche Grüsse',
+      legalNote: 'Grundlage: OR Art. 102 und 104. Mit der Mahnung gerät die Person in Verzug, sofern die Forderung fällig ist; war ein fester Zahltag vereinbart, schon nach Ablauf dieses Tages. Ab Verzug kann Verzugszins von 5 % pro Jahr verlangt werden. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+    },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+    claimDispute: {
+      title: 'Forderung bestreiten',
+      description: 'Auf eine Mahnung antworten, wenn die Rechnung nicht stimmt oder schon bezahlt ist — und Unterlagen verlangen.',
+      felder: {
+        rechnungsnummer: {
+          label: 'Rechnungs- oder Referenznummer (steht auf der Mahnung)',
+        },
+        rechnungsdatum: {
+          label: 'Datum der Rechnung',
+        },
+        umfang: {
+          label: { sie: 'Was bestreiten Sie?', du: 'Was bestreitest du?' },
+          ganz: 'Die ganze Forderung',
+          teil: 'Nur einen Teil der Forderung',
+        },
+        teilbetrag: {
+          label: 'Bestrittener Betrag in CHF',
+        },
+        gebuehrenbetrag: {
+          label: 'Bestrittene Gebühren in CHF (steht auf der Mahnung)', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+        },
+        grund: {
+          label: 'Warum?',
+          unklar: 'Die Forderung ist nicht nachvollziehbar — Unterlagen verlangen',
+          bezahlt: 'Schon bezahlt — Kopie des Zahlungsbelegs beilegen',
+          gebuehren: 'Nur die Mahn- oder Inkassogebühren — sie sind nicht vereinbart', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+        },
+        einschaetzung: {
+          label: { sie: 'Ihre Einschätzung (freiwillig)', du: 'Deine Einschätzung (freiwillig)' },
+          hilfe: 'Erscheint im Brief ausdrücklich als Einschätzung, nicht als Tatsache.',
+        },
+      },
+      hinweis: {
+        title: 'Bestreiten ist kein Rechtsvorschlag',
+        text: { sie: 'Mit diesem Brief halten Sie fest, dass Sie die Forderung bestreiten, und verlangen Unterlagen. Eine Betreibung kann der Gläubiger trotzdem einleiten.', du: 'Mit diesem Brief hältst du fest, dass du die Forderung bestreitest, und verlangst Unterlagen. Eine Betreibung kann der Gläubiger trotzdem einleiten.' },
+        zahlungsbefehl: 'Liegt schon ein Zahlungsbefehl vor, zählen 10 Tage ab Zustellung: Dann braucht es den Rechtsvorschlag beim Betreibungsamt (SchKG Art. 74), nicht diesen Brief.',
+      },
+      subject: 'Ihre Mahnung — Rechnung Nr. {number} vom {date}',
+      salutation: 'Sehr geehrte Damen und Herren,',
+      body1: 'ich habe Ihre Mahnung zur Rechnung Nr. {number} vom {date} erhalten.',
+      ganz: 'Ich bestreite diese Forderung.',
+      teil: 'Ich bestreite diese Forderung im Umfang von CHF {amount}.',
+      gebuehrenSatz: 'Ich bestreite die verlangten Mahn- bzw. Inkassogebühren von CHF {amount}.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      zahlungForderung: 'Die Forderung selbst samt Verzugszins begleiche ich; meine Zahlung betrifft nicht die bestrittenen Gebühren.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      grund: {
+        unklar: 'Sie ist für mich nicht nachvollziehbar. Bitte senden Sie mir eine detaillierte Aufstellung und die Unterlagen, auf die sich die Forderung stützt.',
+        bezahlt: 'Nach meinen Unterlagen habe ich diesen Betrag bereits bezahlt. Eine Kopie des Zahlungsbelegs liegt bei.',
+        gebuehren: 'Die verlangten Mahn- bzw. Inkassogebühren sind nach meinen Unterlagen nicht vereinbart. Bitte zeigen Sie mir die Vereinbarung, auf die sie sich stützen, oder streichen Sie sie.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      },
+      einschaetzung: 'Meine Einschätzung: {text}',
+      body2: 'Bis zur Klärung bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
+      closing: 'Freundliche Grüsse',
+      legalNote: { sie: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreiten Sie nur einen Teil, klären Sie mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Dieser Brief erkennt die Forderung nicht an. Er hält die Bestreitung fest, verhindert aber keine Betreibung: Kommt ein Zahlungsbefehl, gilt die 10-Tage-Frist für den Rechtsvorschlag (SchKG Art. 74). Bestreitest du nur einen Teil, klär mit einer Beratungsstelle, ob der Rest als anerkannt gelten könnte. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' },
+      legalNoteGebuehren: { sie: 'Mit diesem Brief anerkennen Sie die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerken Sie bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.', du: 'Mit diesem Brief anerkennst du die Forderung selbst (OR Art. 135 Ziff. 1) — bestritten sind nur die Gebühren. Vermerk bei der Zahlung «Forderung und Verzugszins, Gebühren bestritten». Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      rest: 'Zum übrigen Betrag äussere ich mich nach Erhalt der Unterlagen; eine Anerkennung ist damit nicht verbunden.',
+    },
+    // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (27.09.2026)
+    installmentRequest: {
+      title: 'Ratenzahlung vorschlagen',
+      description: { sie: 'Eine offene Rechnung in Raten begleichen — einen Vorschlag machen, den Ihr Budget trägt.', du: 'Eine offene Rechnung in Raten begleichen — einen Vorschlag machen, den dein Budget trägt.' },
+      felder: {
+        rechnungsnummer: {
+          label: 'Rechnungs- oder Referenznummer (steht auf der Mahnung)',
+        },
+        betrag: {
+          label: 'Hauptforderung in CHF (ohne Mahn- und Inkassogebühren)',
+        },
+        rate: {
+          label: 'Monatliche Rate in CHF',
+          hilfe: { sie: 'Nur so viel, wie Ihr Budget auch in einem schwierigen Monat trägt.', du: 'Nur so viel, wie dein Budget auch in einem schwierigen Monat trägt.' },
+        },
+        ab: {
+          label: 'Erste Rate am',
+        },
+      },
+      hinweis: {
+        title: { sie: 'Bevor Sie Raten vorschlagen', du: 'Bevor du Raten vorschlägst' },
+        anerkennung: { sie: 'Jede Anzahlung gilt als Anerkennung der Forderung — die Verjährung beginnt damit neu (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Auch ein Ratengesuch kann als Anerkennung gewertet werden. Schlagen Sie Raten nur vor, wenn die Forderung stimmt.', du: 'Jede Anzahlung gilt als Anerkennung der Forderung — die Verjährung beginnt damit neu (OR Art. 135 Ziff. 1, Art. 137 Abs. 1). Auch ein Ratengesuch kann als Anerkennung gewertet werden. Schlag Raten nur vor, wenn die Forderung stimmt.' },
+        budget: { sie: 'Der Gläubiger muss nicht zustimmen. Ohne andere Abmachung läuft der Verzugszins auf dem offenen Betrag weiter (OR Art. 104 Abs. 1). Bitten Sie um eine schriftliche Bestätigung, und ziehen Sie bei mehreren offenen Forderungen eine Schuldenberatung bei. Reicht das Einkommen auf Dauer nicht für das Nötige, rät die Schuldenberatung (schuldeninfo.ch) von Ratenvereinbarungen ab — zuerst die laufenden Rechnungen.', du: 'Der Gläubiger muss nicht zustimmen. Ohne andere Abmachung läuft der Verzugszins auf dem offenen Betrag weiter (OR Art. 104 Abs. 1). Bitte um eine schriftliche Bestätigung, und zieh bei mehreren offenen Forderungen eine Schuldenberatung bei. Reicht das Einkommen auf Dauer nicht für das Nötige, rät die Schuldenberatung (schuldeninfo.ch) von Ratenvereinbarungen ab — zuerst die laufenden Rechnungen.' },
+      },
+      subject: 'Gesuch um Ratenzahlung — Rechnung Nr. {number}',
+      salutation: 'Sehr geehrte Damen und Herren,',
+      body1: 'ich habe Ihre Mahnung zur Rechnung Nr. {number} erhalten. Die Hauptforderung von CHF {amount} kann ich zurzeit nicht auf einmal bezahlen.',
+      body2: 'Ich schlage Ihnen vor, sie in monatlichen Raten von CHF {rate} zu begleichen, erstmals am {date}.',
+      body3: 'Bitte bestätigen Sie mir diesen Vorschlag schriftlich. Solange ich die Raten wie vereinbart bezahle, bitte ich Sie, von weiteren Mahnungen und Gebühren sowie von einer Betreibung abzusehen.',
+      closing: 'Freundliche Grüsse',
+      legalNote: 'Ein Ratengesuch ist ein Vorschlag; gültig ist, was der Gläubiger bestätigt. Jede Anzahlung gilt als Anerkennung der Forderung (OR Art. 135 Ziff. 1); auch das Gesuch kann so gewertet werden. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung.',
+      gebuehren: 'Dieses Gesuch betrifft die Hauptforderung. Für allfällige Mahn- oder Inkassogebühren bitte ich Sie um deren Grundlage.',
+    },
+    deathNotice: {
+      title: 'Annunziar in cas da mort', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      description: 'Communitgar in cas da mort ad ina assicuranza, ina banca, ina administraziun u in purschider d’abunaments e dumandar co ch’i va vinavant.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      felder: {
+        verstorben: { label: 'Num da la persuna morta' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        todesdatum: { label: 'Data da la mort' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        vertragsnummer: { label: 'Numer da contract, da client u da polissa' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      erbe: {
+        title: 'Impurtant uschè ditg che l’ierta è averta', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        text: 'Tgi che s’maschaida avant la scadenza dal termin da renunzia en las fatschentas da l’ierta, fa acziuns che van sur la simpla administraziun ora, u prenda u zuppa chaussas da l’ierta, na po betg pli renunziar a l’ierta (ZGB art. 571 al. 2) — per exempel tgi che paja debits ord la relaschada, renconuscha pretensiuns u dispona da la facultad da la persuna morta. Tge ch’è anc «simpla administraziun», dumonda ins en cas da dubi tar l’autoritad d’ierta. Il termin importa trais mais; per ertavels legals cumenza el per regla, cur ch’els vegnan a savair da la mort, per ertavels instituids cun la communicaziun uffiziala (ZGB art. 567).', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        brief: { sie: 'Quest brev è perquai ina simpla communicaziun cun dumondas. Na cumplettai el betg cun ina empermischun da pajament, ina disditga u in’instrucziun — en cas da dubi dumandai l’emprim tar l’autoritad d’ierta u tar in post spezialisà.', du: 'Quest brev è perquai ina simpla communicaziun cun dumondas. Na cumpletta el betg cun ina empermischun da pajament, ina disditga u in’instrucziun — en cas da dubi dumonda l’emprim tar l’autoritad d’ierta u tar in post spezialisà.' }, // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+        miete: 'Contract da fittanza: ils ertavels pon desdir cun il termin legal sin il proxim termin legal (OR art. 266i). Ils ertavels ageschan per regla communablamain (ZGB art. 602 al. 2). Sch’igl è raschunaivel da far quai avant la decisiun davart l’ierta, sclerescha ins meglier ordavant cun l’autoritad cumpetenta u cun in post spezialisà — questa templata na desda perquai betg.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      },
+      subject: 'Communicaziun d’in cas da mort — {name}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      salutation: 'Stimadas dunnas, stimads signurs,', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body1: 'jau As communitgesch che {name} è mort/a ils {date}.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      reference: 'Numer da contract u da client: {number}', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      body2: 'As prej jau da ma communitgar tge documents che Vus duvrais e co ch’il contract po vegnir terminà. Ultra da quai As prej jau d’ina survista dal stadi al di da la mort (per exempel in extract dal conto) resp. d’in eventual quint final.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      vorbehalt: 'Questa scrittira è ina communicaziun. Ella na cuntegna nagina disditga, nagina decleraziun davart l’ierta e nagina renconuschientscha da pretensiuns.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      closing: 'Cordials salids', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
+      legalNote: 'Remartga: simpla communicaziun — nagina empermischun da pajament, nagina disditga, nagina disposiziun da facultad (ZGB art. 571 al. 2). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica.', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
     },
     wageReminder: {
       title: 'Notar il termin en il chalender',
@@ -4792,7 +5230,6 @@ export default {
       healthInfoRecorded: 'Infurmaziuns da sanadad registradas',
       statusYes: 'Avant maun',
       statusNo: 'Anc avert',
-      statusDeclined: 'Refusà',
       contactSentence: "Per il cas d'urgenza è ina persuna da contact deponida.",
       contactAndDoctor: "Per il cas d'urgenza è ina persuna da contact deponida. In medi da chasa è registrà.",
       contactAndProvision: "Per il cas d'urgenza è ina persuna da contact deponida. Indicaziuns da prevenziun èn registradas.",
@@ -4895,6 +5332,12 @@ export default {
     incomeNet: 'Entrada netta',
     incomeFamilienzulagen: 'Supplements da famiglia',
     incomeAlimente: 'Aliments retschavids',
+    incomeGross: 'Salari brut',
+    incomeSalary: 'Salari',
+    incomeSide: 'Gudogn accessoric',
+    incomeSideGross: 'Gudogn accessoric (brut)',
+    incomePartner: 'Salari net partenari/a',
+    availableNeedsNetto: { sie: "In salari è endatà sco salari brut — AVS, AD e cassa da pensiun n'èn anc betg deducids. Cun il salari net (certificat da salari u extract dal conto) quintain nus, tge che resta liber.", du: "In salari è endatà sco salari brut — AVS, AD e cassa da pensiun n'èn anc betg deducids. Cun il salari net (certificat da salari u extract dal conto) quintain nus, tge che resta liber." },
     ipvRelief: 'Reducziun IPV',
     ipvEffective: 'Grevezza effectiva',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -5001,6 +5444,7 @@ export default {
         belege: 'Quittanzas tschernidas ({count})',
         arbeitgeber: 'Patrun ed adressa',
         lohn: 'Datas da salari',
+        briefAngaben: 'Indicaziuns dal formular dal brev (numers, datas, nums)', // TODO(rm): provisorisch — Gegenlese (Briefe Lebensereignisse, 26.09.2026)
         // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
         ipvErgebnis: 'Reducziun da premias stimada (RIP)',
         ipvOrientierung: 'Stimaziun da la reducziun da premias (senza import)', // TODO(rm): provisorisch
@@ -5052,7 +5496,7 @@ export default {
       bloodType: 'Gruppa da sang',
       emergencyContact: "Contact d'urgenza",
       allergies: 'Allergias',
-      organDonor: "Donatur d'organs",
+      organDonor: "Donaziun d'organs",
       documents: 'DOCUMENTS ({count} datotecas)',
       securityTitle: 'INDICAZIUNS DA SEGIREZZA',
       securityTip1: 'Questa datoteca cuntegna datas persunalas confidenzialas',
@@ -5136,6 +5580,414 @@ export default {
     linkCanton: 'Tar l\'uffizi chantunal',
     linkOverview: 'Survista chantunala (BWO)',
   },
+  // Patientenverfügung in Fragen (27.09.2026) — Fragen in Ich-Form, keine Sie/Du-Fassung nötig.
+  // Geprüft: docs/design/patientenverfuegung-fragen-2026-09-27.md
+  // TODO(rm): provisorisch — Gegenlese (Patientenverfügung neu, 27.09.2026)
+  pv: {
+    ui: {
+      title: 'Far ina disposiziun da pazient',
+      intro: 'Tredesch dumondas, ina per pagina. Mintgina po restar averta cun «Quai na sai jau anc betg» — lura na cumpara ella betg en il document. A la fin dat i ina prevista per stampar.',
+      speicher: 'Las respostas vegnan memorisadas en quest navigatur, sco tut las indicaziuns en Maloja. I sa tracta da datas da sanadad e perquai da datas spezialmain degnas da protecziun.',
+      einstiegPsych: 'Per il tractament d’ina disturbanza psichica en ina clinica valan ultra da quai las reglas dal plazzament a scopi d’assistenza (CC art. 380).',
+      hinweis: 'Agid d’orientaziun, nagin cussegl medicinal e nagin cussegl giuridic. Discutar decisiuns medicinalas cun la media u il medi.',
+      fortschritt: 'Dumonda {n} da {total}',
+      zurueck: 'Enavos',
+      weiter: 'Vinavant',
+      zurVorschau: 'A la prevista',
+      warum: 'Pertge vegn quai dumandà?',
+      offen: 'Quai na sai jau anc betg',
+      bestehendDatum: 'Data da la disposiziun pli veglia',
+      organeListe: 'Tge organs u tessids?',
+      name: 'Num',
+      beziehung: 'Relaziun',
+      telefon: 'Telefon',
+      vorschauTitel: 'Prevista',
+      leer: 'Anc nagut respundì. La prevista s’empla cun las respostas.',
+      ungueltigOhne: 'Senza data e suttascripziun n’è ella betg valaivla. Endatar omadus a maun.',
+      drucken: 'Stampar',
+      aendern: 'Midar las respostas',
+    },
+    frage: {
+      bestehend: 'Datti gia ina disposiziun da pazient?',
+      werte: 'Tge è impurtant per mai en la vita — e tge faschess ch’ella na valess betg pli la paina per mai?',
+      therapieziel: 'Sch’i na dat nagina speranza da guariziun pli: Tge duai avair la precedenza?',
+      situationen: 'Per tge situaziuns duai la disposiziun valair en special?',
+      reanimation: 'Duai vegnir empruvà ina reanimaziun en cas d’in arrest dal cor e da la circulaziun?',
+      lebensverlaengernd: 'Mesiras che prolungheschan la vita sco respiraziun artifiziala, dialisa u tractament intensiv — duain ellas vegnir prendidas?',
+      ernaehrung: 'Nutriment e liquids artifizials tras sonda u infusiun — duain els vegnir dads?',
+      linderung: 'Duai il levgiament da dolurs, da difficultads da respirar e d’anguscha avair la precedenza?',
+      sedierung: 'Sche plagas grevas na sa laschan betg levgiar autramain: Sun jau d’accord cun ina sedaziun palliativa?',
+      ortBegleitung: 'Nua e cun tgi vuless jau passentar l’ultim temp?',
+      organe: 'Suenter mia mort',
+      organspende: 'Donaziun d’organs e da tessids',
+      obduktion: 'Autopsia',
+      forschung: 'Corp per l’instrucziun e la perscrutaziun',
+      vertretung: 'Tgi duai discurrer per mai — e tgi, sche questa persuna na po betg?',
+      original: 'Nua vegn l’original suttascrit conservà?',
+    },
+    hilfe: {
+      bestehend: 'Sch’i dat gia ina, stat en il document, sche questa la remplazza u la cumplettescha.',
+      werte: 'Facultativ. Gida la media u il medi e la persuna represchentanta a chapir l’atgna voluntad.',
+      therapieziel: 'La direcziun che las singulas decisiuns suondan.',
+      situationen: 'Pliras pussaivladads. La disposiziun vala adina, sch’ins na po betg pli decider sez.',
+      reanimation: 'Reanimaziun munta massascha dal cor, respiraziun e eventualmain in cuntact electric.',
+      lebensverlaengernd: '«Mo per in temp limità» munta: empruvar e cuntinuar betg, sch’i na dat nagina meglieraziun.',
+      ernaehrung: 'Offrir da mangiar e da baiver fa adina part da la tgira da basa. Qua sa tracta i mo da l’alimentaziun artifiziala.',
+      linderung: 'Il levgiament fa adina part dal tractament. Questa dumonda fixescha, sch’el ha la precedenza envers auters finamiras.',
+      sedierung: 'Cun medicaments vegn ins mess en in stadi sumegliant al sien per levgiar plagas grevas.',
+      ortBegleitung: 'Facultativ. Per exempel in lieu, persunas, assistenza spirituala, musica.',
+      organe: 'En Svizra vala la regulaziun da consentiment extendida (stadi dals 27.09.2026, UFSP). Sch’i n’è nagina decisiun fixada, vegnan dumandads ils proxims confamigliars.',
+      vertretung: 'La persuna discutta las mesiras cun la media u il medi e decida en mes num. Discurrer ordavant cun ella.',
+      original: 'L’indicaziun sin la carta d’assicurà endatescha ina persuna spezialisada autorisada, cun consentiment.',
+    },
+    warum: {
+      bestehend: 'Ina disposiziun pli nova remplazza la pli veglia, auter che sch’ella la cumplettescha senza dubi mo (CC art. 362 al. 3 en cumbinaziun cun l’art. 371 al. 3). Perquai stat en il document expressivamain tge che vala.',
+      werte: 'Sch’ina situaziun n’è betg reglada, dumbra la voluntad presumtiva (CC art. 372 al. 2, art. 378 al. 3). Las atgnas valurs gidan a la renconuscher.',
+      therapieziel: 'La finamira terapeutica gida a classifitgar las singulas decisiuns (directivas da l’ASSM «Disposiziuns da pazient», cifra 4.2).',
+      situationen: 'Ina disposiziun da pazient vala, sch’ins n’è betg pli abel da giuditgar (CC art. 370 al. 1). Situaziuns numnadas la fan pli clera.',
+      reanimation: 'Fixar a tge mesiras medicinalas ch’ins consenta ed a tgeninas betg è il nuc d’ina disposiziun da pazient (CC art. 370 al. 1). Respostas cleras gidan, perquai che respostas nunclera pon far dubis (art. 372 al. 2).',
+      lebensverlaengernd: 'Fixar a tge mesiras medicinalas ch’ins consenta ed a tgeninas betg è il nuc d’ina disposiziun da pazient (CC art. 370 al. 1).',
+      ernaehrung: 'L’alimentaziun artifiziala è ina mesira medicinala ch’ins po acceptar u refusar (CC art. 370 al. 1).',
+      linderung: 'Tenor las directivas da l’ASSM «Il mort ed il murir» (cifra 6.1.2) duain las plagas vegnir levgiadas suffizientamain; ils medicaments pon prolungar u scursanir la vita.',
+      sedierung: 'La sedaziun palliativa è reglada en las directivas da l’ASSM «Il mort ed il murir» (cifra 6.1.3).',
+      ortBegleitung: 'Ins po dar instrucziuns a la persuna represchentanta (CC art. 370 al. 2). Giavischs davart lieu ed accumpagnament fan part da quai.',
+      organe: 'Ina decisiun fixada n’sto betg pli vegnir engiavinada d’auters.',
+      vertretung: 'Ins po designar ina persuna e, per il cas ch’ella n’è betg adattada, n’accepta betg l’incumbensa u la desditga, ina persuna substituta (CC art. 370 al. 2 e 3). Senza ellas decidan persunas stretgas en ina successiun fixada (art. 378).',
+      original: 'La media u il medi verifitgescha sin la carta d’assicurà, sch’i dat ina disposiziun (CC art. 372 al. 1; OCA art. 6 al. 1 lit. i).',
+    },
+    opt: {
+      bestehend_nein: 'Na',
+      bestehend_ersetzt: 'Gea — questa la remplazza',
+      bestehend_ergaenzt: 'Gea — questa la cumplettescha',
+      therapieziel_verlaengern: 'Prolungar la vita',
+      therapieziel_lebensqualitaet: 'Qualitad da vita e levgiament',
+      situationen_notfall: 'Eveniment acut senza speranza da meglieraziun',
+      situationen_bewusstlos: 'Perdita da conscienza permanenta',
+      situationen_demenz: 'Demenza avanzada',
+      situationen_endphase: 'Ultima fasa d’ina malsogna nunguaribla',
+      reanimation_ja: 'Gea',
+      reanimation_nein: 'Na',
+      lebensverlaengernd_ja: 'Gea',
+      lebensverlaengernd_begrenzt: 'Mo per in temp limità',
+      lebensverlaengernd_nein: 'Na',
+      ernaehrung_ja: 'Gea',
+      ernaehrung_begrenzt: 'Mo per in temp limità',
+      ernaehrung_nein: 'Na',
+      linderung_ja: 'Gea',
+      sedierung_ja: 'Gea',
+      sedierung_nein: 'Na',
+      organspende_ja: 'Gea',
+      organspende_nein: 'Na',
+      organspende_bestimmte: 'Mo tscherts organs u tessids',
+      obduktion_ja: 'Gea',
+      obduktion_nein: 'Na',
+      forschung_ja: 'Gea',
+      forschung_nein: 'Na',
+    },
+    doc: {
+      titel: 'Disposiziun da pazient',
+      name: 'Num',
+      geburt: 'Data da naschientscha',
+      adresse: 'Adressa',
+      urteilsfaehig: 'Jau fatsch questa disposiziun abel da giuditgar e da mia libra voluntad.',
+      gilt: 'Ella vala, sche jau n’è betg pli abel da giuditgar.',
+      giltInsbesondere: 'En special:',
+      sit_notfall: 'tar in eveniment acut senza speranza da meglieraziun',
+      sit_bewusstlos: 'tar ina perdita da conscienza permanenta',
+      sit_demenz: 'tar ina demenza avanzada',
+      sit_endphase: 'en l’ultima fasa d’ina malsogna nunguaribla',
+      titel_werte: 'Tge ch’è impurtant per mai',
+      titel_entscheide: 'Mesiras medicinalas',
+      titel_ort: 'Lieu ed accumpagnament',
+      titel_tod: 'Suenter mia mort',
+      titel_vertretung: 'Represchentanza',
+      therapieziel_verlaengern: 'Sch’i na dat nagina speranza da guariziun pli, duai la prolungaziun da mia vita avair la precedenza.',
+      therapieziel_lebensqualitaet: 'Sch’i na dat nagina speranza da guariziun pli, duain la qualitad da vita ed il levgiament avair la precedenza.',
+      reanimation_ja: 'En cas d’in arrest dal cor e da la circulaziun duai vegnir empruvà ina reanimaziun.',
+      reanimation_nein: 'En cas d’in arrest dal cor e da la circulaziun refus jau ina reanimaziun.',
+      lebensverlaengernd_ja: 'Mesiras che prolungheschan la vita sco respiraziun artifiziala, dialisa u tractament intensiv duain vegnir prendidas.',
+      lebensverlaengernd_begrenzt: 'Mesiras che prolungheschan la vita sco respiraziun artifiziala, dialisa u tractament intensiv duain vegnir prendidas mo per in temp limità e terminadas, sch’i na dat nagina meglieraziun.',
+      lebensverlaengernd_nein: 'Jau refus mesiras che prolungheschan la vita sco respiraziun artifiziala, dialisa u tractament intensiv.',
+      ernaehrung_ja: 'Nutriment e liquids artifizials tras sonda u infusiun duain vegnir dads.',
+      ernaehrung_begrenzt: 'Nutriment e liquids artifizials tras sonda u infusiun duain vegnir dads mo per in temp limità.',
+      ernaehrung_nein: 'Jau refus nutriment e liquids artifizials tras sonda u infusiun. Da mangiar e da baiver duai vegnir offrì a mai vinavant.',
+      linderung_ja: 'Il levgiament da dolurs, da difficultads da respirar e d’anguscha duai avair la precedenza.',
+      sedierung_ja: 'Sche plagas grevas na sa laschan betg levgiar autramain, sun jau d’accord cun ina sedaziun palliativa.',
+      sedierung_nein: 'Jau refus ina sedaziun palliativa.',
+      organspende_ja: 'Suenter mia mort dastgan vegnir prendids organs e tessids.',
+      organspende_nein: 'Jau na consent betg che organs e tessids vegnian prendids suenter mia mort.',
+      organspende_bestimmte: 'Suenter mia mort dastgan vegnir prendids mo quests organs u tessids: {liste}.',
+      obduktion_ja: 'Jau sun d’accord cun in’autopsia.',
+      obduktion_nein: 'Jau refus in’autopsia.',
+      forschung_ja: 'Mes corp dastga vegnir duvrà suenter mia mort per l’instrucziun e la perscrutaziun.',
+      forschung_nein: 'Mes corp na duai betg vegnir duvrà suenter mia mort per l’instrucziun e la perscrutaziun.',
+      rolle_vertretung: 'Persuna represchentanta — discutta las mesiras cun la media u il medi e decida en mes num',
+      rolle_ersatz: 'Persuna substituta — sche la persuna represchentanta n’è betg adattada, n’accepta betg l’incumbensa u la desditga',
+      ersetzt: 'Questa disposiziun remplazza tut las pli veglias.',
+      ergaenzt: 'Questa disposiziun cumplettescha mia disposiziun dals {datum}.',
+      ort: 'Lieu',
+      datum: 'Data',
+      unterschrift: 'Suttascripziun',
+    },
+    begleit: {
+      titel: 'Fegl d’accumpagnament — betg part da la disposiziun',
+      ungueltig: 'Senza data e suttascripziun n’è la disposiziun betg valaivla (CC art. 371 al. 1). Endatar omadus a maun.',
+      urteilsfaehig: 'Ella è mo valaivla, sch’ella è vegnida fatga cun la capacitad da giuditgar (CC art. 370 al. 1). Sin giavisch po ina media u in medi confermar quella — facultativ.',
+      besprechen: 'Recumandaziun: discurrer cun la persuna represchentanta e cun la media u il medi da chasa e dar ina copia.',
+      karte: 'Indicaziun sin la carta d’assicurà: endatada d’ina persuna spezialisada autorisada, cun consentiment (CC art. 371 al. 2; OCA art. 6 al. 1 lit. i).',
+      original: 'Original conservà: {ort}',
+      neueFassung: 'Per midar: datar e suttascriver ina nova versiun. Ella remplazza la pli veglia, auter che sch’ella la cumplettescha senza dubi mo (CC art. 362 al. 3). Destruir la veglia è ina via pussaivla da la revocar (art. 362 al. 2).',
+      keineBeratung: 'Fatg cun Maloja Plana — agid d’orientaziun, nagin cussegl medicinal e nagin cussegl giuridic.',
+    },
+  },
+  // Vorsorgeauftrag-Vorlage (va) und Bestattungswünsche (bw), 27.09.2026 — geprüft:
+  // docs/design/vorsorge-dokumente-2026-09-27.md. Neutral bzw. Ich-Form, keine Sie/Du-Fassung nötig.
+  // TODO(rm): provisorisch — Gegenlese (Vorsorge-Dokumente neu, 27.09.2026)
+  va: {
+    ui: {
+      title: 'Incumbensa preventiva: model per copiar',
+      intro: 'Sis dumondas, ina per pagina. Da quellas resulta in text ch’ins copiescha cumplettamain a maun, datescha e suttascriva. In’incumbensa preventiva è pussaivla a partir da 18 onns e sch’ins è abel da giuditgar (CC art. 13).',
+      hinweis: 'Model per copiar — la stampa sezza n’è betg in’incumbensa preventiva. Agid d’orientaziun, nagin cussegl giuridic.',
+      fortschritt: 'Dumonda {n} da {total}',
+      zurueck: 'Enavos',
+      weiter: 'Vinavant',
+      zurVorschau: 'Al text',
+      warum: 'Pertge vegn quai dumandà?',
+      offen: 'Quai na sai jau anc betg',
+      bestehendDatum: 'Data da l’incumbensa pli veglia',
+      name: 'Num (persuna u organisaziun)',
+      beziehung: 'Relaziun',
+      geburt: 'Data da naschientscha (facultativ)',
+      adresse: 'Adressa (facultativ)',
+      vorschauTitel: 'Text per copiar',
+      abweichend: 'En la disposiziun da pazient stat in’autra persuna represchentanta. La lescha na di betg tgenina che ha la precedenza; tar opiniuns divergentas decida l’autoritad per la protecziun da creschids (CC art. 378 al. 1 cifra 1, art. 381 al. 2). Il meglier numnar la medema persuna en omadus documents u scriver ina successiun.',
+      drucken: 'Stampar il model',
+      aendern: 'Midar las respostas',
+      zurueckZumWegweiser: 'Enavos a la guida',
+    },
+    frage: {
+      bestehend: 'Datti gia in’incumbensa preventiva?',
+      beauftragtFrage: 'Tgi duai agir per mai, sche jau n’è betg pli abel da giuditgar?',
+      bereiche: 'Da tge duai questa persuna sa fatschentar?',
+      weisungen: 'Datti instrucziuns che la persuna duai observar?',
+      ersatzFrage: 'Tgi duai remplazzar, sche questa persuna na po betg?',
+      entschaedigung: 'Duai la persuna incumbensada vegnir indemnisada?',
+    },
+    hilfe: {
+      bestehend: 'Sch’i dat gia ina, stat en il text, sche questa la remplazza u la cumplettescha.',
+      beauftragtFrage: 'Ina persuna u in’organisaziun. Discurrer ordavant cun ella, sch’ella vul surpigliar quai.',
+      bereiche: 'Pliras pussaivladads. Tgira da la persuna: sa fatschentar cun la persuna, per exempel abitar ed assistenza. Tgira da la facultad: entradas, quints, contos. Represchentanza giuridica: vers autoritads, bancas ed auters.',
+      weisungen: 'Facultativ. Per exempel: tegnair l’abitaziun uschè ditg sco pussaivel. Sche bains immobigliars dastgan vegnir vendids u donaziuns fatgas: scriver quai expressivamain.',
+      ersatzFrage: 'Facultativ, ma nizzaivel: la persuna incumbensada po er refusar u desdir pli tard.',
+      entschaedigung: 'Las spesas necessarias vegnan en mintga cas indemnisadas.',
+    },
+    warum: {
+      bestehend: 'In’incumbensa pli nova remplazza la pli veglia, auter che sch’ella la cumplettescha senza dubi mo (CC art. 362 al. 3). Perquai stat expressivamain en il text tge che vala.',
+      beauftragtFrage: 'Incumbensada po vegnir ina persuna natirala u giuridica (CC art. 360 al. 1).',
+      bereiche: 'Tgira da la persuna, tgira da la facultad e represchentanza giuridica èn ils trais secturs da la lescha; las incumbensas ston vegnir descrittas (CC art. 360 al. 1 e 2).',
+      weisungen: 'Ins po dar instrucziuns a la persuna incumbensada (CC art. 360 al. 2).',
+      ersatzFrage: 'Per il cas che la persuna incumbensada n’è betg adattada, n’accepta betg l’incumbensa u la desditga, po ins designar ina substituziun (CC art. 360 al. 3). Ella po desdir cun in termin da dus mais (art. 367).',
+      entschaedigung: 'Sch’i manca ina disposiziun, fixescha l’autoritad in’indemnisaziun adequata, sche la dimensiun da las incumbensas giustifitgescha quai u sche talas prestaziuns vegnan per ordinari pajadas. Las spesas vegnan adina indemnisadas (CC art. 366).',
+    },
+    opt: {
+      bestehend_nein: 'Na',
+      bestehend_ersetzt: 'Gea — questa la remplazza',
+      bestehend_ergaenzt: 'Gea — questa la cumplettescha',
+      bereiche_personensorge: 'Tgira da la persuna',
+      bereiche_vermoegenssorge: 'Tgira da la facultad',
+      bereiche_rechtsverkehr: 'Represchentanza giuridica',
+      entschaedigung_unentgeltlich: 'Gratuitamain (mo spesas)',
+      entschaedigung_angemessen: 'Indemnisaziun adequata',
+    },
+    doc: {
+      titel: 'Incumbensa preventiva',
+      einleitung: 'Jau, {name}, naschì/naschida ils {geburt}, domicilià/domiciliada a {adresse}, dun questa incumbensa preventiva per il cas che jau vegniss inabel da giuditgar.',
+      beauftragt: 'Jau incumbensesch {name}{zusatz}.',
+      geboren: 'naschì/naschida ils {datum}',
+      bereich_personensorge: 'La persuna incumbensada surpiglia la tgira da la persuna.',
+      bereich_vermoegenssorge: 'La persuna incumbensada surpiglia la tgira da la facultad.',
+      bereich_rechtsverkehr: 'La persuna incumbensada ma represchenta giuridicamain.',
+      bereichLuecke: 'La persuna incumbensada surpiglia las suandantas incumbensas: __________',
+      weisungen: 'Instrucziuns: {text}',
+      ersatz: 'Sche la persuna incumbensada n’è betg adattada, n’accepta betg l’incumbensa u la desditga, incumbensesch jau {name}{zusatz}.',
+      entschaedigung_unentgeltlich: 'La persuna incumbensada agescha gratuitamain; las spesas necessarias vegnan indemnisadas.',
+      entschaedigung_angemessen: 'La persuna incumbensada survegn in’indemnisaziun adequata.',
+      ersetzt: 'Questa incumbensa preventiva remplazza tut las pli veglias.',
+      ergaenzt: 'Questa incumbensa preventiva cumplettescha mia incumbensa dals {datum}.',
+      ortDatum: 'Lieu, data',
+      unterschrift: 'Suttascripziun',
+      rolle_beauftragt: 'Persuna incumbensada',
+      rolle_ersatz: 'Persuna substituta',
+    },
+    vorlage: {
+      titel: 'Incumbensa preventiva — model per copiar',
+      nichtAbschreiben: 'Betg copiar.',
+      warnung: 'Questa stampa n’è betg in’incumbensa preventiva – er betg cun suttascripziun. La furma pretenda: scrit dal cumenzament fin a la fin a maun, datà e suttascrit (CC art. 361 al. 2) u documentà publicamain (al. 1). Agid d’orientaziun, nagin cussegl giuridic.',
+    },
+    begleit: {
+      titel: 'Fegl d’accumpagnament — betg copiar',
+      form: 'Valaivla mo sch’ella è scritta dal cumenzament fin a la fin a maun, datada e suttascritta (CC art. 361 al. 2) u documentada publicamain (al. 1).',
+      alter: 'Far la po, tgi che ha 18 onns ed è abel da giuditgar (CC art. 13).',
+      zivilstandsamt: 'Sin dumonda registrescha l’uffizi da stadi civil ch’i dat l’incumbensa e nua ch’ella sa chatta — facultativ (CC art. 361 al. 3).',
+      kesb: 'Sche la persuna daventa inabla da giuditgar, examinescha l’autoritad l’incumbensa e surdat a la persuna incumbensada in document (CC art. 363).',
+      besondere: 'Sche bains immobigliars dastgan vegnir vendids u donaziuns fatgas: scriver quai expressivamain.',
+      patientenverfuegung: 'Per decisiuns medicinalas datti la disposiziun da pazient. Il meglier numnar la medema persuna represchentanta en omadus documents.',
+      keineBeratung: 'Fatg cun Maloja Plana — agid d’orientaziun, nagin cussegl giuridic. Cussegl porschan notariats ed advocatura.',
+    },
+  },
+  bw: {
+    ui: {
+      title: 'Fixar ils giavischs da sepultura',
+      intro: 'Otg dumondas, ina per pagina. Bler po ins er «laschar als confamigliars» — quai stat lura sco giavisch en il document. Tge ch’è pussaivel reglan il chantun e la vischnanca.',
+      hinweis: 'Agid d’orientaziun, nagin cussegl giuridic.',
+      fortschritt: 'Dumonda {n} da {total}',
+      zurueck: 'Enavos',
+      weiter: 'Vinavant',
+      zurVorschau: 'A la prevista',
+      warum: 'Pertge vegn quai dumandà?',
+      offen: 'Quai na sai jau anc betg',
+      grabartText: 'Tge tip da fossa?',
+      anzeigeWo: 'Nua duai ella cumparair?',
+      vorschauTitel: 'Prevista',
+      leer: 'Anc nagut respundì. La prevista s’empla cun las respostas.',
+      drucken: 'Stampar',
+      aendern: 'Midar las respostas',
+    },
+    frage: {
+      art: 'Sepultura en terra u cremaziun?',
+      grabart: 'Tge tip da fossa?',
+      ort: 'Nua? Vischnanca u santeri',
+      abschied: 'Co duai esser il cumià?',
+      gestaltung: 'Musica, texts, flurs — tge duai esser da la partida?',
+      anzeige: 'Duai i dar in annunzi da mort?',
+      benachrichtigen: 'Tgi duai vegnir infurmà?',
+      geregelt: 'È gia insatge reglà u pajà?',
+    },
+    hilfe: {
+      art: 'Tge ch’è pussaivel reglan il chantun e la vischnanca.',
+      grabart: 'Betg mintga tip da fossa datti dapertut, per exempel fossa cuminaivla u sepultura en la natira. Dumandar la vischnanca.',
+      ort: 'Facultativ.',
+      abschied: 'Religius u betg, en in ravugl pitschen u pli grond.',
+      gestaltung: 'Facultativ.',
+      anzeige: 'Per exempel en ina gasetta u online.',
+      benachrichtigen: 'Facultativ. Num e telefon, ina persuna per lingia — mo quai ch’è necessari.',
+      geregelt: 'Facultativ. Per exempel ina prevenziun da sepultura u ina fossa reservada.',
+    },
+    warum: {
+      art: 'Per che ils confamigliars sappian tge ch’è giavischà.',
+      grabart: 'Tge ch’ina vischnanca porscha è different. Perquai en cas da dubi dumandar là.',
+      ort: 'Per che ils confamigliars sappian nua.',
+      abschied: 'Per che ils confamigliars sappian tge ch’è giavischà.',
+      gestaltung: 'Ils pitschens giavischs èn savens quels, dals quals tuts sa regordan.',
+      anzeige: 'Per che ils confamigliars sappian tge ch’è giavischà.',
+      benachrichtigen: 'Per che nagin na vegnia emblidà.',
+      geregelt: 'Per che nagut na vegnia pajà duas giadas u emblidà.',
+    },
+    opt: {
+      art_erd: 'Sepultura en terra',
+      art_kremation: 'Cremaziun',
+      art_angehoerige: 'Laschar als confamigliars',
+      grabart_reihengrab: 'Fossa en rain',
+      grabart_urnengrab: 'Fossa d’urna',
+      grabart_gemeinschaftsgrab: 'Fossa cuminaivla',
+      grabart_natur: 'Sepultura en la natira',
+      grabart_anderes: 'Auter',
+      grabart_angehoerige: 'Laschar als confamigliars',
+      abschied_religioes: 'Funeral religius',
+      abschied_nichtReligioes: 'Funeral betg religius',
+      abschied_engsterKreis: 'Mo en il ravugl il pli stretg',
+      abschied_keiner: 'Nagin funeral',
+      abschied_angehoerige: 'Laschar als confamigliars',
+      anzeige_ja: 'Gea',
+      anzeige_karten: 'Mo cartas',
+      anzeige_keine: 'Nagin',
+      anzeige_angehoerige: 'Laschar als confamigliars',
+    },
+    doc: {
+      titel: 'Mes giavischs da sepultura',
+      name: 'Num',
+      geburt: 'Data da naschientscha',
+      art_erd: 'Jau giavisch ina sepultura en terra.',
+      art_kremation: 'Jau giavisch ina cremaziun.',
+      art_angehoerige: 'La tscherna tranter sepultura en terra e cremaziun lasch jau a mes confamigliars.',
+      grabart_reihengrab: 'Sco fossa giavisch jau ina fossa en rain.',
+      grabart_urnengrab: 'Sco fossa giavisch jau ina fossa d’urna.',
+      grabart_gemeinschaftsgrab: 'Sco fossa giavisch jau ina fossa cuminaivla.',
+      grabart_natur: 'Jau giavisch ina sepultura en la natira.',
+      grabart_anderes: 'Sco fossa giavisch jau: {text}.',
+      grabart_angehoerige: 'Il tip da fossa lasch jau a mes confamigliars.',
+      abschied_religioes: 'Jau giavisch in funeral religius.',
+      abschied_nichtReligioes: 'Jau giavisch in funeral betg religius.',
+      abschied_engsterKreis: 'Il cumià duai avair lieu mo en il ravugl il pli stretg.',
+      abschied_keiner: 'Jau na giavisch nagin funeral.',
+      abschied_angehoerige: 'La furma dal cumià lasch jau a mes confamigliars.',
+      anzeige_ja: 'In annunzi da mort duai cumparair: {wo}.',
+      anzeige_karten: 'Empè d’in annunzi da mort duain vegnir tramessas mo cartas.',
+      anzeige_keine: 'Jau na giavisch nagin annunzi da mort.',
+      anzeige_angehoerige: 'Sch’i dat in annunzi da mort lasch jau a mes confamigliars.',
+      titel_ort: 'Lieu',
+      titel_gestaltung: 'Musica, texts, flurs',
+      titel_benachrichtigen: 'Per plaschair infurmar',
+      titel_geregelt: 'Gia reglà',
+      datum: 'Data',
+      unterschrift: 'Suttascripziun',
+    },
+    begleit: {
+      titel: 'Fegl d’accumpagnament',
+      wo: 'Dir als confamigliars nua che quest fegl sa chatta e dar ina copia.',
+      gemeinde: 'Tge ch’è pussaivel reglan il chantun e la vischnanca. En cas da dubi dumandar la vischnanca.',
+      testament: 'Betg scriver mo en il testament: testaments vegnan averts pir suenter la consegna (CC art. 557 al. 1).',
+      keineBeratung: 'Fatg cun Maloja Plana — agid d’orientaziun, nagin cussegl giuridic.',
+    },
+  },
+  // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
+  kreditkarteView: {
+    // TODO(rm): provisorisch — Gegenlese (Kreditkarten-Rechner neu, 27.09.2026)
+    title: 'Vala mia carta la paina?',
+    intro: 'Per mintga carta: quant ch’ella custa per onn e quant ch’ella porta — calculà mo cun las indicaziuns endatadas qua. Ina stimaziun, nagina recumandaziun per ina carta.',
+    karteLabel: 'Carta {n}',
+    name: 'Num da la carta (facultativ)',
+    jahresgebuehr: 'Taxa annuala CHF',
+    ausgabenTitel: 'Expensas cun questa carta',
+    ausgabenMonat: 'En media per mais CHF',
+    fremdAnteil: 'Da quai en valuta estra u a l’exteriur, en %',
+    fremdGebuehr: 'Taxa per valuta estra, en %',
+    fremdGebuehrHinweis: 'Stat en la survista da las taxas da la carta.',
+    zinsenJahr: 'Tschains da l’onn passà CHF',
+    zinsenHinweis: 'Mo sche il quint n’è betg vegnì pajà cumplettamain — stat sin ils quints mensils.',
+    vorteileTitel: 'Tge che la carta dat en cuntraprestaziun',
+    cashback: 'Cashback, en %',
+    vorteil_punkte: 'Puncts u miglias',
+    vorteil_rabatte: 'Rabats e bons',
+    vorteil_lounge: 'Access a la lounge',
+    vorteil_reiseversicherung: 'Assicuranza da viadi',
+    vorteil_annullierung: 'Assicuranza d’annullaziun',
+    vorteil_kaufschutz: 'Protecziun da cumpra',
+    vorteil_mietwagen: 'Assicuranza per autos da fittar',
+    wertGeld: 'Tge ch’i porta propi per onn, CHF',
+    wertGeldHinweis: 'Mo quai che vegn propi duvrà u barattà.',
+    statusFrage: 'Dovri questa assicuranza?',
+    status_anderswo: 'Gia assicurà autrò',
+    status_unnoetig: 'Na dovri betg',
+    status_braucheIch: 'Vegniss fatga uschiglio',
+    wertVersicherung: 'Quant ch’ella custass uschiglio per onn, CHF',
+    rechnungTitel: 'Calculà sin in onn',
+    posten_cashback: 'Cashback',
+    posten_vorteile: 'Ulteriurs avantatgs',
+    posten_gebuehr: 'Taxa annuala',
+    posten_fremd: 'Taxa da valuta estra',
+    posten_zinsen: 'Tschains',
+    ergebnis_bringt: 'Questa carta porta var {betrag} per onn.',
+    ergebnis_kostet: 'Questa carta custa var {betrag} per onn.',
+    ergebnis_ausgeglichen: 'Questa carta va circa si — plus u main in pèr francs per onn.',
+    ergebnis_brauchtAusgaben: 'Cur che las expensas per mais èn endatadas, pon ins calcular.',
+    nichtGezaehlt: 'Betg quintà: {liste} — gia assicurà autrò u betg necessari.',
+    basis: 'Calculà cun {ausgaben} expensas per onn.',
+    saldoHinweis: 'En il profil stat in saldo avert da la carta da {betrag}. Sch’i dat tschains, tutgan quels en il quint survart.',
+    karteDazu: 'Endatar ina ulteriura carta',
+    karteWeg: 'Allontanar questa carta',
+    vorlaeufig: 'Stimaziun a basa da las indicaziuns endatadas — nagin cussegl e nagina recumandaziun per ina tscherta carta.',
+  },
   mietzinsView: {
     title: 'Contribuziuns a la fittanza',
     intro: 'Tscherts chantuns e vischnancas sustegnan inquilins cun contribuziuns a la fittanza tenor l\'entrada. Qua ina orientaziun calma — nagina dumonda, nagina garanzia lianta.',
@@ -5145,6 +5997,28 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     cantonLabel: { sie: 'Voss chantun: {name}', du: 'Tes chantun: {name}' },
     checkTitle: 'Test svelt',
+    annahmeOhneDreizehnten: 'Entrada quintada senza 13avla paja — l’indicaziun manca anc. Cun ina 13avla paja è ella pli auta e po surpassar il limit. Quai sa lascha indicar en il chapitel «Finanzas & daners».', // TODO(rm): provisorisch
+    result_tableLimit: 'Per questa chasada (trais u dapli creschids senza uffants) na numna la tabella nagin limit. L’uffizi da contribuziuns socialas scleresch il dretg.', // TODO(rm): provisorisch
+    result_jungeErwachseneOffen: 'En la chasada viva almain ina persuna tranter 18 e 24 onns. Ella quinta mo sch’ella è en emprima furmaziun (emprendissadi, scola u studi fin a l’emprim diplom) — lura è il limit bler pli aut. Il dretg scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    erstausbildungFrage: '{name}: en emprima furmaziun?', // TODO(rm): provisorisch
+    personAlter: 'Persuna, {alter} onns', // TODO(rm): provisorisch
+    erstausbildungHinweis: 'Emprima furmaziun munta: emprendissadi, scola u studi fin a l’emprim diplom. Mo lura quinta la persuna (ed il limit crescha); uschiglio na tutga ella betg tar la chasada. La resposta resta memorisada tar la chasada.', // TODO(rm): provisorisch
+    bedingung_ZG: 'Vala mo per abitaziuns tenor la lescha chantunala da promoziun d’abitaziuns — l’administraziun sa sche l’atgna tutga latiers.', // TODO(rm): provisorisch
+    wfgFrage: 'È l’abitaziun suttamessa a la lescha chantunala da promoziun d’abitaziuns (WFG)?', // TODO(rm): provisorisch
+    wfg_ja: 'Gea', // TODO(rm): provisorisch
+    wfg_nein: 'Na', // TODO(rm): provisorisch
+    wfg_weissNicht: 'Na sai betg', // TODO(rm): provisorisch
+    wfgHinweis: 'Quai sa l’administraziun u il locatur. La resposta resta memorisada en il chapitel Abitar.', // TODO(rm): provisorisch
+    result_wfgNein: 'A Zug datti contribuziuns da fitg mo per abitaziuns tenor la lescha da promoziun d’abitaziuns — per questa abitaziun pia betg. Autras agids sco la reducziun da premias na dependan betg da quai.', // TODO(rm): provisorisch
+    result_municipalLimit: 'Qua na datti nagin limit fix d’entradas: el vegn quintà per chasada (basegn da viver, premia da la cassa da malsauns, fitg, tgira d’uffants) e fixà da la vischnanca da domicil. Sch’i dat in dretg, scleresch la vischnanca.', // TODO(rm): provisorisch
+    steuerbarTiefer: 'Il chantun cumpareglia las entradas taxablas da la davosa taxaziun — suenter las deducziuns èn ellas savens pli bassas ch’il salari net. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
+    massgebendTiefer: 'Il chantun quinta cun l’entrada decisiva suenter las deducziuns (plus 10 % da la facultad sur la franchisa) — ella è savens pli bassa ch’il salari. Stgars sur il limit vala la controlla tuttina.', // TODO(rm): provisorisch
+    konkubinatPartner: 'L’entrada da la segunda persuna creschida n’è betg quintada: senza matrimoni quinta ella tenor il chantun pir suenter intgins onns da convivenza u cun uffants cuminaivels. Quintada, fiss l’entrada da la chasada CHF {mit} — sch’ella quinta, scleresch il servetsch chantunal.', // TODO(rm): provisorisch
+    konkubinatPartnerGrenze: 'L’entrada da la segunda persuna creschida n’è betg quintada ed il limit è quintà senza ella: senza matrimoni quinta ella a Basilea-Citad pir cun uffants cuminaivels u suenter tschintg onns da convivenza. Quintada, fiss l’entrada da la chasada CHF {mit} ed il limit var. CHF {grenze} — sch’ella quinta, scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    partnerOffen: 'Quintà senza l’entrada dal consort u da la consorta — l’indicaziun manca anc (chapitel Basa persunala, chasada). Cun ina entrada è l’entrada da la chasada pli auta.', // TODO(rm): provisorisch
+    referenzalterBS: 'A partir da la vegliadetgna da referenza AVS na paja Basilea-Citad naginas contribuziuns da fitg pli (lescha da contribuziuns da fitg § 4 al. 2). Tar ina pensiun anticipada po exister in dretg — quai scleresch l’uffizi da contribuziuns socialas.', // TODO(rm): provisorisch
+    kindOhneAlter: 'Tar almain in uffant manca la vegliadetgna — quintà sco uffant minoren. A partir da 18 onns quinta el mo en emprima furmaziun; la vegliadetgna sa lascha cumplettar tar la chasada.', // TODO(rm): provisorisch
+    mietbelastungZG: 'Tranter CHF 50’000 e 60’000 dat Zug mo ina contribuziun, sche la fittanza suenter la reducziun surpassa 25 % da l’entrada — qua è ella gia avant sut quai.', // TODO(rm): provisorisch
     basis: 'Basa: entrada CHF {income}/onn · fittanza CHF {rent}/mais · chasada {size} pers.',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     result_likely: { sie: 'I vala la paina da controllar il dretg: Vossa entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.', du: 'I vala la paina da controllar il dretg: tia entrada (CHF {income}) è sut la limita indicativa (CHF {limit}). Il dretg exact determinescha la posiziun chantunala.' },
@@ -5157,12 +6031,10 @@ export default {
     result_needIncome: { sie: 'Endatai Vossa entrada, lura pudain nus stimar il dretg pli precis.', du: 'Endatescha tia entrada, lura pudain nus stimar il dretg pli precis.' },
     enterIncomeLink: 'Endatar l\'entrada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
-    rentWithin: { sie: 'Vossa fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).', du: 'Tia fittanza è entaifer la limita chantunala (CHF {limit}/mais per {size} pers.).' },
-    rentOver: 'Tia fittanza surpassa la limita chantunala (CHF {limit}/mais per {size} pers.) — per ordinari vegn mo quintà fin la limita.',
-    cantonNote_BS: 'Dapi fanadur 2025 era per chasadas d\'ina u duas persunas cun bassa entrada (indicativ ~CHF 50’000/onn), betg mo famiglias. Almain 2 onns domicil.',
-    cantonNote_BL: 'Mo per chasadas cun almain in uffant. Entrada netta annuala radund CHF 40’000–75’000 (pèrs) u 30’000–60’000 (geniturs sulets). La vischnanca paja or l\'agid.',
-    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d\'effort), betg ina limita d\'entrada fixa. Max. CHF 1’400 per stanza, il pli ferm la mesadad da la fittanza. 2 dals davos 5 onns domicil.',
-    cantonNote_ZG: 'Entrada suenter la taglia federala directa fin CHF 60’000 (+2’500 per uffant, +20’000 per ulteriura persuna creschida), facultad netta fin CHF 144’000. Almain 3 onns domicil; la contribuziun va al locatur.',
+    cantonNote_BS: 'Per chasadas cun bassa entrada. Limit per chasada: entrada da basa plus CHF 36’000 — p. ex. 1 persuna fin var. CHF 51’750, pèr fin var. CHF 54’000, pèr cun in uffant fin var. CHF 76’000 (fegl d’infurmaziun 01.2026). Quintà vegn cun l’entrada decisiva inclusiv ina part da la facultad. Almain 2 onns domicil; nagin dretg pli a partir da la vegliadetgna da referenza AVS.', // TODO(rm): provisorisch
+    cantonNote_BL: 'Mo per chasadas cun almain in uffant minoren u en emprima furmaziun. Nagin limit fix d’entradas: la vischnanca da domicil al quinta per chasada e paja or l’agid. Almain 2 onns domicil.', // TODO(rm): provisorisch
+    cantonNote_GE: 'Dretg via la grevezza da fittanza (taux d’effort), betg ina limita d’entrada fixa. Max. CHF 1’000 per stanza, il pli ferm la mesadad da la fittanza. 2 onns cuntinuads domicil en ils davos 5; nagina facultad taxabla; mo abitaziuns HBM/HLM u renconuschidas dal chantun.', // TODO(rm): provisorisch
+    cantonNote_ZG: 'Mo per abitaziuns suttamessas a la lescha chantunala da promoziun d’abitaziuns (dumandar l’administraziun). Entrada tenor la taglia federala directa fin CHF 60’000 (+2’500 per uffant minoren, +20’000 per persuna maiorenna a partir da la terza); tranter 50’000 e 60’000 mo sche la fittanza surpassa 25 % da l’entrada. Facultad netta fin CHF 144’000 (+16’900 per uffant). Almain 3 onns domicil u lieu da lavur en il chantun; la contribuziun va al locatur.', // TODO(rm): provisorisch
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -5306,19 +6178,33 @@ export default {
     b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   gepaeck: {
-    title: 'Mon bagage',
+    title: 'Sac à dos de randonnée',
     intro: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.',
-    link: 'Mon bagage',
+    link: 'Sac à dos de randonnée',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
     pack: 'Remballer',
     wege: '{n} chemins',
     wegeOne: '1 chemin',
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    // Werkzeug-Vorschau 27.09.2026: Werkzeuge im Gepäck, Portemonnaie, Aussenfach.
+    werkzeuge: '{n} utensils',
+    werkzeugeOne: '1 utensil',
+    wegeTitel: 'Vias',
+    werkzeugeTitel: 'Utensils',
+    aussenfach: 'Tastga dadora · Deponer ed ordinar',
+    aussenfachSub: 'Documents, termins e glistas — a maun, dadora vi dal satg.',
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
+    aussenfachKarte: 'Tastga dadora',
+    aussenfachKarteSub: 'Ils medems utensils, per pachetar',
+    menuAlle: 'Tut ils utensils en il bagagi',
     packed: '{done} sur {total} renseignés',
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
-    obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée' },
-    objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu' },
-    w: { dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
+    // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
+    obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Buorsa' },
+    objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Daners & taglias' },
+    w: { bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Mahnung erhalten', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -5328,9 +6214,10 @@ export default {
     tacho: 'Crusch da franchisa',
     tachoSub: 'auta u bassa — tge vala la paina?',
     // TODO(rm): provisorisch — Gegenlese (Franchise-Vorschlag, 25.09.2026)
-    kreuzPasst: { sie: 'Vossa franchisa va bain', du: 'Tia franchisa va bain' },
-    kreuzWechsel: 'Proposta: {franchise} a partir dal 1. schaner',
-    kreuzWechselPolster: 'Proposta: {franchise}, sche la reserva tanscha',
+    kreuzPasst: { sie: 'Vossa franchisa va bain (stimaziun)', du: 'Tia franchisa va bain (stimaziun)' },
+    kreuzPasstPolster: { sie: 'Vossa franchisa va bain, controllar la reserva (stimaziun)', du: 'Tia franchisa va bain, controllar la reserva (stimaziun)' },
+    kreuzWechsel: 'Plitost {franchise} (stimaziun, premias {jahr})',
+    kreuzWechselPolster: 'Plitost {franchise}, sche la reserva tanscha (stimaziun)',
     kompass: 'Boussola da prestaziuns',
     kompassFound: '{n} vias pussaivlas',
     kompassFoundOne: 'ina via pussaivla',
@@ -5348,6 +6235,8 @@ export default {
     intro: 'Tge che la lescha pretenda — e tge che vala la paina dapli.',
     pflichtTitle: 'Obligatoric',
     pflichtNote: 'Prescrit da la lescha.',
+    bvgUnklar: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. I n’è betg registrada ina paja bruta — il certificat da salari mussa sch’ella vala qua.', // TODO(rm): provisorisch
+    bvgUnklar13: 'Cassa da pensiun: obligatorica a partir d’ina paja annuala bruta da CHF {schwelle}. Cun ina 13avla paja fiss la paja sura — l’indicaziun manca anc (chapitel Finanzas & daners).', // TODO(rm): provisorisch
     empfohlenTitle: 'Recumandà',
     empfohlenNote: 'Facultativ, ma sensà.',
     kk: 'Assicuranza da malsauns',

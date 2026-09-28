@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import Icons from './IconKern.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PanelTitle, Eyebrow } from './components/Heading.jsx';
-import { getCantonName } from './config/cantonalData.js';
+import PrimaryButton from './components/PrimaryButton.jsx';
+import { getCantonName } from './config/kantonPLZ.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, naechsterSchritt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { kapitelStatus, astFarben, bereichsKnopf } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
 import BergLandschaft from './components/BergLandschaft.jsx';
 import { aufklappZeichen } from './IconKern.jsx';
-import { ABLAEUFE } from './config/ansichtenRegister.js';
+import { ABLAEUFE, ansichtIkon } from './config/ansichtenRegister.js';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
+import { miniRucksack, rucksackZeichen } from './components/miniRucksack.js';
+import { auswahlLabel } from './utils/auswahlLabel.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -74,8 +78,8 @@ function buildSnippet(chapterKey, chData, allData, t) {
     const parts = [chData.kkInsurer];
     const prem = fmtCHF(chData.kkPremium);
     if (prem) parts.push(prem);
-    if (chData.franchise) parts.push(t('synthesis.franchise', { value: chData.franchise }));
-    if (chData.kkModel) parts.push(chData.kkModel);
+    if (chData.franchise) parts.push(t('synthesis.franchise', { value: auswahlLabel('versicherungen', 'franchise', chData.franchise, t) }));
+    if (chData.kkModel) parts.push(auswahlLabel('versicherungen', 'kkModel', chData.kkModel, t));
     return parts.join(', ') + '.';
   }
   if (chapterKey === 'ausbildung') {
@@ -96,7 +100,7 @@ function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'notfall') {
     if (!chData.emergencyContact) return null;
     const parts = [t('synthesis.emergencyContact', { name: chData.emergencyContact })];
-    if (chData.bloodType) parts.push(t('synthesis.bloodType', { type: chData.bloodType }));
+    if (blutgruppeLabel(chData.bloodType)) parts.push(t('synthesis.bloodType', { type: blutgruppeLabel(chData.bloodType, t) }));
     if (chData.allergies) parts.push(chData.allergies);
     return parts.join(' · ') + '.';
   }
@@ -355,6 +359,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       // Immer mitgegeben, auch unter 10 % (Entscheid Stebler Studios 25.09.2026; vorher erst
       // ab 10 %). Ob der Kreis steht, entscheidet BergLandschaft: sobald etwas begonnen ist.
       prozent: Number.isFinite(completion) ? Math.round(completion) : 0,
+      // Zeichen auf den drei Tal-Strassen (27.09.2026): zuerst der Rucksack; später der
+      // Finanzbaum, das dritte ist offen — je ein Eintrag hier, der Platz folgt der Reihenfolge.
+      talStationen: [
+        { key: 'gepaeck', label: t('gepaeck.link'), zeichen: rucksackZeichen, farbe: palette.gold, onClick: () => onNavigate('gepaeck') },
+      ],
     })),
 
     React.createElement('div', { className: 'mp-blatt', style: { '--mp-seite': palette.bg } },
@@ -458,12 +467,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
       }, t('dashboard.nextUpReassure')),
       (() => {
-        const reminders = loadReminders();
+        // Neben den Erinnerungen auch die Steuerfrist aus dem Kapitel Behörden — bis
+        // 27.09.2026 stand hier «keine offene», während das Kapitel dieselbe Frist
+        // «in 3 Tagen» zeigte. Sie ist die einzige Frist, die ein Kapitel als Datum führt.
         const today = inDays(0);
-        const upcoming = reminders
-          .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
+        const steuerfrist = data.behoerden && data.behoerden.taxFilingDeadline;
+        const kandidaten = loadReminders().filter((r) => !r.done && r.dueDate);
+        if (steuerfrist) kandidaten.push({ title: t('behördenStatus.taxDeadline'), dueDate: steuerfrist });
+        const upcoming = kandidaten
+          .filter((r) => r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
-        const fmt = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        // Lokal gelesen (new Date('2026-09-30') ist UTC-Mitternacht) und in der App-Sprache,
+        // nicht in der des Browsers.
+        const fmt = (iso) => { try { const [j, m, d] = iso.split('-').map(Number); return new Date(j, m - 1, d).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'short' }); } catch { return iso; } };
         const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
         const part = (label, value) => React.createElement('span', null,
           React.createElement('span', { style: { color: palette.soft } }, label + ' '),
@@ -492,7 +508,22 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Vorher zwei: «Was können Sie hier sofort tun?» oben, «Was steht mir zu?» weiter
     // unten. IPV und Sozialhilfe standen in beiden, dazu drei Übersichts-Einstiege.
     // Jetzt: Übersicht → Schnell-Check → Leistungen → Links, darunter das Übrige.
-    React.createElement('div', {
+    // Rechts im Kopf der Wanderrucksack (gewählt 27.09.2026; bis dahin «Mein Gepäck») — Gegenstück zum Leistungs-Kompass
+    // über den Leistungen: Beschriftung links, Zeichnung rechts. Der Datenschutz-Satz
+    // rückt dafür unter den Titel.
+    (() => {
+      const rucksackKnopf = React.createElement('button', {
+        type: 'button', onClick: () => onNavigate('gepaeck'),
+        style: {
+          display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0', flexShrink: 0,
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'right',
+        },
+      },
+        React.createElement('span', { style: { minWidth: 0 } },
+          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('gepaeck.link')),
+          React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } }, t('gepaeck.unpack'))),
+        miniRucksack(palette));
+      return React.createElement('div', {
       'data-tour': 'anspruch',
       // Kein Kasten im Kasten (Grundsatz 25.09.2026, Vorbild «Ihr Alltag»): die Einträge
       // tragen eigene Rahmen, der Abschnitt selbst hat nur Luft — 48 px nach aussen.
@@ -501,16 +532,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }
     },
       React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.md + 'px', marginBottom: space.md }
       },
-        React.createElement(PanelTitle, {
-          palette,
-          style: { margin: 0, letterSpacing: '-0.2px' }
-        }, t('dashboard.anspruchTitle')),
-        React.createElement('div', {
-          // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
-          style: { fontSize: text.xs - 1, color: palette.sageDeep }
-        }, t('dashboard.highlightPrivacy'))
+        React.createElement('div', { style: { minWidth: 0 } },
+          React.createElement(PanelTitle, { palette, style: { margin: 0, letterSpacing: '-0.2px' } }, t('dashboard.anspruchTitle')),
+          React.createElement('div', {
+            // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
+            style: { fontSize: text.xs - 1, color: palette.sageDeep, marginTop: '2px' }
+          }, t('dashboard.highlightPrivacy'))),
+        rucksackKnopf
       ),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
@@ -518,10 +548,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       (() => {
         const items = [
           { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
+          // Zweite grosse Karte daneben (gewählt 27.09.2026): die Notfallkarte — vorher klein
+          // unter der Linie. Die Ansprüche erreicht man über den Leistungs-Kompass.
+          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall', primary: true },
           // Bundessteuer: seit 25.09.2026 als Instrument «Steuer-Säulen».
           // IPV und Sozialhilfe stehen seit 25.09.2026 nur noch unter «Was steht mir zu?» —
           // vorher je zweimal auf dem Dashboard, mit verschiedenen Untertiteln.
-          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
           !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
         ].filter(Boolean);
         const renderItem = (item) => {
@@ -560,33 +592,36 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             )
           );
         };
-        const primary = items.find(i => i.primary);
+        const primaries = items.filter(i => i.primary);
         const rest = items.filter(i => !i.primary);
         return React.createElement(React.Fragment, null,
-          // Die Finanz-Übersicht bleibt der eine grosse Einstieg — sie fasst alles zusammen.
-          primary && renderItem(primary),
+          // Zwei grosse Einstiege nebeneinander: Finanz-Übersicht und Notfallkarte.
+          // Auf dem Handy untereinander (auto-fit).
+          React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.sm + 'px' }
+          }, primaries.map(renderItem)),
           // Eigene Suspense-Grenze wie bei den Instrumenten.
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(QuickCheck, { palette, t, onNavigate, data })),
-          // Die zwei Wege weiter — nebeneinander, in einer Zeile.
-          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.lg + 'px', marginTop: space.sm } },
-            ...[['ansprueche', t('dashboard.anspruchAlleLink')], ['situationen', t('lebenszustaende.dashboardLink')]].map(([view, label]) =>
-              React.createElement('button', {
-                key: view,
-                onClick: () => onNavigate(view),
-                style: {
-                  // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
-                  background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
-                  fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
-                },
-              }, label))),
+          // Der Weg weiter — seit 27.09.2026 nur noch einer («Alle Ansprüche» führt über den
+          // Leistungs-Kompass auf dieselbe Seite).
+          React.createElement('button', {
+            onClick: () => onNavigate('situationen'),
+            style: {
+              // Polsterung hebt das Ziel auf 35 px (WCAG 2.2 AA: 24x24).
+              display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', marginTop: space.sm,
+              fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+            },
+          }, t('lebenszustaende.dashboardLink')),
           // Deine Instrumente — seit 25.09.2026 im selben Block, nach den Leistungen
           // (Wunsch 25.09.: erst was zusteht, dann der eigene Stand).
           // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(InstrumentePanel, { palette, t, data, onNavigate, eingebettet: true })),
           // Was man sonst sofort tun kann (keine Ansprüche): leise unter einer Linie.
-          React.createElement('div', {
+          // Seit die Notfallkarte oben steht, bleibt hier nur das Beispiel — im Demo-Modus
+          // nichts, dann auch keine leere Linie.
+          rest.length > 0 && React.createElement('div', {
             style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
           }, rest.map(renderItem))
         );
@@ -618,7 +653,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           )
         )
       )
-    ),
+    );
+    })(),
 
     // ─── Life chapters — moved up: the core action, immediately visible ──
     React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
@@ -752,38 +788,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ),
     ),
 
-    // Zugang zum Gepäck — Lebensereignisse als Ausrüstung, neben Baum und Obstgarten.
-    React.createElement('button', {
-      onClick: () => onNavigate('gepaeck'),
-      'aria-label': t('gepaeck.link'),
-      style: {
-        display: 'flex', alignItems: 'center', gap: space.sm + 'px',
-        width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
-        padding: space.sm + 'px ' + space.md + 'px',
-        background: 'linear-gradient(' + palette.gold + '10,' + palette.gold + '10),' + palette.bg, border: '1px solid ' + palette.gold + '2e',
-        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
-        transition: `background ${duration.normal}ms ${ease}`,
-      },
-    },
-      React.createElement('span', {
-        style: {
-          width: '34px', height: '34px', borderRadius: '50%',
-          background: palette.gold + '22', color: palette.sandDeep,
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-        },
-      }, React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
-        React.createElement('path', { d: 'M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z' }),
-        React.createElement('path', { d: 'M9 8a3 3 0 0 1 6 0' }),
-        React.createElement('path', { d: 'M9 14h6' }))),
-      React.createElement('span', { style: { flex: 1, minWidth: 0 } },
-        React.createElement('span', {
-          style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text },
-        }, t('gepaeck.link')),
-        React.createElement('span', {
-          style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
-        }, t('gepaeck.ctaSub')),
-      ),
-    ),
+    // Der goldene Gepäck-Knopf, der hier stand, ist seit 27.09.2026 weg: der Wanderrucksack
+    // steht oben rechts in «Was steht mir zu?», im Panorama und am Handy in der unteren Leiste
+    // (und das Startbündel brauchte den Platz — Grenze 65 kB).
 
 
     // ─── Tools — calm grid ─────────────────────────────────
@@ -795,9 +802,21 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
       }, t('dashboard.toolsSubtitle')),
+      // Werkzeug-Vorschau 27.09.2026: die flache Liste bleibt vorerst (die Hervorhebungen
+      // sind ein eigener, offener Entscheid) — der Weg zu ALLEN Werkzeugen führt ins Gepäck.
+      React.createElement('button', {
+        type: 'button', onClick: () => onNavigate('gepaeck'),
+        style: {
+          display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 2px', margin: '0 0 ' + space.sm + 'px',
+          background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep,
+        },
+      }, t('gepaeck.menuAlle'), ' ›'),
       (() => {
         const renderTool = (tool) => {
-          const IconFn = Icons[tool.icon];
+          // Zeichen aus dem Register, wo die Ansicht dort steht (Seitenrundgang 27.09.2026:
+          // Offizielle Links und Flyer trugen hier noch das Tresor-Zeichen); sonst das eigene.
+          const IconFn = Icons[tool.view ? ansichtIkon(tool.view, tool.icon) : tool.icon];
           const iconPx = simpleView ? '40px' : '20px';
           return React.createElement('button', {
             key: tool.key || tool.view,
@@ -865,11 +884,27 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
           ] },
         ];
+        // Welche Gruppe offen war, gilt für die Sitzung (sessionStorage): wer aus
+        // «Lebensereignisse» in einen Ablauf ging und «Übersicht» antippt, soll die
+        // Gruppe offen wiederfinden, nicht zugeklappt (Seitenrundgang 27.09.2026).
+        // Nur eine Ansichts-Bequemlichkeit — fehlt der Speicher, starten alle zu.
+        const GRUPPEN_KEY = 'mp_offene_werkzeuggruppen';
+        let offen = [];
+        try { offen = JSON.parse(sessionStorage.getItem(GRUPPEN_KEY) || '[]'); } catch { offen = []; }
+        const merkeGruppe = (gi, istOffen) => {
+          try {
+            const rest = offen.filter((i) => i !== gi);
+            offen = istOffen ? rest.concat(gi) : rest;
+            sessionStorage.setItem(GRUPPEN_KEY, JSON.stringify(offen));
+          } catch { /* ohne Speicher: nichts merken */ }
+        };
         return React.createElement(React.Fragment, null,
           ...groups.map((g, gi) => React.createElement('details', {
             // Alle Gruppen starten zu (Tester-Feedback 25.09.2026: «Lebensereignisse
             // eingeklappt»). Vorher stand die erste Gruppe offen, mit 34 Einträgen.
             key: 'tg-' + gi,
+            open: Array.isArray(offen) && offen.includes(gi),
+            onToggle: (e) => merkeGruppe(gi, e.currentTarget.open),
             style: { borderTop: '1px solid ' + palette.border + '66' },
           },
             React.createElement('summary', {
@@ -900,6 +935,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
       if (daysSince <= 7) return null;
       const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
+      // 25.09.2026: gefüllter Knopf mit Sicherungs-Zeichen (vorher nackter Textlink,
+      // Stebler Studios: «sollte ein CTA haben und ein Icon»). Das Zeichen steht NUR im
+      // Knopf, nicht noch einmal vor dem Text (Entscheid gleicher Abend).
       return React.createElement('div', {
         style: {
           marginBottom: space.xl,
@@ -909,18 +947,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           border: '1px solid ' + palette.sage + '25',
         }
       },
-        React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: 0 }
-        }, reason + ' ' + t('dashboard.exportReminder')),
-        React.createElement('button', {
-          onClick: () => onNavigate('export'),
-          style: {
-            // War 19 px hoch; 8 px Polsterung statt der 6 px Aussenabstand darüber.
-            background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
-            fontSize: text.sm, color: palette.sageDeep || palette.sage,
-            fontFamily: 'inherit', fontWeight: weight.medium,
-          }
-        }, t('dashboard.exportReminderAction'))
+        React.createElement('div', { style: { minWidth: 0, display: 'flex', flexDirection: 'column' } },
+          React.createElement('div', {
+            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+          }, reason + ' ' + t('dashboard.exportReminder')),
+          React.createElement(PrimaryButton, {
+            palette, onClick: () => onNavigate('export'),
+            style: { minHeight: '44px', alignSelf: 'flex-end' }, // rechtsbündig, 25.09.2026
+            icon: React.createElement('span', {
+              'aria-hidden': 'true',
+              style: { display: 'block', width: '16px', height: '16px', flexShrink: 0, color: palette.onSand },
+            }, Icons.sicherung()),
+          }, t('dashboard.exportReminderAction'), ' ›')
+        )
       );
     })(),
 

@@ -93,7 +93,7 @@ export const DEMO_DATA = {
     jobTitle: 'Pflegefachfrau HF',
     employmentStart: '2019-04-01',
     workPermit: 'swiss',
-    workHoursPerWeek: '80',
+    workHoursPerWeek: '42',
     languages: 'Deutsch, Englisch, Französisch',
   },
   behoerden: {

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { getMietzinsbeitraege, mietzinsIncomeLimit, MIETZINS_OVERVIEW_URL } from '../mietzinsbeitraege.js';
+import { getMietzinsbeitraege, mietzinsIncomeLimit, mietzinsErgebnis, MIETZINS_OVERVIEW_URL } from '../mietzinsbeitraege.js';
+import { ERGEBNIS_ART } from '../ergebnisArt.js';
 
 describe('mietzinsbeitraege', () => {
   it('returns confirmed programs as "has" with a link', () => {
@@ -37,5 +38,19 @@ describe('mietzinsbeitraege', () => {
     expect(mietzinsIncomeLimit(zg, 3, 1)).toBe(60000 + 2500);          // +1 Kind
     expect(mietzinsIncomeLimit(zg, 3, 0)).toBe(60000 + 20000);         // 3. erwachsene Person
     expect(mietzinsIncomeLimit(getMietzinsbeitraege('GE'))).toBeNull(); // kein barème → null
+  });
+
+  // 25.09.2026, Fachprüfung: BL hat nach § 6 MBG (SGS 844) keine feste Grenze — sie wird je Haushalt
+  // berechnet und von der Gemeinde festgesetzt (§ 10). Kein Grenzvergleich, Orientierung.
+  it('BL: keine feste Einkommensgrenze, sondern Gemeinde', () => {
+    const bl = getMietzinsbeitraege('BL');
+    expect(bl.incomeLimit).toBeNull();
+    expect(bl.limitArt).toBe('gemeinde');
+    expect(mietzinsIncomeLimit(bl, 3, 1)).toBeNull();
+    expect(mietzinsErgebnis({ info: bl, assessmentKey: 'municipalLimit', annualIncome: 30000 }).art).toBe(ERGEBNIS_ART.ORIENTIERUNG);
+  });
+
+  it('ZG misst das steuerbare Einkommen', () => {
+    expect(getMietzinsbeitraege('ZG').einkommensBasis).toBe('steuerbar');
   });
 });

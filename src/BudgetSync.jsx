@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { einnahmenZeilen } from './data/haushaltsEinnahmen.js';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { calculateSozialhilfe } from './config/cantonalData.js';
@@ -14,6 +15,7 @@ import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -274,21 +276,14 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
   },
 
     // Title
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('budgetSync.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('sync'), size: 22 }), style: { marginBottom: space.md + 'px' } }, t('budgetSync.title')),
 
     // === Income section ===
-    budget.incomeDetail.net > 0 && React.createElement('div', { style: itemLineStyle },
-      React.createElement('span', null, t('budgetSync.incomeNet')),
-      React.createElement('span', null, formatCHF(budget.incomeDetail.net * mult))
-    ),
-    budget.incomeDetail.familienzulagen > 0 && React.createElement('div', { style: itemLineStyle },
-      React.createElement('span', null, t('budgetSync.incomeFamilienzulagen')),
-      React.createElement('span', null, formatCHF(budget.incomeDetail.familienzulagen * mult))
-    ),
-    budget.incomeDetail.alimenteReceived > 0 && React.createElement('div', { style: itemLineStyle },
-      React.createElement('span', null, t('budgetSync.incomeAlimente')),
-      React.createElement('span', null, formatCHF(budget.incomeDetail.alimenteReceived * mult))
-    ),
+    // Einnahmen des Haushalts — dieselben Zeilen wie die Finanzübersicht (data/haushaltsEinnahmen.js).
+    ...einnahmenZeilen(budget.einnahmen).map(z => React.createElement('div', { key: z.key, style: itemLineStyle },
+      React.createElement('span', null, t(z.key)),
+      React.createElement('span', null, formatCHF(z.betrag * mult))
+    )),
     React.createElement('div', { style: { ...lineStyle, fontWeight: weight.semi, fontSize: text.body } },
       React.createElement('span', null, t('budgetSync.totalIncome')),
       budget.income > 0
@@ -346,7 +341,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         marginTop: space.sm, padding: '8px 12px', background: palette.up,
         borderRadius: radius.xs, fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
-    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')) + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
+    // Betrag als eigenes Kind — ein React-Element mit «+» an einen String gehängt ergab seit
+    // 21.09.2026 (6edd2f8b) «[object Object] (CHF 420)».
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')), ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
     // Separator before total
     React.createElement('div', { style: { ...separatorStyle, borderTopWidth: '2px' } }),
@@ -366,10 +363,16 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
       React.createElement('span', null,
         showAnnual ? t('budgetSync.annualAvailable') : t('budgetSync.available')
       ),
-      React.createElement('span', {
-        style: { color: budget.remaining < 0 ? (palette.roseDeep || palette.rose) : palette.text }
-      }, formatCHF(budget.remaining * mult))
+      // Brutto erfasst: kein Betrag — AHV, ALV und Pensionskasse fehlen darin (Variante a, 28.09.2026).
+      budget.bruttoDabei
+        ? null
+        : React.createElement('span', {
+          style: { color: budget.remaining < 0 ? (palette.roseDeep || palette.rose) : palette.text }
+        }, formatCHF(budget.remaining * mult))
     ),
+    budget.bruttoDabei && React.createElement('div', {
+      style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, paddingBottom: '5px' }
+    }, t('budgetSync.availableNeedsNetto')),
 
     // === SKOS household orientation (collapsible, default closed) ===
     skosShown && React.createElement('div', {
@@ -407,6 +410,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
           }
         }, sozialhilfe.eligible
           ? t('budgetSync.skosClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
+          // Freibetrag-Fall (Predeploy 25.09.2026): kein «voraussichtlich nicht relevant».
+          : sozialhilfe.efbEntscheidet ? t('sozialhilfe.efbEntscheidet')
           : t('budgetSync.skosNoClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
         ),
         React.createElement('div', {

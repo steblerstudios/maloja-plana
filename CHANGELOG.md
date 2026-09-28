@@ -11,13 +11,204 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Patientenverfügung in Fragen** (#440, `#/patientenverfuegung`). 13 Fragen, eine pro Seite, jede mit
+  «Weiss ich noch nicht» und «Warum wird das gefragt?»; am Schluss Vorschau und Druckdokument mit
+  separatem Begleitblatt. Datum und Unterschrift nur von Hand, kein Standardwert (auch keine
+  Organspende aus einem anderen Eintrag), «ergänzt» nennt das Datum der früheren Verfügung (ZGB 362
+  Abs. 3). Geprüft am Wortlaut (rechts- und swiss-precision-pruefer, 27.09.). 🛑 **Vor dem Deploy:
+  ärztliche Gegenlese der Fragen 3–9.**
+- **Vorsorgeauftrag: Vorlage zum Abschreiben** (#443, im Vorsorge-Wegweiser). Sechs Fragen, danach ein
+  Text zum Abschreiben von Hand; der Ausdruck selbst ist ausdrücklich kein Vorsorgeauftrag (ZGB 361).
+  Hinweis, wenn Vorsorgeauftrag und Patientenverfügung verschiedene Personen nennen.
+- **Bestattungswünsche** (#443, `#/bestattung`): acht Fragen, Vorschau, Druck; «Den Angehörigen
+  überlassen» als eigener Wunsch; keine Frage nach der Konfession.
+- **Testament-Wegweiser** (#443, Schritt 6 im Vorsorge-Wegweiser) — Formen, Pflichtteil, Beratung;
+  bewusst kein Generator.
+
 ### Geändert
+- **Hinweis «Bestattungswünsche» im Notfall-Kapitel** (5 Sprachen, #443): «Nicht rechtlich bindend»
+  war unbelegt → «schriftlich festhalten … Was möglich ist, regeln Kanton und Gemeinde».
+- **Fragen-Ablauf als gemeinsamer Baustein** (`components/FragenAblauf.jsx`, #443) für die drei
+  Dokumente. Startbündel nach #440 + #443: 61,24 / 65 kB (`npm run size`).
+- **Steuer-Karte der Finanzübersicht nennt die eigene Angabe** neben der Schätzung (#451). Wer sein
+  steuerbares Einkommen selbst eingetragen hat, sieht diesen Wert, nicht nur die Rechnung daraus.
+- **Miet-Balken vergleicht Nettomiete mit BFS-Nettomiete** (#450) — vorher stand die eigene Bruttomiete
+  gegen einen Netto-Vergleichswert; der Balken war systematisch zu hoch.
+- **Kantonale Mietzins-Limiten entfernt, wo sie unbelegt waren** (#452): 26 Kantonswerte ohne Quelle raus,
+  belegt bleiben die IPV-Angaben von 5 Kantonen. Testament-Hinweis nach ZGB 505 Abs. 2 (Hinterlegung).
+- **Budget: Einnahmen des ganzen Haushalts** (#453) — Partner/in und Nebenerwerb zählen mit; Raten-Vorschlag
+  im Schuldenmanager rechnet ohne brutto erfassten Nebenerwerb; Monatsbudget in der Finanzübersicht =
+  Budget-Seite, bei Bruttolohn kein «frei verfügbar». Startbündel nach #449–#453: 61,11 / 65 kB.
+
+### Behoben
+- **Wochenstunden über 60 gelten als unplausibel** (#449). Die Demo-Eingabe «80 Std.» halbierte den
+  Stundenlohn und hätte einen falschen Mindestlohn-Brief ausgelöst. Grenze 60 ist gewählt, nicht belegt.
+- **BVG-Hinweis auf der Budget-Seite zeigte «[object Object] (CHF …)»** (#453) — seit 21.09. (`6edd2f8b`) war
+  ein React-Element mit `+` an einen String gehängt; der Betrag ist jetzt ein eigenes Kind.
+
+## [0.1.44-beta] — 2026-09-28
+
+*Ein PR seit `0.1.43-beta` (`92d2cfe`): #433. Startbündel 61,03 / 65 kB (`npm run size`, auf `0096626`).
+**Gemergt ist nicht live** — der Tag kommt erst nach dem Deploy.*
+
+### Neu
+- **Wanderrucksack und «Was steht mir zu?» neu geordnet** (#433). «Mein Gepäck» heisst jetzt
+  **Wanderrucksack** (5 Sprachen) und sitzt oben rechts im Block «Was steht mir zu?», am Computer
+  zusätzlich als Kreis auf der linken Tal-Strasse des Bergpanoramas. Die **Notfallkarte** ist die
+  zweite grosse Karte neben der Finanz-Übersicht. **Leistungs-Kompass und «Ansprüche im Überblick»
+  sind eine Seite** (`#/schnellcheck` = `#/ansprueche`): oben die eigenen Zahlen, darunter die ganze
+  Anspruchs-Landkarte. Am Handy eine **untere Leiste mit sechs Plätzen** (Übersicht · Rucksack ·
+  Kalender | + | Anspruch · Suche · Menü). Der untere Gepäck-Knopf auf dem Dashboard ist weg.
+
+### Geändert
+- **Startdatei 4,35 kB kleiner** (#433). Die PLZ-Funktionen liegen neu in `config/kantonPLZ.js`;
+  vorher zog `main.jsx` über sie die ganze `cantonalData.js` samt IPV-, Sozialhilfe- und EL-Rechnung
+  in die Startdatei. Die Rechnungen laden jetzt als eigener Chunk nach, im selben Moment wie bisher
+  die IPV-Kantonsmodelle. Ein Test hält die Startdatei frei von `cantonalData.js`.
+
+## [0.1.43-beta] — 2026-09-28
+
+*Alles seit `0.1.42-beta` (Tag auf `4197501`): #436–#439, #441, #442. #438/#439 laufen schon seit dem
+Zwischen-Deploy vom 28.09. 11:00 (`f11ae37`) unter der alten Nummer; dieses Release gibt dem Stand
+wieder eine eigene. Startbündel 64,94 / 65 kB (`npm run size`, gemessen auf `2ac40ba`). **Gemergt ist
+nicht live** — der Tag kommt erst nach dem Deploy.*
+
+### Neu
+- **Kreditkarte: «Lohnt sich meine Karte?»** (#437). Neue Ansicht `#/kreditkarte`: Jahresgebühr,
+  Ausgaben (Fremdwährung, Zinsen) und Vorteile (Cashback, Punkte, Versicherungen) werden gegeneinander
+  gerechnet; das Ergebnis steht in einem Satz («bringt / kostet etwa CHF X im Jahr»). Nur eigene Angaben,
+  keine Kartenempfehlung. Versicherungen zählen nur, wenn man sie sonst selbst abschliessen würde.
+  Mehrere Karten möglich (`finanzen.kreditkarten`); rm provisorisch.
+
+### Behoben
+- **Organspende nach der Zustimmungsregelung, ohne vorausgewählten Entscheid** (#441, #442). Die Seite
+  zeigte ohne gespeicherte Wahl «Registriert». Neu die fünf Möglichkeiten, die das BAG heute nennt
+  (Zustimmung alle · nur bestimmte · Ablehnung · Vertrauensperson · noch nicht entschieden), mit
+  Rechtsstand, Datum und BAG-Link. Eine Wahrheit `notfall.organDonor` für Seite, Kapitel, Dossier,
+  Export, Notfall-QR und Wanderrucksack; Migration v4→v5, ein altes «Ja» wird **nicht** zu «alle
+  Organe», sondern leer mit Bitte um Bestätigung (alte Werte bleiben in `_organspendeVorV5`). Name der
+  Vertrauensperson im Organspende-QR, Dossier und Export, bewusst nicht im allgemeinen Notfall-QR.
+  «Widersprochen» entfernt. Befund der Fachprüfung vom 27.09.2026.
+- **Zwei Lücken der Zeichen-Wächter geschlossen** (#436). Der Wegweiser-Pfeil in «→ Zur Bibliothek»
+  (5 Sprachen) ist weg, und der Querverweis «Notfallkarte» zeigte still das Zeichen «verlässt Maloja».
+  Zwei neue Wächter-Tests, beide vor der Korrektur rot gesehen.
+- **Vorsorgeauftrag: Hinweis nennt das Zivilstandsamt statt der Gemeinde** (#438). Der Feld-Hinweis im
+  Kapitel Vorsorge sagte in allen fünf Sprachen «Muss bei der Gemeinde registriert werden». Nach ZGB
+  Art. 361 Abs. 3 trägt das Zivilstandsamt **auf Antrag** ein, dass es ihn gibt und wo er liegt — freiwillig,
+  keine Gültigkeitsbedingung. Wortlaut wie der fachgeprüfte Wegweiser (`step3Text`); rm provisorisch (`TODO(rm)`).
+  Dieselbe Falschaussage in `docs/product/` nachgezogen. Befund der Rechtsprüfung vom 27.09.2026.
+
+## [0.1.42-beta] — 2026-09-27
+
+*Ein Fix seit `0.1.41-beta` (`4685c20`): #434. Gemessen und am echten iPhone geprüft.*
+
+### Behoben
+- **QR-Codes scharf gezeichnet — der Notfall-QR öffnet am iPhone wieder die Kontaktkarte** (#434).
+  Die Bibliothek zeichnete 180 × 180 Bildpunkte, auf Retina-Bildschirmen doppelt so gross und
+  weichgezeichnet angezeigt (97 Module = 1,9 px je Modul); die Kamera erkannte den Code, öffnete aber
+  nichts. Jetzt ganze Gerätepixel je Modul (mind. 2) und `image-rendering: pixelated`, für alle QR
+  (Notfall, KK-Karte, Organspende, Flyer — der Flyer druckt dadurch auch schärfer). Ursache in zwei
+  Versuchen am Telefon getrennt: der Inhalt (BOM, Zeilenfaltung) war es nicht, die Darstellung schon.
+
+## [0.1.41-beta] — 2026-09-27
+
+*Alles seit `0.1.40-beta` (Tag auf `d47dc32`, 24.09.), nachgezogen gegen
+`git log v0.1.40-beta..HEAD` (PR #328 bis #430, 164 Commits). Drei Zwischen-Deploys liefen noch
+unter der Nummer 0.1.40-beta (25.09. `0a80d71`, 27.09. `80262b6` und `bbde468`); dieses Release
+gibt dem Stand die eigene Nummer, damit Tag und Live-Stand wieder übereinstimmen. Der Tag wird erst
+nach dem Deploy gesetzt. **Gemergt ist nicht live.** Die Einträge unten waren im «Unreleased» nur
+zum Teil gesammelt; ergänzt nach den PR-Titeln, je mit Nummer.*
+
+### Neu
+- **Vier Briefe zu Lebensereignissen** (#404–#406): Arbeitszeugnis anfordern (OR 330a), Einsprache
+  gegen die Kündigung (OR 336b), Rechtsvorschlag (SchKG 74), Todesfall einer Stelle melden. Vorwahl
+  aus einem Ablauf springt zum Formular.
+- **Schulden & Rechnungen als Bilder** (#422, #428): «noch offen» als Balken nach Vorrang-Stufe (mit
+  Rappen wie die Karten), Abbau-Plan als Zeitachse, «Wo jede Forderung steht» — ohne Rot, Text neben
+  jedem Bild.
+- **Werkzeuge im Rucksack** (#414): ein Register für Menü, Suche und Dashboard, Geld im Portemonnaie,
+  «Ablegen & Ordnen» im Aussenfach und im Menü (#411).
+- **Dashboard als Berglandschaft** (#365, #372, #374, #383–#385, #390): gemalter Malojapass,
+  Fortschritt unten im Bild, Prozent-Kreis immer sichtbar; Startbildschirm-Hinweis als Karte im
+  Panorama (#379), «So geht es» als Hauptknopf (#373).
+- **Zurückfinden** (#367, #369, #413): Brotkrume statt zwei Zurück-Knöpfen, «Zurück zu …» nach jeder
+  benannten Ansicht, «Übersicht» an die alte Stelle.
+- **Ein Hauptknopf je Seite** (#415, #416): Kapitelende «Weiter mit … ›», Frist-Knopf als Hauptknopf,
+  in den Werkzeugen ein lauter Knopf.
+- **Sozialhilfe-Rechner: Wohnform** (#348): familienähnlich anteilig, Zweck-WG −10 % (SKOS C.3.1/C.3.2).
+- **QR: Hinweis «als Kontakt speichern»** (#403) für Notfall-, KK- und Organspende-QR.
+- **Leises Einblenden beim Ansichtswechsel** (#377).
+- **Mahnung — erhalten und selbst mahnen** (27.09.2026). Ablauf «Mahnung erhalten» als Stufe
+  vor der Betreibung: einordnen (Verzug ≠ Betreibung), Forderung prüfen und Verjährung,
+  Verzugszins 5 % und die Frage nach Gebühren, Sonderfälle Miete (OR 257d) und Krankenkasse
+  (KVG 64a), Raten, selbst mahnen. Dazu drei Briefe: Mahnung schreiben, Forderung bestreiten,
+  Ratenzahlung vorschlagen (mit der Anerkennungs-Warnung vor dem Formular). 5 Sprachen, rm als
+  deutscher Rückfall. Grundlagen am Wortlaut (Fedlex, 27.09.2026). Damit **35** Abläufe.
+  Rückweg: «Betreibung erhalten», der Schuldenmanager und der Lebenszustand «Verschuldet oder
+  in Betreibung» verweisen auf die Mahnung. Dazu ein **Verzugszins-Rechner** (Richtwert, 365 und
+  360 Tage), **Steuern** im Ablauf (direkte Bundessteuer: Zahlungserleichterung, Erlass nur vor dem
+  Zahlungsbefehl, DBG 166/167) und die **Mahnstufe je Forderung** im Schuldenmanager.
+
+### Behoben
+- **Kapitel Finanzen: steuerbares Einkommen wieder bearbeitbar** (#427). Die Abschnittsliste zeigte
+  beim «ändern ›» ein «mehr Felder»-Feld ohne eigene Überschrift nicht an.
+- **Schulden** (#420, #421): Knopftexte Betreibung/Verlustschein, Datum in alten Einträgen, «überfällig»
+  eine Regel für Übersicht und Karte, «nur für jetzt» statt «Gespeichert» im Beispiel; kein
+  Datenverlust mehr nach «Beispiel verlassen».
+- **Seitenrundgang** (#412): rohe Auswahlwerte (Blutgruppe u. a., auch im Organspende-QR),
+  Anspruch-Check-Zurück, Dashboard «keine Frist» trotz Steuerfrist.
+- **Geld** (#417, #341): `t()` formatiert Zahlen hinter «CHF» selbst; Geldbeträge aus einer Quelle,
+  Datum nach Schweizer Uhr.
+- **Nicht zweimal eingeben** (#339): Vorbefüllung aus dem Profil, Budget-Felder, Steuer-Import.
+- **Sozialhilfe: eine Wahrheit** (#389, #395): Schnellrechnung mit Einkommensfreibetrag (SKOS D.2) und
+  Erwerbsunkosten (C.6.3); brutto im Profil nach derselben Regel wie das Dashboard.
+- **IPV und 13. Monatslohn** (#388, #399): eine Regel; Mietzinsbeiträge gegen die Quellen 2026.
+- **Konkubinat mit Kindern** (#338, K125): acht Kantone ohne Kantonszahl (Kinderabzug hälftig).
+- **UI/UX-Runden 3–5 und Codex-Befunde** (#332, #336, #341, #344): Screenreader, Tastatur, Schulden
+  sofort gespeichert, IPV ohne Sackgassen, Kacheln ohne Frankenbetrag.
+- **Kleineres**: Text-Export lesbar (#364) · Kassen-Tabelle auf 375 px (#381) · Rundungen aus der
+  Skala (#375) · Rundgang-«×» 44 px (#330) · statische Seiten mit App-Icon (#328) · rm-Anrede,
+  Schuld-Liste 299 → 25 (#335) · Notfallkarte drucken als echter Knopf (#428) · Befunde der
+  Deploy-Tore 25.09. und 27.09. (#393, #406, #421, #427, #428).
+- **Schuldenmanager: Abbau-Plan und Übersicht rechnen richtig** (27.09.2026). «Gesamtschulden» ohne
+  Bezahltes; Schulden ohne Datum nicht mehr «bald fällig»; «Überfällig» zählt auch den gewählten
+  Status. Der Zahlungsplan (fest CHF 500, ein Zinssatz für alles, Endlos-Plan bei zu kleiner Rate)
+  ist ersetzt durch einen Richtwert mit eigener Rate, je Schuld ihr Zins, ehrlich «reicht nicht»
+  statt endloser Liste. Betreibungsregister ohne Wertungen und Schwellen ohne Quelle. Reihenfolge
+  belegt (schuldeninfo.ch, Caritas), neu ein belegter Steuer-Hinweis (DBG 33/34, StHG 9/13).
+  Erste Tests für `schuldenCalc.js`.
+- **Abbau-Plan: Monatsrate aus dem Budget** — vorgeschlagen, wenn der Lohn netto erfasst ist und
+  Wohnen, Krankenkasse und Lebensmittel im Budget stehen; heutige Schuldenraten zählen als verfügbar;
+  überschreibbar. **Bussen und Geldstrafen** (StGB 35/36/79a/106: Raten, Ersatzfreiheitsstrafe,
+  gemeinnützige Arbeit), **Verlustscheine** (SchKG 149/149a/265: zinsfrei, 20 Jahre, Löschung nach
+  Tilgung) und ein belegter Hinweis zu **Mahn- und Inkassogebühren** (in der Regel nicht geschuldet,
+  nur wenn beziffert vereinbart; K-Tipp, SRF) — dazu im Bestreitungsbrief der Grund «nur Gebühren».
+
+### Geändert
+- **Kapitel als Abschnittsliste** (#425): jeder Wert einmal, «ändern ›» macht genau diesen Abschnitt
+  an Ort und Stelle zu Feldern; Kapitel und Abläufe in der Farbe ihres Lebensbereichs (#423, #424).
+- **Frist-Knöpfe in einem Muster** (#426, #428): «Frist/Erinnerung «…» in den Kalender (Datum)».
+  Zusatzversicherung kündigen und Anmeldung RAV sind «Erinnerung» (Kündigungstermin laut Police bzw.
+  «spätester Tag», AVIG Art. 17 — keine Ausschlussfrist).
+- **Dashboard** (#370, #378, #380, #387): «Was ist jetzt dran?» unter der Landschaft mit Hauptknopf und
+  Bereichsfarbe, «Was steht mir zu?» als ein Block; Zeichen aus dem Register (#418); Weg-Knöpfe
+  unterstreichen beim Drüberfahren (#371).
 - **Dashboard: Fortschritt und Grundordnung sind eine Karte** (Tester-Feedback 25.09.2026).
   Vorher zwei Karten im zugeklappten Abschnitt «Detaillierter Fortschritt»; jetzt offen,
   je Kapitel eine aufklappbare Zeile mit den Grundordnungs-Feldern und «Öffnen». Am Handy
   stehen Titel, Balken und Status untereinander.
 - **Werkzeuge & Features: alle Gruppen starten eingeklappt**, auch «Lebensereignisse» (34 Einträge).
 - **Rundgang begrüsst mit «Maloja Plana»** statt «Maloja» (5 Sprachen, auch die Screenreader-Beschriftung). Italienisch geschlechtsneutral: «Le diamo / Ti diamo il benvenuto» statt «Benvenuto».
+
+### Sicherheit
+- GitHub-Actions auf feste Commits gepinnt, Service Worker nur für den eigenen Server (#396).
+
+### Intern
+- Münz-Illustrationen nachgeladen, 2,4 kB Luft im Startbündel (#382) · toter Code aus
+  `MirrorCards.jsx`/`ChapterView.jsx` entfernt, Kapitel-Chunk −3,1 kB gzip, Startbündel unverändert
+  (#430) · Lint grün, neue Tests (#409, #430) · Doku und Stand-Nachträge (#329, #331, #333, #334,
+  #346, #359, #362, #363, #366, #368, #376, #391, #397, #401, #407, #410, #429).
 
 ## [0.1.40-beta] — 2026-09-24
 

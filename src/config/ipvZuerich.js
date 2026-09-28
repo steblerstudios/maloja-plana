@@ -91,7 +91,7 @@ export function ipvZuerichRechnen({ region, verheiratet, personen, me }) {
 //   verheiratet ohne Partner im Haushalt, eigenes Alter unbekannt oder unter 26
 //   (junge Erwachsene in Ausbildung rechnen mit den Eltern), Kinder ab 19, Vermögen über
 //   der Grenze, Gemeinde nicht eindeutig, Anspruchsjahr vorbei.
-//   Näherung: massgebendes Einkommen = Erwerbs-, Neben- und Renteneinkommen × 12. Die
+//   Näherung: massgebendes Einkommen = Hauptlohn × 12 (× 13 mit 13. Monatslohn), Neben- und Renteneinkommen × 12. Die
 //   Säule-3a-Einzahlung ist darin bereits enthalten (das Nettoeinkommen ist das Geld, aus
 //   dem sie überwiesen wird) — genau das verlangt § 5 Abs. 1 lit. b EG KVG, der sie einer
 //   Steuergrösse zurechnet, in der sie abgezogen wäre. Amtlich zählen die Steuerfaktoren; es

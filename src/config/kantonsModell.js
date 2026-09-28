@@ -18,6 +18,7 @@
 // nichts ausser sich selbst.
 import { saeule3aMaximum, groessteJahresEinzahlung } from '../data/saeule3a.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
+import { hauptlohnMonate } from '../utils/dreizehnter.js';
 
 // ─── Eingaben lesen ────────────────────────────────────────────────────────────
 
@@ -303,7 +304,7 @@ export const SAEULE_3A = Object.freeze({
       + '«nicht erfasst». Entscheid nötig: fragen, oder in AG eine Orientierung statt einer '
       + 'Zahl zeigen. Bis dahin volle Zurechnung wie bisher.',
     // Die Rechnung steht bereit, damit sie beim Entscheid nicht neu erfunden wird.
-    schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * 12,
+    schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     nichtAufgerechnet: () => 0,
   }),
 });
@@ -333,9 +334,16 @@ export const SAEULE_3A = Object.freeze({
 // Das rohe Jahres-Nettoeinkommen aus den erfassten Monatsfeldern — ohne jede kantonale Regel.
 // Eigene Funktion, weil BE es zweimal braucht: einmal für die Rechnung und einmal, um zu
 // prüfen, ob die 3a-Einzahlung überhaupt daraus stammen kann.
+// 🛑 13. Monatslohn (Befund Fachprüfung 25.09.2026, PR #380): bis dahin ×12 für alles — wer
+// einen 13. erhält, hat 8,3 % mehr Jahreseinkommen (13/12), die Verbilligung fiel ZU HOCH aus. Der
+// Hauptlohn zählt jetzt nach derselben Regel wie im Steuerrechner (utils/dreizehnter.js);
+// Nebenerwerb und Renten bleiben ×12. Bei «offen» ×12 — das Ergebnis sagt es dazu
+// (annahmen.ohneDreizehnten, gesetzt in calculateIPV).
+// 🔁 Wiedervorlage vor dem Anspruchsjahr 2027 (docs/IDEEN.md, Winter): die 13. AHV-Altersrente
+// (erstmals Dez. 2026) ist hier noch ×12 — für 2026 richtig, weil die Bemessung auf Vorjahren liegt.
 export function rohesEinkommenJahr(f) {
-  return ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
-    .reduce((s, k) => s + Number(f[k] || 0), 0) * 12;
+  return Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter)
+    + ['sideIncome', 'ahvRente', 'ivRente', 'bvgRente'].reduce((s, k) => s + Number(f[k] || 0), 0) * 12;
 }
 
 // `jahre` = `{ bemessungsjahr, anspruchsjahr }` und wird nur von `bisBundesMaximum` (BE)

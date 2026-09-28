@@ -15,6 +15,8 @@ import { keineKontaktperson } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { organListe } from './utils/organspende.js';
+
 
 // ─── Druckfarben (K53) ────────────────────────────────────
 // Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
@@ -415,6 +417,14 @@ function getNotfallSections(data, chapters, t) {
   const sel = (chapterKey, fieldKey) => resolveSelect(chapters, chapterKey, fieldKey, d(chapterKey, fieldKey));
   const dt = (chapterKey, fieldKey) => formatDate(d(chapterKey, fieldKey));
   const lbl = (chapterKey, fieldKey) => fieldLabel(chapters, chapterKey, fieldKey);
+  // «Nur bestimmte Organe» ohne die Organe hilft Angehörigen nicht — die Liste gehört dazu.
+  const organWert = () => {
+    const liste = d('notfall', 'organDonor') === 'partial' ? organListe(t, data.organDonation) : [];
+    return sel('notfall', 'organDonor') + (liste.length ? ': ' + liste.join(', ') : '');
+  };
+  // Bei «Vertrauensperson» gehört der Name dazu, sonst weiss niemand, wen man fragen soll —
+  // als EIGENE Zeile: so entscheidet NOTFALL_QR_FELDER bewusst, ob er in den Notfall-QR darf.
+  const vertrauensperson = () => d('notfall', 'organDonor') === 'delegated' ? String(d('notfall', 'organVertrauensperson')).trim() : '';
 
   const sections = [
     {
@@ -458,7 +468,8 @@ function getNotfallSections(data, chapters, t) {
       key: 'provision',
       title: t('notfallDossier.sectionProvision'),
       rows: [
-        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: sel('notfall', 'organDonor') },
+        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: organWert() },
+        { feld: 'notfall.organVertrauensperson', label: t('organ.vertrauenspersonKurz'), value: vertrauensperson() },
         { feld: 'notfall.patientenverfuegung', label: lbl('notfall', 'patientenverfuegung'), value: sel('notfall', 'patientenverfuegung') },
         { feld: 'notfall.vorsorgeauftrag', label: lbl('notfall', 'vorsorgeauftrag'), value: sel('notfall', 'vorsorgeauftrag') },
         { feld: 'notfall.bestattungswuensche', label: lbl('notfall', 'bestattungswuensche'), value: sel('notfall', 'bestattungswuensche') },
@@ -490,6 +501,8 @@ function getNotfallSections(data, chapters, t) {
 // AHV-Nummer gehört NICHT in den Notfall-QR. Ein Code wird gezeigt, fotografiert, weitergegeben
 // und ist nicht widerrufbar; das gedruckte Dossier behält die Nummer. ERLAUBNIS-, nicht
 // Verbotsliste: ein neues Dossier-Feld kommt erst in den Code, wenn es hier steht.
+// Bewusst NICHT hier (27.09.2026): notfall.organVertrauensperson — Name und Nummer einer
+// Drittperson stehen im gedruckten Dossier und im Organspende-QR, nicht im allgemeinen Notfall-QR.
 export const NOTFALL_QR_FELDER = Object.freeze([
   'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
   'notfall.emergencyContact', 'notfall.emergencyPhone',
@@ -760,6 +773,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       sozialhilfe.eligible && sozialhilfe.efb > 0 && t('sozialhilfe.efbGeschaetzt'),
       sozialhilfe.efbEntscheidet && t('sozialhilfe.efbEntscheidet'),
       sozialhilfe.erwerbsunkostenOffen && t('sozialhilfe.erwerbsunkostenNichtEingerechnet'),
+      sozialhilfe.effectiveRent > 0 && t('sozialhilfe.rentLimitDossier'),
     ].filter(Boolean);
     const status = sozialhilfe.eligible
       ? t('sozialhilfe.entitled')
@@ -780,6 +794,9 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     if (ipv.eligible) {
       iRows.push({ label: t('premium.monthlySubsidy'), value: formatCHF(ipv.amount) + t('common.perMonth'), bold: true });
       iRows.push({ label: t('premium.annualSubsidy'), value: formatCHF(ipv.amount * 12) + t('common.perYear') });
+      // 13. Monatslohn offen: ×12 gerechnet — dieselbe Annahme wie bei der Steuer, auch hier sichtbar.
+      if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
+      if (ipv.annahmen?.partnerOhneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten') });
     }
     // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
@@ -883,13 +900,17 @@ function getBehoerdenSections(data, chapters, t, calculations) {
 // Die Kennungen sind Teil des Formats: nie umbenennen, nur neue dazunehmen.
 // Die App liest diese Datei nicht wieder ein (Stand 17.09.2026: kein Import-Pfad). Wer später einen
 // Leser baut: Dateien 1.0 tragen an denselben Stellen Strings statt Objekte.
-export const DOSSIER_JSON_VERSION = '1.1';
+// 1.2 (28.09.2026): calculations.sozialhilfe.rentLimit entfällt (unbelegte Kantonstabelle entfernt),
+// effectiveRent ist die ganze erfasste Miete mit Nebenkosten, ohne Limite.
+export const DOSSIER_JSON_VERSION = '1.2';
 // Schlüssel = Name des Textes unter behoerdenDossier.jsonTexte, Wert = Kennung in der Datei.
 export const STEUER_KENNUNG = Object.freeze({
   basisEstv: 'estv_standardabzuege',
   basisDirekt: 'eingetragen_dbst',
   kantonBasis: 'estv_hauptort_ohne_kirchensteuer',
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
+  // IPV (25.09.2026): Partnereinkommen ×12, nach dessen 13. Monatslohn fragt die App nicht.
+  annahmePartnerOhneDreizehnten: 'partner_ohne_13_monatslohn',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
   annahmeEinzeln: 'einzeln_konkubinat',
   // Gate 24.09.2026: Konkubinat mit Kindern, ganzer Kinderabzug bei der Person (KS 30, Ziff. 14.8.1).
@@ -958,7 +979,6 @@ export function generateBehoerdenJSON(data, calculations, t) {
       eligible: !!sozialhilfe.eligible,
       grundbedarf: sozialhilfe.grundbedarf || 0,
       effectiveRent: sozialhilfe.effectiveRent || 0,
-      rentLimit: sozialhilfe.rentLimit || 0,
       effectiveKK: sozialhilfe.effectiveKK || 0,
       totalBedarf: sozialhilfe.totalBedarf || 0,
       income: sozialhilfe.income || 0,
@@ -976,6 +996,10 @@ export function generateBehoerdenJSON(data, calculations, t) {
           eligible: !!ipv.eligible,
           monthlyAmount: ipv.amount || 0,
           annualAmount: (ipv.amount || 0) * 12,
+          ...(ipv.annahmen?.ohneDreizehnten || ipv.annahmen?.partnerOhneDreizehnten ? { assumptions: [
+            ...(ipv.annahmen.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
+            ...(ipv.annahmen.partnerOhneDreizehnten ? [erl('annahmePartnerOhneDreizehnten')] : []),
+          ] } : {}),
         };
   }
   if (el) {

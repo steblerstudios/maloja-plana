@@ -84,3 +84,39 @@ export const bereichsFruechte = (chapters, data, astFarbe) =>
       stage: STUFE[kapitelStatus(ch, data[ch.key])] || 1,
     };
   }).filter(Boolean);
+
+// ─── Kapitel in der Bereichsfarbe (Entscheid Stebler Studios 27.09.2026) ────────────
+// Titel und Zeichen des Kapitels tragen die Farbe seines Lebensbereichs, und der
+// Seitenhintergrund HINTER der Karte ist leicht in ihr getönt; die Karte bleibt neutral.
+// Vorher: Basis, Wohnen und Ausbildung alle gleich salbeigrün, die Tönung 4 % im Kopf.
+
+// Zwei Farben mischen (anteil 0 = a, 1 = b).
+export const mischeHex = (a, b, anteil) => {
+  const kanal = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  const [p, q] = [kanal(a), kanal(b)];
+  return '#' + p.map((v, i) => Math.round(v * (1 - anteil) + q[i] * anteil).toString(16).padStart(2, '0')).join('');
+};
+
+// Die Bereichsfarbe als lesbare Schrift auf `grund`: in 5-%-Schritten Richtung Schwarz
+// (hell) bzw. Weiss (dunkel), bis WCAG-AA (4.5:1) erreicht ist. Der Farbton bleibt;
+// Gold auf hellem Grund (2.2:1) wird so zu einem dunkleren Gold statt zu Braun-Grau.
+export const lesbareFarbe = (farbe, grund, isDarkMode, min = 4.5) => {
+  const ziel = isDarkMode ? '#FFFFFF' : '#000000';
+  for (let a = 0; a <= 1; a += 0.05) {
+    const f = mischeHex(farbe, ziel, a);
+    if (kontrast(f, grund) >= min) return f;
+  }
+  return ziel;
+};
+
+// { schrift, grund } für ein Kapitel — oder null, wenn es keinem Bereich gehört.
+// Tönung: 16 % dunkel, 12 % hell («schwächer», Probe 27.09.2026).
+export const kapitelBereichsfarbe = (chapterKey, palette, isDarkMode) => {
+  const b = getBereichForChapter(chapterKey);
+  if (!b) return null;
+  const farbe = isDarkMode ? b.dark : b.light;
+  return {
+    schrift: lesbareFarbe(farbe, palette.surface, isDarkMode),
+    grund: mischeHex(palette.bg, farbe, isDarkMode ? 0.16 : 0.12),
+  };
+};

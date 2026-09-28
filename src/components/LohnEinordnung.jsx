@@ -150,7 +150,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
   if (!basisKnown || !hoursKnown) {
     const hinweis = !basisKnown
       ? (einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing')
-      : 'lohnEinordnung.hoursUnknownNote';
+      : state.stundenUnplausibel ? 'lohnEinordnung.hoursImplausibleNote' : 'lohnEinordnung.hoursUnknownNote';
     // Fehlt die Einkommensart → Kapitel Finanzen; fehlen die Wochenstunden → Ausbildung & Arbeit.
     // Index aus CHAPTER_KEYS statt hartcodiert: die Kapitel-Reihenfolge darf sich ändern, ohne dass
     // dieser Hinweis still ins falsche Kapitel führt.
@@ -175,11 +175,11 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
               color: palette.sageDeep || palette.mid, fontSize: text.sm, lineHeight: leading.normal,
             },
           },
-            t(hinweis),
+            t(hinweis, { hours: hoursPerWeek }),
             // Der Pfeil ist Dekoration — sonst liest der Screenreader „… eintragen. Rechtspfeil".
             
           )
-        : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis)),
+        : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis, { hours: hoursPerWeek })),
       artZeile
     );
   }

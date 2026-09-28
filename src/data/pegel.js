@@ -9,7 +9,7 @@
 //   clear → klar unter der Grenze (viel Luft)
 //   edge  → knapp unter der Grenze (letzte ~15 %)
 //   over  → über der Grenze / kein Anspruch: andere Wege
-import { calculateIPV, calculateSozialhilfe, getHouseholdInfo } from '../config/cantonalData.js';
+import { calculateIPV, calculateSozialhilfe, getHouseholdInfo, ipvJahreseinkommen } from '../config/cantonalData.js';
 
 // Anzeige-Skala: das Gefäss reicht etwas über die Grenze hinaus, damit der
 // „über der Grenze"-Zustand sichtbar wird (sonst wäre die Grenze der Rand).
@@ -21,9 +21,7 @@ export const PEGEL_SCALE = 1.25;
 export function pegelState(data) {
   const canton = data?.basis?.canton || '';
   const hh = getHouseholdInfo(data);
-  const income = (Number(data?.finanzen?.monthlyIncome || 0)
-    + Number(data?.finanzen?.sideIncome || 0)
-    + (hh.partnerIncome || 0)) * 12;
+  const income = ipvJahreseinkommen(data, hh);
   const ipv = calculateIPV(data);
   const maxIncome = Number(ipv?.cantonData?.maxIncome) || 0;
 
@@ -77,7 +75,10 @@ export function sozialhilfePegelState(data) {
   // Vermögens-Gate spiegelt die Ergebnisliste (Schnellcheck.jsx): liegt Vermögen
   // über dem SKOS-Freibetrag, wird es zuerst angerechnet — dann KEINE Aufstockung
   // behaupten (sonst widerspräche der Pegel dem Ergebnisblock auf derselben Seite).
-  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : 'covered');
+  // 'efb' (Predeploy 25.09.2026): ohne Freibetrag gedeckt, MIT Einkommensfreibetrag (SKOS D.2) ein
+  // Anspruch möglich — ob er beim Eintritt zählt, regelt der Kanton. Dann kein «keine Aufstockung
+  // nötig» (Nein ohne Grundlage), sondern der offene Satz sozialhilfe.efbEntscheidet.
+  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : (sh?.efbEntscheidet ? 'efb' : 'covered'));
   const fraction = Math.max(0, Math.min(PEGEL_SCALE, rawFraction));
   return {
     show: true, variant: 'aufstockung', mode, fraction,

@@ -60,3 +60,37 @@ describe('schildState: zwei Schilde — Pflicht (gesetzlich) und Empfohlen', () 
     expect(st.touched).toBe(false);
   });
 });
+
+// 25.09.2026 (#388): die BVG-Eintrittsschwelle ist ein BRUTTOlohn. Unter der Schwelle, aber
+// als Netto (oder ohne Lohnart) erfasst, ist die Pflicht offen — keine Lücke, aber benannt.
+describe('schildState: BVG-Pflicht bei Nettolohn unter der Schwelle ist offen', () => {
+  const unter = { employed: true, annualIncome: 20000 };
+  it('brutto unter der Schwelle: nicht Pflicht, nicht offen', () => {
+    const st = schildState({ kkInsurer: 'CSS' }, { ...unter, lohnBasis: 'brutto' });
+    expect(st.pflicht.items.map(i => i.key)).toEqual(['kk', 'uvg']);
+    expect(st.bvgUnklar).toBe(false);
+  });
+  it.each([['netto'], [null]])('%s unter der Schwelle: nicht als Lücke gezählt, aber offen', (lohnBasis) => {
+    const st = schildState({ kkInsurer: 'CSS' }, { ...unter, lohnBasis });
+    expect(st.pflicht.items.map(i => i.key)).toEqual(['kk', 'uvg']);
+    expect(st.bvgUnklar).toBe(true);
+  });
+  it('netto ÜBER der Schwelle: Pflicht belegt (brutto liegt noch höher)', () => {
+    const st = schildState({ kkInsurer: 'CSS' }, { employed: true, annualIncome: 30000, lohnBasis: 'netto' });
+    expect(st.pflicht.items.map(i => i.key)).toContain('bvg');
+    expect(st.bvgUnklar).toBe(false);
+  });
+  it('Kasse erfasst: nichts offen', () => {
+    expect(schildState({ kkInsurer: 'CSS', bvgInsurer: 'AXA' }, { ...unter, lohnBasis: 'netto' }).bvgUnklar).toBe(false);
+  });
+  it('Schutzschild zeigt den Hinweis mit der Schwelle', async () => {
+    const React = (await import('react')).default;
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { Schutzschild } = await import('../components/Schutzschild.jsx');
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const t = (k, p) => (p ? k + '(' + Object.values(p).join('|') + ')' : k);
+    const html = (lohnBasis) => renderToStaticMarkup(React.createElement(Schutzschild, { palette, t, versicherungen: { kkInsurer: 'CSS' }, ...unter, lohnBasis }));
+    expect(html('netto')).toContain('schutzschild.bvgUnklar(');
+    expect(html('brutto')).not.toContain('schutzschild.bvgUnklar');
+  });
+});

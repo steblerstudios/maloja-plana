@@ -9,6 +9,7 @@ let QRCode;
 let qrKuerzen;
 let qrNotfallText;
 let qrZeichnen;
+let qrRaster;
 let gesetzt = [];
 let utf8Laenge;
 let QR_MAX_BYTES;
@@ -30,7 +31,7 @@ beforeAll(async () => {
   };
   ({ default: QRCode } = await import('../vendor/qrcodejs.js'));
   ({
-    qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES,
+    qrKuerzen, qrNotfallText, qrZeichnen, qrRaster, utf8Laenge, QR_MAX_BYTES,
     vcardMaskieren, vcardBauen, vcardFalten, qrNotfallVcard, QR_MAX_BYTES_VCARD, QR_DUNKEL, QR_HELL,
   } = await import('../utils/qrSicher.js'));
 });
@@ -282,6 +283,25 @@ describe('QR-Farben kommen nie aus dem Thema', () => {
   });
 });
 
+describe('qrRaster — ganze Gerätepixel je Modul (QR-Versuch 3b, 27.09.2026)', () => {
+  it('Notfall-QR (97 Module, 180 px) auf Retina: 4 Gerätepixel je Modul, nicht 1,9', () => {
+    expect(qrRaster(97, 180, 2)).toEqual({ proModul: 4, css: 194 });
+  });
+  it('immer ganze Pixel und mindestens 2 je Modul, auf jedem Bildschirm', () => {
+    for (const dpr of [1, 1.5, 2, 3]) {
+      for (const [n, b] of [[25, 160], [57, 180], [97, 180], [97, 200], [121, 180]]) {
+        const { proModul, css } = qrRaster(n, b, dpr);
+        expect(Number.isInteger(proModul), `${n}/${b}@${dpr}`).toBe(true);
+        expect(proModul).toBeGreaterThanOrEqual(2);
+        expect(css * dpr).toBeCloseTo(n * proModul);
+      }
+    }
+  });
+  it('fehlende Pixeldichte zählt als 1', () => {
+    expect(qrRaster(97, 180, 0)).toEqual(qrRaster(97, 180, 1));
+  });
+});
+
 describe('qrZeichnen', () => {
   // Zeichnen braucht mehr Browser als Node hat; hier zählt, dass nichts wirft und das
   // Ergebnis ehrlich zurückkommt. Das Bild selbst ist im Browser geprüft (PR-Beschreibung).
@@ -342,7 +362,7 @@ describe('vCard · Zeilenfaltung', () => {
 
   it('hält jede Zeile unter 76 Oktetten, auch mit Umlauten', () => {
     const notiz = 'Allergien: Nüsse, Pollen. Medikamente: eine absichtlich sehr lange Zeile mit Ümlauten, die weit über fünfundsiebzig Oktette hinausgeht';
-    const vcard = vcardBauen({ name: 'Sophie Stebler', tel: '079 000 00 00', notiz });
+    const vcard = vcardBauen({ name: 'Maria Muster', tel: '079 000 00 00', notiz });
     for (const zeile of vcard.split('\r\n')) expect(oktette(zeile)).toBeLessThanOrEqual(75);
   });
 
@@ -368,8 +388,24 @@ describe('vCard · Zeilenfaltung', () => {
 
   it('wiegt die Faltung mit: die fertige Karte bleibt unter der Grenze', () => {
     const abschnitte = [{ titel: 'Notfall', rows: Array.from({ length: 30 }, (_, i) => ({ label: 'Feld ' + i, value: 'Wert mit Ümlaut ' + i })) }];
-    const { text, bytes } = qrNotfallVcard(abschnitte, { name: 'Sophie Stebler', tel: '079 000 00 00' });
+    const { text, bytes } = qrNotfallVcard(abschnitte, { name: 'Maria Muster', tel: '079 000 00 00' });
     expect(bytes).toBeLessThanOrEqual(QR_MAX_BYTES_VCARD);
     for (const zeile of text.split('\r\n')) expect(oktette(zeile)).toBeLessThanOrEqual(75);
+  });
+});
+
+// vcardMaskieren war importiert, aber nie direkt geprüft (eslint no-unused-vars, 27.09.2026).
+// Es schützt jeden Wert im Notfall-QR: ein «;» oder «,» im Namen oder in der Notiz würde sonst
+// ein vCard-Feld teilen, ein Zeilenumbruch eine neue Eigenschaft beginnen (RFC 6350 §3.4).
+describe('vcardMaskieren', () => {
+  it('maskiert Backslash zuerst, dann Semikolon, Komma und Zeilenumbruch', () => {
+    expect(vcardMaskieren('a\\b')).toBe('a\\\\b');
+    expect(vcardMaskieren('Muster; Maria')).toBe('Muster\\; Maria');
+    expect(vcardMaskieren('Penicillin, Nüsse')).toBe('Penicillin\\, Nüsse');
+    expect(vcardMaskieren('Zeile 1\r\nZeile 2\rZeile 3')).toBe('Zeile 1\\nZeile 2\\nZeile 3');
+  });
+  it('leere und fehlende Werte ergeben einen leeren Text', () => {
+    expect(vcardMaskieren(undefined)).toBe('');
+    expect(vcardMaskieren(null)).toBe('');
   });
 });

@@ -3,15 +3,13 @@ import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 import { useFocusTrap } from './hooks/useFocusTrap.js';
-import { aufklappZeichen } from './IconSystem.jsx';
-import { ansichtIkon, SEARCH_VIEWS } from './config/ansichtenRegister.js';
+import { WERKZEUGE, MENUE_WERKZEUGE, werkzeugKey } from './data/werkzeugRegister.js';
 import { laeuftAlsApp } from './utils/geraetErkennung.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
 export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav', hasBottomAnchor = false, leftHand = false }) => {
-  const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   // O17 · Die Schublade ist modal: solange sie offen ist, liegt der Rest der Seite
@@ -107,7 +105,8 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   };
 
   const renderIcon = (iconKey, size) => {
-    const IconFn = Icons[iconKey];
+    // Ein Zeichen, das nicht im Icon-System steht (der Rucksack), kommt als Funktion.
+    const IconFn = typeof iconKey === 'function' ? iconKey : Icons[iconKey];
     if (!IconFn) return null;
     return React.createElement('div', { style: { width: size || '16px', height: size || '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, IconFn());
   };
@@ -118,6 +117,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       onClick: onClick,
       style: {
         width: '100%',
+        minHeight: '44px',
         padding: '12px 20px',
         background: isActive ? palette.up : 'transparent',
         border: 'none',
@@ -253,35 +253,27 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       ...(() => {
         const q = searchQuery.toLowerCase().trim();
 
-        // Reihenfolge und Auswahl bleiben hier (die ersten neun stehen offen,
-
-
-        // der Rest hinter «weitere»). Das PIKTOGRAMM kommt aus dem gemeinsamen
-
-
-        // Register — vorher wich es bei fünf Werkzeugen von der Suche ab.
-
-
-        const allTools = [
-          { key: 'settings', label: t('common.settingsTitle'), icon: ansichtIkon('settings', 'settings') },
-          { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: ansichtIkon('finanzuebersicht', 'budget') },
-          { key: 'situationen', label: t('lebenszustaende.pageTitle'), icon: ansichtIkon('situationen', 'health') },
-          { key: 'unterlagen', label: t('nav.unterlagen'), icon: ansichtIkon('unterlagen', 'documents') },
-          { key: 'tresor', label: t('nav.tresor'), icon: ansichtIkon('tresor', 'document') },
-          { key: 'kk', label: t('nav.kkScanner'), icon: ansichtIkon('kk', 'barcode') },
-          { key: 'budget', label: t('nav.budget'), icon: ansichtIkon('budget', 'csv') },
-          { key: 'schulden', label: t('nav.debts'), icon: ansichtIkon('schulden', 'debt') },
-          { key: 'tax', label: t('nav.taxes'), icon: ansichtIkon('tax', 'money') },
-          { key: 'sozialhilfe', label: t('nav.sozialhilfe'), icon: ansichtIkon('sozialhilfe', 'document') },
-          { key: 'organ', label: t('nav.organDonation'), icon: ansichtIkon('organ', 'health') },
-          { key: 'calendar', label: t('nav.calendar'), icon: ansichtIkon('calendar', 'calendar') },
-          { key: 'sync', label: t('nav.budgetSync'), icon: ansichtIkon('sync', 'money') },
-          { key: 'premium', label: t('nav.kvgIpv'), icon: ansichtIkon('premium', 'health') },
-          { key: 'cv', label: t('nav.cv'), icon: ansichtIkon('cv', 'document') },
-          { key: 'charts', label: t('nav.charts'), icon: ansichtIkon('charts', 'chartsSchoko') },
-          { key: 'export', label: t('nav.export'), icon: ansichtIkon('export', 'download') },
-          { key: 'notifications', label: t('nav.notifications'), icon: ansichtIkon('notifications', 'cowbell') },
-        ];
+        // Werkzeug-Vorschau 27.09.2026: keine eigene Liste mehr. Das Menü zeigt aus dem
+        // EINEN Register (data/werkzeugRegister.js) die Einträge mit `imMenue` —
+        // Dokumentenablage · Kalender · Merkliste —, dazu «Alle Werkzeuge im Gepäck» als
+        // Zugang zu allem übrigen und die Einstellungen (dort: Export, Benachrichtigungen).
+        // Vorher: 18 Einträge von Hand, 9 davon hinter «Mehr», einig mit dem Dashboard bei 8.
+        const rucksack = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', width: '100%', height: '100%' },
+          React.createElement('path', { d: 'M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z' }),
+          React.createElement('path', { d: 'M9 8a3 3 0 0 1 6 0' }), React.createElement('path', { d: 'M9 14h6' }));
+        const oeffne = (w) => {
+          if (w.view === 'chapter') {
+            const idx = (chapters || []).findIndex((c) => c.key === w.kapitel);
+            if (idx >= 0) onNavigate('chapter', idx);
+          } else onNavigate(w.view);
+          onClose();
+        };
+        const alsEintrag = (w) => ({ key: werkzeugKey(w), view: w.view, label: t(w.nav), icon: w.icon, aliases: w.aliases || [], go: () => oeffne(w) });
+        const menueWerkzeuge = MENUE_WERKZEUGE.map(alsEintrag);
+        const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), icon: rucksack, aliases: [], go: () => { onNavigate('gepaeck'); onClose(); } };
+        const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), icon: 'settings', aliases: [], go: () => { onNavigate('settings'); onClose(); } };
+        // Die Suche im Menü findet weiterhin ALLE Werkzeuge (auch die im Gepäck).
+        const allTools = [...WERKZEUGE.map(alsEintrag), gepaeckEintrag, settingsEintrag];
 
         // Search mode — flat filtered list
         if (q) {
@@ -306,30 +298,12 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
             }
           });
 
-          // Tools — gesucht wird wie in der grossen Suche (SearchView): Name,
-          // Beschreibung und Aliase aus dem gemeinsamen Register. Vorher nur die
-          // eigenen 18 Einträge über Name und Schlüssel: «Flyer», «Asyl», «AHV»
-          // oder «Links» fanden im Menü nichts, obwohl es die Ansichten gibt (25.09.2026).
-          const trifft = (teile) => teile.some(p => (p || '').toLowerCase().includes(q));
-          const registerTeile = (key) => {
-            const e = SEARCH_VIEWS.find(v => v.view === key);
-            return e ? [e.sub ? t(e.sub) : '', ...(e.aliases || [])] : [];
-          };
+          // Tools
           allTools.forEach(tool => {
-            if (trifft([tool.label, tool.key, ...registerTeile(tool.key)])) {
-              results.push(navItem(tool.key, tool.label, tool.icon,
-                () => { onNavigate(tool.key); onClose(); }, activeView === tool.key));
+            if (tool.label.toLowerCase().includes(q) || tool.key.toLowerCase().includes(q) || tool.aliases.some((a) => a.includes(q))) {
+              results.push(navItem(tool.key, tool.label, tool.icon, tool.go, activeView === tool.view));
             }
           });
-          SEARCH_VIEWS
-            .filter(v => !allTools.some(tool => tool.key === v.view))
-            .forEach(v => {
-              const label = t(v.nav);
-              if (trifft([label, v.view, ...registerTeile(v.view)])) {
-                results.push(navItem(v.view, label, v.icon,
-                  () => { onNavigate(v.view); onClose(); }, activeView === v.view));
-              }
-            });
 
           if (results.length === 0) {
             results.push(React.createElement('div', {
@@ -394,32 +368,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
             style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.mid, padding: space.md + 'px 20px ' + space.sm + 'px 20px', textTransform: 'uppercase', letterSpacing: '0.5px' }
           }, t('nav.tools')),
 
-          ...allTools.slice(0, 9).map(tool => navItem(tool.key, tool.label, tool.icon,
-            () => { onNavigate(tool.key); onClose(); },
-            activeView === tool.key
-          )),
+          ...menueWerkzeuge.map(tool => navItem(tool.key, tool.label, tool.icon, tool.go, activeView === tool.view)),
+          navItem(gepaeckEintrag.key, gepaeckEintrag.label, gepaeckEintrag.icon, gepaeckEintrag.go, activeView === 'gepaeck'),
 
-          // Advanced — collapsed behind disclosure
-          React.createElement('button', {
-            key: 'advanced-toggle',
-            onClick: () => setShowAdvanced(!showAdvanced),
-            style: {
-              width: '100%', background: 'none', border: 'none',
-              borderTop: '1px solid ' + palette.border, marginTop: space.sm,
-              padding: '14px 20px', cursor: 'pointer',
-              fontSize: text.xs, color: palette.soft, fontFamily: 'inherit',
-              textAlign: 'left', letterSpacing: '0.3px',
-              display: 'flex', alignItems: 'center', gap: space.sm,
-            }
-          },
-            React.createElement('span', { style: { fontSize: '9px', transition: `transform ${duration.normal}ms ${ease}`, transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, aufklappZeichen(false)),
-            t('nav.moreTools')
-          ),
-
-          ...(showAdvanced ? allTools.slice(9).map(tool => navItem(tool.key, tool.label, tool.icon,
-            () => { onNavigate(tool.key); onClose(); },
-            activeView === tool.key
-          )) : []),
+          React.createElement('div', { key: 'settings-sep', 'aria-hidden': 'true', style: { borderTop: '1px solid ' + palette.border, margin: space.sm + 'px 0 0' } }),
+          navItem(settingsEintrag.key, settingsEintrag.label, settingsEintrag.icon, settingsEintrag.go, activeView === 'settings'),
         ];
       })(),
 

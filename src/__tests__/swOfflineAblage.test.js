@@ -125,4 +125,29 @@ describe('Service Worker: Offline-Ablage nach dem ersten Besuch (K59)', () => {
     expect(await antwort('/', 'navigate')).toEqual({ pfad: '/' });
     expect(await antwort('/fonts/fehlt.woff2', 'cors')).toEqual({ fehler: true });
   });
+
+  it('lässt fremde Adressen am Cache vorbei — nur der eigene Server wird abgelegt (25.09.2026)', async () => {
+    // Sicherheitsprüfung 25.09.: der Abruf-Weg legte jede erfolgreiche GET-Antwort ab,
+    // auch fremde. Heute verhindert das die CSP; der Service Worker soll es selbst halten.
+    const sw = swLaden();
+    let beantwortet = false;
+    sw.hoerer.fetch({
+      request: { method: 'GET', url: 'https://fremd.example/assets/boese.js', mode: 'no-cors' },
+      respondWith: () => { beantwortet = true; },
+    });
+    sw.hoerer.fetch({
+      request: { method: 'GET', url: 'https://fremd.example/seite', mode: 'navigate' },
+      respondWith: () => { beantwortet = true; },
+    });
+    await Promise.resolve();
+    expect(beantwortet).toBe(false);
+    expect([...sw.abgelegt.keys()]).toEqual([]);
+
+    // Gegenprobe: eine eigene Adresse wird weiterhin beantwortet und abgelegt.
+    let r;
+    sw.hoerer.fetch({ request: { method: 'GET', url: `${ORIGIN}/assets/eigen-1.js`, mode: 'cors' }, respondWith: (p) => { r = p; } });
+    await r;
+    await new Promise((los) => setTimeout(los, 0));
+    expect([...sw.abgelegt.keys()]).toContain('/assets/eigen-1.js');
+  });
 });

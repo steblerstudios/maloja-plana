@@ -4,8 +4,9 @@ import { text, weight, leading, space, radius, ease, duration } from '../config/
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
-import { calculateIPV, calculateSozialhilfe } from '../config/cantonalData.js';
+import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
+import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
 
 // Leistungsliste des Dashboard-Blocks «Was steht mir zu?» (seit 25.09.2026 eigene Datei,
@@ -15,7 +16,9 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // Brutto oder netto (EinkommenFeld); gerechnet wird mit netto.
   const e = useEinkommen(data);
   const income = e.nettoMonat;
-  const annual = income * 12;
+  // Mit dem 13. Monatslohn aus dem Profil — dieselbe Regel wie calculateIPV (utils/dreizehnter.js),
+  // denn `probe` trägt `dreizehnter` mit und die IPV rechnet damit.
+  const annual = income * hauptlohnMonate(data?.finanzen?.dreizehnter);
   const canton = data?.basis?.canton;
   const fmt = (v) => zahl(v, { hoechstens: 2 });
 
@@ -25,7 +28,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
   // Berechnung ist dieselbe wie in den vollständigen Tools (calculateIPV/
   // calculateSozialhilfe), damit Liste und Rechner nie widersprechen.
-  const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
+  // incomeType 'netto': das Feld hat schon umgerechnet — calculateSozialhilfe soll nicht nochmals.
+  const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income, incomeType: 'netto' } };
   const found = {};
   let sozPegel = null;
   let knappSoz = false;
@@ -39,7 +43,12 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       // in den Rechner (und von dort womöglich ins Profil).
       uebergabe: e.geschaetzt ? undefined : { schnellcheck: { monthlyIncome: income } },
       monthly: ipv.eligible ? ipv.amount : 0,
-      detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
+      // Das Jahreseinkommen, mit dem die IPV rechnet (inkl. Nebenerwerb und Partnereinkommen) — nicht nur
+      // der Hauptlohn (Abschluss-Prüfung #388). Bei offenem 13. steht die Annahme dabei.
+      detail: ipv.eligible
+        ? t('dashboard.quickCheckResult', { income: fmt(ipvJahreseinkommen(probe)), amount: fmt(ipv.annual) })
+          + (ipv.annahmen?.ohneDreizehnten ? ' · ' + t('ipv.ohneDreizehntenKurz') : '')
+        : t(ipv.noteKey),
     };
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
@@ -59,9 +68,14 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       // Texte aus dem Pegel-Werkzeug (pegel.*), dieselbe Engine wie der Rechner.
       else if (sh) sozPegel = {
         bedarf: sh.totalBedarf, einkommen: sh.income,
-        detail: sh.eligible ? t('pegel.vermoegen') : t('pegel.covered'),
+        // Freibetrag-Fall: offen statt «keine Aufstockung nötig» (wie pegel.js, Predeploy 25.09.2026).
+        detail: sh.eligible ? t('pegel.vermoegen') : sh.efbEntscheidet ? t('sozialhilfe.efbEntscheidet') : t('pegel.covered'),
       };
     }
+    // EL (Predeploy 25.09.2026): nur im AHV-/IV-Renten-Kontext, qualitativ ohne Betrag — wie im
+    // vollen Schnellcheck. Bis dahin fehlte sie hier, und der Kompass zählte anders als der Schnellcheck.
+    // Nicht, solange die Einkommensart offen ist (sonst zählte ein leeres Feld als 0 Einkommen).
+    if (!e.offen && checkELEligibility(probe)?.eligible) found.el = { monthly: 0, detail: t('schnellcheck.elNote') };
   } catch { /* Orientierung, nie blockierend */ }
 
   // Wie der volle Schnellcheck (Schnellcheck.jsx): bei Sozialhilfe steckt die IPV schon
@@ -82,7 +96,9 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     { key: 'stipendien', label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
     { key: 'alv', label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
     { key: 'eo', label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
-  ];
+    // EL nur, wenn sie zutrifft (Rentenkontext) — sonst würde die Liste für alle länger.
+    found.el && { key: 'el', label: t('schnellcheck.el'), sub: t('schnellcheck.elNote'), view: 'ergaenzungsleistungen', icon: 'vorsorge' },
+  ].filter(Boolean);
 
   // Zeile statt Karte (dichte Liste: Linien, keine Rahmen). Rechts, wo ein Betrag
   // gezählt wird, ein dünner Balken auf GEMEINSAMER Skala (Grösse = Betrag), eine Farbe:

@@ -17,7 +17,158 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🩺 **Nachtrag 28.09., 11:55 — Vorsorge + Kreditkarte gemergt; LIVE = `1cb36b1f` (0.1.44-beta, gebaut 11:42) enthält die Patientenverfügung.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 11:52): main = `3e1b60d6` · live = `1cb36b1f` · 10 Commits dazwischen · offen: #351 (Entwurf).
+> **Gemergt:** #437 Kreditkarte (`2ac40ba6`) · #440 Patientenverfügung in Fragen (`1cb36b1f`) · #443 Vorsorgeauftrag-Vorlage,
+> Bestattungswünsche, Testament-Wegweiser, Bestattungs-Hinweis korrigiert (`5a60d4c4`) · #447 Changelog (`3e1b60d6`).
+> #445 (Startbündel) **geschlossen** — derselbe Umbau kam mit #433 als `config/kantonPLZ.js`. Startbündel auf main **61,24 / 65 kB**.
+> **Belegt:** 4630 Tests grün (lokal, auf dem #443-Stand = main) · CI grün je PR · live `version.json` = `1cb36b1f`, Gegenprobe 404,
+> Chunk `Patientenverfuegung-*.js` ausgeliefert. #443 ist **nicht** live.
+> 🛑 **Offen:** ärztliche Gegenlese PV-Fragen 3–9 — Entscheid Stebler Studios 28.09.: im Oktober mit den Mails
+> (Studio-Repo `FAHRPLAN-oktober-2026.md`, Woche 4). PV ist damit **vor** der Gegenlese live → Entscheid offen, ob
+> `#/patientenverfuegung` bis dahin verborgen wird. rm-Texte von #437/#440/#443 provisorisch.
+
+> 🧹 **Nachtrag 28.09., 14:20 — Aufräum-Runde: fünf PRs gemergt, Werkbank leer, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 14:20): main = `382fdb4a` · live = `1cb36b1f` (0.1.44-beta, 11:42) ·
+> **34 Commits** dazwischen · offen: #351 Flyer (Entwurf, **Konflikt** mit `main`).
+> **Gemergt** (Freigabe Stebler Studios 28.09. ~14:10, «commite, pushe, merge, was du kannst»): #449 Wochenstunden
+> (`a1c64fcd`) · #450 Miet-Balken netto (`4e2ff27a`) · #451 Steuer-Karte eigene Angabe (`c51ee75a`) · #452
+> Mietzins-Limite unbelegt (`42bb1ee3`) · #453 Haushalts-Einnahmen + `[object Object]`-Fix (`382fdb4a`).
+> **Belegt:** CI grün je PR · 4670 Tests grün lokal auf dem #453-Stand (268 Dateien, 14:14) · PII-Scan grün ·
+> Startbündel auf `main` **61,11 / 65 kB** (`npm run size`, 14:19).
+> **Werkbank:** 12 Worktrees und lokale Zweige der gemergten PRs entfernt; Remote-Zweige stehen noch.
+> Zurückgeblieben: `_werkbank/flyer-a5` (#351) und dieser Doku-Zweig.
+> 🛑 **Offen:** Deploy (Hand Stebler Studios) — mit ihm gehen #438–#453 zusammen live · ärztliche Gegenlese PV
+> (Oktober) · rm-Gegenlese #452 · #351 Flyer-Konflikt auflösen.
+
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
+
+> ⚖️ **Nachtrag 27.09., 21:05 — #438 gemergt (`138717e5`), NICHT live. Live bleibt `4197501d` = 0.1.42-beta.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 21:05): main = `138717e5` · live = `4197501d` · 1 Commit dazwischen · offen: #437 #436 #433 #351 (Entwurf).
+> **#438:** Feld-Hinweis `vorsorgeauftrag` sagte «Muss bei der Gemeinde registriert werden» (de/en/fr/it/rm) — falsch nach ZGB 361 Abs. 3
+> (Zivilstandsamt, auf Antrag, freiwillig). Korrigiert nach dem Wortlaut von `vorsorgeauftrag.step3Text`; rm mit `TODO(rm)`. Suche über alle
+> Sprachen: keine weitere Stelle im Code; dieselbe Aussage in `docs/product/` mitkorrigiert. `kapitelAbdruck.txt`: genau 5 `hint`-Summen.
+> **Belegt:** 4502/4502 Tests (7 von 8 Läufen; 1 Lauf mit 1 Fehlschlag, nicht reproduziert, Datei nicht erfasst) · i18n 57/57 · Gap-Scan gleich
+> wie vorher · PII sauber · CI grün · Squash-Merge auf Zuruf Stebler Studios.
+> **Offen:** Deploy (Stebler Studios) · rm-Gegenlese · Wackel-Test beobachten (bei nächstem Rot Dateinamen festhalten).
+
+> 🏷️ **Nachtrag 27.09., 18:00 — LIVE = `4685c20` = Release 0.1.41-beta (Deploy Stebler Studios 17:45), Tag `v0.1.41-beta` = Live.**
+>
+> **Belegt:** `version.json` `4685c200…`/`0.1.41-beta`/`sauber: true` (Gegenprobe 404) · `index-BK47DFm2.js` und `de-BW-nfuQ1.js`
+> live bytegleich mit dem Build · Tag von `deploy.sh` gesetzt (17:45) · K85: fünf Einstiegsdateien `no-cache`, Assets `immutable`.
+> Rauchtest live (Beispiel ohne Code): Basis 3 / Finanzen 7 Abschnitte, Schuldenmanager, Mahnung, 0 Konsolenfehler.
+> **Seit `bbde468`:** #429 Stand-Doku · #430 toter Code (MirrorCards −474, ChapterView −96; Startbündel unverändert, Kapitel-Chunk
+> −3,1 kB gzip; von/bis-Tests) · #431 Release (CHANGELOG seit 0.1.40 nachgezogen, RAV-Knopf «Erinnerung «Spätester Tag für die
+> RAV-Anmeldung»», K48 C4/C5). Vor dem Deploy: 4499 Tests, 64,58/65 kB, Browser 7 Kapitel ohne Fehler.
+> **September-Abnahme:** Tor (3) und (5) belegt (Studio-Repo `FAHRPLAN-bis-2026-09-30.md`); Tor (4) braucht ein Telefon.
+> 🔑 **Entscheid 27.09.:** Konten ab Oktober (ADR-002 umgekehrt) — K48 C4 rückt nach vorn. Startbündel nur 0,42 kB frei → vor dem Konten-Bau Platz suchen.
+
+> 🚀 **Nachtrag 27.09., 16:44 — LIVE = `bbde468` (0.1.40-beta, Deploy durch Stebler Studios 16:39).**
+>
+> **Belegt:** `version.json` `commit` = `bbde4685…`, `sauber: true` (Gegenprobe erfundene Datei → 404) · Startdatei
+> `index-y8hG_kEV.js` = frischer `main`-Build · Sprach-Chunk `de-B_2_fm0g.js` live **bytegleich** mit dem Build, neue Texte drin
+> («Wo jede Forderung steht», «Erinnerung «Zusatzversicherung kündigen»», «… in den Kalender»).
+> **Rauchtest live** (Beispiel ohne Code): Kapitel Finanzen → «Einkommen ändern» zeigt «Steuerbares Einkommen» (#427) · `#/mahnung`
+> lädt · Schuldenmanager mit Reitern inkl. Abbau-Plan · keine Konsolenfehler.
+> **Umfang (21 Commits über `80262b6`):** #407 #409 #410 #408 #414 #421 (Mahnung/Schulden, Gate 1) · #412 #413 #415 #416 #417 #418
+> #423 #424 #425 #426 #411 (Seitenrundgang) · #420 #422 (Schulden-Fehler + Dataviz) · #427 #428 (Gate 2).
+> **Deploy-Tor 2 auf `37f21a2`:** Mechanik grün (4494 Tests, Lint, Build, SEO 0/0, 64,56/65 kB, PII, CSP, ESTV 156/156 gleich) ·
+> 10 Prüfer (Sicherheit/a11y/Gestalt ganze App, übrige auf `3c4706e..HEAD`). **1 🔴** (selbst belegt): Abschnittsliste #425 filterte
+> `taxableIncome` aus dem offenen Abschnitt → **#427**. Drei ⚠️ → **#428** (Zusatz-Knopf «Erinnerung» statt «Frist», Notfallkarte
+> als `<button>`, Schulden-Balken mit Rappen). Endstand erneut gemessen: 4497 Tests, 64,56/65 kB. Marke = `bbde468`.
+> **Geparkt (kein Blocker):** `createDebtPlan` von/bis ohne eigenen Test · `MirrorCards.jsx` zur Hälfte tot seit #425 (nur noch
+> `buildLifeSentence`) · tote Kopf-Zweige in `feldElemente`/`feldElementeSek` (`ohneKopf` immer an) · Regel «Bereichsfarbe = Identität,
+> Sand = Handlung» nicht im Farbsystem-Blatt · RAV-Knopf «Frist» vs. «Erinnerung» (AVIG 17, Entscheid) · `schuldenCalc` Kommentar
+> «einfach» rechnet Zinseszins (Richtwert) · rm: neue Schulden-Texte ohne `TODO(rm)` · iframe `sandbox` Brief-Vorschau.
+> **Offen:** #419 durch diesen Nachtrag überholt (schliessen) · #351 Flyer (Probedruck).
+
+> 📬 **Nachtrag 27.09., 13:26 — Mahnung (Entwurfs-PR #408, `feat/mahnung-2026-09-27`), — Stand vor dem Merge (bleibt als Beleg).**
+>
+> **Stand, gemessen 27.09.2026 13:26** (`bash scripts/stand-jetzt.sh`): main = `6c24111d` (11:03) · live = `80262b6e` · 3 Commits
+> zwischen live und main · offen: #408, #411–#418, #351 (alle Entwurf). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Auf #408 (Zweig-Spitze `5a7810d`):** Ablauf «Mahnung erhalten» (`#/mahnung`, 6 Schritte inkl. Miete OR 257d, Krankenkasse
+> KVG 64a, Bussen StGB 35/79a/106, Steuern DBG 2/163–167, Verzugszins-Rechner) · Briefe Mahnung schreiben / Forderung bestreiten
+> (inkl. «nur Gebühren») / Ratenzahlung vorschlagen · Schuldenmanager: Mahnstufe je Forderung, Übersicht und Abbau-Plan neu
+> gerechnet (Rate aus dem Budget, Zins je Schuld, «reicht nicht»), Betreibungsregister ohne Wertungen, Verlustschein- und
+> Steuer-Kasten · Rückwege aus Betreibung/Schuldenmanager/Lebenszustand. **Belegt:** 239 Dateien / 4400 Tests grün, Build ok,
+> 62,95 / 65 kB, PII sauber, CI grün; 3 Rechts- und 3 Fachprüfungen ohne Blocker, alle «sollte» eingebaut; Browser-Proben im
+> Demo-Modus. Gesetze am Wortlaut (Fedlex-Filestore via SPARQL, 27.09.).
+>
+> **Entscheide Stebler Studios 27.09.:** Mahnung «beides» (erhalten + selbst mahnen) · Rate aus dem Budget · Mahngebühren-Hinweis
+> «in der Regel nicht geschuldet» (K-Tipp 2022, SRF 2025) · Brief «nur Gebühren» nennt die Zahlung der Forderung · Stufenleiste
+> «guter Anfang».
+>
+> **Nächste Runde:** Schulden & Rechnungen gesamthaft + Dataviz (`docs/IDEEN.md` §5, Horizont «Oktober — bauen»). **Achtung:**
+> #417 (Geld-Formatierung überall) berührt vermutlich dieselben Dateien — nach dem Merge der einen die andere nachziehen.
+> **rm:** Ablauf, Briefe und Schulden-Texte als deutscher Rückfall mit `TODO(rm)`.
+
+> 🚀 **Nachtrag 27.09., 10:20 — Deploy durch Stebler Studios: live = `main` = `80262b6`.**
+>
+> **Stand, gemessen 27.09.2026 10:14** (`bash scripts/stand-jetzt.sh`): main = `80262b6` (10:11) · live = `80262b6`
+> (0.1.40-beta, gebaut 27.09. 10:13) · live = main · offen: #351 (Entwurf). Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Belegt:** Live-`index-zHEb9d7h.js` == frischer Build von `80262b6`; Gegenprobe `index-GIBTESNICHT.js` → 404 ·
+> `scripts/check-deploy.sh`: 140 Assets erreichbar · Rauchtest auf malojaplana.ch (Beispielprofil): vier neue Brief-Karten,
+> Betreibung → Zustellung 25.09. → «Brief: Rechtsvorschlag erheben» → Datum übernommen, Frist 05.10.2026, Fokus auf dem
+> Hinweis, Amtssprache-Satz; QR-Hinweis «Adressbuch» im Notfall-Dossier; keine Konsolenfehler.
+>
+> **Damit live:** #402 Sicherungs-Knopf · #403 QR-Hinweis + Doku Entscheid-Runde · #404 vier Briefe · #405 Sprung zum Formular ·
+> #406 Gate-Korrekturen. **Deploy-Tor** auf `80262b6`: Mechanik (4300 Tests, SEO 0/0, 62,73/65 kB, PII, ESTV 156/156) +
+> 8 Prüfer über ganze App bzw. Diff + 2 Nachprüfer, 0 Blocker; Marke `.maloja/predeploy-ok` = `80262b6`.
+>
+> **Entscheide dieser Sitzung** (Stebler Studios): Entscheid-Runde Oktober vorgezogen (Bauliste §28) · Briefgenerator «jetzt»,
+> alle vier Briefe · Todesfall-Karte ohne Gesetzesstelle · Zustelldatum übernehmen · vor dem Deploy Gate-Punkte 1–5 beheben.
+>
+> **Offen, nächster PR:** Browser-Zurück bringt alte Vorwahl samt Datum · Rechtsvorschlag-Frist an zwei Stellen · `sandbox`
+> fürs Vorschau-iframe · px statt `space`-Tokens im Formular · EN-Texte ohne Sie/Du-Objekte · Doku-Zitat
+> `briefGenerator.js:234` in `TASK_befund-brief-lohn.md` · `IconKern.jsx:290` · eslint-Fehler `workflowsGepinnt.test.js:28`.
+> **rm:** 645+ Markierungen, Arbeitsliste ausserhalb des Repos. **Tag:** `v0.1.40-beta` steht weiter nicht auf dem Live-Stand — Tag nur auf Wort.
+
+> 🚀 **Nachtrag 25.09., 23:15 — Deploy durch Stebler Studios: live = `main` = `cb37254`.**
+>
+> **Stand, gemessen 25.09.2026 23:15** (`bash scripts/stand-jetzt.sh`): main = `cb37254` (23:04) · live = `cb37254`
+> (0.1.40-beta, gebaut 25.09. 23:09, `version.json` `sauber: true`) · live = main · offen: #351 (Entwurf).
+> Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> **Belegt:** Live-`index-DK_NVU1m.js` == frischer Build von `cb37254` (Build von `bd18793` ergibt einen anderen Hash —
+> #399 und #396 sind mit drin) · `scripts/check-deploy.sh`: 132 Assets erreichbar · Rauchtest im Browser auf
+> malojaplana.ch, Beispiel-Profil (63 %): Berg ohne eines der neun Bilder, 6 Wegstücke golden, Kreise 7/7 und 63 %,
+> keine Konsolenfehler.
+>
+> **Damit live** (vorher gemergt, nicht live): u. a. #388 13. Monatslohn + Mietzins · #389 Sozialhilfe eine Wahrheit ·
+> #392 IDEEN: Briefgenerator → Oktober entscheiden · #398 Berg-Bilder bis zum Oktober-Entscheid aus (`BERG_BILDER = false`) ·
+> #399 Kann-Punkte #388 · #396 Actions gepinnt / Service Worker. FEATURES.md: #388/#389 → `verified-live`, Zeile #398 neu.
+>
+> **Entscheide dieser Sitzung** (Stebler Studios): Gamification bis Oktober **nur** die neun Berg-Bilder aus — Lebensbaum,
+> Obstgarten, Gepäck, Instrumente und goldener Weg bleiben · Pastille «abgeschlossen» bleibt wie gebaut (erst ab dem ersten
+> Kapitel auf 100 %, keine «0/7»; beide Varianten im Browser verglichen) · `docs/IDEEN.md` bis Oktober nicht anfassen.
+
+> 🧮 **Nachtrag 25.09., 22:45 — Sitzung «IPV 13. Monatslohn»: eine Regel für den 13. Monatslohn, Mietzinsbeiträge gegen die Quellen 2026 (#388), gemergt auf ausdrückliches Wort von Stebler Studios («und dann bitte noch mergen»), Squash.**
+>
+> **Stand, gemessen 25.09.2026 22:43** (`bash scripts/stand-jetzt.sh`): main = `1b1a307` (22:43) · live = `bb9448c`
+> (0.1.40-beta, gebaut 25.09. 19:06) · 11 Commits dazwischen · offen: #396, #351 (Entwürfe).
+> **#388 ist NICHT live.** Die Zeile altert — vor dem Weiterarbeiten neu messen.
+>
+> | Was | Wo |
+> |---|---|
+> | 13. Monatslohn als **eine** Regel (`dreizehnterStatus`, `hauptlohnMonate`): Steuer, EO/AHV/BVG-Vorbefüllung, IPV (5 Kantonsmodule + Muster-Kantone + Pegel), Schnellcheck | `src/utils/dreizehnter.js` |
+> | IPV-Annahmen sichtbar: `ohneDreizehnten` (Frage offen → ×12), `partnerOhneDreizehnten` — Rechner, Finanzübersicht (Kachel + Export), Dossier (PDF + JSON-Kennung) | `cantonalData.js`, `PremiumSubsidy.jsx`, `FinanzUebersicht.jsx`, `dossierGenerator.js` |
+> | Schutzschild: BVG-Schwelle mit ×13, `bvgUnklar` bei Netto unter der Schwelle oder offenem 13. | `data/schutzschild.js` |
+> | Mietzinsbeiträge: Haushaltseinkommen (Nebenerwerb, Partner bei Ehe; sonst Hinweis mit Zahl) · BL ohne feste Grenze (MBG § 6/§ 10) · GE 1'000/Zimmer (RGL Art. 24 Abs. 2) · BS Grenze = Grundeinkommen + 36'000 (Merkblatt 01.2026 Ziff. 13, +4'000 ab 6. Person nach MBVO Anhang 1), 18–24 mit Frage «Erstausbildung?», 25+ raus · ZG Frage «WFG-Wohnung?», volljährige Kinder als Erwachsene, Hinweis Mietbelastung · Datenstand 2026 | `data/mietzinsbeitraege.js`, `MietzinsOrientierung.jsx` |
+> | Wiedervorlage 13. AHV-Rente vor IPV-Anspruchsjahr 2027 | `docs/IDEEN.md` (Winter) |
+>
+> **Belegt:** `ipvDreizehnter.test.js` (64 Regeln, u. a. «ja» mit m ≡ «nein» mit m × 13/12 in allen fünf Kantonsmodulen) + `schutzschild.test.js`; Mutationsproben je Schritt rot. Auf dem mit `main` zusammengeführten Stand **4198 Tests grün**, Build ok, Startbündel **63,15 / 65 kB**, CI grün. swiss-precision-pruefer: mehrere Quellenprüfungen (BS/BL/GE/ZG mit Wortlaut, SoHaG/SoHaV/MBVO) + Abschlussprüfung ohne Blocker (7 «sollte» eingearbeitet); qualitaets-pruefer ohne Blocker.
+>
+> **Offen:**
+> 1. **Deploy** (Stebler Studios) → danach live prüfen: IPV-Rechner, Mietzins BS/ZG, Schutzschild, Dossier.
+> 2. **rm:** 25+ neue Texte `TODO(rm)` — Liste an Stebler Studios übergeben.
+> 3. Einkommensbasis Mietzins: BS/ZG messen massgebendes/steuerbares Einkommen, die App den Lohn (Hinweis steht).
+> 4. «Kann» aus der Abschlussprüfung: Schnellcheck-Jahreseinkommen ohne Neben-/Partnereinkommen, BVG `>=` vs. «mehr als», BS Referenzalter nicht geprüft, Kinder ohne Alter.
+> 5. Wiedervorlage 13. AHV-Rente vor 2027.
 
 > 🧮 **Nachtrag 25.09., 20:55 — Sitzung «Sozialhilfe eine Wahrheit»: Schnellrechnung und SKOS-Rechner teilen einen Kern (#389), gemergt auf ausdrückliches Wort von Stebler Studios («gerne mergen»), Squash.**
 >

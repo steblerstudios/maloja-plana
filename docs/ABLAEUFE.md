@@ -199,9 +199,18 @@ export · calendar · notifications · settings · legal
 #### E3 · Schulden / Betreibung
 - **Bausteine:** `schulden`/`SchuldenManager` (+ `schuldenCalc.js`: `createDebtPlan`, `calculateBetreibungsRegisterImpact`, `createBetreibungsAuszugTemplate`).
 - **Verwendet?** 🟡 fachlich reich (Schuldenplan, Betreibungsregister-Wirkung, Verlustschein), aber `SchuldenManager.jsx` hat **0 onNavigate** — komplette Insel.
+- **⟨Nachtrag 27.09.2026⟩** Keine Insel mehr (Situation, Mahnung, Kapitel Behörden, Mahnstufen-Wege). Abbau-Plan neu gerechnet (eigene Rate, Zins je Schuld, «reicht nicht»), Übersicht korrigiert, Reihenfolge belegt, Steuer-Hinweis; Tests `schuldenCalc.test.js`.
 - **Lücken:** 🔴 Sanierungs-/Abzahlungsplan erzeugt keine wiederkehrenden Zahlungs-Erinnerungen in `calendar` · 🔴 keine Verkettung zur Schuldenberatung (Orientierung) · 🔴 G3 (Betreibungsauszug bestellen) nicht angebunden obwohl `createBetreibungsAuszugTemplate` existiert.
 - **Crosslinks:** 🔗 → `budget`/`finanzuebersicht` (Tragbarkeit) · 🔗 → `direktlinks` (Betreibungsamt/Schuldenberatung) · 🔗 → `sozialhilfe`.
 - **Nächste Aktion:** Crosslink `SchuldenManager` → `budget`/`finanzuebersicht` (Schulden im Gesamtbudget verankern).
+
+#### E3a · Mahnung erhalten *(neu 27.09.2026)*
+- **Bausteine:** `mahnung`/`MahnungErhalten` · Briefe `paymentReminder`, `claimDispute`, `installmentRequest` (`briefGenerator.js`).
+- **Verwendet?** ✅ im Register `ABLAEUFE`, in Suche, Dashboard und Gepäck (Arbeit, neben «Betreibung erhalten»).
+- **Crosslinks:** 🔗 → `betreibung` (Zahlungsbefehl schon da) · `schulden` · `wohnunggekuendigt` (OR 257d) · `premium` (IPV) · `budget` · `direktlinks` (Schuldenberatung) · `briefe` (drei Vorlagen, vorgewählt).
+- **Lücken:** 🟡 keine Frist-Knöpfe, bewusst (Gläubiger-Frist; Beginn der KK-Nachfrist nicht im Gesetz) · ✅ Rückweg aus `betreibung` (Schritt 2), `schulden` (Plan) und Lebenszustand «Verschuldet» (27.09.) · 🟡 rm = deutscher Rückfall.
+- **Seit 27.09. nachmittags:** Verzugszins-Rechner (Schritt 3), Steuern DBG 163–167 (Schritt 4), Mahnstufe je Forderung im Schuldenmanager (`utils/mahnstufe.js`).
+- **Nächste Aktion:** siehe `IDEEN.md` §5 «Mahnung» (Offen).
 
 #### E4 · Sozialhilfe beantragen
 - **Bausteine:** `sozialhilfe`/`SozialhilfeView` · `SozialhilfeRechner` (SKOS).

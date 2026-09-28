@@ -19,6 +19,7 @@ import { text, weight, radius , space } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { betrag, zahl } from './utils/geld.js';
 import { geburtsjahr } from './config/kantonsModell.js';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
 const fmtCHF = (n) => betrag(n || 0);
@@ -125,6 +126,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       border: opts.primary ? 'none' : '1px solid ' + palette.border,
     },
   }, label);
+
+  // Zweitknopf: Umriss, kein Primär-Gewicht (neben dem einen PrimaryButton).
+  const ruhigerKnopf = {
+    display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
+    padding: '10px 16px', background: 'none', color: palette.text, border: '1px solid ' + palette.border,
+    borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm,
+  };
 
   // Jahr wählen beim Eintragen der Verfügung — klein, zwei Möglichkeiten.
   const jahrWahl = () => React.createElement('label', {
@@ -298,7 +306,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // income isn't yet, we still show the canton-specific info and prompt for income.
   if (!canton) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
       // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
@@ -331,7 +339,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   }
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // Anspruch & Aufenthaltsbewilligung — ruhige Orientierung für Neuzuzüger:innen, kein Verdikt
@@ -470,7 +478,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.maxPossible', { value: ipvResult.maxAnnual })
           )
-        )
+        ),
+        // Wie im Steuerrechner (annahmen.ohneDreizehnten): die Frage nach dem 13. Monatslohn ist offen,
+        // gerechnet ×12 — mit 13. läge die Verbilligung tiefer. Sichtbar, nicht still angenommen.
+        ipvResult.annahmen?.ohneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+          hinweisZeichen(), t('ipv.annahmeOhneDreizehnten')),
+        ipvResult.annahmen?.partnerOhneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+          hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten'))
       ),
 
       // All cantons overview — nur amtlich belegte Kantone (E9); ohne einen belegten entfällt der Vergleich
@@ -506,12 +520,16 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         )
       ),
 
-      // Actions
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: space.sm } },
+      // Actions — EIN lauter Knopf (Online-Antrag), die zwei anderen ruhig (Seitenrundgang
+      // 27.09.2026: vorher drei gefüllte Flächen, «Dokument» in skyDeep genauso laut).
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' } },
+        // Bleibt ein eigener Knopf statt PrimaryButton: gesperrt gilt der Stil aus K53
+        // (gestrichelt, ohne Deckkraft) — PrimaryButton dimmt über opacity.
         React.createElement('button', {
+          type: 'button',
           onClick: handleApplyOnline,
           disabled: !anspruchMoeglich,
-          style: { padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+          style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
         },
           // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
           // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
@@ -519,13 +537,15 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           t('premium.applyOnline')
         ),
         React.createElement('button', {
+          type: 'button',
           onClick: () => setIpvVorschau(true),
           disabled: !anspruchMoeglich,
-          style: { padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+          style: { ...ruhigerKnopf, ...(anspruchMoeglich ? null : gesperrtStil) }
         }, hinweisZeichen('kaestchen'), t('premium.document')),
         React.createElement('button', {
+          type: 'button',
           onClick: () => setShowCalculation(false),
-          style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { ...ruhigerKnopf, color: palette.mid }
         }, hinweisZeichen('kreuz'), t('common.close'))
       ),
 

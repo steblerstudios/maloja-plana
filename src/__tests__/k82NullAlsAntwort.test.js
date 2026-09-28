@@ -118,7 +118,7 @@ describe('K82 · Rechner rechnen gleich', () => {
 
 describe('K82 · Anzeige im Kapitel', () => {
   const render = (key, data) => renderToStaticMarkup(React.createElement(ChapterViewComplete, {
-    palette: LIGHT_PALETTE, t, chapter: kapitel(key), data, allData: { [key]: data },
+    palette: LIGHT_PALETTE, t, anfangsOffen: 'alle', chapter: kapitel(key), data, allData: { [key]: data },
     onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
   }));
   const wertVon = (html, id) => {
