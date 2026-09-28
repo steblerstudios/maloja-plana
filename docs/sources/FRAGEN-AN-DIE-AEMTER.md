@@ -60,6 +60,18 @@ Rechenbeispiel, bei dem das massgebende Einkommen zwischen C und A liegt?
 **Stand:** Waadt ist gebaut und getestet, aber **bewusst nicht eingereicht**, bis das geklärt ist
 (Entscheid Stebler Studios, 20.09.2026). Der Zweig `feat/k31-ipv-vd` liegt lokal.
 
+**Nachtrag 28.09.2026 — der erste Teil der Frage ist ohne das Amt beantwortet.** Die BLV liefert
+die Grafik als eingebettetes PNG (423 × 796 px) im HTML von Art. 21 (`api/actes/81172851-…/html`).
+Das Bild wurde extrahiert und Formel für Formel gelesen: **Formeln 1–5 stimmen mit der Abschrift
+überein** — der Exponent P steht aussen am ganzen Klammerausdruck `{1 − ((RD − C)/(A − C))²}`,
+das Quadrat innen am Bruch; die Formeln 2 und 5 tragen R bzw. Q am Bruch `{(C − RD)/C}` bzw.
+`{(B − RD)/(B − A)}`. Auch die Formeln 6–13 (Kategorien d–h, in der App nicht gebaut) folgen
+demselben Muster. Die Werte der Exponenten standen ohnehin im lesbaren Text des Arrêté
+(28.09.2026 an der Quelle erneut geprüft: unverändert). Damit ist der Verlauf zwischen den
+Eckpunkten belegt; ein zweites amtliches Rechenbeispiel wäre weiterhin willkommen, ist aber
+keine Bedingung mehr. **Waadt wird eingereicht** (Zweig `feat/k31-ipv-vd-2026-09-28`, auf dem
+gemeinsamen Rahmen `kantonsModell.js` neu aufgesetzt).
+
 ---
 
 ## 4 · SVA Aargau — die Werte 2027 stehen auf der Website, nicht im Erlass

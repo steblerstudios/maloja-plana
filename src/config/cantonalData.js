@@ -19,6 +19,7 @@ let _beModule = null;
 let _agModule = null;
 let _sgModule = null;
 let _luModule = null;
+let _vdModule = null;
 
 // K31: die Kantonsmodelle der Prämienverbilligung brauchen die Gemeinde und liegen darum im
 // selben Moment nach wie die PLZ-Daten (je ein eigener Chunk, hält das Hauptbundle klein).
@@ -30,6 +31,7 @@ export function preloadIPVModelle() {
   if (!_agModule) import('./ipvAargau.js').then(m => { _agModule = m; }).catch(() => {});
   if (!_sgModule) import('./ipvStGallen.js').then(m => { _sgModule = m; }).catch(() => {});
   if (!_luModule) import('./ipvLuzern.js').then(m => { _luModule = m; }).catch(() => {});
+  if (!_vdModule) import('./ipvVaud.js').then(m => { _vdModule = m; }).catch(() => {});
 }
 
 // PLZ-Modul aktiv vorladen UND die Kantonsmodelle — wie bisher, für alle, die von hier importieren.
@@ -127,7 +129,12 @@ export const CANTONAL_IPV = {
     beleg: { quelle: 'KVGG AG (SAR 837.200) · V KVGG (SAR 837.211) · SVA Aargau — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   TG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'TG' }, beleg: null },
   TI: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas', beleg: null },
-  VD: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // VD (K31): eigenes Modell in config/ipvVaud.js («subside ordinaire», Formeln nach RLVLAMal
+  // art. 21); Grenze und Höchstbetrag hängen von der Kategorie und vom Haushalt ab, darum hier
+  // keine Einzelwerte. `noteAutoTaxData` stand hier zu Unrecht: in VD braucht der Subside einen
+  // Antrag beim OVAM, erst die jährliche Erneuerung läuft von selbst (Quelle [5] der Recherche).
+  VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',
+    beleg: { quelle: 'Arrêté du Conseil d\'État VD concernant les subsides aux primes de l\'assurance-maladie obligatoire en 2026 du 17.12.2025, art. 2, 4, 6, 7, 9, 13; RLVLAMal (BLV 832.01.1) art. 21 (Formelbild gelesen); LVLAMal (BLV 832.01) art. 11, 16, 17; OVAM, Notice explicative : Les subsides 2026 (vd.ch)', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
   NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
@@ -299,9 +306,9 @@ function ipvRechnen(data) {
     anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton, ...(offen && { offen }),
   });
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
-  // K31: ZH, BE, AG, SG und LU rechnen nach ihrem eigenen amtlichen Modell (config/ipvZuerich.js,
-  // config/ipvBern.js, config/ipvAargau.js, config/ipvStGallen.js bzw. config/ipvLuzern.js). Solange PLZ-Daten und
-  // Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
+  // K31: ZH, BE, AG, SG, LU und VD rechnen nach ihrem eigenen amtlichen Modell (config/ipvZuerich.js,
+  // config/ipvBern.js, config/ipvAargau.js, config/ipvStGallen.js, config/ipvLuzern.js bzw. config/ipvVaud.js).
+  // Solange PLZ-Daten und Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
   if (canton === 'ZH') {
     if (!_zhModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
     return _zhModule.ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
@@ -323,6 +330,10 @@ function ipvRechnen(data) {
   if (canton === 'LU') {
     if (!_luModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
     return _luModule.ipvLuzern(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
+  }
+  if (canton === 'VD') {
+    if (!_vdModule || !plzModul()) { preloadPLZ(); return orientierung('laden'); }
+    return _vdModule.ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, plzModul().lookupPLZ);
   }
 
   let maxAnnualSubsidy;

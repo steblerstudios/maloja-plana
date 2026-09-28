@@ -3010,6 +3010,8 @@ export default {
     noteApplyIas: "Dumonda tar l'Istituto delle assicurazioni sociali (IAS)",
     noteApplySocialAction: "Dumonda tar il Service de l'action sociale",
     noteAutoTaxData: 'Examinaziun automatica via datas da taglia',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/VD, 28.09.2026).
+    noteApplyOvam: 'Dumonda tar l’OVAM u tar l’agentura d’assicuranzas socialas; il renovament annual va automaticamain',
     noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
@@ -3048,6 +3050,10 @@ export default {
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/VD, 28.09.2026).
+    vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun definitiva entrada en vigur, betg l’entrada dad oz. Il dretg cumenza il emprim di dal segund mais suenter la dumonda — tgi che inoltrescha tard perda ils mais avant. Imports retschavids memia bler ston vegnir restituids.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/VD, 28.09.2026).
+    vdSpezifischerSubside: 'La premia registrada qua è auta en relaziun cun l’entrada. Il chantun Vad enconuscha ultra da quai in subsidi specific, sche las premias surpassan 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovria las premias da tut las persunas da la chasada. Dumandar tar l’OVAM.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',

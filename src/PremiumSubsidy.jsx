@@ -446,6 +446,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // diesen Satz stünde eine Zahl im Brief, deren Grundlage strittig ist, und niemand
       // wüsste es. Steht nur bei `zusatzVorbehaltKey` — sonst wäre es Lärm für alle anderen.
       // (Befund Fachprüfung 23.09.2026: der Vorbehalt lag im Code und kam nie bei der Person an.)
+      // Denselben Platz nutzt VD für den Hinweis auf den «subside spécifique» (ohne Betrag,
+      // ipvVaud.js): ein zweiter kantonaler Satz, nur wo er den Haushalt betrifft.
       ipvResult.zusatzVorbehaltKey && React.createElement('div', { style: { marginTop: space.xs } },
         t(ipvResult.zusatzVorbehaltKey)),
       // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn

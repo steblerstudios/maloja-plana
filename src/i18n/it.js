@@ -4029,6 +4029,7 @@ export default {
     noteApplyIas: 'Richiesta presso l\'Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Richiesta presso il Service de l\'action sociale',
     noteAutoTaxData: 'Verifica automatica tramite i dati fiscali',
+    noteApplyOvam: 'Richiesta all’OVAM o all’agenzia di assicurazioni sociali; il rinnovo annuale è automatico',
     noteAutoSam: 'Automatico tramite il SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Cantone non riconosciuto',
     youngAdultsNote: 'I giovani adulti (19–25) in formazione hanno spesso una riduzione propria, più alta. Da verificare a parte.',
@@ -4062,6 +4063,9 @@ export default {
     luFristLaeuft: 'Nel Cantone di Lucerna la riduzione dei premi va richiesta ogni anno — per il {jahr} entro il 31 ottobre {vorjahr}, presso la WAS Ausgleichskasse Luzern. Chi si annuncia più tardi riceve la riduzione solo per i premi che scadono dopo l’annuncio. Chi percepisce prestazioni complementari o l’aiuto sociale non deve annunciarsi.',
     luFristVorbei: 'Il termine d’annuncio per il {jahr} scadeva il 31 ottobre {vorjahr}. Chi si annuncia solo ora riceve la riduzione soltanto per i premi che scadono dopo l’annuncio — non retroattivamente. L’importo indicato mostra l’intero diritto annuo. Per il {folgejahr} il termine scade il 31 ottobre {jahr}; i valori per il {folgejahr} non sono ancora stabiliti. Chi percepisce prestazioni complementari o l’aiuto sociale non deve annunciarsi.',
     luFristNichtAbgezogen: 'Riduzione dei premi Lucerna: qui non dedotta. Il termine di iscrizione per il {jahr} scadeva il 31 ottobre {vorjahr}. Con un’iscrizione successiva vengono ridotti solo i premi che scadono dopo l’iscrizione. Quando arriva la decisione, il suo importo può essere registrato nella riduzione dei premi, alla voce «Decisione ricevuta». Chi percepisce prestazioni complementari o l’aiuto sociale non deve annunciarsi.',
+    // K31 VD (28.09.2026): Arrêté subsides 2026 art. 6 al. 3; LVLAMal art. 16 al. 1bis; vd.ch (Antragsweg).
+    vorbehaltVD: 'Nel Cantone di Vaud conta l’ultima tassazione definitiva cresciuta in giudicato, non il reddito attuale. Il diritto inizia il primo giorno del secondo mese successivo alla domanda: chi la presenta tardi perde i mesi precedenti. Gli importi percepiti in eccesso vanno restituiti.',
+    vdSpezifischerSubside: 'Il premio registrato qui è alto rispetto al reddito. Il Cantone di Vaud prevede inoltre un sussidio specifico quando i premi superano il 10 per cento del reddito determinante. L’app non ne calcola l’importo: servirebbero i premi di tutte le persone dell’economia domestica. Da chiedere all’OVAM.',
     naeherung: 'Calcolo basato sui redditi e sulla sostanza registrati qui, non sul reddito imponibile. Il servizio cantonale si basa sui fattori fiscali e arriva quindi a un importo un po’ diverso.',
     offenGrund: {
       haushalt: 'Per le coppie e le economie domestiche con più adulti l’app non calcola ancora: mancano l’età e i redditi della seconda persona.',

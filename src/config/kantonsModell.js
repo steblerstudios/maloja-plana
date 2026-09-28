@@ -112,8 +112,8 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866)',
+    kantone: 'ZH, SG, LU, VD',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD OVAM Notice explicative 2026 Ziff. 1 ③ («versements au titre du 3e pilier A selon code 310 de la DT», LHPS-Revenu déterminant; an der Quelle gelesen 28.09.2026)',
     nichtAufgerechnet: () => 0,
   }),
 

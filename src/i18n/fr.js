@@ -4028,6 +4028,7 @@ export default {
     noteApplyIas: 'Demande auprès de l\'Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Demande auprès du Service de l\'action sociale',
     noteAutoTaxData: 'Vérification automatique via les données fiscales',
+    noteApplyOvam: 'Demande auprès de l’OVAM ou de l’agence d’assurances sociales; le renouvellement annuel est automatique',
     noteAutoSam: 'Automatique via le SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton non reconnu',
     youngAdultsNote: 'Les jeunes adultes (19–25) en formation ont souvent une réduction propre, plus élevée. À vérifier séparément.',
@@ -4061,6 +4062,9 @@ export default {
     luFristLaeuft: 'Dans le canton de Lucerne, la réduction de primes doit être demandée chaque année — pour {jahr}, jusqu’au 31 octobre {vorjahr}, auprès de la WAS Ausgleichskasse Luzern. En cas d’inscription plus tardive, seules les primes échues après l’inscription sont réduites. Les personnes au bénéfice de prestations complémentaires ou de l’aide sociale n’ont pas besoin de s’inscrire.',
     luFristVorbei: 'Le délai d’inscription pour {jahr} courait jusqu’au 31 octobre {vorjahr}. En cas d’inscription maintenant, seules les primes échues après l’inscription sont réduites — pas de manière rétroactive. Le montant affiché correspond au droit annuel complet. Pour {folgejahr}, le délai court jusqu’au 31 octobre {jahr}; les valeurs pour {folgejahr} ne sont pas encore fixées. Les personnes au bénéfice de prestations complémentaires ou de l’aide sociale n’ont pas besoin de s’inscrire.',
     luFristNichtAbgezogen: 'Réduction de primes Lucerne : non déduite ici. Le délai d’inscription pour {jahr} courait jusqu’au 31 octobre {vorjahr}. En cas d’inscription plus tardive, seules les primes échues après l’inscription sont réduites. Une fois la décision reçue, son montant peut être saisi dans la réduction de primes, sous « Décision reçue ». Les personnes au bénéfice de prestations complémentaires ou de l’aide sociale n’ont pas besoin de s’inscrire.',
+    // K31 VD (28.09.2026): Arrêté subsides 2026 art. 6 al. 3; LVLAMal art. 16 al. 1bis; vd.ch (Antragsweg).
+    vorbehaltVD: 'Dans le canton de Vaud, c’est la dernière décision de taxation définitive qui compte, et non le revenu actuel. Le droit débute le 1er jour du 2e mois suivant la demande: déposer tard fait perdre les mois précédents. Les montants perçus en trop doivent être remboursés.',
+    vdSpezifischerSubside: 'La prime saisie ici est élevée par rapport au revenu. Le canton de Vaud accorde en plus un subside spécifique lorsque les primes dépassent 10 pour cent du revenu déterminant. L’application n’en calcule pas le montant: cela demanderait les primes de toutes les personnes du ménage. À demander à l’OVAM.',
     naeherung: 'Calcul basé sur les revenus et la fortune saisis ici, et non sur le revenu imposable. Le service cantonal se fonde sur les facteurs fiscaux et arrive donc à un montant quelque peu différent.',
     offenGrund: {
       haushalt: 'Pour les couples et les ménages de plusieurs adultes, l’application ne calcule pas encore: l’âge et les revenus de la deuxième personne manquent.',

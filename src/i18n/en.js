@@ -4028,6 +4028,7 @@ export default {
     noteApplyIas: 'Apply at Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Apply at Service de l\'action sociale',
     noteAutoTaxData: 'Automatic verification via tax data',
+    noteApplyOvam: 'Apply to the OVAM or the Agence d’assurances sociales; the yearly renewal is automatic',
     noteAutoSam: 'Automatic via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton not recognized',
     youngAdultsNote: 'Young adults (19–25) in education often have their own, higher subsidy. Please check separately.',
@@ -4061,6 +4062,9 @@ export default {
     luFristLaeuft: 'In the canton of Lucerne, the premium reduction has to be applied for every year — for {jahr} by 31 October {vorjahr}, with WAS Ausgleichskasse Luzern. Anyone applying later only receives the reduction for premiums falling due after the application. Anyone receiving supplementary benefits or social assistance does not need to apply.',
     luFristVorbei: 'The application deadline for {jahr} was 31 October {vorjahr}. Anyone applying only now receives the reduction only for premiums falling due after the application — not retroactively. The amount shown is the full annual entitlement. For {folgejahr} the deadline is 31 October {jahr}; the values for {folgejahr} have not yet been set. Anyone receiving supplementary benefits or social assistance does not need to apply.',
     luFristNichtAbgezogen: 'Premium reduction Lucerne: not deducted here. The registration deadline for {jahr} was 31 October {vorjahr}. Anyone registering later only receives the reduction for premiums falling due after registration. Once the decision has arrived, its amount can be entered under premium reduction via «Decision received». Anyone receiving supplementary benefits or social assistance does not need to apply.',
+    // K31 VD (28.09.2026): Arrêté subsides 2026 art. 6 al. 3; LVLAMal art. 16 al. 1bis; vd.ch (application route).
+    vorbehaltVD: 'In the canton of Vaud the basis is the most recent final tax assessment, not today’s income. The entitlement starts on the first day of the second month after the application — applying late costs the months before that. Amounts received in excess must be repaid.',
+    vdSpezifischerSubside: 'The premium recorded here is high in relation to the income. The canton of Vaud also grants a specific subsidy where premiums exceed 10 per cent of the determining income. This app does not calculate its amount — that would require the premiums of everyone in the household. Please ask the OVAM.',
     naeherung: 'Calculated from the income and assets recorded here, not from taxable income. The cantonal office uses the tax factors and will therefore arrive at a somewhat different amount.',
     offenGrund: {
       haushalt: 'For couples and households with several adults the app does not calculate yet: the age and income of the second person are missing.',

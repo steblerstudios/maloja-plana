@@ -12,6 +12,13 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
+- **Prämienverbilligung Waadt nach amtlichem Modell 2026** (K31, sechster Kanton). «Subside
+  ordinaire» nach Arrêté du Conseil d’État vom 17.12.2025 und RLVLAMal art. 21, gebaut für
+  26+ allein, 26+ mit Kind(ern) und Kinder 0–18; das Formelbild der Verordnung wurde am 28.09.
+  aus der BLV extrahiert und gelesen, das amtliche Beispiel der Notice geht auf den Franken auf.
+  Neuer Antrags-Hinweis (OVAM/AAS statt «automatisch via Steuerdaten»), eigener Vorbehalt,
+  Hinweis ohne Betrag auf den «subside spécifique». Paare, 19–25-Jährige und Sonderkategorien
+  zeigen bewusst keine Zahl. Alle 5 Sprachen (rm provisorisch).
 - **Patientenverfügung in Fragen** (#440, `#/patientenverfuegung`). 13 Fragen, eine pro Seite, jede mit
   «Weiss ich noch nicht» und «Warum wird das gefragt?»; am Schluss Vorschau und Druckdokument mit
   separatem Begleitblatt. Datum und Unterschrift nur von Hand, kein Standardwert (auch keine

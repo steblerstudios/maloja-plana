@@ -244,7 +244,8 @@ describe('Eingaben lesen', () => {
   // sonst schreibt der nächste Kanton «belegt», wo «Zahl fehlt noch» gemeint war.
   describe('SAEULE_3A: die drei Zurechnungsregeln', () => {
     it('jede Regel nennt ihre Kantone und ihren Beleg', () => {
-      expect(SAEULE_3A.voll.kantone).toBe('ZH, SG, LU');
+      // VD seit 28.09.2026: Notice explicative 2026 Ziff. 1 ③ rechnet die 3a unbedingt zu.
+      expect(SAEULE_3A.voll.kantone).toBe('ZH, SG, LU, VD');
       expect(SAEULE_3A.bisBundesMaximum.kantone).toBe('BE');
       expect(SAEULE_3A.schwelleOhneSaeule2.kantone).toBe('AG');
       for (const r of Object.values(SAEULE_3A)) expect(r.beleg).toMatch(/Art\.|§/);

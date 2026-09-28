@@ -4065,6 +4065,8 @@ export default {
     noteApplyIas: 'Antrag beim Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Antrag beim Service de l\'action sociale',
     noteAutoTaxData: 'Automatische Prüfung via Steuerdaten',
+    // VD: der erste Subside muss beantragt werden, erst die Erneuerung läuft von selbst.
+    noteApplyOvam: 'Antrag beim OVAM oder bei der Agence d’assurances sociales; die Erneuerung läuft danach automatisch',
     noteAutoSam: 'Automatisch via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Kanton nicht erkannt',
     youngAdultsNote: 'Junge Erwachsene (19–25) in Ausbildung haben oft eine eigene, höhere Verbilligung. Bitte separat prüfen.',
@@ -4105,6 +4107,12 @@ export default {
     luFristLaeuft: 'Die Prämienverbilligung muss im Kanton Luzern jedes Jahr neu angemeldet werden — für {jahr} bis zum 31. Oktober {vorjahr}, bei der WAS Ausgleichskasse Luzern. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die danach fällig werden. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristVorbei: 'Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich erst jetzt anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden — rückwirkend geht es nicht. Der Betrag hier zeigt den ganzen Jahresanspruch. Für {folgejahr} läuft die Frist bis zum 31. Oktober {jahr}; die Werte für {folgejahr} sind noch nicht beschlossen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristNichtAbgezogen: 'Prämienverbilligung Luzern: hier nicht abgezogen. Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden. Ist die Verfügung da, lässt sich ihr Betrag bei der Prämienverbilligung unter «Verfügung erhalten» eintragen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
+    // K31 VD (28.09.2026): VD rechnet mit der letzten rechtskräftigen Veranlagung, und der Anspruch
+    // beginnt erst zwei Monate nach dem Antrag — beides wäre mit dem ZH- oder BE-Satz falsch beschrieben.
+    vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am 1. Tag des zweiten Monats nach dem Antrag — wer spät einreicht, verliert die Monate davor. Zu viel bezogene Beträge sind zurückzuzahlen.',
+    // Kein Betrag, nur der Hinweis: der spezifische Subside braucht die Prämien aller Personen
+    // im Haushalt und den genauen RDU — beides hat die App nicht.
+    vdSpezifischerSubside: 'Die erfasste Prämie ist hoch im Verhältnis zum Einkommen. Der Kanton Waadt kennt zusätzlich einen spezifischen Subside, wenn die Prämien mehr als 10 Prozent des massgebenden Einkommens ausmachen. Wie hoch er ausfällt, rechnet die App nicht — dafür braucht es die Prämien aller Personen im Haushalt. Beim OVAM nachfragen.',
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.

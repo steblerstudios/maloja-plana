@@ -2203,6 +2203,124 @@ App: `maxIncome` 54'000, `subsidySingle` 3'000/Jahr, linearer Abbau. Belegt für
 4. Règlement concernant la LVLAMal (RLVLAMal), BLV 832.01.1, Version en vigueur dès le 01.11.2025, Base législative vaudoise. https://prestations.vd.ch/pub/blv-publication/api/actes/81172851-0af6-4cb2-8896-59408b0037ea/html — abgerufen 16.09.2026
 5. Subside à l'assurance-maladie, État de Vaud (Antragsweg, Anspruchsbeginn). https://www.vd.ch/sante-soins-et-handicap/assurance-maladie/subside-a-lassurance-maladie — abgerufen 16.09.2026
 
+### Nachprüfung 20.09.2026 (K31, Einbau in die App, Zweig `feat/k31-ipv-vd`)
+
+Gebaut in `src/config/ipvVaud.js`, Tests in `src/config/__tests__/ipvVaud.test.js` und
+`src/__tests__/ipvVaudAnzeige.test.js`. Gebaut ist **nur der «subside ordinaire»** und davon
+nur die drei Kategorien, die die App belegen kann: a) 26+ allein · b) 26+ mit Kind(ern) ·
+c) Kinder 0–18.
+
+**Die Formeln waren aus einem Bild abgeschrieben — was davon damals nachgerechnet wurde.**
+Das Formelbild selbst konnte am 20.09. nicht gelesen werden. Geprüft wurde deshalb die Abschrift
+gegen alles, was unabhängig davon feststeht:
+
+| Prüfung | Ergebnis |
+|---|---|
+| a) RD = C1 (17'000) → Maximum F1 | 331 ✓ |
+| a) RD = A1 (40'000) → Minimum E1 | 30 ✓ (Formel 1 hängt dort stetig an) |
+| a) RD = B1 (50'000) / B1+1 | 30 / 0 ✓ |
+| b) RD = 0 → D2 · RD = C2 (24'200) → F2 | 336 / 300 ✓ |
+| b) Formeln 2 und 3 treffen sich bei C2 | beide 300 ✓ |
+| b) RD = A2 (55'000) → E2 · B2 (69'000) / B2+1 | 20 / 20 / 0 ✓ |
+| c) RD = C3 / A3 / B3 / B3+1 | 114 / 114 / 114 / 0 ✓ |
+| Monotonie aller drei Kategorien über 0…90'000 | fällt, steigt nie ✓ |
+| **Amtliches Beispiel der Notice (Ziff. 3)** | **geht auf den Franken auf ✓** |
+
+Zum Beispiel: Familie, 4 Personen, RDU 76'000 → Revenu OVAM 76'000 − 13'000 = 63'000.
+Erwachsene liegen dort zwischen A2 und B2 → je Minimum E2 = 20/Monat; die Kinder liegen genau
+auf A3 → je 114/Monat. (2 × 20 + 2 × 114) × 12 = **3'216** — genau der Betrag der Notice.
+Die Region kommt darin nicht vor: der subside ordinaire ist in VD **nicht** nach Prämienregion
+abgestuft (anders als in ZH und BE). Die Region bestimmt nur die Referenzprämie (art. 13).
+
+**Prämienregionen.** VD hat in der BAG-Tabelle (`src/data/praemienRegionen.js`, priminfo 2026)
+genau zwei Regionen. Die Notice [2] beschreibt die Regionen nur mit Landschaftsnamen, nicht als
+Gemeindeliste — ein Abgleich Gemeinde für Gemeinde ist mit dieser Quelle **nicht möglich**.
+Geprüft ist darum nur, was prüfbar ist: alle in der Notice genannten Räume liegen richtig
+(Stichproben Lausanne · Renens · Villars-Sainte-Croix · Nyon · Morges · Rolle · Lutry · Pully ·
+Vevey · Montreux = R1; Aigle · Bex · Château-d'Oex · Oron · Cossonay · Payerne · Avenches ·
+Yverdon-les-Bains · Le Chenit = R2). PLZ über beide Regionen (z. B. 1080 Servion/Forel) zeigen
+ohne Ortsnamen keine Zahl.
+
+**Das Revenu déterminant ist nicht das Einkommen der App.** Abgebildet ist die Kette der Notice
+Ziff. 1, soweit die App die Posten hat: laufende Nettoeinkünfte (Hauptlohn × 12 oder 13,
+Nebenerwerb und Renten × 12) − KK-Pauschale (2'200 / +1'300 je Kind) + 1/15 des Vermögens über
+59'000 = RDU; davon der Kinderabzug (6'000 / +7'000) = Revenu déterminant OVAM. **Näherung**,
+benannt in der Anzeige: amtlich zählt das «revenu net» der letzten rechtskräftigen Veranlagung —
+Berufsauslagen, Sozialabzüge, Schulden und der Freibetrag von 300'000 auf selbst bewohntem
+Wohneigentum fehlen, ebenso die Einkäufe in die 2. Säule und der Liegenschaftsunterhalt. Die
+Näherung rechnet damit systematisch **zu hoch**, der angezeigte Subside ist eher zu tief als zu hoch.
+
+**Subside spécifique: bewusst kein Betrag.** Er braucht die Prämien aller Personen der UER und
+den genauen RDU — beides hat die App nicht. Stattdessen ein Hinweis ohne Zahl, wenn die
+erfasste Prämie (gedeckelt auf die Referenzprämie nach art. 13) abzüglich des Anteils der
+erwachsenen Person am ordentlichen Subside mehr als 10 % des RDU ausmacht. Jede weitere Person
+im Haushalt vergrössert die linke Seite (Kinder: Referenzprämie 161/152 gegen 114 Subside) —
+der Hinweis erscheint also eher zu selten als zu oft. Er steht auch über der Grenze des
+ordentlichen Subsides, weil der spezifische keine Einkommensgrenze kennt.
+
+**Korrigiert beim Einbau:** Die App führte VD mit `noteKey: 'ipv.noteAutoTaxData'`
+(«automatische Prüfung via Steuerdaten»). Das stimmt nicht — der erste Subside muss beim OVAM
+oder bei der AAS **beantragt** werden, erst die jährliche Erneuerung läuft von selbst
+(Quelle [5]), und der Anspruch beginnt erst am 1. Tag des 2. Monats nach dem Antrag. Neuer
+Schlüssel `ipv.noteApplyOvam`, dazu ein eigener Vorbehalt `ipv.vorbehaltVD` (der Berner Satz
+nennt ein Basisjahr, der Zürcher die Steuerfaktoren des Anspruchsjahres — beides wäre hier falsch).
+
+### Nachprüfung 28.09.2026 (Formelbild gelesen, Umbau auf den gemeinsamen Rahmen, eingereicht)
+
+**Das Formelbild ist gelesen — Frage 3 an das OVAM ist damit im Kern erledigt.** Die BLV liefert
+den Verordnungstext von RLVLAMal art. 21 als HTML (`prestations.vd.ch/pub/blv-publication/api/actes/81172851-0af6-4cb2-8896-59408b0037ea/html`,
+HTTP 200, 706 KB, «en l'état de cette version au 01.11.2025»); die Formeln von al. 2 stecken darin
+als **ein eingebettetes PNG** (Base64, 423 × 796 px, 225 KB), das einzige Bild der Seite.
+Extrahiert, vergrössert und Formel für Formel gegen die Abschrift oben gehalten:
+
+| Formel | Bild | Abschrift | |
+|---|---|---|---|
+| 1 | E1 + ([F1 − E1] × {1 − ((RD − C1)/(A1 − C1))²}^P1) | identisch | ✓ |
+| 2 | F2 + ([D2 − F2] × {(C2 − RD)/C2}^R2) | identisch | ✓ |
+| 3 | E2 + ([F2 − E2] × {1 − ((RD − C2)/(A2 − C2))²}^P2) | identisch | ✓ |
+| 4 | E3 + ([F3 − E3] × {1 − ((RD − C3)/(A3 − C3))²}^P3) | identisch | ✓ |
+| 5 | G3 + ([E3 − G3] × {(B3 − RD)/(B3 − A3)}^Q3) | identisch | ✓ |
+| 6–13 | dasselbe Muster für d)–h) (in der App nicht gebaut) | identisch | ✓ |
+
+Entscheidend war die **Stellung des Exponenten**: P steht aussen am ganzen Klammerausdruck, das
+Quadrat innen am Bruch — genau so rechnet `vdSubsideMonat`. Die **Werte** der Exponenten
+(P1 = 2.5 · R2 = 1 · P2 = 2.3 · P3 = 2.3 · Q3 = 0.25) standen ohnehin im lesbaren Text des Arrêté.
+Damit ist auch der Verlauf zwischen den Eckpunkten belegt, nicht mehr nur die Eckpunkte. Ein
+zweites amtliches Rechenbeispiel mitten auf einer Kurve wäre weiterhin willkommen, ist aber
+keine Bedingung mehr.
+
+**Arrêté 2026 an der Quelle erneut gelesen** (PDF, HTTP 200, 101 KB, «Document généré le
+18.12.2025», `pdftotext`): alle Parameter der Kategorien a)–c), der Kinderabzug (art. 4:
+6'000 / 7'000), die 10-%-Schwelle (art. 7) und die Referenzprämien (art. 13: 563/527 · 538/502 ·
+488/452; Bänder 62'500/70'000 bzw. 86'300/96'600) sind **unverändert**. Die Notice 2026 (PDF,
+HTTP 200, 534 KB) ebenso: KK-Pauschale 2'200/4'400/+1'300, Vermögensfreibetrag 59'000/118'000
+mit 1/15, Kinderabzug 6'000/13'000. Auf vd.ch (Subside-Seite, HTTP 200) ist **kein Arrêté 2027**
+erwähnt — der Jahres-Riegel greift ab 01.01.2027.
+
+**Säule 3a — Regel `voll`.** Notice Ziff. 1 ③: «auquel on ajoute les versements au titre de la
+prévoyance individuelle liée (3e pilier A) selon code 310 de la DT» — unbedingte Zurechnung,
+keine Schwelle, kein Deckel. Der Zweig vom 20.09. addierte `pension3a` noch zum Einkommen;
+seit dem Umbau auf `kantonsModell.js` gilt dieselbe Herleitung wie in ZH/SG/LU: das
+Nettoeinkommen der App trägt die 3a bereits, der Abzug ist 0 (Befund Fachprüfung 20.09.2026,
+in VD nachgezogen). Dazu der Riegel `einkommenNegativ` wie in BE — ein negatives Einkommen
+klemmte in `vdRevenuDeterminant` sonst auf 0 und ergäbe den Höchstbetrag.
+
+**Umbau auf den gemeinsamen Rahmen:** `jahrVorbei`, `mehrereErwachsene`, `geburtsjahr` +
+`ERWACHSEN.mangelsStichtag`, `kinderAlter(…, jahr, 1)`, `regionAusPLZ`, `vermoegenSumme`,
+`einkommenJahr(f, SAEULE_3A.voll)`, `praemieJahr` + `praemieFehlt`, `deckelnProPerson`,
+`ergebnisOhneAnspruch` / `ergebnisMitAnspruch`. Der Hinweis auf den subside spécifique geht
+über `zusatzVorbehaltKey` (derselbe Anzeigeplatz wie der zweite Berner Vorbehalt), nicht mehr
+über ein eigenes Feld. Verhalten sonst unverändert; alle Tests des Zweigs vom 20.09. laufen,
+angepasst nur dort, wo der Rahmen es verlangt (3a, negatives Einkommen, Feldname).
+
+**Abweichungen zur Recherche vom 16.09.2026:** keine bei den Zahlen.
+
+**Offen bleibt (VD):** Paare (Kategorie h), junge Erwachsene 19–25 (Kategorien d–g, alle vier
+hängen am Ausbildungsstatus und an der wirtschaftlichen Unabhängigkeit), Sonderkategorien
+RI/PC, der Betrag des spezifischen Subsides, der Widerspruch beim Inkrafttreten von LVLAMal
+art. 16 al. 1bis (BLV 01.03.2026 gegen Notice 01.01.2026 — die App wendet den Deckel an, das ist
+die tiefere und damit vorsichtigere Lesart), und die Werte 2027.
+
 ---
 
 ## VS — Wallis / Valais
