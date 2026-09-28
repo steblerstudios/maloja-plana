@@ -112,7 +112,7 @@ describe('K31 OW: die Rechnung', () => {
     expect(r.total).toBeCloseTo(10538.4 - 2850, 9);
   });
   it('harte Grenze mit Kindern: 74 999 gibt bei fünf Kindern noch 1 793.61, 75 000 nichts', () => {
-    expect(ipvObwaldenRechnen({ ae: 74999, kinderZahl: 5 }).total).toBeCloseTo(11918.4 - 0.13499 * 74999, 6);
+    expect(ipvObwaldenRechnen({ ae: 74999, kinderZahl: 5 }).total).toBeCloseTo(11918.4 - 0.134999 * 74999, 6);
     expect(ipvObwaldenRechnen({ ae: 75000, kinderZahl: 5 })).toMatchObject({ total: 0, grund: 'ueberGrenze', grenze: 75000 });
   });
 });
