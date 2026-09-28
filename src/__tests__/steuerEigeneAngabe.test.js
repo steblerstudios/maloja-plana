@@ -30,6 +30,12 @@ describe('Steuer-Karte nennt die eigene Angabe neben der Schätzung', () => {
     const monat = Number(html.match(/taxMonthlyCompare\(CHF ([\d’']+)\|/)[1].replace(/[’']/g, ''));
     expect(monat).toBe(Math.round(jahr / 12));
   });
+  it('nur Bundessteuer (kein Kanton): nur die eigene Angabe, kein Monatswert der Teilschätzung', () => {
+    const html = seite(person({ canton: '' }));
+    expect(html).toContain('tax.federalOnly');
+    expect(html).toContain('finanzUebersicht.taxOwnFigure(CHF 850)');
+    expect(html).not.toContain('taxMonthlyCompare');
+  });
   it('ohne eigene Angabe: kein Vergleich', () => {
     const html = seite(person({ monthlyTax: '' }));
     expect(html).not.toContain('taxMonthlyCompare');
