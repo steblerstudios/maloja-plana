@@ -431,7 +431,11 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
       // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der
       // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
-      React.createElement('div', null, ipvResult.region
+      // `jahrKey`: ein Kanton ohne Prämienregion nennt seinen eigenen Satz — `jahrOhneRegion`
+      // spricht vom Aargau (K31 BS, 28.09.2026: sonst stünde bei Basel-Stadt «Kanton Aargau»).
+      React.createElement('div', null, ipvResult.jahrKey
+        ? t(ipvResult.jahrKey, { jahr: ipvResult.jahr })
+        : ipvResult.region
         ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
         : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
       React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
