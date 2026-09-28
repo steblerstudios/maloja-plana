@@ -39,7 +39,7 @@ sind. Dieses Dokument ändert keinen Code.
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | gebaut (PR #476) | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | gebaut (PR #486) — Familien im mehrdeutigen Band ohne Zahl | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
-| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
+| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | ~~teilweise — gebaut (PR #475), zeigt bewusst keinen Betrag~~ ⟨korrigiert 28.09.2026 abends⟩ **gebaut (PR #475), rechnet** — eine Grenze für alle (RRB 2025) | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | abbildbar | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise — **gebaut (PR #481), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Eckpunkte der linearen Skala nicht publiziert sind (nur «kein Anspruch», wo sicher) | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
@@ -1400,8 +1400,8 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat, Hinweis «automatisch aus
 
 ## ZG — Zug
 
-**Beurteilung:** teilweise
-**Modell (kurz):** Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 %
+**Beurteilung:** ~~teilweise — in der App gebaut 28.09.2026 (K31), zeigt bewusst keinen Betrag~~ ⟨korrigiert 28.09.2026 abends, Fachprüfung #475: **abbildbar — gebaut, rechnet**; siehe «Fachprüfung #475 — Fixrunde 1» unten⟩
+**Modell (kurz):** Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; ~~tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden)~~ ⟨korrigiert: eine Grenze für alle, RRB 2025 Ziff. 1.5⟩; Kinder/junge Erw. in Ausbildung mind. 80 % / 50 %
 **Zuständig / Weg:** Ausgleichskasse Zug (Durchführung), Gemeindestellen (Eingang Papierformular). Antrag nötig (online mit Login aus dem Schreiben oder Papier), Frist 30. April 2026 (abgelaufen); EL-Beziehende automatisch.
 **Gültigkeit:** 2026 definitiv (Werte vom Regierungsrat für 2026 festgelegt, laut Broschüre Stand Dezember 2025)
 
@@ -1455,6 +1455,139 @@ App: maxIncome 60'000, subsidySingle 3'600, linearer Abbau. Belegt ist für eine
 4. Online-Rechner «Prämienverbilligung 2026 – provisorische Berechnung als Einzelperson», Ausgleichskasse Zug. https://www.akzug.ch/online-services/online-rechner/praemienverbilligung-2026-provisorische-berechnung-des-anspruches/praemienverbilligung-2025-provisorische-berechnung-als-einzelperson — abgerufen 16.09.2026 (nur Eingabefelder gelesen)
 5. Medienmitteilung «Gezielte Zusatzentlastung bei den Krankenkassenprämien», Kanton Zug, 26.01.2026. https://zg.ch/news/news~_2026_1_gezielte-zusatzentlastung-bei-den-krankenkassenpraemien~.html — abgerufen 16.09.2026
 6. Webseite «Prämienverbilligung (IPV)», Ausgleichskasse Zug (Frist 30.04.2026 abgelaufen). https://www.akzug.ch/dienstleistungen/praemienverbilligung — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Alle Quellen an diesem Tag neu abgerufen, jede mit Gegenprobe (erfundene Adresse muss anders
+antworten).
+
+| Adresse | echt | erfunden |
+|---|---|---|
+| `https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf` | 200, 942'695 B, PDF (erstellt 12.12.2025) | `…Broschuere_IPV_2099.pdf` → **404** |
+| `https://bgs.zg.ch/api/de/texts_of_law/842.6/show_as_json` | 200, 107'311 B | `…/842.69/…` → **404**, 0 B |
+| `https://bgs.zg.ch/api/de/texts_of_law/842.61/show_as_json` | 200, 13'842 B | (dieselbe Gegenprobe) |
+| `https://bgs.zg.ch/api/de/versions/2661/pdf_file` (IPVG) · `…/2185/pdf_file` (V IPVG) | 200, 400'522 B · 200, 164'973 B | `…/versions/999999/pdf_file` → **404**, 0 B |
+| `https://www.akzug.ch/dienstleistungen/praemienverbilligung` | 200 | `…praemienverbilligungxyz` → **404** |
+| `https://www.akzug.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/Praemienverbilligung/Grafik-IPV_2026_neu.pdf` | 200, 1'657'526 B (nur Ablaufgrafik, keine Grenzwerte) | `…Grafik-IPV_2099_neu.pdf` → **404** |
+
+**Fassungen:** IPVG BGS 842.6 «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum:
+11.04.2024)», Stand 1. Januar 2025. V IPVG BGS 842.61 «Aktuelle Version in Kraft seit: 01.01.2021
+(Beschlussdatum: 15.12.2020)». Broschüre 2026 der Ausgleichskasse Zug, PDF erstellt 12.12.2025.
+Werte 2027: keine gefunden.
+
+**Neu gelesen (Wortlaut):**
+> IPVG § 4 Abs. 3: «Massgebend sind die persönlichen und familiären Verhältnisse am 1. Januar des Jahres, für welches Prämienverbilligung beansprucht wird.»
+
+> IPVG § 6 Abs. 2/3: «Massgebend für die Berechnung der Prämienverbilligung sind die Steuerfaktoren der rechtskräftigen Veranlagung der vorletzten Steuerperiode beziehungsweise der letzten Steuerperiode für neu zugezogene Personen.» — «Der Regierungsrat kann die Auszahlung von minimalen Prämienbeiträgen ausschliessen und Obergrenzen für das massgebende Einkommen festlegen, ab denen nur noch ein reduzierter oder kein Anspruch mehr auf Prämienverbilligung besteht.»
+
+> IPVG § 7bis Abs. 2: «Steht mehreren Personen ein nicht reduzierter Gesamtanspruch zu, so wird für Kinder und junge Erwachsene in Ausbildung mindestens die Hälfte der für sie massgebenden Prämie verbilligt.»
+
+> IPVG § 11 Abs. 1/2: Bescheinigung und Versicherungsnachweis «bis 30. April bei jener Gemeinde …, wo sie am 1. Januar des Jahres Wohnsitz hatten» — «Verspätet eingereichte Gesuche können berücksichtigt werden, wenn sie bis 30. September gestellt werden und wichtige Gründe vorliegen.»
+
+> IPVG § 18 Abs. 1: «Ungerechtfertigt bezogene Prämienbeiträge sind zurückzuerstatten. Die Ausgleichskasse macht die Rückforderung geltend.»
+
+> V IPVG § 1 Abs. 1: Reineinkommen, «b) zuzüglich 10 % des Reinvermögens …; b1) zuzüglich allfällig abgezogener, freiwilliger Einkäufe in die 2. Säule …; c) zuzüglich allfällig abgezogener Beiträge an die gebundene Selbstvorsorge (Säule 3a) …; c1) … Liegenschaftsunterhaltskosten …, soweit diese 20 % … übersteigen; d) abzüglich Kinderabzug in der Höhe von 8500 Franken pro Kind.»
+
+Broschüre 2026: alle Zahlen der Tabelle oben im Textlayer wiedergefunden (Richtprämien, 8 %,
+70'000 / 89'900, 0,5 % je 100 mit Aufrundung, Mindestgarantie 80 % / 50 % nur bei «nicht reduzierter
+Verbilligung», Frist 30. April 2026, unter 50 Franken keine Auszahlung, Veranlagung 2024, Kinder
+«Jahrgang 2008 – 2025», junge Erwachsene «2001 – 2007»).
+
+**Bestätigt offen:** «Die Grenzwerte für das massgebende Einkommen fallen bei Einzelpersonen und
+gewissen Haushalten mit nur einer erwachsenen Person tiefer aus.» — keine Zahl, auch nicht in der
+Ablaufgrafik, im Merkblatt-Verzeichnis (nur Broschüre und Gemeindestellen-Liste) oder in der
+Medienmitteilung vom 26.01.2026 («Der Regierungsrat hat die Parameter … festgelegt»). Der
+Regierungsratsbeschluss ist nicht in der BGS erfasst. Den Online-Rechner (serverseitig,
+`actions/calculators/calculation/formcheck`) haben wir **nicht** mit Werten gefüttert. Die
+«Berechnungsvorlage in diesem Dokument» enthält die Broschüre nicht (zwei Bilder: Titel, Schluss).
+
+~~**Ein amtliches Berechnungsbeispiel gibt es nicht.**~~ ⟨korrigiert: die Broschüre 2025, S. 7/8, hat zwei — siehe Fixrunde unten⟩ Prüfstein der Tests sind die Wortlaute von
+S. 5 als Handrechnung (Nullpunkt 4'984.80 / 8 % = 62'310, Kürzungsfaktor mit Aufrundung).
+
+**Was die App daraus macht (`src/config/ipvZug.js`):** ⟨korrigiert 28.09.2026 abends, Fachprüfung #475 und
+Fixrunde 2: der folgende Absatz ist überholt — ZG rechnet einen Betrag für Einzelpersonen und Familien, siehe
+«Fixrunde 1» und «Fixrunde 2» unten⟩ Die App rechnet nur Haushalte mit einer
+erwachsenen Person — genau die Gruppe mit den unbekannten Grenzen. Darum zeigt ZG **für niemanden
+einen Betrag** (`zgGrenzeEinzelperson`), ausser «kein Anspruch», wo er sicher ist: ohne Kinder ab
+massgebendem Einkommen 62'310 (Richtprämie ≤ 8 %), mit Kindern über 89'900. Säule 3a: Regel `voll`
+(V IPVG § 1 lit. c, in `kantonsModell.js` eingetragen). `maxIncome` null.
+
+**Bewusst nicht gebaut:** Paare, Konkubinat, mehrere Erwachsene · junge Erwachsene · Quellen-
+besteuerte, EL, Sozialhilfe, Mutterschaftsbeiträge · BVG-Einkäufe und Liegenschaftsunterhalt ·
+Mindestgarantie der Kinder (nur bei nicht reduziertem Anspruch, und Gesetz 50 % gegen Broschüre 80 %).
+
+**Fachprüfung #475 — Fixrunde 1 (28.09.2026 abends):** Die Aussagen «Bestätigt offen», «Was die App
+daraus macht» und die Fragen unten sind **überholt** und bleiben als Beleg stehen.
+- **Beschluss 2025 an der Quelle gelesen:** Regierungsrat Zug, Sitzung vom 26. November 2024,
+  «Prämienverbilligung 2025» (`https://cdn.zg.ch/dam/jcr:e30a2229-fec0-4fd2-8c93-bbf68758b247/RRB%20IPV%202025.pdf`
+  → 200, 82'584 B; gleichlautend `akzug.ch/uploads/PDF-Formulare-Merkbl%C3%A4tter/Praemienverbilligung/2025-IPV_Regierungsratsbeschluss_kurz.pdf`
+  → 200, Gegenprobe `…/2099-IPV_…` → 404). Ziff. 1.5: «Pro 100 Franken, die das massgebende Einkommen die
+  Grenze von 70 000 Franken übersteigt, wird der ordentliche Anspruch auf Prämienverbilligung um
+  0,5 Prozent reduziert. … Übersteigt das massgebende Einkommen 89 900 Franken, besteht kein Anspruch»
+  — **eine Grenze, ohne Unterscheidung nach Haushalt**. Ziff. 1.6: «Steht mehreren Personen ein nicht
+  reduzierter Gesamtanspruch zu, so wird für Kinder mindestens 80 Prozent … verbilligt. Beträgt der
+  gemäss § 6 IPVG berechnete Gesamtanspruch weniger als dieser Mindestanspruch, so wird der
+  Mindestanspruch vergütet.» Ziff. 3: Veröffentlichung im Amtsblatt.
+- **Beschluss 2026 nicht gefunden** (`…/2026-IPV_Regierungsratsbeschluss_kurz.pdf` → 404 — eine geratene
+  Adresse, kein Negativbefund über die Sache). Die Werte 2026 stammen aus der Broschüre 2026, die
+  Struktur aus dem Beschluss 2025. Frage 5.
+- **Broschüre 2025** (`akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2025_low.pdf` → 200, PDF 07.01.2025,
+  12 S.) S. 7/8: Beispiel 1 «Alleinstehende Person ohne Kinder»: 25'000 + 500 + 1'000 + 2'000 = 28'500 →
+  2'280 → **Anspruch 3'354.40**; Beispiel 2 Familie: 42'800 → 3'424; 17'814 → 14'390; Mindestgarantie
+  1'958.60 + 2'102.40 = 4'061 → **«Anspruch (höherer Betrag)» 14'390**. Beide rechnet die App mit den
+  Werten 2025 auf den Rappen nach. Derselbe Satz «bei Einzelpersonen … tiefer» steht auch hier — er
+  beschreibt die Formel (Nullpunkt Einzelperson 4'984.80 / 8 % = **62'310**, mit einem Kind 77'610).
+- **Deckel:** keiner (IPVG nur § 7 Abs. 3, Sozialhilfe); KVV Art. 106c Abs. 5bis (SR 832.102, Stand
+  01.01.2026, Fedlex-Filestore PDF 200, 1'342'590 B; Datum 20260102 → HTML-Hülle 77'151 B) selbst gelesen:
+  «Er bezahlt der versicherten Person den Differenzbetrag … aus. Kantonale Regelungen, wonach die Prämie
+  höchstens bis zu ihrem vollen Umfang verbilligt werden kann …, bleiben vorbehalten.» → `KEIN_PRAEMIENDECKEL.ZG`.
+- **Näherung (B2):** «Kein Anspruch» und «unter 50» nur, wenn es auch nach dem Versicherungsabzug gilt —
+  Steuergesetz Zug BGS 632.1, «Version in Kraft von: 01.01.2024 bis: 31.12.2025» (`bgs.zg.ch/api/de/versions/2510/pdf_file`
+  → 200), § 30 lit. g: «bis zum Gesamtbetrag von: 6000 Franken für verheiratete Personen …; 3000 Franken
+  für die übrigen steuerpflichtigen Personen … Diese Abzüge erhöhen sich um 1000 Franken für jedes Kind»
+  (höchstens die erfasste Prämie). Sonst Grund `zgNaeherung`. Bei erfassten bezahlten Alimenten nie ein Verdikt.
+- **Gesuch:** § 11 IPVG (30. April; verspätet bis 30. September aus wichtigen Gründen) — im Budget wird
+  nichts abgezogen (`gesuchNoetig`, wie NE); Frist-Sätze `zgFristLaeuft` / `zgFristVorbei`.
+- Kind mit Geburtsjahr im Anspruchsjahr zählt nicht (§ 4 Abs. 3 IPVG, Broschüre «2008 – 2025»).
+
+**Fixrunde 2 nach dem Re-Review #475 (28.09.2026 spätabends):**
+- ~~Untergrenze nur mit dem Versicherungsabzug «höchstens die erfasste Prämie»~~ ⟨korrigiert: ohne erfasste
+  Prämie war der Abzug 0⟩ — jetzt **immer** der volle Satz nach § 30 lit. g (3'000; ohne Beiträge nach lit. d/e,
+  d. h. ohne Lohn, um die Hälfte höher: 4'500; + 1'000 je Kind), denn auch Lebens-, Unfallprämien und Sparzinsen
+  zählen.
+- **Berufskosten** an der Quelle gelesen: StG Zug BGS 632.1, «Stand 1. Januar 2024» (`bgs.zg.ch/api/de/versions/2510/pdf_file`
+  → 200, 3'276'596 B; Gegenprobe `…/versions/9999991/pdf_file` → 404, 0 B) § 25 Abs. 1 lit. a: Fahrkosten «bis zu
+  einem Maximalbetrag von 6000 Franken», Abs. 2: «Für die Berufskosten nach Abs. 1 Bst. b und c werden
+  Pauschalansätze festgelegt» — festgelegt von der Steuerverwaltung (V StG BGS 632.11 § 10, «Stand 1. Januar 2022»,
+  `…/versions/2286/pdf_file_with_annexes` → 200). Die Ansätze: Steuerverwaltung Zug, «Wegleitung zur Steuererklärung
+  für natürliche Personen» 2024 (`zg.ch/dam/jcr:f2658eeb-c8c6-45d9-989c-908ce1a9c4ba/Wegleitung_2024_StKtZug_A4_20241022.pdf`
+  → 200, 644'449 B, PDF; Gegenprobe mit erfundener Kennung → 404), S. 32: «Der Abzug beträgt 3 % des Nettolohnes,
+  mindestens Fr. 2 000.– und höchstens Fr. 4 000.– pro Jahr. Beträgt Ihr Einkommen weniger als Fr. 2 000.– pro Jahr,
+  entspricht der zulässige Abzug diesem geringeren Einkommen.» · Fahrkosten «Fr. 6 000.– (Kantons- und
+  Gemeindesteuern)» · S. 33 Verpflegung «bei regelmässiger auswärtiger Verpflegung Fr. 3 200.– im Jahr». Das
+  Steuerbuch auf zg.ch leitet auf `wissen.zg.ch` um und lieferte roh für echte und erfundene Seiten dieselbe
+  Hülle (402'238 B) — **kein Beleg**, nicht verwendet.
+- **Untergrenze des Verdikts** jetzt: massgebendes Einkommen − (bei Lohn: Pauschale 3 % [2'000–4'000] + 6'000
+  Fahrkosten + 3'200 Verpflegung) − Versicherungsabzug voll − bezahlte Unterhaltsbeiträge ×12 (§ 30 lit. c) −
+  erfasste Kinderbetreuung ×12, höchstens 25'000 je Kind unter 14 im Basisjahr (§ 30 lit. l). Einzelperson ohne
+  Kinder: «kein Anspruch» erst ab rund 76'200 Nettolohn (≈ 6'350/Monat) statt ab 62'310. Nicht darin (unbeschränkt
+  oder unbekannt): nachgewiesene höhere Berufskosten, Weiterbildung (lit. n, bis 12'000), Krankheitskosten (§ 31),
+  Spenden, Schuldzinsen. «Unter dem Mindestbetrag» als Verdikt ist damit praktisch nicht mehr erreichbar.
+- **Erhaltene Unterhaltsbeiträge und Familienzulagen** zählen jetzt zum massgebenden Einkommen: StG § 22 Abs. 1
+  lit. f («Unterhaltsbeiträge, die eine steuerpflichtige Person bei Scheidung … für sich erhält, sowie
+  Unterhaltsbeiträge, die ein Elternteil für die unter seiner elterlichen Sorge oder Obhut stehenden Kinder
+  erhält») und § 16 Abs. 1 («Zulagen»), Wegleitung 2024 Code 155 («Kinder- und Familienzulagen …, welche direkt
+  von der Ausgleichskasse ausgerichtet und nicht bereits im Erwerbseinkommen … berücksichtigt worden sind»).
+  Prüffall: 1 Kind, 4'000 + 1'500 Alimente + 300 Zulagen → ME 61'100 → **1'320.80** (vorher 3'048.80). Bezahlte
+  Alimente mindern nur die Untergrenze, nicht den Betrag (§ 30 lit. c gilt nur für Ex-Ehegatten und minderjährige
+  Kinder; das App-Feld unterscheidet das nicht). Der Vorbehalt nennt beide Richtungen und die Doppelzählung,
+  wenn Zulagen schon im Nettolohn stecken.
+- **«Berechtigt»** mit Häkchen trotz Gesuchspflicht (§ 11 IPVG) → `antragNoetig` wie GE: «Möglicher Betrag — nur
+  auf Antrag».
+
+~~**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 9):** Grenzen für Einzelpersonen und «gewisse» Haushalte
+mit einer erwachsenen Person · welche Haushalte das sind · Mindestgarantie 80 % (Broschüre) gegen
+«mindestens die Hälfte» (§ 7bis) · Parameter-Beschluss des Regierungsrats 2026.~~ ⟨neu: FRAGEN-AN-DIE-AEMTER.md § 20 — Beschluss 2026, Bedeutung des Broschüren-Satzes, verspätete Gesuche⟩
 
 ---
 

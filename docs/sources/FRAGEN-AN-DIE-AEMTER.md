@@ -586,6 +586,57 @@ wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rec
 
 ---
 
+## 20 · Ausgleichskasse Zug — der Beschluss 2026 und die Frist
+
+*Aufgenommen 28.09.2026 beim Einbau von ZG, nach der Fachprüfung neu gefasst. Entwurf — **nicht
+gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, … SZ 18, SO 19, ZG 20.)*
+
+**Worum es geht:** Die Broschüre «Prämienverbilligung 2026 im Kanton Zug» nennt Richtprämien,
+Selbstbehalt 8 % und die Grenzen 70'000 / 89'900 — und dazu: «Die Grenzwerte für das massgebende
+Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer
+aus.» Die App rechnet heute nur Haushalte mit einer erwachsenen Person. Solange diese Grenzen
+fehlen, zeigt sie für Zug **keinen Betrag**, nur «kein Anspruch», wo er sicher ist.
+
+⟨Fachprüfung #475, 28.09.2026 abends: Fragen 1–4 in dieser Form sind **überholt** und bleiben als
+Beleg stehen. Die Regierungsratsbeschlüsse 2024 und 2025 kennen **eine** Grenze für alle (Ziff. 1.5),
+die Broschüre 2025 rechnet eine Einzelperson ohne weitere Grenze; der Satz «bei Einzelpersonen …
+tiefer» beschreibt die Formel (Nullpunkt 62'310). Frage 3 beantwortet RRB 2025 Ziff. 1.6 (80 %,
+gestützt auf § 7bis Abs. 2 IPVG i. V. m. Art. 65 Abs. 1bis KVG), Frage 4 Ziff. 3 (Amtsblatt).
+Die App rechnet jetzt. Offen bleiben die Fragen 5–7 unten.⟩
+
+~~**Frage 1 — Grenzen 2026:** Ab welchem massgebenden Einkommen beginnt für Einzelpersonen die
+Kürzung, und wo liegt die Obergrenze? Gilt dieselbe Kürzung (0,5 % je angefangene 100 Franken)?~~
+
+~~**Frage 2 — «gewisse Haushalte»:** Welche Haushalte mit einer erwachsenen Person haben die tieferen
+Grenzen, welche die Haushaltsgrenzen (z. B. alleinerziehend mit Kindern)?~~
+
+~~**Frage 3 — Mindestgarantie Kinder:** Die Broschüre nennt «mindestens 80 % der Richtprämie», § 7bis
+Abs. 2 IPVG «mindestens die Hälfte der für sie massgebenden Prämie». Worauf stützt sich die 80 %?~~
+
+~~**Frage 4 — Beschluss:** Ist der Regierungsratsbeschluss mit den Parametern 2026 veröffentlicht
+(Amtsblatt)? In der BGS ist er nicht erfasst.~~
+
+**Frage 5 — Beschluss 2026:** Der Beschluss mit den Parametern 2026 liegt uns nicht vor (akzug.ch
+führt die Kurzfassungen 2023–2025, für 2026 nicht; zg.ch zeigt noch 2025). Gilt Ziff. 1.5 für 2026
+unverändert — eine Grenze für alle, ohne eigene Grenzen für Einzelpersonen? Wo ist er veröffentlicht?
+
+**Frage 6 — der Satz in der Broschüre:** «Die Grenzwerte … fallen bei Einzelpersonen und gewissen
+Haushalten mit nur einer erwachsenen Person tiefer aus.» Ist damit gemeint, dass die Formel bei ihnen
+früher auf null fällt (Einzelperson 62'310, mit einem Kind 77'610)?
+
+**Frage 7 — verspätete Gesuche:** § 11 Abs. 2 IPVG lässt Gesuche bis 30. September zu, «wenn …
+wichtige Gründe vorliegen»; die Website schreibt, nach dem 30. April sei keine Anmeldung mehr
+möglich. Welche Gründe gelten als wichtig?
+
+**Stand:** ZG ist gebaut (Entwurfs-PR #475) und rechnet nach den Werten der Broschüre 2026 und der
+Struktur des Beschlusses 2025. «Kein Anspruch» sagt die App nur auf einer Untergrenze des
+Reineinkommens (⟨Fixrunde 2⟩ Versicherungsabzug § 30 lit. g StG voll, Berufskosten-Pauschale,
+Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Wegleitung 2024 der
+Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
+zum Einkommen.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
