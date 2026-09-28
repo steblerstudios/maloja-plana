@@ -35,10 +35,11 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, GR — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
+//                        GR: Art. 8a Abs. 1 lit. e KPVG (BR 542.100)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        KKVV Art. 6 Abs. 4 lit. i
@@ -112,8 +113,8 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866)',
+    kantone: 'ZH, SG, LU, GR',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100)',
     nichtAufgerechnet: () => 0,
   }),
 
@@ -402,6 +403,11 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
   SG: 'sGS 331.538 und sGS 331.111 kennen keine Begrenzung auf die fakturierte Prämie — '
     + 'die Verbilligung bemisst sich allein an der kantonalen Referenzprämie. '
     + 'Offene Frage an die SVA St.Gallen: was gilt, wenn die eigene Prämie tiefer ist?',
+  // Gemessen 28.09.2026 über den vollen Text von KPVG (BR 542.100, Version 3445) und VOzKPVG
+  // (BR 542.120, Version 3606): «effektiv», «tatsächlich», «höchstens» kommen nicht vor.
+  GR: 'KPVG (BR 542.100) und VOzKPVG (BR 542.120) kennen keine Begrenzung auf die tatsächlich '
+    + 'bezahlte Prämie — verbilligt werden die massgebenden Prämien (Richtprämien, Art. 8 Abs. 1 '
+    + 'KPVG). Offene Frage an die SVA Graubünden: was gilt, wenn die eigene Prämie tiefer ist?',
 });
 
 // ─── Regeln, die kantonal VERSCHIEDEN sind — benannt statt vereinheitlicht ─────
