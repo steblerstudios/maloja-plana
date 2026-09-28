@@ -402,7 +402,7 @@ zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüt
 
 ## 15 · Service de l'assurance-maladie (SAM) Genève — Deckel je Person, Familienzulagen, Kind aus dem Vorjahr, Rundung
 
-*Nummer: zuerst 8, dann 9, dann 10 — nach den Merges von UR (#464), NE (#478) und GR (#467) mit Nummer 15 festgelegt (11–14 für die Kantone in Arbeit freigehalten).*
+*Nummer: zuerst 8, dann 9, dann 10 — nach den Merges von UR (#464), NE (#478) und GR (#467) mit Nummer 15 festgelegt (Koordination; 11 = TG, 14 = TI). Eine parallele Sitzung nummerierte GE zwischenzeitlich als 12 — der Block ist hier zusammengeführt.*
 
 *Aufgenommen 28.09.2026 beim Einbau von GE, nachgeführt am Abend nach Fach-, Rechtsprüfung und Abgleich.
 Entwurf — **nicht gesendet**.*
