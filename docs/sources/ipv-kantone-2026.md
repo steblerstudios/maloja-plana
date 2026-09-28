@@ -48,13 +48,13 @@ sind. Dieses Dokument ändert keinen Code.
 | AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | abbildbar | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
 | AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | abbildbar | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
-| GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | abbildbar | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
+| GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | gebaut (PR #467; Kinder bis 80'000 ohne Zahl, Lesart offen) | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
 | AG | Aargau | Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie | abbildbar | <https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes> |
-| TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0) | teilweise | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
+| TG | Thurgau | Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0 nach Abzug der steuerfreien Beträge, StG § 53) | teilweise — belegt, gebaut ohne Zahl (PR #474, Steuerbetrag fehlt der App) | <https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes> |
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | Zwei Stufen. (1) «Subside ordinaire»: Monatsbetrag nach Formel mit Parametern je Kategorie (Max. bis C, Kurve bis A, Minimum bis B, darüber 0). (2) «Subside spécifique»: Prämie (höchstens Referenzprämie) minus ordentlicher Subside, soweit über 10 % des RDU. | gebaut (PR #VD-PR) — subside ordinaire; subside spécifique nur als Hinweis | <https://www.vd.ch/fileadmin/user_upload/themes/social/Prestations__assurance_et_soutien/Assurance_maladie/Subside/Arr%C3%AAt%C3%A9_subsides_2026_du_17-12-2025_-_publi%C3%A9.pdf> |
 | VS | Wallis | Degressive Einkommensskala mit 7 Klassen: 70/50/40/30/20/10/5 % der regionalen Referenzprämie (Kinder 80 %), Grenzen je Haushaltstyp (allein/Ehepaar) und Kinderzahl. EL/Sozialhilfe 100 %. | abbildbar | <https://lex.vs.ch/app/de/texts_of_law/832.105> |
-| NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | abbildbar (mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge, siehe «Offen») | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
+| NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | gebaut (PR #478) — ~~mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge~~ ⟨28.09.2026: aufgelöst, der Unterschied ist der Décret RSN 821.104⟩ | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
 | GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
 | JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
 
@@ -73,7 +73,7 @@ sind. Dieses Dokument ändert keinen Code.
 - **NE:** Widerspruch zwischen Kantonsseite «Classifications et montants» (geändert 08.09.2026)
   und dem Erlass RSN 821.102 ab Klasse S3 (z. B. Erwachsene S3: Seite 515, Erlass 514). An beiden
   Quellen nachgeprüft. Kein Änderungsbeschluss gefunden. **Verbindlich bis auf Weiteres der
-  Erlass**; beim OCAB nachfragen.
+  Erlass**; beim OCAB nachfragen. ⟨28.09.2026: **aufgelöst** — die höheren Beträge der Seite sind Arrêté RSN 821.102 **plus** die ausserordentlichen Subsides des Grossen Rates (Décret RSN 821.104 vom 2.12.2025). Das OCAB-Blatt «Normes de classification valables en 2026» überschreibt seine Tabelle mit «Arrêté du 12.11.2025 (CE) + Décret du 02.12.2025 (GC)». Die App rechnet die Summe.⟩
 - **GE:** Beträge stammen aus dem amtlichen Tarif-PDF «Barème subsides 2026»; der
   Indexierungsbeschluss des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht gefunden. Der
   Gesetzestext enthält noch die nicht indexierten Beträge.
@@ -1423,7 +1423,7 @@ bis zu der ein Betrag besteht). Für die 3a im Band 7'056–7'258 zählt die Unt
 EL, Sozialhilfe, Härtefälle, Ermessensveranlagte · Pension/Kapitalabfindungen/Geschäftsverluste/
 Zuwendungen/Liegenschaftskosten (§ 69 lit. a–d, f SV) · Werte 2027 (SG hat eine künftige Fassung).
 
-**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 10):** Eckpunkte der linearen Skala · Rundung der
+**Offen (FRAGEN-AN-DIE-AEMTER.md, Abschnitt 19 — Nummer nach Absprache):** Eckpunkte der linearen Skala · Rundung der
 Richtprämie (aufgerundet?) · wie die Auszahlungslimite bei Kindern wirkt · ein Berechnungsbeispiel.
 
 **Fachprüfung #481 (28.09.2026 abends) — Fixrunde 1:**
@@ -1958,7 +1958,7 @@ lassen, statt still etwas anderes zu messen.
 
 ## GR — Graubünden
 
-**Beurteilung:** abbildbar
+**Beurteilung:** abbildbar — **gebaut (PR #467), an der Quelle nachgeprüft 28.09.2026**, siehe «Nachprüfung 28.09.2026» unten
 **Modell (kurz):** Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt
 **Zuständig / Weg:** SVA Graubünden (AHV-Ausgleichskasse); Antrag (online oder bei SVA/AHV-Zweigstelle der Wohngemeinde), Frist 31.12.2026 (Posteingang); Vorschussleistung 65 % bei fehlender definitiver Veranlagung 2025; bisherige Beziehende erhalten von Amtes wegen Mitteilung über Vorschusszahlung und gelten als angemeldet
 **Gültigkeit:** 2026 definitiv (Wegleitung IPV 2026, PDF vom 05.01.2026; Selbstbehalt-Stufen im Gesetz KPVG, Stand 1.1.2025)
@@ -2013,6 +2013,99 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 1. Wegleitung Individuelle Prämienverbilligung 2026, SVA Graubünden, PDF vom 05.01.2026. https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf — abgerufen 16.09.2026 (unter https://www.sva.gr.ch/downloads/ipv_wegleitung_d.pdf: HTTP 404)
 2. Gesetz über die Krankenversicherung und die Prämienverbilligung (KPVG, BR 542.100), Kanton Graubünden, aktuelle Version in Kraft seit 01.01.2025. https://www.gr-lex.gr.ch/api/de/versions/3445/pdf_file_with_annexes (kanonisch https://www.gr-lex.gr.ch/app/de/texts_of_law/542.100) — abgerufen 16.09.2026
 3. Verordnung zum Gesetz über die Krankenversicherung und die Prämienverbilligung (VOzKPVG, BR 542.120), Stand 1.1.2026. https://www.gr-lex.gr.ch/api/de/versions/3606/pdf_file_with_annexes — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+An der Quelle nachgeprüft **28.09.2026**. Alle Abrufe mit `curl`, PDFs mit `pdftotext -layout`.
+
+**Fassungen und Gegenproben**
+
+| Quelle | Abruf | Fassung | Gegenprobe |
+|---|---|---|---|
+| KPVG, BR 542.100 — `https://www.gr-lex.gr.ch/api/de/versions/3445/pdf_file_with_annexes` | HTTP 200, 569'455 Bytes, 12 Seiten | «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum: 14.06.2022)», keine künftige Version (API `…/api/de/texts_of_law/542.100`: `current_version` 3445, `future_versions` leer) | erfundene Version `…/versions/99999/…` → HTTP 404, 0 Bytes; erfundene Nummer `…/texts_of_law/542.999` → HTTP 404 |
+| VOzKPVG, BR 542.120 — `…/api/de/versions/3606/pdf_file_with_annexes` | HTTP 200, 486'815 Bytes, 12 Seiten | «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 16.12.2025)», keine künftige Version | wie oben |
+| Wegleitung IPV 2026, SVA — `https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf` | HTTP 200, 148'376 Bytes | PDF erstellt 05.01.2026 | erfundener Name `…/ipv_wegleitung_xq.pdf` → HTTP 404 |
+| Prämienregionen 2026, SVA — `https://www.sva.gr.ch/files/sva/dienstleistungen/07_ipv/ipv_praemienregion_d.pdf` | HTTP 200, 72'610 Bytes, 1 Seite | «Prämienregionen Jahr 2026», PDF erstellt 07.01.2026 | — (Liste Zeile für Zeile gegen die BAG-Daten der App, siehe unten) |
+
+**Bestätigt (Wortlaut wie oben):** Art. 8 Abs. 1–4 KPVG, Art. 8a Abs. 1 lit. a–g, Art. 6 Abs. 1 (Gesamtanspruch),
+Art. 7 Abs. 1 (Abstufung nach Regionen), Art. 17 Abs. 1 VOzKPVG (Durchschnittsprämien − 10 %, aufgerundet). Die
+Richtprämien der Wegleitung (5'916 / 5'532 / 5'232 · 4'368 / 4'092 / 3'912 · 1'404 / 1'320 / 1'248) und die beiden
+Selbstbehalt-Tabellen stehen im Textlayer, nicht als Bild. Der Grosse Rat hat nach Art. 8 Abs. 5 nichts erhöht: die
+Wegleitung 2026 nennt die gesetzlichen Stufen unverändert.
+
+**Neu gelesen, vorher nicht erfasst:**
+- Art. 14 Abs. 1 VOzKPVG: «Personen mit Wohnsitz im Kanton haben das Anmeldeformular bis spätestens Ende des
+  anspruchsberechtigten Jahres bei der AHV-Zweigstelle ihrer Wohngemeinde einzureichen.» Abs. 2: «Personen, die von
+  Amtes wegen eine Mitteilung über die Vorschusszahlung erhalten, gelten als angemeldet.»
+- Art. 10 lit. a KPVG: Ansprüche verwirken, «wenn die Anmeldung nicht innerhalb der vorgeschriebenen Fristen
+  eingereicht wird».
+- Art. 22 Abs. 3 VOzKPVG: «Ein Gesamtanspruch wird den Versicherern anteilmässig im Verhältnis zur Summe der für die
+  Berechnung des Anspruchs auf Prämienverbilligung massgebenden Richtprämien ausbezahlt.»
+- Art. 13 Abs. 2 KPVG: unrechtmässig bezogene Leistungen können innert fünf Jahren zurückgefordert werden; die
+  Wegleitung: Nachzahlungen und Rückforderungen laufen über den Krankenversicherer.
+- **Mindestbetrag:** Art. 11 Abs. 5 und Art. 16 Abs. 4 KPVG: «Die Regierung kann die Auszahlung geringfügiger
+  Beträge ausschliessen.» In der VOzKPVG und in der Wegleitung steht **keine** solche Grenze (Suche nach
+  «geringfügig» über beide Volltexte: nur die zwei Gesetzesstellen). ⟨Der Eintrag «Mindestbetrag … nicht gefunden»
+  oben bleibt richtig; die Ermächtigung ist jetzt benannt.⟩
+- **Deckel auf die effektive Prämie:** weder KPVG noch VOzKPVG enthalten eine Begrenzung. Suche nach «effektiv»,
+  «tatsächlich», «höchstens», «übersteig» über beide Volltexte: nur Art. 8 Abs. 1 («soweit sie … Selbstbehalt
+  übersteigen») und Art. 11 Abs. 2 (Vorschuss) treffen. Gleiche Lage wie SG → `KEIN_PRAEMIENDECKEL.GR`.
+
+**Prämienregionen:** Die SVA-Liste (100 Gemeinden) ist Zeile für Zeile gegen die BAG-Daten der App
+(`data/praemienRegionen.js`) abgeglichen — **0 Abweichungen**. 14 Gemeinden führt die SVA unter einer Kurzform (Roveredo,
+S.Vittore, Conters i.P., Schmitten, Sedrun-Tujetsch, Seewis i.P., Sils i.D., Sils i.E./Segl, Sta. Maria i.C., Ilanz,
+Klosters-Serneus, LaPunt-Chamues-Ch, Zillis, Medel/Lucm. Curaglia); alle liegen in derselben Region wie beim BAG. Der
+Test `ipvGraubuenden.test.js` hält die Liste wörtlich fest.
+
+**Amtliches Berechnungsbeispiel:** keines gefunden — nicht in der Wegleitung 2026, nicht auf `sva.gr.ch/ipv.html`,
+nicht in der Wegleitung 2015 (dort nur der Satz, dass für Kinder und junge Erwachsene «zusätzlich zur ordentlichen
+Berechnung mit einer Vergleichsrechnung abgeglichen» wird). Der Online-Rechner der SVA rechnet serverseitig; er wurde
+nur angesehen (GET), **nicht** mit Daten gefüttert.
+
+**Zwei Lesarten, die die Quellen nicht entscheiden** (→ `FRAGEN-AN-DIE-AEMTER.md`, Frage 10):
+1. *Satz aufs ganze Einkommen oder je Tranche?* ⟨Offen seit 16.09., siehe «Offen / nicht gefunden»⟩ Die App rechnet
+   mit dem Satz aufs **ganze** anrechenbare Einkommen: «Der Selbstbehalt beträgt für anrechenbare Einkommen bis
+   10 000 Franken 5 Prozent … Er erhöht sich … um je 1 Prozentpunkt» — der Selbstbehalt *ist* ein Satz je Kategorie,
+   und die Wegleitung stellt ihn als eine Zeile je Einkommenskategorie dar. Gebaut, mit Vorbehalt in der Anzeige
+   (`ipv.vorbehaltGR`). Bei 40'000 ergibt das 2'316, nach der Tranchen-Lesart wären es 3'066.
+2. *Kinder-Vergleich für den Haushalt oder je Kind?* Art. 8 Abs. 4: «der höhere der gemäss den Absätzen 2 und 3
+   berechneten Beträge». Für den Gesamtanspruch ist die massgebende Prämie die Summe (Art. 17 Abs. 2 VOzKPVG), das
+   spricht für den Haushalt; Abs. 3 («Die massgebenden Prämien für Kinder … werden … um 100 Prozent» verbilligt)
+   spricht für jedes Kind. Beispiel Region 1, ein Kind, 30'000: Haushalt 4'920, je Kind 5'380.33. **Nicht gebaut:**
+   die App rechnet mit Kindern nur, wo beide Lesarten dasselbe ergeben (über 80'000, oder wo der allgemeine Anteil
+   des Kindes den Kinder-Satz schon übersteigt), sonst `orientierung('grKinder')`.
+
+**Bewusst nicht gebaut:** Paare/Gesamtanspruch · junge Erwachsene in Ausbildung · Quellenbesteuerte · EL-,
+Sozialhilfe- und Mutterschaftsbeitrags-Beziehende · von Art. 8a Abs. 1: lit. b, c, f, g, BVG-Einkäufe (lit. d) und
+Einkommen im vereinfachten Abrechnungsverfahren · alle Steuerabzüge (die App kennt das satzbestimmende steuerbare
+Einkommen nicht) · Vorschuss (65 %). **Gebaut von Art. 8a Abs. 1:** lit. a (10 % der erfassten Vermögensposten),
+lit. d (laufender BVG-Beitrag, wenn erfasst — das Feld «BVG-Beitrag monatlich» ist im Nettolohn schon abgezogen),
+lit. e (Säule 3a, steckt im Nettoeinkommen, Regel `voll`).
+
+**Gewählt, nicht belegt:** Alter nach `ERWACHSEN.mangelsStichtag` (kein Stichtag in KPVG/VOzKPVG; die Wegleitung
+sagt «Erwachsene ab 26. Altersjahr» ohne Jahrgänge) · Rundung auf den Franken im Jahr (keine Rundungsregel
+gefunden) · Kategoriengrenze «bis und mit» auf den Franken genau, Beträge dazwischen (40'000.50) gelten als über
+der Grenze.
+
+**Werte 2027:** am 28.09.2026 nicht publiziert (Wegleitung trägt 2026, API ohne künftige Version). Ab 01.01.2027
+zeigt die App für GR keinen Betrag (`jahrVorbei`).
+
+### Nachtrag 28.09.2026 abends — Fachprüfung PR #467 eingearbeitet
+
+- **Alter:** ⟨korrigiert⟩ Oben steht «Alter nach `ERWACHSEN.mangelsStichtag` (kein Stichtag …)». Der Online-Rechner der
+  SVA (`https://www.sva.gr.ch/ipv.html`, gelesen 28.09.2026, nur GET, nichts abgeschickt) nennt die Jahrgänge:
+  «Anzahl junge Erwachsene (Jahrgang 2001 - 2007)», «Anzahl Kinder (Jahrgang 2008 - 2026)». Die App rechnet jetzt nach
+  `ERWACHSEN.imAnspruchsjahr` (wie AG, LU): Jahrgang 2000 ist 2026 erwachsen.
+- **Lesart Selbstbehalt:** ⟨korrigiert⟩ «Bei 40'000 ergibt das 2'316, nach der Tranchen-Lesart wären es 3'066» stimmt;
+  der Unterschied wächst aber über 40'000 auf konstant **1'150 Fr.**, und zwischen 59'160 und 70'660 (R1) sagt die App
+  «kein Anspruch», wo nach der Tranchen-Lesart einer bestünde. Richtung: zu tief. Vorbehalt und «kein Anspruch»-Satz
+  nennen das jetzt in der Anzeige.
+- **Kinder-Vergleich:** die Wegleitung, Abschnitt «Gesamtanspruch», «Bei Personen im Gesamtanspruch werden die
+  anrechenbaren Einkommen sowie die Richtprämien aller Personen zusammengezählt», stützt die Haushalt-Lesart (die
+  tiefere Zahl). Unterschied bis 2'411 (drei Kinder, 60'000). Weiterhin ohne Zahl (`grKinder`).
+- **BVG-Beitrag:** ist keiner erfasst, zeigt die Anzeige den Zusatz-Vorbehalt `ipv.vorbehaltGRbvg` (Betrag sonst zu
+  hoch, Beispiel der Prüfung: 2'352 statt 1'716).
+- **Deckel:** nur kantonales Recht geprüft; Bundesrecht (KVG Art. 65 / KVV) nicht gelesen — in Frage 10.3 ergänzt (dort seit der Integration 28.09.2026 ein Verweis auf den Uri-Beleg KVV Art. 106c Abs. 5bis, für GR nicht selbst nachgelesen).
 
 ---
 
@@ -2217,7 +2310,7 @@ wörtlich in § 10 Abs. 4 KVGG.
 
 ## TG — Thurgau
 
-**Beurteilung:** teilweise
+**Beurteilung:** teilweise — **belegt, an der Quelle nachgeprüft 28.09.2026, zeigt bewusst keine Zahl** (siehe «Nachprüfung 28.09.2026» unten)
 **Modell (kurz):** Feste Pauschalbeträge nach Kategorie der **einfachen satzbestimmenden Steuer zu 100 %** (nicht nach Einkommen): Erwachsene A ≤ 400 → 3'408 · B ≤ 600 → 2'556 · C ≤ 800 → 1'704; Kinder D ≤ 1'600 (Eltern) → 1'236; nur ohne steuerbares Vermögen (Fr. 0)
 **Zuständig / Weg:** Krankenkassenkontrollstelle der Wohnsitzgemeinde (Grenzgänger: Gemeinde des Arbeitsorts); reines Antragsprinzip, jährlich; Gemeinde stellt Berechtigten im Frühjahr ein Formular zu; Frist 31.12.2026, sonst verfällt der Anspruch
 **Gültigkeit:** 2026 definitiv (TG KVV § 14, Version in Kraft seit 01.01.2026; Merkblatt Amt für Gesundheit vom 16.12.2025)
@@ -2271,6 +2364,57 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Thurg
 2. Information zur Prämienverbilligung 2026, Kanton Thurgau, Amt für Gesundheit, PDF vom 16.12.2025. https://gesundheit.tg.ch/public/upload/assets/183453/Merkblatt%20IPV%202026.pdf — abgerufen 16.09.2026
 3. «192.8 Millionen Franken für die individuelle Prämienverbilligung», Medienmitteilung Kanton Thurgau, 27.11.2025. https://www.tg.ch/news.html/485/news/76767 — abgerufen 16.09.2026 (nur Hinweis)
 4. Prämienverbilligung, Amt für Gesundheit Kanton Thurgau (Übersichtsseite). https://gesundheit.tg.ch/bevoelkerung/krankenversicherung/praemienverbilligung.html/5578 — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App) — belegt, zeigt bewusst keine Zahl
+
+An der Quelle nachgeprüft **28.09.2026**, Abrufe mit `curl`, PDFs mit `pdftotext -layout`.
+
+| Quelle | Abruf | Fassung | Gegenprobe |
+|---|---|---|---|
+| TG KVV, RB 832.10 — `https://www.rechtsbuch.tg.ch/api/de/versions/3027/pdf_file_with_annexes` | HTTP 200, 364'334 Bytes | «Krankenversicherungsverordnung (TG KVV) vom 20. Dezember 2011 (Stand 1. Januar 2026)»; API `…/api/de/texts_of_law/832.10`: `current_version` 3027, «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum: 31.03.2026)», keine künftige Version. § 14 Abs. 1 Ziff. 1–3 und 5 laut Änderungstabelle zuletzt geändert 25.11.2025 (48/2025), in Kraft 01.01.2026 | `…/versions/99999/…` → HTTP 404, 0 Bytes; `…/texts_of_law/832.99` → HTTP 404 |
+| Merkblatt «Information zur Prämienverbilligung 2026», Amt für Gesundheit — `https://gesundheit.tg.ch/public/upload/assets/183453/Merkblatt%20IPV%202026.pdf` | HTTP 200, 126'823 Bytes | PDF erstellt 16.12.2025 | `…/Merkblatt%20IPV%202099.pdf` → HTTP 404 (HTML-Fehlerseite) |
+
+**Bestätigt (Wortlaut wie oben):** § 14 Abs. 1 Ziff. 1–3, 5–7 (Beträge 3'408 / 2'556 / 1'704 / 1'236 / 6'132 /
+1'236), § 14 Ziff. 4 aufgehoben, § 15 Abs. 1 («per 1. Januar aufgrund der Steuerdaten des Vorjahres»), § 15 Abs. 2bis
+(Differenzen unter Fr. 30), Merkblatt: Kat. A–D, Kinder Jahrgang 2008–2025, junge Erwachsene in Ausbildung Jahrgang
+2001–2007 (50 %, max. Fr. 2'376), «Das unterzeichnete Formular ist bis zum 31. Dezember 2026 bei der
+Krankenkassenkontrollstelle der zuständigen Gemeinde einzureichen. Wird diese Frist verpasst, verfällt der Anspruch.»
+
+**Neu gelesen:** § 18 Abs. 1 TG KVV: «Bei leiblichen Eltern im Konkubinat sind die steuerlichen Verhältnisse der
+Mutter …» massgebend (Kinder). Merkblatt: EL-Beziehende erhalten eine Prämienpauschale, «Ein IPV-Antrag ist nicht
+notwendig».
+
+**Warum keine Zahl — geprüft, nicht angenommen:** Die App hat kein Feld für die einfache Steuer zu 100 %. Ihr
+Steuerrechner (`data/kantonaleSteuerdaten.js`) schätzt die Kantons- und Gemeindesteuer am Hauptort aus einer
+interpolierten Stütztabelle des ESTV-Rechners, nach eigenem Kopf «grobe Schätzung»; die einfache Steuer ist eine
+andere Grösse (vor den Steuerfüssen, auf dem satzbestimmenden Einkommen), und das steuerbare Vermögen des Vorjahres
+kennt die App ebenfalls nicht. Eine Stufe hängt an ein paar Franken Steuer und ist bis Fr. 3'408 wert. → Modul
+`ipvThurgau.js` mit der Rechnung nach § 14 (getestet gegen die Tabelle), Register, Beleg — Anzeige in jeder Lage
+`orientierung('tgSteuerbetrag')` mit den amtlichen Ansätzen im Text. Ob ein Feld «einfache Steuer» kommt, ist ein
+Produktentscheid von Stebler Studios.
+
+**Korrektur:** ⟨korrigiert 28.09.2026⟩ In `CANTONAL_IPV` stand für TG `noteApplySva` («Antrag bei SVA TG»). Zuständig
+ist laut Merkblatt die Krankenkassenkontrollstelle der Wohnsitzgemeinde → neuer Schlüssel `noteApplyKkKontrollstelle`.
+Die Übersichtszeile oben («Zuständig / Weg») war richtig.
+
+**Offen (unverändert):** «Steht auf der Steuerrechnung» ist nicht nachgeprüft — die App sagt es darum nicht.
+Junge Erwachsene nicht in Ausbildung: im Merkblatt nicht geregelt.
+
+**Werte 2027:** am 28.09.2026 nicht publiziert (keine künftige Version im Rechtsbuch). Ab 01.01.2027 Grund `jahr`.
+
+### Nachtrag 28.09.2026 abends — Fachprüfung PR #474 eingearbeitet
+
+- **«ohne steuerbares Vermögen (Fr. 0)»** ⟨präzisiert⟩: gemeint ist das steuerbare Vermögen nach den steuerfreien
+  Beträgen. TG StG (RB 640.1), Rechtsbuch-Version 2929, in Kraft 01.01.2025–31.12.2028, selbst gelesen 28.09.2026:
+  § 53 Abs. 1 «Vom Reinvermögen werden abgezogen: 1. bei Steuerpflichtigen in ungetrennter Ehe Fr. 200'000 2. bei allen
+  übrigen Steuerpflichtigen Fr. 100'000 3. für jedes nicht selbständig besteuerte Kind zusätzlich Fr. 100'000». Die
+  Anzeige nennt die Beträge.
+- **«einfache Steuer»** ⟨Offen-Punkt geschlossen⟩: StG § 6 Abs. 1 «Die nach den gesetzlichen Steuersätzen berechnete
+  Steuer von Einkommen, Vermögen, Gewinn und Kapital gilt als einfache Steuer zu 100 Prozent.»
+- **Kein Formular erhalten:** TG KVV § 15 Abs. 2 (Neubemessung innert 30 Tagen ab rechtskräftiger Feststellung, u. a.
+  gestützt auf die definitive Steuerschlussrechnung) und Merkblatt («Wurde in den Vorjahren nicht automatisch ein
+  Antragsformular zugestellt …», «Eine Neubemessung von Amtes wegen ist nicht zulässig») — steht jetzt im Grund-Text.
+- «provisorische» Steuerdaten ergänzt; in fr/it/en/rm steht der Amtsname «Krankenkassenkontrollstelle» in Klammern.
 
 ---
 
@@ -2780,9 +2924,9 @@ Zusätzlich: Abzüge 6.4 max. 10'000, 6.5 max. 2'400 (Art. 12 al. 5); Geschäfts
 App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Belegte Vergleichswerte: Erwachsene/r allein ohne Kind max. revenu déterminant 50'600, Höchstbetrag S1 611 CHF/Monat (= 7'332 CHF/Jahr), in 15 Stufen und nicht linear abnehmend — ein linearer Abbau bildet NE nicht ab.
 
 ### Offen / nicht gefunden
-- **Widerspruch Webseite ↔ Erlass:** Die Seite «Classifications et montants» [2] (Drupal-Metadatum «Modified: 08/09/2026») nennt für Junge Erwachsene / Erwachsene ab S3 andere Beträge als der Erlass und das PDF vom 28.11.2025, z. B. Erwachsene S3 **515** (Erlass 514), S4 453 (450), S10 110 (96), S15 **41** (26); Junge Erw. S15 30 (19); Junge Erw. in Ausbildung S15 124 (116); Erw. in Ausbildung S12 515 (514), S15 166 (154). S1, S2 und Referenzprämien stimmen überein. Kein Änderungsbeschluss gefunden (CE-Kurzinformation 6.7.2026 [5] erwähnt nur Nachtragskredite und «prorogation des mesures transitoires» ohne Zahlen). Die Seite sagt selbst, sie basiere auf dem Arrêté. → Verbindlich ist bis auf Weiteres RSN 821.102; beim OCAB nachfragen, ob eine Änderung (z. B. Erhöhung per Mitte 2026) beschlossen ist.
+- **Widerspruch Webseite ↔ Erlass:** Die Seite «Classifications et montants» [2] (Drupal-Metadatum «Modified: 08/09/2026») nennt für Junge Erwachsene / Erwachsene ab S3 andere Beträge als der Erlass und das PDF vom 28.11.2025, z. B. Erwachsene S3 **515** (Erlass 514), S4 453 (450), S10 110 (96), S15 **41** (26); Junge Erw. S15 30 (19); Junge Erw. in Ausbildung S15 124 (116); Erw. in Ausbildung S12 515 (514), S15 166 (154). S1, S2 und Referenzprämien stimmen überein. Kein Änderungsbeschluss gefunden (CE-Kurzinformation 6.7.2026 [5] erwähnt nur Nachtragskredite und «prorogation des mesures transitoires» ohne Zahlen). Die Seite sagt selbst, sie basiere auf dem Arrêté. → Verbindlich ist bis auf Weiteres RSN 821.102; beim OCAB nachfragen, ob eine Änderung (z. B. Erhöhung per Mitte 2026) beschlossen ist. ⟨28.09.2026: aufgelöst, siehe Nachprüfung 28.09.2026 — kein Widerspruch, sondern eine zweite Rechtsgrundlage⟩
 - Merkblatt «Subsides à l'assurance-maladie, informations détaillées (20251202)» nicht geöffnet.
-- Die Klassen gelten als Höchstbetrag; der Subside ist auf die effektive Prämie begrenzt (Art. 11 al. 2 für besondere Versicherungsformen) — genaue Kappungsregel (RALILAMal) nicht separat geprüft.
+- Die Klassen gelten als Höchstbetrag; der Subside ist auf die effektive Prämie begrenzt (Art. 11 al. 2 für besondere Versicherungsformen) — genaue Kappungsregel (RALILAMal) nicht separat geprüft. ⟨28.09.2026: geprüft — LILAMal Art. 14 al. 4 «Le montant du subside ne peut être supérieur à la prime exigée par l'assureur»; Art. 11 al. 2 betrifft nicht den Deckel, sondern die **Kürzung bei Wahlfranchise** (LAMal Art. 62 al. 2 lit. a)⟩
 
 ### Quellen
 1. Arrêté fixant les normes de classification et le montant des subsides en matière d'assurance-maladie obligatoire des soins pour l'année 2026 (RSN 821.102), Conseil d'État NE, vom 12.11.2025, État au 1er janvier 2026, FO 2025 No 47. https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf — abgerufen 16.09.2026
@@ -2791,6 +2935,97 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 4. Communiqué «Subsides à l'assurance-maladie 2026 : maintien des mesures et introduction d'un nouveau modèle d'octroi», État de Neuchâtel, 28.11.2025. https://www.ne.ch/communiques-de-presse/subsides-lassurance-maladie-2026-maintien-des-mesures-et-introduction-dun-nouveau-modele-doctroi — abgerufen 16.09.2026
 5. Informations brèves de la séance du Conseil d'État du 6 juillet 2026, État de Neuchâtel. https://www.ne.ch/communiques-de-presse/informations-breves-de-la-seance-du-conseil-detat-du-6-juillet-2026 — abgerufen 16.09.2026
 6. Subsides assurance-maladie (LAMal) — Verfahren/Coupon-réponse/FAQ, État de Neuchâtel. https://www.ne.ch/themes/social/assurance-maladie/subsides-assurance-maladie-lamal — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+Gebaut in `src/config/ipvNeuchatel.js` (Stufentabelle wie BE, auf `kantonsModell.js`), Tests in
+`src/config/__tests__/ipvNeuchatel.test.js` und `src/__tests__/ipvNeuchatelAnzeige.test.js`.
+Gebaut ist die **erwachsene Person ab 26, allein, mit 0–10 minderjährigen Kindern**.
+
+**Quellen, heute gelesen (curl + `pdftotext -layout`, Gegenprobe je Weg):**
+
+| # | Quelle | Fassung | Weg · Gegenprobe |
+|---|---|---|---|
+| [1] | Arrêté RSN 821.102 du 12.11.2025 | «État au 1er janvier 2026», FO 2025 No 47, PDF erzeugt 06.01.2026, SHA-256 `aaa6ad61…` | rsn.ne.ch-PDF 200, 197'335 Bytes; erfundene Nummer 821.109 → 404. Die Kopie unter `books/20261/` ist byte-gleich. |
+| [2] | **Décret RSN 821.104 du 2.12.2025** instituant des subsides extraordinaires … pour l'année 2026 (Grand Conseil) | «État au 15 janvier 2026», FO 2025 No 50, promulgiert 14.01.2026, in Kraft 15.01.2026, «caduc de plein droit le 31 décembre 2027» | rsn.ne.ch-PDF 200 = Lexfind tolv 258772 (gleiche Grösse). Tabelle Art. 4 im Textlayer verschoben — **am Seitenbild gelesen** (pdftoppm, Seite 2) |
+| [3] | OCAB, «Normes de classification valables en 2026», Réf. OCAB25-006 — <https://www.ne.ch/sites/default/files/2026-01/Normes%202026_02.12.2025_0.pdf> | publiziert 11.12.2025 | ne.ch-PDF 200, 5 Seiten |
+| [4] | LILAMal RSN 821.10 | «Etat au 1er janvier 2026» | rsn.ne.ch-PDF 200 |
+| [5] | RALILAMal RSN 821.101 | «État au 1er janvier 2026» | rsn.ne.ch-PDF 200 |
+| [6] | LAMal SR 832.10 | «État le 1er juillet 2026» | Fedlex-SPARQL nennt die Fassung 2026-07-01; Filestore-PDF 200 (1'054'273 Bytes), erfundenes Datum → HTML-Hülle 9'148 Bytes |
+| [7] | ne.ch «Classifications et montants» | «dateModified 08/09/2026» | Seite 200; erfundener Pfad → 404 |
+| [8] | ne.ch «Subsides assurance-maladie (LAMal)» | «dateModified 17/09/2026» | Seite 200 |
+
+**Der Widerspruch vom 16.09. ist aufgelöst.** Der Grosse Rat hat am 2.12.2025 — drei Wochen nach
+dem Arrêté — ausserordentliche Subsides beschlossen [2]. Art. 3 al. 2: «Ils viennent augmenter les
+montants maximums des subsides prévus par l'article 11 de l'ANO 2026, le subside total accordé ne
+pouvant être supérieur à la prime exigée par l'assureur.» Art. 6 al. 1: «simplement ajoutés aux
+subsides ordinaires», al. 2: ohne Gesuch. Zuschläge Erwachsene ab 26 (Art. 4 al. 1, am Seitenbild):
+S1 – · S2 – · S3 1 · S4 3 · S5 4 · S6 6 · S7 8 · S8 10 · S9 12 · S10 14 · S11 14 · S12 14 · S13 15 ·
+S14 14 · S15 15. **[1] + [2] ergibt Zeile für Zeile die Tabelle des OCAB [3] und der Seite [7]:**
+611 · 579 · 515 · 453 · 390 · 328 · 272 · 216 · 166 · 110 · 91 · 78 · 66 · 53 · 41 (auch junge
+Erwachsene und Personen in Ausbildung gehen auf, nicht gebaut). Die App rechnet die Summe. Wer
+nur [1] rechnete, läge ab S3 bis CHF 15 im Monat zu tief.
+
+**Weitere Befunde, heute gelesen:**
+- **Kürzung bei Wahlfranchise:** [1] Art. 11 al. 2 und [2] Art. 4 al. 2 — die Beträge «sont
+  diminués dans la même mesure que les réductions accordées par les assureurs en cas de formes
+  particulières d'assurances au sens de l'article 62, alinéa 2, lettre a LAMal»; LAMal Art. 62
+  al. 2 lit. a [6] ist die höhere Kostenbeteiligung gegen Prämienrabatt (Wahlfranchise). Das OCAB
+  [3] präzisiert: «diminués du même taux que le rabais accordé par l'assureur» und rechnet ein
+  Beispiel (450.– bei Franchise 300; bei 2'500 und Rabatt −32,24 % 304.90). Den Rabatt kennt die
+  App nicht ⇒ **Zahl nur bei Franchise 300**, sonst `offen: 'neFranchise'`. Das OCAB-Beispiel ist
+  der einzige amtliche Rechenfall; er betrifft genau diesen nicht gebauten Teil.
+- **Deckel:** LILAMal Art. 14 al. 4 [4] und [2] Art. 3 al. 2.
+- **Unter 15'000 nur auf Gesuch:** [1] Art. 16 (revenu effectif < 15'000 allein, +3'000 je Kind)
+  und RALILAMal Art. 36 [5] ⇒ `offen: 'neRevenuMinimum'` mit dem Weg zum GSR.
+- **Alter:** [1] Art. 6/7 nach Kalenderjahr («fin de l'année civile des 25 ans», «dès le début de
+  l'année civile des 26 ans»), [8]: «Dès le 1er janvier de l'année de vos 26 ans» ⇒
+  `ERWACHSEN.imAnspruchsjahr`, **belegt**. Kind [1] Art. 5 «fin de l'année civile des 18 ans».
+- **Säule 3a:** [1] Art. 12 al. 1 lit. a «sous seules déductions» von 6.4, 6.5, 6.7, 6.10 — die 3a
+  ist nicht darunter ⇒ Regel `SAEULE_3A.voll` (NE dort eingetragen).
+- **Weg:** «Automaticité mixte» [8], RALILAMal Art. 31 [5]: Bisherige automatisch; neu
+  Berechtigte erhalten einen Coupon-réponse und bestätigen «dans un délai de 30 jours», sonst
+  verfällt der Anspruch. `noteKey` neu `ipv.noteAutoOcab` (vorher «Automatische Prüfung via
+  Steuerdaten» — für neu Berechtigte unvollständig).
+- **Grenzen** Annexe [1] = [3] für die Tabelle «adulte seul», 0–10 Kinder, vollständig verglichen.
+- **Werte 2027:** am 28.09.2026 nicht publiziert. Jahres-Riegel ab 01.01.2027; der Décret [2]
+  gilt ohnehin nur für die Monate 2026.
+
+**Gewählt, nicht belegt:** Klassengrenzen einschliesslich ([1] Art. 3 «égal ou inférieur»; die
+Seite [7] schreibt «22'800 à 23'940», die Nahtstelle ist dort doppelt genannt) · revenu effectif
+Ziff. 5.5 ≈ Nettoeinkommen der App (Annahme: Lohn netto laut Lohnausweis) · Kind ohne Geburtsdatum
++1 Jahr (vorsichtig an der 18).
+
+**Bewusst nicht gebaut:** Paare/Konkubinat (eigene Tabellen) · junge Erwachsene und Personen in
+Ausbildung (Art. 6–8, 15) · PC-/Sozialhilfe-Beziehende · Quellenbesteuerte, amtlich Veranlagte,
+Selbständige · Wahlfranchise-Kürzung · Abzüge 6.4/6.5/6.7/6.10 (Einkommen zu hoch, Betrag eher zu
+tief — eine Klasse ist 1'140 Franken breit) · Mietertrag · Anspruchsbeginn nach Art. 17 ·
+Rückforderung nach Art. 21 (im Vorbehalt genannt).
+
+### Fixrunde 1 nach der Fachprüfung 28.09.2026 (PR #478)
+
+Fachprüfung (swiss-precision-pruefer): **Erlass + Dekret zusammen rechnen bestätigt.** Behoben:
+- **Blocker 2 — Selbständige:** RALILAMal Art. 30 al. 1/3 («perçoivent un subside chaque année sur
+  demande», Gesuch beim GSR innert 12 Monaten). `employmentType` `selfEmployed`/`freelance` ⇒
+  `offen: 'neIndependant'` statt einer Zahl mit dem Weg «automatisch».
+- **Blocker 1 — nur Text:** `familienzulagen`, `alimenteReceived` (gehören zum revenu effectif) und
+  `alimentePaid` (Ziff. 6.10 abziehbar) liest der gemeinsame `rohesEinkommenJahr` nicht. Das betrifft
+  alle Module und wird in einem eigenen Rahmen-PR behoben. ~~«Unterhaltsbeiträge; die App kennt sie
+  nicht»~~ ⟨korrigiert 28.09.2026⟩ — `vorbehaltNE` sagt jetzt: erfasste Familienzulagen und erhaltene
+  Unterhaltsbeiträge fliessen noch nicht ein (Betrag zu hoch), bezahlte werden noch nicht abgezogen
+  (Betrag zu tief). Rechenkern unverändert.
+- **Wichtig 3 — Art. 16 nach Abzügen:** Band von **2'000 Franken** über der Schwelle (GEWÄHLT, nicht
+  amtlich) ⇒ Zahl mit Hinweis `ipv.neRevenuMinimumNahe` (Gesuch beim GSR). Richtungssatz im
+  Vorbehalt eingeschränkt («meist eher zu tief; knapp über 15'000 kann es umgekehrt sein»).
+- **Wichtig 4 — Kinderanteil:** Vorbehalt nennt 160/Monat je Kind und die Kürzung bei tieferer
+  Kinderprämie oder Wahlfranchise.
+- **Kann 3:** «mehr als 20 Prozent» (Art. 21 al. 2 «dépasse 20%»). **Kann 4:** Personen unter 26 mit
+  Geburtsdatum ⇒ eigener Grund `neJeuneAdulte` (Ledige 19–25 ohne Kind nur auf Gesuch, Art. 16 al. 1,
+  OCAB Fall B). **Kann 5:** `maxAnnual` mit Kindern gepinnt, alle elf Grenzzeilen (0–10 Kinder).
+  **Kann 2:** URL OCAB oben. **Kann 6:** Vermögen = erfasste Posten ohne Schulden; ob Ziff. 6.16
+  Schulden abzieht, nicht gelesen — als Annahme im Modulkopf.
+- **Offen, Produktentscheid (Kann 1):** bei Franchise über 300 statt keiner Zahl «höchstens CHF X
+  (bei Franchise 300)» zeigen — nie in Budget/Abzug/Dossier. Nicht gebaut.
 
 ---
 
