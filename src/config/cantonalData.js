@@ -35,6 +35,7 @@ export const IPV_MODULE = {
   NE: { laden: () => import('./ipvNeuchatel.js'), fn: 'ipvNeuchatel', brauchtPLZ: false },
   // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
   GE: { laden: () => import('./ipvGenf.js'), fn: 'ipvGenf', brauchtPLZ: false },
+  GR: { laden: () => import('./ipvGraubuenden.js'), fn: 'ipvGraubuenden' },
 };
 const _module = {};
 
@@ -137,7 +138,11 @@ export const CANTONAL_IPV = {
   // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.
   SG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' },
     beleg: { quelle: 'sGS 331.538 · sGS 331.111 · SVA St.Gallen — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
-  GR: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' }, beleg: null },
+  // GR (K31): eigenes Modell in config/ipvGraubuenden.js (Richtprämie der Region minus Selbstbehalt,
+  // dessen Satz nach Einkommenskategorien von 5 % auf 10 % steigt). Keine publizierte Grenze für
+  // Erwachsene — die Grenzen in Art. 8 Abs. 3 KPVG betreffen nur Kinder —, darum maxIncome null.
+  GR: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' },
+    beleg: { quelle: 'KPVG (BR 542.100) · VOzKPVG (BR 542.120) · SVA Graubünden — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // AG (K31): eigenes Modell in config/ipvAargau.js (Richtprämie minus 17,5 % des massgebenden
   // Einkommens). Keine Prämienregionen; die Einkommensgrenze nach § 5 Abs. 5 KVGG publiziert
   // der Kanton nicht als Zahl, darum bleibt maxIncome null und die Anzeige nennt keine Grenze.
