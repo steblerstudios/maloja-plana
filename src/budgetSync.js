@@ -101,6 +101,9 @@ const syncBudgetFromChapters = (data) => {
   // Unbelegt bleibt es beim Hinweis ohne Betrag (ipvOrientierung).
   const abzug = ipvAbzug(data, ipv);
   const ipvAnmeldefristVorbei = abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI ? abzug.frist : null;
+  // Der Hinweis dazu ist kantonal (LU: 31. Oktober des Vorjahres · FR: 31. August des Jahres).
+  // Nennt das Ergebnis keinen eigenen Schlüssel, gilt der Luzerner Budget-Text.
+  const ipvAnmeldefristHinweisKey = ipvAnmeldefristVorbei ? (ipv.fristNichtAbgezogenKey || null) : null;
   const ipvRelief = abzug.betrag;
   // Abgezogen wird der Betrag einer gültigen Verfügung — dann sagt der Hinweis «laut Verfügung»,
   // nicht «möglicherweise Anspruch».
@@ -131,6 +134,7 @@ const syncBudgetFromChapters = (data) => {
     ipvVerfuegungUnzugeordnet,
     ipvOrientierung,
     ipvAnmeldefristVorbei,
+    ipvAnmeldefristHinweisKey,
     expenses: {}
   };
 
@@ -258,7 +262,7 @@ const getBudgetRecommendations = (budget, t) => {
   } else if (budget.ipvAnmeldefristVorbei) {
     recommendations.push({
       level: 'info',
-      text: t ? t('budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction Lucerne: not deducted, the registration deadline has passed.'
+      text: t ? t(budget.ipvAnmeldefristHinweisKey || 'budget.ipvHintLuFristVorbei', budget.ipvAnmeldefristVorbei) : 'Premium reduction: not deducted, the application deadline has passed.'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({
