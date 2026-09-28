@@ -431,9 +431,13 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
       // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der
       // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
-      React.createElement('div', null, ipvResult.region
-        ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
-        : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
+      // `jahrKey`: ein Kanton ohne Prämienregionen, der nicht der Aargau ist, bringt seinen eigenen
+      // Satz mit (UR, 28.09.2026) — `ipv.jahrOhneRegion` nennt den Aargau beim Namen.
+      React.createElement('div', null, ipvResult.jahrKey
+        ? t(ipvResult.jahrKey, { jahr: ipvResult.jahr })
+        : ipvResult.region
+          ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
+          : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
       React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
       // Der Vorbehalt ist kantonsspezifisch: BE rechnet mit den Steuerdaten des Vorvorjahres
       // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres, AG mit denen von vor DREI
