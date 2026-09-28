@@ -56,7 +56,9 @@ describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
 });
 
 describe('praemienBelegState — E9: Kanton nicht amtlich belegt', () => {
-  const base = { basis: { canton: 'ZG' }, finanzen: { monthlyIncome: 500 }, versicherungen: { kkPremium: 200 } };
+  // ⟨28.09.2026⟩ bis dahin ZG — seit K31 hat ZG ein eigenes Modell. GE trägt dieselben
+  // Musterwerte (60 000 / 3 600); wer GE baut, braucht hier wieder einen Kanton ohne Modell.
+  const base = { basis: { canton: 'GE' }, finanzen: { monthlyIncome: 500 }, versicherungen: { kkPremium: 200 } };
 
   it('zeigt eine Orientierung ohne Betrag statt einer Verbilligung', () => {
     const state = praemienBelegState(base);
@@ -76,11 +78,12 @@ describe('praemienBelegState — E9: Kanton nicht amtlich belegt', () => {
 
 describe('praemienBelegState — Verbilligung nie über der Prämie (B2, belegter Kanton simuliert)', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['ZG']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
   afterAll(() => zuruecksetzen());
-  // ZG, Einperson, tiefes Einkommen → hohe IPV; niedrige Prämie eingetragen.
+  // GE (bis 28.09.2026 ZG, siehe oben), Einperson, tiefes Einkommen → hohe IPV (Muster-Abbau);
+  // niedrige Prämie eingetragen.
   const base = {
-    basis: { canton: 'ZG' },
+    basis: { canton: 'GE' },
     finanzen: { monthlyIncome: 500 },
     versicherungen: { kkPremium: 200 },
   };
@@ -113,7 +116,7 @@ describe('praemienBelegState — Verbilligung nie über der Prämie (B2, belegte
   });
 
   it('ist "over" bei Einkommen über der Grenze', () => {
-    const data = { ...base, finanzen: { monthlyIncome: 6000 } }; // 72k/Jahr > 60k ZG-Grenze
+    const data = { ...base, finanzen: { monthlyIncome: 6000 } }; // 72k/Jahr > 60k Muster-Grenze GE
     expect(praemienBelegState(data).mode).toBe('over');
   });
 
