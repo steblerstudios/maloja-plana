@@ -424,6 +424,9 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
 //                       LU — die WAS führt für 2026 «Erwachsene (ab Jahrgang 2000)» in ihrer
 //                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
+//                       FR — ORP (RSF 842.1.13) Art. 3 al. 3 lit. b/c: «jeune personne adulte …
+//                       jusqu'à l'année de ses 25 ans»; Mémento RPI 2026 Ziff. 8.1: «jeune adulte
+//                       âgé de 19 à 25 ans». (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am

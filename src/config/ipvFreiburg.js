@@ -38,8 +38,10 @@
 //    einer Grenze von 37'000 13,51 %, bei 57'400 nur 8,71 %.
 // 3. EINE PUBLIZIERTE GRENZE ALS ZAHL. Anders als LU, SG und AG veröffentlicht Freiburg die
 //    Einkommensgrenze je Haushalt ([3] Ziff. 1) — die Anzeige nennt sie darum (`maxIncome`).
-// 4. ANTRAG MIT HARTER FRIST. Bis 31. August des Anspruchsjahres, «La Caisse AVS n'entre pas en
-//    matière sur les demandes présentées après cette échéance» (Art. 2 al. 1 [1]). Der Anspruch
+// 4. ANTRAG MIT HARTER FRIST. Bis 31. August des Anspruchsjahres, «Celle-ci n'entre pas en matière
+//    sur les demandes présentées après cette échéance» (Art. 2 al. 1 [1]; das Mémento [3] Ziff. 3
+//    schreibt «La Caisse AVS n'entre pas en matière …»). ⟨Zitat korrigiert 28.09.2026, Fachprüfung
+//    K2: hier stand der Mémento-Wortlaut als Art. 2 al. 1.⟩ Der Anspruch
 //    beginnt frühestens im Monat des Antrags (Art. 7a [1]). Wer im Vorjahr Verbilligung bezog,
 //    wird von Amtes wegen geprüft ([3] Ziff. 7).
 //
@@ -54,8 +56,12 @@
 //     es mindestens 1 %.
 //   · Rundung des Betrags: nirgends publiziert. Die App rechnet Satz × Monatsprämie × 12 je Person
 //     und rundet die Summe auf ganze Franken.
-//   · Stichtag fürs Alter: weder ORP noch Mémento nennen einen. `ERWACHSEN.mangelsStichtag` wie BE
-//     und SG; Kinder nur, solange sie das ganze Anspruchsjahr minderjährig sind (siehe unten).
+//   · Kinder nur, solange sie das ganze Anspruchsjahr minderjährig sind (siehe unten).
+//   ⟨korrigiert 28.09.2026 nach der Fachprüfung, W4⟩ Hier stand: «Stichtag fürs Alter: weder ORP noch
+//   Mémento nennen einen. `ERWACHSEN.mangelsStichtag` wie BE und SG». Falsch: ORP Art. 3 al. 3 lit. b/c
+//   [1] zählt die «jeune personne adulte … jusqu'à l'année de ses 25 ans», das Mémento Ziff. 8.1 den
+//   «jeune adulte âgé de 19 à 25 ans» — eine JAHRGANGSREGEL. Erwachsen ist, wer im Anspruchsjahr 26
+//   wird: `ERWACHSEN.imAnspruchsjahr` (wie LU und AG), BELEGT.
 //
 // BEWUSST NICHT GEBAUT (wie in den anderen Kantonen):
 //   · Ehepaare, eingetragene Partnerschaften, Konkubinat, mehrere Erwachsene — das zweite Einkommen
@@ -76,6 +82,12 @@
 //     bis 30'000 …): das Einkommen fällt dadurch zu HOCH aus und der Betrag zu TIEF. Dieselbe
 //     Näherung wie in allen Kantonen (i18n `ipv.naeherung`).
 //   · Kein Mindestbetrag: weder ORP, LALAMal noch Mémento kennen einen (gesucht 28.09.2026).
+//   · Weitere Näherungen (Fachprüfung 28.09.2026, K4): der Vermögensanteil nimmt 5 % der erfassten
+//     Posten OHNE Schulden abzuziehen (die ORP meint die «fortune imposable», also netto) — wirkt nach
+//     unten; bei Selbständigen rechnet die ORP die 3a NICHT auf (Art. 5 al. 1 lit. b, Mémento Ziff.
+//     2.1.2 ohne Code 4.130), die App lässt sie im Einkommen — wirkt nach unten; ein im Anspruchsjahr
+//     geborenes Kind zählt erst ab dem Geburtsmonat (Art. 5 al. 4), die App fürs ganze Jahr — wirkt
+//     nach oben, selten.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -203,7 +215,9 @@ export function ipvFreiburgRechnen({ region, kinderZahl = 0, me, paar = false })
   };
 }
 
-// Kinder: «enfant à charge» ist nach Art. 3 al. 3 lit. a [1] das MINDERJÄHRIGE Kind. Wer im
+// Kinder: «enfant à charge» ist nach Art. 3 al. 3 lit. a [1] das MINDERJÄHRIGE Kind. Eigener Grund
+// `kindVolljaehrig` (Fachprüfung 28.09.2026, W3: vorher `haushalt`, der von «Paaren» spricht und
+// alleinerziehende Personen falsch anredete). Wer im
 // Anspruchsjahr 18 wird, ist es ab dem Geburtstag nur noch mit Ausbildung (lit. b) oder tiefem
 // Einkommen (lit. c) — beides kennt die App nicht. Darum strenger als der Rahmen (`UEBER_18`):
 // gerechnet wird nur, solange jedes Kind das ganze Jahr minderjährig ist.
@@ -218,14 +232,16 @@ export function ipvFreiburg(data, hh, ipvData, youngAdultsCount, orientierung, l
   // auf der Seite der ECAS noch nicht publiziert — ab dem 01.01. des Folgejahres keine Zahl.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
-  // Kein Stichtag fürs Alter in ORP oder Mémento — gewählt wie BE und SG. Personen 19–25 rechnen
-  // mit einer eigenen Durchschnittsprämie und oft über die Eltern: bewusst nicht gebaut.
+  // ORP Art. 3 al. 3 lit. b/c [1]: junge Erwachsene «jusqu'à l'année de ses 25 ans»; Mémento
+  // Ziff. 8.1: «jeune adulte âgé de 19 à 25 ans». Erwachsen ist also, wer im Anspruchsjahr 26 wird
+  // (Jahrgang 2000 für 2026) — belegt, wie LU und AG. Personen 19–25 rechnen mit einer eigenen
+  // Durchschnittsprämie und oft über die Eltern: bewusst nicht gebaut.
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
+  if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
   // Alter im Anspruchsjahr; beim eingetippten Alter ein Jahr dazu (vorsichtig, wie BE/SG/LU).
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
-  if (NICHT_GANZJAEHRIG_MINDERJAEHRIG(kinderJahre)) return orientierung('haushalt');
+  if (NICHT_GANZJAEHRIG_MINDERJAEHRIG(kinderJahre)) return orientierung('kindVolljaehrig');
 
   const { region } = regionAusPLZ({ data, kanton: 'FR', lookupPLZ, regionFn: frRegion });
   if (!region) return orientierung('region');

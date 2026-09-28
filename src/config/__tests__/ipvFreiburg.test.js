@@ -319,22 +319,24 @@ describe('K31 calculateIPV für FR (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: -500 }))).toMatchObject({ belegt: false, offen: 'einkommenNegativ' });
   });
 
-  it('Alter: mangels Stichtag erwachsen erst, wer am Ende des Vorjahres 26 ist', () => {
-    expect(calculateIPV(person({ dob: '1999-12-31' })).belegt).toBe(true);
-    expect(calculateIPV(person({ dob: '2000-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
+  // ORP Art. 3 al. 3 lit. b/c: «jusqu'à l'année de ses 25 ans»; Mémento 8.1 «19 à 25 ans».
+  // ⟨gedreht 28.09.2026, Fachprüfung W4: vorher `mangelsStichtag`, Jahrgang 2000 ohne Zahl.⟩
+  it('Alter nach Jahrgang (ORP Art. 3 al. 3): 2000 ist 2026 erwachsen, 2001 nicht', () => {
+    expect(calculateIPV(person({ dob: '2000-12-31' })).belegt).toBe(true);
+    expect(calculateIPV(person({ dob: '2001-01-01' }))).toMatchObject({ belegt: false, offen: 'alter' });
     expect(calculateIPV(person({ dob: '' }))).toMatchObject({ offen: 'alter' });
   });
 
   it('Kinder: nur ganzjährig minderjährige (Art. 3 al. 3 lit. a); wer 2026 18 wird, keine Zahl', () => {
     expect(calculateIPV(person({ children: [{ birthDate: '2009-01-01' }] })).belegt).toBe(true);
-    expect(calculateIPV(person({ children: [{ birthDate: '2008-12-31' }] }))).toMatchObject({ offen: 'haushalt' });
+    expect(calculateIPV(person({ children: [{ birthDate: '2008-12-31' }] }))).toMatchObject({ offen: 'kindVolljaehrig' });
     // Eingetipptes Alter zählt im Anspruchsjahr eins mehr: 17 ist 2026 vielleicht schon 18.
-    expect(calculateIPV(person({ children: [{ age: 17 }] }))).toMatchObject({ offen: 'haushalt' });
+    expect(calculateIPV(person({ children: [{ age: 17 }] }))).toMatchObject({ offen: 'kindVolljaehrig' });
     expect(calculateIPV(person({ children: [{ age: 16 }] })).belegt).toBe(true);
   });
 
   it('Kinder über 18, Kinder ohne Alter, Paare, Konkubinat: Orientierung mit Grund', () => {
-    expect(calculateIPV(person({ children: [{ age: 19 }] }))).toMatchObject({ offen: 'haushalt' });
+    expect(calculateIPV(person({ children: [{ age: 19 }] }))).toMatchObject({ offen: 'kindVolljaehrig' });
     expect(calculateIPV(person({ children: [{ age: 0 }] }))).toMatchObject({ offen: 'alter' });
     expect(calculateIPV(person({ basis: { maritalStatus: 'married' } }))).toMatchObject({ offen: 'haushalt' });
     expect(calculateIPV(person({ basis: { maritalStatus: 'cohabiting' } }))).toMatchObject({ offen: 'haushalt' });
