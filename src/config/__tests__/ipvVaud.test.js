@@ -42,6 +42,17 @@ describe('K31 VD: Eckpunkte der drei gebauten Kategorien [4] art. 21 al. 1', () 
     expect(vdSubsideMonat('e', 50001)).toBe(0);
   });
 
+  // Die STELLUNG des Exponenten, wie am Formelbild gelesen (28.09.2026): P1 aussen am ganzen
+  // Ausdruck {1 − ((RD − C1)/(A1 − C1))²}. Mitten zwischen C1 und A1 (RD 28 500) ergibt das
+  // 30 + 301 × (¾)^2.5 = 176.63. Mit dem Exponenten innen am Bruch wären es 321.6, ohne ihn 199.3.
+  // Das pinnt die Lesart des Bildes, nicht eine amtliche Zahl — ein amtliches Beispiel auf der
+  // Kurve gibt es nicht (FRAGEN-AN-DIE-AEMTER.md, Frage 3).
+  it('a) Formel 1 mitten auf der Kurve: RD 28 500 → 176.63 (Exponent aussen, wie im Bild)', () => {
+    expect(vdSubsideMonat('e', 28500)).toBeCloseTo(30 + 301 * Math.pow(0.75, 2.5), 9);
+    expect(vdSubsideMonat('e', 28500)).toBeCloseTo(176.63, 2);
+    expect(ipvVaudRechnen({ personen: ['e'], revenuOvam: 28500 }).monat).toBe(177);
+  });
+
   it('a) Formel 1 hängt an beiden Nahtstellen stetig an: 331 bei C1, 30 bei A1', () => {
     expect(vdSubsideMonat('e', 17000.01)).toBeCloseTo(331, 5);
     expect(vdSubsideMonat('e', 39999.99)).toBeCloseTo(30, 4);
@@ -374,6 +385,7 @@ describe('K31 calculateIPV für VD (App-Angaben → Modell)', () => {
     // 2 000 × 13 = 26 000 − 2 200 = 23 800 → Formel 1 → 263.7… → 264
     const r = calculateIPV(person({ monthlyIncome: 2000, finanzen: { dreizehnter: 'ja' } }));
     expect(ipvVaudRechnen({ personen: ['e'], revenuOvam: 23800 }).monat).toBe(r.amount);
+    expect(r.amount).toBe(270);
     expect(r.amount).toBeLessThan(300);
   });
 
