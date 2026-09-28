@@ -240,6 +240,28 @@ die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU 
 
 ---
 
+## 10 · IAS Tessin — Bedarfsgrenze für RDM, Berufsauslagen und Aufteilung
+
+**Wo:** LCAMal (RL 853.100) Art. 31, 32a, 37; RLCAMal (RL 853.110) Art. 17, 18; Decreto RL 870.130;
+Istruzioni RIPAM 2026.
+
+**Frage 1 — RDM:** Art. 32a nennt «50% del limite di fabbisogno, senza computo della pigione, ai sensi
+della Laps». Ist das für eine Einzelperson 2026 die «soglia d'intervento» nach Laps Art. 10 und Decreto
+870.130, also 18'709 (RDM = 3,8 × 50 % × 18'709 = 35'547.10)? Die Istruzioni nennen 18'709 als «limite di
+fabbisogno esistenziale», RLCAMal Art. 18 regelt das Jahr — wörtlich gleichgesetzt ist es nirgends.
+
+**Frage 2 — Berufsauslagen:** Ist die Pauschale von 4'000 für jede UR mit einer hauptberuflich
+angestellten Person fest, oder zählt der tatsächliche Abzug nach LT, höchstens 4'000?
+
+**Frage 3 — Kinder:** Wie wird nach RLCAMal Art. 17 Abs. 2 aufgeteilt, wenn die UR-Verbilligung 80 % des
+PMR der Minderjährigen übersteigt — erhalten diese genau 80 % und die übrigen Personen den Rest nach PMR?
+Davon hängen der Deckel (Art. 37 Abs. 3) und der Mindestbetrag je Person (Art. 21) ab.
+
+**Stand:** TI ist für 2026 für Alleinstehende gebaut (Entwurfs-PR, K31); Haushalte mit Kindern und Paare
+zeigen keinen Betrag. Die App hat den IAS-Rechner bewusst nicht mit Daten gefüttert.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für
