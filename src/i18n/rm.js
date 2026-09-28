@@ -3445,6 +3445,8 @@ export default {
     healthCosts: 'Custs da sanadad (LAMal)',
     healthCostsDetail: 'Quints dal medi pajads {year}',
     healthCostsOpen: 'anc avert: {amount}',
+    taxMonthlyCompare: { sie: '≈ {estimate} per mais stimà · Vossa indicaziun en il budget: {angabe} per mais.', du: '≈ {estimate} per mais stimà · Tia indicaziun en il budget: {angabe} per mais.' },
+    taxOwnFigure: { sie: 'Vossa indicaziun en il budget: {angabe} per mais.', du: 'Tia indicaziun en il budget: {angabe} per mais.' },
     canton: 'Chantun',
     taxes: 'Taglientas',
     ipv: 'Reducziun da premias (IPV)',

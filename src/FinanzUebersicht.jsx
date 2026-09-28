@@ -199,6 +199,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   // R4: Annahmen hinter der Zahl (13. Monatslohn offen, Alleinverdiener-Ehepaar).
   const annahmen = steuern ? steuern.annahmen : null;
   const annahmenSatz = taxResult ? annahmenTexte(t, annahmen).join(' ') : '';
+  // Die Budget-Bilanz unten zieht die EIGENE Angabe ab (`finanzen.monthlyTax`), die Karte
+  // schätzt — die Karte nennt darum beide (Entscheid 28.09.2026, Variante A). Den Monatswert
+  // der Schätzung nur mit Kantonszahl: eine reine Bundessteuer neben der vollen eigenen
+  // Steuer läse sich wie eine Abweichung, die keine ist.
+  const eigeneSteuer = Number(data.finanzen?.monthlyTax || 0);
+  const steuerAngabeSatz = eigeneSteuer <= 0 ? ''
+    : kantonal
+      ? t('finanzUebersicht.taxMonthlyCompare', { estimate: formatCHF(Math.round(kantonal.total / 12)), angabe: formatCHF(eigeneSteuer) })
+      : t('finanzUebersicht.taxOwnFigure', { angabe: formatCHF(eigeneSteuer) });
 
   const hasData = income > 0;
 
@@ -424,10 +433,11 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
           ? '~ ' + formatCHF(taxResult.steuer) + ' ' + t('common.perYear') + ' (' + t('tax.federalOnly') + ')'
           : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
       statusColor: palette.text,
-      detail: kantonal
+      detail: [steuerAngabeSatz, kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION }) + (annahmenSatz ? ' ' + annahmenSatz : '')
         : steuerOhneZahl ? (steuerkanton && ERKLAERT_IN_ORIENTIERUNG.includes(steuerOhneZahl) ? null : bundOhneZahlText(t, steuerOhneZahl))
           : [!steuerkanton ? t('finanzUebersicht.selectCanton') : '', annahmenSatz].filter(Boolean).join(' ') || null,
+      ].filter(Boolean).join(' ') || null,
       onClick: () => onNavigate('tax'),
     }),
     // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,

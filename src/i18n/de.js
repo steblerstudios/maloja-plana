@@ -5038,6 +5038,8 @@ export default {
     healthCosts: 'Gesundheitskosten (KVG)',
     healthCostsDetail: 'Bezahlte Arztrechnungen {year}',
     healthCostsOpen: 'noch offen: {amount}',
+    taxMonthlyCompare: { sie: '≈ {estimate} pro Monat geschätzt · Ihre Angabe im Budget: {angabe} pro Monat.', du: '≈ {estimate} pro Monat geschätzt · Deine Angabe im Budget: {angabe} pro Monat.' },
+    taxOwnFigure: { sie: 'Ihre Angabe im Budget: {angabe} pro Monat.', du: 'Deine Angabe im Budget: {angabe} pro Monat.' },
     canton: 'Kanton',
     taxes: 'Steuern',
     ipv: 'Prämienverbilligung (IPV)',

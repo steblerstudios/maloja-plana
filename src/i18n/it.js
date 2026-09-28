@@ -4993,6 +4993,8 @@ export default {
     healthCosts: 'Costi sanitari (LAMal)',
     healthCostsDetail: 'Fatture mediche pagate {year}',
     healthCostsOpen: 'ancora aperto: {amount}',
+    taxMonthlyCompare: { sie: '≈ {estimate} al mese stimati · La Sua indicazione nel budget: {angabe} al mese.', du: '≈ {estimate} al mese stimati · La tua indicazione nel budget: {angabe} al mese.' },
+    taxOwnFigure: { sie: 'La Sua indicazione nel budget: {angabe} al mese.', du: 'La tua indicazione nel budget: {angabe} al mese.' },
     canton: 'Cantone',
     taxes: 'Imposte',
     ipv: 'Riduzione dei premi (RDP)',

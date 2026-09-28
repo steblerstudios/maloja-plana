@@ -5016,6 +5016,8 @@ export default {
     healthCosts: 'Health costs (KVG)',
     healthCostsDetail: 'Paid medical bills {year}',
     healthCostsOpen: 'still open: {amount}',
+    taxMonthlyCompare: '≈ {estimate} per month estimated · Your figure in the budget: {angabe} per month.',
+    taxOwnFigure: 'Your figure in the budget: {angabe} per month.',
     canton: 'Canton',
     taxes: 'Taxes',
     ipv: 'Premium reduction (IPV)',
