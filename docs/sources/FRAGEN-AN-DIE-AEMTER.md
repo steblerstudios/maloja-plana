@@ -506,6 +506,46 @@ publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
 
 ---
 
+## 16 · Ausgleichskasse Nidwalden — Kinder: besondere und allgemeine Prämienverbilligung
+
+*Aufgenommen 28.09.2026 beim Einbau von NW. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Selbstbehalt, Richtprämien und Steuerwerte 2026 stehen in NG 742.111 und NG 742.1;
+die App rechnet danach für Alleinstehende. Für Familien fehlt uns eine Regel.
+
+*Nummer 16 (28.09.2026 spätabends): 10 ist GR, 11–15 sind für TG, FR, JU, TI, GE reserviert.*
+
+**Frage 1 — Kinder (Art. 14 Abs. 2 kKVG):** «Besteht nach Berücksichtigung der besonderen
+Prämienverbilligung weiterhin ein Anspruch auf allgemeine Prämienverbilligung für die Kinder, wird diese
+zusätzlich ausgerichtet.» Wie wird gerechnet? Beispiel: ein Elternteil, ein Kind, Summe der Steuerwerte
+30'000, Richtprämien 5'400 / 1'260, Selbstbehalt 3'000. Wir sehen drei Lesarten: (a) das Kind zählt in
+der allgemeinen Rechnung nur mit 20 % → 3'660; (b) das Kind erhält das Höhere aus 80 % und seinem
+Anteil → 3'975.60; (c) 80 % plus sein Anteil, höchstens die Richtprämie → 4'227.60. Welche gilt? Bis
+zur Antwort zeigt die App Familien in diesem Bereich keinen Betrag.
+
+**Frage 2 — Mindestbetrag (§ 5 der Verordnung 2026):** «Beträge unter Fr. 100.–» — je Person oder
+für den ganzen Anspruch? Die App prüft die Summe.
+
+**Frage 3 — Rundung:** Gibt es eine Rundungsregel für die Auszahlung (z. B. Monatsbetrag auf
+5 Rappen)? Wir haben keine gefunden und rechnen auf ganze Franken im Jahr.
+
+*Hinweis zu Frage 1 (Fachprüfung #486, K1, keine Entscheidung):* Art. 15 Abs. 2 sagt für junge
+Erwachsene «Besteht … ein **höherer** Anspruch …, wird **dieser Betrag** ausgerichtet» (eine
+Max-Regel); Art. 14 Abs. 2 sagt «weiterhin … **zusätzlich**». Der Wortlaut spricht eher gegen (b).
+Auch (a) ist nicht sicher eine Untergrenze: zählt das Kind in der allgemeinen Rechnung gar nicht,
+ergäbe das Beispiel 3'408.
+
+**Frage 4 — Neugeborene (Art. 17 Abs. 2 und Art. 20a kKVG):** Ein 2026 geborenes Kind zählt «bis Ende
+Kalenderjahr». Wird sein Anteil für die Monate vor der Geburt gekürzt (Prämie erst ab Geburt
+geschuldet)? Die App rechnet anteilig ab dem Geburtsmonat. Den Mindestbetrag (Frage 2) prüft sie
+auf dem ungekürzten Anspruch, nicht auf dem Monatsanteil — Geburt im Dezember: 84 statt keiner
+Auszahlung. Stimmt diese Reihenfolge?
+
+**Stand:** NW ist für 2026 gebaut (Entwurfs-PR, K31) — ohne Zahl für Familien, bei denen Frage 1
+entscheidet. Werte 2027 nicht publiziert; ab 01.01.2027 zeigt die App für NW keinen Betrag.
+
+---
+
 ## 17 · Ausgleichskasse Obwalden — Jahrgang 2008, Mindestbetrag, Stufen und die Grenze mit Kindern
 
 *Aufgenommen 28.09.2026 beim Einbau von OW. Entwurf — **nicht gesendet**.*
@@ -797,6 +837,57 @@ die Kinder auf 827 statt 827.20 auf. Ist «auf ganze Franken abrunden» die Rege
 
 **Stand:** AI ist für 2026 gebaut (Entwurfs-PR, K31). Ab 01.01.2027 zeigt die App für AI keinen Betrag
 mehr, bis die Werte 2027 eingearbeitet sind.
+
+---
+
+## 20 · Ausgleichskasse Zug — der Beschluss 2026 und die Frist
+
+*Aufgenommen 28.09.2026 beim Einbau von ZG, nach der Fachprüfung neu gefasst. Entwurf — **nicht
+gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, … SZ 18, SO 19, ZG 20.)*
+
+**Worum es geht:** Die Broschüre «Prämienverbilligung 2026 im Kanton Zug» nennt Richtprämien,
+Selbstbehalt 8 % und die Grenzen 70'000 / 89'900 — und dazu: «Die Grenzwerte für das massgebende
+Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer
+aus.» Die App rechnet heute nur Haushalte mit einer erwachsenen Person. Solange diese Grenzen
+fehlen, zeigt sie für Zug **keinen Betrag**, nur «kein Anspruch», wo er sicher ist.
+
+⟨Fachprüfung #475, 28.09.2026 abends: Fragen 1–4 in dieser Form sind **überholt** und bleiben als
+Beleg stehen. Die Regierungsratsbeschlüsse 2024 und 2025 kennen **eine** Grenze für alle (Ziff. 1.5),
+die Broschüre 2025 rechnet eine Einzelperson ohne weitere Grenze; der Satz «bei Einzelpersonen …
+tiefer» beschreibt die Formel (Nullpunkt 62'310). Frage 3 beantwortet RRB 2025 Ziff. 1.6 (80 %,
+gestützt auf § 7bis Abs. 2 IPVG i. V. m. Art. 65 Abs. 1bis KVG), Frage 4 Ziff. 3 (Amtsblatt).
+Die App rechnet jetzt. Offen bleiben die Fragen 5–7 unten.⟩
+
+~~**Frage 1 — Grenzen 2026:** Ab welchem massgebenden Einkommen beginnt für Einzelpersonen die
+Kürzung, und wo liegt die Obergrenze? Gilt dieselbe Kürzung (0,5 % je angefangene 100 Franken)?~~
+
+~~**Frage 2 — «gewisse Haushalte»:** Welche Haushalte mit einer erwachsenen Person haben die tieferen
+Grenzen, welche die Haushaltsgrenzen (z. B. alleinerziehend mit Kindern)?~~
+
+~~**Frage 3 — Mindestgarantie Kinder:** Die Broschüre nennt «mindestens 80 % der Richtprämie», § 7bis
+Abs. 2 IPVG «mindestens die Hälfte der für sie massgebenden Prämie». Worauf stützt sich die 80 %?~~
+
+~~**Frage 4 — Beschluss:** Ist der Regierungsratsbeschluss mit den Parametern 2026 veröffentlicht
+(Amtsblatt)? In der BGS ist er nicht erfasst.~~
+
+**Frage 5 — Beschluss 2026:** Der Beschluss mit den Parametern 2026 liegt uns nicht vor (akzug.ch
+führt die Kurzfassungen 2023–2025, für 2026 nicht; zg.ch zeigt noch 2025). Gilt Ziff. 1.5 für 2026
+unverändert — eine Grenze für alle, ohne eigene Grenzen für Einzelpersonen? Wo ist er veröffentlicht?
+
+**Frage 6 — der Satz in der Broschüre:** «Die Grenzwerte … fallen bei Einzelpersonen und gewissen
+Haushalten mit nur einer erwachsenen Person tiefer aus.» Ist damit gemeint, dass die Formel bei ihnen
+früher auf null fällt (Einzelperson 62'310, mit einem Kind 77'610)?
+
+**Frage 7 — verspätete Gesuche:** § 11 Abs. 2 IPVG lässt Gesuche bis 30. September zu, «wenn …
+wichtige Gründe vorliegen»; die Website schreibt, nach dem 30. April sei keine Anmeldung mehr
+möglich. Welche Gründe gelten als wichtig?
+
+**Stand:** ZG ist gebaut (Entwurfs-PR #475) und rechnet nach den Werten der Broschüre 2026 und der
+Struktur des Beschlusses 2025. «Kein Anspruch» sagt die App nur auf einer Untergrenze des
+Reineinkommens (⟨Fixrunde 2⟩ Versicherungsabzug § 30 lit. g StG voll, Berufskosten-Pauschale,
+Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Wegleitung 2024 der
+Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
+zum Einkommen.
 
 ---
 

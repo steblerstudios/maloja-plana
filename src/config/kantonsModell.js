@@ -29,13 +29,13 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die Zurechnungsregeln (seit 28.09.2026 fünf) — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (seit 28.09.2026 sechs) — benannt und belegt, NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI, ZG — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        (UR: kein Abzug der 3a vom PV-Einkommen, rechnerisch dasselbe.)
 //                        (GE aus dem Gegengrund: im RDU wird die 3a gar nicht erst abgezogen.)
 //                        (TI: die Abzüge vom verfügbaren Einkommen sind abschliessend aufgezählt,
@@ -53,6 +53,8 @@ export function vermoegenSumme(f) {
 //                            (Säule 3a = Code 4.130 der Freiburger Steuererklärung)
 //                        SH: § 12 Abs. 1 lit. e Dekret (SHR 832.110)
 //                        AI: Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)
+//                        ZG: § 1 Abs. 1 lit. c V IPVG (BGS 842.61), «zuzüglich allfällig
+//                            abgezogener Beiträge an die gebundene Selbstvorsorge (Säule 3a)»
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE, SO, VS — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        BE: KKVV Art. 6 Abs. 4 lit. i
@@ -62,6 +64,8 @@ export function vermoegenSumme(f) {
 //                        VS: VüIPV (SGS 832.105) Art. 8 Abs. 1 lit. a, «bis zum Maximalbetrag des
 //                            Angestelltenlohns». Das Wallis rechnet nur, wo der Deckel NICHT beisst
 //                            (das Merkblatt der Ausgleichskasse nennt keinen Deckel — ipvWallis.js).
+//   abgezogen            NW — gar nicht aufgerechnet: gemessen wird am Reineinkommen, in dem sie
+//                        abgezogen ist. Art. 12 Abs. 2 kKVG (NG 742.1) ⇒ Abzug = die ganze Einzahlung.
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
@@ -144,8 +148,8 @@ export const SAEULE_3A = Object.freeze({
     // GE (28.09.2026, ipvGenf.js): dasselbe Ergebnis aus dem GEGENTEILIGEN Grund — die 3a wird im
     // RDU gar nicht erst abgezogen; LRDU Art. 5 Abs. 1 (rsGE J 4 06) nennt LIPP Art. 31 lit. a und b,
     // nicht lit. c (gebundene Selbstvorsorge). Wo nichts abgezogen wurde, ist nichts aufzurechnen.
-    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13) · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110) · AI Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501)',
+    kantone: 'ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI, ZG',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · VD art. 6 al. 2 lit. a LHPS (BLV 850.03) · UR Art. 7 Abs. 2 RB 20.2213 · NE Art. 12 al. 1 lit. a RSN 821.102 (nur die genannten Abzüge — die 3a gehört nicht dazu) · GR Art. 8a Abs. 1 lit. e KPVG (BR 542.100) · TI Art. 31 Abs. 1 lit. d LCAMal (RL 853.100) · OW Art. 7a GDB 851.11 · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU · FR Art. 5 Abs. 1 lit. a Ziff. 1 ORP (RSF 842.1.13) · SH § 12 Abs. 1 lit. e Dekret (SHR 832.110) · AI Art. 5 Abs. 3 lit. d StKB IPV (GS 832.501) · ZG § 1 Abs. 1 lit. c V IPVG (BGS 842.61)',
     // OW (28.09.2026): Art. 7a GDB 851.11 zieht vom Total der Einkünfte nur aufgezählte Posten ab;
     // die 3a (Art. 35 Abs. 1 lit. e StG) ist nicht darunter — sie bleibt voll im Einkommen.
     nichtAufgerechnet: () => 0,
@@ -405,6 +409,33 @@ export const SAEULE_3A = Object.freeze({
     freibetrag: 10000,
     nichtAufgerechnet: (f) => Math.min(betrag3a(f), 10000),
   }),
+
+  // ⟨NW, 28.09.2026⟩ Die sechste Regel (auf NW als vierte gebaut; SZ `imReineinkommenAbgezogen` und
+  // AR `freibetragOhneSaeule2` kamen in der Sammel-Integration dazu) — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
+  // (Code 330), und dort ist die 3a abgezogen (StG NW Art. 35 Abs. 1 Ziff. 5, NG 521.1). Rechnet
+  // der Kanton sie wieder auf, stünde sie unter den Aufrechnungen von Art. 12 Abs. 2 kKVG
+  // (NG 742.1) — dort stehen BGSA-Lohn, BVG-Einkauf, Teileinkünfte, Liegenschaftsunterhalt und
+  // Reinvermögen, die 3a nicht. Also bleibt sie ABGEZOGEN, und die App muss die ganze Einzahlung
+  // aus ihrem Nettoeinkommen herausnehmen.
+  // ⚠️ Kein Deckel auf das Bundesmaximum: eine Einzahlung darüber wäre gesetzwidrig und im
+  // Reineinkommen nicht abgezogen. Der Betrag ist der des laufenden Jahres (siehe `betrag3a`);
+  // zwischen den Jahresmaxima (2024: 7'056, 2026: 7'258) zieht die App bis 202 Franken zu viel ab
+  // — Wirkung höchstens 20 Franken im Jahr, auf der zu hohen Seite.
+  abgezogen: Object.freeze({
+    name: 'abgezogen',
+    kantone: 'NW',
+    beleg: 'NW Art. 12 Abs. 2 kKVG (NG 742.1) — Reineinkommen ohne 3a-Aufrechnung; StG NW Art. 35 Abs. 1 Ziff. 5 (NG 521.1)',
+    nichtAufgerechnet: (f) => betrag3a(f),
+    // Wie bei `bisBundesMaximum`, nur ab dem ersten Franken: eine Einzahlung, die grösser ist als
+    // das ganze erfasste Einkommen, stammt nicht daraus (oder es steht der Kontostand im Feld) —
+    // der Abzug zöge das Einkommen ins Negative und die App zeigte den Höchstbetrag. Ebenso ein
+    // Wert, der über die grösste Summe eines einzelnen Jahres hinausreicht.
+    widerlegt: (f, jahresEinkommen, jahre) => {
+      if (!(betrag3a(f) > 0)) return false;
+      const ueberEinkommen = Number.isFinite(jahresEinkommen) && betrag3a(f) > Math.max(0, jahresEinkommen);
+      return ueberEinkommen || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
+    },
+  }),
 });
 
 // Eigene Konstante, weil `widerlegt` oben auf `sicherAbziehbar` derselben Regel zugreift und
@@ -518,6 +549,14 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
   GR: 'KPVG (BR 542.100) und VOzKPVG (BR 542.120) kennen keine Begrenzung auf die tatsächlich '
     + 'bezahlte Prämie — verbilligt werden die massgebenden Prämien (Richtprämien, Art. 8 Abs. 1 '
     + 'KPVG). Offene Frage an die SVA Graubünden: was gilt, wenn die eigene Prämie tiefer ist?',
+  // ZG (28.09.2026, Fachprüfung #475): IPVG (BGS 842.6) begrenzt nur bei Sozialhilfe «höchstens
+  // jedoch bis zur massgebenden Prämie» (§ 7 Abs. 3); weder Gesetz, Verordnung, RRB 2025 noch die
+  // Broschüre 2026 nennen sonst einen Deckel. KVV Art. 106c Abs. 5bis selbst gelesen (Fedlex,
+  // Stand 01.01.2026): Differenz an die versicherte Person, kantonale Deckel vorbehalten.
+  ZG: 'IPVG (BGS 842.6) begrenzt die Verbilligung nur bei Sozialhilfe auf die massgebende Prämie '
+    + '(§ 7 Abs. 3); sonst nennen weder Gesetz, Verordnung noch RRB einen Deckel. Bundesrechtlich '
+    + 'zahlt der Versicherer die Differenz aus, kantonale Deckel bleiben vorbehalten (KVV Art. 106c '
+    + 'Abs. 5bis) — Zug hat keinen.',
 });
 
 // ─── Regeln, die kantonal VERSCHIEDEN sind — benannt statt vereinheitlicht ─────
