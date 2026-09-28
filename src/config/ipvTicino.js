@@ -70,8 +70,8 @@
 //   · die monatliche Auszahlung ab dem Folgemonat nach einem späten Antrag (Art. 25 Abs. 3 [1]);
 //     der Betrag hier ist der Jahresanspruch, der Hinweis daneben nennt die Frist.
 import {
-  vermoegenSumme, rohesEinkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
 
@@ -161,7 +161,11 @@ export function ipvTicino(data, hh, ipvData, youngAdultsCount, orientierung) {
   // nicht gebaut (siehe Kopf).
   if ((hh.children || []).length > 0) return orientierung('tiKinder');
 
-  const einkommen = rohesEinkommenJahr(f) + Math.max(0, Number(f.alimenteReceived) || 0) * 12;
+  // Säule 3a: bleibt im Einkommen (Regel `voll`, Beleg LCAMal Art. 31 Abs. 1 lit. d — die Sozial-
+  // abzüge sind abschliessend aufgezählt, die 3a ist nicht darunter). ⚠️ Das IAS nennt für die
+  // Sozialabzüge die Ziffern 10.1–10.3 der Veranlagung; ob 10.3 im Tessiner Formular die 3a ist,
+  // ist nicht geprüft (Frage 10) — dann läge die Zahl für 3a-Sparende zu tief.
+  const einkommen = einkommenJahr(f, SAEULE_3A.voll) + Math.max(0, Number(f.alimenteReceived) || 0) * 12;
   if (einkommen < 0) return orientierung('einkommenNegativ');
   // Art. 27 [1] / [3] Art. 11: bis 30, Einkommen unter der Bedarfsgrenze und in Erstausbildung
   // ⇒ UR der Eltern. Die Ausbildung kennt die App nicht; darum keine Zahl, wo es zutreffen

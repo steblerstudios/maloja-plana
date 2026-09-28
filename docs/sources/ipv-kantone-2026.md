@@ -2236,7 +2236,7 @@ Abgeleitet (eigene Rechnung aus [1]+[4], nicht amtlich publiziert, nur zur Plaus
 - RDM Paar ohne Kinder = 3.8 × 50 % × (18'709 + 9'215) = CHF 53'055.60.
 - Höchstbetrag Einzelperson Erwachsen bei RD = 0: 8'016 × 76.5 % = CHF 6'132.24/Jahr (begrenzt auf die effektive Prämie, art. 37 cpv. 3).
 
-⚠️ Annahme: Dass «limite di fabbisogno … ai sensi della Laps» in art. 32a der «soglia d’intervento» nach Laps art. 10 / Decreto 870.130 entspricht, schliesse ich aus dem identischen Betrag 18'709 in [3]. Der Zusatz «senza computo della pigione» ist in [4] nicht ausdrücklich erwähnt. Vor Umsetzung mit dem IAS-Simulator (www.iasticino.ch) gegenprüfen.
+⚠️ Annahme: Dass «limite di fabbisogno … ai sensi della Laps» in art. 32a der «soglia d’intervento» nach Laps art. 10 / Decreto 870.130 entspricht, schliesse ich aus dem identischen Betrag 18'709 in [3]. ⟨korrigiert 28.09.2026: nicht mehr nur aus dem Betrag geschlossen — siehe «Nachprüfung 28.09.2026» unten (RLCAMal Art. 18 unter dem Titel «soglie Laps», IAS Ziff. 1.3, Decreto 870.130). Der IAS-Simulator wurde bewusst nicht gefüttert.⟩ Der Zusatz «senza computo della pigione» ist in [4] nicht ausdrücklich erwähnt. Vor Umsetzung mit dem IAS-Simulator (www.iasticino.ch) gegenprüfen.
 
 ### Massgebendes Einkommen
 > «Per principio, il RD è determinato a partire dai dati accertati del calcolo dell’imponibile per l’imposta cantonale IC 2023 (notifica di tassazione).» — Quelle [3] Ziff. 1.2
@@ -2250,7 +2250,7 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt ist ein q
 
 ### Offen / nicht gefunden
 - Ob der Zusatz «senza computo della pigione» die Laps-Schwelle 18'709 weiter verändert: im Decreto 870.130 nicht erwähnt (siehe Annahme oben). Gegenprobe mit dem IAS-Simulator steht aus.
-- Regolamento RLCAMal (853.110) nicht im Wortlaut geprüft (Verteilung, Mindestbetrag). Die Angaben dazu stammen aus dem IAS-Merkblatt [3].
+- Regolamento RLCAMal (853.110) nicht im Wortlaut geprüft (Verteilung, Mindestbetrag). Die Angaben dazu stammen aus dem IAS-Merkblatt [3]. ⟨erledigt 28.09.2026: RLCAMal Art. 11, 17, 18, 21 im Wortlaut gelesen, siehe unten.⟩
 - Keine amtliche Tabelle mit ausgerechneten Einkommensgrenzen je Haushaltsgrösse gefunden. Das IAS verweist auf den Simulator.
 
 ### Quellen
@@ -2317,6 +2317,20 @@ Quellenbesteuerte, EL/Laps/Sozialhilfe. `anmeldefristVorbei` bewusst nicht geset
 den Luzerner Satz) — das Budget zieht darum den ganzen Jahresbetrag ab.
 
 **Werte 2027:** am 28.09.2026 nicht publiziert (Decreto 2026 gilt bis 31.12.2026). Ab 01.01.2027 Grund `jahr`.
+
+### Nachtrag 28.09.2026 abends — Fachprüfung PR #484 eingearbeitet
+
+- **Frist (Blocker):** LCAMal Art. 25 Abs. 3 + IAS Ziff. 2 («Solo se la domanda … entro il 31 dicembre 2025, il diritto
+  alla RIPAM può essere concesso da gennaio 2026») → das Ergebnis setzt `anmeldefristVorbei` und
+  `fristNichtAbgezogenKey: 'ipv.tiFristNichtAbgezogen'`; Budget, KK-Last-Karte und Prämien-Beleg ziehen nach der Frist
+  nichts ab (Leser-Mechanismus zeichengleich aus FR `8ee1904b`).
+- **Stärkste Brücke für die RDM-Zuordnung:** RLCAMal, «Capitolo sesto — Anno di riferimento delle soglie Laps»,
+  darunter Art. 18 «Limite di fabbisogno minimo (art. 32a LCAMal)». Der Vorbehalt sagt jetzt «bestätigt ist sie vom
+  IAS noch nicht, die Frage liegt bereit» (die Frage 10 ist ein Entwurf, nicht gesendet).
+- **Berufsauslagen:** nur bei Anstellungstyp «Angestellt»; leer → ohne Abzug, mit Zusatz-Vorbehalt (Betrag bei
+  Anstellung höher). Vorher galt leer als angestellt (+1'009 Fr./Jahr für Selbständige ohne Angabe).
+- **Richtung im Vorbehalt:** fehlende Schuldzinsen und Schulden ⇒ der Betrag liegt eher zu tief.
+- **Säule 3a:** `SAEULE_3A.voll` um TI ergänzt (Beleg Art. 31 Abs. 1 lit. d); offen: Ziffer 10.3 (Frage 10.4).
 
 ---
 
