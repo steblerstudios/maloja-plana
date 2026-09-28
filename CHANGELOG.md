@@ -12,6 +12,35 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
+- **Prämienverbilligung Waadt nach amtlichem Modell 2026** (K31, sechster Kanton). «Subside
+  ordinaire» nach Arrêté du Conseil d’État vom 17.12.2025 und RLVLAMal art. 21, gebaut für
+  26+ allein, 26+ mit Kind(ern) und Kinder 0–18; jede Zahl am 28.09. an der Quelle neu gelesen,
+  das Formelbild der Verordnung aus der BLV extrahiert und gelesen, das amtliche Beispiel der
+  Notice geht auf den Franken auf. Antragsweg OVAM/AAS statt «automatisch via Steuerdaten»,
+  eigener Vorbehalt, Hinweis ohne Betrag auf den «subside spécifique». Paare, 19–25-Jährige und
+  Sonderkategorien zeigen bewusst keine Zahl. Alle 5 Sprachen (rm provisorisch).
+- **Kantonsmodelle als Register** (#459): ein Eintrag je Kanton in `IPV_MODULE` statt eines
+  `if`-Blocks — Vorbereitung für die übrigen Kantone.
+
+## [0.1.45-beta] — 2026-09-28
+
+*Alles seit `0.1.44-beta` (Tag auf `1cb36b1f`): #440, #443, #449–#453, #455, #457, #458, #351, #460–#462
+(dazu Doku #447/#448/#454/#456). #440–#453 laufen seit dem Zwischen-Deploy vom 28.09. 15:07 (`c739364d`)
+unter der alten Nummer; dieses Release gibt dem Stand die Nummer, damit der Tag wieder auf das Live-Bundle
+zeigt (`deploy.sh` tagt nur bei neuer Version). Startbündel **61,33 / 65 kB** (`npm run size`, auf `92f1c9ae`),
+4708 Tests. **Gemergt ist nicht live.***
+
+### Neu
+- **Flyer A5, zweiseitig** (#351, `#/flyer`): Vorderseite mit Bildmarke, Claim, den drei Datenschutz-Zeilen
+  und QR; Rückseite mit den drei Schritten und Einstieg. Bewusst hell (Browser drucken nicht randlos);
+  das dunkle Druckerei-PDF bleibt die Vorlage für den professionellen Druck. 11 neue Texte in 5 Sprachen,
+  rm als `TODO(rm)`.
+- **Mahnung, Schritt 3: Inkassobüro statt Gläubiger** (#461). Vollmacht oder Abtretungserklärung verlangen;
+  nach der Berner Schuldenberatung (schuldeninfo.ch «Inkassobüros», 04.2024) bleiben nur Forderung,
+  Verzugszins und die Kosten einer berechtigten Betreibung geschuldet, ausser man hat weiteren Gebühren
+  vorher zugestimmt; die Kosten der Vertretung vor dem Betreibungsamt dürfen nicht überbunden werden
+  (SchKG Art. 27 Abs. 2, Wortlaut der Konsolidierung 1.1.2026). Rechts-Prüfer: Blocker behoben (Aussage
+  zugeschrieben, auf die Vertretung eingegrenzt). rm = deutscher Rückfall.
 - **Patientenverfügung in Fragen** (#440, `#/patientenverfuegung`). 13 Fragen, eine pro Seite, jede mit
   «Weiss ich noch nicht» und «Warum wird das gefragt?»; am Schluss Vorschau und Druckdokument mit
   separatem Begleitblatt. Datum und Unterschrift nur von Hand, kein Standardwert (auch keine
@@ -40,8 +69,22 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Budget: Einnahmen des ganzen Haushalts** (#453) — Partner/in und Nebenerwerb zählen mit; Raten-Vorschlag
   im Schuldenmanager rechnet ohne brutto erfassten Nebenerwerb; Monatsbudget in der Finanzübersicht =
   Budget-Seite, bei Bruttolohn kein «frei verfügbar». Startbündel nach #449–#453: 61,11 / 65 kB.
+- **Sozialhilfe-Anzeigen sagen «geschätzt mit der ganzen Miete»** (#455, Folge von #452): Schnellcheck,
+  Leistungsliste, Pegel, Anspruch-Check, Kalender-Signale, Lebensbaum und Budget-Satz tragen den Zusatz;
+  eine Wahrheit `mitGanzerMiete` aus `calculateSozialhilfe`, keine neue Schwelle. Wächter mit Erlaubnisliste.
+- **EL-Hinweise ohne «AHV/IV-Bezüger»** (#462): «EL nur bei AHV- oder IV-Leistung» in de/fr/it/rm
+  (Finanzübersicht, EL-Rechner, Behörden-Dossier); en war schon neutral.
+- **115 verwaiste `mirror.*`-Texte je Sprache entfernt** (#460, Nachtrag zu #430): MirrorCards liest noch 36
+  Satz-Bausteine; die Feld-Beschriftungen der alten Spiegel-Tabellen las niemand mehr. Startbündel unverändert.
 
 ### Behoben
+- **EL-Karte der Finanzübersicht erklärt und führt weiter** (#457): sie verglich den falschen Schlüssel und
+  sagte ohne AHV/IV-Rente immer «Nicht anwendbar» ohne Grund; jetzt Grund + Klick zur EL-Seite. Die
+  **Armutsgrenze** rechnet mit der Haushaltssumme des Budgets (#453) statt einer eigenen Summe und verstummt
+  nicht mehr bei Nebenerwerb ohne Art.
+- **«Drucken» in den Druckfenstern tat nichts** (#458): die Fenster erben die CSP der App (`script-src 'self'`),
+  der Inline-Klick war blockiert — im Browser belegt. Die fünf Knöpfe werden jetzt aus der App verdrahtet
+  (`data-druck`); die gespeicherte Datei druckt weiter ohne CSP. Wächter über ganz `src/`.
 - **Wochenstunden über 60 gelten als unplausibel** (#449). Die Demo-Eingabe «80 Std.» halbierte den
   Stundenlohn und hätte einen falschen Mindestlohn-Brief ausgelöst. Grenze 60 ist gewählt, nicht belegt.
 - **BVG-Hinweis auf der Budget-Seite zeigte «[object Object] (CHF …)»** (#453) — seit 21.09. (`6edd2f8b`) war

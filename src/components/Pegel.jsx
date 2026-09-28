@@ -96,7 +96,8 @@ export const Pegel = ({ palette, t, state }) => {
     h('div', { style: { fontSize: text.sm, color: statusColor, lineHeight: leading.normal } }, statusText),
     // In-Card-Disclaimer wie beim Prämien-Beleg — sobald ein CHF-Betrag steht,
     // ihn sichtbar als Schätzung/Orientierung markieren (nicht nur der Seiten-Fuss).
-    hasAmount ? h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' } }, t('beleg.geschaetzt')) : null
+    hasAmount ? h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' } },
+      t('beleg.geschaetzt') + (state.mitGanzerMiete ? ' · ' + t('sozialhilfe.mitGanzerMiete') : '')) : null
   );
 
   // Kein role='img' am Container: das SVG ist bereits aria-hidden (dekorativ), und

@@ -51,7 +51,9 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       if (rent > 0) {
         const sh = calculateSozialhilfe(probe);
         if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
-          incomeBenefits.push({ key: 'soz', label: t('anspruch.items.sozialhilfe.label'), view: 'sozialhilfe' });
+          // Ganze Miete eingerechnet (keine Mietzins-Limite bekannt) — der «Anspruch» sagt es.
+          incomeBenefits.push({ key: 'soz', view: 'sozialhilfe',
+            label: t('anspruch.items.sozialhilfe.label') + (sh.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '') });
         }
       }
       if (checkELEligibility(probe)?.eligible) {
