@@ -142,11 +142,11 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
 
 // K31: ZH ist seit 19.09.2026 belegt, BE und AG seit 20.09.2026 — alle drei mit eigenem
 // Modell (Tests in ipvZuerich.test.js, ipvBern.test.js bzw. ipvAargau.test.js).
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GR', 'TG', 'GE'];
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GR', 'TG', 'TI', 'GE'];
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 15 null, ZH, BE, AG, SG, LU, VD, UR, NE, GR, TG und GE mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 14 null, ZH, BE, AG, SG, LU, VD, UR, NE, GR, TG, TI und GE mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
     expect(UNBELEGT).toHaveLength(15);
