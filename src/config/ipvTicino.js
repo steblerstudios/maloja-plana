@@ -37,7 +37,7 @@
 // Drei amtliche Texte, die dieselbe Zahl tragen; der Satz «limite di fabbisogno = soglia
 // d'intervento» steht aber nirgends wörtlich. Die stärkste Brücke (Fachprüfung #484): [3] setzt
 // Art. 18 «Limite di fabbisogno minimo (art. 32a LCAMal)» unter den Titel «Capitolo sesto — Anno
-// di riferimento delle SOGLIE Laps». Frage ans IAS: FRAGEN-AN-DIE-AEMTER.md, 10 (Entwurf, nicht
+// di riferimento delle SOGLIE Laps». Frage ans IAS: FRAGEN-AN-DIE-AEMTER.md, 14 (Entwurf, nicht
 // gesendet — der Vorbehalt sagt «bestätigt ist sie noch nicht», nicht «ist nachgefragt»).
 // Der IAS-Rechner (Gegenprobe) wurde bewusst NICHT mit Daten gefüttert.
 //
@@ -164,7 +164,7 @@ export function ipvTicino(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Säule 3a: bleibt im Einkommen (Regel `voll`, Beleg LCAMal Art. 31 Abs. 1 lit. d — die Sozial-
   // abzüge sind abschliessend aufgezählt, die 3a ist nicht darunter). ⚠️ Das IAS nennt für die
   // Sozialabzüge die Ziffern 10.1–10.3 der Veranlagung; ob 10.3 im Tessiner Formular die 3a ist,
-  // ist nicht geprüft (Frage 10) — dann läge die Zahl für 3a-Sparende zu tief.
+  // ist nicht geprüft (Frage 14) — dann läge die Zahl für 3a-Sparende zu tief.
   const einkommen = einkommenJahr(f, SAEULE_3A.voll) + Math.max(0, Number(f.alimenteReceived) || 0) * 12;
   if (einkommen < 0) return orientierung('einkommenNegativ');
   // Art. 27 [1] / [3] Art. 11: bis 30, Einkommen unter der Bedarfsgrenze und in Erstausbildung

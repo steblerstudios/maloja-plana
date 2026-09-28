@@ -65,6 +65,15 @@ describe('K31 IPV-Rechner, Kanton Tessin', () => {
     expect(render(profil(47300 / 12))).toContain('ipv.tiUnterMindestbetrag');
   });
 
+  it('Anstellungstyp leer: der Zusatz-Vorbehalt steht in der Anzeige; bei «Angestellt» nicht', () => {
+    const leer = profil(3000);
+    leer.finanzen = { monthlyIncome: 3000 };
+    const html = render(leer);
+    expect(html).toContain('ipv.vorbehaltTIangestellt');
+    expect(html).toContain('CHF 2’332');
+    expect(render(profil(3000))).not.toContain('ipv.vorbehaltTIangestellt');
+  });
+
   it('Kinder: Orientierung mit dem Tessiner Grund', () => {
     const html = render(profil(3000, { children: [{ age: 5 }] }));
     expect(html).toContain('ipv.orientierungOffen');
