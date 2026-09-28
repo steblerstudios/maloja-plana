@@ -146,10 +146,10 @@ const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'G
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 11 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI und VS mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 3 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI und VS mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    expect(UNBELEGT).toHaveLength(10);
+    expect(UNBELEGT).toHaveLength(3);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
   });

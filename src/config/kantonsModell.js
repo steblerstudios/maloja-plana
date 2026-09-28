@@ -566,7 +566,7 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //
 //   abEndeVorjahr       ZH — ausdrücklich im Erlass: § 8 EG KVG, «für das ganze Jahr das
 //                       Alter am Ende des Vorjahres massgebend». BELEGT.
-//   mangelsStichtag     BE, VD, SG, UR, VS — rechnerisch dasselbe wie oben, aber aus einem anderen
+//   mangelsStichtag     BE, VD, SG, UR, VS, JU — rechnerisch dasselbe wie oben, aber aus einem anderen
 //                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
 //                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe
 //                       ist. GEWÄHLT, nicht belegt — und jederzeit zu überdenken, wenn eine
@@ -589,11 +589,20 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       âgé de 19 à 25 ans». (28.09.2026)
 //                       SH — Verordnung SHR 832.111 § A1-1: «Personen der Jahrgänge 2000 und
 //                       älter» für 2026. (28.09.2026)
+//                       SZ — SVA Schwyz, «Richtprämien … Für das Jahr 2026»: «Erwachsene (ab
+//                       Jahrgang 2000)». (28.09.2026, ipvSchwyz.js [4])
+//                       AR — SOVAR-Antrag 2026: «Für Personen mit Jahrgang 2001 oder jünger …»;
+//                       Jahrgang 2000 und älter ist erwachsen. (28.09.2026, ipvAppenzellAusserrhoden.js [5])
+//                       AI — StKB IPV Anhang A1-1 Ziff. 1 lit. c: «Erwachsene (Jahrgang 2000 und
+//                       älter)». (28.09.2026, ipvAppenzellInnerrhoden.js [1])
+//                       (NW, OW, NE, SO und ZG rufen dieselbe Regel; ihre Belege stehen im Modulkopf.)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnen AG, LU, GR, TI und FR für den Jahrgang 2000, die anderen nicht. Gemessen am
 // aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen. ⟨nachgetragen 28.09.2026 nach dem
 // Re-Review #467: hier stand nur AG; LU (23.09.), GR und TI (28.09.) rechnen seither ebenso.⟩
+// ⟨Sammel-Integration 28.09.2026: nach dem Quelltext rufen ausserdem SH, SZ, AR und AI sowie NW, OW,
+// NE, SO, GE und ZG `imAnspruchsjahr` — hier nicht nachgemessen, nur aus dem Aufruf gelesen.⟩
 //
 // 🛑 `abEndeVorjahr` und `mangelsStichtag` sind absichtlich zwei Namen für dieselbe Rechnung.
 // Sonst schreibt der nächste Kanton «belegt», wo «vorsichtig gewählt» gemeint war — und ein

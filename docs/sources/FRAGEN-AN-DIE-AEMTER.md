@@ -104,6 +104,8 @@ stimmig. Übrig bleibt die Frage nach der Rechtsgrundlage.*
 **Stand:** AG ist für 2026 gebaut; die Werte 2027 sind bewusst **nicht** eingebaut, weil sie
 nur auf der Website belegt sind. Ab 01.01.2027 zeigt die App für AG keinen Betrag mehr.
 
+---
+
 ## 5 · SVA St.Gallen — Deckel auf die effektive Prämie, und zwei kleinere Punkte
 
 **Worum es geht:** Vier Kantone begrenzen die Prämienverbilligung ausdrücklich auf die
@@ -237,7 +239,6 @@ den Kinderanteil begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind
 
 **Stand:** LU ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 sind **nicht** eingebaut —
 die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU keinen Betrag mehr.
-
 
 ---
 
@@ -588,58 +589,6 @@ App dort keinen Betrag, wo es darauf ankommt.
 **Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
 zeigt die App für OW keinen Betrag.
 
-## 24 · SVA Schaffhausen — Kinder-Mindestanspruch, Aufteilung, Rundung
-
-*Aufgenommen 28.09.2026 beim Einbau von SH. Entwurf — **nicht gesendet**. (Nummer 24, zugeteilt
-28.09.2026 abends; vorher 8, dann 12.)*
-
-**Worum es geht:** Formel und Zahlen 2026 stehen im Dekret (SHR 832.110 §§ 10–13bis) und im
-Anhang 1 der Verordnung (SHR 832.111). Ein Berechnungsbeispiel gibt es weder im Merkblatt 2026
-noch auf svash.ch. Die Versand-Grenzwerte (§ A1-2) rechnen wir als Nullpunkt der Formel auf den
-Franken nach — das belegt Selbstbehalt und Richtprämien, nicht aber die folgenden Punkte.
-
-**Frage 1 — Kinder, Basis der 80 %:** Werden die «Prämien der Kinder um mindestens 80 Prozent»
-(Merkblatt, § 13bis Dekret) auf die **Richtprämie** des Kindes (2026: 1'387 / 1'295) gerechnet
-oder auf seine **effektive** Prämie? Wir rechnen mit der Richtprämie — das Antragsformular fragt
-nach der Krankenkasse, nicht nach der Prämie.
-
-**Frage 2 — Aufteilung des Rests (§ 13bis Abs. 1):** «Die verbleibenden Mittel werden anteilig
-entsprechend der Höhe der anrechenbaren Prämie auf die mitbetroffenen Angehörigen des Haushalts
-verteilt.» Zählen die Kinder dabei **mit** (sie erhalten dann mehr als 80 %), oder geht der Rest
-nur an die übrigen Personen? Die Summe ändert sich nicht, wohl aber der Anteil der erwachsenen
-Person — und damit, ob deren eigene Prämie als Obergrenze greift. Geben beide Lesarten einen
-anderen Betrag, zeigt die App keinen.
-
-**Frage 3 — Kinder und Fr. 100:** Liegt die Differenz über 0, aber unter Fr. 100, sagt § 13
-Abs. 2 «kein Betrag», § 13bis Abs. 2 aber «entsprechend erhöht», bis die Kinder 80 % erhalten.
-Was gilt? Die App zeigt in diesem schmalen Band keinen Betrag.
-
-**Frage 4 — Rundung:** Auf welche Einheit wird der verfügte Betrag gerundet? Wir runden den
-Jahresbetrag auf ganze Franken.
-
-**Frage 5 — Website:** Die Seite «Berechnung» (svash.ch/ipv/berechnung) zeigt am 28.09.2026 noch
-die Richtprämien 2025 und die Steuerwerte 2023; die FAQ nennt «bis spätestens 30. April 2025».
-Das Merkblatt 2026 und die Verordnung sind nachgeführt.
-
-**Frage 6 — Kinder über dem Nullpunkt (Fachprüfung #471 W5):** Gilt der Mindestanspruch der Kinder
-(80 %) nur, solange nach § 10 ein Anspruch besteht (Merkblatt: «bei einem Anspruch auf
-Prämienverbilligung»), oder nach Art. 65 Abs. 1bis KVG («untere und mittlere Einkommen») auch darüber?
-Wir rechnen die erste Lesart. Richtung: gilt die zweite, sagt die App Familien knapp über dem Nullpunkt
-zu Unrecht «kein Anspruch» (zu tief, 1'109.60 bzw. 1'036 je Kind).
-
-**Frage 7 — Deckel beim Kind (Fachprüfung #471 W3):** Wird der Anteil eines Kindes auf seine eigene
-Prämie begrenzt (§ 17 Abs. 2)? In der Lesart «Rest mit Kindern verteilt» kann er über der
-Kinderprämie liegen — die App wäre dann um mehrere hundert Franken je Kind und Jahr zu hoch, umso mehr,
-je tiefer die Kinderprämie.
-
-**Frage 8 — Entlastungsabzug und Säule 3a (Fachprüfung #471 K8):** Wird der Entlastungsabzug am
-steuerlichen Reineinkommen (nach dem 3a-Abzug) gemessen oder am Einkommen nach der Aufrechnung nach
-§ 12 lit. e? Wir rechnen am steuerlichen Reineinkommen; sonst läge die App um bis zu rund 400 Franken
-zu hoch.
-
-**Stand:** SH ist für 2026 gebaut (Entwurfs-PR, K31). Ein Anhang für 2027 ist am 28.09.2026 nicht
-publiziert. Ab 01.01.2027 zeigt die App für SH keinen Betrag mehr.
-
 ---
 
 ## 18 · SVA Schwyz — Grenze je Mietzinsregion, Kinder-Mindestanspruch, Stichtag
@@ -722,50 +671,111 @@ Abs. 2 lit. a spricht vom «steuerbaren Vermögen»; die App rechnet so (Fachpr�
 
 **Stand:** SO ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag, nur «kein Anspruch»,
 wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rechnet die App.
+
 ---
 
-## 27 · Ausgleichskasse des Kantons Wallis — eine Tabellenzelle, die Säule 3a, der Staatsratsbeschluss
+## 20 · Ausgleichskasse Zug — der Beschluss 2026 und die Frist
 
-*Aufgenommen 28.09.2026 beim Einbau von VS. Entwurf — **nicht gesendet**. Nummer 27 (Integration 28.09.2026: 11–26 für die übrigen Kantone reserviert; zuerst als 9, dann 10 notiert).*
+*Aufgenommen 28.09.2026 beim Einbau von ZG, nach der Fachprüfung neu gefasst. Entwurf — **nicht
+gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, … SZ 18, SO 19, ZG 20.)*
 
-**Worum es geht:** Referenzprämien, Sätze und Grenzen 2026 stehen in der «Einkommenstabelle zur
-Berechnung der Krankenkassensubventionen 2026» (Echelle définitive RIP 2026, 19.12.2025) und —
-mit dem Vermerk «(Provisorisch)» — im Anhang zur Medienmitteilung vom 3. Februar 2026. Die App
-rechnet nach der Tabelle. Ein amtliches Rechenbeispiel mit Franken haben wir nicht gefunden.
+**Worum es geht:** Die Broschüre «Prämienverbilligung 2026 im Kanton Zug» nennt Richtprämien,
+Selbstbehalt 8 % und die Grenzen 70'000 / 89'900 — und dazu: «Die Grenzwerte für das massgebende
+Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer
+aus.» Die App rechnet heute nur Haushalte mit einer erwachsenen Person. Solange diese Grenzen
+fehlen, zeigt sie für Zug **keinen Betrag**, nur «kein Anspruch», wo er sicher ist.
 
-~~**Frage 1 — Kinderzeile «Alleinstehende mit 1 Kind»:** Die Einkommenstabelle nennt **63'000**, der
-Medienanhang **61'000**; alle anderen Zellen stimmen überein. Welcher Wert gilt 2026? Bis zur
-Antwort zeigt die App für eine alleinstehende Person mit einem Kind zwischen 61'001 und 63'000
-keinen Betrag (Unterschied: 80 % der Kinder-Referenzprämie, CHF 1'276.80 im Jahr in Region I).~~
-⟨**beantwortet durch die Quelle, 28.09.2026** (Fachprüfung #477): «Modalités de subventionnement des
-primes d'assurance-maladie 2026» (Dienststelle für Gesundheitswesen, 22.12.2025) Ziff. 4.1: «les enfants
-des personnes seules dont le revenu est compris entre CHF 60'125.- et CHF 63'000.- ont droit à un subside
-de 80%». Auch der französische Medienanhang nennt 63'000; nur die deutsche Fassung 61'000. Die App
-rechnet mit 63'000. Frage nicht stellen — höchstens als Hinweis: «DE-Medienanhang Folie 8 weicht ab».⟩
+⟨Fachprüfung #475, 28.09.2026 abends: Fragen 1–4 in dieser Form sind **überholt** und bleiben als
+Beleg stehen. Die Regierungsratsbeschlüsse 2024 und 2025 kennen **eine** Grenze für alle (Ziff. 1.5),
+die Broschüre 2025 rechnet eine Einzelperson ohne weitere Grenze; der Satz «bei Einzelpersonen …
+tiefer» beschreibt die Formel (Nullpunkt 62'310). Frage 3 beantwortet RRB 2025 Ziff. 1.6 (80 %,
+gestützt auf § 7bis Abs. 2 IPVG i. V. m. Art. 65 Abs. 1bis KVG), Frage 4 Ziff. 3 (Amtsblatt).
+Die App rechnet jetzt. Offen bleiben die Fragen 5–7 unten.⟩
 
-**Frage 2 — Säule 3a:** Art. 8 Abs. 1 lit. a VüIPV rechnet die Beiträge «bis zum Maximalbetrag des
-Angestelltenlohns» dazu; die Seite der Ausgleichskasse zählt «Beiträge der gebundenen
-Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220)» ohne Obergrenze, ebenso die «Modalités 2026»
-der Dienststelle (Ziff. 6.1: «+ les cotisations à des formes reconnues de prévoyance liée (pilier 3a)»). Gilt die Obergrenze — und wenn
-ja, das Maximum mit 2. Säule des Steuerjahres x − 2 (2024: CHF 7'056)? Bis zur Antwort zeigt die App
-bei Einzahlungen über dem Maximum keinen Betrag.
+~~**Frage 1 — Grenzen 2026:** Ab welchem massgebenden Einkommen beginnt für Einzelpersonen die
+Kürzung, und wo liegt die Obergrenze? Gilt dieselbe Kürzung (0,5 % je angefangene 100 Franken)?~~
 
-**Frage 3 — Staatsratsbeschluss:** Wo ist der Beschluss nach Art. 7 VüIPV (Einkommensgrenzen und
-degressive Skala 2026) veröffentlicht? Im Amtsblatt 2026 haben wir ihn nicht gefunden; gefunden ist die
-Publikation nach Art. 23 («Modalités … 2026», 22.12.2025). Genügt sie als Grundlage?
+~~**Frage 2 — «gewisse Haushalte»:** Welche Haushalte mit einer erwachsenen Person haben die tieferen
+Grenzen, welche die Haushaltsgrenzen (z. B. alleinerziehend mit Kindern)?~~
 
-**Frage 4 — Rundung:** ~~Gilt der Satz der ersten Zeile, deren Grenze das massgebende Einkommen nicht
-übersteigt?~~ ⟨belegt: Art. 2 Abs. 2 «gleich oder kleiner» und «Modalités» Ziff. 4.1 «limites maximales»⟩
-Wird der Betrag je Monat und Person gerundet?
+~~**Frage 3 — Mindestgarantie Kinder:** Die Broschüre nennt «mindestens 80 % der Richtprämie», § 7bis
+Abs. 2 IPVG «mindestens die Hälfte der für sie massgebenden Prämie». Worauf stützt sich die 80 %?~~
 
-**Frage 5 — Frist für Gesuche ohne Entscheid:** Die «Modalités 2026» nennen für Sondergesuche und
-Quellenbesteuerte den 31. Dezember 2026; VüIPV Art. 11 (Fassung 01.05.2026) nennt für die Geltendmachung
-nach einem Entscheid eine «zwingende Frist von 2 Jahren» und für Personen ohne Entscheid «rückwirkend
-2 Jahre». Gilt für ein Gesuch ohne Entscheid der 31. Dezember des Anspruchsjahres oder die Zwei-Jahres-
-Frist? Die App nennt vorsichtig den 31. Dezember.
+~~**Frage 4 — Beschluss:** Ist der Regierungsratsbeschluss mit den Parametern 2026 veröffentlicht
+(Amtsblatt)? In der BGS ist er nicht erfasst.~~
 
-**Stand:** VS ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 am 28.09.2026 nicht publiziert;
-ab 01.01.2027 zeigt die App für VS keinen Betrag mehr.
+**Frage 5 — Beschluss 2026:** Der Beschluss mit den Parametern 2026 liegt uns nicht vor (akzug.ch
+führt die Kurzfassungen 2023–2025, für 2026 nicht; zg.ch zeigt noch 2025). Gilt Ziff. 1.5 für 2026
+unverändert — eine Grenze für alle, ohne eigene Grenzen für Einzelpersonen? Wo ist er veröffentlicht?
+
+**Frage 6 — der Satz in der Broschüre:** «Die Grenzwerte … fallen bei Einzelpersonen und gewissen
+Haushalten mit nur einer erwachsenen Person tiefer aus.» Ist damit gemeint, dass die Formel bei ihnen
+früher auf null fällt (Einzelperson 62'310, mit einem Kind 77'610)?
+
+**Frage 7 — verspätete Gesuche:** § 11 Abs. 2 IPVG lässt Gesuche bis 30. September zu, «wenn …
+wichtige Gründe vorliegen»; die Website schreibt, nach dem 30. April sei keine Anmeldung mehr
+möglich. Welche Gründe gelten als wichtig?
+
+**Stand:** ZG ist gebaut (Entwurfs-PR #475) und rechnet nach den Werten der Broschüre 2026 und der
+Struktur des Beschlusses 2025. «Kein Anspruch» sagt die App nur auf einer Untergrenze des
+Reineinkommens (⟨Fixrunde 2⟩ Versicherungsabzug § 30 lit. g StG voll, Berufskosten-Pauschale,
+Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Wegleitung 2024 der
+Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
+zum Einkommen.
+
+---
+
+## 24 · SVA Schaffhausen — Kinder-Mindestanspruch, Aufteilung, Rundung
+
+*Aufgenommen 28.09.2026 beim Einbau von SH. Entwurf — **nicht gesendet**. (Nummer 24, zugeteilt
+28.09.2026 abends; vorher 8, dann 12.)*
+
+**Worum es geht:** Formel und Zahlen 2026 stehen im Dekret (SHR 832.110 §§ 10–13bis) und im
+Anhang 1 der Verordnung (SHR 832.111). Ein Berechnungsbeispiel gibt es weder im Merkblatt 2026
+noch auf svash.ch. Die Versand-Grenzwerte (§ A1-2) rechnen wir als Nullpunkt der Formel auf den
+Franken nach — das belegt Selbstbehalt und Richtprämien, nicht aber die folgenden Punkte.
+
+**Frage 1 — Kinder, Basis der 80 %:** Werden die «Prämien der Kinder um mindestens 80 Prozent»
+(Merkblatt, § 13bis Dekret) auf die **Richtprämie** des Kindes (2026: 1'387 / 1'295) gerechnet
+oder auf seine **effektive** Prämie? Wir rechnen mit der Richtprämie — das Antragsformular fragt
+nach der Krankenkasse, nicht nach der Prämie.
+
+**Frage 2 — Aufteilung des Rests (§ 13bis Abs. 1):** «Die verbleibenden Mittel werden anteilig
+entsprechend der Höhe der anrechenbaren Prämie auf die mitbetroffenen Angehörigen des Haushalts
+verteilt.» Zählen die Kinder dabei **mit** (sie erhalten dann mehr als 80 %), oder geht der Rest
+nur an die übrigen Personen? Die Summe ändert sich nicht, wohl aber der Anteil der erwachsenen
+Person — und damit, ob deren eigene Prämie als Obergrenze greift. Geben beide Lesarten einen
+anderen Betrag, zeigt die App keinen.
+
+**Frage 3 — Kinder und Fr. 100:** Liegt die Differenz über 0, aber unter Fr. 100, sagt § 13
+Abs. 2 «kein Betrag», § 13bis Abs. 2 aber «entsprechend erhöht», bis die Kinder 80 % erhalten.
+Was gilt? Die App zeigt in diesem schmalen Band keinen Betrag.
+
+**Frage 4 — Rundung:** Auf welche Einheit wird der verfügte Betrag gerundet? Wir runden den
+Jahresbetrag auf ganze Franken.
+
+**Frage 5 — Website:** Die Seite «Berechnung» (svash.ch/ipv/berechnung) zeigt am 28.09.2026 noch
+die Richtprämien 2025 und die Steuerwerte 2023; die FAQ nennt «bis spätestens 30. April 2025».
+Das Merkblatt 2026 und die Verordnung sind nachgeführt.
+
+**Frage 6 — Kinder über dem Nullpunkt (Fachprüfung #471 W5):** Gilt der Mindestanspruch der Kinder
+(80 %) nur, solange nach § 10 ein Anspruch besteht (Merkblatt: «bei einem Anspruch auf
+Prämienverbilligung»), oder nach Art. 65 Abs. 1bis KVG («untere und mittlere Einkommen») auch darüber?
+Wir rechnen die erste Lesart. Richtung: gilt die zweite, sagt die App Familien knapp über dem Nullpunkt
+zu Unrecht «kein Anspruch» (zu tief, 1'109.60 bzw. 1'036 je Kind).
+
+**Frage 7 — Deckel beim Kind (Fachprüfung #471 W3):** Wird der Anteil eines Kindes auf seine eigene
+Prämie begrenzt (§ 17 Abs. 2)? In der Lesart «Rest mit Kindern verteilt» kann er über der
+Kinderprämie liegen — die App wäre dann um mehrere hundert Franken je Kind und Jahr zu hoch, umso mehr,
+je tiefer die Kinderprämie.
+
+**Frage 8 — Entlastungsabzug und Säule 3a (Fachprüfung #471 K8):** Wird der Entlastungsabzug am
+steuerlichen Reineinkommen (nach dem 3a-Abzug) gemessen oder am Einkommen nach der Aufrechnung nach
+§ 12 lit. e? Wir rechnen am steuerlichen Reineinkommen; sonst läge die App um bis zu rund 400 Franken
+zu hoch.
+
+**Stand:** SH ist für 2026 gebaut (Entwurfs-PR, K31). Ein Anhang für 2027 ist am 28.09.2026 nicht
+publiziert. Ab 01.01.2027 zeigt die App für SH keinen Betrag mehr.
 
 ---
 
@@ -840,54 +850,48 @@ mehr, bis die Werte 2027 eingearbeitet sind.
 
 ---
 
-## 20 · Ausgleichskasse Zug — der Beschluss 2026 und die Frist
+## 27 · Ausgleichskasse des Kantons Wallis — eine Tabellenzelle, die Säule 3a, der Staatsratsbeschluss
 
-*Aufgenommen 28.09.2026 beim Einbau von ZG, nach der Fachprüfung neu gefasst. Entwurf — **nicht
-gesendet**. (Nummer nach Absprache: UR 8, NE 9, GR 10, … SZ 18, SO 19, ZG 20.)*
+*Aufgenommen 28.09.2026 beim Einbau von VS. Entwurf — **nicht gesendet**. Nummer 27 (Integration 28.09.2026: 11–26 für die übrigen Kantone reserviert; zuerst als 9, dann 10 notiert).*
 
-**Worum es geht:** Die Broschüre «Prämienverbilligung 2026 im Kanton Zug» nennt Richtprämien,
-Selbstbehalt 8 % und die Grenzen 70'000 / 89'900 — und dazu: «Die Grenzwerte für das massgebende
-Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer
-aus.» Die App rechnet heute nur Haushalte mit einer erwachsenen Person. Solange diese Grenzen
-fehlen, zeigt sie für Zug **keinen Betrag**, nur «kein Anspruch», wo er sicher ist.
+**Worum es geht:** Referenzprämien, Sätze und Grenzen 2026 stehen in der «Einkommenstabelle zur
+Berechnung der Krankenkassensubventionen 2026» (Echelle définitive RIP 2026, 19.12.2025) und —
+mit dem Vermerk «(Provisorisch)» — im Anhang zur Medienmitteilung vom 3. Februar 2026. Die App
+rechnet nach der Tabelle. Ein amtliches Rechenbeispiel mit Franken haben wir nicht gefunden.
 
-⟨Fachprüfung #475, 28.09.2026 abends: Fragen 1–4 in dieser Form sind **überholt** und bleiben als
-Beleg stehen. Die Regierungsratsbeschlüsse 2024 und 2025 kennen **eine** Grenze für alle (Ziff. 1.5),
-die Broschüre 2025 rechnet eine Einzelperson ohne weitere Grenze; der Satz «bei Einzelpersonen …
-tiefer» beschreibt die Formel (Nullpunkt 62'310). Frage 3 beantwortet RRB 2025 Ziff. 1.6 (80 %,
-gestützt auf § 7bis Abs. 2 IPVG i. V. m. Art. 65 Abs. 1bis KVG), Frage 4 Ziff. 3 (Amtsblatt).
-Die App rechnet jetzt. Offen bleiben die Fragen 5–7 unten.⟩
+~~**Frage 1 — Kinderzeile «Alleinstehende mit 1 Kind»:** Die Einkommenstabelle nennt **63'000**, der
+Medienanhang **61'000**; alle anderen Zellen stimmen überein. Welcher Wert gilt 2026? Bis zur
+Antwort zeigt die App für eine alleinstehende Person mit einem Kind zwischen 61'001 und 63'000
+keinen Betrag (Unterschied: 80 % der Kinder-Referenzprämie, CHF 1'276.80 im Jahr in Region I).~~
+⟨**beantwortet durch die Quelle, 28.09.2026** (Fachprüfung #477): «Modalités de subventionnement des
+primes d'assurance-maladie 2026» (Dienststelle für Gesundheitswesen, 22.12.2025) Ziff. 4.1: «les enfants
+des personnes seules dont le revenu est compris entre CHF 60'125.- et CHF 63'000.- ont droit à un subside
+de 80%». Auch der französische Medienanhang nennt 63'000; nur die deutsche Fassung 61'000. Die App
+rechnet mit 63'000. Frage nicht stellen — höchstens als Hinweis: «DE-Medienanhang Folie 8 weicht ab».⟩
 
-~~**Frage 1 — Grenzen 2026:** Ab welchem massgebenden Einkommen beginnt für Einzelpersonen die
-Kürzung, und wo liegt die Obergrenze? Gilt dieselbe Kürzung (0,5 % je angefangene 100 Franken)?~~
+**Frage 2 — Säule 3a:** Art. 8 Abs. 1 lit. a VüIPV rechnet die Beiträge «bis zum Maximalbetrag des
+Angestelltenlohns» dazu; die Seite der Ausgleichskasse zählt «Beiträge der gebundenen
+Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220)» ohne Obergrenze, ebenso die «Modalités 2026»
+der Dienststelle (Ziff. 6.1: «+ les cotisations à des formes reconnues de prévoyance liée (pilier 3a)»). Gilt die Obergrenze — und wenn
+ja, das Maximum mit 2. Säule des Steuerjahres x − 2 (2024: CHF 7'056)? Bis zur Antwort zeigt die App
+bei Einzahlungen über dem Maximum keinen Betrag.
 
-~~**Frage 2 — «gewisse Haushalte»:** Welche Haushalte mit einer erwachsenen Person haben die tieferen
-Grenzen, welche die Haushaltsgrenzen (z. B. alleinerziehend mit Kindern)?~~
+**Frage 3 — Staatsratsbeschluss:** Wo ist der Beschluss nach Art. 7 VüIPV (Einkommensgrenzen und
+degressive Skala 2026) veröffentlicht? Im Amtsblatt 2026 haben wir ihn nicht gefunden; gefunden ist die
+Publikation nach Art. 23 («Modalités … 2026», 22.12.2025). Genügt sie als Grundlage?
 
-~~**Frage 3 — Mindestgarantie Kinder:** Die Broschüre nennt «mindestens 80 % der Richtprämie», § 7bis
-Abs. 2 IPVG «mindestens die Hälfte der für sie massgebenden Prämie». Worauf stützt sich die 80 %?~~
+**Frage 4 — Rundung:** ~~Gilt der Satz der ersten Zeile, deren Grenze das massgebende Einkommen nicht
+übersteigt?~~ ⟨belegt: Art. 2 Abs. 2 «gleich oder kleiner» und «Modalités» Ziff. 4.1 «limites maximales»⟩
+Wird der Betrag je Monat und Person gerundet?
 
-~~**Frage 4 — Beschluss:** Ist der Regierungsratsbeschluss mit den Parametern 2026 veröffentlicht
-(Amtsblatt)? In der BGS ist er nicht erfasst.~~
+**Frage 5 — Frist für Gesuche ohne Entscheid:** Die «Modalités 2026» nennen für Sondergesuche und
+Quellenbesteuerte den 31. Dezember 2026; VüIPV Art. 11 (Fassung 01.05.2026) nennt für die Geltendmachung
+nach einem Entscheid eine «zwingende Frist von 2 Jahren» und für Personen ohne Entscheid «rückwirkend
+2 Jahre». Gilt für ein Gesuch ohne Entscheid der 31. Dezember des Anspruchsjahres oder die Zwei-Jahres-
+Frist? Die App nennt vorsichtig den 31. Dezember.
 
-**Frage 5 — Beschluss 2026:** Der Beschluss mit den Parametern 2026 liegt uns nicht vor (akzug.ch
-führt die Kurzfassungen 2023–2025, für 2026 nicht; zg.ch zeigt noch 2025). Gilt Ziff. 1.5 für 2026
-unverändert — eine Grenze für alle, ohne eigene Grenzen für Einzelpersonen? Wo ist er veröffentlicht?
-
-**Frage 6 — der Satz in der Broschüre:** «Die Grenzwerte … fallen bei Einzelpersonen und gewissen
-Haushalten mit nur einer erwachsenen Person tiefer aus.» Ist damit gemeint, dass die Formel bei ihnen
-früher auf null fällt (Einzelperson 62'310, mit einem Kind 77'610)?
-
-**Frage 7 — verspätete Gesuche:** § 11 Abs. 2 IPVG lässt Gesuche bis 30. September zu, «wenn …
-wichtige Gründe vorliegen»; die Website schreibt, nach dem 30. April sei keine Anmeldung mehr
-möglich. Welche Gründe gelten als wichtig?
-
-**Stand:** ZG ist gebaut (Entwurfs-PR #475) und rechnet nach den Werten der Broschüre 2026 und der
-Struktur des Beschlusses 2025. «Kein Anspruch» sagt die App nur auf einer Untergrenze des
-Reineinkommens (⟨Fixrunde 2⟩ Versicherungsabzug § 30 lit. g StG voll, Berufskosten-Pauschale,
-Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Wegleitung 2024 der
-Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
-zum Einkommen.
+**Stand:** VS ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 am 28.09.2026 nicht publiziert;
+ab 01.01.2027 zeigt die App für VS keinen Betrag mehr.
 
 ---
 
