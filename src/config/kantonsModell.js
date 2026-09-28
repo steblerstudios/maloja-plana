@@ -112,8 +112,12 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866)',
+    kantone: 'ZH, SG, LU, GE',
+    // GE rechnet dasselbe (Abzug 0), aber aus dem GEGENTEILIGEN Grund: die 3a wird im RDU gar nicht
+    // erst abgezogen — LRDU Art. 5 Abs. 1 (rsGE J 4 06) nennt LIPP Art. 31 lit. a und b, nicht
+    // lit. c (gebundene Selbstvorsorge). Wo nichts abgezogen wurde, ist nichts aufzurechnen.
+    // (28.09.2026, ipvGenf.js)
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866) · GE LRDU Art. 5 Abs. 1 lit. a/c (rsGE J 4 06) i. V. m. LIPP Art. 31 (rsGE D 3 08): kein 3a-Abzug im RDU',
     nichtAufgerechnet: () => 0,
   }),
 
@@ -420,6 +424,8 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
 //                       LU — die WAS führt für 2026 «Erwachsene (ab Jahrgang 2000)» in ihrer
 //                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
+//                       GE — das Barème 2026 führt «jeunes adultes, les personnes nées entre
+//                       2001 et 2007», Stichtag 1. Januar (RaLAMal Art. 10 Abs. 8). (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am

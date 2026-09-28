@@ -30,6 +30,8 @@ export const IPV_MODULE = {
   AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+  // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
+  GE: { laden: () => import('./ipvGenf.js'), fn: 'ipvGenf', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -139,7 +141,11 @@ export const CANTONAL_IPV = {
   VD: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
   VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService', beleg: null },
   NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
-  GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam', beleg: null },
+  // GE (K31): eigenes Modell in config/ipvGenf.js (acht Gruppen nach RDU mit festen Monatsbeträgen,
+  // Gruppe 9 nur für Kinder). Die Grenze ist amtlich publiziert (LaLAMal Art. 21) und hängt an der
+  // Haushaltsform — das Modul setzt sie je Fall; hier darum null wie in BE.
+  GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam',
+    beleg: { quelle: 'LaLAMal (rsGE J 3 05) Art. 21/22 · RaLAMal (rsGE J 3 05.01) Art. 9–10A · LRDU (rsGE J 4 06) Art. 8 · Barème subsides 2026, Service de l\'assurance-maladie (SAM) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };
 
