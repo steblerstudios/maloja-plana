@@ -1356,7 +1356,7 @@ massgebliches Einkommen 62'000 → Gruppe 5 (61'000 < 62'000 ≤ 63'000); ohne A
 = **1'021** im Monat; mit AVM 2 × 355 + 253 + 130 = **1'093**. Beide in
 `src/config/__tests__/ipvBaselStadt.test.js`.
 
-**Korrektur zu dieser Erhebung (16.09.):** ~~«Zuständig / Weg: … keine Frist»~~ bleibt richtig, aber
+**Korrektur an der App (nicht an dieser Erhebung):** «Zuständig / Weg» oben bleibt richtig, aber
 die App sagte bis heute für BS «Automatische Prüfung via Steuerdaten» (`noteAutoTaxData`) — falsch:
 § 15 Abs. 1 KVO gewährt Beiträge nur «auf Antrag». ⟨korrigiert 28.09.2026: `noteKey` jetzt
 `ipv.noteApplyAsb` «Antrag beim Amt für Sozialbeiträge».⟩
