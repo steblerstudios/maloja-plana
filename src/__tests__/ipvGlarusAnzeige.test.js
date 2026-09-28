@@ -94,4 +94,13 @@ describe('K31 IPV-Rechner, Kanton Glarus', () => {
     }
   // Fünf Sprachdateien laden unter Last länger als 5 s (gemessen 28.09.2026).
   }, 30000);
+
+  // Re-Review #487 🛑 R1: erhaltene Alimente und Familienzulagen sind eingerechnet — der Vorbehalt
+  // darf nicht mehr «nicht eingerechnet» sagen und nennt die Doppelzählung der Kinderzulage.
+  it('Vorbehalt GL: Zulagen eingerechnet, Hinweis auf doppelt gezählte Kinderzulage (de)', async () => {
+    const { ipv } = (await import('../i18n/de.js')).default;
+    expect(ipv.vorbehaltGL).not.toMatch(/nicht eingerechnet/);
+    expect(ipv.vorbehaltGL).toMatch(/erhaltene Alimente und erfasste Familienzulagen eingerechnet/);
+    expect(ipv.vorbehaltGL).toMatch(/doppelt/);
+  }, 30000);
 });
