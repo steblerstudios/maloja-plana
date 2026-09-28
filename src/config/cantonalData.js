@@ -152,7 +152,7 @@ export const CANTONAL_IPV = {
   // Referenzprämie, Kinder 80 %). Die Grenze hängt am Haushalt und wird im Modul gesetzt. Der Weg ist
   // automatisch über die Steuerdaten (Ausgleichskasse), nicht ein Antrag bei der Dienststelle.
   VS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
-    beleg: { quelle: 'VüIPV VS (SGS 832.105) · Einkommenstabelle 2026 · Ausgleichskasse des Kantons Wallis — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+    beleg: { quelle: 'VüIPV VS (SGS 832.105) · Einkommenstabelle 2026 · Modalités RIP 2026 (Dienststelle für Gesundheitswesen) · Ausgleichskasse des Kantons Wallis — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // NE (K31): Klassen S1–S15, Grenzen je Kinderzahl (Annexe RSN 821.102) — keine Einzelwerte.
   // Weg: automatisch nach der Veranlagung, neu Berechtigte mit Antwortschein innert 30 Tagen (RALILAMal Art. 31).
   NE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoOcab',

@@ -310,23 +310,36 @@ Berechnung der Krankenkassensubventionen 2026» (Echelle définitive RIP 2026, 1
 mit dem Vermerk «(Provisorisch)» — im Anhang zur Medienmitteilung vom 3. Februar 2026. Die App
 rechnet nach der Tabelle. Ein amtliches Rechenbeispiel mit Franken haben wir nicht gefunden.
 
-**Frage 1 — Kinderzeile «Alleinstehende mit 1 Kind»:** Die Einkommenstabelle nennt **63'000**, der
+~~**Frage 1 — Kinderzeile «Alleinstehende mit 1 Kind»:** Die Einkommenstabelle nennt **63'000**, der
 Medienanhang **61'000**; alle anderen Zellen stimmen überein. Welcher Wert gilt 2026? Bis zur
 Antwort zeigt die App für eine alleinstehende Person mit einem Kind zwischen 61'001 und 63'000
-keinen Betrag (Unterschied: 80 % der Kinder-Referenzprämie, CHF 1'276.80 im Jahr in Region I).
+keinen Betrag (Unterschied: 80 % der Kinder-Referenzprämie, CHF 1'276.80 im Jahr in Region I).~~
+⟨**beantwortet durch die Quelle, 28.09.2026** (Fachprüfung #477): «Modalités de subventionnement des
+primes d'assurance-maladie 2026» (Dienststelle für Gesundheitswesen, 22.12.2025) Ziff. 4.1: «les enfants
+des personnes seules dont le revenu est compris entre CHF 60'125.- et CHF 63'000.- ont droit à un subside
+de 80%». Auch der französische Medienanhang nennt 63'000; nur die deutsche Fassung 61'000. Die App
+rechnet mit 63'000. Frage nicht stellen — höchstens als Hinweis: «DE-Medienanhang Folie 8 weicht ab».⟩
 
 **Frage 2 — Säule 3a:** Art. 8 Abs. 1 lit. a VüIPV rechnet die Beiträge «bis zum Maximalbetrag des
 Angestelltenlohns» dazu; die Seite der Ausgleichskasse zählt «Beiträge der gebundenen
-Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220)» ohne Obergrenze. Gilt die Obergrenze — und wenn
+Selbstvorsorge (Säule 3a) (Ziffern 2210 et 2220)» ohne Obergrenze, ebenso die «Modalités 2026»
+der Dienststelle (Ziff. 6.1: «+ les cotisations à des formes reconnues de prévoyance liée (pilier 3a)»). Gilt die Obergrenze — und wenn
 ja, das Maximum mit 2. Säule des Steuerjahres x − 2 (2024: CHF 7'056)? Bis zur Antwort zeigt die App
 bei Einzahlungen über dem Maximum keinen Betrag.
 
 **Frage 3 — Staatsratsbeschluss:** Wo ist der Beschluss nach Art. 7 VüIPV (Einkommensgrenzen und
-degressive Skala 2026) veröffentlicht? Im Amtsblatt 2026 haben wir ihn nicht gefunden.
+degressive Skala 2026) veröffentlicht? Im Amtsblatt 2026 haben wir ihn nicht gefunden; gefunden ist die
+Publikation nach Art. 23 («Modalités … 2026», 22.12.2025). Genügt sie als Grundlage?
 
-**Frage 4 — Lesart und Rundung:** Gilt der Satz der ersten Zeile, deren Grenze das massgebende
-Einkommen nicht übersteigt (Art. 2 Abs. 2: «gleich oder kleiner»)? Wird der Betrag je Monat und
-Person gerundet?
+**Frage 4 — Rundung:** ~~Gilt der Satz der ersten Zeile, deren Grenze das massgebende Einkommen nicht
+übersteigt?~~ ⟨belegt: Art. 2 Abs. 2 «gleich oder kleiner» und «Modalités» Ziff. 4.1 «limites maximales⟩
+Wird der Betrag je Monat und Person gerundet?
+
+**Frage 5 — Frist für Gesuche ohne Entscheid:** Die «Modalités 2026» nennen für Sondergesuche und
+Quellenbesteuerte den 31. Dezember 2026; VüIPV Art. 11 (Fassung 01.05.2026) nennt für die Geltendmachung
+nach einem Entscheid eine «zwingende Frist von 2 Jahren» und für Personen ohne Entscheid «rückwirkend
+2 Jahre». Gilt für ein Gesuch ohne Entscheid der 31. Dezember des Anspruchsjahres oder die Zwei-Jahres-
+Frist? Die App nennt vorsichtig den 31. Dezember.
 
 **Stand:** VS ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 am 28.09.2026 nicht publiziert;
 ab 01.01.2027 zeigt die App für VS keinen Betrag mehr.

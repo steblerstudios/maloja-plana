@@ -2602,7 +2602,7 @@ Einkommen von Kindern bis 20 im selben Wohnsitz zählt nicht mit (Art. 8 Abs. 1t
 App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt für eine alleinstehende Person ohne Kind: Anspruch endet über 38'500 (massgebendes Einkommen). Der Höchstbetrag ist 70 % der Referenzprämie, abgeleitet CHF 4'712 (Region I) bzw. 4'040 (Region II) pro Jahr. Der Abbau erfolgt stufenweise in 7 Klassen, nicht linear.
 
 ### Offen / nicht gefunden
-- **Widerspruch in amtlichen Unterlagen:** Kinderzeile «Alleinstehende mit 1 Kind» = **63'000** in der Einkommenstabelle [3] (Dateititel «Echelle définitive RIP 2026», 19.12.2025), aber **61'000** im Medienanhang [4] (3.2.2026, Spalte «Subventionsansatz (Provisorisch)»). Alle anderen geprüften Zellen stimmen überein. Vor Umsetzung bei der Ausgleichskasse klären. Bis dahin gilt [3], weil die Ausgleichskasse diese Datei als «Vollständige Einkommenstabelle 2026» verlinkt.
+- ⟨aufgelöst 28.09.2026, siehe Nachtrag Fachprüfung #477⟩ **Widerspruch in amtlichen Unterlagen:** Kinderzeile «Alleinstehende mit 1 Kind» = **63'000** in der Einkommenstabelle [3] (Dateititel «Echelle définitive RIP 2026», 19.12.2025), aber **61'000** im Medienanhang [4] (3.2.2026, Spalte «Subventionsansatz (Provisorisch)»). Alle anderen geprüften Zellen stimmen überein. Vor Umsetzung bei der Ausgleichskasse klären. Bis dahin gilt [3], weil die Ausgleichskasse diese Datei als «Vollständige Einkommenstabelle 2026» verlinkt.
 - Der Staatsratsbeschluss selbst (Art. 7 VüIPV) wurde nicht im Wortlaut gefunden. Die Zahlen stammen aus den Unterlagen der Ausgleichskasse und des Kantons. Eine Amtsblatt-Veröffentlichung 2026 (Art. 23) wurde nicht gefunden, nur die von 2025 (nicht geöffnet).
 - Wie der Satz für junge Erwachsene (Referenzprämie «Junge Erw.») bestimmt wird: Die Tabelle hat nur die Zeilen «Erwachsene» und «Kinder». Vermutlich gilt für junge Erwachsene ab 20 die Erwachsenenzeile mit der Referenzprämie «Junge Erw.». Das ist nicht wörtlich belegt.
 - Die Lesart «erste nicht überschrittene Grenze = Satz» ist aus dem Tabellenaufbau abgeleitet, nicht wörtlich belegt.
@@ -2655,6 +2655,41 @@ App: `maxIncome` 45'000, `subsidySingle` 2'400, linearer Abbau. Belegt für eine
 **Bewusst nicht gebaut:** Ehepaare/Konkubinat · Personen 20–25 · Kinder über 18 und im Anspruchsjahr geborene Kinder (`kindImJahrGeboren`) · über 9 Kinder · EL/Sozialhilfe (100 %) · Quellenbesteuerte · Ermessenseinschätzung · Neuberechnung bei 30 % Rückgang (im Vorbehalt genannt) · Kapitalleistungen, Liegenschaftsverluste, Auslandelemente · kein Mindestbetrag gefunden.
 
 **2027:** am 28.09.2026 nicht publiziert. Ab 01.01.2027 keine Zahl (`jahrVorbei`).
+
+
+### Nachtrag nach der Fachprüfung #477 (28.09.2026, Verdikt «erst beheben» → behoben)
+
+**Neue Quellen, heute selbst gelesen:**
+- [5] Dienststelle für Gesundheitswesen, «Modalités de subventionnement des primes d'assurance-maladie 2026»
+  (Datei «Directives et BO - RIP 2026_fr», PDF erstellt 22.12.2025),
+  <https://www.vs.ch/documents/8841577/8881906/Directives+et+BO+-+RIP+2026_fr.pdf/0fa8dbfc-4049-4dcd-7795-d662e75ab422?t=1767607967668&v=2.1>
+  → 200, 114'603 Bytes, 6 S.
+- [6] Kantonale Steuerverwaltung, «Wegleitung Zusammenfassung 2024» (Steuerjahr 2024 = Bemessungsjahr),
+  <https://www.vs.ch/documents/508074/36083053/Guide_simplifi%C3%A9_2024_D.pdf/07c812f7-5eea-82c7-3435-809ce4b9c252?t=1736164914951> → 200.
+
+**Wortlaute** (Originalsprache):
+> «En complément aux limites précitées, les enfants des personnes seules dont le revenu est compris entre CHF 60'125.- et CHF 63'000.- ont droit à un subside de 80%.» — [5] Ziff. 4.1
+>
+> «Les personnes ne figurant pas au fichier fiscal (titulaires d'un permis B, L, N ou F) devront présenter une requête de subvention personnelle pour 2026. … Ces demandes devront être déposées auprès de la Caisse de compensation du canton du Valais pour le 31 décembre 2026 au plus tard.» — [5] Ziff. 6.2
+>
+> «Revenu net avant les déductions personnelles (chiffre 2400) + 5% de la fortune revalorisée nette … + les cotisations à des formes reconnues de prévoyance liée (pilier 3a) … ./. les pensions alimentaires versées ./. les prestations en capital reçues» — [5] Ziff. 6.1 · «Les dettes fiscales et les déductions forfaitaires sont déduites.» — Ziff. 6.3
+>
+> «220 Kinder- und Familienzulagen — Die von Bund und Kanton entrichteten Kinder- und Familienzulagen sind steuerpflichtig (Art. 13 StG)» · «1410+1420 Unterhaltsbeiträge — Vom getrennt lebenden oder geschiedenen Partner erhaltene Zahlungen» — [6]
+
+**Behoben:**
+- **B1 (Ruling):** Erhaltene Unterhaltsbeiträge und Familienzulagen zählen zum Einkommen (sie liegen vor Ziffer
+  2400), bezahlte werden abgezogen — das VS-Modul liest alle drei Felder selbst. Beispiel der Prüfung
+  (1 Kind, 3'000 netto, 300 Zulagen, 800 Alimente): **2'623** statt 5'989. Ein Rahmen-PR muss VS ausnehmen.
+- **B2:** Ausweis B oder L (`ausbildung.workPermit`) → keine Zahl, Grund `vsQuellensteuer` (Gesuch bis 31.12.).
+  N und F kennt die App nicht; neue C-Bewilligungen erkennt sie nicht — beides nennt der Vorbehalt.
+- **Kinderzeile 1 Kind = 63'000:** ~~«Widerspruch … Bei der Ausgleichskasse klären.»~~ ⟨aufgelöst⟩ [5] Ziff. 4.1 und
+  der FR-Medienanhang nennen 63'000; nur die DE-Fassung 61'000. Kein Band ohne Zahl mehr, Grenze wird angezeigt.
+- **Vorbehalt:** Police für neue Berechtigte, 31.12. für Gesuche/Sondergesuche, EL/Sozialhilfe 100 %, beide
+  Richtungen der Näherung (ohne Berufsauslagen/Schulden eher zu tief; Alimente/Zulagen eingerechnet).
+- **21–25:** eigener Grund `vsJungeErwachsene` statt `alter`.
+- **Säule 3a:** «keine Zahl» bleibt — auch [5] Ziff. 6.1 nennt die 3a ohne Obergrenze; Verordnung gegen beide Vollzugsstellen.
+- **Lesart** «≤ Grenze» belegt ([5] Ziff. 4.1, Art. 2 Abs. 2).
+- Fragen an die Ausgleichskasse: jetzt Nr. 10 (8 = Uri, 9 = FR); Frage 1 beantwortet, neu Frage 5 (31.12. vs. 2 Jahre).
 
 ---
 
