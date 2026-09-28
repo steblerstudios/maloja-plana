@@ -3966,6 +3966,7 @@ export default {
       praemie: 'Manca il premio della cassa malati. La riduzione non supera mai il premio stesso — senza di esso l’importo qui sarebbe il limite superiore, non il diritto.',
       einkommenNegativ: 'Il reddito registrato è negativo. Su questa base non è possibile calcolare alcuna riduzione — si prega di verificare l’importo nel capitolo Finanze.',
       saeule3aUeberEinkommen: 'Il versamento al pilastro 3a indicato supera i redditi registrati per l’anno — oppure si distribuisce su più anni. In tal caso non si può dire quale parte sia già compresa nei redditi e l’importo risulterebbe troppo alto. Da verificare: si chiede il versamento di un anno, non il saldo del conto né la somma di più anni.',
+      steuerbaresEinkommen: 'Nel Cantone Giura conta il reddito imponibile della tassazione fiscale definitiva di due anni prima — dopo tutte le deduzioni fiscali —, corretto secondo le regole cantonali. L’app non conosce questo reddito; calcolato dal salario netto risulterebbe troppo alto, e l’importo sarebbe troppo basso o sparirebbe del tutto. La Cassa di compensazione del Cantone Giura esamina il diritto d’ufficio non appena la tassazione è disponibile. Se entro 30 giorni dalla tassazione non arriva alcuna lettera, occorre una domanda entro il 31 dicembre.',
       laden: 'Le basi si stanno ancora caricando.',
     },
   },

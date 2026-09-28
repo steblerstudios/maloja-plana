@@ -4012,6 +4012,7 @@ export default {
       praemie: 'Für die Rechnung fehlt die Krankenkassenprämie. Die Verbilligung ist höchstens so hoch wie die Prämie selbst — ohne sie wäre die Zahl hier die Obergrenze, nicht der Anspruch.',
       einkommenNegativ: 'Das erfasste Einkommen ist negativ. Damit lässt sich keine Verbilligung berechnen — bitte den Betrag im Kapitel Finanzen prüfen.',
       saeule3aUeberEinkommen: 'Die erfasste Einzahlung in die Säule 3a ist höher als die erfassten Einkünfte des Jahres — oder sie verteilt sich auf mehrere Jahre. Dann lässt sich nicht sagen, welcher Teil in den Einkünften schon enthalten ist, und die Zahl wäre zu hoch. Bitte prüfen: Gefragt ist die Einzahlung eines Jahres, nicht der Kontostand und nicht die Summe mehrerer Jahre.',
+      steuerbaresEinkommen: 'Im Kanton Jura zählt das steuerbare Einkommen der definitiven Steuerveranlagung von vor zwei Jahren — nach allen Steuerabzügen —, korrigiert nach kantonalen Regeln. Dieses Einkommen kennt die App nicht; aus dem Nettolohn gerechnet läge es zu hoch, und die Zahl fiele zu tief aus oder ganz weg. Die Ausgleichskasse des Kantons Jura prüft den Anspruch von Amtes wegen, sobald die Veranlagung vorliegt. Kommt innert 30 Tagen nach der Veranlagung kein Schreiben, ist bis zum 31. Dezember ein Gesuch nötig.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },

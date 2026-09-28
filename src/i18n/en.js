@@ -3965,6 +3965,7 @@ export default {
       praemie: 'The health insurance premium is missing. The reduction is never higher than the premium itself — without it the figure here would be the upper limit, not the entitlement.',
       einkommenNegativ: 'The income recorded is negative. No reduction can be calculated from that — please check the amount in the Finances chapter.',
       saeule3aUeberEinkommen: 'The pillar 3a contribution entered is higher than the income recorded for the year — or it spans several years. It is then impossible to say which part is already included in the income, and the figure would be too high. Please check: what is asked for is one year’s contribution, not the account balance and not the total of several years.',
+      steuerbaresEinkommen: 'In the canton of Jura, what counts is the taxable income from the final tax assessment of two years earlier — after all tax deductions — corrected under cantonal rules. The app does not know this income; calculated from net pay it would be too high, and the amount would be too low or disappear. The compensation office of the canton of Jura assesses entitlement ex officio once the tax assessment is available. If no letter arrives within 30 days of the assessment, an application is needed by 31 December.',
       laden: 'The basis is still loading.',
     },
   },

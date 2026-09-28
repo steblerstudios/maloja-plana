@@ -3965,6 +3965,7 @@ export default {
       praemie: 'La prime d’assurance-maladie manque pour le calcul. La réduction ne dépasse jamais la prime elle-même — sans elle, le montant ici serait la limite supérieure, pas le droit.',
       einkommenNegativ: 'Le revenu saisi est négatif. Aucune réduction ne peut être calculée sur cette base — merci de vérifier le montant dans le chapitre Finances.',
       saeule3aUeberEinkommen: 'Le versement au pilier 3a saisi dépasse les revenus saisis pour l’année — ou il se répartit sur plusieurs années. Impossible alors de dire quelle part est déjà comprise dans les revenus, et le montant serait trop élevé. À vérifier : la question porte sur le versement d’une année, pas sur le solde du compte ni sur le total de plusieurs années.',
+      steuerbaresEinkommen: 'Dans le canton du Jura, c’est le revenu imposable de la taxation fiscale définitive d’il y a deux ans qui compte — après toutes les déductions fiscales —, corrigé selon les règles cantonales. L’application ne connaît pas ce revenu ; calculé à partir du salaire net, il serait trop élevé, et le montant serait trop bas ou disparaîtrait. La Caisse de compensation du canton du Jura examine le droit d’office dès que la taxation est établie. Sans courrier dans les 30 jours suivant la taxation, une requête est nécessaire avant le 31 décembre.',
       laden: 'Les bases sont encore en cours de chargement.',
     },
   },

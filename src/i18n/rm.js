@@ -3069,6 +3069,7 @@ export default {
       praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
       einkommenNegativ: 'L’entrada registrada è negativa. Uschia na sa lascha calcular nagina reducziun — controllai per plaschair l’import en il chapitel Finanzas.',
       saeule3aUeberEinkommen: 'Il pajament en la 3. pitga A è pli aut che las entradas registradas da l’onn — u el sa repartescha sin plirs onns. Lura na sa lascha betg dir, tge part ch’è gia cuntegnida en las entradas, e la cifra fiss memia auta. Per plaschair controllar: dumandà è il pajament d’in onn, betg il stadi dal conto e betg la summa da plirs onns.',
+      steuerbaresEinkommen: 'En il chantun Giura quinta l’entrada imponibla da la taxaziun fiscala definitiva da avant dus onns — suenter tut las deducziuns fiscalas —, curregida tenor las reglas chantunalas. Questa entrada na enconuscha l’app betg; quintada a basa da la paga netta fiss ella memia auta, e l’import fiss memia bass u crudass davent. La Cassa da cumpensaziun dal chantun Giura examinescha il dretg d’uffizi, uschespert che la taxaziun è avant maun. Sch’i na vegn nagina brev entaifer 30 dis suenter la taxaziun, è ina dumonda necessaria fin ils 31 da december.', // TODO(rm): provisorisch — Gegenlese (K31 JU 28.09.2026)
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },
