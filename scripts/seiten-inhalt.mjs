@@ -516,7 +516,7 @@ export const SONDERSEITEN = [
       'Wer hinter Maloja Plana steht, welche Daten beim Aufruf dieser Seiten anfallen und wofür die Rechner ausdrücklich nicht einstehen.',
     brotkrume: 'Rechtliches',
     vorspann:
-      'Diese Seite gilt für malojaplana.ch und die öffentlichen Erklärseiten. Für die Anwendung selbst gilt zusätzlich die ausführliche Datenschutzerklärung, die in der App unter «Datenschutz & Rechtliches» steht — auch sie ohne Zugangscode.',
+      'Diese Seite gilt für malojaplana.ch und die öffentlichen Erklärseiten. Für die Anwendung selbst gilt zusätzlich die ausführliche Datenschutzerklärung, die in der App unter «Datenschutz & Rechtliches» steht — auch sie ohne Zugangscode. Verbindlich sind die veröffentlichten Fassungen: diese Seite für malojaplana.ch und die Erklärseiten, der Text in der App für die Anwendung. Die Arbeitsfassungen im öffentlichen Quellcode (docs/legal) sind Entwürfe und Herkunftsnachweis, nicht die verbindliche Fassung.',
     abschnitte: [
       {
         titel: 'Anbieterin',
