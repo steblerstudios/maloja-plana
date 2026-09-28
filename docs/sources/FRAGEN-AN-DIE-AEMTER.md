@@ -471,6 +471,46 @@ publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
 
 ---
 
+## 16 · Ausgleichskasse Nidwalden — Kinder: besondere und allgemeine Prämienverbilligung
+
+*Aufgenommen 28.09.2026 beim Einbau von NW. Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Selbstbehalt, Richtprämien und Steuerwerte 2026 stehen in NG 742.111 und NG 742.1;
+die App rechnet danach für Alleinstehende. Für Familien fehlt uns eine Regel.
+
+*Nummer 16 (28.09.2026 spätabends): 10 ist GR, 11–15 sind für TG, FR, JU, TI, GE reserviert.*
+
+**Frage 1 — Kinder (Art. 14 Abs. 2 kKVG):** «Besteht nach Berücksichtigung der besonderen
+Prämienverbilligung weiterhin ein Anspruch auf allgemeine Prämienverbilligung für die Kinder, wird diese
+zusätzlich ausgerichtet.» Wie wird gerechnet? Beispiel: ein Elternteil, ein Kind, Summe der Steuerwerte
+30'000, Richtprämien 5'400 / 1'260, Selbstbehalt 3'000. Wir sehen drei Lesarten: (a) das Kind zählt in
+der allgemeinen Rechnung nur mit 20 % → 3'660; (b) das Kind erhält das Höhere aus 80 % und seinem
+Anteil → 3'975.60; (c) 80 % plus sein Anteil, höchstens die Richtprämie → 4'227.60. Welche gilt? Bis
+zur Antwort zeigt die App Familien in diesem Bereich keinen Betrag.
+
+**Frage 2 — Mindestbetrag (§ 5 der Verordnung 2026):** «Beträge unter Fr. 100.–» — je Person oder
+für den ganzen Anspruch? Die App prüft die Summe.
+
+**Frage 3 — Rundung:** Gibt es eine Rundungsregel für die Auszahlung (z. B. Monatsbetrag auf
+5 Rappen)? Wir haben keine gefunden und rechnen auf ganze Franken im Jahr.
+
+*Hinweis zu Frage 1 (Fachprüfung #486, K1, keine Entscheidung):* Art. 15 Abs. 2 sagt für junge
+Erwachsene «Besteht … ein **höherer** Anspruch …, wird **dieser Betrag** ausgerichtet» (eine
+Max-Regel); Art. 14 Abs. 2 sagt «weiterhin … **zusätzlich**». Der Wortlaut spricht eher gegen (b).
+Auch (a) ist nicht sicher eine Untergrenze: zählt das Kind in der allgemeinen Rechnung gar nicht,
+ergäbe das Beispiel 3'408.
+
+**Frage 4 — Neugeborene (Art. 17 Abs. 2 und Art. 20a kKVG):** Ein 2026 geborenes Kind zählt «bis Ende
+Kalenderjahr». Wird sein Anteil für die Monate vor der Geburt gekürzt (Prämie erst ab Geburt
+geschuldet)? Die App rechnet anteilig ab dem Geburtsmonat. Den Mindestbetrag (Frage 2) prüft sie
+auf dem ungekürzten Anspruch, nicht auf dem Monatsanteil — Geburt im Dezember: 84 statt keiner
+Auszahlung. Stimmt diese Reihenfolge?
+
+**Stand:** NW ist für 2026 gebaut (Entwurfs-PR, K31) — ohne Zahl für Familien, bei denen Frage 1
+entscheidet. Werte 2027 nicht publiziert; ab 01.01.2027 zeigt die App für NW keinen Betrag.
+
+---
+
 ## 17 · Ausgleichskasse Obwalden — Jahrgang 2008, Mindestbetrag, Stufen und die Grenze mit Kindern
 
 *Aufgenommen 28.09.2026 beim Einbau von OW. Entwurf — **nicht gesendet**.*
