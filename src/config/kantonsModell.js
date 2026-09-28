@@ -47,6 +47,8 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   nichtAbgezogen       BL — gemessen vor allen Abzügen (Zwischentotal Ziffer 399), die 3a
+//                        wird dort nie abgezogen. EG KVG BL § 9 Abs. 1 (SGS 362)
 //
 // 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
@@ -309,6 +311,25 @@ export const SAEULE_3A = Object.freeze({
     schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     nichtAufgerechnet: () => 0,
   }),
+
+  // ⟨28.09.2026, K31 BL⟩ Basel-Landschaft rechnet die 3a weder zu noch ab — sie wird dort gar
+  // nie abgezogen, weil das massgebende Einkommen VOR den Abzügen gemessen wird:
+  //   EG KVG BL § 9 Abs. 1 (SGS 362, Version in Kraft seit 01.04.2023): «Das massgebende
+  //   Jahreseinkommen entspricht dem Zwischentotal der steuerbaren Einkünfte (ohne Einkünfte
+  //   aus Liegenschaften) vermehrt um …»
+  // Das Zwischentotal ist Ziffer 399 der Steuererklärung BL (Online-Rechner der SVA BL:
+  // «Zwischentotal der steuerbaren Einkünfte 399 Nettoeinkommen»); die Säule 3a ist dort ein
+  // Abzug unter Ziffer 610, also NACH Ziffer 399 (Wegleitung zur Steuererklärung 2024 der
+  // Steuerverwaltung BL, Ziffern 399 und 610, gelesen 28.09.2026). Die 3a steckt damit im
+  // massgebenden Einkommen — wie im Nettoeinkommen der App. Rechnerisch dasselbe wie `voll`,
+  // aber aus einem anderen Grund; darum ein eigener Name (siehe `ERWACHSEN`: zwei Namen für
+  // dieselbe Rechnung, damit der Grund lesbar bleibt).
+  nichtAbgezogen: Object.freeze({
+    name: 'nichtAbgezogen',
+    kantone: 'BL',
+    beleg: 'EG KVG BL § 9 Abs. 1 (SGS 362) · Wegleitung Steuererklärung BL 2024, Ziffern 399 und 610',
+    nichtAufgerechnet: () => 0,
+  }),
 });
 
 // 🛑 SÄULE 3A — WARUM HIER NICHTS MEHR AUFGERECHNET WIRD (Befund Fachprüfung 20.09.2026)
@@ -422,6 +443,9 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
 //                       LU — die WAS führt für 2026 «Erwachsene (ab Jahrgang 2000)» in ihrer
 //                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
+//                       BL — im Erlass: PVV (SGS 362.12) § 9 Abs. 1 lit. a, Erwachsene sind
+//                       «Personen ab dem 1. Januar nach Vollendung des 25. Altersjahres».
+//                       BELEGT. (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am
