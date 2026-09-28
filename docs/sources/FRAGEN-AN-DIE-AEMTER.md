@@ -262,7 +262,7 @@ Formel (50'760) keinen Betrag, weil er in Region 3 null wäre und in den anderen
 des Merkblatts (alleinstehend, zwei Kinder, anrechenbares Einkommen 39'250) steht als
 Prämienverbilligung die Differenz 3'836.50, darunter «Die SVA Schwyz prüft in jedem Einzelfall,
 dass die Prämien für Kinder um mindestens 80 Prozent … verbilligt werden.» Anteilig nach
-Richtprämie verteilt erhielte jedes Kind 604.71, also 47 % seiner Richtprämie. Wird dann **je
+Richtprämie verteilt erhielte jedes Kind 604.69, also 47 % seiner Richtprämie. ⟨korrigiert 28.09.2026: hier stand 604.71⟩ Wird dann **je
 Kind auf 80 % erhöht** (Gesamtbetrag rund 4'683), oder wird der **Gesamtbetrag** mit der Summe
 der Kinder-Mindestbeträge verglichen (dann bleibt es bei 3'836.50)? Bis zur Antwort rechnet die
 App mit Kindern nur, solange jedes Kind anteilig ohnehin 80 % erhält.
@@ -275,6 +275,14 @@ App auf die Jahrgänge in «Richtprämien 2026»: Erwachsene ab Jahrgang 2000.)
 **Frage 4 — Deckel § 10 Abs. 1 EGzKVG:** Gilt «darf die tatsächlich geschuldeten Prämien …
 nicht übersteigen» je Person oder für den Haushalt? Die App kennt nur die Prämie der erwachsenen
 Person und begrenzt deren Anteil.
+
+**Frage 6 — Änderung der Verhältnisse im Anspruchsjahr:** § 10 VVzEGzKVG: «Wesentliche Änderungen
+der wirtschaftlichen Verhältnisse zwischen der letzten rechtskräftigen Steuerveranlagung und dem
+31. Dezember des Anspruchsjahres werden auf Antrag berücksichtigt» (mindestens 10 %, Antrag bis
+31. März des Folgejahres). Das Merkblatt 2026/2027 sagt: «Änderungen der wirtschaftlichen
+Verhältnisse nach dem 1. Januar … können erst in den Folgejahren berücksichtigt werden.» Welche
+Regel gilt für eine Person, deren Einkommen im Laufe des Anspruchsjahres um mehr als 10 % sinkt?
+(Die App nennt heute beide Aussagen und verweist an die SVA.)
 
 **Frage 5 — späte Anmeldung:** Die Website sagt zur Frist 31.12.2026: «Je nach Anmeldeeingang
 erhalten Sie die Prämienverbilligung möglicherweise rückwirkend per 1. Januar 2026.» Wovon hängt

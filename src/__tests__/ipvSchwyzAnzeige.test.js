@@ -72,6 +72,23 @@ describe('K31 IPV-Rechner, Kanton Schwyz', () => {
     expect(html).not.toContain('premium.eligible');
   });
 
+  it('Familie zwischen den beiden SVA-Tabellen: der sichere Kinder-Anspruch statt «vielleicht keiner»', () => {
+    const html = render(profil(4671, { children: [{ age: 5 }] }));
+    expect(html).toContain('ipv.offenGrund.szKinderMindestanspruch');
+    expect(html).not.toContain('ipv.offenGrund.szGrenzeMietzinsregion');
+  });
+
+  it('«kein Anspruch» sagt, dass das amtliche Reineinkommen tiefer sein kann (Fachprüfung #470 ⚠️ 2)', async () => {
+    const de = (await import('../i18n/de.js')).default;
+    expect(de.ipv.szKeinAnspruch).toMatch(/Reineinkommen/);
+    expect(de.ipv.szKeinAnspruch).toMatch(/50 760/);
+    expect(de.ipv.szKeinAnspruch).toMatch(/Antrag/);
+    expect(de.ipv.szKeinAnspruch).not.toMatch(/in jeder Gemeinde/);
+    // ⚠️ 4: der Vorbehalt nennt Verordnung UND Merkblatt, statt eine Neuberechnung zuzusagen.
+    expect(de.ipv.vorbehaltSZ).toMatch(/Vollzugsverordnung/);
+    expect(de.ipv.vorbehaltSZ).toMatch(/Merkblatt/);
+  });
+
   it('über dem Nullpunkt: «kein Anspruch» mit dem Schwyzer Satz', () => {
     const html = render(profil(5000));
     expect(html).toContain('ipv.szKeinAnspruch');
@@ -85,7 +102,7 @@ describe('K31 IPV-Rechner, Kanton Schwyz', () => {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      for (const k of ['szGrenzeMietzinsregion', 'saeule3aAbzugUnklar']) {
+      for (const k of ['szGrenzeMietzinsregion', 'saeule3aAbzugUnklar', 'szKinderMindestanspruch']) {
         expect(typeof texte.ipv.offenGrund[k], `${sprache}.js: ipv.offenGrund.${k} fehlt`).toBe('string');
       }
       expect(texte.ipv.szFristLaeuft).toContain('{jahr}');

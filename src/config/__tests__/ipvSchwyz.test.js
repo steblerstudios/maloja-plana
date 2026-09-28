@@ -41,6 +41,12 @@ describe('K31 SZ: die Zahlen 2026, wörtlich aus den Quellen', () => {
   it('[4]: minimale Höchsteinkommen Alleinstehende, 0–4 Kinder (Mietzinsregion 3, Kinder unter 11)', () => {
     expect(IPV_SZ.hoechsteinkommenMinimal).toEqual([43554, 56052, 65845, 74343, 80161]);
   });
+  it('[4] zweite Tabelle: Höchstgrenzen für den Kinder-Mindestanspruch 80 %, 0–4 Kinder', () => {
+    expect(IPV_SZ.hoechsteinkommenKinderMinimal).toEqual([43554, 63117, 74491.25, 84306.75, 91222.25]);
+  });
+  it('Plausibilität [4]: die zweite Tabelle liegt je Kinderzahl über der ersten (+25 % Lebensbedarf, § 5 Abs. 2)', () => {
+    IPV_SZ.hoechsteinkommenMinimal.forEach((w, i) => expect(IPV_SZ.hoechsteinkommenKinderMinimal[i]).toBeGreaterThanOrEqual(w));
+  });
   it('§ 7a Abs. 1 [3]: Kinder mind. 80 % · § 18 Abs. 2 [1]: unter 50 Franken keine Auszahlung', () => {
     expect(IPV_SZ.mindestanteilKind).toBe(0.8);
     expect(IPV_SZ.mindestbetrag).toBe(50);
@@ -77,7 +83,8 @@ describe('K31 SZ: die drei Beispiele des Merkblatts [5] — jede Zahl', () => {
     expect(r.differenz).toBeCloseTo(3836.50, 9);
   });
   it('🛑 Beispiel 3 ist beim Kinder-Mindestanspruch mehrdeutig — die Rechnung sagt «unklar»', () => {
-    // Anteilig verteilt bekäme jedes Kind 3 836.50 × 1 285.20 / 8 154 = 604.71, also 47 %.
+    // Anteilig verteilt bekäme jedes Kind 3 836.50 × 1 285.20 / 8 154 = 604.69, also 47 %.
+    // ⟨korrigiert 28.09.2026, Fachprüfung #470 ⚠️ 3: hier stand 604.71.⟩
     // Ob die SVA auf 80 % erhöht (≈ +847) oder am Gesamtbetrag misst, zeigt [5] nicht.
     const r = ipvSchwyzRechnen({ personen: ['e', 'k', 'k'], me: 39250 });
     expect(r.anteil).toBeLessThan(0.8);
@@ -125,14 +132,14 @@ describe('K31 SZ: Säule 3a — im Reineinkommen abgezogen, nicht aufgerechnet (
     expect(regel.sicherAbziehbar({ monthlyIncome: 5000 }, { bemessungsjahre: [2019] })).toBe(null);
   });
   it('widerlegt über der sicheren Schwelle, ohne Einzahlung nie', () => {
-    expect(regel.widerlegt({ monthlyIncome: 2500, pension3a: 6000 }, jahre)).toBe(false);
-    expect(regel.widerlegt({ monthlyIncome: 2500, pension3a: 6001 }, jahre)).toBe(true);
-    expect(regel.widerlegt({ monthlyIncome: 9000, pension3a: 7057 }, jahre)).toBe(true);
-    expect(regel.widerlegt({ monthlyIncome: 0 }, jahre)).toBe(false);
+    expect(regel.widerlegt({ monthlyIncome: 2500, pension3a: 6000 }, 0, jahre)).toBe(false);
+    expect(regel.widerlegt({ monthlyIncome: 2500, pension3a: 6001 }, 0, jahre)).toBe(true);
+    expect(regel.widerlegt({ monthlyIncome: 9000, pension3a: 7057 }, 0, jahre)).toBe(true);
+    expect(regel.widerlegt({ monthlyIncome: 0 }, 0, jahre)).toBe(false);
   });
   it('widerlegt, wenn der Wert über ein Jahr hinausreicht (Altdaten)', () => {
     const f = { monthlyIncome: 5000, pension3a: 6000, pension3aDeposits: [{ date: '2025-01-01', amount: 3000 }, { date: '2026-01-01', amount: 3000 }] };
-    expect(regel.widerlegt(f, jahre)).toBe(true);
+    expect(regel.widerlegt(f, 0, jahre)).toBe(true);
   });
   it('zieht die ganze Einzahlung ab', () => {
     expect(regel.nichtAufgerechnet({ pension3a: 3000 })).toBe(3000);
@@ -223,14 +230,28 @@ describe('K31 calculateIPV für SZ (App-Angaben → Modell)', () => {
       .toBe(Math.round(3600 + anteil * 1285.2));
   });
 
-  it('mit Kind im mittleren Bereich: Mindestanspruch mehrdeutig → keine Zahl', () => {
-    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, children: [{ age: 5 }] }))).toMatchObject({ belegt: false, offen: 'mindestanspruch' });
+  it('mit Kind im mittleren Bereich: Gesamtbetrag mehrdeutig → keine Zahl, aber der sichere Kinder-Anspruch', () => {
+    expect(calculateIPV(person({ monthlyIncome: 20000 / 12, children: [{ age: 5 }] }))).toMatchObject({ belegt: false, offen: 'szKinderMindestanspruch' });
   });
 
-  it('mit Kind über dem minimalen Höchsteinkommen (56 052) und ab 5 Kindern: keine Zahl', () => {
-    expect(calculateIPV(person({ monthlyIncome: 4671, children: [{ age: 5 }] }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
+  // Fachprüfung #470 ⚠️ 1 und 💡 1: welcher Grund zwischen den beiden SVA-Tabellen gilt, ist gepinnt.
+  it('1 Kind: ab 56 052 (erste Tabelle) bis unter 63 117 (zweite Tabelle) der Kinder-Grund, ab 63 117 die Mietzinsregion', () => {
+    expect(calculateIPV(person({ monthlyIncome: 4671, children: [{ age: 5 }] }))).toMatchObject({ offen: 'szKinderMindestanspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 5259.7, children: [{ age: 5 }] }))).toMatchObject({ offen: 'szKinderMindestanspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 5259.75, children: [{ age: 5 }] }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
+  });
+  it('2 Kinder: die Tabellenwerte für 2 Kinder, nicht die für 1 oder 0', () => {
+    const zwei = [{ age: 5 }, { age: 8 }];
+    expect(calculateIPV(person({ monthlyIncome: 65000 / 12, children: zwei }))).toMatchObject({ offen: 'szKinderMindestanspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 74000 / 12, children: zwei }))).toMatchObject({ offen: 'szKinderMindestanspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 74500 / 12, children: zwei }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
+  });
+  it('ab 5 Kindern: der Wert für 4 Kinder ist eine belegte Untergrenze — tiefes Einkommen rechnet', () => {
     const fuenf = Array.from({ length: 5 }, () => ({ age: 5 }));
-    expect(calculateIPV(person({ monthlyIncome: 500, children: fuenf }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
+    // me 6 000: Summe 5 583.60 + 5 × 1 285.20 = 12 009.60 − 660 = 11 349.60, Anteil 94,5 %
+    expect(calculateIPV(person({ monthlyIncome: 500, children: fuenf }))).toMatchObject({ eligible: true, annual: 11350 });
+    expect(calculateIPV(person({ monthlyIncome: 7601, children: fuenf }))).toMatchObject({ offen: 'szKinderMindestanspruch' });
+    expect(calculateIPV(person({ monthlyIncome: 7602, children: fuenf }))).toMatchObject({ offen: 'szGrenzeMietzinsregion' });
   });
 
   it('Alter nach Jahrgang [4]: 2000 ist erwachsen, 2001 nicht', () => {
