@@ -685,6 +685,49 @@ wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rec
 
 ---
 
+## 25 · SOVAR Appenzell Ausserrhoden — Kinder, Deckel, Steuerjahr, Säule 3a
+
+*Aufgenommen 28.09.2026 beim Einbau von AR. Entwurf — **nicht gesendet**. (Nummer 25, zugeteilt
+28.09.2026 abends; vorher 9, dann 11.)*
+
+**Worum es geht:** Das EG zum KVG (bGS 833.14) und die Verordnung (bGS 833.141) stehen online mit
+«Stand 1. Januar 2017» — laut Medienmitteilung vom 31.10.2025 ist das tatsächlich das geltende
+Gesetz. Die Werte 2026 stehen im Merkblatt der SOVAR; die Regierungsratsbeschlüsse selbst sind nicht
+publiziert. Ein Berechnungsbeispiel gibt es nicht.
+
+**Frage 1 — Kinder und Selbstbehalt:** Erhält jedes minderjährige Kind die 1'114.80 (80 %) **fest**
+bis zur Obergrenze (Art. 11 Abs. 2 EG), unabhängig vom Selbstbehalt — oder wird der Selbstbehalt von
+der Summe aller Richtprämien abgezogen? Und was gilt, wenn der Selbstbehalt die Richtprämie der
+erwachsenen Person übersteigt, das Einkommen aber unter der Obergrenze liegt (Art. 16 Abs. 1 lit. c
+EG)? Wir rechnen «fest» und zeigen im zweiten Fall keinen Betrag.
+
+**Frage 2 — Deckel (Art. 7 V):** «Die Prämienverbilligung übersteigt die Höhe der Prämie … mit der
+ordentlichen Franchise und mit Unfalldeckung nicht.» Gilt das auch, wenn die versicherte Person eine
+höhere Franchise oder keine Unfalldeckung hat — also ist der Deckel die **hypothetische** Prämie mit
+Fr. 300 Franchise und Unfall, nicht die bezahlte? Solange das offen ist, zeigt die App keinen
+Betrag, wenn er über der erfassten Prämie liegt.
+
+**Frage 3 — Steuerjahr:** «letzte rechtskräftige Steuerveranlagung» — für den Anspruch 2026 in der
+Regel 2024? Wir brauchen das Jahr für den steuerlichen Kinderabzug nach Alter (5'300 / 7'400 / 11'600).
+
+**Frage 4 — Säule 3a:** Wie stellt die Kasse fest, ob eine Person einer Vorsorgeeinrichtung angehört
+(volle Aufrechnung) oder nicht (nur über 10'000)? Die App kennt das nur, wenn ein BVG-Beitrag
+erfasst ist.
+
+**Frage 5 — Neugeborene:** Wie wird ein Kind gerechnet, das nach dem 1. Januar geboren ist (Art. 6 V:
+Anspruch ab dem Folgemonat; Art. 16 Abs. 2 EG: Verhältnisse am 1. Januar)?
+
+**Frage 6 — Verfahren:** Art. 10 V nennt die AHV-Gemeindezweigstelle, das Antragsformular 2026 die
+SOVAR. Welche Stelle gilt?
+⟨28.09.2026, nach der Fachprüfung #480: das Formular, das die SOVAR nennt, ist das für **Zuzug aus dem
+Ausland**. Die Anzeige nennt jetzt die AHV-Zweigstelle der Wohngemeinde (Art. 10 Abs. 1 V) und dass die
+SOVAR mutmasslich Berechtigte anschreibt (Medienmitteilung 12.12.2025). Die Frage bleibt zur Bestätigung.⟩
+
+**Stand:** AR ist für 2026 gebaut (Entwurfs-PR, K31). Die Teilrevision des EG zum KVG liegt beim
+Kantonsrat; für 2027 neu prüfen. Ab 01.01.2027 zeigt die App für AR keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für

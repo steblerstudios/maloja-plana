@@ -29,7 +29,7 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die Zurechnungsregeln (seit 28.09.2026 vier) — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (seit 28.09.2026 fünf) — benannt und belegt, NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
@@ -64,6 +64,9 @@ export function vermoegenSumme(f) {
 //   imReineinkommenAbgezogen  SZ (28.09.2026) — GAR KEINE Zurechnung: § 7 Abs. 2 EGzKVG
 //                        (SRSZ 361.100) zählt die Aufrechnungen abschliessend auf, die 3a
 //                        fehlt darin. ⇒ Abzug = die ganze Einzahlung, soweit sicher abziehbar.
+//   freibetragOhneSaeule2 AR — ohne Säule 2 nur der Teil über 10'000 (fester Freibetrag).
+//                        Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a
+//                        V zum KVG (bGS 833.141). Mit Säule 2 gilt dort `voll`.
 //
 // 🛑 EINE DIESER REGELN (`schwelleOhneSaeule2`) WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
@@ -380,6 +383,23 @@ export const SAEULE_3A = Object.freeze({
       const sicher = SAEULE_3A_SZ_SICHER(f, jahre);
       return sicher === null || betrag3a(f) > sicher || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
     },
+  }),
+
+  // AR (K31, 28.09.2026): wie AG hängt die Zurechnung an der Säule-2-Zugehörigkeit — aber mit einem
+  // festen FREIBETRAG statt einer Schwelle in Prozent, darum eine eigene Regel und nicht
+  // `schwelleOhneSaeule2` umgebogen. Wortlaut (bGS 833.141 Art. 5 Abs. 1 lit. a): «der Betrag an die
+  // Säule 3a von Personen, die keiner Vorsorgeeinrichtung nach Art. 80 [BVG] angehören, der
+  // 10 000 Franken übersteigt». Für Personen MIT Vorsorgeeinrichtung gilt `voll` (bGS 833.14
+  // Art. 19 Abs. 1 lit. a). Diese Regel beschreibt nur den Fall OHNE.
+  // 🛑 Wie in AG weiss die App nicht sicher, welcher Fall vorliegt. ipvAppenzellAusserrhoden.js
+  // rechnet darum beide Fälle und zeigt keine Zahl, wenn sie verschieden ausfallen — ausser ein
+  // BVG-Beitrag ist erfasst, dann ist die Zugehörigkeit positiv belegt.
+  freibetragOhneSaeule2: Object.freeze({
+    name: 'freibetragOhneSaeule2',
+    kantone: 'AR',
+    beleg: 'Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a V zum KVG (bGS 833.141)',
+    freibetrag: 10000,
+    nichtAufgerechnet: (f) => Math.min(betrag3a(f), 10000),
   }),
 });
 

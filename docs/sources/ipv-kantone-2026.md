@@ -45,7 +45,7 @@ sind. Dieses Dokument ändert keinen Code.
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | gebaut (PR #471, an der Quelle nachgeprüft 28.09.2026) | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
-| AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | abbildbar | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
+| AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | gebaut (PR #480, an der Quelle nachgeprüft 28.09.2026) | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
 | AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | abbildbar | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
 | GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | gebaut (PR #467; Kinder bis 80'000 ohne Zahl, Lesart offen) | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
@@ -2180,9 +2180,9 @@ Sonderfälle: EL-Beziehende über die EL (ohne Antrag); Sozialhilfebeziehende «
 Die App führt `maxIncome` 42'000 und `subsidySingle` 2'100 (Modell «flat»); belegt ist für Alleinstehende eine Obergrenze von 35'000 und ein Betrag von bis zu 6'025.20 Fr., abnehmend um 46 % des Einkommens über 20'670 — kein Pauschalbetrag.
 
 ### Offen / nicht gefunden
-- Die Gesetzessammlung (ar.clex.ch) zeigt EG zum KVG und Verordnung nur mit «Stand 1. Januar 2017»; die Regierungsratsbeschlüsse mit den Werten 2026 selbst wurden nicht gefunden — Zahlen stammen aus dem SOVAR-Merkblatt 2026 und der Medienmitteilung.
+- Die Gesetzessammlung (ar.clex.ch) zeigt EG zum KVG und Verordnung nur mit «Stand 1. Januar 2017»; die Regierungsratsbeschlüsse mit den Werten 2026 selbst wurden nicht gefunden — Zahlen stammen aus dem SOVAR-Merkblatt 2026 und der Medienmitteilung. ⟨28.09.2026: «Stand 2017» ist der geltende Stand — Medienmitteilung 31.10.2025: «Das derzeit gültige Gesetz stammt aus dem Jahre 2017.»⟩
 - Eine Teilrevision des EG zum KVG («flexibler gestalten», Medienmitteilung 31.10.2025) ist in Arbeit; Inkraftsetzung nicht genannt — für 2027 prüfen.
-- Mindestauszahlungsbetrag: Gesetz erlaubt Ausschluss (Art. 13 Abs. 2), Betrag 2026 nicht gefunden.
+- ~~Mindestauszahlungsbetrag: Gesetz erlaubt Ausschluss (Art. 13 Abs. 2), Betrag 2026 nicht gefunden.~~ ⟨korrigiert 28.09.2026: V zum KVG Art. 13 Abs. 1 «Beträge unter 20 Franken werden nicht ausbezahlt.» — siehe Nachprüfung⟩
 - Anwendung von Lebensbedarf für Verheiratete **ohne** Kinder (Merkblatt nennt nur «Verheiratete und Alleinerziehende mit Kindern» 31'005) — Wortlaut mehrdeutig; das Gesetz verweist auf Art. 10 Abs. 1 lit. a Ziff. 1/2 ELG (Ehepaare = Ziff. 2).
 
 ### Quellen
@@ -2191,6 +2191,92 @@ Die App führt `maxIncome` 42'000 und `subsidySingle` 2'100 (Modell «flat»); b
 3. Medienmitteilung «Regierungsrat legt individuelle Prämienverbilligung 2026 fest», Kanton Appenzell Ausserrhoden, 12.12.2025. https://ar.ch/schnellzugriff/medienmitteilungen-der-kantonalen-verwaltung/detail/news/regierungsrat-legt-individuelle-praemienverbilligung-2026-fest/ — abgerufen 16.09.2026
 4. Medienmitteilung «Zustimmung zur flexibleren Ausgestaltung der Prämienverbilligung», Kanton Appenzell Ausserrhoden, 31.10.2025. https://ar.ch/schnellzugriff/medienmitteilungen-der-kantonalen-verwaltung/detail/news/zustimmung-zur-flexibleren-ausgestaltung-der-praemienverbilligung/ — abgerufen 16.09.2026
 5. Verordnung zum EG zum KVG (V zum KVG), bGS 833.141, Stand 1. Januar 2017 (Vermögensanteil «15 Prozent des steuerbaren Vermögens»). https://ar.clex.ch/api/de/versions/1167/pdf_file — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App — `src/config/ipvAppenzellAusserrhoden.js`)
+
+**An der Quelle nachgeprüft 28.09.2026.** Messweg: API-Route `ar.clex.ch/api/de/texts_of_law/<nr>` und
+`…/api/de/versions/<id>/pdf_file`, Gegenprobe `texts_of_law/833.199` → 404, `versions/9999999` → 404;
+Merkblatt über `curl` + `pdftotext`, Gegenprobe `Merkblatt-IPV-2099.pdf` → 404; Medienmitteilungen
+Gegenprobe erfundener Pfad → 404.
+
+**Fassungen:**
+- EG zum KVG bGS 833.14: «Aktuelle Version in Kraft seit: 01.01.2017 (Beschlussdatum: 13.06.2016)», Version 1156.
+- V zum KVG bGS 833.141: «Aktuelle Version in Kraft seit: 01.01.2017 (Beschlussdatum: 27.09.2016)», Version 1167.
+- Medienmitteilung 31.10.2025: «Das derzeit gültige Gesetz stammt aus dem Jahre 2017.» Die Teilrevision
+  («flexibler») ist vom Regierungsrat «zuhanden des Kantonsrates verabschiedet», nicht in Kraft.
+- SOVAR «Merkblatt … im Jahr 2026» (PDF erstellt 18.12.2025) — alle Zahlen oben bestätigt, wörtlich.
+- Medienmitteilung 12.12.2025: «Nach den Vorgaben des Bundes müssen die Prämien für Kinder zu 80 %
+  verbilligt werden. […] Der Kinderabzug wird bei 2‘000 Franken belassen. Die herabgesetzten
+  Obergrenzen beim Vermögen um 20 % und die Anpassungen beim Einkommen werden beibehalten. Der
+  Selbstbehalt wird auf 46 % festgelegt.» ⟨korrigiert: die Zeile «nur als Zusammenfassung gelesen»
+  oben ist jetzt wörtlich belegt⟩
+- SOVAR «Prämienverbilligung bei Zuzug aus dem Ausland — Antrag für das Jahr 2026»: «Für Personen mit
+  Jahrgang 2001 oder jünger: Befinden Sie sich am 1.1.2026 in Ausbildung?», «Kinder der Jahrgänge
+  2008 - 2026», «Bitte das Antragsformular bei den Sozialversicherungen Appenzell Ausserrhoden einreichen.»
+- Steuergesetz bGS 621.11, Versionen 1633 (01.03.2024) und 1634 (01.01.2025): Art. 38 Abs. 1 lit. a
+  (Kinderabzug), Anhang 1 «Betrag per 1. Januar 2024»: Ziff. 1 **5'300**, Ziff. 2 **7'400**, Ziff. 3
+  **11'600**; Art. 51 Abs. 1: «b) für alle übrigen steuerpflichtigen Personen Fr. 75 000.–; c) zusätzlich
+  für jedes minderjährige Kind … Fr. 25 000.–». Alleinstehende ohne Kinder haben keinen Sozialabzug.
+
+**Neu gelesen (Verordnung):**
+> «Zum steuerbaren Einkommen werden hinzugezählt: a) der Betrag an die Säule 3a von Personen, die keiner
+> Vorsorgeeinrichtung nach Art. 80 [BVG] angehören, der 10 000 Franken übersteigt; […] d) 15 Prozent des
+> steuerbaren Vermögens.» — Art. 5 Abs. 1
+
+> «Der Anspruch auf Prämienverbilligung beginnt: a) mit dem der Geburt folgenden Monat» — Art. 6 Abs. 1
+
+> «Die Prämienverbilligung übersteigt die Höhe der Prämie für die obligatorische Krankenversicherung mit
+> der ordentlichen Franchise und mit Unfalldeckung nicht.» — Art. 7 Abs. 1
+
+> «Personen, die Anspruch auf Prämienverbilligung erheben, reichen ihren Antrag bis spätestens 31. März
+> bei der AHV-Gemeindezweigstelle der Gemeinde ein […]» · Abs. 2: in Härtefällen «bis spätestens
+> 30. April» — Art. 10
+
+> «Beträge unter 20 Franken werden nicht ausbezahlt.» — Art. 13 Abs. 1
+
+**Neu gelesen (Gesetz):** Art. 11 Abs. 2 (Kinder «bis zur Obergrenze … im Umfang des … Prozentsatzes
+verbilligt»), Art. 12 Abs. 1/2 (Obergrenzen 2017 und Spielraum ±10 % / ±20 % — die Werte 2026 liegen
+darin), Art. 16 Abs. 1 lit. c/d und Abs. 2 (Stichtag 1. Januar), Art. 19 Abs. 1 lit. a–i, Art. 20
+(Abweichung über 20 %), Art. 21 (Rückerstattung), Art. 22 (Verwirkung).
+
+**Kein amtliches Berechnungsbeispiel** (Merkblatt, SOVAR-Seite, Formular). Prüfsteine: Handrechnungen
+aus dem Wortlaut — 24'000 → 6'025.20 − 46 % × 3'330 = **4'493.40**; Nullpunkt Alleinstehende
+20'670 + 6'025.20 / 0,46 = **33'768.26** (unter der Obergrenze 35'000, die darum für Alleinstehende
+nicht wirkt); Obergrenzen 2026 innerhalb ±10 % der Gesetzesbeträge.
+
+**Prämienregion:** eine (BAG-Daten der App: alle 20 AR-Gemeinden Region 0); Richtprämie kantonsweit
+(Art. 2 lit. a EG). Darum ohne PLZ und mit eigenem Satz `ipv.jahrAR` statt `ipv.jahrOhneRegion` (der den
+Aargau nennt) — `jahrKey` in `PremiumSubsidy.jsx`, wortgleich wie in den Zweigen UR/SZ.
+
+**Gewählt, nicht belegt** (FRAGEN-AN-DIE-AEMTER.md, Punkt 25 — ⟨umnummeriert 28.09.2026 abends, vorher 9, dann 11⟩): Kinder fest 80 % (Art. 11 Abs. 2) und
+keine Zahl im Band Selbstbehalt > Richtprämie unter der Obergrenze · Deckel = Prämie mit Fr. 300
+Franchise und Unfall ⇒ keine Zahl, wenn der Betrag über der erfassten Prämie liegt · Steuerjahr 2024 für
+den Kinderabzug · erfasster BVG-Beitrag = Vorsorgeeinrichtung, sonst beide Fälle rechnen · Rundung auf
+ganze Franken.
+
+**Bewusst nicht gebaut:** Paare · junge Erwachsene · Kinder nach dem 1. Januar geboren · Quellen-
+besteuerte/EU · EL/Sozialhilfe · Aufrechnungen Art. 19 lit. c–f, h, i · `anmeldefristVorbei`.
+
+**Folge:** `CANTONAL_IPV.AR` → `maxIncome` 35'000 (amtlich publiziert, je Haushalt vom Modul gesetzt),
+Musterwerte entfernt; `noteKey` bleibt «Antrag bei SVA AR» (Formular 2026: «bei den
+Sozialversicherungen Appenzell Ausserrhoden einreichen»; Art. 10 V nennt noch die
+Gemeindezweigstelle — Frage 6).
+
+**Nachtrag Fachprüfung #480 (28.09.2026 abends):**
+- ⟨korrigiert⟩ Antragsstelle: `noteKey` jetzt «Antrag bei AHV-Zweigstelle Gemeinde» und `arFristLaeuft`
+  «bei der AHV-Zweigstelle der Wohngemeinde» (V Art. 10 Abs. 1); die SOVAR schreibt mutmasslich Berechtigte an
+  (Medienmitteilung 12.12.2025). Das Formular mit der SOVAR als Stelle gilt nur bei Zuzug aus dem Ausland.
+- Richtung der Näherung jetzt sichtbar: die App rechnet mit dem Nettoeinkommen, das steuerbare Einkommen ist
+  wegen Berufskosten und Versicherungsabzug (StG Art. 35 Abs. 1 lit. g, bis Fr. 2'700) meist tiefer — mit 46 %
+  Selbstbehalt wirkt das stark (Prüfung: 30'000 netto → App 1'733, mit −2'700 schon 2'975). `vorbehaltAR` und
+  `arKeinAnspruch` sagen «eher höher» und «ein Antrag lohnt sich». Nicht gerechnet (Produktentscheid).
+- Frist: `anmeldefristVorbei` jetzt gesetzt, mit eigenem Text `ipv.arFristNichtAbgezogen` (Leser wie FR,
+  `fristNichtAbgezogenKey`). Budget, KK-Last und Prämienbeleg ziehen nach dem 31.03. nichts mehr ab.
+- Säule 2: ein ausdrücklich erfasster BVG-Beitrag 0 gilt als «keine Pensionskasse» (wie GR), leer bleibt unbekannt.
+- `offenGrund.praemieFranchise` nennt die belegte Untergrenze («mindestens so hoch wie die erfasste Prämie»).
+  Eine Anzeige als Spanne «mindestens/höchstens» wäre ein neuer Zustand — Produktentscheid, im PR notiert.
+- «höchstens möglich» = Richtprämie + Kinderbetrag, nicht mehr an der erfassten Prämie gedeckelt.
+- `arFristVorbei` nennt die Ausnahme Zuzug aus dem Ausland (V Art. 6 Abs. 1 lit. b).
 
 ---
 
