@@ -36,6 +36,10 @@ export const IPV_MODULE = {
   // GE: feste Monatsbeträge je Einkommensgruppe, kantonsweit gleich — keine Prämienregion (Barème 2026).
   GE: { laden: () => import('./ipvGenf.js'), fn: 'ipvGenf', brauchtPLZ: false },
   GR: { laden: () => import('./ipvGraubuenden.js'), fn: 'ipvGraubuenden' },
+  // TG rechnet nach dem Steuerbetrag, nicht nach Region oder Einkommen — und zeigt bewusst keine Zahl.
+  TG: { laden: () => import('./ipvThurgau.js'), fn: 'ipvThurgau', brauchtPLZ: false },
+  // TI kennt Prämienregionen, rechnet aber mit einem kantonsweiten PMR (LCAMal Art. 28 Abs. 2).
+  TI: { laden: () => import('./ipvTicino.js'), fn: 'ipvTicino', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -148,8 +152,16 @@ export const CANTONAL_IPV = {
   // der Kanton nicht als Zahl, darum bleibt maxIncome null und die Anzeige nennt keine Grenze.
   AG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AG' },
     beleg: { quelle: 'KVGG AG (SAR 837.200) · V KVGG (SAR 837.211) · SVA Aargau — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
-  TG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'TG' }, beleg: null },
-  TI: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas', beleg: null },
+  // TG (K31): Modul config/ipvThurgau.js. Feste Ansätze nach der einfachen Steuer zu 100 % (TG KVV
+  // § 14), nicht nach dem Einkommen — die App kennt diese Steuerzahl nicht und zeigt darum bewusst
+  // keinen Betrag (Grund `tgSteuerbetrag`). Keine Einkommensgrenze in Franken, darum maxIncome null.
+  // Antrag bei der Krankenkassenkontrollstelle der Gemeinde, nicht bei einer SVA (Merkblatt 2026).
+  TG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyKkKontrollstelle',
+    beleg: { quelle: 'TG KVV (RB 832.10) § 14–15 · Amt für Gesundheit TG — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
+  // TI (K31): eigenes Modell in config/ipvTicino.js (PMR − PMR × RD²/RDM², × 76,5 %). Keine
+  // publizierte Einkommensgrenze — das IAS verweist auf seinen Rechner —, darum maxIncome null.
+  TI: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas',
+    beleg: { quelle: 'LCAMal (RL 853.100) · RL 853.310 · RLCAMal (RL 853.110) · RL 870.130 · IAS — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // VD (K31): Grenze und Höchstbetrag hängen an der Kategorie (Arrêté 2026 art. 2) — keine Einzelwerte.
   // Der Weg ist ein Antrag (Notice OVAM 2026 Ziff. 4), nicht die automatische Prüfung via Steuerdaten.
   VD: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyOvam',

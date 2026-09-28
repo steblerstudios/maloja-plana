@@ -218,8 +218,9 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
 
   // GE seit 28.09.2026: setzt die Frist nur in den Antragsfällen (RDU unter der Untergrenze,
   // RaLAMal Art. 10A: vor dem 30. November) — die automatischen Fälle kennen keine Frist.
-  it('die Frist-Angabe lesen nur die Module LU und GE sowie ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvGenf.js', 'data/ipvAbzug.js'];
+  // TI (28.09.2026, Fachprüfung #484): LCAMal Art. 25 Abs. 3 — nach der Frist erst ab dem Folgemonat.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, GE, TI) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvGenf.js', 'config/ipvTicino.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
