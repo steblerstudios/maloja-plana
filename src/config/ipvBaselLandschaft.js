@@ -20,6 +20,9 @@
 //       mit 403): Ziffer 100 (Nettolohn), 310/320 (erhaltene Unterhaltsbeiträge), 380 (übrige
 //       Einkünfte, Familienzulagen), Ziffer 399 (Zwischentotal), Ziffer 610 (Säule 3a),
 //       Ziffern 900/905 (steuerfreie Beträge Vermögen), Ziffer 750 (Kinderabzug Staatssteuer).
+//       ⟨Vermerk 28.09.2026, Fixrunde 1 und Re-Review: die Ziffern 310/320/380 wurden in dieser
+//       Runde NICHT nachgelesen — die Wegleitung antwortete mit 403. Sie sind Angabe der
+//       Vorgänger-Sitzung; tragend für Familienzulagen und erhaltene Alimente ist [6] § 24.⟩
 //   [6] Steuergesetz BL (SGS 331) § 50 Abs. 1 lit. a/b: steuerfreie Beträge 180'000 / 90'000
 //       (Primärquelle zu [4] Ziffern 900/905; Fachprüfung 28.09.2026, K3). § 24 Abs. 1:
 //       steuerbar sind lit. a Einkünfte aus unselbständiger Erwerbstätigkeit «mit Einschluss …
@@ -111,6 +114,7 @@ export const IPV_BL = {
 //     Einkünfte vor Ziffer 399; [6] § 24 Abs. 1 lit. f.
 //   · Familienzulagen (`familienzulagen`): [6] § 24 Abs. 1 lit. a/c; [4] Ziffer 100 («Zulagen» im Lohn) bzw. Ziffer 380
 //     («Familienzulagen … in der Ziffer 380 ‹übrige Einkünfte› zu deklarieren») — beides vor 399.
+//     (Ziffern 310/320/380: Angabe der Vorgänger-Sitzung, nicht nachgelesen — Wegleitung → 403.)
 //     Die App führt sie wie data/haushaltsEinnahmen.js ZUSÄTZLICH zum Lohn.
 //   · bezahlte Unterhaltsbeiträge (`alimentePaid`): [1] § 9 Abs. 1 lit. c «vermindert um …
 //     geleistete Unterhaltsbeiträge, für die bei der Staatsteuer ein Abzug gewährt wird».

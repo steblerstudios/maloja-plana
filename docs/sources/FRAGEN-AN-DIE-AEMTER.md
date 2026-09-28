@@ -351,6 +351,9 @@ keine; die App zeigt darum auch kleine Beträge.
 
 **Stand:** GR ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 lagen am 28.09.2026 nicht vor;
 ab 01.01.2027 zeigt die App für GR keinen Betrag mehr.
+
+---
+
 ## 11 · Amt für Gesundheit Thurgau — wo findet eine Person ihre «einfache Steuer zu 100 %»?
 
 **Wo:** TG KVV (RB 832.10) § 14; Merkblatt «Information zur Prämienverbilligung 2026».
@@ -549,6 +552,8 @@ App dort keinen Betrag, wo es darauf ankommt.
 
 **Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
 zeigt die App für OW keinen Betrag.
+
+---
 
 ## 19 · Ausgleichskasse Solothurn / Departement des Innern — die lineare Eigenanteil-Skala
 
