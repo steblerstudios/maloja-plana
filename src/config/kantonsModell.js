@@ -35,7 +35,8 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU, VD — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG, LU, VD, GE — unbedingte Zurechnung, keine Schwelle, kein Deckel
+//                        (GE aus dem Gegengrund: im RDU wird die 3a gar nicht erst abgezogen).
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
 //                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)

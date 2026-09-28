@@ -37,7 +37,16 @@
 //       justifiés par l'intéressé»).
 //   [5] ge.ch, «Demander un subside d'assurance-maladie 2026» (SAM), Stand 9. Juli 2026: «en principe
 //       accordé automatiquement sur la base du revenu d'il y a deux ans»; Liste der Antragsfälle.
-//   [6] ge.ch, «Informations générales sur le subside de l'assurance-maladie», Stand 28. Mai 2026.
+//       Unterseite «Revenus 2024 (RDU 2026) particulièrement bas» (Stand 18.09.2026) mit der Tabelle
+//       der Untergrenzen: «Personne seule 15'000 · avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants
+//       24'000 · 4 enfants 27'000 · Couple seul sans enfant 20'000 · avec 1 enfant 23'000 …», Frist
+//       «avant le 30 novembre 2026». Unterseite «Revenu brut sup. à 200'000 ou fortune brute sup. à
+//       250'000» (18.09.2026): «Revenu déterminant 2026 = (revenu brut 2024 * 0.95) + (fortune brute
+//       2024 /15)», Antrag per Brief vor dem 30. November 2026.
+//   [6] ge.ch, «Communiqué hebdomadaire du Conseil d'Etat du 5 novembre 2025» — «Indexation des subsides
+//       d'assurance-maladie pour 2026», «indice de base: 2024»: adultes 8,7 %, jeunes adultes 5,3 %,
+//       enfants 10,9 %, mit Tabelle aller Beträge 2024 → 2026 (320 → 348 … 50 → 55; 100 → 106; 60 → 67).
+//       Das ist der Arrêté-Beleg, der am Nachmittag noch fehlte.
 //   [7] Loi sur l'imposition des personnes physiques (LIPP), rsGE D 3 08, Stand 01.01.2026:
 //       Art. 18 Abs. 1 (unselbständiges Erwerbseinkommen «y compris … les allocations»), Art. 26
 //       lit. e (erhaltene Alimente und Kinderunterhaltsbeiträge), Art. 29 Abs. 2 (Berufskosten
@@ -70,16 +79,12 @@
 //
 // 4. DIE GESETZESBETRÄGE STEHEN NICHT IM GESETZ. Art. 22 [2] nennt 320 … 50 Franken (Stand Dezember
 //    2024); Art. 9B [3] lässt sie jährlich per Arrêté indexieren und auf den Franken aufrunden. Die
-//    Beträge 2026 (348 … 55) stehen im Barème [1]. Den Arrêté selbst haben wir nicht gefunden
-//    (docs/sources/FRAGEN-AN-DIE-AEMTER.md, Frage 8). Gegenprobe, die wir haben: alle acht
-//    Erwachsenenbeträge ergeben sich aus den Gesetzesbeträgen mit EINEM Faktor 1,0875, aufgerundet
-//    (320 × 1,0875 = 348.00 · 270 × 1,0875 = 293.63 → 294 · … · 50 × 1,0875 = 54.38 → 55); der
-//    Test hält das fest. Die Beträge für Kinder (60 → 67) und junge Erwachsene (100 → 106) in
-//    Gruppe 9 folgen NICHT diesem Faktor (66 bzw. 109 wären es) — Art. 9B Abs. 1 [3] nennt für
-//    alle dieselbe Durchschnittsprämie. Warum sie abweichen, erklärt keine der gelesenen Quellen;
-//    wir nehmen die Barème-Zahlen und fragen (FRAGEN-AN-DIE-AEMTER.md, Frage 8). ⟨Rechtsprüfung
-//    28.09.2026: hier stand vorher «eigene Durchschnittsprämie je Kategorie» als Tatsache —
-//    das war eine Vermutung.⟩
+//    Beträge 2026 (348 … 55) stehen im Barème [1] und im Communiqué des Conseil d'Etat vom
+//    5.11.2025 [6]: drei Indexsätze auf Basis 2024 — Erwachsene 8,7 %, junge Erwachsene 5,3 %,
+//    Kinder 10,9 % —, jeder Betrag aufgerundet (320 × 1,087 = 347.84 → 348 · … · 50 × 1,087 = 54.35
+//    → 55 · 100 × 1,053 = 105.3 → 106 · 60 × 1,109 = 66.54 → 67); der Test rechnet alle zehn nach.
+//    ⟨28.09.2026 abends: am Nachmittag stand hier «Arrêté nicht gefunden» und ein Faktor 1,0875 für
+//    die Erwachsenen — das Communiqué [6] fand die Cockpit-Sitzung, und es erklärt auch Gruppe 9.⟩
 //
 // SÄULE 3A — WARUM HIER DIE REGEL `voll` GILT, AUS EINEM ANDEREN GRUND ALS IN ZH/SG/LU
 // Dort rechnet der Kanton die 3a dem Steuereinkommen wieder ZU. In Genf wird sie im RDU gar nicht
@@ -92,26 +97,29 @@
 // WAS DER RDU DER APP SONST NOCH ENTHÄLT — UND WAS IHM FEHLT (Fachprüfung 28.09.2026: die erste
 // Fassung nahm nur Lohn, Nebenerwerb und Renten und behauptete, alle Auslassungen wirkten in
 // dieselbe Richtung; beides war falsch):
-//   + erhaltene Alimente und Kinderunterhaltsbeiträge ×12 — LRDU Art. 4 Abs. 1 lit. c [4], LIPP
-//     Art. 26 lit. e [7]. Die App führt `alimenteReceived` («pro Monat»). Belegt.
-//   + Familienzulagen ×12 — LIPP Art. 18 Abs. 1 [7] zählt zum Erwerbseinkommen «les allocations»;
-//     die App führt `familienzulagen` («pro Monat»). Dass damit die Kinder- und Ausbildungszulagen
-//     gemeint sind, entspricht dem Bundesrecht (sie stehen auf dem Lohnausweis), der Genfer Wortlaut
-//     nennt sie nicht ausdrücklich — GEWÄHLT, Frage 8 an das SAM. Weglassen hiesse: mit Kindern
-//     eine bis mehrere Gruppen zu hoch (die Paar-Spalte ist 10'000 breit), und der Betrag ginge über
-//     data/ipvAbzug.js ins Budget.
-//   − Berufskosten pauschal 3 % des unselbständigen Erwerbseinkommens, mindestens 600, höchstens
-//     1'700 — LIPP Art. 29 Abs. 2 [7] via LRDU Art. 5 Abs. 1 lit. d [4]. Deterministisch, also
-//     gebaut. Die Pauschale gilt «du revenu brut après les déductions prévues à l'article 31,
-//     lettres a et b» — das Netto der App liegt etwas darunter, der Abzug fällt darum minimal zu
-//     klein aus (Richtung: RDU zu hoch). Ohne die Pauschale sah eine Person mit 15'000–15'600 Netto
-//     «automatisch», obwohl ihr RDU unter 15'000 liegt und sie beantragen muss.
+//   − Berufskosten pauschal 3 % des Hauptlohns, mindestens 600, höchstens 1'700 — LIPP Art. 29
+//     Abs. 2 [7] via LRDU Art. 5 Abs. 1 lit. d [4]. Deterministisch und nur Genf, also hier gebaut.
+//     Die Pauschale gilt «du revenu brut après les déductions prévues à l'article 31, lettres a et
+//     b» — das Netto der App liegt etwas darunter, der Abzug fällt darum minimal zu klein aus
+//     (Richtung: RDU zu hoch). Ohne die Pauschale sah eine Person mit 15'000–15'600 Netto
+//     «automatisch», obwohl ihr RDU unter 15'000 liegt und sie beantragen muss. Für den Nebenerwerb
+//     gälte LIPP Art. 29A (20 %, 800–2'400) — nicht gebaut, Richtung: RDU zu hoch.
 //   + Vermögen: die drei erfassten Posten (vermoegenSumme) plus `pension3bBalance` — LRDU Art. 6
 //     lit. f [4] («assurances-vie … pour leur valeur de rachat»); das 3a-Kapital bleibt draussen
 //     (lit. g). Was fehlt: Schulden (Art. 7 lit. b) — Richtung: RDU zu hoch.
-//   Es fehlen weiter: Kinderbetreuung (Art. 5 lit. e), bezahlte Unterhaltsbeiträge (lit. f),
-//   Krankheitskosten über 5 % (lit. h) — Richtung: RDU zu hoch; und Nebenerwerbs-Pauschale
-//   (LIPP Art. 29A) — Richtung: RDU zu hoch.
+//   🛑 FAMILIENZULAGEN, ERHALTENE UND BEZAHLTE ALIMENTE, KINDERBETREUUNG — erfasst, hier NICHT
+//     gerechnet, Richtung GEMISCHT. Belegt für Genf: Familienzulagen zählen zum Erwerbseinkommen
+//     (LIPP Art. 18 Abs. 1 [7] «y compris … les allocations»), erhaltene Alimente sind Einkommen
+//     (LRDU Art. 4 Abs. 1 lit. c [4], LIPP Art. 26 lit. e) — beides HEBT den RDU; bezahlte
+//     Unterhaltsbeiträge (LRDU Art. 5 lit. f) und Kinderbetreuung (lit. e, LIPP Art. 35) sind
+//     abziehbar — beides SENKT ihn. Dasselbe fehlt in JEDEM Kantonsmodul (`rohesEinkommenJahr` in
+//     kantonsModell.js liest die Felder nicht; Befund in UR, GE, VS, NE, SO gleich). Ruling der
+//     Runde 28.09.2026: nicht in den Kantons-PRs rechnen, sondern EIN Rahmen-PR nach den Merges und
+//     vor dem Deploy, mit benannter Regel je Kanton — sonst 20 verschiedene Umsetzungen. Für Genf
+//     ist die Regel mit den Belegen hier vorbereitet. Bis dahin nennt der Vorbehalt (`ipv.vorbehaltGE`)
+//     die Posten als erfasst, aber nicht gerechnet. ⟨Zwischen 18:53 und 20:30 rechnete dieses Modul
+//     Alimente und Familienzulagen selbst (`5d6f8373`) — zurückgebaut wegen des Rulings.⟩
+//   Es fehlen weiter: Krankheitskosten über 5 % (Art. 5 lit. h) — Richtung: RDU zu hoch.
 //
 // BEWUSST NICHT GEBAUT (die Angabe fehlt der App, oder der Weg ist ein anderer):
 //   · Paare, eingetragene Partnerschaften und Konkubinat mit gemeinsamem Kind — Art. 9 [3] addiert
@@ -131,6 +139,13 @@
 //     Wer so viel verdient, liegt mit dem Netto ohnehin über jeder Grenze (169'000 mit vier Kindern
 //     im Barème; die App rechnet nach Art. 21 Abs. 8 auch mit mehr Kindern weiter, +6'000 je Kind)
 //     — die Vermutung ändert für die Anzeige nichts.
+//   · Wohneigentum: LRDU Art. 6 lit. a [4] zählt «tous les immeubles» zum Vermögen, RaLAMal Art. 10
+//     Abs. 1 [3] zum Bruttovermögen nach Steuerwert ohne das Abattement — die Hypothek zählt dort
+//     nicht dagegen. Die App kennt nur `propertyValue` (Verkehrswert, nicht Steuerwert) und
+//     `mortgageStatus`. Mit Liegenschaft liegt das Bruttovermögen meist über 250'000 ⇒ Antrag nötig
+//     (Art. 20 Abs. 2 [2]); darum KEINE Zahl, sondern `wohneigentumGE`. Eine erfasste Hypothek gilt
+//     als Eigentum auch ohne Wert (GEWÄHLT: ohne Liegenschaft keine Hypothek; warnt eher zu oft).
+//     (Fachprüfung W2 und Fixrunde `feb5d7e1`, übernommen.)
 //   · die Neuberechnung bei Verschlechterung (Art. 13B [3]) — die App rechnet mit dem heutigen
 //     Einkommen, nicht mit dem RDU 2024, und kann darum nicht sagen, ob −20 % vorliegen; die
 //     Bedingungen und Fristen stehen im Vorbehalt (`ipv.vorbehaltGE`).
@@ -163,6 +178,11 @@ export const IPV_GE = {
   // Dezember 2024: 320 / 270 / 220 / 180 / 150 / 110 / 80 / 50 — indexiert nach Art. 9B [3].)
   erwachsene: [348, 294, 240, 196, 164, 120, 87, 55],
   gesetzErwachsene: [320, 270, 220, 180, 150, 110, 80, 50],
+  // Communiqué des Conseil d'Etat vom 5.11.2025 [6]: «adultes: 8,7% · jeunes adultes … 5,3% ·
+  // enfants: 10,9%», «indice de base: 2024». Gesetzesbeträge Gruppe 9: Art. 22 Abs. 2 lit. b (60)
+  // und Abs. 3 lit. b (100) [2].
+  indexierung: { erwachsene: 0.087, jungeErwachsene: 0.053, kinder: 0.109 },
+  gesetzGruppe9: { kind: 60, jungeErwachsene: 100 },
   // Barème [1], Zeile «Subside mensuel enfant»: 132 in den Gruppen 1–8 (Art. 22 Abs. 2 lit. a [2]:
   // 80 % der BAG-Durchschnittsprämie, aufgerundet, plus 10 Franken), 67 in Gruppe 9 (lit. b: 60
   // Franken, indexiert).
@@ -179,7 +199,9 @@ export const IPV_GE = {
   // bescheiden», Subsid nur auf begründeten Antrag (Art. 20 Abs. 2, Art. 23 Abs. 5 [2]).
   vermoegenBruttoGrenze: 250000,
   // RaLAMal Art. 10 Abs. 4/5 [3]: unter diesen RDU-Beträgen ebenfalls Vermutung «nicht bescheiden»
-  // (ausser bei Sozialhilfe) ⇒ Antrag mit Nachweis der Lebenshaltung.
+  // (ausser bei Sozialhilfe) ⇒ Antrag mit Nachweis der Lebenshaltung. Die Tabelle des SAM [5]
+  // («Personne seule avec 1 enfant 18'000», «Couple avec 1 enfant 23'000») zeigt: die Zeile
+  // «assuré seul» gilt auch für Alleinerziehende — +3'000 je Kind, NICHT die Paar-Zeile.
   antragUnter: { allein: 15000, paar: 20000, jeUnterhaltspflicht: 3000 },
   // RaLAMal Art. 10A [3]: Antragsfälle «avant le 30 novembre de l'année d'ouverture du droit».
   antragsfrist: { monat: 11, tag: 30 },
@@ -226,21 +248,23 @@ export function ipvGenfRechnen({ rdu, kinderZahl = 0 }) {
 }
 
 // RDU-Untergrenze, unter der der Kanton den Anspruch NICHT automatisch prüft (RaLAMal Art. 10
-// Abs. 4/5 [3]). Der Text nennt nur «assuré seul, sans charge légale» und «couple, sans charge
-// légale», je +3'000 «par charge légale». Für eine alleinstehende Person MIT Kind gibt es zwei
-// Lesarten, und der Text entscheidet sie nicht (FRAGEN-AN-DIE-AEMTER.md, Frage 8):
-//   `vorsichtig`  Paar-Zeile + 3'000 je Kind (Gleichstellung wie Art. 21 Abs. 4 [2]) — warnt
-//                 häufiger. Damit wird der HINWEIS gesetzt: ein unnötiger Antrag kostet nichts,
-//                 ein fehlender den ganzen Jahresanspruch.
-//   `sicher`      Zeile «assuré seul» + 3'000 je Kind — darunter ist der Antrag nach BEIDEN
-//                 Lesarten nötig. Nur damit wird nach dem 30.11. `anmeldefristVorbei` gesetzt:
-//                 sonst nähme die App im Band zwischen den Lesarten einen Anspruch aus dem Budget,
-//                 der in Wahrheit automatisch käme (Rechtsprüfung 28.09.2026).
-// Beide GEWÄHLT, nicht belegt; die Anzeige sagt es bei Kindern dazu (`ipv.geAntragNoetigKinder`).
-export function geAntragUnter(kinderZahl, lesart = 'vorsichtig') {
+// Abs. 4/5 [3]): 15'000 für eine Person allein, +3'000 je Kind — die Tabelle des SAM [5] nennt
+// «Personne seule avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants 27'000».
+// ⟨28.09.2026 abends: bis dahin rechnete das Modul Alleinerziehende mit der Paar-Zeile (20'000 +
+// 3'000 = 23'000) und nannte das «gewählt» — die Cockpit-Sitzung fand die SAM-Tabelle, die Frage
+// ist damit beantwortet (FRAGEN-AN-DIE-AEMTER.md, Frage 8.2). Folge der alten Lesart: RDU
+// 18'000–22'999 bekam «nur auf Antrag» und nach dem 30.11. «tritt nicht ein» — falsch für genau
+// diese Gruppe. Die zwei Lesarten `vorsichtig`/`sicher` sind weg.⟩
+export function geAntragUnter(kinderZahl) {
   const p = IPV_GE.antragUnter;
-  const zeile = lesart === 'vorsichtig' && kinderZahl > 0 ? p.paar : p.allein;
-  return zeile + p.jeUnterhaltspflicht * kinderZahl;
+  return p.allein + p.jeUnterhaltspflicht * kinderZahl;
+}
+
+// Wohneigentum erfasst? Ein eingetragener Liegenschaftswert oder eine Hypothek (Profil `wohnen`).
+// Begründung im Kopf («Wohneigentum»).
+export function hatWohneigentum(wohnen) {
+  const w = wohnen || {};
+  return Number(w.propertyValue) > 0 || w.mortgageStatus === 'fixedRate' || w.mortgageStatus === 'variable';
 }
 
 // Berufskosten-Pauschale (LIPP Art. 29 Abs. 2 [7]) auf das unselbständige Erwerbseinkommen im Jahr:
@@ -252,9 +276,11 @@ export function geBerufskostenPauschale(erwerbJahr) {
 }
 
 // Der RDU-Sockel, wie die App ihn nähert (LRDU Art. 4–8 [4]; Herleitung im Kopf). Reine Funktion,
-// damit die Tests jeden Posten einzeln prüfen können. Alle Eingaben in CHF/Jahr.
-export function geRdu({ netto, erwerb, alimente = 0, familienzulagen = 0, vermoegen = 0 }) {
-  return netto + alimente + familienzulagen - geBerufskostenPauschale(erwerb) + IPV_GE.vermoegenAnteil * Math.max(0, vermoegen);
+// damit die Tests jeden Posten einzeln prüfen können. Alle Eingaben in CHF/Jahr. `erwerb` ist der
+// Hauptlohn (für die Berufskosten-Pauschale). Familienzulagen und Alimente fehlen hier mit Absicht
+// (Rahmen-Ruling, siehe Kopf).
+export function geRdu({ netto, erwerb, vermoegen = 0 }) {
+  return netto - geBerufskostenPauschale(erwerb) + IPV_GE.vermoegenAnteil * Math.max(0, vermoegen);
 }
 
 // Aufruf aus calculateIPV (config/cantonalData.js) für GE mit Beleg. Die App rechnet nur, wo ihre
@@ -308,43 +334,30 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Ausschluss, aber nur auf begründeten Antrag mit Nachweis (Art. 23 Abs. 5 [2]). Die App kennt
   // nur die erfassten Posten, nicht das steuerliche Bruttovermögen — darum ein eigener Grund.
   if (vermoegen > IPV_GE.vermoegenBruttoGrenze) return orientierung('vermoegenAntragGE');
+  // Wohneigentum zählt zum Bruttovermögen (Steuerwert, ohne Hypothek) — siehe Kopf. Keine Zahl.
+  if (hatWohneigentum(data.wohnen)) return orientierung('wohneigentumGE');
   // Ein negatives Einkommen ist ein Vertipper, kein Einkommen (BE, Fachprüfung 23.09.2026). Art. 9A
   // [3] setzt einen negativen RDU zwar auf 0 — der meint aber Geschäftsverluste, die die App nicht
   // erfasst, nicht ein Minuszeichen im Lohnfeld. Ohne den Riegel ergäbe der Vertipper Gruppe 1.
   if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
 
   // LRDU Art. 8 Abs. 2 [4]: Sockel = Einkommen (Art. 4/5) + 1/15 des Vermögens (Art. 6/7). Die 3a
-  // bleibt im Einkommen (Regel `voll`), Alimente und Familienzulagen kommen dazu, die Berufskosten-
-  // Pauschale geht auf das Erwerbseinkommen weg — Herleitung und Belege im Kopf.
-  const erwerb = Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12;
+  // bleibt im Einkommen (Regel `voll`), die Berufskosten-Pauschale geht auf den Hauptlohn weg —
+  // Herleitung, Belege und was mit Absicht fehlt: im Kopf.
   const rdu = geRdu({
-    netto: einkommenJahr(f, SAEULE_3A.voll), erwerb,
-    alimente: Math.max(0, Number(f.alimenteReceived) || 0) * 12,
-    familienzulagen: Math.max(0, Number(f.familienzulagen) || 0) * 12,
+    netto: einkommenJahr(f, SAEULE_3A.voll),
+    erwerb: Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
     vermoegen,
   });
   const r = ipvGenfRechnen({ rdu, kinderZahl });
 
-  // Art. 22 Abs. 4 [2]: «Le montant des subsides accordés ne peut dépasser le montant de la prime
-  // effective de l'assuré.» — je versicherte Person. Die App kennt nur die Prämie der erwachsenen
-  // Person, also wird nur deren Anteil gedeckelt; der Kinderanteil bleibt ungedeckelt (wie ZH, BE,
-  // LU: `deckelnProPerson`). ⚠️ Liegt die Prämie eines Kindes unter 132 Franken im Monat, fällt der
-  // Betrag hier um die Differenz zu hoch aus.
-  const praemie = praemieJahr(data);
-  if (praemieFehlt(praemie)) return orientierung('praemie');
-  const annual = deckelnProPerson(r.annual, r.erwachseneAnnual, praemie);
-  const maxAnnual = deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie);
-
   // Art. 10 Abs. 4–6 [3]: unter der RDU-Untergrenze prüft der Kanton nicht automatisch — Antrag
   // mit Nachweis, vor dem 30. November (Art. 10A [3]), sonst kein Eintreten. Genau die ärmste
   // Gruppe; wer sich hier auf «automatisch» verlässt, verliert den ganzen Jahresanspruch.
-  // Zwei Schwellen, siehe `geAntragUnter`: der Hinweis ab der vorsichtigen, die Budget-Folge
-  // (`anmeldefristVorbei`) erst ab der sicheren.
-  const antragGrenze = geAntragUnter(kinderZahl, 'vorsichtig');
+  const antragGrenze = geAntragUnter(kinderZahl);
   const antragWegenRdu = rdu < antragGrenze;
   // Antrag nötig: wegen des RDU oder wegen eines Kindes nach dem Bemessungsjahr (Art. 13C [3]).
   const antragNoetig = antragWegenRdu || kindNachBasisjahr;
-  const antragSicher = rdu < geAntragUnter(kinderZahl, 'sicher');
   const frist = new Date(`${jahr}-${String(IPV_GE.antragsfrist.monat).padStart(2, '0')}-${IPV_GE.antragsfrist.tag}T00:00:00`);
   // «avant le 30 novembre»: am 30. selbst ist es zu spät.
   const fristVorbei = new Date() >= frist;
@@ -361,21 +374,34 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   const cantonData = { ...ipvData, maxIncome: gruppen[gruppen.length - 1], ...(antragNoetig ? { noteKey: 'ipv.geWegAntrag', noteParams: {} } : {}) };
   const gemeinsam = {
     canton: 'GE', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltGE',
-    // Keine Prämienregion: die Anzeige zeigt statt «Prämienregion undefined» den Genfer Satz.
-    extra: { basisjahr, jahrOhneRegionKey: 'ipv.jahrGE' },
+    // Keine Prämienregion: `jahrKey` heisst das Feld in allen Kantonen ohne Region (UR, SZ, NE …);
+    // die Anzeige zeigt damit den Genfer Satz statt «Prämienregion undefined» oder des Aargauer Satzes.
+    extra: { basisjahr, jahrKey: 'ipv.jahrGE' },
   };
-  if (annual <= 0) {
+  // Über der letzten Grenze: kein Anspruch — und zwar VOR dem Prämien-Riegel, sonst hiesse es
+  // «Prämie fehlt», wo gar nichts zu deckeln wäre (Abgleich 28.09.2026).
+  if (r.annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze } });
   }
 
+  // Art. 22 Abs. 4 [2]: «Le montant des subsides accordés ne peut dépasser le montant de la prime
+  // effective de l'assuré.» — je versicherte Person. Die App kennt nur die Prämie der erwachsenen
+  // Person, also wird nur deren Anteil gedeckelt; der Kinderanteil bleibt ungedeckelt (wie ZH, BE,
+  // LU: `deckelnProPerson`). ⚠️ Liegt die Prämie eines Kindes unter 132 Franken im Monat, fällt der
+  // Betrag hier um die Differenz zu hoch aus.
+  const praemie = praemieJahr(data);
+  if (praemieFehlt(praemie)) return orientierung('praemie');
+  const annual = deckelnProPerson(r.annual, r.erwachseneAnnual, praemie);
+  const maxAnnual = deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie);
+
   // Welcher Satz beim Betrag steht: nach der Frist der Frist-Satz (die App zieht dann nichts mehr
-  // ab; LU macht es genauso), sonst der Antragshinweis — bei Kindern der mit dem Vorbehalt zur
-  // gewählten Grenze —, sonst Gruppe 9, sonst der Weg des Kantons.
+  // ab; LU und FR machen es genauso), sonst der Antragshinweis, sonst das Kind nach dem
+  // Bemessungsjahr, sonst Gruppe 9, sonst der Weg des Kantons.
   let noteKey, noteParams;
   if (antragWegenRdu && fristVorbei) {
     noteKey = 'ipv.geAntragFristVorbei'; noteParams = { value: antragGrenze, jahr, folgejahr: jahr + 1 };
   } else if (antragWegenRdu) {
-    noteKey = kinderZahl > 0 ? 'ipv.geAntragNoetigKinder' : 'ipv.geAntragNoetig'; noteParams = { value: antragGrenze, jahr };
+    noteKey = 'ipv.geAntragNoetig'; noteParams = { value: antragGrenze, jahr };
   } else if (kindNachBasisjahr) {
     // Art. 13C [3]: Fristen wie 13B Abs. 5 — vor dem 30.11., bei Zuwachs im 2. Halbjahr bis 30.06.
     // des Folgejahres. Ob das auch für ein Kind aus dem VORJAHR (Jahrgang 2025) gilt, sagt der Text
@@ -389,13 +415,17 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount, noteKey, noteParams,
     // `antragNoetig`: die Anzeige setzt dann statt «Berechtigt» eine Überschrift, die den Antrag
-    // nennt. `anmeldefristVorbei` nur dort, wo ein Antrag nach beiden Lesarten nötig war und die
-    // Frist verstrichen ist: dann zieht die App nirgends etwas von der Prämie ab (data/ipvAbzug.js).
-    // Für die automatischen Fälle gibt es keine Frist.
+    // nennt. `anmeldefristVorbei` nur im RDU-Antragsfall nach der Frist: dann zieht die App nirgends
+    // etwas von der Prämie ab (data/ipvAbzug.js), und die drei Leser (KK-Last-Karte, Prämien-Beleg,
+    // Budget) zeigen den Genfer Text `fristNichtAbgezogenKey` statt des Luzerner — derselbe
+    // Mechanismus wie FR (Ruling Frist-Mechanismus 28.09.2026; Fachprüfung B2: vorher stand nach
+    // dem 30.11. «Prämienverbilligung Luzern … 31. Oktober» auf drei Genfer Seiten). Für die
+    // automatischen Fälle und das Kind nach Art. 13C (Fristen bis 30.06.) gibt es keine Frist-Folge.
     extra: {
       ...gemeinsam.extra,
       ...(antragNoetig ? { antragNoetig: true } : {}),
-      ...(antragSicher && fristVorbei ? { anmeldefristVorbei: true } : {}),
+      ...(antragWegenRdu ? { fristNichtAbgezogenKey: 'ipv.geFristNichtAbgezogen' } : {}),
+      ...(antragWegenRdu && fristVorbei ? { anmeldefristVorbei: true } : {}),
     },
   });
 }

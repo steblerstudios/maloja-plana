@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_GE, ipvGenfRechnen, geGrenzen, geAntragUnter, geBerufskostenPauschale, geRdu } from '../ipvGenf.js';
+import { IPV_GE, ipvGenfRechnen, geGrenzen, geAntragUnter, geBerufskostenPauschale, geRdu, hatWohneigentum } from '../ipvGenf.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
 
 // K31 — Prämienverbilligung Kanton Genf 2026 («subsides d'assurance-maladie»).
@@ -9,6 +9,8 @@ import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
 //   [2] LaLAMal rsGE J 3 05 (Stand 02.11.2024) — Art. 20, 21, 22, 23, 33
 //   [3] RaLAMal rsGE J 3 05.01 (Stand 01.01.2025) — Art. 9, 9A, 9B, 10, 10A, 13B, 13C
 //   [4] LRDU rsGE J 4 06 (Stand 01.01.2025) — Art. 4, 5, 6, 8 Abs. 2, 9
+//   [5] ge.ch «Demander un subside 2026», Unterseiten «RDU particulièrement bas» und «fortune brute sup. à 250'000» (18.09.2026)
+//   [6] ge.ch Communiqué du Conseil d'Etat du 5 novembre 2025 — Indexsätze 8,7 / 5,3 / 10,9 %
 //   [7] LIPP rsGE D 3 08 (Stand 01.01.2026) — Art. 18, 26, 29 Abs. 2, 31
 //
 // Genf rechnet in Gruppen: ein fester Monatsbetrag je Gruppe und erwachsene Person, je Kind ein
@@ -60,20 +62,21 @@ describe('K31 GE: die Konstanten 2026, wörtlich aus [1], [2], [3], [7]', () => 
     expect(IPV_GE.jungeErwachsene).toEqual({ gruppe1bis8: 231, gruppe9: 106, jahrgaenge: [2001, 2007] });
   });
 
-  // Art. 9B [3]: die Gesetzesbeträge (Art. 22 Abs. 1 [2], Stand Dezember 2024) werden jährlich
-  // indexiert und «arrondis au franc supérieur». Den Arrêté 2026 haben wir nicht; dass alle acht
-  // Erwachsenenbeträge aus EINEM Faktor folgen, ist die Gegenprobe, die wir haben. Die Beträge der
-  // Gruppe 9 (60 → 67, 100 → 106) folgen ihm NICHT — das steht im Modulkopf und in Frage 8.
-  it('alle acht Erwachsenenbeträge 2026 = Gesetzesbetrag × 1,0875, aufgerundet — Gruppe 9 nicht', () => {
+  // Art. 9B [3]: die Gesetzesbeträge (Art. 22 [2], Stand Dezember 2024) werden jährlich indexiert und
+  // «arrondis au franc supérieur». Der Arrêté-Beleg ist das Communiqué vom 5.11.2025 [6]: drei Sätze
+  // auf Basis 2024 — Erwachsene 8,7 %, junge Erwachsene 5,3 %, Kinder 10,9 % — und die Tabelle
+  // aller Beträge. Hier wird jeder der zehn Beträge aus Gesetzesbetrag × Satz nachgerechnet.
+  it('alle zehn Beträge 2026 = Gesetzesbetrag × Indexsatz [6], aufgerundet', () => {
     expect(IPV_GE.gesetzErwachsene).toEqual([320, 270, 220, 180, 150, 110, 80, 50]);
-    IPV_GE.gesetzErwachsene.forEach((g, i) => {
-      expect(Math.ceil(g * 1.0875 - 1e-9)).toBe(IPV_GE.erwachsene[i]);
-    });
-    // und mit einem anderen Faktor ginge es nicht auf — die Probe ist nicht trivial
-    expect(Math.ceil(320 * 1.08 - 1e-9)).not.toBe(348);
-    // Gruppe 9: derselbe Faktor ergäbe 66 und 109, das Barème nennt 67 und 106
-    expect(Math.ceil(60 * 1.0875 - 1e-9)).toBe(66);
-    expect(Math.ceil(100 * 1.0875 - 1e-9)).toBe(109);
+    expect(IPV_GE.indexierung).toEqual({ erwachsene: 0.087, jungeErwachsene: 0.053, kinder: 0.109 });
+    expect(IPV_GE.gesetzGruppe9).toEqual({ kind: 60, jungeErwachsene: 100 });
+    const auf = (betrag, satz) => Math.ceil(betrag * (1 + satz) - 1e-9);
+    IPV_GE.gesetzErwachsene.forEach((g, i) => expect(auf(g, IPV_GE.indexierung.erwachsene)).toBe(IPV_GE.erwachsene[i]));
+    expect(auf(IPV_GE.gesetzGruppe9.kind, IPV_GE.indexierung.kinder)).toBe(IPV_GE.kind.gruppe9);                 // 66.54 → 67
+    expect(auf(IPV_GE.gesetzGruppe9.jungeErwachsene, IPV_GE.indexierung.jungeErwachsene)).toBe(IPV_GE.jungeErwachsene.gruppe9); // 105.3 → 106
+    // und die Probe ist nicht trivial: mit einem Einheitssatz ginge Gruppe 9 nicht auf
+    expect(auf(60, 0.087)).toBe(66);
+    expect(auf(100, 0.087)).toBe(109);
   });
 
   it('übrige Werte: 1/15 Vermögen [4], 250 000 Bruttovermögen, 15 000 / 20 000 + 3 000, Frist 30.11. [3], Berufskosten [7]', () => {
@@ -183,11 +186,10 @@ describe('K31 GE: der RDU der App (LRDU Art. 4–8 [4], LIPP Art. 18/26/29 [7])'
     expect(geBerufskostenPauschale(-5)).toBe(0);
   });
 
-  it('Sockel: Netto + Alimente + Familienzulagen − Pauschale + Vermögen/15', () => {
+  it('Sockel: Netto − Pauschale + Vermögen/15 (Familienzulagen und Alimente bewusst nicht — Rahmen-Ruling)', () => {
     expect(geRdu({ netto: 30000, erwerb: 30000 })).toBe(29100);
-    expect(geRdu({ netto: 30000, erwerb: 30000, alimente: 6000 })).toBe(35100);
-    expect(geRdu({ netto: 30000, erwerb: 30000, familienzulagen: 2400 })).toBe(31500);
     expect(geRdu({ netto: 30000, erwerb: 30000, vermoegen: 15000 })).toBe(30100);
+    expect(geRdu({ netto: 30000, erwerb: 30000, alimente: 6000, familienzulagen: 2400 })).toBe(29100);
     // Rente: kein Erwerb, keine Pauschale
     expect(geRdu({ netto: 24000, erwerb: 0 })).toBe(24000);
     // negatives Vermögen zählt nicht
@@ -195,17 +197,24 @@ describe('K31 GE: der RDU der App (LRDU Art. 4–8 [4], LIPP Art. 18/26/29 [7])'
   });
 });
 
-describe('K31 GE: RDU-Untergrenze für den Antrag (RaLAMal Art. 10 Abs. 4/5 [3]) — zwei Lesarten', () => {
-  it('allein 15 000 in beiden Lesarten', () => {
-    expect(geAntragUnter(0)).toBe(15000);
-    expect(geAntragUnter(0, 'sicher')).toBe(15000);
+describe('K31 GE: RDU-Untergrenze für den Antrag (RaLAMal Art. 10 Abs. 4/5 [3], Tabelle des SAM [5])', () => {
+  // [5]: «Personne seule 15'000 · avec 1 enfant 18'000 · 2 enfants 21'000 · 3 enfants 24'000 · 4 enfants 27'000»
+  // — die Zeile «assuré seul» gilt auch für Alleinerziehende. ⟨Bis 28.09.2026 abends rechnete das Modul hier mit
+  // der Paar-Zeile (23'000) und nannte das «gewählt»; die SAM-Tabelle entscheidet es.⟩
+  it.each([[0, 15000], [1, 18000], [2, 21000], [3, 24000], [4, 27000]])('%s Kind(er) → %s', (kinder, grenze) => {
+    expect(geAntragUnter(kinder)).toBe(grenze);
   });
+  it('18 000, nicht 23 000', () => { expect(geAntragUnter(1)).not.toBe(23000); });
+});
 
-  it('mit Kindern: vorsichtig = Paar-Zeile 20 000 + 3 000 je Kind, sicher = 15 000 + 3 000 je Kind', () => {
-    expect(geAntragUnter(1)).toBe(23000);
-    expect(geAntragUnter(2)).toBe(26000);
-    expect(geAntragUnter(1, 'sicher')).toBe(18000);
-    expect(geAntragUnter(2, 'sicher')).toBe(21000);
+describe('K31 GE: Wohneigentum (LRDU Art. 6 lit. a, RaLAMal Art. 10 Abs. 1)', () => {
+  it('erkannt an Liegenschaftswert oder Hypothek; Miete allein ist keines', () => {
+    expect(hatWohneigentum({ propertyValue: 800000 })).toBe(true);
+    expect(hatWohneigentum({ mortgageStatus: 'fixedRate' })).toBe(true);
+    expect(hatWohneigentum({ mortgageStatus: 'variable' })).toBe(true);
+    expect(hatWohneigentum({ rentAmount: 1500 })).toBe(false);
+    expect(hatWohneigentum({ propertyValue: 0, mortgageStatus: 'none' })).toBe(false);
+    expect(hatWohneigentum(undefined)).toBe(false);
   });
 });
 
@@ -232,7 +241,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     const r = calculateIPV(person());
     expect(r).toMatchObject({
       belegt: true, eligible: true, amount: 348, annual: 4176, maxAnnual: 4176, reductionPercent: 100,
-      canton: 'GE', jahr: 2026, basisjahr: 2024, vorbehaltKey: 'ipv.vorbehaltGE', jahrOhneRegionKey: 'ipv.jahrGE',
+      canton: 'GE', jahr: 2026, basisjahr: 2024, vorbehaltKey: 'ipv.vorbehaltGE', jahrKey: 'ipv.jahrGE',
     });
     expect(r.region).toBeUndefined();
     expect(r.cantonData.maxIncome).toBe(50000);
@@ -320,23 +329,15 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ finanzen: { savingsAccount: 200000, pension3bBalance: 50001 } }))).toMatchObject({ offen: 'vermoegenAntragGE' });
   });
 
-  // LRDU Art. 4 Abs. 1 lit. c [4], LIPP Art. 26 lit. e [7]: erhaltene Alimente sind Einkommen.
-  // Fachprüfung 28.09.2026 (Blocker): die erste Fassung liess sie weg — mit Kindern bis mehrere
-  // Gruppen zu hoch, und der Betrag ging so ins Budget.
-  it('erhaltene Alimente zählen zum RDU: 500/Monat = 6 000 kippen eine Gruppe', () => {
+  // 🛑 RAHMEN-RULING 28.09.2026: Familienzulagen und Alimente rechnet KEIN Kantons-PR — ein eigener
+  // Rahmen-PR nach den Merges (vor dem Deploy) tut es für alle. Dieser Test hält fest, dass GE es
+  // nicht heimlich doch tut (zwischen 18:53 und 20:30 tat es das), und dass der Vorbehalt die Posten nennt.
+  it('Familienzulagen und erhaltene Alimente verändern den RDU hier NICHT (Rahmen-PR folgt)', () => {
     const kind = [{ birthDate: '2015-01-01' }];
-    // 4 000 × 12 = 48 000 − 1 440 = 46 560 → Gruppe 1 (bis 51 000); + 6 000 = 52 560 → Gruppe 2
-    expect(calculateIPV(person({ monthlyIncome: 4000, children: kind })).amount).toBe(480);
-    expect(calculateIPV(person({ monthlyIncome: 4000, children: kind, finanzen: { alimenteReceived: 500 } })).amount).toBe(426);
-  });
-
-  // LIPP Art. 18 Abs. 1 [7]: «les allocations» — GEWÄHLT, dass die Familienzulagen gemeint sind
-  // (Frage 8). Weglassen hiesse zu hoch, also Rückforderungsseite.
-  it('Familienzulagen zählen zum RDU: 400/Monat = 4 800', () => {
-    const kind = [{ birthDate: '2015-01-01' }];
-    // 4 000 → 46 560; + 4 800 = 51 360 → Gruppe 2
-    expect(calculateIPV(person({ monthlyIncome: 4000, children: kind, finanzen: { familienzulagen: 400 } })).amount).toBe(426);
-    expect(calculateIPV(person({ monthlyIncome: 4000, children: kind, finanzen: { familienzulagen: 300 } })).amount).toBe(480); // 50 160
+    const ohne = calculateIPV(person({ monthlyIncome: 4000, children: kind }));
+    expect(ohne.amount).toBe(480);
+    expect(calculateIPV(person({ monthlyIncome: 4000, children: kind, finanzen: { alimenteReceived: 500 } })).amount).toBe(480);
+    expect(calculateIPV(person({ monthlyIncome: 4000, children: kind, finanzen: { familienzulagen: 400 } })).amount).toBe(480);
   });
 
   it('Berufskosten-Pauschale wirkt durch die App: 5 000/Monat → 60 000 − 1 700 = 58 300 (Grenze 57 000 mit 2 Kindern: Gruppe 2)', () => {
@@ -344,6 +345,22 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 5000, children: kinder })).amount).toBe(558);
     // ohne Pauschale wäre 60 000 auch Gruppe 2 — an 4 890: 58 680 − 1 700 = 56 980 (Gruppe 1) vs. 58 680 (Gruppe 2)
     expect(calculateIPV(person({ monthlyIncome: 4890, children: kinder })).amount).toBe(612);
+    // Nebenerwerb: keine Pauschale (LIPP Art. 29A nicht gebaut) — 2 000 Lohn + 500 Nebenerwerb = 30 000 − 720 = 29 280
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { sideIncome: 500 } })).amount).toBe(348);
+    expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { sideIncome: 561 } })).amount).toBe(294); // 30 012 − 720
+  });
+
+  // Fachprüfung W2 / Fixrunde: Wohneigentum zählt zum Bruttovermögen nach Steuerwert, ohne Hypothek —
+  // mit Liegenschaft ist die 250'000-Vermutung fast immer erreicht, und die App kennt den Steuerwert nicht.
+  it('Wohneigentum: keine Zahl, Grund «wohneigentumGE»', () => {
+    const eigentum = { ...person({ monthlyIncome: 2000 }), wohnen: { postalCode: '1204', city: 'Genève', propertyValue: 900000 } };
+    expect(calculateIPV(eigentum)).toMatchObject({ belegt: false, amount: null, offen: 'wohneigentumGE' });
+    const hypothek = { ...person({ monthlyIncome: 2000 }), wohnen: { postalCode: '1204', city: 'Genève', mortgageStatus: 'fixedRate' } };
+    expect(calculateIPV(hypothek)).toMatchObject({ belegt: false, offen: 'wohneigentumGE' });
+  });
+
+  it('über der Grenze OHNE erfasste Prämie: «kein Anspruch», nicht «Prämie fehlt» (Reihenfolge)', () => {
+    expect(calculateIPV(person({ monthlyIncome: 4296, kkPremium: null }))).toMatchObject({ belegt: true, eligible: false, noteKey: 'ipv.incomeAboveLimit' });
   });
 
   it('Bruttovermögen über 250 000: kein Betrag, Grund «vermoegenAntragGE» (RaLAMal Art. 10 Abs. 1 [3])', () => {
@@ -372,9 +389,12 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ kkPremium: 100 }))).toMatchObject({ amount: 100, annual: 1200, maxAnnual: 1200 });
   });
 
-  it('Alleinerziehend, 1 Kind, Einkommen 0: 348 + 132 = 480/Monat, «Max.» = Erwachsenengrenze 121 000, Antrag unter 23 000 mit Vorbehalt', () => {
+  it('Alleinerziehend, 1 Kind, Einkommen 0: 348 + 132 = 480/Monat, «Max.» = Erwachsenengrenze 121 000, Antrag unter 18 000 [5]', () => {
     const r = calculateIPV(person({ children: [{ birthDate: '2015-01-01' }] }));
-    expect(r).toMatchObject({ amount: 480, annual: 5760, maxAnnual: 5760, noteKey: 'ipv.geAntragNoetigKinder', noteParams: { value: 23000, jahr: 2026 }, antragNoetig: true });
+    expect(r).toMatchObject({ amount: 480, annual: 5760, maxAnnual: 5760, noteKey: 'ipv.geAntragNoetig', noteParams: { value: 18000, jahr: 2026 }, antragNoetig: true });
+    // Rente 20 000 mit einem Kind: über 18 000 → automatisch (nach der alten Paar-Lesart wäre es «Antrag» gewesen)
+    expect(calculateIPV(person({ children: [{ birthDate: '2015-01-01' }], finanzen: { ahvRente: 20000 / 12 } })).noteKey).toBe('ipv.geWegAutomatisch');
+    expect(calculateIPV(person({ children: [{ birthDate: '2015-01-01' }], finanzen: { ahvRente: 17999 / 12 } })).noteKey).toBe('ipv.geAntragNoetig');
     // Fachprüfung 28.09.2026: 151 000 ist nur die Grenze des Kinderbeitrags (Gruppe 9).
     expect(r.cantonData.maxIncome).toBe(121000);
   });
@@ -419,7 +439,7 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     // Jahrgang 2024 steht in der Veranlagung: automatisch
     expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2024-12-31' }] })).noteKey).toBe('ipv.geWegAutomatisch');
     // Der RDU-Antragsfall hat Vorrang (derselbe Antrag, tiefere Schwelle)
-    expect(calculateIPV(person({ monthlyIncome: 1000, children: [{ birthDate: '2026-03-01' }] })).noteKey).toBe('ipv.geAntragNoetigKinder');
+    expect(calculateIPV(person({ monthlyIncome: 1000, children: [{ birthDate: '2026-03-01' }] })).noteKey).toBe('ipv.geAntragNoetig');
     // und die Frist-Folge fürs Budget gilt dafür nicht
     vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-01T12:00:00'));
     expect(calculateIPV(person({ monthlyIncome: 4000, children: [{ birthDate: '2026-03-01' }] })).anmeldefristVorbei).toBeUndefined();
@@ -463,33 +483,25 @@ describe('K31 calculateIPV für GE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ plz: '', city: '' }))).toMatchObject({ eligible: true, amount: 348 });
   });
 
-  describe('Antragsfrist 30. November (RaLAMal Art. 10A [3]) — nur für die Antragsfälle', () => {
-    it('vor dem 30.11.: Antrag nötig, Frist läuft — nichts wird als «vorbei» markiert', () => {
+  describe('Antragsfrist 30. November (RaLAMal Art. 10A [3]) — nur für die RDU-Antragsfälle', () => {
+    it('vor dem 30.11.: Antrag nötig, Frist läuft — nichts wird als «vorbei» markiert, aber der Genfer Leser-Schlüssel steht bereit', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-29T12:00:00'));
       const r = calculateIPV(person());
       expect(r.noteKey).toBe('ipv.geAntragNoetig');
       expect(r.anmeldefristVorbei).toBeUndefined();
+      expect(r.fristNichtAbgezogenKey).toBe('ipv.geFristNichtAbgezogen');
     });
 
-    it('am 30.11. ist es zu spät («avant le 30 novembre»): Frist-Satz und anmeldefristVorbei', () => {
+    it('am 30.11. ist es zu spät («avant le 30 novembre»): Frist-Satz, anmeldefristVorbei und der Genfer Leser-Schlüssel', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-30T00:00:01'));
-      expect(calculateIPV(person())).toMatchObject({ noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: 15000, jahr: 2026, folgejahr: 2027 }, anmeldefristVorbei: true, antragNoetig: true });
-      // der automatische Fall kennt keine Frist
-      expect(calculateIPV(person({ monthlyIncome: 2000 })).anmeldefristVorbei).toBeUndefined();
-    });
-
-    // Rechtsprüfung 28.09.2026: im Band zwischen den beiden Lesarten der Untergrenze (mit einem Kind
-    // 18 000–23 000) darf die App nach der Frist keinen Anspruch aus dem Budget nehmen, der nach
-    // der anderen Lesart automatisch käme — der Hinweis bleibt, die Budget-Folge nicht.
-    it('im Band zwischen den Lesarten: Hinweis ja, anmeldefristVorbei nein', () => {
-      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-01T12:00:00'));
-      const kind = [{ birthDate: '2015-01-01' }];
-      // Rente 20 000 (keine Pauschale): unter 23 000, über 18 000
-      const band = calculateIPV(person({ children: kind, finanzen: { ahvRente: 20000 / 12 } }));
-      expect(band).toMatchObject({ noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: 23000, jahr: 2026, folgejahr: 2027 } });
-      expect(band.anmeldefristVorbei).toBeUndefined();
-      // Rente 17 000: unter beiden Lesarten
-      expect(calculateIPV(person({ children: kind, finanzen: { ahvRente: 17000 / 12 } })).anmeldefristVorbei).toBe(true);
+      expect(calculateIPV(person())).toMatchObject({
+        noteKey: 'ipv.geAntragFristVorbei', noteParams: { value: 15000, jahr: 2026, folgejahr: 2027 },
+        anmeldefristVorbei: true, antragNoetig: true, fristNichtAbgezogenKey: 'ipv.geFristNichtAbgezogen',
+      });
+      // der automatische Fall kennt keine Frist und keinen Leser-Schlüssel
+      const auto = calculateIPV(person({ monthlyIncome: 2000 }));
+      expect(auto.anmeldefristVorbei).toBeUndefined();
+      expect(auto.fristNichtAbgezogenKey).toBeUndefined();
     });
   });
 

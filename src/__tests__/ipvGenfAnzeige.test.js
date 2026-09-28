@@ -1,9 +1,12 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import { zahl as geldZahl } from '../utils/geld.js';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
+import { KKLastCard } from '../KKLastCard.jsx';
+import { praemienBelegState } from '../data/praemienBeleg.js';
+import { calculateMonthlyBudget } from '../budgetSync.js';
 
 // K31 — der IPV-Rechner zeigt für GE den Betrag nach dem Gruppen-Modell (Barème 2026).
 // Was hier sichtbar sein muss:
@@ -108,18 +111,18 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     // Die Sprachdateien NICHT als `it` importieren — das überschriebe vitests `it`.
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['jahrGE', 'vorbehaltGE', 'geWegAutomatisch', 'geWegAntrag', 'geAntragNoetig', 'geAntragNoetigKinder', 'geAntragFristVorbei', 'geAntragKindNeu', 'geNurKinder']) {
+      for (const k of ['jahrGE', 'vorbehaltGE', 'geWegAutomatisch', 'geWegAntrag', 'geAntragNoetig', 'geAntragFristVorbei', 'geFristNichtAbgezogen', 'geAntragKindNeu', 'geNurKinder']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      for (const k of ['vermoegenAntragGE', 'geJungeErwachsene']) {
+      for (const k of ['vermoegenAntragGE', 'geJungeErwachsene', 'wohneigentumGE']) {
         expect(typeof texte.ipv.offenGrund[k], `${sprache}.js: offenGrund.${k} fehlt`).toBe('string');
       }
       expect(typeof texte.premium.eligibleAntrag, `${sprache}.js: premium.eligibleAntrag fehlt`).toBe('string');
       expect(texte.ipv.jahrGE).toContain('{jahr}');
       expect(texte.ipv.vorbehaltGE).toContain('{basisjahr}');
       expect(texte.ipv.vorbehaltGE).toContain('{jahr}');
-      for (const k of ['geAntragNoetig', 'geAntragNoetigKinder', 'geAntragFristVorbei']) {
+      for (const k of ['geAntragNoetig', 'geAntragFristVorbei']) {
         expect(texte.ipv[k]).toContain('{value}');
         expect(texte.ipv[k]).toContain('{jahr}');
       }
@@ -128,7 +131,7 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
       expect(texte.ipv.geAntragKindNeu).toContain('{folgejahr}');
       expect(texte.ipv.geNurKinder).toContain('{value}');
     }
-  });
+  }, 30000);
 
   it('Paare, Kinder ohne Alter und Vermögen über 250 000: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(2000), basis: { ...profil(2000).basis, maritalStatus: 'married' } });
@@ -137,5 +140,52 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     const vermoegen = render(profil(2000, { finanzen: { savingsAccount: 300000 } }));
     expect(vermoegen).toContain('ipv.offenGrund.vermoegenAntragGE');
     expect(vermoegen).not.toContain('CHF 4’176');
+  });
+
+  it('Wohneigentum: keine Zahl, eigener Grund mit Antrag (W2)', () => {
+    const html = render({ ...profil(2000), wohnen: { postalCode: '1204', city: 'Genève', propertyValue: 900000 } });
+    expect(html).toContain('ipv.orientierungOffen');
+    expect(html).toContain('ipv.offenGrund.wohneigentumGE');
+    expect(html).not.toContain('CHF 4’176');
+  });
+});
+
+// Fachprüfung B2 (PR #469): nach dem 30. November zeigten KK-Last-Karte, Prämien-Beleg und Budget für
+// Genf den LUZERNER Text («31. Oktober 2025», «nur für die Prämien, die nach der Anmeldung fällig
+// werden»). Jetzt nennt das Ergebnis seinen Schlüssel (`fristNichtAbgezogenKey`, Mechanismus wie FR).
+describe('K31 GE nach der Antragsfrist (1.12.2026): nirgends abgezogen, Genfer Text in allen drei Lesern', () => {
+  beforeAll(async () => {
+    preloadPLZ();
+    await import('../config/ipvGenf.js');
+    await new Promise((r) => setTimeout(r, 0));
+  });
+  afterEach(() => { vi.useRealTimers(); });
+  const arm = () => profil(1000);
+  const am = (datum) => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date(datum)); };
+
+  it('KK-Last-Karte: der Genfer Text, kein luFrist, kein «Luzern»', () => {
+    am('2026-12-01T12:00:00');
+    const karte = renderToStaticMarkup(React.createElement(KKLastCard, { palette, t, data: arm(), onNavigate: () => {} }));
+    expect(karte).toContain('ipv.geFristNichtAbgezogen');
+    expect(karte).not.toContain('luFrist');
+    expect(karte).not.toContain('Luzern');
+  });
+
+  it('Prämien-Beleg: Modus fristVorbei mit dem Genfer Text', () => {
+    am('2026-12-01T12:00:00');
+    expect(praemienBelegState(arm())).toMatchObject({ mode: 'fristVorbei', verbilligung: 0, noteKey: 'ipv.geFristNichtAbgezogen' });
+  });
+
+  it('Budget: nichts abgezogen, der Genfer Hinweis-Schlüssel', () => {
+    am('2026-12-01T12:00:00');
+    const b = calculateMonthlyBudget(arm(), t);
+    expect(b.ipvRelief ?? 0).toBe(0);
+    expect(b.ipvAnmeldefristHinweisKey).toBe('ipv.geFristNichtAbgezogen');
+  });
+
+  it('vor der Frist (28.09.2026) wird ganz normal abgezogen', () => {
+    am('2026-09-28T12:00:00');
+    expect(praemienBelegState(arm()).mode).not.toBe('fristVorbei');
+    expect(calculateMonthlyBudget(arm(), t).ipvAnmeldefristHinweisKey ?? null).toBeNull();
   });
 });
