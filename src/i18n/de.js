@@ -3945,6 +3945,7 @@ export default {
     noteApplyAhvBranchShort: 'Antrag bei AHV-Zweigstelle',
     noteApplyCompensation: 'Antrag bei Ausgleichskasse',
     noteApplySocialOffice: 'Antrag bei Sozialamt',
+    noteApplyGl: 'Antrag bei der kantonalen Steuerverwaltung (Fachstelle IPV), bis 31. Januar',
     noteApplyHealthOffice: 'Antrag beim Amt für Gesundheit',
     noteApplyHealthService: 'Antrag bei Dienststelle für Gesundheit',
     noteApplyCantonalCompensation: 'Antrag bei kantonaler Ausgleichskasse',
@@ -3967,6 +3968,7 @@ export default {
     jahrRegion: 'Gerechnet für das Anspruchsjahr {jahr}, Prämienregion {region}.',
     // AG kennt keine Prämienregionen: die Richtprämie gilt kantonsweit (V KVGG § 4 Abs. 1).
     jahrOhneRegion: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Aargau gilt dieselbe Richtprämie im ganzen Kanton — es gibt keine Prämienregionen.',
+    jahrGL: 'Gerechnet für das Anspruchsjahr {jahr}. Im Kanton Glarus gilt dieselbe Richtprämie im ganzen Kanton — sie hängt nicht vom Wohnort ab.',
     vorbehalt: 'Der Kanton kann die Berechnungsgrundlagen im Laufe des Jahres noch anpassen. Verbindlich wird der Anspruch erst mit den definitiven Steuerfaktoren {jahr}; zu viel bezogene Beträge sind zurückzuzahlen.',
     // BE rechnet mit den Steuerdaten des Vorvorjahres (KKVV Art. 7 Abs. 1) — der ZH-Satz wäre hier falsch.
     vorbehaltBE: 'Im Kanton Bern ist die definitive Veranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Wer heute deutlich weniger verdient, muss eine Neubeurteilung beantragen. Zu viel bezogene Beträge sind zurückzuzahlen.',
@@ -3991,6 +3993,12 @@ export default {
     luFristLaeuft: 'Die Prämienverbilligung muss im Kanton Luzern jedes Jahr neu angemeldet werden — für {jahr} bis zum 31. Oktober {vorjahr}, bei der WAS Ausgleichskasse Luzern. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die danach fällig werden. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristVorbei: 'Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich erst jetzt anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden — rückwirkend geht es nicht. Der Betrag hier zeigt den ganzen Jahresanspruch. Für {folgejahr} läuft die Frist bis zum 31. Oktober {jahr}; die Werte für {folgejahr} sind noch nicht beschlossen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
     luFristNichtAbgezogen: 'Prämienverbilligung Luzern: hier nicht abgezogen. Die Anmeldefrist für {jahr} lief bis zum 31. Oktober {vorjahr}. Wer sich später anmeldet, erhält die Verbilligung nur für die Prämien, die nach der Anmeldung fällig werden. Ist die Verfügung da, lässt sich ihr Betrag bei der Prämienverbilligung unter «Verfügung erhalten» eintragen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht diese Anmeldung nicht.',
+    vorbehaltGL: 'Im Kanton Glarus ist die definitive Steuerveranlagung {basisjahr} die Grundlage — genauer das Total der Einkünfte —, nicht das heutige Einkommen. Hat sich die wirtschaftliche Lage um mehr als 30 Prozent verschlechtert, kann auf Antrag mit der Veranlagung des Vorjahres gerechnet werden; der Antrag ist innert 30 Tagen nach deren Zustellung zu stellen. Zu Unrecht ausgerichtete Beträge werden zurückgefordert.',
+    glKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Die Richtprämie liegt nicht über dem Selbstbehalt, den der Kanton Glarus je nach Einkommen festlegt. Eine Einkommensgrenze als Zahl veröffentlicht der Kanton nicht — sie ergibt sich erst aus der Rechnung.',
+    glUnterMindestbetrag: 'Nach dieser Rechnung bestünde ein Anspruch, er wird aber nicht ausgerichtet: Der Kanton Glarus zahlt unter 12 Franken je Person und Jahr keine Prämienverbilligung aus.',
+    glFristLaeuft: 'Die Prämienverbilligung muss im Kanton Glarus jedes Jahr neu beantragt werden — für {jahr} bis zum 31. Januar {jahr}, bei der kantonalen Steuerverwaltung (Fachstelle IPV), auf Papier oder über my.gl.ch. Wer später beantragt, erhält die Verbilligung nur für die Prämien ab dem Monat nach dem Antrag. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht keinen Antrag.',
+    glFristVorbei: 'Die Antragsfrist für {jahr} lief bis zum 31. Januar {jahr}. Wer jetzt noch beantragt, erhält die Verbilligung nur für die Prämien ab dem Monat nach dem Antrag — rückwirkend geht es nicht. Der Betrag hier zeigt den ganzen Jahresanspruch. Für {folgejahr} gilt wieder der 31. Januar; die Werte für {folgejahr} sind noch nicht publiziert. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht keinen Antrag.',
+    glFristNichtAbgezogen: 'Prämienverbilligung Glarus: hier nicht abgezogen. Die Antragsfrist für {jahr} lief bis zum 31. Januar {jahr}. Wer später beantragt, erhält die Verbilligung nur für die Prämien ab dem Monat nach dem Antrag. Ist die Verfügung da, lässt sich ihr Betrag bei der Prämienverbilligung unter «Verfügung erhalten» eintragen. Wer Ergänzungsleistungen oder Sozialhilfe bezieht, braucht keinen Antrag.',
     // K31 VD (28.09.2026): Arrêté 2026 art. 2; Notice OVAM 2026 Ziff. 1–4; RLVLAMal art. 22.
     noteApplyOvam: 'Antrag online beim OVAM oder bei der Agence d’assurances sociales der Wohnregion; die jährliche Erneuerung nimmt das OVAM vor',
     vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des zweiten Monats nach dem Antrag — für die Monate davor gibt es nichts rückwirkend. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',

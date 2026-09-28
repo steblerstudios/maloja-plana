@@ -78,7 +78,8 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     ),
     // Luzern nach der Anmeldefrist: statt der Abzugszeile der Grund, warum nichts abgezogen ist.
     showFairness && fristVorbei && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
-      t('ipv.luFristNichtAbgezogen', abzug.frist)
+      // Der Satz des Kantons (`fristNichtAbgezogenKey`, GL seit 28.09.2026); ohne Angabe der Luzerner.
+      t(ipv?.fristNichtAbgezogenKey || 'ipv.luFristNichtAbgezogen', abzug.frist)
     ),
     showFairness && ipvAmount === 0 && ipv && !ipv.eligible && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
       ipv.belegt === false ? t(ipv.noteKey, ipv.noteParams) : t('kkLast.ipvNoClaim')

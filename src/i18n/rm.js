@@ -3005,6 +3005,7 @@ export default {
     noteApplyAhvBranchShort: 'Dumonda tar la filiala AVS',
     noteApplyCompensation: 'Dumonda tar la cassa da cumpensaziun',
     noteApplySocialOffice: "Dumonda tar l'uffizi social",
+    noteApplyGl: 'Dumonda tar l’administraziun chantunala da taglia (post IPV), fin ils 31 da schaner',
     noteApplyHealthOffice: "Dumonda tar l'uffizi da sanadad",
     noteApplyHealthService: 'Dumonda tar il servetsch da sanadad',
     noteApplyCantonalCompensation: 'Dumonda tar la cassa da cumpensaziun chantunalas',
@@ -3027,6 +3028,7 @@ export default {
     jahrRegion: 'Quint per l’onn da dretg {jahr}, regiun da premias {region}.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     jahrOhneRegion: 'Quint per l’onn da dretg {jahr}. En il chantun Argovia vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
+    jahrGL: 'Quint per l’onn da dretg {jahr}. En il chantun Glaruna vala la medema premia da referenza en tut il chantun — ella na dependa betg dal lieu da domicil.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
@@ -3049,6 +3051,12 @@ export default {
     luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     luFristNichtAbgezogen: 'Reducziun da premias Lucerna: betg deducida qua. Il termin d’annunzia per {jahr} è scadì ils 31 d’october {vorjahr}. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter l’annunzia. Cura che la decisiun è arrivada, po ses import vegnir inscrit tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
+    vorbehaltGL: 'En il chantun Glaruna è la basa la taxaziun fiscala definitiva {basisjahr} — pli exactamain il total da las entradas —, betg l’entrada dad oz. Sche la situaziun economica è sa pegiurada per dapli che 30 pertschient, po vegnir quintà sin dumonda cun la taxaziun da l’onn precedent; la dumonda sto vegnir fatga entaifer 30 dis suenter ch’ella è vegnida surdada. Imports pajads a tort vegnan pretendids enavos.',
+    glKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg la part atgna ch’il chantun Glaruna fixescha tenor l’entrada. Il chantun na publitgescha nagina limita d’entrada sco cifra — ella resulta pir da la quintada.',
+    glUnterMindestbetrag: 'Tenor questa quintada exista in dretg, el na vegn dentant betg pajà: il chantun Glaruna na paja nagina reducziun da premias sut 12 francs per persuna e per onn.',
+    glFristLaeuft: 'En il chantun Glaruna sto la reducziun da premias vegnir dumandada mintga onn da nov — per {jahr} fin ils 31 da schaner {jahr}, tar l’administraziun chantunala da taglia (post IPV), sin palpiri u via my.gl.ch. Tgi che dumonda pli tard, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
+    glFristVorbei: 'Il termin per {jahr} è scadì ils 31 da schaner {jahr}. Tgi che dumonda uss, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} vala puspè ils 31 da schaner; las valurs {folgejahr} n’èn anc betg publitgadas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
+    glFristNichtAbgezogen: 'Reducziun da premias Glaruna: qua betg deducida. Il termin per {jahr} è scadì ils 31 da schaner {jahr}. Tgi che dumonda pli tard, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda. Sche la decisiun è qua, sa lascha endatar ses import tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
     // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
     noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
     vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda — ils mais avant na vegnan betg pajads retroactivamain. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',

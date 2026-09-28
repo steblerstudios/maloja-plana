@@ -216,8 +216,9 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
     expect(treffer).toEqual([]);
   });
 
-  it('die Frist-Angabe lesen nur das Luzerner Modul und ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'data/ipvAbzug.js'];
+  it('die Frist-Angabe lesen nur die Module mit Anmeldefrist (LU, GL) und ipvAbzug', () => {
+    // GL (28.09.2026) hat ebenfalls eine Anmeldefrist (VV PV Art. 6) und setzt die Angabe selbst.
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvGlarus.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });

@@ -46,7 +46,7 @@ export function praemienBelegState(data) {
     return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false };
   }
   if (abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI) {
-    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: 'ipv.luFristNichtAbgezogen', noteParams: abzug.frist };
+    return { show: true, mode: 'fristVorbei', verbilligung: 0, praemie, selbst: praemie, canton, confirmed: false, noteKey: ipv.fristNichtAbgezogenKey || 'ipv.luFristNichtAbgezogen', noteParams: abzug.frist };
   }
   // Altbestand ohne Kanton/Jahr: der Betrag ist gedeckelt an der Verfügung — der Beleg sagt
   // «Verfügung ohne Jahr» statt «geschätzt», aber keinen Stempel.

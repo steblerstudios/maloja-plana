@@ -205,7 +205,7 @@ export function ipvGlarus(data, hh, ipvData, youngAdultsCount, orientierung) {
   const fristVorbei = new Date() > new Date(`${jahr}-01-31T23:59:59`);
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
-    extra: { ...gemeinsam.extra, anmeldefristVorbei: fristVorbei },
+    extra: { ...gemeinsam.extra, anmeldefristVorbei: fristVorbei, fristNichtAbgezogenKey: 'ipv.glFristNichtAbgezogen' },
     noteKey: fristVorbei ? 'ipv.glFristVorbei' : 'ipv.glFristLaeuft',
     noteParams: { jahr, folgejahr: jahr + 1 },
   });
