@@ -91,7 +91,7 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
     // Die Sprachdateien NICHT als `it` importieren — das überschriebe vitests `it`.
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['vorbehaltBS', 'bsKeinAnspruch', 'bsAntrag', 'jahrBS']) {
+      for (const k of ['vorbehaltBS', 'bsKeinAnspruch', 'bsAntrag', 'bsAntragAvm', 'bsAntragStandard', 'bsHypothetischGerechnet', 'bsPensumAngenommen', 'jahrBS']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
@@ -107,6 +107,19 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
   // Fünf Sprachdateien laden dauert unter Last länger als die 5 s Vorgabe (gemessen 28.09.2026,
   // Last 40–90 bei parallelen Sitzungen) — der Test prüft Inhalt, nicht Tempo.
   }, 30000);
+
+  it('Pensum: ohne Stunden steht die 80-%-Annahme bei der Zahl, mit 21 Std. die Anrechnung (Fachprüfung B2/W1)', () => {
+    expect(render(profil(3000))).toContain('ipv.bsPensumAngenommen');
+    const mitStunden = render({ ...profil(2500), ausbildung: { workHoursPerWeek: '21' } });
+    expect(mitStunden).toContain('ipv.bsHypothetischGerechnet');
+    expect(mitStunden).toContain('CHF 37');
+  });
+
+  it('Hausarzt-Modell: Hauptzahl mit Zuschlag, eigener Hinweis (W4)', () => {
+    const html = render({ ...profil(3000), versicherungen: { kkPremium: 500, kkModel: 'hausarzt' } });
+    expect(html).toContain('CHF 148');
+    expect(html).toContain('ipv.bsAntragAvm(118|148)');
+  });
 
   it('Paare und Kinder ohne Alter: Orientierung mit Grund statt Zahl', () => {
     const paar = render({ ...profil(3000), basis: { ...profil(3000).basis, maritalStatus: 'married' } });
