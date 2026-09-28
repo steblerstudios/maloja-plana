@@ -21,6 +21,10 @@
 //       monatlichen Durchschnittsprämien 2026 … Erwachsene 602.00, Junge Erwachsene 435.00, Kinder
 //       139.00» und «Der Abschlag wird auf 30% festgelegt.» — damit ist die EINHEIT der
 //       Richtprämien in [1] geklärt: 422 / 305 / 98 sind MONATSbeträge (602 × 70 % = 421.40).
+//   [6] Steuergesetz (StG) BGS 614.11, «Aktuelle Version in Kraft seit: 01.01.2025 (Beschlussdatum:
+//       03.09.2024)», § 71 Abs. 1/2: Sozialabzüge vom Reinvermögen (100'000 Ehepaare und
+//       Alleinerziehende, 60'000 übrige, 20'000 je Kind; verdoppelt für AHV/IV-Rentenberechtigte mit
+//       ungenügendem Reineinkommen und Reinvermögen bis 200'000). Gelesen 28.09.2026 (Fachprüfung #481).
 //   [5] AKSO, Merkblatt IPV 2026 (PDF 18.12.2025): Jahrgänge junge Erwachsene 2001–2007,
 //       Antrag innert 30 Tagen, Auszahlung rückwirkend per 1. Januar an die Krankenkasse,
 //       «nur die effektive Prämie verbilligt».
@@ -48,6 +52,19 @@
 //     Sozialhilfe (§ 71 Abs. 3), Härtefälle (§ 71 Abs. 4), Ermessensveranlagte (§ 89 Abs. 3 [3]).
 //   · vom massgebenden Einkommen: Pension zu 100 %, Kapitalabfindungen, Geschäftsverluste,
 //     Zuwendungen, Liegenschaftskosten (§ 69 Abs. 1 lit. a–d, f [2]) — die App erfasst sie nicht.
+//   · der Deckel auf die effektive Prämie ([5]: «wird nur die effektive Prämie verbilligt») — die App
+//     zeigt nie einen Betrag, darum weder `praemieFehlt` noch `KEIN_PRAEMIENDECKEL`. Sobald SO einen
+//     Betrag rechnet, gehört `praemieFehlt` + `deckelnProPerson` hierher (Fachprüfung #481 K3).
+//
+// 🛑 «KEIN ANSPRUCH» NUR AUF EINER UNTERGRENZE (Fachprüfung #481, B1 und W1, 28.09.2026)
+// Das amtliche massgebende Einkommen ist das satzbestimmende Einkommen der Steuerveranlagung —
+// nach Berufsauslagen, Versicherungs- und Unterhaltsabzügen. Das Nettoeinkommen der App liegt fast
+// immer DARÜBER. «Kein Anspruch» sagt die App darum nur, wo auch die Untergrenze reicht:
+//   · Vermögen erst über den Sozialabzügen nach § 71 StG [6] und nach Abzug der erfassten Schulden
+//     ⟨vorher: 50 % der erfassten Brutto-Posten — falsches «kein Anspruch» u. a. für eine Rentnerin
+//     mit 30'000 Einkommen und 45'000 Erspartem, die bei jedem Satz mindestens 264 erhält⟩;
+//   · bei erfassten bezahlten Unterhaltsbeiträgen (`alimentePaid`) nie: sie sind im Kanton abziehbar,
+//     im Rahmen der App aber noch nicht (Rahmen-Befund, wird für alle Kantone gelöst).
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr,
   jahrVorbei, mehrereErwachsene, ERWACHSEN, SAEULE_3A,
@@ -74,6 +91,10 @@ export const IPV_SO = {
   auszahlungslimite: 240,
   // § 70 Abs. 4 [2]: Kinder «um mindestens 80%».
   mindestanteilKind: 0.8,
+  // § 71 Abs. 1 lit. a–c, Abs. 2 StG [6]: «100’000 Franken für … Steuerpflichtige, die allein mit
+  // Kindern zusammenleben» · «60'000 Franken für die andern» · «20'000 Franken für jedes Kind» ·
+  // verdoppelt bei Rentenberechtigten mit Reinvermögen «von nicht mehr als 200’000 Franken».
+  sozialabzugVermoegen: { mitKindern: 100000, uebrige: 60000, jeKind: 20000, verdoppelnBis: 200000 },
 };
 
 // Die Spanne, in der der Betrag liegen MUSS, gleich wie die Skala verläuft: mit dem tiefsten
@@ -90,6 +111,20 @@ export function ipvSolothurnSpanne({ personen, me }) {
     mindestens: me0 > p.grenzwert ? 0 : betrag(p.eigenanteil.bis),
     ueberGrenzwert: me0 > p.grenzwert,
   };
+}
+
+// § 71 StG [6]: Sozialabzüge vom Reinvermögen. Die App kennt kein Reinvermögen, nur die erfassten
+// Posten und Schulden — Reinvermögen ≈ Posten − Kreditkarte − Darlehen (eine Untergrenze, denn nicht
+// erfasste Werte fehlen ebenso wie nicht erfasste Schulden). Abs. 2 (Verdoppelung) gilt nur bei
+// «ungenügendem Reineinkommen», das das Gesetz hier nicht beziffert: für die Untergrenze nimmt die
+// App den verdoppelten Abzug an, sobald eine AHV- oder IV-Rente erfasst ist.
+export function soSteuerbaresVermoegen(f, kinderZahl) {
+  const rein = Math.max(0, vermoegenSumme(f) - Number(f.creditCardBalance || 0) - Number(f.loans || 0));
+  const s = IPV_SO.sozialabzugVermoegen;
+  let abzug = (kinderZahl > 0 ? s.mitKindern : s.uebrige) + s.jeKind * kinderZahl;
+  const rente = Number(f.ahvRente || 0) > 0 || Number(f.ivRente || 0) > 0;
+  if (rente && rein <= s.verdoppelnBis) abzug *= 2;
+  return Math.max(0, rein - abzug);
 }
 
 // Aufruf aus calculateIPV (config/cantonalData.js) für SO mit Beleg. Keine Prämienregion (BAG: eine
@@ -118,8 +153,9 @@ export function ipvSolothurn(data, hh, ipvData, youngAdultsCount, orientierung) 
   const regel = SAEULE_3A.bisBundesMaximum;
   if (regel.maximumFuer(jahre.bemessungsjahr) === null) return orientierung('jahr');
   if (regel.widerlegt(f, rohesEinkommenJahr(f), jahre)) return orientierung('saeule3aUeberEinkommen');
-  // § 69 Abs. 1 lit. g [2] mit [1] Ziff. 1: 50 % des satzbestimmenden Vermögens.
-  const me = Math.max(0, einkommenJahr(f, regel, jahre) + p.vermoegenAnteil * vermoegenSumme(f));
+  // § 69 Abs. 1 lit. g [2] mit [1] Ziff. 1: 50 % des satzbestimmenden Vermögens — «des steuerbaren
+  // Vermögens» (§ 89 Abs. 2 lit. a [3]), also nach den Sozialabzügen des § 71 StG [6].
+  const me = Math.max(0, einkommenJahr(f, regel, jahre) + p.vermoegenAnteil * soSteuerbaresVermoegen(f, kinderJahre.length));
   // Die Regel zieht erst über BEIDEN Jahresmaxima ab (7'258); im Band 7'056–7'258 kann das
   // massgebende Einkommen darum um bis zu 202 Franken zu hoch sein. Für «kein Anspruch» zählt die
   // Untergrenze — so wird nie jemandem ein Anspruch abgesprochen, der an diesem Band hängt.
@@ -129,11 +165,16 @@ export function ipvSolothurn(data, hh, ipvData, youngAdultsCount, orientierung) 
 
   const kinderZahl = kinderJahre.length;
   const r = ipvSolothurnSpanne({ personen: ['e', ...kinderJahre.map(() => 'k')], me: meUnten });
-  const keinAnspruchSicher = r.ueberGrenzwert || (kinderZahl === 0 && r.hoechstens <= 0);
-  if (!keinAnspruchSicher) return orientierung('soSkalaUnklar');
+  // § 75 Abs. 2 [2]: wer kein Antragsformular erhalten hat, kann bis 31. Juli des Anspruchsjahres
+  // ein Gesuch stellen; danach verwirkt (Ausnahme: Veranlagung noch nicht rechtskräftig). Für
+  // Quellenbesteuerte gilt der 31. Dezember (Merkblatt QS 2026) — beides steht in den Texten.
+  const fristVorbei = new Date() > new Date(`${jahr}-07-31T23:59:59`);
+  const alimenteBezahlt = Number(f.alimentePaid) > 0;
+  const keinAnspruchSicher = !alimenteBezahlt && (r.ueberGrenzwert || (kinderZahl === 0 && r.hoechstens <= 0));
+  if (!keinAnspruchSicher) return orientierung(fristVorbei ? 'soSkalaUnklarFristVorbei' : 'soSkalaUnklar');
   return ergebnisOhneAnspruch({
     canton: 'SO', cantonData: { ...ipvData, maxIncome: null }, jahr,
     vorbehaltKey: 'ipv.vorbehaltSO', noteKey: 'ipv.soKeinAnspruch',
-    extra: { jahrKey: 'ipv.jahrEineRegion' },
+    extra: { jahrKey: 'ipv.jahrEineRegion', anmeldefristVorbei: fristVorbei },
   });
 }
