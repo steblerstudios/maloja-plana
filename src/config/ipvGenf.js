@@ -349,9 +349,16 @@ export function ipvGenf(data, hh, ipvData, youngAdultsCount, orientierung) {
   // LRDU Art. 8 Abs. 2 [4]: Sockel = Einkommen (Art. 4/5) + 1/15 des Vermögens (Art. 6/7). Die 3a
   // bleibt im Einkommen (Regel `voll`), die Berufskosten-Pauschale geht auf den Hauptlohn weg —
   // Herleitung, Belege und was mit Absicht fehlt: im Kopf.
+  // Die Berufskosten-Pauschale gilt nur für unselbständige Erwerbstätigkeit (LRDU Art. 5 Abs. 1 lit. d
+  // [4] verweist auf LIPP Art. 29, «activité lucrative dépendante»). Selbständige, Freiberufliche und
+  // Rentner:innen bekommen sie nicht; ohne Angabe des Anstellungstyps rechnen wir wie angestellt —
+  // GEWÄHLT, weil das Lohnfeld der App nach dem Lohn einer Anstellung fragt und die Mehrheit so
+  // arbeitet. (Re-Review 28.09.2026, W-b: vorher galt die Pauschale auch für Selbständige — 54 Fr./Monat
+  // zu viel an einer Gruppengrenze.)
+  const unselbstaendig = !f.employmentType || f.employmentType === 'employed';
   const rdu = geRdu({
     netto: einkommenJahr(f, SAEULE_3A.voll),
-    erwerb: Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
+    erwerb: unselbstaendig ? Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) : 0,
     vermoegen,
   });
   const r = ipvGenfRechnen({ rdu, kinderZahl });
