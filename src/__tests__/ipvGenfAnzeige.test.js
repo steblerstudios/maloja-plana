@@ -47,11 +47,12 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     expect(html).not.toContain('CHF 4’176');
   });
 
-  it('nennt die amtliche Einkommensgrenze — 50 000 allein, 151 000 mit einem Kind — und keine Musterwerte', () => {
+  it('nennt die amtliche Einkommensgrenze — 50 000 allein, 121 000 (Erwachsene) mit einem Kind — und keine Musterwerte', () => {
     const allein = render(profil(2000));
     expect(allein).toContain('premium.maxIncome(' + geldZahl(50000) + ')');
     const kind = render(profil(2000, { children: [{ age: 5 }] }));
-    expect(kind).toContain('premium.maxIncome(' + geldZahl(151000) + ')');
+    expect(kind).toContain('premium.maxIncome(' + geldZahl(121000) + ')');
+    expect(kind).not.toContain('premium.maxIncome(' + geldZahl(151000) + ')');
     for (const html of [allein, kind]) {
       for (const zahl of [60000, 3600, 7200]) {
         expect(html).not.toContain(geldZahl(zahl));
@@ -68,9 +69,28 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     expect(html).not.toContain('ipv.vorbehalt(');
   });
 
-  it('unter 15 000 RDU steht der Antragshinweis mit Grenze und Jahr', () => {
-    expect(render(profil(1000))).toContain('ipv.geAntragNoetig(15000|2026)');
-    expect(render(profil(2000))).not.toContain('ipv.geAntragNoetig');
+  // Rechtsprüfung 28.09.2026 (Blocker): im Antragsfall stand «Automatisch via SAM» in der Kantonskarte
+  // und «Berechtigt» als Überschrift — neben dem Satz «prüft nicht automatisch».
+  it('unter 15 000 RDU: Antragshinweis mit Grenze und Jahr, Karte «Antrag nötig», Überschrift ohne «Berechtigt»', () => {
+    const html = render(profil(1000));
+    expect(html).toContain('ipv.geAntragNoetig(15000|2026)');
+    expect(html).toContain('premium.note(ipv.geWegAntrag)');
+    expect(html).toContain('premium.eligibleAntrag');
+    expect(html).not.toMatch(/premium\.eligible[^A]/);
+    expect(html).not.toContain('noteAutoSam');
+    // der Normalfall: «in der Regel automatisch», Überschrift «Berechtigt»
+    const normal = render(profil(2000));
+    expect(normal).not.toContain('ipv.geAntragNoetig');
+    expect(normal).toContain('premium.note(ipv.geWegAutomatisch)');
+    expect(normal).toMatch(/premium\.eligible[^A]/);
+    expect(normal).not.toContain('premium.eligibleAntrag');
+  });
+
+  it('junge erwachsene Person: eigener Grund mit Antragsfrist statt «Geburtsdatum fehlt»', () => {
+    const html = render({ ...profil(2000), basis: { ...profil(2000).basis, dateOfBirth: '2004-05-01' } });
+    expect(html).toContain('ipv.orientierungOffen');
+    expect(html).toContain('ipv.offenGrund.geJungeErwachsene');
+    expect(html).not.toContain('ipv.offenGrund.alter');
   });
 
   it('über Gruppe 8 mit Kind: nur der Kinderbeitrag, mit dem Gruppe-9-Hinweis', () => {
@@ -88,15 +108,24 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
     // Die Sprachdateien NICHT als `it` importieren — das überschriebe vitests `it`.
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = (await import(`../i18n/${sprache}.js`)).default;
-      for (const k of ['jahrGE', 'vorbehaltGE', 'geAntragNoetig', 'geNurKinder']) {
+      for (const k of ['jahrGE', 'vorbehaltGE', 'geWegAutomatisch', 'geWegAntrag', 'geAntragNoetig', 'geAntragNoetigKinder', 'geAntragFristVorbei', 'geAntragKindNeu', 'geNurKinder']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
-      expect(typeof texte.ipv.offenGrund.vermoegenAntragGE, `${sprache}.js: offenGrund.vermoegenAntragGE fehlt`).toBe('string');
+      for (const k of ['vermoegenAntragGE', 'geJungeErwachsene']) {
+        expect(typeof texte.ipv.offenGrund[k], `${sprache}.js: offenGrund.${k} fehlt`).toBe('string');
+      }
+      expect(typeof texte.premium.eligibleAntrag, `${sprache}.js: premium.eligibleAntrag fehlt`).toBe('string');
       expect(texte.ipv.jahrGE).toContain('{jahr}');
       expect(texte.ipv.vorbehaltGE).toContain('{basisjahr}');
-      expect(texte.ipv.geAntragNoetig).toContain('{value}');
-      expect(texte.ipv.geAntragNoetig).toContain('{jahr}');
+      expect(texte.ipv.vorbehaltGE).toContain('{jahr}');
+      for (const k of ['geAntragNoetig', 'geAntragNoetigKinder', 'geAntragFristVorbei']) {
+        expect(texte.ipv[k]).toContain('{value}');
+        expect(texte.ipv[k]).toContain('{jahr}');
+      }
+      expect(texte.ipv.geAntragFristVorbei).toContain('{folgejahr}');
+      expect(texte.ipv.geAntragKindNeu).toContain('{basisjahr}');
+      expect(texte.ipv.geAntragKindNeu).toContain('{folgejahr}');
       expect(texte.ipv.geNurKinder).toContain('{value}');
     }
   });

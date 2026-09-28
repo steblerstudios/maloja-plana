@@ -267,7 +267,27 @@ begrenzen den Erwachsenenbetrag auf die erfasste Prämie der erwachsenen Person;
 Kinderbeträge (132 / 67) begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind. Ist das
 die Praxis des SAM?
 
-**Stand:** GE ist für 2026 gebaut (Entwurfs-PR, K31). Das Barème 2027 war am 28.09.2026 nicht
+*Ergänzt 28.09.2026 abends nach der Fach- und Rechtsprüfung:*
+
+**Frage 4 — Gruppe 9 im Arrêté:** Mit dem Faktor 1,0875 ergäben die Gesetzesbeträge der Gruppe 9
+(Art. 22 al. 2 lit. b: 60; al. 3 lit. b: 100) 66 und 109 Franken, das Barème nennt **67 und 106**.
+Art. 9B al. 1 RaLAMal nennt für alle dieselbe «prime moyenne». Welche Basis gilt für diese
+beiden Beträge — und welche Rolle spielt Art. 22 al. 10 LaLAMal («prime moyenne cantonale»)?
+
+**Frage 5 — Familienzulagen im RDU:** LRDU Art. 4 al. 1 lit. a verweist auf LIPP Art. 18, und
+dessen al. 1 zählt «les allocations» zum Erwerbseinkommen. Wir nehmen an, dass damit auch die
+Kinder- und Ausbildungszulagen gemeint sind (wie im Bundesrecht, sie stehen auf dem
+Lohnausweis) und rechnen sie in den RDU. Ist das richtig?
+
+**Frage 6 — Kind aus dem Vorjahr:** Art. 13C RaLAMal regelt den Fall, dass die Familie «en cours
+d'année» wächst. Gilt der schriftliche Antrag auch für ein Kind mit **Jahrgang 2025**, das in der
+Veranlagung 2024 noch nicht steht, im Anspruchsjahr 2026 aber schon da war — oder erfasst es
+der SAM automatisch aus den Zivilstandsdaten? Bis zur Antwort warnt die App in beiden Fällen.
+
+**Frage 7 — Rundung:** Wird der RDU für die Gruppenzuordnung auf ganze Franken gerundet? Wir
+vergleichen ungerundet (30'000.50 liegt über 30'000).
+
+**Stand:** GE ist für 2026 gebaut (Entwurfs-PR #469, K31). Das Barème 2027 war am 28.09.2026 nicht
 publiziert; ab 01.01.2027 zeigt die App für GE keinen Betrag mehr.
 
 ---

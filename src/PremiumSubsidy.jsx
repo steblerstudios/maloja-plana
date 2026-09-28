@@ -417,7 +417,11 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle')),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } }, hinweisZeichen('check'), t('premium.eligible')),
+      // «Berechtigt» stimmt nicht, wo der Kanton den Anspruch nur auf Antrag prüft (GE unter der
+      // RDU-Untergrenze): dann eine Überschrift, die den Antrag nennt, ohne Häkchen — sonst stünde
+      // «Berechtigt» neben «prüft nicht automatisch» (Rechtsprüfung 28.09.2026).
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } },
+        hinweisZeichen(ipvResult.antragNoetig ? undefined : 'check'), t(ipvResult.antragNoetig ? 'premium.eligibleAntrag' : 'premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams)),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },

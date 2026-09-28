@@ -427,7 +427,10 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       LU — die WAS führt für 2026 «Erwachsene (ab Jahrgang 2000)» in ihrer
 //                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
 //                       GE — das Barème 2026 führt «jeunes adultes, les personnes nées entre
-//                       2001 et 2007», Stichtag 1. Januar (RaLAMal Art. 10 Abs. 8). (28.09.2026)
+//                       2001 et 2007»; LaLAMal Art. 20 Abs. 3 lit. b: «ayant atteint leur
+//                       majorité avant le 1er janvier … jusqu'à 25 ans révolus». (RaLAMal
+//                       Art. 10 Abs. 8 nennt den 1. Januar nur «pour l'application de
+//                       l'alinéa 7», trägt die Regel also nicht allein.) (28.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am

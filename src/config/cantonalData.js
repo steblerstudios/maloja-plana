@@ -148,7 +148,10 @@ export const CANTONAL_IPV = {
   // GE (K31): eigenes Modell in config/ipvGenf.js (acht Gruppen nach RDU mit festen Monatsbeträgen,
   // Gruppe 9 nur für Kinder). Die Grenze ist amtlich publiziert (LaLAMal Art. 21) und hängt an der
   // Haushaltsform — das Modul setzt sie je Fall; hier darum null wie in BE.
-  GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam',
+  // noteKey: «in der Regel automatisch» — ge.ch nennt Antragsfälle, die die App nicht erfragt
+  // (Zuzug, Quellensteuer, fehlende Veranlagung, veränderte Lage); das Modul überschreibt ihn im
+  // Antragsfall (Rechtsprüfung 28.09.2026: vorher stand hier `ipv.noteAutoSam` ohne Einschränkung).
+  GE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.geWegAutomatisch',
     beleg: { quelle: 'LaLAMal (rsGE J 3 05) Art. 21/22 · RaLAMal (rsGE J 3 05.01) Art. 9–10A · LRDU (rsGE J 4 06) Art. 8 · Barème subsides 2026, Service de l\'assurance-maladie (SAM) — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction', beleg: null },
 };
