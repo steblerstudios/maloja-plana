@@ -548,6 +548,58 @@ App dort keinen Betrag, wo es darauf ankommt.
 **Stand:** OW ist für 2026 gebaut (Entwurfs-PR, K31). Werte 2027 nicht publiziert; ab 01.01.2027
 zeigt die App für OW keinen Betrag.
 
+## 24 · SVA Schaffhausen — Kinder-Mindestanspruch, Aufteilung, Rundung
+
+*Aufgenommen 28.09.2026 beim Einbau von SH. Entwurf — **nicht gesendet**. (Nummer 24, zugeteilt
+28.09.2026 abends; vorher 8, dann 12.)*
+
+**Worum es geht:** Formel und Zahlen 2026 stehen im Dekret (SHR 832.110 §§ 10–13bis) und im
+Anhang 1 der Verordnung (SHR 832.111). Ein Berechnungsbeispiel gibt es weder im Merkblatt 2026
+noch auf svash.ch. Die Versand-Grenzwerte (§ A1-2) rechnen wir als Nullpunkt der Formel auf den
+Franken nach — das belegt Selbstbehalt und Richtprämien, nicht aber die folgenden Punkte.
+
+**Frage 1 — Kinder, Basis der 80 %:** Werden die «Prämien der Kinder um mindestens 80 Prozent»
+(Merkblatt, § 13bis Dekret) auf die **Richtprämie** des Kindes (2026: 1'387 / 1'295) gerechnet
+oder auf seine **effektive** Prämie? Wir rechnen mit der Richtprämie — das Antragsformular fragt
+nach der Krankenkasse, nicht nach der Prämie.
+
+**Frage 2 — Aufteilung des Rests (§ 13bis Abs. 1):** «Die verbleibenden Mittel werden anteilig
+entsprechend der Höhe der anrechenbaren Prämie auf die mitbetroffenen Angehörigen des Haushalts
+verteilt.» Zählen die Kinder dabei **mit** (sie erhalten dann mehr als 80 %), oder geht der Rest
+nur an die übrigen Personen? Die Summe ändert sich nicht, wohl aber der Anteil der erwachsenen
+Person — und damit, ob deren eigene Prämie als Obergrenze greift. Geben beide Lesarten einen
+anderen Betrag, zeigt die App keinen.
+
+**Frage 3 — Kinder und Fr. 100:** Liegt die Differenz über 0, aber unter Fr. 100, sagt § 13
+Abs. 2 «kein Betrag», § 13bis Abs. 2 aber «entsprechend erhöht», bis die Kinder 80 % erhalten.
+Was gilt? Die App zeigt in diesem schmalen Band keinen Betrag.
+
+**Frage 4 — Rundung:** Auf welche Einheit wird der verfügte Betrag gerundet? Wir runden den
+Jahresbetrag auf ganze Franken.
+
+**Frage 5 — Website:** Die Seite «Berechnung» (svash.ch/ipv/berechnung) zeigt am 28.09.2026 noch
+die Richtprämien 2025 und die Steuerwerte 2023; die FAQ nennt «bis spätestens 30. April 2025».
+Das Merkblatt 2026 und die Verordnung sind nachgeführt.
+
+**Frage 6 — Kinder über dem Nullpunkt (Fachprüfung #471 W5):** Gilt der Mindestanspruch der Kinder
+(80 %) nur, solange nach § 10 ein Anspruch besteht (Merkblatt: «bei einem Anspruch auf
+Prämienverbilligung»), oder nach Art. 65 Abs. 1bis KVG («untere und mittlere Einkommen») auch darüber?
+Wir rechnen die erste Lesart. Richtung: gilt die zweite, sagt die App Familien knapp über dem Nullpunkt
+zu Unrecht «kein Anspruch» (zu tief, 1'109.60 bzw. 1'036 je Kind).
+
+**Frage 7 — Deckel beim Kind (Fachprüfung #471 W3):** Wird der Anteil eines Kindes auf seine eigene
+Prämie begrenzt (§ 17 Abs. 2)? In der Lesart «Rest mit Kindern verteilt» kann er über der
+Kinderprämie liegen — die App wäre dann um mehrere hundert Franken je Kind und Jahr zu hoch, umso mehr,
+je tiefer die Kinderprämie.
+
+**Frage 8 — Entlastungsabzug und Säule 3a (Fachprüfung #471 K8):** Wird der Entlastungsabzug am
+steuerlichen Reineinkommen (nach dem 3a-Abzug) gemessen oder am Einkommen nach der Aufrechnung nach
+§ 12 lit. e? Wir rechnen am steuerlichen Reineinkommen; sonst läge die App um bis zu rund 400 Franken
+zu hoch.
+
+**Stand:** SH ist für 2026 gebaut (Entwurfs-PR, K31). Ein Anhang für 2027 ist am 28.09.2026 nicht
+publiziert. Ab 01.01.2027 zeigt die App für SH keinen Betrag mehr.
+
 ---
 
 ## 18 · SVA Schwyz — Grenze je Mietzinsregion, Kinder-Mindestanspruch, Stichtag

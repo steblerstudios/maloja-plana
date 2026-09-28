@@ -74,13 +74,14 @@ const KANTONE = [
   ['UR', '6460', 'Altdorf'],
   ['OW', '6060', 'Sarnen'],
   ['FR', '1700', 'Fribourg'],
+  ['SH', '8200', 'Schaffhausen'],
 ];
 
 describe('calculateIPV in den Kantonsmodulen', () => {
   beforeAll(async () => {
     preloadPLZ();
     await import('../../data/plzGemeinde.js');
-    await Promise.all(['ipvZuerich', 'ipvBern', 'ipvAargau', 'ipvStGallen', 'ipvLuzern', 'ipvUri', 'ipvObwalden', 'ipvFreiburg'].map((m) => import(`../${m}.js`)));
+    await Promise.all(['ipvZuerich', 'ipvBern', 'ipvAargau', 'ipvStGallen', 'ipvLuzern', 'ipvUri', 'ipvObwalden', 'ipvFreiburg', 'ipvSchaffhausen'].map((m) => import(`../${m}.js`)));
     await new Promise((r) => setTimeout(r, 0));
   });
 
