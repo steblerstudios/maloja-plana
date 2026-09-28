@@ -29,7 +29,8 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die drei Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht. ⟨28.09.2026: hier stand «Die
+// drei»; seit K31 kommen je Kanton weitere dazu, darum ohne Zahl.⟩
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
@@ -53,7 +54,7 @@ export function vermoegenSumme(f) {
 //   abzugOhneSaeule2     BS — kein Zuschlag auf eine Steuergrösse, sondern ein Abzug von den
 //                        Einnahmen, und nur OHNE Säule 2. SoHaV § 17 Abs. 1 lit. a/b (SG 890.710)
 //
-// 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
+// 🛑 EINE DIESER REGELN (`schwelleOhneSaeule2`) WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
 // wird beim nächsten Kanton nicht kopiert. `schwelleOhneSaeule2` gibt `0` zurück wie `voll`,
 // aber aus einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
