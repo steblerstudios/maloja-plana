@@ -29,8 +29,21 @@
 //       als Prüfstein der Rechnung.
 //   [6] Steuergesetz Zug, BGS 632.1, «Version in Kraft von: 01.01.2024 bis: 31.12.2025» (für die
 //       Steuerperiode 2024), § 30 lit. g: Versicherungsabzug.
+//       ⟨Fixrunde 2⟩ Dieselbe Fassung, «Stand 1. Januar 2024» (bgs.zg.ch/api/de/versions/2510/pdf_file):
+//       § 15 Abs. 1 alle Einkünfte · § 16 Abs. 1 «Zulagen» aus dem Arbeitsverhältnis · § 22 lit. f
+//       erhaltene Unterhaltsbeiträge (für sich und für Kinder unter der eigenen Obhut) steuerbar ·
+//       § 25 Abs. 1 lit. a Fahrkosten «bis zu einem Maximalbetrag von 6000 Franken», Abs. 2
+//       Pauschalansätze für Verpflegung und übrige Berufskosten · § 30 lit. c bezahlte Unterhalts-
+//       beiträge (Ex-Ehegatte, minderjährige Kinder) · lit. g (s. u.) · lit. l Drittbetreuung
+//       «höchstens 25'000 Franken» je Kind unter 14.
 //   [7] KVV Art. 106c Abs. 5bis (SR 832.102, Stand 01.01.2026, Fedlex): Differenz an die versicherte
 //       Person, kantonale Deckel vorbehalten.
+//   [8] Steuerverwaltung Zug, «Wegleitung zur Steuererklärung für natürliche Personen» 2024 (PDF
+//       Wegleitung_2024_StKtZug_A4_20241022.pdf, zg.ch), S. 32/33: übrige Berufskosten «3 % des
+//       Nettolohnes, mindestens Fr. 2 000.– und höchstens Fr. 4 000.– pro Jahr», Fahrkosten bis
+//       «Fr. 6 000.– (Kantons- und Gemeindesteuern)», auswärtige Verpflegung «Fr. 3 200.– im Jahr»;
+//       S. 18 (Code 155): Kinder- und Familienzulagen, die nicht im Lohn stecken, sind Einkommen.
+//       Die Pauschalen legt die Steuerverwaltung fest (V StG BGS 632.11 § 10, Stand 01.01.2022).
 //
 // DAS MODELL IN EINEM SATZ
 // Verbilligt wird die Summe der Richtprämien, soweit sie 8 % des massgebenden Einkommens
@@ -46,14 +59,34 @@
 // endet der Anspruch schon bei 4'984.80 / 8 % = 62'310, unter 70'000; mit einem Kind bei 77'610.
 // ⟨Bis zur Fachprüfung stand hier, diese Grenzen seien nicht beziffert, und ZG zeigte keinen Betrag.⟩
 //
+// DAS EINKOMMEN IM BETRAG ⟨Fixrunde 2, Re-Review B3⟩
+// Gerechnet wird mit allen erfassten Einkünften, die das Steuergesetz zum Reineinkommen zählt:
+// Nettolohn, Nebenerwerb, Renten, dazu ERHALTENE Unterhaltsbeiträge (§ 22 lit. f [6]) und
+// Familienzulagen (§ 16 Abs. 1 [6], Wegleitung Code 155 [8]) — beide als eigene Felder der App,
+// ×12. Die Familienzulagen zählen wie in data/haushaltsEinnahmen.js ZUSÄTZLICH zum Lohn; stecken
+// sie schon im erfassten Nettolohn, wären sie doppelt (steht im Vorbehalt). Vorher fehlten beide:
+// 1 Kind, 4'000 + 1'500 Alimente + 300 Zulagen ergab 3'049 statt 1'321.
+// Die ABZÜGE bis zum Reineinkommen (Berufskosten, Versicherungsprämien, bezahlte Unterhaltsbeiträge,
+// Drittbetreuung …) rechnet der Betrag NICHT ab: die App kennt deren tatsächliche Höhe nicht. Der
+// Betrag liegt darum eher zu tief (Vorbehalt: beide Richtungen).
+//
 // 🛑 KEIN VERDIKT AUS DER NÄHERUNG
-// Massgebend ist das Reineinkommen (Code 299) — nach Berufskosten, Versicherungsabzug, Unterhalts-
-// beiträgen. Das Nettoeinkommen der App liegt darüber, der Betrag hier also eher zu tief (steht in
-// `ipv.naeherung`). Ein «kein Anspruch» oder «unter dem Mindestbetrag» sagt die App darum nur, wenn es
-// auch nach dem Versicherungsabzug [6] (3'000 für Alleinstehende, + 1'000 je Kind, höchstens die
-// erfasste Prämie) gilt und keine bezahlten Unterhaltsbeiträge erfasst sind; sonst `zgNaeherung`.
-// Weitere Abzüge (Berufskosten nach § 25 [6]) nimmt die App nicht an — deren Pauschalen sind nicht
-// gelesen.
+// Ein «kein Anspruch» oder «unter dem Mindestbetrag» sagt die App nur, wenn es auch auf einer
+// UNTERGRENZE des Reineinkommens gilt (`zgUntergrenzeAbzug`): die höchsten Abzüge, die ohne
+// Einzelnachweis vorstellbar sind — Versicherungsabzug voll (§ 30 lit. g [6]: 3'000, ohne AHV-/
+// Vorsorgebeiträge 4'500, + 1'000 je Kind, unabhängig von der erfassten Prämie, denn auch Lebens-,
+// Unfallprämien und Sparzinsen zählen), bei Erwerbseinkommen die Berufskosten-Pauschale (3 %, 2'000–
+// 4'000 [8]) plus Fahrkosten bis 6'000 und Verpflegung 3'200 [8], bezahlte Unterhaltsbeiträge ×12
+// (§ 30 lit. c) und erfasste Kinderbetreuung ×12 bis 25'000 je Kind unter 14 (§ 30 lit. l). Sonst
+// `zgNaeherung`. Für eine Einzelperson ohne Kinder heisst das: «kein Anspruch» erst ab rund
+// 76'200 Nettolohn im Jahr (≈ 6'350 im Monat), nicht schon ab 62'310.
+// ⟨Bis zur Fixrunde 2 zog die Untergrenze nur den Versicherungsabzug ab, und nur bis zur erfassten
+// Prämie — ohne Prämie gar nichts; und bei erfassten bezahlten Alimenten gab es nie ein Verdikt.⟩
+// Nicht in der Untergrenze (unbeschränkt oder der App unbekannt): nachgewiesene höhere Berufskosten,
+// Weiterbildung (§ 30 lit. n, bis 12'000), Krankheitskosten (§ 31), Spenden, Schuldzinsen,
+// Einkäufe. Wer solche Abzüge hat, liegt tiefer — die Verdikt-Texte raten darum zur Anmeldung.
+// Ein Verdikt «unter dem Mindestbetrag» ist damit praktisch nie erreichbar: die Untergrenze liegt
+// mindestens 3'000 tiefer, der Anspruch dort also mindestens 240 höher.
 //
 // BEWUSST NICHT GEBAUT:
 //   · Paare, Konkubinat, mehrere Erwachsene (§ 4 Abs. 2 [1]).
@@ -62,11 +95,12 @@
 //   · Quellenbesteuerte (§ 7 Abs. 1), EL (Abs. 2), Sozialhilfe (Abs. 3), Mutterschaftsbeiträge (Abs. 4).
 //   · freiwillige Einkäufe 2. Säule, Liegenschaftsunterhalt über 20 % (§ 1 lit. b1/c1 [2]).
 import {
-  vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
+  vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr,
   jahrVorbei, mehrereErwachsene, ERWACHSEN, SAEULE_3A, KEIN_PRAEMIENDECKEL,
   kinderAlter, ALTER_UNERFASST, UEBER_18,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
+import { hauptlohnMonate } from '../utils/dreizehnter.js';
 
 // Werte 2026, wörtlich aus [1]–[3] (Struktur [4]). Alle Beträge sind Jahresbeträge in CHF.
 export const IPV_ZG = {
@@ -93,9 +127,15 @@ export const IPV_ZG = {
   // [3] S. 6 und [4] Ziff. 1.4: «Ein Prämienbeitrag unter 50 Franken pro Jahr wird nicht ausbezahlt.»
   mindestbetrag: 50,
   // § 30 lit. g [6] (Steuerperiode 2024): «bis zum Gesamtbetrag von … 3000 Franken für die übrigen
-  // steuerpflichtigen Personen … Diese Abzüge erhöhen sich um 1000 Franken für jedes Kind».
-  // Nur für die Untergrenze des Verdikts, nicht für den Betrag.
-  versicherungsabzug: { alleinstehend: 3000, jeKind: 1000 },
+  // steuerpflichtigen Personen. Für steuerpflichtige Personen ohne Beiträge gemäss den Bst. d und e
+  // erhöhen sich diese Ansätze um die Hälfte. Diese Abzüge erhöhen sich um 1000 Franken für jedes
+  // Kind». Nur für die Untergrenze des Verdikts, nicht für den Betrag.
+  versicherungsabzug: { alleinstehend: 3000, ohneBeitraege: 4500, jeKind: 1000 },
+  // [8] S. 32/33 und § 25 [6] (Steuerperiode 2024). Nur für die Untergrenze des Verdikts.
+  berufskosten: { satz: 0.03, min: 2000, max: 4000, fahrkostenMax: 6000, verpflegungMax: 3200 },
+  // § 30 lit. l [6]: Drittbetreuung «höchstens 25'000 Franken» je Kind, das «das 14. Altersjahr
+  // noch nicht vollendet hat». Nur für die Untergrenze des Verdikts.
+  drittbetreuung: { jeKind: 25000, unterAlter: 14 },
   // § 11 Abs. 1/2 [1]: Gesuch «bis 30. April»; verspätet «bis 30. September …, wenn … wichtige Gründe».
   frist: { monatTag: '04-30', verspaetetBis: '09-30' },
 };
@@ -134,6 +174,36 @@ export function ipvZugRechnen({ personen, me, richtpraemie = IPV_ZG.richtpraemie
   };
 }
 
+// Monatsfeld → Jahresbetrag; unlesbar oder negativ ⇒ 0 (wie BS/UR).
+const jaehrlich = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x * 12 : 0; };
+
+// Erhaltene Unterhaltsbeiträge (§ 22 lit. f [6]) und Familienzulagen (§ 16 Abs. 1 [6], Code 155
+// [8]) im Jahr — zählen zum massgebenden Einkommen (Fixrunde 2, B3).
+export function zgWeitereEinkuenfte(f) {
+  return jaehrlich(f.alimenteReceived) + jaehrlich(f.familienzulagen);
+}
+
+// Höchste Abzüge bis zum Reineinkommen, die ohne Einzelnachweis vorstellbar sind — nur für die
+// Untergrenze des Verdikts (siehe Kopf «KEIN VERDIKT AUS DER NÄHERUNG»). `kinderJahre` = Alter im
+// Anspruchsjahr; die Drittbetreuung zählt für Kinder unter 14 im Basisjahr (2 Jahre früher).
+export function zgUntergrenzeAbzug(f, kinderJahre) {
+  const p = IPV_ZG;
+  const b = p.berufskosten;
+  const lohn = Math.max(0, Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12);
+  // [8] S. 32: «Beträgt Ihr Einkommen weniger als Fr. 2 000.– pro Jahr, entspricht der zulässige
+  // Abzug diesem geringeren Einkommen.»
+  const berufskosten = lohn > 0
+    ? Math.min(lohn, Math.min(b.max, Math.max(b.min, b.satz * lohn))) + b.fahrkostenMax + b.verpflegungMax
+    : 0;
+  // § 30 lit. g [6]: ohne AHV-/Vorsorgebeiträge (ohne Erwerb) um die Hälfte höher — für die
+  // Untergrenze der höhere Satz, sobald kein Lohn erfasst ist.
+  const versicherung = (lohn > 0 ? p.versicherungsabzug.alleinstehend : p.versicherungsabzug.ohneBeitraege)
+    + p.versicherungsabzug.jeKind * kinderJahre.length;
+  const kleine = kinderJahre.filter((a) => a - p.basisjahrAbstand < p.drittbetreuung.unterAlter).length;
+  const betreuung = Math.min(jaehrlich(f.childcare), p.drittbetreuung.jeKind * kleine);
+  return berufskosten + versicherung + jaehrlich(f.alimentePaid) + betreuung;
+}
+
 // Reinvermögen ≈ erfasste Posten − Kreditkarte − Darlehen (die App führt kein Reinvermögen).
 export function zgReinvermoegen(f) {
   return Math.max(0, vermoegenSumme(f) - Number(f.creditCardBalance || 0) - Number(f.loans || 0));
@@ -161,8 +231,9 @@ export function ipvZug(data, hh, ipvData, youngAdultsCount, orientierung) {
   if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
 
   // § 1 Abs. 1 [2]: Reineinkommen + 10 % Reinvermögen + Säule 3a (lit. c, aufgerechnet — das
-  // Nettoeinkommen der App trägt sie schon, Regel `voll`) − 8500 je Kind.
-  const me = Math.max(0, einkommenJahr(f, SAEULE_3A.voll)
+  // Nettoeinkommen der App trägt sie schon, Regel `voll`) − 8500 je Kind. Erhaltene Alimente und
+  // Familienzulagen sind Einkünfte [6] (Fixrunde 2, B3).
+  const me = Math.max(0, einkommenJahr(f, SAEULE_3A.voll) + zgWeitereEinkuenfte(f)
     + p.vermoegenAnteil * zgReinvermoegen(f) - p.kinderabzug * kinderZahl);
   const personen = ['e', ...kinderJahre.map(() => 'k')];
   const r = ipvZugRechnen({ personen, me });
@@ -186,11 +257,8 @@ export function ipvZug(data, hh, ipvData, youngAdultsCount, orientierung) {
   if (r.grund) {
     // Kein oder zu kleiner Anspruch — aber nur als Aussage, wenn auch die Untergrenze des
     // amtlichen Einkommens nicht reicht (siehe Kopf).
-    const praemie = praemieJahr(data);
-    const abzug = Math.min(p.versicherungsabzug.alleinstehend + p.versicherungsabzug.jeKind * kinderZahl,
-      praemie > 0 ? praemie : 0);
-    const unten = ipvZugRechnen({ personen, me: Math.max(0, me - abzug) });
-    if (Number(f.alimentePaid) > 0 || unten.total >= p.mindestbetrag) return orientierung('zgNaeherung');
+    const unten = ipvZugRechnen({ personen, me: Math.max(0, me - zgUntergrenzeAbzug(f, kinderJahre)) });
+    if (unten.total >= p.mindestbetrag) return orientierung('zgNaeherung');
     return ergebnisOhneAnspruch({
       ...gemeinsam,
       noteKey: r.grund === 'mindestbetrag' ? 'ipv.zgUnterMindestbetrag' : 'ipv.zgKeinAnspruch',
@@ -198,9 +266,12 @@ export function ipvZug(data, hh, ipvData, youngAdultsCount, orientierung) {
   }
   const annual = Math.round(r.total);
   const maxAnnual = Math.round(ipvZugRechnen({ personen, me: 0 }).total);
+  // Das Gesuch ist Pflicht (§ 11 [1]): statt des Häkchens «Berechtigt» die Überschrift «nur auf
+  // Antrag» (`antragNoetig`, Mechanik von GE in PremiumSubsidy.jsx) — Fixrunde 2.
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
     noteKey: fristVorbei ? 'ipv.zgFristVorbei' : 'ipv.zgFristLaeuft',
     noteParams: { jahr, folgejahr: jahr + 1 },
+    extra: { ...gemeinsam.extra, antragNoetig: true },
   });
 }
