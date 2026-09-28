@@ -118,7 +118,7 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
 // um SG, am 23.09.2026 um LU und am 28.09.2026 um VD, UR, NE, GE, GR, TG und TI: unverändert bleiben jetzt 14 der 26 Kantone.
 const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI'];
 
-describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GR, TG und TI rechnen exakt wie v0.1.37-beta', () => {
+describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG und TI rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
     { adults: 1, children: [] }, { adults: 2, children: [], partnerIncome: 1500 },
     { adults: 1, children: [{ age: 5 }] }, { adults: 2, children: [{ age: 3 }, { age: 20 }] },
