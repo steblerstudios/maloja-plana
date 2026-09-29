@@ -340,6 +340,24 @@ Abschiedsagentur, plaant).
   was gehört wohin, was ist doppelt, wo hilft ein Bild statt Text (z. B. Abbau-Plan als ruhige
   Zeitachse, Anteil je Stufe, Mahnstufen). Design zuerst, gemeinsam (Mockup), Haltung ruhig und ohne
   Wertung (keine roten Alarm-Zahlen). Grundlage: Stand #408.
+- 🔨 **Stundenlohn: was steht mir zu?** *⟨Stebler Studios 25.09.2026: Rechner für Arbeit im
+  Stundenlohn, «ja für maloja plana»; 28.09. «ja bitte» zum Bau⟩*
+  - **Warum:** Wer im Stundenlohn arbeitet, verliert am häufigsten dort, wo niemand nachrechnet:
+    ein Ferienzuschlag, der nicht separat ausgewiesen ist · bei Arbeit auf Abruf kein Lohn bei
+    Krankheit und keine bezahlte Bereitschaft · Pensionskasse und Unfall fallen bei kleinen Pensen
+    weg. Dazu eine Lücke im eigenen Code: der Mindestlohn gilt **ohne** Ferien- und
+    Feiertagszuschlag (`lohnCheck.js`), wer «25 Fr. alles inklusive» verdient, wurde am falschen
+    Betrag gemessen.
+  - **Gebaut (Entwurfs-PR, 28.09.):** Ansicht `stundenlohn` im Portemonnaie. Art der Anstellung
+    (fest · Abruf echt/unecht · befristet · temporär · Hausdienst) · Grundlohn und Zuschläge
+    getrennt (Ferien 8,33/10,64/13,04 %, Feiertage nur beziffert, 13. als Zwölftel) · bei
+    unbekannter Ferienform **beide Lesarten** nebeneinander · Mindestlohn am **Grundlohn** über
+    `pruefeStundenlohn` · Schwellen Pensionskasse (BVG Art. 2) und Freizeit-Unfall (UVV Art. 13) ·
+    offene Fragen statt Annahmen. Ergebnis-Art: Schätzung.
+  - **Leitplanke:** kein Brief an den Arbeitgeber (`WAGECLAIM_BEREIT = false`, Entscheid
+    15.07.2026) — nur Einordnung und Fragen für die Person selbst.
+  - **Offen (Ideen):** GAV-Mindestlöhne je Branche · NAV Hauswirtschaft mit Beträgen · Vergleich
+    mit einer hochgeladenen Lohnabrechnung · Querverweis aus dem Kapitel Finanzen bei Stundenlohn.
 - 🌱 **UVG → Brief-Automatik** (Angestellte: Unfalldeckung abwählen) · **alle Prämien-Abläufe enden im Brief-Generator** (UVG/Franchise/Wechsel).
 - 🌱 **Generatoren fürs Lebensende** *⟨Eingang 19.07.⟩* — Vorsorgeauftrag, Testament,
   Bestattungsauftrag; evtl. bei der Gemeinde hinterlegen (gemeinde- und kantonsabhängig).

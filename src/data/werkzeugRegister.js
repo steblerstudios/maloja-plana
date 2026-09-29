@@ -37,6 +37,7 @@ export const WERKZEUGE = [
   { view: 'schulden', nav: 'nav.debts', icon: 'debt', fach: 'geld', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
   { view: 'kreditkarte', nav: 'nav.kreditkarte', sub: 'nav.sub.kreditkarte', icon: 'money', fach: 'geld', aliases: ['kreditkarte', 'cashback', 'jahresgebühr', 'credit card', 'carte de crédit', 'carta di credito'] },
   { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', fach: 'geld', imMenue: 5, aliases: ['finanzübersicht', 'übersicht', 'finanzen', 'overview'] },
+  { view: 'stundenlohn', nav: 'nav.stundenlohn', sub: 'nav.sub.stundenlohn', icon: 'money', fach: 'geld', aliases: ['stundenlohn', 'ferienzuschlag', 'arbeit auf abruf', 'aushilfe', 'temporär', 'salaire horaire', 'salario orario', 'hourly wage'] },
   // Kein eigener View: führt ins Kapitel Finanzen (wie bisher auf dem Dashboard).
   { key: 'mindestlohn', view: 'chapter', kapitel: 'finanzen', nav: 'nav.mindestlohn', sub: 'nav.sub.mindestlohn', icon: 'money', fach: 'geld', suche: false },
   { view: 'sozialhilfe', nav: 'nav.sozialhilfe', sub: 'nav.sub.sozialhilfe', icon: 'sozialhilfe', fach: 'geld', aliases: ['skos', 'sozialhilfe', 'aide sociale'] },
