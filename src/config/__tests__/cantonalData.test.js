@@ -2,7 +2,14 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { SKOS_GRUNDBEDARF, getGrundbedarf, calculateSozialhilfe, calculateIPV, checkELEligibility, CANTONAL_IPV, CANTON_CODES, IPV_MODULE } from '../cantonalData.js';
 import { grundbedarfFuerHaushalt, berechneSozialhilfe } from '../../data/sozialhilfeRechner.js';
 import { vermoegensfreibetragUnbestaetigt } from '../../data/vermoegensfreibetragUnbestaetigt.js';
-import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton, MUSTERWERTE } from './ipvBelegtSimulieren.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 describe('SKOS_GRUNDBEDARF (cantonalData)', () => {
   it('matches the official SKOS GBL 2025/2026 scale (SKOS-RL C.3.1)', () => {
@@ -142,35 +149,43 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
 
 // K31: ZH ist seit 19.09.2026 belegt, BE und AG seit 20.09.2026 — alle drei mit eigenem
 // Modell (Tests in ipvZuerich.test.js, ipvBern.test.js bzw. ipvAargau.test.js).
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'JU', 'NW', 'ZG', 'FR', 'SZ', 'SH', 'AR', 'AI', 'VS'];
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'JU', 'NW', 'ZG', 'FR', 'SZ', 'SH', 'AR', 'AI', 'VS', 'BS'];
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
+// GE ist seit #469 selbst belegt; der Muster-Helfer oben macht es für diese Datei zum Muster-Kanton.
+// Die Register-Tests prüfen den ECHTEN Stand — darum für sie kurz zurück, danach wieder Muster.
+// ⟨28.09.2026, Merge von main (GE #469) in feat/ipv-bs⟩
+const echterStand = (fn) => async () => {
+  musterZurueck();
+  try { await fn(); } finally { musterZurueck = musterKanton('GE'); }
+};
+
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 3 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI und VS mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 2 null, ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI, VS und BS mit Quelle', echterStand(() => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    expect(UNBELEGT).toHaveLength(3);
+    expect(UNBELEGT).toHaveLength(2);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
-  });
+  }));
 
   // Register und Beleg gehören zusammen: ein belegter Kanton OHNE Modul fiele auf den Muster-Abbau
   // zurück (den kein Kanton so kennt), ein Modul OHNE Beleg würde nie aufgerufen. Beides wäre still.
-  it('IPV_MODULE: genau die belegten Kantone haben ein Modul, mit Lader und Einstiegsfunktion', () => {
+  it('IPV_MODULE: genau die belegten Kantone haben ein Modul, mit Lader und Einstiegsfunktion', echterStand(() => {
     const belegt = Object.keys(CANTONAL_IPV).filter((k) => CANTONAL_IPV[k].beleg && CANTONAL_IPV[k].beleg.quelle).sort();
     expect(Object.keys(IPV_MODULE).sort()).toEqual(belegt);
     for (const [k, m] of Object.entries(IPV_MODULE)) {
       expect(typeof m.laden, k).toBe('function');
       expect(typeof m.fn, k).toBe('string');
     }
-  });
+  }));
 
-  it('IPV_MODULE: jeder Lader liefert ein Modul mit der genannten Einstiegsfunktion', async () => {
+  it('IPV_MODULE: jeder Lader liefert ein Modul mit der genannten Einstiegsfunktion', echterStand(async () => {
     for (const [k, m] of Object.entries(IPV_MODULE)) {
       const mod = await m.laden();
       expect(typeof mod[m.fn], `${k}.${m.fn}`).toBe('function');
     }
-  });
+  }));
 
   it.each(UNBELEGT)('%s: kein Betrag, kein «berechtigt», keine Grenze — tief und hoch dieselbe Ausgabe', (canton) => {
     const ausgabe = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } });
@@ -193,19 +208,19 @@ describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
   });
 
   it('prüfenswert hängt nur an der erfassten Prämie, nie an der (unbelegten) Grenze', () => {
-    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'BS' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
+    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'GE' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
     expect(r(1000, 300)).toBe(true);
     expect(r(50000, 300)).toBe(true);
     expect(r(1000, 0)).toBe(false);
   });
 
   it('ein beleg ohne quelle zählt nicht als belegt', () => {
-    const vorher = CANTONAL_IPV.BS.beleg;
-    CANTONAL_IPV.BS.beleg = { quelle: '', stand: '2026' };
+    const vorher = CANTONAL_IPV.GE.beleg;
+    CANTONAL_IPV.GE.beleg = { quelle: '', stand: '2026' };
     try {
-      expect(calculateIPV({ basis: { canton: 'BS' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
+      expect(calculateIPV({ basis: { canton: 'GE' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
     } finally {
-      CANTONAL_IPV.BS.beleg = vorher;
+      CANTONAL_IPV.GE.beleg = vorher;
     }
   });
 });
@@ -216,13 +231,15 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
   // E9: das Modell rechnet nur für amtlich belegte Kantone; hier simuliert.
   // K31: bis 19.09.2026 lief dieser Block mit ZH, danach mit BE; beide haben jetzt ein
   // eigenes Modell. Der lineare Abbau gilt weiter für die übrigen Kantone — bis 23.09.2026
-  // lief er hier mit LU, seither hat auch LU ein eigenes Modell; darum BS (gleiche Musterwerte).
+  // lief er hier mit LU, seither hat auch LU ein eigenes Modell; bis 28.09.2026 mit BS, das seither
+  // ebenfalls eines hat, wie VD — darum GE (noch ohne Modul).
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
   afterAll(() => zuruecksetzen());
-  const zh = CANTONAL_IPV.BS;
+  // Die Musterwerte aus dem Helfer, nicht aus der Kantonszeile (die wird erst im beforeAll ersetzt).
+  const zh = MUSTERWERTE;
   const ipv = (overrides = {}) => calculateIPV({
-    basis: { canton: 'BS' },
+    basis: { canton: 'GE' },
     finanzen: {},
     ...overrides,
   });
@@ -252,7 +269,7 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
 
   it('uses the family subsidy plus per-child amount when children are present', () => {
     const r = ipv({
-      basis: { canton: 'BS', household: { adults: 1, children: [{ age: 5 }, { age: 8 }] } },
+      basis: { canton: 'GE', household: { adults: 1, children: [{ age: 5 }, { age: 8 }] } },
       finanzen: { monthlyIncome: 0 },
     });
     expect(r.maxAnnual).toBe(zh.subsidyFamily + 2 * zh.subsidyChild);
@@ -276,8 +293,8 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
 
   it('counts partner income towards the income limit', () => {
     // single monthly income alone is well within the limit, partner income pushes it over
-    const r = ipv({ basis: { canton: 'BS', household: { adults: 2, partnerIncome: 4000 } }, finanzen: { monthlyIncome: 1000 } });
-    expect(r.eligible).toBe(false); // (1000 + 4000) × 12 = 60000 > 54000 (BS-Musterwert)
+    const r = ipv({ basis: { canton: 'GE', household: { adults: 2, partnerIncome: 4000 } }, finanzen: { monthlyIncome: 1000 } });
+    expect(r.eligible).toBe(false); // (1000 + 4000) × 12 = 60000 ≥ 60000 (GE-Musterwert) → Faktor 0
   });
 });
 

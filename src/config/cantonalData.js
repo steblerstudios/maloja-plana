@@ -30,6 +30,7 @@ export const IPV_MODULE = {
   AG: { laden: () => import('./ipvAargau.js'), fn: 'ipvAargau', brauchtPLZ: false },
   SG: { laden: () => import('./ipvStGallen.js'), fn: 'ipvStGallen' },
   LU: { laden: () => import('./ipvLuzern.js'), fn: 'ipvLuzern' },
+  BS: { laden: () => import('./ipvBaselStadt.js'), fn: 'ipvBaselStadt', brauchtPLZ: false },
   FR: { laden: () => import('./ipvFreiburg.js'), fn: 'ipvFreiburg' },
   SZ: { laden: () => import('./ipvSchwyz.js'), fn: 'ipvSchwyz', brauchtPLZ: false },
   VD: { laden: () => import('./ipvVaud.js'), fn: 'ipvVaud' },
@@ -172,7 +173,11 @@ export const CANTONAL_IPV = {
   // zu der ein Betrag bestünde (für Alleinstehende endet er viel früher) — darum maxIncome null.
   SO: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation',
     beleg: { quelle: 'Parameter IPV 2026 DDI SO (27.01.2026) · SV (BGS 831.2) · SG (BGS 831.1) · AKSO — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // BS (K31): eigenes Modell in config/ipvBaselStadt.js (Stufentabelle nach KVO Anhang 2). Die
+  // Leistungsgrenze ist publiziert, hängt aber an der Haushaltsgrösse — sie steht im Ergebnis.
+  // Weg: Antrag beim Amt für Sozialbeiträge (KVO § 15), nicht automatisch.
+  BS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAsb',
+    beleg: { quelle: 'KVO BS (SG 834.410) · SoHaG (SG 890.700) · SoHaV (SG 890.710) · Amt für Sozialbeiträge BS — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' }, beleg: null },
   // SH (K31): eigenes Modell in config/ipvSchaffhausen.js (Richtprämien minus 15 % des anrechenbaren
   // Einkommens, höchstens 65 %). Die Versand-Grenzwerte der Verordnung sind keine Anspruchsgrenze,
