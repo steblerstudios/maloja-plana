@@ -171,7 +171,7 @@ export const AusserdemOffen = ({ palette, t, posten, onNavigate }) => {
 
 // ② «Offene Posten»: beide Ablagen nebeneinander gelesen — Arztrechnungen (KVG-Tracker) und
 // Forderungen (Schuldenmanager). Nur lesen; die Summe ist die Summe der beiden Gruppen.
-const forderungName = (f, t) => f.creditor
+export const forderungName = (f, t) => f.creditor
   || (f.ausBeleg
     ? (f.belegDatum ? t('schulden.posten.rechnungVom', { datum: formatDE(f.belegDatum) }) : t('schulden.posten.ohneDatum'))
     : '—');

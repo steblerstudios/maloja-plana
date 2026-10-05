@@ -19,7 +19,7 @@ import { betrag, zahl } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey } from './components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName } from './components/SchuldenBilder.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -375,7 +375,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       schulden.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') }) : React.createElement('div', null,
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
-            React.createElement('strong', null, debt.creditor),
+            React.createElement('strong', null, forderungName(debt, t)),
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
@@ -383,7 +383,10 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           ),
           // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
-          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
+          // Lücke aus dem Spec: bisher kein Weg zu «bezahlt» nach dem Erfassen. Derselbe Klick läuft über
+          // onSave und gleicht den verbundenen Beleg ab (utils/offenePosten.js, nachSchuldenSpeichern).
+          React.createElement('button', { type: 'button', onClick: () => handleUpdateDebt(debt.id, 'status', debt.status === 'paid' ? 'open' : 'paid'), style: { ...zweitKnopf, marginRight: space.sm } }, debt.status === 'paid' ? t('schulden.wiederOffen') : t('schulden.alsBezahlt')),
+          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + forderungName(debt, t), onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       )
     ),

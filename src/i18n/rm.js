@@ -2848,6 +2848,9 @@ export default {
     date: 'Data',
     statusOpen: 'Avert',
     statusPaid: 'Pajà',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    alsBezahlt: 'Als bezahlt markieren',
+    wiederOffen: 'Wieder offen',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
@@ -5251,6 +5254,11 @@ export default {
     belegRemind: 'M\'algurdar en il chalender',
     belegReminded: 'En il chalender',
     belegReminderTitle: 'Pajar il quint dal medi ({betrag})',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    alsForderung: 'Als Forderung im Schuldenmanager führen',
+    wirdGefuehrt: 'Wird im Schuldenmanager geführt',
+    zumSchuldenmanager: 'Zum Schuldenmanager',
+    loeschenVerbunden: 'Wird im Schuldenmanager geführt — dort zuerst entfernen.',
     belegNichtGedeckt: 'Betg cuvrì da la cassa',
     belegNichtGedecktHint: 'Na quinta betg sin la franschisa/il parteniment — p.ex. prestaziuns pajadas sez.',
     belegNichtGedecktNote: '+ {amount} betg cuvrì',

@@ -94,3 +94,14 @@ export const abgleichBelege = (data) => {
   if (!geaendert) return data;
   return { ...data, versicherungen: { ...data.versicherungen, kkBelege: neu } };
 };
+
+// Verdrahtung für main.jsx (Task 4): beide Funktionen sind rein, main.jsx ruft nur sie auf.
+// ③ Übernehmen: schreibt in beide Ablagen (schulden + versicherungen) mit einem Klick.
+export const uebernehmen = (prev, belegId, heute, neueId) => ({ ...prev, ...belegAlsForderung(prev, belegId, heute, neueId) });
+
+// Speichern im Schuldenmanager: Bezahlt-Abgleich zurück zum Beleg. Nur mit echtem Array —
+// ohne `schulden` würde `abgleichBelege` jede Verbindung als «Forderung fehlt» lesen und lösen.
+export const nachSchuldenSpeichern = (prev, schuldenData) => {
+  const neu = { ...prev, ...schuldenData };
+  return Array.isArray(schuldenData?.schulden) ? abgleichBelege(neu) : neu;
+};
