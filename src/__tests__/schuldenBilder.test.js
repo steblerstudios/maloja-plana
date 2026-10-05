@@ -7,7 +7,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createDebtPlan, prioritizeDebts, calculateDebtStatus } from '../schuldenCalc.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, summenJeStufe, STUFEN_TON, zeitraum } from '../components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, summenJeStufe, STUFEN_TON, zeitraum } from '../components/SchuldenBilder.jsx';
+import { offenePosten } from '../utils/offenePosten.js';
 import { LIGHT_PALETTE as palette, DARK_PALETTE } from '../config/constants.js';
 import { betrag } from '../utils/geld.js';
 
@@ -128,4 +129,75 @@ describe('Kontrast der Stufen-Töne', () => {
       expect(werte[1]).toBeGreaterThan(werte[2]);
     });
   }
+});
+
+// Task 3 (Schulden R2, 05.10.2026): ① «Ausserdem offen» und ② «Offene Posten» — nur lesen.
+describe('① AusserdemOffen / ② OffenePosten', () => {
+  const heute = '2026-10-05';
+  const daten = {
+    versicherungen: { kkBelege: [
+      { id: 'b1', datum: '2026-09-01', betrag: 400, status: 'offen', frist: '2026-10-20' },
+      { id: 'b2', datum: '', betrag: 240, status: 'offen' },
+      { id: 'b3', datum: '2026-08-01', betrag: 90, status: 'offen', forderungId: '7' },
+    ] },
+    schulden: [
+      { id: 7, creditor: '', amount: 90, status: 'open', stufe: 'rechnung', ausBeleg: 'b3', belegDatum: '2026-08-01' },
+      { id: 8, creditor: 'Steueramt', amount: 300, status: 'open', stufe: 'mahnung' },
+      { id: 9, creditor: '', amount: 50, status: 'open' },
+    ],
+  };
+  const posten = offenePosten(daten, heute);
+  const render = (C, p, pal = palette, onNavigate) => renderToStaticMarkup(React.createElement(C, { palette: pal, t, posten: p, onNavigate })).replace(/&quot;/g, '"').replace(/&#x27;/g, "'");
+
+  it('① ohne Arztrechnungen: nichts (kein «0 Rechnungen»)', () => {
+    expect(render(AusserdemOffen, offenePosten({}, heute))).toBe('');
+  });
+  it('① nennt Anzahl, Betrag und nächste Frist', () => {
+    const html = render(AusserdemOffen, posten, palette, () => {});
+    expect(html).toContain('schulden.posten.ausserdem');
+    expect(html).toContain('"anzahl":2');
+    expect(html).toContain(betrag(640, { stellen: 2 }));
+    expect(html).toContain('schulden.posten.naechsteFrist');
+    expect(html).toContain('schulden.posten.zumTracker');
+  });
+  it('① Einzahl-Variante, und ohne Frist keine «nächste Frist»', () => {
+    const eins = offenePosten({ versicherungen: { kkBelege: [{ id: 'x', betrag: 120, status: 'offen' }] } }, heute);
+    const html = render(AusserdemOffen, eins);
+    expect(html).toContain('schulden.posten.ausserdemEins');
+    expect(html).not.toContain('naechsteFrist');
+  });
+  it('② beide Gruppen, Beleg ohne Datum, Herkunft, Summe', () => {
+    const html = render(OffenePosten, posten, palette, () => {});
+    expect(html).toContain('schulden.posten.zumTracker');
+    expect(html).toContain('schulden.posten.titel');
+    expect(html).toContain('schulden.posten.gruppeArzt');
+    expect(html).toContain('schulden.posten.gruppeForderungen');
+    expect(html).toContain('schulden.posten.ohneDatum');
+    expect(html).toContain('schulden.posten.rechnungVom');
+    expect(html).toContain('schulden.posten.ausArzt');
+    expect(html).toContain('schulden.stufe.mahnung');
+    expect(html).toContain('schulden.stufe.keine');
+    expect(html).toContain(betrag(posten.summe, { stellen: 2 }));
+    expect(html).toContain('<section');
+    expect(html).toContain('aria-labelledby');
+  });
+  it('② Frist abgelaufen als Text; Knopf zum Tracker ruft onNavigate(kvg)', () => {
+    const alt = offenePosten({ versicherungen: { kkBelege: [{ id: 'a', datum: '2026-05-01', betrag: 100, status: 'offen', frist: '2026-06-01' }] } }, heute);
+    const html = render(OffenePosten, alt);
+    expect(html).toContain('schulden.posten.fristAbgelaufen');
+    const q = fs.readFileSync(path.resolve(__dirname, '../components/SchuldenBilder.jsx'), 'utf8');
+    expect(q).toMatch(/onNavigate\('kvg'\)/);
+  });
+  it('② ohne Forderungen keine Forderungen-Gruppe', () => {
+    const html = render(OffenePosten, offenePosten({ versicherungen: { kkBelege: [{ id: 'a', betrag: 10, status: 'offen' }] } }, heute));
+    expect(html).not.toContain('gruppeForderungen');
+  });
+  it('kein Rot, hell und dunkel', () => {
+    for (const p of [palette, DARK_PALETTE]) {
+      for (const C of [AusserdemOffen, OffenePosten]) {
+        const html = render(C, posten, p).toLowerCase();
+        for (const rot of [p.rose, p.roseDeep]) expect(html).not.toContain(rot.toLowerCase());
+      }
+    }
+  });
 });

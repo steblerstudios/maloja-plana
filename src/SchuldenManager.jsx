@@ -4,6 +4,7 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig } from './schuldenCalc.js';
 import { heuteIso, alsIsoDatum } from './utils/fristen.js';
+import { offenePosten } from './utils/offenePosten.js';
 import { renderSource } from './utils/renderSource.js';
 import { formatDE } from './utils/helpers.js';
 import { leseBetrag } from './briefGenerator.js';
@@ -18,7 +19,7 @@ import { betrag, zahl } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, STUFEN_TON, tierLabelKey } from './components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey } from './components/SchuldenBilder.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -142,6 +143,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
 
 
   const debtStatus = calculateDebtStatus(schulden);
+  // ① ② Mit dem lokalen Zustand, damit frisch Erfasstes sofort zählt.
+  const posten = offenePosten({ ...data, schulden }, heuteIso());
   const prioritized = prioritizeDebts(schulden, method);
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income);
@@ -231,6 +234,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
         ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') })
         : React.createElement(React.Fragment, null,
           React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
+          React.createElement(AusserdemOffen, { palette, t, posten, onNavigate }),
+          React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
           React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate })),
 
       betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },

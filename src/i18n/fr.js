@@ -3118,6 +3118,21 @@ export default {
       title: 'Amendes et peines pécuniaires',
       quelle: 'Sources : [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_35]], [[CP art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_36]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_106]] (vérifié en septembre 2026).',
     },
+    // Postes ouverts (Dettes R2, 05.10.2026) : ① « Également ouvert », ② liste du suivi LAMal et du gestionnaire de dettes.
+    posten: {
+      ausserdem: 'Également ouvert : {anzahl} factures médicales · {betrag}',
+      ausserdemEins: 'Également ouvert : une facture médicale · {betrag}',
+      naechsteFrist: 'prochain délai {datum}',
+      zumTracker: 'vers le suivi LAMal',
+      titel: 'Postes ouverts',
+      gruppeArzt: 'Factures médicales · dans le suivi LAMal',
+      gruppeForderungen: 'Créances · dans le gestionnaire de dettes',
+      rechnungVom: 'Facture médicale du {datum}',
+      ohneDatum: 'Facture médicale sans date',
+      frist: 'Délai {datum}',
+      fristAbgelaufen: 'Délai dépassé ({datum})',
+      ausArzt: 'issue d’une facture médicale',
+    },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {
       offen: 'Encore ouvert',

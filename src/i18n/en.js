@@ -3118,6 +3118,21 @@ export default {
       title: 'Fines and monetary penalties',
       quelle: 'Sources: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (German text where no English exists, checked September 2026).',
     },
+    // Open items (Debts R2, 05.10.2026): ① «Also open», ② list from the KVG tracker and the debt manager.
+    posten: {
+      ausserdem: 'Also open: {anzahl} medical bills · {betrag}',
+      ausserdemEins: 'Also open: one medical bill · {betrag}',
+      naechsteFrist: 'next deadline {datum}',
+      zumTracker: 'to the health insurance tracker',
+      titel: 'Open items',
+      gruppeArzt: 'Medical bills · in the health insurance tracker',
+      gruppeForderungen: 'Claims · in the debt manager',
+      rechnungVom: 'Medical bill of {datum}',
+      ohneDatum: 'Medical bill without a date',
+      frist: 'Deadline {datum}',
+      fristAbgelaufen: 'Deadline passed ({datum})',
+      ausArzt: 'from a medical bill',
+    },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {
       offen: 'Still open',

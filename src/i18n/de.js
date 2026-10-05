@@ -3142,6 +3142,21 @@ export default {
       title: 'Bussen und Geldstrafen',
       quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',
     },
+    // Offene Posten (Schulden R2, 05.10.2026): ① «Ausserdem offen», ② Liste aus KVG-Tracker und Schuldenmanager.
+    posten: {
+      ausserdem: 'Ausserdem offen: {anzahl} Arztrechnungen · {betrag}',
+      ausserdemEins: 'Ausserdem offen: eine Arztrechnung · {betrag}',
+      naechsteFrist: 'nächste Frist {datum}',
+      zumTracker: 'zum KVG-Tracker',
+      titel: 'Offene Posten',
+      gruppeArzt: 'Arztrechnungen · im KVG-Tracker',
+      gruppeForderungen: 'Forderungen · im Schuldenmanager',
+      rechnungVom: 'Arztrechnung vom {datum}',
+      ohneDatum: 'Arztrechnung ohne Datum',
+      frist: 'Frist {datum}',
+      fristAbgelaufen: 'Frist abgelaufen ({datum})',
+      ausArzt: 'aus Arztrechnung',
+    },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {
       offen: 'Noch offen',

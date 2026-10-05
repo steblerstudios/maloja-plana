@@ -3075,6 +3075,21 @@ export default {
       title: 'Multe e pene pecuniarie',
       quelle: 'Fonti: [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_35]], [[CP art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_36]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_106]] (verificato a settembre 2026).',
     },
+    // Voci aperte (Debiti R2, 05.10.2026): ① «Inoltre aperto», ② elenco dal tracker LAMal e dal gestore dei debiti.
+    posten: {
+      ausserdem: 'Inoltre aperto: {anzahl} fatture mediche · {betrag}',
+      ausserdemEins: 'Inoltre aperta: una fattura medica · {betrag}',
+      naechsteFrist: 'prossimo termine {datum}',
+      zumTracker: 'al tracker LAMal',
+      titel: 'Voci aperte',
+      gruppeArzt: 'Fatture mediche · nel tracker LAMal',
+      gruppeForderungen: 'Crediti · nel gestore dei debiti',
+      rechnungVom: 'Fattura medica del {datum}',
+      ohneDatum: 'Fattura medica senza data',
+      frist: 'Termine {datum}',
+      fristAbgelaufen: 'Termine scaduto ({datum})',
+      ausArzt: 'da una fattura medica',
+    },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {
       offen: 'Ancora aperto',
