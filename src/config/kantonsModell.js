@@ -29,7 +29,8 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Die Zurechnungsregeln (seit 28.09.2026 sechs) — benannt und belegt, NICHT vereinheitlicht.
+// Die Zurechnungsregeln (seit 28.09.2026 sieben: mit BS `abzugOhneSaeule2`) — benannt und belegt,
+// NICHT vereinheitlicht.
 //
 // Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
@@ -71,6 +72,8 @@ export function vermoegenSumme(f) {
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
 //   totalDerEinkuenfte   GL — gemessen am Total der Einkünfte, vor allen Abzügen; die 3a wird
 //                        dort nie abgezogen. EG KVG GL Art. 15 Abs. 1 (GS VIII D/21/1)
+//   abzugOhneSaeule2     BS — kein Zuschlag auf eine Steuergrösse, sondern ein Abzug von den
+//                        Einnahmen, und nur OHNE Säule 2. SoHaV § 17 Abs. 1 lit. a/b (SG 890.710)
 //   imReineinkommenAbgezogen  SZ (28.09.2026) — GAR KEINE Zurechnung: § 7 Abs. 2 EGzKVG
 //                        (SRSZ 361.100) zählt die Aufrechnungen abschliessend auf, die 3a
 //                        fehlt darin. ⇒ Abzug = die ganze Einzahlung, soweit sicher abziehbar.
@@ -452,6 +455,33 @@ export const SAEULE_3A = Object.freeze({
       const ueberEinkommen = Number.isFinite(jahresEinkommen) && betrag3a(f) > Math.max(0, jahresEinkommen);
       return ueberEinkommen || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
     },
+  }),
+
+  // ⟨28.09.2026, K31 BS⟩ Die siebte Regel (im BS-Zweig als vierte gebaut; bei der
+  // Integration hinter SZ, AR und NW einsortiert) — und die erste, die NICHT auf einer Steuergrösse
+  // aufsetzt. Basel-Stadt rechnet die Prämienverbilligung über das Harmonisierungsgesetz
+  // Sozialleistungen: massgeblich sind die EINNAHMEN der Haushaltseinheit, bereinigt um die
+  // anerkannten Abzüge (SoHaG § 7 Abs. 2, SG 890.700). Wortlaut an der Quelle, abgerufen
+  // 28.09.2026 über die API der Gesetzessammlung (Version 5476, in Kraft seit 01.07.2021):
+  //   SoHaV § 17 Abs. 1 lit. a: «Beiträge an die Säule 3a (gebundene Selbstvorsorge) können
+  //     von Personen abgezogen werden, welche keiner zweiten Säule angehören.»
+  //   lit. b (selbständig Erwerbende): «… sowie an die Säule 3a, sofern keine obligatorische
+  //     oder freiwillige zweite Säule besteht.»
+  // Also umgekehrt zu ZH/SG/LU: dort wird die 3a immer zugerechnet, hier wird sie nur OHNE
+  // zweite Säule abgezogen. Das Nettoeinkommen der App trägt die 3a (siehe `einkommenJahr`):
+  //   mit zweiter Säule  ⇒ kein Abzug, der App-Wert ist richtig  (`nichtAufgerechnet` = 0)
+  //   ohne zweite Säule  ⇒ die ganze Einzahlung kommt weg       (`ohneSaeule2`)
+  // 🛑 Welcher Fall gilt, weiss die App nicht sicher — dieselbe fehlende Angabe wie bei
+  // `schwelleOhneSaeule2` (AG). Anders als dort wird hier NICHT still der eine Fall gerechnet:
+  // ipvBaselStadt.js rechnet beide und zeigt nur dann eine Zahl, wenn beide dieselbe
+  // Beitragsgruppe ergeben oder ein Pensionskassenbeitrag erfasst ist. Grund: BS rechnet in
+  // Stufen, ein Abzug von wenigen tausend Franken verschiebt den Betrag um eine ganze Gruppe.
+  abzugOhneSaeule2: Object.freeze({
+    name: 'abzugOhneSaeule2',
+    kantone: 'BS',
+    beleg: 'SoHaV BS § 17 Abs. 1 lit. a und b (SG 890.710, in Kraft seit 01.07.2021)',
+    nichtAufgerechnet: () => 0,
+    ohneSaeule2: (f) => betrag3a(f),
   }),
 });
 

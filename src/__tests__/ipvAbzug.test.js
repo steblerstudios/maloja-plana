@@ -7,10 +7,11 @@ import React from 'react';
 import fs from 'node:fs';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { preloadPLZ, calculateIPV } from '../config/cantonalData.js';
+import { preloadPLZ, calculateIPV, CANTONAL_IPV } from '../config/cantonalData.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { praemienBelegState } from '../data/praemienBeleg.js';
 import { ipvAbzug, fristHinweisKey } from '../data/ipvAbzug.js';
+import { musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { KKLastCard } from '../KKLastCard.jsx';
 import { PraemienBeleg } from '../components/PraemienBeleg.jsx';
 import FinanzUebersicht from '../FinanzUebersicht.jsx';
@@ -74,7 +75,17 @@ describe('ipvAbzug · die Regel', () => {
     expect(ipvAbzug(person('LU', { anspruch: { ipv: { status: 'beantragt' } } })).betrag).toBe(0);
   });
   it('unbelegter Kanton: 0, nie ein Betrag', () => {
-    expect(ipvAbzug(person('BS'))).toMatchObject({ betrag: 0, grund: 'keiner' });
+    // ⟨28.09.2026, Integration BS⟩ bis hier stand BS als unbelegter Kanton — BS ist seither belegt.
+    // Synthetischer Test-Kanton «TT» (Muster-Helfer), damit kein künftiges Kantonsmodell diesen Test umdeutet.
+    const zurueck = musterKanton('TT');
+    try {
+      expect(calculateIPV(person('TT'))).toMatchObject({ belegt: false, amount: null });
+      expect(calculateIPV(person('TT')).offen).toBeUndefined();
+      expect(ipvAbzug(person('TT'))).toMatchObject({ betrag: 0, grund: 'keiner' });
+    } finally { zurueck(); }
+    // Der Helfer räumt den synthetischen Kanton ganz weg (kein `TT: undefined`, sonst 27 Schlüssel).
+    expect(Object.prototype.hasOwnProperty.call(CANTONAL_IPV, 'TT')).toBe(false);
+    expect(Object.keys(CANTONAL_IPV)).toHaveLength(26);
   });
 });
 

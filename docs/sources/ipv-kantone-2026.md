@@ -42,7 +42,7 @@ sind. Dieses Dokument ändert keinen Code.
 | ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | ~~teilweise — gebaut (PR #475), zeigt bewusst keinen Betrag~~ ⟨korrigiert 28.09.2026 abends⟩ **gebaut (PR #475), rechnet** — eine Grenze für alle (RRB 2025) | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | gebaut (PR #472, nachgeprüft 28.09.2026) | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise — **gebaut (PR #481), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Eckpunkte der linearen Skala nicht publiziert sind (nur «kein Anspruch», wo sicher) | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
-| BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
+| BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | gebaut (PR #473) | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | gebaut (PR #471, an der Quelle nachgeprüft 28.09.2026) | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
 | AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | gebaut (PR #480, an der Quelle nachgeprüft 28.09.2026) | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
@@ -2202,9 +2202,9 @@ Berechnungsgrundlage ist grundsätzlich die letzte Steuerveranlagung; bei Abweic
 Die App führt `maxIncome` 54'000 und `subsidySingle` 3'000/Jahr mit linearem Abbau; belegt sind für eine Einzelperson die Grenze 49'375 Fr. und 444 Fr. **pro Monat** (5'328 Fr./Jahr) in der tiefsten Gruppe, gestuft bis 17 Fr./Monat — die App liegt bei der Grenze zu hoch und beim Maximalbetrag deutlich zu tief.
 
 ### Offen / nicht gefunden
-- Die genauen Bestandteile der «Einnahmen» und «anerkannten Abzüge» (§§ 16–17 SoHaV) sind komplex; für die App braucht es eine Vereinfachung (z. B. Nettolohn + Zulagen + Vermögensanteil, wie im ASB-Beispiel).
+- Die genauen Bestandteile der «Einnahmen» und «anerkannten Abzüge» (§§ 16–17 SoHaV) sind komplex; für die App braucht es eine Vereinfachung (z. B. Nettolohn + Zulagen + Vermögensanteil, wie im ASB-Beispiel). ⟨28.09.2026: §§ 16–18 SoHaV gelesen, Vereinfachung und Auslassungen unten.⟩
 - Die SoHaV-Fassung in der Gesetzessammlung ist die «Aktuelle Version in Kraft seit: 01.07.2021»; Freibeträge stimmen mit der ASB-Seite überein.
-- Höhe des hypothetischen Einkommens (ASB-Seite nennt 28'800 Fr./Jahr für Erwachsene) nicht in einer Rechtsquelle nachgeprüft.
+- ~~Höhe des hypothetischen Einkommens (ASB-Seite nennt 28'800 Fr./Jahr für Erwachsene) nicht in einer Rechtsquelle nachgeprüft.~~ ⟨korrigiert 28.09.2026: in der SoHaV gelesen — § 24 Abs. 2 «100 Prozent entsprechen dabei einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto)», § 25 Abs. 1 lit. a «CHF 28'800 (netto) (80 Prozent von CHF 36'000)» für Selbständige. Siehe Nachprüfung unten.⟩
 
 ### Quellen
 1. Verordnung über die Krankenversicherung im Kanton Basel-Stadt (KVO), SG 834.410, §§ 21–22, Stand «in Kraft seit 01.01.2026» (Beschluss 16.12.2025). https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file (Eintrag: https://www.gesetzessammlung.bs.ch/app/de/texts_of_law/834.410) — abgerufen 16.09.2026
@@ -2215,6 +2215,112 @@ Die App führt `maxIncome` 54'000 und `subsidySingle` 3'000/Jahr mit linearem Ab
 6. Verordnung über die Harmonisierung und Koordination von bedarfsabhängigen Sozialleistungen (SoHaV), SG 890.710, §§ 11, 28, 29, in Kraft seit 01.07.2021. https://www.gesetzessammlung.bs.ch/api/de/versions/5476/pdf_file — abgerufen 16.09.2026
 7. Gesetz über die Harmonisierung und Koordination von bedarfsabhängigen Sozialleistungen (SoHaG), SG 890.700, §§ 6–7, in Kraft seit 01.07.2025. https://www.gesetzessammlung.bs.ch/api/de/versions/6622/pdf_file — abgerufen 16.09.2026
 8. Merkblatt Prämienverbilligung (Ausgabe 01.2026), Amt für Sozialbeiträge. https://media.bs.ch/original_file/5fe6904e84baed32e2ffd98bb846fa9144cd536a/pv-merkblatt-2026.pdf — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+**An der Quelle nachgeprüft am 28.09.2026**, alle Erlasse über die API der Gesetzessammlung
+(`https://www.gesetzessammlung.bs.ch/api/de/texts_of_law/<nr>` → JSON mit Versionen,
+`…/api/de/versions/<id>/pdf_file_with_annexes` → PDF, `pdftotext -layout`). Gegenprobe: erfundene
+Erlassnummer `834.419` → HTTP 404, 0 Bytes; erfundene Version `99999` → HTTP 404; erfundener
+media.bs.ch-Hash → HTTP 404. Das Messgerät unterscheidet also.
+
+| Quelle | Fassung (an der Quelle gelesen) |
+|---|---|
+| KVO, SG 834.410 | Version **6727**, «Aktuelle Version in Kraft seit: 01.01.2026 bis: 31.12.2026 (Beschlussdatum: 16.12.2025)»; Anhang 2 «in der Fassung vom 21. Oktober 2025 (KB 25.10.2025)» |
+| KVO, künftige Fassung | Version **6935**, «Zukünftige Version in Kraft ab: 01.01.2027 (Beschlussdatum: 15.09.2026)» — ändert Ingress und fügt § 6a (Datenlieferung ambulante Pflege) ein; **Anhang 2 unverändert** (Fassung 21.10.2025). Die Beiträge 2027 sind am 28.09.2026 **nicht publiziert**. |
+| SoHaG, SG 890.700 | Version **6622**, «in Kraft seit: 01.07.2025 (Beschlussdatum: 12.02.2025)», keine künftige Fassung |
+| SoHaV, SG 890.710 | Version **5476**, «in Kraft seit: 01.07.2021 (Beschlussdatum: 27.04.2021)», keine künftige Fassung |
+| ASB Beitragstabelle 2026 | «Gemäss Beschluss des Regierungsrates vom 21. Oktober 2025», media.bs.ch (Quelle [3] oben), HTTP 200 |
+| ASB Merkblatt | «Ausgabe 01.2026», media.bs.ch (Quelle [8] oben), HTTP 200 |
+
+**T 1–T 4 bestätigt:** Die Tabelle oben stimmt mit Anhang 2 der Version 6727 Zelle für Zelle überein
+(abgeglichen im Textlayer). Zwei Druckbesonderheiten im Anhang: Gruppe 16, 4 PH steht als
+«85.000» (Punkt statt Apostroph; gemeint 85'000, so auch in [3]); Gruppe 09, Erwachsene mit AVM
+bleibt **240** in der Verordnung gegen **230** in der Beitragstabelle — es gilt die Verordnung.
+Zusätzlich geprüft: die Spalten folgen in **jeder** Gruppe SoHaV § 11 Abs. 2 («160 Prozent eines
+Einpersonenhaushalts», +10'000 / +8'000 / +6'000 / +4'000 je weitere Person).
+
+**Wortlaute, die der Code zusätzlich zitiert:**
+
+> «Der Kanton entrichtet auf Antrag von wirtschaftlich schwächer gestellten Personen mit Wohnsitz im Kanton Basel-Stadt … Beiträge an deren Krankenversicherungsprämien» — § 15 Abs. 1 KVO
+
+> «Sollten Sie Anspruch auf Prämienverbilligung haben, erhalten Sie diese ab dem Monat nach der Antragstellung.» — Merkblatt 01.2026, Ziff. 5
+
+> «Das Amt für Sozialbeiträge kann die für den Zuschlag zu berücksichtigenden Versicherungsmodelle von einem Mindestrabatt gegenüber der ordentlichen Krankenpflegeversicherung des entsprechenden Versicherers abhängig machen.» — § 21 Abs. 1bis KVO
+
+> «von den anrechenbaren Einnahmen abziehbar sind a) bei unselbstständiger Erwerbstätigkeit die Beiträge an die Sozialversicherungen des Bundes sowie an Vorsorgeleistungen der zweiten Säule … Beiträge an die Säule 3a (gebundene Selbstvorsorge) können von Personen abgezogen werden, welche keiner zweiten Säule angehören.» — § 17 Abs. 1 SoHaV
+
+> «Liegt kein Erwerbstätigkeitssurrogat gemäss § 22 und/oder kein Rechtfertigungsgrund gemäss § 23 dieser Verordnung vor, wird bei einer unselbstständig erwerbenden Person ein hypothetisches Erwerbseinkommen angerechnet, a) wenn eine allein stehende/allein erziehende Person nicht mindestens einer Erwerbstätigkeit von 80 Prozent nachgeht … 100 Prozent entsprechen dabei einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» — § 24 Abs. 1/2 SoHaV
+
+> «Eine Person hat das 60. Altersjahr überschritten.» (Rechtfertigungsgrund) — § 23 Abs. 1 lit. a SoHaV; «die überwiegende Betreuung eigener Kinder … bis zur Vollendung des 16. Altersjahres» (Erwerbstätigkeitssurrogat) — § 22 Abs. 1 lit. a SoHaV
+
+> «Als Berechnungsgrundlage für das anrechenbare Einkommen gemäss § 7 SoHaG dient in der Regel die jeweils letzt vorliegende Steuerverfügung.» — § 13 Abs. 1 SoHaV
+
+> «Unrechtmässig bezogene Leistungen gemäss § 1 Abs. 1 lit. a bis e dieses Gesetzes sind zurückzuerstatten.» — § 17 Abs. 1 SoHaG (die Prämienverbilligung ist lit. d)
+
+Haushaltseinheit laut Merkblatt Ziff. 4 (Konkubinat): «die Konkubinatspartnerin / der
+Konkubinatspartner im gemeinsamen Haushalt mit gemeinsamen Kindern» und «ohne Kinder / ohne
+gemeinsame Kinder nach fünfjähriger Lebensgemeinschaft (unter Umständen auch früher)» — deckt
+sich mit SoHaV § 1.
+
+**Prüfstein (amtliches Beispiel [3]), Zahl für Zahl nachgerechnet:** 4-Personenhaushalt,
+massgebliches Einkommen 62'000 → Gruppe 5 (61'000 < 62'000 ≤ 63'000); ohne AVM 2 × 325 + 247 + 124
+= **1'021** im Monat; mit AVM 2 × 355 + 253 + 130 = **1'093**. Beide in
+`src/config/__tests__/ipvBaselStadt.test.js`.
+
+**Korrektur an der App (nicht an dieser Erhebung):** «Zuständig / Weg» oben bleibt richtig, aber
+die App sagte bis heute für BS «Automatische Prüfung via Steuerdaten» (`noteAutoTaxData`) — falsch:
+§ 15 Abs. 1 KVO gewährt Beiträge nur «auf Antrag». ⟨korrigiert 28.09.2026: `noteKey` jetzt
+`ipv.noteApplyAsb` «Antrag beim Amt für Sozialbeiträge».⟩
+
+**So rechnet die App (config/ipvBaselStadt.js):** massgebliches Einkommen = Hauptlohn × 12 (× 13 mit
+13. Monatslohn) + Neben- und Renteneinkommen × 12 (der Nettolohn trägt die Beiträge an AHV/ALV/PK
+bereits abgezogen, SoHaV § 17 lit. a) + ein Zehntel des erfassten Vermögens über 37'500 (+15'000 je
+Kind, SoHaV § 28). Gruppe aus T 1 je Haushaltsgrösse (Erwachsene + Kinder bis 18; ab neun Personen
++4'000 je Person, § 22 Abs. 1 KVO), Beitrag aus T 3, der Anteil der erwachsenen Person auf ihre
+Prämie gedeckelt (§ 22 Abs. 2 KVO). Keine Prämienregion, keine Vermögensgrenze, kein Mindestbetrag
+(in KVO und SoHaV keiner gefunden; Gruppe 22 zahlt 17 im Monat).
+
+**Gewählt, nicht belegt (steht so im Code und im PR):**
+- Gruppengrenze «bis und mit» (analog «nicht übersteigt», § 22 Abs. 1 KVO) — Frage 21.3.
+- **Hypothetisches Einkommen:** unter 28'800 Erwerbseinkommen im Jahr keine Zahl, ausser die Person
+  ist am Ende des Vorjahres mindestens 61 oder betreut ein Kind, das im ganzen Anspruchsjahr unter 16
+  ist — Frage 21.2. Darüber rechnet die App; der Vorbehalt nennt die 80-%-Regel.
+- **Säule 3a:** beide Fälle (mit/ohne zweite Säule) gerechnet; ein erfasster Pensionskassenbeitrag
+  (`versicherungen.bvgContribution` > 0) gilt als Beleg für eine zweite Säule; weichen die Gruppen
+  sonst ab, keine Zahl (`offenGrund.bsSaeule3a`).
+- **Zuschlag AVM (T 4):** nicht gerechnet, sondern als zweite Zahl im Hinweis genannt — das Feld
+  `kkModel` reicht nicht, weil der Mindestrabatt (§ 21 Abs. 1bis) nicht publiziert ist — Frage 21.4.
+- Alter: erwachsen erst, wenn am Ende des Vorjahres 26 (`ERWACHSEN.mangelsStichtag`, wie BE/SG) — Frage 21.5.
+
+**Bewusst nicht gebaut:** Paare, eingetragene Partnerschaft, Konkubinat; volljährige Kinder in
+Erstausbildung (gehören zur Haushaltseinheit, Ausbildung nicht erfasst); Antragstellende unter 25;
+Kinder getrennt lebender Eltern (SoHaV §§ 4–7); Quellenbesteuerte, EL- und Sozialhilfebeziehende,
+Personen nach Art. 65a KVG; nicht erfasste Einnahmen (Familienzulagen ausserhalb des Nettolohns,
+Unterhaltsbeiträge, Vermögenserträge, Stipendien, Alimentenbevorschussung); Liegenschaften zu 25 %
+des Steuerwerts; Zuzug im laufenden Jahr (§ 16 KVO); Erhöhung der Mindesterwerbseinkommen im
+Einzelfall (§ 27 SoHaV); Erwerbstätigkeitssurrogate, die die App nicht kennt (Ausbildung,
+Krankheit, Arbeitslosentaggeld, IV-Rente) — diese Personen sehen unter 28'800 keine Zahl.
+
+**Fixrunde 28.09.2026 abends (Fachprüfung PR #473, «erst beheben»):**
+- ⟨korrigiert⟩ Oben steht bei «Bewusst nicht gebaut»: «nicht erfasste Einnahmen (Familienzulagen ausserhalb
+  des Nettolohns, Unterhaltsbeiträge, …)». **Falsch** — die App erfasst `finanzen.familienzulagen`,
+  `alimenteReceived` und `alimentePaid`. BS rechnet sie jetzt selbst: SoHaV § 16 Abs. 1 lit. c Ziff. 3
+  («Familienzulagen (wie Kinder-, Ausbildungs-, Unterhaltszulagen usw.)») und Ziff. 6
+  («familienrechtliche Unterhaltsbeiträge») als Einnahmen, § 17 Abs. 1 lit. c/ca bezahlte als Abzug.
+  Beispiel der Prüfung: alleinerziehend, 3'000 + 800 Alimente → 420 statt 601; 1'000 bezahlt → 444 statt 266.
+- ⟨korrigiert⟩ «Den Beschäftigungsgrad kennt die App nicht» — falsch, `ausbildung.workHoursPerWeek` ist
+  erfasst. Hypothetisches Einkommen jetzt nach SoHaV § 24 Abs. 2 am Pensum (Stunden ÷ 42, **gewählt**:
+  die Vollzeit-Norm der App aus `data/lohnCheck.js`; SoHaV nennt keine Stundenzahl). 21 Std., 30'000 →
+  +10'800 → Gruppe 16 → 37 statt 266. Ohne Stunden bleibt die Schwelle 28'800, und bei der Zahl steht die
+  80-%-Annahme (`ipv.bsPensumAngenommen`).
+- AVM-Zuschlag: das Merkblatt 01.2026 nennt keinen Mindestrabatt; mit erfasstem Hausarzt-/HMO-/Telmed-/
+  Apothekenmodell ist die Hauptzahl jetzt aus T 4 («sofern die Police eingereicht ist»), mit «Standard»
+  aus T 3; leer/Basic/Comfort wie bisher mit beiden Zahlen.
+- Gruppe 09 = 240 zusätzlich durch den DWSU-Bericht 2026 (S. 10) gestützt; «Obergrenze» der Gruppe durch
+  denselben Bericht (S. 4).
+- Nicht in diesem PR (Rahmen): ein brutto erfasster Lohn wird wie in allen IPV-Modulen als netto
+  gerechnet (Fachprüfung W6).
 
 ---
 
