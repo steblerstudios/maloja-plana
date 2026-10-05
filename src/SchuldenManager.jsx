@@ -230,13 +230,13 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     // Overview — Dataviz-Runde 27.09.2026: ein Balken nach Reihenfolge (A) und die Mahnstufen
     // aller Forderungen auf einer Leiste (C), statt fünf Zahlenzeilen. Bilder in SchuldenBilder.jsx.
     view === 'overview' && React.createElement('div', { role: 'tabpanel' },
+      // ① ② stehen unabhängig davon, ob schon Forderungen erfasst sind (Arztrechnungen allein genügen).
       prioritized.length === 0 && debtStatus.paid === 0
         ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') })
-        : React.createElement(React.Fragment, null,
-          React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
-          React.createElement(AusserdemOffen, { palette, t, posten, onNavigate }),
-          React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
-          React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate })),
+        : React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
+      React.createElement(AusserdemOffen, { palette, t, posten, onNavigate }),
+      React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
+      React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate }),
 
       betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm, color: palette.text } }, t('schulden.debtRegisterAnalysis')),

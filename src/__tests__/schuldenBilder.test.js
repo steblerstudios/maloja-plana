@@ -192,6 +192,24 @@ describe('① AusserdemOffen / ② OffenePosten', () => {
     const html = render(OffenePosten, offenePosten({ versicherungen: { kkBelege: [{ id: 'a', betrag: 10, status: 'offen' }] } }, heute));
     expect(html).not.toContain('gruppeForderungen');
   });
+  it('② namenlose Forderung ohne Beleg heisst «—», nicht «Arztrechnung»', () => {
+    const p = offenePosten({ schulden: [{ id: 1, creditor: '', amount: 20, status: 'open' }] }, heute);
+    const html = render(OffenePosten, p);
+    expect(html).not.toContain('ohneDatum');
+    expect(html).not.toContain('rechnungVom');
+    expect(html).toContain('>—<');
+  });
+  it('① ② erscheinen auch ohne Schulden, nur mit Arztbelegen (SchuldenManager)', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
+    const ov = q.slice(q.indexOf("view === 'overview'"), q.indexOf("betreibung.length > 0 && React.createElement('div', { style: { padding"));
+    const zweig = ov.slice(ov.indexOf('prioritized.length === 0 && debtStatus.paid === 0'), ov.indexOf('React.createElement(AusserdemOffen'));
+    expect(zweig).toMatch(/: React\.createElement\(OffenBalken,[^\n]*\),\s*$/);
+    expect(ov).toMatch(/createElement\(AusserdemOffen,/);
+    expect(ov).toMatch(/createElement\(OffenePosten,/);
+    const nurArzt = offenePosten({ versicherungen: { kkBelege: [{ id: 'z', datum: '2026-09-01', betrag: 75, status: 'offen' }] }, schulden: [] }, heute);
+    expect(render(AusserdemOffen, nurArzt)).toContain('schulden.posten.ausserdemEins');
+    expect(render(OffenePosten, nurArzt)).toContain('schulden.posten.titel');
+  });
   it('kein Rot, hell und dunkel', () => {
     for (const p of [palette, DARK_PALETTE]) {
       for (const C of [AusserdemOffen, OffenePosten]) {
