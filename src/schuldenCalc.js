@@ -136,6 +136,8 @@ export const formatVerlustschein = (verlustschein) => {
 export const CATEGORY_TIER = {
   wohnen: 1, krankenkasse: 1, alimente: 1, bussen: 1,
   steuern: 2,
+  // gesundheit: Stufe 3 ist die Reihenfolge der Schuldenberatungs-Quellen (nur laufende Prämien werden
+  // vorgezogen), keine Vorgabe des KVG.
   kredit: 3, gesundheit: 3, sonstige: 3,
 };
 
