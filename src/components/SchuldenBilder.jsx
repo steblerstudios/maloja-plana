@@ -8,6 +8,8 @@ const chf = (x) => betrag(x, { stellen: 2 });
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { AblaufLink } from '../AblaufSchale.jsx';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from '../utils/mahnstufe.js';
+import { verjaehrungVerlustschein } from '../schuldenCalc.js';
+import { alsIsoDatum, leseDatum, heuteIso } from '../utils/fristen.js';
 
 // Drei ruhige Bilder für den Schuldenmanager (Dataviz-Runde 27.09.2026, Stebler Studios: A + B + C).
 //
@@ -221,5 +223,54 @@ export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
         ))
       )
     )
+  );
+};
+
+// ⑤ Verlustscheine (Task 5, Schulden R2, 05.10.2026): wie lange eine Forderung aus einem Verlustschein
+// noch läuft. Ein Ton (STUFEN_TON[2]), Text neben jeder Linie, kein Rot. Gezeichnet wird nur, was ein
+// erfasstes Ausstellungsdatum hat (Ende = Ausstellung + 20 Jahre, SchKG Art. 149a Abs. 1); Einträge
+// ohne Datum stehen in der Lesezeile mit ihrem Hinweis, nicht hier.
+// Wer ist die Gegenseite? «Ich schulde» → der Gläubiger; «Mir wird geschuldet» → der Schuldner.
+// Ohne Rolle (alte Einträge) was da ist.
+export const verlustscheinName = (e, t) => {
+  const name = e.rolle === 'geschuldet' ? (e.debtor || e.creditor) : (e.creditor || e.debtor);
+  return name || t('schulden.posten.ohneName');
+};
+
+export const VerlustscheinZeitachse = ({ palette, t, eintraege, heute = heuteIso() }) => {
+  const zeilen = (eintraege || []).map(e => {
+    const bisIso = verjaehrungVerlustschein(e);
+    const von = leseDatum(alsIsoDatum(e.date)), bis = leseDatum(bisIso);
+    return von && bis ? { e, bisIso, von: von.getTime(), bis: bis.getTime() } : null;
+  }).filter(Boolean).sort((a, b) => a.von - b.von);
+  if (zeilen.length === 0) return null;
+  const jetzt = (leseDatum(heute) || new Date()).getTime();
+  const lo = Math.min(jetzt, ...zeilen.map(z => z.von));
+  const hi = Math.max(jetzt, ...zeilen.map(z => z.bis));
+  const spanne = hi - lo || 1;
+  const pos = (ms) => ((ms - lo) / spanne) * 100;
+  const zeile = { display: 'grid', gridTemplateColumns: 'minmax(0, 7.5rem) minmax(0, 1fr)', alignItems: 'center', columnGap: space.sm + 'px', rowGap: '2px', padding: space.xs + 'px 0', fontSize: text.sm };
+  return React.createElement('div', { style: { margin: space.md + 'px 0' } },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.verlustschein.zeitachse.titel')),
+    React.createElement('div', { 'aria-hidden': 'true', style: { ...zeile, paddingTop: 0 } },
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.verlustschein.zeitachse.achse')),
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+        React.createElement('span', null, String(new Date(lo).getFullYear())),
+        React.createElement('span', null, String(new Date(hi).getFullYear()))
+      ),
+    ),
+    React.createElement('ol', { 'aria-label': t('schulden.verlustschein.zeitachse.label'), style: { listStyle: 'none', padding: 0, margin: 0 } },
+      zeilen.map(z => React.createElement('li', { key: z.e.id, style: zeile },
+        React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, verlustscheinName(z.e, t)),
+        React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '12px', background: spur(palette), borderRadius: radius.sm } },
+          React.createElement('div', { style: { position: 'absolute', left: pos(z.von) + '%', width: 'max(4px, ' + (pos(z.bis) - pos(z.von)) + '%)', top: 0, bottom: 0, background: ton(palette, 2), borderRadius: radius.xs } }),
+          // «heute»: eine dünne Marke in der Tinte der Schrift, als Text in der Zeile darunter erklärt.
+          React.createElement('div', { style: { position: 'absolute', left: pos(jetzt) + '%', width: '2px', top: '-3px', bottom: '-3px', background: palette.text, borderRadius: radius.xs } })
+        ),
+        React.createElement('span', { style: { gridColumn: 2, color: palette.mid, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' } }, t('schulden.verlustschein.verjaehrt', { datum: formatDE(z.bisIso) }))
+      ))
+    ),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, t('schulden.verlustschein.zeitachse.heute', { datum: formatDE(heute) })),
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, margin: space.sm + 'px 0 0' } }, t('schulden.verlustschein.verjaehrung'))
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig } from './schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig, verjaehrungVerlustschein } from './schuldenCalc.js';
 import { heuteIso, alsIsoDatum } from './utils/fristen.js';
 import { offenePosten } from './utils/offenePosten.js';
 import { renderSource } from './utils/renderSource.js';
@@ -19,7 +19,7 @@ import { betrag, zahl } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName } from './components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName, VerlustscheinZeitachse, verlustscheinName } from './components/SchuldenBilder.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -43,7 +43,7 @@ export const MahnstufenLeiste = ({ debt, palette, t, inputStyle, onChange, onNav
 };
 
 // `vorlaeufig`: Beispiel oder Ausprobieren — Änderungen liegen nur im Arbeitsspeicher (main.jsx).
-export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig, startView = 'overview' }) => {
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig, startView = 'overview', startBearbeite = null }) => {
   const vorlesen = useVorlesenContext();
   const [view, setView] = useState(startView);
   // Ansage beim Statuswechsel einer Forderung (a11y 05.10.2026): «Gespeichert» sagt nicht, welche.
@@ -51,6 +51,17 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
   const [verlustscheine, setVerlustscheine] = useState(data.verlustscheine || []);
+  // Verlustscheine als Lesezeilen: die Felder erscheinen erst nach «Bearbeiten», immer nur bei einem Eintrag.
+  const [bearbeite, setBearbeite] = useState(startBearbeite);
+  // Wohin der Fokus nach «Bearbeiten» / «Fertig» wandert: erstes Feld bzw. zurück auf den Knopf der Zeile.
+  const fokusNach = useRef(null);
+  useEffect(() => {
+    const ziel = fokusNach.current;
+    if (!ziel) return;
+    fokusNach.current = null;
+    const el = document.querySelector('[data-vs-fokus="' + ziel + '"]');
+    if (el) el.focus();
+  }, [bearbeite]);
   // Nicht zweimal eingeben: «Persönliche Darlehen» aus dem Kapitel Finanzen, solange noch keine Schuld erfasst ist.
   const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
   const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
@@ -101,15 +112,21 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   };
 
   const handleAddVerlustschein = () => {
-    const entry = formatVerlustschein({
+    // Kein erfundenes Datum: formatVerlustschein setzt «heute» ein, daraus würde eine falsche Verjährung.
+    const entry = { ...formatVerlustschein({
       debtor: '',
       amount: 0,
       creditor: '',
       court: '',
       status: 'open'
-    });
+    }), date: '' };
     setVerlustscheine([...verlustscheine, entry]);
+    fokusNach.current = 'rolle-' + entry.id;
+    setBearbeite(entry.id);
   };
+
+  const startBearbeiten = (id) => { fokusNach.current = 'rolle-' + id; setBearbeite(id); };
+  const fertigBearbeiten = (id) => { fokusNach.current = 'knopf-' + id; setBearbeite(null); };
 
   const handleUpdateVerlustschein = (id, field, value) => {
     setVerlustscheine(verlustscheine.map(e => e.id === id ? { ...e, [field]: field === 'amount' ? Number(value) || 0 : value } : e));
@@ -117,6 +134,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
 
   const handleDeleteVerlustschein = (id) => {
     setVerlustscheine(verlustscheine.filter(e => e.id !== id));
+    if (bearbeite === id) setBearbeite(null);
   };
 
   // Mahnstufe nachtragen (27.09.2026): eine Forderung wandert von der Rechnung zur Mahnung.
@@ -443,20 +461,64 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addVerlustschein')),
 
       verlustscheine.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'document', size: 26, color: palette.mid }), title: t('schulden.emptyVerlustschein') }) : React.createElement('div', null,
-        verlustscheine.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
-          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
-            React.createElement('input', { type: 'text', value: entry.creditor || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, flex: '1 1 200px', marginBottom: 0 } }),
-            React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } })
-          ),
-          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
-            React.createElement('input', { type: 'text', value: entry.debtor || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'debtor', e.target.value), placeholder: t('schulden.debtor'), 'aria-label': t('schulden.debtor'), style: { ...inputStyle, flex: '1 1 200px', marginBottom: 0 } }),
-            React.createElement('input', { type: 'text', value: entry.court || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'court', e.target.value), placeholder: t('schulden.court'), 'aria-label': t('schulden.court'), style: { ...inputStyle, flex: '1 1 160px', marginBottom: 0 } })
-          ),
-          React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
-            React.createElement('input', { type: 'date', value: alsIsoDatum(entry.date), onChange: (e) => handleUpdateVerlustschein(entry.id, 'date', e.target.value), 'aria-label': t('schulden.date'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
-            React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
-          )
-        ))
+        React.createElement(VerlustscheinZeitachse, { palette, t, eintraege: verlustscheine, heute: heuteIso() }),
+        verlustscheine.map(entry => {
+          const rolle = entry.rolle === 'schulde' || entry.rolle === 'geschuldet' ? entry.rolle : null;
+          const name = verlustscheinName(entry, t);
+          const datumIso = alsIsoDatum(entry.date);
+          const bisIso = verjaehrungVerlustschein(entry);
+          const aendern = (feld, v) => handleUpdateVerlustschein(entry.id, feld, v);
+          const feld = (extra) => ({ ...inputStyle, marginBottom: 0, ...extra });
+          const loeschen = React.createElement('button', { type: 'button', 'aria-label': t('common.delete') + ' ' + name, onClick: () => handleDeleteVerlustschein(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'));
+          if (bearbeite === entry.id) {
+            return React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
+              // Rolle zuerst: sie bestimmt, welches Namensfeld folgt.
+              React.createElement('select', { value: rolle || '', 'data-vs-fokus': 'rolle-' + entry.id, onChange: (e) => aendern('rolle', e.target.value || undefined), 'aria-label': t('schulden.verlustschein.rolle.label'), style: { ...feld(), marginBottom: space.xs } },
+                React.createElement('option', { value: '' }, t('schulden.verlustschein.rolle.waehlen')),
+                React.createElement('option', { value: 'schulde' }, t('schulden.verlustschein.rolle.schulde')),
+                React.createElement('option', { value: 'geschuldet' }, t('schulden.verlustschein.rolle.geschuldet'))
+              ),
+              rolle && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginBottom: space.xs } }, t('schulden.verlustschein.rolle.hilfe.' + rolle)),
+              React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
+                rolle !== 'geschuldet' && React.createElement('input', { type: 'text', value: entry.creditor || '', onChange: (e) => aendern('creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: feld({ flex: '1 1 200px' }) }),
+                rolle !== 'schulde' && React.createElement('input', { type: 'text', value: entry.debtor || '', onChange: (e) => aendern('debtor', e.target.value), placeholder: t('schulden.debtor'), 'aria-label': t('schulden.debtor'), style: feld({ flex: '1 1 200px' }) }),
+                React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => aendern('amount', e.target.value), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: feld({ width: '140px' }) })
+              ),
+              React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
+                React.createElement('input', { type: 'text', value: entry.court || '', onChange: (e) => aendern('court', e.target.value), placeholder: t('schulden.court'), 'aria-label': t('schulden.court'), style: feld({ flex: '1 1 160px' }) }),
+                React.createElement('input', { type: 'date', value: alsIsoDatum(entry.date), onChange: (e) => aendern('date', e.target.value), 'aria-label': t('schulden.verlustschein.datum'), style: feld({ width: '160px' }) })
+              ),
+              React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', alignItems: 'center' } },
+                React.createElement('button', { type: 'button', 'aria-label': t('schulden.verlustschein.fertig') + ' ' + name, onClick: () => fertigBearbeiten(entry.id), style: buttonStyle }, t('schulden.verlustschein.fertig')),
+                loeschen
+              )
+            );
+          }
+          const klein = { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: space.xs };
+          return React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
+            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, flexWrap: 'wrap' } },
+              React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } },
+                rolle && React.createElement('span', { style: { color: palette.mid } }, t('schulden.verlustschein.rolle.' + rolle) + ' · '),
+                React.createElement('span', { style: { fontWeight: weight.semi, color: palette.text } }, name),
+                // Alter Eintrag mit beiden Namen: die Gegenseite bleibt sichtbar.
+                !rolle && entry.creditor && entry.debtor && React.createElement('span', { style: { color: palette.mid } }, ' · ' + entry.debtor)),
+              React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, betrag(entry.amount, { stellen: 2 }))
+            ),
+            React.createElement('div', { style: klein },
+              bisIso
+                ? t('schulden.verlustschein.ausgestellt', { datum: formatDE(datumIso) }) + ' · ' + t('schulden.verlustschein.verjaehrt', { datum: formatDE(bisIso) })
+                : t('schulden.verlustschein.ohneDatum'),
+              entry.court ? ' · ' + entry.court : ''
+            ),
+            !rolle && React.createElement('div', { style: klein }, t('schulden.verlustschein.rolle.fehlt')),
+            // SchKG 149 Abs. 4 gilt für die schuldende Person — nie pauschal.
+            rolle === 'schulde' && React.createElement('div', { style: klein }, t('schulden.verlustschein.zinslos')),
+            React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginTop: space.sm } },
+              React.createElement('button', { type: 'button', 'data-vs-fokus': 'knopf-' + entry.id, 'aria-label': t('schulden.verlustschein.bearbeiten') + ' ' + name, onClick: () => startBearbeiten(entry.id), style: zweitKnopf }, t('schulden.verlustschein.bearbeiten')),
+              loeschen
+            )
+          );
+        })
       )
     ),
 

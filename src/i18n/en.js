@@ -3115,8 +3115,27 @@ export default {
     planQuelle: 'Sources: [[schuldeninfo.ch, “Weiterleben mit Schulden” (2011, German)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, debt restructuring guide (German)|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[DBG Art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_33]], [[DBG Art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_34]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[StHG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_9]], [[StHG Art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_13]] (German text where no English exists, read September 2026).',
     verlustschein: {
       title: 'What a certificate of unpaid debt means',
-      text: 'A certificate of unpaid debt (Verlustschein) is issued when a seizure does not cover the claim (SchKG Art. 149 para. 1). It counts as an acknowledgement of debt (para. 2). No interest is owed on the claim (para. 4) — if someone charges interest on a certificate of unpaid debt, you can point this out. The claim becomes time-barred 20 years after issue (Art. 149a para. 1). You can also pay at any time at the debt collection office that issued it (para. 2); once paid, the entry is deleted from the register (para. 3). After a bankruptcy, a new debt collection based on the certificate is only possible if you have come into new assets (Art. 265 para. 2) — you must raise this with the objection (Art. 265a para. 1); the letter “File an objection (Rechtsvorschlag)” has a field for this.',
+      text: 'A certificate of unpaid debt (Verlustschein) is issued when a seizure does not cover the claim (SchKG Art. 149 para. 1). It counts as an acknowledgement of debt (para. 2). The claim becomes time-barred 20 years after issue (Art. 149a para. 1). You can also pay at any time at the debt collection office that issued it (para. 2); once paid, the entry is deleted from the register (para. 3). After a bankruptcy, a new debt collection based on the certificate is only possible if you have come into new assets (Art. 265 para. 2) — you must raise this with the objection (Art. 265a para. 1); the letter “File an objection (Rechtsvorschlag)” has a field for this.',
       quelle: 'Sources: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (German text where no English exists, checked September 2026).',
+      rolle: {
+        label: 'Role', waehlen: 'Choose role', schulde: 'I owe', geschuldet: 'I am owed',
+        fehlt: 'Role not chosen yet — set it under “Edit”.',
+        hilfe: {
+          schulde: 'The certificate of unpaid debt is against you. Enter whom you owe.',
+          geschuldet: 'You hold a certificate of unpaid debt against another person. Enter who owes you.',
+        },
+      },
+      // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
+      zinslos: 'SchKG Art. 149 para. 4: “The debtor has … no interest to pay.” This applies to you as the debtor. Co-debtors and guarantors may owe interest, but may not pass it on to you.',
+      // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
+      verjaehrung: 'SchKG Art. 149a para. 1: the claim becomes time-barred “20 years after the certificate of unpaid debt was issued; against the debtor’s heirs, however, at the latest one year after the opening of the succession.” The axis only counts the 20 years from the entered issue date.',
+      verjaehrt: 'time-barred on {datum}',
+      ausgestellt: 'issued on {datum}',
+      ohneDatum: 'No issue date — the limitation date cannot be shown without it.',
+      datum: 'Issue date',
+      bearbeiten: 'Edit',
+      fertig: 'Done',
+      zeitachse: { titel: 'Limitation at a glance', label: 'Limitation of each certificate, one per row', achse: 'Year', heute: 'The vertical mark shows today ({datum}).' },
     },
     bussen: {
       title: 'Fines and monetary penalties',
