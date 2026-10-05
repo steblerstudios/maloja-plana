@@ -70,6 +70,8 @@ export function vermoegenSumme(f) {
 //   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//   totalDerEinkuenfte   GL — gemessen am Total der Einkünfte, vor allen Abzügen; die 3a wird
+//                        dort nie abgezogen. EG KVG GL Art. 15 Abs. 1 (GS VIII D/21/1)
 //   abzugOhneSaeule2     BS — kein Zuschlag auf eine Steuergrösse, sondern ein Abzug von den
 //                        Einnahmen, und nur OHNE Säule 2. SoHaV § 17 Abs. 1 lit. a/b (SG 890.710)
 //   imReineinkommenAbgezogen  SZ (28.09.2026) — GAR KEINE Zurechnung: § 7 Abs. 2 EGzKVG
@@ -349,6 +351,21 @@ export const SAEULE_3A = Object.freeze({
     nichtAufgerechnet: () => 0,
   }),
 
+  // ⟨28.09.2026, K31 GL⟩ Glarus misst am «Total der Einkünfte» — VOR allen Abzügen:
+  //   EG KVG GL (GS VIII D/21/1) Art. 15 Abs. 1: «Das anrechenbare Einkommen bestimmt sich nach
+  //   dem Total der Einkünfte, erhöht um einen vom Landrat festgelegten Anteil des steuerbaren
+  //   Vermögens.» Die Fachstelle IPV nennt dafür Ziffer 215 der Veranlagung («Erläuterungen und
+  //   Berechnungsbeispiele zur IPV 2026»); die Säule 3a ist in der Wegleitung zur
+  //   Steuererklärung 2024 ein Abzug unter Ziffer 11, nach den Einkünften (Ziffern 1–7).
+  // Die 3a steckt also im anrechenbaren Einkommen — wie im Nettoeinkommen der App. Rechnerisch
+  // wie `voll`, aber aus einem anderen Grund; darum ein eigener Name.
+  totalDerEinkuenfte: Object.freeze({
+    name: 'totalDerEinkuenfte',
+    kantone: 'GL',
+    beleg: 'EG KVG GL Art. 15 Abs. 1 (GS VIII D/21/1) · Wegleitung Steuererklärung GL 2024, Ziffern 1–7 und 11',
+    nichtAufgerechnet: () => 0,
+  }),
+
   // ⟨28.09.2026, K31 SZ⟩ Die vierte Regel — und die erste, die GAR NICHT aufrechnet.
   // Schwyz nimmt das Reineinkommen der direkten Bundessteuer und erhöht es abschliessend um
   // drei Posten (§ 7 Abs. 2 EGzKVG, SRSZ 361.100, Stand 1.2.2026, an der Quelle gelesen
@@ -413,8 +430,8 @@ export const SAEULE_3A = Object.freeze({
     nichtAufgerechnet: (f) => Math.min(betrag3a(f), 10000),
   }),
 
-  // ⟨NW, 28.09.2026⟩ Die sechste Regel (auf NW als vierte gebaut; SZ `imReineinkommenAbgezogen` und
-  // AR `freibetragOhneSaeule2` kamen in der Sammel-Integration dazu) — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
+  // ⟨NW, 28.09.2026⟩ Die siebte Regel (auf NW als vierte gebaut; SZ `imReineinkommenAbgezogen` und
+  // AR `freibetragOhneSaeule2` kamen in der Sammel-Integration dazu, GL `totalDerEinkuenfte` mit #487) — das Gegenteil von `voll`. Nidwalden misst am REINEINKOMMEN
   // (Code 330), und dort ist die 3a abgezogen (StG NW Art. 35 Abs. 1 Ziff. 5, NG 521.1). Rechnet
   // der Kanton sie wieder auf, stünde sie unter den Aufrechnungen von Art. 12 Abs. 2 kKVG
   // (NG 742.1) — dort stehen BGSA-Lohn, BVG-Einkauf, Teileinkünfte, Liegenschaftsunterhalt und
@@ -596,6 +613,9 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //
 //   abEndeVorjahr       ZH — ausdrücklich im Erlass: § 8 EG KVG, «für das ganze Jahr das
 //                       Alter am Ende des Vorjahres massgebend». BELEGT.
+//                       GL — EG KVG GL Art. 12 Abs. 2: «Die persönlichen und familiären
+//                       Verhältnisse bestimmen sich nach den Gegebenheiten am 31. Dezember des
+//                       Vorjahres»; VV PV Art. 10: Erwachsene «über 25 Jahre». BELEGT (28.09.2026).
 //   mangelsStichtag     BE, VD, SG, UR, VS, JU — rechnerisch dasselbe wie oben, aber aus einem anderen
 //                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
 //                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe

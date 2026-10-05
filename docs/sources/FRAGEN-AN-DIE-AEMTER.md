@@ -718,6 +718,57 @@ Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Weglei
 Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
 zum Einkommen.
 
+## 23 · Kantonale Steuerverwaltung Glarus, Fachstelle IPV — Kindergarantie im Berechnungsbeispiel
+
+*Aufgenommen 28.09.2026 beim Einbau von GL (K31). Entwurf — **nicht gesendet**. (Nummer 23 nach der
+Reservierung vom 28.09. abends: 8 UR, 9 NE, 10 GR, 11–20 andere Kantone, 21 BS, 22 BL. ⟨korrigiert:
+hier stand «Nummer 10, weil die Zweige BS und BL gleichzeitig Nr. 8 und 9 belegen»⟩)*
+
+**Worum es geht:** Formel, Selbstbehalte und die Richtprämien 2026 (5'447 / 3'896 / 1'500, Mitteilung
+der Fachstelle vom 18.11.2025) stehen vollständig in EG KVG, PVV, VV PV und den Unterlagen der
+Fachstelle. Beide amtlichen Berechnungsbeispiele rechnen wir auf den Franken nach.
+
+**Frage 1 — Kindergarantie im Beispiel «Eltern mit 2 Kindern»:** Das Beispiel (anrechenbares
+Einkommen 65'000, 12 %) ergibt CHF 6'094. Der Satz direkt darunter sagt, dass Kinder bis 85'000
+mindestens 80 % der Richtprämie erhalten (Art. 16 Abs. 3 EG KVG). Verteilt man 6'094 nach VV PV
+Art. 9 Abs. 1 im Verhältnis der Richtprämien, erhält jedes Kind 657.90 — weniger als 80 % von
+1'500 (1'200). Gilt dann (a) «Kinder erhalten 1'200, die Eltern den Rest» (Total 6'094), oder
+(b) «Kinder erhalten 1'200 zusätzlich zum Anteil der Eltern» (Total 7'178)? Bis zur Antwort zeigt
+die App dort, wo die Lesarten abweichen, keinen Betrag. Wie teilt die Verfügung den Betrag auf die
+Personen auf (VV PV Art. 9 Abs. 2, Zahlung je Person an den Versicherer)? Das entscheidet (a) oder (b).
+*Indiz, keine Auslegung durch uns (nachgetragen 28.09.2026 nach der Fachprüfung):* Die Fassung
+2016–2022 (EG KVG, Version 1931, «Stand 1. Januar 2016», selbst gelesen über
+`gesetze.gl.ch/api/de/versions/1931/pdf_file_with_annexes`) formulierte je Person: «Kinder sowie
+junge Erwachsene in Ausbildung … haben Anrecht auf die jeweilige halbe Richtprämie, sofern die
+Berechnung gemäss Artikel 14 Absatz 1 einen tieferen Anspruch … ergibt». Die heutige Fassung (Version
+2376) sagt: «Der Kanton verbilligt die Prämien der Kinder um 80 Prozent … der jeweiligen Richtprämie».
+Wirkung heute, gemessen: 1 Elternteil + 1 Kind sieht eine Zahl nur bis netto rund 1'500/Monat; mit
+2 Kindern fehlt sie zwischen rund 2'500 und 6'500/Monat.
+
+**Frage 2 — Stufengrenzen:** Gilt der Satz von 9 % noch bei einem anrechenbaren Einkommen von genau
+40'000 («bis 40 000 Franken»)? Wir rechnen «bis und mit».
+
+~~**Frage 4 — erhaltene Alimente und Familienzulagen:** PVV Art. 3 lit. c zieht bezahlte Alimente ab
+(die App tut das). Erhaltene Alimente und Familienzulagen nennen EG KVG und PVV nicht; zählen sie
+über das «Total der Einkünfte» (EG KVG Art. 15 Abs. 1) aus der Steuerveranlagung mit? Die App rechnet
+sie heute nicht zu und sagt bei der Zahl, dass sie damit zu hoch sein kann.~~
+⟨**beantwortet 28.09.2026 an der Quelle — Frage zurückgezogen, nicht senden** (Re-Review #487, 🛑 R1):
+Das «Total der Einkünfte» ist die Ziffer 215 der Steuerveranlagung. Das Steuergesetz (GS VI C/1/1,
+Version 2445, «Version in Kraft von: 01.01.2024 bis: 31.12.2024», gelesen über
+`gesetze.gl.ch/api/de/versions/2445/pdf_file_with_annexes`, Gegenprobe `versions/99999` → 404) zählt
+erhaltene Unterhaltsbeiträge ausdrücklich zu den steuerbaren Einkünften (Art. 23 Abs. 1 Ziff. 6) und
+«Zulagen» zu den Einkünften aus Arbeitsverhältnis (Art. 17 Abs. 1); abgezogen wird erst danach
+(Art. 25 Abs. 1, bezahlte Unterhaltsbeiträge Art. 31 Ziff. 3). Die App rechnet beide seither zum
+Total der Einkünfte. Wortlaut in Version 2668 (seit 01.01.2026) gleich.⟩
+
+**Frage 3 — Vermögensfreibetrag bei IV-Rente:** Das Steuergesetz (Art. 45 Ziff. 4) gewährt ab einer
+halben IV-Rente weitere 25'400. Die App kennt den IV-Grad nicht und rechnet ohne — ist das für die
+IPV-Berechnung (10 % des steuerbaren Vermögens) so übernommen?
+
+**Stand:** GL ist für 2026 gebaut (Entwurfs-PR, K31). Die EG-KVG-Fassung 2027 (Landsgemeinde
+03.05.2026) behält den Antrag; ab 2028 gilt eine weitere Fassung. Ab 01.01.2027 zeigt die App für
+GL keinen Betrag mehr, bis die Richtprämien 2027 eingearbeitet sind.
+
 ---
 
 ## 21 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle

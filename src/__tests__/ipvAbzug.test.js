@@ -233,9 +233,10 @@ describe('Wächter · eine Stelle für den IPV-Abzug', () => {
   // SHR 832.110 § 15 Abs. 3 — ohne Antrag bis 30. April verwirkt, Fachprüfung #471, eigener
   // Hinweis-Schlüssel `ipv.shFristNichtAbgezogen`) und Appenzell Ausserrhoden (V zum KVG Art. 10,
   // EG Art. 22 — bis 31. März, danach verwirkt; Fachprüfung #480; eigener Hinweis-Schlüssel
-  // `ipv.arFristNichtAbgezogen`) die Frist.
-  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, FR, GE, OW, NW, TI, SH, AR) und liest nur ipvAbzug', () => {
-    const erlaubt = ['config/ipvLuzern.js', 'config/ipvFreiburg.js', 'config/ipvGenf.js', 'config/ipvObwalden.js', 'config/ipvNidwalden.js', 'config/ipvTicino.js', 'config/ipvSchaffhausen.js', 'config/ipvAppenzellAusserrhoden.js', 'data/ipvAbzug.js'];
+  // `ipv.arFristNichtAbgezogen`) und Glarus (VV PV Art. 6 Abs. 1: bis 31. Januar des Anspruchsjahres,
+  // danach nur die Prämien ab dem Folgemonat; Hinweis-Schlüssel `ipv.glFristNichtAbgezogen`) die Frist.
+  it('die Frist-Angabe setzen nur Kantonsmodule mit Anmeldefrist (LU, FR, GE, OW, NW, TI, SH, AR, GL) und liest nur ipvAbzug', () => {
+    const erlaubt = ['config/ipvLuzern.js', 'config/ipvFreiburg.js', 'config/ipvGenf.js', 'config/ipvObwalden.js', 'config/ipvNidwalden.js', 'config/ipvTicino.js', 'config/ipvSchaffhausen.js', 'config/ipvAppenzellAusserrhoden.js', 'config/ipvGlarus.js', 'data/ipvAbzug.js'];
     const treffer = quellen().filter((p) => /\banmeldefristVorbei\b/.test(code(p))).map(rel);
     expect(treffer.sort()).toEqual(erlaubt.sort());
   });
