@@ -3070,6 +3070,11 @@ export default {
     category: 'Art der Schuld',
     catWohnen: 'Miete / Wohnen',
     catKrankenkasse: 'Krankenkasse',
+    catGesundheit: 'Arzt, Labor, Spital',
+    catHilfe: {
+      krankenkasse: { sie: 'Prämien sowie Franchise und Selbstbehalt, die Ihnen die Krankenkasse in Rechnung stellt (KVG Art. 64a).', du: 'Prämien sowie Franchise und Selbstbehalt, die dir die Krankenkasse in Rechnung stellt (KVG Art. 64a).' },
+      gesundheit: { sie: 'Rechnungen von Arztpraxis, Labor oder Spital, die Sie direkt erhalten, schulden Sie dem Leistungserbringer; Ihre Krankenkasse erstattet Ihnen den versicherten Teil (KVG Art. 42 Abs. 1). Reichen Sie die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.', du: 'Rechnungen von Arztpraxis, Labor oder Spital, die du direkt erhältst, schuldest du dem Leistungserbringer; deine Krankenkasse erstattet dir den versicherten Teil (KVG Art. 42 Abs. 1). Reiche die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.' },
+    },
     catAlimente: 'Alimente',
     catBussen: 'Bussen',
     catSteuern: 'Steuern',

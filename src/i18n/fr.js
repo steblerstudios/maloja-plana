@@ -3046,6 +3046,11 @@ export default {
     category: 'Type de dette',
     catWohnen: 'Loyer / logement',
     catKrankenkasse: 'Assurance-maladie',
+    catGesundheit: 'Médecin, laboratoire, hôpital',
+    catHilfe: {
+      krankenkasse: { sie: 'Primes, ainsi que franchise et quote-part que la caisse-maladie vous facture (LAMal art. 64a).', du: 'Primes, ainsi que franchise et quote-part que la caisse-maladie te facture (LAMal art. 64a).' },
+      gesundheit: { sie: 'Les factures d’un cabinet médical, d’un laboratoire ou d’un hôpital que vous recevez directement sont dues au fournisseur de prestations; votre caisse-maladie vous rembourse la part assurée (LAMal art. 42 al. 1). Transmettez donc la facture à votre caisse-maladie, si ce n’est pas encore fait. Dans le plan de désendettement, elle figure parmi les autres dettes.', du: 'Les factures d’un cabinet médical, d’un laboratoire ou d’un hôpital que tu reçois directement sont dues au fournisseur de prestations; ta caisse-maladie te rembourse la part assurée (LAMal art. 42 al. 1). Transmets donc la facture à ta caisse-maladie, si ce n’est pas encore fait. Dans le plan de désendettement, elle figure parmi les autres dettes.' },
+    },
     catAlimente: 'Pensions alimentaires',
     catBussen: 'Amendes',
     catSteuern: 'Impôts',

@@ -2851,6 +2851,12 @@ export default {
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    catGesundheit: 'Arzt, Labor, Spital',
+    catHilfe: {
+      krankenkasse: { sie: 'Prämien sowie Franchise und Selbstbehalt, die Ihnen die Krankenkasse in Rechnung stellt (KVG Art. 64a).', du: 'Prämien sowie Franchise und Selbstbehalt, die dir die Krankenkasse in Rechnung stellt (KVG Art. 64a).' },
+      gesundheit: { sie: 'Rechnungen von Arztpraxis, Labor oder Spital, die Sie direkt erhalten, schulden Sie dem Leistungserbringer; Ihre Krankenkasse erstattet Ihnen den versicherten Teil (KVG Art. 42 Abs. 1). Reichen Sie die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.', du: 'Rechnungen von Arztpraxis, Labor oder Spital, die du direkt erhältst, schuldest du dem Leistungserbringer; deine Krankenkasse erstattet dir den versicherten Teil (KVG Art. 42 Abs. 1). Reiche die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.' },
+    },
     catAlimente: 'Alimentaziun',
     catBussen: 'Multas',
     catSteuern: 'Taglias',

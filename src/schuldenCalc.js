@@ -130,10 +130,13 @@ export const formatVerlustschein = (verlustschein) => {
 // (Caritas); ein Erlass der Bundessteuer nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4).
 // Danach die übrigen nach Methode (Lawine = höchster Zins zuerst; Schneeball = kleinster
 // Betrag zuerst). Reine Orientierung, keine Beratung.
-const CATEGORY_TIER = {
+// Arzt-/Labor-/Spitalrechnung im Tiers garant = Forderung des Leistungserbringers
+// (KVG Art. 42 Abs. 1), nicht KVG 64a (nur Prämien/Kostenbeteiligung gegenüber dem Versicherer)
+// → Stufe 3. Prüfer 05.10.2026.
+export const CATEGORY_TIER = {
   wohnen: 1, krankenkasse: 1, alimente: 1, bussen: 1,
   steuern: 2,
-  kredit: 3, sonstige: 3,
+  kredit: 3, gesundheit: 3, sonstige: 3,
 };
 
 export const prioritizeDebts = (debts, method = 'lawine') => {

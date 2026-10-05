@@ -3046,6 +3046,11 @@ export default {
     category: 'Type of debt',
     catWohnen: 'Rent / housing',
     catKrankenkasse: 'Health insurance',
+    catGesundheit: 'Doctor, lab, hospital',
+    catHilfe: {
+      krankenkasse: 'Premiums, plus the deductible and co-payment that your health insurer bills you for (KVG Art. 64a).',
+      gesundheit: 'You owe invoices from a doctor’s practice, laboratory or hospital that you receive directly to the provider; your health insurer reimburses you for the insured part (KVG Art. 42 para. 1). So submit the invoice to your health insurer if you have not already done so. In the repayment plan it is listed with the other debts.',
+    },
     catAlimente: 'Alimony',
     catBussen: 'Fines',
     catSteuern: 'Taxes',

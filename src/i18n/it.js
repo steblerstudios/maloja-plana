@@ -3003,6 +3003,11 @@ export default {
     category: 'Tipo di debito',
     catWohnen: 'Affitto / abitazione',
     catKrankenkasse: 'Cassa malati',
+    catGesundheit: 'Medico, laboratorio, ospedale',
+    catHilfe: {
+      krankenkasse: { sie: 'Premi, nonché franchigia e aliquota percentuale che la cassa malati Le fattura (LAMal art. 64a).', du: 'Premi, nonché franchigia e aliquota percentuale che la cassa malati ti fattura (LAMal art. 64a).' },
+      gesundheit: { sie: 'Le fatture di uno studio medico, di un laboratorio o di un ospedale che Lei riceve direttamente sono dovute al fornitore di prestazioni; la Sua cassa malati Le rimborsa la parte assicurata (LAMal art. 42 cpv. 1). Inoltri quindi la fattura alla cassa malati, se non l’ha ancora fatto. Nel piano di riduzione figura tra gli altri debiti.', du: 'Le fatture di uno studio medico, di un laboratorio o di un ospedale che ricevi direttamente sono dovute al fornitore di prestazioni; la tua cassa malati ti rimborsa la parte assicurata (LAMal art. 42 cpv. 1). Inoltra quindi la fattura alla cassa malati, se non l’hai ancora fatto. Nel piano di riduzione figura tra gli altri debiti.' },
+    },
     catAlimente: 'Alimenti',
     catBussen: 'Multe',
     catSteuern: 'Imposte',
