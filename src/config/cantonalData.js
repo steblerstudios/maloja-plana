@@ -53,6 +53,7 @@ export const IPV_MODULE = {
   VS: { laden: () => import('./ipvWallis.js'), fn: 'ipvWallis' },
   NW: { laden: () => import('./ipvNidwalden.js'), fn: 'ipvNidwalden', brauchtPLZ: false },
   ZG: { laden: () => import('./ipvZug.js'), fn: 'ipvZug', brauchtPLZ: false },
+  BL: { laden: () => import('./ipvBaselLandschaft.js'), fn: 'ipvBaselLandschaft', brauchtPLZ: false },
 };
 const _module = {};
 
@@ -178,7 +179,10 @@ export const CANTONAL_IPV = {
   // Weg: Antrag beim Amt für Sozialbeiträge (KVO § 15), nicht automatisch.
   BS: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAsb',
     beleg: { quelle: 'KVO BS (SG 834.410) · SoHaG (SG 890.700) · SoHaV (SG 890.710) · Amt für Sozialbeiträge BS — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
-  BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' }, beleg: null },
+  // BL (K31): eigenes Modell in config/ipvBaselLandschaft.js (Richtprämie minus 7,75 %, harte
+  // Obergrenze nach Dekret SGS 362.1). Die Obergrenze hängt an der Kinderzahl — sie steht im Ergebnis.
+  BL: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' },
+    beleg: { quelle: 'EG KVG BL (SGS 362) · Dekret SGS 362.1 · PVV (SGS 362.12) · SVA Basel-Landschaft — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-28' } },
   // SH (K31): eigenes Modell in config/ipvSchaffhausen.js (Richtprämien minus 15 % des anrechenbaren
   // Einkommens, höchstens 65 %). Die Versand-Grenzwerte der Verordnung sind keine Anspruchsgrenze,
   // darum maxIncome null. Antrag bei der SVA Schaffhausen (Dekret § 15), nicht bei der Gemeinde.

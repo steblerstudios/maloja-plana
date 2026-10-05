@@ -43,7 +43,7 @@ sind. Dieses Dokument ändert keinen Code.
 | FR | Freiburg | Prozent der regionalen Durchschnittsprämie (1 %–65 %) nach Tabelle, abhängig davon, um wie viel Prozent das anrechenbare Einkommen unter der gesetzlichen Grenze liegt (Einzelperson 37'000; Paar 65'000; Alleinerziehende 43'400; +14'000 je Kind); Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 %; 2 Prämienregionen | gebaut (PR #472, nachgeprüft 28.09.2026) | <https://assets.caisseavsfr.ch/Htdocs/Files/v/c24c23cead959f6952ac7c90174e13792ee122b03d8191e785de70ac0df833dd.pdf/memento_rpi_f_2026.pdf?download=1> |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise — **gebaut (PR #481), 28.09.2026; zeigt bewusst keinen Betrag**, weil die Eckpunkte der linearen Skala nicht publiziert sind (nur «kein Anspruch», wo sicher) | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | gebaut (PR #473) | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
-| BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
+| BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | gebaut (PR #479) | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | gebaut (PR #471, an der Quelle nachgeprüft 28.09.2026) | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
 | AR | Appenzell Ausserrhoden | Richtprämie minus Selbstbehalt 46 % von (massgebendes Einkommen − allgemeiner Lebensbedarf − 2'000 je Kind); harte Obergrenzen Einkommen (Alleinstehende 35'000) und Vermögen (120'000 / 200'000); Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie | gebaut (PR #480, an der Quelle nachgeprüft 28.09.2026) | <https://www.sovar.ch/uploads/SOVAR/Formulare/AK/Beitraege/Merkblatt-IPV-2026.pdf> |
 | AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | gebaut (PR #485, an der Quelle nachgeprüft 28.09.2026) | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
@@ -2284,7 +2284,7 @@ Quellenbesteuerte: laut SVA-Seite 70 % vom Bruttoeinkommen des Vor-Vorjahres (Qu
 Die App führt `maxIncome` 51'000 und `subsidySingle` 2'700 mit linearem Abbau; belegt ist für eine Einzelperson eine Obergrenze von 31'000 (51'000 gilt für zwei Erwachsene ohne Kinder) und ein Betrag von 4'596 Fr. minus 7,75 % des massgebenden Einkommens.
 
 ### Offen / nicht gefunden
-- Ordentlicher Anspruch laut SVA-Seite nur für Personen, die seit mindestens zwei Jahren im Kanton steuerpflichtig sind (aus Abruf-Zusammenfassung, Wortlaut nicht selbst geprüft); Zuziehende über separates Gesuch (Regeln §§ in PVV nicht vollständig ausgewertet).
+- Ordentlicher Anspruch laut SVA-Seite nur für Personen, die seit mindestens zwei Jahren im Kanton steuerpflichtig sind (aus Abruf-Zusammenfassung, Wortlaut nicht selbst geprüft); Zuziehende über separates Gesuch (Regeln §§ in PVV nicht vollständig ausgewertet). ⟨28.09.2026 an der Quelle gelesen, SVA-Seite «Ordentlicher Anspruch»: «Der ordentliche Anspruch besteht für Personen, welche seit mindestens zwei Jahren im Kanton Basel-Landschaft steuerpflichtig sind.» Zuziehende: PVV §§ 13/14, Gesuch bis 31.12. des dem Zuzugsjahr folgenden Anspruchsjahres.⟩
 - Keine eigene Vermögensgrenze; Vermögen wirkt über 20 % des steuerbaren Vermögens im MGE.
 - Sonderregeln Sozialhilfe/EL/Quellensteuer nicht im Detail ausgewertet.
 
@@ -2294,6 +2294,76 @@ Die App führt `maxIncome` 51'000 und `subsidySingle` 2'700 mit linearem Abbau; 
 3. Verordnung über die Prämienverbilligung in der Krankenpflegeversicherung (PVV), SGS 362.12, Stand 1. Januar 2026 (§ 5 geändert 18.11.2025, GS 2025.058). https://bl.clex.ch/api/de/versions/4361/pdf_file (Eintrag: https://bl.clex.ch/app/de/texts_of_law/362.12) — abgerufen 16.09.2026
 4. Ordentlicher Anspruch IPV, SVA Basel-Landschaft. https://www.sva-bl.ch/de/ausgleichskasse/individuelle-praemienverbilligung-ipv/ordentlicher-anspruch — abgerufen 16.09.2026
 5. Häufige Fragen IPV, SVA Basel-Landschaft. https://www.sva-bl.ch/de/ausgleichskasse/individuelle-praemienverbilligung-ipv/haeufige-fragen-ipv — abgerufen 16.09.2026
+
+### Nachprüfung 28.09.2026 (K31, Einbau in die App)
+
+**An der Quelle nachgeprüft am 28.09.2026** über die API von bl.clex.ch
+(`/api/de/texts_of_law/<nr>` → Versionen, `/api/de/versions/<id>/pdf_file_with_annexes` → PDF).
+Gegenprobe: erfundene Erlassnummer `362.19` → HTTP 404, 0 Bytes; erfundene Version `99999` → HTTP 404.
+
+| Quelle | Fassung (an der Quelle gelesen) |
+|---|---|
+| EG KVG, SGS 362 | Version **4310**, «Aktuelle Version in Kraft seit: 01.04.2023 (Beschlussdatum: 16.03.2023)», keine künftige Fassung |
+| Dekret, SGS 362.1 | Version **1922**, «in Kraft seit: 01.01.2014 (Beschlussdatum: 31.10.2013)», keine künftige Fassung |
+| PVV, SGS 362.12 | Version **4361**, «in Kraft seit: 01.01.2026 (Beschlussdatum: 18.11.2025)», keine künftige Fassung → Richtprämien 2027 noch nicht publiziert |
+| Wegleitung Steuererklärung BL 2024 | Steuerverwaltung BL, PDF über bl-api.webcloud7.ch (HTTP 200; erfundener Dateiname → 404) — Bemessungsjahr für 2026 |
+| SVA BL | Seiten «Ordentlicher Anspruch» und «IPV Online-Rechner» (HTTP 200; erfundene Unterseite → 404) |
+
+**Alle Zahlen der Tabelle oben bestätigt** (Richtprämien 383/318/164, 7,75 %, Obergrenzen, «kein
+Mindestbetrag»). Zusätzlich gelesen:
+
+> «Personen ab dem 1. Januar nach Vollendung des 25. Altersjahres, die aufgrund der definitiven Steuerveranlagung des Vor-Vorjahres die Voraussetzungen für eine Prämienverbilligung erfüllen» — PVV § 9 Abs. 1 lit. a (Erwachsene: wer im Anspruchsjahr 26 wird; Online-Rechner: «Erwachsene/r (ab Jahrgang 2000)»)
+
+> «Die Ausgleichskasse stellt den Personen gemäss § 9 in der Regel von Amtes wegen ein Antragsformular zu.» / «… stellen es innert 1 Jahr seit Zustellung der Ausgleichskasse zu.» — PVV § 10 Abs. 1 und 3; «Gesuche um Prämienverbilligung sind bis Ende des Anspruchsjahres einzureichen, ansonsten der Anspruch verwirkt.» — EG KVG § 9c Abs. 1
+
+> «Zwischentotal der steuerbaren Einkünfte 399 Nettoeinkommen» — SVA BL, IPV Online-Rechner (Feldbeschriftung)
+
+> «In der Steuererklärung ist der Nettolohn (d.h. der Lohn nach Abzug von AHV-, IV-, EO- und ALV-Prämien, der laufenden Beiträge an Personalvorsorgeeinrichtungen sowie der Prämien an die obligatorische Nichtberufsunfallversicherung) einzutragen.» — Wegleitung 2024, Ziffer 100. Die Säule 3a ist dort ein Abzug unter **Ziffer 610**, also nach dem Zwischentotal 399.
+
+> «Der Abzug beträgt CHF 180’000 für … Einelternfamilien» / «Der Abzug beträgt CHF 90’000 für alle anderen steuerpflichtigen Personen.» — Wegleitung 2024, Ziffern 900/905 (steuerfreie Beträge Vermögen)
+
+> «Kein Abzug möglich; CHF 750 pro Kind» (Staatssteuer, Kinderabzug als Steuerbetrag) — Wegleitung 2024, Ziffer 750. Der Online-Rechner übersetzt «Kinderabzug gemäss Staatssteuer» 750 → 5'000 je Kind (EG KVG § 9 Abs. 1 lit. d).
+
+> «Das Konkubinat ist für die Berechnung nicht relevant» — SVA BL, Online-Rechner
+
+**Prüfstein:** kein amtliches Berechnungsbeispiel mit Beträgen gefunden (der Online-Rechner prüft nur
+die Obergrenze und wurde bewusst nicht mit Daten gefüttert). Die Tests rechnen gegen den Wortlaut:
+Einkommen 0 → 4'596; 20'000 → 3'046; 31'000 → 2'193.50; 31'001 → kein Anspruch.
+**Korrektur zur Nachrechnung vom 16.09.** («bei MGE 31'000 … 2'193.50 Fr. IPV») — bestätigt.
+
+**So rechnet die App (config/ipvBaselLandschaft.js):** massgebend = Hauptlohn × 12 (× 13) + Neben- und
+Renteneinkommen × 12 (≈ Zwischentotal Ziffer 399; die 3a bleibt drin — `SAEULE_3A.nichtAbgezogen`)
++ 20 % des erfassten Vermögens über 90'000 (mit Kind 180'000) − 5'000 je Kind. Betrag = Summe der
+Jahresrichtprämien − 7,75 % davon, bis zur Obergrenze; Anteil der erwachsenen Person auf ihre
+Prämie gedeckelt. Keine Prämienregion, keine Vermögensgrenze, kein Mindestbetrag.
+
+**Gewählt, nicht belegt:**
+- Kinder-Mindestanteil 80 %: zwei Lesarten, Zahl nur wo sie übereinstimmen (sonst `mindestanspruch`) — Frage 22.1.
+- Kind möglicherweise nach dem Bemessungsjahr geboren (tiefstmögliches Alter ≤ 1): keine Zahl (`offenGrund.blKindNeu`) — Frage 22.3.
+- Obergrenze «bis und mit» — Frage 22.4.
+- Kinderabzug 5'000 für jedes erfasste minderjährige Kind im Haushalt (die App prüft nicht, ob der Staatssteuer-Kinderabzug gewährt wurde).
+
+**Bewusst nicht gebaut:** Paare / eingetragene Partnerschaft; Konkubinat (BL rechnet getrennt, aber
+die Kinderzuordnung hängt am Kinderabzug); junge Erwachsene (§ 8 Abs. 1bis, PVV §§ 14a–14c);
+Quellenbesteuerte (PVV § 18c); Zuziehende (PVV §§ 13/14); Sozialhilfe; Einkünfte aus
+Liegenschaften und Unterhaltsbeiträge (§ 9 Abs. 1 lit. a/c).
+
+**Fixrunde 28.09.2026 abends (Fachprüfung PR #479, «erst beheben»):**
+- ⟨korrigiert⟩ «Liegenschaften und Unterhaltsbeiträge (lit. c) — die App erfasst sie nicht» war falsch.
+  BL rechnet jetzt `alimentePaid` als Abzug (EG KVG § 9 Abs. 1 lit. c; «Abzug gewährt» **gewählt**:
+  Regelfall), `alimenteReceived` (Wegleitung 2024 Ziffern 310/320, StG § 24 lit. f) und `familienzulagen`
+  (Wegleitung Ziffer 100 «Zulagen» bzw. 380 «Familienzulagen … übrige Einkünfte») als Einkünfte vor
+  Ziffer 399. Die Wegleitung 2024 ist mit curl und Browser-Kennung lesbar (HTTP 200; ohne Kennung 403):
+  `bl-api.webcloud7.ch/…/unselbstaendig-erwerbende-2024/wegleitung-zur-steuererklarung_int_2_w_2024_240917.pdf`.
+  Prüfbeispiele: 2'800 − 1'000 bezahlt → **2'922** (vorher «kein Anspruch»); 2'000 + 1'000 erhalten →
+  **kein Anspruch** (vorher 2'736).
+- ⟨korrigiert⟩ Obergrenze: «bei 31'000 → 2'193.50» war gegen den amtlichen Rechner der SVA (`math >= 0` →
+  «NEIN»). Jetzt «ab der Grenze kein Anspruch» — Frage 22.4 um Bestätigung.
+- Freibeträge zusätzlich belegt: StG BL § 50 Abs. 1 lit. a/b (180'000 / 90'000). Schulden (Reinvermögen)
+  als bewusst nicht gebaut benannt.
+- Texte: «kein Anspruch» nennt die Veranlagung {basisjahr} (Näherung an der Klippe); Gesuchsfrist
+  31. Dezember (PVV § 18 Abs. 2) in Vorbehalt und Neugeborenen-Grund; Kinderanteil ungedeckelt benannt.
+- Lesarten Kinder-80 %: Abstand wächst bis 1'644 (nicht «536»), (a) ist Untergrenze — Produktfrage in 22.1.
 
 ---
 

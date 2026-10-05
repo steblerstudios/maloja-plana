@@ -769,6 +769,48 @@ Beiträge 2027 stehen aus. Ab 01.01.2027 zeigt die App für BS keinen Betrag meh
 
 ---
 
+## 22 · SVA Basel-Landschaft — Mindestanteil der Kinder und Kinder nach dem Bemessungsjahr
+
+*Aufgenommen 28.09.2026 beim Einbau von BL (K31). Entwurf — **nicht gesendet**. (Nummer 22 nach der
+Reservierung vom 28.09. abends: 8 UR, 9 NE, 10 GR, 11–20 andere Kantone, 21 BS.)*
+
+**Worum es geht:** Formel, Richtprämien, Prozentanteil und Obergrenzen 2026 stehen vollständig im
+EG KVG (SGS 362), im Dekret (SGS 362.1) und in der PVV (SGS 362.12). Ein amtliches
+Berechnungsbeispiel mit Beträgen haben wir nicht gefunden; der Online-Rechner prüft nur die
+Obergrenze.
+
+**Frage 1 — Kinder mindestens 80 % (§ 8 Abs. 3 EG KVG):** Wie wirkt der Mindestanteil mit der
+Differenzrechnung nach § 8 Abs. 2 zusammen? (a) Der Haushalt erhält mindestens «Kinderzahl × 80 %
+der Kinder-Richtprämie» (Boden auf dem Ganzen), oder (b) der Betrag wird im Verhältnis der
+Richtprämien verteilt und jedes Kind erhält mindestens 80 % zusätzlich zum Anteil der
+erwachsenen Person? Der Abstand wächst mit dem Einkommen: 1 Kind, 40'000 → 536 Franken; 1 Kind,
+51'000 → 791; 2 Kinder, 68'000 → 1'644. ⟨korrigiert 28.09.2026 nach der Fachprüfung: hier stand nur
+«536»⟩ Bis zur Antwort zeigt die App dort, wo sie abweichen, keinen Betrag. Die Landratsvorlage
+2019/458 («Erhöhung Mindestanspruch für Kinder») könnte die Frage klären; wir haben sie noch nicht
+gelesen. *Produktfrage an Stebler Studios (nicht an die SVA):* (a) ist unter beiden Lesarten eine
+Untergrenze — soll die App Familien statt «keine Zahl» ein «mindestens CHF …» zeigen?
+
+**Frage 2 — Aufteilung und Deckel (§ 8 Abs. 2bis):** Gilt «darf die tatsächlich bezahlte Prämie
+nicht übersteigen» je Person oder für die Berechnungseinheit? Wie wird der Betrag auf die
+Personen verteilt?
+
+**Frage 3 — Kinder, die nach dem Bemessungsjahr geboren sind:** ~~Zählt es für 2026 nur auf
+Gesuch …?~~ ⟨grösstenteils beantwortet 28.09.2026⟩ PVV § 18 Abs. 4bis: «Neugeborene Kinder werden ab
+Beginn des Geburtsmonats berücksichtigt»; Gesuch bis 31. Dezember des Anspruchsjahres (§ 18 Abs. 2);
+die SVA-Seite «Häufige Fragen» sagt für «Geburt Kinder im letzten oder aktuellen Jahr»: Gesuch online
+mit der Police des Kindes. Offen bleibt nur, wie der Betrag für das Geburtsjahr anteilig gerechnet
+wird — darum zeigt die App weiter keinen Betrag, nennt aber jetzt Frist und Stelle.
+
+**Frage 4 — Obergrenze:** ⟨umgestellt 28.09.2026⟩ Der Quelltext Ihres Online-Rechners
+(`sva_onlinecalculator.js`) antwortet bei `einkommen − obergrenze >= 0` mit «NEIN», also schon bei
+genau 31'000. Die App rechnet jetzt ebenso («ab der Grenze kein Anspruch»). Bitte bestätigen, dass die
+Verfügung so rechnet. (Vorher: «Wir rechnen ‹bis und mit›».)
+
+**Stand:** BL ist für 2026 gebaut (Entwurfs-PR, K31). Ab 01.01.2027 zeigt die App für BL keinen
+Betrag mehr, bis die Richtprämien 2027 eingearbeitet sind.
+
+---
+
 ## 24 · SVA Schaffhausen — Kinder-Mindestanspruch, Aufteilung, Rundung
 
 *Aufgenommen 28.09.2026 beim Einbau von SH. Entwurf — **nicht gesendet**. (Nummer 24, zugeteilt
