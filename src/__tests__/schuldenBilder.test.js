@@ -192,12 +192,28 @@ describe('① AusserdemOffen / ② OffenePosten', () => {
     const html = render(OffenePosten, offenePosten({ versicherungen: { kkBelege: [{ id: 'a', betrag: 10, status: 'offen' }] } }, heute));
     expect(html).not.toContain('gruppeForderungen');
   });
-  it('② namenlose Forderung ohne Beleg heisst «—», nicht «Arztrechnung»', () => {
+  it('② namenlose Forderung ohne Beleg heisst «Ohne Namen», nicht «Arztrechnung» und nicht «—»', () => {
     const p = offenePosten({ schulden: [{ id: 1, creditor: '', amount: 20, status: 'open' }] }, heute);
     const html = render(OffenePosten, p);
     expect(html).not.toContain('ohneDatum');
     expect(html).not.toContain('rechnungVom');
-    expect(html).toContain('>—<');
+    expect(html).toContain('>schulden.posten.ohneName<');
+    expect(html).not.toContain('>—<');
+  });
+  it('② Summe trägt ein sichtbares Etikett «Total» vor dem Betrag, in text.body', () => {
+    const html = render(OffenePosten, posten);
+    expect(html).toMatch(/schulden\.posten\.summe<\/span>\s*<span[^>]*>[^<]*CHF/);
+    const summe = html.slice(html.indexOf('schulden.posten.summe'));
+    expect(summe.slice(0, summe.indexOf('CHF'))).toContain('font-size:16px');
+    expect(summe.slice(0, summe.indexOf('CHF'))).not.toContain('font-size:19px');
+  });
+  it('① Betrag in «Ausserdem offen» bricht nicht um', () => {
+    const html = render(AusserdemOffen, posten, palette, () => {});
+    expect(html).toContain('white-space:nowrap');
+  });
+  it('① ② Weg-Link steht mit Abstand oben (space.xs) in eigenem Wrapper', () => {
+    expect(render(AusserdemOffen, posten, palette, () => {})).toMatch(/<div style="margin-top:4px"><button[^>]*class="mp-link"/);
+    expect(render(OffenePosten, posten, palette, () => {})).toMatch(/<div style="margin-top:4px"><button[^>]*class="mp-link"/);
   });
   it('① ② erscheinen auch ohne Schulden, nur mit Arztbelegen (SchuldenManager)', () => {
     const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');

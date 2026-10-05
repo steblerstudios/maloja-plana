@@ -3045,6 +3045,8 @@ export default {
     statusPaid: 'Payé',
     alsBezahlt: 'Marquer comme payée',
     wiederOffen: 'Rouvrir',
+    ansageBezahlt: '{name} : payée',
+    ansageOffen: '{name} : rouverte',
     category: 'Type de dette',
     catWohnen: 'Loyer / logement',
     catKrankenkasse: 'Assurance-maladie',
@@ -3134,6 +3136,8 @@ export default {
       frist: 'Échéance {datum}',
       fristAbgelaufen: 'Échéance dépassée ({datum})',
       ausArzt: 'issue d’une facture médicale',
+      ohneName: 'Sans nom',
+      summe: 'Total',
     },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {

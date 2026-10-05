@@ -11,7 +11,7 @@ import { leseBetrag } from './briefGenerator.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { LegendenMarke } from './components/LegendenMarke.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, visuallyHiddenStyle } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
@@ -43,9 +43,11 @@ export const MahnstufenLeiste = ({ debt, palette, t, inputStyle, onChange, onNav
 };
 
 // `vorlaeufig`: Beispiel oder Ausprobieren — Änderungen liegen nur im Arbeitsspeicher (main.jsx).
-export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig }) => {
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig, startView = 'overview' }) => {
   const vorlesen = useVorlesenContext();
-  const [view, setView] = useState('overview');
+  const [view, setView] = useState(startView);
+  // Ansage beim Statuswechsel einer Forderung (a11y 05.10.2026): «Gespeichert» sagt nicht, welche.
+  const [statusAnsage, setStatusAnsage] = useState('');
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
   const [verlustscheine, setVerlustscheine] = useState(data.verlustscheine || []);
@@ -122,6 +124,12 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     setSchulden(schulden.map(d => d.id === id ? { ...d, [field]: value } : d));
   };
 
+  const wechselStatus = (debt) => {
+    const neu = debt.status === 'paid' ? 'open' : 'paid';
+    handleUpdateDebt(debt.id, 'status', neu);
+    setStatusAnsage(t(neu === 'paid' ? 'schulden.ansageBezahlt' : 'schulden.ansageOffen', { name: forderungName(debt, t) }));
+  };
+
   const handleDeleteDebt = (id) => {
     setSchulden(schulden.filter(d => d.id !== id));
   };
@@ -142,6 +150,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   }, [schulden, betreibung, verlustscheine]);
 
 
+  // Kategorie-Hinweis: Select verweist per aria-describedby nur darauf, solange er sichtbar ist.
+  const katHilfeSichtbar = newDebt.category === 'krankenkasse' || newDebt.category === 'gesundheit';
   const debtStatus = calculateDebtStatus(schulden);
   // ① ② Mit dem lokalen Zustand, damit frisch Erfasstes sofort zählt.
   const posten = offenePosten({ ...data, schulden }, heuteIso());
@@ -351,7 +361,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),
           React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), 'aria-label': t('schulden.dueSoon') + ' (' + t('common.optional') + ')', style: { ...inputStyle, marginTop: space.sm } }),
           React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), 'aria-label': t('schulden.interestRate') + ' (' + t('common.optional') + ')', style: inputStyle }),
-          React.createElement('select', { value: newDebt.category, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
+          React.createElement('select', { value: newDebt.category, 'aria-describedby': katHilfeSichtbar ? 'kat-hilfe' : undefined, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
             React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
             React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
             React.createElement('option', { value: 'gesundheit' }, t('schulden.catGesundheit')),
@@ -361,7 +371,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
             React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
           ),
-          (newDebt.category === 'krankenkasse' || newDebt.category === 'gesundheit') && React.createElement('div', { 'data-testid': 'kat-hilfe', style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.catHilfe.' + newDebt.category)),
+          katHilfeSichtbar && React.createElement('div', { id: 'kat-hilfe', 'data-testid': 'kat-hilfe', style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.catHilfe.' + newDebt.category)),
           React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), 'aria-label': t('schulden.statusField'), style: inputStyle },
             React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
             React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
@@ -385,7 +395,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
           // Lücke aus dem Spec: bisher kein Weg zu «bezahlt» nach dem Erfassen. Derselbe Klick läuft über
           // onSave und gleicht den verbundenen Beleg ab (utils/offenePosten.js, nachSchuldenSpeichern).
-          React.createElement('button', { type: 'button', onClick: () => handleUpdateDebt(debt.id, 'status', debt.status === 'paid' ? 'open' : 'paid'), style: { ...zweitKnopf, marginRight: space.sm } }, debt.status === 'paid' ? t('schulden.wiederOffen') : t('schulden.alsBezahlt')),
+          React.createElement('button', { type: 'button', 'aria-label': t(debt.status === 'paid' ? 'schulden.wiederOffen' : 'schulden.alsBezahlt') + ' ' + forderungName(debt, t), onClick: () => wechselStatus(debt), style: { ...zweitKnopf, marginRight: space.sm } }, debt.status === 'paid' ? t('schulden.wiederOffen') : t('schulden.alsBezahlt')),
           React.createElement('button', { 'aria-label': t('common.delete') + ' ' + forderungName(debt, t), onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       )
@@ -458,7 +468,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
 
     // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
     // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
-    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig })
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),
+    // Welche Forderung wie gewechselt hat: nur für Screenreader, von Anfang an im DOM.
+    React.createElement('p', { role: 'status', 'data-testid': 'status-ansage', style: visuallyHiddenStyle }, statusAnsage)
   );
 };
 

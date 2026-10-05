@@ -2851,6 +2851,9 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
     alsBezahlt: 'Als bezahlt markieren',
     wiederOffen: 'Wieder offen',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    ansageBezahlt: '{name}: bezahlt',
+    ansageOffen: '{name}: wieder offen',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
@@ -2943,6 +2946,8 @@ export default {
       frist: 'Zahlungsfrist {datum}',
       fristAbgelaufen: 'Zahlungsfrist abgelaufen ({datum})',
       ausArzt: 'aus einer Arztrechnung',
+      ohneName: 'Ohne Namen',
+      summe: 'Total',
     },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.

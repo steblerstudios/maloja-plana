@@ -3002,6 +3002,8 @@ export default {
     statusPaid: 'Pagato',
     alsBezahlt: 'Segnare come pagato',
     wiederOffen: 'Riaprire',
+    ansageBezahlt: '{name}: pagato',
+    ansageOffen: '{name}: riaperto',
     category: 'Tipo di debito',
     catWohnen: 'Affitto / abitazione',
     catKrankenkasse: 'Cassa malati',
@@ -3091,6 +3093,8 @@ export default {
       frist: 'Scadenza {datum}',
       fristAbgelaufen: 'Scadenza superata ({datum})',
       ausArzt: 'da una fattura medica',
+      ohneName: 'Senza nome',
+      summe: 'Totale',
     },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {

@@ -3045,6 +3045,8 @@ export default {
     statusPaid: 'Paid',
     alsBezahlt: 'Mark as paid',
     wiederOffen: 'Open again',
+    ansageBezahlt: '{name}: paid',
+    ansageOffen: '{name}: open again',
     category: 'Type of debt',
     catWohnen: 'Rent / housing',
     catKrankenkasse: 'Health insurance',
@@ -3134,6 +3136,8 @@ export default {
       frist: 'Payment due {datum}',
       fristAbgelaufen: 'Payment overdue ({datum})',
       ausArzt: 'from a medical bill',
+      ohneName: 'No name',
+      summe: 'Total',
     },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {

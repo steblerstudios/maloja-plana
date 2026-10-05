@@ -12,6 +12,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { StatusForm } from './components/StatusForm.jsx';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { AblaufLink } from './AblaufSchale.jsx';
 import { istBelegUebernehmbar } from './utils/offenePosten.js';
 import { heuteIso } from './utils/fristen.js';
 
@@ -398,7 +399,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
   };
   const fmtDatum = (d) => d ? d.split('-').reverse().join('.') : t('kvg.belegNoDate');
   // ③ Zweitknopf (Umriss, wie überall): nur mit onUebernehmen — im Beispiel gibt main.jsx keine mit.
-  const zweitKnopf = { background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm, minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px' };
+  const zweitKnopf = { background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.xs, minHeight: '44px', boxSizing: 'border-box', padding: space.sm + 'px ' + space.md + 'px' };
   const heute = heuteIso();
 
   const result = berechneFranchise(franchise, kosten);
@@ -723,7 +724,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                 ),
                 // Verbunden: kein stilles Mitlöschen — der Hinweis nennt den Weg, der Beleg bleibt stehen.
                 b.forderungId && React.createElement('div', {
-                  style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.normal }
+                  style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: leading.normal }
                 }, t('kvg.loeschenVerbunden')),
                 offen && b.frist && React.createElement('div', {
                   style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginTop: '6px' }
@@ -742,19 +743,15 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                   }, erledigtZeichen(remindedIds.has(b.id), remindedIds.has(b.id) ? t('kvg.belegReminded') : t('kvg.belegRemind')))
                 ),
                 b.forderungId && React.createElement('div', {
-                  style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap', marginTop: '6px' }
+                  style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm, flexWrap: 'wrap', marginTop: space.xs }
                 },
-                  React.createElement('span', { style: { fontSize: text.xs, color: palette.text } }, t('kvg.wirdGefuehrt')),
-                  onNavigate && React.createElement('button', {
-                    type: 'button',
-                    onClick: () => onNavigate('schulden'),
-                    style: { background: 'none', border: 'none', fontFamily: 'inherit', fontSize: text.xs, fontWeight: weight.medium, padding: '2px 0', color: palette.sandDeep, cursor: 'pointer' }
-                  }, t('kvg.zumSchuldenmanager'))
+                  React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('kvg.wirdGefuehrt')),
+                  onNavigate && React.createElement(AblaufLink, { palette, label: t('kvg.zumSchuldenmanager'), onClick: () => onNavigate('schulden') })
                 ),
                 onUebernehmen && istBelegUebernehmbar(b, heute) && React.createElement('button', {
                   type: 'button',
                   onClick: () => onUebernehmen(b.id),
-                  style: { ...zweitKnopf, marginTop: '6px' }
+                  style: { ...zweitKnopf, marginTop: space.xs }
                 }, t('kvg.alsForderung')),
                 b.nichtGedeckt > 0 && React.createElement('div', {
                   style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' }

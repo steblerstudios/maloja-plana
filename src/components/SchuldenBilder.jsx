@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { text, weight, space, radius, leading, visuallyHiddenStyle } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
 import { formatDE } from '../utils/helpers.js';
 
@@ -146,7 +146,7 @@ export const MahnstufenUebersicht = ({ palette, t, prioritized, onNavigate }) =>
                 MAHNSTUFEN.map((k, j) => React.createElement('span', { key: k }, punkt(j <= i, j === i)))
               )
           ),
-          weg && onNavigate && React.createElement('div', { style: { paddingInlineStart: 'min(7.5rem, 40%)' } },
+          weg && onNavigate && React.createElement('div', { style: { paddingInlineStart: 'min(7.5rem, 40%)', marginTop: space.xs } },
             React.createElement(AblaufLink, { palette, label: t(weg.key), onClick: () => onNavigate(weg.view) }))
         );
       })
@@ -160,11 +160,16 @@ export const MahnstufenUebersicht = ({ palette, t, prioritized, onNavigate }) =>
 export const AusserdemOffen = ({ palette, t, posten, onNavigate }) => {
   const n = posten && posten.arzt ? posten.arzt.length : 0;
   if (n === 0) return null;
-  const satz = t(n === 1 ? 'schulden.posten.ausserdemEins' : 'schulden.posten.ausserdem', { anzahl: n, betrag: chf(posten.summeArzt) });
+  // Der Betrag bricht nicht um: Marke im Satz, dann Teile und nowrap-Betrag wieder zusammensetzen.
+  const MARKE = '§BETRAG§';
+  const satz = t(n === 1 ? 'schulden.posten.ausserdemEins' : 'schulden.posten.ausserdem', { anzahl: n, betrag: MARKE });
   const frist = posten.naechsteFrist ? ' · ' + t('schulden.posten.naechsteFrist', { datum: formatDE(posten.naechsteFrist) }) : '';
-  return React.createElement('div', { style: { marginBottom: space.lg, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
-    React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } }, satz + frist),
-    onNavigate && React.createElement('div', null,
+  const teile = satz.split(MARKE);
+  const betragKnoten = React.createElement('span', { key: 'betrag', style: { color: palette.text, whiteSpace: 'nowrap' } }, chf(posten.summeArzt));
+  return React.createElement('div', { style: { marginBottom: space.lg, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+    React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+      teile.length === 2 ? [teile[0], betragKnoten, teile[1] + frist] : satz.split(MARKE).join(chf(posten.summeArzt)) + frist),
+    onNavigate && React.createElement('div', { style: { marginTop: space.xs } },
       React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') }))
   );
 };
@@ -174,20 +179,22 @@ export const AusserdemOffen = ({ palette, t, posten, onNavigate }) => {
 export const forderungName = (f, t) => f.creditor
   || (f.ausBeleg
     ? (f.belegDatum ? t('schulden.posten.rechnungVom', { datum: formatDE(f.belegDatum) }) : t('schulden.posten.ohneDatum'))
-    : '—');
+    : t('schulden.posten.ohneName'));
 
 export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
   const arzt = posten && posten.arzt ? posten.arzt : [];
   const forderungen = posten && posten.forderungen ? posten.forderungen : [];
   if (arzt.length + forderungen.length === 0) return null;
-  const zeile = { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm + 'px', padding: '6px 0', borderTop: '1px solid ' + palette.border + '55', fontSize: text.sm, color: palette.text };
+  const zeile = { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm + 'px', padding: space.xs + 'px 0', borderTop: '1px solid ' + palette.border + '55', fontSize: text.sm, color: palette.text };
   const betragStil = { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' };
   const gruppenTitel = { fontSize: text.sm, color: palette.mid, margin: 0, fontWeight: weight.semi };
   const nebenText = { display: 'block', fontSize: text.xs, color: palette.mid };
   return React.createElement('section', { 'aria-labelledby': 'offene-posten-titel', style: { marginBottom: space.lg } },
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm + 'px', marginBottom: space.sm } },
       React.createElement('h3', { id: 'offene-posten-titel', style: { margin: 0, fontWeight: weight.semi, fontSize: text.body, color: palette.text } }, t('schulden.posten.titel')),
-      React.createElement('span', { style: { ...betragStil, fontSize: text.lg, fontWeight: weight.semi } }, chf(posten.summe))
+      React.createElement('span', { style: { display: 'inline-flex', alignItems: 'baseline', gap: space.sm + 'px' } },
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.posten.summe')),
+        React.createElement('span', { style: { ...betragStil, fontSize: text.body, fontWeight: weight.semi } }, chf(posten.summe)))
     ),
     arzt.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement('h4', { style: gruppenTitel }, t('schulden.posten.gruppeArzt')),
@@ -199,7 +206,8 @@ export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
           React.createElement('span', { style: betragStil }, chf(b.betrag))
         ))
       ),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') })
+      onNavigate && React.createElement('div', { style: { marginTop: space.xs } },
+        React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') }))
     ),
     forderungen.length > 0 && React.createElement('div', null,
       React.createElement('h4', { style: gruppenTitel }, t('schulden.posten.gruppeForderungen')),

@@ -3069,6 +3069,8 @@ export default {
     statusPaid: 'Gezahlt',
     alsBezahlt: 'Als bezahlt markieren',
     wiederOffen: 'Wieder offen',
+    ansageBezahlt: '{name}: bezahlt',
+    ansageOffen: '{name}: wieder offen',
     category: 'Art der Schuld',
     catWohnen: 'Miete / Wohnen',
     catKrankenkasse: 'Krankenkasse',
@@ -3158,6 +3160,8 @@ export default {
       frist: 'Zahlungsfrist {datum}',
       fristAbgelaufen: 'Zahlungsfrist abgelaufen ({datum})',
       ausArzt: 'aus einer Arztrechnung',
+      ohneName: 'Ohne Namen',
+      summe: 'Total',
     },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
     bild: {
