@@ -300,9 +300,6 @@ Sozialabzügen (Lohnausweis Ziff. 11) enthalten? Die App setzt das Nettoeinkomme
 
 **Stand:** NE ist für 2026 gebaut (Entwurfs-PR #478, K31). Werte 2027 nicht eingebaut; ab
 01.01.2027 zeigt die App für NE keinen Betrag mehr.
-
----
-
 ## 10 · SVA Graubünden — Selbstbehalt-Satz, Kinder-Vergleich, Deckel und Alter
 
 **Wo:** KPVG (BR 542.100) Art. 8 Abs. 2–4; VOzKPVG (BR 542.120) Art. 17, 22; Wegleitung IPV 2026.
@@ -672,8 +669,6 @@ Abs. 2 lit. a spricht vom «steuerbaren Vermögen»; die App rechnet so (Fachpr�
 **Stand:** SO ist gebaut (Entwurfs-PR, K31) und zeigt bewusst keinen Betrag, nur «kein Anspruch»,
 wo er für jeden Satz zwischen 10 und 16 % gilt. Mit der Antwort auf Frage 1 rechnet die App.
 
----
-
 ## 20 · Ausgleichskasse Zug — der Beschluss 2026 und die Frist
 
 *Aufgenommen 28.09.2026 beim Einbau von ZG, nach der Fachprüfung neu gefasst. Entwurf — **nicht
@@ -722,6 +717,55 @@ Reineinkommens (⟨Fixrunde 2⟩ Versicherungsabzug § 30 lit. g StG voll, Beruf
 Fahrkosten bis 6'000, Verpflegung, bezahlte Alimente, Kinderbetreuung — Wegleitung 2024 der
 Steuerverwaltung); dazwischen zeigt sie keine Zahl. Erhaltene Alimente und Familienzulagen zählt sie
 zum Einkommen.
+
+---
+
+## 21 · Amt für Sozialbeiträge Basel-Stadt — hypothetisches Einkommen, Zuschlag und eine Tabellenzelle
+
+*Aufgenommen 28.09.2026 beim Einbau von BS (K31). Entwurf — **nicht gesendet**.*
+
+**Worum es geht:** Tabelle und Beiträge 2026 stehen vollständig in Anhang 2 der KVO (SG 834.410),
+das Einkommen im Harmonisierungsgesetz (SoHaG, SG 890.700) und seiner Verordnung (SoHaV,
+SG 890.710). Das Berechnungsbeispiel des ASB (4 Personen, 62'000 → Gruppe 5) rechnen wir Zahl
+für Zahl nach. Offen bleiben Punkte, die die App nur mit einer eigenen Annahme rechnen könnte.
+
+**Frage 1 — Gruppe 09, Erwachsene mit alternativem Modell:** Anhang 2 der KVO nennt **240**, die
+Beitragstabelle «Einkommensgruppen, -grenzen und IPV-Beiträge ab 1. Januar 2026» **230**. Wir
+folgen der Verordnung (240 ist auch der Abstand von 30 Franken, den alle anderen Gruppen haben).
+Welcher Betrag wird ausbezahlt?
+
+**Frage 2 — hypothetisches Einkommen:** SoHaV § 24 Abs. 2 lautet: «Als hypothetisches
+Erwerbseinkommen wird die Differenz (in Prozenten) zwischen der effektiven Erwerbstätigkeit und dem
+in Abs. 1 genannten Mindesterwerbstätigkeitsgrad (80 bzw. 160 Prozent) angerechnet. 100 Prozent
+entsprechen dabei einem jährlichen Mindesterwerbseinkommen von CHF 36'000 (netto).» Sind die
+Wochenstunden erfasst, rechnet die App das Pensum als Stunden ÷ 42 und rechnet die Differenz zu
+80 % an (21 Std. → 50 % → 30 % × 36'000 = 10'800). Sind sie nicht erfasst, zeigt sie unter einem
+Erwerbseinkommen von 28'800 keinen Betrag (ausser über 60 oder mit einem Kind unter 16) und nennt
+darüber die 80-%-Annahme bei der Zahl. Drei Rückfragen: Mit welcher Wochenstundenzahl setzen Sie
+100 % an? Gibt es eine Praxis bei Vollzeit mit einem Lohn unter 28'800? Und gilt «das 60. Altersjahr
+überschritten» (§ 23 lit. a) ab dem 60. oder ab dem 61. Geburtstag?
+⟨korrigiert 28.09.2026 nach der Fachprüfung: hier stand «Nach SoHaV § 24 wird Alleinstehenden unter
+80 % die Differenz zu 36'000 netto angerechnet» — das gab den Wortlaut falsch wieder (angerechnet
+wird die Differenz in PROZENTEN, nicht bis 36'000 aufgefüllt), und die Wochenstunden kannte die
+App sehr wohl.⟩
+
+**Frage 3 — Gruppengrenzen:** § 22 Abs. 1 KVO gewährt Beiträge, wenn das Einkommen die
+Leistungsgrenze «nicht übersteigt». Gilt dasselbe für die Grenzen zwischen den Gruppen — gehört
+ein Einkommen von genau 23'125 (1 Person) zu Gruppe 01?
+
+**Frage 4 — Zuschlag für alternative Modelle (§ 21 Abs. 1bis KVO):** Das ASB «kann die für den
+Zuschlag zu berücksichtigenden Versicherungsmodelle von einem Mindestrabatt … abhängig machen».
+Gibt es diesen Mindestrabatt 2026, und wie hoch ist er? Das Merkblatt 01.2026 nennt keinen. Die App
+rechnet bei erfasstem Hausarzt-, HMO-, Telmed- oder Apothekenmodell mit Zuschlag und sagt «sofern die
+Police eingereicht ist; das Amt kann einen Mindestrabatt verlangen».
+
+**Frage 5 — Alter:** KVO und SoHaV nennen für die Altersklassen keinen Stichtag. Welcher Zeitpunkt
+entscheidet für eine Person, die im Anspruchsjahr 26 wird? Wir zeigen für diesen Jahrgang derzeit
+keinen Betrag.
+
+**Stand:** BS ist für 2026 gebaut (Entwurfs-PR, K31). Die KVO-Fassung ab 01.01.2027
+(Beschluss 15.09.2026) ist publiziert, trägt aber noch den Anhang 2 vom 21.10.2025 — die
+Beiträge 2027 stehen aus. Ab 01.01.2027 zeigt die App für BS keinen Betrag mehr.
 
 ---
 

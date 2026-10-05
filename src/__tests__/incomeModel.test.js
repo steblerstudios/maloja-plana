@@ -1,7 +1,14 @@
-import { describe, it, expect, onTestFinished } from 'vitest';
+import { describe, it, expect, onTestFinished, beforeAll, afterAll } from 'vitest';
 import { mapTaxFields } from '../taxImport.js';
 import { calculateSozialhilfe, calculateIPV } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // Einkommens-Modell: Nebenerwerb (sideIncome) + steuerbares
@@ -41,7 +48,7 @@ describe('taxImport: Nebenerwerb → sideIncome (Jahreswert /12)', () => {
 
 describe('Berechtigungslogik: Nebenerwerb zählt als Einkommen', () => {
   const base = {
-    basis: { canton: 'BS', household: { adults: 1, children: [] } },
+    basis: { canton: 'GE', household: { adults: 1, children: [] } }, // (BS und VD seit 28.09.2026 mit eigenem Modell, darum GE — noch ohne Modul; Musterwerte 60 000 / 3 600 / 7 200 / 1 800)
     finanzen: { monthlyIncome: 2000 },
     wohnen: { rentAmount: 1100, utilities: 100 },
     versicherungen: { kkPremium: 320 },
@@ -54,8 +61,8 @@ describe('Berechtigungslogik: Nebenerwerb zählt als Einkommen', () => {
     expect(mit.deficit).toBeLessThan(ohne.deficit);
   });
 
-  it('IPV-Beitrag sinkt (oder gleich), wenn Nebenerwerb dazukommt (BS belegt simuliert, E9; bis 23.09.2026 LU, das seither ein eigenes Modell hat)', () => {
-    const zuruecksetzen = kantoneBelegtSimulieren(['BS']);
+  it('IPV-Beitrag sinkt (oder gleich), wenn Nebenerwerb dazukommt (GE belegt simuliert, E9; bis 23.09.2026 LU, bis 28.09.2026 BS — beide seither mit eigenem Modell, VD ebenso)', () => {
+    const zuruecksetzen = kantoneBelegtSimulieren(['GE']);
     onTestFinished(zuruecksetzen);
     const ohne = calculateIPV(base);
     const mit = calculateIPV({ ...base, finanzen: { ...base.finanzen, sideIncome: 800 } });

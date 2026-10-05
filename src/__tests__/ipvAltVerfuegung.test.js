@@ -11,6 +11,7 @@ import { preloadPLZ, calculateIPV } from '../config/cantonalData.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { praemienBelegState } from '../data/praemienBeleg.js';
 import { ipvAbzug, verfuegungZuordnung } from '../data/ipvAbzug.js';
+import { musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { nextIpvStatus, IPV_STATUS } from '../data/ipvStatus.js';
 import { KKLastCard } from '../KKLastCard.jsx';
 import { PraemienBeleg } from '../components/PraemienBeleg.jsx';
@@ -128,8 +129,14 @@ describe('Altbestand: nie mehr als die Schätzung', () => {
     expect(praemienBelegState(d)).toMatchObject({ mode: 'fristVorbei', verbilligung: 0 });
   });
   it('unbelegter Kanton (E9) → 0, keine Zahl', () => {
+    // ⟨28.09.2026, Integration BS⟩ bis hier stand BS als unbelegter Kanton — BS ist seither belegt.
+    // Synthetischer Test-Kanton «TT» (Muster-Helfer), damit kein künftiges Kantonsmodell diesen Test umdeutet.
     am(SEPT_2026);
-    expect(ipvAbzug(person('BS', alteVerfuegung(200)))).toMatchObject({ betrag: 0, grund: 'keiner' });
+    const zurueck = musterKanton('TT');
+    try {
+      expect(calculateIPV(person('TT')).belegt).toBe(false);
+      expect(ipvAbzug(person('TT', alteVerfuegung(200)))).toMatchObject({ betrag: 0, grund: 'keiner' });
+    } finally { zurueck(); }
   });
   it('kein Anspruch nach der Schätzung → 0', () => {
     am(SEPT_2026);
