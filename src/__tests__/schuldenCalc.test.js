@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein } from '../schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, CATEGORY_TIER, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein } from '../schuldenCalc.js';
 import { alsIsoDatum } from '../utils/fristen.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -135,6 +135,27 @@ describe('prioritizeDebts (Quelle: schuldeninfo.ch 2011, Caritas)', () => {
       { id: 3, category: 'krankenkasse', amount: 1, status: 'open' },
     ]);
     expect(r.map(d => d.tier)).toEqual([1, 2, 3]);
+  });
+  it('Arzt-/Labor-/Spitalrechnung (gesundheit) ist Stufe 3, Krankenkasse bleibt Stufe 1', () => {
+    expect(prioritizeDebts([{ category: 'gesundheit', amount: 400, status: 'open' }])[0].tier).toBe(3);
+    expect(prioritizeDebts([{ category: 'krankenkasse', amount: 400, status: 'open' }])[0].tier).toBe(1);
+  });
+  it('CATEGORY_TIER führt gesundheit ausdrücklich (nicht nur über den Rückfall)', () => {
+    expect(Object.keys(CATEGORY_TIER)).toContain('gesundheit');
+    expect(CATEGORY_TIER.gesundheit).toBe(3);
+  });
+  it('gesundheit steht hinter Miete, Krankenkasse und Steuern', () => {
+    const r = prioritizeDebts([
+      { id: 1, category: 'gesundheit', amount: 9999, status: 'open' },
+      { id: 2, category: 'steuern', amount: 1, status: 'open' },
+      { id: 3, category: 'krankenkasse', amount: 1, status: 'open' },
+    ]);
+    expect(r.map(d => d.id)).toEqual([3, 2, 1]);
+  });
+  it('Hinweistexte wörtlich nach Spec (KVG 42 Abs. 1 / KVG 64a)', () => {
+    expect(de.schulden.catGesundheit).toBe('Arzt, Labor, Spital');
+    expect(de.schulden.catHilfe.gesundheit.sie).toBe('Rechnungen von Arztpraxis, Labor oder Spital, die Sie direkt erhalten, schulden Sie dem Leistungserbringer; Ihre Krankenkasse erstattet Ihnen den versicherten Teil (KVG Art. 42 Abs. 1). Reichen Sie die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.');
+    expect(de.schulden.catHilfe.krankenkasse.sie).toBe('Prämien sowie Franchise und Selbstbehalt, die Ihnen die Krankenkasse in Rechnung stellt (KVG Art. 64a).');
   });
 });
 

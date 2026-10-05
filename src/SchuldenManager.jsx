@@ -4,13 +4,14 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig } from './schuldenCalc.js';
 import { heuteIso, alsIsoDatum } from './utils/fristen.js';
+import { offenePosten } from './utils/offenePosten.js';
 import { renderSource } from './utils/renderSource.js';
 import { formatDE } from './utils/helpers.js';
 import { leseBetrag } from './briefGenerator.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { LegendenMarke } from './components/LegendenMarke.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, visuallyHiddenStyle } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
@@ -18,7 +19,7 @@ import { betrag, zahl } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, STUFEN_TON, tierLabelKey } from './components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName } from './components/SchuldenBilder.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -42,9 +43,11 @@ export const MahnstufenLeiste = ({ debt, palette, t, inputStyle, onChange, onNav
 };
 
 // `vorlaeufig`: Beispiel oder Ausprobieren — Änderungen liegen nur im Arbeitsspeicher (main.jsx).
-export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig }) => {
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeufig, startView = 'overview' }) => {
   const vorlesen = useVorlesenContext();
-  const [view, setView] = useState('overview');
+  const [view, setView] = useState(startView);
+  // Ansage beim Statuswechsel einer Forderung (a11y 05.10.2026): «Gespeichert» sagt nicht, welche.
+  const [statusAnsage, setStatusAnsage] = useState('');
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
   const [verlustscheine, setVerlustscheine] = useState(data.verlustscheine || []);
@@ -121,6 +124,12 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     setSchulden(schulden.map(d => d.id === id ? { ...d, [field]: value } : d));
   };
 
+  const wechselStatus = (debt) => {
+    const neu = debt.status === 'paid' ? 'open' : 'paid';
+    handleUpdateDebt(debt.id, 'status', neu);
+    setStatusAnsage(t(neu === 'paid' ? 'schulden.ansageBezahlt' : 'schulden.ansageOffen', { name: forderungName(debt, t) }));
+  };
+
   const handleDeleteDebt = (id) => {
     setSchulden(schulden.filter(d => d.id !== id));
   };
@@ -141,7 +150,11 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   }, [schulden, betreibung, verlustscheine]);
 
 
+  // Kategorie-Hinweis: Select verweist per aria-describedby nur darauf, solange er sichtbar ist.
+  const katHilfeSichtbar = newDebt.category === 'krankenkasse' || newDebt.category === 'gesundheit';
   const debtStatus = calculateDebtStatus(schulden);
+  // ① ② Mit dem lokalen Zustand, damit frisch Erfasstes sofort zählt.
+  const posten = offenePosten({ ...data, schulden }, heuteIso());
   const prioritized = prioritizeDebts(schulden, method);
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income);
@@ -227,11 +240,13 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     // Overview — Dataviz-Runde 27.09.2026: ein Balken nach Reihenfolge (A) und die Mahnstufen
     // aller Forderungen auf einer Leiste (C), statt fünf Zahlenzeilen. Bilder in SchuldenBilder.jsx.
     view === 'overview' && React.createElement('div', { role: 'tabpanel' },
+      // ① ② stehen unabhängig davon, ob schon Forderungen erfasst sind (Arztrechnungen allein genügen).
       prioritized.length === 0 && debtStatus.paid === 0
         ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') })
-        : React.createElement(React.Fragment, null,
-          React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
-          React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate })),
+        : React.createElement(OffenBalken, { palette, t, prioritized, status: debtStatus }),
+      React.createElement(AusserdemOffen, { palette, t, posten, onNavigate }),
+      React.createElement(OffenePosten, { palette, t, posten, onNavigate }),
+      React.createElement(MahnstufenUebersicht, { palette, t, prioritized, onNavigate }),
 
       betreibung.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm, color: palette.text } }, t('schulden.debtRegisterAnalysis')),
@@ -346,15 +361,17 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),
           React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), 'aria-label': t('schulden.dueSoon') + ' (' + t('common.optional') + ')', style: { ...inputStyle, marginTop: space.sm } }),
           React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), 'aria-label': t('schulden.interestRate') + ' (' + t('common.optional') + ')', style: inputStyle }),
-          React.createElement('select', { value: newDebt.category, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
+          React.createElement('select', { value: newDebt.category, 'aria-describedby': katHilfeSichtbar ? 'kat-hilfe' : undefined, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
             React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
             React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
+            React.createElement('option', { value: 'gesundheit' }, t('schulden.catGesundheit')),
             React.createElement('option', { value: 'alimente' }, t('schulden.catAlimente')),
             React.createElement('option', { value: 'bussen' }, t('schulden.catBussen')),
             React.createElement('option', { value: 'steuern' }, t('schulden.catSteuern')),
             React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
             React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
           ),
+          katHilfeSichtbar && React.createElement('div', { id: 'kat-hilfe', 'data-testid': 'kat-hilfe', style: { fontSize: text.xs, color: palette.mid, marginTop: '-4px', marginBottom: space.sm } }, t('schulden.catHilfe.' + newDebt.category)),
           React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), 'aria-label': t('schulden.statusField'), style: inputStyle },
             React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
             React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
@@ -368,7 +385,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       schulden.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') }) : React.createElement('div', null,
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
-            React.createElement('strong', null, debt.creditor),
+            React.createElement('strong', null, forderungName(debt, t)),
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : palette.text } }, betrag(debt.amount, { stellen: 2 }))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
@@ -376,7 +393,10 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           ),
           // Mahnstufe: Rechnung, Mahnung, Zahlungsbefehl (siehe MahnstufenLeiste oben).
           debt.status !== 'paid' && React.createElement(MahnstufenLeiste, { debt, palette, t, inputStyle, onNavigate, onChange: (v) => handleUpdateDebt(debt.id, 'stufe', v) }),
-          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
+          // Lücke aus dem Spec: bisher kein Weg zu «bezahlt» nach dem Erfassen. Derselbe Klick läuft über
+          // onSave und gleicht den verbundenen Beleg ab (utils/offenePosten.js, nachSchuldenSpeichern).
+          React.createElement('button', { type: 'button', 'aria-label': t(debt.status === 'paid' ? 'schulden.wiederOffen' : 'schulden.alsBezahlt') + ' ' + forderungName(debt, t), onClick: () => wechselStatus(debt), style: { ...zweitKnopf, marginRight: space.sm } }, debt.status === 'paid' ? t('schulden.wiederOffen') : t('schulden.alsBezahlt')),
+          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + forderungName(debt, t), onClick: () => handleDeleteDebt(debt.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       )
     ),
@@ -448,7 +468,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
 
     // Kein «Speichern»-Knopf mehr: jede Änderung ist sofort übernommen. Die Zeile sagt es,
     // sobald es etwas zu sagen gibt — in einer Status-Region, die von Anfang an dasteht.
-    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig })
+    React.createElement(GespeichertZeile, { palette, t, sichtbar: gespeichert, vorlaeufig }),
+    // Welche Forderung wie gewechselt hat: nur für Screenreader, von Anfang an im DOM.
+    React.createElement('p', { role: 'status', 'data-testid': 'status-ansage', style: visuallyHiddenStyle }, statusAnsage)
   );
 };
 

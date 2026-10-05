@@ -2848,9 +2848,22 @@ export default {
     date: 'Data',
     statusOpen: 'Avert',
     statusPaid: 'Pajà',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    alsBezahlt: 'Als bezahlt markieren',
+    wiederOffen: 'Wieder offen',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    ansageBezahlt: '{name}: bezahlt',
+    ansageOffen: '{name}: wieder offen',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    catGesundheit: 'Arzt, Labor, Spital',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    catHilfe: {
+      krankenkasse: { sie: 'Prämien sowie Franchise und Selbstbehalt, die Ihnen die Krankenkasse in Rechnung stellt (KVG Art. 64a).', du: 'Prämien sowie Franchise und Selbstbehalt, die dir die Krankenkasse in Rechnung stellt (KVG Art. 64a).' },
+      gesundheit: { sie: 'Rechnungen von Arztpraxis, Labor oder Spital, die Sie direkt erhalten, schulden Sie dem Leistungserbringer; Ihre Krankenkasse erstattet Ihnen den versicherten Teil (KVG Art. 42 Abs. 1). Reichen Sie die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.', du: 'Rechnungen von Arztpraxis, Labor oder Spital, die du direkt erhältst, schuldest du dem Leistungserbringer; deine Krankenkasse erstattet dir den versicherten Teil (KVG Art. 42 Abs. 1). Reiche die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.' },
+    },
     catAlimente: 'Alimentaziun',
     catBussen: 'Multas',
     catSteuern: 'Taglias',
@@ -2919,8 +2932,25 @@ export default {
       title: 'Bussen und Geldstrafen',
       quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
-    // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    posten: {
+      ausserdem: 'Ausserdem offen: {anzahl} Arztrechnungen · {betrag}',
+      ausserdemEins: 'Ausserdem offen: eine Arztrechnung · {betrag}',
+      naechsteFrist: 'nächste Zahlungsfrist {datum}',
+      zumTracker: 'zum KVG-Tracker',
+      titel: 'Offene Posten',
+      gruppeArzt: 'Arztrechnungen · im KVG-Tracker',
+      gruppeForderungen: 'Forderungen · im Schuldenmanager',
+      rechnungVom: 'Arztrechnung vom {datum}',
+      ohneDatum: 'Arztrechnung ohne Datum',
+      frist: 'Zahlungsfrist {datum}',
+      fristAbgelaufen: 'Zahlungsfrist abgelaufen ({datum})',
+      ausArzt: 'aus einer Arztrechnung',
+      ohneName: 'Ohne Namen',
+      summe: 'Total',
+    },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.
     bild: {
       offen: 'Noch offen',
       ueberfaellig: 'Fälligkeit überschritten: {amount}',
@@ -5230,6 +5260,11 @@ export default {
     belegRemind: 'M\'algurdar en il chalender',
     belegReminded: 'En il chalender',
     belegReminderTitle: 'Pajar il quint dal medi ({betrag})',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    alsForderung: 'Als Forderung im Schuldenmanager führen',
+    wirdGefuehrt: 'Wird im Schuldenmanager geführt',
+    zumSchuldenmanager: 'Zum Schuldenmanager',
+    loeschenVerbunden: 'Zum Löschen zuerst die Forderung im Schuldenmanager entfernen.',
     belegNichtGedeckt: 'Betg cuvrì da la cassa',
     belegNichtGedecktHint: 'Na quinta betg sin la franschisa/il parteniment — p.ex. prestaziuns pajadas sez.',
     belegNichtGedecktNote: '+ {amount} betg cuvrì',

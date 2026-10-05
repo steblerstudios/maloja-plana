@@ -1,6 +1,7 @@
 import React from 'react';
-import { text, weight, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { text, weight, space, radius, leading, visuallyHiddenStyle } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
+import { formatDE } from '../utils/helpers.js';
 
 // Wie die Karten im Schuldenmanager: mit Rappen, sonst ergeben Summe und Karten verschiedene Zahlen.
 const chf = (x) => betrag(x, { stellen: 2 });
@@ -145,10 +146,80 @@ export const MahnstufenUebersicht = ({ palette, t, prioritized, onNavigate }) =>
                 MAHNSTUFEN.map((k, j) => React.createElement('span', { key: k }, punkt(j <= i, j === i)))
               )
           ),
-          weg && onNavigate && React.createElement('div', { style: { paddingInlineStart: 'min(7.5rem, 40%)' } },
+          weg && onNavigate && React.createElement('div', { style: { paddingInlineStart: 'min(7.5rem, 40%)', marginTop: space.xs } },
             React.createElement(AblaufLink, { palette, label: t(weg.key), onClick: () => onNavigate(weg.view) }))
         );
       })
+    )
+  );
+};
+
+// ① «Ausserdem offen» (Task 3, Schulden R2, 05.10.2026): eine ruhige Zeile unter dem Balken.
+// Arztrechnungen aus dem KVG-Tracker stehen NICHT im Balken (eine Quelle je Wahrheit) — hier nur
+// erwähnt, mit Weg dorthin. Ohne offene Beleg-Rechnungen: nichts. Kein Rot, nichts automatisch.
+export const AusserdemOffen = ({ palette, t, posten, onNavigate }) => {
+  const n = posten && posten.arzt ? posten.arzt.length : 0;
+  if (n === 0) return null;
+  // Der Betrag bricht nicht um: Marke im Satz, dann Teile und nowrap-Betrag wieder zusammensetzen.
+  const MARKE = '§BETRAG§';
+  const satz = t(n === 1 ? 'schulden.posten.ausserdemEins' : 'schulden.posten.ausserdem', { anzahl: n, betrag: MARKE });
+  const frist = posten.naechsteFrist ? ' · ' + t('schulden.posten.naechsteFrist', { datum: formatDE(posten.naechsteFrist) }) : '';
+  const teile = satz.split(MARKE);
+  const betragKnoten = React.createElement('span', { key: 'betrag', style: { color: palette.text, whiteSpace: 'nowrap' } }, chf(posten.summeArzt));
+  return React.createElement('div', { style: { marginBottom: space.lg, fontSize: text.sm, color: palette.text, lineHeight: leading.normal } },
+    React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } },
+      teile.length === 2 ? [teile[0], betragKnoten, teile[1] + frist] : satz.split(MARKE).join(chf(posten.summeArzt)) + frist),
+    onNavigate && React.createElement('div', { style: { marginTop: space.xs } },
+      React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') }))
+  );
+};
+
+// ② «Offene Posten»: beide Ablagen nebeneinander gelesen — Arztrechnungen (KVG-Tracker) und
+// Forderungen (Schuldenmanager). Nur lesen; die Summe ist die Summe der beiden Gruppen.
+export const forderungName = (f, t) => f.creditor
+  || (f.ausBeleg
+    ? (f.belegDatum ? t('schulden.posten.rechnungVom', { datum: formatDE(f.belegDatum) }) : t('schulden.posten.ohneDatum'))
+    : t('schulden.posten.ohneName'));
+
+export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
+  const arzt = posten && posten.arzt ? posten.arzt : [];
+  const forderungen = posten && posten.forderungen ? posten.forderungen : [];
+  if (arzt.length + forderungen.length === 0) return null;
+  const zeile = { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm + 'px', padding: space.xs + 'px 0', borderTop: '1px solid ' + palette.border + '55', fontSize: text.sm, color: palette.text };
+  const betragStil = { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' };
+  const gruppenTitel = { fontSize: text.sm, color: palette.mid, margin: 0, fontWeight: weight.semi };
+  const nebenText = { display: 'block', fontSize: text.xs, color: palette.mid };
+  return React.createElement('section', { 'aria-labelledby': 'offene-posten-titel', style: { marginBottom: space.lg } },
+    React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm + 'px', marginBottom: space.sm } },
+      React.createElement('h3', { id: 'offene-posten-titel', style: { margin: 0, fontWeight: weight.semi, fontSize: text.body, color: palette.text } }, t('schulden.posten.titel')),
+      React.createElement('span', { style: { display: 'inline-flex', alignItems: 'baseline', gap: space.sm + 'px' } },
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.posten.summe')),
+        React.createElement('span', { style: { ...betragStil, fontSize: text.body, fontWeight: weight.semi } }, chf(posten.summe)))
+    ),
+    arzt.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
+      React.createElement('h4', { style: gruppenTitel }, t('schulden.posten.gruppeArzt')),
+      React.createElement('ul', { style: { listStyle: 'none', padding: 0, margin: 0 } },
+        arzt.map(b => React.createElement('li', { key: b.id, style: zeile },
+          React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } },
+            b.datum ? t('schulden.posten.rechnungVom', { datum: formatDE(b.datum) }) : t('schulden.posten.ohneDatum'),
+            b.frist && React.createElement('span', { style: nebenText }, t(b.abgelaufen ? 'schulden.posten.fristAbgelaufen' : 'schulden.posten.frist', { datum: formatDE(b.frist) }))),
+          React.createElement('span', { style: betragStil }, chf(b.betrag))
+        ))
+      ),
+      onNavigate && React.createElement('div', { style: { marginTop: space.xs } },
+        React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') }))
+    ),
+    forderungen.length > 0 && React.createElement('div', null,
+      React.createElement('h4', { style: gruppenTitel }, t('schulden.posten.gruppeForderungen')),
+      React.createElement('ul', { style: { listStyle: 'none', padding: 0, margin: 0 } },
+        forderungen.map(f => React.createElement('li', { key: f.id, style: zeile },
+          React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } },
+            forderungName(f, t),
+            React.createElement('span', { style: nebenText },
+              (f.stufe ? t('schulden.stufe.' + f.stufe) : t('schulden.stufe.keine')) + (f.ausBeleg ? ' · ' + t('schulden.posten.ausArzt') : ''))),
+          React.createElement('span', { style: betragStil }, chf(f.amount))
+        ))
+      )
     )
   );
 };
