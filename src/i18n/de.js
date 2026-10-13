@@ -3071,6 +3071,7 @@ export default {
     wiederOffen: 'Wieder offen',
     ansageBezahlt: '{name}: bezahlt',
     ansageOffen: '{name}: wieder offen',
+    ansageGeloescht: '{name} gelöscht',
     category: 'Art der Schuld',
     catWohnen: 'Miete / Wohnen',
     catKrankenkasse: 'Krankenkasse',
@@ -3139,8 +3140,40 @@ export default {
     planQuelle: 'Quellen: [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, Ratgeber Schuldensanierung|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[DBG Art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_33]], [[DBG Art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_34]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[StHG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_9]], [[StHG Art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_13]] (gelesen im September 2026).',
     verlustschein: {
       title: 'Was ein Verlustschein bedeutet',
-      text: { sie: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Zinsen sind darauf keine geschuldet (Abs. 4) — verlangt jemand Zinsen auf einen Verlustschein, dürfen Sie darauf hinweisen. Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen können Sie jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn Sie zu neuem Vermögen gekommen sind (Art. 265 Abs. 2) — das müssen Sie mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.', du: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Zinsen sind darauf keine geschuldet (Abs. 4) — verlangt jemand Zinsen auf einen Verlustschein, darfst du darauf hinweisen. Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen kannst du jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn du zu neuem Vermögen gekommen bist (Art. 265 Abs. 2) — das musst du mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.' },
+      text: { sie: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen können Sie jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn Sie zu neuem Vermögen gekommen sind (Art. 265 Abs. 2) — das müssen Sie mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.', du: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen kannst du jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn du zu neuem Vermögen gekommen bist (Art. 265 Abs. 2) — das musst du mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.' },
       quelle: 'Quellen: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (geprüft im September 2026).',
+      rolle: {
+        label: 'Rolle', waehlen: 'Rolle wählen', schulde: 'Ich schulde', geschuldet: 'Mir wird geschuldet',
+        fehlt: 'Rolle noch nicht gewählt — unter «Bearbeiten» festhalten.',
+        hilfe: {
+          schulde: { sie: 'Der Verlustschein lautet auf Sie. Tragen Sie ein, wem Sie schulden.', du: 'Der Verlustschein lautet auf dich. Trag ein, wem du schuldest.' },
+          geschuldet: { sie: 'Sie besitzen einen Verlustschein gegen eine andere Person. Tragen Sie ein, wer Ihnen schuldet.', du: 'Du besitzt einen Verlustschein gegen eine andere Person. Trag ein, wer dir schuldet.' },
+        },
+      },
+      // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
+      zinslos: { sie: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für Sie als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an Ihrer Stelle Zinsen zahlen müssen, können sie nicht von Ihnen zurückverlangen.', du: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für dich als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an deiner Stelle Zinsen zahlen müssen, können sie nicht von dir zurückverlangen.' },
+      // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
+      verjaehrung: { sie: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in Ihrem Fall verändert hat, kann Ihnen das Betreibungsamt sagen.', du: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in deinem Fall verändert hat, kann dir das Betreibungsamt sagen.' },
+      verjaehrt: '20 Jahre nach Ausstellung: {datum}',
+      // Ausgestellt vor dem 1.1.1997: Übergangsregel, kein errechnetes Datum (swiss-precision-pruefer 13.10.2026).
+      vor1997: { sie: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann Ihnen das Datum sagen.', du: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann dir das Datum sagen.' },
+      ausgestellt: 'ausgestellt am {datum}',
+      ohneDatum: 'Ohne Ausstellungsdatum — die Verjährung lässt sich so nicht angeben.',
+      datum: 'Ausstellungsdatum',
+      bearbeiten: 'Bearbeiten',
+      fertig: 'Fertig',
+      zeitachse: { titel: 'Verjährung auf einen Blick', label: 'Verjährung je Verlustschein, einer pro Zeile', achse: 'Jahr', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
+    },
+    betreibung: {
+      auszugRegel: { sie: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann Ihr Verfahren als abgeschlossen gilt, kann Ihnen das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.', du: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann dein Verfahren als abgeschlossen gilt, kann dir das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.' },
+      verbinden: 'Verbunden mit',
+      verbindenKeine: 'Keine Schuld',
+      verbundenMit: 'Verbunden mit: {name}',
+      keineVerbindung: 'Die verbundene Schuld gibt es nicht mehr.',
+      ohneDatum: 'Registerdatum nicht erfasst',
+      bearbeiten: 'Bearbeiten',
+      fertig: 'Fertig',
+      zeitleiste: { titel: 'Erfasste Registerdaten', label: 'Registerdatum je Betreibung, eine pro Zeile', achse: 'Jahr', eingetragen: 'eingetragen am {datum}', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
     },
     bussen: {
       title: 'Bussen und Geldstrafen',
@@ -3154,7 +3187,7 @@ export default {
       zumTracker: 'zum KVG-Tracker',
       titel: 'Offene Posten',
       gruppeArzt: 'Arztrechnungen · im KVG-Tracker',
-      gruppeForderungen: 'Forderungen · im Schuldenmanager',
+      gruppeForderungen: 'Schulden · im Schuldenmanager',
       rechnungVom: 'Arztrechnung vom {datum}',
       ohneDatum: 'Arztrechnung ohne Datum',
       frist: 'Zahlungsfrist {datum}',

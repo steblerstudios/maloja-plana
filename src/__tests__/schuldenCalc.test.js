@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, CATEGORY_TIER, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein } from '../schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, CATEGORY_TIER, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein, verjaehrungVerlustschein } from '../schuldenCalc.js';
 import { alsIsoDatum } from '../utils/fristen.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -219,8 +219,13 @@ describe('istUeberfaellig — eine Regel für Übersicht und Karte', () => {
 });
 
 describe('Betreibung und Verlustschein — Datum und Status lesbar', () => {
-  it('neue Verlustscheine tragen ein ISO-Datum', () => {
-    expect(formatVerlustschein({}).date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  it('Verlustscheine behalten ein erfasstes ISO-Datum', () => {
+    expect(formatVerlustschein({ date: '2021-03-15' }).date).toBe('2021-03-15');
+  });
+  it('ohne Datum bleibt das Datum leer — nie «heute» (daraus würde eine falsche Verjährung)', () => {
+    expect(formatVerlustschein({}).date).toBe('');
+    expect(formatVerlustschein({ date: '' }).date).toBe('');
+    expect(verjaehrungVerlustschein(formatVerlustschein({}))).toBeNull();
   });
   it('alte Einträge «27.9.2026» erscheinen im Datumsfeld', () => {
     expect(alsIsoDatum('27.9.2026')).toBe('2026-09-27');
@@ -240,5 +245,29 @@ describe('Betreibung und Verlustschein — Datum und Status lesbar', () => {
     expect(q).toMatch(/handleAddBetreibung[^\n]*t\('schulden\.addBetreibung'\)/);
     expect(q).toMatch(/handleAddVerlustschein[^\n]*t\('schulden\.addVerlustschein'\)/);
     expect(de.schulden.addBetreibung).toBe('Betreibung erfassen');
+  });
+});
+
+// Task 5 (Schulden R2, 05.10.2026): Verlustschein-Verjährung nach SchKG Art. 149a Abs. 1.
+describe('verjaehrungVerlustschein — Ausstellung + 20 Jahre, nur mit erfasstem Datum', () => {
+  it('Ausstellung + 20 Jahre', () => {
+    expect(verjaehrungVerlustschein({ date: '2021-03-15' })).toBe('2041-03-15');
+  });
+  it('29.02.: bleibt der 29.02., wenn das Zieljahr ein Schaltjahr ist (2024 -> 2044)', () => {
+    expect(verjaehrungVerlustschein({ date: '2024-02-29' })).toBe('2044-02-29');
+  });
+  it('29.02.: sonst der 28.02. (2080 -> 2100 ist kein Schaltjahr)', () => {
+    expect(verjaehrungVerlustschein({ date: '2080-02-29' })).toBe('2100-02-28');
+  });
+  it('ohne gültiges Datum: null — kein errechnetes Ende', () => {
+    expect(verjaehrungVerlustschein({})).toBeNull();
+    expect(verjaehrungVerlustschein({ date: 'x' })).toBeNull();
+    expect(verjaehrungVerlustschein({ date: '' })).toBeNull();
+    expect(verjaehrungVerlustschein({ date: '2026-02-31' })).toBeNull();
+    expect(verjaehrungVerlustschein(null)).toBeNull();
+  });
+  it('alter Eintrag im deutschen Format: über alsIsoDatum und direkt', () => {
+    expect(verjaehrungVerlustschein({ date: alsIsoDatum('15.3.2021') })).toBe('2041-03-15');
+    expect(verjaehrungVerlustschein({ date: '15.3.2021' })).toBe('2041-03-15');
   });
 });

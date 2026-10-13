@@ -3047,6 +3047,7 @@ export default {
     wiederOffen: 'Rouvrir',
     ansageBezahlt: '{name} : payée',
     ansageOffen: '{name} : rouverte',
+    ansageGeloescht: 'Supprimé : {name}',
     category: 'Type de dette',
     catWohnen: 'Loyer / logement',
     catKrankenkasse: 'Assurance-maladie',
@@ -3115,8 +3116,39 @@ export default {
     planQuelle: 'Sources : [[schuldeninfo.ch, « Weiterleben mit Schulden » (2011, en allemand)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, guide assainissement des dettes (en allemand)|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[LIFD art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_33]], [[LIFD art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_34]], [[LIFD art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/fr#art_167]], [[LHID art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/fr#art_9]], [[LHID art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/fr#art_13]] (lu en septembre 2026).',
     verlustschein: {
       title: 'Ce que signifie un acte de défaut de biens',
-      text: { sie: 'Un acte de défaut de biens est délivré lorsqu’une saisie ne couvre pas la créance (LP art. 149, al. 1). Il vaut reconnaissance de dette (al. 2). Aucun intérêt n’est dû sur la créance (al. 4) — si quelqu’un réclame des intérêts sur un acte de défaut de biens, vous pouvez le lui rappeler. La créance se prescrit par 20 ans dès la délivrance (art. 149a, al. 1). Vous pouvez aussi payer en tout temps à l’office des poursuites qui a délivré l’acte (al. 2) ; après paiement, l’inscription est radiée des registres (al. 3). Sur la base d’un acte de défaut de biens après faillite, une nouvelle poursuite n’est possible que si vous revenez à meilleure fortune (art. 265, al. 2) — vous devez le faire valoir par l’opposition (art. 265a, al. 1) ; la lettre « Former opposition » prévoit un champ à cet effet.', du: 'Un acte de défaut de biens est délivré lorsqu’une saisie ne couvre pas la créance (LP art. 149, al. 1). Il vaut reconnaissance de dette (al. 2). Aucun intérêt n’est dû sur la créance (al. 4) — si quelqu’un réclame des intérêts sur un acte de défaut de biens, tu peux le lui rappeler. La créance se prescrit par 20 ans dès la délivrance (art. 149a, al. 1). Tu peux aussi payer en tout temps à l’office des poursuites qui a délivré l’acte (al. 2) ; après paiement, l’inscription est radiée des registres (al. 3). Sur la base d’un acte de défaut de biens après faillite, une nouvelle poursuite n’est possible que si tu reviens à meilleure fortune (art. 265, al. 2) — tu dois le faire valoir par l’opposition (art. 265a, al. 1) ; la lettre « Former opposition » prévoit un champ à cet effet.' },
+      text: { sie: 'Un acte de défaut de biens est délivré lorsqu’une saisie ne couvre pas la créance (LP art. 149, al. 1). Il vaut reconnaissance de dette (al. 2). La créance se prescrit par 20 ans dès la délivrance (art. 149a, al. 1). Vous pouvez aussi payer en tout temps à l’office des poursuites qui a délivré l’acte (al. 2) ; après paiement, l’inscription est radiée des registres (al. 3). Sur la base d’un acte de défaut de biens après faillite, une nouvelle poursuite n’est possible que si vous revenez à meilleure fortune (art. 265, al. 2) — vous devez le faire valoir par l’opposition (art. 265a, al. 1) ; la lettre « Former opposition » prévoit un champ à cet effet.', du: 'Un acte de défaut de biens est délivré lorsqu’une saisie ne couvre pas la créance (LP art. 149, al. 1). Il vaut reconnaissance de dette (al. 2). La créance se prescrit par 20 ans dès la délivrance (art. 149a, al. 1). Tu peux aussi payer en tout temps à l’office des poursuites qui a délivré l’acte (al. 2) ; après paiement, l’inscription est radiée des registres (al. 3). Sur la base d’un acte de défaut de biens après faillite, une nouvelle poursuite n’est possible que si tu reviens à meilleure fortune (art. 265, al. 2) — tu dois le faire valoir par l’opposition (art. 265a, al. 1) ; la lettre « Former opposition » prévoit un champ à cet effet.' },
       quelle: 'Sources : [[LP art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_149]], [[LP art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_149_a]], [[LP art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_265]], [[LP art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_265_a]] (vérifié en septembre 2026).',
+      rolle: {
+        label: 'Rôle', waehlen: 'Choisir le rôle', schulde: 'Je dois de l’argent', geschuldet: 'On me doit de l’argent',
+        fehlt: 'Rôle pas encore choisi — à indiquer sous « Modifier ».',
+        hilfe: {
+          schulde: { sie: 'L’acte de défaut de biens est établi à votre encontre. Indiquez à qui vous devez de l’argent.', du: 'L’acte de défaut de biens est établi à ton encontre. Indique à qui tu dois de l’argent.' },
+          geschuldet: { sie: 'Vous détenez un acte de défaut de biens contre une autre personne. Indiquez qui vous doit de l’argent.', du: 'Tu détiens un acte de défaut de biens contre une autre personne. Indique qui te doit de l’argent.' },
+        },
+      },
+      // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
+      zinslos: { sie: 'LP art. 149, al. 4 : le créancier « ne peut réclamer au débiteur des intérêts pour la créance constatée par acte de défaut de biens ». Cela vaut pour vous en tant que personne débitrice. Les personnes codébitrices et les cautions peuvent devoir des intérêts, mais ne peuvent pas vous les répercuter.', du: 'LP art. 149, al. 4 : le créancier « ne peut réclamer au débiteur des intérêts pour la créance constatée par acte de défaut de biens ». Cela vaut pour toi en tant que personne débitrice. Les personnes codébitrices et les cautions peuvent devoir des intérêts, mais ne peuvent pas te les répercuter.' },
+      // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
+      verjaehrung: { sie: 'LP art. 149a, al. 1 : la créance « se prescrit par 20 ans à compter de la délivrance de l’acte de défaut de biens; à l’égard des héritiers du débiteur, elle se prescrit au plus tard par un an à compter de l’ouverture de la succession ». L’axe ne compte que les 20 ans à partir de la date de délivrance saisie. L’office des poursuites peut vous dire si le délai a changé dans votre cas.', du: 'LP art. 149a, al. 1 : la créance « se prescrit par 20 ans à compter de la délivrance de l’acte de défaut de biens; à l’égard des héritiers du débiteur, elle se prescrit au plus tard par un an à compter de l’ouverture de la succession ». L’axe ne compte que les 20 ans à partir de la date de délivrance saisie. L’office des poursuites peut te dire si le délai a changé dans ton cas.' },
+      verjaehrt: '20 ans après la délivrance : {datum}',
+      vor1997: { sie: 'Délivré avant 1997 — une règle transitoire s’applique à ces actes de défaut de biens. L’office des poursuites peut vous indiquer la date.', du: 'Délivré avant 1997 — une règle transitoire s’applique à ces actes de défaut de biens. L’office des poursuites peut t’indiquer la date.' },
+      ausgestellt: 'délivré le {datum}',
+      ohneDatum: 'Sans date de délivrance — la prescription ne peut pas être indiquée.',
+      datum: 'Date de délivrance',
+      bearbeiten: 'Modifier',
+      fertig: 'Terminé',
+      zeitachse: { titel: 'Prescription en un coup d’œil', label: 'Prescription de chaque acte de défaut de biens, une ligne chacun', achse: 'Année', heute: 'Le trait vertical marque aujourd’hui ({datum}).' },
+    },
+    betreibung: {
+      auszugRegel: { sie: 'Les tiers voient une poursuite dans l’extrait jusqu’à cinq ans après la clôture de la procédure (LP art. 8a, al. 4). L’office des poursuites peut vous dire quand votre procédure est considérée comme close. Les autorités ayant une procédure pendante peuvent aussi demander des extraits au-delà de ce délai.', du: 'Les tiers voient une poursuite dans l’extrait jusqu’à cinq ans après la clôture de la procédure (LP art. 8a, al. 4). L’office des poursuites peut te dire quand ta procédure est considérée comme close. Les autorités ayant une procédure pendante peuvent aussi demander des extraits au-delà de ce délai.' },
+      verbinden: 'Liée à',
+      verbindenKeine: 'Aucune dette',
+      verbundenMit: 'Liée à : {name}',
+      keineVerbindung: 'La dette liée n’existe plus.',
+      ohneDatum: 'Date d’inscription non saisie',
+      bearbeiten: 'Modifier',
+      fertig: 'Terminé',
+      zeitleiste: { titel: 'Dates d’inscription saisies', label: 'Date d’inscription de chaque poursuite, une ligne chacune', achse: 'Année', eingetragen: 'inscrite le {datum}', heute: 'Le trait vertical marque aujourd’hui ({datum}).' },
     },
     bussen: {
       title: 'Amendes et peines pécuniaires',

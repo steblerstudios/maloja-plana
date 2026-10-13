@@ -8,6 +8,13 @@ const chf = (x) => betrag(x, { stellen: 2 });
 import { LegendenMarke } from './LegendenMarke.jsx';
 import { AblaufLink } from '../AblaufSchale.jsx';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from '../utils/mahnstufe.js';
+import { verjaehrungVerlustschein } from '../schuldenCalc.js';
+import { alsIsoDatum, leseDatum, heuteIso } from '../utils/fristen.js';
+
+// Masse der Spur in den Zeitachsen (Verlustscheine, Betreibung): dafür gibt es kein Token, darum benannt statt roh im Bild.
+// hoehe = Spurhöhe, marke = «heute»-Strich, punkt = Registerpunkt, minBreite = kleinste sichtbare Strecke,
+// ueberstand = wie weit der «heute»-Strich über die Spur hinausragt (alles in px).
+const SPUR = { hoehe: 12, marke: 2, punkt: 10, minBreite: 4, ueberstand: 3 };
 
 // Drei ruhige Bilder für den Schuldenmanager (Dataviz-Runde 27.09.2026, Stebler Studios: A + B + C).
 //
@@ -221,5 +228,101 @@ export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
         ))
       )
     )
+  );
+};
+
+// ⑤ Verlustscheine (Task 5, Schulden R2, 05.10.2026): wie lange eine Forderung aus einem Verlustschein
+// noch läuft. Ein Ton (STUFEN_TON[2]), Text neben jeder Linie, kein Rot. Gezeichnet wird nur, was ein
+// erfasstes Ausstellungsdatum hat (Ende = Ausstellung + 20 Jahre, SchKG Art. 149a Abs. 1); Einträge
+// ohne Datum stehen in der Lesezeile mit ihrem Hinweis, nicht hier.
+// Wer ist die Gegenseite? «Ich schulde» → der Gläubiger; «Mir wird geschuldet» → der Schuldner.
+// Mit gesetzter Rolle zählt nur das Feld der Rolle (leer → «Ohne Namen»); der Rückfall auf die
+// andere Seite gilt nur ohne Rolle (alte Einträge).
+export const verlustscheinName = (e, t) => {
+  const name = e.rolle === 'geschuldet' ? e.debtor
+    : e.rolle === 'schulde' ? e.creditor
+      : (e.creditor || e.debtor);
+  return name || t('schulden.posten.ohneName');
+};
+
+export const VerlustscheinZeitachse = ({ palette, t, eintraege, heute = heuteIso() }) => {
+  const zeilen = (eintraege || []).map(e => {
+    const bisIso = verjaehrungVerlustschein(e);
+    const von = leseDatum(alsIsoDatum(e.date)), bis = leseDatum(bisIso);
+    return von && bis ? { e, bisIso, von: von.getTime(), bis: bis.getTime() } : null;
+  }).filter(Boolean).sort((a, b) => a.von - b.von);
+  if (zeilen.length === 0) return null;
+  const jetzt = (leseDatum(heute) || new Date()).getTime();
+  const lo = Math.min(jetzt, ...zeilen.map(z => z.von));
+  const hi = Math.max(jetzt, ...zeilen.map(z => z.bis));
+  const spanne = hi - lo || 1;
+  const pos = (ms) => ((ms - lo) / spanne) * 100;
+  const zeile = { display: 'grid', gridTemplateColumns: 'minmax(0, 7.5rem) minmax(0, 1fr)', alignItems: 'center', columnGap: space.sm + 'px', rowGap: space['2xs'], padding: space.xs + 'px 0', fontSize: text.sm };
+  return React.createElement('div', { style: { margin: space.md + 'px 0 ' + space.lg + 'px' } },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.verlustschein.zeitachse.titel')),
+    React.createElement('div', { 'aria-hidden': 'true', style: { ...zeile, paddingTop: 0 } },
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.verlustschein.zeitachse.achse')),
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+        React.createElement('span', null, String(new Date(lo).getFullYear())),
+        React.createElement('span', null, String(new Date(hi).getFullYear()))
+      ),
+    ),
+    // role="list": mit list-style: none nehmen Safari/VoiceOver die Listensemantik sonst weg.
+    React.createElement('ol', { role: 'list', 'aria-label': t('schulden.verlustschein.zeitachse.label'), style: { listStyle: 'none', padding: 0, margin: 0 } },
+      zeilen.map(z => React.createElement('li', { key: z.e.id, style: zeile },
+        React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, verlustscheinName(z.e, t)),
+        React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: SPUR.hoehe, background: spur(palette), borderRadius: radius.sm } },
+          React.createElement('div', { style: { position: 'absolute', left: pos(z.von) + '%', width: 'max(' + SPUR.minBreite + 'px, ' + (pos(z.bis) - pos(z.von)) + '%)', top: 0, bottom: 0, background: ton(palette, 2), borderRadius: radius.xs } }),
+          // «heute»: eine dünne Marke in der Tinte der Schrift, als Text in der Zeile darunter erklärt.
+          React.createElement('div', { style: { position: 'absolute', left: pos(jetzt) + '%', width: SPUR.marke, top: -SPUR.ueberstand, bottom: -SPUR.ueberstand, background: palette.text, borderRadius: radius.hair } })
+        ),
+        React.createElement('span', { style: { gridColumn: 2, color: palette.text, fontSize: text.sm, fontVariantNumeric: 'tabular-nums' } }, t('schulden.verlustschein.verjaehrt', { datum: formatDE(z.bisIso) }))
+      ))
+    ),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, t('schulden.verlustschein.zeitachse.heute', { datum: formatDE(heute) })),
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, margin: space.sm + 'px 0 0' } }, t('schulden.verlustschein.verjaehrung'))
+  );
+};
+
+// ④ Betreibung (Task 6, Schulden R2, 05.10.2026): die ERFASSTEN Registerdaten auf einer ruhigen Leiste.
+// Ein Punkt je Betreibung mit Datum, Text daneben. Bewusst KEIN Ende, keine Fünf-Jahres-Linie:
+// «Abschluss des Verfahrens» ist im Gesetz nicht definiert (SchKG Art. 8a Abs. 4, swiss-precision-pruefer
+// 05.10.2026). Die Regel steht als Text im Tab. Einträge ohne Registerdatum stehen nur in der Liste.
+export const BetreibungZeitleiste = ({ palette, t, eintraege, heute = heuteIso() }) => {
+  const zeilen = (eintraege || []).map(e => {
+    const iso = alsIsoDatum(e.registerDate);
+    const d = leseDatum(iso);
+    return d ? { e, iso, ms: d.getTime() } : null;
+  }).filter(Boolean).sort((a, b) => a.ms - b.ms);
+  if (zeilen.length === 0) return null;
+  const jetzt = (leseDatum(heute) || new Date()).getTime();
+  const lo = Math.min(jetzt, ...zeilen.map(z => z.ms));
+  const hi = Math.max(jetzt, ...zeilen.map(z => z.ms));
+  const spanne = hi - lo || 1;
+  // Auf der Spur bleiben: Position begrenzen und die Marke um denselben Anteil ihrer Breite zurückschieben.
+  const pos = (ms) => Math.min(100, Math.max(0, Math.round(((ms - lo) / spanne) * 1000) / 10));
+  const marke = (ms, stil) => { const p = pos(ms); return { position: 'absolute', left: p + '%', transform: 'translateX(-' + p + '%)', ...stil }; };
+  const zeile = { display: 'grid', gridTemplateColumns: 'minmax(0, 7.5rem) minmax(0, 1fr)', alignItems: 'center', columnGap: space.sm + 'px', rowGap: space['2xs'], padding: space.xs + 'px 0', fontSize: text.sm };
+  return React.createElement('div', { style: { margin: space.md + 'px 0' } },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.betreibung.zeitleiste.titel')),
+    React.createElement('div', { 'aria-hidden': 'true', style: { ...zeile, paddingTop: 0 } },
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.betreibung.zeitleiste.achse')),
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+        React.createElement('span', null, String(new Date(lo).getFullYear())),
+        React.createElement('span', null, String(new Date(hi).getFullYear()))
+      )
+    ),
+    React.createElement('ol', { role: 'list', 'aria-label': t('schulden.betreibung.zeitleiste.label'), style: { listStyle: 'none', padding: 0, margin: 0 } },
+      zeilen.map(z => React.createElement('li', { key: z.e.id, style: zeile },
+        React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, z.e.creditor || t('schulden.posten.ohneName')),
+        React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: SPUR.hoehe, background: spur(palette), borderRadius: radius.sm } },
+          React.createElement('div', { 'data-punkt': '1', style: marke(z.ms, { top: (SPUR.hoehe - SPUR.punkt) / 2, width: SPUR.punkt, height: SPUR.punkt, borderRadius: radius.full, background: ton(palette, 2) }) }),
+          // «heute»: dünne Marke in der Tinte der Schrift, als Text darunter erklärt.
+          React.createElement('div', { style: marke(jetzt, { width: SPUR.marke, top: -SPUR.ueberstand, bottom: -SPUR.ueberstand, background: palette.text, borderRadius: radius.hair }) })
+        ),
+        React.createElement('span', { style: { gridColumn: 2, color: palette.text, fontSize: text.sm, fontVariantNumeric: 'tabular-nums' } }, t('schulden.betreibung.zeitleiste.eingetragen', { datum: formatDE(z.iso) }))
+      ))
+    ),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, t('schulden.betreibung.zeitleiste.heute', { datum: formatDE(heute) }))
   );
 };
