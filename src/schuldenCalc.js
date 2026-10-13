@@ -1,4 +1,4 @@
-import { heuteIso, leseDatum } from './utils/fristen.js';
+import { heuteIso, leseDatum, alsIsoDatum } from './utils/fristen.js';
 
 // Schulden Manager und Betreibungsregister
 
@@ -53,7 +53,7 @@ export const PLAN_MAX_MONATE = 360;
 export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
   const rate = Number(monthlyPayment);
   const offen = prioritizeDebts(debts, method)
-    .map(d => ({ id: d.id, creditor: d.creditor, rest: Number(d.amount) || 0, zins: Math.max(0, Number(d.interestRate) || 0) }))
+    .map(d => ({ id: d.id, creditor: d.creditor, ausBeleg: d.ausBeleg, belegDatum: d.belegDatum, rest: Number(d.amount) || 0, zins: Math.max(0, Number(d.interestRate) || 0) }))
     .filter(d => d.rest > 0);
   if (!(rate > 0) || offen.length === 0) return null;
 
@@ -86,7 +86,7 @@ export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
     }
   }
   if (offen.some(d => d.rest > 0)) return { machbar: false, grund: 'dauer' };
-  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, monat: fertig[d.id], von: von[d.id], bis: bis[d.id] })) };
+  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, ...(d.ausBeleg ? { ausBeleg: d.ausBeleg, belegDatum: d.belegDatum || '' } : {}), monat: fertig[d.id], von: von[d.id], bis: bis[d.id] })) };
 };
 
 // Betreibungen im Verhältnis zum Einkommen — überarbeitet 27.09.2026. Vorher: ohne Einkommen
@@ -108,7 +108,8 @@ export const calculateBetreibungsRegisterImpact = (registerEntries, monthlyIncom
 export const formatVerlustschein = (verlustschein) => {
   return {
     id: verlustschein.id || Date.now(),
-    date: verlustschein.date || heuteIso(),
+    // Kein erfundenes Datum: «heute» wäre eine Ausstellung, die niemand erfasst hat (Verjährung!).
+    date: verlustschein.date || '',
     debtor: verlustschein.debtor || '',
     amount: Number(verlustschein.amount || 0),
     creditor: verlustschein.creditor || '',
@@ -116,8 +117,32 @@ export const formatVerlustschein = (verlustschein) => {
     court: verlustschein.court || '',
     status: verlustschein.status || 'open',
     notes: verlustschein.notes || '',
-    uploadedFile: verlustschein.uploadedFile || null
+    uploadedFile: verlustschein.uploadedFile || null,
+    ...(verlustschein.rolle === 'schulde' || verlustschein.rolle === 'geschuldet' ? { rolle: verlustschein.rolle } : {})
   };
+};
+
+// Verjährung des Verlustscheins: SchKG Art. 149a Abs. 1 — 20 Jahre nach der Ausstellung (gegenüber
+// den Erben des Schuldners spätestens ein Jahr nach Eröffnung des Erbganges; das steht im Text,
+// gerechnet wird nur die 20-Jahres-Frist). Nur mit erfasstem Ausstellungsdatum: ohne Datum null,
+// nie ein errechnetes Ende aus dem Heute. Alte Einträge im Format «15.3.2021» werden gelesen.
+// Ein 29.02. bleibt der 29.02., wenn das Zieljahr ein Schaltjahr ist, sonst der 28.02.
+// Vor dem 1.1.1997 ausgestellt: Übergangsregel, kein errechnetes Datum (swiss-precision-pruefer 13.10.2026).
+export const VERJAEHRUNG_JAHRE = 20;
+export const VERJAEHRUNG_AB = '1997-01-01';
+// Gültiges Ausstellungsdatum vor dem 1.1.1997? (Ohne Datum: nein — das ist ein anderer Fall.)
+export const istVor1997 = (entry) => {
+  const iso = alsIsoDatum(entry && entry.date);
+  return !!leseDatum(iso) && iso < VERJAEHRUNG_AB;
+};
+export const verjaehrungVerlustschein = (entry) => {
+  const d = leseDatum(alsIsoDatum(entry && entry.date));
+  if (!d || istVor1997(entry)) return null;
+  const jahr = d.getFullYear() + VERJAEHRUNG_JAHRE;
+  const monat = d.getMonth();
+  const letzterTag = new Date(jahr, monat + 1, 0).getDate();
+  const tag = Math.min(d.getDate(), letzterTag);
+  return `${String(jahr).padStart(4, '0')}-${String(monat + 1).padStart(2, '0')}-${String(tag).padStart(2, '0')}`;
 };
 
 // Konsequenz-orientierte Reihenfolge. Belegt 27.09.2026 (vorher nur «CH-Schuldenberatungs-
@@ -130,10 +155,15 @@ export const formatVerlustschein = (verlustschein) => {
 // (Caritas); ein Erlass der Bundessteuer nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4).
 // Danach die übrigen nach Methode (Lawine = höchster Zins zuerst; Schneeball = kleinster
 // Betrag zuerst). Reine Orientierung, keine Beratung.
-const CATEGORY_TIER = {
+// Arzt-/Labor-/Spitalrechnung im Tiers garant = Forderung des Leistungserbringers
+// (KVG Art. 42 Abs. 1), nicht KVG 64a (nur Prämien/Kostenbeteiligung gegenüber dem Versicherer)
+// → Stufe 3. Prüfer 05.10.2026.
+export const CATEGORY_TIER = {
   wohnen: 1, krankenkasse: 1, alimente: 1, bussen: 1,
   steuern: 2,
-  kredit: 3, sonstige: 3,
+  // gesundheit: Stufe 3 ist die Reihenfolge der Schuldenberatungs-Quellen (nur laufende Prämien werden
+  // vorgezogen), keine Vorgabe des KVG.
+  kredit: 3, gesundheit: 3, sonstige: 3,
 };
 
 export const prioritizeDebts = (debts, method = 'lawine') => {

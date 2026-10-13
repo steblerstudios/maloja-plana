@@ -138,6 +138,8 @@ const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { heuteIso } from './utils/fristen.js';
+import { uebernehmen, nachSchuldenSpeichern } from './utils/offenePosten.js';
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
@@ -1554,7 +1556,7 @@ const AppInner = ({ demo }) => {
           palette, t, vorlaeufig,
           data: activeData,
           onNavigate: handleNavigate,
-          onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
+          onSave: (schuldenData) => writeData(prev => nachSchuldenSpeichern(prev, schuldenData))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
           palette, t, vorlaeufig,
@@ -1639,7 +1641,8 @@ const AppInner = ({ demo }) => {
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters, onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }), isMobile, lang }),
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
-        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate }),
+        // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
+        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, heuteIso(), Date.now())) }),
         view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
