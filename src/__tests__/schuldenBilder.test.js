@@ -443,10 +443,9 @@ describe('④ · Tab «Betreibung» — Lesezeile, Regeltext, Verbindung', () =>
     expect(rendern([bt], [kreditkarte])).toContain('schulden.bild.ausForderungen');
     expect(rendern([{ ...bt, forderungId: 7 }], [kreditkarte])).not.toContain('schulden.bild.ausForderungen');
   });
-  it('Quelltext: Verbindung als Zahl, ohne Automatik', () => {
-    const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
-    expect(q).toMatch(/forderungId/);
-    expect(q).toMatch(/Number\(/);
+  it('Verbindung mit String-ID (alte/importierte Daten) wird gefunden', () => {
+    const h = rendern([{ ...bt, forderungId: '7' }], [kreditkarte]);
+    expect(h).toContain('schulden.betreibung.verbundenMit{"name":"Kreditkarte"}');
   });
   it('Neuer Eintrag: KEIN automatisches «heute», direkt im Bearbeiten-Modus (Quelltext)', () => {
     const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
@@ -457,7 +456,10 @@ describe('④ · Tab «Betreibung» — Lesezeile, Regeltext, Verbindung', () =>
   });
   it('Löschen lässt den Fokus nicht auf body fallen (Quelltext)', () => {
     const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
-    expect(q).toMatch(/handleDeleteBetreibung = [\s\S]*?fokusNach\.current = /);
+    const fn = q.match(/handleDeleteBetreibung = \(id\) => \{[\s\S]*?\n {2}\};/)[0];
+    expect(fn).toMatch(/fokusNach\.current = /);
+    expect(fn).toMatch(/bt-feld-/);
+    expect(fn).toMatch(/'bt-neu'/);
   });
 });
 

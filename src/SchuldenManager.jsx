@@ -118,7 +118,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     const rest = betreibung.filter(e => e.id !== id);
     // Fokus nicht auf body fallen lassen: nächste Zeile, sonst «+ Betreibung».
     const naechste = rest[i] || rest[i - 1];
-    fokusNach.current = naechste ? 'bt-knopf-' + naechste.id : 'bt-neu';
+    // Ist die nächste Zeile gerade im Bearbeiten-Modus, gibt es ihren Knopf nicht: dann ihr erstes Feld.
+    fokusNach.current = naechste ? (naechste.id === bearbeite ? 'bt-feld-' : 'bt-knopf-') + naechste.id : 'bt-neu';
     setBetreibung(rest);
     if (bearbeite === id) setBearbeite(null);
   };
