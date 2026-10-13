@@ -53,7 +53,7 @@ export const PLAN_MAX_MONATE = 360;
 export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
   const rate = Number(monthlyPayment);
   const offen = prioritizeDebts(debts, method)
-    .map(d => ({ id: d.id, creditor: d.creditor, rest: Number(d.amount) || 0, zins: Math.max(0, Number(d.interestRate) || 0) }))
+    .map(d => ({ id: d.id, creditor: d.creditor, ausBeleg: d.ausBeleg, belegDatum: d.belegDatum, rest: Number(d.amount) || 0, zins: Math.max(0, Number(d.interestRate) || 0) }))
     .filter(d => d.rest > 0);
   if (!(rate > 0) || offen.length === 0) return null;
 
@@ -86,7 +86,7 @@ export const createDebtPlan = (debts, monthlyPayment, method = 'lawine') => {
     }
   }
   if (offen.some(d => d.rest > 0)) return { machbar: false, grund: 'dauer' };
-  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, monat: fertig[d.id], von: von[d.id], bis: bis[d.id] })) };
+  return { machbar: true, monate: monat, zinsTotal: rappen(zinsTotal), reihenfolge: offen.map(d => ({ id: d.id, creditor: d.creditor, ...(d.ausBeleg ? { ausBeleg: d.ausBeleg, belegDatum: d.belegDatum || '' } : {}), monat: fertig[d.id], von: von[d.id], bis: bis[d.id] })) };
 };
 
 // Betreibungen im Verhältnis zum Einkommen — überarbeitet 27.09.2026. Vorher: ohne Einkommen
@@ -130,10 +130,15 @@ export const formatVerlustschein = (verlustschein) => {
 // (Caritas); ein Erlass der Bundessteuer nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4).
 // Danach die übrigen nach Methode (Lawine = höchster Zins zuerst; Schneeball = kleinster
 // Betrag zuerst). Reine Orientierung, keine Beratung.
-const CATEGORY_TIER = {
+// Arzt-/Labor-/Spitalrechnung im Tiers garant = Forderung des Leistungserbringers
+// (KVG Art. 42 Abs. 1), nicht KVG 64a (nur Prämien/Kostenbeteiligung gegenüber dem Versicherer)
+// → Stufe 3. Prüfer 05.10.2026.
+export const CATEGORY_TIER = {
   wohnen: 1, krankenkasse: 1, alimente: 1, bussen: 1,
   steuern: 2,
-  kredit: 3, sonstige: 3,
+  // gesundheit: Stufe 3 ist die Reihenfolge der Schuldenberatungs-Quellen (nur laufende Prämien werden
+  // vorgezogen), keine Vorgabe des KVG.
+  kredit: 3, gesundheit: 3, sonstige: 3,
 };
 
 export const prioritizeDebts = (debts, method = 'lawine') => {
