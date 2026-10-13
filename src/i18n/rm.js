@@ -2937,10 +2937,12 @@ export default {
         },
       },
       // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
-      zinslos: { sie: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für Sie als schuldende Person. Mitschuldner und Bürgen können Zinsen schulden, dürfen sie aber nicht auf Sie abwälzen.', du: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für dich als schuldende Person. Mitschuldner und Bürgen können Zinsen schulden, dürfen sie aber nicht auf dich abwälzen.' },
+      zinslos: { sie: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für Sie als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an Ihrer Stelle Zinsen zahlen müssen, können sie nicht von Ihnen zurückverlangen.', du: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für dich als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an deiner Stelle Zinsen zahlen müssen, können sie nicht von dir zurückverlangen.' },
       // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
-      verjaehrung: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum.',
-      verjaehrt: 'verjährt am {datum}',
+      verjaehrung: { sie: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in Ihrem Fall verändert hat, kann Ihnen das Betreibungsamt sagen.', du: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in deinem Fall verändert hat, kann dir das Betreibungsamt sagen.' },
+      verjaehrt: '20 Jahre nach Ausstellung: {datum}',
+      // Ausgestellt vor dem 1.1.1997: Übergangsregel, kein errechnetes Datum (swiss-precision-pruefer 13.10.2026).
+      vor1997: { sie: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann Ihnen das Datum sagen.', du: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann dir das Datum sagen.' },
       ausgestellt: 'ausgestellt am {datum}',
       ohneDatum: 'Ohne Ausstellungsdatum — die Verjährung lässt sich so nicht angeben.',
       datum: 'Ausstellungsdatum',

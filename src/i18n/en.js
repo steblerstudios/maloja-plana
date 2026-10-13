@@ -3116,7 +3116,7 @@ export default {
     verlustschein: {
       title: 'What a certificate of unpaid debt means',
       text: 'A certificate of unpaid debt (Verlustschein) is issued when a seizure does not cover the claim (SchKG Art. 149 para. 1). It counts as an acknowledgement of debt (para. 2). The claim becomes time-barred 20 years after issue (Art. 149a para. 1). You can also pay at any time at the debt collection office that issued it (para. 2); once paid, the entry is deleted from the register (para. 3). After a bankruptcy, a new debt collection based on the certificate is only possible if you have come into new assets (Art. 265 para. 2) — you must raise this with the objection (Art. 265a para. 1); the letter “File an objection (Rechtsvorschlag)” has a field for this.',
-      quelle: 'Sources: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (German text where no English exists, checked September 2026).',
+      quelle: 'Sources: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (Official texts in German, French and Italian; the English version on Fedlex is a non-binding translation. Checked September 2026.)',
       rolle: {
         label: 'Role', waehlen: 'Choose role', schulde: 'I owe', geschuldet: 'I am owed',
         fehlt: 'Role not chosen yet — set it under “Edit”.',
@@ -3126,10 +3126,11 @@ export default {
         },
       },
       // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
-      zinslos: 'SchKG Art. 149 para. 4: “The debtor has … no interest to pay.” This applies to you as the debtor. Co-debtors and guarantors may owe interest, but may not pass it on to you.',
+      zinslos: 'Under SchKG Art. 149 para. 4, the debtor does not have to pay interest on a claim documented by a certificate of unpaid debt. This applies to you as the debtor. Co-debtors and guarantors who have to pay interest in your place may not claim it back from you.',
       // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
-      verjaehrung: 'SchKG Art. 149a para. 1: the claim becomes time-barred “20 years after the certificate of unpaid debt was issued; against the debtor’s heirs, however, at the latest one year after the opening of the succession.” The axis only counts the 20 years from the entered issue date.',
-      verjaehrt: 'time-barred on {datum}',
+      verjaehrung: 'Under SchKG Art. 149a para. 1, the claim becomes time-barred 20 years after the certificate is issued; against the debtor’s heirs, however, at the latest one year after the succession is opened. The axis only counts the 20 years from the entered issue date. The debt enforcement office can tell you whether the period has changed in your case.',
+      verjaehrt: '20 years after issue: {datum}',
+      vor1997: 'Issued before 1997 — a transitional rule applies to these certificates. The debt enforcement office can tell you the date.',
       ausgestellt: 'issued on {datum}',
       ohneDatum: 'No issue date — the limitation date cannot be shown without it.',
       datum: 'Issue date',

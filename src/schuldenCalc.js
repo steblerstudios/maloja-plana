@@ -126,10 +126,17 @@ export const formatVerlustschein = (verlustschein) => {
 // gerechnet wird nur die 20-Jahres-Frist). Nur mit erfasstem Ausstellungsdatum: ohne Datum null,
 // nie ein errechnetes Ende aus dem Heute. Alte Einträge im Format «15.3.2021» werden gelesen.
 // Ein 29.02. bleibt der 29.02., wenn das Zieljahr ein Schaltjahr ist, sonst der 28.02.
+// Vor dem 1.1.1997 ausgestellt: Übergangsregel, kein errechnetes Datum (swiss-precision-pruefer 13.10.2026).
 export const VERJAEHRUNG_JAHRE = 20;
+export const VERJAEHRUNG_AB = '1997-01-01';
+// Gültiges Ausstellungsdatum vor dem 1.1.1997? (Ohne Datum: nein — das ist ein anderer Fall.)
+export const istVor1997 = (entry) => {
+  const iso = alsIsoDatum(entry && entry.date);
+  return !!leseDatum(iso) && iso < VERJAEHRUNG_AB;
+};
 export const verjaehrungVerlustschein = (entry) => {
   const d = leseDatum(alsIsoDatum(entry && entry.date));
-  if (!d) return null;
+  if (!d || istVor1997(entry)) return null;
   const jahr = d.getFullYear() + VERJAEHRUNG_JAHRE;
   const monat = d.getMonth();
   const letzterTag = new Date(jahr, monat + 1, 0).getDate();

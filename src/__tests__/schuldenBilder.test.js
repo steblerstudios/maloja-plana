@@ -267,8 +267,8 @@ describe('⑤ · VerlustscheinZeitachse', () => {
     expect(html).toContain('schulden.verlustschein.verjaehrung');
   });
   it('Nachweis aus de.js: Wortlaut 149a Abs. 1 inkl. Erben, 149 Abs. 4 nur in der Rolle', () => {
-    expect(de.schulden.verlustschein.verjaehrung).toContain('verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.');
-    expect(de.schulden.verlustschein.verjaehrung).toContain('149a Abs. 1');
+    expect(de.schulden.verlustschein.verjaehrung.sie).toContain('verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.');
+    expect(de.schulden.verlustschein.verjaehrung.sie).toContain('149a Abs. 1');
     expect(de.schulden.verlustschein.zinslos.sie).toContain('Der Schuldner hat … keine Zinsen zu zahlen.');
     expect(de.schulden.verlustschein.zinslos.sie).toContain('149 Abs. 4');
     // der allgemeine Erklärkasten sagt nicht mehr pauschal «zinslos»

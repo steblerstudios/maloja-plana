@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GespeichertZeile } from './components/GespeichertZeile.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig, verjaehrungVerlustschein } from './schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, istUeberfaellig, verjaehrungVerlustschein, istVor1997 } from './schuldenCalc.js';
 import { heuteIso, alsIsoDatum } from './utils/fristen.js';
 import { offenePosten } from './utils/offenePosten.js';
 import { renderSource } from './utils/renderSource.js';
@@ -563,7 +563,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             React.createElement('div', { style: klein },
               bisIso
                 ? t('schulden.verlustschein.ausgestellt', { datum: formatDE(datumIso) }) + ' · ' + t('schulden.verlustschein.verjaehrt', { datum: formatDE(bisIso) })
-                : t('schulden.verlustschein.ohneDatum'),
+                : t(istVor1997(entry) ? 'schulden.verlustschein.vor1997' : 'schulden.verlustschein.ohneDatum'),
               entry.court ? ' · ' + entry.court : ''
             ),
             !rolle && React.createElement('div', { style: klein }, t('schulden.verlustschein.rolle.fehlt')),
