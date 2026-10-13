@@ -259,7 +259,8 @@ export const VerlustscheinZeitachse = ({ palette, t, eintraege, heute = heuteIso
         React.createElement('span', null, String(new Date(hi).getFullYear()))
       ),
     ),
-    React.createElement('ol', { 'aria-label': t('schulden.verlustschein.zeitachse.label'), style: { listStyle: 'none', padding: 0, margin: 0 } },
+    // role="list": mit list-style: none nehmen Safari/VoiceOver die Listensemantik sonst weg.
+    React.createElement('ol', { role: 'list', 'aria-label': t('schulden.verlustschein.zeitachse.label'), style: { listStyle: 'none', padding: 0, margin: 0 } },
       zeilen.map(z => React.createElement('li', { key: z.e.id, style: zeile },
         React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, verlustscheinName(z.e, t)),
         React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '12px', background: spur(palette), borderRadius: radius.sm } },

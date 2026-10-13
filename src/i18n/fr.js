@@ -3047,6 +3047,7 @@ export default {
     wiederOffen: 'Rouvrir',
     ansageBezahlt: '{name} : payée',
     ansageOffen: '{name} : rouverte',
+    ansageGeloescht: 'Supprimé : {name}',
     category: 'Type de dette',
     catWohnen: 'Loyer / logement',
     catKrankenkasse: 'Assurance-maladie',

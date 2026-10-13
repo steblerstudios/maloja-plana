@@ -3071,6 +3071,7 @@ export default {
     wiederOffen: 'Wieder offen',
     ansageBezahlt: '{name}: bezahlt',
     ansageOffen: '{name}: wieder offen',
+    ansageGeloescht: '{name} gelöscht',
     category: 'Art der Schuld',
     catWohnen: 'Miete / Wohnen',
     catKrankenkasse: 'Krankenkasse',

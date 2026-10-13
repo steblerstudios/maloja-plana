@@ -61,7 +61,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     fokusNach.current = null;
     const el = document.querySelector('[data-vs-fokus="' + ziel + '"]');
     if (el) el.focus();
-  }, [bearbeite, betreibung.length]);
+  }, [bearbeite, betreibung.length, verlustscheine.length]);
   // Nicht zweimal eingeben: «Persönliche Darlehen» aus dem Kapitel Finanzen, solange noch keine Schuld erfasst ist.
   const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
   const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
@@ -116,6 +116,9 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   const handleDeleteBetreibung = (id) => {
     const i = betreibung.findIndex(e => e.id === id);
     const rest = betreibung.filter(e => e.id !== id);
+    // Screenreader: ohne Ansage verschwindet die Zeile wortlos.
+    const name = (betreibung[i] && betreibung[i].creditor) || t('schulden.posten.ohneName');
+    setStatusAnsage(t('schulden.ansageGeloescht', { name }));
     // Fokus nicht auf body fallen lassen: nächste Zeile, sonst «+ Betreibung».
     const naechste = rest[i] || rest[i - 1];
     // Ist die nächste Zeile gerade im Bearbeiten-Modus, gibt es ihren Knopf nicht: dann ihr erstes Feld.
@@ -134,19 +137,27 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       status: 'open'
     }), date: '' };
     setVerlustscheine([...verlustscheine, entry]);
-    fokusNach.current = 'rolle-' + entry.id;
+    fokusNach.current = 'vs-rolle-' + entry.id;
     setBearbeite(entry.id);
   };
 
-  const startBearbeiten = (id) => { fokusNach.current = 'rolle-' + id; setBearbeite(id); };
-  const fertigBearbeiten = (id) => { fokusNach.current = 'knopf-' + id; setBearbeite(null); };
+  const startBearbeiten = (id) => { fokusNach.current = 'vs-rolle-' + id; setBearbeite(id); };
+  const fertigBearbeiten = (id) => { fokusNach.current = 'vs-knopf-' + id; setBearbeite(null); };
 
   const handleUpdateVerlustschein = (id, field, value) => {
     setVerlustscheine(verlustscheine.map(e => e.id === id ? { ...e, [field]: field === 'amount' ? Number(value) || 0 : value } : e));
   };
 
   const handleDeleteVerlustschein = (id) => {
-    setVerlustscheine(verlustscheine.filter(e => e.id !== id));
+    const i = verlustscheine.findIndex(e => e.id === id);
+    const rest = verlustscheine.filter(e => e.id !== id);
+    const name = verlustscheinName(verlustscheine[i] || {}, t);
+    setStatusAnsage(t('schulden.ansageGeloescht', { name }));
+    // Fokus nicht auf body fallen lassen: nächste Zeile, sonst «+ Verlustschein».
+    const naechste = rest[i] || rest[i - 1];
+    // Ist die nächste Zeile gerade im Bearbeiten-Modus, gibt es ihren Knopf nicht: dann ihr Rollen-Select.
+    fokusNach.current = naechste ? (naechste.id === bearbeite ? 'vs-rolle-' : 'vs-knopf-') + naechste.id : 'vs-neu';
+    setVerlustscheine(rest);
     if (bearbeite === id) setBearbeite(null);
   };
 
@@ -233,6 +244,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   // in Rose, so laut wie «+ Schuld erfassen». Jetzt Umriss mit
   // roséfarbenem Text als Hinweis, nicht als Alarm.
   const zweitKnopf = { ...buttonStyle, background: 'transparent', color: palette.text, border: '1px solid ' + palette.border };
+  // Sichtbare Beschriftung über einem Select (klein, ruhig) — die Auswahl steht nie ohne Namen da.
+  const feldLabel = { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space['2xs'] };
   const loeschKnopf = { ...zweitKnopf, color: palette.roseDeep || palette.rose };
 
   // Ruhiger Erklärkasten mit Titel, Text und Quellenzeile (Verlustscheine, Bussen — 27.09.2026).
@@ -459,13 +472,14 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           const bezahlt = entry.status === 'paid' || entry.status === 'erledigt';
           const hatId = entry.forderungId != null && entry.forderungId !== '';
           const verbunden = hatId ? schulden.find(d => Number(d.id) === Number(entry.forderungId)) : null;
-          const feld = (extra) => ({ ...inputStyle, marginBottom: 0, ...extra });
+          // 44 px: Touch-Ziel (a11y 13.10.2026); das globale inputStyle bleibt unberührt.
+          const feld = (extra) => ({ ...inputStyle, marginBottom: 0, minHeight: 44, ...extra });
           const loeschen = React.createElement('button', { type: 'button', 'aria-label': t('common.delete') + ' ' + name, onClick: () => handleDeleteBetreibung(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'));
           if (bearbeite === entry.id) {
             // Verbinden: offene Forderungen, dazu die schon verbundene (auch wenn inzwischen bezahlt).
             const wahl = schulden.filter(d => d.status !== 'paid' || (verbunden && d.id === verbunden.id));
             return React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
-              React.createElement('input', { type: 'text', value: entry.creditor || '', 'data-vs-fokus': 'bt-feld-' + entry.id, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
+              React.createElement('input', { type: 'text', value: entry.creditor || '', 'data-vs-fokus': 'bt-feld-' + entry.id, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: feld({ marginBottom: space.xs }) }),
               React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
                 React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: feld({ width: '140px' }) }),
                 React.createElement('input', { type: 'date', value: alsIsoDatum(entry.registerDate), onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), 'aria-label': t('schulden.registerDate'), style: feld({ width: '160px' }) }),
@@ -476,7 +490,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
                 )
               ),
               // Bewusste Verbindung zu einer Forderung — nichts wird angelegt, nur verwiesen.
-              React.createElement('select', { value: verbunden ? String(verbunden.id) : '', onChange: (e) => handleUpdateBetreibung(entry.id, 'forderungId', e.target.value === '' ? undefined : Number(e.target.value)), 'aria-label': t('schulden.betreibung.verbinden'), style: feld({ marginBottom: space.sm }) },
+              React.createElement('label', { htmlFor: 'bt-verbinden-' + entry.id, style: feldLabel }, t('schulden.betreibung.verbinden')),
+              React.createElement('select', { id: 'bt-verbinden-' + entry.id, value: verbunden ? String(verbunden.id) : '', onChange: (e) => handleUpdateBetreibung(entry.id, 'forderungId', e.target.value === '' ? undefined : Number(e.target.value)), style: feld({ marginBottom: space.sm }) },
                 React.createElement('option', { value: '' }, t('schulden.betreibung.verbindenKeine')),
                 wahl.map(d => React.createElement('option', { key: d.id, value: String(d.id) }, forderungName(d, t) + ' · ' + betrag(d.amount, { stellen: 2 })))
               ),
@@ -514,7 +529,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       // Was ein Verlustschein bedeutet (SchKG 149, 149a, 265) — 27.09.2026.
       erklaerKasten('vs', t('schulden.verlustschein.title'), 'schulden.verlustschein.text', 'schulden.verlustschein.quelle'),
 
-      React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addVerlustschein')),
+      React.createElement('button', { type: 'button', 'data-vs-fokus': 'vs-neu', onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addVerlustschein')),
 
       verlustscheine.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'document', size: 26, color: palette.mid }), title: t('schulden.emptyVerlustschein') }) : React.createElement('div', null,
         React.createElement(VerlustscheinZeitachse, { palette, t, eintraege: verlustscheine, heute: heuteIso() }),
@@ -524,12 +539,14 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           const datumIso = alsIsoDatum(entry.date);
           const bisIso = verjaehrungVerlustschein(entry);
           const aendern = (feld, v) => handleUpdateVerlustschein(entry.id, feld, v);
-          const feld = (extra) => ({ ...inputStyle, marginBottom: 0, ...extra });
+          // 44 px: Touch-Ziel (a11y 13.10.2026); das globale inputStyle bleibt unberührt.
+          const feld = (extra) => ({ ...inputStyle, marginBottom: 0, minHeight: 44, ...extra });
           const loeschen = React.createElement('button', { type: 'button', 'aria-label': t('common.delete') + ' ' + name, onClick: () => handleDeleteVerlustschein(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'));
           if (bearbeite === entry.id) {
             return React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
               // Rolle zuerst: sie bestimmt, welches Namensfeld folgt.
-              React.createElement('select', { value: rolle || '', 'data-vs-fokus': 'rolle-' + entry.id, onChange: (e) => aendern('rolle', e.target.value || undefined), 'aria-label': t('schulden.verlustschein.rolle.label'), style: { ...feld(), marginBottom: space.xs } },
+              React.createElement('label', { htmlFor: 'vs-rolle-select-' + entry.id, style: feldLabel }, t('schulden.verlustschein.rolle.label')),
+              React.createElement('select', { id: 'vs-rolle-select-' + entry.id, value: rolle || '', 'data-vs-fokus': 'vs-rolle-' + entry.id, onChange: (e) => aendern('rolle', e.target.value || undefined), style: { ...feld(), marginBottom: space.xs } },
                 React.createElement('option', { value: '' }, t('schulden.verlustschein.rolle.waehlen')),
                 React.createElement('option', { value: 'schulde' }, t('schulden.verlustschein.rolle.schulde')),
                 React.createElement('option', { value: 'geschuldet' }, t('schulden.verlustschein.rolle.geschuldet'))
@@ -570,7 +587,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
             // SchKG 149 Abs. 4 gilt für die schuldende Person — nie pauschal.
             rolle === 'schulde' && React.createElement('div', { style: klein }, t('schulden.verlustschein.zinslos')),
             React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginTop: space.sm } },
-              React.createElement('button', { type: 'button', 'data-vs-fokus': 'knopf-' + entry.id, 'aria-label': t('schulden.verlustschein.bearbeiten') + ' ' + name, onClick: () => startBearbeiten(entry.id), style: zweitKnopf }, t('schulden.verlustschein.bearbeiten')),
+              React.createElement('button', { type: 'button', 'data-vs-fokus': 'vs-knopf-' + entry.id, 'aria-label': t('schulden.verlustschein.bearbeiten') + ' ' + name, onClick: () => startBearbeiten(entry.id), style: zweitKnopf }, t('schulden.verlustschein.bearbeiten')),
               loeschen
             )
           );

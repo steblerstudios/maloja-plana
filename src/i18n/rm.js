@@ -2854,6 +2854,8 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
     ansageBezahlt: '{name}: bezahlt',
     ansageOffen: '{name}: wieder offen',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    ansageGeloescht: '{name} gelöscht',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',

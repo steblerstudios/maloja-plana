@@ -3047,6 +3047,7 @@ export default {
     wiederOffen: 'Open again',
     ansageBezahlt: '{name}: paid',
     ansageOffen: '{name}: open again',
+    ansageGeloescht: '{name} deleted',
     category: 'Type of debt',
     catWohnen: 'Rent / housing',
     catKrankenkasse: 'Health insurance',

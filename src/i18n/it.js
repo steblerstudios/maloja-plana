@@ -3004,6 +3004,7 @@ export default {
     wiederOffen: 'Riaprire',
     ansageBezahlt: '{name}: pagato',
     ansageOffen: '{name}: riaperto',
+    ansageGeloescht: 'Eliminato: {name}',
     category: 'Tipo di debito',
     catWohnen: 'Affitto / abitazione',
     catKrankenkasse: 'Cassa malati',

@@ -472,7 +472,9 @@ describe('④ · Bearbeiten-Modus Betreibung (Zustand über startBearbeite)', ()
   const e1 = { id: 1, creditor: 'Amt Alpha', amount: 900, registerDate: '2022-03-15', status: 'open' };
   it('Select «Verbunden mit»: leere Wahl + offene Forderungen, keine bezahlte', () => {
     const h = rendern(e1);
-    expect(h).toContain('aria-label="schulden.betreibung.verbinden"');
+    // Name über die sichtbare Beschriftung (label for), nicht mehr über aria-label (Fix-Welle 13.10.2026).
+    expect(h).toMatch(/<label for="bt-verbinden-1"[^>]*>schulden\.betreibung\.verbinden<\/label>/);
+    expect(h).toContain('id="bt-verbinden-1"');
     expect(h).toContain('>Kreditkarte');
     expect(h).not.toMatch(/<option[^>]*>Zahnarzt/);
   });
