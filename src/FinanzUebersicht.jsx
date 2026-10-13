@@ -222,7 +222,8 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
   // Reale Gesundheitsausgabe = gedeckter Betrag + nicht-gedeckter Anteil.
   const belegTotal = (b) => (Number(b.betrag) || 0) + (Number(b.nichtGedeckt) || 0);
   const gesundheitskosten = belegeThisYear.filter(b => b.status !== 'offen').reduce((s, b) => s + belegTotal(b), 0);
-  const gesundheitskostenOffen = belegeThisYear.filter(b => b.status === 'offen').reduce((s, b) => s + belegTotal(b), 0);
+  // Als Forderung übernommene Belege (forderungId) stehen im Schuldenmanager — hier nicht ein zweites Mal.
+  const gesundheitskostenOffen = belegeThisYear.filter(b => b.status === 'offen' && !b.forderungId).reduce((s, b) => s + belegTotal(b), 0);
   const hasGesundheitskosten = (gesundheitskosten + gesundheitskostenOffen) > 0;
 
   // Vermögen (Wertschriften + übriges Vermögen + Ersparnisse) — Steuerwert, ohne gebundenes 3a

@@ -2848,9 +2848,24 @@ export default {
     date: 'Data',
     statusOpen: 'Avert',
     statusPaid: 'Pajà',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    alsBezahlt: 'Als bezahlt markieren',
+    wiederOffen: 'Wieder offen',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    ansageBezahlt: '{name}: bezahlt',
+    ansageOffen: '{name}: wieder offen',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    ansageGeloescht: '{name} gelöscht',
     category: 'Tip da debit',
     catWohnen: 'Patg / abitar',
     catKrankenkasse: 'Cassa da malsauns',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    catGesundheit: 'Arzt, Labor, Spital',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    catHilfe: {
+      krankenkasse: { sie: 'Prämien sowie Franchise und Selbstbehalt, die Ihnen die Krankenkasse in Rechnung stellt (KVG Art. 64a).', du: 'Prämien sowie Franchise und Selbstbehalt, die dir die Krankenkasse in Rechnung stellt (KVG Art. 64a).' },
+      gesundheit: { sie: 'Rechnungen von Arztpraxis, Labor oder Spital, die Sie direkt erhalten, schulden Sie dem Leistungserbringer; Ihre Krankenkasse erstattet Ihnen den versicherten Teil (KVG Art. 42 Abs. 1). Reichen Sie die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.', du: 'Rechnungen von Arztpraxis, Labor oder Spital, die du direkt erhältst, schuldest du dem Leistungserbringer; deine Krankenkasse erstattet dir den versicherten Teil (KVG Art. 42 Abs. 1). Reiche die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.' },
+    },
     catAlimente: 'Alimentaziun',
     catBussen: 'Multas',
     catSteuern: 'Taglias',
@@ -2912,15 +2927,66 @@ export default {
     planQuelle: 'Quellen: [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, Ratgeber Schuldensanierung|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[DBG Art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_33]], [[DBG Art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_34]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[StHG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_9]], [[StHG Art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_13]] (gelesen im September 2026).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     verlustschein: {
       title: 'Was ein Verlustschein bedeutet',
-      text: { sie: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Zinsen sind darauf keine geschuldet (Abs. 4) — verlangt jemand Zinsen auf einen Verlustschein, dürfen Sie darauf hinweisen. Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen können Sie jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn Sie zu neuem Vermögen gekommen sind (Art. 265 Abs. 2) — das müssen Sie mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.', du: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Zinsen sind darauf keine geschuldet (Abs. 4) — verlangt jemand Zinsen auf einen Verlustschein, darfst du darauf hinweisen. Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen kannst du jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn du zu neuem Vermögen gekommen bist (Art. 265 Abs. 2) — das musst du mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.' },
+      text: { sie: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen können Sie jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn Sie zu neuem Vermögen gekommen sind (Art. 265 Abs. 2) — das müssen Sie mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.', du: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen kannst du jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn du zu neuem Vermögen gekommen bist (Art. 265 Abs. 2) — das musst du mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.' },
       quelle: 'Quellen: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (geprüft im September 2026).',
+      // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+      rolle: {
+        label: 'Rolle', waehlen: 'Rolle wählen', schulde: 'Ich schulde', geschuldet: 'Mir wird geschuldet',
+        fehlt: 'Rolle noch nicht gewählt — unter «Bearbeiten» festhalten.',
+        hilfe: {
+          schulde: { sie: 'Der Verlustschein lautet auf Sie. Tragen Sie ein, wem Sie schulden.', du: 'Der Verlustschein lautet auf dich. Trag ein, wem du schuldest.' },
+          geschuldet: { sie: 'Sie besitzen einen Verlustschein gegen eine andere Person. Tragen Sie ein, wer Ihnen schuldet.', du: 'Du besitzt einen Verlustschein gegen eine andere Person. Trag ein, wer dir schuldet.' },
+        },
+      },
+      // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
+      zinslos: { sie: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für Sie als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an Ihrer Stelle Zinsen zahlen müssen, können sie nicht von Ihnen zurückverlangen.', du: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für dich als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an deiner Stelle Zinsen zahlen müssen, können sie nicht von dir zurückverlangen.' },
+      // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
+      verjaehrung: { sie: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in Ihrem Fall verändert hat, kann Ihnen das Betreibungsamt sagen.', du: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in deinem Fall verändert hat, kann dir das Betreibungsamt sagen.' },
+      verjaehrt: '20 Jahre nach Ausstellung: {datum}',
+      // Ausgestellt vor dem 1.1.1997: Übergangsregel, kein errechnetes Datum (swiss-precision-pruefer 13.10.2026).
+      vor1997: { sie: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann Ihnen das Datum sagen.', du: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann dir das Datum sagen.' },
+      ausgestellt: 'ausgestellt am {datum}',
+      ohneDatum: 'Ohne Ausstellungsdatum — die Verjährung lässt sich so nicht angeben.',
+      datum: 'Ausstellungsdatum',
+      bearbeiten: 'Bearbeiten',
+      fertig: 'Fertig',
+      zeitachse: { titel: 'Verjährung auf einen Blick', label: 'Verjährung je Verlustschein, einer pro Zeile', achse: 'Jahr', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    betreibung: {
+      auszugRegel: { sie: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann Ihr Verfahren als abgeschlossen gilt, kann Ihnen das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.', du: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann dein Verfahren als abgeschlossen gilt, kann dir das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.' },
+      verbinden: 'Verbunden mit',
+      verbindenKeine: 'Keine Schuld',
+      verbundenMit: 'Verbunden mit: {name}',
+      keineVerbindung: 'Die verbundene Schuld gibt es nicht mehr.',
+      ohneDatum: 'Registerdatum nicht erfasst',
+      bearbeiten: 'Bearbeiten',
+      fertig: 'Fertig',
+      zeitleiste: { titel: 'Erfasste Registerdaten', label: 'Registerdatum je Betreibung, eine pro Zeile', achse: 'Jahr', eingetragen: 'eingetragen am {datum}', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
+    },
     bussen: {
       title: 'Bussen und Geldstrafen',
       quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
-    // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    posten: {
+      ausserdem: 'Ausserdem offen: {anzahl} Arztrechnungen · {betrag}',
+      ausserdemEins: 'Ausserdem offen: eine Arztrechnung · {betrag}',
+      naechsteFrist: 'nächste Zahlungsfrist {datum}',
+      zumTracker: 'zum KVG-Tracker',
+      titel: 'Offene Posten',
+      gruppeArzt: 'Arztrechnungen · im KVG-Tracker',
+      gruppeForderungen: 'Schulden · im Schuldenmanager',
+      rechnungVom: 'Arztrechnung vom {datum}',
+      ohneDatum: 'Arztrechnung ohne Datum',
+      frist: 'Zahlungsfrist {datum}',
+      fristAbgelaufen: 'Zahlungsfrist abgelaufen ({datum})',
+      ausArzt: 'aus einer Arztrechnung',
+      ohneName: 'Ohne Namen',
+      summe: 'Total',
+    },
     // Bilder im Schuldenmanager (Dataviz-Runde 27.09.2026, components/SchuldenBilder.jsx).
+    // TODO(rm): deutscher Rückfall (Dataviz-Runde 27.09.2026), Romanisch fehlt noch.
     bild: {
       offen: 'Noch offen',
       ueberfaellig: 'Fälligkeit überschritten: {amount}',
@@ -3006,6 +3072,8 @@ export default {
     noteApplyAhvBranchShort: 'Dumonda tar la filiala AVS',
     noteApplyCompensation: 'Dumonda tar la cassa da cumpensaziun',
     noteApplySocialOffice: "Dumonda tar l'uffizi social",
+    // TODO(rm): provisorisch — Gegenlese (K31 GL, 28.09.2026)
+    noteApplyGl: 'Dumonda tar l’administraziun chantunala da taglia (post IPV), fin ils 31 da schaner',
     noteApplyAsb: 'Dumonda tar l’Amt für Sozialbeiträge',
     noteApplyHealthOffice: "Dumonda tar l'uffizi da sanadad",
     noteApplyHealthService: 'Dumonda tar il servetsch da sanadad',
@@ -3028,6 +3096,8 @@ export default {
     jahrRegion: 'Quint per l’onn da dretg {jahr}, regiun da premias {region}.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     jahrOhneRegion: 'Quint per l’onn da dretg {jahr}. En il chantun Argovia vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
+    // TODO(rm): provisorisch — Gegenlese (K31 GL, 28.09.2026)
+    jahrGL: 'Quint per l’onn da dretg {jahr}. En il chantun Glaruna vala la medema premia da referenza en tut il chantun — ella na dependa betg dal lieu da domicil.',
     // TODO(rm): provisorisch — Gegenlese (K31 BL, 28.09.2026)
     jahrBL: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Champagna vala la premia da referenza tuttina en tut il chantun — ella na dependa betg dal lieu da domicil.',
     jahrBS: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Citad na dependan las contribuziuns betg dal lieu da domicil — ellas valan tuttina en tut il chantun.',
@@ -3090,6 +3160,13 @@ export default {
     tiUnterMindestbetrag: 'Tenor questa quintada existiss in dretg, el na vegn dentant betg pajà: il chantun Tessin na paja naginas reducziuns da premias sut 120 francs per persuna ed onn.',
     tiFristLaeuft: 'Per ina reducziun a partir da schaner {jahr} sto la dumonda vegnir inoltrada tar l’IAS (Servizio sussidi assicurazione malattia) fin ils 31 da december {vorjahr}; decisiv è il bul da la posta. Sch’ella vegn inoltrada pli tard, vala la reducziun a partir dal mais suenter la dumonda. Tgi che survegn prestaziuns cumplementaras, prestaziuns Laps u agid social na sto betg far ina dumonda.', // TODO(rm): provisorisch — Gegenlese
     tiFristVorbei: 'Il termin per ina reducziun a partir da schaner {jahr} è scadì ils 31 da december {vorjahr} (bul da la posta). Tgi che fa ussa la dumonda tar l’IAS, survegn la reducziun a partir dal mais suenter la dumonda — per l’onn current betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} cura il termin fin ils 31 da december {jahr}. Tgi che survegn prestaziuns cumplementaras, prestaziuns Laps u agid social na sto betg far ina dumonda.', // TODO(rm): provisorisch — Gegenlese
+    // TODO(rm): provisorisch — Gegenlese (K31 GL, 28.09.2026): vorbehaltGL bis glFristNichtAbgezogen
+    vorbehaltGL: 'En il chantun Glaruna è la basa la taxaziun fiscala definitiva {basisjahr} — pli exactamain il total da las entradas —, betg l’entrada dad oz. Sche la situaziun economica è sa pegiurada per dapli che 30 pertschient, po vegnir quintà sin dumonda cun la taxaziun da l’onn precedent; la dumonda sto vegnir fatga entaifer 30 dis suenter ch’ella è vegnida surdada. Alimentaziuns pajadas èn deducidas; alimentaziuns retschavidas e supplements da famiglia registrads èn quintads, perquai ch’els fan part da l’entrada taxabla — sch’il supplement per uffants è gia cuntegnì en la paga netta registrada, quinta el qua duas giadas e la reducziun è memia bassa. Debits n’èn betg deducids da la facultad — cun els è la reducziun pli auta. La part dals uffants n’è betg limitada a lur atgnas premias; tgi che ha prendì nov domicil en il chantun, survegn la reducziun pir a partir da l’onn suandant. Imports pajads a tort vegnan pretendids enavos.',
+    glKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg la part atgna ch’il chantun Glaruna fixescha tenor l’entrada. Il chantun na publitgescha nagina limita d’entrada sco cifra — ella resulta pir da la quintada.',
+    glUnterMindestbetrag: 'Tenor questa quintada exista in dretg, el na vegn dentant betg pajà: il chantun Glaruna na paja nagina reducziun da premias sut 12 francs per persuna e per onn.',
+    glFristLaeuft: 'En il chantun Glaruna sto la reducziun da premias vegnir dumandada mintga onn da nov — per {jahr} fin ils 31 da schaner {jahr}, tar l’administraziun chantunala da taglia (post IPV), sin palpiri u via my.gl.ch. Tgi che dumonda pli tard, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
+    glFristVorbei: 'Il termin per {jahr} è scadì ils 31 da schaner {jahr}. Tgi che dumonda uss, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} vala puspè ils 31 da schaner; las valurs {folgejahr} n’èn anc betg publitgadas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
+    glFristNichtAbgezogen: 'Reducziun da premias Glaruna: qua betg deducida. Il termin per {jahr} è scadì ils 31 da schaner {jahr}. Tgi che dumonda pli tard, survegn la reducziun mo per las premias a partir dal mais suenter la dumonda. Sche la decisiun è qua, sa lascha endatar ses import tar la reducziun da premias sut «Decisiun retschavida». Tgi che survegn prestaziuns cumplementaras u agid social na sto betg far dumonda.',
     // TODO(rm): provisorisch — Gegenlese (K31 BL, 28.09.2026)
     vorbehaltBL: 'En il chantun Basilea-Champagna è la basa la taxaziun fiscala definitiva {basisjahr} — pli exactamain il total intermediar da las entradas taxablas —, betg l’entrada dad oz. Alimentaziuns retschavidas e supplements da famiglia tutgan tier, alimentaziuns pajadas vegnan deducidas. Sche l’entrada è sa midada l’onn precedent per dapli che 20 pertschient u sche la chasada è sa midada, vegn la reducziun adattada sin dumonda; la dumonda sto arrivar fin ils 31 da december {jahr} tar la SVA Basel-Landschaft. Tgi ch’è taxabel en il chantun pir dapi curt, fa atgna dumonda. La part dals uffants n’è qua betg limitada a lur atgnas premias; sche la premia d’in uffant è pli bassa, è l’import pli bass. Imports pajads a tort ston vegnir restituids.',
     blKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: l’entrada decisiva cuntanscha la limita superiura da CHF {grenze} per onn ch’il chantun Basilea-Champagna fixescha per questa chasada; a partir da questa limita croda la reducziun dal tuttafatg. Decisiv è dentant il total intermediar da la taxaziun {basisjahr}, betg l’entrada dad oz: sch’el era pli bass, exista tuttina in dretg — la SVA Basel-Landschaft tramet lura il formular d’uffizi.',
@@ -5238,6 +5315,11 @@ export default {
     belegRemind: 'M\'algurdar en il chalender',
     belegReminded: 'En il chalender',
     belegReminderTitle: 'Pajar il quint dal medi ({betrag})',
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    alsForderung: 'Als Forderung im Schuldenmanager führen',
+    wirdGefuehrt: 'Wird im Schuldenmanager geführt',
+    zumSchuldenmanager: 'Zum Schuldenmanager',
+    loeschenVerbunden: 'Zum Löschen zuerst die Forderung im Schuldenmanager entfernen.',
     belegNichtGedeckt: 'Betg cuvrì da la cassa',
     belegNichtGedecktHint: 'Na quinta betg sin la franschisa/il parteniment — p.ex. prestaziuns pajadas sez.',
     belegNichtGedecktNote: '+ {amount} betg cuvrì',
