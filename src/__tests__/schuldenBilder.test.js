@@ -293,6 +293,18 @@ describe('⑤ · Tab «Verlustscheine» — Rolle, Lesezeile, Bearbeiten', () =>
   const schulde = { id: 1, creditor: 'Bank Alpha', amount: 1200, date: '2021-03-15', court: 'BA Basel', rolle: 'schulde' };
   const geschuldet = { id: 2, debtor: 'Frau Muster', amount: 800, date: '2010-06-01', rolle: 'geschuldet' };
 
+  it('T5: mit gesetzter Rolle zählt nur das Feld der Rolle — kein Rückfall auf die andere Seite', () => {
+    const h = rendern([{ id: 5, creditor: '', debtor: 'Muster', date: '2021-03-15', amount: 10, rolle: 'schulde' }]);
+    expect(h).not.toContain('Muster');
+    expect(h).toContain('schulden.posten.ohneName');
+    const g = rendern([{ id: 6, creditor: 'Bank Beta', debtor: '', date: '2021-03-15', amount: 10, rolle: 'geschuldet' }]);
+    expect(g).not.toContain('Bank Beta');
+    expect(g).toContain('schulden.posten.ohneName');
+    expect(verlustscheinName({ rolle: 'schulde', creditor: '', debtor: 'Muster' }, t)).toBe('schulden.posten.ohneName');
+    expect(verlustscheinName({ rolle: 'geschuldet', creditor: 'X', debtor: '' }, t)).toBe('schulden.posten.ohneName');
+    expect(verlustscheinName({ creditor: '', debtor: 'Muster' }, t)).toBe('Muster');
+    expect(verlustscheinName({ creditor: 'Alt AG', debtor: 'Muster' }, t)).toBe('Alt AG');
+  });
   it('Lesezeile: Rolle, Name, ausgestellt, «verjährt am», Knopf «Bearbeiten» mit Namen — keine offenen Felder', () => {
     const h = rendern([schulde]);
     expect(h).toContain('schulden.verlustschein.rolle.schulde');

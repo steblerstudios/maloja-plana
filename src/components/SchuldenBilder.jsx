@@ -236,9 +236,12 @@ export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
 // erfasstes Ausstellungsdatum hat (Ende = Ausstellung + 20 Jahre, SchKG Art. 149a Abs. 1); Einträge
 // ohne Datum stehen in der Lesezeile mit ihrem Hinweis, nicht hier.
 // Wer ist die Gegenseite? «Ich schulde» → der Gläubiger; «Mir wird geschuldet» → der Schuldner.
-// Ohne Rolle (alte Einträge) was da ist.
+// Mit gesetzter Rolle zählt nur das Feld der Rolle (leer → «Ohne Namen»); der Rückfall auf die
+// andere Seite gilt nur ohne Rolle (alte Einträge).
 export const verlustscheinName = (e, t) => {
-  const name = e.rolle === 'geschuldet' ? (e.debtor || e.creditor) : (e.creditor || e.debtor);
+  const name = e.rolle === 'geschuldet' ? e.debtor
+    : e.rolle === 'schulde' ? e.creditor
+      : (e.creditor || e.debtor);
   return name || t('schulden.posten.ohneName');
 };
 

@@ -3187,7 +3187,7 @@ export default {
       zumTracker: 'zum KVG-Tracker',
       titel: 'Offene Posten',
       gruppeArzt: 'Arztrechnungen · im KVG-Tracker',
-      gruppeForderungen: 'Forderungen · im Schuldenmanager',
+      gruppeForderungen: 'Schulden · im Schuldenmanager',
       rechnungVom: 'Arztrechnung vom {datum}',
       ohneDatum: 'Arztrechnung ohne Datum',
       frist: 'Zahlungsfrist {datum}',
