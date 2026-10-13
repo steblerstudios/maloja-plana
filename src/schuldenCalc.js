@@ -108,7 +108,8 @@ export const calculateBetreibungsRegisterImpact = (registerEntries, monthlyIncom
 export const formatVerlustschein = (verlustschein) => {
   return {
     id: verlustschein.id || Date.now(),
-    date: verlustschein.date || heuteIso(),
+    // Kein erfundenes Datum: «heute» wäre eine Ausstellung, die niemand erfasst hat (Verjährung!).
+    date: verlustschein.date || '',
     debtor: verlustschein.debtor || '',
     amount: Number(verlustschein.amount || 0),
     creditor: verlustschein.creditor || '',

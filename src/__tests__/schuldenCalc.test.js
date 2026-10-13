@@ -219,8 +219,13 @@ describe('istUeberfaellig — eine Regel für Übersicht und Karte', () => {
 });
 
 describe('Betreibung und Verlustschein — Datum und Status lesbar', () => {
-  it('neue Verlustscheine tragen ein ISO-Datum', () => {
-    expect(formatVerlustschein({}).date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  it('Verlustscheine behalten ein erfasstes ISO-Datum', () => {
+    expect(formatVerlustschein({ date: '2021-03-15' }).date).toBe('2021-03-15');
+  });
+  it('ohne Datum bleibt das Datum leer — nie «heute» (daraus würde eine falsche Verjährung)', () => {
+    expect(formatVerlustschein({}).date).toBe('');
+    expect(formatVerlustschein({ date: '' }).date).toBe('');
+    expect(verjaehrungVerlustschein(formatVerlustschein({}))).toBeNull();
   });
   it('alte Einträge «27.9.2026» erscheinen im Datumsfeld', () => {
     expect(alsIsoDatum('27.9.2026')).toBe('2026-09-27');
