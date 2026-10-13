@@ -71,7 +71,7 @@ export const OffenBalken = ({ palette, t, prioritized, status }) => {
     nebenzeile && React.createElement('div', { style: { borderTop: '1px solid ' + palette.border, marginTop: space.md, paddingTop: space.sm, fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, nebenzeile),
     erste && React.createElement('div', { style: { marginTop: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
       // Nur der Name — der Weg dazu steht einmal, in der Stufen-Leiste darunter.
-      t('schulden.bild.naechstes', { name: erste.creditor || '—' })
+      t('schulden.bild.naechstes', { name: forderungName(erste, t) })
     )
   );
 };
@@ -110,7 +110,7 @@ export const AbbauZeitachse = ({ palette, t, plan }) => {
       plan.reihenfolge.map((r, i) => {
         const von = Math.max(0, r.von || 0), bis = Math.max(von, r.bis || r.monat);
         return React.createElement('li', { key: r.id, style: zeile },
-          React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, (i + 1) + ' · ' + (r.creditor || '—')),
+          React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, (i + 1) + ' · ' + forderungName(r, t)),
           React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '12px', background: spur(palette), borderRadius: radius.sm } },
             React.createElement('div', { style: { position: 'absolute', left: (von / n) * 100 + '%', width: 'max(4px, ' + ((bis - von) / n) * 100 + '%)', top: 0, bottom: 0, background: ton(palette, 1), borderRadius: radius.xs } })
           ),
@@ -138,13 +138,13 @@ export const MahnstufenUebersicht = ({ palette, t, prioritized, onNavigate }) =>
         const stufe = leseStufe(d.stufe);
         const i = MAHNSTUFEN.indexOf(stufe);
         const weg = naechsterWeg(d);
-        const lesart = (d.creditor || '—') + ': ' + (i >= 0 ? t('schulden.stufe.' + stufe) : t('schulden.bild.stufeOffen'));
+        const lesart = forderungName(d, t) + ': ' + (i >= 0 ? t('schulden.stufe.' + stufe) : t('schulden.bild.stufeOffen'));
         // Vorlesen: EIN Textknoten mit Name und Stufe; das Sichtbare daneben ist aria-hidden
         // (a11y-Prüfer 27.09.: aria-label auf li wird im Lesemodus nicht zuverlässig gelesen).
         return React.createElement('li', { key: d.id, style: { padding: '6px 0', borderTop: '1px solid ' + palette.border + '55' } },
           React.createElement('span', { style: visuallyHiddenStyle }, lesart),
           React.createElement('div', { 'aria-hidden': 'true', style: { display: 'grid', gridTemplateColumns: spalten, gap: space.sm + 'px', alignItems: 'center', fontSize: text.sm } },
-            React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, d.creditor || '—'),
+            React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, forderungName(d, t)),
             i < 0
               ? React.createElement('span', { style: { color: palette.mid, fontSize: text.xs } }, t('schulden.bild.stufeOffen'))
               : React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center' } },
@@ -177,7 +177,7 @@ export const AusserdemOffen = ({ palette, t, posten, onNavigate }) => {
     React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums' } },
       teile.length === 2 ? [teile[0], betragKnoten, teile[1] + frist] : satz.split(MARKE).join(chf(posten.summeArzt)) + frist),
     onNavigate && React.createElement('div', { style: { marginTop: space.xs } },
-      React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') }))
+      React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg', undefined, 'franchise') }))
   );
 };
 
@@ -214,7 +214,7 @@ export const OffenePosten = ({ palette, t, posten, onNavigate }) => {
         ))
       ),
       onNavigate && React.createElement('div', { style: { marginTop: space.xs } },
-        React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg') }))
+        React.createElement(AblaufLink, { palette, label: t('schulden.posten.zumTracker'), onClick: () => onNavigate('kvg', undefined, 'franchise') }))
     ),
     forderungen.length > 0 && React.createElement('div', null,
       React.createElement('h4', { style: gruppenTitel }, t('schulden.posten.gruppeForderungen')),

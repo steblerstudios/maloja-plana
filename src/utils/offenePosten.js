@@ -11,6 +11,10 @@
 
 const rappen = (x) => Math.round((Number(x) || 0) * 100);
 
+// Offener Betrag eines Belegs: Rechnungsbetrag plus nicht gedeckter Anteil (wie FinanzUebersicht
+// und die Anzeige im KVG-Tracker), Rappen-genau.
+const belegOffen = (b) => (rappen(b.betrag) + rappen(b.nichtGedeckt)) / 100;
+
 const belege = (data) => (Array.isArray(data?.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : []);
 const schulden = (data) => (Array.isArray(data?.schulden) ? data.schulden : []);
 
@@ -23,7 +27,7 @@ export const offenePosten = (data, heute) => {
     .map(b => ({
       id: b.id,
       datum: b.datum || '',
-      betrag: Number(b.betrag) || 0,
+      betrag: belegOffen(b),
       frist: b.frist || '',
       abgelaufen: !!b.frist && b.frist < heute,
     }));
@@ -54,7 +58,7 @@ export const belegAlsForderung = (data, belegId, heute, neueId) => {
   const forderung = {
     id: neueId,
     creditor: '',
-    amount: beleg.betrag,
+    amount: belegOffen(beleg),
     dueDate: beleg.frist || '',
     interestRate: 0,
     category: 'gesundheit',

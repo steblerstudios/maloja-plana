@@ -77,6 +77,38 @@ describe('offenePosten', () => {
   });
 });
 
+describe('Offener Betrag = betrag + nichtGedeckt (Gesamtprüfung I2)', () => {
+  const mitAnteil = () => ({ versicherungen: { kkBelege: [
+    { id: 'n1', datum: '2026-09-12', betrag: 240, nichtGedeckt: 50, frist: '2026-10-02', status: 'offen' },
+    { id: 'n2', datum: '2026-09-13', betrag: 100, status: 'offen' },
+  ] }, schulden: [] });
+  it('offenePosten: arzt-Betrag und summeArzt enthalten den nicht gedeckten Anteil', () => {
+    const r = offenePosten(mitAnteil(), HEUTE);
+    expect(r.arzt.find(b => b.id === 'n1').betrag).toBe(290);
+    expect(r.arzt.find(b => b.id === 'n2').betrag).toBe(100);
+    expect(r.summeArzt).toBe(390);
+    expect(r.summe).toBe(390);
+  });
+  it('Rappen-genau, auch mit Text-Zahlen', () => {
+    const d = { versicherungen: { kkBelege: [{ id: 'r', betrag: '100.05', nichtGedeckt: '0.10', status: 'offen' }] } };
+    const r = offenePosten(d, HEUTE);
+    expect(r.arzt[0].betrag).toBe(100.15);
+    expect(r.summeArzt).toBe(100.15);
+  });
+  it('belegAlsForderung: amount = betrag + nichtGedeckt; ohne Anteil unverändert', () => {
+    const r = belegAlsForderung(mitAnteil(), 'n1', HEUTE, 5);
+    expect(r.schulden.find(s => s.id === 5).amount).toBe(290);
+    const r2 = belegAlsForderung(mitAnteil(), 'n2', HEUTE, 6);
+    expect(r2.schulden.find(s => s.id === 6).amount).toBe(100);
+  });
+  it('keine Doppelzählung nach dem Übernehmen', () => {
+    const d = mitAnteil();
+    const vorher = offenePosten(d, HEUTE).summe;
+    const nachher = offenePosten({ ...d, ...belegAlsForderung(d, 'n1', HEUTE, 5) }, HEUTE).summe;
+    expect(nachher).toBe(vorher);
+  });
+});
+
 describe('istBelegUebernehmbar', () => {
   it('abgelaufene und fristlose offene Belege ja, künftige und übernommene nein', () => {
     expect(istBelegUebernehmbar({ status: 'offen', frist: '2026-10-02' }, HEUTE)).toBe(true);
