@@ -313,7 +313,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
           React.createElement('ol', { start: prioritized.findIndex(d => d.tier === tier) + 1, style: { margin: 0, paddingInlineStart: '1.4em', fontSize: text.sm, color: palette.text } },
             prioritized.filter(d => d.tier === tier).map((d, idx) => React.createElement('li', { key: d.id || idx, style: { padding: '3px 0' } },
               React.createElement('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm } },
-                React.createElement('span', null, d.creditor || '—'),
+                React.createElement('span', null, forderungName(d, t)),
                 React.createElement('span', { style: { fontVariantNumeric: 'tabular-nums' } }, betrag(Number(d.amount || 0), { stellen: 2 })))
             ))
           )
@@ -415,7 +415,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       // Mahnstufe «Zahlungsbefehl» auf einer Forderung und dieser Tab waren zwei Erfassungen ohne
       // Verbindung (Rundgang 27.09.). Hier nur der Hinweis — nichts wird automatisch angelegt.
       mitZahlungsbefehl.length > 0 && React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
-        hinweisZeichen(), t('schulden.bild.ausForderungen', { namen: mitZahlungsbefehl.map(d => d.creditor || '—').join(', ') })
+        hinweisZeichen(), t('schulden.bild.ausForderungen', { namen: mitZahlungsbefehl.map(d => forderungName(d, t)).join(', ') })
       ),
       betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
         betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'paid' || entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },

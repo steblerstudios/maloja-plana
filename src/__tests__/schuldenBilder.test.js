@@ -186,7 +186,16 @@ describe('① AusserdemOffen / ② OffenePosten', () => {
     const html = render(OffenePosten, alt);
     expect(html).toContain('schulden.posten.fristAbgelaufen');
     const q = fs.readFileSync(path.resolve(__dirname, '../components/SchuldenBilder.jsx'), 'utf8');
-    expect(q).toMatch(/onNavigate\('kvg'\)/);
+    expect(q).toMatch(/onNavigate\('kvg'/);
+  });
+  it('③ I3: Weg zum Tracker öffnet den Tab «franchise» (Belege und Übernehmen), in ① und ②', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../components/SchuldenBilder.jsx'), 'utf8');
+    const ausserdem = q.slice(q.indexOf('export const AusserdemOffen'), q.indexOf('export const forderungName'));
+    const offene = q.slice(q.indexOf('export const OffenePosten'));
+    for (const baustein of [ausserdem, offene]) {
+      expect(baustein).toContain("onNavigate('kvg', undefined, 'franchise')");
+      expect(baustein).not.toMatch(/onNavigate\('kvg'\)/);
+    }
   });
   it('② ohne Forderungen keine Forderungen-Gruppe', () => {
     const html = render(OffenePosten, offenePosten({ versicherungen: { kkBelege: [{ id: 'a', betrag: 10, status: 'offen' }] } }, heute));
@@ -233,5 +242,39 @@ describe('① AusserdemOffen / ② OffenePosten', () => {
         for (const rot of [p.rose, p.roseDeep]) expect(html).not.toContain(rot.toLowerCase());
       }
     }
+  });
+});
+
+// Gesamtprüfung I1 (13.10.2026): eine übernommene Arztrechnung (creditor '') heisst überall gleich.
+describe('I1 · Name übernommener Arztrechnungen überall', () => {
+  const uebernommen = { id: 7, creditor: '', amount: 290, status: 'open', category: 'gesundheit', stufe: 'rechnung', ausBeleg: 'b3', belegDatum: '2026-09-12' };
+  const liste = [uebernommen];
+  const html = (C, props) => renderToStaticMarkup(React.createElement(C, { palette, t, ...props })).replace(/&quot;/g, '"').replace(/&#x27;/g, "'");
+  it('Balken «als Erstes»', () => {
+    const h = html(OffenBalken, { prioritized: prioritizeDebts(liste), status: calculateDebtStatus(liste, HEUTE) });
+    expect(h).toContain('schulden.bild.naechstes');
+    expect(h).toContain('rechnungVom');
+    expect(h).not.toContain('"name":"—"');
+  });
+  it('Zeitachse', () => {
+    const h = html(AbbauZeitachse, { plan: createDebtPlan(liste, 500) });
+    expect(h).toContain('rechnungVom');
+    expect(h).not.toContain('— ');
+    expect(h).not.toContain('· —');
+  });
+  it('Mahnstufen: sichtbar und vorgelesen', () => {
+    const h = html(MahnstufenUebersicht, { prioritized: prioritizeDebts(liste) });
+    expect(h.match(/rechnungVom/g).length).toBeGreaterThanOrEqual(2);
+    expect(h).not.toContain('>—<');
+    expect(h).not.toContain('—:');
+  });
+  it('Plan-Liste und Zahlungsbefehl-Hinweis im Schuldenmanager nutzen forderungName', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
+    expect(q).not.toMatch(/creditor \|\| '—'/);
+    expect(q).toMatch(/mitZahlungsbefehl\.map\(d => forderungName\(d, t\)\)/);
+  });
+  it('Quelltext der Bilder kennt kein creditor || «—» mehr', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../components/SchuldenBilder.jsx'), 'utf8');
+    expect(q).not.toMatch(/creditor \|\| '—'/);
   });
 });
