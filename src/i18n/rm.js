@@ -2948,6 +2948,18 @@ export default {
       fertig: 'Fertig',
       zeitachse: { titel: 'Verjährung auf einen Blick', label: 'Verjährung je Verlustschein, einer pro Zeile', achse: 'Jahr', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+    // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
+    betreibung: {
+      auszugRegel: { sie: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann Ihr Verfahren als abgeschlossen gilt, kann Ihnen das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.', du: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann dein Verfahren als abgeschlossen gilt, kann dir das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.' },
+      verbinden: 'Verbunden mit',
+      verbindenKeine: 'Keine Forderung',
+      verbundenMit: 'Verbunden mit: {name}',
+      keineVerbindung: 'Die verbundene Forderung gibt es nicht mehr.',
+      ohneDatum: 'Registerdatum nicht erfasst',
+      bearbeiten: 'Bearbeiten',
+      fertig: 'Fertig',
+      zeitleiste: { titel: 'Erfasste Registerdaten', label: 'Registerdatum je Betreibung, eine pro Zeile', achse: 'Jahr', eingetragen: 'eingetragen am {datum}', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
+    },
     bussen: {
       title: 'Bussen und Geldstrafen',
       quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',

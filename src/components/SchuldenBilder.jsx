@@ -274,3 +274,46 @@ export const VerlustscheinZeitachse = ({ palette, t, eintraege, heute = heuteIso
     React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, margin: space.sm + 'px 0 0' } }, t('schulden.verlustschein.verjaehrung'))
   );
 };
+
+// ④ Betreibung (Task 6, Schulden R2, 05.10.2026): die ERFASSTEN Registerdaten auf einer ruhigen Leiste.
+// Ein Punkt je Betreibung mit Datum, Text daneben. Bewusst KEIN Ende, keine Fünf-Jahres-Linie:
+// «Abschluss des Verfahrens» ist im Gesetz nicht definiert (SchKG Art. 8a Abs. 4, swiss-precision-pruefer
+// 05.10.2026). Die Regel steht als Text im Tab. Einträge ohne Registerdatum stehen nur in der Liste.
+export const BetreibungZeitleiste = ({ palette, t, eintraege, heute = heuteIso() }) => {
+  const zeilen = (eintraege || []).map(e => {
+    const iso = alsIsoDatum(e.registerDate);
+    const d = leseDatum(iso);
+    return d ? { e, iso, ms: d.getTime() } : null;
+  }).filter(Boolean).sort((a, b) => a.ms - b.ms);
+  if (zeilen.length === 0) return null;
+  const jetzt = (leseDatum(heute) || new Date()).getTime();
+  const lo = Math.min(jetzt, ...zeilen.map(z => z.ms));
+  const hi = Math.max(jetzt, ...zeilen.map(z => z.ms));
+  const spanne = hi - lo || 1;
+  // Auf der Spur bleiben: Position begrenzen und die Marke um denselben Anteil ihrer Breite zurückschieben.
+  const pos = (ms) => Math.min(100, Math.max(0, Math.round(((ms - lo) / spanne) * 1000) / 10));
+  const marke = (ms, stil) => { const p = pos(ms); return { position: 'absolute', left: p + '%', transform: 'translateX(-' + p + '%)', ...stil }; };
+  const zeile = { display: 'grid', gridTemplateColumns: 'minmax(0, 7.5rem) minmax(0, 1fr)', alignItems: 'center', columnGap: space.sm + 'px', rowGap: '2px', padding: space.xs + 'px 0', fontSize: text.sm };
+  return React.createElement('div', { style: { margin: space.md + 'px 0' } },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text, marginBottom: space.xs } }, t('schulden.betreibung.zeitleiste.titel')),
+    React.createElement('div', { 'aria-hidden': 'true', style: { ...zeile, paddingTop: 0 } },
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('schulden.betreibung.zeitleiste.achse')),
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, fontVariantNumeric: 'tabular-nums' } },
+        React.createElement('span', null, String(new Date(lo).getFullYear())),
+        React.createElement('span', null, String(new Date(hi).getFullYear()))
+      )
+    ),
+    React.createElement('ol', { role: 'list', 'aria-label': t('schulden.betreibung.zeitleiste.label'), style: { listStyle: 'none', padding: 0, margin: 0 } },
+      zeilen.map(z => React.createElement('li', { key: z.e.id, style: zeile },
+        React.createElement('span', { style: { color: palette.text, overflowWrap: 'anywhere' } }, z.e.creditor || t('schulden.posten.ohneName')),
+        React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '12px', background: spur(palette), borderRadius: radius.sm } },
+          React.createElement('div', { 'data-punkt': '1', style: marke(z.ms, { top: '1px', width: '10px', height: '10px', borderRadius: '50%', background: ton(palette, 2) }) }),
+          // «heute»: dünne Marke in der Tinte der Schrift, als Text darunter erklärt.
+          React.createElement('div', { style: marke(jetzt, { width: '2px', top: '-3px', bottom: '-3px', background: palette.text, borderRadius: radius.xs }) })
+        ),
+        React.createElement('span', { style: { gridColumn: 2, color: palette.mid, fontSize: text.xs, fontVariantNumeric: 'tabular-nums' } }, t('schulden.betreibung.zeitleiste.eingetragen', { datum: formatDE(z.iso) }))
+      ))
+    ),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, t('schulden.betreibung.zeitleiste.heute', { datum: formatDE(heute) }))
+  );
+};

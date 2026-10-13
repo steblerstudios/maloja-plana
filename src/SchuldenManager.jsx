@@ -19,7 +19,7 @@ import { betrag, zahl } from './utils/geld.js';
 import { darlehenVorschlag, betreibungsHinweis, rateAusBudget } from './utils/schuldenAusProfil.js';
 import { CHAPTER_KEYS } from './config/constants.js';
 import { MAHNSTUFEN, leseStufe, naechsterWeg } from './utils/mahnstufe.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName, VerlustscheinZeitachse, verlustscheinName } from './components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, STUFEN_TON, tierLabelKey, forderungName, VerlustscheinZeitachse, verlustscheinName, BetreibungZeitleiste } from './components/SchuldenBilder.jsx';
 
 // Mahnstufe einer Forderung (27.09.2026): Rechnung → Mahnung → Zahlungsbefehl, hier nur die Auswahl
 // und der ruhige nächste Weg. Das Bild aller Stufen steht seit der Dataviz-Runde (27.09.) EINMAL in
@@ -61,7 +61,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     fokusNach.current = null;
     const el = document.querySelector('[data-vs-fokus="' + ziel + '"]');
     if (el) el.focus();
-  }, [bearbeite]);
+  }, [bearbeite, betreibung.length]);
   // Nicht zweimal eingeben: «Persönliche Darlehen» aus dem Kapitel Finanzen, solange noch keine Schuld erfasst ist.
   const [vorschlag] = useState(() => darlehenVorschlag(data, data.schulden));
   const [newDebt, setNewDebt] = useState({ creditor: '', amount: vorschlag?.amount || '', dueDate: '', interestRate: '', status: 'open', category: vorschlag?.category || 'sonstige' });
@@ -92,23 +92,35 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   };
 
   const handleAddBetreibung = () => {
+    // Kein erfundenes Datum: «heute» wäre ein Registerdatum, das niemand erfasst hat. Leer lassen, direkt bearbeiten.
     const entry = {
       id: Date.now(),
       creditor: '',
       amount: 0,
-      registerDate: heuteIso(),
+      registerDate: '',
       status: 'open',
       documentFile: null
     };
     setBetreibung([...betreibung, entry]);
+    fokusNach.current = 'bt-feld-' + entry.id;
+    setBearbeite(entry.id);
   };
+
+  const startBearbeitenBt = (id) => { fokusNach.current = 'bt-feld-' + id; setBearbeite(id); };
+  const fertigBearbeitenBt = (id) => { fokusNach.current = 'bt-knopf-' + id; setBearbeite(null); };
 
   const handleUpdateBetreibung = (id, field, value) => {
     setBetreibung(betreibung.map(e => e.id === id ? { ...e, [field]: field === 'amount' ? Number(value) || 0 : value } : e));
   };
 
   const handleDeleteBetreibung = (id) => {
-    setBetreibung(betreibung.filter(e => e.id !== id));
+    const i = betreibung.findIndex(e => e.id === id);
+    const rest = betreibung.filter(e => e.id !== id);
+    // Fokus nicht auf body fallen lassen: nächste Zeile, sonst «+ Betreibung».
+    const naechste = rest[i] || rest[i - 1];
+    fokusNach.current = naechste ? 'bt-knopf-' + naechste.id : 'bt-neu';
+    setBetreibung(rest);
+    if (bearbeite === id) setBearbeite(null);
   };
 
   const handleAddVerlustschein = () => {
@@ -177,7 +189,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income);
   const plan = createDebtPlan(schulden, leseBetrag(planRate), method);
-  const mitZahlungsbefehl = prioritized.filter(d => leseStufe(d.stufe) === 'zahlungsbefehl');
+  // Nur Forderungen, zu denen noch keine Betreibung bewusst verbunden wurde.
+  const mitZahlungsbefehl = prioritized.filter(d => leseStufe(d.stufe) === 'zahlungsbefehl' && !betreibung.some(b => b.forderungId != null && Number(b.forderungId) === Number(d.id)));
 
   const cardStyle = {
     padding: space.md,
@@ -423,7 +436,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
     view === 'betreibung' && React.createElement('div', { role: 'tabpanel' },
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.debtCollection')),
 
-      React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addBetreibung')),
+      React.createElement('button', { type: 'button', 'data-vs-fokus': 'bt-neu', onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addBetreibung')),
       // Registerstand im Kapitel Behörden nur als Hinweis, nie automatisch (utils/schuldenAusProfil.js).
       betreibungsHinweis(data.behoerden?.betreibungsStatus, betreibung) && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, color: palette.text, lineHeight: '1.5' } },
         hinweisZeichen(), t('schulden.registerHinweis'), ' ',
@@ -436,19 +449,61 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
         hinweisZeichen(), t('schulden.bild.ausForderungen', { namen: mitZahlungsbefehl.map(d => d.creditor || '—').join(', ') })
       ),
       betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
-        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'paid' || entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },
-          React.createElement('input', { type: 'text', value: entry.creditor, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
-          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
-            React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } }),
-            React.createElement('input', { type: 'date', value: alsIsoDatum(entry.registerDate), onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), 'aria-label': t('schulden.registerDate'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
-            // Bis 27.09.2026 legte der Knopf 'active' an — keine der Optionen; gilt als offen.
-            React.createElement('select', { value: entry.status === 'paid' ? 'paid' : 'open', onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), 'aria-label': t('schulden.statusField'), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
-              React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
-              React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
+        React.createElement(BetreibungZeitleiste, { palette, t, eintraege: betreibung, heute: heuteIso() }),
+        // SchKG Art. 8a Abs. 4 als Regel in Worten, ohne errechnetes Ende (swiss-precision-pruefer 05.10.2026).
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, margin: '0 0 ' + space.md + 'px' } }, t('schulden.betreibung.auszugRegel')),
+        betreibung.map(entry => {
+          const name = entry.creditor || t('schulden.posten.ohneName');
+          const datumIso = alsIsoDatum(entry.registerDate);
+          const bezahlt = entry.status === 'paid' || entry.status === 'erledigt';
+          const hatId = entry.forderungId != null && entry.forderungId !== '';
+          const verbunden = hatId ? schulden.find(d => Number(d.id) === Number(entry.forderungId)) : null;
+          const feld = (extra) => ({ ...inputStyle, marginBottom: 0, ...extra });
+          const loeschen = React.createElement('button', { type: 'button', 'aria-label': t('common.delete') + ' ' + name, onClick: () => handleDeleteBetreibung(entry.id), style: loeschKnopf }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'));
+          if (bearbeite === entry.id) {
+            // Verbinden: offene Forderungen, dazu die schon verbundene (auch wenn inzwischen bezahlt).
+            const wahl = schulden.filter(d => d.status !== 'paid' || (verbunden && d.id === verbunden.id));
+            return React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
+              React.createElement('input', { type: 'text', value: entry.creditor || '', 'data-vs-fokus': 'bt-feld-' + entry.id, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
+              React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
+                React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: feld({ width: '140px' }) }),
+                React.createElement('input', { type: 'date', value: alsIsoDatum(entry.registerDate), onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), 'aria-label': t('schulden.registerDate'), style: feld({ width: '160px' }) }),
+                // Bis 27.09.2026 legte der Knopf 'active' an — keine der Optionen; gilt als offen.
+                React.createElement('select', { value: bezahlt ? 'paid' : 'open', onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), 'aria-label': t('schulden.statusField'), style: feld({ width: '140px' }) },
+                  React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
+                  React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
+                )
+              ),
+              // Bewusste Verbindung zu einer Forderung — nichts wird angelegt, nur verwiesen.
+              React.createElement('select', { value: verbunden ? String(verbunden.id) : '', onChange: (e) => handleUpdateBetreibung(entry.id, 'forderungId', e.target.value === '' ? undefined : Number(e.target.value)), 'aria-label': t('schulden.betreibung.verbinden'), style: feld({ marginBottom: space.sm }) },
+                React.createElement('option', { value: '' }, t('schulden.betreibung.verbindenKeine')),
+                wahl.map(d => React.createElement('option', { key: d.id, value: String(d.id) }, forderungName(d, t) + ' · ' + betrag(d.amount, { stellen: 2 })))
+              ),
+              hatId && !verbunden && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } }, t('schulden.betreibung.keineVerbindung')),
+              React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', alignItems: 'center' } },
+                React.createElement('button', { type: 'button', 'aria-label': t('schulden.betreibung.fertig') + ' ' + name, onClick: () => fertigBearbeitenBt(entry.id), style: buttonStyle }, t('schulden.betreibung.fertig')),
+                loeschen
+              )
+            );
+          }
+          const klein = { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: space.xs };
+          return React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
+            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, flexWrap: 'wrap' } },
+              React.createElement('span', { style: { fontWeight: weight.semi, color: palette.text, overflowWrap: 'anywhere' } }, name),
+              React.createElement('span', { style: { color: palette.text, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, betrag(entry.amount, { stellen: 2 }))
+            ),
+            React.createElement('div', { style: klein },
+              (datumIso ? formatDE(datumIso) : t('schulden.betreibung.ohneDatum')) + ' · ' + (bezahlt ? t('schulden.statusPaid') : t('schulden.statusOpen'))
+            ),
+            // Verbindung: Name der Forderung, oder ehrlich «gibt es nicht mehr» — nie ein Absturz.
+            verbunden && React.createElement('div', { style: klein }, t('schulden.betreibung.verbundenMit', { name: forderungName(verbunden, t) })),
+            !verbunden && hatId && React.createElement('div', { style: klein }, t('schulden.betreibung.keineVerbindung')),
+            React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginTop: space.sm } },
+              React.createElement('button', { type: 'button', 'data-vs-fokus': 'bt-knopf-' + entry.id, 'aria-label': t('schulden.betreibung.bearbeiten') + ' ' + name, onClick: () => startBearbeitenBt(entry.id), style: zweitKnopf }, t('schulden.betreibung.bearbeiten')),
+              loeschen
             )
-          ),
-          React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...loeschKnopf, marginTop: space.xs } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
-        ))
+          );
+        })
       )
     ),
 

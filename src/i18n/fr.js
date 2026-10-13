@@ -3137,6 +3137,17 @@ export default {
       fertig: 'Terminé',
       zeitachse: { titel: 'Prescription en un coup d’œil', label: 'Prescription de chaque acte de défaut de biens, une ligne chacun', achse: 'Année', heute: 'Le trait vertical marque aujourd’hui ({datum}).' },
     },
+    betreibung: {
+      auszugRegel: { sie: 'Les tiers voient une poursuite dans l’extrait jusqu’à cinq ans après la clôture de la procédure (LP art. 8a, al. 4). L’office des poursuites peut vous dire quand votre procédure est considérée comme close. Les autorités ayant une procédure pendante peuvent aussi demander des extraits au-delà de ce délai.', du: 'Les tiers voient une poursuite dans l’extrait jusqu’à cinq ans après la clôture de la procédure (LP art. 8a, al. 4). L’office des poursuites peut te dire quand ta procédure est considérée comme close. Les autorités ayant une procédure pendante peuvent aussi demander des extraits au-delà de ce délai.' },
+      verbinden: 'Liée à',
+      verbindenKeine: 'Aucune dette',
+      verbundenMit: 'Liée à : {name}',
+      keineVerbindung: 'La dette liée n’existe plus.',
+      ohneDatum: 'Date d’inscription non saisie',
+      bearbeiten: 'Modifier',
+      fertig: 'Terminé',
+      zeitleiste: { titel: 'Dates d’inscription saisies', label: 'Date d’inscription de chaque poursuite, une ligne chacune', achse: 'Année', eingetragen: 'inscrite le {datum}', heute: 'Le trait vertical marque aujourd’hui ({datum}).' },
+    },
     bussen: {
       title: 'Amendes et peines pécuniaires',
       quelle: 'Sources : [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_35]], [[CP art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_36]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/fr#art_106]] (vérifié en septembre 2026).',

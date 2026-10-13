@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createDebtPlan, prioritizeDebts, calculateDebtStatus } from '../schuldenCalc.js';
-import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, summenJeStufe, STUFEN_TON, zeitraum, VerlustscheinZeitachse } from '../components/SchuldenBilder.jsx';
+import { OffenBalken, AbbauZeitachse, MahnstufenUebersicht, AusserdemOffen, OffenePosten, summenJeStufe, STUFEN_TON, zeitraum, VerlustscheinZeitachse, BetreibungZeitleiste } from '../components/SchuldenBilder.jsx';
 import { SchuldenManager } from '../SchuldenManager.jsx';
 import de from '../i18n/de.js';
 import { offenePosten } from '../utils/offenePosten.js';
@@ -358,5 +358,136 @@ describe('⑤ · Bearbeiten-Modus (Zustand über startBearbeite)', () => {
   it('Touch-Ziel: Knöpfe mindestens 44 px', () => {
     const h = rendern({ id: 1, creditor: 'Bank Alpha', amount: 1, rolle: 'schulde' });
     expect(h).toMatch(/<button[^>]*min-height:44px[^>]*>[^<]*schulden\.verlustschein\.fertig/);
+  });
+});
+
+// Task 6 (Schulden R2, 05.10.2026): Betreibung als Lesezeile, Zeitleiste der ERFASSTEN Daten, Verbindung zur Forderung.
+describe('④ · BetreibungZeitleiste — nur erfasste Registerdaten', () => {
+  const eintraege = [
+    { id: 1, creditor: 'Amt Alpha', registerDate: '2022-03-15', amount: 900 },
+    { id: 2, creditor: 'Firma Beta', registerDate: '2023-06-01', amount: 150 },
+    { id: 3, creditor: 'Ohne Datum AG', registerDate: '', amount: 50 },
+  ];
+  const html = renderToStaticMarkup(React.createElement(BetreibungZeitleiste, { palette, t, eintraege, heute: '2026-10-05' })).replace(/&quot;/g, '"');
+  it('zwei Einträge mit Datum: zwei Punkte, Datum als Text', () => {
+    expect((html.match(/<li/g) || []).length).toBe(2);
+    expect((html.match(/data-punkt/g) || []).length).toBe(2);
+    expect(html).toContain('schulden.betreibung.zeitleiste.eingetragen{"datum":"15.03.2022"}');
+    expect(html).toContain('schulden.betreibung.zeitleiste.eingetragen{"datum":"01.06.2023"}');
+  });
+  it('Mutationswächter: kein errechnetes Ende (Registerdatum + 5 Jahre) im Markup', () => {
+    expect(html).not.toContain('2027');
+    expect(html).not.toContain('2028');
+    expect(html).not.toMatch(/endet|erlischt|bis zum/);
+    expect(html).not.toContain('auszugRegel');
+  });
+  it('Eintrag ohne Datum: nicht auf der Leiste', () => {
+    expect(html).not.toContain('Ohne Datum AG');
+  });
+  it('Liste mit role="list", ein Ton, kein Rot, «heute» als Text', () => {
+    expect(html).toMatch(/<ol[^>]*role="list"/);
+    expect(html).not.toMatch(/rose|#c0|red/i);
+    expect(html).toContain('schulden.betreibung.zeitleiste.heute{"datum":"05.10.2026"}');
+  });
+  it('«heute» und Punkte bleiben auf der Spur, auch bei Datum nach heute', () => {
+    const spaet = renderToStaticMarkup(React.createElement(BetreibungZeitleiste, { palette, t, heute: '2026-10-05',
+      eintraege: [{ id: 1, creditor: 'A', registerDate: '2026-12-01' }, { id: 2, creditor: 'B', registerDate: '2026-10-05' }] }));
+    const links = [...spaet.matchAll(/left:(-?[\d.]+)%/g)].map(m => Number(m[1]));
+    expect(links.length).toBeGreaterThan(0);
+    for (const l of links) { expect(l).toBeGreaterThanOrEqual(0); expect(l).toBeLessThanOrEqual(100); }
+    for (const m of spaet.matchAll(/left:([\d.]+)%[^"]*?transform:translateX\(-([\d.]+)%\)/g)) expect(m[2]).toBe(m[1]);
+  });
+  it('nichts zu zeigen: leer', () => {
+    expect(renderToStaticMarkup(React.createElement(BetreibungZeitleiste, { palette, t, eintraege: [{ id: 3, creditor: 'X', registerDate: '' }], heute: '2026-10-05' }))).toBe('');
+    expect(renderToStaticMarkup(React.createElement(BetreibungZeitleiste, { palette, t, eintraege: [], heute: '2026-10-05' }))).toBe('');
+  });
+});
+
+describe('④ · Tab «Betreibung» — Lesezeile, Regeltext, Verbindung', () => {
+  const rendern = (betreibung, schulden = [], overrides = {}) => renderToStaticMarkup(React.createElement(SchuldenManager, {
+    palette, t, data: { schulden, betreibung, verlustscheine: [], finanzen: {}, basis: {} }, onSave: () => {}, onNavigate: () => {}, startView: 'betreibung', ...overrides,
+  })).replace(/&quot;/g, '"');
+  const kreditkarte = { id: 7, creditor: 'Kreditkarte', amount: 4500, status: 'open', category: 'kredit', stufe: 'zahlungsbefehl' };
+  const bt = { id: 1, creditor: 'Amt Alpha', amount: 900, registerDate: '2022-03-15', status: 'open' };
+
+  it('Lesezeile: Name, Betrag, Datum, Status, «Bearbeiten» mit Namen — keine offenen Felder', () => {
+    const h = rendern([bt]);
+    expect(h).toContain('Amt Alpha');
+    expect(h).toContain('15.03.2022');
+    expect(h).toContain('schulden.statusOpen');
+    expect(h).toContain('aria-label="schulden.betreibung.bearbeiten Amt Alpha"');
+    expect(h).not.toContain('<input');
+    expect(h).not.toContain('<select');
+  });
+  it('Regeltext 8a Abs. 4 steht, sobald es Einträge gibt — auch ohne Registerdatum', () => {
+    expect(rendern([bt])).toContain('schulden.betreibung.auszugRegel');
+    expect(rendern([{ id: 2, creditor: 'Ohne Datum AG', amount: 5, registerDate: '', status: 'open' }])).toContain('schulden.betreibung.auszugRegel');
+    expect(rendern([])).not.toContain('schulden.betreibung.auszugRegel');
+  });
+  it('Eintrag ohne Datum: «ohneDatum» in der Liste, nicht auf der Leiste', () => {
+    const h = rendern([{ id: 2, creditor: 'Ohne Datum AG', amount: 5, registerDate: '', status: 'open' }]);
+    expect(h).toContain('schulden.betreibung.ohneDatum');
+    expect(h).not.toContain('schulden.betreibung.zeitleiste.label');
+  });
+  it('verbundene Forderung: «verbundenMit» mit Name', () => {
+    const h = rendern([{ ...bt, forderungId: 7 }], [kreditkarte]);
+    expect(h).toContain('schulden.betreibung.verbundenMit{"name":"Kreditkarte"}');
+    expect(h).not.toContain('schulden.betreibung.keineVerbindung');
+  });
+  it('gelöschte Forderung: «keineVerbindung», kein Absturz', () => {
+    const h = rendern([{ ...bt, forderungId: 99 }], [kreditkarte]);
+    expect(h).toContain('schulden.betreibung.keineVerbindung');
+    expect(h).not.toContain('schulden.betreibung.verbundenMit');
+  });
+  it('Hinweiszeile nur für Zahlungsbefehl OHNE verbundene Betreibung', () => {
+    expect(rendern([bt], [kreditkarte])).toContain('schulden.bild.ausForderungen');
+    expect(rendern([{ ...bt, forderungId: 7 }], [kreditkarte])).not.toContain('schulden.bild.ausForderungen');
+  });
+  it('Quelltext: Verbindung als Zahl, ohne Automatik', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
+    expect(q).toMatch(/forderungId/);
+    expect(q).toMatch(/Number\(/);
+  });
+  it('Neuer Eintrag: KEIN automatisches «heute», direkt im Bearbeiten-Modus (Quelltext)', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
+    const fn = q.match(/handleAddBetreibung = \(\) => \{[\s\S]*?\n {2}\};/)[0];
+    expect(fn).toMatch(/registerDate: ''/);
+    expect(fn).not.toMatch(/heuteIso/);
+    expect(fn).toMatch(/setBearbeite\(entry\.id\)/);
+  });
+  it('Löschen lässt den Fokus nicht auf body fallen (Quelltext)', () => {
+    const q = fs.readFileSync(path.resolve(__dirname, '../SchuldenManager.jsx'), 'utf8');
+    expect(q).toMatch(/handleDeleteBetreibung = [\s\S]*?fokusNach\.current = /);
+  });
+});
+
+describe('④ · Bearbeiten-Modus Betreibung (Zustand über startBearbeite)', () => {
+  const kreditkarte = { id: 7, creditor: 'Kreditkarte', amount: 4500, status: 'open', stufe: 'zahlungsbefehl' };
+  const bezahlt = { id: 8, creditor: 'Zahnarzt', amount: 680, status: 'paid' };
+  const rendern = (e, schulden = [kreditkarte, bezahlt]) => renderToStaticMarkup(React.createElement(SchuldenManager, {
+    palette, t, data: { schulden, betreibung: [e], verlustscheine: [], finanzen: {}, basis: {} }, onSave: () => {}, onNavigate: () => {}, startView: 'betreibung', startBearbeite: e.id,
+  })).replace(/&quot;/g, '"');
+  const e1 = { id: 1, creditor: 'Amt Alpha', amount: 900, registerDate: '2022-03-15', status: 'open' };
+  it('Select «Verbunden mit»: leere Wahl + offene Forderungen, keine bezahlte', () => {
+    const h = rendern(e1);
+    expect(h).toContain('aria-label="schulden.betreibung.verbinden"');
+    expect(h).toContain('>Kreditkarte');
+    expect(h).not.toMatch(/<option[^>]*>Zahnarzt/);
+  });
+  it('gewählte Forderung ist ausgewählt', () => {
+    expect(rendern({ ...e1, forderungId: 7 })).toMatch(/<option value="7" selected/);
+  });
+  it('Fertig-Knopf mit Namen, mindestens 44 px', () => {
+    const h = rendern(e1);
+    expect(h).toContain('aria-label="schulden.betreibung.fertig Amt Alpha"');
+    expect(h).toMatch(/<button[^>]*min-height:44px[^>]*>[^<]*schulden\.betreibung\.fertig/);
+  });
+});
+
+describe('④ · Nachweis aus de.js — Wortlaut SchKG 8a Abs. 4', () => {
+  it('drei Sätze wörtlich (Sie-Form)', () => {
+    const r = de.schulden.betreibung.auszugRegel;
+    expect(r.sie).toBe('Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann Ihr Verfahren als abgeschlossen gilt, kann Ihnen das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.');
+    expect(r.du).toContain('Wann dein Verfahren als abgeschlossen gilt, kann dir das Betreibungsamt sagen.');
   });
 });

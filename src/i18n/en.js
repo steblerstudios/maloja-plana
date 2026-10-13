@@ -3137,6 +3137,17 @@ export default {
       fertig: 'Done',
       zeitachse: { titel: 'Limitation at a glance', label: 'Limitation of each certificate, one per row', achse: 'Year', heute: 'The vertical mark shows today ({datum}).' },
     },
+    betreibung: {
+      auszugRegel: 'Third parties see a debt enforcement entry in an extract until five years after the proceedings are concluded (SchKG Art. 8a para. 4). The debt enforcement office can tell you when your proceedings count as concluded. Authorities with a pending procedure can still request extracts after that.',
+      verbinden: 'Linked to',
+      verbindenKeine: 'No debt',
+      verbundenMit: 'Linked to: {name}',
+      keineVerbindung: 'The linked debt no longer exists.',
+      ohneDatum: 'Register date not recorded',
+      bearbeiten: 'Edit',
+      fertig: 'Done',
+      zeitleiste: { titel: 'Recorded register dates', label: 'Register date of each entry, one per row', achse: 'Year', eingetragen: 'entered on {datum}', heute: 'The vertical mark shows today ({datum}).' },
+    },
     bussen: {
       title: 'Fines and monetary penalties',
       quelle: 'Sources: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (German text where no English exists, checked September 2026).',

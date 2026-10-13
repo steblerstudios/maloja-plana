@@ -3094,6 +3094,17 @@ export default {
       fertig: 'Fatto',
       zeitachse: { titel: 'Prescrizione in sintesi', label: 'Prescrizione di ogni attestato, uno per riga', achse: 'Anno', heute: 'Il trattino verticale indica oggi ({datum}).' },
     },
+    betreibung: {
+      auszugRegel: { sie: 'I terzi vedono un’esecuzione nell’estratto fino a cinque anni dopo la conclusione della procedura (LEF art. 8a cpv. 4). L’ufficio di esecuzione può dirle quando la sua procedura è considerata conclusa. Le autorità con una procedura pendente possono chiedere estratti anche dopo.', du: 'I terzi vedono un’esecuzione nell’estratto fino a cinque anni dopo la conclusione della procedura (LEF art. 8a cpv. 4). L’ufficio di esecuzione può dirti quando la tua procedura è considerata conclusa. Le autorità con una procedura pendente possono chiedere estratti anche dopo.' },
+      verbinden: 'Collegato a',
+      verbindenKeine: 'Nessun debito',
+      verbundenMit: 'Collegato a: {name}',
+      keineVerbindung: 'Il debito collegato non esiste più.',
+      ohneDatum: 'Data di iscrizione non registrata',
+      bearbeiten: 'Modifica',
+      fertig: 'Fatto',
+      zeitleiste: { titel: 'Date di iscrizione registrate', label: 'Data di iscrizione di ogni esecuzione, una per riga', achse: 'Anno', eingetragen: 'iscritta il {datum}', heute: 'Il trattino verticale indica oggi ({datum}).' },
+    },
     bussen: {
       title: 'Multe e pene pecuniarie',
       quelle: 'Fonti: [[CP art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_35]], [[CP art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_36]], [[CP art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_79_a]], [[CP art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/it#art_106]] (verificato a settembre 2026).',
