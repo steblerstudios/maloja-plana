@@ -3166,9 +3166,9 @@ export default {
     betreibung: {
       auszugRegel: { sie: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann Ihr Verfahren als abgeschlossen gilt, kann Ihnen das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.', du: 'Dritte sehen eine Betreibung im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Wann dein Verfahren als abgeschlossen gilt, kann dir das Betreibungsamt sagen. Behörden mit einem hängigen Verfahren können auch danach noch Auszüge verlangen.' },
       verbinden: 'Verbunden mit',
-      verbindenKeine: 'Keine Forderung',
+      verbindenKeine: 'Keine Schuld',
       verbundenMit: 'Verbunden mit: {name}',
-      keineVerbindung: 'Die verbundene Forderung gibt es nicht mehr.',
+      keineVerbindung: 'Die verbundene Schuld gibt es nicht mehr.',
       ohneDatum: 'Registerdatum nicht erfasst',
       bearbeiten: 'Bearbeiten',
       fertig: 'Fertig',
