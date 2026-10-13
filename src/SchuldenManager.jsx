@@ -465,7 +465,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate, vorlaeuf
       betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
         React.createElement(BetreibungZeitleiste, { palette, t, eintraege: betreibung, heute: heuteIso() }),
         // SchKG Art. 8a Abs. 4 als Regel in Worten, ohne errechnetes Ende (swiss-precision-pruefer 05.10.2026).
-        React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, margin: '0 0 ' + space.md + 'px' } }, t('schulden.betreibung.auszugRegel')),
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5, margin: '0 0 ' + space.lg + 'px' } }, t('schulden.betreibung.auszugRegel')),
         betreibung.map(entry => {
           const name = entry.creditor || t('schulden.posten.ohneName');
           const datumIso = alsIsoDatum(entry.registerDate);
