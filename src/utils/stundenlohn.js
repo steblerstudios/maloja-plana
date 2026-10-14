@@ -6,9 +6,11 @@
 // was noch offen ist. Was sie nicht kann: den Vertrag lesen. Jede Frage, die nur der Vertrag
 // beantwortet, bleibt als Frage stehen — sie wird nicht mit einer Annahme zugedeckt.
 //
-// Warum der Grundlohn so wichtig ist: die kantonalen Mindestlöhne gelten OHNE Ferien- und
-// Feiertagszuschlag (siehe data/lohnCheck.js, «Ferien-/Feiertagszuschläge»). Wer «25 Fr. alles
-// inklusive» verdient, hat in Wahrheit einen tieferen Grundlohn — genau den muss man vergleichen.
+// Warum der Grundlohn so wichtig ist: die kantonalen Mindestlöhne gelten OHNE Ferienzuschlag, in
+// GE, NE, TI und JU auch ohne Feiertagszuschlag (Belege: data/lohnCheck.js, «Ferien-/Feiertags-
+// zuschläge»; NE LEmpl Art. 32d Abs. 3; BS MiLoG § 3 Abs. 1 nennt nur den Ferienzuschlag). Wer
+// «25 Fr. alles inklusive» verdient, hat in Wahrheit einen tieferen Grundlohn — genau den muss
+// man vergleichen. Der Feiertagszuschlag wird nie aus dem Betrag herausgerechnet.
 //
 // Mindestlohn-Befund: kommt aus `pruefeStundenlohn` (eine Wahrheit, kein zweiter Rechenweg).
 // Er bleibt ein Befund für die Person selbst; ein Brief an den Arbeitgeber entsteht hier nicht

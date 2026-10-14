@@ -6141,7 +6141,7 @@ export default {
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     ml_ok: 'Il salari da basa da {grund} per ura cuntanscha u surpassa il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). In contract collectiv u normal da lavur da la branca po prescriver in salari minimal pli aut.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    ml_okTI: 'Il salari da basa da {grund} per ura cuntanscha u surpassa il pli bass salari minimal dal Tessin ({mindest}). Tenor la branca va el fin a {obergrenze}. In contract collectiv u normal da lavur da la branca po prescriver in salari minimal pli aut.',
+    ml_okTI: 'Il salari da basa da {grund} per ura cuntanscha u surpassa il pli bass salari minimal dal Tessin ({mindest}, stadi {jahr}). Tenor la branca va el fin a {obergrenze}. In contract collectiv u normal da lavur da la branca po prescriver in salari minimal pli aut.',
     ml_konformMit13: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Cun il 13avel salari mensil po quai tanscher — premess ch’el vegnia quintà per il salari minimal.',
     ml_konformMit13Bs: 'A Basilea-Citad vala quai mo, sch’el vegn pajà a parts cun mintga salari mensil.',
     ml_dreizehnterUnklar: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Sche quai tanscha, dependa dal 13avel salari mensil: cun in 13avel po quai tanscher, senza betg. Cun la resposta a la dumonda davart il 13avel sa lascha quai classifitgar.',
@@ -6150,15 +6150,15 @@ export default {
     ml_stelle: 'Sche nagina da quellas na vala, pon ils dretgs vegnir sclerids tar {stelle}.',
     ml_keinGesetz: 'Il chantun {kanton} n’enconuscha nagin salari minimal legal. In contract collectiv da lavur da la branscha po tuttina prescriver in.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    ml_zhHinweis: 'En las citads da Turitg e Winterthur ha il Tribunal federal confermà ils 12.5.2026 la valaivladad d’in salari minimal communal (BGer 2C_28/2025 e 2C_30/2025), ma el n’è anc betg en vigur. La citad po dar infurmaziun.',
+    ml_zhHinweis: 'En las citads da Turitg e Winterthur ha il Tribunal federal confermà ils 12.5.2026 la valaivladad d’in salari minimal communal (BGer 2C_28/2025 e 2C_30/2025), ma el n’è anc betg en vigur (stadi 29.9.2026). La citad po dar infurmaziun.',
     ml_keinKanton: 'Cun il chantun dal lieu da lavur sa lascha il salari da basa cumparegliar cun in salari minimal chantunal.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    bvg_obligatorisch: 'Salari annual stimà tar il medem patrun: {jahr}. Quai è sur la limita d’entrada da {schwelle} — per regla tutga la plazza uschia en la chascha da pensiun (BVG art. 2 al. 1). Excepziuns: engaschament a termin da maximalmain trais mais, lavur accessorica ultra d’ina plazza principala gia assicurada (BVV 2 art. 1j al. 1 lit. b e c).',
+    bvg_obligatorisch: 'Salari annual stimà tar il medem patrun: {jahr}. Quai è sur la limita d’entrada da {schwelle} — per regla tutga la plazza uschia en la chascha da pensiun (BVG art. 2 al. 1). Tranter autras excepziuns: engaschament a termin da maximalmain trais mais, lavur accessorica ultra d’ina plazza principala gia assicurada (BVV 2 art. 1j al. 1 lit. b e c).',
     bvg_darunter: 'Salari annual stimà tar il medem patrun: {jahr}. Quai n’è betg sur la limita d’entrada da {schwelle} — la chascha da pensiun n’è lura betg obligatorica (BVG art. 2 al. 1).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     bvg_befristetKurz: 'Tar engaschaments a termin fin a trais mais na vala la obligaziun per regla betg (BVV 2 art. 1j al. 1 lit. b). Sch’igl engaschament vegn prolungà sur trais mais, vala ella (BVV 2 art. 1k).',
     // TODO(rm): Gegenlese: deutscher Rückfall, Fix-Welle #492 (14.10.2026)
-    bvg_haengtAnFerien: 'Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind: geschätzt {tief} oder {hoch} im Jahr, Eintrittsschwelle {schwelle} (BVG Art. 2 Abs. 1).',
+    bvg_haengtAnFerien: 'Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind: geschätzt {tief} im Jahr, wenn die Ferien enthalten sind, {hoch}, wenn sie dazukommen. Eintrittsschwelle {schwelle} (BVG Art. 2 Abs. 1).',
     bvg_unbekannt: 'Cun las uras per emna sa lascha stimar, sch’il salari è sur la limita d’entrada da la chascha da pensiun (BVG art. 2 al. 1).',
     nbu_versichert: 'A partir da 8 uras per emna tar il medem patrun èn era accidents durant il temp liber assicurads tras il patrun (UVV art. 13 al. 1).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
@@ -6168,7 +6168,7 @@ export default {
     // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
     art_einordnung_abrufUnecht: 'Sche missiuns pon vegnir refusadas, dependan Ferienentschädigung, dis da festa e salari en cas da malsogna fermamain dal contract. Igl vala la paina da leger el exactamain.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    art_einordnung_befristet: 'En cas da malsogna sto il salari vegnir pajà vinavant per in temp limità, sche l’engaschament ha durà dapli che trais mais u è vegnì fatg per dapli che trais mais e sch’igl impedi dal lavur n’è betg la culpa da la persuna (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit (OR art. 324a al. 4).',
+    art_einordnung_befristet: 'En cas da malsogna sto il salari vegnir pajà vinavant per in temp limità, sche l’engaschament ha durà dapli che trais mais u è vegnì fatg per dapli che trais mais e sch’igl impedi dal lavur n’è betg la culpa da la persuna (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit u en in contract normal u collectiv da lavur (OR art. 324a al. 4).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     art_einordnung_temporaer: 'Tar lavur temporara va l’engaschament tras l’agentura d’emprest da persunal, betg tras l’interpresa da missiun. Savens vala in contract collectiv da lavur cun agens salaris minimals — tge contract, po l’agentura dir.',
     art_einordnung_hausdienst: 'Per lavur en chasadas privatas datti contracts normals da lavur, per part cun salaris minimals. Ils imports na mussa Maloja anc betg — il chantun dat infurmaziun.',
@@ -6184,7 +6184,7 @@ export default {
     frage_bereitschaft: 'Vegn il temp, durant il qual vegn spetgà sin in clom, indemnisà?',
     frage_gav: 'Tge contract collectiv da lavur vala per la missiun, e tge salari minimal stat en el?',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    frage_krankheit: 'Dura l’engaschament dapli che trais mais? Da quai dependa, sch’il salari vegn pajà vinavant en cas da malsogna senza atgna culpa (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit (OR art. 324a al. 4).',
+    frage_krankheit: 'Dura l’engaschament dapli che trais mais? Da quai dependa, sch’il salari vegn pajà vinavant en cas da malsogna senza atgna culpa (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit u en in contract normal u collectiv da lavur (OR art. 324a al. 4).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     quellen: 'Funtaunas: OR art. 329a al. 1 (vacanzas) · OR art. 324a al. 1 e 4 (salari en cas da malsogna) · BGE 129 III 493 e BGE 149 III 202 (inditgar la Ferienentschädigung) · BVG art. 2 al. 1 (chascha da pensiun, limita stadi 2026) · BVV 2 art. 1j al. 1 e art. 1k (excepziuns) · UVV art. 13 al. 1 e 2 (accidents) · Cst. art. 110 al. 3 (1. d’avust) · salaris minimals chantunals stadi 2026: GE LIRT art. 39K · NE LEmpl art. 32d al. 3 · JU RSJU 822.41 · TI LSM · BS MiLoG § 3 al. 1. A Genevra, a Neuchâtel, en il Tessin ed en il Giura vala il salari minimal senza supplement da vacanzas e da dis da festa, a Basilea-Citad senza supplement da vacanzas.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert

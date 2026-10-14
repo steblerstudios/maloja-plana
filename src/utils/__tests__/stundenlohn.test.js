@@ -239,7 +239,7 @@ describe('Einordnung im gerenderten Text', () => {
   it('B1 · unbekannte Ferienform an der Schwelle: der Text sagt, dass es an den Ferien hängt', () => {
     const txt = seite({ betrag: '25', wochenstunden: '18', dreizehnter: 'nein', feiertag: 'nein' });
     expect(txt).toContain('Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind');
-    expect(txt).toContain("geschätzt CHF 21’600 oder CHF 23’400 im Jahr, Eintrittsschwelle CHF 22’680 (BVG Art. 2 Abs. 1).");
+    expect(txt).toContain("geschätzt CHF 21’600 im Jahr, wenn die Ferien enthalten sind, CHF 23’400, wenn sie dazukommen. Eintrittsschwelle CHF 22’680 (BVG Art. 2 Abs. 1).");
   });
 
   it('befristet: der Hinweis ersetzt die Pflichtaussage; sonst nennt der Text die Ausnahmen', () => {
@@ -248,12 +248,12 @@ describe('Einordnung im gerenderten Text', () => {
     expect(kurz).toContain('Bei befristeten Anstellungen bis drei Monate gilt die Pflicht in der Regel nicht (BVV 2 Art. 1j Abs. 1 Bst. b).');
     expect(kurz).not.toContain('gehört die Stelle damit in die Pensionskasse');
     const fest = seite({ ...basis, art: 'fest' });
-    expect(fest).toContain('in der Regel gehört die Stelle damit in die Pensionskasse (BVG Art. 2 Abs. 1). Ausnahmen: befristet auf höchstens drei Monate, Nebenerwerb neben einer schon versicherten Hauptstelle (BVV 2 Art. 1j Abs. 1 Bst. b und c).');
+    expect(fest).toContain('in der Regel gehört die Stelle damit in die Pensionskasse (BVG Art. 2 Abs. 1). Ausnahmen unter anderem: befristet auf höchstens drei Monate, Nebenerwerb neben einer schon versicherten Hauptstelle (BVV 2 Art. 1j Abs. 1 Bst. b und c).');
   });
 
   it('Tessin: «ok» nennt die Spanne der Branchen, andere Kantone nicht; überall der Hinweis auf GAV/NAV', () => {
     const ti = seite({ betrag: '22', ferienForm: 'bezahlt', kanton: 'TI', wochenstunden: '20', dreizehnter: 'nein' });
-    expect(ti).toContain('liegt auf oder über dem tiefsten Tessiner Mindestlohn (CHF 20.00). Je nach Branche liegt er bis CHF 20.50.');
+    expect(ti).toContain('liegt auf oder über dem tiefsten Tessiner Mindestlohn (CHF 20.00, Stand 2026). Je nach Branche liegt er bis CHF 20.50.');
     const ge = seite({ betrag: '30', ferienForm: 'bezahlt', kanton: 'GE', wochenstunden: '20', dreizehnter: 'nein' });
     expect(ge).not.toContain('Tessiner');
     for (const txt of [ti, ge]) expect(txt).toContain('Ein Gesamt- oder Normalarbeitsvertrag der Branche kann einen höheren Mindestlohn vorschreiben.');
@@ -270,5 +270,11 @@ describe('Einordnung im gerenderten Text', () => {
     expect(txt).toContain('BS MiLoG § 3 Abs. 1');
     expect(txt).not.toContain('Art. 32a ff.');
     expect(txt).toContain('In Genf, Neuenburg, im Tessin und im Jura gilt der Mindestlohn ohne Ferien- und Feiertagszuschlag, in Basel-Stadt ohne Ferienzuschlag.');
+  });
+
+  it('OR 324a Abs. 4: Schriftform, NAV oder GAV; Stand-Angabe zum Zürcher/Winterthurer Hinweis', () => {
+    const txt = seite({ art: 'befristet', betrag: '25', kanton: 'ZH' });
+    expect(txt).toContain('sofern nicht schriftlich, in einem Normal- oder Gesamtarbeitsvertrag eine mindestens gleichwertige Regelung getroffen ist (OR Art. 324a Abs. 4)');
+    expect(txt).toContain('noch nicht in Kraft (Stand 29.9.2026)');
   });
 });

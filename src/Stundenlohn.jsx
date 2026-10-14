@@ -98,7 +98,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
     switch (b.status) {
       // Tessin: gestufter Mindestlohn — «ok» heisst nur: über dem tiefsten Satz.
       case 'ok': return vorsatz + (e.kanton === 'TI'
-        ? t('stundenlohnView.ml_okTI', { grund, mindest: zahlText(b.mindestStunde), obergrenze: zahlText(TI_MINDESTLOHN_OBERGRENZE) })
+        ? t('stundenlohnView.ml_okTI', { grund, mindest: zahlText(b.mindestStunde), jahr: b.jahr, obergrenze: zahlText(TI_MINDESTLOHN_OBERGRENZE) })
         : t('stundenlohnView.ml_ok', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr }));
       case 'konformMit13': return vorsatz + t('stundenlohnView.ml_konformMit13', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName })
         // Die Basler Besonderheit (13. nur bei anteiliger Auszahlung) gehört nur zu Basel-Stadt.
