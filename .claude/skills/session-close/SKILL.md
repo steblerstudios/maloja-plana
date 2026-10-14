@@ -65,15 +65,17 @@ Wenn ein unfertiger Arbeitsfaden offen ist, den ein neuer Chat aufnehmen müsste
 an, `/handoff` zu laufen (den kopierbaren Übergabe-Block). Nicht aufdrängen — anbieten.
 Nicht selbst nachbauen; das ist `/handoff`s Aufgabe.
 
-## 6. Titel vorschlagen — archivieren tust DU
+## 6. Titel vorschlagen — archivieren nur auf dein Wort
 
 - Einen prägnanten Titel-Vorschlag für die Sitzung zeigen.
-- **Ehrlich (Wahrheits-Disziplin):** Der Assistent hat **kein Werkzeug**, um eine
-  Claude-Unterhaltung zu benennen oder zu archivieren — das ist immer von Stebler Studios Tipp in
-  der App. Also nicht mit „[j/N]" so tun, als könnte er es. Richtige Formulierung:
-  „Titel-Vorschlag: … — **du** benennst + archivierst in der App."
-- Archivieren ist der einzige unumkehrbar wirkende Schritt und bleibt bewusst bei
-  Stebler Studios: nie automatisch, nie vortäuschen, dass der Assistent es tut.
+- **Ehrlich (Wahrheits-Disziplin):** In der Desktop-App **kann** der Assistent eine Sitzung
+  benennen (`set_session_title`) und archivieren (`archive_session`, `"self"` für diese
+  Sitzung) — die App fragt Stebler Studios dabei jedes Mal um Erlaubnis. Er tut es **nur auf
+  ausdrückliches Wort** („archivieren"), nie automatisch. Ohne diese Werkzeuge (z. B. im
+  Terminal) gilt: „Titel-Vorschlag: … — **du** benennst + archivierst in der App."
+- Archivieren lässt sich in der App rückgängig machen (Archiv-Liste), wirkt aber wie ein
+  Abschluss: erst Export + Nebensätze in Dateien, dann archivieren. Exporte landen in
+  `~/Downloads` (ausserhalb der Sicherung) — nach `Claude outputs/transkripte/` verschieben.
 
 ---
 
