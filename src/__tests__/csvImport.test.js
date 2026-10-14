@@ -47,3 +47,22 @@ describe('processBudgetEntries (K106)', () => {
     expect(bestand).toEqual(kopie);
   });
 });
+
+// Sammel-Fix 14.10.2026, Punkt 3: Die CSV kennt die Einkommensart nicht. Ein neuer
+// Betrag mit der alten Art («netto» für einen Brutto-Betrag) liess Rechner falsch
+// vorbefüllen. Ändert der Import den Betrag, wird die Art wieder offen.
+describe('processBudgetEntries — incomeType', () => {
+  const mitArt = { ...bestand, incomeType: 'netto' };
+  it('geänderter Lohn macht die Einkommensart wieder offen', () => {
+    const out = processBudgetEntries([zeile(6100, 'income', 'income')], mitArt);
+    expect(out.monthlyIncome).toBe(6100);
+    expect(out.incomeType).toBeUndefined();
+    expect('incomeType' in out).toBe(true); // Schlüssel bleibt, damit das Zusammenführen die alte Art überschreibt
+  });
+  it('gleicher Lohn behält die Art', () => {
+    expect(processBudgetEntries([zeile(5200, 'income', 'income')], mitArt).incomeType).toBe('netto');
+  });
+  it('Import ohne Einkommenszeile behält die Art', () => {
+    expect(processBudgetEntries([zeile(1500, 'Miete')], mitArt).incomeType).toBe('netto');
+  });
+});
