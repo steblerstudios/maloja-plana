@@ -163,6 +163,7 @@ export const KKScanner = ({ palette, t, data, onSave, vorlaeufig }) => {
     setKKData({ insurer: '', cardNumber: '', holder: '', ahv: '', franchise: '', model: '' });
     setScanResult(null);
     setQRCode(null);
+    setAhvImQr(false);
     setGespeichert(true);
   };
 
