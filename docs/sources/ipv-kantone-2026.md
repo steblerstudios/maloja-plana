@@ -31,7 +31,7 @@ sind. Dieses Dokument ändert keinen Code.
 
 | Kt. | Kanton | Modell | Abbildbar? | Hauptquelle |
 |---|---|---|---|---|
-| ZH | Zürich | Referenzprämie (70 % der regionalen Durchschnittsprämie) minus Eigenanteil 8,4 % (Alleinstehende/Alleinerziehende) bzw. 10,5 % (Verheiratete) des massgebenden Einkommens; 3 Prämienregionen; Vermögensgrenze 150'000 / 300'000 | abbildbar | <https://svazurich.ch/unsere-produkte/weitere-produkte/krankenversicherung--kvg-/praemienverbilligung/leistung.html> |
+| ZH | Zürich | Referenzprämie (70 % der regionalen Durchschnittsprämie) minus Eigenanteil 8,8 % (Alleinstehende/Alleinerziehende) bzw. 11,0 % (Verheiratete) des massgebenden Einkommens (2026, nachträglich erhöht: RRB 980/2026); 3 Prämienregionen; Vermögensgrenze 150'000 / 300'000 | abbildbar | <https://svazurich.ch/unsere-produkte/weitere-produkte/krankenversicherung--kvg-/praemienverbilligung/leistung.html> |
 | BE | Bern | Stufentabelle: fester Monatsbetrag je Prämienregion (3), Altersgruppe und Einkommensstufe (bis 9'000 / 17'000 / 25'000 / 35'000; Familien bis 45'000); Kinder und junge Erwachsene in Ausbildung Pauschalbetrag | abbildbar | <https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Berechnungsschema%202026_de.pdf> |
 | LU | Luzern | Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind) | abbildbar | <https://srl.lu.ch/app/de/texts_of_law/866a> |
 | UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | gebaut (PR #464) | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
@@ -164,7 +164,7 @@ teuerste Region):
 ## ZH — Zürich
 
 **Beurteilung:** abbildbar
-**Modell (kurz):** Referenzprämie (70 % der regionalen Durchschnittsprämie) minus Eigenanteil 8,4 % (Alleinstehende/Alleinerziehende) bzw. 10,5 % (Verheiratete) des massgebenden Einkommens; 3 Prämienregionen; Vermögensgrenze 150'000 / 300'000
+**Modell (kurz):** Referenzprämie (70 % der regionalen Durchschnittsprämie) minus Eigenanteil 8,8 % (Alleinstehende/Alleinerziehende) bzw. 11,0 % (Verheiratete) des massgebenden Einkommens (seit RRB 980/2026, vorher 8,4 % / 10,5 %); 3 Prämienregionen; Vermögensgrenze 150'000 / 300'000
 **Zuständig / Weg:** SVA Zürich; Antragsformular wird automatisch zugestellt (Basis Steuerfaktoren 2023), sonst Online-Nachmeldung; Antrag 2026 bis spätestens 31. März 2027; provisorische Auszahlung von 80 %, definitive Abrechnung nach Steuerfaktoren 2026
 **Gültigkeit:** 2026 festgelegt (RRB Nr. 947/2025), Auszahlung provisorisch; laut SVA können die Berechnungsgrundlagen «bis zum Herbst 2026 noch angepasst werden» (2025 wurde rückwirkend gesenkt)
 
@@ -183,8 +183,8 @@ Formel (aus [1]): IPV = Referenzprämie − Eigenanteil × massgebendes Einkomme
 | Grösse | Wert | Quelle |
 |---|---|---|
 | Referenzprämie | 70 % der regionalen Durchschnittsprämie | [1], [2] |
-| Eigenanteil Alleinstehende/Alleinerziehende | 8,4 % des massg. Einkommens | [1], [2] |
-| Eigenanteil Verheiratete/eingetr. Partnerschaft | 10,5 % des massg. Einkommens | [1], [2] |
+| Eigenanteil Alleinstehende/Alleinerziehende | 8,8 % des massg. Einkommens (bis RRB 980/2026: 8,4 %) | [11] (vorher [1], [2]) |
+| Eigenanteil Verheiratete/eingetr. Partnerschaft | 11,0 % des massg. Einkommens (bis RRB 980/2026: 10,5 %) | [11] (vorher [1], [2]) |
 | Regionale Durchschnittsprämie 2026, Region 1 (Stadt Zürich) | Erw. 640 · junge Erw. (19–25) 459 · Kinder 154 CHF/Monat | [3] |
 | Regionale Durchschnittsprämie 2026, Region 2 | Erw. 584 · junge Erw. 420 · Kinder 140 CHF/Monat | [3] |
 | Regionale Durchschnittsprämie 2026, Region 3 | Erw. 544 · junge Erw. 389 · Kinder 130 CHF/Monat | [3] |
@@ -340,7 +340,7 @@ der Gesundheitsdirektion ([9] Disp. VI) gerechnet wurde, die nicht publiziert si
 nicht. Zudem ergibt die Zelle Einzel R1 junge Erw. 2 Kinder 71 210 statt 71 200: sie liegt knapp
 über der Familiengrenze und ist mit der Formel verträglich.
 **Folge im Code:** Für 2027 zeigt die App die **publizierte** Grenze (Tabelle als Datum), nie eine
-selbst gerechnete; für 2026 bleibt der Test «Grenze = Nullpunkt» (36 Zellen exakt). Der Test pinnt
+selbst gerechnete; für 2026 prüft der Test «Grenze = Nullpunkt» (bis 14.10.2026 exakt; seit RRB 980/2026 abgerundet auf CHF 10, siehe Nachtrag unten). Der Test pinnt
 damit die Sache — «angezeigt wird, was die SVA publiziert» — statt eine Toleranz zu raten.
 Bekannte Unschärfe, sobald 2027 rechnet: knapp unter der publizierten Grenze kann die Formel einen
 Betrag von wenigen Franken im Jahr ergeben, knapp darüber ebenso. Zu klären mit den definitiven
@@ -349,7 +349,7 @@ Werten aus dem September-Beschluss.
 **Für die Fachprüfung offen:**
 - Definitiver RRB September 2026 (Eigenanteil, Referenzprämie 2027) — sobald publiziert, Referenz
   und RDP 2027 eintragen; dann rechnet 2027 ohne weiteren Umbau.
-- Zelle 78 280 bei der SVA nachfragen (Tippfehler?).
+- Zelle 78 280 (2027, verheiratet R1 junge Erw. 1 Kind): SVA fragen — vermutlich 79 280. Im Code NICHT korrigiert (die App rechnet 2027 ohnehin noch nicht).
 - **Altersgruppe junge Erwachsene:** [10] führt für 2027 «Junge Erwachsene (Jahrgang 2002 bis
   2008)», [5] für 2026 «Jahrgang 2001 bis 2007» — das ist das Alter **im** Anspruchsjahr (19–25).
   Die App rechnet nach § 8 EG KVG das Alter am Ende des Vorjahres; damit gilt z. B. Jahrgang 2000
@@ -364,6 +364,39 @@ Werten aus dem September-Beschluss.
     https://svazurich.ch/dam/sva-dokumente/4000_ipv/4000_vl3_ipv_kundeninformation_2027.pdf — abgerufen 28.09.2026
 
 [1], [3], [5], [8] am 28.09.2026 erneut abgerufen; Werte 2026 unverändert, Beispiel [1] nennt weiter «CHF 5'776».
+
+### Nachtrag 14.10.2026 — Eigenanteil 2026 nachträglich erhöht (RRB 980/2026)
+
+**Der Satz 2026 oben (8,4 % / 10,5 %, RRB 947/2025) gilt nicht mehr.** Der Regierungsrat hat ihn am
+16.09.2026 für die definitive Bestimmung der IPV 2026 erhöht. Alle Zahlen heute (14.10.2026) selbst an der Quelle gelesen:
+
+[11] Regierungsrat Kanton Zürich, Auszug aus dem Protokoll, Sitzung vom 16. September 2026, Nr. 980
+     «Krankenversicherung (Prämienverbilligung 2027, Festlegung weiterer Eckwerte und des
+     Kantonsbeitrags, Prämienverbilligung 2026, Anpassung des Eigenanteilssatzes 2026)» (8 Seiten),
+     https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2026/980/RRB-2026-0980.pdf
+     — abgerufen 14.10.2026 (curl, pdftotext).
+     Dispositiv IV, wörtlich: «Die Eigenanteilssätze zur definitiven Bestimmung der Prämienverbilligung
+     2026 werden wie folgt geändert: a. Eigenanteil für Verheiratete und für eingetragene Partnerinnen oder
+     Partner: 11,0% (bisher: 10,5%). b. Eigenanteil für Einzelpersonen und Alleinerziehende: 8,8% (bisher: 8,4%).»
+     Erw. 4: «Die angepassten Eigenanteilssätze 2026 kommen erst bei der Festlegung der definitiven
+     IPV-Beiträge zur Anwendung, die gestützt auf die definitiven Steuerdaten 2026 erfolgen wird.»
+     (Ausgangsbeschluss RRB 947/2025, «vorbehältlich einer späteren Anpassung im Anspruchsjahr», § 3 Abs. 2 Satz 2 EG KVG.)
+[4'] SVA Zürich, «Einkommensgrenzen 2026» (Seite [4]) — am 14.10.2026 erneut abgerufen: alle 48 Zellen
+     (Einzelpersonen und Verheiratete, 3 Regionen, junge Erwachsene/Erwachsene, 0–3 Kinder) liegen neu, z. B. Region 1,
+     Erwachsene, keine Kinder: CHF 61'090 (vorher 64'000). Verheiratete Region 1 Erwachsene, keine Kinder: CHF 97'740
+     (vorher 102'400). Die Tabelle steht im Test `TABELLE_A` (src/config/__tests__/ipvZuerich.test.js) wörtlich.
+
+**Nicht nachgeführt bei der SVA:** das Rechenbeispiel auf «Prämienverbilligung: Leistung» [1] rechnet noch mit 8.4 %
+(und 5'776); die Seite nennt auch den alten Satz 2026 noch. Massgebend ist der RRB.
+
+**Neu: die Grenze ist nicht mehr «Summe ÷ Satz» auf den Franken.** Mit 8,8 % / 11,0 % liegt die SVA-Zahl in 40 von 48
+Zellen 1 bis 9 Franken unter dem Nullpunkt der Formel (Region 1 Erw.: 5'376 ÷ 0,088 = 61'090.91, SVA 61'090). In
+allen 48 Zellen ist die SVA-Zahl der **auf CHF 10 abgerundete** Nullpunkt (0 Ausnahmen). Das ist eine Beobachtung, kein
+Zitat — ob die SVA so rundet, ist offen (Frage an die SVA). Die App zeigt weiter den ungerundeten Nullpunkt (61'091), also höchstens 9 Franken
+über der SVA-Zahl; der Test pinnt «abgerundet auf 10 = SVA-Zahl» statt der früheren exakten Gleichheit.
+
+Folge im Rechner (von Hand gerechnet, Region 1, alleinstehend): Einkommen 40'000 → CHF 1'856 (vorher 2'016);
+62'000 → kein Anspruch (vorher 168).
 
 ---
 

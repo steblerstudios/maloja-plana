@@ -59,23 +59,23 @@ beforeAll(async () => {
 });
 afterEach(() => vi.useRealTimers());
 
-describe('Messpunkt: ZH, 20 000 Fr./Jahr — die Schätzung ist 308', () => {
-  it('ohne Verfügung zieht alles 308 ab (Abdruck aus #325/#326 unverändert)', () => {
+describe('Messpunkt: ZH, 20 000 Fr./Jahr — die Schätzung ist 301', () => {
+  it('ohne Verfügung zieht alles 301 ab (3 616 ÷ 12 nach RRB 980/2026; vorher 308)', () => {
     am(SEPT_2026);
     const d = person('ZH');
-    expect(ipvAbzug(d)).toEqual({ betrag: 308, grund: 'geschaetzt', frist: null });
-    expect(calculateMonthlyBudget(d, t).ipvRelief).toBe(308);
+    expect(ipvAbzug(d)).toEqual({ betrag: 301, grund: 'geschaetzt', frist: null });
+    expect(calculateMonthlyBudget(d, t).ipvRelief).toBe(301);
   });
 });
 
-describe('Altbestand ZH, Verfügung 100: überall 100, nicht 308', () => {
+describe('Altbestand ZH, Verfügung 100: überall 100, nicht 301', () => {
   it('ipvAbzug: höchstens der Verfügungsbetrag, eigener Grund', () => {
     am(SEPT_2026);
     const d = person('ZH', alteVerfuegung(100));
     expect(verfuegungZuordnung(d)).toBe('unzugeordnet');
     expect(ipvAbzug(d)).toEqual({ betrag: 100, grund: 'verfuegungUnzugeordnet', frist: null });
   });
-  it('Budget: 100 abgezogen, Hinweis sagt «höchstens die Verfügung», nicht «möglicherweise Anspruch ca. 308»', () => {
+  it('Budget: 100 abgezogen, Hinweis sagt «höchstens die Verfügung», nicht «möglicherweise Anspruch ca. 301»', () => {
     am(SEPT_2026);
     const b = calculateMonthlyBudget(person('ZH', alteVerfuegung(100)), t);
     expect(b.ipvRelief).toBe(100);
@@ -87,7 +87,7 @@ describe('Altbestand ZH, Verfügung 100: überall 100, nicht 308', () => {
     am(SEPT_2026);
     const html = kk(person('ZH', alteVerfuegung(100)));
     expect(html).toContain('kkLast.ipvRelief(100|');
-    expect(html).not.toContain('kkLast.ipvRelief(308|');
+    expect(html).not.toContain('kkLast.ipvRelief(301|');
   });
   it('Prämien-Beleg: 100, kein Stempel, «Verfügung ohne Jahr» statt «geschätzt»', () => {
     am(SEPT_2026);
@@ -98,27 +98,27 @@ describe('Altbestand ZH, Verfügung 100: überall 100, nicht 308', () => {
     expect(html).not.toContain('beleg.geschaetzt');
     expect(html).not.toContain('ipvStatus.stamp');
   });
-  it('Finanzübersicht: Kachel und Druck sagen 100, nicht 308', () => {
+  it('Finanzübersicht: Kachel und Druck sagen 100, nicht 301', () => {
     am(SEPT_2026);
     const d = person('ZH', alteVerfuegung(100));
     const k = ipvKachel(uebersicht(d));
     expect(k).toContain('CHF 100');
     expect(k).toContain('finanzUebersicht.ipvVerfuegungOhneJahr');
-    expect(k).not.toContain('CHF 308');
+    expect(k).not.toContain('CHF 301');
     const zeile = druckZeile(d);
     expect(zeile).toContain('CHF 100');
     expect(zeile).toContain('finanzUebersicht.ipvVerfuegungOhneJahr');
-    expect(zeile).not.toContain('CHF 308');
+    expect(zeile).not.toContain('CHF 301');
   });
 });
 
 describe('Altbestand: nie mehr als die Schätzung', () => {
-  it('Verfügung 500 > Schätzung 308 → 308', () => {
+  it('Verfügung 500 > Schätzung 301 → 301', () => {
     am(SEPT_2026);
     const d = person('ZH', alteVerfuegung(500));
-    expect(ipvAbzug(d)).toEqual({ betrag: 308, grund: 'verfuegungUnzugeordnet', frist: null });
-    expect(calculateMonthlyBudget(d, t).ipvRelief).toBe(308);
-    expect(praemienBelegState(d).verbilligung).toBe(308);
+    expect(ipvAbzug(d)).toEqual({ betrag: 301, grund: 'verfuegungUnzugeordnet', frist: null });
+    expect(calculateMonthlyBudget(d, t).ipvRelief).toBe(301);
+    expect(praemienBelegState(d).verbilligung).toBe(301);
   });
   it('Luzern nach der Anmeldefrist → 0, Grund der Frist', () => {
     am(SEPT_2026);

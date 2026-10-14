@@ -27,20 +27,20 @@ describe('K31 IPV-Rechner, Kanton Zürich', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  it('Einkommen 2 000/Monat, Stadt Zürich: 5 376 − 8.4 % × 24 000 = 3 360/Jahr, 280/Monat', () => {
+  it('Einkommen 2 000/Monat, Stadt Zürich: 5 376 − 8.8 % × 24 000 = 3 264/Jahr, 272/Monat (Satz nach RRB 980/2026)', () => {
     const html = render(profil(2000));
     expect(html).toContain('premium.eligible');
-    expect(html).toContain('CHF 280');
+    expect(html).toContain('CHF 272');
   // Seit 24.09.2026 mit Tausendertrennung aus utils/geld.js — vorher CHF-Beträge ohne ’ bzw. nach Gerätesprache.
-    expect(html).toContain('CHF 3’360');
-    expect(html).toContain(zahl(64000));
+    expect(html).toContain('CHF 3’264');
+    expect(html).toContain(zahl(61091));
     expect(html).not.toContain('ipv.orientierungOffen');
     expect(html).not.toContain(zahl(54900));
   });
 
-  it('über der Grenze: «Einkommen über Grenze» mit der amtlichen Grenze 64 000', () => {
+  it('über der Grenze: «Einkommen über Grenze» mit der Grenze 61 091 (Nullpunkt 5 376 ÷ 8,8 %; SVA: 61 090)', () => {
     const html = render(profil(6000));
-    expect(html).toContain('ipv.incomeAboveLimit(64000)');
+    expect(html).toContain('ipv.incomeAboveLimit(61091)');
     expect(html).not.toContain('premium.eligible');
   });
 

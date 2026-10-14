@@ -27,14 +27,14 @@ const REGIONEN = [1, 2, 3];
 // (älter 25 Jahre)», Spalten keine Kinder / 1 Kind / 2 Kinder / 3 Kinder.
 const TABELLE_A = {
   einzel: {
-    1: { j: [45900, 70500, 76700, 92100], e: [64000, 79400, 94800, 110200] },
-    2: { j: [42000, 70500, 70500, 84000], e: [58400, 72400, 86400, 100400] },
-    3: { j: [38900, 70500, 70500, 77900], e: [54400, 70500, 80400, 93400] },
+    1: { j: [43810, 70500, 73210, 87910], e: [61090, 75790, 90490, 105190] },
+    2: { j: [40090, 70500, 70500, 80180], e: [55740, 70500, 82470, 95830] },
+    3: { j: [37130, 70500, 70500, 74350], e: [51920, 70500, 76740, 89150] },
   },
   verheiratet: {
-    1: { j: [73440, 85760, 98080, 110400], e: [102400, 114720, 127040, 139360] },
-    2: { j: [67200, 78400, 89600, 100800], e: [93440, 104640, 115840, 127040] },
-    3: { j: [62240, 72640, 83040, 93440], e: [87040, 97440, 107840, 118240] },
+    1: { j: [70100, 81860, 93620, 105380], e: [97740, 109500, 121260, 133020] },
+    2: { j: [64140, 74830, 85520, 96210], e: [89190, 99880, 110570, 121260] },
+    3: { j: [59410, 70500, 79260, 89190], e: [83080, 93010, 102930, 112860] },
   },
 };
 
@@ -46,7 +46,12 @@ describe('K31 ZH-Modell gegen die amtliche Tabelle der Einkommensgrenzen 2026 [A
           it(`${stand}, Region ${region}, ${alter === 'j' ? 'junge Erwachsene' : 'Erwachsene'}, ${kinder} Kind(er): Grenze CHF ${grenze}`, () => {
             const personen = [...Array(stand === 'verheiratet' ? 2 : 1).fill(alter), ...Array(kinder).fill('k')];
             const r = ipvZuerichRechnen({ region, verheiratet: stand === 'verheiratet', personen, me: grenze });
-            expect(r.grenze).toBe(grenze);
+            // Seit RRB 980/2026 (11,0 / 8,8 %) ist die Formel (Summe ÷ Satz) nicht mehr auf den
+            // Franken genau: die SVA veröffentlicht die Grenze auf CHF 10 abgerundet (alle 48 Zellen,
+            // 40 davon weichen von der gerundeten Formel ab, 0 anders als durch Abrunden auf 10).
+            // Die App zeigt den ungerundeten Nullpunkt, 0–9 Franken über der SVA-Zahl.
+            expect(Math.floor(r.grenze / 10) * 10).toBe(grenze);
+            expect(r.grenze - grenze).toBeLessThan(10);
           });
         });
       }
@@ -168,35 +173,53 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
     expect(einzel(3, 0).total).toBeCloseTo(4569.6, 6); // 70 % × 544 × 12
   });
 
-  it('Berechnungsbeispiel [B], 20 000 alleinstehend, Region 1: Eigenanteil 1 680 wie amtlich; Betrag 3 696 statt der publizierten 4 096', () => {
+  it('Berechnungsbeispiel [B], 20 000 alleinstehend, Region 1: Eigenanteil 1 680 wie amtlich; Betrag 3 616 (nach RRB 980/2026) statt der publizierten 4 096', () => {
     // [B] wörtlich: «Referenzprämie (70 Prozent der regionalen Durchschnittsprämie, Region 1) CHF 5'776
     // · Abzüglich Eigenanteil (8.4 Prozent vom massgebenden Einkommen; CHF 20'000) - CHF 1'680 ·
     // Höhe der Prämienverbilligung 2026 CHF 4'096». 70 % der Durchschnittsprämie Region 1 [C]
     // sind 5 376, nicht 5 776 — und nur 5 376 erklärt die Grenze 64 000 in [A] (64 000 × 8.4 % = 5 376).
     // Das Beispiel enthält vermutlich einen Tippfehler; die App folgt Regel und Tabelle.
+    // Es rechnet ausserdem noch mit dem Satz vor RRB 980/2026: dort 8,4 % → 1 680; massgebend
+    // ist der nachträglich erhöhte Satz 8,8 % → 1 760, also 5 376 − 1 760 = 3 616.
     expect(0.084 * 20000).toBeCloseTo(1680, 6);
-    expect(einzel(1, 20000).total).toBeCloseTo(3696, 6);
+    expect(0.088 * 20000).toBeCloseTo(1760, 6);
+    expect(einzel(1, 20000).total).toBeCloseTo(3616, 6);
   });
 
   it('genau an der Grenze null, knapp darunter ein kleiner Betrag, darüber null (nie negativ)', () => {
-    expect(einzel(1, 64000).total).toBeCloseTo(0, 6);
-    expect(einzel(1, 63600).total).toBeCloseTo(33.6, 6); // 5 376 − 8.4 % × 63 600
-    expect(einzel(1, 64001).total).toBe(0);
+    expect(einzel(1, 5376 / 0.088).total).toBeCloseTo(0, 6); // Nullpunkt 61 090.91
+    expect(einzel(1, 60000).total).toBeCloseTo(96, 6); // 5 376 − 8.8 % × 60 000
+    expect(einzel(1, 61092).total).toBe(0);
     expect(einzel(3, 90000).total).toBe(0);
+  });
+
+  // RRB Nr. 980/2026 Disp. IV (16.09.2026): Eigenanteil 2026 nachträglich 8,8 % statt 8,4 %.
+  // Folge, von Hand gerechnet (Region 1, alleinstehend, Referenzprämie 5 376 = 70 % × 640 × 12):
+  //   40 000: 5 376 − 8,8 % × 40 000 (3 520) = 1 856   (mit dem alten Satz: 5 376 − 3 360 = 2 016)
+  //   62 000: 5 376 − 8,8 % × 62 000 (5 456) < 0 → kein Anspruch   (alt: 5 376 − 5 208 = 168)
+  it('Folge von RRB 980/2026: 40 000 → 1 856 (vorher 2 016); 62 000 → kein Anspruch (vorher 168)', () => {
+    expect(IPV_ZH.satz).toEqual({ verheiratet: 0.110, uebrige: 0.088 });
+    expect(einzel(1, 40000).total).toBeCloseTo(1856, 6);
+    expect(einzel(1, 62000).total).toBe(0);
+    // Gegenprobe mit dem alten Satz: so wären es 2 016 bzw. 168 gewesen
+    expect(5376 - 0.084 * 40000).toBeCloseTo(2016, 6);
+    expect(5376 - 0.084 * 62000).toBeCloseTo(168, 6);
+    // Verheiratete: 11,0 % statt 10,5 %, Region 1, zwei Erwachsene (10 752): 10 752 − 11 % × 80 000 = 1 952
+    expect(ipvZuerichRechnen({ region: 1, verheiratet: true, personen: ['e', 'e'], me: 80000 }).total).toBeCloseTo(1952, 6);
   });
 
   it('Alleinerziehend, 1 Kind, Region 1, Einkommen 60 000: Kind erhält den Mindestanspruch [D] + [E] § 7', () => {
     // Referenzprämien: Erw. 5 376, Kind 70 % × 154 × 12 = 1 293.60; Summe 6 669.60.
-    // Verbilligung Gruppe: 6 669.60 − 8.4 % × 60 000 = 1 629.60; Anteil Kind (§ 6 Abs. 4) = 316.07.
+    // Verbilligung Gruppe: 6 669.60 − 8.8 % × 60 000 = 1 389.60; Anteil Kind (§ 6 Abs. 4) = 269.60.
     // Mindestanspruch Kind: 80 % × 84 % × 154 × 12 = 1 241.856 > Anteil → Kind 1 241.856.
-    // Erwachsene/r: 1 629.60 × 5 376 / 6 669.60 = 1 313.53. Total 2 555.39.
+    // Erwachsene/r: 1 389.60 × 5 376 / 6 669.60 = 1 120.08. Total 2 361.94.
     const r = einzel(1, 60000, 1);
-    expect(r.total).toBeCloseTo(1629.6 * 5376 / 6669.6 + 0.8 * 0.84 * 154 * 12, 6);
+    expect(r.total).toBeCloseTo(1389.6 * 5376 / 6669.6 + 0.8 * 0.84 * 154 * 12, 6);
     expect(r.unklar).toBe(false);
   });
 
   it('Familiengrenze 70 500 [D]: bis dahin Mindestanspruch, knapp darüber rechnet die App nicht (Abbau 60 % je Kind oder je Familie offen)', () => {
-    expect(einzel(3, 70500, 1).total).toBeCloseTo(0.8 * 0.84 * 130 * 12, 6); // Formel allein wäre 0 (Nullpunkt 67 400)
+    expect(einzel(3, 70500, 1).total).toBeCloseTo(0.8 * 0.84 * 130 * 12, 6); // Formel allein wäre 0 (Nullpunkt 64 336)
     expect(einzel(3, 70500, 1).unklar).toBe(false);
     expect(einzel(3, 70501, 1).unklar).toBe(true);
     // Über 70 500 + Mindestanspruch / 60 % bindet der Mindestanspruch unter keiner Lesart mehr.
@@ -204,12 +227,12 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
   });
 
   it('über der Familiengrenze, aber Formel-Anteil des Kindes über dem Mindestanspruch: eindeutig', () => {
-    // Region 1, 3 Kinder, Einkommen 71 000: Gruppe 9 256.80 − 5 964 = 3 292.80, Anteil je Kind 460.14 < 1 241.86 → unklar
+    // Region 1, 3 Kinder, Einkommen 71 000: Gruppe 9 256.80 − 6 248 = 3 008.80, Anteil je Kind 420.50 < 1 241.86 → unklar
     expect(einzel(1, 71000, 3).unklar).toBe(true);
-    // Einkommen 20 000: unter der Familiengrenze, Anteil je Kind 1 002.13 < Mindest → Mindest gilt
+    // Einkommen 20 000: unter der Familiengrenze, Anteil je Kind 1 047.73 < Mindest → Mindest gilt
     const r = einzel(1, 20000, 3);
     expect(r.unklar).toBe(false);
-    expect(r.total).toBeCloseTo((9256.8 - 1680) * 5376 / 9256.8 + 3 * 0.8 * 0.84 * 154 * 12, 6);
+    expect(r.total).toBeCloseTo((9256.8 - 1760) * 5376 / 9256.8 + 3 * 0.8 * 0.84 * 154 * 12, 6);
   });
 
   it('Werte 2026 sichtbar im Datensatz', () => {
@@ -309,34 +332,39 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     versicherungen: kkPremium != null ? { kkPremium } : {},
   });
 
-  it('Einzelperson, Einkommen 0, Stadt Zürich: 5 376/Jahr, 448/Monat, Grenze 64 000', () => {
+  it('Einzelperson, Einkommen 0, Stadt Zürich: 5 376/Jahr, 448/Monat, Grenze 61 091 (SVA: 61 090)', () => {
     const r = calculateIPV(person());
     expect(r).toMatchObject({ belegt: true, eligible: true, annual: 5376, amount: 448, maxAnnual: 5376, reductionPercent: 100, region: 1, jahr: 2026 });
-    expect(r.cantonData.maxIncome).toBe(64000);
+    expect(r.cantonData.maxIncome).toBe(61091); // 5 376 ÷ 8,8 % = 61 090.91; SVA veröffentlicht 61 090 (abgerundet)
     expect(r.noteKey).toBe('ipv.noteApplySva');
   });
 
-  it('Einzelperson Winterthur (Region 2), 2 500/Monat: 4 905.60 − 8.4 % × 30 000 = 2 385.60', () => {
+  it('Einzelperson Winterthur (Region 2), 2 500/Monat: 4 905.60 − 8.8 % × 30 000 = 2 265.60', () => {
     const r = calculateIPV(person({ monthlyIncome: 2500, plz: '8400' }));
-    expect(r).toMatchObject({ annual: 2386, amount: 199, region: 2 });
-    expect(r.cantonData.maxIncome).toBe(58400);
+    expect(r).toMatchObject({ annual: 2266, amount: 189, region: 2 });
+    expect(r.cantonData.maxIncome).toBe(55745); // 4 905.60 ÷ 8,8 %; SVA: 55 740 (abgerundet)
   });
 
-  it('genau an der Grenze (5 333.33 × 12 = 64 000): kein Anspruch, Grenze genannt', () => {
-    const r = calculateIPV(person({ monthlyIncome: 64000 / 12 }));
-    expect(r).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: 64000 } });
+  it('an der Grenze (61 091 = 5 090.92 × 12): kein Anspruch, Grenze genannt', () => {
+    const r = calculateIPV(person({ monthlyIncome: 61091 / 12 }));
+    expect(r).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: 61091 } });
   });
 
-  it('knapp unter der Grenze (5 300/Monat = 63 600): 34/Jahr, 3/Monat', () => {
-    expect(calculateIPV(person({ monthlyIncome: 5300 }))).toMatchObject({ eligible: true, annual: 34, amount: 3 });
+  it('unter der Grenze (5 000/Monat = 60 000): 96/Jahr, 8/Monat', () => {
+    expect(calculateIPV(person({ monthlyIncome: 5000 }))).toMatchObject({ eligible: true, annual: 96, amount: 8 });
+  });
+
+  it('RRB 980/2026 in der App: 40 000/Jahr (3 333.33/Monat) → 1 856; 62 000/Jahr → kein Anspruch', () => {
+    expect(calculateIPV(person({ monthlyIncome: 40000 / 12 }))).toMatchObject({ eligible: true, annual: 1856 });
+    expect(calculateIPV(person({ monthlyIncome: 62000 / 12 }))).toMatchObject({ eligible: false, amount: 0 });
   });
 
   it('Alleinerziehend mit 2 Kindern, Uster (Region 2), 4 000/Monat: Mindestanspruch der Kinder', () => {
-    // Referenzprämien: 4 905.60 + 2 × 70 % × 140 × 12 (1 176) = 7 257.60; Gruppe 7 257.60 − 8.4 % × 48 000 = 3 225.60
-    // Erwachsene/r 3 225.60 × 4 905.60 / 7 257.60 = 2 180.27; Kinder je 80 % × 84 % × 140 × 12 = 1 128.96
+    // Referenzprämien: 4 905.60 + 2 × 70 % × 140 × 12 (1 176) = 7 257.60; Gruppe 7 257.60 − 8.8 % × 48 000 = 3 033.60
+    // Erwachsene/r 3 033.60 × 4 905.60 / 7 257.60 = 2 050.45; Kinder je 80 % × 84 % × 140 × 12 = 1 128.96
     const r = calculateIPV(person({ monthlyIncome: 4000, plz: '8610', children: [{ age: 4 }, { age: 9 }] }));
-    expect(r).toMatchObject({ eligible: true, annual: Math.round(3225.6 * 4905.6 / 7257.6 + 2 * 1128.96), region: 2 });
-    expect(r.cantonData.maxIncome).toBe(86400); // [A] Region 2, Erwachsene, 2 Kinder
+    expect(r).toMatchObject({ eligible: true, annual: Math.round(3033.6 * 4905.6 / 7257.6 + 2 * 1128.96), region: 2 });
+    expect(r.cantonData.maxIncome).toBe(82473); // 7 257.60 ÷ 8,8 %; [A] Region 2, Erwachsene, 2 Kinder: 82 470 (abgerundet)
   });
 
   it('Bruttoprämie tiefer als die Referenzprämie: höchstens die Prämie (§ 4 Abs. 3 EG KVG)', () => {
@@ -344,8 +372,8 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
   });
 
   it('Vermögen: 10 % über dem Freibetrag 75 000 zählt als Einkommen; über 150 000 kein Betrag', () => {
-    // 100 000 Vermögen → + 2 500 massgebendes Einkommen → 5 376 − 210 = 5 166
-    expect(calculateIPV(person({ finanzen: { savingsAccount: 100000 } })).annual).toBe(5166);
+    // 100 000 Vermögen → + 2 500 massgebendes Einkommen → 5 376 − 8,8 % × 2 500 (220) = 5 156
+    expect(calculateIPV(person({ finanzen: { savingsAccount: 100000 } })).annual).toBe(5156);
     expect(calculateIPV(person({ finanzen: { savingsAccount: 150001 } }))).toMatchObject({ belegt: false, amount: null, offen: 'vermoegen' });
   });
 
@@ -372,8 +400,8 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
       mitAttrappe2027(() => {
         vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T23:59:00'));
         const alt = calculateIPV(person({ monthlyIncome: 2500 }));
-        expect(alt).toMatchObject({ jahr: 2026, annual: 2856 }); // 5 376 − 8.4 % × 30 000
-        expect(alt.cantonData.maxIncome).toBe(64000);
+        expect(alt).toMatchObject({ jahr: 2026, annual: 2736 }); // 5 376 − 8.8 % × 30 000
+        expect(alt.cantonData.maxIncome).toBe(61091);
         vi.setSystemTime(new Date('2027-01-01T00:01:00'));
         const neu = calculateIPV(person({ monthlyIncome: 2500 }));
         expect(neu).toMatchObject({ jahr: 2027, annual: 2556 }); // 5 376 − 9.4 % × 30 000 (Attrappe)
@@ -407,18 +435,19 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
   // Hier stand bis zum 20.09. `pension3a: 7258 → 4766`, also die volle Aufrechnung ON TOP.
   // Das war eine Doppelzählung und kostete bei 48 000 Basiseinkommen 610.–/Jahr.
   // Nachgerechnet gegen den Rechenkern: Referenzprämie 0,7 × 640 × 12 = 5 376, Eigenanteil
-  // 8,4 %. Bei 48 000 also 5 376 − 4 032 = 1 344 — mit der alten Doppelzählung nur 734.33.
+  // 8,8 % (seit RRB 980/2026; vorher 8,4 %). Bei 48 000 also 5 376 − 4 224 = 1 152 — mit der
+  // alten Doppelzählung nur 513.
   // 🛑 Die 7'258 hier NICHT durch die Konstante aus src/data/saeule3a.js ersetzen: Sie trägt
-  // die Rechnung des Kommentars bis zur 734 unten. Ändert sich das Maximum, wäre 734 nicht
+  // die Rechnung des Kommentars bis zur 513 unten. Ändert sich das Maximum, wäre 513 nicht
   // mehr «der alte, zu tiefe Wert» — der Wächter prüfte dann eine Zahl ohne Bedeutung.
   it('Säule 3a zählt NICHT zusätzlich zum Nettoeinkommen', () => {
     const mitDreiA = calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 7258 } })).annual;
     const ohneDreiA = calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 0 } })).annual;
-    // 48 000 × 8,4 % = 4 032 → 5 376 − 4 032 = 1 344, in beiden Fällen
-    expect(mitDreiA).toBe(1344);
-    expect(ohneDreiA).toBe(1344);
-    // und der alte, zu tiefe Wert kommt nicht zurück (1 344 − 8,4 % × 7 258 = 734.33 → 734)
-    expect(mitDreiA).not.toBe(734);
+    // 48 000 × 8,8 % = 4 224 → 5 376 − 4 224 = 1 152, in beiden Fällen
+    expect(mitDreiA).toBe(1152);
+    expect(ohneDreiA).toBe(1152);
+    // und der alte, zu tiefe Wert kommt nicht zurück (1 152 − 8,8 % × 7 258 = 513.3 → 513)
+    expect(mitDreiA).not.toBe(513);
   });
 
   // ⚠️ GRENZFALL, bewusst festgehalten statt stillschweigend in Kauf genommen.
@@ -431,7 +460,7 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
   });
 
   it('Renten zählen zum massgebenden Einkommen', () => {
-    expect(calculateIPV(person({ finanzen: { ahvRente: 2500 } })).annual).toBe(2856); // 5 376 − 8.4 % × 30 000
+    expect(calculateIPV(person({ finanzen: { ahvRente: 2500 } })).annual).toBe(2736); // 5 376 − 8.8 % × 30 000
   });
 
   it('PLZ mit mehreren Regionen: mit Ortsname eindeutig, ohne Ortsname keine Zahl', () => {

@@ -16,6 +16,12 @@ aber 70 % der regionalen Durchschnittsprämie, also 0,7 × 640 × 12 = **5'376**
 auch die publizierte Einkommensgrenze von 64'000 (5'376 ÷ 8,4 %). Dasselbe gilt für 459 → 45'900
 und für 2 × 5'376 → 102'400. Drei publizierte Tabellenwerte stützen 5'376, keiner die 5'776.
 
+*Nachtrag 14.10.2026:* Seit RRB 980/2026 gilt für 2026 der Eigenanteil 8,8 % / 11,0 %; die Grenzen lauten neu
+(Region 1: 61'090 = 5'376 ÷ 8,8 %, abgerundet; verheiratet 97'740). Das Beispiel auf «Leistung» rechnet noch mit 8.4 %.
+Zusätzliche Frage: Rundet die SVA die Einkommensgrenzen auf CHF 10 ab? (Alle 48 Zellen 2026 sind der auf 10 abgerundete
+Nullpunkt; die App zeigt den ungerundeten.) Bei den Grenzen 2027: Zelle verheiratet Region 1, junge Erwachsene, 1 Kind
+78'280 — vermutlich 79'280, SVA fragen.
+
 **Frage:** Ist die Zahl im Beispiel ein Fehler, oder gibt es einen Grund, den wir übersehen?
 
 **Zwei Punkte, die sich mit derselben Antwort klären lassen:**

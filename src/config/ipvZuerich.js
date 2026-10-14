@@ -8,7 +8,8 @@
 //   § 6 Abs. 3/4: Referenzprämien der Gruppe zusammengezählt, Verbilligung nach ihrer Höhe verteilt.
 //   § 7 Abs. 1: Mindestanspruch (Art. 65 Abs. 1bis KVG) nicht eingehalten → Anteil erhöht.
 //   SVA Zürich, «Prämienverbilligung: Leistung»: Referenzprämie 2026 = 70 % der regionalen
-//     Durchschnittsprämie; Eigenanteil 2026 10.5 % (Verheiratete) / 8.4 % (übrige).
+//     Durchschnittsprämie. Eigenanteil 2026 dort noch 10.5 % / 8.4 % — massgebend ist aber
+//     RRB Nr. 980/2026 (16.09.2026) Disp. IV: 11,0 % (Verheiratete) / 8,8 % (übrige), abgerufen 14.10.2026.
 //   SVA Zürich, «Regionale Durchschnittsprämien», Tabelle 2026 (CHF pro Monat).
 //   RRB Nr. 297/2025, Dispositiv I–IV: Vermögensgrenzen, massgebende Prämie 84 % der RDP,
 //     Familiengrenze 70 500 (nur minderjährige Kinder), Abzugsquote 60 % darüber.
@@ -26,7 +27,9 @@ import {
 export const IPV_ZH = {
   jahr: 2026,
   referenz: 0.7,
-  satz: { verheiratet: 0.105, uebrige: 0.084 },
+  // Eigenanteil 2026: RRB Nr. 980/2026 vom 16.09.2026, Disp. IV — nachträglich erhöht auf 11,0 % /
+  // 8,8 % (vorher 10,5 % / 8,4 % nach RRB 947/2025); gilt bei der definitiven Berechnung.
+  satz: { verheiratet: 0.110, uebrige: 0.088 },
   // e = Erwachsene ab 26, j = junge Erwachsene 19–25, k = Kinder 0–18
   rdp: { 1: { e: 640, j: 459, k: 154 }, 2: { e: 584, j: 420, k: 140 }, 3: { e: 544, j: 389, k: 130 } },
   massgebend: 0.84,

@@ -125,7 +125,7 @@ export const CANTONAL_IPV = {
   // ZH (K31): eigenes Modell in config/ipvZuerich.js; Grenze und Höchstbetrag hängen von
   // Prämienregion und Haushalt ab, darum hier keine Einzelwerte (die Musterwerte sind entfernt).
   ZH: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'ZH' },
-    beleg: { quelle: 'EG KVG ZH (LS 832.01) · RRB 297/2025, 947/2025 · SVA Zürich — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-19' } },
+    beleg: { quelle: 'EG KVG ZH (LS 832.01) · RRB 297/2025, 947/2025, 980/2026 (Eigenanteil 2026 erhöht) · SVA Zürich — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-10-14' } },
   // BE (K31): eigenes Modell in config/ipvBern.js (Stufentabelle); Grenze und Höchstbetrag
   // hängen von Prämienregion und Haushalt ab, darum hier keine Einzelwerte.
   BE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
