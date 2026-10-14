@@ -2516,7 +2516,7 @@ export default {
       heartfelt7: 'La più grande organizzazione giovanile della Svizzera (scout).',
       heartfelt8: 'Rifugio, affido animali e consulenza per la protezione degli animali nella regione di Basilea.',
       heartfelt9: 'Assistenza a domicilio, consulenza previdenziale e accompagnamento empatico in caso di decesso, con sede a Münchenstein.',
-      heartfelt10: 'l’app per le cose da fare (App Store, Rau Media) — Un’app per le attività minimalista e tranquilla. Nessun account, nessun tracciamento, i dati restano sul dispositivo.',
+      heartfelt10: 'l’app per le cose da fare (App Store, Rau Media) — Un’app per le attività minimalista e tranquilla. Secondo il produttore nessun account, nessun tracciamento, i dati restano sul dispositivo.',
       heartfelt11: 'La più antica scuola svizzera per cani guida — alleva e addestra cani guida e d’assistenza.',
       heartfelt12: 'Scuola per cani guida a Liestal — mobilità e autonomia per le persone ipovedenti.',
       heartfelt13: 'Lavoro corporeo, movimento ed energetico — ritrovare la propria vitalità.',
