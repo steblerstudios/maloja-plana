@@ -610,6 +610,10 @@ const AppInner = ({ demo }) => {
   // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
   // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
   const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
+  // Beispiel betreten (Fusszeile und Dashboard-Kachel): Demo-Datensatz erst beim Betreten laden;
+  // demoMode wird erst gesetzt, wenn er da ist (kein Render-Fenster mit demoMode ohne demoData —
+  // sonst zeigte das «Beispiel» die echten Daten). Das Beispiel beginnt ohne Dokumente (K24).
+  const beispielBetreten = () => import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); });
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); beispielVerlassen(); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
   // Guard auf nicht-leeren Stand: ein leeres Sandbox-Objekt ({}) ist truthy, würde
@@ -1133,10 +1137,7 @@ const AppInner = ({ demo }) => {
       onClick: () => {
         if (demo) demo.onLeave();
         else if (demoMode) { beispielVerlassen(); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
-        // Demo-Datensatz erst beim Betreten laden; demoMode wird erst gesetzt, wenn er da
-        // ist (kein Render-Fenster, in dem demoMode aktiv aber demoData noch null wäre).
-        // Das Beispiel beginnt ohne Dokumente — die eigenen bleiben aussen vor (K24).
-        else { import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }); }
+        else beispielBetreten();
       },
       style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
@@ -1485,7 +1486,7 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
           simpleView,
           demoMode,
-          onEnterDemo: () => { setDemoDocs([]); setDemoMode(true); setView('dashboard'); },
+          onEnterDemo: beispielBetreten,
           onLeaveDemo: beispielVerlassen,
           isTablet,
           isMobile,
