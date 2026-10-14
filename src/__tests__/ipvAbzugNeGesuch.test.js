@@ -106,8 +106,9 @@ describe('Wächter · gesuchNoetig', () => {
   };
   lauf(SRC);
   const code = (p) => fs.readFileSync(p, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`])\/\/.*$/gm, '$1');
-  it('nur config/ipvNeuchatel.js (setzt) und data/ipvAbzug.js (liest)', () => {
+  it('nur config/ipvNeuchatel.js und config/ipvZug.js (setzen) und data/ipvAbzug.js (liest)', () => {
     const treffer = quellen.filter((p) => /\bgesuchNoetig\b/.test(code(p))).map((p) => path.relative(SRC, p).split(path.sep).join('/'));
-    expect(treffer.sort()).toEqual(['config/ipvNeuchatel.js', 'data/ipvAbzug.js']);
+    // ZG (28.09.2026): das Gesuch bis 30. April ist Pflicht (§ 11 IPVG) — gleicher Weg, eigener Satz.
+    expect(treffer.sort()).toEqual(['config/ipvNeuchatel.js', 'config/ipvZug.js', 'data/ipvAbzug.js']);
   });
 });

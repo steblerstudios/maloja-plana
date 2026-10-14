@@ -78,8 +78,9 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     showFairness && ipvAmount > 0 && React.createElement('div', { style: { fontSize: text.sm, color: palette.skyDeep, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
       t('kkLast.ipvRelief', { ipv: ipvAmount, share: netShareRounded })
     ),
-    // Nach der Anmeldefrist (LU, FR): statt der Abzugszeile der Grund, warum nichts abgezogen ist.
-    // Der Text ist kantonal — das Ergebnis nennt seinen Schlüssel; ohne ihn gilt der Luzerner.
+    // Nach der Anmeldefrist (LU, FR, GE, OW, NW, TI, SH, AR): statt der Abzugszeile der Grund, warum
+    // nichts abgezogen ist. Welcher Text, sagt fristHinweisKey (data/ipvAbzug.js): der Schlüssel des
+    // Kantons, der Luzerner nur für LU, sonst ein neutraler.
     showFairness && fristVorbei && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
       t(fristHinweisKey(ipv), abzug.frist)
     ),

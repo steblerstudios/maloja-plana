@@ -278,7 +278,8 @@ export const SONDERSEITEN = [
       'Tgi che stat davos Maloja Plana, tge datas che resultan cun la consultaziun da questas paginas e per tge ch’ils calculaturs expressivamain na respundan betg.',
     brotkrume: 'Chaussas giuridicas',
     vorspann:
-      'Questa pagina vala per malojaplana.ch e per las paginas explicativas publicas. Per l’applicaziun sezza vala ultra da quai la decleraziun detagliada davart la protecziun da datas, che stat en l’applicaziun sut «Protecziun da datas e chaussas giuridicas» — era ella senza code d’access.',
+      // TODO(rm): provisorisch — Gegenlese (Satz «verbindliche Fassung» neu, 28.09.2026)
+      'Questa pagina vala per malojaplana.ch e per las paginas explicativas publicas. Per l’applicaziun sezza vala ultra da quai la decleraziun detagliada davart la protecziun da datas, che stat en l’applicaziun sut «Protecziun da datas e chaussas giuridicas» — era ella senza code d’access. Liantas èn las versiuns publitgadas: questa pagina per malojaplana.ch e las paginas explicativas, il text en l’applicaziun per l’applicaziun. Las versiuns da lavur en il code da funtauna public (docs/legal) èn sbozs e cumprova da l’origin, betg la versiun lianta.',
     abschnitte: [
       {
         titel: 'Purschidra',

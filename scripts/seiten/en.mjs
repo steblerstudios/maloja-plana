@@ -269,7 +269,7 @@ export const SONDERSEITEN = [
       'Who is behind Maloja Plana, what data arises when these pages are accessed, and what the calculators expressly do not answer for.',
     brotkrume: 'Legal notice',
     vorspann:
-      'This page applies to malojaplana.ch and the public explanatory pages. For the application itself, the detailed data protection statement additionally applies, which is in the app under “Data protection and legal” — also without an access code.',
+      'This page applies to malojaplana.ch and the public explanatory pages. For the application itself, the detailed data protection statement additionally applies, which is in the app under “Data protection and legal” — also without an access code. The published versions are the binding ones: this page for malojaplana.ch and the explanatory pages, the text in the app for the application. The working copies in the public source code (docs/legal) are drafts and a record of provenance, not the binding version.',
     abschnitte: [
       {
         titel: 'Provider',

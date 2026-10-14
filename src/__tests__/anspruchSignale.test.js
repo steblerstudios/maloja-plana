@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { anspruchSignale, anspruchSignaleListe } from '../data/anspruchSignale.js';
+import { musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 
 describe('anspruchSignale: gedeckte Ansprüche → Lebensbaum-Ast', () => {
   it('leeres Profil trägt kein Signal (kein Ring ohne Anspruch)', () => {
@@ -9,13 +10,18 @@ describe('anspruchSignale: gedeckte Ansprüche → Lebensbaum-Ast', () => {
   });
 
   it('IPV bei Kanton + Einkommen + erfasster Prämie → Ast „versicherungen" (E9: prüfenswert, ohne Grenzvergleich)', () => {
-    const data = { basis: { canton: 'BS' }, finanzen: { monthlyIncome: 3000 }, versicherungen: { kkPremium: 400 } };
-    const sig = anspruchSignale(data);
-    expect(sig.versicherungen).toEqual([{ key: 'ipv', view: 'premium' }]);
-    // unbelegter Kanton: auch bei hohem Einkommen, weil die Grenze nicht belegt ist
-    expect(anspruchSignale({ ...data, finanzen: { monthlyIncome: 30000 } }).versicherungen).toEqual([{ key: 'ipv', view: 'premium' }]);
-    // ohne Prämie kein Signal
-    expect(anspruchSignale({ ...data, versicherungen: {} }).versicherungen).toBeUndefined();
+    // ⟨28.09.2026, Integration BS⟩ bis hier stand BS als unbelegter Kanton — BS ist seither belegt.
+    // Synthetischer Test-Kanton «TT» (Muster-Helfer), damit kein künftiges Kantonsmodell diesen Test umdeutet.
+    const zurueck = musterKanton('TT');
+    try {
+      const data = { basis: { canton: 'TT' }, finanzen: { monthlyIncome: 3000 }, versicherungen: { kkPremium: 400 } };
+      const sig = anspruchSignale(data);
+      expect(sig.versicherungen).toEqual([{ key: 'ipv', view: 'premium' }]);
+      // unbelegter Kanton: auch bei hohem Einkommen, weil die Grenze nicht belegt ist
+      expect(anspruchSignale({ ...data, finanzen: { monthlyIncome: 30000 } }).versicherungen).toEqual([{ key: 'ipv', view: 'premium' }]);
+      // ohne Prämie kein Signal
+      expect(anspruchSignale({ ...data, versicherungen: {} }).versicherungen).toBeUndefined();
+    } finally { zurueck(); }
   });
 
   it('ohne Kanton kein IPV-Signal (kein erfundener Betrag)', () => {

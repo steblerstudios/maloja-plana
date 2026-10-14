@@ -80,7 +80,7 @@ Kacheln ohne unbelegten Frankenbetrag. Hier stehen nur die **Entscheide**.
 | Karten **Stufe 1**: Link «In OpenStreetMap öffnen» | §14 | Muster `ExternerLink` |
 | Herzensempfehlungen: pflegewegweiser.ch und David-Rau-App prüfen und ergänzen (die übrigen 26 sind drin) | §9 | je Angebot prüfen, ob es noch besteht |
 | Schwarz-Weiss-Modus: ist der vorhandene Graustufen-Schalter das Gewünschte? | §4 | nur ansehen und entscheiden |
-| **Schulden & Rechnungen gesamthaft + Dataviz** (nächste Sitzung, Wunsch 27.09. abends) | §5 | #408 (Mahnung, Schuldenmanager); Design zuerst, Mockup |
+| ~~**Schulden & Rechnungen gesamthaft + Dataviz**~~ *(Dataviz A+B+C gebaut 27.09., #420/#422)* → **zweite Runde 05.10.:** Rechnungen ↔ Schulden, Betreibung/Verlustscheine — Entwurf [`superpowers/specs/2026-10-05-schulden-rechnungen-design.md`](superpowers/specs/2026-10-05-schulden-rechnungen-design.md) | §5 | Entwurf lesen, dann Bauplan; vier Fachfragen am Wortlaut |
 
 *Korrektur 24.09. spätabends, am Code nachgesehen:* «Vor dem Wechsel prüfen» (KVG und
 Zusatz, `checkIntro`) und «Das verlässt dein Gerät» (`ExportVorschau` in elf Ansichten) sind
@@ -334,6 +334,9 @@ Abschiedsagentur, plaant).
   - **Entscheid 27.09.:** Der Brief «nur Gebühren» nennt die Zahlung der Forderung; der Hinweis sagt
     offen, dass das eine Anerkennung ist (OR 135 Ziff. 1).
 - 🌱 **Schulden & Rechnungen gesamthaft anschauen — und sauberer, visueller darstellen (Dataviz)**
+  ⟨Nachtrag 05.10.2026: A+B+C gebaut und gemergt 27.09. (#420, #422), nicht live. Offen geblieben
+  sind die Rechnungen (Arztbelege im KVG-Tracker ohne Verbindung zum Schuldenmanager) sowie Betreibung
+  und Verlustscheine — dafür der Entwurf `docs/superpowers/specs/2026-10-05-schulden-rechnungen-design.md`.⟩
   *⟨Stebler Studios 27.09. abends: «danach uns schulden und rechnungen gerne komplett anschauen und
   auch ein wenig mit dataviz dinge sauberer und visueller darstellen»⟩* — der ganze Schuldenmanager
   (Übersicht, Schulden, Abbau-Plan, Betreibung, Verlustscheine) plus Mahnung-Ablauf als eine Runde:

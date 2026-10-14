@@ -273,7 +273,7 @@ export const SONDERSEITEN = [
       'Qui se trouve derrière Maloja Plana, quelles données sont collectées lors de la consultation de ces pages et ce dont les calculateurs ne répondent expressément pas.',
     brotkrume: 'Mentions légales',
     vorspann:
-      'Cette page vaut pour malojaplana.ch et les pages d’explication publiques. Pour l’application elle-même s’applique en outre la déclaration de protection des données détaillée, qui figure dans l’application sous « Protection des données et mentions légales » — elle aussi sans code d’accès.',
+      'Cette page vaut pour malojaplana.ch et les pages d’explication publiques. Pour l’application elle-même s’applique en outre la déclaration de protection des données détaillée, qui figure dans l’application sous « Protection des données et mentions légales » — elle aussi sans code d’accès. Font foi les versions publiées : cette page pour malojaplana.ch et les pages d’explication, le texte dans l’application pour l’application. Les versions de travail dans le code source public (docs/legal) sont des brouillons et une trace d’origine, non la version qui fait foi.',
     abschnitte: [
       {
         titel: 'Fournisseuse',

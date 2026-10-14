@@ -1,5 +1,9 @@
 # Nutzungsbedingungen — Maloja Plana
 
+> **Nicht die verbindliche Fassung.** Verbindlich ist der veröffentlichte Text «Nutzung» in der App
+> (`src/i18n/*.js`, `legal.terms`); für Website und Erklärseiten gilt `malojaplana.ch/rechtliches/`.
+> Diese Datei ist Arbeitsfassung und Herkunftsnachweis (festgehalten 28.09.2026, Schutz-Durchgang).
+
 **Stand: 16.09.2026** (erstellt Juni 2026; Nachführung am Ende)
 
 ---

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein } from '../schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, prioritizeDebts, CATEGORY_TIER, PLAN_MAX_MONATE, istUeberfaellig, formatVerlustschein, verjaehrungVerlustschein } from '../schuldenCalc.js';
 import { alsIsoDatum } from '../utils/fristen.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -136,6 +136,27 @@ describe('prioritizeDebts (Quelle: schuldeninfo.ch 2011, Caritas)', () => {
     ]);
     expect(r.map(d => d.tier)).toEqual([1, 2, 3]);
   });
+  it('Arzt-/Labor-/Spitalrechnung (gesundheit) ist Stufe 3, Krankenkasse bleibt Stufe 1', () => {
+    expect(prioritizeDebts([{ category: 'gesundheit', amount: 400, status: 'open' }])[0].tier).toBe(3);
+    expect(prioritizeDebts([{ category: 'krankenkasse', amount: 400, status: 'open' }])[0].tier).toBe(1);
+  });
+  it('CATEGORY_TIER führt gesundheit ausdrücklich (nicht nur über den Rückfall)', () => {
+    expect(Object.keys(CATEGORY_TIER)).toContain('gesundheit');
+    expect(CATEGORY_TIER.gesundheit).toBe(3);
+  });
+  it('gesundheit steht hinter Miete, Krankenkasse und Steuern', () => {
+    const r = prioritizeDebts([
+      { id: 1, category: 'gesundheit', amount: 9999, status: 'open' },
+      { id: 2, category: 'steuern', amount: 1, status: 'open' },
+      { id: 3, category: 'krankenkasse', amount: 1, status: 'open' },
+    ]);
+    expect(r.map(d => d.id)).toEqual([3, 2, 1]);
+  });
+  it('Hinweistexte wörtlich nach Spec (KVG 42 Abs. 1 / KVG 64a)', () => {
+    expect(de.schulden.catGesundheit).toBe('Arzt, Labor, Spital');
+    expect(de.schulden.catHilfe.gesundheit.sie).toBe('Rechnungen von Arztpraxis, Labor oder Spital, die Sie direkt erhalten, schulden Sie dem Leistungserbringer; Ihre Krankenkasse erstattet Ihnen den versicherten Teil (KVG Art. 42 Abs. 1). Reichen Sie die Rechnung darum bei der Krankenkasse ein, falls noch nicht geschehen. Im Abbau-Plan steht sie bei den übrigen Schulden.');
+    expect(de.schulden.catHilfe.krankenkasse.sie).toBe('Prämien sowie Franchise und Selbstbehalt, die Ihnen die Krankenkasse in Rechnung stellt (KVG Art. 64a).');
+  });
 });
 
 describe('Texte Abbau-Plan, Steuern und Raten (27.09.2026)', () => {
@@ -198,8 +219,13 @@ describe('istUeberfaellig — eine Regel für Übersicht und Karte', () => {
 });
 
 describe('Betreibung und Verlustschein — Datum und Status lesbar', () => {
-  it('neue Verlustscheine tragen ein ISO-Datum', () => {
-    expect(formatVerlustschein({}).date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  it('Verlustscheine behalten ein erfasstes ISO-Datum', () => {
+    expect(formatVerlustschein({ date: '2021-03-15' }).date).toBe('2021-03-15');
+  });
+  it('ohne Datum bleibt das Datum leer — nie «heute» (daraus würde eine falsche Verjährung)', () => {
+    expect(formatVerlustschein({}).date).toBe('');
+    expect(formatVerlustschein({ date: '' }).date).toBe('');
+    expect(verjaehrungVerlustschein(formatVerlustschein({}))).toBeNull();
   });
   it('alte Einträge «27.9.2026» erscheinen im Datumsfeld', () => {
     expect(alsIsoDatum('27.9.2026')).toBe('2026-09-27');
@@ -219,5 +245,29 @@ describe('Betreibung und Verlustschein — Datum und Status lesbar', () => {
     expect(q).toMatch(/handleAddBetreibung[^\n]*t\('schulden\.addBetreibung'\)/);
     expect(q).toMatch(/handleAddVerlustschein[^\n]*t\('schulden\.addVerlustschein'\)/);
     expect(de.schulden.addBetreibung).toBe('Betreibung erfassen');
+  });
+});
+
+// Task 5 (Schulden R2, 05.10.2026): Verlustschein-Verjährung nach SchKG Art. 149a Abs. 1.
+describe('verjaehrungVerlustschein — Ausstellung + 20 Jahre, nur mit erfasstem Datum', () => {
+  it('Ausstellung + 20 Jahre', () => {
+    expect(verjaehrungVerlustschein({ date: '2021-03-15' })).toBe('2041-03-15');
+  });
+  it('29.02.: bleibt der 29.02., wenn das Zieljahr ein Schaltjahr ist (2024 -> 2044)', () => {
+    expect(verjaehrungVerlustschein({ date: '2024-02-29' })).toBe('2044-02-29');
+  });
+  it('29.02.: sonst der 28.02. (2080 -> 2100 ist kein Schaltjahr)', () => {
+    expect(verjaehrungVerlustschein({ date: '2080-02-29' })).toBe('2100-02-28');
+  });
+  it('ohne gültiges Datum: null — kein errechnetes Ende', () => {
+    expect(verjaehrungVerlustschein({})).toBeNull();
+    expect(verjaehrungVerlustschein({ date: 'x' })).toBeNull();
+    expect(verjaehrungVerlustschein({ date: '' })).toBeNull();
+    expect(verjaehrungVerlustschein({ date: '2026-02-31' })).toBeNull();
+    expect(verjaehrungVerlustschein(null)).toBeNull();
+  });
+  it('alter Eintrag im deutschen Format: über alsIsoDatum und direkt', () => {
+    expect(verjaehrungVerlustschein({ date: alsIsoDatum('15.3.2021') })).toBe('2041-03-15');
+    expect(verjaehrungVerlustschein({ date: '15.3.2021' })).toBe('2041-03-15');
   });
 });

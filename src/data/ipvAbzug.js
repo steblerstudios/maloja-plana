@@ -24,6 +24,8 @@
 //      Anspruchsjahres; danach tritt die Kasse nur noch in Ausnahmefällen ein. Von Amtes wegen
 //      geprüft werden bisherige Beziehende und Anträge des Vorjahres ohne Entscheid — die App
 //      erkennt beide nicht, darum auch hier 0 nach der Frist (Weg: «Verfügung erhalten»).
+//   GE, OW, NW, TI, SH, AR — Frist und Beleg je im Modulkopf (config/ipv<Kanton>.js); alle nennen
+//      ihren eigenen Hinweis-Schlüssel. Die Liste hält der Wächter in ipvAbzug.test.js aktuell.
 // Welcher HINWEIS dazu steht, sagt `fristHinweisKey` unten: jeder Kanton ausser LU nennt seinen
 // eigenen Schlüssel (`fristNichtAbgezogenKey` im Ergebnis); fehlt er, ein neutraler Text — nie
 // still der Luzerner (Ruling nach der Fachprüfung #472, 28.09.2026).

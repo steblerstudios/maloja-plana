@@ -163,6 +163,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.privacy.responsible2') }),
         P({ children: t('legal.privacy.responsible3') }),
         P({ children: t('legal.privacy.responsible4') }),
+        P({ children: t('legal.privacy.responsible5') }),
       ]}),
       Section({ title: t('legal.privacy.localTitle'), palette, children: [
         P({ children: t('legal.privacy.local1') }),

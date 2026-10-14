@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { CANTONAL_LINKS } from '../data/direktLinks.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
@@ -15,6 +15,13 @@ import { calculateMonthlyBudget, createBudgetReport } from '../budgetSync.js';
 import { leiteKategorienAb } from '../exportVorschau.js';
 import { getBehoerdenDossierPreview, generateBehoerdenJSON } from '../dossierGenerator.js';
 import { anspruchSignale } from '../data/anspruchSignale.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // E9 (Entscheid 16.09.2026, Bau-Liste M13): Die kantonalen IPV-Werte sind
@@ -30,10 +37,10 @@ const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '
 const render = (C, props) => renderToStaticMarkup(React.createElement(C, { palette, t, onNavigate: () => {}, ...props }));
 const fmt = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
 
-// BS, Einperson, 2000/Monat: nach dem (unbelegten) Muster klar unter der Grenze.
-// (Bis 23.09.2026 stand hier LU; seither rechnet LU nach eigenem Modell.)
+// GE, Einperson, 2000/Monat: nach dem (unbelegten) Muster klar unter der Grenze.
+// (Bis 23.09.2026 stand hier LU, bis 28.09.2026 BS; beide — und VD — rechnen seither nach eigenem Modell.)
 const profil = (extra = {}) => ({
-  basis: { canton: 'BS', household: { adults: 1, children: [] } },
+  basis: { canton: 'GE', household: { adults: 1, children: [] } },
   finanzen: { monthlyIncome: 2000 },
   wohnen: {},
   versicherungen: { kkPremium: 450 },
@@ -46,7 +53,7 @@ const nettoProfil = () => { const p = profil(); return { ...p, finanzen: { ...p.
 // Der Betrag, den das Muster rechnen WÜRDE — er darf unbelegt nirgends stehen.
 let musterBetrag;
 beforeAll(() => {
-  const zurueck = kantoneBelegtSimulieren(['BS']);
+  const zurueck = kantoneBelegtSimulieren(['GE']);
   musterBetrag = calculateIPV(profil());
   zurueck();
 });
@@ -74,17 +81,19 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
   });
 
   it('Verfahrens-Hinweis je Kanton ist ausgeblendet, der Link zur Stelle bleibt', () => {
-    const html = render(PremiumSubsidy, { data: profil({ basis: { canton: 'GL', household: { adults: 1, children: [] } } }), onUpdateData: () => {} });
+    // Der Muster-Kanton trägt `noteAutoTaxData` (bis 28.09.2026 lief das mit GL, dessen Zeile es
+    // fälschlich sagte); unbelegt darf der Satz nicht erscheinen.
+    const html = render(PremiumSubsidy, { data: profil(), onUpdateData: () => {} });
     expect(html).not.toContain('premium.note');
     expect(html).not.toContain('ipv.noteAutoTaxData');
-    expect(html).toContain('href="' + CANTONAL_LINKS.GL.ipv + '"');
+    expect(html).toContain('href="' + CANTONAL_LINKS.GE.ipv + '"');
   });
 
   it('IPV-Rechner: Orientierung + Link zur kantonalen Stelle, kein Betrag, kein Verdikt, keine Grenze', () => {
     const html = render(PremiumSubsidy, { data: profil(), onUpdateData: () => {} });
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.zurStelle');
-    expect(html).toContain('href="' + CANTONAL_LINKS.BS.ipv + '"');
+    expect(html).toContain('href="' + CANTONAL_LINKS.GE.ipv + '"');
     expect(html).toContain('ipvStatus.orientierungLead');
     expect(html).not.toContain('premium.eligible');
     expect(html).not.toContain('premium.notEligible');
@@ -134,7 +143,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
       belegt: false,
       einschaetzung: 'beim-kanton-pruefen',
       hinweis: 'ipv.orientierungOffen',
-      kantonaleStelle: CANTONAL_LINKS.BS.ipv,
+      kantonaleStelle: CANTONAL_LINKS.GE.ipv,
     });
     expect(JSON.stringify(dok)).not.toMatch(/amount|annual|maxIncome|subsidy/);
   });
@@ -165,7 +174,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     expect(html).toContain('ipv.statusOffen');
     expect(html).not.toContain('finanzUebersicht.notEligible');
     expect(html).not.toContain('ipv.incomeAboveLimit');
-    const zeilen = druckAbschnitte(t, { income: 2000, canton: 'BS', ipv: calculateIPV(profil()), sozialhilfe: {}, el: {} })
+    const zeilen = druckAbschnitte(t, { income: 2000, canton: 'GE', ipv: calculateIPV(profil()), sozialhilfe: {}, el: {} })
       .flatMap((a) => a.zeilen || a.rows || []);
     const ipvZeile = JSON.stringify(zeilen);
     expect(ipvZeile).toContain('ipv.statusOffen');
@@ -196,7 +205,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
 
 describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
   afterAll(() => zuruecksetzen());
 
   it('IPV-Rechner zeigt «Berechtigt» und die Beträge', () => {
