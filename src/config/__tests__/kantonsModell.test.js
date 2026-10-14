@@ -244,10 +244,22 @@ describe('Eingaben lesen', () => {
   // sonst schreibt der nächste Kanton «belegt», wo «Zahl fehlt noch» gemeint war.
   describe('SAEULE_3A: die drei Zurechnungsregeln', () => {
     it('jede Regel nennt ihre Kantone und ihren Beleg', () => {
-      expect(SAEULE_3A.voll.kantone).toBe('ZH, SG, LU, VD');
-      expect(SAEULE_3A.bisBundesMaximum.kantone).toBe('BE');
+      expect(SAEULE_3A.voll.kantone).toBe('ZH, SG, LU, VD, UR, NE, GE, GR, TI, OW, FR, SH, AI, ZG');
+      expect(SAEULE_3A.bisBundesMaximum.kantone).toBe('BE, SO, VS');
       expect(SAEULE_3A.schwelleOhneSaeule2.kantone).toBe('AG');
+      expect(SAEULE_3A.abgezogen.kantone).toBe('NW');
       for (const r of Object.values(SAEULE_3A)) expect(r.beleg).toMatch(/Art\.|§/);
+    });
+
+    // ⟨NW, 28.09.2026⟩ Die vierte Regel: die ganze Einzahlung wird herausgenommen.
+    it('abgezogen (NW): Abzug = die ganze Einzahlung; widerlegt ab dem ersten Franken über dem Einkommen', () => {
+      expect(SAEULE_3A.abgezogen.nichtAufgerechnet({ pension3a: 7258 })).toBe(7258);
+      expect(SAEULE_3A.abgezogen.nichtAufgerechnet({ pension3a: 'abc' })).toBe(0);
+      expect(SAEULE_3A.abgezogen.nichtAufgerechnet({})).toBe(0);
+      expect(SAEULE_3A.abgezogen.widerlegt({ pension3a: 0 }, 0)).toBe(false);
+      expect(SAEULE_3A.abgezogen.widerlegt({ pension3a: 5000 }, 6000)).toBe(false);
+      expect(SAEULE_3A.abgezogen.widerlegt({ pension3a: 6500 }, 6000)).toBe(true);
+      expect(SAEULE_3A.abgezogen.widerlegt({ pension3a: 100 }, NaN)).toBe(false);
     });
 
     // ⟨23.09.2026, zweite Änderung am selben Tag — beide Schritte bleiben lesbar⟩
@@ -295,6 +307,19 @@ describe('Eingaben lesen', () => {
     it('die AG-Schwelle rechnet, auch wenn sie noch nicht angewendet wird', () => {
       expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({ monthlyIncome: 2500 })).toBe(3000);
       expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({})).toBe(0);
+    });
+
+    // AR (K31, 28.09.2026): eigene Regel — ein fester Freibetrag von 10'000 für Personen ohne
+    // Vorsorgeeinrichtung (bGS 833.141 Art. 5 Abs. 1 lit. a), keine Prozent-Schwelle wie AG.
+    it('AR: ohne Säule 2 bleibt die 3a bis 10 000 unberücksichtigt, darüber zählt sie', () => {
+      const r = SAEULE_3A.freibetragOhneSaeule2;
+      expect(r.kantone).toBe('AR');
+      expect(r.freibetrag).toBe(10000);
+      expect(r.offen).toBeUndefined();
+      expect(r.nichtAufgerechnet({ pension3a: 6000 })).toBe(6000);
+      expect(r.nichtAufgerechnet({ pension3a: 25000 })).toBe(10000);
+      expect(r.nichtAufgerechnet({ pension3a: 'abc' })).toBe(0);
+      expect(einkommenJahr({ monthlyIncome: 3000, pension3a: 6000 }, r)).toBe(36000 - 6000);
     });
   });
 

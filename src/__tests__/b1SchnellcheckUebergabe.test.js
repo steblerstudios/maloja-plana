@@ -4,10 +4,17 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // B-1 (BUGS.md) · Entscheid E22 vom 16.09.2026
@@ -43,7 +50,7 @@ const textVon = (e) => e.kinder.flat().filter((k) => typeof k === 'string').join
 
 // Das Profil: Kanton Bern, 5000/Monat (BUGS.md B-1, Nachstell-Variante 4).
 const profil = (finanzen = { monthlyIncome: 5000 }) => ({
-  basis: { canton: 'BS', household: { adults: 1, children: [] } },
+  basis: { canton: 'GE', household: { adults: 1, children: [] } }, // (BS und VD seit 28.09.2026 mit eigenem Modell, darum GE — noch ohne Modul; Musterwerte 60 000 / 3 600 / 7 200 / 1 800)
   finanzen,
   wohnen: { rentAmount: 1400 },
   versicherungen: { kkPremium: 420 },
@@ -114,7 +121,7 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
     expect(html).toContain('premium.schnellcheckGerechnet');
     expect(html).toContain('premium.schnellcheckProfilBleibt');
     expect(html).toContain('premium.schnellcheckUebernehmen');
-    // BS ist nicht amtlich belegt (E9): neutrale Orientierung, kein Betrag. (Bis 23.09.2026 LU.)
+    // GE ist nicht amtlich belegt (E9; bis 28.09.2026 BS): neutrale Orientierung, kein Betrag. (Bis 23.09.2026 LU.)
     // Dass mit 3000 statt 5000 gerechnet wird, zeigt der Test mit belegtem Kanton unten.
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('CHF 3');
@@ -157,7 +164,7 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
 
   describe('mit belegtem Kanton (simuliert): der Betrag ist der für die Schnellcheck-Zahl', () => {
     let zuruecksetzen;
-    beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+    beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
     afterAll(() => zuruecksetzen());
 
     it('zeigt den Betrag für 3000, nicht «nicht berechtigt» für 5000', () => {

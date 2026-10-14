@@ -220,10 +220,10 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
 });
 
 // Erweitert 20.09.2026 um BE und AG (zweiter und vierter Kanton mit eigenem Modell), danach
-// um SG, am 23.09.2026 um LU und am 28.09.2026 um VD: unverändert bleiben jetzt 20 der 26 Kantone.
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD'];
+// um SG, am 23.09.2026 um LU und am 28.09.2026 um VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI, VS, BS, GL und BL: unverändert bleibt jetzt keiner der 26 Kantone.
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU', 'VD', 'UR', 'NE', 'GE', 'GR', 'TG', 'TI', 'OW', 'SO', 'JU', 'NW', 'ZG', 'FR', 'SZ', 'SH', 'AR', 'AI', 'VS', 'BS', 'GL', 'BL'];
 
-describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU und VD rechnen exakt wie v0.1.37-beta', () => {
+describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU, VD, UR, NE, GE, GR, TG, TI, OW, SO, JU, NW, ZG, FR, SZ, SH, AR, AI, VS, BS, GL und BL rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
     { adults: 1, children: [] }, { adults: 2, children: [], partnerIncome: 1500 },
     { adults: 1, children: [{ age: 5 }] }, { adults: 2, children: [{ age: 3 }, { age: 20 }] },
@@ -249,8 +249,13 @@ describe('K31 Regression: alle Kantone ausser ZH, BE, AG, SG, LU und VD rechnen 
     }
   }
 
-  it(`20 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
-    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(20);
+  // Seit GL #487 und BL #479 (13.10.2026) rechnet jeder der 26 Kantone nach eigenem Modell —
+  // es bleibt kein Kanton, der noch wie v0.1.37-beta rechnen müsste. Der Wächter bleibt: kommt
+  // je ein Kanton ohne eigenes Modell dazu (z. B. ein Beleg fällt weg), wird er hier rot, und
+  // die Vergleichsschleife greift wieder.
+  it('kein Kanton mehr ohne eigenes Modell (heutiger Stand: alle 26 belegt)', () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toEqual([]);
+    expect(faelle).toHaveLength(0);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 

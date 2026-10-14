@@ -40,6 +40,14 @@ genannt wird. Seit 23.09.2026 liegen darum **alle acht** Texte unter
 Bundle kompiliert, ihre Lizenztexte fehlten in der Auslieferung — aufgefallen bei der
 Rechts-Prüfung am 23.09.2026.*
 
+**Wächter seit 28.09.2026:** `src/__tests__/lizenzTexte.test.js` bildet den Laufzeit-Abschluss
+aus `dependencies` (rekursiv über `node_modules`) und die vendorierten Dateien in
+`public/vendor/` und `src/vendor/` ab und wird rot, wenn ein Paket ohne Text unter
+`public/licenses/` dazukommt, ein Text ein Platzhalter ist, ein Text hier in der Tabelle
+fehlt oder ein Text herumliegt, den niemand erklärt. Mutationsprobe am 28.09.: Text entfernt →
+rot, neue Vendor-Datei → rot. Er prüft **nicht**, ob ein Paket im Bundle wirklich landet
+(Tree-Shaking) — absichtlich streng.
+
 ## Dev Dependencies
 
 | Paket | Version | Lizenz | Zweck |

@@ -2,9 +2,16 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { calculateIPV, calculateSozialhilfe } from '../config/cantonalData.js';
-import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
+import { kantoneBelegtSimulieren, musterKanton } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { QuickCheck } from '../components/Leistungsliste.jsx';
 import { zahl } from '../utils/geld.js';
+
+// Muster-Kanton (W3, 28.09.2026): GE wird für diese Datei zu einem festen Muster-Kanton ohne Modul —
+// sonst brächen die Muster-Erwartungen, sobald GE sein eigenes Modell hat (ipvBelegtSimulieren.js).
+let musterZurueck;
+beforeAll(() => { musterZurueck = musterKanton('GE'); });
+afterAll(() => musterZurueck());
+
 
 // ─────────────────────────────────────────────────────────────
 // Leistungsliste auf dem Dashboard (25.09.2026): Schnell-Check und Leistungen sind
@@ -24,7 +31,7 @@ const render = (props) => renderToStaticMarkup(React.createElement(QuickCheck, {
 const betrag = (n) => '≈ CHF ' + zahl(n, { hoechstens: 2 });
 
 const profil = (monthlyIncome) => ({
-  basis: { canton: 'BS', household: { adults: 1, children: [] } },
+  basis: { canton: 'GE', household: { adults: 1, children: [] } }, // (BS und VD seit 28.09.2026 mit eigenem Modell, darum GE — noch ohne Modul; Musterwerte 60 000 / 3 600 / 7 200 / 1 800)
   finanzen: { monthlyIncome, incomeType: 'netto' },
   wohnen: { rentAmount: 1000 },
   versicherungen: { kkPremium: 450 },
@@ -32,7 +39,7 @@ const profil = (monthlyIncome) => ({
 
 describe('Dashboard-Leistungsliste · IPV und Sozialhilfe', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
   afterAll(() => zuruecksetzen());
 
   it('Voraussetzung: bei 1000/Monat greifen beide', () => {
@@ -85,7 +92,7 @@ describe('Instrument Steuer-Säulen', () => {
 // ─────────────────────────────────────────────────────────────
 describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['GE']); });
   afterAll(() => zuruecksetzen());
 
   it('Art offen: Feld leer, Hinweis statt Rechnung', () => {
@@ -110,7 +117,7 @@ describe('Dashboard-Leistungsliste · Einkommen brutto/netto', () => {
   });
 
   it('brutto nahe am Bedarf: «knapp» — bei netto nicht', () => {
-    // Bedarf BS, 1 Person, Miete 1000, KK 450 → Netto knapp darunter
+    // Bedarf GE, 1 Person, Miete 1000, KK 450 → Netto knapp darunter
     const bedarf = calculateSozialhilfe(profil(0)).totalBedarf;
     // 3 % über dem Bedarf: innerhalb der Knapp-Schwelle, aber nicht gleich (Gegenprobe mit Schwelle 0 → rot)
     const brutto = Math.round(bedarf * 1.03 / 0.936);   // unter der BVG-Schwelle: netto = brutto × 0.936

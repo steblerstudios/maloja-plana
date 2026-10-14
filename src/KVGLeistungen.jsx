@@ -12,6 +12,9 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { StatusForm } from './components/StatusForm.jsx';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
+import { AblaufLink } from './AblaufSchale.jsx';
+import { istBelegUebernehmbar } from './utils/offenePosten.js';
+import { heuteIso } from './utils/fristen.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -312,7 +315,7 @@ const KatalogTab = ({ palette, t, filterCat, canton }) => {
 };
 
 // ─── Franchise Tab ─────────────────────────────────────────
-const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
+const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehmen }) => {
   const currentYear = new Date().getFullYear();
   const storedFranchise = (() => {
     const f = data.versicherungen?.franchise;
@@ -395,6 +398,9 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
     onUpdateData('versicherungen', 'kkBelege', belege.map(b => b.id === id ? { ...b, eingereicht: !b.eingereicht } : b));
   };
   const fmtDatum = (d) => d ? d.split('-').reverse().join('.') : t('kvg.belegNoDate');
+  // ③ Zweitknopf (Umriss, wie überall): nur mit onUebernehmen — im Beispiel gibt main.jsx keine mit.
+  const zweitKnopf = { background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.xs, minHeight: '44px', boxSizing: 'border-box', padding: space.sm + 'px ' + space.md + 'px' };
+  const heute = heuteIso();
 
   const result = berechneFranchise(franchise, kosten);
   const hasInput = kosten > 0;
@@ -704,16 +710,22 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                   ),
                   React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
                     React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, betrag(Number(b.betrag) || 0, { hoechstens: 2 })),
-                    React.createElement('button', {
-                      onClick: () => removeBeleg(b.id),
-                      'aria-label': t('kvg.belegRemove'),
-                      style: {
-                        background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
-                        fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
-                      }
-                    }, '×')
+                    b.forderungId
+                      ? null
+                      : React.createElement('button', {
+                          onClick: () => removeBeleg(b.id),
+                          'aria-label': t('kvg.belegRemove'),
+                          style: {
+                            background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
+                            fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                          }
+                        }, '×')
                   )
                 ),
+                // Verbunden: kein stilles Mitlöschen — der Hinweis nennt den Weg, der Beleg bleibt stehen.
+                b.forderungId && React.createElement('div', {
+                  style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: leading.normal }
+                }, t('kvg.loeschenVerbunden')),
                 offen && b.frist && React.createElement('div', {
                   style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginTop: '6px' }
                 },
@@ -730,6 +742,17 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                     }
                   }, erledigtZeichen(remindedIds.has(b.id), remindedIds.has(b.id) ? t('kvg.belegReminded') : t('kvg.belegRemind')))
                 ),
+                b.forderungId && React.createElement('div', {
+                  style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm, flexWrap: 'wrap', marginTop: space.xs }
+                },
+                  React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('kvg.wirdGefuehrt')),
+                  onNavigate && React.createElement(AblaufLink, { palette, label: t('kvg.zumSchuldenmanager'), onClick: () => onNavigate('schulden') })
+                ),
+                onUebernehmen && istBelegUebernehmbar(b, heute) && React.createElement('button', {
+                  type: 'button',
+                  onClick: () => onUebernehmen(b.id),
+                  style: { ...zweitKnopf, marginTop: space.xs }
+                }, t('kvg.alsForderung')),
                 b.nichtGedeckt > 0 && React.createElement('div', {
                   style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' }
                 }, t('kvg.belegNichtGedecktNote', { amount: betrag(b.nichtGedeckt, { hoechstens: 2 }) })),
@@ -986,7 +1009,7 @@ export const TpwQuellen = ({ palette, t }) =>
   );
 
 // ─── Main Component ────────────────────────────────────────
-export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNavigate }) => {
+export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNavigate, onUebernehmen }) => {
   const [tab, setTab] = useState(initialTab || 'katalog');
   const [filterCat, setFilterCat] = useState('all');
 
@@ -1041,7 +1064,7 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
       React.createElement(KatalogTab, { palette, t, filterCat, canton: data.basis?.canton || '' })
     ),
 
-    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate }),
+    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate, onUebernehmen }),
     tab === 'rechnung' && React.createElement(RechnungTab, { palette, t, data }),
 
     React.createElement('div', {
