@@ -613,7 +613,7 @@ const AppInner = ({ demo }) => {
   // Beispiel betreten (Fusszeile und Dashboard-Kachel): Demo-Datensatz erst beim Betreten laden;
   // demoMode wird erst gesetzt, wenn er da ist (kein Render-Fenster mit demoMode ohne demoData —
   // sonst zeigte das «Beispiel» die echten Daten). Das Beispiel beginnt ohne Dokumente (K24).
-  const beispielBetreten = () => import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); });
+  const beispielBetreten = () => import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }).catch((e) => { console.warn('Beispiel konnte nicht geladen werden', e); });
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); beispielVerlassen(); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
   // Guard auf nicht-leeren Stand: ein leeres Sandbox-Objekt ({}) ist truthy, würde

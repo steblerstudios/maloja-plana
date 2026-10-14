@@ -65,4 +65,16 @@ describe('processBudgetEntries — incomeType', () => {
   it('Import ohne Einkommenszeile behält die Art', () => {
     expect(processBudgetEntries([zeile(1500, 'Miete')], mitArt).incomeType).toBe('netto');
   });
+  it('Profil-Lohn als Text: gleicher Betrag behält die Art', () => {
+    const out = processBudgetEntries([zeile(5200, 'income', 'income')], { ...bestand, monthlyIncome: '5200', incomeType: 'netto' });
+    expect(out.incomeType).toBe('netto');
+  });
+  it('Profil-Lohn als Text: anderer Betrag macht die Art offen', () => {
+    const out = processBudgetEntries([zeile(5200, 'income', 'income')], { ...bestand, monthlyIncome: '5300', incomeType: 'netto' });
+    expect(out.incomeType).toBeUndefined();
+  });
+  it('leerer Profil-Lohn: neuer Betrag macht die Art offen', () => {
+    const out = processBudgetEntries([zeile(5200, 'income', 'income')], { ...bestand, monthlyIncome: '', incomeType: 'netto' });
+    expect(out.incomeType).toBeUndefined();
+  });
 });

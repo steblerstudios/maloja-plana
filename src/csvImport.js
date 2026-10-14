@@ -152,7 +152,8 @@ export const processBudgetEntries = (entries, currentBudget) => {
     // Die CSV kennt die Einkommensart (brutto/netto) nicht: ändert sich der Betrag, gilt die
     // bisherige Art nicht mehr für ihn — sie wird offen, damit kein Rechner falsch vorbefüllt.
     // Der Schlüssel bleibt (undefined), weil onImport mit {...prev, ...updated} zusammenführt.
-    if (income !== currentBudget?.monthlyIncome) updated.incomeType = undefined;
+    // Zahl gegen Zahl: das Währungsfeld liegt im Profil oft als Text vor ('5200').
+    if (Number(currentBudget?.monthlyIncome) !== income) updated.incomeType = undefined;
     updated.monthlyIncome = income;
   }
   if (expenses.rent > 0) updated.rentAmount = expenses.rent;
