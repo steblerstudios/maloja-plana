@@ -46,12 +46,15 @@ describe('K31 ZH-Modell gegen die amtliche Tabelle der Einkommensgrenzen 2026 [A
           it(`${stand}, Region ${region}, ${alter === 'j' ? 'junge Erwachsene' : 'Erwachsene'}, ${kinder} Kind(er): Grenze CHF ${grenze}`, () => {
             const personen = [...Array(stand === 'verheiratet' ? 2 : 1).fill(alter), ...Array(kinder).fill('k')];
             const r = ipvZuerichRechnen({ region, verheiratet: stand === 'verheiratet', personen, me: grenze });
-            // Seit RRB 980/2026 (11,0 / 8,8 %) ist die Formel (Summe ÷ Satz) nicht mehr auf den
-            // Franken genau: die SVA veröffentlicht die Grenze auf CHF 10 abgerundet (alle 48 Zellen,
-            // 40 davon weichen von der gerundeten Formel ab, 0 anders als durch Abrunden auf 10).
-            // Die App zeigt den ungerundeten Nullpunkt, 0–9 Franken über der SVA-Zahl.
-            expect(Math.floor(r.grenze / 10) * 10).toBe(grenze);
-            expect(r.grenze - grenze).toBeLessThan(10);
+            // Angezeigt wird die publizierte SVA-Zahl (IPV_ZH.grenzen), nicht die Formel.
+            expect(r.grenze).toBe(grenze);
+            // Konsistenzwächter: Seit RRB 980/2026 (11,0 / 8,8 %) ist die SVA-Zahl in allen 48 Zellen der
+            // auf CHF 10 abgerundete Nullpunkt der Formel (Summe ÷ Satz, mit Kindern mindestens die
+            // Familiengrenze) — 40 Zellen weichen von der auf den Franken gerundeten Formel ab.
+            const summe = personen.reduce((a, c) => a + IPV_ZH.referenz * IPV_ZH.rdp[region][c] * 12, 0);
+            const satz = stand === 'verheiratet' ? IPV_ZH.satz.verheiratet : IPV_ZH.satz.uebrige;
+            const nullpunkt = Math.max(summe / satz, kinder ? IPV_ZH.familienGrenze : 0);
+            expect(Math.floor(nullpunkt / 10) * 10).toBe(grenze);
           });
         });
       }
@@ -159,8 +162,13 @@ describe('K31 ZH 2027: angezeigte Grenze = publizierte Tabelle [G], nicht die Fo
     const r = ipvZuerichRechnen({ region: 1, verheiratet: false, personen: ['e', 'k', 'k', 'k', 'k'], me: 0, werte });
     expect(r.grenze).toBe(Math.round((0.7 * 12 * (640 + 4 * 154)) / 0.094));
   });
-  it('2026 hat keine Tabelle im Datensatz: dort bleibt die Formel massgebend', () => {
-    expect(IPV_ZH.grenzen).toBeUndefined();
+  it('2026 hat seit 14.10.2026 ebenfalls die publizierte Tabelle im Datensatz (wörtlich wie TABELLE_A)', () => {
+    expect(IPV_ZH.grenzen).toEqual(TABELLE_A);
+  });
+  it('Anzeige 2026: Region 1, Einzel, Erwachsene ohne Kinder → 61 090 (SVA), nicht 61 091 (Formel)', () => {
+    const r = ipvZuerichRechnen({ region: 1, verheiratet: false, personen: ['e'], me: 0 });
+    expect(r.grenze).toBe(61090);
+    expect(r.total).toBeCloseTo(5376, 6); // der Betrag bleibt die Formel
   });
 });
 
@@ -332,22 +340,22 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     versicherungen: kkPremium != null ? { kkPremium } : {},
   });
 
-  it('Einzelperson, Einkommen 0, Stadt Zürich: 5 376/Jahr, 448/Monat, Grenze 61 091 (SVA: 61 090)', () => {
+  it('Einzelperson, Einkommen 0, Stadt Zürich: 5 376/Jahr, 448/Monat, Grenze 61 090 (wie die SVA publiziert)', () => {
     const r = calculateIPV(person());
     expect(r).toMatchObject({ belegt: true, eligible: true, annual: 5376, amount: 448, maxAnnual: 5376, reductionPercent: 100, region: 1, jahr: 2026 });
-    expect(r.cantonData.maxIncome).toBe(61091); // 5 376 ÷ 8,8 % = 61 090.91; SVA veröffentlicht 61 090 (abgerundet)
+    expect(r.cantonData.maxIncome).toBe(61090); // publizierte SVA-Zahl (Formel: 5 376 ÷ 8,8 % = 61 090.91)
     expect(r.noteKey).toBe('ipv.noteApplySva');
   });
 
   it('Einzelperson Winterthur (Region 2), 2 500/Monat: 4 905.60 − 8.8 % × 30 000 = 2 265.60', () => {
     const r = calculateIPV(person({ monthlyIncome: 2500, plz: '8400' }));
     expect(r).toMatchObject({ annual: 2266, amount: 189, region: 2 });
-    expect(r.cantonData.maxIncome).toBe(55745); // 4 905.60 ÷ 8,8 %; SVA: 55 740 (abgerundet)
+    expect(r.cantonData.maxIncome).toBe(55740); // publizierte SVA-Zahl (Formel: 4 905.60 ÷ 8,8 % = 55 745.45)
   });
 
-  it('an der Grenze (61 091 = 5 090.92 × 12): kein Anspruch, Grenze genannt', () => {
+  it('über dem Nullpunkt (61 091 = 5 090.92 × 12): kein Anspruch, publizierte Grenze 61 090 genannt', () => {
     const r = calculateIPV(person({ monthlyIncome: 61091 / 12 }));
-    expect(r).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: 61091 } });
+    expect(r).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: 61090 } });
   });
 
   it('unter der Grenze (5 000/Monat = 60 000): 96/Jahr, 8/Monat', () => {
@@ -364,7 +372,7 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     // Erwachsene/r 3 033.60 × 4 905.60 / 7 257.60 = 2 050.45; Kinder je 80 % × 84 % × 140 × 12 = 1 128.96
     const r = calculateIPV(person({ monthlyIncome: 4000, plz: '8610', children: [{ age: 4 }, { age: 9 }] }));
     expect(r).toMatchObject({ eligible: true, annual: Math.round(3033.6 * 4905.6 / 7257.6 + 2 * 1128.96), region: 2 });
-    expect(r.cantonData.maxIncome).toBe(82473); // 7 257.60 ÷ 8,8 %; [A] Region 2, Erwachsene, 2 Kinder: 82 470 (abgerundet)
+    expect(r.cantonData.maxIncome).toBe(82470); // publizierte SVA-Zahl, Region 2, Erwachsene, 2 Kinder (Formel: 7 257.60 ÷ 8,8 % = 82 472.73)
   });
 
   it('Bruttoprämie tiefer als die Referenzprämie: höchstens die Prämie (§ 4 Abs. 3 EG KVG)', () => {
@@ -401,7 +409,7 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
         vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T23:59:00'));
         const alt = calculateIPV(person({ monthlyIncome: 2500 }));
         expect(alt).toMatchObject({ jahr: 2026, annual: 2736 }); // 5 376 − 8.8 % × 30 000
-        expect(alt.cantonData.maxIncome).toBe(61091);
+        expect(alt.cantonData.maxIncome).toBe(61090);
         vi.setSystemTime(new Date('2027-01-01T00:01:00'));
         const neu = calculateIPV(person({ monthlyIncome: 2500 }));
         expect(neu).toMatchObject({ jahr: 2027, annual: 2556 }); // 5 376 − 9.4 % × 30 000 (Attrappe)

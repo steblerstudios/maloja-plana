@@ -392,8 +392,8 @@ Werten aus dem September-Beschluss.
 **Neu: die Grenze ist nicht mehr «Summe ÷ Satz» auf den Franken.** Mit 8,8 % / 11,0 % liegt die SVA-Zahl in 40 von 48
 Zellen 1 bis 9 Franken unter dem Nullpunkt der Formel (Region 1 Erw.: 5'376 ÷ 0,088 = 61'090.91, SVA 61'090). In
 allen 48 Zellen ist die SVA-Zahl der **auf CHF 10 abgerundete** Nullpunkt (0 Ausnahmen). Das ist eine Beobachtung, kein
-Zitat — ob die SVA so rundet, ist offen (Frage an die SVA). Die App zeigt weiter den ungerundeten Nullpunkt (61'091), also höchstens 9 Franken
-über der SVA-Zahl; der Test pinnt «abgerundet auf 10 = SVA-Zahl» statt der früheren exakten Gleichheit.
+Zitat — ob die SVA so rundet, ist offen (Frage an die SVA). Die App zeigt die publizierte SVA-Zahl (61'090; `IPV_ZH.grenzen`, wie 2027), nicht den
+Nullpunkt; der Betrag bleibt die Formel. Der Test hält «abgerundet auf 10 = SVA-Zahl» als Konsistenzwächter.
 
 Folge im Rechner (von Hand gerechnet, Region 1, alleinstehend): Einkommen 40'000 → CHF 1'856 (vorher 2'016);
 62'000 → kein Anspruch (vorher 168).

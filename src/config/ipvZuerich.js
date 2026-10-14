@@ -13,9 +13,11 @@
 //   SVA Zürich, «Regionale Durchschnittsprämien», Tabelle 2026 (CHF pro Monat).
 //   RRB Nr. 297/2025, Dispositiv I–IV: Vermögensgrenzen, massgebende Prämie 84 % der RDP,
 //     Familiengrenze 70 500 (nur minderjährige Kinder), Abzugsquote 60 % darüber.
-// Gegenprobe: alle 36 Einkommensgrenzen 2026 der SVA ergeben sich exakt aus diesen Werten
-// (src/config/__tests__/ipvZuerich.test.js). Für 2027 nicht — dort gilt die publizierte
-// Tabelle als Datum (IPV_ZH_2027.grenzen). 2027 ist vorbereitet, rechnet aber erst, wenn
+// Gegenprobe: alle 48 Einkommensgrenzen 2026 der SVA (nach RRB 980/2026) ergeben sich aus diesen
+// Werten, exakt nach Abrunden des Nullpunkts auf CHF 10 (src/config/__tests__/ipvZuerich.test.js).
+// Angezeigt wird trotzdem die publizierte Tabelle (IPV_ZH.grenzen, wörtlich von der SVA, abgerufen
+// 14.10.2026), nie eine selbst gerechnete oder gerundete Zahl; die Formel bleibt für den Betrag.
+// Für 2027 ebenso — dort stimmt die Formel nicht einmal so (IPV_ZH_2027.grenzen). 2027 ist vorbereitet, rechnet aber erst, wenn
 // Referenzprämie und Durchschnittsprämien 2027 amtlich publiziert sind (Stand 28.09.2026).
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
@@ -37,6 +39,21 @@ export const IPV_ZH = {
   familienGrenze: 70500,
   abzugsquote: 0.6,
   vermoegen: { grenze: [150000, 300000], freibetrag: [75000, 150000], anteil: 0.1 },
+  // SVA Zürich, «Einkommensgrenzen 2026», wörtlich (abgerufen 14.10.2026, nach RRB 980/2026). Angezeigt wird
+  // diese Zahl; sie ist der auf CHF 10 abgerundete Nullpunkt der Formel (Wächter im Test).
+  // e = Erwachsene (älter 25), j = junge Erwachsene (18–25); Spalten: keine Kinder / 1 / 2 / 3 Kinder.
+  grenzen: {
+    einzel: {
+      1: { j: [43810, 70500, 73210, 87910], e: [61090, 75790, 90490, 105190] },
+      2: { j: [40090, 70500, 70500, 80180], e: [55740, 70500, 82470, 95830] },
+      3: { j: [37130, 70500, 70500, 74350], e: [51920, 70500, 76740, 89150] },
+    },
+    verheiratet: {
+      1: { j: [70100, 81860, 93620, 105380], e: [97740, 109500, 121260, 133020] },
+      2: { j: [64140, 74830, 85520, 96210], e: [89190, 99880, 110570, 121260] },
+      3: { j: [59410, 70500, 79260, 89190], e: [83080, 93010, 102930, 112860] },
+    },
+  },
 };
 
 // Anspruchsjahr 2027 — vorbereitet, rechnet aber NOCH NICHT (Stand 28.09.2026).
@@ -108,8 +125,8 @@ export function zhRegion(bfsNr) {
 }
 
 // Reine Rechnung. personen: Kategorien je Person ('e' | 'j' | 'k'); me: massgebendes Einkommen/Jahr.
-// Liefert Jahresbeträge in CHF (ungerundet), die Einkommensgrenze wie in der SVA-Tabelle
-// (Nullpunkt der Formel, mit minderjährigen Kindern mindestens die Familiengrenze) und
+// Liefert Jahresbeträge in CHF (ungerundet), die Einkommensgrenze wie die SVA sie publiziert (Tabellenzahl,
+// wo der Datensatz eine hat; sonst Nullpunkt der Formel, mit minderjährigen Kindern mindestens die Familiengrenze) und
 // `unklar`, wenn das Ergebnis vom Abbau des Kinder-Mindestanspruchs über der Familiengrenze
 // abhängt: RRB 297/2025 Disp. IV lässt offen, ob die 60 % je Kind oder je Familie abgezogen
 // werden — dann rechnet die App bewusst nicht.

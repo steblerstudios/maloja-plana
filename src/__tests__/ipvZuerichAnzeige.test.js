@@ -33,14 +33,14 @@ describe('K31 IPV-Rechner, Kanton Zürich', () => {
     expect(html).toContain('CHF 272');
   // Seit 24.09.2026 mit Tausendertrennung aus utils/geld.js — vorher CHF-Beträge ohne ’ bzw. nach Gerätesprache.
     expect(html).toContain('CHF 3’264');
-    expect(html).toContain(zahl(61091));
+    expect(html).toContain(zahl(61090));
     expect(html).not.toContain('ipv.orientierungOffen');
     expect(html).not.toContain(zahl(54900));
   });
 
-  it('über der Grenze: «Einkommen über Grenze» mit der Grenze 61 091 (Nullpunkt 5 376 ÷ 8,8 %; SVA: 61 090)', () => {
+  it('über der Grenze: «Einkommen über Grenze» mit der publizierten SVA-Grenze 61 090 (nicht 61 091 = Formel)', () => {
     const html = render(profil(6000));
-    expect(html).toContain('ipv.incomeAboveLimit(61091)');
+    expect(html).toContain('ipv.incomeAboveLimit(61090)');
     expect(html).not.toContain('premium.eligible');
   });
 
