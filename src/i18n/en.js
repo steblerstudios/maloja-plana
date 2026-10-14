@@ -4771,7 +4771,7 @@ export default {
     art_einordnung_temporaer: 'In temporary work, the employment runs through the staffing agency, not through the business where the work is done. Often a collective labour agreement with its own minimum wages applies — the staffing agency can say which one.',
     art_einordnung_hausdienst: 'For work in private households there are standard employment contracts, some with minimum wages. Maloja does not show the amounts yet — the canton can provide information.',
     fragenTitel: 'Open questions',
-    fragenIntro: 'Only the contract or the payslip can answer these points. They work well as questions for the employer or for an advice centre.',
+    fragenIntro: 'These points work well as questions for the employer or for an advice centre — only the contract or the payslip can answer them.',
     frage_ferienForm: 'Is holiday pay included in the hourly wage, or does it come on top?',
     frage_ausgewiesen: 'Is the holiday supplement shown as a separate amount in the contract and on the payslip?',
     frage_feiertag: 'Are public holidays paid — and if so, with what supplement?',
