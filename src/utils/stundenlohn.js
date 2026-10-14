@@ -56,6 +56,10 @@ export const FERIEN_MIN_WOCHEN_BIS_20 = 5;
 // Arbeitgeber (UVV Art. 13 Abs. 1).
 export const NBU_MIN_WOCHENSTUNDEN = 8;
 
+// Tessin: der Mindestlohn ist nach Branche gestuft, 20.00 bis 20.50 (Decreto esecutivo 11.12.2025,
+// RL 843.620; data/lohnCheck.js führt den unteren Wert 20.00).
+export const TI_MINDESTLOHN_OBERGRENZE = 20.5;
+
 // Liest «25.50», «25,50», «1'200» — alles andere (Text, negativ, leer) ergibt 0.
 export const lies = (v) => {
   if (v === null || v === undefined) return 0;
@@ -157,9 +161,15 @@ export function stundenlohnRechnen(eingabe) {
   const jahreslohn = w > 0 ? Math.round(jahrTiefRoh) : null;
   // BVG Art. 2 Abs. 1: versichert, wer bei einem Arbeitgeber MEHR als die Schwelle verdient (auf Rappen verglichen).
   const ueber = (x) => rappen(x) > BVG_EINTRITTSSCHWELLE_JAHR;
-  const bvg = w > 0
+  const bvgRoh = w > 0
     ? (ueber(jahrTiefRoh) === ueber(jahrHochRoh) ? (ueber(jahrTiefRoh) ? 'obligatorisch' : 'darunter') : 'haengtAnFerien')
     : 'unbekannt';
+  // BVV 2 Art. 1j Abs. 1 Bst. b: befristet auf höchstens drei Monate → nicht unterstellt (vorbehalten
+  // Art. 1k: Verlängerung über drei Monate). Wer nicht sagt, dass es länger dauert, bekommt keine
+  // Pflichtaussage, sondern den Hinweis auf die Ausnahme.
+  const bvg = e.art === 'befristet' && e.ueber3Monate !== 'ja' && (bvgRoh === 'obligatorisch' || bvgRoh === 'haengtAnFerien')
+    ? 'befristetKurz'
+    : bvgRoh;
 
   return {
     status: 'gerechnet',

@@ -6,7 +6,7 @@ import { text, weight, radius, space, leading } from './config/tokens.js';
 import { CANTON_CODES, getCantonName } from './config/kantonPLZ.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { betrag } from './utils/geld.js';
-import { stundenlohnRechnen, stundenlohnErgebnis, lies, ARTEN, FERIEN_FORMEN, ANTWORTEN } from './utils/stundenlohn.js';
+import { stundenlohnRechnen, stundenlohnErgebnis, lies, ARTEN, FERIEN_FORMEN, ANTWORTEN, TI_MINDESTLOHN_OBERGRENZE } from './utils/stundenlohn.js';
 
 // «Was steht mir im Stundenlohn zu?» — Wunsch Stebler Studios 25.09.2026.
 // Flächen: A Anstellung · B Lohn · C Ferien und Zuschläge · D die Rechnung · E Einordnung
@@ -96,7 +96,10 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
     const grund = zahlText(r.lesarten[key].grund);
     const vorsatz = r.ferienForm === 'unklar' ? t('stundenlohnView.lesartKurz_' + key) + ' ' : '';
     switch (b.status) {
-      case 'ok': return vorsatz + t('stundenlohnView.ml_ok', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr });
+      // Tessin: gestufter Mindestlohn — «ok» heisst nur: über dem tiefsten Satz.
+      case 'ok': return vorsatz + (e.kanton === 'TI'
+        ? t('stundenlohnView.ml_okTI', { grund, mindest: zahlText(b.mindestStunde), obergrenze: zahlText(TI_MINDESTLOHN_OBERGRENZE) })
+        : t('stundenlohnView.ml_ok', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr }));
       case 'konformMit13': return vorsatz + t('stundenlohnView.ml_konformMit13', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName })
         // Die Basler Besonderheit (13. nur bei anteiliger Auszahlung) gehört nur zu Basel-Stadt.
         + (e.kanton === 'BS' ? ' ' + t('stundenlohnView.ml_konformMit13Bs') : '');
@@ -104,9 +107,9 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
         + ' ' + t('lohnCheck.ausnahmen') + ' '
         + t('stundenlohnView.ml_stelle', { stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
-      // Städte Zürich und Winterthur: städtische Mindestlohn-Beschlüsse. Stand der Rechtslage im Repo
-      // NICHT belegt (Notiz aus der Werkbank: «BGer 2C_28/2025, 12.5.2026» — Volltext nicht gelesen).
-      // Der Text `ml_zhHinweis` behauptet darum nichts über Gültigkeit, er verweist an die Stadt.
+      // Städte Zürich und Winterthur: BGer 2C_28/2025 (Zürich) und 2C_30/2025 (Winterthur), beide
+      // vom 12.5.2026: gültig, aber noch nicht in Kraft (Quelle: QUELLEN-492, Winterthurer Volltext
+      // nicht gelesen). `ml_zhHinweis` nennt keine Beträge und verweist an die Stadt.
       case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName }) + (e.kanton === 'ZH' ? ' ' + t('stundenlohnView.ml_zhHinweis') : '');
       default: return t('stundenlohnView.ml_keinKanton');
     }

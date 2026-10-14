@@ -173,6 +173,16 @@ describe('Schwellen: Pensionskasse und Unfallversicherung', () => {
     expect(stundenlohnRechnen({ betrag: '25', ferienForm: 'dazu', wochenstunden: '18', dreizehnter: 'nein' }).bvg).toBe('obligatorisch');
   });
 
+  it('B2 (Fach) · befristet bis drei Monate: keine Pensionskassen-Pflicht behaupten, auch über der Schwelle', () => {
+    const basis = { betrag: '25', ferienForm: 'dazu', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' };
+    expect(stundenlohnRechnen({ ...basis, art: 'befristet' }).bvg).toBe('befristetKurz');
+    expect(stundenlohnRechnen({ ...basis, art: 'befristet', ueber3Monate: 'nein' }).bvg).toBe('befristetKurz');
+    expect(stundenlohnRechnen({ ...basis, art: 'befristet', ueber3Monate: 'ja' }).bvg).toBe('obligatorisch');
+    expect(stundenlohnRechnen({ ...basis, art: 'fest' }).bvg).toBe('obligatorisch');
+    // unter der Schwelle bleibt es «darunter»
+    expect(stundenlohnRechnen({ ...basis, wochenstunden: '10', art: 'befristet' }).bvg).toBe('darunter');
+  });
+
   it('NBU ab 8 Std./Woche; darunter nur Berufsunfälle', () => {
     expect(stundenlohnRechnen({ betrag: '25', wochenstunden: '8' }).nbu).toBe('versichert');
     expect(stundenlohnRechnen({ betrag: '25', wochenstunden: '7,5' }).nbu).toBe('nurBeruf');
@@ -230,5 +240,35 @@ describe('Einordnung im gerenderten Text', () => {
     const txt = seite({ betrag: '25', wochenstunden: '18', dreizehnter: 'nein', feiertag: 'nein' });
     expect(txt).toContain('Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind');
     expect(txt).toContain("geschätzt CHF 21’600 oder CHF 23’400 im Jahr, Eintrittsschwelle CHF 22’680 (BVG Art. 2 Abs. 1).");
+  });
+
+  it('befristet: der Hinweis ersetzt die Pflichtaussage; sonst nennt der Text die Ausnahmen', () => {
+    const basis = { betrag: '25', ferienForm: 'dazu', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' };
+    const kurz = seite({ ...basis, art: 'befristet' });
+    expect(kurz).toContain('Bei befristeten Anstellungen bis drei Monate gilt die Pflicht in der Regel nicht (BVV 2 Art. 1j Abs. 1 Bst. b).');
+    expect(kurz).not.toContain('gehört die Stelle damit in die Pensionskasse');
+    const fest = seite({ ...basis, art: 'fest' });
+    expect(fest).toContain('in der Regel gehört die Stelle damit in die Pensionskasse (BVG Art. 2 Abs. 1). Ausnahmen: befristet auf höchstens drei Monate, Nebenerwerb neben einer schon versicherten Hauptstelle (BVV 2 Art. 1j Abs. 1 Bst. b und c).');
+  });
+
+  it('Tessin: «ok» nennt die Spanne der Branchen, andere Kantone nicht; überall der Hinweis auf GAV/NAV', () => {
+    const ti = seite({ betrag: '22', ferienForm: 'bezahlt', kanton: 'TI', wochenstunden: '20', dreizehnter: 'nein' });
+    expect(ti).toContain('liegt auf oder über dem tiefsten Tessiner Mindestlohn (CHF 20.00). Je nach Branche liegt er bis CHF 20.50.');
+    const ge = seite({ betrag: '30', ferienForm: 'bezahlt', kanton: 'GE', wochenstunden: '20', dreizehnter: 'nein' });
+    expect(ge).not.toContain('Tessiner');
+    for (const txt of [ti, ge]) expect(txt).toContain('Ein Gesamt- oder Normalarbeitsvertrag der Branche kann einen höheren Mindestlohn vorschreiben.');
+  });
+
+  it('NBU unter 8 Stunden: Berufsunfälle und Arbeitsweg, nicht die Freizeit', () => {
+    const txt = seite({ betrag: '25', wochenstunden: '6' });
+    expect(txt).toContain('nur Berufsunfälle versichert, dazu Unfälle auf dem Arbeitsweg (UVV Art. 13 Abs. 1 und 2). Unfälle in der Freizeit nicht.');
+  });
+
+  it('Quellenzeile: NE Art. 32d Abs. 3, BS § 3 Abs. 1, keine Behauptung zu BS-Feiertagen', () => {
+    const txt = seite({});
+    expect(txt).toContain('NE LEmpl Art. 32d Abs. 3');
+    expect(txt).toContain('BS MiLoG § 3 Abs. 1');
+    expect(txt).not.toContain('Art. 32a ff.');
+    expect(txt).toContain('In Genf, Neuenburg, im Tessin und im Jura gilt der Mindestlohn ohne Ferien- und Feiertagszuschlag, in Basel-Stadt ohne Ferienzuschlag.');
   });
 });
