@@ -97,7 +97,11 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
     const vorsatz = r.ferienForm === 'unklar' ? t('stundenlohnView.lesartKurz_' + key) + ' ' : '';
     switch (b.status) {
       case 'ok': return vorsatz + t('stundenlohnView.ml_ok', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr });
-      case 'konformMit13': return vorsatz + t('stundenlohnView.ml_konformMit13', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName });
+      case 'konformMit13': return vorsatz + t('stundenlohnView.ml_konformMit13', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName })
+        // Die Basler Besonderheit (13. nur bei anteiliger Auszahlung) gehört nur zu Basel-Stadt.
+        + (e.kanton === 'BS' ? ' ' + t('stundenlohnView.ml_konformMit13Bs') : '');
+      // Kanton, in dem nicht belegt ist, ob der Mindestlohn den Ferienzuschlag enthält (BS).
+      case 'ferienUnbelegt': return vorsatz + t('stundenlohnView.ml_ferienUnbelegt', { kanton: kantonName, ueberUnter: t('stundenlohnView.ml_wortUeber'), mindest: zahlText(b.mindestStunde), stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
       case 'dreizehnterUnklar': return vorsatz + t('stundenlohnView.ml_dreizehnterUnklar', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName });
       case 'unterMindestlohn': return vorsatz + t('stundenlohnView.ml_unter', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr })
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
@@ -173,7 +177,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
             befundKeys.map((key) => React.createElement('p', { key, style: absatz }, befundSatz(key))),
             React.createElement('p', { style: absatz }, r.bvg === 'unbekannt'
               ? t('stundenlohnView.bvg_unbekannt')
-              : t('stundenlohnView.bvg_' + r.bvg, { jahr: betrag(r.jahreslohn), schwelle: betrag(r.bvgSchwelle) })),
+              : t('stundenlohnView.bvg_' + r.bvg, { jahr: betrag(r.jahreslohn), tief: betrag(r.jahrTief), hoch: betrag(r.jahrHoch), schwelle: betrag(r.bvgSchwelle) })),
             React.createElement('p', { style: absatz }, t('stundenlohnView.nbu_' + r.nbu)),
             e.art && ['abrufEcht', 'abrufUnecht', 'befristet', 'temporaer', 'hausdienst'].includes(e.art) && React.createElement('p', { style: absatz }, t('stundenlohnView.art_einordnung_' + e.art))
           )

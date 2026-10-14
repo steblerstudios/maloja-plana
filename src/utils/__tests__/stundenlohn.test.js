@@ -1,4 +1,9 @@
 import { describe, it, expect } from 'vitest';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { Stundenlohn } from '../../Stundenlohn.jsx';
+import { createT } from '../../i18n/index.js';
+import de from '../../i18n/de.js';
 import { stundenlohnRechnen, ferienSatz, ferienWochenAnspruch, offeneFragen } from '../stundenlohn.js';
 
 // «Was steht mir im Stundenlohn zu?» — getrennte Rechnung für Grundlohn und Zuschläge.
@@ -40,12 +45,12 @@ describe('Grundlohn und Zuschläge getrennt', () => {
 
   it('«inklusive»: 25 Fr. enthalten den Zuschlag → Grundlohn 23.08 + Ferien 1.92', () => {
     const r = stundenlohnRechnen({ betrag: '25', ferienForm: 'inklusive', dreizehnter: 'nein', feiertag: 'nein' });
-    expect(r.lesarten.inklusive).toEqual({ grund: 23.08, ferien: 1.92, feiertag: 0, dreizehnter: 0, total: 25 });
+    expect(r.lesarten.inklusive).toMatchObject({ grund: 23.08, ferien: 1.92, feiertag: 0, dreizehnter: 0, total: 25 });
   });
 
   it('«dazu»: der Zuschlag kommt zu den 25 Fr. dazu → 27.08', () => {
     const r = stundenlohnRechnen({ betrag: '25', ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' });
-    expect(r.lesarten.dazu).toEqual({ grund: 25, ferien: 2.08, feiertag: 0, dreizehnter: 0, total: 27.08 });
+    expect(r.lesarten.dazu).toMatchObject({ grund: 25, ferien: 2.08, feiertag: 0, dreizehnter: 0, total: 27.08 });
   });
 
   it('«bezahlt»: Ferien werden bezogen und bezahlt → kein Zuschlag', () => {
@@ -104,6 +109,34 @@ describe('Mindestlohn am Grundlohn, nicht am Betrag mit Zuschlägen', () => {
     expect(r.befunde.inklusive.mindestMonat).toBeUndefined();
   });
 
+  it('B2 · NE: der Mindestlohn gilt ohne Ferienentschädigung (LEmpl Art. 32d Abs. 3) → wie GE/TI/JU am Grundlohn', () => {
+    // 22.50 inkl. Ferien → Grundlohn 20.77 < 21.35
+    const r = stundenlohnRechnen({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'NE', wochenstunden: '20' });
+    expect(r.befunde.inklusive.status).toBe('unterMindestlohn');
+  });
+
+  it('B2 · BS: ob der Mindestlohn den Ferienzuschlag enthält, ist nicht belegt → kein «unter», solange der Betrag mit Zuschlag reicht', () => {
+    const r = stundenlohnRechnen({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' });
+    expect(r.befunde.inklusive.status).toBe('ferienUnbelegt');
+    expect(r.befunde.inklusive.ueberUnter).toBe('ueber');
+    expect(r.befunde.inklusive.mindestStunde).toBe(22.2);
+    expect(r.befunde.inklusive.status).not.toBe('unterMindestlohn');
+  });
+
+  it('B2 · BS: liegt schon der Betrag mit Zuschlag darunter → «unter» wie bisher', () => {
+    const r = stundenlohnRechnen({ betrag: '20', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' });
+    expect(r.befunde.inklusive.status).toBe('unterMindestlohn');
+  });
+
+  it('B2 · BS, Ferien «dazu»: der Grundlohn ist der Betrag, keine Unsicherheit', () => {
+    expect(stundenlohnRechnen({ betrag: '22.5', ferienForm: 'dazu', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' }).befunde.dazu.status).toBe('ok');
+    expect(stundenlohnRechnen({ betrag: '21', ferienForm: 'dazu', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' }).befunde.dazu.status).toBe('unterMindestlohn');
+  });
+
+  it('B2 · NE 20.00 inklusive → «unter»', () => {
+    expect(stundenlohnRechnen({ betrag: '20', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'NE', wochenstunden: '20' }).befunde.inklusive.status).toBe('unterMindestlohn');
+  });
+
   it('Kanton ohne Mindestlohn → keinGesetz; ohne Kanton → keinKanton', () => {
     expect(stundenlohnRechnen({ betrag: '18', ferienForm: 'dazu', kanton: 'ZH' }).befunde.dazu.status).toBe('keinGesetz');
     expect(stundenlohnRechnen({ betrag: '18', ferienForm: 'dazu' }).befunde.dazu.status).toBe('keinKanton');
@@ -112,21 +145,47 @@ describe('Mindestlohn am Grundlohn, nicht am Betrag mit Zuschlägen', () => {
 
 describe('Schwellen: Pensionskasse und Unfallversicherung', () => {
   it('BVG: über 22 680 im Jahr obligatorisch, mit der tiefsten Lesart gerechnet', () => {
-    // 23.08 × 20 × 52 = 24 003 → über der Schwelle
-    const r = stundenlohnRechnen({ betrag: '25', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' });
-    expect(r.jahreslohn).toBe(24003);
+    // Ferien enthalten: 25 × 12/13 × 20 × 52 = 24 000 (ungerundeter Grundlohn) → über der Schwelle
+    const r = stundenlohnRechnen({ betrag: '25', ferienForm: 'inklusive', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' });
+    expect(r.jahreslohn).toBe(24000);
     expect(r.bvg).toBe('obligatorisch');
-    // 23.08 × 15 × 52 = 18 002 → darunter
-    expect(stundenlohnRechnen({ betrag: '25', wochenstunden: '15', dreizehnter: 'nein' }).bvg).toBe('darunter');
+    // 25 × 12/13 × 15 × 52 = 18 000 → darunter
+    expect(stundenlohnRechnen({ betrag: '25', ferienForm: 'inklusive', wochenstunden: '15', dreizehnter: 'nein' }).bvg).toBe('darunter');
   });
 
   it('BVG: genau auf der Schwelle ist noch nicht versichert (Art. 2: «mehr als»)', () => {
-    // Genau auf die Schwelle: 21.81 × 19.998 × 52 = 22 680.3 → gerundet 22 680.
-    const genau = stundenlohnRechnen({ betrag: '21.81', ferienForm: 'bezahlt', wochenstunden: '19.998', dreizehnter: 'nein', feiertag: 'nein' });
+    // 31.50 × 12/13 × 15 × 52 = 22 680.00 genau → nicht mehr als die Schwelle
+    const genau = stundenlohnRechnen({ betrag: '31.5', ferienForm: 'inklusive', wochenstunden: '15', dreizehnter: 'nein', feiertag: 'nein' });
     expect(genau.jahreslohn).toBe(22680);
     expect(genau.bvg).toBe('darunter');
-    // 21.81 × 20 × 52 = 22 682 → einen Schritt darüber
-    expect(stundenlohnRechnen({ betrag: '21.81', ferienForm: 'bezahlt', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' }).bvg).toBe('obligatorisch');
+    // 31.51 → 22 687.20, einen Schritt darüber
+    expect(stundenlohnRechnen({ betrag: '31.51', ferienForm: 'inklusive', wochenstunden: '15', dreizehnter: 'nein', feiertag: 'nein' }).bvg).toBe('obligatorisch');
+  });
+
+  it('BVG: die Schwelle wird am ungerundeten Jahreslohn gemessen, nicht am gerundeten', () => {
+    // 21.81 × 19.998 × 52 = 22 680.3 → mehr als 22 680, auch wenn die Anzeige 22 680 zeigt
+    const r = stundenlohnRechnen({ betrag: '21.81', ferienForm: 'bezahlt', wochenstunden: '19.998', dreizehnter: 'nein', feiertag: 'nein' });
+    expect(r.jahreslohn).toBe(22680);
+    expect(r.bvg).toBe('obligatorisch');
+  });
+
+  it('B1 · Ferienform unklar: liegen die Lesarten auf verschiedenen Seiten der Schwelle → haengtAnFerien', () => {
+    // enthalten: 25 × 12/13 × 18 × 52 = 21 600 · dazu: 25 × 18 × 52 = 23 400 · Schwelle 22 680
+    const r = stundenlohnRechnen({ betrag: '25', wochenstunden: '18', dreizehnter: 'nein', feiertag: 'nein' });
+    expect(r.ferienForm).toBe('unklar');
+    expect(r.bvg).toBe('haengtAnFerien');
+    expect(r.jahrTief).toBe(21600);
+    expect(r.jahrHoch).toBe(23400);
+  });
+
+  it('B1 · Ferienform unklar, aber beide Lesarten auf derselben Seite → eindeutig', () => {
+    expect(stundenlohnRechnen({ betrag: '25', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' }).bvg).toBe('obligatorisch'); // 24 000 / 26 000
+    expect(stundenlohnRechnen({ betrag: '25', wochenstunden: '15', dreizehnter: 'nein', feiertag: 'nein' }).bvg).toBe('darunter'); // 18 000 / 19 500
+  });
+
+  it('B1 · bekannte Ferienform: nie haengtAnFerien', () => {
+    expect(stundenlohnRechnen({ betrag: '25', ferienForm: 'inklusive', wochenstunden: '18', dreizehnter: 'nein' }).bvg).toBe('darunter');
+    expect(stundenlohnRechnen({ betrag: '25', ferienForm: 'dazu', wochenstunden: '18', dreizehnter: 'nein' }).bvg).toBe('obligatorisch');
   });
 
   it('NBU ab 8 Std./Woche; darunter nur Berufsunfälle', () => {
@@ -162,5 +221,36 @@ describe('offene Fragen', () => {
     expect(offeneFragen({ art: 'temporaer' }, basis)).toEqual(['gav']);
     expect(offeneFragen({ art: 'befristet' }, basis)).toEqual(['krankheit']);
     expect(offeneFragen({ art: 'befristet', ueber3Monate: 'ja' }, basis)).toEqual([]);
+  });
+});
+
+// Die Einordnung, wie sie die Person liest: gerenderter Text (de), nicht nur der Status.
+describe('Einordnung im gerenderten Text', () => {
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const t = createT({ de }, 'de', 'sie');
+  const seite = (rechner) => renderToStaticMarkup(React.createElement(Stundenlohn, {
+    palette, t, onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
+  })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+
+  it('B10 · der Basel-Satz zum 13. Monatslohn steht nur bei Basel-Stadt', () => {
+    const basis = { betrag: '21', ferienForm: 'dazu', dreizehnter: 'ja', wochenstunden: '20', feiertag: 'nein' };
+    expect(seite({ ...basis, kanton: 'BS' })).toContain('In Basel-Stadt gilt das nur');
+    // Genf: 24.00 liegt zwischen 22.70 und 24.59 → konformMit13, aber ohne den Basler Satz
+    const ge = seite({ ...basis, betrag: '24', kanton: 'GE' });
+    expect(ge).toContain('Mit dem 13. Monatslohn kann das reichen');
+    expect(ge).not.toContain('In Basel-Stadt gilt das nur');
+  });
+
+  it('B1 · unbekannte Ferienform an der Schwelle: der Text sagt, dass es an den Ferien hängt', () => {
+    const txt = seite({ betrag: '25', wochenstunden: '18', dreizehnter: 'nein', feiertag: 'nein' });
+    expect(txt).toContain('Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind');
+    expect(txt).toContain("geschätzt CHF 21’600 oder CHF 23’400 im Jahr, Eintrittsschwelle CHF 22’680 (BVG Art. 2 Abs. 1).");
+  });
+
+  it('B2 · BS: offener Punkt statt «unter»', () => {
+    const txt = seite({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' });
+    expect(txt).toContain('Ob der Mindestlohn im Kanton Basel-Stadt den Ferienzuschlag enthält, ist hier nicht belegt.');
+    expect(txt).toContain('Mit Zuschlag liegt der Lohn über');
+    expect(txt).not.toContain('scheint unter dem gesetzlichen Mindestlohn');
   });
 });

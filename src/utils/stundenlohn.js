@@ -16,7 +16,7 @@
 //
 // Quellen je Aussage: in den Texten (i18n `stundenlohnView`) und unten an den Konstanten.
 
-import { pruefeStundenlohn, stundenAufMonat, wochenstundenUnplausibel } from '../data/lohnCheck.js';
+import { pruefeStundenlohn, stundenAufMonat, wochenstundenUnplausibel, kantonHatMindestlohn, getMindestlohn } from '../data/lohnCheck.js';
 import { BVG_EINTRITTSSCHWELLE_JAHR } from '../data/lohnAbzuege.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from '../data/ergebnisArt.js';
 
@@ -56,6 +56,13 @@ export const FERIEN_MIN_WOCHEN_BIS_20 = 5;
 // Arbeitgeber (UVV Art. 13 Abs. 1).
 export const NBU_MIN_WOCHENSTUNDEN = 8;
 
+// Kantone, in denen der Mindestlohn AUSDRÜCKLICH ohne Ferien- und Feiertagszuschlag gilt
+// (am Wortlaut belegt): GE LIRT Art. 39K Abs. 5 · TI Decreto esecutivo 11.12.2025 · JU (siehe
+// data/lohnCheck.js, «Ferien-/Feiertagszuschläge») · NE LEmpl Art. 32d Abs. 3 («indemnités de
+// vacances et pour jours fériés non comprises», RSN 813.10, Stand 1.1.2026). BS (MiLoG) ist
+// nicht belegt: dort bleibt offen, ob der Zuschlag im Mindestlohn steckt.
+export const OHNE_FERIENZUSCHLAG = ['GE', 'NE', 'TI', 'JU'];
+
 // Liest «25.50», «25,50», «1'200» — alles andere (Text, negativ, leer) ergibt 0.
 export const lies = (v) => {
   if (v === null || v === undefined) return 0;
@@ -86,6 +93,8 @@ function lesart(betrag, satzFerien, satzFeiertag, dreizehnter, inklusive, mitZus
   const feiertag = grund * satzFeiertag;
   const dreizehnterAnteil = dreizehnter === 'ja' ? grund / 12 : 0;
   return {
+    grundRoh: grund,
+    ferienRoh: ferien,
     grund: rappen(grund),
     ferien: rappen(ferien),
     feiertag: rappen(feiertag),
@@ -105,6 +114,21 @@ function mindestlohn(grund, wochenstunden, kanton, dreizehnter) {
     return rest;
   }
   return befund;
+}
+
+// Befund je Lesart. In den Kantonen mit belegtem Ausschluss zählt der Grundlohn. Anderswo (BS)
+// ist nicht belegt, ob der Mindestlohn den Ferienzuschlag enthält: liegt der Grundlohn darunter,
+// der Betrag MIT Zuschlag aber nicht, bleibt das ein offener Punkt statt eines «unter».
+function befundLesart(l, inklusive, w, kanton, dreizehnter) {
+  const b = mindestlohn(l.grund, w, kanton, dreizehnter);
+  if (inklusive && b.status !== 'ok' && kantonHatMindestlohn(kanton) && !OHNE_FERIENZUSCHLAG.includes(kanton)) {
+    const mit = mindestlohn(rappen(l.grundRoh + l.ferienRoh), w, kanton, dreizehnter);
+    if (mit.status === 'ok') {
+      const ml = getMindestlohn(kanton);
+      return { status: 'ferienUnbelegt', kanton, mindestStunde: ml.chfStunde, jahr: ml.jahr, mitZuschlagStunde: mit.lohnStunde, ueberUnter: 'ueber' };
+    }
+  }
+  return b;
 }
 
 export function stundenlohnRechnen(eingabe) {
@@ -137,16 +161,23 @@ export function stundenlohnRechnen(eingabe) {
 
   const befunde = {};
   for (const [key, l] of Object.entries(lesarten)) {
-    befunde[key] = e.kanton ? mindestlohn(l.grund, w, e.kanton, dreizehnter) : { status: 'keinKanton' };
+    befunde[key] = e.kanton ? befundLesart(l, key.startsWith('inklusive'), w, e.kanton, dreizehnter) : { status: 'keinKanton' };
   }
 
   // Jahreslohn (Schätzung): Grundlohn mit Ferien über 52 Wochen = Grundlohn × Stunden × 52,
   // gleich ob die Ferien als Zuschlag oder als bezahlte Wochen kommen. Dazu Feiertage und 13.
-  // Massgebend für die Schwellen ist die tiefste Lesart — sie behauptet am wenigsten.
-  const tiefste = Object.values(lesarten).reduce((a, b) => (a.grund <= b.grund ? a : b));
-  const jahreslohn = w > 0
-    ? Math.round(tiefste.grund * (1 + satzFeiertag) * w * 52 * (dreizehnter === 'ja' ? 13 / 12 : 1))
-    : null;
+  // Gerechnet wird mit dem UNGERUNDETEN Grundlohn; gerundet wird nur die Anzeige.
+  // Bei unbekannter Ferienform entscheiden die Lesarten: liegen sie auf verschiedenen Seiten
+  // der BVG-Schwelle, hängt die Pflicht an den Ferien — das wird gesagt, nicht geraten.
+  const jahrJe = Object.values(lesarten).map((l) => l.grundRoh * (1 + satzFeiertag) * w * 52 * (dreizehnter === 'ja' ? 13 / 12 : 1));
+  const jahrTiefRoh = w > 0 ? Math.min(...jahrJe) : null;
+  const jahrHochRoh = w > 0 ? Math.max(...jahrJe) : null;
+  const jahreslohn = w > 0 ? Math.round(jahrTiefRoh) : null;
+  // BVG Art. 2 Abs. 1: versichert, wer bei einem Arbeitgeber MEHR als die Schwelle verdient (auf Rappen verglichen).
+  const ueber = (x) => rappen(x) > BVG_EINTRITTSSCHWELLE_JAHR;
+  const bvg = w > 0
+    ? (ueber(jahrTiefRoh) === ueber(jahrHochRoh) ? (ueber(jahrTiefRoh) ? 'obligatorisch' : 'darunter') : 'haengtAnFerien')
+    : 'unbekannt';
 
   return {
     status: 'gerechnet',
@@ -160,8 +191,9 @@ export function stundenlohnRechnen(eingabe) {
     stundenUnplausibel,
     monat: w > 0 ? Object.fromEntries(Object.entries(lesarten).map(([k, l]) => [k, Math.round(l.total * stundenAufMonat(w))])) : null,
     jahreslohn,
-    // BVG Art. 2 Abs. 1: versichert, wer bei einem Arbeitgeber MEHR als die Schwelle verdient.
-    bvg: jahreslohn === null ? 'unbekannt' : jahreslohn > BVG_EINTRITTSSCHWELLE_JAHR ? 'obligatorisch' : 'darunter',
+    jahrTief: jahreslohn,
+    jahrHoch: w > 0 ? Math.round(jahrHochRoh) : null,
+    bvg,
     bvgSchwelle: BVG_EINTRITTSSCHWELLE_JAHR,
     nbu: w > 0 ? (w >= NBU_MIN_WOCHENSTUNDEN ? 'versichert' : 'nurBeruf') : 'unbekannt',
     fragen: offeneFragen(e, { ferienForm, dreizehnter, feiertag }),
