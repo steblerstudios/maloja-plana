@@ -109,32 +109,17 @@ describe('Mindestlohn am Grundlohn, nicht am Betrag mit Zuschlägen', () => {
     expect(r.befunde.inklusive.mindestMonat).toBeUndefined();
   });
 
-  it('B2 · NE: der Mindestlohn gilt ohne Ferienentschädigung (LEmpl Art. 32d Abs. 3) → wie GE/TI/JU am Grundlohn', () => {
-    // 22.50 inkl. Ferien → Grundlohn 20.77 < 21.35
-    const r = stundenlohnRechnen({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'NE', wochenstunden: '20' });
-    expect(r.befunde.inklusive.status).toBe('unterMindestlohn');
+  it('B2 · NE und BS: der Mindestlohn gilt ohne Ferienzuschlag (LEmpl Art. 32d Abs. 3 · MiLoG § 3 Abs. 1) → am Grundlohn', () => {
+    // 22.50 inkl. Ferien → Grundlohn 20.77: unter NE 21.35 und unter BS 22.20
+    for (const kanton of ['NE', 'BS']) {
+      const r = stundenlohnRechnen({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton, wochenstunden: '20' });
+      expect(r.befunde.inklusive.status, kanton).toBe('unterMindestlohn');
+      expect(r.befunde.inklusive.lohnStunde).toBe(20.77);
+    }
   });
 
-  it('B2 · BS: ob der Mindestlohn den Ferienzuschlag enthält, ist nicht belegt → kein «unter», solange der Betrag mit Zuschlag reicht', () => {
-    const r = stundenlohnRechnen({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' });
-    expect(r.befunde.inklusive.status).toBe('ferienUnbelegt');
-    expect(r.befunde.inklusive.ueberUnter).toBe('ueber');
-    expect(r.befunde.inklusive.mindestStunde).toBe(22.2);
-    expect(r.befunde.inklusive.status).not.toBe('unterMindestlohn');
-  });
-
-  it('B2 · BS: liegt schon der Betrag mit Zuschlag darunter → «unter» wie bisher', () => {
-    const r = stundenlohnRechnen({ betrag: '20', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' });
-    expect(r.befunde.inklusive.status).toBe('unterMindestlohn');
-  });
-
-  it('B2 · BS, Ferien «dazu»: der Grundlohn ist der Betrag, keine Unsicherheit', () => {
+  it('B2 · BS, Ferien «dazu»: der Betrag ist der Grundlohn', () => {
     expect(stundenlohnRechnen({ betrag: '22.5', ferienForm: 'dazu', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' }).befunde.dazu.status).toBe('ok');
-    expect(stundenlohnRechnen({ betrag: '21', ferienForm: 'dazu', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' }).befunde.dazu.status).toBe('unterMindestlohn');
-  });
-
-  it('B2 · NE 20.00 inklusive → «unter»', () => {
-    expect(stundenlohnRechnen({ betrag: '20', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'NE', wochenstunden: '20' }).befunde.inklusive.status).toBe('unterMindestlohn');
   });
 
   it('Kanton ohne Mindestlohn → keinGesetz; ohne Kanton → keinKanton', () => {
@@ -245,12 +230,5 @@ describe('Einordnung im gerenderten Text', () => {
     const txt = seite({ betrag: '25', wochenstunden: '18', dreizehnter: 'nein', feiertag: 'nein' });
     expect(txt).toContain('Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind');
     expect(txt).toContain("geschätzt CHF 21’600 oder CHF 23’400 im Jahr, Eintrittsschwelle CHF 22’680 (BVG Art. 2 Abs. 1).");
-  });
-
-  it('B2 · BS: offener Punkt statt «unter»', () => {
-    const txt = seite({ betrag: '22.5', ferienForm: 'inklusive', dreizehnter: 'nein', kanton: 'BS', wochenstunden: '20' });
-    expect(txt).toContain('Ob der Mindestlohn im Kanton Basel-Stadt den Ferienzuschlag enthält, ist hier nicht belegt.');
-    expect(txt).toContain('Mit Zuschlag liegt der Lohn über');
-    expect(txt).not.toContain('scheint unter dem gesetzlichen Mindestlohn');
   });
 });

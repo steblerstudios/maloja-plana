@@ -16,7 +16,7 @@
 //
 // Quellen je Aussage: in den Texten (i18n `stundenlohnView`) und unten an den Konstanten.
 
-import { pruefeStundenlohn, stundenAufMonat, wochenstundenUnplausibel, kantonHatMindestlohn, getMindestlohn } from '../data/lohnCheck.js';
+import { pruefeStundenlohn, stundenAufMonat, wochenstundenUnplausibel } from '../data/lohnCheck.js';
 import { BVG_EINTRITTSSCHWELLE_JAHR } from '../data/lohnAbzuege.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from '../data/ergebnisArt.js';
 
@@ -55,13 +55,6 @@ export const FERIEN_MIN_WOCHEN_BIS_20 = 5;
 // Unfallversicherung: gegen Nichtberufsunfälle versichert ab 8 Std./Woche beim selben
 // Arbeitgeber (UVV Art. 13 Abs. 1).
 export const NBU_MIN_WOCHENSTUNDEN = 8;
-
-// Kantone, in denen der Mindestlohn AUSDRÜCKLICH ohne Ferien- und Feiertagszuschlag gilt
-// (am Wortlaut belegt): GE LIRT Art. 39K Abs. 5 · TI Decreto esecutivo 11.12.2025 · JU (siehe
-// data/lohnCheck.js, «Ferien-/Feiertagszuschläge») · NE LEmpl Art. 32d Abs. 3 («indemnités de
-// vacances et pour jours fériés non comprises», RSN 813.10, Stand 1.1.2026). BS (MiLoG) ist
-// nicht belegt: dort bleibt offen, ob der Zuschlag im Mindestlohn steckt.
-export const OHNE_FERIENZUSCHLAG = ['GE', 'NE', 'TI', 'JU'];
 
 // Liest «25.50», «25,50», «1'200» — alles andere (Text, negativ, leer) ergibt 0.
 export const lies = (v) => {
@@ -103,7 +96,11 @@ function lesart(betrag, satzFerien, satzFeiertag, dreizehnter, inklusive, mitZus
   };
 }
 
-// Mindestlohn am Grundlohn. Ohne Wochenstunden rechnet `pruefeStundenlohn` mit einer Stunde:
+// Mindestlohn am Grundlohn: in allen fünf Kantonen gilt der Mindestlohn OHNE Ferienzuschlag —
+// GE LIRT Art. 39K Abs. 5 · TI Decreto esecutivo 11.12.2025 · JU (data/lohnCheck.js, «Ferien-/
+// Feiertagszuschläge») · NE LEmpl Art. 32d Abs. 3 (Ferien- und Feiertagsentschädigung nicht
+// eingerechnet) · BS MiLoG § 3 Abs. 1 («Zusätzlich ist der gesetzliche Ferienzuschlag
+// geschuldet»). Der Feiertagszuschlag wird hier nie aus dem Betrag herausgerechnet. Ohne Wochenstunden rechnet `pruefeStundenlohn` mit einer Stunde:
 // der Stundenvergleich hängt nicht davon ab, nur die Monatsdifferenz — die fällt dann weg.
 function mindestlohn(grund, wochenstunden, kanton, dreizehnter) {
   const w = wochenstunden > 0 ? wochenstunden : 1;
@@ -114,21 +111,6 @@ function mindestlohn(grund, wochenstunden, kanton, dreizehnter) {
     return rest;
   }
   return befund;
-}
-
-// Befund je Lesart. In den Kantonen mit belegtem Ausschluss zählt der Grundlohn. Anderswo (BS)
-// ist nicht belegt, ob der Mindestlohn den Ferienzuschlag enthält: liegt der Grundlohn darunter,
-// der Betrag MIT Zuschlag aber nicht, bleibt das ein offener Punkt statt eines «unter».
-function befundLesart(l, inklusive, w, kanton, dreizehnter) {
-  const b = mindestlohn(l.grund, w, kanton, dreizehnter);
-  if (inklusive && b.status !== 'ok' && kantonHatMindestlohn(kanton) && !OHNE_FERIENZUSCHLAG.includes(kanton)) {
-    const mit = mindestlohn(rappen(l.grundRoh + l.ferienRoh), w, kanton, dreizehnter);
-    if (mit.status === 'ok') {
-      const ml = getMindestlohn(kanton);
-      return { status: 'ferienUnbelegt', kanton, mindestStunde: ml.chfStunde, jahr: ml.jahr, mitZuschlagStunde: mit.lohnStunde, ueberUnter: 'ueber' };
-    }
-  }
-  return b;
 }
 
 export function stundenlohnRechnen(eingabe) {
@@ -161,7 +143,7 @@ export function stundenlohnRechnen(eingabe) {
 
   const befunde = {};
   for (const [key, l] of Object.entries(lesarten)) {
-    befunde[key] = e.kanton ? befundLesart(l, key.startsWith('inklusive'), w, e.kanton, dreizehnter) : { status: 'keinKanton' };
+    befunde[key] = e.kanton ? mindestlohn(l.grund, w, e.kanton, dreizehnter) : { status: 'keinKanton' };
   }
 
   // Jahreslohn (Schätzung): Grundlohn mit Ferien über 52 Wochen = Grundlohn × Stunden × 52,

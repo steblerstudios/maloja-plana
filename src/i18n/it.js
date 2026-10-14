@@ -4664,8 +4664,6 @@ export default {
     ml_unter: 'Il salario di base di {grund} all’ora sembra inferiore al salario minimo legale nel cantone {kanton} ({mindest} all’ora, stato {jahr}). Il confronto è fatto senza supplemento per vacanze e giorni festivi.',
     ml_differenz: 'Al mese sarebbero circa {betrag} in meno del salario minimo.',
     ml_stelle: 'Se nessuna di queste si applica, i diritti possono essere chiariti presso {stelle}.',
-    ml_ferienUnbelegt: 'Qui non è accertato se il salario minimo nel cantone {kanton} comprenda il supplemento per vacanze. Con il supplemento il salario è {ueberUnter} {mindest}, senza è inferiore. Informazioni: {stelle}.',
-    ml_wortUeber: 'superiore a',
     ml_keinGesetz: 'Il cantone {kanton} non ha un salario minimo legale. Un contratto collettivo di lavoro del settore può comunque prevederne uno.',
     ml_zhHinweis: 'Le città di Zurigo e Winterthur hanno votato su un salario minimo comunale. Maloja non verifica se oggi si applica — l’amministrazione cittadina può informare.',
     ml_keinKanton: 'Con il cantone del luogo di lavoro, il salario di base può essere confrontato con un salario minimo cantonale.',

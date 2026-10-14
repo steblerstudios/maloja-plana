@@ -4723,8 +4723,6 @@ export default {
     ml_unter: 'Der Grundlohn von {grund} pro Stunde scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen ({mindest} pro Stunde, Stand {jahr}). Verglichen wird ohne Ferien- und Feiertagszuschlag.',
     ml_differenz: 'Pro Monat wären das etwa {betrag} weniger als der Mindestlohn.',
     ml_stelle: 'Trifft keine davon zu, lassen sich die Ansprüche bei {stelle} klären.',
-    ml_ferienUnbelegt: 'Ob der Mindestlohn im Kanton {kanton} den Ferienzuschlag enthält, ist hier nicht belegt. Mit Zuschlag liegt der Lohn {ueberUnter} {mindest}, ohne Zuschlag darunter. Auskunft: {stelle}.',
-    ml_wortUeber: 'über',
     ml_keinGesetz: 'Der Kanton {kanton} kennt keinen gesetzlichen Mindestlohn. Ein Gesamtarbeitsvertrag der Branche kann trotzdem einen vorschreiben.',
     ml_zhHinweis: 'In den Städten Zürich und Winterthur wurde über einen städtischen Mindestlohn abgestimmt. Ob er heute gilt, prüft Maloja nicht — Auskunft gibt die Stadtverwaltung.',
     ml_keinKanton: 'Mit dem Kanton des Arbeitsorts lässt sich der Grundlohn mit einem kantonalen Mindestlohn vergleichen.',

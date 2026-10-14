@@ -100,9 +100,6 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       case 'konformMit13': return vorsatz + t('stundenlohnView.ml_konformMit13', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName })
         // Die Basler Besonderheit (13. nur bei anteiliger Auszahlung) gehört nur zu Basel-Stadt.
         + (e.kanton === 'BS' ? ' ' + t('stundenlohnView.ml_konformMit13Bs') : '');
-      // Kanton, in dem nicht belegt ist, ob der Mindestlohn den Ferienzuschlag enthält (BS).
-      case 'ferienUnbelegt': return vorsatz + t('stundenlohnView.ml_ferienUnbelegt', { kanton: kantonName, ueberUnter: t('stundenlohnView.ml_wortUeber'), mindest: zahlText(b.mindestStunde), stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
-      case 'dreizehnterUnklar': return vorsatz + t('stundenlohnView.ml_dreizehnterUnklar', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName });
       case 'unterMindestlohn': return vorsatz + t('stundenlohnView.ml_unter', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr })
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
         + ' ' + t('lohnCheck.ausnahmen') + ' '

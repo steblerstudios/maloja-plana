@@ -4753,8 +4753,6 @@ export default {
     ml_unter: 'The base pay of {grund} per hour appears to be below the statutory minimum wage in the canton of {kanton} ({mindest} per hour, as of {jahr}). The comparison is made without holiday and public holiday supplements.',
     ml_differenz: 'Per month, that would be about {betrag} less than the minimum wage.',
     ml_stelle: 'If none of these applies, entitlements can be clarified with {stelle}.',
-    ml_ferienUnbelegt: 'Whether the minimum wage in the canton of {kanton} includes the holiday supplement is not established here. With the supplement, the wage is {ueberUnter} {mindest}; without it, below. Information: {stelle}.',
-    ml_wortUeber: 'above',
     ml_keinGesetz: 'The canton of {kanton} has no statutory minimum wage. A collective labour agreement for the sector can still set one.',
     ml_zhHinweis: 'The cities of Zurich and Winterthur have voted on a municipal minimum wage. Maloja does not check whether it applies today — the city administration can say.',
     ml_keinKanton: 'With the canton of the place of work, the base pay can be compared with a cantonal minimum wage.',

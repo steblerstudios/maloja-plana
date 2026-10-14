@@ -6138,9 +6138,6 @@ export default {
     ml_unter: 'Il salari da basa da {grund} per ura para dad esser sut il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). Cumpareglià vegn senza supplement da vacanzas e da dis da festa.',
     ml_differenz: 'Per mais fiss quai var {betrag} main ch’il salari minimal.',
     ml_stelle: 'Sche nagina da quellas na vala, pon ils dretgs vegnir sclerids tar {stelle}.',
-    // TODO(rm): Gegenlese: deutscher Rückfall, Fix-Welle #492 (14.10.2026)
-    ml_ferienUnbelegt: 'Ob der Mindestlohn im Kanton {kanton} den Ferienzuschlag enthält, ist hier nicht belegt. Mit Zuschlag liegt der Lohn {ueberUnter} {mindest}, ohne Zuschlag darunter. Auskunft: {stelle}.',
-    ml_wortUeber: 'über',
     ml_keinGesetz: 'Il chantun {kanton} n’enconuscha nagin salari minimal legal. In contract collectiv da lavur da la branscha po tuttina prescriver in.',
     ml_zhHinweis: 'Las citads da Turitg e Winterthur han votà davart in salari minimal communal. Sch’el vala oz, na verifitgescha Maloja betg — l’administraziun da la citad dat infurmaziun.',
     ml_keinKanton: 'Cun il chantun dal lieu da lavur sa lascha il salari da basa cumparegliar cun in salari minimal chantunal.',
