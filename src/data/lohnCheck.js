@@ -59,8 +59,12 @@ export const LOHNCHECK_DATA_VERSION = '2026';
 //    ⚠️ Fürs Wieder-Einschalten am Volltext klären: Die Ferienjob-Regel wird uneinheitlich
 //    referiert — teils als 75 % des Satzes (~18.44, max. 60 Tage/Jahr), teils als GANZE
 //    Ausnahme. Beides spricht fürs Ruhen; der Nutzertext sagt nur generisch „Ferienjobs".
-//  · **Ferien-/Feiertagszuschläge:** alle drei definieren den Boden OHNE sie (GE Art. 39K
-//    al. 5 · TI Decreto 11.12.2025 · JU). Bei Stundenlohn enthält das Monatseinkommen
+//  · **Ferien-/Feiertagszuschläge:** alle fünf definieren den Boden ohne Ferienzuschlag:
+//    GE Art. 39K al. 5 · TI Decreto 11.12.2025 · JU · NE LEmpl Art. 32d Abs. 3 (RSN 813.10,
+//    État au 1.1.2026: Ferien- UND Feiertagsentschädigung «non comprises») · BS MiLoG § 3
+//    Abs. 1 (SG 812.200, Stand 1.7.2022: «Zusätzlich ist der gesetzliche Ferienzuschlag
+//    geschuldet» — nur Ferien; Feiertage in BS nicht belegt, das Amt verlangt nur den
+//    1. August). Bei Stundenlohn enthält das Monatseinkommen
 //    diese ~14 % → der abgeleitete Stundenlohn ist zu hoch → verpasste Unterschreitungen.
 //    Sichere Richtung (kein Fehlalarm), darum kein Blocker.
 //
