@@ -40,3 +40,12 @@ export const addReminder = ({ title, dueDate, category = 'personal', recurrence 
   // Nur als Erfolg melden, wenn das Speichern wirklich geklappt hat (sonst kein falsches ✓).
   return saveReminders([...reminders, reminder]) ? reminder : null;
 };
+
+// Für jeden Erinnerungs-Knopf: im Beispiel und beim Ausprobieren (`vorlaeufig`, main.jsx)
+// bleibt nichts — addReminder ginge sonst in den ECHTEN Kalender (Review 14.10.2026).
+// Rückgabe: 'gespeichert' | 'vorlaeufig' | null (Speichern gescheitert, kein falsches ✓).
+// Den Text dazu wählt der Knopf: bei 'vorlaeufig' common.savedTemporary.
+export const erinnerungSichern = (reminder, vorlaeufig) => {
+  if (vorlaeufig) return 'vorlaeufig';
+  return addReminder(reminder) ? 'gespeichert' : null;
+};

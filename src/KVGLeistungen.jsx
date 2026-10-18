@@ -4,7 +4,8 @@ import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSy
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
-import { addReminder, loadReminders } from './utils/reminders.js';
+import { erinnerungSichern, loadReminders } from './utils/reminders.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
 import { getCantonName } from './config/cantonalData.js';
@@ -98,7 +99,9 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
   // belegbarem Monats-Intervall). Druckfrei, lokal, nie aggressiver als das Intervall.
   const recMonths = VORSORGE_INTERVAL_MONATE[item.key];
   const [lastVisit, setLastVisit] = React.useState(() => recMonths ? (loadVorsorgeDates()[item.key] || '') : '');
-  const [reminderSaved, setReminderSaved] = React.useState(false);
+  // null | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
+  const vorlaeufig = useVorlaeufig();
+  const [reminderSaved, setReminderSaved] = React.useState(null);
 
   return React.createElement('div', {
     style: {
@@ -195,13 +198,10 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                   React.createElement('div', { style: { color: palette.mid } }, t('kvg.nextRecommended', { date: nextStr })),
                   overdue && React.createElement('div', { style: { color: palette.mid, marginTop: '3px' } }, t('kvg.overdueHint')),
                   overdue && (reminderSaved
-                    ? React.createElement('div', { style: { color: palette.sageDeep || '#4A6657', marginTop: '4px' } }, hinweisZeichen('check'), t('kvg.reminderSaved'))
+                    ? React.createElement('div', { style: { color: palette.sageDeep || '#4A6657', marginTop: '4px' } }, hinweisZeichen('check'), t(reminderSaved === 'vorlaeufig' ? 'common.savedTemporary' : 'kvg.reminderSaved'))
                     : React.createElement('button', {
                         type: 'button',
-                        onClick: () => {
-                          const r = addReminder({ title: t('kvg.' + item.key), dueDate: inDays(0), category: 'health' });
-                          if (r) setReminderSaved(true);
-                        },
+                        onClick: () => setReminderSaved(erinnerungSichern({ title: t('kvg.' + item.key), dueDate: inDays(0), category: 'health' }, vorlaeufig)),
                         style: {
                           marginTop: '4px', background: 'none', border: '1px solid ' + palette.border,
                           borderRadius: radius.sm, padding: '4px 10px', fontSize: text.xs,
@@ -350,17 +350,21 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
 
   // Belege, für die schon eine offene Kalender-Erinnerung existiert (für ✓-Feedback,
   // auch nach erneutem Öffnen der Ansicht). addReminder ist ohnehin idempotent.
+  // Beleg-id → 'gespeichert' | 'vorlaeufig'. Im Beispiel/beim Ausprobieren bleibt der echte
+  // Kalender unsichtbar und unberührt — die Liste beginnt leer.
+  const vorlaeufig = useVorlaeufig();
   const reminderTitle = (b) => t('kvg.belegReminderTitle', { betrag: betrag(Number(b.betrag) || 0, { hoechstens: 2 }) });
   const [remindedIds, setRemindedIds] = useState(() => {
+    const m = new Map();
+    if (vorlaeufig) return m;
     const rem = loadReminders();
-    const s = new Set();
-    belege.forEach(b => { if (b.frist && rem.some(r => !r.done && r.dueDate === b.frist && r.title === reminderTitle(b))) s.add(b.id); });
-    return s;
+    belege.forEach(b => { if (b.frist && rem.some(r => !r.done && r.dueDate === b.frist && r.title === reminderTitle(b))) m.set(b.id, 'gespeichert'); });
+    return m;
   });
   const remindBeleg = (b) => {
     if (!b.frist) return;
-    const r = addReminder({ title: reminderTitle(b), dueDate: b.frist, category: 'health' });
-    if (r) setRemindedIds(prev => new Set(prev).add(b.id));
+    const ergebnis = erinnerungSichern({ title: reminderTitle(b), dueDate: b.frist, category: 'health' }, vorlaeufig);
+    if (ergebnis) setRemindedIds(prev => new Map(prev).set(b.id, ergebnis));
   };
 
   const canton = data.basis?.canton || '';
@@ -740,7 +744,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate, onUebernehme
                       color: remindedIds.has(b.id) ? (palette.sageDeep || '#4A6657') : palette.sandDeep,
                       cursor: remindedIds.has(b.id) ? 'default' : 'pointer',
                     }
-                  }, erledigtZeichen(remindedIds.has(b.id), remindedIds.has(b.id) ? t('kvg.belegReminded') : t('kvg.belegRemind')))
+                  }, erledigtZeichen(remindedIds.has(b.id), remindedIds.has(b.id) ? t(remindedIds.get(b.id) === 'vorlaeufig' ? 'common.savedTemporary' : 'kvg.belegReminded') : t('kvg.belegRemind')))
                 ),
                 b.forderungId && React.createElement('div', {
                   style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm, flexWrap: 'wrap', marginTop: space.xs }

@@ -6,6 +6,7 @@ import { buildICS, downloadICS } from './utils/icsExport.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { anspruchSignaleListe } from './data/anspruchSignale.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -66,7 +67,11 @@ const CATEGORY_ICON_KEYS = {
 
 // ─── Component ──────────────────────────────────────────────
 export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) => {
-  const [reminders, setReminders] = useState(loadReminders);
+  // Im Beispiel und beim Ausprobieren (Entscheid 18.10.2026): der Kalender beginnt leer, was
+  // man einträgt, liegt nur im Arbeitsspeicher. Die echten Erinnerungen bleiben unsichtbar
+  // und unberührt. main.jsx hängt den Kalender beim Moduswechsel neu ein (key: datenModus).
+  const vorlaeufig = useVorlaeufig();
+  const [reminders, setReminders] = useState(() => (vorlaeufig ? [] : loadReminders()));
   const [view, setView] = useState('upcoming'); // upcoming, completed, add
   const [showTemplates, setShowTemplates] = useState(false);
   // Visueller Kalender: Jahresband (12 Monate) + Monatsraster des gewählten Monats.
@@ -89,7 +94,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
   const [newLastVisit, setNewLastVisit] = useState('');
 
   // Persist on change
-  useEffect(() => { saveReminders(reminders); }, [reminders]);
+  useEffect(() => { if (!vorlaeufig) saveReminders(reminders); }, [reminders, vorlaeufig]);
 
   // Auto-generate recurring instances
   useEffect(() => {

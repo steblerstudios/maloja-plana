@@ -1656,7 +1656,9 @@ const AppInner = ({ demo }) => {
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'notfallpass' && React.createElement(NotfallpassBlatt, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
-        view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
+        // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
+        // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
+        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
