@@ -54,6 +54,7 @@ trägt die Werte hier ein (`.claude/commands/`, lokal).
 | Monat | Besuche | Besucher | Top-Länder | Mobil-Anteil | Top-Referrer | Notiz |
 |---|---|---|---|---|---|---|
 | 2026-07 | | | | | | (erste Erhebung) |
+| 2026-10 (bis 18.) | – | – | – | – | google · duckduckgo · bing · instagram · t.co (zus. ~22) | 6 142 Abfragen gesamt, davon 2 139 × 404 — Grossteil Scanner (WordPress/Joomla-JCE, ~900) + Referrer-Spam (binance.com, 70). `/favicon.ico` fehlte → PR #500. Alte Lazy-Chunks (`index-c41fa79f.js` u. a.) werden noch abgefragt und liefern 404. Stage (`stage.malojaplana.ch`) öffentlich, Stand 10.07. Besuchszahlen noch nicht abgelesen. |
 
 ## Später (Weg 2 — nur bei echtem Bedarf)
 
