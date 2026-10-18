@@ -90,6 +90,35 @@ solange keine frische Marke da ist → „erst `/maloja-predeploy`". `deploy.sh 
 bleibt frei (schnelle Testschleife). Der Hook wird erst nach `/hooks`-Reload bzw.
 Claude-Neustart aktiv (gleiche Watcher-Falle wie beim Tests-vor-Commit-Hook).
 
+### Tests-vor-Commit-Hook: welcher Stand wird getestet? (Befund 18.10.2026)
+
+Ein zweiter PreToolUse-Hook in `.claude/settings.json` lässt vor jedem `git commit`
+`npx vitest run` laufen und blockt den Commit bei roten Tests (Log:
+`/tmp/maloja-precommit-tests.log`). `settings.json` ist **bewusst nicht in git**
+(`.gitignore`: Maschinen-Pfade + Permission-Regeln bleiben lokal) — deshalb steht die
+Logik hier.
+
+**Fehler bis 18.10.:** Die Testwurzel war `${CLAUDE_PROJECT_DIR:-$(git rev-parse …)}`.
+In einer Worktree-Sitzung (`.claude/worktrees/<name>`) zeigt `CLAUDE_PROJECT_DIR` auf
+die **Haupt-Arbeitskopie** — das Tor testete also `main`, nicht den Stand, der
+committet wird. Belegt im Log («Testlauf-Wurzel: …/maloja-frontend» aus einer
+Worktree-Sitzung) und mit Attrappe nachgestellt. Zweite Lücke: `git -C <pfad> commit`
+enthält den Text «git commit» nicht und lief am Tor vorbei.
+
+**Seit 18.10.** bestimmt der Hook das Verzeichnis, in dem der Commit läuft:
+
+1. `cwd` aus dem Tool-Input; davor ein `cd <pfad> &&` bzw. `cd <pfad>;` und ein
+   `git -C <pfad> commit` werden berücksichtigt (relativ, `~`, Anführungszeichen).
+2. Wurzel = `git -C <verzeichnis> rev-parse --show-toplevel`.
+3. Fallback: `$CLAUDE_PROJECT_DIR`, danach der feste Hauptpfad (wenn kein `package.json`).
+
+Das Log nennt jetzt Wurzel **und** Ausgangsverzeichnis. Grenzen: Der Hook springt auch
+an, wenn «git commit» nur als Text in einem Befehl steht (kostet einen Testlauf, schadet
+nicht); alle Sitzungen schreiben in dieselbe Logdatei. **Jeder Worktree hat eine eigene
+Kopie von `settings.json`, nicht über git** — wie sie entsteht, ist nicht belegt; am
+18.10. hatten zwei bestehende Worktrees noch die alte Fassung. Testen nur mit Attrappe
+(`vitest` → `echo`), nie scharf.
+
 ---
 
 ## Hauptbundle klein halten (Size-Limit)
