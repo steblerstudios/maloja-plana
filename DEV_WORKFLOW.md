@@ -93,8 +93,9 @@ Claude-Neustart aktiv (gleiche Watcher-Falle wie beim Tests-vor-Commit-Hook).
 ### Tests-vor-Commit-Hook: welcher Stand wird getestet? (Befund 18.10.2026)
 
 Ein zweiter PreToolUse-Hook in `.claude/settings.json` lässt vor jedem `git commit`
-`npx vitest run` laufen und blockt den Commit bei roten Tests (Log:
-`/tmp/maloja-precommit-tests.log`). `settings.json` ist **bewusst nicht in git**
+`npx vitest run` laufen und blockt den Commit bei roten Tests (Log je Arbeitsbaum:
+`/tmp/maloja-precommit-tests-<ordnername>.log`, z. B. `…-maloja-frontend.log` für die
+Hauptkopie; bis 18.10. eine gemeinsame `/tmp/maloja-precommit-tests.log`). `settings.json` ist **bewusst nicht in git**
 (`.gitignore`: Maschinen-Pfade + Permission-Regeln bleiben lokal) — deshalb steht die
 Logik hier.
 
@@ -118,10 +119,11 @@ enthält den Text «git commit» nicht und lief am Tor vorbei.
 
 Das Log nennt jetzt Wurzel **und** Ausgangsverzeichnis. Grenzen: Der Hook springt auch
 an, wenn «git commit» nur als Text in einem Befehl steht (kostet einen Testlauf, schadet
-nicht); alle Sitzungen schreiben in dieselbe Logdatei. **Jeder Worktree hat eine eigene
-Kopie von `settings.json`, nicht über git** — wie sie entsteht, ist nicht belegt; am
-18.10. hatten zwei bestehende Worktrees noch die alte Fassung. Testen nur mit Attrappe
-(`vitest` → `echo`), nie scharf.
+nicht). **Worktrees haben meist keine eigene `settings.json`** — am 18.10. hatte nur
+einer von drei eine Kopie (Herkunft nicht belegt), die anderen laden die Hooks
+vermutlich aus der Hauptkopie. Massgeblich ist deshalb
+`maloja-frontend/.claude/settings.json`; eine Worktree-Kopie, falls vorhanden, gleich
+halten. Testen nur mit Attrappe (`vitest` → `echo`), nie scharf.
 
 ---
 
