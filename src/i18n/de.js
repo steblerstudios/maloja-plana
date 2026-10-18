@@ -2525,7 +2525,7 @@ export default {
       heartfelt7: 'Der grösste Kinder- und Jugendverband der Schweiz.',
       heartfelt8: 'Tierheim, Tiervermittlung und Tierschutzberatung in der Region Basel.',
       heartfelt9: 'Betreuung zu Hause, Vorsorge-Beratung und einfühlsame Begleitung im Todesfall, mit Sitz in Münchenstein.',
-      heartfelt10: 'die Todo-App (App Store, Rau Media) — Eine ruhige, minimalistische To-do-App. Kein Konto, kein Tracking, die Daten bleiben auf dem Gerät.',
+      heartfelt10: 'die Todo-App (App Store, Rau Media) — Eine ruhige, minimalistische To-do-App. Laut Anbieter ohne Konto, ohne Tracking, die Daten bleiben auf dem Gerät.',
       heartfelt11: 'Älteste Blindenführhundeschule der Schweiz — züchtet und bildet Führ- und Assistenzhunde aus.',
       heartfelt12: 'Führhundeschule in Liestal — Mobilität und Selbständigkeit für sehbehinderte Menschen.',
       heartfelt13: 'Körperarbeit, Bewegung und Energiearbeit — zurück zur eigenen Lebendigkeit.',

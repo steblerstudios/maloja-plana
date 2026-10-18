@@ -16,6 +16,7 @@ import { betrag } from './utils/geld.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { miniRucksack, rucksackZeichen } from './components/miniRucksack.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
+import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -40,7 +41,7 @@ function fmtCHF(v) {
   return n && !isNaN(n) ? betrag(n, { hoechstens: 2 }) : null;
 }
 
-function buildSnippet(chapterKey, chData, allData, t) {
+export function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'basis') {
     const name = [(chData.firstName || ''), (chData.lastName || '')].filter(Boolean).join(' ');
     if (!name) return null;
@@ -67,7 +68,8 @@ function buildSnippet(chapterKey, chData, allData, t) {
     const parts = [income];
     if (exp > 0) parts.push(fmtCHF(exp) + ' ' + t('synthesis.expenses'));
     const annual = (Number(chData.monthlyIncome) || 0) * 12;
-    if (annual > 0 && exp > 0) {
+    // «frei» nur bei netto erfasstem Lohn: ein Bruttolohn kommt nicht so an, ohne Art wäre es geraten.
+    if (annual > 0 && exp > 0 && lohnIstNetto(chData)) {
       const frei = Number(chData.monthlyIncome) - exp;
       if (frei > 0) parts.push(fmtCHF(Math.round(frei)) + ' ' + t('synthesis.freePerMonth'));
     }
