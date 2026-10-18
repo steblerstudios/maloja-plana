@@ -35,6 +35,25 @@
       Datenschutzerklärung die Server-Logs des Hosters? Falls unklar → prüfen,
       nicht einfach ergänzen.
 
+## Eigene Abrufe herausrechnen (Befund 18.10.2026)
+
+Der Manager kann nicht filtern. Im Kopf abziehen, bevor eine Zahl gedeutet wird:
+
+- **Webbrowser `stebler-cockpit-drift` und `stebler-cockpit-stand`** — das Cockpit
+  (`stebler-studios/scripts/drift-pruefen.py`, `stand-erheben.py`). Oktober bis
+  18.: 125 + 30 Abfragen.
+- **`curl/…`, `python-requests/…`** — meist eigene Prüfungen (Claude-Sitzungen,
+  `scripts/check-*.sh`). Nicht jede einzelne belegt.
+- **Besucher-IPs des eigenen Anschlusses** — IPv6 wechselt im hinteren Teil, darum
+  erscheint ein Anschluss als mehrere Adressen mit gleichem Anfang. Die eigene
+  Adresse nachschauen statt hier notieren (keine IPs ins öffentliche Repo).
+
+Was sicher **nicht** von uns ist: WordPress-/Joomla-Pfade, `wp2shell`, `cve-…`,
+Censys/Palo Alto/Netcraft (Internet-Vermessung), Referrer `binance.com` (Spam).
+Echte Menschen am ehesten erkennbar an: `/fonts/lexend-latin-400-normal.woff2`
+(lädt nur ein echter Browser, einmal pro Gerät und Jahr) und Linkvorschauen
+(`facebookexternalhit`, `WhatsApp`) — jemand hat einen Link geteilt.
+
 ## Das monatliche Ritual (~10 Minuten, z. B. am Monatsersten)
 
 1. Manager öffnen → Statistik von `malojaplana.ch` anschauen (nicht Stage).
@@ -54,6 +73,7 @@ trägt die Werte hier ein (`.claude/commands/`, lokal).
 | Monat | Besuche | Besucher | Top-Länder | Mobil-Anteil | Top-Referrer | Notiz |
 |---|---|---|---|---|---|---|
 | 2026-07 | | | | | | (erste Erhebung) |
+| 2026-10 (bis 18.) | – | – | – | – | google · duckduckgo · bing · instagram · t.co (zus. ~22) | 6 142 Abfragen gesamt, davon 2 139 × 404 — Grossteil Scanner (WordPress/Joomla-JCE, ~900) + Referrer-Spam (binance.com, 70). `/favicon.ico` fehlte → PR #500. Alte Lazy-Chunks (`index-c41fa79f.js` u. a.) werden noch abgefragt und liefern 404. Stage (`stage.malojaplana.ch`) öffentlich, Stand 10.07. Besuchszahlen noch nicht abgelesen. |
 
 ## Später (Weg 2 — nur bei echtem Bedarf)
 
