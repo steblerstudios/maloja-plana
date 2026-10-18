@@ -29,6 +29,7 @@
 #   • deployt aus JEDEM Branch (typisch 'feat/…') — keine main-/origin-Sperre
 #   • kein Rollback-Backup (Stage ist wegwerfbar)
 #   • eigenes Remote-Ziel + eigene Abschluss-URL
+#   • alle Seiten «noindex, nofollow» (nie in Suchmaschinen)
 # Einmalige Voraussetzung (Infomaniak-Panel, Stebler Studios): Subdomain
 # stage.malojaplana.ch anlegen. Deren Docroot-Pfad unten als STAGE_REMOTE_DIR
 # setzen (aus dem Panel ablesen). Zugriffsschutz übernimmt das In-App-BetaGate.
@@ -183,6 +184,26 @@ fi
 # Doku & Befund: docs/SEO_GEO.md
 echo "→ SEO/GEO-Fundament prüfen…"
 bash "$(dirname "$0")/scripts/check-seo.sh" dist
+
+# ─── Stage: nie in Suchmaschinen ─────────────────────────────────────────────
+# Befund 18.10.2026: stage.malojaplana.ch war öffentlich und trug «index, follow» —
+# mit einem Stand vom 10.07. Wer über eine Suche dort landet, sieht womöglich
+# überholte Beträge und Regeln. Darum bekommt jede HTML-Seite im Stage-Build
+# «noindex, nofollow». robots.txt bleibt offen: eine gesperrte Seite kann Google
+# nicht lesen und sähe das noindex nie. Ersetzt keinen Zugriffsschutz (Passwort im
+# Infomaniak-Panel) — es hält die Vorschau nur aus den Suchergebnissen.
+# Nach dem SEO-Gate, weil dieses den Produktions-Build prüft; Gate unten: bleibt
+# eine Seite indexierbar, geht nichts hoch.
+if [ "$STAGE" = "1" ]; then
+  echo "→ Stage: alle Seiten auf noindex…"
+  find dist -name '*.html' -exec perl -pi -e 's#<meta name="robots" content="[^"]*">#<meta name="robots" content="noindex, nofollow">#g' {} +
+  OFFEN="$(find dist -name '*.html' -exec grep -L '<meta name="robots" content="noindex, nofollow">' {} + || true)"
+  if [ -n "$OFFEN" ]; then
+    echo "✗ Stage-Seiten ohne noindex — nichts hochgeladen:" >&2
+    echo "$OFFEN" >&2
+    exit 1
+  fi
+fi
 
 # ─── Rollback-Sicherung: aktuelle Live-Version sichern, BEVOR sie überschrieben wird ──
 # Spiegelt den aktuellen Remote-Stand nach ./.deploy-backups/<zeit>/ (gitignored).
