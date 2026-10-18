@@ -697,8 +697,10 @@ export const ERWACHSEN = {
 // (Befund Fachprüfung 20.09.2026). Ergebnis `null` ⇒ der Kanton gibt keine Zahl.
 //
 // `eingetipptPlus` ist die vorsichtige Seite an der Grenze 18 und je Kanton verschieden:
-// ZH nimmt das eingetippte Alter unverändert (Bezugsjahr ist bereits das Vorjahr), BE zählt
-// ein Jahr dazu (Bezugsjahr ist das Anspruchsjahr). Beide Wege wirken nie nach oben.
+// ZH rechnet die Altersgruppe der Prämie (Kind / junge Erwachsene) nach dem Alter im Anspruchsjahr
+// und zählt dafür beim eingetippten Alter ein Jahr dazu — wie BE (siehe ipvZuerich.js: `kinderAlter(…, jahr, 1)`);
+// nur für die übrigen Prüfungen (Alter unerfasst, über 18) nimmt ZH das Alter am Ende des Vorjahres
+// unverändert. Alle Wege wählen die vorsichtige Seite und wirken nie nach oben.
 export function kinderAlter(children, bezugsjahr, eingetipptPlus = 0) {
   return (children || []).map((c) => (/^\d{4}-/.test(c.birthDate || '')
     ? bezugsjahr - Number(c.birthDate.slice(0, 4))
