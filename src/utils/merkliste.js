@@ -25,3 +25,11 @@ export const addTodo = ({ text, link = null }) => {
   saveTodos([...items, item]);
   return item;
 };
+
+// Für jeden «merken»-Knopf: im Beispiel und beim Ausprobieren (`vorlaeufig`, main.jsx) bleibt
+// nichts — addTodo ginge sonst in die ECHTE Merkliste (wie erinnerungSichern, 18.10.2026).
+// Rückgabe: 'gespeichert' | 'vorlaeufig' | null.
+export const merkpunktSichern = (todo, vorlaeufig) => {
+  if (vorlaeufig) return 'vorlaeufig';
+  return addTodo(todo) ? 'gespeichert' : null;
+};

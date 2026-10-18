@@ -4,6 +4,15 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
+import i18nDe from '../i18n/de.js';
+import i18nFr from '../i18n/fr.js';
+import i18nIt from '../i18n/it.js';
+import i18nEn from '../i18n/en.js';
+import i18nRm from '../i18n/rm.js';
+
+// Sprachdateien (zusammen ~3,8 MB) statisch laden: ein import() im Testkörper zählt gegen
+// das 5-s-Testtimeout und lief unter Last der vollen Suite darüber (Pre-Commit 18.10.2026).
+const TEXTE = { de: i18nDe, fr: i18nFr, it: i18nIt, en: i18nEn, rm: i18nRm };
 
 // K31 — der IPV-Rechner zeigt für BS den Betrag nach der Stufentabelle der KVO (Anhang 2).
 // Was hier sichtbar sein muss:
@@ -90,7 +99,7 @@ describe('K31 IPV-Rechner, Kanton Basel-Stadt', () => {
   it('kein roher Schlüssel bleibt stehen: alle BS-Texte in allen fünf Sprachen', async () => {
     // Die Sprachdateien NICHT als `it` importieren — das überschriebe vitests `it`.
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
-      const texte = (await import(`../i18n/${sprache}.js`)).default;
+      const texte = TEXTE[sprache];
       for (const k of ['vorbehaltBS', 'bsKeinAnspruch', 'bsAntrag', 'bsAntragAvm', 'bsAntragStandard', 'bsHypothetischGerechnet', 'bsPensumAngenommen', 'jahrBS']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);

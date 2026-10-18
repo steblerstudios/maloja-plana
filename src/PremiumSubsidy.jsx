@@ -10,8 +10,9 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
-import { addTodo } from './utils/merkliste.js';
-import { addReminder } from './utils/reminders.js';
+import { merkpunktSichern } from './utils/merkliste.js';
+import { erinnerungSichern } from './utils/reminders.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
 import { verfuegungZuordnung, VERFUEGUNG_ZUORDNUNG } from './data/ipvAbzug.js';
 import { abweichungen, mitUebergabe } from './data/schnellcheckUebergabe.js';
@@ -40,6 +41,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     const s = readIpvStatus(data);
     return s.betrag ? String(s.betrag) : '';
   });
+  // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
+  const vorlaeufig = useVorlaeufig();
   const [renewAdded, setRenewAdded] = useState(false);
   // Für welches Jahr die Verfügung gilt (Deploy-Gate Runde 4): wählbar beim Eintragen, laufendes
   // oder folgendes Jahr — eine Verfügung fürs nächste Jahr kommt oft schon im Herbst.
@@ -49,18 +52,19 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const [ipvVorschau, setIpvVorschau] = useState(false);
   // Unterlagen für den IPV-Antrag als offenen Punkt in die Merkliste legen (Muster wie Umzug),
   // nimmt der „Welche Papiere brauche ich?"-Unsicherheit die Spitze. Idempotent, Link → Lebensordner.
+  // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts in der echten Merkliste).
   const [permitAdded, setPermitAdded] = useState(false);
   const permitTodoButton = () => React.createElement('button', {
-    onClick: () => { addTodo({ text: t('premium.permitTodoText'), link: 'tresor' }); setPermitAdded(true); },
-    disabled: permitAdded,
-    'aria-pressed': permitAdded,
+    onClick: () => { const ergebnis = merkpunktSichern({ text: t('premium.permitTodoText'), link: 'tresor' }, vorlaeufig); if (ergebnis) setPermitAdded(ergebnis); },
+    disabled: !!permitAdded,
+    'aria-pressed': !!permitAdded,
     style: {
       marginTop: '8px', cursor: permitAdded ? 'default' : 'pointer', fontFamily: 'inherit',
       background: 'none', border: '1px solid ' + (permitAdded ? palette.sage : palette.border),
       borderRadius: radius.sm, padding: '3px 10px', fontSize: text.xs,
       color: permitAdded ? (palette.sageDeep || palette.sage) : palette.mid,
     },
-  }, erledigtZeichen(permitAdded, permitAdded ? t('premium.permitTodoAdded') : t('premium.permitTodoAdd')));
+  }, erledigtZeichen(!!permitAdded, permitAdded ? t(permitAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'premium.permitTodoAdded') : t('premium.permitTodoAdd')));
 
   const canton = data.basis?.canton || '';
   const ipvResult = calculateIPV(data);
@@ -214,11 +218,11 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         ),
         lead(t('ipvStatus.renewLead')),
         h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
-          lineBtn(erledigtZeichen(renewAdded, renewAdded ? t('ipvStatus.renewAdded') : t('ipvStatus.renewAdd')), () => {
+          lineBtn(erledigtZeichen(!!renewAdded, renewAdded ? t(renewAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'ipvStatus.renewAdded') : t('ipvStatus.renewAdd')), () => {
             if (renewAdded) return;
-            const ok = addReminder({ title: t('ipvStatus.reminderTitle'), dueDate: dueNext, category: 'insurance', recurrence: 'yearly' });
-            if (ok) setRenewAdded(true);
-          }, { primary: !renewAdded, pressed: renewAdded }),
+            const ergebnis = erinnerungSichern({ title: t('ipvStatus.reminderTitle'), dueDate: dueNext, category: 'insurance', recurrence: 'yearly' }, vorlaeufig);
+            if (ergebnis) setRenewAdded(ergebnis);
+          }, { primary: !renewAdded, pressed: !!renewAdded }),
           lineBtn(t('ipvStatus.reset'), () => { setVerfBetrag(''); setRenewAdded(false); setIpvStatus(IPV_STATUS.GESCHAETZT); })
         ),
       ], { accent: palette.sage });

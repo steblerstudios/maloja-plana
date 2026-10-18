@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
-import { addReminder } from './utils/reminders.js';
+import { erinnerungSichern } from './utils/reminders.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { renderSource } from './utils/renderSource.js';
 import { istVorbei } from './utils/fristen.js';
@@ -87,10 +88,23 @@ export const AblaufLink = ({ palette, label, onClick }) => {
 // Seitenrundgang 27.09.2026 — vorher ein nachgebauter Sand-Knopf). Zwei Fristen im selben
 // Ablauf (Dienst, Wegzug, Zuzug, EL, Stelle verloren) gehören zu zwei Ereignissen und
 // erscheinen erst mit dem eigenen Datum — darum bleiben beide Hauptknöpfe.
-export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
+// Im Beispiel und beim Ausprobieren (`vorlaeufig`) schreibt der Knopf nichts (erinnerungSichern)
+// und läuft auch kein onSaved. Wie GespeichertZeile sagt er dann «nur für jetzt».
+// Rückgabe: 'gespeichert' | 'vorlaeufig' | null (Speichern gescheitert).
+export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
+  const ergebnis = erinnerungSichern(reminder, vorlaeufig);
+  if (ergebnis === 'gespeichert' && onSaved) onSaved(); // nur nach echtem Speichern
+  return ergebnis;
+};
+
+export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
   const s = styles(palette);
-  const [done, setDone] = useState(false);
-  const handle = () => { if (addReminder(reminder)) { if (onSaved) onSaved(); setDone(true); } }; // nur bestätigen, wenn gespeichert
+  const vorlaeufig = useVorlaeufig();
+  const [done, setDone] = useState(null);
+  const handle = () => setDone(fristSichern(reminder, { vorlaeufig, onSaved }));
+  if (done === 'vorlaeufig') {
+    return React.createElement('div', { role: 'status', style: s.done }, hinweisZeichen('check'), t('common.savedTemporary'));
+  }
   if (done) {
     return React.createElement('div', null,
       React.createElement('div', { style: s.done }, hinweisZeichen('check'), doneLabel),

@@ -4,6 +4,15 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
+import i18nDe from '../i18n/de.js';
+import i18nFr from '../i18n/fr.js';
+import i18nIt from '../i18n/it.js';
+import i18nEn from '../i18n/en.js';
+import i18nRm from '../i18n/rm.js';
+
+// Sprachdateien (zusammen ~3,8 MB) statisch laden: ein import() im Testkörper zählt gegen
+// das 5-s-Testtimeout und lief unter Last der vollen Suite darüber (Pre-Commit 18.10.2026).
+const TEXTE = { de: i18nDe, fr: i18nFr, it: i18nIt, en: i18nEn, rm: i18nRm };
 
 // K31 — der IPV-Rechner zeigt für SH den Betrag nach dem Selbstbehalt-Modell (Dekret SHR 832.110).
 // Was hier sichtbar sein muss:
@@ -79,7 +88,7 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
 
   it('kein roher Schlüssel bleibt stehen: alle SH-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
-      const texte = (await import(`../i18n/${sprache}.js`)).default;
+      const texte = TEXTE[sprache];
       for (const k of ['vorbehaltSH', 'shKeinAnspruch', 'shUnterMindestbetrag', 'shFristLaeuft', 'shFristVorbei', 'shFristNichtAbgezogen', 'shKinderVorbehalt']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
@@ -95,7 +104,7 @@ describe('K31 IPV-Rechner, Kanton Schaffhausen', () => {
 
   // Fachprüfung #471 W1/W2/W3/W5: Richtung sichtbar, Unterhalt genannt, Kinder-Vorbehalt nur mit Kindern.
   it('die Texte nennen die Richtung; mit Kindern steht der Kinder-Vorbehalt dabei', async () => {
-    const de = (await import('../i18n/de.js')).default.ipv;
+    const de = TEXTE.de.ipv;
     expect(de.vorbehaltSH).toMatch(/eher zu tief/);
     expect(de.vorbehaltSH).toMatch(/Unterhaltsbeiträge/);
     expect(de.shKeinAnspruch).toMatch(/kann darum ein Anspruch bestehen/);

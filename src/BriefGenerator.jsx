@@ -9,7 +9,8 @@ import { text as textTokens, weight, radius , leading , space, ease, duration } 
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { openPrintWindow } from './utils/helpers.js';
-import { addReminder } from './utils/reminders.js';
+import { erinnerungSichern } from './utils/reminders.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { zahl } from './utils/geld.js';
 import { Brotkrume } from './components/Brotkrume.jsx';
@@ -192,6 +193,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
   const [preview, setPreview] = useState(false);
   const [printed, setPrinted] = useState(false);
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
+  // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
+  const vorlaeufig = useVorlaeufig();
   const [reminderAdded, setReminderAdded] = useState(false);
   // Export-Vorschau (K3): vor dem Öffnen zeigen, welche Angaben im Brief stehen.
   const [exportVorschau, setExportVorschau] = useState(false);
@@ -274,14 +277,14 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
 
   const handleAddReminder = () => {
     if (!frist) return;
-    const r = addReminder({
+    const ergebnis = erinnerungSichern({
       title: t('briefe.' + selected + '.reminderTitle'),
       dueDate: frist.iso,
       category: 'work',
       recurrence: 'once',
       notes: t(REMINDER_NOTES_KEY[selected]),
-    });
-    if (r) setReminderAdded(true);
+    }, vorlaeufig);
+    if (ergebnis) setReminderAdded(ergebnis);
   };
 
   // Vorschau nur für Vorlagen, die auch angeboten werden dürfen — sonst rendert ein
@@ -510,7 +513,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate, initial
       reminderAdded
         ? React.createElement('div', {
             style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sageDeep, display: 'flex', alignItems: 'center', gap: '6px' }
-          }, hinweisZeichen('check'), t('briefe.wageReminder.added'))
+          }, hinweisZeichen('check'), t(reminderAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'briefe.wageReminder.added'))
         : React.createElement('button', {
             onClick: handleAddReminder,
             style: {

@@ -14,6 +14,7 @@ import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/kantonPLZ.j
 import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
@@ -141,6 +142,10 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { GlossarText } from './GlossarBegriff.jsx';
 import { heuteIso } from './utils/fristen.js';
 import { uebernehmen, nachSchuldenSpeichern } from './utils/offenePosten.js';
+import { installiereNeuLadenNachDeploy } from './utils/neuLadenNachDeploy.js';
+
+// Tab über einen Deploy offen gelassen → nachgeladene Ansicht fehlt → einmal neu laden.
+installiereNeuLadenNachDeploy();
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
@@ -1162,6 +1167,8 @@ const AppInner = ({ demo }) => {
   );
 
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
+  // Abläufe bekommen keine Modus-Props; der Frist-Knopf liest `vorlaeufig` hier (AblaufSchale).
+  React.createElement(VorlaeufigContext.Provider, { value: vorlaeufig },
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
@@ -1626,7 +1633,8 @@ const AppInner = ({ demo }) => {
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
-        view === 'merkliste' && React.createElement(MerklisteView, { palette, t, onNavigate: handleNavigate }),
+        // key: datenModus — wie beim Kalender: nach «Beispiel verlassen» keine Beispiel-Liste über die echte.
+        view === 'merkliste' && React.createElement(MerklisteView, { key: datenModus, palette, t, onNavigate: handleNavigate }),
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
@@ -1656,7 +1664,9 @@ const AppInner = ({ demo }) => {
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'notfallpass' && React.createElement(NotfallpassBlatt, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
-        view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
+        // key: datenModus — sonst hielte der Kalender nach «Beispiel verlassen» die Beispiel-Liste
+        // und schriebe sie über die echten Erinnerungen (wie der Schuldenmanager, 27.09.2026).
+        view === 'calendar' && React.createElement(CalendarReminders, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'installApp' && React.createElement(InstallGuide, {
           palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
@@ -1678,7 +1688,7 @@ const AppInner = ({ demo }) => {
     // Web: Fusszeile pinned unter dem Inhalt.
     !isMobile && footerEl,
     isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true), leftHand })
-  ));
+  )));
 };
 
 // Wrap in I18nProvider + ErrorBoundary + BetaGate
