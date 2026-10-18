@@ -5,6 +5,15 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { KKLastCard } from '../KKLastCard.jsx';
+import i18nDe from '../i18n/de.js';
+import i18nFr from '../i18n/fr.js';
+import i18nIt from '../i18n/it.js';
+import i18nEn from '../i18n/en.js';
+import i18nRm from '../i18n/rm.js';
+
+// Sprachdateien (zusammen ~3,8 MB) statisch laden: ein import() im Testkörper zählt gegen
+// das 5-s-Testtimeout und lief unter Last der vollen Suite darüber (Pre-Commit 18.10.2026).
+const TEXTE = { de: i18nDe, fr: i18nFr, it: i18nIt, en: i18nEn, rm: i18nRm };
 
 // K31 — der IPV-Rechner zeigt für GL den Betrag nach Richtprämie minus Selbstbehalt.
 // Was hier sichtbar sein muss:
@@ -83,7 +92,7 @@ describe('K31 IPV-Rechner, Kanton Glarus', () => {
 
   it('kein roher Schlüssel bleibt stehen: alle GL-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
-      const texte = (await import(`../i18n/${sprache}.js`)).default;
+      const texte = TEXTE[sprache];
       for (const k of ['vorbehaltGL', 'glKeinAnspruch', 'glUnterMindestbetrag', 'glFristLaeuft', 'glFristVorbei', 'glFristNichtAbgezogen', 'jahrGL', 'noteApplyGl']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(30);
@@ -98,7 +107,7 @@ describe('K31 IPV-Rechner, Kanton Glarus', () => {
   // Re-Review #487 🛑 R1: erhaltene Alimente und Familienzulagen sind eingerechnet — der Vorbehalt
   // darf nicht mehr «nicht eingerechnet» sagen und nennt die Doppelzählung der Kinderzulage.
   it('Vorbehalt GL: Zulagen eingerechnet, Hinweis auf doppelt gezählte Kinderzulage (de)', async () => {
-    const { ipv } = (await import('../i18n/de.js')).default;
+    const { ipv } = TEXTE.de;
     expect(ipv.vorbehaltGL).not.toMatch(/nicht eingerechnet/);
     expect(ipv.vorbehaltGL).toMatch(/erhaltene Alimente und erfasste Familienzulagen eingerechnet/);
     expect(ipv.vorbehaltGL).toMatch(/doppelt/);

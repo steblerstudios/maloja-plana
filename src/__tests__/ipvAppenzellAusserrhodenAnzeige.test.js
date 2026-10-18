@@ -3,6 +3,15 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
+import i18nDe from '../i18n/de.js';
+import i18nFr from '../i18n/fr.js';
+import i18nIt from '../i18n/it.js';
+import i18nEn from '../i18n/en.js';
+import i18nRm from '../i18n/rm.js';
+
+// Sprachdateien (zusammen ~3,8 MB) statisch laden: ein import() im Testkörper zählt gegen
+// das 5-s-Testtimeout und lief unter Last der vollen Suite darüber (Pre-Commit 18.10.2026).
+const TEXTE = { de: i18nDe, fr: i18nFr, it: i18nIt, en: i18nEn, rm: i18nRm };
 
 // K31 — der IPV-Rechner zeigt für AR den Betrag nach EG zum KVG (bGS 833.14) und Merkblatt SOVAR 2026.
 // Was hier sichtbar sein muss:
@@ -72,7 +81,7 @@ describe('K31 IPV-Rechner, Kanton Appenzell Ausserrhoden', () => {
 
   it('kein roher Schlüssel bleibt stehen: alle AR-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
-      const texte = (await import(`../i18n/${sprache}.js`)).default;
+      const texte = TEXTE[sprache];
       for (const k of ['jahrAR', 'vorbehaltAR', 'arKeinAnspruch', 'arUnterMindestbetrag', 'arFristLaeuft', 'arFristVorbei', 'arFristNichtAbgezogen']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
@@ -88,7 +97,7 @@ describe('K31 IPV-Rechner, Kanton Appenzell Ausserrhoden', () => {
 
   // Fachprüfung #480 B1/W1/W3/W4: Richtung, Antrag lohnt sich, Untergrenze, Ausweg, Antragsstelle.
   it('die Texte nennen die Richtung und was eine Person tun kann', async () => {
-    const de = (await import('../i18n/de.js')).default.ipv;
+    const de = TEXTE.de.ipv;
     expect(de.vorbehaltAR).toMatch(/eher höher/);
     expect(de.arKeinAnspruch).toMatch(/Antrag lohnt sich/);
     expect(de.offenGrund.praemieFranchise).toMatch(/mindestens so hoch wie die erfasste Prämie/);

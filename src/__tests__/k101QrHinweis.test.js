@@ -5,6 +5,15 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
+import i18nDe from '../i18n/de.js';
+import i18nFr from '../i18n/fr.js';
+import i18nIt from '../i18n/it.js';
+import i18nEn from '../i18n/en.js';
+import i18nRm from '../i18n/rm.js';
+
+// Sprachdateien (zusammen ~3,8 MB) statisch laden: ein import() im Testkörper zählt gegen
+// das 5-s-Testtimeout und lief unter Last der vollen Suite darüber (Pre-Commit 18.10.2026).
+const TEXTE = { de: i18nDe, fr: i18nFr, it: i18nIt, en: i18nEn, rm: i18nRm };
 
 const quelle = datei => fs.readFileSync(path.join(__dirname, '..', datei), 'utf8');
 
@@ -37,7 +46,7 @@ describe('K101 · QR-Hinweis an allen drei QR-Stellen', () => {
   // lag das bei 5,0–5,2 s und fiel als Timeout rot (24.09.2026).
   it('der Schlüssel ist in allen fünf Sprachen vorhanden', { timeout: 30_000 }, async () => {
     for (const lang of ['de', 'fr', 'it', 'en', 'rm']) {
-      const { default: tr } = await import(`../i18n/${lang}.js`);
+      const tr = TEXTE[lang];
       const wert = (tr.notfallDossier || {}).qrHint;
       expect(typeof wert, lang).toBe('string');
       expect(wert.length, lang).toBeGreaterThan(40);
@@ -50,7 +59,7 @@ describe('K101 · QR-Hinweis an allen drei QR-Stellen', () => {
   it('der Hinweis nennt das Speichern als Kontakt, in allen fünf Sprachen', { timeout: 30_000 }, async () => {
     const wort = { de: /Kontakt.*Adressbuch/, fr: /contact.*carnet d’adresses/, it: /contatto.*rubrica/, en: /contact.*address book/, rm: /contact.*adressas/ };
     for (const [lang, muster] of Object.entries(wort)) {
-      const { default: tr } = await import(`../i18n/${lang}.js`);
+      const tr = TEXTE[lang];
       expect(tr.notfallDossier.qrHint, lang).toMatch(muster);
     }
   });

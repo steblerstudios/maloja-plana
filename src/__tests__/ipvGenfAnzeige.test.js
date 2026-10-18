@@ -7,6 +7,15 @@ import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { KKLastCard } from '../KKLastCard.jsx';
 import { praemienBelegState } from '../data/praemienBeleg.js';
 import { calculateMonthlyBudget } from '../budgetSync.js';
+import i18nDe from '../i18n/de.js';
+import i18nFr from '../i18n/fr.js';
+import i18nIt from '../i18n/it.js';
+import i18nEn from '../i18n/en.js';
+import i18nRm from '../i18n/rm.js';
+
+// Sprachdateien (zusammen ~3,8 MB) statisch laden: ein import() im Testkörper zählt gegen
+// das 5-s-Testtimeout und lief unter Last der vollen Suite darüber (Pre-Commit 18.10.2026).
+const TEXTE = { de: i18nDe, fr: i18nFr, it: i18nIt, en: i18nEn, rm: i18nRm };
 
 // K31 — der IPV-Rechner zeigt für GE den Betrag nach dem Gruppen-Modell (Barème 2026).
 // Was hier sichtbar sein muss:
@@ -110,7 +119,7 @@ describe('K31 IPV-Rechner, Kanton Genf', () => {
   it('kein roher Schlüssel bleibt stehen: alle GE-Texte in allen fünf Sprachen', async () => {
     // Die Sprachdateien NICHT als `it` importieren — das überschriebe vitests `it`.
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
-      const texte = (await import(`../i18n/${sprache}.js`)).default;
+      const texte = TEXTE[sprache];
       for (const k of ['jahrGE', 'vorbehaltGE', 'geWegAutomatisch', 'geWegAntrag', 'geAntragNoetig', 'geAntragFristVorbei', 'geFristNichtAbgezogen', 'geAntragKindNeu', 'geNurKinder']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
@@ -203,17 +212,17 @@ describe('K31 GE — Weg-Satz, Tausendertrennung, kein noteAutoSam (fünf Sprach
   };
   it('geWegAutomatisch nennt das tiefe RDU des Bemessungsjahres, das heutige Einkommen und die Frist', async () => {
     for (const sprache of SPRACHEN) {
-      const w = (await import(`../i18n/${sprache}.js`)).default.ipv.geWegAutomatisch;
+      const w = TEXTE[sprache].ipv.geWegAutomatisch;
       for (const [was, re] of Object.entries(muster[sprache])) expect(w, `${sprache}: ${was}`).toMatch(re);
     }
   });
   it('ipv.noteAutoSam gibt es in keiner Sprache mehr', async () => {
     for (const sprache of SPRACHEN) {
-      expect((await import(`../i18n/${sprache}.js`)).default.ipv.noteAutoSam, sprache).toBeUndefined();
+      expect(TEXTE[sprache].ipv.noteAutoSam, sprache).toBeUndefined();
     }
   });
   it('die Genfer Hinweise mit einem Betrag tragen {value} — formatiert kommt er aus dem Modul (zahl(), gepinnt in ipvGenf.test.js)', async () => {
-    const de = (await import('../i18n/de.js')).default.ipv;
+    const de = TEXTE.de.ipv;
     for (const k of ['geAntragNoetig', 'geAntragFristVorbei', 'geNurKinder']) expect(de[k], k).toContain('{value}');
   });
 });
