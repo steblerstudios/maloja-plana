@@ -2516,7 +2516,7 @@ export default {
       heartfelt7: 'Le plus grand mouvement de jeunesse de Suisse (scoutisme).',
       heartfelt8: 'Refuge, placement d’animaux et conseil en protection animale dans la région de Bâle.',
       heartfelt9: 'Accompagnement à domicile, conseil en prévoyance et soutien bienveillant en cas de décès, basée à Münchenstein.',
-      heartfelt10: 'l’app de tâches (App Store, Rau Media) — Une app de tâches minimaliste et sereine. Sans compte, sans pistage, les données restent sur l’appareil.',
+      heartfelt10: 'l’app de tâches (App Store, Rau Media) — Une app de tâches minimaliste et sereine. Selon l’éditeur, sans compte, sans pistage, les données restent sur l’appareil.',
       heartfelt11: 'La plus ancienne école suisse de chiens-guides — élève et forme chiens-guides et d’assistance.',
       heartfelt12: 'École de chiens-guides à Liestal — mobilité et autonomie pour les personnes malvoyantes.',
       heartfelt13: 'Travail corporel, mouvement et travail énergétique — renouer avec sa propre vitalité.',

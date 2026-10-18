@@ -2516,7 +2516,7 @@ export default {
       heartfelt7: 'Switzerland’s largest children’s and youth movement (Scouts).',
       heartfelt8: 'Animal shelter, rehoming and animal-welfare advice in the Basel region.',
       heartfelt9: 'Home care, advance-care counselling and compassionate support in the event of death, based in Münchenstein.',
-      heartfelt10: 'the to-do app (App Store, Rau Media) — A calm, minimalist to-do app. No account, no tracking, your data stays on your device.',
+      heartfelt10: 'the to-do app (App Store, Rau Media) — A calm, minimalist to-do app. According to the maker, no account, no tracking, and your data stays on your device.',
       heartfelt11: 'Switzerland\'s oldest guide-dog school — breeds and trains guide and assistance dogs.',
       heartfelt12: 'Guide-dog school in Liestal — mobility and independence for visually impaired people.',
       heartfelt13: 'Body work, movement and energy work — reconnecting with your own aliveness.',

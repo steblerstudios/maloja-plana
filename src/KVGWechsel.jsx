@@ -12,8 +12,8 @@ import { GlossarText } from './GlossarBegriff.jsx';
 // von oben nach unten, keine Wizard-Hölle.
 
 // Nächster ordentlicher Kündigungstermin: 30. November (dieses Jahr, sonst nächstes).
-const nextNov30 = () => {
-  const now = new Date();
+export const nextNov30 = (heute = new Date()) => {
+  const now = new Date(heute);
   now.setHours(0, 0, 0, 0); // Datum, nicht Uhrzeit vergleichen → der 30.11. selbst zählt noch
   const year = now.getFullYear();
   const nov30 = new Date(year, 10, 30);
@@ -21,6 +21,9 @@ const nextNov30 = () => {
   // Samstag/Sonntag → Werktag davor (BAG, priminfo FAQ). Früher schadet nie.
   return werktagAmOderDavor(`${y}-11-30`);
 };
+
+// «TT.MM.JJJJ» aus dem ISO-Datum der Erinnerung — der Knopf zeigt, was im Kalender landet.
+export const fristKnopfDatum = (iso) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}.${iso.slice(0, 4)}`;
 
 export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   const [chosenPath, setChosenPath] = useState(null); // null | '3a' | '3b'
@@ -130,7 +133,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('kvgWechsel.step4Text', { year: deadlineYear })),
       React.createElement(FristButton, {
         palette, t,
-        buttonLabel: t('kvgWechsel.step4Button', { date: '30.11.' + deadlineYear }),
+        buttonLabel: t('kvgWechsel.step4Button', { date: fristKnopfDatum(deadline) }),
         doneLabel: t('kvgWechsel.step4Done'),
         calendarLabel: t('kvgWechsel.step4CalendarLink'),
         onNavigate,

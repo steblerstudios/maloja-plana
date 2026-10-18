@@ -2516,7 +2516,7 @@ export default {
       heartfelt7: 'La pli gronda organisaziun da uffants e giuvenils da la Svizra.',
       heartfelt8: 'Refugi d’animals, intermediaziun e cussegliaziun da protecziun d’animals en la regiun da Basilea.',
       heartfelt9: 'Tgira a chasa, cussegliaziun da prevenziun ed accumpagnament en cas da mort, cun sedia a Münchenstein.',
-      heartfelt10: 'l’app da pendenzas (App Store, Rau Media) — In’app da pendenzas minimalistica e calma. Senza conto, senza fil-suandar, tias datas restan sin tes apparat.',
+      heartfelt10: 'l’app da pendenzas (App Store, Rau Media) — In’app da pendenzas minimalistica e calma. Tenor il purschider senza conto, senza fil-suandar, las datas restan sin l’apparat.',
       heartfelt11: 'La pli veglia scola svizra per chauns da mussavia — eleva ed instruescha chauns da mussavia e d’assistenza.',
       heartfelt12: 'Scola per chauns da mussavia a Liestal — mobilitad ed independenza per persunas cun impediment da vesair.',
       heartfelt13: 'Lavur dal corp, moviment e lavur d’energia — turnar a la atgna vivacitad.',
