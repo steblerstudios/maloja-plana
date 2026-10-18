@@ -138,6 +138,14 @@ describe('Schwellen: Pensionskasse und Unfallversicherung', () => {
     expect(stundenlohnRechnen({ betrag: '25', ferienForm: 'inklusive', wochenstunden: '15', dreizehnter: 'nein' }).bvg).toBe('darunter');
   });
 
+  it('Monat ist ein Zwölftel des Jahres — kein zweiter Rechenweg (Fachprüfung 18.10.)', () => {
+    // vorher: 25 inkl., 20 Std. → Monat 2 167 (Stundentotal × 52), Jahr 24 000 — widersprüchlich
+    const r = stundenlohnRechnen({ betrag: '25', ferienForm: 'inklusive', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' });
+    expect(r.monat.inklusive).toBe(2000);
+    const m = stundenlohnRechnen({ betrag: '24', ferienForm: 'dazu', wochenstunden: '20', dreizehnter: 'ja', feiertag: 'nein' });
+    expect(m.monat.dazu).toBe(Math.round(m.jahreslohn / 12));
+  });
+
   it('BVG: genau auf der Schwelle ist noch nicht versichert (Art. 2: «mehr als»)', () => {
     // 31.50 × 12/13 × 15 × 52 = 22 680.00 genau → nicht mehr als die Schwelle
     const genau = stundenlohnRechnen({ betrag: '31.5', ferienForm: 'inklusive', wochenstunden: '15', dreizehnter: 'nein', feiertag: 'nein' });
@@ -227,6 +235,12 @@ describe('Einordnung im gerenderten Text', () => {
     palette, t, onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
   })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
 
+  it('13. unbeantwortet im Spalt: der Text nennt die 13.-Frage, nicht «Kanton wählen» (Wording-Prüfung 18.10.)', () => {
+    const txt = seite({ betrag: '25', ferienForm: 'inklusive', kanton: 'GE', wochenstunden: '20' });
+    expect(txt).toContain('hängt am 13. Monatslohn');
+    expect(txt).not.toContain('Mit dem Kanton des Arbeitsorts');
+  });
+
   it('B10 · der Basel-Satz zum 13. Monatslohn steht nur bei Basel-Stadt', () => {
     const basis = { betrag: '21', ferienForm: 'dazu', dreizehnter: 'ja', wochenstunden: '20', feiertag: 'nein' };
     expect(seite({ ...basis, kanton: 'BS' })).toContain('In Basel-Stadt gilt das nur');
@@ -272,9 +286,11 @@ describe('Einordnung im gerenderten Text', () => {
     expect(txt).toContain('In Genf, Neuenburg, im Tessin und im Jura gilt der Mindestlohn ohne Ferien- und Feiertagszuschlag, in Basel-Stadt ohne Ferienzuschlag.');
   });
 
-  it('OR 324a Abs. 4: Schriftform, NAV oder GAV; Stand-Angabe zum Zürcher/Winterthurer Hinweis', () => {
+  it('OR 324a Abs. 4: Schriftform, NAV oder GAV; Zürich/Winterthur ohne unbelegtes Urteil und Datum', () => {
     const txt = seite({ art: 'befristet', betrag: '25', kanton: 'ZH' });
     expect(txt).toContain('sofern nicht schriftlich, in einem Normal- oder Gesamtarbeitsvertrag eine mindestens gleichwertige Regelung getroffen ist (OR Art. 324a Abs. 4)');
-    expect(txt).toContain('noch nicht in Kraft (Stand 29.9.2026)');
+    // Fachprüfung 18.10.2026: Urteil und Inkrafttreten im Repo nicht belegt → nur Verweis an die Stadt.
+    expect(txt).toContain('Ob und ab wann er gilt, weiss die Stadt.');
+    expect(txt).not.toContain('2C_28/2025');
   });
 });

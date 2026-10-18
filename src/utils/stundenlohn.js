@@ -183,7 +183,9 @@ export function stundenlohnRechnen(eingabe) {
     befunde,
     wochenstunden: w,
     stundenUnplausibel,
-    monat: w > 0 ? Object.fromEntries(Object.entries(lesarten).map(([k, l]) => [k, Math.round(l.total * stundenAufMonat(w))])) : null,
+    // Monat = Jahr / 12 (eine Rechnung, kein zweiter Weg). Die Wochenstunden gelten für eine
+    // Arbeitswoche ohne Ferienwochen; Stundentotal × 52 Wochen hätte den Ferienzuschlag doppelt gezählt.
+    monat: w > 0 ? Object.fromEntries(Object.keys(lesarten).map((k, i) => [k, Math.round(jahrJe[i] / 12)])) : null,
     jahreslohn,
     jahrTief: jahreslohn,
     jahrHoch: w > 0 ? Math.round(jahrHochRoh) : null,

@@ -1597,7 +1597,7 @@ export default {
     bestattung: 'Giavischs da sepultura',
     patientenverfuegung: 'Far ina disposiziun da pazient',
     kreditkarte: 'Carta da credit: vala la paina?',
-    stundenlohn: 'Salari per ura: tge ma tutga?',
+    stundenlohn: 'Salari per ura: tge ma tutga?', // TODO(rm): provisorisch — Gegenlese (Stundenlohn-Rechner neu, 28.09.2026)
     zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
@@ -1679,7 +1679,7 @@ export default {
     sub: {
       patientenverfuegung: 'En dumondas, per stampar',
       kreditkarte: 'Custs ed avantatgs per onn',
-      stundenlohn: 'Salari da basa, vacanzas e supplements separads',
+      stundenlohn: 'Salari da basa, vacanzas e supplements separads', // TODO(rm): provisorisch — Gegenlese (Stundenlohn-Rechner neu, 28.09.2026)
       installApp: 'Metter sin il homescreen',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       arztkoffer: { sie: 'Voss utensils da sanadad en ina valisch da medi', du: 'Tes utensils da sanadad en ina valisch da medi' },
@@ -6097,7 +6097,7 @@ export default {
     betragHinweis: 'L’import per ura, sco ch’el stat en il contract u sin il quint da salari — avant las deducziuns.',
     wochenstunden: 'Uras per emna, en media',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    wochenstundenHinweis: 'Tar missiuns variablas: la media dals ultims mais. Resguardadas èn las uras da questa ina plazza: las limitas da la chascha da pensiun e da l’assicuranza d’accidents durant il temp liber valan per patrun. Emplenì ordavant dal profil, sch’igl è avant maun.',
+    wochenstundenHinweis: 'Resguardadas èn las uras d’in’emna da lavur, senza emnas da vacanzas; tar missiuns variablas la media dals ultims mais. I quinta mo questa plazza: las limitas da la chascha da pensiun e da l’assicuranza d’accidents durant il temp liber valan per patrun. Emplenì ordavant dal profil, sch’igl è avant maun.',
     stundenUnplausibel: '{stunden} uras per emna èn nunusitadamain bleras — stat qua forsa in pensum en pertschient? Tschertgadas èn uras per emna. Fin che quai è sclerì, calculescha Maloja senza import mensil e senza limitas.',
     zuschlaegeTitel: 'Vacanzas e supplements',
     ferienForm: 'Co vegnan las vacanzas pajadas?',
@@ -6113,7 +6113,7 @@ export default {
     ausgewiesenHinweis: 'Per exempel sco atgna lingia «Ferienentschädigung 8,33 %».',
     vertragZuWenig: 'Il contract numna main vacanzas che quai che tutga tar almain. Calculà vegn perquai cun {wochen} emnas (OR art. 329a al. 1).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    nichtAusgewiesen: 'Tenor il Tribunal federal sto la Ferienentschädigung vegnir inditgada sco import u pertschient en il contract e sin mintga quint da salari; uschiglio po il salari da vacanzas stuair vegnir pajà anc ina giada (BGE 129 III 493 cons. 3.2 s.; BGE 149 III 202 cons. 2.2.1 s.). Sche quai vala en il agen cas, po in servetsch da cussegliaziun per dretg da lavur classifitgar.',
+    nichtAusgewiesen: 'Tenor il Tribunal federal sto la Ferienentschädigung vegnir inditgada sco import u pertschient en il contract e sin mintga quint da salari; uschiglio po il salari da vacanzas stuair vegnir pajà anc ina giada (BGE 129 III 493). Sche quai vala en il agen cas, po in servetsch da cussegliaziun per dretg da lavur classifitgar.',
     feiertag: 'È in supplement per dis da festa fixà?',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     feiertagHinweis: 'El vegn mo quintà, sch’il pertschient è enconuschent. L’1. d’avust è in di da festa pajà (Cst. art. 110 al. 3).',
@@ -6145,12 +6145,13 @@ export default {
     ml_konformMit13: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Cun il 13avel salari mensil po quai tanscher — premess ch’el vegnia quintà per il salari minimal.',
     ml_konformMit13Bs: 'A Basilea-Citad vala quai mo, sch’el vegn pajà a parts cun mintga salari mensil.',
     ml_dreizehnterUnklar: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Sche quai tanscha, dependa dal 13avel salari mensil: cun in 13avel po quai tanscher, senza betg. Cun la resposta a la dumonda davart il 13avel sa lascha quai classifitgar.',
-    ml_unter: 'Il salari da basa da {grund} per ura para dad esser sut il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). Cumpareglià vegn senza supplement da vacanzas e da dis da festa.',
+    ml_unter: 'Il salari da basa da {grund} per ura para dad esser sut il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). Cumpareglià vegn il salari da basa senza supplement da vacanzas.',
     ml_differenz: 'Per mais fiss quai var {betrag} main ch’il salari minimal.',
     ml_stelle: 'Sche nagina da quellas na vala, pon ils dretgs vegnir sclerids tar {stelle}.',
     ml_keinGesetz: 'Il chantun {kanton} n’enconuscha nagin salari minimal legal. In contract collectiv da lavur da la branscha po tuttina prescriver in.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    ml_zhHinweis: 'En las citads da Turitg e Winterthur ha il Tribunal federal confermà ils 12.5.2026 la valaivladad d’in salari minimal communal (BGer 2C_28/2025 e 2C_30/2025), ma el n’è anc betg en vigur (stadi 29.9.2026). La citad po dar infurmaziun.',
+    // TODO(rm): provisorisch — Gegenlese (ml_zhHinweis gekürzt 18.10.2026, Fachprüfung)
+    ml_zhHinweis: 'Las citads da Turitg e Winterthur han votà davart in salari minimal communal. Sch’el vala e da cura davent, po dir la citad.',
     ml_keinKanton: 'Cun il chantun dal lieu da lavur sa lascha il salari da basa cumparegliar cun in salari minimal chantunal.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     bvg_obligatorisch: 'Salari annual stimà tar il medem patrun: {jahr}. Quai è sur la limita d’entrada da {schwelle} — per regla tutga la plazza uschia en la chascha da pensiun (BVG art. 2 al. 1). Tranter autras excepziuns: engaschament a termin da maximalmain trais mais, lavur accessorica ultra d’ina plazza principala gia assicurada (BVV 2 art. 1j al. 1 lit. b e c).',
@@ -6186,7 +6187,7 @@ export default {
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     frage_krankheit: 'Dura l’engaschament dapli che trais mais? Da quai dependa, sch’il salari vegn pajà vinavant en cas da malsogna senza atgna culpa (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit u en in contract normal u collectiv da lavur (OR art. 324a al. 4).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    quellen: 'Funtaunas: OR art. 329a al. 1 (vacanzas) · OR art. 324a al. 1 e 4 (salari en cas da malsogna) · BGE 129 III 493 e BGE 149 III 202 (inditgar la Ferienentschädigung) · BVG art. 2 al. 1 (chascha da pensiun, limita stadi 2026) · BVV 2 art. 1j al. 1 e art. 1k (excepziuns) · UVV art. 13 al. 1 e 2 (accidents) · Cst. art. 110 al. 3 (1. d’avust) · salaris minimals chantunals stadi 2026: GE LIRT art. 39K · NE LEmpl art. 32d al. 3 · JU RSJU 822.41 · TI LSM · BS MiLoG § 3 al. 1. A Genevra, a Neuchâtel, en il Tessin ed en il Giura vala il salari minimal senza supplement da vacanzas e da dis da festa, a Basilea-Citad senza supplement da vacanzas.',
+    quellen: 'Funtaunas: OR art. 329a al. 1 (vacanzas) · OR art. 324a al. 1 e 4 (salari en cas da malsogna) · BGE 129 III 493 (inditgar la Ferienentschädigung) · BVG art. 2 al. 1 (chascha da pensiun, limita stadi 2026) · BVV 2 art. 1j al. 1 e art. 1k (excepziuns) · UVV art. 13 al. 1 e 2 (accidents) · Cst. art. 110 al. 3 (1. d’avust) · salaris minimals chantunals stadi 2026: GE LIRT art. 39K · NE LEmpl art. 32d al. 3 · JU RSJU 822.41 · TI LSM · BS MiLoG § 3 al. 1. A Genevra, a Neuchâtel, en il Tessin ed en il Giura vala il salari minimal senza supplement da vacanzas e da dis da festa, a Basilea-Citad senza supplement da vacanzas.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     vorlaeufig: 'Stimaziun a basa da las indicaziuns endatadas, cun il medem dumber d’uras durant l’entir onn. Nagina cussegliaziun giuridica. Decisivs èn la lescha, il contract e il contract collectiv u normal da lavur. En cas da dispita decida il tribunal.',
   },

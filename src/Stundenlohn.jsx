@@ -103,13 +103,15 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       case 'konformMit13': return vorsatz + t('stundenlohnView.ml_konformMit13', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName })
         // Die Basler Besonderheit (13. nur bei anteiliger Auszahlung) gehört nur zu Basel-Stadt.
         + (e.kanton === 'BS' ? ' ' + t('stundenlohnView.ml_konformMit13Bs') : '');
+      // Im Spalt zwischen reduziertem und vollem Boden entscheidet die Frage zum 13. — nicht anklagen.
+      case 'dreizehnterUnklar': return vorsatz + t('stundenlohnView.ml_dreizehnterUnklar', { grund, mindest: zahlText(b.mindestStunde), reduziert: zahlText(b.reduzierterBoden), kanton: kantonName });
       case 'unterMindestlohn': return vorsatz + t('stundenlohnView.ml_unter', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr })
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
         + ' ' + t('lohnCheck.ausnahmen') + ' '
         + t('stundenlohnView.ml_stelle', { stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
-      // Städte Zürich und Winterthur: BGer 2C_28/2025 (Zürich) und 2C_30/2025 (Winterthur), beide
-      // vom 12.5.2026: gültig, aber noch nicht in Kraft (Quelle: QUELLEN-492, Winterthurer Volltext
-      // nicht gelesen). `ml_zhHinweis` nennt keine Beträge und verweist an die Stadt.
+      // Städte Zürich und Winterthur: städtischer Mindestlohn abgestimmt; Gerichtsstand und Inkrafttreten
+      // sind im Repo nicht belegt (Fachprüfung 18.10.2026). `ml_zhHinweis` nennt darum weder Urteil
+      // noch Datum noch Beträge und verweist an die Stadt.
       case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName }) + (e.kanton === 'ZH' ? ' ' + t('stundenlohnView.ml_zhHinweis') : '');
       default: return t('stundenlohnView.ml_keinKanton');
     }
