@@ -10,7 +10,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
-import { addTodo } from './utils/merkliste.js';
+import { merkpunktSichern } from './utils/merkliste.js';
 import { erinnerungSichern } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
@@ -52,18 +52,19 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const [ipvVorschau, setIpvVorschau] = useState(false);
   // Unterlagen für den IPV-Antrag als offenen Punkt in die Merkliste legen (Muster wie Umzug),
   // nimmt der „Welche Papiere brauche ich?"-Unsicherheit die Spitze. Idempotent, Link → Lebensordner.
+  // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts in der echten Merkliste).
   const [permitAdded, setPermitAdded] = useState(false);
   const permitTodoButton = () => React.createElement('button', {
-    onClick: () => { addTodo({ text: t('premium.permitTodoText'), link: 'tresor' }); setPermitAdded(true); },
-    disabled: permitAdded,
-    'aria-pressed': permitAdded,
+    onClick: () => { const ergebnis = merkpunktSichern({ text: t('premium.permitTodoText'), link: 'tresor' }, vorlaeufig); if (ergebnis) setPermitAdded(ergebnis); },
+    disabled: !!permitAdded,
+    'aria-pressed': !!permitAdded,
     style: {
       marginTop: '8px', cursor: permitAdded ? 'default' : 'pointer', fontFamily: 'inherit',
       background: 'none', border: '1px solid ' + (permitAdded ? palette.sage : palette.border),
       borderRadius: radius.sm, padding: '3px 10px', fontSize: text.xs,
       color: permitAdded ? (palette.sageDeep || palette.sage) : palette.mid,
     },
-  }, erledigtZeichen(permitAdded, permitAdded ? t('premium.permitTodoAdded') : t('premium.permitTodoAdd')));
+  }, erledigtZeichen(!!permitAdded, permitAdded ? t(permitAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'premium.permitTodoAdded') : t('premium.permitTodoAdd')));
 
   const canton = data.basis?.canton || '';
   const ipvResult = calculateIPV(data);

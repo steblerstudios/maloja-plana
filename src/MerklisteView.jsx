@@ -3,6 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 
 // Persönliche Merkliste: „Erkenntnis → Handlung". Eine Notiz erfassen und
 // optional direkt mit dem passenden Rechner/Kapitel verknüpfen (Deeplink).
@@ -29,13 +30,18 @@ const load = () => {
 };
 
 export const MerklisteView = ({ palette, t, onNavigate }) => {
-  const [items, setItems] = useState(load);
+  // Im Beispiel und beim Ausprobieren (Entscheid 18.10.2026, wie der Kalender): beginnt leer,
+  // speichert nie; die echten Punkte bleiben unsichtbar und unberührt. main.jsx hängt die
+  // Ansicht beim Moduswechsel neu ein (key: datenModus).
+  const vorlaeufig = useVorlaeufig();
+  const [items, setItems] = useState(() => (vorlaeufig ? [] : load()));
   const [newText, setNewText] = useState('');
   const [newLink, setNewLink] = useState('');
 
   useEffect(() => {
+    if (vorlaeufig) return;
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (e) { /* Speicher voll */ }
-  }, [items]);
+  }, [items, vorlaeufig]);
 
   const add = () => {
     const text = newText.trim();

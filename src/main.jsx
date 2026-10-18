@@ -1626,7 +1626,8 @@ const AppInner = ({ demo }) => {
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
-        view === 'merkliste' && React.createElement(MerklisteView, { palette, t, onNavigate: handleNavigate }),
+        // key: datenModus — wie beim Kalender: nach «Beispiel verlassen» keine Beispiel-Liste über die echte.
+        view === 'merkliste' && React.createElement(MerklisteView, { key: datenModus, palette, t, onNavigate: handleNavigate }),
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),

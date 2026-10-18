@@ -4,7 +4,8 @@ import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, a
 import { plusTage } from './utils/fristen.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
-import { addTodo } from './utils/merkliste.js';
+import { merkpunktSichern } from './utils/merkliste.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
@@ -52,16 +53,21 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
 
   // Adress-Checkliste: jede Stelle lässt sich als offener Punkt in die Merkliste legen
   // (idempotent, kein Doppel). Der Link führt jeweils zum Adressänderungs-Brief.
+  // Wert je Stelle: 'gespeichert' | 'vorlaeufig'. Im Beispiel/beim Ausprobieren nichts in die
+  // echte Merkliste; die Zeilen sagen «gemerkt», darunter steht einmal «nur für jetzt».
+  const vorlaeufig = useVorlaeufig();
   const [added, setAdded] = useState({});
+  const merke = (k) => merkpunktSichern({ text: t('umzug.step3TodoPrefix') + ' ' + t('umzug.step3' + k), link: 'briefe' }, vorlaeufig);
   const addOne = (k) => {
-    addTodo({ text: t('umzug.step3TodoPrefix') + ' ' + t('umzug.step3' + k), link: 'briefe' });
-    setAdded(a => ({ ...a, [k]: true }));
+    const ergebnis = merke(k);
+    if (ergebnis) setAdded(a => ({ ...a, [k]: ergebnis }));
   };
   const addAll = () => {
     const next = {};
-    CHECKLIST.forEach(k => { addTodo({ text: t('umzug.step3TodoPrefix') + ' ' + t('umzug.step3' + k), link: 'briefe' }); next[k] = true; });
+    CHECKLIST.forEach(k => { const ergebnis = merke(k); if (ergebnis) next[k] = ergebnis; });
     setAdded(next);
   };
+  const nurFuerJetzt = Object.values(added).includes('vorlaeufig');
 
   return React.createElement(AblaufContainer, {
     palette, icon: 'home',
@@ -137,6 +143,8 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
           );
         })
       ),
+      nurFuerJetzt && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep || palette.sage, fontWeight: weight.semi, margin: '0 0 ' + space.xs + 'px' } },
+        hinweisZeichen('check', 12, 'z'), t('common.savedTemporary')),
       React.createElement('button', {
         onClick: addAll,
         style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi },
