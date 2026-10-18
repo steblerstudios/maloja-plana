@@ -16,6 +16,8 @@ import { SozialhilfeRechner } from '../SozialhilfeRechner.jsx';
 import { KKLastCard, KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 import { StipendienView } from '../StipendienView.jsx';
 import { LohnEinordnung } from '../components/LohnEinordnung.jsx';
+import { Stundenlohn } from '../Stundenlohn.jsx';
+import { stundenlohnErgebnis } from '../utils/stundenlohn.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import fr from '../i18n/fr.js';
@@ -226,6 +228,22 @@ describe('O3 · Lohn-Einordnung (Orientierung)', () => {
   });
 });
 
+describe('O3 · Stundenlohn (Schätzung)', () => {
+  it('reine Funktion: Stundenlohn, Wochenstunden, Kanton, Ferienform', () => {
+    expect(stundenlohnErgebnis({})).toEqual({ art: 'schaetzung', fehlend: ['stundenlohn', 'wochenstunden', 'kanton', 'ferienform'] });
+    expect(stundenlohnErgebnis({ betrag: '25', wochenstunden: '20', kanton: 'GE', ferienForm: 'unklar' }).fehlend).toEqual(['ferienform']);
+    expect(stundenlohnErgebnis({ betrag: '25', wochenstunden: '80', kanton: 'GE', ferienForm: 'dazu' }).fehlend).toEqual(['wochenstunden']);
+    expect(stundenlohnErgebnis({ betrag: '25', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' }).fehlend).toEqual([]);
+  });
+  it('Aufrufstelle: Kanton und Stunden kommen aus dem Profil, genau eine Zeile', () => {
+    expect(artZeilen(render(Stundenlohn, { data: leer }))).toEqual([{ art: 'schaetzung', fehlend: 4 }]);
+    const profil = { ...leer, basis: { canton: 'GE' }, ausbildung: { workHoursPerWeek: '20' } };
+    expect(artZeilen(render(Stundenlohn, { data: profil }))).toEqual([{ art: 'schaetzung', fehlend: 2 }]);
+    const voll = { ...profil, finanzen: { stundenlohnRechner: { betrag: '25', ferienForm: 'inklusive' } } };
+    expect(artZeilen(render(Stundenlohn, { data: voll }))).toEqual([{ art: 'schaetzung', fehlend: 0 }]);
+  });
+});
+
 describe('O3 · Wahrheits-Disziplin', () => {
   it('kein umgestellter Rechner nennt sich «Berechnung»', () => {
     const faelle = [
@@ -238,6 +256,7 @@ describe('O3 · Wahrheits-Disziplin', () => {
       KK_LAST_ERGEBNIS,
       stipendienErgebnis({ status: 'swiss', scope: 'tertiaer' }),
       lohnEinordnungErgebnis({ income: 6000, incomeType: 'brutto', hoursPerWeek: 42 }),
+      stundenlohnErgebnis({ betrag: '25', wochenstunden: '20', kanton: 'GE', ferienForm: 'dazu' }),
     ];
     for (const e of faelle) expect(e.art).not.toBe(ERGEBNIS_ART.BERECHNUNG);
   });

@@ -1597,6 +1597,7 @@ export default {
     bestattung: 'Giavischs da sepultura',
     patientenverfuegung: 'Far ina disposiziun da pazient',
     kreditkarte: 'Carta da credit: vala la paina?',
+    stundenlohn: 'Salari per ura: tge ma tutga?', // TODO(rm): provisorisch — Gegenlese (Stundenlohn-Rechner neu, 28.09.2026)
     zurueckZu: 'Enavos tar {name}', // «Zurück zu Kapitel …» nach einem Querverweis (main.jsx)
     dashboard: 'Survista',
     tools: 'Utensils',
@@ -1678,6 +1679,7 @@ export default {
     sub: {
       patientenverfuegung: 'En dumondas, per stampar',
       kreditkarte: 'Custs ed avantatgs per onn',
+      stundenlohn: 'Salari da basa, vacanzas e supplements separads', // TODO(rm): provisorisch — Gegenlese (Stundenlohn-Rechner neu, 28.09.2026)
       installApp: 'Metter sin il homescreen',
       // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
       arztkoffer: { sie: 'Voss utensils da sanadad en ina valisch da medi', du: 'Tes utensils da sanadad en ina valisch da medi' },
@@ -6067,6 +6069,128 @@ export default {
     },
   },
   // «Lohnt sich meine Karte?» — Kreditkarten-Rechner (27.09.2026). Neutral formuliert, keine Sie/Du-Fassung nötig.
+  stundenlohnView: {
+    // TODO(rm): provisorisch — Gegenlese Muttersprachler:in (Stundenlohn-Rechner neu, 28.09.2026).
+    // Gesetzes-Abkürzungen vorläufig nach deutscher Form (OR, BVG, UVV) mit «art.»/«al.».
+    title: 'Salari per ura: tge ma tutga?',
+    intro: 'Per lavur pajada per ura: il salari dividì en salari da basa, vacanzas ed ulteriurs supplements, il salari da basa cumpareglià cun il salari minimal chantunal, ed ultra da quai las limitas per la chascha da pensiun e per l’assicuranza cunter accidents. Calculà mo cun las indicaziuns endatadas qua — quai che mo il contract po respunder resta sco dumonda.',
+    anstellungTitel: 'Engaschament',
+    art: 'Gener d’engaschament',
+    art_fest: 'Engaschament fix pajà per ura',
+    art_abrufEcht: 'Lavur sin clom — las missiuns ston vegnir acceptadas',
+    art_abrufUnecht: 'Lavur sin clom — las missiuns pon vegnir refusadas',
+    art_befristet: 'Engaschament a temp limità',
+    art_temporaer: 'Lavur temporara tras in’agentura d’emprest da persunal',
+    art_hausdienst: 'Lavur en ina chasada privata',
+    artHinweis_fest: 'Missiuns regularas; mintga ura lavurada vegn pajada.',
+    artHinweis_abrufEcht: 'L’interpresa clama, ed ina missiun na po betg simplamain vegnir refusada.',
+    artHinweis_abrufUnecht: 'L’interpresa dumonda, e mintga missiun po vegnir refusada.',
+    artHinweis_befristet: 'L’engaschament finescha a ina data fixa u cun in’incumbensa determinada.',
+    artHinweis_temporaer: 'Il contract è cun l’agentura d’emprest da persunal; lavurà vegn en in’autra interpresa.',
+    artHinweis_hausdienst: 'Per exempel nettegiar, tgirar u guardar uffants en ina chasada privata.',
+    kanton: 'Chantun dal lieu da lavur',
+    kantonHinweis: 'Per il salari minimal quinta il chantun, en il qual vegn lavurà. Emplenì ordavant cun il chantun da domicil dal profil, sch’el è avant maun.',
+    ueber3Monate: 'Dura l’engaschament dapli che trais mais, u è el vegnì fixà uschia?',
+    unter20: 'Pli giuven che 20 onns',
+    lohnTitel: 'Salari',
+    betrag: 'Salari per ura brut, en fr.',
+    betragHinweis: 'L’import per ura, sco ch’el stat en il contract u sin il quint da salari — avant las deducziuns.',
+    wochenstunden: 'Uras per emna, en media',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    wochenstundenHinweis: 'Resguardadas èn las uras d’in’emna da lavur, senza emnas da vacanzas; tar missiuns variablas la media dals ultims mais. I quinta mo questa plazza: las limitas da la chascha da pensiun e da l’assicuranza d’accidents durant il temp liber valan per patrun. Emplenì ordavant dal profil, sch’igl è avant maun.',
+    stundenUnplausibel: '{stunden} uras per emna èn nunusitadamain bleras — stat qua forsa in pensum en pertschient? Tschertgadas èn uras per emna. Fin che quai è sclerì, calculescha Maloja senza import mensil e senza limitas.',
+    zuschlaegeTitel: 'Vacanzas e supplements',
+    ferienForm: 'Co vegnan las vacanzas pajadas?',
+    ferienForm_inklusive: 'Gia cuntegnidas en il salari per ura',
+    ferienForm_dazu: 'Sco supplement ultra dal salari per ura',
+    ferienForm_bezahlt: 'Las vacanzas vegnan retratgas e pajadas durant quel temp',
+    ferienForm_unklar: 'Na sai betg',
+    ferienWochen: 'Emnas da vacanzas per onn tenor contract',
+    ferienWochenHinweis: 'Laschar vid, sch’i n’è nagut fixà. Almain 4 emnas tutgan tar, fin a 20 onns cumplenids 5 emnas (OR art. 329a al. 1).',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    ausgewiesen: 'Stat la Ferienentschädigung separadamain en il contract e sin il quint da salari?',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    ausgewiesenHinweis: 'Per exempel sco atgna lingia «Ferienentschädigung 8,33 %».',
+    vertragZuWenig: 'Il contract numna main vacanzas che quai che tutga tar almain. Calculà vegn perquai cun {wochen} emnas (OR art. 329a al. 1).',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    nichtAusgewiesen: 'Tenor il Tribunal federal sto la Ferienentschädigung vegnir inditgada sco import u pertschient en il contract e sin mintga quint da salari; uschiglio po il salari da vacanzas stuair vegnir pajà anc ina giada (BGE 129 III 493). Sche quai vala en il agen cas, po in servetsch da cussegliaziun per dretg da lavur classifitgar.',
+    feiertag: 'È in supplement per dis da festa fixà?',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    feiertagHinweis: 'El vegn mo quintà, sch’il pertschient è enconuschent. L’1. d’avust è in di da festa pajà (Cst. art. 110 al. 3).',
+    feiertagProzent: 'Supplement per dis da festa, en %',
+    dreizehnter: 'Datti in 13avel salari mensil?',
+    antwort_ja: 'Gea',
+    antwort_nein: 'Na',
+    antwort_unklar: 'Na sai betg',
+    brauchtBetrag: 'Uschespert ch’il salari per ura è endatà, cumpara qua il quint.',
+    rechnungTitel: 'Il quint per ura',
+    lesart_inklusive: 'Sche l’import da {betrag} cuntegna gia las vacanzas',
+    lesart_dazu: 'Sche las vacanzas vegnan tar {betrag}',
+    lesartKurz_inklusive: 'Sche las vacanzas èn cuntegnidas:',
+    lesartKurz_dazu: 'Sche las vacanzas vegnan tar:',
+    lesartenHinweis: 'Tge lectura ch’è endretg, stat en il contract u sin il quint da salari. Fin che quai è cler, mussa Maloja omaduas.',
+    zeile_grund: 'Salari da basa',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    zeile_ferien: 'Ferienentschädigung {prozent} % ({wochen} emnas)',
+    zeile_feiertag: 'Supplement per dis da festa',
+    zeile_dreizehnter: 'Part dal 13avel salari mensil',
+    zeile_total: 'Total per ura',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    proMonat: 'Tar in pensum da {stunden} uras per emna fa quai var {betrag} per mais, brut.',
+    einordnungTitel: 'Classificaziun',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    ml_ok: 'Il salari da basa da {grund} per ura cuntanscha u surpassa il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). In contract collectiv u normal da lavur da la branca po prescriver in salari minimal pli aut.',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    ml_okTI: 'Il salari da basa da {grund} per ura cuntanscha u surpassa il pli bass salari minimal dal Tessin ({mindest}, stadi {jahr}). Tenor la branca va el fin a {obergrenze}. In contract collectiv u normal da lavur da la branca po prescriver in salari minimal pli aut.',
+    ml_konformMit13: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Cun il 13avel salari mensil po quai tanscher — premess ch’el vegnia quintà per il salari minimal.',
+    ml_konformMit13Bs: 'A Basilea-Citad vala quai mo, sch’el vegn pajà a parts cun mintga salari mensil.',
+    ml_dreizehnterUnklar: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Sche quai tanscha, dependa dal 13avel salari mensil: cun in 13avel po quai tanscher, senza betg. Cun la resposta a la dumonda davart il 13avel sa lascha quai classifitgar.',
+    ml_unter: 'Il salari da basa da {grund} per ura para dad esser sut il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). Cumpareglià vegn il salari da basa senza supplement da vacanzas.',
+    ml_differenz: 'Per mais fiss quai var {betrag} main ch’il salari minimal.',
+    ml_stelle: 'Sche nagina da quellas na vala, pon ils dretgs vegnir sclerids tar {stelle}.',
+    ml_keinGesetz: 'Il chantun {kanton} n’enconuscha nagin salari minimal legal. In contract collectiv da lavur da la branscha po tuttina prescriver in.',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    // TODO(rm): provisorisch — Gegenlese (ml_zhHinweis gekürzt 18.10.2026, Fachprüfung)
+    ml_zhHinweis: 'Las citads da Turitg e Winterthur han votà davart in salari minimal communal. Sch’el vala e da cura davent, po dir la citad.',
+    ml_keinKanton: 'Cun il chantun dal lieu da lavur sa lascha il salari da basa cumparegliar cun in salari minimal chantunal.',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    bvg_obligatorisch: 'Salari annual stimà tar il medem patrun: {jahr}. Quai è sur la limita d’entrada da {schwelle} — per regla tutga la plazza uschia en la chascha da pensiun (BVG art. 2 al. 1). Tranter autras excepziuns: engaschament a termin da maximalmain trais mais, lavur accessorica ultra d’ina plazza principala gia assicurada (BVV 2 art. 1j al. 1 lit. b e c).',
+    bvg_darunter: 'Salari annual stimà tar il medem patrun: {jahr}. Quai n’è betg sur la limita d’entrada da {schwelle} — la chascha da pensiun n’è lura betg obligatorica (BVG art. 2 al. 1).',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    bvg_befristetKurz: 'Tar engaschaments a termin fin a trais mais na vala la obligaziun per regla betg (BVV 2 art. 1j al. 1 lit. b). Sch’igl engaschament vegn prolungà sur trais mais, vala ella (BVV 2 art. 1k).',
+    // TODO(rm): Gegenlese: deutscher Rückfall, Fix-Welle #492 (14.10.2026)
+    bvg_haengtAnFerien: 'Ob die Pensionskasse obligatorisch ist, hängt davon ab, ob die Ferien im Stundenlohn enthalten sind: geschätzt {tief} im Jahr, wenn die Ferien enthalten sind, {hoch}, wenn sie dazukommen. Eintrittsschwelle {schwelle} (BVG Art. 2 Abs. 1).',
+    bvg_unbekannt: 'Cun las uras per emna sa lascha stimar, sch’il salari è sur la limita d’entrada da la chascha da pensiun (BVG art. 2 al. 1).',
+    nbu_versichert: 'A partir da 8 uras per emna tar il medem patrun èn era accidents durant il temp liber assicurads tras il patrun (UVV art. 13 al. 1).',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    nbu_nurBeruf: 'Sut 8 uras per emna tar il medem patrun èn tras il patrun mo accidents professiunals assicurads, ultra da quai accidents sin la via da lavur (UVV art. 13 al. 1 e 2). Accidents durant il temp liber na vegnan betg cuvrids. Lura vala la paina da verifitgar, sche la cassa da malsauns cuvra era accidents.',
+    nbu_unbekannt: 'Cun las uras per emna sa lascha dir, sche era accidents durant il temp liber èn assicurads (a partir da 8 uras tar il medem patrun, UVV art. 13 al. 1).',
+    art_einordnung_abrufEcht: 'Tar lavur sin clom, nua che las missiuns ston vegnir acceptadas, sa tschenta la dumonda dal temp da spetga: sche e co ch’el vegn indemnisà, regla il contract. In servetsch da cussegliaziun per dretg da lavur po classifitgar, tge che tutga tar.',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    art_einordnung_abrufUnecht: 'Sche missiuns pon vegnir refusadas, dependan Ferienentschädigung, dis da festa e salari en cas da malsogna fermamain dal contract. Igl vala la paina da leger el exactamain.',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    art_einordnung_befristet: 'En cas da malsogna sto il salari vegnir pajà vinavant per in temp limità, sche l’engaschament ha durà dapli che trais mais u è vegnì fatg per dapli che trais mais e sch’igl impedi dal lavur n’è betg la culpa da la persuna (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit u en in contract normal u collectiv da lavur (OR art. 324a al. 4).',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    art_einordnung_temporaer: 'Tar lavur temporara va l’engaschament tras l’agentura d’emprest da persunal, betg tras l’interpresa da missiun. Savens vala in contract collectiv da lavur cun agens salaris minimals — tge contract, po l’agentura dir.',
+    art_einordnung_hausdienst: 'Per lavur en chasadas privatas datti contracts normals da lavur, per part cun salaris minimals. Ils imports na mussa Maloja anc betg — il chantun dat infurmaziun.',
+    fragenTitel: 'Dumondas avertas',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    fragenIntro: 'Quests puncts sa preston sco dumondas al patrun u ad in servetsch da cussegliaziun; respunder po mo il contract u il quint da salari.',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    frage_ferienForm: 'È la Ferienentschädigung cuntegnida en il salari per ura, u vegn ella tar?',
+    // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
+    frage_ausgewiesen: 'Stat la Ferienentschädigung sco import separà en il contract e sin il quint da salari?',
+    frage_feiertag: 'Vegnan ils dis da festa pajads — e sche gea, cun tge supplement?',
+    frage_dreizehnter: 'Datti in 13avel salari mensil, e co vegn el pajà?',
+    frage_bereitschaft: 'Vegn il temp, durant il qual vegn spetgà sin in clom, indemnisà?',
+    frage_gav: 'Tge contract collectiv da lavur vala per la missiun, e tge salari minimal stat en el?',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    frage_krankheit: 'Dura l’engaschament dapli che trais mais? Da quai dependa, sch’il salari vegn pajà vinavant en cas da malsogna senza atgna culpa (OR art. 324a al. 1) — nun ch’ina regulaziun almain equivalenta saja vegnida cunvegnida per scrit u en in contract normal u collectiv da lavur (OR art. 324a al. 4).',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    quellen: 'Funtaunas: OR art. 329a al. 1 (vacanzas) · OR art. 324a al. 1 e 4 (salari en cas da malsogna) · BGE 129 III 493 (inditgar la Ferienentschädigung) · BVG art. 2 al. 1 (chascha da pensiun, limita stadi 2026) · BVV 2 art. 1j al. 1 e art. 1k (excepziuns) · UVV art. 13 al. 1 e 2 (accidents) · Cst. art. 110 al. 3 (1. d’avust) · salaris minimals chantunals stadi 2026: GE LIRT art. 39K · NE LEmpl art. 32d al. 3 · JU RSJU 822.41 · TI LSM · BS MiLoG § 3 al. 1. A Genevra, a Neuchâtel, en il Tessin ed en il Giura vala il salari minimal senza supplement da vacanzas e da dis da festa, a Basilea-Citad senza supplement da vacanzas.',
+    // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    vorlaeufig: 'Stimaziun a basa da las indicaziuns endatadas, cun il medem dumber d’uras durant l’entir onn. Nagina cussegliaziun giuridica. Decisivs èn la lescha, il contract e il contract collectiv u normal da lavur. En cas da dispita decida il tribunal.',
+  },
   kreditkarteView: {
     // TODO(rm): provisorisch — Gegenlese (Kreditkarten-Rechner neu, 27.09.2026)
     title: 'Vala mia carta la paina?',
