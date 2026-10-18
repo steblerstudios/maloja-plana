@@ -107,8 +107,12 @@ enthält den Text «git commit» nicht und lief am Tor vorbei.
 
 **Seit 18.10.** bestimmt der Hook das Verzeichnis, in dem der Commit läuft:
 
-1. `cwd` aus dem Tool-Input; davor ein `cd <pfad> &&` bzw. `cd <pfad>;` und ein
-   `git -C <pfad> commit` werden berücksichtigt (relativ, `~`, Anführungszeichen).
+1. `cwd` aus dem Tool-Input; ein führendes `cd <pfad> &&` bzw. `cd <pfad>;` und ein
+   `git -C <pfad> commit` werden berücksichtigt (relativ, `~`, Anführungszeichen) —
+   **nur in der ersten Befehlszeile und nur, wenn das Verzeichnis existiert.** Sonst
+   gilt `cwd`. Grund: Der erste echte Commit mit der Korrektur hatte `git -C <pfad>
+   commit` als Text in der Commit-Nachricht; der Hook nahm `<pfad>` ernst und fiel auf
+   `main` zurück.
 2. Wurzel = `git -C <verzeichnis> rev-parse --show-toplevel`.
 3. Fallback: `$CLAUDE_PROJECT_DIR`, danach der feste Hauptpfad (wenn kein `package.json`).
 
