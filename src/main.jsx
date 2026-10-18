@@ -140,6 +140,10 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { GlossarText } from './GlossarBegriff.jsx';
 import { heuteIso } from './utils/fristen.js';
 import { uebernehmen, nachSchuldenSpeichern } from './utils/offenePosten.js';
+import { installiereNeuLadenNachDeploy } from './utils/neuLadenNachDeploy.js';
+
+// Tab über einen Deploy offen gelassen → nachgeladene Ansicht fehlt → einmal neu laden.
+installiereNeuLadenNachDeploy();
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
