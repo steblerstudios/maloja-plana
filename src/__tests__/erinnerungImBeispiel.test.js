@@ -86,3 +86,24 @@ describe('Kalender im Beispiel', () => {
     expect(lies('main.jsx')).toMatch(/React\.createElement\(CalendarReminders, \{ key: datenModus,/);
   });
 });
+
+describe('Überfällig-Banner im Beispiel (Dashboard)', () => {
+  // Im Browser belegt 18.10.2026: im Beispiel stand «1 Erinnerungen brauchen Aufmerksamkeit» —
+  // die ECHTE überfällige Frist, während der Kalender dort leer beginnt.
+  const t = createT({ de }, 'de', 'sie');
+  const palette = new Proxy({}, { get: () => '#888888' });
+  const echt = [{ id: '1', title: 'Echte überfällige Frist', dueDate: '2020-01-10', category: 'admin', recurrence: 'once', notes: '', done: false, completedDate: null, createdDate: '2020-01-01' }];
+  const render = async (vorlaeufig) => {
+    const { OverdueBanner } = await import('../OverdueBanner.jsx');
+    return renderToStaticMarkup(React.createElement(VorlaeufigContext.Provider, { value: vorlaeufig },
+      React.createElement(OverdueBanner, { palette, t, onNavigate: () => {} })));
+  };
+  it('echt: der Banner meldet die überfällige Frist', async () => {
+    store.or5_reminders = JSON.stringify(echt);
+    expect(await render(false)).toContain('aria-label');
+  });
+  it('vorläufig: kein Banner aus den echten Erinnerungen', async () => {
+    store.or5_reminders = JSON.stringify(echt);
+    expect(await render(true)).toBe('');
+  });
+});

@@ -2,6 +2,7 @@ import React from 'react';
 import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
 import { Icon } from './IconKern.jsx';
 import { inDays } from './utils/helpers.js';
+import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
 // Shows on Dashboard when there are overdue or due-today reminders.
@@ -21,7 +22,10 @@ const loadReminders = () => {
 const todayISO = () => inDays(0);
 
 export const OverdueBanner = ({ palette, t, onNavigate }) => {
-  const reminders = loadReminders();
+  // Im Beispiel und beim Ausprobieren beginnt der Kalender leer (Entscheid 18.10.2026) —
+  // dann meldet auch der Banner keine echten Erinnerungen.
+  const vorlaeufig = useVorlaeufig();
+  const reminders = vorlaeufig ? [] : loadReminders();
   const today = todayISO();
 
   const overdue = reminders.filter(r => !r.done && r.dueDate < today);
