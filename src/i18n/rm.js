@@ -5346,6 +5346,7 @@ export default {
     tpwQuelleVor: "Funtauna da la valur dal punct", // TODO(rm): provisorisch
     tpwQuelleTarifpartner: "societads medicinalas", // TODO(rm): provisorisch
     tpwQuelleSZ: "societads medicinalas; 0.85 per santéservices, pli baud tarifsuisse; 0.86 per CSS e HSK", // TODO(rm): provisorisch
+    tpwQuelleSO: "0.84 per santéservices; decisiuns separadas: CSS 0.84, HSK 0.85", // TODO(rm): provisorisch
     tpwQuelleGE: "vala per CSS", // TODO(rm): provisorisch
     tpwQuelleVD: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
     tpwQuelleLU: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
@@ -5354,6 +5355,7 @@ export default {
     tpwQuelleSeiten: "Bulletin uffizial da las leschas p. {seiten}", // TODO(rm): provisorisch — TI: amtliche Gesetzessammlung, nicht Amtsblatt
     tpwErgebnisGruppe: "Documentà per persunas assicuradas tar {gruppe}; tar autras cassas po la valur esser differenta.", // TODO(rm): provisorisch
     tpwErgebnisGruppeSZ: "Documentà per persunas assicuradas tar santéservices; per CSS e HSK vala en il chantun SZ 0.86.", // TODO(rm): provisorisch
+    tpwErgebnisGruppeSO: "Documentà per persunas assicuradas tar santéservices e CSS; per HSK vala en il chantun SO 0.85; tar autras cassas po la valur divergiar.", // TODO(rm): provisorisch
     tpwOhneKanton: "Senza chantun na quinta l'app betg — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     tpwOhneKantonProfil: "Senza chantun da domicil en il profil na quinta l'app betg qua — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },

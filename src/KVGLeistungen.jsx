@@ -960,13 +960,14 @@ const RechnungTab = ({ palette, t, data }) => {
 // Deploy-Gate 0.1.37 (1+2): ruhige Zeilen direkt beim berechneten Taxpunkt-Ergebnis — im Tab
 // «Arztrechnung» und in der Umrechnung im Franchise-Tab (dort vor dem Übernehmen als Beleg).
 //   · Gilt der Beleg nur für eine Versicherergruppe (TAXPUNKTWERT_QUELLEN.gruppe), steht sie hier,
-//     nicht erst im Linktext der Quellenliste. SZ: auch der Wert für CSS und HSK ist belegt.
-//   · K27/R4: die neun Kantone ohne Beleg 2026 zeigen «Stand 2025, provisorisch»; sonst — nur im
+//     nicht erst im Linktext der Quellenliste. SZ und SO: eigener Satz, weil dort auch der Wert
+//     der übrigen Gruppen belegt ist (SZ: CSS/HSK 0.86 · SO: CSS 0.84, HSK 0.85).
+//   · K27/R4: die Kantone ohne Beleg 2026 (TAXPUNKTWERT_UNBELEGT_2026) zeigen «Stand 2025, provisorisch»; sonst — nur im
 //     Tab «Arztrechnung» (mitDatenstand) — das Prüfdatum der belegten Werte.
 export const TpwErgebnisHinweise = ({ palette, t, canton, mitDatenstand = false }) => {
   const q = Object.prototype.hasOwnProperty.call(TAXPUNKTWERT_QUELLEN, canton) ? TAXPUNKTWERT_QUELLEN[canton] : null;
   const gruppe = q && q.gruppe
-    ? (q.zusatz === 'SZ' ? t('kvg.tpwErgebnisGruppeSZ') : t('kvg.tpwErgebnisGruppe', { gruppe: q.gruppe }))
+    ? (q.zusatz === 'SZ' || q.zusatz === 'SO' ? t('kvg.tpwErgebnisGruppe' + q.zusatz) : t('kvg.tpwErgebnisGruppe', { gruppe: q.gruppe }))
     : null;
   const unbelegt = TAXPUNKTWERT_UNBELEGT_2026.includes(canton);
   const stand = unbelegt

@@ -44,14 +44,15 @@ describe('K88 · Quellen-Links nennen Versicherergruppe und Stand', () => {
     expect(html).toContain('VD (kvg.tpwQuelleVD)');
     expect(html).toContain('LU (kvg.tpwQuelleLU)');
     expect(html).toContain('UR (kvg.tpwQuelleUR)');
+    expect(html).toContain('SO (kvg.tpwQuelleSO)');
     expect(html).toContain('GR (kvg.tpwQuelleStand(07.09.2026))');
     expect(html).toContain('ZG (kvg.tpwQuelleStand(13.01.2026))');
     // Kantone, deren Beleg für alle Gruppen gilt, bleiben kurz
     expect(html).toMatch(/>ZH</);
     expect(html).toMatch(/>BE</);
-    // weiterhin 17 Links, jeder mit ≥44 px Tippfläche
+    // 18 Links (SO seit 19.10.2026), jeder mit ≥44 px Tippfläche
     const links = html.match(/<a [^>]*>/g) || [];
-    expect(links).toHaveLength(17);
+    expect(links).toHaveLength(18);
     for (const a of links) expect(a).toContain('min-height:44px');
   });
 
@@ -157,5 +158,39 @@ describe('K103 · ohne oder mit unbekanntem Kanton keine Zahl', () => {
         expect(tr.kvg[k].length, lang + ' ' + k).toBeGreaterThan(10);
       }
     }
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// SO · Taxpunktwert 2026 amtlich belegt (19.10.2026)
+// Belege (rrb.so.ch, pdftotext): RRB SO 2026/825 vom 28.04.2026, Ziff. 3.2 — GAeSO ↔ santéservices
+// ag «mit einem Taxpunktwert von 0.84 Franken, gültig ab 1. Januar 2026, wird genehmigt»;
+// RRB 2026/1038 vom 02.06.2026 — CSS ebenfalls 0.84; RRB 2026/408 vom 03.03.2026, Ziff. 3.1 — HSK 0.85.
+// Der frühere App-Wert 0.89 galt 2025 für keine der drei Gruppen (je Ziff. 1/1.2 «Bis 2025 betrug …»).
+// BL und JU bleiben unbelegt: an der Kantonsquelle nur Spital- bzw. Klinikbeschlüsse gefunden.
+// ─────────────────────────────────────────────────────────────
+describe('SO · Taxpunktwert 2026 belegt, BL/JU bewusst unverändert', () => {
+  it('SO führt 0.84 (santéservices) mit Quelle RRB 2026/825', () => {
+    expect(TAXPUNKTWERT.SO).toBe(0.84);
+    expect(taxpunktwertFuer('SO')).toBe(0.84);
+    expect(TAXPUNKTWERT_QUELLEN.SO).toEqual({
+      art: 'behoerde',
+      url: 'https://rrb.so.ch/beschlussnummer/2026_825/download/1b4811c78b1542fbbd5d161c3e95fbb0/',
+      zusatz: 'SO',
+      gruppe: 'santéservices',
+    });
+  });
+
+  it('Linktext nennt santéservices, CSS 0.84 und HSK 0.85 — in allen fünf Sprachen', () => {
+    for (const [lang, tr] of Object.entries(SPRACHEN)) {
+      expect(tr.kvg.tpwQuelleSO, lang).toMatch(/^0\.84 [^;]*santéservices ?;.*CSS 0\.84, HSK 0\.85$/);
+    }
+  });
+
+  it('BL und JU behalten den Stand 2025 (keine Kantonsquelle 2026 für die freie Praxis)', () => {
+    expect(TAXPUNKTWERT.BL).toBe(0.89);
+    expect(TAXPUNKTWERT.JU).toBe(0.88);
+    expect(TAXPUNKTWERT_QUELLEN.BL).toBeUndefined();
+    expect(TAXPUNKTWERT_QUELLEN.JU).toBeUndefined();
   });
 });
