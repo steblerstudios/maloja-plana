@@ -2,6 +2,10 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import { pruefeStundenlohn, pruefeLohn, getMindestlohn, alleMindestlohnKantone } from '../lohnCheck.js';
 import { mindestlohnBoden, lohnBandState } from '../lohnEinordnung.js';
 import { stundenlohnRechnen } from '../../utils/stundenlohn.js';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { Stundenlohn } from '../../Stundenlohn.jsx';
+import { createT } from '../../i18n/index.js';
 import de from '../../i18n/de.js';
 import fr from '../../i18n/fr.js';
 import it_ from '../../i18n/it.js';
@@ -109,6 +113,30 @@ describe('Mindestlohn-Jahres-Riegel', () => {
     const stati = Object.values(r.befunde).map((b) => b.status);
     expect(stati.length).toBeGreaterThan(0);
     expect(stati.every((s) => s === 'jahrNichtBelegt')).toBe(true);
+  });
+
+  describe('gerenderter Text im Stundenlohn-Rechner (de)', () => {
+    const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+    const t = createT({ de }, 'de', 'sie');
+    const seite = () => renderToStaticMarkup(React.createElement(Stundenlohn, {
+      palette, t, onUpdateData: () => {},
+      data: { finanzen: { stundenlohnRechner: { betrag: '20', wochenstunden: '42', kanton: 'GE', ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' } } },
+    })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+
+    it('2026: Befund mit Betrag 24.59 wie bisher', () => {
+      zeit('2026-06-01T12:00:00');
+      const s = seite();
+      expect(s).toContain('24.59');
+      expect(s).not.toContain('amtlich belegt');
+    });
+
+    it('2027: Hinweis mit beiden Jahren, kein Betrag 24.59, kein «scheint unter»', () => {
+      zeit('2027-01-01T00:00:01');
+      const s = seite();
+      expect(s).toContain('Die Mindestlöhne in dieser App sind für 2026 amtlich belegt. Für 2027 sind noch keine geprüften Werte erfasst');
+      expect(s).not.toContain('24.59');
+      expect(s).not.toContain('scheint unter');
+    });
   });
 
   describe('Hinweistext in allen fünf Sprachen', () => {
