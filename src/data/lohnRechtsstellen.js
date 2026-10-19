@@ -70,10 +70,15 @@ export const LOHN_KONTROLLSTELLEN = {
     // selbst nennt Porrentruy für alle Arbeitsorte (jura.ch/DES/SEE):
     // „…peut saisir le Conseil de prud'hommes (Tribunal de première instance), à Porrentruy."
     // Name wörtlich wie auf jura.ch (Zitat oben), ohne deutschen Zusatz: «(Arbeitsgericht)» stand
-    // sonst auch in fr/it/en/rm (Swiss-Precision-Prüfung 19.10.2026, zu #509).
+    // sonst auch in fr/it/en/rm (Swiss-Precision-Prüfung 19.10.2026, zu #509). Quelle, am
+    // 19.10.2026 abgerufen (die Kurzform «jura.ch/DES/SEE» liefert 404):
+    // https://www.jura.ch/fr/Autorites/Administration/DES/Economie-et-Emploi-SEE/Conditions-de-travail/Conditions-de-travail/Salaires-minimaux.html
+    // Rechts-Prüfung 19.10.2026 am Volltext: RSJU 182.34 Art. 1 (Conseil de prud'hommes = juridiction
+    // du Tribunal de première instance), Art. 12 (Greffe gibt Auskunft), Art. 22 al. 1 (Präsident bzw.
+    // Greffier ist Schlichtungsbehörde, ZPO Art. 197) · RSJU 181.1 Art. 29 al. 1 (Sitz Porrentruy).
     fallback: 'Conseil de prud’hommes (Tribunal de première instance), Porrentruy',
     hinweis: 'Das Wort „Kontrollstelle“ hier vermeiden — der Weg führt über das Arbeitsgericht.',
-    verify: false, // geprüft 2026-07-15: RSJU 822.41 + 822.411 Volltext · jura.ch/DES/SEE
+    verify: false, // geprüft 2026-07-15: RSJU 822.41 + 822.411 Volltext · Name/Sitz 2026-10-19: RSJU 182.34 + 181.1, jura.ch (URL oben)
   },
   NE: {
     // Gegengeprüft 2026-07-15 an rsn.ne.ch + ne.ch: Neuenburg hat KEIN eigenes
