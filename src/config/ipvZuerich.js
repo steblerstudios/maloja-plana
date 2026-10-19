@@ -17,8 +17,8 @@
 // Werten, exakt nach Abrunden des Nullpunkts auf CHF 10 (src/config/__tests__/ipvZuerich.test.js).
 // Angezeigt wird trotzdem die publizierte Tabelle (IPV_ZH.grenzen, wörtlich von der SVA, abgerufen
 // 14.10.2026), nie eine selbst gerechnete oder gerundete Zahl; die Formel bleibt für den Betrag.
-// Für 2027 ebenso — dort stimmt die Formel nicht einmal so (IPV_ZH_2027.grenzen). 2027 ist vorbereitet, rechnet aber erst, wenn
-// Referenzprämie und Durchschnittsprämien 2027 amtlich publiziert sind (Stand 28.09.2026).
+// Für 2027 ebenso — dort stimmt die Formel nicht einmal so (IPV_ZH_2027.grenzen). 2027 ist eingetragen, rechnet aber erst, wenn
+// die SVA definitive Durchschnittsprämien 2027 publiziert (Stand 19.10.2026: provisorisch; `rdpProvisorisch`).
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
@@ -56,20 +56,24 @@ export const IPV_ZH = {
   },
 };
 
-// Anspruchsjahr 2027 — vorbereitet, rechnet aber NOCH NICHT (Stand 28.09.2026).
-// Alles hier ist heute an der Quelle gelesen; was fehlt, steht als `null` und hält den
-// Jahres-Riegel zu. Wortlaute und Abrufdaten: docs/sources/ipv-kantone-2026.md, Abschnitt ZH,
-// «Vorbereitung 2027 (28.09.2026)».
-//   satz       SVA Zürich «Leistung»: «Für das Jahr 2027 gelten folgende Eigenanteile: 11.8 Prozent
-//              für Verheiratete … 9.4 Prozent für Alleinstehende und Alleinerziehende». Nach RRB
-//              Nr. 303/2026 Disp. VI von der Gesundheitsdirektion PROVISORISCH festgesetzt; der
-//              Regierungsrat legt ihn «im September 2026 … definitiv» fest (Erw. 4, 6).
-//   referenz   null: RRB 303/2026 Erw. 3f ermächtigt die Gesundheitsdirektion, «eine höhere
-//              Referenzprämie provisorisch festzulegen»; die Zahl für 2027 ist nirgends publiziert
-//              (die SVA-Seite sagt nur «ab dem Jahr 2026 neu 70 Prozent»).
-//   rdp        null: die SVA-Tabelle «Regionale Durchschnittsprämien» zeigt am 28.09.2026 nur 2026.
-//              Die Werte 665/607/566 aus der Notiz vom 19.09. sind heute an keiner amtlichen
-//              Stelle nachzulesen — darum nicht übernommen.
+// Anspruchsjahr 2027 — eingetragen, rechnet aber NOCH NICHT (Stand 19.10.2026, Entscheid
+// Stebler Studios 19.10.2026: «Eintragen, Riegel zu»). Alles hier ist an der Quelle gelesen.
+// Wortlaute und Abrufdaten: docs/sources/ipv-kantone-2026.md, Abschnitt ZH, «Vorbereitung 2027
+// (28.09.2026)» und «Nachtrag 19.10.2026».
+//   satz       RRB Nr. 980/2026 vom 16.09.2026, Disp. I (abgerufen 19.10.2026): «Die
+//              Eigenanteilssätze zur Festlegung der Prämienverbilligung 2027 werden mit einer
+//              Referenzprämie von 70% … sowie unter Vorbehalt einer späteren Anpassung gemäss § 3
+//              Abs. 2 Satz 2 EG KVG wie folgt festgelegt: a. … 11,8%. b. … 9,4%.» Beschlossen,
+//              mit Vorbehalt — der Satz hält den Riegel nicht mehr (bis 19.10.: `satzProvisorisch`,
+//              Grundlage war RRB 303/2026 Disp. VI; der Nachtrag 14.10. hatte RRB 980 nur bis
+//              Disp. IV gelesen). Der Vorbehalt ist nicht bloss formal: derselbe RRB hebt in
+//              Disp. IV den Satz 2026 nachträglich an.
+//   referenz   RRB 980/2026 Disp. I: «Referenzprämie von 70% gemäss § 4 Abs. 2 Satz 2 EG KVG».
+//   rdp        SVA Zürich «Regionale Durchschnittsprämien» (Seite unter «Ergänzungsleistungen»; die
+//              Höhe «legt das Eidgenössische Departement des Innern (EDI) … fest»), Tabelle «2027
+//              (provisorisch)», CHF pro Monat, wörtlich (abgerufen 19.10.2026). PROVISORISCH — darum
+//              `rdpProvisorisch`. Dass die IPV mit genau dieser EL-Tabelle rechnet, ist amtlich nicht
+//              bestätigt (2026 nur durch Nachrechnen gestützt; Quellenblatt «Offen / nicht gefunden»).
 //   massgebend RRB 303/2026 Disp. II: 83 % der regionalen Durchschnittsprämien 2027 (2026: 84 %).
 //   familienGrenze, abzugsquote  RRB 303/2026 Disp. III.1 (71 200) und Disp. IV (60 %).
 //   vermoegen  RRB 303/2026 Disp. I: dieselben Obergrenzen wie 2026. Freibeträge und 10 %-Anteil:
@@ -80,13 +84,22 @@ export const IPV_ZH = {
 //              Spalten: keine Kinder / 1 / 2 / 3 Kinder.
 export const IPV_ZH_2027 = {
   jahr: 2027,
-  referenz: null,
-  // Provisorisch (RRB 303/2026 Disp. VI; definitiv «im September 2026», Erw. 4). Solange das
-  // hier `true` steht, rechnet 2027 nicht — auch wenn Referenz und Durchschnittsprämien schon
-  // eingetragen sind. Erst mit dem definitiven Beschluss auf `false` setzen (Fachprüfung 28.09.).
-  satzProvisorisch: true,
+  referenz: 0.7,
+  // Riegel 2027. Solange das hier `true` steht, rechnet 2027 nicht — obwohl Satz, Referenz und
+  // Durchschnittsprämien eingetragen sind. Grund: die SVA führt die Durchschnittsprämien 2027 als
+  // «provisorisch», und ihre eigenen Einkommensgrenzen 2027 (`grenzen` unten) passen rechnerisch
+  // NICHT zu diesen Werten, sondern zu tieferen: Region 1, Einzel, Erwachsene ohne Kinder
+  // 0,7 × 665 × 12 ÷ 0,094 = 59 425.53 → SVA 59 420; mit 672 wären es 60 051.06. Ebenso Region 2/3
+  // (≈ 607 / 566) und junge Erwachsene (≈ 477 / 437 / 405 statt 481 / 441 / 409). Das ist eine
+  // Beobachtung, kein Befund über die SVA — offene Frage in docs/sources/FRAGEN-AN-DIE-AEMTER.md.
+  // Erst auf `false` setzen, wenn (a) die Tabelle 2027 nicht mehr «provisorisch» heisst,
+  // (b) Durchschnittsprämien und Grenzen zusammenpassen oder die SVA geantwortet hat und (c) die
+  // Identität IPV-Durchschnittsprämie = EL-Tabelle geklärt ist — dann wörtlich neu abgleichen.
+  // Ein Test-Wächter schlägt an, wenn der Riegel offen ist und (b) nicht gilt.
+  rdpProvisorisch: true,
   satz: { verheiratet: 0.118, uebrige: 0.094 },
-  rdp: null,
+  // e = Erwachsene ab 26, j = junge Erwachsene 19–25, k = Kinder 0–18 (SVA/EDI, 2027 provisorisch)
+  rdp: { 1: { e: 672, j: 481, k: 163 }, 2: { e: 614, j: 441, k: 148 }, 3: { e: 574, j: 409, k: 138 } },
   massgebend: 0.83,
   mindestKind: 0.8,
   familienGrenze: 71200,
@@ -113,7 +126,7 @@ export const IPV_ZH_JAHRE = { 2026: IPV_ZH, 2027: IPV_ZH_2027 };
 
 export function zhWerte(jahr = new Date().getFullYear()) {
   const w = IPV_ZH_JAHRE[jahr];
-  return w && w.referenz != null && w.rdp != null && !w.satzProvisorisch ? w : null;
+  return w && w.referenz != null && w.rdp != null && !w.rdpProvisorisch ? w : null;
 }
 
 // BAG-Prämienregionen ZH (Stand 2026, wie src/data/praemienRegionen.js; Guard-Test hält beide
@@ -195,8 +208,8 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   const b = data.basis || {};
   const f = data.finanzen || {};
   // Anspruchsjahr = laufendes Kalenderjahr. Werte je Jahr aus IPV_ZH_JAHRE; fehlt das Jahr
-  // oder ist es unvollständig (2027: Referenzprämie und Durchschnittsprämien noch nicht
-  // publiziert), bleibt der Jahres-Riegel zu — dieselbe Orientierung wie bisher ab 01.01.2027.
+  // oder ist es nicht freigegeben (2027: Durchschnittsprämien nur provisorisch publiziert,
+  // `rdpProvisorisch`), bleibt der Jahres-Riegel zu — dieselbe Orientierung wie bisher ab 01.01.2027.
   const werte = zhWerte();
   if (!werte) return orientierung('jahr');
   const jahr = werte.jahr;
