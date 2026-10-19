@@ -1,10 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Stundenlohn } from '../../Stundenlohn.jsx';
 import { createT } from '../../i18n/index.js';
 import de from '../../i18n/de.js';
 import { stundenlohnRechnen, ferienSatz, ferienWochenAnspruch, offeneFragen } from '../stundenlohn.js';
+import { lohnKontrollstelleText } from '../../data/lohnRechtsstellen.js';
 
 // «Was steht mir im Stundenlohn zu?» — getrennte Rechnung für Grundlohn und Zuschläge.
 // Kern-Beispiel: 25 Fr. «alles inklusive» in Genf. Der Grundlohn ist dann 25 × 12/13 = 23.08,
@@ -335,5 +336,51 @@ describe('Einordnung im gerenderten Text', () => {
     // Fachprüfung 18.10.2026: Urteil und Inkrafttreten im Repo nicht belegt → nur Verweis an die Stadt.
     expect(txt).toContain('Ob und ab wann er gilt, weiss die Stadt.');
     expect(txt).not.toContain('2C_28/2025');
+  });
+});
+
+// Swiss-Precision-Prüfung 19.10.2026 (beim Jahres-Riegel, PR #508): Für JU ist `stelle: null`
+// bewusst — es gibt keine zuständige Behörde, der Weg führt ans Arbeitsgericht (`fallback`).
+// Der Rechner setzte `stelle.stelle` ungeprüft ein; createT ersetzt nur `undefined`, darum
+// stand wörtlich «… bei null klären». Jetzt gilt dieselbe Regel wie im Kapitel und im Brief.
+describe('Zuständige Stelle im Befund «unter dem Mindestlohn»', () => {
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const t = createT({ de }, 'de', 'sie');
+  const seite = (rechner) => renderToStaticMarkup(React.createElement(Stundenlohn, {
+    palette, t, onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
+  })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+  // Datum fixiert: der Befund hängt am Mindestlohn-Jahr 2026 (JU 21.40, data/lohnCheck.js).
+  beforeAll(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-19T12:00:00')); });
+  afterAll(() => { vi.useRealTimers(); });
+  const unter = { betrag: '18', art: 'fest', wochenstunden: '20', ferienForm: 'bezahlt', dreizehnter: 'nein', feiertag: 'nein' };
+
+  it('JU: kein «null», sondern das Arbeitsgericht aus der Registry', () => {
+    const txt = seite({ ...unter, kanton: 'JU' });
+    expect(txt).toContain('Mindestlohn');
+    expect(txt).not.toMatch(/\bnull\b/);
+    expect(txt).toContain('Trifft keine davon zu, lassen sich die Ansprüche bei Conseil de prud’hommes (Arbeitsgericht), Porrentruy klären.');
+  });
+
+  it('BS: belegte Stelle wird genannt (Regel unverändert)', () => {
+    const txt = seite({ ...unter, kanton: 'BS' });
+    expect(txt).toContain('bei Amt für Wirtschaft und Arbeit (AWA), Team Arbeitsmarktaufsicht klären.');
+  });
+});
+
+describe('lohnKontrollstelleText — eine Regel für Kapitel, Rechner und Brief', () => {
+  const t = createT({ de }, 'de', 'sie');
+  const neutral = 'der zuständigen kantonalen Stelle';
+  it('stelle null → fallback (JU)', () => {
+    expect(lohnKontrollstelleText('JU', t)).toBe('Conseil de prud’hommes (Arbeitsgericht), Porrentruy');
+  });
+  it('kein Eintrag → neutral', () => {
+    expect(lohnKontrollstelleText('ZH', t)).toBe(neutral);
+    expect(lohnKontrollstelleText(undefined, t)).toBe(neutral);
+  });
+  it('verify: true → neutral, auch wenn eine Stelle eingetragen ist (nie eine ungeprüfte nennen)', () => {
+    expect(lohnKontrollstelleText('XX', t, { stelle: 'Ungeprüftes Amt', fallback: 'Gericht', verify: true })).toBe(neutral);
+  });
+  it('weder stelle noch fallback → neutral, nie «null»', () => {
+    expect(lohnKontrollstelleText('XX', t, { stelle: null, verify: false })).toBe(neutral);
   });
 });
