@@ -26,6 +26,8 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
     kanton: gespeichert.kanton ?? profilKanton,
     wochenstunden: gespeichert.wochenstunden ?? profilStunden,
   };
+  // Stunden aus dem Profil können alle Stellen zusammen meinen — die Schwellen gelten je Betrieb (Fachprüfung 19.10.2026).
+  const stundenAusProfil = gespeichert.wochenstunden == null && !!profilStunden;
   const aendern = (patch) => onUpdateData && onUpdateData('finanzen', 'stundenlohnRechner', { ...gespeichert, ...patch });
   const r = stundenlohnRechnen(e);
 
@@ -145,7 +147,8 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
         feld('betrag', t('stundenlohnView.betrag'), t('stundenlohnView.betragHinweis')),
         feld('wochenstunden', t('stundenlohnView.wochenstunden'), t('stundenlohnView.wochenstundenHinweis'))
       ),
-      r.stundenUnplausibel && React.createElement('p', { role: 'status', style: absatz }, hinweisZeichen(), t('stundenlohnView.stundenUnplausibel', { stunden: e.wochenstunden }))
+      r.stundenUnplausibel && React.createElement('p', { role: 'status', style: absatz }, hinweisZeichen(), t('stundenlohnView.stundenUnplausibel', { stunden: e.wochenstunden })),
+      stundenAusProfil && React.createElement('p', { style: absatz }, hinweisZeichen(), t('stundenlohnView.stundenAusProfil'))
     ),
 
     // C — Ferien und Zuschläge
@@ -185,6 +188,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
               ? t('stundenlohnView.bvg_unbekannt')
               : t('stundenlohnView.bvg_' + r.bvg, { jahr: betrag(r.jahreslohn), tief: betrag(r.jahrTief), hoch: betrag(r.jahrHoch), schwelle: betrag(r.bvgSchwelle) })),
             React.createElement('p', { style: absatz }, t('stundenlohnView.nbu_' + r.nbu)),
+            stundenAusProfil && r.nbu !== 'unbekannt' && React.createElement('p', { style: absatz }, t('stundenlohnView.stundenAusProfil')),
             e.art && ['abrufEcht', 'abrufUnecht', 'befristet', 'temporaer', 'hausdienst'].includes(e.art) && React.createElement('p', { style: absatz }, t('stundenlohnView.art_einordnung_' + e.art))
           )
         ),
