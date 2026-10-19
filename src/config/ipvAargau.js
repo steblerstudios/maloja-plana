@@ -42,6 +42,10 @@
 // und dieser Anhang ist am 20.09.2026 weiterhin die aktuelle Fassung: die Gesetzessammlung
 // führt zu SAR 837.211 keine künftige Version und kein Änderungsdokument aus 2026.
 // Darum bleibt 2026 gebaut und 2027 ungebaut; offener Punkt in docs/sources/FRAGEN-AN-DIE-AEMTER.md.
+// ⟨Nachtrag 19.10.2026⟩ Seither liegt eine KANTONSQUELLE vor: das PDF «Richtprämien 2027» im
+// Handbuch Soziales (Anhang, Stand 1. September 2026) mit denselben Zahlen. 2027 ist darum
+// jetzt eingetragen (IPV_AG_2027), aber mit `beschlussFehlt: true` verriegelt — die Fassung
+// in der Gesetzessammlung fehlt weiterhin. Begründung beim Datensatz unten.
 
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
@@ -73,13 +77,52 @@ export const IPV_AG = {
   mindestanteilKind: 0.5,
 };
 
+// Anspruchsjahr 2027 — Werte eingetragen, rechnet aber NOCH NICHT (Stand 19.10.2026).
+// Alle Zahlen am 19.10.2026 an der Quelle gelesen, Wortlaute im Quellenblatt, Abschnitt AG,
+// «Nachtrag 19.10.2026»:
+//   Kanton AG, DGS, Handbuch Soziales Kap. 7.3.1, PDF «Richtprämien 2027»: «Anhang (Stand
+//     1. September 2026) · Berechnungselemente für die Verteilung der Prämienverbilligung 2027»
+//     — Richtprämien 6'070 / 4'440 / 1'450, Einkommensabzüge 8'500 / 12'200 / 0 / 8'000 und
+//     2'500 je Kind, Einkommenssatz 19,25 %. Kopfzeile des PDF: «Beilage 2 zum bereinigten
+//     Bericht» — eine Beilage, kein Beschluss und keine Fassung der Gesetzessammlung.
+//   SVA Aargau, «Allgemeine Informationen»: dieselben Zahlen «für das Bezugsjahr 2027» und
+//     «Berechnungsbasis … ist das steuerbare Einkommen der rechtskräftigen Steuerveranlagung
+//     2024» (= 2027 − 3, § 7 Abs. 1 KVGG, darum basisjahrAbstand unverändert 3).
+// 🛑 Riegel: Die Gesetzessammlung führt zu SAR 837.211 am 19.10.2026 weiterhin die «Aktuelle
+// Version in Kraft seit: 01.09.2025 (Beschlussdatum: 27.08.2025)» mit dem Anhang 2026, ohne
+// künftige Version (`future_versions` leer) und ohne Änderungsdokument aus 2026; einen RRB oder
+// eine Medienmitteilung zu den Berechnungselementen 2027 haben wir nicht gefunden. Der Wert
+// ist also kantonal publiziert, sein Beschluss aber nicht belegt. Solange `beschlussFehlt`
+// `true` steht, rechnet 2027 nicht (agWerte liefert null → Orientierung «jahr», wie bisher ab
+// 01.01.2027). Auf `false` setzen erst mit der Fassung in der SAR oder dem RRB — oder auf
+// ausdrücklichen Entscheid von Stebler Studios.
+export const IPV_AG_2027 = {
+  ...IPV_AG,
+  jahr: 2027,
+  beschlussFehlt: true,
+  richtpraemie: { e: 6070, j: 4440, k: 1450 },
+  einkommenssatz: 0.1925,
+  abzug: { alleinstehend: 8500, alleinstehendMitKind: 12200, ehepaar: 0, ehepaarMitKind: 8000 },
+  kinderabzug: 2500,
+};
+
+// Werte je Anspruchsjahr, gewählt nach dem Kalenderjahr (Muster wie IPV_ZH_JAHRE). Fehlt ein
+// Jahr oder ist sein Beschluss nicht belegt, rechnet die App nicht — der Jahres-Riegel.
+export const IPV_AG_JAHRE = { 2026: IPV_AG, 2027: IPV_AG_2027 };
+
+export function agWerte(jahr = new Date().getFullYear()) {
+  const w = IPV_AG_JAHRE[jahr];
+  return w && !w.beschlussFehlt ? w : null;
+}
+
 // Massgebendes Einkommen nach § 6 Abs. 2 KVGG. `bereinigtesEinkommen` ist das (genäherte)
 // bereinigte steuerbare Einkommen im Jahr, `vermoegen` das steuerbare Vermögen, `kinderZahl`
 // die Zahl der Kinder und der gemeinsam eingestuften jungen Erwachsenen in Ausbildung.
 // Der Boden bei 0 ist kein kosmetischer Clamp: ohne ihn stiege der Anspruch über die Summe
 // der Richtprämien hinaus, was § 6 Abs. 1 nicht zulässt («soweit die Richtprämie … übersteigt»).
-export function agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen = 0, verheiratet = false, kinderZahl = 0 }) {
-  const p = IPV_AG;
+// `werte`: Datensatz des Anspruchsjahres (Vorgabe 2026).
+export function agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen = 0, verheiratet = false, kinderZahl = 0, werte = IPV_AG }) {
+  const p = werte;
   const typ = verheiratet
     ? (kinderZahl > 0 ? 'ehepaarMitKind' : 'ehepaar')
     : (kinderZahl > 0 ? 'alleinstehendMitKind' : 'alleinstehend');
@@ -92,8 +135,8 @@ export function agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen = 0, v
 // Reihenfolge — `null`/0 heisst «nicht erfasst», dann greifen für diese Person weder der
 // Mindestanspruch (§ 7 Abs. 2 KVGG) noch der Deckel (§ 7 Abs. 3 KVGG).
 // Liefert Jahresbeträge in CHF (ungerundet).
-export function ipvAargauRechnen({ personen, me, praemien = null }) {
-  const p = IPV_AG;
+export function ipvAargauRechnen({ personen, me, praemien = null, werte = IPV_AG }) {
+  const p = werte;
   const refs = personen.map((c) => p.richtpraemie[c]);
   const summe = refs.reduce((a, b) => a + b, 0);
   const me0 = Math.max(0, me);
@@ -149,10 +192,13 @@ export function ipvAargauRechnen({ personen, me, praemien = null }) {
 export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   const b = data.basis || {};
   const f = data.finanzen || {};
-  const jahr = IPV_AG.jahr;
-  // Die App rechnet nur für das Jahr, dessen Werte belegt sind. Ab dem 01.01. des Folgejahres
-  // lieber keine Zahl als eine aus veralteten Sätzen: Die SVA weist für 2027 bereits 6'070 /
-  // 4'440 / 1'450 und 19,25 % aus, die Rechtssammlung trägt aber noch den Anhang 2026.
+  // Anspruchsjahr = laufendes Kalenderjahr. Die App rechnet nur für ein Jahr, dessen Werte UND
+  // Beschluss belegt sind (agWerte). 2027 ist eingetragen, aber mit `beschlussFehlt` — ab dem
+  // 01.01.2027 also weiterhin keine Zahl, bis die Fassung in der SAR steht (Stand 19.10.2026).
+  const werte = agWerte();
+  if (!werte) return orientierung('jahr');
+  const jahr = werte.jahr;
+  // Zweite Sicherung, falls je ein Datensatz eines vergangenen Jahres hereingereicht wird.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   // § 9 Abs. 2 KVGG: Konkubinat wird «bei einem gemeinsamen Haushalt angenommen». Die
   // Verordnung führt das aus — vermutet wird die Lebensgemeinschaft erst, wenn «a) seit
@@ -188,15 +234,15 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // 20.09.2026). Das ist NICHT die vorsichtige Seite — eine zu tiefe Zahl hält Berechtigte
   // vom Antrag ab. (Hier stand vorher genau diese Begründung; sie war falsch.)
   const bereinigtesEinkommen = einkommenJahr(f, SAEULE_3A.schwelleOhneSaeule2);
-  const me = agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen, verheiratet: false, kinderZahl: 0 });
+  const me = agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen, verheiratet: false, kinderZahl: 0, werte });
 
   // Nur eine Person im Haushalt, darum ist die erfasste Prämie ihre eigene (§ 7 Abs. 3 KVGG).
   const praemie = praemieJahr(data);
   if (praemieFehlt(praemie)) return orientierung('praemie');
   const praemien = [praemie];
-  const annual = Math.round(ipvAargauRechnen({ personen: ['e'], me, praemien }).total);
+  const annual = Math.round(ipvAargauRechnen({ personen: ['e'], me, praemien, werte }).total);
   // Vergleichsgrösse «höchstens möglich»: dieselbe Rechnung bei massgebendem Einkommen 0.
-  const maxAnnual = Math.round(ipvAargauRechnen({ personen: ['e'], me: 0, praemien }).total);
+  const maxAnnual = Math.round(ipvAargauRechnen({ personen: ['e'], me: 0, praemien, werte }).total);
 
   // § 5 Abs. 5 KVGG definiert eine Einkommensgrenze, der Kanton publiziert sie aber nicht als
   // Zahl. Eine aus der Formel abgeleitete Grenze wäre eine eigene Rechnung, keine amtliche
@@ -207,7 +253,7 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Anspruch verwirkt. Für 2026 war das der 31.12.2025 — ein Betrag ohne diesen Satz wäre
   // irreführend. Die Frist des laufenden Kalenderjahres läuft für das FOLGEJAHR.
   const fristAbgelaufen = new Date().getFullYear() >= jahr;
-  const basisjahr = jahr - IPV_AG.basisjahrAbstand;
+  const basisjahr = jahr - werte.basisjahrAbstand;
   const gemeinsam = { canton: 'AG', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltAG', extra: { basisjahr } };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.agKeinAnspruch' });
