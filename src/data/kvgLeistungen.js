@@ -133,6 +133,29 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //             HSK ↔ Vaud Cliniques, also Privatkliniken)
 //             https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981
 //
+// Abgerufen 19.10.2026 (Register rrb.so.ch, Suche «TARDOC»; PDF gelesen mit pdftotext):
+//   SO 0.84 — RRB SO Nr. 2026/825 vom 28.04.2026, Ziff. 3.2: «Der kantonale Tarifvertrag zwischen
+//             der Gesellschaft der Ärztinnen und Ärzte des Kantons Solothurn und der santéservices
+//             ag … (TARDOC) und dem ambulanten ärztlichen Patientenpauschaltarif (Ambulante
+//             Pauschalen) mit einem Taxpunktwert von 0.84 Franken, gültig ab 1. Januar 2026, wird
+//             genehmigt.» Hebt RRB 2026/531 vom 16.03.2026 auf (Ziff. 1.1: Frankenbeträge
+//             «versehentlich in Rappenbeträge aufgelistet»). Genehmigter Vertrag, nicht nur
+//             provisorisch (Ziff. 2.5: die provisorischen Tarife werden mit Rechtskraft hinfällig)
+//             https://rrb.so.ch/beschlussnummer/2026_825/download/1b4811c78b1542fbbd5d161c3e95fbb0/
+//             Die beiden anderen Gruppen, je eigener Beschluss mit GAeSO:
+//             CSS 0.84 — RRB SO Nr. 2026/1038 vom 02.06.2026, Ziff. 3.1 («mit einem Taxpunktwert
+//               von 0.84 Franken, gültig ab 1. Januar 2026, wird genehmigt»)
+//               https://rrb.so.ch/beschlussnummer/2026_1038/download/7d3bb40bb5de4cf3a3ac52a0b960fcf1/
+//             HSK 0.85 — RRB SO Nr. 2026/408 vom 03.03.2026, Ziff. 3.1 («mit einem Taxpunktwert von
+//               Fr. 0.85, gültig ab 1. Januar 2026, wird genehmigt»)
+//               https://rrb.so.ch/beschlussnummer/2026_408/download/9c35a45a13e642b88a56735f9c1814e0
+//             Die App führt 0.84: der Wert gilt für zwei der drei Gruppen (santéservices und CSS).
+//             Verlinkt ist der santéservices-Beschluss; der Linktext nennt CSS und HSK als eigene
+//             Beschlüsse. Gegenprobe erfundene Download-Kennung (…/2026_1038/download/000…/) → 404.
+//             Der bisherige App-Wert 0.89 galt 2025 für keine der drei Gruppen: «Bis 2025 betrug der
+//             TPW zwischen der GAeSO und der santéservices ag 0.84 Franken» (RRB 825 Ziff. 1.2),
+//             ebenso CSS 0.84 (RRB 1038 Ziff. 1) und HSK «Fr. 0.85» (RRB 408 Ziff. 1).
+//
 // K22, abgerufen 16.09.2026 — Quelle: Tarifpartner, keine behördliche Festsetzung.
 // Vereinigung Zentralschweizer Ärztegesellschaften (VZAG) / Ärztegesellschaft des Kantons
 // Luzern, «Update Taxpunktwert Kanton Luzern» (die Seite trägt kein Publikationsdatum; sie
@@ -152,21 +175,38 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //   nicht angefochten haben — der RRB selbst regelt nur das Verhältnis zu tarifsuisse.)
 //   https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html
 //
-// Neun Kantone bleiben UNGEPRÜFT — Stand 2025 (TARMED), keine Quelle 2026 gefunden:
-//   AG, BL, SO — die Kantone publizieren nur stationäre Tarife; die Tarifinformation der
-//                kantonalen Ärztegesellschaften liegt im Mitgliederbereich. Für SO sind im
-//                RRB-Register zwar Beschlüsse zum TARDOC-Taxpunktwert verzeichnet, ihr Text
-//                ist dort aber nicht abrufbar
+// Acht Kantone bleiben UNGEPRÜFT — Stand 2025 (TARMED), keine Quelle 2026 gefunden
+// (SO seit 19.10.2026 belegt, siehe oben):
+//   AG, BL     — die Kantone publizieren nur stationäre Tarife; die Tarifinformation der
+//                kantonalen Ärztegesellschaften liegt im Mitgliederbereich.
+//                BL, nachgeprüft 19.10.2026 (Suche baselland.ch «Taxpunktwert», «TARDOC»):
+//                amtlich nur der Spital-Arbeitstarif 0.91 — Medienmitteilung RR BL 13.02.2026
+//                («Als Arbeitstarif wird der bisher geltende Taxpunktwert von Fr. 0.91
+//                festgesetzt», für die Spitäler), Regierungsbulletin 28.01.2025 (Kantonsspital
+//                Baselland, TARMED 0.91 ab 1.1.2025). Für die freie Praxis nichts gefunden.
+//                Die Zweitquelle RRB SO 2026/825 Ziff. 2.3.1 nennt «Kanton Basel-Landschaft:
+//                0.91 Franken … [Stand: 1. Oktober 2025]», ohne Leistungserbringer zu nennen. An
+//                der Kantonsquelle für die freie Praxis nicht bestätigt. ⚠️ Widerspruch offen: in
+//                derselben Aufzählung decken sich AG 0.89, BE 0.86 (und BS 0.91 in RRB 1038) mit
+//                den App-Werten der freien Praxis — die Kennzeichnung «Stand 2025» für BL 0.89 ist
+//                damit selbst fraglich. Gehört in die Anfrage an den Kanton (K30)
 //   AI, GL, SH — keine Festsetzung oder Publikation 2026 auffindbar. SH nennt auf seiner Seite
 //                zur Tariffestsetzung für freipraktizierende Ärzte weiterhin den Stand 2019
 //   JU, NE, VS — kein Arrêté und keine Tarifliste 2026 zu den freipraktizierenden Ärztinnen
-//                und Ärzten gefunden; die publizierten Listen betreffen stationäre Tarife
+//                und Ärzten gefunden; die publizierten Listen betreffen stationäre Tarife.
+//                JU, nachgeprüft 19.10.2026 (jura.ch, rsju.jura.ch): einzig ein Arrêté zur
+//                Convention Clinique Le Noirmont ↔ HSK (TARDOC ab 1.1.2026, ohne Betrag) — eine
+//                Klinik, nicht die freie Praxis. Die Zweitquelle RRB SO 2026/825 Ziff. 2.3.1
+//                nennt «Kanton Jura: 0.94 Franken [Stand: 1. Oktober 2025]», ohne Leistungserbringer
+//                zu nennen; an der Kantonsquelle nicht bestätigt. ⚠️ Gleicher Widerspruch wie bei BL
+//                (App 0.88 als «Stand 2025»), dazu nennt BAULISTE-2026-09-30 für JU spitalambulant
+//                0.89 — drei verschiedene JU-Zahlen; gehört in die Anfrage an den Kanton (K30)
 // Ihre Werte stehen bewusst unverändert. Lieber ein alter, als Stand 2025 gekennzeichneter
 // Wert als eine plausible Zahl ohne Beleg.
 export const TAXPUNKTWERT = {
   AG: 0.89, AI: 0.89, AR: 0.86, BE: 0.86, BL: 0.89, BS: 0.91,
   FR: 0.91, GE: 0.94, GL: 0.87, GR: 0.86, JU: 0.88, LU: 0.85,
-  NE: 0.92, NW: 0.88, OW: 0.86, SG: 0.86, SH: 0.87, SO: 0.89,
+  NE: 0.92, NW: 0.88, OW: 0.86, SG: 0.86, SH: 0.87, SO: 0.84,
   SZ: 0.85, TG: 0.86, TI: 0.93, UR: 0.88, VD: 0.94, VS: 0.86,
   ZG: 0.82, ZH: 0.91,
 };
@@ -175,14 +215,15 @@ export const TAXPUNKTWERT = {
 // nur der einen KVG_DATA_VERSION für den ganzen Datensatz — sonst datiert eine Zahl den
 // ganzen Katalog mit. Stand = letzte Prüfrunde der Taxpunktwerte oben (K22, 16.09.2026).
 // Deploy-Gate 0.1.37 (19.09.2026): alle Quellen nachgeprüft, Werte unverändert.
-export const TAXPUNKTWERT_DATA_VERSION = '2026-09-19';
+// 19.10.2026: SO belegt (0.89 → 0.84, RRB SO 2026/825), BL und JU nachgeprüft, unverändert.
+export const TAXPUNKTWERT_DATA_VERSION = '2026-10-19';
 
-// K26/K30 (Bauliste §9/§10, E28): die neun Kantone ohne belegten Wert 2026 — Stand 2025
-// (TARMED), siehe Kommentar oben "Neun Kantone bleiben UNGEPRÜFT". Für die Fussnote
+// K26/K30 (Bauliste §9/§10, E28): die Kantone ohne belegten Wert 2026 — Stand 2025
+// (TARMED), siehe Kommentar oben "Acht Kantone bleiben UNGEPRÜFT" (bis 19.10.2026 neun, mit SO). Für die Fussnote
 // kvg.tpwNote, damit sie die Kantone nennt statt nur allgemein zu warnen. Seit R4 (16.09.2026)
 // füllt die App den Platzhalter {kantone} in kvg.tpwNote aus dieser Liste und zeigt je
 // gewähltem Kanton «Stand 2025, provisorisch» (kvg.tpwStandUnbelegt).
-export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', 'JU', 'NE', 'VS'];
+export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'AI', 'GL', 'SH', 'JU', 'NE', 'VS'];
 
 // E41 (Entscheid 17.09.2026): die Quelle je Kanton als Daten, damit die App sie verlinken kann.
 // Nur die URLs aus dem Kommentar oben — je Kanton die Quelle, die den geführten Wert trägt:
@@ -190,7 +231,7 @@ export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', '
 //                        RRB im BVGer-Urteil)
 //   art 'tarifpartner' = Übersicht der Ärztegesellschaften (OW, NW; SZ 0.85 für santéservices —
 //                        das BVGer-Urteil C-718/2026 belegt dort nur den CSS-Wert 0.86)
-// Die neun Kantone aus TAXPUNKTWERT_UNBELEGT_2026 haben bewusst keinen Eintrag.
+// Die Kantone aus TAXPUNKTWERT_UNBELEGT_2026 haben bewusst keinen Eintrag.
 //
 // K88 (19.09.2026): wo der verlinkte Beleg nur für eine Versicherergruppe gilt, nennt der Linktext
 // sie (Muster K92: zusatz → kvg.tpwQuelle<zusatz>). Nachgeprüft 19.09.2026, je Gegenprobe 404:
@@ -223,6 +264,8 @@ export const TAXPUNKTWERT_QUELLEN = {
   NW: { art: 'tarifpartner', url: VZAG_LU },
   OW: { art: 'tarifpartner', url: VZAG_LU },
   SG: { art: 'behoerde', url: 'https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf' },
+  // 19.10.2026: in SO gilt 0.84 für santéservices (verlinkt) und CSS, 0.85 für HSK — Zusatz im Linktext.
+  SO: { art: 'behoerde', url: 'https://rrb.so.ch/beschlussnummer/2026_825/download/1b4811c78b1542fbbd5d161c3e95fbb0/', zusatz: 'SO', gruppe: 'santéservices' },
   // K92: in SZ gilt 0.85 nur für santéservices (vormals tarifsuisse), für CSS und HSK 0.86 — Zusatz im Linktext.
   SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ', gruppe: 'santéservices' },
   TG: { art: 'behoerde', url: 'https://gesundheit.tg.ch/public/upload/assets/185106/Tarif%C3%BCbersicht%20Ambulante%20Tarife%20OKP%202020%20bis%202026.pdf' },

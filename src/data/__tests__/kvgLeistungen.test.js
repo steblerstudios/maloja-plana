@@ -64,6 +64,8 @@ describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
   const behoerdlich = {
     AR: 0.86, FR: 0.91, GE: 0.94, GR: 0.86, LU: 0.85, SG: 0.86,
     TG: 0.86, TI: 0.93, UR: 0.88, VD: 0.94, ZG: 0.82,
+    // RRB SO 2026/825 vom 28.04.2026, Ziff. 3.2 (GAeSO ↔ santéservices ag), belegt 19.10.2026
+    SO: 0.84,
   };
   for (const [kanton, wert] of Object.entries(behoerdlich)) {
     it(`${kanton} ${wert} (behördliche Quelle 2026)`, () => {
@@ -78,26 +80,26 @@ describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
     });
   }
 
-  // Diese neun Kantone bleiben bewusst auf dem Stand 2025 (TARMED): für 2026 wurde weder eine
+  // Diese acht Kantone (bis 19.10.2026 neun, mit SO) bleiben bewusst auf dem Stand 2025 (TARMED): für 2026 wurde weder eine
   // behördliche Festsetzung noch eine Publikation eines Tarifpartners gefunden. Der Test hält
   // fest, dass sie ungeprüft sind — er ist kein Beleg für ihre Richtigkeit.
   it('ungeprüfte Kantone behalten den Stand 2025 (TARMED)', () => {
     const ungeprueft = {
       AG: 0.89, AI: 0.89, BL: 0.89, GL: 0.87, JU: 0.88, NE: 0.92,
-      SH: 0.87, SO: 0.89, VS: 0.86,
+      SH: 0.87, VS: 0.86,
     };
     for (const [kanton, wert] of Object.entries(ungeprueft)) {
       expect(TAXPUNKTWERT[kanton]).toBe(wert);
     }
   });
 
-  it('17 der 26 Kantone sind für 2026 belegt, 9 bleiben ungeprüft', () => {
+  it('18 der 26 Kantone sind für 2026 belegt, 8 bleiben ungeprüft', () => {
     const belegt2026 = [
       'AR', 'BE', 'BS', 'FR', 'GE', 'GR', 'LU', 'NW', 'OW',
-      'SG', 'SZ', 'TG', 'TI', 'UR', 'VD', 'ZG', 'ZH',
+      'SG', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'ZG', 'ZH',
     ];
-    expect(belegt2026).toHaveLength(17);
-    expect(Object.keys(TAXPUNKTWERT).filter(k => !belegt2026.includes(k))).toHaveLength(9);
+    expect(belegt2026).toHaveLength(18);
+    expect(Object.keys(TAXPUNKTWERT).filter(k => !belegt2026.includes(k))).toHaveLength(8);
   });
 
   it('alle 26 Kantone sind erfasst', () => {
@@ -116,9 +118,9 @@ describe('TAXPUNKTWERT_DATA_VERSION — eigener Datenstand (K27)', () => {
     expect(TAXPUNKTWERT_DATA_VERSION).not.toBe(KVG_DATA_VERSION);
   });
 
-  it('TAXPUNKTWERT_UNBELEGT_2026 listet genau die neun Kantone ohne Beleg 2026 (K30)', () => {
+  it('TAXPUNKTWERT_UNBELEGT_2026 listet genau die acht Kantone ohne Beleg 2026 (K30; SO belegt seit 19.10.2026)', () => {
     expect(TAXPUNKTWERT_UNBELEGT_2026.slice().sort()).toEqual(
-      ['AG', 'AI', 'BL', 'GL', 'JU', 'NE', 'SH', 'SO', 'VS']
+      ['AG', 'AI', 'BL', 'GL', 'JU', 'NE', 'SH', 'VS']
     );
   });
 });
@@ -128,7 +130,7 @@ describe('TAXPUNKTWERT_DATA_VERSION — eigener Datenstand (K27)', () => {
 // das Provisorische (Bauliste §14, K52).
 // R4 (16.09.): die Kantonsliste kommt als Platzhalter {kantone} aus
 // TAXPUNKTWERT_UNBELEGT_2026 — nicht mehr von Hand in fünf Sprachen.
-describe('kvg.tpwNote — provisorisch + neun unbelegte Kantone (K26)', () => {
+describe('kvg.tpwNote — provisorisch + unbelegte Kantone (K26)', () => {
   const sprachen = { de, en, fr, it: it_, rm };
   for (const [code, dict] of Object.entries(sprachen)) {
     it(`${code}: Kantonsliste als Platzhalter, keine handgeschriebene Liste`, () => {

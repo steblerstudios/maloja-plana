@@ -32,7 +32,7 @@ const hinweiseHtml = (canton, extra = {}) =>
 describe('1 · Versicherergruppe direkt beim Ergebnis', () => {
   it('jede Quelle mit zusatz trägt eine gruppe, die im belegten Linktext steht', () => {
     const mitZusatz = Object.entries(TAXPUNKTWERT_QUELLEN).filter(([, q]) => q.zusatz);
-    expect(mitZusatz.map(([c]) => c).sort()).toEqual(['GE', 'LU', 'SZ', 'UR', 'VD']);
+    expect(mitZusatz.map(([c]) => c).sort()).toEqual(['GE', 'LU', 'SO', 'SZ', 'UR', 'VD']);
     for (const [c, q] of mitZusatz) {
       expect(typeof q.gruppe, c).toBe('string');
       for (const [lang, tr] of Object.entries(SPRACHEN)) {
@@ -44,6 +44,7 @@ describe('1 · Versicherergruppe direkt beim Ergebnis', () => {
     expect(TAXPUNKTWERT_QUELLEN.VD.gruppe).toBe('santéservices');
     expect(TAXPUNKTWERT_QUELLEN.LU.gruppe).toBe('santéservices');
     expect(TAXPUNKTWERT_QUELLEN.SZ.gruppe).toBe('santéservices');
+    expect(TAXPUNKTWERT_QUELLEN.SO.gruppe).toBe('santéservices');
   });
 
   it('Zeile beim Ergebnis: Gruppe aus den Daten, SZ mit dem belegten Zweitwert', () => {
@@ -52,6 +53,8 @@ describe('1 · Versicherergruppe direkt beim Ergebnis', () => {
     expect(hinweiseHtml('VD')).toContain('kvg.tpwErgebnisGruppe(santéservices)');
     expect(hinweiseHtml('LU')).toContain('kvg.tpwErgebnisGruppe(santéservices)');
     expect(hinweiseHtml('SZ')).toContain('kvg.tpwErgebnisGruppeSZ');
+    expect(hinweiseHtml('SO')).toContain('kvg.tpwErgebnisGruppeSO');
+    expect(hinweiseHtml('SO')).not.toContain('tpwStandUnbelegt');
     // Beleg gilt für alle Versicherer → keine Zeile
     for (const c of ['ZH', 'BE', 'TI', 'AG']) expect(hinweiseHtml(c)).not.toContain('tpwErgebnisGruppe');
   });
@@ -62,6 +65,7 @@ describe('1 · Versicherergruppe direkt beim Ergebnis', () => {
       expect(tr.kvg.tpwErgebnisGruppeSZ, lang).toMatch(/santéservices/);
       expect(tr.kvg.tpwErgebnisGruppeSZ, lang).toMatch(/0\.86/);
       expect(tr.kvg.tpwErgebnisGruppeSZ, lang).toMatch(/CSS.*HSK/);
+      expect(tr.kvg.tpwErgebnisGruppeSO, lang).toMatch(/santéservices.*CSS.*HSK.*0\.85/);
     }
     expect(de.kvg.tpwErgebnisGruppe).toBe('Belegt für Versicherte von {gruppe}; bei anderen Kassen kann der Wert abweichen.');
   });
@@ -91,7 +95,7 @@ describe('2 · Hinweis «Stand 2025» bei Kantonen ohne Beleg 2026', () => {
   });
 
   it('Datenstand der belegten Werte nur, wo verlangt (Arztrechnung)', () => {
-    expect(hinweiseHtml('ZH', { mitDatenstand: true })).toContain('kvg.tpwDataVersion: 2026-09-19');
+    expect(hinweiseHtml('ZH', { mitDatenstand: true })).toContain('kvg.tpwDataVersion: 2026-10-19');
     expect(hinweiseHtml('ZH')).not.toContain('tpwDataVersion');
     expect(hinweiseHtml('AG', { mitDatenstand: true })).not.toContain('tpwDataVersion');
   });

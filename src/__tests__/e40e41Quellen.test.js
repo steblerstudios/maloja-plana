@@ -114,10 +114,11 @@ describe('E41 · Taxpunktwert-Quellen je Kanton', () => {
   const datei = readFileSync(new URL('../data/kvgLeistungen.js', import.meta.url), 'utf-8');
   const kommentarZeilen = datei.split('\n').filter((z) => z.trim().startsWith('//'));
 
-  it('genau die Kantone mit belegtem Wert haben eine Quelle, die neun unbelegten keine', () => {
+  it('genau die Kantone mit belegtem Wert haben eine Quelle, die unbelegten keine', () => {
     const belegt = Object.keys(TAXPUNKTWERT).filter((c) => !TAXPUNKTWERT_UNBELEGT_2026.includes(c)).sort();
     expect(Object.keys(TAXPUNKTWERT_QUELLEN).sort()).toEqual(belegt);
-    expect(belegt).toHaveLength(17);
+    expect(belegt).toHaveLength(18);
+    expect(TAXPUNKTWERT_UNBELEGT_2026).toEqual(['AG', 'BL', 'AI', 'GL', 'SH', 'JU', 'NE', 'VS']);
     for (const c of TAXPUNKTWERT_UNBELEGT_2026) expect(TAXPUNKTWERT_QUELLEN[c], c).toBeUndefined();
   });
 
@@ -137,13 +138,13 @@ describe('E41 · Taxpunktwert-Quellen je Kanton', () => {
   it('Anzeige: ein Link je Kanton, neuer Tab mit Ansage, Tarifpartner benannt', () => {
     const html = renderToStaticMarkup(React.createElement(TpwQuellen, { palette, t: tKey }));
     const links = html.match(/<a [^>]*>/g) || [];
-    expect(links).toHaveLength(17);
+    expect(links).toHaveLength(18);
     for (const a of links) {
       expect(a).toContain('target="_blank"');
       expect(a).toContain('rel="noopener noreferrer"');
     }
-    expect(html.match(/a11y\.neuerTab/g)).toHaveLength(17);
-    expect(html.match(/kvg\.tpwQuelleVor/g)).toHaveLength(17);
+    expect(html.match(/a11y\.neuerTab/g)).toHaveLength(18);
+    expect(html.match(/kvg\.tpwQuelleVor/g)).toHaveLength(18);
     expect(html).toContain('kvg.tpwQuellenTitel');
     expect(html).toContain('href="' + TAXPUNKTWERT_QUELLEN.ZH.url + '"');
     expect(html).toContain('OW (kvg.tpwQuelleTarifpartner)');
@@ -154,7 +155,7 @@ describe('E41 · Taxpunktwert-Quellen je Kanton', () => {
   it('steht im Tab «Rechnung» der KVG-Seite', () => {
     const html = renderToStaticMarkup(React.createElement(KVGLeistungen, { palette, t: tKey, data: { basis: { canton: 'ZH' } }, initialTab: 'rechnung', onUpdateData: () => {} }));
     expect(html).toContain('data-testid="tpw-quellen"');
-    expect(html.match(/kvg\.tpwQuelleVor/g)).toHaveLength(17);
+    expect(html.match(/kvg\.tpwQuelleVor/g)).toHaveLength(18);
   });
 
   it('Texte in allen fünf Sprachen', () => {
