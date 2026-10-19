@@ -4,6 +4,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Stundenlohn } from '../../Stundenlohn.jsx';
 import { createT } from '../../i18n/index.js';
 import de from '../../i18n/de.js';
+import fr from '../../i18n/fr.js';
+import en from '../../i18n/en.js';
 import { stundenlohnRechnen, ferienSatz, ferienWochenAnspruch, offeneFragen } from '../stundenlohn.js';
 
 // «Was steht mir im Stundenlohn zu?» — getrennte Rechnung für Grundlohn und Zuschläge.
@@ -357,11 +359,32 @@ describe('Zuständige Stelle im Befund «unter dem Mindestlohn»', () => {
     const txt = seite({ ...unter, kanton: 'JU' });
     expect(txt).toContain('Mindestlohn');
     expect(txt).not.toMatch(/\bnull\b/);
-    expect(txt).toContain('Trifft keine davon zu, lassen sich die Ansprüche bei Conseil de prud’hommes (Arbeitsgericht), Porrentruy klären.');
+    expect(txt).toContain('Trifft keine davon zu, kann man sich an die zuständige Stelle wenden: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
   });
 
   it('BS: belegte Stelle wird genannt (Regel unverändert)', () => {
     const txt = seite({ ...unter, kanton: 'BS' });
-    expect(txt).toContain('bei Amt für Wirtschaft und Arbeit (AWA), Team Arbeitsmarktaufsicht klären.');
+    expect(txt).toContain('an die zuständige Stelle wenden: Amt für Wirtschaft und Arbeit (AWA), Team Arbeitsmarktaufsicht.');
+  });
+
+  // Swiss-Precision-Prüfung 19.10.2026 (zu #509): Der Name stand ohne Artikel im Satz («bei
+  // Conseil …», «auprès de Conseil …», «with Conseil …»), und das deutsche «(Arbeitsgericht)»
+  // erschien in allen Sprachen. Jetzt steht der Name nach einem Doppelpunkt, wie im Brief.
+  const seiteIn = (sprache, dict, rechner) => renderToStaticMarkup(React.createElement(Stundenlohn, {
+    palette, t: createT({ [sprache]: dict }, sprache, 'sie'), onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
+  })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+
+  it('fr: kein «auprès de Conseil», kein deutscher Zusatz', () => {
+    const txt = seiteIn('fr', fr, { ...unter, kanton: 'JU' });
+    expect(txt).toContain('Si aucune ne s’applique, il est possible de s’adresser à l’organe compétent : Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
+    expect(txt).not.toContain('auprès de Conseil');
+    expect(txt).not.toContain('Arbeitsgericht');
+  });
+
+  it('en: kein «with Conseil», kein deutscher Zusatz', () => {
+    const txt = seiteIn('en', en, { ...unter, kanton: 'JU' });
+    expect(txt).toContain('If none of these applies, the competent body can be contacted: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
+    expect(txt).not.toContain('with Conseil');
+    expect(txt).not.toContain('Arbeitsgericht');
   });
 });

@@ -1,7 +1,11 @@
 import { describe, it, expect, vi } from 'vitest';
-import { getLohnKontrollstelle, LOHN_KONTROLLSTELLEN, UNBEZAHLTER_LOHN_WEG, nennbareKontrollstelle, lohnKontrollstelleText } from '../lohnRechtsstellen.js';
+import { getLohnKontrollstelle, LOHN_KONTROLLSTELLEN, UNBEZAHLTER_LOHN_WEG, nennbareKontrollstelle, lohnStelleSatz } from '../lohnRechtsstellen.js';
 import { createT } from '../../i18n/index.js';
 import de from '../../i18n/de.js';
+import fr from '../../i18n/fr.js';
+import itSprache from '../../i18n/it.js';
+import en from '../../i18n/en.js';
+import rm from '../../i18n/rm.js';
 import { kantonHatMindestlohn } from '../lohnCheck.js';
 
 describe('lohnRechtsstellen', () => {
@@ -137,15 +141,18 @@ describe('verify:true hält Ungeprüftes aus dem Brief (synthetischer Kanton)', 
 
 // Swiss-Precision-Prüfung 19.10.2026: Der Stundenlohn-Rechner setzte für JU `stelle: null` ein
 // («bei null klären»). Jetzt eine Regel für Kapitel, Rechner und Brief.
-describe('nennbareKontrollstelle / lohnKontrollstelleText — eine Regel', () => {
+const alle = { de, fr, it: itSprache, en, rm };
+describe('nennbareKontrollstelle / lohnStelleSatz — eine Regel', () => {
   const t = createT({ de }, 'de', 'sie');
-  const neutral = 'der zuständigen kantonalen Stelle';
-  it('stelle null → fallback (JU)', () => {
-    expect(lohnKontrollstelleText('JU', t)).toBe('Conseil de prud’hommes (Arbeitsgericht), Porrentruy');
+  const mit = 'stundenlohnView.ml_stelle';
+  const ohne = 'stundenlohnView.ml_stelleNeutral';
+  it('stelle null → fallback (JU), amtlicher Name ohne deutschen Zusatz', () => {
+    expect(lohnStelleSatz('JU', t, mit, ohne)).toBe('Trifft keine davon zu, kann man sich an die zuständige Stelle wenden: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
   });
-  it('kein Eintrag → neutral', () => {
-    expect(lohnKontrollstelleText('ZH', t)).toBe(neutral);
-    expect(lohnKontrollstelleText(undefined, t)).toBe(neutral);
+  it('kein Eintrag → eigener Satz ohne Doppelpunkt und ohne Namen', () => {
+    const neutral = 'Trifft keine davon zu, kann man sich an die zuständige kantonale Stelle wenden.';
+    expect(lohnStelleSatz('ZH', t, mit, ohne)).toBe(neutral);
+    expect(lohnStelleSatz(undefined, t, mit, ohne)).toBe(neutral);
   });
   it('verify: true → nichts nennen, auch wenn eine Stelle eingetragen ist', () => {
     expect(nennbareKontrollstelle({ stelle: 'Ungeprüftes Amt', fallback: 'Gericht', verify: true })).toBe(null);
@@ -155,11 +162,25 @@ describe('nennbareKontrollstelle / lohnKontrollstelleText — eine Regel', () =>
     expect(nennbareKontrollstelle({ stelle: null, verify: false })).toBe(null);
     expect(nennbareKontrollstelle(null)).toBe(null);
   });
-  it('jeder Registry-Eintrag ergibt einen echten Text, nie «null»/«undefined»', () => {
+  it('jeder Registry-Eintrag: Name nach dem Doppelpunkt, nie «null»/«undefined»', () => {
     for (const k of Object.keys(LOHN_KONTROLLSTELLEN)) {
-      const txt = lohnKontrollstelleText(k, t);
-      expect(typeof txt).toBe('string');
+      const txt = lohnStelleSatz(k, t, mit, ohne);
+      expect(txt).toContain(': ' + nennbareKontrollstelle(LOHN_KONTROLLSTELLEN[k]) + '.');
       expect(txt).not.toMatch(/\b(null|undefined)\b/);
+    }
+  });
+  // Swiss-Precision-Prüfung 19.10.2026 (zu #509): «(Arbeitsgericht)» stand auch in fr/it/en/rm.
+  it('kein Registry-Name trägt einen deutschen Zusatz in Klammern', () => {
+    expect(nennbareKontrollstelle(LOHN_KONTROLLSTELLEN.JU)).toBe('Conseil de prud’hommes (Tribunal de première instance), Porrentruy');
+  });
+  // Die Vorlagen mit Namen brauchen {stelle} nach einem Doppelpunkt; die neutralen nie {stelle}.
+  it('alle 5 Sprachen: Name nur nach Doppelpunkt, neutraler Satz ohne Platzhalter', () => {
+    const texte = (v) => (typeof v === 'string' ? [v] : Object.values(v));
+    for (const [code, dict] of Object.entries(alle)) {
+      for (const [bereich, key] of [['lohnCheck', 'stelleSatz'], ['stundenlohnView', 'ml_stelle']]) {
+        for (const s of texte(dict[bereich][key])) expect(s, code + ' ' + key).toMatch(/: \{stelle\}\.$/);
+        for (const s of texte(dict[bereich][key + 'Neutral'])) expect(s, code + ' ' + key + 'Neutral').not.toContain('{stelle}');
+      }
     }
   });
 });
