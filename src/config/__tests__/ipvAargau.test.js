@@ -371,6 +371,17 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
   describe('Jahres-Riegel', () => {
     afterEach(() => { vi.useRealTimers(); });
 
+    // § 10 Abs. 4 KVGG: im 4. Quartal läuft die Frist fürs Folgejahr. Der Betrag bleibt der des
+    // laufenden Jahres (2027 ist verriegelt), der Satz nennt 2026 als abgelaufen und 2027 als
+    // laufend — an jedem Tag des Jahres derselbe Schlüssel.
+    it.each(['2026-01-01T12:00:00', '2026-10-01T12:00:00', '2026-12-31T23:59:00'])(
+      'am %s: Frist-Satz mit Folgejahr, Betrag 2026', (zeit) => {
+        vi.useFakeTimers(); vi.setSystemTime(new Date(zeit));
+        const r = calculateIPV(person({ monthlyIncome: 1000 }));
+        expect(r).toMatchObject({ jahr: 2026, noteKey: 'ipv.agFristAbgelaufen' });
+        expect(r.noteParams).toEqual({ jahr: 2026, vorjahr: 2025, folgejahr: 2027 });
+      });
+
     it('im Anspruchsjahr 2026 rechnet sie', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T12:00:00'));
       expect(calculateIPV(person()).annual).toBe(5830);
@@ -384,8 +395,9 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
     // ⟨geändert 19.10.2026, Werte je Jahr⟩ Hier stand «vor dem Anspruchsjahr läuft die Frist
     // noch — dann der andere Satz» (2025 → `ipv.agFristLaeuft` mit den Werten 2026). Seit der
     // Auswahl nach Kalenderjahr (agWerte, Muster ZH) gibt es für 2025 keinen Datensatz mehr und
-    // also keine Zahl. Der Zweig `agFristLaeuft` bleibt im Modul stehen, ist aber nur noch
-    // erreichbar, wenn je ein Datensatz für ein künftiges Jahr gewählt wird (offener Punkt im PR).
+    // also keine Zahl. Der Zweig `agFristLaeuft` war damit tot und ist entfernt (Entscheid
+    // Stebler Studios 19.10.2026, Variante A); der Satz `agFristAbgelaufen` nennt die Frist
+    // fürs Folgejahr ohnehin — siehe der Test zum 4. Quartal unten.
     it('vor 2026 (kein Datensatz für das Jahr) keine Zahl', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2025-11-01T12:00:00'));
       expect(calculateIPV(person())).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
