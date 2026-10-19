@@ -158,6 +158,8 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       ),
       r.vertragZuWenig && React.createElement('p', { role: 'status', style: absatz }, hinweisZeichen(), t('stundenlohnView.vertragZuWenig', { wochen: r.ferienWochen })),
       e.ausgewiesen === 'nein' && e.ferienForm !== 'bezahlt' && React.createElement('p', { role: 'status', style: absatz }, hinweisZeichen(), t('stundenlohnView.nichtAusgewiesen')),
+      // OR 329d Abs. 2: bei regelmässiger Arbeit keine Abgeltung in Geld (Rechtsprüfung 18.10.2026).
+      e.art === 'fest' && (e.ferienForm === 'inklusive' || e.ferienForm === 'dazu') && React.createElement('p', { role: 'status', style: absatz }, hinweisZeichen(), t('stundenlohnView.ferienAbgeltungFest')),
       React.createElement('div', { style: raster },
         antwort('feiertag', t('stundenlohnView.feiertag'), t('stundenlohnView.feiertagHinweis')),
         e.feiertag === 'ja' && feld('feiertagProzent', t('stundenlohnView.feiertagProzent'))
@@ -177,6 +179,8 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
           React.createElement('section', { 'aria-labelledby': 'sl-e', role: 'status', style: flaeche },
             React.createElement('h3', { id: 'sl-e', style: { ...titelStil, fontSize: text.body } }, t('stundenlohnView.einordnungTitel')),
             befundKeys.map((key) => React.createElement('p', { key, style: absatz }, befundSatz(key))),
+            // GE/NE/TI/JU: Mindestlohn ohne Feiertagszuschlag — der wird nie herausgerechnet, also die Annahme offen sagen.
+            ['GE', 'NE', 'TI', 'JU'].includes(e.kanton) && e.feiertag !== 'nein' && React.createElement('p', { style: absatz }, t('stundenlohnView.ml_feiertagAnnahme')),
             React.createElement('p', { style: absatz }, r.bvg === 'unbekannt'
               ? t('stundenlohnView.bvg_unbekannt')
               : t('stundenlohnView.bvg_' + r.bvg, { jahr: betrag(r.jahreslohn), tief: betrag(r.jahrTief), hoch: betrag(r.jahrHoch), schwelle: betrag(r.bvgSchwelle) })),

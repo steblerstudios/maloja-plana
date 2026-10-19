@@ -235,6 +235,32 @@ describe('Einordnung im gerenderten Text', () => {
     palette, t, onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
   })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
 
+  it('OR 329d Abs. 2: feste Anstellung + Ferien im Lohn → Hinweis auf Abgeltungsverbot; bezahlte Ferien → kein Hinweis', () => {
+    const basis = { betrag: '25', art: 'fest', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein' };
+    expect(seite({ ...basis, ferienForm: 'inklusive' })).toContain('OR Art. 329d Abs. 2');
+    // Rechtsprüfung 19.10.: BGE 129 III 493 E. 3.2 sagt «ausnahmsweise», nicht «sehr unregelmässig»; Ausweis-Bedingung gehört dazu.
+    expect(seite({ ...basis, ferienForm: 'inklusive' })).toContain('nur ausnahmsweise zugelassen');
+    expect(seite({ ...basis, ferienForm: 'inklusive' })).toContain('auf jeder Lohnabrechnung klar ausgewiesen');
+    expect(seite({ ...basis, ferienForm: 'inklusive' })).not.toContain('sehr unregelmässig');
+    expect(seite({ ...basis, ferienForm: 'dazu' })).toContain('OR Art. 329d Abs. 2');
+    expect(seite({ ...basis, ferienForm: 'bezahlt' })).not.toContain('OR Art. 329d Abs. 2');
+    expect(seite({ ...basis, art: 'abrufUnecht', ferienForm: 'inklusive' })).not.toContain('OR Art. 329d Abs. 2');
+  });
+
+  it('GE/NE/TI/JU: Annahme zum Feiertagszuschlag wird ausgesprochen, ausser er ist ausdrücklich verneint', () => {
+    const basis = { betrag: '27', ferienForm: 'dazu', wochenstunden: '20', dreizehnter: 'nein' };
+    expect(seite({ ...basis, kanton: 'GE' })).toContain('als käme ein allfälliger Feiertagszuschlag zum Betrag dazu');
+    expect(seite({ ...basis, kanton: 'GE', feiertag: 'nein' })).not.toContain('allfälliger Feiertagszuschlag');
+    expect(seite({ ...basis, kanton: 'BS' })).not.toContain('allfälliger Feiertagszuschlag');
+  });
+
+  it('BVG: Altersgrenze und Rufbereitschaft als Rechtsfrage', () => {
+    const txt = seite({ betrag: '25', ferienForm: 'dazu', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein', art: 'abrufEcht' });
+    expect(txt).toContain('sofern das 17. Altersjahr überschritten ist (BVG Art. 2 Abs. 1)');
+    expect(txt).toContain('zuerst Tod und Invalidität');
+    expect(txt).toContain('ist eine Rechtsfrage und nicht nur eine Frage des Vertrags');
+  });
+
   it('13. unbeantwortet im Spalt: der Text nennt die 13.-Frage, nicht «Kanton wählen» (Wording-Prüfung 18.10.)', () => {
     const txt = seite({ betrag: '25', ferienForm: 'inklusive', kanton: 'GE', wochenstunden: '20' });
     expect(txt).toContain('hängt am 13. Monatslohn');
@@ -262,7 +288,7 @@ describe('Einordnung im gerenderten Text', () => {
     expect(kurz).toContain('Bei befristeten Anstellungen bis drei Monate gilt die Pflicht in der Regel nicht (BVV 2 Art. 1j Abs. 1 Bst. b).');
     expect(kurz).not.toContain('gehört die Stelle damit in die Pensionskasse');
     const fest = seite({ ...basis, art: 'fest' });
-    expect(fest).toContain('in der Regel gehört die Stelle damit in die Pensionskasse (BVG Art. 2 Abs. 1). Ausnahmen unter anderem: befristet auf höchstens drei Monate, Nebenerwerb neben einer schon versicherten Hauptstelle (BVV 2 Art. 1j Abs. 1 Bst. b und c).');
+    expect(fest).toContain('das Sparen fürs Alter beginnt ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7 Abs. 1). Ausnahmen unter anderem: befristet auf höchstens drei Monate, Nebenerwerb neben einer schon versicherten Hauptstelle (BVV 2 Art. 1j Abs. 1 Bst. b und c).');
   });
 
   it('Tessin: «ok» nennt die Spanne der Branchen, andere Kantone nicht; überall der Hinweis auf GAV/NAV', () => {

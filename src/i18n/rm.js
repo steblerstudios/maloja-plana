@@ -6113,6 +6113,10 @@ export default {
     ausgewiesenHinweis: 'Per exempel sco atgna lingia «Ferienentschädigung 8,33 %».',
     vertragZuWenig: 'Il contract numna main vacanzas che quai che tutga tar almain. Calculà vegn perquai cun {wochen} emnas (OR art. 329a al. 1).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
+    // TODO(rm): provisorisch — Gegenlese (neu 18.10.2026, Folge-PR #492)
+    ferienAbgeltungFest: 'Tar lavur regulara ston las vacanzas per princip vegnir tratgas; uschè ditg che l’engaschament dura, na dastgan ellas betg vegnir indemnisadas cun daners (OR art. 329d al. 2). In supplement da vacanzas pajà cun il salari current ha il Tribunal federal admess mo excepziunalmain: tar lavur irregulara, e mo sche la part da vacanzas è inditgada cler en il contract e sin mintga quint da salari (BGE 129 III 493 cons. 3.2). In servetsch da cussegliaziun per dretg da lavur po classifitgar, tge che vala en il cas singul.',
+    // TODO(rm): provisorisch — Gegenlese (neu 18.10.2026, Folge-PR #492)
+    ml_feiertagAnnahme: 'Il quint suppona ch’in eventual supplement per dis da festa vegnia tar l’import. Sch’el è gia cuntegnì, è il salari da basa pli bass — il quint da salari mussa quai.',
     nichtAusgewiesen: 'Tenor il Tribunal federal sto la Ferienentschädigung vegnir inditgada sco import u pertschient en il contract e sin mintga quint da salari; uschiglio po il salari da vacanzas stuair vegnir pajà anc ina giada (BGE 129 III 493). Sche quai vala en il agen cas, po in servetsch da cussegliaziun per dretg da lavur classifitgar.',
     feiertag: 'È in supplement per dis da festa fixà?',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
@@ -6154,7 +6158,7 @@ export default {
     ml_zhHinweis: 'Las citads da Turitg e Winterthur han votà davart in salari minimal communal. Sch’el vala e da cura davent, po dir la citad.',
     ml_keinKanton: 'Cun il chantun dal lieu da lavur sa lascha il salari da basa cumparegliar cun in salari minimal chantunal.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
-    bvg_obligatorisch: 'Salari annual stimà tar il medem patrun: {jahr}. Quai è sur la limita d’entrada da {schwelle} — per regla tutga la plazza uschia en la chascha da pensiun (BVG art. 2 al. 1). Tranter autras excepziuns: engaschament a termin da maximalmain trais mais, lavur accessorica ultra d’ina plazza principala gia assicurada (BVV 2 art. 1j al. 1 lit. b e c).',
+    bvg_obligatorisch: 'Salari annual stimà tar il medem patrun: {jahr}. Quai è sur la limita d’entrada da {schwelle} — per regla tutga la plazza uschia en la chascha da pensiun, sche l’onn da vegliadetgna 17 è surpassà (BVG art. 2 al. 1). A partir dal 1. da schaner suenter il 17avel anniversari èn l’emprim mo mort ed invaliditad assicuradas; il spargn per la vegliadetgna cumenza a partir dal 1. da schaner suenter il 24avel anniversari (BVG art. 7 al. 1). Tranter autras excepziuns: engaschament a termin da maximalmain trais mais, lavur accessorica ultra d’ina plazza principala gia assicurada (BVV 2 art. 1j al. 1 lit. b e c).',
     bvg_darunter: 'Salari annual stimà tar il medem patrun: {jahr}. Quai n’è betg sur la limita d’entrada da {schwelle} — la chascha da pensiun n’è lura betg obligatorica (BVG art. 2 al. 1).',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     bvg_befristetKurz: 'Tar engaschaments a termin fin a trais mais na vala la obligaziun per regla betg (BVV 2 art. 1j al. 1 lit. b). Sch’igl engaschament vegn prolungà sur trais mais, vala ella (BVV 2 art. 1k).',
@@ -6165,7 +6169,7 @@ export default {
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     nbu_nurBeruf: 'Sut 8 uras per emna tar il medem patrun èn tras il patrun mo accidents professiunals assicurads, ultra da quai accidents sin la via da lavur (UVV art. 13 al. 1 e 2). Accidents durant il temp liber na vegnan betg cuvrids. Lura vala la paina da verifitgar, sche la cassa da malsauns cuvra era accidents.',
     nbu_unbekannt: 'Cun las uras per emna sa lascha dir, sche era accidents durant il temp liber èn assicurads (a partir da 8 uras tar il medem patrun, UVV art. 13 al. 1).',
-    art_einordnung_abrufEcht: 'Tar lavur sin clom, nua che las missiuns ston vegnir acceptadas, sa tschenta la dumonda dal temp da spetga: sche e co ch’el vegn indemnisà, regla il contract. In servetsch da cussegliaziun per dretg da lavur po classifitgar, tge che tutga tar.',
+    art_einordnung_abrufEcht: 'Tar lavur sin clom, nua che las missiuns ston vegnir acceptadas, sa tschenta la dumonda dal temp da spetga. Sch’el sto vegnir indemnisà e quant, è ina dumonda giuridica e betg mo ina dumonda dal contract. In servetsch da cussegliaziun per dretg da lavur po classifitgar, tge che tutga tar.',
     // TODO(rm): Gegenlese: Wortwahl-Angleichung Fix-Welle #492 (14.10.2026)
     art_einordnung_abrufUnecht: 'Sche missiuns pon vegnir refusadas, dependan Ferienentschädigung, dis da festa e salari en cas da malsogna fermamain dal contract. Igl vala la paina da leger el exactamain.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
