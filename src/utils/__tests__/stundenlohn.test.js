@@ -254,6 +254,22 @@ describe('Einordnung im gerenderten Text', () => {
     expect(seite({ ...basis, kanton: 'BS' })).not.toContain('allfälliger Feiertagszuschlag');
   });
 
+  it('Stunden aus dem Profil: Hinweis «je Betrieb»; selbst eingetragen: kein Hinweis (Fachprüfung 19.10.)', () => {
+    const render = (data) => renderToStaticMarkup(React.createElement(Stundenlohn, { palette, t, onUpdateData: () => {}, data }))
+      .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    const rechner = { betrag: '25', ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' };
+    const ausProfil = render({ ausbildung: { workHoursPerWeek: '11' }, finanzen: { stundenlohnRechner: rechner } });
+    expect(ausProfil).toContain('Die Stunden stammen aus dem Profil');
+    const selbst = render({ ausbildung: { workHoursPerWeek: '11' }, finanzen: { stundenlohnRechner: { ...rechner, wochenstunden: '6' } } });
+    expect(selbst).not.toContain('Die Stunden stammen aus dem Profil');
+  });
+
+  it('Quellen: «ohne Feiertagszuschlag» nur für Neuenburg belegt', () => {
+    const txt = seite({ betrag: '25', ferienForm: 'dazu', kanton: 'GE', wochenstunden: '20' });
+    expect(txt).toContain('in Neuenburg ausdrücklich auch ohne Feiertagszuschlag (LEmpl Art. 32d Abs. 3)');
+    expect(txt).not.toContain('im Jura gilt der Mindestlohn ohne Ferien- und Feiertagszuschlag');
+  });
+
   it('BVG: Altersgrenze und Rufbereitschaft als Rechtsfrage', () => {
     const txt = seite({ betrag: '25', ferienForm: 'dazu', wochenstunden: '20', dreizehnter: 'nein', feiertag: 'nein', art: 'abrufEcht' });
     expect(txt).toContain('sofern das 17. Altersjahr überschritten ist (BVG Art. 2 Abs. 1)');
@@ -309,7 +325,8 @@ describe('Einordnung im gerenderten Text', () => {
     expect(txt).toContain('NE LEmpl Art. 32d Abs. 3');
     expect(txt).toContain('BS MiLoG § 3 Abs. 1');
     expect(txt).not.toContain('Art. 32a ff.');
-    expect(txt).toContain('In Genf, Neuenburg, im Tessin und im Jura gilt der Mindestlohn ohne Ferien- und Feiertagszuschlag, in Basel-Stadt ohne Ferienzuschlag.');
+    // Fachprüfung 19.10.2026: «ohne Feiertagszuschlag» ist nur für NE belegt, für GE/TI/JU nicht.
+    expect(txt).toContain('In Genf, Neuenburg, im Tessin, im Jura und in Basel-Stadt gilt der Mindestlohn ohne Ferienzuschlag; in Neuenburg ausdrücklich auch ohne Feiertagszuschlag (LEmpl Art. 32d Abs. 3).');
   });
 
   it('OR 324a Abs. 4: Schriftform, NAV oder GAV; Zürich/Winterthur ohne unbelegtes Urteil und Datum', () => {

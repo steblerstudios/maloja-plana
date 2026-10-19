@@ -13,6 +13,9 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
+**Stand:** 2026-10-19 15:30 · **Live:** `c739364d` (0.1.44-beta) — **`main` ist 385+ Commits weiter** (0.1.46-beta in #506, Deploy-Tor 0 Blocker, nicht deployt). Neu gebaut, nicht live (Status `built`, Zeilen folgen beim Deploy): Prämienverbilligung alle 26 Kantone (K31) · Stundenlohn-Rechner (#492/#505) · Schulden R2 (#495/#496) · Mahnung rm (#490) · Neu laden nach Deploy (#502) · Beispielmodus ohne echten Kalender (#499). Nachtrag in SESSION_START.md (19.10. 15:30).
+
+*Vorheriger Stand (bleibt als Beleg):*
 **Stand:** 2026-09-28 15:11 · **Live:** `c739364d` (0.1.44-beta) = `main`, Startdatei **`index-Cf1Zpfvx.js`**, `version.json` `sauber: true`, gebaut 28.09. 15:07. Deploy durch Stebler Studios nach der Aufräum-Runde (#438–#454 gemergt, 4670 Tests grün, `eslint src` sauber, kein Deploy-Tor-Lauf); `scripts/check-deploy.sh`: 128 Assets erreichbar, Gegenprobe erfundener Name 404. ⚠️ Tag `v0.1.44-beta` bleibt auf `1cb36b1f` (11:42) — Tag ≠ Live. Nachtrag in SESSION_START.md (28.09. 15:11).
 
 *Vorheriger Stand (bleibt als Beleg):*

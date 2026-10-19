@@ -17,6 +17,24 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🚪 **Nachtrag 19.10.2026, 15:30 — Deploy-Tor für 0.1.46-beta gelaufen: 0 Blocker. NICHT deployt.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:06): main = `9b4fa4c7` · live = `c739364d` (0.1.44-beta, 28.09. 15:07) ·
+> 383 Commits dazwischen. Danach gemergt: #504 (`01523591`) · #505 (`d99fec2d`, 15:17). **0.1.45-beta war nie live.**
+> **Tor (`/maloja-predeploy`) auf dem Baum von `d99fec2d`:** vitest 339 Dateien / 6158 grün · build ok · SEO 0 Fehler ·
+> size-limit 63,05/65 kB · PII 0 · keine neuen Dependencies · de-Chunk enthält die neuen Texte · ESTV-Stichprobe 156/156
+> (0 Abweichungen) · Ganze-App-Reviews Sicherheit/a11y/Design: 0 Blocker · Diff-Reviews qualitaet/swiss-precision/ordnung/
+> copy/rechts/links: 0 Blocker. Die «sollte»-Liste und die Belege stehen im Tor-Protokoll von Stebler Studios (ausserhalb
+> des Repos).
+> **Vor dem Deploy noch offen:** #506 (dieser PR — Fristtexte, Stunden-aus-Profil-Hinweis, TI/JU-Quelle, Version
+> 0.1.46-beta + CHANGELOG) mergen → Tor kurz auf dem neuen HEAD wiederholen → Freigabe-Marke `.maloja/predeploy-ok`
+> → (optional `/code-review ultra`) → `bash deploy.sh` (Stebler Studios) → live gegen `version.json` + Bundle prüfen,
+> erst dann `FEATURES.md` auf `verified-live`.
+> **Nach dem Deploy (aus dem Tor, kein Blocker):** Mindestlöhne ohne Jahres-Riegel (ab 1.1.2027 «Stand 2026») ·
+> BVG-Schwelle 2027 beim BSV prüfen · GE/TI/JU «ohne Feiertagszuschlag» an der Quelle prüfen · NAV Hauswirtschaft ·
+> rm-Gegenlese (zuerst die drei Mahnbriefe #490) · Eingabefeld-Rand 1,34:1 (a11y, ganze App) · kleine Löschknöpfe
+> `KVGLeistungen.jsx` · Fedlex-Anker-Stichproben im Browser · `@capacitor/ios` ≥ 8.4.3 vor jedem iOS-Build.
+
 > 🩺 **Nachtrag 28.09., 11:55 — Vorsorge + Kreditkarte gemergt; LIVE = `1cb36b1f` (0.1.44-beta, gebaut 11:42) enthält die Patientenverfügung.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 11:52): main = `3e1b60d6` · live = `1cb36b1f` · 10 Commits dazwischen · offen: #351 (Entwurf).

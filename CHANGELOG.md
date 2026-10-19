@@ -11,7 +11,24 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.46-beta] — 2026-10-19
+
+*Alles seit `0.1.45-beta` (#459 … #505). **0.1.45-beta war nie live** — live war bis hierher `0.1.44-beta`
+(`c739364d`, 28.09. 15:07); mit diesem Deploy geht der Inhalt beider Blöcke zusammen raus. Deploy-Tor vom
+19.10.2026: 0 Blocker in Sicherheit, a11y, Design und sechs Diff-Prüfungen; ESTV-Stichprobe 156/156;
+6158+ Tests; Startbündel 63,05 / 65 kB. Protokoll ausserhalb des Repos (Stebler Studios). **Gemergt ist nicht live.***
+
 ### Neu
+- **Prämienverbilligung in allen 26 Kantonen belegt** (K31): neu UR (#464), GR (#467), GE (#469, Re-Review #491),
+  TG (#474, belegt ohne Zahl), BS (#473), ZG (#475), OW (#476), NE (#478), BL (#479), SO (#481, ohne Zahl),
+  ZH Kind ab 19 + Werte je Jahr, 2027 vorbereitet (#482), JU (#483, ohne Zahl), TI (#484), NW (#486), GL (#487),
+  FR SZ SH AR AI VS (#493). Jedes Modul mit Jahres-Riegel: nach Ablauf des Anspruchsjahres keine Zahl mehr.
+- **Was steht mir im Stundenlohn zu?** (#492, #505): Grundlohn und Zuschläge getrennt, Mindestlohn am Grundlohn
+  (GE/NE/TI/JU/BS), BVG- und UVG-Schwellen, offene Fragen statt Annahmen; Rechtstexte gegen Fedlex und
+  BGE 129 III 493 geprüft. 5 Sprachen, rm provisorisch.
+- **Schulden Runde 2** (#495, #496): Arztrechnungen und Schulden ohne Doppelzählung; Betreibung und Verlustscheine
+  mit belegter Zeit (SchKG 149, 149a, 265, 265a).
+- **Mahnung auf Rumantsch** (#490, provisorisch, Gegenlese offen).
 - **Prämienverbilligung Waadt nach amtlichem Modell 2026** (K31, sechster Kanton). «Subside
   ordinaire» nach Arrêté du Conseil d’État vom 17.12.2025 und RLVLAMal art. 21, gebaut für
   26+ allein, 26+ mit Kind(ern) und Kinder 0–18; jede Zahl am 28.09. an der Quelle neu gelesen,
@@ -21,6 +38,21 @@ kommt der Changelog immer mit, nie doppelt.*
   Sonderkategorien zeigen bewusst keine Zahl. Alle 5 Sprachen (rm provisorisch).
 - **Kantonsmodelle als Register** (#459): ein Eintrag je Kanton in `IPV_MODULE` statt eines
   `if`-Blocks — Vorbereitung für die übrigen Kantone.
+
+### Behoben
+- **Nach einem Deploy fehlendes Programmteil** → einmal neu laden statt Fehlerschirm, mit Sperre gegen Schleifen (#502).
+- **Beispiel- und Probe-Modus** schreiben nichts mehr in den echten Kalender (#499).
+- **Sieben kleine Fehler** aus dem Befund vom 25.09.: Beispiel-Kachel, AHV-Kästchen, CSV, Xdo «laut Anbieter»,
+  KVG-Datum, frei/Mt., DSFA-Ziffer (#498).
+- **Fristtexte IPV** (SG, LU, FR, GL, SH, NW, AR) sagen «hier noch nicht eingearbeitet» statt einer Aussage über
+  die Ämter, die ab Oktober still veraltet; LU-Folgejahr-Frist bleibt nach dem 31.10. richtig. Stundenlohn: Hinweis,
+  wenn die Wochenstunden aus dem Profil stammen; «ohne Feiertagszuschlag» nur für NE belegt (Vor-Deploy 19.10.).
+- **favicon.ico** ergänzt (#500) · **Stage** nie in Suchmaschinen, `noindex, nofollow` (#501).
+
+### Doku & Wächter
+- Verbindliche Rechtstext-Fassung steht an Seite, App und `docs/legal`, 5 Sprachen (#489) · Lizenz-Wächter (#488) ·
+  Tests-vor-Commit-Hook testet im Worktree den richtigen Stand (#504) · Sprachdateien in 23 Tests statisch (#503) ·
+  session-close-Skill (#497).
 
 ## [0.1.45-beta] — 2026-09-28
 
