@@ -4090,7 +4090,7 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — provisorisch (Rumantsch Grischun).
     dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
-    jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun {kanton}.', // TODO(rm): Gegenlese Muttersprachler:in
+    jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
   },
 
   charts: {

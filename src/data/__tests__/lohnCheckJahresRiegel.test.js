@@ -144,7 +144,7 @@ describe('Mindestlohn-Jahres-Riegel', () => {
         palette, t, onUpdateData: () => {},
         data: { finanzen: { stundenlohnRechner: { betrag: '20', wochenstunden: '42', kanton: 'JU', ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' } } },
       })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
-      expect(s).toContain('Der geltende Betrag ist beim Kanton');
+      expect(s).toContain('Der geltende Betrag steht beim Kanton Jura.');
       expect(s).not.toContain('null');
       expect(s).not.toContain('prud');
       expect(s).not.toContain('21.40');

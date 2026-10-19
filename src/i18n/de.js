@@ -2929,7 +2929,7 @@ export default {
     // Jahres-Riegel (data/lohnCheck.js): die Sätze sind für {jahr} belegt; für das laufende Jahr
     // keine Zahl erfinden, sondern sagen, dass sie fehlt. Bewusst ohne {stelle}: die Kontrollstellen sind
     // für Streitfälle da (JU: Arbeitsgericht), und die TI-Stelle verliert per 01.01.2027 ihre Grundlage.
-    jahrNichtBelegt: 'Die Mindestlöhne in dieser App sind für {jahr} amtlich belegt. Für {laufend} sind noch keine geprüften Werte erfasst — darum hier kein Vergleich. Der geltende Betrag ist beim Kanton {kanton} nachzulesen.',
+    jahrNichtBelegt: 'Die Mindestlöhne in dieser App sind für {jahr} amtlich belegt. Für {laufend} sind noch keine geprüften Werte erfasst — darum hier kein Vergleich. Der geltende Betrag steht beim Kanton {kanton}.',
   },
 
   tax: {

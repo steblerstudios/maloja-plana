@@ -2901,7 +2901,7 @@ export default {
     basisNetto: { sie: 'Votre revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait votre salaire brut (il figure sur votre fiche de salaire).', du: 'Ton revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait ton salaire brut (il figure sur ta fiche de salaire).' },
     dreizehnterUnklar: 'Le salaire est juste en dessous du salaire minimum complet. Avec un 13e salaire mensuel, il peut néanmoins être conforme — le 13e compte pour le salaire minimum. Veuillez indiquer dans le chapitre Finances si un 13e est versé, nous pourrons alors le classer clairement.',
     nextStepLink: 'Préparer la demande de salaire',
-    jahrNichtBelegt: 'Les salaires minimums de cette application sont vérifiés pour {jahr} d’après les sources officielles. Pour {laufend}, aucune valeur vérifiée n’est encore saisie — c’est pourquoi aucune comparaison n’est faite ici. Le montant en vigueur peut être consulté auprès du canton {kanton}.',
+    jahrNichtBelegt: 'Les salaires minimaux de cette application sont vérifiés pour {jahr} d’après les sources officielles. Pour {laufend}, aucune valeur vérifiée n’est encore saisie — c’est pourquoi aucune comparaison n’est faite ici. Le montant en vigueur peut être consulté auprès du canton ({kanton}).',
   },
 
   tax: {
