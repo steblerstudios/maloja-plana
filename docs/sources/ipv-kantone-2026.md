@@ -4110,10 +4110,21 @@ den Abzügen, Pauschalen oder Freibeträgen.
 Regel ist aus dem Arrêté (2026: art. 7–10) in den Règlement gewandert (art. 21a–21d), mit
 derselben 10-%-Schwelle, derselben Begrenzung auf die Referenzprämie und derselben Formel. Neu
 sind art. 21b al. 4 (RDU ≤ 0 ⇒ 100 %), was die Ungleichung der App bei RDU 0 schon so ergibt,
-und art. 21c al. 6 (kein spezifischer Subside über der Vermögensgrenze), was der neue
-Vermögens-Riegel vorher abfängt. Der Hinweistext `ipv.vdSpezifischerSubside` («mehr als 10
+und art. 21c al. 6: kein spezifischer Subside, wenn ein Mitglied nicht «de condition
+économique modeste» ist (Verweis auf art. 9 al. 1, 3 und 4 LVLAMal). Das umfasst die neue
+Vermögensgrenze, die der Vermögens-Riegel vorher abfängt, aber auch die Fälle von RLVLAMal art. 17
+al. 1, die die App nicht kennt. Der Hinweistext `ipv.vdSpezifischerSubside` («mehr als 10
 Prozent») bleibt richtig. Geändert hat sich für den Hinweis nur die Fundstelle und die
-Referenzprämie (art. 10 statt art. 13).
+Referenzprämie (art. 10 statt art. 13). Ebenfalls neu, und von der App nicht abgefragt:
+art. 21a al. 4 (wer eine Sonderkategorie nach art. 18 al. 1/2 LVLAMal bezieht, z. B. RI, hat
+keinen spezifischen Subside, dort kann der Hinweis zu Unrecht erscheinen) und art. 21a al. 2
+(PC Familles zählen zum RDU). Den Vergleich mit dem Arrêté 2026 hat die Fachprüfung nicht
+selbst nachgelesen, weil er nicht im Prüfordner lag. Er beruht auf den Wortlauten weiter oben
+in diesem Abschnitt.
+
+Bandgrenze 86'300: art. 9 al. 3 leitet die Franchise-Grenze als B2 × 1,25 = 86'250 her, die
+Tabelle in art. 10 al. 2 nennt 86'300. Der Code folgt der Tabelle (62'500, 70'000 und 96'600 gehen
+auf).
 
 **Eingebaut** (`src/config/ipvVaud.js`, `IPV_VD_2027`, `IPV_VD_JAHRE`, `vdWerte(jahr)`, nach dem
 Muster von ZH): 2027 ist ein eigenes Jahresobjekt, die App wählt nach Kalenderjahr. 2026 ist
@@ -4131,7 +4142,10 @@ noch in [7] noch in [8]:
   franchises équivalentes aux seuils d'imposition au sens des articles 58 et 60» LI; die
   Frankenwerte stehen wieder nur in der Notice 2026.
 
-Eine Notice 2027 lag am 19.10.2026 nicht vor [10]. Beide Grössen stehen im Code als `null`, der
+Eine Notice 2027 lag am 19.10.2026 nicht vor [10]. Den Freibetrag könnte LI art. 58/60
+(BLV 642.11) gesetzlich belegen. Nicht gelesen, und offen bleibt, welche Fassung gilt (die der
+Referenz-Steuerperiode oder die des Anspruchsjahres). Für die KK-Pauschale gibt es keinen solchen
+Weg, sie allein hält den Riegel zu. Beide Grössen stehen im Code als `null`, der
 Jahres-Riegel bleibt damit ab 01.01.2027 zu (dieselbe Orientierung wie bisher). Der Fünfzehntel
 steht im Gesetz (LHPS art. 6 al. 2 lit. b) und ist eingetragen.
 
@@ -4145,6 +4159,17 @@ Vermögen) wird als fortune mobilière genommen. Liegt es über 130'000, zeigt d
 der Vermögensposten der Veranlagung kann davon abweichen. Ein Haushalt mit einer erwachsenen
 Person und Kindern gilt als «UER composée d'une seule personne adulte» (Kinder sind nach art. 12
 keine Erwachsenen, und die App baut nur diesen Haushalt).
+
+**Fachprüfung 19.10.2026 (swiss-precision-pruefer):** kein Blocker, jede Zahl wörtlich bestätigt.
+Umgesetzt: eigener Grund `ipv.offenGrund.vermoegenVD` (der allgemeine Text nannte das «steuerbare
+Gesamtvermögen», massgebend ist hier nur die fortune mobilière). Der Vorbehalt 2027 sagt jetzt,
+dass es rückwirkend nur ausnahmsweise etwas gibt (art. 25 al. 1 Satz 2: «exceptionnellement …
+au plus tôt dès le début de la période de subside en cours»). Dazu die Präzisierungen oben (art.
+21c al. 6, art. 21a al. 2/4, Bandgrenze). **Nicht in diesem Schritt, weil sie die Anzeige 2026
+ändern:** derselbe Rückwirkungssatz im Vorbehalt 2026; der Zuzug aus einem anderen Kanton im
+laufenden Jahr (RLVLAMal art. 25 al. 4, Fassung bis 31.12.2026: «ne peut bénéficier d'un subside
+pour l'année considérée»); ein Hinweis im Herbst 2026 für Haushalte über 130'000 fortune mobilière,
+deren Antrag oder Erneuerung schon unter die Regeln 2027 fällt (art. 33c, Arrêté art. 7 al. 3).
 
 **Tests:** `src/config/__tests__/ipvVaud.test.js`, Blöcke «VD 2027»: Werte wörtlich gepinnt, eine
 Handrechnung je Kategorie (a: RD 28'500 → 177; b: RD 12'100 → 318; c: 118 bis B3; Haushalt RD 0

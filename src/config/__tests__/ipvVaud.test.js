@@ -637,16 +637,26 @@ describe('K31 VD 2027: Mechanik mit Attrappe für KK-Pauschale und Freibetrag', 
       expect(r).toMatchObject({ belegt: true, jahr: 2027, amount: 336 + 118, vorbehaltKey: 'ipv.vorbehaltVD2027' });
     });
   });
-  it('mit Attrappe: fortune mobilière genau 130 000 rechnet, 130 001 nicht (Grund «vermoegen»)', () => {
+  it('mit Attrappe: fortune mobilière genau 130 000 rechnet, 130 001 nicht (Grund «vermoegenVD»)', () => {
     im2027();
     attrappe(() => {
       expect(calculateIPV(person({ finanzen: { savingsAccount: 130000 } })).belegt).toBe(true);
       expect(calculateIPV(person({ finanzen: { savingsAccount: 100000, securitiesValue: 30001 } })))
-        .toMatchObject({ belegt: false, amount: null, offen: 'vermoegen' });
+        .toMatchObject({ belegt: false, amount: null, offen: 'vermoegenVD' });
     });
   });
   it('2026 kennt diese Grenze nicht: 200 000 Vermögen ergeben dort weiter eine Zahl', () => {
     vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-01T12:00:00'));
     expect(calculateIPV(person({ finanzen: { savingsAccount: 200000 } })).belegt).toBe(true);
+  });
+});
+
+describe('K31 VD 2027: Texte in allen fünf Sprachen', () => {
+  it('Vorbehalt 2027 und Grund vermoegenVD gibt es in de/fr/it/en/rm', async () => {
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const m = (await import(`../../i18n/${l}.js`)).default;
+      expect(m.ipv.vorbehaltVD2027.length, l).toBeGreaterThan(80);
+      expect(m.ipv.offenGrund.vermoegenVD, l).toMatch(/130[  ,']000/);
+    }
   });
 });

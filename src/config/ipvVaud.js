@@ -331,7 +331,9 @@ export function ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // schliesst fortune mobilière über der Grenze jeden Subside aus ([7] art. 17 al. 2/3, [6]
   // art. 12). «au-delà» = darüber; gebaut ist nur die UER mit einer erwachsenen Person.
   const vermoegen = vermoegenSumme(f);
-  if (werte.vermoegensGrenze && vermoegen > werte.vermoegensGrenze.allein) return orientierung('vermoegen');
+  // Eigener Grund `vermoegenVD`: der allgemeine Text nennt das «steuerbare Gesamtvermögen», hier
+  // zählt nur die fortune mobilière (Fachprüfung 19.10.2026, S2).
+  if (werte.vermoegensGrenze && vermoegen > werte.vermoegensGrenze.allein) return orientierung('vermoegenVD');
   const { rdu, revenuOvam } = vdRevenuDeterminant({
     einkommen: einkommenJahr(f, SAEULE_3A.voll), vermoegen, kinderZahl, werte,
   });
