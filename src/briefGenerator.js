@@ -15,7 +15,7 @@
 import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
 import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
-import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
+import { getLohnKontrollstelle, nennbareKontrollstelle } from './data/lohnRechtsstellen.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { zahl } from './utils/geld.js';
 import { plusTage, heuteIso } from './utils/fristen.js';
@@ -101,7 +101,7 @@ function wageClaimRefs(kanton, t) {
   const neutralStelle = t('briefe.wageClaim.stelleFallback');
   if (!e) return { gesetz: neutralGesetz, stelle: neutralStelle };
   const gesetz = (e.gesetz && !e.verify) ? e.gesetz : neutralGesetz;
-  const stelle = e.verify ? neutralStelle : (e.stelle || e.fallback || neutralStelle);
+  const stelle = nennbareKontrollstelle(e) || neutralStelle;
   return { gesetz, stelle };
 }
 

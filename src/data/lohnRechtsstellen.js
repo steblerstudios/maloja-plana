@@ -102,13 +102,17 @@ export function getLohnKontrollstelle(kanton) {
   return LOHN_KONTROLLSTELLEN[kanton] || null;
 }
 
-// Der Text für {stelle} im Mindestlohn-Befund — eine Regel für Kapitel (ChapterView) und
-// Stundenlohn-Rechner, gleich wie `briefGenerator.wageClaimRefs`: `verify: true` wird nie
-// genannt; sonst `stelle`, dann `fallback` (JU: Arbeitsgericht, weil `stelle: null` belegt
-// ist), sonst die neutrale Formulierung. Nie eine Stelle erfinden — und nie «null» einsetzen
+// Welche Stelle ein Text nennen darf — EINE Regel für Kapitel (ChapterView), Stundenlohn-Rechner
+// und Brief (briefGenerator.wageClaimRefs): `verify: true` wird nie genannt; sonst `stelle`, dann
+// `fallback` (JU: Arbeitsgericht, weil `stelle: null` belegt ist); sonst `null` → der Aufrufer setzt
+// seine neutrale Formulierung. Nie eine Stelle erfinden — und nie «null» in einen Satz setzen
 // (Swiss-Precision-Prüfung 19.10.2026: der Rechner nahm `stelle.stelle` ungeprüft).
-// `eintrag` ist nur für Tests überschreibbar.
-export function lohnKontrollstelleText(kanton, tr, eintrag = getLohnKontrollstelle(kanton)) {
-  if (!eintrag || eintrag.verify) return tr('lohnCheck.stelleFallbackKurz');
-  return eintrag.stelle || eintrag.fallback || tr('lohnCheck.stelleFallbackKurz');
+export function nennbareKontrollstelle(eintrag) {
+  if (!eintrag || eintrag.verify) return null;
+  return eintrag.stelle || eintrag.fallback || null;
+}
+
+// Der Text für {stelle} im Mindestlohn-Befund (Kapitel und Rechner).
+export function lohnKontrollstelleText(kanton, tr) {
+  return nennbareKontrollstelle(getLohnKontrollstelle(kanton)) || tr('lohnCheck.stelleFallbackKurz');
 }

@@ -1,5 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { getLohnKontrollstelle, LOHN_KONTROLLSTELLEN, UNBEZAHLTER_LOHN_WEG } from '../lohnRechtsstellen.js';
+import { getLohnKontrollstelle, LOHN_KONTROLLSTELLEN, UNBEZAHLTER_LOHN_WEG, nennbareKontrollstelle, lohnKontrollstelleText } from '../lohnRechtsstellen.js';
+import { createT } from '../../i18n/index.js';
+import de from '../../i18n/de.js';
 import { kantonHatMindestlohn } from '../lohnCheck.js';
 
 describe('lohnRechtsstellen', () => {
@@ -107,7 +109,9 @@ describe('verify:true hält Ungeprüftes aus dem Brief (synthetischer Kanton)', 
 
   it('ungeprüfter Eintrag: weder Gesetzestitel noch Stelle stehen im Brief', async () => {
     vi.resetModules();
-    vi.doMock('../lohnRechtsstellen.js', () => ({
+    // Die echte Nenn-Regel bleibt drin (importOriginal) — gemockt wird nur die Registry.
+    vi.doMock('../lohnRechtsstellen.js', async (importOriginal) => ({
+      nennbareKontrollstelle: (await importOriginal()).nennbareKontrollstelle,
       LOHN_KONTROLLSTELLEN: {
         GE: { gesetz: 'ERFUNDENES-GESETZ-XY', stelle: 'ERFUNDENE-STELLE-XY', verify: true },
       },
@@ -130,3 +134,33 @@ describe('verify:true hält Ungeprüftes aus dem Brief (synthetischer Kanton)', 
     vi.resetModules();
   });
 });
+
+// Swiss-Precision-Prüfung 19.10.2026: Der Stundenlohn-Rechner setzte für JU `stelle: null` ein
+// («bei null klären»). Jetzt eine Regel für Kapitel, Rechner und Brief.
+describe('nennbareKontrollstelle / lohnKontrollstelleText — eine Regel', () => {
+  const t = createT({ de }, 'de', 'sie');
+  const neutral = 'der zuständigen kantonalen Stelle';
+  it('stelle null → fallback (JU)', () => {
+    expect(lohnKontrollstelleText('JU', t)).toBe('Conseil de prud’hommes (Arbeitsgericht), Porrentruy');
+  });
+  it('kein Eintrag → neutral', () => {
+    expect(lohnKontrollstelleText('ZH', t)).toBe(neutral);
+    expect(lohnKontrollstelleText(undefined, t)).toBe(neutral);
+  });
+  it('verify: true → nichts nennen, auch wenn eine Stelle eingetragen ist', () => {
+    expect(nennbareKontrollstelle({ stelle: 'Ungeprüftes Amt', fallback: 'Gericht', verify: true })).toBe(null);
+  });
+  it('stelle vor fallback; weder noch → null, nie der Text «null»', () => {
+    expect(nennbareKontrollstelle({ stelle: 'Amt', fallback: 'Gericht', verify: false })).toBe('Amt');
+    expect(nennbareKontrollstelle({ stelle: null, verify: false })).toBe(null);
+    expect(nennbareKontrollstelle(null)).toBe(null);
+  });
+  it('jeder Registry-Eintrag ergibt einen echten Text, nie «null»/«undefined»', () => {
+    for (const k of Object.keys(LOHN_KONTROLLSTELLEN)) {
+      const txt = lohnKontrollstelleText(k, t);
+      expect(typeof txt).toBe('string');
+      expect(txt).not.toMatch(/\b(null|undefined)\b/);
+    }
+  });
+});
+

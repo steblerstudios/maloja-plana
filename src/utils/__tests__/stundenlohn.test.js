@@ -5,7 +5,6 @@ import { Stundenlohn } from '../../Stundenlohn.jsx';
 import { createT } from '../../i18n/index.js';
 import de from '../../i18n/de.js';
 import { stundenlohnRechnen, ferienSatz, ferienWochenAnspruch, offeneFragen } from '../stundenlohn.js';
-import { lohnKontrollstelleText } from '../../data/lohnRechtsstellen.js';
 
 // «Was steht mir im Stundenlohn zu?» — getrennte Rechnung für Grundlohn und Zuschläge.
 // Kern-Beispiel: 25 Fr. «alles inklusive» in Genf. Der Grundlohn ist dann 25 × 12/13 = 23.08,
@@ -364,23 +363,5 @@ describe('Zuständige Stelle im Befund «unter dem Mindestlohn»', () => {
   it('BS: belegte Stelle wird genannt (Regel unverändert)', () => {
     const txt = seite({ ...unter, kanton: 'BS' });
     expect(txt).toContain('bei Amt für Wirtschaft und Arbeit (AWA), Team Arbeitsmarktaufsicht klären.');
-  });
-});
-
-describe('lohnKontrollstelleText — eine Regel für Kapitel, Rechner und Brief', () => {
-  const t = createT({ de }, 'de', 'sie');
-  const neutral = 'der zuständigen kantonalen Stelle';
-  it('stelle null → fallback (JU)', () => {
-    expect(lohnKontrollstelleText('JU', t)).toBe('Conseil de prud’hommes (Arbeitsgericht), Porrentruy');
-  });
-  it('kein Eintrag → neutral', () => {
-    expect(lohnKontrollstelleText('ZH', t)).toBe(neutral);
-    expect(lohnKontrollstelleText(undefined, t)).toBe(neutral);
-  });
-  it('verify: true → neutral, auch wenn eine Stelle eingetragen ist (nie eine ungeprüfte nennen)', () => {
-    expect(lohnKontrollstelleText('XX', t, { stelle: 'Ungeprüftes Amt', fallback: 'Gericht', verify: true })).toBe(neutral);
-  });
-  it('weder stelle noch fallback → neutral, nie «null»', () => {
-    expect(lohnKontrollstelleText('XX', t, { stelle: null, verify: false })).toBe(neutral);
   });
 });
