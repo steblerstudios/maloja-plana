@@ -3337,7 +3337,7 @@ zeigt die App für GR keinen Betrag (`jahrVorbei`).
 **Beurteilung:** abbildbar
 **Modell (kurz):** Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie
 **Zuständig / Weg:** SVA Aargau; SVA ermittelt Berechtigte aus Steuerdaten und schreibt sie an, Antrag innert sechs Wochen; spätestens 31. Dezember im Vorjahr (für 2026: 31.12.2025, abgelaufen), sonst verwirkt
-**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ~~⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».~~ **Am 20.09.2026 aufgelöst: die SVA-Seite schreibt heute durchgehend «Bezugsjahr 2027», siehe «Nachprüfung 20.09.2026».** In der App gebaut ist 2026.
+**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ~~⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».~~ **Am 20.09.2026 aufgelöst: die SVA-Seite schreibt heute durchgehend «Bezugsjahr 2027», siehe «Nachprüfung 20.09.2026».** In der App gebaut ist 2026. **⟨Nachtrag 19.10.2026⟩ 2027 eingetragen, aber verriegelt (`beschlussFehlt: true`): Kantons-PDF [6] liegt vor, SAR-Fassung fehlt — siehe «Nachtrag 19.10.2026».**
 
 ### Rechenmodell
 > «Anspruch auf Prämienverbilligung besteht, wenn die Richtprämie einen prozentualen Anteil des massgebenden Einkommens übersteigt. Bei Mehrpersonenhaushalten werden die Richtprämien der einzelnen Haushaltsmitglieder zusammengezählt.» — Quelle [1], § 6 Abs. 1
@@ -3392,6 +3392,7 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 3. Anhang 1 Berechnungselemente für die Verteilung der Prämienverbilligung 2026 (AGS 2025/…), Kanton Aargau, Handbuch Soziales, PDF geändert 05.11.2025. https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpr-mien-2026.pdf — abgerufen 16.09.2026
 4. Allgemeine Informationen (Prämienverbilligung), SVA Aargau (widersprüchliche Jahresangabe, s. oben). https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine — abgerufen 16.09.2026
 5. Informationsblatt Prämienverbilligung 2027, SVA Aargau (enthält keine Zahlen). https://www.sva-aargau.ch/informationsblattpv — abgerufen 16.09.2026
+6. Anhang (Stand 1. September 2026) «Berechnungselemente für die Verteilung der Prämienverbilligung 2027», Kanton Aargau, Handbuch Soziales, PDF «Richtprämien 2027» (Kopfzeile «Beilage 2 zum bereinigten Bericht»), SHA-256 cee5dd41…17246. https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpraemien2027.pdf — abgerufen 19.10.2026
 
 ### Nachprüfung 20.09.2026 (K31, Einbau in die App)
 
@@ -3528,6 +3529,68 @@ Einkommensgrenze nach § 5 Abs. 5.
 **Nicht nachgemessen:** die zwei Zitate aus dem Informationsblatt (Anmeldefenster, Code sechs
 Wochen gültig) — die Seite liefert heute HTML statt PDF. Tragend sind sie nicht; die Frist steht
 wörtlich in § 10 Abs. 4 KVGG.
+
+### Nachtrag 19.10.2026 — Werte 2027 eingetragen, Riegel zu (`beschlussFehlt`)
+
+Alle Quellen am **19.10.2026, 17:45 MESZ** neu abgerufen (curl; PDF mit `pdftotext -layout`).
+
+**[6] Kanton Aargau, DGS, Handbuch Soziales, Kap. 7.3.1, PDF «Richtprämien 2027»** —
+https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpraemien2027.pdf
+(verlinkt auf der Kapitelseite 7.3.1 als «Richtprämien 2027 (PDF, 1 Seite, 128 KB)», neben
+«Richtprämien 2026»). 1 Seite, 128 464 Bytes, SHA-256
+`cee5dd41be4791f3f5dcfe5da5ce9f483019f5aecc6f891fec87e70240517246`; PDF-Metadaten: Autor
+«Staatskanzlei des Kantons Aargau», erstellt 20.08.2026, geändert 23.09.2026. Wortlaut:
+
+> «Beilage 2 zum bereinigten Bericht» (Kopfzeile) · «837.211» · «Anhang (Stand 1. September 2026)» ·
+> «Berechnungselemente für die Verteilung der Prämienverbilligung 2027» ·
+> «Die Richtprämien gemäss § 5 KVGG und § 3 Abs. 1 der Verordnung zum Gesetz zum Bundesgesetz
+> über die Krankenversicherung (V KVGG) betragen: a) für Erwachsene: Fr. 6'070.–, b) für junge
+> Erwachsene: Fr. 4'440.–, c) für Kinder: Fr. 1’450.–.» ·
+> «Die Einkommensabzüge gemäss § 5 KVGG betragen: a) für Alleinstehende: Fr. 8'500.–, b) für
+> Alleinstehende mit Kind(ern): Fr. 12'200.–, c) für Ehepaare: Fr. 0.–, d) für Ehepaare mit
+> Kind(ern): Fr. 8'000.–, e) pro Kind/gemeinsam eingestuften jungen Erwachsenen in Ausbildung:
+> Fr. 2’500.–.» · «Der Einkommenssatz gemäss § 5 KVGG beträgt 19,25 %.»
+
+**[4] SVA Aargau, «Allgemeine Informationen»** —
+https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine
+
+> «Berechnungsbasis für die Prämienverbilligung 2027 ist das steuerbare Einkommen der
+> rechtskräftigen Steuerveranlagung 2024.» · «Sie betragen für das Bezugsjahr 2027: für
+> Erwachsene: 6'070 Franken jährlich / 505.85 Franken pro Monat · für junge Erwachsene: 4'440
+> Franken jährlich / 370.00 Franken pro Monat · für Kinder: 1'450 Franken jährlich / 120.85
+> Franken pro Monat» · Einkommensabzüge 8'500 / 12'200 / 0 / 8'000 / 2'500 · «Der
+> Einkommenssatz beträgt 19.25 Prozent.» · Rechenbeispiel (Paar, 2 Kinder, 1 junger Erwachsener):
+> massgebendes Einkommen 30'397, Total Richtprämien 19'480, Tabellenzeile «Einkommenssatz 19.25
+> Prozent von 30'397 Franken» | «- 5'851.45», Verbilligungsanspruch 13'628.55. «Junge Erwachsene (Jahrgang 2002 - 2008)».
+
+Beide Quellen stimmen in **allen** Zahlen überein. Die Abzüge sind gegenüber 2026 unverändert;
+das Basisjahr 2024 bestätigt «drei Jahre vor dem Anspruchsjahr» ([1] § 7 Abs. 1).
+
+**[2] Gegenprobe Gesetzessammlung** —
+https://gesetzessammlungen.ag.ch/api/de/texts_of_law/837.211/show_as_json:
+`current_version` = «Aktuelle Version in Kraft seit: 01.09.2025 (Beschlussdatum: 27.08.2025)»,
+`future_versions` = `[]`, `abrogated_scheduled` = `false`; jüngstes Änderungsdokument
+«AGS 2025/06-13, Publikationsdatum 20.10.2025». **Keine Fassung mit dem Anhang 2027.**
+Zum Vergleich der Takt der Vorjahre: Beschluss 28.08.2024 → AGS 18.10.2024; Beschluss
+27.08.2025 → AGS 20.10.2025. Eine Aufnahme 2026 im selben Takt wäre also bald zu erwarten —
+das ist eine Beobachtung, kein Beleg.
+
+**RRB / Medienmitteilung:** gesucht (Websuche auf ag.ch, gesetzessammlungen.ag.ch, sva-aargau.ch
+sowie allgemein), **nichts gefunden**. Die einzige Medienmitteilung «Regierungsrat beschliesst
+Berechnungsparameter für die Prämienverbilligung …», die die Suche liefert, betrifft das Jahr
+**2023**. Gefunden wurde nur der Kantonsbeitrag 2027 (Grosser Rat, Dekret zur Prämienverbilligung,
+AGS 2026/06-03 — https://gesetzessammlungen.ag.ch/app/de/change_documents/1820); er legt die
+Berechnungselemente nicht fest.
+
+**Gebauter Zustand:** `IPV_AG_2027` in `src/config/ipvAargau.js` trägt alle Zahlen oben,
+wörtlich, mit `beschlussFehlt: true`. `agWerte()` liefert für 2027 darum `null`, die App zeigt ab
+01.01.2027 für AG weiterhin die Orientierung «jahr» ohne Betrag — wie bisher. Kantonsquelle
+liegt vor, **SAR-Fassung bzw. Beschluss fehlt**. Öffnen (`false`) erst mit der Fassung in der SAR
+oder einem RRB, oder auf ausdrücklichen Entscheid von Stebler Studios. Das SVA-Rechenbeispiel ist
+mit den Werten 2027 im Test nachgerechnet (exakt 13'628.5775; im Beispiel ist der Abzug auf
+5 Rappen aufgerundet, 5'851.4225 → 5'851.45 — eine Regel lässt sich aus einem Beispiel nicht
+ableiten). Wortlaut-Treue: Apostrophe wie im PDF (’ bei 1’450 und 2’500). Fachprüfung
+19.10.2026 (swiss-precision-pruefer): kein Blocker, alle Zahlen gegen beide Quellen bestätigt.
 
 ---
 
