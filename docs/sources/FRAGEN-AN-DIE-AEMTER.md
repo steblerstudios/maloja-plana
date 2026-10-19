@@ -30,6 +30,28 @@ Nullpunkt; die App zeigt den ungerundeten.) Bei den Grenzen 2027: Zelle verheira
 - Wird die Abzugsquote von 60 % über der Familiengrenze **je Kind** oder **je Familie**
   abgezogen? (RRB 297/2025 lässt beides zu; wir zeigen in dieser Zone bewusst keinen Betrag.)
 
+### 1b · SVA Zürich — Durchschnittsprämien 2027 und Einkommensgrenzen 2027 passen nicht zusammen
+
+*Ergänzt 19.10.2026.*
+
+**Wo:** Seite «Regionale Durchschnittsprämien» (unter «Ergänzungsleistungen»), Abschnitt «2027 (provisorisch)»,
+und Seite «Prämienverbilligung 2027: Einkommensgrenzen 2027».
+
+Die erste Seite führt für 2027 (provisorisch) Region 1/2/3: Erwachsene 672/614/574, junge Erwachsene 481/441/409,
+Kinder 163/148/138 CHF pro Monat. Die zweite lässt sich damit nicht nachrechnen. Mit 70 % Referenzprämie und
+9,4 % Eigenanteil (RRB 980/2026 Disp. I) ergäbe Region 1, Einzelperson, Erwachsene ohne Kinder
+0,7 × 672 × 12 ÷ 0,094 = **60'051.06**; publiziert sind **59'420**. Diese Zahl passt zu einer Durchschnittsprämie
+von **665** (0,7 × 665 × 12 ÷ 0,094 = 59'425.53). Ebenso passen die übrigen fünf kinderlosen Einzelzellen zu
+607 / 566 (Erwachsene R2/R3) und 477 / 437 / 405 (junge Erwachsene), nicht zu den publizierten
+Durchschnittsprämien. Die App rechnet 2027 für ZH deshalb noch nicht.
+
+**Fragen:**
+- Mit welchen Durchschnittsprämien 2027 sind die Einkommensgrenzen 2027 gerechnet — und welche Zahl gilt für die
+  Berechnung des Anspruchs: die provisorisch publizierten (672 …) oder die tieferen (665 …)?
+- Werden die Einkommensgrenzen 2027 mit den definitiven Durchschnittsprämien neu publiziert?
+- Ist die regionale Durchschnittsprämie der Prämienverbilligung dieselbe Zahl wie die EL-Durchschnittsprämie,
+  die laut Ihrer Seite das EDI festlegt?
+
 ---
 
 ## 2 · ASV Bern — zwei Gemeinden, zwei widersprüchliche Listen

@@ -311,9 +311,9 @@ Heute an der Quelle gelesen:
 
 | Grösse 2027 | Wert | Quelle | Status |
 |---|---|---|---|
-| Eigenanteil | 9,4 % übrige · 11,8 % Verheiratete | [1] «Für das Jahr 2027 gelten folgende Eigenanteile» | **provisorisch** — [9] Disp. VI: Gesundheitsdirektion setzt ihn provisorisch fest; «Im September 2026 wird der Regierungsrat den Eigenanteilssatz für die IPV 2027 definitiv festlegen» (Erw. 4). Ein solcher Beschluss war am 28.09. nicht auffindbar (Medienmitteilung nach Vorjahres-Muster → 404, abgeleitete Adresse, kein Negativbefund). |
-| Referenzprämie | **nicht publiziert** | [9] Erw. 3f: Gesundheitsdirektion ermächtigt, «eine höhere Referenzprämie provisorisch festzulegen»; definitiv «im September 2026». [1] sagt nur «ab dem Jahr 2026 neu 70 Prozent». | im Code `null` |
-| Regionale Durchschnittsprämien | **heute nicht nachzulesen** | [3] zeigt am 28.09.2026 nur die Tabellen 2023–2026; kein 2027-PDF verlinkt. | im Code `null` |
+| Eigenanteil | 9,4 % übrige · 11,8 % Verheiratete | [1] «Für das Jahr 2027 gelten folgende Eigenanteile» | ⟨überholt 19.10.2026: beschlossen, RRB 980/2026 Disp. I — Nachtrag unten⟩ **provisorisch** — [9] Disp. VI: Gesundheitsdirektion setzt ihn provisorisch fest; «Im September 2026 wird der Regierungsrat den Eigenanteilssatz für die IPV 2027 definitiv festlegen» (Erw. 4). Ein solcher Beschluss war am 28.09. nicht auffindbar (Medienmitteilung nach Vorjahres-Muster → 404, abgeleitete Adresse, kein Negativbefund). |
+| Referenzprämie | ⟨überholt 19.10.2026: 70 %, RRB 980/2026 Disp. I⟩ **nicht publiziert** | [9] Erw. 3f: Gesundheitsdirektion ermächtigt, «eine höhere Referenzprämie provisorisch festzulegen»; definitiv «im September 2026». [1] sagt nur «ab dem Jahr 2026 neu 70 Prozent». | im Code `null` |
+| Regionale Durchschnittsprämien | ⟨überholt 19.10.2026: provisorisch publiziert, Nachtrag unten⟩ **heute nicht nachzulesen** | [3] zeigt am 28.09.2026 nur die Tabellen 2023–2026; kein 2027-PDF verlinkt. | im Code `null` |
 | Massgebende Prämie (Kinder-Mindestanspruch) | **83 %** der RDP 2027 (2026: 84 %) | [9] Disp. II | neu — stand in keiner früheren Notiz |
 | Familiengrenze | 71 200 (nur minderjährige Kinder) · 94 900 (mind. ein junger Erw. in Ausbildung) | [9] Disp. III | belegt |
 | Abzugsquote über der Familiengrenze | 60 % | [9] Disp. IV | belegt |
@@ -398,6 +398,69 @@ Nullpunkt; der Betrag bleibt die Formel. Der Test hält «abgerundet auf 10 = SV
 Folge im Rechner (von Hand gerechnet, Region 1, alleinstehend): Einkommen 40'000 → CHF 1'856 (vorher 2'016);
 62'000 → kein Anspruch (vorher 168).
 
+### Nachtrag 19.10.2026 — Stand 2027 eingetragen, Riegel bleibt zu (RRB 980/2026 Disp. I, SVA RDP 2027 provisorisch)
+
+**Korrektur zum Nachtrag 14.10.2026:** Dort wurde aus RRB 980/2026 [11] **nur Dispositiv IV** (Satz 2026)
+gelesen. Derselbe Beschluss legt in **Dispositiv I** bereits den Eigenanteil **2027** und die **Referenzprämie
+2027** fest. Die Zeilen «Eigenanteil … provisorisch» und «Referenzprämie … nicht publiziert» der Tabelle
+«Vorbereitung 2027 (28.09.2026)» oben sind damit überholt (stehen gelassen als Stand vom 28.09.).
+Entscheid Stebler Studios, 19.10.2026: «Eintragen, Riegel zu».
+
+Alle Zahlen heute (19.10.2026, 17:42–17:45 Europe/Zurich) selbst an der Quelle gelesen (curl; PDF mit pdftotext):
+
+[11] RRB Nr. 980/2026 vom 16.09.2026 (URL wie oben) — **Dispositiv I, wörtlich:** «Die Eigenanteilssätze zur
+     Festlegung der Prämienverbilligung 2027 werden mit einer Referenzprämie von 70% gemäss § 4 Abs. 2 Satz 2 EG
+     KVG sowie unter Vorbehalt einer späteren Anpassung gemäss § 3 Abs. 2 Satz 2 EG KVG wie folgt festgelegt:
+     a. Eigenanteil für Verheiratete und für eingetragene Partnerinnen oder Partner: 11,8%. b. Eigenanteil für
+     Einzelpersonen und Alleinerziehende: 9,4%.»
+     Dazu Disp. II (gebundene Ausgabe IPV 2027 Fr. 799 400 000) und Disp. III (Kantonsbeitrag 2027
+     Fr. 638 400 000) — nur Doku, nicht im Code.
+[3'] = [3], SVA Zürich, «Regionale Durchschnittsprämien» (Seite unter «Ergänzungsleistungen»),
+     https://svazurich.ch/unsere-produkte/weitere-produkte/weitere-leistungen/ergaenzungsleistungen/regionale-durchschnittspraemien.html
+     — erneut abgerufen 19.10.2026. Einleitung, wörtlich: «Die Höhe der Durchschnittsprämie legt das Eidgenössische
+     Departement des Innern (EDI) jeweils im Herbst für das Folgejahr fest.» Abschnitt «Höhe der regionalen Durchschnittsprämie 2027 (provisorisch)», wörtlich:
+     «Die Höhe der regionalen Durchschnittsprämien für das Jahr 2027 entspricht der obligatorischen
+     Krankenpflegeversicherung für Erwachsene mit Franchise 300 (Kinder Franchise 0) und Unfall pro Monat.»
+
+     | Region | Erwachsene (ab 26 Jahre) | Junge Erwachsene (19 bis 25 Jahre) | Kinder (0 bis 18 Jahre) |
+     |---|---|---|---|
+     | Region 1 | CHF 672 pro Monat | CHF 481 pro Monat | CHF 163 pro Monat |
+     | Region 2 | CHF 614 pro Monat | CHF 441 pro Monat | CHF 148 pro Monat |
+     | Region 3 | CHF 574 pro Monat | CHF 409 pro Monat | CHF 138 pro Monat |
+
+     Die Tabelle 2026 darunter unverändert (R1 640/459/154 · R2 584/420/140 · R3 544/389/130).
+[8'] SVA Zürich, «Einkommensgrenzen 2027» (Seite [8]) — am 19.10.2026 erneut abgerufen: **alle 48 Zellen
+     unverändert** gegenüber `IPV_ZH_2027.grenzen` (auch die Zelle 78 280). Hinweis dort weiter: «Die
+     Berechnungsgrundlagen können vom Regierungsrat bis zum Herbst 2027 noch angepasst werden.»
+
+| Grösse 2027 | Wert | Quelle | Im Code (`IPV_ZH_2027`) |
+|---|---|---|---|
+| Eigenanteil | 11,8 % Verheiratete · 9,4 % übrige | [11] Disp. I | `satz` unverändert — jetzt **beschlossen, mit Vorbehalt** § 3 Abs. 2 Satz 2 EG KVG (kein bloss formaler Vorbehalt: derselbe RRB hebt in Disp. IV den Satz 2026 nachträglich an) |
+| Referenzprämie | 70 % | [11] Disp. I | `referenz: 0.7` (vorher `null`) |
+| Regionale Durchschnittsprämien | Tabelle oben | [3'], **provisorisch** | `rdp` wörtlich (vorher `null`) |
+| Einkommensgrenzen | 48 Zellen | [8'] | unverändert |
+
+**Warum der Riegel trotzdem zu bleibt.** Der alte Grund (`satzProvisorisch`) ist weg; neu hält `rdpProvisorisch: true`
+2027 zu, `zhWerte(2027)` liefert weiter `null`, die App zeigt ab 01.01.2027 für ZH weiter keine Zahl (Grund `jahr`).
+Zwei Gründe: (1) die SVA führt die Durchschnittsprämien selbst als «provisorisch»; (2) die publizierten
+Einkommensgrenzen 2027 [8'] passen rechnerisch **nicht** zu diesen Durchschnittsprämien. Zurückgerechnet
+(Grenze × 9,4 % ÷ (70 % × 12)) ergeben die sechs Zellen «Einzel, keine Kinder» 664.94 / 606.92 / 565.90
+(Erwachsene R1/R2/R3) und 476.94 / 436.93 / 404.93 (junge Erwachsene) — also die Werte der Notiz vom 19.09.
+(665/607/566, 477/437/405; siehe ⟨korrigiert 28.09.2026⟩ oben), nicht [3']. Beispiel R1 Erwachsene:
+0,7 × 665 × 12 ÷ 0,094 = 59 425.53 → SVA 59 420; mit 672 wären es 60 051.06. Mit [3'] lägen die sechs Grenzen
+rund 360 bis 720 Franken höher. Das ist eine **Beobachtung**, kein Befund über die SVA; welche Zahl gilt, ist
+offen (FRAGEN-AN-DIE-AEMTER.md, ZH). Der Test pinnt sie als Wächter («Grenzen 2027 [G] passen zu RDP 665/607/566 …»).
+Dazu ein drittes, älteres Risiko: dass die IPV-«regionale Durchschnittsprämie» dieselbe Zahl ist wie die
+EL-Tabelle [3], ist amtlich nicht bestätigt (siehe «Offen / nicht gefunden» oben); für 2026 ist es nur durch
+Nachrechnen gestützt. Die Abweichung 2027 kann genau ein Hinweis darauf sein, dass die IPV mit einer anderen Zahl
+rechnet als die EL-Tabelle des EDI.
+**Lösen erst, wenn (a) die Tabelle 2027 an [3'] nicht mehr «provisorisch» heisst, (b) Durchschnittsprämien und
+Grenzen zusammenpassen (kinderlose Einzelzellen: Nullpunkt der Formel 0 bis unter 50 Franken über der publizierten
+Grenze, wie am 28.09. beobachtet; mit 665 … sind es 5.53 bis 8.72) oder die SVA die Frage beantwortet hat, und (c) die Identität IPV-RDP = EL-Tabelle geklärt ist.** Dann [3'] und [8'] wörtlich neu
+abgleichen und `rdpProvisorisch: false` setzen; die Mechanik ist mit Attrappe getestet. Ein zweiter Wächter im Test
+schlägt an, sobald der Riegel offen ist und (b) nicht gilt — sonst zeigte die App die Grenze 59'420 und rechnete bis
+rund 60'051 trotzdem einen Betrag. Bei der Freigabe gehört der SVA-Hinweis «Die Berechnungsgrundlagen können vom
+Regierungsrat bis zum Herbst 2027 noch angepasst werden» mit in die Anzeige (Vorbehalt § 3 Abs. 2 Satz 2 EG KVG).
 ---
 
 ## BE — Bern

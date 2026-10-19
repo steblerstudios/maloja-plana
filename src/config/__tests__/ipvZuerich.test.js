@@ -69,6 +69,13 @@ describe('K31 ZH-Modell gegen die amtliche Tabelle der Einkommensgrenzen 2026 [A
 //  [G] SVA Zürich, «Prämienverbilligung 2027: Einkommensgrenzen 2027»,
 //      https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2027/einkommensgrenzen-2027.html
 //  [B] wie oben («Leistung»): «Für das Jahr 2027 gelten folgende Eigenanteile: 11.8 … 9.4 Prozent».
+// Nachtrag, abgerufen 2026-10-19 (Wortlaute: Quellenblatt, ZH, «Nachtrag 19.10.2026»):
+//  [H] RRB Nr. 980/2026 vom 16.09.2026, Dispositiv I: Eigenanteil 2027 11,8 % / 9,4 % «mit einer
+//      Referenzprämie von 70% … sowie unter Vorbehalt einer späteren Anpassung gemäss § 3 Abs. 2
+//      Satz 2 EG KVG», https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2026/980/RRB-2026-0980.pdf
+//  [I] SVA Zürich, «Regionale Durchschnittsprämien», Tabelle «2027 (provisorisch)», CHF pro Monat,
+//      https://svazurich.ch/unsere-produkte/weitere-produkte/weitere-leistungen/ergaenzungsleistungen/regionale-durchschnittspraemien.html
+//  [G] am 19.10.2026 erneut abgerufen: alle 48 Zellen unverändert.
 // [G] wörtlich abgeschrieben, unabhängig von der Kopie im Modul — beide müssen übereinstimmen.
 const TABELLE_G_2027 = {
   einzel: {
@@ -83,20 +90,34 @@ const TABELLE_G_2027 = {
   },
 };
 
-// 🛑 ATTRAPPE, keine amtliche Zahl. Die Referenzprämie und die Durchschnittsprämien 2027 sind
-// am 28.09.2026 nicht publiziert. Um die Mechanik (Jahreswechsel, Satz 2027, Stichtag,
-// Tabellen-Grenze) zu prüfen, wird hier 70 % und die Tabelle 2026 eingesetzt — nur im Test,
-// nur für die Dauer eines Falls. Erwartete Beträge sind darum keine Aussage über 2027.
-const ATTRAPPE_2027 = { referenz: 0.7, rdp: IPV_ZH.rdp, satzProvisorisch: false };
+// [I] wörtlich abgeschrieben (Region → e = Erwachsene ab 26, j = junge Erwachsene 19–25, k = Kinder).
+const TABELLE_I_2027_PROVISORISCH = {
+  1: { e: 672, j: 481, k: 163 },
+  2: { e: 614, j: 441, k: 148 },
+  3: { e: 574, j: 409, k: 138 },
+};
+
+// 🛑 ATTRAPPE, keine Freigabe. Satz, Referenz und Durchschnittsprämien 2027 sind eingetragen,
+// aber die Durchschnittsprämien sind nur provisorisch ([I]) — der Riegel `rdpProvisorisch` hält
+// 2027 zu. Um die Mechanik (Jahreswechsel, Satz 2027, Stichtag, Tabellen-Grenze) zu prüfen,
+// wird der Riegel hier geöffnet — nur im Test, nur für die Dauer eines Falls. Erwartete Beträge
+// rechnen mit den PROVISORISCHEN Werten und sind darum keine Aussage über 2027.
+const ATTRAPPE_2027 = { rdpProvisorisch: false };
 function mitAttrappe2027(fn) {
-  const alt = { referenz: IPV_ZH_2027.referenz, rdp: IPV_ZH_2027.rdp, satzProvisorisch: IPV_ZH_2027.satzProvisorisch };
+  const alt = { rdpProvisorisch: IPV_ZH_2027.rdpProvisorisch };
   Object.assign(IPV_ZH_2027, ATTRAPPE_2027);
   try { return fn(); } finally { Object.assign(IPV_ZH_2027, alt); }
 }
 
 describe('K31 ZH 2027: Werte wörtlich an der Quelle', () => {
-  it('Eigenanteil 2027 [B]: 9.4 % übrige, 11.8 % Verheiratete (provisorisch nach [F] Disp. VI)', () => {
+  it('Eigenanteil 2027 [H] Disp. I: 9.4 % übrige, 11.8 % Verheiratete (beschlossen, mit Vorbehalt)', () => {
     expect(IPV_ZH_2027.satz).toEqual({ uebrige: 0.094, verheiratet: 0.118 });
+  });
+  it('Referenzprämie 2027 [H] Disp. I: 70 %', () => {
+    expect(IPV_ZH_2027.referenz).toBe(0.7);
+  });
+  it('Durchschnittsprämien 2027 [I] wörtlich (provisorisch)', () => {
+    expect(IPV_ZH_2027.rdp).toEqual(TABELLE_I_2027_PROVISORISCH);
   });
   it('[F] Disp. II: massgebende Prämie 83 % (2026: 84 %)', () => {
     expect(IPV_ZH_2027.massgebend).toBe(0.83);
@@ -107,32 +128,69 @@ describe('K31 ZH 2027: Werte wörtlich an der Quelle', () => {
     expect(IPV_ZH_2027.abzugsquote).toBe(0.6);
     expect(IPV_ZH_2027.vermoegen.grenze).toEqual([150000, 300000]);
   });
-  it('Referenzprämie und Durchschnittsprämien 2027 sind NICHT publiziert → null, nicht geraten', () => {
-    expect(IPV_ZH_2027.referenz).toBeNull();
-    expect(IPV_ZH_2027.rdp).toBeNull();
-  });
   it('Einkommensgrenzen 2027 [G] wörtlich im Modul', () => {
     expect(IPV_ZH_2027.grenzen).toEqual(TABELLE_G_2027);
   });
 });
 
 describe('K31 ZH: Werte je Jahr', () => {
-  it('2026 → Datensatz 2026 (unverändert), 2027 → noch keiner (unvollständig), 2025/2028 → keiner', () => {
+  it('2026 → Datensatz 2026 (unverändert), 2027 → noch keiner (Riegel zu), 2025/2028 → keiner', () => {
     expect(zhWerte(2026)).toBe(IPV_ZH);
     expect(IPV_ZH_JAHRE[2027]).toBe(IPV_ZH_2027);
     expect(zhWerte(2027)).toBeNull();
     expect(zhWerte(2025)).toBeNull();
     expect(zhWerte(2028)).toBeNull();
   });
-  it('sobald 2027 vollständig ist, wird es gewählt (Attrappe)', () => {
+  it('sobald der Riegel offen ist, wird 2027 gewählt (Attrappe)', () => {
     mitAttrappe2027(() => expect(zhWerte(2027)).toBe(IPV_ZH_2027));
     expect(zhWerte(2027)).toBeNull(); // Attrappe wieder weg
   });
-  it('provisorischer Eigenanteil hält 2027 zu, auch wenn Referenz und Durchschnittsprämien da sind', () => {
-    const alt = { referenz: IPV_ZH_2027.referenz, rdp: IPV_ZH_2027.rdp };
-    Object.assign(IPV_ZH_2027, { referenz: ATTRAPPE_2027.referenz, rdp: ATTRAPPE_2027.rdp });
-    try { expect(zhWerte(2027)).toBeNull(); } finally { Object.assign(IPV_ZH_2027, alt); }
-    expect(IPV_ZH_2027.satzProvisorisch).toBe(true);
+  // Entscheid Stebler Studios 19.10.2026: «Eintragen, Riegel zu». Mutationsprobe 19.10.2026:
+  // `rdpProvisorisch: false` im Modul → 5 Fälle rot gesehen (dieser, «2027 → noch keiner»,
+  // «sobald der Riegel offen ist», «Riegel 2027 offen nur, wenn …» und Jahres-Riegel «ab 2027
+  // keine Zahl mehr»), dann zurück auf `true` → alle grün.
+  it('provisorische Durchschnittsprämien [I] halten 2027 zu, obwohl alles eingetragen ist', () => {
+    expect(IPV_ZH_2027.referenz).not.toBeNull();
+    expect(IPV_ZH_2027.rdp).not.toBeNull();
+    expect(IPV_ZH_2027.rdpProvisorisch).toBe(true);
+    expect(zhWerte(2027)).toBeNull();
+    expect('satzProvisorisch' in IPV_ZH_2027).toBe(false); // alter Riegel weg, nicht doppelt
+  });
+  // Grund für den Riegel, als Beobachtung gepinnt: aus den publizierten Grenzen [G] (Einzel,
+  // ohne Kinder) zurückgerechnet — Grenze × 9,4 % ÷ (70 % × 12) — ergibt sich je Zelle eine
+  // Durchschnittsprämie knapp unter 665 / 607 / 566 (Erwachsene) und 477 / 437 / 405 (junge
+  // Erwachsene), nicht [I]. Beispiel: 0,7 × 665 × 12 ÷ 0,094 = 59 425 → SVA 59 420; mit 672 wären
+  // es 60 051. Mit [I] lägen die Grenzen rund 360 bis 720 Franken höher. Offene Frage an die SVA
+  // (FRAGEN-AN-DIE-AEMTER.md). Ändert die SVA eine der beiden Tabellen, schlägt dieser Fall an —
+  // dann neu lesen, nicht anpassen.
+  const implizit = { 1: { e: 665, j: 477 }, 2: { e: 607, j: 437 }, 3: { e: 566, j: 405 } };
+  it('Grenzen 2027 [G] passen zu RDP 665/607/566 bzw. 477/437/405, nicht zu [I]', () => {
+    const rueckgerechnet = (grenze) => (grenze * 0.094) / (0.7 * 12);
+    for (const region of REGIONEN) {
+      for (const alter of ['e', 'j']) {
+        const rdp = rueckgerechnet(TABELLE_G_2027.einzel[region][alter][0]);
+        expect(implizit[region][alter] - rdp).toBeGreaterThanOrEqual(0);
+        expect(implizit[region][alter] - rdp).toBeLessThan(0.11);
+        expect(TABELLE_I_2027_PROVISORISCH[region][alter] - rdp).toBeGreaterThan(4);
+      }
+    }
+  });
+  // Zweiter Wächter (Fachprüfung 19.10.2026): der Riegel darf nur aufgehen, wenn eingetragene
+  // Durchschnittsprämien und publizierte Grenzen zusammenpassen — sonst zeigte die App die Grenze
+  // 59 420 und rechnete bis rund 60 051 trotzdem einen Betrag. «Passen» heisst hier wie am
+  // 28.09. beobachtet: Nullpunkt der Formel 0 bis unter 50 Franken über der publizierten Grenze
+  // (kinderlose Einzelzellen; mit 665 … sind es 5.53 bis 8.72, mit [I] 363 bis 724).
+  function grenzenPassenZuRdp(w, rdp = w.rdp) {
+    return REGIONEN.every((region) => ['e', 'j'].every((alter) => {
+      const nullpunkt = (w.referenz * rdp[region][alter] * 12) / w.satz.uebrige;
+      const abstand = nullpunkt - w.grenzen.einzel[region][alter][0];
+      return abstand >= 0 && abstand < 50;
+    }));
+  }
+  it('Riegel 2027 offen nur, wenn Durchschnittsprämien und Grenzen [G] zusammenpassen', () => {
+    expect(grenzenPassenZuRdp(IPV_ZH_2027, implizit)).toBe(true); // der Wächter unterscheidet …
+    expect(grenzenPassenZuRdp(IPV_ZH_2027)).toBe(false); // … und [I] passt heute nicht
+    expect(IPV_ZH_2027.rdpProvisorisch || grenzenPassenZuRdp(IPV_ZH_2027)).toBe(true);
   });
 });
 
@@ -160,7 +218,7 @@ describe('K31 ZH 2027: angezeigte Grenze = publizierte Tabelle [G], nicht die Fo
   it('ohne Tabellenzelle (4 Kinder) bleibt es beim Nullpunkt der Formel wie 2026', () => {
     const werte = { ...IPV_ZH_2027, ...ATTRAPPE_2027 };
     const r = ipvZuerichRechnen({ region: 1, verheiratet: false, personen: ['e', 'k', 'k', 'k', 'k'], me: 0, werte });
-    expect(r.grenze).toBe(Math.round((0.7 * 12 * (640 + 4 * 154)) / 0.094));
+    expect(r.grenze).toBe(Math.round((0.7 * 12 * (672 + 4 * 163)) / 0.094)); // [I] provisorisch
   });
   it('2026 hat seit 14.10.2026 ebenfalls die publizierte Tabelle im Datensatz (wörtlich wie TABELLE_A)', () => {
     expect(IPV_ZH.grenzen).toEqual(TABELLE_A);
@@ -412,8 +470,9 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
         expect(alt.cantonData.maxIncome).toBe(61090);
         vi.setSystemTime(new Date('2027-01-01T00:01:00'));
         const neu = calculateIPV(person({ monthlyIncome: 2500 }));
-        expect(neu).toMatchObject({ jahr: 2027, annual: 2556 }); // 5 376 − 9.4 % × 30 000 (Attrappe)
-        expect(neu.cantonData.maxIncome).toBe(59420); // [G], nicht 5 376 / 9.4 % = 57 191
+        // 0,7 × 672 × 12 = 5 644.80 [H][I] − 9.4 % × 30 000 = 2 824.80 (Attrappe, RDP provisorisch)
+        expect(neu).toMatchObject({ jahr: 2027, annual: Math.round(5644.8 - 2820) });
+        expect(neu.cantonData.maxIncome).toBe(59420); // [G], nicht 5 644.80 / 9.4 % = 60 051
       });
     });
 
@@ -429,9 +488,10 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     it('Kinder-Mindestanspruch 2027 mit 83 % [F] Disp. II (Attrappe)', () => {
       mitAttrappe2027(() => {
         vi.useFakeTimers(); vi.setSystemTime(new Date('2027-06-01T12:00:00'));
-        // Region 1, 1 Kind, 60 000: Gruppe 6 669.60 − 9.4 % × 60 000 = 1 029.60
+        // Region 1, 1 Kind, 60 000 (RDP [I] provisorisch): Gruppe 0,7 × 12 × (672 + 163) = 7 014
+        // − 9.4 % × 60 000 = 1 374; Kinderanteil 268 < Mindestanspruch 0,8 × 0,83 × 163 × 12.
         const r = calculateIPV(person({ monthlyIncome: 5000, children: [{ age: 5 }] }));
-        expect(r.annual).toBe(Math.round(1029.6 * 5376 / 6669.6 + 0.8 * 0.83 * 154 * 12));
+        expect(r.annual).toBe(Math.round(1374 * 5644.8 / 7014 + 0.8 * 0.83 * 163 * 12));
       });
     });
   });
