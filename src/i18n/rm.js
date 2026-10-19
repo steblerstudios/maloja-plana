@@ -4077,9 +4077,10 @@ export default {
   },
   lohnCheck: {
     // TODO(rm): Gegenlese Muttersprachler:in
-    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pudais Vus clerir Voss dretgs tar {stelle}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pos ti clerir Tes dretgs tar {stelle}." },
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} {stelleSatz}" },
     ausnahmen: 'Il salari minimal na vala dentant betg per tuts: emprendissadi, pratica ed uffants sut 18 onns èn exclus, ed en tscherts chantuns era branschas cun in contract collectiv, l’agricultura e lavurs da vacanzas.',
-    stelleFallbackKurz: 'la post chantunal cumpetenta', // TODO(rm): Gegenlese Muttersprachler:in
+    stelleSatz: { sie: 'Sche nagut da quai na vala, pudais Vus contactar l’organ cumpetent: {stelle}.', du: 'Sche nagut da quai na vala, pos ti contactar l’organ cumpetent: {stelle}.' }, // TODO(rm): Gegenlese Muttersprachler:in
+    stelleSatzNeutral: { sie: 'Sche nagut da quai na vala, pudais Vus contactar l’organ chantunal cumpetent.', du: 'Sche nagut da quai na vala, pos ti contactar l’organ chantunal cumpetent.' }, // TODO(rm): Gegenlese Muttersprachler:in
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
     hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
@@ -6155,7 +6156,8 @@ export default {
     ml_dreizehnterUnklar: 'Il salari da basa da {grund} per ura è sut il salari minimal en il chantun {kanton} ({mindest}), ma sur {reduziert}. Sche quai tanscha, dependa dal 13avel salari mensil: cun in 13avel po quai tanscher, senza betg. Cun la resposta a la dumonda davart il 13avel sa lascha quai classifitgar.',
     ml_unter: 'Il salari da basa da {grund} per ura para dad esser sut il salari minimal legal en il chantun {kanton} ({mindest} per ura, stadi {jahr}). Cumpareglià vegn il salari da basa senza supplement da vacanzas.',
     ml_differenz: 'Per mais fiss quai var {betrag} main ch’il salari minimal.',
-    ml_stelle: 'Sche nagina da quellas na vala, pon ils dretgs vegnir sclerids tar {stelle}.',
+    ml_stelle: 'Sche nagina da quellas na vala, po l’organ cumpetent vegnir contactà: {stelle}.', // TODO(rm): Gegenlese Muttersprachler:in
+    ml_stelleNeutral: 'Sche nagina da quellas na vala, po l’organ chantunal cumpetent vegnir contactà.', // TODO(rm): Gegenlese Muttersprachler:in
     ml_keinGesetz: 'Il chantun {kanton} n’enconuscha nagin salari minimal legal. In contract collectiv da lavur da la branscha po tuttina prescriver in.',
     // TODO(rm): Gegenlese: Fix-Welle #492 (14.10.2026), neu/geändert
     // TODO(rm): provisorisch — Gegenlese (ml_zhHinweis gekürzt 18.10.2026, Fachprüfung)

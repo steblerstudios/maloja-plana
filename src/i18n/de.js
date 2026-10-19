@@ -2910,11 +2910,14 @@ export default {
     // GAV gar nicht; GE hat drei Sätze). „liegt unter" wäre für eine Lernende schlicht
     // falsch — und der Satz führte bis Runde 8 zu einem Brief an den Arbeitgeber.
     // Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
-    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} Trifft nichts davon zu, können Sie Ihre Ansprüche bei {stelle} klären.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} Trifft nichts davon zu, kannst Du Deine Ansprüche bei {stelle} klären.' },
+    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} {stelleSatz}', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} {stelleSatz}' },
     ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle: Lehre, Praktikum und Personen unter 18 Jahren sind ausgenommen, in einzelnen Kantonen auch Branchen mit einem Gesamtarbeitsvertrag, die Landwirtschaft und Ferienjobs.',
     // Fallback, wenn der Kanton keine benannte Kontrollstelle hat (JU: kein Inspektorat —
     // der Weg führt dort übers Arbeitsgericht). Nie eine Stelle erfinden.
-    stelleFallbackKurz: 'der zuständigen kantonalen Stelle',
+    // Name nach Doppelpunkt, wie im Brief (Swiss-Precision-Prüfung 19.10.2026): eingesetzt ohne Artikel
+    // stand «bei Conseil … klären». Ohne nennbare Stelle der Neutral-Satz (data/lohnRechtsstellen.js).
+    stelleSatz: { sie: 'Trifft nichts davon zu, können Sie sich an die zuständige Stelle wenden: {stelle}.', du: 'Trifft nichts davon zu, kannst Du Dich an die zuständige Stelle wenden: {stelle}.' },
+    stelleSatzNeutral: { sie: 'Trifft nichts davon zu, können Sie sich an die zuständige kantonale Stelle wenden.', du: 'Trifft nichts davon zu, kannst Du Dich an die zuständige kantonale Stelle wenden.' },
     keinMindestlohn: { sie: 'In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', du: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.' },
     hoursEquiv: '≈ {month} Std./Monat · {year} Std./Jahr',
     hourlyWage: 'Stundenlohn (aus Monatslohn ÷ tatsächliche Stunden): CHF {wage}',
@@ -4732,7 +4735,8 @@ export default {
     ml_dreizehnterUnklar: 'Der Grundlohn von {grund} pro Stunde liegt unter dem Mindestlohn im Kanton {kanton} ({mindest}), aber über {reduziert}. Ob das reicht, hängt am 13. Monatslohn: mit einem 13. kann es genügen, ohne nicht. Mit der Antwort auf die Frage zum 13. lässt es sich einordnen.',
     ml_unter: 'Der Grundlohn von {grund} pro Stunde scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen ({mindest} pro Stunde, Stand {jahr}). Verglichen wird der Grundlohn ohne Ferienzuschlag.',
     ml_differenz: 'Pro Monat wären das etwa {betrag} weniger als der Mindestlohn.',
-    ml_stelle: 'Trifft keine davon zu, lassen sich die Ansprüche bei {stelle} klären.',
+    ml_stelle: 'Trifft keine davon zu, kann man sich an die zuständige Stelle wenden: {stelle}.',
+    ml_stelleNeutral: 'Trifft keine davon zu, kann man sich an die zuständige kantonale Stelle wenden.',
     ml_keinGesetz: 'Der Kanton {kanton} kennt keinen gesetzlichen Mindestlohn. Ein Gesamtarbeitsvertrag der Branche kann trotzdem einen vorschreiben.',
     ml_zhHinweis: 'Die Städte Zürich und Winterthur haben über einen städtischen Mindestlohn abgestimmt. Ob und ab wann er gilt, weiss die Stadt.',
     ml_keinKanton: 'Mit dem Kanton des Arbeitsorts lässt sich der Grundlohn mit einem kantonalen Mindestlohn vergleichen.',
