@@ -90,6 +90,41 @@ solange keine frische Marke da ist → „erst `/maloja-predeploy`". `deploy.sh 
 bleibt frei (schnelle Testschleife). Der Hook wird erst nach `/hooks`-Reload bzw.
 Claude-Neustart aktiv (gleiche Watcher-Falle wie beim Tests-vor-Commit-Hook).
 
+### Tests-vor-Commit-Hook: welcher Stand wird getestet? (Befund 18.10.2026)
+
+Ein zweiter PreToolUse-Hook in `.claude/settings.json` lässt vor jedem `git commit`
+`npx vitest run` laufen und blockt den Commit bei roten Tests (Log je Arbeitsbaum:
+`/tmp/maloja-precommit-tests-<ordnername>.log`, z. B. `…-maloja-frontend.log` für die
+Hauptkopie; bis 18.10. eine gemeinsame `/tmp/maloja-precommit-tests.log`). `settings.json` ist **bewusst nicht in git**
+(`.gitignore`: Maschinen-Pfade + Permission-Regeln bleiben lokal) — deshalb steht die
+Logik hier.
+
+**Fehler bis 18.10.:** Die Testwurzel war `${CLAUDE_PROJECT_DIR:-$(git rev-parse …)}`.
+In einer Worktree-Sitzung (`.claude/worktrees/<name>`) zeigt `CLAUDE_PROJECT_DIR` auf
+die **Haupt-Arbeitskopie** — das Tor testete also `main`, nicht den Stand, der
+committet wird. Belegt im Log («Testlauf-Wurzel: …/maloja-frontend» aus einer
+Worktree-Sitzung) und mit Attrappe nachgestellt. Zweite Lücke: `git -C <pfad> commit`
+enthält den Text «git commit» nicht und lief am Tor vorbei.
+
+**Seit 18.10.** bestimmt der Hook das Verzeichnis, in dem der Commit läuft:
+
+1. `cwd` aus dem Tool-Input; ein führendes `cd <pfad> &&` bzw. `cd <pfad>;` und ein
+   `git -C <pfad> commit` werden berücksichtigt (relativ, `~`, Anführungszeichen) —
+   **nur in der ersten Befehlszeile und nur, wenn das Verzeichnis existiert.** Sonst
+   gilt `cwd`. Grund: Der erste echte Commit mit der Korrektur hatte `git -C <pfad>
+   commit` als Text in der Commit-Nachricht; der Hook nahm `<pfad>` ernst und fiel auf
+   `main` zurück.
+2. Wurzel = `git -C <verzeichnis> rev-parse --show-toplevel`.
+3. Fallback: `$CLAUDE_PROJECT_DIR`, danach der feste Hauptpfad (wenn kein `package.json`).
+
+Das Log nennt jetzt Wurzel **und** Ausgangsverzeichnis. Grenzen: Der Hook springt auch
+an, wenn «git commit» nur als Text in einem Befehl steht (kostet einen Testlauf, schadet
+nicht). **Worktrees haben meist keine eigene `settings.json`** — am 18.10. hatte nur
+einer von drei eine Kopie (Herkunft nicht belegt), die anderen laden die Hooks
+vermutlich aus der Hauptkopie. Massgeblich ist deshalb
+`maloja-frontend/.claude/settings.json`; eine Worktree-Kopie, falls vorhanden, gleich
+halten. Testen nur mit Attrappe (`vitest` → `echo`), nie scharf.
+
 ---
 
 ## Hauptbundle klein halten (Size-Limit)
