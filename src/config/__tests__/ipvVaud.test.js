@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_VD, ipvVaudRechnen, vdSubsideMonat, vdRevenuDeterminant, vdRegion, spezifischerSubsideMoeglich } from '../ipvVaud.js';
+import { IPV_VD, IPV_VD_2027, IPV_VD_JAHRE, vdWerte, ipvVaudRechnen, vdSubsideMonat, vdRevenuDeterminant, vdRegion, spezifischerSubsideMoeglich } from '../ipvVaud.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, IPV_MODULE } from '../cantonalData.js';
 import { SAEULE_3A } from '../kantonsModell.js';
 import { getRegion } from '../../data/praemienRegionen.js';
@@ -451,6 +451,8 @@ describe('K31 calculateIPV für VD (App-Angaben → Modell)', () => {
       expect(calculateIPV(person()).annual).toBe(3972);
     });
 
+    // ⟨19.10.2026⟩ 2027 ist eingebaut (IPV_VD_2027), aber KK-Pauschale und Vermögensfreibetrag
+    // 2027 sind nirgends publiziert — der Riegel bleibt darum zu (eigener Block unten).
     it('ab 2027 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
       expect(calculateIPV(person())).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
@@ -502,5 +504,159 @@ describe('K31 calculateIPV für VD (App-Angaben → Modell)', () => {
     ['ein Franken über B3', 76001, 0],
   ])('Kategorie c), Revenu OVAM %s → %i/Monat', (_, rd, erwartet) => {
     expect(ipvVaudRechnen({ personen: ['k'], revenuOvam: rd }).monat).toBe(erwartet);
+  });
+});
+
+// ── Anspruchsjahr 2027 (eingebaut 19.10.2026) ────────────────────────────────────────────
+// Quellen, an der Quelle gelesen 2026-10-19 (curl + pdftotext; Wortlaute: docs/sources/
+// ipv-kantone-2026.md, VD, «Nachtrag 19.10.2026 — Werte 2027»):
+//  [6] Arrêté … subsides … en 2027, du 7 octobre 2026, in Kraft 01.01.2027,
+//      https://sieldocs.vd.ch/ecm/app18/service/siel/getContent?ID=2394289
+//  [7] Règlement modifiant le RLVLAMal, du 7 octobre 2026, in Kraft 01.01.2027,
+//      https://sieldocs.vd.ch/ecm/app18/service/siel/getContent?ID=2394296
+describe('K31 VD 2027: Werte wörtlich an der Quelle [6]', () => {
+  it('a) «E1 … 30 fr.» · «F1 … 331 fr.» · C1 17\'000 · A1 40\'000 · P1 2.5 · B1 50\'000 — wie 2026', () => {
+    expect(IPV_VD_2027.kategorien.e).toEqual({ max: 331, min: 30, C: 17000, A: 40000, B: 50000, P: 2.5 });
+    expect(IPV_VD_2027.kategorien.e).toEqual(IPV_VD.kategorien.e);
+  });
+  it('b) E2 20 · F2 300 · D2 336 · C2 24\'200 · A2 55\'000 · R2 1 · P2 2.3 · B2 69\'000 — wie 2026', () => {
+    expect(IPV_VD_2027.kategorien.ef).toEqual({ maxBei0: 336, beiC: 300, min: 20, C: 24200, A: 55000, B: 69000, R: 1, P: 2.3 });
+    expect(IPV_VD_2027.kategorien.ef).toEqual(IPV_VD.kategorien.ef);
+  });
+  it('c) «E3. Le subside est fixé à 118 fr.» · «F3 … 118 fr.» · «G3 … 118 fr.» · C3 26\'000 · A3 63\'000 · B3 76\'000', () => {
+    expect(IPV_VD_2027.kategorien.k).toEqual({ max: 118, beiA: 118, min: 118, C: 26000, A: 63000, B: 76000, P: 2.3, Q: 0.25 });
+  });
+  it('art. 4 al. 1: Kinderabzug «6\'000 fr. pour le premier enfant et 7\'000 fr. de plus»', () => {
+    expect(IPV_VD_2027.kinderAbzug).toEqual({ erstes: 6000, weitere: 7000 });
+  });
+  it('art. 10: Referenzprämien Erwachsene 580/543 · 555/518 · 505/468, Bänder 62\'500/70\'000 bzw. 86\'300/96\'600', () => {
+    const r = (b) => b.map((x) => [x.bis, x.r[1], x.r[2]]);
+    expect(r(IPV_VD_2027.referenzPraemie.allein)).toEqual([[62500, 580, 543], [70000, 555, 518], [Infinity, 505, 468]]);
+    expect(r(IPV_VD_2027.referenzPraemie.mehrere)).toEqual([[86300, 580, 543], [96600, 555, 518], [Infinity, 505, 468]]);
+  });
+  it('NEU art. 12 al. 3 / [7] art. 17: fortune mobilière über 130\'000 (eine erwachsene Person) bzw. 260\'000', () => {
+    expect(IPV_VD_2027.vermoegensGrenze).toEqual({ allein: 130000, mehrere: 260000 });
+  });
+  it('[7] art. 21a al. 1: taux d\'effort «supérieur à 10%»', () => {
+    expect(IPV_VD_2027.tauxEffort).toBe(0.1);
+  });
+  it('was weder [6] noch [7] nennt, steht als null: KK-Pauschale und Vermögensfreibetrag', () => {
+    expect(IPV_VD_2027.kkPauschale).toBeNull();
+    expect(IPV_VD_2027.vermoegen.freibetragAllein).toBeNull();
+    expect(IPV_VD_2027.vermoegen.freibetragPaar).toBeNull();
+    expect(IPV_VD_2027.vermoegen.anteil).toBe(1 / 15); // LHPS art. 6 al. 2 lit. b, «un quinzième»
+  });
+});
+
+describe('K31 VD: Werte je Jahr — 2026 unverändert, 2027 noch zu', () => {
+  it('2026 ist derselbe Datensatz wie vorher; Kinder 114, Vorbehalt ohne Jahreszahl', () => {
+    expect(IPV_VD_JAHRE[2026]).toBe(IPV_VD);
+    expect(vdWerte(2026)).toBe(IPV_VD);
+    expect(IPV_VD.kategorien.k.max).toBe(114);
+    expect(vdSubsideMonat('k', 0)).toBe(114); // Vorgabe bleibt 2026
+    expect(IPV_VD.vorbehaltKey).toBeUndefined();
+    expect(IPV_VD.vermoegensGrenze).toBeUndefined();
+  });
+  it('2027 fehlt eine Zahl, die die Rechnung braucht → vdWerte(2027) = null; 2028 gibt es nicht', () => {
+    expect(vdWerte(2027)).toBeNull();
+    expect(vdWerte(2028)).toBeNull();
+    expect(vdWerte(2025)).toBeNull();
+  });
+});
+
+// Handrechnung je Kategorie, mit den Parametern 2027 — unabhängig von KK-Pauschale und
+// Freibetrag (die gehen nur ins Einkommen ein, nicht in die Formel).
+describe('K31 VD 2027: Handrechnung je Kategorie', () => {
+  const w = IPV_VD_2027;
+  it('a) RD 28\'500 (Mitte C1–A1): 30 + 301 × (¾)^2.5 = 176.62 → aufgerundet 177', () => {
+    expect(vdSubsideMonat('e', 28500, w)).toBeCloseTo(30 + 301 * Math.pow(0.75, 2.5), 9);
+    expect(ipvVaudRechnen({ personen: ['e'], revenuOvam: 28500, werte: w }).monat).toBe(177);
+  });
+  it('b) RD 12\'100 (halbes C2): 300 + 36 × ½ = 318; bei C2 300, bei A2–B2 20, über B2 0', () => {
+    expect(vdSubsideMonat('ef', 12100, w)).toBeCloseTo(318, 9);
+    expect(vdSubsideMonat('ef', 24200, w)).toBeCloseTo(300, 9);
+    expect(vdSubsideMonat('ef', 69000, w)).toBe(20);
+    expect(vdSubsideMonat('ef', 69001, w)).toBe(0);
+  });
+  it('c) Kinder 118 über den ganzen Bereich bis B3 (E3 = F3 = G3), über B3 0', () => {
+    for (const rd of [0, 26000, 40000, 63000, 70000, 76000]) expect(vdSubsideMonat('k', rd, w)).toBeCloseTo(118, 9);
+    expect(vdSubsideMonat('k', 76001, w)).toBe(0);
+  });
+  it('Haushalt: alleinerziehend, 2 Kinder, RD 0 → 336 + 118 + 118 = 572/Monat = 6\'864/Jahr', () => {
+    const r = ipvVaudRechnen({ personen: ['ef', 'k', 'k'], revenuOvam: 0, werte: w });
+    expect(r).toMatchObject({ monat: 572, annual: 6864, grenze: 76000, erwachseneAnnual: 336 * 12 });
+  });
+  it('Gegenstück zum Notice-Beispiel 2026 (RD OVAM 63\'000, 2 Erw. + 2 Kinder) mit 2027: (2 × 20 + 2 × 118) × 12 = 3\'312', () => {
+    expect(ipvVaudRechnen({ personen: ['ef', 'ef', 'k', 'k'], revenuOvam: 63000, werte: w }).annual).toBe(3312);
+  });
+  it('Hinweis subside spécifique mit den Referenzprämien 2027 (art. 10 al. 1)', () => {
+    // RDU 60 000 ≤ 62 500 → 580 × 12 = 6 960 > 6 000 → Hinweis.
+    expect(spezifischerSubsideMoeglich({ praemieMonat: 600, region: 1, rdu: 60000, mehrere: false, erwachseneAnnual: 0, werte: w })).toBe(true);
+    // RDU 70 000 → Band 555 × 12 = 6 660 < 7 000 → kein Hinweis.
+    expect(spezifischerSubsideMoeglich({ praemieMonat: 600, region: 1, rdu: 70000, mehrere: false, erwachseneAnnual: 0, werte: w })).toBe(false);
+    // Region 2, RDU 64 000: 518 × 12 = 6 216 < 6 400 → keiner; mit den 2026-Werten (502) ebenso.
+    expect(spezifischerSubsideMoeglich({ praemieMonat: 600, region: 2, rdu: 64000, mehrere: false, erwachseneAnnual: 0, werte: w })).toBe(false);
+  });
+});
+
+// Die Mechanik des Jahreswechsels — mit einer ATTRAPPE für die zwei fehlenden Zahlen.
+// 🛑 ATTRAPPE, keine amtliche Zahl: KK-Pauschale und Freibetrag 2027 sind am 19.10.2026 nicht
+// publiziert. Eingesetzt werden die Werte 2026, nur für die Dauer eines Falls — die erwarteten
+// Beträge sind darum KEINE Aussage über 2027, nur über die Mechanik (Riegel, Vorbehalt,
+// Vermögensgrenze, Kinderbetrag).
+describe('K31 VD 2027: Mechanik mit Attrappe für KK-Pauschale und Freibetrag', () => {
+  beforeAll(async () => {
+    preloadPLZ();
+    await import('../../data/plzGemeinde.js');
+    await import('../ipvVaud.js');
+    await new Promise((r) => setTimeout(r, 0));
+  });
+  afterEach(() => { vi.useRealTimers(); });
+  const attrappe = (fn) => {
+    const alt = { kkPauschale: IPV_VD_2027.kkPauschale, vermoegen: IPV_VD_2027.vermoegen };
+    IPV_VD_2027.kkPauschale = IPV_VD.kkPauschale;
+    IPV_VD_2027.vermoegen = { ...IPV_VD.vermoegen };
+    try { return fn(); } finally { Object.assign(IPV_VD_2027, alt); }
+  };
+  const person = ({ monthlyIncome = 0, children = [], finanzen = {} } = {}) => ({
+    basis: { canton: 'VD', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children } },
+    finanzen: { monthlyIncome, ...finanzen },
+    wohnen: { postalCode: '1003', city: 'Lausanne' },
+    versicherungen: { kkPremium: 700 },
+  });
+  const im2027 = () => { vi.useFakeTimers(); vi.setSystemTime(new Date('2027-03-01T12:00:00')); };
+
+  it('ohne Attrappe bleibt 2027 zu (Grund «jahr»)', () => {
+    im2027();
+    expect(calculateIPV(person())).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
+  });
+  it('mit Attrappe: Jahr 2027, Vorbehalt 2027 (Beginn im Folgemonat), Kinder 118', () => {
+    im2027();
+    attrappe(() => {
+      const r = calculateIPV(person({ children: [{ birthDate: '2016-03-01' }] }));
+      expect(r).toMatchObject({ belegt: true, jahr: 2027, amount: 336 + 118, vorbehaltKey: 'ipv.vorbehaltVD2027' });
+    });
+  });
+  it('mit Attrappe: fortune mobilière genau 130 000 rechnet, 130 001 nicht (Grund «vermoegenVD»)', () => {
+    im2027();
+    attrappe(() => {
+      expect(calculateIPV(person({ finanzen: { savingsAccount: 130000 } })).belegt).toBe(true);
+      expect(calculateIPV(person({ finanzen: { savingsAccount: 100000, securitiesValue: 30001 } })))
+        .toMatchObject({ belegt: false, amount: null, offen: 'vermoegenVD' });
+    });
+  });
+  it('2026 kennt diese Grenze nicht: 200 000 Vermögen ergeben dort weiter eine Zahl', () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-01T12:00:00'));
+    expect(calculateIPV(person({ finanzen: { savingsAccount: 200000 } })).belegt).toBe(true);
+  });
+});
+
+describe('K31 VD 2027: Texte in allen fünf Sprachen', () => {
+  it('Vorbehalt 2027 und Grund vermoegenVD gibt es in de/fr/it/en/rm', async () => {
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
+      const m = (await import(`../../i18n/${l}.js`)).default;
+      expect(m.ipv.vorbehaltVD2027.length, l).toBeGreaterThan(80);
+      expect(m.ipv.offenGrund.vermoegenVD, l).toMatch(/130[  ,']000/);
+    }
   });
 });
