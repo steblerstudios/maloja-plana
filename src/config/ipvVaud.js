@@ -127,6 +127,72 @@ export const IPV_VD = {
   },
 };
 
+// Anspruchsjahr 2027 — eingebaut am 19.10.2026, rechnet aber NOCH NICHT.
+// Belege (an der Quelle gelesen 19.10.2026), Wortlaute in docs/sources/ipv-kantone-2026.md,
+// Abschnitt VD, «Nachtrag 19.10.2026 — Werte 2027»:
+//   [6] Arrêté concernant les subsides … en 2027, du 7 octobre 2026, in Kraft 01.01.2027
+//       (sieldocs.vd.ch ID 2394289, «Document généré le 08.10.2026»; hebt den Arrêté vom
+//       17.12.2025 auf, art. 13). art. 2 (Parameter) · art. 4 al. 1 (Kinderabzug) · art. 7
+//       al. 3 (Steuerperiode) · art. 10 (Referenzprämien) · art. 12 (Vermögensgrenze, NEU).
+//   [7] Règlement modifiant le RLVLAMal, du 7 octobre 2026, in Kraft 01.01.2027 (ID 2394296):
+//       art. 17 al. 2/3 (Vermögensgrenze, NEU) · art. 21a–21d (subside spécifique, aus dem
+//       Arrêté in den Règlement verschoben; 10 % in art. 21a al. 1) · art. 25 al. 1 (Beginn
+//       des Anspruchs NEU «le premier jour du mois suivant»).
+// Was fehlt, steht als `null` und hält den Jahres-Riegel zu (`vdWerte`):
+//   kkPauschale, vermoegen.freibetrag*  Weder [6] noch [7] noch die RLHPS-Änderung vom selben
+//       Tag (ID 2394293, nur art. 6) nennen sie. Ihre Frankenwerte stehen nur in der Notice 2026
+//       [2]; LHPS art. 6 al. 2 lit. a nennt bloss «un forfait fixe pour frais de maladie» (vom
+//       Conseil d'État festzusetzen, al. 7), RLHPS art. 4 al. 1 verweist für die Freibeträge
+//       auf die Steuerschwellen LI art. 58/60. Eine Notice 2027 lag am 19.10.2026 auf vd.ch
+//       nicht vor. 2026 wurde der Oktober-Arrêté am 17.12. ersetzt — darum im Dezember 2026
+//       Arrêté UND Notice erneut lesen, dann diese drei Zahlen eintragen.
+export const IPV_VD_2027 = {
+  jahr: 2027,
+  kategorien: {
+    // a) [6] art. 2 let. a — E1 30 · F1 331 · C1 17'000 · A1 40'000 · P1 2.5 · B1 50'000
+    //    (unverändert gegenüber 2026).
+    e: { max: 331, min: 30, C: 17000, A: 40000, B: 50000, P: 2.5 },
+    // b) [6] art. 2 let. b — E2 20 · F2 300 · D2 336 · C2 24'200 · A2 55'000 · R2 1 · P2 2.3 ·
+    //    B2 69'000 (unverändert).
+    ef: { maxBei0: 336, beiC: 300, min: 20, C: 24200, A: 55000, B: 69000, R: 1, P: 2.3 },
+    // c) [6] art. 2 let. c — E3 118 (bei A3) · F3 118 · C3 26'000 · A3 63'000 · P3 2.3 ·
+    //    G3 118 · B3 76'000 · Q3 0.25. 2026: 114. Die Kurve bleibt flach (E3 = F3 = G3).
+    k: { max: 118, beiA: 118, min: 118, C: 26000, A: 63000, B: 76000, P: 2.3, Q: 0.25 },
+  },
+  kkPauschale: null,
+  // Der Fünfzehntel steht im Gesetz (LHPS art. 6 al. 2 lit. b), die Freibeträge nicht (s. o.).
+  vermoegen: { freibetragAllein: null, freibetragPaar: null, anteil: 1 / 15 },
+  // [6] art. 4 al. 1: «6'000 fr. pour le premier enfant et 7'000 fr. de plus par enfant
+  // supplémentaire» (unverändert).
+  kinderAbzug: { erstes: 6000, weitere: 7000 },
+  // NEU 2027 — [7] art. 17 al. 2/3 mit [6] art. 12 al. 3: «Les seuils de fortune mobilière
+  // au-delà desquels aucun droit au subside n'est accordé sont les suivants : a. UER composées
+  // d'une seule personne adulte : 130'000 fr. b. UER composées de plusieurs personnes adultes :
+  // 260'000 fr.» Fortune mobilière = Ziffern 410/420/430/445 der Veranlagung (art. 12 al. 2):
+  // Wertschriften, Bargeld, Fahrzeuge u. a., übriges Vermögen — die Posten von `vermoegenSumme`.
+  // Kinder zählen nicht als Erwachsene; gebaut ist nur der Haushalt mit EINER erwachsenen Person.
+  vermoegensGrenze: { allein: 130000, mehrere: 260000 },
+  // [7] art. 21a al. 1: taux d'effort «supérieur à 10%» (2026: Arrêté art. 7 al. 1).
+  tauxEffort: 0.1,
+  // [6] art. 10 al. 1 (UER aus einer Person) und al. 2 (aus mehreren), Erwachsene je Monat.
+  referenzPraemie: {
+    allein: [{ bis: 62500, r: { 1: 580, 2: 543 } }, { bis: 70000, r: { 1: 555, 2: 518 } }, { bis: Infinity, r: { 1: 505, 2: 468 } }],
+    mehrere: [{ bis: 86300, r: { 1: 580, 2: 543 } }, { bis: 96600, r: { 1: 555, 2: 518 } }, { bis: Infinity, r: { 1: 505, 2: 468 } }],
+  },
+  // Der Vorbehalt nennt den Beginn des Anspruchs — der ändert 2027 ([7] art. 25 al. 1).
+  vorbehaltKey: 'ipv.vorbehaltVD2027',
+};
+
+// Werte je Anspruchsjahr, gewählt nach dem Kalenderjahr (die App zeigt immer das laufende
+// Anspruchsjahr). Fehlt ein Jahr oder eine Zahl, die die Rechnung braucht, rechnet die App
+// nicht — der Jahres-Riegel, je Jahr wie in ZH (`zhWerte`).
+export const IPV_VD_JAHRE = { 2026: IPV_VD, 2027: IPV_VD_2027 };
+
+export function vdWerte(jahr = new Date().getFullYear()) {
+  const w = IPV_VD_JAHRE[jahr];
+  return w && w.kkPauschale != null && w.vermoegen.freibetragAllein != null && w.vermoegen.freibetragPaar != null ? w : null;
+}
+
 // Prämienregion einer Gemeinde. Massgebend ist die BAG-Zuteilung (KVG Art. 61 Abs. 2); VD hat
 // dort genau zwei Regionen. Die Notice [2] beschreibt sie nur mit Landschaftsnamen («Région 1 :
 // Lausanne, l'Ouest lausannois, Nyon, La Côte, Lavaux, la Riviera»), nicht als Gemeindeliste —
@@ -140,8 +206,9 @@ export function vdRegion(bfsNr) {
 
 // Ein Monatsbetrag des subside ordinaire, vor der Rundung. `kat` ist 'e' | 'ef' | 'k', `rd` der
 // revenu déterminant OVAM im Jahr. [4] art. 21 al. 1 (Bereiche) und al. 2 (Formeln 1–5).
-export function vdSubsideMonat(kat, rd) {
-  const p = IPV_VD.kategorien[kat];
+// `werte`: Datensatz des Anspruchsjahres (Vorgabe 2026); die Formeln selbst ändern nicht.
+export function vdSubsideMonat(kat, rd, werte = IPV_VD) {
+  const p = werte.kategorien[kat];
   const x = Math.max(0, rd);
   if (x > p.B) return 0;
   if (kat === 'ef') {
@@ -172,8 +239,8 @@ export function vdSubsideMonat(kat, rd) {
 // art. 6 al. 2 lit. a unbedingt dazu und steckt im Nettoeinkommen der App schon drin — sie wird
 // hier NICHT noch einmal addiert (das tat der Zweig vom 20.09.2026 noch; derselbe Befund wie
 // in ZH/BE/AG/SG, siehe den Block bei `einkommenJahr`).
-export function vdRevenuDeterminant({ einkommen, vermoegen, kinderZahl, paar = false }) {
-  const p = IPV_VD;
+export function vdRevenuDeterminant({ einkommen, vermoegen, kinderZahl, paar = false, werte = IPV_VD }) {
+  const p = werte;
   const pauschale = (paar ? p.kkPauschale.paar : p.kkPauschale.erwachsener) + kinderZahl * p.kkPauschale.proKind;
   const freibetrag = paar ? p.vermoegen.freibetragPaar : p.vermoegen.freibetragAllein;
   // [2] ⑨: «Le résultat ne peut pas être inférieur à 0 fr.»
@@ -186,17 +253,17 @@ export function vdRevenuDeterminant({ einkommen, vermoegen, kinderZahl, paar = f
 // Reine Rechnung des subside ordinaire. `personen` sind die Kategorien ('e' | 'ef' | 'k'),
 // `revenuOvam` der revenu déterminant OVAM. Rundung [4] art. 21 al. 1: «le montant ainsi calculé
 // est arrondi au franc supérieur» — je Person und Monat, dann auf zwölf Monate.
-export function ipvVaudRechnen({ personen, revenuOvam }) {
-  const monatlich = personen.map((c) => Math.ceil(vdSubsideMonat(c, revenuOvam)));
+export function ipvVaudRechnen({ personen, revenuOvam, werte = IPV_VD }) {
+  const monatlich = personen.map((c) => Math.ceil(vdSubsideMonat(c, revenuOvam, werte)));
   const monat = monatlich.reduce((a, b) => a + b, 0);
   const erwachseneMonat = personen.reduce((s, c, i) => s + (c === 'k' ? 0 : monatlich[i]), 0);
   // Grenze des Haushalts: die höchste Grenze B der vertretenen Kategorien — dort verliert die
   // letzte Person ihren Anspruch. Jede davon steht als Zahl in [1] art. 2 (B1, B2, B3).
-  const grenze = Math.max(...personen.map((c) => IPV_VD.kategorien[c].B));
+  const grenze = Math.max(...personen.map((c) => werte.kategorien[c].B));
   // Vergleichsgrösse «höchstens möglich»: der Betrag bei revenu déterminant 0 (Kategorie b)
   // beginnt dort bei D2 = 336, nicht bei F2).
-  const maximalMonat = personen.reduce((s, c) => s + Math.ceil(vdSubsideMonat(c, 0)), 0);
-  const maximalErwachseneMonat = personen.reduce((s, c) => s + (c === 'k' ? 0 : Math.ceil(vdSubsideMonat(c, 0))), 0);
+  const maximalMonat = personen.reduce((s, c) => s + Math.ceil(vdSubsideMonat(c, 0, werte)), 0);
+  const maximalErwachseneMonat = personen.reduce((s, c) => s + (c === 'k' ? 0 : Math.ceil(vdSubsideMonat(c, 0, werte))), 0);
   return {
     monat, annual: monat * 12, maximal: maximalMonat * 12, grenze,
     erwachseneAnnual: erwachseneMonat * 12, erwachseneMaximal: maximalErwachseneMonat * 12,
@@ -208,13 +275,16 @@ export function ipvVaudRechnen({ personen, revenuOvam }) {
 // nach Abzug des ordentlichen Subsides mehr als 10 % des RDU ausmachen.
 // Die App stellt nur die Prämie der erwachsenen Person ihrem eigenen Anteil gegenüber. Jede
 // weitere Person im Haushalt vergrössert die linke Seite (Kinder: Referenzprämie 161/152 gegen
-// 114 Subside) — der Hinweis erscheint also eher zu selten als zu oft. Er verspricht nichts.
-export function spezifischerSubsideMoeglich({ praemieMonat, region, rdu, mehrere, erwachseneAnnual }) {
+// 114 Subside; 2027: 165/156 gegen 118) — der Hinweis erscheint also eher zu selten als zu oft.
+// Er verspricht nichts. 2027 steht die Regel im RLVLAMal ([7] art. 21a–21c) statt im Arrêté,
+// inhaltlich gleich; neu ist art. 21b al. 4 (RDU ≤ 0 ⇒ taux d'effort 100 %) — das ergibt die
+// Ungleichung unten bei RDU 0 von selbst, sobald nach dem Subside etwas Prämie übrig bleibt.
+export function spezifischerSubsideMoeglich({ praemieMonat, region, rdu, mehrere, erwachseneAnnual, werte = IPV_VD }) {
   if (!(praemieMonat > 0) || !region) return false;
-  const baender = mehrere ? IPV_VD.referenzPraemie.mehrere : IPV_VD.referenzPraemie.allein;
+  const baender = mehrere ? werte.referenzPraemie.mehrere : werte.referenzPraemie.allein;
   const referenz = (baender.find((b) => rdu <= b.bis) || baender[baender.length - 1]).r[region];
   const anrechenbar = Math.min(praemieMonat, referenz) * 12;
-  return anrechenbar - erwachseneAnnual > IPV_VD.tauxEffort * rdu;
+  return anrechenbar - erwachseneAnnual > werte.tauxEffort * rdu;
 }
 
 // Aufruf aus calculateIPV (config/cantonalData.js, Register IPV_MODULE). Die App rechnet nur, wo
@@ -222,9 +292,13 @@ export function spezifischerSubsideMoeglich({ praemieMonat, region, rdu, mehrere
 export function ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, lookupPLZ) {
   const b = data.basis || {};
   const f = data.finanzen || {};
-  const jahr = IPV_VD.jahr;
   // Der Arrêté wird jährlich neu erlassen (der für 2026 änderte den Kinderbetrag gegenüber dem
-  // Arrêté vom 1. Oktober 2025). Werte 2027 waren am 28.09.2026 auf vd.ch nicht publiziert.
+  // Arrêté vom 1. Oktober 2025). Werte je Jahr aus IPV_VD_JAHRE; fehlt das Jahr oder eine Zahl
+  // (2027: KK-Pauschale und Vermögensfreibetrag, Stand 19.10.2026), bleibt der Riegel zu.
+  const werte = vdWerte();
+  if (!werte) return orientierung('jahr');
+  const jahr = werte.jahr;
+  // Zweite Sicherung, falls je ein Datensatz eines vergangenen Jahres hereingereicht wird.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   // Paare: eigene Kategorie h), die App kennt die zweite Person nicht. Konkubinat gehört dazu —
   // die UER nach LHPS zählt zusammenlebende Personen zusammen.
@@ -253,14 +327,17 @@ export function ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, looku
   if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
 
   const kinderZahl = kinderJahre.length;
-  // Keine Vermögensgrenze in VD — das Vermögen geht nur über den Fünfzehntel ein ([5]).
+  // 2026 keine Vermögensgrenze — das Vermögen geht nur über den Fünfzehntel ein ([5]). Ab 2027
+  // schliesst fortune mobilière über der Grenze jeden Subside aus ([7] art. 17 al. 2/3, [6]
+  // art. 12). «au-delà» = darüber; gebaut ist nur die UER mit einer erwachsenen Person.
   const vermoegen = vermoegenSumme(f);
+  if (werte.vermoegensGrenze && vermoegen > werte.vermoegensGrenze.allein) return orientierung('vermoegen');
   const { rdu, revenuOvam } = vdRevenuDeterminant({
-    einkommen: einkommenJahr(f, SAEULE_3A.voll), vermoegen, kinderZahl,
+    einkommen: einkommenJahr(f, SAEULE_3A.voll), vermoegen, kinderZahl, werte,
   });
 
   // Kategorie der erwachsenen Person: mit Kind(ern) b), sonst a).
-  const r = ipvVaudRechnen({ personen: [kinderZahl > 0 ? 'ef' : 'e', ...kinderJahre.map(() => 'k')], revenuOvam });
+  const r = ipvVaudRechnen({ personen: [kinderZahl > 0 ? 'ef' : 'e', ...kinderJahre.map(() => 'k')], revenuOvam, werte });
 
   // [4] art. 22 al. 1: «Le montant du subside ne peut être supérieur à la prime exigée par
   // l'assureur.» — seit Erlass unverändert in Kraft; dazu seit 01.03.2026 [3] art. 16 al. 1bis.
@@ -275,12 +352,12 @@ export function ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, looku
 
   const spezifisch = spezifischerSubsideMoeglich({
     praemieMonat: praemie / 12, region, rdu, mehrere: kinderZahl > 0,
-    erwachseneAnnual: Math.min(r.erwachseneAnnual, praemie),
+    erwachseneAnnual: Math.min(r.erwachseneAnnual, praemie), werte,
   });
   // Die Grenze B der Kategorie steht in [1] art. 2 als Zahl — sie darf angezeigt werden.
   const cantonData = { ...ipvData, maxIncome: r.grenze };
   const gemeinsam = {
-    canton: 'VD', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltVD',
+    canton: 'VD', cantonData, jahr, vorbehaltKey: werte.vorbehaltKey || 'ipv.vorbehaltVD',
     // Nur setzen, wenn zutreffend — sonst stünde der Hinweis bei jedem VD-Haushalt. Er läuft
     // über `zusatzVorbehaltKey`, die Stelle, an der die Anzeige einen zweiten, nur für diese
     // Person geltenden Satz zeigt (PremiumSubsidy.jsx) — ohne Betrag.
