@@ -17,6 +17,16 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🚀 **Nachtrag 19.10.2026, 15:46 — 0.1.46-beta ist LIVE.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:42): main = live = `650908a2` (Merge #506, 15:34, durch Stebler Studios).
+> Startdatei `index-DonLTkj4.js` = lokaler `dist`. `version.json` `sauber: false` — Ursache: nur die ungetrackte
+> `ipv_rechner_28.html` (nicht ausgeliefert, live 404); der ausgelieferte Code ist `650908a2`. Marke `.maloja/predeploy-ok`
+> = `650908a2` (13:36:51Z); Tor auf diesem Baum wiederholt: vitest 6160 grün · build · SEO · 63,04/65 kB · PII Exit 0.
+> `check-deploy.sh`: 132 Assets erreichbar. Browser (Beispielmodus): Footer `v0.1.46-beta`, Stundenlohn + ZH-IPV ok,
+> keine Konsolenfehler. Status je Feature in FEATURES.md (nur Stundenlohn `verified-live`, Rest `deployed`).
+> **Danach offen:** die «sollte»-Liste aus `DEPLOY-TOR-maloja-2026-10-19.md` (u. a. Jahres-Riegel Mindestlöhne vor 1.1.2027).
+
 > 🚪 **Nachtrag 19.10.2026, 15:30 — Deploy-Tor für 0.1.46-beta gelaufen: 0 Blocker. NICHT deployt.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:06): main = `9b4fa4c7` · live = `c739364d` (0.1.44-beta, 28.09. 15:07) ·
