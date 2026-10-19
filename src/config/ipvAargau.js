@@ -252,8 +252,13 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   const cantonData = { ...ipvData };
   // § 10 Abs. 4 KVGG: Der Antrag muss bis 31.12. des Vorjahres gestellt sein, sonst ist der
   // Anspruch verwirkt. Für 2026 war das der 31.12.2025 — ein Betrag ohne diesen Satz wäre
-  // irreführend. Die Frist des laufenden Kalenderjahres läuft für das FOLGEJAHR.
-  const fristAbgelaufen = new Date().getFullYear() >= jahr;
+  // irreführend. Die Frist des laufenden Kalenderjahres läuft für das FOLGEJAHR — das sagt
+  // derselbe Satz mit `folgejahr`, das ganze Jahr über, also auch im 4. Quartal.
+  // ⟨geändert 19.10.2026, Entscheid Stebler Studios: Variante A⟩ Hier stand eine Weiche
+  // `getFullYear() >= jahr` mit dem Gegenstück `ipv.agFristLaeuft`. Seit agWerte nach dem
+  // Kalenderjahr wählt, ist das Anspruchsjahr immer das laufende Jahr — die Weiche war tot,
+  // der Schlüssel ist entfernt. Wer je einen Datensatz für ein künftiges Jahr rechnen lässt,
+  // braucht einen neuen, geprüften Satz (ohne den Betrag als «abgelaufen» zu bezeichnen).
   const basisjahr = jahr - werte.basisjahrAbstand;
   const gemeinsam = { canton: 'AG', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltAG', extra: { basisjahr } };
   if (annual <= 0) {
@@ -261,7 +266,7 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   }
   return ergebnisMitAnspruch({
     ...gemeinsam, annual, maxAnnual, youngAdultsCount,
-    noteKey: fristAbgelaufen ? 'ipv.agFristAbgelaufen' : 'ipv.agFristLaeuft',
+    noteKey: 'ipv.agFristAbgelaufen',
     noteParams: { jahr, vorjahr: jahr - 1, folgejahr: jahr + 1 },
   });
 }
