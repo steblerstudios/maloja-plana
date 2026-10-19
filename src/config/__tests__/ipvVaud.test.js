@@ -660,3 +660,95 @@ describe('K31 VD 2027: Texte in allen fünf Sprachen', () => {
     }
   });
 });
+
+// Vorschau 2026 → 2027 (Fachprüfung 19.10.2026, «Nicht in diesem Schritt», Punkt 3): 2026 rechnet
+// weiter mit dem Fünfzehntel, ab 01.01.2027 schliesst fortune mobilière über 130 000 jeden
+// Subside aus ([6] art. 12 al. 3, [7] art. 17 al. 3). Der Hinweis steht nur als Text, nur über
+// der Grenze, und nur solange das Anspruchsjahr selbst keine Vermögensgrenze hat.
+describe('K31 VD 2026: Hinweis auf die Vermögensgrenze 2027', () => {
+  beforeAll(async () => {
+    preloadPLZ();
+    await import('../../data/plzGemeinde.js');
+    await import('../ipvVaud.js');
+    await new Promise((r) => setTimeout(r, 0));
+  });
+  afterEach(() => { vi.useRealTimers(); });
+  const im2026 = () => { vi.useFakeTimers(); vi.setSystemTime(new Date('2026-11-01T12:00:00')); };
+  const person = ({ monthlyIncome = 2000, kkPremium = 120, finanzen = {} } = {}) => ({
+    basis: { canton: 'VD', dateOfBirth: '1980-05-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
+    finanzen: { monthlyIncome, ...finanzen },
+    wohnen: { postalCode: '1003', city: 'Lausanne' },
+    versicherungen: { kkPremium },
+  });
+  const zusatz = (r) => [].concat(r.zusatzVorbehaltKey || []);
+
+  it('genau 130 000: kein Hinweis («au-delà» = darüber)', () => {
+    im2026();
+    const r = calculateIPV(person({ finanzen: { savingsAccount: 130000 } }));
+    expect(r.belegt).toBe(true);
+    expect(zusatz(r)).not.toContain('ipv.vdVermoegen2027');
+  });
+  it('130 001 (über alle drei Posten): Zahl 2026 bleibt, Hinweis erscheint, ohne Betrag', () => {
+    im2026();
+    const ohne = calculateIPV(person({ finanzen: { savingsAccount: 130000 } }));
+    const r = calculateIPV(person({ finanzen: { savingsAccount: 100000, securitiesValue: 30000, otherAssets: 1 } }));
+    expect(r).toMatchObject({ belegt: true, jahr: 2026, vorbehaltKey: 'ipv.vorbehaltVD' });
+    // Der Hinweis ändert die Rechnung 2026 nicht: 1 Franken mehr Vermögen, gleicher Betrag.
+    expect(r.amount).toBe(ohne.amount);
+    expect(r.zusatzVorbehaltKey).toBe('ipv.vdVermoegen2027');
+  });
+  it('mit spezifischem Subside zugleich: beide Sätze, als Liste', () => {
+    im2026();
+    const r = calculateIPV(person({ kkPremium: 700, finanzen: { savingsAccount: 200000 } }));
+    expect(r.belegt).toBe(true);
+    expect(r.zusatzVorbehaltKey).toEqual(['ipv.vdSpezifischerSubside', 'ipv.vdVermoegen2027']);
+  });
+  it('auch ohne Anspruch 2026 steht der Hinweis (die Grenze gilt dann erst recht)', () => {
+    im2026();
+    const r = calculateIPV(person({ monthlyIncome: 7000, finanzen: { savingsAccount: 200000 } }));
+    expect(r.noteKey).toBe('ipv.vdKeinAnspruch');
+    expect(zusatz(r)).toContain('ipv.vdVermoegen2027');
+  });
+  it('2027 selbst (mit Attrappe) zeigt keinen Vorschau-Hinweis — dort greift der Riegel', () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2027-03-01T12:00:00'));
+    const alt = { kkPauschale: IPV_VD_2027.kkPauschale, vermoegen: IPV_VD_2027.vermoegen };
+    IPV_VD_2027.kkPauschale = IPV_VD.kkPauschale;
+    IPV_VD_2027.vermoegen = { ...IPV_VD.vermoegen };
+    try {
+      const r = calculateIPV(person({ finanzen: { savingsAccount: 120000 } }));
+      expect(r.belegt).toBe(true);
+      expect(zusatz(r)).not.toContain('ipv.vdVermoegen2027');
+      // Über der Grenze: der Riegel selbst (Grund «vermoegenVD»), kein Vorschau-Satz.
+      const ueber = calculateIPV(person({ finanzen: { savingsAccount: 200000 } }));
+      expect(ueber).toMatchObject({ belegt: false, amount: null, offen: 'vermoegenVD' });
+      expect(zusatz(ueber)).not.toContain('ipv.vdVermoegen2027');
+    } finally { Object.assign(IPV_VD_2027, alt); }
+  });
+});
+
+// Vorbehalt 2026 an RLVLAMal art. 25 (Fassung bis 31.12.2026) angeglichen — Fachprüfung 19.10.2026:
+// al. 1 Satz 2 (ausnahmsweise rückwirkend, höchstens ab Beginn der laufenden Periode) und al. 4
+// (Zuzug aus einem anderen Kanton im laufenden Jahr: kein Subside, ausser PC AVS/AI oder RI).
+describe('K31 VD 2026: Vorbehalt und Vermögenshinweis in allen fünf Sprachen', () => {
+  const MERKMALE = {
+    de: { nie: /nichts rückwirkend/, rueck: /nur in zwei Fällen/, zuzug: /anderen Kanton/, el: /AHV\/IV/ },
+    fr: { nie: /ne sont pas rattrapés/, rueck: /dans deux cas seulement/, zuzug: /autre canton/, el: /AVS\/AI/ },
+    it: { nie: /non vengono recuperati/, rueck: /solo in due casi/, zuzug: /altro Cantone/, el: /AVS\/AI/ },
+    en: { nie: /not paid retroactively/, rueck: /in two cases only/, zuzug: /another canton/, el: /AHV\/IV/ },
+    rm: { nie: /na vegnan betg pajads/, rueck: /mo en dus cas/, zuzug: /auter chantun/, el: /AVS\/AI/ },
+  };
+  it.each(Object.keys(MERKMALE))('%s', async (l) => {
+    const m = (await import(`../../i18n/${l}.js`)).default;
+    const k = MERKMALE[l];
+    expect(m.ipv.vorbehaltVD).not.toMatch(k.nie);
+    expect(m.ipv.vorbehaltVD).toMatch(k.rueck);
+    expect(m.ipv.vorbehaltVD).toMatch(k.zuzug);
+    expect(m.ipv.vorbehaltVD).toMatch(k.el);
+    // 2026 beginnt der Anspruch weiter im ZWEITEN Monat (art. 25 al. 1, Fassung bis 31.12.2026).
+    expect(m.ipv.vorbehaltVD).not.toBe(m.ipv.vorbehaltVD2027);
+    // Der Zuzugssatz gehört NICHT in den Vorbehalt 2027: art. 25 al. 4 ist ab 01.01.2027 ersetzt.
+    expect(m.ipv.vorbehaltVD2027).not.toMatch(k.zuzug);
+    expect(m.ipv.vdVermoegen2027).toMatch(/130[  ,']000/);
+    expect(m.ipv.vdVermoegen2027).toMatch(/2027/);
+  }, 20000);
+});

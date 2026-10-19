@@ -4177,6 +4177,69 @@ Handrechnung je Kategorie (a: RD 28'500 → 177; b: RD 12'100 → 318; c: 118 bi
 zwei fehlenden Zahlen, Mutationsprobe (118 → 117, 130'000 → 131'000, 555 → 556: je rot gesehen,
 zurückgesetzt).
 
+### Nachtrag 19.10.2026 (abends) — Anzeige 2026 an die Fachprüfung angeglichen
+
+Anlass: die drei Punkte «Nicht in diesem Schritt» oben. An der Quelle gelesen **19.10.2026,
+18:14 CEST**: RLVLAMal [4] über die BLV-API (200, 719'379 Bytes; die Seite führt unter art. 25
+schon «Modif. 13 du 07.10.2026 … entrée en vigueur au 01.01.2027»), dazu [6] und [7] erneut
+(SHA-256 identisch mit dem Abruf von 17:42).
+
+**(1) Rückwirkung 2026.** [4] art. 25 al. 1 (geltende Fassung): «Le droit au subside prend
+naissance le premier jour du deuxième mois suivant celui où la demande de subside est déposée
+… Lorsque le requérant établit avoir été empêché sans sa faute de déposer plus tôt sa demande, ou
+lorsqu'il dépose sa demande à la suite d'une information périodique au sens de l'article 10 de la
+loi, il peut être accordé exceptionnellement un subside avec effet rétroactif, mais au plus tôt
+dès le début de la période de subside en cours.» al. 3: «la décision d'octroi couvre la période
+allant jusqu'à la fin de l'année civile» (daher «laufendes Jahr»). Der Satz 2 steht in [7]
+unverändert. `ipv.vorbehaltVD` sagte «nichts rückwirkend» — falsch, jetzt wie im Vorbehalt 2027,
+mit dem Beginn im **zweiten** Monat.
+
+**(2) Zuzug.** [4] art. 25 al. 4 (Fassung bis 31.12.2026): «Le requérant en provenance d'un autre
+canton au cours de l'année ne peut bénéficier d'un subside pour l'année considérée, à moins qu'il
+bénéficie de prestations complémentaires à l'AVS/AI ou du revenu d'insertion.» In [7] wird al. 4
+**ersetzt** (neu: Verweis auf art. 25a bei Änderungen während der Instruktion). Darum steht der
+Satz nur in `ipv.vorbehaltVD`, nicht in `ipv.vorbehaltVD2027`. Die App fragt den Zuzug nicht ab;
+der Satz steht für alle VD-Haushalte im Vorbehalt.
+
+**(3) Hinweis Vermögensgrenze 2027.** Neuer Schlüssel `ipv.vdVermoegen2027`, nur Text, nur 2026,
+nur wenn das erfasste Vermögen über `IPV_VD_2027.vermoegensGrenze.allein` (130'000, [6] art. 12
+al. 3 lit. a) liegt — «au-delà», also strikt darüber. Die Rechnung 2026 bleibt unverändert
+(Fünfzehntel). Begründung, warum schon im Herbst: die Erneuerung 2027 nimmt die Veranlagung
+«entrée en force au 22 octobre 2026» ([6] art. 7 al. 3); ein Antrag im November beginnt nach
+[4] art. 25 al. 1 am 1.1.2027, einer im Dezember nach [7] art. 33c («Le droit à la prestation
+débute au 1er janvier 2027 pour toutes les demandes de subside déposées entre le 1er décembre
+et le 31 décembre 2026»). Gesteuert über den Datensatz des Folgejahres, kein Datum im Code.
+Treffen spezifischer Subside und Vermögenshinweis zusammen, trägt `zusatzVorbehaltKey` eine
+Liste; PremiumSubsidy.jsx zeigt beide Sätze.
+
+**Tests:** `ipvVaud.test.js`, Blöcke «VD 2026: Hinweis auf die Vermögensgrenze 2027» (130'000
+kein Hinweis, 130'001 Hinweis bei gleichem Betrag, Liste mit spezifischem Subside, auch ohne
+Anspruch, 2027 ohne Vorschau) und «VD 2026: Vorbehalt und Vermögenshinweis in allen fünf
+Sprachen»; `ipvVaudAnzeige.test.js` (beide Sätze im HTML, ohne Betrag). Mutationsprobe `>` → `>=`:
+rot gesehen, zurückgesetzt. Eine zweite Bedingung (`!werte.vermoegensGrenze`) überlebte die
+Mutation, weil 2027 über der Grenze schon vorher mit `vermoegenVD` zurückkehrt — entfernt.
+
+**Fachprüfung 19.10.2026 abends (swiss-precision-pruefer, copy-pruefer):** kein Blocker. Umgesetzt:
+- **Ziffer 420** heisst «Numéraire, billets de banques et autres métaux précieux» ([6] art. 12 al.
+  2 lit. b) — Banknoten, nicht Bankguthaben. Der Text sagte «Bargeld und Bankguthaben», auch im
+  schon bestehenden `ipv.offenGrund.vermoegenVD`. Beide jetzt nach den vier Ziffern. **Offen:**
+  ob Bank- und Sparguthaben unter 410 «titres et autres placements» fallen, steht in [6] nicht;
+  die App zählt das Sparkonto in `vermoegenSumme` so oder so mit (vorsichtige Seite).
+- **Rückwirkung abschliessend:** art. 25 al. 1 Satz 2 nennt genau zwei Fälle (ohne Verschulden
+  verhindert, «établit» = Nachweis bei der Person; Antrag nach einer «information périodique au
+  sens de l'article 10 de la loi»). Das «etwa» ist weg, beide Fälle stehen da — in
+  `vorbehaltVD` **und** `vorbehaltVD2027` (dort derselbe Satz). LVLAMal art. 10 nicht gelesen;
+  der Text sagt darum nur «periodische Information des Kantons».
+- **«laufendes Jahr»** ist eine Schlussfolgerung aus art. 25 al. 3 («jusqu'à la fin de l'année
+  civile»), kein Zitat von al. 1 («période de subside en cours»).
+- **Zuzug:** «vom Kanton Waadt keine Verbilligung» und der Rat, beim bisherigen Wohnkanton
+  nachzufragen. Wie der Herkunftskanton den Wegzug regelt, ist **nicht** geprüft; der Text sagt
+  darum nur «nachfragen», keinen Anspruch.
+- **Massgebend ist die Veranlagung** ([6] art. 12 al. 2, art. 7 al. 3), nicht das erfasste
+  Vermögen — als Halbsatz in `ipv.vdVermoegen2027`.
+- **Für weiterhin offen erklärt:** rm-Texte provisorisch (`TODO(rm)`), insbesondere die
+  rätoromanische Bezeichnung der EL.
+
 ---
 
 ## VS — Wallis / Valais
