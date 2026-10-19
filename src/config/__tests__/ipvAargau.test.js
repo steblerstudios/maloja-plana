@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
-import { IPV_AG, ipvAargauRechnen, agMassgebendesEinkommen, ipvAargau } from '../ipvAargau.js';
+import { IPV_AG, IPV_AG_2027, IPV_AG_JAHRE, agWerte, ipvAargauRechnen, agMassgebendesEinkommen, ipvAargau } from '../ipvAargau.js';
 import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
 
@@ -66,6 +66,46 @@ describe('K31 AG: die Zahlen 2026 stehen so im Erlass [2] Anhang 1', () => {
     // «zur Vollständigkeit» wieder herein.
     expect(Object.keys(IPV_AG.richtpraemie).sort()).toEqual(['e', 'j', 'k']);
     expect(IPV_AG.regionen).toBeUndefined();
+  });
+});
+
+// Werte 2027, wörtlich aus dem PDF «Richtprämien 2027» des Kantons (Handbuch Soziales Kap. 7,
+// «Anhang (Stand 1. September 2026)», abgerufen 19.10.2026) und gleichlautend bei der SVA.
+const RICHTPRAEMIE_2027 = { e: 6070, j: 4440, k: 1450 };
+const EINKOMMENSSATZ_2027 = 0.1925;
+
+describe('K31 AG: die Zahlen 2027 stehen so im Kantons-PDF — eingetragen, aber verriegelt', () => {
+  it('Richtprämien, Einkommenssatz, Abzüge (unverändert gegenüber 2026)', () => {
+    expect(IPV_AG_2027.jahr).toBe(2027);
+    expect(IPV_AG_2027.richtpraemie).toEqual(RICHTPRAEMIE_2027);
+    expect(IPV_AG_2027.einkommenssatz).toBe(EINKOMMENSSATZ_2027);
+    expect(IPV_AG_2027.abzug).toEqual(ABZUG_2026);
+    expect(IPV_AG_2027.kinderabzug).toBe(KINDERABZUG_2026);
+    expect(IPV_AG_2027.vermoegensanteil).toBe(0.2);
+    expect(IPV_AG_2027.mindestanteilKind).toBe(0.5);
+    // SVA: «Berechnungsbasis für die Prämienverbilligung 2027 ist … die Steuerveranlagung 2024»
+    expect(IPV_AG_2027.jahr - IPV_AG_2027.basisjahrAbstand).toBe(2024);
+    expect(IPV_AG_2027.regionen).toBeUndefined();
+  });
+
+  it('der Datensatz 2026 bleibt, wie er war (kein Durchschlag aus 2027)', () => {
+    expect(IPV_AG.jahr).toBe(2026);
+    expect(IPV_AG.richtpraemie).toEqual(RICHTPRAEMIE_2026);
+    expect(IPV_AG.einkommenssatz).toBe(EINKOMMENSSATZ_2026);
+    expect(IPV_AG.beschlussFehlt).toBeUndefined();
+  });
+
+  it('Rechenbeispiel der SVA 2027: Paar, 2 Kinder, 1 junger Erwachsener → 13 628.55', () => {
+    const w = IPV_AG_2027;
+    const me = agMassgebendesEinkommen({ bereinigtesEinkommen: 45897, verheiratet: true, kinderZahl: 3, werte: w });
+    expect(me).toBe(30397);
+    const r = ipvAargauRechnen({ personen: ['e', 'e', 'k', 'k', 'j'], me, werte: w });
+    expect(r.summe).toBe(19480);
+    // SVA-Tabellenzeile «Einkommenssatz 19.25 Prozent von 30'397 Franken» | «- 5'851.45»,
+    // Anspruch 13'628.55. Exakt sind es 5 851.4225 bzw. 13 628.5775 — im Beispiel ist der Abzug
+    // auf 5 Rappen aufgerundet (ob das die Regel ist, zeigt ein Beispiel nicht).
+    expect(r.total).toBeCloseTo(13628.5775, 6);
+    expect(Math.abs(r.total - 13628.55)).toBeLessThan(0.05);
   });
 });
 
@@ -341,9 +381,45 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
       expect(calculateIPV(person())).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
     });
 
-    it('vor dem Anspruchsjahr läuft die Frist noch — dann der andere Satz', () => {
+    // ⟨geändert 19.10.2026, Werte je Jahr⟩ Hier stand «vor dem Anspruchsjahr läuft die Frist
+    // noch — dann der andere Satz» (2025 → `ipv.agFristLaeuft` mit den Werten 2026). Seit der
+    // Auswahl nach Kalenderjahr (agWerte, Muster ZH) gibt es für 2025 keinen Datensatz mehr und
+    // also keine Zahl. Der Zweig `agFristLaeuft` bleibt im Modul stehen, ist aber nur noch
+    // erreichbar, wenn je ein Datensatz für ein künftiges Jahr gewählt wird (offener Punkt im PR).
+    it('vor 2026 (kein Datensatz für das Jahr) keine Zahl', () => {
       vi.useFakeTimers(); vi.setSystemTime(new Date('2025-11-01T12:00:00'));
-      expect(calculateIPV(person()).noteKey).toBe('ipv.agFristLaeuft');
+      expect(calculateIPV(person())).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
+    });
+  });
+
+  // Anspruchsjahr 2027 (Nachtrag 19.10.2026): Werte eingetragen, Riegel zu.
+  describe('2027 hinter dem Riegel «beschlussFehlt»', () => {
+    afterEach(() => { vi.useRealTimers(); IPV_AG_2027.beschlussFehlt = true; });
+
+    it('der Riegel ist im Datensatz zu — und darum liefert agWerte für 2027 nichts', () => {
+      expect(IPV_AG_2027.beschlussFehlt).toBe(true);
+      expect(agWerte(2026)).toBe(IPV_AG);
+      expect(agWerte(2027)).toBeNull();
+      expect(agWerte(2028)).toBeNull();
+      expect(IPV_AG_JAHRE[2027]).toBe(IPV_AG_2027);
+    });
+
+    it('2027 rechnet die App nicht: dieselbe Orientierung «jahr» wie vorher', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2027-03-01T12:00:00'));
+      expect(calculateIPV(person())).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
+    });
+
+    it('erst mit geöffnetem Riegel rechnet 2027 — mit den Werten 2027 und Basisjahr 2024', () => {
+      IPV_AG_2027.beschlussFehlt = false;
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2027-03-01T12:00:00'));
+      expect(calculateIPV(person())).toMatchObject({ belegt: true, annual: 6070, jahr: 2027, basisjahr: 2024 });
+      // 2 500/Monat → 30 000 − 8 500 = 21 500 → 6 070 − 19,25 % × 21 500 = 6 070 − 4 138.75 = 1 931.25
+      expect(calculateIPV(person({ monthlyIncome: 2500 })).annual).toBe(1931);
+    });
+
+    it('2026 bleibt unberührt vom Datensatz 2027', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-06-01T12:00:00'));
+      expect(calculateIPV(person({ monthlyIncome: 2500 }))).toMatchObject({ annual: 2068, jahr: 2026, basisjahr: 2023 });
     });
   });
 
