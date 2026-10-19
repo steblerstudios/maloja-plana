@@ -69,9 +69,16 @@ export const LOHN_KONTROLLSTELLEN = {
     // WIDERLEGT: Jura hat einen EINZIGEN Tribunal de première instance, und der Kanton
     // selbst nennt Porrentruy für alle Arbeitsorte (jura.ch/DES/SEE):
     // „…peut saisir le Conseil de prud'hommes (Tribunal de première instance), à Porrentruy."
-    fallback: 'Conseil de prud’hommes (Arbeitsgericht), Porrentruy',
+    // Name wörtlich wie auf jura.ch (Zitat oben), ohne deutschen Zusatz: «(Arbeitsgericht)» stand
+    // sonst auch in fr/it/en/rm (Swiss-Precision-Prüfung 19.10.2026, zu #509). Quelle, am
+    // 19.10.2026 abgerufen (die Kurzform «jura.ch/DES/SEE» liefert 404):
+    // https://www.jura.ch/fr/Autorites/Administration/DES/Economie-et-Emploi-SEE/Conditions-de-travail/Conditions-de-travail/Salaires-minimaux.html
+    // Rechts-Prüfung 19.10.2026 am Volltext: RSJU 182.34 Art. 1 (Conseil de prud'hommes = juridiction
+    // du Tribunal de première instance), Art. 12 (Greffe gibt Auskunft), Art. 22 al. 1 (Präsident bzw.
+    // Greffier ist Schlichtungsbehörde, ZPO Art. 197) · RSJU 181.1 Art. 29 al. 1 (Sitz Porrentruy).
+    fallback: 'Conseil de prud’hommes (Tribunal de première instance), Porrentruy',
     hinweis: 'Das Wort „Kontrollstelle“ hier vermeiden — der Weg führt über das Arbeitsgericht.',
-    verify: false, // geprüft 2026-07-15: RSJU 822.41 + 822.411 Volltext · jura.ch/DES/SEE
+    verify: false, // geprüft 2026-07-15: RSJU 822.41 + 822.411 Volltext · Name/Sitz 2026-10-19: RSJU 182.34 + 181.1, jura.ch (URL oben)
   },
   NE: {
     // Gegengeprüft 2026-07-15 an rsn.ne.ch + ne.ch: Neuenburg hat KEIN eigenes
@@ -100,4 +107,23 @@ export const UNBEZAHLTER_LOHN_WEG =
 
 export function getLohnKontrollstelle(kanton) {
   return LOHN_KONTROLLSTELLEN[kanton] || null;
+}
+
+// Welche Stelle ein Text nennen darf — EINE Regel für Kapitel (ChapterView), Stundenlohn-Rechner
+// und Brief (briefGenerator.wageClaimRefs): `verify: true` wird nie genannt; sonst `stelle`, dann
+// `fallback` (JU: Arbeitsgericht, weil `stelle: null` belegt ist); sonst `null` → der Aufrufer setzt
+// seine neutrale Formulierung. Nie eine Stelle erfinden — und nie «null» in einen Satz setzen
+// (Swiss-Precision-Prüfung 19.10.2026: der Rechner nahm `stelle.stelle` ungeprüft).
+export function nennbareKontrollstelle(eintrag) {
+  if (!eintrag || eintrag.verify) return null;
+  return eintrag.stelle || eintrag.fallback || null;
+}
+
+// Der Satz zur Stelle im Mindestlohn-Befund (Kapitel und Rechner). Der Name steht nach einem
+// Doppelpunkt (`mitName`, Platzhalter {stelle}), wie im Brief: Eingesetzt ohne Artikel ergab er
+// «bei Conseil …», «auprès de Conseil …», «with Conseil …» (Swiss-Precision-Prüfung 19.10.2026).
+// Ohne nennbare Stelle ein eigener Satz ohne Namen (`ohneName`) — nie eine Stelle erfinden.
+export function lohnStelleSatz(kanton, tr, mitName, ohneName) {
+  const stelle = nennbareKontrollstelle(getLohnKontrollstelle(kanton));
+  return stelle ? tr(mitName, { stelle }) : tr(ohneName);
 }

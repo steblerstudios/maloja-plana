@@ -1,9 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Stundenlohn } from '../../Stundenlohn.jsx';
 import { createT } from '../../i18n/index.js';
 import de from '../../i18n/de.js';
+import fr from '../../i18n/fr.js';
+import en from '../../i18n/en.js';
 import { stundenlohnRechnen, ferienSatz, ferienWochenAnspruch, offeneFragen } from '../stundenlohn.js';
 
 // «Was steht mir im Stundenlohn zu?» — getrennte Rechnung für Grundlohn und Zuschläge.
@@ -335,5 +337,54 @@ describe('Einordnung im gerenderten Text', () => {
     // Fachprüfung 18.10.2026: Urteil und Inkrafttreten im Repo nicht belegt → nur Verweis an die Stadt.
     expect(txt).toContain('Ob und ab wann er gilt, weiss die Stadt.');
     expect(txt).not.toContain('2C_28/2025');
+  });
+});
+
+// Swiss-Precision-Prüfung 19.10.2026 (beim Jahres-Riegel, PR #508): Für JU ist `stelle: null`
+// bewusst — es gibt keine zuständige Behörde, der Weg führt ans Arbeitsgericht (`fallback`).
+// Der Rechner setzte `stelle.stelle` ungeprüft ein; createT ersetzt nur `undefined`, darum
+// stand wörtlich «… bei null klären». Jetzt gilt dieselbe Regel wie im Kapitel und im Brief.
+describe('Zuständige Stelle im Befund «unter dem Mindestlohn»', () => {
+  const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+  const t = createT({ de }, 'de', 'sie');
+  const seite = (rechner) => renderToStaticMarkup(React.createElement(Stundenlohn, {
+    palette, t, onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
+  })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+  // Datum fixiert: der Befund hängt am Mindestlohn-Jahr 2026 (JU 21.40, data/lohnCheck.js).
+  beforeAll(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-19T12:00:00')); });
+  afterAll(() => { vi.useRealTimers(); });
+  const unter = { betrag: '18', art: 'fest', wochenstunden: '20', ferienForm: 'bezahlt', dreizehnter: 'nein', feiertag: 'nein' };
+
+  it('JU: kein «null», sondern das Arbeitsgericht aus der Registry', () => {
+    const txt = seite({ ...unter, kanton: 'JU' });
+    expect(txt).toContain('Mindestlohn');
+    expect(txt).not.toMatch(/\bnull\b/);
+    expect(txt).toContain('Trifft keine davon zu, kann man sich an die zuständige Stelle wenden: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
+  });
+
+  it('BS: belegte Stelle wird genannt (Regel unverändert)', () => {
+    const txt = seite({ ...unter, kanton: 'BS' });
+    expect(txt).toContain('an die zuständige Stelle wenden: Amt für Wirtschaft und Arbeit (AWA), Team Arbeitsmarktaufsicht.');
+  });
+
+  // Swiss-Precision-Prüfung 19.10.2026 (zu #509): Der Name stand ohne Artikel im Satz («bei
+  // Conseil …», «auprès de Conseil …», «with Conseil …»), und das deutsche «(Arbeitsgericht)»
+  // erschien in allen Sprachen. Jetzt steht der Name nach einem Doppelpunkt, wie im Brief.
+  const seiteIn = (sprache, dict, rechner) => renderToStaticMarkup(React.createElement(Stundenlohn, {
+    palette, t: createT({ [sprache]: dict }, sprache, 'sie'), onUpdateData: () => {}, data: { finanzen: { stundenlohnRechner: rechner } },
+  })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+
+  it('fr: kein «auprès de Conseil», kein deutscher Zusatz', () => {
+    const txt = seiteIn('fr', fr, { ...unter, kanton: 'JU' });
+    expect(txt).toContain('Si aucune ne s’applique, il est possible de s’adresser à l’organe compétent : Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
+    expect(txt).not.toContain('auprès de Conseil');
+    expect(txt).not.toContain('Arbeitsgericht');
+  });
+
+  it('en: kein «with Conseil», kein deutscher Zusatz', () => {
+    const txt = seiteIn('en', en, { ...unter, kanton: 'JU' });
+    expect(txt).toContain('If none of these applies, the competent body can be contacted: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.');
+    expect(txt).not.toContain('with Conseil');
+    expect(txt).not.toContain('Arbeitsgericht');
   });
 });

@@ -18,7 +18,7 @@ import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
-import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
+import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
 // Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
 import { einzahlungenImJahr } from './data/saeule3a.js';
 import { openPrintWindow, escapeHtml, formatDE } from './utils/helpers.js';
@@ -54,12 +54,8 @@ import { abschnittGruppen } from './utils/abschnitte.js';
 // und irreführend obendrein: für den JU-Mindestlohn ist gar KEINE kantonale Stelle
 // zuständig, der Weg führt ans Arbeitsgericht. Die App schickte die Nutzerin zu einer
 // Behörde, deren Nichtexistenz sie selbst dokumentiert (`hinweis` im Registry-Eintrag).
-// Jetzt spiegelt diese Funktion `wageClaimRefs` — eine Quelle, eine Regel.
-function lohnKontrollstelleText(kanton, tr) {
-  const e = getLohnKontrollstelle(kanton);
-  if (!e || e.verify) return tr('lohnCheck.stelleFallbackKurz');
-  return e.stelle || e.fallback || tr('lohnCheck.stelleFallbackKurz');
-}
+// Jetzt spiegelt `lohnStelleSatz` (data/lohnRechtsstellen.js) `wageClaimRefs` — eine
+// Quelle, eine Regel. Seit 19.10.2026 dort, damit auch der Stundenlohn-Rechner sie nutzt.
 
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
@@ -1346,7 +1342,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   },
                     // FIX D: pro-Kanton-Jahr (check.jahr), nicht das globale LOHNCHECK_DATA_VERSION —
                     // sonst zeigte ein TI-Nutzer im Kapitel ein anderes Jahr als im Brief.
-                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelle: lohnKontrollstelleText(check.kanton, tr), ausnahmen: tr('lohnCheck.ausnahmen') })
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelleSatz: lohnStelleSatz(check.kanton, tr, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral'), ausnahmen: tr('lohnCheck.ausnahmen') })
                   )
                 );
                 // ⚠️ Der Brief-Knopf ruht (`WAGECLAIM_BEREIT === false`): Der Befund kennt
@@ -1598,7 +1594,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         // als Ersetzungs-Muster lesen ($&, $1, …) und den Text verstümmeln.
                         // Ein Funktions-Replacer gibt ihn wörtlich zurück (Predeploy-Runde 8,
                         // dritte Prüfung). Die Zahl-/Code-Platzhalter oben sind ungefährlich.
-                        .replace('{stelle}', () => lohnKontrollstelleText(kanton, tr))
+                        .replace('{stelleSatz}', () => lohnStelleSatz(kanton, tr, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral'))
                         // Der Befund kennt die Ausnahmen nicht → er nennt sie, statt eine
                         // Rechtsverletzung festzustellen (siehe `WAGECLAIM_BEREIT`).
                         .replace('{ausnahmen}', () => tr('lohnCheck.ausnahmen'))
