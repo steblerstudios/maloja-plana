@@ -256,7 +256,7 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       alignItems: 'center',
       justifyContent: 'center',
       gap: '4px',
-      transition: `all ${duration.normal}ms ${ease}`,
+      transition: `background ${duration.normal}ms ${ease}, color ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
     },
   },
     React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },

@@ -216,7 +216,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
         padding: '12px 16px', background: isJustDone ? palette.sage + '12' : palette.up, borderRadius: radius.sm,
         border: '1px solid ' + (isJustDone ? palette.sage : r.done ? palette.sage + '44' : dueColor + '66'),
         marginBottom: space.sm, opacity: r.done && !isJustDone ? 0.7 : 1,
-        transition: `all ${duration.slow}ms ${ease}`,
+        transition: `background ${duration.slow}ms ${ease}, border-color ${duration.slow}ms ${ease}, opacity ${duration.slow}ms ${ease}`,
       }
     },
       isJustDone && React.createElement('div', {
@@ -520,7 +520,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
               style: {
                 padding: '8px 12px', background: palette.surface, border: '1px solid ' + palette.border,
                 borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, textAlign: 'left',
-                color: palette.text, transition: `all ${duration.normal}ms ${ease}`
+                color: palette.text, transition: `border-color ${duration.normal}ms ${ease}`
               },
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; }

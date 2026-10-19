@@ -11,6 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert
+- Übergänge animieren nur noch die Eigenschaften, die sich wirklich ändern, statt `transition: all`
+  (10 Stellen: Erinnerungskarten, Vorlagen, Feedback-Auswahl, Kapitel-Symbole, Benachrichtigungs-Schalter,
+  Sprachwahl, Überfällig-Banner, Rundgang-Spotlight, Vorlese-Knopf). Kein sichtbarer Unterschied gewollt.
+
 ## [0.1.46-beta] — 2026-10-19
 
 *Alles seit `0.1.45-beta` (#459 … #505). **0.1.45-beta war nie live** — live war bis hierher `0.1.44-beta`
