@@ -173,6 +173,17 @@ describe('nennbareKontrollstelle / lohnStelleSatz — eine Regel', () => {
   it('kein Registry-Name trägt einen deutschen Zusatz in Klammern', () => {
     expect(nennbareKontrollstelle(LOHN_KONTROLLSTELLEN.JU)).toBe('Conseil de prud’hommes (Tribunal de première instance), Porrentruy');
   });
+  // Kapitel-Befund (ChapterView): derselbe Satz hängt am Ende von lohnCheck.unterMindestlohn.
+  it('Kapitel de/fr: Befundsatz endet mit der Stelle nach Doppelpunkt, kein «{stelle}» übrig', () => {
+    const p = { kanton: 'JU', mindestStunde: '21.40', lohnStunde: '18.00', jahr: 2026, ausnahmen: '' };
+    const de_ = createT({ de }, 'de', 'du');
+    const txtDe = de_('lohnCheck.unterMindestlohn', { ...p, stelleSatz: lohnStelleSatz('JU', de_, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral') });
+    expect(txtDe.endsWith('kannst Du Dich an die zuständige Stelle wenden: Conseil de prud’hommes (Tribunal de première instance), Porrentruy.')).toBe(true);
+    const fr_ = createT({ fr }, 'fr', 'sie');
+    const txtFr = fr_('lohnCheck.unterMindestlohn', { ...p, stelleSatz: lohnStelleSatz('ZH', fr_, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral') });
+    expect(txtFr.endsWith('vous pouvez vous adresser à l’autorité cantonale compétente.')).toBe(true);
+    expect(txtDe + txtFr).not.toMatch(/\{stelle(Satz)?\}/);
+  });
   // Die Vorlagen mit Namen brauchen {stelle} nach einem Doppelpunkt; die neutralen nie {stelle}.
   it('alle 5 Sprachen: Name nur nach Doppelpunkt, neutraler Satz ohne Platzhalter', () => {
     const texte = (v) => (typeof v === 'string' ? [v] : Object.values(v));

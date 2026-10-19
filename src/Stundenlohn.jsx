@@ -4,7 +4,7 @@ import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { CANTON_CODES, getCantonName } from './config/kantonPLZ.js';
-import { lohnKontrollstelleText } from './data/lohnRechtsstellen.js';
+import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
 import { betrag } from './utils/geld.js';
 import { stundenlohnRechnen, stundenlohnErgebnis, lies, ARTEN, FERIEN_FORMEN, ANTWORTEN, TI_MINDESTLOHN_OBERGRENZE } from './utils/stundenlohn.js';
 
@@ -109,7 +109,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       case 'unterMindestlohn': return vorsatz + t('stundenlohnView.ml_unter', { grund, mindest: zahlText(b.mindestStunde), kanton: kantonName, jahr: b.jahr })
         + (b.differenzMonat ? ' ' + t('stundenlohnView.ml_differenz', { betrag: betrag(b.differenzMonat) }) : '')
         + ' ' + t('lohnCheck.ausnahmen') + ' '
-        + t('stundenlohnView.ml_stelle', { stelle: lohnKontrollstelleText(e.kanton, t) });
+        + lohnStelleSatz(e.kanton, t, 'stundenlohnView.ml_stelle', 'stundenlohnView.ml_stelleNeutral');
       // Städte Zürich und Winterthur: städtischer Mindestlohn abgestimmt; Gerichtsstand und Inkrafttreten
       // sind im Repo nicht belegt (Fachprüfung 18.10.2026). `ml_zhHinweis` nennt darum weder Urteil
       // noch Datum noch Beträge und verweist an die Stadt.

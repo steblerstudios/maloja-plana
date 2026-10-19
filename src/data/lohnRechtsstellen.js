@@ -69,7 +69,9 @@ export const LOHN_KONTROLLSTELLEN = {
     // WIDERLEGT: Jura hat einen EINZIGEN Tribunal de première instance, und der Kanton
     // selbst nennt Porrentruy für alle Arbeitsorte (jura.ch/DES/SEE):
     // „…peut saisir le Conseil de prud'hommes (Tribunal de première instance), à Porrentruy."
-    fallback: 'Conseil de prud’hommes (Arbeitsgericht), Porrentruy',
+    // Name wörtlich wie auf jura.ch (Zitat oben), ohne deutschen Zusatz: «(Arbeitsgericht)» stand
+    // sonst auch in fr/it/en/rm (Swiss-Precision-Prüfung 19.10.2026, zu #509).
+    fallback: 'Conseil de prud’hommes (Tribunal de première instance), Porrentruy',
     hinweis: 'Das Wort „Kontrollstelle“ hier vermeiden — der Weg führt über das Arbeitsgericht.',
     verify: false, // geprüft 2026-07-15: RSJU 822.41 + 822.411 Volltext · jura.ch/DES/SEE
   },
@@ -112,7 +114,11 @@ export function nennbareKontrollstelle(eintrag) {
   return eintrag.stelle || eintrag.fallback || null;
 }
 
-// Der Text für {stelle} im Mindestlohn-Befund (Kapitel und Rechner).
-export function lohnKontrollstelleText(kanton, tr) {
-  return nennbareKontrollstelle(getLohnKontrollstelle(kanton)) || tr('lohnCheck.stelleFallbackKurz');
+// Der Satz zur Stelle im Mindestlohn-Befund (Kapitel und Rechner). Der Name steht nach einem
+// Doppelpunkt (`mitName`, Platzhalter {stelle}), wie im Brief: Eingesetzt ohne Artikel ergab er
+// «bei Conseil …», «auprès de Conseil …», «with Conseil …» (Swiss-Precision-Prüfung 19.10.2026).
+// Ohne nennbare Stelle ein eigener Satz ohne Namen (`ohneName`) — nie eine Stelle erfinden.
+export function lohnStelleSatz(kanton, tr, mitName, ohneName) {
+  const stelle = nennbareKontrollstelle(getLohnKontrollstelle(kanton));
+  return stelle ? tr(mitName, { stelle }) : tr(ohneName);
 }
