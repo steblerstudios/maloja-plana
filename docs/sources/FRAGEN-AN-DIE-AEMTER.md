@@ -30,6 +30,28 @@ Nullpunkt; die App zeigt den ungerundeten.) Bei den Grenzen 2027: Zelle verheira
 - Wird die Abzugsquote von 60 % über der Familiengrenze **je Kind** oder **je Familie**
   abgezogen? (RRB 297/2025 lässt beides zu; wir zeigen in dieser Zone bewusst keinen Betrag.)
 
+### 1b · SVA Zürich — Durchschnittsprämien 2027 und Einkommensgrenzen 2027 passen nicht zusammen
+
+*Ergänzt 19.10.2026.*
+
+**Wo:** Seite «Regionale Durchschnittsprämien» (unter «Ergänzungsleistungen»), Abschnitt «2027 (provisorisch)»,
+und Seite «Prämienverbilligung 2027: Einkommensgrenzen 2027».
+
+Die erste Seite führt für 2027 (provisorisch) Region 1/2/3: Erwachsene 672/614/574, junge Erwachsene 481/441/409,
+Kinder 163/148/138 CHF pro Monat. Die zweite lässt sich damit nicht nachrechnen. Mit 70 % Referenzprämie und
+9,4 % Eigenanteil (RRB 980/2026 Disp. I) ergäbe Region 1, Einzelperson, Erwachsene ohne Kinder
+0,7 × 672 × 12 ÷ 0,094 = **60'051.06**; publiziert sind **59'420**. Diese Zahl passt zu einer Durchschnittsprämie
+von **665** (0,7 × 665 × 12 ÷ 0,094 = 59'425.53). Ebenso passen die übrigen fünf kinderlosen Einzelzellen zu
+607 / 566 (Erwachsene R2/R3) und 477 / 437 / 405 (junge Erwachsene), nicht zu den publizierten
+Durchschnittsprämien. Die App rechnet 2027 für ZH deshalb noch nicht.
+
+**Fragen:**
+- Mit welchen Durchschnittsprämien 2027 sind die Einkommensgrenzen 2027 gerechnet — und welche Zahl gilt für die
+  Berechnung des Anspruchs: die provisorisch publizierten (672 …) oder die tieferen (665 …)?
+- Werden die Einkommensgrenzen 2027 mit den definitiven Durchschnittsprämien neu publiziert?
+- Ist die regionale Durchschnittsprämie der Prämienverbilligung dieselbe Zahl wie die EL-Durchschnittsprämie,
+  die laut Ihrer Seite das EDI festlegt?
+
 ---
 
 ## 2 · ASV Bern — zwei Gemeinden, zwei widersprüchliche Listen
@@ -109,6 +131,19 @@ stimmig. Übrig bleibt die Frage nach der Rechtsgrundlage.*
 
 **Stand:** AG ist für 2026 gebaut; die Werte 2027 sind bewusst **nicht** eingebaut, weil sie
 nur auf der Website belegt sind. Ab 01.01.2027 zeigt die App für AG keinen Betrag mehr.
+
+**⟨Nachtrag 19.10.2026⟩ Jetzt liegt eine Kantonsquelle vor, die SAR-Fassung fehlt weiterhin.**
+Der Kanton publiziert im Handbuch Soziales (Kap. 7.3.1) das PDF «Richtprämien 2027»: «Anhang
+(Stand 1. September 2026) · Berechnungselemente für die Verteilung der Prämienverbilligung 2027»
+mit 6'070 / 4'440 / 1'450, unveränderten Abzügen und 19,25 % — dieselben Zahlen wie die SVA. Die
+Kopfzeile lautet aber «Beilage 2 zum bereinigten Bericht»; ein Beschluss ist daraus nicht
+ersichtlich (ob die Beilage zu einem Regierungsratsbeschluss gehört, wissen wir nicht). Die
+Gesetzessammlung führt am 19.10.2026 zu SAR 837.211 weiterhin nur die Fassung vom 27.08.2025
+(keine künftige Version), einen RRB oder eine Medienmitteilung zu 2027 haben wir nicht gefunden.
+Die App trägt die Werte 2027 jetzt ein, **rechnet sie aber nicht** (`beschlussFehlt: true`) —
+an der Wirkung ab 01.01.2027 ändert sich also nichts. Die Frage ist damit enger: **Wann wird der
+Anhang 2027 in die SAR aufgenommen, und unter welchem Beschlussdatum?** Wortlaute und Abrufdaten:
+`docs/sources/ipv-kantone-2026.md`, Abschnitt AG, «Nachtrag 19.10.2026».
 
 ---
 

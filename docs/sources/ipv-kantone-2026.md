@@ -311,9 +311,9 @@ Heute an der Quelle gelesen:
 
 | Grösse 2027 | Wert | Quelle | Status |
 |---|---|---|---|
-| Eigenanteil | 9,4 % übrige · 11,8 % Verheiratete | [1] «Für das Jahr 2027 gelten folgende Eigenanteile» | **provisorisch** — [9] Disp. VI: Gesundheitsdirektion setzt ihn provisorisch fest; «Im September 2026 wird der Regierungsrat den Eigenanteilssatz für die IPV 2027 definitiv festlegen» (Erw. 4). Ein solcher Beschluss war am 28.09. nicht auffindbar (Medienmitteilung nach Vorjahres-Muster → 404, abgeleitete Adresse, kein Negativbefund). |
-| Referenzprämie | **nicht publiziert** | [9] Erw. 3f: Gesundheitsdirektion ermächtigt, «eine höhere Referenzprämie provisorisch festzulegen»; definitiv «im September 2026». [1] sagt nur «ab dem Jahr 2026 neu 70 Prozent». | im Code `null` |
-| Regionale Durchschnittsprämien | **heute nicht nachzulesen** | [3] zeigt am 28.09.2026 nur die Tabellen 2023–2026; kein 2027-PDF verlinkt. | im Code `null` |
+| Eigenanteil | 9,4 % übrige · 11,8 % Verheiratete | [1] «Für das Jahr 2027 gelten folgende Eigenanteile» | ⟨überholt 19.10.2026: beschlossen, RRB 980/2026 Disp. I — Nachtrag unten⟩ **provisorisch** — [9] Disp. VI: Gesundheitsdirektion setzt ihn provisorisch fest; «Im September 2026 wird der Regierungsrat den Eigenanteilssatz für die IPV 2027 definitiv festlegen» (Erw. 4). Ein solcher Beschluss war am 28.09. nicht auffindbar (Medienmitteilung nach Vorjahres-Muster → 404, abgeleitete Adresse, kein Negativbefund). |
+| Referenzprämie | ⟨überholt 19.10.2026: 70 %, RRB 980/2026 Disp. I⟩ **nicht publiziert** | [9] Erw. 3f: Gesundheitsdirektion ermächtigt, «eine höhere Referenzprämie provisorisch festzulegen»; definitiv «im September 2026». [1] sagt nur «ab dem Jahr 2026 neu 70 Prozent». | im Code `null` |
+| Regionale Durchschnittsprämien | ⟨überholt 19.10.2026: provisorisch publiziert, Nachtrag unten⟩ **heute nicht nachzulesen** | [3] zeigt am 28.09.2026 nur die Tabellen 2023–2026; kein 2027-PDF verlinkt. | im Code `null` |
 | Massgebende Prämie (Kinder-Mindestanspruch) | **83 %** der RDP 2027 (2026: 84 %) | [9] Disp. II | neu — stand in keiner früheren Notiz |
 | Familiengrenze | 71 200 (nur minderjährige Kinder) · 94 900 (mind. ein junger Erw. in Ausbildung) | [9] Disp. III | belegt |
 | Abzugsquote über der Familiengrenze | 60 % | [9] Disp. IV | belegt |
@@ -398,6 +398,69 @@ Nullpunkt; der Betrag bleibt die Formel. Der Test hält «abgerundet auf 10 = SV
 Folge im Rechner (von Hand gerechnet, Region 1, alleinstehend): Einkommen 40'000 → CHF 1'856 (vorher 2'016);
 62'000 → kein Anspruch (vorher 168).
 
+### Nachtrag 19.10.2026 — Stand 2027 eingetragen, Riegel bleibt zu (RRB 980/2026 Disp. I, SVA RDP 2027 provisorisch)
+
+**Korrektur zum Nachtrag 14.10.2026:** Dort wurde aus RRB 980/2026 [11] **nur Dispositiv IV** (Satz 2026)
+gelesen. Derselbe Beschluss legt in **Dispositiv I** bereits den Eigenanteil **2027** und die **Referenzprämie
+2027** fest. Die Zeilen «Eigenanteil … provisorisch» und «Referenzprämie … nicht publiziert» der Tabelle
+«Vorbereitung 2027 (28.09.2026)» oben sind damit überholt (stehen gelassen als Stand vom 28.09.).
+Entscheid Stebler Studios, 19.10.2026: «Eintragen, Riegel zu».
+
+Alle Zahlen heute (19.10.2026, 17:42–17:45 Europe/Zurich) selbst an der Quelle gelesen (curl; PDF mit pdftotext):
+
+[11] RRB Nr. 980/2026 vom 16.09.2026 (URL wie oben) — **Dispositiv I, wörtlich:** «Die Eigenanteilssätze zur
+     Festlegung der Prämienverbilligung 2027 werden mit einer Referenzprämie von 70% gemäss § 4 Abs. 2 Satz 2 EG
+     KVG sowie unter Vorbehalt einer späteren Anpassung gemäss § 3 Abs. 2 Satz 2 EG KVG wie folgt festgelegt:
+     a. Eigenanteil für Verheiratete und für eingetragene Partnerinnen oder Partner: 11,8%. b. Eigenanteil für
+     Einzelpersonen und Alleinerziehende: 9,4%.»
+     Dazu Disp. II (gebundene Ausgabe IPV 2027 Fr. 799 400 000) und Disp. III (Kantonsbeitrag 2027
+     Fr. 638 400 000) — nur Doku, nicht im Code.
+[3'] = [3], SVA Zürich, «Regionale Durchschnittsprämien» (Seite unter «Ergänzungsleistungen»),
+     https://svazurich.ch/unsere-produkte/weitere-produkte/weitere-leistungen/ergaenzungsleistungen/regionale-durchschnittspraemien.html
+     — erneut abgerufen 19.10.2026. Einleitung, wörtlich: «Die Höhe der Durchschnittsprämie legt das Eidgenössische
+     Departement des Innern (EDI) jeweils im Herbst für das Folgejahr fest.» Abschnitt «Höhe der regionalen Durchschnittsprämie 2027 (provisorisch)», wörtlich:
+     «Die Höhe der regionalen Durchschnittsprämien für das Jahr 2027 entspricht der obligatorischen
+     Krankenpflegeversicherung für Erwachsene mit Franchise 300 (Kinder Franchise 0) und Unfall pro Monat.»
+
+     | Region | Erwachsene (ab 26 Jahre) | Junge Erwachsene (19 bis 25 Jahre) | Kinder (0 bis 18 Jahre) |
+     |---|---|---|---|
+     | Region 1 | CHF 672 pro Monat | CHF 481 pro Monat | CHF 163 pro Monat |
+     | Region 2 | CHF 614 pro Monat | CHF 441 pro Monat | CHF 148 pro Monat |
+     | Region 3 | CHF 574 pro Monat | CHF 409 pro Monat | CHF 138 pro Monat |
+
+     Die Tabelle 2026 darunter unverändert (R1 640/459/154 · R2 584/420/140 · R3 544/389/130).
+[8'] SVA Zürich, «Einkommensgrenzen 2027» (Seite [8]) — am 19.10.2026 erneut abgerufen: **alle 48 Zellen
+     unverändert** gegenüber `IPV_ZH_2027.grenzen` (auch die Zelle 78 280). Hinweis dort weiter: «Die
+     Berechnungsgrundlagen können vom Regierungsrat bis zum Herbst 2027 noch angepasst werden.»
+
+| Grösse 2027 | Wert | Quelle | Im Code (`IPV_ZH_2027`) |
+|---|---|---|---|
+| Eigenanteil | 11,8 % Verheiratete · 9,4 % übrige | [11] Disp. I | `satz` unverändert — jetzt **beschlossen, mit Vorbehalt** § 3 Abs. 2 Satz 2 EG KVG (kein bloss formaler Vorbehalt: derselbe RRB hebt in Disp. IV den Satz 2026 nachträglich an) |
+| Referenzprämie | 70 % | [11] Disp. I | `referenz: 0.7` (vorher `null`) |
+| Regionale Durchschnittsprämien | Tabelle oben | [3'], **provisorisch** | `rdp` wörtlich (vorher `null`) |
+| Einkommensgrenzen | 48 Zellen | [8'] | unverändert |
+
+**Warum der Riegel trotzdem zu bleibt.** Der alte Grund (`satzProvisorisch`) ist weg; neu hält `rdpProvisorisch: true`
+2027 zu, `zhWerte(2027)` liefert weiter `null`, die App zeigt ab 01.01.2027 für ZH weiter keine Zahl (Grund `jahr`).
+Zwei Gründe: (1) die SVA führt die Durchschnittsprämien selbst als «provisorisch»; (2) die publizierten
+Einkommensgrenzen 2027 [8'] passen rechnerisch **nicht** zu diesen Durchschnittsprämien. Zurückgerechnet
+(Grenze × 9,4 % ÷ (70 % × 12)) ergeben die sechs Zellen «Einzel, keine Kinder» 664.94 / 606.92 / 565.90
+(Erwachsene R1/R2/R3) und 476.94 / 436.93 / 404.93 (junge Erwachsene) — also die Werte der Notiz vom 19.09.
+(665/607/566, 477/437/405; siehe ⟨korrigiert 28.09.2026⟩ oben), nicht [3']. Beispiel R1 Erwachsene:
+0,7 × 665 × 12 ÷ 0,094 = 59 425.53 → SVA 59 420; mit 672 wären es 60 051.06. Mit [3'] lägen die sechs Grenzen
+rund 360 bis 720 Franken höher. Das ist eine **Beobachtung**, kein Befund über die SVA; welche Zahl gilt, ist
+offen (FRAGEN-AN-DIE-AEMTER.md, ZH). Der Test pinnt sie als Wächter («Grenzen 2027 [G] passen zu RDP 665/607/566 …»).
+Dazu ein drittes, älteres Risiko: dass die IPV-«regionale Durchschnittsprämie» dieselbe Zahl ist wie die
+EL-Tabelle [3], ist amtlich nicht bestätigt (siehe «Offen / nicht gefunden» oben); für 2026 ist es nur durch
+Nachrechnen gestützt. Die Abweichung 2027 kann genau ein Hinweis darauf sein, dass die IPV mit einer anderen Zahl
+rechnet als die EL-Tabelle des EDI.
+**Lösen erst, wenn (a) die Tabelle 2027 an [3'] nicht mehr «provisorisch» heisst, (b) Durchschnittsprämien und
+Grenzen zusammenpassen (kinderlose Einzelzellen: Nullpunkt der Formel 0 bis unter 50 Franken über der publizierten
+Grenze, wie am 28.09. beobachtet; mit 665 … sind es 5.53 bis 8.72) oder die SVA die Frage beantwortet hat, und (c) die Identität IPV-RDP = EL-Tabelle geklärt ist.** Dann [3'] und [8'] wörtlich neu
+abgleichen und `rdpProvisorisch: false` setzen; die Mechanik ist mit Attrappe getestet. Ein zweiter Wächter im Test
+schlägt an, sobald der Riegel offen ist und (b) nicht gilt — sonst zeigte die App die Grenze 59'420 und rechnete bis
+rund 60'051 trotzdem einen Betrag. Bei der Freigabe gehört der SVA-Hinweis «Die Berechnungsgrundlagen können vom
+Regierungsrat bis zum Herbst 2027 noch angepasst werden» mit in die Anzeige (Vorbehalt § 3 Abs. 2 Satz 2 EG KVG).
 ---
 
 ## BE — Bern
@@ -3337,7 +3400,7 @@ zeigt die App für GR keinen Betrag (`jahrVorbei`).
 **Beurteilung:** abbildbar
 **Modell (kurz):** Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie
 **Zuständig / Weg:** SVA Aargau; SVA ermittelt Berechtigte aus Steuerdaten und schreibt sie an, Antrag innert sechs Wochen; spätestens 31. Dezember im Vorjahr (für 2026: 31.12.2025, abgelaufen), sonst verwirkt
-**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ~~⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».~~ **Am 20.09.2026 aufgelöst: die SVA-Seite schreibt heute durchgehend «Bezugsjahr 2027», siehe «Nachprüfung 20.09.2026».** In der App gebaut ist 2026.
+**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ~~⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».~~ **Am 20.09.2026 aufgelöst: die SVA-Seite schreibt heute durchgehend «Bezugsjahr 2027», siehe «Nachprüfung 20.09.2026».** In der App gebaut ist 2026. **⟨Nachtrag 19.10.2026⟩ 2027 eingetragen, aber verriegelt (`beschlussFehlt: true`): Kantons-PDF [6] liegt vor, SAR-Fassung fehlt — siehe «Nachtrag 19.10.2026».**
 
 ### Rechenmodell
 > «Anspruch auf Prämienverbilligung besteht, wenn die Richtprämie einen prozentualen Anteil des massgebenden Einkommens übersteigt. Bei Mehrpersonenhaushalten werden die Richtprämien der einzelnen Haushaltsmitglieder zusammengezählt.» — Quelle [1], § 6 Abs. 1
@@ -3392,6 +3455,7 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 3. Anhang 1 Berechnungselemente für die Verteilung der Prämienverbilligung 2026 (AGS 2025/…), Kanton Aargau, Handbuch Soziales, PDF geändert 05.11.2025. https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpr-mien-2026.pdf — abgerufen 16.09.2026
 4. Allgemeine Informationen (Prämienverbilligung), SVA Aargau (widersprüchliche Jahresangabe, s. oben). https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine — abgerufen 16.09.2026
 5. Informationsblatt Prämienverbilligung 2027, SVA Aargau (enthält keine Zahlen). https://www.sva-aargau.ch/informationsblattpv — abgerufen 16.09.2026
+6. Anhang (Stand 1. September 2026) «Berechnungselemente für die Verteilung der Prämienverbilligung 2027», Kanton Aargau, Handbuch Soziales, PDF «Richtprämien 2027» (Kopfzeile «Beilage 2 zum bereinigten Bericht»), SHA-256 cee5dd41…17246. https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpraemien2027.pdf — abgerufen 19.10.2026
 
 ### Nachprüfung 20.09.2026 (K31, Einbau in die App)
 
@@ -3528,6 +3592,68 @@ Einkommensgrenze nach § 5 Abs. 5.
 **Nicht nachgemessen:** die zwei Zitate aus dem Informationsblatt (Anmeldefenster, Code sechs
 Wochen gültig) — die Seite liefert heute HTML statt PDF. Tragend sind sie nicht; die Frist steht
 wörtlich in § 10 Abs. 4 KVGG.
+
+### Nachtrag 19.10.2026 — Werte 2027 eingetragen, Riegel zu (`beschlussFehlt`)
+
+Alle Quellen am **19.10.2026, 17:45 MESZ** neu abgerufen (curl; PDF mit `pdftotext -layout`).
+
+**[6] Kanton Aargau, DGS, Handbuch Soziales, Kap. 7.3.1, PDF «Richtprämien 2027»** —
+https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpraemien2027.pdf
+(verlinkt auf der Kapitelseite 7.3.1 als «Richtprämien 2027 (PDF, 1 Seite, 128 KB)», neben
+«Richtprämien 2026»). 1 Seite, 128 464 Bytes, SHA-256
+`cee5dd41be4791f3f5dcfe5da5ce9f483019f5aecc6f891fec87e70240517246`; PDF-Metadaten: Autor
+«Staatskanzlei des Kantons Aargau», erstellt 20.08.2026, geändert 23.09.2026. Wortlaut:
+
+> «Beilage 2 zum bereinigten Bericht» (Kopfzeile) · «837.211» · «Anhang (Stand 1. September 2026)» ·
+> «Berechnungselemente für die Verteilung der Prämienverbilligung 2027» ·
+> «Die Richtprämien gemäss § 5 KVGG und § 3 Abs. 1 der Verordnung zum Gesetz zum Bundesgesetz
+> über die Krankenversicherung (V KVGG) betragen: a) für Erwachsene: Fr. 6'070.–, b) für junge
+> Erwachsene: Fr. 4'440.–, c) für Kinder: Fr. 1’450.–.» ·
+> «Die Einkommensabzüge gemäss § 5 KVGG betragen: a) für Alleinstehende: Fr. 8'500.–, b) für
+> Alleinstehende mit Kind(ern): Fr. 12'200.–, c) für Ehepaare: Fr. 0.–, d) für Ehepaare mit
+> Kind(ern): Fr. 8'000.–, e) pro Kind/gemeinsam eingestuften jungen Erwachsenen in Ausbildung:
+> Fr. 2’500.–.» · «Der Einkommenssatz gemäss § 5 KVGG beträgt 19,25 %.»
+
+**[4] SVA Aargau, «Allgemeine Informationen»** —
+https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine
+
+> «Berechnungsbasis für die Prämienverbilligung 2027 ist das steuerbare Einkommen der
+> rechtskräftigen Steuerveranlagung 2024.» · «Sie betragen für das Bezugsjahr 2027: für
+> Erwachsene: 6'070 Franken jährlich / 505.85 Franken pro Monat · für junge Erwachsene: 4'440
+> Franken jährlich / 370.00 Franken pro Monat · für Kinder: 1'450 Franken jährlich / 120.85
+> Franken pro Monat» · Einkommensabzüge 8'500 / 12'200 / 0 / 8'000 / 2'500 · «Der
+> Einkommenssatz beträgt 19.25 Prozent.» · Rechenbeispiel (Paar, 2 Kinder, 1 junger Erwachsener):
+> massgebendes Einkommen 30'397, Total Richtprämien 19'480, Tabellenzeile «Einkommenssatz 19.25
+> Prozent von 30'397 Franken» | «- 5'851.45», Verbilligungsanspruch 13'628.55. «Junge Erwachsene (Jahrgang 2002 - 2008)».
+
+Beide Quellen stimmen in **allen** Zahlen überein. Die Abzüge sind gegenüber 2026 unverändert;
+das Basisjahr 2024 bestätigt «drei Jahre vor dem Anspruchsjahr» ([1] § 7 Abs. 1).
+
+**[2] Gegenprobe Gesetzessammlung** —
+https://gesetzessammlungen.ag.ch/api/de/texts_of_law/837.211/show_as_json:
+`current_version` = «Aktuelle Version in Kraft seit: 01.09.2025 (Beschlussdatum: 27.08.2025)»,
+`future_versions` = `[]`, `abrogated_scheduled` = `false`; jüngstes Änderungsdokument
+«AGS 2025/06-13, Publikationsdatum 20.10.2025». **Keine Fassung mit dem Anhang 2027.**
+Zum Vergleich der Takt der Vorjahre: Beschluss 28.08.2024 → AGS 18.10.2024; Beschluss
+27.08.2025 → AGS 20.10.2025. Eine Aufnahme 2026 im selben Takt wäre also bald zu erwarten —
+das ist eine Beobachtung, kein Beleg.
+
+**RRB / Medienmitteilung:** gesucht (Websuche auf ag.ch, gesetzessammlungen.ag.ch, sva-aargau.ch
+sowie allgemein), **nichts gefunden**. Die einzige Medienmitteilung «Regierungsrat beschliesst
+Berechnungsparameter für die Prämienverbilligung …», die die Suche liefert, betrifft das Jahr
+**2023**. Gefunden wurde nur der Kantonsbeitrag 2027 (Grosser Rat, Dekret zur Prämienverbilligung,
+AGS 2026/06-03 — https://gesetzessammlungen.ag.ch/app/de/change_documents/1820); er legt die
+Berechnungselemente nicht fest.
+
+**Gebauter Zustand:** `IPV_AG_2027` in `src/config/ipvAargau.js` trägt alle Zahlen oben,
+wörtlich, mit `beschlussFehlt: true`. `agWerte()` liefert für 2027 darum `null`, die App zeigt ab
+01.01.2027 für AG weiterhin die Orientierung «jahr» ohne Betrag — wie bisher. Kantonsquelle
+liegt vor, **SAR-Fassung bzw. Beschluss fehlt**. Öffnen (`false`) erst mit der Fassung in der SAR
+oder einem RRB, oder auf ausdrücklichen Entscheid von Stebler Studios. Das SVA-Rechenbeispiel ist
+mit den Werten 2027 im Test nachgerechnet (exakt 13'628.5775; im Beispiel ist der Abzug auf
+5 Rappen aufgerundet, 5'851.4225 → 5'851.45 — eine Regel lässt sich aus einem Beispiel nicht
+ableiten). Wortlaut-Treue: Apostrophe wie im PDF (’ bei 1’450 und 2’500). Fachprüfung
+19.10.2026 (swiss-precision-pruefer): kein Blocker, alle Zahlen gegen beide Quellen bestätigt.
 
 ---
 
@@ -4038,6 +4164,207 @@ keine Zahl, obwohl der ordentliche Subside nicht an der Region hängt (die Regio
 Hinweis und die Anzeige; siehe PR).
 
 **Werte 2027:** am 28.09.2026 auf vd.ch nicht publiziert. Jahres-Riegel ab 01.01.2027.
+
+### Nachtrag 19.10.2026 — Werte 2027 (Arrêté vom 7.10.2026)
+
+Anlass: Erhebung der Kantonswerte 2027 vom 19.10.2026 (Freigabe Stebler Studios). Alles an der
+Quelle gelesen (curl + `pdftotext -layout`), Abruf **19.10.2026, 17:42–17:50 CEST**.
+
+**Quellen, heute gelesen:**
+
+| # | Quelle | Fassung | Weg · Gegenprobe |
+|---|---|---|---|
+| [6] | Arrêté concernant les subsides aux primes de l'assurance-maladie obligatoire en 2027, du 7 octobre 2026 | «Document généré le 08.10.2026», in Kraft 01.01.2027 (art. 14), hebt den Arrêté vom 17.12.2025 auf (art. 13) | https://sieldocs.vd.ch/ecm/app18/service/siel/getContent?ID=2394289 — 200, PDF, 95'773 Bytes, 10 Seiten, SHA-256 `0dac6b7e…7353` (erster Versuch Verbindungs-Timeout, zweiter 200); erfundene ID `9999999123` → 404 |
+| [7] | Règlement modifiant le RLVLAMal, du 7 octobre 2026 | «Document généré le 08.10.2026», in Kraft 01.01.2027 (Art. 2) | …getContent?ID=2394296 — 200, PDF, 96'729 Bytes, 11 Seiten, SHA-256 `90e3a0d8…a1c6` |
+| [8] | Règlement modifiant le RLHPS, du 7 octobre 2026 | in Kraft 01.01.2027 | …getContent?ID=2394293 — 200, PDF, 56'797 Bytes, 2 Seiten |
+| [9] | vd.ch, Entscheid des Conseil d'État vom 7.10.2026 «Subsides aux primes d'assurance maladie obligatoire pour 2027» | — | https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/decision/id/2d8b98e8-cf99-4994-a740-881bfaf020ee — 200; verlinkt genau [6], [7], [8] |
+| [10] | vd.ch, «Subside à l'assurance-maladie» | — | 200; verlinkt Arrêté 2025/2026 und Notice 2026, **keine Notice 2027** |
+
+**Wortlaute [6], die die App braucht (Kategorien a–c):**
+
+- art. 2 let. a: «E1. Le subside minimum est fixé à 30 fr.» · «F1. Le subside maximum est fixé à
+  331 fr.» · C1 «17'000 fr.» · A1 «40'000 fr.» · «P1. … est fixé à 2.5.» · B1 «50'000 fr.» —
+  **unverändert** gegenüber 2026.
+- art. 2 let. b: «E2. Le subside minimum est fixé à 20 fr.» · «F2. Le subside est fixé à 300 fr.
+  lorsque le revenu déterminant est égal à C2.» · «D2. Le subside maximum est fixé à 336 fr.» ·
+  C2 «24'200 fr.» · A2 «55'000 fr.» · R2 «1» · P2 «2.3» · B2 «69'000 fr.» — **unverändert**.
+- art. 2 let. c: «E3. Le subside est fixé à 118 fr. lorsque le revenu déterminant est égal à A3.» ·
+  «F3. Le subside maximum est fixé à 118 fr.» · C3 «26'000 fr.» · A3 «63'000 fr.» · P3 «2.3» ·
+  «G3. Le subside minimum est fixé à 118 fr.» · B3 «76'000 fr.» · Q3 «0.25» — **Kinder 118 statt
+  114**, die Kurve bleibt flach.
+- art. 4 al. 1: «6'000 fr. pour le premier enfant et 7'000 fr. de plus par enfant supplémentaire»
+  — unverändert.
+- art. 7 al. 3: Steuerperiode «la plus récente ayant fait l'objet d'une décision de taxation
+  définitive entrée en force au 22 octobre 2026» (2026: 17.10.2025).
+- art. 10 al. 1 (UER aus einer Person), Erwachsene je Monat: RDU ≤ 62'500 «Région 1 : 580.-
+  Région 2 : 543.-» · 62'500–70'000 «555.- / 518.-» · über 70'000 «505.- / 468.-». al. 2 (mehrere
+  Personen): dieselben Erwachsenenwerte mit den Bändern 86'300 / 96'600; «Enfants Région 1 :
+  165.- Région 2 : 156.-» in allen drei Bändern. (2026: art. 13, 563/527 · 538/502 · 488/452,
+  Kinder 161/152.)
+- **NEU** art. 12 al. 3: «Les seuils de fortune mobilière au-delà desquels aucun droit au subside
+  n'est accordé sont les suivants : a. UER composées d'une seule personne adulte : 130'000 fr.
+  b. UER composées de plusieurs personnes adultes : 260'000 fr.» al. 2: fortune mobilière =
+  Ziffern 410 (titres et autres placements), 420 (numéraire …), 430 (autos, bijoux …), 445
+  (autres fortunes) der Veranlagung. al. 4: junge Erwachsene in Ausbildung zählen nicht als
+  Erwachsene.
+- Weitere, nicht gebaut: art. 3 (Sonderkategorien, Kinder dort 165/153), art. 6
+  (volljährige abhängige Kinder), art. 8/9 (Herleitung der Referenzprämien, Franchisen-Grenzen).
+
+**Wortlaute [7] (RLVLAMal, in Kraft 01.01.2027):**
+
+- art. 17 al. 2 (neu): «Le Conseil d'Etat arrête les seuils de fortune mobilière au-delà desquels
+  les assurés ne peuvent être considérés comme étant de condition économique modeste …»; al. 3:
+  «Si un membre de l'unité économique de référence ne peut être considéré comme étant de
+  condition économique modeste, aucun membre de l'unité économique de référence n'a droit à un
+  subside.»
+- art. 21a al. 1 (neu): subside spécifique, wenn die Prämien nach Abzug der Subsides «un
+  pourcentage de leur revenu déterminant unifié … (taux d'effort) supérieur à 10%» ausmachen;
+  art. 21b (Berechnung, Prämien je Person höchstens die Referenzprämie des Arrêté), al. 4:
+  «Lorsque le RDU applicable à l'UER est inférieur ou égal à 0 fr., le taux d'effort est égal à
+  100%.»; art. 21c (Betrag), al. 6: kein spezifischer Subside, wenn ein Mitglied nicht «de
+  condition économique modeste» ist; art. 21d (Höchstbetrag, Minimum 20 fr.).
+- art. 25 al. 1 (neu): «Le droit au subside prend naissance le premier jour du mois suivant celui
+  où la demande de subside est déposée» (bisher «du deuxième mois suivant»). art. 33c:
+  Anträge vom 1.–31.12.2026 → Anspruch ab 1.1.2027.
+- art. 23 (Calcul du revenu déterminant) aufgehoben; das RDU bleibt das der LHPS art. 6
+  (art. 21a al. 1, Arrêté art. 9 al. 1).
+
+**[8] RLHPS:** ändert nur art. 6 (Aktualisierung der finanziellen Lage, neues al. 4). Nichts an
+den Abzügen, Pauschalen oder Freibeträgen.
+
+**Betrifft die RLVLAMal-Änderung den Hinweis auf den subside spécifique?** Inhaltlich nein. Die
+Regel ist aus dem Arrêté (2026: art. 7–10) in den Règlement gewandert (art. 21a–21d), mit
+derselben 10-%-Schwelle, derselben Begrenzung auf die Referenzprämie und derselben Formel. Neu
+sind art. 21b al. 4 (RDU ≤ 0 ⇒ 100 %), was die Ungleichung der App bei RDU 0 schon so ergibt,
+und art. 21c al. 6: kein spezifischer Subside, wenn ein Mitglied nicht «de condition
+économique modeste» ist (Verweis auf art. 9 al. 1, 3 und 4 LVLAMal). Das umfasst die neue
+Vermögensgrenze, die der Vermögens-Riegel vorher abfängt, aber auch die Fälle von RLVLAMal art. 17
+al. 1, die die App nicht kennt. Der Hinweistext `ipv.vdSpezifischerSubside` («mehr als 10
+Prozent») bleibt richtig. Geändert hat sich für den Hinweis nur die Fundstelle und die
+Referenzprämie (art. 10 statt art. 13). Ebenfalls neu, und von der App nicht abgefragt:
+art. 21a al. 4 (wer eine Sonderkategorie nach art. 18 al. 1/2 LVLAMal bezieht, z. B. RI, hat
+keinen spezifischen Subside, dort kann der Hinweis zu Unrecht erscheinen) und art. 21a al. 2
+(PC Familles zählen zum RDU). Den Vergleich mit dem Arrêté 2026 hat die Fachprüfung nicht
+selbst nachgelesen, weil er nicht im Prüfordner lag. Er beruht auf den Wortlauten weiter oben
+in diesem Abschnitt.
+
+Bandgrenze 86'300: art. 9 al. 3 leitet die Franchise-Grenze als B2 × 1,25 = 86'250 her, die
+Tabelle in art. 10 al. 2 nennt 86'300. Der Code folgt der Tabelle (62'500, 70'000 und 96'600 gehen
+auf).
+
+**Eingebaut** (`src/config/ipvVaud.js`, `IPV_VD_2027`, `IPV_VD_JAHRE`, `vdWerte(jahr)`, nach dem
+Muster von ZH): 2027 ist ein eigenes Jahresobjekt, die App wählt nach Kalenderjahr. 2026 ist
+unverändert (derselbe Datensatz `IPV_VD`, alle bisherigen Tests grün). Neu für 2027: der
+Vermögens-Riegel (erfasstes Vermögen über 130'000 ⇒ keine Zahl, Grund `vermoegen`) und ein
+eigener Vorbehalt `ipv.vorbehaltVD2027` mit dem Anspruchsbeginn im Folgemonat (5 Sprachen).
+
+🛑 **2027 rechnet trotzdem noch nicht.** Zwei Grössen der Einkommensrechnung stehen weder in [6]
+noch in [7] noch in [8]:
+
+- **Pauschalabzug KK-Prämien** (2026: 2'200 / 4'400 / +1'300 je Kind). LHPS art. 6 al. 2 lit. a
+  nennt nur «un forfait fixe pour frais de maladie», den der Conseil d'État festsetzt (al. 7);
+  RLHPS nennt keine Zahl. Die Frankenwerte 2026 stehen allein in der Notice 2026 [2].
+- **Vermögensfreibetrag** (2026: 59'000 / 118'000). RLHPS art. 4 al. 1 verweist auf «des
+  franchises équivalentes aux seuils d'imposition au sens des articles 58 et 60» LI; die
+  Frankenwerte stehen wieder nur in der Notice 2026.
+
+Eine Notice 2027 lag am 19.10.2026 nicht vor [10]. Den Freibetrag könnte LI art. 58/60
+(BLV 642.11) gesetzlich belegen. Nicht gelesen, und offen bleibt, welche Fassung gilt (die der
+Referenz-Steuerperiode oder die des Anspruchsjahres). Für die KK-Pauschale gibt es keinen solchen
+Weg, sie allein hält den Riegel zu. Beide Grössen stehen im Code als `null`, der
+Jahres-Riegel bleibt damit ab 01.01.2027 zu (dieselbe Orientierung wie bisher). Der Fünfzehntel
+steht im Gesetz (LHPS art. 6 al. 2 lit. b) und ist eingetragen.
+
+⚠️ **Im Dezember 2026 erneut prüfen.** 2026 wurde der Oktober-Arrêté (1.10.2025) am 17.12.2025
+durch einen neuen ersetzt, der den Kinderbetrag änderte (74 → 114). Dasselbe kann mit [6]
+geschehen. Darum im Dezember 2026: Arrêté **und** Notice 2027 neu lesen, jede Zahl gegen
+`IPV_VD_2027` halten, dann KK-Pauschale und Freibetrag eintragen und den Riegel öffnen.
+
+**Gewählt, nicht belegt:** Das erfasste Vermögen der App (Wertschriften, Sparkonto, übriges
+Vermögen) wird als fortune mobilière genommen. Liegt es über 130'000, zeigt die App keine Zahl;
+der Vermögensposten der Veranlagung kann davon abweichen. Ein Haushalt mit einer erwachsenen
+Person und Kindern gilt als «UER composée d'une seule personne adulte» (Kinder sind nach art. 12
+keine Erwachsenen, und die App baut nur diesen Haushalt).
+
+**Fachprüfung 19.10.2026 (swiss-precision-pruefer):** kein Blocker, jede Zahl wörtlich bestätigt.
+Umgesetzt: eigener Grund `ipv.offenGrund.vermoegenVD` (der allgemeine Text nannte das «steuerbare
+Gesamtvermögen», massgebend ist hier nur die fortune mobilière). Der Vorbehalt 2027 sagt jetzt,
+dass es rückwirkend nur ausnahmsweise etwas gibt (art. 25 al. 1 Satz 2: «exceptionnellement …
+au plus tôt dès le début de la période de subside en cours»). Dazu die Präzisierungen oben (art.
+21c al. 6, art. 21a al. 2/4, Bandgrenze). **Nicht in diesem Schritt, weil sie die Anzeige 2026
+ändern:** derselbe Rückwirkungssatz im Vorbehalt 2026; der Zuzug aus einem anderen Kanton im
+laufenden Jahr (RLVLAMal art. 25 al. 4, Fassung bis 31.12.2026: «ne peut bénéficier d'un subside
+pour l'année considérée»); ein Hinweis im Herbst 2026 für Haushalte über 130'000 fortune mobilière,
+deren Antrag oder Erneuerung schon unter die Regeln 2027 fällt (art. 33c, Arrêté art. 7 al. 3).
+
+**Tests:** `src/config/__tests__/ipvVaud.test.js`, Blöcke «VD 2027»: Werte wörtlich gepinnt, eine
+Handrechnung je Kategorie (a: RD 28'500 → 177; b: RD 12'100 → 318; c: 118 bis B3; Haushalt RD 0
+→ 572/Monat), die Mechanik des Jahreswechsels mit einer ausdrücklich benannten Attrappe für die
+zwei fehlenden Zahlen, Mutationsprobe (118 → 117, 130'000 → 131'000, 555 → 556: je rot gesehen,
+zurückgesetzt).
+
+### Nachtrag 19.10.2026 (abends) — Anzeige 2026 an die Fachprüfung angeglichen
+
+Anlass: die drei Punkte «Nicht in diesem Schritt» oben. An der Quelle gelesen **19.10.2026,
+18:14 CEST**: RLVLAMal [4] über die BLV-API (200, 719'379 Bytes; die Seite führt unter art. 25
+schon «Modif. 13 du 07.10.2026 … entrée en vigueur au 01.01.2027»), dazu [6] und [7] erneut
+(SHA-256 identisch mit dem Abruf von 17:42).
+
+**(1) Rückwirkung 2026.** [4] art. 25 al. 1 (geltende Fassung): «Le droit au subside prend
+naissance le premier jour du deuxième mois suivant celui où la demande de subside est déposée
+… Lorsque le requérant établit avoir été empêché sans sa faute de déposer plus tôt sa demande, ou
+lorsqu'il dépose sa demande à la suite d'une information périodique au sens de l'article 10 de la
+loi, il peut être accordé exceptionnellement un subside avec effet rétroactif, mais au plus tôt
+dès le début de la période de subside en cours.» al. 3: «la décision d'octroi couvre la période
+allant jusqu'à la fin de l'année civile» (daher «laufendes Jahr»). Der Satz 2 steht in [7]
+unverändert. `ipv.vorbehaltVD` sagte «nichts rückwirkend» — falsch, jetzt wie im Vorbehalt 2027,
+mit dem Beginn im **zweiten** Monat.
+
+**(2) Zuzug.** [4] art. 25 al. 4 (Fassung bis 31.12.2026): «Le requérant en provenance d'un autre
+canton au cours de l'année ne peut bénéficier d'un subside pour l'année considérée, à moins qu'il
+bénéficie de prestations complémentaires à l'AVS/AI ou du revenu d'insertion.» In [7] wird al. 4
+**ersetzt** (neu: Verweis auf art. 25a bei Änderungen während der Instruktion). Darum steht der
+Satz nur in `ipv.vorbehaltVD`, nicht in `ipv.vorbehaltVD2027`. Die App fragt den Zuzug nicht ab;
+der Satz steht für alle VD-Haushalte im Vorbehalt.
+
+**(3) Hinweis Vermögensgrenze 2027.** Neuer Schlüssel `ipv.vdVermoegen2027`, nur Text, nur 2026,
+nur wenn das erfasste Vermögen über `IPV_VD_2027.vermoegensGrenze.allein` (130'000, [6] art. 12
+al. 3 lit. a) liegt — «au-delà», also strikt darüber. Die Rechnung 2026 bleibt unverändert
+(Fünfzehntel). Begründung, warum schon im Herbst: die Erneuerung 2027 nimmt die Veranlagung
+«entrée en force au 22 octobre 2026» ([6] art. 7 al. 3); ein Antrag im November beginnt nach
+[4] art. 25 al. 1 am 1.1.2027, einer im Dezember nach [7] art. 33c («Le droit à la prestation
+débute au 1er janvier 2027 pour toutes les demandes de subside déposées entre le 1er décembre
+et le 31 décembre 2026»). Gesteuert über den Datensatz des Folgejahres, kein Datum im Code.
+Treffen spezifischer Subside und Vermögenshinweis zusammen, trägt `zusatzVorbehaltKey` eine
+Liste; PremiumSubsidy.jsx zeigt beide Sätze.
+
+**Tests:** `ipvVaud.test.js`, Blöcke «VD 2026: Hinweis auf die Vermögensgrenze 2027» (130'000
+kein Hinweis, 130'001 Hinweis bei gleichem Betrag, Liste mit spezifischem Subside, auch ohne
+Anspruch, 2027 ohne Vorschau) und «VD 2026: Vorbehalt und Vermögenshinweis in allen fünf
+Sprachen»; `ipvVaudAnzeige.test.js` (beide Sätze im HTML, ohne Betrag). Mutationsprobe `>` → `>=`:
+rot gesehen, zurückgesetzt. Eine zweite Bedingung (`!werte.vermoegensGrenze`) überlebte die
+Mutation, weil 2027 über der Grenze schon vorher mit `vermoegenVD` zurückkehrt — entfernt.
+
+**Fachprüfung 19.10.2026 abends (swiss-precision-pruefer, copy-pruefer):** kein Blocker. Umgesetzt:
+- **Ziffer 420** heisst «Numéraire, billets de banques et autres métaux précieux» ([6] art. 12 al.
+  2 lit. b) — Banknoten, nicht Bankguthaben. Der Text sagte «Bargeld und Bankguthaben», auch im
+  schon bestehenden `ipv.offenGrund.vermoegenVD`. Beide jetzt nach den vier Ziffern. **Offen:**
+  ob Bank- und Sparguthaben unter 410 «titres et autres placements» fallen, steht in [6] nicht;
+  die App zählt das Sparkonto in `vermoegenSumme` so oder so mit (vorsichtige Seite).
+- **Rückwirkung abschliessend:** art. 25 al. 1 Satz 2 nennt genau zwei Fälle (ohne Verschulden
+  verhindert, «établit» = Nachweis bei der Person; Antrag nach einer «information périodique au
+  sens de l'article 10 de la loi»). Das «etwa» ist weg, beide Fälle stehen da — in
+  `vorbehaltVD` **und** `vorbehaltVD2027` (dort derselbe Satz). LVLAMal art. 10 nicht gelesen;
+  der Text sagt darum nur «periodische Information des Kantons».
+- **«laufendes Jahr»** ist eine Schlussfolgerung aus art. 25 al. 3 («jusqu'à la fin de l'année
+  civile»), kein Zitat von al. 1 («période de subside en cours»).
+- **Zuzug:** «vom Kanton Waadt keine Verbilligung» und der Rat, beim bisherigen Wohnkanton
+  nachzufragen. Wie der Herkunftskanton den Wegzug regelt, ist **nicht** geprüft; der Text sagt
+  darum nur «nachfragen», keinen Anspruch.
+- **Massgebend ist die Veranlagung** ([6] art. 12 al. 2, art. 7 al. 3), nicht das erfasste
+  Vermögen — als Halbsatz in `ipv.vdVermoegen2027`.
+- **Für weiterhin offen erklärt:** rm-Texte provisorisch (`TODO(rm)`), insbesondere die
+  rätoromanische Bezeichnung der EL.
 
 ---
 

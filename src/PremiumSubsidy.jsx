@@ -458,8 +458,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // diesen Satz stünde eine Zahl im Brief, deren Grundlage strittig ist, und niemand
       // wüsste es. Steht nur bei `zusatzVorbehaltKey` — sonst wäre es Lärm für alle anderen.
       // (Befund Fachprüfung 23.09.2026: der Vorbehalt lag im Code und kam nie bei der Person an.)
-      ipvResult.zusatzVorbehaltKey && React.createElement('div', { style: { marginTop: space.xs } },
-        t(ipvResult.zusatzVorbehaltKey)),
+      // Ein Schlüssel oder eine Liste (VD: spezifischer Subside und Vermögensgrenze 2027 zugleich).
+      ...[].concat(ipvResult.zusatzVorbehaltKey || []).map((k) => React.createElement('div', { key: k, style: { marginTop: space.xs } },
+        t(k))),
       // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
       // der Anspruch beantragt werden muss.
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle'))
