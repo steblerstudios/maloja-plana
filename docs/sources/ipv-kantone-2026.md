@@ -3545,11 +3545,11 @@ https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbu
 > «Berechnungselemente für die Verteilung der Prämienverbilligung 2027» ·
 > «Die Richtprämien gemäss § 5 KVGG und § 3 Abs. 1 der Verordnung zum Gesetz zum Bundesgesetz
 > über die Krankenversicherung (V KVGG) betragen: a) für Erwachsene: Fr. 6'070.–, b) für junge
-> Erwachsene: Fr. 4'440.–, c) für Kinder: Fr. 1'450.–.» ·
+> Erwachsene: Fr. 4'440.–, c) für Kinder: Fr. 1’450.–.» ·
 > «Die Einkommensabzüge gemäss § 5 KVGG betragen: a) für Alleinstehende: Fr. 8'500.–, b) für
 > Alleinstehende mit Kind(ern): Fr. 12'200.–, c) für Ehepaare: Fr. 0.–, d) für Ehepaare mit
 > Kind(ern): Fr. 8'000.–, e) pro Kind/gemeinsam eingestuften jungen Erwachsenen in Ausbildung:
-> Fr. 2'500.–.» · «Der Einkommenssatz gemäss § 5 KVGG beträgt 19,25 %.»
+> Fr. 2’500.–.» · «Der Einkommenssatz gemäss § 5 KVGG beträgt 19,25 %.»
 
 **[4] SVA Aargau, «Allgemeine Informationen»** —
 https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine
@@ -3560,8 +3560,8 @@ https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetz
 > Franken jährlich / 370.00 Franken pro Monat · für Kinder: 1'450 Franken jährlich / 120.85
 > Franken pro Monat» · Einkommensabzüge 8'500 / 12'200 / 0 / 8'000 / 2'500 · «Der
 > Einkommenssatz beträgt 19.25 Prozent.» · Rechenbeispiel (Paar, 2 Kinder, 1 junger Erwachsener):
-> massgebendes Einkommen 30'397, Total Richtprämien 19'480, «Einkommenssatz 19.25 Prozent von
-> 30'397 Franken − 5'851.45», Verbilligungsanspruch 13'628.55. «Junge Erwachsene (Jahrgang 2002 - 2008)».
+> massgebendes Einkommen 30'397, Total Richtprämien 19'480, Tabellenzeile «Einkommenssatz 19.25
+> Prozent von 30'397 Franken» | «- 5'851.45», Verbilligungsanspruch 13'628.55. «Junge Erwachsene (Jahrgang 2002 - 2008)».
 
 Beide Quellen stimmen in **allen** Zahlen überein. Die Abzüge sind gegenüber 2026 unverändert;
 das Basisjahr 2024 bestätigt «drei Jahre vor dem Anspruchsjahr» ([1] § 7 Abs. 1).
@@ -3587,8 +3587,10 @@ wörtlich, mit `beschlussFehlt: true`. `agWerte()` liefert für 2027 darum `null
 01.01.2027 für AG weiterhin die Orientierung «jahr» ohne Betrag — wie bisher. Kantonsquelle
 liegt vor, **SAR-Fassung bzw. Beschluss fehlt**. Öffnen (`false`) erst mit der Fassung in der SAR
 oder einem RRB, oder auf ausdrücklichen Entscheid von Stebler Studios. Das SVA-Rechenbeispiel ist
-mit den Werten 2027 im Test nachgerechnet (exakt 13'628.5775; die SVA rundet den Abzug auf
-5 Rappen auf, siehe oben).
+mit den Werten 2027 im Test nachgerechnet (exakt 13'628.5775; im Beispiel ist der Abzug auf
+5 Rappen aufgerundet, 5'851.4225 → 5'851.45 — eine Regel lässt sich aus einem Beispiel nicht
+ableiten). Wortlaut-Treue: Apostrophe wie im PDF (’ bei 1’450 und 2’500). Fachprüfung
+19.10.2026 (swiss-precision-pruefer): kein Blocker, alle Zahlen gegen beide Quellen bestätigt.
 
 ---
 

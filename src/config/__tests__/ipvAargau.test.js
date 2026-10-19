@@ -101,8 +101,9 @@ describe('K31 AG: die Zahlen 2027 stehen so im Kantons-PDF — eingetragen, aber
     expect(me).toBe(30397);
     const r = ipvAargauRechnen({ personen: ['e', 'e', 'k', 'k', 'j'], me, werte: w });
     expect(r.summe).toBe(19480);
-    // SVA: «Einkommenssatz 19.25 Prozent von 30'397 Franken − 5'851.45», Anspruch 13'628.55.
-    // Exakt sind es 5 851.4225 bzw. 13 628.5775 — die SVA rundet den Abzug auf 5 Rappen auf.
+    // SVA-Tabellenzeile «Einkommenssatz 19.25 Prozent von 30'397 Franken» | «- 5'851.45»,
+    // Anspruch 13'628.55. Exakt sind es 5 851.4225 bzw. 13 628.5775 — im Beispiel ist der Abzug
+    // auf 5 Rappen aufgerundet (ob das die Regel ist, zeigt ein Beispiel nicht).
     expect(r.total).toBeCloseTo(13628.5775, 6);
     expect(Math.abs(r.total - 13628.55)).toBeLessThan(0.05);
   });

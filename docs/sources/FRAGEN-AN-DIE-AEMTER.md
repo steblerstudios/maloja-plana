@@ -114,7 +114,8 @@ nur auf der Website belegt sind. Ab 01.01.2027 zeigt die App für AG keinen Betr
 Der Kanton publiziert im Handbuch Soziales (Kap. 7.3.1) das PDF «Richtprämien 2027»: «Anhang
 (Stand 1. September 2026) · Berechnungselemente für die Verteilung der Prämienverbilligung 2027»
 mit 6'070 / 4'440 / 1'450, unveränderten Abzügen und 19,25 % — dieselben Zahlen wie die SVA. Die
-Kopfzeile lautet aber «Beilage 2 zum bereinigten Bericht»; ein Beschluss ist das nicht. Die
+Kopfzeile lautet aber «Beilage 2 zum bereinigten Bericht»; ein Beschluss ist daraus nicht
+ersichtlich (ob die Beilage zu einem Regierungsratsbeschluss gehört, wissen wir nicht). Die
 Gesetzessammlung führt am 19.10.2026 zu SAR 837.211 weiterhin nur die Fassung vom 27.08.2025
 (keine künftige Version), einen RRB oder eine Medienmitteilung zu 2027 haben wir nicht gefunden.
 Die App trägt die Werte 2027 jetzt ein, **rechnet sie aber nicht** (`beschlussFehlt: true`) —

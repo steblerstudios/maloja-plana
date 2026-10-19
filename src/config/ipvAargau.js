@@ -84,7 +84,8 @@ export const IPV_AG = {
 //     1. September 2026) · Berechnungselemente für die Verteilung der Prämienverbilligung 2027»
 //     — Richtprämien 6'070 / 4'440 / 1'450, Einkommensabzüge 8'500 / 12'200 / 0 / 8'000 und
 //     2'500 je Kind, Einkommenssatz 19,25 %. Kopfzeile des PDF: «Beilage 2 zum bereinigten
-//     Bericht» — eine Beilage, kein Beschluss und keine Fassung der Gesetzessammlung.
+//     Bericht» — ein Beschluss ist daraus nicht ersichtlich, eine Fassung der Gesetzessammlung
+//     ist es nicht. (Ob die Beilage zu einem RRB gehört, ist nicht belegt — Fachprüfung 19.10.)
 //   SVA Aargau, «Allgemeine Informationen»: dieselben Zahlen «für das Bezugsjahr 2027» und
 //     «Berechnungsbasis … ist das steuerbare Einkommen der rechtskräftigen Steuerveranlagung
 //     2024» (= 2027 − 3, § 7 Abs. 1 KVGG, darum basisjahrAbstand unverändert 3).
