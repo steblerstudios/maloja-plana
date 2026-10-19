@@ -356,14 +356,29 @@ export function ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, looku
     praemieMonat: praemie / 12, region, rdu, mehrere: kinderZahl > 0,
     erwachseneAnnual: Math.min(r.erwachseneAnnual, praemie), werte,
   });
+  // Vorschau auf die Vermögensgrenze des Folgejahres (Fachprüfung 19.10.2026): 2026 zählt das
+  // Vermögen nur über den Fünfzehntel, ab 01.01.2027 schliesst fortune mobilière über 130'000
+  // jeden Subside aus ([6] art. 12 al. 3, [7] art. 17 al. 3). Wer heute über der Grenze liegt,
+  // erhält 2026 die Zahl oben — aber die Erneuerung 2027 ([6] art. 7 al. 3) und jeder Antrag
+  // mit Anspruchsbeginn 2027 (November: «deuxième mois», [4] art. 25 al. 1; Dezember: [7]
+  // art. 33c) laufen schon unter der neuen Regel. Nur Text, kein Betrag; gesteuert über die
+  // Daten des Folgejahres, nicht über ein Datum. 2027 selbst kommt nicht bis hier: über der
+  // Grenze kehrt es oben mit `vermoegenVD` zurück.
+  const folgejahr = IPV_VD_JAHRE[jahr + 1];
+  const grenzeFolgejahr = folgejahr && folgejahr.vermoegensGrenze;
+  const vermoegenVorschau = Boolean(grenzeFolgejahr && vermoegen > grenzeFolgejahr.allein);
+  // Nur setzen, wenn zutreffend — sonst stünde der Hinweis bei jedem VD-Haushalt. Er läuft
+  // über `zusatzVorbehaltKey`, die Stelle, an der die Anzeige einen zweiten, nur für diese
+  // Person geltenden Satz zeigt (PremiumSubsidy.jsx) — ohne Betrag. Treffen beide zu: Liste.
+  const zusatz = [
+    ...(spezifisch ? ['ipv.vdSpezifischerSubside'] : []),
+    ...(vermoegenVorschau ? ['ipv.vdVermoegen2027'] : []),
+  ];
   // Die Grenze B der Kategorie steht in [1] art. 2 als Zahl — sie darf angezeigt werden.
   const cantonData = { ...ipvData, maxIncome: r.grenze };
   const gemeinsam = {
     canton: 'VD', cantonData, jahr, vorbehaltKey: werte.vorbehaltKey || 'ipv.vorbehaltVD',
-    // Nur setzen, wenn zutreffend — sonst stünde der Hinweis bei jedem VD-Haushalt. Er läuft
-    // über `zusatzVorbehaltKey`, die Stelle, an der die Anzeige einen zweiten, nur für diese
-    // Person geltenden Satz zeigt (PremiumSubsidy.jsx) — ohne Betrag.
-    extra: { region, ...(spezifisch ? { zusatzVorbehaltKey: 'ipv.vdSpezifischerSubside' } : {}) },
+    extra: { region, ...(zusatz.length ? { zusatzVorbehaltKey: zusatz.length === 1 ? zusatz[0] : zusatz } : {}) },
   };
   if (annual <= 0) {
     // Über der Grenze des ordentlichen Subsides kann der spezifische trotzdem bestehen — er hat
