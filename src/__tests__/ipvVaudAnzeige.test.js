@@ -62,7 +62,7 @@ describe('K31 IPV-Rechner, Kanton Waadt', () => {
   it('kein roher Schlüssel bleibt stehen: alle VD-Texte in allen fünf Sprachen', async () => {
     for (const sprache of ['de', 'fr', 'it', 'en', 'rm']) {
       const texte = TEXTE[sprache];
-      for (const k of ['vorbehaltVD', 'vdKeinAnspruch', 'vdSpezifischerSubside', 'noteApplyOvam']) {
+      for (const k of ['vorbehaltVD', 'vdKeinAnspruch', 'vdSpezifischerSubside', 'vdVermoegen2027', 'noteApplyOvam']) {
         expect(typeof texte.ipv[k], `${sprache}.js: ipv.${k} fehlt`).toBe('string');
         expect(texte.ipv[k].length).toBeGreaterThan(40);
       }
@@ -105,6 +105,18 @@ describe('K31 IPV-Rechner, Kanton Waadt', () => {
     expect(html).not.toContain('ipv.jahrRegion');
     expect(html).not.toContain('ipv.vdSpezifischerSubside');
     expect(html).not.toContain('premium.eligible');
+  });
+
+  // Vorschau auf die Vermögensgrenze 2027 ([6] art. 12 al. 3): neben dem spezifischen Subside ein
+  // zweiter Satz, beide sichtbar, keiner mit Betrag (Fachprüfung 19.10.2026).
+  it('über 130 000 Vermögen: Hinweis auf 2027 neben dem spezifischen Subside, ohne Betrag', () => {
+    const html = render(profil(2000, {}));
+    expect(html).not.toContain('ipv.vdVermoegen2027');
+    const reich = render({ ...profil(2000), finanzen: { monthlyIncome: 2000, savingsAccount: 200000 } });
+    expect(reich).toContain('premium.eligible');
+    expect(reich).toContain('ipv.vdSpezifischerSubside');
+    expect(reich).toContain('ipv.vdVermoegen2027');
+    expect(reich).not.toContain('ipv.vdVermoegen2027(');
   });
 
   it('Kantonsvergleich zeigt VD nicht mit Einzelwerten (hat keine mehr)', () => {

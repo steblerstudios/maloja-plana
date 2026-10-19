@@ -132,6 +132,19 @@ stimmig. Übrig bleibt die Frage nach der Rechtsgrundlage.*
 **Stand:** AG ist für 2026 gebaut; die Werte 2027 sind bewusst **nicht** eingebaut, weil sie
 nur auf der Website belegt sind. Ab 01.01.2027 zeigt die App für AG keinen Betrag mehr.
 
+**⟨Nachtrag 19.10.2026⟩ Jetzt liegt eine Kantonsquelle vor, die SAR-Fassung fehlt weiterhin.**
+Der Kanton publiziert im Handbuch Soziales (Kap. 7.3.1) das PDF «Richtprämien 2027»: «Anhang
+(Stand 1. September 2026) · Berechnungselemente für die Verteilung der Prämienverbilligung 2027»
+mit 6'070 / 4'440 / 1'450, unveränderten Abzügen und 19,25 % — dieselben Zahlen wie die SVA. Die
+Kopfzeile lautet aber «Beilage 2 zum bereinigten Bericht»; ein Beschluss ist daraus nicht
+ersichtlich (ob die Beilage zu einem Regierungsratsbeschluss gehört, wissen wir nicht). Die
+Gesetzessammlung führt am 19.10.2026 zu SAR 837.211 weiterhin nur die Fassung vom 27.08.2025
+(keine künftige Version), einen RRB oder eine Medienmitteilung zu 2027 haben wir nicht gefunden.
+Die App trägt die Werte 2027 jetzt ein, **rechnet sie aber nicht** (`beschlussFehlt: true`) —
+an der Wirkung ab 01.01.2027 ändert sich also nichts. Die Frage ist damit enger: **Wann wird der
+Anhang 2027 in die SAR aufgenommen, und unter welchem Beschlussdatum?** Wortlaute und Abrufdaten:
+`docs/sources/ipv-kantone-2026.md`, Abschnitt AG, «Nachtrag 19.10.2026».
+
 ---
 
 ## 5 · SVA St.Gallen — Deckel auf die effektive Prämie, und zwei kleinere Punkte
