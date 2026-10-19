@@ -30,7 +30,7 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 // (derselbe Wert wie Kapitel/Brief). Die SKALA/Marke rechnet durchgehend auf der LSE-Norm
 // (40 Std.). Wer die 182 für die Marke oder `incomeFTE` verwendet, holt die Zwei-Welten-
 // Krankheit zurück — siehe `mindestlohnBoden`.
-import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel, mindestlohnJahrVorbei } from './lohnCheck.js';
+import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel, mindestlohnJahrNichtBelegt } from './lohnCheck.js';
 import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 
@@ -78,7 +78,7 @@ const num = (v) => {
 export function mindestlohnBoden(canton) {
   const ml = getMindestlohn(canton);
   // Jahres-Riegel (lohnCheck.js): ohne belegten Satz fürs laufende Jahr weder Marke noch Betrag.
-  if (!ml || mindestlohnJahrVorbei(ml.jahr)) return null;
+  if (!ml || mindestlohnJahrNichtBelegt(ml.jahr)) return null;
   return {
     chfStunde: ml.chfStunde,
     monat: Math.round(ml.chfStunde * (LSE_VOLLZEIT_STUNDEN_WOCHE * 52 / 12)), // 40 Std. — Marke
@@ -92,7 +92,7 @@ export function mindestlohnBoden(canton) {
 export function mindestlohnNichtBelegt(canton) {
   const ml = getMindestlohn(canton);
   const heute = new Date();
-  return ml && mindestlohnJahrVorbei(ml.jahr, heute) ? { jahr: ml.jahr, laufendesJahr: heute.getFullYear() } : null;
+  return ml && mindestlohnJahrNichtBelegt(ml.jahr, heute) ? { jahr: ml.jahr, laufendesJahr: heute.getFullYear() } : null;
 }
 
 // Lage des Lohns auf dem Barometer.

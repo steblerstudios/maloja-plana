@@ -46,8 +46,11 @@ export const LOHNCHECK_DATA_VERSION = '2026';
 // 'jahrNichtBelegt'). Gleiches Muster wie `jahrVorbei` in config/kantonsModell.js (IPV).
 // Neue Werte erst nach Prüfung am Volltext der Kantonsquelle eintragen, nie geschätzt.
 // (Deploy-Tor 19.10.2026: einziger offener Punkt mit fester Frist.)
-export function mindestlohnJahrVorbei(jahr, heute = new Date()) {
-  return heute.getFullYear() > jahr;
+// Bewusst `!==` statt `>`: Werden die Sätze des Folgejahres schon im Dezember eingetragen,
+// gelten sie nicht rückwirkend für Dezemberlöhne — ein höherer neuer Satz ergäbe sonst einen
+// Fehlalarm gegen korrekt bezahlte Löhne (Befund swiss-precision-pruefer, 19.10.2026).
+export function mindestlohnJahrNichtBelegt(jahr, heute = new Date()) {
+  return heute.getFullYear() !== jahr;
 }
 
 function nichtBelegt(kanton, ml, heute) {
@@ -111,7 +114,7 @@ export function pruefeLohn(monatslohnChf, kanton) {
   const ml = MINDESTLOHN[kanton];
   if (!ml) return { status: 'keinGesetz', kanton };
   const heute = new Date();
-  if (mindestlohnJahrVorbei(ml.jahr, heute)) return nichtBelegt(kanton, ml, heute);
+  if (mindestlohnJahrNichtBelegt(ml.jahr, heute)) return nichtBelegt(kanton, ml, heute);
 
   const stundenChf = monatslohnChf / STUNDEN_PRO_MONAT;
   const mindestMonat = ml.chfStunde * STUNDEN_PRO_MONAT;
@@ -240,7 +243,7 @@ export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkom
   // Jahres-Riegel vor jedem Urteil: ohne belegten Satz für das laufende Jahr kein Vergleich.
   // Kein `mindestStunde` im Ergebnis, damit keine Ansicht den alten Betrag doch noch zeigt.
   const heute = new Date();
-  if (mindestlohnJahrVorbei(ml.jahr, heute)) return { ...base, ...nichtBelegt(kanton, ml, heute) };
+  if (mindestlohnJahrNichtBelegt(ml.jahr, heute)) return { ...base, ...nichtBelegt(kanton, ml, heute) };
 
   // Über dem VOLLEN Boden ist die Unterschreitung arithmetisch ausgeschlossen — ohne
   // Basis- und ohne 13.-Frage.

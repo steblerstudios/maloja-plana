@@ -54,6 +54,14 @@ describe('Mindestlohn-Jahres-Riegel', () => {
     expect(pruefeStundenlohn(2000, 42, k, 'netto').status).toBe('jahrNichtBelegt');
   });
 
+  it('Werte gelten nur in IHREM Jahr — auch nicht zu früh (Dezember vor dem neuen Satz)', () => {
+    zeit('2025-12-15T12:00:00');
+    const r = pruefeStundenlohn(3000, 42, 'GE', 'brutto', 'no');
+    expect(r.status).toBe('jahrNichtBelegt');
+    expect(r).toMatchObject({ jahr: 2026, laufendesJahr: 2025 });
+    expect(r).not.toHaveProperty('mindestStunde');
+  });
+
   it('Kanton ohne Mindestlohn bleibt 2027 «keinGesetz» — der Riegel betrifft nur belegte Kantone', () => {
     zeit('2027-03-15T12:00:00');
     expect(pruefeStundenlohn(3000, 42, 'ZH', 'brutto').status).toBe('keinGesetz');
@@ -130,6 +138,18 @@ describe('Mindestlohn-Jahres-Riegel', () => {
       expect(s).not.toContain('amtlich belegt');
     });
 
+    it('2027 Jura: keine Stelle, kein «null», kein Gericht als Auskunftsstelle', () => {
+      zeit('2027-01-01T00:00:01');
+      const s = renderToStaticMarkup(React.createElement(Stundenlohn, {
+        palette, t, onUpdateData: () => {},
+        data: { finanzen: { stundenlohnRechner: { betrag: '20', wochenstunden: '42', kanton: 'JU', ferienForm: 'dazu', dreizehnter: 'nein', feiertag: 'nein' } } },
+      })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
+      expect(s).toContain('Der geltende Betrag ist beim Kanton');
+      expect(s).not.toContain('null');
+      expect(s).not.toContain('prud');
+      expect(s).not.toContain('21.40');
+    });
+
     it('2027: Hinweis mit beiden Jahren, kein Betrag 24.59, kein «scheint unter»', () => {
       zeit('2027-01-01T00:00:01');
       const s = seite();
@@ -153,7 +173,9 @@ describe('Mindestlohn-Jahres-Riegel', () => {
         expect(text).not.toMatch(/\d/);
       }
       expect(kapitel).toContain('{kanton}');
-      expect(kapitel).toContain('{stelle}');
+      // Bewusst ohne Stelle: Kontrollstellen sind für Streitfälle da (JU: Arbeitsgericht),
+      // und die TI-Stelle verliert per 01.01.2027 ihre Grundlage (lohnRechtsstellen.js).
+      expect(kapitel).not.toContain('{stelle}');
     });
   });
 });

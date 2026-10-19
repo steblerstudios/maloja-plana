@@ -1344,7 +1344,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   React.createElement('div', {
                     key: 'hours-minwage-jahr-nicht-belegt',
                     style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
-                  }, tr('lohnCheck.jahrNichtBelegt', { jahr: check.jahr, laufend: check.laufendesJahr, kanton: check.kanton, stelle: lohnKontrollstelleText(check.kanton, tr) }))
+                  }, tr('lohnCheck.jahrNichtBelegt', { jahr: check.jahr, laufend: check.laufendesJahr, kanton: check.kanton }))
                 );
               }
               if (check && check.status === 'unterMindestlohn') {
@@ -1590,7 +1590,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         lineHeight: leading.relaxed,
                         marginBottom: space.sm + 'px',
                       }
-                    }, tr('lohnCheck.jahrNichtBelegt', { jahr: result.jahr, laufend: result.laufendesJahr, kanton: result.kanton, stelle: lohnKontrollstelleText(result.kanton, tr) }))
+                    }, tr('lohnCheck.jahrNichtBelegt', { jahr: result.jahr, laufend: result.laufendesJahr, kanton: result.kanton }))
                   );
                 }
                 if (result.status === 'unterMindestlohn') {

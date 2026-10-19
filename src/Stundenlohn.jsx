@@ -115,7 +115,7 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       // sind im Repo nicht belegt (Fachprüfung 18.10.2026). `ml_zhHinweis` nennt darum weder Urteil
       // noch Datum noch Beträge und verweist an die Stadt.
       // Jahres-Riegel (data/lohnCheck.js): für das laufende Jahr kein belegter Satz — kein Urteil.
-      case 'jahrNichtBelegt': return t('lohnCheck.jahrNichtBelegt', { jahr: b.jahr, laufend: b.laufendesJahr, kanton: kantonName, stelle: stelle ? stelle.stelle : t('lohnCheck.stelleFallbackKurz') });
+      case 'jahrNichtBelegt': return t('lohnCheck.jahrNichtBelegt', { jahr: b.jahr, laufend: b.laufendesJahr, kanton: kantonName });
       case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName }) + (e.kanton === 'ZH' ? ' ' + t('stundenlohnView.ml_zhHinweis') : '');
       default: return t('stundenlohnView.ml_keinKanton');
     }

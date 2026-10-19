@@ -2884,7 +2884,7 @@ export default {
     readoutBelow: { sie: 'Ihr Lohn liegt unter dem Schweizer Median.', du: 'Dein Lohn liegt unter dem Schweizer Median.' },
     mindestlohnLine: 'Kantonaler Mindestlohn: CHF {stunde}/Std. — bei Vollzeit rund CHF {amount} im Monat (Stand {jahr}).',
     // Jahres-Riegel (data/lohnCheck.js): ab dem 01.01. des Folgejahres kein Betrag aus dem alten Jahr.
-    mindestlohnJahrNichtBelegt: 'Kantonaler Mindestlohn: amtlich belegt für {jahr}, für {laufend} noch keine geprüften Werte — darum hier ohne Betrag und ohne Vergleich.',
+    mindestlohnJahrNichtBelegt: 'Kantonaler Mindestlohn: amtlich belegt für {jahr}, für {laufend} noch keine geprüften Werte — darum hier ohne Betrag und ohne Mindestlohn-Vergleich.',
     // Die Unterschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
     // Vorher war der Text in beiden Zuständen identisch, und der ausformulierte Satz stand
     // nur im Kapitel — in der Finanz-Übersicht war die Aussage schlicht verloren.
@@ -2927,8 +2927,9 @@ export default {
     dreizehnterUnklar: 'Der Lohn liegt knapp unter dem vollen Mindestlohn. Mit einem 13. Monatslohn kann er dennoch konform sein — der 13. zählt an den Mindestlohn. Bitte im Finanzen-Kapitel angeben, ob ein 13. bezahlt wird, dann ordnen wir es eindeutig ein.',
     nextStepLink: 'Lohn-Nachfrage vorbereiten',
     // Jahres-Riegel (data/lohnCheck.js): die Sätze sind für {jahr} belegt; für das laufende Jahr
-    // keine Zahl erfinden, sondern sagen, dass sie fehlt, und auf die Stelle verweisen.
-    jahrNichtBelegt: 'Die Mindestlöhne in dieser App sind für {jahr} amtlich belegt. Für {laufend} sind noch keine geprüften Werte erfasst — darum hier kein Vergleich. Der geltende Mindestlohn im Kanton {kanton} lässt sich bei {stelle} erfragen.',
+    // keine Zahl erfinden, sondern sagen, dass sie fehlt. Bewusst ohne {stelle}: die Kontrollstellen sind
+    // für Streitfälle da (JU: Arbeitsgericht), und die TI-Stelle verliert per 01.01.2027 ihre Grundlage.
+    jahrNichtBelegt: 'Die Mindestlöhne in dieser App sind für {jahr} amtlich belegt. Für {laufend} sind noch keine geprüften Werte erfasst — darum hier kein Vergleich. Der geltende Betrag ist beim Kanton {kanton} nachzulesen.',
   },
 
   tax: {
