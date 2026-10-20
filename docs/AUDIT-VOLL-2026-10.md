@@ -2,7 +2,7 @@
 
 *Geprüfter Stand: `origin/main` `36199039` (19.10.2026 17:32, #510) **plus** Entwurf #508
 `fix/mindestlohn-jahresriegel` @ `37ee2069` — also genau das, was am 29.10. live gehen soll.
-Lauf am 19.10.2026 abends, nach `stebler-studios/bibliothek/sops/review-umfang.md` Stufe L (alle acht Linsen) und
+Lauf vom 19.10.2026 abends bis 20.10.2026, nach `stebler-studios/bibliothek/sops/review-umfang.md` Stufe L (alle acht Linsen) und
 dem Judge-Prinzip: elf günstige Prüfer (Sonnet) lesen, Claude Code (Opus) plant, prüft nach,
 dedupliziert und stuft ein. Keine Fixes in diesem Durchgang.*
 
