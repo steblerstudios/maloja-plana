@@ -1518,7 +1518,7 @@ export default {
       finanzuebersichtHint: 'Tutti i calcoli in un colpo d\'occhio',
       addressInWohnen: { sie: 'Il Suo indirizzo è salvato nel capitolo «Abitazione»', du: 'Il tuo indirizzo è salvato nel capitolo «Abitazione»' },
       employerInFinanzen: 'Datore di lavoro & reddito nel capitolo «Finanze»',
-      educationTaxHint: 'Costi di formazione? Fino a CHF 10’000 deducibili dalle imposte',
+      educationTaxHint: 'Costi di formazione? Deducibili fino a CHF 13’000 per l\'imposta federale, i cantoni hanno limiti propri',
       taxFromBehoerdenHint: 'Stimare il carico fiscale',
       schuldenFromBehoerdenHint: 'Gestire le esecuzioni',
     },

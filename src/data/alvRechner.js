@@ -52,7 +52,8 @@ export function bestimmeWartetage({ versicherterVerdienst, hatKinder }) {
 // abgebildet. Gibt null zurück, wenn Beitragszeit < 12 Monate (oft kein Anspruch).
 export function bestimmeAnspruchstage({ beitragsmonate, alter, hatKinder, ivGrad40 }) {
   if (!beitragsmonate || beitragsmonate < 12) return null;
-  if ((alter >= 55 && beitragsmonate >= 22) || ivGrad40) return 520;
+  // AVIG Art. 27 Abs. 2 lit. c: 520 nur mit mindestens 22 Beitragsmonaten — ab 55 ODER mit IV-Rente (≥ 40 %).
+  if (beitragsmonate >= 22 && (alter >= 55 || ivGrad40)) return 520;
   if (alter && alter < 25 && !hatKinder) return 200; // jung, ohne Unterhaltspflicht
   if (beitragsmonate >= 18) return 400;
   return 260; // 12 bis <18 Monate
