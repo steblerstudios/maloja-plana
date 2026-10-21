@@ -139,6 +139,48 @@ describe('ahvRechner', () => {
       expect(mit.erziehungsgutschrift).toBeGreaterThan(0);
     });
 
+    // B8 (Voll-Audit 10/2026): Skala 44 statt linearer Interpolation. Soll-Werte wörtlich aus
+    // BSV-Merkblatt 3.01, Stand 1.1.2026, Anhang S. 18 (https://www.ahv-iv.ch/p/3.01.d,
+    // abgerufen 2026-10-21). Die alte Gerade lieferte 1512 / 1764 / 2016.
+    describe('Skala 44 (Merkblatt 3.01, Stand 1.1.2026)', () => {
+      const rente = (einkommen) => berechneAltersrente({
+        geburtsjahr: 1961, durchschnittlichesJahreseinkommen: einkommen, beitragsjahre: 44,
+      }).monatsrente;
+
+      it('trifft die Tabellenwerte im Mittelfeld', () => {
+        expect(rente(30240)).toBe(1588);
+        expect(rente(45360)).toBe(1915);
+        expect(rente(60480)).toBe(2117);
+      });
+
+      it('Minimum und Maximum', () => {
+        expect(rente(1)).toBe(1260);
+        expect(rente(15120)).toBe(1260);
+        expect(rente(90720)).toBe(2520);
+        expect(rente(250000)).toBe(2520);
+      });
+
+      it('rundet auf den nächsthöheren Tabellenwert auf (keine Interpolation)', () => {
+        expect(rente(30241)).toBe(1620);   // → Zeile 31'752
+        expect(rente(15121)).toBe(1293);   // → Zeile 16'632
+        expect(rente(89209)).toBe(2520);   // → Zeile 90'720
+        // Merkblatt-Beispiel Ziff. 30: 25'983 + 9'494 → «aufgerundet auf Tabellenwert» 36'288 → 1'719
+        expect(rente(25983 + 9494)).toBe(1719);
+      });
+
+      it('Ehepaar-Plafond wie im Merkblatt-Beispiel Ziff. 31 (1880 / 1900)', () => {
+        const r = berechneAltersrente({
+          geburtsjahr: 1961, durchschnittlichesJahreseinkommen: 45360, beitragsjahre: 44,
+          verheiratet: true, einkommenPartner: 46872,
+        });
+        expect(r.vollrente).toBe(1915);
+        expect(r.plafoniert).toBe(true);
+        expect(r.monatsrente).toBeCloseTo(1880, 0);
+        expect(r.rentePartner).toBeCloseTo(1900, 0);
+        expect(r.totalEhepaar).toBeCloseTo(3780, 0);
+      });
+    });
+
     it('returns zero for zero income', () => {
       const r = berechneAltersrente({
         geburtsjahr: 1961,
