@@ -37,6 +37,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
+import { steuerfristVorbei } from './utils/steuerfrist.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -1931,7 +1932,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
             React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
           )
-        )
+        ),
+        // Verpasste Steuerfrist, noch nicht als eingereicht vermerkt: ruhig sagen, was jetzt
+        // geht, statt nur «(vor 22 Tagen)» grau stehen zu lassen (Massstab-Prüfung 21.10.2026).
+        // Mahnung mit Nachfrist, erst danach Ermessen: Bund DBG Art. 124 Abs. 3, Art. 130 Abs. 2
+        // (aus dem Gedächtnis, im PR zur Fachprüfung markiert — kantonal je eigenes Steuergesetz).
+        (() => {
+          const n = new Date();
+          const heute = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
+          if (!steuerfristVorbei(data, heute)) return null;
+          return React.createElement('p', {
+            role: 'note',
+            style: { fontSize: text.sm, color: palette.text, margin: space.sm + 'px 0 0', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', lineHeight: leading.relaxed },
+          }, tr('behördenStatus.pastHint'));
+        })()
       );
     })(),
 

@@ -1815,6 +1815,7 @@ export default {
     nextUpReassure: { sie: 'Juste une suggestion — c’est vous qui donnez le rythme.', du: 'Juste une suggestion — c’est toi qui donnes le rythme.' },
     glanceDeadline: 'Prochain délai',
     glanceNoDeadline: 'aucun en cours',
+    glanceDeadlinePast: '{title} · dépassé depuis le {date}',
     glanceSaved: 'Dernière sauvegarde',
     glanceNeverSaved: 'Aucun fichier de sauvegarde créé',
     nextUpAction: 'Compléter : {feld}',
@@ -2230,6 +2231,7 @@ export default {
     today: 'aujourd\'hui',
     ago: 'il y a {n} mois',
     agoDays: 'il y a {n} jours',
+    pastHint: { sie: 'Le délai est dépassé. Déposez la déclaration dès que possible — en règle générale, l\u2019administration fiscale fixe un nouveau délai par un rappel.', du: 'Le délai est dépassé. Dépose la déclaration dès que possible — en règle générale, l\u2019administration fiscale fixe un nouveau délai par un rappel.' },
     recorded: 'documenté',
   },
 

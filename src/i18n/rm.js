@@ -1909,6 +1909,8 @@ export default {
     nextUpReassure: { sie: 'Mo ina proposta — Vus fixais il tempo.', du: 'Mo ina proposta — ti fixeschas il tempo.' },
     glanceDeadline: 'Proxim termin',
     glanceNoDeadline: 'nagin avert',
+    // TODO(rm): provisorisch — Gegenlese (verpasste Steuerfrist, 21.10.2026)
+    glanceDeadlinePast: '{title} · scadì dals {date}',
     glanceSaved: 'Ultima segirada',
     glanceNeverSaved: 'Anc nagina datoteca da backup creada',
     nextUpAction: 'Cumplettar: {feld}',
@@ -3773,6 +3775,8 @@ export default {
     today: 'oz',
     ago: 'avant {n} mais',
     agoDays: 'avant {n} dis',
+    // TODO(rm): provisorisch — Gegenlese (verpasste Steuerfrist, 21.10.2026)
+    pastHint: { sie: 'Il termin è scadì. Inoltrai la decleraziun uschè spert sco pussaivel — per regla fixescha l\u2019uffizi da taglia in nov termin cun ina admoniziun.', du: 'Il termin è scadì. Inoltrescha la decleraziun uschè spert sco pussaivel — per regla fixescha l\u2019uffizi da taglia in nov termin cun ina admoniziun.' },
     recorded: 'registrà',
   },
 

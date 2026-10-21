@@ -1814,6 +1814,7 @@ export default {
     nextUpReassure: { sie: 'Solo un suggerimento — il ritmo lo decide Lei.', du: 'Solo un suggerimento — il ritmo lo decidi tu.' },
     glanceDeadline: 'Prossima scadenza',
     glanceNoDeadline: 'nessuna aperta',
+    glanceDeadlinePast: '{title} · scaduta dal {date}',
     glanceSaved: 'Ultimo salvataggio',
     glanceNeverSaved: 'Ancora nessun file di backup creato',
     nextUpAction: 'Completare: {feld}',
@@ -2230,6 +2231,7 @@ export default {
     today: 'oggi',
     ago: '{n} mesi fa',
     agoDays: '{n} giorni fa',
+    pastHint: { sie: 'Il termine è scaduto. Inoltri la dichiarazione il prima possibile — di regola l\u2019ufficio delle imposte fissa un nuovo termine con un richiamo.', du: 'Il termine è scaduto. Inoltra la dichiarazione il prima possibile — di regola l\u2019ufficio delle imposte fissa un nuovo termine con un richiamo.' },
     recorded: 'documentato',
   },
 

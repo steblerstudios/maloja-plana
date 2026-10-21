@@ -1821,6 +1821,7 @@ export default {
     nextUpReassure: { sie: 'Nur ein Vorschlag — Sie bestimmen das Tempo.', du: 'Nur ein Vorschlag — Du bestimmst das Tempo.' },
     glanceDeadline: 'Nächste Frist',
     glanceNoDeadline: 'keine offene',
+    glanceDeadlinePast: '{title} · vorbei seit {date}',
     glanceSaved: 'Zuletzt gesichert',
     glanceNeverSaved: 'Noch keine Sicherungsdatei erstellt',
     nextUpAction: '{feld} ergänzen',
@@ -2236,6 +2237,7 @@ export default {
     today: 'heute',
     ago: 'vor {n} Monaten',
     agoDays: 'vor {n} Tagen',
+    pastHint: { sie: 'Die Frist ist vorbei. Reichen Sie die Erklärung so bald wie möglich ein — in der Regel setzt das Steueramt mit einer Mahnung eine Nachfrist.', du: 'Die Frist ist vorbei. Reiche die Erklärung so bald wie möglich ein — in der Regel setzt das Steueramt mit einer Mahnung eine Nachfrist.' },
     recorded: 'erfasst',
   },
 

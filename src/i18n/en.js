@@ -1814,6 +1814,7 @@ export default {
     nextUpReassure: 'Just a suggestion — you set the pace.',
     glanceDeadline: 'Next deadline',
     glanceNoDeadline: 'none open',
+    glanceDeadlinePast: '{title} · passed on {date}',
     glanceSaved: 'Last saved',
     glanceNeverSaved: 'No backup file created yet',
     nextUpAction: 'Fill in: {feld}',
@@ -2230,6 +2231,7 @@ export default {
     today: 'today',
     ago: '{n} months ago',
     agoDays: '{n} days ago',
+    pastHint: { sie: 'The deadline has passed. Submit your return as soon as you can — the tax office usually sets a new deadline with a reminder.', du: 'The deadline has passed. Submit your return as soon as you can — the tax office usually sets a new deadline with a reminder.' },
     recorded: 'recorded',
   },
 
