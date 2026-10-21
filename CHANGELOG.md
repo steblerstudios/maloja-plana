@@ -11,15 +11,31 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
+
+*Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B5, B6, B7, B10, B12
+aus dem Voll-Audit Stufe L (`docs/AUDIT-VOLL-2026-10.md`, PR #518) und den Mindestlohn-Jahresriegel (#508).
+Seit 0.1.46 gemergt, ohne eigene Zeile: #510 (Lohnstelle, JU amtlicher Name), #511/#516 (IPV AG 2027, Riegel zu),
+#512 (IPV ZH 2027, Riegel zu), #514/#517 (IPV VD 2027 Riegel zu, Anzeige 2026). Noch offen und vor dem Deploy
+hier einzutragen: die Audit-PRs zu B8, B9. **Gemergt ist nicht live.***
+
 ### Behoben
+- **Drei falsche Behörden-Links (Audit B1–B3):** Vaterschaft → AHV-Merkblatt 6.04 «Entschädigung des andern
+  Elternteils» (vorher 6.03 Corona-Erwerbsersatz); Familienzulagen → 6.08 «Familienzulagen» (vorher 6.01 EO für
+  Dienstleistende); Uri Steuererklärung → ur.ch «Natürliche Personen» mit eTax.UR (vorher «Organisation von Anlässen»).
+- **ALV: 520 Taggelder mit IV-Rente nur ab 22 Beitragsmonaten (Audit B10)**, AVIG Art. 27 Abs. 2 lit. c.
+  Vorher bekamen IV-Rentner/innen immer 520, auch mit 12 Monaten.
+- **Bildungsabzug (Audit B12):** Hinweis «bis CHF 10’000» → Bundessteuer bis CHF 13’000 (DBG Art. 33 Abs. 1
+  lit. j), Kantone mit eigenen Grenzen; 5 Sprachen.
+- **«Arbeitslosengeld» → «Arbeitslosenentschädigung» (Audit B7)** an den letzten drei Stellen.
 - **Auto-Save verliert die letzte Eingabe nicht mehr** (Voll-Audit B4): sofort speichern bei `pagehide` und beim Wechsel in den Hintergrund (iOS wegwischen, Tab schliessen, neu laden innert 5 s); bei Dauertippen spätestens nach 30 s. Ein fremder Tab (K116) und der Löschweg sperren weiterhin. `utils/autoSave.js`.
+- **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
+- **Mindestlohn-Jahresriegel** (#508): ab 1.1.2027 kein Vergleich mehr mit den Mindestlöhnen 2026.
+- **AHV-Altersrente nach amtlicher Skala 44 statt linear** (Voll-Audit B8): die Vollrente kommt jetzt aus der 51-zeiligen Tabelle des BSV-Merkblatts 3.01 (Stand 1.1.2026), das Einkommen wird wie amtlich auf den nächsthöheren Tabellenwert aufgerundet. Im Mittelfeld zeigte die App zu wenig, an den Tabellenwerten bis 7,9 %, dazwischen wegen der Aufrundung bis gut 9 %: 30'240 → 1588 (vorher 1512), 45'360 → 1915 (1764), 60'480 → 2117 (2016). Wirkt im Vorsorge-Rechner, im IK-Auszug und beim Ehepaar-Plafond. Die EL-Heuristik und die Pensionierungsseite rechnen keine AHV-Rente selbst und sind nicht betroffen.
 
 ### Geändert
+- **Version 0.1.47-beta (Audit B6).**
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
-
-### Behoben
-- **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
-- **AHV-Altersrente nach amtlicher Skala 44 statt linear** (Voll-Audit B8): die Vollrente kommt jetzt aus der 51-zeiligen Tabelle des BSV-Merkblatts 3.01 (Stand 1.1.2026), das Einkommen wird wie amtlich auf den nächsthöheren Tabellenwert aufgerundet. Im Mittelfeld zeigte die App zu wenig, an den Tabellenwerten bis 7,9 %, dazwischen wegen der Aufrundung bis gut 9 %: 30'240 → 1588 (vorher 1512), 45'360 → 1915 (1764), 60'480 → 2117 (2016). Wirkt im Vorsorge-Rechner, im IK-Auszug und beim Ehepaar-Plafond. Die EL-Heuristik und die Pensionierungsseite rechnen keine AHV-Rente selbst und sind nicht betroffen.
 
 ## [0.1.46-beta] — 2026-10-19
 

@@ -1518,7 +1518,7 @@ export default {
       finanzuebersichtHint: 'Tutti i calcoli in un colpo d\'occhio',
       addressInWohnen: { sie: 'Il Suo indirizzo è salvato nel capitolo «Abitazione»', du: 'Il tuo indirizzo è salvato nel capitolo «Abitazione»' },
       employerInFinanzen: 'Datore di lavoro & reddito nel capitolo «Finanze»',
-      educationTaxHint: 'Costi di formazione? Fino a CHF 10’000 deducibili dalle imposte',
+      educationTaxHint: 'Costi di formazione? Deducibili fino a CHF 13’000 per l\'imposta federale, i cantoni hanno limiti propri',
       taxFromBehoerdenHint: 'Stimare il carico fiscale',
       schuldenFromBehoerdenHint: 'Gestire le esecuzioni',
     },
@@ -3174,6 +3174,7 @@ export default {
     readoutAbove: { sie: 'Il Suo salario è superiore alla mediana svizzera.', du: 'Il tuo salario è superiore alla mediana svizzera.' },
     readoutBelow: { sie: 'Il Suo salario è inferiore alla mediana svizzera.', du: 'Il tuo salario è inferiore alla mediana svizzera.' },
     mindestlohnLine: 'Salario minimo cantonale: CHF {stunde}/ora — a tempo pieno circa CHF {amount} al mese (stato {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Salario minimo cantonale: verificato sulle fonti ufficiali per il {jahr}, per il {laufend} non ci sono ancora valori verificati — per questo qui senza importo e senza confronto con il salario minimo.',
     mindestlohnBreachedLine: { sie: 'Il Suo salario sembra inferiore.', du: 'Il tuo salario sembra inferiore.' },
     fulltimeNote: 'Confronto sulla base di un impiego a tempo pieno (40 ore/settimana, come per la mediana UST).',
     dreizehnterNote: 'Il valore di confronto include la quota di tredicesima (×13/12) per corrispondere alla mediana UST. Senza tredicesima sarebbe CHF {fte}.',
@@ -3200,6 +3201,7 @@ export default {
     basisNetto: { sie: 'Il Suo reddito è registrato come netto. Il salario minimo legale è un salario lordo — per il confronto ci servirebbe il Suo salario lordo (è indicato sul Suo conteggio salariale).', du: 'Il tuo reddito è registrato come netto. Il salario minimo legale è un salario lordo — per il confronto ci servirebbe il tuo salario lordo (è indicato sul tuo conteggio salariale).' },
     dreizehnterUnklar: 'Il salario è di poco inferiore al salario minimo pieno. Con una tredicesima può comunque essere conforme — la tredicesima conta per il salario minimo. Indicare nel capitolo Finanze se viene versata una tredicesima, così potremo classificarlo con chiarezza.',
     nextStepLink: 'Preparare la richiesta salariale',
+    jahrNichtBelegt: 'I salari minimi di questa app sono verificati sulle fonti ufficiali per il {jahr}. Per il {laufend} non sono ancora registrati valori verificati — per questo qui non c’è alcun confronto. L’importo in vigore si può consultare presso il cantone ({kanton}).',
   },
 
   cv: {
