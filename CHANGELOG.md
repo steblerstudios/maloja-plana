@@ -16,6 +16,9 @@ kommt der Changelog immer mit, nie doppelt.*
   (10 Stellen: Erinnerungskarten, Vorlagen, Feedback-Auswahl, Kapitel-Symbole, Benachrichtigungs-Schalter,
   Sprachwahl, Überfällig-Banner, Rundgang-Spotlight, Vorlese-Knopf). Kein sichtbarer Unterschied gewollt.
 
+### Behoben
+- **Probier-Modus-Banner, Feinschliff aus dem Tor-Vorlauf 21.10.:** nach «Zurück» in der Rückfrage liegt der Fokus wieder auf «In den Stand übernehmen» statt auf der Seite; «Verwerfen», «In den Stand übernehmen» und «Leer starten» sind 44 px hoch wie die Rückfrage-Knöpfe; bei 375 px bricht der Banner wieder um, statt den Text auf ein Wort je Zeile zu quetschen; die neuen rm-Texte (Rückfrage, `vdVermoegen2027`, `vorbehaltVD2027`) sind als provisorisch markiert.
+
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 
 *Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B5, B6, B7, B10, B12
