@@ -11,17 +11,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-### Geändert
-- Übergänge animieren nur noch die Eigenschaften, die sich wirklich ändern, statt `transition: all`
-  (10 Stellen: Erinnerungskarten, Vorlagen, Feedback-Auswahl, Kapitel-Symbole, Benachrichtigungs-Schalter,
-  Sprachwahl, Überfällig-Banner, Rundgang-Spotlight, Vorlese-Knopf). Kein sichtbarer Unterschied gewollt.
-
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 
 *Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B5, B6, B7, B10, B12
 aus dem Voll-Audit Stufe L (`docs/AUDIT-VOLL-2026-10.md`, PR #518) und den Mindestlohn-Jahresriegel (#508).
 Seit 0.1.46 gemergt, ohne eigene Zeile: #510 (Lohnstelle, JU amtlicher Name), #511/#516 (IPV AG 2027, Riegel zu),
-#512 (IPV ZH 2027, Riegel zu), #514/#517 (IPV VD 2027 Riegel zu, Anzeige 2026). B8 (#521) und B9 (#523) sind dabei.
+#512 (IPV ZH 2027, Riegel zu), #514/#517 (IPV VD 2027 Riegel zu, Anzeige 2026). B8 (#521) und B9 (#523) sind dabei, dazu #524 (AHV-Folgebefunde zu B8) und #515 (Übergänge gezielt).
 **Gemergt ist nicht live.***
 
 ### Behoben
@@ -39,10 +34,14 @@ Seit 0.1.46 gemergt, ohne eigene Zeile: #510 (Lohnstelle, JU amtlicher Name), #5
 - **AHV-Altersrente nach amtlicher Skala 44 statt linear** (Voll-Audit B8): die Vollrente kommt jetzt aus der 51-zeiligen Tabelle des BSV-Merkblatts 3.01 (Stand 1.1.2026), das Einkommen wird wie amtlich auf den nächsthöheren Tabellenwert aufgerundet. Im Mittelfeld zeigte die App zu wenig, an den Tabellenwerten bis 7,9 %, dazwischen wegen der Aufrundung bis gut 9 %: 30'240 → 1588 (vorher 1512), 45'360 → 1915 (1764), 60'480 → 2117 (2016). Wirkt im Vorsorge-Rechner, im IK-Auszug und beim Ehepaar-Plafond. Die EL-Heuristik und die Pensionierungsseite rechnen keine AHV-Rente selbst und sind nicht betroffen.
 - **Vorsorge-Rechner: leere Beitragsjahre heissen jetzt «bis zum Bezug», nicht «bis heute»** (Voll-Audit B9): ohne eigene Angabe rechnete die AHV-Schätzung mit den Jahren seit 20 bis heute — für 40-Jährige 20/44 der Vollrente — und das «Total 1. + 2. Säule» zählte diese abgeschnittene AHV zur bis zum Bezug hochgerechneten BVG. Neu: lückenlose Beiträge bis zum Bezugsalter, höchstens 44, wie schon im Zukunft-Reiter; im AHV- und im Vergleich-Reiter steht ein ruhiger Hinweis, dass es eine Annahme ist (5 Sprachen).
 - **Probier-Modus-Banner, Feinschliff aus dem Tor-Vorlauf 21.10.:** nach «Zurück» in der Rückfrage liegt der Fokus wieder auf «In den Stand übernehmen» statt auf der Seite; «Verwerfen», «In den Stand übernehmen» und «Leer starten» sind 44 px hoch wie die Rückfrage-Knöpfe; bei 375 px bricht der Banner wieder um, statt den Text auf ein Wort je Zeile zu quetschen; die neuen rm-Texte (Rückfrage, `vdVermoegen2027`, `vorbehaltVD2027`) sind als provisorisch markiert.
+- **AHV: Erziehungs-/Betreuungsgutschriften bei Verheirateten halbiert, Vollrente nach Jahrgangs-Beitragsdauer** (Folge-Befunde zu B8): Für die Ehejahre wird die Gutschrift amtlich je zur Hälfte geteilt, auch nach Scheidung oder Verwitwung (Merkblatt 3.01 Ziff. 19/20, Merkblatt 1.07 Ziff. 1); die App rechnete sie ganz (Merkblatt-Beispiel Ziff. 31: 2036 statt 1915). Die Vollrente gibt es bei so vielen Beitragsjahren wie der eigene Jahrgang hat (Ziff. 12) — für Frauen JG 1961–63 je nach Geburtsmonat 43; die App verlangte fest 44 (Ziff. 30: 1681 statt 1719). Vorbezug/Aufschub-Vergleich und IK-Block rechnen mit derselben Jahrgangs-Dauer; ohne eingetragene Jahre zeigt die Vergleichstabelle je Bezugsalter dieselbe Rente wie der AHV-Block. Hinweis zur Teilung im Vorsorge-Rechner, 5 Sprachen.
 
 ### Geändert
 - **Version 0.1.47-beta (Audit B6).**
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
+- Übergänge animieren nur noch die Eigenschaften, die sich wirklich ändern, statt `transition: all`
+  (10 Stellen: Erinnerungskarten, Vorlagen, Feedback-Auswahl, Kapitel-Symbole, Benachrichtigungs-Schalter,
+  Sprachwahl, Überfällig-Banner, Rundgang-Spotlight, Vorlese-Knopf). Kein sichtbarer Unterschied gewollt.
 
 ## [0.1.46-beta] — 2026-10-19
 

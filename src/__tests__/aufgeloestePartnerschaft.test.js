@@ -109,3 +109,17 @@ describe('Anzeige', () => {
     expect(cv.personal.maritalStatus).toBe('Aufgelöste Partnerschaft');
   });
 });
+
+// AHV-Gutschriften: geteilt wird für die Ehejahre, auch wenn die Ehe/Partnerschaft heute
+// aufgelöst ist (BSV-Merkblatt 1.07 Ziff. 1; Merkblatt 3.01 Ziff. 19/20).
+import { warVerheiratet as warVerheiratetAhv } from '../utils/zivilstand.js';
+describe('warVerheiratet (AHV-Gutschriften, Ehejahre)', () => {
+  it('heute oder früher verheiratet/eingetragen → true', () => {
+    for (const z of ['married', 'registeredPartnership', 'divorced', 'widowed', 'dissolvedPartnership']) {
+      expect(warVerheiratetAhv(z), z).toBe(true);
+    }
+  });
+  it('ledig, Konkubinat, leer → false', () => {
+    for (const z of ['single', 'cohabiting', '', undefined]) expect(warVerheiratetAhv(z), String(z)).toBe(false);
+  });
+});
