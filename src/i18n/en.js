@@ -2875,6 +2875,7 @@ export default {
     readoutAbove: 'Your wage is above the Swiss median.',
     readoutBelow: 'Your wage is below the Swiss median.',
     mindestlohnLine: 'Cantonal minimum wage: CHF {stunde}/hr — about CHF {amount} a month at full time (as of {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Cantonal minimum wage: verified against official sources for {jahr}, no verified figures for {laufend} yet — so no amount and no minimum-wage comparison here.',
     mindestlohnBreachedLine: 'Your wage appears to be below it.',
     fulltimeNote: 'Comparison based on a full-time position (40 hrs/week, as used for the FSO median).',
     dreizehnterNote: 'The comparison figure includes the pro-rated 13th month salary (×13/12) so it matches the FSO median. Without the 13th it would be CHF {fte}.',
@@ -2901,6 +2902,7 @@ export default {
     basisNetto: 'Your income is recorded as net. The legal minimum wage is a gross wage — for the comparison we would need your gross salary (it is on your payslip).',
     dreizehnterUnklar: 'The wage is just below the full minimum wage. With a 13th month\'s salary it may still comply — the 13th counts towards the minimum wage. Please indicate in the Finances chapter whether a 13th is paid, then we can classify it clearly.',
     nextStepLink: 'Prepare wage inquiry',
+    jahrNichtBelegt: 'The minimum wages in this app are verified against official sources for {jahr}. No verified figures have been entered for {laufend} yet — so there is no comparison here. The amount currently in force can be checked with the canton of {kanton}.',
   },
 
   tax: {
@@ -5645,6 +5647,9 @@ export default {
     discard: 'Discard',
     apply: 'Apply to my data',
     startBlank: 'Start blank',
+    replaceQuestion: 'Started blank: applying replaces all saved data with these entries. Everything else is removed.',
+    replaceBack: 'Back',
+    replaceConfirm: 'Replace everything',
   },
   demo: {
     bannerTitle: 'Example: Maria Muster, 34, Zurich',

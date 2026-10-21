@@ -113,13 +113,15 @@ export const Stundenlohn = ({ palette, t, data, onUpdateData }) => {
       // Städte Zürich und Winterthur: städtischer Mindestlohn abgestimmt; Gerichtsstand und Inkrafttreten
       // sind im Repo nicht belegt (Fachprüfung 18.10.2026). `ml_zhHinweis` nennt darum weder Urteil
       // noch Datum noch Beträge und verweist an die Stadt.
+      // Jahres-Riegel (data/lohnCheck.js): für das laufende Jahr kein belegter Satz — kein Urteil.
+      case 'jahrNichtBelegt': return t('lohnCheck.jahrNichtBelegt', { jahr: b.jahr, laufend: b.laufendesJahr, kanton: kantonName });
       case 'keinGesetz': return t('stundenlohnView.ml_keinGesetz', { kanton: kantonName }) + (e.kanton === 'ZH' ? ' ' + t('stundenlohnView.ml_zhHinweis') : '');
       default: return t('stundenlohnView.ml_keinKanton');
     }
   };
   // Nur ein Satz, wenn beide Lesarten dasselbe sagen und kein Kanton-Befund abhängt.
   const befundKeys = r.status === 'gerechnet'
-    ? (['keinGesetz', 'keinKanton'].includes(Object.values(r.befunde)[0].status) ? [Object.keys(r.befunde)[0]] : Object.keys(r.befunde))
+    ? (['keinGesetz', 'keinKanton', 'jahrNichtBelegt'].includes(Object.values(r.befunde)[0].status) ? [Object.keys(r.befunde)[0]] : Object.keys(r.befunde))
     : [];
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },

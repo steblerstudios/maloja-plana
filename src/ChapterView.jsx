@@ -1334,6 +1334,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   check && check.lohnStunde != null && allData?.finanzen?.incomeType === 'brutto' && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, tr('lohnCheck.hourlyWage', { wage: check.lohnStunde.toFixed(2) }))
                 )
               );
+              // Jahres-Riegel (data/lohnCheck.js): kein belegter Satz fürs laufende Jahr → Hinweis statt Befund.
+              if (check && check.status === 'jahrNichtBelegt') {
+                elements.push(
+                  React.createElement('div', {
+                    key: 'hours-minwage-jahr-nicht-belegt',
+                    style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                  }, tr('lohnCheck.jahrNichtBelegt', { jahr: check.jahr, laufend: check.laufendesJahr, kanton: check.kanton }))
+                );
+              }
               if (check && check.status === 'unterMindestlohn') {
                 elements.push(
                   React.createElement('div', {
@@ -1559,6 +1568,25 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         marginBottom: space.sm + 'px',
                       }
                     }, tr('lohnCheck.dreizehnterUnklar'))
+                  );
+                }
+                // Jahres-Riegel (data/lohnCheck.js): für das laufende Jahr kein belegter Satz →
+                // ruhiger Hinweis mit Datenjahr und zuständiger Stelle, kein Betrag aus dem Vorjahr.
+                if (result.status === 'jahrNichtBelegt') {
+                  elements.push(
+                    React.createElement('div', {
+                      key: 'mindestlohn-jahr-nicht-belegt',
+                      style: {
+                        gridColumn: '1 / -1',
+                        background: palette.sageMist || palette.up,
+                        borderRadius: radius.sm,
+                        padding: space.sm + 'px ' + space.md + 'px',
+                        fontSize: text.sm,
+                        color: palette.sageDeep || palette.mid,
+                        lineHeight: leading.relaxed,
+                        marginBottom: space.sm + 'px',
+                      }
+                    }, tr('lohnCheck.jahrNichtBelegt', { jahr: result.jahr, laufend: result.laufendesJahr, kanton: result.kanton }))
                   );
                 }
                 if (result.status === 'unterMindestlohn') {

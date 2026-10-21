@@ -2875,6 +2875,7 @@ export default {
     readoutAbove: { sie: 'Votre salaire est supérieur à la médiane suisse.', du: 'Ton salaire est supérieur à la médiane suisse.' },
     readoutBelow: { sie: 'Votre salaire est inférieur à la médiane suisse.', du: 'Ton salaire est inférieur à la médiane suisse.' },
     mindestlohnLine: 'Salaire minimum cantonal : CHF {stunde}/h — environ CHF {amount} par mois à plein temps (état {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Salaire minimum cantonal : vérifié pour {jahr} d’après les sources officielles, pas encore de valeurs vérifiées pour {laufend} — donc ni montant ni comparaison avec le salaire minimum ici.',
     mindestlohnBreachedLine: { sie: 'Votre salaire semble inférieur.', du: 'Ton salaire semble inférieur.' },
     fulltimeNote: 'Comparaison sur la base d’un poste à plein temps (40 h/semaine, comme pour la médiane de l’OFS).',
     dreizehnterNote: 'La valeur de comparaison inclut la part du 13e salaire (×13/12) pour correspondre à la médiane de l’OFS. Sans 13e, ce serait CHF {fte}.',
@@ -2901,6 +2902,7 @@ export default {
     basisNetto: { sie: 'Votre revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait votre salaire brut (il figure sur votre fiche de salaire).', du: 'Ton revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait ton salaire brut (il figure sur ta fiche de salaire).' },
     dreizehnterUnklar: 'Le salaire est juste en dessous du salaire minimum complet. Avec un 13e salaire mensuel, il peut néanmoins être conforme — le 13e compte pour le salaire minimum. Veuillez indiquer dans le chapitre Finances si un 13e est versé, nous pourrons alors le classer clairement.',
     nextStepLink: 'Préparer la demande de salaire',
+    jahrNichtBelegt: 'Les salaires minimaux de cette application sont vérifiés pour {jahr} d’après les sources officielles. Pour {laufend}, aucune valeur vérifiée n’est encore saisie — c’est pourquoi aucune comparaison n’est faite ici. Le montant en vigueur peut être consulté auprès du canton ({kanton}).',
   },
 
   tax: {
@@ -5645,6 +5647,9 @@ export default {
     discard: 'Annuler',
     apply: 'Appliquer à mes données',
     startBlank: 'Commencer à vide',
+    replaceQuestion: 'Démarré à vide : appliquer remplace toutes les données enregistrées par ces indications. Le reste est supprimé.',
+    replaceBack: 'Retour',
+    replaceConfirm: 'Tout remplacer',
   },
   demo: {
     bannerTitle: 'Exemple : Maria Muster, 34 ans, Zurich',
