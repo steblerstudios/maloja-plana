@@ -95,7 +95,7 @@ describe('B5 · main.jsx', () => {
   it('die Rückfrage zeigt Text und zwei Knöpfe, Fokus auf «Zurück»', () => {
     expect(main).toMatch(/ersetzenFragen \? React\.createElement/);
     expect(main).toMatch(/t\('sandbox\.replaceQuestion'\)/);
-    expect(main).toMatch(/autoFocus: true, onClick: \(\) => setErsetzenFragen\(false\)/);
+    expect(main).toMatch(/autoFocus: true, onClick: rueckfrageZurueck\b/);
     expect(main).toMatch(/t\('sandbox\.replaceConfirm'\)/);
   });
 });

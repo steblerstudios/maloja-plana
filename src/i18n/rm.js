@@ -2661,8 +2661,11 @@ export default {
     discard: 'Annullar',
     apply: 'Surpigliar las datas',
     startBlank: 'Cumenzar vid',
+    // TODO(rm): provisorisch — Gegenlese (Probier-Modus B5, 21.10.2026)
     replaceQuestion: 'Cumenzà vid: surpigliar remplazza tut las datas memorisadas cun questas indicaziuns. Il rest va a perder.',
+    // TODO(rm): provisorisch — Gegenlese (Probier-Modus B5, 21.10.2026)
     replaceBack: 'Enavos',
+    // TODO(rm): provisorisch — Gegenlese (Probier-Modus B5, 21.10.2026)
     replaceConfirm: 'Remplazzar tut',
   },
   demo: {
@@ -3188,7 +3191,9 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
     noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
     vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Tgi che sa transferescha d’in auter chantun en il chantun Vad durant l’onn na survegn nagin subsidi dal chantun Vad per quel onn, auter che cun prestaziuns supplementaras a l’AVS/AI u cun il revenu d’insertion (l’agid social dal chantun Vad); lura vali la paina da s’infurmar tar il chantun da domicil precedent. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
+    // TODO(rm): provisorisch — Gegenlese (IPV VD 2027, 19.10.2026)
     vdVermoegen2027: 'A partir dal 1. schaner 2027 fixescha il chantun Vad ina limita da facultad: sche la facultad mobila surpassa 130 000 francs, n’ha nagin commember da la chasada pli dretg al subsidi. Là vegnan quintads titels ed autras investiziuns, daners en bar, bancnotas e metals preziús, vehichels, bischutaria ed auters objects da valur ed il rest da la facultad — betg immobiglias. La facultad registrada surpassa questa limita; decisiva è la facultad tenor l’ultima taxaziun fiscala. Per il 2026 na sa mida nagut; la renovaziun annuala per il 2027 e mintga dumonda, nua ch’il dretg cumenza pir il 2027, tutgan dentant gia sut la nova regla.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
+    // TODO(rm): provisorisch — Gegenlese (IPV VD 2027, 19.10.2026)
     vorbehaltVD2027: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal proxim mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
     vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF {value}, la limita dal chantun Vad per quest tip da chasada.',
     vdSpezifischerSubside: 'La premia registrada è auta en relaziun cun l’entrada. Il chantun Vad conceda ultra da quai in subsidi specific, sche las premias surpassan, suenter la deducziun dal subsidi ordinari, 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovri las premias da tut las persunas da la chasada. L’OVAM al examinescha tar la dumonda.',
