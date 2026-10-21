@@ -17,6 +17,20 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧱 **Nachtrag 21.10.2026, 17:05 — Audit B4 + B5 gemergt, Tor-Vorlauf auf main gelaufen: 0 Blocker. KEINE Freigabe-Marke.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 16:54): main = `3b29fd78` (21.10. 16:53) · live = `650908a2` (0.1.46-beta) · 10 Commits dazwischen.
+> Gemergt durch Claude auf Stebler Studios’ ausdrückliches Wort (21.10., nur diese zwei): **#520** B4 Auto-Save sofort bei `pagehide`/hidden + Höchstwartezeit 30 s (`6c296a36`) ·
+> **#522** B5 Rückfrage nach «Leer starten» vor dem Übernehmen (`3b29fd78`). Beide im Browser gegen das alte Verhalten gegengeprüft.
+> **Tor auf `3b29fd78`:** vitest 341 Dateien / 6246 grün · build ok · SEO 0/0 · size-limit 63,62/65 kB · PII 0 · i18n 86/86 · CSP self-only ·
+> keine neuen Dependencies · neue Texte in allen 5 Sprach-Chunks · ESTV-Stichprobe 156/156 (0 Abweichungen). Diff-Reviews (live..main)
+> qualitaet/swiss-precision/copy/a11y/sicherheit: **0 Blocker**. Ganze-App-Reviews nicht wiederholt (Voll-Audit L vom 20./21.10.).
+> **Warum keine Marke `.maloja/predeploy-ok`:** die übrigen deploy-blockierenden Audit-Befunde (Sammel-PR B1–B3/B6/B7/B10/B12, B8 #521, B9 #523)
+> sind nicht auf main. Tor nach deren Merge auf dem neuen HEAD wiederholen, dann Marke.
+> **«Sollte» aus dem Tor:** TPW BL/JU zeigen «Stand 2025», RRB SO 2026/825 nennt BL 0.91 / JU 0.94 (Entscheid Stebler Studios) ·
+> Probier-Banner: Fokus nach «Zurück» zurück auf «Übernehmen», Banner-Knöpfe 44 px, `TODO(rm)` an `sandbox.replace*` und `vorbehaltVD2027` ·
+> OVAM/EL in VD-/EN-Texten ausschreiben · FR-Interpunktion vereinheitlichen · iPhone-Handtest B4 (Wegwischen innert 5 s) · FR/IT/RM-Gegenlese.
+
 > 🚀 **Nachtrag 19.10.2026, 15:46 — 0.1.46-beta ist LIVE.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:42): main = live = `650908a2` (Merge #506, 15:34, durch Stebler Studios).
