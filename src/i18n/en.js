@@ -1518,7 +1518,7 @@ export default {
       finanzuebersichtHint: 'All calculations at a glance',
       addressInWohnen: 'Your address is stored in the "Housing" chapter',
       employerInFinanzen: 'Employer & income in the "Finances" chapter',
-      educationTaxHint: 'Training costs? Up to CHF 13,000 deductible for federal tax, cantons set their own limits',
+      educationTaxHint: 'Training costs? Up to CHF 13,000 deductible for federal tax (as of 2026), cantons set their own limits',
       taxFromBehoerdenHint: 'Estimate tax burden',
       schuldenFromBehoerdenHint: 'Manage debt collection',
     },
