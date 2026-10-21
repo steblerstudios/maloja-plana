@@ -14,6 +14,11 @@ kommt der Changelog immer mit, nie doppelt.*
 ### Behoben
 - **AHV: Erziehungs-/Betreuungsgutschriften bei Verheirateten halbiert, Vollrente nach Jahrgangs-Beitragsdauer** (Folge-Befunde zu B8): Für die Ehejahre wird die Gutschrift amtlich je zur Hälfte geteilt, auch nach Scheidung oder Verwitwung (Merkblatt 3.01 Ziff. 19/20, Merkblatt 1.07 Ziff. 1); die App rechnete sie ganz (Merkblatt-Beispiel Ziff. 31: 2036 statt 1915). Die Vollrente gibt es bei so vielen Beitragsjahren wie der eigene Jahrgang hat (Ziff. 12) — für Frauen JG 1961–63 je nach Geburtsmonat 43; die App verlangte fest 44 (Ziff. 30: 1681 statt 1719). Vorbezug/Aufschub-Vergleich und IK-Block rechnen mit derselben Jahrgangs-Dauer. Hinweis zur Teilung im Vorsorge-Rechner, 5 Sprachen.
 
+### Geändert
+- Übergänge animieren nur noch die Eigenschaften, die sich wirklich ändern, statt `transition: all`
+  (10 Stellen: Erinnerungskarten, Vorlagen, Feedback-Auswahl, Kapitel-Symbole, Benachrichtigungs-Schalter,
+  Sprachwahl, Überfällig-Banner, Rundgang-Spotlight, Vorlese-Knopf). Kein sichtbarer Unterschied gewollt.
+
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 
 *Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B5, B6, B7, B10, B12

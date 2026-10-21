@@ -182,7 +182,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
                 color: palette.text, fontSize: text.sm, fontWeight: weight.semi,
                 fontFamily: fontFamily,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: space.sm,
-                transition: `all ${duration.normal}ms ${ease}`,
+                transition: `border-color ${duration.normal}ms ${ease}`,
               },
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; },
