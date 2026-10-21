@@ -79,3 +79,18 @@ describe('Text der Annahme in allen fünf Sprachen', () => {
     }
   });
 });
+
+describe('angenommeneBeitragsjahre (Merkblatt 3.01 Ziff. 12/13)', () => {
+  it('Bezug im Referenzalter oder später → 44 (Vollrente)', async () => {
+    const { angenommeneBeitragsjahre } = await import('../utils/beitragsjahreAnnahme.js');
+    expect(angenommeneBeitragsjahre(65, 65)).toBe(44);
+    expect(angenommeneBeitragsjahre(70, 65)).toBe(44);
+    expect(angenommeneBeitragsjahre(64.5, 64.5)).toBe(44); // Übergangsjahrgang im Referenzalter
+  });
+  it('Vorbezug → Bezugsalter − 21 (Teilrente): 63 → 42, 64 → 43', async () => {
+    const { angenommeneBeitragsjahre } = await import('../utils/beitragsjahreAnnahme.js');
+    expect(angenommeneBeitragsjahre(63, 65)).toBe(42);
+    expect(angenommeneBeitragsjahre(64, 65)).toBe(43);
+    expect(angenommeneBeitragsjahre(63, 64.5)).toBe(42);
+  });
+});

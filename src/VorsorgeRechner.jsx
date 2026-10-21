@@ -15,6 +15,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
+import { angenommeneBeitragsjahre as angenommeneBeitragsjahreFuer } from './utils/beitragsjahreAnnahme.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
 
 function parseYear(dateStr) {
@@ -105,9 +106,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Leere Beitragsjahre (Audit B9): die Rente ab Bezug braucht die Jahre BIS zum Bezug, nicht
   // die bis heute — sonst stünde neben der bis zum Bezug hochgerechneten BVG eine AHV, die
   // mitten in der Erwerbszeit abgeschnitten ist (40 J., Ø 80'000: 20/44 statt 44/44). Annahme:
-  // lückenlos ab 21 bis zum Bezugsalter, höchstens 44 — dieselbe Rechnung wie projektionAhv.
+  // lückenlos ab 21 bis zum Bezug, höchstens 44, beim Vorbezug entsprechend weniger
+  // (utils/beitragsjahreAnnahme.js) — dieselbe Rechnung wie projektionAhv.
   // Wird sichtbar als Annahme ausgewiesen (vr.beitragsjahreAngenommen).
-  const angenommeneBeitragsjahre = Math.min(Math.max(0, Math.floor(parsedBezugAlter - 20)), AHV_PARAMS.volleBeitragsjahre);
+  const angenommeneBeitragsjahre = angenommeneBeitragsjahreFuer(parsedBezugAlter, refAlterJahre);
   const beitragsjahreAngenommen = !Number(beitragsjahre);
   const parsedBeitragsjahre = Number(beitragsjahre) || angenommeneBeitragsjahre;
   // Statistische Lebenserwartung ab 65 (BFS, gerundet): Frauen ~88, Männer ~85,
@@ -148,7 +150,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // Ohne eigene Angabe: Annahme bis zum Referenzalter, nicht bis zum Regler — sonst hinge jede
     // Zeile der Tabelle (63–70) vom gerade eingestellten Bezugsalter ab.
     const bjTabelle = beitragsjahreAngenommen
-      ? Math.min(Math.max(0, Math.floor(refAlterJahre - 20)), AHV_PARAMS.volleBeitragsjahre)
+      ? angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre)
       : parsedBeitragsjahre;
     return vergleicheVorbezugAufschub(parsedEinkommen, bjTabelle, data.basis?.gender, birthYear || 1970);
   }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreAngenommen, refAlterJahre, data.basis?.gender, birthYear]);
