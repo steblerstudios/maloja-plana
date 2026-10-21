@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, shadow, radius, space } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
+import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
 
 const PieChart = ({ data, labels, colors, title, palette }) => {
   const total = data.reduce((a, b) => a + b, 0);
@@ -68,19 +69,19 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
   const rent = Number(data?.wohnen?.rentAmount || 0);
   const utilities = Number(data?.wohnen?.utilities || 0);
   const kkPremium = Number(data?.versicherungen?.kkPremium || 0);
+  // BVG nur noch als Hinweis: er ist im Nettolohn schon abgezogen (Entscheid 21.10.2026,
+  // Charts rechnet wie das Kapitel Finanzen — siehe utils/monatsrechnung.js).
   const bvg = Number(data?.versicherungen?.bvgContribution || 0);
-  const income = Number(data?.finanzen?.monthlyIncome || 0);
   const tax = Number(data?.finanzen?.monthlyTax || 0);
   const groceries = Number(data?.finanzen?.groceries || 0);
   const communication = Number(data?.finanzen?.communication || 0);
   const mobility = Number(data?.finanzen?.mobility || 0);
   const debtPayments = Number(data?.finanzen?.debtPayments || 0);
+  const alimentePaid = Number(data?.finanzen?.alimentePaid || 0);
   const otherInsurance = Number(data?.finanzen?.otherInsurance || 0);
-  const liability = Number(data?.versicherungen?.liabilityAmount || 0);
-  const household = Number(data?.versicherungen?.householdInsuranceAmount || 0);
-  const autoIns = Number(data?.versicherungen?.autoInsuranceAmount || 0);
 
-  const totalExpenses = rent + utilities + kkPremium + bvg + tax + groceries + communication + mobility + debtPayments + otherInsurance + liability + household + autoIns;
+  const income = sumTotalIncome(data?.finanzen);
+  const totalExpenses = sumAllExpenses(data?.finanzen, data);
   const remaining = Math.max(0, income - totalExpenses);
 
   const hasData = income > 0 || totalExpenses > 0;
@@ -103,13 +104,13 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
     // der Rückfall-Text nie (Legende zeigte «budgetSync.taxes», Massstab-Prüfung 21.10.2026).
     { label: t('budgetSync.field.utilities'), value: utilities, color: palette.gold },
     { label: t('budgetSync.field.healthInsurance'), value: kkPremium, color: palette.sky },
-    { label: 'BVG', value: bvg, color: palette.sage },
     { label: t('budgetSync.field.tax'), value: tax, color: '#8B7355' },
     { label: t('budgetSync.field.groceries'), value: groceries, color: '#7B9E8C' },
     { label: t('budgetSync.field.communication'), value: communication, color: '#6E90B0' },
     { label: t('budgetSync.field.mobility'), value: mobility, color: '#B08060' },
     { label: t('budgetSync.field.debtPayments'), value: debtPayments, color: palette.rose },
-    { label: t('budgetSync.field.otherInsurance'), value: otherInsurance + liability + household + autoIns, color: '#A89F94' },
+    { label: t('budgetSync.field.alimentePaid'), value: alimentePaid, color: palette.sage },
+    { label: t('budgetSync.field.otherInsurance'), value: otherInsurance, color: '#A89F94' },
   ].filter(item => item.value > 0);
 
   const maxExpense = Math.max(...expenseItems.map(i => i.value));
@@ -138,6 +139,8 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
         React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: remaining > 0 ? (palette.sageDeep || palette.sage) : (palette.roseDeep || palette.rose) } }, betrag(remaining, { hoechstens: 2 }))
       )
     ),
+
+    bvg > 0 && React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.md + 'px' } }, t('budgetSync.bvgReferenceNote')),
 
     React.createElement(PieChart, {
       palette,

@@ -11,6 +11,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { text, space, radius, leading, shadow } from './config/tokens.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { betrag } from './utils/geld.js';
+import { sumExpenses, sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -161,31 +162,8 @@ function buildWohnenSentence(data, t) {
 
 // ─── Finanzen ──────────────────────────────────────────────
 
-function sumExpenses(data, allData) {
-  const fields = ['monthlyTax', 'groceries', 'communication', 'mobility', 'otherInsurance'];
-  let sum = 0;
-  fields.forEach(k => { sum += Number(data[k]) || 0; });
-  // Cross-chapter: rent + utilities from wohnen
-  sum += Number(allData?.wohnen?.rentAmount) || 0;
-  sum += Number(allData?.wohnen?.utilities) || 0;
-  // Cross-chapter: KK premium from versicherungen
-  sum += Number(allData?.versicherungen?.kkPremium) || 0;
-  return sum;
-}
-
-function sumAllExpenses(data, allData) {
-  let sum = sumExpenses(data, allData);
-  sum += Number(data.debtPayments) || 0;
-  sum += Number(data.alimentePaid) || 0;
-  return sum;
-}
-
-function sumTotalIncome(data) {
-  let sum = Number(data.monthlyIncome) || 0;
-  sum += Number(data.familienzulagen) || 0;
-  sum += Number(data.alimenteReceived) || 0;
-  return sum;
-}
+// sumExpenses · sumAllExpenses · sumTotalIncome: seit 21.10.2026 in utils/monatsrechnung.js,
+// damit Charts dieselbe Rechnung benutzt.
 
 function buildFinanzenSentence(data, allData, t) {
   const income = formatCHF(data.monthlyIncome);
