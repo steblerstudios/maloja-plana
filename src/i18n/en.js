@@ -5987,6 +5987,7 @@ export default {
     betreuungsjahre: 'Caregiving years',
     betreuungsjahreHint: 'Years caring for close relatives (register annually)',
     gutschriftHinweis: 'Only one credit counts per calendar year (child-rearing or caregiving).',
+    gutschriftGeteilt: 'If married, the credit for the years of marriage is split in half between both spouses. The calculation assumes all entered years fall within the marriage.',
     verheiratet: 'Married or in a registered partnership',
     einkommenPartner: 'Partner income (CHF)',
     ahvRente: 'Estimated AHV old-age pension',

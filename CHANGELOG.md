@@ -16,6 +16,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ### Behoben
 - **AHV-Altersrente nach amtlicher Skala 44 statt linear** (Voll-Audit B8): die Vollrente kommt jetzt aus der 51-zeiligen Tabelle des BSV-Merkblatts 3.01 (Stand 1.1.2026), das Einkommen wird wie amtlich auf den nächsthöheren Tabellenwert aufgerundet. Im Mittelfeld zeigte die App zu wenig, an den Tabellenwerten bis 7,9 %, dazwischen wegen der Aufrundung bis gut 9 %: 30'240 → 1588 (vorher 1512), 45'360 → 1915 (1764), 60'480 → 2117 (2016). Wirkt im Vorsorge-Rechner, im IK-Auszug und beim Ehepaar-Plafond. Die EL-Heuristik und die Pensionierungsseite rechnen keine AHV-Rente selbst und sind nicht betroffen.
+- **AHV: Erziehungs-/Betreuungsgutschriften bei Verheirateten halbiert, Vollrente nach Jahrgangs-Beitragsdauer** (Folge-Befunde zu B8): Für die Ehejahre wird die Gutschrift amtlich je zur Hälfte geteilt (Merkblatt 3.01 Ziff. 19/20); die App rechnete sie ganz (Merkblatt-Beispiel Ziff. 31: 2036 statt 1915). Die Vollrente gibt es bei so vielen Beitragsjahren wie der eigene Jahrgang hat (Ziff. 12) — für Frauen JG 1961–63 je nach Geburtsmonat 43; die App verlangte fest 44 (Ziff. 30: 1681 statt 1719). Hinweis zur Teilung im Vorsorge-Rechner, 5 Sprachen.
 
 ## [0.1.46-beta] — 2026-10-19
 

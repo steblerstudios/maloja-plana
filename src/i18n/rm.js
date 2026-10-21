@@ -6695,6 +6695,7 @@ export default {
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
     gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
+    gutschriftGeteilt: 'En cas da matrimoni vegn la bonificaziun per ils onns da matrimoni repartida per mesadad tranter omadus. Il quint suppona che tut ils onns inditgads crodian en il matrimoni.',
     verheiratet: 'Maridà/ada u en partenadi registrà',
     einkommenPartner: 'Entrada dal partenari (CHF)',
     ahvRente: 'Renta da vegliadetgna AVS stimada',

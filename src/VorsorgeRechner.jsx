@@ -33,6 +33,8 @@ function currentAge(dateStr) {
 export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const isMobile = useIsMobile();
   const birthYear = parseYear(data.basis?.dateOfBirth);
+  // Geburtsmonat nur für die volle Beitragsdauer der Frauen JG 1961–63 (Merkblatt 3.01 Ziff. 12).
+  const birthMonth = Number(String(data.basis?.dateOfBirth || '').split('-')[1]) || undefined;
   const alter = currentAge(data.basis?.dateOfBirth);
   // Echtes Referenzalter (AHV 21) für diese Person — für Frauen der Übergangsgeneration
   // (JG 1961–63) tiefer als 65. Es ist der NEUTRALE Default fürs Bezugsalter: sonst zeigt
@@ -125,6 +127,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     if (eink <= 0) return null;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
+      geburtsmonat: birthMonth,
       geschlecht: data.basis?.gender,
       durchschnittlichesJahreseinkommen: eink,
       beitragsjahre: bj,
@@ -134,7 +137,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear, data.basis?.gender]);
+  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
@@ -177,6 +180,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     const bj = Number(beitragsjahre) || Math.min(Math.max(0, parsedBezugAlter - 20), AHV_PARAMS.volleBeitragsjahre);
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
+      geburtsmonat: birthMonth,
       geschlecht: data.basis?.gender,
       durchschnittlichesJahreseinkommen: parsedEinkommen,
       beitragsjahre: bj,
@@ -186,7 +190,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, data.basis?.gender]);
+  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
   // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),
@@ -463,7 +467,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         )
       ),
       React.createElement('div', { style: s.section },
-        React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre + ' ' + t('vr.jahre') + ')',
+        React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + ahvResult.volleBeitragsdauer + ' ' + t('vr.jahre') + ')',
           ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
         ),
         ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.goldDeep } },
@@ -479,6 +483,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ),
         ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
           t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')
+        ),
+        ahvResult.gutschriftGeteilt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
+          t('vr.gutschriftGeteilt')
         ),
         ahvResult.erziehungsjahre > 0 && ahvResult.betreuungsjahre > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
           t('vr.gutschriftHinweis')

@@ -6048,6 +6048,7 @@ export default {
     betreuungsjahre: 'Betreuungsjahre',
     betreuungsjahreHint: 'Jahre mit Pflege naher Angehöriger (jährlich anmelden)',
     gutschriftHinweis: 'Pro Kalenderjahr zählt nur eine Gutschrift (Erziehung oder Betreuung).',
+    gutschriftGeteilt: 'Bei Verheirateten wird die Gutschrift für die Ehejahre je zur Hälfte auf beide aufgeteilt. Gerechnet ist so, als fielen alle eingetragenen Jahre in die Ehe.',
     verheiratet: 'Verheiratet oder in eingetragener Partnerschaft',
     einkommenPartner: 'Einkommen Partner (CHF)',
     ahvRente: 'Geschätzte AHV-Altersrente',
