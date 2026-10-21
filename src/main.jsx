@@ -17,6 +17,7 @@ import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
+import { speichereFallsOffen, beimVerlassenSpeichern, hoechstWarteRest, AUTOSAVE_RUHE_MS } from './utils/autoSave.js';
 import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
 import { eintragFolgen } from './utils/eintragFolgen.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
@@ -809,36 +810,43 @@ const AppInner = ({ demo }) => {
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
   }, [demo]);
+  // B4: Ruhe-Takt, Höchstwartezeit und sofort beim Verlassen — dieselbe Speicherfunktion
+  // (utils/autoSave.js). Die Sperre nach fremder Änderung gilt für alle drei.
+  const ersteOffeneAenderung = React.useRef(null);
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (fremdGeaendert) return;
-      if (data !== lastPersistedData.current || documents !== lastPersistedDocs.current) {
-        setIsSaving(true);
-        try {
-          localStorage.setItem('or5_data', JSON.stringify(data));
-          localStorage.setItem('or5_docs', JSON.stringify(documents));
-          // Refs nur bei Erfolg vorrücken → bei Fehler Retry in der nächsten Runde.
-          lastPersistedData.current = data;
-          lastPersistedDocs.current = documents;
-          setLastSave(new Date());
-          setSaveError(false);
-          runtimeEventBus.publish({
-            id: crypto.randomUUID(),
-            eventType: 'DATA_PERSISTED',
-            timestamp: new Date().toISOString(),
-            actor: 'system',
-            workflowId: 'auto-save',
-          });
-        } catch (err) {
-          // Quota o.ä.: Loop am Leben halten, ruhig melden statt still scheitern.
-          setSaveError(true);
-          if (typeof console !== 'undefined') console.warn('Auto-Save fehlgeschlagen:', err && err.name);
-        } finally {
-          setIsSaving(false);
-        }
+    const zuletzt = { data: lastPersistedData.current, docs: lastPersistedDocs.current };
+    const speichern = () => {
+      setIsSaving(true);
+      const r = speichereFallsOffen({ storage: localStorage, data, documents, zuletzt, fremdGeaendert });
+      setIsSaving(false);
+      if (r.status === 'gespeichert') {
+        lastPersistedData.current = data;
+        lastPersistedDocs.current = documents;
+        ersteOffeneAenderung.current = null;
+        setLastSave(new Date());
+        setSaveError(false);
+        runtimeEventBus.publish({
+          id: crypto.randomUUID(),
+          eventType: 'DATA_PERSISTED',
+          timestamp: new Date().toISOString(),
+          actor: 'system',
+          workflowId: 'auto-save',
+        });
+      } else if (r.status === 'fehler') {
+        // Quota o.ä.: Takt am Leben halten, ruhig melden statt still scheitern. Die
+        // Höchstwartezeit beginnt neu, sonst schriebe jeder Tastendruck sofort erneut.
+        ersteOffeneAenderung.current = Date.now();
+        setSaveError(true);
+        if (typeof console !== 'undefined') console.warn('Auto-Save fehlgeschlagen:', r.fehler && r.fehler.name);
       }
-    }, 5000);
-    return () => clearInterval(timer);
+    };
+    const offen = data !== zuletzt.data || documents !== zuletzt.docs;
+    if (!offen) ersteOffeneAenderung.current = null;
+    else if (ersteOffeneAenderung.current == null) ersteOffeneAenderung.current = Date.now();
+    const timer = setInterval(speichern, AUTOSAVE_RUHE_MS);
+    const hoechst = offen ? setTimeout(speichern, hoechstWarteRest(ersteOffeneAenderung.current, Date.now())) : null;
+    const abmelden = beimVerlassenSpeichern(window, document, speichern);
+    return () => { clearInterval(timer); if (hoechst) clearTimeout(hoechst); abmelden(); };
   }, [data, documents, fremdGeaendert]);
 
   const updateData = (chapter, field, value) => {

@@ -65,12 +65,13 @@ describe('main.jsx — das Auto-Save schreibt nach fremder Änderung nicht mehr'
     expect(main).toMatch(/if \(istFremdeAenderung\(e\.key\)\) setFremdGeaendert\(true\);/);
   });
 
-  it('im Intervall steht die Sperre VOR dem Schreiben von or5_data', () => {
-    const intervall = main.slice(main.indexOf('const timer = setInterval('));
-    const sperre = intervall.indexOf('if (fremdGeaendert) return;');
-    const schreiben = intervall.indexOf("localStorage.setItem('or5_data'");
-    expect(sperre).toBeGreaterThan(-1);
-    expect(schreiben).toBeGreaterThan(sperre);
+  // Seit B4 (10/2026) schreibt main.jsx nicht mehr selbst, sondern über
+  // speichereFallsOffen (utils/autoSave.js) — dort steht die Sperre vor dem Schreiben,
+  // belegt in autoSavePagehide.test.js. Hier: main.jsx reicht den Zustand durch.
+  it('jeder Speicherweg bekommt die Sperre mit', () => {
+    expect(main).toMatch(/speichereFallsOffen\(\{[^}]*fremdGeaendert[^}]*\}\)/);
+    const effekt = main.slice(main.indexOf('const ersteOffeneAenderung'), main.indexOf('const updateData ='));
+    expect(effekt).not.toMatch(/localStorage\.setItem\(/);
   });
 
   it('die Meldung bekommt den Zustand', () => {
