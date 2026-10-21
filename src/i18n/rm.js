@@ -6705,7 +6705,7 @@ export default {
     referenzalter: 'Etad da referenza (AVS 21)',
     skalenfaktor: 'Scala da contribuziun',
     fehlendeBeitragsjahre: 'Onns da contribuziun che mancan',
-    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a l’etad da retratga ({alter}), q.v.d. {jahre} onns da contribuziun — sco tar la 2. pitga. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
+    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da retschavida ({alter}), q.v.d. {jahre} onns da contribuziun — sco tar la 2. pitga. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
     vorbezug: 'Reducziun (retschavida anticipada)',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",

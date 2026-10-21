@@ -145,8 +145,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
-    return vergleicheVorbezugAufschub(parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear || 1970);
-  }, [parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear]);
+    // Ohne eigene Angabe: Annahme bis zum Referenzalter, nicht bis zum Regler — sonst hinge jede
+    // Zeile der Tabelle (63–70) vom gerade eingestellten Bezugsalter ab.
+    const bjTabelle = beitragsjahreAngenommen
+      ? Math.min(Math.max(0, Math.floor(refAlterJahre - 20)), AHV_PARAMS.volleBeitragsjahre)
+      : parsedBeitragsjahre;
+    return vergleicheVorbezugAufschub(parsedEinkommen, bjTabelle, data.basis?.gender, birthYear || 1970);
+  }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreAngenommen, refAlterJahre, data.basis?.gender, birthYear]);
 
   const bvgResult = useMemo(() => {
     if (parsedEinkommen <= 0 || !alter) return null;
