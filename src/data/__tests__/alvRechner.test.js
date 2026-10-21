@@ -47,6 +47,15 @@ describe('bestimmeAnspruchstage', () => {
   it('520 ab 55 mit ≥22 Monaten', () => {
     expect(bestimmeAnspruchstage({ beitragsmonate: 24, alter: 56, hatKinder: false })).toBe(520);
   });
+  // Audit 2026-10 B10, AVIG Art. 27 Abs. 2 lit. c: auch mit IV-Rente braucht es 22 Beitragsmonate für 520.
+  it('IV-Rente (≥ 40 %): 520 erst ab 22 Beitragsmonaten', () => {
+    expect(bestimmeAnspruchstage({ beitragsmonate: 22, alter: 40, ivGrad40: true })).toBe(520);
+    expect(bestimmeAnspruchstage({ beitragsmonate: 12, alter: 40, ivGrad40: true })).toBe(260);
+    expect(bestimmeAnspruchstage({ beitragsmonate: 20, alter: 40, ivGrad40: true })).toBe(400);
+  });
+  it('ab 55 mit < 22 Monaten: keine 520', () => {
+    expect(bestimmeAnspruchstage({ beitragsmonate: 20, alter: 58 })).toBe(400);
+  });
   it('200 bei <25 ohne Unterhaltspflicht', () => {
     expect(bestimmeAnspruchstage({ beitragsmonate: 20, alter: 22, hatKinder: false })).toBe(200);
   });

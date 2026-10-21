@@ -11,7 +11,26 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.47-beta] — 2026-10-29 (geplant, Deploy durch Stebler Studios)
+
+*Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B3, B6, B7, B10, B12
+aus dem Voll-Audit Stufe L (`docs/AUDIT-VOLL-2026-10.md`, PR #518). Seit 0.1.46 gemergt, ohne eigene Zeile:
+#510 (Lohnstelle, JU amtlicher Name), #511/#516 (IPV AG 2027, Riegel zu), #512 (IPV ZH 2027, Riegel zu),
+#514/#517 (IPV VD 2027 Riegel zu, Anzeige 2026). Noch offen und vor dem Deploy hier einzutragen: #508
+(Mindestlohn-Jahresriegel) und die Audit-PRs zu B4, B5, B8, B9. **Gemergt ist nicht live.***
+
+### Behoben
+- **Drei falsche Behörden-Links (Audit B1–B3):** Vaterschaft → AHV-Merkblatt 6.04 «Entschädigung des andern
+  Elternteils» (vorher 6.03 Corona-Erwerbsersatz); Familienzulagen → 6.08 «Familienzulagen» (vorher 6.01 EO für
+  Dienstleistende); Uri Steuererklärung → ur.ch «Natürliche Personen» mit eTax.UR (vorher «Organisation von Anlässen»).
+- **ALV: 520 Taggelder mit IV-Rente nur ab 22 Beitragsmonaten (Audit B10)**, AVIG Art. 27 Abs. 2 lit. c.
+  Vorher bekamen IV-Rentner/innen immer 520, auch mit 12 Monaten.
+- **Bildungsabzug (Audit B12):** Hinweis «bis CHF 10’000» → Bundessteuer bis CHF 13’000 (DBG Art. 33 Abs. 1
+  lit. j), Kantone mit eigenen Grenzen; 5 Sprachen.
+- **«Arbeitslosengeld» → «Arbeitslosenentschädigung» (Audit B7)** an den letzten drei Stellen.
+
 ### Geändert
+- **Version 0.1.47-beta (Audit B6).**
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
 
 ## [0.1.46-beta] — 2026-10-19

@@ -1763,7 +1763,7 @@ export default {
       finanzuebersichtHint: "Tut las calculaziuns en ina egliada",
       addressInWohnen: { sie: "Vossa adressa è deponida en il chapitel «Abitar»", du: "Tia adressa è deponida en il chapitel «Abitar»" },
       employerInFinanzen: 'Patrun & entrada en il chapitel «Finanzas»',
-      educationTaxHint: "Custs da furmaziun? Fin a CHF 10'000 deducibels da las taglias",
+      educationTaxHint: "Custs da furmaziun? Fin a CHF 13'000 deducibels per la taglia federala, ils chantuns han agens limits",
       taxFromBehoerdenHint: 'Stimar la chargia fiscala',
       schuldenFromBehoerdenHint: 'Administrar las esecuziuns',
     },
