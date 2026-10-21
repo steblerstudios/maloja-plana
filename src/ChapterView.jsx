@@ -1788,7 +1788,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ...liste.map((f) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f) : feldElemente(f)))))
           : (leer
               ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
-              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+              // Spalten: die Bezeichnung behält mindestens ihr längstes Wort, der Wert darf
+              // schrumpfen und umbrechen. Vorher («minmax(0,1fr) auto») nahm ein langer Wert
+              // («Netto (was ich erhalte)») seine volle Breite, und «Einkommensart» lief bei
+              // 375 px in ihn hinein (Massstab-Prüfung 21.10.2026).
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(0, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
                     React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
