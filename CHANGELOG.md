@@ -11,10 +11,14 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Auto-Save verliert die letzte Eingabe nicht mehr** (Voll-Audit B4): sofort speichern bei `pagehide` und beim Wechsel in den Hintergrund (iOS wegwischen, Tab schliessen, neu laden innert 5 s); bei Dauertippen spätestens nach 30 s. Ein fremder Tab (K116) und der Löschweg sperren weiterhin. `utils/autoSave.js`.
+
 ### Geändert
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
 
 ### Behoben
+- **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
 - **AHV-Altersrente nach amtlicher Skala 44 statt linear** (Voll-Audit B8): die Vollrente kommt jetzt aus der 51-zeiligen Tabelle des BSV-Merkblatts 3.01 (Stand 1.1.2026), das Einkommen wird wie amtlich auf den nächsthöheren Tabellenwert aufgerundet. Im Mittelfeld zeigte die App zu wenig, an den Tabellenwerten bis 7,9 %, dazwischen wegen der Aufrundung bis gut 9 %: 30'240 → 1588 (vorher 1512), 45'360 → 1915 (1764), 60'480 → 2117 (2016). Wirkt im Vorsorge-Rechner, im IK-Auszug und beim Ehepaar-Plafond. Die EL-Heuristik und die Pensionierungsseite rechnen keine AHV-Rente selbst und sind nicht betroffen.
 
 ## [0.1.46-beta] — 2026-10-19
