@@ -20,6 +20,7 @@ import { migrateData } from './utils/dataMigration.js';
 import { speichereFallsOffen, beimVerlassenSpeichern, hoechstWarteRest, AUTOSAVE_RUHE_MS } from './utils/autoSave.js';
 import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
 import { eintragFolgen } from './utils/eintragFolgen.js';
+import { probeUebernehmen } from './utils/probeUebernehmen.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
@@ -596,6 +597,9 @@ const AppInner = ({ demo }) => {
   const docs = demoMode ? demoDocs : documents;
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
+  // B5: nach «Leer starten» ersetzt Übernehmen den ganzen Stand — erst nach Rückfrage.
+  const [sandboxLeer, setSandboxLeer] = useState(false);
+  const [ersetzenFragen, setErsetzenFragen] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [dbBlocked, setDbBlocked] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
@@ -621,14 +625,20 @@ const AppInner = ({ demo }) => {
   // demoMode wird erst gesetzt, wenn er da ist (kein Render-Fenster mit demoMode ohne demoData —
   // sonst zeigte das «Beispiel» die echten Daten). Das Beispiel beginnt ohne Dokumente (K24).
   const beispielBetreten = () => import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }).catch((e) => { console.warn('Beispiel konnte nicht geladen werden', e); });
-  const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); beispielVerlassen(); };
-  const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
-  // Guard auf nicht-leeren Stand: ein leeres Sandbox-Objekt ({}) ist truthy, würde
-  // aber via setData({}) alle Kapitel löschen (siehe blankSandbox).
-  const applySandbox = () => { if (sandboxData && Object.keys(sandboxData).length > 0) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
+  const probeSchliessen = () => { setSandboxMode(false); setSandboxData(null); setSandboxLeer(false); setErsetzenFragen(false); };
+  const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setSandboxLeer(false); setErsetzenFragen(false); beispielVerlassen(); };
+  const discardSandbox = probeSchliessen;
+  // Leere Probe ({}) lässt den Stand unberührt; nach «Leer starten» fragt Übernehmen
+  // zuerst nach, weil es den ganzen Stand ersetzt (B5, utils/probeUebernehmen.js).
+  const applySandbox = (bestaetigt) => {
+    const r = probeUebernehmen({ probe: sandboxData, leerGestartet: sandboxLeer, bestaetigt });
+    if (r.aktion === 'fragen') { setErsetzenFragen(true); return; }
+    if (r.aktion === 'ersetzen') setData(r.stand);
+    probeSchliessen();
+  };
   // Leere Tafel im Probier-Modus: für ein frisches Beispiel (z.B. jemandem zeigen),
-  // ohne die eigenen Zahlen — nichts wird persistiert.
-  const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); beispielVerlassen(); };
+  // ohne die eigenen Zahlen — nichts wird persistiert, ausser nach ausdrücklicher Frage.
+  const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); setSandboxLeer(true); setErsetzenFragen(false); beispielVerlassen(); };
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht', 'schnellcheck', 'anspruchcheck'];
 
@@ -1398,6 +1408,28 @@ const AppInner = ({ demo }) => {
           },
         }, t('sandbox.startBlank'))
       ),
+      // B5: Rückfrage an Stelle der zwei Knöpfe; der Fokus landet auf «Zurück».
+      ersetzenFragen ? React.createElement('div', { role: 'group', 'aria-labelledby': 'probe-ersetzen-frage', style: { flexBasis: '100%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' } },
+        React.createElement('div', { id: 'probe-ersetzen-frage', style: { flex: '1 1 240px', fontSize: text.xs, color: palette.text } }, t('sandbox.replaceQuestion')),
+        React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
+          React.createElement('button', {
+            type: 'button', autoFocus: true, onClick: () => setErsetzenFragen(false),
+            style: {
+              padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
+              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+              color: palette.text, fontFamily: 'inherit',
+            }
+          }, t('sandbox.replaceBack')),
+          React.createElement('button', {
+            type: 'button', onClick: () => applySandbox(true),
+            style: {
+              padding: '6px 14px', minHeight: '44px', background: palette.sageBtn, border: 'none',
+              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
+              color: '#fff', fontFamily: 'inherit',
+            }
+          }, t('sandbox.replaceConfirm'))
+        )
+      ) :
       React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
         React.createElement('button', {
           onClick: discardSandbox,
@@ -1408,7 +1440,7 @@ const AppInner = ({ demo }) => {
           }
         }, t('sandbox.discard')),
         React.createElement('button', {
-          onClick: applySandbox,
+          onClick: () => applySandbox(false),
           style: {
             padding: '6px 14px', background: palette.sageBtn, border: 'none',
             borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,

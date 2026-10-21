@@ -5622,6 +5622,9 @@ export default {
     discard: 'Annulla',
     apply: 'Applica ai miei dati',
     startBlank: 'Inizia da vuoto',
+    replaceQuestion: 'Iniziato da vuoto: applicare sostituisce tutti i dati salvati con queste indicazioni. Il resto viene eliminato.',
+    replaceBack: 'Indietro',
+    replaceConfirm: 'Sostituisci tutto',
   },
   demo: {
     bannerTitle: 'Esempio: Maria Muster, 34 anni, Zurigo',

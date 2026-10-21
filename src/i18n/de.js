@@ -5691,6 +5691,9 @@ export default {
     discard: 'Verwerfen',
     apply: 'In den Stand übernehmen',
     startBlank: 'Leer starten',
+    replaceQuestion: 'Leer gestartet: Übernehmen ersetzt den ganzen gespeicherten Stand durch diese Angaben. Was dort sonst steht, fällt weg.',
+    replaceBack: 'Zurück',
+    replaceConfirm: 'Ganzen Stand ersetzen',
   },
   demo: {
     bannerTitle: 'Beispiel: Maria Muster, 34, Zürich',
