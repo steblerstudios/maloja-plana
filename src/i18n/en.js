@@ -5645,6 +5645,9 @@ export default {
     discard: 'Discard',
     apply: 'Apply to my data',
     startBlank: 'Start blank',
+    replaceQuestion: 'Started blank: applying replaces all saved data with these entries. Everything else is removed.',
+    replaceBack: 'Back',
+    replaceConfirm: 'Replace everything',
   },
   demo: {
     bannerTitle: 'Example: Maria Muster, 34, Zurich',
