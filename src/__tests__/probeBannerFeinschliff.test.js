@@ -76,7 +76,7 @@ describe('Probier-Banner · bricht auf dem Handy um', () => {
 
 describe('Probier-Banner · rm-Texte als provisorisch markiert', () => {
   const zeilen = lies('i18n/rm.js').split('\n');
-  for (const k of ['replaceQuestion', 'replaceBack', 'replaceConfirm', 'vorbehaltVD2027']) {
+  for (const k of ['replaceQuestion', 'replaceBack', 'replaceConfirm', 'vdVermoegen2027', 'vorbehaltVD2027']) {
     it(`${k}: TODO(rm) direkt darüber`, () => {
       const i = zeilen.findIndex((z) => z.trimStart().startsWith(`${k}: `));
       expect(i).toBeGreaterThan(0);

@@ -19,7 +19,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ### Behoben
 - **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
-- **Probier-Modus-Banner, Feinschliff aus dem Tor-Vorlauf 21.10.:** nach «Zurück» in der Rückfrage liegt der Fokus wieder auf «In den Stand übernehmen» statt auf der Seite; «Verwerfen», «In den Stand übernehmen» und «Leer starten» sind 44 px hoch wie die Rückfrage-Knöpfe; bei 375 px bricht der Banner wieder um, statt den Text auf ein Wort je Zeile zu quetschen; die neuen rm-Texte (Rückfrage, `vorbehaltVD2027`) sind als provisorisch markiert.
+- **Probier-Modus-Banner, Feinschliff aus dem Tor-Vorlauf 21.10.:** nach «Zurück» in der Rückfrage liegt der Fokus wieder auf «In den Stand übernehmen» statt auf der Seite; «Verwerfen», «In den Stand übernehmen» und «Leer starten» sind 44 px hoch wie die Rückfrage-Knöpfe; bei 375 px bricht der Banner wieder um, statt den Text auf ein Wort je Zeile zu quetschen; die neuen rm-Texte (Rückfrage, `vdVermoegen2027`, `vorbehaltVD2027`) sind als provisorisch markiert.
 
 ## [0.1.46-beta] — 2026-10-19
 
