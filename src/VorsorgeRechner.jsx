@@ -12,7 +12,7 @@ import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { giltAlsVerheiratet } from './utils/zivilstand.js';
+import { giltAlsVerheiratet, warVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahreslohnAusProfil.js';
@@ -135,14 +135,15 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       betreuungsjahre: betr,
       bezugAlter: parsedBezugAlter,
       verheiratet,
+      gutschriftTeilen: verheiratet || warVerheiratet(data.basis?.maritalStatus),
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
-    return vergleicheVorbezugAufschub(parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear || 1970);
-  }, [parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear]);
+    return vergleicheVorbezugAufschub(parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear || 1970, birthMonth);
+  }, [parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear, birthMonth]);
 
   const bvgResult = useMemo(() => {
     if (parsedEinkommen <= 0 || !alter) return null;
@@ -188,9 +189,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       betreuungsjahre: Number(betreuungsjahre) || 0,
       bezugAlter: parsedBezugAlter,
       verheiratet,
+      gutschriftTeilen: verheiratet || warVerheiratet(data.basis?.maritalStatus),
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
+  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
 
   // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
   // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),
@@ -363,7 +365,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // Live-Auswertung (Success-Feedback)
         r && React.createElement('div', { 'aria-live': 'polite', style: { ...s.section, marginTop: space.sm + 'px', background: palette.sage + '11', border: '1px solid ' + palette.sage + '33' } },
           React.createElement('div', { style: s.label }, t('vr.ikSummary')),
-          React.createElement('div', null, t('vr.ikBeitragsjahre') + ': ' + r.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre),
+          React.createElement('div', null, t('vr.ikBeitragsjahre') + ': ' + r.beitragsjahre + '/' + (ahvResult ? ahvResult.volleBeitragsdauer : AHV_PARAMS.volleBeitragsjahre)),
           React.createElement('div', null, t('vr.ikDurchschnitt') + ': CHF ' + fmt(r.durchschnittlichesJahreseinkommen)),
           r.jugendjahreGenutzt > 0 && React.createElement('div', { style: { color: palette.sageDeep } }, t('vr.ikJugendGenutzt') + ': ' + r.jugendjahreGenutzt),
           r.luecken > 0 && React.createElement('div', { style: { color: palette.goldDeep } }, t('vr.ikLuecken') + ': ' + r.luecken),

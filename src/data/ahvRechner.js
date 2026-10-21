@@ -134,7 +134,8 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
  * @param {number} [params.erziehungsjahre=0] - Jahre mit Erziehungsgutschriften
  * @param {number} [params.bezugAlter] - Gewünschtes Bezugsalter (default: Referenzalter)
  * @param {number} [params.geburtsmonat] - 1–12; nur für die volle Beitragsdauer der Frauen JG 1961–63
- * @param {boolean} [params.verheiratet=false] - auch: Erziehungs-/Betreuungsgutschriften je zur Hälfte
+ * @param {boolean} [params.verheiratet=false] - für die Plafonierung
+ * @param {boolean} [params.gutschriftTeilen] - Gutschriften je zur Hälfte (Ehejahre); Standard: = verheiratet
  * @param {number} [params.einkommenPartner=0] - Durchschnittseinkommen Partner (für Plafonierung)
  * @returns {Object} Rentenberechnung
  */
@@ -148,6 +149,7 @@ export function berechneAltersrente({
   betreuungsjahre = 0,
   bezugAlter,
   verheiratet = false,
+  gutschriftTeilen = verheiratet,
   einkommenPartner = 0,
 }) {
   // Referenzalter geschlechts-/jahrgangsabhängig (AHV 21, Frauen-Übergangsgeneration),
@@ -161,10 +163,12 @@ export function berechneAltersrente({
   // pro Kalenderjahr kann nur eine angerechnet werden — hier als getrennte,
   // additive Jahre modelliert (Nutzer erfasst verschiedene Jahre).
   // Bei Verheirateten «während der Kalenderjahre der Ehe je zur Hälfte aufgeteilt» (Merkblatt 3.01,
-  // Stand 1.1.2026, Ziff. 19/20; Beispiele Ziff. 30/31: «18 × 45 360 ÷ 43 Jahre ÷ 2»). Annahme hier:
-  // alle erfassten Gutschriftjahre fallen in die Ehe — die App kennt das Heiratsjahr nicht.
+  // Stand 1.1.2026, Ziff. 19/20; Beispiele Ziff. 30/31: «18 × 45 360 ÷ 43 Jahre ÷ 2»; Merkblatt 1.07
+  // Ziff. 1: «zwingend»). Gilt für die Ehejahre, also auch nach Scheidung/Verwitwung — darum ein
+  // eigener Schalter neben `verheiratet` (Plafonierung). Annahme: alle erfassten Gutschriftjahre
+  // fallen in die Ehe — die App kennt das Heiratsjahr nicht.
   const gutschriftJahre = (erziehungsjahre || 0) + (betreuungsjahre || 0);
-  const gutschriftGeteilt = !!verheiratet && gutschriftJahre > 0;
+  const gutschriftGeteilt = !!gutschriftTeilen && gutschriftJahre > 0;
   const gutschriftProJahr = gutschriftJahre > 0
     ? (ERZIEHUNGSGUTSCHRIFT_JAHR * gutschriftJahre) / beitragsjahre / (gutschriftGeteilt ? 2 : 1)
     : 0;
@@ -245,7 +249,7 @@ export function berechneAltersrente({
 /**
  * Vergleiche Renten bei verschiedenen Bezugsaltern (Vorbezug/Aufschub).
  */
-export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr) {
+export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr, geburtsmonat) {
   const alter = [63, 64, 65, 66, 67, 68, 69, 70];
   return alter.map(a => {
     const r = berechneAltersrente({
@@ -253,6 +257,7 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
       // ECHTE Referenzalter der Person rechnet (AHV 21). Ohne Angabe → 1965/kein
       // Geschlecht = Referenzalter 65 (unverändertes Verhalten, rückwärtskompatibel).
       geburtsjahr: geburtsjahr || 1965,
+      geburtsmonat,
       geschlecht,
       durchschnittlichesJahreseinkommen,
       beitragsjahre,

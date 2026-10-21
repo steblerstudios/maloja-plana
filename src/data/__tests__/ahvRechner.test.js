@@ -231,6 +231,26 @@ describe('ahvRechner', () => {
         expect(r.erziehungsgutschrift).toBe(16495); // 16 × 45 360 ÷ 44
       });
 
+      it('geschieden: Gutschrift geteilt (Ehejahre), aber keine Plafonierung', () => {
+        // Merkblatt 1.07 Ziff. 1: «während der Kalenderjahre der Ehe (zwingend) hälftig geteilt»
+        const r = berechneAltersrente({
+          geburtsjahr: 1970, durchschnittlichesJahreseinkommen: 40000, beitragsjahre: 44, erziehungsjahre: 16,
+          verheiratet: false, gutschriftTeilen: true,
+        });
+        expect(r.gutschriftGeteilt).toBe(true);
+        expect(r.erziehungsgutschrift).toBe(8247); // 16 × 45 360 ÷ 44 ÷ 2 = 8247.27
+        expect(r.plafoniert).toBe(false);
+        expect(r.totalEhepaar).toBeNull();
+      });
+
+      it('Vorbezug/Aufschub-Vergleich kennt den Geburtsmonat: 43 Jahre = Vollrente', () => {
+        const zeilen = vergleicheVorbezugAufschub(90720, 43, 'female', 1962, 2);
+        // Referenzalter 64 J 6 M → Bezug mit 65 = 6 Monate Aufschub, unter 12 Monaten kein Zuschlag
+        expect(zeilen.find(z => z.bezugAlter === 65).monatsrente).toBe(2520);
+        const ohneMonat = vergleicheVorbezugAufschub(90720, 43, 'female', 1962);
+        expect(ohneMonat.find(z => z.bezugAlter === 65).monatsrente).toBeLessThan(2520); // 43/44
+      });
+
       it('Teilrente misst an der Jahrgangs-Dauer: 42 von 43 Jahren', () => {
         const r = berechneAltersrente({
           geburtsjahr: 1962, geburtsmonat: 2, geschlecht: 'female', durchschnittlichesJahreseinkommen: 90720, beitragsjahre: 42,

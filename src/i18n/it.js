@@ -5975,7 +5975,7 @@ export default {
     betreuungsjahre: 'Anni di assistenza',
     betreuungsjahreHint: 'Anni di cura di parenti stretti (annunciare ogni anno)',
     gutschriftHinweis: 'Per anno civile conta un solo accredito (educazione o assistenza).',
-    gutschriftGeteilt: 'In caso di matrimonio, l’accredito per gli anni di matrimonio è ripartito a metà tra i due. Il calcolo presuppone che tutti gli anni indicati cadano nel matrimonio.',
+    gutschriftGeteilt: 'Per gli anni di matrimonio l’accredito è ripartito a metà tra i due coniugi — anche dopo un divorzio o la vedovanza. Il calcolo presuppone che tutti gli anni indicati cadano nel matrimonio.',
     verheiratet: 'Sposato/a o in unione domestica registrata',
     einkommenPartner: 'Reddito del partner (CHF)',
     ahvRente: 'Rendita AVS stimata',

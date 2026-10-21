@@ -5987,7 +5987,7 @@ export default {
     betreuungsjahre: 'Années de prise en charge',
     betreuungsjahreHint: 'Années à soigner des proches (à annoncer chaque année)',
     gutschriftHinweis: 'Une seule bonification par année civile (éducation ou assistance).',
-    gutschriftGeteilt: 'En cas de mariage, la bonification des années de mariage est partagée par moitié entre les deux. Le calcul part du principe que toutes les années indiquées tombent dans le mariage.',
+    gutschriftGeteilt: 'Pour les années de mariage, la bonification est partagée par moitié entre les deux conjoints — aussi après un divorce ou un veuvage. Le calcul part du principe que toutes les années indiquées tombent dans le mariage.',
     verheiratet: 'Marié(e) ou en partenariat enregistré',
     einkommenPartner: 'Revenu du conjoint (CHF)',
     ahvRente: 'Rente AVS estimée',
