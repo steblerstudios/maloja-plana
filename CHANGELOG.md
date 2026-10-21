@@ -11,6 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert
+- Übergänge animieren nur noch die Eigenschaften, die sich wirklich ändern, statt `transition: all`
+  (10 Stellen: Erinnerungskarten, Vorlagen, Feedback-Auswahl, Kapitel-Symbole, Benachrichtigungs-Schalter,
+  Sprachwahl, Überfällig-Banner, Rundgang-Spotlight, Vorlese-Knopf). Kein sichtbarer Unterschied gewollt.
+
 ### Behoben
 - **Probier-Modus-Banner, Feinschliff aus dem Tor-Vorlauf 21.10.:** nach «Zurück» in der Rückfrage liegt der Fokus wieder auf «In den Stand übernehmen» statt auf der Seite; «Verwerfen», «In den Stand übernehmen» und «Leer starten» sind 44 px hoch wie die Rückfrage-Knöpfe; bei 375 px bricht der Banner wieder um, statt den Text auf ein Wort je Zeile zu quetschen; die neuen rm-Texte (Rückfrage, `vdVermoegen2027`, `vorbehaltVD2027`) sind als provisorisch markiert.
 

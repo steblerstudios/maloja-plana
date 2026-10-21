@@ -42,7 +42,7 @@ export const NotificationSettings = ({ palette, t }) => {
     background: enabled ? palette.sage : palette.up,
     border: '1px solid ' + (enabled ? palette.sage : palette.border),
     cursor: 'pointer', position: 'relative',
-    transition: `all ${duration.normal}ms ${ease}`, flexShrink: 0,
+    transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`, flexShrink: 0,
   });
 
   const toggleDot = (enabled) => ({
@@ -50,7 +50,7 @@ export const NotificationSettings = ({ palette, t }) => {
     background: enabled ? '#fff' : palette.mid,
     position: 'absolute', top: '2px',
     left: enabled ? '22px' : '2px',
-    transition: `all ${duration.normal}ms ${ease}`,
+    transition: `left ${duration.normal}ms ${ease}, background ${duration.normal}ms ${ease}`,
   });
 
   const renderToggle = (key, label, description) => {
