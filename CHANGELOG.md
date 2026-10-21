@@ -40,6 +40,9 @@ Seit 0.1.46 gemergt, ohne eigene Zeile: #510 (Lohnstelle, JU amtlicher Name), #5
 - **Vorsorge-Rechner: leere Beitragsjahre heissen jetzt «bis zum Bezug», nicht «bis heute»** (Voll-Audit B9): ohne eigene Angabe rechnete die AHV-Schätzung mit den Jahren seit 20 bis heute — für 40-Jährige 20/44 der Vollrente — und das «Total 1. + 2. Säule» zählte diese abgeschnittene AHV zur bis zum Bezug hochgerechneten BVG. Neu: lückenlose Beiträge bis zum Bezugsalter, höchstens 44, wie schon im Zukunft-Reiter; im AHV- und im Vergleich-Reiter steht ein ruhiger Hinweis, dass es eine Annahme ist (5 Sprachen).
 - **Probier-Modus-Banner, Feinschliff aus dem Tor-Vorlauf 21.10.:** nach «Zurück» in der Rückfrage liegt der Fokus wieder auf «In den Stand übernehmen» statt auf der Seite; «Verwerfen», «In den Stand übernehmen» und «Leer starten» sind 44 px hoch wie die Rückfrage-Knöpfe; bei 375 px bricht der Banner wieder um, statt den Text auf ein Wort je Zeile zu quetschen; die neuen rm-Texte (Rückfrage, `vdVermoegen2027`, `vorbehaltVD2027`) sind als provisorisch markiert.
 
+- **Tor-Nachtrag 21.10.:** Bildungsabzug mit «Stand 2026» und Quellkommentar (DBG Art. 33 Abs. 1 lit. j); die rätoromanischen Rechtsvorbehalte zu Waadt (`vorbehaltVD`, `vorbehaltVD2027`, `vdVermoegen2027`) zeigen bis zur Gegenlese die deutsche Fassung, der rm-Entwurf bleibt als Kommentar im Code; `TODO(rm)` an `educationTaxHint` und `vr.beitragsjahreAngenommen`.
+- *B11 ist im Voll-Audit bewusst nicht vergeben (herabgestuft zu 🟠 D8, leeres BVG-Guthaben).*
+
 ### Geändert
 - **Version 0.1.47-beta (Audit B6).**
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
