@@ -549,7 +549,7 @@ export default {
     step5LinkIpv: 'Prämienverbilligung neu berechnen',
     step5LinkSituation: 'Situation „Alleinerziehend" ansehen',
     step5TextAlv: 'Wer wegen der Trennung oder Scheidung eine Stelle suchen oder das Pensum erhöhen muss, kann von der Beitragszeit der Arbeitslosenversicherung befreit sein — bis zu 90 Taggelder, wenn das Ereignis höchstens ein Jahr zurückliegt und damals Wohnsitz in der Schweiz bestand (AVIG Art. 14 Abs. 2, Art. 27 Abs. 4). Die Arbeitslosenkasse klärt es ab.',
-    step5LinkAlv: 'Arbeitslosengeld ansehen',
+    step5LinkAlv: 'Arbeitslosenentschädigung ansehen',
     footerNote: { sie: 'Sie müssen nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.', du: 'Du musst nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   selbstaendigkeit: {
@@ -1521,7 +1521,7 @@ export default {
       finanzuebersichtHint: 'Alle Berechnungen auf einen Blick',
       addressInWohnen: { sie: 'Ihre Adresse ist im Kapitel «Wohnen» hinterlegt', du: 'Deine Adresse ist im Kapitel «Wohnen» hinterlegt' },
       employerInFinanzen: 'Arbeitgeber & Einkommen im Kapitel «Finanzen»',
-      educationTaxHint: 'Fortbildungskosten? Bis CHF 10’000 steuerlich absetzbar',
+      educationTaxHint: 'Fortbildungskosten? Bei der Bundessteuer bis CHF 13’000 absetzbar, die Kantone haben eigene Grenzen',
       taxFromBehoerdenHint: 'Steuerbelastung abschätzen',
       schuldenFromBehoerdenHint: 'Betreibungen verwalten',
     },
@@ -2883,6 +2883,8 @@ export default {
     readoutAbove: { sie: 'Ihr Lohn liegt über dem Schweizer Median.', du: 'Dein Lohn liegt über dem Schweizer Median.' },
     readoutBelow: { sie: 'Ihr Lohn liegt unter dem Schweizer Median.', du: 'Dein Lohn liegt unter dem Schweizer Median.' },
     mindestlohnLine: 'Kantonaler Mindestlohn: CHF {stunde}/Std. — bei Vollzeit rund CHF {amount} im Monat (Stand {jahr}).',
+    // Jahres-Riegel (data/lohnCheck.js): ab dem 01.01. des Folgejahres kein Betrag aus dem alten Jahr.
+    mindestlohnJahrNichtBelegt: 'Kantonaler Mindestlohn: amtlich belegt für {jahr}, für {laufend} noch keine geprüften Werte — darum hier ohne Betrag und ohne Mindestlohn-Vergleich.',
     // Die Unterschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
     // Vorher war der Text in beiden Zuständen identisch, und der ausformulierte Satz stand
     // nur im Kapitel — in der Finanz-Übersicht war die Aussage schlicht verloren.
@@ -2927,6 +2929,10 @@ export default {
     basisNetto: { sie: 'Ihr Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Ihren Bruttolohn (er steht auf Ihrer Lohnabrechnung).', du: 'Dein Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Deinen Bruttolohn (er steht auf Deiner Lohnabrechnung).' },
     dreizehnterUnklar: 'Der Lohn liegt knapp unter dem vollen Mindestlohn. Mit einem 13. Monatslohn kann er dennoch konform sein — der 13. zählt an den Mindestlohn. Bitte im Finanzen-Kapitel angeben, ob ein 13. bezahlt wird, dann ordnen wir es eindeutig ein.',
     nextStepLink: 'Lohn-Nachfrage vorbereiten',
+    // Jahres-Riegel (data/lohnCheck.js): die Sätze sind für {jahr} belegt; für das laufende Jahr
+    // keine Zahl erfinden, sondern sagen, dass sie fehlt. Bewusst ohne {stelle}: die Kontrollstellen sind
+    // für Streitfälle da (JU: Arbeitsgericht), und die TI-Stelle verliert per 01.01.2027 ihre Grundlage.
+    jahrNichtBelegt: 'Die Mindestlöhne in dieser App sind für {jahr} amtlich belegt. Für {laufend} sind noch keine geprüften Werte erfasst — darum hier kein Vergleich. Der geltende Betrag steht beim Kanton {kanton}.',
   },
 
   tax: {
@@ -5964,7 +5970,7 @@ export default {
     lageTitle: 'Lage-abhängige Leistungen',
     lageIntro: 'Diese hängen nicht am Einkommen, sondern an einer Lebenslage:',
     lageIv: 'Invalidenversicherung (IV) — bei Krankheit oder Behinderung',
-    lageAlv: 'Arbeitslosengeld (ALV) — bei Stellenverlust',
+    lageAlv: 'Arbeitslosenentschädigung (ALV) — bei Stellenverlust',
     lageEo: 'Erwerbsersatz (EO) — bei Dienst oder Mutterschaft',
     lageFamilienzulagen: 'Familienzulagen — mit Kindern',
     waySituationen: 'Lebenssituationen — versteckte Berechtigungen',
