@@ -17,7 +17,28 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🚪 **Nachtrag 21.10.2026, 19:45 — Deploy-Tor 0.1.47-beta auf `069ee9f4`: 0 Blocker, Marke gesetzt. NICHT deployt.**
+>
+> **Gemessen:** main = `069ee9f4` (#528, 21.10. 19:26) · live = `650908a2` (0.1.46-beta) · 19 Commits dazwischen. Alle elf
+> deploy-blockierenden Audit-Befunde sind auf main: Sammel-PR #519 (B1–B3/B6/B7/B10/B12), #520 B4, #522 B5, #521 B8, #523 B9;
+> dazu #508 Mindestlohn-Riegel, #515 Motion, #524 AHV-Folge, #526/#527 Probier-Banner, #528 Tor-Entscheide (Bildungsabzug mit
+> Quelle + «Stand 2026», rm-VD-Vorbehalte deutsch bis Gegenlese, B11 vermerkt).
+> **Tor auf `069ee9f4`:** vitest 2× 344 Dateien / 6310 grün · build ok · SEO 0/0 · size-limit 63,72/65 kB · PII 0 · i18n 86/86 ·
+> eslint 0 · CSP self-only · keine neuen Dependencies · Version `0.1.47-beta` im Bundle · neue Texte in den Sprach-Chunks ·
+> ESTV-Stichprobe 156/156 (0 Abweichungen). Reviews: auf `803b66aa` ganze App (Sicherheit, a11y) + Diff (swiss-precision,
+> qualitaet, copy, rechts, links, ordnung) + `/code-review`; auf `803b66aa..069ee9f4` fünf Diff-Prüfer — **0 🔴**.
+> Tests unter hoher Load (28–61, mehrere Sitzungen) teils rot mit `Test timed out in 5000ms.`, belegt in 5 Läufen: wackelig, kein Fehler.
+> **Marke** `.maloja/predeploy-ok` gesetzt (im Haupt-Checkout). Wird nach diesem Doku-Merge auf den neuen HEAD nachgezogen,
+> nach Beleg, dass nur `.md` dazukam. Protokoll ausserhalb des Repos (Stebler Studios, `DEPLOY-TOR-maloja-2026-10-21.md`).
+> **Nächste Schritte:** (optional `/code-review ultra`) → `bash deploy.sh` (Stebler Studios, Do 29.10. oder früher) → live gegen
+> `version.json` + Bundle prüfen → erst dann `FEATURES.md` auf `verified-live`.
+> **Offen, nicht blockierend:** Mindestlohn-Tests **vor 1.1.2027** auf feste Uhr (sonst Suite rot am Neujahrstag) · Bildungsabzug
+> 13'000 an Fedlex nachlesen · rm-Oberfläche: deutsche VD-Texte ohne «(tudestg)»/`lang="de"` · Fokus nach «Ganzen Stand
+> ersetzen» fällt auf body · `vr.gutschriftGeteilt`/Beitragsjahre-Hinweis ohne aria-live · Eingabefeld-Rand 1,34:1 ·
+> FR/IT/RM-Gegenlese · iPhone-Handtest B4 · Xcode im November (Simulator).
+
 > 🧱 **Nachtrag 21.10.2026, 17:05 — Audit B4 + B5 gemergt, Tor-Vorlauf auf main gelaufen: 0 Blocker. KEINE Freigabe-Marke.**
+> *(Überholt durch den Nachtrag 19:45 darüber; bleibt als Beleg.)*
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 16:54): main = `3b29fd78` (21.10. 16:53) · live = `650908a2` (0.1.46-beta) · 10 Commits dazwischen.
 > Gemergt durch Claude auf Stebler Studios’ ausdrückliches Wort (21.10., nur diese zwei): **#520** B4 Auto-Save sofort bei `pagehide`/hidden + Höchstwartezeit 30 s (`6c296a36`) ·
