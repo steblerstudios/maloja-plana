@@ -5645,6 +5645,9 @@ export default {
     discard: 'Annuler',
     apply: 'Appliquer à mes données',
     startBlank: 'Commencer à vide',
+    replaceQuestion: 'Démarré à vide : appliquer remplace toutes les données enregistrées par ces indications. Le reste est supprimé.',
+    replaceBack: 'Retour',
+    replaceConfirm: 'Tout remplacer',
   },
   demo: {
     bannerTitle: 'Exemple : Maria Muster, 34 ans, Zurich',

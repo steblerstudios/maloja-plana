@@ -11,10 +11,14 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Auto-Save verliert die letzte Eingabe nicht mehr** (Voll-Audit B4): sofort speichern bei `pagehide` und beim Wechsel in den Hintergrund (iOS wegwischen, Tab schliessen, neu laden innert 5 s); bei Dauertippen spätestens nach 30 s. Ein fremder Tab (K116) und der Löschweg sperren weiterhin. `utils/autoSave.js`.
+
 ### Geändert
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
 
 ### Behoben
+- **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
 - **Vorsorge-Rechner: leere Beitragsjahre heissen jetzt «bis zum Bezug», nicht «bis heute»** (Voll-Audit B9): ohne eigene Angabe rechnete die AHV-Schätzung mit den Jahren seit 20 bis heute — für 40-Jährige 20/44 der Vollrente — und das «Total 1. + 2. Säule» zählte diese abgeschnittene AHV zur bis zum Bezug hochgerechneten BVG. Neu: lückenlose Beiträge bis zum Bezugsalter, höchstens 44, wie schon im Zukunft-Reiter; im AHV- und im Vergleich-Reiter steht ein ruhiger Hinweis, dass es eine Annahme ist (5 Sprachen).
 
 ## [0.1.46-beta] — 2026-10-19

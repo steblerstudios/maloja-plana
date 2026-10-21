@@ -2661,6 +2661,9 @@ export default {
     discard: 'Annullar',
     apply: 'Surpigliar las datas',
     startBlank: 'Cumenzar vid',
+    replaceQuestion: 'Cumenzà vid: surpigliar remplazza tut las datas memorisadas cun questas indicaziuns. Il rest va a perder.',
+    replaceBack: 'Enavos',
+    replaceConfirm: 'Remplazzar tut',
   },
   demo: {
     footerLink: 'Exempel',
