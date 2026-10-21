@@ -1763,7 +1763,7 @@ export default {
       finanzuebersichtHint: "Tut las calculaziuns en ina egliada",
       addressInWohnen: { sie: "Vossa adressa è deponida en il chapitel «Abitar»", du: "Tia adressa è deponida en il chapitel «Abitar»" },
       employerInFinanzen: 'Patrun & entrada en il chapitel «Finanzas»',
-      educationTaxHint: "Custs da furmaziun? Fin a CHF 10'000 deducibels da las taglias",
+      educationTaxHint: "Custs da furmaziun? Fin a CHF 13'000 deducibels per la taglia federala, ils chantuns han agens limits",
       taxFromBehoerdenHint: 'Stimar la chargia fiscala',
       schuldenFromBehoerdenHint: 'Administrar las esecuziuns',
     },
@@ -2661,6 +2661,9 @@ export default {
     discard: 'Annullar',
     apply: 'Surpigliar las datas',
     startBlank: 'Cumenzar vid',
+    replaceQuestion: 'Cumenzà vid: surpigliar remplazza tut las datas memorisadas cun questas indicaziuns. Il rest va a perder.',
+    replaceBack: 'Enavos',
+    replaceConfirm: 'Remplazzar tut',
   },
   demo: {
     footerLink: 'Exempel',
@@ -3110,7 +3113,6 @@ export default {
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     vorbehaltAG: 'En il chantun Argovia è la taxaziun definitiva {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura notablamain pli pauc po dumandar ina nova quintada tar la SVA Aargau. Imports retschavids nunlegitimamain vegnan pretends enavos.',
     agFristAbgelaufen: 'Attenziun, termin: Per {jahr} na sa lascha la reducziun da premias betg pli dumandar en il chantun Argovia — la dumonda stuess esser vegnida inoltrada enfin ils 31 da december {vorjahr}. L’import qua mussa da tge ch’i va. Per {folgejahr} cuorra il termin enfin ils 31 da december {jahr}, ed el vala da nov mintg’onn. Tgi che retscheiva agid social u prestaziuns cumplementaras obtegna la reducziun senza dumonda. I dat ina excepziun: tgi che gudogna dapi la taxaziun decisiva notablamain pli pauc (almain 20 pertschient durant almain sis mais), è nizzà novamain en il chantun u tge situaziun persunala è sa midada, po inoltrar ina dumonda era durant l’onn (procedura extraordinaria, §§ 11–16 KVGG).',
-    agFristLaeuft: 'Attenziun, termin: En il chantun Argovia sto la reducziun da premias vegnir dumandada da nov mintg’onn — per {jahr} il pli tard ils 31 da december {vorjahr}. Suenter croda il dretg per quest onn. Tgi che retscheiva agid social u prestaziuns cumplementaras obtegna la reducziun senza dumonda.',
     agKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg 17,5 pertschient da l’entrada decisiva. Il chantun Argovia na publitgescha nagina limita d’entrada sco cifra.',
     vorbehaltSG: 'En il chantun Son Gagl è la basa la entrada netta da la perioda fiscala {basisjahr} — dus onns avant l’onn da dretg, betg l’entrada dad oz. Ultra da quai vegn sbassada la premia da referenza chantunala da la regiun da premias, betg la premia pajada propi: sche quella è pli bassa, po era l’import pajà esser pli bass. Sa infurmar tar la SVA St.Gallen.',
     sgKeinAnspruch: 'Tenor quest quint n’exista nagin dretg: la premia da referenza na surpassa betg la limita da grevezza da l’entrada determinanta. Il chantun Son Gagl na publitgescha nagina limita d’entrada sco cifra — ella resulta pir dal quint.',
@@ -3185,7 +3187,9 @@ export default {
     bsPensumAngenommen: 'Quint per in pensum dad almain 80 pertschient — las uras da lavur per emna n’èn betg registradas. Tgi che viva sulet u educhescha sulet ils uffants e lavura main, survegn en il chantun Basilea-Citad per ordinari cleramain main. Las uras sa laschan endatar en il chapitel «Furmaziun & lavur», quellas d’ina activitad accessorica sut «Entrada accessorica: uras da lavur per l’emna».',
     // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
     noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
-    vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda — ils mais avant na vegnan betg pajads retroactivamain. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
+    vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Tgi che sa transferescha d’in auter chantun en il chantun Vad durant l’onn na survegn nagin subsidi dal chantun Vad per quel onn, auter che cun prestaziuns supplementaras a l’AVS/AI u cun il revenu d’insertion (l’agid social dal chantun Vad); lura vali la paina da s’infurmar tar il chantun da domicil precedent. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
+    vdVermoegen2027: 'A partir dal 1. schaner 2027 fixescha il chantun Vad ina limita da facultad: sche la facultad mobila surpassa 130 000 francs, n’ha nagin commember da la chasada pli dretg al subsidi. Là vegnan quintads titels ed autras investiziuns, daners en bar, bancnotas e metals preziús, vehichels, bischutaria ed auters objects da valur ed il rest da la facultad — betg immobiglias. La facultad registrada surpassa questa limita; decisiva è la facultad tenor l’ultima taxaziun fiscala. Per il 2026 na sa mida nagut; la renovaziun annuala per il 2027 e mintga dumonda, nua ch’il dretg cumenza pir il 2027, tutgan dentant gia sut la nova regla.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
+    vorbehaltVD2027: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal proxim mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
     vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF {value}, la limita dal chantun Vad per quest tip da chasada.',
     vdSpezifischerSubside: 'La premia registrada è auta en relaziun cun l’entrada. Il chantun Vad conceda ultra da quai in subsidi specific, sche las premias surpassan, suenter la deducziun dal subsidi ordinari, 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovri las premias da tut las persunas da la chasada. L’OVAM al examinescha tar la dumonda.',
     // K31 UR (28.09.2026) — TODO(rm): provisorisch, Gegenlese offen
@@ -3249,6 +3253,7 @@ export default {
       alter: 'Manca ina data da naschientscha — era tar ils uffants. Giuvenils en furmaziun vegnan ultra da quai quintads cun l’entrada dals geniturs, che n’è betg registrada qua.',
       region: 'La vischnanca na sa lascha betg determinar univocamain cun il numer postal. Ella decida davart la regiun da premias e uschia davart l’import.',
       vermoegen: 'La facultad registrada surpassa la limita chantunala. Decisiva è la facultad imposabla totala, che n’è betg registrada cumplettamain qua.',
+      vermoegenVD: 'En il chantun Vad n’ha a partir dal 2027 nagin commember da la chasada dretg al subsidi, sche la facultad mobila surpassa 130 000 francs. Là vegnan quintads titels ed autras investiziuns, daners en bar, bancnotas e metals preziús, vehichels, bischutaria ed auters objects da valur ed il rest da la facultad — betg immobiglias. La facultad registrada surpassa questa limita.', // TODO(rm): provisorisch — Gegenlese (K31 VD 2027, 19.10.2026)
       vermoegenAntrag: 'Sur ina facultad bruta da 750 000 francs n’examinescha il chantun Berna betg automaticamain. Quai n’è nagina exclusiun: il dretg sto vegnir dumandà enfin ils 31 da december.',
       // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
       agKinder: 'Per chasadas cun uffants na quinta l’applicaziun anc betg en il chantun Argovia: là retschaivan ils uffants almain la mesadad da lur atgna premia da la cassa da malsauns, e questas premias n’èn betg registradas qua.',
@@ -4060,6 +4065,7 @@ export default {
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
     mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Salari minimal chantunal: verifitgà tenor las funtaunas uffizialas per {jahr}, per {laufend} anc naginas valurs verifitgadas — perquai qua senza import e senza cumparegliaziun cun il salari minimal.', // TODO(rm): Gegenlese Muttersprachler:in
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
@@ -4090,6 +4096,7 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — provisorisch (Rumantsch Grischun).
     dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
+    jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
   },
 
   charts: {
@@ -5344,6 +5351,7 @@ export default {
     tpwQuelleVor: "Funtauna da la valur dal punct", // TODO(rm): provisorisch
     tpwQuelleTarifpartner: "societads medicinalas", // TODO(rm): provisorisch
     tpwQuelleSZ: "societads medicinalas; 0.85 per santéservices, pli baud tarifsuisse; 0.86 per CSS e HSK", // TODO(rm): provisorisch
+    tpwQuelleSO: "0.84 per santéservices; decisiuns separadas: CSS 0.84, HSK 0.85", // TODO(rm): provisorisch
     tpwQuelleGE: "vala per CSS", // TODO(rm): provisorisch
     tpwQuelleVD: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
     tpwQuelleLU: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
@@ -5352,6 +5360,7 @@ export default {
     tpwQuelleSeiten: "Bulletin uffizial da las leschas p. {seiten}", // TODO(rm): provisorisch — TI: amtliche Gesetzessammlung, nicht Amtsblatt
     tpwErgebnisGruppe: "Documentà per persunas assicuradas tar {gruppe}; tar autras cassas po la valur esser differenta.", // TODO(rm): provisorisch
     tpwErgebnisGruppeSZ: "Documentà per persunas assicuradas tar santéservices; per CSS e HSK vala en il chantun SZ 0.86.", // TODO(rm): provisorisch
+    tpwErgebnisGruppeSO: "Documentà per persunas assicuradas tar santéservices e CSS; per HSK vala en il chantun SO 0.85; tar autras cassas po la valur divergiar.", // TODO(rm): provisorisch
     tpwOhneKanton: "Senza chantun na quinta l'app betg — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     tpwOhneKantonProfil: "Senza chantun da domicil en il profil na quinta l'app betg qua — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
@@ -6701,6 +6710,7 @@ export default {
     referenzalter: 'Etad da referenza (AVS 21)',
     skalenfaktor: 'Scala da contribuziun',
     fehlendeBeitragsjahre: 'Onns da contribuziun che mancan',
+    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da retschavida ({alter}), q.v.d. {jahre} onns da contribuziun — sco tar la 2. pitga. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
     vorbezug: 'Reducziun (retschavida anticipada)',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",

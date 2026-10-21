@@ -174,6 +174,9 @@ describe('K24 · Verdrahtung in main.jsx', () => {
   });
 
   it('der Auto-Save schreibt weiterhin nur die echte Liste nach or5_docs', () => {
-    expect(quelle).toContain("localStorage.setItem('or5_docs', JSON.stringify(documents));");
+    // Seit B4 (10/2026) schreibt utils/autoSave.js; main.jsx reicht `documents` durch, nie `docs`.
+    expect(quelle).toMatch(/speichereFallsOffen\(\{ storage: localStorage, data, documents, /);
+    const util = fs.readFileSync(path.resolve(__dirname, '../utils/autoSave.js'), 'utf8');
+    expect(util).toContain("storage.setItem('or5_docs', JSON.stringify(documents));");
   });
 });

@@ -549,7 +549,7 @@ export default {
     step5LinkIpv: 'Prämienverbilligung neu berechnen',
     step5LinkSituation: 'Situation „Alleinerziehend" ansehen',
     step5TextAlv: 'Wer wegen der Trennung oder Scheidung eine Stelle suchen oder das Pensum erhöhen muss, kann von der Beitragszeit der Arbeitslosenversicherung befreit sein — bis zu 90 Taggelder, wenn das Ereignis höchstens ein Jahr zurückliegt und damals Wohnsitz in der Schweiz bestand (AVIG Art. 14 Abs. 2, Art. 27 Abs. 4). Die Arbeitslosenkasse klärt es ab.',
-    step5LinkAlv: 'Arbeitslosengeld ansehen',
+    step5LinkAlv: 'Arbeitslosenentschädigung ansehen',
     footerNote: { sie: 'Sie müssen nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.', du: 'Du musst nicht alles allein regeln — Schlichtungs-, Eheberatungs- und Rechtsberatungsstellen sind da. Dies ist Orientierung, keine Rechtsberatung.' },
   },
   selbstaendigkeit: {
@@ -1521,7 +1521,7 @@ export default {
       finanzuebersichtHint: 'Alle Berechnungen auf einen Blick',
       addressInWohnen: { sie: 'Ihre Adresse ist im Kapitel «Wohnen» hinterlegt', du: 'Deine Adresse ist im Kapitel «Wohnen» hinterlegt' },
       employerInFinanzen: 'Arbeitgeber & Einkommen im Kapitel «Finanzen»',
-      educationTaxHint: 'Fortbildungskosten? Bis CHF 10’000 steuerlich absetzbar',
+      educationTaxHint: 'Fortbildungskosten? Bei der Bundessteuer bis CHF 13’000 absetzbar, die Kantone haben eigene Grenzen',
       taxFromBehoerdenHint: 'Steuerbelastung abschätzen',
       schuldenFromBehoerdenHint: 'Betreibungen verwalten',
     },
@@ -2883,6 +2883,8 @@ export default {
     readoutAbove: { sie: 'Ihr Lohn liegt über dem Schweizer Median.', du: 'Dein Lohn liegt über dem Schweizer Median.' },
     readoutBelow: { sie: 'Ihr Lohn liegt unter dem Schweizer Median.', du: 'Dein Lohn liegt unter dem Schweizer Median.' },
     mindestlohnLine: 'Kantonaler Mindestlohn: CHF {stunde}/Std. — bei Vollzeit rund CHF {amount} im Monat (Stand {jahr}).',
+    // Jahres-Riegel (data/lohnCheck.js): ab dem 01.01. des Folgejahres kein Betrag aus dem alten Jahr.
+    mindestlohnJahrNichtBelegt: 'Kantonaler Mindestlohn: amtlich belegt für {jahr}, für {laufend} noch keine geprüften Werte — darum hier ohne Betrag und ohne Mindestlohn-Vergleich.',
     // Die Unterschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
     // Vorher war der Text in beiden Zuständen identisch, und der ausformulierte Satz stand
     // nur im Kapitel — in der Finanz-Übersicht war die Aussage schlicht verloren.
@@ -2927,6 +2929,10 @@ export default {
     basisNetto: { sie: 'Ihr Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Ihren Bruttolohn (er steht auf Ihrer Lohnabrechnung).', du: 'Dein Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Deinen Bruttolohn (er steht auf Deiner Lohnabrechnung).' },
     dreizehnterUnklar: 'Der Lohn liegt knapp unter dem vollen Mindestlohn. Mit einem 13. Monatslohn kann er dennoch konform sein — der 13. zählt an den Mindestlohn. Bitte im Finanzen-Kapitel angeben, ob ein 13. bezahlt wird, dann ordnen wir es eindeutig ein.',
     nextStepLink: 'Lohn-Nachfrage vorbereiten',
+    // Jahres-Riegel (data/lohnCheck.js): die Sätze sind für {jahr} belegt; für das laufende Jahr
+    // keine Zahl erfinden, sondern sagen, dass sie fehlt. Bewusst ohne {stelle}: die Kontrollstellen sind
+    // für Streitfälle da (JU: Arbeitsgericht), und die TI-Stelle verliert per 01.01.2027 ihre Grundlage.
+    jahrNichtBelegt: 'Die Mindestlöhne in dieser App sind für {jahr} amtlich belegt. Für {laufend} sind noch keine geprüften Werte erfasst — darum hier kein Vergleich. Der geltende Betrag steht beim Kanton {kanton}.',
   },
 
   tax: {
@@ -4047,7 +4053,6 @@ export default {
     vorbehaltAG: 'Im Kanton Aargau ist die rechtskräftige Steuerveranlagung {basisjahr} die Grundlage — drei Jahre vor dem Anspruchsjahr, nicht das heutige Einkommen. Wer seither deutlich weniger verdient, kann bei der SVA Aargau eine Neuberechnung verlangen. Zu Unrecht bezogene Beträge werden zurückgefordert.',
     // § 10 Abs. 4 KVGG: ohne Antrag bis 31.12. des Vorjahres ist der Anspruch verwirkt.
     agFristAbgelaufen: 'Achtung Frist: Für {jahr} lässt sich die Prämienverbilligung im Kanton Aargau nicht mehr beantragen — der Antrag hätte bis zum 31. Dezember {vorjahr} gestellt sein müssen. Der Betrag hier zeigt, worum es geht. Für {folgejahr} läuft die Frist bis zum 31. Dezember {jahr}, und sie gilt jedes Jahr neu. Wer Sozialhilfe oder Ergänzungsleistungen bezieht, erhält die Verbilligung ohne Antrag. Eine Ausnahme gibt es: Wer seit der massgebenden Veranlagung deutlich weniger verdient (mindestens 20 Prozent während mindestens sechs Monaten), neu zugezogen ist oder dessen persönliche Verhältnisse sich verändert haben, kann auch während des Jahres einen Antrag stellen (ausserordentliches Verfahren, §§ 11–16 KVGG).',
-    agFristLaeuft: 'Achtung Frist: Die Prämienverbilligung muss im Kanton Aargau jedes Jahr neu beantragt werden — für {jahr} spätestens am 31. Dezember {vorjahr}. Danach ist der Anspruch für dieses Jahr verwirkt. Wer Sozialhilfe oder Ergänzungsleistungen bezieht, erhält die Verbilligung ohne Antrag.',
     // AG publiziert keine Einkommensgrenze als Zahl (§ 5 Abs. 5 KVGG) — darum ohne Betrag.
     agKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Die Richtprämie liegt nicht über 17,5 Prozent des massgebenden Einkommens. Der Kanton Aargau veröffentlicht dazu keine Einkommensgrenze als Zahl.',
     vorbehaltSG: 'Im Kanton St.Gallen ist das Reineinkommen der Steuerperiode {basisjahr} die Grundlage — zwei Jahre vor dem Anspruchsjahr, nicht das heutige Einkommen. Verbilligt wird zudem die kantonale Referenzprämie der Prämienregion, nicht die tatsächlich bezahlte Prämie: liegt diese tiefer, kann der ausbezahlte Betrag tiefer ausfallen. Bei der SVA St.Gallen nachfragen.',
@@ -4114,7 +4119,9 @@ export default {
     bsPensumAngenommen: 'Gerechnet für ein Pensum von mindestens 80 Prozent — die Arbeitsstunden pro Woche sind nicht erfasst. Wer allein stehend oder allein erziehend weniger arbeitet, erhält im Kanton Basel-Stadt meist deutlich weniger. Die Stunden lassen sich im Kapitel «Ausbildung & Arbeit» eintragen, die eines Nebenerwerbs bei «Nebenerwerb: Arbeitsstunden pro Woche».',
     // K31 VD (28.09.2026): Arrêté 2026 art. 2; Notice OVAM 2026 Ziff. 1–4; RLVLAMal art. 22.
     noteApplyOvam: 'Antrag online beim OVAM oder bei der Agence d’assurances sociales der Wohnregion; die jährliche Erneuerung nimmt das OVAM vor',
-    vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des zweiten Monats nach dem Antrag — für die Monate davor gibt es nichts rückwirkend. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
+    vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des zweiten Monats nach dem Antrag. Rückwirkend gibt es nur ausnahmsweise etwas, höchstens ab Beginn des laufenden Jahres, und nur in zwei Fällen: wenn nachgewiesen ist, dass ein früherer Antrag ohne eigenes Verschulden nicht möglich war, oder wenn der Antrag auf eine periodische Information des Kantons hin gestellt wird; das entscheidet das OVAM. Wer im Lauf des Jahres aus einem anderen Kanton in die Waadt zieht, erhält für dieses Jahr vom Kanton Waadt keine Verbilligung, ausser bei Ergänzungsleistungen zur AHV/IV oder beim Revenu d’insertion (der Waadtländer Sozialhilfe); dann lohnt es sich, beim bisherigen Wohnkanton nachzufragen. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
+    vdVermoegen2027: 'Ab 1. Januar 2027 gilt im Kanton Waadt eine Vermögensgrenze: Liegt das bewegliche Vermögen über 130 000 Franken, besteht für den ganzen Haushalt kein Anspruch mehr. Gezählt werden Wertschriften und andere Anlagen, Bargeld, Banknoten und Edelmetalle, Fahrzeuge, Schmuck und andere Wertgegenstände sowie das übrige Vermögen — nicht Liegenschaften. Das erfasste Vermögen liegt darüber; massgebend ist das Vermögen laut letzter Steuerveranlagung. Für 2026 ändert das nichts; die jährliche Erneuerung für 2027 und jeder Antrag, dessen Anspruch erst 2027 beginnt, fallen aber schon unter die neue Regel.',
+    vorbehaltVD2027: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des Monats, der auf den Antrag folgt. Rückwirkend gibt es nur ausnahmsweise etwas, höchstens ab Beginn des laufenden Jahres, und nur in zwei Fällen: wenn nachgewiesen ist, dass ein früherer Antrag ohne eigenes Verschulden nicht möglich war, oder wenn der Antrag auf eine periodische Information des Kantons hin gestellt wird; das entscheidet das OVAM. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
     vdKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch auf den ordentlichen Subside: Das massgebende Einkommen (revenu déterminant) liegt über CHF {value}, der Grenze des Kantons Waadt für diese Haushaltsform.',
     vdSpezifischerSubside: 'Die erfasste Prämie ist hoch im Verhältnis zum Einkommen. Der Kanton Waadt gewährt zusätzlich einen spezifischen Subside, wenn die Prämien nach Abzug der ordentlichen Verbilligung mehr als 10 Prozent des massgebenden Einkommens ausmachen. Wie hoch er wäre, rechnet die App nicht — dafür braucht es die Prämien aller Personen im Haushalt. Das OVAM prüft ihn beim Antrag mit.',
     // K31 UR (28.09.2026): RB 20.2213 Art. 3, 7, 10, 11, 14, 18; SVS Uri, Medienmitteilung 18.12.2025.
@@ -4190,6 +4197,7 @@ export default {
       alter: 'Für die Rechnung fehlt ein Geburtsdatum — auch bei den Kindern. Junge Erwachsene in Ausbildung werden zudem mit dem Einkommen der Eltern gerechnet, das hier nicht erfasst ist.',
       region: 'Die Gemeinde lässt sich aus der Postleitzahl nicht eindeutig bestimmen. Sie entscheidet über die Prämienregion und damit über den Betrag.',
       vermoegen: 'Das erfasste Vermögen liegt über der kantonalen Grenze. Massgebend ist das steuerbare Gesamtvermögen, das hier nicht vollständig erfasst ist.',
+      vermoegenVD: 'Im Kanton Waadt besteht ab 2027 für den ganzen Haushalt kein Anspruch, wenn das bewegliche Vermögen über 130 000 Franken liegt. Gezählt werden dort Wertschriften und andere Anlagen, Bargeld, Banknoten und Edelmetalle, Fahrzeuge, Schmuck und andere Wertgegenstände sowie das übrige Vermögen — nicht Liegenschaften. Das erfasste Vermögen liegt über dieser Grenze.',
       vermoegenAntrag: 'Über einem Bruttovermögen von 750 000 Franken prüft der Kanton Bern nicht automatisch. Das ist kein Ausschluss — der Anspruch muss bis zum 31. Dezember beantragt werden.',
       regionStrittig: 'Die Gemeinde ist eindeutig, ihre Prämienregion nicht: Die Liste des Bundesamts und die des Kantons widersprechen sich. Bis das geklärt ist, steht hier lieber keine Zahl; der Unterschied wäre bis zu 156 Franken im Jahr.',
       mindestanspruch: 'In diesem Einkommensbereich ist die kantonale Regel nicht eindeutig. Lieber keine Zahl als eine, die um mehrere hundert Franken danebenliegt.',
@@ -5628,6 +5636,7 @@ export default {
     tpwQuelleVor: "Quelle Taxpunktwert",
     tpwQuelleTarifpartner: "Ärztegesellschaften",
     tpwQuelleSZ: "Ärztegesellschaften; 0.85 für santéservices, vormals tarifsuisse; 0.86 für CSS und HSK",
+    tpwQuelleSO: "0.84 für santéservices; eigene Beschlüsse: CSS 0.84, HSK 0.85",
     tpwQuelleGE: "gilt für CSS",
     tpwQuelleVD: "gilt für santéservices, vormals tarifsuisse",
     tpwQuelleLU: "gilt für santéservices, vormals tarifsuisse",
@@ -5636,6 +5645,7 @@ export default {
     tpwQuelleSeiten: "Amtl. Gesetzessammlung S. {seiten}",
     tpwErgebnisGruppe: "Belegt für Versicherte von {gruppe}; bei anderen Kassen kann der Wert abweichen.",
     tpwErgebnisGruppeSZ: "Belegt für Versicherte von santéservices; für CSS und HSK gilt in SZ 0.86.",
+    tpwErgebnisGruppeSO: "Belegt für Versicherte von santéservices und CSS; für HSK gilt in SO 0.85; bei anderen Kassen kann der Wert abweichen.",
     tpwOhneKanton: "Ohne Kanton rechnet die App nicht — der Taxpunktwert ist je Kanton verschieden.",
     tpwOhneKantonProfil: "Ohne Wohnkanton im Profil rechnet die App hier nicht — der Taxpunktwert ist je Kanton verschieden.",
     disclaimer: { sie: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Ihre Krankenkasse.', du: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Deine Krankenkasse.' },
@@ -5687,6 +5697,9 @@ export default {
     discard: 'Verwerfen',
     apply: 'In den Stand übernehmen',
     startBlank: 'Leer starten',
+    replaceQuestion: 'Leer gestartet: Übernehmen ersetzt den ganzen gespeicherten Stand durch diese Angaben. Was dort sonst steht, fällt weg.',
+    replaceBack: 'Zurück',
+    replaceConfirm: 'Ganzen Stand ersetzen',
   },
   demo: {
     bannerTitle: 'Beispiel: Maria Muster, 34, Zürich',
@@ -5957,7 +5970,7 @@ export default {
     lageTitle: 'Lage-abhängige Leistungen',
     lageIntro: 'Diese hängen nicht am Einkommen, sondern an einer Lebenslage:',
     lageIv: 'Invalidenversicherung (IV) — bei Krankheit oder Behinderung',
-    lageAlv: 'Arbeitslosengeld (ALV) — bei Stellenverlust',
+    lageAlv: 'Arbeitslosenentschädigung (ALV) — bei Stellenverlust',
     lageEo: 'Erwerbsersatz (EO) — bei Dienst oder Mutterschaft',
     lageFamilienzulagen: 'Familienzulagen — mit Kindern',
     waySituationen: 'Lebenssituationen — versteckte Berechtigungen',
@@ -6054,6 +6067,7 @@ export default {
     referenzalter: 'Referenzalter (AHV 21)',
     skalenfaktor: 'Beitragsskala',
     fehlendeBeitragsjahre: 'Fehlende Beitragsjahre',
+    beitragsjahreAngenommen: 'Annahme: Beiträge ohne Lücke bis zum Bezugsalter ({alter}), also {jahre} Beitragsjahre — gleich wie bei der 2. Säule. Mit den eigenen Beitragsjahren wird die Schätzung genauer.',
     vorbezug: 'Kürzung (Vorbezug)',
     aufschub: 'Zuschlag (Aufschub)',
     erziehungsgutschrift: 'Erziehungs-/Betreuungsgutschrift',
