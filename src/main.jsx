@@ -17,9 +17,9 @@ import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
-import { probeUebernehmen } from './utils/probeUebernehmen.js';
 import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
 import { eintragFolgen } from './utils/eintragFolgen.js';
+import { probeUebernehmen } from './utils/probeUebernehmen.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten

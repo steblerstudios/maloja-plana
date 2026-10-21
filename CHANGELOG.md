@@ -11,11 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-### Behoben
-- **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
-
 ### Geändert
 - **Taxpunktwert SO 2026 belegt:** 0.89 → 0.84 (RRB SO 2026/825, GAeSO ↔ santéservices; CSS ebenfalls 0.84 nach RRB 2026/1038, HSK 0.85 nach RRB 2026/408). SO zeigt nicht mehr «Stand 2025»; Quelle verlinkt, Gruppenzeile beim Ergebnis. BL und JU nachgeprüft, mangels Kantonsquelle für die freie Praxis unverändert. `TAXPUNKTWERT_DATA_VERSION` 2026-10-19.
+
+### Behoben
+- **Probier-Modus: «Leer starten» + «Übernehmen» löscht nicht mehr still alle Kapitel** (Voll-Audit B5): nach einem Leer-Start fragt Übernehmen zuerst nach («Ganzen Stand ersetzen» / «Zurück», Fokus auf Zurück), in allen fünf Sprachen. Probier-Modus aus dem eigenen Stand unverändert. `utils/probeUebernehmen.js`.
 
 ## [0.1.46-beta] — 2026-10-19
 
