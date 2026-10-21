@@ -186,7 +186,7 @@ const BetaFeedback = ({ palette, t }) => {
     border: '1px solid ' + (selected ? (palette.sage || palette.accent) : palette.border),
     background: selected ? (palette.sageMist || palette.up) : 'transparent',
     color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
-    fontWeight: selected ? weight.medium : weight.normal, transition: `all ${duration.fast}ms ${ease}`,
+    fontWeight: selected ? weight.medium : weight.normal, transition: `background ${duration.fast}ms ${ease}, border-color ${duration.fast}ms ${ease}`,
   });
 
   const handleSubmit = () => {
@@ -723,7 +723,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   background: getIconBg(pct, ch.key),
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                  transition: `all ${duration.cinematic}ms ${ease}`,
+                  transition: `background ${duration.cinematic}ms ${ease}, opacity ${duration.cinematic}ms ${ease}, box-shadow ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
                   boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
                   border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
                   animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',

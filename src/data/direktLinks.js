@@ -49,7 +49,7 @@ export const DIREKTLINKS = [
   {
     id: 'arbeitslosigkeit',
     kategorie: 'arbeit',
-    name: { de: 'Arbeitslosengeld', en: 'Unemployment benefits', fr: 'Indemnités de chômage' },
+    name: { de: 'Arbeitslosenentschädigung', en: 'Unemployment benefits', fr: 'Indemnités de chômage' },
     beschreibung: { de: 'Arbeitslosenentschädigung bei Stellenverlust', en: 'Unemployment compensation upon job loss', fr: 'Indemnisation chômage en cas de perte d\'emploi' },
     url: 'https://www.arbeit.swiss/de/stellensuchende',
     antragsstelle: { de: 'RAV (Regionales Arbeitsvermittlungszentrum)', en: 'RAV (Regional employment centre)', fr: 'ORP (Office régional de placement)' },
@@ -69,7 +69,8 @@ export const DIREKTLINKS = [
     kategorie: 'familie',
     name: { de: 'Familienzulagen', en: 'Family allowances', fr: 'Allocations familiales' },
     beschreibung: { de: 'Kinder- und Ausbildungszulagen', en: 'Child and education allowances', fr: 'Allocations pour enfants et formation' },
-    url: 'https://www.ahv-iv.ch/p/6.01.d',
+    // Merkblatt 6.08 «Familienzulagen» (Stand 1.1.2025, geprüft 21.10.2026); vorher 6.01 = EO für Dienstleistende.
+    url: 'https://www.ahv-iv.ch/p/6.08.d',
     antragsstelle: { de: 'Familienausgleichskasse (via Arbeitgeber)', en: 'Family compensation fund (via employer)', fr: 'Caisse d\'allocations familiales (via employeur)' },
   },
   {
@@ -85,7 +86,8 @@ export const DIREKTLINKS = [
     kategorie: 'familie',
     name: { de: 'Vaterschaftsentschädigung', en: 'Paternity compensation', fr: 'Allocation de paternité' },
     beschreibung: { de: '2 Wochen Erwerbsersatz nach Geburt', en: '2 weeks income compensation after birth', fr: '2 semaines d\'allocation après la naissance' },
-    url: 'https://www.ahv-iv.ch/p/6.03.d',
+    // Merkblatt 6.04 «Entschädigung des andern Elternteils EAE» (Stand 1.1.2024, geprüft 21.10.2026); vorher 6.03 = Corona-Erwerbsersatz.
+    url: 'https://www.ahv-iv.ch/p/6.04.d',
     antragsstelle: { de: 'AHV-Ausgleichskasse (via Arbeitgeber)', en: 'OASI compensation fund (via employer)', fr: 'Caisse de compensation AVS (via employeur)' },
   },
   {
@@ -324,7 +326,7 @@ export const CANTONAL_LINKS = {
     ipv: 'https://www.ecasjura.ch/fr/Assurances/Assurance-maladie/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026.html',
   },
   UR: {
-    steuererklaerung: 'https://www.ur.ch/dienstleistungen/3040',
+    steuererklaerung: 'https://www.ur.ch/finanzen/1570', // «Natürliche Personen» mit eTax.UR (geprüft 21.10.2026); vorher 3040 = Organisation von Anlässen
     sozialdienst: 'https://www.ur.ch/dienstleistungen/8953',
     ipv: 'https://www.ur.ch/dienstleistungen/3519',
   },

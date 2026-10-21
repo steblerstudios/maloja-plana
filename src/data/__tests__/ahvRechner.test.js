@@ -4,7 +4,7 @@ import {
   bvgKoordinationsabzug, berechneBVGGuthaben, projiziereVorsorge,
   AHV_PARAMS, BVG_PARAMS, AHV_DATA_VERSION,
   bvgAltersgutschriftSatz, nettoZuBruttoRichtwert, AHV_ALV_ARBEITNEHMER_SATZ,
-  aufschubZuschlagProzent,
+  aufschubZuschlagProzent, volleBeitragsdauer,
 } from '../ahvRechner.js';
 
 describe('ahvRechner', () => {
@@ -137,6 +137,127 @@ describe('ahvRechner', () => {
       });
       expect(mit.monatsrente).toBeGreaterThan(ohne.monatsrente);
       expect(mit.erziehungsgutschrift).toBeGreaterThan(0);
+    });
+
+    // B8 (Voll-Audit 10/2026): Skala 44 statt linearer Interpolation. Soll-Werte wörtlich aus
+    // BSV-Merkblatt 3.01, Stand 1.1.2026, Anhang S. 18 (https://www.ahv-iv.ch/p/3.01.d,
+    // abgerufen 2026-10-21). Die alte Gerade lieferte 1512 / 1764 / 2016.
+    describe('Skala 44 (Merkblatt 3.01, Stand 1.1.2026)', () => {
+      const rente = (einkommen) => berechneAltersrente({
+        geburtsjahr: 1961, durchschnittlichesJahreseinkommen: einkommen, beitragsjahre: 44,
+      }).monatsrente;
+
+      it('trifft die Tabellenwerte im Mittelfeld', () => {
+        expect(rente(30240)).toBe(1588);
+        expect(rente(45360)).toBe(1915);
+        expect(rente(60480)).toBe(2117);
+      });
+
+      it('Minimum und Maximum', () => {
+        expect(rente(1)).toBe(1260);
+        expect(rente(15120)).toBe(1260);
+        expect(rente(90720)).toBe(2520);
+        expect(rente(250000)).toBe(2520);
+      });
+
+      it('rundet auf den nächsthöheren Tabellenwert auf (keine Interpolation)', () => {
+        expect(rente(30241)).toBe(1620);   // → Zeile 31'752
+        expect(rente(15121)).toBe(1293);   // → Zeile 16'632
+        expect(rente(89209)).toBe(2520);   // → Zeile 90'720
+        // Merkblatt-Beispiel Ziff. 30: 25'983 + 9'494 → «aufgerundet auf Tabellenwert» 36'288 → 1'719
+        expect(rente(25983 + 9494)).toBe(1719);
+      });
+
+      it('Ehepaar-Plafond wie im Merkblatt-Beispiel Ziff. 31 (1880 / 1900)', () => {
+        const r = berechneAltersrente({
+          geburtsjahr: 1961, durchschnittlichesJahreseinkommen: 45360, beitragsjahre: 44,
+          verheiratet: true, einkommenPartner: 46872,
+        });
+        expect(r.vollrente).toBe(1915);
+        expect(r.plafoniert).toBe(true);
+        expect(r.monatsrente).toBeCloseTo(1880, 0);
+        expect(r.rentePartner).toBeCloseTo(1900, 0);
+        expect(r.totalEhepaar).toBeCloseTo(3780, 0);
+      });
+    });
+
+    // Folge-Befunde zu B8 (Swiss-Precision-Prüfer, 21.10.2026). Beides wörtlich aus BSV-Merkblatt 3.01,
+    // Stand 1.1.2026: Ziff. 12 (volle Beitragsdauer = die des Jahrgangs), Ziff. 19 (Erziehungs-
+    // gutschriften in den Ehejahren je zur Hälfte), Rechenbeispiele Ziff. 30/31 (S. 14–17).
+    // Ohne den Rentenzuschlag für Frauen der Übergangsgeneration (+80), den die App nicht rechnet.
+    describe('Merkblatt-Beispiele Ziff. 30/31: Jahrgangs-Beitragsdauer und geteilte Gutschriften', () => {
+      it('volle Beitragsdauer nach Jahrgang und Geburtsmonat', () => {
+        expect(volleBeitragsdauer({ geburtsjahr: 1962, geburtsmonat: 2, geschlecht: 'female' })).toBe(43); // Ziff. 30: 1983–2025
+        expect(volleBeitragsdauer({ geburtsjahr: 1961, geburtsmonat: 9, geschlecht: 'male' })).toBe(44);   // Ziff. 31: 1982–2025
+        expect(volleBeitragsdauer({ geburtsjahr: 1961, geburtsmonat: 11, geschlecht: 'female' })).toBe(44); // 64 J 3 M erst im Feb. 2026
+        expect(volleBeitragsdauer({ geburtsjahr: 1963, geburtsmonat: 1, geschlecht: 'female' })).toBe(43);
+        expect(volleBeitragsdauer({ geburtsjahr: 1963, geburtsmonat: 10, geschlecht: 'female' })).toBe(44);
+        expect(volleBeitragsdauer({ geburtsjahr: 1975, geburtsmonat: 6, geschlecht: 'female' })).toBe(44);
+        expect(volleBeitragsdauer({ geburtsjahr: 1962, geschlecht: 'female' })).toBe(44); // ohne Monat: wie bisher
+      });
+
+      it('Ziff. 30: Frau geb. 17.2.1962, 43 Jahre, 18 Erziehungsjahre, verheiratet → Vollrente 1719', () => {
+        const r = berechneAltersrente({
+          geburtsjahr: 1962, geburtsmonat: 2, geschlecht: 'female',
+          durchschnittlichesJahreseinkommen: 25983, beitragsjahre: 43, erziehungsjahre: 18, verheiratet: true,
+        });
+        expect(r.erziehungsgutschrift).toBe(9494); // 18 × 45 360 ÷ 43 ÷ 2
+        expect(r.gutschriftGeteilt).toBe(true);
+        expect(r.volleBeitragsdauer).toBe(43);
+        expect(r.skalenfaktor).toBe(1);           // Skala 44 trotz 43 Jahren
+        expect(r.fehlendeBeitragsjahre).toBe(0);
+        expect(r.monatsrente).toBe(1719);
+      });
+
+      it('Ziff. 31: Frau 35 219 → 1915, Mann geb. 2.9.1961 36 990 → 1935 (vor Plafonierung)', () => {
+        const frau = berechneAltersrente({
+          geburtsjahr: 1962, geburtsmonat: 2, geschlecht: 'female',
+          durchschnittlichesJahreseinkommen: 35219, beitragsjahre: 43, erziehungsjahre: 18, verheiratet: true,
+        });
+        const mann = berechneAltersrente({
+          geburtsjahr: 1961, geburtsmonat: 9, geschlecht: 'male',
+          durchschnittlichesJahreseinkommen: 36990, beitragsjahre: 44, erziehungsjahre: 18, verheiratet: true,
+        });
+        expect(frau.vollrente).toBe(1915); // vorher 2036: Gutschrift nicht halbiert
+        expect(mann.erziehungsgutschrift).toBe(9278);
+        expect(mann.vollrente).toBe(1935);
+      });
+
+      it('unverheiratet: volle Gutschrift, nicht geteilt', () => {
+        const r = berechneAltersrente({
+          geburtsjahr: 1970, durchschnittlichesJahreseinkommen: 40000, beitragsjahre: 44, erziehungsjahre: 16,
+        });
+        expect(r.gutschriftGeteilt).toBe(false);
+        expect(r.erziehungsgutschrift).toBe(16495); // 16 × 45 360 ÷ 44
+      });
+
+      it('geschieden: Gutschrift geteilt (Ehejahre), aber keine Plafonierung', () => {
+        // Merkblatt 1.07 Ziff. 1: «während der Kalenderjahre der Ehe (zwingend) hälftig geteilt»
+        const r = berechneAltersrente({
+          geburtsjahr: 1970, durchschnittlichesJahreseinkommen: 40000, beitragsjahre: 44, erziehungsjahre: 16,
+          verheiratet: false, gutschriftTeilen: true,
+        });
+        expect(r.gutschriftGeteilt).toBe(true);
+        expect(r.erziehungsgutschrift).toBe(8247); // 16 × 45 360 ÷ 44 ÷ 2 = 8247.27
+        expect(r.plafoniert).toBe(false);
+        expect(r.totalEhepaar).toBeNull();
+      });
+
+      it('Vorbezug/Aufschub-Vergleich kennt den Geburtsmonat: 43 Jahre = Vollrente', () => {
+        const zeilen = vergleicheVorbezugAufschub(90720, 43, 'female', 1962, 2);
+        // Referenzalter 64 J 6 M → Bezug mit 65 = 6 Monate Aufschub, unter 12 Monaten kein Zuschlag
+        expect(zeilen.find(z => z.bezugAlter === 65).monatsrente).toBe(2520);
+        const ohneMonat = vergleicheVorbezugAufschub(90720, 43, 'female', 1962);
+        expect(ohneMonat.find(z => z.bezugAlter === 65).monatsrente).toBeLessThan(2520); // 43/44
+      });
+
+      it('Teilrente misst an der Jahrgangs-Dauer: 42 von 43 Jahren', () => {
+        const r = berechneAltersrente({
+          geburtsjahr: 1962, geburtsmonat: 2, geschlecht: 'female', durchschnittlichesJahreseinkommen: 90720, beitragsjahre: 42,
+        });
+        expect(r.skalenfaktor).toBeCloseTo(42 / 43, 10);
+        expect(r.fehlendeBeitragsjahre).toBe(1);
+      });
     });
 
     it('returns zero for zero income', () => {

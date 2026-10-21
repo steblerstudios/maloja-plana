@@ -1763,7 +1763,8 @@ export default {
       finanzuebersichtHint: "Tut las calculaziuns en ina egliada",
       addressInWohnen: { sie: "Vossa adressa è deponida en il chapitel «Abitar»", du: "Tia adressa è deponida en il chapitel «Abitar»" },
       employerInFinanzen: 'Patrun & entrada en il chapitel «Finanzas»',
-      educationTaxHint: "Custs da furmaziun? Fin a CHF 10'000 deducibels da las taglias",
+      // TODO(rm): provisorisch — Gegenlese (Bildungsabzug, 21.10.2026)
+      educationTaxHint: "Custs da furmaziun? Fin a CHF 13'000 deducibels per la taglia federala (stadi 2026), ils chantuns han agens limits",
       taxFromBehoerdenHint: 'Stimar la chargia fiscala',
       schuldenFromBehoerdenHint: 'Administrar las esecuziuns',
     },
@@ -2661,8 +2662,11 @@ export default {
     discard: 'Annullar',
     apply: 'Surpigliar las datas',
     startBlank: 'Cumenzar vid',
+    // TODO(rm): provisorisch — Gegenlese (Probier-Modus B5, 21.10.2026)
     replaceQuestion: 'Cumenzà vid: surpigliar remplazza tut las datas memorisadas cun questas indicaziuns. Il rest va a perder.',
+    // TODO(rm): provisorisch — Gegenlese (Probier-Modus B5, 21.10.2026)
     replaceBack: 'Enavos',
+    // TODO(rm): provisorisch — Gegenlese (Probier-Modus B5, 21.10.2026)
     replaceConfirm: 'Remplazzar tut',
   },
   demo: {
@@ -3187,9 +3191,15 @@ export default {
     bsPensumAngenommen: 'Quint per in pensum dad almain 80 pertschient — las uras da lavur per emna n’èn betg registradas. Tgi che viva sulet u educhescha sulet ils uffants e lavura main, survegn en il chantun Basilea-Citad per ordinari cleramain main. Las uras sa laschan endatar en il chapitel «Furmaziun & lavur», quellas d’ina activitad accessorica sut «Entrada accessorica: uras da lavur per l’emna».',
     // TODO(rm): provisorisch — Gegenlese (K31 VD, 28.09.2026)
     noteApplyOvam: 'Dumonda online tar l’OVAM u tar l’agentura d’assicuranzas socialas da la regiun; la renovaziun annuala fa l’OVAM',
-    vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Tgi che sa transferescha d’in auter chantun en il chantun Vad durant l’onn na survegn nagin subsidi dal chantun Vad per quel onn, auter che cun prestaziuns supplementaras a l’AVS/AI u cun il revenu d’insertion (l’agid social dal chantun Vad); lura vali la paina da s’infurmar tar il chantun da domicil precedent. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
-    vdVermoegen2027: 'A partir dal 1. schaner 2027 fixescha il chantun Vad ina limita da facultad: sche la facultad mobila surpassa 130 000 francs, n’ha nagin commember da la chasada pli dretg al subsidi. Là vegnan quintads titels ed autras investiziuns, daners en bar, bancnotas e metals preziús, vehichels, bischutaria ed auters objects da valur ed il rest da la facultad — betg immobiglias. La facultad registrada surpassa questa limita; decisiva è la facultad tenor l’ultima taxaziun fiscala. Per il 2026 na sa mida nagut; la renovaziun annuala per il 2027 e mintga dumonda, nua ch’il dretg cumenza pir il 2027, tutgan dentant gia sut la nova regla.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
-    vorbehaltVD2027: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal proxim mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
+    // rm-Entwurf, ungeprüft (bis zur Gegenlese nicht ausgeliefert): vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal segund mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Tgi che sa transferescha d’in auter chantun en il chantun Vad durant l’onn na survegn nagin subsidi dal chantun Vad per quel onn, auter che cun prestaziuns supplementaras a l’AVS/AI u cun il revenu d’insertion (l’agid social dal chantun Vad); lura vali la paina da s’infurmar tar il chantun da domicil precedent. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
+    // TODO(rm): provisorisch — Gegenlese (Rechtsvorbehalt VD, deutsche Fassung bis Gegenlese, 21.10.2026)
+    vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des zweiten Monats nach dem Antrag. Rückwirkend gibt es nur ausnahmsweise etwas, höchstens ab Beginn des laufenden Jahres, und nur in zwei Fällen: wenn nachgewiesen ist, dass ein früherer Antrag ohne eigenes Verschulden nicht möglich war, oder wenn der Antrag auf eine periodische Information des Kantons hin gestellt wird; das entscheidet das OVAM. Wer im Lauf des Jahres aus einem anderen Kanton in die Waadt zieht, erhält für dieses Jahr vom Kanton Waadt keine Verbilligung, ausser bei Ergänzungsleistungen zur AHV/IV oder beim Revenu d’insertion (der Waadtländer Sozialhilfe); dann lohnt es sich, beim bisherigen Wohnkanton nachzufragen. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
+    // rm-Entwurf, ungeprüft (bis zur Gegenlese nicht ausgeliefert): vdVermoegen2027: 'A partir dal 1. schaner 2027 fixescha il chantun Vad ina limita da facultad: sche la facultad mobila surpassa 130 000 francs, n’ha nagin commember da la chasada pli dretg al subsidi. Là vegnan quintads titels ed autras investiziuns, daners en bar, bancnotas e metals preziús, vehichels, bischutaria ed auters objects da valur ed il rest da la facultad — betg immobiglias. La facultad registrada surpassa questa limita; decisiva è la facultad tenor l’ultima taxaziun fiscala. Per il 2026 na sa mida nagut; la renovaziun annuala per il 2027 e mintga dumonda, nua ch’il dretg cumenza pir il 2027, tutgan dentant gia sut la nova regla.', // TODO(rm): provisorisch — Gegenlese (VD 2026 Vorbehalt, 19.10.2026)
+    // TODO(rm): provisorisch — Gegenlese (Rechtsvorbehalt VD, deutsche Fassung bis Gegenlese, 21.10.2026)
+    vdVermoegen2027: 'Ab 1. Januar 2027 gilt im Kanton Waadt eine Vermögensgrenze: Liegt das bewegliche Vermögen über 130 000 Franken, besteht für den ganzen Haushalt kein Anspruch mehr. Gezählt werden Wertschriften und andere Anlagen, Bargeld, Banknoten und Edelmetalle, Fahrzeuge, Schmuck und andere Wertgegenstände sowie das übrige Vermögen — nicht Liegenschaften. Das erfasste Vermögen liegt darüber; massgebend ist das Vermögen laut letzter Steuerveranlagung. Für 2026 ändert das nichts; die jährliche Erneuerung für 2027 und jeder Antrag, dessen Anspruch erst 2027 beginnt, fallen aber schon unter die neue Regel.',
+    // rm-Entwurf, ungeprüft (bis zur Gegenlese nicht ausgeliefert): vorbehaltVD2027: 'En il chantun Vad vala l’ultima taxaziun fiscala definitiva, betg l’entrada dad oz. Il dretg cumenza l’emprim di dal proxim mais suenter la dumonda. Retroactivamain vegn concedì insatge mo excepziunalmain, il pli baud a partir dal cumenzament da l’onn current, e mo en dus cas: sch’igl è cumprovà ch’ina dumonda pli baud n’era betg pussaivla senza atgna culpa, u sche la dumonda suonda ina infurmaziun periodica dal chantun; l’OVAM decida. Midadas da las entradas, da la facultad u da la chasada ston vegnir annunziadas immediatamain; subsidis retschavids senza dretg vegnan pretendids enavos.',
+    // TODO(rm): provisorisch — Gegenlese (Rechtsvorbehalt VD, deutsche Fassung bis Gegenlese, 21.10.2026)
+    vorbehaltVD2027: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am ersten Tag des Monats, der auf den Antrag folgt. Rückwirkend gibt es nur ausnahmsweise etwas, höchstens ab Beginn des laufenden Jahres, und nur in zwei Fällen: wenn nachgewiesen ist, dass ein früherer Antrag ohne eigenes Verschulden nicht möglich war, oder wenn der Antrag auf eine periodische Information des Kantons hin gestellt wird; das entscheidet das OVAM. Änderungen bei Einkommen, Vermögen oder Haushalt sind sofort zu melden; zu Unrecht bezogene Beträge werden zurückgefordert.',
     vdKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg al subsidi ordinari: l’entrada decisiva surpassa CHF {value}, la limita dal chantun Vad per quest tip da chasada.',
     vdSpezifischerSubside: 'La premia registrada è auta en relaziun cun l’entrada. Il chantun Vad conceda ultra da quai in subsidi specific, sche las premias surpassan, suenter la deducziun dal subsidi ordinari, 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovri las premias da tut las persunas da la chasada. L’OVAM al examinescha tar la dumonda.',
     // K31 UR (28.09.2026) — TODO(rm): provisorisch, Gegenlese offen
@@ -4065,6 +4075,7 @@ export default {
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
     mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Salari minimal chantunal: verifitgà tenor las funtaunas uffizialas per {jahr}, per {laufend} anc naginas valurs verifitgadas — perquai qua senza import e senza cumparegliaziun cun il salari minimal.', // TODO(rm): Gegenlese Muttersprachler:in
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
@@ -4095,6 +4106,7 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — provisorisch (Rumantsch Grischun).
     dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
+    jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
   },
 
   charts: {
@@ -6698,6 +6710,7 @@ export default {
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
     gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
+    gutschriftGeteilt: 'Per ils onns da matrimoni vegn la bonificaziun repartida per mesadad tranter ils dus conjugals — er suenter in divorzi u la mort dal conjugal. Il quint suppona che tut ils onns inditgads crodian en il matrimoni.',
     verheiratet: 'Maridà/ada u en partenadi registrà',
     einkommenPartner: 'Entrada dal partenari (CHF)',
     ahvRente: 'Renta da vegliadetgna AVS stimada',
@@ -6708,6 +6721,8 @@ export default {
     referenzalter: 'Etad da referenza (AVS 21)',
     skalenfaktor: 'Scala da contribuziun',
     fehlendeBeitragsjahre: 'Onns da contribuziun che mancan',
+    // TODO(rm): provisorisch — Gegenlese (Vorsorge B9, 21.10.2026)
+    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da retschavida ({alter}), q.v.d. {jahre} onns da contribuziun — sco tar la 2. pitga. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
     vorbezug: 'Reducziun (retschavida anticipada)',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",

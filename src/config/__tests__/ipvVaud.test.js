@@ -735,7 +735,9 @@ describe('K31 VD 2026: Vorbehalt und Vermögenshinweis in allen fünf Sprachen',
     fr: { nie: /ne sont pas rattrapés/, rueck: /dans deux cas seulement/, zuzug: /autre canton/, el: /AVS\/AI/ },
     it: { nie: /non vengono recuperati/, rueck: /solo in due casi/, zuzug: /altro Cantone/, el: /AVS\/AI/ },
     en: { nie: /not paid retroactively/, rueck: /in two cases only/, zuzug: /another canton/, el: /AHV\/IV/ },
-    rm: { nie: /na vegnan betg pajads/, rueck: /mo en dus cas/, zuzug: /auter chantun/, el: /AVS\/AI/ },
+    // rm zeigt die VD-Rechtsvorbehalte bis zur Gegenlese auf Deutsch (Entscheid 21.10.2026); der rm-Entwurf
+    // («mo en dus cas», «auter chantun») steht als Kommentar in rm.js.
+    rm: { nie: /nichts rückwirkend/, rueck: /nur in zwei Fällen/, zuzug: /anderen Kanton/, el: /AHV\/IV/ },
   };
   it.each(Object.keys(MERKMALE))('%s', async (l) => {
     const m = (await import(`../../i18n/${l}.js`)).default;
@@ -751,4 +753,12 @@ describe('K31 VD 2026: Vorbehalt und Vermögenshinweis in allen fünf Sprachen',
     expect(m.ipv.vdVermoegen2027).toMatch(/130[  ,']000/);
     expect(m.ipv.vdVermoegen2027).toMatch(/2027/);
   }, 20000);
+});
+
+describe('VD-Rechtsvorbehalte rm: deutsche Fassung bis zur Gegenlese (Tor 21.10.2026)', () => {
+  it.each(['vorbehaltVD', 'vorbehaltVD2027', 'vdVermoegen2027'])('%s: rm = de', async (k) => {
+    const de = (await import('../../i18n/de.js')).default;
+    const rm = (await import('../../i18n/rm.js')).default;
+    expect(rm.ipv[k]).toBe(de.ipv[k]);
+  });
 });
