@@ -140,7 +140,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     );
   }
 
-  const { incomeFTE, incomeVergleich, hat13, income, incomeRoh, geschaetzt, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, konformMit13, dreizehnterUnklar, scaleMin, scaleMax } = state;
+  const { incomeFTE, incomeVergleich, hat13, income, incomeRoh, geschaetzt, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mindestlohnNichtBelegt, mlBreached, konformMit13, dreizehnterUnklar, scaleMin, scaleMax } = state;
   // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
   const arbeitColor = bereichFillColor('arbeit', isDarkMode);
 
@@ -310,6 +310,12 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       // 12/13-Spalt, 13.-Frage offen: kein Urteil, ruhige Einladung (reuse lohnCheck-String).
       dreizehnterUnklar ? ' ' + t('lohnCheck.dreizehnterUnklar') : ''
     ),
+
+    // Jahres-Riegel (data/lohnCheck.js): der Kanton kennt einen Mindestlohn, aber für das laufende
+    // Jahr ist kein Satz belegt — dann weder Marke noch Betrag, nur dieser Satz.
+    mindestlohnNichtBelegt && React.createElement('div', {
+      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
+    }, t('lohnEinordnung.mindestlohnJahrNichtBelegt', { jahr: mindestlohnNichtBelegt.jahr, laufend: mindestlohnNichtBelegt.laufendesJahr })),
 
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },

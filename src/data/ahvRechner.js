@@ -64,22 +64,36 @@ function skalenFaktor(beitragsjahre) {
   return beitragsjahre / VOLLE_BEITRAGSJAHRE;
 }
 
-// Rentenformel: massgebendes durchschnittliches Jahreseinkommen → Monatsrente
-// Lineare Interpolation zwischen Min und Max gemäss Art. 34 AHVG
+// Skala 44, monatliche Vollrente (Alters- und Invalidenrente 1/1), Beträge in Franken.
+// Wörtlich aus dem BSV-Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»,
+// Stand 1.1.2026, Anhang S. 18 «AHV/IV-Renten ab 1. Januar 2025 · Skala 44: Monatliche
+// Vollrenten» (https://www.ahv-iv.ch/p/3.01.d, abgerufen 2026-10-21 14:19 UTC, pdftotext -layout).
+// Die Tabelle gilt seit 1.1.2025 unverändert auch 2026. Paare [massgebendes durchschnittliches
+// Jahreseinkommen, Monatsrente]; Schritt 1512 CHF. Nicht linear: zwei Steigungen mit Knick bei
+// 45'360 (Art. 34 Abs. 2 AHVG, fester + variabler Rententeil), dazu die Rundung der Tabelle.
+const SKALA_44 = [
+  [15120, 1260], [16632, 1293], [18144, 1326], [19656, 1358], [21168, 1391],
+  [22680, 1424], [24192, 1457], [25704, 1489], [27216, 1522], [28728, 1555],
+  [30240, 1588], [31752, 1620], [33264, 1653], [34776, 1686], [36288, 1719],
+  [37800, 1751], [39312, 1784], [40824, 1817], [42336, 1850], [43848, 1882],
+  [45360, 1915], [46872, 1935], [48384, 1956], [49896, 1976], [51408, 1996],
+  [52920, 2016], [54432, 2036], [55944, 2056], [57456, 2076], [58968, 2097],
+  [60480, 2117], [61992, 2137], [63504, 2157], [65016, 2177], [66528, 2197],
+  [68040, 2218], [69552, 2238], [71064, 2258], [72576, 2278], [74088, 2298],
+  [75600, 2318], [77112, 2339], [78624, 2359], [80136, 2379], [81648, 2399],
+  [83160, 2419], [84672, 2439], [86184, 2460], [87696, 2480], [89208, 2500],
+  [90720, 2520],
+];
+
+// Massgebendes durchschnittliches Jahreseinkommen → monatliche Vollrente (Skala 44).
+// Amtliche Regel: das Einkommen wird «aufgerundet auf Tabellenwert» (Merkblatt 3.01, Ziff. 30/31,
+// Beispiele S. 15–17: 25'983 + 9'494 → 36'288 → 1'719; 35'219 + 9'494 → 45'360 → 1'915).
+// Also nächsthöhere Tabellenzeile, keine Interpolation. Bis 15'120 → Minimalrente,
+// ab 90'720 → Maximalrente.
 function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
-  if (durchschnittlichesJahreseinkommen <= 0) return 0;
-
-  // Unter Minimum → Minimalrente
-  const minEinkommen = 15120;  // Untere Grenze (= 12× Minimalrente, ergibt Minimalrente)
-  const maxEinkommen = MAX_VERSICHERTES_EINKOMMEN;
-
-  if (durchschnittlichesJahreseinkommen <= minEinkommen) return AHV_MIN_RENTE;
-  if (durchschnittlichesJahreseinkommen >= maxEinkommen) return AHV_MAX_RENTE;
-
-  // Formel Art. 34 AHVG: Rente = (Einkommen / 2 × 13) / 12 + fester Zuschlag
-  // Vereinfacht: lineare Interpolation
-  const anteil = (durchschnittlichesJahreseinkommen - minEinkommen) / (maxEinkommen - minEinkommen);
-  return Math.round((AHV_MIN_RENTE + anteil * (AHV_MAX_RENTE - AHV_MIN_RENTE)) * 100) / 100;
+  if (!(durchschnittlichesJahreseinkommen > 0)) return 0;
+  const zeile = SKALA_44.find(([einkommen]) => durchschnittlichesJahreseinkommen <= einkommen);
+  return zeile ? zeile[1] : AHV_MAX_RENTE;
 }
 
 
@@ -434,7 +448,8 @@ export const BVG_PARAMS = {
 // (mehrere Konten moderat füllen → Vorzugszins halten + gestaffelter Bezug).
 export const SAEULE3A_ZINSSCHWELLE = 20000;
 
-// WARTUNG: AHV/ALV/BVG-Werte sind Stand 2026. Im Januar 2027 gegen die neuen
+// WARTUNG: AHV/ALV/BVG-Werte sind Stand 2026. Bei einer Rentenanpassung SKALA_44 (alle 51 Zeilen)
+// zusammen mit AHV_MIN_RENTE/AHV_MAX_RENTE nachziehen. Im Januar 2027 gegen die neuen
 // BSV-Rententabellen und AHVV-Anpassungen prüfen und diese Version hochziehen.
 export const AHV_DATA_VERSION = '2026';
-export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV Art. 55ter, BSV Rententabellen 2026';
+export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV Art. 55ter, BSV-Merkblatt 3.01 Stand 1.1.2026 (Skala 44, Renten ab 1.1.2025)';

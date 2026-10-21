@@ -1518,7 +1518,7 @@ export default {
       finanzuebersichtHint: 'Tous les calculs en un coup d\'œil',
       addressInWohnen: { sie: 'Votre adresse est enregistrée dans le chapitre «Logement»', du: 'Ton adresse est enregistrée dans le chapitre «Logement»' },
       employerInFinanzen: 'Employeur & revenu dans le chapitre «Finances»',
-      educationTaxHint: 'Frais de formation ? Jusqu\'à CHF 10’000 déductibles des impôts',
+      educationTaxHint: 'Frais de formation ? Déductibles jusqu\'à CHF 13’000 pour l\'impôt fédéral, les cantons fixent leurs propres plafonds',
       taxFromBehoerdenHint: 'Estimer la charge fiscale',
       schuldenFromBehoerdenHint: 'Gérer les poursuites',
     },
@@ -2875,6 +2875,7 @@ export default {
     readoutAbove: { sie: 'Votre salaire est supérieur à la médiane suisse.', du: 'Ton salaire est supérieur à la médiane suisse.' },
     readoutBelow: { sie: 'Votre salaire est inférieur à la médiane suisse.', du: 'Ton salaire est inférieur à la médiane suisse.' },
     mindestlohnLine: 'Salaire minimum cantonal : CHF {stunde}/h — environ CHF {amount} par mois à plein temps (état {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Salaire minimum cantonal : vérifié pour {jahr} d’après les sources officielles, pas encore de valeurs vérifiées pour {laufend} — donc ni montant ni comparaison avec le salaire minimum ici.',
     mindestlohnBreachedLine: { sie: 'Votre salaire semble inférieur.', du: 'Ton salaire semble inférieur.' },
     fulltimeNote: 'Comparaison sur la base d’un poste à plein temps (40 h/semaine, comme pour la médiane de l’OFS).',
     dreizehnterNote: 'La valeur de comparaison inclut la part du 13e salaire (×13/12) pour correspondre à la médiane de l’OFS. Sans 13e, ce serait CHF {fte}.',
@@ -2901,6 +2902,7 @@ export default {
     basisNetto: { sie: 'Votre revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait votre salaire brut (il figure sur votre fiche de salaire).', du: 'Ton revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait ton salaire brut (il figure sur ta fiche de salaire).' },
     dreizehnterUnklar: 'Le salaire est juste en dessous du salaire minimum complet. Avec un 13e salaire mensuel, il peut néanmoins être conforme — le 13e compte pour le salaire minimum. Veuillez indiquer dans le chapitre Finances si un 13e est versé, nous pourrons alors le classer clairement.',
     nextStepLink: 'Préparer la demande de salaire',
+    jahrNichtBelegt: 'Les salaires minimaux de cette application sont vérifiés pour {jahr} d’après les sources officielles. Pour {laufend}, aucune valeur vérifiée n’est encore saisie — c’est pourquoi aucune comparaison n’est faite ici. Le montant en vigueur peut être consulté auprès du canton ({kanton}).',
   },
 
   tax: {
@@ -6000,6 +6002,7 @@ export default {
     referenzalter: 'Âge de référence (AVS 21)',
     skalenfaktor: 'Échelle de cotisation',
     fehlendeBeitragsjahre: 'Années de cotisation manquantes',
+    beitragsjahreAngenommen: 'Hypothèse : cotisations sans lacune jusqu’à l’âge de la retraite ({alter}), soit {jahre} années de cotisation — comme pour le 2e pilier. Avec les années de cotisation effectives, l’estimation devient plus précise.',
     vorbezug: 'Réduction (anticipation)',
     aufschub: 'Supplément (ajournement)',
     erziehungsgutschrift: 'Bonification pour éducation / assistance',

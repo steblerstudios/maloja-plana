@@ -1763,7 +1763,7 @@ export default {
       finanzuebersichtHint: "Tut las calculaziuns en ina egliada",
       addressInWohnen: { sie: "Vossa adressa è deponida en il chapitel «Abitar»", du: "Tia adressa è deponida en il chapitel «Abitar»" },
       employerInFinanzen: 'Patrun & entrada en il chapitel «Finanzas»',
-      educationTaxHint: "Custs da furmaziun? Fin a CHF 10'000 deducibels da las taglias",
+      educationTaxHint: "Custs da furmaziun? Fin a CHF 13'000 deducibels per la taglia federala, ils chantuns han agens limits",
       taxFromBehoerdenHint: 'Stimar la chargia fiscala',
       schuldenFromBehoerdenHint: 'Administrar las esecuziuns',
     },
@@ -4070,6 +4070,7 @@ export default {
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
     mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
+    mindestlohnJahrNichtBelegt: 'Salari minimal chantunal: verifitgà tenor las funtaunas uffizialas per {jahr}, per {laufend} anc naginas valurs verifitgadas — perquai qua senza import e senza cumparegliaziun cun il salari minimal.', // TODO(rm): Gegenlese Muttersprachler:in
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
@@ -4100,6 +4101,7 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — provisorisch (Rumantsch Grischun).
     dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
+    jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
   },
 
   charts: {
@@ -6713,6 +6715,7 @@ export default {
     referenzalter: 'Etad da referenza (AVS 21)',
     skalenfaktor: 'Scala da contribuziun',
     fehlendeBeitragsjahre: 'Onns da contribuziun che mancan',
+    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da retschavida ({alter}), q.v.d. {jahre} onns da contribuziun — sco tar la 2. pitga. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
     vorbezug: 'Reducziun (retschavida anticipada)',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",
