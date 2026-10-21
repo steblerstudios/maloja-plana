@@ -151,12 +151,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
-    // Ohne eigene Angabe: Annahme bis zum Referenzalter, nicht bis zum Regler — sonst hinge jede
-    // Zeile der Tabelle (63–70) vom gerade eingestellten Bezugsalter ab.
-    const bjTabelle = beitragsjahreAngenommen
-      ? angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre)
-      : parsedBeitragsjahre;
-    return vergleicheVorbezugAufschub(parsedEinkommen, bjTabelle, data.basis?.gender, birthYear || 1970, birthMonth);
+    const vergleich = (bj) => vergleicheVorbezugAufschub(parsedEinkommen, bj, data.basis?.gender, birthYear || 1970, birthMonth);
+    if (!beitragsjahreAngenommen) return vergleich(parsedBeitragsjahre);
+    // Ohne eigene Angabe: je Zeile dieselbe Annahme wie im AHV-Block für genau dieses Bezugsalter
+    // (Vorbezug → Teilrente, utils/beitragsjahreAnnahme.js) — nicht abhängig vom Regler, und
+    // dieselbe Rente für dasselbe Alter auf beiden Stellen des Bildschirms.
+    return vergleich(angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre)).map(zeile =>
+      vergleich(angenommeneBeitragsjahreFuer(zeile.bezugAlter, refAlterJahre)).find(z => z.bezugAlter === zeile.bezugAlter));
   }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreAngenommen, refAlterJahre, data.basis?.gender, birthYear, birthMonth]);
 
   const bvgResult = useMemo(() => {
@@ -379,7 +380,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // Live-Auswertung (Success-Feedback)
         r && React.createElement('div', { 'aria-live': 'polite', style: { ...s.section, marginTop: space.sm + 'px', background: palette.sage + '11', border: '1px solid ' + palette.sage + '33' } },
           React.createElement('div', { style: s.label }, t('vr.ikSummary')),
-          React.createElement('div', null, t('vr.ikBeitragsjahre') + ': ' + r.beitragsjahre + '/' + (ahvResult ? ahvResult.volleBeitragsdauer : AHV_PARAMS.volleBeitragsjahre)),
+          React.createElement('div', null, t('vr.ikBeitragsjahre') + ': ' + (ahvResult ? Math.min(r.beitragsjahre, ahvResult.volleBeitragsdauer) + '/' + ahvResult.volleBeitragsdauer : r.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre)),
           React.createElement('div', null, t('vr.ikDurchschnitt') + ': CHF ' + fmt(r.durchschnittlichesJahreseinkommen)),
           r.jugendjahreGenutzt > 0 && React.createElement('div', { style: { color: palette.sageDeep } }, t('vr.ikJugendGenutzt') + ': ' + r.jugendjahreGenutzt),
           r.luecken > 0 && React.createElement('div', { style: { color: palette.goldDeep } }, t('vr.ikLuecken') + ': ' + r.luecken),
