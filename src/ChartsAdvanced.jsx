@@ -98,15 +98,18 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
 
   const expenseItems = [
     { label: t('budgetSync.housingCosts'), value: rent, color: palette.rose },
-    { label: 'NK', value: utilities, color: palette.gold },
-    { label: 'KK', value: kkPremium, color: palette.sky },
+    // Beschriftungen aus budgetSync.field — die früheren Schlüssel budgetSync.taxes usw.
+    // gab es nie; t() gab den Schlüssel zurück, und weil der nicht leer ist, griff auch
+    // der Rückfall-Text nie (Legende zeigte «budgetSync.taxes», Massstab-Prüfung 21.10.2026).
+    { label: t('budgetSync.field.utilities'), value: utilities, color: palette.gold },
+    { label: t('budgetSync.field.healthInsurance'), value: kkPremium, color: palette.sky },
     { label: 'BVG', value: bvg, color: palette.sage },
-    { label: t('budgetSync.taxes') || 'Steuern', value: tax, color: '#8B7355' },
-    { label: t('budgetSync.groceries') || 'Lebensmittel', value: groceries, color: '#7B9E8C' },
-    { label: t('budgetSync.communication') || 'Kommunikation', value: communication, color: '#6E90B0' },
-    { label: t('budgetSync.mobility') || 'Mobilität', value: mobility, color: '#B08060' },
-    { label: t('budgetSync.debtPayments') || 'Schuldenraten', value: debtPayments, color: palette.rose },
-    { label: t('budgetSync.otherInsurance') || 'Weitere Vers.', value: otherInsurance + liability + household + autoIns, color: '#A89F94' },
+    { label: t('budgetSync.field.tax'), value: tax, color: '#8B7355' },
+    { label: t('budgetSync.field.groceries'), value: groceries, color: '#7B9E8C' },
+    { label: t('budgetSync.field.communication'), value: communication, color: '#6E90B0' },
+    { label: t('budgetSync.field.mobility'), value: mobility, color: '#B08060' },
+    { label: t('budgetSync.field.debtPayments'), value: debtPayments, color: palette.rose },
+    { label: t('budgetSync.field.otherInsurance'), value: otherInsurance + liability + household + autoIns, color: '#A89F94' },
   ].filter(item => item.value > 0);
 
   const maxExpense = Math.max(...expenseItems.map(i => i.value));
