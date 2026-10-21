@@ -448,7 +448,8 @@ export const BVG_PARAMS = {
 // (mehrere Konten moderat füllen → Vorzugszins halten + gestaffelter Bezug).
 export const SAEULE3A_ZINSSCHWELLE = 20000;
 
-// WARTUNG: AHV/ALV/BVG-Werte sind Stand 2026. Im Januar 2027 gegen die neuen
+// WARTUNG: AHV/ALV/BVG-Werte sind Stand 2026. Bei einer Rentenanpassung SKALA_44 (alle 51 Zeilen)
+// zusammen mit AHV_MIN_RENTE/AHV_MAX_RENTE nachziehen. Im Januar 2027 gegen die neuen
 // BSV-Rententabellen und AHVV-Anpassungen prüfen und diese Version hochziehen.
 export const AHV_DATA_VERSION = '2026';
-export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV Art. 55ter, BSV Rententabellen 2026';
+export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV Art. 55ter, BSV-Merkblatt 3.01 Stand 1.1.2026 (Skala 44, Renten ab 1.1.2025)';
