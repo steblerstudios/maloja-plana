@@ -1521,7 +1521,8 @@ export default {
       finanzuebersichtHint: 'Alle Berechnungen auf einen Blick',
       addressInWohnen: { sie: 'Ihre Adresse ist im Kapitel «Wohnen» hinterlegt', du: 'Deine Adresse ist im Kapitel «Wohnen» hinterlegt' },
       employerInFinanzen: 'Arbeitgeber & Einkommen im Kapitel «Finanzen»',
-      educationTaxHint: 'Fortbildungskosten? Bei der Bundessteuer bis CHF 13’000 absetzbar, die Kantone haben eigene Grenzen',
+      // Quelle: DBG Art. 33 Abs. 1 lit. j (SR 642.11, Fedlex-Fassung 1.1.2026): «bis zum Gesamtbetrag von 13 000 Franken» — nachgemessen im Voll-Audit 2026-10 (B12). Bei jedem Jahreswechsel prüfen.
+      educationTaxHint: 'Fortbildungskosten? Bei der Bundessteuer bis CHF 13’000 absetzbar (Stand 2026), die Kantone haben eigene Grenzen',
       taxFromBehoerdenHint: 'Steuerbelastung abschätzen',
       schuldenFromBehoerdenHint: 'Betreibungen verwalten',
     },
