@@ -639,6 +639,16 @@ const AppInner = ({ demo }) => {
   // Leere Tafel im Probier-Modus: für ein frisches Beispiel (z.B. jemandem zeigen),
   // ohne die eigenen Zahlen — nichts wird persistiert, ausser nach ausdrücklicher Frage.
   const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); setSandboxLeer(true); setErsetzenFragen(false); beispielVerlassen(); };
+  // «Zurück» entfernt den fokussierten Knopf mit der Rückfrage; der Fokus fiele sonst
+  // auf <body>. Er geht zurück auf «In den Stand übernehmen», von wo die Frage kam.
+  const uebernehmenKnopf = React.useRef(null);
+  const zurueckFokus = React.useRef(false);
+  const rueckfrageZurueck = () => { zurueckFokus.current = true; setErsetzenFragen(false); };
+  useEffect(() => {
+    if (ersetzenFragen || !zurueckFokus.current) return;
+    zurueckFokus.current = false;
+    if (uebernehmenKnopf.current) uebernehmenKnopf.current.focus();
+  }, [ersetzenFragen]);
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht', 'schnellcheck', 'anspruchcheck'];
 
@@ -1394,7 +1404,9 @@ const AppInner = ({ demo }) => {
         flexWrap: 'wrap',
       }
     },
-      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+      // Basis 240px statt 0: sonst bricht die Zeile auf dem Handy nie um und die
+      // Knöpfe quetschen den Text auf ein Wort je Zeile (375 px, Tor-Vorlauf 21.10.).
+      React.createElement('div', { style: { flex: '1 1 240px', minWidth: 0 } },
         React.createElement('div', { role: 'status' },
           React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('sandbox.bannerTitle')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('sandbox.bannerText'))
@@ -1402,7 +1414,7 @@ const AppInner = ({ demo }) => {
         React.createElement('button', {
           onClick: blankSandbox,
           style: {
-            background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0 0 0',
+            background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0 0 0', minHeight: '44px',
             fontSize: text.xs, fontWeight: weight.medium, color: palette.sageDeep, fontFamily: 'inherit',
             textDecoration: 'underline', textUnderlineOffset: '2px',
           },
@@ -1413,7 +1425,7 @@ const AppInner = ({ demo }) => {
         React.createElement('div', { id: 'probe-ersetzen-frage', style: { flex: '1 1 240px', fontSize: text.xs, color: palette.text } }, t('sandbox.replaceQuestion')),
         React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
           React.createElement('button', {
-            type: 'button', autoFocus: true, onClick: () => setErsetzenFragen(false),
+            type: 'button', autoFocus: true, onClick: rueckfrageZurueck,
             style: {
               padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
               borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
@@ -1434,15 +1446,15 @@ const AppInner = ({ demo }) => {
         React.createElement('button', {
           onClick: discardSandbox,
           style: {
-            padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
+            padding: '6px 14px', minHeight: '44px', background: palette.surface, border: '1px solid ' + palette.border,
             borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
             color: palette.text, fontFamily: 'inherit',
           }
         }, t('sandbox.discard')),
         React.createElement('button', {
-          onClick: () => applySandbox(false),
+          ref: uebernehmenKnopf, onClick: () => applySandbox(false),
           style: {
-            padding: '6px 14px', background: palette.sageBtn, border: 'none',
+            padding: '6px 14px', minHeight: '44px', background: palette.sageBtn, border: 'none',
             borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
             color: '#fff', fontFamily: 'inherit',
           }
