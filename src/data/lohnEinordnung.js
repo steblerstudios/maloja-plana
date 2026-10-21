@@ -30,7 +30,7 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 // (derselbe Wert wie Kapitel/Brief). Die SKALA/Marke rechnet durchgehend auf der LSE-Norm
 // (40 Std.). Wer die 182 für die Marke oder `incomeFTE` verwendet, holt die Zwei-Welten-
 // Krankheit zurück — siehe `mindestlohnBoden`.
-import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel } from './lohnCheck.js';
+import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT, wochenstundenUnplausibel, mindestlohnJahrNichtBelegt } from './lohnCheck.js';
 import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 
@@ -77,13 +77,22 @@ const num = (v) => {
 // TEXT auf derselben 40-Std.-Zahl (4262) und widersprach damit dem Rest der App (4475).
 export function mindestlohnBoden(canton) {
   const ml = getMindestlohn(canton);
-  if (!ml) return null;
+  // Jahres-Riegel (lohnCheck.js): ohne belegten Satz fürs laufende Jahr weder Marke noch Betrag.
+  if (!ml || mindestlohnJahrNichtBelegt(ml.jahr)) return null;
   return {
     chfStunde: ml.chfStunde,
     monat: Math.round(ml.chfStunde * (LSE_VOLLZEIT_STUNDEN_WOCHE * 52 / 12)), // 40 Std. — Marke
     monatVollzeit: Math.round(ml.chfStunde * STUNDEN_PRO_MONAT),              // 42 Std. — Text
     jahr: ml.jahr,
   };
+}
+
+// Der Kanton kennt einen Mindestlohn, aber für das laufende Jahr ist kein Satz belegt →
+// { jahr, laufendesJahr } für den Hinweis; sonst null (auch in Kantonen ohne Mindestlohn).
+export function mindestlohnNichtBelegt(canton) {
+  const ml = getMindestlohn(canton);
+  const heute = new Date();
+  return ml && mindestlohnJahrNichtBelegt(ml.jahr, heute) ? { jahr: ml.jahr, laufendesJahr: heute.getFullYear() } : null;
 }
 
 // Lage des Lohns auf dem Barometer.
@@ -178,6 +187,7 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
     delta,
     median,
     mindestlohn: mindestlohnBoden(canton),
+    mindestlohnNichtBelegt: mindestlohnNichtBelegt(canton),
     mlBreached,
     konformMit13,
     dreizehnterUnklar,

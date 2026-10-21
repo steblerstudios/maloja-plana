@@ -38,6 +38,25 @@ export const VOLLZEIT_STUNDEN_WOCHE = 42;
 
 export const LOHNCHECK_DATA_VERSION = '2026';
 
+// ─── Jahres-Riegel ───────────────────────────────────────────────────────────
+// Die Beträge oben sind für ihr `jahr` amtlich belegt, und vier der fünf Kantone passen
+// jährlich an (GE/NE/BS/TI `indexiert: true`). Ab dem 01.01. des Folgejahres rechnet die App
+// darum nicht still mit den alten Sätzen weiter — weder «ok» noch «unter dem Mindestlohn» —,
+// sondern sagt, dass die Werte für das laufende Jahr nicht belegt sind (Status
+// 'jahrNichtBelegt'). Gleiches Muster wie `jahrVorbei` in config/kantonsModell.js (IPV).
+// Neue Werte erst nach Prüfung am Volltext der Kantonsquelle eintragen, nie geschätzt.
+// (Deploy-Tor 19.10.2026: einziger offener Punkt mit fester Frist.)
+// Bewusst `!==` statt `>`: Werden die Sätze des Folgejahres schon im Dezember eingetragen,
+// gelten sie nicht rückwirkend für Dezemberlöhne — ein höherer neuer Satz ergäbe sonst einen
+// Fehlalarm gegen korrekt bezahlte Löhne (Befund swiss-precision-pruefer, 19.10.2026).
+export function mindestlohnJahrNichtBelegt(jahr, heute = new Date()) {
+  return heute.getFullYear() !== jahr;
+}
+
+function nichtBelegt(kanton, ml, heute) {
+  return { status: 'jahrNichtBelegt', kanton, jahr: ml.jahr, laufendesJahr: heute.getFullYear() };
+}
+
 // ─── Der Mindestlohn-Befund kennt die Ausnahmen NICHT ────────────────────────
 // Predeploy-Runde 8, zweite Batterie (swiss-precision, an den Volltexten belegt).
 // Stebler-Studios-Entscheid 2026-07-15: Befund bleibt (er ordnet ein), BRIEF wird
@@ -94,6 +113,8 @@ export function getMindestlohn(kanton) {
 export function pruefeLohn(monatslohnChf, kanton) {
   const ml = MINDESTLOHN[kanton];
   if (!ml) return { status: 'keinGesetz', kanton };
+  const heute = new Date();
+  if (mindestlohnJahrNichtBelegt(ml.jahr, heute)) return nichtBelegt(kanton, ml, heute);
 
   const stundenChf = monatslohnChf / STUNDEN_PRO_MONAT;
   const mindestMonat = ml.chfStunde * STUNDEN_PRO_MONAT;
@@ -219,6 +240,10 @@ export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkom
   const ml = MINDESTLOHN[kanton];
   const base = { lohnStunde, stundenMonat, kanton };
   if (!ml) return { ...base, status: 'keinGesetz' };
+  // Jahres-Riegel vor jedem Urteil: ohne belegten Satz für das laufende Jahr kein Vergleich.
+  // Kein `mindestStunde` im Ergebnis, damit keine Ansicht den alten Betrag doch noch zeigt.
+  const heute = new Date();
+  if (mindestlohnJahrNichtBelegt(ml.jahr, heute)) return { ...base, ...nichtBelegt(kanton, ml, heute) };
 
   // Über dem VOLLEN Boden ist die Unterschreitung arithmetisch ausgeschlossen — ohne
   // Basis- und ohne 13.-Frage.
