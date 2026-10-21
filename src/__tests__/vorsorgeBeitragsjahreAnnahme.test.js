@@ -94,3 +94,17 @@ describe('angenommeneBeitragsjahre (Merkblatt 3.01 Ziff. 12/13)', () => {
     expect(angenommeneBeitragsjahre(63, 64.5)).toBe(42);
   });
 });
+
+describe('Vergleich-Reiter: Tabellenzeile = AHV-Block für dasselbe Bezugsalter (ohne eingetragene Jahre)', () => {
+  it('Zeile 63 rechnet mit 42 Jahren (Vorbezug → Teilrente), Zeile 65 mit 44', async () => {
+    const { vergleicheVorbezugAufschub } = await import('../data/ahvRechner.js');
+    reiter = 'vergleich';
+    const html = zeichne(profil);
+    const z63 = vergleicheVorbezugAufschub(80000, 42, undefined, geburtsjahr).find(z => z.bezugAlter === 63);
+    const z65 = vergleicheVorbezugAufschub(80000, 44, undefined, geburtsjahr).find(z => z.bezugAlter === 65);
+    const z63alt = vergleicheVorbezugAufschub(80000, 44, undefined, geburtsjahr).find(z => z.bezugAlter === 63);
+    expect(html).toContain('CHF ' + esc(zahl(z63.monatsrente)));
+    expect(html).toContain('CHF ' + esc(zahl(z65.monatsrente)));
+    expect(html).not.toContain('CHF ' + esc(zahl(z63alt.monatsrente)));
+  });
+});

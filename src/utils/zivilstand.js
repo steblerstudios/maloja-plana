@@ -44,6 +44,17 @@ export function giltAlsVerheiratet(zivilstand) {
   return zivilstand === ZIVILSTAND_VERHEIRATET || zivilstand === ZIVILSTAND_EINGETRAGEN;
 }
 
+// true, wenn es (mindestens) eine Ehe oder eingetragene Partnerschaft gab oder gibt — auch nach
+// Scheidung, Verwitwung oder Auflösung. Gebraucht für die AHV-Erziehungs-/Betreuungsgutschriften:
+// «Bei Ehepaaren werden die Erziehungsgutschriften während der Kalenderjahre der Ehe (zwingend)
+// hälftig geteilt» (BSV-Merkblatt 1.07, Stand 1.1.2016, Nachdruck Nov. 2024, Ziff. 1;
+// gleich Merkblatt 3.01, Stand 1.1.2026, Ziff. 19/20). Die Teilung hängt an den Ehejahren,
+// nicht am heutigen Zivilstand.
+export function warVerheiratet(zivilstand) {
+  return giltAlsVerheiratet(zivilstand) || zivilstand === ZIVILSTAND_AUFGELOEST
+    || zivilstand === 'divorced' || zivilstand === 'widowed';
+}
+
 // Anzeige-Text eines gespeicherten Zivilstands in der aktuellen Sprache. Unbekannte oder
 // alte Werte (z. B. von Hand importiert) erscheinen unverändert statt als roher Schlüssel.
 export function zivilstandLabel(wert, t) {
