@@ -11,6 +11,24 @@
 // die zuständige Arbeitslosenkasse.
 
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
+import { werteFuerStichtag } from './jahrestabelle.js';
+
+// Jahr der Werte. 2027 geprüft am 21.10.2026, alle Beträge unverändert:
+//   UVV Art. 22 Abs. 1, Fedlex Stand 1.1.2027: «… 148 200 Franken im Jahr» (Fussnote: Fassung vom
+//   12.11.2014, in Kraft seit 1.1.2016).
+//   https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1983/38_38_38/20270101/de/html/fedlex-data-admin-ch-eli-cc-1983-38_38_38-20270101-de-html.html
+//   AVIG: Fedlex führt KEINE Fassung zum 1.1.2027 (der Pfad …/20270101/ liefert nur die 9-kB-Hülle);
+//   es gilt die Fassung 1.1.2026 oben weiter.
+// ⚠️ OFFEN: `satz80Schwelle` (3 797). AVIV Art. 33 Abs. 2, Fedlex Stand 1.1.2027: «Das WBF nimmt die
+//   Anpassung des Grenzbetrages nach Artikel 22 Absatz 3 AVIG auf der Grundlage der Anpassungen an
+//   die Lohn- und Preisentwicklung bei der AHV/IV … vor.» Die AHV passt 2027 an (+1,587 %). Eine
+//   Verordnung des WBF für 2027 ist am 21.10.2026 nicht gefunden. Der Wert bleibt, bis sie belegt
+//   ist — nicht hochgerechnet.
+export const ALV_QUELLE_JE_JAHR = Object.freeze({
+  2026: Object.freeze({ quelle: 'AVIG/AVIV, UVV Art. 22 (Stand 1.1.2026)' }),
+  2027: Object.freeze({ quelle: 'AVIG/AVIV, UVV Art. 22 (Stand 1.1.2027)' }),
+});
+const ALV_HEUTE = werteFuerStichtag(ALV_QUELLE_JE_JAHR);
 
 export const ALV_PARAMS = {
   versicherterVerdienstMax: 12350, // UVV Art. 22 Abs. 1: 148 200 Fr./Jahr ÷ 12 (AVIG Art. 3 Abs. 2 verweist auf das UVG-Maximum)
@@ -22,7 +40,7 @@ export const ALV_PARAMS = {
   taggelderProMonat: 21.7,         // Durchschnitt (5 Taggelder/Woche, Mo–Fr); nicht in AVIG/AVIV beziffert
   satzHoch: 0.8,                   // AVIG Art. 22 Abs. 1
   satzTief: 0.7,                   // AVIG Art. 22 Abs. 2
-  version: '2026',
+  version: String(ALV_HEUTE.jahr),
 };
 
 // Taggeldsatz: 80 % bei Unterhaltspflicht für Kinder <25, versichertem Verdienst
@@ -102,4 +120,5 @@ export function alvErgebnis({ bruttolohn, beitragsmonate, alter }) {
   });
 }
 
-export const ALV_DATA_VERSION = '2026';
+export const ALV_DATA_VERSION = String(ALV_HEUTE.jahr);
+export const ALV_DATA_SOURCE = ALV_HEUTE.quelle;

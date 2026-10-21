@@ -3,13 +3,19 @@
 //         EOG Art. 16i–16k (Vaterschaftsentschädigung seit 01.01.2021),
 //         EOG Art. 16n–16s (Betreuungsentschädigung seit 01.07.2021),
 //         EOG ab Art. 16t (Adoptionsentschädigung seit 01.01.2023)
-// Stand: 2026
+// Stand: 2026 und 2027 (Version nach Jahr, siehe EO_DATA_VERSION)
 //
 // Alle Beträge in CHF. Keine Netzwerk-Calls, reine Berechnung.
 
 import { ergebnis, ERGEBNIS_ART } from './ergebnisArt.js';
+import { werteFuerStichtag } from './jahrestabelle.js';
 
-// === EO-Parameter 2026 ===
+// === EO-Parameter ===
+// Höchstbetrag 220/Tag gilt 2026 und 2027 unverändert: Verordnung über Anpassungen an die Lohn- und
+// Preisentwicklung bei der AHV/IV/EO ab dem Jahr 2027 vom 2.10.2026, Art. 7 Abs. 2: «Entschädigung
+// nach Artikel 16f Absatz 1 EOG … 220 Franken im Tag» (Fedlex eli/cc/2026/542, Stand 1.1.2027,
+// abgerufen 21.10.2026). Darum nur EINE Konstante; je Jahr wechselt allein die Quellenangabe.
+// Ändert sich der Betrag einmal, gehört er in die Tabelle EO_QUELLE_JE_JAHR (dann als Wert).
 const MAX_TAGGELD = 220;          // Maximales Taggeld (CHF/Tag)
 const ENTSCHAEDIGUNGSSATZ = 0.80; // 80% des Einkommens
 
@@ -186,8 +192,13 @@ export const EO_PARAMS = {
   betreuungMaxTage: BETREUUNG_MAX_TAGE,
 };
 
-export const EO_DATA_VERSION = '2026';
-export const EO_DATA_SOURCE = 'EOG Art. 16a–16x, EOMV, BSV 2026';
+export const EO_QUELLE_JE_JAHR = Object.freeze({
+  2026: Object.freeze({ quelle: 'EOG Art. 16a–16x, EOMV, BSV 2026' }),
+  2027: Object.freeze({ quelle: 'EOG Art. 16a–16x, EOMV, V vom 2.10.2026 Art. 7 (AS 2026 542), BSV 2027' }),
+});
+const EO_HEUTE = werteFuerStichtag(EO_QUELLE_JE_JAHR);
+export const EO_DATA_VERSION = String(EO_HEUTE.jahr);
+export const EO_DATA_SOURCE = EO_HEUTE.quelle;
 
 // O3 — Ergebnis-Art des EO-Rechners: SCHÄTZUNG (Fachprüfung swiss-precision, 24.09.2026, PR #345).
 // Die Eckwerte sind amtlich (80 %, Höchstbetrag, Tage), aber der Rechner nimmt den Anspruch für

@@ -2,8 +2,59 @@
 // (25.09.2026), damit die Sozialhilfe-Schnellrechnung im Startbündel nicht den ganzen AHV-Rechner
 // nachzieht. ahvRechner.js reicht alles weiter.
 
+import { werteFuerStichtag } from './jahrestabelle.js';
+
 export const REFERENZALTER = 65;
-export const KOORDINATIONSABZUG = 26460; // BVG-Koordinationsabzug 2026
+
+// === BVG-Grenzbeträge und Lohnabzüge je Kalenderjahr (Weg A, Entscheid Sophie 21.10.2026) ===
+// Auswahl nach Stichtag über `lohnWerte(stichtag)`; die Konstanten weiter unten sind der Stand
+// beim Laden der App.
+//
+// BVG (BVV 2 Art. 5, SR 831.441.1), Tabelle «Bisherige / Neue Beträge»:
+//   22 680 → 23 040 (Eintrittsschwelle, Art. 2 Abs. 1 / Art. 7 Abs. 1 BVG)
+//   26 460 → 26 880 (Koordinationsabzug, Art. 8 Abs. 1 BVG)
+//   90 720 → 92 160 (oberer Grenzbetrag, Art. 8 Abs. 1 BVG)
+//    3 780 →  3 840 (minimaler koordinierter Lohn, Art. 8 Abs. 2 BVG)
+//   Fussnote: «Fassung gemäss Ziff. I der V vom 2. Okt. 2026, in Kraft seit 1. Jan. 2027 (AS 2026 547)».
+//   Fedlex, Stand 1.1.2027, abgerufen 21.10.2026:
+//   https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1984/543_543_543/20270101/de/html/fedlex-data-admin-ch-eli-cc-1984-543_543_543-20270101-de-html.html
+//   Höchster koordinierter Lohn = oberer Grenzbetrag − Koordinationsabzug (gerechnet, kein Zitat).
+// Beitragssatz AHV/IV/EO Arbeitnehmende 2027 = 4,35 + 0,7 + 0,25 = 5,3 %, unverändert:
+//   AHVG Art. 5 Abs. 1 «4,35 Prozent» und IVG Art. 3 Abs. 1 «1,4 Prozent» (je hälftig), beide
+//   Fedlex Stand 1.1.2027, abgerufen 21.10.2026 · EOV Art. 36 Abs. 1 «0,5 Prozent» (AS 2026 548).
+// ALV-Höchstbetrag 148 200/Jahr, unverändert: UVV Art. 22 Abs. 1, Fedlex Stand 1.1.2027.
+// Freibetrag Rentner 16 800/Jahr = 1 400/Monat, unverändert: AHVV, Fedlex Stand 1.1.2027.
+// ALV-Beitragssatz 1,1 %: keine Änderung gefunden (nicht im Paket des Bundesrats vom 02.10.2026).
+export const LOHN_WERTE_JE_JAHR = Object.freeze({
+  2026: Object.freeze({
+    eintrittsschwelle: 22680,
+    koordinationsabzug: 26460,
+    minKoordinierterLohn: 3780,
+    maxKoordinierterLohn: 64260,   // 90 720 − 26 460
+    ahvIvEoSatzAn: 0.053,
+    alvSatzAn: 0.011,
+    alvHoechstbetragJahr: 148200,
+    ahvFreibetragRentnerMonat: 1400,
+  }),
+  2027: Object.freeze({
+    eintrittsschwelle: 23040,
+    koordinationsabzug: 26880,
+    minKoordinierterLohn: 3840,
+    maxKoordinierterLohn: 65280,   // 92 160 − 26 880
+    ahvIvEoSatzAn: 0.053,
+    alvSatzAn: 0.011,
+    alvHoechstbetragJahr: 148200,
+    ahvFreibetragRentnerMonat: 1400,
+  }),
+});
+
+// Werte für ein Datum (Standard: heute). Siehe jahrestabelle.js für Jahre ausserhalb der Tabelle.
+export function lohnWerte(stichtag) {
+  return werteFuerStichtag(LOHN_WERTE_JE_JAHR, stichtag);
+}
+
+const LOHN_HEUTE = lohnWerte();
+export const KOORDINATIONSABZUG = LOHN_HEUTE.koordinationsabzug; // BVG-Koordinationsabzug
 
 /**
  * Referenzalter (Rentenalter) in MONATEN.
@@ -33,20 +84,19 @@ export function referenzalterMonate({ geschlecht, geburtsjahr } = {}) {
 /**
  * Berechne den BVG-Mindestlohn und Koordinationsabzug.
  */
-export const BVG_EINTRITTSSCHWELLE_JAHR = 22680; // Stand 2026 (¾ der max. AHV-Rente, Art. 2 Abs. 1 BVG)
+export const BVG_EINTRITTSSCHWELLE_JAHR = LOHN_HEUTE.eintrittsschwelle; // ¾ der max. AHV-Rente, Art. 2 Abs. 1 BVG
 
-export function bvgKoordinationsabzug(jahresbruttolohn) {
-  const mindestlohn = BVG_EINTRITTSSCHWELLE_JAHR;
-  // «nicht mehr als 22 680» ist befreit (Art. 2 Abs. 1 BVG; Merkblatt 6.06) → <= (bis 25.09.2026 <)
-  if (jahresbruttolohn <= mindestlohn) return { versichert: false, koordinierterLohn: 0 };
+export function bvgKoordinationsabzug(jahresbruttolohn, stichtag) {
+  const w = lohnWerte(stichtag);
+  // «nicht mehr als 22 680» (2027: 23 040) ist befreit (Art. 2 Abs. 1 BVG; Merkblatt 6.06) → <=
+  if (jahresbruttolohn <= w.eintrittsschwelle) return { versichert: false, koordinierterLohn: 0 };
 
-  const koordinierterLohn = Math.max(3780, jahresbruttolohn - KOORDINATIONSABZUG);
-  const maxKoordinierterLohn = 64260; // Obergrenze (= 90'720 − 26'460)
+  const koordinierterLohn = Math.max(w.minKoordinierterLohn, jahresbruttolohn - w.koordinationsabzug);
   return {
     versichert: true,
-    koordinierterLohn: Math.min(koordinierterLohn, maxKoordinierterLohn),
-    koordinationsabzug: KOORDINATIONSABZUG,
-    eintrittsschwelle: mindestlohn,
+    koordinierterLohn: Math.min(koordinierterLohn, w.maxKoordinierterLohn),
+    koordinationsabzug: w.koordinationsabzug,
+    eintrittsschwelle: w.eintrittsschwelle,
   };
 }
 
@@ -71,7 +121,7 @@ export function bvgAltersgutschriftSatz(alter) {
 // Kehrt die fixen Arbeitnehmer-Abzüge um: AHV/IV/EO 5.3 % + ALV 1.1 % = 6.4 %
 // (Quelle BSV/AHV-IV 2025) PLUS die BVG-Altersgutschrift nach Alter (Art. 16 BVG),
 // als ~halber Arbeitnehmer-Anteil auf dem koordinierten Lohn und erst über der
-// Eintrittsschwelle (CHF 22'680/Jahr). NICHT enthalten: Steuern, NBU-Prämie,
+// Eintrittsschwelle (CHF 22'680/Jahr, ab 2027 23'040). NICHT enthalten: Steuern, NBU-Prämie,
 // überobligatorische PK-Pläne — der PK-Anteil variiert nach Kasse. Bleibt darum
 // bewusst ein «~»-Anhaltspunkt, nie eine verbindliche Zahl. Ohne Alter fällt die
 // PK weg (dann = reiner AHV/ALV-Richtwert).
@@ -84,31 +134,33 @@ export const AHV_ALV_ARBEITNEHMER_SATZ = 0.064;
 //     148 200/Jahr, darüber nichts (Merkblatt 2.08, Stand 1.1.2025).
 //   • Im Rentenalter: keine ALV, keine BVG-Sparbeiträge, AHV/IV/EO nur über dem Freibetrag
 //     1 400/Monat (Merkblatt 2.01, Ziff. 14/15).
-export const AHV_IV_EO_SATZ_AN = 0.053;
-export const ALV_SATZ_AN = 0.011;
-export const ALV_HOECHSTBETRAG_JAHR = 148200;      // Stand 2026
-export const AHV_FREIBETRAG_RENTNER_MONAT = 1400;  // 16 800/Jahr, Stand 2026
-function abzuegeRichtwertMonat(bruttoMonat, alter, rentenalter = false) {
-  if (rentenalter) return Math.max(0, bruttoMonat - AHV_FREIBETRAG_RENTNER_MONAT) * AHV_IV_EO_SATZ_AN;
+// Werte je Jahr: LOHN_WERTE_JE_JAHR oben (2027 unverändert, Belege dort).
+export const AHV_IV_EO_SATZ_AN = LOHN_HEUTE.ahvIvEoSatzAn;
+export const ALV_SATZ_AN = LOHN_HEUTE.alvSatzAn;
+export const ALV_HOECHSTBETRAG_JAHR = LOHN_HEUTE.alvHoechstbetragJahr;
+export const AHV_FREIBETRAG_RENTNER_MONAT = LOHN_HEUTE.ahvFreibetragRentnerMonat;  // 16 800/Jahr
+function abzuegeRichtwertMonat(bruttoMonat, alter, rentenalter = false, stichtag) {
+  const w = lohnWerte(stichtag);
+  if (rentenalter) return Math.max(0, bruttoMonat - w.ahvFreibetragRentnerMonat) * w.ahvIvEoSatzAn;
   const gutschrift = bvgAltersgutschriftSatz(alter);
-  const koord = bvgKoordinationsabzug(bruttoMonat * 12);
+  const koord = bvgKoordinationsabzug(bruttoMonat * 12, stichtag);
   const pkMonat = koord.versichert ? (koord.koordinierterLohn / 12) * (gutschrift / 100) / 2 : 0;
-  return bruttoMonat * AHV_IV_EO_SATZ_AN + Math.min(bruttoMonat, ALV_HOECHSTBETRAG_JAHR / 12) * ALV_SATZ_AN + pkMonat;
+  return bruttoMonat * w.ahvIvEoSatzAn + Math.min(bruttoMonat, w.alvHoechstbetragJahr / 12) * w.alvSatzAn + pkMonat;
 }
 
-export function nettoZuBruttoRichtwert(nettoMonat, alter, rentenalter = false) {
+export function nettoZuBruttoRichtwert(nettoMonat, alter, rentenalter = false, stichtag) {
   const netto = Math.max(0, Number(nettoMonat) || 0);
   if (netto <= 0) return 0;
   // Fixpunkt-Iteration: Brutto minus Abzüge soll das Netto treffen. Die Abzüge wachsen
   // monoton mit dem Brutto → wenige Schritte konvergieren.
   let brutto = netto / (1 - AHV_ALV_ARBEITNEHMER_SATZ);
   for (let i = 0; i < 12; i++) {
-    brutto += netto - (brutto - abzuegeRichtwertMonat(brutto, alter, rentenalter));
+    brutto += netto - (brutto - abzuegeRichtwertMonat(brutto, alter, rentenalter, stichtag));
   }
   // An der BVG-Eintrittsschwelle springen die Abzüge (Art. 2 BVG): manche Netto-Werte hat kein
   // Brutto genau. Dann den Kandidaten nehmen, dessen Rückrechnung am nächsten liegt (die Schwelle).
-  const netto_ = (b) => b - abzuegeRichtwertMonat(b, alter, rentenalter);
-  const kandidaten = [brutto, BVG_EINTRITTSSCHWELLE_JAHR / 12];
+  const netto_ = (b) => b - abzuegeRichtwertMonat(b, alter, rentenalter, stichtag);
+  const kandidaten = [brutto, lohnWerte(stichtag).eintrittsschwelle / 12];
   kandidaten.sort((a, b) => Math.abs(netto_(a) - netto) - Math.abs(netto_(b) - netto));
   return Math.round(kandidaten[0]);
 }
@@ -117,8 +169,8 @@ export function nettoZuBruttoRichtwert(nettoMonat, alter, rentenalter = false) {
 // einem Brutto-Monatslohn — dieselben Abzüge wie oben (AHV/IV/EO + ALV 6.4 %, PK-Anteil nach Alter
 // über der Eintrittsschwelle). NICHT enthalten: NBU-Prämie, Krankentaggeld, überobligatorische PK,
 // Quellensteuer, 13. Monatslohn → das echte Netto liegt meist etwas TIEFER. Nur als «≈», nie verbindlich.
-export function bruttoZuNettoRichtwert(bruttoMonat, alter, rentenalter = false) {
+export function bruttoZuNettoRichtwert(bruttoMonat, alter, rentenalter = false, stichtag) {
   const brutto = Math.max(0, Number(bruttoMonat) || 0);
   if (brutto <= 0) return 0;
-  return Math.round(brutto - abzuegeRichtwertMonat(brutto, alter, rentenalter));
+  return Math.round(brutto - abzuegeRichtwertMonat(brutto, alter, rentenalter, stichtag));
 }

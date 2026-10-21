@@ -1,22 +1,19 @@
 // Lohnabzüge, Referenzalter und BVG-Grundwerte leben seit 25.09.2026 in ./lohnAbzuege.js (klein,
 // im Startbündel für die Sozialhilfe-Schnellrechnung). Hier nur importiert und weitergereicht —
 // bestehende Importe aus ahvRechner.js funktionieren unverändert.
-import { REFERENZALTER, KOORDINATIONSABZUG, referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, BVG_GUTSCHRIFTEN, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert } from './lohnAbzuege.js';
-export { referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert };
+import { werteFuerStichtag } from './jahrestabelle.js';
+import { REFERENZALTER, KOORDINATIONSABZUG, LOHN_WERTE_JE_JAHR, lohnWerte, referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, BVG_GUTSCHRIFTEN, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert } from './lohnAbzuege.js';
+export { LOHN_WERTE_JE_JAHR, lohnWerte, referenzalterMonate, BVG_EINTRITTSSCHWELLE_JAHR, bvgKoordinationsabzug, bvgAltersgutschriftSatz, AHV_ALV_ARBEITNEHMER_SATZ, AHV_IV_EO_SATZ_AN, ALV_SATZ_AN, ALV_HOECHSTBETRAG_JAHR, AHV_FREIBETRAG_RENTNER_MONAT, nettoZuBruttoRichtwert, bruttoZuNettoRichtwert };
 // AHV-Rentenrechner für Maloja Plana
 // Quelle: Art. 34–40 AHVG, Verordnung über die AHV (AHVV)
-// Stand: 2026 (Renten nach AHV-Reform AHV21, in Kraft seit 01.01.2024)
+// Stand: Werte 2026 und 2027 als Jahrestabelle (Renten nach AHV-Reform AHV21, in Kraft seit 01.01.2024)
 // Referenzalter: 65 (Männer und Frauen ab Jahrgang 1964)
 //
 // Alle Beträge in CHF/Monat. Keine Netzwerk-Calls, reine Berechnung.
 
-// === AHV-Parameter 2026 ===
-const AHV_MIN_RENTE = 1260;       // Minimalrente (Vollrente, Skala 44)
-const AHV_MAX_RENTE = 2520;       // Maximalrente (Vollrente, Skala 44)
-const AHV_MAX_EHEPAAR = 3780;     // Plafonierung Ehepaar (150% Maximalrente)
+// === AHV-Parameter je Kalenderjahr: AHV_WERTE_JE_JAHR (weiter unten, nach SKALA_44) ===
 const MIN_BEITRAGSJAHRE = 1;
 const VOLLE_BEITRAGSJAHRE = 44;   // Skala 44 = Vollrente
-const MAX_VERSICHERTES_EINKOMMEN = 90720; // Obere Grenze massg. Einkommen (= 3× max. jährl. AHV-Rente)
 
 // Vorbezug
 const VORBEZUG_KUERZUNG_PRO_MONAT = 0.005667; // 6.8% pro Jahr (gesetzlicher AHV-Vorbezugssatz)
@@ -53,8 +50,8 @@ export function aufschubZuschlagProzent(monate) {
   return zeile[Math.min(Math.floor((m % 12) / 3), zeile.length - 1)];
 }
 
-// Erziehungsgutschriften pro Kind (pauschal, jährlich, geteilt bei gemeinsamer elterlicher Sorge)
-const ERZIEHUNGSGUTSCHRIFT_JAHR = 45360; // 3× minimale jährliche Altersrente (3× 15'120)
+// Erziehungsgutschriften pro Kind (pauschal, jährlich, geteilt bei gemeinsamer elterlicher Sorge):
+// `erziehungsgutschriftJahr` in AHV_WERTE_JE_JAHR (3× minimale jährliche Altersrente).
 
 /**
  * Volle Beitragsdauer des Jahrgangs: so viele Beitragsjahre braucht es für die Vollrente.
@@ -97,7 +94,7 @@ function skalenFaktor(beitragsjahre, volleDauer = VOLLE_BEITRAGSJAHRE) {
 // Die Tabelle gilt seit 1.1.2025 unverändert auch 2026. Paare [massgebendes durchschnittliches
 // Jahreseinkommen, Monatsrente]; Schritt 1512 CHF. Nicht linear: zwei Steigungen mit Knick bei
 // 45'360 (Art. 34 Abs. 2 AHVG, fester + variabler Rententeil), dazu die Rundung der Tabelle.
-const SKALA_44 = [
+const SKALA_44_2026 = [
   [15120, 1260], [16632, 1293], [18144, 1326], [19656, 1358], [21168, 1391],
   [22680, 1424], [24192, 1457], [25704, 1489], [27216, 1522], [28728, 1555],
   [30240, 1588], [31752, 1620], [33264, 1653], [34776, 1686], [36288, 1719],
@@ -111,15 +108,75 @@ const SKALA_44 = [
   [90720, 2520],
 ];
 
+// Skala 44 ab 1.1.2027, Spalte «Alters- und Invalidenrente 1/1», wörtlich aus BSV «Monatliche
+// Vollrenten, Skala 44 · Gültig ab 1. Januar 2027» (318.117.1 df 8.26), S. 1
+// (https://sozialversicherungen.admin.ch/de/d/6462/download, abgerufen 22.10.2026, PDF 190 639 Byte,
+// SHA-256 6f633eea…5b20b9d75, pdftotext -layout; alle 51 Zeilen maschinell übernommen, Schritt
+// 1536, monoton steigend geprüft). Knick bei 46'080, letzte Zeile «92 160 und mehr → 2 560».
+const SKALA_44_2027 = [
+  [15360, 1280], [16896, 1313], [18432, 1347], [19968, 1380], [21504, 1413],
+  [23040, 1446], [24576, 1480], [26112, 1513], [27648, 1546], [29184, 1580],
+  [30720, 1613], [32256, 1646], [33792, 1679], [35328, 1713], [36864, 1746],
+  [38400, 1779], [39936, 1812], [41472, 1846], [43008, 1879], [44544, 1912],
+  [46080, 1946], [47616, 1966], [49152, 1987], [50688, 2007], [52224, 2028],
+  [53760, 2048], [55296, 2068], [56832, 2089], [58368, 2109], [59904, 2130],
+  [61440, 2150], [62976, 2171], [64512, 2191], [66048, 2212], [67584, 2232],
+  [69120, 2253], [70656, 2273], [72192, 2294], [73728, 2314], [75264, 2335],
+  [76800, 2355], [78336, 2376], [79872, 2396], [81408, 2417], [82944, 2437],
+  [84480, 2458], [86016, 2478], [87552, 2499], [89088, 2519], [90624, 2540],
+  [92160, 2560],
+];
+
+// === AHV-Parameter je Kalenderjahr (Weg A, Entscheid Sophie 21.10.2026) ===
+// Auswahl nach Stichtag über `ahvWerte(stichtag)`, damit die App am 1.1. von selbst umschaltet.
+// 2027 belegt an:
+//   • Verordnung über Anpassungen an die Lohn- und Preisentwicklung bei der AHV/IV/EO ab dem Jahr
+//     2027 vom 2. Oktober 2026 (Fedlex eli/cc/2026/542, Stand 1.1.2027, abgerufen 21.10.2026),
+//     Art. 3 Abs. 1: «Der Mindestbetrag der vollen Altersrente … wird auf 1280 Franken festgesetzt.»
+//     https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2026/542/20270101/de/html/fedlex-data-admin-ch-eli-cc-2026-542-20270101-de-html.html
+//   • Skala 44 2027 (oben): 15 360 → 1 280 · 92 160 und mehr → 2 560.
+//   • Plafond Ehepaar 3 840 (150 % von 2 560): BSV-Übersicht «Änderungen auf 1. Januar 2027», S. 1.
+// Gerechnet, nicht zitiert (Regel × belegter Betrag):
+//   • erziehungsgutschriftJahr = «dreifache minimale jährliche Altersrente» (Art. 29sexies Abs. 2
+//     AHVG, Fedlex Stand 1.1.2027): 2026 3 × 15 120 = 45 360 · 2027 3 × 15 360 = 46 080. Massgebend
+//     ist der Betrag «im Zeitpunkt der Entstehung des Rentenanspruchs» — der Rechner nimmt wie bei
+//     der Rente die Werte von heute; künftige Anpassungen kennt niemand.
+// Vorbezugssatz, Aufschubtabelle und Beitragsdauer ändern 2027 nicht (Art. 3 der V: nur Beträge).
+export const AHV_WERTE_JE_JAHR = Object.freeze({
+  2026: Object.freeze({
+    minRente: 1260,                  // Minimalrente (Vollrente, Skala 44)
+    maxRente: 2520,                  // Maximalrente (Vollrente, Skala 44)
+    maxEhepaar: 3780,                // Plafonierung Ehepaar (150 % Maximalrente)
+    maxVersichertesEinkommen: 90720, // Obere Grenze massg. Einkommen (= 3× max. jährl. AHV-Rente)
+    erziehungsgutschriftJahr: 45360, // 3× minimale jährliche Altersrente (3× 15'120)
+    skala44: SKALA_44_2026,
+    quelle: 'AHVG Art. 34–40, AHVV Art. 55ter, BSV-Merkblatt 3.01 Stand 1.1.2026 (Skala 44, Renten ab 1.1.2025)',
+  }),
+  2027: Object.freeze({
+    minRente: 1280,
+    maxRente: 2560,
+    maxEhepaar: 3840,
+    maxVersichertesEinkommen: 92160,
+    erziehungsgutschriftJahr: 46080,
+    skala44: SKALA_44_2027,
+    quelle: 'AHVG Art. 34–40, AHVV Art. 55ter, BSV Skala 44 gültig ab 1.1.2027 (318.117.1), V vom 2.10.2026 (AS 2026 542)',
+  }),
+});
+
+// Werte für ein Datum (Standard: heute). Jahre ausserhalb der Tabelle: siehe jahrestabelle.js.
+export function ahvWerte(stichtag) {
+  return werteFuerStichtag(AHV_WERTE_JE_JAHR, stichtag);
+}
+
 // Massgebendes durchschnittliches Jahreseinkommen → monatliche Vollrente (Skala 44).
 // Amtliche Regel: das Einkommen wird «aufgerundet auf Tabellenwert» (Merkblatt 3.01, Ziff. 30/31,
 // Beispiele S. 15–17: 25'983 + 9'494 → 36'288 → 1'719; 35'219 + 9'494 → 45'360 → 1'915).
-// Also nächsthöhere Tabellenzeile, keine Interpolation. Bis 15'120 → Minimalrente,
-// ab 90'720 → Maximalrente.
-function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
+// Also nächsthöhere Tabellenzeile, keine Interpolation. Bis 15'120 (2027: 15'360) → Minimalrente,
+// ab 90'720 (2027: 92'160) → Maximalrente.
+function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen, w) {
   if (!(durchschnittlichesJahreseinkommen > 0)) return 0;
-  const zeile = SKALA_44.find(([einkommen]) => durchschnittlichesJahreseinkommen <= einkommen);
-  return zeile ? zeile[1] : AHV_MAX_RENTE;
+  const zeile = w.skala44.find(([einkommen]) => durchschnittlichesJahreseinkommen <= einkommen);
+  return zeile ? zeile[1] : w.maxRente;
 }
 
 
@@ -137,6 +194,7 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
  * @param {boolean} [params.verheiratet=false] - für die Plafonierung
  * @param {boolean} [params.gutschriftTeilen] - Gutschriften je zur Hälfte (Ehejahre); Standard: = verheiratet
  * @param {number} [params.einkommenPartner=0] - Durchschnittseinkommen Partner (für Plafonierung)
+ * @param {Date|string|number} [params.stichtag] - Welche Jahreswerte gelten (Standard: heute)
  * @returns {Object} Rentenberechnung
  */
 export function berechneAltersrente({
@@ -151,7 +209,9 @@ export function berechneAltersrente({
   verheiratet = false,
   gutschriftTeilen = verheiratet,
   einkommenPartner = 0,
+  stichtag,
 }) {
+  const w = ahvWerte(stichtag);
   // Referenzalter geschlechts-/jahrgangsabhängig (AHV 21, Frauen-Übergangsgeneration),
   // in Monaten wegen der 3-Monats-Schritte. Männer/divers/unbekannt = 780 (65 J) →
   // identisch zum bisherigen pauschalen Referenzalter 65 (kein Verhaltenswechsel).
@@ -170,12 +230,12 @@ export function berechneAltersrente({
   const gutschriftJahre = (erziehungsjahre || 0) + (betreuungsjahre || 0);
   const gutschriftGeteilt = !!gutschriftTeilen && gutschriftJahre > 0;
   const gutschriftProJahr = gutschriftJahre > 0
-    ? (ERZIEHUNGSGUTSCHRIFT_JAHR * gutschriftJahre) / beitragsjahre / (gutschriftGeteilt ? 2 : 1)
+    ? (w.erziehungsgutschriftJahr * gutschriftJahre) / beitragsjahre / (gutschriftGeteilt ? 2 : 1)
     : 0;
   const aufgewertetesEinkommen = durchschnittlichesJahreseinkommen + gutschriftProJahr;
 
   // Grundrente (Vollrente bei Skala 44)
-  const vollrente = monatsrenteAusEinkommen(aufgewertetesEinkommen);
+  const vollrente = monatsrenteAusEinkommen(aufgewertetesEinkommen, w);
 
   // Skalierung nach Beitragsjahren, gemessen an der vollen Beitragsdauer des Jahrgangs
   const volleDauer = volleBeitragsdauer({ geburtsjahr, geburtsmonat, geschlecht });
@@ -205,10 +265,10 @@ export function berechneAltersrente({
   let plafoniert = false;
   let rentePartner = 0;
   if (verheiratet && einkommenPartner > 0) {
-    rentePartner = Math.round(monatsrenteAusEinkommen(einkommenPartner) * faktor * 100) / 100;
+    rentePartner = Math.round(monatsrenteAusEinkommen(einkommenPartner, w) * faktor * 100) / 100;
     const total = rente + rentePartner;
-    if (total > AHV_MAX_EHEPAAR) {
-      const reduktion = AHV_MAX_EHEPAAR / total;
+    if (total > w.maxEhepaar) {
+      const reduktion = w.maxEhepaar / total;
       rente = Math.round(rente * reduktion * 100) / 100;
       rentePartner = Math.round(rentePartner * reduktion * 100) / 100;
       plafoniert = true;
@@ -243,13 +303,14 @@ export function berechneAltersrente({
     plafoniert,
     rentePartner: verheiratet ? rentePartner : null,
     totalEhepaar: verheiratet ? Math.round((rente + rentePartner) * 100) / 100 : null,
+    werteJahr: w.jahr, // Jahr der verwendeten Rentenwerte (für eine Anzeige «Stand …»)
   };
 }
 
 /**
  * Vergleiche Renten bei verschiedenen Bezugsaltern (Vorbezug/Aufschub).
  */
-export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr, geburtsmonat) {
+export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr, geburtsmonat, stichtag) {
   const alter = [63, 64, 65, 66, 67, 68, 69, 70];
   return alter.map(a => {
     const r = berechneAltersrente({
@@ -262,11 +323,18 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
       durchschnittlichesJahreseinkommen,
       beitragsjahre,
       bezugAlter: a,
+      stichtag,
     });
     return { bezugAlter: a, monatsrente: r.monatsrente, jahresrente: r.jahresrente, anpassung: r.vorbezugAufschub };
   });
 }
 
+
+// BVG-Mindestzins: BVV 2 Art. 12 Bst. k, Fedlex Stand 1.1.2027 (abgerufen 21.10.2026): «für den
+// Zeitraum ab dem 1. Januar 2024: mindestens mit 1,25 Prozent». Für 2027 hat der Bundesrat am
+// 22.10.2026 noch nicht entschieden (Empfehlung BVG-Kommission 1,75 %). Darum KEINE Jahreszeile:
+// Es gilt der Satz in Kraft, bis ein Entscheid publiziert ist. Dann hier nachtragen.
+const BVG_MINDESTZINS = 1.25;
 
 /**
  * Berechne geschätztes BVG-Altersguthaben bei Pensionierung.
@@ -276,13 +344,14 @@ export function berechneBVGGuthaben({
   jahresbruttolohn,
   aktuellesGuthaben = 0,
   austrittsalter = 65,
-  zinssatz = 1.25, // BVG-Mindestzins 2026
+  zinssatz = BVG_MINDESTZINS,
   // BVG-Mindestumwandlungssatz 2026. Die eigene Pensionskasse rechnet oft mit
   // einem abweichenden (im überobligatorischen Teil meist tieferen) Satz — darum
   // überschreibbar. Unter 1 oder über 10 wäre unplausibel → auf 6.8 zurückfallen.
   umwandlungssatz = 6.8,
+  stichtag,
 }) {
-  const koord = bvgKoordinationsabzug(jahresbruttolohn);
+  const koord = bvgKoordinationsabzug(jahresbruttolohn, stichtag);
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
 
   let guthaben = aktuellesGuthaben;
@@ -465,19 +534,22 @@ export function vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter, aktuellesEinkom
 }
 
 // Konstanten exportieren für Tests und UI
+const AHV_HEUTE = ahvWerte(); // Stand beim Laden der App
 export const AHV_PARAMS = {
-  minRente: AHV_MIN_RENTE,
-  maxRente: AHV_MAX_RENTE,
-  maxEhepaar: AHV_MAX_EHEPAAR,
+  minRente: AHV_HEUTE.minRente,
+  maxRente: AHV_HEUTE.maxRente,
+  maxEhepaar: AHV_HEUTE.maxEhepaar,
   referenzalter: REFERENZALTER,
   volleBeitragsjahre: VOLLE_BEITRAGSJAHRE,
-  maxVersichertesEinkommen: MAX_VERSICHERTES_EINKOMMEN,
+  maxVersichertesEinkommen: AHV_HEUTE.maxVersichertesEinkommen,
 };
 
 export const BVG_PARAMS = {
-  mindestzins: 1.25,
+  mindestzins: BVG_MINDESTZINS,
   umwandlungssatz: 6.8,
-  eintrittsschwelle: 22680,
+  // Bis 22.10.2026 stand hier das Literal 22680 neben der Konstante in lohnAbzuege.js — zwei
+  // Stellen für einen Wert. Jetzt dieselbe Quelle.
+  eintrittsschwelle: BVG_EINTRITTSSCHWELLE_JAHR,
   koordinationsabzug: KOORDINATIONSABZUG,
   gutschriften: BVG_GUTSCHRIFTEN,
 };
@@ -488,8 +560,8 @@ export const BVG_PARAMS = {
 // (mehrere Konten moderat füllen → Vorzugszins halten + gestaffelter Bezug).
 export const SAEULE3A_ZINSSCHWELLE = 20000;
 
-// WARTUNG: AHV/ALV/BVG-Werte sind Stand 2026. Bei einer Rentenanpassung SKALA_44 (alle 51 Zeilen)
-// zusammen mit AHV_MIN_RENTE/AHV_MAX_RENTE nachziehen. Im Januar 2027 gegen die neuen
-// BSV-Rententabellen und AHVV-Anpassungen prüfen und diese Version hochziehen.
-export const AHV_DATA_VERSION = '2026';
-export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV Art. 55ter, BSV-Merkblatt 3.01 Stand 1.1.2026 (Skala 44, Renten ab 1.1.2025)';
+// WARTUNG: Werte 2026 und 2027 stehen in AHV_WERTE_JE_JAHR (inkl. der ganzen Skala 44) und
+// LOHN_WERTE_JE_JAHR. Für 2028 nach der Anpassung des Bundesrats eine Zeile mit allen 51
+// Tabellenzeilen ergänzen. Die Version folgt dem Jahr der Werte, die gerade gelten.
+export const AHV_DATA_VERSION = String(AHV_HEUTE.jahr);
+export const AHV_DATA_SOURCE = AHV_HEUTE.quelle;
