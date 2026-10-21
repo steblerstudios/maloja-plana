@@ -3786,7 +3786,7 @@ export default {
     ago: 'avant {n} mais',
     agoDays: 'avant {n} dis',
     // TODO(rm): provisorisch — Gegenlese (verpasste Steuerfrist, 21.10.2026)
-    pastHint: { sie: 'Il termin è scadì. Inoltrai la decleraziun uschè spert sco pussaivel — per regla fixescha l\u2019uffizi da taglia in nov termin cun ina admoniziun.', du: 'Il termin è scadì. Inoltrescha la decleraziun uschè spert sco pussaivel — per regla fixescha l\u2019uffizi da taglia in nov termin cun ina admoniziun.' },
+    pastHint: { sie: 'Il termin registrà è scadì. Sche la decleraziun manca anc: Inoltrai ella uschè spert sco pussaivel. Per il pli suonda l\u2019emprim ina admoniziun cun in nov termin. Sche er quel vegn manchentà, po l\u2019uffizi da taglia stimar la taglia ed infliger ina multa.', du: 'Il termin registrà è scadì. Sche la decleraziun manca anc: Inoltrescha ella uschè spert sco pussaivel. Per il pli suonda l\u2019emprim ina admoniziun cun in nov termin. Sche er quel vegn manchentà, po l\u2019uffizi da taglia stimar la taglia ed infliger ina multa.' },
     recorded: 'registrà',
   },
 

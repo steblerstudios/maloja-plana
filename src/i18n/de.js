@@ -2238,7 +2238,7 @@ export default {
     today: 'heute',
     ago: 'vor {n} Monaten',
     agoDays: 'vor {n} Tagen',
-    pastHint: { sie: 'Die Frist ist vorbei. Reichen Sie die Erklärung so bald wie möglich ein — in der Regel setzt das Steueramt mit einer Mahnung eine Nachfrist.', du: 'Die Frist ist vorbei. Reiche die Erklärung so bald wie möglich ein — in der Regel setzt das Steueramt mit einer Mahnung eine Nachfrist.' },
+    pastHint: { sie: 'Die erfasste Frist ist vorbei. Falls die Erklärung noch fehlt: Reichen Sie sie so bald wie möglich ein. Meist folgt zuerst eine Mahnung mit Nachfrist. Wird auch diese verpasst, kann das Steueramt die Steuer schätzen und eine Busse verhängen.', du: 'Die erfasste Frist ist vorbei. Falls die Erklärung noch fehlt: Reiche sie so bald wie möglich ein. Meist folgt zuerst eine Mahnung mit Nachfrist. Wird auch diese verpasst, kann das Steueramt die Steuer schätzen und eine Busse verhängen.' },
     recorded: 'erfasst',
   },
 

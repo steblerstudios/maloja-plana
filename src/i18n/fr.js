@@ -2231,7 +2231,7 @@ export default {
     today: 'aujourd\'hui',
     ago: 'il y a {n} mois',
     agoDays: 'il y a {n} jours',
-    pastHint: { sie: 'Le délai est dépassé. Déposez la déclaration dès que possible — en règle générale, l\u2019administration fiscale fixe un nouveau délai par un rappel.', du: 'Le délai est dépassé. Dépose la déclaration dès que possible — en règle générale, l\u2019administration fiscale fixe un nouveau délai par un rappel.' },
+    pastHint: { sie: 'Le délai saisi est dépassé. Si la déclaration manque encore : déposez-la dès que possible. En général, l\u2019administration fiscale envoie d\u2019abord une sommation fixant un nouveau délai. Si celui-ci n\u2019est pas respecté non plus, elle peut procéder à une taxation d\u2019office et infliger une amende.', du: 'Le délai saisi est dépassé. Si la déclaration manque encore : dépose-la dès que possible. En général, l\u2019administration fiscale envoie d\u2019abord une sommation fixant un nouveau délai. Si celui-ci n\u2019est pas respecté non plus, elle peut procéder à une taxation d\u2019office et infliger une amende.' },
     recorded: 'documenté',
   },
 

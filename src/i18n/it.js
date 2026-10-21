@@ -2231,7 +2231,7 @@ export default {
     today: 'oggi',
     ago: '{n} mesi fa',
     agoDays: '{n} giorni fa',
-    pastHint: { sie: 'Il termine è scaduto. Inoltri la dichiarazione il prima possibile — di regola l\u2019ufficio delle imposte fissa un nuovo termine con un richiamo.', du: 'Il termine è scaduto. Inoltra la dichiarazione il prima possibile — di regola l\u2019ufficio delle imposte fissa un nuovo termine con un richiamo.' },
+    pastHint: { sie: 'Il termine registrato è scaduto. Se la dichiarazione manca ancora: la inoltri il prima possibile. Di regola l\u2019ufficio delle imposte invia prima una diffida con un nuovo termine. Se anche questo non viene rispettato, può procedere a una tassazione d\u2019ufficio e infliggere una multa.', du: 'Il termine registrato è scaduto. Se la dichiarazione manca ancora: inoltrala il prima possibile. Di regola l\u2019ufficio delle imposte invia prima una diffida con un nuovo termine. Se anche questo non viene rispettato, può procedere a una tassazione d\u2019ufficio e infliggere una multa.' },
     recorded: 'documentato',
   },
 

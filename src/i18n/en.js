@@ -2231,7 +2231,7 @@ export default {
     today: 'today',
     ago: '{n} months ago',
     agoDays: '{n} days ago',
-    pastHint: { sie: 'The deadline has passed. Submit your return as soon as you can — the tax office usually sets a new deadline with a reminder.', du: 'The deadline has passed. Submit your return as soon as you can — the tax office usually sets a new deadline with a reminder.' },
+    pastHint: { sie: 'The deadline you recorded has passed. If the return is still missing: submit it as soon as you can. Usually a reminder with a new deadline comes first. If that one is missed too, the tax office can estimate the tax and impose a fine.', du: 'The deadline you recorded has passed. If the return is still missing: submit it as soon as you can. Usually a reminder with a new deadline comes first. If that one is missed too, the tax office can estimate the tax and impose a fine.' },
     recorded: 'recorded',
   },
 

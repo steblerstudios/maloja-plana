@@ -1939,8 +1939,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ),
         // Verpasste Steuerfrist, noch nicht als eingereicht vermerkt: ruhig sagen, was jetzt
         // geht, statt nur «(vor 22 Tagen)» grau stehen zu lassen (Massstab-Prüfung 21.10.2026).
-        // Mahnung mit Nachfrist, erst danach Ermessen: Bund DBG Art. 124 Abs. 3, Art. 130 Abs. 2
-        // (aus dem Gedächtnis, im PR zur Fachprüfung markiert — kantonal je eigenes Steuergesetz).
+        // Belegt an Fedlex (Fachprüfung 21.10.2026): Mahnung mit Nachfrist DBG Art. 124 Abs. 3;
+        // erst «trotz Mahnung» Ermessen (DBG 130 Abs. 2 · StHG 46 Abs. 3) und Busse (DBG 174 ·
+        // StHG 55), Ermessensveranlagung nur eingeschränkt anfechtbar (DBG 132 Abs. 3 · StHG 48
+        // Abs. 2). FR «sommation», IT «diffida» = Gesetzesbegriffe. Kantonale Praxis (Gebühren,
+        // Erstreckung) nicht geprüft — darum «Meist» und kein Betrag. «Falls … noch fehlt», weil
+        // der Hinweis auch bei leerem Feld «Ausstehende Steuererklärungen» erscheint.
         (() => {
           const n = new Date();
           const heute = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
