@@ -53,7 +53,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       textAlign: 'left',
       color: palette.text,
       fontFamily: fontFamily,
-      transition: `all ${duration.normal}ms ${ease}`,
+      transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
     }
   },
     React.createElement('div', {
