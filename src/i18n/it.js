@@ -5985,6 +5985,7 @@ export default {
     referenzalter: 'Età di riferimento (AVS 21)',
     skalenfaktor: 'Scala dei contributi',
     fehlendeBeitragsjahre: 'Anni di contribuzione mancanti',
+    beitragsjahreAngenommen: 'Ipotesi: contributi senza lacune fino all’età di riscossione ({alter}), cioè {jahre} anni di contribuzione — come per il 2° pilastro. Con gli anni di contribuzione effettivi la stima diventa più precisa.',
     vorbezug: 'Riduzione (anticipo)',
     aufschub: 'Supplemento (differimento)',
     erziehungsgutschrift: 'Accredito per compiti educativi / assistenziali',

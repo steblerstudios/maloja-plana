@@ -5997,6 +5997,7 @@ export default {
     referenzalter: 'Reference age (AHV 21)',
     skalenfaktor: 'Contribution scale',
     fehlendeBeitragsjahre: 'Missing contribution years',
+    beitragsjahreAngenommen: 'Assumption: contributions without gaps up to the retirement age ({alter}), i.e. {jahre} contribution years — the same as for the 2nd pillar. With the actual contribution years the estimate becomes more precise.',
     vorbezug: 'Reduction (early withdrawal)',
     aufschub: 'Supplement (deferral)',
     erziehungsgutschrift: 'Child-rearing / caregiving credit',

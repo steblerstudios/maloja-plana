@@ -101,8 +101,15 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
   const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
-  const parsedBeitragsjahre = Number(beitragsjahre) || (alter && alter > 20 ? Math.min(alter - 20, 44) : 44);
   const parsedBezugAlter = Number(bezugAlter) || refAlterJahre;
+  // Leere Beitragsjahre (Audit B9): die Rente ab Bezug braucht die Jahre BIS zum Bezug, nicht
+  // die bis heute — sonst stünde neben der bis zum Bezug hochgerechneten BVG eine AHV, die
+  // mitten in der Erwerbszeit abgeschnitten ist (40 J., Ø 80'000: 20/44 statt 44/44). Annahme:
+  // lückenlos ab 21 bis zum Bezugsalter, höchstens 44 — dieselbe Rechnung wie projektionAhv.
+  // Wird sichtbar als Annahme ausgewiesen (vr.beitragsjahreAngenommen).
+  const angenommeneBeitragsjahre = Math.min(Math.max(0, Math.floor(parsedBezugAlter - 20)), AHV_PARAMS.volleBeitragsjahre);
+  const beitragsjahreAngenommen = !Number(beitragsjahre);
+  const parsedBeitragsjahre = Number(beitragsjahre) || angenommeneBeitragsjahre;
   // Statistische Lebenserwartung ab 65 (BFS, gerundet): Frauen ~88, Männer ~85,
   // sonst ~86. Vorbelegt aus dem hinterlegten Geschlecht, jederzeit anpassbar.
   // Bestimmt, über wie viele Jahre AHV/BVG-Rente und 3a/3b-Kapital gerechnet werden.
@@ -174,7 +181,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // heutigen Beitragsjahren stark unterschätzt. Eingetragene Beitragsjahre gehen vor.
   const projektionAhv = useMemo(() => {
     if (parsedEinkommen <= 0) return null;
-    const bj = Number(beitragsjahre) || Math.min(Math.max(0, parsedBezugAlter - 20), AHV_PARAMS.volleBeitragsjahre);
+    const bj = parsedBeitragsjahre;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
       geschlecht: data.basis?.gender,
@@ -186,7 +193,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, data.basis?.gender]);
+  }, [parsedEinkommen, parsedBeitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, data.basis?.gender]);
 
   // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
   // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),
@@ -465,6 +472,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       React.createElement('div', { style: s.section },
         React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre + ' ' + t('vr.jahre') + ')',
           ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
+        ),
+        beitragsjahreAngenommen && !ikResult && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+          t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(Math.round(parsedBezugAlter * 12)), jahre: angenommeneBeitragsjahre })
         ),
         ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.goldDeep } },
           t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
@@ -945,6 +955,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + ' / ' + t('vr.monat')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
           t('vr.saeulen') + ': AHV CHF ' + fmt(ahvResult.monatsrente) + ' + BVG CHF ' + fmt(bvgResult.monatsrente)
+        ),
+        beitragsjahreAngenommen && !ikResult && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+          t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(Math.round(parsedBezugAlter * 12)), jahre: angenommeneBeitragsjahre })
         )
       ),
 
