@@ -56,7 +56,8 @@ describe('ahvRechner', () => {
         durchschnittlichesJahreseinkommen: 60000,
         beitragsjahre: 22,
       });
-      expect(partial.monatsrente).toBeCloseTo(full.monatsrente * 0.5, 0);
+      // Teilrente auf ganze Franken (Merkblatt 3.04 Ziff. 24): 2 117 × 0,5 = 1 058,5 → 1 059
+      expect(partial.monatsrente).toBe(Math.round(full.monatsrente * 0.5));
       expect(partial.skalenfaktor).toBeCloseTo(0.5);
     });
 

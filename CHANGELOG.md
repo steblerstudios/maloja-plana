@@ -11,6 +11,15 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **AHV-Vorbezug wird im Referenzalter neu berechnet (Fachprüfung 21.10., Merkblatt 3.04 Ziff. 5).** Vorher
+  galt die Teilrente des Vorbezugs lebenslang. Jetzt: bis zum Referenzalter Teilrente mit Kürzung, danach
+  Vollrente mit den Jahren des Vorbezugs minus fester Kürzungsbetrag in Franken. Bezug 63, Ø 80'000:
+  1'962 bis 65, ab 65 2'070 (vorher lebenslang 1'962). AHV-Block, Vergleichstabelle und Zukunftsbild zeigen
+  beide Beträge, die Annahme-Zeile nennt beide Zählungen (5 Sprachen). Teilrente und Kürzung auf ganze
+  Franken (Ziff. 24), Kürzungssätze genau nach Tabelle Ziff. 4, bei Ehepaaren zuerst plafoniert, dann
+  gekürzt. Die AHV-Fläche im Zukunftsbild steigt wieder von der heutigen Anwartschaft zum Rücktritt an.
+
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 
 *Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B5, B6, B7, B10, B12
