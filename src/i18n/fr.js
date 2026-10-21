@@ -6002,6 +6002,7 @@ export default {
     referenzalter: 'Âge de référence (AVS 21)',
     skalenfaktor: 'Échelle de cotisation',
     fehlendeBeitragsjahre: 'Années de cotisation manquantes',
+    beitragsjahreAngenommen: 'Hypothèse : cotisations sans lacune jusqu’à l’âge de la retraite ({alter}), soit {jahre} années de cotisation — comme pour le 2e pilier. Avec les années de cotisation effectives, l’estimation devient plus précise.',
     vorbezug: 'Réduction (anticipation)',
     aufschub: 'Supplément (ajournement)',
     erziehungsgutschrift: 'Bonification pour éducation / assistance',

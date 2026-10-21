@@ -6067,6 +6067,7 @@ export default {
     referenzalter: 'Referenzalter (AHV 21)',
     skalenfaktor: 'Beitragsskala',
     fehlendeBeitragsjahre: 'Fehlende Beitragsjahre',
+    beitragsjahreAngenommen: 'Annahme: Beiträge ohne Lücke bis zum Bezugsalter ({alter}), also {jahre} Beitragsjahre — gleich wie bei der 2. Säule. Mit den eigenen Beitragsjahren wird die Schätzung genauer.',
     vorbezug: 'Kürzung (Vorbezug)',
     aufschub: 'Zuschlag (Aufschub)',
     erziehungsgutschrift: 'Erziehungs-/Betreuungsgutschrift',
