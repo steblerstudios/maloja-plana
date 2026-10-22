@@ -6716,6 +6716,7 @@ export default {
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
     gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
+    // TODO(rm): provisorisch — Gegenlese (AHV B8, 21.10.2026)
     gutschriftGeteilt: 'Per ils onns da matrimoni vegn la bonificaziun repartida per mesadad tranter ils dus conjugals — er suenter in divorzi u la mort dal conjugal. Il quint suppona che tut ils onns inditgads crodian en il matrimoni.',
     verheiratet: 'Maridà/ada u en partenadi registrà',
     einkommenPartner: 'Entrada dal partenari (CHF)',

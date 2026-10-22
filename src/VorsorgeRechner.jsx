@@ -101,6 +101,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Persistiert, wenn sich die IK-Daten ändern; `onUpdateData` (Prop) bewusst keine Dep.
   }, [ikEntries, ikActive]);
 
+  // Erziehungs-/Betreuungsgutschriften halbieren (Ehejahre, Merkblatt 3.01 Ziff. 19/20): der Schalter
+  // «Verheiratet» im Rechner entscheidet (Sophie, 22.10.2026). Steht er auf «Nein», wird nur geteilt,
+  // wenn das Profil eine frühere Ehe nennt (geschieden, verwitwet, aufgelöste Partnerschaft) — dort
+  // lagen die Gutschriftjahre in den Ehejahren. Ein «Nein» bei Profil «verheiratet» ist eine bewusste
+  // Was-wäre-wenn-Rechnung und teilt nicht.
+  const gutschriftTeilen = verheiratet
+    || (warVerheiratet(data.basis?.maritalStatus) && !giltAlsVerheiratet(data.basis?.maritalStatus));
   const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
   const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
@@ -157,11 +164,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       betreuungsjahre: betr,
       bezugAlter: parsedBezugAlter,
       verheiratet,
-      gutschriftTeilen: verheiratet || warVerheiratet(data.basis?.maritalStatus),
+      gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
       beitragsjahreReferenzalter: ikResult ? undefined : beitragsjahreReferenzalter,
     });
-  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
+  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
@@ -218,11 +225,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       betreuungsjahre: Number(betreuungsjahre) || 0,
       bezugAlter: parsedBezugAlter,
       verheiratet,
-      gutschriftTeilen: verheiratet || warVerheiratet(data.basis?.maritalStatus),
+      gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
       beitragsjahreReferenzalter,
     });
-  }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
+  }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreReferenzalter, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   // Heutige AHV-Anwartschaft für den Startpunkt der AHV-Fläche im Zukunftsbild: nur die Jahre
   // bis heute (IK-Historie oder höchstens Alter − 21), Bezug im Referenzalter. Seit leere
@@ -243,10 +250,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       erziehungsjahre: ikResult ? ikResult.erziehungsjahre : (Number(erziehungsjahre) || 0),
       betreuungsjahre: ikResult ? ikResult.betreuungsjahre : (Number(betreuungsjahre) || 0),
       verheiratet,
-      gutschriftTeilen: verheiratet || warVerheiratet(data.basis?.maritalStatus),
+      gutschriftTeilen,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [alter, ikResult, parsedEinkommen, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
+  }, [alter, ikResult, parsedEinkommen, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, verheiratet, gutschriftTeilen, einkommenPartner, birthYear, birthMonth, data.basis?.gender]);
 
   // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
   // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),

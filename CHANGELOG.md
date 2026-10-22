@@ -30,6 +30,10 @@ kommt der Changelog immer mit, nie doppelt.*
   Das Feld «Beitragsjahre» zählt jetzt die Jahre **bis zum Referenzalter** (Hinweis am Feld, 5 Sprachen):
   die Zahl bleibt gleich, wenn das Bezugsalter verschoben wird, und Vorbezug und Bezug mit 65 rechnen
   dieselbe Grundlage (40 Jahre, Bezug 63: 1'776 bis 65, 1'884 ab 65; mit 65: 2'163 = 1'884 + 279 Kürzung).
+- **Vorsorge-Rechner: der Schalter «Verheiratet» entscheidet über die Halbierung der Erziehungs-/
+  Betreuungsgutschriften** (Befund Tor 0.1.47 zu #524). Vorher wurde auch bei «Nein» geteilt, sobald das
+  Profil «verheiratet» sagte. Bei «Nein» wird nur noch geteilt, wenn das Profil eine frühere Ehe nennt
+  (geschieden, verwitwet, aufgelöste Partnerschaft).
 
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 
