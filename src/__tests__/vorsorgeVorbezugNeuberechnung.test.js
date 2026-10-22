@@ -6,10 +6,13 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 // und nichts sonst werden über den Startwert von useState gesetzt.
 let reiter = 'ahv';
 let bezugAlter = '63';
+let beitragsjahre = '';   // Feld «Beitragsjahre» = erster useState('') im Rechner
+let leerZaehler = 0;
 vi.mock('react', async (original) => {
   const R = await original();
   const useState = (init) => {
     let start = init === 'ahv' ? reiter : init;
+    if (init === '' && leerZaehler++ === 0) start = beitragsjahre;
     if (typeof start === 'function') {
       start = start();
       if (start === '65') start = bezugAlter; // Startwert des Bezugsalters = Referenzalter
@@ -33,7 +36,7 @@ const t = (schluessel, p) => {
   if (p) for (const [k, v] of Object.entries(p)) text = text.split('{' + k + '}').join(String(v));
   return text;
 };
-const zeichne = (data) => renderToStaticMarkup(React.createElement(VorsorgeRechner, { palette, t, data, onNavigate: () => {}, onUpdateData: () => {} }));
+const zeichne = (data) => (leerZaehler = 0, renderToStaticMarkup(React.createElement(VorsorgeRechner, { palette, t, data, onNavigate: () => {}, onUpdateData: () => {} })));
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/'/g, '&#x27;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 const geburtsjahr = new Date().getFullYear() - 40;
@@ -44,7 +47,7 @@ const profil = {
 const chf = (v) => 'CHF ' + esc(zahl(v));
 const ab65 = esc(t('vr.renteAbReferenzalter', { alter: '65 ' + t('vr.jahre'), betrag: zahl(2070) })) + ' / ' + t('vr.monat');
 
-afterEach(() => { reiter = 'ahv'; bezugAlter = '63'; });
+afterEach(() => { reiter = 'ahv'; bezugAlter = '63'; beitragsjahre = ''; });
 
 describe('Vorsorge-Rechner: Vorbezug wird im Referenzalter neu berechnet (Merkblatt 3.04 Ziff. 5)', () => {
   it('Reiter AHV: 1 962 bis 65, darunter 2 070 ab 65, Kürzung in Franken, Annahme mit beiden Zählungen', () => {
@@ -90,6 +93,41 @@ describe('Vorsorge-Rechner: Vorbezug wird im Referenzalter neu berechnet (Merkbl
   });
 });
 
+describe('Eigene Beitragsjahre zählen bis zum Referenzalter (Sophie, 22.10.2026)', () => {
+  // 40 eingetragen = 40 Jahre im Referenzalter. Bezug 63: bis 65 fehlen die zwei Vorbezugsjahre
+  // (38/44 = 2 055, Kürzung 13,6 % = 279), ab 65 40/44 = 2 163 − 279 = 1 884. Merkblatt 3.04 Ziff. 5
+  // («genau gleichgestellt»): Rente ab 65 + Kürzung = Rente bei Bezug mit 65.
+  it('Reiter AHV, Bezug 63: 1 776 bis 65, 1 884 ab 65', () => {
+    beitragsjahre = '40';
+    const html = zeichne(profil);
+    expect(html).toContain(chf(1776) + ' / ' + t('vr.monat'));
+    expect(html).toContain(esc(t('vr.renteAbReferenzalter', { alter: '65 ' + t('vr.jahre'), betrag: zahl(1884) })));
+    expect(html).toContain('(38/44 ' + t('vr.jahre') + ')');
+  });
+  it('Reiter AHV, Bezug 65: dieselben 40 Jahre, 2 163 — die Zahl hängt nicht am Regler', () => {
+    beitragsjahre = '40';
+    bezugAlter = '65';
+    const html = zeichne(profil);
+    expect(html).toContain(chf(2163) + ' / ' + t('vr.monat'));
+    expect(html).toContain('(40/44 ' + t('vr.jahre') + ')');
+  });
+  it('Vergleich: Zeile 63 ab 65 + Kürzung = Zeile 65', () => {
+    beitragsjahre = '40';
+    reiter = 'vergleich';
+    const html = zeichne(profil);
+    expect(html).toContain(chf(1776));
+    expect(html).toContain(esc(t('vr.abAlterKurz', { alter: '65 ' + t('vr.jahre'), betrag: zahl(1884) })));
+    expect(html).toContain(chf(2163));
+    expect(1884 + 279).toBe(2163);
+  });
+  it('Feld: Platzhalter 44 und Hinweis «bis zum Referenzalter», auch beim Vorbezug', () => {
+    const html = zeichne(profil);
+    const feld = html.match(new RegExp('<input[^>]*aria-label="' + t('vr.beitragsjahre') + '"[^>]*>'));
+    expect(feld && feld[0]).toContain('placeholder="44"');
+    expect(html).toContain(esc(t('vr.beitragsjahreHint', { referenzalter: '65 ' + t('vr.jahre') })));
+  });
+});
+
 describe('Neue Texte in allen fünf Sprachen', () => {
   it('vorhanden, mit Platzhaltern, Sie/Du wo angeredet wird', async () => {
     for (const lang of ['de', 'fr', 'it', 'en', 'rm']) {
@@ -99,6 +137,7 @@ describe('Neue Texte in allen fünf Sprachen', () => {
         expect(vr.renteAbReferenzalter, lang).toContain(p);
         expect(vr.abAlterKurz, lang).toContain(p);
       }
+      expect(vr.beitragsjahreHint && (vr.beitragsjahreHint.sie || vr.beitragsjahreHint), lang).toContain('{referenzalter}');
       const n = vr.vorbezugNeuberechnung;
       if (lang === 'en') expect(typeof n).toBe('string');
       else {

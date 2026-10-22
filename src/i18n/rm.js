@@ -6708,6 +6708,8 @@ export default {
     nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair il salari annual brut per AVS e LPP.",
     partnerNettoHint: 'Endatar per plaschair il salari annual brut — en il profil è mo il salari net registrà, e quel fiss qua la basa sbagliada.',
     beitragsjahre: 'Onns da contribuziun',
+    // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
+    beitragsjahreHint: { sie: 'Fin a la vegliadetgna da referenza ({referenzalter}): Voss onns tenor l’extract IC plus ils onns spetgads fin lura. Vid = senza largia.', du: 'Fin a la vegliadetgna da referenza ({referenzalter}): tes onns tenor l’extract IC plus ils onns spetgads fin lura. Vid = senza largia.' },
     bezugAlter: 'Vegliadetgna da retschavida',
     erziehungsjahre: "Onns d'educaziun",
     erziehungsjahreHint: 'Onns cun uffants sut 16',
@@ -6726,10 +6728,15 @@ export default {
     skalenfaktor: 'Scala da contribuziun',
     fehlendeBeitragsjahre: 'Onns da contribuziun che mancan',
     // TODO(rm): provisorisch — Gegenlese (Vorsorge B9, 21.10.2026)
-    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da retschavida ({alter}), q.v.d. {jahre} onns da contribuziun — sco tar la 2. pitga. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
+    // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
+    beitragsjahreAngenommen: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da referenza ({alter}), q.v.d. {jahre} onns da contribuziun. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
+    // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     beitragsjahreAngenommenVorbezug: 'Supposiziun: contribuziuns senza largia fin a la vegliadetgna da referenza ({referenzalter}) — cun domicil en Svizra vala l’obligaziun da pajar contribuziuns er durant la retschavida anticipada. Fin a la retschavida ({alter}) èn quai {jahre} onns da contribuziun, a partir da la vegliadetgna da referenza {jahreRef}. Cun ils onns da contribuziun effectivs daventa la stima pli precisa.',
+    // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     renteAbReferenzalter: 'A partir da la vegliadetgna da referenza ({alter}): CHF {betrag}',
+    // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     vorbezugNeuberechnung: { sie: 'Fin a la vegliadetgna da referenza mancan anc onns da contribuziun, perquai èsi per il solit ina renta parziala. Cun domicil en Svizra stuais Vus durant quest temp anc pajar contribuziuns; tar la vegliadetgna da referenza vegn la renta calculada da nov cun quests onns. La reducziun en francs resta per tut la vita e vegn adattada cun las rentas.', du: 'Fin a la vegliadetgna da referenza mancan anc onns da contribuziun, perquai èsi per il solit ina renta parziala. Cun domicil en Svizra stos ti durant quest temp anc pajar contribuziuns; tar la vegliadetgna da referenza vegn la renta calculada da nov cun quests onns. La reducziun en francs resta per tut la vita e vegn adattada cun las rentas.' },
+    // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     abAlterKurz: 'a partir da {alter}: CHF {betrag}',
     vorbezug: 'Reducziun (retschavida anticipada)',
     aufschub: 'Supplement (prorogaziun)',

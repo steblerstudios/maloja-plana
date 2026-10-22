@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
-import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
+import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, volleBeitragsdauer, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -111,13 +111,22 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // lückenlos ab 21 bis zum Bezug, höchstens 44, beim Vorbezug entsprechend weniger
   // (utils/beitragsjahreAnnahme.js) — dieselbe Rechnung wie projektionAhv.
   // Wird sichtbar als Annahme ausgewiesen (vr.beitragsjahreAngenommen).
-  const angenommeneBeitragsjahre = angenommeneBeitragsjahreFuer(parsedBezugAlter, refAlterJahre);
+  //
+  // Das Feld zählt die Beitragsjahre BIS ZUM REFERENZALTER (Sophie, 22.10.2026): dort rechnet die
+  // AHV definitiv (Merkblatt 3.04 Ziff. 5), und wer vorbezieht, zahlt bis dahin weiter (Ziff. 8).
+  // So bleibt die Zahl gleich, wenn der Regler fürs Bezugsalter verschoben wird. Beim Vorbezug
+  // fehlen bis zum Referenzalter die vollen Vorbezugsjahre (Teilrente), gemessen an der vollen
+  // Beitragsdauer des Jahrgangs; leer gilt die Annahme aus utils/beitragsjahreAnnahme.js.
   const beitragsjahreAngenommen = !Number(beitragsjahre);
-  const parsedBeitragsjahre = Number(beitragsjahre) || angenommeneBeitragsjahre;
-  // Beim Vorbezug wird die Rente im Referenzalter neu berechnet, mit den Jahren des Vorbezugs
-  // (Merkblatt 3.04 Ziff. 5/8). Unter der Annahme heisst das: volle Beitragsdauer. Mit eigenen
-  // Jahren rechnet berechneAltersrente selbst die vollen Vorbezugsjahre dazu.
-  const beitragsjahreReferenzalter = beitragsjahreAngenommen ? angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre) : undefined;
+  const beitragsjahreReferenzalter = Number(beitragsjahre) || angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre);
+  const volleDauer = volleBeitragsdauer({ geburtsjahr: birthYear || 1970, geburtsmonat: birthMonth, geschlecht: data.basis?.gender });
+  const beitragsjahreBeiBezug = (bezug) => {
+    if (beitragsjahreAngenommen) return angenommeneBeitragsjahreFuer(bezug, refAlterJahre);
+    const vorbezugMonate = Math.min(24, Math.max(0, refAlterMonate - Math.round(bezug * 12)));
+    return Math.max(0, Math.min(beitragsjahreReferenzalter, volleDauer) - Math.floor(vorbezugMonate / 12));
+  };
+  const angenommeneBeitragsjahre = angenommeneBeitragsjahreFuer(parsedBezugAlter, refAlterJahre);
+  const parsedBeitragsjahre = beitragsjahreBeiBezug(parsedBezugAlter);
   // Statistische Lebenserwartung ab 65 (BFS, gerundet): Frauen ~88, Männer ~85,
   // sonst ~86. Vorbelegt aus dem hinterlegten Geschlecht, jederzeit anpassbar.
   // Bestimmt, über wie viele Jahre AHV/BVG-Rente und 3a/3b-Kapital gerechnet werden.
@@ -156,15 +165,14 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
-    const vergleich = (bj, bjReferenzalter) => vergleicheVorbezugAufschub(parsedEinkommen, bj, data.basis?.gender, birthYear || 1970, birthMonth, bjReferenzalter);
-    if (!beitragsjahreAngenommen) return vergleich(parsedBeitragsjahre);
-    // Ohne eigene Angabe: je Zeile dieselbe Annahme wie im AHV-Block für genau dieses Bezugsalter
-    // (Vorbezug → Teilrente bis zum Referenzalter, dann volle Dauer, utils/beitragsjahreAnnahme.js) —
-    // nicht abhängig vom Regler, und dieselbe Rente für dasselbe Alter auf beiden Stellen des Bildschirms.
-    const voll = angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre);
-    return vergleich(voll).map(zeile =>
-      vergleich(angenommeneBeitragsjahreFuer(zeile.bezugAlter, refAlterJahre), voll).find(z => z.bezugAlter === zeile.bezugAlter));
-  }, [parsedEinkommen, parsedBeitragsjahre, beitragsjahreAngenommen, refAlterJahre, data.basis?.gender, birthYear, birthMonth]);
+    const vergleich = (bj) => vergleicheVorbezugAufschub(parsedEinkommen, bj, data.basis?.gender, birthYear || 1970, birthMonth, beitragsjahreReferenzalter);
+    // Je Zeile dieselbe Zählung wie im AHV-Block für genau dieses Bezugsalter (Vorbezug → Teilrente
+    // bis zum Referenzalter, dann alle Jahre bis zum Referenzalter) — nicht abhängig vom Regler, und
+    // dieselbe Rente für dasselbe Alter auf beiden Stellen des Bildschirms.
+    return vergleich(beitragsjahreReferenzalter).map(zeile =>
+      vergleich(beitragsjahreBeiBezug(zeile.bezugAlter)).find(z => z.bezugAlter === zeile.bezugAlter));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- beitragsjahreBeiBezug hängt nur an den gelisteten Werten.
+  }, [parsedEinkommen, beitragsjahre, beitragsjahreReferenzalter, volleDauer, refAlterJahre, refAlterMonate, data.basis?.gender, birthYear, birthMonth]);
 
   const bvgResult = useMemo(() => {
     if (parsedEinkommen <= 0 || !alter) return null;
@@ -224,7 +232,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     if (!alter) return null;
     const eink = ikResult ? ikResult.durchschnittlichesJahreseinkommen : parsedEinkommen;
     if (eink <= 0) return null;
-    const bisHeute = ikResult ? ikResult.beitragsjahre : Math.min(parsedBeitragsjahre, Math.max(0, Math.floor(alter) - 21));
+    const bisHeute = ikResult ? ikResult.beitragsjahre : Math.min(beitragsjahreReferenzalter, Math.max(0, Math.floor(alter) - 21));
     if (bisHeute <= 0) return null;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
@@ -238,7 +246,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       gutschriftTeilen: verheiratet || warVerheiratet(data.basis?.maritalStatus),
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [alter, ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
+  }, [alter, ikResult, parsedEinkommen, beitragsjahreReferenzalter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, birthMonth, data.basis?.gender, data.basis?.maritalStatus]);
 
   // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
   // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),
@@ -314,10 +322,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // Annahme-Zeile bei leeren Beitragsjahren; beim Vorbezug mit beiden Zählungen (bis zum Bezug
   // die Teilrente, ab dem Referenzalter die Neuberechnung, Merkblatt 3.04 Ziff. 4/5).
   const annahmeText = () => {
-    const p = { alter: fmtAlterMonate(Math.round(parsedBezugAlter * 12)), jahre: angenommeneBeitragsjahre };
-    if (Math.round(parsedBezugAlter * 12) >= refAlterMonate) return t('vr.beitragsjahreAngenommen', p);
+    if (Math.round(parsedBezugAlter * 12) >= refAlterMonate) {
+      return t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(refAlterMonate), jahre: beitragsjahreReferenzalter });
+    }
     return t('vr.beitragsjahreAngenommenVorbezug', {
-      ...p,
+      alter: fmtAlterMonate(Math.round(parsedBezugAlter * 12)),
+      jahre: angenommeneBeitragsjahre,
       referenzalter: fmtAlterMonate(refAlterMonate),
       jahreRef: ahvResult ? ahvResult.beitragsjahreReferenzalter : beitragsjahreReferenzalter,
     });
@@ -488,7 +498,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
         field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint') }),
-        field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(parsedBeitragsjahre), width: '80px', min: 1, max: 44 }),
+        field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(beitragsjahreReferenzalter), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
         field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 63, max: 70 })
       ),
       React.createElement('div', { style: s.row },
