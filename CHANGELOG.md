@@ -12,6 +12,14 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Behoben
+- **Charts zeigte rohe Schlüssel** in der Legende (`budgetSync.taxes` usw.); «NK»/«KK» ausgeschrieben, 5 Sprachen (#530).
+- **Charts rechnet wie das Kapitel Finanzen** (#530): kein BVG mehr als Ausgabe (steckt im Nettolohn, steht als
+  Hinweis), keine Haftpflicht-*Versicherungssumme* und keine Hausrat-/Fahrzeug-*Jahres*prämien als Monatsausgabe.
+  Beispiel vorher 4’197 / Rest 2’003, jetzt wie im Kapitel 3’720 / 2’480. Gemeinsame Rechnung `utils/monatsrechnung.js`.
+- **Verpasste Steuerfrist bleibt sichtbar** (#530): Dashboard «Nächste Frist» zeigt «Steuerfrist · vorbei seit …»,
+  solange «Ausstehende Steuererklärungen» nicht 0 ist; im Kapitel Behörden ein Satz zu Mahnung, Nachfrist und
+  Folgen (DBG 124/130/174, StHG 46/55). rm provisorisch.
+- **Kapitel am Handy:** Bezeichnung und Wert überlappen nicht mehr («Einkommensart» / «Netto (was ich erhalte)», #530).
 - **AHV-Vorbezug wird im Referenzalter neu berechnet (Fachprüfung 21.10., Merkblatt 3.04 Ziff. 5).** Vorher
   galt die Teilrente des Vorbezugs lebenslang. Jetzt: bis zum Referenzalter Teilrente mit Kürzung, danach
   Vollrente mit den Jahren des Vorbezugs minus fester Kürzungsbetrag in Franken. Bezug 63, Ø 80'000:
