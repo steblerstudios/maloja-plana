@@ -47,8 +47,8 @@
 // Steuerjahr 2027 (ergänzt 21.10.2026): BSV-Mitteilung 05.10.2026 «Höchstabzüge Säule 3a im
 // Steuerjahr 2027» und BSV-Übersicht «Änderungen auf 1. Januar 2027», S. 2: 7'373 / 36'864.
 //   https://www.bsv.admin.ch/de/newnsb/6ck3kzVxBNQ4 (abgerufen 21.10.2026)
-// Gegenrechnung an zwei amtlichen Texten: BVV 3 Art. 7 Abs. 1 (Fedlex Stand 1.1.2025, gilt bis
-// 31.05.2027): «8 Prozent» bzw. «40 Prozent des oberen Grenzbetrages nach Artikel 8 Absatz 1 BVG»,
+// Gegenrechnung an zwei amtlichen Texten: BVV 3 Art. 7 Abs. 1 (Fedlex Stand 1.1.2025; laut Fedlex-
+// SPARQL am 21.10.2026 keine Fassung zum 1.1.2027, die nächste trägt das Datum 1.6.2027): «8 Prozent» bzw. «40 Prozent des oberen Grenzbetrages nach Artikel 8 Absatz 1 BVG»,
 // oberer Grenzbetrag 2027 92'160 (BVV 2 Art. 5, AS 2026 547) → 7'372.80 (BSV rundet auf 7'373)
 // und 36'864. In der ESTV-Tabelle oben stand 2027 am 21.10.2026 noch nicht (nicht nachgesehen).
 export const SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR = Object.freeze({

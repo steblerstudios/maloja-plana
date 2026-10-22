@@ -28,6 +28,11 @@ describe('werteFuerStichtag', () => {
   it('nach dem letzten belegten Jahr: letztes Jahr, aber sichtbar nicht belegt', () => {
     expect(werteFuerStichtag(t, 2028)).toEqual({ a: 2, jahr: 2027, belegt: false });
   });
+  it('ohne Stichtag (auch null) gilt heute', () => {
+    const heute = new Date().getFullYear();
+    expect(werteFuerStichtag(t, null).jahr).toBe(werteFuerStichtag(t, heute).jahr);
+    expect(werteFuerStichtag(t, undefined).jahr).toBe(werteFuerStichtag(t, heute).jahr);
+  });
   it('vor dem ersten belegten Jahr: das erste', () => {
     expect(werteFuerStichtag(t, 2020)).toEqual({ a: 1, jahr: 2026, belegt: false });
   });

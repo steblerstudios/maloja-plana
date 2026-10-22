@@ -16,10 +16,10 @@
 // Anders als `saeule3aMaximum` (gibt `null`): Ein AHV- oder BVG-Rechner ohne Werte zeigte gar nichts,
 // und die Werte des Vorjahres sind bis zur Anpassung die geltenden.
 //
-// `stichtag`: ein Datum, ein Datums-String oder eine Jahreszahl (2027). Unlesbar → heute.
+// `stichtag`: ein Datum, ein Datums-String oder eine Jahreszahl (2027). Fehlt/`null`/unlesbar → heute.
 export function werteFuerStichtag(tabelle, stichtag = new Date()) {
   const jahre = Object.keys(tabelle).map(Number).sort((a, b) => a - b);
-  const d = stichtag instanceof Date ? stichtag : new Date(stichtag);
+  const d = stichtag == null ? new Date() : stichtag instanceof Date ? stichtag : new Date(stichtag);
   const gewuenscht = Number.isInteger(stichtag) && stichtag > 1900 && stichtag < 3000 ? stichtag
     : Number.isFinite(d.getTime()) ? d.getFullYear() : new Date().getFullYear();
   const jahr = tabelle[gewuenscht] ? gewuenscht
