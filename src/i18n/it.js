@@ -1814,6 +1814,7 @@ export default {
     nextUpReassure: { sie: 'Solo un suggerimento — il ritmo lo decide Lei.', du: 'Solo un suggerimento — il ritmo lo decidi tu.' },
     glanceDeadline: 'Prossima scadenza',
     glanceNoDeadline: 'nessuna aperta',
+    glanceDeadlinePast: '{title} · scaduta dal {date}',
     glanceSaved: 'Ultimo salvataggio',
     glanceNeverSaved: 'Ancora nessun file di backup creato',
     nextUpAction: 'Completare: {feld}',
@@ -2230,6 +2231,7 @@ export default {
     today: 'oggi',
     ago: '{n} mesi fa',
     agoDays: '{n} giorni fa',
+    pastHint: { sie: 'Il termine registrato è scaduto. Se la dichiarazione manca ancora: la inoltri il prima possibile. Di regola l\u2019ufficio delle imposte invia prima una diffida con un nuovo termine. Se anche questo non viene rispettato, può procedere a una tassazione d\u2019ufficio e infliggere una multa.', du: 'Il termine registrato è scaduto. Se la dichiarazione manca ancora: inoltrala il prima possibile. Di regola l\u2019ufficio delle imposte invia prima una diffida con un nuovo termine. Se anche questo non viene rispettato, può procedere a una tassazione d\u2019ufficio e infliggere una multa.' },
     recorded: 'documentato',
   },
 

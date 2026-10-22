@@ -1822,6 +1822,7 @@ export default {
     nextUpReassure: { sie: 'Nur ein Vorschlag — Sie bestimmen das Tempo.', du: 'Nur ein Vorschlag — Du bestimmst das Tempo.' },
     glanceDeadline: 'Nächste Frist',
     glanceNoDeadline: 'keine offene',
+    glanceDeadlinePast: '{title} · vorbei seit {date}',
     glanceSaved: 'Zuletzt gesichert',
     glanceNeverSaved: 'Noch keine Sicherungsdatei erstellt',
     nextUpAction: '{feld} ergänzen',
@@ -2237,6 +2238,7 @@ export default {
     today: 'heute',
     ago: 'vor {n} Monaten',
     agoDays: 'vor {n} Tagen',
+    pastHint: { sie: 'Die erfasste Frist ist vorbei. Falls die Erklärung noch fehlt: Reichen Sie sie so bald wie möglich ein. Meist folgt zuerst eine Mahnung mit Nachfrist. Wird auch diese verpasst, kann das Steueramt die Steuer schätzen und eine Busse verhängen.', du: 'Die erfasste Frist ist vorbei. Falls die Erklärung noch fehlt: Reiche sie so bald wie möglich ein. Meist folgt zuerst eine Mahnung mit Nachfrist. Wird auch diese verpasst, kann das Steueramt die Steuer schätzen und eine Busse verhängen.' },
     recorded: 'erfasst',
   },
 

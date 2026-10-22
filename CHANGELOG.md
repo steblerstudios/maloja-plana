@@ -11,6 +11,16 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Charts zeigte rohe Schlüssel** in der Legende (`budgetSync.taxes` usw.); «NK»/«KK» ausgeschrieben, 5 Sprachen (#530).
+- **Charts rechnet wie das Kapitel Finanzen** (#530): kein BVG mehr als Ausgabe (steckt im Nettolohn, steht als
+  Hinweis), keine Haftpflicht-*Versicherungssumme* und keine Hausrat-/Fahrzeug-*Jahres*prämien als Monatsausgabe.
+  Beispiel vorher 4’197 / Rest 2’003, jetzt wie im Kapitel 3’720 / 2’480. Gemeinsame Rechnung `utils/monatsrechnung.js`.
+- **Verpasste Steuerfrist bleibt sichtbar** (#530): Dashboard «Nächste Frist» zeigt «Steuerfrist · vorbei seit …»,
+  solange «Ausstehende Steuererklärungen» nicht 0 ist; im Kapitel Behörden ein Satz zu Mahnung, Nachfrist und
+  Folgen (DBG 124/130/174, StHG 46/55). rm provisorisch.
+- **Kapitel am Handy:** Bezeichnung und Wert überlappen nicht mehr («Einkommensart» / «Netto (was ich erhalte)», #530).
+
 ### Tests
 - **Feste Test-Uhr (22.10.2026):** `src/__tests__/festeUhr.setup.js`, eingebunden in `vite.config.js`. Mindestlohn und
   Prämienverbilligung sind jahresgebunden, die Tests nahmen still «heute = 2026» an. Mit der Uhr auf dem 2.1.2027

@@ -37,6 +37,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
+import { steuerfristVorbei } from './utils/steuerfrist.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -1787,7 +1788,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ...liste.map((f) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f) : feldElemente(f)))))
           : (leer
               ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
-              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+              // Spalten: die Bezeichnung behält mindestens ihr längstes Wort, der Wert darf
+              // schrumpfen und umbrechen. Vorher («minmax(0,1fr) auto») nahm ein langer Wert
+              // («Netto (was ich erhalte)») seine volle Breite, und «Einkommensart» lief bei
+              // 375 px in ihn hinein (Massstab-Prüfung 21.10.2026).
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(0, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
                     React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
@@ -1931,7 +1936,24 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
             React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
           )
-        )
+        ),
+        // Verpasste Steuerfrist, noch nicht als eingereicht vermerkt: ruhig sagen, was jetzt
+        // geht, statt nur «(vor 22 Tagen)» grau stehen zu lassen (Massstab-Prüfung 21.10.2026).
+        // Belegt an Fedlex (Fachprüfung 21.10.2026): Mahnung mit Nachfrist DBG Art. 124 Abs. 3;
+        // erst «trotz Mahnung» Ermessen (DBG 130 Abs. 2 · StHG 46 Abs. 3) und Busse (DBG 174 ·
+        // StHG 55), Ermessensveranlagung nur eingeschränkt anfechtbar (DBG 132 Abs. 3 · StHG 48
+        // Abs. 2). FR «sommation», IT «diffida» = Gesetzesbegriffe. Kantonale Praxis (Gebühren,
+        // Erstreckung) nicht geprüft — darum «Meist» und kein Betrag. «Falls … noch fehlt», weil
+        // der Hinweis auch bei leerem Feld «Ausstehende Steuererklärungen» erscheint.
+        (() => {
+          const n = new Date();
+          const heute = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
+          if (!steuerfristVorbei(data, heute)) return null;
+          return React.createElement('p', {
+            role: 'note',
+            style: { fontSize: text.sm, color: palette.text, margin: space.sm + 'px 0 0', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', lineHeight: leading.relaxed },
+          }, tr('behördenStatus.pastHint'));
+        })()
       );
     })(),
 
