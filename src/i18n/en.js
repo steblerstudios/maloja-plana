@@ -1814,6 +1814,7 @@ export default {
     nextUpReassure: 'Just a suggestion — you set the pace.',
     glanceDeadline: 'Next deadline',
     glanceNoDeadline: 'none open',
+    glanceDeadlinePast: '{title} · passed on {date}',
     glanceSaved: 'Last saved',
     glanceNeverSaved: 'No backup file created yet',
     nextUpAction: 'Fill in: {feld}',
@@ -2230,6 +2231,7 @@ export default {
     today: 'today',
     ago: '{n} months ago',
     agoDays: '{n} days ago',
+    pastHint: { sie: 'The deadline you recorded has passed. If the return is still missing: submit it as soon as you can. Usually a reminder with a new deadline comes first. If that one is missed too, the tax office can estimate the tax and impose a fine.', du: 'The deadline you recorded has passed. If the return is still missing: submit it as soon as you can. Usually a reminder with a new deadline comes first. If that one is missed too, the tax office can estimate the tax and impose a fine.' },
     recorded: 'recorded',
   },
 

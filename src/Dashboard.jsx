@@ -17,6 +17,7 @@ import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { miniRucksack, rucksackZeichen } from './components/miniRucksack.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
 import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
+import { steuerfristVorbei } from './utils/steuerfrist.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -479,6 +480,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const upcoming = kandidaten
           .filter((r) => r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
+        // Eine verpasste Steuerfrist (und noch etwas offen) geht vor jeder kommenden Frist —
+        // bis 21.10.2026 fiel sie hier still weg und es stand «keine offene».
+        const verpasst = steuerfristVorbei(data.behoerden, today);
         // Lokal gelesen (new Date('2026-09-30') ist UTC-Mitternacht) und in der App-Sprache,
         // nicht in der des Browsers.
         const fmt = (iso) => { try { const [j, m, d] = iso.split('-').map(Number); return new Date(j, m - 1, d).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'short' }); } catch { return iso; } };
@@ -490,7 +494,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         return React.createElement('div', {
           style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', fontSize: text.xs, color: palette.soft },
         },
-          part(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
+          part(t('dashboard.glanceDeadline'), verpasst
+            ? t('dashboard.glanceDeadlinePast', { title: t('behördenStatus.taxDeadline'), date: fmt(steuerfrist) })
+            : upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
           dot,
           // «Zuletzt gesichert noch kein Backup» stand neben «Gespeichert» (Codex-Audit): ohne
           // Sicherungsdatei ein eigener Satz, der Datei und Gerät nicht vermischt.

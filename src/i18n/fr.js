@@ -1815,6 +1815,7 @@ export default {
     nextUpReassure: { sie: 'Juste une suggestion — c’est vous qui donnez le rythme.', du: 'Juste une suggestion — c’est toi qui donnes le rythme.' },
     glanceDeadline: 'Prochain délai',
     glanceNoDeadline: 'aucun en cours',
+    glanceDeadlinePast: '{title} · dépassé depuis le {date}',
     glanceSaved: 'Dernière sauvegarde',
     glanceNeverSaved: 'Aucun fichier de sauvegarde créé',
     nextUpAction: 'Compléter : {feld}',
@@ -2230,6 +2231,7 @@ export default {
     today: 'aujourd\'hui',
     ago: 'il y a {n} mois',
     agoDays: 'il y a {n} jours',
+    pastHint: { sie: 'Le délai saisi est dépassé. Si la déclaration manque encore : déposez-la dès que possible. En général, l\u2019administration fiscale envoie d\u2019abord une sommation fixant un nouveau délai. Si celui-ci n\u2019est pas respecté non plus, elle peut procéder à une taxation d\u2019office et infliger une amende.', du: 'Le délai saisi est dépassé. Si la déclaration manque encore : dépose-la dès que possible. En général, l\u2019administration fiscale envoie d\u2019abord une sommation fixant un nouveau délai. Si celui-ci n\u2019est pas respecté non plus, elle peut procéder à une taxation d\u2019office et infliger une amende.' },
     recorded: 'documenté',
   },
 
