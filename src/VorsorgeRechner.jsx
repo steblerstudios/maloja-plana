@@ -127,10 +127,18 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const beitragsjahreAngenommen = !Number(beitragsjahre);
   const beitragsjahreReferenzalter = Number(beitragsjahre) || angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre);
   const volleDauer = volleBeitragsdauer({ geburtsjahr: birthYear || 1970, geburtsmonat: birthMonth, geschlecht: data.basis?.gender });
+  // Fehlende Jahre zwischen Bezug und Referenzalter in KALENDERjahren (gezählt wird bis zum 31.12. vor
+  // dem Rentenbeginn, Merkblatt 3.01 Ziff. 12) — bei Frauen JG 1961–63 hängt das am Geburtsmonat
+  // (Fachprüfung 22.10.: JG 1962, September, Bezug 63 → 2, nicht 1). Ohne Monat wie die Annahme.
+  const fehlendeJahreBisReferenzalter = (bezug) => {
+    const bezugMonate = Math.max(Math.round(bezug * 12), refAlterMonate - 24);
+    if (bezugMonate >= refAlterMonate) return 0;
+    if (birthMonth) return Math.floor((birthMonth - 1 + refAlterMonate) / 12) - Math.floor((birthMonth - 1 + bezugMonate) / 12);
+    return angenommeneBeitragsjahreFuer(refAlterJahre, refAlterJahre) - angenommeneBeitragsjahreFuer(bezugMonate / 12, refAlterJahre);
+  };
   const beitragsjahreBeiBezug = (bezug) => {
     if (beitragsjahreAngenommen) return angenommeneBeitragsjahreFuer(bezug, refAlterJahre);
-    const vorbezugMonate = Math.min(24, Math.max(0, refAlterMonate - Math.round(bezug * 12)));
-    return Math.max(0, Math.min(beitragsjahreReferenzalter, volleDauer) - Math.floor(vorbezugMonate / 12));
+    return Math.max(0, Math.min(beitragsjahreReferenzalter, volleDauer) - fehlendeJahreBisReferenzalter(bezug));
   };
   const angenommeneBeitragsjahre = angenommeneBeitragsjahreFuer(parsedBezugAlter, refAlterJahre);
   const parsedBeitragsjahre = beitragsjahreBeiBezug(parsedBezugAlter);
@@ -330,7 +338,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // die Teilrente, ab dem Referenzalter die Neuberechnung, Merkblatt 3.04 Ziff. 4/5).
   const annahmeText = () => {
     if (Math.round(parsedBezugAlter * 12) >= refAlterMonate) {
-      return t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(refAlterMonate), jahre: beitragsjahreReferenzalter });
+      return t('vr.beitragsjahreAngenommen', { alter: fmtAlterMonate(refAlterMonate), jahre: Math.min(beitragsjahreReferenzalter, volleDauer) });
     }
     return t('vr.beitragsjahreAngenommenVorbezug', {
       alter: fmtAlterMonate(Math.round(parsedBezugAlter * 12)),
@@ -505,7 +513,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
         field(t('vr.einkommen'), einkommen, setEinkommen, { placeholder: '80000', sublabel: nettoHinterlegt ? t('vr.nettoHint') : basisOffen ? t('einkommensart.offenBrutto') : t('vr.einkommenHint') }),
-        field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(beitragsjahreReferenzalter), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
+        field(t('vr.beitragsjahre'), beitragsjahre, setBeitragsjahre, { placeholder: String(Math.min(beitragsjahreReferenzalter, volleDauer)), width: '80px', min: 1, max: 44, sublabel: t('vr.beitragsjahreHint', { referenzalter: fmtAlterMonate(refAlterMonate) }) }),
         field(t('vr.bezugAlter'), bezugAlter, setBezugAlter, { width: '80px', min: 63, max: 70 })
       ),
       React.createElement('div', { style: s.row },
