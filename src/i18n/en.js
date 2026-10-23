@@ -1406,6 +1406,16 @@ export default {
     anspruch: 'Rights',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Backpack',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'Coming up',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: 'Where you stand right now and what comes next.',
+      wasAnsteht: 'Deadlines, appointments and your checklist in one place.',
+      rucksack: 'Paths through life events and all your tools, organised like gear.',
+      anspruch: 'Benefits and calculators — premium reduction, supplementary benefits, social assistance, grants.',
+    },
     capDokument: 'Document',
     capBeleg: 'Receipt',
     capFrist: 'Deadline',

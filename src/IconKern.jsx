@@ -1,4 +1,5 @@
 import React from 'react';
+import { tagInZuerich } from './utils/zuerichTag.js';
 
 // ─── Maloja Plana SVG Pictogram System — der Kern ──────────
 //
@@ -341,9 +342,10 @@ const _health = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
 );
 
 // Kalender — zeigt dynamisch den heutigen Tag. Outline + currentColor-Zahl,
-// damit sie in Hell- UND Dunkelmodus lesbar bleibt.
+// damit sie in Hell- UND Dunkelmodus lesbar bleibt. Fassung 5 (23.10.2026): der Tag
+// gilt in Europe/Zurich, nicht nach der Uhr des Geräts (utils/zuerichTag.js).
 const _calendar = () => {
-  const day = new Date().getDate();
+  const day = tagInZuerich();
   return React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
     React.createElement('rect', { x: '3', y: '5', width: '18', height: '17', rx: '2.5' }),
     React.createElement('line', { x1: '3', y1: '10', x2: '21', y2: '10' }),
@@ -352,6 +354,14 @@ const _calendar = () => {
     React.createElement('text', { x: '12', y: '18.6', textAnchor: 'middle', fontSize: '8.5', fontWeight: '700', fill: 'currentColor', stroke: 'none', style: { fontFamily: "'Hanken Grotesk', sans-serif" } }, String(day))
   );
 };
+
+// Ordner — die Dokumentenablage (Fassung 5, 23.10.2026). Dieselbe Form wie das
+// `OrdnerIcon` in DocumentTresor.jsx (Rücken mit Reiter, vordere Klappe), hier als
+// Linie im Stil der übrigen Zeichen. Vorher trug die Ablage den Tresor.
+const _ordner = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M3 6.5 A1.5 1.5 0 0 1 4.5 5 H9.5 L11.5 7.5 H19.5 A1.5 1.5 0 0 1 21 9 V18.5 A1.5 1.5 0 0 1 19.5 20 H4.5 A1.5 1.5 0 0 1 3 18.5 Z' }),
+  React.createElement('path', { d: 'M3 10.5 H21', opacity: '0.45' })
+);
 
 const _search = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round' },
   React.createElement('circle', { cx: '10', cy: '10', r: '7' }),
@@ -454,6 +464,7 @@ const _iconFactories = {
 
   // Extended chapter icons
   dokumentTresor: _dokumentTresor,
+  ordner: _ordner,
   budgetWallet: _budgetWallet,
   praemienverbilligung: _praemienverbilligung,
   lebenslauf: _lebenslauf,

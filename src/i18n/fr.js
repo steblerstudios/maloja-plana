@@ -1406,6 +1406,16 @@ export default {
     anspruch: 'Droits',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'À venir',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Où vous en êtes et ce qui vient ensuite.', du: 'Où tu en es et ce qui vient ensuite.' },
+      wasAnsteht: 'Délais, rendez-vous et l’aide-mémoire au même endroit.',
+      rucksack: 'Des parcours pour chaque événement de la vie et tous les outils, rangés comme un équipement.',
+      anspruch: 'Prestations et calculateurs — réduction des primes, prestations complémentaires, aide sociale, bourses.',
+    },
     capDokument: 'Document',
     capBeleg: 'Justificatif',
     capFrist: 'Échéance',

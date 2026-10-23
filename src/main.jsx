@@ -50,6 +50,7 @@ import BetaGate from './BetaGate.jsx';
 // das Stück nach dem ersten Bild im Leerlauf vorgeladen (siehe `vorladen` unten).
 const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
 import { Icon, zurueckZeichen, aufklappZeichen } from './IconKern.jsx';
+import { tagInZuerich } from './utils/zuerichTag.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
@@ -286,11 +287,15 @@ const bottomIcon = (name, color, size) => {
   if (name === 'clock') return React.createElement('svg', common, React.createElement('circle', { cx: 12, cy: 12, r: 8 }), P('M12 8 V12 L15 14'));
   if (name === 'gift') return React.createElement('svg', common, P('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8'));
   if (name === 'plus') return React.createElement('svg', common, P('M12 5 V19 M5 12 H19'));
-  if (name === 'file') return React.createElement('svg', common, P('M7 3 H14 L18 7 V21 H7 Z M14 3 V7 H18'));
+  // Dokumentenablage = Ordner, Merkliste = Haken (Fassung 5, 23.10.2026) — dieselben Formen
+  // wie `ordner` und `check` im Icon-System, hier in der Strichstärke der Leiste.
+  if (name === 'ordner') return React.createElement('svg', common, P('M3 6.5 A1.5 1.5 0 0 1 4.5 5 H9.5 L11.5 7.5 H19.5 A1.5 1.5 0 0 1 21 9 V18.5 A1.5 1.5 0 0 1 19.5 20 H4.5 A1.5 1.5 0 0 1 3 18.5 Z'), React.createElement('path', { d: 'M3 10.5 H21', opacity: 0.45 }));
+  if (name === 'check') return React.createElement('svg', common, P('M4 12 L10 18 L20 6'));
   if (name === 'receipt') return React.createElement('svg', common, P('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15'));
   // Kalender mit heutiger Tageszahl (wie iOS): das Datum steht im Blatt statt einer generischen Uhr.
+  // Der Tag gilt in Europe/Zurich, nicht nach der Geräte-Uhr (Fassung 5, utils/zuerichTag.js).
   if (name === 'calendarToday') {
-    const day = String(new Date().getDate());
+    const day = String(tagInZuerich());
     return React.createElement('svg', common,
       P('M4 6 H20 V20 H4 Z'), P('M4 10 H20'), P('M8 3 V7'), P('M16 3 V7'),
       React.createElement('text', {
@@ -303,7 +308,6 @@ const bottomIcon = (name, color, size) => {
   // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B) und Lupe.
   if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
   if (name === 'search') return React.createElement('svg', common, React.createElement('circle', { cx: 11, cy: 11, r: 6 }), P('M15.5 15.5 L20 20'));
-  if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
 
@@ -357,10 +361,10 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
   );
   const fan = [
-    { key: 'tresor', label: t('nav.capDokument'), icon: 'file', left: 'calc(50% - 104px)', bottom: '84px' },
+    { key: 'tresor', label: t('nav.capDokument'), icon: 'ordner', left: 'calc(50% - 104px)', bottom: '84px' },
     { key: 'kk', label: t('nav.capBeleg'), icon: 'receipt', left: 'calc(50% - 40px)', bottom: '126px' },
     { key: 'calendar', label: t('nav.capFrist'), icon: 'calendarToday', left: 'calc(50% + 40px)', bottom: '126px' },
-    { key: 'merkliste', label: t('nav.merkliste'), icon: 'pencil', left: 'calc(50% + 104px)', bottom: '84px' },
+    { key: 'merkliste', label: t('nav.merkliste'), icon: 'check', left: 'calc(50% + 104px)', bottom: '84px' },
   ];
   return React.createElement(React.Fragment, null,
     React.createElement('div', {
@@ -1217,16 +1221,18 @@ const AppInner = ({ demo }) => {
       activeView: view,
       chapters,
       completion: calculateCompletion(),
-      // Am Handy trägt der Boden-Anker die Übersicht → im Drawer weglassen (keine
-      // Dopplung). In der Web-Ansicht gibt es keinen Anker → Übersicht bleibt hier,
-      // bis wir ein eigenes Web-Äquivalent haben (Stebler Studios).
-      hasBottomAnchor: isMobile,
       leftHand,
+      isDarkMode,
+      // Fassung 5 (23.10.2026): unten im Menü Einfache Ansicht und Problem melden —
+      // derselbe Schalter wie in der Kopfzeile, derselbe Mail-Entwurf wie in der Fusszeile.
+      simpleView,
+      onToggleSimpleView: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
+      feedbackHref,
       // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
+      // «Rundgang neu starten» steht seit Fassung 5 nur noch bei den Einstellungen
+      // (Einstellungs-Schublade, am Handy und am Computer erreichbar).
       settingsControls: null,
       settingsLabel: t('nav.settings'),
-      // Rundgang nur EINMAL: am Handy in den Einstellungen, am Desktop hier im Menü.
-      onStartTour: isMobile ? null : () => { setView('dashboard'); setTourOpen(true); },
     })),
     // Einstellungen & Konto — eigene Schublade (oben-rechts-Eingang, entdoppelt das Menü).
     settingsOpen && React.createElement(React.Suspense, { fallback: null, key: 'einstellungen' },

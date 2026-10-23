@@ -1656,6 +1656,21 @@ export default {
     anspruch: 'Dretgs',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    // rm ungeprüft F5
+    wasAnsteht: 'Tge che vegn',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      // rm ungeprüft F5
+      dashboard: { sie: 'Nua che Vus stais ussa e tge che vegn sco proxim.', du: 'Nua che ti stas ussa e tge che vegn sco proxim.' },
+      // rm ungeprüft F5
+      wasAnsteht: 'Termins, scadenzas e la glista da memoria en in lieu.',
+      // rm ungeprüft F5
+      rucksack: 'Vias tras eveniments da la vita e tut ils utensils, urdinads sco ina equipaziun.',
+      // rm ungeprüft F5
+      anspruch: 'Prestaziuns e calculaturs — reducziun da las premias, prestaziuns supplementaras, agid social, stipendis.',
+    },
     capDokument: 'Document',
     capBeleg: 'Quittanza',
     capFrist: 'Termin',
