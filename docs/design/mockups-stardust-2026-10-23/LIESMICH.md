@@ -8,6 +8,7 @@ Entwürfe, **nicht gebaut**. Gehören zu `docs/IDEEN.md` §16 und
 | `index.html` | Eingang (gebaut, #537) und Übersicht: Karte, Wegring (abgelegt), Variante C mit Bereichszeilen |
 | `seiten.html` | Fassung 1 der anderen Seiten: Kapitel, Rechner, Ablauf, Ablage — aufgeräumt |
 | `seiten-v2.html` | Fassung 2: eigenes Licht je Bereich, Daten-Grammatik, Antippen, Passstrasse als Ablauf |
+| `seiten-v3.html` | Fassung 3: Fassung 2 plus alle früheren Entscheide aus `PRUEFLISTE.md` (Wege, Leisten, Zustände, Sprache, Sie/Du, Graustufen-Test) |
 
 **Ansehen:** über einen lokalen Server, nicht über `file://` (sonst laden Icons und Schriften
 nicht), z. B. `python3 -m http.server -d docs/design/mockups-stardust-2026-10-23 5447`.
