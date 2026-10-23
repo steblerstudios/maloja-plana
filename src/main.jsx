@@ -1580,6 +1580,8 @@ const AppInner = ({ demo }) => {
           onDownload: handleDownloadDocument,
           onDelete: handleDeleteDocument,
           onUpdateExpiry: docAktionen.ablaufAendern,
+          // «Was oft zuerst hineingehört» (Fassung 5): ein Vorschlag öffnet sein Kapitel.
+          onOpenChapter: (key) => { const i = chapters.findIndex((c) => c.key === key); if (i >= 0) handleNavigate('chapter', i); },
           initialTab: tresorInitialTab,
           isDarkMode
         }),
