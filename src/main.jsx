@@ -1498,7 +1498,9 @@ const AppInner = ({ demo }) => {
       // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
-      view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
+      // Der Umzug (Fassung 5) zeichnet seine Brotkrume im eigenen Kopf (AblaufSchale `kopf`). Als
+      // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
+      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
@@ -1669,7 +1671,7 @@ const AppInner = ({ demo }) => {
           onLegal: () => handleNavigate('legal'),
         }),
         view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate, datenModus }),
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'stelleverloren' && React.createElement(StelleVerloren, { palette, t, onNavigate: handleNavigate }),

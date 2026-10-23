@@ -241,6 +241,11 @@ export default {
     fertigTitel: 'Der Umzug ist geordnet',
     fertigText: 'Alle vier Schritte sind erledigt.',
     nochmals: 'Ablauf nochmals ansehen',
+    // Namen der vier Stationen auf der Passstrasse (Fassung 5, wörtlich aus dem Mockup)
+    passAdresse: 'Adresse',
+    passGemeinde: 'Gemeinde',
+    passNachfuehren: 'Nachführen',
+    passKuendigen: 'Kündigen',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',

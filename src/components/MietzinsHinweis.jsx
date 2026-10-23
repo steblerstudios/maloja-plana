@@ -6,7 +6,9 @@ import { ExternerLink } from './ExternerLink.jsx';
 // Ruhiger Hinweis zu Mietzinsbeiträgen — analog zur IPV, aber kantonal/kommunal
 // fragmentiert. Drei Zustände: bestätigt (affirmativ), keines (ausgegraut), unklar
 // (prüfen). Nie ein falsches „gibt's nicht" — würdevoll, keine falsche Hoffnung.
-export const MietzinsHinweis = ({ palette, t, canton }) => {
+// `ohneTitel`: steht der Hinweis in einer Aufklapp-Zeile, die schon «Mietzinsbeiträge» heisst
+// (Umzug, Fassung 5), fallen Titel und Trennlinie weg.
+export const MietzinsHinweis = ({ palette, t, canton, ohneTitel = false }) => {
   if (!canton) return null;
   const info = getMietzinsbeitraege(canton);
 
@@ -23,13 +25,13 @@ export const MietzinsHinweis = ({ palette, t, canton }) => {
 
   return React.createElement('div', {
     style: {
-      marginTop: space.sm + 'px', paddingTop: space.sm + 'px',
-      borderTop: '1px solid ' + palette.border,
+      marginTop: space.sm + 'px',
+      ...(ohneTitel ? {} : { paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border }),
       fontSize: text.xs, color: body.color, lineHeight: leading.normal,
       fontStyle: info.state === 'none' ? 'italic' : 'normal',
     },
   },
-    React.createElement('span', { style: { fontWeight: weight.semi, color: palette.text } }, t('mietzins.title') + ' '),
+    !ohneTitel && React.createElement('span', { style: { fontWeight: weight.semi, color: palette.text } }, t('mietzins.title') + ' '),
     React.createElement('span', null, body.msg + ' '),
     body.label && link(body.label),
   );

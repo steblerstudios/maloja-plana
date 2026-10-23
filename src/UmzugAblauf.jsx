@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, space, radius } from './config/tokens.js';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, AblaufPass, PASS_SCHRITTE, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, AblaufPass, PASS_SCHRITTE, ablaufStyles, ablaufTextFarbe } from './AblaufSchale.jsx';
 import { ablaufStandLaden, ablaufStandSichern } from './utils/ablaufStand.js';
 import { PanelTitle } from './components/Heading.jsx';
 import PrimaryButton from './components/PrimaryButton.jsx';
-import { plusTage } from './utils/fristen.js';
+import { plusTage, heuteIso, istVorbei } from './utils/fristen.js';
+import { fontFamilyDisplay } from './config/tokens.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { merkpunktSichern } from './utils/merkliste.js';
@@ -26,8 +27,18 @@ export const ohneNummer = (titel) => String(titel).replace(/^\s*\d+\s*·\s*/, ''
 // Gerechnet ab dem Umzugsdatum, das die Person eingibt (vorbelegt aus dem Kapitel
 // Wohnen, falls erfasst) — nicht mehr ab heute (Befund 24.09.2026, utils/fristen.js).
 
-export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
+// Vorbelegung des Umzugsdatums. `wohnen.moveInDate` heisst «wohnt hier seit» — meist der LETZTE
+// Umzug. Nur wenn seine 14 Tage noch laufen, ist es dieser Umzug. Sonst bleibt das Feld leer;
+// im Beispiel (Maria wohnt seit 2021 an der Langstrasse) steht ein Umzug in einer Woche, damit
+// die Frist-Karte zu sehen ist statt «Die 14 Tage waren am 15.08.2021 vorbei».
+export const umzugsDatumVorschlag = (moveInDate, datenModus) => {
+  if (moveInDate && !istVorbei(plusTage(moveInDate, 14))) return moveInDate;
+  return datenModus === 'beispiel' ? plusTage(heuteIso(), 7) : '';
+};
+
+export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate, datenModus }) => {
   const s = ablaufStyles(palette);
+  const textFarbe = ablaufTextFarbe(palette) || palette.sageDeep || palette.mid;
   const currentAddress = [data?.wohnen?.address, [data?.wohnen?.postalCode, data?.wohnen?.city].filter(Boolean).join(' ')]
     .filter(Boolean).join(', ');
   // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
@@ -43,17 +54,18 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
     const gem = lookupPLZ(plz);
     return gem && gem.length ? gem[0].kanton : null;
   })();
-  const typeCard = (id, label) => {
+  // Fassung 5: zwei Spalten, die dritte Wahl über die ganze Breite; die gewählte in der
+  // Bereichsfarbe umrandet und leicht getönt, die anderen bleiben gleich hell.
+  const typeCard = (id, label, voll) => {
     const isChosen = umzugType === id;
-    const isDimmed = umzugType && !isChosen;
     return React.createElement('button', {
       type: 'button', key: id, onClick: () => setUmzugType(id), 'aria-pressed': isChosen,
       style: {
-        flex: '1 1 160px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
-        padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text,
-        background: isChosen ? palette.surface : palette.up, borderRadius: radius.sm,
-        border: '1.5px solid ' + (isChosen ? palette.sand : palette.border),
-        opacity: isDimmed ? 0.55 : 1, transition: 'opacity 120ms, border-color 120ms',
+        gridColumn: voll ? '1 / -1' : undefined, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+        padding: '12px', minHeight: '48px', fontSize: text.sm, color: palette.text,
+        background: isChosen ? textFarbe + '24' : palette.surface, borderRadius: radius.lg + 'px',
+        border: '1px solid ' + (isChosen ? textFarbe : palette.border),
+        transition: 'border-color 120ms, background 120ms',
       },
     }, erledigtZeichen(isChosen, label));
   };
@@ -81,7 +93,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
   const [stand, setStandRoh] = useState(() => ablaufStandLaden('umzug', PASS_SCHRITTE, vorlaeufig));
   const setStand = (next) => { setStandRoh(next); ablaufStandSichern('umzug', next, vorlaeufig); };
   // Das Umzugsdatum lebt hier (nicht in EreignisFrist), damit es beim Blättern bleibt.
-  const [umzugsDatum, setUmzugsDatum] = useState(data?.wohnen?.moveInDate || '');
+  const [umzugsDatum, setUmzugsDatum] = useState(() => umzugsDatumVorschlag(data?.wohnen?.moveInDate, datenModus));
   // Nach einem Schrittwechsel den Fokus auf den neuen Schritt legen (nicht beim ersten Laden).
   const schrittRef = useRef(null);
   const gewechselt = useRef(false);
@@ -104,10 +116,10 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
     { titel: 'umzug.step2Title', inhalt: () => [
       // Typ-Wähler: was sich ändert, hängt davon ab, wie weit der Umzug geht.
       React.createElement('p', { key: 'typ', style: { ...s.stepText, marginBottom: '6px' } }, t('umzug.typeLabel')),
-      React.createElement('div', { key: 'wahl', style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
+      React.createElement('div', { key: 'wahl', role: 'group', 'aria-label': t('umzug.typeLabel'), style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm + 'px', margin: space.sm + 'px 0' } },
         typeCard('gemeinde', t('umzug.typeGemeinde')),
         typeCard('kanton', t('umzug.typeKanton')),
-        typeCard('extra', t('umzug.typeExtra'))
+        typeCard('extra', t('umzug.typeExtra'), true)
       ),
       React.createElement('p', { key: 'text', style: s.stepText }, t(umzugType ? 'umzug.step2Text_' + umzugType : 'umzug.step2Text')),
       // „Das ändert sich" — ruhiger Hinweis je Typ, mit Crosslinks zu Prämie/Steuern wo relevant.
@@ -129,9 +141,17 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { key: 'tax', palette, label: t('umzug.changesLinkTax'), onClick: () => onNavigate('tax') }),
       // Neue Gemeinde/Kanton kann einen Mietzinsbeitrags-Anspruch bedeuten — Hinweis genau hier,
       // wo das Lebensereignis ihn auslöst (bestehende Komponente, kanton-bewusst).
-      umzugType !== 'gemeinde' && React.createElement(MietzinsHinweis, { key: 'mietzins', palette, t, canton: userCanton }),
-      // Voller Mietzinsbeiträge-Schnellcheck (mit echten Beträgen), nicht nur der Hinweis.
-      umzugType !== 'gemeinde' && onNavigate && React.createElement(AblaufLink, { key: 'mietzinsLink', palette, label: t('umzug.linkMietzins'), onClick: () => onNavigate('mietzins') }),
+      // Fassung 5: als Aufklapp-Zeile «Mietzinsbeiträge +», darin Hinweis und Schnellcheck.
+      umzugType !== 'gemeinde' && React.createElement('details', { key: 'mietzins', style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, marginTop: space.sm + 'px' } },
+        React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, listStyle: 'none' } },
+          // mietzins.title trägt den Doppelpunkt für den Fliesstext («Mietzinsbeiträge: …»); als Zeile ohne.
+          t('mietzins.title').replace(/\s*:\s*$/, ''),
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.soft } }, '+')),
+        React.createElement('div', { style: { paddingBottom: space.sm + 'px' } },
+          React.createElement(MietzinsHinweis, { palette, t, canton: userCanton, ohneTitel: true }),
+          // Voller Mietzinsbeiträge-Schnellcheck (mit echten Beträgen), nicht nur der Hinweis.
+          onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkMietzins'), onClick: () => onNavigate('mietzins') }))
+      ),
       // Beim Wechsel in einen anderen Kanton (`extra`) — einen Umzugstyp «aus dem Ausland»
       // gibt es nicht. Wer tatsächlich neu in der Schweiz ist, erkennt sich an der
       // Beschriftung («Neu in der Schweiz?») und findet dort die erste KK-Anmeldung.
@@ -196,8 +216,8 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('button', { type: 'button', style: { ...ruhigerKnopf, padding: 0, marginTop: space.sm + 'px' }, onClick: () => geheZu({ schritt: 0, fertig: false }) }, t('umzug.nochmals'))
     )
     : React.createElement('div', { 'data-umzug-schritt': String(nr + 1) },
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.semi } }, t('onboarding.stepOf', { current: nr + 1, total })),
-      React.createElement(AblaufStep, { palette, title: ohneNummer(t(schritte[nr].titel)) }, ...schritte[nr].inhalt()),
+      React.createElement('div', { style: { fontSize: text.xs, color: textFarbe, fontWeight: weight.semi } }, t('onboarding.stepOf', { current: nr + 1, total })),
+      React.createElement(AblaufStep, { palette, title: ohneNummer(t(schritte[nr].titel)), titelStyle: { marginTop: space.xs + 'px', fontFamily: fontFamilyDisplay, fontSize: '22px', lineHeight: 1.2 } }, ...schritte[nr].inhalt()),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', marginTop: space.lg + 'px' } },
         React.createElement(PrimaryButton, {
           palette, style: { minHeight: '44px' },
@@ -212,8 +232,14 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
     palette, icon: 'home',
     title: t('umzug.title'),
     intro: t('umzug.intro'),
+    // Kopf wie im Mockup Fassung 5: Landschaftsband, Brotkrume «Übersicht › Wohnen › Umzug», Kachel.
+    kopf: {
+      t, onNavigate,
+      bereichTitel: chapterIdx('wohnen') >= 0 ? chapters[chapterIdx('wohnen')].title : null,
+      zumBereich: () => onNavigate && onNavigate('chapter', chapterIdx('wohnen')),
+    },
   },
-    React.createElement(AblaufPass, { palette, aktuell: nr, fertig: stand.fertig }),
+    React.createElement(AblaufPass, { palette, aktuell: nr, fertig: stand.fertig, namen: [t('umzug.passAdresse'), t('umzug.passGemeinde'), t('umzug.passNachfuehren'), t('umzug.passKuendigen')] }),
     React.createElement('div', { ref: schrittRef, tabIndex: -1, 'aria-live': 'polite', style: { outline: 'none' } }, schrittInhalt),
     React.createElement(AblaufFooter, { palette, t, quelle: t('umzug.quelle'), notes: [t('umzug.footerFrist'), t('trust.localOnly')] })
   );

@@ -16,8 +16,15 @@ kommt der Changelog immer mit, nie doppelt.*
   liegt im ＋-Fächer («Frist») und im Menü, die Suche oben im Menü und neu als Lupe in der Kopfzeile.
 - **Kopfzeile Handy und Desktop gleich** (#545): Lupe und Zahnrad oben rechts; am Desktop ersetzt das Zahnrad
   die Barrierefreiheits-Figur (gleiche Schublade, Tooltip «Einstellungen · Barrierefreiheit»).
+- **Ablauf Umzug sieht aus wie im Mockup Fassung 5**: Landschaftsband oben mit Brotkrume «Übersicht › Wohnen
+  & Leben › Umzug», Zeichen in einer Kachel, Stationsnamen auf der Passstrasse (Adresse · Gemeinde · Nachführen ·
+  Kündigen, neu in 5 Sprachen, rm ungeprüft), «Schritt n von 4» in der Bereichsfarbe, Art des Umzugs als Raster,
+  Mietzinsbeiträge als Aufklapp-Zeile. #540 hatte nur den Ablauf gebaut, nicht die Gestaltung.
 
 ### Behoben
+- **Umzug: kein altes Einzugsdatum mehr als Umzugsdatum.** «Wohnt hier seit» ist meist der letzte Umzug; es gilt
+  nur noch, solange seine 14 Tage laufen. Im Beispiel stand deshalb «Die 14 Tage waren am 15.08.2021 vorbei»
+  statt der Frist-Karte — jetzt ein Umzug in einer Woche.
 - Die Fusszeile am Handy springt im Schwarzweiss-Modus nicht mehr mit beim Scrollen (#545): der Filter liegt
   auf `<html>` statt auf dem App-Rahmen, der sonst Bezugsrahmen für `position: fixed` war.
 
