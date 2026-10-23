@@ -588,6 +588,26 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 .meldung.zeigen { opacity: 1; transform: none; pointer-events: auto; }
 .meldung .txt { flex: 1; }
 .meldung button { background: none; border: 0; color: var(--sand); cursor: pointer; min-height: 44px; padding: 0 8px; }
+/* I · Einstellungen (Fassung 5, 23.10. abends) */
+.einst-gruppe { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 6px 16px; margin-bottom: 14px; }
+.einst-gruppe h4 { font-size: 13px; color: var(--soft); font-weight: 500; margin: 12px 0 2px; }
+.einst-zeile { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; border-bottom: 1px solid var(--border); font-size: 15px; }
+.einst-zeile:last-child { border-bottom: 0; }
+.einst-zeile > label { white-space: nowrap; }
+.einst-zeile > span { display: flex; gap: 10px; align-items: center; }
+.einst-zeile > span svg { color: var(--mid); flex-shrink: 0; }
+.wahl { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; padding: 2px; }
+.wahl button { border: 0; background: none; color: var(--mid); border-radius: 999px; min-height: 40px; min-width: 52px; padding: 0 12px; cursor: pointer; font: inherit; font-size: 14px; }
+.wahl button[aria-pressed="true"] { background: var(--up); color: var(--text); font-weight: 500; }
+.schalter { width: 52px; height: 32px; border-radius: 999px; border: 1px solid var(--border); background: transparent; position: relative; cursor: pointer; flex-shrink: 0; margin: 6px 0; }
+.schalter::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: var(--mid); transition: left .2s, background .2s; }
+.schalter[aria-pressed="true"] { background: var(--sage); border-color: var(--sage); }
+.schalter[aria-pressed="true"]::after { left: 23px; background: var(--bg); }
+.einst-knopf { display: flex; gap: 10px; align-items: center; width: 100%; min-height: 52px; background: none; border: 0; border-bottom: 1px solid var(--border); color: var(--text); font: inherit; font-size: 15px; text-align: start; cursor: pointer; padding: 0; }
+.einst-knopf:last-child { border-bottom: 0; }
+.einst-knopf svg { color: var(--mid); }
+.einst-knopf .pfeil { margin-inline-start: auto; color: var(--soft); }
+.einst-loeschen { color: var(--roseDeep); }
 </style>
 </head>
 <body>
@@ -1129,6 +1149,67 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   </ul></div>
 </section>
 
+<!-- ===================== I · Einstellungen ===================== -->
+<section class="abschnitt" id="i">
+  <h2>I · Einstellungen</h2>
+  <p class="warum"><b>Neu in Fassung 5 (23.10. abends).</b> Heute gibt es zwei fast gleiche Orte: die Seite «Einstellungen» (33 Bausteine) und die Schublade hinter dem Zahnrad («Ansicht &amp; Sprache»). Hier ist alles auf <b>einer</b> Seite: Anzeige &amp; Sprache, Barrierefreiheit, «Rundgang neu starten» (heute nur in der Schublade), Daten &amp; Sicherung, Daten auf diesem Gerät. Alle Texte aus <code>de.js</code>. Die Schalter zeigen ihren Zustand selbst, statt nur ein Symbol. Das Erscheinungsbild schaltet hier wirklich um.</p>
+  <div class="geraet" data-seite="i">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv=""></nav>
+    <div class="seite" style="--licht: var(--sage)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Einstellungen</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="zahnrad" style="--licht: var(--sage)"></span><h3>Einstellungen</h3></div>
+          <p class="satz">Diese Einstellungen lassen sich jederzeit ändern.</p>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <div class="einst-gruppe">
+            <h4>Anzeige &amp; Sprache</h4>
+            <div class="einst-zeile"><span>Anrede</span><span class="wahl" role="group" aria-label="Anrede"><button aria-pressed="true" data-einst-anrede="sie">Sie</button><button aria-pressed="false" data-einst-anrede="du">Du</button></span></div>
+            <div class="einst-zeile"><label for="einst-sprache">Sprache wählen</label><select id="einst-sprache" style="max-width:150px;min-height:40px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text);padding:0 12px;font:inherit;font-size:14px"><option>Deutsch</option><option>Français</option><option>Italiano</option><option>English</option><option>Rumantsch (provisoric)</option></select></div>
+            <div class="einst-zeile"><span>Erscheinungsbild</span><span class="wahl" role="group" aria-label="Erscheinungsbild"><button aria-pressed="false" data-einst-thema="light">Hell</button><button aria-pressed="true" data-einst-thema="dark">Dunkel</button></span></div>
+          </div>
+          <div class="einst-gruppe">
+            <h4>Barrierefreiheit</h4>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>Vorlesen</span><button class="schalter" aria-pressed="false" aria-label="Vorlesen"></button></div>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M3 18 8 6l5 12M5 14h6M15 18v-5a3 3 0 0 1 6 0v5M15 15.5h6"/></svg>Bessere Lesbarkeit</span><button class="schalter" aria-pressed="false" aria-label="Bessere Lesbarkeit"></button></div>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Einfache Ansicht</span><button class="schalter" aria-pressed="false" aria-label="Einfache Ansicht"></button></div>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0 0 12 3.5Z" fill="currentColor"/></svg>Schwarzweiss</span><button class="schalter" aria-pressed="false" aria-label="Schwarzweiss" data-einst-grau></button></div>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="10" r="5"/><rect x="12" y="12" width="8" height="8" rx="1.5"/></svg>Farbenblind-Modus</span><button class="schalter" aria-pressed="false" aria-label="Farbenblind-Modus"></button></div>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="12" r="2"/><path d="M14 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12"/></svg>Reduzierte Bewegung</span><button class="schalter" aria-pressed="false" aria-label="Reduzierte Bewegung" data-einst-still></button></div>
+            <div class="einst-zeile"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 10.5V4a1.5 1.5 0 0 1 3 0v7M14 10.5V5.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7 6 6 0 0 1-5-3l-2.4-4a1.5 1.5 0 0 1 2.6-1.5L8 15"/></svg>Linkshänder-Modus</span><button class="schalter" aria-pressed="false" aria-label="Linkshänder-Modus"></button></div>
+          </div>
+          <div class="einst-gruppe">
+            <button class="einst-knopf" data-meldung="Rundgang startet auf der Übersicht"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></svg>Rundgang neu starten<span class="pfeil">›</span></button>
+          </div>
+          <div class="einst-gruppe">
+            <h4>Daten &amp; Sicherung</h4>
+            <button class="einst-knopf"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16Z"/></svg>Persönliche Basis bearbeiten<span class="pfeil">›</span></button>
+            <button class="einst-knopf"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Backup &amp; Export<span class="pfeil">›</span></button>
+            <button class="einst-knopf"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>Benachrichtigungen<span class="pfeil">›</span></button>
+          </div>
+          <div class="einst-gruppe">
+            <h4>Daten auf diesem Gerät</h4>
+            <p class="satz" style="font-size:14px;margin:6px 0 4px" data-sie="Maloja speichert alles nur in diesem Browser. Hier können Sie alles davon entfernen." data-du="Maloja speichert alles nur in diesem Browser. Hier kannst Du alles davon entfernen."></p>
+            <button class="einst-knopf einst-loeschen">Alle Daten auf diesem Gerät löschen<span class="pfeil">›</span></button>
+          </div>
+          <div class="vertrauen" style="justify-content:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht." data-du="Lokal gespeichert. Deine Eingaben verlassen dein Gerät nicht."></span></div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv=""></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Ein Ort statt zwei.</b> Heute zeigen die Seite und die Zahnrad-Schublade fast dasselbe, aber nicht ganz: «Rundgang neu starten» steht nur in der Schublade, «Persönliche Basis bearbeiten» und «Alle Daten löschen» nur auf der Seite, und «Export» heisst in der Schublade «Backup &amp; Export». Vorschlag: Das Zahnrad öffnet diese Seite.</li>
+    <li><b>Erscheinungsbild:</b> heute steht im Dunkelmodus ein Knopf «Hell» neben «Erscheinungsbild». Gemeint ist «auf Hell umschalten» (<code>ThemeToggle.jsx</code>), man liest es aber als «ist hell». Hier eine Wahl «Hell | Dunkel», die gewählte ist hervorgehoben. Gleiches für «Sie | Du».</li>
+    <li><b>Schalter statt Symbol-Knöpfe:</b> heute steht rechts nur ein Symbol, ob es an ist, sieht man kaum. Hier ein Schalter, der den Zustand selbst zeigt. «Vorlesen ein/aus» wird zu «Vorlesen», weil der Schalter das «ein/aus» zeigt. «Schwarzweiss» und «Reduzierte Bewegung» wirken im Mockup echt.</li>
+    <li>Keine Versalien bei den Gruppentiteln (heute «ANZEIGE &amp; SPRACHE»). Der Hinweis «Im Beispiel ist das Löschen ausgeschaltet …» erscheint nur im Demo-Modus und bleibt.</li>
+    <li>Neu für den Copy-Prüfer: keine neuen Sätze. Nur «Vorlesen» statt «Vorlesen ein/aus» und «Backup &amp; Export» auch auf der Seite (heute dort «Export»). a11y-Prüfer: Schalter 52 × 32 in einer 56 px hohen Zeile, die ganze Zeile sollte tippbar sein.</li>
+  </ul></div>
+</section>
+
 <script>
   const root = document.documentElement;
   root.dataset.theme = 'dark';
@@ -1168,6 +1249,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     ordner: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-7.5L9.8 5H5a2 2 0 0 0-2 2Z"/><path d="M3 10.5h18"/></svg>`,
     haken: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>`,
     globus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.6 5.4 3.6 8.5s-1.1 5.9-3.6 8.5c-2.5-2.6-3.6-5.4-3.6-8.5s1.1-5.9 3.6-8.5Z"/></svg>`,
+    zahnrad: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.2h3.4l.5 2.4 1.6.9 2.3-.8 1.7 2.9-1.8 1.6v1.6l1.8 1.6-1.7 2.9-2.3-.8-1.6.9-.5 2.4h-3.4l-.5-2.4-1.6-.9-2.3.8-1.7-2.9 1.8-1.6v-1.6L4.2 8.6l1.7-2.9 2.3.8 1.6-.9Z"/><circle cx="12" cy="12" r="3"/></svg>`,
   };
   fetch('icons.json').then((r) => r.json()).then((d) => { ICONS = { ...d, ...EIGENE }; icons(); });
 
@@ -1228,6 +1310,23 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     m.classList.add('zeigen'); clearTimeout(m._t); m._t = setTimeout(() => m.classList.remove('zeigen'), 4500);
   }
   document.querySelectorAll('[data-meldung]').forEach((b) => b.addEventListener('click', () => melden(b.closest('.geraet'), b.dataset.meldung)));
+
+  // ---------- I · Einstellungen: Wahl und Schalter wirken echt (über die Leiste oben) ----------
+  const einstSync = () => {
+    document.querySelectorAll('[data-einst-thema]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.einstThema === root.dataset.theme));
+    document.querySelectorAll('[data-einst-anrede]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.einstAnrede === anrede));
+    const grau = document.querySelector('[data-einst-grau]'); if (grau) grau.setAttribute('aria-pressed', document.body.classList.contains('graustufen'));
+    const still = document.querySelector('[data-einst-still]'); if (still) still.setAttribute('aria-pressed', document.body.classList.contains('still'));
+  };
+  document.querySelectorAll('[data-einst-thema]').forEach((b) => b.addEventListener('click', () => document.querySelector(`[data-modus="${b.dataset.einstThema}"]`).click()));
+  document.querySelectorAll('[data-einst-anrede]').forEach((b) => b.addEventListener('click', () => document.querySelector(`[data-anrede="${b.dataset.einstAnrede}"]`).click()));
+  document.querySelectorAll('.schalter').forEach((b) => b.addEventListener('click', () => {
+    if (b.hasAttribute('data-einst-grau')) return document.getElementById('grau').click();
+    if (b.hasAttribute('data-einst-still')) return document.getElementById('still').click();
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+  }));
+  document.querySelectorAll('[data-modus], [data-anrede], #grau, #still').forEach((b) => b.addEventListener('click', () => setTimeout(einstSync)));
+  einstSync();
 
   // ---------- Glossar ----------
   document.querySelectorAll('.begriff').forEach((b) => { b.setAttribute('aria-expanded', 'false'); b.addEventListener('click', (e) => { e.stopPropagation(); const p = document.getElementById(b.dataset.erklaerung); const an = !p.classList.contains('offen'); p.classList.toggle('offen', an); b.setAttribute('aria-expanded', an); }); });
