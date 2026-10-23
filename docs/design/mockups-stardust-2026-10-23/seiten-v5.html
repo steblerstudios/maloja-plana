@@ -734,7 +734,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           <div class="stufe">
             <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Wohnen &amp; Leben</a><span>›</span>Umzug</nav></div>
             <div class="titelzeile"><span class="sym" data-icon="wohnen"></span><h3>Umzug</h3></div>
-            <p class="satz">Ein Umzug zieht viele kleine Schritte nach sich. Eines nach dem anderen.</p>
+            <p class="satz">Ein Umzug zieht viele kleine Schritte nach sich. Hier der ruhige Überblick — Adresse, Gemeinde, alte Wohnung. Eines nach dem anderen.</p>
           </div>
           <div class="pass stufe s2" aria-hidden="true">
             <svg viewBox="0 0 340 150">
@@ -1110,14 +1110,23 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   let umzugsDatum = '2026-11-01';
   const STELLEN = ['Post — Nachsendeauftrag einrichten', 'Krankenkasse', 'Arbeitgeber', 'Ausgleichskasse / AHV', 'Steueramt', 'Weitere Versicherungen (Hausrat, Haftpflicht, Auto)', 'Bank & Karten', 'Abos, Vereine, Ärztin/Arzt'];
   const gemerkt = new Set();
+  // Art des Umzugs wie in der App: ohne Wahl der allgemeine Satz (step2Text), sonst step2Text_gemeinde/_kanton/_extra
+  let umzugArt = null;
+  const UMZUG_ARTEN = [['gemeinde', 'In derselben Gemeinde'], ['kanton', 'Andere Gemeinde, gleicher Kanton'], ['extra', 'In einen anderen Kanton']];
+  const UMZUG_TEXT = {
+    allgemein: ['In der Schweiz melden Sie sich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nehmen Sie Ausweis und Mietvertrag mit.', 'In der Schweiz meldest du dich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab. Nimm Ausweis und Mietvertrag mit.'],
+    gemeinde: ['Sie bleiben in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melden Sie nur Ihre neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', 'Du bleibst in derselben Gemeinde — eine richtige Ab- und Anmeldung entfällt. Melde nur deine neue Adresse der Einwohnerkontrolle, innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.'],
+    kanton: ['Sie wechseln die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', 'Du wechselst die Gemeinde im selben Kanton: bei der alten Gemeinde abmelden, bei der neuen anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.'],
+    extra: ['Sie ziehen in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nehmen Sie Ausweis und Mietvertrag mit.', 'Du ziehst in einen anderen Kanton: bei der alten Gemeinde abmelden, im neuen Kanton anmelden — innert 14 Tagen. Nimm Ausweis und Mietvertrag mit.'],
+  };
   const datumText = (iso) => { const [j, m, d] = iso.split('-').map(Number); return `${d}. ${MONLANG[m - 1]} ${j}`; };
   const plus14 = (iso) => { const [j, m, d] = iso.split('-').map(Number); const x = new Date(j, m - 1, d + 14); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
   const SCHRITTE = [
     { titel: 'Neue Adresse', kurz: 'Adresse', html: () => `<p>Erfasst: Langstrasse 42, 8004 Zürich. Stimmt sie noch?</p><p><a href="#" style="color:var(--sand);text-decoration:none">Adresse im Kapitel Wohnen ›</a></p>` },
     { titel: 'Bei der Gemeinde an- und abmelden', kurz: 'Gemeinde', html: () => {
       const du = anrede === 'du', frist = plus14(umzugsDatum), heuteIso = '2026-10-23', vorbei = frist < heuteIso;
-      return `<p>Welche Art Umzug ist das?</p><div class="wahl" role="group"><button aria-pressed="false">In derselben Gemeinde</button><button aria-pressed="true">Andere Gemeinde, gleicher Kanton</button><button class="voll" aria-pressed="false">In einen anderen Kanton</button></div>
-      <p>In der Schweiz melden ${du ? 'du dich' : 'Sie sich'} innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab.</p>
+      return `<p>Welche Art Umzug ist das?</p><div class="wahl" role="group">${UMZUG_ARTEN.map(([k, n], i) => `<button${i === 2 ? ' class="voll"' : ''} data-umzugart="${k}" aria-pressed="${umzugArt === k}">${n}</button>`).join('')}</div>
+      <p>${UMZUG_TEXT[umzugArt || 'allgemein'][du ? 1 : 0]}</p>
       <label class="feldzeile" style="margin-top:12px"><span>Umzugsdatum</span><input type="date" id="umzug-datum" value="${umzugsDatum}"></label>
       ${vorbei
         ? `<div class="frist" style="background:color-mix(in srgb, var(--gold) 14%, var(--up))"><span class="text">Die 14 Tage waren am ${datumText(frist)} vorbei. ${du ? 'Melde dich trotzdem sofort an' : 'Melden Sie sich trotzdem sofort an'} — die Gemeinde sagt, was nun gilt.</span></div>`
@@ -1165,7 +1174,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       passZeichnen(); schrittZeigen();
     };
     const z = document.getElementById('zurueck'); if (z) z.onclick = () => { jetzt--; passZeichnen(); schrittZeigen(); };
-    el.querySelectorAll('.wahl').forEach((w) => w.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; w.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); }));
+    el.querySelectorAll('[data-umzugart]').forEach((b) => b.onclick = () => { umzugArt = umzugArt === b.dataset.umzugart ? null : b.dataset.umzugart; schrittZeigen(); });
     const fr = el.querySelector('[data-frist]'); if (fr) fr.onclick = () => { fr.textContent = 'Im Kalender notiert'; fr.disabled = true; melden(geraet, `Frist «Anmeldung Gemeinde» im Kalender (${datumText(plus14(umzugsDatum))})`, true, () => { fr.textContent = 'In den Kalender'; fr.disabled = false; }); };
     const dat = el.querySelector('#umzug-datum'); if (dat) dat.onchange = () => { if (dat.value) { umzugsDatum = dat.value; schrittZeigen(); el.querySelector('#umzug-datum')?.focus({ preventScroll: true }); } };
     el.querySelectorAll('[data-stelle]').forEach((b) => b.onclick = () => { const i = +b.dataset.stelle; if (gemerkt.has(i)) gemerkt.delete(i); else { gemerkt.add(i); melden(geraet, `«Adresse ändern: ${STELLEN[i]}» gemerkt`, true, () => { gemerkt.delete(i); schrittZeigen(); }); } schrittZeigen(); });
