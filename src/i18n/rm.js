@@ -2838,6 +2838,22 @@ export default {
     ordnerStarting: 'In bun cumenzament.',
     ordnerGrowing: { sie: 'Voss classader sa pleina.', du: 'Tes classader sa pleina.' },
     ordnerFull: 'Tut a ses lieu.',
+    // rm ungeprüft F5
+    suggestTitle: 'Quai che vegn savens l’emprim en',
+    // rm ungeprüft F5
+    suggestId: 'Carta d’identitad u passaport',
+    // rm ungeprüft F5
+    suggestLease: 'Contract da fittanza',
+    // rm ungeprüft F5
+    suggestKkPolicy: 'Polissa da la cassa da malsauns',
+    // rm ungeprüft F5
+    suggestChapter: 'Chapitel {chapter}',
+    // rm ungeprüft F5
+    activeEmpty: 'Tut ils documents èn scadids e sa chattan en l’archiv.',
+    // rm ungeprüft F5
+    expiringEmpty: 'Nagut na scada prest.',
+    // rm ungeprüft F5
+    archiveEmpty: 'En l’archiv na sa chatta nagut.',
   },
 
   schulden: {
