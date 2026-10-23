@@ -33,6 +33,19 @@ und Fassung 5 (#539–#544).*
   der Merkliste), Aufklapp-Zeilen, «Ihre Lage», Vorlesen; Regler mit «Ins Profil übernehmen». Rechnung unverändert.
 - Neue Texte in 5 Sprachen; rm als «ungeprüft F5» markiert bis zur Gegenlese.
 
+### Geändert — übrige
+- **Werte 2027 als Jahrestabellen** (#533, #536): AHV, BVG, Säule 3a, EO und ALV rechnen je Kalenderjahr
+  (`data/jahrestabelle.js`); ab 1.1.2027 gelten die Bundeswerte 2027 (Verordnung vom 2.10.2026). Texte nennen
+  die Beträge aus den Tabellen statt fester Zahlen.
+- **Eingang als Ort** (#537): die Code-Wand mit der Landschaft zuerst, das Versprechen als Hauptsache.
+- **Bildschirme** (#538): Titel brechen um, Fusszeile und IPV-Knopf mit Tippfläche, Etiketten im Bild.
+
+### Behoben im Tor (23.10.2026)
+- «Was ansteht» stürzt nicht mehr ab, wenn eine zurückgespielte Sicherung einen Merkpunkt mit ungültigem
+  Tag enthält (Prüfung in `validateMerkliste`).
+- Fälligkeitstexte im Kalender in den tiefen Farbtönen (Kontrast AA); «Merken»-Knöpfe im Umzug 44 px hoch.
+- «Was ansteht» heisst in Menü und Seitentitel gleich (en/fr/it/rm).
+
 ### Behoben
 - **Charts zeigte rohe Schlüssel** in der Legende (`budgetSync.taxes` usw.); «NK»/«KK» ausgeschrieben, 5 Sprachen (#530).
 - **Charts rechnet wie das Kapitel Finanzen** (#530): kein BVG mehr als Ausgabe (steckt im Nettolohn, steht als
