@@ -45,7 +45,7 @@ export const Lehre = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('lehre.step5LinkStip'), onClick: () => onNavigate('stipendien') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('lehre.step5LinkIpv'), onClick: () => onNavigate('premium') })
     ),
-    React.createElement(AblaufFooter, { palette, t, quelle: t('lehre.quelle'), notes: [t('lehre.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('lehre.quelle') + (ahv.verordnung ? ' ' + t('common.betraegeVerordnung', { jahr: ahv.jahr, ...ahv.verordnung }) : ''), notes: [t('lehre.footerNote'), t('trust.localOnly')] })
   );
 };
 

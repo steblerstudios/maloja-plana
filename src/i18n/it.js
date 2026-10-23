@@ -1275,6 +1275,7 @@ export default {
     remove: 'Rimuovi voce',
   },
   common: {
+    betraegeVerordnung: 'Importi {jahr}: [[ordinanza del {datum}|https://www.fedlex.admin.ch/{eli}/it]].',
     qrFehler: 'Al momento non è stato possibile generare il codice QR.',
     qrErstellt: "Codice QR creato.",
     appName: 'Maloja Plana',
@@ -6121,7 +6122,7 @@ export default {
     hinweisMutterschaft: 'Maternità: 14 settimane dalla nascita. Requisito: almeno 5 mesi di attività lavorativa.',
     hinweisVaterschaft: 'Paternità: 2 settimane, da fruire entro 6 mesi dalla nascita.',
     hinweisAdoption: 'Adozione: 2 settimane, bambino sotto i 4 anni.',
-    source: 'Stima secondo i valori di riferimento della [[LIPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]] (stato 2026). Se sussiste un diritto e a quanto ammonta lo decide la cassa di compensazione. Nessuna informazione giuridicamente vincolante.',
+    source: 'Stima secondo i valori di riferimento della [[LIPG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]] (stato {jahr}). Se sussiste un diritto e a quanto ammonta lo decide la cassa di compensazione. Nessuna informazione giuridicamente vincolante.',
   },
 
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).

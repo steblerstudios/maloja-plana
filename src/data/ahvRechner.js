@@ -150,6 +150,7 @@ export const AHV_WERTE_JE_JAHR = Object.freeze({
     maxVersichertesEinkommen: 90720, // Obere Grenze massg. Einkommen (= 3× max. jährl. AHV-Rente)
     erziehungsgutschriftJahr: 45360, // 3× minimale jährliche Altersrente (3× 15'120)
     skala44: SKALA_44_2026,
+    verordnung: null,               // 2026: die Beträge stehen im AHVG selbst (Art. 34 Abs. 5: 1 260)
     quelle: 'AHVG Art. 34–40, AHVV Art. 55ter, BSV-Merkblatt 3.01 Stand 1.1.2026 (Skala 44, Renten ab 1.1.2025)',
   }),
   2027: Object.freeze({
@@ -159,6 +160,10 @@ export const AHV_WERTE_JE_JAHR = Object.freeze({
     maxVersichertesEinkommen: 92160,
     erziehungsgutschriftJahr: 46080,
     skala44: SKALA_44_2027,
+    // Ab 2027 kommen die Beträge aus der Verordnung, nicht aus dem Gesetzestext: AHVG Art. 34 Abs. 5
+    // nennt auch in der Fassung 1.1.2027 noch 1 260. Wer nachschlägt, braucht darum die Verordnung
+    // (V vom 2.10.2026, Art. 3 Abs. 1: 1 280; Fedlex eli/cc/2026/542, swiss-precision-pruefer 23.10.2026).
+    verordnung: Object.freeze({ datum: '2.10.2026', eli: 'eli/cc/2026/542' }),
     quelle: 'AHVG Art. 34–40, AHVV Art. 55ter, BSV Skala 44 gültig ab 1.1.2027 (318.117.1), V vom 2.10.2026 (AS 2026 542)',
   }),
 });

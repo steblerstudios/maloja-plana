@@ -1059,7 +1059,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'] }),
 
     React.createElement('div', { style: s.source },
-      renderSource(t('vr.source', { jahr: ahvHeute.jahr }), null, t)
+      renderSource(t('vr.source', { jahr: ahvHeute.jahr }) + (ahvHeute.verordnung ? ' ' + t('common.betraegeVerordnung', { jahr: ahvHeute.jahr, ...ahvHeute.verordnung }) : ''), null, t)
     ),
 
     onNavigate && React.createElement('button', {

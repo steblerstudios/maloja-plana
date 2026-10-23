@@ -1515,6 +1515,7 @@ export default {
     remove: 'Allontanar posiziun',
   },
   common: {
+    betraegeVerordnung: 'Beträge {jahr}: [[Verordnung vom {datum}|https://www.fedlex.admin.ch/{eli}/de]].',
     // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
     qrFehler: 'Il code QR n’ha betg pudì vegnir generà per il mument.',
     qrErstellt: "Code QR generà.", // TODO(rm): provisorisch
@@ -5074,7 +5075,7 @@ export default {
     hinweisVaterschaft: 'Paternitad: 2 emnas, retschaviment entaifer 6 mais suenter la naschientscha.',
     hinweisAdoption: "Adopziun: 2 emnas, uffant sut 4 onns.",
     // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
-    source: "Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand 2026). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.",
+    source: "Schätzung nach den Eckwerten des [[EOG|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (Stand {jahr}). Ob ein Anspruch besteht und wie hoch er ist, entscheidet die Ausgleichskasse. Keine rechtsverbindliche Auskunft.",
   },
 
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).

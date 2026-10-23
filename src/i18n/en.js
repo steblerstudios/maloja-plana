@@ -1275,6 +1275,7 @@ export default {
     remove: 'Remove item',
   },
   common: {
+    betraegeVerordnung: 'Amounts for {jahr}: [[Ordinance of {datum}|https://www.fedlex.admin.ch/{eli}/de]].',
     qrFehler: 'The QR code could not be created just now.',
     qrErstellt: "QR code created.",
     appName: 'Maloja Plana',
@@ -6143,7 +6144,7 @@ export default {
     hinweisMutterschaft: 'Maternity: 14 weeks from birth. Requires at least 5 months of employment.',
     hinweisVaterschaft: 'Paternity: 2 weeks, to be taken within 6 months of birth.',
     hinweisAdoption: 'Adoption: 2 weeks, child under 4 years old.',
-    source: 'Estimate based on the reference values of the [[LIECA|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (as of 2026). Whether an entitlement exists and how high it is, the compensation office decides. Not legally binding.',
+    source: 'Estimate based on the reference values of the [[LIECA|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]] (as of {jahr}). Whether an entitlement exists and how high it is, the compensation office decides. Not legally binding.',
   },
   // Einkommensart nicht gewählt → kein Rechner füllt den Lohn vor (utils/jahreslohnAusProfil.js).
   einkommensfeld: {

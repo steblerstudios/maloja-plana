@@ -24,6 +24,7 @@ const rm = (await import('../i18n/rm.js')).default;
 const { Lehre } = await import('../Lehre.jsx');
 const { NeuerJob } = await import('../NeuerJob.jsx');
 const { VorsorgeRechner } = await import('../VorsorgeRechner.jsx');
+const { EOrechner } = await import('../EOrechner.jsx');
 
 const alle = { de, en, fr, it: it_, rm };
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
@@ -87,6 +88,44 @@ describe.each(FAELLE)('Uhr $uhr: Texte zeigen die Werte $jahr', (f) => {
     } });
     expect(html).toContain(esc(`Jahreslohn nicht über der BVG-Eintrittsschwelle (CHF ${f.schwelle}, Stand ${f.jahr})`));
     expect(html).not.toContain(esc('(< CHF'));
+  });
+});
+
+// Ab 2027 kommen die AHV-Beträge aus der Verordnung vom 2.10.2026, nicht aus dem AHVG (Art. 34 Abs. 5
+// nennt auch 2027 noch 1 260). Die Quellenzeilen verweisen darum ab 2027 auf die Verordnung, 2026 nicht.
+// Dazu die EO-Quellenzeile: «Stand {jahr}» statt fest 2026 (Wunsch Sophie 23.10.2026).
+const VO_LINK = 'https://www.fedlex.admin.ch/eli/cc/2026/542/';
+const profilAhv = {
+  basis: { canton: 'BS', dateOfBirth: '1985-01-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
+  finanzen: { monthlyIncome: 6000, incomeType: 'brutto', dreizehnter: 'no' },
+};
+describe('Quellenzeilen: Verordnung 2027 und EO «Stand {jahr}»', () => {
+  it('Uhr 2026: kein Verweis auf die Verordnung, EO «Stand 2026»', () => {
+    uhr('2026-11-15T10:00:00');
+    expect(zeichne(VorsorgeRechner, { data: profilAhv })).not.toContain(VO_LINK);
+    expect(zeichne(Lehre)).not.toContain(VO_LINK);
+    expect(zeichne(EOrechner, { data: {} })).toContain('(Stand 2026)');
+  });
+  it('Uhr 2027: Vorsorge-Rechner und «Lehre» verweisen auf die Verordnung, in jeder Sprache', () => {
+    uhr('2027-01-15T10:00:00');
+    const sprache = { de: 'de', rm: 'de', en: 'de', fr: 'fr', it: 'it' };
+    for (const lang of Object.keys(alle)) {
+      for (const html of [zeichne(VorsorgeRechner, { data: profilAhv }, lang), zeichne(Lehre, {}, lang)]) {
+        expect(html, lang).toContain(`href="${VO_LINK}${sprache[lang]}"`);
+        expect(html, lang).toContain('2.10.2026');
+        expect(html, lang).not.toMatch(/\{(jahr|datum|eli)\}/);
+      }
+    }
+    expect(zeichne(Lehre)).toContain('Beträge 2027:');
+  });
+  it('Uhr 2027: EO-Quelle «Stand 2027», in allen Sprachen ohne offenen Platzhalter', () => {
+    uhr('2027-01-15T10:00:00');
+    const stand = { de: 'Stand', rm: 'Stand', fr: 'état', it: 'stato', en: 'as of' };
+    for (const lang of Object.keys(alle)) {
+      const html = zeichne(EOrechner, { data: {} }, lang);
+      expect(html, lang).toContain(`(${stand[lang]} 2027)`);
+      expect(html, lang).not.toMatch(/\{jahr\}/);
+    }
   });
 });
 
