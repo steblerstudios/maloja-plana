@@ -348,7 +348,9 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     key: it.key, onClick: it.onClick, 'aria-label': it.label,
     'aria-current': it.active ? 'page' : undefined,
     style: {
-      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+      // alignSelf stretch + flex-start: die Zeichen stehen auf einer Linie, auch wenn ein
+      // Name zweizeilig umbricht («Was steht mir zu?», 23.10.2026).
+      flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
       padding: '9px 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
       color: it.active ? palette.text : palette.mid,
     },
@@ -356,7 +358,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     it.icon === 'sackmesser'
       ? React.createElement(SackmesserIcon, { open: it.active, color: it.active ? palette.sage : palette.mid })
       : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
-    React.createElement('span', { style: { fontSize: '10px', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
+    React.createElement('span', { style: { fontSize: '10px', lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
   );
   const fan = [
