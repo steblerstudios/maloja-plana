@@ -5,7 +5,7 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { loadTodos, saveTodos, merkpunktBauen, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
-import { merkpunktBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
+import { merkpunktBereich, merkpunktZeichen, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 
 // Persönliche Merkliste: „Erkenntnis → Handlung". Eine Notiz erfassen und
 // optional direkt mit dem passenden Rechner/Kapitel verknüpfen (Deeplink).
@@ -147,7 +147,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
     ];
     return React.createElement('div', { key: i.id, style: s.row },
       React.createElement('input', { type: 'checkbox', checked: !!i.done, onChange: () => toggle(i.id), style: s.cb, 'aria-label': (i.done ? t('merkliste.undo') : t('merkliste.markDone')) + ': ' + i.text }),
-      React.createElement('span', { 'aria-hidden': 'true', style: s.sym(farbe) }, React.createElement(Icon, { name: merkpunktBereich(i.link), size: 18 })),
+      React.createElement('span', { 'aria-hidden': 'true', style: s.sym(farbe) }, React.createElement(Icon, { name: merkpunktZeichen(i.link), size: 18 })),
       React.createElement('div', { style: s.spalte },
         i.link && onNavigate
           ? React.createElement('button', { type: 'button', style: s.haupt, onClick: () => onNavigate(i.link) }, ...inhalt)

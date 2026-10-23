@@ -7,7 +7,7 @@ import { VorlaeufigContext } from '../hooks/vorlaeufigContext.js';
 import {
   addTodo, loadTodos, aufgabeAnlegen, merkpunktSichern, merkpunktUmschalten, merkpunktTagSetzen, einJahrSpaeter,
 } from '../utils/merkliste.js';
-import { merkpunktBereich, kategorieBereich } from '../data/aufgabenBereiche.js';
+import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from '../data/aufgabenBereiche.js';
 
 // Fassung 5 (Sophie, 23.10.2026): Merkliste ist die To-do-Liste. Optionales Feld «tag»,
 // erledigtAm beim Abhaken, Wiederholung «jaehrlich», neue Einträge oben.
@@ -78,18 +78,28 @@ describe('Abhaken und Tag', () => {
   });
 });
 
-describe('Bereichs-Zuordnung (festgelegt 23.10.2026)', () => {
+describe('Bereichs-Zuordnung (festgelegt 23.10.2026, Liste B)', () => {
   it.each([
     ['premium', 'versicherungen'], ['praemien', 'versicherungen'], ['vorsorge', 'versicherungen'],
-    ['tax', 'behoerden'], ['calendar', 'behoerden'], ['direktlinks', 'behoerden'],
-    ['sozialhilfe', 'finanzen'], ['alv', 'ausbildung'], ['stipendien', 'ausbildung'],
-    ['asyl', 'basis'], ['tresor', 'basis'], [null, 'basis'],
+    ['tax', 'finanzen'], ['sozialhilfe', 'finanzen'], ['alv', 'finanzen'],
+    ['stipendien', 'ausbildung'], ['asyl', 'behoerden'],
+    ['tresor', null], ['calendar', null], ['direktlinks', null], [null, null],
   ])('Merkpunkt %s → %s', (link, bereich) => expect(merkpunktBereich(link)).toBe(bereich));
+  it('ohne Bereich: eigenes Zeichen (Register), ohne Verknüpfung der Haken', () => {
+    expect(merkpunktZeichen(null)).toBe('check');
+    expect(merkpunktZeichen('direktlinks')).toBe('globe');
+    expect(merkpunktZeichen('tax')).toBe('finanzen');
+  });
   it.each([
-    ['health', 'versicherungen'], ['insurance', 'versicherungen'], ['admin', 'behoerden'], ['legal', 'behoerden'],
-    ['work', 'ausbildung'], ['education', 'ausbildung'], ['family', 'basis'], ['personal', 'basis'],
-    ['finance', 'basis'], ['housing', 'basis'],
+    ['health', 'versicherungen'], ['insurance', 'versicherungen'], ['finance', 'finanzen'],
+    ['admin', 'behoerden'], ['legal', 'behoerden'], ['work', 'ausbildung'], ['education', 'ausbildung'],
+    ['housing', 'wohnen'], ['family', 'basis'], ['personal', null],
   ])('Kategorie %s → %s', (k, bereich) => expect(kategorieBereich(k)).toBe(bereich));
+  it('Steuern hat dieselbe Farbe wie das Kapitel Finanzen', () => {
+    const palette = { bg: '#F4F3EF', surface: '#FFFFFF', sage: '#5A7868', mid: '#6B6B6B' };
+    expect(bereichZeichenFarbe(merkpunktBereich('tax'), palette)).toBe(bereichZeichenFarbe('finanzen', palette));
+    expect(bereichZeichenFarbe(null, palette)).toMatch(/^#[0-9a-f]{6}$/i);
+  });
 });
 
 describe('Merkliste zeigt Tag, Wiederholung und erledigt am', () => {
