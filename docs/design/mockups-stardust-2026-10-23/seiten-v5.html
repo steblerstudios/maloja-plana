@@ -416,6 +416,12 @@ body.desktop .zl-band { margin: 2px 0 0; }
 #ipv-weg label { display: grid; gap: 4px; font-size: 12px; color: var(--mid); margin: 6px 0; }
 #ipv-weg input { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; width: 160px; }
 #ipv-weg .zurueck { background: none; border: 0; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; min-height: 44px; padding: 0; }
+.fin-orient { font-size: 13px; color: var(--mid); line-height: 1.5; margin: 4px 0 10px; padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--finanzen) 9%, var(--up)); }
+.fin-feld select { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; }
+.fin-fertig { margin: 4px 0 14px; }
+.feld.leer span:first-child { color: var(--soft); }
+.fin-mehr { display: grid; gap: 6px; justify-items: start; margin-top: 14px; }
+.fin-mehr small { font-size: 12px; color: var(--soft); }
 .dok-form { margin-top: 14px; }
 .dok-form select { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; }
 .dok-datei { display: flex; align-items: center; justify-content: center; min-height: 72px; border: 1.5px dashed var(--border); border-radius: 14px; color: var(--mid); font-size: 14px; text-align: center; padding: 10px; cursor: pointer; margin: 4px 0 12px; }
@@ -698,22 +704,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         </div>
         <div class="rechtsspalte stufe s3">
           <div class="reiter2" role="tablist"><button role="tab" aria-selected="true" data-reiter="angaben">Angaben</button><button role="tab" aria-selected="false" data-reiter="dokumente">Dokumente</button></div>
-          <div id="reiter-angaben">
-          <div class="zeile" data-offen="false"><button><b>Einkommen</b><span class="bal"><i style="width:100%"></i></span><small>erfasst · ändern</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>Monatliches Einkommen</span><span>CHF 6'200</span></div><div class="feld"><span>Einkommensart</span><span>Netto (was ich erhalte)</span></div><div class="feld"><span>Arbeitgeber</span><span>Kantonsspital Zürich</span></div><div class="feld"><span>Anstellungstyp</span><span>erfasst</span></div><div class="feld"><span>Arbeitsbeginn</span><span>erfasst</span></div></div></div></div>
-          <div class="zeile" data-offen="false"><button><b>Monatliche Ausgaben</b><span class="bal"><i style="width:100%"></i></span><small>CHF 3'720 erfasst · ändern</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>Steuern monatlich</span><span>erfasst</span></div><div class="feld"><span>Lebensmittel &amp; Haushalt</span><span>erfasst</span></div><div class="feld"><span>Internet &amp; Telefon</span><span>erfasst</span></div></div></div></div>
-          <div class="zeile" data-offen="false"><button><b>Verpflichtungen</b><span class="bal"><i style="width:0%"></i></span><small>noch offen · ergänzen</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>Verpflichtungen</span><button class="offen">ergänzen</button></div></div></div></div>
-          <div class="zeile" data-offen="false"><button><b>Sparen</b><span class="bal"><i style="width:100%"></i></span><small>erfasst · ändern</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>Sparen</span><span>erfasst</span></div></div></div></div>
-          <div class="zeile" data-offen="false"><button><b>Vermögen &amp; Wertschriften</b><span class="bal"><i style="width:0%"></i></span><small>noch offen · ergänzen</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>Vermögen &amp; Wertschriften</span><button class="offen">ergänzen</button></div></div></div></div>
-          <div class="zeile" data-offen="false"><button><b>Kredit</b><span class="bal"><i style="width:100%"></i></span><small>erfasst · ändern</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>Kreditkarten vorhanden?</span><span>erfasst</span></div></div></div></div>
-          <div class="zeile" data-offen="false"><button><b>Vorsorge</b><span class="bal"><i style="width:100%"></i></span><small>erfasst · ändern</small><span class="pfeil">›</span></button>
-            <div class="tiefe"><div><div class="feld"><span>3. Säule A eingezahlt</span><span>erfasst</span></div></div></div></div>
-          </div>
+          <div id="reiter-angaben"></div>
           <div id="reiter-dokumente" hidden>
             <!-- wie ChapterView.jsx: Dokumenttyp aus chapter.docs, Ablaufdatum, Datei, Hochladen, Erforderliche Dokumente -->
             <form class="dok-form" id="kap-dok-form">
@@ -747,7 +738,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <div class="meldung" role="status"><span class="txt"></span><button hidden>Rückgängig</button></div>
   </div>
   <div class="notiz"><ul>
-    <li><b>Entschieden 23.10.:</b> Kopf links und ruhig wie die anderen Seiten. Neu und für den Copy-Prüfer: «Jeden Monat bleiben» mit «verplant» / «Einkommen, netto», «Passend zu diesem Bereich» (mit «Lohnausweis ablegen», «Ablauf · 5 Schritte», «Anspruch · je nach Einkommen») und «Als Nächstes». Reiter «Dokumente» wie in <code>ChapterView.jsx</code> (Dokumenttyp aus den Kapitel-Dokumenten, Ablaufdatum, Datei, Hochladen, Erforderliche Dokumente, Fehlertexte der App) plus «Dokument fotografieren» als zweiter Weg.</li>
+    <li><b>Entschieden 23.10.:</b> Kopf links und ruhig wie die anderen Seiten. Neu und für den Copy-Prüfer: «Jeden Monat bleiben» mit «verplant» / «Einkommen, netto», «Passend zu diesem Bereich» (mit «Lohnausweis ablegen», «Ablauf · 5 Schritte», «Anspruch · je nach Einkommen») und «Als Nächstes». Reiter «Angaben» mit allen 37 Feldern wie <code>constants.js</code> (Namen, Auswahlen, Hinweise aus <code>de.js</code>, Werte aus Marias <code>DEMO_DATA</code>), «ändern ›» öffnet das Bearbeiten mit dem Orientierungs-Satz des Abschnitts, die zusätzlichen Felder (steuerbares Einkommen, Vorsorge) hinter «Weitere Bereiche anzeigen». Reiter «Dokumente» wie in <code>ChapterView.jsx</code> (Dokumenttyp aus den Kapitel-Dokumenten, Ablaufdatum, Datei, Hochladen, Erforderliche Dokumente, Fehlertexte der App) plus «Dokument fotografieren» als zweiter Weg.</li>
     <li>Gruppen und Felder wie in der App; wo die Erfassung keinen Wert lieferte, steht «erfasst». Balken zeigen nur erfasst / offen — keine erfundenen Prozente. Die Lage auf der Lohn-Skala ist gezeichnet; die Werte (CHF 6'472, Median CHF 7'024) und alle Sätze sind die heutigen.</li>
     <li>Offene Felder sind sandfarben («ergänzen»), nie rot — markieren, nicht anklagen (Lärm-Audit N2).</li>
   </ul></div>
@@ -1189,7 +1180,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const gruppe = (sel, fn) => document.querySelectorAll(sel).forEach((b) => b.addEventListener('click', () => { document.querySelectorAll(sel).forEach((x) => x.setAttribute('aria-pressed', x === b)); fn(b); }));
   gruppe('[data-modus]', (b) => { root.dataset.theme = b.dataset.modus; logos(); icons(); passZeichnen(); ipv(); });
   gruppe('[data-geraet]', (b) => document.body.classList.toggle('desktop', b.dataset.geraet === 'desktop'));
-  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); if (typeof foto === 'function') foto(); if (typeof uebersicht === 'function') uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); });
+  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); if (typeof foto === 'function') foto(); if (typeof uebersicht === 'function') uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); finanzenAngaben(); });
   const umschalter = (id, klasse) => document.getElementById(id).addEventListener('click', (e) => { const an = !document.body.classList.contains(klasse); document.body.classList.toggle(klasse, an); e.currentTarget.setAttribute('aria-pressed', an); });
   umschalter('grau', 'graustufen'); umschalter('still', 'still');
 
@@ -1239,6 +1230,103 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     }
   }
   document.getElementById('ipv-lohn').addEventListener('input', ipv);
+  // Kapitel · Reiter «Angaben»: alle 37 Felder wie constants.js (chapters[finanzen].fields), Namen, Auswahlen und
+  // Hinweise aus de.js, Werte aus DEMO_DATA (config/demoData.js). «secondary» steckt hinter «Weitere Bereiche anzeigen».
+  const FIN = [
+    ['Einkommen', 'einkommen', [
+      ['monthlyIncome', 'Monatliches Einkommen', 'chf', '6200', ['Ihr Einkommen — Netto ist was auf Ihrem Konto ankommt.', 'Dein Einkommen — Netto ist was auf deinem Konto ankommt.']],
+      ['sideIncome', 'Nebenerwerb pro Monat', 'chf', '', 'Zusätzliches Einkommen neben dem Hauptjob (Nebenjob, Honorare). Wird zum Einkommen gezählt.'],
+      ['sideEmployer', 'Nebenerwerb: Arbeitgeber', 'text', '', 'Nur nötig, wenn aus dem Nebenerwerb ein Brief werden soll.'],
+      ['sideEmployerAddress', 'Nebenerwerb: Adresse des Arbeitgebers', 'text', '', 'Für den Briefkopf — Strasse, PLZ und Ort, wie auf dem Lohnausweis.'],
+      ['sideHoursPerWeek', 'Nebenerwerb: Arbeitsstunden pro Woche', 'text', '', 'Nötig für den Mindestlohn-Check des Nebenjobs: ohne Stunden lässt sich kein Stundenlohn berechnen.'],
+      ['sideIncomeType', 'Nebenerwerb: Einkommensart', ['Netto (was ich erhalte)', 'Brutto (vor Abzügen)'], ''],
+      ['taxableIncome', 'Steuerbares Einkommen pro Jahr', 'chf', '', 'Steuerbares Einkommen aus der Steuererklärung (pro Jahr, nach Abzügen). Nur zur Orientierung — kann den Steuer-Rechner füttern.', true],
+      ['incomeType', 'Einkommensart', ['Netto (was ich erhalte)', 'Brutto (vor Abzügen)'], 'Netto (was ich erhalte)'],
+      ['dreizehnter', '13. Monatslohn?', ['Nein', 'Ja'], ''],
+      ['employer', 'Arbeitgeber', 'text', 'Kantonsspital Zürich'],
+      ['employerAddress', 'Adresse des Arbeitgebers', 'text', '', 'Für Briefe an den Arbeitgeber — Strasse, PLZ und Ort.'],
+      ['employmentType', 'Anstellungstyp', ['Angestellt', 'Selbstständig', 'Freiberufler', 'Rentner'], 'Angestellt'],
+      ['startDate', 'Arbeitsbeginn', 'date', '2019-04-01'],
+      ['familienzulagen', 'Familienzulagen pro Monat', 'chf', '', 'Kinderzulagen vom Arbeitgeber oder der Ausgleichskasse.'],
+      ['alimenteReceived', 'Alimente erhalten pro Monat', 'chf', '', ['Unterhaltsbeiträge, die Sie monatlich erhalten.', 'Unterhaltsbeiträge, die du monatlich erhältst.']],
+    ]],
+    ['Monatliche Ausgaben', 'steuern', [
+      ['monthlyTax', 'Steuern monatlich', 'chf', '850', 'Geschätzt oder laut Steuerrechnung.'],
+      ['groceries', 'Lebensmittel & Haushalt', 'chf', '450', 'Lebensmittel, Drogerie, Haushaltsbedarf pro Monat.'],
+      ['communication', 'Internet & Telefon', 'chf', '85', 'Internet, Mobiltelefon, Festnetz pro Monat.'],
+      ['mobility', 'Mobilität', 'chf', '120', 'GA, Halbtax, Verbundabo oder Autokosten pro Monat.'],
+      ['childcare', 'Kinderbetreuung', 'chf', '', 'Kita, Tagesschule, Tagesmutter — monatliche Kosten.'],
+      ['otherInsurance', 'Weitere Versicherungen', 'chf', '', 'Haftpflicht, Hausrat, Rechtsschutz, KK-Zusatz zusammen pro Monat.'],
+    ]],
+    ['Verpflichtungen', 'schuldenraten', [
+      ['debtPayments', 'Monatliche Schuldenraten', 'chf', '', 'Monatliche Raten für laufende Schulden oder Abzahlungen.'],
+      ['alimentePaid', 'Alimente bezahlt pro Monat', 'chf', '', ['Unterhaltsbeiträge, die Sie monatlich bezahlen.', 'Unterhaltsbeiträge, die du monatlich bezahlst.']],
+    ]],
+    ['Sparen', '', [
+      ['savingsGoal', 'Sparziel', 'chf', '500'],
+      ['savingsAccount', 'Ersparte', 'chf', '18500'],
+      ['bankName', 'Hausbank', 'text', 'ZKB'],
+    ]],
+    ['Vermögen & Wertschriften', '', [
+      ['securitiesValue', 'Wertschriften / Depot (Steuerwert)', 'chf', '', 'Steuerwert von Aktien, Fonds und Obligationen per 31.12. — relevant für die Vermögenssteuer.'],
+      ['otherAssets', 'Übriges Vermögen', 'chf', '', 'Bargeld, Edelmetalle, Kryptowährungen, Fahrzeuge usw. (Steuerwert).'],
+    ]],
+    ['Kredit', '', [
+      ['creditCard', 'Kreditkarten vorhanden?', ['Nein', 'Ja (1)', 'Ja (2+)'], 'Ja (1)'],
+      ['creditCardLimit', 'Kreditkarten-Limit total', 'chf', '', 'Summe aller Kartenlimiten zusammen.'],
+      ['creditCardBalance', 'Offener Kartensaldo', 'chf', '', 'Aktuell offener Betrag auf den Karten — zählt als Schuld, oft mit hohen Zinsen.'],
+      ['loans', 'Persönliche Darlehen', 'chf', ''],
+    ]],
+    ['Vorsorge', 'saeule3a', [
+      ['pension3a', '3. Säule A eingezahlt pro Jahr', 'chf', '250', '', true],
+      ['pension3aBalance', '3. Säule A — Guthaben (Kontostand)', 'chf', '', ['Der gesamte bisher angesparte Betrag auf Ihrem 3a-Konto — nicht die Jahreseinzahlung.', 'Der gesamte bisher angesparte Betrag auf deinem 3a-Konto — nicht die Jahreseinzahlung.'], true],
+      ['pension3b', '3. Säule B', ['Nein', 'Ja'], '', '', true],
+      ['pension3bBalance', '3. Säule B — Guthaben (Kontostand)', 'chf', '', ['Der aktuelle Wert Ihrer freien Vorsorge 3b (Sparkonto, Lebensversicherung, Wertschriften).', 'Der aktuelle Wert deiner freien Vorsorge 3b (Sparkonto, Lebensversicherung, Wertschriften).'], true],
+      ['investmentFunds', 'Anlagefonds vorhanden?', ['Nein', 'Ja'], '', '', true],
+    ]],
+  ];
+  const ORIENT = {  // orientation.* aus de.js
+    einkommen: ['Ihr Einkommen ist die Grundlage für Budget, Steuern und mögliche Unterstützungsansprüche wie Prämienverbilligung.', 'Dein Einkommen ist die Grundlage für Budget, Steuern und mögliche Unterstützungsansprüche wie Prämienverbilligung.'],
+    steuern: ['In der Schweiz zahlen Sie Steuern an Gemeinde, Kanton und Bund. Die Höhe hängt von Wohnort und Einkommen ab.', 'In der Schweiz zahlst du Steuern an Gemeinde, Kanton und Bund. Die Höhe hängt von Wohnort und Einkommen ab.'],
+    schuldenraten: ['Monatliche Schuldenraten gehören zu den Fixkosten. Kostenlose Schuldenberatung gibt es in jedem Kanton.', 'Monatliche Schuldenraten gehören zu den Fixkosten. Kostenlose Schuldenberatung gibt es in jedem Kanton.'],
+    saeule3a: ['Mit der Säule 3a sparen Sie freiwillig für später — und sparen gleichzeitig Steuern.', 'Mit der Säule 3a sparst Du freiwillig für später — und sparst gleichzeitig Steuern.'],
+  };
+  let finOffen = -1, finBearbeiten = -1, finMehr = false;
+  const finWert = (f) => !f[3] ? '' : f[2] === 'chf' ? 'CHF ' + Number(f[3]).toLocaleString('de-CH').replace(/[’,]/g, "'") : f[2] === 'date' ? f[3].split('-').reverse().join('.') : f[3];
+  const finText = (x) => Array.isArray(x) ? x[anrede === 'du' ? 1 : 0] : (x || '');
+  function finanzenAngaben() {
+    const el = document.getElementById('reiter-angaben'); if (!el) return;
+    const sichtbar = (f) => finMehr || !f[5];
+    let h = '';
+    FIN.forEach(([titel, orient, felder], i) => {
+      const alle = felder.filter(sichtbar); if (!alle.length) return;
+      const voll = alle.filter((f) => f[3]).length, anteil = Math.round(voll / alle.length * 100);
+      const offen = finOffen === i || finBearbeiten === i;
+      h += `<div class="zeile" data-offen="${offen}"><button data-fin="${i}" aria-expanded="${offen}"><b>${titel.replace('&', '&amp;')}</b><span class="bal"><i style="width:${anteil}%"></i></span><small>${voll ? `${voll} von ${alle.length} erfasst · ändern` : 'noch leer · ergänzen'}</small><span class="pfeil">›</span></button><div class="tiefe"><div>`;
+      if (finBearbeiten === i) {
+        h += (orient ? `<p class="fin-orient">${finText(ORIENT[orient])}</p>` : '') + alle.map((f) => {
+          const id = 'fin-' + f[0], hint = f[4] ? `<small>${finText(f[4])}</small>` : '';
+          const feld = Array.isArray(f[2]) ? `<select id="${id}" data-k="${f[0]}"><option value="">— Auswählen —</option>${f[2].map((o) => `<option${o === f[3] ? ' selected' : ''}>${o}</option>`).join('')}</select>`
+            : `<input id="${id}" data-k="${f[0]}" type="${f[2] === 'date' ? 'date' : 'text'}" ${f[2] === 'chf' ? 'inputmode="numeric" placeholder="CHF"' : ''} value="${f[3]}">`;
+          return `<label class="feldzeile fin-feld" for="${id}"><span>${f[1]}</span>${feld}${hint}</label>`;
+        }).join('') + `<button class="knopfprim fin-fertig" data-finfertig="${i}">fertig</button>`;
+      } else {
+        h += alle.map((f) => f[3] ? `<div class="feld"><span>${f[1]}</span><span>${finWert(f)}</span></div>` : `<div class="feld leer"><span>${f[1]}</span><button class="offen" data-finedit="${i}">ergänzen</button></div>`).join('')
+          + `<div class="feld"><span></span><button class="offen" data-finedit="${i}">${voll ? 'ändern ›' : 'ergänzen ›'}</button></div>`;
+      }
+      h += `</div></div></div>`;
+    });
+    const versteckt = FIN.flatMap((a) => a[2]).filter((f) => f[5]), mitDaten = versteckt.some((f) => f[3]);
+    h += `<div class="fin-mehr"><button class="knopfruhig" data-finmehr>${finMehr ? 'Weniger anzeigen' : 'Weitere Bereiche anzeigen'}</button>${!finMehr && mitDaten ? '<small>Einige ausgeblendete Bereiche enthalten bereits Daten.</small>' : ''}</div>`;
+    el.innerHTML = h;
+    el.querySelectorAll('[data-fin]').forEach((b) => b.onclick = () => { const i = +b.dataset.fin; finOffen = finOffen === i ? -1 : i; if (finBearbeiten === i) finBearbeiten = -1; finanzenAngaben(); });
+    el.querySelectorAll('[data-finedit]').forEach((b) => b.onclick = () => { finBearbeiten = +b.dataset.finedit; finOffen = finBearbeiten; finanzenAngaben(); el.querySelector('.fin-feld input, .fin-feld select')?.focus({ preventScroll: true }); });
+    el.querySelectorAll('[data-finfertig]').forEach((b) => b.onclick = () => {
+      el.querySelectorAll('[data-k]').forEach((x) => { const f = FIN.flatMap((a) => a[2]).find((y) => y[0] === x.dataset.k); f[3] = x.type === 'date' || !(f[2] === 'chf') ? x.value : x.value.replace(/[^0-9]/g, ''); });
+      finBearbeiten = -1; finanzenAngaben(); melden(el.closest('.geraet'), 'Gespeichert', false);
+    });
+    el.querySelector('[data-finmehr]').onclick = () => { finMehr = !finMehr; finanzenAngaben(); };
+  }
   // Kapitel · Reiter «Dokumente»: Fehlertexte wie die App (selectFile / selectDocType / selectExpiry), Erfolg «Dokument hinzugefügt»
   (() => {
     const f = document.getElementById('kap-dok-form'); if (!f) return;
@@ -1836,7 +1924,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   document.getElementById('foto-abbrechen').onclick = () => { fotoSchritt = 0; fotoArt = null; seiten = 1; foto(); };
   document.querySelectorAll('[data-kamera]').forEach((b) => b.addEventListener('click', () => { kamera = b.dataset.kamera; document.querySelectorAll('[data-kamera]').forEach((x) => x.setAttribute('aria-pressed', x === b)); fotoSchritt = 0; foto(); }));
 
-  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); icons();
+  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); finanzenAngaben(); icons();
   // ?nur=a … zeigt nur einen Abschnitt — für die Vergleichsseite (heute neben neu)
   const nur = new URLSearchParams(location.search).get('nur');
   if (nur) {

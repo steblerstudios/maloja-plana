@@ -211,3 +211,17 @@ Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.j
   Steuererklärung, Lohnzettel, Kontoauszug), Ablaufdatum, «Datei auswählen oder hierher ziehen»,
   «Hochladen», «Erforderliche Dokumente», «Ihre Dokumente bleiben auf diesem Gerät.», Fehlertexte der
   App; dazu «Dokument fotografieren» als zweiter Weg. Der erfundene Leer-Satz ist weg.
+
+### Kapitel Finanzen · alle Felder (Sophie, 23.10.2026)
+
+Frage von Sophie: fehlen da nicht noch Details? **Ja:** Die App hat 37 Felder in sieben Abschnitten,
+Fassung 5 zeigte etwa 12. Jetzt im Mockup:
+- **Alle 37 Felder** mit den Namen aus `de.js`, Werte aus Marias Beispieldaten (`config/demoData.js`).
+  Dabei aufgefallen: Mobilität (CHF 120), Sparziel (CHF 500), Erspartes (CHF 18'500) und Hausbank (ZKB)
+  sind bei Maria ausgefüllt, standen im Mockup aber nicht oder nur als «erfasst».
+- **Bearbeiten** wie die App: «ändern ›» öffnet die Felder des Abschnitts mit Hinweisen und dem
+  Orientierungs-Satz (Einkommen, Steuern, Schuldenraten, Säule 3a), dann «fertig».
+- **Weitere Bereiche anzeigen:** steuerbares Einkommen und die ganze Vorsorge (secondary-Felder),
+  mit dem App-Hinweis «Einige ausgeblendete Bereiche enthalten bereits Daten.».
+- Offen für den Bau: ob die fünf Nebenerwerb-Felder immer oder erst mit einem Nebenerwerb erscheinen
+  (im Mockup immer, wie in der Feldliste).
