@@ -24,7 +24,7 @@ export const LINK_TARGETS = [
   { view: 'stipendien', label: 'nav.stipendien' },
   { view: 'asyl', label: 'nav.asyl' },
   { view: 'tresor', label: 'nav.tresor' },
-  { view: 'calendar', label: 'nav.calendar' },
+  { view: 'calendar', label: 'nav.wasAnsteht' },
   { view: 'direktlinks', label: 'nav.direktlinks' },
 ];
 

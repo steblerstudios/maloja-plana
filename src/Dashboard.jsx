@@ -365,7 +365,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       // Zeichen auf den drei Tal-Strassen (27.09.2026): zuerst der Rucksack; später der
       // Finanzbaum, das dritte ist offen — je ein Eintrag hier, der Platz folgt der Reihenfolge.
       talStationen: [
-        { key: 'gepaeck', label: t('gepaeck.link'), zeichen: rucksackZeichen, farbe: palette.gold, onClick: () => onNavigate('gepaeck') },
+        { key: 'gepaeck', label: t('nav.rucksack'), zeichen: rucksackZeichen, farbe: palette.gold, onClick: () => onNavigate('gepaeck') },
       ],
     })),
 
@@ -528,7 +528,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         },
       },
         React.createElement('span', { style: { minWidth: 0 } },
-          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('gepaeck.link')),
+          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, t('nav.rucksack')),
           React.createElement('span', { style: { display: 'block', fontSize: text.xs - 1, color: palette.mid } }, t('gepaeck.unpack'))),
         miniRucksack(palette));
       return React.createElement('div', {
@@ -864,7 +864,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           // «Lebensereignisse». Dort bleibt es: «Bewilligung & Fristen» ist der
           // richtige Nachbar. (Bis 25.09.2026 stand die Gruppe offen; jetzt zu.)
           { label: t('dashboard.toolGroups.support'), items: [
-            { label: t('lebenszustaende.pageTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
+            { label: t('dashboard.anspruchTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
           ] },
           { label: t('dashboard.toolGroups.money'), items: [
             { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
@@ -888,7 +888,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('dashboard.toolGroups.organize'), items: [
             { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
             { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
-            { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
+            { label: t('nav.wasAnsteht'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
             { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
           ] },
         ];

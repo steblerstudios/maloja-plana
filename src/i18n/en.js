@@ -31,7 +31,6 @@ export default {
       },
     },
     moreInfo: 'Learn more',
-    pageTitle: 'Life situations',
     pageSub: 'Discover hidden entitlements',
     dashboardLink: 'Does a situation apply to you?',
     tiefesEinkommen: {
@@ -531,7 +530,7 @@ export default {
     step5Title: '5 · Review your entitlements',
     step5Text: 'A larger household changes what you may be entitled to. Your premium reduction (IPV) is recalculated on the new household — worth checking again. If you are raising the child alone or on a tight budget, the life situations gather further support in one calm place.',
     step5LinkIpv: 'Recalculate premium reduction',
-    step5LinkSituation: 'View matching life situations',
+    step5LinkSituation: 'View matching situations under “What am I entitled to?”',
     relatedTitle: 'Related events',
     relatedHeirat: 'Marriage or partnership',
     footerNote: 'Much goes through the employer and compensation office — keep confirmations safe. This is orientation, not legal advice.',
@@ -1393,7 +1392,6 @@ export default {
     unterlagen: 'My Documents',
     flyer: 'Flyer to share',
     export: 'Export',
-    calendar: 'Calendar',
     merkliste: 'My checklist',
     umzug: 'Moving home',
     unfallkrankheit: 'Accident or illness',
@@ -1403,7 +1401,6 @@ export default {
     search: 'Search',
     menu: 'Menu',
     erfassen: 'Add',
-    anspruch: 'Rights',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Backpack',
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
@@ -4952,7 +4949,6 @@ export default {
     linkBudget: 'View in budget',
   },
   calendar: {
-    title: 'Coming up',
     aufgabe: 'Task',
     ausMerkliste: 'from your checklist',
     ganzerMonat: 'Whole month',
@@ -5835,9 +5831,7 @@ export default {
     b: { wohnen: 'Home', finanzen: 'Finances', person: 'Person', versicherungen: 'Insurance', gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension', bildung: 'Education', notfall: 'Emergency', behoerden: 'Authorities' },
   },
   gepaeck: {
-    title: 'Hiking backpack',
     intro: 'Each area of life is a piece of gear in the backpack. Unpack it, open an item — inside are the paths through life. A path leads into its guided flow.',
-    link: 'Hiking backpack',
     ctaSub: 'Life events as gear — unpack, look inside.',
     unpack: 'Unpack',
     pack: 'Pack up again',
@@ -5853,7 +5847,7 @@ export default {
     // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
     aussenfachKarte: 'Outer pocket',
     aussenfachKarteSub: 'The same tools, packed away',
-    menuAlle: 'All tools in my kit',
+    menuAlle: 'All tools in my backpack',
     packed: '{done} of {total} on file',
     legend: 'Every area a real object — keyring, doctor’s bag, tool roll. A path leads into its guided flow. Alongside the tree and the orchard.',
     obj: { wohnen: 'Keyring', arbeit: 'Tool roll', familie: 'Keepsake box', gesundheit: 'Doctor’s bag', alter: 'Field flask', abschied: 'Sealed letter', geld: 'Wallet' },
