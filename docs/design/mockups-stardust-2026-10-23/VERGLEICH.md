@@ -76,3 +76,15 @@ Sophie will **nicht mit der Übersicht beginnen**. Die Punkte sind festgehalten,
 - **Erfundener Text in Fassung 5:** «Am meisten offen: Finanzen & Geld.» steht nicht in `de.js`.
   Heute heisst es «Weiter mit Finanzen & Geld ›». «Ihr Lebensordner» als Kartentitel gibt es so
   auch nicht.
+
+### Kapitel Finanzen · Befunde beim Durchgehen (23.10.2026, noch nicht entschieden)
+
+Sophie hat auf den Umzug gewechselt; offen bleiben:
+- **Kopf:** heute zentriert (Münze, Titel und Satz in Gold), Fassung 5 links und ruhig.
+- **Texte ohne Vorbild in `de.js`:** «Jeden Monat bleiben», «verplant», «Einkommen, netto»,
+  «Passend zu diesem Bereich» mit «Lohnausweis ablegen», «Ablauf · 5 Schritte», «Als Nächstes».
+- **Reiter «Dokumente»:** heute ein Formular (Dokumenttyp, Ablaufdatum, «Datei auswählen oder
+  hierher ziehen», «Hochladen», «Erforderliche Dokumente», «Ihre Dokumente bleiben auf diesem
+  Gerät.»). Fassung 5 zeigt nur einen erfundenen Leer-Satz und «Dokument fotografieren». Die
+  Messung hatte den Reiter nicht geöffnet, darum stand das nicht in der Liste.
+- Korrigiert (0cbf2487): die Zusammenfassung endet wieder mit «Es bleiben CHF 2'480.».
