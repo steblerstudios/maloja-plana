@@ -438,7 +438,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
       const vorher = calMonth === 0 ? [calYear - 1, 11] : [calYear, calMonth - 1];
       const nachher = calMonth === 11 ? [calYear + 1, 0] : [calYear, calMonth + 1];
 
-      const navBtn = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, minWidth: '36px', height: '36px', cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.md, lineHeight: 1 };
+      const navBtn = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, minWidth: '44px', height: '44px', cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.md, lineHeight: 1 };
       const monthBtn = (m) => ({ position: 'relative', ...(isMobile ? { minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: space.sm + 'px' } : { padding: space.xs + 'px 0 ' + (space.sm) + 'px' }), border: '1px solid ' + (m === calMonth ? palette.sand : 'transparent'), background: m === calMonth ? palette.sand + '22' : 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, textAlign: 'center' });
       const verteilRand = verteilen ? palette.sage : palette.border;
       const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, background: iso === selDate ? palette.sand + '2E' : 'none', border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.sky : 'transparent')), fontWeight: isToday ? weight.semi : weight.normal });
@@ -451,10 +451,10 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
       return React.createElement('div', { role: 'group', 'aria-label': t('calendar.calAria'), style: { background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md } },
         // Kopf: ‹ Monat Jahr › (über den Jahreswechsel) + Heute
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
-          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
+        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
+          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
             React.createElement('button', { type: 'button', 'aria-label': monatJahr(vorher[0], vorher[1]), style: navBtn, onClick: () => springe(vorher[0], vorher[1]) }, '‹'),
-            React.createElement('span', { 'aria-live': 'polite', style: { fontSize: text.md, fontWeight: weight.semi, color: palette.text, minWidth: '120px', textAlign: 'center' } }, monatJahr(calYear, calMonth)),
+            React.createElement('span', { 'aria-live': 'polite', style: { fontSize: text.md, fontWeight: weight.semi, color: palette.text, minWidth: '112px', textAlign: 'center' } }, monatJahr(calYear, calMonth)),
             React.createElement('button', { type: 'button', 'aria-label': monatJahr(nachher[0], nachher[1]), style: navBtn, onClick: () => springe(nachher[0], nachher[1]) }, '›')
           ),
           React.createElement('button', { type: 'button', style: { ...knopfRuhig, color: palette.mid }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
