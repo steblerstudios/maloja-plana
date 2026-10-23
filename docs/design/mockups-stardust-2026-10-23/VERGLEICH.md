@@ -413,5 +413,6 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
 
 ### entschieden (Sophie, 23.10.2026 abends)
 
-- **Steuern (J) und Einstellungen (I) gelten so.** Sophie wörtlich: «steuern und einstellungen sind super».
+- ~~**Steuern (J) und Einstellungen (I) gelten so.** Sophie wörtlich: «steuern und einstellungen sind super».~~
+  > ⟨korrigiert, Sophie 23.10. abends⟩ «steuern sry da bin ich doch noch nicht sicher». **Es gilt nur Einstellungen (I).** Steuern (J) ist wieder offen.
 - **Finanz-Übersicht (K):** keine Rückmeldung, bleibt offen.
