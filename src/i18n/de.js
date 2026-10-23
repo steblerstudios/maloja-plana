@@ -2695,6 +2695,15 @@ export default {
     ordnerStarting: 'Ein guter Anfang.',
     ordnerGrowing: { sie: 'Ihr Ordner füllt sich.', du: 'Dein Ordner füllt sich.' },
     ordnerFull: 'Alles an seinem Platz.',
+    // Fassung 5 (23.10.2026) — neu, für den Copy-Prüfer
+    suggestTitle: 'Was oft zuerst hineingehört',
+    suggestId: 'Ausweis oder Pass',
+    suggestLease: 'Mietvertrag',
+    suggestKkPolicy: 'Police der Krankenkasse',
+    suggestChapter: 'Kapitel {chapter}',
+    activeEmpty: 'Alle Dokumente sind abgelaufen und liegen im Archiv.',
+    expiringEmpty: 'Nichts läuft bald ab.',
+    archiveEmpty: 'Im Archiv liegt nichts.',
   },
 
   budgetSync: {

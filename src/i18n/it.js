@@ -2686,6 +2686,15 @@ export default {
     ordnerStarting: 'Un buon inizio.',
     ordnerGrowing: { sie: 'Il Suo raccoglitore si riempie.', du: 'Il tuo raccoglitore si riempie.' },
     ordnerFull: 'Tutto al suo posto.',
+    // Versione 5 (23.10.2026) — nuovo, da rileggere
+    suggestTitle: 'Cosa ci va spesso per primo',
+    suggestId: 'Carta d’identità o passaporto',
+    suggestLease: 'Contratto di locazione',
+    suggestKkPolicy: 'Polizza della cassa malati',
+    suggestChapter: 'Capitolo {chapter}',
+    activeEmpty: 'Tutti i documenti sono scaduti e si trovano nell’archivio.',
+    expiringEmpty: 'Nulla scade a breve.',
+    archiveEmpty: 'L’archivio è vuoto.',
   },
 
   budgetSync: {
