@@ -66,3 +66,16 @@ Erledigtes im Kalender, Fach «Noch ohne Tag»); neue Icons für Was ansteht, Ab
 Datenfeld «Tag» am Merkpunkt; «Alle Kantone vergleichen» (heute 0 von 26 Kantonen belegt).
 
 **Ansehen:** Vorschau-Server `stardust-mockup` (Port 5447) zeigt diesen Ordner.
+
+## Nachtrag 23.10.2026, 15:38 — Kapitel Finanzen vertieft, Zuordnungen festgelegt
+
+- **Kapitel Finanzen fertig:** alle 37 Felder mit Marias echten Werten (`config/demoData.js`),
+  Bearbeiten wie die App, die eingebauten Helfer (Mindestlohn-Check, Wegweiser, Posten, Säule-3a-
+  Einzahlungen, Alimente, «Trifft nicht zu»), Barometer mit vier Abschnitten und Mindestlohn-«!»
+  (Schalter Basel-Stadt), ruhiger gemacht. Sophie: «so passt das Kapitel Finanzen jetzt».
+- **Zuordnungen festgelegt:** Werkzeug → Bereich (Merkliste) und Kategorie → Bereich (Kalender), aus
+  `werkzeugRegister.js` abgeleitet; Werkzeuge ohne Bereich mit eigenem neutralem Symbol.
+- **Offen im Mockup:** nur noch die **Übersicht** (Sophie: «machen wir später»).
+- **Vor dem Bau weiterhin:** Copy-Prüfer für die neuen Texte, a11y-Prüfer (u. a. 44-px-Tippflächen),
+  Datenfeld «Tag» am Merkpunkt, «Alle Kantone vergleichen» (0 von 26 belegt), Nebenerwerb immer oder
+  nur bei Bedarf.
