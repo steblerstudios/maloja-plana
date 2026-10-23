@@ -155,6 +155,37 @@ const SEITEN = [
     ['Einstellungen', 'Eintrag', 'in der Reihe unten', 'drin'],
     ['Karten mit Einzeiler, Continuity-Übergang', '—', 'im Mockup', 'neu'],
   ]},
+  // Runde 2 (23.10.2026 abends): neu gemessen (vergleich-inventar-runde2.json), Entwürfe I, J, K
+  { id: 'steuern', titel: 'Steuern', heuteBild: 'heute-steuern.jpg', neu: 'seiten-v5.html?nur=j', bausteine: 84, zeilen: [
+    ['Titel «Steuer-Orientierung» und Einleitung', 'Kasten oben', 'Titel mit Symbol, Satz darunter', 'drin'],
+    ['Ergebnis: Bundessteuer, Kantons-/Gemeindesteuer, Gesamtsteuer, Nettoeinkommen', '3 Kästen nach den Abzügen', 'zuerst: Gesamtsteuer gross, Balken Bund/Kanton, zwei Teile, Nettoeinkommen', 'anders'],
+    ['Eingaben: Steuerkanton, Verheiratet, Kinder, Nettolohn pro Jahr, Glossar BVG/AHV/Nettolohn', 'oben', 'aufgeklappt unter dem Ergebnis', 'drin'],
+    ['Steuerbares Einkommen (optional), Glossar Bundessteuer/Veranlagung', 'Feld', 'Feld; «Veranlagung ⓘ» einmal statt zweimal', 'drin'],
+    ['6 Abzüge mit Max-Betrag', 'Felder', 'Felder mit Max darunter', 'drin'],
+    ['Berechnung: Nettolohn, Total (-), steuerbares Einkommen, Hinweise ESTV/13. Monatslohn/Messpunkte', 'Liste', 'zugeklappt «Berechnung»', 'drin'],
+    ['Zivilstand im Vergleich: 3 Säulen, Sätze, «Daten speichern»', 'Säulen', 'Säulen, Sätze, Knopf', 'drin'],
+    ['Datenstand, offizielle Stelle, Querlinks Finanz-Übersicht und Steuerfristverlängerung', 'unten', 'unten', 'drin'],
+    ['Zustand «Kanton fehlt»', 'nur ohne Kanton', 'Schalter im Mockup', 'drin'],
+  ]},
+  { id: 'finanzuebersicht', titel: 'Finanz-Übersicht', heuteBild: 'heute-finanzuebersicht.jpg', neu: 'seiten-v5.html?nur=k', bausteine: 79, zeilen: [
+    ['Lebensbaum «Was aus Ihren Angaben wächst», Flache Ansicht, Dreh-Hinweis', 'ganzer erster Bildschirm', 'weiter unten, ganz erhalten', 'anders'],
+    ['Nettoeinkommen, Kanton', 'Kasten', 'zwei Marken über dem Budget', 'drin'],
+    ['Monatsbudget, frei verfügbar, Notgroschen-Tank', 'ganz unten', 'zuerst', 'anders'],
+    ['Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten', '6 Kästen', '6 ruhige Zeilen mit Wert, je zum Werkzeug', 'drin'],
+    ['Wo steht Ihr Lohn? mit Sätzen, Quelle, Branchenvergleich (18 Branchen)', 'Balken', 'Barometer mit vier Abschnitten wie im Kapitel', 'drin'],
+    ['Wo steht Ihre Miete? 3 Balken, Sätze, Wohnkosten-Anteil', 'Karte', 'zugeklappt', 'drin'],
+    ['Ihre KK-Last mit Richtwert 10 % (WHO)', 'Karte', 'zugeklappt', 'drin'],
+    ['Budget-Übersicht, Behörden-Dossier, drucken, Hinweis', 'unten', 'unten', 'drin'],
+    ['Zustand «Noch kein Einkommen»', 'nur ohne Einkommen', 'Schalter im Mockup', 'drin'],
+  ]},
+  { id: 'einstellungen', titel: 'Einstellungen', heuteBild: 'heute-einstellungen.jpg', neu: 'seiten-v5.html?nur=i', bausteine: 33, zeilen: [
+    ['Anzeige & Sprache: Anrede, Sprache, Erscheinungsbild', 'Symbol-Knöpfe («Hell» heisst «auf Hell umschalten»)', 'Wahl «Sie | Du», «Hell | Dunkel», Auswahl hervorgehoben', 'anders'],
+    ['Barrierefreiheit: 7 Schalter', 'nur Symbol', 'Schalter mit sichtbarem Zustand', 'anders'],
+    ['Rundgang neu starten', 'nur in der Zahnrad-Schublade', 'auf der Seite', 'neu'],
+    ['Daten & Sicherung: Persönliche Basis, Export, Benachrichtigungen', 'Knöpfe', 'Zeilen; «Export» heisst wie in der Schublade «Backup & Export»', 'drin'],
+    ['Daten auf diesem Gerät: Löschen (im Beispiel aus)', 'eigene Karte', 'eigene Karte mit Satz', 'drin'],
+    ['Zweiter Ort: Zahnrad-Schublade «Ansicht & Sprache»', 'fast gleich', 'Vorschlag: Zahnrad öffnet die Seite', 'anders'],
+  ]},
 ];
 const ST = { drin: 'drin', anders: 'anders', fehlt: 'fehlt noch', weg: 'bewusst weg', neu: 'neu' };
 const st = (k) => `<span class="st ${k}"><i></i>${ST[k]}</span>`;

@@ -627,6 +627,26 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 .st-saeulen button i { display: block; width: 100%; max-width: 64px; border-radius: 10px 10px 4px 4px; background: var(--finanzen); }
 .st-saeulen button[aria-pressed="false"] i { opacity: .45; }
 .st-saeulen .offen i { background: none; border: 1.5px dashed var(--border); height: 40%; }
+/* K · Finanz-Übersicht (Fassung 5, 23.10. abends) */
+.fu-budget { display: grid; gap: 6px; font-size: 14px; margin-top: 10px; }
+.fu-budget > div { display: flex; justify-content: space-between; }
+.fu-tank { display: flex; gap: 10px; align-items: center; margin-top: 14px; font-size: 13px; color: var(--mid); }
+.fu-tank .glas { flex: 0 0 64px; height: 12px; border-radius: 999px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+.fu-tank .glas i { position: absolute; inset: 0 auto 0 0; width: 61%; background: var(--sage); }
+.fu-tank .glas b { position: absolute; top: -2px; bottom: -2px; left: 37.5%; width: 2px; background: var(--text); }
+.fu-status .verweis b { display: block; font-size: 15px; margin: 2px 0; }
+.fu-status .verweis small { white-space: normal; }
+.fu-vergleich { display: grid; gap: 10px; margin: 12px 0; font-size: 13px; }
+.fu-vergleich > div { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; }
+.fu-vergleich .spur { grid-column: 1 / -1; height: 10px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.fu-vergleich .spur i { display: block; height: 100%; border-radius: 999px; }
+.fu-kk { position: relative; height: 12px; border-radius: 999px; background: var(--border); margin: 16px 0 22px; }
+.fu-kk i { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--versicherungen); }
+.fu-kk b { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--text); }
+.fu-kk span { position: absolute; top: 16px; font-size: 11px; color: var(--soft); transform: translateX(-50%); white-space: nowrap; }
+.fu-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.fu-chips button { border: 1px solid var(--border); background: none; color: var(--mid); border-radius: 999px; min-height: 36px; padding: 0 12px; font: inherit; font-size: 12px; cursor: pointer; }
+.fu-baum { height: 180px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 10%, transparent), color-mix(in srgb, var(--sage) 28%, transparent)); display: grid; place-items: center; color: var(--mid); font-size: 13px; margin-top: 10px; text-align: center; padding: 0 20px; }
 </style>
 </head>
 <body>
@@ -1249,7 +1269,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <p class="satz" data-sie="Diese Übersicht zeigt Ihnen eine grobe Einschätzung Ihrer Steuerbelastung — als Orientierung, nicht als Steuerberatung. Sie können Abzüge ausprobieren und sehen, wie sich Ihre Situation verändert." data-du="Diese Übersicht zeigt dir eine grobe Einschätzung deiner Steuerbelastung — als Orientierung, nicht als Steuerberatung. Du kannst Abzüge ausprobieren und sehen, wie sich deine Situation verändert."></p>
           </div>
           <div class="held stufe s2" id="j-ergebnis">
-            <div class="lage" id="st-lage"><span>Kanton Zürich</span><span>Ledig</span><span>0 Kinder</span><span>Grundtarif</span></div>
+            <div class="lage" id="st-lage"><span>Kanton Zürich</span><span>Ledig</span><span>Grundtarif</span></div>
             <div id="st-mit-kanton">
               <div class="etikett">Geschätzte Gesamtsteuer</div>
               <div class="st-gross anzeige">~ CHF 8’431</div>
@@ -1258,7 +1278,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
                 <div><span><i class="punkt" style="background:var(--sage)"></i><button class="begriff" data-erklaerung="st-bund-erkl">Bundessteuer<sup>ⓘ</sup></button> ~1.31%<small>Tarif: Grundtarif · Grenzsteuersatz: 2.97%</small></span><b>~ CHF 977</b></div>
                 <div><span><i class="punkt" style="background:var(--finanzen)"></i>Kantons- und Gemeindesteuer (Zürich)<span class="st-marke">Grobe Schätzung</span></span><b>~ CHF 7’454</b></div>
               </div>
-              <p class="erklaerung" id="st-bund-erkl">Die direkte Bundessteuer (DBG Art. 36) geht an den Bund. Kanton und Gemeinde erheben ihre eigene Steuer.</p>
+              <p class="erklaerung" id="st-bund-erkl">Bundessteuer — die direkte Bundessteuer auf dem Einkommen. Ein Tarif für die ganze Schweiz, unabhängig vom Wohnkanton; Kantons- und Gemeindesteuer kommen separat dazu. Grundlage: DBG Art. 36.</p>
               <p class="unter">Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.</p>
               <div class="st-zeile" style="border-bottom:0;margin-top:6px"><span>Nettoeinkommen (Jahres-Schätzung)</span><b>CHF 65’969</b></div>
             </div>
@@ -1279,9 +1299,9 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <label class="st-feld" style="justify-content:flex-start;gap:12px"><input type="checkbox" style="width:22px;min-height:22px"><span>Verheiratet oder in eingetragener Partnerschaft</span></label>
             <div class="st-feld"><label for="st-kinder">Kinder</label><select id="st-kinder"><option>0</option><option>1</option><option>2</option><option>3</option></select></div>
             <div class="st-feld"><span data-sie="Ihr eigener Nettolohn pro Jahr" data-du="Dein eigener Nettolohn pro Jahr"></span><b>CHF 74’400</b></div>
-            <p class="fuss" style="margin-top:6px"><span data-sie="Hochrechnung aus Ihrem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen." data-du="Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen."></span> Begriffe: <button class="begriff">BVG<sup>ⓘ</sup></button> <button class="begriff">AHV<sup>ⓘ</sup></button> <button class="begriff">Nettolohn<sup>ⓘ</sup></button></p>
+            <p class="fuss" style="margin-top:6px"><span data-sie="Hochrechnung aus Ihrem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen." data-du="Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen."></span> <button class="begriff">BVG<sup>ⓘ</sup></button> <button class="begriff">AHV<sup>ⓘ</sup></button> <button class="begriff">Nettolohn<sup>ⓘ</sup></button></p>
             <div class="st-feld"><label for="st-steuerbar">Steuerbares Einkommen (optional)</label><input id="st-steuerbar" type="number" placeholder="z.B. 65 000"></div>
-            <p class="fuss" style="margin-top:6px">Begriffe: <button class="begriff">Bundessteuer<sup>ⓘ</sup></button> <button class="begriff">Veranlagung<sup>ⓘ</sup></button></p>
+            <p class="fuss" style="margin-top:6px"><button class="begriff">Bundessteuer<sup>ⓘ</sup></button> <button class="begriff">Veranlagung<sup>ⓘ</sup></button></p>
             <div class="st-feld"><label>Berufskosten<small>Max: CHF 5’000</small></label><input type="number" value="0"></div>
             <div class="st-feld"><label>Altersvorsorge 3. Säule<small>Max: CHF 7’258</small></label><input type="number" value="0"></div>
             <div class="st-feld"><label>Schuldzinsen<small>Max: CHF 50’000</small></label><input type="number" value="0"></div>
@@ -1322,9 +1342,104 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   <div class="notiz"><ul>
     <li><b>Reihenfolge umgedreht:</b> heute Eingaben → Berechnung → Ergebnis; hier Ergebnis → Eingaben → Berechnung. Wer nur wissen will «ungefähr wie viel?», sieht es sofort. Wer probieren will, findet die Felder gleich darunter.</li>
     <li><b>Ein Balken statt drei Kästen:</b> heute stehen Bundessteuer, Kantons-/Gemeindesteuer und Gesamtsteuer in drei Kästen untereinander. Hier eine Zahl gross, darunter ein Balken (Bund 11.6 % in Salbeigrün, Kanton/Gemeinde 88.4 % in der Finanzen-Farbe) und die zwei Teile. «Grobe Schätzung» bleibt als Marke bei Kanton/Gemeinde.</li>
-    <li>Die Glossar-Knöpfe (BVG, AHV, Nettolohn, Bundessteuer, Veranlagung) bleiben. Heute steht «Veranlagung ⓘ» zweimal hintereinander, hier einmal. Der Erklärsatz zu «Bundessteuer ⓘ» oben ist ein Platzhalter (Copy-Prüfer). In der App kommt der Text aus dem Glossar.</li>
+    <li>Die Glossar-Knöpfe (BVG, AHV, Nettolohn, Bundessteuer, Veranlagung) bleiben. Heute steht «Veranlagung ⓘ» zweimal hintereinander, hier einmal. Der Erklärsatz zu «Bundessteuer ⓘ» oben ist der Glossar-Text der App (<code>glossar.bundessteuer</code>).</li>
     <li><b>Zustände (Schalter oben):</b> «Kanton fehlt» zeigt, was die App heute ohne Kanton zeigt: nur Bundessteuer, den Satz «Wählen Sie einen Kanton …» und das Nettoeinkommen mit dem Hinweis, dass Kanton/Gemeinde fehlen. Weitere Fälle aus dem Code, die Maria nicht sieht: Elterntarif (ledig mit Kindern), Wohnkanton-Frage, «steuerbares Einkommen als Basis», Einkommen ausserhalb der Tabelle (<code>tax.bandOutside</code>), Hinweise bei Bruttolohn, Rente, Selbständigkeit, Konkubinat. Sie bleiben im Bau wie heute.</li>
     <li><b>Befund App:</b> Der Untertitel «Bundessteuer berechnen» im Menü und auf der Übersicht ist veraltet. Die Seite rechnet Bund, Kanton und Gemeinde. Vorschlag für den Copy-Prüfer: «Steuern grob abschätzen» o. ä.</li>
+  </ul></div>
+</section>
+
+<!-- ===================== K · Finanz-Übersicht ===================== -->
+<section class="abschnitt" id="k">
+  <h2>K · Übersicht — «Finanz-Übersicht»</h2>
+  <p class="warum"><b>Neu in Fassung 5 (23.10. abends).</b> Heute füllt der 3D-Lebensbaum den ganzen ersten Bildschirm. Die Finanzen beginnen erst darunter. Hier steht <b>zuerst, was frei bleibt</b> (Monatsbudget und Notgroschen), dann die sechs Zeilen Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten, dann die drei Einordnungen Lohn, Miete, Krankenkasse. Der Baum bleibt (Leitplanke 06.07.: Baum und Garten bleiben) und rückt nach unten. Alle 79 Bausteine von heute, Texte und Zahlen aus der App (Maria Muster).</p>
+  <div class="leiste zustaende" role="group" aria-label="Lage der Person">
+    <button class="pill" data-fulage="maria" aria-pressed="true">Wie Maria Muster</button>
+    <button class="pill" data-fulage="leer" aria-pressed="false">Noch kein Einkommen</button>
+  </div>
+  <div class="geraet" data-seite="k">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="finanzen"></nav>
+    <div class="seite" style="--licht: var(--finanzen)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links">
+          <div class="stufe">
+            <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Finanzen &amp; Geld</a><span>›</span>Finanz-Übersicht</nav></div>
+            <div class="titelzeile"><span class="sym" data-icon="finanzen" style="--licht: var(--finanzen)"></span><h3>Finanz-Übersicht</h3></div>
+            <p class="satz" data-sie="Ihre Situation auf einen Blick — basierend auf Ihren Eingaben." data-du="Deine Situation auf einen Blick — basierend auf Deinen Eingaben."></p>
+          </div>
+          <div class="held stufe s2" id="fu-leer" hidden>
+            <p class="unter" data-sie="Noch keine Finanzdaten vorhanden. Erfassen Sie Ihr Einkommen, um die Übersicht zu sehen." data-du="Noch keine Finanzdaten vorhanden. Erfasse Dein Einkommen, um die Übersicht zu sehen."></p>
+            <div class="knoepfe"><button class="knopfprim">Einkommen eingeben</button></div>
+          </div>
+          <div class="held stufe s2" id="fu-held">
+            <div class="lage"><span>Nettoeinkommen CHF 6’200 /Mt.</span><span>Kanton: Zürich</span></div>
+            <div class="etikett">Monatsbudget</div>
+            <div class="fu-budget">
+              <div><span>Einnahmen</span><span>CHF 6’200</span></div>
+              <div><span>Ausgaben</span><span>− CHF 3’741</span></div>
+            </div>
+            <div class="st-zeile" style="border-bottom:0;margin-top:4px;font-size:15px"><span>Frei verfügbar</span><b class="anzeige" style="font-size:24px">CHF 2’459</b></div>
+            <div class="fu-tank"><span class="glas" aria-hidden="true"><i></i><b></b></span><span data-sie="Ihr Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3." data-du="Dein Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3."></span></div>
+          </div>
+        </div>
+        <div class="rechtsspalte stufe s3" id="fu-rest">
+          <div class="fu-status">
+            <a class="verweis" href="#j"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Steuern<b>~ CHF 8’431 /J.</b><small>≈ CHF 703 pro Monat geschätzt · Ihre Angabe im Budget: CHF 850 pro Monat.</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#b"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Prämienverbilligung (IPV)<b>Kein Anspruch</b><small>Einkommen über Grenze (CHF 61’090)</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Sozialhilfe-Orientierung<b>Einkommen reicht aus</b><small>Grundbedarf (SKOS): CHF 1’061 | Total Bedarf: CHF 3’276</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Ergänzungsleistungen (EL)<b>EL nur bei AHV- oder IV-Leistung</b></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Vermögen<b>CHF 18’500</b><small>Wertschriften, Ersparnisse und übriges Vermögen (Steuerwert)</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Gesundheitskosten (KVG)<b>CHF 240</b><small>Bezahlte Arztrechnungen 2026 · noch offen: CHF 180</small></span><span class="pfeil">›</span></a>
+          </div>
+          <details open><summary>Wo steht Ihr Lohn?</summary>
+            <div id="lohn-baro-k" style="margin-top:12px"></div>
+            <p class="unter" style="margin-top:10px"><b data-sie="Ihr Lohn: CHF 6’472" data-du="Dein Lohn: CHF 6’472"></b> · Median: CHF 7’024<br><span data-sie="Ihr Lohn liegt unter dem Schweizer Median." data-du="Dein Lohn liegt unter dem Schweizer Median."></span></p>
+            <p class="fuss">Aus Netto CHF 6’200 geschätzt — der Balken zeigt das ungefähre Brutto (die Mindestlohn-Prüfung greift nur mit echtem Bruttolohn). Mehr als Vollzeit (42 Std./Woche): auf 40 Std. umgerechnet CHF 6’472 (erfasst: CHF 6’796). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig. Vergleich ohne anteiligen 13. Monatslohn. Mit einem 13. läge der Vergleichswert rund 8 % höher.<br>Quelle: <a href="#" style="color:var(--sand)">BFS ↗</a>, Lohnstrukturerhebung 2024 (Median CHF 7’024, inkl. anteiligem 13. Monatslohn).<br>Orientierung: eine Grössenordnung, nicht nach amtlicher Regel gerechnet.</p>
+            <p class="unter" style="margin-top:12px" data-sie="Ihr Lohn im Branchenvergleich (Median-Bruttolohn):" data-du="Dein Lohn im Branchenvergleich (Median-Bruttolohn):"></p>
+            <div class="fu-chips"><button>Gastgewerbe ’22</button><button>Reinigung ’22</button><button>Landwirtschaft ’22</button><button>Detailhandel ’24</button><button>Handel ’22</button><button>Transport ’22</button><button>Industrie ’22</button><button>Bau ’24</button><button>Gesundheit ’22</button><button>Bildung ’22</button><button>Öff. Verwaltung ’22</button><button>Beratung ’22</button><button>Energie ’22</button><button>Versicherung ’22</button><button>Telekom ’22</button><button>IT ’22</button><button>Finanzen ’22</button><button>Pharma ’24</button></div>
+            <p class="fuss">Quelle: BFS Lohnstrukturerhebung 2022/2024</p>
+          </details>
+          <details><summary>Wo steht Ihre Miete?</summary>
+            <p class="unter" style="margin-top:10px">Miete regional vs. Schweiz</p>
+            <div class="fu-vergleich">
+              <div><span>Schweizer Schnitt</span><span>CHF 1327</span><span class="spur"><i style="width:80%;background:var(--mid)"></i></span></div>
+              <div><span>Ihre Region</span><span>CHF 1538</span><span class="spur"><i style="width:93%;background:var(--wohnen)"></i></span></div>
+              <div><span data-sie="Ihre Miete" data-du="Deine Miete"></span><span>CHF 1650</span><span class="spur"><i style="width:100%;background:var(--finanzen)"></i></span></div>
+            </div>
+            <p class="unter">rund 16 % über dem Schweizer Schnitt</p>
+            <p class="fuss">Das ist vor allem strukturell — in Städten und nachgefragten Regionen sind Bauland und Wohnungen knapper und teurer. Der Schweizer Schnitt ist dort oft gar nicht zu finden.<br>Quelle: <a href="#" style="color:var(--sand)">BFS ↗</a>, Mietpreiserhebung 2020 · Nettomiete, ohne Nebenkosten</p>
+            <p class="unter" data-sie="Ihre Wohnkosten sind 30% Ihres Einkommens." data-du="Deine Wohnkosten sind 30% Deines Einkommens."></p>
+            <p class="fuss">Als Faustregel sollte die Miete rund einen Drittel des Einkommens nicht übersteigen — viele Vermieter verlangen das sogar.</p>
+          </details>
+          <details><summary data-sie="Ihre KK-Last" data-du="Deine KK-Last"></summary>
+            <p class="unter" style="margin-top:10px">Die Grundversicherungs-Prämie entspricht 6.2% des monatlichen Einkommens.</p>
+            <div class="fu-kk" aria-hidden="true"><i style="width:41%"></i><b style="left:66.7%"></b><span style="left:66.7%">Richtwert 10% (WHO)</span></div>
+            <p class="unter">Die Prämie allein liegt unter 10% — Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu.</p>
+            <p class="fuss">Zur Einordnung: Die WHO zählt Gesundheitsausgaben über 10% des Einkommens zu den belastenden („katastrophalen") Ausgaben. Die Prämie ist nur ein Teil der Gesundheitskosten.<br>Orientierung: eine Grössenordnung, nicht nach amtlicher Regel gerechnet.<br>Quelle: <a href="#" style="color:var(--sand)">WHO / UNO SDG-Indikator 3.8.2 ↗</a></p>
+          </details>
+          <div class="weiter">
+            <h4 data-sie="Was aus Ihren Angaben wächst" data-du="Was aus Deinen Angaben wächst"></h4>
+            <div class="fu-baum">Lebensbaum wie heute (3D, drehbar) mit den sechs Früchten: Steuern, Budget, Lohn, IPV, Sozialhilfe, Notfall</div>
+            <div class="knoepfe" style="margin-top:10px"><button class="knopfruhig">Flache Ansicht</button></div>
+            <p class="fuss">Mit den Pfeiltasten links und rechts lässt sich der Baum drehen. Jeder Ast ist auch einzeln anwählbar.</p>
+          </div>
+          <div style="margin-top:14px"><a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Budget-Übersicht</span><span class="pfeil">›</span></a><a class="verweis" href="#"><span class="sym k" data-icon="behoerden" style="--licht: var(--behoerden)"></span><span>Behörden-Dossier</span><span class="pfeil">›</span></a></div>
+          <div class="knoepfe" style="margin-top:12px"><button class="knopfruhig">Übersicht drucken / als PDF speichern</button></div>
+          <p class="fuss" data-sie="Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wenden Sie sich an die zuständige Stelle." data-du="Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wende Dich an die zuständige Stelle."></p>
+          <div class="vertrauen" style="justify-content:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Daten bleiben auf diesem Gerät." data-du="Deine Daten bleiben auf diesem Gerät."></span></div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="anspruch"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Baum nach unten:</b> heute ist der erste Bildschirm nur Baum (siehe <code>heute-finanzuebersicht.jpg</code>). Wer «Finanz-Übersicht» antippt, will zuerst Zahlen sehen. Der Baum bleibt ganz, mit «Flache Ansicht» und Dreh-Hinweis, nur weiter unten. Die Leitplanke vom 06.07. (Baum und Garten bleiben) gilt weiter.</li>
+    <li><b>Was frei bleibt, zuerst:</b> Monatsbudget und Notgroschen stehen heute ganz unten. Hier oben, weil «Was bleibt mir?» die Kernfrage ist. Der Notgroschen als kleine Tankanzeige mit Marke bei «empfohlen» (3 Monate), wie heute.</li>
+    <li><b>Sechs Zeilen statt sechs Kästen:</b> Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten als ruhige Zeilen mit Wert rechts. Jede führt zu ihrem Werkzeug. Der lange Steuer-Text von heute (Bund + Kanton, Messpunkte, 13. Monatslohn) steht auf der Steuer-Seite. Hier nur der Monatsvergleich.</li>
+    <li>Das Feld «Lebensbaum wie heute …» ist ein Platzhalter im Mockup, kein App-Text. Lohn offen, Miete und Krankenkasse zugeklappt (gleiche Texte wie heute). «Wo steht Ihr Lohn?» ist dasselbe Barometer mit vier Abschnitten wie im Kapitel Finanzen (A), entschieden 23.10.</li>
+    <li><b>Zustand «Noch kein Einkommen»</b> (Schalter oben): der Satz und «Einkommen eingeben» wie heute. Weitere Fälle aus dem Code, die Maria nicht sieht: Haushalt-Zeile (mehr als 1 Person), «Unter Armutsgrenze», Mindestlohn-«!» (GE, NE, JU, BS, TI), KK-Last über 10 % mit IPV-Knopf, Aufschlüsselung mehrerer Einnahmen, Bruttolohn-Hinweis beim frei Verfügbaren. Sie bleiben im Bau wie heute.</li>
+    <li><b>Copy-Prüfer:</b> in der Du-Form schreibt <code>finanzUebersicht.*</code> «Deine/Dein/Dich» gross, <code>tax.*</code> «deine/dir» klein. Eine Schreibweise wählen. Die Gesundheitskosten-Karte zeigt nur das laufende Jahr (Demo-Belege sind 2026 datiert).</li>
   </ul></div>
 </section>
 
@@ -1452,12 +1567,18 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     document.getElementById('st-mit-kanton').hidden = ohne;
     document.getElementById('st-ohne-kanton').hidden = !ohne;
     document.getElementById('st-kanton').value = ohne ? '' : 'ZH';
-    document.querySelector('#st-lage span').textContent = ohne ? 'Kein Kanton' : 'Kanton Zürich';
+    document.querySelector('#st-lage span').hidden = ohne;
   };
   gruppe('[data-stlage]', (b) => stLage(b.dataset.stlage));
   document.getElementById('st-kanton').addEventListener('change', (e) => {
     const lage = e.target.value ? 'maria' : 'ohnekanton';
     document.querySelector(`[data-stlage="${lage}"]`).click();
+  });
+  gruppe('[data-fulage]', (b) => {
+    const leer = b.dataset.fulage === 'leer';
+    document.getElementById('fu-leer').hidden = !leer;
+    document.getElementById('fu-held').hidden = leer;
+    document.getElementById('fu-rest').hidden = leer;
   });
   document.querySelectorAll('.st-saeulen button:not(.offen)').forEach((b) => b.addEventListener('click', () => document.querySelectorAll('.st-saeulen button:not(.offen)').forEach((x) => x.setAttribute('aria-pressed', x === b))));
 
@@ -1503,18 +1624,19 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const GR = [3000, 4635, 7024, 12526, 13000];
   const baroPos = (v) => { v = Math.max(GR[0], Math.min(GR[4], v)); const i = Math.min(3, GR.findIndex((g, j) => v <= GR[j + 1])); return (i + (v - GR[i]) / (GR[i + 1] - GR[i])) * 25; };
   function lohnBaro() {
-    const el = document.getElementById('lohn-baro'); if (!el) return;
+    const els = ['lohn-baro', 'lohn-baro-k'].map((id) => document.getElementById(id)).filter(Boolean); if (!els.length) return;
     const lohn = 6472, pos = baroPos(lohn), ml = mlKanton === 'BS' ? Math.round(22.20 * 182) : null;
     const zone = lohn <= GR[1] ? 0 : lohn <= GR[2] ? 1 : lohn <= GR[3] ? 2 : 3;
     // jede Abschnitt-Bubble füllt sich bis zum Lohn: darunter voll, die eigene teilweise, darüber leer
     const fuell = [0, 1, 2, 3].map((i) => Math.max(0, Math.min(1, pos / 25 - i)) * 100);
     // Lage im Raster mit Lücken: Prozent über die Breite, die Lücken (6px) gleichen sich weitgehend aus
-    el.innerHTML = `<div class="baro4" role="img" aria-label="Lohn CHF 6'472, Median CHF 7'024. ${anrede === 'du' ? 'Dein' : 'Ihr'} Lohn liegt unter dem Schweizer Median. unterer Bereich${ml ? '. Kantonaler Mindestlohn CHF ' + ml.toLocaleString('de-CH').replace(/[’,]/g, "'") : ''}">
+    const html = `<div class="baro4" role="img" aria-label="Lohn CHF 6'472, Median CHF 7'024. ${anrede === 'du' ? 'Dein' : 'Ihr'} Lohn liegt unter dem Schweizer Median. unterer Bereich${ml ? '. Kantonaler Mindestlohn CHF ' + ml.toLocaleString('de-CH').replace(/[’,]/g, "'") : ''}">
       <div class="grenzen" aria-hidden="true"><span style="left:25%">CHF 4'635</span><span style="left:75%">CHF 12'526</span></div>
       <div class="bubbles" aria-hidden="true">${fuell.map((f) => `<i><b style="width:${f}%"></b></i>`).join('')}
         <span class="median" style="left:50%;background:var(--gold)"></span>${ml ? `<span class="ml" style="left:${baroPos(ml)}%">!</span>` : ''}</div>
       <div class="namen" aria-hidden="true">${[['unteres Zehntel', 'Tieflohn'], ['unterer Bereich'], ['oberer Bereich'], ['oberes Zehntel', 'Spitzenlohn']].map(([a, b], i) => `<span class="${i === zone ? 'aktiv' : ''}">${a}${b ? '<br>' + b : ''}</span>`).join('')}</div>
     </div>${ml ? `<p>Kantonaler Mindestlohn: CHF 22.20/Std. — bei Vollzeit rund CHF ${ml.toLocaleString('de-CH').replace(/[’,]/g, "'")} im Monat (Stand 2026).</p>` : ''}`;
+    els.forEach((el) => { el.innerHTML = html; });
   }
   document.querySelectorAll('[data-mlkanton]').forEach((b) => b.onclick = () => {
     mlKanton = b.dataset.mlkanton; document.querySelectorAll('[data-mlkanton]').forEach((x) => x.setAttribute('aria-pressed', x === b)); lohnBaro(); finanzenAngaben();
