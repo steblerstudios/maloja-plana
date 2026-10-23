@@ -419,7 +419,7 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
 
 ---
 
-## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L und M entschieden 24.10.)
+## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L, M und N entschieden 24.10.)
 
 Der Anker «Anspruch» öffnet die Seite **Lebenssituationen** (`situationen`, `main.jsx` BottomAnchor).
 Bilder: `heute-rucksack.jpg`, `heute-situationen.jpg`, `heute-suche.jpg`. Inventar: `vergleich-inventar-runde3.json`
@@ -435,7 +435,20 @@ Alle sichtbaren Texte gegen `de.js` und die laufende App geprüft: **0 unbelegt*
 - **Rucksack:** «Wieder einpacken» ist zweimal ein Knopf (Zeichnung und Knopf darunter).
 - Kein Befund: Symbol-Text in Knopfnamen («HELVETIA», «23») ist `aria-hidden`; nur das Mess-Skript las ihn mit.
 
-**Noch nicht entschieden:** N.
+**Runde 3 vollständig entschieden** (L, M, N am 24.10.).
+
+### Suche (N) · entschieden (Sophie, 24.10.2026)
+
+- **Entwurf N passt**, so wie gezeichnet: Suchfeld oben, bleibt beim Scrollen stehen; ohne Suchwort zuerst
+  die **sieben Bereiche als Kacheln** in ihren Farben (heute ganz unten nach 70 Einträgen), dann
+  **Werkzeuge** und **Lebensereignisse** als getrennte Gruppen (heute alles unter «Werkzeuge»); Treffer
+  markiert, «Keine Treffer …» im Wortlaut der App.
+- **Alle Seiten auffindbar:** Mietzins, Notfallkarte, Briefe, Obstgarten, Rucksack, Rechtliches u. a. aus
+  `WEITERE_NAMEN` in die Suche. Schon gebaut in `2fae91da` (Zweig `fix/suche-notfallkarte-mietzins`, andere
+  Sitzung, noch nicht auf main) — beim Bau darauf aufsetzen statt neu.
+- Namen in der Suche nach der Regel «eine Seite, ein Name» («Was steht mir zu?», «Was ansteht», «Rucksack»);
+  «Kalender» bleibt als Suchwort für «Was ansteht».
+- «Steuern · Bundessteuer berechnen» bleibt offen bis zum Entscheid J (Befund `nav.sub.taxes` veraltet).
 
 ### Was steht mir zu? (M) · entschieden (Sophie, 24.10.2026)
 
