@@ -11,6 +11,7 @@ Entwürfe, **nicht gebaut**. Gehören zu `docs/IDEEN.md` §16 und
 | `seiten-v3.html` | Fassung 3: Fassung 2 plus alle früheren Entscheide aus `PRUEFLISTE.md` (Wege, Leisten, Zustände, Sprache, Sie/Du, Graustufen-Test) |
 | `seiten-v4.html` | Fassung 4: Tippflächen nachgemessen, dazu Abschnittsanzeige, «Als Nächstes» und Menü als Karten (aus Stardust) |
 | `abgleich.html` | Abgleich: 27 Stardust-Muster eingeordnet, 31 Prüflisten-Punkte mit Stand in Fassung 4 |
+| `vergleich.html` | Heute neben neu, Seite für Seite: Bild von heute, Fassung 4 zum Antippen, jedes Element eingeordnet (`VERGLEICH.md`, Rohdaten `vergleich-inventar.json`) |
 
 **Ansehen:** über einen lokalen Server, nicht über `file://` (sonst laden Icons und Schriften
 nicht), z. B. `python3 -m http.server -d docs/design/mockups-stardust-2026-10-23 5447`.

@@ -401,7 +401,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 </div>
 
 <!-- ===================== A · Kapitel ===================== -->
-<section class="abschnitt">
+<section class="abschnitt" id="a">
   <h2>A · Kapitel — «Finanzen &amp; Geld»</h2>
   <p class="warum">Der Monatsfluss als Objekt, die Gruppen als Bereichszeilen zum Aufklappen. Neu: «Passend zu diesem Bereich» — Abläufe, Anspruch und Unterlagen an einem Ort. Der Verweis zur Prämienverbilligung führt zu Abschnitt B, dort mit «Zurück zu Finanzen &amp; Geld».</p>
   <div class="geraet" data-seite="a">
@@ -515,7 +515,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 </section>
 
 <!-- ===================== C · Ablauf ===================== -->
-<section class="abschnitt">
+<section class="abschnitt" id="c">
   <h2>C · Ablauf — «Umzug»</h2>
   <p class="warum">Die Passstrasse aus Fassung 2, ergänzt um die Frist: «innert 14 Tagen» wird zu einer sanften Frist im Kalender, mit Rückgängig. Am Ende steht ein ruhiger Abschluss statt eines Knopfs ins Leere.</p>
   <div class="geraet" data-seite="c">
@@ -718,7 +718,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 </section>
 
 <!-- ===================== E · Menü ===================== -->
-<section class="abschnitt">
+<section class="abschnitt" id="e">
   <h2>E · Menü — «Wo ist alles andere?»</h2>
   <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. <b>Neu: Continuity</b> — tippen Sie auf einen Bereich: die Karte bleibt und wächst zur Seite, das Icon wandert in den Kopf. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen.</p>
   <div class="geraet" data-seite="e">
@@ -1104,6 +1104,16 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   document.querySelectorAll('[data-kamera]').forEach((b) => b.addEventListener('click', () => { kamera = b.dataset.kamera; document.querySelectorAll('[data-kamera]').forEach((x) => x.setAttribute('aria-pressed', x === b)); fotoSchritt = 0; foto(); }));
 
   logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); icons();
+  // ?nur=a … zeigt nur einen Abschnitt — für die Vergleichsseite (heute neben neu)
+  const nur = new URLSearchParams(location.search).get('nur');
+  if (nur) {
+    document.querySelectorAll('header.kopf, .neu').forEach((e) => e.style.display = 'none');
+    document.querySelectorAll('section.abschnitt').forEach((e) => { if (e.id !== nur) e.style.display = 'none'; else { e.style.borderTop = '0'; e.style.marginTop = '0'; e.style.paddingTop = '8px'; } });
+    document.querySelectorAll('.abschnitt > h2, .abschnitt > .warum, .notiz').forEach((e) => e.style.display = 'none');
+    const t = new URLSearchParams(location.search).get('thema'); if (t) root.dataset.theme = t;
+    document.body.classList.add('still');
+    document.querySelectorAll('.geraet').forEach((g) => g.classList.add('da'));
+  }
 </script>
 </body>
 </html>

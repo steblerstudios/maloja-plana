@@ -539,6 +539,21 @@ h1, h2, h3, .display { font-family: 'Hanken Grotesk', sans-serif; font-weight: 7
   document.getElementById('wr-nochmal').addEventListener('click', einblenden);
   document.querySelectorAll('[data-modus]').forEach(b => b.addEventListener('click', () => { logosZeichnen(); ringZeichnen(false); }));
   logosZeichnen();
+  // ?nur=eingang | ?nur=uebersicht — für die Vergleichsseite
+  (() => {
+    const nur = new URLSearchParams(location.search).get('nur'); if (!nur) return;
+    const abschnitte = [...document.querySelectorAll('section.abschnitt')];
+    document.querySelector('header.kopf').style.display = 'none';
+    abschnitte.forEach((e, i) => { e.style.display = (nur === 'eingang' ? i === 0 : i === 1) ? '' : 'none'; e.style.borderTop = '0'; });
+    document.querySelectorAll('.abschnitt > h2, .abschnitt > .warum, .notiz, .label, .logo-vergleich, .werkzeug').forEach((e) => e.style.display = 'none');
+    const ziel = abschnitte[nur === 'eingang' ? 0 : 1];
+    // nur die Spalte «Vorschlag» bzw. «Variante C» zeigen
+    ziel.querySelectorAll('.paar > div').forEach((spalte) => {
+      const lab = spalte.querySelector('.label')?.textContent || '';
+      spalte.style.display = (nur === 'eingang' ? /Vorschlag/.test(lab) : /Variante C/.test(lab)) ? '' : 'none';
+    });
+    ziel.querySelector('.paar').style.display = 'block';
+  })();
   new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { if (gewaehlt === null) einblenden(); o.disconnect(); } }, { threshold: .4 }).observe(document.querySelector('.wr-ring'));
   ringZeichnen(false); texteSetzen();
 
