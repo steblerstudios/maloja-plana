@@ -607,6 +607,34 @@ gibt es nicht — 4 Stellen fallen seit jeher auf 10 px zurück, ein echter Pill
 Aussehen ändern · 13× `text.xs - 1` / `text.body + 1` statt einer Skalenstufe · 16 verschiedene
 Deckkraft-Suffixe ohne Token.
 
+## 16 · Vorbild Stardust — die Haltung übernehmen, nicht die Oberfläche (23.10.2026)
+
+🌱 *Vision, nichts gebaut.* Festgehalten nach einem Blick auf [stardust.app](https://stardust.app/)
+(Zyklus-App; Startseite und die Ansicht hinter «Enter Universe», 23.10.2026). Stebler Studios
+gefällt dort das Design und die Führung. Die Frage war, was davon zu Maloja passt.
+
+**Die Grundregel:** Stardust ist laut und verspielt, Maloja soll ruhig sein (§0, §4). Wer
+Planeten und Neon-Verläufe übernimmt, landet beim AI/SaaS-Look, den wir vermeiden wollen.
+Übertragen wird die **Haltung**.
+
+| Bei Stardust | Für Maloja übersetzt | Hängt an |
+|---|---|---|
+| **Eine Metapher trägt alles:** der Kosmos, weil es um Zyklus und Mond geht. Die Startseite ist ein Ort, den man betritt («Enter Universe»), keine Feature-Liste. | Die **Landschaft**: Berge, Wege, Kapitel als Orte. Die Startseite als Ort, nicht als Aufzählung. | §1 Skeuomorphismus-Welt, §2 Baum/Obstgarten, Panorama-Karte, Berg-Hero |
+| **Ein grosses Objekt pro Screen:** der Zyklus-Ring mit «13 Days» in der Mitte, alles andere ordnet sich unter. | Pro Screen **ein** Haupt-Instrument, der Rest tritt zurück. | §3 Schnellchecks als Instrumente, «Dashboard entschlacken» |
+| **Ein Satz deutet die Daten:** «Your Daily Decode» unter dem Diagramm. | Der «Nächste Schritt» als **ein ruhiger Satz** in einfacher Sprache. Ohne Witze, weil es oft um ernste Dinge geht. | §7 Copy & Ton |
+| **Datenschutz als Stolz:** «Your data is private, period.» als eigener Menüpunkt. | Local-first sichtbar machen statt nur in der Datenschutzerklärung. Bei uns stimmt es sogar ohne Einschränkung. | Disclaimer-/nDSG-Texte — Wortlaut erst nach Rechtsprüfung |
+| **Materialität:** Serifen für Titel, Pill-Buttons, weiche Flächen. | Gleiche Richtung wie die Granit-Palette. Echter Pillen-Radius fehlt heute (§15 «Kleinkram»). | §4, `radius.pill` |
+
+**Bewusst nicht übernehmen:**
+- **Schwere 3D-Bilder.** Sie sprengen Bundle-Grösse und CSP.
+- **Nur Dark Mode in grellen Farben.** Ein Modus bleibt konsistent, aber hell und dunkel bleiben beide.
+- **Ihr Cookie-Banner mit Werbe-Tracking.** Widerspricht unserer Analytics-Haltung.
+- **Weniger Bereichsfarben.** Die sieben bleiben, weil sie ein Kanal für Barrierefreiheit sind (§8).
+
+**Nächster Schritt, wenn es dran ist:** zuerst ein Mockup der Startseite «als Ort» (Design
+zuerst, gemeinsam). Offen ist, ob die Übertragung auch für den Lebensrucksack gelten soll.
+Dort darf es persönlicher und wärmer sein als bei Maloja.
+
 ## Nächste Schritte (gemeinsam gewählt)
 
 1. ✅ **Diese Landkarte** — vollständig, sichtbar, wählbar.
