@@ -4852,7 +4852,13 @@ export default {
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
-    title: 'Calendario e promemoria',
+    title: 'In programma',
+    aufgabe: 'Compito',
+    ausMerkliste: 'dal promemoria',
+    ganzerMonat: 'Tutto il mese',
+    nochOhneTag: 'Ancora senza giorno',
+    aufTagLegen: 'Assegnare a un giorno',
+    jetztTagAntippen: { sie: 'Ora tocchi un giorno qui sopra.', du: 'Ora tocca un giorno qui sopra.' },
     anspruchTitle: { sie: 'Forse per Lei', du: 'Forse per te' },
     anspruchIntro: { sie: 'Dai Suoi dati — nessun obbligo, solo un suggerimento su dove vale la pena guardare.', du: 'Dai tuoi dati — nessun obbligo, solo un suggerimento su dove vale la pena guardare.' },
     exportIcs: 'Esporta calendario (.ics)',
@@ -6584,6 +6590,10 @@ export default {
     doneTitle: 'Fatto',
     markDone: 'Segna come fatto',
     undo: 'Segna come non fatto',
+    tagWaehlen: 'Scegliere un giorno',
+    ohneTag: 'Senza giorno',
+    erledigtAm: 'fatto il {datum}',
+    entfernt: 'Rimosso',
   },
   // O3 — tipo di risultato (src/data/ergebnisArt.js). Blocco proprio in fondo al file.
   ergebnisArt: {

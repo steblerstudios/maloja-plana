@@ -4356,6 +4356,10 @@ export default {
     doneTitle: 'Done',
     markDone: 'Mark as done',
     undo: 'Mark as not done',
+    tagWaehlen: 'Choose a day',
+    ohneTag: 'No day',
+    erledigtAm: 'done on {datum}',
+    entfernt: 'Removed',
   },
 
   kkLast: {
@@ -4941,7 +4945,13 @@ export default {
     linkBudget: 'View in budget',
   },
   calendar: {
-    title: 'Calendar and reminders',
+    title: 'What’s ahead',
+    aufgabe: 'Task',
+    ausMerkliste: 'from your checklist',
+    ganzerMonat: 'Whole month',
+    nochOhneTag: 'No day yet',
+    aufTagLegen: 'Put on a day',
+    jetztTagAntippen: 'Now tap a day above.',
     anspruchTitle: 'Possibly for you',
     anspruchIntro: 'From your entries — no obligation, just a hint where it may be worth a look.',
     upcoming: 'Upcoming',
