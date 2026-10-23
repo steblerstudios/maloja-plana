@@ -303,7 +303,7 @@ export default {
     // rm ungeprüft F5
     abschliessen: 'Terminar il decurs',
     // rm ungeprüft F5
-    fertigTitel: 'La midada è en urden',
+    fertigTitel: 'Il midar da chasa è en urden',
     // rm ungeprüft F5
     fertigText: 'Tut ils quatter pass èn fatgs.',
     // rm ungeprüft F5

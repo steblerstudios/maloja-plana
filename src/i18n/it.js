@@ -235,7 +235,7 @@ export default {
     step2Button: 'Scadenza «Annuncio al comune» nel calendario ({date})',
     step2Done: 'Annotato nel calendario.',
     step2CalendarLink: 'Al calendario',
-    fristKarteTitel: 'Notifica al comune',
+    fristKarteTitel: 'Annuncio al comune',
     fristKarteBis: 'entro il {date}',
     weiter: 'Fatto, avanti ›',
     abschliessen: 'Concludere il percorso',
