@@ -76,7 +76,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
   };
   const nurFuerJetzt = Object.values(added).includes('vorlaeufig');
 
-  // Ein Schritt nach dem anderen (Fassung 5, Entscheid Sophie 23.10.2026). Der Stand bleibt
+  // Ein Schritt nach dem anderen (Fassung 5, Entscheid Stebler Studios 23.10.2026). Der Stand bleibt
   // gespeichert (utils/ablaufStand.js), im Beispiel/Ausprobieren nur für jetzt.
   const [stand, setStandRoh] = useState(() => ablaufStandLaden('umzug', PASS_SCHRITTE, vorlaeufig));
   const setStand = (next) => { setStandRoh(next); ablaufStandSichern('umzug', next, vorlaeufig); };

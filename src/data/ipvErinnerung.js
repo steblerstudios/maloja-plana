@@ -1,4 +1,4 @@
-// «Jährlich erinnern» auf der Seite Prämienverbilligung (Fassung 5, Entscheid Sophie 23.10.2026):
+// «Jährlich erinnern» auf der Seite Prämienverbilligung (Fassung 5, Entscheid Stebler Studios 23.10.2026):
 // in JEDEM Schritt des IPV-Wegs, nicht erst nach der Verfügung. Legt «Prämienverbilligung fürs
 // nächste Jahr prüfen» als jährliche Aufgabe auf die Merkliste. Reine Logik, kein React.
 

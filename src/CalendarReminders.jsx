@@ -67,7 +67,7 @@ const CATEGORY_ICON_KEYS = {
   legal: 'legal', personal: 'basis'
 };
 
-// Fassung 5 (Sophie, 23.10.2026): Form trägt die Art, Farbe den Bereich — Graustufen-tauglich.
+// Fassung 5 (Stebler Studios, 23.10.2026): Form trägt die Art, Farbe den Bereich — Graustufen-tauglich.
 //   Punkt = Frist · Raute = Termin · Quadrat = Aufgabe aus der Merkliste · leerer Kreis = erledigt.
 // Was Sie hier selbst eintragen (Formular, Vorlage), ist ein Termin (art: 'termin'); was ein
 // Ablauf oder Rechner über utils/reminders.js anlegt — und alles Ältere ohne `art` — eine Frist.

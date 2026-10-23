@@ -9,7 +9,7 @@ import { ablaufStandLaden, ablaufStandSichern, ablaufStandKey } from '../utils/a
 import { UmzugAblauf, ohneNummer } from '../UmzugAblauf.jsx';
 import { EreignisFrist } from '../AblaufSchale.jsx';
 
-// Fassung 5 · Ablauf Umzug (Entscheid Sophie 23.10.2026): ein Schritt nach dem anderen auf
+// Fassung 5 · Ablauf Umzug (Entscheid Stebler Studios 23.10.2026): ein Schritt nach dem anderen auf
 // der Passstrasse, Frist als Karte mit Datum, der Stand bleibt gespeichert. Alle vier Schritte
 // und ihr ganzer Inhalt bleiben erreichbar.
 

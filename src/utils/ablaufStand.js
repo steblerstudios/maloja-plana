@@ -1,4 +1,4 @@
-// Wo man in einem Schritt-für-Schritt-Ablauf steht (Fassung 5, Entscheid Sophie 23.10.2026:
+// Wo man in einem Schritt-für-Schritt-Ablauf steht (Fassung 5, Entscheid Stebler Studios 23.10.2026:
 // «ein Schritt nach dem anderen auf der Passstrasse»). Erster Nutzer: der Umzug.
 //
 // Gespeichert wie die übrigen Ansichts-Zustände der App: ein eigener `or5_`-Schlüssel im

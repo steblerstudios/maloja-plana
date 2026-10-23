@@ -102,7 +102,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   }, [ikEntries, ikActive]);
 
   // Erziehungs-/Betreuungsgutschriften halbieren (Ehejahre, Merkblatt 3.01 Ziff. 19/20): der Schalter
-  // «Verheiratet» im Rechner entscheidet (Sophie, 22.10.2026). Steht er auf «Nein», wird nur geteilt,
+  // «Verheiratet» im Rechner entscheidet (Stebler Studios, 22.10.2026). Steht er auf «Nein», wird nur geteilt,
   // wenn das Profil eine frühere Ehe nennt (geschieden, verwitwet, aufgelöste Partnerschaft) — dort
   // lagen die Gutschriftjahre in den Ehejahren. Ein «Nein» bei Profil «verheiratet» ist eine bewusste
   // Was-wäre-wenn-Rechnung und teilt nicht.
@@ -119,7 +119,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // (utils/beitragsjahreAnnahme.js) — dieselbe Rechnung wie projektionAhv.
   // Wird sichtbar als Annahme ausgewiesen (vr.beitragsjahreAngenommen).
   //
-  // Das Feld zählt die Beitragsjahre BIS ZUM REFERENZALTER (Sophie, 22.10.2026): dort rechnet die
+  // Das Feld zählt die Beitragsjahre BIS ZUM REFERENZALTER (Stebler Studios, 22.10.2026): dort rechnet die
   // AHV definitiv (Merkblatt 3.04 Ziff. 5), und wer vorbezieht, zahlt bis dahin weiter (Ziff. 8).
   // So bleibt die Zahl gleich, wenn der Regler fürs Bezugsalter verschoben wird. Beim Vorbezug
   // fehlen bis zum Referenzalter die vollen Vorbezugsjahre (Teilrente), gemessen an der vollen

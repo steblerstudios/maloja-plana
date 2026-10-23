@@ -9,7 +9,7 @@ import {
 } from '../utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from '../data/aufgabenBereiche.js';
 
-// Fassung 5 (Sophie, 23.10.2026): Merkliste ist die To-do-Liste. Optionales Feld «tag»,
+// Fassung 5 (Stebler Studios, 23.10.2026): Merkliste ist die To-do-Liste. Optionales Feld «tag»,
 // erledigtAm beim Abhaken, Wiederholung «jaehrlich», neue Einträge oben.
 
 let store;

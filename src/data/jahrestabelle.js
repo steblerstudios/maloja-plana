@@ -1,6 +1,6 @@
 // Auswahl aus einer Jahrestabelle `{ 2026: {...}, 2027: {...} }` nach Stichtag.
 //
-// Warum es das gibt (Entscheid Sophie 21.10.2026, «Weg A»): Die Bundeswerte 2027 sind beschlossen
+// Warum es das gibt (Entscheid Stebler Studios 21.10.2026, «Weg A»): Die Bundeswerte 2027 sind beschlossen
 // und publiziert, gelten aber erst ab dem 1.1.2027. Ein Tausch der Konstanten hätte ab dem Deploy
 // gewirkt, also im Dezember schon die Renten 2027 gezeigt. Mit der Tabelle kann im Dezember
 // ausgeliefert werden, und am 1.1. schaltet die App von selbst um.

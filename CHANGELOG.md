@@ -16,7 +16,7 @@ kommt der Changelog immer mit, nie doppelt.*
 *Alles seit `0.1.47-beta` (live `d4da4629`, 21.10.2026): Nachzug mit #529, #530, #532, #533, #536, #537, #538
 und Fassung 5 (#539–#544).*
 
-### Geändert — Fassung 5 (Entscheide Sophie 23.10.2026, Mockups `docs/design/mockups-stardust-2026-10-23`)
+### Geändert — Fassung 5 (Entscheide Stebler Studios 23.10.2026, Mockups `docs/design/mockups-stardust-2026-10-23`)
 - **Dokumentenablage** (#539): Fächer «Aktiv · Bald fällig · Archiv», Suche und Sortierung erst mit Inhalt;
   eine Zeile pro Dokument mit Ablaufdatum zum direkten Ändern; im leeren Ordner «Was oft zuerst hineingehört».
 - **Ablauf Umzug** (#540): ein Schritt nach dem anderen auf der Passstrasse; die Anmeldefrist als Karte mit

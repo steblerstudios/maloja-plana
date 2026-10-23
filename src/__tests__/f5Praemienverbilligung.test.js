@@ -1,4 +1,4 @@
-// Fassung 5 · Rechner IPV (Entscheide Sophie 23.10.2026, VERGLEICH.md «Rechner IPV · entschieden»).
+// Fassung 5 · Rechner IPV (Entscheide Stebler Studios 23.10.2026, VERGLEICH.md «Rechner IPV · entschieden»).
 // Geprüft: «Jährlich erinnern» in jedem Schritt als jährliche Merkliste-Aufgabe (ohne Duplikat),
 // der Regler mit «Ins Profil übernehmen», die Überschriften wie die App, «Ihre Lage», Glossar im
 // Titel, «Möglicher Betrag — nur auf Antrag» unter «Berechtigt», wenn kein Betrag gerechnet ist.
