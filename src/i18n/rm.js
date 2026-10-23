@@ -3698,6 +3698,12 @@ export default {
     yourCanton: { sie: 'Voss chantun', du: 'Tes chantun' },
     privacyNote: { sie: 'Vossas indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.', du: 'Tias indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.' },
     skipForNow: 'Sursiglir per il mument',
+    // App installada vida (Onboarding.jsx, zurSicherungWechseln) — TODO(rm): Gegenlese
+    appLeer: {
+      titel: 'Gia emplenì en il navigatur?',
+      text: { sie: 'L\'app installada ha in agen spazi da memoria. Quai che Vus avais endatà en il navigatur n\'è perquai anc betg qua. Faschai en il navigatur sut «Export» ina segirezza e restabilì ella qua.', du: 'L\'app installada ha in agen spazi da memoria. Quai che ti has endatà en il navigatur n\'è perquai anc betg qua. Fa en il navigatur sut «Export» ina segirezza e restabilescha ella qua.' },
+      knopf: 'Restabilir ina segirezza',
+    },
     stepOf: 'Pass {current} da {total}',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     needsTitle: { sie: 'Tge pertutga Vus en quest mument?', du: 'Tge pertutga tai en quest mument?' },

@@ -4997,6 +4997,12 @@ export default {
     yourCanton: { sie: 'Votre canton', du: 'Ton canton' },
     privacyNote: { sie: 'Vos données restent sur cet appareil. Pas de compte. Pas de cloud.', du: 'Tes données restent sur cet appareil. Pas de compte. Pas de cloud.' },
     skipForNow: 'Passer pour l\'instant',
+    // Application installée vide (Onboarding.jsx, zurSicherungWechseln)
+    appLeer: {
+      titel: 'Déjà rempli dans le navigateur?',
+      text: { sie: 'L\'application installée a sa propre mémoire. Ce que vous avez saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, créez une sauvegarde sous «Export», puis restaurez-la ici.', du: 'L\'application installée a sa propre mémoire. Ce que tu as saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, crée une sauvegarde sous «Export», puis restaure-la ici.' },
+      knopf: 'Restaurer une sauvegarde',
+    },
     stepOf: 'Étape {current} sur {total}',
     needsTitle: { sie: 'Qu\'est-ce qui vous concerne en ce moment ?', du: 'Qu\'est-ce qui te concerne en ce moment ?' },
     needsSubtitle: { sie: 'Choisissez ce qui vous correspond — Maloja vous montre aussitôt ce à quoi vous avez droit. Vous pouvez le modifier à tout moment.', du: 'Choisis ce qui te correspond — Maloja te montre aussitôt ce à quoi tu as droit. Tu peux le modifier à tout moment.' },

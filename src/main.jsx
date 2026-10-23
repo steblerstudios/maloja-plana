@@ -1006,6 +1006,8 @@ const AppInner = ({ demo }) => {
         palette, t, setLanguage, supportedLanguages,
         onComplete: () => setOnboardingDone(true),
         onUpdateData: updateData,
+        // Leere installierte App: direkt zur Sicherungs-Seite (Begründung in Onboarding.jsx).
+        onSicherungEinspielen: () => { setView('export'); setOnboardingDone(true); },
       })
     );
   }

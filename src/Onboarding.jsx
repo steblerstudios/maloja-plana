@@ -23,9 +23,27 @@ export { isOnboardingDone } from './utils/einfuehrungStatus.js';
 import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { zurueckZeichen, Icon } from './IconSystem.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
+import { laeuftAlsApp } from './utils/geraetErkennung.js';
 
-export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
+// ─── Leere App nach dem Installieren (23.10.2026) ─────────────────────────────
+// Safari gibt der installierten App (iPhone-Startbildschirm, Mac-Dock) einen eigenen
+// Speicher. Wer im Browser schon ausgefüllt hat, sieht in der App wieder diese
+// Einführung — die Angaben liegen im Browser, nicht hier. Die Anleitung rät zur
+// Sicherung vorher (i18n `installApp.daten`), aber wer sie nicht gelesen hat, stand
+// bisher vor einer leeren App ohne Erklärung. Darum steht der Weg hier, und nur wenn
+// die Seite als App läuft: im Browser teilt sich nichts.
+//
+// Die Einführung gilt danach als erledigt (sonst käme sie nach dem Abbrechen wieder),
+// es werden aber keine Angaben geschrieben. Das Einspielen selbst läuft über die
+// bestehende Sicherungs-Seite mit Rückfrage und Passwort — kein zweiter Weg.
+export const zurSicherungWechseln = (speicher, weiter) => {
+  try { speicher.setItem(STORAGE_KEY, 'true'); } catch { /* gesperrter Speicher: dann nur für diese Sitzung */ }
+  weiter();
+};
+
+export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData, onSicherungEinspielen }) => {
   const [step, setStep] = useState(0);
+  const [alsApp] = useState(() => laeuftAlsApp());
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [canton, setCanton] = useState('');
@@ -214,6 +232,23 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
           ),
           t('common.simpleView')
+        ),
+        alsApp && onSicherungEinspielen && React.createElement('div', {
+          'data-testid': 'app-leer-sicherung',
+          style: {
+            marginTop: space.lg, padding: space.md, background: palette.up,
+            border: '1px solid ' + palette.border, borderRadius: radius.md,
+          },
+        },
+          React.createElement('p', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+            t('onboarding.appLeer.titel')),
+          React.createElement('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.sm, lineHeight: leading.normal, color: palette.mid } },
+            t('onboarding.appLeer.text')),
+          React.createElement('button', {
+            type: 'button',
+            onClick: () => zurSicherungWechseln(localStorage, onSicherungEinspielen),
+            style: { ...btnSecondary, marginTop: space.sm, minHeight: '44px', color: palette.text },
+          }, t('onboarding.appLeer.knopf'))
         )
       )
     );
