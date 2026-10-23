@@ -79,3 +79,16 @@ Datenfeld «Tag» am Merkpunkt; «Alle Kantone vergleichen» (heute 0 von 26 Kan
 - **Vor dem Bau weiterhin:** Copy-Prüfer für die neuen Texte, a11y-Prüfer (u. a. 44-px-Tippflächen),
   Datenfeld «Tag» am Merkpunkt, «Alle Kantone vergleichen» (0 von 26 belegt), Nebenerwerb immer oder
   nur bei Bedarf.
+
+## Nachtrag 23.10.2026, 16:40: Eingang, Steuern, Finanz-Übersicht, Einstellungen
+
+- **Zuordnung Merkliste/Kalender:** Sophie «Ja, Liste B». Die frühere Liste in «Vor dem Bau festgelegt»
+  ist durchgestrichen (2a99c797). Die Bau-Werkbank `f5-merkliste-kalender` (c7f6246a,
+  `src/data/aufgabenBereiche.js`) hatte nach der alten Liste gebaut. Die Bau-Sitzung «Lücken Fassung 5
+  Umsetzung» hat eine Nachricht mit der richtigen Liste bekommen. Ob sie gelesen und umgesetzt wurde, ist
+  **nicht bestätigt**.
+- **Eingang:** bleibt wie live (#537). «Einfache Ansicht» bleibt ein Knopf (456f1406).
+- **Neu gezeichnet:** I Einstellungen, J Steuern, K Finanz-Übersicht, mit Bildern und Inventar von heute.
+  Texte gegen `de.js` geprüft. Details und Befunde in VERGLEICH.md, Abschnitt «Runde 2».
+- **Befund App:** «Bundessteuer berechnen» (`nav.sub.taxes`, 5 Sprachen) ist veraltet.
+- **Offen:** Sophies Ja zu I, J, K · Übersicht · weitere Seiten (Lebenssituationen, weitere Kapitel, Schnellcheck).

@@ -367,3 +367,46 @@ Gerät löschen». Die Schublade hinter dem Zahnrad («Ansicht & Sprache») hat 
 **Entwurf:** alles auf einer Seite; «Hell | Dunkel» und «Sie | Du» als Wahl mit hervorgehobener
 Auswahl; Schalter, die ihren Zustand zeigen; «Rundgang neu starten» auch hier; keine neuen Sätze.
 Noch nicht entschieden.
+
+### Steuern · Entwurf J (`seiten-v5.html?nur=j`)
+
+**Heute:** Eingaben → sechs Abzüge → Berechnung → drei Ergebnis-Kästen → Zivilstand-Säulen → Quellen.
+Das Ergebnis steht erst nach dem dritten Bildschirm. «Veranlagung ⓘ» steht zweimal hintereinander.
+
+**Entwurf:** zuerst die geschätzte Gesamtsteuer (gross), ein Balken Bund/Kanton-Gemeinde und die zwei
+Teile, dann die Eingaben (aufgeklappt), Berechnung (zugeklappt), Zivilstand, Quellen, offizielle Stelle.
+Zustand «Kanton fehlt» per Schalter. Alle 84 Bausteine drin.
+
+**Bedingte Teile** (aus dem Code, Maria sieht sie nicht; bleiben im Bau wie heute): Wohnkanton-Frage,
+Elterntarif (ledig mit Kindern), «steuerbares Einkommen als Basis», Kinderabzug, Hinweise ohne Zahl
+(Bruttolohn, Rente, selbständig, Partner offen, Konkubinat), Einkommen ausserhalb der Tabelle
+(`tax.bandOutside`), «Nur die Bundessteuer ist abgezogen» ohne Kanton.
+
+### Finanz-Übersicht · Entwurf K (`seiten-v5.html?nur=k`)
+
+**Heute:** der erste Bildschirm ist nur der 3D-Lebensbaum. Dann Nettoeinkommen, Lohn, Branchen, Miete,
+sechs Kästen (Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten), KK-Last, ganz unten Budget
+und Notgroschen.
+
+**Entwurf:** zuerst Monatsbudget, frei verfügbar, Notgroschen. Dann die sechs Zeilen (je zum Werkzeug),
+dann Lohn (Barometer mit vier Abschnitten wie im Kapitel), Miete und KK-Last zugeklappt. Der Baum bleibt
+ganz, weiter unten (Leitplanke 06.07.). Zustand «Noch kein Einkommen» per Schalter. Alle 79 Bausteine drin.
+
+**Bedingte Teile** (bleiben im Bau wie heute): Haushalt-Zeile, «Unter Armutsgrenze», Mindestlohn-«!»
+(GE, NE, JU, BS, TI), KK-Last über 10 % mit IPV-Knopf, mehrere Einnahmequellen, Bruttolohn-Hinweis.
+Die Gesundheitskosten-Karte zeigt nur das laufende Jahr.
+
+**Copy-Prüfer:** Du-Form schreibt `finanzUebersicht.*` «Deine/Dich» gross, `tax.*` «deine/dir» klein.
+
+### Textprüfung I/J/K gegen `de.js` und die laufende App (23.10. abends)
+
+Skript in der App (`fetch('/src/i18n/de.js')` + Seitentexte). Fünf Texte waren nicht belegt und sind
+ersetzt oder gestrichen: Erklärsatz zu «Bundessteuer ⓘ» (jetzt `glossar.bundessteuer`), «Begriffe:»,
+«0 Kinder», «Kein Kanton» (Marke wird ausgeblendet). Bleibt bewusst: der Platzhalter für den Baum
+(Mockup, kein App-Text) und der Abschnittsname «Datenstand · Offizielle Stelle & Antrag» (zwei App-Wörter).
+Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup & Export» auch auf der Seite.
+
+**Bilder neben heute:** `neu-steuern.jpg`, `neu-finanzuebersicht.jpg`, `neu-einstellungen.jpg`;
+`vergleich-v5.html` hat jetzt 12 Seiten.
+
+**Noch nicht entschieden:** die drei Entwürfe I, J, K. Empfehlung Claude: so übernehmen.
