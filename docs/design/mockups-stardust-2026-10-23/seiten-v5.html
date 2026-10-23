@@ -416,6 +416,17 @@ body.desktop .zl-band { margin: 2px 0 0; }
 #ipv-weg label { display: grid; gap: 4px; font-size: 12px; color: var(--mid); margin: 6px 0; }
 #ipv-weg input { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; width: 160px; }
 #ipv-weg .zurueck { background: none; border: 0; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; min-height: 44px; padding: 0; }
+.dok-form { margin-top: 14px; }
+.dok-form select { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; }
+.dok-datei { display: flex; align-items: center; justify-content: center; min-height: 72px; border: 1.5px dashed var(--border); border-radius: 14px; color: var(--mid); font-size: 14px; text-align: center; padding: 10px; cursor: pointer; margin: 4px 0 12px; }
+.dok-datei.gewaehlt { border-style: solid; border-color: var(--sage); color: var(--text); }
+.dok-fehler { font-size: 13px; color: var(--gold); margin: -4px 0 10px; }
+.dok-wege { display: flex; flex-wrap: wrap; gap: 8px; }
+.dok-wege a.knopfruhig { text-decoration: none; }
+.dok-noetig { margin-top: 18px; padding: 12px 14px; border-radius: 14px; background: var(--up); }
+.dok-noetig h4 { font-size: 14px; font-weight: 500; margin: 0 0 6px; }
+.dok-noetig ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--mid); }
+.dok-noetig li.da { color: var(--soft); text-decoration: line-through; }
 .ipv-profil { display: grid; gap: 2px; justify-items: start; margin: 6px 0 4px; }
 .ipv-profil small { font-size: 12px; color: var(--mid); }
 .ipv-profil .knopfruhig { margin-top: 6px; font-size: 13px; padding: 8px 14px; }
@@ -703,7 +714,18 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           <div class="zeile" data-offen="false"><button><b>Vorsorge</b><span class="bal"><i style="width:100%"></i></span><small>erfasst · ändern</small><span class="pfeil">›</span></button>
             <div class="tiefe"><div><div class="feld"><span>3. Säule A eingezahlt</span><span>erfasst</span></div></div></div></div>
           </div>
-          <div id="reiter-dokumente" hidden><div class="leer" style="padding:18px 0 6px"><p data-sie="Noch keine Dokumente in diesem Kapitel. Lohnausweis, Kontoauszüge oder Steuerbescheid gehören hierher." data-du="Noch keine Dokumente in diesem Kapitel. Lohnausweis, Kontoauszüge oder Steuerbescheid gehören hierher."></p><button class="knopfruhig">Dokument fotografieren</button></div></div>
+          <div id="reiter-dokumente" hidden>
+            <!-- wie ChapterView.jsx: Dokumenttyp aus chapter.docs, Ablaufdatum, Datei, Hochladen, Erforderliche Dokumente -->
+            <form class="dok-form" id="kap-dok-form">
+              <label class="feldzeile"><span>Dokumenttyp</span><select id="kap-dok-typ"><option value="">— Auswählen —</option><option>Steuererklärung</option><option>Lohnzettel</option><option>Kontoauszug</option></select></label>
+              <label class="feldzeile"><span>Ablaufdatum</span><input type="date" id="kap-dok-ablauf"></label>
+              <label class="dok-datei"><input type="file" id="kap-dok-datei" hidden><span id="kap-dok-dateiname">Datei auswählen oder hierher ziehen</span></label>
+              <p class="dok-fehler" id="kap-dok-fehler" role="alert" hidden></p>
+              <div class="dok-wege"><button class="knopfprim" type="submit">Hochladen</button><a class="knopfruhig" href="#h">Dokument fotografieren</a></div>
+            </form>
+            <div class="dok-noetig"><h4>Erforderliche Dokumente</h4><ul id="kap-dok-liste"><li>Steuererklärung</li><li>Lohnzettel</li><li>Kontoauszug</li></ul></div>
+            <div class="vertrauen" style="justify-content:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Dokumente bleiben auf diesem Gerät." data-du="Deine Dokumente bleiben auf diesem Gerät."></span></div>
+          </div>
 
           <div class="passend">
             <h4>Passend zu diesem Bereich</h4>
@@ -722,8 +744,10 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       </div>
     </div></div>
     <nav class="anker" data-aktiv="uebersicht"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button hidden>Rückgängig</button></div>
   </div>
   <div class="notiz"><ul>
+    <li><b>Entschieden 23.10.:</b> Kopf links und ruhig wie die anderen Seiten. Neu und für den Copy-Prüfer: «Jeden Monat bleiben» mit «verplant» / «Einkommen, netto», «Passend zu diesem Bereich» (mit «Lohnausweis ablegen», «Ablauf · 5 Schritte», «Anspruch · je nach Einkommen») und «Als Nächstes». Reiter «Dokumente» wie in <code>ChapterView.jsx</code> (Dokumenttyp aus den Kapitel-Dokumenten, Ablaufdatum, Datei, Hochladen, Erforderliche Dokumente, Fehlertexte der App) plus «Dokument fotografieren» als zweiter Weg.</li>
     <li>Gruppen und Felder wie in der App; wo die Erfassung keinen Wert lieferte, steht «erfasst». Balken zeigen nur erfasst / offen — keine erfundenen Prozente. Die Lage auf der Lohn-Skala ist gezeichnet; die Werte (CHF 6'472, Median CHF 7'024) und alle Sätze sind die heutigen.</li>
     <li>Offene Felder sind sandfarben («ergänzen»), nie rot — markieren, nicht anklagen (Lärm-Audit N2).</li>
   </ul></div>
@@ -1215,6 +1239,21 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     }
   }
   document.getElementById('ipv-lohn').addEventListener('input', ipv);
+  // Kapitel · Reiter «Dokumente»: Fehlertexte wie die App (selectFile / selectDocType / selectExpiry), Erfolg «Dokument hinzugefügt»
+  (() => {
+    const f = document.getElementById('kap-dok-form'); if (!f) return;
+    const datei = document.getElementById('kap-dok-datei'), name = document.getElementById('kap-dok-dateiname'), fehler = document.getElementById('kap-dok-fehler');
+    datei.onchange = () => { if (datei.files[0]) { name.textContent = datei.files[0].name; name.parentElement.classList.add('gewaehlt'); } };
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const typ = document.getElementById('kap-dok-typ').value, ablauf = document.getElementById('kap-dok-ablauf').value;
+      const msg = !datei.files[0] ? 'Datei auswählen oder hierher ziehen' : !typ ? 'Bitte Dokumenttyp auswählen' : !ablauf ? 'Bitte Ablaufdatum eingeben' : '';
+      fehler.hidden = !msg; fehler.textContent = msg; if (msg) return;
+      [...document.querySelectorAll('#kap-dok-liste li')].find((li) => li.textContent === typ)?.classList.add('da');
+      f.reset(); name.textContent = 'Datei auswählen oder hierher ziehen'; name.parentElement.classList.remove('gewaehlt');
+      melden(f.closest('.geraet'), 'Dokument hinzugefügt', false);
+    });
+  })();
   // «Ihr IPV-Weg» wie ipvStatus in PremiumSubsidy.jsx: geschätzt → beantragt → Verfügung erhalten.
   // «Jährlich erinnern» legt eine jährliche Aufgabe in Merkliste und Kalender (Entscheid Sophie 23.10.: in jedem Schritt, nicht erst nach der Verfügung)
   let ipvWeg = 'geschaetzt', ipvBetrag = '', ipvErinnert = false;

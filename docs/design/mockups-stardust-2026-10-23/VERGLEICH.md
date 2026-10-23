@@ -201,3 +201,13 @@ Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.j
 - **Förderbeträge unter der Grenze** rechnet die App mit nachgeladenen kantonalen Modellen
   (`calculateIPV`); ausserhalb des Browsers liefert die Rechnung nur «laden». Das Mockup zeigt darum
   keinen Betrag, sondern «Möglicher Betrag — nur auf Antrag».
+
+### Kapitel Finanzen · entschieden (Sophie, 23.10.2026)
+
+- **Kopf links und ruhig** wie alle anderen neuen Seiten (heute zentriert, Münze und Satz in Gold).
+- **Neue Teile bleiben** und gehen an den Copy-Prüfer: «Jeden Monat bleiben CHF 2'480» mit
+  «verplant» / «Einkommen, netto», «Passend zu diesem Bereich» und «Als Nächstes».
+- **Reiter «Dokumente» wie heute plus Fotografieren:** Dokumenttyp (aus den Kapitel-Dokumenten:
+  Steuererklärung, Lohnzettel, Kontoauszug), Ablaufdatum, «Datei auswählen oder hierher ziehen»,
+  «Hochladen», «Erforderliche Dokumente», «Ihre Dokumente bleiben auf diesem Gerät.», Fehlertexte der
+  App; dazu «Dokument fotografieren» als zweiter Weg. Der erfundene Leer-Satz ist weg.
