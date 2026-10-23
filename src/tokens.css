@@ -458,3 +458,96 @@ html.mp-readable body {
 
 /* Programmatischer Fokus (Sprach-Ladehinweis) ohne Rahmen um den ganzen Hauptbereich */
 main[tabindex="-1"]:focus { outline: none; }
+
+/* ─── Eingang als Ort (Code-Wand, BetaGate.jsx · Vorbild Stardust, 23.10.2026) ──
+   Man betritt zuerst die Landschaft, dann das Formular. Immer hell wie bisher (die Wand
+   kennt keinen Dunkelmodus), darum Farben fest aus LIGHT_PALETTE über --mp-tor-*.
+   Robust über Bildschirme: keine feste Höhe (min-height, dvh mit vh davor als Rückfall),
+   alle Masse über clamp(), sichere Ränder für Notch und Home-Leiste. Kein Bildschirm darf
+   den Inhalt abschneiden: wird es eng, scrollt die Seite. */
+.mp-tor {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--mp-tor-bg);
+  isolation: isolate;
+}
+.mp-tor-bild {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--mp-tor-bildhoehe);
+  background-size: cover;
+  background-position: 30% 70%;
+  z-index: -1;
+  --mp-tor-bildhoehe: clamp(180px, 44dvh, 520px);
+}
+/* Das Bild läuft nach unten in die Seitenfarbe aus — die Schrift steht nie auf dem Bild. */
+.mp-tor-bild::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 -2px 0; /* 2 px über die Kante: sonst blieb auf manchen Dichten eine Haarlinie */
+  background: linear-gradient(to bottom, transparent 35%, var(--mp-tor-bg) 94%);
+}
+.mp-tor-kopf {
+  position: relative;
+  padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+}
+.mp-tor-kopf h1 { margin: 0; }
+.mp-tor-inhalt {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  /* Startet im Auslauf des Bildes: Bildhöhe minus Kopf minus ein Stück Überlappung. */
+  padding: calc(clamp(180px, 44dvh, 520px) - 150px) max(20px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+}
+.mp-tor-titel {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  /* Höchstens 34 px: in der 440-px-Spalte bricht «Verstehen, was zusteht.» sonst dreizeilig. */
+  font-size: clamp(26px, 7.2vw, 34px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  color: var(--mp-tor-text);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.mp-tor-titel span { display: block; color: var(--mp-tor-akzent); }
+
+/* Sehr niedrige Fenster (Handy quer, kleine Laptops): das Bild tritt zurück. */
+@media (max-height: 560px) {
+  .mp-tor-bild { --mp-tor-bildhoehe: clamp(120px, 34dvh, 220px); }
+  .mp-tor-inhalt { padding-top: 40px; }
+  .mp-tor-titel { font-size: clamp(24px, 4.4vw, 32px); }
+}
+
+/* Breite Fenster (Tablet quer, Desktop): die Landschaft füllt den Raum, das Formular
+   steht als ruhige Fläche rechts darin. Erst ab 900 px Breite UND genug Höhe — sonst
+   bliebe für die Fläche zu wenig Platz und sie würde unten abgeschnitten. */
+@media (min-width: 900px) and (min-height: 600px) {
+  .mp-tor { flex-direction: row; align-items: center; }
+  .mp-tor-bild { inset: 0; height: auto; background-position: 35% 60%; }
+  .mp-tor-bild::after {
+    inset: 0; /* hier füllt das Bild die ganze Höhe: kein Überstand, sonst 2 px Scrollen */
+    background: linear-gradient(to right, transparent 40%, color-mix(in srgb, var(--mp-tor-bg) 55%, transparent) 75%, var(--mp-tor-bg));
+  }
+  .mp-tor-kopf { position: absolute; top: 0; left: 0; padding: 28px 36px; }
+  .mp-tor-inhalt {
+    max-width: 440px;
+    margin: 40px clamp(24px, 7vw, 120px) 40px auto;
+    padding: 36px 36px 28px;
+    background: color-mix(in srgb, var(--mp-tor-flaeche) 88%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--mp-tor-rand);
+    border-radius: 22px;
+  }
+  .mp-tor-titel { font-size: 32px; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .mp-tor-inhalt { background: var(--mp-tor-flaeche); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
