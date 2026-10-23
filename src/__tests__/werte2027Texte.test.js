@@ -72,6 +72,9 @@ describe.each(FAELLE)('Uhr $uhr: Texte zeigen die Werte $jahr', (f) => {
       finanzen: { monthlyIncome: 6000, incomeType: 'brutto', dreizehnter: 'no' },
     } });
     expect(html).toContain(esc(`${de.vr.minMax}: CHF ${f.minRente} – ${f.maxRente} / ${de.vr.monat} (Stand ${f.jahr})`));
+    // Quellenzeile darunter: dasselbe Jahr (swiss-precision-pruefer 23.10.2026)
+    expect(html).toContain(`Keine rechtsverbindliche Auskunft. Stand ${f.jahr}.`);
+    expect(html).not.toMatch(/\{jahr\}/);
   });
 
   // BVG Art. 2 Abs. 1 / Art. 7 Abs. 1: versichert ist, wer «mehr als» die Schwelle verdient — genau die
@@ -107,6 +110,9 @@ describe('Keine Zahl der Bundestabellen mehr fest in den Texten', () => {
     const d = alle[lang];
     for (const s of [...texte(d.neuerJob.step2Text), ...texte(d.lehre.step4Text), ...texte(d.lehre.step5Text)]) {
       expect(s).not.toMatch(/22[\s,’']680|2[\s,’']520/);
+      // 268 Fr. (FamZG) stehen in keiner Tabelle: kein festes «Stand 2026» neben «Stand {jahr}»,
+      // sondern «seit 1. Januar 2025» (swiss-precision-pruefer 23.10.2026: FamZG ohne Fassung 1.1.2027)
+      expect(s).not.toMatch(/(Stand|état|stato|as of) 2026/);
     }
   });
 });
