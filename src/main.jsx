@@ -1287,10 +1287,24 @@ const AppInner = ({ demo }) => {
         )
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        // Handy: oben rechts = Einstellungen/Konto (Zahnrad); Navigation liegt am Boden-Anker.
-        // Desktop: Bedienelemente inline + Hamburger (kein Boden-Anker).
+        // Handy: oben rechts = Suche (Lupe) + Einstellungen/Konto (Zahnrad); Navigation liegt
+        // am Boden-Anker. Die Lupe sitzt seit 23.10.2026 hier statt in der Fusszeile (dort
+        // waren sieben Plätze zu viel). Desktop: Bedienelemente inline + Hamburger.
         isMobile
-          ? React.createElement('button', {
+          ? React.createElement(React.Fragment, { key: 'mobile-controls' },
+            React.createElement('button', {
+              key: 'search',
+              'aria-label': t('nav.search'),
+              'aria-current': view === 'search' ? 'page' : undefined,
+              onClick: () => handleNavigate('search'),
+              style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+            },
+              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+                React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
+                React.createElement('path', { d: 'M15.5 15.5 L20 20' })
+              )
+            ),
+            React.createElement('button', {
               key: 'settings',
               'aria-label': t('nav.settings'),
               'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
@@ -1302,7 +1316,7 @@ const AppInner = ({ demo }) => {
                 // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
                 React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
               )
-            )
+            ))
           : React.createElement(React.Fragment, { key: 'desktop-controls' },
               // Ruhige, hierarchische Kopfzeile: nur Sprache + Erscheinungsbild bleiben
               // griffbereit inline. Alle Barrierefreiheits-Schalter (und Anrede) wandern
