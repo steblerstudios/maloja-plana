@@ -646,6 +646,20 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 .fu-kk span { position: absolute; top: 16px; font-size: 11px; color: var(--soft); transform: translateX(-50%); white-space: nowrap; }
 .fu-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .fu-chips button { border: 1px solid var(--border); background: none; color: var(--mid); border-radius: 999px; min-height: 36px; padding: 0 12px; font: inherit; font-size: 12px; cursor: pointer; }
+/* M · Lebenssituationen, N · Suche (Fassung 5, 23.10. abends) */
+.ls-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.ls-chips button { border: 1px solid var(--border); background: none; color: var(--text); border-radius: 999px; min-height: 44px; padding: 8px 14px; font: inherit; font-size: 14px; text-align: start; cursor: pointer; }
+.ls-chips button[aria-pressed="true"] { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 16%, transparent); }
+.ls-karte { border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; }
+.ls-karte b { display: block; font-size: 15px; margin-bottom: 4px; }
+.ls-karte p { margin: 0; font-size: 14px; color: var(--mid); line-height: 1.5; }
+.ls-karte small { display: block; margin-top: 6px; font-size: 12px; color: var(--soft); }
+.su-feld { position: sticky; top: 0; z-index: 3; background: var(--bg); padding: 6px 0 10px; }
+.su-feld input { width: 100%; min-height: 48px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); padding: 0 18px; font: inherit; font-size: 15px; box-sizing: border-box; }
+.su-gruppe { font-size: 13px; color: var(--soft); margin: 16px 0 4px; }
+.su-bereiche { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.su-bereiche a { display: flex; gap: 10px; align-items: center; min-height: 56px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 14px; text-decoration: none; color: var(--text); font-size: 13px; }
+.su-treffer mark { background: color-mix(in srgb, var(--gold) 35%, transparent); color: inherit; border-radius: 3px; }
 .fu-baum { height: 180px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 10%, transparent), color-mix(in srgb, var(--sage) 28%, transparent)); display: grid; place-items: center; color: var(--mid); font-size: 13px; margin-top: 10px; text-align: center; padding: 0 20px; }
 </style>
 </head>
@@ -1443,6 +1457,84 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   </ul></div>
 </section>
 
+<!-- ===================== M · Lebenssituationen (Anker «Anspruch») ===================== -->
+<section class="abschnitt" id="m">
+  <h2>M · Liste zum Auswählen — «Lebenssituationen» (Anker «Anspruch»)</h2>
+  <p class="warum"><b>Neu in Fassung 5 (23.10. abends).</b> Der Knopf «Anspruch» unten öffnet diese Seite. Heute: Titel, Einleitung, elf Situationen als Knöpfe. Antippen zeigt darunter, was infrage kommt (Karten mit Quelle und Stand, bei «Geld knapp» auch Angebote in der Region). Hier gleich aufgebaut, in der Form der anderen Seiten: Kopf mit Symbol, die Situationen als Auswahl, die Karten in der Bereichsform. Alle Texte aus der App.</p>
+  <div class="geraet" data-seite="m">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="anspruch"></nav>
+    <div class="seite" style="--licht: var(--gold)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Lebenssituationen</nav></div>
+          <div class="titelzeile"><span class="sym" data-anker-sym="anspruch" style="--licht: var(--gold)"></span><h3 style="font-size:clamp(24px,7vw,34px);hyphens:manual">Lebenssituationen</h3></div>
+          <p class="satz" data-sie="Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer andauernden Situation. Wählen Sie, was passt. Das bleibt auf Ihrem Gerät und hilft nur, Ihnen Passendes zu zeigen — kein Profil, keine Bewertung." data-du="Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer andauernden Situation. Wähle, was passt. Das bleibt auf deinem Gerät und hilft nur, dir Passendes zu zeigen — kein Profil, keine Bewertung."></p>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <div class="ls-chips" role="group" aria-label="Lebenssituationen">
+            <button aria-pressed="true" data-ls="geld">Wenn das Geld knapp ist</button><button aria-pressed="false" data-ls>Kinder allein grossziehen</button><button aria-pressed="false" data-ls>Mit Beeinträchtigung oder chronischer Krankheit</button><button aria-pressed="false" data-ls>Angehörige pflegen</button><button aria-pressed="false" data-ls>Neu in der Schweiz</button><button aria-pressed="false" data-ls>In Ausbildung</button><button aria-pressed="false" data-ls>Asylsuchend oder mit Schutzstatus</button><button aria-pressed="false" data-ls>Pensioniert / im AHV-Alter</button><button aria-pressed="false" data-ls>Ohne Arbeit / zwischen Stellen</button><button aria-pressed="false" data-ls>Verschuldet oder in Betreibung</button><button aria-pressed="false" data-ls>Ein Elternteil ist verstorben (Waisenrente)</button>
+          </div>
+          <p class="fuss" id="ls-hinweis" hidden>Eine Situation antippen, um zu sehen, was infrage kommt.</p>
+          <div id="ls-geld" style="margin-top:16px">
+            <p class="unter">Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung — vieles bleibt ungenutzt, weil man es schlicht nicht kennt.</p>
+            <a class="verweis" href="#b"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Prämienverbilligung (IPV)<small>Der Kanton hilft bei den Krankenkassen-Prämien für tiefe und mittlere Einkommen. Viele Berechtigte stellen nie einen Antrag.<br>Quelle: BAG / Kanton · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="wohnen" style="--licht: var(--wohnen)"></span><span>Mietzinsbeitrag<small>Einzelne Kantone und Gemeinden beteiligen sich an der Miete, wenn sie bei tiefem Einkommen zu schwer wiegt.<br>Quelle: Kanton · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Ergänzende Sozialhilfe<small>Wenn das Einkommen das Nötigste nicht deckt, kann die Sozialhilfe aufstocken. Das ist ein Recht, kein Almosen.<br>Quelle: SKOS · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="ausbildung" style="--licht: var(--ausbildung)"></span><span>Stipendien &amp; Ausbildungsbeiträge<small>Für Ausbildung und Studium bei tiefem Einkommen gibt es Stipendien — rückzahlbar oder nicht.<br>Quelle: EDK / Kanton · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Franchise prüfen<small>Bei wenigen Arztbesuchen senkt eine höhere Franchise die monatliche Prämie — lohnt sich jeden Herbst zu prüfen.<br>Quelle: BAG · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="globus" style="--licht: var(--sage)"></span><span>KulturLegi (Caritas) ↗<small>Der Ausweis für kleine Budgets: mindestens 30% Rabatt auf tausende Angebote in Kultur, Sport, Bildung (z.B. Kurse) und Gesundheit (z.B. Zahnbehandlung). Das Angebot ist je Region verschieden — Ihre kantonale KulturLegi zeigt, was bei Ihnen gilt.<br>Quelle: Caritas · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#"><span class="sym k" data-icon="globus" style="--licht: var(--sage)"></span><span>Reka-Ferien für 200.– ↗<small>Mit der KulturLegi ermöglicht die Reka-Stiftung armutsbetroffenen Familien und Alleinstehenden eine Ferienwoche für rund 200 Franken — Unterkunft und Anreise mit dem ÖV inklusive.<br>Quelle: Reka-Stiftung Ferienhilfe · Stand 2026</small></span><span class="pfeil">›</span></a>
+            <h4 class="su-gruppe" data-sie="Angebote in Ihrer Region" data-du="Angebote in deiner Region"></h4>
+            <div class="ls-karte"><b data-sie="Ihre regionale KulturLegi ↗" data-du="Deine regionale KulturLegi ↗"></b><p>Die Angebote für Ihre Region — Kultur, Kurse, Sport und mehr.</p></div>
+            <div class="ls-karte"><b>Freikarten &amp; Aktionen Zürich ↗</b><p>Konkrete Aktionen im Kanton Zürich mit der KulturLegi — z. B. Bücher- und Spiele-Gutscheine, Computer für die digitale Teilhabe.</p></div>
+            <div class="ls-karte"><b>Volkshochschule Zürich ↗</b><p>Mit der KulturLegi 50% Rabatt auf Vortragskurse und 20% auf weitere Kurse.</p></div>
+            <div class="ls-karte"><b>Caritas-Markt ↗</b><p>Vergünstigte Lebensmittel und Alltagsartikel für Menschen mit knappem Budget — Zugang mit der Caritas-Markt-Kundenkarte (über die KulturLegi).</p></div>
+          </div>
+          <div class="vertrauen" style="justify-content:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Daten bleiben auf diesem Gerät." data-du="Deine Daten bleiben auf diesem Gerät."></span></div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="anspruch"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Drei Namen für eine Seite:</b> unten heisst der Knopf «Anspruch», im Rucksack und auf der Übersicht «Was steht mir zu?», die Seite selbst «Lebenssituationen». Wer «Anspruch» antippt und «Lebenssituationen» liest, ist kurz unsicher, ob er richtig ist. Vorschlag: Titel bleibt, darüber steht die Brotkrume; im Bau prüfen, ob «Was steht mir zu?» als Titel besser trägt (Copy-Prüfer).</li>
+    <li>Die Karten führen, wo es ein Werkzeug gibt, direkt dorthin (IPV, Sozialhilfe, Stipendien). Bereichsfarbe nach dem Werkzeug. Externe Angebote (KulturLegi, Reka) mit Globus und ↗, wie die Aussenfach-Regel.</li>
+    <li>Im Mockup ist nur «Wenn das Geld knapp ist» mit Karten gefüllt. Die anderen zehn zeigen im Mockup den Hinweis «Eine Situation antippen …». Ihre Karten stehen in der App.</li>
+  </ul></div>
+</section>
+
+<!-- ===================== N · Suche ===================== -->
+<section class="abschnitt" id="n">
+  <h2>N · Suche</h2>
+  <p class="warum"><b>Neu in Fassung 5 (23.10. abends).</b> Heute zeigt die leere Suche eine Liste mit 78 Einträgen: zuerst 70 «Werkzeuge» (darunter auch alle Lebensereignisse), ganz unten die 7 Kapitel. Hier stehen zuerst die sieben Bereiche als Kacheln in ihren Farben, dann «Werkzeuge» und «Lebensereignisse» getrennt. Das Suchfeld bleibt oben stehen. Treffer werden markiert. Probieren: «miete» oder «xyz» eintippen.</p>
+  <div class="geraet" data-seite="n">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="suche"></nav>
+    <div class="seite" style="--licht: var(--sage)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Suche</nav></div>
+          <div class="titelzeile"><span class="sym" data-anker-sym="suche" style="--licht: var(--sage)"></span><h3>Suche</h3></div>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <div class="su-feld"><input id="su-eingabe" type="search" placeholder="Werkzeuge und Kapitel durchsuchen…" aria-label="Suche"></div>
+          <div id="su-liste"></div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="suche"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Kapitel zuerst:</b> Die sieben Bereiche sind der Weg, den die App überall zeigt. Als Kacheln in ihren Farben sind sie sofort erkennbar. Heute stehen sie nach 70 Einträgen ganz unten.</li>
+    <li><b>Lebensereignisse getrennt:</b> heute stehen Abläufe wie «Wohnung gekündigt» oder «Heirat» unter «Werkzeuge». Hier eine eigene Gruppe «Lebensereignisse» (das Wort gibt es in der App schon). Im Mockup ist die Liste gekürzt.</li>
+    <li><b>Befund App:</b> Einige Seiten lassen sich nicht finden. Sie stehen in <code>WEITERE_NAMEN</code> in <code>config/ansichtenRegister.js</code> («nicht in der Suche»): Mietzins-Rechner, Notfallkarte, Briefe, Obstgarten, Rucksack, Rechtliches u. a. Wer «Notfallkarte» oder «Miete» sucht, findet sie nicht. Vorschlag: in die Suche aufnehmen.</li>
+    <li>«Steuern · Bundessteuer berechnen» steht auch hier, siehe Befund bei J.</li>
+  </ul></div>
+</section>
+
 <script>
   const root = document.documentElement;
   root.dataset.theme = 'dark';
@@ -1580,6 +1672,42 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     document.getElementById('fu-held').hidden = leer;
     document.getElementById('fu-rest').hidden = leer;
   });
+  // ---------- M · Lebenssituationen: Auswahl (im Mockup nur «Geld knapp» mit Karten) ----------
+  document.querySelectorAll('[data-ls]').forEach((b) => b.addEventListener('click', () => {
+    const an = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', an);
+    const geld = document.querySelector('[data-ls="geld"]').getAttribute('aria-pressed') === 'true';
+    document.getElementById('ls-geld').hidden = !geld;
+    document.getElementById('ls-hinweis').hidden = geld;
+  }));
+  document.querySelectorAll('[data-anker-sym]').forEach((el) => { el.innerHTML = ic(el.dataset.ankerSym); });
+
+  // ---------- N · Suche: Kapitel zuerst, dann Werkzeuge und Lebensereignisse; Treffer markiert ----------
+  // Namen und Untertitel aus de.js (nav.*, nav.sub.*); Liste gekürzt. Mietzinsbeiträge, Notfallkarte und
+  // Rucksack stehen heute NICHT in der Suche (WEITERE_NAMEN) — hier als Vorschlag drin.
+  const SU_BEREICHE = [['Persönliche Basis', 'basis', 'basis'], ['Wohnen & Leben', 'wohnen', 'wohnen'], ['Finanzen & Geld', 'finanzen', 'finanzen'], ['Versicherungen & Vorsorge', 'versicherungen', 'versicherungen'], ['Ausbildung & Arbeit', 'ausbildung', 'ausbildung'], ['Behörden & Rechtliches', 'behoerden', 'behoerden'], ['Notfall', 'notfall', 'notfall']];
+  const SU_WERKZEUGE = [['Steuern', 'Bundessteuer berechnen', 'finanzen', 'steuer tax impot'], ['Finanz-Übersicht', '', 'finanzen'], ['Sozialhilfe', 'SKOS-Orientierung', 'finanzen'], ['Prämienverbilligung (IPV)', 'Anspruch prüfen', 'versicherungen'], ['Prämien-Orientierung', 'Modelle vergleichen', 'versicherungen'], ['Vorsorge-Rechner', 'AHV & Pensionskasse', 'versicherungen'], ['ALV-Taggeld', 'Taggeld abschätzen', 'finanzen'], ['Stipendien', 'Ausbildungsbeiträge, kantonal', 'ausbildung'], ['Mietzinsbeiträge', 'Anspruch & Schnellcheck', 'wohnen', 'miete mietzins wohnkosten'], ['Notfallkarte vorbereiten', '', 'notfall', 'notfall ice kontakt'], ['Rucksack', '', 'basis'], ['Dokumentenablage', 'Sichere Ablage', 'sage'], ['Kalender', 'Fristen & Termine', 'sage'], ['Merkliste', 'Notizen & nächste Schritte', 'sage'], ['Offizielle Links', 'Behörden & Ämter', 'sage']];
+  const SU_EREIGNISSE = [['Umzug', 'Adresse, Gemeinde, Kündigung', 'wohnen'], ['Wohnung gekündigt', 'Anfechten, Erstreckung, 30 Tage', 'wohnen', 'miete kündigung vermieter'], ['Zusammenziehen ohne Trauschein', 'Miete, Erben, Vorsorge, Kinder', 'wohnen'], ['Neuer Job', 'Vertrag, Vorsorge, Steuern, Fristen', 'ausbildung'], ['Stelle verloren', 'RAV, Versicherungen, Vorsorge', 'ausbildung'], ['Heirat oder Partnerschaft', 'Zivilstand, Steuern, Vorsorge', 'basis'], ['Kind bekommen', 'Geburt, KK, Zulagen, EO', 'basis'], ['Trennung oder Scheidung', 'Wohnen, Kinder, Finanzen', 'basis'], ['Krankenkasse wechseln', 'Vergleichen, wechseln, Frist sichern', 'versicherungen'], ['Betreibung erhalten', 'Zahlungsbefehl — ruhig reagieren', 'behoerden'], ['Todesfall im Umfeld', 'Erste Schritte, Renten, Nachlass', 'basis']];
+  const suMark = (t, q) => { if (!q) return t; const i = t.toLowerCase().indexOf(q); return i < 0 ? t : t.slice(0, i) + '<mark>' + t.slice(i, i + q.length) + '</mark>' + t.slice(i + q.length); };
+  const suZeile = ([n, s, f], q) => `<a class="verweis su-treffer" href="#"><span class="sym k" data-icon="${f === 'sage' ? 'ordner' : f}" style="--licht: var(--${f})"></span><span>${suMark(n, q)}${s ? `<small>${suMark(s, q)}</small>` : ''}</span><span class="pfeil">›</span></a>`;
+  function suche() {
+    const q = document.getElementById('su-eingabe').value.trim().toLowerCase();
+    const passt = ([n, s, , a = '']) => !q || (n + ' ' + s + ' ' + a).toLowerCase().includes(q);
+    const b = SU_BEREICHE.filter(([n]) => passt([n, ''])), w = SU_WERKZEUGE.filter(passt), e = SU_EREIGNISSE.filter(passt);
+    const el = document.getElementById('su-liste');
+    if (q && !b.length && !w.length && !e.length) {
+      const roh = document.getElementById('su-eingabe').value.trim();
+      el.innerHTML = `<p class="unter" style="margin-top:14px"><b>Keine Treffer</b><br>${anrede === 'du' ? `Nichts gefunden für „${roh}“. Versuch einen anderen Begriff.` : `Nichts gefunden für „${roh}“. Versuchen Sie einen anderen Begriff.`}</p>`;
+      return;
+    }
+    el.innerHTML = (b.length ? `<h4 class="su-gruppe">Kapitel</h4><div class="su-bereiche">${b.map(([n, i, f]) => `<a href="#"><span class="sym k" data-icon="${i}" style="--licht: var(--${f})"></span><span>${suMark(n, q)}</span></a>`).join('')}</div>` : '')
+      + (w.length ? `<h4 class="su-gruppe">Werkzeuge</h4>${w.map((x) => suZeile(x, q)).join('')}` : '')
+      + (e.length ? `<h4 class="su-gruppe">Lebensereignisse</h4>${e.map((x) => suZeile(x, q)).join('')}` : '');
+    icons();
+  }
+  document.getElementById('su-eingabe').addEventListener('input', suche);
+  document.querySelectorAll('[data-anrede]').forEach((b) => b.addEventListener('click', () => setTimeout(suche)));
+  suche();
   document.querySelectorAll('.st-saeulen button:not(.offen)').forEach((b) => b.addEventListener('click', () => document.querySelectorAll('.st-saeulen button:not(.offen)').forEach((x) => x.setAttribute('aria-pressed', x === b))));
 
   // ---------- Glossar ----------
