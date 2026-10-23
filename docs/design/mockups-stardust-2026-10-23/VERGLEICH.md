@@ -478,6 +478,48 @@ Budget (nur `otherInsurance`). Vor dem Bau entscheiden, ob erfasste Versicherung
 **Voraussetzung im Bau:** eine Monatsrechnung (🔴 1 im Gesamtbericht), sonst zeigen Kapitel und Übersicht
 verschiedene Summen.
 
+### Finanz-Übersicht (K) · zweiter und dritter Ausbau, entschieden (Sophie, 24.10.2026)
+
+Sophie: «was jetzt schon drin ist und erarbeitet wurde» bleibt, dazu alles, was die App schon kann.
+Umgesetzt in `seiten-v5.html?nur=k` (ffcc25b2, 6185adae). Sophie: «die Finanz-Übersicht passt jetzt».
+
+**Zweiter Ausbau — Inhalte, die die App schon rechnet**
+- **Budget-Hinweis** unter «Frei verfügbar» aus `getBudgetRecommendations` (Maria: `budget.budgetCalm`).
+- **Vom Brutto zum Netto (Richtwert)** im Einnahmen-Block: `nettoZuBruttoRichtwert` (Alter 34 → ≈ 6'796),
+  AHV/IV/EO 5.3 %, ALV 1.1 %, PK nach Alter (−161), mit dem Vorbehalt aus dem Code (ohne NBU, KTG,
+  überobligatorische PK).
+- **Richtwerte und Teuerung je Posten** als kurze Zeilen («vergleichbarer Haushalt rund CHF …», «Preise seit
+  2020 +… % (allgemein +8 %)») aus `BUDGET_BENCHMARKS` (Haushaltstyp nach `resolveHouseholdType`) und
+  `BUDGET_PRICE_TREND`; die Erklärung (BFS HABE 2020/21, LIK Dez. 2020 – Aug. 2025) **einmal** als Fussnote
+  statt der vollen Sätze unter jedem Posten (die App zeigt sie heute je Posten hinter ⓘ).
+- **Aufs Jahr gerechnet:** Einnahmen, Ausgaben, frei, davon geplant zu sparen; Hinweis, wenn der 13. Monatslohn
+  nicht erfasst ist (die Budget-Seite hat schon den Schalter Monat/Jahr, `showAnnual`).
+- **Schutzschild ausgeklappt:** Pflicht (KK, UVG, BVG) und Empfohlen (Haftpflicht, Hausrat) mit gedeckt/offen,
+  Texte `schutzschild.*`.
+
+**Dritter Ausbau — die gebauten Instrumente** (Geometrie und Texte aus den Bausteinen)
+- **Notgroschen als Tacho** (`ReserveTank` über `Gauge`): 0–6 Monate, sand bis «empfohlen» (3), danach salbei,
+  Zeiger auf den Monaten, Ablesung `finanzUebersicht.tankReadout` darunter. Ersetzt den kleinen Balken.
+- **Pegel** (`Pegel`) unter den Zeilen IPV (Variante «luft», Linie = Grenze) und Sozialhilfe (Variante
+  «aufstockung», Linie = Bedarf), Ablesung `pegel.*`.
+- **Miete als Regional-Barometer** (`RegionalBarometer`, kind «rent», Füllung in Wohnen-Farbe): Füllung = eigene
+  Miete, Punkt = Region, Strich = Schweizer Schnitt, Legende, Abweichung, «strukturell», Quelle. Ersetzt die drei
+  Balken. Drittel-Schwelle «!» nur, wenn sie in der Skala liegt (bei Maria nicht).
+- Die vier Instrument-Kacheln (Franchise-Kreuz, Steuer-Säule, Reserve-Tank, Schutzschild) bleiben als Reihe.
+
+**Im Mockup angenähert:** die Deep-Farben der App (`sandDeep`, `skyDeep`, `goldDeep`) gibt es im Mockup nicht —
+im Bau gelten die App-Farben und ihre Kontrast-Regeln.
+
+**Befunde App (vor dem Bau klären):**
+- Die Brutto-Schätzung nimmt einen PK-Abzug nach Alter an (Maria −161), obwohl ein PK-Beitrag erfasst ist
+  (`bvgContribution` 420). Entscheid: erfassten Beitrag verwenden, wenn vorhanden?
+- Hausrat-Prämie erfasst, nicht im Budget (siehe oben).
+
+**Neue Texte für den Copy-Prüfer** (zusätzlich zu oben): «Vom Brutto zum Netto (Richtwert)», «Bruttolohn,
+geschätzt», «Pensionskasse, geschätzt nach Alter», der PK-Vorbehalt, die Kurzzeilen Richtwert/Teuerung und ihre
+Fussnote, «Aufs Jahr gerechnet», «Davon geplant zu sparen», der 13.-Monatslohn-Satz («rund CHF 6'200 mehr» ist
+eine Näherung — vor dem Bau an den swiss-precision-pruefer).
+
 ---
 
 ## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L, M und N entschieden 24.10.)
