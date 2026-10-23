@@ -259,3 +259,6 @@ Sophie: «es fehlen mir die Details, die wir bei den Finanzen eingebaut haben».
   die vier Wegweiser beim Lohn sind eine Reihe kleiner Knöpfe statt einer Liste; die fünf
   Nebenerwerb-Felder stecken hinter einer Zeile «Nebenerwerb · falls vorhanden» (offen, sobald etwas
   erfasst ist). Neu für den Copy-Prüfer: «So ist gerechnet», «falls vorhanden».
+- **«Trifft nicht zu» leiser** (Sophie, 23.10.): kein eigener Knopf mehr unter dem Feld, sondern ein
+  kleines graues Wort rechts neben dem Feldnamen; danach dort «Zurücknehmen». Tippfläche 32 px hoch,
+  für den Bau auf 44 px prüfen (a11y-Prüfer).

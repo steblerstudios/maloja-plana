@@ -443,7 +443,9 @@ body.desktop .zl-band { margin: 2px 0 0; }
 .fin-gruppe summary small { color: var(--soft); font-size: 12px; }
 .fin-gruppe[open] summary { margin-bottom: 4px; }
 .fin-feld small { font-size: 11.5px; color: var(--soft); }
-.fin-na { font-size: 12px; justify-self: start; min-height: 32px; }
+.fin-kopf { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.fin-na { font-size: 11.5px; color: var(--soft); min-height: 32px; padding: 0 2px; margin: -8px -2px -8px 0; background: none; border: 0; cursor: pointer; white-space: nowrap; }
+.fin-na:hover, .fin-na:focus-visible { color: var(--mid); text-decoration: underline; }
 .fin-feld-na small { color: var(--soft); }
 .fin-alimente { margin: 0 0 12px; padding: 8px 12px; border-radius: 12px; background: var(--up); opacity: .85; }
 .fin-alimente summary { cursor: pointer; font-size: 13px; color: var(--mid); min-height: 40px; display: flex; align-items: center; }
@@ -1382,8 +1384,10 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             : `<input id="${id}" data-k="${f[0]}" type="${f[2] === 'date' ? 'date' : 'text'}" ${f[2] === 'chf' ? 'inputmode="numeric" placeholder="CHF"' : ''} value="${f[3]}">`;
           const na = finNa.has(f[0]);
           const naKnopf = NA_OK.includes(f[0]) && !f[3] ? `<button class="zurueck fin-na" data-na="${f[0]}">${na ? 'Zurücknehmen' : 'Trifft nicht zu'}</button>` : '';
-          const zeile = na ? `<div class="feldzeile fin-feld fin-feld-na"><span>${f[1]}</span><small>trifft nicht zu. Zählt als erledigt.</small>${naKnopf}</div>`
-            : `<label class="feldzeile fin-feld" for="${id}"><span>${f[1]}</span>${feld}${hint}${naKnopf}</label>${finZusatz(f)}`;
+          // leise: «Trifft nicht zu» steht als kleines Wort rechts neben dem Feldnamen, nicht als eigene Zeile
+          const kopf = (t) => naKnopf ? `<span class="fin-kopf"><span>${t}</span>${naKnopf}</span>` : `<span>${t}</span>`;
+          const zeile = na ? `<div class="feldzeile fin-feld fin-feld-na">${kopf(f[1])}<small>trifft nicht zu. Zählt als erledigt.</small></div>`
+            : `<label class="feldzeile fin-feld" for="${id}">${kopf(f[1])}${feld}${hint}</label>${finZusatz(f)}`;
           // Ruhiger als die App: die fünf Nebenerwerb-Felder hinter einer Zeile (Entscheid offen, siehe VERGLEICH.md)
           if (f[0].startsWith('side')) {
             const neben = felder.filter((x) => x[0].startsWith('side'));
