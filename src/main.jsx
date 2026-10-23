@@ -1298,72 +1298,52 @@ const AppInner = ({ demo }) => {
         )
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        // Handy: oben rechts = Suche (Lupe) + Einstellungen/Konto (Zahnrad); Navigation liegt
-        // am Boden-Anker. Die Lupe sitzt seit 23.10.2026 hier statt in der Fusszeile (dort
-        // waren sieben Plätze zu viel). Desktop: Bedienelemente inline + Hamburger.
-        isMobile
-          ? React.createElement(React.Fragment, { key: 'mobile-controls' },
-            React.createElement('button', {
-              key: 'search',
-              'aria-label': t('nav.search'),
-              'aria-current': view === 'search' ? 'page' : undefined,
-              onClick: () => handleNavigate('search'),
-              style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-            },
-              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
-                React.createElement('path', { d: 'M15.5 15.5 L20 20' })
-              )
-            ),
-            React.createElement('button', {
-              key: 'settings',
-              'aria-label': t('nav.settings'),
-              'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
-              onClick: () => setSettingsOpen(true),
-              style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-            },
-              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
-                // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
-                React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
-              )
-            ))
-          : React.createElement(React.Fragment, { key: 'desktop-controls' },
-              // Ruhige, hierarchische Kopfzeile: nur Sprache + Erscheinungsbild bleiben
-              // griffbereit inline. Alle Barrierefreiheits-Schalter (und Anrede) wandern
-              // hinter EIN Symbol → Einstellungs-Schublade (gruppiert & beschriftet).
-              ...settingsControls.filter(c => c.key === 'lang' || c.key === 'theme'),
-              React.createElement('button', {
-                key: 'a11y',
-                'aria-label': t('common.settingsAccessibility'),
-                title: t('common.settingsAccessibility'),
-                'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
-                onClick: () => setSettingsOpen(true),
-                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-              },
-                // Universelles Barrierefreiheit-Symbol (Figur mit ausgestreckten Armen im Kreis)
-                React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                  React.createElement('circle', { cx: '12', cy: '12', r: '10', opacity: '0.35' }),
-                  React.createElement('circle', { cx: '12', cy: '6.6', r: '1.35', fill: 'currentColor', stroke: 'none' }),
-                  React.createElement('path', { d: 'M6.5 9.2 H17.5' }),
-                  React.createElement('path', { d: 'M12 9.2 V13.2' }),
-                  React.createElement('path', { d: 'M12 13.2 L9.4 18' }),
-                  React.createElement('path', { d: 'M12 13.2 L14.6 18' })
-                )
-              ),
-              React.createElement('button', {
-                key: 'menu',
-                'aria-label': t('nav.menu'),
-                onClick: () => setMobileNavOpen(!mobileNavOpen),
-                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-              },
-                React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-                  React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
-                  React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
-                  React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
-                )
-              )
-            )
+        // Oben rechts, Handy wie Desktop: Lupe (Suche) und Zahnrad (Einstellungen-Schublade).
+        // Die Lupe sitzt seit 23.10.2026 hier statt in der Fusszeile (dort waren sieben Plätze
+        // zu viel). Am Desktop ersetzt das Zahnrad die frühere Barrierefreiheits-Figur — sie
+        // öffnete dieselbe Schublade; Barrierefreiheit ist dort eine eigene Gruppe, der Tooltip
+        // nennt sie. Desktop zusätzlich: Sprache + Erscheinungsbild inline und Hamburger; am
+        // Handy liegt die Navigation am Boden-Anker.
+        React.createElement('button', {
+          key: 'search',
+          'aria-label': t('nav.search'),
+          title: isMobile ? undefined : t('nav.search'),
+          'aria-current': view === 'search' ? 'page' : undefined,
+          onClick: () => handleNavigate('search'),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+            React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
+            React.createElement('path', { d: 'M15.5 15.5 L20 20' })
+          )
+        ),
+        ...(isMobile ? [] : settingsControls.filter(c => c.key === 'lang' || c.key === 'theme')),
+        React.createElement('button', {
+          key: 'settings',
+          'aria-label': t('nav.settings'),
+          title: isMobile ? undefined : t('common.settingsTitle') + ' · ' + t('common.settingsAccessibility'),
+          'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
+          onClick: () => setSettingsOpen(true),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+            React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
+            // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
+            React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+          )
+        ),
+        !isMobile && React.createElement('button', {
+          key: 'menu',
+          'aria-label': t('nav.menu'),
+          onClick: () => setMobileNavOpen(!mobileNavOpen),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
+            React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
+            React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
+            React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
+          )
+        )
       )
     ),
     !demoMode && React.createElement('div', {
