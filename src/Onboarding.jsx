@@ -235,12 +235,14 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         ),
         alsApp && onSicherungEinspielen && React.createElement('div', {
           'data-testid': 'app-leer-sicherung',
+          role: 'group', 'aria-labelledby': 'app-leer-titel',
           style: {
             marginTop: space.lg, padding: space.md, background: palette.up,
             border: '1px solid ' + palette.border, borderRadius: radius.md,
           },
         },
-          React.createElement('p', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+          // h2 unter dem Logo-h1: per Überschriften-Navigation auffindbar.
+          React.createElement('h2', { id: 'app-leer-titel', style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
             t('onboarding.appLeer.titel')),
           React.createElement('p', { style: { margin: space.xs + 'px 0 0', fontSize: text.sm, lineHeight: leading.normal, color: palette.mid } },
             t('onboarding.appLeer.text')),

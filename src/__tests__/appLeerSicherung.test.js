@@ -52,8 +52,16 @@ describe('Einführung · Hinweis auf die Sicherung in der installierten App', ()
     globalThis.localStorage = { getItem: () => null, setItem: () => {} };
     alsApp(true);
     const block = rendern().match(/<div[^>]*data-testid="app-leer-sicherung"[\s\S]*?<\/button>/)[0];
-    for (const tag of block.match(/<(button|p|strong)[^>]*>/g)) expect(tag).toMatch(/color:/);
+    for (const tag of block.match(/<(button|p|h2|strong)[^>]*>/g)) expect(tag).toMatch(/color:/);
     expect(Number(block.match(/<button[^>]*min-height:\s*(\d+)px/)[1])).toBeGreaterThanOrEqual(44);
+  });
+
+  it('Screenreader: eine Gruppe, benannt durch eine h2-Überschrift', () => {
+    globalThis.localStorage = { getItem: () => null, setItem: () => {} };
+    alsApp(true);
+    const html = rendern();
+    expect(html).toMatch(/<div[^>]*role="group"[^>]*aria-labelledby="app-leer-titel"[^>]*data-testid="app-leer-sicherung"|<div[^>]*data-testid="app-leer-sicherung"[^>]*role="group"[^>]*aria-labelledby="app-leer-titel"/);
+    expect(html).toMatch(/<h2[^>]*id="app-leer-titel"[^>]*>onboarding\.appLeer\.titel<\/h2>/);
   });
 });
 
@@ -77,6 +85,10 @@ describe('main.jsx führt aus der Einführung direkt zur Sicherung', () => {
   const mainJsx = readFileSync(new URL('../main.jsx', import.meta.url), 'utf8');
   it('onSicherungEinspielen setzt die Ansicht «export»', () => {
     expect(mainJsx).toMatch(/onSicherungEinspielen:\s*\(\)\s*=>\s*\{[^}]*setView\('export'\)/);
+  });
+  it('… und legt den Fokus danach auf <main> (der Knopf verschwindet mit der Einführung)', () => {
+    expect(mainJsx).toMatch(/onSicherungEinspielen:\s*\(\)\s*=>\s*\{[^}]*hauptteilFokussieren\(\)/);
+    expect(mainJsx).toMatch(/const hauptteilFokussieren = \(\) => \{[\s\S]{0,400}getElementById\('mp-main'\)[\s\S]{0,80}focus\(/);
   });
 });
 

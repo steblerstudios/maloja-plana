@@ -3701,8 +3701,8 @@ export default {
     // App installada vida (Onboarding.jsx, zurSicherungWechseln) — TODO(rm): Gegenlese
     appLeer: {
       titel: 'Gia emplenì en il navigatur?',
-      text: { sie: 'L\'app installada ha in agen spazi da memoria. Quai che Vus avais endatà en il navigatur n\'è perquai anc betg qua. Faschai en il navigatur sut «Export» ina segirezza e restabilì ella qua.', du: 'L\'app installada ha in agen spazi da memoria. Quai che ti has endatà en il navigatur n\'è perquai anc betg qua. Fa en il navigatur sut «Export» ina segirezza e restabilescha ella qua.' },
-      knopf: 'Restabilir ina segirezza',
+      text: { sie: 'L\'app installada ha in agen spazi da memoria. Quai che Vus avais endatà en il navigatur n\'è perquai anc betg qua. Faschai en il navigatur sut «Export» ina segirezza e restituì ella qua.', du: 'L\'app installada ha in agen spazi da memoria. Quai che ti has endatà en il navigatur n\'è perquai anc betg qua. Fa en il navigatur sut «Export» ina segirezza e restituescha ella qua.' },
+      knopf: 'Restituir ina segirezza',
     },
     stepOf: 'Pass {current} da {total}',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

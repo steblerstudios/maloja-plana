@@ -4973,8 +4973,8 @@ export default {
     // App installata vuota (Onboarding.jsx, zurSicherungWechseln)
     appLeer: {
       titel: 'Già compilato nel browser?',
-      text: { sie: 'L\'app installata ha una propria memoria. Quanto ha inserito nel browser quindi qui non c\'è ancora. Nel browser crei una copia di sicurezza sotto «Esportazione» e la ripristini qui.', du: 'L\'app installata ha una propria memoria. Quanto hai inserito nel browser quindi qui non c\'è ancora. Nel browser crea una copia di sicurezza sotto «Esportazione» e ripristinala qui.' },
-      knopf: 'Ripristina una copia di sicurezza',
+      text: { sie: 'L\'app installata ha una propria memoria. Quanto ha inserito nel browser non è quindi ancora qui. Nel browser crei un backup sotto «Esportazione» e poi lo ripristini qui.', du: 'L\'app installata ha una propria memoria. Quanto hai inserito nel browser non è quindi ancora qui. Nel browser crea un backup sotto «Esportazione» e poi ripristinalo qui.' },
+      knopf: 'Ripristina un backup',
     },
     stepOf: 'Passo {current} di {total}',
     needsTitle: { sie: 'Cosa la riguarda in questo momento?', du: 'Cosa ti riguarda in questo momento?' },

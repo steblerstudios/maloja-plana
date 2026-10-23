@@ -4277,7 +4277,7 @@ export default {
     skipForNow: 'Skip for now',
     // Empty installed app (Onboarding.jsx, zurSicherungWechseln)
     appLeer: {
-      titel: 'Already filled in using the browser?',
+      titel: 'Already started in the browser?',
       text: 'The installed app has its own storage, so what you entered in the browser is not here yet. In the browser, make a backup under “Export”, then restore it here.',
       knopf: 'Restore a backup',
     },

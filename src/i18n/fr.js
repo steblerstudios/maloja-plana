@@ -4999,8 +4999,8 @@ export default {
     skipForNow: 'Passer pour l\'instant',
     // Application installée vide (Onboarding.jsx, zurSicherungWechseln)
     appLeer: {
-      titel: 'Déjà rempli dans le navigateur?',
-      text: { sie: 'L\'application installée a sa propre mémoire. Ce que vous avez saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, créez une sauvegarde sous «Export», puis restaurez-la ici.', du: 'L\'application installée a sa propre mémoire. Ce que tu as saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, crée une sauvegarde sous «Export», puis restaure-la ici.' },
+      titel: 'Déjà rempli dans le navigateur ?',
+      text: { sie: 'L\'application installée a sa propre mémoire. Ce que vous avez saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, créez une sauvegarde sous « Export », puis restaurez-la ici.', du: 'L\'application installée a sa propre mémoire. Ce que tu as saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, crée une sauvegarde sous « Export », puis restaure-la ici.' },
       knopf: 'Restaurer une sauvegarde',
     },
     stepOf: 'Étape {current} sur {total}',
