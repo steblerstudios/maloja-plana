@@ -9,6 +9,8 @@ Entwürfe, **nicht gebaut**. Gehören zu `docs/IDEEN.md` §16 und
 | `seiten.html` | Fassung 1 der anderen Seiten: Kapitel, Rechner, Ablauf, Ablage — aufgeräumt |
 | `seiten-v2.html` | Fassung 2: eigenes Licht je Bereich, Daten-Grammatik, Antippen, Passstrasse als Ablauf |
 | `seiten-v3.html` | Fassung 3: Fassung 2 plus alle früheren Entscheide aus `PRUEFLISTE.md` (Wege, Leisten, Zustände, Sprache, Sie/Du, Graustufen-Test) |
+| `seiten-v4.html` | Fassung 4: Tippflächen nachgemessen, dazu Abschnittsanzeige, «Als Nächstes» und Menü als Karten (aus Stardust) |
+| `abgleich.html` | Abgleich: 27 Stardust-Muster eingeordnet, 31 Prüflisten-Punkte mit Stand in Fassung 4 |
 
 **Ansehen:** über einen lokalen Server, nicht über `file://` (sonst laden Icons und Schriften
 nicht), z. B. `python3 -m http.server -d docs/design/mockups-stardust-2026-10-23 5447`.
