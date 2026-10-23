@@ -4240,6 +4240,10 @@ export default {
     doneTitle: 'Fait',
     markDone: 'Marquer comme fait',
     undo: 'Marquer comme à faire',
+    tagWaehlen: 'Choisir un jour',
+    ohneTag: 'Sans jour',
+    erledigtAm: 'fait le {datum}',
+    entfernt: 'Supprimé',
   },
 
   kkLast: {
@@ -4825,7 +4829,13 @@ export default {
     linkBudget: 'Voir dans le budget',
   },
   calendar: {
-    title: 'Calendrier et rappels',
+    title: 'À l’agenda',
+    aufgabe: 'Tâche',
+    ausMerkliste: 'de l’aide-mémoire',
+    ganzerMonat: 'Tout le mois',
+    nochOhneTag: 'Pas encore de jour',
+    aufTagLegen: 'Placer sur un jour',
+    jetztTagAntippen: { sie: 'Touchez maintenant un jour ci-dessus.', du: 'Touche maintenant un jour ci-dessus.' },
     anspruchTitle: { sie: 'Peut-être pour vous', du: 'Peut-être pour toi' },
     anspruchIntro: { sie: 'D’après vos données — sans obligation, juste une piste à explorer.', du: 'D’après tes données — sans obligation, juste une piste à explorer.' },
     upcoming: 'A venir',
