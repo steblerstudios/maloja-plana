@@ -77,8 +77,8 @@ const ArtMarke = ({ art, farbe, erledigt, palette, gross }) => {
   const g = gross ? 8 : 6;
   const basis = { display: 'inline-block', width: g + 'px', height: g + 'px', flexShrink: 0, boxSizing: 'border-box' };
   if (erledigt) return React.createElement('span', { 'aria-hidden': 'true', style: { ...basis, borderRadius: '50%', border: '1.5px solid ' + palette.mid } });
-  const form = art === 'termin' ? { transform: 'rotate(45deg) scale(.85)', borderRadius: '1px' }
-    : art === 'aufgabe' ? { borderRadius: '1px' }
+  const form = art === 'termin' ? { transform: 'rotate(45deg) scale(.85)', borderRadius: 0 }
+    : art === 'aufgabe' ? { borderRadius: 0 }
     : { borderRadius: '50%' };
   return React.createElement('span', { 'aria-hidden': 'true', style: { ...basis, ...form, background: farbe } });
 };
