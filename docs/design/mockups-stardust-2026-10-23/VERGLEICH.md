@@ -182,3 +182,22 @@ Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.j
   (aus `PremiumSubsidy.jsx`, nicht in der Messung): «Ihr IPV-Weg» (Automatisch / Antrag, «Ich habe
   beantragt», «Verfügung erhalten», Betrag laut Verfügung, «Jährlich erinnern»), «Alle Kantone
   vergleichen», Vorlesen, Hinweise zu Wochenaufenthalt und jungen Erwachsenen, Kanton wählen.
+
+### Rechner IPV · entschieden (Sophie, 23.10.2026)
+
+- **Überschriften wie die App:** «Anspruch & Aufenthaltsbewilligung», «Benötigte Dokumente»,
+  «Offizielle Stelle & Antrag». «Ihre Lage» bleibt als neuer Titel (Copy-Prüfer).
+- **«Frist in den Kalender» ist raus** (keine belegte Frist). Dafür **«Ihr IPV-Weg»** wie in der App:
+  Automatisch / Antrag → «Ich habe beantragt» → «Verfügung erhalten» → Betrag laut Verfügung, und
+  **«Jährlich erinnern»** legt «Prämienverbilligung fürs nächste Jahr prüfen» als **jährliche Aufgabe**
+  in Merkliste und Kalender (↻ Jährlich). Abweichung zur App: dort erst nach der Verfügung, hier in
+  jedem Schritt (Wunsch Sophie: sich das als Aufgabe eintragen können).
+- **Vorlesen** neben dem Untertitel (Browser-Sprachausgabe, wie `VorlesenButton`).
+- **Hinweise je nach Lage** (Wochenaufenthalt, junge Erwachsene, Kanton fehlt) mit den App-Texten;
+  im Mockup über einen Schalter, weil Maria Muster keinen davon sieht.
+- **«Alle Kantone vergleichen» bewusst nicht im Mockup:** Die App zeigt die Tabelle nur mit amtlich
+  belegten Kantonen; das sind heute **0 von 26**. Sie erscheint also heute nirgends. Vor dem Bau
+  klären, ob und mit welchen Quellen sie kommen soll.
+- **Förderbeträge unter der Grenze** rechnet die App mit nachgeladenen kantonalen Modellen
+  (`calculateIPV`); ausserhalb des Browsers liefert die Rechnung nur «laden». Das Mockup zeigt darum
+  keinen Betrag, sondern «Möglicher Betrag — nur auf Antrag».

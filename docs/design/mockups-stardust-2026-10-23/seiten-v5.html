@@ -402,6 +402,20 @@ body.desktop .zl-band { margin: 2px 0 0; }
 .zl-monate button { flex: 0 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; }
 .zl-monate button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 [data-seite="g"] .reiter2 button[aria-selected="true"] { border-bottom-color: var(--sage); }
+.vorlesen { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; margin: 2px 0 6px; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; }
+.ipv-hinweis { margin: 10px 0 4px; padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--gold) 10%, var(--up)); font-size: 13px; color: var(--text); line-height: 1.5; }
+.ipv-hinweis b { display: block; font-weight: 500; color: var(--gold); margin-bottom: 2px; }
+.ipv-hinweis select { margin-top: 6px; width: 100%; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; }
+.ipv-hinweis small { display: block; color: var(--mid); margin-top: 6px; font-size: 12px; }
+#ipv-weg p { font-size: 14px; color: var(--mid); margin: 6px 0; }
+#ipv-weg ul { font-size: 14px; color: var(--mid); margin: 6px 0 10px; padding-left: 18px; }
+#ipv-weg ul li { margin-bottom: 4px; }
+#ipv-weg .knoepfe2 { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
+#ipv-weg .stempel { display: inline-block; border: 2px solid var(--sage); color: var(--sage); font-size: 12px; font-weight: 600; letter-spacing: .5px; padding: 2px 8px; border-radius: 6px; transform: rotate(-3deg); margin-bottom: 6px; }
+#ipv-weg .betrag { font-family: 'Hanken Grotesk'; font-size: 22px; font-weight: 700; color: var(--sage); }
+#ipv-weg label { display: grid; gap: 4px; font-size: 12px; color: var(--mid); margin: 6px 0; }
+#ipv-weg input { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; width: 160px; }
+#ipv-weg .zurueck { background: none; border: 0; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; min-height: 44px; padding: 0; }
 .ipv-profil { display: grid; gap: 2px; justify-items: start; margin: 6px 0 4px; }
 .ipv-profil small { font-size: 12px; color: var(--mid); }
 .ipv-profil .knopfruhig { margin-top: 6px; font-size: 13px; padding: 8px 14px; }
@@ -719,6 +733,12 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <section class="abschnitt" id="b">
   <h2>B · Rechner — «Prämienverbilligung (IPV)»</h2>
   <p class="warum">Fassung 5: mit allem, was der Rechner heute zeigt — Kanton, Modell, Jahresgrenze, monatliche und jährliche Förderung, Anspruchsjahr und Prämienregion, die vier benötigten Dokumente, Online-Antrag, offizielle Stellen, Finanz-Übersicht und Berechnungsgrundlage im Wortlaut.</p>
+  <div class="leiste zustaende" role="group" aria-label="Lage der Person">
+    <button class="pill" data-ipvlage="maria" aria-pressed="true">Wie Maria Muster</button>
+    <button class="pill" data-ipvlage="woche" aria-pressed="false">Wochenaufenthalt</button>
+    <button class="pill" data-ipvlage="jung" aria-pressed="false">Junge Erwachsene im Haushalt</button>
+    <button class="pill" data-ipvlage="kanton" aria-pressed="false">Kanton fehlt</button>
+  </div>
   <div class="geraet mit-abschnitt" data-seite="b">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><button class="zahnrad" aria-label="Einstellungen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg></button></span></div>
     <div class="rahmen"><nav class="seitenmenue" data-aktiv="anspruch"></nav>
@@ -729,11 +749,13 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <div class="wege"><a class="herkunft" href="#">‹ Zurück zu Finanzen &amp; Geld</a><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Anspruch</a><span>›</span>Prämienverbilligung</nav></div>
             <div class="titelzeile"><span class="sym" data-icon="versicherungen"></span><h3>Prämienverbilligung <span style="white-space:nowrap">(<button class="begriff" data-erklaerung="ipv-erkl">IPV<sup>ⓘ</sup></button>)</span></h3></div>
             <p class="erklaerung" id="ipv-erkl">IPV heisst «individuelle Prämienverbilligung»: Der Kanton zahlt einen Teil der Krankenkassenprämie, wenn das Einkommen tief ist.</p>
+            <button class="vorlesen" id="ipv-vorlesen" aria-label="Vorlesen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>Vorlesen</button>
             <p class="satz" data-sie="Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Ihrer Krankenkassenprämie, wenn Ihr Einkommen unter einer bestimmten Grenze liegt." data-du="Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Deiner Krankenkassenprämie, wenn Dein Einkommen unter einer bestimmten Grenze liegt."></p>
           </div>
           <div class="held stufe s2" id="b-lage">
             <div class="etikett" data-sie="Ihre Lage" data-du="Deine Lage"></div>
             <div class="lage"><span>Kanton Zürich</span><span>1 Person</span><span>Prämienregion 1</span><span>Anspruchsjahr 2026</span></div>
+            <div id="ipv-lagehinweis"></div>
             <div class="regler"><label for="ipv-lohn"><span data-sie="Wie hoch ist Ihr Einkommen pro Monat (netto)?" data-du="Wie hoch ist dein Einkommen pro Monat (netto)?"></span><b id="ipv-wert">CHF 6'200</b></label><input id="ipv-lohn" type="range" min="2000" max="9000" step="100" value="6200"></div>
             <div class="ipv-profil" id="ipv-profil" hidden><small>Gerechnet mit den Zahlen aus dem Schnellcheck</small><small data-sie="Ihr Profil bleibt unverändert, solange Sie die Zahlen nicht übernehmen." data-du="Dein Profil bleibt unverändert, solange Du die Zahlen nicht übernimmst."></small><button class="knopfruhig" id="ipv-uebernehmen">Ins Profil übernehmen</button></div>
             <div class="baro" aria-hidden="true">
@@ -749,17 +771,17 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           </div>
         </div>
         <div class="rechtsspalte stufe s3">
-          <div class="abschnittanzeige" data-offen="false"><button class="kopfzeile" aria-expanded="false"><span>Abschnitt: <b class="abschnitt-name">Wer hat Anspruch?</b></span><span class="plus" aria-hidden="true">+</span></button>
-            <ol><li><a href="#b-lage" class="jetzt" data-sie="Ihre Lage und Ergebnis" data-du="Deine Lage und Ergebnis"></a></li><li><a href="#b-anspruch">Wer hat Anspruch? · Dokumente · Antragsstelle</a></li><li><a href="#b-weiter">Wie es weitergeht</a></li><li><a href="#b-quelle">Berechnungsgrundlage</a></li></ol></div>
-          <details open id="b-anspruch"><summary>Wer hat Anspruch?</summary><p>Anspruch besteht meist bei Wohnsitz im Kanton, obligatorischer Krankenversicherung und einer Bewilligung von mindestens 3 Monaten — auch eine Kurzaufenthaltsbewilligung (Ausweis L) kann berechtigen. Die genauen Regeln und Einkommensgrenzen unterscheiden sich je Kanton; im Zweifel hilft die kantonale IPV-Stelle weiter. Für den Antrag braucht es meist die Lohnabrechnungen der letzten 3 Monate und die Police mit der Prämie.</p></details>
+          <div class="abschnittanzeige" data-offen="false"><button class="kopfzeile" aria-expanded="false"><span>Abschnitt: <b class="abschnitt-name">Anspruch &amp; Aufenthaltsbewilligung</b></span><span class="plus" aria-hidden="true">+</span></button>
+            <ol><li><a href="#b-lage" class="jetzt" data-sie="Ihre Lage und Ergebnis" data-du="Deine Lage und Ergebnis"></a></li><li><a href="#b-anspruch">Anspruch &amp; Aufenthaltsbewilligung · Dokumente · Offizielle Stelle</a></li><li><a href="#b-weiter" data-sie="Ihr IPV-Weg" data-du="Dein IPV-Weg"></a></li><li><a href="#b-quelle">Berechnungsgrundlage</a></li></ol></div>
+          <details open id="b-anspruch"><summary>Anspruch &amp; Aufenthaltsbewilligung</summary><p>Anspruch besteht meist bei Wohnsitz im Kanton, obligatorischer Krankenversicherung und einer Bewilligung von mindestens 3 Monaten — auch eine Kurzaufenthaltsbewilligung (Ausweis L) kann berechtigen. Die genauen Regeln und Einkommensgrenzen unterscheiden sich je Kanton; im Zweifel hilft die kantonale IPV-Stelle weiter. Für den Antrag braucht es meist die Lohnabrechnungen der letzten 3 Monate und die Police mit der Prämie.</p></details>
           <details><summary>Benötigte Dokumente</summary><ul style="color:var(--mid);font-size:14px;margin:10px 0 0;padding-left:18px"><li>Steuererklärung (letzte 2 Jahre)</li><li>Lohnabrechnungen der letzten 3 Monate</li><li>Familienausweis (falls relevant)</li><li>Bestätigung der Krankenkassenprämien</li></ul></details>
-          <details><summary>Wo stelle ich den Antrag?</summary><p>Hinweis: Antrag bei SVA ZH. Antragsstelle: kantonale Behörde.</p><p><a href="#" style="color:var(--sand)">Prämienverbilligung — Verbilligung der Krankenkassenprämie bei tiefem Einkommen (ch.ch) ↗</a></p><p><a href="#" style="color:var(--sand)" data-sie="Ihr Kanton: Zürich — Prämienverbilligung beantragen ↗" data-du="Dein Kanton: Zürich — Prämienverbilligung beantragen ↗"></a></p></details>
+          <details><summary>Offizielle Stelle &amp; Antrag</summary><p>Hinweis: Antrag bei SVA ZH. Antragsstelle: kantonale Behörde.</p><p><a href="#" style="color:var(--sand)">Prämienverbilligung — Verbilligung der Krankenkassenprämie bei tiefem Einkommen (ch.ch) ↗</a></p><p><a href="#" style="color:var(--sand)" data-sie="Ihr Kanton: Zürich — Prämienverbilligung beantragen ↗" data-du="Dein Kanton: Zürich — Prämienverbilligung beantragen ↗"></a></p></details>
           <div class="weiter" id="b-weiter">
-            <h4>Wie es weitergeht</h4>
+            <h4 data-sie="Ihr IPV-Weg" data-du="Dein IPV-Weg"></h4>
+            <div id="ipv-weg" aria-live="polite"></div>
             <div class="knoepfe">
               <button class="knopfprim">Online-Antrag ↗</button>
               <button class="knopfruhig" id="ipv-merken" aria-pressed="false">Unterlagen für den Antrag merken</button>
-              <button class="knopfruhig" data-meldung="Frist im Kalender eingetragen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Frist in den Kalender</button>
             </div>
             <div style="margin-top:14px"><a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Finanz-Übersicht<small>Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.</small></span><span class="pfeil">›</span></a><a class="verweis" href="#"><span class="sym k" data-icon="behoerden" style="--licht: var(--behoerden)"></span><span>Offizielle Links<small>Alle Stellen zu diesem Thema</small></span><span class="pfeil">›</span></a></div>
           </div>
@@ -775,6 +797,8 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li><b>Echte Werte statt erfundener:</b> Kanton Zürich, Modell einkommensabhängig, Max. Einkommen CHF 61'090 pro Jahr, Anspruchsjahr 2026, Prämienregion 1 — wie die App heute. Vereinfacht ist nur «Monatswert × 12»; die Förderbeträge rechnet der echte Rechner, darum steht unter der Grenze «— (Rechner)» statt einer erfundenen Zahl.</li>
     <li>Das «| Schnitt» aus Fassung 2 ist raus: ein Vergleich mit anderen widerspricht dem Playbook (§10). Das «!» bleibt schwarz; Rot gibt es nur auf der kritischen Seite einer harten Schwelle.</li>
     <li>Die Knöpfe unten geben Rückmeldung mit «Rückgängig» — antippen zum Ansehen.</li>
+    <li><b>Entschieden 23.10.:</b> Überschriften wie die App («Anspruch &amp; Aufenthaltsbewilligung», «Benötigte Dokumente», «Offizielle Stelle &amp; Antrag»; «Ihre Lage» ist neu). Regler mit «Ins Profil übernehmen». Glossar «IPV ⓘ» bleibt (die App kennt Glossar-Begriffe schon). Statt «Frist in den Kalender» jetzt «Ihr IPV-Weg» wie in <code>PremiumSubsidy.jsx</code> (Ich habe beantragt → Verfügung erhalten → Betrag) mit «Jährlich erinnern»: legt «Prämienverbilligung fürs nächste Jahr prüfen» als jährliche Aufgabe in Merkliste und Kalender. In der App steht «Jährlich erinnern» erst nach der Verfügung; hier in jedem Schritt (Wunsch Sophie). Vorlesen neben dem Untertitel. Hinweise je nach Lage über den Schalter oben.</li>
+    <li><b>Bewusst nicht drin:</b> «Alle Kantone vergleichen». Die App zeigt die Tabelle nur mit amtlich belegten Kantonen, und das sind heute 0 von 26 (<code>CANTONAL_IPV</code>, Feld <code>beleg.quelle</code>). Sie erscheint also heute nirgends; mit Zahlen gefüllt wäre sie erfunden. Ebenso keine Förderbeträge unter der Grenze: die rechnet die App mit nachgeladenen kantonalen Modellen.</li>
   </ul></div>
 </section>
 
@@ -1141,7 +1165,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const gruppe = (sel, fn) => document.querySelectorAll(sel).forEach((b) => b.addEventListener('click', () => { document.querySelectorAll(sel).forEach((x) => x.setAttribute('aria-pressed', x === b)); fn(b); }));
   gruppe('[data-modus]', (b) => { root.dataset.theme = b.dataset.modus; logos(); icons(); passZeichnen(); ipv(); });
   gruppe('[data-geraet]', (b) => document.body.classList.toggle('desktop', b.dataset.geraet === 'desktop'));
-  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); if (typeof foto === 'function') foto(); if (typeof uebersicht === 'function') uebersicht(); });
+  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); if (typeof foto === 'function') foto(); if (typeof uebersicht === 'function') uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); });
   const umschalter = (id, klasse) => document.getElementById(id).addEventListener('click', (e) => { const an = !document.body.classList.contains(klasse); document.body.classList.toggle(klasse, an); e.currentTarget.setAttribute('aria-pressed', an); });
   umschalter('grau', 'graustufen'); umschalter('still', 'still');
 
@@ -1191,6 +1215,55 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     }
   }
   document.getElementById('ipv-lohn').addEventListener('input', ipv);
+  // «Ihr IPV-Weg» wie ipvStatus in PremiumSubsidy.jsx: geschätzt → beantragt → Verfügung erhalten.
+  // «Jährlich erinnern» legt eine jährliche Aufgabe in Merkliste und Kalender (Entscheid Sophie 23.10.: in jedem Schritt, nicht erst nach der Verfügung)
+  let ipvWeg = 'geschaetzt', ipvBetrag = '', ipvErinnert = false;
+  function ipvWegZeichnen() {
+    const el = document.getElementById('ipv-weg'); if (!el) return;
+    const du = anrede === 'du', S = (sie, d) => du ? d : sie;
+    let h = '';
+    if (ipvWeg === 'geschaetzt') {
+      h = `<p>${S('Wie die Verbilligung bei Ihnen läuft, hängt vom Kanton ab:', 'Wie die Verbilligung bei dir läuft, hängt vom Kanton ab:')}</p><ul><li>${S('Automatisch: Viele Kantone berechnen die Verbilligung aus Ihrer Steuererklärung — Sie müssen nichts tun, sondern nur auf die Verfügung achten.', 'Automatisch: Viele Kantone berechnen die Verbilligung aus deiner Steuererklärung — du musst nichts tun, sondern nur auf die Verfügung achten.')}</li><li>${S('Antrag: In anderen Kantonen beantragen Sie sie selbst (siehe die Links unten).', 'Antrag: In anderen Kantonen beantragst du sie selbst (siehe die Links unten).')}</li></ul>
+        <div class="knoepfe2"><button class="knopfruhig" data-weg="beantragt">Ich habe beantragt</button><button class="knopfprim" data-weg="bestaetigt">Verfügung erhalten</button></div>`;
+    } else if (ipvWeg === 'beantragt') {
+      h = `<div class="stempel" style="border-color:var(--gold);color:var(--gold)">Beantragt</div><p>${S('Sie haben die Verbilligung beantragt. Wenn die Verfügung kommt, halten Sie den bestätigten Betrag hier fest.', 'Du hast die Verbilligung beantragt. Wenn die Verfügung kommt, halte den bestätigten Betrag hier fest.')}</p>
+        <div class="knoepfe2"><button class="knopfprim" data-weg="bestaetigt">Verfügung erhalten</button></div>`;
+    } else {
+      h = `<div class="stempel">bestätigt</div>${ipvBetrag ? `<div class="betrag">CHF ${ipvBetrag} / Monat</div><p>${S('Das ist der Betrag aus Ihrer Verfügung — nicht mehr unsere Schätzung.', 'Das ist der Betrag aus deiner Verfügung — nicht mehr unsere Schätzung.')}</p>` : `<p>${S('Tragen Sie den Betrag aus der Verfügung ein.', 'Trag den Betrag aus der Verfügung ein.')}</p>`}
+        <label>Betrag laut Verfügung (CHF / Monat)<input id="ipv-betrag" inputmode="numeric" value="${ipvBetrag}"></label>`;
+    }
+    h += `<p>${S('Die Verbilligung gilt pro Jahr. Sollen wir Sie nächstes Jahr ruhig daran erinnern?', 'Die Verbilligung gilt pro Jahr. Sollen wir dich nächstes Jahr ruhig daran erinnern?')}</p>
+      <div class="knoepfe2"><button class="knopfruhig" id="ipv-erinnern" aria-pressed="${ipvErinnert}">${ipvErinnert ? '✓ Erinnerung gesetzt' : 'Jährlich erinnern'}</button>${ipvWeg !== 'geschaetzt' ? '<button class="zurueck" data-weg="geschaetzt">Zurücksetzen</button>' : ''}</div>`;
+    el.innerHTML = h;
+    el.querySelectorAll('[data-weg]').forEach((b) => b.onclick = () => { ipvWeg = b.dataset.weg; ipvWegZeichnen(); });
+    const bt = el.querySelector('#ipv-betrag'); if (bt) bt.onchange = () => { ipvBetrag = bt.value.replace(/[^0-9']/g, ''); ipvWegZeichnen(); };
+    el.querySelector('#ipv-erinnern').onclick = () => {
+      if (ipvErinnert) return;
+      // ipvStatus.reminderTitle, Kategorie insurance, recurrence yearly; Datum: in einem Jahr
+      MERK.unshift({ t: 'Prämienverbilligung fürs nächste Jahr prüfen', v: 'premium', tag: tageBis(new Date(2027, 9, 23)), wieder: 'yearly' });
+      ipvErinnert = true; merkZeichnen(0); zeitleiste(); ipvWegZeichnen();
+      melden(el.closest('.geraet'), '«Prämienverbilligung fürs nächste Jahr prüfen» jährlich im Kalender', false);
+    };
+  }
+  // Hinweise, die die App nur bei bestimmter Lage zeigt (premium.weekly*, youngAdultsNote, cantonChoose)
+  const KANTONE = ['Aargau', 'Appenzell Ausserrhoden', 'Appenzell Innerrhoden', 'Basel-Landschaft', 'Basel-Stadt', 'Bern', 'Freiburg', 'Genf', 'Glarus', 'Graubünden', 'Jura', 'Luzern', 'Neuenburg', 'Nidwalden', 'Obwalden', 'Schaffhausen', 'Schwyz', 'Solothurn', 'St. Gallen', 'Tessin', 'Thurgau', 'Uri', 'Waadt', 'Wallis', 'Zug', 'Zürich'];
+  let ipvLage = 'maria';
+  function ipvLageZeichnen() {
+    const el = document.getElementById('ipv-lagehinweis'), du = anrede === 'du';
+    el.innerHTML = ipvLage === 'woche' ? `<div class="ipv-hinweis"><b>! Wochenaufenthalt erkannt</b>KK-Prämie richtet sich nach dem Wohnkanton (Hauptwohnsitz).<br>IPV-Antrag im Wohnkanton, nicht am Arbeitsort.</div>`
+      : ipvLage === 'jung' ? `<div class="ipv-hinweis">Junge Erwachsene (19–25) in Ausbildung haben oft eine eigene, höhere Verbilligung. Bitte separat prüfen.</div>`
+      : ipvLage === 'kanton' ? `<div class="ipv-hinweis"><label for="ipv-kanton" style="font-weight:500">${du ? 'In welchem Kanton wohnst Du?' : 'In welchem Kanton wohnen Sie?'}</label><select id="ipv-kanton"><option value="">Auswählen</option>${KANTONE.map((k) => `<option>${k}</option>`).join('')}</select><small>${du ? 'Wir übernehmen ihn auch unter «Persönliche Basis». Dort kannst Du ihn jederzeit ändern.' : 'Wir übernehmen ihn auch unter «Persönliche Basis». Dort können Sie ihn jederzeit ändern.'}</small></div>`
+      : '';
+    document.querySelector('#b-lage .lage').hidden = ipvLage === 'kanton';
+  }
+  document.querySelectorAll('[data-ipvlage]').forEach((b) => b.onclick = () => {
+    ipvLage = b.dataset.ipvlage; document.querySelectorAll('[data-ipvlage]').forEach((x) => x.setAttribute('aria-pressed', x === b)); ipvLageZeichnen();
+  });
+  // Vorlesen wie VorlesenButton (Browser-Sprachausgabe, liest den Untertitel)
+  document.getElementById('ipv-vorlesen').onclick = () => {
+    const t = document.querySelector('#b .satz').textContent;
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = 'de-CH'; speechSynthesis.speak(u); } catch (e) { melden(document.querySelector('[data-seite="b"]'), 'Vorlesen', false); }
+  };
   document.getElementById('ipv-uebernehmen').onclick = (e) => { ipvProfil = +document.getElementById('ipv-lohn').value; e.currentTarget.textContent = 'Ins Profil übernommen'; e.currentTarget.disabled = true; };
   // wie die App: nach dem Tipp «Auf der Merkliste» (premium.permitTodoAdded), und der Punkt steht in der Merkliste
   document.getElementById('ipv-merken').onclick = (e) => {
@@ -1369,7 +1442,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       z.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'start' });
     });
     const ziele = ['b-anspruch', 'b-weiter', 'b-quelle'].map((id) => document.getElementById(id));
-    const namen = { 'b-anspruch': 'Wer hat Anspruch?', 'b-weiter': 'Wie es weitergeht', 'b-quelle': 'Berechnungsgrundlage' };
+    const namen = { 'b-anspruch': 'Anspruch & Aufenthaltsbewilligung', 'b-weiter': anrede === 'du' ? 'Dein IPV-Weg' : 'Ihr IPV-Weg', 'b-quelle': 'Berechnungsgrundlage' };
     addEventListener('scroll', () => {
       let jetzt = ziele[0];
       ziele.forEach((z) => { if (z.getBoundingClientRect().top < innerHeight * 0.45) jetzt = z; });
@@ -1404,7 +1477,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     const [, name, farbe2] = ziel(m.v);
     return `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}${m.erledigt ? ' erledigt' : ''}"><div><div class="innen2"><button class="haken" aria-pressed="${!!m.erledigt}" aria-label="${m.erledigt ? 'Als nicht erledigt markieren' : 'Als erledigt markieren'}" data-i="${i}"><i>${m.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button><span class="sym k" data-icon="${farbe2}" style="--licht: var(--${farbe2})"></span><span class="titel">${m.t}${m.v ? `<small>${name.replace('&', '&amp;')} ›</small>` : ''}${m.erledigt
       ? `<small class="merk-tag">erledigt am ${tagKurz(m.fertigTag ?? 0)}</small>`
-      : `<button class="merk-tag-knopf" data-tagwahl="${i}" aria-expanded="${merkTagOffen === i}">${m.tag != null ? '◷ ' + tagKurz(m.tag) : 'Tag wählen'}</button>${merkTagOffen === i ? `<span class="merk-tag-feld"><input type="date" data-tagwert="${i}" value="${m.tag != null ? isoAus(m.tag) : ''}" aria-label="Tag für «${m.t}»">${m.tag != null ? `<button class="knopfruhig" data-tagweg="${i}">Ohne Tag</button>` : ''}</span>` : ''}`}</span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`;
+      : `<button class="merk-tag-knopf" data-tagwahl="${i}" aria-expanded="${merkTagOffen === i}">${m.tag != null ? '◷ ' + tagKurz(m.tag) + (m.wieder === 'yearly' ? ' · ↻ Jährlich' : '') : 'Tag wählen'}</button>${merkTagOffen === i ? `<span class="merk-tag-feld"><input type="date" data-tagwert="${i}" value="${m.tag != null ? isoAus(m.tag) : ''}" aria-label="Tag für «${m.t}»">${m.tag != null ? `<button class="knopfruhig" data-tagweg="${i}">Ohne Tag</button>` : ''}</span>` : ''}`}</span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`;
   }
   function merkZeichnen(neuIndex = -1) {
     const l = document.getElementById('merkliste'), du = anrede === 'du';
@@ -1526,7 +1599,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     MERK.forEach((m) => {
       const tag = m.erledigt ? (m.fertigTag ?? m.tag ?? 0) : m.tag;
       if (tag == null) return;
-      aus.push({ tag, titel: m.t, art: 'Aufgabe', bereich: ziel(m.v)[2], woher: 'aus der Merkliste', erledigt: !!m.erledigt, ref: m, quelle: 'merkliste' });
+      aus.push({ tag, titel: m.t, art: 'Aufgabe', bereich: ziel(m.v)[2], woher: 'aus der Merkliste', wieder: m.wieder, erledigt: !!m.erledigt, ref: m, quelle: 'merkliste' });
     });
     return aus.sort((a, b) => a.tag - b.tag);
   }
@@ -1724,7 +1797,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   document.getElementById('foto-abbrechen').onclick = () => { fotoSchritt = 0; fotoArt = null; seiten = 1; foto(); };
   document.querySelectorAll('[data-kamera]').forEach((b) => b.addEventListener('click', () => { kamera = b.dataset.kamera; document.querySelectorAll('[data-kamera]').forEach((x) => x.setAttribute('aria-pressed', x === b)); fotoSchritt = 0; foto(); }));
 
-  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); uebersicht(); icons();
+  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); icons();
   // ?nur=a … zeigt nur einen Abschnitt — für die Vergleichsseite (heute neben neu)
   const nur = new URLSearchParams(location.search).get('nur');
   if (nur) {
