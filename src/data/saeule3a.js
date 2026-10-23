@@ -43,7 +43,16 @@
 // Prämienverbilligung von BE — zwei Jahre später. Darum die Jahre einzeln, nicht ein Wert.
 // Werte wörtlich aus der ESTV-Tabelle «Höchstabzüge Säule 3a», an der Quelle abgelesen am
 // 23.09.2026 (alle sechs publizierten Jahre, nicht nur die gebrauchten).
+//
+// Steuerjahr 2027 (ergänzt 21.10.2026): BSV-Mitteilung 05.10.2026 «Höchstabzüge Säule 3a im
+// Steuerjahr 2027» und BSV-Übersicht «Änderungen auf 1. Januar 2027», S. 2: 7'373 / 36'864.
+//   https://www.bsv.admin.ch/de/newnsb/6ck3kzVxBNQ4 (abgerufen 21.10.2026)
+// Gegenrechnung an zwei amtlichen Texten: BVV 3 Art. 7 Abs. 1 (Fedlex Stand 1.1.2025; laut Fedlex-
+// SPARQL am 21.10.2026 keine Fassung zum 1.1.2027, die nächste trägt das Datum 1.6.2027): «8 Prozent» bzw. «40 Prozent des oberen Grenzbetrages nach Artikel 8 Absatz 1 BVG»,
+// oberer Grenzbetrag 2027 92'160 (BVV 2 Art. 5, AS 2026 547) → 7'372.80 (BSV rundet auf 7'373)
+// und 36'864. In der ESTV-Tabelle oben stand 2027 am 21.10.2026 noch nicht (nicht nachgesehen).
 export const SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR = Object.freeze({
+  2027: Object.freeze({ mitPensionskasse: 7373, ohnePensionskasse: 36864 }),
   2026: Object.freeze({ mitPensionskasse: 7258, ohnePensionskasse: 36288 }),
   2025: Object.freeze({ mitPensionskasse: 7258, ohnePensionskasse: 36288 }),
   2024: Object.freeze({ mitPensionskasse: 7056, ohnePensionskasse: 35280 }),
@@ -60,12 +69,27 @@ export function saeule3aMaximum(steuerjahr) {
   return SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[steuerjahr]?.mitPensionskasse ?? null;
 }
 
+// Das laufende Steuerjahr, nach Datum (Weg A, Entscheid Sophie 21.10.2026): bis 31.12.2026 gilt
+// 2026, ab 1.1.2027 von selbst 2027. Ein Jahr nach dem letzten belegten zeigt das letzte belegte
+// und sagt das über `steuerjahr` (der Tracker nennt dann ausdrücklich dieses Jahr).
+// Ohne Import mit eigener Zeile gelöst — siehe «Blatt ohne eigene Importe» oben.
+const LAUFENDES_STEUERJAHR = (() => {
+  const heute = new Date().getFullYear();
+  if (SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[heute]) return heute;
+  return Math.max(...Object.keys(SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR).map(Number));
+})();
+
+const SAEULE3A_QUELLE = {
+  2027: { abgerufen: '2026-10-21', quelle: 'BSV, Höchstabzüge Säule 3a im Steuerjahr 2027 (BVV 3 Art. 7 Abs. 1)' },
+};
+
 export const SAEULE3A_HOECHSTABZUG = {
-  ...SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[2026],
+  ...SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[LAUFENDES_STEUERJAHR],
   satzOhnePensionskasse: 0.20,
-  steuerjahr: 2026,
+  steuerjahr: LAUFENDES_STEUERJAHR,
   abgerufen: '2026-09-23',
   quelle: 'ESTV, Höchstabzüge Säule 3a bei der Direkten Bundessteuer (BVV 3 Art. 7 Abs. 1)',
+  ...SAEULE3A_QUELLE[LAUFENDES_STEUERJAHR],
 };
 
 // Bequemer Kurzname für den häufigen Fall: Angestellte mit Pensionskasse, LAUFENDES Jahr.

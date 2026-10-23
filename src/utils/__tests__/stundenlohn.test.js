@@ -8,6 +8,12 @@ import fr from '../../i18n/fr.js';
 import en from '../../i18n/en.js';
 import { stundenlohnRechnen, ferienSatz, ferienWochenAnspruch, offeneFragen } from '../stundenlohn.js';
 
+// Diese Datei prüft die Werte 2026. Seit den Jahrestabellen (Werte 2027, Weg A) hängen die Werte am
+// Datum: die Uhr steht darum fest im Jahr 2026, auch nach dem 1.1.2027. `vi.hoisted` läuft vor den
+// Importen, also auch vor den Konstanten, die beim Laden aus dem Datum gebildet werden.
+// Die Werte 2027 prüft werte2027.test.js.
+vi.hoisted(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-22T12:00:00')); });
+
 // «Was steht mir im Stundenlohn zu?» — getrennte Rechnung für Grundlohn und Zuschläge.
 // Kern-Beispiel: 25 Fr. «alles inklusive» in Genf. Der Grundlohn ist dann 25 × 12/13 = 23.08,
 // und genau der — nicht die 25 — ist mit dem Mindestlohn (24.59, ohne Zuschläge) zu vergleichen.
@@ -352,7 +358,7 @@ describe('Zuständige Stelle im Befund «unter dem Mindestlohn»', () => {
   })).replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, "'").replace(/\s+/g, ' ');
   // Datum fixiert: der Befund hängt am Mindestlohn-Jahr 2026 (JU 21.40, data/lohnCheck.js).
   beforeAll(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-19T12:00:00')); });
-  afterAll(() => { vi.useRealTimers(); });
+  afterAll(() => { vi.setSystemTime(new Date('2026-10-22T12:00:00')); }); // zurück auf die Datei-Uhr 2026 (oben)
   const unter = { betrag: '18', art: 'fest', wochenstunden: '20', ferienForm: 'bezahlt', dreizehnter: 'nein', feiertag: 'nein' };
 
   it('JU: kein «null», sondern das Arbeitsgericht aus der Registry', () => {

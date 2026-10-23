@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import {
   berechneAltersrente, referenzalterMonate, vergleicheVorbezugAufschub,
   bvgKoordinationsabzug, berechneBVGGuthaben, projiziereVorsorge,
@@ -560,6 +560,12 @@ describe('nettoZuBruttoRichtwert — Netto→Brutto-Schätzung (AHV/ALV + PK nac
 
 // ─── Gegenrichtung brutto→netto (25.09.2026) ─────────────────────────────────
 import { bruttoZuNettoRichtwert } from '../ahvRechner.js';
+
+// Diese Datei prüft die Werte 2026. Seit den Jahrestabellen (Werte 2027, Weg A) hängen die Werte am
+// Datum: die Uhr steht darum fest im Jahr 2026, auch nach dem 1.1.2027. `vi.hoisted` läuft vor den
+// Importen, also auch vor den Konstanten, die beim Laden aus dem Datum gebildet werden.
+// Die Werte 2027 prüft werte2027.test.js.
+vi.hoisted(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-22T12:00:00')); });
 
 describe('bruttoZuNettoRichtwert — dieselben Abzüge wie netto→brutto', () => {
   it('unter der BVG-Schwelle nur AHV/ALV (6.4 %)', () => {
