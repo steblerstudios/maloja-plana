@@ -222,6 +222,10 @@ body.still .leer .bild svg { animation: none; }
 .uebersichtzeile { font-size: 13px; color: var(--soft); margin: 4px 0 12px; }
 .uebersichtzeile b { color: var(--text); font-weight: 500; }
 .suche { width: 100%; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); padding: 11px 14px; font: inherit; min-height: 44px; margin-bottom: 8px; }
+.ablage-werkzeug { margin-top: 12px; }
+.sortieren { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--soft); margin-bottom: 8px; }
+.sortieren select, .merk-form select { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 14px; min-height: 44px; padding: 0 10px; }
+[data-seite="d"] .reiter2 button[aria-selected="true"] { border-bottom-color: var(--basis); }
 .dok { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); min-height: 64px; }
 .dok small { display: block; color: var(--soft); font-size: 12px; }
 .dok .mehr { margin-left: auto; background: none; border: 0; color: var(--mid); width: 44px; height: 44px; border-radius: 10px; cursor: pointer; }
@@ -257,7 +261,10 @@ body.desktop .abschnittanzeige { margin: 0 0 10px; border: 1px solid var(--borde
 .menue .klein-reihe { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
 .menue .klein-reihe a { color: var(--mid); min-height: 44px; display: inline-flex; align-items: center; }
 body.desktop .menue { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; padding: 24px 32px; }
-body.desktop .menue .ober, body.desktop .menue .suche, body.desktop .menue .klein-reihe { grid-column: 1 / -1; }
+body.desktop .menue .ober, body.desktop .menue .suche, body.desktop .menue .klein-reihe, body.desktop .menue .menue-stand { grid-column: 1 / -1; }
+.menue-stand { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--soft); margin: -4px 0 12px; }
+.menue-stand .knopfruhig { font-size: 13px; padding: 8px 14px; }
+.menue-alle { display: flex; align-items: center; min-height: 44px; padding: 0 4px; color: var(--sand); text-decoration: none; font-size: 15px; }
 
 /* U · Übersicht — vollständig (Vergleich: 10 Lücken) */
 .demoleiste { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; background: color-mix(in srgb, var(--sand) 12%, var(--bg)); border-bottom: 1px solid var(--border); font-size: 13px; position: relative; z-index: 3; }
@@ -356,6 +363,20 @@ body.desktop .zeitleiste { margin: 4px 0 6px; }
 body.desktop .zl-band { margin: 2px 0 0; }
 .zl-band span { position: absolute; top: 0; height: 26px; border-radius: 13px; font-size: 12px; display: flex; align-items: center; padding: 0 10px; white-space: nowrap; overflow: hidden; color: var(--bg); font-weight: 500; }
 .zl-monat { font-size: 13px; color: var(--soft); margin: 0 0 4px; }
+.zl-kopf { display: flex; align-items: center; gap: 4px; }
+.zl-kopf .zl-monat { margin: 0; min-width: 120px; text-align: center; color: var(--text); font-weight: 500; font-size: 15px; }
+.zl-nav { width: 44px; height: 44px; border: 0; border-radius: 12px; background: none; color: var(--mid); font-size: 22px; cursor: pointer; }
+.zl-heute { margin-left: auto; padding: 8px 14px; }
+.zl-monate { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 8px -20px 6px; padding: 0 20px; }
+.zl-monate::-webkit-scrollbar { display: none; }
+.zl-monate button { flex: 0 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; }
+.zl-monate button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+[data-seite="g"] .reiter2 button[aria-selected="true"] { border-bottom-color: var(--sage); }
+.zl-form { margin-top: 12px; padding: 14px; border: 1px solid var(--border); border-radius: 16px; }
+.termin .haken { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border: 0; background: none; cursor: pointer; margin: 0 -10px 0 auto; }
+.termin .haken i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); display: grid; place-items: center; }
+.termin.fertig .haken i { background: var(--sage); border-color: var(--sage); }
+.termin.fertig .was { color: var(--soft); }
 .liste-zeit h5 { font-family: 'Hanken Grotesk'; font-size: 16px; margin: 20px 0 2px; }
 .termin { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); min-height: 64px; scroll-margin-top: 80px; text-decoration: none; color: inherit; }
 .termin.markiert { background: linear-gradient(90deg, color-mix(in srgb, var(--sand) 14%, transparent), transparent); }
@@ -407,6 +428,15 @@ body.desktop .zl-band { margin: 2px 0 0; }
 /* F · Liste: sofort weg, «Entfernt · Rückgängig» (IDEEN §15, Vorschlag C) */
 .merk { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .32s cubic-bezier(.2,.7,.2,1), opacity .25s; }
 .merk.weg { grid-template-rows: 0fr; opacity: 0; }
+.merk-form { margin-bottom: 14px; }
+.merk-reihe { display: flex; gap: 10px; align-items: flex-end; }
+.merk-reihe label { flex: 1; display: grid; gap: 4px; font-size: 12px; color: var(--soft); min-width: 0; }
+.merk-reihe select { width: 100%; }
+.merk .haken { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border: 0; background: none; cursor: pointer; margin: 0 -8px 0 -10px; }
+.merk .haken i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); display: grid; place-items: center; }
+.merk.erledigt .haken i { background: var(--sage); border-color: var(--sage); }
+.merk.erledigt .titel { color: var(--soft); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--soft) 60%, transparent); }
+#merkliste h5 { font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); margin: 14px 0 0; }
 .merk > div { overflow: hidden; }
 .merk .innen2 { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); min-height: 64px; }
 .merk small { display: block; color: var(--soft); font-size: 12px; }
@@ -564,13 +594,16 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           <div class="stufe">
             <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Finanzen &amp; Geld</nav></div>
             <div class="titelzeile"><span class="sym" data-icon="finanzen"></span><h3>Finanzen &amp; Geld</h3></div>
-            <p class="satz" data-sie="Ihr Einkommen, Erspartes und Bankdaten — ein klares Bild für Budget, Steuern und Anträge." data-du="Dein Einkommen, Erspartes und Bankdaten — ein klares Bild für Budget, Steuern und Anträge."></p>
+            <p class="satz" data-sie="Ihr Einkommen, Erspartes und Bankdaten" data-du="Dein Einkommen, Erspartes und Bankdaten"></p>
+            <p class="unter" data-sie="Ein klares Bild Ihrer finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen." data-du="Ein klares Bild Deiner finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen."></p>
           </div>
           <div class="held stufe s2">
             <div class="etikett">Jeden Monat bleiben</div>
             <div class="gross">CHF 2'480</div>
             <div class="fluss"><div class="spur" role="img" aria-label="3'720 von 6'200 Franken verplant"><div class="fuellung" data-ziel="60"></div></div>
               <div class="zeilen"><span><b>3'720</b> verplant</span><span>von <b>6'200</b> Einkommen, netto</span></div></div>
+            <p class="unter" style="margin-top:12px">Monatliches Einkommen CHF 6'200 bei Kantonsspital Zürich. Erfasste monatliche Ausgaben CHF 3'720</p>
+            <p class="unter" style="margin-top:8px" data-sie="Je nach Einkommen haben Sie möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundigen Sie sich bei Ihrer Gemeinde oder Ihrem Kanton." data-du="Je nach Einkommen hast Du möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundige Dich bei Deiner Gemeinde oder Deinem Kanton."></p>
           </div>
           <div class="lohn stufe s2">
             <h4 data-sie="Wo steht Ihr Lohn?" data-du="Wo steht dein Lohn?"></h4>
@@ -731,7 +764,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <!-- ===================== D · Ablage ===================== -->
 <section class="abschnitt" id="d">
   <h2>D · Ablage — «Dokumentenablage»</h2>
-  <p class="warum">Leer: ein ruhiges Bild und drei Starts. Gefüllt: eine Übersichtszeile statt drei Zähler, Suche erst ab Inhalt. Löschen fragt nach, weil die Datei danach nicht mehr auf dem Gerät ist (Entscheid «C», §15).</p>
+  <p class="warum">Leer: ein ruhiges Bild und drei Starts. Gefüllt: eine Übersichtszeile statt drei Zähler, Suche erst ab Inhalt. Löschen fragt nach, weil die Datei danach nicht mehr auf dem Gerät ist (Entscheid «C», §15). <b>Fassung 5:</b> die Reiter «Aktiv / Archiv» mit Zahl, «Sortieren nach» (Nach Ablauf, Nach Datum, Name (A-Z)) und der Ordner-Satz der App («Ihr Ordner ist bereit.», «Ein guter Anfang.» …) statt eines erfundenen Untertitels.</p>
   <div class="leiste zustaende" role="group" aria-label="Zustand der Ablage">
     <button class="pill" data-ablage="leer" aria-pressed="true">Leer</button>
     <button class="pill" data-ablage="voll" aria-pressed="false">Mit Dokumenten</button>
@@ -745,7 +778,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           <div class="stufe">
             <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Meine Unterlagen</a><span>›</span>Dokumentenablage</nav></div>
             <div class="titelzeile"><span class="sym" data-icon="basis"></span><h3>Dokumentenablage</h3></div>
-            <p class="satz" data-sie="Ausweise, Verträge, Belege — an einem Ort, nur auf Ihrem Gerät." data-du="Ausweise, Verträge, Belege — an einem Ort, nur auf deinem Gerät."></p>
+            <p class="satz" id="ablage-satz" data-sie="Ihr Ordner ist bereit." data-du="Dein Ordner ist bereit."></p>
           </div>
         </div>
         <div class="rechtsspalte">
@@ -771,7 +804,11 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           </div>
           <div id="ablage-voll" hidden>
             <div class="uebersichtzeile"><b>3 Dokumente</b> · 1 läuft bald ab · zuletzt gesichert 2. Okt.</div>
-            <input class="suche" type="search" placeholder="In der Ablage suchen" aria-label="In der Ablage suchen">
+            <div class="reiter2" role="tablist" aria-label="Aktiv oder Archiv"><button role="tab" aria-selected="true" data-fach="aktiv"><span id="zahl-aktiv">3</span> Aktiv</button><button role="tab" aria-selected="false" data-fach="archiv"><span id="zahl-archiv">1</span> Archiv</button></div>
+            <div class="ablage-werkzeug">
+              <input class="suche" type="search" placeholder="Suchen..." aria-label="Suchen">
+              <label class="sortieren"><span>Sortieren nach</span><select id="ablage-sort"><option value="ablauf">Nach Ablauf</option><option value="datum">Nach Datum</option><option value="name">Name (A-Z)</option></select></label>
+            </div>
             <div id="dokliste"></div>
           </div>
           <div class="vertrauen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Daten bleiben auf diesem Gerät." data-du="Deine Daten bleiben auf diesem Gerät."></span></div>
@@ -790,13 +827,14 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li>«Was oft zuerst hineingehört», die drei Vorschläge und die Dokumente im gefüllten Zustand sind neue Platzhalter-Texte — vor dem Bau durch den Copy-Prüfer.</li>
     <li>Löschen: hier mit Nachfrage, weil die Datei danach weg ist. In Listen wie der Merkliste gilt dagegen «sofort weg, Entfernt · Rückgängig» — beides wie in §15 vorgeschlagen.</li>
     <li>«Läuft bald ab» steht in Gold, nicht in Rot: ein Hinweis, keine Warnung.</li>
+    <li>Reiter und Sortierung erscheinen bewusst erst mit Inhalt; heute stehen sie auch beim leeren Ordner («0 Aktiv · 0 Archiv»). Texte wörtlich aus <code>de.js</code> (tresor.*), der Satz wechselt mit der Anzahl wie in <code>DocumentTresor.jsx</code>.</li>
   </ul></div>
 </section>
 
 <!-- ===================== G · Was ansteht ===================== -->
 <section class="abschnitt" id="g">
   <h2>G · Zeitleiste — «Was ansteht»</h2>
-  <p class="warum">Von Stardust: die Tagesleiste mit «heute» und einem Band, das zeigt, in welcher Phase man gerade ist. Bei Maloja: Fristen als Punkte in der Farbe ihres Bereichs, laufende Abläufe als Band («Umzug»), heute hervorgehoben. Die Leiste lässt sich wischen; ein Tipp auf einen Tag springt in die Liste darunter. Kein Countdown, kein Rot.</p>
+  <p class="warum">Von Stardust: die Tagesleiste mit «heute» und einem Band, das zeigt, in welcher Phase man gerade ist. Bei Maloja: Fristen als Punkte in der Farbe ihres Bereichs, laufende Abläufe als Band («Umzug»), heute hervorgehoben. Die Leiste lässt sich wischen; ein Tipp auf einen Tag springt in die Liste darunter. Kein Countdown, kein Rot. <b>Fassung 5:</b> was der Kalender heute kann — Monat vor und zurück (über den Jahreswechsel), Sprung auf jeden Monat und auf «Heute», «Bevorstehend / Erledigt» mit Zahl, abhaken, «+ Erinnerung hinzufügen» und der Hinweis am Schluss.</p>
   <div class="geraet" data-seite="g">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
     <div class="rahmen"><nav class="seitenmenue" data-aktiv="kalender"></nav>
@@ -815,14 +853,24 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           </div>
         </div>
         <div class="rechtsspalte stufe s3">
-          <div class="zl-monat" id="zl-monat">Oktober / November 2026</div>
+          <div class="zl-kopf"><button class="zl-nav" id="zl-zurueck" aria-label="Vorheriger Monat">‹</button><div class="zl-monat" id="zl-monat" aria-live="polite">Oktober 2026</div><button class="zl-nav" id="zl-vor" aria-label="Nächster Monat">›</button><button class="knopfruhig zl-heute" id="zl-heute">Heute</button></div>
+          <div class="zl-monate" id="zl-monate" role="group" aria-label="Monat wählen"></div>
           <div class="zeitleiste" aria-label="Tage">
             <div class="zl-spur" id="zl-spur"></div>
             <div class="zl-band" id="zl-band" aria-hidden="true"></div>
           </div>
           <div class="legende2" style="margin:8px 0 0"><span><i style="background:var(--wohnen);border-radius:50%"></i>Frist</span><span><i style="background:var(--finanzen);border-radius:1px;transform:rotate(45deg) scale(.85)"></i>Termin</span><span><i style="background:var(--text);border-radius:50%"></i>heute</span></div>
+          <div class="reiter2" role="tablist" aria-label="Bevorstehend oder erledigt" style="margin-top:16px"><button role="tab" aria-selected="true" data-zl="offen"><span id="zl-zahl-offen">0</span> Bevorstehend</button><button role="tab" aria-selected="false" data-zl="erledigt"><span id="zl-zahl-erledigt">0</span> Erledigt</button></div>
+          <button class="knopfruhig" id="zl-neu" style="margin-top:12px" aria-expanded="false">+ Erinnerung hinzufügen</button>
+          <form class="zl-form" id="zl-form" hidden>
+            <label class="feldzeile"><span>Titel</span><input id="zl-f-titel" type="text" required></label>
+            <label class="feldzeile"><span>Datum</span><input id="zl-f-datum" type="date" value="2026-10-30" required></label>
+            <label class="feldzeile"><span>Notiz</span><input id="zl-f-notiz" type="text"></label>
+            <div style="display:flex;gap:10px"><button class="knopfprim" type="submit">Erinnerung hinzufügen</button><button class="knopfruhig" type="button" id="zl-f-ab">Abbrechen</button></div>
+          </form>
           <div class="liste-zeit" id="zl-liste"></div>
           <div class="ruhig"><span class="punkt"></span><span data-sie="Ohne Datum: 4 Einträge auf der Merkliste." data-du="Ohne Datum: 4 Einträge auf der Merkliste."></span></div>
+          <p class="fuss" data-sie="Diese Erinnerungen dienen nur zur Information. Bitte kontaktieren Sie die zuständige Behörde oder Fachperson für offizielle Auskünfte." data-du="Diese Erinnerungen dienen nur zur Information. Bitte kontaktiere die zuständige Behörde oder Fachperson für offizielle Auskünfte."></p>
         </div>
       </div>
     </div></div>
@@ -831,6 +879,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   <div class="notiz"><ul>
     <li>Heute ist der echte Tag (23. Oktober 2026). <b>Alle Einträge sind Platzhalter</b>; im Bau kommen sie aus dem Kalender, den Abläufen (Frist «innert 14 Tagen» ab Umzugstag) und den Ablaufdaten in der Ablage.</li>
     <li>Punkt = Frist, Raute = Termin: Form trägt die Art, Farbe den Bereich, das Wort beides — der Graustufen-Test hält.</li>
+    <li>Die Seite heisst heute «Kalender und Erinnerungen»; «Was ansteht» ist der neue Name aus der Navigations-Ordnung. Gruppen, «Fällig in … Tagen», Leer-Zustand und Hinweis wörtlich aus <code>de.js</code> (calendar.*). Die Formular-Beschriftungen «Titel» und «Datum» sind Platzhalter.</li>
     <li>Das Band zeigt laufende Abläufe wie Stardusts Phasenband. «In 9 Tagen» statt Countdown; vergangene Fristen erscheinen ruhig als «verpasst — was jetzt?», nie rot.</li>
   </ul></div>
 </section>
@@ -869,7 +918,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <!-- ===================== F · Liste mit Rückgängig ===================== -->
 <section class="abschnitt" id="f">
   <h2>F · Liste — «Merkliste»</h2>
-  <p class="warum">Das Gegenstück zur Ablage: In Listen ist nichts endgültig verloren, darum gibt es keine Nachfrage. Ein Tipp aufs ×, der Eintrag gleitet weg, unten steht «Entfernt · Rückgängig» — ein Tipp holt ihn an dieselbe Stelle zurück. So steht es als Vorschlag C in IDEEN §15.</p>
+  <p class="warum">Das Gegenstück zur Ablage: In Listen ist nichts endgültig verloren, darum gibt es keine Nachfrage. Ein Tipp aufs ×, der Eintrag gleitet weg, unten steht «Entfernt · Rückgängig» — ein Tipp holt ihn an dieselbe Stelle zurück. So steht es als Vorschlag C in IDEEN §15. <b>Fassung 5:</b> das Hinzufügen der App — Eingabe, «Verknüpfen mit» (die zwölf echten Ziele) und «Hinzufügen» —, abhaken mit den Gruppen «Zu erledigen / Erledigt», Einleitung und Leer-Zustand im Wortlaut.</p>
   <div class="geraet" data-seite="f">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
     <div class="rahmen"><nav class="seitenmenue" data-aktiv="kalender"></nav>
@@ -878,9 +927,15 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         <div class="links"><div class="stufe">
           <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Was ansteht</a><span>›</span>Merkliste</nav></div>
           <div class="titelzeile"><span class="sym" data-icon="behoerden" style="--licht: var(--behoerden)"></span><h3>Merkliste</h3></div>
-          <p class="satz" data-sie="Was Sie sich vorgenommen haben — ohne Frist, ohne Druck." data-du="Was du dir vorgenommen hast — ohne Frist, ohne Druck."></p>
+          <p class="satz" data-sie="Ist Ihnen etwas aufgefallen, das Sie später erledigen möchten — etwa „Ich könnte Prämienverbilligung beantragen“? Notieren Sie es hier und verknüpfen Sie es direkt mit dem passenden Werkzeug, damit Sie zurückfinden, wenn Sie Zeit haben." data-du="Ist dir etwas aufgefallen, das du später erledigen möchtest — etwa „Ich könnte Prämienverbilligung beantragen“? Notiere es hier und verknüpfe es direkt mit dem passenden Werkzeug, damit du zurückfindest, wenn du Zeit hast."></p>
         </div></div>
-        <div class="rechtsspalte stufe s2"><div id="merkliste"></div></div>
+        <div class="rechtsspalte stufe s2">
+          <form class="merk-form" id="merk-form">
+            <input class="suche" id="merk-text" type="text" data-ph-sie="Was möchten Sie sich merken?" data-ph-du="Was möchtest du dir merken?" placeholder="Was möchten Sie sich merken?" aria-label="Notiz">
+            <div class="merk-reihe"><label><span>Verknüpfen mit</span><select id="merk-ziel"></select></label><button class="knopfprim" type="submit">Hinzufügen</button></div>
+          </form>
+          <div id="merkliste"></div>
+        </div>
       </div>
     </div></div>
     <nav class="anker" data-aktiv="kalender"></nav>
@@ -888,27 +943,32 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   </div>
   <div class="notiz"><ul>
     <li>Einträge sind Platzhalter. «Rückgängig» bleibt rund fünf Sekunden; danach ist der Eintrag weg, wie bei jeder Liste in der App.</li>
-    <li>Leer wird die Liste nicht still: dann steht ein Satz, warum sie leer ist, und wie man etwas merkt (Z2).</li>
+    <li>Leer wird die Liste nicht still: dann steht ein Satz, warum sie leer ist, und wie man etwas merkt (Z2). Texte aus <code>de.js</code> (merkliste.*), Ziele aus <code>LINK_TARGETS</code> in <code>MerklisteView.jsx</code>.</li>
   </ul></div>
 </section>
 
 <!-- ===================== E · Menü ===================== -->
 <section class="abschnitt" id="e">
   <h2>E · Menü — «Wo ist alles andere?»</h2>
-  <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. <b>Neu: Continuity</b> — tippen Sie auf einen Bereich: die Karte bleibt und wächst zur Seite, das Icon wandert in den Kopf. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen.</p>
+  <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. <b>Neu: Continuity</b> — tippen Sie auf einen Bereich: die Karte bleibt und wächst zur Seite, das Icon wandert in den Kopf. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen. <b>Fassung 5:</b> Stand («63% vollständig») und «Auf den Startbildschirm legen» oben, die Bereiche in den Gruppen «Ihr Alltag / Ihre Absicherung / Ihr Schutz», dazu Steuern, Finanz-Übersicht, Lebenssituationen und «Alle Werkzeuge im Gepäck ›».</p>
   <div class="geraet" data-seite="e">
     <div class="menue">
       <div class="ober"><span class="logo" data-breite="118"></span><button class="zu" aria-label="Menü schliessen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-      <input class="suche" type="search" placeholder="Suchen — z. B. Prämienverbilligung" aria-label="Suchen">
+      <div class="menue-stand"><span>63% vollständig</span><button class="knopfruhig" data-meldung="Anleitung geöffnet">Auf den Startbildschirm legen</button></div>
+      <input class="suche" type="search" placeholder="Suchen…" aria-label="Suchen">
       <div>
         <a class="karte" href="#"><span class="bild" data-anker="uebersicht"></span><span><b>Übersicht</b><small data-sie="Wo Sie gerade stehen und was als Nächstes dran ist." data-du="Wo du gerade stehst und was als Nächstes dran ist."></small></span></a>
         <a class="karte" href="#"><span class="bild" data-anker="kalender"></span><span><b>Was ansteht</b><small>Fristen, Termine und die Merkliste an einem Ort.</small></span></a>
         <a class="karte" href="#"><span class="bild" data-anker="rucksack"></span><span><b>Rucksack</b><small data-sie="Was Sie bei einem Wechsel mitnehmen: Unterlagen, Ausweise, Kontakte." data-du="Was du bei einem Wechsel mitnimmst: Unterlagen, Ausweise, Kontakte."></small></span></a>
         <a class="karte" href="#"><span class="bild" data-anker="anspruch"></span><span><b>Was steht mir zu?</b><small>Leistungen und Rechner — Prämienverbilligung, Sozialhilfe, Stipendien.</small></span></a>
       </div>
+      <div id="menue-bereiche"></div>
       <div>
-        <div class="gruppe-titel">Bereiche</div>
-        <div id="menue-bereiche"></div>
+        <div class="gruppe-titel">Werkzeuge</div>
+        <a class="karte" href="#"><span class="sym" data-icon="behoerden" style="--licht: var(--behoerden);width:48px;height:48px;border-radius:14px"></span><span><b>Steuern</b><small>Bundessteuer berechnen</small></span></a>
+        <a class="karte" href="#"><span class="sym" data-icon="finanzen" style="--licht: var(--finanzen);width:48px;height:48px;border-radius:14px"></span><span><b>Finanz-Übersicht</b><small>Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.</small></span></a>
+        <a class="karte" href="#"><span class="sym" data-icon="basis" style="--licht: var(--gold);width:48px;height:48px;border-radius:14px"></span><span><b>Lebenssituationen</b><small>Versteckte Ansprüche entdecken</small></span></a>
+        <a class="menue-alle" href="#">Alle Werkzeuge im Gepäck ›</a>
       </div>
       <div class="klein-reihe"><a href="#">Einstellungen</a><a href="#">Einfache Ansicht</a><a href="#">Datenschutz &amp; Rechtliches</a><a href="#">Problem melden</a></div>
     </div>
@@ -1113,15 +1173,30 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   }
 
   // ---------- D · Ablage ----------
+  // datum = hochgeladen, ablauf = Ablaufdatum (für «Nach Ablauf»); archiv wie der Reiter «Archiv» der App
   let DOKS = [
-    { name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen' },
-    { name: 'Lohnausweis 2025', wo: 'Finanzen & Geld · 12. Feb. 2026', icon: 'finanzen', licht: 'finanzen' },
-    { name: 'Pass', wo: 'Persönliche Basis · läuft im März 2027 ab', icon: 'basis', licht: 'basis', bald: true },
+    { name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen', datum: '2026-10-01', ablauf: '9999' },
+    { name: 'Lohnausweis 2025', wo: 'Finanzen & Geld · 12. Feb. 2026', icon: 'finanzen', licht: 'finanzen', datum: '2026-02-12', ablauf: '9999' },
+    { name: 'Pass', wo: 'Persönliche Basis · läuft im März 2027 ab', icon: 'basis', licht: 'basis', bald: true, datum: '2025-06-03', ablauf: '2027-03' },
+    { name: 'Mietvertrag alte Wohnung', wo: 'Wohnen & Leben · Archiv', icon: 'wohnen', licht: 'wohnen', datum: '2021-07-20', ablauf: '9999', archiv: true },
   ];
+  let ablageFach = 'aktiv';
   function dokliste() {
     const l = document.getElementById('dokliste');
-    l.innerHTML = DOKS.map((d, i) => `<div class="dok"><span class="sym k" data-icon="${d.icon}" style="--licht: var(--${d.licht})"></span><span>${d.name}<small class="${d.bald ? 'hinweisfrist' : ''}">${d.wo.replace('&', '&amp;')}</small></span><button class="mehr" aria-label="${d.name} löschen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button></div>`).join('');
-    document.querySelector('#ablage-voll .uebersichtzeile').innerHTML = `<b>${DOKS.length} Dokument${DOKS.length === 1 ? '' : 'e'}</b>${DOKS.some((d) => d.bald) ? ' · 1 läuft bald ab' : ''} · zuletzt gesichert 2. Okt.`;
+    const q = document.querySelector('#ablage-voll .suche').value.trim().toLowerCase();
+    const sort = document.getElementById('ablage-sort').value;
+    const aktiv = DOKS.filter((d) => !d.archiv);
+    document.getElementById('zahl-aktiv').textContent = aktiv.length;
+    document.getElementById('zahl-archiv').textContent = DOKS.length - aktiv.length;
+    // Satz wie DocumentTresor.jsx: unter 5 Dokumenten ordnerStarting, unter 15 ordnerGrowing, sonst ordnerFull
+    const satz = document.getElementById('ablage-satz'), n = DOKS.length;
+    if (n) { satz.dataset.sie = n < 5 ? 'Ein guter Anfang.' : n < 15 ? 'Ihr Ordner füllt sich.' : 'Alles an seinem Platz.'; satz.dataset.du = n < 5 ? 'Ein guter Anfang.' : n < 15 ? 'Dein Ordner füllt sich.' : 'Alles an seinem Platz.'; }
+    satz.textContent = satz.dataset[anrede];
+    const zeigen = DOKS.map((d, i) => ({ d, i }))
+      .filter(({ d }) => (ablageFach === 'archiv') === !!d.archiv && (!q || d.name.toLowerCase().includes(q)))
+      .sort((a, b) => sort === 'name' ? a.d.name.localeCompare(b.d.name, 'de') : sort === 'datum' ? b.d.datum.localeCompare(a.d.datum) : a.d.ablauf.localeCompare(b.d.ablauf));
+    l.innerHTML = zeigen.length ? zeigen.map(({ d, i }) => `<div class="dok"><span class="sym k" data-icon="${d.icon}" style="--licht: var(--${d.licht})"></span><span>${d.name}<small class="${d.bald ? 'hinweisfrist' : ''}">${d.wo.replace('&', '&amp;')}</small></span><button class="mehr" aria-label="${d.name} löschen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button></div>`).join('') : `<p class="unter" style="padding:14px 0">${q ? 'Keine Treffer.' : 'Im Archiv liegt nichts.'}</p>`;
+    document.querySelector('#ablage-voll .uebersichtzeile').innerHTML = `<b>${aktiv.length} Dokument${aktiv.length === 1 ? '' : 'e'}</b>${aktiv.some((d) => d.bald) ? ' · 1 läuft bald ab' : ''} · zuletzt gesichert 2. Okt.`;
     icons();
     l.querySelectorAll('.mehr').forEach((b) => b.onclick = () => nachfragen(+b.dataset.i));
   }
@@ -1136,14 +1211,26 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     document.getElementById('ablage-leer').hidden = z !== 'leer';
     document.getElementById('ablage-voll').hidden = z !== 'voll';
     document.querySelectorAll('[data-ablage]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.ablage === z));
-    if (z === 'voll') { if (!DOKS.length) DOKS = [{ name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen' }]; dokliste(); }
+    const satz = document.getElementById('ablage-satz');
+    if (z === 'voll') { if (!DOKS.length) DOKS = [{ name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen', datum: '2026-10-01', ablauf: '9999' }]; dokliste(); }
+    else { satz.dataset.sie = 'Ihr Ordner ist bereit.'; satz.dataset.du = 'Dein Ordner ist bereit.'; satz.textContent = satz.dataset[anrede]; }
   }
   document.querySelectorAll('[data-ablage]').forEach((b) => b.addEventListener('click', () => ablage(b.dataset.ablage)));
+  document.querySelectorAll('[data-fach]').forEach((b) => b.addEventListener('click', () => {
+    ablageFach = b.dataset.fach;
+    document.querySelectorAll('[data-fach]').forEach((x) => x.setAttribute('aria-selected', x === b));
+    dokliste();
+  }));
+  document.getElementById('ablage-sort').addEventListener('change', dokliste);
+  document.querySelector('#ablage-voll .suche').addEventListener('input', dokliste);
 
   // ---------- E · Menü ----------
   const BEREICH_SATZ = { basis: 'Name, Ausweis, Bewilligung — das Fundament.', wohnen: 'Wohnung, Miete, Umzug, Haushalt.', finanzen: 'Einkommen, Budget, Erspartes, Bank.', versicherungen: 'Krankenkasse, AHV, Säule 3a, Policen.', ausbildung: 'Stelle, Lohn, Weiterbildung, Abschlüsse.', behoerden: 'Steuern, Gemeinde, Fristen, Briefe.', notfall: 'Notfallpass, Kontakte, Verfügungen.' };
   const BER2 = [['basis', 'Persönliche Basis'], ['wohnen', 'Wohnen & Leben'], ['finanzen', 'Finanzen & Geld'], ['versicherungen', 'Versicherungen & Vorsorge'], ['ausbildung', 'Ausbildung & Arbeit'], ['behoerden', 'Behörden & Rechtliches'], ['notfall', 'Notfall']];
-  document.getElementById('menue-bereiche').innerHTML = BER2.map(([k, t]) => `<a class="karte" href="#"><span class="sym" data-icon="${k}" style="--licht: var(--${k});width:48px;height:48px;border-radius:14px"></span><span><b>${t.replace('&', '&amp;')}</b><small>${BEREICH_SATZ[k]}</small></span></a>`).join('');
+  // Gliederung wie heute: tierCore / tierSupporting / tierProtective
+  const STUFEN = [[{ sie: 'Ihr Alltag', du: 'Dein Alltag' }, ['basis', 'wohnen', 'finanzen']], [{ sie: 'Ihre Absicherung', du: 'Deine Absicherung' }, ['versicherungen', 'ausbildung']], [{ sie: 'Ihr Schutz', du: 'Dein Schutz' }, ['behoerden', 'notfall']]];
+  document.getElementById('menue-bereiche').innerHTML = STUFEN.map(([titel, keys]) => `<div><div class="gruppe-titel" data-sie="${titel.sie}" data-du="${titel.du}">${titel.sie}</div>`
+    + keys.map((k) => BER2.find((b) => b[0] === k)).map(([k, t]) => `<a class="karte" href="#"><span class="sym" data-icon="${k}" style="--licht: var(--${k});width:48px;height:48px;border-radius:14px"></span><span><b>${t.replace('&', '&amp;')}</b><small>${BEREICH_SATZ[k]}</small></span></a>`).join('') + '</div>').join('');
   document.querySelectorAll('.karte .bild[data-anker]').forEach((el) => { el.innerHTML = ic(el.dataset.anker).replace('width="20" height="20"', 'width="24" height="24"'); });
 
   // ---------- Abschnittsanzeige (Rechner) ----------
@@ -1166,17 +1253,36 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   });
 
   // ---------- F · Merkliste: sofort weg, Rückgängig holt an dieselbe Stelle ----------
-  let MERK = [
-    { t: 'Säule 3a eröffnen', w: 'Finanzen & Geld', i: 'finanzen' },
-    { t: 'Hausratversicherung vergleichen', w: 'Versicherungen & Vorsorge', i: 'versicherungen' },
-    { t: 'Arbeitszeugnis anfragen', w: 'Ausbildung & Arbeit', i: 'ausbildung' },
-    { t: 'Notfallkontakt prüfen', w: 'Notfall', i: 'notfall' },
+  // Verknüpfungsziele wie LINK_TARGETS in MerklisteView.jsx (Namen aus nav.*), Farbe = passender Bereich
+  const MERK_ZIELE = [['', 'Keine Verknüpfung', 'basis'], ['premium', 'Prämienverbilligung (IPV)', 'versicherungen'], ['praemien', 'Prämien-Orientierung', 'versicherungen'], ['tax', 'Steuern', 'behoerden'], ['sozialhilfe', 'Sozialhilfe', 'finanzen'], ['vorsorge', 'Vorsorge-Rechner', 'versicherungen'], ['alv', 'ALV-Taggeld', 'ausbildung'], ['stipendien', 'Stipendien', 'ausbildung'], ['asyl', 'Asyl & Schutz', 'basis'], ['tresor', 'Dokumentenablage', 'basis'], ['calendar', 'Kalender', 'behoerden'], ['direktlinks', 'Offizielle Links', 'behoerden']];
+  const ziel = (v) => MERK_ZIELE.find((z) => z[0] === v) || MERK_ZIELE[0];
+  let MERK = [  // Platzhalter
+    { t: 'Ich könnte Prämienverbilligung beantragen', v: 'premium' },
+    { t: 'Säule 3a eröffnen', v: 'vorsorge' },
+    { t: 'Lohnausweis ablegen', v: 'tresor' },
+    { t: 'Notfallkontakt prüfen', v: '', erledigt: true },
   ];
+  document.getElementById('merk-ziel').innerHTML = MERK_ZIELE.map(([v, n]) => `<option value="${v}">${n.replace('&', '&amp;')}</option>`).join('');
+  document.getElementById('merk-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const feld = document.getElementById('merk-text'), t = feld.value.trim();
+    if (!t) { feld.focus(); return; }
+    MERK.unshift({ t, v: document.getElementById('merk-ziel').value });
+    feld.value = ''; merkZeichnen(0);
+  });
+  function merkZeile(m, i, neuIndex) {
+    const [, name, farbe2] = ziel(m.v);
+    return `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}${m.erledigt ? ' erledigt' : ''}"><div><div class="innen2"><button class="haken" aria-pressed="${!!m.erledigt}" aria-label="${m.erledigt ? 'Als nicht erledigt markieren' : 'Als erledigt markieren'}" data-i="${i}"><i>${m.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button><span class="sym k" data-icon="${farbe2}" style="--licht: var(--${farbe2})"></span><span class="titel">${m.t}<small>${m.v ? name.replace('&', '&amp;') + ' ›' : 'ohne Verknüpfung'}</small></span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`;
+  }
   function merkZeichnen(neuIndex = -1) {
-    const l = document.getElementById('merkliste');
-    if (!MERK.length) { l.innerHTML = `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Nichts gemerkt</h4><p>${anrede === 'du' ? 'Wenn du in einem Rechner oder Ablauf «Merken» tippst, erscheint es hier.' : 'Wenn Sie in einem Rechner oder Ablauf «Merken» tippen, erscheint es hier.'}</p></div>`; return; }
-    l.innerHTML = MERK.map((m, i) => `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}"><div><div class="innen2"><span class="sym k" data-icon="${m.i}" style="--licht: var(--${m.i})"></span><span>${m.t}<small>${m.w.replace('&', '&amp;')}</small></span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`).join('');
+    const l = document.getElementById('merkliste'), du = anrede === 'du';
+    const feld = document.getElementById('merk-text'); feld.placeholder = feld.dataset[du ? 'phDu' : 'phSie'];
+    if (!MERK.length) { l.innerHTML = `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Noch nichts gemerkt</h4><p>${du ? 'Deine Merkliste ist leer. Füge oben eine erste Notiz hinzu.' : 'Ihre Merkliste ist leer. Fügen Sie oben eine erste Notiz hinzu.'}</p></div>`; return; }
+    const offen = MERK.map((m, i) => [m, i]).filter(([m]) => !m.erledigt), fertig = MERK.map((m, i) => [m, i]).filter(([m]) => m.erledigt);
+    l.innerHTML = (offen.length ? `<h5>Zu erledigen</h5>` + offen.map(([m, i]) => merkZeile(m, i, neuIndex)).join('') : '')
+      + (fertig.length ? `<h5>Erledigt</h5>` + fertig.map(([m, i]) => merkZeile(m, i, neuIndex)).join('') : '');
     icons();
+    l.querySelectorAll('.haken').forEach((b) => b.onclick = () => { const m = MERK[+b.dataset.i]; m.erledigt = !m.erledigt; merkZeichnen(); });
     l.querySelectorAll('.x').forEach((b) => b.onclick = () => {
       const i = +b.dataset.i, eintrag = MERK[i], zeile = b.closest('.merk');
       const ruhig = document.body.classList.contains('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1260,45 +1366,96 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const MON = ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sept.', 'Okt.', 'Nov.', 'Dez.'];
   const MONLANG = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
   const ANSTEHT = [  // Platzhalter
+    { tag: -2, titel: 'Nachsendeauftrag einrichten', art: 'Frist', bereich: 'wohnen', woher: 'aus dem Ablauf Umzug', erledigt: true },
     { tag: 3, titel: 'Wohnungsübergabe', art: 'Termin', bereich: 'wohnen', woher: 'aus dem Ablauf Umzug' },
     { tag: 9, titel: 'Anmelden bei der neuen Gemeinde', art: 'Frist', bereich: 'wohnen', woher: 'aus dem Ablauf Umzug' },
     { tag: 14, titel: 'Prämienverbilligung: Antrag einreichen', art: 'Frist', bereich: 'versicherungen', woher: 'aus dem Rechner, selbst eingetragen' },
     { tag: 21, titel: 'Zahnarzt', art: 'Termin', bereich: 'basis', woher: 'Kalender' },
     { tag: 38, titel: 'Krankenkasse: Kündigung für den Wechsel', art: 'Frist', bereich: 'versicherungen', woher: 'selbst eingetragen' },
   ];
-  const BAENDER = [{ von: -2, bis: 9, titel: 'Umzug · Schritt 2 von 3', bereich: 'wohnen' }];
+  const BAENDER = [{ von: -2, bis: 9, titel: 'Umzug · Schritt 2 von 4', bereich: 'wohnen' }];
   const TAGE = 42, BREITE = 46, VOR = 3;
+  const tageBis = (d) => Math.round((d - HEUTE) / 864e5);
+  let zlAb = -VOR, zlFach = 'offen';  // zlAb: erster gezeigter Tag, gezählt ab heute
+  function zlMonat() { const d = tagNach(zlAb + VOR); return [d.getFullYear(), d.getMonth()]; }
+  function zlSpringen(jahr, monat) {
+    const erster = new Date(jahr, monat, 1);
+    zlAb = (jahr === HEUTE.getFullYear() && monat === HEUTE.getMonth()) ? -VOR : tageBis(erster) - VOR;
+    zeitleiste();
+  }
   function zeitleiste() {
     const spur = document.getElementById('zl-spur'); if (!spur) return;
+    const [jahr, monat] = zlMonat();
+    document.getElementById('zl-monat').textContent = `${MONLANG[monat]} ${jahr}`;
+    document.getElementById('zl-monate').innerHTML = MON.map((m, i) => `<button aria-pressed="${i === monat}" data-m="${i}">${m.replace('.', '')}</button>`).join('');
+    document.querySelectorAll('#zl-monate button').forEach((b) => b.onclick = () => zlSpringen(jahr, +b.dataset.m));
+    const reihe = document.getElementById('zl-monate'), gewaehlt = reihe.querySelector('[aria-pressed="true"]');
+    reihe.scrollLeft = gewaehlt.offsetLeft - reihe.offsetLeft - 40;  // gewählten Monat sichtbar halten
     let h = '';
-    for (let n = -VOR; n < TAGE - VOR; n++) {
-      const d = tagNach(n), marken = ANSTEHT.filter((a) => a.tag === n);
+    for (let n = zlAb; n < zlAb + TAGE; n++) {
+      const d = tagNach(n), marken = ANSTEHT.filter((a) => a.tag === n && !a.erledigt);
       h += `<button class="zl-tag${n === 0 ? ' heute' : ''}${d.getDate() === 1 ? ' monat1' : ''}" data-n="${n}" aria-pressed="false" aria-label="${d.getDate()}. ${MONLANG[d.getMonth()]}${n === 0 ? ', heute' : ''}${marken.length ? ', ' + marken.map((m) => m.art + ' ' + m.titel).join(', ') : ''}">
         <span class="wt">${d.getDate() === 1 ? MON[d.getMonth()] : WT[d.getDay()]}</span><span class="nr">${d.getDate()}</span>
         <span class="marken">${marken.map((m) => `<i class="marke-f${m.art === 'Termin' ? ' raute' : ''}" style="background:var(--${m.bereich})"></i>`).join('')}</span></button>`;
     }
     spur.innerHTML = h;
-    document.getElementById('zl-band').innerHTML = BAENDER.map((b) => `<span style="left:${(b.von + VOR) * BREITE}px;width:${(b.bis - b.von + 1) * BREITE}px;background:var(--${b.bereich})">${b.titel}</span>`).join('');
     const band = document.getElementById('zl-band');
-    spur.addEventListener('scroll', () => { band.style.transform = `translateX(${-spur.scrollLeft}px)`; }, { passive: true });
-    spur.scrollLeft = 0;
+    band.innerHTML = BAENDER.map((b) => `<span style="left:${(b.von - zlAb) * BREITE}px;width:${(b.bis - b.von + 1) * BREITE}px;background:var(--${b.bereich})">${b.titel}</span>`).join('');
+    spur.onscroll = () => { band.style.transform = `translateX(${-spur.scrollLeft}px)`; };
+    spur.scrollLeft = 0; band.style.transform = '';
     spur.querySelectorAll('.zl-tag').forEach((b) => b.onclick = () => {
       spur.querySelectorAll('.zl-tag').forEach((x) => x.setAttribute('aria-pressed', x === b));
-      const n = +b.dataset.n, ziel = ANSTEHT.find((a) => a.tag >= n);
+      const n = +b.dataset.n, ziel = ANSTEHT.find((a) => !a.erledigt && a.tag >= n);
       document.querySelectorAll('#zl-liste .termin').forEach((t) => t.classList.toggle('markiert', ziel && +t.dataset.n === ziel.tag));
       const el = ziel && document.querySelector(`#zl-liste .termin[data-n="${ziel.tag}"]`);
       if (el) el.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'center' });
     });
-    const gruppen = [['Diese Woche', (a) => a.tag <= 7], ['Bis Ende November', (a) => a.tag > 7 && a.tag <= 38], ['Später', (a) => a.tag > 38]];
-    document.getElementById('zl-liste').innerHTML = gruppen.map(([t, f]) => {
-      const e = ANSTEHT.filter(f); if (!e.length) return '';
-      return `<h5>${t}</h5>` + e.map((a) => { const d = tagNach(a.tag); return `<a class="termin" href="#" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · in ${a.tag} Tag${a.tag === 1 ? '' : 'en'} · ${a.woher}</small></span><span class="pfeil">›</span></a>`; }).join('');
-    }).join('');
-    const naechste = ANSTEHT.find((a) => a.art === 'Frist');
-    document.getElementById('zl-held-titel').textContent = `in ${naechste.tag} Tagen`;
-    document.getElementById('zl-held-text').textContent = `${naechste.titel} · ${naechste.woher}`;
+    zlListe();
+  }
+  function zlListe() {
+    ANSTEHT.sort((a, b) => a.tag - b.tag);
+    const offen = ANSTEHT.filter((a) => !a.erledigt), fertig = ANSTEHT.filter((a) => a.erledigt);
+    document.getElementById('zl-zahl-offen').textContent = offen.length;
+    document.getElementById('zl-zahl-erledigt').textContent = fertig.length;
+    const monatsende = tageBis(new Date(HEUTE.getFullYear(), HEUTE.getMonth() + 1, 0));
+    // Gruppen wie die App (calendar.thisWeek / thisMonth / later)
+    const gruppen = zlFach === 'offen'
+      ? [['Diese Woche', (a) => a.tag <= 7], ['Diesen Monat', (a) => a.tag > 7 && a.tag <= monatsende], ['Später', (a) => a.tag > monatsende]]
+      : [['Erledigt', () => true]];
+    const liste = zlFach === 'offen' ? offen : fertig;
+    const zeile = (a) => { const d = tagNach(a.tag); const wann = a.tag === 0 ? 'Fällig heute' : a.tag === 1 ? 'Fällig morgen' : a.tag > 1 ? `Fällig in ${a.tag} Tagen` : `${d.getDate()}. ${MONLANG[d.getMonth()]}`;
+      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-t="${a.titel}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
+    const l = document.getElementById('zl-liste');
+    l.innerHTML = liste.length ? gruppen.map(([t, f]) => { const e = liste.filter(f); return e.length ? `<h5>${t}</h5>` + e.map(zeile).join('') : ''; }).join('')
+      : `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Noch nichts geplant</h4><p>${anrede === 'du' ? 'Noch keine Erinnerungen. Füge deine erste Erinnerung hinzu, um organisiert zu bleiben.' : 'Noch keine Erinnerungen. Fügen Sie Ihre erste Erinnerung hinzu, um organisiert zu bleiben.'}</p></div>`;
+    l.querySelectorAll('.haken').forEach((b) => b.onclick = () => {
+      const a = ANSTEHT.find((x) => x.titel === b.dataset.t); a.erledigt = !a.erledigt;
+      zeitleiste(); melden(l.closest('.geraet'), a.erledigt ? `«${a.titel}» erledigt` : `«${a.titel}» wieder offen`, false);
+    });
+    const naechste = offen.find((a) => a.art === 'Frist' && a.tag >= 0);
+    document.getElementById('zl-held-titel').textContent = naechste ? `in ${naechste.tag} Tagen` : 'keine offene';
+    document.getElementById('zl-held-text').textContent = naechste ? `${naechste.titel} · ${naechste.woher}` : '';
     icons();
   }
+  document.getElementById('zl-zurueck').onclick = () => { const [j, m] = zlMonat(); zlSpringen(m === 0 ? j - 1 : j, (m + 11) % 12); };
+  document.getElementById('zl-vor').onclick = () => { const [j, m] = zlMonat(); zlSpringen(m === 11 ? j + 1 : j, (m + 1) % 12); };
+  document.getElementById('zl-heute').onclick = () => { zlAb = -VOR; zeitleiste(); };
+  document.querySelectorAll('[data-zl]').forEach((b) => b.onclick = () => {
+    zlFach = b.dataset.zl; document.querySelectorAll('[data-zl]').forEach((x) => x.setAttribute('aria-selected', x === b)); zlListe();
+  });
+  const zlForm = document.getElementById('zl-form'), zlNeu = document.getElementById('zl-neu');
+  const zlFormZeigen = (an) => { zlForm.hidden = !an; zlNeu.hidden = an; zlNeu.setAttribute('aria-expanded', an); if (an) document.getElementById('zl-f-titel').focus({ preventScroll: true }); };
+  zlNeu.onclick = () => zlFormZeigen(true);
+  document.getElementById('zl-f-ab').onclick = () => zlFormZeigen(false);
+  zlForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const titel = document.getElementById('zl-f-titel').value.trim(), [j, m, t] = document.getElementById('zl-f-datum').value.split('-').map(Number);
+    if (!titel || !j) return;
+    ANSTEHT.push({ tag: tageBis(new Date(j, m - 1, t)), titel, art: 'Termin', bereich: 'basis', woher: 'selbst eingetragen' });
+    zlForm.reset(); zlFormZeigen(false);
+    zlFach = 'offen'; document.querySelectorAll('[data-zl]').forEach((x) => x.setAttribute('aria-selected', x.dataset.zl === 'offen'));
+    zeitleiste(); melden(zlForm.closest('.geraet'), `«${titel}» hinzugefügt`, false);
+  });
 
   // ---------- H · Dokument fotografieren ----------
   let fotoSchritt = 0, kamera = 'ja', fotoArt = null, seiten = 1;

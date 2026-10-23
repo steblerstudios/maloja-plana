@@ -18,7 +18,28 @@ oder erfundenen.
 - Umzug: alle vier Schritte. Die Erfassung hat **acht** Stellen mit Namen, nicht sechs
   (Arbeitgeber und Steueramt waren anders eingebettet).
 
-## Offen
+## Nachtrag 23.10.2026, 13:48 — fertig (andere Sitzung, nach der Übergabe)
+Alles, was unten unter «Offen» steht, ist erledigt und im Browser geprüft (390 px, Sie und Du,
+Konsole ohne Fehler):
+- Umzug: «Gemeinde» steht links unter der Kehre, «Kündigen» links vom Strassenende. Nachgemessen:
+  keine Beschriftung berührt die 14 px breite Strasse. Das Band in «Was ansteht» heisst jetzt
+  «Schritt 2 von 4».
+- Kapitel: echter Untertitel und Einleitung, Zusammenfassungszeile, IPV-Hinweis (finanzen.*,
+  contextIpv).
+- Ablage: Reiter «Aktiv / Archiv» mit Zahl, «Sortieren nach» mit drei Optionen, Ordner-Satz nach
+  `DocumentTresor.jsx`.
+- Merkliste: Eingabe, «Verknüpfen mit» (12 Ziele aus `LINK_TARGETS`), «Hinzufügen», abhaken,
+  «Zu erledigen / Erledigt», Leer-Zustand im Wortlaut.
+- Kalender («Was ansteht»): Monat ‹ › über den Jahreswechsel, Monatsknöpfe, «Heute»,
+  «Bevorstehend / Erledigt», abhaken, «+ Erinnerung hinzufügen», Hinweis. Platzhalter sind nur
+  die Formular-Beschriftungen «Titel» und «Datum».
+- Menü: «63% vollständig», «Auf den Startbildschirm legen», Gruppen Alltag / Absicherung /
+  Schutz, Steuern, Finanz-Übersicht, Lebenssituationen, «Alle Werkzeuge im Gepäck ›».
+
+Nicht gemacht: die Gegenprobe aller 34 Lücken Zeile für Zeile gegen `vergleich-inventar.json`
+mit einem Skript. Geprüft wurde nur von Hand, Seite für Seite.
+
+## Offen (Stand der Übergabe, 13:25)
 1. Umzug: Das Feld «Strasse» überdeckt die Beschriftung «Gemeinde» leicht.
 2. Kapitel
 3. Merkliste und Kalender (Vorlage: `heute-merkliste.jpg`, `heute-kalender.jpg`)
