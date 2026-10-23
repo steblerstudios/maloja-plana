@@ -113,3 +113,12 @@ weniger als 90 Tage bis zum Ablauf. Der Archiv-Platzhalter in Fassung 5 war daru
 - **«Was oft zuerst hineingehört»** mit drei Vorschlägen bleibt (neu, Copy-Prüfer). Die erfundene
   Übersichtszeile ist ersetzt durch «{n} Dokumente» (tresor.docCount).
 - Für den Copy-Prüfer: der Status «54d» ist knapp und wörtlich aus der App.
+
+### Merkliste · entschieden (Sophie, 23.10.2026)
+
+- **Verknüpfung als Unterzeile** mit ›, der ganze Eintrag ist die Tippfläche (heute: kleiner Knopf rechts).
+- **Bereichs-Symbol pro Eintrag** wie Fassung 5. Die Zuordnung Werkzeug → Bereich gibt es in der
+  App noch nicht; der Vorschlag steht in der Notiz unter dem Mockup und muss vor dem Bau festgelegt werden.
+- **Neue Einträge oben** (heute: unten).
+- Korrigiert (c5243a87): kein erfundenes «ohne Verknüpfung» mehr.
+- Entfernen mit «Rückgängig» war schon entschieden (Entscheid «C», §15); heute löscht die App sofort.
