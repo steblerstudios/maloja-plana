@@ -17,6 +17,20 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 📱 **Nachtrag 23.10.2026, 18:40 — Fusszeile, Kopfzeile, Scroll-Fix (#545) gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 18:36): main = `55ca1e93` (#545, 18:31) · live = `4299bfb9` (0.1.48-beta, 18:08,
+> ⚠️ laut Skript aus ungespeichertem Arbeitsbaum gebaut) · 8 Commits dazwischen · offen: #549 (dieser Doku-Nachzug), #548, #547.
+> **Inhalt #545:** Boden-Anker am Handy 5 statt 7 Plätze (Übersicht · Rucksack | ＋ | Anspruch · Menü; Kalender im ＋-Fächer
+> und Menü, Suche im Menü). Kopfzeile Handy **und** Desktop: Lupe + Zahnrad (Desktop: Zahnrad ersetzt die Barrierefreiheits-
+> Figur, gleiche Schublade). Scroll-Springen behoben: `filter: grayscale` lag auf dem App-Rahmen und machte ihn zum Bezugsrahmen
+> für `position: fixed` (gemessen 4716 px statt 812 px) → Filter jetzt auf `<html>`; dazu `translateZ(0)` an der Leiste.
+> **Verifiziert:** vitest 363 / 6550 grün, build ok, size 64,55 / 65 kB, CI grün; im Browser 375 px und 1280 px angeschaut.
+> **Nicht verifiziert:** echtes iPhone/Android (das Zittern beim Ein-/Ausfahren der Adressleiste ist nur vorbeugend behandelt).
+> **Lehre:** Zwei Sitzungen im selben Checkout — eine wechselte den Zweig zwischen Build und Commit, der Commit landete auf dem
+> fremden Zweig. Parallel arbeitende Sitzungen gehören in **eigene Arbeitsbäume** (`git worktree add`), nie in denselben Ordner.
+> **Nächster Schritt:** nächster Deploy (Stebler Studios) nimmt #545 mit; danach live am Handy prüfen (Schwarzweiss an, scrollen).
+
 > 🚪 **Nachtrag 23.10.2026, 17:45 — Deploy-Tor 0.1.48-beta (Nachzug 29.10.) auf Zweig `release/0.1.48-beta` `c88ee519`: 0 Blocker. Marke NICHT gesetzt, NICHT deployt.**
 >
 > **Gemessen:** live = `d4da4629` (0.1.47-beta) · main = `412d11bb` (Fassung 5 #539–#544 gemergt) · Release-Zweig = main-Inhalt
