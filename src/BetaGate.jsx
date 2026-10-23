@@ -1,10 +1,12 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
+// Dieselbe Landschaft wie auf der Übersicht (BergLandschaft) — kein zweites Bild.
+import landschaft from './assets/berge/landschaft.webp?url';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 
@@ -56,6 +58,17 @@ export const BetaGate = ({ children }) => {
   // Seite neu: Schirm, Überlagerung und Demo-Zustand verfallen mit dem Arbeitsspeicher,
   // zurück bleibt die Code-Wand. or5_beta_access bleibt unberührt.
   const [demo, setDemo] = useState(null); // null | 'laedt' | { data, onLeave }
+  // Fokus ins Codefeld, ohne zu scrollen: `autoFocus` schob auf dem Handy Logo und
+  // Landschaft aus dem Bild. Nur mit Maus/Trackpad — auf Touch-Geräten öffnete der
+  // Sofort-Fokus die Tastatur, bevor man den Eingang überhaupt gesehen hatte.
+  const codeFeld = useRef(null);
+  useEffect(() => {
+    try {
+      if (codeFeld.current && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        codeFeld.current.focus({ preventScroll: true });
+      }
+    } catch { /* ohne matchMedia: kein Fokus, kein Schaden */ }
+  }, [legalSection]);
   const startDemo = () => {
     setDemo('laedt');
     import('./demo/demoSpeicher.js')
@@ -96,54 +109,69 @@ export const BetaGate = ({ children }) => {
     }
   };
 
+  // Eingang als Ort (Vorbild Stardust, 23.10.2026): zuerst die Landschaft, darin das
+  // Formular. Texte unverändert — nur Anordnung und Gewicht sind neu. Das Layout für
+  // Handy, Tablet und Desktop steht in tokens.css (.mp-tor*), weil es Media-Queries braucht.
+  // Der Leitsatz in zwei Zeilen wie auf der Übersicht; ohne Satzgrenze bleibt er eine Zeile.
+  const leitsatz = String(t('dashboard.welcome'));
+  const satzGrenze = leitsatz.search(/[.!?]\s/);
+  const [zeile1, zeile2] = satzGrenze > 0
+    ? [leitsatz.slice(0, satzGrenze + 1), leitsatz.slice(satzGrenze + 2)]
+    : [leitsatz, ''];
+
   return React.createElement('div', {
     role: 'main',
     'aria-label': 'Maloja Plana',
+    className: 'mp-tor',
     style: {
-      minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: palette.bg, fontFamily: 'inherit',
+      '--mp-tor-bg': palette.bg, '--mp-tor-flaeche': palette.surface, '--mp-tor-rand': palette.border,
+      '--mp-tor-text': palette.text, '--mp-tor-akzent': palette.sageDeep, fontFamily: 'inherit',
     }
   },
-    React.createElement('form', {
-      onSubmit: handleSubmit,
-      style: {
-        background: palette.surface, padding: '40px', borderRadius: radius.md,
-        border: '1px solid ' + palette.border, maxWidth: '360px', width: '100%',
-        textAlign: 'center',
-      }
-    },
-      React.createElement('h1', {
-        'aria-label': 'Maloja Plana',
-        style: { fontSize: text.xl, fontWeight: weight.bold, margin: '0 0 ' + space.sm + 'px', color: palette.text, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '2px' }
-      },
+    React.createElement('div', { className: 'mp-tor-bild', 'aria-hidden': 'true', style: { backgroundImage: 'url(' + landschaft + ')' } }),
+    React.createElement('div', { className: 'mp-tor-kopf' },
+      React.createElement('h1', { 'aria-label': 'Maloja Plana' },
         // Der Name steckt als versteckter Text im Logo: Screenreader UND Text-Extraktion
         // (Suchmaschine, KI-Crawler) lesen «Maloja Plana» (Wächter: markennameImTitel.test.js).
-        React.createElement(MarkenLogo, { palette, breite: 220 })
+        // Anthrazit, weil es auf dem hellen Himmel steht (Farbe nach Fläche, MarkenLogo.jsx).
+        React.createElement(MarkenLogo, { palette, breite: 180 })
+      )
+    ),
+    React.createElement('form', {
+      onSubmit: handleSubmit,
+      className: 'mp-tor-inhalt',
+    },
+      React.createElement('p', { className: 'mp-tor-titel' },
+        zeile1, zeile2 && React.createElement('span', null, zeile2)
       ),
       React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: leading.normal }
+        style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.normal }
       }, t('beta.intro')),
-      React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: leading.normal }
-      }, t('beta.gateMessage')),
+      // Das Versprechen als Hauptsache, nicht als graues Kästchen.
       React.createElement('div', {
         style: {
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-          marginBottom: space.lg, padding: '8px 12px',
-          background: palette.sage + '0A', borderRadius: radius.sm,
+          display: 'flex', alignItems: 'center', gap: space.sm + 4 + 'px',
+          padding: space.md + 'px 0', margin: '0 0 ' + space.md + 'px',
+          borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border,
         }
       },
-        React.createElement(TrustLockIcon, { size: 14, color: palette.sage }),
         React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.sageDeep, lineHeight: leading.normal }
+          'aria-hidden': 'true',
+          style: { flexShrink: 0, width: '36px', height: '36px', borderRadius: '50%', background: palette.sage + '1A', display: 'grid', placeItems: 'center' }
+        }, React.createElement(TrustLockIcon, { size: 16, color: palette.sageDeep })),
+        React.createElement('span', {
+          style: { fontSize: text.body, fontWeight: weight.medium, color: palette.text, lineHeight: 1.35 }
         }, t('trust.localBadge'))
       ),
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.sm + 'px', lineHeight: leading.normal }
+      }, t('beta.gateMessage')),
       React.createElement('input', {
         type: 'text',
         value: input,
         onChange: (e) => { setInput(e.target.value); setError(false); },
         placeholder: t('beta.codePlaceholder'), 'aria-label': t('beta.codePlaceholder'),
-        autoFocus: true,
+        ref: codeFeld,
         'aria-invalid': error ? 'true' : undefined,
         'aria-describedby': error ? 'beta-error' : undefined,
         style: {
@@ -189,6 +217,8 @@ export const BetaGate = ({ children }) => {
         ),
         t('common.simpleView')
       ),
+      // Fusszeile zentriert wie bisher; Titel und Formular stehen linksbündig.
+      React.createElement('div', { style: { textAlign: 'center' } },
       React.createElement('button', {
         type: 'button',
         onClick: () => setLegalSection('privacy'),
@@ -216,6 +246,7 @@ export const BetaGate = ({ children }) => {
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm }
       }, 'Stebler Studios · Basel')
+      )
     )
   );
 };
