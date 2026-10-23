@@ -266,11 +266,15 @@ Sophie: «es fehlen mir die Details, die wir bei den Finanzen eingebaut haben».
 ### Vor dem Bau festgelegt (Sophie, 23.10.2026, Auswahl-Dialog in der Bau-Sitzung)
 
 - **Umfang:** «Möglichst alles» von Fassung 5 in den Nachzug **29.10.** (Übersicht ausgenommen, nicht entschieden).
-- **Merkliste · Bereichs-Symbol:** Vorschlag aus dem Mockup gilt — IPV, Prämien, Vorsorge → Versicherungen ·
+- ~~**Merkliste · Bereichs-Symbol:** Vorschlag aus dem Mockup gilt — IPV, Prämien, Vorsorge → Versicherungen ·
   Steuern, Kalender, Offizielle Links → Behörden · Sozialhilfe → Finanzen · ALV, Stipendien → Ausbildung ·
-  Asyl, Ablage, ohne Verknüpfung → Persönliche Basis.
-- **Kalender · Kategorie → Bereichsfarbe:** Vorschlag gilt — Gesundheit/Versicherung → Versicherungen,
-  Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis; übrige → Basis.
+  Asyl, Ablage, ohne Verknüpfung → Persönliche Basis.~~
+- ~~**Kalender · Kategorie → Bereichsfarbe:** Vorschlag gilt — Gesundheit/Versicherung → Versicherungen,
+  Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis; übrige → Basis.~~
+  > ⟨überholt, Sophie 23.10.2026 abends⟩ **Es gilt der Block «Zuordnungen Merkliste und Kalender ·
+  > festgelegt» weiter unten** (aus `werkzeugRegister.js`). Die beiden Zeilen oben waren der erste
+  > Mockup-Vorschlag, bevor die App geprüft war. Sie lagen bei Steuern, ALV und Asyl daneben und hätten
+  > «Steuern» in der Merkliste anders eingefärbt als im Kapitel. Sophie: «Ja, Liste B».
 - **Kapitel Finanzen · Nebenerwerb:** die fünf Felder erscheinen **erst mit Nebenerwerb**.
 - **Sprachen:** FR/IT/EN und **auch rm** entwirft Claude selbst; rm als ungeprüft markiert bis zur Gegenlese.
   Copy-Prüfer liest alle neuen Texte vorher.
