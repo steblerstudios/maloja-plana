@@ -21,6 +21,12 @@ kommt der Changelog immer mit, nie doppelt.*
   Folgen (DBG 124/130/174, StHG 46/55). rm provisorisch.
 - **Kapitel am Handy:** Bezeichnung und Wert überlappen nicht mehr («Einkommensart» / «Netto (was ich erhalte)», #530).
 
+### Tests
+- **Feste Test-Uhr (22.10.2026):** `src/__tests__/festeUhr.setup.js`, eingebunden in `vite.config.js`. Mindestlohn und
+  Prämienverbilligung sind jahresgebunden, die Tests nahmen still «heute = 2026» an. Mit der Uhr auf dem 2.1.2027
+  waren 57 Testdateien rot (712 Tests), danach 0. Die App ändert sich nicht. `heuteNachSchweizerUhr` setzt seine Zeit
+  jetzt je Test statt einmal pro Datei. Sobald die Werte 2027 eingebaut sind, wird das Datum nachgeschoben.
+
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 
 *Alles seit `0.1.46-beta` (live `650908a2`, 19.10.2026). Enthält die Befunde B1–B5, B6, B7, B10, B12

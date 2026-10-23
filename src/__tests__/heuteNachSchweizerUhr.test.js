@@ -4,15 +4,16 @@
 // `new Date().toISOString()`. Zwischen Mitternacht und 1 Uhr (Winter) bzw. 2 Uhr
 // (Sommer) ist das in UTC noch gestern — eine heute fällige Frist galt dann als
 // morgen fällig, eine gestrige als heute. Geprüft um 00:30 Zürcher Zeit.
-import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach, afterAll, vi } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { inDays } from '../utils/helpers.js';
 import { nextIpvStatus } from '../data/ipvStatus.js';
 
 const altTZ = process.env.TZ;
-beforeAll(() => {
-  process.env.TZ = 'Europe/Zurich';
+beforeAll(() => { process.env.TZ = 'Europe/Zurich'; });
+// Je Test, nicht einmal pro Datei: die feste Test-Uhr (festeUhr.setup.js) setzt vor jedem Test 22.10.2026.
+beforeEach(() => {
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2026-09-24T22:30:00Z')); // = 25.09.2026, 00:30 in Zürich
 });
