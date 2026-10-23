@@ -4217,6 +4217,8 @@ export default {
 
   premium: {
     title: 'Reducziun da premias (IPV)',
+    // rm ungeprüft F5
+    lageTitle: { sie: 'Vossa situaziun', du: 'Tia situaziun' },
     subtitle: { sie: "Reducziun individuala da premias — il chantun surpiglia ina part da Vossa premia da cassa da malsauns sche Vossa entrada è sut in tschert cunfin.", du: "Reducziun individuala da premias — il chantun surpiglia ina part da Tia premia da cassa da malsauns sche Tia entrada è sut in tschert cunfin." },
     canton: 'Chantun: {name}',
     cantonUnknown: 'Betg enconuschent',

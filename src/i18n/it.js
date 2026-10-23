@@ -2757,6 +2757,7 @@ export default {
 
   premium: {
     title: 'Riduzione dei premi (IPV)',
+    lageTitle: { sie: 'La Sua situazione', du: 'La tua situazione' },
     subtitle: { sie: 'Riduzione individuale dei premi — il cantone copre una parte del Suo premio di assicurazione malattia se il Suo reddito è inferiore a una certa soglia.', du: 'Riduzione individuale dei premi — il cantone copre una parte del tuo premio di assicurazione malattia se il tuo reddito è inferiore a una certa soglia.' },
     canton: 'Cantone: {name}',
     cantonUnknown: 'Non riconosciuto',
