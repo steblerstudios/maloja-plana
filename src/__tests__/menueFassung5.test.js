@@ -151,7 +151,8 @@ describe('Icons · Was ansteht / Ablage / Merkliste', () => {
     const main = lies('main.jsx');
     expect(main).toMatch(/key: 'tresor', label: t\('nav\.capDokument'\), icon: 'ordner'/);
     expect(main).toMatch(/key: 'merkliste', label: t\('nav\.merkliste'\), icon: 'check'/);
-    expect(main).toMatch(/key: 'calendar', label: t\('nav\.calendar'\), icon: 'calendarToday'/);
+    // Seit 23.10.2026 liegt der Kalender nur noch im Erfassen-Fächer, nicht mehr in der Leiste.
+    expect(main).toMatch(/key: 'calendar', label: t\('nav\.capFrist'\), icon: 'calendarToday'/);
     expect(main).toMatch(/const day = String\(tagInZuerich\(\)\)/);
     expect(main).not.toMatch(/new Date\(\)\.getDate\(\)/);
     expect(lies('IconKern.jsx')).not.toMatch(/new Date\(\)\.getDate\(\)/);

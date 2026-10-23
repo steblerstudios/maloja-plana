@@ -44,8 +44,9 @@ describe('Wanderrucksack · Panorama, untere Leiste, Name', () => {
     expect(src('Dashboard.jsx')).toMatch(/talStationen: \[\s*\{ key: 'gepaeck', label: t\('gepaeck\.link'\)[^}]*onNavigate\('gepaeck'\)/);
   });
 
-  it('untere Leiste: Übersicht · Rucksack · Kalender | + | Anspruch · Suche · Menü', () => {
-    expect(src('main.jsx')).toContain(': [left1, leftR, left2, center, right1, rightS, right2];');
+  // 23.10.2026: Kalender und Suche raus (sieben Plätze waren am Handy zu viel).
+  it('untere Leiste: Übersicht · Rucksack | + | Anspruch · Menü', () => {
+    expect(src('main.jsx')).toContain(': [left1, left2, center, right1, right2];');
   });
 
   it('der Name ist in allen fünf Sprachen umgestellt', () => {
