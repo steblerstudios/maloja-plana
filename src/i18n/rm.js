@@ -5785,6 +5785,14 @@ export default {
     doneTitle: 'Fatg',
     markDone: 'Marcar sco fatg',
     undo: 'Marcar sco betg fatg',
+    // rm ungeprüft F5
+    tagWaehlen: 'Tscherner in di',
+    // rm ungeprüft F5
+    ohneTag: 'Senza di',
+    // rm ungeprüft F5
+    erledigtAm: 'fatg ils {datum}',
+    // rm ungeprüft F5
+    entfernt: 'Allontanà',
   },
 
   kkLast: {
@@ -6418,7 +6426,20 @@ export default {
     linkBudget: 'Vesair en il budget',
   },
   calendar: {
-    title: 'Chalender e commemoraziuns',
+    // rm ungeprüft F5
+    title: 'Tge ch\'è proxim',
+    // rm ungeprüft F5
+    aufgabe: 'Incumbensa',
+    // rm ungeprüft F5
+    ausMerkliste: 'ord la glista da memoria',
+    // rm ungeprüft F5
+    ganzerMonat: 'L’entir mais',
+    // rm ungeprüft F5
+    nochOhneTag: 'Anc senza di',
+    // rm ungeprüft F5
+    aufTagLegen: 'Metter sin in di',
+    // rm ungeprüft F5
+    jetztTagAntippen: { sie: 'Tutgai ussa survart in di.', du: 'Tutga ussa survart in di.' },
     anspruchTitle: { sie: 'Eventualmain per Vus', du: 'Eventualmain per Tai' },
     anspruchIntro: { sie: 'Da Vossas datas — nagin oblig, mo in indizi nua ch’i vala la paina da dar in’egliada.', du: 'Da Tes datas — nagin oblig, mo in indizi nua ch’i vala la paina da dar in’egliada.' },
     upcoming: 'Proxim',
