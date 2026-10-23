@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AHV_PARAMS, BVG_PARAMS, AHV_DATA_VERSION, AHV_DATA_SOURCE, berechneAltersrente, BVG_EINTRITTSSCHWELLE_JAHR } from '../ahvRechner.js';
 import { KOORDINATIONSABZUG } from '../lohnAbzuege.js';
 import { EO_DATA_VERSION, EO_DATA_SOURCE } from '../eoRechner.js';
@@ -11,6 +11,9 @@ import { SAEULE3A_HOECHSTABZUG, SAEULE3A_MAX } from '../saeule3a.js';
 vi.hoisted(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2027-01-15T10:00:00')); });
 
 describe('Uhr 15.01.2027: die Konstanten zeigen die Werte 2027', () => {
+  // Die feste Test-Uhr (src/__tests__/festeUhr.setup.js) stellt vor jedem Test auf 22.10.2026
+  // zurück. Für Rechnungen «ohne Stichtag = heute» hier wieder auf 2027.
+  beforeEach(() => { vi.setSystemTime(new Date('2027-01-15T10:00:00')); });
   it('AHV', () => {
     expect(AHV_PARAMS).toMatchObject({ minRente: 1280, maxRente: 2560, maxEhepaar: 3840, maxVersichertesEinkommen: 92160 });
     expect(AHV_DATA_VERSION).toBe('2027');
