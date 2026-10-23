@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maloja nach Stardust</title>
+<style>
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 600; src: url(hanken-grotesk-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 700; src: url(hanken-grotesk-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 400; src: url(lexend-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 500; src: url(lexend-latin-500-normal.woff2) format('woff2'); }
+
+/* Werte aus src/config/constants.js (DARK_PALETTE / LIGHT_PALETTE) */
+:root, :root[data-theme="dark"] {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #9CA0A6; --soft: #989CA4;
+  --sand: #C4A06A; --onSand: #2A2620; --sage: #7E9F8C; --sageDeep: #8FB0A0; --gold: #C4A870;
+  --glas: rgba(34,33,31,.72); --veil: rgba(20,19,17,.55);
+}
+:root[data-theme="light"] {
+  --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6;
+  --text: #24262A; --mid: #5E6167; --soft: #5A5D63;
+  --sand: #C4A06A; --onSand: #2A2620; --sage: #5A7868; --sageDeep: #3E5449; --gold: #C4A870;
+  --glas: rgba(250,250,248,.80); --veil: rgba(242,242,240,.35);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Lexend', sans-serif; font-size: 15px; line-height: 1.5; }
+h1, h2, h3, .display { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; letter-spacing: -.01em; }
+
+.kopf { max-width: 1180px; margin: 0 auto; padding: 32px 16px 8px; }
+.kopf h1 { font-size: 28px; margin: 0 0 6px; }
+.kopf p { color: var(--mid); margin: 0; max-width: 70ch; }
+.werkzeug { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.pill { border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.pill[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+.abschnitt { max-width: 1180px; margin: 0 auto; padding: 32px 16px; border-top: 1px solid var(--border); }
+.abschnitt > h2 { font-size: 20px; margin: 0 0 4px; }
+.abschnitt > .warum { color: var(--mid); margin: 0 0 20px; max-width: 72ch; font-size: 14px; }
+.paar { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 390px)); gap: 28px; align-items: start; }
+.label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); margin-bottom: 8px; }
+.label b { color: var(--sage); font-weight: 500; }
+.handy { width: 100%; max-width: 390px; border-radius: 28px; overflow: hidden; border: 1px solid var(--border); background: var(--bg); position: relative; }
+.vorher img { display: block; width: 100%; }
+.notiz { font-size: 13px; color: var(--mid); margin: 10px 2px 0; }
+.notiz li { margin-bottom: 4px; }
+.notiz ul { padding-left: 18px; margin: 6px 0 0; }
+
+/* ---------- 1 · Eingang als Ort ---------- */
+.eingang { height: 720px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; }
+.eingang .bild { position: absolute; left: -10px; right: -10px; top: 0; height: 46%; background: url(landschaft.webp) 30% 70% / cover; filter: blur(1.5px); }
+.eingang .schleier { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, transparent 24%, var(--veil) 36%, var(--bg) 45%); }
+.eingang .inhalt { position: relative; padding: 0 24px 28px; }
+.marke { position: absolute; top: 22px; left: 22px; display: flex; align-items: center; gap: 8px; z-index: 2; font-family: 'Hanken Grotesk'; font-weight: 700; font-size: 18px; color: #24262A; }
+.marke img { width: 28px; height: 28px; }
+.logo { position: relative; display: block; flex-shrink: 0; }
+.logo .schrift { position: absolute; inset: 0; -webkit-mask: url(marken-schriftzug.svg) center / contain no-repeat; mask: url(marken-schriftzug.svg) center / contain no-repeat; }
+.logo svg { position: absolute; inset: 0; display: block; }
+.logo-vergleich { display: flex; gap: 10px; margin-top: 10px; }
+.logo-vergleich figure { margin: 0; flex: 1; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+.logo-vergleich .probe { height: 74px; background: url(landschaft.webp) 30% 8% / cover; display: flex; align-items: center; padding: 0 14px; }
+.logo-vergleich figcaption { font-size: 12px; color: var(--mid); padding: 6px 10px; background: var(--surface); }
+.eingang h3 { font-size: 34px; line-height: 1.08; margin: 0 0 14px; }
+.eingang h3 span { color: var(--sage); display: block; }
+.versprechen { display: flex; gap: 12px; align-items: flex-start; padding: 14px 0 18px; border-top: 1px solid var(--border); margin-top: 18px; }
+.versprechen .schloss { width: 34px; height: 34px; border-radius: 50%; background: var(--up); display: grid; place-items: center; flex-shrink: 0; color: var(--sage); }
+.versprechen strong { font-family: 'Hanken Grotesk'; font-weight: 600; font-size: 17px; display: block; line-height: 1.25; }
+.versprechen small { color: var(--mid); font-size: 13px; }
+.feld { width: 100%; font: inherit; padding: 13px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); margin-bottom: 10px; }
+.primaer { width: 100%; font: inherit; font-weight: 500; padding: 13px; border: 0; border-radius: 999px; background: var(--sand); color: var(--onSand); cursor: pointer; }
+.geist { width: 100%; font: inherit; padding: 12px; margin-top: 8px; border-radius: 999px; background: transparent; color: var(--text); border: 1px solid var(--border); cursor: pointer; }
+.fuss { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 14px; font-size: 12px; color: var(--soft); }
+.fuss a { color: var(--soft); }
+
+/* ---------- 2+3 · Hero mit einer Zahl und einem Satz ---------- */
+.appkopf { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.appkopf .marke { position: static; color: var(--text); text-shadow: none; font-size: 16px; }
+.appkopf .marke img { width: 24px; height: 24px; }
+.appkopf .knoepfe { display: flex; gap: 6px; }
+.appkopf .knoepfe span { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); }
+.buehne { position: relative; aspect-ratio: 560 / 400; background: url(landschaft.webp) center / cover; }
+.buehne .titel { position: absolute; top: 7%; left: 16%; font-family: 'Hanken Grotesk'; font-weight: 700; font-size: 19px; line-height: 1.15; color: #2C3A33; }
+.buehne .titel span { display: block; color: #4E6B5C; }
+.station { position: absolute; transform: translate(-50%, -50%); font-size: 9.5px; padding: 2px 7px 2px 3px; border-radius: 999px; background: rgba(250,250,248,.82); color: #24262A; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.station i { width: 13px; height: 13px; border-radius: 50%; display: block; }
+.blatt { position: relative; margin-top: -10px; padding: 0 12px 16px; }
+.heute { background: var(--glas); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 22px; padding: 18px 18px 14px; }
+.heute .oben { display: flex; gap: 14px; align-items: center; }
+.ring { width: 64px; height: 64px; flex-shrink: 0; position: relative; }
+.ring svg { transform: rotate(-90deg); }
+.ring b { position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Hanken Grotesk'; font-size: 17px; }
+.heute .wort { font-size: 11px; color: var(--soft); text-transform: uppercase; letter-spacing: .08em; }
+.heute .satz { font-family: 'Hanken Grotesk'; font-weight: 600; font-size: 20px; line-height: 1.22; margin: 2px 0 0; }
+.heute .weiter { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.heute .weiter span { color: var(--mid); font-size: 14px; }
+.heute .weiter button { font: inherit; font-weight: 500; font-size: 14px; border: 0; border-radius: 999px; padding: 10px 16px; min-height: 44px; background: var(--sand); color: var(--onSand); white-space: nowrap; }
+.heute .glance { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--soft); }
+.heute .glance em { font-style: normal; color: var(--mid); }
+.liste { margin-top: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 6px 14px; }
+.liste .zeile { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.liste .zeile:last-child { border: 0; }
+.liste .zeile i { width: 9px; height: 9px; border-radius: 50%; }
+.liste .zeile span { flex: 1; }
+.liste .zeile small { color: var(--soft); }
+.liste .kopfzeile { font-size: 12px; color: var(--soft); padding: 8px 0 2px; }
+
+/* ---------- Variante C · Bereiche im Stil von heute ---------- */
+.bereiche, .danach { margin-top: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 6px 16px 8px; }
+.bereiche .kopfzeile, .danach .kopfzeile { font-size: 13px; font-weight: 500; color: var(--text); padding: 10px 0 4px; display: flex; justify-content: space-between; }
+.danach .kopfzeile span { color: var(--soft); font-weight: 400; font-size: 12px; }
+.sym-box { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; }
+.sym-box.wegmarke { border-radius: 50%; width: 30px; height: 30px; margin: 2px; }
+.symbol-wahl { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 10px; }
+.symbol-wahl .pill { font-size: 12px; padding: 5px 12px; }
+.bz { display: grid; grid-template-columns: 34px 1fr 14px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.bz:last-child { border: 0; }
+.bz .sym { width: 22px; height: 22px; border-radius: 6px; }
+.bz b { font-weight: 500; font-size: 14.5px; display: block; }
+.bz .balken { height: 4px; border-radius: 2px; background: var(--up); margin: 6px 0 4px; overflow: hidden; }
+.bz .balken i { display: block; height: 100%; border-radius: 2px; }
+.bz small { font-size: 12px; color: var(--soft); }
+.bz .pfeil { color: var(--soft); font-size: 16px; }
+.zeile-leer { height: 12px; border-radius: 6px; background: var(--up); margin: 10px 0; }
+.zeile-leer.kurz { width: 60%; }
+
+/* ---------- Variante B · Wegring ---------- */
+.buehne.kurz { aspect-ratio: 560 / 230; background-position: center 18%; }
+.buehne.kurz::before { content: ''; position: absolute; inset: 0 0 45% 0; background: linear-gradient(180deg, rgba(246,244,236,.85), rgba(246,244,236,0)); }
+.buehne.kurz .titel { top: 12%; }
+.buehne.kurz .titel span { color: #3E5449; }
+.wr-blatt { position: relative; margin-top: 14px; padding: 0 16px 20px; text-align: center; }
+.wr-ring { position: relative; width: 260px; height: 260px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle, var(--bg) 58%, transparent 72%); }
+.wr-ring svg { width: 100%; height: 100%; overflow: visible; }
+.wr-ring .seg { cursor: pointer; }
+.wr-ring .seg:focus { outline: none; }
+.wr-ring .seg:focus-visible circle.punkt { stroke: var(--text); stroke-width: 2; }
+.wr-ring circle.punkt { transition: r .25s ease, opacity .4s ease, transform .4s ease; }
+.wr-mitte { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+.wr-mitte b { font-family: 'Hanken Grotesk'; font-size: 44px; line-height: 1; letter-spacing: -.02em; }
+.wr-mitte span { font-size: 12px; color: var(--soft); margin-top: 6px; max-width: 140px; }
+.wr-satz { font-family: 'Hanken Grotesk'; font-weight: 700; font-size: 26px; line-height: 1.15; margin: 4px 0 6px; letter-spacing: -.01em; }
+.wr-sub { color: var(--mid); margin: 0 auto 16px; max-width: 30ch; }
+.wr-knopf { font: inherit; font-weight: 500; border: 0; border-radius: 999px; padding: 12px 22px; min-height: 44px; background: var(--sand); color: var(--onSand); cursor: pointer; }
+.wr-glance { margin-top: 14px; font-size: 12px; color: var(--soft); }
+.wr-glance em { font-style: normal; color: var(--mid); }
+.wr-legende { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.wr-legende button { font: inherit; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
+.wr-legende button i { width: 8px; height: 8px; border-radius: 50%; }
+.wr-legende button small { color: var(--soft); }
+.wr-legende button[aria-pressed="true"] { background: var(--up); border-color: var(--mid); }
+.einblenden { opacity: 0; transform: translateY(6px); }
+.eingeblendet { opacity: 1; transform: none; transition: opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1); }
+@media (prefers-reduced-motion: reduce) { .einblenden { opacity: 1; transform: none; } .wr-ring circle.punkt { transition: none; } }
+
+@media (prefers-color-scheme: light) { :root:not([data-theme]) { --bg: #F2F2F0; } }
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <h1>Maloja nach Stardust · Mockup 1–3</h1>
+  <p>Links jeweils der heutige Stand (Bildschirmfoto von malojaplana.ch, Demo «Maria Muster», 23.10.2026), rechts der Vorschlag. Nur Entwurf, nichts davon ist gebaut. Das Landschaftsbild, die Farben und die Schriften stammen aus dem Repo.</p>
+  <div class="werkzeug" role="group" aria-label="Darstellung">
+    <button class="pill" data-modus="dark" aria-pressed="true">Dunkel</button>
+    <button class="pill" data-modus="light" aria-pressed="false">Hell</button>
+  </div>
+</header>
+
+<section class="abschnitt">
+  <h2>1 · Der Eingang als Ort</h2>
+  <p class="warum">Stardust lässt einen zuerst in die Welt treten. Hier liegt der Zugang direkt in der Passstrasse, und der Datenschutz wird vom grauen Kästchen zum Hauptversprechen. Von drei gleich lauten Knöpfen bleibt einer primär.</p>
+  <div class="paar">
+    <div class="vorher">
+      <div class="label">Heute</div>
+      <div class="handy"><img src="vorher-eingang.jpg" alt="Heutiger Zugang: weisse Karte mit Logo, Text, Code-Feld und drei Knöpfen"></div>
+    </div>
+    <div>
+      <div class="label"><b>Vorschlag</b></div>
+      <div class="handy eingang">
+        <div class="bild" aria-hidden="true"></div>
+        <div class="schleier" aria-hidden="true"></div>
+        <div class="marke"><span class="logo" data-flaeche="hell" data-breite="150"></span></div>
+        <div class="inhalt">
+          <h3>Verstehen, was zusteht.<span>Ordnen, was ansteht.</span></h3>
+          <p style="color:var(--mid);margin:0;font-size:14px">Ihr ruhiger Überblick über das Leben in der Schweiz: Steuern, Versicherungen, Dokumente.</p>
+          <div class="versprechen">
+            <div class="schloss" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+            <div><strong>Ihre Daten bleiben auf diesem Gerät.</strong><small>Lokal gespeichert, offline-fähig, kostenlos.</small></div>
+          </div>
+          <input class="feld" placeholder="Zugangscode" aria-label="Zugangscode">
+          <button class="primaer">Öffnen</button>
+          <button class="geist">Ohne Code ausprobieren</button>
+          <div class="fuss"><a href="#">Einfache Ansicht</a><a href="#">Datenschutz &amp; Rechtliches</a><a href="#">Problem melden</a></div>
+        </div>
+      </div>
+      <div class="logo-vergleich">
+        <figure><div class="probe"><span class="logo" data-flaeche="hell" data-breite="130"></span></div><figcaption>Anthrazit (gewählt)</figcaption></figure>
+        <figure><div class="probe"><span class="logo" data-flaeche="dunkel" data-breite="130"></span></div><figcaption>Farbig, wie bisher im Kopf</figcaption></figure>
+      </div>
+      <div class="notiz"><ul>
+        <li><b>Logo:</b> Anthrazit, weil es auf dem hellen Himmel steht. Das ist eure eigene Regel aus <code>MarkenLogo.jsx</code>: Farbe nach der Fläche, nicht nach dem Modus. Die farbige Fassung hätte dort zu wenig Kontrast.</li>
+        <li>Der Wortlaut des Versprechens stammt aus dem heutigen Text. Vor einer Änderung muss der Rechts-Prüfer drüber.</li>
+        <li>Kein neues Bild, nur das vorhandene, unscharf und abgedunkelt. Es kommen keine zusätzlichen KB dazu.</li>
+        <li>«Einfache Ansicht» wird vom dritten Knopf zum Link unten.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <h2>2 + 3 · Eine Zahl und ein Satz für heute</h2>
+  <p class="warum">Heute stehen auf dem Dashboard «7/7 begonnen», «63 % ausgefüllt», «Ihr Fortschritt 70 %» und «Grundordnung 15/15», und 63 und 70 meinen offenbar nicht dasselbe. Stardust zeigt ein Objekt und einen Satz, der es deutet. Der Vorschlag führt «Was ist jetzt dran?» und die Fortschritts-Kreise zu einer Karte zusammen, die sich über das Bild schiebt.</p>
+  <div class="werkzeug" role="group" aria-label="Zustand der Demo" style="margin:-6px 0 18px">
+    <button class="pill" data-zustand="leer" aria-pressed="false">Ganz am Anfang</button>
+    <button class="pill" data-zustand="offen" aria-pressed="false">Grundordnung offen</button>
+    <button class="pill" data-zustand="steht" aria-pressed="true">Grundordnung steht (Demo heute)</button>
+    <button class="pill" data-zustand="frist" aria-pressed="false">Frist steht an</button>
+  </div>
+  <div class="paar">
+    <div class="vorher">
+      <div class="label">Heute</div>
+      <div class="handy"><img src="vorher-hero.jpg" alt="Heutiges Dashboard: Passstrasse mit Stationen, unten zwei Kreise 7/7 begonnen und 63 % ausgefüllt"></div>
+      <div class="handy" style="margin-top:12px"><img src="vorher-fortschritt.jpg" alt="Heutige Fortschritts-Karte: Ihr Fortschritt 70 %, Grundordnung 15/15, sieben Balken"></div>
+    </div>
+    <div>
+      <div class="label"><b>Variante A · die Karte</b> (erster Entwurf)</div>
+      <div class="handy">
+        <div class="appkopf"><div class="marke"><span class="logo" data-flaeche="auto" data-breite="120"></span></div><div class="knoepfe"><span></span><span></span><span></span></div></div>
+        <div class="buehne" role="img" aria-label="Passstrasse mit den Bereichen als Stationen">
+          <div class="titel">Verstehen, was zusteht.<span>Ordnen, was ansteht.</span></div>
+          <div class="station" style="left:12%;top:61%"><i style="background:#A88A5E"></i>Ausbildung</div>
+          <div class="station" style="left:31%;top:59%"><i style="background:#7D8590"></i>Behörden</div>
+          <div class="station" style="left:12%;top:70%"><i style="background:#6E7F8C"></i>Basis</div>
+          <div class="station" style="left:46%;top:66%"><i style="background:#B87070"></i>Notfall</div>
+          <div class="station" style="left:21%;top:78%"><i style="background:#8FA45E"></i>Wohnen</div>
+          <div class="station" style="left:49%;top:79%"><i style="background:#6E90B0"></i>Versicherung</div>
+          <div class="station" style="left:58%;top:87%"><i style="background:#C4A06A"></i>Finanzen</div>
+          <div class="station" style="left:84%;top:71%"><i style="background:#C4A870"></i>Wanderrucksack</div>
+        </div>
+        <div class="blatt">
+          <div class="heute" aria-live="polite">
+            <div class="oben">
+              <div class="ring" aria-hidden="true">
+                <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="var(--up)" stroke-width="6"/><circle data-z="bogen" cx="32" cy="32" r="27" fill="none" stroke="var(--sage)" stroke-width="6" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="62.8"/></svg>
+                <b data-z="zahl">63&#8239;%</b>
+              </div>
+              <div>
+                <div class="wort" data-z="wort">Ihr Lebensordner</div>
+                <p class="satz" data-z="satz">Die Grundordnung steht.</p>
+              </div>
+            </div>
+            <div class="weiter"><span data-z="naechst">Am meisten offen ist noch bei Finanzen &amp; Geld.</span><button data-z="knopf">Weiter ›</button></div>
+            <div class="glance" data-z="glance">Keine offene Frist · <em>Noch keine Sicherungsdatei</em></div>
+          </div>
+          <div class="liste">
+            <div class="kopfzeile">Bereiche</div>
+            <div class="zeile"><i style="background:#6E7F8C"></i><span>Persönliche Basis</span><small>vertieft</small></div>
+            <div class="zeile"><i style="background:#8FA45E"></i><span>Wohnen &amp; Leben</span><small>Überblick</small></div>
+            <div class="zeile"><i style="background:#C4A06A"></i><span>Finanzen &amp; Geld</span><small>Überblick</small></div>
+            <div class="zeile"><i style="background:#6E90B0"></i><span>Versicherungen &amp; Vorsorge</span><small>Überblick</small></div>
+            <div class="zeile"><i style="background:#A88A5E"></i><span>Ausbildung &amp; Arbeit</span><small>vertieft</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="notiz"><ul>
+        <li><b>Eine Zahl:</b> nur noch der Ring. Welche Prozentzahl er zeigt (63 oder 70), müssen wir vorher klären, heute rechnen die beiden Stellen offenbar verschieden.</li>
+        <li><b>Ein Satz:</b> kommt aus Daten, die es schon gibt: <code>naechsterSchritt()</code>, Steuerfrist, Erinnerungen, letzte Sicherung. Nichts Neues wird behauptet.</li>
+        <li>Die Bereichsliste bleibt, ohne eigene Prozente und Balken, als ruhige Alternative zur Strasse (Barrierefreiheit).</li>
+        <li>Die Bereichsfarben in der Liste sind Platzhalter, nicht die echten Tokens.</li>
+      </ul></div>
+    </div>
+
+    <div>
+      <div class="label"><b>Variante C · Heute + Karte + Bereiche</b> (neu)</div>
+      <div class="symbol-wahl" role="group" aria-label="Symbole der Bereiche">
+        <button class="pill" data-symbol="heute" aria-pressed="false">Wie heute</button>
+        <button class="pill" data-symbol="flaeche" aria-pressed="true">Auf Fläche</button>
+        <button class="pill" data-symbol="marke" aria-pressed="false">Wegmarke</button>
+      </div>
+      <p class="notiz" id="symbol-notiz" style="margin:0 0 12px"><b>Auf Fläche:</b> dieselben Icons, etwas kleiner auf einer zart getönten Fläche in der Bereichsfarbe. Das bringt Stardusts weiche Flächen hinein, ohne ein Icon zu ändern. Mein Favorit.</p>
+      <div class="handy">
+        <div class="appkopf"><div class="marke"><span class="logo" data-flaeche="auto" data-breite="120"></span></div><div class="knoepfe"><span></span><span></span><span></span></div></div>
+        <div class="buehne" role="img" aria-label="Passstrasse mit den Bereichen als Stationen">
+          <div class="titel">Verstehen, was zusteht.<span>Ordnen, was ansteht.</span></div>
+          <div class="station" style="left:12%;top:61%"><i style="background:#A98A64"></i>Ausbildung</div>
+          <div class="station" style="left:31%;top:59%"><i style="background:#7C8798"></i>Behörden</div>
+          <div class="station" style="left:12%;top:70%"><i style="background:#7E9F8C"></i>Basis</div>
+          <div class="station" style="left:46%;top:66%"><i style="background:#C77069"></i>Notfall</div>
+          <div class="station" style="left:21%;top:78%"><i style="background:#9DBA6A"></i>Wohnen</div>
+          <div class="station" style="left:49%;top:79%"><i style="background:#86A6C2"></i>Versicherung</div>
+          <div class="station" style="left:58%;top:87%"><i style="background:#D2B77E"></i>Finanzen</div>
+          <div class="station" style="left:84%;top:71%"><i style="background:#C4A870"></i>Wanderrucksack</div>
+        </div>
+        <div class="blatt">
+          <div class="heute">
+            <div class="oben">
+              <div class="ring" aria-hidden="true">
+                <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="var(--up)" stroke-width="6"/><circle data-z="bogen" cx="32" cy="32" r="27" fill="none" stroke="var(--sage)" stroke-width="6" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="62.8"/></svg>
+                <b data-z="zahl">63&#8239;%</b>
+              </div>
+              <div>
+                <div class="wort" data-z="wort">Ihr Lebensordner</div>
+                <p class="satz" data-z="satz">Die Grundordnung steht.</p>
+              </div>
+            </div>
+            <div class="weiter"><span data-z="naechst">Am meisten offen ist noch bei Finanzen &amp; Geld.</span><button data-z="knopf">Weiter ›</button></div>
+            <div class="glance" data-z="glance">Keine offene Frist · <em>Noch keine Sicherungsdatei</em></div>
+          </div>
+          <div class="bereiche">
+            <div class="kopfzeile">Bereiche</div>
+            <div id="c-bereiche"></div>
+          </div>
+          <div class="danach">
+            <div class="kopfzeile">Leistungen <span>wie heute ›</span></div>
+            <div class="zeile-leer"></div><div class="zeile-leer kurz"></div>
+          </div>
+        </div>
+      </div>
+      <div class="notiz"><ul>
+        <li><b>Von heute bleibt:</b> das ganze Bild mit den Stationen, die Bereiche mit Symbol, farbigem Balken und Pfeil, und alles darunter (Leistungen, Instrumente).</li>
+        <li><b>Aus A kommt:</b> die Karte mit Zahl, Satz und einem Knopf. Sie ersetzt «Was ist jetzt dran?» und die beiden Kreise im Bild.</li>
+        <li><b>Was wegfällt:</b> «Ihr Fortschritt 70 %», die Zeile «Grundordnung 15/15» und die Prozente je Bereich. Der Balken zeigt den Stand weiter, das Wort (Überblick, vertieft) sagt ihn in Sprache.</li>
+        <li>Die Icons sind eure echten Kapitel-Icons aus <code>IconKern.jsx</code> und <code>IconMuenzen.jsx</code>, unverändert.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <h2>Ablage · der Wegring, für woanders</h2>
+  <p class="warum">Auf der Startseite passt er nicht, er ist aufgehoben. Denkbare Orte: eine Jahres- oder Kapitelübersicht, der Finanzbaum, ein «So steht Ihr Ordner»-Blatt zum Teilen.</p>
+  <div class="paar">
+    <div>
+      <div class="label"><b>Wegring</b></div>
+      <div class="handy">
+        <div class="appkopf"><div class="marke"><span class="logo" data-flaeche="auto" data-breite="120"></span></div><div class="knoepfe"><span></span><span></span><span></span></div></div>
+        <div class="buehne kurz" role="img" aria-label="Passstrasse am Malojapass">
+          <div class="titel">Verstehen, was zusteht.<span>Ordnen, was ansteht.</span></div>
+        </div>
+        <div class="wr-blatt">
+          <div class="wr-ring">
+            <svg id="wegring" viewBox="0 0 260 260" role="group" aria-label="Sieben Bereiche, je sechs Punkte"></svg>
+            <div class="wr-mitte" aria-live="polite"><b id="wr-zahl">70&#8239;%</b><span id="wr-wort">Ihr Lebensordner</span></div>
+          </div>
+          <p class="wr-satz" id="wr-satz">Die Grundordnung steht.</p>
+          <p class="wr-sub" id="wr-sub">Am meisten offen ist noch bei Finanzen &amp; Geld.</p>
+          <button class="wr-knopf" id="wr-knopf">Weiter mit Finanzen ›</button>
+          <div class="wr-glance">Keine offene Frist · <em>Noch keine Sicherungsdatei</em></div>
+          <div class="wr-legende" id="wr-legende"></div>
+        </div>
+      </div>
+      <div class="werkzeug" style="margin-top:10px"><button class="pill" id="wr-nochmal">Einblendung nochmals abspielen</button></div>
+      <div class="notiz"><ul>
+        <li><b>Ein Objekt statt Kreise + Karte + Liste:</b> der Ring trägt alle sieben Bereiche. Jeder Bereich hat sechs Punkte, gefüllt nach Fortschritt. Form (voll/leer) und Farbe tragen die Bedeutung zusammen, wie Stardusts Zyklus-Ring.</li>
+        <li><b>Tippen auf einen Bogen oder ein Kärtchen</b> zeigt diesen Bereich in der Mitte und den nächsten Schritt darunter. Ohne Auswahl spricht der Ring über das Ganze.</li>
+        <li><b>Gestaffelt eingeblendet</b> (Punkte, dann Zahl, dann Satz). Mit «Bewegung reduzieren» im System erscheint alles sofort.</li>
+        <li><b>70 %</b> ist der Schnitt der sieben Bereiche, das entspricht heute «Ihr Fortschritt». Die «63 %» im Bild rechnen anders, das bleibt zu klären.</li>
+        <li><b>Was wegfällt:</b> die Stationen auf der Strasse. Das Bild wird zur Stimmung, die Navigation macht der Ring. Ob ihr das wollt, ist ein echter Entscheid.</li>
+        <li>Die Felder im nächsten Schritt je Bereich («Säule 3a ergänzen» usw.) sind Platzhalter. Die Farben sind die echten aus <code>lebensbereiche.js</code>.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.documentElement;
+  root.dataset.theme = 'dark';
+  document.querySelectorAll('[data-modus]').forEach(b => b.addEventListener('click', () => {
+    root.dataset.theme = b.dataset.modus;
+    document.querySelectorAll('[data-modus]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  }));
+
+  // Die vier Zustände: jeder Satz entspricht einer Regel, die Dashboard.jsx heute schon kennt.
+  const zustaende = {
+    leer:  { p: 0,  wort: 'Willkommen', satz: 'Fangen wir mit dem Wichtigsten an.', naechst: 'Zuerst Ihr Name und Ihr Wohnort, etwa zwei Minuten.', knopf: 'Beginnen ›', glance: 'Keine offene Frist · <em>Noch keine Sicherungsdatei</em>' },
+    offen: { p: 34, wort: 'Ihr Lebensordner', satz: 'Noch 4 Dinge bis zur Grundordnung.', naechst: 'Als Nächstes: Krankenkasse ergänzen.', knopf: 'Jetzt ›', glance: 'Keine offene Frist · <em>Zuletzt gesichert 2. Okt.</em>' },
+    steht: { p: 63, wort: 'Ihr Lebensordner', satz: 'Die Grundordnung steht.', naechst: 'Am meisten offen ist noch bei Finanzen &amp; Geld.', knopf: 'Weiter ›', glance: 'Keine offene Frist · <em>Noch keine Sicherungsdatei</em>' },
+    frist: { p: 63, wort: 'Nächste Frist', satz: 'Steuererklärung bis 31. März, noch 159 Tage.', naechst: 'Was dafür nötig ist, steht im Bereich Behörden.', knopf: 'Ansehen ›', glance: 'Datum aus Ihren Angaben · <em>Zuletzt gesichert 2. Okt.</em>' },
+  };
+  // ---------- Logo: Pfade und Farben aus src/components/MarkenLogo.jsx ----------
+  const PFADE = [
+    ['weg', 'M 0 190 C 0 169 7 152 22 138 L 89 78 C 102 66 119 65 131 78 C 177 122 206 136 270 153 C 299 163 321 172 302 193 C 284 208 228 224 182 242 C 128 264 92 294 92 330 L 92 467 C 92 529 0 529 0 468 Z'],
+    ['berg', 'M 176 92 L 265 7 C 278 -4 294 -3 307 10 L 392 110 C 405 101 421 96 434 110 L 479 154 C 493 168 500 186 500 205 L 500 280 C 455 234 433 196 379 175 C 335 157 282 143 240 127 C 216 118 194 105 176 92 Z'],
+    ['weg', 'M 200 331 C 200 286 269 248 322 242 C 410 230 500 278 500 349 C 500 414 431 467 328 467 L 328 375 C 328 345 275 312 275 351 L 275 529 C 275 562 200 563 200 517 Z'],
+  ];
+  const LOGO_FARBEN = {
+    dunkel: { weg: '#8FB0A0', berg: '#C4A870', schrift: '#E6E3DC' },
+    hell:   { weg: '#22211F', berg: '#22211F', schrift: '#22211F' },
+  };
+  function logosZeichnen() {
+    document.querySelectorAll('.logo').forEach(el => {
+      const fl = el.dataset.flaeche === 'auto' ? (root.dataset.theme === 'dark' ? 'dunkel' : 'hell') : el.dataset.flaeche;
+      const f = LOGO_FARBEN[fl], b = +el.dataset.breite, h = Math.round(b * 184 / 782);
+      el.style.width = b + 'px'; el.style.height = h + 'px';
+      el.innerHTML = `<span class="schrift" style="background:${f.schrift}"></span><svg width="${b}" height="${h}" viewBox="26 20 782 184" aria-hidden="true"><g transform="translate(28 22) scale(0.32)">${PFADE.map(([k, d]) => `<path fill="${f[k]}" d="${d}"/>`).join('')}</g></svg>`;
+      el.setAttribute('aria-label', 'Maloja Plana'); el.setAttribute('role', 'img');
+    });
+  }
+
+  // ---------- Variante B · Wegring ----------
+  // Farben aus src/data/lebensbereiche.js (light / dark), Prozente aus der Demo «Maria Muster».
+  const BEREICHE = [
+    { key: 'basis', name: 'Persönliche Basis', kurz: 'Basis', pct: 79, hell: '#5A7868', dunkel: '#7E9F8C', schritt: 'Ausweisnummer ergänzen' },
+    { key: 'wohnen', name: 'Wohnen & Leben', kurz: 'Wohnen', pct: 64, hell: '#7E9A4E', dunkel: '#9DBA6A', schritt: 'Mietvertrag ablegen' },
+    { key: 'finanzen', name: 'Finanzen & Geld', kurz: 'Finanzen', pct: 38, hell: '#C4A870', dunkel: '#D2B77E', schritt: 'Säule 3a ergänzen' },
+    { key: 'versicherungen', name: 'Versicherungen & Vorsorge', kurz: 'Versicherung', pct: 64, hell: '#6E90B0', dunkel: '#86A6C2', schritt: 'Hausrat-Police ablegen' },
+    { key: 'ausbildung', name: 'Ausbildung & Arbeit', kurz: 'Ausbildung', pct: 82, hell: '#8A6D4B', dunkel: '#A98A64', schritt: 'Arbeitszeugnis ablegen' },
+    { key: 'behoerden', name: 'Behörden & Rechtliches', kurz: 'Behörden', pct: 80, hell: '#5A6472', dunkel: '#7C8798', schritt: 'Steuerfrist eintragen' },
+    { key: 'notfall', name: 'Notfall', kurz: 'Notfall', pct: 85, hell: '#B0524C', dunkel: '#C77069', schritt: 'Notfallkontakt prüfen' },
+  ];
+  const PUNKTE = 6, R = 112, LUECKE = 14;
+  let gewaehlt = null;
+  const gesamt = Math.round(BEREICHE.reduce((s, b) => s + b.pct, 0) / BEREICHE.length);
+  const offenster = BEREICHE.reduce((a, b) => (b.pct < a.pct ? b : a));
+  const farbe = b => root.dataset.theme === 'dark' ? b.dunkel : b.hell;
+
+  function ringZeichnen(animiert) {
+    const svg = document.getElementById('wegring');
+    const spanne = (360 - BEREICHE.length * LUECKE) / BEREICHE.length;
+    let html = '', n = 0;
+    BEREICHE.forEach((b, i) => {
+      const voll = Math.round(b.pct / 100 * PUNKTE);
+      const start = -90 + i * (spanne + LUECKE) + LUECKE / 2;
+      const aktiv = gewaehlt === null || gewaehlt === i;
+      html += `<g class="seg" tabindex="0" role="button" data-i="${i}" aria-label="${b.name}, ${b.pct} Prozent" aria-pressed="${gewaehlt === i}">`;
+      // unsichtbare Trefferfläche über den ganzen Bogen
+      const a0 = (start - 4) * Math.PI / 180, a1 = (start + spanne + 4) * Math.PI / 180;
+      html += `<path d="M ${130 + (R - 18) * Math.cos(a0)} ${130 + (R - 18) * Math.sin(a0)} L ${130 + (R + 18) * Math.cos(a0)} ${130 + (R + 18) * Math.sin(a0)} A ${R + 18} ${R + 18} 0 0 1 ${130 + (R + 18) * Math.cos(a1)} ${130 + (R + 18) * Math.sin(a1)} L ${130 + (R - 18) * Math.cos(a1)} ${130 + (R - 18) * Math.sin(a1)} A ${R - 18} ${R - 18} 0 0 0 ${130 + (R - 18) * Math.cos(a0)} ${130 + (R - 18) * Math.sin(a0)} Z" fill="transparent"/>`;
+      for (let p = 0; p < PUNKTE; p++) {
+        const w = (start + (spanne / (PUNKTE - 1)) * p) * Math.PI / 180;
+        const x = 130 + R * Math.cos(w), y = 130 + R * Math.sin(w);
+        const r = gewaehlt === i ? 8.5 : 7;
+        const f = farbe(b);
+        const stil = p < voll ? `fill="${f}" stroke="none"` : `fill="none" stroke="${f}" stroke-width="1.6"`;
+        html += `<circle class="punkt${animiert ? ' einblenden' : ''}" data-n="${n++}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" ${stil} opacity="${aktiv ? 1 : .28}" style="transform-origin:${x.toFixed(1)}px ${y.toFixed(1)}px"/>`;
+      }
+      html += '</g>';
+    });
+    svg.innerHTML = html;
+    svg.querySelectorAll('.seg').forEach(g => {
+      const w = () => waehlen(+g.dataset.i);
+      g.addEventListener('click', w);
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); w(); } });
+    });
+    document.getElementById('wr-legende').innerHTML = BEREICHE.map((b, i) =>
+      `<button data-i="${i}" aria-pressed="${gewaehlt === i}"><i style="background:${farbe(b)}"></i>${b.kurz} <small>${b.pct}&#8239;%</small></button>`).join('');
+    document.querySelectorAll('#wr-legende button').forEach(bt => bt.addEventListener('click', () => waehlen(+bt.dataset.i)));
+  }
+
+  function texteSetzen() {
+    const z = document.getElementById('wr-zahl'), w = document.getElementById('wr-wort');
+    const s = document.getElementById('wr-satz'), u = document.getElementById('wr-sub'), k = document.getElementById('wr-knopf');
+    if (gewaehlt === null) {
+      z.innerHTML = gesamt + '&#8239;%'; w.textContent = 'Ihr Lebensordner';
+      s.textContent = 'Die Grundordnung steht.';
+      u.innerHTML = 'Am meisten offen ist noch bei ' + offenster.name.replace('&', '&amp;') + '.';
+      k.textContent = 'Weiter mit ' + offenster.kurz + ' ›';
+    } else {
+      const b = BEREICHE[gewaehlt];
+      z.innerHTML = b.pct + '&#8239;%'; w.textContent = b.name;
+      s.textContent = 'Als Nächstes: ' + b.schritt + '.';
+      u.textContent = 'Nochmals tippen zeigt wieder das Ganze.';
+      k.textContent = b.kurz + ' öffnen ›';
+    }
+  }
+
+  let laeuft = [];
+  function allesZeigen() {
+    laeuft.forEach(clearTimeout); laeuft = [];
+    document.querySelectorAll('.wr-blatt .einblenden').forEach(el => el.classList.add('eingeblendet'));
+  }
+  function waehlen(i) { allesZeigen(); gewaehlt = gewaehlt === i ? null : i; ringZeichnen(false); texteSetzen(); }
+
+  function einblenden() {
+    allesZeigen();
+    gewaehlt = null; ringZeichnen(true); texteSetzen();
+    const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const spaeter = ['.wr-mitte', '#wr-satz', '#wr-sub', '#wr-knopf', '.wr-glance', '#wr-legende'].map(q => document.querySelector(q));
+    if (ruhig) { document.querySelectorAll('#wegring .einblenden').forEach(c => c.classList.remove('einblenden')); return; }
+    spaeter.forEach(el => { el.classList.remove('eingeblendet'); el.classList.add('einblenden'); });
+    const spaet = (f, ms) => laeuft.push(setTimeout(f, ms));
+    document.querySelectorAll('#wegring .punkt').forEach(c => spaet(() => c.classList.add('eingeblendet'), 120 + c.dataset.n * 22));
+    const nachPunkten = 120 + PUNKTE * BEREICHE.length * 22;
+    // Rule of Three: Primär (Ring + Zahl), Sekundär (Satz), Tertiär (Rest)
+    spaet(() => spaeter[0].classList.add('eingeblendet'), nachPunkten);
+    spaet(() => { spaeter[1].classList.add('eingeblendet'); spaeter[2].classList.add('eingeblendet'); }, nachPunkten + 250);
+    spaet(() => spaeter.slice(3).forEach(el => el.classList.add('eingeblendet')), nachPunkten + 550);
+  }
+  // Variante C: Bereichsliste im Stil der heutigen Fortschritts-Karte, ohne Prozente.
+  // Symbol-Vorschläge. Linien-Set neu gezeichnet (24er-Raster, 1.8 Strich wie IconKern-Regeln);
+  // Früchte unverändert aus src/FruchtSilhouette.jsx.
+  const LINIE = {
+    basis: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16.5c.6-1.8 1.9-2.6 3.2-2.6s2.6.8 3.2 2.6M14.5 10h4M14.5 13.2h3"/>',
+    wohnen: '<path d="M3 11.5 12 4l9 7.5M5.5 10v10h13V10M10 20v-5h4v5"/>',
+    finanzen: '<ellipse cx="12" cy="7" rx="6" ry="2.5"/><path d="M6 7v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7M6 12v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5"/>',
+    versicherungen: '<path d="M12 3 5 6v5.5c0 4.5 3 7.7 7 9.5 4-1.8 7-5 7-9.5V6Z"/><path d="m9 12 2 2 4-4"/>',
+    ausbildung: '<path d="M2.5 9.5 12 5l9.5 4.5L12 14Z"/><path d="M6.5 11.5V16c1.5 1.5 3.5 2.2 5.5 2.2s4-.7 5.5-2.2v-4.5M21.5 9.5v5"/>',
+    behoerden: '<path d="M3 9l9-5 9 5M4 9h16M6 9v8M10 9v8M14 9v8M18 9v8M3 20h18"/>',
+    notfall: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/><path d="M12 9.5v5M9.5 12h5"/>',
+  };
+  const FRUCHT = {
+    basis: '<path d="M12 8 C 10.5 6.6 7.4 6.6 6.3 9.4 C 5.4 11.8 6 17 9 19.4 C 10.4 20.5 13.6 20.5 15 19.4 C 18 17 18.6 11.8 17.7 9.4 C 16.6 6.6 13.5 6.6 12 8 Z"/><path d="M12 8 L12 4.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M12 6 C 13 4.2 15.4 3.6 16.6 4.4 C 15.8 6.4 13.6 7 12 6 Z"/>',
+    wohnen: '<path d="M12 5.4 C 11.1 5.4 10.6 6.9 11.1 8.7 C 8.6 9.9 7.4 13 8.3 16.2 C 9.1 19 11 20.6 12 20.6 C 13 20.6 14.9 19 15.7 16.2 C 16.6 13 15.4 9.9 12.9 8.7 C 13.4 6.9 12.9 5.4 12 5.4 Z"/><path d="M12 5.6 L12 3.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>',
+    finanzen: '<path fill-rule="evenodd" d="M12 6 C 8.1 6 6 9.5 6 13.2 C 6 16.9 8.7 19.6 12 19.6 C 15.3 19.6 18 16.9 18 13.2 C 18 9.5 15.9 6 12 6 Z M11.7 7.2 C 10.6 10.7 10.6 15.3 11.7 18.4 L 12.3 18.4 C 11.2 15.3 11.2 10.7 12.3 7.2 Z"/><path d="M12 6.2 L12.6 4.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+    versicherungen: '<circle cx="12" cy="14" r="6"/><path d="M12 8.6 L10.6 5.6 L12 7 L13.4 5.6 L12 8.6 Z M9.6 9.4 L6.8 8.4 L8.8 9 L8.4 6.9 L9.6 9.4 Z M14.4 9.4 L15.6 6.9 L15.2 9 L17.2 8.4 L14.4 9.4 Z"/>',
+    ausbildung: '<path fill-rule="evenodd" d="M12 5.6 C 7.6 5.6 5.4 9 5.4 12.6 C 5.4 16.8 8.4 20 12 20 C 15.6 20 18.6 16.8 18.6 12.6 C 18.6 9 16.4 5.6 12 5.6 Z M11.6 7 C 12.6 9 10.8 10.6 11.6 12.6 C 12.4 14.6 10.8 16.6 11.9 18.6 L 12.4 18.6 C 11.4 16.6 13 14.6 12.2 12.6 C 11.4 10.6 13.2 9 12.4 7 Z"/>',
+    behoerden: '<path fill-rule="evenodd" d="M12 5 C 8.6 5 6.8 8.6 6.8 12.4 C 6.8 16.6 9 20.4 12 20.4 C 15 20.4 17.2 16.6 17.2 12.4 C 17.2 8.6 15.4 5 12 5 Z M11.7 6.4 C 10.8 10 10.8 15 11.7 19 L 12.3 19 C 11.4 15 11.4 10 12.3 6.4 Z"/><path d="M12 5.2 L12.6 3.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+    notfall: '<circle cx="7" cy="12" r="1.8"/><circle cx="10.2" cy="11.2" r="1.8"/><circle cx="13.8" cy="11.2" r="1.8"/><circle cx="17" cy="12" r="1.8"/><circle cx="8.8" cy="14.6" r="1.8"/><circle cx="12" cy="15" r="1.8"/><circle cx="15.2" cy="14.6" r="1.8"/><path d="M12 13 L12 4.4 M12 6 L9 4 M12 6 L15 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" fill="none"/>',
+  };
+  // Echte Kapitel-Icons, gerendert aus src/IconKern.jsx und src/IconMuenzen.jsx (unveraendert).
+  const ECHT = {"basis": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" width=\"100%\" height=\"100%\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"2\" y=\"3\" width=\"20\" height=\"18\" rx=\"2.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"></rect><circle cx=\"9\" cy=\"10\" r=\"3\"></circle><path d=\"M 4.5 18 Q 4.5 14 9 14 Q 13.5 14 13.5 18\"></path><line x1=\"15.5\" y1=\"9\" x2=\"19.5\" y2=\"9\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" opacity=\"0.5\"></line><line x1=\"15.5\" y1=\"12\" x2=\"18.5\" y2=\"12\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" opacity=\"0.4\"></line><line x1=\"15.5\" y1=\"15\" x2=\"19\" y2=\"15\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" opacity=\"0.35\"></line></svg>", "wohnen": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" width=\"100%\" height=\"100%\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M 0.5 12 L 12 2.5 L 23.5 12 Z\"></path><line x1=\"1.5\" y1=\"11.8\" x2=\"22.5\" y2=\"11.8\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.12\"></line><rect x=\"17\" y=\"4.5\" width=\"2\" height=\"4.5\"></rect><rect x=\"16.5\" y=\"4\" width=\"3\" height=\"0.8\" rx=\"0.2\"></rect><path d=\"M 18 4 Q 17.5 3 18.2 2.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.3\" opacity=\"0.4\"></path><rect x=\"4\" y=\"12\" width=\"16\" height=\"10\"></rect><rect x=\"3.5\" y=\"21.5\" width=\"17\" height=\"0.7\" rx=\"0.1\" fill=\"currentColor\"></rect><line x1=\"4\" y1=\"14\" x2=\"20\" y2=\"14\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.12\"></line><line x1=\"4\" y1=\"16.5\" x2=\"20\" y2=\"16.5\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.12\"></line><line x1=\"4\" y1=\"19\" x2=\"20\" y2=\"19\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.1\"></line><rect x=\"10\" y=\"7\" width=\"4\" height=\"3\" rx=\"0.3\" fill=\"white\"></rect><path d=\"M 10 7.3 Q 12 5.8 14 7.3\" fill=\"white\"></path><line x1=\"12\" y1=\"5.8\" x2=\"12\" y2=\"10\" stroke=\"currentColor\" stroke-width=\"0.4\"></line><line x1=\"10\" y1=\"8\" x2=\"14\" y2=\"8\" stroke=\"currentColor\" stroke-width=\"0.4\"></line><path d=\"M 8 10.5 Q 10 11.2 12 10.5 Q 14 11.2 16 10.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.2\"></path><path d=\"M 4 12 L 3 12 L 4 11\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.4\"></path><path d=\"M 20 12 L 21 12 L 20 11\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.4\"></path><line x1=\"4\" y1=\"15.5\" x2=\"20\" y2=\"15.5\" stroke=\"white\" stroke-width=\"0.7\"></line><line x1=\"4.5\" y1=\"12.5\" x2=\"4.5\" y2=\"15.5\" stroke=\"white\" stroke-width=\"0.4\"></line><line x1=\"9.3\" y1=\"12.5\" x2=\"9.3\" y2=\"15.5\" stroke=\"white\" stroke-width=\"0.4\"></line><line x1=\"14.7\" y1=\"12.5\" x2=\"14.7\" y2=\"15.5\" stroke=\"white\" stroke-width=\"0.4\"></line><line x1=\"19.5\" y1=\"12.5\" x2=\"19.5\" y2=\"15.5\" stroke=\"white\" stroke-width=\"0.4\"></line><path d=\"M 4.5 12.5 L 9.3 15.5 M 9.3 12.5 L 4.5 15.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.3\" opacity=\"0.4\"></path><path d=\"M 9.3 12.5 L 14.7 15.5 M 14.7 12.5 L 9.3 15.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.3\" opacity=\"0.4\"></path><path d=\"M 14.7 12.5 L 19.5 15.5 M 19.5 12.5 L 14.7 15.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.3\" opacity=\"0.4\"></path><rect x=\"5\" y=\"15.8\" width=\"4\" height=\"0.7\" rx=\"0.15\" fill=\"white\" opacity=\"0.25\"></rect><rect x=\"15\" y=\"15.8\" width=\"4\" height=\"0.7\" rx=\"0.15\" fill=\"white\" opacity=\"0.25\"></rect><circle cx=\"6\" cy=\"15.6\" r=\"0.35\" fill=\"white\" opacity=\"0.18\"></circle><circle cx=\"7\" cy=\"15.5\" r=\"0.4\" fill=\"white\" opacity=\"0.2\"></circle><circle cx=\"8\" cy=\"15.6\" r=\"0.35\" fill=\"white\" opacity=\"0.18\"></circle><circle cx=\"16\" cy=\"15.6\" r=\"0.35\" fill=\"white\" opacity=\"0.18\"></circle><circle cx=\"17\" cy=\"15.5\" r=\"0.4\" fill=\"white\" opacity=\"0.2\"></circle><circle cx=\"18\" cy=\"15.6\" r=\"0.35\" fill=\"white\" opacity=\"0.18\"></circle><rect x=\"5.2\" y=\"17.2\" width=\"1\" height=\"2.8\" rx=\"0.1\" fill=\"white\" opacity=\"0.4\"></rect><rect x=\"6.4\" y=\"17.2\" width=\"3\" height=\"2.8\" rx=\"0.2\" fill=\"white\"></rect><rect x=\"9.6\" y=\"17.2\" width=\"1\" height=\"2.8\" rx=\"0.1\" fill=\"white\" opacity=\"0.4\"></rect><rect x=\"13.4\" y=\"17.2\" width=\"1\" height=\"2.8\" rx=\"0.1\" fill=\"white\" opacity=\"0.4\"></rect><rect x=\"14.6\" y=\"17.2\" width=\"3\" height=\"2.8\" rx=\"0.2\" fill=\"white\"></rect><rect x=\"17.8\" y=\"17.2\" width=\"1\" height=\"2.8\" rx=\"0.1\" fill=\"white\" opacity=\"0.4\"></rect><line x1=\"7.9\" y1=\"17.2\" x2=\"7.9\" y2=\"20\" stroke=\"currentColor\" stroke-width=\"0.3\"></line><line x1=\"16.1\" y1=\"17.2\" x2=\"16.1\" y2=\"20\" stroke=\"currentColor\" stroke-width=\"0.3\"></line><line x1=\"6.4\" y1=\"18.6\" x2=\"9.4\" y2=\"18.6\" stroke=\"currentColor\" stroke-width=\"0.2\"></line><line x1=\"14.6\" y1=\"18.6\" x2=\"17.6\" y2=\"18.6\" stroke=\"currentColor\" stroke-width=\"0.2\"></line><rect x=\"6.2\" y=\"20\" width=\"3.6\" height=\"0.3\" rx=\"0.1\" fill=\"white\" opacity=\"0.3\"></rect><rect x=\"14.4\" y=\"20\" width=\"3.6\" height=\"0.3\" rx=\"0.1\" fill=\"white\" opacity=\"0.3\"></rect><rect x=\"10.5\" y=\"17.5\" width=\"3\" height=\"4.5\" rx=\"0.3\" fill=\"white\"></rect><path d=\"M 10.5 17.8 Q 12 16.5 13.5 17.8\" fill=\"white\"></path><line x1=\"12\" y1=\"17\" x2=\"12\" y2=\"22\" stroke=\"currentColor\" stroke-width=\"0.2\" opacity=\"0.3\"></line><circle cx=\"12.8\" cy=\"20\" r=\"0.3\" fill=\"currentColor\"></circle><rect x=\"10\" y=\"21.5\" width=\"4\" height=\"0.5\" rx=\"0.1\" fill=\"white\" opacity=\"0.2\"></rect></svg>", "versicherungen": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" width=\"100%\" height=\"100%\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z\"></path><path d=\"M 12 4 L 6 7.2 L 6 12 Q 6 17.5 12 20 Q 18 17.5 18 12 L 18 7.2 Z\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" opacity=\"0.3\"></path><g transform=\"translate(12, 12.5)\"><circle r=\"1.5\" fill=\"white\"></circle><ellipse cx=\"0\" cy=\"-4\" rx=\"1.2\" ry=\"2.5\" fill=\"white\" opacity=\"0.9\"></ellipse><ellipse cx=\"0\" cy=\"4\" rx=\"1.2\" ry=\"2.5\" fill=\"white\" opacity=\"0.9\"></ellipse><ellipse cx=\"-4\" cy=\"0\" rx=\"2.5\" ry=\"1.2\" fill=\"white\" opacity=\"0.9\"></ellipse><ellipse cx=\"4\" cy=\"0\" rx=\"2.5\" ry=\"1.2\" fill=\"white\" opacity=\"0.9\"></ellipse><ellipse cx=\"-2.8\" cy=\"-2.8\" rx=\"1.2\" ry=\"2.5\" fill=\"white\" opacity=\"0.7\" transform=\"rotate(-45)\"></ellipse><ellipse cx=\"2.8\" cy=\"-2.8\" rx=\"1.2\" ry=\"2.5\" fill=\"white\" opacity=\"0.7\" transform=\"rotate(45)\"></ellipse><ellipse cx=\"-2.8\" cy=\"2.8\" rx=\"1.2\" ry=\"2.5\" fill=\"white\" opacity=\"0.7\" transform=\"rotate(45)\"></ellipse><ellipse cx=\"2.8\" cy=\"2.8\" rx=\"1.2\" ry=\"2.5\" fill=\"white\" opacity=\"0.7\" transform=\"rotate(-45)\"></ellipse></g></svg>", "ausbildung": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" width=\"100%\" height=\"100%\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M 2 10 L 12 5 L 22 10 L 12 15 Z\"></path><path d=\"M 6 12.5 L 6 18 L 12 21 L 18 18 L 18 12.5\"></path><line x1=\"20\" y1=\"10\" x2=\"20\" y2=\"17\" stroke=\"currentColor\" stroke-width=\"1.5\"></line></svg>", "notfall": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" width=\"100%\" height=\"100%\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M 12 21 Q 3 14 3 8.5 Q 3 4 7 4 Q 9.5 4 12 7 Q 14.5 4 17 4 Q 21 4 21 8.5 Q 21 14 12 21 Z\"></path><path d=\"M 12 19 Q 5 13.5 5 9 Q 5 5.8 7.5 5.5 Q 9.5 5.5 12 8 Q 14.5 5.5 16.5 5.5 Q 19 5.8 19 9 Q 19 13.5 12 19 Z\" fill=\"none\" stroke=\"white\" stroke-width=\"0.4\" opacity=\"0.25\"></path><rect x=\"10.5\" y=\"7.5\" width=\"3\" height=\"8\" rx=\"0.8\" fill=\"white\"></rect><rect x=\"8\" y=\"10\" width=\"8\" height=\"3\" rx=\"0.8\" fill=\"white\"></rect></svg>", "finanzen": "<svg viewBox=\"0 0 48 48\" fill=\"currentColor\"><circle cx=\"24\" cy=\"24\" r=\"23\"></circle><circle cx=\"24\" cy=\"24\" r=\"22.2\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" opacity=\"0.25\"></circle><circle cx=\"24\" cy=\"24\" r=\"21.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.3\" opacity=\"0.15\"></circle><circle cx=\"24\" cy=\"24\" r=\"20.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.8\" stroke-dasharray=\"0.15 1.5\" stroke-linecap=\"round\" opacity=\"0.9\"></circle><text x=\"24\" y=\"13\" text-anchor=\"middle\" font-size=\"6\" font-weight=\"bold\" fill=\"white\" style=\"font-family:Georgia, serif\" letter-spacing=\"1\">5 FR.</text><path d=\"M 19 15 L 29 15 L 29 23.5 Q 29 28 24 31 Q 19 28 19 23.5 Z\" fill=\"white\"></path><path d=\"M 20.2 16.2 L 27.8 16.2 L 27.8 23 Q 27.8 26.5 24 29 Q 20.2 26.5 20.2 23 Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.4\" opacity=\"0.25\"></path><rect x=\"22.8\" y=\"17.5\" width=\"2.4\" height=\"9\" rx=\"0.3\" fill=\"currentColor\"></rect><rect x=\"20.5\" y=\"20.5\" width=\"7\" height=\"2.5\" rx=\"0.3\" fill=\"currentColor\"></rect><path d=\"M 23 38 Q 19 35 14.5 28 Q 10.5 22 9 14 Q 8.5 12 10 11\" fill=\"none\" stroke=\"white\" stroke-width=\"0.75\" stroke-linecap=\"round\" opacity=\"0.85\"></path><path d=\"M 9.5 12 Q 8 10.5 7.5 10.5 Q 7.5 12.5 9.5 12 Z\" fill=\"white\" opacity=\"0.7\"></path><path d=\"M 9.5 12 Q 11 10.5 12 10 Q 11.5 12.2 9.5 12 Z\" fill=\"white\" opacity=\"0.7\"></path><path d=\"M 9 14.5 Q 6.8 13 5.5 13 Q 6.5 15.2 9 14.5 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 9 14.5 Q 11 12.5 12.5 12.2 Q 11 14.8 9 14.5 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 9.3 17.5 Q 7 15.8 5.8 16 Q 7.2 18.2 9.3 17.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 9.3 17.5 Q 11.5 15.2 13 15.2 Q 11.2 17.5 9.3 17.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 10 20.5 Q 7 18.5 5.5 18.8 Q 7.5 21 10 20.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 10 20.5 Q 12.5 18 14.2 18 Q 12.2 20.5 10 20.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 11.5 24 Q 8.5 21.8 6.5 22.2 Q 9 24.5 11.5 24 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 11.5 24 Q 14 21.5 16 21.5 Q 13.8 24 11.5 24 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 13.5 27.5 Q 10.5 25.5 8.5 26 Q 11 28 13.5 27.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 13.5 27.5 Q 16 25 18 25.2 Q 15.8 27.5 13.5 27.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 16 31 Q 13 29 11 29.2 Q 13.5 31.5 16 31 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 16 31 Q 18.5 28.5 20.5 28.8 Q 18.2 31 16 31 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 19 34.5 Q 16 32.5 14.5 33 Q 16.8 35 19 34.5 Z\" fill=\"white\" opacity=\"0.75\"></path><path d=\"M 19 34.5 Q 21.2 32.5 22.5 32.8 Q 20.8 34.5 19 34.5 Z\" fill=\"white\" opacity=\"0.75\"></path><circle cx=\"9.2\" cy=\"13.2\" r=\"0.7\" fill=\"white\" opacity=\"0.55\"></circle><circle cx=\"8.5\" cy=\"13.8\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"9\" cy=\"16\" r=\"0.75\" fill=\"white\" opacity=\"0.6\"></circle><circle cx=\"8.2\" cy=\"16.6\" r=\"0.6\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"9.6\" cy=\"16.6\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"9.5\" cy=\"19\" r=\"0.75\" fill=\"white\" opacity=\"0.6\"></circle><circle cx=\"8.7\" cy=\"19.6\" r=\"0.6\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"10.3\" cy=\"19.5\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"10.5\" cy=\"22\" r=\"0.75\" fill=\"white\" opacity=\"0.6\"></circle><circle cx=\"9.7\" cy=\"22.6\" r=\"0.6\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"12.5\" cy=\"25.8\" r=\"0.7\" fill=\"white\" opacity=\"0.55\"></circle><circle cx=\"11.8\" cy=\"26.3\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"14.5\" cy=\"29.2\" r=\"0.65\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"17\" cy=\"32.8\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><path d=\"M 25 38 Q 29 35 33.5 28 Q 37.5 22 39 14 Q 39.5 12 38 11\" fill=\"none\" stroke=\"white\" stroke-width=\"0.75\" stroke-linecap=\"round\" opacity=\"0.85\"></path><path d=\"M 38.5 12 Q 40 10.5 40.5 10.5 Q 40.5 12.5 38.5 12 Z\" fill=\"white\" opacity=\"0.7\"></path><path d=\"M 38.5 12 Q 37 10.5 36 10 Q 36.5 12.2 38.5 12 Z\" fill=\"white\" opacity=\"0.7\"></path><path d=\"M 39 14.5 Q 41.2 13 42.5 13 Q 41.5 15.2 39 14.5 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 39 14.5 Q 37 12.5 35.5 12.2 Q 37 14.8 39 14.5 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 38.7 17.5 Q 41 15.8 42.2 16 Q 40.8 18.2 38.7 17.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 38.7 17.5 Q 36.5 15.2 35 15.2 Q 36.8 17.5 38.7 17.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 38 20.5 Q 41 18.5 42.5 18.8 Q 40.5 21 38 20.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 38 20.5 Q 35.5 18 33.8 18 Q 35.8 20.5 38 20.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 36.5 24 Q 39.5 21.8 41.5 22.2 Q 39 24.5 36.5 24 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 36.5 24 Q 34 21.5 32 21.5 Q 34.2 24 36.5 24 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 34.5 27.5 Q 37.5 25.5 39.5 26 Q 37 28 34.5 27.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 34.5 27.5 Q 32 25 30 25.2 Q 32.2 27.5 34.5 27.5 Z\" fill=\"white\" opacity=\"0.85\"></path><path d=\"M 32 31 Q 35 29 37 29.2 Q 34.5 31.5 32 31 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 32 31 Q 29.5 28.5 27.5 28.8 Q 29.8 31 32 31 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 29 34.5 Q 32 32.5 33.5 33 Q 31.2 35 29 34.5 Z\" fill=\"white\" opacity=\"0.75\"></path><path d=\"M 29 34.5 Q 26.8 32.5 25.5 32.8 Q 27.2 34.5 29 34.5 Z\" fill=\"white\" opacity=\"0.75\"></path><circle cx=\"38.8\" cy=\"13.2\" r=\"0.7\" fill=\"white\" opacity=\"0.55\"></circle><circle cx=\"39.5\" cy=\"13.8\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"39\" cy=\"16\" r=\"0.75\" fill=\"white\" opacity=\"0.6\"></circle><circle cx=\"39.8\" cy=\"16.6\" r=\"0.6\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"38.4\" cy=\"16.6\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"38.5\" cy=\"19\" r=\"0.75\" fill=\"white\" opacity=\"0.6\"></circle><circle cx=\"39.3\" cy=\"19.6\" r=\"0.6\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"37.7\" cy=\"19.5\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"37.5\" cy=\"22\" r=\"0.75\" fill=\"white\" opacity=\"0.6\"></circle><circle cx=\"38.3\" cy=\"22.6\" r=\"0.6\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"35.5\" cy=\"25.8\" r=\"0.7\" fill=\"white\" opacity=\"0.55\"></circle><circle cx=\"36.2\" cy=\"26.3\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><circle cx=\"33.5\" cy=\"29.2\" r=\"0.65\" fill=\"white\" opacity=\"0.5\"></circle><circle cx=\"31\" cy=\"32.8\" r=\"0.55\" fill=\"white\" opacity=\"0.45\"></circle><path d=\"M 22 38.5 L 24 37 L 26 38.5 L 24 40 Z\" fill=\"white\" opacity=\"0.8\"></path><path d=\"M 22 38.5 Q 19.5 39.5 17.5 38 Q 16 37 16.5 35.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.9\" stroke-linecap=\"round\" opacity=\"0.7\"></path><path d=\"M 22 39.2 Q 19.5 40.5 17.8 39 Q 16.5 38 17 36.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" stroke-linecap=\"round\" opacity=\"0.45\"></path><path d=\"M 26 38.5 Q 28.5 39.5 30.5 38 Q 32 37 31.5 35.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.9\" stroke-linecap=\"round\" opacity=\"0.7\"></path><path d=\"M 26 39.2 Q 28.5 40.5 30.2 39 Q 31.5 38 31 36.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" stroke-linecap=\"round\" opacity=\"0.45\"></path><text x=\"24\" y=\"43.5\" text-anchor=\"middle\" font-size=\"4.2\" fill=\"white\" style=\"font-family:Georgia, serif\" letter-spacing=\"0.8\">2026</text><circle cx=\"16\" cy=\"42.5\" r=\"0.45\" fill=\"white\" opacity=\"0.35\"></circle><circle cx=\"32\" cy=\"42.5\" r=\"0.45\" fill=\"white\" opacity=\"0.35\"></circle></svg>", "behoerden": "<svg viewBox=\"0 0 48 48\" fill=\"currentColor\"><line x1=\"12\" y1=\"1\" x2=\"14\" y2=\"42\" stroke=\"currentColor\" stroke-width=\"0.7\" stroke-linecap=\"round\"></line><path d=\"M 12 1 Q 10.5 3.5 11.3 6 L 12 3.5 L 12.7 6 Q 13.5 3.5 12 1 Z\" fill=\"currentColor\"></path><ellipse cx=\"22\" cy=\"7\" rx=\"3\" ry=\"3.2\" fill=\"currentColor\"></ellipse><path d=\"M 19.5 4.2 Q 19 5 18.8 6 Q 18.3 6.8 18 7.5 Q 17.8 8 18.2 8.6 Q 18.5 9.2 19.2 9.6 L 20 9.8\" fill=\"currentColor\"></path><path d=\"M 19.2 6.3 Q 19.7 6 20.3 6.3 Q 19.7 6.6 19.2 6.3 Z\" fill=\"white\" opacity=\"0.25\"></path><circle cx=\"18.3\" cy=\"7.8\" r=\"0.15\" fill=\"white\" opacity=\"0.1\"></circle><path d=\"M 18.3 8.5 Q 18.6 8.3 18.9 8.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.15\" opacity=\"0.12\"></path><path d=\"M 19.5 4.2 Q 21 3.2 23.5 3.8 Q 25 4.2 25 5.5 Q 25.5 6.5 25 8\" fill=\"currentColor\"></path><ellipse cx=\"25.2\" cy=\"6\" rx=\"1.8\" ry=\"1.6\" fill=\"currentColor\"></ellipse><path d=\"M 24 5.5 Q 25 5 26 5.5 Q 26 6.5 25 7\" fill=\"none\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.15\"></path><line x1=\"18.5\" y1=\"4.2\" x2=\"17.5\" y2=\"2.5\" stroke=\"currentColor\" stroke-width=\"0.6\" stroke-linecap=\"round\"></line><line x1=\"19.5\" y1=\"3.8\" x2=\"18.8\" y2=\"1.5\" stroke=\"currentColor\" stroke-width=\"0.65\" stroke-linecap=\"round\"></line><line x1=\"20.5\" y1=\"3.5\" x2=\"20.2\" y2=\"0.8\" stroke=\"currentColor\" stroke-width=\"0.6\" stroke-linecap=\"round\"></line><line x1=\"21.5\" y1=\"3.3\" x2=\"21.5\" y2=\"0.3\" stroke=\"currentColor\" stroke-width=\"0.7\" stroke-linecap=\"round\"></line><line x1=\"22.5\" y1=\"3.5\" x2=\"23\" y2=\"0.8\" stroke=\"currentColor\" stroke-width=\"0.6\" stroke-linecap=\"round\"></line><line x1=\"23.5\" y1=\"3.8\" x2=\"24.2\" y2=\"1.5\" stroke=\"currentColor\" stroke-width=\"0.65\" stroke-linecap=\"round\"></line><line x1=\"24.5\" y1=\"4.2\" x2=\"25.5\" y2=\"2.5\" stroke=\"currentColor\" stroke-width=\"0.6\" stroke-linecap=\"round\"></line><path d=\"M 18 4.8 Q 21.5 3 25 4.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1\"></path><path d=\"M 19.5 9.8 C 19.2 11.0 19.3 12.5 19.6 14.0 Q 19.9 15.0 20.5 15.2 L 22.0 15.0 C 22.3 14.0 22.2 11.5 21.8 9.8 Q 21.0 9.4 19.5 9.8 Z\" fill=\"currentColor\"></path><path d=\"M 19.0 15.0 Q 20.8 15.8 22.5 15.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.6\" opacity=\"0.22\"></path><path d=\"M 19.8 11.5 Q 20.8 11.8 21.8 11.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.18\" opacity=\"0.18\"></path><path d=\"M 16.5 15 Q 19.5 14.5 22.5 15 Q 25.5 15.5 26.5 17.5 Q 26.5 19 25.5 20 Q 24.5 21.5 24 23 Q 23 24 23.5 26 Q 24.5 29 25.5 32 Q 27 36 28.5 39.5 L 30 42 L 10.5 42 L 12 39.5 Q 13.5 36 14.5 32 Q 15.5 29 16 26 Q 16.5 24 16 23 Q 15.5 21.5 14.8 20 Q 14 19 14 17.5 Q 14 15.5 16.5 15 Z\" fill=\"currentColor\"></path><path d=\"M 24 15.5 Q 22 17 20 19 Q 18 22 17 25 Q 16 28 15 32 Q 14 36 12 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.6\" opacity=\"0.3\"></path><path d=\"M 25 16 Q 23 18 21 20 Q 19 23 18 26 Q 17 29 16 33 Q 15 37 13.5 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.15\"></path><path d=\"M 16.5 15 Q 15.5 15.5 15 16\" fill=\"none\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.15\"></path><path d=\"M 16.5 17 Q 18.5 18.5 20.5 18\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.2\"></path><path d=\"M 15.5 23 Q 20 24 24.5 23\" fill=\"none\" stroke=\"white\" stroke-width=\"0.7\" opacity=\"0.35\"></path><rect x=\"19.2\" y=\"22.6\" width=\"1.5\" height=\"1\" rx=\"0.2\" fill=\"white\" opacity=\"0.25\"></rect><path d=\"M 16.5 26 Q 15 31 13.5 36 Q 12.5 39 11.5 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.18\"></path><path d=\"M 19 25.5 Q 18 31 17 36 Q 16.5 39 15.5 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.18\"></path><path d=\"M 21 25.5 Q 20.5 31 20 36 Q 19.5 39 19.5 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.18\"></path><path d=\"M 23 26 Q 23 31 23 36 Q 23 39 23.5 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.18\"></path><path d=\"M 25.5 27 Q 26 32 26.5 37 Q 27 39 27.5 42\" fill=\"none\" stroke=\"white\" stroke-width=\"0.25\" opacity=\"0.15\"></path><path d=\"M 11.5 41.5 Q 20 42.5 29 41.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.12\"></path><path d=\"M 16 16 Q 15 18 14.5 20 Q 14 22 13.5 23.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path><ellipse cx=\"13.5\" cy=\"24\" rx=\"1.1\" ry=\"1.3\" fill=\"currentColor\"></ellipse><path d=\"M 24 16 Q 26.5 17.5 28.5 20 Q 31 23 33 26\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path><path d=\"M 23.5 15.2 Q 25 15 25.8 16 Q 26 17 25 17 Q 24 16 23.5 15.5 Z\" fill=\"currentColor\"></path><ellipse cx=\"33.2\" cy=\"26.5\" rx=\"1.1\" ry=\"0.8\" fill=\"currentColor\"></ellipse><path d=\"M 31 27 L 39 27 L 39 34 Q 39 38 35 40 Q 31 38 31 34 Z\" fill=\"currentColor\"></path><path d=\"M 32 28.2 L 38 28.2 L 38 33.5 Q 38 36.5 35 38.5 Q 32 36.5 32 33.5 Z\" fill=\"none\" stroke=\"white\" stroke-width=\"0.3\" opacity=\"0.25\"></path><rect x=\"34\" y=\"29\" width=\"2\" height=\"7\" rx=\"0.2\" fill=\"white\"></rect><rect x=\"32.5\" y=\"31\" width=\"5\" height=\"2.5\" rx=\"0.2\" fill=\"white\"></rect><path d=\"M 15 41.5 Q 13.5 41.2 12 41.5 L 11.5 42.5 L 16 42.5 Z\" fill=\"currentColor\"></path><path d=\"M 23.5 41.5 Q 25 41.2 26 41.5 L 26.5 42.5 L 23 42.5 Z\" fill=\"currentColor\"></path><path d=\"M 13 42 L 14.5 41.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.25\"></path><path d=\"M 24.5 42 L 25.5 41.5\" fill=\"none\" stroke=\"white\" stroke-width=\"0.2\" opacity=\"0.25\"></path><rect x=\"9\" y=\"42.5\" width=\"24\" height=\"0.8\" rx=\"0.2\" fill=\"currentColor\"></rect><rect x=\"7\" y=\"43.3\" width=\"28\" height=\"1.2\" rx=\"0.2\" fill=\"currentColor\"></rect><text x=\"21\" y=\"47.5\" text-anchor=\"middle\" font-size=\"3.2\" font-weight=\"bold\" fill=\"currentColor\" style=\"font-family:Georgia, serif\" letter-spacing=\"1.5\">HELVETIA</text></svg>"};
+  const echt = (k, f, px) => ECHT[k].replace('<svg ', `<svg width="${px}" height="${px}" style="color:${f};display:block" aria-hidden="true" `);
+  const linie = (k, farbe, px) => `<svg width="${px}" height="${px}" viewBox="0 0 24 24" fill="none" stroke="${farbe}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${LINIE[k]}</svg>`;
+  const SYMBOLE = {
+    heute:   b => `<span class="sym-box">${echt(b.key, farbe(b), 22)}</span>`,
+    flaeche: b => `<span class="sym-box flaeche" style="background:${farbe(b)}26">${echt(b.key, farbe(b), 20)}</span>`,
+    marke:   b => `<span class="sym-box wegmarke" style="background:${farbe(b)}">${echt(b.key, root.dataset.theme === 'dark' ? '#22211F' : '#FFFFFF', 17)}</span>`,
+  };
+  let symbolArt = 'flaeche';
+  document.querySelectorAll('[data-symbol]').forEach(bt => bt.addEventListener('click', () => {
+    symbolArt = bt.dataset.symbol;
+    document.querySelectorAll('[data-symbol]').forEach(x => x.setAttribute('aria-pressed', x === bt));
+    document.getElementById('symbol-notiz').innerHTML = SYMBOL_NOTIZ[symbolArt];
+    bereicheZeichnen();
+  }));
+  const SYMBOL_NOTIZ = {
+    heute: '<b>Wie heute:</b> eure Kapitel-Icons in der Bereichsfarbe, so wie sie heute in der Fortschritts-Karte stehen. Nichts Neues.',
+    flaeche: '<b>Auf Fläche:</b> dieselben Icons, etwas kleiner auf einer zart getönten Fläche in der Bereichsfarbe. Das bringt Stardusts weiche Flächen hinein, ohne ein Icon zu ändern. Mein Favorit.',
+    marke: '<b>Wegmarke:</b> dieselben Icons auf einer vollen Scheibe, wie eine Station auf der Strasse. Haken: Schild, Herz und Münzen haben weisse Innenzeichnungen, die auf der Scheibe teils verschwinden, und Weiss auf Sand hat im Hellmodus wenig Kontrast.',
+  };
+  const STUFE = { basis: 'Vertieft', wohnen: 'Überblick', finanzen: 'Überblick', versicherungen: 'Überblick', ausbildung: 'Vertieft', behoerden: 'Vertieft', notfall: 'Vertieft' };
+  function bereicheZeichnen() {
+    document.getElementById('c-bereiche').innerHTML = BEREICHE.map(b =>
+      `<div class="bz" role="button" tabindex="0" aria-label="${b.name}, ${STUFE[b.key]}">${SYMBOLE[symbolArt](b)}<span><b>${b.name}</b><div class="balken"><i style="width:${b.pct}%;background:${farbe(b)}"></i></div><small>${STUFE[b.key]}</small></span><span class="pfeil" aria-hidden="true">›</span></div>`).join('');
+  }
+  document.querySelectorAll('[data-modus]').forEach(b => b.addEventListener('click', bereicheZeichnen));
+  bereicheZeichnen();
+
+  document.getElementById('wr-nochmal').addEventListener('click', einblenden);
+  document.querySelectorAll('[data-modus]').forEach(b => b.addEventListener('click', () => { logosZeichnen(); ringZeichnen(false); }));
+  logosZeichnen();
+  new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { if (gewaehlt === null) einblenden(); o.disconnect(); } }, { threshold: .4 }).observe(document.querySelector('.wr-ring'));
+  ringZeichnen(false); texteSetzen();
+
+  const U = 169.6;
+  document.querySelectorAll('[data-zustand]').forEach(b => b.addEventListener('click', () => {
+    const z = zustaende[b.dataset.zustand];
+    const alle = k => document.querySelectorAll('[data-z="' + k + '"]');
+    alle('bogen').forEach(el => el.setAttribute('stroke-dashoffset', U * (1 - z.p / 100)));
+    alle('zahl').forEach(el => el.innerHTML = z.p + '&#8239;%');
+    ['wort', 'satz', 'naechst', 'knopf', 'glance'].forEach(k => alle(k).forEach(el => el.innerHTML = z[k]));
+    document.querySelectorAll('[data-zustand]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  }));
+</script>
+</body>
+</html>
