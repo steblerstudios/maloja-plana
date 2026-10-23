@@ -92,3 +92,8 @@ Datenfeld «Tag» am Merkpunkt; «Alle Kantone vergleichen» (heute 0 von 26 Kan
   Texte gegen `de.js` geprüft. Details und Befunde in VERGLEICH.md, Abschnitt «Runde 2».
 - **Befund App:** «Bundessteuer berechnen» (`nav.sub.taxes`, 5 Sprachen) ist veraltet.
 - **Offen:** Sophies Ja zu I, J, K · Übersicht · weitere Seiten (Lebenssituationen, weitere Kapitel, Schnellcheck).
+  - *Nachtrag 16:45:* Die Bau-Sitzung meldet, sie habe Liste B gegen VERGLEICH.md (6a62e1cb, 2a99c797)
+    geprüft und an den Bau-Agenten für `feat/f5-merkliste-kalender` weitergegeben. Er passt
+    `aufgabenBereiche.js` und die Kalender-Zuordnung an, mit `werkzeugRegister.js` «fach» als Quelle.
+    **Im Code noch nicht nachgeprüft.** Stand Bau laut Meldung: Ablage #539 und Umzug #540 als
+    Entwurfs-PRs offen; Merkliste-Kalender, Menü, IPV und Kapitel Finanzen noch in Arbeit.
