@@ -1651,11 +1651,11 @@ export default {
       // rm ungeprüft F5
       dashboard: { sie: 'Nua che Vus stais ussa e tge che vegn sco proxim.', du: 'Nua che ti stas ussa e tge che vegn sco proxim.' },
       // rm ungeprüft F5
-      wasAnsteht: 'Termins, scadenzas e la glista da notizias en in lieu.',
+      wasAnsteht: 'Termins, scadenzas e la glista da memoria en in lieu.',
       // rm ungeprüft F5
-      rucksack: { sie: 'Quai che Vus prendais cun Vus tar ina midada: documents, legitimaziuns, contacts.', du: 'Quai che ti prendas cun tai tar ina midada: documents, legitimaziuns, contacts.' },
+      rucksack: 'Vias tras eveniments da la vita e tut ils utensils, urdinads sco ina equipaziun.',
       // rm ungeprüft F5
-      anspruch: 'Prestaziuns e quints — reducziun da las premias, agid social, stipendis.',
+      anspruch: 'Prestaziuns e calculaturs — reducziun da las premias, prestaziuns supplementaras, agid social, stipendis.',
     },
     capDokument: 'Document',
     capBeleg: 'Quittanza',

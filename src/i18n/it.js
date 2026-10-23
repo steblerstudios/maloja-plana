@@ -1405,9 +1405,9 @@ export default {
     // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
     ankerSatz: {
       dashboard: { sie: 'Dove si trova ora e che cosa viene dopo.', du: 'Dove ti trovi ora e che cosa viene dopo.' },
-      wasAnsteht: 'Scadenze, appuntamenti e la lista promemoria in un unico posto.',
-      rucksack: { sie: 'Ciò che porta con sé in un cambiamento: documenti, carte d’identità, contatti.', du: 'Ciò che porti con te in un cambiamento: documenti, carte d’identità, contatti.' },
-      anspruch: 'Prestazioni e calcolatori — riduzione dei premi, aiuto sociale, borse di studio.',
+      wasAnsteht: 'Scadenze, appuntamenti e il promemoria in un unico posto.',
+      rucksack: 'Percorsi per gli eventi della vita e tutti gli strumenti, ordinati come un’attrezzatura.',
+      anspruch: 'Prestazioni e calcolatori — riduzione dei premi, prestazioni complementari, aiuto sociale, borse di studio.',
     },
     capDokument: 'Documento',
     capBeleg: 'Ricevuta',

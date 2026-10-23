@@ -1405,9 +1405,9 @@ export default {
     // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
     ankerSatz: {
       dashboard: 'Where you stand right now and what comes next.',
-      wasAnsteht: 'Deadlines, appointments and your saved list in one place.',
-      rucksack: 'What you take with you when things change: documents, IDs, contacts.',
-      anspruch: 'Benefits and calculators — premium reduction, social assistance, grants.',
+      wasAnsteht: 'Deadlines, appointments and your checklist in one place.',
+      rucksack: 'Paths through life events and all your tools, organised like gear.',
+      anspruch: 'Benefits and calculators — premium reduction, supplementary benefits, social assistance, grants.',
     },
     capDokument: 'Document',
     capBeleg: 'Receipt',

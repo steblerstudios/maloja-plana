@@ -41,8 +41,8 @@ describe('Menü · Inhalt (Fassung 5)', () => {
   it('die vier Anker oben, mit ihren neuen Sätzen', () => {
     for (const s of ['Übersicht', 'Wo Sie gerade stehen und was als Nächstes dran ist.',
       'Was ansteht', 'Fristen, Termine und die Merkliste an einem Ort.',
-      'Rucksack', 'Was Sie bei einem Wechsel mitnehmen: Unterlagen, Ausweise, Kontakte.',
-      'Was steht mir zu?', 'Leistungen und Rechner — Prämienverbilligung, Sozialhilfe, Stipendien.']) {
+      'Rucksack', 'Wege durch Lebensereignisse und alle Werkzeuge, geordnet wie Ausrüstung.',
+      'Was steht mir zu?', 'Leistungen und Rechner — Prämienverbilligung, Ergänzungsleistungen, Sozialhilfe, Stipendien.']) {
       expect(txt, s).toContain(s);
     }
     // Reihenfolge: Anker vor den Bereichen

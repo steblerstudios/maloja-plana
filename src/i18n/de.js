@@ -1406,8 +1406,8 @@ export default {
     ankerSatz: {
       dashboard: { sie: 'Wo Sie gerade stehen und was als Nächstes dran ist.', du: 'Wo du gerade stehst und was als Nächstes dran ist.' },
       wasAnsteht: 'Fristen, Termine und die Merkliste an einem Ort.',
-      rucksack: { sie: 'Was Sie bei einem Wechsel mitnehmen: Unterlagen, Ausweise, Kontakte.', du: 'Was du bei einem Wechsel mitnimmst: Unterlagen, Ausweise, Kontakte.' },
-      anspruch: 'Leistungen und Rechner — Prämienverbilligung, Sozialhilfe, Stipendien.',
+      rucksack: 'Wege durch Lebensereignisse und alle Werkzeuge, geordnet wie Ausrüstung.',
+      anspruch: 'Leistungen und Rechner — Prämienverbilligung, Ergänzungsleistungen, Sozialhilfe, Stipendien.',
     },
     capDokument: 'Dokument',
     capBeleg: 'Beleg',
