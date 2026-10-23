@@ -43,3 +43,26 @@ Texte —, nicht nur den sichtbaren Anfang. Rohdaten: `vergleich-inventar.json`.
 
 **Nächster Schritt:** Fassung 5 holt die «fehlt noch»-Punkte in die Mockups, damit nichts
 verloren geht, was heute funktioniert — Seite für Seite, in der Reihenfolge oben.
+
+---
+
+## Nachtrag 23.10.2026 · Fassung 5 neben heute
+
+**Ansehen:** `vergleich-v5.html`. Gleiche Seite wie oben, rechts jetzt Fassung 5 (`seiten-v5.html`),
+in der Spalte «Stand» steht bei jeder geänderten Zeile auch der Stand von Fassung 4.
+`vergleich.html` (Fassung 4) bleibt unverändert als Beleg.
+
+Ergebnis der Einordnung (von Hand, Zeile für Zeile gegen die Liste oben):
+**0 fehlt noch · 10 anders · 59 drin · 7 neu.** Der Eingang steht weiter neben Fassung 4,
+weil Fassung 5 ihn nicht neu zeichnet (er ist seit #537 live).
+
+Die zehn «anders» sind bewusste Entscheide oder offene Fragen, kein Vergessen. Sie sind der Stoff
+fürs gemeinsame Durchgehen, Seite für Seite:
+- Übersicht: Ring «63 %» statt zwei Kreisen (welche Zahl gilt?), Karte «Ihr Lebensordner»,
+  Bereichszeilen ohne %, die Bereiche ein Mal statt zwei Mal
+- Kapitel: Kopf links statt zentriert
+- Rechner: «Anspruch» als Aufklapp-Zeile
+- Ablage: Reiter erst ab Inhalt (heute auch leer «0 Aktiv · 0 Archiv»), Suche erst ab Inhalt
+- Kalender: Titel «Was ansteht» statt «Kalender und Erinnerungen», Tagesleiste statt Monatsraster
+
+Die Mess-Skripte der alten Sitzung liegen jetzt unter `messung/`.
