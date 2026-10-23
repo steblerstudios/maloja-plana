@@ -11,6 +11,23 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert — Fassung 5 (Entscheide Sophie 23.10.2026, Mockups `docs/design/mockups-stardust-2026-10-23`)
+- **Dokumentenablage** (#539): Fächer «Aktiv · Bald fällig · Archiv», Suche und Sortierung erst mit Inhalt;
+  eine Zeile pro Dokument mit Ablaufdatum zum direkten Ändern; im leeren Ordner «Was oft zuerst hineingehört».
+- **Ablauf Umzug** (#540): ein Schritt nach dem anderen auf der Passstrasse; die Anmeldefrist als Karte mit
+  Datum und «In den Kalender»; Fortschritt bleibt gespeichert.
+- **Menü** (#541): ganzer Bildschirm mit Karten und Satz; oben Übersicht, Was ansteht, Rucksack, Was steht mir
+  zu?; unten Einstellungen, Einfache Ansicht, Rechtliches, Problem melden. Neue Zeichen: Ordner (Ablage),
+  Haken (Merkliste), Kalenderblatt mit dem heutigen Tag.
+- **Kapitel** (#542): Kopf links und ruhig in allen Kapiteln. Finanzen: «Jeden Monat bleiben CHF …»,
+  «Passend zu diesem Bereich», «Als Nächstes», «Dokument fotografieren»; Nebenerwerb hinter «falls vorhanden».
+- **Merkliste und «Was ansteht»** (#544): Merkpunkte können einen Tag bekommen und stehen dann als Aufgabe im
+  Kalender; Fach «Noch ohne Tag»; Erledigtes am Erledigt-Tag. Kalender heisst «Was ansteht», mit Tagesleiste
+  und «Ganzer Monat». Merkliste: neue Einträge oben, Bereichs-Zeichen, «Entfernt · Rückgängig».
+- **Prämienverbilligung** (#543): «Ihr IPV-Weg» mit «Jährlich erinnern» in jedem Schritt (jährliche Aufgabe auf
+  der Merkliste), Aufklapp-Zeilen, «Ihre Lage», Vorlesen; Regler mit «Ins Profil übernehmen». Rechnung unverändert.
+- Neue Texte in 5 Sprachen; rm als «ungeprüft F5» markiert bis zur Gegenlese.
+
 ### Behoben
 - **Charts zeigte rohe Schlüssel** in der Legende (`budgetSync.taxes` usw.); «NK»/«KK» ausgeschrieben, 5 Sprachen (#530).
 - **Charts rechnet wie das Kapitel Finanzen** (#530): kein BVG mehr als Ausgabe (steckt im Nettolohn, steht als
