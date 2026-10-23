@@ -17,6 +17,30 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🏷️ **Nachtrag 23.10.2026, 18:21 — Ein Name je Seite. Branch `fix/ein-name-pro-seite`, NICHT gepusht, kein PR.**
+>
+> **Anlass (Stebler Studios):** Dieselbe Seite hatte drei Namen — unten «Anspruch», im Rucksack «Was steht mir zu?», als
+> Titel «Lebenssituationen». **Regel ab jetzt: eine Seite, ein Name, ein i18n-Schlüssel** — Leiste, Menü, Seitentitel,
+> Suche, «Zurück zu …» und Panorama lesen denselben Schlüssel. Entscheid: auch in der schmalen Leiste der volle Name
+> (bricht zweizeilig um), keine Kurzform.
+>
+> **Commits:** `05721a4b` Namen · `d1503f21` Leiste (Zeichen bleiben auf einer Linie, wenn ein Name umbricht).
+> - `situationen` → `dashboard.anspruchTitle` («Was steht mir zu?»). Im Menü stand die Seite **doppelt** (Anker +
+>   Werkzeug «Lebenssituationen») — jetzt nur noch als Anker. Link in «Kind bekommen» umformuliert.
+> - `calendar` → `nav.wasAnsteht` («Was ansteht»; vorher in Suche/«Zurück zu …» «Kalender»). Suche findet weiter
+>   «Kalender» (Aliase in allen fünf Sprachen). Hebt die Fassung-5-Regel «nav.calendar bleibt Kalender» (heute Morgen) auf.
+> - `gepaeck` → `nav.rucksack` («Rucksack»; vorher Titel + Panorama «Wanderrucksack»). Menü: «Alle Werkzeuge im Rucksack».
+> - Gelöscht in allen fünf Sprachen: `nav.anspruch`, `nav.calendar`, `calendar.title`, `gepaeck.title`, `gepaeck.link`,
+>   `lebenszustaende.pageTitle`. Wächter: `src/__tests__/einNameJeSeite.test.js`.
+>
+> **Verifiziert:** vitest 362 Dateien / 6534 grün · eslint 0 · build ok. Leiste im Browser bei 375 px gemessen: alle Zeichen
+> auf derselben Höhe; bei 320 px in allen fünf Sprachen höchstens zwei Zeilen (Messtexte in der Leistenschrift, Sprache
+> nicht echt umgestellt). **Nicht** auf echtem iPhone, **nicht** live.
+>
+> **Offen:** (1) Branch steht auf `fix/suche-notfallkarte-mietzins` (`2fae91da`, andere Sitzung, nicht auf main) — erst
+> diesen PR, dann diesen. (2) rm: neuer Linktext «rm ungeprüft»; `nav.rucksack` ist in rm.js französisch («Sac à dos») —
+> Gegenlese. (3) Push + Entwurfs-PR nur auf Zuruf. (4) `ipv_rechner_28.html` im Stamm, ungetrackt, nicht aus dieser Sitzung.
+
 > 🚪 **Nachtrag 21.10.2026, 19:45 — Deploy-Tor 0.1.47-beta auf `069ee9f4`: 0 Blocker, Marke gesetzt. NICHT deployt.**
 >
 > **Gemessen:** main = `069ee9f4` (#528, 21.10. 19:26) · live = `650908a2` (0.1.46-beta) · 19 Commits dazwischen. Alle elf
