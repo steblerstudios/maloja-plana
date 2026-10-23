@@ -434,6 +434,21 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
   landen Beispieldaten nach «Beispiel verlassen» + «Speichern» im echten Profil.
 - Bedingte Teile (Wohnkanton-Frage, Elterntarif, Hinweise ohne Zahl, `tax.bandOutside` …) bleiben wie heute.
 
+### Finanz-Übersicht (K) · entschieden (Sophie, 24.10.2026)
+
+- **Entwurf K passt: Budget zuerst** — Monatsbudget, frei verfügbar, Notgroschen-Tank oben; Nettoeinkommen
+  und Kanton als zwei Marken darüber.
+- **Sechs ruhige Zeilen** statt sechs Kästen: Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten,
+  je mit Wert, je zum Werkzeug.
+- **Lebensbaum ganz erhalten, weiter unten** (Leitplanke 06.07.) statt den ganzen ersten Bildschirm.
+- Lohn als **Barometer mit vier Abschnitten** wie im Kapitel Finanzen (ersetzt die 10-px-Chips, «erreicht»
+  nicht mehr nur durch Tönung); Miete und KK-Last zugeklappt; Budget-Übersicht, Dossier, Drucken unten.
+  Alle 79 Bausteine bleiben; bedingte Teile wie heute.
+- Beim Bau mitnehmen (Gesamtbericht 24.10.): **eine** Monatsrechnung für Übersicht und Kapitel
+  (`utils/monatsrechnung.js` vs. `haushaltsEinnahmen`, 🔴 1); Kopf links statt Kopf in Karte
+  (`FinanzUebersicht.jsx:278`); Baum hört auch auf den In-App-Schalter «Bewegung reduzieren»
+  (`Baum3D.jsx:609`); Du-Form `finanzUebersicht.*` klein schreiben (Copy-Prüfer).
+
 ---
 
 ## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L, M und N entschieden 24.10.)
