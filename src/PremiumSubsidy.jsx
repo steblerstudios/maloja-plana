@@ -11,7 +11,7 @@ import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { getCantonalLinks } from './data/direktLinks.js';
 import { merkpunktSichern } from './utils/merkliste.js';
-import { erinnerungSichern } from './utils/reminders.js';
+import { ipvErinnerung, erinnerungLiegtSchon } from './data/ipvErinnerung.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
 import { verfuegungZuordnung, VERFUEGUNG_ZUORDNUNG } from './data/ipvAbzug.js';
@@ -31,19 +31,27 @@ const fmtCHF = (n) => betrag(n || 0);
 export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateData, schnellcheckZahlen }) => {
   const vorlesen = useVorlesenContext();
   const [uebernommen, setUebernommen] = useState(false);
-  const offeneZahlen = abweichungen(profil, schnellcheckZahlen);
+  // Regler (Fassung 5): ein Einkommen zum Ausprobieren. Gilt wie die Schnellcheck-Zahlen nur
+  // hier — ins Profil geht es erst mit «Ins Profil übernehmen». null = nicht bewegt.
+  const [regler, setRegler] = useState(null);
+  const profilEinkommen = Number(profil && profil.finanzen && profil.finanzen.monthlyIncome) || 0;
+  const schnellcheckOffen = abweichungen(profil, schnellcheckZahlen);
+  // Ist der Regler bewegt, gilt sein Wert fürs Einkommen — auch wenn er wieder auf dem
+  // Profilwert steht (dann ist das Einkommen nicht mehr «offen»).
+  const schnellcheckListe = regler != null ? schnellcheckOffen.filter(([, feld]) => feld !== 'monthlyIncome') : schnellcheckOffen;
+  const reglerOffen = regler != null && regler !== profilEinkommen ? [['finanzen', 'monthlyIncome', regler]] : [];
+  const offeneZahlen = [...schnellcheckListe, ...reglerOffen];
   const data = mitUebergabe(profil, offeneZahlen);
   const [showCalculation, setShowCalculation] = useState(true);
   // IPV-Lebenslinie (Phase 2): der Beleg als Gesicht seines Ablaufs. Verfügungs-
-  // Betrag lokal gepuffert (Init aus dem persistierten Status), Erinnerungs-Flag
-  // fürs idempotente Kalender-Angebot. Siehe docs/design/ipv-lebenslinie.md.
+  // Betrag lokal gepuffert (Init aus dem persistierten Status). Siehe docs/design/ipv-lebenslinie.md.
   const [verfBetrag, setVerfBetrag] = useState(() => {
     const s = readIpvStatus(data);
     return s.betrag ? String(s.betrag) : '';
   });
-  // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts im echten Kalender).
+  // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts in der echten Merkliste).
   const vorlaeufig = useVorlaeufig();
-  const [renewAdded, setRenewAdded] = useState(false);
+  const [renewAdded, setRenewAdded] = useState(() => (erinnerungLiegtSchon(t('ipvStatus.reminderTitle'), vorlaeufig) ? 'gespeichert' : false));
   // Für welches Jahr die Verfügung gilt (Deploy-Gate Runde 4): wählbar beim Eintragen, laufendes
   // oder folgendes Jahr — eine Verfügung fürs nächste Jahr kommt oft schon im Herbst.
   const laufendesJahr = new Date().getFullYear();
@@ -54,15 +62,24 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // nimmt der „Welche Papiere brauche ich?"-Unsicherheit die Spitze. Idempotent, Link → Lebensordner.
   // false | 'gespeichert' | 'vorlaeufig' (Beispiel/Ausprobieren: nichts in der echten Merkliste).
   const [permitAdded, setPermitAdded] = useState(false);
+
+  // Zweitknopf: Umriss, kein Primär-Gewicht (neben dem einen lauten Knopf).
+  const ruhigerKnopf = {
+    display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
+    padding: '10px 16px', background: 'none', color: palette.text, border: '1px solid ' + palette.border,
+    borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm,
+  };
+
   const permitTodoButton = () => React.createElement('button', {
+    type: 'button',
     onClick: () => { const ergebnis = merkpunktSichern({ text: t('premium.permitTodoText'), link: 'tresor' }, vorlaeufig); if (ergebnis) setPermitAdded(ergebnis); },
     disabled: !!permitAdded,
     'aria-pressed': !!permitAdded,
     style: {
-      marginTop: '8px', cursor: permitAdded ? 'default' : 'pointer', fontFamily: 'inherit',
-      background: 'none', border: '1px solid ' + (permitAdded ? palette.sage : palette.border),
-      borderRadius: radius.sm, padding: '3px 10px', fontSize: text.xs,
-      color: permitAdded ? (palette.sageDeep || palette.sage) : palette.mid,
+      ...ruhigerKnopf,
+      cursor: permitAdded ? 'default' : 'pointer',
+      border: '1px solid ' + (permitAdded ? palette.sage : palette.border),
+      color: permitAdded ? (palette.sageDeep || palette.sage) : palette.text,
     },
   }, erledigtZeichen(!!permitAdded, permitAdded ? t(permitAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'premium.permitTodoAdded') : t('premium.permitTodoAdd')));
 
@@ -76,6 +93,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const ohneBetrag = ipvResult.belegt === false;
   const anspruchMoeglich = !!ipvResult.anspruchMoeglich;
   const stelleUrl = (getCantonalLinks(canton) || {}).ipv || null;
+  // Fassung 5: rechnet die App einen Betrag (kantonales Modell geladen), steht er wie bisher da.
+  // Kann sie keinen rechnen, steht unter «Berechtigt» «Möglicher Betrag — nur auf Antrag».
+  const betragGerechnet = typeof ipvResult.amount === 'number' && Number.isFinite(ipvResult.amount);
 
   // K64: gesperrte Knöpfe wie in ZipExport (K53) — Text mid auf der ruhigen Fläche up
   // (hell 5.25:1, dunkel 4.81:1, auch farbenblind ≥ 4.5:1), gestrichelter Rand und
@@ -108,6 +128,37 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   // und haben keinen einzelnen Vergleichswert (AG publiziert nicht einmal eine Einkommensgrenze).
   const belegteKantone = Object.entries(CANTONAL_IPV).filter(([, v]) => !!(v.beleg && v.beleg.quelle) && v.subsidySingle != null);
 
+  // --- Bausteine des ruhigen Layouts (Fassung 5) ----------------------------
+  // Abschnitts-Titel: echte Überschrift (h3) im ruhigen Kleinformat, keine Versalien.
+  const abschnittTitel = (label, id) => React.createElement('h3', {
+    id,
+    style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.sm + 'px' },
+  }, label);
+  // Aufklapp-Zeile wie im Mockup: Linie unten, Titel als <summary> mit 44 px Tippfläche.
+  const aufklappZeile = (titel, inhalt, opts = {}) => React.createElement('details', {
+    open: opts.open || undefined,
+    style: { borderBottom: '1px solid ' + palette.border, padding: space.xs + 'px 0 ' + space.sm + 'px' },
+  },
+    React.createElement('summary', {
+      style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+    }, titel),
+    inhalt
+  );
+  const fliesstext = { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', margin: space.xs + 'px 0 0' };
+
+  // Kopf links: Icon, Titel mit Glossar «IPV ⓘ», Untertitel mit Vorlesen daneben.
+  const kopf = () => React.createElement(React.Fragment, null,
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } },
+      React.createElement(GlossarText, { palette, t }, t('premium.title'))),
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px', lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') }))
+  );
+
+  // «Anspruch & Aufenthaltsbewilligung» als Aufklapp-Zeile (offen) — ruhige Orientierung für
+  // Neuzuzüger:innen, kein Verdikt (Quellen: SVA Zürich „Wer hat Anspruch", Kanton Basel-Stadt).
+  const anspruchZeile = () => aufklappZeile(t('premium.permitTitle'),
+    React.createElement('p', { style: fliesstext }, t('premium.permitText')),
+    { open: true });
+
   // --- IPV-Lebenslinie (Phase 2) -------------------------------------------
   // Statefull Beleg — Übergänge schreiben additiv nach data.anspruch.ipv
   // (fehlt ⇒ 'geschaetzt'). Ehrliche Verzweigung: Automatik-Kantone haben KEINEN
@@ -120,6 +171,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const kantonName = (code) => (code ? getCantonName(code, t) : '');
   const setIpvStatus = (status, extra) => onUpdateData && onUpdateData('anspruch', 'ipv', nextIpvStatus(status, extra));
   const lineBtn = (label, onClick, opts = {}) => React.createElement('button', {
+    type: 'button',
     onClick,
     'aria-pressed': opts.pressed || undefined,
     style: {
@@ -130,13 +182,6 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       border: opts.primary ? 'none' : '1px solid ' + palette.border,
     },
   }, label);
-
-  // Zweitknopf: Umriss, kein Primär-Gewicht (neben dem einen PrimaryButton).
-  const ruhigerKnopf = {
-    display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
-    padding: '10px 16px', background: 'none', color: palette.text, border: '1px solid ' + palette.border,
-    borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.medium, fontSize: text.sm,
-  };
 
   // Jahr wählen beim Eintragen der Verfügung — klein, zwei Möglichkeiten.
   const jahrWahl = () => React.createElement('label', {
@@ -154,6 +199,24 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   );
   const verfuegungEintragen = () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton, jahr: Number(verfJahr) });
 
+  // «Jährlich erinnern» in JEDEM Schritt (Fassung 5, Wunsch Sophie 23.10.2026; vorher nur nach
+  // der Verfügung): legt «Prämienverbilligung fürs nächste Jahr prüfen» als jährliche Aufgabe auf
+  // die Merkliste. Im Beispiel und beim Ausprobieren bleibt nichts (merkpunktSichern).
+  const erinnern = () => {
+    if (renewAdded) return;
+    const datum = ipvStatus.status === IPV_STATUS.BESTAETIGT ? ipvStatus.datum : null;
+    const ergebnis = merkpunktSichern(ipvErinnerung(t, datum), vorlaeufig);
+    if (ergebnis) setRenewAdded(ergebnis);
+  };
+  const erinnernZeile = (weitere = []) => React.createElement(React.Fragment, null,
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', margin: space.md + 'px 0 ' + space.sm + 'px' } }, t('ipvStatus.renewLead')),
+    React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', alignItems: 'center' } },
+      lineBtn(erledigtZeichen(!!renewAdded, renewAdded ? t(renewAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'ipvStatus.renewAdded') : t('ipvStatus.renewAdd')),
+        erinnern, { pressed: !!renewAdded }),
+      ...weitere
+    )
+  );
+
   const renderLebenslinie = () => {
     if (!onUpdateData || !hasIncome) return null;
     // Ein bereits beantragter/bestätigter Status bleibt sichtbar, auch wenn die
@@ -162,25 +225,18 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     // die Lebenslinie aus, wenn (noch) kein Anspruch geschätzt wird.
     if (!anspruchMoeglich && ipvStatus.status === IPV_STATUS.GESCHAETZT) return null;
     const h = React.createElement;
-    const card = (children, opts = {}) => h('div', {
-      style: {
-        padding: '14px', borderRadius: radius.sm, marginBottom: space.md,
-        background: palette.surface, border: '1px solid ' + palette.border,
-        borderLeft: '3px solid ' + (opts.accent || palette.sand),
-      },
-    }, ...(Array.isArray(children) ? children : [children]));
-    const head = (label, badge) => h('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: space.xs } },
-      h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('ipvStatus.title')),
-      badge
+    const weg = (children) => h('section', {
+      'aria-labelledby': 'ipv-weg-titel',
+      style: { padding: space.md + 'px 0', borderBottom: '1px solid ' + palette.border },
+    }, ...children);
+    const head = (badge) => h('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: space.xs } },
+      h('h3', { id: 'ipv-weg-titel', style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: 0 } }, t('ipvStatus.title')),
+      badge || null
     );
     const lead = (s) => h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', marginBottom: space.sm } }, s);
 
     if (ipvStatus.status === IPV_STATUS.BESTAETIGT) {
       const stamp = h('span', { style: { border: '2px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.5px', padding: '2px 8px', borderRadius: radius.xs, transform: 'rotate(-6deg)', display: 'inline-block' } }, t('ipvStatus.stamp'));
-      // Frist an das Verfügungs-Datum koppeln (nicht an „heute"): so bleibt die
-      // dueDate über Tage stabil und die addReminder-Dedup (Titel + Datum) greift —
-      // sonst entstünde bei jedem erneuten Antippen an einem anderen Tag ein Duplikat.
-      const dueNext = (() => { const base = ipvStatus.datum ? new Date(ipvStatus.datum) : new Date(); base.setFullYear(base.getFullYear() + 1); return base.toISOString().split('T')[0]; })();
       // Gilt die Verfügung nicht (anderes Jahr/anderer Kanton) oder fehlt ihr die Zuordnung
       // (Altbestand vor 0.1.40-beta), sagt die Seite das — Kanton und Jahr ergänzt erst ein
       // sichtbares «Ja», nie automatisch.
@@ -199,50 +255,43 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
             aktKanton: kantonName(canton), aktJahr: laufendesJahr,
           }).replace(/\s{2,}/g, ' '))
         : lead(t('ipvStatus.confirmedLead'));
-      return card([
-        head(null, stamp),
+      return weg([
+        head(stamp),
         hinweis,
         zuordnen,
         ipvStatus.betrag > 0
           ? h('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sageDeep, marginBottom: space.sm } }, fmtCHF(ipvStatus.betrag) + ' / ' + t('schnellcheck.monat'))
           : h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm } }, t('ipvStatus.betragPrompt')),
-        h('label', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('ipvStatus.betragLabel')),
-        h('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', marginBottom: space.md, flexWrap: 'wrap' } },
+        h('label', { htmlFor: 'ipv-verf-betrag', style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('ipvStatus.betragLabel')),
+        h('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap' } },
           h('input', {
+            id: 'ipv-verf-betrag',
             type: 'number', inputMode: 'numeric', min: '0', value: verfBetrag,
             onChange: (e) => setVerfBetrag(e.target.value),
             onBlur: () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, datum: ipvStatus.datum, kanton: ipvStatus.kanton, jahr: ipvStatus.jahr }),
-            'aria-label': t('ipvStatus.betragLabel'),
             style: { width: '120px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
           })
         ),
-        lead(t('ipvStatus.renewLead')),
-        h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
-          lineBtn(erledigtZeichen(!!renewAdded, renewAdded ? t(renewAdded === 'vorlaeufig' ? 'common.savedTemporary' : 'ipvStatus.renewAdded') : t('ipvStatus.renewAdd')), () => {
-            if (renewAdded) return;
-            const ergebnis = erinnerungSichern({ title: t('ipvStatus.reminderTitle'), dueDate: dueNext, category: 'insurance', recurrence: 'yearly' }, vorlaeufig);
-            if (ergebnis) setRenewAdded(ergebnis);
-          }, { primary: !renewAdded, pressed: !!renewAdded }),
-          lineBtn(t('ipvStatus.reset'), () => { setVerfBetrag(''); setRenewAdded(false); setIpvStatus(IPV_STATUS.GESCHAETZT); })
-        ),
-      ], { accent: palette.sage });
+        erinnernZeile([lineBtn(t('ipvStatus.reset'), () => { setVerfBetrag(''); setIpvStatus(IPV_STATUS.GESCHAETZT); })]),
+      ]);
     }
 
     if (ipvStatus.status === IPV_STATUS.BEANTRAGT) {
       const badge = h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep } }, t('ipvStatus.appliedLabel'));
-      return card([
-        head(null, badge),
+      return weg([
+        head(badge),
         lead(t('ipvStatus.appliedLead')),
         jahrWahl(),
         h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
           lineBtn(t('ipvStatus.markConfirmed'), verfuegungEintragen, { primary: true }),
           lineBtn(t('ipvStatus.reset'), () => setIpvStatus(IPV_STATUS.GESCHAETZT))
         ),
+        erinnernZeile(),
       ]);
     }
 
     // geschaetzt — ehrliche Verzweigung: zwei Wege neutral, beide Übergänge offen.
-    return card([
+    return weg([
       head(),
       lead(t(ohneBetrag ? 'ipvStatus.orientierungLead' : 'ipvStatus.geschaetztLead')),
       h('ul', { style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '18px', fontSize: text.sm, color: palette.mid, lineHeight: '1.55' } },
@@ -254,6 +303,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         lineBtn(t('ipvStatus.markApplied'), () => setIpvStatus(IPV_STATUS.BEANTRAGT)),
         lineBtn(t('ipvStatus.markConfirmed'), verfuegungEintragen, { primary: true })
       ),
+      erinnernZeile(),
     ]);
   };
 
@@ -306,95 +356,84 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     );
   };
 
+  // Hinweise je nach Lage (Fassung 5: im ruhigen Gold-Kasten wie im Mockup, Texte wie bisher).
+  const lageHinweisStil = { padding: '10px 12px', borderRadius: radius.md, background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: space.md };
+
   // Only block when the canton is genuinely missing. If the canton is set but the
   // income isn't yet, we still show the canton-specific info and prompt for income.
   if (!canton) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
-      // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, hinweisZeichen(), t('premium.permitTitle')),
-        React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
-        permitTodoButton()
+      kopf(),
+      // «Ihre Lage» mit dem Hinweis «Kanton fehlt»: Codex-Audit 24.09. — die Kachel verspricht
+      // «Kanton und Einkommen hier eingeben», die Wahl steht deshalb direkt hier. Sie schreibt
+      // basis.canton, dasselbe Feld wie Einführung und «Persönliche Basis».
+      React.createElement('section', { 'aria-labelledby': 'ipv-lage-titel', style: { paddingBottom: space.md, borderBottom: '1px solid ' + palette.border } },
+        abschnittTitel(t('premium.lageTitle'), 'ipv-lage-titel'),
+        React.createElement('div', { style: { ...lageHinweisStil, marginBottom: 0 } },
+          onUpdateData
+            ? React.createElement(React.Fragment, null,
+                React.createElement('label', { htmlFor: 'ipv-kanton', style: { display: 'block', color: palette.text, fontWeight: weight.semi, marginBottom: '6px' } }, t('premium.cantonChoose')),
+                React.createElement('select', {
+                  id: 'ipv-kanton',
+                  value: '',
+                  onChange: (e) => { if (e.target.value) onUpdateData('basis', 'canton', e.target.value); },
+                  'aria-describedby': 'ipv-kanton-hinweis',
+                  style: { padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px', maxWidth: '100%' },
+                },
+                  React.createElement('option', { value: '' }, t('common.select')),
+                  CANTON_CODES.map((c) => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
+                ),
+                React.createElement('p', { id: 'ipv-kanton-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } }, t('premium.cantonSavedHint'))
+              )
+            : React.createElement('span', { style: { color: palette.text } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterCanton')))
+        )
       ),
-      // Codex-Audit 24.09.: die Kachel verspricht «Kanton und Einkommen hier eingeben»,
-      // die Seite schickte vorher in zwei andere Kapitel. Jetzt die Wahl direkt hier — sie
-      // schreibt basis.canton, dasselbe Feld wie Einführung und «Persönliche Basis».
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-        onUpdateData
-          ? React.createElement(React.Fragment, null,
-              React.createElement('label', { htmlFor: 'ipv-kanton', style: { display: 'block', color: palette.text, fontWeight: weight.semi, marginBottom: '6px' } }, t('premium.cantonChoose')),
-              React.createElement('select', {
-                id: 'ipv-kanton',
-                value: '',
-                onChange: (e) => { if (e.target.value) onUpdateData('basis', 'canton', e.target.value); },
-                'aria-describedby': 'ipv-kanton-hinweis',
-                style: { padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', appearance: 'auto', minWidth: '220px' },
-              },
-                React.createElement('option', { value: '' }, t('common.select')),
-                CANTON_CODES.map((c) => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
-              ),
-              React.createElement('p', { id: 'ipv-kanton-hinweis', style: { margin: space.xs + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } }, t('premium.cantonSavedHint'))
-            )
-          : React.createElement(React.Fragment, null, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterCanton')))
-      )
+      // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
+      anspruchZeile(),
+      React.createElement('div', { style: { marginTop: space.md } }, permitTodoButton())
     );
   }
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('premium'), size: 22 }), style: { marginBottom: space.sm } }, t('premium.title')),
-    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
-
-    // Anspruch & Aufenthaltsbewilligung — ruhige Orientierung für Neuzuzüger:innen, kein Verdikt
-    // (Quellen: SVA Zürich „Wer hat Anspruch", Kanton Basel-Stadt Prämienverbilligung).
-    React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
-      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, hinweisZeichen(), t('premium.permitTitle')),
-      React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
-      permitTodoButton()
+  // --- Regler «Einkommen pro Monat» -----------------------------------------
+  // Der Wert steht im Regler, gerechnet wird mit ihm (data.finanzen.monthlyIncome). Die Spanne
+  // ist eine Bedien-Spanne, keine Grenze: bis mindestens CHF 12'000, sonst bis zum Doppelten des
+  // Ausgangswerts — an keiner Stelle eine Aussage über den Anspruch.
+  const einkommenJetzt = Number(data.finanzen?.monthlyIncome) || 0;
+  const reglerMax = Math.max(12000, Math.ceil((Math.max(profilEinkommen, Number(schnellcheckZahlen?.monthlyIncome) || 0) * 2) / 1000) * 1000);
+  const reglerBlock = () => React.createElement('div', { style: { margin: space.md + 'px 0' } },
+    React.createElement('label', { htmlFor: 'ipv-regler', style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, flexWrap: 'wrap', fontSize: text.sm, color: palette.text, marginBottom: space.xs } },
+      React.createElement('span', null, t('finanzUebersicht.monthlyIncome')),
+      React.createElement('b', { style: { fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, fmtCHF(einkommenJetzt) + ' ' + t('common.perMonth'))
     ),
+    React.createElement('input', {
+      id: 'ipv-regler', type: 'range', min: 0, max: reglerMax, step: 100,
+      value: Math.min(reglerMax, einkommenJetzt),
+      'aria-valuetext': fmtCHF(einkommenJetzt) + ' ' + t('common.perMonth'),
+      onChange: (e) => { setRegler(Number(e.target.value) || 0); setUebernommen(false); },
+      style: { width: '100%', minHeight: '44px', accentColor: palette.sand, cursor: 'pointer' },
+    })
+  );
 
-    // Canton info
-    React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, hinweisZeichen(), t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
-      ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
-        React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
-        // Nicht jeder Kanton publiziert eine Einkommensgrenze als Zahl: der Aargau definiert
-        // sie in § 5 Abs. 5 KVGG, veröffentlicht sie aber nicht. Eine abgeleitete Zahl wäre
-        // unsere eigene Rechnung — dann lieber keine Zeile (K31, 20.09.2026).
-        ipvResult.cantonData.maxIncome != null && React.createElement('div', null, t('premium.maxIncome', { value: zahl(ipvResult.cantonData.maxIncome, { hoechstens: 2 }) })),
-        React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
-      ),
-      // E9: unbelegt weder Modell noch Grenze noch Verfahrens-Hinweis (für GL nachweislich
-      // falsch) — der Weg zum Kanton steht als Link im Orientierungs-Kasten darunter.
-      // (Ohne Kanton kommt die Ansicht nicht bis hier: sie endet oben mit premium.enterCanton.)
+  // B-1/E22 + Regler: sichtbar sagen, womit gerechnet wird. Ins Profil geht nichts ohne den Klick.
+  const uebernahmeBlock = () => offeneZahlen.length > 0 ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
+    schnellcheckListe.length > 0 && React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('premium.schnellcheckGerechnet')),
+    schnellcheckListe.length > 0 && React.createElement('ul', { style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '18px', color: palette.text } },
+      schnellcheckListe.map(([, feld, wert]) => React.createElement('li', { key: feld },
+        t(feld === 'monthlyIncome' ? 'schnellcheck.income' : feld === 'rentAmount' ? 'schnellcheck.rent' : 'schnellcheck.kk') + ': ' + fmtCHF(wert)))
     ),
+    React.createElement('div', { style: { color: palette.mid, marginBottom: onUpdateData ? space.sm : 0 } }, t('premium.schnellcheckProfilBleibt')),
+    onUpdateData && React.createElement('button', {
+      type: 'button',
+      onClick: () => { offeneZahlen.forEach(([kapitel, feld, wert]) => onUpdateData(kapitel, feld, wert)); setUebernommen(true); },
+      style: { cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi, padding: '8px 14px', minHeight: '44px', borderRadius: radius.sm, background: 'none', color: palette.sandDeep, border: '1px solid ' + palette.border },
+    }, t('premium.schnellcheckUebernehmen'))
+  ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, hinweisZeichen('check'), t('premium.schnellcheckUebernommen'));
 
-    // B-1/E22: sichtbar sagen, dass mit den Schnellcheck-Zahlen gerechnet wird.
-    // Ins Profil geht nichts ohne den Klick auf den Knopf.
-    offeneZahlen.length > 0 ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('premium.schnellcheckGerechnet')),
-      React.createElement('ul', { style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '18px', color: palette.text } },
-        offeneZahlen.map(([, feld, wert]) => React.createElement('li', { key: feld },
-          t(feld === 'monthlyIncome' ? 'schnellcheck.income' : feld === 'rentAmount' ? 'schnellcheck.rent' : 'schnellcheck.kk') + ': ' + fmtCHF(wert)))
-      ),
-      React.createElement('div', { style: { color: palette.mid, marginBottom: onUpdateData ? space.sm : 0 } }, t('premium.schnellcheckProfilBleibt')),
-      onUpdateData && React.createElement('button', {
-        type: 'button',
-        onClick: () => { offeneZahlen.forEach(([kapitel, feld, wert]) => onUpdateData(kapitel, feld, wert)); setUebernommen(true); },
-        style: { cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi, padding: '8px 14px', minHeight: '44px', borderRadius: radius.sm, background: 'none', color: palette.sandDeep, border: '1px solid ' + palette.border },
-      }, t('premium.schnellcheckUebernehmen'))
-    ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, hinweisZeichen('check'), t('premium.schnellcheckUebernommen')),
-
-    // Residence type warning
-    residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('premium.weeklyResidence')),
-      React.createElement('div', null, t('premium.weeklyIpvNote')),
-      React.createElement('div', null, t('premium.weeklyKkNote'))
-    ),
-
+  // Ergebnis — Urteil gross, darunter der Satz; die Beträge, wo die App sie rechnet.
+  const urteil = (label, farbe, zeichen) => React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: farbe, lineHeight: '1.2', margin: space.sm + 'px 0 ' + space.xs + 'px' } }, hinweisZeichen(zeichen), label);
+  const ergebnis = () => {
     // Eligibility Status — only once income is present; otherwise prompt for income
-    !hasIncome ? React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.sm, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
+    if (!hasIncome) return React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.sm, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: onUpdateData ? space.sm : 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterIncome'))),
       // Inline income field — entering it here triggers the calculation immediately
       // (writes to data.finanzen.monthlyIncome, the same field used everywhere else).
@@ -407,183 +446,227 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           onChange: (e) => onUpdateData('finanzen', 'monthlyIncome', e.target.value),
           'aria-label': t('premium.enterIncome'),
           placeholder: '0',
-          style: { width: '140px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
+          style: { width: '140px', padding: '8px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
         }),
         React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + t('common.perMonth'))
       )
-    ) : ohneBetrag ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-      // Orientierung ohne Betrag (E9): ruhig, kein Verdikt in beide Richtungen.
+    );
+    // Orientierung ohne Betrag (E9): ruhig, kein Verdikt in beide Richtungen.
+    if (ohneBetrag) return React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, hinweisZeichen(), t(ipvResult.noteKey, ipvResult.noteParams)),
       // Warum hier keine Zahl steht (K31, Fachprüfung 20.09.2026). Ohne diesen Satz liest sich
       // «kein Betrag» wie «der Kanton ist ungeprüft» — es heisst aber oft nur, dass eine Angabe fehlt.
       ipvResult.offen && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, t('ipv.offenGrund.' + ipvResult.offen)),
       offenFeld(ipvResult.offen),
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle')),
-      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
-    ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
+    );
+    if (ipvResult.eligible) return React.createElement('div', { style: { marginBottom: space.md } },
       // «Berechtigt» stimmt nicht, wo der Kanton den Anspruch nur auf Antrag prüft (GE unter der
       // RDU-Untergrenze): dann eine Überschrift, die den Antrag nennt, ohne Häkchen — sonst stünde
       // «Berechtigt» neben «prüft nicht automatisch» (Rechtsprüfung 28.09.2026).
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } },
-        hinweisZeichen(ipvResult.antragNoetig ? undefined : 'check'), t(ipvResult.antragNoetig ? 'premium.eligibleAntrag' : 'premium.eligible')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams)),
-      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
-    ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), t('premium.notEligible')),
+      urteil(t(ipvResult.antragNoetig ? 'premium.eligibleAntrag' : 'premium.eligible'), palette.sageDeep, ipvResult.antragNoetig ? undefined : 'check'),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, t(ipvResult.noteKey, ipvResult.noteParams)),
+      // Fassung 5: ohne gerechneten Betrag steht unter «Berechtigt» der Antrags-Satz statt einer Zahl.
+      !betragGerechnet && !ipvResult.antragNoetig && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('premium.eligibleAntrag')),
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { ...lageHinweisStil, marginTop: space.sm, marginBottom: 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
+    );
+    return React.createElement('div', { style: { marginBottom: space.md } },
+      urteil(t('premium.notEligible'), palette.text),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
+    );
+  };
+
+  // Beträge — nur mit amtlich belegtem Kanton (E9) und nur, wo die App einen rechnet.
+  const betraege = () => (hasIncome && showCalculation && !ohneBetrag && betragGerechnet) && React.createElement('div', { style: { border: '1px solid ' + palette.border + '66', borderRadius: radius.sm, background: palette.up, marginBottom: space.md } },
+    React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px', borderBottom: '1px solid ' + palette.border + '33' } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
+        React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.monthlySubsidy')),
+        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(ipvResult.amount, { hoechstens: 2 }))
+      ),
+      ipvResult.reductionPercent != null && ipvResult.reductionPercent < 100 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+        t('premium.reductionNote', { percent: ipvResult.reductionPercent })
+      )
+    ),
+    React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px' } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
+        React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.annualSubsidy')),
+        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(ipvResult.annual || 0, { hoechstens: 2 }))
+      ),
+      ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+        t('premium.maxPossible', { value: ipvResult.maxAnnual })
+      )
+    ),
+    // Wie im Steuerrechner (annahmen.ohneDreizehnten): die Frage nach dem 13. Monatslohn ist offen,
+    // gerechnet ×12 — mit 13. läge die Verbilligung tiefer. Sichtbar, nicht still angenommen.
+    ipvResult.annahmen?.ohneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      hinweisZeichen(), t('ipv.annahmeOhneDreizehnten')),
+    ipvResult.annahmen?.partnerOhneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
+      hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten'))
+  );
+
+  // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton
+  // nach seinem eigenen Modell gerechnet wurde (alle Kantone in IPV_MODULE). Eine konkrete Zahl ohne ihr Jahr
+  // und ohne den Rückzahlungs-Vorbehalt wäre zu selbstsicher (Fachprüfung 20.09.2026).
+  const grundlage = () => ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
+    // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der
+    // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
+    // `jahrKey`: ein Kanton ohne Prämienregionen, der nicht der Aargau ist, bringt seinen eigenen
+    // Satz mit (UR, NE, OW, NW, 28.09.2026) — `ipv.jahrOhneRegion` nennt den Aargau beim Namen.
+    React.createElement('div', null, ipvResult.jahrKey
+      ? t(ipvResult.jahrKey, { jahr: ipvResult.jahr })
+      : ipvResult.region
+        ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
+        : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
+    React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
+    // Der Vorbehalt ist kantonsspezifisch: BE rechnet mit den Steuerdaten des Vorvorjahres
+    // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres, AG mit denen von vor DREI
+    // Jahren (§ 7 Abs. 1 KVGG). Ein Satz für alle wäre für zwei der drei Kantone falsch.
+    React.createElement('div', { style: { marginTop: space.xs } },
+      t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.basisjahr ?? ipvResult.jahr - 2 })),
+    // 🛑 Ein ZWEITER Vorbehalt, und nur für die, die er betrifft: Wo der 3a-Deckel wirkt,
+    // hängt der ganze Betrag an einer Lesart von KKVV Art. 6 Abs. 4 lit. i, die beim ASV
+    // Bern angefragt und nicht bestätigt ist (SAEULE_3A.bisBundesMaximum.vorbehalt). Ohne
+    // diesen Satz stünde eine Zahl im Brief, deren Grundlage strittig ist, und niemand
+    // wüsste es. Steht nur bei `zusatzVorbehaltKey` — sonst wäre es Lärm für alle anderen.
+    // (Befund Fachprüfung 23.09.2026: der Vorbehalt lag im Code und kam nie bei der Person an.)
+    // Ein Schlüssel oder eine Liste (VD: spezifischer Subside und Vermögensgrenze 2027 zugleich).
+    ...[].concat(ipvResult.zusatzVorbehaltKey || []).map((k) => React.createElement('div', { key: k, style: { marginTop: space.xs } },
+      t(k))),
+    // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
+    // der Anspruch beantragt werden muss.
+    stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle'))
+  );
+
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    kopf(),
+
+    // ── Ihre Lage ─────────────────────────────────────────────────────────
+    React.createElement('section', { 'aria-labelledby': 'ipv-lage-titel', style: { padding: space.md + 'px 0', borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border } },
+      abschnittTitel(t('premium.lageTitle'), 'ipv-lage-titel'),
+
+      // Kanton, Modell, Grenze — die Lage, in der gerechnet wird.
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.55', marginBottom: space.sm } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text } }, t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
+        ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
+          React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
+          // Nicht jeder Kanton publiziert eine Einkommensgrenze als Zahl: der Aargau definiert
+          // sie in § 5 Abs. 5 KVGG, veröffentlicht sie aber nicht. Eine abgeleitete Zahl wäre
+          // unsere eigene Rechnung — dann lieber keine Zeile (K31, 20.09.2026).
+          ipvResult.cantonData.maxIncome != null && React.createElement('div', null, t('premium.maxIncome', { value: zahl(ipvResult.cantonData.maxIncome, { hoechstens: 2 }) })),
+          React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
+        )
+        // E9: unbelegt weder Modell noch Grenze noch Verfahrens-Hinweis (für GL nachweislich
+        // falsch) — der Weg zum Kanton steht als Link in der Orientierung darunter.
+      ),
+
+      // Residence type warning
+      residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: lageHinweisStil },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('premium.weeklyResidence')),
+        React.createElement('div', null, t('premium.weeklyIpvNote')),
+        React.createElement('div', null, t('premium.weeklyKkNote'))
+      ),
+
+      // Nur wo die App rechnet: ohne amtlich belegten Kanton (E9) änderte der Regler nichts —
+      // die Seite bleibt dort für jedes Einkommen gleich (ipvOhneBeleg.test.js).
+      hasIncome && !ohneBetrag && reglerBlock(),
+      uebernahmeBlock(),
+      ergebnis(),
+      betraege(),
+      grundlage()
     ),
 
-    // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton
-    // nach seinem eigenen Modell gerechnet wurde (alle Kantone in IPV_MODULE). Eine konkrete Zahl ohne ihr Jahr
-    // und ohne den Rückzahlungs-Vorbehalt wäre zu selbstsicher (Fachprüfung 20.09.2026).
-    ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
-      // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der
-      // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
-      // `jahrKey`: ein Kanton ohne Prämienregionen, der nicht der Aargau ist, bringt seinen eigenen
-      // Satz mit (UR, NE, OW, NW, 28.09.2026) — `ipv.jahrOhneRegion` nennt den Aargau beim Namen.
-      React.createElement('div', null, ipvResult.jahrKey
-        ? t(ipvResult.jahrKey, { jahr: ipvResult.jahr })
-        : ipvResult.region
-          ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
-          : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
-      React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
-      // Der Vorbehalt ist kantonsspezifisch: BE rechnet mit den Steuerdaten des Vorvorjahres
-      // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres, AG mit denen von vor DREI
-      // Jahren (§ 7 Abs. 1 KVGG). Ein Satz für alle wäre für zwei der drei Kantone falsch.
-      React.createElement('div', { style: { marginTop: space.xs } },
-        t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.basisjahr ?? ipvResult.jahr - 2 })),
-      // 🛑 Ein ZWEITER Vorbehalt, und nur für die, die er betrifft: Wo der 3a-Deckel wirkt,
-      // hängt der ganze Betrag an einer Lesart von KKVV Art. 6 Abs. 4 lit. i, die beim ASV
-      // Bern angefragt und nicht bestätigt ist (SAEULE_3A.bisBundesMaximum.vorbehalt). Ohne
-      // diesen Satz stünde eine Zahl im Brief, deren Grundlage strittig ist, und niemand
-      // wüsste es. Steht nur bei `zusatzVorbehaltKey` — sonst wäre es Lärm für alle anderen.
-      // (Befund Fachprüfung 23.09.2026: der Vorbehalt lag im Code und kam nie bei der Person an.)
-      // Ein Schlüssel oder eine Liste (VD: spezifischer Subside und Vermögensgrenze 2027 zugleich).
-      ...[].concat(ipvResult.zusatzVorbehaltKey || []).map((k) => React.createElement('div', { key: k, style: { marginTop: space.xs } },
-        t(k))),
-      // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
-      // der Anspruch beantragt werden muss.
-      stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle'))
-    ),
+    // ── Aufklapp-Zeilen wie die App-Überschriften ─────────────────────────
+    anspruchZeile(),
+    aufklappZeile(t('premium.requiredDocs'),
+      React.createElement('ul', { style: { ...fliesstext, paddingLeft: '20px' } },
+        [t('premium.doc1'), t('premium.doc2'), t('premium.doc3'), t('premium.doc4')].map((doc, idx) =>
+          React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc)
+        )
+      )),
+    aufklappZeile(t('dl.mirrorTitle'),
+      React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv', ohneRahmen: true })),
 
-    // IPV-Lebenslinie — der Beleg als Gesicht seines Ablaufs (Phase 2)
+    // ── Ihr IPV-Weg ───────────────────────────────────────────────────────
     renderLebenslinie(),
 
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '12px', fontStyle: 'italic' } }, t('premium.disclaimer')),
-
-    hasIncome && showCalculation && React.createElement('div', null,
-      // Results — nur mit amtlich belegtem Kanton (E9)
-      !ohneBetrag && React.createElement('div', { style: { border: '1px solid ' + palette.border + '66', borderRadius: radius.sm, background: palette.up, marginBottom: space.md } },
-        React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px', borderBottom: '1px solid ' + palette.border + '33' } },
-          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.monthlySubsidy')),
-            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(ipvResult.amount, { hoechstens: 2 }))
-          ),
-          ipvResult.reductionPercent != null && ipvResult.reductionPercent < 100 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-            t('premium.reductionNote', { percent: ipvResult.reductionPercent })
-          )
-        ),
-        React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px' } },
-          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.annualSubsidy')),
-            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(ipvResult.annual || 0, { hoechstens: 2 }))
-          ),
-          ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-            t('premium.maxPossible', { value: ipvResult.maxAnnual })
-          )
-        ),
-        // Wie im Steuerrechner (annahmen.ohneDreizehnten): die Frage nach dem 13. Monatslohn ist offen,
-        // gerechnet ×12 — mit 13. läge die Verbilligung tiefer. Sichtbar, nicht still angenommen.
-        ipvResult.annahmen?.ohneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
-          hinweisZeichen(), t('ipv.annahmeOhneDreizehnten')),
-        ipvResult.annahmen?.partnerOhneDreizehnten && React.createElement('div', { style: { padding: '0 ' + space.md + 'px ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: '1.5' } },
-          hinweisZeichen(), t('ipv.annahmePartnerOhneDreizehnten'))
+    // Knöpfe — EIN lauter Knopf (Online-Antrag), die anderen ruhig (Seitenrundgang
+    // 27.09.2026: vorher drei gefüllte Flächen, «Dokument» in skyDeep genauso laut).
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center', margin: space.md + 'px 0' } },
+      // Bleibt ein eigener Knopf statt PrimaryButton: gesperrt gilt der Stil aus K53
+      // (gestrichelt, ohne Deckkraft) — PrimaryButton dimmt über opacity.
+      hasIncome && showCalculation && React.createElement('button', {
+        type: 'button',
+        onClick: handleApplyOnline,
+        disabled: !anspruchMoeglich,
+        style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+      },
+        // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
+        // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
+        React.createElement(ZielHinweis, { t }),
+        t('premium.applyOnline')
       ),
-
-      // All cantons overview — nur amtlich belegte Kantone (E9); ohne einen belegten entfällt der Vergleich
-      belegteKantone.length > 0 && React.createElement('details', { style: { marginBottom: space.md } },
-        React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, t('premium.compareCantons')),
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.sm, marginTop: space.sm } },
-          belegteKantone.map(([key, val]) =>
-            React.createElement('div', {
-              key,
-              style: {
-                padding: space.sm,
-                background: key === canton ? palette.sage + '22' : palette.up,
-                borderRadius: radius.xs,
-                border: '1px solid ' + (key === canton ? palette.sage : palette.border),
-                fontSize: text.sm
-              }
-            },
-              React.createElement('div', { style: { fontWeight: weight.semi } }, key + ' — ' + getCantonName(key, t)),
-              React.createElement('div', { style: { color: palette.mid } }, 'Max: ' + betrag(val.maxIncome, { hoechstens: 2 }) + ' | Single: ' + betrag(val.subsidySingle, { hoechstens: 2 }) + t('common.perYear'))
-            )
-          )
-        )
-      ),
-
-      // Checklist
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
-        // h3, nicht h4: die Checkliste ist eine eigene Sektion unter dem h2-Ergebnis, kein Unterpunkt (WCAG 1.3.1, Voll-Review 15.09.2026)
-        React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' } }, hinweisZeichen('kaestchen'), t('premium.requiredDocs') + ':'),
-        React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
-          [t('premium.doc1'), t('premium.doc2'), t('premium.doc3'), t('premium.doc4')].map((doc, idx) =>
-            React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc)
-          )
-        )
-      ),
-
-      // Actions — EIN lauter Knopf (Online-Antrag), die zwei anderen ruhig (Seitenrundgang
-      // 27.09.2026: vorher drei gefüllte Flächen, «Dokument» in skyDeep genauso laut).
-      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' } },
-        // Bleibt ein eigener Knopf statt PrimaryButton: gesperrt gilt der Stil aus K53
-        // (gestrichelt, ohne Deckkraft) — PrimaryButton dimmt über opacity.
-        React.createElement('button', {
-          type: 'button',
-          onClick: handleApplyOnline,
-          disabled: !anspruchMoeglich,
-          style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box', padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
-        },
-          // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
-          // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
-          React.createElement(ZielHinweis, { t }),
-          t('premium.applyOnline')
-        ),
-        React.createElement('button', {
-          type: 'button',
-          onClick: () => setIpvVorschau(true),
-          disabled: !anspruchMoeglich,
-          style: { ...ruhigerKnopf, ...(anspruchMoeglich ? null : gesperrtStil) }
-        }, hinweisZeichen('kaestchen'), t('premium.document')),
-        React.createElement('button', {
-          type: 'button',
-          onClick: () => setShowCalculation(false),
-          style: { ...ruhigerKnopf, color: palette.mid }
-        }, hinweisZeichen('kreuz'), t('common.close'))
-      ),
-
-      // Export-Vorschau (K20) direkt unter den Knöpfen, die sie geöffnet haben.
-      ipvVorschau && React.createElement(ExportVorschau, {
-        palette, t, art: 'ipvJson',
-        quelle: { dokument: buildIpvDokument(data, t, ipvResult) },
-        onWeiter: () => { setIpvVorschau(false); handleDownloadDocument(); },
-        onZurueck: () => setIpvVorschau(false),
-      })
+      // «Unterlagen für den Antrag merken» — wie bisher ein Merkliste-Eintrag, danach «Auf der Merkliste».
+      permitTodoButton(),
+      hasIncome && showCalculation && React.createElement('button', {
+        type: 'button',
+        onClick: () => setIpvVorschau(true),
+        disabled: !anspruchMoeglich,
+        style: { ...ruhigerKnopf, ...(anspruchMoeglich ? null : gesperrtStil) }
+      }, hinweisZeichen('kaestchen'), t('premium.document')),
+      hasIncome && showCalculation && React.createElement('button', {
+        type: 'button',
+        onClick: () => setShowCalculation(false),
+        style: { ...ruhigerKnopf, color: palette.mid }
+      }, hinweisZeichen('kreuz'), t('common.close'))
     ),
 
-    React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv' }),
+    // Export-Vorschau (K20) direkt unter den Knöpfen, die sie geöffnet haben.
+    hasIncome && showCalculation && ipvVorschau && React.createElement(ExportVorschau, {
+      palette, t, art: 'ipvJson',
+      quelle: { dokument: buildIpvDokument(data, t, ipvResult) },
+      onWeiter: () => { setIpvVorschau(false); handleDownloadDocument(); },
+      onZurueck: () => setIpvVorschau(false),
+    }),
+
+    // All cantons overview — nur amtlich belegte Kantone (E9); ohne einen belegten entfällt der
+    // Vergleich (Logik unverändert, Fassung 5: «Alle Kantone vergleichen» bleibt wie heute).
+    hasIncome && showCalculation && belegteKantone.length > 0 && React.createElement('details', { style: { marginBottom: space.md } },
+      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0', minHeight: '44px' } }, t('premium.compareCantons')),
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.sm, marginTop: space.sm } },
+        belegteKantone.map(([key, val]) =>
+          React.createElement('div', {
+            key,
+            style: {
+              padding: space.sm,
+              background: key === canton ? palette.sage + '22' : palette.up,
+              borderRadius: radius.xs,
+              border: '1px solid ' + (key === canton ? palette.sage : palette.border),
+              fontSize: text.sm, color: palette.text,
+            }
+          },
+            React.createElement('div', { style: { fontWeight: weight.semi } }, key + ' — ' + getCantonName(key, t)),
+            React.createElement('div', { style: { color: palette.mid } }, 'Max: ' + betrag(val.maxIncome, { hoechstens: 2 }) + ' | Single: ' + betrag(val.subsidySingle, { hoechstens: 2 }) + t('common.perYear'))
+          )
+        )
+      )
+    ),
+
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '12px', fontStyle: 'italic' } }, t('premium.disclaimer')),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly')),
 
     onNavigate && React.createElement('button', {
+      type: 'button',
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: '44px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
     }, t('nav.finanzUebersicht')),
 
     // Crosslink: IPV wird kantonal beantragt → zu den offiziellen Behörden-Links
     onNavigate && React.createElement('button', {
+      type: 'button',
       onClick: () => onNavigate('direktlinks'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, minHeight: '44px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium }
     }, t('nav.direktlinks'))
   );
 };

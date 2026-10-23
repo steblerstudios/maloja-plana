@@ -46,7 +46,13 @@ describe('erinnerungSichern — eine Entscheidung für alle Erinnerungs-Knöpfe'
 });
 
 describe('die Knöpfe gehen nur noch über erinnerungSichern', () => {
-  for (const f of ['KVGLeistungen.jsx', 'BriefGenerator.jsx', 'PremiumSubsidy.jsx', 'AblaufSchale.jsx']) {
+  // PremiumSubsidy.jsx fehlt hier seit Fassung 5 (23.10.2026): «Jährlich erinnern» legt eine
+  // jährliche Aufgabe auf die Merkliste (merkpunktSichern, geprüft in merklisteImBeispiel.test.js)
+  // statt einer Kalender-Erinnerung. Kein addReminder ist weiter Pflicht:
+  it('PremiumSubsidy.jsx schreibt keine Kalender-Erinnerung an erinnerungSichern vorbei', () => {
+    expect(lies('PremiumSubsidy.jsx')).not.toMatch(/\baddReminder\(/);
+  });
+  for (const f of ['KVGLeistungen.jsx', 'BriefGenerator.jsx', 'AblaufSchale.jsx']) {
     it(f, () => {
       const s = lies(f);
       expect(s).toMatch(/erinnerungSichern\(/);
