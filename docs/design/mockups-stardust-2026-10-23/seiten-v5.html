@@ -1331,12 +1331,13 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   document.querySelector('#ablage-voll .suche').addEventListener('input', dokliste);
 
   // ---------- E · Menü ----------
-  const BEREICH_SATZ = { basis: 'Name, Ausweis, Bewilligung — das Fundament.', wohnen: 'Wohnung, Miete, Umzug, Haushalt.', finanzen: 'Einkommen, Budget, Erspartes, Bank.', versicherungen: 'Krankenkasse, AHV, Säule 3a, Policen.', ausbildung: 'Stelle, Lohn, Weiterbildung, Abschlüsse.', behoerden: 'Steuern, Gemeinde, Fristen, Briefe.', notfall: 'Notfallpass, Kontakte, Verfügungen.' };
+  // Die Beschreibungen der Kapitel aus de.js (chapters.*.description), Sie/Du
+  const BEREICH_SATZ = { basis: ['Ihre Identität und Kontaktdaten', 'Deine Identität und Kontaktdaten'], wohnen: ['Ihr Zuhause, Miete und Wohnsituation', 'Dein Zuhause, Miete und Wohnsituation'], finanzen: ['Ihr Einkommen, Erspartes und Bankdaten', 'Dein Einkommen, Erspartes und Bankdaten'], versicherungen: ['Krankenkasse, Pensionskasse und Absicherung', 'Krankenkasse, Pensionskasse und Absicherung'], ausbildung: ['Ihre Qualifikationen und Arbeitsstelle', 'Deine Qualifikationen und Arbeitsstelle'], behoerden: ['Steuern, rechtliche Angelegenheiten und amtliche Dokumente', 'Steuern, rechtliche Angelegenheiten und amtliche Dokumente'], notfall: ['Notfallkontakte und medizinische Informationen', 'Notfallkontakte und medizinische Informationen'] };
   const BER2 = [['basis', 'Persönliche Basis'], ['wohnen', 'Wohnen & Leben'], ['finanzen', 'Finanzen & Geld'], ['versicherungen', 'Versicherungen & Vorsorge'], ['ausbildung', 'Ausbildung & Arbeit'], ['behoerden', 'Behörden & Rechtliches'], ['notfall', 'Notfall']];
   // Gliederung wie heute: tierCore / tierSupporting / tierProtective
   const STUFEN = [[{ sie: 'Ihr Alltag', du: 'Dein Alltag' }, ['basis', 'wohnen', 'finanzen']], [{ sie: 'Ihre Absicherung', du: 'Deine Absicherung' }, ['versicherungen', 'ausbildung']], [{ sie: 'Ihr Schutz', du: 'Dein Schutz' }, ['behoerden', 'notfall']]];
   document.getElementById('menue-bereiche').innerHTML = STUFEN.map(([titel, keys]) => `<div><div class="gruppe-titel" data-sie="${titel.sie}" data-du="${titel.du}">${titel.sie}</div>`
-    + keys.map((k) => BER2.find((b) => b[0] === k)).map(([k, t]) => `<a class="karte" href="#"><span class="sym" data-icon="${k}" style="--licht: var(--${k});width:48px;height:48px;border-radius:14px"></span><span><b>${t.replace('&', '&amp;')}</b><small>${BEREICH_SATZ[k]}</small></span></a>`).join('') + '</div>').join('');
+    + keys.map((k) => BER2.find((b) => b[0] === k)).map(([k, t]) => `<a class="karte" href="#"><span class="sym" data-icon="${k}" style="--licht: var(--${k});width:48px;height:48px;border-radius:14px"></span><span><b>${t.replace('&', '&amp;')}</b><small data-sie="${BEREICH_SATZ[k][0]}" data-du="${BEREICH_SATZ[k][1]}">${BEREICH_SATZ[k][0]}</small></span></a>`).join('') + '</div>').join('');
   document.querySelectorAll('.karte .bild[data-anker]').forEach((el) => { el.innerHTML = ic(el.dataset.anker).replace('width="20" height="20"', 'width="24" height="24"'); });
 
   // ---------- Abschnittsanzeige (Rechner) ----------
