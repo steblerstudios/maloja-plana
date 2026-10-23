@@ -88,3 +88,15 @@ Sophie hat auf den Umzug gewechselt; offen bleiben:
   Gerät.»). Fassung 5 zeigt nur einen erfundenen Leer-Satz und «Dokument fotografieren». Die
   Messung hatte den Reiter nicht geöffnet, darum stand das nicht in der Liste.
 - Korrigiert (0cbf2487): die Zusammenfassung endet wieder mit «Es bleiben CHF 2'480.».
+
+### Ablauf Umzug · entschieden (Sophie, 23.10.2026)
+
+- **Ein Schritt nach dem anderen** auf der Passstrasse, wie Fassung 5 (heute: alle vier Schritte
+  auf einer Seite).
+- **Frist als Karte mit Datum** («Anmeldung Gemeinde · bis …» + «In den Kalender»); danach die
+  App-Sätze «Im Kalender notiert.» und «Zum Kalender».
+- **Keine Unterzeile** beim Krankenkassen-Verweis; nur «Krankenkassen-Prämie prüfen ›» wie heute.
+- Korrigiert beim Durchgehen (87bff394): Einleitung und 14-Tage-Satz wieder vollständig, der Satz
+  wechselt mit der Art des Umzugs (step2Text, _gemeinde, _kanton, _extra).
+- Neu und für den Copy-Prüfer: «Erledigt, weiter ›», «Ablauf abschliessen», «Der Umzug ist
+  geordnet» mit Satz.
