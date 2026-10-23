@@ -16,10 +16,9 @@ export const tagInEinemJahr = (iso, heute = new Date()) => {
   return new Date(Date.UTC(j + 1, mo - 1, d)).toISOString().slice(0, 10);
 };
 
-// Der Merkpunkt. `tag` und `wiederholung` sind zusätzliche Felder für die Verknüpfung
-// Merkliste ↔ Kalender (Zweig feat/f5-merkliste-kalender). Die heutige addTodo-Funktion legt
-// nur {text, link} ab und lässt sie fallen — kein Fehler, kein Bruch alter Einträge.
-// Doppelt wird nichts: addTodo erkennt einen offenen Punkt mit gleichem Text und Link.
+// Der Merkpunkt, mit `tag` und `wiederholung` aus dem Merkpunkt-Modell (utils/merkliste.js):
+// er steht in der Merkliste und an seinem Tag in «Was ansteht»; beim Abhaken entsteht er ein
+// Jahr später neu. Doppelt wird nichts: addTodo erkennt einen offenen Punkt mit gleichem Text und Link.
 export const ipvErinnerung = (t, datum, heute) => ({
   text: t('ipvStatus.reminderTitle'),
   link: IPV_ERINNERUNG_LINK,
