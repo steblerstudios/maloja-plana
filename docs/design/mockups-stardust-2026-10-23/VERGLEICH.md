@@ -277,3 +277,20 @@ Sophie: «es fehlen mir die Details, die wir bei den Finanzen eingebaut haben».
 - **Gemeinsames Feld «Tag»** (Merkliste ↔ Kalender): technischer Entscheid der Bau-Sitzung — optionales
   Datumsfeld am Merkpunkt, alte Einträge ohne Tag bleiben gültig (keine Migration).
 - **«Alle Kantone vergleichen»:** App-Logik bleibt wie sie ist (erscheint erst mit amtlich belegten Kantonen).
+
+### Zuordnungen Merkliste und Kalender · festgelegt (Sophie, 23.10.2026)
+
+Abgeleitet aus der App selbst: `data/werkzeugRegister.js` gibt jedem Werkzeug ein «fach»
+(geld · gesundheit · alter · Aussenfach), `config/ansichtenRegister.js` dem Asyl-Ablauf den Bereich
+Behörden. Mein erster Vorschlag lag bei Steuern, ALV und Asyl daneben.
+
+**Merkliste (Werkzeug → Bereich):** IPV, Prämien-Orientierung, Vorsorge-Rechner → Versicherungen &
+Vorsorge · Steuern, Sozialhilfe, ALV-Taggeld → Finanzen & Geld · Stipendien → Ausbildung & Arbeit ·
+Asyl & Schutz → Behörden & Rechtliches · Dokumentenablage, Kalender, Offizielle Links und Einträge ohne
+Verknüpfung → **kein Bereich**: eigenes Symbol (Ordner, Kalender mit Datum, Globus, Haken) in neutralem
+Grau-Grün, wie das «Aussenfach» der App.
+
+**Kalender (Kategorie → Bereich):** Gesundheit, Versicherung → Versicherungen & Vorsorge · Finanzen →
+Finanzen & Geld · Verwaltung, Recht → Behörden & Rechtliches · Arbeit, Ausbildung → Ausbildung &
+Arbeit · Wohnen → Wohnen & Leben · Familie → Persönliche Basis · Persönlich → kein Bereich,
+Kalender-Symbol neutral.

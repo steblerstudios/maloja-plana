@@ -1026,7 +1026,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li>Heute ist der echte Tag (23. Oktober 2026). <b>Alle Einträge sind Platzhalter</b>; im Bau kommen sie aus dem Kalender, den Abläufen (Frist «innert 14 Tagen» ab Umzugstag) und den Ablaufdaten in der Ablage.</li>
     <li>Punkt = Frist, Raute = Termin: Form trägt die Art, Farbe den Bereich, das Wort beides — der Graustufen-Test hält.</li>
     <li>Die Seite heisst heute «Kalender und Erinnerungen»; «Was ansteht» ist der neue Name aus der Navigations-Ordnung. Gruppen, «Fällig in … Tagen», Leer-Zustand und Hinweis wörtlich aus <code>de.js</code> (calendar.*). Formular wie die App: «Erinnerung hinzufügen...», Datum, Notiz mit «Optional...».</li>
-    <li>Entschieden 23.10.: Titel «Was ansteht»; Tagesleiste plus aufklappbar «Ganzer Monat» (neuer Text, Copy-Prüfer); Formular wie heute mit Kategorie, Wiederkehrend, bei Gesundheit Deckung und «Letzter Besuch», und «Schnell hinzufügen aus Vorlagen» (eine Vorlage trägt direkt ein, wie in <code>CalendarReminders.jsx</code>); dazu «Kalender exportieren (.ics)» und «Möglicherweise für Sie da». Dieser Block erscheint nur mit gedecktem Anspruch (IPV, Sozialhilfe, EL), bei Maria Muster also nicht — Schalter über dem Gerät. Merkliste verknüpft: To-dos ohne Tag warten unten im Fach «Noch ohne Tag»; «Auf einen Tag legen» und dann einen Tag in der Leiste oder im ganzen Monat antippen. Neu für den Copy-Prüfer: «Aufgabe», «aus der Merkliste», «Noch ohne Tag», «Auf einen Tag legen», «Jetzt oben einen Tag antippen.». Icon: Kalender mit dem heutigen Datum. Kategorie → Bereichsfarbe ist ein Vorschlag (Gesundheit/Versicherung → Versicherungen, Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis).</li>
+    <li>Entschieden 23.10.: Titel «Was ansteht»; Tagesleiste plus aufklappbar «Ganzer Monat» (neuer Text, Copy-Prüfer); Formular wie heute mit Kategorie, Wiederkehrend, bei Gesundheit Deckung und «Letzter Besuch», und «Schnell hinzufügen aus Vorlagen» (eine Vorlage trägt direkt ein, wie in <code>CalendarReminders.jsx</code>); dazu «Kalender exportieren (.ics)» und «Möglicherweise für Sie da». Dieser Block erscheint nur mit gedecktem Anspruch (IPV, Sozialhilfe, EL), bei Maria Muster also nicht — Schalter über dem Gerät. Merkliste verknüpft: To-dos ohne Tag warten unten im Fach «Noch ohne Tag»; «Auf einen Tag legen» und dann einen Tag in der Leiste oder im ganzen Monat antippen. Neu für den Copy-Prüfer: «Aufgabe», «aus der Merkliste», «Noch ohne Tag», «Auf einen Tag legen», «Jetzt oben einen Tag antippen.». Icon: Kalender mit dem heutigen Datum. <b>Kategorie → Bereich festgelegt (Sophie, 23.10.):</b> Gesundheit, Versicherung → Versicherungen &amp; Vorsorge · Finanzen → Finanzen &amp; Geld · Verwaltung, Recht → Behörden &amp; Rechtliches · Arbeit, Ausbildung → Ausbildung &amp; Arbeit · Wohnen → Wohnen &amp; Leben · Familie → Persönliche Basis · Persönlich → kein Bereich, Kalender-Symbol neutral.</li>
     <li>Das Band zeigt laufende Abläufe wie Stardusts Phasenband. «In 9 Tagen» statt Countdown; vergangene Fristen erscheinen ruhig als «verpasst — was jetzt?», nie rot.</li>
   </ul></div>
 </section>
@@ -1091,7 +1091,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   <div class="notiz"><ul>
     <li>Einträge sind Platzhalter. «Rückgängig» bleibt rund fünf Sekunden; danach ist der Eintrag weg, wie bei jeder Liste in der App.</li>
     <li>Leer wird die Liste nicht still: dann steht ein Satz, warum sie leer ist, und wie man etwas merkt (Z2). Texte aus <code>de.js</code> (merkliste.*), Ziele aus <code>LINK_TARGETS</code> in <code>MerklisteView.jsx</code>.</li>
-    <li>Entschieden 23.10.: Verknüpfung als Unterzeile mit ›, neue Einträge oben, und jeder Eintrag bekommt ein Bereichs-Symbol. Die Zuordnung gibt es in der App noch nicht; im Mockup: IPV, Prämien, Vorsorge → Versicherungen · Steuern, Kalender, Offizielle Links → Behörden · Sozialhilfe → Finanzen · ALV, Stipendien → Ausbildung · Asyl, Ablage, keine Verknüpfung → Persönliche Basis. Vor dem Bau festlegen.</li>
+    <li>Entschieden 23.10.: Verknüpfung als Unterzeile mit ›, neue Einträge oben, und jeder Eintrag bekommt ein Bereichs-Symbol. <b>Zuordnung festgelegt (Sophie, 23.10.)</b>, abgeleitet aus dem «fach» in <code>werkzeugRegister.js</code>: IPV, Prämien, Vorsorge → Versicherungen &amp; Vorsorge · Steuern, Sozialhilfe, ALV → Finanzen &amp; Geld · Stipendien → Ausbildung &amp; Arbeit · Asyl → Behörden &amp; Rechtliches · Ablage, Kalender, Offizielle Links, ohne Verknüpfung → kein Bereich, eigenes Symbol (Ordner, Kalender, Globus, Haken) in neutralem Grau-Grün.</li>
     <li><b>Merkliste und Kalender verknüpft (Sophie, 23.10.):</b> Die Merkliste ist die To-do-Liste. Jeder Eintrag kann über «Tag wählen» einen Tag bekommen und steht dann im Kalender («Was ansteht») als Aufgabe (Quadrat). Erledigtes steht im Kalender am Tag, an dem es erledigt wurde (leerer Kreis). Abhaken geht an beiden Orten. Neu für den Copy-Prüfer: «Tag wählen», «Ohne Tag», «erledigt am …».</li>
   </ul></div>
 </section>
@@ -1167,6 +1167,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     kalendertag: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v4M16 3v4"/><text x="12" y="18.6" text-anchor="middle" font-size="8.5" font-weight="700" font-family="Lexend, sans-serif" fill="currentColor" stroke="none">23</text></svg>`,
     ordner: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-7.5L9.8 5H5a2 2 0 0 0-2 2Z"/><path d="M3 10.5h18"/></svg>`,
     haken: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>`,
+    globus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.6 5.4 3.6 8.5s-1.1 5.9-3.6 8.5c-2.5-2.6-3.6-5.4-3.6-8.5s1.1-5.9 3.6-8.5Z"/></svg>`,
   };
   fetch('icons.json').then((r) => r.json()).then((d) => { ICONS = { ...d, ...EIGENE }; icons(); });
 
@@ -1679,8 +1680,10 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   });
 
   // ---------- F · Merkliste: sofort weg, Rückgängig holt an dieselbe Stelle ----------
-  // Verknüpfungsziele wie LINK_TARGETS in MerklisteView.jsx (Namen aus nav.*), Farbe = passender Bereich
-  const MERK_ZIELE = [['', 'Keine Verknüpfung', 'basis'], ['premium', 'Prämienverbilligung (IPV)', 'versicherungen'], ['praemien', 'Prämien-Orientierung', 'versicherungen'], ['tax', 'Steuern', 'behoerden'], ['sozialhilfe', 'Sozialhilfe', 'finanzen'], ['vorsorge', 'Vorsorge-Rechner', 'versicherungen'], ['alv', 'ALV-Taggeld', 'ausbildung'], ['stipendien', 'Stipendien', 'ausbildung'], ['asyl', 'Asyl & Schutz', 'basis'], ['tresor', 'Dokumentenablage', 'basis'], ['calendar', 'Kalender', 'behoerden'], ['direktlinks', 'Offizielle Links', 'behoerden']];
+  // Verknüpfungsziele wie LINK_TARGETS in MerklisteView.jsx (Namen aus nav.*). Bereich nach dem «fach» in
+  // data/werkzeugRegister.js (geld → Finanzen, gesundheit/alter → Versicherungen & Vorsorge), Asyl nach ABLAEUFE
+  // (behoerden). Werkzeuge im «Aussenfach» gehören keinem Bereich: eigenes Symbol, neutral (Entscheid Sophie 23.10.).
+  const MERK_ZIELE = [['', 'Keine Verknüpfung', 'sage', 'haken'], ['premium', 'Prämienverbilligung (IPV)', 'versicherungen'], ['praemien', 'Prämien-Orientierung', 'versicherungen'], ['tax', 'Steuern', 'finanzen'], ['sozialhilfe', 'Sozialhilfe', 'finanzen'], ['vorsorge', 'Vorsorge-Rechner', 'versicherungen'], ['alv', 'ALV-Taggeld', 'finanzen'], ['stipendien', 'Stipendien', 'ausbildung'], ['asyl', 'Asyl & Schutz', 'behoerden'], ['tresor', 'Dokumentenablage', 'sage', 'ordner'], ['calendar', 'Kalender', 'sage', 'kalendertag'], ['direktlinks', 'Offizielle Links', 'sage', 'globus']];
   const ziel = (v) => MERK_ZIELE.find((z) => z[0] === v) || MERK_ZIELE[0];
   let MERK = [  // Platzhalter
     // tag = geplanter Tag (ab heute gezählt), leer = noch ohne Tag; fertigTag = an welchem Tag erledigt
@@ -1701,8 +1704,8 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const isoAus = (n) => { const d = tagNach(n); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
   const tagKurz = (n) => { const d = tagNach(n); return `${WT[d.getDay()]} ${d.getDate()}. ${MON[d.getMonth()]}`; };
   function merkZeile(m, i, neuIndex) {
-    const [, name, farbe2] = ziel(m.v);
-    return `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}${m.erledigt ? ' erledigt' : ''}"><div><div class="innen2"><button class="haken" aria-pressed="${!!m.erledigt}" aria-label="${m.erledigt ? 'Als nicht erledigt markieren' : 'Als erledigt markieren'}" data-i="${i}"><i>${m.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button><span class="sym k" data-icon="${farbe2}" style="--licht: var(--${farbe2})"></span><span class="titel">${m.t}${m.v ? `<small>${name.replace('&', '&amp;')} ›</small>` : ''}${m.erledigt
+    const [, name, farbe2, sym2] = ziel(m.v);
+    return `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}${m.erledigt ? ' erledigt' : ''}"><div><div class="innen2"><button class="haken" aria-pressed="${!!m.erledigt}" aria-label="${m.erledigt ? 'Als nicht erledigt markieren' : 'Als erledigt markieren'}" data-i="${i}"><i>${m.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button><span class="sym k" data-icon="${sym2 || farbe2}" style="--licht: var(--${farbe2})"></span><span class="titel">${m.t}${m.v ? `<small>${name.replace('&', '&amp;')} ›</small>` : ''}${m.erledigt
       ? `<small class="merk-tag">erledigt am ${tagKurz(m.fertigTag ?? 0)}</small>`
       : `<button class="merk-tag-knopf" data-tagwahl="${i}" aria-expanded="${merkTagOffen === i}">${m.tag != null ? '◷ ' + tagKurz(m.tag) + (m.wieder === 'yearly' ? ' · ↻ Jährlich' : '') : 'Tag wählen'}</button>${merkTagOffen === i ? `<span class="merk-tag-feld"><input type="date" data-tagwert="${i}" value="${m.tag != null ? isoAus(m.tag) : ''}" aria-label="Tag für «${m.t}»">${m.tag != null ? `<button class="knopfruhig" data-tagweg="${i}">Ohne Tag</button>` : ''}</span>` : ''}`}</span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`;
   }
@@ -1826,7 +1829,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     MERK.forEach((m) => {
       const tag = m.erledigt ? (m.fertigTag ?? m.tag ?? 0) : m.tag;
       if (tag == null) return;
-      aus.push({ tag, titel: m.t, art: 'Aufgabe', bereich: ziel(m.v)[2], woher: 'aus der Merkliste', wieder: m.wieder, erledigt: !!m.erledigt, ref: m, quelle: 'merkliste' });
+      aus.push({ tag, titel: m.t, art: 'Aufgabe', bereich: ziel(m.v)[2], icon: ziel(m.v)[3], woher: 'aus der Merkliste', wieder: m.wieder, erledigt: !!m.erledigt, ref: m, quelle: 'merkliste' });
     });
     return aus.sort((a, b) => a.tag - b.tag);
   }
@@ -1888,7 +1891,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       : [['Erledigt', () => true]];
     const liste = zlFach === 'offen' ? offen : fertig;
     const zeile = (a) => { const d = tagNach(a.tag); const wann = a.erledigt ? `erledigt am ${d.getDate()}. ${MONLANG[d.getMonth()]}` : a.tag === 0 ? 'Fällig heute' : a.tag === 1 ? 'Fällig morgen' : a.tag > 1 ? `Fällig in ${a.tag} Tagen` : `${d.getDate()}. ${MONLANG[d.getMonth()]}`;
-      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}${a.wieder && a.wieder !== 'once' ? ' · ↻ ' + WIEDER.find((w) => w[0] === a.wieder)[1] : ''}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-k="${alle.indexOf(a)}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
+      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.icon || a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}${a.wieder && a.wieder !== 'once' ? ' · ↻ ' + WIEDER.find((w) => w[0] === a.wieder)[1] : ''}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-k="${alle.indexOf(a)}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
     const l = document.getElementById('zl-liste');
     l.innerHTML = liste.length ? gruppen.map(([t, f]) => { const e = liste.filter(f); return e.length ? `<h5>${t}</h5>` + e.map(zeile).join('') : ''; }).join('')
       : `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Noch nichts geplant</h4><p>${anrede === 'du' ? 'Noch keine Erinnerungen. Füge deine erste Erinnerung hinzu, um organisiert zu bleiben.' : 'Noch keine Erinnerungen. Fügen Sie Ihre erste Erinnerung hinzu, um organisiert zu bleiben.'}</p></div>`;
@@ -1900,7 +1903,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     const ohne = MERK.map((m, i) => [m, i]).filter(([m]) => !m.erledigt && m.tag == null);
     document.getElementById('zl-ohnetag').innerHTML = ohne.length
       ? `<h5>Noch ohne Tag <small>aus der Merkliste</small></h5>${zlVerteilen >= 0 ? `<p class="zl-tipp" role="status">Jetzt oben einen Tag antippen. <button class="knopfruhig" data-verteilab>Abbrechen</button></p>` : ''}`
-        + ohne.map(([m, i]) => `<div class="zl-todo"><span class="sym k" data-icon="${ziel(m.v)[2]}" style="--licht: var(--${ziel(m.v)[2]})"></span><span>${m.t}</span><button class="knopfruhig" data-verteile="${i}" aria-pressed="${zlVerteilen === i}">Auf einen Tag legen</button></div>`).join('')
+        + ohne.map(([m, i]) => `<div class="zl-todo"><span class="sym k" data-icon="${ziel(m.v)[3] || ziel(m.v)[2]}" style="--licht: var(--${ziel(m.v)[2]})"></span><span>${m.t}</span><button class="knopfruhig" data-verteile="${i}" aria-pressed="${zlVerteilen === i}">Auf einen Tag legen</button></div>`).join('')
       : `<p class="ruhig" style="margin-top:16px">Alles aus der Merkliste hat einen Tag.</p>`;
     document.querySelectorAll('[data-verteile]').forEach((b) => b.onclick = () => { const i = +b.dataset.verteile; zlVerteilen = zlVerteilen === i ? -1 : i; zlListe(); if (zlVerteilen >= 0) document.querySelector('[data-seite="g"] .zl-kopf').scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'start' }); });
     const ab = document.querySelector('[data-verteilab]'); if (ab) ab.onclick = () => { zlVerteilen = -1; zlListe(); };
@@ -1922,7 +1925,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   zlNeu.onclick = () => zlFormZeigen(true);
   document.getElementById('zl-f-ab').onclick = () => zlFormZeigen(false);
   // Formular wie CalendarReminders.jsx: Kategorie, Wiederkehrend, bei Gesundheit Deckung + letzter Besuch, Vorlagen
-  const KAT = [['health', 'Gesundheit', 'versicherungen'], ['admin', 'Verwaltung', 'behoerden'], ['finance', 'Finanzen', 'finanzen'], ['insurance', 'Versicherung', 'versicherungen'], ['work', 'Arbeit', 'ausbildung'], ['family', 'Familie', 'basis'], ['education', 'Ausbildung', 'ausbildung'], ['housing', 'Wohnen', 'wohnen'], ['legal', 'Recht', 'behoerden'], ['personal', 'Persönlich', 'basis']];
+  const KAT = [['health', 'Gesundheit', 'versicherungen'], ['admin', 'Verwaltung', 'behoerden'], ['finance', 'Finanzen', 'finanzen'], ['insurance', 'Versicherung', 'versicherungen'], ['work', 'Arbeit', 'ausbildung'], ['family', 'Familie', 'basis'], ['education', 'Ausbildung', 'ausbildung'], ['housing', 'Wohnen', 'wohnen'], ['legal', 'Recht', 'behoerden'], ['personal', 'Persönlich', 'sage', 'kalendertag']];  // Entscheid Sophie 23.10.: Familie → Persönliche Basis, Persönlich → neutral
   const WIEDER = [['once', 'Einmalig'], ['daily', 'Täglich'], ['weekly', 'Wöchentlich'], ['monthly', 'Monatlich'], ['quarterly', 'Alle 3 Monate'], ['halfYearly', 'Alle 6 Monate'], ['yearly', 'Jährlich']];
   const DECKUNG = {
     doctor: 'Arztbesuche sind gedeckt, wenn medizinisch nötig — nach Franchise und Selbstbehalt. Einen festen jährlichen Gesundheits-Check vergütet die Grundversicherung nicht automatisch.',
@@ -1939,6 +1942,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   ];
   let zlWieder = 'once', zlDeckung = '';
   const katBereich = (k) => (KAT.find((x) => x[0] === k) || KAT[9])[2];
+  const katSymbol = (k) => (KAT.find((x) => x[0] === k) || KAT[9])[3];
   document.getElementById('zl-f-kat').innerHTML = KAT.map(([k, n]) => `<option value="${k}"${k === 'personal' ? ' selected' : ''}>${n}</option>`).join('');
   function zlFormFelder() {
     document.getElementById('zl-f-wieder').innerHTML = WIEDER.map(([k, n]) => `<button type="button" data-wieder="${k}" aria-pressed="${zlWieder === k}">${n}</button>`).join('');
@@ -1965,13 +1969,13 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   document.getElementById('zl-vorlagen').innerHTML = VORLAGEN.map(([t], i) => `<button type="button" data-vorlage="${i}">${t}</button>`).join('');
   document.querySelectorAll('[data-vorlage]').forEach((b) => b.onclick = () => {
     const [titel, kat, wieder, tage, deck] = VORLAGEN[+b.dataset.vorlage];
-    zlEintragen({ tag: tage, titel, art: 'Termin', bereich: katBereich(kat), woher: 'aus einer Vorlage', wieder, notiz: deck ? DECKUNG[deck] : '' });
+    zlEintragen({ tag: tage, titel, art: 'Termin', bereich: katBereich(kat), icon: katSymbol(kat), woher: 'aus einer Vorlage', wieder, notiz: deck ? DECKUNG[deck] : '' });
   });
   zlForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const titel = document.getElementById('zl-f-titel').value.trim(), [j, m, t] = document.getElementById('zl-f-datum').value.split('-').map(Number);
     if (!titel || !j) return;
-    zlEintragen({ tag: tageBis(new Date(j, m - 1, t)), titel, art: 'Termin', bereich: katBereich(document.getElementById('zl-f-kat').value), woher: 'selbst eingetragen', wieder: zlWieder, notiz: document.getElementById('zl-f-notiz').value.trim() });
+    zlEintragen({ tag: tageBis(new Date(j, m - 1, t)), titel, art: 'Termin', bereich: katBereich(document.getElementById('zl-f-kat').value), icon: katSymbol(document.getElementById('zl-f-kat').value), woher: 'selbst eingetragen', wieder: zlWieder, notiz: document.getElementById('zl-f-notiz').value.trim() });
   });
   // «Möglicherweise für Sie da» erscheint nur mit gedecktem Anspruch (anspruchSignaleListe); Maria Muster hat keinen
   document.querySelectorAll('[data-anspruch]').forEach((b) => b.onclick = () => {
