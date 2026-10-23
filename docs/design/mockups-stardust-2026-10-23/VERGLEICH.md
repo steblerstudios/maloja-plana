@@ -262,3 +262,18 @@ Sophie: «es fehlen mir die Details, die wir bei den Finanzen eingebaut haben».
 - **«Trifft nicht zu» leiser** (Sophie, 23.10.): kein eigener Knopf mehr unter dem Feld, sondern ein
   kleines graues Wort rechts neben dem Feldnamen; danach dort «Zurücknehmen». Tippfläche 32 px hoch,
   für den Bau auf 44 px prüfen (a11y-Prüfer).
+
+### Vor dem Bau festgelegt (Sophie, 23.10.2026, Auswahl-Dialog in der Bau-Sitzung)
+
+- **Umfang:** «Möglichst alles» von Fassung 5 in den Nachzug **29.10.** (Übersicht ausgenommen, nicht entschieden).
+- **Merkliste · Bereichs-Symbol:** Vorschlag aus dem Mockup gilt — IPV, Prämien, Vorsorge → Versicherungen ·
+  Steuern, Kalender, Offizielle Links → Behörden · Sozialhilfe → Finanzen · ALV, Stipendien → Ausbildung ·
+  Asyl, Ablage, ohne Verknüpfung → Persönliche Basis.
+- **Kalender · Kategorie → Bereichsfarbe:** Vorschlag gilt — Gesundheit/Versicherung → Versicherungen,
+  Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis; übrige → Basis.
+- **Kapitel Finanzen · Nebenerwerb:** die fünf Felder erscheinen **erst mit Nebenerwerb**.
+- **Sprachen:** FR/IT/EN und **auch rm** entwirft Claude selbst; rm als ungeprüft markiert bis zur Gegenlese.
+  Copy-Prüfer liest alle neuen Texte vorher.
+- **Gemeinsames Feld «Tag»** (Merkliste ↔ Kalender): technischer Entscheid der Bau-Sitzung — optionales
+  Datumsfeld am Merkpunkt, alte Einträge ohne Tag bleiben gültig (keine Migration).
+- **«Alle Kantone vergleichen»:** App-Logik bleibt wie sie ist (erscheint erst mit amtlich belegten Kantonen).
