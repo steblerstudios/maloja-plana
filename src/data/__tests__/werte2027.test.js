@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { werteFuerStichtag } from '../jahrestabelle.js';
-import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben } from '../ahvRechner.js';
+import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, vorbezugKuerzungsbetrag } from '../ahvRechner.js';
 import { LOHN_WERTE_JE_JAHR, lohnWerte, bvgKoordinationsabzug } from '../lohnAbzuege.js';
 import { saeule3aMaximum, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR } from '../saeule3a.js';
 
@@ -100,8 +100,18 @@ describe('AHV 2027 (Skala 44 gültig ab 1.1.2027)', () => {
     expect(rente(30000, J2026, { erziehungsjahre: 11 }).erziehungsgutschrift).toBe(45360 * 11 / 44);
   });
 
+  it('Vorbezug 2027 (Neuberechnung im Referenzalter, #529) rechnet mit den Werten 2027', () => {
+    const r = rente(200000, J2027, { beitragsjahre: 42, bezugAlter: 63 });
+    const teilrente2027 = Math.round(2560 * 42 / 44);
+    expect(r.kuerzungsbetrag).toBe(vorbezugKuerzungsbetrag(teilrente2027, 24));
+    expect(r.monatsrente).toBe(teilrente2027 - r.kuerzungsbetrag);
+    expect(r.monatsrenteReferenzalter).toBe(2560 - r.kuerzungsbetrag);
+    const r26 = rente(200000, J2026, { beitragsjahre: 42, bezugAlter: 63 });
+    expect(r26.monatsrenteReferenzalter).toBe(2520 - vorbezugKuerzungsbetrag(Math.round(2520 * 42 / 44), 24));
+  });
+
   it('der Vorbezug/Aufschub-Vergleich reicht den Stichtag durch', () => {
-    const z65 = (st) => vergleicheVorbezugAufschub(200000, 44, undefined, 1965, undefined, st)
+    const z65 = (st) => vergleicheVorbezugAufschub(200000, 44, undefined, 1965, undefined, undefined, st)
       .find((z) => z.bezugAlter === 65).monatsrente;
     expect(z65(J2026)).toBe(2520);
     expect(z65(J2027)).toBe(2560);

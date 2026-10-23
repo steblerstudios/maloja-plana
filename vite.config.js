@@ -54,6 +54,8 @@ export default defineConfig({
     // mit (Zahlen vervielfacht, fremde halbfertige Branches faerben das
     // Ergebnis rot). Das Deploy-Gate muss nur diesen Arbeitsbaum messen.
     exclude: [...configDefaults.exclude, '**/.claude/**'],
+    // Feste Test-Uhr (22.10.2026), sonst wird die Suite am 1.1.2027 rot.
+    setupFiles: ['./src/__tests__/festeUhr.setup.js'],
   },
   build: {
     outDir: 'dist',

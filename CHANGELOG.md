@@ -20,6 +20,26 @@ kommt der Changelog immer mit, nie doppelt.*
   solange «Ausstehende Steuererklärungen» nicht 0 ist; im Kapitel Behörden ein Satz zu Mahnung, Nachfrist und
   Folgen (DBG 124/130/174, StHG 46/55). rm provisorisch.
 - **Kapitel am Handy:** Bezeichnung und Wert überlappen nicht mehr («Einkommensart» / «Netto (was ich erhalte)», #530).
+- **AHV-Vorbezug wird im Referenzalter neu berechnet (Fachprüfung 21.10., Merkblatt 3.04 Ziff. 5).** Vorher
+  galt die Teilrente des Vorbezugs lebenslang. Jetzt: bis zum Referenzalter Teilrente mit Kürzung, danach
+  Vollrente mit den Jahren des Vorbezugs minus fester Kürzungsbetrag in Franken. Bezug 63, Ø 80'000:
+  1'962 bis 65, ab 65 2'070 (vorher lebenslang 1'962). AHV-Block, Vergleichstabelle und Zukunftsbild zeigen
+  beide Beträge, die Annahme-Zeile nennt beide Zählungen (5 Sprachen). Teilrente und Kürzung auf ganze
+  Franken (Ziff. 24), Kürzungssätze genau nach Tabelle Ziff. 4, bei Ehepaaren zuerst plafoniert, dann
+  gekürzt. Die AHV-Fläche im Zukunftsbild steigt wieder von der heutigen Anwartschaft zum Rücktritt an.
+  Das Feld «Beitragsjahre» zählt jetzt die Jahre **bis zum Referenzalter** (Hinweis am Feld, 5 Sprachen):
+  die Zahl bleibt gleich, wenn das Bezugsalter verschoben wird, und Vorbezug und Bezug mit 65 rechnen
+  dieselbe Grundlage (40 Jahre, Bezug 63: 1'776 bis 65, 1'884 ab 65; mit 65: 2'163 = 1'884 + 279 Kürzung).
+- **Vorsorge-Rechner: der Schalter «Verheiratet» entscheidet über die Halbierung der Erziehungs-/
+  Betreuungsgutschriften** (Befund Tor 0.1.47 zu #524). Vorher wurde auch bei «Nein» geteilt, sobald das
+  Profil «verheiratet» sagte. Bei «Nein» wird nur noch geteilt, wenn das Profil eine frühere Ehe nennt
+  (geschieden, verwitwet, aufgelöste Partnerschaft).
+
+### Tests
+- **Feste Test-Uhr (22.10.2026):** `src/__tests__/festeUhr.setup.js`, eingebunden in `vite.config.js`. Mindestlohn und
+  Prämienverbilligung sind jahresgebunden, die Tests nahmen still «heute = 2026» an. Mit der Uhr auf dem 2.1.2027
+  waren 57 Testdateien rot (712 Tests), danach 0. Die App ändert sich nicht. `heuteNachSchweizerUhr` setzt seine Zeit
+  jetzt je Test statt einmal pro Datei. Sobald die Werte 2027 eingebaut sind, wird das Datum nachgeschoben.
 
 ## [0.1.47-beta] — 2026-10-21 (Deploy durch Stebler Studios)
 

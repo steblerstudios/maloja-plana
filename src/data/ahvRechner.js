@@ -15,8 +15,35 @@ export { LOHN_WERTE_JE_JAHR, lohnWerte, referenzalterMonate, BVG_EINTRITTSSCHWEL
 const MIN_BEITRAGSJAHRE = 1;
 const VOLLE_BEITRAGSJAHRE = 44;   // Skala 44 = Vollrente
 
-// Vorbezug
-const VORBEZUG_KUERZUNG_PRO_MONAT = 0.005667; // 6.8% pro Jahr (gesetzlicher AHV-Vorbezugssatz)
+// Vorbezug: 6,8 % pro Jahr, höchstens 24 Monate. Die Tabelle im BSV-Merkblatt 3.04 «Flexibler
+// Rentenbezug», Stand 1.1.2026, Ziff. 4 (https://www.ahv-iv.ch/p/3.04.d, abgerufen 2026-10-21
+// 17:23 UTC) führt die Sätze je Monat auf eine Nachkommastelle gerundet: 1 Monat 0,6 %,
+// 15 Monate 8,5 %, 24 Monate 13,6 %. Genau das ergibt 6,8/12 je Monat, auf 0,1 % gerundet.
+// Nicht abgebildet: die tieferen Sätze der Frauen JG 1961–1969 (einkommensabhängig, Ziff. 4).
+const VORBEZUG_MAX_MONATE = 24;
+
+/**
+ * Kürzungssatz beim Vorbezug in Prozent (Merkblatt 3.04 Ziff. 4).
+ *
+ * @param {number} monate - Vorbezugsdauer in Monaten (über 24 zählt als 24)
+ * @returns {number} Kürzungssatz in Prozent (z. B. 13.6)
+ */
+export function vorbezugKuerzungProzent(monate) {
+  const m = Math.min(Math.max(0, Math.floor(Number(monate) || 0)), VORBEZUG_MAX_MONATE);
+  return Math.round(m * 68 / 12) / 10;
+}
+
+/**
+ * Kürzungsbetrag beim Vorbezug in ganzen Franken (Merkblatt 3.04 Ziff. 24/25): Satz der
+ * Vorbezugsdauer × ungekürzte vorbezogene Rente. Bleibt nach dem Referenzalter als fester Abzug.
+ *
+ * @param {number} rente - ungekürzte vorbezogene Monatsrente (bei Wechseln: ihr Durchschnitt)
+ * @param {number} monate - Vorbezugsdauer in Monaten
+ * @returns {number} CHF pro Monat
+ */
+export function vorbezugKuerzungsbetrag(rente, monate) {
+  return Math.round((Number(rente) || 0) * vorbezugKuerzungProzent(monate) / 100);
+}
 
 // Aufschub: Erhöhungssätze in Prozent der Altersrente, Art. 55ter Abs. 1 AHVV (SR 831.101),
 // Fassung in Kraft seit 1.1.2025 (AS 2024 462), konsolidierter Stand 1.1.2026. Wörtlich aus
@@ -79,8 +106,8 @@ export function volleBeitragsdauer({ geburtsjahr, geburtsmonat, geschlecht } = {
 }
 
 // Skala: Beitragsjahre → Bruchteil der Vollrente (Art. 52 AHVV), gemessen an der vollen
-// Beitragsdauer des Jahrgangs (Merkblatt 3.01 Ziff. 12/13). Anteilig gerechnet; die amtlichen
-// Teilrenten-Tabellen (Skala 1–43) runden zusätzlich auf ganze Franken.
+// Beitragsdauer des Jahrgangs (Merkblatt 3.01 Ziff. 12/13). Anteilig gerechnet; die Teilrente
+// wird wie in den amtlichen Tabellen (Skala 1–43) auf ganze Franken gerundet (berechneAltersrente).
 function skalenFaktor(beitragsjahre, volleDauer = VOLLE_BEITRAGSJAHRE) {
   if (beitragsjahre >= volleDauer) return 1;
   if (beitragsjahre < MIN_BEITRAGSJAHRE) return 0;
@@ -199,8 +226,12 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen, w) {
  * @param {boolean} [params.verheiratet=false] - für die Plafonierung
  * @param {boolean} [params.gutschriftTeilen] - Gutschriften je zur Hälfte (Ehejahre); Standard: = verheiratet
  * @param {number} [params.einkommenPartner=0] - Durchschnittseinkommen Partner (für Plafonierung)
+ * @param {number} [params.beitragsjahreReferenzalter] - nur beim Vorbezug: Beitragsjahre bei der
+ *   Neuberechnung im Referenzalter; Standard: `beitragsjahre` + volle Vorbezugsjahre (Beitragspflicht
+ *   läuft während des Vorbezugs weiter, Merkblatt 3.04 Ziff. 8)
  * @param {Date|string|number} [params.stichtag] - Welche Jahreswerte gelten (Standard: heute)
- * @returns {Object} Rentenberechnung
+ * @returns {Object} Rentenberechnung; beim Vorbezug ist `monatsrente` die Rente während des
+ *   Vorbezugs und `monatsrenteReferenzalter` die neu berechnete Rente ab dem Referenzalter
  */
 export function berechneAltersrente({
   geburtsjahr,
@@ -214,6 +245,7 @@ export function berechneAltersrente({
   verheiratet = false,
   gutschriftTeilen = verheiratet,
   einkommenPartner = 0,
+  beitragsjahreReferenzalter,
   stichtag,
 }) {
   const w = ahvWerte(stichtag);
@@ -222,6 +254,8 @@ export function berechneAltersrente({
   // identisch zum bisherigen pauschalen Referenzalter 65 (kein Verhaltenswechsel).
   const refMonate = referenzalterMonate({ geschlecht, geburtsjahr });
   const alter = bezugAlter || (refMonate / 12);
+  const differenzMonate = alter * 12 - refMonate;
+  const vorbezugMonate = differenzMonate < 0 ? Math.min(-differenzMonate, VORBEZUG_MAX_MONATE) : 0;
 
   // Einkommen mit Erziehungs- UND Betreuungsgutschriften aufwerten.
   // Beide gleichen Jahresbetrag (3× Minimalrente, Art. 29sexies/29septies AHVG);
@@ -234,51 +268,67 @@ export function berechneAltersrente({
   // fallen in die Ehe — die App kennt das Heiratsjahr nicht.
   const gutschriftJahre = (erziehungsjahre || 0) + (betreuungsjahre || 0);
   const gutschriftGeteilt = !!gutschriftTeilen && gutschriftJahre > 0;
-  const gutschriftProJahr = gutschriftJahre > 0
-    ? (w.erziehungsgutschriftJahr * gutschriftJahre) / beitragsjahre / (gutschriftGeteilt ? 2 : 1)
-    : 0;
-  const aufgewertetesEinkommen = durchschnittlichesJahreseinkommen + gutschriftProJahr;
-
-  // Grundrente (Vollrente bei Skala 44)
-  const vollrente = monatsrenteAusEinkommen(aufgewertetesEinkommen, w);
-
-  // Skalierung nach Beitragsjahren, gemessen an der vollen Beitragsdauer des Jahrgangs
   const volleDauer = volleBeitragsdauer({ geburtsjahr, geburtsmonat, geschlecht });
-  const faktor = skalenFaktor(beitragsjahre, volleDauer);
-  let rente = Math.round(vollrente * faktor * 100) / 100;
 
-  // Vorbezug oder Aufschub
+  // Ungekürzte Rente für eine Beitragsdauer: Vollrente (Skala 44) aus dem aufgewerteten Einkommen,
+  // skaliert an der vollen Beitragsdauer des Jahrgangs, als Teilrente auf ganze Franken gerundet
+  // (Merkblatt 3.04 Ziff. 24: «Teilrente Skala 43» 2 463 Franken = 2 520 × 43/44).
+  const grundrente = (bj) => {
+    const gutschriftProJahr = gutschriftJahre > 0
+      ? (w.erziehungsgutschriftJahr * gutschriftJahre) / bj / (gutschriftGeteilt ? 2 : 1)
+      : 0;
+    const vollrente = monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen + gutschriftProJahr, w);
+    const faktor = skalenFaktor(bj, volleDauer);
+    return { gutschriftProJahr, vollrente, faktor, rente: Math.round(vollrente * faktor) };
+  };
+
+  // Plafonierung bei Ehepaaren
+  const plafoniere = (rente, faktor) => {
+    if (!(verheiratet && einkommenPartner > 0)) return { rente, rentePartner: 0, plafoniert: false };
+    const rentePartner = Math.round(monatsrenteAusEinkommen(einkommenPartner, w) * faktor * 100) / 100;
+    const total = rente + rentePartner;
+    if (total <= w.maxEhepaar) return { rente, rentePartner, plafoniert: false };
+    const reduktion = w.maxEhepaar / total;
+    return { rente: Math.round(rente * reduktion * 100) / 100, rentePartner: Math.round(rentePartner * reduktion * 100) / 100, plafoniert: true };
+  };
+
+  const basis = grundrente(beitragsjahre);
+  const { gutschriftProJahr, vollrente, faktor } = basis;
   let vorbezugAufschub = 0;
-  const differenzMonate = alter * 12 - refMonate;
+  let kuerzungsbetrag = 0;
+  let p;
+  let pReferenzalter;
+  let bjReferenzalter = beitragsjahre;
 
-  if (differenzMonate < 0) {
-    // Vorbezug (max 24 Monate = 2 Jahre)
-    const monate = Math.min(Math.abs(differenzMonate), 24);
-    const kuerzung = monate * VORBEZUG_KUERZUNG_PRO_MONAT;
-    vorbezugAufschub = -kuerzung;
-    rente = Math.round(rente * (1 - kuerzung) * 100) / 100;
+  if (vorbezugMonate > 0) {
+    // Vorbezug, Merkblatt 3.04 Ziff. 4/5/24/25: Während des Vorbezugs meist eine Teilrente (es
+    // fehlen Beitragsjahre), gekürzt um den Satz der Vorbezugsdauer. Im Referenzalter wird die Rente
+    // definitiv neu berechnet, mit den Versicherungszeiten des Vorbezugs. Davon geht der Kürzungs-
+    // betrag ab: Satz × ungekürzte vorbezogene Rente, ganze Franken, «für die Dauer des gesamten
+    // Rentenbezugs». Beispiel Ziff. 25: Vollrente plafoniert 1 890 − Kürzung 123 = 1 767 Franken.
+    // Gekürzt wird nach der Plafonierung (Ziff. 24: «plafonierte Rente … abzüglich der Kürzung»).
+    vorbezugAufschub = -vorbezugKuerzungProzent(vorbezugMonate) / 100;
+    p = plafoniere(basis.rente, faktor);
+    kuerzungsbetrag = vorbezugKuerzungsbetrag(p.rente, vorbezugMonate);
+    p = { ...p, rente: p.rente - kuerzungsbetrag };
+    bjReferenzalter = beitragsjahreReferenzalter != null && Number.isFinite(Number(beitragsjahreReferenzalter))
+      ? Math.max(beitragsjahre, Number(beitragsjahreReferenzalter))
+      : beitragsjahre + Math.floor(vorbezugMonate / 12);
+    const definitiv = grundrente(bjReferenzalter);
+    const pd = plafoniere(definitiv.rente, definitiv.faktor);
+    pReferenzalter = { ...pd, rente: pd.rente - kuerzungsbetrag };
   } else if (differenzMonate > 0) {
     // Aufschub: Tabelle Art. 55ter AHVV (1–5 Jahre, monatlich gestaffelt); unter
     // 12 Monaten kein Zuschlag (Art. 39 Abs. 1 AHVG), z. B. Frau JG 1962 mit
     // Referenzalter 64 J 6 M und Bezug mit 65.
     const zuschlag = aufschubZuschlagProzent(differenzMonate) / 100;
     vorbezugAufschub = zuschlag;
-    rente = Math.round(rente * (1 + zuschlag) * 100) / 100;
+    p = plafoniere(Math.round(basis.rente * (1 + zuschlag) * 100) / 100, faktor);
+  } else {
+    p = plafoniere(basis.rente, faktor);
   }
-
-  // Plafonierung bei Ehepaaren
-  let plafoniert = false;
-  let rentePartner = 0;
-  if (verheiratet && einkommenPartner > 0) {
-    rentePartner = Math.round(monatsrenteAusEinkommen(einkommenPartner, w) * faktor * 100) / 100;
-    const total = rente + rentePartner;
-    if (total > w.maxEhepaar) {
-      const reduktion = w.maxEhepaar / total;
-      rente = Math.round(rente * reduktion * 100) / 100;
-      rentePartner = Math.round(rentePartner * reduktion * 100) / 100;
-      plafoniert = true;
-    }
-  }
+  pReferenzalter = pReferenzalter || p;
+  const { rente, rentePartner, plafoniert } = p;
 
   return {
     monatsrente: rente,
@@ -296,10 +346,17 @@ export function berechneAltersrente({
     skalenfaktor: faktor,
     beitragsjahre: Math.min(beitragsjahre, volleDauer),
     volleBeitragsdauer: volleDauer,
-    fehlendeBeitragsjahre: Math.max(0, volleDauer - beitragsjahre),
+    // Lücken der definitiven Rente: beim Vorbezug füllen die Jahre bis zum Referenzalter auf.
+    fehlendeBeitragsjahre: Math.max(0, volleDauer - bjReferenzalter),
     bezugAlter: alter,
     referenzalterMonate: refMonate,
     vorbezugAufschub: Math.round(vorbezugAufschub * 10000) / 100, // in Prozent
+    // Vorbezug: Kürzung in Franken (bleibt lebenslang) und die ab dem Referenzalter neu berechnete
+    // Rente. Ohne Vorbezug ist die Rente ab Referenzalter dieselbe wie `monatsrente`.
+    kuerzungsbetrag,
+    beitragsjahreReferenzalter: Math.min(bjReferenzalter, volleDauer),
+    monatsrenteReferenzalter: pReferenzalter.rente,
+    jahresrenteReferenzalter: Math.round(pReferenzalter.rente * 13 * 100) / 100,
     erziehungsgutschrift: Math.round(gutschriftProJahr), // kombinierte Aufwertung Erziehung + Betreuung (CHF/Jahr)
     gutschriftGeteilt,
     gutschriftJahre,
@@ -314,8 +371,9 @@ export function berechneAltersrente({
 
 /**
  * Vergleiche Renten bei verschiedenen Bezugsaltern (Vorbezug/Aufschub).
+ * Vorbezugszeilen tragen zusätzlich die Rente ab dem Referenzalter (Neuberechnung, Merkblatt 3.04 Ziff. 5).
  */
-export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr, geburtsmonat, stichtag) {
+export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr, geburtsmonat, beitragsjahreReferenzalter, stichtag) {
   const alter = [63, 64, 65, 66, 67, 68, 69, 70];
   return alter.map(a => {
     const r = berechneAltersrente({
@@ -328,9 +386,13 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
       durchschnittlichesJahreseinkommen,
       beitragsjahre,
       bezugAlter: a,
+      beitragsjahreReferenzalter,
       stichtag,
     });
-    return { bezugAlter: a, monatsrente: r.monatsrente, jahresrente: r.jahresrente, anpassung: r.vorbezugAufschub };
+    return {
+      bezugAlter: a, monatsrente: r.monatsrente, jahresrente: r.jahresrente, anpassung: r.vorbezugAufschub,
+      monatsrenteReferenzalter: r.monatsrenteReferenzalter, jahresrenteReferenzalter: r.jahresrenteReferenzalter,
+    };
   });
 }
 
