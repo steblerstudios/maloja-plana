@@ -2692,7 +2692,7 @@ export default {
     suggestLease: 'Rental agreement',
     suggestKkPolicy: 'Health insurance policy',
     suggestChapter: 'Chapter {chapter}',
-    activeEmpty: 'All documents are in the archive.',
+    activeEmpty: 'All documents have expired and are in the archive.',
     expiringEmpty: 'Nothing is expiring soon.',
     archiveEmpty: 'The archive is empty.',
   },

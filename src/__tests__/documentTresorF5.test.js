@@ -119,7 +119,7 @@ describe('Ablage · mit Inhalt', () => {
   });
 
   it('nur archivierte Dokumente: Aktiv zeigt einen Satz statt einer leeren Fläche', () => {
-    expect(render([ABGELAUFEN])).toContain('Alle Dokumente liegen im Archiv.');
+    expect(render([ABGELAUFEN])).toContain('Alle Dokumente sind abgelaufen und liegen im Archiv.');
   });
 });
 

@@ -276,7 +276,7 @@ export const DocumentTresor = ({
     },
   }, zahl + ' ' + label);
 
-  const leerImFach = searchTerm ? t('common.noResults')
+  const leerImFach = (searchTerm || activeTab !== 'all') ? t('common.noResults')
     : fach === 'archiv' ? t('tresor.archiveEmpty')
     : fach === 'bald' ? t('tresor.expiringEmpty')
     : t('tresor.activeEmpty');

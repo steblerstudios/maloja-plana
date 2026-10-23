@@ -2834,7 +2834,7 @@ export default {
     // rm ungeprüft F5
     suggestChapter: 'Chapitel {chapter}',
     // rm ungeprüft F5
-    activeEmpty: 'Tut ils documents èn en l’archiv.',
+    activeEmpty: 'Tut ils documents èn scadids e sa chattan en l’archiv.',
     // rm ungeprüft F5
     expiringEmpty: 'Nagut na scada prest.',
     // rm ungeprüft F5

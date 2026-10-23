@@ -2692,7 +2692,7 @@ export default {
     suggestLease: 'Contratto di locazione',
     suggestKkPolicy: 'Polizza della cassa malati',
     suggestChapter: 'Capitolo {chapter}',
-    activeEmpty: 'Tutti i documenti sono nell’archivio.',
+    activeEmpty: 'Tutti i documenti sono scaduti e si trovano nell’archivio.',
     expiringEmpty: 'Nulla scade a breve.',
     archiveEmpty: 'L’archivio è vuoto.',
   },

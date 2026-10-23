@@ -2701,7 +2701,7 @@ export default {
     suggestLease: 'Mietvertrag',
     suggestKkPolicy: 'Police der Krankenkasse',
     suggestChapter: 'Kapitel {chapter}',
-    activeEmpty: 'Alle Dokumente liegen im Archiv.',
+    activeEmpty: 'Alle Dokumente sind abgelaufen und liegen im Archiv.',
     expiringEmpty: 'Nichts läuft bald ab.',
     archiveEmpty: 'Im Archiv liegt nichts.',
   },
