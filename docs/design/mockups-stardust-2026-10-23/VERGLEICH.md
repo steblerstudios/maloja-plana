@@ -138,3 +138,22 @@ Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.j
   bei Maria Muster also nicht. Im Mockup per Schalter beide Zustände.
 - Vor dem Bau festlegen: Kategorie → Bereichsfarbe (Vorschlag in der Notiz unter dem Mockup).
 - Korrigiert (af59cebd): Formular-Texte aus der App statt «Titel» / «Datum».
+
+### Merkliste und Kalender verknüpft · Icons (Sophie, 23.10.2026)
+
+- **Eine Sache statt zwei:** Die Merkliste ist die To-do-Liste. Ein Eintrag kann einen Tag bekommen
+  («Tag wählen» in der Merkliste) und erscheint dann in «Was ansteht» als **Aufgabe** an diesem Tag
+  (Quadrat in der Leiste und im ganzen Monat).
+- **Erledigtes im Kalender:** am Tag, an dem es erledigt wurde (leerer Kreis), im Reiter «Erledigt»
+  mit «erledigt am …». Abhaken geht in der Merkliste und im Kalender, beide bleiben gleich.
+- **Verteilen:** To-dos ohne Tag warten in «Was ansteht» im Fach «Noch ohne Tag». «Auf einen Tag
+  legen», dann einen Tag antippen. Ersetzt die Zeile «Ohne Datum: 4 Einträge auf der Merkliste».
+- **Icons:** «Was ansteht» = Kalender mit dem heutigen Datum; Dokumentenablage = Ordner (wie
+  `OrdnerIcon` in der App); Merkliste = Haken (wie in der App). Vorher hatten Was ansteht und
+  Merkliste das Behörden-Icon, die Ablage das Icon der Persönlichen Basis.
+- Neu für den Copy-Prüfer: «Aufgabe», «aus der Merkliste», «Tag wählen», «Ohne Tag»,
+  «erledigt am …», «Noch ohne Tag», «Auf einen Tag legen», «Jetzt oben einen Tag antippen.».
+- Für den Bau: Die App speichert Merkliste und Kalender heute getrennt (`MerklisteView.jsx`,
+  `CalendarReminders.jsx`). Die Verknüpfung braucht ein gemeinsames Datenfeld (Tag am Merkpunkt).
+- Nebenbei behoben: Die Klasse `.erledigt` der Umzug-Marken hat die erledigten Merkliste-Einträge
+  zerdrückt; jetzt auf `#erledigt` beschränkt.

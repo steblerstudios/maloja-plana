@@ -202,8 +202,8 @@ body.still .wechsel { animation: none; } body.still .pass .gefahren { transition
 .frist { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; background: var(--up); margin-top: 14px; }
 .frist .text { flex: 1; font-size: 14px; }
 .frist small { display: block; color: var(--soft); font-size: 12px; }
-.erledigt { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-.erledigt span { font-size: 12px; color: var(--soft); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px 4px 8px; display: inline-flex; gap: 5px; align-items: center; }
+#erledigt { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }  /* nur die Schritt-Marken im Umzug, nicht .merk.erledigt */
+#erledigt span { font-size: 12px; color: var(--soft); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px 4px 8px; display: inline-flex; gap: 5px; align-items: center; }
 .fertigbild { text-align: center; padding: 10px 0 0; }
 .fertigbild h4 { font-family: 'Hanken Grotesk'; font-size: 24px; margin: 10px 0 6px; }
 .fertigbild p { color: var(--mid); margin: 0 auto 16px; max-width: 32ch; }
@@ -370,6 +370,21 @@ body.desktop .zeitleiste { margin: 4px 0 6px; }
 .zl-tag[aria-pressed="true"] .nr { box-shadow: 0 0 0 2px var(--sand); }
 .zl-tag .marken { display: flex; gap: 3px; height: 10px; align-items: center; }
 .zl-tag .marke-f { width: 8px; height: 8px; border-radius: 50%; }
+.zl-tag .marke-f.quadrat, .zl-raster .marke-f.quadrat { border-radius: 2px; width: 7px; height: 7px; }
+.marke-f.fertig { background: none !important; border: 1.5px solid var(--soft); border-radius: 50%; width: 7px; height: 7px; box-sizing: border-box; }
+.zl-raster .marken i { width: 5px; height: 5px; border-radius: 50%; }
+.zeitleiste.verteilen .zl-tag .nr, .zl-raster.verteilen button { outline: 1px dashed color-mix(in srgb, var(--sand) 60%, transparent); outline-offset: -2px; }
+.zl-ohnetag h5 { font-family: 'Hanken Grotesk'; font-size: 16px; margin: 22px 0 4px; }
+.zl-ohnetag h5 small { font-family: 'Lexend'; font-weight: 400; font-size: 12px; color: var(--soft); margin-left: 6px; }
+.zl-todo { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.zl-todo > span:nth-child(2) { flex: 1; min-width: 0; }
+.zl-todo .knopfruhig { font-size: 12px; padding: 6px 12px; min-height: 40px; white-space: nowrap; }
+.zl-todo .knopfruhig[aria-pressed="true"] { border-color: var(--sand); color: var(--sand); }
+.zl-tipp { font-size: 13px; color: var(--sand); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 4px 0 6px; }
+.merk-tag-knopf { display: inline-flex; align-items: center; margin-top: 4px; min-height: 32px; padding: 0 10px; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--mid); font: inherit; font-size: 12px; cursor: pointer; }
+.merk-tag-feld { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.merk-tag-feld input { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 14px; min-height: 40px; padding: 0 8px; }
+.merk-tag-feld .knopfruhig { font-size: 12px; padding: 6px 12px; min-height: 40px; }
 .zl-tag .marke-f.raute { border-radius: 1px; transform: rotate(45deg); width: 7px; height: 7px; }
 .zl-heute-linie { position: absolute; top: 0; bottom: 30px; width: 1px; background: var(--text); opacity: .35; pointer-events: none; }
 .zl-band { position: relative; height: 26px; margin: 2px 20px 0; }
@@ -813,7 +828,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         <div class="links">
           <div class="stufe">
             <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Meine Unterlagen</a><span>›</span>Dokumentenablage</nav></div>
-            <div class="titelzeile"><span class="sym" data-icon="basis"></span><h3>Dokumentenablage</h3></div>
+            <div class="titelzeile"><span class="sym" data-icon="ordner" style="--licht: var(--sage)"></span><h3>Dokumentenablage</h3></div>
             <p class="satz" id="ablage-satz" data-sie="Ihr Ordner ist bereit." data-du="Dein Ordner ist bereit."></p>
           </div>
         </div>
@@ -883,7 +898,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         <div class="links">
           <div class="stufe">
             <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Was ansteht</nav></div>
-            <div class="titelzeile"><span class="sym" data-icon="behoerden" style="--licht: var(--behoerden)"></span><h3>Was ansteht</h3></div>
+            <div class="titelzeile"><span class="sym" data-icon="kalendertag" style="--licht: var(--sage)"></span><h3>Was ansteht</h3></div>
             <p class="satz" data-sie="Fristen, Termine und was Sie sich gemerkt haben — in der Reihenfolge der Zeit." data-du="Fristen, Termine und was du dir gemerkt hast — in der Reihenfolge der Zeit."></p>
           </div>
           <div class="held stufe s2" id="zl-held">
@@ -904,7 +919,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <div class="zl-spur" id="zl-spur"></div>
             <div class="zl-band" id="zl-band" aria-hidden="true"></div>
           </div>
-          <div class="legende2" style="margin:8px 0 0"><span><i style="background:var(--wohnen);border-radius:50%"></i>Frist</span><span><i style="background:var(--finanzen);border-radius:1px;transform:rotate(45deg) scale(.85)"></i>Termin</span><span><i style="background:var(--text);border-radius:50%"></i>heute</span></div>
+          <div class="legende2" style="margin:8px 0 0"><span><i style="background:var(--wohnen);border-radius:50%"></i>Frist</span><span><i style="background:var(--finanzen);border-radius:1px;transform:rotate(45deg) scale(.85)"></i>Termin</span><span><i style="background:var(--versicherungen);border-radius:2px;width:8px;height:8px"></i>Aufgabe</span><span><i style="border:1.5px solid var(--soft);border-radius:50%;width:8px;height:8px"></i>erledigt</span><span><i style="background:var(--text);border-radius:50%"></i>heute</span></div>
           <details class="zl-raster-auf" id="zl-raster-auf"><summary>Ganzer Monat</summary><div class="zl-raster" id="zl-raster" role="group" aria-label="Kalender-Übersicht"></div></details>
           <div class="reiter2" role="tablist" aria-label="Bevorstehend oder erledigt" style="margin-top:16px"><button role="tab" aria-selected="true" data-zl="offen"><span id="zl-zahl-offen">0</span> Bevorstehend</button><button role="tab" aria-selected="false" data-zl="erledigt"><span id="zl-zahl-erledigt">0</span> Erledigt</button></div>
           <button class="knopfruhig" id="zl-neu" style="margin-top:12px" aria-expanded="false">+ Erinnerung hinzufügen</button>
@@ -920,7 +935,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <div style="display:flex;gap:10px"><button class="knopfprim" type="submit">Erinnerung hinzufügen</button><button class="knopfruhig" type="button" id="zl-f-ab">Abbrechen</button></div>
           </form>
           <div class="liste-zeit" id="zl-liste"></div>
-          <div class="ruhig"><span class="punkt"></span><span data-sie="Ohne Datum: 4 Einträge auf der Merkliste." data-du="Ohne Datum: 4 Einträge auf der Merkliste."></span></div>
+          <div class="zl-ohnetag" id="zl-ohnetag"></div>
           <div class="zl-export"><button class="knopfruhig" data-meldung="maloja-erinnerungen.ics gespeichert">Kalender exportieren (.ics)</button><small data-sie="Fügen Sie Ihre Erinnerungen zu Ihrem Handy- oder Computerkalender hinzu." data-du="Füge deine Erinnerungen zu deinem Handy- oder Computerkalender hinzu."></small></div>
           <p class="fuss" data-sie="Diese Erinnerungen dienen nur zur Information. Bitte kontaktieren Sie die zuständige Behörde oder Fachperson für offizielle Auskünfte." data-du="Diese Erinnerungen dienen nur zur Information. Bitte kontaktiere die zuständige Behörde oder Fachperson für offizielle Auskünfte."></p>
         </div>
@@ -932,7 +947,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li>Heute ist der echte Tag (23. Oktober 2026). <b>Alle Einträge sind Platzhalter</b>; im Bau kommen sie aus dem Kalender, den Abläufen (Frist «innert 14 Tagen» ab Umzugstag) und den Ablaufdaten in der Ablage.</li>
     <li>Punkt = Frist, Raute = Termin: Form trägt die Art, Farbe den Bereich, das Wort beides — der Graustufen-Test hält.</li>
     <li>Die Seite heisst heute «Kalender und Erinnerungen»; «Was ansteht» ist der neue Name aus der Navigations-Ordnung. Gruppen, «Fällig in … Tagen», Leer-Zustand und Hinweis wörtlich aus <code>de.js</code> (calendar.*). Formular wie die App: «Erinnerung hinzufügen...», Datum, Notiz mit «Optional...».</li>
-    <li>Entschieden 23.10.: Titel «Was ansteht»; Tagesleiste plus aufklappbar «Ganzer Monat» (neuer Text, Copy-Prüfer); Formular wie heute mit Kategorie, Wiederkehrend, bei Gesundheit Deckung und «Letzter Besuch», und «Schnell hinzufügen aus Vorlagen» (eine Vorlage trägt direkt ein, wie in <code>CalendarReminders.jsx</code>); dazu «Kalender exportieren (.ics)» und «Möglicherweise für Sie da». Dieser Block erscheint nur mit gedecktem Anspruch (IPV, Sozialhilfe, EL), bei Maria Muster also nicht — Schalter über dem Gerät. Kategorie → Bereichsfarbe ist ein Vorschlag (Gesundheit/Versicherung → Versicherungen, Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis).</li>
+    <li>Entschieden 23.10.: Titel «Was ansteht»; Tagesleiste plus aufklappbar «Ganzer Monat» (neuer Text, Copy-Prüfer); Formular wie heute mit Kategorie, Wiederkehrend, bei Gesundheit Deckung und «Letzter Besuch», und «Schnell hinzufügen aus Vorlagen» (eine Vorlage trägt direkt ein, wie in <code>CalendarReminders.jsx</code>); dazu «Kalender exportieren (.ics)» und «Möglicherweise für Sie da». Dieser Block erscheint nur mit gedecktem Anspruch (IPV, Sozialhilfe, EL), bei Maria Muster also nicht — Schalter über dem Gerät. Merkliste verknüpft: To-dos ohne Tag warten unten im Fach «Noch ohne Tag»; «Auf einen Tag legen» und dann einen Tag in der Leiste oder im ganzen Monat antippen. Neu für den Copy-Prüfer: «Aufgabe», «aus der Merkliste», «Noch ohne Tag», «Auf einen Tag legen», «Jetzt oben einen Tag antippen.». Icon: Kalender mit dem heutigen Datum. Kategorie → Bereichsfarbe ist ein Vorschlag (Gesundheit/Versicherung → Versicherungen, Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis).</li>
     <li>Das Band zeigt laufende Abläufe wie Stardusts Phasenband. «In 9 Tagen» statt Countdown; vergangene Fristen erscheinen ruhig als «verpasst — was jetzt?», nie rot.</li>
   </ul></div>
 </section>
@@ -979,7 +994,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       <div class="innen">
         <div class="links"><div class="stufe">
           <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Was ansteht</a><span>›</span>Merkliste</nav></div>
-          <div class="titelzeile"><span class="sym" data-icon="behoerden" style="--licht: var(--behoerden)"></span><h3>Merkliste</h3></div>
+          <div class="titelzeile"><span class="sym" data-icon="haken" style="--licht: var(--sage)"></span><h3>Merkliste</h3></div>
           <p class="satz" data-sie="Ist Ihnen etwas aufgefallen, das Sie später erledigen möchten — etwa „Ich könnte Prämienverbilligung beantragen“? Notieren Sie es hier und verknüpfen Sie es direkt mit dem passenden Werkzeug, damit Sie zurückfinden, wenn Sie Zeit haben." data-du="Ist dir etwas aufgefallen, das du später erledigen möchtest — etwa „Ich könnte Prämienverbilligung beantragen“? Notiere es hier und verknüpfe es direkt mit dem passenden Werkzeug, damit du zurückfindest, wenn du Zeit hast."></p>
         </div></div>
         <div class="rechtsspalte stufe s2">
@@ -998,6 +1013,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li>Einträge sind Platzhalter. «Rückgängig» bleibt rund fünf Sekunden; danach ist der Eintrag weg, wie bei jeder Liste in der App.</li>
     <li>Leer wird die Liste nicht still: dann steht ein Satz, warum sie leer ist, und wie man etwas merkt (Z2). Texte aus <code>de.js</code> (merkliste.*), Ziele aus <code>LINK_TARGETS</code> in <code>MerklisteView.jsx</code>.</li>
     <li>Entschieden 23.10.: Verknüpfung als Unterzeile mit ›, neue Einträge oben, und jeder Eintrag bekommt ein Bereichs-Symbol. Die Zuordnung gibt es in der App noch nicht; im Mockup: IPV, Prämien, Vorsorge → Versicherungen · Steuern, Kalender, Offizielle Links → Behörden · Sozialhilfe → Finanzen · ALV, Stipendien → Ausbildung · Asyl, Ablage, keine Verknüpfung → Persönliche Basis. Vor dem Bau festlegen.</li>
+    <li><b>Merkliste und Kalender verknüpft (Sophie, 23.10.):</b> Die Merkliste ist die To-do-Liste. Jeder Eintrag kann über «Tag wählen» einen Tag bekommen und steht dann im Kalender («Was ansteht») als Aufgabe (Quadrat). Erledigtes steht im Kalender am Tag, an dem es erledigt wurde (leerer Kreis). Abhaken geht an beiden Orten. Neu für den Copy-Prüfer: «Tag wählen», «Ohne Tag», «erledigt am …».</li>
   </ul></div>
 </section>
 
@@ -1066,7 +1082,13 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       el.innerHTML = svg ? svg.replace('<svg ', `<svg width="${px}" height="${px}" style="color:${licht};display:block" aria-hidden="true" `) : '';
     });
   }
-  fetch('icons.json').then((r) => r.json()).then((d) => { ICONS = d; icons(); });
+  // Eigene Zeichen für die Werkzeug-Seiten: Kalender mit dem heutigen Datum (wie das Anker-Icon der App) und Ordner (wie OrdnerIcon in DocumentTresor.jsx)
+  const EIGENE = {
+    kalendertag: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v4M16 3v4"/><text x="12" y="18.6" text-anchor="middle" font-size="8.5" font-weight="700" font-family="Lexend, sans-serif" fill="currentColor" stroke="none">23</text></svg>`,
+    ordner: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-7.5L9.8 5H5a2 2 0 0 0-2 2Z"/><path d="M3 10.5h18"/></svg>`,
+    haken: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>`,
+  };
+  fetch('icons.json').then((r) => r.json()).then((d) => { ICONS = { ...d, ...EIGENE }; icons(); });
 
   // ---------- Leisten: Boden-Anker (Handy, wie live) und Seitenmenü (Desktop) ----------
   const I = {
@@ -1341,10 +1363,11 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const MERK_ZIELE = [['', 'Keine Verknüpfung', 'basis'], ['premium', 'Prämienverbilligung (IPV)', 'versicherungen'], ['praemien', 'Prämien-Orientierung', 'versicherungen'], ['tax', 'Steuern', 'behoerden'], ['sozialhilfe', 'Sozialhilfe', 'finanzen'], ['vorsorge', 'Vorsorge-Rechner', 'versicherungen'], ['alv', 'ALV-Taggeld', 'ausbildung'], ['stipendien', 'Stipendien', 'ausbildung'], ['asyl', 'Asyl & Schutz', 'basis'], ['tresor', 'Dokumentenablage', 'basis'], ['calendar', 'Kalender', 'behoerden'], ['direktlinks', 'Offizielle Links', 'behoerden']];
   const ziel = (v) => MERK_ZIELE.find((z) => z[0] === v) || MERK_ZIELE[0];
   let MERK = [  // Platzhalter
+    // tag = geplanter Tag (ab heute gezählt), leer = noch ohne Tag; fertigTag = an welchem Tag erledigt
     { t: 'Ich könnte Prämienverbilligung beantragen', v: 'premium' },
-    { t: 'Säule 3a eröffnen', v: 'vorsorge' },
+    { t: 'Säule 3a eröffnen', v: 'vorsorge', tag: 5 },
     { t: 'Lohnausweis ablegen', v: 'tresor' },
-    { t: 'Notfallkontakt prüfen', v: '', erledigt: true },
+    { t: 'Notfallkontakt prüfen', v: '', erledigt: true, fertigTag: -1 },
   ];
   document.getElementById('merk-ziel').innerHTML = MERK_ZIELE.map(([v, n]) => `<option value="${v}">${n.replace('&', '&amp;')}</option>`).join('');
   document.getElementById('merk-form').addEventListener('submit', (e) => {
@@ -1352,11 +1375,16 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     const feld = document.getElementById('merk-text'), t = feld.value.trim();
     if (!t) { feld.focus(); return; }
     MERK.unshift({ t, v: document.getElementById('merk-ziel').value });
-    feld.value = ''; merkZeichnen(0);
+    feld.value = ''; merkZeichnen(0); zeitleiste();
   });
+  let merkTagOffen = -1;
+  const isoAus = (n) => { const d = tagNach(n); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const tagKurz = (n) => { const d = tagNach(n); return `${WT[d.getDay()]} ${d.getDate()}. ${MON[d.getMonth()]}`; };
   function merkZeile(m, i, neuIndex) {
     const [, name, farbe2] = ziel(m.v);
-    return `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}${m.erledigt ? ' erledigt' : ''}"><div><div class="innen2"><button class="haken" aria-pressed="${!!m.erledigt}" aria-label="${m.erledigt ? 'Als nicht erledigt markieren' : 'Als erledigt markieren'}" data-i="${i}"><i>${m.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button><span class="sym k" data-icon="${farbe2}" style="--licht: var(--${farbe2})"></span><span class="titel">${m.t}${m.v ? `<small>${name.replace('&', '&amp;')} ›</small>` : ''}</span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`;
+    return `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}${m.erledigt ? ' erledigt' : ''}"><div><div class="innen2"><button class="haken" aria-pressed="${!!m.erledigt}" aria-label="${m.erledigt ? 'Als nicht erledigt markieren' : 'Als erledigt markieren'}" data-i="${i}"><i>${m.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button><span class="sym k" data-icon="${farbe2}" style="--licht: var(--${farbe2})"></span><span class="titel">${m.t}${m.v ? `<small>${name.replace('&', '&amp;')} ›</small>` : ''}${m.erledigt
+      ? `<small class="merk-tag">erledigt am ${tagKurz(m.fertigTag ?? 0)}</small>`
+      : `<button class="merk-tag-knopf" data-tagwahl="${i}" aria-expanded="${merkTagOffen === i}">${m.tag != null ? '◷ ' + tagKurz(m.tag) : 'Tag wählen'}</button>${merkTagOffen === i ? `<span class="merk-tag-feld"><input type="date" data-tagwert="${i}" value="${m.tag != null ? isoAus(m.tag) : ''}" aria-label="Tag für «${m.t}»">${m.tag != null ? `<button class="knopfruhig" data-tagweg="${i}">Ohne Tag</button>` : ''}</span>` : ''}`}</span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`;
   }
   function merkZeichnen(neuIndex = -1) {
     const l = document.getElementById('merkliste'), du = anrede === 'du';
@@ -1366,14 +1394,17 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     l.innerHTML = (offen.length ? `<h5>Zu erledigen</h5>` + offen.map(([m, i]) => merkZeile(m, i, neuIndex)).join('') : '')
       + (fertig.length ? `<h5>Erledigt</h5>` + fertig.map(([m, i]) => merkZeile(m, i, neuIndex)).join('') : '');
     icons();
-    l.querySelectorAll('.haken').forEach((b) => b.onclick = () => { const m = MERK[+b.dataset.i]; m.erledigt = !m.erledigt; merkZeichnen(); });
+    l.querySelectorAll('.haken').forEach((b) => b.onclick = () => { const m = MERK[+b.dataset.i]; m.erledigt = !m.erledigt; m.fertigTag = m.erledigt ? 0 : undefined; merkZeichnen(); zeitleiste(); });
+    l.querySelectorAll('[data-tagwahl]').forEach((b) => b.onclick = () => { const i = +b.dataset.tagwahl; merkTagOffen = merkTagOffen === i ? -1 : i; merkZeichnen(); });
+    l.querySelectorAll('[data-tagwert]').forEach((f) => f.onchange = () => { if (!f.value) return; const [j, mo, t] = f.value.split('-').map(Number); MERK[+f.dataset.tagwert].tag = tageBis(new Date(j, mo - 1, t)); merkTagOffen = -1; merkZeichnen(); zeitleiste(); });
+    l.querySelectorAll('[data-tagweg]').forEach((b) => b.onclick = () => { delete MERK[+b.dataset.tagweg].tag; merkTagOffen = -1; merkZeichnen(); zeitleiste(); });
     l.querySelectorAll('.x').forEach((b) => b.onclick = () => {
       const i = +b.dataset.i, eintrag = MERK[i], zeile = b.closest('.merk');
       const ruhig = document.body.classList.contains('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
       zeile.classList.add('weg');
       setTimeout(() => {
-        MERK.splice(i, 1); merkZeichnen();
-        melden(l.closest('.geraet'), `«${eintrag.t}» entfernt`, true, () => { MERK.splice(i, 0, eintrag); merkZeichnen(i); });
+        MERK.splice(i, 1); merkZeichnen(); zeitleiste();
+        melden(l.closest('.geraet'), `«${eintrag.t}» entfernt`, true, () => { MERK.splice(i, 0, eintrag); merkZeichnen(i); zeitleiste(); });
       }, ruhig ? 0 : 320);
     });
   }
@@ -1467,6 +1498,29 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     zlAb = (jahr === HEUTE.getFullYear() && monat === HEUTE.getMonth()) ? -VOR : tageBis(erster) - VOR;
     zeitleiste();
   }
+  // Eine Quelle für den Kalender: Fristen und Termine (ANSTEHT) und die Merkliste als To-dos.
+  // Ein To-do erscheint am geplanten Tag; erledigt steht es am Tag, an dem es erledigt wurde.
+  let zlVerteilen = -1;  // Merkliste-Eintrag, der gerade auf einen Tag gelegt wird
+  function alleEintraege() {
+    const aus = ANSTEHT.map((a) => ({ ...a, ref: a, quelle: 'kalender' }));
+    MERK.forEach((m) => {
+      const tag = m.erledigt ? (m.fertigTag ?? m.tag ?? 0) : m.tag;
+      if (tag == null) return;
+      aus.push({ tag, titel: m.t, art: 'Aufgabe', bereich: ziel(m.v)[2], woher: 'aus der Merkliste', erledigt: !!m.erledigt, ref: m, quelle: 'merkliste' });
+    });
+    return aus.sort((a, b) => a.tag - b.tag);
+  }
+  const markeHtml = (m) => `<i class="marke-f${m.erledigt ? ' fertig' : m.art === 'Termin' ? ' raute' : m.art === 'Aufgabe' ? ' quadrat' : ''}" style="${m.erledigt ? '' : `background:var(--${m.bereich})`}"></i>`;
+  function tagGewaehlt(n) {
+    if (zlVerteilen >= 0) {  // To-do auf diesen Tag legen
+      const m = MERK[zlVerteilen]; m.tag = n; zlVerteilen = -1;
+      merkZeichnen(); zeitleiste(); melden(document.querySelector('[data-seite="g"]'), `«${m.t}» liegt jetzt auf ${tagKurz(n)}`, false); return;
+    }
+    const ziel2 = alleEintraege().find((a) => !a.erledigt && a.tag >= n);
+    document.querySelectorAll('#zl-liste .termin').forEach((t) => t.classList.toggle('markiert', ziel2 && +t.dataset.n === ziel2.tag));
+    const el = ziel2 && document.querySelector(`#zl-liste .termin[data-n="${ziel2.tag}"]`);
+    if (el) el.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'center' });
+  }
   function zeitleiste() {
     const spur = document.getElementById('zl-spur'); if (!spur) return;
     const [jahr, monat] = zlMonat();
@@ -1477,42 +1531,34 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     reihe.scrollLeft = gewaehlt.offsetLeft - reihe.offsetLeft - 40;  // gewählten Monat sichtbar halten
     let h = '';
     for (let n = zlAb; n < zlAb + TAGE; n++) {
-      const d = tagNach(n), marken = ANSTEHT.filter((a) => a.tag === n && !a.erledigt);
+      const d = tagNach(n), marken = alleEintraege().filter((a) => a.tag === n);
       h += `<button class="zl-tag${n === 0 ? ' heute' : ''}${d.getDate() === 1 ? ' monat1' : ''}" data-n="${n}" aria-pressed="false" aria-label="${d.getDate()}. ${MONLANG[d.getMonth()]}${n === 0 ? ', heute' : ''}${marken.length ? ', ' + marken.map((m) => m.art + ' ' + m.titel).join(', ') : ''}">
         <span class="wt">${d.getDate() === 1 ? MON[d.getMonth()] : WT[d.getDay()]}</span><span class="nr">${d.getDate()}</span>
-        <span class="marken">${marken.map((m) => `<i class="marke-f${m.art === 'Termin' ? ' raute' : ''}" style="background:var(--${m.bereich})"></i>`).join('')}</span></button>`;
+        <span class="marken">${marken.map(markeHtml).join('')}</span></button>`;
     }
     spur.innerHTML = h;
     // Ganzer Monat (wie heute das Monatsraster), Montag zuerst
     const erster = new Date(jahr, monat, 1), tageImMonat = new Date(jahr, monat + 1, 0).getDate(), leer = (erster.getDay() + 6) % 7;
     let rh = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((w) => `<span class="wt">${w}</span>`).join('') + '<span></span>'.repeat(leer);
     for (let d = 1; d <= tageImMonat; d++) {
-      const n = tageBis(new Date(jahr, monat, d)), marken = ANSTEHT.filter((a) => a.tag === n && !a.erledigt);
-      rh += `<button class="${n === 0 ? 'heute' : ''}" data-rn="${n}" aria-label="${d}. ${MONLANG[monat]}${marken.length ? ' · ' + marken.length : ''}">${d}<span style="display:flex;gap:2px;height:5px">${marken.map((m) => `<i style="background:var(--${m.bereich})"></i>`).join('')}</span></button>`;
+      const n = tageBis(new Date(jahr, monat, d)), marken = alleEintraege().filter((a) => a.tag === n);
+      rh += `<button class="${n === 0 ? 'heute' : ''}" data-rn="${n}" aria-label="${d}. ${MONLANG[monat]}${marken.length ? ' · ' + marken.length : ''}">${d}<span class="marken" style="display:flex;gap:2px;height:6px">${marken.map(markeHtml).join('')}</span></button>`;
     }
     document.getElementById('zl-raster').innerHTML = rh;
-    document.querySelectorAll('#zl-raster [data-rn]').forEach((b) => b.onclick = () => {
-      const n = +b.dataset.rn, ziel = ANSTEHT.find((a) => !a.erledigt && a.tag >= n);
-      document.querySelectorAll('#zl-liste .termin').forEach((t) => t.classList.toggle('markiert', ziel && +t.dataset.n === ziel.tag));
-      const el = ziel && document.querySelector(`#zl-liste .termin[data-n="${ziel.tag}"]`);
-      if (el) el.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'center' });
-    });
+    document.querySelectorAll('#zl-raster [data-rn]').forEach((b) => b.onclick = () => tagGewaehlt(+b.dataset.rn));
     const band = document.getElementById('zl-band');
     band.innerHTML = BAENDER.map((b) => `<span style="left:${(b.von - zlAb) * BREITE}px;width:${(b.bis - b.von + 1) * BREITE}px;background:var(--${b.bereich})">${b.titel}</span>`).join('');
     spur.onscroll = () => { band.style.transform = `translateX(${-spur.scrollLeft}px)`; };
     spur.scrollLeft = 0; band.style.transform = '';
     spur.querySelectorAll('.zl-tag').forEach((b) => b.onclick = () => {
       spur.querySelectorAll('.zl-tag').forEach((x) => x.setAttribute('aria-pressed', x === b));
-      const n = +b.dataset.n, ziel = ANSTEHT.find((a) => !a.erledigt && a.tag >= n);
-      document.querySelectorAll('#zl-liste .termin').forEach((t) => t.classList.toggle('markiert', ziel && +t.dataset.n === ziel.tag));
-      const el = ziel && document.querySelector(`#zl-liste .termin[data-n="${ziel.tag}"]`);
-      if (el) el.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'center' });
+      tagGewaehlt(+b.dataset.n);
     });
     zlListe();
   }
   function zlListe() {
     ANSTEHT.sort((a, b) => a.tag - b.tag);
-    const offen = ANSTEHT.filter((a) => !a.erledigt), fertig = ANSTEHT.filter((a) => a.erledigt);
+    const alle = alleEintraege(), offen = alle.filter((a) => !a.erledigt), fertig = alle.filter((a) => a.erledigt).reverse();
     document.getElementById('zl-zahl-offen').textContent = offen.length;
     document.getElementById('zl-zahl-erledigt').textContent = fertig.length;
     const monatsende = tageBis(new Date(HEUTE.getFullYear(), HEUTE.getMonth() + 1, 0));
@@ -1521,15 +1567,25 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       ? [['Diese Woche', (a) => a.tag <= 7], ['Diesen Monat', (a) => a.tag > 7 && a.tag <= monatsende], ['Später', (a) => a.tag > monatsende]]
       : [['Erledigt', () => true]];
     const liste = zlFach === 'offen' ? offen : fertig;
-    const zeile = (a) => { const d = tagNach(a.tag); const wann = a.tag === 0 ? 'Fällig heute' : a.tag === 1 ? 'Fällig morgen' : a.tag > 1 ? `Fällig in ${a.tag} Tagen` : `${d.getDate()}. ${MONLANG[d.getMonth()]}`;
-      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}${a.wieder && a.wieder !== 'once' ? ' · ↻ ' + WIEDER.find((w) => w[0] === a.wieder)[1] : ''}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-t="${a.titel}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
+    const zeile = (a) => { const d = tagNach(a.tag); const wann = a.erledigt ? `erledigt am ${d.getDate()}. ${MONLANG[d.getMonth()]}` : a.tag === 0 ? 'Fällig heute' : a.tag === 1 ? 'Fällig morgen' : a.tag > 1 ? `Fällig in ${a.tag} Tagen` : `${d.getDate()}. ${MONLANG[d.getMonth()]}`;
+      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}${a.wieder && a.wieder !== 'once' ? ' · ↻ ' + WIEDER.find((w) => w[0] === a.wieder)[1] : ''}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-k="${alle.indexOf(a)}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
     const l = document.getElementById('zl-liste');
     l.innerHTML = liste.length ? gruppen.map(([t, f]) => { const e = liste.filter(f); return e.length ? `<h5>${t}</h5>` + e.map(zeile).join('') : ''; }).join('')
       : `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Noch nichts geplant</h4><p>${anrede === 'du' ? 'Noch keine Erinnerungen. Füge deine erste Erinnerung hinzu, um organisiert zu bleiben.' : 'Noch keine Erinnerungen. Fügen Sie Ihre erste Erinnerung hinzu, um organisiert zu bleiben.'}</p></div>`;
     l.querySelectorAll('.haken').forEach((b) => b.onclick = () => {
-      const a = ANSTEHT.find((x) => x.titel === b.dataset.t); a.erledigt = !a.erledigt;
-      zeitleiste(); melden(l.closest('.geraet'), a.erledigt ? `«${a.titel}» erledigt` : `«${a.titel}» wieder offen`, false);
+      const a = alle[+b.dataset.k], ref = a.ref; ref.erledigt = !ref.erledigt;
+      if (a.quelle === 'merkliste') { ref.fertigTag = ref.erledigt ? 0 : undefined; merkZeichnen(); }
+      zeitleiste(); melden(l.closest('.geraet'), ref.erledigt ? `«${a.titel}» erledigt` : `«${a.titel}» wieder offen`, false);
     });
+    const ohne = MERK.map((m, i) => [m, i]).filter(([m]) => !m.erledigt && m.tag == null);
+    document.getElementById('zl-ohnetag').innerHTML = ohne.length
+      ? `<h5>Noch ohne Tag <small>aus der Merkliste</small></h5>${zlVerteilen >= 0 ? `<p class="zl-tipp" role="status">Jetzt oben einen Tag antippen. <button class="knopfruhig" data-verteilab>Abbrechen</button></p>` : ''}`
+        + ohne.map(([m, i]) => `<div class="zl-todo"><span class="sym k" data-icon="${ziel(m.v)[2]}" style="--licht: var(--${ziel(m.v)[2]})"></span><span>${m.t}</span><button class="knopfruhig" data-verteile="${i}" aria-pressed="${zlVerteilen === i}">Auf einen Tag legen</button></div>`).join('')
+      : `<p class="ruhig" style="margin-top:16px">Alles aus der Merkliste hat einen Tag.</p>`;
+    document.querySelectorAll('[data-verteile]').forEach((b) => b.onclick = () => { const i = +b.dataset.verteile; zlVerteilen = zlVerteilen === i ? -1 : i; zlListe(); if (zlVerteilen >= 0) document.querySelector('[data-seite="g"] .zl-kopf').scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'start' }); });
+    const ab = document.querySelector('[data-verteilab]'); if (ab) ab.onclick = () => { zlVerteilen = -1; zlListe(); };
+    document.querySelector('[data-seite="g"] .zeitleiste').classList.toggle('verteilen', zlVerteilen >= 0);
+    document.getElementById('zl-raster').classList.toggle('verteilen', zlVerteilen >= 0);
     const naechste = offen.find((a) => a.art === 'Frist' && a.tag >= 0);
     document.getElementById('zl-held-titel').textContent = naechste ? `in ${naechste.tag} Tagen` : 'keine offene';
     document.getElementById('zl-held-text').textContent = naechste ? `${naechste.titel} · ${naechste.woher}` : '';
