@@ -684,6 +684,19 @@ body.still .rs-karte { transition: none; }
 .su-bereiche { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .su-bereiche a { display: flex; gap: 10px; align-items: center; min-height: 56px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 14px; text-decoration: none; color: var(--text); font-size: 13px; }
 .su-treffer mark { background: color-mix(in srgb, var(--gold) 35%, transparent); color: inherit; border-radius: 3px; }
+.fu-auf { margin-top: 10px; border-top: 1px solid var(--border); }
+.fu-auf > summary { display: flex; justify-content: space-between; align-items: center; min-height: 44px; cursor: pointer; font-size: 14px; list-style: none; }
+.fu-auf > summary::-webkit-details-marker { display: none; }
+.fu-auf > summary::after { content: '›'; color: var(--soft); margin-left: 10px; font-size: 20px; line-height: 1; transition: transform .2s; }
+.fu-auf[open] > summary::after { transform: rotate(90deg); }
+.fu-auf > summary b { margin-left: auto; font-weight: 500; }
+.fu-posten { display: grid; gap: 4px; padding: 0 0 12px; font-size: 13px; text-align: left; }
+.fu-posten .gr { display: flex; justify-content: space-between; color: var(--text); font-weight: 500; margin-top: 6px; }
+.fu-posten .po { display: flex; justify-content: space-between; color: var(--mid); padding-left: 12px; }
+.fu-posten .leer { color: var(--soft); padding: 0 0 0 12px; text-align: left; margin: 0; }
+.fu-posten .po span:last-child, .fu-posten .gr span:last-child { white-space: nowrap; margin-left: 12px; }
+.fu-anteil { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin: 2px 0 8px; background: var(--border); }
+.fu-anteil i { display: block; height: 100%; }
 .fu-baum { height: 180px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 10%, transparent), color-mix(in srgb, var(--sage) 28%, transparent)); display: grid; place-items: center; color: var(--mid); font-size: 13px; margin-top: 10px; text-align: center; padding: 0 20px; }
 </style>
 </head>
@@ -1410,23 +1423,70 @@ body.still .rs-karte { transition: none; }
             <div class="knoepfe"><button class="knopfprim">Einkommen eingeben</button></div>
           </div>
           <div class="held stufe s2" id="fu-held">
-            <div class="lage"><span>Nettoeinkommen CHF 6’200 /Mt.</span><span>Kanton: Zürich</span></div>
+            <div class="lage"><span>Nettoeinkommen CHF 6’200 /Mt.</span><span>Kanton: Zürich</span><span>Haushalt: 1 Person</span></div>
             <div class="etikett">Monatsbudget</div>
-            <div class="fu-budget">
-              <div><span>Einnahmen</span><span>CHF 6’200</span></div>
-              <div><span>Ausgaben</span><span>− CHF 3’741</span></div>
-            </div>
             <div class="st-zeile" style="border-bottom:0;margin-top:4px;font-size:15px"><span>Frei verfügbar</span><b class="anzeige" style="font-size:24px">CHF 2’459</b></div>
             <div class="fu-tank"><span class="glas" aria-hidden="true"><i></i><b></b></span><span data-sie="Ihr Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3." data-du="Dein Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3."></span></div>
+            <details class="fu-auf"><summary><span>Total Einnahmen</span><b>CHF 6’200</b></summary>
+              <div class="fu-posten">
+                <div class="po"><span>Nettoeinkommen</span><span>CHF 6’200</span></div>
+                <div class="leer">Nebenerwerb, Partner/in, Familienzulagen, Alimente: nicht erfasst</div>
+              </div>
+            </details>
+            <details class="fu-auf"><summary><span>Monatliche Ausgaben</span><b>− CHF 3’741</b></summary>
+              <div class="fu-posten">
+                <div class="fu-anteil" aria-hidden="true"><i style="width:48.9%;background:var(--wohnen)"></i><i style="width:10.3%;background:var(--versicherungen)"></i><i style="width:14.3%;background:var(--basis)"></i><i style="width:3.2%;background:var(--ausbildung)"></i><i style="width:23.3%;background:var(--behoerden)"></i></div>
+                <div class="gr"><span>Wohnen</span><span>CHF 1’830</span></div>
+                <div class="po"><span>Miete</span><span>CHF 1’650</span></div>
+                <div class="po"><span>Nebenkosten</span><span>CHF 180</span></div>
+                <div class="gr"><span>Versicherung &amp; Gesundheit</span><span>CHF 385</span></div>
+                <div class="po"><span>Krankenkasse</span><span>CHF 385</span></div>
+                <div class="gr"><span>Leben</span><span>CHF 535</span></div>
+                <div class="po"><span>Lebensmittel &amp; Haushalt</span><span>CHF 450</span></div>
+                <div class="po"><span>Internet &amp; Telefon</span><span>CHF 85</span></div>
+                <div class="gr"><span>Mobilität</span><span>CHF 120</span></div>
+                <div class="gr"><span>Steuern &amp; Vorsorge</span><span>CHF 871</span></div>
+                <div class="po"><span>Steuern</span><span>CHF 850</span></div>
+                <div class="po"><span>Säule 3a (CHF 250 / Jahr)</span><span>CHF 21</span></div>
+                <div class="gr"><span>Verpflichtungen</span><span>—</span></div>
+                <div class="leer">Schuldenraten, Alimente bezahlt: nicht erfasst</div>
+              </div>
+            </details>
           </div>
         </div>
         <div class="rechtsspalte stufe s3" id="fu-rest">
-          <div class="fu-status">
+          <details class="fu-auf" style="border-top:0"><summary><span>Sparen &amp; Vorsorge</span><b>CHF 521 /Mt.</b></summary>
+            <div class="fu-posten">
+              <div class="po"><span>Sparziel</span><span>CHF 500 /Mt.</span></div>
+              <div class="po"><span>Säule 3a eingezahlt</span><span>CHF 250 /Jahr</span></div>
+              <div class="leer">Höchstbetrag 2026 mit Pensionskasse: CHF 7’258 — noch CHF 7’008 möglich</div>
+              <div class="po"><span>Säule 3b</span><span>—</span></div>
+              <div class="po"><span>Pensionskasse, Beitrag</span><span>CHF 420 /Mt.</span></div>
+              <div class="leer">Der PK-Beitrag ist schon vom Lohn abgezogen und steht darum nicht in den Ausgaben.</div>
+            </div>
+          </details>
+          <details class="fu-auf"><summary><span>Vermögen &amp; Schulden</span><b>CHF 18’500</b></summary>
+            <div class="fu-posten">
+              <div class="gr"><span>Frei verfügbar</span><span>CHF 18’500</span></div>
+              <div class="po"><span>Sparkonto (ZKB)</span><span>CHF 18’500</span></div>
+              <div class="po"><span>Wertschriften / Fonds</span><span>—</span></div>
+              <div class="gr"><span>Gebunden (Vorsorge)</span><span>CHF 45’000</span></div>
+              <div class="po"><span>Pensionskasse, Guthaben</span><span>CHF 45’000</span></div>
+              <div class="po"><span>Säule 3a, Guthaben</span><span>—</span></div>
+              <div class="gr"><span>Schulden</span><span>—</span></div>
+              <div class="po"><span>Persönliche Darlehen</span><span>—</span></div>
+              <div class="po"><span>Kreditkarte (1), offener Saldo</span><span>—</span></div>
+              <div class="po"><span>Offene Forderungen (Schuldenmanager)</span><span>keine</span></div>
+              <p class="fuss" style="margin:6px 0 0">Wertschriften, Ersparnisse und übriges Vermögen (Steuerwert). Die Pensionskasse zählt nicht zum frei verfügbaren Vermögen.</p>
+            </div>
+          </details>
+          <h4 style="margin:18px 0 0" data-sie="Ihre Instrumente" data-du="Deine Instrumente"></h4>
+          <div class="u-instrumente" id="k-instrumente"></div>
+          <div class="fu-status" style="margin-top:14px">
             <a class="verweis" href="#j"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Steuern<b>~ CHF 8’431 /J.</b><small>≈ CHF 703 pro Monat geschätzt · Ihre Angabe im Budget: CHF 850 pro Monat.</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#b"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Prämienverbilligung (IPV)<b>Kein Anspruch</b><small>Einkommen über Grenze (CHF 61’090)</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Sozialhilfe-Orientierung<b>Einkommen reicht aus</b><small>Grundbedarf (SKOS): CHF 1’061 | Total Bedarf: CHF 3’276</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Ergänzungsleistungen (EL)<b>EL nur bei AHV- oder IV-Leistung</b></span><span class="pfeil">›</span></a>
-            <a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Vermögen<b>CHF 18’500</b><small>Wertschriften, Ersparnisse und übriges Vermögen (Steuerwert)</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Gesundheitskosten (KVG)<b>CHF 240</b><small>Bezahlte Arztrechnungen 2026 · noch offen: CHF 180</small></span><span class="pfeil">›</span></a>
           </div>
           <details open><summary>Wo steht Ihr Lohn?</summary>
@@ -2377,7 +2437,7 @@ body.still .rs-karte { transition: none; }
       ['Steuer-Säule', 'Bundessteuer ≈ CHF 977 / Jahr', `<svg width="40" height="34" viewBox="0 0 40 34" aria-hidden="true"><rect x="12" y="2" width="16" height="30" rx="4" fill="var(--up)"/><rect x="12" y="22" width="16" height="10" rx="4" fill="var(--behoerden)"/></svg>`],
       ['Reserve-Tankanzeige', '4.9 Monate Reserve', bar(82, 'var(--finanzen)')],
       ['Schutzschild', '5/5 gedeckt', `<svg width="32" height="34" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5.5V11c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5V5.5Z" fill="var(--sage)"/></svg>`]];
-    document.getElementById('u-instrumente').innerHTML = INST.map(([t, w, v]) => `<button class="u-instrument">${v}<b>${t}</b><small>${w}</small></button>`).join('');
+    ['u-instrumente', 'k-instrumente'].forEach((id) => { const el = document.getElementById(id); if (el) el.innerHTML = INST.map(([t, w, v]) => `<button class="u-instrument">${v}<b>${t}</b><small>${w}</small></button>`).join(''); });
     const WZ = [['Lebensereignisse', 35, 'Umzug, Heirat, Stelle verloren, Todesfall …'], ['Gesundheit', 1, 'Unfall oder Krankheit'], ['Unterstützung & Anspruch', 1, 'Was steht mir zu?'], ['Geld & Steuern', 6, 'Steuern, Budget, Quellensteuer …'], ['Versicherung & Gesundheit', 3, 'Prämien, KVG-Wechsel …'], ['Dokumente & Behörden', 4, 'Briefe, Ausweis, Betreibungsauszug …'], ['Organisieren & Profil', 4, 'Merkliste, Kalender, Export …']];
     document.getElementById('u-werkzeuge').innerHTML = WZ.map(([t, n, b]) => `<details><summary>${t.replace('&', '&amp;')}<span>${n}</span></summary><p>${b} (Platzhalter)</p></details>`).join('');
     icons();
