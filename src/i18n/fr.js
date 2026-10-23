@@ -2686,6 +2686,15 @@ export default {
     ordnerStarting: 'Un bon début.',
     ordnerGrowing: { sie: 'Votre classeur se remplit.', du: 'Ton classeur se remplit.' },
     ordnerFull: 'Tout est à sa place.',
+    // Version 5 (23.10.2026) — nouveau, relecture
+    suggestTitle: 'Ce qu’on y range souvent en premier',
+    suggestId: 'Carte d’identité ou passeport',
+    suggestLease: 'Contrat de bail',
+    suggestKkPolicy: 'Police de la caisse-maladie',
+    suggestChapter: 'Chapitre {chapter}',
+    activeEmpty: 'Tous les documents sont échus et se trouvent dans l’archive.',
+    expiringEmpty: 'Rien n’arrive bientôt à échéance.',
+    archiveEmpty: 'L’archive est vide.',
   },
 
   budgetSync: {
