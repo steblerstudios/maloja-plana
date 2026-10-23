@@ -1190,7 +1190,8 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     { name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen', datum: '2026-10-01', ablauf: '9999' },
     { name: 'Lohnausweis 2025', wo: 'Finanzen & Geld · 12. Feb. 2026', icon: 'finanzen', licht: 'finanzen', datum: '2026-02-12', ablauf: '9999' },
     { name: 'Pass', wo: 'Persönliche Basis · läuft im März 2027 ab', icon: 'basis', licht: 'basis', bald: true, datum: '2025-06-03', ablauf: '2027-03' },
-    { name: 'Mietvertrag alte Wohnung', wo: 'Wohnen & Leben · Archiv', icon: 'wohnen', licht: 'wohnen', datum: '2021-07-20', ablauf: '9999', archiv: true },
+    // Archiv heisst in der App: abgelaufen (DocumentTresor.jsx, getDaysUntilExpiry < 0)
+    { name: 'Identitätskarte', wo: 'Persönliche Basis · Abgelaufen · Ablauf: 14.08.2026', icon: 'basis', licht: 'basis', datum: '2016-08-14', ablauf: '2026-08-14', archiv: true },
   ];
   let ablageFach = 'aktiv';
   function dokliste() {
