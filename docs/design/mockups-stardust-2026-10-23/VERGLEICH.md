@@ -122,3 +122,19 @@ weniger als 90 Tage bis zum Ablauf. Der Archiv-Platzhalter in Fassung 5 war daru
 - **Neue Einträge oben** (heute: unten).
 - Korrigiert (c5243a87): kein erfundenes «ohne Verknüpfung» mehr.
 - Entfernen mit «Rückgängig» war schon entschieden (Entscheid «C», §15); heute löscht die App sofort.
+
+### Kalender · entschieden (Sophie, 23.10.2026)
+
+Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.jsx`) steht mehr.
+- **Titel «Was ansteht»** (heute «Kalender und Erinnerungen»).
+- **Beides:** Tagesleiste mit Monatssprung, darunter aufklappbar «Ganzer Monat» als Monatsraster
+  (der Name «Ganzer Monat» ist neu, Copy-Prüfer).
+- **Formular wie heute, vollständig:** Text («Erinnerung hinzufügen...»), Datum, Kategorie (10),
+  Wiederkehrend (Einmalig bis Jährlich), bei Gesundheit «Von der Grundversicherung gedeckt?» und
+  «Letzter Besuch» (rechnet den nächsten Termin), Notiz («Optional...»), dazu «Schnell hinzufügen
+  aus Vorlagen» (11 Vorlagen, tragen direkt ein, Deckungs-Hinweis als Notiz).
+- **«Kalender exportieren (.ics)»** mit Satz, am Ende.
+- **«Möglicherweise für Sie da»** oben. Erscheint nur mit gedecktem Anspruch (IPV, Sozialhilfe, EL);
+  bei Maria Muster also nicht. Im Mockup per Schalter beide Zustände.
+- Vor dem Bau festlegen: Kategorie → Bereichsfarbe (Vorschlag in der Notiz unter dem Mockup).
+- Korrigiert (af59cebd): Formular-Texte aus der App statt «Titel» / «Datum».

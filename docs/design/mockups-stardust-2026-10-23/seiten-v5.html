@@ -385,6 +385,28 @@ body.desktop .zl-band { margin: 2px 0 0; }
 .zl-monate button { flex: 0 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; }
 .zl-monate button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 [data-seite="g"] .reiter2 button[aria-selected="true"] { border-bottom-color: var(--sage); }
+.zl-anspruch { border: 1px solid color-mix(in srgb, var(--sage) 30%, transparent); background: color-mix(in srgb, var(--sage) 7%, transparent); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
+.zl-anspruch b { font-weight: 500; font-size: 14px; }
+.zl-anspruch p { font-size: 12px; color: var(--mid); margin: 2px 0 8px; }
+.zl-anspruch a { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); text-decoration: none; font-size: 14px; }
+.zl-anspruch a i { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); }
+.zl-anspruch .pfeil { margin-left: auto; color: var(--soft); }
+.zl-raster-auf { margin-top: 10px; }
+.zl-raster-auf summary, .zl-vorlagen summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--sand); font-size: 14px; }
+.zl-raster { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 13px; }
+.zl-raster .wt { color: var(--soft); font-size: 11px; padding: 4px 0; }
+.zl-raster button { min-height: 40px; border: 0; border-radius: 10px; background: none; color: var(--text); font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-variant-numeric: tabular-nums; }
+.zl-raster button.heute { box-shadow: inset 0 0 0 1.5px var(--text); }
+.zl-raster button i { width: 5px; height: 5px; border-radius: 50%; }
+.zl-form-titel { font-size: 15px; font-weight: 500; margin: 0 0 4px; }
+.zl-form select { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: inherit; min-height: 44px; padding: 0 10px; }
+.zl-wieder { display: flex; flex-wrap: wrap; gap: 6px; }
+.zl-wieder button, #zl-vorlagen button { border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font: inherit; font-size: 13px; min-height: 36px; padding: 0 12px; cursor: pointer; }
+.zl-wieder button[aria-pressed="true"] { background: var(--sand); color: var(--onSand); border-color: var(--sand); }
+#zl-vorlagen { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 8px; }
+.zl-hinweis { font-size: 12px; color: var(--mid); margin: -6px 0 12px; line-height: 1.5; }
+.zl-export { margin-top: 18px; display: grid; gap: 4px; justify-items: start; }
+.zl-export small { font-size: 12px; color: var(--soft); }
 .zl-form { margin-top: 12px; padding: 14px; border: 1px solid var(--border); border-radius: 16px; }
 .termin .haken { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border: 0; background: none; cursor: pointer; margin: 0 -10px 0 auto; }
 .termin .haken i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); display: grid; place-items: center; }
@@ -849,6 +871,10 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <section class="abschnitt" id="g">
   <h2>G · Zeitleiste — «Was ansteht»</h2>
   <p class="warum">Von Stardust: die Tagesleiste mit «heute» und einem Band, das zeigt, in welcher Phase man gerade ist. Bei Maloja: Fristen als Punkte in der Farbe ihres Bereichs, laufende Abläufe als Band («Umzug»), heute hervorgehoben. Die Leiste lässt sich wischen; ein Tipp auf einen Tag springt in die Liste darunter. Kein Countdown, kein Rot. <b>Fassung 5:</b> was der Kalender heute kann — Monat vor und zurück (über den Jahreswechsel), Sprung auf jeden Monat und auf «Heute», «Bevorstehend / Erledigt» mit Zahl, abhaken, «+ Erinnerung hinzufügen» und der Hinweis am Schluss.</p>
+  <div class="leiste zustaende" role="group" aria-label="Zustand «Möglicherweise für Sie da»">
+    <button class="pill" data-anspruch="ja" aria-pressed="true">Mit gedecktem Anspruch</button>
+    <button class="pill" data-anspruch="nein" aria-pressed="false">Wie bei Maria Muster (kein Block)</button>
+  </div>
   <div class="geraet" data-seite="g">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
     <div class="rahmen"><nav class="seitenmenue" data-aktiv="kalender"></nav>
@@ -867,6 +893,11 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           </div>
         </div>
         <div class="rechtsspalte stufe s3">
+          <div class="zl-anspruch" id="zl-anspruch">
+            <b data-sie="Möglicherweise für Sie da" data-du="Möglicherweise für Dich da"></b>
+            <p data-sie="Aus Ihren Angaben — kein Muss, nur ein Hinweis, wo sich ein Blick lohnt." data-du="Aus Deinen Angaben — kein Muss, nur ein Hinweis, wo sich ein Blick lohnt."></p>
+            <a href="#b"><i></i>Prämienverbilligung (IPV)<span class="pfeil">›</span></a>
+          </div>
           <div class="zl-kopf"><button class="zl-nav" id="zl-zurueck" aria-label="Vorheriger Monat">‹</button><div class="zl-monat" id="zl-monat" aria-live="polite">Oktober 2026</div><button class="zl-nav" id="zl-vor" aria-label="Nächster Monat">›</button><button class="knopfruhig zl-heute" id="zl-heute">Heute</button></div>
           <div class="zl-monate" id="zl-monate" role="group" aria-label="Monat wählen"></div>
           <div class="zeitleiste" aria-label="Tage">
@@ -874,16 +905,23 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <div class="zl-band" id="zl-band" aria-hidden="true"></div>
           </div>
           <div class="legende2" style="margin:8px 0 0"><span><i style="background:var(--wohnen);border-radius:50%"></i>Frist</span><span><i style="background:var(--finanzen);border-radius:1px;transform:rotate(45deg) scale(.85)"></i>Termin</span><span><i style="background:var(--text);border-radius:50%"></i>heute</span></div>
+          <details class="zl-raster-auf" id="zl-raster-auf"><summary>Ganzer Monat</summary><div class="zl-raster" id="zl-raster" role="group" aria-label="Kalender-Übersicht"></div></details>
           <div class="reiter2" role="tablist" aria-label="Bevorstehend oder erledigt" style="margin-top:16px"><button role="tab" aria-selected="true" data-zl="offen"><span id="zl-zahl-offen">0</span> Bevorstehend</button><button role="tab" aria-selected="false" data-zl="erledigt"><span id="zl-zahl-erledigt">0</span> Erledigt</button></div>
           <button class="knopfruhig" id="zl-neu" style="margin-top:12px" aria-expanded="false">+ Erinnerung hinzufügen</button>
           <form class="zl-form" id="zl-form" hidden>
+            <h5 class="zl-form-titel">Erinnerung hinzufügen</h5>
+            <details class="zl-vorlagen"><summary>Schnell hinzufügen aus Vorlagen</summary><div id="zl-vorlagen"></div></details>
             <label class="feldzeile"><input id="zl-f-titel" type="text" placeholder="Erinnerung hinzufügen..." aria-label="Erinnerung hinzufügen" required></label>
             <label class="feldzeile"><input id="zl-f-datum" type="date" value="2026-10-30" aria-label="Datum" required></label>
-            <label class="feldzeile"><textarea id="zl-f-notiz" placeholder="Optional..." aria-label="Notiz" rows="2"></textarea></label>
+            <label class="feldzeile"><span>Kategorie</span><select id="zl-f-kat"></select></label>
+            <p class="zl-hinweis" id="zl-f-deckung" hidden></p>
+            <div class="feldzeile"><span>Wiederkehrend</span><div class="zl-wieder" id="zl-f-wieder" role="group" aria-label="Wiederkehrend"></div></div>
+            <label class="feldzeile"><span>Notiz</span><textarea id="zl-f-notiz" placeholder="Optional..." aria-label="Notiz" rows="2"></textarea></label>
             <div style="display:flex;gap:10px"><button class="knopfprim" type="submit">Erinnerung hinzufügen</button><button class="knopfruhig" type="button" id="zl-f-ab">Abbrechen</button></div>
           </form>
           <div class="liste-zeit" id="zl-liste"></div>
           <div class="ruhig"><span class="punkt"></span><span data-sie="Ohne Datum: 4 Einträge auf der Merkliste." data-du="Ohne Datum: 4 Einträge auf der Merkliste."></span></div>
+          <div class="zl-export"><button class="knopfruhig" data-meldung="maloja-erinnerungen.ics gespeichert">Kalender exportieren (.ics)</button><small data-sie="Fügen Sie Ihre Erinnerungen zu Ihrem Handy- oder Computerkalender hinzu." data-du="Füge deine Erinnerungen zu deinem Handy- oder Computerkalender hinzu."></small></div>
           <p class="fuss" data-sie="Diese Erinnerungen dienen nur zur Information. Bitte kontaktieren Sie die zuständige Behörde oder Fachperson für offizielle Auskünfte." data-du="Diese Erinnerungen dienen nur zur Information. Bitte kontaktiere die zuständige Behörde oder Fachperson für offizielle Auskünfte."></p>
         </div>
       </div>
@@ -894,6 +932,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li>Heute ist der echte Tag (23. Oktober 2026). <b>Alle Einträge sind Platzhalter</b>; im Bau kommen sie aus dem Kalender, den Abläufen (Frist «innert 14 Tagen» ab Umzugstag) und den Ablaufdaten in der Ablage.</li>
     <li>Punkt = Frist, Raute = Termin: Form trägt die Art, Farbe den Bereich, das Wort beides — der Graustufen-Test hält.</li>
     <li>Die Seite heisst heute «Kalender und Erinnerungen»; «Was ansteht» ist der neue Name aus der Navigations-Ordnung. Gruppen, «Fällig in … Tagen», Leer-Zustand und Hinweis wörtlich aus <code>de.js</code> (calendar.*). Formular wie die App: «Erinnerung hinzufügen...», Datum, Notiz mit «Optional...».</li>
+    <li>Entschieden 23.10.: Titel «Was ansteht»; Tagesleiste plus aufklappbar «Ganzer Monat» (neuer Text, Copy-Prüfer); Formular wie heute mit Kategorie, Wiederkehrend, bei Gesundheit Deckung und «Letzter Besuch», und «Schnell hinzufügen aus Vorlagen» (eine Vorlage trägt direkt ein, wie in <code>CalendarReminders.jsx</code>); dazu «Kalender exportieren (.ics)» und «Möglicherweise für Sie da». Dieser Block erscheint nur mit gedecktem Anspruch (IPV, Sozialhilfe, EL), bei Maria Muster also nicht — Schalter über dem Gerät. Kategorie → Bereichsfarbe ist ein Vorschlag (Gesundheit/Versicherung → Versicherungen, Verwaltung/Recht → Behörden, Arbeit/Ausbildung → Ausbildung, Familie/Persönlich → Basis).</li>
     <li>Das Band zeigt laufende Abläufe wie Stardusts Phasenband. «In 9 Tagen» statt Countdown; vergangene Fristen erscheinen ruhig als «verpasst — was jetzt?», nie rot.</li>
   </ul></div>
 </section>
@@ -1444,6 +1483,20 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         <span class="marken">${marken.map((m) => `<i class="marke-f${m.art === 'Termin' ? ' raute' : ''}" style="background:var(--${m.bereich})"></i>`).join('')}</span></button>`;
     }
     spur.innerHTML = h;
+    // Ganzer Monat (wie heute das Monatsraster), Montag zuerst
+    const erster = new Date(jahr, monat, 1), tageImMonat = new Date(jahr, monat + 1, 0).getDate(), leer = (erster.getDay() + 6) % 7;
+    let rh = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((w) => `<span class="wt">${w}</span>`).join('') + '<span></span>'.repeat(leer);
+    for (let d = 1; d <= tageImMonat; d++) {
+      const n = tageBis(new Date(jahr, monat, d)), marken = ANSTEHT.filter((a) => a.tag === n && !a.erledigt);
+      rh += `<button class="${n === 0 ? 'heute' : ''}" data-rn="${n}" aria-label="${d}. ${MONLANG[monat]}${marken.length ? ' · ' + marken.length : ''}">${d}<span style="display:flex;gap:2px;height:5px">${marken.map((m) => `<i style="background:var(--${m.bereich})"></i>`).join('')}</span></button>`;
+    }
+    document.getElementById('zl-raster').innerHTML = rh;
+    document.querySelectorAll('#zl-raster [data-rn]').forEach((b) => b.onclick = () => {
+      const n = +b.dataset.rn, ziel = ANSTEHT.find((a) => !a.erledigt && a.tag >= n);
+      document.querySelectorAll('#zl-liste .termin').forEach((t) => t.classList.toggle('markiert', ziel && +t.dataset.n === ziel.tag));
+      const el = ziel && document.querySelector(`#zl-liste .termin[data-n="${ziel.tag}"]`);
+      if (el) el.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'center' });
+    });
     const band = document.getElementById('zl-band');
     band.innerHTML = BAENDER.map((b) => `<span style="left:${(b.von - zlAb) * BREITE}px;width:${(b.bis - b.von + 1) * BREITE}px;background:var(--${b.bereich})">${b.titel}</span>`).join('');
     spur.onscroll = () => { band.style.transform = `translateX(${-spur.scrollLeft}px)`; };
@@ -1469,7 +1522,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       : [['Erledigt', () => true]];
     const liste = zlFach === 'offen' ? offen : fertig;
     const zeile = (a) => { const d = tagNach(a.tag); const wann = a.tag === 0 ? 'Fällig heute' : a.tag === 1 ? 'Fällig morgen' : a.tag > 1 ? `Fällig in ${a.tag} Tagen` : `${d.getDate()}. ${MONLANG[d.getMonth()]}`;
-      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-t="${a.titel}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
+      return `<div class="termin${a.erledigt ? ' fertig' : ''}" data-n="${a.tag}"><span class="datum"><b>${d.getDate()}</b><small>${MON[d.getMonth()]}</small></span><span class="sym k" data-icon="${a.bereich}" style="--licht: var(--${a.bereich})"></span><span class="was">${a.titel}<small><span class="art">${a.art}</span> · ${wann} · ${a.woher}${a.wieder && a.wieder !== 'once' ? ' · ↻ ' + WIEDER.find((w) => w[0] === a.wieder)[1] : ''}</small></span><button class="haken" aria-pressed="${!!a.erledigt}" aria-label="${a.erledigt ? 'Rückgängig' : 'Als erledigt markieren'}: ${a.titel}" data-t="${a.titel}"><i>${a.erledigt ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' : ''}</i></button></div>`; };
     const l = document.getElementById('zl-liste');
     l.innerHTML = liste.length ? gruppen.map(([t, f]) => { const e = liste.filter(f); return e.length ? `<h5>${t}</h5>` + e.map(zeile).join('') : ''; }).join('')
       : `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Noch nichts geplant</h4><p>${anrede === 'du' ? 'Noch keine Erinnerungen. Füge deine erste Erinnerung hinzu, um organisiert zu bleiben.' : 'Noch keine Erinnerungen. Fügen Sie Ihre erste Erinnerung hinzu, um organisiert zu bleiben.'}</p></div>`;
@@ -1492,14 +1545,62 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const zlFormZeigen = (an) => { zlForm.hidden = !an; zlNeu.hidden = an; zlNeu.setAttribute('aria-expanded', an); if (an) document.getElementById('zl-f-titel').focus({ preventScroll: true }); };
   zlNeu.onclick = () => zlFormZeigen(true);
   document.getElementById('zl-f-ab').onclick = () => zlFormZeigen(false);
+  // Formular wie CalendarReminders.jsx: Kategorie, Wiederkehrend, bei Gesundheit Deckung + letzter Besuch, Vorlagen
+  const KAT = [['health', 'Gesundheit', 'versicherungen'], ['admin', 'Verwaltung', 'behoerden'], ['finance', 'Finanzen', 'finanzen'], ['insurance', 'Versicherung', 'versicherungen'], ['work', 'Arbeit', 'ausbildung'], ['family', 'Familie', 'basis'], ['education', 'Ausbildung', 'ausbildung'], ['housing', 'Wohnen', 'wohnen'], ['legal', 'Recht', 'behoerden'], ['personal', 'Persönlich', 'basis']];
+  const WIEDER = [['once', 'Einmalig'], ['daily', 'Täglich'], ['weekly', 'Wöchentlich'], ['monthly', 'Monatlich'], ['quarterly', 'Alle 3 Monate'], ['halfYearly', 'Alle 6 Monate'], ['yearly', 'Jährlich']];
+  const DECKUNG = {
+    doctor: 'Arztbesuche sind gedeckt, wenn medizinisch nötig — nach Franchise und Selbstbehalt. Einen festen jährlichen Gesundheits-Check vergütet die Grundversicherung nicht automatisch.',
+    dentist: 'Zahnbehandlungen sind in der Regel nicht in der Grundversicherung — die Kosten meist selbst zu tragen (ausser bei bestimmten Erkrankungen). Eine Zusatzversicherung kann einen Teil übernehmen.',
+    gyn: 'Grundversicherung: gynäkologische Krebsvorsorge (Pap) i.d.R. alle 3 Jahre (nach zwei unauffälligen jährlichen Kontrollen). Häufiger ist möglich — die zusätzlichen Termine sind dann selbst zu zahlen. Was medizinisch sinnvoll ist, klärt die Ärztin/der Arzt.',
+    vaccinations: 'Vom BAG empfohlene Impfungen sind meist gedeckt (nach Franchise/Selbstbehalt). Reiseimpfungen in der Regel nicht.',
+    medication: 'Ärztlich verschriebene Medikamente von der Spezialitätenliste sind gedeckt — nach Franchise und Selbstbehalt. Rezept rechtzeitig erneuern, damit keine Lücke entsteht.',
+  };
+  const VORLAGEN = [  // TEMPLATES in CalendarReminders.jsx, Tage ab heute
+    ['Jährlicher Arztbesuch', 'health', 'yearly', 30, 'doctor'], ['Jährlicher Zahnarztbesuch', 'health', 'yearly', 60, 'dentist'], ['Jährlicher Gynäkologie-Besuch', 'health', 'yearly', 90, 'gyn'],
+    ['Steuererklärung Frist', 'finance', 'yearly', 120], ['Versicherung erneuern', 'insurance', 'yearly', 180], ['Bewilligung erneuern', 'admin', 'yearly', 365],
+    ['RAV-Termin', 'admin', 'monthly', 14], ['Integrationskurs', 'education', 'weekly', 7], ['Impf-Erinnerung', 'health', 'yearly', 180, 'vaccinations'],
+    ['Medikamente nachbestellen / Rezept erneuern', 'health', 'quarterly', 60, 'medication'], ['Krankenkasse wechseln Frist (30. Nov.)', 'insurance', 'yearly', tageBis(new Date(2026, 10, 30))],
+  ];
+  let zlWieder = 'once', zlDeckung = '';
+  const katBereich = (k) => (KAT.find((x) => x[0] === k) || KAT[9])[2];
+  document.getElementById('zl-f-kat').innerHTML = KAT.map(([k, n]) => `<option value="${k}"${k === 'personal' ? ' selected' : ''}>${n}</option>`).join('');
+  function zlFormFelder() {
+    document.getElementById('zl-f-wieder').innerHTML = WIEDER.map(([k, n]) => `<button type="button" data-wieder="${k}" aria-pressed="${zlWieder === k}">${n}</button>`).join('');
+    document.querySelectorAll('[data-wieder]').forEach((b) => b.onclick = () => { zlWieder = b.dataset.wieder; zlFormFelder(); });
+    const gesund = document.getElementById('zl-f-kat').value === 'health', d = document.getElementById('zl-f-deckung');
+    d.hidden = !gesund;
+    d.innerHTML = gesund ? `<span style="display:block;margin-bottom:6px">Von der Grundversicherung gedeckt? (optional)</span><span class="zl-wieder">${[['covered', 'gedeckt'], ['selfpay', 'selbst zahlen'], ['unsure', 'unsicher']].map(([k, n]) => `<button type="button" data-deckung="${k}" aria-pressed="${zlDeckung === k}">${n}</button>`).join('')}</span>
+      <label class="feldzeile" style="margin:12px 0 0"><span>Letzter Besuch (optional)</span><input type="date" id="zl-f-besuch"><small>Daraus berechnen wir den nächsten empfohlenen Termin.</small></label>` : '';
+    d.querySelectorAll('[data-deckung]').forEach((b) => b.onclick = () => { zlDeckung = zlDeckung === b.dataset.deckung ? '' : b.dataset.deckung; zlFormFelder(); });
+    const besuch = document.getElementById('zl-f-besuch');
+    if (besuch) besuch.onchange = () => { if (!besuch.value) return; const [j, m, t] = besuch.value.split('-').map(Number); const n = new Date(j, m - 1, t);
+      ({ daily: () => n.setDate(t + 1), weekly: () => n.setDate(t + 7), monthly: () => n.setMonth(m), quarterly: () => n.setMonth(m + 2), halfYearly: () => n.setMonth(m + 5), yearly: () => n.setFullYear(j + 1), once: () => n.setFullYear(j + 1) })[zlWieder]();
+      document.getElementById('zl-f-datum').value = `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`; };
+  }
+  document.getElementById('zl-f-kat').onchange = zlFormFelder;
+  zlFormFelder();
+  const zlEintragen = (eintrag) => {
+    ANSTEHT.push(eintrag);
+    zlForm.reset(); zlWieder = 'once'; zlDeckung = ''; zlFormFelder(); zlFormZeigen(false);
+    zlFach = 'offen'; document.querySelectorAll('[data-zl]').forEach((x) => x.setAttribute('aria-selected', x.dataset.zl === 'offen'));
+    zeitleiste(); melden(zlForm.closest('.geraet'), `«${eintrag.titel}» hinzugefügt`, false);
+  };
+  // Eine Vorlage trägt direkt ein (wie die App), die Deckungs-Orientierung wandert in die Notiz
+  document.getElementById('zl-vorlagen').innerHTML = VORLAGEN.map(([t], i) => `<button type="button" data-vorlage="${i}">${t}</button>`).join('');
+  document.querySelectorAll('[data-vorlage]').forEach((b) => b.onclick = () => {
+    const [titel, kat, wieder, tage, deck] = VORLAGEN[+b.dataset.vorlage];
+    zlEintragen({ tag: tage, titel, art: 'Termin', bereich: katBereich(kat), woher: 'aus einer Vorlage', wieder, notiz: deck ? DECKUNG[deck] : '' });
+  });
   zlForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const titel = document.getElementById('zl-f-titel').value.trim(), [j, m, t] = document.getElementById('zl-f-datum').value.split('-').map(Number);
     if (!titel || !j) return;
-    ANSTEHT.push({ tag: tageBis(new Date(j, m - 1, t)), titel, art: 'Termin', bereich: 'basis', woher: 'selbst eingetragen' });
-    zlForm.reset(); zlFormZeigen(false);
-    zlFach = 'offen'; document.querySelectorAll('[data-zl]').forEach((x) => x.setAttribute('aria-selected', x.dataset.zl === 'offen'));
-    zeitleiste(); melden(zlForm.closest('.geraet'), `«${titel}» hinzugefügt`, false);
+    zlEintragen({ tag: tageBis(new Date(j, m - 1, t)), titel, art: 'Termin', bereich: katBereich(document.getElementById('zl-f-kat').value), woher: 'selbst eingetragen', wieder: zlWieder, notiz: document.getElementById('zl-f-notiz').value.trim() });
+  });
+  // «Möglicherweise für Sie da» erscheint nur mit gedecktem Anspruch (anspruchSignaleListe); Maria Muster hat keinen
+  document.querySelectorAll('[data-anspruch]').forEach((b) => b.onclick = () => {
+    document.querySelectorAll('[data-anspruch]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    document.getElementById('zl-anspruch').hidden = b.dataset.anspruch !== 'ja';
   });
 
   // ---------- H · Dokument fotografieren ----------
