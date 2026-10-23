@@ -430,6 +430,7 @@ body.desktop .zl-band { margin: 2px 0 0; }
 .art-wahl button small { display: block; color: var(--soft); font-size: 12px; }
 .art-wahl button[aria-pressed="true"] { border-color: var(--basis); background: color-mix(in srgb, var(--basis) 14%, var(--surface)); }
 .feldzeile { display: flex; flex-direction: column; gap: 6px; margin: 4px 0 14px; font-size: 14px; }
+.feldzeile textarea { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); padding: 11px 14px; font: inherit; resize: vertical; }
 .feldzeile input { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); padding: 11px 14px; font: inherit; min-height: 44px; }
 .feldzeile small { color: var(--soft); font-size: 12px; }
 .erlaubnis { text-align: center; padding: 10px 4px; }
@@ -876,9 +877,9 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           <div class="reiter2" role="tablist" aria-label="Bevorstehend oder erledigt" style="margin-top:16px"><button role="tab" aria-selected="true" data-zl="offen"><span id="zl-zahl-offen">0</span> Bevorstehend</button><button role="tab" aria-selected="false" data-zl="erledigt"><span id="zl-zahl-erledigt">0</span> Erledigt</button></div>
           <button class="knopfruhig" id="zl-neu" style="margin-top:12px" aria-expanded="false">+ Erinnerung hinzufügen</button>
           <form class="zl-form" id="zl-form" hidden>
-            <label class="feldzeile"><span>Titel</span><input id="zl-f-titel" type="text" required></label>
-            <label class="feldzeile"><span>Datum</span><input id="zl-f-datum" type="date" value="2026-10-30" required></label>
-            <label class="feldzeile"><span>Notiz</span><input id="zl-f-notiz" type="text"></label>
+            <label class="feldzeile"><input id="zl-f-titel" type="text" placeholder="Erinnerung hinzufügen..." aria-label="Erinnerung hinzufügen" required></label>
+            <label class="feldzeile"><input id="zl-f-datum" type="date" value="2026-10-30" aria-label="Datum" required></label>
+            <label class="feldzeile"><textarea id="zl-f-notiz" placeholder="Optional..." aria-label="Notiz" rows="2"></textarea></label>
             <div style="display:flex;gap:10px"><button class="knopfprim" type="submit">Erinnerung hinzufügen</button><button class="knopfruhig" type="button" id="zl-f-ab">Abbrechen</button></div>
           </form>
           <div class="liste-zeit" id="zl-liste"></div>
@@ -892,7 +893,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   <div class="notiz"><ul>
     <li>Heute ist der echte Tag (23. Oktober 2026). <b>Alle Einträge sind Platzhalter</b>; im Bau kommen sie aus dem Kalender, den Abläufen (Frist «innert 14 Tagen» ab Umzugstag) und den Ablaufdaten in der Ablage.</li>
     <li>Punkt = Frist, Raute = Termin: Form trägt die Art, Farbe den Bereich, das Wort beides — der Graustufen-Test hält.</li>
-    <li>Die Seite heisst heute «Kalender und Erinnerungen»; «Was ansteht» ist der neue Name aus der Navigations-Ordnung. Gruppen, «Fällig in … Tagen», Leer-Zustand und Hinweis wörtlich aus <code>de.js</code> (calendar.*). Die Formular-Beschriftungen «Titel» und «Datum» sind Platzhalter.</li>
+    <li>Die Seite heisst heute «Kalender und Erinnerungen»; «Was ansteht» ist der neue Name aus der Navigations-Ordnung. Gruppen, «Fällig in … Tagen», Leer-Zustand und Hinweis wörtlich aus <code>de.js</code> (calendar.*). Formular wie die App: «Erinnerung hinzufügen...», Datum, Notiz mit «Optional...».</li>
     <li>Das Band zeigt laufende Abläufe wie Stardusts Phasenband. «In 9 Tagen» statt Countdown; vergangene Fristen erscheinen ruhig als «verpasst — was jetzt?», nie rot.</li>
   </ul></div>
 </section>
