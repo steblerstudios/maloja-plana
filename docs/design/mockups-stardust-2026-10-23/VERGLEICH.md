@@ -410,3 +410,8 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
 `vergleich-v5.html` hat jetzt 12 Seiten.
 
 **Noch nicht entschieden:** die drei Entwürfe I, J, K. Empfehlung Claude: so übernehmen.
+
+### entschieden (Sophie, 23.10.2026 abends)
+
+- **Steuern (J) und Einstellungen (I) gelten so.** Sophie wörtlich: «steuern und einstellungen sind super».
+- **Finanz-Übersicht (K):** keine Rückmeldung, bleibt offen.
