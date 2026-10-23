@@ -1399,6 +1399,16 @@ export default {
     anspruch: 'Diritti',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Zaino',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'In arrivo',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Dove si trova ora e che cosa viene dopo.', du: 'Dove ti trovi ora e che cosa viene dopo.' },
+      wasAnsteht: 'Scadenze, appuntamenti e la lista promemoria in un unico posto.',
+      rucksack: { sie: 'Ciò che porta con sé in un cambiamento: documenti, carte d’identità, contatti.', du: 'Ciò che porti con te in un cambiamento: documenti, carte d’identità, contatti.' },
+      anspruch: 'Prestazioni e calcolatori — riduzione dei premi, aiuto sociale, borse di studio.',
+    },
     capDokument: 'Documento',
     capBeleg: 'Ricevuta',
     capFrist: 'Scadenza',

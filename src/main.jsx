@@ -1221,16 +1221,18 @@ const AppInner = ({ demo }) => {
       activeView: view,
       chapters,
       completion: calculateCompletion(),
-      // Am Handy trägt der Boden-Anker die Übersicht → im Drawer weglassen (keine
-      // Dopplung). In der Web-Ansicht gibt es keinen Anker → Übersicht bleibt hier,
-      // bis wir ein eigenes Web-Äquivalent haben (Stebler Studios).
-      hasBottomAnchor: isMobile,
       leftHand,
+      isDarkMode,
+      // Fassung 5 (23.10.2026): unten im Menü Einfache Ansicht und Problem melden —
+      // derselbe Schalter wie in der Kopfzeile, derselbe Mail-Entwurf wie in der Fusszeile.
+      simpleView,
+      onToggleSimpleView: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
+      feedbackHref,
       // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
+      // «Rundgang neu starten» steht seit Fassung 5 nur noch bei den Einstellungen
+      // (Einstellungs-Schublade, am Handy und am Computer erreichbar).
       settingsControls: null,
       settingsLabel: t('nav.settings'),
-      // Rundgang nur EINMAL: am Handy in den Einstellungen, am Desktop hier im Menü.
-      onStartTour: isMobile ? null : () => { setView('dashboard'); setTourOpen(true); },
     })),
     // Einstellungen & Konto — eigene Schublade (oben-rechts-Eingang, entdoppelt das Menü).
     settingsOpen && React.createElement(React.Suspense, { fallback: null, key: 'einstellungen' },
