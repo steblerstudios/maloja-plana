@@ -307,6 +307,14 @@ export default {
     fertigText: 'Tut ils quatter pass èn fatgs.',
     // rm ungeprüft F5
     nochmals: 'Guardar puspè il decurs',
+    // rm ungeprüft F5
+    passAdresse: 'Adressa',
+    // rm ungeprüft F5
+    passGemeinde: 'Vischnanca',
+    // rm ungeprüft F5
+    passNachfuehren: 'Actualisar',
+    // rm ungeprüft F5
+    passKuendigen: 'Desdir',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',
