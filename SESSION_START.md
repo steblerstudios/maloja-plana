@@ -17,7 +17,21 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
-> 🏷️ **Nachtrag 23.10.2026, 18:21 — Ein Name je Seite. Branch `fix/ein-name-pro-seite`, NICHT gepusht, kein PR.**
+> 📱 **Nachtrag 23.10.2026, 18:40 — Fusszeile, Kopfzeile, Scroll-Fix (#545) gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 18:36): main = `55ca1e93` (#545, 18:31) · live = `4299bfb9` (0.1.48-beta, 18:08,
+> ⚠️ laut Skript aus ungespeichertem Arbeitsbaum gebaut) · 8 Commits dazwischen · offen: #549 (dieser Doku-Nachzug), #548, #547.
+> **Inhalt #545:** Boden-Anker am Handy 5 statt 7 Plätze (Übersicht · Rucksack | ＋ | Anspruch · Menü; Kalender im ＋-Fächer
+> und Menü, Suche im Menü). Kopfzeile Handy **und** Desktop: Lupe + Zahnrad (Desktop: Zahnrad ersetzt die Barrierefreiheits-
+> Figur, gleiche Schublade). Scroll-Springen behoben: `filter: grayscale` lag auf dem App-Rahmen und machte ihn zum Bezugsrahmen
+> für `position: fixed` (gemessen 4716 px statt 812 px) → Filter jetzt auf `<html>`; dazu `translateZ(0)` an der Leiste.
+> **Verifiziert:** vitest 363 / 6550 grün, build ok, size 64,55 / 65 kB, CI grün; im Browser 375 px und 1280 px angeschaut.
+> **Nicht verifiziert:** echtes iPhone/Android (das Zittern beim Ein-/Ausfahren der Adressleiste ist nur vorbeugend behandelt).
+> **Lehre:** Zwei Sitzungen im selben Checkout — eine wechselte den Zweig zwischen Build und Commit, der Commit landete auf dem
+> fremden Zweig. Parallel arbeitende Sitzungen gehören in **eigene Arbeitsbäume** (`git worktree add`), nie in denselben Ordner.
+> **Nächster Schritt:** nächster Deploy (Stebler Studios) nimmt #545 mit; danach live am Handy prüfen (Schwarzweiss an, scrollen).
+
+> 🏷️ **Nachtrag 23.10.2026, 18:21 — Ein Name je Seite. Branch `fix/ein-name-pro-seite`, PR gegen main offen, NICHT gemergt, NICHT live.**
 >
 > **Anlass (Stebler Studios):** Dieselbe Seite hatte drei Namen — unten «Anspruch», im Rucksack «Was steht mir zu?», als
 > Titel «Lebenssituationen». **Regel ab jetzt: eine Seite, ein Name, ein i18n-Schlüssel** — Leiste, Menü, Seitentitel,
@@ -37,9 +51,20 @@
 > auf derselben Höhe; bei 320 px in allen fünf Sprachen höchstens zwei Zeilen (Messtexte in der Leistenschrift, Sprache
 > nicht echt umgestellt). **Nicht** auf echtem iPhone, **nicht** live.
 >
-> **Offen:** (1) Branch steht auf `fix/suche-notfallkarte-mietzins` (`2fae91da`, andere Sitzung, nicht auf main) — erst
-> diesen PR, dann diesen. (2) rm: neuer Linktext «rm ungeprüft»; `nav.rucksack` ist in rm.js französisch («Sac à dos») —
-> Gegenlese. (3) Push + Entwurfs-PR nur auf Zuruf. (4) `ipv_rechner_28.html` im Stamm, ungetrackt, nicht aus dieser Sitzung.
+> **Offen:** (1) rm-Gegenlese: neuer Linktext «rm ungeprüft»; `nav.rucksack` ist in rm.js französisch («Sac à dos»).
+> (2) Nach dem Merge live am Handy prüfen, ob die zweizeilige Leiste ruhig steht. (3) `ipv_rechner_28.html` im Stamm, ungetrackt,
+> nicht aus dieser Sitzung. *Nachgetragen 18:50:* origin/main (#545, #548, #549, Tor 0.1.48) hineingemergt; main hatte
+> `calendar.title` parallel auf «Was ansteht» angeglichen — Schlüssel bleibt gelöscht, Text identisch mit `nav.wasAnsteht`.
+
+> 🚪 **Nachtrag 23.10.2026, 17:45 — Deploy-Tor 0.1.48-beta (Nachzug 29.10.) auf Zweig `release/0.1.48-beta` `c88ee519`: 0 Blocker. Marke NICHT gesetzt, NICHT deployt.**
+>
+> **Gemessen:** live = `d4da4629` (0.1.47-beta) · main = `412d11bb` (Fassung 5 #539–#544 gemergt) · Release-Zweig = main-Inhalt
+> + Changelog/Version + Tor-Fixes. Vitest 363 Dateien / 6550 Tests grün (einzelne Datei-Tests laufen unter Last ins 5-s-Limit,
+> einzeln grün), Lint 0, Build ok, size 64,63 / 65 kB, SEO 0/0, PII 0 (Vorname aus 23 Kommentaren entfernt), CSP self-only,
+> keine neuen Dependencies, ESTV-Stichprobe 156/156 (Daten seit live unverändert). Reviews ganze App (Sicherheit, a11y, Design)
+> und Diff (Swiss-Precision, Recht, Ordnung, Links, Copy, Code-Review): 0 🔴; ⚠️ behoben in `46267e21`, `30738256`, `c88ee519`.
+> **Offen:** GitHub war ab 16:50 nicht erreichbar → Zweig nicht gepusht, kein PR. Fedlex-Link `eli/cc/2026/542` (Beträge 2027)
+> und BVG-Mindestzins 2027 an der Quelle noch nicht gegengeprüft (fedlex nicht erreichbar). Marke erst auf dem gemergten main-HEAD.
 
 > 🚪 **Nachtrag 21.10.2026, 19:45 — Deploy-Tor 0.1.47-beta auf `069ee9f4`: 0 Blocker, Marke gesetzt. NICHT deployt.**
 >

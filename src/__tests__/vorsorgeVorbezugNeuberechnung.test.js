@@ -93,7 +93,7 @@ describe('Vorsorge-Rechner: Vorbezug wird im Referenzalter neu berechnet (Merkbl
   });
 });
 
-describe('Eigene Beitragsjahre zählen bis zum Referenzalter (Sophie, 22.10.2026)', () => {
+describe('Eigene Beitragsjahre zählen bis zum Referenzalter (Stebler Studios, 22.10.2026)', () => {
   // 40 eingetragen = 40 Jahre im Referenzalter. Bezug 63: bis 65 fehlen die zwei Vorbezugsjahre
   // (38/44 = 2 055, Kürzung 13,6 % = 279), ab 65 40/44 = 2 163 − 279 = 1 884. Merkblatt 3.04 Ziff. 5
   // («genau gleichgestellt»): Rente ab 65 + Kürzung = Rente bei Bezug mit 65.

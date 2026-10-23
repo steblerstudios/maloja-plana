@@ -1829,7 +1829,7 @@ export default {
     nextUpReassure: { sie: 'Solo un suggerimento — il ritmo lo decide Lei.', du: 'Solo un suggerimento — il ritmo lo decidi tu.' },
     glanceDeadline: 'Prossima scadenza',
     glanceNoDeadline: 'nessuna aperta',
-    glanceDeadlinePast: '{title} · scaduta dal {date}',
+    glanceDeadlinePast: '{title} · scadenza passata dal {date}',
     glanceSaved: 'Ultimo salvataggio',
     glanceNeverSaved: 'Ancora nessun file di backup creato',
     nextUpAction: 'Completare: {feld}',
@@ -2804,6 +2804,7 @@ export default {
 
   premium: {
     title: 'Riduzione dei premi (IPV)',
+    lageTitle: { sie: 'La Sua situazione', du: 'La tua situazione' },
     subtitle: { sie: 'Riduzione individuale dei premi — il cantone copre una parte del Suo premio di assicurazione malattia se il Suo reddito è inferiore a una certa soglia.', du: 'Riduzione individuale dei premi — il cantone copre una parte del tuo premio di assicurazione malattia se il tuo reddito è inferiore a una certa soglia.' },
     canton: 'Cantone: {name}',
     cantonUnknown: 'Non riconosciuto',
@@ -6051,6 +6052,7 @@ export default {
     vorbezugNeuberechnung: { sie: 'Fino all’età di riferimento mancano ancora anni di contribuzione, perciò di solito si tratta di una rendita parziale. Con domicilio in Svizzera, in questo periodo l’obbligo contributivo continua anche per lei; all’età di riferimento la rendita viene ricalcolata con questi anni. La riduzione in franchi resta a vita e viene adeguata con le rendite.', du: 'Fino all’età di riferimento mancano ancora anni di contribuzione, perciò di solito si tratta di una rendita parziale. Con domicilio in Svizzera, in questo periodo l’obbligo contributivo continua anche per te; all’età di riferimento la rendita viene ricalcolata con questi anni. La riduzione in franchi resta a vita e viene adeguata con le rendite.' },
     abAlterKurz: 'da {alter}: CHF {betrag}',
     vorbezug: 'Riduzione (anticipo)',
+    vorbezugFrauenUebergang: 'Per le donne nate tra il 1961 e il 1969 valgono aliquote di riduzione più basse, qui non rappresentate (promemoria AVS 3.04). Da verificare presso la cassa di compensazione.',
     aufschub: 'Supplemento (differimento)',
     erziehungsgutschrift: 'Accredito per compiti educativi / assistenziali',
     plafoniert: 'Limite per coppie',

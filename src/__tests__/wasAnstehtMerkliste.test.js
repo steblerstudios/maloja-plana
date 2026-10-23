@@ -8,7 +8,7 @@ import de from '../i18n/de.js';
 import { VorlaeufigContext } from '../hooks/vorlaeufigContext.js';
 import { inDays } from '../utils/helpers.js';
 
-// Fassung 5 (Sophie, 23.10.2026): «Was ansteht» zeigt Merkpunkte mit Tag als Aufgabe,
+// Fassung 5 (Stebler Studios, 23.10.2026): «Was ansteht» zeigt Merkpunkte mit Tag als Aufgabe,
 // Merkpunkte ohne Tag im Fach «Noch ohne Tag», Tagesleiste + «Ganzer Monat», Export am Ende.
 
 let store;

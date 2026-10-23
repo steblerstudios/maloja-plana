@@ -1646,7 +1646,7 @@ const AppInner = ({ demo }) => {
         // isDarkMode: das Miet-Barometer im Budget braucht die Frucht-Farbe („du" trägt die
         // Bereichsfarbe) — ohne den Prop läge `bereichFillColor` im Dunkelmodus stumm daneben.
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
-        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
+        view === 'premium' && React.createElement(PremiumSubsidy, { key: datenModus, palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, isDarkMode }),
         view === 'kreditkarte' && React.createElement(Kreditkarte, { palette, t, data: activeData, onUpdateData: updateData }),
@@ -1660,7 +1660,7 @@ const AppInner = ({ demo }) => {
           onLegal: () => handleNavigate('legal'),
         }),
         view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'umzug' && React.createElement(UmzugAblauf, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'stelleverloren' && React.createElement(StelleVerloren, { palette, t, onNavigate: handleNavigate }),

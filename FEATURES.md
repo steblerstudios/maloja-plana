@@ -13,6 +13,9 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
+**Stand:** 2026-10-23 17:45 · **Live:** `d4da4629` (0.1.47-beta, 21.10.) · main `412d11bb` + Release `c88ee519` (0.1.48-beta) gebaut, nicht deployt.
+
+*Vorheriger Stand (bleibt als Beleg):*
 **Stand:** 2026-10-19 15:46 · **Live:** `650908a2` (0.1.46-beta) = `main`, Startdatei **`index-DonLTkj4.js`** = lokaler `dist`-Build, `version.json` gebaut 19.10. 15:41, `sauber: false` — einzige Abweichung im Arbeitsbaum ist die ungetrackte `ipv_rechner_28.html`, nicht ausgeliefert (live 404). Deploy durch Stebler Studios nach Deploy-Tor (Marke `650908a2`, auf diesem Baum wiederholt: 6160 Tests grün, build, SEO, 63,04/65 kB, PII Exit 0); `scripts/check-deploy.sh`: 132 Assets erreichbar. Live im Browser (Beispielmodus Maria Muster, ZH): Footer `v0.1.46-beta`, Stundenlohn-Ansicht mit Profil-Hinweis «je Betrieb», ZH-IPV Anspruchsjahr 2026, keine Konsolenfehler. Nachtrag in SESSION_START.md (19.10. 15:46).
 
 *Vorheriger Stand (bleibt als Beleg):*
@@ -43,6 +46,8 @@
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
+| **Fassung 5** — Ablage, Umzug Schritt für Schritt, Menü mit Karten + Icons, Kapitel-Kopf links + Finanzen, Merkliste ↔ «Was ansteht» mit Tag, IPV-Weg mit «Jährlich erinnern» | `built` | #539–#544 · main `412d11bb` · Release `c88ee519` | Je Zweig Copy-Prüfer, Browser 375 px im Beispiel, Suite auf zusammengeführtem Stand, CI grün; Tor 23.10.: 0 🔴. Verknüpfung Merkliste→Kalender mit echten Daten nur per Tests. rm «ungeprüft F5». |
+| **Werte 2027 als Jahrestabellen** (#533/#536) · **AHV-Vorbezug im Referenzalter neu** (#529) · **sichtbare Fehler** (#530) · **Eingang als Ort** (#537) · **Bildschirme** (#538) | `built` | main `412d11bb` | Skala 2027 an ahv-iv.ch bytegleich (Swiss-Precision 23.10.), Kürzungssätze = Merkblatt 3.04 Ziff. 4. Fedlex-Verordnung 2026/542 noch nicht an der Quelle geöffnet. |
 | **Stundenlohn-Rechner** — Grundlohn, Ferien, Zuschläge, Mindestlohn je Arbeitskanton, BVG/UVG-Schwellen; Hinweis «Stunden aus dem Profil, Schwellen je Betrieb»; Quellenzeile «ohne Feiertagszuschlag» nur NE | `verified-live` | PRs #492, #505, #506 · live `650908a2` (0.1.46-beta) | Live 19.10. ~15:44 in `index-DonLTkj4.js`-Build: `#/stundenlohn` im Beispielmodus geöffnet, Profil-Hinweis und Quellenzeile (NE LEmpl Art. 32d Abs. 3) wörtlich sichtbar. **Rechnung live nicht durchgespielt** (keine Werte eingegeben); Rechnung über Tests. |
 | **K31 · Prämienverbilligung alle 26 Kantone** + 7 Fristtexte (SG/LU/FR/GL/SH/NW/AR) × 5 Sprachen | `deployed` | #506 und Vorgänger · live `650908a2` | Live geprüft **nur ZH** (Beispielmodus): Anspruchsjahr 2026, Prämienregion 1, Grenze CHF 61’090, Hinweis SVA ZH. Die übrigen 25 Kantone und die Fristtexte **nicht live nachgesehen** → noch nicht `verified-live`. |
 | **Schulden R2 (#495/#496) · Mahnung rm (#490) · Neu laden nach Deploy (#502) · Beispielmodus ohne echten Kalender (#499)** | `deployed` | live `650908a2` | Im live Bundle mitgegangen (`check-deploy.sh` 132 Assets 200); **einzeln nicht live nachgeprüft**. Rumantsch-Gegenlese der Mahnbriefe offen. |

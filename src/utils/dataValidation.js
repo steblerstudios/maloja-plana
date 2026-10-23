@@ -165,6 +165,13 @@ export function validateMerkliste(items) {
       errors.push('merkliste[' + idx + '] text is not a string');
       return false;
     }
+    // Fassung 5: tag / erledigtAm nur als 'YYYY-MM-DD' — sonst Feld weg statt Absturz in «Was ansteht».
+    for (const feld of ['tag', 'erledigtAm']) {
+      if (m[feld] !== undefined && !(isString(m[feld]) && /^\d{4}-\d{2}-\d{2}$/.test(m[feld]))) {
+        errors.push('merkliste[' + idx + '] ' + feld + ' is not a date');
+        delete m[feld];
+      }
+    }
     return true;
   });
 

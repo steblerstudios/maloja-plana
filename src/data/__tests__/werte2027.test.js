@@ -4,7 +4,7 @@ import { AHV_WERTE_JE_JAHR, ahvWerte, berechneAltersrente, vergleicheVorbezugAuf
 import { LOHN_WERTE_JE_JAHR, lohnWerte, bvgKoordinationsabzug } from '../lohnAbzuege.js';
 import { saeule3aMaximum, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR } from '../saeule3a.js';
 
-// Werte 2027 als Jahrestabelle (Weg A, Entscheid Sophie 21.10.2026). Jeder Test hier gibt den
+// Werte 2027 als Jahrestabelle (Weg A, Entscheid Stebler Studios 21.10.2026). Jeder Test hier gibt den
 // Stichtag ausdrücklich mit — er hängt nicht an der Uhr. Was beim Laden aus der Uhr gebildet wird
 // (AHV_PARAMS, Versionen), prüft werte2027Uhr.test.js mit fester Uhr 2027.
 // Belege: Kommentare in ahvRechner.js (AHV_WERTE_JE_JAHR) und lohnAbzuege.js (LOHN_WERTE_JE_JAHR).
