@@ -61,10 +61,43 @@ lässt lange Titel nicht umbrechen. Ein langes deutsches Wort («Arbeitslosenent
 oder ein langer Titel schiebt den Menü-Knopf aus dem Bild. Vermutlich eine gemeinsame
 Kopf-Komponente ohne `min-width: 0` / Umbruch — **noch nicht am Code bestätigt.**
 
-### Noch offen
+### Zweite Runde (nach Unterbruch, Zweig auf `origin/main` 416394cf)
 
-- 768 × 1024 (Tablet hochkant), 1024 × 768 (Tablet quer), 1440 × 900 (Laptop),
-  844 × 390 (Handy quer) — Messung unterbrochen, wird nachgeholt
-- Tippflächen nach Art aufschlüsseln (wie viele echte Knöpfe, wie viele Textlinks im Fliesstext;
-  Letztere sind nach WCAG 2.5.8 ausgenommen)
-- Ursache des Seitenkopf-Musters am Code bestätigen
+| Grösse | Auffällige Seiten | Tippflächen < 24 px |
+|---|---|---|
+| 360 × 640 (Android) | 4: `dashboard` (unsichtbar), `alv`, `behoerdendossier`, `lebensmappe` | 767 |
+| 768 × 1024 (Tablet hochkant) | **0** | 826 |
+| 1024 × 768 (Tablet quer) | **0** | 829 |
+| 1440 × 900 (Laptop) | **0** | 829 |
+| 844 × 390 (Handy quer) | **0** | 826 |
+
+**Ab 768 px Breite ist keine Seite auffällig.** Die Fehler sitzen alle unter ~400 px Breite.
+
+### Ursachen — am Code bestätigt
+
+1. **Lange Seitentitel (alv, bestattung, bewilligung, ergaenzungsleistungen, premium,
+   stipendien).** `PageTitle` (`components/Heading.jsx`, 50 Verwendungen) setzt mit Icon
+   `display: inline-flex`. Der Titeltext wird ein Flex-Element mit `min-width: auto` =
+   breitestes Wort. `hyphens: manual`, `overflow-wrap: normal` → «Arbeitslosenentschädigung»
+   (28 px) misst 374 px in einer 320-px-Spalte. Weil `html { overflow-x: clip }` das seitliche
+   Scrollen verhindert, wird der Titel **rechts abgeschnitten** — das ist der sichtbare Fehler.
+   `PanelTitle` hat dasselbe Muster.
+2. **`lebensmappe`, `behoerdendossier`:** Dokument breiter als das Fenster (363 / 377 px), aber
+   kein sichtbares Element über dem Rand — unsichtbar, durch `overflow-x: clip` aufgefangen.
+   Kein sichtbarer Fehler; Ursache nicht weiter verfolgt.
+3. **`dashboard`:** die Station «Wanderrucksack» (`nowrap`, 120 px) ragt im Bild bis 408 px.
+   Liegt in der Bühne, wird abgeschnitten; bei 320 px ist zudem der Leitsatz im Bild zu breit.
+
+### Tippflächen — aufgeschlüsselt (Stichprobe: je Seite die ersten drei)
+
+Nur **13** sind Textlinks im Fliesstext (nach WCAG 2.5.8 ausgenommen). Die häufigsten echten:
+
+| Element | Grösse | Wo |
+|---|---|---|
+| Link «Feedback per E-Mail» | 135 × 17 | Fusszeile, **jede Seite** |
+| Knopf «Datenschutz & Rechtliches» | 174 × 17 | Fusszeile, **jede Seite** |
+| Knopf «IPV ⓘ» | 35 × 23 | viele Seiten |
+| Quellen-Links «… (öffnet in neuem Tab)» | z. B. 43 × 17 | Quellenlisten |
+| Eingabefelder | — | einzelne Seiten |
+
+Die zwei Fusszeilen-Links allein erklären rund 180 der ~800 Treffer (2 × 92 Seiten).
