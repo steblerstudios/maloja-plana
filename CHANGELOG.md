@@ -14,7 +14,7 @@ kommt der Changelog immer mit, nie doppelt.*
 ## [0.1.48-beta] — 2026-10-29 (geplant; Deploy durch Stebler Studios)
 
 *Alles seit `0.1.47-beta` (live `d4da4629`, 21.10.2026): Nachzug mit #529, #530, #532, #533, #536, #537, #538
-und Fassung 5 (#539–#544).*
+und Fassung 5 (#539–#545).*
 
 ### Geändert — Fassung 5 (Entscheide Stebler Studios 23.10.2026, Mockups `docs/design/mockups-stardust-2026-10-23`)
 - **Dokumentenablage** (#539): Fächer «Aktiv · Bald fällig · Archiv», Suche und Sortierung erst mit Inhalt;
@@ -39,12 +39,18 @@ und Fassung 5 (#539–#544).*
   die Beträge aus den Tabellen statt fester Zahlen.
 - **Eingang als Ort** (#537): die Code-Wand mit der Landschaft zuerst, das Versprechen als Hauptsache.
 - **Bildschirme** (#538): Titel brechen um, Fusszeile und IPV-Knopf mit Tippfläche, Etiketten im Bild.
+- **Fusszeile am Handy mit 5 statt 7 Plätzen** (#545): Übersicht · Rucksack | ＋ | Anspruch · Menü. Kalender
+  liegt im ＋-Fächer («Frist») und im Menü, die Suche oben im Menü und neu als Lupe in der Kopfzeile.
+- **Kopfzeile Handy und Desktop gleich** (#545): Lupe und Zahnrad oben rechts; am Desktop ersetzt das Zahnrad
+  die Barrierefreiheits-Figur (gleiche Schublade, Tooltip «Einstellungen · Barrierefreiheit»).
 
 ### Behoben im Tor (23.10.2026)
 - «Was ansteht» stürzt nicht mehr ab, wenn eine zurückgespielte Sicherung einen Merkpunkt mit ungültigem
   Tag enthält (Prüfung in `validateMerkliste`).
 - Fälligkeitstexte im Kalender in den tiefen Farbtönen (Kontrast AA); «Merken»-Knöpfe im Umzug 44 px hoch.
 - «Was ansteht» heisst in Menü und Seitentitel gleich (en/fr/it/rm).
+- Die Fusszeile am Handy springt im Schwarzweiss-Modus nicht mehr mit beim Scrollen (#545): der Filter liegt
+  auf `<html>` statt auf dem App-Rahmen, der sonst Bezugsrahmen für `position: fixed` war.
 
 ### Behoben
 - **Charts zeigte rohe Schlüssel** in der Legende (`budgetSync.taxes` usw.); «NK»/«KK» ausgeschrieben, 5 Sprachen (#530).
