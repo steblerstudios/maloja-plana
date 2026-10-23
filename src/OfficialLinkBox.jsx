@@ -7,7 +7,9 @@ import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Reusable "mirror" of an official DirektLinks entry, shown in context next to a
 // calculator or section (e.g. the Sozialhilfe link beside the Sozialhilfe view).
-export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
+// `ohneRahmen` (Fassung 5, Prämienverbilligung): ohne Kasten und ohne eigenen Titel — für eine
+// Aufklapp-Zeile, die «Offizielle Stelle & Antrag» schon als Überschrift trägt.
+export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey, ohneRahmen = false }) => {
   const lang = t('dl.lang');
   const l = (obj) => (obj && (obj[lang] || obj.de)) || '';
   const links = (Array.isArray(ids) ? ids : [ids]).map(getLinkById).filter(Boolean);
@@ -40,13 +42,13 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
   };
 
   return React.createElement('div', {
-    style: {
+    style: ohneRahmen ? { marginTop: space.xs + 'px' } : {
       marginTop: space.md + 'px', padding: space.md + 'px',
       background: palette.up, borderRadius: radius.sm + 'px',
       border: '1px solid ' + palette.border,
     }
   },
-    React.createElement('div', {
+    !ohneRahmen && React.createElement('div', {
       style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 'px' }
     }, t('dl.mirrorTitle')),
 

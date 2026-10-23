@@ -2807,6 +2807,7 @@ export default {
 
   premium: {
     title: 'Premium subsidy (IPV)',
+    lageTitle: 'Your situation',
     subtitle: 'Individual premium reduction — the canton covers part of your health insurance premium if your income is below a certain threshold.',
     canton: 'Canton: {name}',
     cantonUnknown: 'Not recognized',

@@ -2816,6 +2816,7 @@ export default {
 
   premium: {
     title: 'Prämienverbilligung (IPV)',
+    lageTitle: { sie: 'Ihre Lage', du: 'Deine Lage' },
     subtitle: { sie: 'Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Ihrer Krankenkassenprämie, wenn Ihr Einkommen unter einer bestimmten Grenze liegt.', du: 'Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Deiner Krankenkassenprämie, wenn Dein Einkommen unter einer bestimmten Grenze liegt.' },
     canton: 'Kanton: {name}',
     cantonUnknown: 'Nicht erkannt',
