@@ -393,6 +393,9 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
         paddingBottom: 'env(safe-area-inset-bottom)',
+        // Eigene Ebene: sonst zeichnet iOS/Android die Leiste mit Weichzeichner beim Ein-/
+        // Ausfahren der Adressleiste neu und sie zittert hinterher.
+        transform: 'translateZ(0)',
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
@@ -445,6 +448,14 @@ const AppInner = ({ demo }) => {
   // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
   const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
+  // Der Filter sitzt auf <html>, nicht auf dem App-Rahmen: ein `filter` auf einem Vorfahren
+  // macht ihn zum Bezugsrahmen für `position: fixed` — der Boden-Anker scrollte dann mit
+  // und sprang (gemeldet 23.10.2026). Das Wurzelelement ist von dieser Regel ausgenommen.
+  useEffect(() => {
+    const html = document.documentElement;
+    html.style.filter = grayscale ? 'grayscale(1)' : '';
+    return () => { html.style.filter = ''; };
+  }, [grayscale]);
   // Farbenblind-Modus: tauscht das Rot-Grün-Paar sage/rose gegen Blau/Orange (opt-in)
   const [colorBlind, setColorBlind] = useState(() => { try { return localStorage.getItem('or5_colorblind') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_colorblind', colorBlind ? '1' : '0'); } catch {} }, [colorBlind]);
@@ -1202,7 +1213,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
