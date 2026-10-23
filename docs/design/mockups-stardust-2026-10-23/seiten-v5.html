@@ -646,6 +646,30 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 .fu-kk span { position: absolute; top: 16px; font-size: 11px; color: var(--soft); transform: translateX(-50%); white-space: nowrap; }
 .fu-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .fu-chips button { border: 1px solid var(--border); background: none; color: var(--mid); border-radius: 999px; min-height: 36px; padding: 0 12px; font: inherit; font-size: 12px; cursor: pointer; }
+/* L · Rucksack (Fassung 5, 23.10. abends) */
+.rs-sack { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 6px 0 14px; }
+.rs-sack button.sack { background: none; border: 0; padding: 0; cursor: pointer; width: 104px; }
+.rs-aussen { border: 1px dashed var(--border); border-radius: 18px; padding: 12px 14px; margin: 12px 0 14px; background: color-mix(in srgb, var(--up) 60%, transparent); }
+.rs-aussen .rs-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; margin-top: 6px; }
+.rs-aussen .rs-raster a { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: 13px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+.rs-karte { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; margin-bottom: 10px; overflow: hidden; transition: opacity .45s, transform .45s; }
+.rs-karte.gepackt { opacity: 0; transform: translateY(-14px) scale(.96); }
+body.still .rs-karte { transition: none; }
+.rs-kopf { display: flex; gap: 12px; align-items: center; width: 100%; background: none; border: 0; color: var(--text); text-align: start; padding: 10px 14px; min-height: 64px; cursor: pointer; font: inherit; }
+.rs-kopf b { display: block; font-size: 15px; }
+.rs-kopf small { display: block; font-size: 12px; color: var(--mid); margin-top: 2px; }
+.rs-kopf .pf { margin-inline-start: auto; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: grid; place-items: center; transition: transform .3s; flex-shrink: 0; }
+.rs-kopf[aria-expanded="true"] .pf { transform: rotate(180deg); }
+.rs-punkte { display: inline-flex; gap: 3px; margin-top: 5px; }
+.rs-punkte i { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+.rs-punkte i.an { background: var(--gold); }
+.rs-fach { padding: 0 14px 10px; border-top: 1px dashed var(--border); }
+.rs-fach h5 { font-size: 12px; color: var(--soft); font-weight: 500; margin: 10px 0 2px; }
+.rs-fach a { display: flex; align-items: center; gap: 10px; min-height: 44px; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 14px; }
+.rs-fach a:last-child { border-bottom: 0; }
+.rs-fach a .art { width: 4px; align-self: stretch; margin: 8px 0; border-radius: 2px; background: var(--sage); }
+.rs-fach a.werkzeug .art { background: var(--gold); }
+.rs-fach a .pfeil { margin-inline-start: auto; color: var(--soft); }
 /* M · Lebenssituationen, N · Suche (Fassung 5, 23.10. abends) */
 .ls-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .ls-chips button { border: 1px solid var(--border); background: none; color: var(--text); border-radius: 999px; min-height: 44px; padding: 8px 14px; font: inherit; font-size: 14px; text-align: start; cursor: pointer; }
@@ -1457,6 +1481,40 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   </ul></div>
 </section>
 
+<!-- ===================== L · Rucksack ===================== -->
+<section class="abschnitt" id="l">
+  <h2>L · Ausrüstung — «Wanderrucksack» (Anker «Rucksack»)</h2>
+  <p class="warum"><b>Neu in Fassung 5 (23.10. abends).</b> Heute: Titel, Einleitung, der Rucksack zum Antippen (packt sich beim Öffnen einmal aus), «Was steht mir zu?», das offene Aussenfach, sieben Gegenstände zum Aufklappen (darin «Wege» = Abläufe und «Werkzeuge»), das Aussenfach noch einmal als achte Karte, ein Satz unten. Hier dieselbe Ordnung und dieselben Zeichnungen, in der Form der anderen Seiten: Karten mit runden Ecken, aufgeklappt eine ruhige Liste mit ›, Wege mit Salbei-Strich, Werkzeuge mit Messing-Strich wie heute. Alle Inhalte aus der App.</p>
+  <div class="geraet" data-seite="l">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="rucksack"></nav>
+    <div class="seite" style="--licht: var(--sage)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Wanderrucksack</nav></div>
+          <div class="titelzeile"><span class="sym" data-anker-sym="rucksack" style="--licht: var(--sage)"></span><h3>Wanderrucksack</h3></div>
+          <p class="satz" data-sie="Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Packen Sie aus, öffnen Sie einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf." data-du="Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Pack aus, öffne einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf."></p>
+          <div class="rs-sack"><button class="sack" id="rs-sack" aria-label="Wieder einpacken"></button><button class="knopfruhig" id="rs-knopf">Wieder einpacken</button></div>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <a class="verweis" href="#m"><span class="sym k" data-anker-sym="anspruch" style="--licht: var(--gold)"></span><span>Was steht mir zu?<small>Versteckte Ansprüche entdecken</small></span><span class="pfeil">›</span></a>
+          <div class="rs-aussen" id="rs-aussen"></div>
+          <div id="rs-karten"></div>
+          <p class="fuss">Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.</p>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="rucksack"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Was bleibt:</b> die Gegenstände mit ihren Zeichnungen (aus <code>Gepaeck.jsx</code>), Auspacken beim Öffnen, ein Gegenstand offen auf einmal, die Punkte «4 von 4 erfasst», Wege und Werkzeuge getrennt, «Was steht mir zu?» oben, das Aussenfach oben offen und unten noch einmal als Karte (Wunsch vom 27.09.).</li>
+    <li><b>Was neu ist:</b> die Form (Karten, Listen mit ›, wie Menü und Kapitel), der Knopf «Wieder einpacken» als ruhiger Rahmen-Knopf statt goldener Pille. «Bewegung reduzieren» (oben) schaltet das Auspacken ab, wie in der App.</li>
+    <li><b>Gefunden:</b> «Wieder einpacken» steht heute zweimal hintereinander: die Rucksack-Zeichnung ist selbst ein Knopf mit demselben Namen. Für Screenreader heisst das zweimal dasselbe. Vorschlag: die Zeichnung nur zum Antippen, ohne eigenen Namen (<code>aria-hidden</code>), der Name bleibt am Knopf darunter.</li>
+    <li>Die Zahlen in den Untertiteln («11 Wege», «6 Werkzeuge») rechnet die App aus den Listen. Im Mockup stehen sie fest.</li>
+  </ul></div>
+</section>
+
 <!-- ===================== M · Lebenssituationen (Anker «Anspruch») ===================== -->
 <section class="abschnitt" id="m">
   <h2>M · Liste zum Auswählen — «Lebenssituationen» (Anker «Anspruch»)</h2>
@@ -1672,6 +1730,49 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     document.getElementById('fu-held').hidden = leer;
     document.getElementById('fu-rest').hidden = leer;
   });
+  // ---------- L · Rucksack: Zeichnungen aus Gepaeck.jsx, Inhalte wie die App (Demo Maria) ----------
+  const RS_M = () => { const d = root.dataset.theme === 'dark'; return { brass: farbe('gold'), canvas: farbe('sage'), paper: farbe('surface'), stroke: 'rgba(0,0,0,.24)', line: 'rgba(0,0,0,.16)', oxblood: d ? '#A65A4A' : '#8C4A3C', steel: d ? '#8A9298' : '#9AA3A8', wood: d ? '#8A6242' : '#9C6B4A', woodLo: d ? '#6E4E34' : '#B4894F' }; };
+  const rsIll = (n) => { const M = RS_M(), w = (s) => `<svg viewBox="0 0 48 48" width="42" height="42" aria-hidden="true">${s}</svg>`;
+    if (n === 'key') return w(`<circle cx="15" cy="24" r="9" fill="${M.brass}" stroke="${M.stroke}"/><circle cx="15" cy="24" r="3.6" fill="${M.paper}"/><rect x="22" y="22" width="19" height="4" rx="2" fill="${M.brass}"/><rect x="34" y="26" width="3" height="5" rx="1" fill="${M.brass}"/><rect x="39" y="26" width="3" height="7" rx="1" fill="${M.brass}"/>`);
+    if (n === 'toolroll') return w(`<rect x="7" y="16" width="34" height="22" rx="4" fill="${M.woodLo}" stroke="${M.stroke}"/><path d="M15 16v22M23 16v22M31 16v22" stroke="${M.line}"/><rect x="10" y="10" width="3" height="8" rx="1.5" fill="${M.canvas}"/><circle cx="20" cy="12" r="3" fill="${M.steel}"/><rect x="27" y="9" width="3" height="9" rx="1.5" fill="${M.oxblood}"/><rect x="6" y="22" width="36" height="4" rx="2" fill="${M.canvas}"/><rect x="22" y="22" width="6" height="4" rx="1" fill="${M.brass}"/>`);
+    if (n === 'box') return w(`<rect x="8" y="20" width="32" height="18" rx="3" fill="${M.wood}" stroke="${M.stroke}"/><rect x="6" y="14" width="36" height="8" rx="2" fill="${M.woodLo}" stroke="${M.line}"/><rect x="21" y="20" width="6" height="18" fill="${M.oxblood}" opacity=".85"/><rect x="21" y="18" width="6" height="4" rx="1" fill="${M.brass}"/>`);
+    if (n === 'doctorbag') return w(`<path d="M9 20q0-4 4-4h22q4 0 4 4v18H9z" fill="${M.oxblood}" stroke="${M.stroke}"/><path d="M18 16v-3q0-2 2-2h8q2 0 2 2v3" fill="none" stroke="${M.oxblood}" stroke-width="2"/><path d="M9 22h30" stroke="${M.line}"/><rect x="21" y="24" width="6" height="10" rx="1" fill="${M.paper}"/><rect x="19" y="27" width="10" height="4" rx="1" fill="${M.paper}"/><rect x="22" y="15" width="4" height="4" rx="1" fill="${M.brass}"/>`);
+    if (n === 'flask') return w(`<rect x="19" y="8" width="10" height="6" rx="2" fill="${M.canvas}"/><rect x="16" y="14" width="16" height="26" rx="7" fill="${M.steel}" stroke="${M.stroke}"/><rect x="16" y="22" width="16" height="5" fill="${M.canvas}"/><path d="M20 30h8M20 34h8" stroke="${M.line}"/><rect x="21" y="16" width="6" height="4" rx="1" fill="${M.brass}"/>`);
+    if (n === 'wallet') return w(`<rect x="11" y="12" width="20" height="8" rx="1.5" fill="${M.canvas}" stroke="${M.line}"/><path d="M14 15.5h8" stroke="${M.line}"/><rect x="8" y="17" width="29" height="20" rx="3" fill="${M.wood}" stroke="${M.stroke}"/><path d="M8 22h29M11 33h11" stroke="${M.line}"/><path d="M30 22h9q3 0 3 3v2q0 3-3 3h-9q-3 0-3-3v-2q0-3 3-3z" fill="${M.woodLo}" stroke="${M.stroke}"/><circle cx="31" cy="26" r="2.2" fill="${M.brass}"/>`);
+    if (n === 'pocket') return w(`<rect x="8" y="14" width="32" height="24" rx="4" fill="${M.canvas}" stroke="${M.stroke}"/><path d="M8 21q16 5 32 0" fill="none" stroke="${M.line}"/><path d="M12 28h24" stroke="${M.brass}" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="28" r="2.4" fill="${M.brass}"/>`);
+    return w(`<rect x="8" y="14" width="32" height="22" rx="2" fill="${root.dataset.theme === 'dark' ? '#5A544A' : M.paper}" stroke="${M.stroke}"/><path d="M8 15l16 12 16-12" fill="none" stroke="${M.line}" stroke-width="1.4"/><circle cx="24" cy="30" r="4.5" fill="${M.oxblood}"/>`); };
+  const rsSack = () => { const M = RS_M(); return `<svg viewBox="0 0 200 220" width="100%" aria-hidden="true"><path d="M74 44 C55 72 58 112 68 158" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="12" stroke-linecap="round"/><path d="M126 44 C145 72 142 112 132 158" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="12" stroke-linecap="round"/><rect x="34" y="52" width="132" height="156" rx="26" fill="${M.canvas}"/><rect x="58" y="132" width="84" height="62" rx="15" fill="${M.canvas}" stroke="${M.line}"/><rect x="58" y="132" width="84" height="62" rx="15" fill="rgba(0,0,0,.08)"/><path d="M66 158 H134" stroke="${M.brass}" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="158" r="5" fill="${M.brass}"/><path d="M38 82 q0 -22 22 -22 h80 q22 0 22 22 v8 q-62 16 -124 0 z" fill="${M.canvas}" stroke="${M.line}"/><rect x="74" y="84" width="12" height="40" rx="4" fill="rgba(0,0,0,.12)"/><rect x="114" y="84" width="12" height="40" rx="4" fill="rgba(0,0,0,.12)"/><rect x="72" y="112" width="16" height="9" rx="2" fill="${M.brass}"/><rect x="112" y="112" width="16" height="9" rx="2" fill="${M.brass}"/><path d="M86 56 q14 -12 28 0" fill="none" stroke="${M.brass}" stroke-width="5" stroke-linecap="round"/></svg>`; };
+  const RS_AUSSEN = ['Dokumentenablage', 'Kalender', 'Merkliste', 'Meine Unterlagen', 'Lebenslauf', 'Offizielle Links', 'Flyer zum Teilen', 'Charts', 'Suche'];
+  const RS = [
+    ['Schlüsselbund', 'key', 'Ankommen & Wohnen · 11 Wege', 4, ['Betreibungsauszug bestellen', 'Pass oder Identitätskarte', 'Wegzug ins Ausland', 'Einbürgerung', 'Wohnung gekündigt', 'Umzug', 'Neu in der Schweiz', 'Aufenthalt & Bewilligung', 'Mietzins prüfen', 'Führerausweis', 'Asyl & Schutz'], []],
+    ['Werkzeugrolle', 'toolroll', 'Arbeit & Einkommen · 8 Wege', 4, ['Militär- oder Zivildienst', 'Lehre beginnen', 'Ausgesteuert', 'Quellensteuer', 'Erste Stelle', 'Stelle verloren', 'Selbständig werden', 'Ausbildung & Stipendien'], []],
+    ['Erinnerungskiste', 'box', 'Familie & Beziehung · 6 Wege', 1, ['18 werden', 'Adoption', 'Zusammenziehen ohne Trauschein', 'Heirat', 'Geburt', 'Trennung'], []],
+    ['Arztkoffer', 'doctorbag', 'Gesundheit & Kasse · 5 Wege · 6 Werkzeuge', 4, ['Krankheit oder Unfall', 'Krankenkasse wechseln', 'Krankenkasse zum ersten Mal', 'Zusatzversicherung wechseln', 'Invalidität (IV)'], ['Prämienverbilligung (IPV)', 'Prämien-Orientierung', 'KVG-Leistungen & Franchise', 'Patientenverfügung erstellen', 'KK-Scanner', 'Gesundheit']],
+    ['Feldflasche', 'flask', 'Alter & Vorsorge · 4 Wege · 1 Werkzeug', 3, ['Ergänzungsleistungen beantragen', 'Vorsorgeauftrag & Patientenverfügung', 'Pensionierung', 'Wenn Pflege nötig wird'], ['Vorsorge-Rechner']],
+    ['Versiegelter Brief', 'letter', 'Abschied · 3 Wege', 1, ['Todesfall', 'Bestattungswünsche festhalten', 'Organspende'], []],
+    ['Portemonnaie', 'wallet', 'Geld & Steuern · 2 Wege · 12 Werkzeuge', 4, ['Mahnung erhalten', 'Betreibung erhalten'], ['Steuern', 'Steuer-Import', 'Budget', 'Budget-Sync', 'Schulden', 'Kreditkarte: lohnt sie sich?', 'Finanz-Übersicht', 'Stundenlohn: was steht mir zu?', 'Mindestlohn-Check', 'Sozialhilfe', 'ALV-Taggeld', 'Erwerbsersatz (EO)']],
+    ['Aussenfach', 'pocket', 'Dieselben Werkzeuge, zum Einpacken', 0, [], RS_AUSSEN],
+  ];
+  let rsOffen = null, rsGepackt = false;
+  function rucksack() {
+    document.getElementById('rs-sack').innerHTML = rsSack();
+    document.getElementById('rs-aussen').innerHTML = `<div style="display:flex;gap:12px;align-items:center">${rsIll('pocket')}<span><b style="font-size:15px">Aussenfach · Ablegen und ordnen</b><small style="display:block;font-size:12px;color:var(--mid)">Unterlagen, Termine und Listen — griffbereit aussen am Rucksack.</small></span></div><div class="rs-raster">${RS_AUSSEN.map((n) => `<a href="#">${n}</a>`).join('')}</div>`;
+    const zeile = (n, art) => `<a href="#" class="${art}"><span class="art"></span>${n}<span class="pfeil">›</span></a>`;
+    document.getElementById('rs-karten').innerHTML = RS.map(([n, ill, sub, punkte, wege, werkzeuge], i) => {
+      const offen = rsOffen === i, beides = wege.length && werkzeuge.length;
+      return `<div class="rs-karte${rsGepackt ? ' gepackt' : ''}" style="transition-delay:${rsGepackt ? 0 : i * 60}ms"><button class="rs-kopf" aria-expanded="${offen}" data-rs="${i}">${rsIll(ill)}<span><b>${n}</b><small>${sub}</small>${punkte ? `<span class="rs-punkte" role="img" aria-label="${punkte} von 4 erfasst">${[0, 1, 2, 3].map((k) => `<i class="${k < punkte ? 'an' : ''}"></i>`).join('')}</span>` : ''}</span><span class="pf" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></button>${offen ? `<div class="rs-fach">${beides ? '<h5>Wege</h5>' : ''}${wege.map((w) => zeile(w, 'weg')).join('')}${beides ? '<h5>Werkzeuge</h5>' : ''}${werkzeuge.map((w) => zeile(w, 'werkzeug')).join('')}</div>` : ''}</div>`;
+    }).join('');
+    document.querySelectorAll('[data-rs]').forEach((b) => b.onclick = () => { const i = +b.dataset.rs; rsOffen = rsOffen === i ? null : i; rucksack(); });
+    const t = rsGepackt ? 'Auspacken' : 'Wieder einpacken';
+    document.getElementById('rs-knopf').textContent = t; document.getElementById('rs-sack').setAttribute('aria-label', t);
+    document.getElementById('rs-aussen').style.opacity = rsGepackt ? 0 : 1;
+  }
+  const rsUmschalten = () => { rsGepackt = !rsGepackt; rsOffen = null; rucksack(); };
+  document.getElementById('rs-knopf').addEventListener('click', rsUmschalten);
+  document.getElementById('rs-sack').addEventListener('click', rsUmschalten);
+  document.querySelectorAll('[data-modus]').forEach((b) => b.addEventListener('click', () => setTimeout(rucksack)));
+  rucksack();
+
   // ---------- M · Lebenssituationen: Auswahl (im Mockup nur «Geld knapp» mit Karten) ----------
   document.querySelectorAll('[data-ls]').forEach((b) => b.addEventListener('click', () => {
     const an = b.getAttribute('aria-pressed') !== 'true';

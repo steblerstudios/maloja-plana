@@ -97,3 +97,11 @@ Datenfeld «Tag» am Merkpunkt; «Alle Kantone vergleichen» (heute 0 von 26 Kan
     `aufgabenBereiche.js` und die Kalender-Zuordnung an, mit `werkzeugRegister.js` «fach» als Quelle.
     **Im Code noch nicht nachgeprüft.** Stand Bau laut Meldung: Ablage #539 und Umzug #540 als
     Entwurfs-PRs offen; Merkliste-Kalender, Menü, IPV und Kapitel Finanzen noch in Arbeit.
+
+## Nachtrag 23.10.2026, abends: Steuern wieder offen, Runde 3
+
+- **Steuern (J) wieder offen** (Sophie: «da bin ich doch noch nicht sicher»). Entschieden: nur Einstellungen (I).
+- **Neu gezeichnet:** L Rucksack, M Lebenssituationen (Anker «Anspruch»), N Suche. Texte geprüft, 0 unbelegt.
+  Befunde in VERGLEICH.md «Runde 3».
+- **Offen:** J, K, L, M, N · Übersicht · danach Einstieg (Schnellcheck), Notfall-Seiten, Datenseiten;
+  Kapitel/Abläufe/Rechner nur gegen ihre Vorlage prüfen.

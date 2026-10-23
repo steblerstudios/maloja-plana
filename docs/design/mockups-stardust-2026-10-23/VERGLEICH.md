@@ -416,3 +416,23 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
 - ~~**Steuern (J) und Einstellungen (I) gelten so.** Sophie wörtlich: «steuern und einstellungen sind super».~~
   > ⟨korrigiert, Sophie 23.10. abends⟩ «steuern sry da bin ich doch noch nicht sicher». **Es gilt nur Einstellungen (I).** Steuern (J) ist wieder offen.
 - **Finanz-Übersicht (K):** keine Rückmeldung, bleibt offen.
+
+---
+
+## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends)
+
+Der Anker «Anspruch» öffnet die Seite **Lebenssituationen** (`situationen`, `main.jsx` BottomAnchor).
+Bilder: `heute-rucksack.jpg`, `heute-situationen.jpg`, `heute-suche.jpg`. Inventar: `vergleich-inventar-runde3.json`
+(Rucksack 26, Situationen 14, Suche 78 Bausteine). Entwürfe: L Rucksack, M Lebenssituationen, N Suche.
+Alle sichtbaren Texte gegen `de.js` und die laufende App geprüft: **0 unbelegt**.
+
+**Befunde App:**
+- **Suche findet nicht alles:** `WEITERE_NAMEN` in `config/ansichtenRegister.js` («nicht in der Suche»)
+  enthält u. a. Mietzinsbeiträge, Notfallkarte, Briefe, Obstgarten, Rucksack, Rechtliches. «miete» findet
+  heute nur «Wohnung gekündigt» und «Zusammenziehen», «Notfallkarte» nichts.
+- **Suche ordnet Lebensereignisse unter «Werkzeuge»** (Heirat, Umzug …); die Kapitel stehen nach 70 Einträgen.
+- **Drei Namen für eine Seite:** Anker «Anspruch», Zeile «Was steht mir zu?», Titel «Lebenssituationen».
+- **Rucksack:** «Wieder einpacken» ist zweimal ein Knopf (Zeichnung und Knopf darunter).
+- Kein Befund: Symbol-Text in Knopfnamen («HELVETIA», «23») ist `aria-hidden`; nur das Mess-Skript las ihn mit.
+
+**Noch nicht entschieden:** L, M, N.
