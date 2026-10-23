@@ -1982,6 +1982,9 @@ export default {
         verplant: "{betrag} budgeted",
         vonEinkommenNetto: "of {betrag} net income",
         vonEinkommen: "of {betrag} income",
+        haushaltBleiben: "For the whole household, {betrag} is left over",
+        haushaltFehlen: "For the whole household, {betrag} is missing",
+        haushaltWie: "Calculated as on the budget page. Where entered, a partner's income and side income are added; childcare, mortgage, buildings insurance and pillar 3a contributions are also deducted.",
       },
       passend: {
         titel: "Related to this area",

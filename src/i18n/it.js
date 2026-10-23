@@ -1982,6 +1982,9 @@ export default {
         verplant: "{betrag} pianificato",
         vonEinkommenNetto: "su {betrag} di reddito netto",
         vonEinkommen: "su {betrag} di reddito",
+        haushaltBleiben: "Per l'intera economia domestica restano {betrag}",
+        haushaltFehlen: "Per l'intera economia domestica mancano {betrag}",
+        haushaltWie: "Calcolato come nella pagina Budget. Se registrati, si aggiungono il reddito della o del partner e il reddito accessorio; vengono inoltre dedotti la custodia dei figli, l'ipoteca, l'assicurazione stabili e i versamenti nel pilastro 3a.",
       },
       passend: {
         titel: "Collegato a questo ambito",

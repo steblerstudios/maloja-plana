@@ -39,6 +39,7 @@ import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
+import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -101,6 +102,23 @@ export const monatsUebersicht = (finanzen, allData) => {
   const bleibt = einkommen - verplant;
   if (bleibt < 0) return null;
   return { einkommen, verplant, bleibt, anteil: Math.min(100, Math.round((verplant / einkommen) * 100)) };
+};
+
+// Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js: dazu Partner/in,
+// Nebenerwerb, Kinderbetreuung, Hypothek, Gebäudeversicherung, 3. Säule). Entscheid Stebler
+// Studios 24.10.2026 (docs/entscheide/finanzen-fusion.md): beide Saldi zeigen, klar benannt —
+// der zweite nur, wenn er auf den Franken vom Kapitel-Saldo abweicht. Ist ein weiterer Lohn
+// (Nebenerwerb, Partner/in) brutto erfasst, gibt es keinen Haushalts-Betrag (wie im Budget), nur
+// die Frage nach dem Netto. Ist der eigene Lohn brutto, schweigt die Zeile: die Zahl darüber rechnet
+// selbst mit dem Brutto, und «rechnen wir aus, was frei bleibt» stünde ihr direkt entgegen
+// (Fachprüfung 24.10.2026; wie die Hauptzahl bei brutto aussieht, ist offen — Entscheidungsblatt).
+export const haushaltsSaldo = (allData, kapitelBleibt) => {
+  if (!allData || allData.finanzen?.incomeType === 'brutto') return null;
+  const b = calculateMonthlyBudget(allData);
+  if (!Number.isFinite(b.remaining)) return null;
+  const rest = Math.round(b.remaining);
+  if (rest === Math.round(kapitelBleibt)) return null;
+  return b.bruttoDabei ? { brutto: true } : { brutto: false, rest };
 };
 
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen }) => {
@@ -1892,9 +1910,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
   // ─── Fassung 5 · Kapitel Finanzen (Entscheid 23.10.2026) ──────────────────────────────
   // Ein Text mit «{betrag}» und dem Betrag fett darin — die Wortstellung bleibt je Sprache.
-  const mitBetrag = (key, wert) => {
+  const mitBetrag = (key, wert, format = zahl) => {
     const [vor, nach = ''] = tr(key).split('{betrag}');
-    return [vor, React.createElement('b', { key: 'b', style: { color: palette.text, fontWeight: weight.semi } }, zahl(wert)), nach];
+    return [vor, React.createElement('b', { key: 'b', style: { color: palette.text, fontWeight: weight.semi, whiteSpace: 'nowrap' } }, format(wert)), nach];
   };
   const renderMonatsHeld = () => {
     const m = monatsUebersicht(data, allData);
@@ -1911,7 +1929,20 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
-      )
+      ),
+      renderHaushaltsSaldo(m)
+    );
+  };
+  // Zweite Zeile: der Haushalt wie auf der Budget-Seite — nur, wenn er abweicht.
+  const renderHaushaltsSaldo = (m) => {
+    const h = haushaltsSaldo(allData, m.bleibt);
+    if (!h) return null;
+    return React.createElement('div', { 'data-teil': 'monat-haushalt', style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+      h.brutto
+        ? React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('budgetSync.availableNeedsNetto'))
+        : React.createElement('div', { style: { fontSize: text.sm, color: palette.text } },
+            ...mitBetrag(h.rest >= 0 ? 'chapters.finanzen.monat.haushaltBleiben' : 'chapters.finanzen.monat.haushaltFehlen', Math.abs(h.rest), betrag)),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '2px' } }, tr('chapters.finanzen.monat.haushaltWie'))
     );
   };
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).

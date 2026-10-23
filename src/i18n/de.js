@@ -1989,6 +1989,9 @@ export default {
         verplant: "{betrag} verplant",
         vonEinkommenNetto: "von {betrag} Einkommen, netto",
         vonEinkommen: "von {betrag} Einkommen",
+        haushaltBleiben: "Mit dem ganzen Haushalt bleiben {betrag}",
+        haushaltFehlen: "Mit dem ganzen Haushalt fehlen {betrag}",
+        haushaltWie: "Gerechnet wie auf der Budget-Seite. Dazu zählen, soweit erfasst, das Einkommen der Partnerin oder des Partners und der Nebenerwerb; zusätzlich abgezogen werden Kinderbetreuung, Hypothek, Gebäudeversicherung und Einzahlungen in die Säule 3a.",
       },
       passend: {
         titel: "Passend zu diesem Bereich",

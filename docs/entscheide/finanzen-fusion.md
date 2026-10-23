@@ -20,8 +20,12 @@ zeigen teils dasselbe. Soll es nur noch einen Ort geben?
 
 🛑 **Die zwei Saldi rechnen verschieden.** `monatsrechnung.js` zählt als Einnahmen Lohn,
 Familienzulagen und erhaltene Alimente. `budgetSync.js` zählt dazu Partner/in und Nebenerwerb, bei
-den Ausgaben Hypothek, Gebäudeversicherung und 3a, und zieht die IPV ab. Mit Nebenerwerb oder
-Partner/in stehen heute zwei verschiedene «bleibt»-Beträge in der App.
+den Ausgaben Kinderbetreuung, Hypothek, Gebäudeversicherung und Säule 3a. Mit einem dieser Posten
+stehen heute zwei verschiedene «bleibt»-Beträge in der App (im Beispiel Maria: 2’480 und 2’459).
+⟨korrigiert 24.10.2026 nach Fachprüfung⟩ Hier stand «und zieht die IPV ab». **Das stimmt nicht:**
+`remaining` rechnet mit der vollen Prämie (`budgetSync.js:152, 178–179`); die Budget-Seite zeigt die
+IPV nur als eigene Zeile daneben (`BudgetSync.jsx:325–335`). Der Kommentar in
+`FinanzUebersicht.jsx` (~Z. 184) sagt es ebenso ungenau — fällt mit Bauschritt 2 weg.
 
 ## 2 · Entscheide (24.10.2026)
 
@@ -67,4 +71,22 @@ Partner/in stehen heute zwei verschiedene «bleibt»-Beträge in der App.
 6. Probiermodus (Entscheid 4).
 7. Tests anpassen (nicht löschen), FEATURES.md, `maloja-review`, Browser 375 px, Entwurfs-PR. Kein Merge.
 
-**Offen:** Wortlaut der zwei Saldo-Zeilen · Aufwand Probiermodus · Lage des Baums im Browser prüfen.
+## 5 · Stand Bauschritt 1 (24.10.2026)
+
+Gebaut: unter «Jeden Monat bleiben» die Zeile «Mit dem ganzen Haushalt bleiben / fehlen CHF …»
+mit Erklärsatz (`haushaltsSaldo`, `ChapterView.jsx`; Test `finanzenHaushaltsSaldo.test.js`).
+Geprüft von `swiss-precision-pruefer` und `copy-pruefer`, Funde eingearbeitet (Satzbau Erklärzeile,
+«Säule 3a», kein «CHF NaN», kein Netto-Hinweis unter einer Brutto-Zahl).
+
+**Offen, für Stebler Studios:**
+- **Eigener Lohn brutto:** Die grosse Zahl oben rechnet weiter mit dem Brutto (Fassung 5, nur
+  «netto» fällt weg). Die Haushalts-Zeile schweigt dort, damit nicht zwei Aussagen gegeneinander
+  stehen. Soll die Hauptzahl bei brutto durch den Netto-Satz ersetzt werden wie im Budget?
+- **Kapitel-Saldo negativ oder ohne eigenen Lohn:** `monatsUebersicht` liefert dann nichts, und
+  damit fehlt auch die Haushalts-Zeile — gerade bei Paaren, wo der Haushalt positiv sein kann.
+  Gehört zum Umbau in Bauschritt 3.
+- **Obere Zeile benennen?** Copy-Prüfer: «Jeden Monat bleiben» sagt nicht, dass es ums eigene
+  Einkommen geht. Vorschlag «Vom eigenen Einkommen bleiben jeden Monat» — ändert den Wortlaut
+  von Fassung 5, darum nicht ohne Zuruf.
+
+**Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.
