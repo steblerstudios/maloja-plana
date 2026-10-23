@@ -277,6 +277,8 @@ body.desktop .menue { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px
 body.desktop .menue .ober, body.desktop .menue .suche, body.desktop .menue .klein-reihe, body.desktop .menue .menue-stand { grid-column: 1 / -1; }
 .menue-stand { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--soft); margin: -4px 0 12px; }
 .menue-stand .knopfruhig { font-size: 13px; padding: 8px 14px; }
+.menue-lokal { font-size: 12px; color: var(--soft); margin: 10px 0 0; }
+body.desktop .menue .menue-lokal { grid-column: 1 / -1; }
 .menue-alle { display: flex; align-items: center; min-height: 44px; padding: 0 4px; color: var(--sand); text-decoration: none; font-size: 15px; }
 
 /* U · Übersicht — vollständig (Vergleich: 10 Lücken) */
@@ -1020,7 +1022,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <!-- ===================== E · Menü ===================== -->
 <section class="abschnitt" id="e">
   <h2>E · Menü — «Wo ist alles andere?»</h2>
-  <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. <b>Neu: Continuity</b> — tippen Sie auf einen Bereich: die Karte bleibt und wächst zur Seite, das Icon wandert in den Kopf. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen. <b>Fassung 5:</b> Stand («63% vollständig») und «Auf den Startbildschirm legen» oben, die Bereiche in den Gruppen «Ihr Alltag / Ihre Absicherung / Ihr Schutz», dazu Steuern, Finanz-Übersicht, Lebenssituationen und «Alle Werkzeuge im Gepäck ›».</p>
+  <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. <b>Neu: Continuity</b> — tippen Sie auf einen Bereich: die Karte bleibt und wächst zur Seite, das Icon wandert in den Kopf. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen. <b>Fassung 5:</b> Stand («63% vollständig») und «Auf den Startbildschirm legen» oben, die Bereiche in den Gruppen «Ihr Alltag / Ihre Absicherung / Ihr Schutz», dazu Steuern, Finanz-Übersicht, Lebenssituationen und «Alle Werkzeuge im Gepäck ›». <b>Entschieden 23.10.:</b> Karten mit Satz; die vier Anker bleiben oben (ihre Sätze sind neu, Copy-Prüfer); die Bereich-Sätze sind die Kapitel-Beschreibungen der App; unten Einstellungen, Einfache Ansicht, Datenschutz &amp; Rechtliches, Problem melden und «Lokal gespeichert …». «Rundgang neu starten» bleibt nur in den Einstellungen.</p>
   <div class="geraet" data-seite="e">
     <div class="menue">
       <div class="ober"><span class="logo" data-breite="118"></span><button class="zu" aria-label="Menü schliessen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
@@ -1041,6 +1043,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         <a class="menue-alle" href="#">Alle Werkzeuge im Gepäck ›</a>
       </div>
       <div class="klein-reihe"><a href="#">Einstellungen</a><a href="#">Einfache Ansicht</a><a href="#">Datenschutz &amp; Rechtliches</a><a href="#">Problem melden</a></div>
+      <p class="menue-lokal" data-sie="Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht." data-du="Lokal gespeichert. Deine Eingaben verlassen dein Gerät nicht."></p>
     </div>
   </div>
   <div class="notiz"><ul>

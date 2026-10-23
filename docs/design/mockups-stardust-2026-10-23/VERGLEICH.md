@@ -157,3 +157,15 @@ Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.j
   `CalendarReminders.jsx`). Die Verknüpfung braucht ein gemeinsames Datenfeld (Tag am Merkpunkt).
 - Nebenbei behoben: Die Klasse `.erledigt` der Umzug-Marken hat die erledigten Merkliste-Einträge
   zerdrückt; jetzt auf `#erledigt` beschränkt.
+
+### Menü · entschieden (Sophie, 23.10.2026)
+
+- **Karten mit Satz** auf ganzem Bildschirm, wie Fassung 5 (heute: schmales Panel, Zeilen ohne Satz).
+- **Die vier Anker bleiben oben** (Übersicht, Was ansteht, Rucksack, Was steht mir zu?). Ihre Sätze
+  sind neu und gehen an den Copy-Prüfer.
+- **Bereich-Sätze** = die Kapitel-Beschreibungen der App (chapters.*.description), korrigiert in 126a8a0f.
+- **Unten:** Einstellungen, Einfache Ansicht, Datenschutz & Rechtliches, Problem melden und
+  «Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht.» (nav.privacyNote).
+  Begründung: Vertrauen (lokal), Rechtliches muss von überall erreichbar sein, Melden während der
+  Beta, Einfache Ansicht für Barrierefreiheit.
+- **«Rundgang neu starten» nicht im Menü:** steht in der App schon bei den Einstellungen (MobileNav.jsx).
