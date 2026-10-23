@@ -225,3 +225,22 @@ Fassung 5 zeigte etwa 12. Jetzt im Mockup:
   mit dem App-Hinweis «Einige ausgeblendete Bereiche enthalten bereits Daten.».
 - Offen für den Bau: ob die fünf Nebenerwerb-Felder immer oder erst mit einem Nebenerwerb erscheinen
   (im Mockup immer, wie in der Feldliste).
+
+### Kapitel Finanzen · die eingebauten Helfer (Sophie, 23.10.2026)
+
+Sophie: «es fehlen mir die Details, die wir bei den Finanzen eingebaut haben». Aus `ChapterView.jsx`
+übernommen, jeweils im Bearbeiten unter dem passenden Feld, Texte aus `de.js`:
+- **Monatliches Einkommen:** Mindestlohn-Check («In Ihrem Kanton gibt es keinen gesetzlichen
+  Mindestlohn.» — Zürich hat keinen, `kantonHatMindestlohn('ZH')` = false) und die Wegweiser
+  «IPV-Anspruch prüfen», «Bundessteuer abschätzen», «Orientierung: Was steht Ihnen gemäss SKOS zu?»,
+  «Alle Berechnungen auf einen Blick».
+- **Lebensmittel & Haushalt, Internet & Telefon:** «Posten hinzufügen» mit Bezeichnung und Betrag,
+  die Summe wird zum Feldwert (`ItemizedAmount`).
+- **Kreditkarten vorhanden? = Ja:** «Lohnt sich die Karte? Kosten und Vorteile rechnen».
+- **Säule 3a:** Einzahlungen mit Datum und Betrag, «Einzahlung hinzufügen», Stand gegen das
+  Maximum 2026 (CHF 7'258 mit Pensionskasse, `data/saeule3a.js`).
+- **Alimente (keine Kinder):** eingeklappt und gedämpft, «betrifft Sie aktuell nicht — antippen zum
+  Erkunden», mit der Orientierung zum Kindesunterhalt und dem Link der Zürcher Gerichte.
+- **«Trifft nicht zu»** bei Arbeitgeber, Adresse, Arbeitsbeginn und Alimente; zählt als erledigt.
+- Nicht übernommen, weil bei Maria nicht sichtbar: Lohn-Hinweis «unter dem Mindestlohn» (nur in
+  Kantonen mit Mindestlohn), Hinweis zur verpassten Steuerfrist, Partnereinkommen.
