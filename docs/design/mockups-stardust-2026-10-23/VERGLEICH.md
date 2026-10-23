@@ -330,3 +330,40 @@ den die App auch hat (`data-theme`).
 
 Sophie hat zweimal gefragt «was ist besser und warum?». Entschieden hat Claude nach der Empfehlung
 oben. Ein Widerspruch kann das jederzeit wieder öffnen.
+
+---
+
+## Runde 2 · Steuern, Finanz-Übersicht, Einstellungen (23.10.2026 abends)
+
+**Gemessen:** Demo «Maria Muster», Werkbank `eingang-als-ort` (= `main` 0eba0fc1), 375 × 812, Dunkelmodus.
+Bilder: `heute-steuern.jpg`, `heute-finanzuebersicht.jpg`, `heute-einstellungen.jpg`.
+Inventar: `vergleich-inventar-runde2.json` (Skript `messung/inventar-messung.js`).
+
+| Seite | Bausteine heute |
+|---|---|
+| Steuern (`#/tax`) | 84 |
+| Finanz-Übersicht (`#/finanzuebersicht`) | 79 |
+| Einstellungen (`#/settings`) | 33, dazu die Zahnrad-Schublade «Ansicht & Sprache» |
+
+### Befund, der die App heute betrifft (nicht nur die Entwürfe)
+
+- **«Bundessteuer berechnen»** (`nav.sub.taxes`, in allen 5 Sprachen) steht unter «Steuern» auf der
+  Übersicht und im Menü. Die Seite rechnet aber Bund **und** Kanton und Gemeinde (ESTV-Messpunkte,
+  Steuerjahr 2026). Der Untertitel ist veraltet. Korrektur gehört in den Bau, mit dem Copy-Prüfer.
+
+### Einstellungen · Entwurf I (`seiten-v5.html?nur=i`)
+
+**Heute:** zwei fast gleiche Orte. Die Seite `#/settings` hat Anzeige & Sprache, Barrierefreiheit,
+Daten & Sicherung (Persönliche Basis bearbeiten, Export, Benachrichtigungen) und «Alle Daten auf diesem
+Gerät löschen». Die Schublade hinter dem Zahnrad («Ansicht & Sprache») hat dieselben Schalter, dazu
+«Rundgang neu starten», «Konto & Daten» und «Backup & Export», aber kein Löschen und keine Persönliche Basis.
+
+**Gefunden:**
+- Neben «Erscheinungsbild» steht im Dunkelmodus ein Knopf **«Hell»**. Gemeint ist «auf Hell umschalten»
+  (`ThemeToggle.jsx`), man liest es als «ist gerade hell». Gleich bei «Anrede: Sie».
+- Die Barrierefreiheits-Knöpfe zeigen nur ein Symbol. Ob etwas an ist, sieht man kaum.
+- Gruppentitel in Versalien («ANZEIGE & SPRACHE»), entgegen der Fassung-5-Regel.
+
+**Entwurf:** alles auf einer Seite; «Hell | Dunkel» und «Sie | Du» als Wahl mit hervorgehobener
+Auswahl; Schalter, die ihren Zustand zeigen; «Rundgang neu starten» auch hier; keine neuen Sätze.
+Noch nicht entschieden.
