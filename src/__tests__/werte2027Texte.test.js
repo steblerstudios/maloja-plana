@@ -74,13 +74,15 @@ describe.each(FAELLE)('Uhr $uhr: Texte zeigen die Werte $jahr', (f) => {
     expect(html).toContain(esc(`${de.vr.minMax}: CHF ${f.minRente} – ${f.maxRente} / ${de.vr.monat} (Stand ${f.jahr})`));
   });
 
-  it('Vorsorge-Rechner, Reiter BVG: «≤» (Gesetz: «nicht mehr als») und «Stand {jahr}»', () => {
+  // BVG Art. 2 Abs. 1 / Art. 7 Abs. 1: versichert ist, wer «mehr als» die Schwelle verdient — genau die
+  // Schwelle ist nicht versichert. Darum «nicht über» (copy-pruefer 23.10.2026: «unter» + «≤» widersprach sich).
+  it('Vorsorge-Rechner, Reiter BVG: «nicht über» der Schwelle und «Stand {jahr}»', () => {
     reiter = 'bvg';
     const html = zeichne(VorsorgeRechner, { data: {
       basis: { canton: 'BS', dateOfBirth: '2008-01-01', maritalStatus: 'single', household: { adults: 1, children: [] } },
       finanzen: { monthlyIncome: 1500, incomeType: 'brutto', dreizehnter: 'no' },
     } });
-    expect(html).toContain(esc(`${de.vr.bvgNichtVersichert} (≤ CHF ${f.schwelle}, Stand ${f.jahr})`));
+    expect(html).toContain(esc(`Jahreslohn nicht über der BVG-Eintrittsschwelle (CHF ${f.schwelle}, Stand ${f.jahr})`));
     expect(html).not.toContain(esc('(< CHF'));
   });
 });
