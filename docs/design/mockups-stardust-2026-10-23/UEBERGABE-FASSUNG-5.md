@@ -47,3 +47,22 @@ mit einem Skript. Geprüft wurde nur von Hand, Seite für Seite.
 5. Ablage
 6. Am Ende: alle 34 Lücken gegen `vergleich-inventar.json` abhaken, dann committen.
    Nicht pushen.
+
+## Nachtrag 23.10.2026, 15:07 — Seite für Seite durchgegangen
+
+Mit Sophie gemeinsam, heute neben Fassung 5 (`vergleich-v5.html`). Jeder Text gegen `de.js` und den
+App-Code geprüft, Entscheide umgesetzt und in `VERGLEICH.md` festgehalten (je ein Block pro Seite).
+
+**Entschieden und umgesetzt:** Ablauf Umzug · Dokumentenablage · Merkliste · Kalender («Was ansteht»)
+· Menü · Rechner IPV · Kapitel Finanzen. Dazu: Merkliste und Kalender sind verknüpft (To-dos mit Tag,
+Erledigtes im Kalender, Fach «Noch ohne Tag»); neue Icons für Was ansteht, Ablage, Merkliste.
+
+**Offen — als Nächstes:** die **Übersicht** (Sophie: «machen wir später»). Befunde stehen in
+`VERGLEICH.md` unter «Übersicht · Befunde beim Durchgehen»: 63 % gegen 70 %, der erfundene Satz
+«Am meisten offen: …» und der Kartentitel «Ihr Lebensordner», dazu die vier «anders»-Punkte.
+
+**Vor dem Bau festzulegen** (steht je in den Notizen unter den Mockups): Zuordnung Werkzeug → Bereich
+(Merkliste) und Kategorie → Bereich (Kalender); neue Texte gehen an den Copy-Prüfer; gemeinsames
+Datenfeld «Tag» am Merkpunkt; «Alle Kantone vergleichen» (heute 0 von 26 Kantonen belegt).
+
+**Ansehen:** Vorschau-Server `stardust-mockup` (Port 5447) zeigt diesen Ordner.
