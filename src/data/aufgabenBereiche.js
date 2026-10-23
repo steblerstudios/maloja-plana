@@ -1,5 +1,5 @@
 // Bereich (Kapitel-Farbe + Kapitel-Zeichen) für Merkpunkte und Kalender-Einträge.
-// Festgelegt von Sophie am 23.10.2026, Block «Zuordnungen Merkliste und Kalender · festgelegt»
+// Festgelegt von Stebler Studios am 23.10.2026, Block «Zuordnungen Merkliste und Kalender · festgelegt»
 // (VERGLEICH.md Fassung 5, «Ja, Liste B»). Die erste Liste aus «Vor dem Bau festgelegt» ist überholt.
 //
 // Merkliste: die Zuordnung steht NICHT doppelt hier, sie kommt aus der App selbst —

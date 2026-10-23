@@ -7,7 +7,7 @@ import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, tarifvergleichGrund, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
-import { SAEULE3A_MAX } from './data/saeule3a.js';
+import { SAEULE3A_MAX, saeule3aMaximum } from './data/saeule3a.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
@@ -81,7 +81,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
   const hh = getHouseholdInfo(data);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
-    { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: SAEULE3A_MAX },
+    // An den Tarif gebunden (Stand Steuerjahr 2026), nicht ans Kalenderjahr — sonst ab 1.1.2027 der 3a-Höchstabzug 2027.
+    { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: saeule3aMaximum(2026) ?? SAEULE3A_MAX },
     { label: t('tax.debtInterest'), key: 'debtInterest', default: 0, max: 50000 },
     { label: t('tax.maintenance'), key: 'maintenance', default: 0, max: 50000 },
     { label: t('tax.education'), key: 'education', default: 0, max: 10000 },

@@ -133,7 +133,8 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
       offen && React.createElement('input', {
         type: 'date', style: s.tagFeld, value: i.tag || '',
         'aria-label': t('merkliste.tagWaehlen') + ': ' + i.text,
-        onChange: e => { if (e.target.value) tagSetzen(i.id, e.target.value); },
+        // Beim Tippen meldet das Feld schon «0002-…» als gültig — erst ein vierstelliges Jahr ab 1900 zählt.
+        onChange: e => { const v = e.target.value; if (v && Number(v.slice(0, 4)) >= 1900) tagSetzen(i.id, v); },
       }),
       offen && i.tag && React.createElement('button', { type: 'button', style: s.tagKnopf, onClick: () => tagSetzen(i.id, null) }, t('merkliste.ohneTag'))
     );

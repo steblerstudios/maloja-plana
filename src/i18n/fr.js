@@ -1833,7 +1833,7 @@ export default {
     nextUpReassure: { sie: 'Juste une suggestion — c’est vous qui donnez le rythme.', du: 'Juste une suggestion — c’est toi qui donnes le rythme.' },
     glanceDeadline: 'Prochain délai',
     glanceNoDeadline: 'aucun en cours',
-    glanceDeadlinePast: '{title} · dépassé depuis le {date}',
+    glanceDeadlinePast: '{title} · échéance dépassée depuis le {date}',
     glanceSaved: 'Dernière sauvegarde',
     glanceNeverSaved: 'Aucun fichier de sauvegarde créé',
     nextUpAction: 'Compléter : {feld}',
@@ -2807,6 +2807,7 @@ export default {
 
   premium: {
     title: 'Réduction de primes (IPV)',
+    lageTitle: { sie: 'Votre situation', du: 'Ta situation' },
     subtitle: { sie: 'Réduction individuelle des primes — le canton prend en charge une partie de votre prime d\'assurance maladie si votre revenu est inférieur à un certain seuil.', du: 'Réduction individuelle des primes — le canton prend en charge une partie de ta prime d\'assurance maladie si ton revenu est inférieur à un certain seuil.' },
     canton: 'Canton : {name}',
     cantonUnknown: 'Non reconnu',
@@ -4879,7 +4880,7 @@ export default {
     linkBudget: 'Voir dans le budget',
   },
   calendar: {
-    title: 'À l’agenda',
+    title: 'À venir',
     aufgabe: 'Tâche',
     ausMerkliste: 'de l’aide-mémoire',
     ganzerMonat: 'Tout le mois',
@@ -6073,6 +6074,7 @@ export default {
     vorbezugNeuberechnung: { sie: 'Jusqu’à l’âge de référence, il manque encore des années de cotisation : c’est donc en général une rente partielle. En cas de domicile en Suisse, l’obligation de cotiser continue pour vous pendant ce temps ; à l’âge de référence, la rente est recalculée avec ces années. La réduction en francs reste à vie et est adaptée avec les rentes.', du: 'Jusqu’à l’âge de référence, il manque encore des années de cotisation : c’est donc en général une rente partielle. En cas de domicile en Suisse, l’obligation de cotiser continue pour toi pendant ce temps ; à l’âge de référence, la rente est recalculée avec ces années. La réduction en francs reste à vie et est adaptée avec les rentes.' },
     abAlterKurz: 'dès {alter} : CHF {betrag}',
     vorbezug: 'Réduction (anticipation)',
+    vorbezugFrauenUebergang: 'Pour les femmes nées entre 1961 et 1969, des taux de réduction plus bas s’appliquent ; ils ne sont pas représentés ici (mémento AVS 3.04). À vérifier auprès de la caisse de compensation.',
     aufschub: 'Supplément (ajournement)',
     erziehungsgutschrift: 'Bonification pour éducation / assistance',
     plafoniert: 'Plafonnement couple',

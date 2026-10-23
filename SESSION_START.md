@@ -17,6 +17,16 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🚪 **Nachtrag 23.10.2026, 17:45 — Deploy-Tor 0.1.48-beta (Nachzug 29.10.) auf Zweig `release/0.1.48-beta` `c88ee519`: 0 Blocker. Marke NICHT gesetzt, NICHT deployt.**
+>
+> **Gemessen:** live = `d4da4629` (0.1.47-beta) · main = `412d11bb` (Fassung 5 #539–#544 gemergt) · Release-Zweig = main-Inhalt
+> + Changelog/Version + Tor-Fixes. Vitest 363 Dateien / 6550 Tests grün (einzelne Datei-Tests laufen unter Last ins 5-s-Limit,
+> einzeln grün), Lint 0, Build ok, size 64,63 / 65 kB, SEO 0/0, PII 0 (Vorname aus 23 Kommentaren entfernt), CSP self-only,
+> keine neuen Dependencies, ESTV-Stichprobe 156/156 (Daten seit live unverändert). Reviews ganze App (Sicherheit, a11y, Design)
+> und Diff (Swiss-Precision, Recht, Ordnung, Links, Copy, Code-Review): 0 🔴; ⚠️ behoben in `46267e21`, `30738256`, `c88ee519`.
+> **Offen:** GitHub war ab 16:50 nicht erreichbar → Zweig nicht gepusht, kein PR. Fedlex-Link `eli/cc/2026/542` (Beträge 2027)
+> und BVG-Mindestzins 2027 an der Quelle noch nicht gegengeprüft (fedlex nicht erreichbar). Marke erst auf dem gemergten main-HEAD.
+
 > 🚪 **Nachtrag 21.10.2026, 19:45 — Deploy-Tor 0.1.47-beta auf `069ee9f4`: 0 Blocker, Marke gesetzt. NICHT deployt.**
 >
 > **Gemessen:** main = `069ee9f4` (#528, 21.10. 19:26) · live = `650908a2` (0.1.46-beta) · 19 Commits dazwischen. Alle elf

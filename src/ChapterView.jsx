@@ -107,6 +107,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
+  // Nebenerwerb: offen, wenn beim ersten Zeigen schon etwas erfasst ist — danach hält das
+  // <details> seinen Zustand selbst (sonst klappte es beim Leeren des letzten Feldes zu).
+  const nebenerwerbAnfangsOffen = useRef(null);
   const [uploadError, setUploadError] = useState('');
   const [uploadFile, setUploadFile] = useState(null);
   const [uploadExpiry, setUploadExpiry] = useState('');
@@ -1805,8 +1808,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         if (f.k !== NEBENERWERB_FELDER[0]) return;
         const neben = liste.filter((x) => NEBENERWERB_FELDER.includes(x.k));
         const angegeben = nebenerwerbAngegeben(data);
+        if (nebenerwerbAnfangsOffen.current === null) nebenerwerbAnfangsOffen.current = angegeben;
         formular.push(React.createElement('details', {
-          key: 'af-nebenerwerb', 'data-nebenerwerb': angegeben ? 'angegeben' : 'leer', open: angegeben,
+          key: 'af-nebenerwerb', 'data-nebenerwerb': angegeben ? 'angegeben' : 'leer', open: nebenerwerbAnfangsOffen.current || undefined,
           style: { gridColumn: '1 / -1', marginBottom: space.sm + 'px', borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' },
         },
           React.createElement('summary', {

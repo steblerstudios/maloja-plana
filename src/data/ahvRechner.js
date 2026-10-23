@@ -154,7 +154,7 @@ const SKALA_44_2027 = [
   [92160, 2560],
 ];
 
-// === AHV-Parameter je Kalenderjahr (Weg A, Entscheid Sophie 21.10.2026) ===
+// === AHV-Parameter je Kalenderjahr (Weg A, Entscheid Stebler Studios 21.10.2026) ===
 // Auswahl nach Stichtag über `ahvWerte(stichtag)`, damit die App am 1.1. von selbst umschaltet.
 // 2027 belegt an:
 //   • Verordnung über Anpassungen an die Lohn- und Preisentwicklung bei der AHV/IV/EO ab dem Jahr
