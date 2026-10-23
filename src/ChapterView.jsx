@@ -38,6 +38,7 @@ import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkomm
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
+import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -82,6 +83,25 @@ export function zurErwachsenenErfassung(doc = typeof document !== 'undefined' ? 
   if (typeof knopf.focus === 'function') knopf.focus({ preventScroll: true });
   return true;
 }
+
+// Fassung 5 · Kapitel Finanzen (Entscheid 23.10.2026): die fünf Nebenerwerb-Felder erscheinen
+// erst mit einem Nebenerwerb. Ein eigenes Ja/Nein-Feld gibt es nicht; als angegeben gilt er,
+// sobald eines der fünf Felder einen Wert trägt oder als «trifft nicht zu» markiert ist —
+// so geht kein gespeicherter Nebenerwerb unsichtbar verloren.
+export const NEBENERWERB_FELDER = ['sideIncome', 'sideEmployer', 'sideEmployerAddress', 'sideHoursPerWeek', 'sideIncomeType'];
+export const nebenerwerbAngegeben = (d) => NEBENERWERB_FELDER.some((k) => feldHatWert(d, k) || trifftNichtZu(d, k));
+
+// Fassung 5 · «Jeden Monat bleiben»: dieselbe Rechnung und Bedingung wie der Satz
+// «Es bleiben CHF …» (MirrorCards → utils/monatsrechnung.js). null, wenn nichts zu zeigen ist
+// (Einnahmen oder Ausgaben fehlen) oder die Ausgaben das Einkommen übersteigen.
+export const monatsUebersicht = (finanzen, allData) => {
+  const einkommen = sumTotalIncome(finanzen);
+  const verplant = sumAllExpenses(finanzen, allData);
+  if (!(einkommen > 0 && verplant > 0)) return null;
+  const bleibt = einkommen - verplant;
+  if (bleibt < 0) return null;
+  return { einkommen, verplant, bleibt, anteil: Math.min(100, Math.round((verplant / einkommen) * 100)) };
+};
 
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen }) => {
   const vorlesen = useVorlesenContext();
@@ -1753,15 +1773,53 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return String(v);
   };
   const abschnittGefuellt = (f) => (f.type === 'household' ? !!data.household : (feldHatWert(data, f.k) || trifftNichtZu(data, f.k)));
+  // Fassung 5 · Finanzen: die «mehr Felder» (steuerbares Einkommen, Vorsorge) stehen hinter
+  // «Weitere Bereiche anzeigen» — auch das steuerbare Einkommen mitten im Abschnitt Einkommen.
+  // Ein ausgeblendetes Feld mit Daten verschwindet nie still: der Schalter startet offen,
+  // sobald eines Daten trägt, und eingeklappt steht der App-Hinweis «Einige ausgeblendete
+  // Bereiche enthalten bereits Daten.». Andere Kapitel bleiben, wie sie waren.
+  const istFinanzen = chapter.key === 'finanzen';
+  const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
   const abschnittsliste = () => {
     const gruppen = abschnittGruppen(chapter.fields, chapter.title);
     const karte = (g) => {
-      const gefuellt = g.felder.filter(abschnittGefuellt);
+      const felder = g.felder.filter(feldSichtbar);
+      if (felder.length === 0) return null;
+      const gefuellt = felder.filter(abschnittGefuellt);
       const offen = !!offeneAbschnitte[g.key];
       const leer = gefuellt.length === 0;
       const umschalten = () => setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
       // Alle Felder des Abschnitts — jedes mit dem Baustein seiner Art (Haupt / «mehr Felder»).
-      const liste = g.felder;
+      const liste = felder;
+      // Finanzen · Nebenerwerb (Entscheid 23.10.2026): die fünf Felder erst mit Nebenerwerb.
+      // Es gibt kein eigenes Ja/Nein-Feld — angegeben ist ein Nebenerwerb, sobald eines der
+      // fünf Felder einen Wert trägt (oder «trifft nicht zu»). Dann steht die Zeile offen;
+      // sonst eingeklappt «Nebenerwerb · falls vorhanden», ein Tipp öffnet sie.
+      const feldBausteine = (f) => (f.secondary ? feldElementeSek(f) : feldElemente(f));
+      const formular = [];
+      liste.forEach((f) => {
+        if (!(istFinanzen && NEBENERWERB_FELDER.includes(f.k))) {
+          formular.push(React.createElement(React.Fragment, { key: 'af-' + f.k }, ...feldBausteine(f)));
+          return;
+        }
+        if (f.k !== NEBENERWERB_FELDER[0]) return;
+        const neben = liste.filter((x) => NEBENERWERB_FELDER.includes(x.k));
+        const angegeben = nebenerwerbAngegeben(data);
+        formular.push(React.createElement('details', {
+          key: 'af-nebenerwerb', 'data-nebenerwerb': angegeben ? 'angegeben' : 'leer', open: angegeben,
+          style: { gridColumn: '1 / -1', marginBottom: space.sm + 'px', borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' },
+        },
+          React.createElement('summary', {
+            style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+          },
+            tr('chapters.finanzen.nebenerwerb.titel'),
+            React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } },
+              tr(angegeben ? 'chapters.finanzen.nebenerwerb.erfasst' : 'chapters.finanzen.nebenerwerb.fallsVorhanden'))
+          ),
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingTop: space.sm + 'px' } },
+            ...neben.map((x) => React.createElement(React.Fragment, { key: 'af-' + x.k }, ...feldBausteine(x))))
+        ));
+      });
       return React.createElement('section', {
         key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel,
         style: {
@@ -1785,7 +1843,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingBottom: space.sm + 'px' } },
               demoMode && React.createElement('p', { key: 'demo', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, tr('demo.readOnlyHint')),
               g.intro && React.createElement('p', { key: 'intro', style: { gridColumn: '1 / -1', fontSize: text.sm, color: palette.mid, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px' } }, g.intro),
-              ...liste.map((f) => React.createElement(React.Fragment, { key: 'af-' + f.k }, ...(f.secondary ? feldElementeSek(f) : feldElemente(f)))))
+              ...formular)
           : (leer
               ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
               // Spalten: die Bezeichnung behält mindestens ihr längstes Wort, der Wert darf
@@ -1800,6 +1858,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       );
     };
     const haupt = gruppen.filter((g) => !g.sek);
+    if (istFinanzen) {
+      const sek = gruppen.filter((g) => g.sek);
+      const hatSekFelder = chapter.fields.some((f) => f.secondary);
+      return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginBottom: space.lg + 'px' } },
+        ...haupt.map(karte),
+        ...(showSecondary ? sek.map(karte) : []),
+        hatSekFelder && React.createElement('div', { key: 'mehr', style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px' } },
+          React.createElement('button', {
+            type: 'button', onClick: toggleSecondary, 'aria-expanded': showSecondary,
+            style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text, padding: '8px 16px', minHeight: '44px', fontFamily: 'inherit' },
+          }, tr(showSecondary ? 'chapterView.showLess' : 'chapterView.showMore')),
+          !showSecondary && secondaryHasData && React.createElement('small', { 'data-hinweis': 'ausgeblendet-mit-daten', style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.hasHiddenData'))
+        )
+      );
+    }
     const sekMitDaten = gruppen.filter((g) => g.sek && g.felder.some(abschnittGefuellt));
     const sekLeer = gruppen.filter((g) => g.sek && !g.felder.some(abschnittGefuellt));
     return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginBottom: space.lg + 'px' } },
@@ -1813,16 +1886,87 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     );
   };
 
-  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
-    // Header — expressive chapter entrance with landscape continuity
-    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
-      React.createElement('div', { style: { marginBottom: space.md + 'px', color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
-        React.createElement(Icon, { name: chapter.key, size: 48 })
+  // ─── Fassung 5 · Kapitel Finanzen (Entscheid 23.10.2026) ──────────────────────────────
+  // Ein Text mit «{betrag}» und dem Betrag fett darin — die Wortstellung bleibt je Sprache.
+  const mitBetrag = (key, wert) => {
+    const [vor, nach = ''] = tr(key).split('{betrag}');
+    return [vor, React.createElement('b', { key: 'b', style: { color: palette.text, fontWeight: weight.semi } }, zahl(wert)), nach];
+  };
+  const renderMonatsHeld = () => {
+    const m = monatsUebersicht(data, allData);
+    if (!m) return null;
+    // «netto» nur, wenn das Einkommen als Netto erfasst ist — sonst stimmte das Wort nicht.
+    const einkommenKey = data.incomeType === 'netto' ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
+    return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, tr('chapters.finanzen.monat.bleiben')),
+      React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(m.bleibt)),
+      // Der Balken wiederholt nur die zwei Zahlen darunter — darum für Screenreader stumm.
+      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
+        React.createElement('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: m.anteil + '%', background: palette.gold, borderRadius: radius.full } })
       ),
-      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px', ...(bereichsfarbe ? { color: bereichsfarbe.schrift } : {}) } }, chapter.title),
-      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
+        React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
+        React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
+      )
+    );
+  };
+  // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).
+  const renderPassend = () => {
+    if (!onNavigate) return null;
+    const ziele = [
+      { key: 'uebersicht', titel: tr('nav.crosslink.finanzuebersichtHint'), sub: tr('chapters.finanzen.passend.uebersichtSub'), gehe: () => onNavigate('finanzuebersicht'), ikon: ansichtIkon('finanzuebersicht') },
+      { key: 'ipv', titel: tr('chapters.finanzen.passend.ipv'), sub: tr('chapters.finanzen.passend.ipvSub'), gehe: () => onNavigate('premium'), ikon: ansichtIkon('premium') },
+      // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
+      { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
+      // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
+      { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
+    ];
+    return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
+      React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
+      ...ziele.map((z) => React.createElement('button', {
+        key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe,
+        style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
+      },
+        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: palette.sageDeep || palette.mid } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
+        React.createElement('span', { style: { flex: 1, minWidth: 0 } },
+          React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
+          React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
+        ),
+        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
+      ))
+    );
+  };
+  // «Als Nächstes»: das nächste Kapitel mit Titel und Satz, darunter derselbe Hauptknopf wie bisher.
+  const renderAlsNaechstes = () => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.md } },
+    React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase', letterSpacing: '0.5px', color: palette.mid } }, tr('chapterView.alsNaechstes')),
+    React.createElement('h3', { style: { margin: space.xs + 'px 0 2px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, nextChapter.title),
+    nextChapter.description && React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, nextChapter.description),
+    React.createElement(PrimaryButton, {
+      palette, onClick: onNext,
+      style: { minHeight: '44px', boxSizing: 'border-box' },
+    }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›')
+  );
+
+  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
+    // Kopf — links und ruhig (Fassung 5, Entscheid 23.10.2026, für alle Kapitel): kleines
+    // Zeichen in der Bereichsfarbe neben dem Titel, Titel und Sätze in den Textfarben. Vorher
+    // zentriert auf getöntem Band, Münze (48 px), Titel und Intro-Satz in der Bereichsfarbe.
+    React.createElement('div', { 'data-kapitelkopf': 'links', style: { textAlign: 'left', marginBottom: space.lg + 'px', paddingBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '55' } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.xs + 'px' } },
+        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
+          React.createElement(Icon, { name: chapter.key, size: 28 })
+        ),
+        React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0 } }, chapter.title)
+      ),
+      React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, chapter.description),
+      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.xs + 'px 0 0', lineHeight: leading.relaxed, maxWidth: '560px' } }, introText)
     ),
+
+    // Fassung 5 · «Jeden Monat bleiben» — nur Finanzen. Rechnet genau wie der Satz
+    // «Es bleiben CHF …» (utils/monatsrechnung.js), dieselbe Bedingung: Einnahmen und
+    // Ausgaben erfasst. Bei einem Minus kein «bleiben»-Betrag — der Satz sagt dann
+    // «Es fehlen …»; eine erfundene Formulierung dafür gibt es nicht.
+    chapter.key === 'finanzen' && renderMonatsHeld(),
 
     // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt
     // (Abschnittsliste) — oben war er Vorspann vor jedem Inhalt.
@@ -2065,18 +2209,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
       }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
-    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
-      React.createElement('button', {
-        className: 'mp-link',
-        onClick: () => onNavigate('finanzuebersicht'),
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || palette.up,
-          border: 'none', borderRadius: radius.sm,
-          fontSize: text.sm, color: palette.sageDeep || palette.mid,
-          cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', width: '100%',
-        }
-      }, t('nav.crosslink.finanzuebersichtHint')),
+    // «Alle Berechnungen auf einen Blick» stand hier als eigener Knopf; seit Fassung 5 ist er
+    // der erste Eintrag in «Passend zu diesem Bereich» (unten) — und dort auch ohne Lohn.
 
     // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
     // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
@@ -2200,6 +2334,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           })
         ),
 
+        // Fassung 5 · Finanzen: «Dokument fotografieren» als zweiter Weg zur Datei. Kein eigener
+        // Kamera-Code — derselbe Datei-Eingang mit `capture`: auf dem Handy öffnet er die Kamera,
+        // sonst die Dateiwahl. Wird die Kamera abgelehnt, bleibt «Datei auswählen» darüber.
+        istFinanzen && React.createElement('label', {
+          'data-weg': 'fotografieren',
+          style: { display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', marginBottom: '12px', border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer', boxSizing: 'border-box' },
+        },
+          tr('chapterView.fotografieren'),
+          React.createElement('input', {
+            type: 'file', accept: 'image/*', capture: 'environment',
+            onChange: (e) => { setUploadFile(e.target.files?.[0]); setUploadError(''); },
+            className: 'mp-datei-eingang', style: visuallyHiddenStyle,
+          })
+        ),
+
         uploadError && React.createElement('div', { role: 'alert', style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
         // Die Status-Region steht immer da und füllt sich erst — eine Region, die MIT
@@ -2279,6 +2428,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Nächstes Thema — Testperson A: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
     // Seit 27.09.2026 (Seitenrundgang) als der eine Hauptknopf «Weiter mit … ›», wie auf
     // der Übersicht — vorher eine stille Karte, die neben den Feldern kaum als Weg las.
+    // Fassung 5 · Finanzen: «Passend zu diesem Bereich» und «Als Nächstes» (Entscheid 23.10.2026).
+    istFinanzen && renderPassend(),
+    istFinanzen && nextChapter && onNext ? renderAlsNaechstes() :
     nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
       React.createElement(PrimaryButton, {
         palette, onClick: onNext,

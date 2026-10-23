@@ -235,6 +235,13 @@ export default {
     step2Button: 'Scadenza «Annuncio al comune» nel calendario ({date})',
     step2Done: 'Annotato nel calendario.',
     step2CalendarLink: 'Al calendario',
+    fristKarteTitel: 'Annuncio al comune',
+    fristKarteBis: 'entro il {date}',
+    weiter: 'Fatto, avanti ›',
+    abschliessen: 'Concludere il percorso',
+    fertigTitel: 'Il trasloco è in ordine',
+    fertigText: 'Tutti e quattro i passi sono fatti.',
+    nochmals: 'Rivedere il percorso',
     reminderTitle: 'Annunciarsi al nuovo comune',
     reminderNotes: 'Annunciarsi al nuovo comune entro 14 giorni dal trasloco (e disdirsi dal vecchio). Portare documento d\'identità e contratto d\'affitto.',
     step3Title: '3 · Aggiornare l\'indirizzo ovunque',
@@ -1399,6 +1406,16 @@ export default {
     anspruch: 'Diritti',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Zaino',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'In arrivo',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Dove si trova ora e che cosa viene dopo.', du: 'Dove ti trovi ora e che cosa viene dopo.' },
+      wasAnsteht: 'Scadenze, appuntamenti e il promemoria in un unico posto.',
+      rucksack: 'Percorsi per gli eventi della vita e tutti gli strumenti, ordinati come un’attrezzatura.',
+      anspruch: 'Prestazioni e calcolatori — riduzione dei premi, prestazioni complementari, aiuto sociale, borse di studio.',
+    },
     capDokument: 'Documento',
     capBeleg: 'Ricevuta',
     capFrist: 'Scadenza',
@@ -1959,6 +1976,27 @@ export default {
       emptyState: { sie: 'Il Suo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.', du: 'Il tuo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.' },
       emptyStateHint: { sie: 'Inserisca il salario mensile — 10 secondi.', du: 'Inserisci il salario mensile — 10 secondi.' },
       benefits: ['Calcolatore fiscale', 'Riduzione premi', 'Assistenza sociale', 'Salario minimo'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Ogni mese restano",
+        verplant: "{betrag} pianificato",
+        vonEinkommenNetto: "su {betrag} di reddito netto",
+        vonEinkommen: "su {betrag} di reddito",
+      },
+      passend: {
+        titel: "Collegato a questo ambito",
+        uebersichtSub: "Panoramica finanziaria: imposte, IPV, assistenza sociale, PC",
+        ipv: "Verificare la riduzione dei premi",
+        ipvSub: "Diritto · secondo il reddito",
+        neuerJobSub: "Percorso · {n} passi",
+        lohnausweis: "Archiviare il certificato di salario",
+        lohnausweisSub: "Documenti · Raccoglitore documenti",
+      },
+      nebenerwerb: {
+        titel: "Attività accessoria",
+        fallsVorhanden: "se presente",
+        erfasst: "registrata",
+      },
       fields: {
         monthlyIncome: 'Reddito netto mensile (CHF)',
         sideIncome: 'Reddito accessorio al mese CHF',
@@ -2274,6 +2312,9 @@ export default {
     uploadSuccess: 'Documento aggiunto',
     hint: 'Nota',
     trustDocuments: { sie: 'I Suoi documenti restano su questo dispositivo.', du: 'I tuoi documenti restano su questo dispositivo.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Fotografare un documento",
+    alsNaechstes: "Prossimo passo",
     emptyState: { sie: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per Lei.', du: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per te.' },
     emptyStateHint: { sie: 'Può completare in qualsiasi momento. Niente deve essere fatto tutto insieme.', du: 'Puoi completare in qualsiasi momento. Niente deve essere fatto tutto insieme.' },
     nextTopic: 'Prossimo tema',
@@ -2686,6 +2727,15 @@ export default {
     ordnerStarting: 'Un buon inizio.',
     ordnerGrowing: { sie: 'Il Suo raccoglitore si riempie.', du: 'Il tuo raccoglitore si riempie.' },
     ordnerFull: 'Tutto al suo posto.',
+    // Versione 5 (23.10.2026) — nuovo, da rileggere
+    suggestTitle: 'Cosa ci va spesso per primo',
+    suggestId: 'Carta d’identità o passaporto',
+    suggestLease: 'Contratto di locazione',
+    suggestKkPolicy: 'Polizza della cassa malati',
+    suggestChapter: 'Capitolo {chapter}',
+    activeEmpty: 'Tutti i documenti sono scaduti e si trovano nell’archivio.',
+    expiringEmpty: 'Nulla scade a breve.',
+    archiveEmpty: 'L’archivio è vuoto.',
   },
 
   budgetSync: {

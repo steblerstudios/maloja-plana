@@ -235,6 +235,13 @@ export default {
     step2Button: 'Délai « Annonce à la commune » dans le calendrier ({date})',
     step2Done: 'Noté dans le calendrier.',
     step2CalendarLink: 'Vers le calendrier',
+    fristKarteTitel: 'Annonce à la commune',
+    fristKarteBis: 'jusqu\'au {date}',
+    weiter: 'Fait, suivant ›',
+    abschliessen: 'Terminer le parcours',
+    fertigTitel: 'Le déménagement est en ordre',
+    fertigText: 'Les quatre étapes sont faites.',
+    nochmals: 'Revoir le parcours',
     reminderTitle: 'S\'annoncer à la nouvelle commune',
     reminderNotes: 'S\'annoncer à la nouvelle commune dans les 14 jours suivant le déménagement (et se désannoncer de l\'ancienne). Prendre pièce d\'identité et contrat de bail.',
     step3Title: '3 · Mettre l\'adresse à jour partout',
@@ -1399,6 +1406,16 @@ export default {
     anspruch: 'Droits',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'À venir',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Où vous en êtes et ce qui vient ensuite.', du: 'Où tu en es et ce qui vient ensuite.' },
+      wasAnsteht: 'Délais, rendez-vous et l’aide-mémoire au même endroit.',
+      rucksack: 'Des parcours pour chaque événement de la vie et tous les outils, rangés comme un équipement.',
+      anspruch: 'Prestations et calculateurs — réduction des primes, prestations complémentaires, aide sociale, bourses.',
+    },
     capDokument: 'Document',
     capBeleg: 'Justificatif',
     capFrist: 'Échéance',
@@ -1959,6 +1976,27 @@ export default {
       emptyState: { sie: 'Votre revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.', du: 'Ton revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.' },
       emptyStateHint: { sie: 'Indiquez votre salaire mensuel — 10 secondes.', du: 'Indique ton salaire mensuel — 10 secondes.' },
       benefits: ['Calculateur fiscal', 'Réduction de primes', 'Aide sociale', 'Salaire minimum'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Il reste chaque mois",
+        verplant: "{betrag} planifié",
+        vonEinkommenNetto: "sur {betrag} de revenu net",
+        vonEinkommen: "sur {betrag} de revenu",
+      },
+      passend: {
+        titel: "En lien avec ce domaine",
+        uebersichtSub: "Vue d'ensemble financière : impôts, IPV, aide sociale, PC",
+        ipv: "Vérifier la réduction de primes",
+        ipvSub: "Droit · selon le revenu",
+        neuerJobSub: "Parcours · {n} étapes",
+        lohnausweis: "Classer le certificat de salaire",
+        lohnausweisSub: "Documents · Classeur de documents",
+      },
+      nebenerwerb: {
+        titel: "Activité accessoire",
+        fallsVorhanden: "le cas échéant",
+        erfasst: "saisie",
+      },
       fields: {
         monthlyIncome: 'Revenu mensuel (CHF)',
         sideIncome: 'Revenu accessoire par mois CHF',
@@ -2276,6 +2314,9 @@ export default {
     uploadSuccess: 'Document ajouté',
     hint: 'Indication',
     trustDocuments: { sie: 'Vos documents restent sur cet appareil.', du: 'Tes documents restent sur cet appareil.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Photographier un document",
+    alsNaechstes: "Et ensuite",
     nextTopic: 'Thème suivant',
     sectionNav: 'Thèmes du chapitre',
     showMore: 'Afficher plus de sections',
@@ -2686,6 +2727,15 @@ export default {
     ordnerStarting: 'Un bon début.',
     ordnerGrowing: { sie: 'Votre classeur se remplit.', du: 'Ton classeur se remplit.' },
     ordnerFull: 'Tout est à sa place.',
+    // Version 5 (23.10.2026) — nouveau, relecture
+    suggestTitle: 'Ce qu’on y range souvent en premier',
+    suggestId: 'Carte d’identité ou passeport',
+    suggestLease: 'Contrat de bail',
+    suggestKkPolicy: 'Police de la caisse-maladie',
+    suggestChapter: 'Chapitre {chapter}',
+    activeEmpty: 'Tous les documents sont échus et se trouvent dans l’archive.',
+    expiringEmpty: 'Rien n’arrive bientôt à échéance.',
+    archiveEmpty: 'L’archive est vide.',
   },
 
   budgetSync: {

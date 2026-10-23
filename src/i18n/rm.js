@@ -294,6 +294,20 @@ export default {
     step2Button: 'Termin «Annunzia a la vischnanca» en il chalender ({date})',
     step2Done: 'Im Kalender notiert.',
     step2CalendarLink: 'Zum Kalender',
+    // rm ungeprüft F5
+    fristKarteTitel: 'Annunzia a la vischnanca',
+    // rm ungeprüft F5
+    fristKarteBis: 'fin ils {date}',
+    // rm ungeprüft F5
+    weiter: 'Fatg, vinavant ›',
+    // rm ungeprüft F5
+    abschliessen: 'Terminar il decurs',
+    // rm ungeprüft F5
+    fertigTitel: 'Il midar da chasa è en urden',
+    // rm ungeprüft F5
+    fertigText: 'Tut ils quatter pass èn fatgs.',
+    // rm ungeprüft F5
+    nochmals: 'Guardar puspè il decurs',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',
@@ -1642,6 +1656,21 @@ export default {
     anspruch: 'Dretgs',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    // rm ungeprüft F5
+    wasAnsteht: 'Tge che vegn',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      // rm ungeprüft F5
+      dashboard: { sie: 'Nua che Vus stais ussa e tge che vegn sco proxim.', du: 'Nua che ti stas ussa e tge che vegn sco proxim.' },
+      // rm ungeprüft F5
+      wasAnsteht: 'Termins, scadenzas e la glista da memoria en in lieu.',
+      // rm ungeprüft F5
+      rucksack: 'Vias tras eveniments da la vita e tut ils utensils, urdinads sco ina equipaziun.',
+      // rm ungeprüft F5
+      anspruch: 'Prestaziuns e calculaturs — reducziun da las premias, prestaziuns supplementaras, agid social, stipendis.',
+    },
     capDokument: 'Document',
     capBeleg: 'Quittanza',
     capFrist: 'Termin',
@@ -2055,6 +2084,41 @@ export default {
       emptyState: { sie: "Vossa entrada activescha il calculatur da taglia, l'examinaziun IPV ed il controlla dal salari.", du: "Tia entrada activescha il calculatur da taglia, l'examinaziun IPV ed il controlla dal salari." },
       emptyStateHint: 'Endatar il salari mensil — dura 10 secundas.',
       benefits: ['Calculatur da taglia', 'Examinaziun IPV', 'Agid social', 'Controlla dal salari'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        // rm ungeprüft F5
+        bleiben: "Mintga mais restan",
+        // rm ungeprüft F5
+        verplant: "{betrag} planisads",
+        // rm ungeprüft F5
+        vonEinkommenNetto: "da {betrag} entrada netta",
+        // rm ungeprüft F5
+        vonEinkommen: "da {betrag} entrada",
+      },
+      passend: {
+        // rm ungeprüft F5
+        titel: "Tutga tar quest sectur",
+        // rm ungeprüft F5
+        uebersichtSub: "Survista finanziala: taglia, IPV, agid social, PC",
+        // rm ungeprüft F5
+        ipv: "Controllar la reducziun da premias",
+        // rm ungeprüft F5
+        ipvSub: "Dretg · tenor l'entrada",
+        // rm ungeprüft F5
+        neuerJobSub: "Andament · {n} pass",
+        // rm ungeprüft F5
+        lohnausweis: "Deponer il certificat da salari",
+        // rm ungeprüft F5
+        lohnausweisSub: "Documents · Deposita da documents",
+      },
+      nebenerwerb: {
+        // rm ungeprüft F5
+        titel: "Gudogn accessoric",
+        // rm ungeprüft F5
+        fallsVorhanden: "sche avant maun",
+        // rm ungeprüft F5
+        erfasst: "registrà",
+      },
       fields: {
         monthlyIncome: 'Entrada mensiala CHF',
         sideIncome: 'Entrada accessorica per mais CHF',
@@ -2823,6 +2887,22 @@ export default {
     ordnerStarting: 'In bun cumenzament.',
     ordnerGrowing: { sie: 'Voss classader sa pleina.', du: 'Tes classader sa pleina.' },
     ordnerFull: 'Tut a ses lieu.',
+    // rm ungeprüft F5
+    suggestTitle: 'Quai che vegn savens l’emprim en',
+    // rm ungeprüft F5
+    suggestId: 'Carta d’identitad u passaport',
+    // rm ungeprüft F5
+    suggestLease: 'Contract da fittanza',
+    // rm ungeprüft F5
+    suggestKkPolicy: 'Polissa da la cassa da malsauns',
+    // rm ungeprüft F5
+    suggestChapter: 'Chapitel {chapter}',
+    // rm ungeprüft F5
+    activeEmpty: 'Tut ils documents èn scadids e sa chattan en l’archiv.',
+    // rm ungeprüft F5
+    expiringEmpty: 'Nagut na scada prest.',
+    // rm ungeprüft F5
+    archiveEmpty: 'En l’archiv na sa chatta nagut.',
   },
 
   schulden: {
@@ -3823,6 +3903,11 @@ export default {
     uploadSuccess: 'Document agiunschì',
     hint: 'Indicaziun',
     trustDocuments: { sie: 'Voss documents restan sin quest apparat.', du: 'Tes documents restan sin quest apparat.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    // rm ungeprüft F5
+    fotografieren: "Fotografar in document",
+    // rm ungeprüft F5
+    alsNaechstes: "Sco proxim",
     nextTopic: 'Proxim tema',
     sectionNav: 'Temas dal chapitel',
     showMore: 'Mussar ulteriurs secturs',

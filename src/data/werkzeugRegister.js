@@ -60,7 +60,10 @@ export const WERKZEUGE = [
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
   // Die drei für den Alltag stehen zusätzlich im Menü (gleicher Name, gleiches Zeichen);
   // dahinter im Menü: Steuern · Finanz-Übersicht · Lebenssituationen (gewählt 27.09.2026).
-  { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'dokumentTresor', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor'] },
+  // Zeichen seit Fassung 5 (23.10.2026): Ablage = Ordner, Kalender = Blatt mit dem
+  // heutigen Tag (Europe/Zurich), Merkliste = Haken. Im Menü steht der Kalender seither
+  // als Anker «Was ansteht» oben, nicht mehr unter den Werkzeugen.
+  { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'ordner', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor'] },
   { view: 'calendar', nav: 'nav.calendar', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: 2, aliases: ['ical', 'ics', 'termine'] },
   { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
   { view: 'unterlagen', nav: 'nav.unterlagen', sub: 'nav.sub.unterlagen', icon: 'documents', fach: AUSSENFACH, aliases: ['unterlagen', 'documents'] },

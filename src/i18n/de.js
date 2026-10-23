@@ -235,6 +235,13 @@ export default {
     step2Button: 'Frist «Anmeldung Gemeinde» in den Kalender ({date})',
     step2Done: 'Im Kalender notiert.',
     step2CalendarLink: 'Zum Kalender',
+    fristKarteTitel: 'Anmeldung Gemeinde',
+    fristKarteBis: 'bis {date}',
+    weiter: 'Erledigt, weiter ›',
+    abschliessen: 'Ablauf abschliessen',
+    fertigTitel: 'Der Umzug ist geordnet',
+    fertigText: 'Alle vier Schritte sind erledigt.',
+    nochmals: 'Ablauf nochmals ansehen',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',
@@ -1399,6 +1406,16 @@ export default {
     anspruch: 'Anspruch',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Rucksack',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'Was ansteht',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Wo Sie gerade stehen und was als Nächstes dran ist.', du: 'Wo du gerade stehst und was als Nächstes dran ist.' },
+      wasAnsteht: 'Fristen, Termine und die Merkliste an einem Ort.',
+      rucksack: 'Wege durch Lebensereignisse und alle Werkzeuge, geordnet wie Ausrüstung.',
+      anspruch: 'Leistungen und Rechner — Prämienverbilligung, Ergänzungsleistungen, Sozialhilfe, Stipendien.',
+    },
     capDokument: 'Dokument',
     capBeleg: 'Beleg',
     capFrist: 'Frist',
@@ -1966,6 +1983,27 @@ export default {
       emptyState: { sie: 'Ihr Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.', du: 'Dein Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.' },
       emptyStateHint: 'Monatslohn eintragen — dauert 10 Sekunden.',
       benefits: ['Steuerrechner', 'IPV-Prüfung', 'Sozialhilfe', 'Mindestlohn-Check'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Jeden Monat bleiben",
+        verplant: "{betrag} verplant",
+        vonEinkommenNetto: "von {betrag} Einkommen, netto",
+        vonEinkommen: "von {betrag} Einkommen",
+      },
+      passend: {
+        titel: "Passend zu diesem Bereich",
+        uebersichtSub: "Finanz-Übersicht: Steuer, IPV, Sozialhilfe, EL",
+        ipv: "Prämienverbilligung prüfen",
+        ipvSub: "Anspruch · je nach Einkommen",
+        neuerJobSub: "Ablauf · {n} Schritte",
+        lohnausweis: "Lohnausweis ablegen",
+        lohnausweisSub: "Unterlagen · Dokumentenablage",
+      },
+      nebenerwerb: {
+        titel: "Nebenerwerb",
+        fallsVorhanden: "falls vorhanden",
+        erfasst: "erfasst",
+      },
       fields: {
         monthlyIncome: 'Monatliches Einkommen CHF',
         sideIncome: 'Nebenerwerb pro Monat CHF',
@@ -2283,6 +2321,9 @@ export default {
     uploadSuccess: 'Dokument hinzugefügt',
     hint: 'Hinweis',
     trustDocuments: { sie: 'Ihre Dokumente bleiben auf diesem Gerät.', du: 'Deine Dokumente bleiben auf diesem Gerät.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Dokument fotografieren",
+    alsNaechstes: "Als Nächstes",
     nextTopic: 'Nächstes Thema',
     sectionNav: 'Themen im Kapitel',
     showMore: 'Weitere Bereiche anzeigen',
@@ -2695,6 +2736,15 @@ export default {
     ordnerStarting: 'Ein guter Anfang.',
     ordnerGrowing: { sie: 'Ihr Ordner füllt sich.', du: 'Dein Ordner füllt sich.' },
     ordnerFull: 'Alles an seinem Platz.',
+    // Fassung 5 (23.10.2026) — neu, für den Copy-Prüfer
+    suggestTitle: 'Was oft zuerst hineingehört',
+    suggestId: 'Ausweis oder Pass',
+    suggestLease: 'Mietvertrag',
+    suggestKkPolicy: 'Police der Krankenkasse',
+    suggestChapter: 'Kapitel {chapter}',
+    activeEmpty: 'Alle Dokumente sind abgelaufen und liegen im Archiv.',
+    expiringEmpty: 'Nichts läuft bald ab.',
+    archiveEmpty: 'Im Archiv liegt nichts.',
   },
 
   budgetSync: {
