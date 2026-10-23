@@ -4273,6 +4273,12 @@ export default {
     yourCanton: 'Your canton',
     privacyNote: 'Your data stays on this device. No account. No cloud.',
     skipForNow: 'Skip for now',
+    // Empty installed app (Onboarding.jsx, zurSicherungWechseln)
+    appLeer: {
+      titel: 'Already started in the browser?',
+      text: 'The installed app has its own storage, so what you entered in the browser is not here yet. In the browser, make a backup under “Export”, then restore it here.',
+      knopf: 'Restore a backup',
+    },
     stepOf: 'Step {current} of {total}',
     needsTitle: 'What applies to you right now?',
     needsSubtitle: 'Pick what fits — Maloja will show you straight away what you\'re entitled to. You can change this anytime.',
