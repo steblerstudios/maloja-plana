@@ -419,7 +419,7 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
 
 ---
 
-## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends)
+## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L entschieden 24.10.)
 
 Der Anker «Anspruch» öffnet die Seite **Lebenssituationen** (`situationen`, `main.jsx` BottomAnchor).
 Bilder: `heute-rucksack.jpg`, `heute-situationen.jpg`, `heute-suche.jpg`. Inventar: `vergleich-inventar-runde3.json`
@@ -435,4 +435,18 @@ Alle sichtbaren Texte gegen `de.js` und die laufende App geprüft: **0 unbelegt*
 - **Rucksack:** «Wieder einpacken» ist zweimal ein Knopf (Zeichnung und Knopf darunter).
 - Kein Befund: Symbol-Text in Knopfnamen («HELVETIA», «23») ist `aria-hidden`; nur das Mess-Skript las ihn mit.
 
-**Noch nicht entschieden:** L, M, N.
+**Noch nicht entschieden:** M, N.
+
+### Rucksack (L) · entschieden (Sophie, 24.10.2026)
+
+- **Entwurf L passt**, so wie gezeichnet: Karten mit runden Ecken, aufgeklappt eine ruhige Liste mit ›,
+  Wege mit Salbei-Strich, Werkzeuge mit Messing-Strich.
+- **Name «Rucksack», nicht «Wanderrucksack»** — Titel, Brotkrume und Panorama lesen `nav.rucksack`
+  (Regel «eine Seite, ein Name» vom 23.10., Zweig `fix/ein-name-pro-seite`, noch nicht auf main).
+  Im Mockup steht noch «Wanderrucksack»; beim Bau gilt der neue Name.
+- **«Wieder einpacken» nur einmal:** die Zeichnung bleibt zum Antippen, aber ohne eigenen Namen
+  (`aria-hidden`); der Name steht am ruhigen Rahmen-Knopf darunter (statt goldener Pille).
+- **Bleibt wie heute:** die Zeichnungen aus `Gepaeck.jsx`, Auspacken beim Öffnen (aus bei «Bewegung
+  reduzieren»), ein Gegenstand offen auf einmal, «x von 4 erfasst», «Was steht mir zu?» oben, das
+  Aussenfach oben offen und unten noch einmal als Karte (Wunsch 27.09.), der Satz unten.
+- Die Zahlen in den Untertiteln («11 Wege», «6 Werkzeuge») rechnet die App aus den Listen.
