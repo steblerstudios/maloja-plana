@@ -104,7 +104,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   // ohne Satz (VERGLEICH.md «Menü · entschieden»). Reihenfolge = Navigations-Rückgrat:
   //   1. die vier Anker (Übersicht · Was ansteht · Rucksack · Was steht mir zu?)
   //   2. die sieben Bereiche in ihren Gruppen, Satz = chapters.*.description
-  //   3. die Werkzeuge aus dem Register (imMenue), dazu «Alle Werkzeuge im Gepäck ›»
+  //   3. die Werkzeuge aus dem Register (imMenue), dazu «Alle Werkzeuge im Rucksack ›»
   //   4. unten: Einstellungen · Einfache Ansicht · Datenschutz & Rechtliches ·
   //      Problem melden · «Lokal gespeichert …»
   // «Rundgang neu starten» steht NICHT mehr hier, sondern nur in den Einstellungen.
@@ -144,7 +144,8 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
 
   // Werkzeug-Vorschau 27.09.2026: keine eigene Liste. Das Menü zeigt aus dem EINEN
   // Register (data/werkzeugRegister.js) die Einträge mit `imMenue`. Der Kalender steht
-  // seit Fassung 5 oben als Anker «Was ansteht» und darum nicht ein zweites Mal hier.
+  // seit Fassung 5 oben als Anker «Was ansteht» und darum nicht ein zweites Mal hier;
+  // ebenso «Was steht mir zu?» (bis 23.10.2026 doppelt: Anker und «Lebenssituationen»).
   // Satz je Werkzeug: der Untertitel aus dem Register; die Finanz-Übersicht hat dort
   // keinen und nimmt den Satz ihrer Dashboard-Kachel.
   const WERKZEUG_SATZ = { finanzuebersicht: 'dashboard.highlightFinanzSub' };
@@ -153,15 +154,15 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
     satz: w.sub ? t(w.sub) : (WERKZEUG_SATZ[w.view] ? t(WERKZEUG_SATZ[w.view]) : null),
     go: () => oeffne(w),
   });
-  const menueWerkzeuge = MENUE_WERKZEUGE.map(alsEintrag).filter((w) => w.view !== 'calendar');
+  const menueWerkzeuge = MENUE_WERKZEUGE.map(alsEintrag).filter((w) => w.view !== 'calendar' && w.view !== 'situationen');
   const gepaeckEintrag = { key: 'gepaeck', view: 'gepaeck', label: t('gepaeck.menuAlle'), icon: rucksack, aliases: [], go: geh('gepaeck') };
   const settingsEintrag = { key: 'settings', view: 'settings', label: t('common.settingsTitle'), icon: 'settings', aliases: [], go: geh('settings') };
   // Die Suche im Menü findet weiterhin ALLE Werkzeuge (auch die im Gepäck).
   const allTools = [...WERKZEUGE.map(alsEintrag), gepaeckEintrag, settingsEintrag];
 
   // Die vier Anker. Namen aus der App; die Sätze sind neu (Copy-Prüfer, nav.ankerSatz.*).
-  // «Was ansteht» hat einen eigenen Menü-Namen (nav.wasAnsteht): nav.calendar speist auch
-  // den Boden-Anker, das Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+  // Ein Name je Seite (23.10.2026): Menü, Leiste, Seitentitel und «Zurück zu …» lesen
+  // denselben Schlüssel — nav.wasAnsteht, nav.rucksack, dashboard.anspruchTitle.
   const ANKER = [
     { key: 'dashboard', view: 'dashboard', label: t('nav.dashboard'), satz: t('nav.ankerSatz.dashboard'), icon: sackmesser },
     { key: 'calendar', view: 'calendar', label: t('nav.wasAnsteht'), satz: t('nav.ankerSatz.wasAnsteht'), icon: 'calendar' },

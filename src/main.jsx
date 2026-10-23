@@ -416,7 +416,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
         );
-        const right1 = slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
+        const right1 = slot({ key: 'situationen', label: t('dashboard.anspruchTitle'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
         const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
         return leftHand
           ? [right2, right1, center, left2, left1]

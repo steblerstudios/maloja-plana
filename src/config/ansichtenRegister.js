@@ -99,14 +99,14 @@ const WEITERE_NAMEN = {
   search: 'nav.search',
   settings: 'nav.settings',
   ansprueche: 'anspruch.pageTitle',
-  situationen: 'lebenszustaende.pageTitle',
+  situationen: 'dashboard.anspruchTitle',
   schnellcheck: 'anspruch.pageTitle', // seit 27.09.2026 dieselbe Seite wie «ansprueche»
   notfalleinstieg: 'chapters.notfall.title',
   notfallkarte: 'notfallkarte.title',
   gesundheit: 'arztkoffer.title',
   briefe: 'briefe.title',
   obstgarten: 'obstgarten.title',
-  gepaeck: 'gepaeck.title',
+  gepaeck: 'nav.rucksack',
   legal: 'legal.title',
   mietzins: 'nav.mietzins',
 };

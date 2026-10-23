@@ -386,7 +386,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
   const reiter = (aktiv) => ({ flex: 1, padding: '10px 12px', minHeight: '44px', background: aktiv ? palette.surface : 'none', color: palette.text, border: '1px solid ' + (aktiv ? palette.sand : 'transparent'), borderRadius: radius.sm, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: aktiv ? weight.semi : weight.normal });
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('calendar'), size: 22 }), style: { marginBottom: space.md } }, t('calendar.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: ansichtIkon('calendar'), size: 22 }), style: { marginBottom: space.md } }, t('nav.wasAnsteht')),
 
     // Möglicherweise für dich (Anspruch-Signale, Variante C, #4.4): ruhiger Hinweis
     // auf gedeckte Ansprüche — dieselbe ehrliche Logik wie der Ring am Baum. Kein

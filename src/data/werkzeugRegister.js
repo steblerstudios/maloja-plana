@@ -64,7 +64,7 @@ export const WERKZEUGE = [
   // heutigen Tag (Europe/Zurich), Merkliste = Haken. Im Menü steht der Kalender seither
   // als Anker «Was ansteht» oben, nicht mehr unter den Werkzeugen.
   { view: 'tresor', nav: 'nav.tresor', sub: 'nav.sub.tresor', icon: 'ordner', fach: AUSSENFACH, imMenue: 1, aliases: ['dokumente', 'documents', 'tresor'] },
-  { view: 'calendar', nav: 'nav.calendar', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: 2, aliases: ['ical', 'ics', 'termine'] },
+  { view: 'calendar', nav: 'nav.wasAnsteht', sub: 'nav.sub.calendar', icon: 'calendar', fach: AUSSENFACH, imMenue: 2, aliases: ['ical', 'ics', 'termine', 'kalender', 'calendrier', 'calendario', 'calendar', 'chalender'] },
   { view: 'merkliste', nav: 'nav.merkliste', sub: 'nav.sub.merkliste', icon: 'check', fach: AUSSENFACH, imMenue: 3, aliases: ['todo', 'merkliste'] },
   { view: 'unterlagen', nav: 'nav.unterlagen', sub: 'nav.sub.unterlagen', icon: 'documents', fach: AUSSENFACH, aliases: ['unterlagen', 'documents'] },
   { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', fach: AUSSENFACH, aliases: ['cv', 'lebenslauf', 'resume'] },
@@ -73,7 +73,7 @@ export const WERKZEUGE = [
   { view: 'charts', nav: 'nav.charts', icon: 'chartsSchoko', fach: AUSSENFACH, aliases: ['charts', 'diagramme', 'statistik', 'grafik'] },
   // Gewählt 27.09.2026: Lebenssituationen als «Was steht mir zu?» über den Gegenständen
   // (und im Menü); die Arztkoffer-Ansicht «Gesundheit» im Gegenstand Arztkoffer.
-  { view: 'situationen', nav: 'lebenszustaende.pageTitle', sub: 'lebenszustaende.pageSub', icon: 'health', fach: OBEN, imMenue: 6, suche: false },
+  { view: 'situationen', nav: 'dashboard.anspruchTitle', sub: 'lebenszustaende.pageSub', icon: 'health', fach: OBEN, imMenue: 6, suche: false },
   { view: 'gesundheit', nav: 'nav.arztkoffer', sub: 'nav.sub.arztkoffer', icon: 'health', fach: 'gesundheit', suche: false },
   { view: 'search', nav: 'nav.search', sub: 'nav.sub.search', icon: 'search', fach: AUSSENFACH, suche: false },
 

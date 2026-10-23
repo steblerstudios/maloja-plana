@@ -31,7 +31,6 @@ export default {
       },
     },
     moreInfo: 'Saperne di più',
-    pageTitle: 'Situazioni di vita',
     pageSub: 'Scoprire diritti poco noti',
     dashboardLink: { sie: 'Una situazione la riguarda?', du: 'Una situazione ti riguarda?' },
     tiefesEinkommen: {
@@ -531,7 +530,7 @@ export default {
     step5Title: '5 · Riverificare i diritti',
     step5Text: { sie: 'Un’economia domestica più grande cambia ciò a cui ha diritto. La Sua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresce il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.', du: 'Un’economia domestica più grande cambia ciò a cui hai diritto. La tua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresci il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.' },
     step5LinkIpv: 'Ricalcola la riduzione dei premi',
-    step5LinkSituation: 'Vedi le situazioni di vita corrispondenti',
+    step5LinkSituation: 'Vedi le situazioni corrispondenti in «A cosa ho diritto?»',
     relatedTitle: 'Eventi correlati',
     relatedHeirat: 'Matrimonio o unione',
     footerNote: { sie: 'Molto passa tramite datore di lavoro e cassa di compensazione — conservi bene le conferme. Questo è orientamento, non consulenza legale.', du: 'Molto passa tramite datore di lavoro e cassa di compensazione — conserva bene le conferme. Questo è orientamento, non consulenza legale.' },
@@ -1390,7 +1389,6 @@ export default {
     charts: 'Grafici',
     unterlagen: 'I miei documenti',
     export: 'Esportazione',
-    calendar: 'Calendario',
     notifications: 'Notifiche',
     installApp: 'Installare come app',
     flyer: 'Volantino da condividere',
@@ -1403,7 +1401,6 @@ export default {
     search: 'Cerca',
     menu: 'Menu',
     erfassen: 'Aggiungi',
-    anspruch: 'Diritti',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Zaino',
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
@@ -4852,7 +4849,6 @@ export default {
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
-    title: 'In programma',
     aufgabe: 'Compito',
     ausMerkliste: 'dal promemoria',
     ganzerMonat: 'Tutto il mese',
@@ -5802,9 +5798,7 @@ export default {
     b: { wohnen: 'Abitare', finanzen: 'Finanze', person: 'Persona', versicherungen: 'Assicurazione', gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza', bildung: 'Formazione', notfall: 'Emergenza', behoerden: 'Autorità' },
   },
   gepaeck: {
-    title: 'Zaino da escursione',
     intro: { sie: 'Ogni ambito della vita è un attrezzo nello zaino. Disfaccia il bagaglio, apra un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.', du: 'Ogni ambito della vita è un attrezzo nello zaino. Disfa il bagaglio, apri un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.' },
-    link: 'Zaino da escursione',
     ctaSub: 'Gli eventi della vita come attrezzatura — disfare, guardare dentro.',
     unpack: 'Disfare',
     pack: 'Rifare il bagaglio',
@@ -5820,7 +5814,7 @@ export default {
     // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
     aussenfachKarte: 'Tasca esterna',
     aussenfachKarteSub: 'Gli stessi strumenti, da riporre',
-    menuAlle: 'Tutti gli strumenti nel bagaglio',
+    menuAlle: 'Tutti gli strumenti nello zaino',
     packed: '{done} di {total} inseriti',
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',
     obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata', geld: 'Portamonete' },
