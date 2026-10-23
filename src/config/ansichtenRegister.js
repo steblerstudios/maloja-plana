@@ -72,6 +72,16 @@ export const SEARCH_VIEWS = [
   { view: 'stipendien', nav: 'nav.stipendien', sub: 'nav.sub.stipendien', icon: 'ausbildung', aliases: ['stipendien', 'scholarship'] },
   { view: 'organ', nav: 'nav.organDonation', icon: 'health', aliases: ['organspende', 'spende', 'organ', 'donation'] },
   { view: 'bestattung', nav: 'nav.bestattung', icon: 'document', aliases: ['bestattung', 'beerdigung', 'kremation', 'abdankung', 'obsèques', 'funerale', 'funeral'] },
+  { view: 'mietzins', nav: 'nav.mietzins', sub: 'nav.sub.mietzins', icon: 'home', aliases: ['mietzins', 'mietzinsbeitrag', 'mietzinsrechner', 'miete', 'mietzuschuss', 'wohnbeihilfe', 'aide au loyer', 'aides au loyer', 'sussidio affitto', 'rent subsidy'] },
+  // Seiten, die das Dashboard und die Kapitel ansteuern, die aber weder Werkzeug noch
+  // Ablauf sind. Befund 23.10.2026: wer «Notfallkarte» eintippte, bekam nichts — die
+  // Karte auf dem Dashboard führt in `notfalleinstieg`, und keine dieser Seiten stand hier.
+  // Der Name ist derselbe wie auf der Dashboard-Karte.
+  { view: 'notfalleinstieg', nav: 'dashboard.highlightNotfall', icon: 'notfall', aliases: ['notfallkarte', 'notfall', 'notfallkontakt', 'blutgruppe', 'carte d’urgence', 'urgence', 'scheda d’emergenza', 'emergenza', 'emergency card', 'emergency'] },
+  { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
+  { view: 'notfallpass', nav: 'notfallpass.title', icon: 'health', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
+  { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
+  { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'dossier', 'cartella', 'life folder'] },
   // Der Weg auf den Startbildschirm. Muss auffindbar sein, weil ihn ausserhalb
   // von Chromium kein Banner von selbst anbietet — wer auf dem iPhone danach
   // sucht, sucht mit genau diesen Wörtern.

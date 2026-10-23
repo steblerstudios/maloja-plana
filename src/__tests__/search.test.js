@@ -66,10 +66,23 @@ describe('SearchView Katalog', () => {
     }
   });
 
+  // Befund 23.10.2026: «Notfallkarte» und «Mietzins» fanden nichts.
+  it.each([
+    ['notfallkarte', 'notfalleinstieg'],
+    ['notfallkarte', 'notfallkarte'],
+    ['mietzins', 'mietzins'],
+    ['notruf', 'notfallkarte'],
+    ['briefvorlage', 'briefe'],
+  ])('«%s» findet %s', (wort, view) => {
+    const treffer = SEARCH_VIEWS.filter((v) => [resolve(de, v.nav), v.view, ...(v.aliases || [])]
+      .some((x) => String(typeof x === 'object' ? x.sie : x).toLowerCase().includes(wort)));
+    expect(treffer.map((v) => v.view)).toContain(view);
+  });
+
   it('jeder Weg im Gepäck ist auch über die Suche erreichbar', () => {
     const searchable = new Set(SEARCH_VIEWS.map((v) => v.view));
     // Kapitel-/Sammelansichten ohne eigenen Such-Eintrag.
-    const ausgenommen = new Set(['situationen', 'mietzins']);
+    const ausgenommen = new Set(['situationen']);
     for (const w of alleWege()) {
       if (ausgenommen.has(w.view)) continue;
       expect(searchable.has(w.view), `Gepäck-Weg ${w.key} → ${w.view} nicht in der Suche`).toBe(true);
