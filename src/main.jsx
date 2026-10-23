@@ -15,7 +15,6 @@ import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
-import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { speichereFallsOffen, beimVerlassenSpeichern, hoechstWarteRest, AUTOSAVE_RUHE_MS } from './utils/autoSave.js';
 import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
@@ -38,12 +37,12 @@ const OverdueBanner = React.lazy(() => import('./OverdueBanner.jsx'));
 import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
-import { syncDocumentReminders } from './utils/docReminders.js';
 import { istFremdeAenderung } from './utils/fremdeAenderung.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
 const InstallHinweis = React.lazy(() => import('./InstallHinweis.jsx'));
-import BetaGate from './BetaGate.jsx';
+// Nur das Tor im Startbündel; die Code-Wand (BetaGate.jsx) lädt es bei Bedarf nach.
+import BetaGateTor from './BetaGateTor.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
 // Luft unter dem 65-KB-Deckel. Damit das erste Antippen trotzdem nicht stockt, wird
@@ -743,8 +742,11 @@ const AppInner = ({ demo }) => {
 
   // Register service worker + check overdue reminders on mount
   useEffect(() => {
-    registerServiceWorker();
-    checkOverdueReminders(t);
+    // Startbündel-Diät (23.10.2026): beides läuft erst nach dem ersten Bild, darum nachgeladen.
+    import('./utils/notifications.js').then(({ registerServiceWorker, checkOverdueReminders }) => {
+      registerServiceWorker();
+      checkOverdueReminders(t);
+    }).catch(() => { /* offline beim ersten Start: SW und Erinnerung beim nächsten Öffnen */ });
     // PLZ->Gemeinde-Daten vorladen, damit Kanton/City-Autofill schon beim ersten PLZ-Eintrag greift
     preloadPLZ();
     // Die Menü-Schubladen liegen seit dem Deckel-Durchgang ausserhalb der Startdatei.
@@ -776,8 +778,12 @@ const AppInner = ({ demo }) => {
   }, [demo]);
 
   // Sync document expiry dates → calendar reminders
+  // Nachgeladen wie oben; das Modul ist nach dem ersten Mal im Speicher, die Reihenfolge der
+  // Aufrufe bleibt (aufgelöste Importe laufen in Aufruf-Reihenfolge).
   useEffect(() => {
-    syncDocumentReminders(documents, t);
+    import('./utils/docReminders.js')
+      .then(({ syncDocumentReminders }) => syncDocumentReminders(documents, t))
+      .catch(() => { /* Erinnerungen holt der nächste Lauf nach */ });
   }, [documents, t]);
 
   useEffect(() => {
@@ -1765,10 +1771,10 @@ const AppInner = ({ demo }) => {
   )));
 };
 
-// Wrap in I18nProvider + ErrorBoundary + BetaGate
+// Wrap in I18nProvider + ErrorBoundary + BetaGateTor (→ BetaGate nur ohne Zugang)
 const App = () => React.createElement(I18nProvider, null,
   React.createElement(ErrorBoundary, null,
-    React.createElement(BetaGate, null,
+    React.createElement(BetaGateTor, null,
       React.createElement(AppInner)
     )
   )
