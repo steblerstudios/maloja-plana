@@ -419,7 +419,7 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
 
 ---
 
-## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L entschieden 24.10.)
+## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L und M entschieden 24.10.)
 
 Der Anker «Anspruch» öffnet die Seite **Lebenssituationen** (`situationen`, `main.jsx` BottomAnchor).
 Bilder: `heute-rucksack.jpg`, `heute-situationen.jpg`, `heute-suche.jpg`. Inventar: `vergleich-inventar-runde3.json`
@@ -435,7 +435,22 @@ Alle sichtbaren Texte gegen `de.js` und die laufende App geprüft: **0 unbelegt*
 - **Rucksack:** «Wieder einpacken» ist zweimal ein Knopf (Zeichnung und Knopf darunter).
 - Kein Befund: Symbol-Text in Knopfnamen («HELVETIA», «23») ist `aria-hidden`; nur das Mess-Skript las ihn mit.
 
-**Noch nicht entschieden:** M, N.
+**Noch nicht entschieden:** N.
+
+### Was steht mir zu? (M) · entschieden (Sophie, 24.10.2026)
+
+- **Entwurf M passt**, so wie gezeichnet: Geschenk-Symbol wie der Anker, die elf Situationen als
+  Auswahl-Pillen (gewählte in Gold), nach dem Antippen Zeilen mit Bereichssymbol, die direkt ins
+  Werkzeug führen (IPV, Sozialhilfe, Stipendien …), Bereichsfarbe nach dem Werkzeug.
+- **Titel «Was steht mir zu?», nicht «Lebenssituationen»** — Anker, Titel, Brotkrume und Suche lesen
+  `dashboard.anspruchTitle` (Regel «eine Seite, ein Name» vom 23.10., Zweig `fix/ein-name-pro-seite`,
+  noch nicht auf main). Damit ist der Befund «Drei Namen für eine Seite» erledigt. Im Mockup steht noch
+  «Lebenssituationen»; beim Bau gilt der neue Titel.
+- **Bleibt wie heute:** Einleitungssatz, «Quelle · Stand» in jeder Zeile, «Angebote in Ihrer Region»,
+  «Ihre Daten bleiben auf diesem Gerät». Externe Angebote (KulturLegi, Reka) mit Globus und ↗, wie die
+  Aussenfach-Regel.
+- Die Karten der übrigen zehn Situationen kommen unverändert aus der App (im Mockup nur «Wenn das Geld
+  knapp ist» gefüllt).
 
 ### Rucksack (L) · entschieden (Sophie, 24.10.2026)
 
