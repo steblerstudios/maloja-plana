@@ -2693,6 +2693,15 @@ export default {
     ordnerStarting: 'A good start.',
     ordnerGrowing: 'Your folder is filling up.',
     ordnerFull: 'Everything in its place.',
+    // Version 5 (23.10.2026) — new, for copy review
+    suggestTitle: 'What often goes in first',
+    suggestId: 'ID card or passport',
+    suggestLease: 'Rental agreement',
+    suggestKkPolicy: 'Health insurance policy',
+    suggestChapter: 'Chapter {chapter}',
+    activeEmpty: 'All documents have expired and are in the archive.',
+    expiringEmpty: 'Nothing is expiring soon.',
+    archiveEmpty: 'The archive is empty.',
   },
 
   budgetSync: {
