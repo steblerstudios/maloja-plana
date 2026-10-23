@@ -67,7 +67,7 @@ const CATEGORY_ICON_KEYS = {
   legal: 'legal', personal: 'basis'
 };
 
-// Fassung 5 (Sophie, 23.10.2026): Form trägt die Art, Farbe den Bereich — Graustufen-tauglich.
+// Fassung 5 (Stebler Studios, 23.10.2026): Form trägt die Art, Farbe den Bereich — Graustufen-tauglich.
 //   Punkt = Frist · Raute = Termin · Quadrat = Aufgabe aus der Merkliste · leerer Kreis = erledigt.
 // Was Sie hier selbst eintragen (Formular, Vorlage), ist ein Termin (art: 'termin'); was ein
 // Ablauf oder Rechner über utils/reminders.js anlegt — und alles Ältere ohne `art` — eine Frist.
@@ -213,9 +213,10 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
   const getDueColor = (dueDate) => {
     const days = daysBetween(today, dueDate);
-    if (days < 0) return palette.rose;
-    if (days === 0) return palette.gold;
-    if (days <= 7) return palette.sky;
+    // Textfarbe: die tiefen Töne halten AA (4.5:1); die hellen nur als Rand.
+    if (days < 0) return palette.roseDeep || palette.rose;
+    if (days === 0) return palette.goldDeep || palette.gold;
+    if (days <= 7) return palette.skyDeep || palette.sky;
     return palette.mid;
   };
 
@@ -292,7 +293,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
   const datumLang = (iso) => datumVon(iso).toLocaleDateString(LOCALE, { day: 'numeric', month: 'long' });
   // Offene Aufgaben am geplanten Tag; erledigte am Tag, an dem sie erledigt wurden
   // (nur seit Fassung 5 abgehakte tragen erledigtAm — ältere erfinden kein Datum).
-  const aufgabenOffen = todos.filter(m => !m.done && m.tag).sort((a, b) => a.tag.localeCompare(b.tag));
+  const aufgabenOffen = todos.filter(m => !m.done && m.tag).sort((a, b) => String(a.tag).localeCompare(String(b.tag)));
   const aufgabenErledigt = todos.filter(m => m.done && m.erledigtAm);
   const ohneTag = todos.filter(m => !m.done && !m.tag);
   const todoUmschalten = (id) => aendereTodos(prev => merkpunktUmschalten(prev, id, today));

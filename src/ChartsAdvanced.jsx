@@ -140,7 +140,8 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
       )
     ),
 
-    bvg > 0 && React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.md + 'px' } }, t('budgetSync.bvgReferenceNote')),
+    // Nur bei Netto-Erfassung wahr: bei Brutto sind BVG und AHV noch nicht abgezogen (Tor 23.10.2026).
+    bvg > 0 && data?.finanzen?.incomeType === 'netto' && React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.md + 'px' } }, t('budgetSync.bvgReferenceNote')),
 
     React.createElement(PieChart, {
       palette,

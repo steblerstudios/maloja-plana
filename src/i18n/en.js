@@ -4946,7 +4946,7 @@ export default {
     linkBudget: 'View in budget',
   },
   calendar: {
-    title: 'What’s ahead',
+    title: 'Coming up',
     aufgabe: 'Task',
     ausMerkliste: 'from your checklist',
     ganzerMonat: 'Whole month',
@@ -6074,6 +6074,7 @@ export default {
     vorbezugNeuberechnung: 'Until the reference age some contribution years are still missing, so it is usually a partial pension. If you live in Switzerland, you remain liable to contribute during this time; at the reference age the pension is recalculated with these years. The reduction in francs remains for life and is adjusted along with the pensions.',
     abAlterKurz: 'from {alter}: CHF {betrag}',
     vorbezug: 'Reduction (early withdrawal)',
+    vorbezugFrauenUebergang: 'Women born 1961–1969 have lower reduction rates, which are not shown here (OASI leaflet 3.04). Please check with the compensation office.',
     aufschub: 'Supplement (deferral)',
     erziehungsgutschrift: 'Child-rearing / caregiving credit',
     plafoniert: 'Couple cap',

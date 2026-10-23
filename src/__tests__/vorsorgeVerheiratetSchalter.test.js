@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 
-// Befund aus dem Tor 0.1.47 (#524), Entscheid Sophie 22.10.2026: Der Schalter «Verheiratet» im
+// Befund aus dem Tor 0.1.47 (#524), Entscheid Stebler Studios 22.10.2026: Der Schalter «Verheiratet» im
 // Vorsorge-Rechner entscheidet über die Halbierung der Erziehungs-/Betreuungsgutschriften. Vorher
 // teilte der Rechner auch bei «Nein», sobald das Profil «verheiratet» sagte. Bei «Nein» wird nur noch
 // geteilt, wenn das Profil eine frühere Ehe nennt (geschieden, verwitwet, aufgelöste Partnerschaft).

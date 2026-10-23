@@ -6136,6 +6136,7 @@ export default {
     vorbezugNeuberechnung: { sie: 'Bis zum Referenzalter fehlen noch Beitragsjahre, darum ist es meist eine Teilrente. Bei Wohnsitz in der Schweiz bleiben Sie in dieser Zeit beitragspflichtig; im Referenzalter wird die Rente mit diesen Jahren neu berechnet. Die Kürzung in Franken bleibt lebenslang und wird mit den Renten angepasst.', du: 'Bis zum Referenzalter fehlen noch Beitragsjahre, darum ist es meist eine Teilrente. Bei Wohnsitz in der Schweiz bleibst du in dieser Zeit beitragspflichtig; im Referenzalter wird die Rente mit diesen Jahren neu berechnet. Die Kürzung in Franken bleibt lebenslang und wird mit den Renten angepasst.' },
     abAlterKurz: 'ab {alter}: CHF {betrag}',
     vorbezug: 'Kürzung (Vorbezug)',
+    vorbezugFrauenUebergang: 'Für Frauen der Jahrgänge 1961–1969 gelten tiefere Kürzungssätze, die hier nicht abgebildet sind (AHV-Merkblatt 3.04). Bitte bei der Ausgleichskasse prüfen.',
     aufschub: 'Zuschlag (Aufschub)',
     erziehungsgutschrift: 'Erziehungs-/Betreuungsgutschrift',
     plafoniert: 'Plafonierung Ehepaar',

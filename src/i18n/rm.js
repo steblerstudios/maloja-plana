@@ -1659,7 +1659,7 @@ export default {
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
     // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
     // rm ungeprüft F5
-    wasAnsteht: 'Tge che vegn',
+    wasAnsteht: 'Tge ch\'è proxim',
     // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
     ankerSatz: {
       // rm ungeprüft F5
@@ -6849,6 +6849,8 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (AHV Vorbezug #529, 22.10.2026)
     abAlterKurz: 'a partir da {alter}: CHF {betrag}',
     vorbezug: 'Reducziun (retschavida anticipada)',
+    // rm ungeprüft F5
+    vorbezugFrauenUebergang: 'Per dunnas da las annadas 1961–1969 valan quotas da reducziun pli bassas che na vegnan betg mussadas qua (fegl d’infurmaziun AVS 3.04). Per plaschair verifitgar tar la cassa da cumpensaziun.',
     aufschub: 'Supplement (prorogaziun)',
     erziehungsgutschrift: "Bonificaziun d'educaziun / da tgira",
     plafoniert: 'Plafonament pèr da maridads',

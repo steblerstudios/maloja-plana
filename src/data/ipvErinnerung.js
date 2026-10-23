@@ -1,19 +1,17 @@
-// «Jährlich erinnern» auf der Seite Prämienverbilligung (Fassung 5, Entscheid Sophie 23.10.2026):
+// «Jährlich erinnern» auf der Seite Prämienverbilligung (Fassung 5, Entscheid Stebler Studios 23.10.2026):
 // in JEDEM Schritt des IPV-Wegs, nicht erst nach der Verfügung. Legt «Prämienverbilligung fürs
 // nächste Jahr prüfen» als jährliche Aufgabe auf die Merkliste. Reine Logik, kein React.
 
-import { loadTodos } from '../utils/merkliste.js';
+import { loadTodos, einJahrSpaeter } from '../utils/merkliste.js';
 
 export const IPV_ERINNERUNG_LINK = 'premium';
 
-// Ein Tag ein Jahr nach dem Ausgangsdatum — dieselbe Rechnung wie vorher fürs Kalender-Angebot
-// (Verfügungs-Datum + 1 Jahr, ohne Verfügung heute + 1 Jahr). In UTC gerechnet, damit kein
-// Zeitzonen-Sprung den Tag verschiebt; ein 29. Februar wird im Folgejahr zum 1. März (wie
-// Date.setFullYear vorher).
+// Ein Tag ein Jahr nach dem Ausgangsdatum (Verfügungs-Datum, sonst heute als lokaler Tag).
+// Dieselbe Regel wie beim Abhaken einer jährlichen Aufgabe: aus dem 29. Februar wird der 28.
 export const tagInEinemJahr = (iso, heute = new Date()) => {
-  const m = typeof iso === 'string' && /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
-  const [j, mo, d] = m ? [Number(m[1]), Number(m[2]), Number(m[3])] : [heute.getFullYear(), heute.getMonth() + 1, heute.getDate()];
-  return new Date(Date.UTC(j + 1, mo - 1, d)).toISOString().slice(0, 10);
+  const m = typeof iso === 'string' && /^(\d{4}-\d{2}-\d{2})/.exec(iso);
+  const p = (n) => String(n).padStart(2, '0');
+  return einJahrSpaeter(m ? m[1] : heute.getFullYear() + '-' + p(heute.getMonth() + 1) + '-' + p(heute.getDate()));
 };
 
 // Der Merkpunkt, mit `tag` und `wiederholung` aus dem Merkpunkt-Modell (utils/merkliste.js):
@@ -31,5 +29,7 @@ export const ipvErinnerung = (t, datum, heute) => ({
 // bleibt dort unsichtbar).
 export const erinnerungLiegtSchon = (titel, vorlaeufig) => {
   if (vorlaeufig) return false;
-  return loadTodos().some((i) => i && !i.done && i.text === titel && (i.link || null) === IPV_ERINNERUNG_LINK);
+  // Auch eine offene jährliche Aufgabe in einer anderen Sprache zählt (sonst nach Sprachwechsel doppelt).
+  return loadTodos().some((i) => i && !i.done && (i.link || null) === IPV_ERINNERUNG_LINK
+    && (i.text === titel || i.wiederholung === 'jaehrlich'));
 };

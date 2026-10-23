@@ -192,7 +192,7 @@ export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey,
   );
 };
 
-// Passstrasse (Fassung 5, Entscheid Sophie 23.10.2026, erster Nutzer: Umzug): die Schritte
+// Passstrasse (Fassung 5, Entscheid Stebler Studios 23.10.2026, erster Nutzer: Umzug): die Schritte
 // als Stationen auf einer Strasse in Kehren; der gefahrene Teil in der Farbe des Bereichs,
 // erledigte Stationen mit Haken, die aktuelle etwas grösser. Reine Grafik (aria-hidden) —
 // wo man steht, sagt die Zeile «Schritt n von N» darüber im Text.

@@ -69,7 +69,7 @@ export function saeule3aMaximum(steuerjahr) {
   return SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[steuerjahr]?.mitPensionskasse ?? null;
 }
 
-// Das laufende Steuerjahr, nach Datum (Weg A, Entscheid Sophie 21.10.2026): bis 31.12.2026 gilt
+// Das laufende Steuerjahr, nach Datum (Weg A, Entscheid Stebler Studios 21.10.2026): bis 31.12.2026 gilt
 // 2026, ab 1.1.2027 von selbst 2027. Ein Jahr nach dem letzten belegten zeigt das letzte belegte
 // und sagt das über `steuerjahr` (der Tracker nennt dann ausdrücklich dieses Jahr).
 // Ohne Import mit eigener Zeile gelöst — siehe «Blatt ohne eigene Importe» oben.

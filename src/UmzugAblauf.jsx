@@ -76,7 +76,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
   };
   const nurFuerJetzt = Object.values(added).includes('vorlaeufig');
 
-  // Ein Schritt nach dem anderen (Fassung 5, Entscheid Sophie 23.10.2026). Der Stand bleibt
+  // Ein Schritt nach dem anderen (Fassung 5, Entscheid Stebler Studios 23.10.2026). Der Stand bleibt
   // gespeichert (utils/ablaufStand.js), im Beispiel/Ausprobieren nur für jetzt.
   const [stand, setStandRoh] = useState(() => ablaufStandLaden('umzug', PASS_SCHRITTE, vorlaeufig));
   const setStand = (next) => { setStandRoh(next); ablaufStandSichern('umzug', next, vorlaeufig); };
@@ -157,7 +157,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
               style: {
                 flexShrink: 0, cursor: isAdded ? 'default' : 'pointer', fontFamily: 'inherit',
                 background: 'none', border: '1px solid ' + (isAdded ? palette.sage : palette.border),
-                borderRadius: radius.sm, padding: '2px 10px', fontSize: text.xs,
+                borderRadius: radius.sm, padding: '2px 12px', minHeight: '44px', fontSize: text.xs,
                 color: isAdded ? (palette.sageDeep || palette.sage) : palette.mid,
               },
             }, erledigtZeichen(isAdded, isAdded ? t('umzug.step3Added') : t('umzug.step3Add')))
@@ -169,7 +169,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('button', {
         key: 'alle',
         onClick: addAll,
-        style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi },
+        style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', minHeight: '44px', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi },
       }, '+ ' + t('umzug.step3AddAll')),
       // Für jede Stelle der Liste den gleichen Adressänderungs-Brief (ein Dokument, wiederverwendbar).
       onNavigate && React.createElement(AblaufLink, { key: 'brief', palette, label: t('umzug.linkAddressChange'), onClick: () => onNavigate('briefe') }),

@@ -93,7 +93,7 @@ describe.each(FAELLE)('Uhr $uhr: Texte zeigen die Werte $jahr', (f) => {
 
 // Ab 2027 kommen die AHV-Beträge aus der Verordnung vom 2.10.2026, nicht aus dem AHVG (Art. 34 Abs. 5
 // nennt auch 2027 noch 1 260). Die Quellenzeilen verweisen darum ab 2027 auf die Verordnung, 2026 nicht.
-// Dazu die EO-Quellenzeile: «Stand {jahr}» statt fest 2026 (Wunsch Sophie 23.10.2026).
+// Dazu die EO-Quellenzeile: «Stand {jahr}» statt fest 2026 (Wunsch Stebler Studios 23.10.2026).
 const VO_LINK = 'https://www.fedlex.admin.ch/eli/cc/2026/542/';
 const profilAhv = {
   basis: { canton: 'BS', dateOfBirth: '1985-01-01', maritalStatus: 'single', household: { adults: 1, children: [] } },

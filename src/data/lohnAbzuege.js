@@ -6,7 +6,7 @@ import { werteFuerStichtag } from './jahrestabelle.js';
 
 export const REFERENZALTER = 65;
 
-// === BVG-Grenzbeträge und Lohnabzüge je Kalenderjahr (Weg A, Entscheid Sophie 21.10.2026) ===
+// === BVG-Grenzbeträge und Lohnabzüge je Kalenderjahr (Weg A, Entscheid Stebler Studios 21.10.2026) ===
 // Auswahl nach Stichtag über `lohnWerte(stichtag)`; die Konstanten weiter unten sind der Stand
 // beim Laden der App.
 //

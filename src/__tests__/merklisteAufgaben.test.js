@@ -9,7 +9,7 @@ import {
 } from '../utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from '../data/aufgabenBereiche.js';
 
-// Fassung 5 (Sophie, 23.10.2026): Merkliste ist die To-do-Liste. Optionales Feld «tag»,
+// Fassung 5 (Stebler Studios, 23.10.2026): Merkliste ist die To-do-Liste. Optionales Feld «tag»,
 // erledigtAm beim Abhaken, Wiederholung «jaehrlich», neue Einträge oben.
 
 let store;
@@ -124,5 +124,19 @@ describe('Merkliste zeigt Tag, Wiederholung und erledigt am', () => {
     const html = await render();
     expect(html).toContain('Jährlich');
     expect(html).toContain('erledigt am');
+  });
+});
+
+describe('Sicherung zurückspielen (Tor 23.10.2026)', () => {
+  it('entfernt ungültige Tage statt «Was ansteht» abstürzen zu lassen', async () => {
+    const { validateMerkliste } = await import('../utils/dataValidation.js');
+    const { sanitized } = validateMerkliste([
+      { id: 'a', text: 'x', tag: 123 },
+      { id: 'b', text: 'y', tag: '2026-11-03', erledigtAm: 'gestern' },
+    ]);
+    expect(sanitized).toHaveLength(2);
+    expect(sanitized[0].tag).toBeUndefined();
+    expect(sanitized[1]).toMatchObject({ tag: '2026-11-03' });
+    expect(sanitized[1].erledigtAm).toBeUndefined();
   });
 });

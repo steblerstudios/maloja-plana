@@ -10,7 +10,7 @@ import de from '../i18n/de.js';
 import { DEMO_DATA } from '../config/demoData.js';
 import { sumAllExpenses, sumTotalIncome } from '../utils/monatsrechnung.js';
 
-// Fassung 5 · Kapitel Finanzen (Entscheide Sophie 23.10.2026, VERGLEICH.md
+// Fassung 5 · Kapitel Finanzen (Entscheide Stebler Studios 23.10.2026, VERGLEICH.md
 // «Kapitel Finanzen · entschieden / · alle Felder / · die eingebauten Helfer», «Vor dem Bau festgelegt»).
 const t = createT({ de }, 'de', 'sie');
 const chapters = getChapters(t);

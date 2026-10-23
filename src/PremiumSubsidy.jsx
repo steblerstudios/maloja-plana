@@ -199,7 +199,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   );
   const verfuegungEintragen = () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, kanton: canton, jahr: Number(verfJahr) });
 
-  // «Jährlich erinnern» in JEDEM Schritt (Fassung 5, Wunsch Sophie 23.10.2026; vorher nur nach
+  // «Jährlich erinnern» in JEDEM Schritt (Fassung 5, Wunsch Stebler Studios 23.10.2026; vorher nur nach
   // der Verfügung): legt «Prämienverbilligung fürs nächste Jahr prüfen» als jährliche Aufgabe auf
   // die Merkliste. Im Beispiel und beim Ausprobieren bleibt nichts (merkpunktSichern).
   const erinnern = () => {
