@@ -6356,7 +6356,7 @@ export default {
   },
   calendar: {
     // rm ungeprüft F5
-    title: 'Tge che vegn',
+    title: 'Tge ch\'è proxim',
     // rm ungeprüft F5
     aufgabe: 'Incumbensa',
     // rm ungeprüft F5

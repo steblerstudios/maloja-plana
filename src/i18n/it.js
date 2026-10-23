@@ -4816,7 +4816,7 @@ export default {
     ausMerkliste: 'dal promemoria',
     ganzerMonat: 'Tutto il mese',
     nochOhneTag: 'Ancora senza giorno',
-    aufTagLegen: 'Mettere in un giorno',
+    aufTagLegen: 'Assegnare a un giorno',
     jetztTagAntippen: { sie: 'Ora tocchi un giorno qui sopra.', du: 'Ora tocca un giorno qui sopra.' },
     anspruchTitle: { sie: 'Forse per Lei', du: 'Forse per te' },
     anspruchIntro: { sie: 'Dai Suoi dati — nessun obbligo, solo un suggerimento su dove vale la pena guardare.', du: 'Dai tuoi dati — nessun obbligo, solo un suggerimento su dove vale la pena guardare.' },
