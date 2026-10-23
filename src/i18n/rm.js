@@ -2055,6 +2055,41 @@ export default {
       emptyState: { sie: "Vossa entrada activescha il calculatur da taglia, l'examinaziun IPV ed il controlla dal salari.", du: "Tia entrada activescha il calculatur da taglia, l'examinaziun IPV ed il controlla dal salari." },
       emptyStateHint: 'Endatar il salari mensil — dura 10 secundas.',
       benefits: ['Calculatur da taglia', 'Examinaziun IPV', 'Agid social', 'Controlla dal salari'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        // rm ungeprüft F5
+        bleiben: "Mintga mais restan",
+        // rm ungeprüft F5
+        verplant: "{betrag} planisads",
+        // rm ungeprüft F5
+        vonEinkommenNetto: "da {betrag} entrada, netto",
+        // rm ungeprüft F5
+        vonEinkommen: "da {betrag} entrada",
+      },
+      passend: {
+        // rm ungeprüft F5
+        titel: "Tutga tar quest sectur",
+        // rm ungeprüft F5
+        uebersichtSub: "Survista finanziala: taglia, IPV, agid social, PC",
+        // rm ungeprüft F5
+        ipv: "Controllar la reducziun da premias",
+        // rm ungeprüft F5
+        ipvSub: "Dretg · tenor l'entrada",
+        // rm ungeprüft F5
+        neuerJobSub: "Andament · {n} pass",
+        // rm ungeprüft F5
+        lohnausweis: "Deponer il certificat da salari",
+        // rm ungeprüft F5
+        lohnausweisSub: "Documents · Deposita da documents",
+      },
+      nebenerwerb: {
+        // rm ungeprüft F5
+        titel: "Gudogn accessoric",
+        // rm ungeprüft F5
+        fallsVorhanden: "sche avant maun",
+        // rm ungeprüft F5
+        erfasst: "registrà",
+      },
       fields: {
         monthlyIncome: 'Entrada mensiala CHF',
         sideIncome: 'Entrada accessorica per mais CHF',
@@ -3823,6 +3858,11 @@ export default {
     uploadSuccess: 'Document agiunschì',
     hint: 'Indicaziun',
     trustDocuments: { sie: 'Voss documents restan sin quest apparat.', du: 'Tes documents restan sin quest apparat.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    // rm ungeprüft F5
+    fotografieren: "Fotografar in document",
+    // rm ungeprüft F5
+    alsNaechstes: "Sco proxim",
     nextTopic: 'Proxim tema',
     sectionNav: 'Temas dal chapitel',
     showMore: 'Mussar ulteriurs secturs',

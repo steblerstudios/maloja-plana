@@ -1959,6 +1959,27 @@ export default {
       emptyState: { sie: 'Votre revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.', du: 'Ton revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.' },
       emptyStateHint: { sie: 'Indiquez votre salaire mensuel — 10 secondes.', du: 'Indique ton salaire mensuel — 10 secondes.' },
       benefits: ['Calculateur fiscal', 'Réduction de primes', 'Aide sociale', 'Salaire minimum'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Il reste chaque mois",
+        verplant: "{betrag} planifiés",
+        vonEinkommenNetto: "sur {betrag} de revenu net",
+        vonEinkommen: "sur {betrag} de revenu",
+      },
+      passend: {
+        titel: "En lien avec ce domaine",
+        uebersichtSub: "Vue d'ensemble financière : impôts, RDP, aide sociale, PC",
+        ipv: "Vérifier la réduction de primes",
+        ipvSub: "Droit · selon le revenu",
+        neuerJobSub: "Parcours · {n} étapes",
+        lohnausweis: "Classer le certificat de salaire",
+        lohnausweisSub: "Documents · Classeur de documents",
+      },
+      nebenerwerb: {
+        titel: "Activité accessoire",
+        fallsVorhanden: "le cas échéant",
+        erfasst: "saisie",
+      },
       fields: {
         monthlyIncome: 'Revenu mensuel (CHF)',
         sideIncome: 'Revenu accessoire par mois CHF',
@@ -2276,6 +2297,9 @@ export default {
     uploadSuccess: 'Document ajouté',
     hint: 'Indication',
     trustDocuments: { sie: 'Vos documents restent sur cet appareil.', du: 'Tes documents restent sur cet appareil.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Photographier un document",
+    alsNaechstes: "Et ensuite",
     nextTopic: 'Thème suivant',
     sectionNav: 'Thèmes du chapitre',
     showMore: 'Afficher plus de sections',

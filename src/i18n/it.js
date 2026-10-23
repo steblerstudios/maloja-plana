@@ -1959,6 +1959,27 @@ export default {
       emptyState: { sie: 'Il Suo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.', du: 'Il tuo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.' },
       emptyStateHint: { sie: 'Inserisca il salario mensile — 10 secondi.', du: 'Inserisci il salario mensile — 10 secondi.' },
       benefits: ['Calcolatore fiscale', 'Riduzione premi', 'Assistenza sociale', 'Salario minimo'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Ogni mese restano",
+        verplant: "{betrag} pianificati",
+        vonEinkommenNetto: "su {betrag} di reddito netto",
+        vonEinkommen: "su {betrag} di reddito",
+      },
+      passend: {
+        titel: "Collegato a questo ambito",
+        uebersichtSub: "Panoramica finanziaria: imposte, RDP, assistenza sociale, PC",
+        ipv: "Verificare la riduzione dei premi",
+        ipvSub: "Diritto · secondo il reddito",
+        neuerJobSub: "Percorso · {n} passi",
+        lohnausweis: "Archiviare il certificato di salario",
+        lohnausweisSub: "Documenti · Raccoglitore documenti",
+      },
+      nebenerwerb: {
+        titel: "Attività accessoria",
+        fallsVorhanden: "se presente",
+        erfasst: "registrata",
+      },
       fields: {
         monthlyIncome: 'Reddito netto mensile (CHF)',
         sideIncome: 'Reddito accessorio al mese CHF',
@@ -2274,6 +2295,9 @@ export default {
     uploadSuccess: 'Documento aggiunto',
     hint: 'Nota',
     trustDocuments: { sie: 'I Suoi documenti restano su questo dispositivo.', du: 'I tuoi documenti restano su questo dispositivo.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Fotografare un documento",
+    alsNaechstes: "Prossimo passo",
     emptyState: { sie: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per Lei.', du: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per te.' },
     emptyStateHint: { sie: 'Può completare in qualsiasi momento. Niente deve essere fatto tutto insieme.', du: 'Puoi completare in qualsiasi momento. Niente deve essere fatto tutto insieme.' },
     nextTopic: 'Prossimo tema',

@@ -1959,6 +1959,27 @@ export default {
       emptyState: 'Your income unlocks the tax calculator, premium reduction check and minimum wage check.',
       emptyStateHint: 'Enter your monthly salary — takes 10 seconds.',
       benefits: ['Tax calculator', 'Premium reduction', 'Social assistance', 'Minimum wage check'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Left over each month",
+        verplant: "{betrag} planned",
+        vonEinkommenNetto: "of {betrag} income, net",
+        vonEinkommen: "of {betrag} income",
+      },
+      passend: {
+        titel: "Related to this area",
+        uebersichtSub: "Financial overview: tax, premium reduction, social assistance, EL",
+        ipv: "Check premium reduction",
+        ipvSub: "Entitlement · depends on income",
+        neuerJobSub: "Guide · {n} steps",
+        lohnausweis: "File your salary statement",
+        lohnausweisSub: "Documents · Document folder",
+      },
+      nebenerwerb: {
+        titel: "Side income",
+        fallsVorhanden: "if any",
+        erfasst: "recorded",
+      },
       fields: {
         monthlyIncome: 'Monthly income (CHF)',
         sideIncome: 'Side income per month CHF',
@@ -2276,6 +2297,9 @@ export default {
     uploadSuccess: 'Document added',
     hint: 'Hint',
     trustDocuments: 'Your documents stay on this device.',
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Take a photo of a document",
+    alsNaechstes: "Up next",
     nextTopic: 'Next topic',
     sectionNav: 'Topics in this chapter',
     showMore: 'Show more sections',
