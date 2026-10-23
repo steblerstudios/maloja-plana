@@ -235,6 +235,13 @@ export default {
     step2Button: 'Délai « Annonce à la commune » dans le calendrier ({date})',
     step2Done: 'Noté dans le calendrier.',
     step2CalendarLink: 'Vers le calendrier',
+    fristKarteTitel: 'Annonce à la commune',
+    fristKarteBis: 'jusqu\'au {date}',
+    weiter: 'Fait, suivant ›',
+    abschliessen: 'Terminer le parcours',
+    fertigTitel: 'Le déménagement est en ordre',
+    fertigText: 'Les quatre étapes sont faites.',
+    nochmals: 'Revoir le parcours',
     reminderTitle: 'S\'annoncer à la nouvelle commune',
     reminderNotes: 'S\'annoncer à la nouvelle commune dans les 14 jours suivant le déménagement (et se désannoncer de l\'ancienne). Prendre pièce d\'identité et contrat de bail.',
     step3Title: '3 · Mettre l\'adresse à jour partout',
@@ -1399,6 +1406,16 @@ export default {
     anspruch: 'Droits',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'À venir',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Où vous en êtes et ce qui vient ensuite.', du: 'Où tu en es et ce qui vient ensuite.' },
+      wasAnsteht: 'Délais, rendez-vous et l’aide-mémoire au même endroit.',
+      rucksack: 'Des parcours pour chaque événement de la vie et tous les outils, rangés comme un équipement.',
+      anspruch: 'Prestations et calculateurs — réduction des primes, prestations complémentaires, aide sociale, bourses.',
+    },
     capDokument: 'Document',
     capBeleg: 'Justificatif',
     capFrist: 'Échéance',

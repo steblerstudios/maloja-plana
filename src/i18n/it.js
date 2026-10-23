@@ -235,6 +235,13 @@ export default {
     step2Button: 'Scadenza «Annuncio al comune» nel calendario ({date})',
     step2Done: 'Annotato nel calendario.',
     step2CalendarLink: 'Al calendario',
+    fristKarteTitel: 'Annuncio al comune',
+    fristKarteBis: 'entro il {date}',
+    weiter: 'Fatto, avanti ›',
+    abschliessen: 'Concludere il percorso',
+    fertigTitel: 'Il trasloco è in ordine',
+    fertigText: 'Tutti e quattro i passi sono fatti.',
+    nochmals: 'Rivedere il percorso',
     reminderTitle: 'Annunciarsi al nuovo comune',
     reminderNotes: 'Annunciarsi al nuovo comune entro 14 giorni dal trasloco (e disdirsi dal vecchio). Portare documento d\'identità e contratto d\'affitto.',
     step3Title: '3 · Aggiornare l\'indirizzo ovunque',
@@ -1399,6 +1406,16 @@ export default {
     anspruch: 'Diritti',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Zaino',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    wasAnsteht: 'In arrivo',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      dashboard: { sie: 'Dove si trova ora e che cosa viene dopo.', du: 'Dove ti trovi ora e che cosa viene dopo.' },
+      wasAnsteht: 'Scadenze, appuntamenti e il promemoria in un unico posto.',
+      rucksack: 'Percorsi per gli eventi della vita e tutti gli strumenti, ordinati come un’attrezzatura.',
+      anspruch: 'Prestazioni e calcolatori — riduzione dei premi, prestazioni complementari, aiuto sociale, borse di studio.',
+    },
     capDokument: 'Documento',
     capBeleg: 'Ricevuta',
     capFrist: 'Scadenza',

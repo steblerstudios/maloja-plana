@@ -294,6 +294,20 @@ export default {
     step2Button: 'Termin «Annunzia a la vischnanca» en il chalender ({date})',
     step2Done: 'Im Kalender notiert.',
     step2CalendarLink: 'Zum Kalender',
+    // rm ungeprüft F5
+    fristKarteTitel: 'Annunzia a la vischnanca',
+    // rm ungeprüft F5
+    fristKarteBis: 'fin ils {date}',
+    // rm ungeprüft F5
+    weiter: 'Fatg, vinavant ›',
+    // rm ungeprüft F5
+    abschliessen: 'Terminar il decurs',
+    // rm ungeprüft F5
+    fertigTitel: 'Il midar da chasa è en urden',
+    // rm ungeprüft F5
+    fertigText: 'Tut ils quatter pass èn fatgs.',
+    // rm ungeprüft F5
+    nochmals: 'Guardar puspè il decurs',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',
@@ -1642,6 +1656,21 @@ export default {
     anspruch: 'Dretgs',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
+    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
+    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
+    // rm ungeprüft F5
+    wasAnsteht: 'Tge che vegn',
+    // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
+    ankerSatz: {
+      // rm ungeprüft F5
+      dashboard: { sie: 'Nua che Vus stais ussa e tge che vegn sco proxim.', du: 'Nua che ti stas ussa e tge che vegn sco proxim.' },
+      // rm ungeprüft F5
+      wasAnsteht: 'Termins, scadenzas e la glista da memoria en in lieu.',
+      // rm ungeprüft F5
+      rucksack: 'Vias tras eveniments da la vita e tut ils utensils, urdinads sco ina equipaziun.',
+      // rm ungeprüft F5
+      anspruch: 'Prestaziuns e calculaturs — reducziun da las premias, prestaziuns supplementaras, agid social, stipendis.',
+    },
     capDokument: 'Document',
     capBeleg: 'Quittanza',
     capFrist: 'Termin',
