@@ -726,7 +726,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <div class="wege"><a class="herkunft" href="#">‹ Zurück zu Finanzen &amp; Geld</a><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Anspruch</a><span>›</span>Prämienverbilligung</nav></div>
             <div class="titelzeile"><span class="sym" data-icon="versicherungen"></span><h3>Prämienverbilligung <span style="white-space:nowrap">(<button class="begriff" data-erklaerung="ipv-erkl">IPV<sup>ⓘ</sup></button>)</span></h3></div>
             <p class="erklaerung" id="ipv-erkl">IPV heisst «individuelle Prämienverbilligung»: Der Kanton zahlt einen Teil der Krankenkassenprämie, wenn das Einkommen tief ist.</p>
-            <p class="satz" data-sie="Der Kanton übernimmt einen Teil Ihrer Krankenkassenprämie, wenn Ihr Einkommen unter einer Grenze liegt." data-du="Der Kanton übernimmt einen Teil deiner Krankenkassenprämie, wenn dein Einkommen unter einer Grenze liegt."></p>
+            <p class="satz" data-sie="Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Ihrer Krankenkassenprämie, wenn Ihr Einkommen unter einer bestimmten Grenze liegt." data-du="Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Deiner Krankenkassenprämie, wenn Dein Einkommen unter einer bestimmten Grenze liegt."></p>
           </div>
           <div class="held stufe s2" id="b-lage">
             <div class="etikett" data-sie="Ihre Lage" data-du="Deine Lage"></div>
@@ -747,14 +747,14 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         <div class="rechtsspalte stufe s3">
           <div class="abschnittanzeige" data-offen="false"><button class="kopfzeile" aria-expanded="false"><span>Abschnitt: <b class="abschnitt-name">Wer hat Anspruch?</b></span><span class="plus" aria-hidden="true">+</span></button>
             <ol><li><a href="#b-lage" class="jetzt" data-sie="Ihre Lage und Ergebnis" data-du="Deine Lage und Ergebnis"></a></li><li><a href="#b-anspruch">Wer hat Anspruch? · Dokumente · Antragsstelle</a></li><li><a href="#b-weiter">Wie es weitergeht</a></li><li><a href="#b-quelle">Berechnungsgrundlage</a></li></ol></div>
-          <details open id="b-anspruch"><summary>Wer hat Anspruch?</summary><p>Anspruch besteht meist bei Wohnsitz im Kanton, obligatorischer Krankenversicherung und einer Bewilligung von mindestens 3 Monaten — auch eine Kurzaufenthaltsbewilligung (Ausweis L) kann berechtigen.</p></details>
+          <details open id="b-anspruch"><summary>Wer hat Anspruch?</summary><p>Anspruch besteht meist bei Wohnsitz im Kanton, obligatorischer Krankenversicherung und einer Bewilligung von mindestens 3 Monaten — auch eine Kurzaufenthaltsbewilligung (Ausweis L) kann berechtigen. Die genauen Regeln und Einkommensgrenzen unterscheiden sich je Kanton; im Zweifel hilft die kantonale IPV-Stelle weiter. Für den Antrag braucht es meist die Lohnabrechnungen der letzten 3 Monate und die Police mit der Prämie.</p></details>
           <details><summary>Benötigte Dokumente</summary><ul style="color:var(--mid);font-size:14px;margin:10px 0 0;padding-left:18px"><li>Steuererklärung (letzte 2 Jahre)</li><li>Lohnabrechnungen der letzten 3 Monate</li><li>Familienausweis (falls relevant)</li><li>Bestätigung der Krankenkassenprämien</li></ul></details>
           <details><summary>Wo stelle ich den Antrag?</summary><p>Hinweis: Antrag bei SVA ZH. Antragsstelle: kantonale Behörde.</p><p><a href="#" style="color:var(--sand)">Prämienverbilligung — Verbilligung der Krankenkassenprämie bei tiefem Einkommen (ch.ch) ↗</a></p><p><a href="#" style="color:var(--sand)" data-sie="Ihr Kanton: Zürich — Prämienverbilligung beantragen ↗" data-du="Dein Kanton: Zürich — Prämienverbilligung beantragen ↗"></a></p></details>
           <div class="weiter" id="b-weiter">
             <h4>Wie es weitergeht</h4>
             <div class="knoepfe">
               <button class="knopfprim">Online-Antrag ↗</button>
-              <button class="knopfruhig" data-meldung="Unterlagen auf die Merkliste gesetzt">Unterlagen für den Antrag merken</button>
+              <button class="knopfruhig" id="ipv-merken" aria-pressed="false">Unterlagen für den Antrag merken</button>
               <button class="knopfruhig" data-meldung="Frist im Kalender eingetragen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Frist in den Kalender</button>
             </div>
             <div style="margin-top:14px"><a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Finanz-Übersicht<small>Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.</small></span><span class="pfeil">›</span></a><a class="verweis" href="#"><span class="sym k" data-icon="behoerden" style="--licht: var(--behoerden)"></span><span>Offizielle Links<small>Alle Stellen zu diesem Thema</small></span><span class="pfeil">›</span></a></div>
@@ -1176,12 +1176,18 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       t.textContent = `Einkommen über Grenze (CHF 61'090). Gerechnet: ${chf(jahr)} pro Jahr.`;
       document.getElementById('ipv-mon').textContent = 'CHF 0'; document.getElementById('ipv-jahr').textContent = 'CHF 0';
     } else {
-      u.textContent = 'Wahrscheinlich berechtigt'; u.style.color = farbe('sageDeep');
-      t.textContent = du ? `Gerechnet: ${chf(jahr)} pro Jahr, unter der Grenze. Den Betrag rechnet der Rechner aus deinen Angaben.` : `Gerechnet: ${chf(jahr)} pro Jahr, unter der Grenze. Den Betrag rechnet der Rechner aus Ihren Angaben.`;
+      u.textContent = 'Berechtigt'; u.style.color = farbe('sageDeep');  // premium.eligible
+      t.textContent = 'Möglicher Betrag — nur auf Antrag';  // premium.eligibleAntrag; den Betrag rechnet im Bau calculateIPV
       document.getElementById('ipv-mon').textContent = '— (Rechner)'; document.getElementById('ipv-jahr').textContent = '— (Rechner)';
     }
   }
   document.getElementById('ipv-lohn').addEventListener('input', ipv);
+  // wie die App: nach dem Tipp «Auf der Merkliste» (premium.permitTodoAdded), und der Punkt steht in der Merkliste
+  document.getElementById('ipv-merken').onclick = (e) => {
+    const b = e.currentTarget; if (b.getAttribute('aria-pressed') === 'true') return;
+    MERK.unshift({ t: 'IPV-Antrag: Police und Lohnabrechnungen der letzten 3 Monate bereitlegen', v: 'tresor' });  // premium.permitTodoText, link: 'tresor' merkZeichnen(0); zeitleiste();
+    b.textContent = 'Auf der Merkliste'; b.setAttribute('aria-pressed', 'true');
+  };
 
   // ---------- C · Passstrasse ----------
   const HAKEN = (c, s = 12) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>`;
