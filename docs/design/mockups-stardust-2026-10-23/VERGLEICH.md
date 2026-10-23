@@ -66,3 +66,13 @@ fürs gemeinsame Durchgehen, Seite für Seite:
 - Kalender: Titel «Was ansteht» statt «Kalender und Erinnerungen», Tagesleiste statt Monatsraster
 
 Die Mess-Skripte der alten Sitzung liegen jetzt unter `messung/`.
+
+### Übersicht · Befunde beim Durchgehen (23.10.2026, noch nicht entschieden)
+
+Sophie will **nicht mit der Übersicht beginnen**. Die Punkte sind festgehalten, entschieden ist nichts:
+- **63 % gegen 70 %:** beides ist richtig gerechnet. 63 % = ausgefüllte Felder über alle Bereiche
+  (`gesamtVollstaendigkeit` in `utils/vollstaendigkeit.js`). 70 % = Durchschnitt der sieben
+  Bereichs-Prozente (`BergDetail.jsx`). Finanzen hat viele Felder bei 38 % und drückt die erste Zahl.
+- **Erfundener Text in Fassung 5:** «Am meisten offen: Finanzen & Geld.» steht nicht in `de.js`.
+  Heute heisst es «Weiter mit Finanzen & Geld ›». «Ihr Lebensordner» als Kartentitel gibt es so
+  auch nicht.
