@@ -118,7 +118,9 @@ export function GlossarBegriff({ term, defKey: vorgegeben, t, palette }) {
       'aria-expanded': open,
       title: t(defKey),
       style: {
-        background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit', color: 'inherit',
+        // Tippfläche ≥ 24 px ohne die Zeile zu verschieben: 3 px Polster oben/unten, gleich
+        // viel negativer Rand (Messung 23.10.2026: «IPV ⓘ» war 23 px hoch).
+        background: 'none', border: 'none', padding: '3px 0', margin: '-3px 0', cursor: 'pointer', font: 'inherit', color: 'inherit',
         borderBottom: open ? '1px solid var(--mp-accent)' : '1px dotted ' + palette.mid,
         lineHeight: 'inherit', whiteSpace: 'nowrap',
       },

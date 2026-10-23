@@ -101,3 +101,33 @@ Nur **13** sind Textlinks im Fliesstext (nach WCAG 2.5.8 ausgenommen). Die häuf
 | Eingabefelder | — | einzelne Seiten |
 
 Die zwei Fusszeilen-Links allein erklären rund 180 der ~800 Treffer (2 × 92 Seiten).
+
+## Behoben (gleicher Zweig, 23.10.2026)
+
+| Was | Wo | Wie |
+|---|---|---|
+| Lange Titel abgeschnitten | `components/Heading.jsx` (`PageTitle`, `PanelTitle`) | Text mit Icon in eigenem Kasten (`min-width: 0`), `overflow-wrap: break-word`, `hyphens: auto` (Sprache aus `html lang`) |
+| Fusszeilen-Links 17 px hoch | `main.jsx` (Fusszeile) | jeder Link 44 px hoch, Zeilenabstand 0 |
+| «IPV ⓘ» 23 px hoch | `GlossarBegriff.jsx` | 3 px Polster oben/unten, gleich viel negativer Rand — die Zeile verschiebt sich nicht |
+| «Wanderrucksack» über den Rand | `components/BergLandschaft.jsx` | Etikett wechselt nach links, wenn es rechts nicht ins Bild passt |
+| Asyl: Text neben Etikett über den Rand | `AsylView.jsx` | Zeilen dürfen lange Wörter umbrechen |
+
+### Nachher gemessen
+
+| Grösse | Vorher auffällig | Nachher | Tippflächen < 24 px vorher → nachher |
+|---|---|---|---|
+| 320 × 568 | 10 | 3 | 752 → 281 |
+| 390 × 844 | 3 | 2 | 785 → 314 |
+
+**Was bleibt, und warum es so bleibt:**
+
+- `behoerdendossier`, `lebensmappe`: **Messartefakt.** Das Browser-Fenster der Testumgebung
+  zeichnet eine 2 px breite Scrollleiste (`innerWidth` 392, `clientWidth` 390); die fixe
+  Menüleiste misst die volle Breite. Echte Handys haben überlagernde Scrollleisten (0 px).
+- `finanzuebersicht`: der drehende 3D-Baum — Astbeschriftungen ragen beim Drehen kurz bis 6 px
+  über den Rand. Bewegung, kein Layoutfehler.
+- `dashboard` (390 px): leere, unsichtbare Kästen der Berg-Überraschungen rechts im Bild.
+- Restliche Tippflächen: vor allem Eingabefelder mit kleiner Höhe (16–17 je Durchgang),
+  Quellen-Links in Listen, «im Profil anpassen», «merken» — **nächster Schritt**, Seite für Seite.
+
+Tests 6366 grün, Lint grün, Startbündel 63.94 kB (Deckel 65).

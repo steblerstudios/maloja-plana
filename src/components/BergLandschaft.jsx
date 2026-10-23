@@ -581,6 +581,12 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
       const sz = 30;
       const farbe = st.farbe; // Pflicht vom Dashboard (Startbündel: kein Rückfall)
       const zeichen = mitKontrastZu(farbe, ui.surface, 3);
+      // Passt das Etikett rechts nicht mehr ins Bild, steht es links der Scheibe (Messung
+      // 23.10.2026: «Wanderrucksack» ragte bei 360 px Breite bis 408 px). Breite grob
+      // geschätzt (xs-Schrift, Polster) — lieber zu früh wechseln als abschneiden.
+      const xPx = ((ort.x - a.x) / a.w) * breite;
+      const etikettBreite = String(st.label).length * 7 + 20;
+      const seite = ort.seite === 'rechts' && xPx + 19 + etikettBreite > breite - 8 ? 'links' : ort.seite;
       return React.createElement('div', {
         key: st.key,
         style: { position: 'absolute', ...imRahmen(ort.x, ort.y), width: 0, height: 0 },
@@ -604,7 +610,7 @@ const BergLandschaft = ({ palette, chapters, chapterCompletions, completion, onS
           style: {
             // display wie bei den Stationen: überschreibt die alte Regel in index.html, die
             // Etiketten unter 480 px ausblendet (die Stationen tragen es ebenso inline).
-            position: 'absolute', [ort.seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
+            position: 'absolute', [seite === 'links' ? 'right' : 'left']: '19px', top: '50%', transform: 'translateY(-50%)',
             whiteSpace: 'nowrap', pointerEvents: 'none', display: 'block',
             fontSize: text.xs, lineHeight: 1.15, color: ETIKETT_SCHRIFT,
             background: etikettGrund(farbe), padding: '2px 7px', borderRadius: radius.sm,
