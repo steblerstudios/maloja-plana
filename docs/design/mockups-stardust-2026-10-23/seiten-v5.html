@@ -696,6 +696,25 @@ body.still .rs-karte { transition: none; }
 .fu-posten .leer { color: var(--soft); padding: 0 0 0 12px; text-align: left; margin: 0; }
 .fu-posten .po span:last-child, .fu-posten .gr span:last-child { white-space: nowrap; margin-left: 12px; }
 .fu-posten .leer.rw { font-size: 12px; padding-left: 24px; }
+/* Instrumente wie in der App: Gauge/ReserveTank, Pegel, RegionalBarometer */
+.k-tank { margin: 12px 0 4px; }
+.k-tank svg { width: 100%; max-width: 240px; height: auto; display: block; margin: 0 auto; overflow: visible; }
+.k-ablesung { text-align: center; font-size: 13px; color: var(--sageDeep); margin: 6px 0 0; }
+.k-pegel { display: flex; align-items: center; gap: 14px; padding: 12px; margin: 4px 0 12px; background: var(--up); border: 1px solid var(--border); border-radius: 10px; }
+.k-pegel svg { flex-shrink: 0; }
+.k-pegel .t { font-size: 12px; color: var(--mid); font-weight: 500; margin-bottom: 4px; }
+.k-pegel .s { font-size: 13px; line-height: 1.4; }
+.k-baro { position: relative; height: 10px; background: var(--border); border-radius: 999px; margin: 14px 0 12px; }
+.k-baro i { position: absolute; display: block; }
+.k-baro .fuell { left: 0; top: 0; bottom: 0; background: var(--wohnen); border-radius: 999px; }
+.k-baro .punkt { top: -1px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--gold); border: 1.5px solid var(--surface); box-sizing: border-box; }
+.k-baro .strich { top: -9px; bottom: -3px; width: 2px; background: var(--text); }
+.k-baro-leg { display: flex; justify-content: space-between; font-size: 12px; color: var(--mid); gap: 8px; }
+.k-baro-du { font-size: 12px; font-weight: 500; margin-top: 2px; }
+.k-baro-leg i, .k-baro-du i { display: inline-block; vertical-align: middle; margin-right: 5px; }
+.m-strich { width: 2px; height: 12px; background: var(--text); }
+.m-punkt { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); }
+.m-fuell { width: 14px; height: 8px; border-radius: 999px; background: var(--wohnen); }
 .fu-anteil { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin: 2px 0 8px; background: var(--border); }
 .fu-anteil i { display: block; height: 100%; }
 .fu-baum { height: 180px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 10%, transparent), color-mix(in srgb, var(--sage) 28%, transparent)); display: grid; place-items: center; color: var(--mid); font-size: 13px; margin-top: 10px; text-align: center; padding: 0 20px; }
@@ -1427,7 +1446,7 @@ body.still .rs-karte { transition: none; }
             <div class="lage"><span>Nettoeinkommen CHF 6’200 /Mt.</span><span>Kanton: Zürich</span><span>Haushalt: 1 Person</span></div>
             <div class="etikett">Monatsbudget</div>
             <div class="st-zeile" style="border-bottom:0;margin-top:4px;font-size:15px"><span>Frei verfügbar</span><b class="anzeige" style="font-size:24px">CHF 2’459</b></div>
-            <div class="fu-tank"><span class="glas" aria-hidden="true"><i></i><b></b></span><span data-sie="Ihr Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3." data-du="Dein Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3."></span></div>
+            <div class="k-tank"><div id="k-tank"></div><p class="k-ablesung" data-sie="Ihr Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3." data-du="Dein Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3."></p></div>
             <p class="fuss" style="margin:6px 0 0" data-sie="Sie haben einen Überblick über Ihre Finanzen. Jeder erfasste Bereich hilft." data-du="Du hast einen Überblick über deine Finanzen. Jeder erfasste Bereich hilft."></p>
             <details class="fu-auf"><summary><span>Total Einnahmen</span><b>CHF 6’200</b></summary>
               <div class="fu-posten">
@@ -1528,7 +1547,9 @@ body.still .rs-karte { transition: none; }
           <div class="fu-status" style="margin-top:14px">
             <a class="verweis" href="#j"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Steuern<b>~ CHF 8’431 /J.</b><small>≈ CHF 703 pro Monat geschätzt · Ihre Angabe im Budget: CHF 850 pro Monat.</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#b"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Prämienverbilligung (IPV)<b>Kein Anspruch</b><small>Einkommen über Grenze (CHF 61’090)</small></span><span class="pfeil">›</span></a>
+            <div class="k-pegel" id="k-pegel-ipv"></div>
             <a class="verweis" href="#"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Sozialhilfe-Orientierung<b>Einkommen reicht aus</b><small>Grundbedarf (SKOS): CHF 1’061 | Total Bedarf: CHF 3’276</small></span><span class="pfeil">›</span></a>
+            <div class="k-pegel" id="k-pegel-soz"></div>
             <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Ergänzungsleistungen (EL)<b>EL nur bei AHV- oder IV-Leistung</b></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Gesundheitskosten (KVG)<b>CHF 240</b><small>Bezahlte Arztrechnungen 2026 · noch offen: CHF 180</small></span><span class="pfeil">›</span></a>
           </div>
@@ -1541,14 +1562,16 @@ body.still .rs-karte { transition: none; }
             <p class="fuss">Quelle: BFS Lohnstrukturerhebung 2022/2024</p>
           </details>
           <details><summary>Wo steht Ihre Miete?</summary>
-            <p class="unter" style="margin-top:10px">Miete regional vs. Schweiz</p>
-            <div class="fu-vergleich">
-              <div><span>Schweizer Schnitt</span><span>CHF 1327</span><span class="spur"><i style="width:80%;background:var(--mid)"></i></span></div>
-              <div><span>Ihre Region</span><span>CHF 1538</span><span class="spur"><i style="width:93%;background:var(--wohnen)"></i></span></div>
-              <div><span data-sie="Ihre Miete" data-du="Deine Miete"></span><span>CHF 1650</span><span class="spur"><i style="width:100%;background:var(--finanzen)"></i></span></div>
+            <p class="unter" style="margin-top:10px;font-weight:600">Miete regional vs. Schweiz</p>
+            <div class="k-baro" aria-hidden="true">
+              <i class="fuell" style="width:86.8%"></i>
+              <i class="punkt" style="left:80.9%"></i>
+              <i class="strich" style="left:69.8%"></i>
             </div>
-            <p class="unter">rund 16 % über dem Schweizer Schnitt</p>
-            <p class="fuss">Das ist vor allem strukturell — in Städten und nachgefragten Regionen sind Bauland und Wohnungen knapper und teurer. Der Schweizer Schnitt ist dort oft gar nicht zu finden.<br>Quelle: <a href="#" style="color:var(--sand)">BFS ↗</a>, Mietpreiserhebung 2020 · Nettomiete, ohne Nebenkosten</p>
+            <div class="k-baro-leg"><span><i class="m-strich"></i>Schweizer Schnitt: CHF 1327</span><span style="color:var(--gold)"><i class="m-punkt"></i><span data-sie="Ihre Region: CHF 1538" data-du="Deine Region: CHF 1538"></span></span></div>
+            <div class="k-baro-du"><i class="m-fuell"></i><span data-sie="Ihre Miete: CHF 1650" data-du="Deine Miete: CHF 1650"></span></div>
+            <p class="unter" style="color:var(--gold)">rund 16 % über dem Schweizer Schnitt</p>
+            <p class="fuss">Das ist vor allem strukturell — in Städten und nachgefragten Regionen sind Bauland und Wohnungen knapper und teurer. Der Schweizer Schnitt ist dort oft gar nicht zu finden.<br><i>Quelle: <a href="#" style="color:var(--sand)">BFS ↗</a>, Mietpreiserhebung 2020 · Nettomiete, ohne Nebenkosten</i></p>
             <p class="unter" data-sie="Ihre Wohnkosten sind 30% Ihres Einkommens." data-du="Deine Wohnkosten sind 30% Deines Einkommens."></p>
             <p class="fuss">Als Faustregel sollte die Miete rund einen Drittel des Einkommens nicht übersteigen — viele Vermieter verlangen das sogar.</p>
           </details>
@@ -2480,6 +2503,52 @@ body.still .rs-karte { transition: none; }
       ['Steuer-Säule', 'Bundessteuer ≈ CHF 977 / Jahr', `<svg width="40" height="34" viewBox="0 0 40 34" aria-hidden="true"><rect x="12" y="2" width="16" height="30" rx="4" fill="var(--up)"/><rect x="12" y="22" width="16" height="10" rx="4" fill="var(--behoerden)"/></svg>`],
       ['Reserve-Tankanzeige', '4.9 Monate Reserve', bar(82, 'var(--finanzen)')],
       ['Schutzschild', '5/5 gedeckt', `<svg width="32" height="34" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5.5V11c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5V5.5Z" fill="var(--sage)"/></svg>`]];
+    // ---------- K: Instrumente wie in der App (Geometrie aus Gauge.jsx und Pegel.jsx) ----------
+    (function kInstrumente() {
+      const tankEl = document.getElementById('k-tank');
+      if (tankEl) {
+        // Gauge.jsx: CX 110, CY 106, R 86, viewBox 220×122 · ReserveTank: 0..6 Monate, Marke 3, Zeiger 4.9
+        const CX = 110, CY = 106, R = 86, MAX = 6;
+        const pol = (f, r) => { const a = Math.PI * (1 - Math.max(0, Math.min(1, f))); return [CX + r * Math.cos(a), CY - r * Math.sin(a)]; };
+        const arc = (f1, f2, r) => { const [x1, y1] = pol(f1, r), [x2, y2] = pol(f2, r); return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`; };
+        const [m1x, m1y] = pol(3 / MAX, R - 10), [m2x, m2y] = pol(3 / MAX, R + 7), [lx, ly] = pol(3 / MAX, R + 19), [nx, ny] = pol(4.9 / MAX, R - 18);
+        tankEl.innerHTML = `<svg viewBox="0 0 220 122" aria-hidden="true">
+          <path d="${arc(0, 1, R)}" fill="none" stroke="var(--border)" stroke-width="12" stroke-linecap="round"/>
+          <path d="${arc(0, 0.5, R)}" fill="none" stroke="var(--sand)" stroke-width="12" opacity=".85"/>
+          <path d="${arc(0.5, 1, R)}" fill="none" stroke="var(--sage)" stroke-width="12" opacity=".85"/>
+          <line x1="${m1x}" y1="${m1y}" x2="${m2x}" y2="${m2y}" stroke="var(--mid)" stroke-width="2"/>
+          <text x="${lx}" y="${ly}" text-anchor="middle" font-size="11" font-weight="500" fill="var(--mid)">empfohlen</text>
+          <line x1="${CX}" y1="${CY}" x2="${nx}" y2="${ny}" stroke="var(--text)" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="${CX}" cy="${CY}" r="5.5" fill="var(--surface)" stroke="var(--text)" stroke-width="2.5"/>
+          <text x="${CX - R}" y="${CY + 15}" text-anchor="middle" font-size="11" fill="var(--mid)">leer</text>
+          <text x="${CX + R}" y="${CY + 15}" text-anchor="middle" font-size="11" fill="var(--mid)">voll</text></svg>`;
+      }
+      // Pegel.jsx: INNER 20..135, Skala 1.25, Linie bei 1/1.25
+      const B = 135, H = 115, LY = B - (1 / 1.25) * H;
+      const VESSEL = 'M32 16 L32 124 Q32 138 46 138 L82 138 Q96 138 96 124 L96 16';
+      const CLIP = 'M33 17 L33 123 Q33 137 46 137 L82 137 Q95 137 95 123 L95 17 Z';
+      const pegel = (id, frac, soz, titel, status, farbe) => {
+        const el = document.getElementById(id); if (!el) return;
+        const top = B - (Math.min(frac, 1.25) / 1.25) * H;
+        const sand = !soz && top < LY - 0.5;
+        const sageTop = soz ? top : Math.max(top, LY);
+        el.innerHTML = `<svg viewBox="0 0 128 152" width="104" height="124" aria-hidden="true">
+          <defs><clipPath id="${id}-c"><path d="${CLIP}"/></clipPath></defs>
+          <g clip-path="url(#${id}-c)">
+            ${sand ? `<rect x="33" y="${top}" width="62" height="${LY - top}" fill="var(--sand)" opacity=".55"/>` : ''}
+            <rect x="33" y="${sageTop}" width="62" height="${B - sageTop + 2}" fill="var(--sage)" opacity=".82"/>
+            <rect x="33" y="${top - 1.5}" width="62" height="3" fill="var(--surface)" opacity=".3"/></g>
+          <rect x="38" y="24" width="5" height="78" rx="2.5" fill="var(--surface)" opacity=".4"/>
+          <path d="${VESSEL}" fill="none" stroke="var(--soft)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="24" y1="${LY}" x2="104" y2="${LY}" stroke="var(--versicherungen)" stroke-width="1.8" stroke-dasharray="5 3"/>
+          <text x="104" y="${LY - 5}" text-anchor="end" font-size="8.5" font-weight="700" fill="var(--versicherungen)">${soz ? 'Bedarf' : 'Grenze'}</text>
+          <line x1="30" y1="146" x2="98" y2="146" stroke="var(--border)" stroke-width="3" stroke-linecap="round"/></svg>
+          <div><div class="t">${titel}</div><div class="s" style="color:${farbe}">${status}</div></div>`;
+      };
+      // Maria: 74'400 / Grenze 61'090 = 1.22 (über der Grenze) · 6'200 / Bedarf 3'276 = 1.89 (gedeckt, Skala voll)
+      pegel('k-pegel-ipv', 74400 / 61090, false, 'Prämienverbilligung (IPV)', 'Über der Grenze — dafür gibt es andere Wege.', 'var(--sand)');
+      pegel('k-pegel-soz', 6200 / 3276, true, 'Sozialhilfe', 'Das Einkommen erreicht das Existenzminimum — keine Aufstockung nötig.', 'var(--mid)');
+    })();
     ['u-instrumente', 'k-instrumente'].forEach((id) => { const el = document.getElementById(id); if (el) el.innerHTML = INST.map(([t, w, v]) => `<button class="u-instrument">${v}<b>${t}</b><small>${w}</small></button>`).join(''); });
     const WZ = [['Lebensereignisse', 35, 'Umzug, Heirat, Stelle verloren, Todesfall …'], ['Gesundheit', 1, 'Unfall oder Krankheit'], ['Unterstützung & Anspruch', 1, 'Was steht mir zu?'], ['Geld & Steuern', 6, 'Steuern, Budget, Quellensteuer …'], ['Versicherung & Gesundheit', 3, 'Prämien, KVG-Wechsel …'], ['Dokumente & Behörden', 4, 'Briefe, Ausweis, Betreibungsauszug …'], ['Organisieren & Profil', 4, 'Merkliste, Kalender, Export …']];
     document.getElementById('u-werkzeuge').innerHTML = WZ.map(([t, n, b]) => `<details><summary>${t.replace('&', '&amp;')}<span>${n}</span></summary><p>${b} (Platzhalter)</p></details>`).join('');
