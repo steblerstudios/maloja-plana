@@ -328,7 +328,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   // 1 auf dem Handy. Echte 3 Spalten bräuchten Gepäck als eigenen, breiteren „Raum"
   // (House-of-Life-Vision) — bewusst später. Text bleibt zusätzlich auf 680px lesbar.
   return h('div', { style: { maxWidth: '860px' } },
-    h(PageTitle, { palette, icon: backpackIcon, style: { marginBottom: space.sm + 'px' } }, t('gepaeck.title')),
+    h(PageTitle, { palette, icon: backpackIcon, style: { marginBottom: space.sm + 'px' } }, t('nav.rucksack')),
     h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, maxWidth: '680px', margin: '0 0 ' + space.md + 'px 0' } }, t('gepaeck.intro')),
     h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: space.lg + 'px' } }, bag, toggle),
     obenEintraege,

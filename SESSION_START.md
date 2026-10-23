@@ -31,6 +31,31 @@
 > fremden Zweig. Parallel arbeitende Sitzungen gehören in **eigene Arbeitsbäume** (`git worktree add`), nie in denselben Ordner.
 > **Nächster Schritt:** nächster Deploy (Stebler Studios) nimmt #545 mit; danach live am Handy prüfen (Schwarzweiss an, scrollen).
 
+> 🏷️ **Nachtrag 23.10.2026, 18:21 — Ein Name je Seite. Branch `fix/ein-name-pro-seite`, PR gegen main offen, NICHT gemergt, NICHT live.**
+>
+> **Anlass (Stebler Studios):** Dieselbe Seite hatte drei Namen — unten «Anspruch», im Rucksack «Was steht mir zu?», als
+> Titel «Lebenssituationen». **Regel ab jetzt: eine Seite, ein Name, ein i18n-Schlüssel** — Leiste, Menü, Seitentitel,
+> Suche, «Zurück zu …» und Panorama lesen denselben Schlüssel. Entscheid: auch in der schmalen Leiste der volle Name
+> (bricht zweizeilig um), keine Kurzform.
+>
+> **Commits:** `05721a4b` Namen · `d1503f21` Leiste (Zeichen bleiben auf einer Linie, wenn ein Name umbricht).
+> - `situationen` → `dashboard.anspruchTitle` («Was steht mir zu?»). Im Menü stand die Seite **doppelt** (Anker +
+>   Werkzeug «Lebenssituationen») — jetzt nur noch als Anker. Link in «Kind bekommen» umformuliert.
+> - `calendar` → `nav.wasAnsteht` («Was ansteht»; vorher in Suche/«Zurück zu …» «Kalender»). Suche findet weiter
+>   «Kalender» (Aliase in allen fünf Sprachen). Hebt die Fassung-5-Regel «nav.calendar bleibt Kalender» (heute Morgen) auf.
+> - `gepaeck` → `nav.rucksack` («Rucksack»; vorher Titel + Panorama «Wanderrucksack»). Menü: «Alle Werkzeuge im Rucksack».
+> - Gelöscht in allen fünf Sprachen: `nav.anspruch`, `nav.calendar`, `calendar.title`, `gepaeck.title`, `gepaeck.link`,
+>   `lebenszustaende.pageTitle`. Wächter: `src/__tests__/einNameJeSeite.test.js`.
+>
+> **Verifiziert:** vitest 362 Dateien / 6534 grün · eslint 0 · build ok. Leiste im Browser bei 375 px gemessen: alle Zeichen
+> auf derselben Höhe; bei 320 px in allen fünf Sprachen höchstens zwei Zeilen (Messtexte in der Leistenschrift, Sprache
+> nicht echt umgestellt). **Nicht** auf echtem iPhone, **nicht** live.
+>
+> **Offen:** (1) rm-Gegenlese: neuer Linktext «rm ungeprüft»; `nav.rucksack` ist in rm.js französisch («Sac à dos»).
+> (2) Nach dem Merge live am Handy prüfen, ob die zweizeilige Leiste ruhig steht. (3) `ipv_rechner_28.html` im Stamm, ungetrackt,
+> nicht aus dieser Sitzung. *Nachgetragen 18:50:* origin/main (#545, #548, #549, Tor 0.1.48) hineingemergt; main hatte
+> `calendar.title` parallel auf «Was ansteht» angeglichen — Schlüssel bleibt gelöscht, Text identisch mit `nav.wasAnsteht`.
+
 > 🚪 **Nachtrag 23.10.2026, 17:45 — Deploy-Tor 0.1.48-beta (Nachzug 29.10.) auf Zweig `release/0.1.48-beta` `c88ee519`: 0 Blocker. Marke NICHT gesetzt, NICHT deployt.**
 >
 > **Gemessen:** live = `d4da4629` (0.1.47-beta) · main = `412d11bb` (Fassung 5 #539–#544 gemergt) · Release-Zweig = main-Inhalt

@@ -49,9 +49,15 @@ describe('Menü · Inhalt (Fassung 5)', () => {
     expect(txt.indexOf('Was steht mir zu?')).toBeLessThan(txt.indexOf('Persönliche Basis'));
   });
 
-  it('«Was ansteht» ersetzt im Menü den Kalender-Eintrag; der Seiten-/Leisten-Name bleibt nav.calendar', () => {
+  it('«Was ansteht» ersetzt im Menü den Kalender-Eintrag', () => {
     expect(txt).not.toMatch(/\bKalender\b/);
-    expect(de.nav.calendar).toBe('Kalender');
+  });
+
+  // 23.10.2026: dieselbe Seite stand als Anker «Was steht mir zu?» und als Werkzeug
+  // «Lebenssituationen» im Menü — jetzt nur noch als Anker.
+  it('«Was steht mir zu?» steht genau einmal im Menü', () => {
+    expect(txt.split('Was steht mir zu?').length - 1).toBe(1);
+    expect(txt).not.toContain('Lebenssituationen');
   });
 
   it('alle sieben Bereiche mit ihrer Kapitel-Beschreibung, in den drei Gruppen', () => {
@@ -64,8 +70,8 @@ describe('Menü · Inhalt (Fassung 5)', () => {
 
   it('nichts von heute fällt weg: Stand, Startbildschirm, Werkzeuge, Gepäck, Einstellungen, Hinweis', () => {
     for (const s of ['63% vollständig', 'Auf den Startbildschirm legen', 'Dokumentenablage', 'Merkliste',
-      'Steuern', 'Finanz-Übersicht', 'Lebenssituationen', 'Alle Werkzeuge im Gepäck ›',
-      'Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.', 'Bundessteuer berechnen', 'Versteckte Ansprüche entdecken',
+      'Steuern', 'Finanz-Übersicht', 'Alle Werkzeuge im Rucksack ›',
+      'Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.', 'Bundessteuer berechnen',
       'Einstellungen', 'Einfache Ansicht', 'Datenschutz & Rechtliches', 'Problem melden',
       'Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht.']) {
       expect(txt, s).toContain(s);

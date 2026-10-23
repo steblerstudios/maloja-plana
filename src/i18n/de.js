@@ -31,7 +31,6 @@ export default {
       },
     },
     moreInfo: 'Mehr erfahren',
-    pageTitle: 'Lebenssituationen',
     pageSub: 'Versteckte Ansprüche entdecken',
     dashboardLink: { sie: 'Trifft eine Situation auf Sie zu?', du: 'Trifft eine Situation auf dich zu?' },
     tiefesEinkommen: {
@@ -531,7 +530,7 @@ export default {
     step5Title: '5 · Ansprüche neu prüfen',
     step5Text: { sie: 'Ein grösserer Haushalt ändert, was Ihnen zusteht. Ihre Prämienverbilligung (IPV) wird auf den neuen Haushalt neu berechnet — ein zweiter Blick lohnt sich. Wenn Sie das Kind allein grossziehen oder mit knappem Budget, sammeln die Lebenszustände weitere Unterstützung an einem ruhigen Ort.', du: 'Ein grösserer Haushalt ändert, was dir zusteht. Deine Prämienverbilligung (IPV) wird auf den neuen Haushalt neu berechnet — ein zweiter Blick lohnt sich. Wenn du das Kind allein grossziehst oder mit knappem Budget, sammeln die Lebenszustände weitere Unterstützung an einem ruhigen Ort.' },
     step5LinkIpv: 'Prämienverbilligung neu berechnen',
-    step5LinkSituation: 'Passende Lebenssituationen ansehen',
+    step5LinkSituation: 'Passende Situationen unter «Was steht mir zu?» ansehen',
     relatedTitle: 'Verwandte Ereignisse',
     relatedHeirat: 'Heirat oder Partnerschaft',
     footerNote: { sie: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahren Sie Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.', du: 'Vieles läuft über Arbeitgeber und Ausgleichskasse — bewahre Bestätigungen gut auf. Dies ist Orientierung, keine Rechtsberatung.' },
@@ -1389,7 +1388,6 @@ export default {
     charts: 'Charts',
     unterlagen: 'Meine Unterlagen',
     export: 'Export',
-    calendar: 'Kalender',
     notifications: 'Benachrichtigungen',
     installApp: 'Als App installieren',
     asyl: 'Asyl & Schutz',
@@ -1403,11 +1401,10 @@ export default {
     search: 'Suche',
     menu: 'Menü',
     erfassen: 'Erfassen',
-    anspruch: 'Anspruch',
-    // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
+    // Ein Name je Seite (23.10.2026): Leiste, Menü, Seitentitel und «Zurück zu …» lesen
+    // denselben Schlüssel. Vorher hiess der Rucksack als Titel «Wanderrucksack» und der
+    // Kalender in der Suche und bei «Zurück zu …» «Kalender».
     rucksack: 'Rucksack',
-    // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
-    // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
     wasAnsteht: 'Was ansteht',
     // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
     ankerSatz: {
@@ -4919,7 +4916,6 @@ export default {
     linkBudget: 'Im Budget ansehen',
   },
   calendar: {
-    title: 'Was ansteht',
     aufgabe: 'Aufgabe',
     ausMerkliste: 'aus der Merkliste',
     ganzerMonat: 'Ganzer Monat',
@@ -5887,9 +5883,7 @@ export default {
     b: { wohnen: 'Wohnen', finanzen: 'Finanzen', person: 'Person', versicherungen: 'Versicherung', gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge', bildung: 'Bildung', notfall: 'Notfall', behoerden: 'Behörden' },
   },
   gepaeck: {
-    title: 'Wanderrucksack',
     intro: { sie: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Packen Sie aus, öffnen Sie einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.', du: 'Jeder Lebensbereich ist ein Ausrüstungsstück im Rucksack. Pack aus, öffne einen Gegenstand — darin liegen die Wege durchs Leben. Ein Weg führt in seinen Ablauf.' },
-    link: 'Wanderrucksack',
     ctaSub: 'Lebensereignisse als Ausrüstung — auspacken, hineinschauen.',
     unpack: 'Auspacken',
     pack: 'Wieder einpacken',
@@ -5905,7 +5899,7 @@ export default {
     // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
     aussenfachKarte: 'Aussenfach',
     aussenfachKarteSub: 'Dieselben Werkzeuge, zum Einpacken',
-    menuAlle: 'Alle Werkzeuge im Gepäck',
+    menuAlle: 'Alle Werkzeuge im Rucksack',
     packed: '{done} von {total} erfasst',
     legend: 'Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.',
     obj: { wohnen: 'Schlüsselbund', arbeit: 'Werkzeugrolle', familie: 'Erinnerungskiste', gesundheit: 'Arztkoffer', alter: 'Feldflasche', abschied: 'Versiegelter Brief', geld: 'Portemonnaie' },

@@ -41,7 +41,7 @@ describe('Wanderrucksack · Panorama, untere Leiste, Name', () => {
   });
 
   it('das Dashboard gibt den Wanderrucksack ins Panorama und führt ins Gepäck', () => {
-    expect(src('Dashboard.jsx')).toMatch(/talStationen: \[\s*\{ key: 'gepaeck', label: t\('gepaeck\.link'\)[^}]*onNavigate\('gepaeck'\)/);
+    expect(src('Dashboard.jsx')).toMatch(/talStationen: \[\s*\{ key: 'gepaeck', label: t\('nav\.rucksack'\)[^}]*onNavigate\('gepaeck'\)/);
   });
 
   // 23.10.2026: Kalender und Suche raus (sieben Plätze waren am Handy zu viel).
@@ -49,13 +49,14 @@ describe('Wanderrucksack · Panorama, untere Leiste, Name', () => {
     expect(src('main.jsx')).toContain(': [left1, left2, center, right1, right2];');
   });
 
-  it('der Name ist in allen fünf Sprachen umgestellt', () => {
-    const erwartet = { de: 'Wanderrucksack', fr: 'Sac à dos de randonnée', it: 'Zaino da escursione', en: 'Hiking backpack', rm: 'Sac à dos de randonnée' };
-    for (const [l, name] of Object.entries(erwartet)) {
+  // 23.10.2026: ein Name je Seite — Leiste, Menü, Panorama und Seitentitel lesen nav.rucksack;
+  // «Wanderrucksack» (gepaeck.title, gepaeck.link) gibt es als zweiten Namen nicht mehr.
+  it('der Rucksack hat einen Namen, in allen fünf Sprachen', () => {
+    expect(src('Gepaeck.jsx')).toContain("t('nav.rucksack')");
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
       const i18n = src(`i18n/${l}.js`);
       const block = i18n.slice(i18n.indexOf('\n  gepaeck: {'));
-      expect(block, l).toContain(`title: '${name}'`);
-      expect(block, l).toContain(`link: '${name}'`);
+      expect(block.slice(0, block.indexOf('\n  },')), l).not.toMatch(/\n {4}(title|link): /);
     }
   });
 });
