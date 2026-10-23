@@ -6074,6 +6074,7 @@ export default {
     vorbezugNeuberechnung: { sie: 'Jusqu’à l’âge de référence, il manque encore des années de cotisation : c’est donc en général une rente partielle. En cas de domicile en Suisse, l’obligation de cotiser continue pour vous pendant ce temps ; à l’âge de référence, la rente est recalculée avec ces années. La réduction en francs reste à vie et est adaptée avec les rentes.', du: 'Jusqu’à l’âge de référence, il manque encore des années de cotisation : c’est donc en général une rente partielle. En cas de domicile en Suisse, l’obligation de cotiser continue pour toi pendant ce temps ; à l’âge de référence, la rente est recalculée avec ces années. La réduction en francs reste à vie et est adaptée avec les rentes.' },
     abAlterKurz: 'dès {alter} : CHF {betrag}',
     vorbezug: 'Réduction (anticipation)',
+    vorbezugFrauenUebergang: 'Pour les femmes nées entre 1961 et 1969, des taux de réduction plus bas s’appliquent ; ils ne sont pas représentés ici (mémento AVS 3.04). À vérifier auprès de la caisse de compensation.',
     aufschub: 'Supplément (ajournement)',
     erziehungsgutschrift: 'Bonification pour éducation / assistance',
     plafoniert: 'Plafonnement couple',

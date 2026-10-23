@@ -578,6 +578,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + '%'
             + (ahvResult.kuerzungsbetrag > 0 ? ' = CHF ' + fmt(ahvResult.kuerzungsbetrag) + ' / ' + t('vr.monat') : '')
         ),
+        // Frauen JG 1961–1969 haben tiefere, einkommensabhängige Kürzungssätze (Merkblatt 3.04 Ziff. 4),
+        // die der Rechner nicht abbildet — die Franken-Kürzung oben ist für sie zu hoch.
+        ahvResult.vorbezugAufschub < 0 && data.basis?.gender === 'female' && birthYear >= 1961 && birthYear <= 1969
+          && React.createElement('div', { style: { fontSize: text.xs, color: palette.goldDeep, marginTop: '2px' } }, t('vr.vorbezugFrauenUebergang')),
         // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
         // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
         ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },

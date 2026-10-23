@@ -6058,6 +6058,7 @@ export default {
     vorbezugNeuberechnung: { sie: 'Fino all’età di riferimento mancano ancora anni di contribuzione, perciò di solito si tratta di una rendita parziale. Con domicilio in Svizzera, in questo periodo l’obbligo contributivo continua anche per lei; all’età di riferimento la rendita viene ricalcolata con questi anni. La riduzione in franchi resta a vita e viene adeguata con le rendite.', du: 'Fino all’età di riferimento mancano ancora anni di contribuzione, perciò di solito si tratta di una rendita parziale. Con domicilio in Svizzera, in questo periodo l’obbligo contributivo continua anche per te; all’età di riferimento la rendita viene ricalcolata con questi anni. La riduzione in franchi resta a vita e viene adeguata con le rendite.' },
     abAlterKurz: 'da {alter}: CHF {betrag}',
     vorbezug: 'Riduzione (anticipo)',
+    vorbezugFrauenUebergang: 'Per le donne nate tra il 1961 e il 1969 valgono aliquote di riduzione più basse, qui non rappresentate (promemoria AVS 3.04). Da verificare presso la cassa di compensazione.',
     aufschub: 'Supplemento (differimento)',
     erziehungsgutschrift: 'Accredito per compiti educativi / assistenziali',
     plafoniert: 'Limite per coppie',
