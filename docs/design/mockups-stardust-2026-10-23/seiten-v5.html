@@ -695,6 +695,7 @@ body.still .rs-karte { transition: none; }
 .fu-posten .po { display: flex; justify-content: space-between; color: var(--mid); padding-left: 12px; }
 .fu-posten .leer { color: var(--soft); padding: 0 0 0 12px; text-align: left; margin: 0; }
 .fu-posten .po span:last-child, .fu-posten .gr span:last-child { white-space: nowrap; margin-left: 12px; }
+.fu-posten .leer.rw { font-size: 12px; padding-left: 24px; }
 .fu-anteil { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin: 2px 0 8px; background: var(--border); }
 .fu-anteil i { display: block; height: 100%; }
 .fu-baum { height: 180px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 10%, transparent), color-mix(in srgb, var(--sage) 28%, transparent)); display: grid; place-items: center; color: var(--mid); font-size: 13px; margin-top: 10px; text-align: center; padding: 0 20px; }
@@ -1427,29 +1428,57 @@ body.still .rs-karte { transition: none; }
             <div class="etikett">Monatsbudget</div>
             <div class="st-zeile" style="border-bottom:0;margin-top:4px;font-size:15px"><span>Frei verfügbar</span><b class="anzeige" style="font-size:24px">CHF 2’459</b></div>
             <div class="fu-tank"><span class="glas" aria-hidden="true"><i></i><b></b></span><span data-sie="Ihr Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3." data-du="Dein Notgroschen (CHF 18’500) trägt rund 4.9 Monate. Empfohlen sind 3."></span></div>
+            <p class="fuss" style="margin:6px 0 0" data-sie="Sie haben einen Überblick über Ihre Finanzen. Jeder erfasste Bereich hilft." data-du="Du hast einen Überblick über deine Finanzen. Jeder erfasste Bereich hilft."></p>
             <details class="fu-auf"><summary><span>Total Einnahmen</span><b>CHF 6’200</b></summary>
               <div class="fu-posten">
                 <div class="po"><span>Nettoeinkommen</span><span>CHF 6’200</span></div>
                 <div class="leer">Nebenerwerb, Partner/in, Familienzulagen, Alimente: nicht erfasst</div>
+                <div class="gr"><span>Vom Brutto zum Netto (Richtwert)</span><span></span></div>
+                <div class="po"><span>Bruttolohn, geschätzt</span><span>≈ CHF 6’796</span></div>
+                <div class="po"><span>AHV/IV/EO 5.3 %</span><span>− CHF 360</span></div>
+                <div class="po"><span>ALV 1.1 %</span><span>− CHF 75</span></div>
+                <div class="po"><span>Pensionskasse, geschätzt nach Alter</span><span>− CHF 161</span></div>
+                <div class="po"><span>Nettoeinkommen</span><span>CHF 6’200</span></div>
+                <div class="leer">Ein grober Anhaltspunkt, nie eine verbindliche Zahl: nicht enthalten sind Nichtberufsunfall-Prämie, Krankentaggeld und überobligatorische Pensionskasse. Erfasst ist ein PK-Beitrag von CHF 420 — die Lohnabrechnung zeigt die echten Abzüge.</div>
               </div>
             </details>
             <details class="fu-auf"><summary><span>Monatliche Ausgaben</span><b>− CHF 3’741</b></summary>
               <div class="fu-posten">
                 <div class="fu-anteil" aria-hidden="true"><i style="width:48.9%;background:var(--wohnen)"></i><i style="width:10.3%;background:var(--versicherungen)"></i><i style="width:14.3%;background:var(--basis)"></i><i style="width:3.2%;background:var(--ausbildung)"></i><i style="width:23.3%;background:var(--behoerden)"></i></div>
                 <div class="gr"><span>Wohnen</span><span>CHF 1’830</span></div>
+                <div class="leer rw">vergleichbarer Haushalt rund CHF 1’277</div>
+                <div class="leer rw">Preise seit 2020 +14 % (allgemein +8 %)</div>
                 <div class="po"><span>Miete</span><span>CHF 1’650</span></div>
                 <div class="po"><span>Nebenkosten</span><span>CHF 180</span></div>
                 <div class="gr"><span>Versicherung &amp; Gesundheit</span><span>CHF 385</span></div>
                 <div class="po"><span>Krankenkasse</span><span>CHF 385</span></div>
+                <div class="leer rw">vergleichbarer Haushalt rund CHF 364</div>
                 <div class="gr"><span>Leben</span><span>CHF 535</span></div>
                 <div class="po"><span>Lebensmittel &amp; Haushalt</span><span>CHF 450</span></div>
+                <div class="leer rw">vergleichbarer Haushalt rund CHF 387</div>
+                <div class="leer rw">Preise seit 2020 +7 % (allgemein +8 %)</div>
                 <div class="po"><span>Internet &amp; Telefon</span><span>CHF 85</span></div>
+                <div class="leer rw">vergleichbarer Haushalt rund CHF 130</div>
+                <div class="leer rw">Preise seit 2020 −2 % (allgemein +8 %)</div>
                 <div class="gr"><span>Mobilität</span><span>CHF 120</span></div>
+                <div class="leer rw">vergleichbarer Haushalt rund CHF 465</div>
+                <div class="leer rw">Preise seit 2020 +10 % (allgemein +8 %)</div>
                 <div class="gr"><span>Steuern &amp; Vorsorge</span><span>CHF 871</span></div>
                 <div class="po"><span>Steuern</span><span>CHF 850</span></div>
+                <div class="leer rw">vergleichbarer Haushalt rund CHF 797</div>
                 <div class="po"><span>Säule 3a (CHF 250 / Jahr)</span><span>CHF 21</span></div>
                 <div class="gr"><span>Verpflichtungen</span><span>—</span></div>
                 <div class="leer">Schuldenraten, Alimente bezahlt: nicht erfasst</div>
+                <p class="fuss" style="margin:8px 0 0" data-sie="Zur Orientierung: «vergleichbarer Haushalt» = Einpersonenhaushalt unter 65 (BFS Haushaltsbudgeterhebung 2020/21); Ihrer kann gut abweichen. «Preise seit 2020» = BFS Landesindex der Konsumentenpreise, Dez. 2020 bis Aug. 2025. Krankenkasse und Steuern sind nicht Teil der Teuerung." data-du="Zur Orientierung: «vergleichbarer Haushalt» = Einpersonenhaushalt unter 65 (BFS Haushaltsbudgeterhebung 2020/21); deiner kann gut abweichen. «Preise seit 2020» = BFS Landesindex der Konsumentenpreise, Dez. 2020 bis Aug. 2025. Krankenkasse und Steuern sind nicht Teil der Teuerung."></p>
+              </div>
+            </details>
+            <details class="fu-auf"><summary><span>Aufs Jahr gerechnet</span><b>CHF 29’510 frei</b></summary>
+              <div class="fu-posten">
+                <div class="po"><span>Einnahmen (12 × CHF 6’200)</span><span>CHF 74’400</span></div>
+                <div class="po"><span>Ausgaben</span><span>− CHF 44’890</span></div>
+                <div class="gr"><span>Frei verfügbar im Jahr</span><span>CHF 29’510</span></div>
+                <div class="po"><span>Davon geplant zu sparen (Sparziel + 3a)</span><span>CHF 6’250</span></div>
+                <div class="leer">Ohne 13. Monatslohn — die Angabe dazu fehlt noch (Kapitel Finanzen &amp; Geld). Mit einem 13. wären es rund CHF 6’200 mehr.</div>
               </div>
             </details>
           </div>
@@ -1482,6 +1511,20 @@ body.still .rs-karte { transition: none; }
           </details>
           <h4 style="margin:18px 0 0" data-sie="Ihre Instrumente" data-du="Deine Instrumente"></h4>
           <div class="u-instrumente" id="k-instrumente"></div>
+          <details class="fu-auf"><summary><span>Schutzschild</span><b>alles gedeckt · 5/5</b></summary>
+            <div class="fu-posten">
+              <p class="leer" style="padding-left:0">Was das Gesetz verlangt — und was sich zusätzlich lohnt.</p>
+              <div class="gr"><span>Pflicht</span><span>3/3</span></div>
+              <div class="leer">Gesetzlich vorgeschrieben.</div>
+              <div class="po"><span>Krankenversicherung (CSS)</span><span>gedeckt</span></div>
+              <div class="po"><span>Unfallversicherung (über Arbeitgeber)</span><span>gedeckt</span></div>
+              <div class="po"><span>Pensionskasse (BVG)</span><span>gedeckt</span></div>
+              <div class="gr"><span>Empfohlen</span><span>2/2</span></div>
+              <div class="leer">Freiwillig, aber sinnvoll.</div>
+              <div class="po"><span>Privathaftpflicht</span><span>gedeckt</span></div>
+              <div class="po"><span>Hausrat (CHF 22 / Jahr)</span><span>gedeckt</span></div>
+            </div>
+          </details>
           <div class="fu-status" style="margin-top:14px">
             <a class="verweis" href="#j"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Steuern<b>~ CHF 8’431 /J.</b><small>≈ CHF 703 pro Monat geschätzt · Ihre Angabe im Budget: CHF 850 pro Monat.</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#b"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Prämienverbilligung (IPV)<b>Kein Anspruch</b><small>Einkommen über Grenze (CHF 61’090)</small></span><span class="pfeil">›</span></a>
