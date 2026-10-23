@@ -305,9 +305,8 @@ const bottomIcon = (name, color, size) => {
     );
   }
   // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?», hier im Startbündel
-  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B) und Lupe.
+  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B).
   if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
-  if (name === 'search') return React.createElement('svg', common, React.createElement('circle', { cx: 11, cy: 11, r: 6 }), P('M15.5 15.5 L20 20'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
 
@@ -394,15 +393,17 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
         paddingBottom: 'env(safe-area-inset-bottom)',
+        // Eigene Ebene: sonst zeichnet iOS/Android die Leiste mit Weichzeichner beim Ein-/
+        // Ausfahren der Adressleiste neu und sie zittert hinterher.
+        transform: 'translateZ(0)',
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
-      // in der Mitte. Seit 27.09.2026 drei je Seite: links Wanderrucksack neben der
-      // Übersicht, rechts die Suche zwischen Anspruch und Menü.
+      // in der Mitte. Seit 23.10.2026 wieder zwei je Seite (Stebler Studios: sieben waren
+      // am Handy zu viel): Kalender liegt im „+"-Fächer und im Menü, die Suche oben im Menü.
       ...(() => {
         const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
-        const leftR = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
-        const left2 = slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') });
+        const left2 = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
             onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
@@ -416,11 +417,10 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
           )
         );
         const right1 = slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
-        const rightS = slot({ key: 'search', label: t('nav.search'), icon: 'search', active: view === 'search', onClick: () => onNavigate('search') });
         const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
         return leftHand
-          ? [right2, rightS, right1, center, left2, leftR, left1]
-          : [left1, leftR, left2, center, right1, rightS, right2];
+          ? [right2, right1, center, left2, left1]
+          : [left1, left2, center, right1, right2];
       })()
     )
   );
@@ -448,6 +448,14 @@ const AppInner = ({ demo }) => {
   // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
   const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
+  // Der Filter sitzt auf <html>, nicht auf dem App-Rahmen: ein `filter` auf einem Vorfahren
+  // macht ihn zum Bezugsrahmen für `position: fixed` — der Boden-Anker scrollte dann mit
+  // und sprang (gemeldet 23.10.2026). Das Wurzelelement ist von dieser Regel ausgenommen.
+  useEffect(() => {
+    const html = document.documentElement;
+    html.style.filter = grayscale ? 'grayscale(1)' : '';
+    return () => { html.style.filter = ''; };
+  }, [grayscale]);
   // Farbenblind-Modus: tauscht das Rot-Grün-Paar sage/rose gegen Blau/Orange (opt-in)
   const [colorBlind, setColorBlind] = useState(() => { try { return localStorage.getItem('or5_colorblind') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_colorblind', colorBlind ? '1' : '0'); } catch {} }, [colorBlind]);
@@ -1205,7 +1213,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
@@ -1290,58 +1298,52 @@ const AppInner = ({ demo }) => {
         )
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        // Handy: oben rechts = Einstellungen/Konto (Zahnrad); Navigation liegt am Boden-Anker.
-        // Desktop: Bedienelemente inline + Hamburger (kein Boden-Anker).
-        isMobile
-          ? React.createElement('button', {
-              key: 'settings',
-              'aria-label': t('nav.settings'),
-              'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
-              onClick: () => setSettingsOpen(true),
-              style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-            },
-              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
-                // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
-                React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
-              )
-            )
-          : React.createElement(React.Fragment, { key: 'desktop-controls' },
-              // Ruhige, hierarchische Kopfzeile: nur Sprache + Erscheinungsbild bleiben
-              // griffbereit inline. Alle Barrierefreiheits-Schalter (und Anrede) wandern
-              // hinter EIN Symbol → Einstellungs-Schublade (gruppiert & beschriftet).
-              ...settingsControls.filter(c => c.key === 'lang' || c.key === 'theme'),
-              React.createElement('button', {
-                key: 'a11y',
-                'aria-label': t('common.settingsAccessibility'),
-                title: t('common.settingsAccessibility'),
-                'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
-                onClick: () => setSettingsOpen(true),
-                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-              },
-                // Universelles Barrierefreiheit-Symbol (Figur mit ausgestreckten Armen im Kreis)
-                React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                  React.createElement('circle', { cx: '12', cy: '12', r: '10', opacity: '0.35' }),
-                  React.createElement('circle', { cx: '12', cy: '6.6', r: '1.35', fill: 'currentColor', stroke: 'none' }),
-                  React.createElement('path', { d: 'M6.5 9.2 H17.5' }),
-                  React.createElement('path', { d: 'M12 9.2 V13.2' }),
-                  React.createElement('path', { d: 'M12 13.2 L9.4 18' }),
-                  React.createElement('path', { d: 'M12 13.2 L14.6 18' })
-                )
-              ),
-              React.createElement('button', {
-                key: 'menu',
-                'aria-label': t('nav.menu'),
-                onClick: () => setMobileNavOpen(!mobileNavOpen),
-                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-              },
-                React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-                  React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
-                  React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
-                  React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
-                )
-              )
-            )
+        // Oben rechts, Handy wie Desktop: Lupe (Suche) und Zahnrad (Einstellungen-Schublade).
+        // Die Lupe sitzt seit 23.10.2026 hier statt in der Fusszeile (dort waren sieben Plätze
+        // zu viel). Am Desktop ersetzt das Zahnrad die frühere Barrierefreiheits-Figur — sie
+        // öffnete dieselbe Schublade; Barrierefreiheit ist dort eine eigene Gruppe, der Tooltip
+        // nennt sie. Desktop zusätzlich: Sprache + Erscheinungsbild inline und Hamburger; am
+        // Handy liegt die Navigation am Boden-Anker.
+        React.createElement('button', {
+          key: 'search',
+          'aria-label': t('nav.search'),
+          title: isMobile ? undefined : t('nav.search'),
+          'aria-current': view === 'search' ? 'page' : undefined,
+          onClick: () => handleNavigate('search'),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+            React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
+            React.createElement('path', { d: 'M15.5 15.5 L20 20' })
+          )
+        ),
+        ...(isMobile ? [] : settingsControls.filter(c => c.key === 'lang' || c.key === 'theme')),
+        React.createElement('button', {
+          key: 'settings',
+          'aria-label': t('nav.settings'),
+          title: isMobile ? undefined : t('common.settingsTitle') + ' · ' + t('common.settingsAccessibility'),
+          'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
+          onClick: () => setSettingsOpen(true),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+            React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
+            // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
+            React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+          )
+        ),
+        !isMobile && React.createElement('button', {
+          key: 'menu',
+          'aria-label': t('nav.menu'),
+          onClick: () => setMobileNavOpen(!mobileNavOpen),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
+            React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
+            React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
+            React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
+          )
+        )
       )
     ),
     !demoMode && React.createElement('div', {
