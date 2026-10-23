@@ -1983,6 +1983,27 @@ export default {
       emptyState: { sie: 'Ihr Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.', du: 'Dein Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.' },
       emptyStateHint: 'Monatslohn eintragen — dauert 10 Sekunden.',
       benefits: ['Steuerrechner', 'IPV-Prüfung', 'Sozialhilfe', 'Mindestlohn-Check'],
+      // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+      monat: {
+        bleiben: "Jeden Monat bleiben",
+        verplant: "{betrag} verplant",
+        vonEinkommenNetto: "von {betrag} Einkommen, netto",
+        vonEinkommen: "von {betrag} Einkommen",
+      },
+      passend: {
+        titel: "Passend zu diesem Bereich",
+        uebersichtSub: "Finanz-Übersicht: Steuer, IPV, Sozialhilfe, EL",
+        ipv: "Prämienverbilligung prüfen",
+        ipvSub: "Anspruch · je nach Einkommen",
+        neuerJobSub: "Ablauf · {n} Schritte",
+        lohnausweis: "Lohnausweis ablegen",
+        lohnausweisSub: "Unterlagen · Dokumentenablage",
+      },
+      nebenerwerb: {
+        titel: "Nebenerwerb",
+        fallsVorhanden: "falls vorhanden",
+        erfasst: "erfasst",
+      },
       fields: {
         monthlyIncome: 'Monatliches Einkommen CHF',
         sideIncome: 'Nebenerwerb pro Monat CHF',
@@ -2300,6 +2321,9 @@ export default {
     uploadSuccess: 'Dokument hinzugefügt',
     hint: 'Hinweis',
     trustDocuments: { sie: 'Ihre Dokumente bleiben auf diesem Gerät.', du: 'Deine Dokumente bleiben auf diesem Gerät.' },
+    // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
+    fotografieren: "Dokument fotografieren",
+    alsNaechstes: "Als Nächstes",
     nextTopic: 'Nächstes Thema',
     sectionNav: 'Themen im Kapitel',
     showMore: 'Weitere Bereiche anzeigen',

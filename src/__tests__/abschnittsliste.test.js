@@ -28,8 +28,10 @@ describe('Abschnittsliste', () => {
   it('der Einkommensbetrag steht einmal, nicht dreimal', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const treffer = html.match(/6’200/g) || [];
-    // einmal im Satz, einmal in der Liste — früher zusätzlich Tabelle + Eingabefeld
-    expect(treffer.length).toBeLessThanOrEqual(3);
+    // einmal im Satz, einmal in der Liste, einmal im Lohn-Barometer («Aus Netto … geschätzt») und
+    // seit Fassung 5 einmal unter «Jeden Monat bleiben» («von … Einkommen, netto», Entscheid
+    // 23.10.2026) — früher zusätzlich Tabelle + Eingabefeld
+    expect(treffer.length).toBeLessThanOrEqual(4);
   });
 
   it('leerer Abschnitt: gestrichelt, «ergänzen ›», «noch leer»', () => {
