@@ -169,3 +169,16 @@ Die Messung hatte nur den leeren Kalender erfasst; im Code (`CalendarReminders.j
   Begründung: Vertrauen (lokal), Rechtliches muss von überall erreichbar sein, Melden während der
   Beta, Einfache Ansicht für Barrierefreiheit.
 - **«Rundgang neu starten» nicht im Menü:** steht in der App schon bei den Einstellungen (MobileNav.jsx).
+
+### Rechner IPV · teilweise entschieden (Sophie, 23.10.2026)
+
+- Korrigiert (7ec07e01): Untertitel und Anspruchs-Text vollständig; unter der Grenze «Berechtigt» und
+  «Möglicher Betrag — nur auf Antrag» (statt erfundenem «Wahrscheinlich berechtigt»); «Unterlagen für
+  den Antrag merken» legt wie die App «IPV-Antrag: Police und Lohnabrechnungen der letzten 3 Monate
+  bereitlegen» auf die Merkliste (verknüpft mit der Ablage), danach «Auf der Merkliste».
+- **Regler bleibt**, mit «Ins Profil übernehmen» wie im Schnellcheck (Texte premium.schnellcheck*).
+- **Glossar «IPV ⓘ» bleibt.** Die App hat Glossar-Begriffe schon (`GlossarText`), es ist also nicht neu.
+- Offen: Überschriften, «Frist in den Kalender», und Teile, die nur unter Bedingungen erscheinen
+  (aus `PremiumSubsidy.jsx`, nicht in der Messung): «Ihr IPV-Weg» (Automatisch / Antrag, «Ich habe
+  beantragt», «Verfügung erhalten», Betrag laut Verfügung, «Jährlich erinnern»), «Alle Kantone
+  vergleichen», Vorlesen, Hinweise zu Wochenaufenthalt und jungen Erwachsenen, Kanton wählen.

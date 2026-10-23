@@ -402,6 +402,9 @@ body.desktop .zl-band { margin: 2px 0 0; }
 .zl-monate button { flex: 0 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid var(--border); border-radius: 999px; background: none; color: var(--mid); font: inherit; font-size: 13px; cursor: pointer; }
 .zl-monate button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 [data-seite="g"] .reiter2 button[aria-selected="true"] { border-bottom-color: var(--sage); }
+.ipv-profil { display: grid; gap: 2px; justify-items: start; margin: 6px 0 4px; }
+.ipv-profil small { font-size: 12px; color: var(--mid); }
+.ipv-profil .knopfruhig { margin-top: 6px; font-size: 13px; padding: 8px 14px; }
 .zl-anspruch { border: 1px solid color-mix(in srgb, var(--sage) 30%, transparent); background: color-mix(in srgb, var(--sage) 7%, transparent); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
 .zl-anspruch b { font-weight: 500; font-size: 14px; }
 .zl-anspruch p { font-size: 12px; color: var(--mid); margin: 2px 0 8px; }
@@ -732,6 +735,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
             <div class="etikett" data-sie="Ihre Lage" data-du="Deine Lage"></div>
             <div class="lage"><span>Kanton Zürich</span><span>1 Person</span><span>Prämienregion 1</span><span>Anspruchsjahr 2026</span></div>
             <div class="regler"><label for="ipv-lohn"><span data-sie="Wie hoch ist Ihr Einkommen pro Monat (netto)?" data-du="Wie hoch ist dein Einkommen pro Monat (netto)?"></span><b id="ipv-wert">CHF 6'200</b></label><input id="ipv-lohn" type="range" min="2000" max="9000" step="100" value="6200"></div>
+            <div class="ipv-profil" id="ipv-profil" hidden><small>Gerechnet mit den Zahlen aus dem Schnellcheck</small><small data-sie="Ihr Profil bleibt unverändert, solange Sie die Zahlen nicht übernehmen." data-du="Dein Profil bleibt unverändert, solange Du die Zahlen nicht übernimmst."></small><button class="knopfruhig" id="ipv-uebernehmen">Ins Profil übernehmen</button></div>
             <div class="baro" aria-hidden="true">
               <div class="spur"></div><div class="fuellung" id="ipv-fuell"></div>
               <div class="grenze" id="ipv-grenze"></div>
@@ -1163,9 +1167,14 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   // nimmt die erfassten Einkommens- und Vermögensangaben. Förderbeträge rechnet nur der echte Rechner.
   const SK_MIN = 20000, SK_MAX = 110000, GRENZE_JAHR = 61090;
   const chf = (n) => 'CHF ' + Math.round(n).toLocaleString('de-CH').replace(/[’,]/g, "'");
+  let ipvProfil = 6200;  // Einkommen im Profil (Maria Muster)
   function ipv() {
     const r = document.getElementById('ipv-lohn'); if (!r) return;
     const mon = +r.value, jahr = mon * 12;
+    // wie im Schnellcheck: geänderte Zahl gilt nur hier, bis man sie ins Profil übernimmt (premium.schnellcheck*)
+    const pr = document.getElementById('ipv-profil'), ub = document.getElementById('ipv-uebernehmen');
+    pr.hidden = mon === ipvProfil && ub.textContent !== 'Ins Profil übernommen';
+    if (mon !== ipvProfil) { ub.textContent = 'Ins Profil übernehmen'; ub.disabled = false; }
     document.getElementById('ipv-wert').textContent = chf(mon);
     document.getElementById('ipv-fuell').style.width = Math.min(100, Math.max(0, (jahr - SK_MIN) / (SK_MAX - SK_MIN) * 100)) + '%';
     document.getElementById('ipv-grenze').style.left = ((GRENZE_JAHR - SK_MIN) / (SK_MAX - SK_MIN) * 100) + '%';
@@ -1182,6 +1191,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     }
   }
   document.getElementById('ipv-lohn').addEventListener('input', ipv);
+  document.getElementById('ipv-uebernehmen').onclick = (e) => { ipvProfil = +document.getElementById('ipv-lohn').value; e.currentTarget.textContent = 'Ins Profil übernommen'; e.currentTarget.disabled = true; };
   // wie die App: nach dem Tipp «Auf der Merkliste» (premium.permitTodoAdded), und der Punkt steht in der Merkliste
   document.getElementById('ipv-merken').onclick = (e) => {
     const b = e.currentTarget; if (b.getAttribute('aria-pressed') === 'true') return;
