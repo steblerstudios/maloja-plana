@@ -1150,7 +1150,8 @@ const AppInner = ({ demo }) => {
       // Deckkraft rechnet das wieder weg, ohne dass die Tafel es sehen kann.
       // Ruhig bleibt die Zeile über Schriftgrösse und Laufweite.
       fontSize: text.xs, color: palette.mid, letterSpacing: '0.3px',
-      display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center',
+      // Zeilenabstand 0: jeder Link trägt selbst 44 px Höhe (Tippfläche, Messung 23.10.2026).
+      display: 'flex', flexWrap: 'wrap', gap: '0 ' + space.sm + 'px', alignItems: 'center',
       padding: '16px 20px', width: '100%', maxWidth: contentMax,
       marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box',
     }
@@ -1159,12 +1160,12 @@ const AppInner = ({ demo }) => {
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('a', {
       href: feedbackHref,
-      style: { color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: { display: 'inline-flex', alignItems: 'center', minHeight: '44px', color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, t('beta.feedbackMail')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
       onClick: () => handleNavigate('legal'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, t('legal.footerLink')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
@@ -1173,13 +1174,13 @@ const AppInner = ({ demo }) => {
         else if (demoMode) { beispielVerlassen(); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
         else beispielBetreten();
       },
-      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
     !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
         onClick: enterSandbox,
-        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, minHeight: '44px', fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
       }, t('sandbox.footerLink'))
     ),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
@@ -1187,7 +1188,7 @@ const AppInner = ({ demo }) => {
       t,
       href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
       title: t('greenHostingFooter'),
-      style: { color: palette.sageDeep, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }
+      style: { color: palette.sageDeep, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', minHeight: '44px' }
     },
       React.createElement(Icon, { name: 'leaf', size: 13 }),
       React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))

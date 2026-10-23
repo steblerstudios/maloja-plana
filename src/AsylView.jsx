@@ -46,7 +46,9 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     alltagIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: space.sm + 'px 0' },
     alltagStatus: { paddingTop: space.sm + 'px', marginTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '66' },
     alltagStatusLabel: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, marginBottom: space.xs + 'px' },
-    alltagRow: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', fontSize: text.xs, color: palette.mid, lineHeight: 1.5, padding: '2px 0' },
+    // Lange Wörter («Ausbildungsprogramme») dürfen umbrechen: neben dem 110-px-Etikett blieben auf
+    // 320-px-Handys nur 78 px, der Text ragte bis 331 px über den Rand (Messung 23.10.2026).
+    alltagRow: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', fontSize: text.xs, color: palette.mid, lineHeight: 1.5, padding: '2px 0', overflowWrap: 'anywhere', hyphens: 'auto' },
     alltagDim: { flexShrink: 0, width: '110px', color: palette.text, fontWeight: weight.medium },
   };
 

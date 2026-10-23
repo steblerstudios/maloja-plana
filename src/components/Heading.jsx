@@ -6,23 +6,33 @@ import { text, weight, space } from '../config/tokens.js';
 // Dokumentstruktur korrekt lesen (vorher war <h2> alles von 13px bis 28px).
 // Flex nur bei inline-Icon, sonst bleiben zentrierte Hero-Titel unberührt.
 
+// Lange Wörter dürfen umbrechen (Messung 23.10.2026): «Arbeitslosenentschädigung» mass in
+// 28 px 374 px und wurde auf 320-px-Handys rechts abgeschnitten (html: overflow-x clip).
+// Trennung nach Sprache (html lang), Notumbruch nur, wenn ein Wort allein nicht passt.
+const umbruch = { overflowWrap: 'break-word', hyphens: 'auto', WebkitHyphens: 'auto' };
+// Mit Icon ist der Titel ein Flex-Behälter: der Text braucht einen eigenen Kasten mit
+// min-width 0, sonst bleibt er so breit wie sein längstes Wort.
+const titelText = (children) => React.createElement('span', { style: { minWidth: 0, ...umbruch } }, children);
+
 // Seitentitel: genau einer pro Ansicht (Hero, 28px bold).
 export const PageTitle = ({ palette, children, icon, style, ...rest }) =>
   React.createElement('h2', {
     style: {
-      ...(icon ? { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px' } : {}),
+      ...(icon ? { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px', maxWidth: '100%' } : {}),
+      ...umbruch,
       fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, margin: 0, ...style,
     }, ...rest,
-  }, icon || null, children);
+  }, icon || null, icon ? titelText(children) : children);
 
 // Karten-/Abschnittstitel (19px semi, optionales Icon).
 export const PanelTitle = ({ palette, children, icon, style, ...rest }) =>
   React.createElement('h3', {
     style: {
-      ...(icon ? { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px' } : {}),
+      ...(icon ? { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px', maxWidth: '100%' } : {}),
+      ...umbruch,
       fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: 0, ...style,
     }, ...rest,
-  }, icon || null, children);
+  }, icon || null, icon ? titelText(children) : children);
 
 // Kleines Kicker-Label — standardmässig KEINE Überschrift (kein h*), damit die
 // Screenreader-Struktur sauber bleibt (13px uppercase).
