@@ -2062,7 +2062,7 @@ export default {
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
         // rm ungeprüft F5
-        vonEinkommenNetto: "da {betrag} entrada, netto",
+        vonEinkommenNetto: "da {betrag} entrada netta",
         // rm ungeprüft F5
         vonEinkommen: "da {betrag} entrada",
       },

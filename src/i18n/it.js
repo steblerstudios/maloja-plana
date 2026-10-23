@@ -1962,13 +1962,13 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Ogni mese restano",
-        verplant: "{betrag} pianificati",
+        verplant: "{betrag} pianificato",
         vonEinkommenNetto: "su {betrag} di reddito netto",
         vonEinkommen: "su {betrag} di reddito",
       },
       passend: {
         titel: "Collegato a questo ambito",
-        uebersichtSub: "Panoramica finanziaria: imposte, RDP, assistenza sociale, PC",
+        uebersichtSub: "Panoramica finanziaria: imposte, IPV, assistenza sociale, PC",
         ipv: "Verificare la riduzione dei premi",
         ipvSub: "Diritto · secondo il reddito",
         neuerJobSub: "Percorso · {n} passi",

@@ -1962,13 +1962,13 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Left over each month",
-        verplant: "{betrag} planned",
-        vonEinkommenNetto: "of {betrag} income, net",
+        verplant: "{betrag} budgeted",
+        vonEinkommenNetto: "of {betrag} net income",
         vonEinkommen: "of {betrag} income",
       },
       passend: {
         titel: "Related to this area",
-        uebersichtSub: "Financial overview: tax, premium reduction, social assistance, EL",
+        uebersichtSub: "Financial overview: tax, premium reduction, social assistance, supplementary benefits",
         ipv: "Check premium reduction",
         ipvSub: "Entitlement · depends on income",
         neuerJobSub: "Guide · {n} steps",
