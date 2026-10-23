@@ -449,6 +449,35 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
   (`FinanzUebersicht.jsx:278`); Baum hört auch auf den In-App-Schalter «Bewegung reduzieren»
   (`Baum3D.jsx:609`); Du-Form `finanzUebersicht.*` klein schreiben (Copy-Prüfer).
 
+### Finanz-Übersicht (K) · detaillierter, entschieden (Sophie, 24.10.2026)
+
+Sophie: «wir wollen zuerst noch die Finanz-Übersicht verbessern und detaillierter machen» — und «der Tacho
+und all das, was wir schon gebaut haben». Umgesetzt in `seiten-v5.html?nur=k` (320aba69). **Summe sichtbar,
+Details aufklappbar.** Alle Zahlen aus `budgetSync.js` (`calculateMonthlyBudget`), Bezeichnungen aus
+`de.js` (`budgetSync.group.*`, `.field.*`), Werte aus `config/demoData.js`.
+
+- **Kopf:** Marken Nettoeinkommen · Kanton · **Haushalt** (neu); «Frei verfügbar» gross, Notgroschen-Tank.
+- **Total Einnahmen** aufklappbar nach Quelle: Lohn, Nebenerwerb, Partner/in, Familienzulagen, Alimente
+  (`haushaltsEinnahmen`); nicht Erfasstes als eine leise Zeile.
+- **Monatliche Ausgaben** aufklappbar nach den sechs Gruppen von `BUDGET_GROUPS` (Wohnen, Versicherung &
+  Gesundheit, Leben, Mobilität, Steuern & Vorsorge, Verpflichtungen) mit ihren Posten, dazu ein Anteils-Balken
+  in Bereichsfarben. Maria: 1'830 + 385 + 535 + 120 + 871 = **3'741** (= App; 3a ist ein Jahresfeld, 250/12).
+- **Sparen & Vorsorge** aufklappbar: Sparziel, 3a eingezahlt mit Rest bis zum Höchstbetrag, 3b, PK-Beitrag
+  (mit Hinweis «schon vom Lohn abgezogen»).
+- **Vermögen & Schulden** aufklappbar: frei verfügbar (Sparkonto, Wertschriften) · gebunden (PK-, 3a-Guthaben,
+  getrennt, nicht frei verfügbar) · Schulden (Darlehen, Kreditkarte, Schuldenmanager). Ersetzt die Zeile
+  «Vermögen» in den Statuszeilen — es bleiben **fünf** Zeilen: Steuern, IPV, Sozialhilfe, EL, Gesundheitskosten.
+- **Ihre Instrumente** auch hier: Franchise-Kreuz, Steuer-Säule, Reserve-Tankanzeige, Schutzschild
+  (`InstrumentePanel`, gleiche Werte wie auf der Übersicht), je zum Werkzeug.
+- Danach unverändert: Lohn-Barometer, Miete, KK-Last (zugeklappt), Lebensbaum, Budget-Übersicht, Dossier, Drucken.
+
+**Neue Texte für den Copy-Prüfer:** «… nicht erfasst», «Frei verfügbar / Gebunden (Vorsorge)», «Höchstbetrag …
+noch CHF … möglich», «Der PK-Beitrag ist schon vom Lohn abgezogen …», «Haushalt: n Person(en)».
+**Befund App:** Hausrat-Prämie (`householdInsuranceAmount`, CHF/Jahr) ist erfasst, fliesst aber nicht ins
+Budget (nur `otherInsurance`). Vor dem Bau entscheiden, ob erfasste Versicherungsprämien ins Budget gehören.
+**Voraussetzung im Bau:** eine Monatsrechnung (🔴 1 im Gesamtbericht), sonst zeigen Kapitel und Übersicht
+verschiedene Summen.
+
 ---
 
 ## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L, M und N entschieden 24.10.)
