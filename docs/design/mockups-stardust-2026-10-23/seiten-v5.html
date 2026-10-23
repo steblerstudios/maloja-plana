@@ -608,6 +608,25 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 .einst-knopf svg { color: var(--mid); }
 .einst-knopf .pfeil { margin-inline-start: auto; color: var(--soft); }
 .einst-loeschen { color: var(--roseDeep); }
+/* J · Steuern (Fassung 5, 23.10. abends) */
+.st-gross { font-size: 34px; font-weight: 600; letter-spacing: -.01em; margin: 2px 0 4px; }
+.st-balken { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--border); margin: 14px 0 8px; }
+.st-balken i { display: block; }
+.st-teile { display: grid; gap: 8px; font-size: 14px; }
+.st-teile > div { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.st-teile b { white-space: nowrap; }
+.st-teile small { display: block; color: var(--soft); font-size: 12px; }
+.st-teile .punkt { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-inline-end: 8px; }
+.st-marke { font-size: 11px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; color: var(--mid); margin-inline-start: 6px; white-space: nowrap; }
+.st-feld { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.st-feld input, .st-feld select { width: 110px; min-height: 40px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); padding: 0 10px; font: inherit; font-size: 14px; text-align: end; }
+.st-feld small { display: block; color: var(--soft); font-size: 12px; }
+.st-zeile { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.st-saeulen { display: flex; gap: 18px; align-items: flex-end; height: 150px; margin: 14px 0 8px; }
+.st-saeulen button { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; height: 100%; background: none; border: 0; color: var(--text); font: inherit; font-size: 13px; cursor: pointer; }
+.st-saeulen button i { display: block; width: 100%; max-width: 64px; border-radius: 10px 10px 4px 4px; background: var(--finanzen); }
+.st-saeulen button[aria-pressed="false"] i { opacity: .45; }
+.st-saeulen .offen i { background: none; border: 1.5px dashed var(--border); height: 40%; }
 </style>
 </head>
 <body>
@@ -1210,6 +1229,105 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   </ul></div>
 </section>
 
+<!-- ===================== J · Steuern ===================== -->
+<section class="abschnitt" id="j">
+  <h2>J · Rechner — «Steuer-Orientierung»</h2>
+  <p class="warum"><b>Neu in Fassung 5 (23.10. abends).</b> Heute stehen die Eingaben zuoberst und das Ergebnis erst nach sechs Abzugsfeldern. Wie beim IPV-Rechner kommt hier <b>zuerst das Ergebnis</b>: die geschätzte Gesamtsteuer, aufgeteilt in Bund und Kanton/Gemeinde. Darunter die Eingaben (aufgeklappt), die Berechnung, der Zivilstand-Vergleich, Quellen und die offizielle Stelle. Alle 84 Bausteine von heute sind drin, alle Texte und Zahlen aus der App (Maria Muster).</p>
+  <div class="leiste zustaende" role="group" aria-label="Lage der Person">
+    <button class="pill" data-stlage="maria" aria-pressed="true">Wie Maria Muster</button>
+    <button class="pill" data-stlage="ohnekanton" aria-pressed="false">Kanton fehlt</button>
+  </div>
+  <div class="geraet mit-abschnitt" data-seite="j">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="finanzen"></nav>
+    <div class="seite" style="--licht: var(--finanzen)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links">
+          <div class="stufe">
+            <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Finanzen &amp; Geld</a><span>›</span>Steuern</nav></div>
+            <div class="titelzeile"><span class="sym" data-icon="finanzen" style="--licht: var(--finanzen)"></span><h3>Steuer-Orientierung</h3></div>
+            <p class="satz" data-sie="Diese Übersicht zeigt Ihnen eine grobe Einschätzung Ihrer Steuerbelastung — als Orientierung, nicht als Steuerberatung. Sie können Abzüge ausprobieren und sehen, wie sich Ihre Situation verändert." data-du="Diese Übersicht zeigt dir eine grobe Einschätzung deiner Steuerbelastung — als Orientierung, nicht als Steuerberatung. Du kannst Abzüge ausprobieren und sehen, wie sich deine Situation verändert."></p>
+          </div>
+          <div class="held stufe s2" id="j-ergebnis">
+            <div class="lage" id="st-lage"><span>Kanton Zürich</span><span>Ledig</span><span>0 Kinder</span><span>Grundtarif</span></div>
+            <div id="st-mit-kanton">
+              <div class="etikett">Geschätzte Gesamtsteuer</div>
+              <div class="st-gross anzeige">~ CHF 8’431</div>
+              <div class="st-balken" aria-hidden="true"><i style="width:11.6%;background:var(--sage)"></i><i style="width:88.4%;background:var(--finanzen)"></i></div>
+              <div class="st-teile">
+                <div><span><i class="punkt" style="background:var(--sage)"></i><button class="begriff" data-erklaerung="st-bund-erkl">Bundessteuer<sup>ⓘ</sup></button> ~1.31%<small>Tarif: Grundtarif · Grenzsteuersatz: 2.97%</small></span><b>~ CHF 977</b></div>
+                <div><span><i class="punkt" style="background:var(--finanzen)"></i>Kantons- und Gemeindesteuer (Zürich)<span class="st-marke">Grobe Schätzung</span></span><b>~ CHF 7’454</b></div>
+              </div>
+              <p class="erklaerung" id="st-bund-erkl">Die direkte Bundessteuer (DBG Art. 36) geht an den Bund. Kanton und Gemeinde erheben ihre eigene Steuer.</p>
+              <p class="unter">Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.</p>
+              <div class="st-zeile" style="border-bottom:0;margin-top:6px"><span>Nettoeinkommen (Jahres-Schätzung)</span><b>CHF 65’969</b></div>
+            </div>
+            <div id="st-ohne-kanton" hidden>
+              <div class="st-teile">
+                <div><span><i class="punkt" style="background:var(--sage)"></i>Bundessteuer ~1.31%<small>Tarif: Grundtarif · Grenzsteuersatz: 2.97%</small></span><b>~ CHF 977</b></div>
+              </div>
+              <p class="unter" style="margin-top:12px" data-sie="Wählen Sie einen Kanton, um die kantonale Steuerbelastung zu sehen." data-du="Wähle einen Kanton, um die kantonale Steuerbelastung zu sehen."></p>
+              <div class="st-zeile" style="border-bottom:0;margin-top:6px"><span>Nettoeinkommen (Jahres-Schätzung)<small style="display:block;color:var(--soft);font-size:12px">Nur die Bundessteuer ist abgezogen — die Kantons- und Gemeindesteuer fehlt in dieser Zahl.</small></span><b>CHF 73’423</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="rechtsspalte stufe s3">
+          <div class="abschnittanzeige" data-offen="false"><button class="kopfzeile" aria-expanded="false"><span>Abschnitt: <b class="abschnitt-name">Eingaben</b></span><span class="plus" aria-hidden="true">+</span></button>
+            <ol><li><a href="#j-ergebnis" class="jetzt">Geschätzte Gesamtsteuer</a></li><li><a href="#j-eingaben">Eingaben</a></li><li><a href="#j-berechnung">Berechnung</a></li><li><a href="#j-zivilstand">Zivilstand im Vergleich</a></li><li><a href="#j-quelle">Datenstand · Offizielle Stelle &amp; Antrag</a></li></ol></div>
+          <details open id="j-eingaben"><summary>Eingaben</summary>
+            <div class="st-feld"><label for="st-kanton">Steuerkanton</label><select id="st-kanton"><option value="">— Auswählen —</option><option value="ZH" selected>ZH</option><option>BE</option><option>BS</option><option>GE</option></select></div>
+            <label class="st-feld" style="justify-content:flex-start;gap:12px"><input type="checkbox" style="width:22px;min-height:22px"><span>Verheiratet oder in eingetragener Partnerschaft</span></label>
+            <div class="st-feld"><label for="st-kinder">Kinder</label><select id="st-kinder"><option>0</option><option>1</option><option>2</option><option>3</option></select></div>
+            <div class="st-feld"><span data-sie="Ihr eigener Nettolohn pro Jahr" data-du="Dein eigener Nettolohn pro Jahr"></span><b>CHF 74’400</b></div>
+            <p class="fuss" style="margin-top:6px"><span data-sie="Hochrechnung aus Ihrem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen." data-du="Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen."></span> Begriffe: <button class="begriff">BVG<sup>ⓘ</sup></button> <button class="begriff">AHV<sup>ⓘ</sup></button> <button class="begriff">Nettolohn<sup>ⓘ</sup></button></p>
+            <div class="st-feld"><label for="st-steuerbar">Steuerbares Einkommen (optional)</label><input id="st-steuerbar" type="number" placeholder="z.B. 65 000"></div>
+            <p class="fuss" style="margin-top:6px">Begriffe: <button class="begriff">Bundessteuer<sup>ⓘ</sup></button> <button class="begriff">Veranlagung<sup>ⓘ</sup></button></p>
+            <div class="st-feld"><label>Berufskosten<small>Max: CHF 5’000</small></label><input type="number" value="0"></div>
+            <div class="st-feld"><label>Altersvorsorge 3. Säule<small>Max: CHF 7’258</small></label><input type="number" value="0"></div>
+            <div class="st-feld"><label>Schuldzinsen<small>Max: CHF 50’000</small></label><input type="number" value="0"></div>
+            <div class="st-feld"><label>Unterhaltsleistungen<small>Max: CHF 50’000</small></label><input type="number" value="0"></div>
+            <div class="st-feld"><label>Fortbildung<small>Max: CHF 10’000</small></label><input type="number" value="0"></div>
+            <div class="st-feld" style="border-bottom:0"><label>Sonstige Abzüge<small>Max: CHF 10’000</small></label><input type="number" value="0"></div>
+          </details>
+          <details id="j-berechnung"><summary>Berechnung</summary>
+            <div class="st-zeile"><span data-sie="Ihr eigener Nettolohn pro Jahr" data-du="Dein eigener Nettolohn pro Jahr"></span><span>CHF 74’400</span></div>
+            <div class="st-zeile"><span>Total (-)</span><span>- CHF 4’032</span></div>
+            <div class="st-zeile"><span>Steuerbares Einkommen (geschätzt nach den Standardabzügen der ESTV)</span><b>CHF 70’368</b></div>
+            <p class="fuss" data-sie="Nettolohn abzüglich der Standardabzüge, die der Steuerrechner der ESTV verwendet: Berufsauslagen (3 %, mindestens CHF 2 000, höchstens CHF 4 000 — oder Ihre erfassten Berufskosten), Versicherungsabzug, Abzug für Verheiratete und für Kinder, dazu Ihre erfassten Abzüge. Mit diesem Wert rechnet Maloja die Bundessteuer und liest die Kantons- und Gemeindesteuer." data-du="Nettolohn abzüglich der Standardabzüge, die der Steuerrechner der ESTV verwendet: Berufsauslagen (3 %, mindestens CHF 2 000, höchstens CHF 4 000 — oder deine erfassten Berufskosten), Versicherungsabzug, Abzug für Verheiratete und für Kinder, dazu deine erfassten Abzüge. Mit diesem Wert rechnet Maloja die Bundessteuer und liest die Kantons- und Gemeindesteuer."></p>
+            <p class="fuss" data-sie="Ohne 13. Monatslohn gerechnet — falls Sie einen erhalten, liegt die Steuer höher. Angeben lässt sich das im Kapitel «Finanzen & Geld»." data-du="Ohne 13. Monatslohn gerechnet — falls du einen erhältst, liegt die Steuer höher. Angeben lässt sich das im Kapitel «Finanzen & Geld»."></p>
+            <p class="fuss">Orientierungswert aus Messpunkten des Steuerrechners der ESTV (Steuerjahr 2026): Hauptort des Kantons, ohne Kirchensteuer; in anderen Gemeinden kann die Steuer deutlich abweichen.</p>
+          </details>
+          <div class="weiter" id="j-zivilstand">
+            <h4>Zivilstand im Vergleich</h4>
+            <p class="unter" data-sie="Tippen Sie eine Säule an, um den Zivilstand auszuprobieren." data-du="Tippe eine Säule an, um den Zivilstand auszuprobieren."></p>
+            <div class="st-saeulen">
+              <button aria-pressed="true"><b>CHF 977</b><i style="height:85%"></i>Ledig</button>
+              <button aria-pressed="false"><b>CHF 524</b><i style="height:46%"></i>Verheiratet, gemeinsam</button>
+              <button class="offen" disabled><b>–</b><i></i>Verheiratet, einzeln</button>
+            </div>
+            <p class="unter">Verheiratet gemeinsam: rund CHF 453 weniger als ledig.</p>
+            <p class="fuss">Bei zwei Einkommen im selben Haushalt kann sich das Bild verschieben.<br>Verheiratet, einzeln (Individualbesteuerung): am 8. März 2026 angenommen, soll 2032 in Kraft treten (Entscheid des Bundesrats vom 19. August 2026). Sobald der neue Tarif gilt, kommt hier eine belegte Zahl.<br>Nur direkte Bundessteuer (DBG Art. 36). Kanton und Gemeinde sind hier nicht enthalten.<br>Je Zivilstand mit den passenden Abzügen gerechnet — steuerbares Einkommen ledig CHF 70’368, verheiratet CHF 65’668 (Alleinverdiener-Ehepaar, mit Verheiratetenabzug und höherem Versicherungsabzug).</p>
+            <div class="knoepfe"><button class="knopfprim" data-meldung="Übernommen — nur für jetzt, nicht dauerhaft gespeichert.">Daten speichern</button></div>
+            <div style="margin-top:14px"><a class="verweis" href="#k"><span class="sym k" data-icon="finanzen" style="--licht: var(--finanzen)"></span><span>Finanz-Übersicht<small>Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.</small></span><span class="pfeil">›</span></a><a class="verweis" href="#"><span class="sym k" data-icon="behoerden" style="--licht: var(--behoerden)"></span><span>Steuerfristverlängerung</span><span class="pfeil">›</span></a></div>
+          </div>
+          <details id="j-stelle"><summary>Offizielle Stelle &amp; Antrag</summary><p><a href="#" style="color:var(--sand)">Steuerrechner ↗</a><br><small style="color:var(--mid)">Steuerbelastung berechnen (ESTV) · swisstaxcalculator.estv.admin.ch</small></p><p>Antragsstelle: Kantonales Steueramt</p><p><a href="#" style="color:var(--sand)" data-sie="Ihr Kanton: Zürich — Steuererklärung online ↗" data-du="Dein Kanton: Zürich — Steuererklärung online ↗"></a></p></details>
+          <p class="fuss" id="j-quelle"><span data-sie="Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge finden Sie bei Ihrer kantonalen Steuerverwaltung." data-du="Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge findest du bei deiner kantonalen Steuerverwaltung."></span><br>Bundessteuer: DBG Art. 36, Datenstand: 2026<br>Kantons- und Gemeindesteuer: Datenstand: Tabelle aus dem Steuerrechner der ESTV, Steuerjahr 2026, abgerufen am 16.09.2026</p>
+          <div class="vertrauen" style="justify-content:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Daten bleiben auf diesem Gerät." data-du="Deine Daten bleiben auf diesem Gerät."></span></div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="anspruch"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Reihenfolge umgedreht:</b> heute Eingaben → Berechnung → Ergebnis; hier Ergebnis → Eingaben → Berechnung. Wer nur wissen will «ungefähr wie viel?», sieht es sofort. Wer probieren will, findet die Felder gleich darunter.</li>
+    <li><b>Ein Balken statt drei Kästen:</b> heute stehen Bundessteuer, Kantons-/Gemeindesteuer und Gesamtsteuer in drei Kästen untereinander. Hier eine Zahl gross, darunter ein Balken (Bund 11.6 % in Salbeigrün, Kanton/Gemeinde 88.4 % in der Finanzen-Farbe) und die zwei Teile. «Grobe Schätzung» bleibt als Marke bei Kanton/Gemeinde.</li>
+    <li>Die Glossar-Knöpfe (BVG, AHV, Nettolohn, Bundessteuer, Veranlagung) bleiben. Heute steht «Veranlagung ⓘ» zweimal hintereinander, hier einmal. Der Erklärsatz zu «Bundessteuer ⓘ» oben ist ein Platzhalter (Copy-Prüfer). In der App kommt der Text aus dem Glossar.</li>
+    <li><b>Zustände (Schalter oben):</b> «Kanton fehlt» zeigt, was die App heute ohne Kanton zeigt: nur Bundessteuer, den Satz «Wählen Sie einen Kanton …» und das Nettoeinkommen mit dem Hinweis, dass Kanton/Gemeinde fehlen. Weitere Fälle aus dem Code, die Maria nicht sieht: Elterntarif (ledig mit Kindern), Wohnkanton-Frage, «steuerbares Einkommen als Basis», Einkommen ausserhalb der Tabelle (<code>tax.bandOutside</code>), Hinweise bei Bruttolohn, Rente, Selbständigkeit, Konkubinat. Sie bleiben im Bau wie heute.</li>
+    <li><b>Befund App:</b> Der Untertitel «Bundessteuer berechnen» im Menü und auf der Übersicht ist veraltet. Die Seite rechnet Bund, Kanton und Gemeinde. Vorschlag für den Copy-Prüfer: «Steuern grob abschätzen» o. ä.</li>
+  </ul></div>
+</section>
+
 <script>
   const root = document.documentElement;
   root.dataset.theme = 'dark';
@@ -1327,6 +1445,21 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   }));
   document.querySelectorAll('[data-modus], [data-anrede], #grau, #still').forEach((b) => b.addEventListener('click', () => setTimeout(einstSync)));
   einstSync();
+
+  // ---------- J · Steuern: Zustand «Kanton fehlt» und Zivilstand-Säulen ----------
+  const stLage = (lage) => {
+    const ohne = lage === 'ohnekanton';
+    document.getElementById('st-mit-kanton').hidden = ohne;
+    document.getElementById('st-ohne-kanton').hidden = !ohne;
+    document.getElementById('st-kanton').value = ohne ? '' : 'ZH';
+    document.querySelector('#st-lage span').textContent = ohne ? 'Kein Kanton' : 'Kanton Zürich';
+  };
+  gruppe('[data-stlage]', (b) => stLage(b.dataset.stlage));
+  document.getElementById('st-kanton').addEventListener('change', (e) => {
+    const lage = e.target.value ? 'maria' : 'ohnekanton';
+    document.querySelector(`[data-stlage="${lage}"]`).click();
+  });
+  document.querySelectorAll('.st-saeulen button:not(.offen)').forEach((b) => b.addEventListener('click', () => document.querySelectorAll('.st-saeulen button:not(.offen)').forEach((x) => x.setAttribute('aria-pressed', x === b))));
 
   // ---------- Glossar ----------
   document.querySelectorAll('.begriff').forEach((b) => { b.setAttribute('aria-expanded', 'false'); b.addEventListener('click', (e) => { e.stopPropagation(); const p = document.getElementById(b.dataset.erklaerung); const an = !p.classList.contains('offen'); p.classList.toggle('offen', an); b.setAttribute('aria-expanded', an); }); });
@@ -1764,16 +1897,21 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     const k = a.querySelector('.kopfzeile');
     k.onclick = () => { const o = a.dataset.offen !== 'true'; a.dataset.offen = o; k.setAttribute('aria-expanded', o); };
     a.querySelectorAll('ol a').forEach((l) => l.onclick = (e) => {
-      e.preventDefault(); const z = document.getElementById(l.getAttribute('href').slice(1)) || document.querySelector('[data-seite="b"] .held');
+      e.preventDefault(); const z = document.getElementById(l.getAttribute('href').slice(1)) || a.closest('.geraet').querySelector('.held');
       a.dataset.offen = false; k.setAttribute('aria-expanded', false);
       z.scrollIntoView({ behavior: document.body.classList.contains('still') ? 'auto' : 'smooth', block: 'start' });
     });
-    const ziele = ['b-anspruch', 'b-weiter', 'b-quelle'].map((id) => document.getElementById(id));
-    const namen = { 'b-anspruch': 'Anspruch & Aufenthaltsbewilligung', 'b-weiter': anrede === 'du' ? 'Dein IPV-Weg' : 'Ihr IPV-Weg', 'b-quelle': 'Berechnungsgrundlage' };
+    // Ziele aus der eigenen Liste (ohne den ersten Eintrag = Ergebnis oben). Beim IPV-Rechner gelten die
+    // bisherigen Kurznamen; sonst steht der Text des Listeneintrags (vor einem «·») in der Kopfzeile.
+    const links = [...a.querySelectorAll('ol a')].slice(1);
+    const ziele = links.map((l) => document.getElementById(l.getAttribute('href').slice(1))).filter(Boolean);
+    const ipvNamen = { 'b-anspruch': 'Anspruch & Aufenthaltsbewilligung', 'b-weiter': anrede === 'du' ? 'Dein IPV-Weg' : 'Ihr IPV-Weg', 'b-quelle': 'Berechnungsgrundlage' };
+    const name = (z) => ipvNamen[z.id] || links.find((l) => l.getAttribute('href') === '#' + z.id).textContent.split(' · ')[0];
     addEventListener('scroll', () => {
+      if (!ziele.length) return;
       let jetzt = ziele[0];
       ziele.forEach((z) => { if (z.getBoundingClientRect().top < innerHeight * 0.45) jetzt = z; });
-      a.querySelector('.abschnitt-name').textContent = namen[jetzt.id];
+      a.querySelector('.abschnitt-name').textContent = name(jetzt);
       a.querySelectorAll('ol a').forEach((l) => l.classList.toggle('jetzt', l.getAttribute('href') === '#' + jetzt.id));
     }, { passive: true });
   });
