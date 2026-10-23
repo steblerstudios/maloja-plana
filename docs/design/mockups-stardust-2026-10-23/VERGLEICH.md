@@ -417,6 +417,23 @@ Neu für den Copy-Prüfer: «Vorlesen» statt «Vorlesen ein/aus» und «Backup 
   > ⟨korrigiert, Sophie 23.10. abends⟩ «steuern sry da bin ich doch noch nicht sicher». **Es gilt nur Einstellungen (I).** Steuern (J) ist wieder offen.
 - **Finanz-Übersicht (K):** keine Rückmeldung, bleibt offen.
 
+### Steuern (J) · entschieden (Sophie, 24.10.2026)
+
+- **Entwurf J passt: Ergebnis zuerst** — geschätzte Gesamtsteuer gross, Balken Bund / Kanton-Gemeinde, die
+  zwei Teile, Nettoeinkommen; darunter die Eingaben (aufgeklappt), Berechnung (zugeklappt), Zivilstand im
+  Vergleich, Datenstand, offizielle Stelle, Querlinks. «Veranlagung ⓘ» nur einmal. Alle 84 Bausteine bleiben.
+- **«Max» nur, wo das Gesetz eine Grenze setzt.** Grund: Fachprüfung 24.10. (`_werkbank/gesamtbericht-2026-10/
+  _bericht/GESAMTBERICHT.md`) — `TaxCalculator.jsx:83-89` nennt Grenzen ohne Grundlage: Unterhaltsbeiträge
+  unbegrenzt abziehbar, Schuldzinsen = Vermögensertrag + 50'000 (DBG 33 Abs. 1 lit. a), «übrige» 10'000 ohne
+  Quelle; Fortbildung «Max 10'000» widerspricht `de.js:1543` «bis 13'000» (DBG 33 Abs. 1 lit. j). Vor dem Bau
+  jede verbleibende Grenze mit dem `swiss-precision-pruefer` belegen; 3a-Feld an den Höchstbetrag binden
+  (heute ohne Obergrenze → zu tiefes Ergebnis).
+- **Untertitel nicht mehr «Bundessteuer berechnen»** (`nav.sub.taxes`, 5 Sprachen) — die Seite rechnet Bund,
+  Kanton und Gemeinde. Neuer Text geht an den Copy-Prüfer; gilt auch in Menü, Übersicht und Suche.
+- Beim Bau mitnehmen (Code-Review 24.10.): `TaxCalculator` braucht `key: datenModus` (`main.jsx:1633`), sonst
+  landen Beispieldaten nach «Beispiel verlassen» + «Speichern» im echten Profil.
+- Bedingte Teile (Wohnkanton-Frage, Elterntarif, Hinweise ohne Zahl, `tax.bandOutside` …) bleiben wie heute.
+
 ---
 
 ## Runde 3 · Anker unten: Rucksack, Anspruch, Suche (23.10.2026 abends, L, M und N entschieden 24.10.)
