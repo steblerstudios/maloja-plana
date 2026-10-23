@@ -1,5 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { ahvWerte, lohnWerte } from './data/ahvRechner.js';
+import { zahl } from './utils/geld.js';
 
 // Lehre beginnen — was dazugehört — geführter Ablauf, gebaut 25.09.2026 auf Wunsch von Stebler Studios.
 // Inhalt aus der Fachprüfung (swiss-precision) vom 25.09.2026, jede Aussage am Gesetzeswortlaut
@@ -8,6 +10,10 @@ import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } f
 
 export const Lehre = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
+  // BVG-Eintrittsschwelle und maximale AHV-Rente aus den Jahrestabellen, je mit ihrem eigenen Jahr
+  // («Stand {jahr}») — bis 22.10.2026 standen «22 680» und «2 520 … Stand 2026» fest im Text.
+  const lohn = lohnWerte();
+  const ahv = ahvWerte();
   return React.createElement(AblaufContainer, {
     palette, icon: 'lebenslauf',
     title: t('lehre.title'),
@@ -28,14 +34,14 @@ export const Lehre = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('lehre.step3Text'))
     ),
     React.createElement(AblaufStep, { palette, title: t('lehre.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('lehre.step4Text')),
+      React.createElement('p', { style: s.stepText }, t('lehre.step4Text', { schwelle: zahl(lohn.eintrittsschwelle), jahr: lohn.jahr })),
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('lehre.step4Unfall')),
       React.createElement('p', { style: { ...s.stepText, marginTop: '8px' } }, t('lehre.step4Steuern')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('lehre.step4Link'), onClick: () => onNavigate('tax') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('lehre.step4LinkUk'), onClick: () => onNavigate('unfallkrankheit') })
     ),
     React.createElement(AblaufStep, { palette, title: t('lehre.step5Title') },
-      React.createElement('p', { style: s.stepText }, t('lehre.step5Text')),
+      React.createElement('p', { style: s.stepText }, t('lehre.step5Text', { maxRente: zahl(ahv.maxRente), jahr: ahv.jahr })),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('lehre.step5LinkStip'), onClick: () => onNavigate('stipendien') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('lehre.step5LinkIpv'), onClick: () => onNavigate('premium') })
     ),
