@@ -196,7 +196,11 @@ export const EO_QUELLE_JE_JAHR = Object.freeze({
   2026: Object.freeze({ quelle: 'EOG Art. 16a–16x, EOMV, BSV 2026' }),
   2027: Object.freeze({ quelle: 'EOG Art. 16a–16x, EOMV, V vom 2.10.2026 Art. 7 (AS 2026 542), BSV 2027' }),
 });
-const EO_HEUTE = werteFuerStichtag(EO_QUELLE_JE_JAHR);
+// Quelle für ein Datum (Standard: heute), samt `jahr` für die Anzeige «Stand {jahr}».
+export function eoWerte(stichtag) {
+  return werteFuerStichtag(EO_QUELLE_JE_JAHR, stichtag);
+}
+const EO_HEUTE = eoWerte();
 export const EO_DATA_VERSION = String(EO_HEUTE.jahr);
 export const EO_DATA_SOURCE = EO_HEUTE.quelle;
 

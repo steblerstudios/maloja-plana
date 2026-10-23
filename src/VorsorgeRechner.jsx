@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
-import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, volleBeitragsdauer, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
+import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, volleBeitragsdauer, AHV_PARAMS, ahvWerte, lohnWerte, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -148,6 +148,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const LE_DEFAULT = { female: 88, male: 85, diverse: 86 };
   const [lebenserwartung, setLebenserwartung] = useState(() => String(LE_DEFAULT[data.basis?.gender] || 86));
   const parsedLE = Math.max(70, Math.min(105, Number(lebenserwartung) || 86));
+
+  // Die Werte, mit denen die Rechner ohne Stichtag rechnen (heute), samt ihrem Jahr. Angezeigt als
+  // «Stand {jahr}»: läuft die Tabelle aus (2028 ohne Nachtrag), steht sichtbar das Jahr der Werte da,
+  // nicht still das laufende (Übergabe Werte 2027, Befund 2, 22.10.2026).
+  const ahvWerteHeute = ahvWerte();
+  const lohnWerteHeute = lohnWerte();
 
   // Aus dem nachgestellten IK-Auszug abgeleitete Kennzahlen (nur wenn aktiv + Einträge).
   const ikResult = useMemo(
@@ -590,7 +596,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           t('vr.plafoniert') + ': CHF ' + fmt(ahvResult.totalEhepaar) + ' / ' + t('vr.monat') + ' (' + t('vr.ehepaar') + ')'
         ),
         React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.mid, fontSize: text.xs } },
-          t('vr.minMax') + ': CHF ' + fmt(AHV_PARAMS.minRente) + ' – ' + fmt(AHV_PARAMS.maxRente) + ' / ' + t('vr.monat')
+          t('vr.minMax') + ': CHF ' + fmt(ahvWerteHeute.minRente) + ' – ' + fmt(ahvWerteHeute.maxRente) + ' / ' + t('vr.monat') + ' (' + t('vr.stand', { jahr: ahvWerteHeute.jahr }) + ')'
         )
       )
     ),
@@ -638,7 +644,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         )
       ),
       bvgResult && !bvgResult.versichert && React.createElement('div', { style: { ...s.section, color: palette.goldDeep } },
-        t('vr.bvgNichtVersichert') + ' (< CHF ' + fmt(BVG_PARAMS.eintrittsschwelle) + ')'
+        t('vr.bvgNichtVersichert') + ' (' + t('vr.bvgSchwelle', { schwelle: lohnWerteHeute.eintrittsschwelle, jahr: lohnWerteHeute.jahr }) + ')'
       ),
       !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt'))
     ),
@@ -1141,7 +1147,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'] }),
 
     React.createElement('div', { style: s.source },
-      renderSource(t('vr.source'), null, t)
+      renderSource(t('vr.source', { jahr: ahvWerteHeute.jahr }) + (ahvWerteHeute.verordnung ? ' ' + t('common.betraegeVerordnung', { jahr: ahvWerteHeute.jahr, ...ahvWerteHeute.verordnung }) : ''), null, t)
     ),
 
     onNavigate && React.createElement('button', {

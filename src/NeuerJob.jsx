@@ -1,6 +1,8 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage, plusMonate } from './utils/fristen.js';
+import { lohnWerte } from './data/lohnAbzuege.js';
+import { zahl } from './utils/geld.js';
 
 // Neuer Job — der 5. geführte Ablauf auf der Schale. Ruhige Orientierung über die
 // Zusammenhänge eines Stellenantritts: Vertrag, Pensionskasse, Unfall/KTG, Steuern,
@@ -28,9 +30,10 @@ export const NeuerJob = ({ palette, t, chapters, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('neuerJob.step1LinkAblage'), onClick: () => onNavigate('tresor', undefined, 'finanzen') })
     ),
 
-    // Schritt 2 — Pensionskasse (BVG)
+    // Schritt 2 — Pensionskasse (BVG). Die Eintrittsschwelle aus der Jahrestabelle, damit der Text
+    // am 1.1. mit der Rechnung umschaltet (bis 22.10.2026 stand «22 680» fest im Text).
     React.createElement(AblaufStep, { palette, title: t('neuerJob.step2Title') },
-      React.createElement('p', { style: s.stepText }, t('neuerJob.step2Text'))
+      React.createElement('p', { style: s.stepText }, t('neuerJob.step2Text', { schwelle: zahl(lohnWerte().eintrittsschwelle) }))
     ),
 
     // Schritt 3 — Unfall & Krankentaggeld
