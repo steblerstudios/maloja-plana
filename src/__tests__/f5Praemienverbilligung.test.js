@@ -84,7 +84,7 @@ describe('tagInEinemJahr — dieselbe Rechnung wie vorher fürs Kalender-Angebot
   it('ohne Datum: heute + 1 Jahr (lokaler Tag, kein UTC-Sprung)', () => {
     expect(tagInEinemJahr(null, new Date(2026, 9, 23, 23, 30))).toBe('2027-10-23');
   });
-  it('29. Februar → 1. März im Folgejahr (wie setFullYear)', () => expect(tagInEinemJahr('2028-02-29')).toBe('2029-03-01'));
+  it('29. Februar → 28. Februar im Folgejahr (wie beim Abhaken)', () => expect(tagInEinemJahr('2028-02-29')).toBe('2029-02-28'));
 });
 
 describe('ipvErinnerung — der Merkpunkt', () => {
