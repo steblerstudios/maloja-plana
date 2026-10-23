@@ -3,8 +3,10 @@
 // Gezählt wird wie für die volle Beitragsdauer: ab dem 1. Januar nach dem 20. Geburtstag bis zum
 // 31. Dezember vor dem Rentenbeginn (BSV-Merkblatt 3.01, Stand 1.1.2026, Ziff. 12). Bei einem
 // Bezug mit vollen Jahren ist das unabhängig vom Geburtsmonat genau «Bezugsalter − 21»: Bezug
-// mit 63 → 42 Jahre, mit 65 → 44. Darum ergibt ein Vorbezug eine Teilrente («während des
-// Vorbezugs in der Regel eine Teilrente», Ziff. 13).
+// mit 63 → 42 Jahre, mit 65 → 44. Darum ergibt ein Vorbezug eine Teilrente — aber nur bis zum
+// Referenzalter («während des Vorbezugs in der Regel eine Teilrente», Ziff. 13). Dann wird die
+// Rente mit den Jahren des Vorbezugs neu berechnet, der Kürzungsbetrag bleibt (Merkblatt 3.04,
+// Stand 1.1.2026, Ziff. 5): angenommeneBeitragsjahre(referenzalter, referenzalter).
 //
 // Ab dem Referenzalter gilt die Beitragsdauer als vollständig (höchstens 44). So bleibt die
 // Annahme auch für Frauen der Übergangsjahrgänge (Referenzalter 64 J 3/6/9 M) eine Vollrente,
