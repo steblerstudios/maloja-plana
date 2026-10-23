@@ -230,7 +230,18 @@ body.still .leer .bild svg { animation: none; }
 [data-seite="d"] .reiter2 button[aria-selected="true"] { border-bottom-color: var(--basis); }
 .dok { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); min-height: 64px; }
 .dok small { display: block; color: var(--soft); font-size: 12px; }
-.dok .mehr { margin-left: auto; background: none; border: 0; color: var(--mid); width: 44px; height: 44px; border-radius: 10px; cursor: pointer; }
+.dok { align-items: flex-start; }
+.dok .sym { margin-top: 2px; }
+.dok-text { flex: 1; min-width: 0; }
+.dok-text small:first-of-type { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }  /* nur der Dateiname wird gekürzt */
+.dok .status-ok { color: var(--sage); }
+.dok .status-bald { color: var(--gold); }
+.dok .status-abgelaufen { color: var(--mid); }
+.dok-knoepfe { display: flex; flex-shrink: 0; margin-right: -10px; }
+.dok-knopf { background: none; border: 0; color: var(--mid); width: 40px; height: 44px; border-radius: 10px; cursor: pointer; display: grid; place-items: center; }
+.dok-ablauf { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.dok-ablauf input { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 14px; min-height: 44px; padding: 0 8px; }
+.dok-ablauf .knopfprim, .dok-ablauf .knopfruhig { padding: 8px 14px; }
 .hinweisfrist { color: var(--gold); }
 .vertrauen { display: flex; gap: 10px; align-items: center; justify-content: center; font-size: 13px; color: var(--mid); margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
 
@@ -766,7 +777,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <!-- ===================== D · Ablage ===================== -->
 <section class="abschnitt" id="d">
   <h2>D · Ablage — «Dokumentenablage»</h2>
-  <p class="warum">Leer: ein ruhiges Bild und drei Starts. Gefüllt: eine Übersichtszeile statt drei Zähler, Suche erst ab Inhalt. Löschen fragt nach, weil die Datei danach nicht mehr auf dem Gerät ist (Entscheid «C», §15). <b>Fassung 5:</b> die Reiter «Aktiv / Archiv» mit Zahl, «Sortieren nach» (Nach Ablauf, Nach Datum, Name (A-Z)) und der Ordner-Satz der App («Ihr Ordner ist bereit.», «Ein guter Anfang.» …) statt eines erfundenen Untertitels.</p>
+  <p class="warum">Leer: ein ruhiges Bild und drei Starts. Gefüllt: eine Übersichtszeile statt drei Zähler, Suche erst ab Inhalt. Löschen fragt nach, weil die Datei danach nicht mehr auf dem Gerät ist (Entscheid «C», §15). <b>Fassung 5, entschieden 23.10.:</b> drei Zähler wie heute («Aktiv · Bald fällig · Archiv»), aber erst mit Inhalt; Suche und «Sortieren nach» ebenfalls erst mit Inhalt; die Zeile pro Dokument mit den App-Texten («Hochgeladen: … · Grösse», «gültig / 54d / Abgelaufen · Ablauf: …») und Ablaufdatum zum Ändern; die drei Vorschläge bleiben.</p>
   <div class="leiste zustaende" role="group" aria-label="Zustand der Ablage">
     <button class="pill" data-ablage="leer" aria-pressed="true">Leer</button>
     <button class="pill" data-ablage="voll" aria-pressed="false">Mit Dokumenten</button>
@@ -806,7 +817,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           </div>
           <div id="ablage-voll" hidden>
             <div class="uebersichtzeile"><b>3 Dokumente</b> · 1 läuft bald ab · zuletzt gesichert 2. Okt.</div>
-            <div class="reiter2" role="tablist" aria-label="Aktiv oder Archiv"><button role="tab" aria-selected="true" data-fach="aktiv"><span id="zahl-aktiv">3</span> Aktiv</button><button role="tab" aria-selected="false" data-fach="archiv"><span id="zahl-archiv">1</span> Archiv</button></div>
+            <div class="reiter2" role="tablist" aria-label="Aktiv, bald fällig oder Archiv"><button role="tab" aria-selected="true" data-fach="aktiv"><span id="zahl-aktiv">3</span> Aktiv</button><button role="tab" aria-selected="false" data-fach="bald"><span id="zahl-bald">1</span> Bald fällig</button><button role="tab" aria-selected="false" data-fach="archiv"><span id="zahl-archiv">1</span> Archiv</button></div>
             <div class="ablage-werkzeug">
               <input class="suche" type="search" placeholder="Suchen..." aria-label="Suchen">
               <label class="sortieren"><span>Sortieren nach</span><select id="ablage-sort"><option value="ablauf">Nach Ablauf</option><option value="datum">Nach Datum</option><option value="name">Name (A-Z)</option></select></label>
@@ -829,7 +840,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     <li>«Was oft zuerst hineingehört», die drei Vorschläge und die Dokumente im gefüllten Zustand sind neue Platzhalter-Texte — vor dem Bau durch den Copy-Prüfer.</li>
     <li>Löschen: hier mit Nachfrage, weil die Datei danach weg ist. In Listen wie der Merkliste gilt dagegen «sofort weg, Entfernt · Rückgängig» — beides wie in §15 vorgeschlagen.</li>
     <li>«Läuft bald ab» steht in Gold, nicht in Rot: ein Hinweis, keine Warnung.</li>
-    <li>Reiter und Sortierung erscheinen bewusst erst mit Inhalt; heute stehen sie auch beim leeren Ordner («0 Aktiv · 0 Archiv»). Texte wörtlich aus <code>de.js</code> (tresor.*), der Satz wechselt mit der Anzahl wie in <code>DocumentTresor.jsx</code>.</li>
+    <li>Wie in <code>DocumentTresor.jsx</code>: Archiv = abgelaufen, «Bald fällig» = weniger als 90 Tage bis zum Ablauf, Status «{Tage}d» wörtlich. Abgelaufen steht in Grau statt in Rot (heute <code>roseDeep</code>). Neu und für den Copy-Prüfer: «Was oft zuerst hineingehört» mit den drei Vorschlägen und der Lösch-Dialog (heute löscht die App ohne Nachfrage; Entscheid «C», §15).</li>
   </ul></div>
 </section>
 
@@ -1185,33 +1196,52 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   }
 
   // ---------- D · Ablage ----------
-  // datum = hochgeladen, ablauf = Ablaufdatum (für «Nach Ablauf»); archiv wie der Reiter «Archiv» der App
-  let DOKS = [
-    { name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen', datum: '2026-10-01', ablauf: '9999' },
-    { name: 'Lohnausweis 2025', wo: 'Finanzen & Geld · 12. Feb. 2026', icon: 'finanzen', licht: 'finanzen', datum: '2026-02-12', ablauf: '9999' },
-    { name: 'Pass', wo: 'Persönliche Basis · läuft im März 2027 ab', icon: 'basis', licht: 'basis', bald: true, datum: '2025-06-03', ablauf: '2027-03' },
-    // Archiv heisst in der App: abgelaufen (DocumentTresor.jsx, getDaysUntilExpiry < 0)
-    { name: 'Identitätskarte', wo: 'Persönliche Basis · Abgelaufen · Ablauf: 14.08.2026', icon: 'basis', licht: 'basis', datum: '2016-08-14', ablauf: '2026-08-14', archiv: true },
+  // Wie DocumentTresor.jsx: Archiv = abgelaufen, «Bald fällig» = aktiv und weniger als 90 Tage bis zum Ablauf.
+  // Zeile wie renderDocCard: Typ, Dateiname, «Hochgeladen: {date} · {size}», «{Status} · Ablauf: {date}».
+  const HEUTE_ABLAGE = new Date(2026, 9, 23);
+  const tageBisAblauf = (iso) => { const [j, m, t] = iso.split('-').map(Number); return Math.ceil((new Date(j, m - 1, t) - HEUTE_ABLAGE) / 864e5); };
+  const chDatum = (iso) => iso.split('-').reverse().join('.');
+  const DOKS_START = [  // Platzhalter
+    { name: 'Mietvertrag', datei: 'mietvertrag-langstrasse.pdf', icon: 'wohnen', datum: '2026-10-01', groesse: '1.2 MB', ablauf: '2031-09-30' },
+    { name: 'Lohnausweis 2025', datei: 'lohnausweis-2025.pdf', icon: 'finanzen', datum: '2026-02-12', groesse: '210 KB', ablauf: '2035-12-31' },
+    { name: 'Pass', datei: 'pass-scan.jpg', icon: 'basis', datum: '2025-06-03', groesse: '840 KB', ablauf: '2026-12-15' },
+    { name: 'Identitätskarte', datei: 'identitaetskarte.jpg', icon: 'basis', datum: '2016-08-14', groesse: '690 KB', ablauf: '2026-08-14' },
   ];
-  let ablageFach = 'aktiv';
+  let DOKS = DOKS_START.map((d) => ({ ...d }));
+  let ablageFach = 'aktiv', ablaufBearbeiten = -1;
+  const dokStatus = (d) => { const n = tageBisAblauf(d.ablauf); return n < 0 ? ['abgelaufen', 'Abgelaufen'] : n < 90 ? ['bald', n + 'd'] : ['ok', 'gültig']; };
   function dokliste() {
     const l = document.getElementById('dokliste');
     const q = document.querySelector('#ablage-voll .suche').value.trim().toLowerCase();
     const sort = document.getElementById('ablage-sort').value;
-    const aktiv = DOKS.filter((d) => !d.archiv);
+    const aktiv = DOKS.filter((d) => tageBisAblauf(d.ablauf) >= 0), bald = aktiv.filter((d) => tageBisAblauf(d.ablauf) < 90);
     document.getElementById('zahl-aktiv').textContent = aktiv.length;
+    document.getElementById('zahl-bald').textContent = bald.length;
     document.getElementById('zahl-archiv').textContent = DOKS.length - aktiv.length;
     // Satz wie DocumentTresor.jsx: unter 5 Dokumenten ordnerStarting, unter 15 ordnerGrowing, sonst ordnerFull
     const satz = document.getElementById('ablage-satz'), n = DOKS.length;
     if (n) { satz.dataset.sie = n < 5 ? 'Ein guter Anfang.' : n < 15 ? 'Ihr Ordner füllt sich.' : 'Alles an seinem Platz.'; satz.dataset.du = n < 5 ? 'Ein guter Anfang.' : n < 15 ? 'Dein Ordner füllt sich.' : 'Alles an seinem Platz.'; }
     satz.textContent = satz.dataset[anrede];
+    const imFach = (d) => { const t = tageBisAblauf(d.ablauf); return ablageFach === 'archiv' ? t < 0 : ablageFach === 'bald' ? t >= 0 && t < 90 : t >= 0; };
     const zeigen = DOKS.map((d, i) => ({ d, i }))
-      .filter(({ d }) => (ablageFach === 'archiv') === !!d.archiv && (!q || d.name.toLowerCase().includes(q)))
+      .filter(({ d }) => imFach(d) && (!q || d.name.toLowerCase().includes(q)))
       .sort((a, b) => sort === 'name' ? a.d.name.localeCompare(b.d.name, 'de') : sort === 'datum' ? b.d.datum.localeCompare(a.d.datum) : a.d.ablauf.localeCompare(b.d.ablauf));
-    l.innerHTML = zeigen.length ? zeigen.map(({ d, i }) => `<div class="dok"><span class="sym k" data-icon="${d.icon}" style="--licht: var(--${d.licht})"></span><span>${d.name}<small class="${d.bald ? 'hinweisfrist' : ''}">${d.wo.replace('&', '&amp;')}</small></span><button class="mehr" aria-label="${d.name} löschen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button></div>`).join('') : `<p class="unter" style="padding:14px 0">${q ? 'Keine Treffer.' : 'Im Archiv liegt nichts.'}</p>`;
-    document.querySelector('#ablage-voll .uebersichtzeile').innerHTML = `<b>${aktiv.length} Dokument${aktiv.length === 1 ? '' : 'e'}</b>${aktiv.some((d) => d.bald) ? ' · 1 läuft bald ab' : ''} · zuletzt gesichert 2. Okt.`;
+    const knopf = (art, label, i, pfad) => `<button class="dok-knopf" data-${art}="${i}" aria-label="${label}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${pfad}</svg></button>`;
+    l.innerHTML = zeigen.length ? zeigen.map(({ d, i }) => { const [st, label] = dokStatus(d);
+      return `<div class="dok"><span class="sym k" data-icon="${d.icon}" style="--licht: var(--${d.icon})"></span><span class="dok-text">${d.name}<small>${d.datei}</small><small>Hochgeladen: ${chDatum(d.datum)} · ${d.groesse.replace(' ', '&nbsp;')}</small>`
+        + (ablaufBearbeiten === i
+          ? `<span class="dok-ablauf"><input type="date" value="${d.ablauf}" aria-label="Ablaufdatum" data-ablaufwert="${i}"><button class="knopfprim" data-ablaufok="${i}">OK</button><button class="knopfruhig" data-ablaufab>Abbrechen</button></span>`
+          : `<small class="status-${st}">${label} · Ablauf: ${chDatum(d.ablauf)}</small>`)
+        + `</span><span class="dok-knoepfe">${knopf('laden', 'Herunterladen', i, '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>')}${knopf('bearbeiten', 'Bearbeiten', i, '<path d="M4 20h4L19 9l-4-4L4 16z"/>')}${knopf('entfernen', 'Entfernen', i, '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>')}</span></div>`; }).join('')
+      : `<p class="unter" style="padding:14px 0">${q ? 'Keine Treffer.' : ablageFach === 'archiv' ? 'Im Archiv liegt nichts.' : 'Nichts läuft bald ab.'}</p>`;
+    // Zeile wie die App: tresor.docCount
+    document.querySelector('#ablage-voll .uebersichtzeile').innerHTML = `<b>${n} Dokumente</b>`;  // Ordner-Satz steht schon unter dem Titel
     icons();
-    l.querySelectorAll('.mehr').forEach((b) => b.onclick = () => nachfragen(+b.dataset.i));
+    l.querySelectorAll('[data-entfernen]').forEach((b) => b.onclick = () => nachfragen(+b.dataset.entfernen));
+    l.querySelectorAll('[data-laden]').forEach((b) => b.onclick = () => melden(l.closest('.geraet'), `«${DOKS[+b.dataset.laden].name}» heruntergeladen`, false));
+    l.querySelectorAll('[data-bearbeiten]').forEach((b) => b.onclick = () => { ablaufBearbeiten = +b.dataset.bearbeiten; dokliste(); l.querySelector('[data-ablaufwert]')?.focus({ preventScroll: true }); });
+    l.querySelectorAll('[data-ablaufok]').forEach((b) => b.onclick = () => { const i = +b.dataset.ablaufok, w = l.querySelector(`[data-ablaufwert="${i}"]`).value; if (w) DOKS[i].ablauf = w; ablaufBearbeiten = -1; dokliste(); });
+    l.querySelectorAll('[data-ablaufab]').forEach((b) => b.onclick = () => { ablaufBearbeiten = -1; dokliste(); });
   }
   function nachfragen(i) {
     const s = document.getElementById('nachfrage'), d = DOKS[i];
@@ -1225,7 +1255,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     document.getElementById('ablage-voll').hidden = z !== 'voll';
     document.querySelectorAll('[data-ablage]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.ablage === z));
     const satz = document.getElementById('ablage-satz');
-    if (z === 'voll') { if (!DOKS.length) DOKS = [{ name: 'Mietvertrag', wo: 'Wohnen & Leben · 1. Okt. 2026', icon: 'wohnen', licht: 'wohnen', datum: '2026-10-01', ablauf: '9999' }]; dokliste(); }
+    if (z === 'voll') { if (!DOKS.length) DOKS = DOKS_START.map((d) => ({ ...d })); dokliste(); }
     else { satz.dataset.sie = 'Ihr Ordner ist bereit.'; satz.dataset.du = 'Dein Ordner ist bereit.'; satz.textContent = satz.dataset[anrede]; }
   }
   document.querySelectorAll('[data-ablage]').forEach((b) => b.addEventListener('click', () => ablage(b.dataset.ablage)));

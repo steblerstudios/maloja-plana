@@ -100,3 +100,16 @@ Sophie hat auf den Umzug gewechselt; offen bleiben:
   wechselt mit der Art des Umzugs (step2Text, _gemeinde, _kanton, _extra).
 - Neu und für den Copy-Prüfer: «Erledigt, weiter ›», «Ablauf abschliessen», «Der Umzug ist
   geordnet» mit Satz.
+
+### Dokumentenablage · entschieden (Sophie, 23.10.2026)
+
+Aus dem Code (`DocumentTresor.jsx`): **Archiv = abgelaufene Dokumente**, «Bald fällig» = aktiv und
+weniger als 90 Tage bis zum Ablauf. Der Archiv-Platzhalter in Fassung 5 war darum falsch (cec1bf26).
+- **Drei Zähler** «Aktiv · Bald fällig · Archiv» wie heute, aber **erst mit Inhalt**.
+- **Suche und Sortierung erst mit Inhalt.**
+- **Zeile pro Dokument mit den App-Texten:** Typ, Dateiname, «Hochgeladen: … · Grösse»,
+  «gültig / {Tage}d / Abgelaufen · Ablauf: …», Ablaufdatum direkt änderbar (OK / Abbrechen),
+  dazu Herunterladen und Entfernen.
+- **«Was oft zuerst hineingehört»** mit drei Vorschlägen bleibt (neu, Copy-Prüfer). Die erfundene
+  Übersichtszeile ist ersetzt durch «{n} Dokumente» (tresor.docCount).
+- Für den Copy-Prüfer: der Status «54d» ist knapp und wörtlich aus der App.
