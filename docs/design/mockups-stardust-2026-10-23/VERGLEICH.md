@@ -298,3 +298,35 @@ Grau-Grün, wie das «Aussenfach» der App.
 Finanzen & Geld · Verwaltung, Recht → Behörden & Rechtliches · Arbeit, Ausbildung → Ausbildung &
 Arbeit · Wohnen → Wohnen & Leben · Familie → Persönliche Basis · Persönlich → kein Bereich,
 Kalender-Symbol neutral.
+
+---
+
+## Eingang · durchgegangen (23.10.2026 abends)
+
+**Verglichen:** App heute (Werkbank `eingang-als-ort`, Stand #537, live in `main`), Code `src/BetaGate.jsx`,
+gegen den Entwurf `index.html?nur=eingang` (Fassung 4, Fassung 5 zeichnet den Eingang nicht neu).
+
+**Befund:** Der Eingang von heute *ist* der umgesetzte Entwurf. #537 hat nur Anordnung und Gewicht
+übernommen, die Texte blieben die der App («Texte unverändert», Kommentar in `BetaGate.jsx`).
+Dadurch hat die App drei Fehler des Entwurfs gar nicht erst übernommen:
+- Entwurf **ohne** den Satz «Diese App befindet sich in der geschlossenen Beta. Bitte geben Sie den
+  Zugangscode ein.» (`beta.gateMessage`): die App zeigt ihn
+- Entwurf **ohne** «Stebler Studios · Basel»: die App zeigt es
+- Entwurf kürzt das Versprechen auf «Ihre Daten bleiben auf diesem Gerät.»: die App zeigt den
+  vollen Text «Lokal gespeichert — Ihre Daten bleiben auf diesem Gerät» (`trust.localBadge`)
+
+Dunkel gegen hell ist **kein** Unterschied in der Sache: die Fassung-5-Entwürfe zeigen den Dunkelmodus,
+den die App auch hat (`data-theme`).
+
+### entschieden (23.10.2026)
+
+- **Eingang bleibt, wie er heute live ist.** Fassung 5 ändert dort nichts.
+- **«Einfache Ansicht» bleibt ein Knopf** (Entwurf: kleiner Link unten). Grund: Wer die einfache Ansicht
+  braucht, sieht schlecht oder ist am Handy unsicher und muss sie sofort finden. Ein kleines Wort
+  unten übersieht man am ehesten.
+- **«Lokal gespeichert» darf zweimal stehen** (Text oben und neben dem Schloss). Das ist das wichtigste
+  Versprechen der App. Eine Kürzung bräuchte neue Texte in 5 Sprachen und den Rechts-Prüfer, für wenig
+  Gewinn.
+
+Sophie hat zweimal gefragt «was ist besser und warum?». Entschieden hat Claude nach der Empfehlung
+oben. Ein Widerspruch kann das jederzeit wieder öffnen.
