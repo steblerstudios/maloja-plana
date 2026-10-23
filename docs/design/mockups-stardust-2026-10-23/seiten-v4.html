@@ -259,6 +259,27 @@ body.desktop .abschnittanzeige { margin: 0 0 10px; border: 1px solid var(--borde
 body.desktop .menue { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; padding: 24px 32px; }
 body.desktop .menue .ober, body.desktop .menue .suche, body.desktop .menue .klein-reihe { grid-column: 1 / -1; }
 
+/* F · Liste: sofort weg, «Entfernt · Rückgängig» (IDEEN §15, Vorschlag C) */
+.merk { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .32s cubic-bezier(.2,.7,.2,1), opacity .25s; }
+.merk.weg { grid-template-rows: 0fr; opacity: 0; }
+.merk > div { overflow: hidden; }
+.merk .innen2 { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); min-height: 64px; }
+.merk small { display: block; color: var(--soft); font-size: 12px; }
+.merk .x { margin-left: auto; width: 44px; height: 44px; border-radius: 10px; border: 0; background: none; color: var(--mid); cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+.merk.zurueckgeholt .innen2 { animation: zurueck .5s ease; }
+@keyframes zurueck { from { background: color-mix(in srgb, var(--sand) 18%, transparent); } to { background: transparent; } }
+body.still .merk { transition: none; } body.still .merk.zurueckgeholt .innen2 { animation: none; }
+@media (prefers-reduced-motion: reduce) { .merk { transition: none; } .merk.zurueckgeholt .innen2 { animation: none; } }
+
+/* E · Continuity: die Karte bleibt und wächst zur Seite */
+.vollbild { position: absolute; inset: 0; z-index: 7; background: var(--bg); overflow: hidden; --licht: var(--sage); }
+.vollbild .band { height: 140px; }
+.vollbild .vb-innen { padding: 0 20px 24px; margin-top: -56px; position: relative; }
+.vollbild .vb-zurueck { position: absolute; top: 12px; left: 12px; z-index: 2; min-height: 44px; padding: 0 14px 0 10px; border-radius: 999px; border: 0; background: color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter: blur(8px); color: var(--text); cursor: pointer; font-size: 14px; }
+.vollbild .vb-inhalt { opacity: 0; transform: translateY(8px); transition: opacity .35s .25s, transform .35s .25s; }
+.vollbild.ganz .vb-inhalt { opacity: 1; transform: none; }
+body.still .vollbild .vb-inhalt { transition: none; }
+
 /* Nachfrage (Tresor: Datei ist danach weg) und Rückmeldung */
 .schleier { position: absolute; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: flex-end; justify-content: center; z-index: 5; }
 .schleier.offen { display: flex; }
@@ -280,7 +301,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 
 <header class="kopf">
   <h1>Maloja nach Stardust · die anderen Seiten, Fassung 4</h1>
-  <p>Fassung 2 plus alles, was wir früher entschieden haben — die Wege, die Leisten, die Zustände, die Sprache. Fassung 4 schliesst die Lücken aus dem Abgleich mit Stardust und der Prüfliste — siehe <a href="abgleich.html">Abgleich</a>. <a href="seiten-v3.html">Fassung 3</a> · <a href="seiten-v2.html">Fassung 2</a> · <a href="seiten.html">Fassung 1</a></p>
+  <p>Fassung 2 plus alles, was wir früher entschieden haben — die Wege, die Leisten, die Zustände, die Sprache. Fassung 4 schliesst alle Lücken aus dem Abgleich mit Stardust und der Prüfliste — neu auch Merkliste (F) und Continuity im Menü (E) — siehe <a href="abgleich.html">Abgleich</a>. <a href="seiten-v3.html">Fassung 3</a> · <a href="seiten-v2.html">Fassung 2</a> · <a href="seiten.html">Fassung 1</a></p>
   <div class="leiste" role="group" aria-label="Darstellung">
     <button class="pill" data-modus="dark" aria-pressed="true">Dunkel</button>
     <button class="pill" data-modus="light" aria-pressed="false">Hell</button>
@@ -400,7 +421,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
         </div>
         <div class="rechtsspalte stufe s3">
           <div class="abschnittanzeige" data-offen="false"><button class="kopfzeile" aria-expanded="false"><span>Abschnitt: <b class="abschnitt-name">Wer hat Anspruch?</b></span><span class="plus" aria-hidden="true">+</span></button>
-            <ol><li><a href="#b-lage" class="jetzt">Ihre Lage und Ergebnis</a></li><li><a href="#b-anspruch">Wer hat Anspruch?</a></li><li><a href="#b-weiter">Wie es weitergeht</a></li><li><a href="#b-quelle">Quelle und Stand</a></li></ol></div>
+            <ol><li><a href="#b-lage" class="jetzt" data-sie="Ihre Lage und Ergebnis" data-du="Deine Lage und Ergebnis"></a></li><li><a href="#b-anspruch">Wer hat Anspruch?</a></li><li><a href="#b-weiter">Wie es weitergeht</a></li><li><a href="#b-quelle">Quelle und Stand</a></li></ol></div>
           <details open id="b-anspruch"><summary>Wer hat Anspruch?</summary><p>Anspruch besteht meist bei Wohnsitz im Kanton, obligatorischer Krankenversicherung und einer Bewilligung von mindestens 3 Monaten — auch eine Kurzaufenthaltsbewilligung (Ausweis L) kann berechtigen.</p></details>
           <details><summary>Was brauche ich für den Antrag?</summary><p>Meist die Lohnabrechnungen der letzten Monate und die Police der Krankenkasse.</p></details>
           <details><summary>Wo stelle ich den Antrag?</summary><p>Bei der kantonalen IPV-Stelle.</p></details>
@@ -530,10 +551,36 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   </ul></div>
 </section>
 
+<!-- ===================== F · Liste mit Rückgängig ===================== -->
+<section class="abschnitt" id="f">
+  <h2>F · Liste — «Merkliste»</h2>
+  <p class="warum">Das Gegenstück zur Ablage: In Listen ist nichts endgültig verloren, darum gibt es keine Nachfrage. Ein Tipp aufs ×, der Eintrag gleitet weg, unten steht «Entfernt · Rückgängig» — ein Tipp holt ihn an dieselbe Stelle zurück. So steht es als Vorschlag C in IDEEN §15.</p>
+  <div class="geraet" data-seite="f">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="kalender"></nav>
+    <div class="seite" style="--licht: var(--sage)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Was ansteht</a><span>›</span>Merkliste</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="behoerden" style="--licht: var(--behoerden)"></span><h3>Merkliste</h3></div>
+          <p class="satz" data-sie="Was Sie sich vorgenommen haben — ohne Frist, ohne Druck." data-du="Was du dir vorgenommen hast — ohne Frist, ohne Druck."></p>
+        </div></div>
+        <div class="rechtsspalte stufe s2"><div id="merkliste"></div></div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="kalender"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li>Einträge sind Platzhalter. «Rückgängig» bleibt rund fünf Sekunden; danach ist der Eintrag weg, wie bei jeder Liste in der App.</li>
+    <li>Leer wird die Liste nicht still: dann steht ein Satz, warum sie leer ist, und wie man etwas merkt (Z2).</li>
+  </ul></div>
+</section>
+
 <!-- ===================== E · Menü ===================== -->
 <section class="abschnitt">
   <h2>E · Menü — «Wo ist alles andere?»</h2>
-  <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen.</p>
+  <p class="warum">Von Stardust übernommen: jeder Menüpunkt ist eine Karte mit Bild und einem Satz, wozu er da ist. <b>Neu: Continuity</b> — tippen Sie auf einen Bereich: die Karte bleibt und wächst zur Seite, das Icon wandert in den Kopf. Statt heute 22 flacher Einträge nach unserer Navigations-Ordnung: oben die drei Anker, dann die sieben Bereiche in ihren Farben, unten Rechtliches und Einstellungen.</p>
   <div class="geraet" data-seite="e">
     <div class="menue">
       <div class="ober"><span class="logo" data-breite="118"></span><button class="zu" aria-label="Menü schliessen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
@@ -541,7 +588,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
       <div>
         <a class="karte" href="#"><span class="bild" data-anker="uebersicht"></span><span><b>Übersicht</b><small data-sie="Wo Sie gerade stehen und was als Nächstes dran ist." data-du="Wo du gerade stehst und was als Nächstes dran ist."></small></span></a>
         <a class="karte" href="#"><span class="bild" data-anker="kalender"></span><span><b>Was ansteht</b><small>Fristen, Termine und die Merkliste an einem Ort.</small></span></a>
-        <a class="karte" href="#"><span class="bild" data-anker="rucksack"></span><span><b>Rucksack</b><small>Was Sie bei einem Wechsel mitnehmen: Unterlagen, Ausweise, Kontakte.</small></span></a>
+        <a class="karte" href="#"><span class="bild" data-anker="rucksack"></span><span><b>Rucksack</b><small data-sie="Was Sie bei einem Wechsel mitnehmen: Unterlagen, Ausweise, Kontakte." data-du="Was du bei einem Wechsel mitnimmst: Unterlagen, Ausweise, Kontakte."></small></span></a>
         <a class="karte" href="#"><span class="bild" data-anker="anspruch"></span><span><b>Was steht mir zu?</b><small>Leistungen und Rechner — Prämienverbilligung, Sozialhilfe, Stipendien.</small></span></a>
       </div>
       <div>
@@ -636,7 +683,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const gruppe = (sel, fn) => document.querySelectorAll(sel).forEach((b) => b.addEventListener('click', () => { document.querySelectorAll(sel).forEach((x) => x.setAttribute('aria-pressed', x === b)); fn(b); }));
   gruppe('[data-modus]', (b) => { root.dataset.theme = b.dataset.modus; logos(); icons(); passZeichnen(); ipv(); });
   gruppe('[data-geraet]', (b) => document.body.classList.toggle('desktop', b.dataset.geraet === 'desktop'));
-  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); });
+  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); });
   const umschalter = (id, klasse) => document.getElementById(id).addEventListener('click', (e) => { const an = !document.body.classList.contains(klasse); document.body.classList.toggle(klasse, an); e.currentTarget.setAttribute('aria-pressed', an); });
   umschalter('grau', 'graustufen'); umschalter('still', 'still');
 
@@ -768,7 +815,63 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     }, { passive: true });
   });
 
-  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); icons();
+  // ---------- F · Merkliste: sofort weg, Rückgängig holt an dieselbe Stelle ----------
+  let MERK = [
+    { t: 'Säule 3a eröffnen', w: 'Finanzen & Geld', i: 'finanzen' },
+    { t: 'Hausratversicherung vergleichen', w: 'Versicherungen & Vorsorge', i: 'versicherungen' },
+    { t: 'Arbeitszeugnis anfragen', w: 'Ausbildung & Arbeit', i: 'ausbildung' },
+    { t: 'Notfallkontakt prüfen', w: 'Notfall', i: 'notfall' },
+  ];
+  function merkZeichnen(neuIndex = -1) {
+    const l = document.getElementById('merkliste');
+    if (!MERK.length) { l.innerHTML = `<div class="leer" style="padding-top:8px"><h4 style="font-size:20px">Nichts gemerkt</h4><p>${anrede === 'du' ? 'Wenn du in einem Rechner oder Ablauf «Merken» tippst, erscheint es hier.' : 'Wenn Sie in einem Rechner oder Ablauf «Merken» tippen, erscheint es hier.'}</p></div>`; return; }
+    l.innerHTML = MERK.map((m, i) => `<div class="merk${i === neuIndex ? ' zurueckgeholt' : ''}"><div><div class="innen2"><span class="sym k" data-icon="${m.i}" style="--licht: var(--${m.i})"></span><span>${m.t}<small>${m.w.replace('&', '&amp;')}</small></span><button class="x" aria-label="«${m.t}» entfernen" data-i="${i}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>`).join('');
+    icons();
+    l.querySelectorAll('.x').forEach((b) => b.onclick = () => {
+      const i = +b.dataset.i, eintrag = MERK[i], zeile = b.closest('.merk');
+      const ruhig = document.body.classList.contains('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+      zeile.classList.add('weg');
+      setTimeout(() => {
+        MERK.splice(i, 1); merkZeichnen();
+        melden(l.closest('.geraet'), `«${eintrag.t}» entfernt`, true, () => { MERK.splice(i, 0, eintrag); merkZeichnen(i); });
+      }, ruhig ? 0 : 320);
+    });
+  }
+
+  // ---------- E · Continuity: Karte wächst zur Seite (FLIP) ----------
+  function vollbildOeffnen(karte) {
+    const geraet = karte.closest('.geraet');
+    const k = karte.querySelector('.sym').dataset.icon;
+    const titel = karte.querySelector('b').textContent, satz = karte.querySelector('small').textContent;
+    const g = geraet.getBoundingClientRect(), r = karte.getBoundingClientRect(), ir = karte.querySelector('.sym').getBoundingClientRect();
+    const vb = document.createElement('div');
+    vb.className = 'vollbild'; vb.style.setProperty('--licht', `var(--${k})`);
+    vb.setAttribute('role', 'dialog'); vb.setAttribute('aria-label', titel);
+    vb.innerHTML = `<div class="band" aria-hidden="true"></div><button class="vb-zurueck">‹ Menü</button>
+      <div class="vb-innen"><div class="titelzeile"><span class="sym vb-sym" data-icon="${k}" style="--licht: var(--${k})"></span><h3>${titel}</h3></div>
+      <div class="vb-inhalt"><p class="satz">${satz}</p>
+        <div class="zeile"><button><b>Grundordnung</b><span class="bal"><i style="width:80%"></i></span><small>fast vollständig</small><span class="pfeil">›</span></button></div>
+        <div class="zeile"><button><b>Vertiefen</b><span class="bal"><i style="width:35%"></i></span><small>Überblick</small><span class="pfeil">›</span></button></div>
+        <p class="fuss">Platzhalter: hier stünde das Kapitel wie in Abschnitt A.</p></div></div>`;
+    geraet.appendChild(vb); icons();
+    const ruhig = document.body.classList.contains('still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ziel = vb.querySelector('.vb-sym').getBoundingClientRect();
+    const oben = r.top - g.top, links = r.left - g.left, rechts = g.right - r.right, unten = g.bottom - r.bottom;
+    const dauer = ruhig ? 0 : 520, kurve = 'cubic-bezier(.2,.7,.2,1)';
+    vb.animate([{ clipPath: `inset(${oben}px ${rechts}px ${unten}px ${links}px round 18px)` }, { clipPath: 'inset(0 0 0 0 round 0)' }], { duration: dauer, easing: kurve });
+    vb.querySelector('.vb-sym').animate([{ transform: `translate(${ir.left - ziel.left}px, ${ir.top - ziel.top}px) scale(${ir.width / ziel.width})` }, { transform: 'none' }], { duration: dauer, easing: kurve });
+    requestAnimationFrame(() => vb.classList.add('ganz'));
+    const zu = vb.querySelector('.vb-zurueck'); zu.focus({ preventScroll: true });
+    zu.onclick = () => {
+      vb.classList.remove('ganz');
+      const a = vb.animate([{ clipPath: 'inset(0 0 0 0 round 0)' }, { clipPath: `inset(${oben}px ${rechts}px ${unten}px ${links}px round 18px)` }], { duration: ruhig ? 0 : 380, easing: kurve });
+      vb.querySelector('.vb-sym').animate([{ transform: 'none' }, { transform: `translate(${ir.left - ziel.left}px, ${ir.top - ziel.top}px) scale(${ir.width / ziel.width})` }], { duration: ruhig ? 0 : 380, easing: kurve });
+      a.onfinish = () => { vb.remove(); karte.focus({ preventScroll: true }); };
+    };
+  }
+  document.getElementById('menue-bereiche').addEventListener('click', (e) => { const k = e.target.closest('.karte'); if (!k) return; e.preventDefault(); vollbildOeffnen(k); });
+
+  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); icons();
 </script>
 </body>
 </html>
