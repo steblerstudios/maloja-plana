@@ -998,6 +998,13 @@ const AppInner = ({ demo }) => {
     }
     // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
     startTransition(() => setView(viewName));
+    hauptteilFokussieren();
+  };
+
+  // Nach einem Ansichtswechsel: nach oben, Fokus auf <main>. Auch für den Sprung aus der
+  // Einführung (onSicherungEinspielen) — dort verschwindet der fokussierte Knopf mit der
+  // Einführung, ohne das hier läge der Fokus danach auf <body>.
+  const hauptteilFokussieren = () => {
     requestAnimationFrame(() => {
       // Das Dokument scrollt, nicht mehr <main> — der Sprung nach oben geht ans Fenster.
       // `preventScroll` bleibt: der Fokus soll die Seite nicht ein zweites Mal bewegen.
@@ -1014,6 +1021,8 @@ const AppInner = ({ demo }) => {
         palette, t, setLanguage, supportedLanguages,
         onComplete: () => setOnboardingDone(true),
         onUpdateData: updateData,
+        // Leere installierte App: direkt zur Sicherungs-Seite (Begründung in Onboarding.jsx).
+        onSicherungEinspielen: () => { setView('export'); setOnboardingDone(true); hauptteilFokussieren(); },
       })
     );
   }
