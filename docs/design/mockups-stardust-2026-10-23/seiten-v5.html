@@ -352,8 +352,19 @@ body.desktop .u-innen { display: grid; grid-template-columns: minmax(320px, 420p
 .lohn .bahn { position: relative; height: 12px; border-radius: 6px; background: var(--up); }
 .lohn .bahn .f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--finanzen); }
 .lohn .bahn .median { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 2px solid var(--bg); transform: translate(-50%, -50%); }
+.baro4 { position: relative; margin: 18px 0 4px; }
+.baro4 .grenzen { position: relative; height: 15px; font-size: 11px; color: var(--soft); }
+.baro4 .grenzen span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.baro4 .bubbles { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; height: 14px; margin-top: 3px; }
+.baro4 .bubbles i { position: relative; border-radius: 7px; background: var(--up); overflow: hidden; }
+.baro4 .bubbles i b { position: absolute; inset: 0 auto 0 0; background: var(--finanzen); border-radius: 7px; }
+.baro4 .median { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--surface); transform: translate(-50%, -50%); }
+.baro4 .ml { position: absolute; bottom: 100%; transform: translateX(-50%); font-weight: 800; font-size: 15px; line-height: 1; color: var(--text); margin-bottom: 1px; }
+.baro4 .namen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 5px; font-size: 10px; color: var(--mid); text-align: center; line-height: 1.3; }
+.baro4 .namen span.aktiv { color: var(--text); font-weight: 500; }
 .lohn .werte { display: flex; justify-content: space-between; font-size: 12px; color: var(--mid); margin-top: 6px; }
 .lohn p { font-size: 13px; color: var(--mid); margin: 6px 0 0; }
+.lohn-gerechnet summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; font-size: 13px; color: var(--sand); }
 .lohn p.fuss { font-size: 12px; color: var(--soft); }
 .reiter2 { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
 .reiter2 button { flex: 1; border: 0; background: none; color: var(--mid); min-height: 44px; font: inherit; font-size: 14px; cursor: pointer; border-bottom: 2px solid transparent; }
@@ -425,6 +436,13 @@ body.desktop .zl-band { margin: 2px 0 0; }
 .fin-posten-zeile { display: flex; gap: 6px; width: 100%; }
 .fin-posten-zeile input { flex: 1; min-width: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 14px; min-height: 40px; padding: 0 8px; }
 .fin-posten-zeile input + input { flex: 0 0 90px; }
+.fin-reihe { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.fin-reihe a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 10px; border: 1px solid var(--border); border-radius: 999px; color: var(--text); text-decoration: none; font-size: 12px; }
+.fin-gruppe { margin: 0 0 12px; border-top: 1px dashed var(--border); border-bottom: 1px dashed var(--border); }
+.fin-gruppe summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.fin-gruppe summary small { color: var(--soft); font-size: 12px; }
+.fin-gruppe[open] summary { margin-bottom: 4px; }
+.fin-feld small { font-size: 11.5px; color: var(--soft); }
 .fin-na { font-size: 12px; justify-self: start; min-height: 32px; }
 .fin-feld-na small { color: var(--soft); }
 .fin-alimente { margin: 0 0 12px; padding: 8px 12px; border-radius: 12px; background: var(--up); opacity: .85; }
@@ -683,6 +701,10 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
 <section class="abschnitt" id="a">
   <h2>A · Kapitel — «Finanzen &amp; Geld»</h2>
   <p class="warum">Fassung 5: die sieben echten Gruppen des Kapitels (Einkommen, Monatliche Ausgaben, Verpflichtungen, Sparen, Vermögen &amp; Wertschriften, Kredit, Vorsorge), die Reiter «Angaben / Dokumente», die Lohn-Einordnung mit Median und BFS-Quelle und «Alle Berechnungen auf einen Blick».</p>
+  <div class="leiste zustaende" role="group" aria-label="Kanton für das Lohn-Barometer">
+    <button class="pill" data-mlkanton="ZH" aria-pressed="true">Wie Maria (Zürich, kein Mindestlohn)</button>
+    <button class="pill" data-mlkanton="BS" aria-pressed="false">Kanton mit Mindestlohn (Basel-Stadt)</button>
+  </div>
   <div class="geraet" data-seite="a">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span><button class="zahnrad" aria-label="Einstellungen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></button></span></div>
     <div class="rahmen"><nav class="seitenmenue" data-aktiv="finanzen"></nav>
@@ -705,12 +727,11 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           </div>
           <div class="lohn stufe s2">
             <h4 data-sie="Wo steht Ihr Lohn?" data-du="Wo steht dein Lohn?"></h4>
-            <div class="skala4" aria-hidden="true"><span>unteres Zehntel Tieflohn</span><span>unterer Bereich</span><span>oberer Bereich</span><span>oberes Zehntel Spitzenlohn</span></div>
-            <div class="bahn" role="img" aria-label="Lohn CHF 6'472, Median CHF 7'024"><div class="f" style="width:44%"></div><div class="median" style="left:50%"></div></div>
+            <div id="lohn-baro"></div>
             <div class="werte"><span data-sie="Ihr Lohn: CHF 6'472" data-du="Dein Lohn: CHF 6'472"></span><span>● Median: CHF 7'024</span></div>
             <p data-sie="Ihr Lohn liegt unter dem Schweizer Median." data-du="Dein Lohn liegt unter dem Schweizer Median."></p>
-            <p class="fuss">Mehr als Vollzeit (42 Std./Woche): auf 40 Std. umgerechnet CHF 6'472 (erfasst: CHF 6'796). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig. Vergleich ohne anteiligen 13. Monatslohn. Mit einem 13. läge der Vergleichswert rund 8 % höher. Aus Netto CHF 6'200 geschätzt — der Balken zeigt das ungefähre Brutto (die Mindestlohn-Prüfung greift nur mit echtem Bruttolohn).</p>
-            <p class="fuss">Quelle: <a href="#">BFS</a>, Lohnstrukturerhebung 2024 (Median CHF 7'024, inkl. anteiligem 13. Monatslohn). Orientierung: eine Grössenordnung, nicht nach amtlicher Regel gerechnet.</p>
+            <details class="lohn-gerechnet"><summary>So ist gerechnet</summary><p class="fuss">Mehr als Vollzeit (42 Std./Woche): auf 40 Std. umgerechnet CHF 6'472 (erfasst: CHF 6'796). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig. Vergleich ohne anteiligen 13. Monatslohn. Mit einem 13. läge der Vergleichswert rund 8 % höher. Aus Netto CHF 6'200 geschätzt — der Balken zeigt das ungefähre Brutto (die Mindestlohn-Prüfung greift nur mit echtem Bruttolohn).</p>
+            <p class="fuss">Quelle: <a href="#">BFS</a>, Lohnstrukturerhebung 2024 (Median CHF 7'024, inkl. anteiligem 13. Monatslohn). Orientierung: eine Grössenordnung, nicht nach amtlicher Regel gerechnet.</p></details>
           </div>
         </div>
         <div class="rechtsspalte stufe s3">
@@ -1191,7 +1212,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   const gruppe = (sel, fn) => document.querySelectorAll(sel).forEach((b) => b.addEventListener('click', () => { document.querySelectorAll(sel).forEach((x) => x.setAttribute('aria-pressed', x === b)); fn(b); }));
   gruppe('[data-modus]', (b) => { root.dataset.theme = b.dataset.modus; logos(); icons(); passZeichnen(); ipv(); });
   gruppe('[data-geraet]', (b) => document.body.classList.toggle('desktop', b.dataset.geraet === 'desktop'));
-  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); if (typeof foto === 'function') foto(); if (typeof uebersicht === 'function') uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); finanzenAngaben(); });
+  gruppe('[data-anrede]', (b) => { anrede = b.dataset.anrede; texte(); schrittZeigen(); if (typeof merkZeichnen === 'function') merkZeichnen(); if (typeof foto === 'function') foto(); if (typeof uebersicht === 'function') uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); finanzenAngaben(); lohnBaro(); });
   const umschalter = (id, klasse) => document.getElementById(id).addEventListener('click', (e) => { const an = !document.body.classList.contains(klasse); document.body.classList.toggle(klasse, an); e.currentTarget.setAttribute('aria-pressed', an); });
   umschalter('grau', 'graustufen'); umschalter('still', 'still');
 
@@ -1241,6 +1262,28 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
     }
   }
   document.getElementById('ipv-lohn').addEventListener('input', ipv);
+  // Lohn-Barometer wie LohnEinordnung.jsx: vier gleich breite Abschnitte (LSE 2024: p10 4'635 · Median 7'024 · p90 12'526,
+  // Skala 3'000–13'000), innen linear. «!» = kantonaler Mindestlohn, nur in Kantonen mit Mindestlohn (lohnCheck.js).
+  let mlKanton = 'ZH';
+  const GR = [3000, 4635, 7024, 12526, 13000];
+  const baroPos = (v) => { v = Math.max(GR[0], Math.min(GR[4], v)); const i = Math.min(3, GR.findIndex((g, j) => v <= GR[j + 1])); return (i + (v - GR[i]) / (GR[i + 1] - GR[i])) * 25; };
+  function lohnBaro() {
+    const el = document.getElementById('lohn-baro'); if (!el) return;
+    const lohn = 6472, pos = baroPos(lohn), ml = mlKanton === 'BS' ? Math.round(22.20 * 182) : null;
+    const zone = lohn <= GR[1] ? 0 : lohn <= GR[2] ? 1 : lohn <= GR[3] ? 2 : 3;
+    // jede Abschnitt-Bubble füllt sich bis zum Lohn: darunter voll, die eigene teilweise, darüber leer
+    const fuell = [0, 1, 2, 3].map((i) => Math.max(0, Math.min(1, pos / 25 - i)) * 100);
+    // Lage im Raster mit Lücken: Prozent über die Breite, die Lücken (6px) gleichen sich weitgehend aus
+    el.innerHTML = `<div class="baro4" role="img" aria-label="Lohn CHF 6'472, Median CHF 7'024. ${anrede === 'du' ? 'Dein' : 'Ihr'} Lohn liegt unter dem Schweizer Median. unterer Bereich${ml ? '. Kantonaler Mindestlohn CHF ' + ml.toLocaleString('de-CH').replace(/[’,]/g, "'") : ''}">
+      <div class="grenzen" aria-hidden="true"><span style="left:25%">CHF 4'635</span><span style="left:75%">CHF 12'526</span></div>
+      <div class="bubbles" aria-hidden="true">${fuell.map((f) => `<i><b style="width:${f}%"></b></i>`).join('')}
+        <span class="median" style="left:50%;background:var(--gold)"></span>${ml ? `<span class="ml" style="left:${baroPos(ml)}%">!</span>` : ''}</div>
+      <div class="namen" aria-hidden="true">${[['unteres Zehntel', 'Tieflohn'], ['unterer Bereich'], ['oberer Bereich'], ['oberes Zehntel', 'Spitzenlohn']].map(([a, b], i) => `<span class="${i === zone ? 'aktiv' : ''}">${a}${b ? '<br>' + b : ''}</span>`).join('')}</div>
+    </div>${ml ? `<p>Kantonaler Mindestlohn: CHF 22.20/Std. — bei Vollzeit rund CHF ${ml.toLocaleString('de-CH').replace(/[’,]/g, "'")} im Monat (Stand 2026).</p>` : ''}`;
+  }
+  document.querySelectorAll('[data-mlkanton]').forEach((b) => b.onclick = () => {
+    mlKanton = b.dataset.mlkanton; document.querySelectorAll('[data-mlkanton]').forEach((x) => x.setAttribute('aria-pressed', x === b)); lohnBaro(); finanzenAngaben();
+  });
   // Kapitel · Reiter «Angaben»: alle 37 Felder wie constants.js (chapters[finanzen].fields), Namen, Auswahlen und
   // Hinweise aus de.js, Werte aus DEMO_DATA (config/demoData.js). «secondary» steckt hinter «Weitere Bereiche anzeigen».
   const FIN = [
@@ -1312,7 +1355,8 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   function finZusatz(f) {
     const du = anrede === 'du', S = (sie, d) => du ? d : sie;
     const weg = (t) => `<a class="fin-weg" href="#">${t} ›</a>`;
-    if (f[0] === 'monthlyIncome') return `<div class="fin-zusatz"><p>${S('In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.')}</p>${weg('IPV-Anspruch prüfen')}${weg('Bundessteuer abschätzen')}${weg(S('Orientierung: Was steht Ihnen gemäss SKOS zu?', 'Orientierung: Was steht Dir gemäss SKOS zu?'))}${weg('Alle Berechnungen auf einen Blick')}</div>`;
+    const reihe = (...t) => `<span class="fin-reihe">${t.map((x) => `<a href="#">${x}</a>`).join('')}</span>`;
+    if (f[0] === 'monthlyIncome') return `<div class="fin-zusatz"><p>${mlKanton === 'BS' ? S('Ihr Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Ihren Bruttolohn (er steht auf Ihrer Lohnabrechnung).', 'Dein Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Deinen Bruttolohn (er steht auf Deiner Lohnabrechnung).') : S('In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.')}</p>${reihe('IPV-Anspruch prüfen', 'Bundessteuer abschätzen', S('Orientierung: Was steht Ihnen gemäss SKOS zu?', 'Orientierung: Was steht Dir gemäss SKOS zu?'), 'Alle Berechnungen auf einen Blick')}</div>`;
     if (POSTEN[f[0]]) { const p = POSTEN[f[0]];
       return `<div class="fin-zusatz fin-posten">${p.map(([n, b], i) => `<span class="fin-posten-zeile"><input value="${n}" placeholder="Bezeichnung" aria-label="Bezeichnung" data-posten="${f[0]}" data-pi="${i}" data-pt="n"><input value="${b}" inputmode="numeric" aria-label="Betrag in Franken" data-posten="${f[0]}" data-pi="${i}" data-pt="b"><button class="zurueck" aria-label="Posten entfernen" data-postenweg="${f[0]}" data-pi="${i}">×</button></span>`).join('')}<button class="zurueck" data-postenneu="${f[0]}">+ Posten hinzufügen</button>${p.length ? `<small>Summe: ${chfS(p.reduce((a, [, b]) => a + (Number(b) || 0), 0))}</small>` : ''}</div>`; }
     if (f[0] === 'creditCard' && /^Ja/.test(f[3])) return `<div class="fin-zusatz">${weg('Lohnt sich die Karte? Kosten und Vorteile rechnen')}</div>`;
@@ -1340,6 +1384,14 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
           const naKnopf = NA_OK.includes(f[0]) && !f[3] ? `<button class="zurueck fin-na" data-na="${f[0]}">${na ? 'Zurücknehmen' : 'Trifft nicht zu'}</button>` : '';
           const zeile = na ? `<div class="feldzeile fin-feld fin-feld-na"><span>${f[1]}</span><small>trifft nicht zu. Zählt als erledigt.</small>${naKnopf}</div>`
             : `<label class="feldzeile fin-feld" for="${id}"><span>${f[1]}</span>${feld}${hint}${naKnopf}</label>${finZusatz(f)}`;
+          // Ruhiger als die App: die fünf Nebenerwerb-Felder hinter einer Zeile (Entscheid offen, siehe VERGLEICH.md)
+          if (f[0].startsWith('side')) {
+            const neben = felder.filter((x) => x[0].startsWith('side'));
+            if (f[0] !== 'sideIncome') return '';
+            const zeilen = neben.map((x) => { const id2 = 'fin-' + x[0]; const fe = Array.isArray(x[2]) ? `<select id="${id2}" data-k="${x[0]}"><option value="">— Auswählen —</option>${x[2].map((o) => `<option${o === x[3] ? ' selected' : ''}>${o}</option>`).join('')}</select>` : `<input id="${id2}" data-k="${x[0]}" type="text" ${x[2] === 'chf' ? 'inputmode="numeric" placeholder="CHF"' : ''} value="${x[3]}">`;
+              return `<label class="feldzeile fin-feld" for="${id2}"><span>${x[1]}</span>${fe}${x[4] ? `<small>${finText(x[4])}</small>` : ''}</label>`; }).join('');
+            return `<details class="fin-gruppe"${neben.some((x) => x[3]) ? ' open' : ''}><summary>Nebenerwerb <small>${neben.filter((x) => x[3]).length ? 'erfasst' : 'falls vorhanden'}</small></summary>${zeilen}</details>`;
+          }
           // Alimente ohne Kinder: wie ChapterView.jsx eingeklappt und gedämpft, mit Orientierung statt Zahlen
           if (f[0] === 'alimenteReceived' || f[0] === 'alimentePaid') return `<details class="fin-alimente"><summary>Alimente / Unterhalt · ${anrede === 'du' ? 'betrifft Dich aktuell nicht — antippen zum Erkunden' : 'betrifft Sie aktuell nicht — antippen zum Erkunden'}</summary><p>Kindesunterhalt wird individuell festgelegt — je nach Einkommen beider Eltern, Anzahl und Alter der Kinder sowie der Betreuung. Eine einfache Formel gibt es nicht.</p><p>Grobe Grössenordnung der reinen Kinderkosten (Barbedarf, NICHT der Unterhaltsbeitrag): je nach Alter rund CHF 1’200–1’900 pro Monat und Kind (Zürcher Kinderkosten-Tabelle, letztmals 2025).</p><p>Der tatsächliche Unterhaltsbeitrag hängt von der konkreten Situation ab. Verbindlich klären das zuständige Gericht, die KESB oder eine Fachberatung.</p><a class="fin-weg" href="#">Unterhaltsberechnung erklärt (Gerichte ZH) ↗</a>${zeile}</details>`;
           return zeile;
@@ -1968,7 +2020,7 @@ body.desktop .meldung { left: auto; right: 24px; bottom: 24px; width: 360px; }
   document.getElementById('foto-abbrechen').onclick = () => { fotoSchritt = 0; fotoArt = null; seiten = 1; foto(); };
   document.querySelectorAll('[data-kamera]').forEach((b) => b.addEventListener('click', () => { kamera = b.dataset.kamera; document.querySelectorAll('[data-kamera]').forEach((x) => x.setAttribute('aria-pressed', x === b)); fotoSchritt = 0; foto(); }));
 
-  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); finanzenAngaben(); icons();
+  logos(); anker(); texte(); passZeichnen(); schrittZeigen(); merkZeichnen(); zeitleiste(); foto(); uebersicht(); ipvWegZeichnen(); ipvLageZeichnen(); finanzenAngaben(); lohnBaro(); icons();
   // ?nur=a … zeigt nur einen Abschnitt — für die Vergleichsseite (heute neben neu)
   const nur = new URLSearchParams(location.search).get('nur');
   if (nur) {

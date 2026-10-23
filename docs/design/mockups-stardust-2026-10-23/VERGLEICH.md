@@ -244,3 +244,18 @@ Sophie: «es fehlen mir die Details, die wir bei den Finanzen eingebaut haben».
 - **«Trifft nicht zu»** bei Arbeitgeber, Adresse, Arbeitsbeginn und Alimente; zählt als erledigt.
 - Nicht übernommen, weil bei Maria nicht sichtbar: Lohn-Hinweis «unter dem Mindestlohn» (nur in
   Kantonen mit Mindestlohn), Hinweis zur verpassten Steuerfrist, Partnereinkommen.
+
+### Kapitel Finanzen · Barometer und Ruhe (Sophie, 23.10.2026)
+
+- **Barometer wie die App** (`LohnEinordnung.jsx`): vier gleich breite Abschnitte (unteres Zehntel /
+  unterer Bereich / oberer Bereich / oberes Zehntel), jeder füllt sich bis zum Lohn; darüber die belegten
+  Grenzen CHF 4'635 und CHF 12'526, darunter die Namen, der eigene Abschnitt hervorgehoben; Median-Punkt
+  in Gold (Lohn darunter). Werte BFS LSE 2024, Skala CHF 3'000–13'000.
+- **Mindestlohn-«!»** nur in Kantonen mit Mindestlohn (GE, NE, JU, BS, TI). Zürich hat keinen, darum
+  sieht Maria es nie. Im Mockup über den Schalter «Kanton mit Mindestlohn (Basel-Stadt)»: «!» bei rund
+  CHF 4'040 (22.20 × 182 Std.) mit der App-Zeile «Kantonaler Mindestlohn: …», und im Bearbeiten der
+  App-Hinweis, dass Maria Netto erfasst hat und der Vergleich den Bruttolohn braucht.
+- **Ruhiger:** die drei langen Lohn-Hinweise stecken hinter «So ist gerechnet» (Texte unverändert);
+  die vier Wegweiser beim Lohn sind eine Reihe kleiner Knöpfe statt einer Liste; die fünf
+  Nebenerwerb-Felder stecken hinter einer Zeile «Nebenerwerb · falls vorhanden» (offen, sobald etwas
+  erfasst ist). Neu für den Copy-Prüfer: «So ist gerechnet», «falls vorhanden».
