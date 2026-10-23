@@ -1659,7 +1659,7 @@ export default {
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
     // speist auch Boden-Anker, Gepäck und «Zurück zu …» und bleibt darum, wie es ist.
     // rm ungeprüft F5
-    wasAnsteht: 'Tge che vegn',
+    wasAnsteht: 'Tge ch\'è proxim',
     // Die Sätze unter den vier Ankern im Menü (neu, Copy-Prüfer).
     ankerSatz: {
       // rm ungeprüft F5

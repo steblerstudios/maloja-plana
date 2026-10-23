@@ -1832,7 +1832,7 @@ export default {
     nextUpReassure: { sie: 'Solo un suggerimento — il ritmo lo decide Lei.', du: 'Solo un suggerimento — il ritmo lo decidi tu.' },
     glanceDeadline: 'Prossima scadenza',
     glanceNoDeadline: 'nessuna aperta',
-    glanceDeadlinePast: '{title} · scaduta dal {date}',
+    glanceDeadlinePast: '{title} · scadenza passata dal {date}',
     glanceSaved: 'Ultimo salvataggio',
     glanceNeverSaved: 'Ancora nessun file di backup creato',
     nextUpAction: 'Completare: {feld}',
@@ -4853,7 +4853,7 @@ export default {
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
-    title: 'In programma',
+    title: 'In arrivo',
     aufgabe: 'Compito',
     ausMerkliste: 'dal promemoria',
     ganzerMonat: 'Tutto il mese',

@@ -4946,7 +4946,7 @@ export default {
     linkBudget: 'View in budget',
   },
   calendar: {
-    title: 'What’s ahead',
+    title: 'Coming up',
     aufgabe: 'Task',
     ausMerkliste: 'from your checklist',
     ganzerMonat: 'Whole month',
