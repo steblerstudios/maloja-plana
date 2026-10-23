@@ -89,4 +89,13 @@ Geprüft von `swiss-precision-pruefer` und `copy-pruefer`, Funde eingearbeitet (
   Einkommen geht. Vorschlag «Vom eigenen Einkommen bleiben jeden Monat» — ändert den Wortlaut
   von Fassung 5, darum nicht ohne Zuruf.
 
+> ✅ **Entschieden 24.10.2026, nach Bauschritt 1** (Stebler Studios, Auswahl-Dialog, je die
+> empfohlene Option) — die drei Punkte oben:
+> - **Brutto:** Ist der eigene Lohn brutto erfasst, steht oben keine Zahl, sondern die Netto-Frage
+>   wie auf der Budget-Seite (`budgetSync.availableNeedsNetto`).
+> - **Minus / kein eigener Lohn:** Der Block verschwindet nicht mehr. Im Minus «… fehlen CHF …» wie
+>   im Spiegelsatz, darunter die Haushalts-Zeile, wenn sie abweicht.
+> - **Benennung:** «Jeden Monat bleiben» bleibt der Normalfall. Steht die Haushalts-Zeile darunter,
+>   heisst die obere Zeile «… vom eigenen Einkommen».
+
 **Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.

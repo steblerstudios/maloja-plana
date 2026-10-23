@@ -41,29 +41,46 @@ describe('«Jeden Monat bleiben»', () => {
     expect(m.bleibt).toBe(m.einkommen - m.verplant);
   });
 
+  // Maria zahlt in die Säule 3a ein — die Budget-Rechnung weicht ab, darum steht die
+  // Haushalts-Zeile darunter und die obere Zeile nennt das eigene Einkommen (Entscheid 24.10.2026).
   it('Maria: CHF 2’480, 3’720 verplant von 6’200 Einkommen, netto — wie der Satz', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const text = html.replace(/<[^>]+>/g, '');
-    expect(text).toContain('Jeden Monat bleibenCHF 2’480');
+    expect(text).toContain('Mit dem eigenen Einkommen bleiben jeden MonatCHF 2’480');
     expect(text).toContain('3’720 verplant');
     expect(text).toContain('von 6’200 Einkommen, netto');
     expect(text).toContain('Es bleiben CHF 2’480.');
   });
 
-  it('Einkommen brutto oder ohne Art: kein «netto»', () => {
-    for (const incomeType of ['brutto', '']) {
-      const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType }).replace(/<[^>]+>/g, '');
-      expect(text).toContain('von 6’200 Einkommen');
-      expect(text).not.toContain('Einkommen, netto');
-    }
+  it('Einkommen ohne Art: Zahl ohne «netto»', () => {
+    const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: '' }).replace(/<[^>]+>/g, '');
+    expect(text).toContain('von 6’200 Einkommen');
+    expect(text).not.toContain('Einkommen, netto');
   });
 
-  it('ohne Ausgaben, ohne Einkommen oder im Minus: kein Betrag', () => {
+  // Entscheid 24.10.2026: bei brutto keine Zahl, die so nie auf dem Konto liegt — die Netto-Frage
+  // wie auf der Budget-Seite. Vorher (Fassung 5, 23.10.) stand die Brutto-Zahl ohne «netto».
+  it('Einkommen brutto: keine Zahl, sondern die Frage nach dem Netto', () => {
+    const html = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' });
+    // Nur der Block — der Spiegelsatz darunter («Monatliches Einkommen …») ist eine eigene Stelle.
+    const text = html.replace(/<[^>]+>/g, '').split('Monatliches Einkommen')[0];
+    expect(text).toContain('Jeden Monat bleiben');
+    expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
+    expect(text).not.toContain('CHF 2’480');
+    expect(text).not.toContain('verplant');
+    expect(html).not.toContain('data-teil="monat-haushalt"');
+  });
+
+  it('ohne Ausgaben: kein Block', () => {
     expect(monatsUebersicht({ monthlyIncome: '5000' }, {})).toBeNull();
-    expect(monatsUebersicht({ groceries: '400' }, {})).toBeNull();
-    expect(monatsUebersicht({ monthlyIncome: '1000', monthlyTax: '2000' }, {})).toBeNull();
-    const html = render('finanzen', { ...DEMO_DATA.finanzen, monthlyIncome: '1000' });
-    expect(html).not.toContain('data-teil="monat-bleiben"');
+  });
+
+  // Entscheid 24.10.2026: im Minus verschwindet der Block nicht mehr (vorher: kein Betrag).
+  // Die Darstellung prüft finanzenHaushaltsSaldo.test.js mit eigenen Daten.
+  it('im Minus: ein Ergebnis mit negativem Rest und vollem Balken', () => {
+    const m = monatsUebersicht({ monthlyIncome: '1000', monthlyTax: '2000' }, {});
+    expect(m.bleibt).toBe(-1000);
+    expect(m.anteil).toBe(100);
   });
 
   it('nur im Kapitel Finanzen', () => {

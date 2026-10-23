@@ -2088,6 +2088,12 @@ export default {
       monat: {
         // rm ungeprüft F5
         bleiben: "Mintga mais restan",
+        // rm ungeprüft Finanzen-Fusion
+        fehlen: "Mintga mais mancan",
+        // rm ungeprüft Finanzen-Fusion
+        eigenBleiben: "Cun l'atgna entrada restan mintga mais",
+        // rm ungeprüft Finanzen-Fusion
+        eigenFehlen: "Cun l'atgna entrada mancan mintga mais",
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
         // rm ungeprüft F5

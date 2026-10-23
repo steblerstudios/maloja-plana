@@ -1979,6 +1979,9 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Il reste chaque mois",
+        fehlen: "Il manque chaque mois",
+        eigenBleiben: "Avec le revenu propre, il reste chaque mois",
+        eigenFehlen: "Avec le revenu propre, il manque chaque mois",
         verplant: "{betrag} planifié",
         vonEinkommenNetto: "sur {betrag} de revenu net",
         vonEinkommen: "sur {betrag} de revenu",

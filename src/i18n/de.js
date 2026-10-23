@@ -1986,6 +1986,9 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Jeden Monat bleiben",
+        fehlen: "Jeden Monat fehlen",
+        eigenBleiben: "Mit dem eigenen Einkommen bleiben jeden Monat",
+        eigenFehlen: "Mit dem eigenen Einkommen fehlen jeden Monat",
         verplant: "{betrag} verplant",
         vonEinkommenNetto: "von {betrag} Einkommen, netto",
         vonEinkommen: "von {betrag} Einkommen",

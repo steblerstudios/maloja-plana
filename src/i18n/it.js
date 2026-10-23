@@ -1979,6 +1979,9 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Ogni mese restano",
+        fehlen: "Ogni mese mancano",
+        eigenBleiben: "Con il proprio reddito ogni mese restano",
+        eigenFehlen: "Con il proprio reddito ogni mese mancano",
         verplant: "{betrag} pianificato",
         vonEinkommenNetto: "su {betrag} di reddito netto",
         vonEinkommen: "su {betrag} di reddito",

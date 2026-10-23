@@ -92,16 +92,16 @@ export function zurErwachsenenErfassung(doc = typeof document !== 'undefined' ? 
 export const NEBENERWERB_FELDER = ['sideIncome', 'sideEmployer', 'sideEmployerAddress', 'sideHoursPerWeek', 'sideIncomeType'];
 export const nebenerwerbAngegeben = (d) => NEBENERWERB_FELDER.some((k) => feldHatWert(d, k) || trifftNichtZu(d, k));
 
-// Fassung 5 · «Jeden Monat bleiben»: dieselbe Rechnung und Bedingung wie der Satz
-// «Es bleiben CHF …» (MirrorCards → utils/monatsrechnung.js). null, wenn nichts zu zeigen ist
-// (Einnahmen oder Ausgaben fehlen) oder die Ausgaben das Einkommen übersteigen.
+// Fassung 5 · «Jeden Monat bleiben»: dieselbe Rechnung wie der Satz «Es bleiben CHF …»
+// (MirrorCards → utils/monatsrechnung.js). null nur, wenn keine Ausgaben erfasst sind.
+// Seit 24.10.2026 (docs/entscheide/finanzen-fusion.md) auch im Minus und ohne eigenes
+// Einkommen — ob der Block dann erscheint, entscheidet renderMonatsHeld. Vorher: null.
 export const monatsUebersicht = (finanzen, allData) => {
   const einkommen = sumTotalIncome(finanzen);
   const verplant = sumAllExpenses(finanzen, allData);
-  if (!(einkommen > 0 && verplant > 0)) return null;
-  const bleibt = einkommen - verplant;
-  if (bleibt < 0) return null;
-  return { einkommen, verplant, bleibt, anteil: Math.min(100, Math.round((verplant / einkommen) * 100)) };
+  if (!(verplant > 0)) return null;
+  const anteil = einkommen > 0 ? Math.min(100, Math.round((verplant / einkommen) * 100)) : 100;
+  return { einkommen, verplant, bleibt: einkommen - verplant, anteil };
 };
 
 // Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js: dazu Partner/in,
@@ -1914,28 +1914,42 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const [vor, nach = ''] = tr(key).split('{betrag}');
     return [vor, React.createElement('b', { key: 'b', style: { color: palette.text, fontWeight: weight.semi, whiteSpace: 'nowrap' } }, format(wert)), nach];
   };
+  // Entscheide 24.10.2026 (docs/entscheide/finanzen-fusion.md): eigener Lohn brutto → die
+  // Netto-Frage statt einer Zahl, die so nie auf dem Konto liegt (wie die Budget-Seite). Im Minus
+  // «Jeden Monat fehlen» statt nichts. Ohne eigenes Einkommen nur, wenn der Haushalt etwas zu sagen
+  // hat. Steht die Haushalts-Zeile darunter, nennt die obere Zeile das eigene Einkommen.
   const renderMonatsHeld = () => {
     const m = monatsUebersicht(data, allData);
     if (!m) return null;
+    const label = { fontSize: text.sm, color: palette.mid, marginBottom: '2px' };
+    if (data.incomeType === 'brutto' && m.einkommen > 0) {
+      return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: label }, tr('chapters.finanzen.monat.bleiben')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('budgetSync.availableNeedsNetto'))
+      );
+    }
+    const h = haushaltsSaldo(allData, m.bleibt);
+    if (m.einkommen <= 0 && !h) return null;
+    const plus = m.bleibt >= 0;
+    const titelKey = 'chapters.finanzen.monat.' + (h ? (plus ? 'eigenBleiben' : 'eigenFehlen') : (plus ? 'bleiben' : 'fehlen'));
     // «netto» nur, wenn das Einkommen als Netto erfasst ist — sonst stimmte das Wort nicht.
     const einkommenKey = data.incomeType === 'netto' ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, tr('chapters.finanzen.monat.bleiben')),
-      React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(m.bleibt)),
+      React.createElement('div', { style: label }, tr(titelKey)),
+      React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),
       // Der Balken wiederholt nur die zwei Zahlen darunter — darum für Screenreader stumm.
       React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
         React.createElement('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: m.anteil + '%', background: palette.gold, borderRadius: radius.full } })
       ),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
-        React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
+        m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
       ),
-      renderHaushaltsSaldo(m)
+      renderHaushaltsSaldo(h)
     );
   };
   // Zweite Zeile: der Haushalt wie auf der Budget-Seite — nur, wenn er abweicht.
-  const renderHaushaltsSaldo = (m) => {
-    const h = haushaltsSaldo(allData, m.bleibt);
+  const renderHaushaltsSaldo = (h) => {
     if (!h) return null;
     return React.createElement('div', { 'data-teil': 'monat-haushalt', style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '88' } },
       h.brutto
@@ -1998,9 +2012,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ),
 
     // Fassung 5 · «Jeden Monat bleiben» — nur Finanzen. Rechnet genau wie der Satz
-    // «Es bleiben CHF …» (utils/monatsrechnung.js), dieselbe Bedingung: Einnahmen und
-    // Ausgaben erfasst. Bei einem Minus kein «bleiben»-Betrag — der Satz sagt dann
-    // «Es fehlen …»; eine erfundene Formulierung dafür gibt es nicht.
+    // «Es bleiben CHF …» (utils/monatsrechnung.js). Seit 24.10.2026 im Minus «Jeden Monat
+    // fehlen» (wie der Satz «Es fehlen …»), bei Brutto die Netto-Frage — siehe renderMonatsHeld.
     chapter.key === 'finanzen' && renderMonatsHeld(),
 
     // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt

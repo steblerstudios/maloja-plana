@@ -1979,6 +1979,9 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Left over each month",
+        fehlen: "Short each month",
+        eigenBleiben: "With your own income, left over each month",
+        eigenFehlen: "With your own income, short each month",
         verplant: "{betrag} budgeted",
         vonEinkommenNetto: "of {betrag} net income",
         vonEinkommen: "of {betrag} income",
