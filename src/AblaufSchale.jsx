@@ -97,7 +97,9 @@ export const fristSichern = (reminder, { vorlaeufig, onSaved } = {}) => {
   return ergebnis;
 };
 
-export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
+// `kompakt` (Fassung 5, Frist-Karte im Umzug): ruhiger Rahmen-Knopf statt Hauptknopf, weil
+// er in einer Karte neben Titel und Datum steht und der Schritt schon einen Hauptknopf hat.
+export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved, kompakt = false }) => {
   const s = styles(palette);
   const vorlaeufig = useVorlaeufig();
   const [done, setDone] = useState(null);
@@ -114,6 +116,16 @@ export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel,
     );
   }
   const zeichen = React.createElement(Icon, { name: 'calendar', size: 16 });
+  if (kompakt) {
+    return React.createElement('button', {
+      type: 'button', onClick: handle,
+      style: {
+        display: 'inline-flex', alignItems: 'center', gap: space.xs + 'px', minHeight: '44px', boxSizing: 'border-box',
+        padding: '0 ' + space.md + 'px', background: 'none', border: '1.5px solid ' + palette.sand, borderRadius: radius.sm,
+        color: palette.sandDeep, fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit', cursor: 'pointer', flexShrink: 0,
+      },
+    }, zeichen, buttonLabel);
+  }
   const basis = { minHeight: '44px', boxSizing: 'border-box', marginTop: space.sm + 'px', textAlign: 'left' };
   return React.createElement(PrimaryButton, { palette, onClick: handle, icon: zeichen, style: basis }, buttonLabel);
 };
@@ -124,13 +136,39 @@ export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel,
 // Rechnung selbst (`frist`) kommt aus utils/fristen.js — nie später als das Gesetz.
 // `wert`/`onWert` optional: wer das Datum auch anderswo braucht, hält es selbst.
 export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey, buttonKey, doneKey, calendarKey,
-  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate, ohneFeld = false }) => {
+  reminderTitle, reminderNotes, category = 'admin', frist, wert, onWert, onNavigate, ohneFeld = false, karte = null }) => {
   const s = styles(palette);
   const [eigen, setEigen] = useState(wert || '');
   const datum = onWert ? (wert || '') : eigen;
   const setze = onWert || setEigen;
   const ziel = frist(datum);
   const vorbei = istVorbei(ziel);
+  const reminder = { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}) };
+  // `karte` (Fassung 5, bisher nur der Umzug): die Frist als Karte mit Datum —
+  // «{titel} · bis {Datum}» und daneben ein ruhiger Knopf «In den Kalender». Danach wie
+  // bisher «Im Kalender notiert.» + «Zum Kalender». Vorbei: dieselbe Karte, mit dem
+  // ruhigen Satz statt Knopf. Form: { titelKey, bisKey, knopfKey }.
+  const fristKarte = karte && ziel ? React.createElement('div', {
+    'data-frist-karte': vorbei ? 'vorbei' : 'offen',
+    style: {
+      marginTop: space.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm,
+      border: '1px solid ' + (vorbei ? palette.gold || palette.border : palette.border),
+      background: palette.up, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px',
+    },
+  },
+    vorbei
+      ? React.createElement('p', { style: { ...s.stepText, color: palette.text, margin: 0 } }, t(vorbeiKey, { date: formatDE(ziel) }))
+      : React.createElement(React.Fragment, null,
+        React.createElement('div', { style: { minWidth: 0 } },
+          React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t(karte.titelKey)),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(karte.bisKey, { date: formatDE(ziel) }))),
+        React.createElement(FristButton, {
+          key: ziel, palette, t, onNavigate, kompakt: true, reminder,
+          buttonLabel: t(karte.knopfKey),
+          doneLabel: t(doneKey),
+          calendarLabel: calendarKey ? t(calendarKey) : null,
+        }))
+  ) : null;
   // `ohneFeld`: das Datum kommt aus einem Feld weiter oben im selben Ablauf (ein
   // Ereignis, zwei Fristen — z.B. Einreise → Gemeinde und Führerausweis). Dann kein
   // zweites Eingabefeld, das dieselbe Frage noch einmal stellt.
@@ -140,15 +178,48 @@ export const EreignisFrist = ({ palette, t, id, labelKey, hinweisKey, vorbeiKey,
       id, type: 'date', value: datum, onChange: (e) => setze(e.target.value),
       style: { padding: '10px 12px', minHeight: '44px', boxSizing: 'border-box', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontSize: text.sm, fontFamily: 'inherit' },
     }),
-    ziel && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } },
+    fristKarte,
+    !karte && ziel && React.createElement('p', { style: { ...s.stepText, marginTop: space.sm + 'px' } },
       t(vorbei ? vorbeiKey : hinweisKey, { date: formatDE(ziel) })),
-    ziel && !vorbei && React.createElement(FristButton, {
+    !karte && ziel && !vorbei && React.createElement(FristButton, {
       // Ein neues Datum ist ein neuer Termin — der Knopf beginnt wieder unbestätigt.
       key: ziel, palette, t, onNavigate,
       buttonLabel: t(buttonKey, { date: formatDE(ziel) }),
       doneLabel: t(doneKey),
       calendarLabel: calendarKey ? t(calendarKey) : null,
-      reminder: { title: reminderTitle, dueDate: ziel, category, recurrence: 'once', ...(reminderNotes ? { notes: reminderNotes } : {}) },
+      reminder,
+    })
+  );
+};
+
+// Passstrasse (Fassung 5, Entscheid Sophie 23.10.2026, erster Nutzer: Umzug): die Schritte
+// als Stationen auf einer Strasse in Kehren; der gefahrene Teil in der Farbe des Bereichs,
+// erledigte Stationen mit Haken, die aktuelle etwas grösser. Reine Grafik (aria-hidden) —
+// wo man steht, sagt die Zeile «Schritt n von N» darüber im Text.
+// Die Strasse hat genau vier Stationen: Anfang, die zwei Kehren-Enden, Ziel (Anteile am
+// Weg gemessen, 0 · 0.32 · 0.64 · 1). Für andere Schrittzahlen ist sie nicht gebaut.
+const PASS_PFAD = 'M24 132 C 120 132, 150 104, 96 88 S 70 46, 170 52 S 300 40, 316 18';
+const PASS_STATIONEN = [{ x: 24, y: 132, anteil: 0 }, { x: 96, y: 88, anteil: 0.321 }, { x: 170, y: 52, anteil: 0.644 }, { x: 316, y: 18, anteil: 1 }];
+export const PASS_SCHRITTE = PASS_STATIONEN.length;
+
+export const AblaufPass = ({ palette, aktuell, fertig }) => {
+  const farbe = (ablaufFarbe(palette) || {}).zeichen || palette.sageDeep || palette.sage;
+  const stand = fertig ? 1 : PASS_STATIONEN[Math.min(Math.max(aktuell, 0), PASS_SCHRITTE - 1)].anteil;
+  return React.createElement('svg', {
+    viewBox: '0 0 340 150', 'aria-hidden': 'true', focusable: 'false', 'data-ablauf-pass': fertig ? 'fertig' : String(aktuell),
+    style: { display: 'block', width: '100%', maxWidth: '340px', height: 'auto', margin: '0 0 ' + space.md + 'px' },
+  },
+    React.createElement('path', { d: PASS_PFAD, fill: 'none', stroke: palette.border, strokeWidth: 12, strokeLinecap: 'round' }),
+    stand > 0 && React.createElement('path', { d: PASS_PFAD, fill: 'none', stroke: farbe, strokeWidth: 12, strokeLinecap: 'round', pathLength: 1, strokeDasharray: '1 1', strokeDashoffset: 1 - stand }),
+    React.createElement('path', { d: PASS_PFAD, fill: 'none', stroke: palette.bg, strokeWidth: 1.2, strokeDasharray: '5 6', opacity: 0.8 }),
+    PASS_STATIONEN.map((p, i) => {
+      const erledigt = fertig || i < aktuell;
+      const jetzt = !fertig && i === aktuell;
+      return React.createElement('g', { key: i },
+        React.createElement('circle', { cx: p.x, cy: p.y, r: jetzt ? 11 : 9, fill: erledigt ? farbe : palette.bg, stroke: erledigt || jetzt ? farbe : palette.border, strokeWidth: 3 }),
+        erledigt
+          ? React.createElement('path', { d: `M${p.x - 4} ${p.y} l3 3 5-6`, stroke: palette.bg, strokeWidth: 2.2, fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' })
+          : React.createElement('text', { x: p.x, y: p.y + 4, textAnchor: 'middle', style: { fontSize: '11px', fontWeight: 600, fill: jetzt ? farbe : palette.soft } }, String(i + 1)));
     })
   );
 };
