@@ -89,6 +89,14 @@ Namen (Portemonnaie-Karte, Arbeitslosenentschädigung) — erst nach Copy-Prüfe
 `utils/monatsrechnung.js`, Maria jetzt 2’459 in Kapitel und Budget. Fachprüfung ohne Blocker. Fixes 1–8: PR #562.
 **Als Nächstes:** Kapitel-Muster aus Runde 9 im Code (`ChapterView.jsx`), Kapitel für Kapitel.
 
+**Kapitel-Muster, Schritt 1 gebaut** (24.10.2026, 21:39): Zweig `feat/f6-kapitel-muster`, Entwurfs-PR #565
+(Basis #564). Ruhige Zusammenfassung, «Passend» und «Als Nächstes» in allen 7 Kapiteln, Notfall endet mit «Alle
+Kapitel durchgegangen», Basis «Im Haushalt». Copy-Prüfer eingearbeitet.
+**Offen, zu entscheiden:** Runde 9 AB («Versicherungs-Übersicht» als eigene Seite) widerspricht
+`maloja-frontend/docs/entscheide/seiten-buendeln.md` Entscheid 3 (`praemien` + `kvg` ins Kapitel Versicherungen).
+**Als Nächstes:** Instrumente je Kapitel, eins nach dem anderen — Wohnen (Drittel, Barometer, Regler) zuerst,
+eine Sitzung je Kapitel.
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
