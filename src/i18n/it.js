@@ -2779,7 +2779,7 @@ export default {
     skosNote: 'Valore indicativo della Conferenza svizzera delle istituzioni dell\'azione sociale. Per orientamento, non per valutazione.',
     autoUpdateNote: { sie: 'Si aggiorna automaticamente quando modifica i dati negli altri capitoli.', du: 'Si aggiorna automaticamente quando modifichi i dati negli altri capitoli.' },
     bvgReferenceNote: 'LPP e AVS sono già dedotti dal salario netto — mostrati qui solo a titolo informativo.',
-    // Legacy keys used by ChartsAdvanced
+    // Legacy keys, used by the Geldfluss (components/Geldfluss.jsx)
     housingCosts: 'Abitazione',
     healthInsurance: 'Assicurazione malattia',
     group: {
@@ -3955,11 +3955,6 @@ export default {
     },
   },
 
-  charts: {
-    title: 'Grafici',
-    noData: 'Nessun grafico ancora',
-    noDataHint: { sie: 'Inserisca entrate e uscite nei capitoli per vedere i grafici qui.', du: 'Inserisci entrate e uscite nei capitoli per vedere i grafici qui.' },
-  },
 
   validation: {
     countryCode: 'Prefisso internazionale',

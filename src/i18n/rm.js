@@ -4227,11 +4227,6 @@ export default {
     jahrNichtBelegt: 'Ils salaris minimals en questa app èn verifitgads tenor las funtaunas uffizialas per {jahr}. Per {laufend} n’èn anc naginas valurs verifitgadas registradas — perquai qua nagina cumparegliaziun. L’import valaivel po vegnir consultà tar il chantun ({kanton}).', // TODO(rm): Gegenlese Muttersprachler:in
   },
 
-  charts: {
-    title: 'Graficas',
-    noData: 'Anc naginas graficas',
-    noDataHint: { sie: 'Endatai Vossa entrada e Vossas expensas en ils chapitels per vesair qua graficas.', du: 'Endatescha Tia entrada e Tias expensas en ils chapitels per vesair qua graficas.' },
-  },
 
   expiryHints: {
     idCard: 'Legitimaziun: 10 onns valida (< 18: 5 onns)',
