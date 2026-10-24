@@ -38,6 +38,13 @@ oben ein Instrument mit Wert (Barometer, Vorschau, Frist) · Angaben als Liste �
 - **Budget/Datenmodell:** Gehören erfasste Prämien (Hausrat, Haftpflicht) ins Budget? Haftpflicht hat kein
   Prämienfeld. Erfassten PK-Beitrag statt Schätzung nach Alter verwenden?
 - **ALV:** ein Name — «Arbeitslosenentschädigung» oder «ALV-Taggeld».
+- **Kapitel Finanzen · Geldfluss (Sankey) — nochmals besprechen** (Sophie 24.10.2026 abends: «schon besser,
+  aber irgendwie finde ich den Geldfluss dort komisch … für die Runde 6 bei den Seiten nochmals drüber
+  reden»). Stand: am Anfang der Auswertung, nach dem Lebensbaum, vor «Wo steht Ihr Lohn?»; nur mit
+  Einkommen. Gebaut auf `feat/charts-geldfluss` (Commit `e620588a`, lokal, nicht gepusht), vorher kurz
+  auf der Charts-Seite (dort «der Ort ist falsch»). Zu klären: anderer Ort, andere Darstellung oder
+  weglassen? Dazu gleich mitentscheiden: die Charts-Seite zeigt wieder das Kuchendiagramm — behalten oder
+  streichen, seit die Finanz-Auswertung im Kapitel steht?
 
 ## Fix-Liste für den Bau (Befunde aus VERGLEICH.md, App heute)
 
