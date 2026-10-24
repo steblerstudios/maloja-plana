@@ -1814,7 +1814,7 @@ body.still .rs-karte { transition: none; }
 
 <!-- ===================== P · Notfall (der Ort) ===================== -->
 <section class="abschnitt" id="p">
-  <h2>P · Ort — «Notfall»</h2>
+  <h2>P · Ort — «Notfall» <small style="font-weight:400;color:var(--soft)">— entfällt, aufgegangen im Kapitel Notfall (AE), 24.10.</small></h2>
   <p class="warum"><b>Neu am 24.10. (Entscheid Sophie: vier Seiten, ein Ort, ein Name je Seite).</b> Heute «Was brauchen Sie im Notfall?» (<code>#/notfalleinstieg</code>), auf der Übersicht als «Notfallkarte vorbereiten». Hier der gemeinsame Ort für alle vier Notfall-Seiten: zuerst der Weg im Ernstfall, dann die zwei Vorbereitungen, dann die drei Szenarien. Kopf links statt zentriert, Szenarien als echte Knöpfe (44 px, Enter und Leertaste).</p>
   <div class="geraet" data-seite="p">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
@@ -2676,7 +2676,7 @@ body.still .rs-karte { transition: none; }
 <!-- ===================== AE · Kapitel Notfall ===================== -->
 <section class="abschnitt" id="ae">
   <h2>AE · Kapitel — «Notfall»</h2>
-  <p class="warum"><b>Neu am 24.10. (Kapitel für Kapitel), das letzte Kapitel.</b> Heute: grüner Kasten, darunter ein Link «Notfallkarte drucken», der wie ein Kästchen zum Abhaken aussieht, dann die Angaben. Vorschlag: oben eine <b>Vorschau der Karte zum Drucken</b> aus den Angaben, darunter der Weg zum <b>Notfall-Ort (P)</b> und <b>Vorsorge</b> als vier Felder. Werte Maria Muster.</p>
+  <p class="warum"><b>Neu am 24.10., umgebaut am selben Tag (Entscheid Sophie: «das Kapitel Notfall ist der eine Ort, P fällt weg»).</b> Das Kapitel nimmt den Notfall-Ort (P) in sich auf: zuerst <b>Im Ernstfall</b> (Notfallkarte), dann <b>Vorbereiten</b> (Notfallpass, Dossier, Karte zum Drucken), dann die <b>drei Szenarien</b> — eine fehlende Angabe führt direkt zum Feld unten —, dann <b>Vorsorge</b> und die Angaben. Werte Maria Muster.</p>
   <div class="geraet" data-seite="ae">
     <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
     <div class="rahmen"><nav class="seitenmenue" data-aktiv="notfall"></nav>
@@ -2689,9 +2689,16 @@ body.still .rs-karte { transition: none; }
             <p class="satz">Notfallkontakte und medizinische Informationen</p>
             <p class="unter">Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.</p>
             <p class="kap-zus">Für den Notfall ist eine Kontaktperson hinterlegt. Ein Hausarzt ist eingetragen. Blutgruppe A+, Allergie gegen Penicillin.</p>
+            <nav class="nf-geschw" aria-label="Notfall-Seiten"><a href="#ae" aria-current="page">Notfall</a><a href="#q">Notfallkarte</a><a href="#r">Notfallpass</a><a href="#s">Notfall-Dossier</a></nav>
           </div>
           <div class="held stufe s2">
-            <h4 class="kap-h">Ihre Notfallkarte — Vorschau</h4>
+            <h4 class="kap-h">Im Ernstfall</h4>
+            <a class="verweis" href="#q" style="border:1px solid var(--notfall);border-radius:12px;padding:12px 12px;min-height:64px"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span><b style="font-weight:600">Notfallkarte</b><small data-sie="Was Sie am Telefon sagen — führt durch den Anruf und zeigt Ihre wichtigsten Angaben." data-du="Was du am Telefon sagst — führt durch den Anruf und zeigt deine wichtigsten Angaben."></small></span><span class="pfeil">›</span></a>
+
+            <h4 class="kap-h">Vorbereiten</h4>
+            <a class="verweis" href="#r"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfallpass<small>Für den Sperrbildschirm · Angaben Feld für Feld zum Übertragen</small></span><span class="pfeil">›</span></a>
+            <a class="verweis" href="#s"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfall-Dossier<small>Wenn jemand anderes helfen muss · zum Ausdrucken, mit QR-Code</small></span><span class="pfeil">›</span></a>
+            <h4 class="kap-h" style="font-size:15px;margin-top:16px">Karte zum Drucken — Vorschau</h4>
             <div style="background:#f6f3ee;color:#2a2622;border-radius:10px;padding:14px 16px;font-size:12px;line-height:1.45;box-shadow:0 1px 0 var(--border);border-left:5px solid #B0524C">
               <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#B0524C">NOTFALL</div>
               <div style="font-size:16px;font-weight:600;margin-top:2px">Maria Muster</div>
@@ -2706,8 +2713,18 @@ body.still .rs-karte { transition: none; }
             <div class="knoepfe" style="margin-top:10px"><button class="knopfruhig">Notfallkarte drucken</button></div>
             <p class="fuss">Für die Brieftasche. Allergien stehen nur als «erfasst» auf der Karte, der Inhalt nicht.</p>
 
-            <h4 class="kap-h">Alles für den Ernstfall</h4>
-            <a class="verweis" href="#p"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfall<small>Notfallkarte, Notfallpass, Dossier · Unfall, Spital, Behördengang</small></span><span class="pfeil">›</span></a>
+            <h4 class="kap-h">Drei Szenarien</h4>
+            <p class="fuss" style="margin:0 0 4px">Welche Angaben Sie dafür parat haben sollten.</p>
+            <details class="nf-szen" open><summary><span><b>Unfall</b><small>Sie hatten einen Unfall. Was brauchen Rettungskräfte und Spital?</small></span><span class="stand">8 von 9</span></summary>
+              <ul class="nf-liste"><li>Notfall-Kontaktperson</li><li>Telefon Notfall</li><li>Blutgruppe</li><li>Allergien</li><li class="offen">Regelmässige Medikamente</li><li>Hausarzt</li><li>Telefon Arzt</li><li>Krankenkasse</li><li>KK-Kartennummer</li></ul>
+              <a class="verweis" href="#ae-medikamente" style="margin-bottom:10px"><span>Regelmässige Medikamente ergänzen<small>Unten in den Angaben · Medizinisches</small></span><span class="pfeil">↓</span></a>
+            </details>
+            <details class="nf-szen"><summary><span><b>Spitalaufenthalt</b><small>Sie müssen ins Spital. Was braucht die Aufnahme?</small></span><span class="stand">10 von 10 ✓</span></summary>
+              <ul class="nf-liste"><li>Vorname</li><li>Nachname</li><li>Geburtsdatum</li><li>AHV-Nummer</li><li>Krankenkasse</li><li>KK-Kartennummer</li><li>Franchise CHF</li><li>Notfall-Kontaktperson</li><li>Telefon Notfall</li><li>Patientenverfügung vorhanden?</li></ul>
+            </details>
+            <details class="nf-szen"><summary><span><b>Behördengang</b><small>Sie gehen auf ein Amt. Was müssen Sie dabei haben?</small></span><span class="stand">9 von 9 ✓</span></summary>
+              <ul class="nf-liste"><li>Vorname</li><li>Nachname</li><li>Geburtsdatum</li><li>Kanton</li><li>Strasse &amp; Hausnummer</li><li>PLZ</li><li>Ort</li><li>AHV-Nummer</li><li>Steuerkanton</li></ul>
+            </details>
 
             <h4 class="kap-h">Vorsorge</h4>
             <p class="fuss" style="margin:0 0 6px">Was gilt, wenn Sie selbst nicht mehr entscheiden können. <span style="color:var(--text)">1 von 4 geregelt.</span></p>
@@ -2727,7 +2744,8 @@ body.still .rs-karte { transition: none; }
             <div class="po"><span>Notfall-Kontaktperson</span><span>Peter Muster</span></div><div class="po"><span>Telefon Notfall</span><span style="white-space:nowrap">+41 79 654 32 10</span></div>
             <div class="gr"><span>Medizinisches</span><span style="color:var(--sand);font-weight:500">ändern ›</span></div>
             <div class="po"><span>Blutgruppe</span><span>A+</span></div><div class="po"><span>Allergien</span><span>Penicillin</span></div>
-            <div class="leer">Medikamente und Vorerkrankungen: nicht erfasst.</div>
+            <a class="po" id="ae-medikamente" href="#" style="color:inherit;text-decoration:none;outline:1px dashed var(--notfall);outline-offset:2px;border-radius:4px"><span>○ Regelmässige Medikamente</span><span style="color:var(--sand)">ergänzen ›</span></a>
+            <div class="leer">Vorerkrankungen: nicht erfasst.</div>
             <div class="gr"><span>Ärztliche Betreuung</span><span style="color:var(--sand);font-weight:500">ändern ›</span></div>
             <div class="po"><span>Hausarzt</span><span>Dr. med. Lisa Brunner</span></div><div class="po"><span>Telefon Arzt</span><span style="white-space:nowrap">+41 44 242 80 00</span></div><div class="po"><span>Bevorzugtes Spital</span><span>UniversitätsSpital Zürich</span></div>
             <div class="gr"><span>Vorsorge</span><span style="color:var(--sand);font-weight:500">ändern ›</span></div>
@@ -2735,8 +2753,6 @@ body.still .rs-karte { transition: none; }
           </div>
           <div class="passend">
             <h4>Passend zu diesem Bereich</h4>
-            <a class="verweis" href="#p"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfall<small>Der Ort für den Ernstfall</small></span><span class="pfeil">›</span></a>
-            <a class="verweis" href="#r"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfallpass<small>Auf den Sperrbildschirm des Handys</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Patientenverfügung erstellen<small>In Fragen, zum Drucken</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Bestattungswünsche<small>Festhalten, was Ihnen wichtig ist</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#d"><span class="sym k" data-icon="basis"></span><span>Dokumente ablegen<small>Unterlagen · Patientenverfügung, Organspendekarte, Blutgruppenausweis</small></span><span class="pfeil">›</span></a>
@@ -2748,6 +2764,7 @@ body.still .rs-karte { transition: none; }
             <button class="knopfruhig">Zur Übersicht ›</button>
           </div>
           <p class="fuss" style="text-align:center">Die Informationen sind hinterlegt.</p>
+          <div class="vertrauen" style="justify-content:center;margin-top:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Daten bleiben auf diesem Gerät." data-du="Deine Daten bleiben auf diesem Gerät."></span></div>
         </div>
       </div>
     </div></div>
@@ -2757,13 +2774,15 @@ body.still .rs-karte { transition: none; }
   <div class="notiz"><ul>
     <li><b>Oben: Vorschau der Karte zum Drucken</b> (Papierkarte wie die Lebenslauf-Vorschau in AC), aus denselben Abschnitten wie der Druck (`notfallkarteAbschnitte`, `ChapterView.jsx:1103`). Darunter «Notfallkarte drucken» als echter Knopf — heute ein Link mit Kästchen-Zeichen (`hinweisZeichen('kaestchen')`, `ChapterView.jsx:1869`), der wie ein Häkchen zum Abhaken aussieht.</li>
     <li><b>Namensfrage:</b> «Notfallkarte» heisst seit Runde 5 die Notruf-Vorlesekarte (Q). Die Karte zum Drucken hier ist etwas anderes (Brieftasche). Zwei Dinge, ein Name — vor dem Bau klären (z. B. «Karte für die Brieftasche»).</li>
-    <li><b>Alles für den Ernstfall:</b> eine Zeile zum Notfall-Ort (P) mit Notfallkarte, Notfallpass, Dossier und den drei Szenarien. Das Kapitel bleibt der Ort zum Eintragen (Entscheid Runde 5).</li>
+    <li><b>Ein Ort (ersetzt Runde 5 «Kapitel bleibt der Ort zum Eintragen»):</b> P (`#/notfalleinstieg`) entfällt; die Route leitet ins Kapitel. Die Zeile der Schwesterseiten heisst jetzt Notfall (Kapitel) · Notfallkarte · Notfallpass · Notfall-Dossier; Q, R, S führen mit «Übersicht › Notfall ›» hierher zurück. Die Übersichtskarte «Notfallkarte vorbereiten» führt ins Kapitel.</li>
+    <li><b>Im Ernstfall</b> zuoberst: die Notfallkarte (Q) als umrandete Zeile — ein Tipp vom Kapitel aus, wie bisher von P.</li>
+    <li><b>Drei Szenarien</b> aus P übernommen (Unfall 8 von 9, Spital 10 von 10, Behördengang 9 von 9). Fehlt etwas, führt die Zeile direkt zum Feld in den Angaben derselben Seite (hier «Regelmässige Medikamente», mit ○ und «ergänzen ›» markiert) — statt «Fehlende Angabe im Kapitel Notfall ergänzen». Angaben aus anderen Kapiteln (z. B. AHV-Nummer) führen in jenes Kapitel.</li>
     <li><b>Vorsorge</b> als vier Felder mit ✓/○ (nicht nur Farbe) und «1 von 4 geregelt». Patientenverfügung und Vorsorgeauftrag stehen auch in AD «Für den Fall der Fälle» — dort als Sicht, eingetragen werden sie hier.</li>
-    <li><b>Passend:</b> Notfall (Ort) · Notfallpass · Patientenverfügung erstellen · Bestattungswünsche · Dokumente ablegen. Vorsorgeauftrag &amp; Patientenverfügung steht schon unter Vorsorge.</li>
+    <li><b>Passend:</b> Patientenverfügung erstellen · Bestattungswünsche · Dokumente ablegen. Notfall (Ort) und Notfallpass fallen aus «Passend», weil sie jetzt oben auf der Seite stehen.</li>
     <li><b>Als Nächstes:</b> Notfall ist das letzte Kapitel. Heute endet es ohne Weg; neu «Alle Kapitel durchgegangen · Zur Übersicht ›». «Die Informationen sind hinterlegt.» bleibt leise.</li>
     <li><b>Befund App:</b> Telefonnummern und «Zustimmung — alle Organe und Gewebe» brechen in der schmalen Wertspalte über vier Zeilen (wie AC, AD). Medikamente und Vorerkrankungen sind leer und werden heute gar nicht genannt.</li>
     <li><b>Geburtsdatum</b> in der Vorschau aus der Persönlichen Basis (`demoData.js`: 1992-03-15).</li>
-    <li><b>Copy-Prüfer:</b> Zusammenfassung (ergänzt), «Ihre Notfallkarte — Vorschau», Satz zur Brieftasche, «Alles für den Ernstfall», «Vorsorge»-Satz, «1 von 4 geregelt», «Medikamente und Vorerkrankungen: nicht erfasst», «Alle Kapitel durchgegangen», Passend-Untertitel.</li>
+    <li><b>Copy-Prüfer:</b> Zusammenfassung (ergänzt), «Ihre Notfallkarte — Vorschau», Satz zur Brieftasche, «Im Ernstfall», «Vorbereiten», «Karte zum Drucken — Vorschau», «Regelmässige Medikamente ergänzen», «Vorsorge»-Satz, «1 von 4 geregelt», «Vorerkrankungen: nicht erfasst», «Alle Kapitel durchgegangen», Passend-Untertitel.</li>
   </ul></div>
 </section>
 
