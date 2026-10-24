@@ -71,7 +71,7 @@ const JobManager = React.lazy(() => import('./JobManager.jsx'));
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
-const MietVergleich = React.lazy(() => import('./components/MietVergleich.jsx').then((m) => ({ default: m.MietVergleich })));
+const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -2118,6 +2118,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Nur der Satz — die Tabellen wiederholten, was die Abschnittsliste zeigt (27.09.2026).
     React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
 
+    // Fassung 6 · Kapitel Wohnen (Runde 9, Entwurf Z): Wohnkosten pro Monat mit Drittel-Marke,
+    // Regional-Barometer und «Ausprobieren: andere Miete». Einkommen und «Frei verfügbar» aus der
+    // einen Monatsrechnung; der Regler verändert das Profil nie.
+    chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'wohnkosten', fallback: null },
+      React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
+    ),
+
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
     // Notfallkarte export — quiet text link (below mirror cards)
@@ -2274,52 +2281,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       );
     })(),
 
-    // Wohnkostenanteil — housing cost share when both costs and income are recorded
-    chapter.key === 'wohnen' && allData && (() => {
-      const rent = parseFloat(data.rentAmount) || 0;
-      const util = parseFloat(data.utilities) || 0;
-      const wohnkosten = rent + util;
-      if (wohnkosten <= 0) return null;
-      const fin = allData.finanzen || {};
-      const income = (parseFloat(fin.monthlyIncome) || 0) + (parseFloat(fin.familienzulagen) || 0) + (parseFloat(fin.alimenteReceived) || 0);
-      if (income <= 0) return null;
-      const pct = ((wohnkosten / income) * 100).toFixed(1).replace(/\.0$/, '');
-      const fmt = (v) => zahl(v);
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('wohnkostenanteil.intro')),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.housing')),
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(wohnkosten) + ' ' + tr('wohnkostenanteil.perMonth'))
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.income')),
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(income) + ' ' + tr('wohnkostenanteil.perMonth'))
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0' } },
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, tr('wohnkostenanteil.share')),
-          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, pct + ' %')
-        )
-      );
-    })(),
-
-    // Mietvergleich: die eigene Miete neben den BFS-Werten für Kanton und Haushalt. Stand bis
-    // 24.10.2026 auf der Finanz-Übersicht unter dem Lohn; seit der Zusammenlegung hier beim Wohnen
-    // (docs/entscheide/finanzen-fusion.md, Bauschritt 5). Ohne Kanton oder Miete: nichts.
-    chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'miet-vergleich', fallback: null },
-      React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-        React.createElement(MietVergleich, { palette, t: tr, data: allData, isDarkMode })
-      )
-    ),
+    // Wohnen: der Kasten «Wohnkosten / Einkommen / Anteil» und der MietVergleich standen bis
+    // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
+    // oben unter der Zusammenfassung (components/WohnkostenInstrument.jsx).
 
     // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
     // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,

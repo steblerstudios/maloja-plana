@@ -2325,12 +2325,29 @@ export default {
     patientenverfuegung: 'Patientenverfügung hinterlegt',
   },
 
-  wohnkostenanteil: {
-    intro: 'Die erfassten Wohnkosten im Verhältnis zum erfassten Einkommen.',
-    housing: 'Wohnkosten',
-    income: 'Einkommen',
-    share: 'Anteil',
-    perMonth: 'pro Monat',
+  // Fassung 6 · Kapitel Wohnen, Instrument oben (Runde 9, Entwurf Z, 24.10.2026). Ersetzt «wohnkostenanteil».
+  // Die Drittel-Marke ist eine Faustregel, keine Vorschrift (Swiss-Precision-Prüfer).
+  wohnenInstrument: {
+    titel: 'Wohnkosten pro Monat',
+    titelAusprobiert: 'Wohnkosten pro Monat · ausprobiert',
+    anteil: '{pct} % des Einkommens (CHF {einkommen})',
+    anteilBrutto: '{pct} % des Bruttoeinkommens (CHF {einkommen})',
+    drittel: 'ein Drittel',
+    faustregel: 'Als grobe Orientierung gilt oft: Wohnkosten bis rund einen Drittel des Einkommens. Eine feste Grenze ist das nicht — bei kleinem Einkommen kann auch weniger schon knapp werden.',
+    mehrAlsDrittel: 'Mehr als ein Drittel des Einkommens geht ans Wohnen. Das ist eine Faustregel, keine Vorschrift — ob es aufgeht, zeigt die Rechnung mit allen Ausgaben.',
+    ohneEinkommen: 'Sobald ein Einkommen im Kapitel Finanzen erfasst ist, zeigt sich hier, welchen Anteil das Wohnen braucht.',
+    ausprobieren: 'Ausprobieren: andere Miete',
+    wohnungssuche: 'Wohnungssuche',
+    reglerLabel: 'Nettomiete einer neuen Wohnung',
+    nebenkostenWieHeute: 'Nebenkosten (wie heute)',
+    freiDanach: 'Frei verfügbar danach',
+    durchspielen: { sie: 'Zum Durchspielen — es wird nichts gespeichert. Die Zahlen oben folgen dem Regler, bis Sie ihn zurücksetzen.', du: 'Zum Durchspielen — es wird nichts gespeichert. Die Zahlen oben folgen dem Regler, bis du ihn zurücksetzt.' },
+    zurueck: 'Zurück auf die heutige Miete',
+    ausprobierteMiete: 'Ausprobierte Miete: CHF {amount}',
+    anteilEigen: { sie: '{pct} % Ihres eigenen Einkommens (CHF {einkommen})', du: '{pct} % deines eigenen Einkommens (CHF {einkommen})' },
+    anteilTeilsBrutto: '{pct} % des erfassten Einkommens (CHF {einkommen}, teils brutto)',
+    mitPartner: 'Die Wohnkosten gelten für den Haushalt, gerechnet ist hier nur das eigene Einkommen. Mit Partner/in zusammen ist der Anteil kleiner.',
+    fehltDanach: 'Es fehlen danach',
   },
 
   chapterView: {

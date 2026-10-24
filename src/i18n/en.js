@@ -2317,12 +2317,28 @@ export default {
     patientenverfuegung: 'Advance directive filed',
   },
 
-  wohnkostenanteil: {
-    intro: 'Recorded housing costs in relation to recorded income.',
-    housing: 'Housing costs',
-    income: 'Income',
-    share: 'Share',
-    perMonth: 'per month',
+  // Fassung 6 · housing chapter, instrument at the top (round 9, draft Z, 24.10.2026). Replaces «wohnkostenanteil».
+  wohnenInstrument: {
+    titel: 'Housing costs per month',
+    titelAusprobiert: 'Housing costs per month · trying out',
+    anteil: '{pct}% of income (CHF {einkommen})',
+    anteilBrutto: '{pct}% of gross income (CHF {einkommen})',
+    drittel: 'one third',
+    faustregel: 'A rough guide often used: housing costs up to about a third of income. It is not a fixed limit — on a small income, less can already be tight.',
+    mehrAlsDrittel: 'More than a third of income goes to housing. That is a rule of thumb, not a requirement — whether it works out shows in the calculation with all expenses.',
+    ohneEinkommen: 'As soon as an income is entered in the Finances chapter, this shows the share housing takes.',
+    ausprobieren: 'Try it: a different rent',
+    wohnungssuche: 'Flat search',
+    reglerLabel: 'Net rent of a new flat',
+    nebenkostenWieHeute: 'Service charges (as today)',
+    freiDanach: 'Left over afterwards',
+    durchspielen: 'Just for trying out — nothing is saved. The figures above follow the slider until you reset it.',
+    zurueck: 'Back to the current rent',
+    ausprobierteMiete: 'Rent tried out: CHF {amount}',
+    anteilEigen: '{pct}% of your own income (CHF {einkommen})',
+    anteilTeilsBrutto: '{pct}% of recorded income (CHF {einkommen}, partly gross)',
+    mitPartner: 'Housing costs are for the household, but only your own income is counted here. Together with your partner, the share is smaller.',
+    fehltDanach: 'Short afterwards',
   },
 
   chapterView: {

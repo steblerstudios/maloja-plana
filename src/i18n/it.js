@@ -2317,12 +2317,28 @@ export default {
     patientenverfuegung: 'Direttive anticipate depositate',
   },
 
-  wohnkostenanteil: {
-    intro: 'I costi abitativi registrati in rapporto al reddito registrato.',
-    housing: 'Costi abitativi',
-    income: 'Reddito',
-    share: 'Quota',
-    perMonth: 'al mese',
+  // Fassung 6 · capitolo Abitazione, strumento in alto (giro 9, bozza Z, 24.10.2026). Sostituisce «wohnkostenanteil».
+  wohnenInstrument: {
+    titel: 'Costi abitativi al mese',
+    titelAusprobiert: 'Costi abitativi al mese · in prova',
+    anteil: '{pct}% del reddito (CHF {einkommen})',
+    anteilBrutto: '{pct}% del reddito lordo (CHF {einkommen})',
+    drittel: 'un terzo',
+    faustregel: 'Un orientamento approssimativo spesso usato: costi abitativi fino a circa un terzo del reddito. Non è un limite fisso — con un reddito basso anche meno può già essere stretto.',
+    mehrAlsDrittel: 'Più di un terzo del reddito va all\'abitazione. È una regola pratica, non un obbligo — il calcolo con tutte le spese mostra se i conti tornano.',
+    ohneEinkommen: 'Appena un reddito è registrato nel capitolo Finanze, qui si vede quale quota richiede l\'abitazione.',
+    ausprobieren: 'Provare: un altro affitto',
+    wohnungssuche: 'Ricerca di un alloggio',
+    reglerLabel: 'Affitto netto di un nuovo alloggio',
+    nebenkostenWieHeute: 'Spese accessorie (come oggi)',
+    freiDanach: 'Disponibile dopo',
+    durchspielen: { sie: 'Solo per provare — non viene salvato nulla. Le cifre sopra seguono il cursore finché non lo reimposta.', du: 'Solo per provare — non viene salvato nulla. Le cifre sopra seguono il cursore finché non lo reimposti.' },
+    zurueck: 'Tornare all\'affitto attuale',
+    ausprobierteMiete: 'Affitto provato: CHF {amount}',
+    anteilEigen: { sie: '{pct}% del Suo reddito (CHF {einkommen})', du: '{pct}% del tuo reddito (CHF {einkommen})' },
+    anteilTeilsBrutto: '{pct}% del reddito registrato (CHF {einkommen}, in parte lordo)',
+    mitPartner: 'I costi abitativi valgono per l\'economia domestica, ma qui conta solo il reddito proprio. Insieme a quello del partner o della partner la quota è più piccola.',
+    fehltDanach: 'Mancano poi',
   },
 
   chapterView: {

@@ -4204,12 +4204,29 @@ export default {
     ahv: 'AVS/AI/EO',
   },
 
-  wohnkostenanteil: {
-    intro: "Ils custs d'abitar registrads en relaziun cun l'entrada registrada.",
-    housing: "Custs d'abitar",
-    income: 'Entrada',
-    share: 'Part',
-    perMonth: 'per mais',
+  // Fassung 6 · chapitel Abitar, instrument sisum (runda 9, sboz Z, 24.10.2026). Remplazza «wohnkostenanteil».
+  // rm ungeprüft F6
+  wohnenInstrument: {
+    titel: "Custs d'abitar per mais",
+    titelAusprobiert: "Custs d'abitar per mais · empruvà",
+    anteil: "{pct} % da l'entrada (CHF {einkommen})",
+    anteilBrutto: "{pct} % da l'entrada bruta (CHF {einkommen})",
+    drittel: 'in terz',
+    faustregel: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
+    mehrAlsDrittel: "Dapli ch'in terz da l'entrada va per abitar. Quai è ina reglacurta, nagin'obligaziun — il quint cun tut las expensas mussa, sch'i va si.",
+    ohneEinkommen: "Uschespert ch'ina entrada è registrada en il chapitel Finanzas, sa mussi qua, tge part che l'abitar dovra.",
+    ausprobieren: 'Empruvar: in auter fit',
+    wohnungssuche: "Tschertga d'abitaziun",
+    reglerLabel: "Fit net d'ina nova abitaziun",
+    nebenkostenWieHeute: 'Custs accessorics (sco oz)',
+    freiDanach: 'Liber suenter',
+    durchspielen: { sie: "Mo per empruvar — i na vegn memorisà nagut. Las cifras survart suondan il reglader, fin che Vus al reponis.", du: "Mo per empruvar — i na vegn memorisà nagut. Las cifras survart suondan il reglader, fin che ti al reponas." },
+    zurueck: 'Enavos al fit dad oz',
+    ausprobierteMiete: 'Fit empruvà: CHF {amount}',
+    anteilEigen: { sie: "{pct} % da Vossa atgna entrada (CHF {einkommen})", du: "{pct} % da tia atgna entrada (CHF {einkommen})" },
+    anteilTeilsBrutto: "{pct} % da l'entrada registrada (CHF {einkommen}, per part brut)",
+    mitPartner: "Ils custs d'abitar valan per l'economia da chasa, qua è quintada mo l'atgna entrada. Ensemen cun il partenari u la partenaria è la part pli pitschna.",
+    fehltDanach: 'I manca suenter',
   },
 
   contextLinks: {
