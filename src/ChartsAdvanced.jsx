@@ -4,103 +4,51 @@ import { text, weight, shadow, radius, space } from './config/tokens.js';
 import { betrag } from './utils/geld.js';
 import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
 
-// Geldfluss (Sankey): links, woher das Geld kommt, in der Mitte der Monat, rechts, wohin es
-// geht. Die Breite jedes Bands ist der Betrag. Das Geld fliesst über die Mitte, weil Maloja
-// nicht weiss, welcher Franken welche Rechnung bezahlt — es wird nichts zugeordnet.
-// Löst am 24.10.2026 das Kuchendiagramm ab (Sophie: «Bau zuerst den Geldfluss»).
-// Beträge stehen nicht im Bild, sondern in der Balkenliste darunter (am Handy lesbar).
-// Schmal (unter 480 px): das Bild hätte rund 6 px Schrift (im Browser gemessen 24.10.2026,
-// Handy 375 px) — dort ohne Text im Bild, die Namen stehen als Legende darunter.
-const FLUSS = { knoten: 10, luecke: 6, zeile: 15, rand: 8, hoehe: 220 };
-const SPALTEN = {
-  breit: { breite: 560, links: 150, mitte: 275, rechts: 400 },
-  schmal: { breite: 300, links: 2, mitte: 145, rechts: 288 },
-};
-const SCHMAL_AB = 480;
+const PieChart = ({ data, labels, colors, title, palette }) => {
+  const total = data.reduce((a, b) => a + b, 0);
+  if (total === 0) return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
+    React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
+    React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: text.sm, padding: '20px' } }, '—')
+  );
 
-export function geldflussLayout(quellen, ziele) {
-  const summe = (liste) => liste.reduce((a, x) => a + x.value, 0);
-  const total = Math.max(summe(quellen), summe(ziele));
-  if (total <= 0) return null;
-  const meiste = Math.max(quellen.length, ziele.length);
-  const innen = Math.max(FLUSS.hoehe, meiste * (FLUSS.zeile + 4));
-  const massstab = (innen - FLUSS.luecke * (meiste - 1)) / total;
+  let currentAngle = 0;
+  const segments = [];
 
-  const stapeln = (liste) => {
-    const hoehe = summe(liste) * massstab + FLUSS.luecke * (liste.length - 1);
-    let y = FLUSS.rand + (innen - hoehe) / 2;
-    let mitteY = FLUSS.rand + (innen - summe(liste) * massstab) / 2;
-    let letzteMarke = -Infinity;
-    return liste.map((x) => {
-      const h = Math.max(1, x.value * massstab);
-      const knoten = { ...x, y, h, mitteY, marke: Math.max(y + h / 2, letzteMarke + FLUSS.zeile) };
-      letzteMarke = knoten.marke;
-      y += h + FLUSS.luecke;
-      mitteY += h;
-      return knoten;
-    });
-  };
+  data.forEach((val, idx) => {
+    if (val <= 0) return;
+    const angle = (val / total) * 360;
+    const startAngle = currentAngle;
+    const endAngle = currentAngle + angle;
+    currentAngle = endAngle;
 
-  const links = stapeln(quellen);
-  const rechts = stapeln(ziele);
-  const unten = Math.max(FLUSS.rand * 2 + innen, ...links.concat(rechts).map((k) => k.marke + FLUSS.zeile));
-  return { links, rechts, mitte: { y: FLUSS.rand + (innen - total * massstab) / 2, h: total * massstab }, hoehe: unten };
-}
+    const startRad = (startAngle - 90) * Math.PI / 180;
+    const endRad = (endAngle - 90) * Math.PI / 180;
+    const x1 = 100 + 80 * Math.cos(startRad);
+    const y1 = 100 + 80 * Math.sin(startRad);
+    const x2 = 100 + 80 * Math.cos(endRad);
+    const y2 = 100 + 80 * Math.sin(endRad);
+    const largeArc = angle > 180 ? 1 : 0;
 
-const band = (x0, y0, x1, y1, h) => {
-  const xm = (x0 + x1) / 2;
-  return `M ${x0} ${y0} C ${xm} ${y0}, ${xm} ${y1}, ${x1} ${y1} L ${x1} ${y1 + h} C ${xm} ${y1 + h}, ${xm} ${y0 + h}, ${x0} ${y0 + h} Z`;
-};
+    segments.push(
+      React.createElement('path', {
+        key: idx,
+        d: `M 100 100 L ${x1} ${y1} A 80 80 0 ${largeArc} 1 ${x2} ${y2} Z`,
+        fill: colors[idx],
+        stroke: palette.surface,
+        strokeWidth: '2'
+      })
+    );
+  });
 
-const Legende = ({ ueberschrift, knoten, palette }) => React.createElement('div', { style: { flex: '1 1 140px' } },
-  React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, ueberschrift),
-  knoten.map((x) => React.createElement('div', { key: x.label, style: { display: 'flex', gap: '6px', alignItems: 'center', fontSize: text.xs, color: palette.text, marginBottom: '2px' } },
-    React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', background: x.color, borderRadius: radius.hair, flexShrink: 0 } }),
-    x.label
-  ))
-);
-
-const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette }) => {
-  const rahmen = React.useRef(null);
-  const [schmal, setSchmal] = React.useState(false);
-  React.useEffect(() => {
-    const el = rahmen.current;
-    if (!el || typeof ResizeObserver === 'undefined') return undefined;
-    const beobachter = new ResizeObserver(([e]) => setSchmal(e.contentRect.width < SCHMAL_AB));
-    beobachter.observe(el);
-    return () => beobachter.disconnect();
-  }, []);
-
-  const lage = geldflussLayout(quellen, ziele);
-  if (!lage) return null;
-  const { links, rechts, mitte, hoehe } = lage;
-  const k = FLUSS.knoten;
-  const s = schmal ? SPALTEN.schmal : SPALTEN.breit;
-  const beschriftung = (knoten, x, anker) => React.createElement('text', {
-    key: 't' + knoten.label, x, y: knoten.marke, dy: '0.35em', textAnchor: anker,
-    fontSize: 12, fill: palette.text,
-  }, knoten.label);
-
-  return React.createElement('div', { ref: rahmen, style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
-    React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: '0 0 6px 0' } }, titel),
-    React.createElement('svg', {
-      viewBox: `0 0 ${s.breite} ${hoehe}`, role: 'img', 'aria-label': beschreibung,
-      style: { width: '100%', height: 'auto', display: 'block' },
-    },
-      React.createElement('title', null, beschreibung),
-      links.map((q) => React.createElement('path', { key: 'bl' + q.label, d: band(s.links + k, q.y, s.mitte, q.mitteY, q.h), fill: q.color, fillOpacity: 0.35 })),
-      rechts.map((z) => React.createElement('path', { key: 'br' + z.label, d: band(s.mitte + k, z.mitteY, s.rechts, z.y, z.h), fill: z.color, fillOpacity: 0.35 })),
-      links.map((q) => React.createElement('rect', { key: 'kl' + q.label, x: s.links, y: q.y, width: k, height: q.h, fill: q.color })),
-      React.createElement('rect', { x: s.mitte, y: mitte.y, width: k, height: mitte.h, fill: palette.mid }),
-      rechts.map((z) => React.createElement('rect', { key: 'kr' + z.label, x: s.rechts, y: z.y, width: k, height: z.h, fill: z.color })),
-      !schmal && links.map((q) => beschriftung(q, s.links - 8, 'end')),
-      !schmal && rechts.map((z) => beschriftung(z, s.rechts + k + 8, 'start'))
-    ),
-    schmal && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginTop: space.sm } },
-      React.createElement(Legende, { ueberschrift: woher, knoten: links, palette }),
-      React.createElement(Legende, { ueberschrift: wohin, knoten: rechts, palette })
-    ),
-    React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '6px 0 0 0' } }, beschreibung)
+  return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
+    React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
+    React.createElement('svg', { width: '200', height: '200', viewBox: '0 0 200 200', 'aria-hidden': 'true', style: { margin: '0 auto', display: 'block' } }, segments),
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm, marginTop: '12px', fontSize: text.xs } },
+      labels.map((label, idx) => data[idx] > 0 ? React.createElement('div', { key: idx, style: { display: 'flex', gap: '6px', alignItems: 'center' } },
+        React.createElement('div', { style: { width: '10px', height: '10px', background: colors[idx], borderRadius: radius.hair, flexShrink: 0 } }),
+        React.createElement('span', null, label + ' (' + Math.round((data[idx] / total) * 100) + '%)')
+      ) : null)
+    )
   );
 };
 
@@ -167,17 +115,12 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
 
   const maxExpense = Math.max(...expenseItems.map(i => i.value));
 
-  // Woher: dieselben drei Felder wie sumTotalIncome. Reicht das Einkommen nicht, steht der
-  // Rest links als «Nicht gedeckt», damit beide Seiten gleich breit sind — nichts wird erfunden.
-  const f = data?.finanzen || {};
-  const quellen = [
-    { label: t('charts.flowSalary'), value: Number(f.monthlyIncome || 0), color: palette.sky },
-    { label: t('charts.flowFamilyAllowances'), value: Number(f.familienzulagen || 0), color: palette.gold },
-    { label: t('charts.flowAlimonyReceived'), value: Number(f.alimenteReceived || 0), color: palette.sand },
-    { label: t('charts.flowUncovered'), value: Math.max(0, totalExpenses - income), color: palette.border },
-  ].filter(q => q.value > 0);
-  const ziele = expenseItems.concat(remaining > 0 ? [{ label: t('budgetSync.remaining'), value: remaining, color: palette.sage }] : []);
-  const flussText = t('charts.flowSummary', { income: betrag(income, { hoechstens: 2 }), expenses: betrag(totalExpenses, { hoechstens: 2 }) });
+  const pieData = expenseItems.map(i => i.value);
+  pieData.push(remaining);
+  const pieLabels = expenseItems.map(i => i.label);
+  pieLabels.push(t('budgetSync.remaining') || 'Verfügbar');
+  const pieColors = expenseItems.map(i => i.color);
+  pieColors.push('#C9D4C5');
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'chartsSchoko', size: 20 }), t('charts.title')),
@@ -200,14 +143,12 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
     // Nur bei Netto-Erfassung wahr: bei Brutto sind BVG und AHV noch nicht abgezogen (Tor 23.10.2026).
     bvg > 0 && data?.finanzen?.incomeType === 'netto' && React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.md + 'px' } }, t('budgetSync.bvgReferenceNote')),
 
-    React.createElement(Geldfluss, {
+    React.createElement(PieChart, {
       palette,
-      quellen,
-      ziele,
-      titel: t('charts.flowTitle'),
-      beschreibung: flussText,
-      woher: t('charts.flowFrom'),
-      wohin: t('charts.flowTo'),
+      data: pieData,
+      labels: pieLabels,
+      colors: pieColors,
+      title: t('budgetSync.expensesOverview')
     }),
 
     expenseItems.length > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },

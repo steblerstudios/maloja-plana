@@ -1970,6 +1970,16 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      geldfluss: {
+        title: 'Where the money comes from, where it goes',
+        salary: 'Monthly income',
+        familyAllowances: 'Family allowances',
+        alimonyReceived: 'Maintenance received',
+        uncovered: 'Not covered',
+        summary: 'Each month {income} comes in and {expenses} goes out. The width of each band shows the amount.',
+        from: 'From',
+        to: 'To',
+      },
       short: 'Finances',
       description: 'Your income, savings, and bank details',
       intro: 'A clear picture of your financial situation. This helps with budgeting, tax, and subsidy applications.',
@@ -3948,14 +3958,6 @@ export default {
     title: 'Charts',
     noData: 'No charts yet',
     noDataHint: 'Fill in your income and expenses in the chapters to see charts here.',
-    flowTitle: 'Where the money comes from, where it goes',
-    flowSalary: 'Monthly income',
-    flowFamilyAllowances: 'Family allowances',
-    flowAlimonyReceived: 'Maintenance received',
-    flowUncovered: 'Not covered',
-    flowSummary: 'Each month {income} comes in and {expenses} goes out. The width of each band shows the amount.',
-    flowFrom: 'From',
-    flowTo: 'To',
   },
 
   validation: {

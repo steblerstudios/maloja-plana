@@ -34,7 +34,10 @@ describe('Auswertung im Kapitel, oberer Teil', () => {
     const stelle = (s) => { const i = text.indexOf(s); expect(i, s).toBeGreaterThan(-1); return i; };
     const lohn = stelle('Wo steht Ihr Lohn?');
     const folgt = stelle('Was sich daraus ergibt');
-    const steuern = stelle('Steuern');
+    // Ab «Was sich daraus ergibt» gesucht: seit 24.10.2026 steht «Steuern» auch als Ausgabe im
+    // Geldfluss weiter oben (geldfluss.test.js hält dessen Platz vor dem Lohn fest).
+    const steuern = text.indexOf('Steuern', folgt);
+    expect(steuern, 'Steuern').toBeGreaterThan(-1);
     const ipv = stelle('Prämienverbilligung');
     const weitere = stelle('Weitere Ansprüche');
     const sozialhilfe = text.indexOf('Sozialhilfe', weitere);

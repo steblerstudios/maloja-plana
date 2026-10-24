@@ -1970,6 +1970,16 @@ export default {
     },
     finanzen: {
       title: 'Finanze',
+      geldfluss: {
+        title: 'Da dove arrivano i soldi, dove vanno',
+        salary: 'Reddito mensile',
+        familyAllowances: 'Assegni familiari',
+        alimonyReceived: 'Alimenti ricevuti',
+        uncovered: 'Non coperto',
+        summary: 'Ogni mese entrano {income} ed escono {expenses}. La larghezza di ogni banda mostra l’importo.',
+        from: 'Da dove',
+        to: 'Verso dove',
+      },
       short: 'Finanze',
       description: { sie: 'Il Suo reddito, i risparmi e i dati bancari', du: 'Il tuo reddito, i risparmi e i dati bancari' },
       intro: { sie: 'Un quadro chiaro della Sua situazione finanziaria. Utile per il budget, le tasse e le richieste di sostegno.', du: 'Un quadro chiaro della tua situazione finanziaria. Utile per il budget, le tasse e le richieste di sostegno.' },
@@ -3949,14 +3959,6 @@ export default {
     title: 'Grafici',
     noData: 'Nessun grafico ancora',
     noDataHint: { sie: 'Inserisca entrate e uscite nei capitoli per vedere i grafici qui.', du: 'Inserisci entrate e uscite nei capitoli per vedere i grafici qui.' },
-    flowTitle: 'Da dove arrivano i soldi, dove vanno',
-    flowSalary: 'Reddito mensile',
-    flowFamilyAllowances: 'Assegni familiari',
-    flowAlimonyReceived: 'Alimenti ricevuti',
-    flowUncovered: 'Non coperto',
-    flowSummary: 'Ogni mese entrano {income} ed escono {expenses}. La larghezza di ogni banda mostra l’importo.',
-    flowFrom: 'Da dove',
-    flowTo: 'Verso dove',
   },
 
   validation: {

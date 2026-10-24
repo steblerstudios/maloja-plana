@@ -1977,6 +1977,16 @@ export default {
     },
     finanzen: {
       title: 'Finanzen & Geld',
+      geldfluss: {
+        title: 'Woher das Geld kommt, wohin es geht',
+        salary: 'Monatseinkommen',
+        familyAllowances: 'Familienzulagen',
+        alimonyReceived: 'Alimente erhalten',
+        uncovered: 'Nicht gedeckt',
+        summary: 'Pro Monat kommen {income} herein und {expenses} gehen hinaus. Die Breite jedes Bands zeigt den Betrag.',
+        from: 'Woher',
+        to: 'Wohin',
+      },
       short: 'Finanzen',
       description: { sie: 'Ihr Einkommen, Erspartes und Bankdaten', du: 'Dein Einkommen, Erspartes und Bankdaten' },
       intro: { sie: 'Ein klares Bild Ihrer finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.', du: 'Ein klares Bild Deiner finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.' },
@@ -3993,14 +4003,6 @@ export default {
     title: 'Charts',
     noData: 'Noch keine Charts',
     noDataHint: { sie: 'Tragen Sie Ihr Einkommen und Ihre Ausgaben in den Kapiteln ein, um hier Charts zu sehen.', du: 'Trage Dein Einkommen und Deine Ausgaben in den Kapiteln ein, um hier Charts zu sehen.' },
-    flowTitle: 'Woher das Geld kommt, wohin es geht',
-    flowSalary: 'Monatseinkommen',
-    flowFamilyAllowances: 'Familienzulagen',
-    flowAlimonyReceived: 'Alimente erhalten',
-    flowUncovered: 'Nicht gedeckt',
-    flowSummary: 'Pro Monat kommen {income} herein und {expenses} gehen hinaus. Die Breite jedes Bands zeigt den Betrag.',
-    flowFrom: 'Woher',
-    flowTo: 'Wohin',
   },
 
   validation: {

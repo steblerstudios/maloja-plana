@@ -2078,6 +2078,16 @@ export default {
     },
     finanzen: {
       title: 'Finanzas & daners',
+      geldfluss: {
+        title: 'Danunder ch’ils daners vegnan, nua ch’els van',
+        salary: 'Entrada mensiala',
+        familyAllowances: 'Supplements da famiglia',
+        alimonyReceived: 'Aliments retschavids',
+        uncovered: 'Betg cuvrì',
+        summary: 'Mintga mais entran {income} e sortan {expenses}. La largezza da mintga banda mussa il import.',
+        from: 'Danunder',
+        to: 'Nua',
+      },
       short: 'Finanzas',
       description: { sie: 'Vossa entrada, spargn e datas bancaras', du: 'Tia entrada, spargn e datas bancaras' },
       intro: { sie: "Ina maletg clara da Vossa situaziun finanziala. Gida tar budget, taglia e dumondas d'agid.", du: "Ina maletg clara da Tia situaziun finanziala. Gida tar budget, taglia e dumondas d'agid." },
@@ -4221,14 +4231,6 @@ export default {
     title: 'Graficas',
     noData: 'Anc naginas graficas',
     noDataHint: { sie: 'Endatai Vossa entrada e Vossas expensas en ils chapitels per vesair qua graficas.', du: 'Endatescha Tia entrada e Tias expensas en ils chapitels per vesair qua graficas.' },
-    flowTitle: 'Danunder ch’ils daners vegnan, nua ch’els van',
-    flowSalary: 'Entrada mensiala',
-    flowFamilyAllowances: 'Supplements da famiglia',
-    flowAlimonyReceived: 'Aliments retschavids',
-    flowUncovered: 'Betg cuvrì',
-    flowSummary: 'Mintga mais entran {income} e sortan {expenses}. La largezza da mintga banda mussa il import.',
-    flowFrom: 'Danunder',
-    flowTo: 'Nua',
   },
 
   expiryHints: {
