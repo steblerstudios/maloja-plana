@@ -662,3 +662,36 @@ Notfall-Entwürfe passen». Entwürfe: `seiten-v5.html?nur=p|q|r|s` (d1758b61).
 
 **Befund App:** im Beispiel (Maria) zeigt das Notfall-Dossier «Der QR-Code liess sich nicht erzeugen.» —
 Ursache nicht geprüft (Länge der Angaben? nur Demo?). Vor dem Bau klären. Druck-HTML ohne `lang` (a11y M11).
+
+---
+
+## Runde 6 · Datenseiten (24.10.2026)
+
+**Gefunden beim Ansehen (Demo Maria):** Die Budget-Seite (`#/sync`, «Monatsbudget») zeigt nach dem Ausbau von K
+dasselbe wie die Finanz-Übersicht. Lebensmappe, Behörden-Dossier und Notfall-Dossier haben dieselbe Form
+(Vorschau + Drucken) unter «Meine Unterlagen». Export ist im Beispiel gesperrt (nicht angesehen).
+Bilder: `heute-budget.jpg`, `heute-unterlagen.jpg`, `heute-lebensmappe.jpg`, `heute-behoerdendossier.jpg`.
+Vergleich: Reiter «Budget → Finanz-Übersicht», «Meine Unterlagen», «Lebensmappe», «Behörden-Dossier».
+
+### Datenseiten · entschieden (Sophie, 24.10.2026)
+
+Sophie wählte beide Empfehlungen («In Finanz-Übersicht aufgehen», «Drei Seiten, eine Form»), danach «die
+Datenseiten passen». Entwürfe: `seiten-v5.html?nur=k|t|u|v` (4701df97).
+
+- **Budget geht in der Finanz-Übersicht (K) auf.** Dazu in K ergänzt: Anteil am Einkommen je Gruppe (leise
+  hinter dem Gruppennamen), «6 Kategorien können Sie noch ergänzen …», «SKOS-Grundbedarf (Orientierung)»
+  aufklappbar, «Budget exportieren», «Wird automatisch aktualisiert …». `#/sync` leitet auf die
+  Finanz-Übersicht. Die Finanz-Übersicht ist damit der eine Ort fürs Geld.
+- **T Meine Unterlagen** bleibt der Ort für Ablage, Dossiers, Briefe und Sicherung: Kopf links statt in Karte,
+  Liste statt sechs Kästen, zwei Gruppen «Zum Ausdrucken» und «Schreiben und sichern», die ganze Zeile ist der
+  Knopf (die Texte «… öffnen» fallen weg), Notfall-Dossier als Verweis «unter Notfall».
+- **Drei Dossiers, eine Form** (wie S): **U Lebensmappe** und **V Behörden-Dossier** — Kopf links, Drucken als
+  Hauptknopf (V zusätzlich «Dossier-Datei exportieren» ruhig), Vorschau als Liste mit Gruppen. In V stehen die
+  langen Hinweise (Steuer, Annahmen, Mehrkosten) als Satz unter der Gruppe statt fett in der Wertspalte, der
+  Status der Orientierung rechts in der Gruppenzeile.
+
+**Neue Texte für den Copy-Prüfer:** «Zum Ausdrucken», «Schreiben und sichern», «keine» (Mögliche
+Unterstützung), SKOS-Satz «Zur Einordnung, keine Berechnung eines Anspruchs — mehr dazu bei «Was steht mir
+zu?»», Feldnamen ohne «CHF» im Namen.
+
+**Befund App:** Behörden-Dossier zeigt «Mögliche Unterstützung /Mt.» ohne Betrag, wenn kein Anspruch besteht.
