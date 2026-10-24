@@ -104,7 +104,8 @@ describe('Kein Leser zeigt Sozialhilfe ohne Zusatz', () => {
   };
   const LESER = [
     '../Schnellcheck.jsx', '../components/Leistungsliste.jsx', '../AnspruchCheck.jsx', '../BudgetSync.jsx',
-    '../FinanzUebersicht.jsx', ...Object.keys(OHNE_EIGENEN_ZUSATZ),
+    // Die Sozialhilfe-Karte der Finanz-Übersicht steht seit 24.10.2026 in components/FinanzAuswertung.jsx.
+    '../components/FinanzAuswertung.jsx', ...Object.keys(OHNE_EIGENEN_ZUSATZ),
   ];
   it('jede Datei, die calculateSozialhilfe aufruft, ist bekannt', () => {
     const src = fileURLToPath(new URL('..', import.meta.url));

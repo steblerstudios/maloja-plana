@@ -11,7 +11,9 @@ import { GlossarText } from './GlossarBegriff.jsx';
 // neue Kasse (zwei Wege, anklickbar) → Kündigung → Frist sichern. Eine editoriale Seite
 // von oben nach unten, keine Wizard-Hölle.
 
-// Nächster ordentlicher Kündigungstermin: 30. November (dieses Jahr, sonst nächstes).
+// Nächster Kündigungstermin nach der Prämienmitteilung: 30. November (dieses Jahr, sonst nächstes),
+// KVG Art. 7 Abs. 2. Nicht die ordentliche Kündigung nach Abs. 1 (Ende Semester, Eingang bis 31. März
+// bzw. 30. September) — die stand hier bis 24.10.2026 fälschlich (Fachprüfung swiss-precision).
 export const nextNov30 = (heute = new Date()) => {
   const now = new Date(heute);
   now.setHours(0, 0, 0, 0); // Datum, nicht Uhrzeit vergleichen → der 30.11. selbst zählt noch

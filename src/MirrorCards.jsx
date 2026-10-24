@@ -184,10 +184,12 @@ function buildFinanzenSentence(data, allData, t) {
     parts.push(t('mirror.finanzen.expensesRecorded', { amount: formatCHF(expSum) }) + '.');
   }
 
-  // Third part: financial difference
+  // Third part: financial difference — nicht bei brutto erfasstem Lohn. Darüber steht dann die
+  // Frage nach dem Netto statt einer Zahl (Entscheid Stebler Studios 24.10.2026,
+  // docs/entscheide/finanzen-fusion.md); ein Rest aus dem Bruttolohn läge so nie auf dem Konto.
   const totalIncome = sumTotalIncome(data);
   const totalExp = sumAllExpenses(data, allData);
-  if (totalIncome > 0 && totalExp > 0) {
+  if (data.incomeType !== 'brutto' && totalIncome > 0 && totalExp > 0) {
     const diff = totalIncome - totalExp;
     if (diff > 0) {
       parts.push(t('mirror.finanzen.remainsPositive', { amount: formatCHF(diff) }) + '.');

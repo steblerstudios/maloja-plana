@@ -14,6 +14,9 @@ import { ZielHinweis } from './components/ExternerLink.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
+import { werktagAmOderDavor } from './utils/fristen.js';
+import { Jahreskreis } from './components/Jahreskreis.jsx';
+import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -84,12 +87,15 @@ const ArtMarke = ({ art, farbe, erledigt, palette, gross }) => {
 };
 
 // ─── Component ──────────────────────────────────────────────
-export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) => {
+// isMobile brauchte nur das alte Monatsraster (6 statt 12 Spalten); seit dem Jahreskreis ungenutzt.
+export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) => {
   // Im Beispiel und beim Ausprobieren (Entscheid 18.10.2026): der Kalender beginnt leer, was
   // man einträgt, liegt nur im Arbeitsspeicher. Die echten Erinnerungen bleiben unsichtbar
   // und unberührt. main.jsx hängt den Kalender beim Moduswechsel neu ein (key: datenModus).
   const vorlaeufig = useVorlaeufig();
-  const [reminders, setReminders] = useState(() => (vorlaeufig ? [] : loadReminders()));
+  // Seit 24.10.2026 beginnt nur das Beispiel Maria mit ein paar Terminen (demo/kalenderBeispiel.js);
+  // beim Ausprobieren bleibt der Kalender leer. Gespeichert wird im Beispiel weiterhin nichts.
+  const [reminders, setReminders] = useState(() => (vorlaeufig ? (beispiel ? kalenderBeispiel(t) : []) : loadReminders()));
   const [view, setView] = useState('upcoming'); // upcoming, completed, add
   const [showTemplates, setShowTemplates] = useState(false);
   // Visueller Kalender: Jahresband (12 Monate) + Monatsraster des gewählten Monats.
@@ -421,9 +427,6 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
     // der Brücke zum Hinzufügen — oder legt eine Aufgabe auf diesen Tag («Noch ohne Tag»).
     // Monatsnamen/Wochentage aus Intl (Swiss-Locale), damit keine 12×5-Namenspflege nötig ist.
     (() => {
-      const monthCount = Array(12).fill(0), monthOverdue = Array(12).fill(false);
-      reminders.forEach(r => { if (r.done) return; const dt = datumVon(r.dueDate); if (dt.getFullYear() === calYear) { monthCount[dt.getMonth()] += 1; if (r.dueDate < today) monthOverdue[dt.getMonth()] = true; } });
-      aufgabenOffen.forEach(m => { const dt = datumVon(m.tag); if (dt.getFullYear() === calYear) { monthCount[dt.getMonth()] += 1; if (m.tag < today) monthOverdue[dt.getMonth()] = true; } });
 
       const first = new Date(calYear, calMonth, 1);
       const startWd = (first.getDay() + 6) % 7; // Montag = 0 (CH)
@@ -433,18 +436,15 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
       for (let d = 1; d <= dim; d++) cells.push(d);
       const isoOf = (d) => calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
       const wdNames = []; for (let i = 0; i < 7; i++) wdNames.push(new Date(2024, 0, 1 + i).toLocaleDateString(LOCALE, { weekday: 'short' }));
-      const monName = (m) => new Date(2024, m, 1).toLocaleDateString(LOCALE, { month: 'short' });
       const monatJahr = (j, m) => new Date(j, m, 1).toLocaleDateString(LOCALE, { month: 'long', year: 'numeric' });
       const springe = (j, m) => { setCalYear(j); setCalMonth(m); setSelDate(null); };
       const vorher = calMonth === 0 ? [calYear - 1, 11] : [calYear, calMonth - 1];
       const nachher = calMonth === 11 ? [calYear + 1, 0] : [calYear, calMonth + 1];
 
       const navBtn = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, minWidth: '44px', height: '44px', cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.md, lineHeight: 1 };
-      const monthBtn = (m) => ({ position: 'relative', ...(isMobile ? { minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: space.sm + 'px' } : { padding: space.xs + 'px 0 ' + (space.sm) + 'px' }), border: '1px solid ' + (m === calMonth ? palette.sand : 'transparent'), background: m === calMonth ? palette.sand + '22' : 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, textAlign: 'center' });
       const verteilRand = verteilen ? palette.sage : palette.border;
       const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, background: iso === selDate ? palette.sand + '2E' : 'none', border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.sky : 'transparent')), fontWeight: isToday ? weight.semi : weight.normal });
       const stripTag = (iso, isToday) => ({ flex: '0 0 46px', minHeight: '64px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', gap: '3px', padding: '6px 0', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', color: palette.text, background: iso === selDate ? palette.sand + '2E' : (isToday ? palette.surface : 'none'), border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.text : 'transparent')) });
-      const dot = (col) => React.createElement('span', { 'aria-hidden': 'true', style: { position: 'absolute', bottom: '3px', left: '50%', transform: 'translateX(-50%)', width: '5px', height: '5px', borderRadius: '50%', background: col } });
       const markenReihe = (iso) => React.createElement('span', { style: { display: 'flex', gap: '2px', alignItems: 'center', minHeight: '8px' } }, ...markenZeile(iso));
 
       const selReminders = selDate ? reminders.filter(r => r.dueDate === selDate).sort((a, b) => Number(a.done) - Number(b.done)) : [];
@@ -460,13 +460,24 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
           ),
           React.createElement('button', { type: 'button', style: { ...knopfRuhig, color: palette.mid }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
-        // Zwölf Monate mit Punkt bei Terminen
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(' + (isMobile ? 6 : 12) + ', 1fr)', gap: isMobile ? '6px 4px' : '2px', marginBottom: space.sm + 'px' } },
-          ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
-            key: m, type: 'button', 'aria-pressed': m === calMonth, 'aria-label': monName(m) + (monthCount[m] ? ' · ' + monthCount[m] : ''),
-            style: monthBtn(m), onClick: () => { setCalMonth(m); setSelDate(null); },
-          }, monName(m), monthCount[m] > 0 ? dot(monthOverdue[m] ? palette.rose : palette.sage) : null))
-        ),
+        // Jahreskreis statt der zwölf Monatsknöpfe (Sophie 24.10.2026: «Ring als Hauptansicht»).
+        // Ein Monat im Ring wählt ihn für die Tagesleiste darunter. Darauf nur Hinterlegtes:
+        // eigene offene Einträge, die KVG-Kündigung (fristen.js, Werktag davor nach BAG) und die
+        // eigene Steuerfrist aus dem Kapitel Behörden. Kantonale IPV-Fristen fehlen bewusst
+        // (erst 5 von 26 hinterlegt).
+        React.createElement(Jahreskreis, {
+          jahr: calYear, heuteIso: today, gewaehlterMonat: calMonth, locale: LOCALE, palette, t, eingebettet: true,
+          onMonat: (m) => { setCalMonth(m); setSelDate(null); },
+          eintraege: [
+            ...upcoming.map(r => ({ key: 'r' + r.id, iso: r.dueDate, art: artVon(r), farbe: bereichZeichenFarbe(kategorieBereich(r.category), palette), titel: r.title })),
+            ...aufgabenOffen.map(m => ({ key: 'm' + m.id, iso: m.tag, art: 'aufgabe', farbe: bereichZeichenFarbe(merkpunktBereich(m.link), palette), titel: m.text })),
+            // Als Fenster ohne festen Anfang: das Recht beginnt mit der eigenen Prämienmitteilung
+            // (KVG Art. 7 Abs. 2), die spätestens am 31. Oktober da sein muss (BAG, priminfo) —
+            // der Strich dort ist «spätestens», kein Beginn (Fachprüfung 24.10.2026).
+            { key: 'fest-kvg', iso: werktagAmOderDavor(calYear + '-11-30'), art: 'frist', auslauf: 61, merke: calYear + '-10-31', farbe: bereichZeichenFarbe(kategorieBereich('insurance'), palette), titel: t('calendar.jahreskreis.kvgTitle'), quelle: t('calendar.jahreskreis.kvgSource') },
+            data?.behoerden?.taxFilingDeadline && { key: 'fest-steuer', iso: data.behoerden.taxFilingDeadline, art: 'frist', farbe: bereichZeichenFarbe(kategorieBereich('finance'), palette), titel: t('calendar.templates.taxDeadline'), quelle: t('calendar.jahreskreis.taxSource') },
+          ].filter(Boolean),
+        }),
         // Tagesleiste: die Tage des Monats, wischbar
         React.createElement('div', {
           ref: leisteRef, role: 'group', 'aria-label': monatJahr(calYear, calMonth),

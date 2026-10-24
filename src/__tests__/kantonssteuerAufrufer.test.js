@@ -179,11 +179,12 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
   });
 
   it('keiner der Aufrufer rechnet selbst: kein Faktor, kein eigener Tabellenzugriff', () => {
-    for (const datei of ['../FinanzUebersicht.jsx', '../BehoerdenDossier.jsx', '../TaxCalculator.jsx', '../dossierGenerator.js']) {
+    // Die Rechnung der Finanz-Übersicht steht seit 24.10.2026 in components/FinanzAuswertung.jsx.
+    for (const datei of ['../FinanzUebersicht.jsx', '../components/FinanzAuswertung.jsx', '../BehoerdenDossier.jsx', '../TaxCalculator.jsx', '../dossierGenerator.js']) {
       const code = readFileSync(new URL(datei, import.meta.url), 'utf-8');
       expect(code, datei).not.toMatch(/faktor|kantonssteuerTabelle|steuerfaktorBand/i);
     }
-    for (const datei of ['../FinanzUebersicht.jsx', '../BehoerdenDossier.jsx', '../TaxCalculator.jsx']) {
+    for (const datei of ['../components/FinanzAuswertung.jsx', '../BehoerdenDossier.jsx', '../TaxCalculator.jsx']) {
       const code = readFileSync(new URL(datei, import.meta.url), 'utf-8');
       expect(code, datei).toMatch(/steuernFuerProfil\(/);
       expect(code, datei).not.toMatch(/schaetzeKantonaleSteuer\(|kantonssteuerFuerProfil\(|berechneBundessteuer\(|steuerbarNachEstv\(/);

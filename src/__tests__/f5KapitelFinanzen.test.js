@@ -41,29 +41,57 @@ describe('«Jeden Monat bleiben»', () => {
     expect(m.bleibt).toBe(m.einkommen - m.verplant);
   });
 
+  // Maria zahlt in die Säule 3a ein — die Budget-Rechnung weicht ab, darum steht die
+  // Haushalts-Zeile darunter und die obere Zeile nennt das eigene Einkommen (Entscheid 24.10.2026).
   it('Maria: CHF 2’480, 3’720 verplant von 6’200 Einkommen, netto — wie der Satz', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const text = html.replace(/<[^>]+>/g, '');
-    expect(text).toContain('Jeden Monat bleibenCHF 2’480');
+    expect(text).toContain('Mit dem eigenen Einkommen bleiben jeden MonatCHF 2’480');
     expect(text).toContain('3’720 verplant');
     expect(text).toContain('von 6’200 Einkommen, netto');
     expect(text).toContain('Es bleiben CHF 2’480.');
   });
 
-  it('Einkommen brutto oder ohne Art: kein «netto»', () => {
-    for (const incomeType of ['brutto', '']) {
-      const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType }).replace(/<[^>]+>/g, '');
-      expect(text).toContain('von 6’200 Einkommen');
-      expect(text).not.toContain('Einkommen, netto');
-    }
+  it('Einkommen ohne Art: Zahl ohne «netto»', () => {
+    const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: '' }).replace(/<[^>]+>/g, '');
+    expect(text).toContain('von 6’200 Einkommen');
+    expect(text).not.toContain('Einkommen, netto');
   });
 
-  it('ohne Ausgaben, ohne Einkommen oder im Minus: kein Betrag', () => {
+  // Entscheid 24.10.2026: bei brutto keine Zahl, die so nie auf dem Konto liegt — die Netto-Frage
+  // wie auf der Budget-Seite. Vorher (Fassung 5, 23.10.) stand die Brutto-Zahl ohne «netto».
+  it('Einkommen brutto: keine Zahl, sondern die Frage nach dem Netto', () => {
+    const html = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' });
+    // Nur der Block — der Spiegelsatz darunter («Monatliches Einkommen …») ist eine eigene Stelle.
+    const text = html.replace(/<[^>]+>/g, '').split('Monatliches Einkommen')[0];
+    expect(text).toContain('Jeden Monat bleiben');
+    expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
+    expect(text).not.toContain('CHF 2’480');
+    expect(text).not.toContain('verplant');
+    expect(html).not.toContain('data-teil="monat-haushalt"');
+  });
+
+  // Entscheid 24.10.2026: auch der Spiegelsatz nennt bei brutto keinen Rest — sonst stünde
+  // «Es bleiben CHF 2’480» direkt unter der Frage nach dem Netto.
+  it('Einkommen brutto: Spiegelsatz mit Einkommen und Ausgaben, ohne «Es bleiben / Es fehlen»', () => {
+    const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' }).replace(/<[^>]+>/g, '');
+    expect(text).toContain('Monatliches Einkommen CHF 6’200');
+    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’720.');
+    expect(text).not.toContain('Es bleiben');
+    const minus = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto', monthlyIncome: '1000' }).replace(/<[^>]+>/g, '');
+    expect(minus).not.toContain('Es fehlen');
+  });
+
+  it('ohne Ausgaben: kein Block', () => {
     expect(monatsUebersicht({ monthlyIncome: '5000' }, {})).toBeNull();
-    expect(monatsUebersicht({ groceries: '400' }, {})).toBeNull();
-    expect(monatsUebersicht({ monthlyIncome: '1000', monthlyTax: '2000' }, {})).toBeNull();
-    const html = render('finanzen', { ...DEMO_DATA.finanzen, monthlyIncome: '1000' });
-    expect(html).not.toContain('data-teil="monat-bleiben"');
+  });
+
+  // Entscheid 24.10.2026: im Minus verschwindet der Block nicht mehr (vorher: kein Betrag).
+  // Die Darstellung prüft finanzenHaushaltsSaldo.test.js mit eigenen Daten.
+  it('im Minus: ein Ergebnis mit negativem Rest und vollem Balken', () => {
+    const m = monatsUebersicht({ monthlyIncome: '1000', monthlyTax: '2000' }, {});
+    expect(m.bleibt).toBe(-1000);
+    expect(m.anteil).toBe(100);
   });
 
   it('nur im Kapitel Finanzen', () => {
@@ -72,10 +100,12 @@ describe('«Jeden Monat bleiben»', () => {
 });
 
 describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
+  // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV im Kapitel selbst; «Passend»
+  // führt zu Budget und Behörden-Dossier (die zwei Wege der früheren Übersicht).
   it('vier Wege zu Zielen, die es in der App gibt', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     expect(html).toContain('Passend zu diesem Bereich');
-    for (const s of ['Alle Berechnungen auf einen Blick', 'Prämienverbilligung prüfen', 'Neuer Job', 'Ablauf · 5 Schritte', 'Lohnausweis ablegen']) {
+    for (const s of ['Neuer Job', 'Ablauf · 5 Schritte', 'Lohnausweis ablegen', 'Monatsbudget', 'Behörden-Dossier']) {
       expect(html).toContain(s);
     }
   });
@@ -86,7 +116,7 @@ describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
 
   it('die Ziele sind Ansichten, die die App wirklich zeigt (main.jsx)', () => {
     const main = fs.readFileSync(path.resolve(__dirname, '../main.jsx'), 'utf8');
-    for (const v of ['neuerjob', 'premium', 'finanzuebersicht', 'tresor']) expect(main).toContain("view === '" + v + "' && React.createElement(");
+    for (const v of ['neuerjob', 'sync', 'behoerdendossier', 'tresor']) expect(main).toContain("view === '" + v + "' && React.createElement(");
   });
 
   it('«Als Nächstes» mit Titel, Satz und dem Weiter-Knopf', () => {

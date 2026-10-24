@@ -30,7 +30,6 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
@@ -39,6 +38,7 @@ import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
+import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -65,6 +65,12 @@ const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
+// Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
+const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));
+// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
+const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
+// Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
+const MietVergleich = React.lazy(() => import('./components/MietVergleich.jsx').then((m) => ({ default: m.MietVergleich })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -91,19 +97,36 @@ export function zurErwachsenenErfassung(doc = typeof document !== 'undefined' ? 
 export const NEBENERWERB_FELDER = ['sideIncome', 'sideEmployer', 'sideEmployerAddress', 'sideHoursPerWeek', 'sideIncomeType'];
 export const nebenerwerbAngegeben = (d) => NEBENERWERB_FELDER.some((k) => feldHatWert(d, k) || trifftNichtZu(d, k));
 
-// Fassung 5 · «Jeden Monat bleiben»: dieselbe Rechnung und Bedingung wie der Satz
-// «Es bleiben CHF …» (MirrorCards → utils/monatsrechnung.js). null, wenn nichts zu zeigen ist
-// (Einnahmen oder Ausgaben fehlen) oder die Ausgaben das Einkommen übersteigen.
+// Fassung 5 · «Jeden Monat bleiben»: dieselbe Rechnung wie der Satz «Es bleiben CHF …»
+// (MirrorCards → utils/monatsrechnung.js). null nur, wenn keine Ausgaben erfasst sind.
+// Seit 24.10.2026 (docs/entscheide/finanzen-fusion.md) auch im Minus und ohne eigenes
+// Einkommen — ob der Block dann erscheint, entscheidet renderMonatsHeld. Vorher: null.
 export const monatsUebersicht = (finanzen, allData) => {
   const einkommen = sumTotalIncome(finanzen);
   const verplant = sumAllExpenses(finanzen, allData);
-  if (!(einkommen > 0 && verplant > 0)) return null;
-  const bleibt = einkommen - verplant;
-  if (bleibt < 0) return null;
-  return { einkommen, verplant, bleibt, anteil: Math.min(100, Math.round((verplant / einkommen) * 100)) };
+  if (!(verplant > 0)) return null;
+  const anteil = einkommen > 0 ? Math.min(100, Math.round((verplant / einkommen) * 100)) : 100;
+  return { einkommen, verplant, bleibt: einkommen - verplant, anteil };
 };
 
-export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen }) => {
+// Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js: dazu Partner/in,
+// Nebenerwerb, Kinderbetreuung, Hypothek, Gebäudeversicherung, 3. Säule). Entscheid Stebler
+// Studios 24.10.2026 (docs/entscheide/finanzen-fusion.md): beide Saldi zeigen, klar benannt —
+// der zweite nur, wenn er auf den Franken vom Kapitel-Saldo abweicht. Ist ein weiterer Lohn
+// (Nebenerwerb, Partner/in) brutto erfasst, gibt es keinen Haushalts-Betrag (wie im Budget), nur
+// die Frage nach dem Netto. Ist der eigene Lohn brutto, schweigt die Zeile: die Zahl darüber rechnet
+// selbst mit dem Brutto, und «rechnen wir aus, was frei bleibt» stünde ihr direkt entgegen
+// (Fachprüfung 24.10.2026; wie die Hauptzahl bei brutto aussieht, ist offen — Entscheidungsblatt).
+export const haushaltsSaldo = (allData, kapitelBleibt) => {
+  if (!allData || allData.finanzen?.incomeType === 'brutto') return null;
+  const b = calculateMonthlyBudget(allData);
+  if (!Number.isFinite(b.remaining)) return null;
+  const rest = Math.round(b.remaining);
+  if (rest === Math.round(kapitelBleibt)) return null;
+  return b.bruttoDabei ? { brutto: true } : { brutto: false, rest };
+};
+
+export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen, chapters, onSelectChapter, lang, onEnterSandbox }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -1892,38 +1915,77 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
   // ─── Fassung 5 · Kapitel Finanzen (Entscheid 23.10.2026) ──────────────────────────────
   // Ein Text mit «{betrag}» und dem Betrag fett darin — die Wortstellung bleibt je Sprache.
-  const mitBetrag = (key, wert) => {
+  const mitBetrag = (key, wert, format = zahl) => {
     const [vor, nach = ''] = tr(key).split('{betrag}');
-    return [vor, React.createElement('b', { key: 'b', style: { color: palette.text, fontWeight: weight.semi } }, zahl(wert)), nach];
+    return [vor, React.createElement('b', { key: 'b', style: { color: palette.text, fontWeight: weight.semi, whiteSpace: 'nowrap' } }, format(wert)), nach];
   };
+  // Entscheide 24.10.2026 (docs/entscheide/finanzen-fusion.md): eigener Lohn brutto → die
+  // Netto-Frage statt einer Zahl, die so nie auf dem Konto liegt (wie die Budget-Seite). Im Minus
+  // «Jeden Monat fehlen» statt nichts. Ohne eigenes Einkommen nur, wenn der Haushalt etwas zu sagen
+  // hat. Steht die Haushalts-Zeile darunter, nennt die obere Zeile das eigene Einkommen.
   const renderMonatsHeld = () => {
     const m = monatsUebersicht(data, allData);
     if (!m) return null;
+    const label = { fontSize: text.sm, color: palette.mid, marginBottom: '2px' };
+    if (data.incomeType === 'brutto' && m.einkommen > 0) {
+      return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: label }, tr('chapters.finanzen.monat.bleiben')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('budgetSync.availableNeedsNetto'))
+      );
+    }
+    const h = haushaltsSaldo(allData, m.bleibt);
+    if (m.einkommen <= 0 && !h) return null;
+    const plus = m.bleibt >= 0;
+    const titelKey = 'chapters.finanzen.monat.' + (h ? (plus ? 'eigenBleiben' : 'eigenFehlen') : (plus ? 'bleiben' : 'fehlen'));
     // «netto» nur, wenn das Einkommen als Netto erfasst ist — sonst stimmte das Wort nicht.
     const einkommenKey = data.incomeType === 'netto' ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, tr('chapters.finanzen.monat.bleiben')),
-      React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(m.bleibt)),
+      React.createElement('div', { style: label }, tr(titelKey)),
+      React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),
       // Der Balken wiederholt nur die zwei Zahlen darunter — darum für Screenreader stumm.
       React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
         React.createElement('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: m.anteil + '%', background: palette.gold, borderRadius: radius.full } })
       ),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
-        React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
-      )
+        m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
+      ),
+      renderHaushaltsSaldo(h)
     );
   };
+  // Zweite Zeile: der Haushalt wie auf der Budget-Seite — nur, wenn er abweicht.
+  const renderHaushaltsSaldo = (h) => {
+    if (!h) return null;
+    return React.createElement('div', { 'data-teil': 'monat-haushalt', style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+      h.brutto
+        ? React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('budgetSync.availableNeedsNetto'))
+        : React.createElement('div', { style: { fontSize: text.sm, color: palette.text } },
+            ...mitBetrag(h.rest >= 0 ? 'chapters.finanzen.monat.haushaltBleiben' : 'chapters.finanzen.monat.haushaltFehlen', Math.abs(h.rest), betrag)),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '2px' } }, tr('chapters.finanzen.monat.haushaltWie'))
+    );
+  };
+  // Die Auswertung (früher die Finanz-Übersicht), in zwei Teilen um «Passend» herum —
+  // components/FinanzAuswertung.jsx, erst bei Bedarf geladen. Zusammenlegung 24.10.2026.
+  const renderAuswertung = (teil) => React.createElement(React.Suspense, { key: 'auswertung-' + teil, fallback: null },
+    React.createElement(FinanzenImKapitel, {
+      teil, palette, t: tr, data: allData || { finanzen: data }, onNavigate: onNavigate || (() => {}),
+      isDarkMode, chapters: chapters || [], onSelectChapter, isMobile, lang,
+      onEnterSandbox: teil === 'oben' ? onEnterSandbox : undefined,
+    })
+  );
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).
+  // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV oben im Kapitel; dazu kamen
+  // die zwei Wege, die die Übersicht unten hatte: Budget und Behörden-Dossier.
   const renderPassend = () => {
     if (!onNavigate) return null;
     const ziele = [
-      { key: 'uebersicht', titel: tr('nav.crosslink.finanzuebersichtHint'), sub: tr('chapters.finanzen.passend.uebersichtSub'), gehe: () => onNavigate('finanzuebersicht'), ikon: ansichtIkon('finanzuebersicht') },
-      { key: 'ipv', titel: tr('chapters.finanzen.passend.ipv'), sub: tr('chapters.finanzen.passend.ipvSub'), gehe: () => onNavigate('premium'), ikon: ansichtIkon('premium') },
       // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
       { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
       // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
       { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
+      { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
+      // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
+      { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
     ];
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
       React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
@@ -1967,9 +2029,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ),
 
     // Fassung 5 · «Jeden Monat bleiben» — nur Finanzen. Rechnet genau wie der Satz
-    // «Es bleiben CHF …» (utils/monatsrechnung.js), dieselbe Bedingung: Einnahmen und
-    // Ausgaben erfasst. Bei einem Minus kein «bleiben»-Betrag — der Satz sagt dann
-    // «Es fehlen …»; eine erfundene Formulierung dafür gibt es nicht.
+    // «Es bleiben CHF …» (utils/monatsrechnung.js). Seit 24.10.2026 im Minus «Jeden Monat
+    // fehlen» (wie der Satz «Es fehlen …»), bei Brutto die Netto-Frage — siehe renderMonatsHeld.
     chapter.key === 'finanzen' && renderMonatsHeld(),
 
     // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt
@@ -2192,6 +2253,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       );
     })(),
 
+    // Mietvergleich: die eigene Miete neben den BFS-Werten für Kanton und Haushalt. Stand bis
+    // 24.10.2026 auf der Finanz-Übersicht unter dem Lohn; seit der Zusammenlegung hier beim Wohnen
+    // (docs/entscheide/finanzen-fusion.md, Bauschritt 5). Ohne Kanton oder Miete: nichts.
+    chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'miet-vergleich', fallback: null },
+      React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
+        React.createElement(MietVergleich, { palette, t: tr, data: allData, isDarkMode })
+      )
+    ),
+
     // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
     // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
     // solange nichts erfasst ist.
@@ -2202,37 +2272,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       }),
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
-    // IPV: shown in finanzen when income + canton exist
-    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
-          border: '1px solid ' + palette.sage + '25',
-          borderLeft: '3px solid ' + palette.sage + '50',
-          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
-        }
-      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
-    // «Alle Berechnungen auf einen Blick» stand hier als eigener Knopf; seit Fassung 5 ist er
-    // der erste Eintrag in «Passend zu diesem Bereich» (unten) — und dort auch ohne Lohn.
-
-    // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
-    // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
-    // null aus der Komponente). `data: allData`, weil das Barometer basis.canton + ausbildung.workHoursPerWeek
-    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen
-    // Feld — `aktuellesKapitel` verhindert dabei den Klick ins eigene Kapitel (Einkommensart liegt hier).
-    chapter.key === 'finanzen' && allData && Number(allData.finanzen?.monthlyIncome) > 0 &&
-      // Rahmen wie am anderen Einbettungsort (FinanzUebersicht): `palette.up` ohne Rand — derselbe
-      // Baustein soll überall gleich sitzen. Bewusst NICHT die Sage-Hinweisfarbe der Nachbarkarten:
-      // das Barometer ist ein Instrument, kein Hinweis.
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.up, borderRadius: radius.sm,
-        }
-      },
-        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: chapter.key })
-      ),
+    // Finanzen: der IPV-Hinweis und das Lohn-Barometer standen hier bis 24.10.2026. Seit der
+    // Zusammenlegung mit der Finanz-Übersicht stehen IPV-Karte und Lohn-Barometer in der
+    // Auswertung unter dem Formular (renderAuswertung, components/FinanzAuswertung.jsx).
 
     // Familienzulagen: shown in basis when children exist
     chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
@@ -2291,6 +2333,19 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )
+      ),
+      // Versicherungen: das Netz über den Abschnitten, sobald etwas eingetragen ist. Ein Tipp
+      // auf eine Achse öffnet den Abschnitt darunter und springt hin (id mp-section-<erstes Feld>).
+      chapter.key === 'versicherungen' && filledCount > 0 && React.createElement(React.Suspense, { fallback: null },
+        React.createElement(VersicherungsNetz, {
+          chapter, data, palette, tr,
+          onAbschnitt: (key) => {
+            setOffeneAbschnitte((o) => ({ ...o, [key]: true }));
+            // Erst nach dem Zeichnen des aufgeklappten Abschnitts springen: mit requestAnimationFrame
+            // lief der Sprung zu früh und die Seite blieb stehen (im Browser gemessen 24.10.2026).
+            setTimeout(() => document.getElementById('mp-section-' + key)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+          },
+        })
       ),
       abschnittsliste()
     ),
@@ -2433,7 +2488,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Seit 27.09.2026 (Seitenrundgang) als der eine Hauptknopf «Weiter mit … ›», wie auf
     // der Übersicht — vorher eine stille Karte, die neben den Feldern kaum als Weg las.
     // Fassung 5 · Finanzen: «Passend zu diesem Bereich» und «Als Nächstes» (Entscheid 23.10.2026).
+    // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
+    // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
+    istFinanzen && renderAuswertung('oben'),
     istFinanzen && renderPassend(),
+    istFinanzen && renderAuswertung('unten'),
     istFinanzen && nextChapter && onNext ? renderAlsNaechstes() :
     nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
       React.createElement(PrimaryButton, {

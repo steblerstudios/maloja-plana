@@ -106,7 +106,8 @@ describe('ⓘ · abgearbeitet und gesperrt', () => {
   // Eigenschaft der Formatierung, nicht der Sache, und verrutscht bei jedem Import.
   it('kein ⓘ hängt mehr an einem Text auf dem Bildschirm', () => {
     const dateien = [...new Set(piktogramme().filter((g) => g.ch === 'ⓘ').map((g) => g.ort.split(':')[0]))];
-    expect(dateien).toEqual(['FinanzUebersicht.jsx']);
+    // Der Druck der Finanz-Übersicht steht seit 24.10.2026 in components/FinanzAuswertung.jsx.
+    expect(dateien).toEqual(['FinanzAuswertung.jsx']);
   });
 });
 

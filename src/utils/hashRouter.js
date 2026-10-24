@@ -28,9 +28,40 @@ export const VALID_VIEWS = new Set([
 // damit der Prod-Build byte-neutral bleibt (der Render-Branch in main.jsx ist ebenso DEV-gated).
 if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 
+// Ansichten, die es nicht mehr als eigene Seite gibt — sie bleiben in VALID_VIEWS, damit alte
+// Links, Lesezeichen und die Zurück-Taste nicht ins Leere führen, und landen hier:
+//   finanzuebersicht → Kapitel Finanzen, bei der Auswertung (Zusammenlegung 24.10.2026,
+//                      docs/entscheide/finanzen-fusion.md). Kapitel 2 = finanzen (CHAPTER_KEYS;
+//                      Wächter: finanzuebersichtUmleitung.test.js, chapterOrder.test.js).
+// handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
+export const UMLEITUNGEN = {
+  finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
+};
+
+// Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
+// Bild für Bild nachsehen, höchstens `bis` ms. Hört auf, sobald die Person selbst scrollt.
+export function springeZuAnker(id, bis = 2000) {
+  if (typeof window === 'undefined' || !id) return;
+  const ende = performance.now() + bis;
+  let aus = false;
+  const halt = () => { aus = true; };
+  const opts = { once: true, passive: true };
+  window.addEventListener('wheel', halt, opts);
+  window.addEventListener('touchmove', halt, opts);
+  const schritt = () => {
+    if (aus) return;
+    const el = document.getElementById(id);
+    if (el) { el.scrollIntoView({ block: 'start' }); return; }
+    if (performance.now() < ende) requestAnimationFrame(schritt);
+  };
+  // Zwei Bilder warten: handleNavigate springt zuerst nach oben (scrollTo 0).
+  requestAnimationFrame(() => requestAnimationFrame(schritt));
+}
+
 /**
  * Parse the current URL hash into a view state.
  * Returns { view, chapterIndex } or null if hash is empty/invalid.
+ * Umgeleitete Ansichten (UMLEITUNGEN) kommen als ihr Ziel zurück, mit `anker`.
  */
 export function parseHash(hash = window.location.hash) {
   if (!hash || hash === '#' || hash === '#/') {
@@ -45,6 +76,7 @@ export function parseHash(hash = window.location.hash) {
   if (!VALID_VIEWS.has(view)) {
     return null; // unknown view → ignore
   }
+  if (UMLEITUNGEN[view]) return { ...UMLEITUNGEN[view] };
 
   if (view === 'chapter' && parts[1] !== undefined) {
     const idx = parseInt(parts[1], 10);

@@ -1431,13 +1431,13 @@ export default {
     step4Title: '4 · Frist sichern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step4Text: { sie: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Werktag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Werktag davor (BAG). Leg dir die Frist in den Kalender.' },
+    step4Text: { sie: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Leg dir die Frist in den Kalender.' },
     step4Button: 'Termin «Desdir la cassa da malsauns» en il chalender ({date})',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',
     reminderTitle: 'Krankenkasse kündigen — Frist',
-    reminderNotes: 'Ordentliche Kündigung der Grundversicherung bis 30.11. Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
+    reminderNotes: 'Kündigung der Grundversicherung nach der Prämienmitteilung: Eingang bis 30.11. (KVG Art. 7 Abs. 2). Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     specialRight: { sie: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie können Sie mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie kannst du mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.' },
@@ -2084,6 +2084,16 @@ export default {
     },
     finanzen: {
       title: 'Finanzas & daners',
+      geldfluss: {
+        title: 'Danunder ch’ils daners vegnan, nua ch’els van',
+        salary: 'Entrada mensiala',
+        familyAllowances: 'Supplements da famiglia',
+        alimonyReceived: 'Aliments retschavids',
+        uncovered: 'Betg cuvrì',
+        summary: 'Mintga mais entran {income} e sortan {expenses}. La largezza da mintga banda mussa il import.',
+        from: 'Danunder',
+        to: 'Nua',
+      },
       short: 'Finanzas',
       description: { sie: 'Vossa entrada, spargn e datas bancaras', du: 'Tia entrada, spargn e datas bancaras' },
       intro: { sie: "Ina maletg clara da Vossa situaziun finanziala. Gida tar budget, taglia e dumondas d'agid.", du: "Ina maletg clara da Tia situaziun finanziala. Gida tar budget, taglia e dumondas d'agid." },
@@ -2094,29 +2104,41 @@ export default {
       monat: {
         // rm ungeprüft F5
         bleiben: "Mintga mais restan",
+        // rm ungeprüft Finanzen-Fusion
+        fehlen: "Mintga mais mancan",
+        // rm ungeprüft Finanzen-Fusion
+        eigenBleiben: "Cun l'atgna entrada restan mintga mais",
+        // rm ungeprüft Finanzen-Fusion
+        eigenFehlen: "Cun l'atgna entrada mancan mintga mais",
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
         // rm ungeprüft F5
         vonEinkommenNetto: "da {betrag} entrada netta",
         // rm ungeprüft F5
         vonEinkommen: "da {betrag} entrada",
+        // rm ungeprüft Finanzen-Fusion
+        haushaltBleiben: "Per l'entira chasada restan {betrag}",
+        // rm ungeprüft Finanzen-Fusion
+        haushaltFehlen: "Per l'entira chasada mancan {betrag}",
+        // rm ungeprüft Finanzen-Fusion
+        haushaltWie: "Quintà sco sin la pagina dal budget. Sch'endatà, vegnan agiuntads l'entrada da la partenaria u dal partenari ed il guadagn accessoric; ultra da quai vegnan deducids la tgira dals uffants, l'ipoteca, l'assicuranza da bajetgs ed ils pajaments en la pitga 3a.",
       },
       passend: {
         // rm ungeprüft F5
         titel: "Tutga tar quest sectur",
-        // rm ungeprüft F5
-        uebersichtSub: "Survista finanziala: taglia, IPV, agid social, PC",
-        // rm ungeprüft F5
-        ipv: "Controllar la reducziun da premias",
-        // rm ungeprüft F5
-        ipvSub: "Dretg · tenor l'entrada",
         // rm ungeprüft F5
         neuerJobSub: "Andament · {n} pass",
         // rm ungeprüft F5
         lohnausweis: "Deponer il certificat da salari",
         // rm ungeprüft F5
         lohnausweisSub: "Documents · Deposita da documents",
+        // rm ungeprüft Finanzen-Fusion
+        budgetSub: "Entradas ed expensas en detagl",
       },
+      // rm ungeprüft Finanzen-Fusion
+      folgt: { titel: "Tge che sa resulta da quai" },
+      // rm ungeprüft Finanzen-Fusion
+      weitereAnsprueche: { titel: "Ulteriurs dretgs", sub: "Agid social e prestaziuns cumplementaras" },
       nebenerwerb: {
         // rm ungeprüft F5
         titel: "Gudogn accessoric",
@@ -2204,6 +2226,12 @@ export default {
     },
     versicherungen: {
       title: 'Assicuranzas & prevenziun',
+      netz: {
+        achse: { basic: 'Cassa da malsauns', occupational: 'Cassa da pensiun', additional: 'Ulteriuras', property: 'Chasa & viadi', mobility: 'Auto', social: 'AVS' },
+        aria: 'Rait da las assicuranzas: Il pli lunsch ch’in piz tanscha anora, il dapli è endatà en quest chapitel.',
+        hinweis: { sie: 'Mussa quant è endatà per mintga assicuranza, betg sche Vus essas bain assicurads. «Na concerna betg» quinta er.', du: 'Mussa quant è endatà per mintga assicuranza, betg sche ti es bain assicurà. «Na concerna betg» quinta er.' },
+        leer: 'Anc n’è nagut endatà. Mintga part crescha qua anora, uschespert ch’ella cuntegna insatge.',
+      },
       // TODO(rm): 'Assicuranza' (singular) da la fuorma plurala dal titel — controlar tar
       // ina/in linguist/a natal/a.
       short: 'Assicuranza',
@@ -4296,7 +4324,6 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     vorsorgeauftrag: { sie: 'Ein Vorsorgeauftrag bestimmt, wer für Sie entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, können Sie beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).', du: 'Ein Vorsorgeauftrag bestimmt, wer für Dich entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, kannst Du beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).' },
     testament: "En Svizra vala senza testament la successiun legala (ZGB Art. 457 ss.). In testament a maun sto esser cumplettamain scrit a maun, datà e suttascrit.",
-    contextIpv: { sie: "Tenor l'entrada avais Vus eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmai Vus tar Vossa vischnanca u Voss chantun.", du: "Tenor l'entrada has Ti eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmescha Tai tar Tia vischnanca u Tes chantun." },
     contextFamilienzulagen: { sie: "Per Voss uffants As stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Voss patrun po gidar enavant.", du: "Per Tes uffants Ta stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Tes patrun po gidar enavant." },
     ipv: { sie: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Vus.", du: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Tai." },
     familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 215 per uffant e mais.", // TODO(rm): Ausbildungszulage mind. CHF 268 (FamZG Art. 5) ergänzen, siehe de.js (25.09.2026)
@@ -6460,6 +6487,17 @@ export default {
     exportIcs: 'Exportar il chalender (.ics)',
     locale: 'rm-CH',
     calAria: 'Survista dal chalender',
+    beispiel: { zahnarzt: 'Dentist: controlla', velo: 'Service dal velo', hausrat: 'Assicuranza d’inventari: controllar la polizza', nebenkosten: 'Controllar il quint dals custs accessorics', hausarzt: 'Medi da chasa: controlla annuala' },
+    jahreskreis: {
+      title: 'L’onn {year} en survista',
+      aria: 'Ring da l’onn {year}, endataziuns: {count}. In mais al avra en il chalender sutvart.',
+      count: '{count} avert',
+      empty: 'Per quest onn n’è anc nagut endatà.',
+      more: '+ {count} ulteriurs',
+      kvgTitle: 'Disditga da l’assicuranza da basa',
+      kvgSource: 'Dapi la retschavida da la communicaziun da la premia (il pli tard ils 31 d’oct., UFSP); retschavida da la cassa fin ils 30 da nov. (KVG art. 7 al. 2). Sonda, dumengia u di da festa vala il di da lavur avant; Maloja na quinta betg cun dis da festa.',
+      taxSource: 'Dal chapitel Autoritads',
+    },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     exportIcsHint: { sie: 'Surpigliai Vossas commemoraziuns en il chalender da Voss telefon u computer.', du: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.' },
     editReminder: 'Modifitgar la commemoraziun',
