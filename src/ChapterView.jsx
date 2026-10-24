@@ -39,7 +39,7 @@ import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from '
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
-import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
+import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -1952,15 +1952,37 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: label }, tr(titelKey)),
       React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),
-      // Der Balken wiederholt nur die zwei Zahlen darunter — darum für Screenreader stumm.
-      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
-        React.createElement('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: m.anteil + '%', background: palette.gold, borderRadius: radius.full } })
-      ),
+      // Der Balken wiederholt nur die Zahlen darunter — darum für Screenreader stumm.
+      // Fassung 6 («nachentschieden» 24.10.2026): unterteilt in Wohnen · Versicherungen · Steuern ·
+      // Übriges; der leere Rest ist, was bleibt. Gemessen am Einkommen, im Minus an den Ausgaben.
+      renderMonatsBalken(m),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
       ),
       renderHaushaltsSaldo(h)
+    );
+  };
+  const renderMonatsBalken = (m) => {
+    const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
+    const teile = [
+      { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: palette.rose },
+      { key: 'versicherungen', wert: p.healthInsurance + p.otherInsurance, farbe: palette.sky },
+      { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
+    ];
+    teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
+    const basis = Math.max(m.einkommen, m.verplant) || 1;
+    const sichtbar = teile.filter((x) => x.wert > 0);
+    return React.createElement('div', { 'aria-hidden': 'true', 'data-teil': 'monat-balken' },
+      React.createElement('div', { style: { display: 'flex', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
+        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe } }))
+      ),
+      sichtbar.length > 1 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: '4px', fontSize: text.xs, color: palette.mid } },
+        ...sichtbar.map((x) => React.createElement('span', { key: x.key, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', color: palette.mid } },
+          React.createElement('span', { style: { width: '8px', height: '8px', borderRadius: radius.hair, background: x.farbe } }),
+          tr('chapters.finanzen.monat.teil.' + x.key)
+        ))
+      )
     );
   };
   // Zweite Zeile: der Haushalt wie auf der Budget-Seite — nur, wenn er abweicht.
