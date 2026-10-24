@@ -717,6 +717,31 @@ body.still .rs-karte { transition: none; }
 .m-fuell { width: 14px; height: 8px; border-radius: 999px; background: var(--wohnen); }
 .fu-anteil { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin: 2px 0 8px; background: var(--border); }
 .fu-anteil i { display: block; height: 100%; }
+/* P–S · Notfall (24.10.): ein Ort, vier Seiten */
+.nf-geschw { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; }
+.nf-geschw a { border: 1px solid var(--border); border-radius: 999px; min-height: 36px; padding: 6px 12px; font-size: 13px; color: var(--mid); text-decoration: none; display: inline-flex; align-items: center; }
+.nf-geschw a[aria-current="page"] { border-color: var(--notfall); color: var(--text); background: color-mix(in srgb, var(--notfall) 14%, transparent); }
+.nf-szen { border-top: 1px solid var(--border); }
+.nf-szen > summary { display: flex; align-items: center; gap: 10px; min-height: 56px; cursor: pointer; list-style: none; }
+.nf-szen > summary::-webkit-details-marker { display: none; }
+.nf-szen > summary b { font-weight: 500; font-size: 15px; }
+.nf-szen > summary small { display: block; color: var(--mid); font-size: 12px; }
+.nf-szen > summary .stand { margin-left: auto; font-size: 13px; color: var(--mid); white-space: nowrap; }
+.nf-liste { list-style: none; padding: 0 0 12px; margin: 0; display: grid; gap: 4px; font-size: 13px; }
+.nf-liste li { display: flex; gap: 8px; color: var(--mid); }
+.nf-liste li::before { content: '✓'; color: var(--sageDeep); width: 14px; }
+.nf-liste li.offen { color: var(--text); }
+.nf-liste li.offen::before { content: '○'; color: var(--notfall); }
+.nf-nummern { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.nf-nummern a { border: 1px solid var(--border); border-radius: 12px; min-height: 56px; padding: 8px 12px; text-decoration: none; color: var(--text); display: flex; flex-direction: column; justify-content: center; }
+.nf-nummern a b { font-size: 20px; font-weight: 600; color: var(--notfall); }
+.nf-nummern a small { font-size: 12px; color: var(--mid); }
+.nf-sagen { margin: 8px 0; padding-left: 20px; font-size: 14px; display: grid; gap: 6px; }
+.nf-feld { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border); min-height: 56px; }
+.nf-feld small { display: block; color: var(--mid); font-size: 12px; }
+.nf-feld .leer { color: var(--soft); font-style: italic; }
+.nf-feld button { border: 1px solid var(--border); background: none; color: var(--text); border-radius: 999px; min-height: 44px; padding: 0 14px; font: inherit; font-size: 13px; }
+.nf-gruppe { font-size: 13px; font-weight: 600; margin: 18px 0 4px; }
 .fu-baum { height: 180px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 10%, transparent), color-mix(in srgb, var(--sage) 28%, transparent)); display: grid; place-items: center; color: var(--mid); font-size: 13px; margin-top: 10px; text-align: center; padding: 0 20px; }
 </style>
 </head>
@@ -1774,6 +1799,209 @@ body.still .rs-karte { transition: none; }
     <li><b>Ruhiger als heute:</b> keine Kartenwand, Kopf links, die Angaben als Marken (zum Anpassen aufklappbar), Ergebnis als Live-Region (<code>role="status"</code>, a11y-Befund M3), Leistungs-Kompass weggelassen — die Pegel tragen die Aussage. Weitere Wege zugeklappt.</li>
     <li><b>Neue Texte für den Copy-Prüfer:</b> Einleitung, «Mit Ihren Angaben», «Angaben anpassen, um durchzuspielen», «Nach Ihrer Lebenslage», «Mit diesen Angaben zeigt sich …» (heute «zeigt der Schnellcheck …»), «Lieber Schritt für Schritt?» mit Untertitel.</li>
     <li><b>Beobachtet 24.10.:</b> beim ersten Öffnen zeigte der Schnellcheck für Maria «IPV prüfenswert, ohne Betrag», nach erneutem Laden «über der Grenze» wie die Finanz-Übersicht. Nicht wiederholbar, Ursache unbestätigt (vermutlich vor fertig geladenem Profil) — im Bau prüfen.</li>
+  </ul></div>
+</section>
+
+<!-- ===================== P · Notfall (der Ort) ===================== -->
+<section class="abschnitt" id="p">
+  <h2>P · Ort — «Notfall»</h2>
+  <p class="warum"><b>Neu am 24.10. (Entscheid Sophie: vier Seiten, ein Ort, ein Name je Seite).</b> Heute «Was brauchen Sie im Notfall?» (<code>#/notfalleinstieg</code>), auf der Übersicht als «Notfallkarte vorbereiten». Hier der gemeinsame Ort für alle vier Notfall-Seiten: zuerst der Weg im Ernstfall, dann die zwei Vorbereitungen, dann die drei Szenarien. Kopf links statt zentriert, Szenarien als echte Knöpfe (44 px, Enter und Leertaste).</p>
+  <div class="geraet" data-seite="p">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="notfall"></nav>
+    <div class="seite" style="--licht: var(--notfall)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span>Notfall</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="notfall" style="--licht: var(--notfall)"></span><h3>Notfall</h3></div>
+          <p class="satz" data-sie="Was brauchen Sie im Notfall? Drei Szenarien — und welche Angaben Sie dafür parat haben sollten." data-du="Was brauchst du im Notfall? Drei Szenarien — und welche Angaben du dafür parat haben solltest."></p>
+          <nav class="nf-geschw" aria-label="Notfall-Seiten"><a href="#p" aria-current="page">Notfall</a><a href="#q">Notfallkarte</a><a href="#r">Notfallpass</a><a href="#s">Notfall-Dossier</a></nav>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <a class="verweis" href="#q"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfallkarte<small data-sie="Im Ernstfall: was Sie am Telefon sagen — führt durch den Anruf und zeigt Ihre wichtigsten Angaben." data-du="Im Ernstfall: was du am Telefon sagst — führt durch den Anruf und zeigt deine wichtigsten Angaben."></small></span><span class="pfeil">›</span></a>
+          <a class="verweis" href="#r"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfallpass<small data-sie="Für den Sperrbildschirm: Ihre Angaben Feld für Feld zum Übertragen, mit den Schritten für iPhone und Android." data-du="Für den Sperrbildschirm: deine Angaben Feld für Feld zum Übertragen, mit den Schritten für iPhone und Android."></small></span><span class="pfeil">›</span></a>
+          <a class="verweis" href="#s"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfall-Dossier<small>Wichtige Informationen, wenn jemand anderes helfen muss — zum Ausdrucken, mit QR-Code.</small></span><span class="pfeil">›</span></a>
+          <h4 style="margin:22px 0 6px">Drei Szenarien</h4>
+          <details class="nf-szen" open><summary><span><b>Unfall</b><small>Sie hatten einen Unfall. Was brauchen Rettungskräfte und Spital?</small></span><span class="stand">8 von 9</span></summary>
+            <ul class="nf-liste"><li>Notfall-Kontaktperson</li><li>Telefon Notfall</li><li>Blutgruppe</li><li>Allergien</li><li class="offen">Regelmässige Medikamente</li><li>Hausarzt</li><li>Telefon Arzt</li><li>Krankenkasse</li><li>KK-Kartennummer</li></ul>
+            <a class="verweis" href="#" style="margin-bottom:10px"><span>Fehlende Angabe im Kapitel Notfall ergänzen</span><span class="pfeil">›</span></a>
+          </details>
+          <details class="nf-szen"><summary><span><b>Spitalaufenthalt</b><small>Sie müssen ins Spital. Was braucht die Aufnahme?</small></span><span class="stand">10 von 10 ✓</span></summary>
+            <ul class="nf-liste"><li>Vorname</li><li>Nachname</li><li>Geburtsdatum</li><li>AHV-Nummer</li><li>Krankenkasse</li><li>KK-Kartennummer</li><li>Franchise CHF</li><li>Notfall-Kontaktperson</li><li>Telefon Notfall</li><li>Patientenverfügung vorhanden?</li></ul>
+          </details>
+          <details class="nf-szen"><summary><span><b>Behördengang</b><small>Sie gehen auf ein Amt. Was müssen Sie dabei haben?</small></span><span class="stand">9 von 9 ✓</span></summary>
+            <ul class="nf-liste"><li>Vorname</li><li>Nachname</li><li>Geburtsdatum</li><li>Kanton</li><li>Strasse &amp; Hausnummer</li><li>PLZ</li><li>Ort</li><li>AHV-Nummer</li><li>Steuerkanton</li></ul>
+          </details>
+          <div class="vertrauen" style="justify-content:flex-start;margin-top:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-sie="Ihre Daten bleiben auf diesem Gerät." data-du="Deine Daten bleiben auf diesem Gerät."></span></div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="uebersicht"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Ein Ort:</b> alle vier Notfall-Seiten tragen die Brotkrume «Übersicht › Notfall › …» und die Zeile der Schwesterseiten. Die Karte auf der Übersicht («Notfallkarte vorbereiten») führt hierher und heisst wie der Ort.</li>
+    <li><b>Namen:</b> «Notfall» (Ort), «Notfallkarte» (heute «Notruf-Vorlesekarte»), «Notfallpass» (heute «Notfallpass vorbereiten»), «Notfall-Dossier». Copy-Prüfer: Kurzsätze der drei Zeilen; «x von 9» statt «8/9».</li>
+    <li><b>Kapitel Notfall</b> bleibt der Ort zum Eintragen; hier nur der Weg dorthin, wenn eine Angabe fehlt (heute ein Knopf «Notfall» ohne Satz).</li>
+    <li><b>Design/a11y:</b> Kopf links (heute zentriert, mit 3-px-Balken), Szenarien als <code>&lt;details&gt;</code> mit 56 px statt <code>div role="button"</code> mit ~28 px (Enter <i>und</i> Leertaste), offene Angabe mit Zeichen ○ statt nur Farbe.</li>
+  </ul></div>
+</section>
+
+<!-- ===================== Q · Notfallkarte ===================== -->
+<section class="abschnitt" id="q">
+  <h2>Q · Ernstfall — «Notfallkarte»</h2>
+  <p class="warum"><b>Neu am 24.10.</b> Heute «Notruf-Vorlesekarte» (<code>#/notfallkarte</code>) — ruhig und gut gebaut. Hier fast gleich: nur der neue Name, die Brotkrume des Notfall-Orts und die Nummern als grosse Knöpfe. Alle Texte aus der App.</p>
+  <div class="geraet" data-seite="q">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="notfall"></nav>
+    <div class="seite" style="--licht: var(--notfall)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#p">Notfall</a><span>›</span>Notfallkarte</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="notfall" style="--licht: var(--notfall)"></span><h3>Notfallkarte</h3></div>
+          <p class="satz" data-sie="Wenn etwas passiert, müssen Sie sich nichts merken. Diese Karte sagt Ihnen, was Sie sagen — und liest Ihre hinterlegten Angaben ab." data-du="Wenn etwas passiert, musst du dir nichts merken. Diese Karte sagt dir, was du sagst — und liest deine hinterlegten Angaben ab."></p>
+          <nav class="nf-geschw" aria-label="Notfall-Seiten"><a href="#p">Notfall</a><a href="#q" aria-current="page">Notfallkarte</a><a href="#r">Notfallpass</a><a href="#s">Notfall-Dossier</a></nav>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <h4 style="margin:0">Nummer wählen</h4>
+          <p class="unter">Tippen Sie auf eine Nummer, um anzurufen. Die 112 erreichen Sie mit dem Handy auch ohne Guthaben und über ein fremdes Netz — nicht aber ohne SIM-Karte.</p>
+          <div class="nf-nummern"><a href="#"><b>144</b><small>Sanität</small></a><a href="#"><b>117</b><small>Polizei</small></a><a href="#"><b>118</b><small>Feuerwehr</small></a><a href="#"><b>145</b><small>Vergiftungen (Tox Info)</small></a><a href="#"><b>1414</b><small>Luftrettung (Rega)</small></a><a href="#"><b>112</b><small>Europäischer Notruf</small></a></div>
+          <p class="fuss">Unsicher, welche? Rufen Sie 144 an — dort verbindet man Sie weiter.</p>
+          <h4 style="margin:18px 0 0">Was Sie sagen</h4>
+          <p class="unter">Bleiben Sie ruhig. Sagen Sie es der Reihe nach:</p>
+          <ol class="nf-sagen"><li>Wo sind Sie? — <b>Langstrasse 42, 8004 Zürich</b></li><li>Was ist passiert?</li><li>Wie viele Personen sind betroffen?</li><li>Wer sind Sie? — <b>Maria Muster · +41 76 432 18 95</b></li></ol>
+          <div class="knoepfe"><button class="knopfruhig">Adresse unsicher? Meinen Standort zeigen</button></div>
+          <p class="fuss">Bleiben Sie am Telefon. Legen Sie erst auf, wenn die Leitstelle es sagt.</p>
+          <h4 style="margin:18px 0 0">Ihre Angaben zum Ablesen</h4>
+          <div class="fu-posten" style="margin-top:6px">
+            <div class="gr"><span>Notfallkontakt</span><span></span></div>
+            <div class="po"><span>Notfall-Kontaktperson</span><span>Peter Muster</span></div>
+            <div class="po"><span>Telefon Notfall</span><span>+41 79 654 32 10</span></div>
+            <div class="gr"><span>Medizinische Angaben</span><span></span></div>
+            <div class="po"><span>Blutgruppe</span><span>A+</span></div>
+            <div class="po"><span>Allergien</span><span>Penicillin</span></div>
+            <div class="gr"><span>Ärztliche Betreuung</span><span></span></div>
+            <div class="po"><span>Hausarzt</span><span>Dr. med. Lisa Brunner</span></div>
+            <div class="po"><span>Telefon Arzt</span><span>+41 44 242 80 00</span></div>
+            <div class="po"><span>Bevorzugtes Spital</span><span>UniversitätsSpital Zürich</span></div>
+          </div>
+          <a class="verweis" href="#s"><span>Ganzes Notfall-Dossier (zum Ausdrucken)</span><span class="pfeil">›</span></a>
+          <p class="fuss">Diese Karte liegt nur auf Ihrem Gerät — niemand sonst sieht sie.</p>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="uebersicht"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Bleibt:</b> Aufbau, Reihenfolge und alle Sätze. Die Seite ist im Ernstfall mit einem Tipp offen (Übersicht, Suche «144», Menü) — kein Umweg über den Ort.</li>
+    <li><b>Anders:</b> Name «Notfallkarte» (<code>notfallkarte.title</code> heute «Notruf-Vorlesekarte»), Brotkrume über «Notfall», Nummern als Knöpfe mit grosser Zahl (56 px, zwei Spalten) statt Pillen.</li>
+  </ul></div>
+</section>
+
+<!-- ===================== R · Notfallpass ===================== -->
+<section class="abschnitt" id="r">
+  <h2>R · Vorbereiten — «Notfallpass»</h2>
+  <p class="warum"><b>Neu am 24.10.</b> Heute «Notfallpass vorbereiten» (<code>#/notfallpass</code>). Hier: neuer Name, Brotkrume des Orts, Zwischentitel ohne Versalien, die Anleitungen für iPhone und Android zugeklappt (wer eins hat, braucht nur eine). Alle Texte aus der App.</p>
+  <div class="geraet" data-seite="r">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="notfall"></nav>
+    <div class="seite" style="--licht: var(--notfall)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#p">Notfall</a><span>›</span>Notfallpass</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="notfall" style="--licht: var(--notfall)"></span><h3>Notfallpass</h3></div>
+          <p class="satz">Das iPhone und manche Android-Telefone zeigen einen Notfallpass auf dem Sperrbildschirm — ohne Entsperren. Diese App kann ihn nicht selbst ausfüllen; Sie tragen die Angaben von Hand ein. Hier stehen sie dafür bereit, Feld für Feld.</p>
+          <nav class="nf-geschw" aria-label="Notfall-Seiten"><a href="#p">Notfall</a><a href="#q">Notfallkarte</a><a href="#r" aria-current="page">Notfallpass</a><a href="#s">Notfall-Dossier</a></nav>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <p class="fuss" style="margin-top:0">Was im Notfallpass steht, kann lesen, wer Ihr Telefon in der Hand hält — ohne Code. Das ist gewollt: Im Notfall zählt, dass jemand die Angaben findet. Sie entscheiden, was Sie eintragen und was nicht.</p>
+          <h4 style="margin:14px 0 0">Ihre Angaben, Feld für Feld</h4>
+          <p class="unter">Aus dem Kapitel Notfall übernommen, in der Reihenfolge der Apple-Hilfe. Übertragen Sie, was Sie möchten.</p>
+          <div class="nf-gruppe">In den Gesundheitsinfos</div>
+          <p class="fuss" style="margin:0 0 4px">Name und Geburtsdatum tragen Sie in der App «Health» ein: auf Ihr Bild tippen, dann «Gesundheitsprofil» und «Bearbeiten».</p>
+          <div class="nf-feld"><span><small>Name</small>Maria Muster</span><button>Kopieren</button></div>
+          <div class="nf-feld"><span><small>Geburtsdatum</small>15.03.1992</span><button>Kopieren</button></div>
+          <div class="nf-gruppe">Im Notfallpass</div>
+          <div class="nf-feld"><span><small>Erkrankungen</small><span class="leer">noch nicht erfasst</span></span></div>
+          <div class="nf-feld"><span><small>Medikamente</small><span class="leer">noch nicht erfasst</span></span></div>
+          <div class="nf-feld"><span><small>Allergien</small>Penicillin</span><button>Kopieren</button></div>
+          <div class="nf-feld"><span><small>Blutgruppe</small>A+</span><button>Kopieren</button></div>
+          <div class="nf-feld"><span><small>Notfallkontakt: Name</small>Peter Muster</span><button>Kopieren</button></div>
+          <div class="nf-feld"><span><small>Notfallkontakt: Telefon</small>+41 79 654 32 10</span><button>Kopieren</button></div>
+          <details class="fu-auf" style="margin-top:14px"><summary><span>Auf dem iPhone</span><b>4 Schritte</b></summary>
+            <ol class="nf-sagen" style="font-size:13px"><li>Öffnen Sie die App «Health», tippen Sie auf Ihr Bild und dann auf «Notfallpass».</li><li>Tippen Sie auf «Los gehts» oder «Bearbeiten» und tragen Sie die Angaben von oben ein.</li><li>Unter «Notfallkontakte» auf «Notfallkontakt hinzufügen» tippen. Gewählt wird aus Ihren Kontakten — legen Sie die Person dort zuerst an, falls sie fehlt.</li><li>Nach unten scrollen, «Im Sperrzustand zeigen» einschalten und auf «Fertig» tippen.</li></ol>
+            <p class="fuss">So finden Helfende den Notfallpass: auf dem Sperrbildschirm nach oben streichen oder die Home-Taste drücken, «Notfall» tippen, dann «Notfallpass». · Apple-Hilfe ↗</p>
+          </details>
+          <details class="fu-auf"><summary><span>Auf Android</span><b>4 Schritte</b></summary>
+            <p class="fuss">Nicht jedes Android-Telefon hat diese App. Wo es sie gibt (ab Android 12), heisst sie «Persönliche Sicherheit», in der App-Liste kurz «Sicherheit».</p>
+            <ol class="nf-sagen" style="font-size:13px"><li>Öffnen Sie die App «Sicherheit», melden Sie sich wenn nötig mit Ihrem Google-Konto an und tippen Sie auf «Meine Infos».</li><li>Unter «Medizinische Daten» Blutgruppe, Allergien und Medikamente eintragen.</li><li>Unter «Notfallkontakte» auf «Kontakt hinzufügen» tippen und die Person aus Ihren Kontakten wählen.</li><li>Unter «Zugriff auf Notfallinformationen» die Option «Anzeigen, wenn gesperrt» wählen.</li></ol>
+            <p class="fuss">Android-Hilfe ↗</p>
+          </details>
+          <a class="verweis" href="#s" style="margin-top:10px"><span>Notfall-Dossier mit QR-Code (zum Ausdrucken)</span><span class="pfeil">›</span></a>
+          <p class="fuss">Dieses Blatt sendet nichts. Kopiert wird nur, wenn Sie auf «Kopieren» tippen.</p>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="uebersicht"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Anders:</b> Name «Notfallpass», Brotkrume über «Notfall», Zwischentitel «In den Gesundheitsinfos» / «Im Notfallpass» normal statt in Versalien (Design-Befund), iPhone- und Android-Anleitung zugeklappt, Kopieren-Knöpfe 44 px.</li>
+    <li><b>Copy-Prüfer:</b> «4 Schritte» als Zusammenfassung im zugeklappten Titel (neu).</li>
+  </ul></div>
+</section>
+
+<!-- ===================== S · Notfall-Dossier ===================== -->
+<section class="abschnitt" id="s">
+  <h2>S · Ausdrucken — «Notfall-Dossier»</h2>
+  <p class="warum"><b>Neu am 24.10.</b> Heute unter «Meine Unterlagen» (<code>#/notfalldossier</code>), mit Kopf in einer Karte. Hier: Brotkrume des Notfall-Orts, Kopf links, Drucken als ruhiger Hauptknopf, QR-Code als eigener Abschnitt, die Vorschau als Liste in den sechs Bereichen. Alle Texte aus der App.</p>
+  <div class="geraet" data-seite="s">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="notfall"></nav>
+    <div class="seite" style="--licht: var(--notfall)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#p">Notfall</a><span>›</span>Notfall-Dossier</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="notfall" style="--licht: var(--notfall)"></span><h3>Notfall-Dossier</h3></div>
+          <p class="satz">Wichtige Informationen, wenn jemand anderes helfen muss. 6 Bereiche mit Angaben.</p>
+          <nav class="nf-geschw" aria-label="Notfall-Seiten"><a href="#p">Notfall</a><a href="#q">Notfallkarte</a><a href="#r">Notfallpass</a><a href="#s" aria-current="page">Notfall-Dossier</a></nav>
+          <div class="knoepfe" style="margin-top:12px"><button class="knopfprim">Drucken / Als PDF speichern</button></div>
+          <p class="fuss">Dieses Dossier enthält persönliche Gesundheitsinformationen. Bitte sorgfältig aufbewahren.</p>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <h4 style="margin:0">Notfall-QR für Rettungskräfte</h4>
+          <div style="display:flex;gap:14px;align-items:flex-start;margin-top:8px">
+            <svg width="96" height="96" viewBox="0 0 21 21" aria-hidden="true" style="flex-shrink:0;background:#fff;padding:4px;border-radius:6px"><path fill="#111" d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2zM8 0h1v2H8zM10 1h2v1h-2zM9 3h3v1H9zM8 5h2v2H8zM11 6h2v2h-2zM8 8h4v1H8zM14 8h2v2h-2zM17 9h3v1h-3zM0 8h2v2H0zM3 9h3v1H3zM9 10h2v3H9zM12 11h3v1h-3zM16 11h2v2h-2zM19 12h2v2h-2zM8 14h2v1H8zM11 14h1v3h-1zM13 13h2v2h-2zM16 15h3v1h-3zM8 17h2v2H8zM13 17h2v1h-2zM17 18h4v1h-4zM12 19h3v2h-3zM19 20h2v1h-2z"/></svg>
+            <p class="fuss" style="margin:0">Scannbar mit jedem Smartphone — der Code enthält nur Text, keinen Link. Er ist nicht verschlüsselt: Wer ihn scannt, liest alle Angaben darin. Zum Mitführen ein Bildschirmfoto machen oder diese Seite drucken. Beim Scannen bietet das Telefon oft an, die Angaben als Kontakt zu speichern — dann stehen sie im Adressbuch der Person, die scannt.</p>
+          </div>
+          <p class="fuss">Der QR-Code enthält eine Kurzfassung: Nicht alle Angaben passen hinein, und der Code nennt am Ende, was fehlt. Vollständig stehen die Angaben nur im Dossier unten.</p>
+          <a class="verweis" href="#r"><span>Dieselben Angaben für den Notfallpass im Telefon vorbereiten</span><span class="pfeil">›</span></a>
+          <h4 style="margin:18px 0 0">Vorschau</h4>
+          <div class="fu-posten" style="margin-top:6px">
+            <div class="gr"><span>Person</span><span></span></div>
+            <div class="po"><span>Name</span><span>Maria Muster</span></div><div class="po"><span>Geburtsdatum</span><span>15.03.1992</span></div><div class="po"><span>Telefon</span><span>+41 76 432 18 95</span></div><div class="po"><span>Strasse &amp; Hausnummer</span><span>Langstrasse 42, 8004 Zürich</span></div>
+            <div class="gr"><span>Notfallkontakt</span><span></span></div>
+            <div class="po"><span>Notfall-Kontaktperson</span><span>Peter Muster</span></div><div class="po"><span>Telefon Notfall</span><span>+41 79 654 32 10</span></div>
+            <div class="gr"><span>Medizinische Angaben</span><span></span></div>
+            <div class="po"><span>Blutgruppe</span><span>A+</span></div><div class="po"><span>Allergien</span><span>Penicillin</span></div>
+            <div class="gr"><span>Ärztliche Betreuung</span><span></span></div>
+            <div class="po"><span>Hausarzt</span><span>Dr. med. Lisa Brunner</span></div><div class="po"><span>Telefon Arzt</span><span>+41 44 242 80 00</span></div><div class="po"><span>Bevorzugtes Spital</span><span>UniversitätsSpital Zürich</span></div>
+            <div class="gr"><span>Vorsorge &amp; Verfügungen</span><span></span></div>
+            <div class="po"><span>Entscheid zur Organspende</span><span>Zustimmung — alle Organe und Gewebe</span></div><div class="po"><span>Patientenverfügung vorhanden?</span><span>Noch nicht</span></div><div class="po"><span>Vorsorgeauftrag vorhanden?</span><span>Noch nicht</span></div><div class="po"><span>Bestattungswünsche festgehalten?</span><span>Noch nicht</span></div>
+            <div class="gr"><span>Versicherung</span><span></span></div>
+            <div class="po"><span>Krankenkasse</span><span>CSS</span></div><div class="po"><span>KK-Kartennummer</span><span>80756 012345678</span></div><div class="po"><span>AHV-Nummer</span><span>756.1234.5678.97</span></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv="uebersicht"></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Anders:</b> Brotkrume «Übersicht › Notfall › Notfall-Dossier» statt «Meine Unterlagen» (dort bleibt ein Verweis), Kopf links statt in einer Karte (Design-Befund), Drucken als ruhiger Hauptknopf links, QR-Hinweis vollständig wie heute (inkl. «Adressbuch»-Satz, #403) neben dem Code.</li>
+    <li><b>Befund App 24.10.:</b> im Beispiel (Maria) steht «Der QR-Code liess sich nicht erzeugen.» — der QR fehlt. Ursache nicht geprüft (Länge der Angaben? Demo?). Vor dem Bau klären; der Code im Mockup ist ein Platzhalter.</li>
+    <li>Druck-HTML ohne Seitensprache (a11y-Befund M11: <code>lang</code> fest/fehlend) — im Bau mitnehmen.</li>
   </ul></div>
 </section>
 

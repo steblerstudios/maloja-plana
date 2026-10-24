@@ -215,6 +215,38 @@ const SEITEN = [
     ['Hinweise «bewertet nichts», «Grobe Orientierung», «Daten bleiben auf dem Gerät»', 'unten', 'unten', 'drin'],
     ['#/schnellcheck, #/ansprueche', 'eigene Seiten', 'leiten auf diese Seite', 'neu'],
   ]},
+  // 24.10.2026: Notfall — vier Seiten, ein Ort, ein Name je Seite (Entscheid Sophie). Bausteine nicht gezählt.
+  { id: 'notfall', titel: 'Notfall · Ort', heuteBild: 'heute-notfalleinstieg.jpg', heuteHinweis: '«Was brauchen Sie im Notfall?» · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=p', bausteine: 0, zeilen: [
+    ['Titel', '«Was brauchen Sie im Notfall?» (auf der Übersicht «Notfallkarte vorbereiten»)', '«Notfall», Satz darunter', 'anders'],
+    ['Kopf', 'zentriert, Herz-Symbol, 3-px-Balken', 'links, Notfall-Symbol', 'anders'],
+    ['Zwei Wege: Vorlesekarte, Notfallpass', 'Kästen', 'Zeilen mit Satz, dazu Notfall-Dossier', 'anders'],
+    ['Drei Szenarien mit Listen und Stand', 'Kästen, Zeile ~28 px, nur Enter', 'aufklappbar, 56 px, Enter und Leertaste, «8 von 9»', 'anders'],
+    ['Fehlende Angabe ergänzen', 'Knopf «Notfall»', 'Zeile «Fehlende Angabe im Kapitel Notfall ergänzen»', 'anders'],
+    ['Brotkrume und Schwesterseiten', 'nur «Übersicht»', '«Übersicht › Notfall», Zeile mit allen vier Seiten', 'neu'],
+  ]},
+  { id: 'notfallkarte', titel: 'Notfall · Notfallkarte', heuteBild: 'heute-notfallkarte.jpg', heuteHinweis: '«Notruf-Vorlesekarte» · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=q', bausteine: 0, zeilen: [
+    ['Titel', '«Notruf-Vorlesekarte»', '«Notfallkarte»', 'anders'],
+    ['Nummern 144, 117, 118, 145, 1414, 112', 'Pillen', 'Knöpfe mit grosser Zahl, zwei Spalten', 'anders'],
+    ['Was Sie sagen (4 Fragen mit Adresse, Name, Telefon)', 'Liste', 'Liste', 'drin'],
+    ['Standort zeigen, «Bleiben Sie am Telefon»', 'Knopf, Satz', 'Knopf, Satz', 'drin'],
+    ['Angaben zum Ablesen (Kontakt, Medizin, Arzt)', 'Kästen', 'Liste in drei Gruppen', 'drin'],
+    ['Ganzes Notfall-Dossier', 'Link', 'Zeile', 'drin'],
+  ]},
+  { id: 'notfallpass', titel: 'Notfall · Notfallpass', heuteBild: 'heute-notfallpass.jpg', heuteHinweis: '«Notfallpass vorbereiten» · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=r', bausteine: 0, zeilen: [
+    ['Titel', '«Notfallpass vorbereiten»', '«Notfallpass»', 'anders'],
+    ['Hinweis «kann lesen, wer Ihr Telefon in der Hand hält»', 'Kasten', 'leiser Satz', 'drin'],
+    ['Zwischentitel', 'IN DEN GESUNDHEITSINFOS / IM NOTFALLPASS (Versalien)', 'normal geschrieben', 'anders'],
+    ['Felder mit «Kopieren»', 'Liste', 'Liste, Knöpfe 44 px', 'drin'],
+    ['Anleitung iPhone und Android', 'beide offen', 'beide zugeklappt, «4 Schritte»', 'anders'],
+    ['Dossier mit QR, «sendet nichts»', 'unten', 'unten', 'drin'],
+  ]},
+  { id: 'notfalldossier', titel: 'Notfall · Dossier', heuteBild: 'heute-notfalldossier.jpg', heuteHinweis: 'Bausteine nicht gezählt · QR im Beispiel nicht erzeugt', neu: 'seiten-v5.html?nur=s', bausteine: 0, zeilen: [
+    ['Brotkrume', 'Übersicht › Meine Unterlagen', 'Übersicht › Notfall', 'anders'],
+    ['Kopf', 'in einer Karte, mit «6 Bereiche mit Angaben»', 'links, gleicher Satz', 'anders'],
+    ['Drucken / Als PDF speichern', 'breiter Sand-Knopf', 'Hauptknopf links', 'drin'],
+    ['Notfall-QR mit Hinweisen', 'zentriert in Kasten; im Beispiel «liess sich nicht erzeugen»', 'eigener Abschnitt, Code neben dem Hinweis', 'anders'],
+    ['Vorschau in sechs Bereichen', 'Kästen', 'Liste mit Gruppen', 'drin'],
+  ]},
   { id: 'suche', titel: 'Suche', heuteBild: 'heute-suche.jpg', neu: 'seiten-v5.html?nur=n', bausteine: 78, zeilen: [
     ['Suchfeld', 'oben', 'oben, bleibt beim Scrollen stehen', 'drin'],
     ['70 «Werkzeuge» (inkl. Lebensereignisse) zuerst', 'eine lange Liste', 'Werkzeuge und Lebensereignisse getrennt', 'anders'],
@@ -233,7 +265,7 @@ document.getElementById('seiten').innerHTML = SEITEN.map((s, i) => `
   <section class="seite${i === 0 ? ' an' : ''}" id="s-${s.id}">
     <h2>${s.titel}</h2>
     <div class="nebeneinander">
-      <div><div class="etikett"><b>Heute</b> · ${s.bausteine} Bausteine${s.heuteHinweis ? ' · ' + s.heuteHinweis : ''}</div>${(s.heuteBilder || [[s.heuteBild, '']]).map(([b, l]) => `${l ? `<div class="etikett" style="margin-top:8px">${l}</div>` : ''}<div class="foto"><img src="${b}" alt="${l || s.titel} heute"></div>`).join('')}</div>
+      <div><div class="etikett"><b>Heute</b>${s.bausteine ? ' · ' + s.bausteine + ' Bausteine' : ''}${s.heuteHinweis ? ' · ' + s.heuteHinweis : ''}</div>${(s.heuteBilder || [[s.heuteBild, '']]).map(([b, l]) => `${l ? `<div class="etikett" style="margin-top:8px">${l}</div>` : ''}<div class="foto"><img src="${b}" alt="${l || s.titel} heute"></div>`).join('')}</div>
       <div><div class="etikett"><b>Neu</b> · ${s.neu.startsWith('seiten-v5') ? 'Fassung 5' : 'Fassung 4 (Eingang unverändert)'} — antippen erlaubt · <a href="${s.neu.replace('?nur=', '#').replace('index.html#eingang', 'index.html').replace('index.html#uebersicht', 'index.html')}" target="_blank">ganz öffnen</a></div><iframe data-src="${s.neu}" title="${s.titel} neu" loading="lazy"></iframe></div>
     </div>
     <div class="filter" role="group" aria-label="Filter">${['alle', 'fehlt', 'anders', 'drin', 'neu'].map((f) => `<button data-f="${f}" aria-pressed="${f === 'alle'}">${f === 'alle' ? 'Alle' : ST[f]}</button>`).join('')}</div>
