@@ -2691,16 +2691,23 @@ body.still .rs-karte { transition: none; }
             <p class="kap-zus">Für den Notfall ist eine Kontaktperson hinterlegt. Ein Hausarzt ist eingetragen. Blutgruppe A+, Allergie gegen Penicillin.</p>
           </div>
           <div class="held stufe s2">
-            <a href="#q" style="display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--notfall);color:#fff;border-radius:14px;padding:14px 16px;min-height:64px">
+            <div style="position:sticky;top:8px;z-index:3">
+            <a href="#q" style="display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--notfall);color:#fff;border-radius:14px;padding:14px 16px;min-height:64px;box-shadow:0 6px 18px rgba(0,0,0,.25)">
               <span aria-hidden="true" style="font-size:22px">☎</span>
               <span style="flex:1"><b style="font-size:16px;font-weight:600;display:block">Im Ernstfall: Notfallkarte öffnen</b><small style="opacity:.9;font-size:12px">Führt durch den Anruf · 144 Sanität · 117 Polizei · 118 Feuerwehr</small></span>
               <span aria-hidden="true" style="font-size:18px">›</span>
             </a>
+            </div>
+            <a href="tel:+41796543210" style="display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-top:8px;min-height:48px"><span>Peter Muster anrufen<small style="display:block;color:var(--soft);font-size:12px">Notfall-Kontaktperson · +41 79 654 32 10</small></span><span aria-hidden="true" style="color:var(--sand)">☏</span></a>
 
             <h4 class="kap-h">Bereit für den Ernstfall</h4>
             <div style="display:flex;align-items:baseline;gap:8px"><span class="gross" style="font-size:30px;white-space:nowrap">19 von 20</span><span class="fuss" style="margin:0">Angaben, die im Notfall gebraucht werden</span></div>
             <div class="k-baro" aria-hidden="true" style="margin:8px 0 10px"><i class="fuell" style="width:95%;background:var(--notfall)"></i></div>
-            <a class="po" href="#ae-medikamente" style="color:inherit;text-decoration:none;border:1px dashed var(--notfall);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between"><span>○ Regelmässige Medikamente <small style="display:block;color:var(--soft)">fehlt für «Unfall»</small></span><span style="color:var(--sand);align-self:center">ergänzen ↓</span></a>
+            <div style="border:1px dashed var(--notfall);border-radius:12px;padding:12px">
+              <label for="ae-med-ein" style="display:block;font-size:14px;color:var(--text)">○ Regelmässige Medikamente <small style="color:var(--soft)">· fehlt für «Unfall»</small></label>
+              <input id="ae-med-ein" type="text" placeholder="z. B. Name und Dosis" style="width:100%;box-sizing:border-box;margin:8px 0;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--up);color:var(--text);font:inherit;min-height:44px">
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="knopfruhig" style="min-height:44px">Speichern</button><button class="knopfruhig" style="min-height:44px;background:none">Ich nehme keine</button></div>
+            </div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
               <details class="nf-szen" style="flex:1 1 100%"><summary><span><b>Drei Szenarien</b><small>Unfall 8 von 9 · Spitalaufenthalt ✓ · Behördengang ✓</small></span><span class="stand">ansehen</span></summary>
                 <p class="fuss" style="margin:4px 0"><b>Unfall</b> — Kontaktperson, Telefon Notfall, Blutgruppe, Allergien, ○ Medikamente, Hausarzt, Telefon Arzt, Krankenkasse, KK-Karte.</p>
@@ -2732,11 +2739,10 @@ body.still .rs-karte { transition: none; }
             <p class="fuss" style="margin:0 0 6px">Was gilt, wenn Sie selbst nicht mehr entscheiden können. <span style="color:var(--text)">1 von 4 geregelt.</span></p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center">
               <div style="border:1px solid var(--sage);border-radius:10px;padding:10px 4px"><div style="font-size:13px;font-weight:600;color:var(--text)">Organspende</div><div class="fuss" style="margin:2px 0 0;color:var(--text)">✓ Zustimmung</div></div>
-              <div style="border:1px solid var(--border);border-radius:10px;padding:10px 4px"><div style="font-size:13px;font-weight:600;color:var(--text)">Patienten&shy;verfügung</div><div class="fuss" style="margin:2px 0 0">○ Noch nicht</div></div>
-              <div style="border:1px solid var(--border);border-radius:10px;padding:10px 4px"><div style="font-size:13px;font-weight:600;color:var(--text)">Vorsorge&shy;auftrag</div><div class="fuss" style="margin:2px 0 0">○ Noch nicht</div></div>
-              <div style="border:1px solid var(--border);border-radius:10px;padding:10px 4px"><div style="font-size:13px;font-weight:600;color:var(--text)">Bestattungs&shy;wünsche</div><div class="fuss" style="margin:2px 0 0">○ Noch nicht</div></div>
+              <a href="#" style="display:block;text-decoration:none;border:1px solid var(--border);border-radius:10px;padding:10px 4px;min-height:64px"><div style="font-size:13px;font-weight:600;color:var(--text)">Patienten&shy;verfügung</div><div class="fuss" style="margin:2px 0 0">○ Noch nicht</div><div style="font-size:12px;color:var(--sand);margin-top:2px">erstellen ›</div></a>
+              <a href="#" style="display:block;text-decoration:none;border:1px solid var(--border);border-radius:10px;padding:10px 4px;min-height:64px"><div style="font-size:13px;font-weight:600;color:var(--text)">Vorsorge&shy;auftrag</div><div class="fuss" style="margin:2px 0 0">○ Noch nicht</div><div style="font-size:12px;color:var(--sand);margin-top:2px">erstellen ›</div></a>
+              <a href="#" style="display:block;text-decoration:none;border:1px solid var(--border);border-radius:10px;padding:10px 4px;min-height:64px"><div style="font-size:13px;font-weight:600;color:var(--text)">Bestattungs&shy;wünsche</div><div class="fuss" style="margin:2px 0 0">○ Noch nicht</div><div style="font-size:12px;color:var(--sand);margin-top:2px">festhalten ›</div></a>
             </div>
-            <a class="verweis" href="#" style="margin-top:8px"><span>Vorsorgeauftrag &amp; Patientenverfügung<small>Wer handelt, was medizinisch gilt</small></span><span class="pfeil">›</span></a>
           </div>
         </div>
         <div class="rechtsspalte stufe s3">
@@ -2755,8 +2761,6 @@ body.still .rs-karte { transition: none; }
           </div>
           <div class="passend">
             <h4>Passend zu diesem Bereich</h4>
-            <a class="verweis" href="#"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Patientenverfügung erstellen<small>In Fragen, zum Drucken</small></span><span class="pfeil">›</span></a>
-            <a class="verweis" href="#"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Bestattungswünsche<small>Festhalten, was Ihnen wichtig ist</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#d"><span class="sym k" data-icon="basis"></span><span>Dokumente ablegen<small>Unterlagen · Patientenverfügung, Organspendekarte, Blutgruppenausweis</small></span><span class="pfeil">›</span></a>
           </div>
           <div class="alsnaechstes">
@@ -2780,6 +2784,7 @@ body.still .rs-karte { transition: none; }
     <li><b>Zweite Fassung (Sophie: «mega Anfang, geht noch besser»):</b> kürzer, jede Sache nur einmal.</li>
     <li><b>Im Ernstfall</b> zuoberst als grosser Knopf in der Notfall-Farbe: «Notfallkarte öffnen» mit den Nummern aus Q (144, 117, 118). Die Zeile der Schwesterseiten entfällt im Kapitel (die Kacheln unten führen dorthin); auf Q, R, S bleibt sie.</li>
     <li><b>Bereit für den Ernstfall:</b> eine Zahl statt drei Listen — «19 von 20» (die 20 verschiedenen Angaben der drei Szenarien aus P, ohne Doppelte), Balken, darunter <b>nur was fehlt</b> mit «ergänzen ↓» direkt zum Feld (Entscheid Sophie: «direkt zum Feld»). Angaben aus anderen Kapiteln (z. B. AHV-Nummer) führen in jenes Kapitel. Die drei Szenarien bleiben zugeklappt zum Nachsehen.</li>
+    <li><b>Dritte Fassung (Sophie: «schon besser, geht noch besser»):</b> (1) der Ernstfall-Knopf bleibt beim Scrollen oben stehen, darunter «Peter Muster anrufen» direkt aus der Seite (Telefon-Link); (2) das Fehlende wird <b>gleich hier ausgefüllt</b> — Feld, «Speichern», und «Ich nehme keine» zählt als erledigt (wie «Keine Kontaktperson», `naOk`); (3) die offenen Vorsorge-Felder führen selbst zum Werkzeug («erstellen ›», «festhalten ›»), darum bleibt in «Passend» nur «Dokumente ablegen».</li>
     <li><b>Ihre Notfall-Unterlagen:</b> vier Kacheln — Notfallkarte, Notfallpass, Notfall-Dossier, Karte zum Drucken — mit dem Satz «Alle entstehen aus den Angaben unten». Die Vorschau der Druckkarte ist zugeklappt.</li>
     <li><b>Vorsorge</b> als vier Felder mit ✓/○ (nicht nur Farbe) und «1 von 4 geregelt». Patientenverfügung und Vorsorgeauftrag stehen auch in AD «Für den Fall der Fälle» — dort als Sicht, eingetragen werden sie hier.</li>
     <li><b>Passend:</b> Patientenverfügung erstellen · Bestattungswünsche · Dokumente ablegen. Notfall (Ort) und Notfallpass fallen aus «Passend», weil sie jetzt oben auf der Seite stehen.</li>
