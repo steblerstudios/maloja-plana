@@ -149,7 +149,8 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
         // Rücklink zum Vergleich in die Merkliste — damit man die Wunsch-Kasse wiederfindet.
         onSaved: () => addTodo({ text: t('kvgWechsel.todoText'), link: 'praemien' }),
       }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.policeLink'), onClick: () => onNavigate('unterlagen') }),
+      // Ablegen geht oben in der Ablage — `unterlagen` springt zu «Meine Unterlagen» ganz unten.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.policeLink'), onClick: () => onNavigate('tresor') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zusatzWechsel.title'), onClick: () => onNavigate('zusatzwechsel') })
     ),
 

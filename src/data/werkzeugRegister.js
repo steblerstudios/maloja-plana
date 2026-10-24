@@ -39,7 +39,10 @@ export const WERKZEUGE = [
   // Seit 24.10.2026 keine eigene Seite: der View ist ein Alias (utils/hashRouter.js UMLEITUNGEN) und
   // führt ins Kapitel Finanzen zur Auswertung. «finanzen» als Suchwort fällt weg — das Kapitel
   // selbst steht schon in der Suche.
-  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', fach: 'geld', imMenue: 5, aliases: ['finanzübersicht', 'übersicht', 'overview'] },
+  // Seit 24.10.2026 (Stebler Studios, nach dem Rundgang Links/Abläufe) heisst der Eintrag wie seine
+  // Zielseite «Finanzen & Geld» und steht nicht mehr im Menü — dort steht das Kapitel schon. Der
+  // Untertitel unterscheidet ihn im Portemonnaie und in der Suche vom Kapitel-Treffer.
+  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', sub: 'nav.sub.finanzuebersicht', icon: 'budget', fach: 'geld', aliases: ['finanzübersicht', 'übersicht', 'overview'] },
   { view: 'stundenlohn', nav: 'nav.stundenlohn', sub: 'nav.sub.stundenlohn', icon: 'money', fach: 'geld', aliases: ['stundenlohn', 'ferienzuschlag', 'arbeit auf abruf', 'aushilfe', 'temporär', 'salaire horaire', 'salario orario', 'hourly wage'] },
   // Kein eigener View: führt ins Kapitel Finanzen (wie bisher auf dem Dashboard).
   { key: 'mindestlohn', view: 'chapter', kapitel: 'finanzen', nav: 'nav.mindestlohn', sub: 'nav.sub.mindestlohn', icon: 'money', fach: 'geld', suche: false },
@@ -62,7 +65,8 @@ export const WERKZEUGE = [
 
   // ── Aussenfach «Ablegen und ordnen» — Entscheid 27.09.2026 ──
   // Die drei für den Alltag stehen zusätzlich im Menü (gleicher Name, gleiches Zeichen);
-  // dahinter im Menü: Steuern · Finanz-Übersicht · Lebenssituationen (gewählt 27.09.2026).
+  // dahinter im Menü: Steuern · Finanz-Übersicht · Lebenssituationen (gewählt 27.09.2026;
+  // die Finanz-Übersicht ist seit 24.10.2026 draussen, siehe ihr Eintrag oben).
   // Zeichen seit Fassung 5 (23.10.2026): Ablage = Ordner, Kalender = Blatt mit dem
   // heutigen Tag (Europe/Zurich), Merkliste = Haken. Im Menü steht der Kalender seither
   // als Anker «Was ansteht» oben, nicht mehr unter den Werkzeugen.

@@ -14,6 +14,7 @@ import { zahl } from './utils/geld.js';
 import { dreizehnterStatus, hauptlohnMonate } from './utils/dreizehnter.js';
 import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { partnerEinkommenRoh } from './utils/partnereinkommen.js';
+import { CHAPTER_KEYS } from './config/constants.js';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -190,7 +191,9 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         assessment && assessment.key === 'likely' && info.mietbelastung && annualIncome > info.mietbelastung.ab && rentMonthly * 12 <= info.mietbelastung.anteil * annualIncome && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t('mietzinsView.mietbelastungZG')),
         React.createElement(ErgebnisArt, { palette, t, ergebnis: art }),
-        assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('mietzinsView.enterIncomeLink'))
+        // Ins Kapitel Finanzen oben zum Formular — nicht über `finanzuebersicht`: dessen Sprungmarke
+        // liegt bei der Auswertung UNTER den Eingabefeldern (Befund Rundgang 24.10.2026).
+        assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf('finanzen')) }, t('mietzinsView.enterIncomeLink'))
       ),
 
       // Wo steht deine Miete? — jetzt aus dem gemeinsamen Bauteil, damit die Finanz-Übersicht

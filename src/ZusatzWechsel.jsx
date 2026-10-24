@@ -83,7 +83,8 @@ export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
           notes: t('zusatzWechsel.reminderNotes'),
         },
       }),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('zusatzWechsel.policeLink'), onClick: () => onNavigate('unterlagen') })
+      // Ablegen geht oben in der Ablage — `unterlagen` springt zu «Meine Unterlagen» ganz unten.
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('zusatzWechsel.policeLink'), onClick: () => onNavigate('tresor') })
     ),
 
     // Zusatzversicherung ist VVG-Geschäft — derselbe Orientierungs-Hinweis wie
