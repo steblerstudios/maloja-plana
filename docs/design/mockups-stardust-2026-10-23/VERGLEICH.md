@@ -623,3 +623,42 @@ Betrag», nach erneutem Laden «über der Grenze» wie die Finanz-Übersicht. Ni
 fertig geladenem Profil. Im Bau prüfen.
 
 **Noch offen (unverändert):** Übersicht (4 Fragen: Zahl 63/70 %, Kartentitel, Bereichszeilen, Bereiche einmal).
+
+---
+
+## Runde 5 · Notfall: vier Seiten, ein Ort (24.10.2026)
+
+**Gefunden beim Ansehen (Demo Maria):** vier verschiedene Aufgaben ohne gemeinsamen Ort und mit wechselnden
+Namen — `#/notfalleinstieg` «Was brauchen Sie im Notfall?» (auf der Übersicht «Notfallkarte vorbereiten», im
+Register «Notfall»), `#/notfallkarte` «Notruf-Vorlesekarte», `#/notfallpass` «Notfallpass vorbereiten»
+(Brotkrume über «Notfall»), `#/notfalldossier` «Notfall-Dossier» (Brotkrume über «Meine Unterlagen»). Das
+Suchwort «Notfallkarte» trifft zwei Seiten. Bilder: `heute-notfalleinstieg.jpg`, `heute-notfallkarte.jpg`,
+`heute-notfallpass.jpg`, `heute-notfalldossier.jpg`. Vergleich: vier Reiter «Notfall · …» in `vergleich-v5.html`.
+
+### Notfall P–S · entschieden (Sophie, 24.10.2026)
+
+Sophie: «vier Seiten mit einem gemeinsamen Notfall-Ort, ein Name je Seite, Fassung-5-Form», danach «die vier
+Notfall-Entwürfe passen». Entwürfe: `seiten-v5.html?nur=p|q|r|s` (d1758b61).
+
+- **Ein Ort «Notfall» (P)** = heutiger Einstieg. Alle vier Seiten: Brotkrume «Übersicht › Notfall › …» und eine
+  Zeile mit den vier Seiten. Die Karte auf der Übersicht führt hierher und heisst wie der Ort.
+- **Ein Name je Seite:** «Notfall», «Notfallkarte» (statt «Notruf-Vorlesekarte», `notfallkarte.title`),
+  «Notfallpass» (statt «Notfallpass vorbereiten»), «Notfall-Dossier». Suche: «Notfallkarte» trifft nur noch Q.
+- **P Notfall:** Kopf links (statt zentriert mit 3-px-Balken); oben drei Zeilen Notfallkarte, Notfallpass,
+  Dossier; darunter die drei Szenarien (Unfall, Spitalaufenthalt, Behördengang) aufklappbar mit «x von n» und
+  ○ für offene Angaben (nicht nur Farbe), 56 px, Enter und Leertaste (heute `div role="button"`, ~28 px, nur
+  Enter). Fehlt etwas: Zeile «Fehlende Angabe im Kapitel Notfall ergänzen» (heute Knopf «Notfall»).
+  Das Kapitel Notfall bleibt der Ort zum Eintragen.
+- **Q Notfallkarte:** Aufbau und alle Sätze bleiben; nur neuer Name, Brotkrume über Notfall, Nummern als
+  Knöpfe mit grosser Zahl (56 px, zwei Spalten) statt Pillen. Im Ernstfall weiter mit einem Tipp erreichbar.
+- **R Notfallpass:** Zwischentitel ohne Versalien, Anleitungen iPhone und Android zugeklappt («4 Schritte»),
+  Kopieren-Knöpfe 44 px.
+- **S Notfall-Dossier:** Brotkrume über Notfall (unter «Meine Unterlagen» bleibt ein Verweis), Kopf links statt
+  in Karte, Drucken als Hauptknopf, QR als eigener Abschnitt mit dem vollständigen Hinweis (inkl.
+  «Adressbuch», #403), Vorschau als Liste in den sechs Bereichen.
+
+**Neue Texte für den Copy-Prüfer:** die drei Kurzsätze unter Notfallkarte/Notfallpass/Dossier auf P,
+«x von n», «Fehlende Angabe im Kapitel Notfall ergänzen», «4 Schritte», neue Seitentitel in fünf Sprachen.
+
+**Befund App:** im Beispiel (Maria) zeigt das Notfall-Dossier «Der QR-Code liess sich nicht erzeugen.» —
+Ursache nicht geprüft (Länge der Angaben? nur Demo?). Vor dem Bau klären. Druck-HTML ohne `lang` (a11y M11).
