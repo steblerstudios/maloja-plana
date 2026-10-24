@@ -882,6 +882,29 @@ kommende Frist setzen; welche Frist im Kanton gilt, mit Quelle prüfen (Swiss-Pr
 **Copy-Prüfer:** Zusammenfassung, «Steuererklärung fällig am …», «Alles zu Ihren Steuern», «Behördengänge»,
 «1 von 5 erledigt», «Für den Fall der Fälle» mit Satz, «Rechtliche Vertretung: nicht erfasst», Passend-Untertitel.
 
+### Kapitel Notfall (AE) · entschieden (Sophie, 24.10.2026)
+
+Entwurf: `seiten-v5.html?nur=ae` (ef0f5474). Bild heute: `heute-kapitel-notfall.jpg`.
+- **Oben** (Sophie wählte alle drei): **Vorschau der Karte zum Drucken** (Papierkarte aus `notfallkarteAbschnitte`,
+  `ChapterView.jsx:1103`) mit echtem Knopf «Notfallkarte drucken» statt Link mit Kästchen-Zeichen
+  (`ChapterView.jsx:1869`) · **«Alles für den Ernstfall»** als eine Zeile zum Notfall-Ort (P) · **Vorsorge** als
+  vier Felder (Organspende, Patientenverfügung, Vorsorgeauftrag, Bestattungswünsche) mit ✓/○ und «1 von 4 geregelt».
+  Patientenverfügung und Vorsorgeauftrag werden hier eingetragen; AD «Für den Fall der Fälle» zeigt sie nur an.
+- Zusammenfassung ruhig unter dem Kopf, ergänzt um Blutgruppe und Allergie. Medikamente und Vorerkrankungen leer →
+  «nicht erfasst».
+- **Passend** (Sophie, alle): Notfall · Notfallpass · Patientenverfügung erstellen · Bestattungswünsche · Dokumente
+  ablegen.
+- **Ende** (Sophie: «Zurück zur Übersicht»): «Alle Kapitel durchgegangen · Zur Übersicht ›». «Die Informationen
+  sind hinterlegt.» bleibt leise.
+
+**Offen (Sophie: «später klären»):** Zwei Dinge heissen «Notfallkarte» — die Notruf-Vorlesekarte (Q, Runde 5) und
+die Karte zum Drucken für die Brieftasche. Vor dem Bau einen eigenen Namen für die Druckkarte finden.
+**Befund App:** Telefonnummern und «Zustimmung — alle Organe und Gewebe» brechen in der Wertspalte über mehrere
+Zeilen (wie AC, AD).
+**Copy-Prüfer:** Zusammenfassung, «Ihre Notfallkarte — Vorschau», Satz zur Brieftasche, «Alles für den Ernstfall»,
+Vorsorge-Satz, «1 von 4 geregelt», «Medikamente und Vorerkrankungen: nicht erfasst», «Alle Kapitel durchgegangen»,
+Passend-Untertitel (u. a. «Festhalten, was Ihnen wichtig ist» ist neu).
+
 ### Feinschliff, gilt für alle Kapitel (24.10.2026)
 
 Zusammenfassungs-Satz mit Abstand und normaler Schrift (`.kap-zus`); Zwischentitel im Kapitel einheitlich
