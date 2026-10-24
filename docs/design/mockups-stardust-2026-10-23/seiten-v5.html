@@ -717,6 +717,11 @@ body.still .rs-karte { transition: none; }
 .m-fuell { width: 14px; height: 8px; border-radius: 999px; background: var(--wohnen); }
 .fu-anteil { display: flex; height: 8px; border-radius: 999px; overflow: hidden; margin: 2px 0 8px; background: var(--border); }
 .fu-anteil i { display: block; height: 100%; }
+/* Kapitel-Feinschliff (24.10.): Zusammenfassung mit Luft, einheitliche Zwischentitel */
+.kap-zus { margin: 14px 0 0; font-size: 15px; line-height: 1.5; color: var(--text); font-weight: 400; }
+.kap-h { font-family: 'Hanken Grotesk'; font-size: 17px; font-weight: 600; color: var(--text); margin: 24px 0 6px; }
+.held .kap-h:first-child, .lohn .kap-h:first-child { margin-top: 0; }
+.stufe + .held, .stufe + .lohn { margin-top: 20px; }
 /* P–S · Notfall (24.10.): ein Ort, vier Seiten */
 .nf-geschw { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; }
 .nf-geschw a { border: 1px solid var(--border); border-radius: 999px; min-height: 36px; padding: 6px 12px; font-size: 13px; color: var(--mid); text-decoration: none; display: inline-flex; align-items: center; }
@@ -2322,7 +2327,7 @@ body.still .rs-karte { transition: none; }
             <div class="titelzeile"><span class="sym" data-icon="wohnen"></span><h3>Wohnen &amp; Leben</h3></div>
             <p class="satz" data-sie="Ihr Zuhause, Miete und Wohnsituation" data-du="Dein Zuhause, Miete und Wohnsituation"></p>
             <p class="unter">Alles rund um Ihr Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.</p>
-            <p class="unter" style="color:var(--text)">Langstrasse 42, 8004 Zürich. Wohndauer 5 Jahre, 2 Monate. Monatsmiete CHF 1’650 plus CHF 180 Nebenkosten. Vermieter: Steiner Immobilien AG.</p>
+            <p class="kap-zus">Langstrasse 42, 8004 Zürich. Wohndauer 5 Jahre, 2 Monate. Monatsmiete CHF 1’650 plus CHF 180 Nebenkosten. Vermieter: Steiner Immobilien AG.</p>
           </div>
           <div class="held stufe s2">
             <div class="etikett" id="z-etikett">Wohnkosten pro Monat</div>
@@ -2330,7 +2335,7 @@ body.still .rs-karte { transition: none; }
             <div class="k-baro" aria-hidden="true" style="margin:14px 0 8px"><i class="fuell" id="z-anteil-f" style="width:29.5%"></i><i class="strich" style="left:33.3%"></i></div>
             <div class="k-baro-leg"><span id="z-anteil">29.5 % des Einkommens (CHF 6’200)</span><span><i class="m-strich"></i>ein Drittel</span></div>
             <p class="fuss" id="z-drittel">Als Faustregel sollte die Miete rund einen Drittel des Einkommens nicht übersteigen — viele Vermieter verlangen das sogar.</p>
-            <p class="unter" style="margin:14px 0 0;font-weight:600">Miete regional vs. Schweiz</p>
+            <h4 class="kap-h">Miete regional vs. Schweiz</h4>
             <div class="k-baro" aria-hidden="true"><i class="fuell" id="z-baro-f" style="width:86.8%"></i><i class="punkt" style="left:80.9%" id="z-baro-p"></i><i class="strich" style="left:69.8%" id="z-baro-s"></i></div>
             <div class="k-baro-leg"><span><i class="m-strich"></i>Schweizer Schnitt: CHF 1327</span><span style="color:var(--gold)"><i class="m-punkt"></i>Ihre Region: CHF 1538</span></div>
             <div class="k-baro-du"><i class="m-fuell"></i><span id="z-baro-du">Ihre Miete: CHF 1650</span></div>
@@ -2403,7 +2408,7 @@ body.still .rs-karte { transition: none; }
             <div class="titelzeile"><span class="sym" data-icon="versicherungen"></span><h3>Versicherungen &amp; Vorsorge</h3></div>
             <p class="satz">Krankenkasse, Pensionskasse und Absicherung</p>
             <p class="unter">Ihre Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.</p>
-            <p class="unter" style="color:var(--text)">Sie sind bei CSS grundversichert. Franchise CHF 1’500. Eine Pensionskasse ist hinterlegt.</p>
+            <p class="kap-zus">Sie sind bei CSS grundversichert. Franchise CHF 1’500. Eine Pensionskasse ist hinterlegt.</p>
           </div>
           <div class="held stufe s2">
             <div class="etikett">Versicherungen pro Monat</div>
@@ -2413,10 +2418,11 @@ body.still .rs-karte { transition: none; }
               <div class="po" style="padding-left:0"><span>Hausrat (CHF 22 / Jahr)</span><span>CHF 2</span></div>
               <div class="leer" style="padding-left:0">Haftpflicht und Reiseversicherung: Prämie nicht erfasst. Pensionskasse (CHF 420) ist schon vom Lohn abgezogen.</div>
             </div>
-            <div class="k-baro" aria-hidden="true" style="margin:14px 0 8px"><i class="fuell" style="width:41.3%;background:var(--versicherungen)"></i><i class="strich" style="left:66.7%"></i></div>
-            <div class="k-baro-leg"><span>Krankenkasse 6.2 % des Einkommens</span><span><i class="m-strich"></i>Richtwert 10 % (WHO)</span></div>
-            <p class="fuss">Die Prämie allein liegt unter 10 % — Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu. Die WHO zählt Gesundheitsausgaben über 10 % des Einkommens zu den belastenden.</p>
-            <p class="unter" style="margin:16px 0 4px;font-weight:600">Schutzschild</p>
+            <h4 class="kap-h">Ihre KK-Last</h4>
+            <div class="k-baro" aria-hidden="true" style="margin:10px 0 8px"><i class="fuell" style="width:41.3%;background:var(--versicherungen)"></i><i class="strich" style="left:66.7%"></i></div>
+            <div class="k-baro-leg"><span>6.2 % des Einkommens</span><span><i class="m-strich"></i>WHO 10 %</span></div>
+            <p class="fuss">Die Prämie allein liegt unter 10 % — Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu.</p>
+            <h4 class="kap-h">Schutzschild</h4>
             <p class="fuss" style="margin:0 0 8px">Was das Gesetz verlangt — und was sich zusätzlich lohnt.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <div style="text-align:center">
@@ -2430,18 +2436,21 @@ body.still .rs-karte { transition: none; }
                 <ul class="nf-liste" style="text-align:left;margin-top:6px"><li>Privathaftpflicht</li><li>Hausrat</li></ul>
               </div>
             </div>
-            <div style="margin-top:14px">
-              <p class="unter" style="margin:0;font-weight:600">Franchise-Kreuz</p>
-              <svg width="100%" height="90" viewBox="0 0 300 90" aria-hidden="true" style="display:block;margin:6px 0">
-                <line x1="10" y1="80" x2="290" y2="80" stroke="var(--border)"/>
-                <path d="M10 70 L290 14" stroke="var(--versicherungen)" stroke-width="2.5" fill="none"/>
-                <path d="M10 44 L290 30" stroke="var(--mid)" stroke-width="2" stroke-dasharray="5 5" fill="none"/>
-                <circle cx="183" cy="35.3" r="5" fill="var(--text)"/>
-                <text x="12" y="38" font-size="10" fill="var(--mid)">Franchise 300</text><text x="12" y="88" font-size="10" fill="var(--versicherungen)">Franchise 2’500</text><text x="290" y="88" font-size="10" fill="var(--mid)" text-anchor="end">Arztkosten im Jahr →</text>
-              </svg>
-              <p class="unter" style="margin:0">Eher 2’500 (Schätzung, Prämien 2026)</p>
-              <p class="fuss" style="margin:2px 0 0">Zwei Linien: Gesamtkosten mit tiefer und mit hoher Franchise, je nach Arztkosten im Jahr. Wo sie sich kreuzen, lohnt sich der Wechsel. Mehr in der Versicherungs-Übersicht ›</p>
-            </div>
+            <h4 class="kap-h">Franchise-Kreuz</h4>
+            <svg width="100%" height="110" viewBox="0 0 300 110" aria-hidden="true" style="display:block;margin:4px 0">
+              <line x1="10" y1="96" x2="290" y2="96" stroke="var(--border)"/>
+              <rect x="10" y="8" width="143" height="88" fill="color-mix(in srgb, var(--versicherungen) 10%, transparent)"/>
+              <path d="M10 86 L290 16" stroke="var(--versicherungen)" stroke-width="2.5" fill="none"/>
+              <path d="M10 60 L290 40" stroke="var(--sand)" stroke-width="2.5" fill="none"/>
+              <circle cx="153" cy="50" r="4.5" fill="var(--text)"/>
+              <line x1="39" y1="8" x2="39" y2="96" stroke="var(--text)" stroke-width="1.5"/><text x="43" y="18" font-size="9" fill="var(--mid)">bisher 420</text>
+              <text x="288" y="12" font-size="9" fill="var(--versicherungen)" text-anchor="end">2’500</text><text x="288" y="36" font-size="9" fill="var(--sand)" text-anchor="end">300</text>
+              <text x="157" y="66" font-size="9" fill="var(--mid)">Break-even ≈ 2’050</text>
+              <text x="290" y="107" font-size="9" fill="var(--mid)" text-anchor="end">Gesundheitskosten pro Jahr →</text>
+            </svg>
+            <p class="unter" style="margin:0;color:var(--text)">Eher 2’500 (Schätzung, Prämien 2026)</p>
+            <p class="fuss" style="margin:2px 0 0">Unter dem Break-even fahren Sie mit der hohen Franchise günstiger. Bisher CHF 420 in diesem Jahr.</p>
+            <a class="verweis" href="#ab" style="margin-top:8px"><span>Alles zur Franchise und zum Vergleich<small>Versicherungs-Übersicht</small></span><span class="pfeil">›</span></a>
           </div>
         </div>
         <div class="rechtsspalte stufe s3">
@@ -2452,7 +2461,7 @@ body.still .rs-karte { transition: none; }
             <div class="gr"><span>Berufliche Vorsorge</span><span style="color:var(--sand);font-weight:500">ändern ›</span></div>
             <div class="po"><span>Pensionskasse</span><span>BVK Personalvorsorge</span></div><div class="po"><span>BVG-Beitrag monatlich</span><span>CHF 420</span></div><div class="po"><span>Aktuelles BVG-Guthaben</span><span>CHF 45’000</span></div>
             <div class="gr"><span>Weitere Versicherungen</span><span style="color:var(--sand);font-weight:500">ändern ›</span></div>
-            <div class="po"><span>UVG-Versicherung</span><span>Über Arbeitgeber</span></div><div class="po"><span>Krankentaggeld (KTG)</span><span>Über Arbeitgeber</span></div><div class="po"><span>Haftpflichtversicherung</span><span>Ja</span></div><div class="po"><span>Versicherungssumme</span><span>CHF 35 ⚠</span></div>
+            <div class="po"><span>UVG-Versicherung</span><span>Über Arbeitgeber</span></div><div class="po"><span>Krankentaggeld (KTG)</span><span>Über Arbeitgeber</span></div><div class="po"><span>Haftpflichtversicherung</span><span>Ja</span></div><div class="po"><span>Versicherungssumme</span><span>CHF 35</span></div>
             <div class="gr"><span>Sach- &amp; Reiseversicherungen</span><span style="color:var(--sand);font-weight:500">ändern ›</span></div>
             <div class="po"><span>Hausratversicherung</span><span>Ja</span></div><div class="po"><span>Hausrat-Prämie</span><span>CHF 22 / Jahr</span></div><div class="po"><span>Reiseversicherung</span><span>TCS</span></div>
             <div class="gr"><span>Sozialversicherung · Mobilität</span><span style="color:var(--sand);font-weight:500">ergänzen ›</span></div>
@@ -2503,17 +2512,17 @@ body.still .rs-karte { transition: none; }
             <div class="titelzeile"><span class="sym" data-icon="ausbildung"></span><h3>Ausbildung &amp; Arbeit</h3></div>
             <p class="satz">Ihre Qualifikationen und Arbeitsstelle</p>
             <p class="unter">Ihre Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.</p>
-            <p class="unter" style="color:var(--text)">Bachelor. Aktuell tätig als Pflegefachfrau HF — bei Kantonsspital Zürich seit 01.04.2019 (7 Jahre, 6 Monate), 42 Std./Woche.</p>
+            <p class="kap-zus">Bachelor. Aktuell tätig als Pflegefachfrau HF — bei Kantonsspital Zürich seit 01.04.2019 (7 Jahre, 6 Monate), 42 Std./Woche.</p>
           </div>
           <div class="lohn stufe s2">
-            <h4 data-sie="Wo steht Ihr Lohn?" data-du="Wo steht dein Lohn?"></h4>
+            <h4 class="kap-h" data-sie="Wo steht Ihr Lohn?" data-du="Wo steht dein Lohn?"></h4>
             <div id="lohn-baro-ac"></div>
-            <div class="werte"><span data-sie="Ihr Lohn: CHF 6'472" data-du="Dein Lohn: CHF 6'472"></span><span>● Median: CHF 7'024</span></div>
+            <div class="werte"><span data-sie="Ihr Lohn: CHF 6’472" data-du="Dein Lohn: CHF 6’472"></span><span>● Median: CHF 7’024</span></div>
             <p data-sie="Ihr Lohn liegt unter dem Schweizer Median." data-du="Dein Lohn liegt unter dem Schweizer Median."></p>
             <p class="fuss">Auf 40 Std. umgerechnet, aus Netto geschätzt. Quelle: BFS, Lohnstrukturerhebung 2024. So ist gerechnet ›</p>
           </div>
-          <div class="stufe s2" style="margin-top:18px">
-            <p class="unter" style="margin:0 0 8px;font-weight:600">Ihr Lebenslauf — Vorschau</p>
+          <div class="stufe s2">
+            <h4 class="kap-h">Ihr Lebenslauf — Vorschau</h4>
             <div style="background:#f6f3ee;color:#2a2622;border-radius:10px;padding:16px 18px;font-size:12px;line-height:1.45;box-shadow:0 1px 0 var(--border)">
               <div style="font-size:16px;font-weight:700">Maria Muster</div>
               <div style="color:#6b6560">Pflegefachfrau HF · Zürich · maria.muster@example.ch</div>
@@ -2587,8 +2596,8 @@ body.still .rs-karte { transition: none; }
             <div class="etikett">Versicherungen pro Monat</div>
             <div class="gross">CHF 387</div>
             <div class="k-baro" aria-hidden="true" style="margin:12px 0 8px"><i class="fuell" style="width:41.3%;background:var(--versicherungen)"></i><i class="strich" style="left:66.7%"></i></div>
-            <div class="k-baro-leg"><span>Krankenkasse 6.2 % des Einkommens</span><span><i class="m-strich"></i>Richtwert 10 % (WHO)</span></div>
-            <details class="fu-auf"><summary><span>Was darin steckt</span><b>3 Posten</b></summary>
+            <div class="k-baro-leg"><span>Krankenkasse 6.2 % des Einkommens</span><span><i class="m-strich"></i>WHO 10 %</span></div>
+            <details class="fu-auf"><summary><span>Was darin steckt</span><b>2 erfasst</b></summary>
               <div class="fu-posten">
                 <div class="po"><span>Krankenkasse (Grundversicherung)</span><span>CHF 385</span></div>
                 <div class="po"><span>Hausrat (CHF 22 / Jahr)</span><span>CHF 2</span></div>
@@ -2633,7 +2642,7 @@ body.still .rs-karte { transition: none; }
             </div>
           </details>
           <details class="fu-auf"><summary><span>Prämie regional vs. Schweiz</span><b>rund 5 % über</b></summary>
-            <div class="k-baro" aria-hidden="true"><i class="fuell" style="width:68.8%;background:var(--versicherungen)"></i><i class="punkt" style="left:87.3%"></i><i class="strich" style="left:83.2%"></i></div>
+            <div class="k-baro" aria-hidden="true"><i class="fuell" style="width:64.2%;background:var(--versicherungen)"></i><i class="punkt" style="left:81.3%"></i><i class="strich" style="left:77.5%"></i></div>
             <div class="k-baro-leg"><span><i class="m-strich"></i>Schweizer Schnitt: CHF 465</span><span style="color:var(--gold)"><i class="m-punkt"></i>Ihre Region: CHF 488</span></div>
             <div class="k-baro-du"><i class="m-fuell" style="background:var(--versicherungen)"></i>Ihre Prämie: CHF 385</div>
             <p class="fuss">Das ist vor allem strukturell — Regionen mit höherer Arztdichte und teureren Spitälern haben höhere Prämien. Mit der Kassenwahl lässt sich nur innerhalb der Region sparen. Postleitzahl 8004 · Zürich (ZH) — Prämienregion 1. Quelle: BAG, mittlere Prämie 2026.</p>
