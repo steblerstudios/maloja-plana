@@ -117,3 +117,27 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
     expect(text).not.toContain('Prämienverbilligung prüfen');
   });
 });
+
+// Entscheid 24.10.2026 (nach Bauschritt 4): der Knopf «neben dem eigenen Stand rechnen», der auf
+// der Finanz-Übersicht stand, erscheint im Kapitel am Anfang der Auswertung.
+describe('Probiermodus-Knopf bei der Auswertung', () => {
+  const knopfText = t('sandbox.footerLink');
+
+  it('mit onEnterSandbox: der Knopf steht am Anfang der Auswertung, vor dem Lebensbaum', () => {
+    const html = teil('oben', DEMO_DATA, { chapters, onEnterSandbox: () => {} });
+    expect(html).toContain('data-weg="probieren"');
+    expect(nurText(html)).toContain(knopfText);
+    expect(html.indexOf('data-weg="probieren"')).toBeLessThan(html.indexOf('data-teil="lebensbaum"'));
+  });
+
+  it('ohne onEnterSandbox (Beispiel, Probiermodus läuft schon): kein Knopf', () => {
+    expect(teil('oben', DEMO_DATA)).not.toContain('data-weg="probieren"');
+  });
+
+  it('main.jsx gibt den Knopf nur ausserhalb von Beispiel und laufendem Probiermodus weiter', () => {
+    const main = fs.readFileSync(path.resolve(__dirname, '../main.jsx'), 'utf8');
+    expect(main).toContain('onEnterSandbox: !demoMode && !sandboxActive ? enterSandbox : undefined');
+    const cv = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
+    expect(cv).toMatch(/onEnterSandbox: teil === 'oben' \? onEnterSandbox : undefined/);
+  });
+});

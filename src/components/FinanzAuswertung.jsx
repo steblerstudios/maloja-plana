@@ -531,7 +531,9 @@ export const auswertungsHinweis = ({ palette, t }) =>
 //             folgt», «Weitere Ansprüche» (Entscheid 3: eingeklappt, offen bei Anspruch)
 //   'unten' — Übersicht drucken, Hinweis zur Schätzung
 // `data` ist das ganze Profil (allData), nicht nur das Kapitel.
-export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMode, chapters = [], onSelectChapter, isMobile, lang = 'de' }) => {
+// `onEnterSandbox` (nur oben, nur ausserhalb von Beispiel und laufendem Probiermodus — main.jsx):
+// der Knopf «neben dem eigenen Stand rechnen», der bis 24.10.2026 auf der Finanz-Übersicht stand.
+export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMode, chapters = [], onSelectChapter, isMobile, lang = 'de', onEnterSandbox }) => {
   const w = finanzWerte(data, t);
   const p = { palette, t, data, onNavigate, w };
   if (teil === 'unten') {
@@ -546,6 +548,18 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
   const anspruch = !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.el.eligible);
   const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
   return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
+    // Gleiches Aussehen wie der Knopf über den Rechnern (main.jsx, SANDBOX_VIEWS).
+    onEnterSandbox && React.createElement('button', {
+      type: 'button', 'data-weg': 'probieren', onClick: onEnterSandbox,
+      style: {
+        display: 'inline-flex', alignItems: 'center', gap: '6px',
+        margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px', minHeight: '32px',
+        background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
+        borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+        // sageDeep statt sage: sage trägt als 13px-Text nur 4.34:1 auf bg (wie main.jsx).
+        color: palette.sageDeep, fontFamily: 'inherit',
+      },
+    }, t('sandbox.footerLink')),
     fruechte.length > 0 && React.createElement('div', { 'data-teil': 'lebensbaum' },
       React.createElement(Lebensbaum, {
         palette, t, data, text, weight, space, radius,

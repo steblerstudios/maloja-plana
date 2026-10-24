@@ -152,4 +152,11 @@ um, dann fällt die Datei weg. Der Steuer-Satz «Angeben lässt sich das im Kapi
 Geld»» ist ein geteilter Text (Steuerrechner, Dossier) und bleibt; im Kapitel ist er richtig,
 nur nahe am eigenen Formular.
 
-**Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.
+> ✅ **Entschieden 24.10.2026** (Stebler Studios: «Ja, der Knopf «neben dem eigenen Stand rechnen»
+> soll im Kapitel Finanzen bei der Auswertung erscheinen»). Ersetzt Entscheid 4. Umgesetzt: der
+> Knopf «Probier-Modus» steht am Anfang der Auswertung (`FinanzenImKapitel`, `data-weg="probieren"`),
+> nur ausserhalb von Beispiel und laufendem Probiermodus (`main.jsx` gibt `onEnterSandbox` nur dann
+> weiter). Im Probiermodus schreibt das Kapitel in die Probierdaten (`writeData`, `main.jsx`), nie
+> ins Profil.
+
+**Offen, übrige:** Lage des Baums im Browser prüfen · rm-Texte gegenlesen.

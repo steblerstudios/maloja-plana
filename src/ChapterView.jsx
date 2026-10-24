@@ -122,7 +122,7 @@ export const haushaltsSaldo = (allData, kapitelBleibt) => {
   return b.bruttoDabei ? { brutto: true } : { brutto: false, rest };
 };
 
-export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen, chapters, onSelectChapter, lang }) => {
+export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen, chapters, onSelectChapter, lang, onEnterSandbox }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -1966,6 +1966,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     React.createElement(FinanzenImKapitel, {
       teil, palette, t: tr, data: allData || { finanzen: data }, onNavigate: onNavigate || (() => {}),
       isDarkMode, chapters: chapters || [], onSelectChapter, isMobile, lang,
+      onEnterSandbox: teil === 'oben' ? onEnterSandbox : undefined,
     })
   );
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).

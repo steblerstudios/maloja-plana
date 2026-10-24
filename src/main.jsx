@@ -1600,6 +1600,9 @@ const AppInner = ({ demo }) => {
           // Lebensbaum im Kapitel Finanzen (Zusammenlegung mit der Finanz-Übersicht, 24.10.2026).
           chapters, lang,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
+          // «Neben dem eigenen Stand rechnen» — stand auf der Finanz-Übersicht (SANDBOX_VIEWS), seit
+          // 24.10.2026 bei der Auswertung im Kapitel Finanzen. Gleiche Bedingung wie der Knopf oben.
+          onEnterSandbox: !demoMode && !sandboxActive ? enterSandbox : undefined,
         })
       ),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },
