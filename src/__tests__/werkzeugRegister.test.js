@@ -73,8 +73,10 @@ describe('Werkzeug-Register: ein Eintrag je Werkzeug', () => {
     }
   });
 
-  it('im Menü stehen genau die sechs gewählten, in dieser Reihenfolge (Entscheid 27.09.)', () => {
-    expect(MENUE_WERKZEUGE.map(werkzeugKey)).toEqual(['tresor', 'calendar', 'merkliste', 'tax', 'finanzuebersicht', 'situationen']);
+  // Entscheid 27.09.: sechs Einträge. Seit 24.10.2026 ohne «Finanz-Übersicht» — sie führte ins
+  // Kapitel Finanzen, das im Menü schon steht (Stebler Studios, nach dem Rundgang Links/Abläufe).
+  it('im Menü stehen genau die gewählten, in dieser Reihenfolge (Entscheid 27.09., 24.10.)', () => {
+    expect(MENUE_WERKZEUGE.map(werkzeugKey)).toEqual(['tresor', 'calendar', 'merkliste', 'tax', 'situationen']);
     const plaetze = MENUE_WERKZEUGE.map((w) => w.imMenue);
     expect(new Set(plaetze).size, 'Menü-Plätze doppelt').toBe(plaetze.length);
   });

@@ -2,6 +2,12 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { UMLEITUNGEN } from '../utils/hashRouter.js';
+import { MENUE_WERKZEUGE } from '../data/werkzeugRegister.js';
+import de from '../i18n/de.js';
+import en from '../i18n/en.js';
+import fr from '../i18n/fr.js';
+import itLang from '../i18n/it.js';
+import rm from '../i18n/rm.js';
 
 // Rundgang 24.10.2026 (Links und Abläufe vor dem Deploy 29.10.): Seit dem Bündeln führen
 // `unterlagen` und `finanzuebersicht` per Umleitung zu einer Sprungmarke UNTEN auf der Sammelseite
@@ -37,5 +43,21 @@ describe('Mietzins «Einkommen erfassen» führt zum Formular im Kapitel Finanze
 
   it('der Knopf öffnet das Kapitel ohne Sprungmarke', () => {
     expect(zielVon('MietzinsOrientierung.jsx', 'mietzinsView.enterIncomeLink')).toBe("'chapter', CHAPTER_KEYS.indexOf('finanzen')");
+  });
+});
+
+// Entscheid Stebler Studios 24.10.2026: Knöpfe nach `finanzuebersicht` heissen wie die Seite, auf der
+// man landet — das Kapitel Finanzen. Der Werkzeug-Eintrag steht nicht mehr im Menü (dort steht das
+// Kapitel schon); Suche, Portemonnaie und alte Links führen weiter über die Umleitung.
+describe('«Finanz-Übersicht» heisst wie ihre Zielseite', () => {
+  for (const [lang, dict] of Object.entries({ de, en, fr, it: itLang, rm })) {
+    it(`${lang}: Knopf und Dashboard-Karte tragen den Kapiteltitel`, () => {
+      expect(dict.nav.finanzUebersicht).toBe(dict.chapters.finanzen.title);
+      expect(dict.dashboard.highlightFinanz).toBe(dict.chapters.finanzen.title);
+    });
+  }
+
+  it('kein zweiter Menüeintrag neben dem Kapitel Finanzen', () => {
+    expect(MENUE_WERKZEUGE.map((w) => w.view)).not.toContain('finanzuebersicht');
   });
 });
