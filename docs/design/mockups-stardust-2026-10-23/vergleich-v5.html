@@ -247,6 +247,38 @@ const SEITEN = [
     ['Notfall-QR mit Hinweisen', 'zentriert in Kasten; im Beispiel «liess sich nicht erzeugen»', 'eigener Abschnitt, Code neben dem Hinweis', 'anders'],
     ['Vorschau in sechs Bereichen', 'Kästen', 'Liste mit Gruppen', 'drin'],
   ]},
+  // 24.10.2026: Datenseiten — Budget geht in der Finanz-Übersicht auf; drei Dossiers in einer Form (Entscheid Sophie). Bausteine nicht gezählt.
+  { id: 'budget', titel: 'Budget → Finanz-Übersicht', heuteBild: 'heute-budget.jpg', heuteHinweis: '«Monatsbudget» (#/sync) · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=k', bausteine: 0, zeilen: [
+    ['Monatsbudget, Posten in sechs Gruppen', 'eigene Seite', 'in der Finanz-Übersicht (Einnahmen / Ausgaben aufklappbar)', 'drin'],
+    ['Anteil am Einkommen je Gruppe (30 %, 6 % …)', 'rechts neben der Summe', 'leise hinter dem Gruppennamen', 'drin'],
+    ['Richtwerte & Teuerung', 'hinter ⓘ je Posten', 'kurze Zeilen je Posten, eine Fussnote', 'drin'],
+    ['BVG/AHV schon abgezogen (CHF 420)', 'Hinweis', 'bei «Sparen & Vorsorge»', 'drin'],
+    ['SKOS-Grundbedarf (Orientierung)', 'aufklappbar', 'aufklappbar', 'drin'],
+    ['Budget-Hinweis, «6 Kategorien ergänzen»', 'Kasten, Satz', 'Satz unter «Frei verfügbar», Satz unter den Ausgaben', 'drin'],
+    ['Jahresansicht, Export', 'Knöpfe', '«Aufs Jahr gerechnet» aufklappbar, «Budget exportieren»', 'drin'],
+    ['#/sync', 'eigene Seite', 'leitet auf die Finanz-Übersicht', 'neu'],
+  ]},
+  { id: 'unterlagen', titel: 'Meine Unterlagen', heuteBild: 'heute-unterlagen.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=t', bausteine: 0, zeilen: [
+    ['Kopf', 'in einer Karte', 'links', 'anders'],
+    ['Sechs Einträge mit Satz und Knopf', 'Kästen mit «… öffnen»', 'Liste, die Zeile ist der Knopf', 'anders'],
+    ['Gruppen', 'keine', '«Zum Ausdrucken», «Schreiben und sichern»', 'neu'],
+    ['Notfall-Dossier', 'eigener Kasten', 'Verweis «unter Notfall»', 'anders'],
+    ['«Alle Unterlagen bleiben auf Ihrem Gerät»', 'unten', 'unten', 'drin'],
+  ]},
+  { id: 'lebensmappe', titel: 'Lebensmappe', heuteBild: 'heute-lebensmappe.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=u', bausteine: 0, zeilen: [
+    ['Kopf mit «6 Bereiche mit Angaben»', 'in einer Karte', 'links, Satz', 'anders'],
+    ['Drucken / Als PDF speichern', 'breiter Sand-Knopf', 'Hauptknopf links', 'drin'],
+    ['Vorschau in sechs Bereichen', 'Kästen', 'Liste mit Gruppen', 'drin'],
+    ['«lokal erstellt, nichts übermittelt»', 'unten', 'unter dem Knopf', 'drin'],
+  ]},
+  { id: 'behoerdendossier', titel: 'Behörden-Dossier', heuteBild: 'heute-behoerdendossier.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=v', bausteine: 0, zeilen: [
+    ['Kopf', 'in einer Karte', 'links', 'anders'],
+    ['Als PDF drucken, Dossier-Datei exportieren', 'zwei breite Knöpfe', 'Hauptknopf + ruhiger Knopf links', 'drin'],
+    ['Person, Finanzielle Situation', 'Kästen', 'Liste mit Gruppen', 'drin'],
+    ['Sozialhilfe-, IPV-, EL-, Bundessteuer-Orientierung', 'Kästen', 'Gruppen mit Status rechts', 'drin'],
+    ['Lange Hinweise (Steuer, Annahmen, Mehrkosten)', 'fett in der schmalen Wertspalte', 'als Satz unter der Gruppe', 'anders'],
+    ['«Mögliche Unterstützung»', '«/Mt.» ohne Betrag', '«keine»', 'anders'],
+  ]},
   { id: 'suche', titel: 'Suche', heuteBild: 'heute-suche.jpg', neu: 'seiten-v5.html?nur=n', bausteine: 78, zeilen: [
     ['Suchfeld', 'oben', 'oben, bleibt beim Scrollen stehen', 'drin'],
     ['70 «Werkzeuge» (inkl. Lebensereignisse) zuerst', 'eine lange Liste', 'Werkzeuge und Lebensereignisse getrennt', 'anders'],
