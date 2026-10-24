@@ -1,10 +1,10 @@
 // Systemblick — derselbe Musterhaushalt, 26 Kantone (Prototyp, Konzept: docs/STATISTIK-SYSTEMBLICK.md).
 //
 // Sozioökonomische Statistik OHNE Nutzerdaten, Stufe 1: Maloja zählt keine Personen, sondern rechnet
-// erfundene Musterhaushalte durch die amtlich belegten Kantonsmodelle, die die App ohnehin hat
-// (Prämienverbilligung: config/cantonalData.js → IPV_MODULE, Wortlaute docs/sources/ipv-kantone-2026.md).
-// Es entsteht keine neue Zahl ohne Beleg: jeder Betrag ist das, was die App einer Person mit genau
-// diesem Profil im Rechner zeigen würde.
+// erfundene Musterhaushalte durch die Kantonsmodelle, die die App ohnehin hat — kantonale Regeln, an
+// amtlichen Quellen belegt (config/cantonalData.js → IPV_MODULE, Wortlaute docs/sources/ipv-kantone-2026.md).
+// Jeder Betrag ist das, was die App einer Person mit genau diesem Profil im Rechner zeigen würde:
+// eine Modellrechnung mit Maloja-Annahmen (unten), weder vom BAG noch von den Kantonen berechnet oder geprüft.
 //
 // Grenzen (gehören zu jeder Darstellung, siehe Konzept):
 // - Die App rechnet mit dem Nettolohn (hier aus dem BAG-Brutto hergeleitet); die Kantone mit
@@ -68,34 +68,36 @@ export const HAUPTORTE = {
 // Haushalte mit zwei Erwachsenen (2, 4, 5, 7) und junge Erwachsene 19–25 (6) rechnet heute kein
 // Kantonsmodell in Maloja (24 Kantone stoppen am Riegel `mehrereErwachsene` bzw. am Alter; TG und JU
 // schon vorher an der Steuergrösse): sie stehen trotzdem in der Tabelle, damit die Lücke sichtbar bleibt.
+// `bezeichnungBag` = Wortlaut BAG Abb. K-2 (nur in der Quellenzeile, in Anführungszeichen);
+// `bezeichnung` = Malojas neutrale Fassung für alle übrigen Stellen.
 export const MUSTERHAUSHALTE = {
   bag1: {
-    bezeichnung: 'BAG 1 · Alleinstehende Rentnerin', bruttoJahr: 45000, rente: true,
-    erwachsene: ['1955-05-01'], kinder: [], maritalStatus: 'single',
+    bezeichnung: 'Haushalt 1 · Alleinstehende Person im Rentenalter', bezeichnungBag: 'Alleinstehende Rentnerin',
+    bruttoJahr: 45000, rente: true, erwachsene: ['1955-05-01'], kinder: [], maritalStatus: 'single',
   },
   bag2: {
-    bezeichnung: 'BAG 2 · Familie mit zwei Kindern (3.5 und 5 Jahre)', bruttoJahr: 70000,
-    erwachsene: ['1986-05-01', '1986-05-01'], kinder: [3, 5], maritalStatus: 'married',
+    bezeichnung: 'Haushalt 2 · Paar mit zwei Kindern (3.5 und 5 Jahre)', bezeichnungBag: 'Familie mit zwei Kindern (3.5 und 5 Jahre)',
+    bruttoJahr: 70000, erwachsene: ['1986-05-01', '1986-05-01'], kinder: [3, 5], maritalStatus: 'married',
   },
   bag3: {
-    bezeichnung: 'BAG 3 · Einelternfamilie mit zwei Kindern (3.5 und 5 Jahre)', bruttoJahr: 60000,
-    erwachsene: ['1988-05-01'], kinder: [3, 5], maritalStatus: 'single',
+    bezeichnung: 'Haushalt 3 · Einelternfamilie mit zwei Kindern (3.5 und 5 Jahre)', bezeichnungBag: 'Einelternfamilie mit zwei Kindern (3.5 und 5 Jahre)',
+    bruttoJahr: 60000, erwachsene: ['1988-05-01'], kinder: [3, 5], maritalStatus: 'single',
   },
   bag4: {
-    bezeichnung: 'BAG 4 · Familie mit vier Kindern (3.5, 5, 8, 10 Jahre)', bruttoJahr: 85000,
-    erwachsene: ['1984-05-01', '1984-05-01'], kinder: [3, 5, 8, 10], maritalStatus: 'married',
+    bezeichnung: 'Haushalt 4 · Paar mit vier Kindern (3.5, 5, 8, 10 Jahre)', bezeichnungBag: 'Familie mit vier Kindern (3.5, 5, 8, 10 Jahre)',
+    bruttoJahr: 85000, erwachsene: ['1984-05-01', '1984-05-01'], kinder: [3, 5, 8, 10], maritalStatus: 'married',
   },
   bag5: {
-    bezeichnung: 'BAG 5 · Familie mit einem Kind (16) und einer jungen Erwachsenen in Ausbildung (20)', bruttoJahr: 70000,
-    erwachsene: ['1978-05-01', '1978-05-01'], kinder: [16, 20], maritalStatus: 'married',
+    bezeichnung: 'Haushalt 5 · Paar mit einem Kind (16) und einer jungen erwachsenen Person in Ausbildung (20)', bezeichnungBag: 'Familie mit einem Kind (16 Jahre) und einer jungen Erwachsenen in Ausbildung (20 Jahre)',
+    bruttoJahr: 70000, erwachsene: ['1978-05-01', '1978-05-01'], kinder: [16, 20], maritalStatus: 'married',
   },
   bag6: {
-    bezeichnung: 'BAG 6 · Alleinstehender junger Erwerbstätiger (24 Jahre)', bruttoJahr: 38000,
-    erwachsene: ['2002-05-01'], kinder: [], maritalStatus: 'single',
+    bezeichnung: 'Haushalt 6 · Alleinstehende erwerbstätige Person (24 Jahre)', bezeichnungBag: 'Alleinstehender junger Erwerbstätiger (24 Jahre)',
+    bruttoJahr: 38000, erwachsene: ['2002-05-01'], kinder: [], maritalStatus: 'single',
   },
   bag7: {
-    bezeichnung: 'BAG 7 · Ehepaar ohne Kinder', bruttoJahr: 60000,
-    erwachsene: ['1971-05-01', '1971-05-01'], kinder: [], maritalStatus: 'married',
+    bezeichnung: 'Haushalt 7 · Ehepaar ohne Kinder', bezeichnungBag: 'Ehepaar ohne Kinder',
+    bruttoJahr: 60000, erwachsene: ['1971-05-01', '1971-05-01'], kinder: [], maritalStatus: 'married',
   },
 };
 

@@ -1,15 +1,19 @@
-// Systemblick messen — die sieben BAG-Modellhaushalte durch alle 26 IPV-Kantonsmodelle, als Markdown.
+// Systemblick messen — die sieben Modellhaushalte des BAG-Monitorings durch alle 26 Kantonsmodelle
+// der Prämienverbilligung, als Markdown.
 //
 //   node scripts/systemblick-messen.mjs > docs/MESSUNG-systemblick-ipv-<datum>.md
 //
 // Schreibt nur auf stdout. Keine Nutzerdaten: die Haushalte sind die Modellhaushalte des BAG-Monitorings
 // (data/systemblick.js). Konzept und Grenzen: docs/STATISTIK-SYSTEMBLICK.md.
+// Fachprüfung 24.10.2026: swiss-precision-, rechts- und copy-pruefer eingearbeitet.
 
 import { MUSTERHAUSHALTE, HAUPTORTE, systemblickIPV, musterProfil } from '../src/data/systemblick.js';
 
 const chf = (n) => (n == null ? '—' : Math.round(n).toLocaleString('de-CH').replace(/’/g, "'"));
 const pct = (n) => (n == null ? '—' : `${Math.round(n)} %`);
-const zelle = (z) => (z.art === 'betrag' ? chf(z.jahr) : z.art === 'keinAnspruch' ? '0' : 'keine Zahl');
+// «kein Anspruch im Modell» statt einer nackten 0: das Ergebnis hängt an Maloja-Annahmen, nicht nur am Kanton.
+const zelle = (z) => (z.art === 'betrag' ? chf(z.jahr) : z.art === 'keinAnspruch' ? 'kein Anspruch im Modell' : 'keine Zahl');
+const kurz = (k) => `H${k.slice(3)}`; // bag3 → H3
 // Verbilligter Anteil der Jahresprämie — eine ÄHNLICHE Grösse wie im BAG-Monitoring 2020, S. 13
 // («Die IPV betrug durchschnittlich … 37% der unverbilligten ‹Mittleren Prämie›»), aber nicht dieselbe:
 // anderer Nenner (regionale Durchschnittsprämie 2026 am Hauptort, nicht «Mittlere Prämie» 2020), und
@@ -21,65 +25,93 @@ const median = (xs) => {
   return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2;
 };
 
+// Klartext zu den Gründen, aus den Kommentaren der Kantonsmodule (src/config/ipv*.js). Jeder Satz sagt,
+// was MALOJA nicht kann oder nicht weiss — nie, dass eine kantonale Regel unklar oder falsch sei.
+const GRUND = {
+  haushalt: 'Zwei Erwachsene im Haushalt: rechnet Maloja noch nicht.',
+  alter: 'Junge erwachsene Person (19–25) bzw. Altersgrenze: rechnet Maloja nicht.',
+  ausbildung: 'Junge erwachsene Person: hängt an einer Ausbildung, nach der Maloja nicht fragt.',
+  geJungeErwachsene: 'Junge erwachsene Person: eigene Kategorie, rechnet Maloja nicht.',
+  neJeuneAdulte: 'Junge erwachsene Person: eigene Kategorie, rechnet Maloja nicht.',
+  vsJungeErwachsene: 'Junge erwachsene Person: eigene Kategorie, rechnet Maloja nicht.',
+  tgSteuerbetrag: 'Der Kanton rechnet mit dem Steuerbetrag; den kann Maloja nicht verlässlich schätzen.',
+  steuerbaresEinkommen: 'Der Kanton rechnet mit dem steuerbaren Einkommen; das kann Maloja nicht verlässlich schätzen.',
+  soSkalaUnklarFristVorbei: 'Maloja zeigt hier nur eine Spanne, keinen Einzelbetrag; die Gesuchsfrist für 2026 ist zudem vorbei.',
+  soSkalaUnklar: 'Maloja zeigt hier nur eine Spanne, keinen Einzelbetrag.',
+  mindestanspruch: 'Mindestverbilligung für Kinder: Maloja kann den Betrag mit den vorhandenen Angaben nicht sicher bestimmen.',
+  agKinder: 'Mindestanspruch der Kinder: braucht deren tatsächliche Prämien, die das Musterprofil nicht einzeln führt.',
+  grKinder: 'Haushalt mit Kindern: zwei Lesarten der Regel ergeben verschiedene Beträge; Maloja zeigt darum keinen.',
+  tiKinder: 'Haushalt mit Kindern: in Maloja noch nicht gebaut.',
+  szKinderMindestanspruch: 'Mindestanspruch der Kinder: Verteilung bei der SVA angefragt, in Maloja noch offen.',
+  szGrenzeMietzinsregion: 'Knapp über der Grenze hängt der Anspruch an Mietzinsregion und Alter; Maloja zeigt darum keinen Betrag.',
+  zgNaeherung: 'Nahe an der Grenze: Maloja kann nicht sicher sagen, ob ein Anspruch besteht.',
+};
+const grundText = (g) => `${GRUND[g] || 'Grund ohne Klartext (bitte ergänzen).'} (\`${g}\`)`;
+
 const runs = {};
 for (const key of Object.keys(MUSTERHAUSHALTE)) runs[key] = await systemblickIPV(key);
 const mitZahl = Object.keys(runs).filter((k) => runs[k].zeilen.some((z) => z.art !== 'keineZahl'));
 const ohneZahl = Object.keys(runs).filter((k) => !mitZahl.includes(k));
+const datum = new Date().toISOString().slice(0, 10);
 
 const out = [];
-out.push(`# Messung Systemblick IPV — BAG-Modellhaushalte — ${new Date().toISOString().slice(0, 10)}`, '');
-out.push('> Erzeugt mit `node scripts/systemblick-messen.mjs`. Prototyp, **nicht veröffentlichen**, bevor das');
-out.push('> Konzept (`docs/STATISTIK-SYSTEMBLICK.md`) freigegeben ist. Fachprüfung (swiss-precision) 24.10.2026: Befunde eingearbeitet.');
-out.push('> **Keine Anspruchszusage.** Ob und wie viel Verbilligung jemand erhält, entscheidet allein die kantonale Stelle.', '');
-out.push('**Haushalte:** die sieben Modellhaushalte aus Ecoplan/BAG, «Wirksamkeit der Prämienverbilligung – Monitoring 2020»,');
-out.push('Mai 2022, S. 12 (Abb. K-2), mit deren Bruttoeinkommen.');
+out.push(`# Messung Systemblick Prämienverbilligung — Modellhaushalte nach BAG-Monitoring 2020 — ${datum}`, '');
+out.push('> **Intern, nicht veröffentlichen**, bevor das Konzept (`docs/STATISTIK-SYSTEMBLICK.md`) freigegeben ist.');
+out.push('> Die Spalte H1 (Person im Rentenalter) ist auch dann **nicht zur Veröffentlichung** bestimmt: ihr Ergebnis hängt an');
+out.push('> den Annahmen (Vermögen 0, keine Abzüge) stärker als an den Regeln der Kantone.', '');
+out.push(`> Modellrechnung von Maloja mit erfundenen Musterhaushalten, Stand ${datum}. Die Zahlen zeigen, wie verschieden`);
+out.push('> die kantonalen Regeln wirken. Sie sagen nicht, was eine bestimmte Person erhält. Maloja rechnet vereinfacht');
+out.push('> (siehe Methode). Die Kantone rechnen mit ihrem eigenen massgebenden Einkommen. Kein amtlicher Vergleich, weder');
+out.push('> vom BAG noch von den Kantonen berechnet oder geprüft. Ob und wie viel Verbilligung jemand erhält, entscheidet');
+out.push('> allein die zuständige Stelle des Kantons. Fehler gefunden? info@malojaplana.ch', '');
+
+out.push('## Methode', '');
+out.push('**Haushalte:** die sieben Modellhaushalte aus Ecoplan im Auftrag des BAG, «Wirksamkeit der Prämienverbilligung –');
+out.push('Monitoring 2020», Mai 2022, S. 12 (Abb. K-2), mit deren Bruttoeinkommen. Die Bezeichnungen hier sind neutral gefasst;');
+out.push('der Wortlaut des BAG steht in der Quellenzeile je Haushalt. Das BAG hat die Beträge unten weder berechnet noch geprüft.');
 out.push('**Von Maloja gesetzt** (nicht vom BAG): Geburtsjahre; Kinderalter ganzzahlig; Netto aus Brutto mit dem App-Richtwert,');
 out.push('**ohne Familienzulagen** (das BAG zählt sie dazu, Anhang B S. 132); **Vermögen 0** (alle Kantone rechnen einen Teil');
-out.push('des Vermögens an, BAG S. 11); Rente = AHV-Maximalrente 2026 + BVG-Rest; Franchise 300; kein 13.');
+out.push('des Vermögens an, BAG S. 11); Rente = AHV-Maximalrente 2026 + BVG-Rest; Franchise CHF 300; ohne 13. Monatslohn.');
 out.push('**Prämie:** regionale Durchschnittsprämie 2026 am Hauptort je Person, Standardmodell, alle Versicherer. Das ist weder');
-out.push('die «Standardprämie» (teuerste Region) noch die «Mittlere Prämie» (effektiv bezahlt) des Monitorings (BAG S. 134).', '');
+out.push('die «Standardprämie» (teuerste Region) noch die «Mittlere Prämie» (effektiv bezahlt) des Monitorings (BAG S. 134).');
 out.push('**Lesart:** Werte = Prämienverbilligung pro Jahr in CHF, so wie der Maloja-Rechner sie für genau dieses Profil zeigen');
-out.push('würde. Die Kantone rechnen mit ihrem eigenen massgebenden Einkommen (meist aus der Steuerveranlagung, nach Abzügen)');
-out.push('— **kein amtlicher Kantonsvergleich**.');
-out.push('`0` = nach dem Maloja-Modell kein Anspruch (bei der Rentnerin stark von den Vereinfachungen oben abhängig) ·');
-out.push('`keine Zahl` = das Kantonsmodell in Maloja zeigt für dieses Profil bewusst keinen Betrag.', '');
+out.push('würde. «kein Anspruch im Modell» = Maloja kommt mit diesen Annahmen auf keinen Anspruch · «keine Zahl» = Maloja');
+out.push('zeigt für dieses Profil bewusst keinen Betrag (Grund unten).', '');
 
 out.push('## Haushalte, für die Maloja rechnen kann', '');
 for (const k of mitZahl) {
   const h = MUSTERHAUSHALTE[k];
   const netto = musterProfil('ZH', k).finanzen;
   const einkommen = h.rente ? `Rente CHF ${chf(h.bruttoJahr)}/Jahr` : `Brutto CHF ${chf(h.bruttoJahr)}/Jahr ≈ Netto CHF ${chf(netto.monthlyIncome)}/Monat`;
-  out.push(`- **${h.bezeichnung}** — ${einkommen}`);
+  out.push(`- **${kurz(k)} · ${h.bezeichnung.replace(/^Haushalt \d · /, '')}** — ${einkommen} · BAG: «${h.bezeichnungBag}»`);
 }
 out.push('');
-out.push(`| Kanton (Hauptort) | ${mitZahl.map((k) => `${k.toUpperCase()} Verbilligung · Prämie/Mt · Anteil`).join(' | ')} |`);
+out.push('Je Zelle: Verbilligung CHF pro Jahr · Haushaltsprämie CHF pro Monat · verbilligter Anteil der Prämie.', '');
+out.push(`| Kanton (Hauptort) | ${mitZahl.map(kurz).join(' | ')} |`);
 out.push(`|---|${mitZahl.map(() => '---:').join('|')}|`);
 for (const kt of Object.keys(HAUPTORTE)) {
   const zs = mitZahl.map((k) => runs[k].zeilen.find((z) => z.kanton === kt));
   out.push(`| ${kt} (${HAUPTORTE[kt].ort}) | ${zs.map((z) => `${zelle(z)} · ${chf(z.praemieMonat)} · ${pct(anteil(z))}`).join(' | ')} |`);
 }
-out.push('', `| Kennzahl | ${mitZahl.map((k) => k.toUpperCase()).join(' | ')} |`, `|---|${mitZahl.map(() => '---:').join('|')}|`);
+out.push('', `| Kennzahl | ${mitZahl.map(kurz).join(' | ')} |`, `|---|${mitZahl.map(() => '---:').join('|')}|`);
 const zeile = (label, f) => out.push(`| ${label} | ${mitZahl.map((k) => f(runs[k])).join(' | ')} |`);
 zeile('Kantone mit Betrag', (r) => r.kennzahlen.mitBetrag);
-zeile('Kantone ohne Anspruch (Maloja-Modell)', (r) => r.kennzahlen.keinAnspruch);
-zeile('Kantone ohne Zahl', (r) => r.kennzahlen.keineZahl);
-zeile('Tiefster Betrag (CHF/Jahr)', (r) => chf(r.kennzahlen.min));
-zeile('Median Betrag (CHF/Jahr)', (r) => chf(r.kennzahlen.median));
-zeile('Höchster Betrag (CHF/Jahr)', (r) => chf(r.kennzahlen.max));
-zeile('Median verbilligter Anteil (Kantone mit Zahl, inkl. 0)', (r) => pct(median(r.zeilen.map(anteil))));
+zeile('Kantone «kein Anspruch im Modell»', (r) => r.kennzahlen.keinAnspruch);
+zeile('Kantone «keine Zahl»', (r) => r.kennzahlen.keineZahl);
+zeile('Tiefster Betrag (CHF/Jahr, nur Kantone mit Betrag)', (r) => chf(r.kennzahlen.min));
+zeile('Median Betrag (CHF/Jahr, nur Kantone mit Betrag)', (r) => chf(r.kennzahlen.median));
+zeile('Höchster Betrag (CHF/Jahr, nur Kantone mit Betrag)', (r) => chf(r.kennzahlen.max));
+zeile('Median verbilligter Anteil (mit Betrag UND «kein Anspruch» = 0 %)', (r) => pct(median(r.zeilen.map(anteil))));
 out.push('');
 
-out.push('## Haushalte, für die Maloja heute keine Zahl zeigt', '');
-out.push('In **allen 26 Kantonen** «keine Zahl». In 24 Kantonen liegt das an Maloja selbst:');
-out.push('- **zwei Erwachsene** — das Kantonsmodell bricht am Riegel `mehrereErwachsene` ab (`haushalt`);');
-out.push('- **junge Erwachsene 19–25** — eigene Kategorie in den Kantonen, oft abhängig von einer Ausbildung, nach der die App');
-out.push('  nicht fragt (`alter`, `ausbildung`, `geJungeErwachsene`, `neJeuneAdulte`, `vsJungeErwachsene`).');
-out.push('TG und JU halten schon vorher an: Maloja nennt dort bewusst keine Zahl, weil das Modell eine Steuergrösse braucht');
-out.push('(`tgSteuerbetrag`, `steuerbaresEinkommen`), die die App nicht verlässlich schätzen kann.', '');
-out.push(`Betroffen sind ${ohneZahl.length} von 7 BAG-Modellhaushalten:`, '');
+out.push('## Haushalte, für die Maloja heute keine Zahl nennen kann', '');
+out.push('In allen 26 Kantonen «keine Zahl». In 24 Kantonen liegt das an Maloja: Paare und junge Erwachsene (19–25) rechnet');
+out.push('die App noch nicht. In TG und JU nennt Maloja schon vorher keine Zahl, weil das Kantonsmodell eine Steuergrösse braucht,');
+out.push('die die App nicht verlässlich schätzen kann. Über die Regeln der Kantone sagt das nichts.', '');
 for (const k of ohneZahl) {
-  const gr = [...new Set(runs[k].zeilen.map((z) => z.grund))].join(', ');
-  out.push(`- **${MUSTERHAUSHALTE[k].bezeichnung}** — Brutto CHF ${chf(MUSTERHAUSHALTE[k].bruttoJahr)}/Jahr · Gründe: \`${gr}\``);
+  const h = MUSTERHAUSHALTE[k];
+  const gr = [...new Set(runs[k].zeilen.map((z) => z.grund))].map((g) => `\`${g}\``).join(', ');
+  out.push(`- **${kurz(k)} · ${h.bezeichnung.replace(/^Haushalt \d · /, '')}** — Brutto CHF ${chf(h.bruttoJahr)}/Jahr · BAG: «${h.bezeichnungBag}» · Gründe: ${gr}`);
 }
 out.push('');
 
@@ -88,10 +120,10 @@ for (const k of mitZahl) {
   for (const z of runs[k].zeilen) {
     if (z.art !== 'keineZahl') continue;
     if (!gruende.has(z.grund)) gruende.set(z.grund, []);
-    gruende.get(z.grund).push(`${z.kanton} ${k.toUpperCase()}`);
+    gruende.get(z.grund).push(`${z.kanton} ${kurz(k)}`);
   }
 }
-out.push('## Warum «keine Zahl» (rechenbare Haushalte)', '', 'Grund (Schlüssel aus dem Kantonsmodell) → betroffene Zellen.', '');
-for (const [g, zellen] of [...gruende].sort((a, b) => b[1].length - a[1].length)) out.push(`- \`${g}\` (${zellen.length}×): ${zellen.join(' · ')}`);
+out.push('## Warum «keine Zahl» (rechenbare Haushalte)', '');
+for (const [g, zellen] of [...gruende].sort((a, b) => b[1].length - a[1].length)) out.push(`- ${grundText(g)} — ${zellen.join(' · ')}`);
 out.push('');
 process.stdout.write(out.join('\n'));
