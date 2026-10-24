@@ -115,6 +115,31 @@ unbelegt (steht noch im MietVergleich auf Mietzins-Seite/Finanz-Übersicht) · F
 «Nettomiete (ohne Nebenkosten)» · `data/mietpreise.js` Quelle «Mietpreiserhebung» vs. «Strukturerhebung», Stand
 2020 beim BFS prüfen · Barometer-Legende bricht bei 375 px um. **Als Nächstes:** Kapitel Versicherungen (AA).
 
+## Stand 24.10.2026, 23:20 — gemergt auf Sophies Zuruf («merge mal was du kannst»)
+
+**In `main`** (`c9d96a50`, 23:15): #562 Fixes 1–8 · #564 eine Monatsrechnung · #565 Kapitel-Muster ·
+#566 Finanzen-Grafiken (Balken, Kuchen, Sankey). Vor jedem Merge: Tests + Build lokal grün; CI auf `main`
+für #564/#565 grün, für #566 lief sie noch. Ein Konflikt (`ChapterView.jsx`, Wertspalte: Fix 1 gegen
+«Im Haushalt») von Hand gelöst — beides übernommen. **Nicht deployt. Gemergt ist nicht live.**
+
+**Nicht gemergt: #567 Kapitel Wohnen** — die Sitzung «Maloja Fassung 6: Kapitel Wohnen» arbeitete um 23:15
+noch daran (ungestagete Änderungen an `mietpreise.js`, `RegionalBarometer.jsx`, i18n). Sie wurde gebeten,
+`main` hineinzuholen, zu prüfen, zu pushen und #567 auf `main` umzustellen — mergen nur auf Zuruf.
+
+**Offen, zu entscheiden (Sophie):**
+1. Versicherungen: «Versicherungs-Übersicht» als eigene Seite (Runde 9 AB) **oder** `praemien` + `kvg` ins
+   Kapitel (`maloja-frontend/docs/entscheide/seiten-buendeln.md`, Entscheid 3) — vor dem Kapitel Versicherungen.
+2. Wortlaut «1 Erwachsene» (Basis, «Im Haushalt») — holprig, aus dem Entwurf übernommen.
+3. Copy-Prüfer für die neuen Namen «Portemonnaie-Karte» und «Arbeitslosenentschädigung» (entschieden, nicht gebaut).
+
+**Offen, zu bauen (je eigene Sitzung):** Kapitel Versicherungen (KK-Last, Schutzschild, Franchise-Kreuz) ·
+Ausbildung (Lohn-Barometer, Lebenslauf-Vorschau) · Behörden (Frist als Kalenderblatt, Behördengänge, Querverweis
+Steuern ↔ Finanzen) · Notfall (Ernstfall-Knopf, «19 von 20»). Dazu: Hausrat-/Haftpflichtprämie ins Budget
+(Haftpflicht-Prämienfeld fehlt) · Beispielprofil Maria (Steuerfrist, KK-Prämie, `liabilityAmount`).
+**Fachbefunde, schon vorher so:** Quellensteuer/Familienzulagen können doppelt zählen, Miete+Hypothek ohne Prüfung,
+Säule 3a ohne Plausibilität (`finanzen-fusion.md` §10) · Mietpunkte aus #567 (unbelegter Satz, «Monatsmiete» mehrdeutig,
+Mietpreise Stand 2020, Barometer-Legende bricht um) · rm-Texte brauchen eine Fachperson.
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
