@@ -229,3 +229,24 @@ Nächste Schritte: A Ansprüche, F Ausgesteuert.
 
 **Nicht geprüft für dieses Blatt:** gerenderte Seiten im Browser (nur Code gelesen), Nutzungszahlen
 (es gibt keine — local-first), ob Abläufe untereinander schon verlinken.
+
+## 7 · Gruppe A zurückgestellt, Gruppe F gebaut (24.10.2026)
+
+**Stand davor:** #555 (Finanzen-Fusion, Geldfluss u. a.) und #556 (dieses Blatt + Charts-Umleitung) auf
+Zuruf gemergt, `main` = `4f615aa2`. Nicht live.
+
+**A · Ansprüche — zurückgestellt** (Stebler Studios: «Stell die Ansprüche zurück und mach zuerst Gruppe F»).
+Befund beim Lesen des Codes, der §2 korrigiert: Seit dem 23.10. («ein Name je Seite») ist `situationen`
+(«Was steht mir zu?») der feste Anker in der Leiste. `ansprueche`/`schnellcheck` = Zahlen-Check + Landkarte;
+`anspruchcheck` = Schritt 1 Zahlen-Check, Schritt 2 Lebenslagen, Schritt 3 Zusammenfassung — er hat keinen
+eigenen Inhalt. «Aufwand klein» stimmt nur für den kleinsten Schnitt (geführten Check streichen, 1 Seite).
+**Empfehlung Claude:** zusammenlegen am Anker — eine Seite «Was steht mir zu?» mit Lebenslagen, Zahlen-Check
+und Landkarte, die drei anderen Adressen als Umleitung (2 Seiten weniger, ein Ort für Ansprüche). Das ist ein
+Umbau: Gliederung, neue Zwischentitel in 5 Sprachen, Probier-Modus-Knopf und Zusammenfassung brauchen einen
+neuen Platz. In Schritten wie die Finanzen-Fusion, eher mit Fassung 6.
+
+**F · Ausgesteuert — gebaut** auf Zweig `feat/ausgesteuert-in-stelle-verloren`. «Ausgesteuert — wie weiter?»
+ist der letzte, aufklappbare Teil von «Stelle verloren» (`<details id="mp-aussteuerung">`, Muster Mietzins im
+Umzug). Alle fünf Schritte, Frist, Quelle und Hinweis unverändert, **keine neuen Texte**. `#/aussteuerung` →
+`UMLEITUNGEN` → «Stelle verloren», `springeZuAnker` klappt den Teil auf. Einträge in Dashboard, Suche und Gepäck
+bleiben und führen über die Umleitung. Wächter: `aussteuerungUmleitung.test.js`.

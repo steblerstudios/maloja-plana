@@ -112,7 +112,7 @@ const Patientenverfuegung = React.lazy(() => import('./Patientenverfuegung.jsx')
 const Bestattung = React.lazy(() => import('./Bestattung.jsx'));
 const Einbuergerung = React.lazy(() => import('./Einbuergerung.jsx'));
 const ZuzugAusland = React.lazy(() => import('./ZuzugAusland.jsx'));
-const Aussteuerung = React.lazy(() => import('./Aussteuerung.jsx'));
+// Aussteuerung: seit 24.10.2026 keine eigene Seite — letzter Teil von «Stelle verloren» (UMLEITUNGEN).
 const Quellensteuer = React.lazy(() => import('./Quellensteuer.jsx'));
 const WohnungGekuendigt = React.lazy(() => import('./WohnungGekuendigt.jsx'));
 const Selbstaendigkeit = React.lazy(() => import('./Selbstaendigkeit.jsx'));
@@ -1727,7 +1727,6 @@ const AppInner = ({ demo }) => {
         view === 'bestattung' && React.createElement(Bestattung, { palette, t, lang, data: activeData, onUpdateData: updateData }),
         view === 'einbuergerung' && React.createElement(Einbuergerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zuzug' && React.createElement(ZuzugAusland, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'aussteuerung' && React.createElement(Aussteuerung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'quellensteuer' && React.createElement(Quellensteuer, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'wohnunggekuendigt' && React.createElement(WohnungGekuendigt, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),

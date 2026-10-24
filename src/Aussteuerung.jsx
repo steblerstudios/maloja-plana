@@ -1,6 +1,7 @@
 import React from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage } from './utils/fristen.js';
+import { text, weight, space } from './config/tokens.js';
 
 // Ausgesteuert — geführter Ablauf, gebaut 24.09.2026. Gegenstück und Fortsetzung von
 // «Stelle verloren». Was es heisst (AVIG 9, 27; ÜLG 3), Unfalldeckung endet 31 Tage
@@ -9,14 +10,24 @@ import { plusTage } from './utils/fristen.js';
 // (BV 12), IPV (KVG 65), ab 60 Überbrückungsleistungen (ÜLG 3, 5, 14, 19), RAV
 // weiter offen (AVG 26, 27). Bewusst ohne Beträge und ohne erfundene Anmeldefristen:
 // für AHV und ÜL gibt es keine (Fachprüfung 24.09.2026).
+//
+// Seit 24.10.2026 keine eigene Seite mehr, sondern der letzte Teil von «Stelle verloren»
+// (docs/entscheide/seiten-buendeln.md, Gruppe F): eine Aufklapp-Zeile wie der Mietzins im
+// Umzug. #/aussteuerung leitet dorthin (UMLEITUNGEN), springeZuAnker klappt sie auf.
+// Texte, Fristen und Quellen unverändert.
 
-export const Aussteuerung = ({ palette, t, onNavigate }) => {
+export const AUSSTEUERUNG_ANKER = 'mp-aussteuerung';
+
+export const AussteuerungTeil = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
-  return React.createElement(AblaufContainer, {
-    palette, icon: 'lebenslauf',
-    title: t('aussteuerung.title'),
-    intro: t('aussteuerung.intro'),
+  return React.createElement('details', {
+    id: AUSSTEUERUNG_ANKER,
+    style: { borderTop: '1px solid ' + palette.border, borderBottom: '1px solid ' + palette.border, marginTop: space.lg + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' },
   },
+    React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.body, fontWeight: weight.semi, color: palette.text, listStyle: 'none' } },
+      t('aussteuerung.title'),
+      React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.soft } }, '+')),
+    React.createElement('p', { style: s.stepText }, t('aussteuerung.intro')),
     React.createElement(AblaufStep, { palette, title: t('aussteuerung.step1Title') },
       React.createElement('p', { style: s.stepText }, t('aussteuerung.step1Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step1Link'), onClick: () => onNavigate('alv') })
@@ -46,8 +57,8 @@ export const Aussteuerung = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('aussteuerung.step5Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('aussteuerung.step5Link'), onClick: () => onNavigate('cv') })
     ),
-    React.createElement(AblaufFooter, { palette, t, quelle: t('aussteuerung.quelle'), notes: [t('aussteuerung.footerNote'), t('trust.localOnly')] })
+    React.createElement(AblaufFooter, { palette, t, quelle: t('aussteuerung.quelle'), notes: [t('aussteuerung.footerNote')] })
   );
 };
 
-export default Aussteuerung;
+export default AussteuerungTeil;
