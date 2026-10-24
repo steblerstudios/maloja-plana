@@ -3958,6 +3958,24 @@ export default {
     fotografieren: "Fotografar in document",
     // rm ungeprüft F5
     alsNaechstes: "Sco proxim",
+    // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
+    // rm ungeprüft F6
+    passend: {
+      familie: "Il stadi civil sa mida",
+      familieSub: "Maridaglia, viver ensemen, uffant, separaziun · en il satg «Famiglia»",
+      lebensmappeSub: "Tut ils chapitels en ina survista · per stampar",
+      briefeSub: "Brevs da model, cumplettadas cun las atgnas indicaziuns",
+      bestattungSub: { sie: "Fixar quai che Vus è impurtant", du: "Fixar quai che ta è impurtant" },
+      ablageBasis: "Deponer ina copia dal document d’identitad",
+      ablageWohnen: "Deponer il contract da locaziun",
+      ablageVersicherungen: "Deponer las policas",
+      ablageAusbildung: "Deponer ils diploms",
+      ablageDokumente: "Deponer documents",
+    },
+    alleDurch: "Tut ils chapitels percurrids",
+    zurUebersichtTitel: "Enavos a la survista",
+    zurUebersichtSatz: { sie: "Voss ordinatur da vita en ina survista.", du: "Tes ordinatur da vita en ina survista." },
+    zurUebersicht: "A la survista",
     nextTopic: 'Proxim tema',
     sectionNav: 'Temas dal chapitel',
     showMore: 'Mussar ulteriurs secturs',

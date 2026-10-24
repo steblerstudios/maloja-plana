@@ -129,11 +129,19 @@ describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
     expect(text).toContain('Weiter mit ' + naechstes.title);
   });
 
-  it('andere Kapitel behalten den bisherigen Weiter-Knopf ohne «Als Nächstes»', () => {
+  // Fassung 6 (Runde 9, VERGLEICH.md): «Passend» und «Als Nächstes» in jedem Kapitel.
+  it('andere Kapitel: auch «Passend» und «Als Nächstes» mit dem Weiter-Knopf', () => {
     const html = render('wohnen', DEMO_DATA.wohnen, { nextChapter: kapitel('finanzen'), onNext: () => {} });
     expect(html).toContain('Weiter mit');
-    expect(html).not.toContain('Als Nächstes');
-    expect(html).not.toContain('Passend zu diesem Bereich');
+    expect(html).toContain('Als Nächstes');
+    expect(html).toContain('Passend zu diesem Bereich');
+    expect(html).toContain('Mietvertrag ablegen');
+  });
+
+  it('letztes Kapitel (Notfall): «Alle Kapitel durchgegangen» mit Weg zur Übersicht', () => {
+    const html = render('notfall', DEMO_DATA.notfall || {}, { nextChapter: null, onNext: undefined });
+    expect(html).toContain('Alle Kapitel durchgegangen');
+    expect(html).toContain('Zur Übersicht');
   });
 });
 

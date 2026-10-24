@@ -96,7 +96,7 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
     const i = (s) => { const n = QUELLE.indexOf(s); expect(n, s).toBeGreaterThan(-1); return n; };
     const formular = i('abschnittsliste()\n');
     const oben = i("renderAuswertung('oben')");
-    const passend = i('istFinanzen && renderPassend()');
+    const passend = i('    renderPassend(),');  // seit Fassung 6 in jedem Kapitel
     const unten = i("renderAuswertung('unten')");
     const naechstes = i('renderAlsNaechstes() :');
     expect(formular).toBeLessThan(oben);

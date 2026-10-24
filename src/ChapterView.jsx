@@ -34,7 +34,7 @@ import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
-import { ansichtIkon } from './config/ansichtenRegister.js';
+import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegister.js';
 import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
@@ -1981,17 +1981,53 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).
   // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV oben im Kapitel; dazu kamen
   // die zwei Wege, die die Übersicht unten hatte: Budget und Behörden-Dossier.
+  // Fassung 6 (Runde 9, VERGLEICH.md): in jedem Kapitel, je mit den von Sophie gewählten Zielen.
+  // Name und Untertitel aus dem Register (wie Menü und Suche), wo es einen gibt; neu sind nur
+  // die Ablage-Zeilen und die Untertitel, die das Register nicht hat.
+  const passendZiele = () => {
+    const weg = (view, extra = {}) => {
+      const subKey = SEARCH_VIEWS.find((v) => v.view === view)?.sub;
+      return { key: view, titel: tr(ansichtName(view) || view), sub: subKey ? tr(subKey) : '', gehe: () => onNavigate(view), ikon: ansichtIkon(view), ...extra };
+    };
+    // Die Ablage, gefiltert auf das Kapitel (wie «Lohnausweis ablegen» bei Finanzen).
+    const ablage = (titelKey) => ({ key: 'ablage', titel: tr(titelKey), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, chapter.key), ikon: ansichtIkon('tresor') });
+    const b = allData?.basis || {};
+    switch (chapter.key) {
+      case 'basis': return [
+        // Je nach Angaben oben (Runde 9, Y). Ein Zuzugsdatum gibt es im Profil nicht — «Neu in der
+        // Schweiz» darum nur, wenn die Nationalität nicht Schweiz ist, zusammen mit den zwei anderen.
+        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug')] : []),
+        weg('lebensmappe', { sub: tr('chapterView.passend.lebensmappeSub') }),
+        weg('ausweis'),
+        weg('gepaeck', { key: 'familie', titel: tr('chapterView.passend.familie'), sub: tr('chapterView.passend.familieSub'), ikon: 'family' }),
+        ablage('chapterView.passend.ablageBasis'),
+      ];
+      case 'wohnen': return [weg('umzug'), weg('mietzins'), weg('wohnunggekuendigt'), ablage('chapterView.passend.ablageWohnen')];
+      case 'versicherungen': return [weg('praemien'), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
+      case 'ausbildung': return [weg('cv'), weg('neuerjob'), weg('stelleverloren'), weg('stundenlohn'), ablage('chapterView.passend.ablageAusbildung')];
+      case 'behoerden': return [
+        // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
+        ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
+        weg('tax'), weg('betreibungsauszug'),
+        ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
+        weg('vorsorgeauftrag'), weg('briefe', { sub: tr('chapterView.passend.briefeSub') }),
+        ablage('chapterView.passend.ablageDokumente'),
+      ];
+      case 'notfall': return [weg('patientenverfuegung'), weg('bestattung', { sub: tr('chapterView.passend.bestattungSub') }), ablage('chapterView.passend.ablageDokumente')];
+      default: return [
+        // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
+        { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
+        // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
+        { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
+        { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
+        // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
+        { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
+      ];
+    }
+  };
   const renderPassend = () => {
     if (!onNavigate) return null;
-    const ziele = [
-      // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
-      { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
-      // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
-      { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
-      { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
-      // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
-      { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
-    ];
+    const ziele = passendZiele();
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
       React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
       ...ziele.map((z) => React.createElement('button', {
@@ -2001,7 +2037,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: palette.sageDeep || palette.mid } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
         React.createElement('span', { style: { flex: 1, minWidth: 0 } },
           React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
-          React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
+          z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
         ),
         React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
       ))
@@ -2016,6 +2052,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       palette, onClick: onNext,
       style: { minHeight: '44px', boxSizing: 'border-box' },
     }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›')
+  );
+
+  // Das letzte Kapitel (Notfall) endete ohne Weg — jetzt zurück zur Übersicht (Runde 9, AE).
+  const renderAlleDurch = () => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.md } },
+    React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase', letterSpacing: '0.5px', color: palette.mid } }, tr('chapterView.alleDurch')),
+    React.createElement('h3', { style: { margin: space.xs + 'px 0 2px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, tr('chapterView.zurUebersichtTitel')),
+    React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, tr('chapterView.zurUebersichtSatz')),
+    React.createElement(PrimaryButton, {
+      palette, className: 'mp-link',
+      onClick: () => onNavigate('dashboard'),
+      style: { minHeight: '44px', boxSizing: 'border-box' },
+    }, tr('chapterView.zurUebersicht'), ' ›')
   );
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
@@ -2500,16 +2548,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
     // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
     istFinanzen && renderAuswertung('oben'),
-    istFinanzen && renderPassend(),
-    istFinanzen && renderAuswertung('unten'),
+    // Fassung 6 (Runde 9): «Passend» und «Als Nächstes» in jedem Kapitel. Notfall: erst die drei
+    // Lagen, dann «Passend»; das letzte Kapitel endet mit «Alle Kapitel durchgegangen».
     chapter.key === 'notfall' && React.createElement(NotfallImKapitel, { teil: 'unten', palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate }),
-    istFinanzen && nextChapter && onNext ? renderAlsNaechstes() :
-    nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
-      React.createElement(PrimaryButton, {
-        palette, onClick: onNext,
-        style: { minHeight: '44px', boxSizing: 'border-box' },
-      }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›'),
-    ) : null,
+    renderPassend(),
+    istFinanzen && renderAuswertung('unten'),
+    nextChapter && onNext ? renderAlsNaechstes() : (!nextChapter && onNavigate ? renderAlleDurch() : null),
 
     // Chapter arrival — quiet rest moment when enough data is present
     (() => {

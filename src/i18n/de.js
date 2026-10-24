@@ -2357,6 +2357,23 @@ export default {
     // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
     fotografieren: "Dokument fotografieren",
     alsNaechstes: "Als Nächstes",
+    // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
+    passend: {
+      familie: "Zivilstand ändert sich",
+      familieSub: "Heirat, Zusammenziehen, Kind, Trennung · im Rucksack «Familie»",
+      lebensmappeSub: "Alle Kapitel auf einen Blick · zum Ausdrucken",
+      briefeSub: "Musterbriefe, mit den eigenen Angaben vorausgefüllt",
+      bestattungSub: { sie: "Festhalten, was Ihnen wichtig ist", du: "Festhalten, was dir wichtig ist" },
+      ablageBasis: "Ausweis-Kopie ablegen",
+      ablageWohnen: "Mietvertrag ablegen",
+      ablageVersicherungen: "Policen ablegen",
+      ablageAusbildung: "Diplome ablegen",
+      ablageDokumente: "Dokumente ablegen",
+    },
+    alleDurch: "Alle Kapitel durchgegangen",
+    zurUebersichtTitel: "Zurück zur Übersicht",
+    zurUebersichtSatz: { sie: "Ihr Lebensordner auf einen Blick.", du: "Dein Lebensordner auf einen Blick." },
+    zurUebersicht: "Zur Übersicht",
     nextTopic: 'Nächstes Thema',
     sectionNav: 'Themen im Kapitel',
     showMore: 'Weitere Bereiche anzeigen',

@@ -2349,6 +2349,23 @@ export default {
     // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
     fotografieren: "Take a photo of a document",
     alsNaechstes: "Up next",
+    // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
+    passend: {
+      familie: "Your civil status changes",
+      familieSub: "Marriage, moving in together, a child, separation · in the backpack «Family»",
+      lebensmappeSub: "All chapters at a glance · to print",
+      briefeSub: "Template letters, pre-filled with your details",
+      bestattungSub: "Write down what matters to you",
+      ablageBasis: "File a copy of your ID",
+      ablageWohnen: "File the tenancy agreement",
+      ablageVersicherungen: "File policies",
+      ablageAusbildung: "File diplomas",
+      ablageDokumente: "File documents",
+    },
+    alleDurch: "All chapters done",
+    zurUebersichtTitel: "Back to the overview",
+    zurUebersichtSatz: "Your life folder at a glance.",
+    zurUebersicht: "To the overview",
     nextTopic: 'Next topic',
     sectionNav: 'Topics in this chapter',
     showMore: 'Show more sections',

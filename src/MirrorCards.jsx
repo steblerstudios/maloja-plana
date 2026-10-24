@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { getCantonName } from './config/cantonalData.js';
-import { text, space, radius, leading, shadow } from './config/tokens.js';
+import { text, space, weight, leading } from './config/tokens.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { betrag } from './utils/geld.js';
 import { sumExpenses, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
@@ -321,24 +321,12 @@ export const MirrorCards = ({ chapterKey, data, allData, palette, t }) => {
   const sentence = buildLifeSentence(chapterKey, data, allData, t);
   if (!sentence) return null;
 
-  return React.createElement('div', {
-    style: { marginBottom: space.lg + 'px' }
-  },
-    // Life sentence card — sage-tinted mirror of your life
-    React.createElement('div', {
-      style: {
-        background: palette.sageDew || palette.surface,
-        border: '1px solid ' + palette.sage + '30',
-        borderRadius: radius.md,
-        padding: space.lg + 'px ' + space.md + 'px',
-        marginBottom: 0,
-        fontSize: text.body,
-        color: palette.text,
-        lineHeight: leading.relaxed,
-        boxShadow: shadow.md,
-      }
-    }, sentence)
-  );
+  // Fassung 6 (Runde 9, Muster über alle Kapitel): die Zusammenfassung als ruhiger Satz unter dem
+  // Kopf (`.kap-zus` im Entwurf) — vorher eine grün getönte Karte mit Schatten.
+  return React.createElement('p', {
+    'data-teil': 'kap-zus',
+    style: { margin: '0 0 ' + space.lg + 'px', fontSize: text.body, fontWeight: weight.normal, color: palette.text, lineHeight: leading.relaxed, maxWidth: '560px' },
+  }, sentence);
 };
 
 export default MirrorCards;
