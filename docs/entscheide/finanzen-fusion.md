@@ -131,4 +131,25 @@ Ebenso für Bauschritt 4: Die Steuer-Karte sagt im Kapitel «Angeben lässt sich
 «Finanzen & Geld»» — im Kapitel selbst ein Verweis auf sich. Copy-Prüfer 24.10.: Texte
 übernommen («Was sich daraus ergibt», IT «Aiuto sociale», EN «missing», FR «son propre revenu»).
 
+## 8 · Stand Bauschritt 4 (24.10.2026)
+
+`finanzuebersicht` ist keine eigene Seite mehr, sondern ein Alias: `UMLEITUNGEN` in
+`utils/hashRouter.js` → Kapitel 2 (finanzen), Sprungmarke `mp-finanz-auswertung`. Greift beim
+Direktlink, bei Lesezeichen, bei der Zurück-Taste (`parseHash`) und bei jedem Knopf
+(`handleNavigate`); die Adresse zeigt danach `#/chapter/2`. Menü, Suche, Dashboard, Lebensbaum,
+der Querverweis am Lohn-Feld und die Rechner (Steuer, IPV, Vorsorge, Sozialhilfe, Mietzins …)
+rufen unverändert `finanzuebersicht` auf und landen so bei der Auswertung. Register: Suchwort
+«finanzen» entfernt (das Kapitel steht selbst in der Suche). `main.jsx`: kein Render-Zweig, kein
+Lazy-Import der Übersicht mehr; `finanzuebersicht` aus `SANDBOX_VIEWS`.
+
+**Korrektur zum Plan:** `SANDBOX_VIEWS` heisst nicht «läuft ohne Profil», sondern «hier erscheint
+der Knopf ‹neben dem eigenen Stand rechnen›». Bauschritt 6 / Entscheid 4 ist darum neu zu lesen:
+Soll dieser Knopf im Kapitel Finanzen erscheinen (bei der Auswertung)? Bis dahin fehlt er dort.
+
+**Bleibt bewusst:** `FinanzUebersicht.jsx` wird nicht mehr angezeigt, aber noch von gut zehn
+Tests gerendert (IPV, Steuern, Sozialhilfe). Die ziehen in Bauschritt 7 auf `FinanzenImKapitel`
+um, dann fällt die Datei weg. Der Steuer-Satz «Angeben lässt sich das im Kapitel «Finanzen &
+Geld»» ist ein geteilter Text (Steuerrechner, Dossier) und bleibt; im Kapitel ist er richtig,
+nur nahe am eigenen Formular.
+
 **Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.

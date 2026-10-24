@@ -25,7 +25,7 @@ import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
-import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle } from './utils/hashRouter.js';
+import { parseHash, setHash, replaceHash, onHashChange, leseHerkunft, merkeStelle, UMLEITUNGEN, springeZuAnker } from './utils/hashRouter.js';
 import { blendeEin } from './utils/einblenden.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
@@ -134,7 +134,7 @@ const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
 const AsylView = React.lazy(() => import('./AsylView.jsx'));
 const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
-const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
+// FinanzUebersicht: seit 24.10.2026 keine eigene Seite — #/finanzuebersicht führt ins Kapitel Finanzen (UMLEITUNGEN).
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
 const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
@@ -654,7 +654,9 @@ const AppInner = ({ demo }) => {
     if (uebernehmenKnopf.current) uebernehmenKnopf.current.focus();
   }, [ersetzenFragen]);
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
-  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht', 'schnellcheck', 'anspruchcheck'];
+  // ('finanzuebersicht' stand hier bis 24.10.2026; ob der Knopf ins Kapitel Finanzen kommt,
+  // ist Bauschritt 6 der Zusammenlegung, docs/entscheide/finanzen-fusion.md.)
+  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'schnellcheck', 'anspruchcheck'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -682,6 +684,12 @@ const AppInner = ({ demo }) => {
     setHerkunft(leseHerkunft());
   }, [view, activeChapter]);
 
+  // Direkteinstieg über einen umgeleiteten Link (#/finanzuebersicht): zur Sprungmarke.
+  useEffect(() => {
+    const p = parseHash();
+    if (p && p.anker) springeZuAnker(p.anker);
+  }, []);
+
   // ─── Leises Einblenden beim Ansichtswechsel (utils/einblenden.js) ─
   // Nicht beim ersten Bild, nicht nach «Zurück» (dort gilt die gemerkte Stelle).
   // Eine Markierung: true = erstes Bild oder nach «Zurück» → still; sonst einblenden.
@@ -706,6 +714,12 @@ const AppInner = ({ demo }) => {
         setView(parsed.view);
         setHerkunft(leseHerkunft());
       });
+      // Ein alter Eintrag (#/finanzuebersicht) kommt als Kapitel mit Sprungmarke zurück — dorthin,
+      // ausser es gibt eine gemerkte Stelle (die gilt dann, siehe unten).
+      // Die Adresse zeigt danach das Ziel, nicht den alten Namen — auch wenn das Kapitel schon offen
+      // war und sich darum kein Zustand ändert, der sie sonst nachführt.
+      if (parsed.anker) replaceHash(parsed.view, parsed.chapterIndex);
+      if (parsed.anker && parsed.stelle === null) springeZuAnker(parsed.anker);
       // Zurück an die Stelle, an der man die Ansicht verlassen hat (merkeStelle in
       // handleNavigate). Zwei Frames: erst rendert die Ansicht, dann hat sie ihre Höhe.
       // Die Übersicht lädt Teile nach (BergDetail, Leistungen, Instrumente): nach zwei
@@ -966,6 +980,14 @@ const AppInner = ({ demo }) => {
   };
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
+    const umleitung = UMLEITUNGEN[viewName];
+    // Eine Ansicht, die es nicht mehr als eigene Seite gibt (utils/hashRouter.js): an ihr Ziel,
+    // dort zur Sprungmarke. finanzuebersicht → Kapitel Finanzen, Auswertung (24.10.2026).
+    if (umleitung) {
+      handleNavigate(umleitung.view, umleitung.chapterIndex, extra);
+      springeZuAnker(umleitung.anker);
+      return;
+    }
     merkeStelle();
     stillBleiben.current = false; // ein Vorwärts-Schritt blendet ein, auch nach einem leeren «Zurück»
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
@@ -1713,7 +1735,6 @@ const AppInner = ({ demo }) => {
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
         // chapters/onSelectChapter/isMobile seit 21.09.: der Lebensbaum steht jetzt
         // hier statt auf dem Dashboard und braucht die Kapitel für seine Äste.
-        view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters, onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }), isMobile, lang }),
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
