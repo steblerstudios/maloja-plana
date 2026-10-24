@@ -41,12 +41,15 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      springeZuAnker klappt es auf.
 //   notfalleinstieg  → Kapitel Notfall (6), oben bei Vorlesekarte und Notfallpass (24.10.2026, Gruppe D;
 //                      Wächter: notfallEinstiegUmleitung.test.js). Die Vorlesekarte bleibt eigene Seite.
+//   unterlagen       → Dokumentenablage, Abschnitt «Meine Unterlagen» unten (24.10.2026, Gruppe H;
+//                      Wächter: unterlagenUmleitung.test.js). Auch die Brotkrumen der Dossiers zeigen hierher.
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
+  unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
