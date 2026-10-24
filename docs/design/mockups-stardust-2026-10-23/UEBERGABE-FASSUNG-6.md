@@ -72,6 +72,18 @@ Referenzprämie · Haftpflicht `liabilityAmount: '35'` ergibt keinen Sinn.
 **Copy-Prüfer und fünf Sprachen:** Jeder Entscheid in VERGLEICH.md hat eine Zeile «Copy-Prüfer» mit den
 neuen Texten. Neue Texte erst nach Prüfung in `de.js` und die anderen vier Sprachen.
 
+### Stand 24.10.2026 abends: Fixes 1–8 gebaut
+
+Zweig `fix/f6-kleine-fixes` (Worktree `_werkbank/f6-kleine-fixes`, ab `origin/main` 32284107), lokal
+committet, **nicht gepusht**. Ein Commit je Fix, 6'717 Tests grün, Build sauber, im Browser geprüft (375 px):
+1 `4e3564e8` Wertspalte · 2 `aed395b7` Untertitel Steuern (Wortlaut aus `taxFromBehoerdenHint`, 5 Sprachen) ·
+3 war schon in `main` (`2fae91da`) · 4 `3ed6dd41` Druck-Knopf · 5 `4405e72a` Rucksack · 6 `001d9c62` ALV
+unter 25 (AVIG Art. 22 Abs. 2 Bst. a) · 7 `778c9f05` Dossier-Zeilen ohne Betrag (auch IPV/Steuern; Steuer zeigt
+«CHF 0», E38) · 8 `89946752` **Ursache: qrcodejs warf auf Android «aMat is not defined»** — der Notfall-QR
+fehlte auf jedem Android-Telefon, nicht nur im Beispiel.
+Offene Entscheide sind seit `b5215193` entschieden (VERGLEICH.md, letzter Abschnitt). Noch nicht gebaut: neue
+Namen (Portemonnaie-Karte, Arbeitslosenentschädigung) — erst nach Copy-Prüfer, dann 5 Sprachen.
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
