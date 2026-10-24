@@ -105,3 +105,15 @@ Datenfeld «Tag» am Merkpunkt; «Alle Kantone vergleichen» (heute 0 von 26 Kan
   Befunde in VERGLEICH.md «Runde 3».
 - **Offen:** J, K, L, M, N · Übersicht · danach Einstieg (Schnellcheck), Notfall-Seiten, Datenseiten;
   Kapitel/Abläufe/Rechner nur gegen ihre Vorlage prüfen.
+
+## Nachtrag 24.10.2026: Abschluss der Sitzung «Seite für Seite, Runde 2 und 3»
+
+- **Überholt durch `UEBERGABE-FASSUNG-6.md`** (a9be3ebe, 06011ce4). Die oben als offen genannten Entwürfe
+  J, K, L, M, N hat Sophie am 24.10. in einer späteren Sitzung entschieden (VERGLEICH.md, Runde 2 und 3).
+  Die Befunde dieser Sitzung stehen dort in der Fix-Liste: «Bundessteuer berechnen» veraltet, Suche findet
+  nicht alles (`WEITERE_NAMEN`), Rucksack «Wieder einpacken» doppelt.
+- **Liste B im Code nachgeprüft:** `f5-merkliste-kalender`, `src/data/aufgabenBereiche.js` leitet die Bereiche
+  aus `werkzeugRegister.js` «fach» ab (Steuern, ALV → Finanzen; Asyl → Behörden; Aussenfach neutral),
+  committet 89efc977 (23.10. 16:06). Die Notiz «nicht bestätigt» oben ist damit erledigt.
+- **Offen aus dieser Sitzung:** nichts Eigenes. Die Durchsicht der gezeichneten Seiten ist Sophies Sache
+  und läuft über `UEBERGABE-FASSUNG-6.md` weiter.
