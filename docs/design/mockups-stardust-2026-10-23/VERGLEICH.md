@@ -695,3 +695,36 @@ Unterstützung), SKOS-Satz «Zur Einordnung, keine Berechnung eines Anspruchs �
 zu?»», Feldnamen ohne «CHF» im Namen.
 
 **Befund App:** Behörden-Dossier zeigt «Mögliche Unterstützung /Mt.» ohne Betrag, wenn kein Anspruch besteht.
+
+---
+
+## Runde 7 · Abläufe: eine Schale, alle auf einmal (24.10.2026)
+
+**Gefunden:** 43 Dateien nutzen `AblaufSchale.jsx`; ~33 Abläufe zeigen alle Schritte untereinander
+(`AblaufContainer` + `AblaufStep`), nur der Umzug geht Schritt für Schritt (`AblaufPass`, `ablaufStand`,
+`EreignisFrist` mit `karte:`). Die Passstrasse ist fest für 4 Stationen (`PASS_PFAD`, `PASS_STATIONEN`).
+17 Abläufe haben eine `EreignisFrist`, drei zwei (Dienst, Wegzug, Zuzug). Bild: `heute-heirat.jpg`.
+Vergleich: Reiter «Abläufe · Schale (Beispiel Heirat)».
+
+### Ablauf-Schale (W) · entschieden (Sophie, 24.10.2026)
+
+Sophie wählte beide Empfehlungen («In der Schale, alle auf einmal», «Passstrasse mit n Kehren»), danach
+«Entwurf W passt für alle Abläufe». Entwurf: `seiten-v5.html?nur=w` (4f2169fe), Beispiel «Heirat».
+
+- **Eine Änderung an der Schale, alle Abläufe:** `AblaufContainer` zeigt seine `AblaufStep` einen nach dem
+  anderen — «Schritt n von N», «Erledigt, weiter ›», «‹ zurück», zuletzt «Ablauf abschliessen»; erledigte
+  Schritte als Marken; Stand gespeichert je Ablauf (wie `ablaufStand`). Abschluss: «Alle N Schritte sind
+  erledigt» + «Zur Übersicht» + «Ablauf nochmals ansehen».
+- **Passstrasse mit n Kehren:** aus N gerechnet (Serpentine, eine Station je Kehre, Höhe wächst mit N, Kehren
+  leicht unterschiedlich weit), Farbe = Bereich des Ablaufs. Ersetzt die feste 4-Stationen-Strasse.
+- **Frist als Karte** in jedem Ablauf (`FristButton`, `EreignisFrist`): «… · bis Datum» mit «In den Kalender»;
+  zwei Fristen = zwei Karten im selben Schritt.
+- **Immer unten, keine Station:** «Verwandte Ereignisse», `AblaufFooter` (Hinweis, Quellen).
+- **Kopf links** mit Bereichssymbol und Brotkrume; Bereich, Farbe und Brotkrume je Ablauf aus dem Register.
+- **a11y mitlösen:** Fokus bleibt nach «In den Kalender» auf der Bestätigung (Live-Region); Schrittfläche nicht
+  zugleich `aria-live` und fokussiert.
+
+**Noch je Ablauf zu prüfen:** reine Info-Schritte tragen «Weiter ›» statt «Erledigt, weiter ›»; Bereich von
+Heirat (heute rosa Band, Herz, kein Bereich). Abläufe ausserhalb der Schale (z. B. `AsylView`) — eigener Entscheid.
+**Neue Texte für den Copy-Prüfer:** «Weiter ›», «Alle N Schritte sind erledigt», Frist-Karten-Untertitel
+«Orientierung · bis …» (Heirat: Frist ist Orientierung, keine gesetzliche).
