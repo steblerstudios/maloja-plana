@@ -1,6 +1,9 @@
 # Systemblick — Zahlen zum System, ohne Zahlen über Menschen
 
-> **Status:** Konzept, Entwurf 24.10.2026 · **nicht freigegeben** · Grundsatzentscheid durch Stebler Studios offen.
+> **Status:** Konzept 24.10.2026 · **Grundsatzentscheid Stebler Studios, 24.10.2026:** **Stufe 1 und 2 freigegeben**
+> (Musterhaushalte und öffentliche Statistik), **intern weiter ausbauen**. **Stufe 3 (freiwillige Beiträge): vorerst
+> nein.** Nicht entschieden und darum weiter **nicht** freigegeben: eine sichtbare Seite in der App und die Verwendung
+> von Zahlen nach aussen (Petitionen, Medien) — dafür gilt weiter «Bevor etwas öffentlich wird».
 > Fachprüfung 24.10.2026: swiss-precision-, rechts- und copy-pruefer, Befunde eingearbeitet.
 > Abgrenzung: [`STATISTIK.md`](STATISTIK.md) zählt *Besuche* (Server-Logs des Hosters). Dieses Dokument
 > handelt von *sozioökonomischen* Zahlen: Wie wirken die Schweizer Regeln für verschiedene Haushalte, und wo
@@ -29,7 +32,8 @@ Statistik entsteht darum zuerst **ohne eine einzige Person**:
 2. aus **öffentlichen amtlichen Statistiken** (BFS, BAG, BSV, SECO, ESTV, Kantone).
 
 Erst wenn eine Frage damit nachweislich nicht beantwortbar ist, kommt Stufe 3 (freiwillige Beiträge) als
-eigener Grundsatzentscheid auf den Tisch — dann gälte der erste Satz dieses Abschnitts nicht mehr.
+eigener Grundsatzentscheid auf den Tisch — dann gälte der erste Satz dieses Abschnitts nicht mehr. Stand 24.10.2026:
+Stufe 3 **vorerst abgelehnt** (Stebler Studios); das Versprechen «die App sendet nichts» bleibt.
 
 ## Wofür (Entscheid Stebler Studios, 24.10.2026: alle vier)
 
@@ -336,6 +340,9 @@ viele beziehen nicht, obwohl sie Anspruch hätten (Nichtbezug)?
 
 ## Stufe 3 — Freiwillige, grobe Beiträge (nur bei echtem Bedarf, eigener Grundsatzentscheid)
 
+> **Entscheid 24.10.2026: vorerst nein.** Der Abschnitt bleibt als Merkliste für einen späteren, eigenen
+> Grundsatzentscheid stehen. Nichts davon wird gebaut.
+
 Nur falls eine Frage weder Stufe 1 noch 2 beantworten kann (z. B. «Wie viele Maloja-Nutzende haben einen
 Anspruch, den sie nicht geltend machen?»). Mindestregeln, falls es je so weit kommt:
 
@@ -358,7 +365,9 @@ Anspruch, den sie nicht geltend machen?»). Mindestregeln, falls es je so weit k
 
 ## Bevor etwas öffentlich wird
 
-- [ ] Grundsatzentscheid Stebler Studios zu diesem Konzept
+- [x] Grundsatzentscheid Stebler Studios zu diesem Konzept (24.10.2026: Stufe 1 + 2 ja, intern; Stufe 3 vorerst nein)
+- [ ] Entscheid Stebler Studios: sichtbare Seite in der App ja/nein
+- [ ] Entscheid Stebler Studios: Zahlen nach aussen (Petitionen, Medien) ja/nein
 - [x] `swiss-precision-pruefer` über `systemblick.js`, Messung und Quellen (24.10.2026, eingearbeitet)
 - [x] `rechts-pruefer` (24.10.2026, eingearbeitet; Gesetzesartikel noch an Fedlex prüfen)
 - [x] `copy-pruefer` (24.10.2026, eingearbeitet)
