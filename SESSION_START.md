@@ -17,6 +17,22 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🎨 **Nachtrag 25.10.2026, 00:25 — Fassung 6, erster Bau: #562, #564, #565, #566 auf Zuruf gemergt. NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 25.10. 00:23): main = `c9d96a50` (24.10. 23:15) · live = `4299bfb9`
+> (0.1.48-beta, 23.10.) · **93 Commits** dazwischen · offen: #569, #568 (andere Sitzungen), #567 (Kapitel Wohnen, in Arbeit), #563, #561.
+> **Gemergt** (Stebler Studios: «merge mal was du kannst»), je Tests + Build lokal grün, CI auf main grün bis #565:
+> - **#562** Fixes 1–8: Wertspalte bricht nicht mitten im Wort · Untertitel Steuern · Druck-Knopf · Rucksack · ALV unter 25
+>   (AVIG Art. 22 Abs. 2 Bst. a) · Dossier ohne «/Mt.» ohne Betrag · **Notfall-QR fiel auf jedem Android aus** (qrcodejs `aMat`).
+> - **#564** eine Monatsrechnung (`utils/monatsrechnung.js`): nur Partner/in trennt Kapitel und Haushalt — Gesamtbericht 🔴 1.
+>   Maria: 2’459 in Kapitel und Budget. Entscheid `docs/entscheide/finanzen-fusion.md` §10, Fachprüfung ohne Blocker.
+> - **#565** Kapitel-Muster Runde 9: ruhige Zusammenfassung, «Passend» und «Als Nächstes» in allen 7 Kapiteln, «Im Haushalt».
+> - **#566** Kapitel Finanzen: Balken (unterteilt) · Kuchen «Ausgaben-Übersicht» · Sankey nur ab zwei Einnahmequellen.
+> **Entscheide und Fahrplan:** Werkbank `mockups-stardust`, `docs/design/mockups-stardust-2026-10-23/VERGLEICH.md` (Runde 9,
+> «nachentschieden») und `UEBERGABE-FASSUNG-6.md` (Stand, offene Entscheide, nächste Kapitel).
+> **Offen:** #567 Wohnen mergen (Sitzung «Maloja Fassung 6: Kapitel Wohnen» holt main nach) · Entscheid Versicherungs-Übersicht
+> (Runde 9 AB) gegen `seiten-buendeln.md` Entscheid 3 · Kapitel Versicherungen, Ausbildung, Behörden, Notfall · Deploy (Stebler Studios).
+
 > 🧩 **Nachtrag 24.10.2026, 19:25 — Seiten bündeln: Blatt + Entscheide + erster Schritt (`#/charts` → Kapitel Finanzen) auf Zweig `feat/charts-umleitung` `78566302`, PR #556. NICHT live.**
 >
 > **Gemessen:** ≈ 91 sichtbare Seiten (86 Ansichten in `main.jsx` + 7 Kapitel; Aug./Sep. 65, ab Okt. 86).
