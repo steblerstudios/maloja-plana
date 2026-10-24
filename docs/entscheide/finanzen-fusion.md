@@ -159,4 +159,11 @@ nur nahe am eigenen Formular.
 > weiter). Im Probiermodus schreibt das Kapitel in die Probierdaten (`writeData`, `main.jsx`), nie
 > ins Profil.
 
+## 9 · Stand Bauschritt 5 (24.10.2026)
+
+Der Mietvergleich (`components/MietVergleich.jsx`, «Wo steht Ihre Miete?») steht im Kapitel
+Wohnen direkt unter dem Wohnkostenanteil, lazy geladen, mit dem ganzen Profil (Kanton, Haushalt).
+Ohne Kanton oder Miete zeigt er nichts, wie bisher. Zwischen Bauschritt 4 und 5 war er nirgends
+sichtbar (die Übersicht wird seit Bauschritt 4 nicht mehr angezeigt).
+
 **Offen, übrige:** Lage des Baums im Browser prüfen · rm-Texte gegenlesen.

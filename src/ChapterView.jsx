@@ -67,6 +67,8 @@ const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));
+// Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
+const MietVergleich = React.lazy(() => import('./components/MietVergleich.jsx').then((m) => ({ default: m.MietVergleich })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -2248,6 +2250,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         )
       );
     })(),
+
+    // Mietvergleich: die eigene Miete neben den BFS-Werten für Kanton und Haushalt. Stand bis
+    // 24.10.2026 auf der Finanz-Übersicht unter dem Lohn; seit der Zusammenlegung hier beim Wohnen
+    // (docs/entscheide/finanzen-fusion.md, Bauschritt 5). Ohne Kanton oder Miete: nichts.
+    chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'miet-vergleich', fallback: null },
+      React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
+        React.createElement(MietVergleich, { palette, t: tr, data: allData, isDarkMode })
+      )
+    ),
 
     // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
     // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
