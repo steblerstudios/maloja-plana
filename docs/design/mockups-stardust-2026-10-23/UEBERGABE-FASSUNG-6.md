@@ -84,6 +84,11 @@ fehlte auf jedem Android-Telefon, nicht nur im Beispiel.
 Offene Entscheide sind seit `b5215193` entschieden (VERGLEICH.md, letzter Abschnitt). Noch nicht gebaut: neue
 Namen (Portemonnaie-Karte, Arbeitslosenentschädigung) — erst nach Copy-Prüfer, dann 5 Sprachen.
 
+**Monatsrechnung gebaut** (24.10.2026, 21:03): Zweig `feat/f6-monatsrechnung`, Entwurfs-PR #564. Entscheid
+«nur Partner/in trennt» (`maloja-frontend/docs/entscheide/finanzen-fusion.md` §10): eine Rechnung in
+`utils/monatsrechnung.js`, Maria jetzt 2’459 in Kapitel und Budget. Fachprüfung ohne Blocker. Fixes 1–8: PR #562.
+**Als Nächstes:** Kapitel-Muster aus Runde 9 im Code (`ChapterView.jsx`), Kapitel für Kapitel.
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
