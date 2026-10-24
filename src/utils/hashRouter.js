@@ -36,10 +36,14 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //   charts           → ebenda (24.10.2026, docs/entscheide/seiten-buendeln.md, Gruppe I): die Seite
 //                      rechnete seit 21.10. wie das Kapitel, der Geldfluss steht seit 24.10. am
 //                      Anfang der Auswertung (Wächter: chartsUmleitung.test.js).
+//   aussteuerung     → «Stelle verloren», aufgeklappter letzter Teil (24.10.2026, Gruppe F;
+//                      Wächter: aussteuerungUmleitung.test.js). Die Sprungmarke ist ein <details>,
+//                      springeZuAnker klappt es auf.
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
   charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
+  aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):
@@ -55,7 +59,8 @@ export function springeZuAnker(id, bis = 2000) {
   const schritt = () => {
     if (aus) return;
     const el = document.getElementById(id);
-    if (el) { el.scrollIntoView({ block: 'start' }); return; }
+    // Ein zugeklappter Teil (<details>, z. B. Aussteuerung in «Stelle verloren») geht dabei auf.
+    if (el) { if (el.tagName === 'DETAILS') el.open = true; el.scrollIntoView({ block: 'start' }); return; }
     if (performance.now() < ende) requestAnimationFrame(schritt);
   };
   // Zwei Bilder warten: handleNavigate springt zuerst nach oben (scrollTo 0).

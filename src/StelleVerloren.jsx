@@ -3,6 +3,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 import { formatDE } from './utils/helpers.js';
 import { plusTage, istVorbei } from './utils/fristen.js';
 import { text, space, radius } from './config/tokens.js';
+import { AussteuerungTeil } from './Aussteuerung.jsx';
 
 // Stelle verloren — der 6. geführte Ablauf auf der Schale. Gegenstück zu „Neuer Job".
 // Ruhige Orientierung mit der kritischsten Reihenfolge zuerst: RAV-Anmeldung (Taggeld
@@ -90,6 +91,9 @@ export const StelleVerloren = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('briefe.ablaufLink.dismissalObjection'), onClick: () => onNavigate('briefe', undefined, 'dismissalObjection') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('stelleVerloren.step4Link'), onClick: () => onNavigate('tresor', undefined, 'finanzen') })
     ),
+
+    // Später: wenn das Taggeld endet — seit 24.10.2026 hier statt eigener Seite (Aussteuerung.jsx).
+    React.createElement(AussteuerungTeil, { palette, t, onNavigate }),
 
     React.createElement(AblaufFooter, { palette, t, quelle: t('stelleVerloren.quelle'), notes: [t('stelleVerloren.footerSperrzeit'), t('trust.localOnly')] })
   );
