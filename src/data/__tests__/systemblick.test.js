@@ -1,7 +1,10 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { CANTON_CODES } from '../../config/cantonalData.js';
 import { lookupPLZ } from '../plzGemeinde.js';
-import { HAUPTORTE, MUSTERHAUSHALTE, musterProfil, haushaltsPraemie, einordnen, kennzahlen, systemblickIPV } from '../systemblick.js';
+import {
+  HAUPTORTE, MUSTERHAUSHALTE, musterProfil, haushaltsPraemie, einordnen, kennzahlen, systemblickIPV,
+  einkommenJahr, restpraemie, kennzahlenRest,
+} from '../systemblick.js';
 
 // Systemblick (Prototyp): derselbe Musterhaushalt durch alle 26 belegten IPV-Kantonsmodelle.
 // Geprüft wird, dass die Auswertung VOLLSTÄNDIG und EHRLICH ist — nicht, ob ein Kanton richtig
@@ -81,6 +84,55 @@ describe('Systemblick: Einordnen und Kennzahlen', () => {
   });
 });
 
+describe('Systemblick: Restprämie und Belastung', () => {
+  it('Restprämie = Jahresprämie − Verbilligung, Belastung in % des Jahreseinkommens', () => {
+    const r = restpraemie({ art: 'betrag', jahr: 4623, praemieMonat: 760 }, 54480);
+    expect(r.restJahr).toBe(9120 - 4623);
+    expect(r.belastung).toBeCloseTo((4497 / 54480) * 100, 10);
+  });
+
+  it('«kein Anspruch im Modell»: die ganze Prämie ist Restprämie', () => {
+    expect(restpraemie({ art: 'keinAnspruch', jahr: 0, praemieMonat: 500 }, 50000)).toEqual({ restJahr: 6000, belastung: 12, restOffen: null });
+  });
+
+  it('«keine Zahl»: Restprämie und Belastung null, nie geschätzt', () => {
+    expect(restpraemie({ art: 'keineZahl', jahr: null, praemieMonat: 700 }, 50000)).toEqual({ restJahr: null, belastung: null, restOffen: null });
+  });
+
+  it('Verbilligung über der Musterprämie (Richtprämie, z. B. AR): keine Zahl mit Grund, nie negativ und nie 0', () => {
+    expect(restpraemie({ art: 'betrag', jahr: 8000, praemieMonat: 600 }, 50000))
+      .toEqual({ restJahr: null, belastung: null, restOffen: 'verbilligungUeberPraemie' });
+  });
+
+  it('Kennzahlen: «kein Anspruch» zählt mit, «keine Zahl» nicht; ohne Werte null statt 0', () => {
+    const z = [
+      { restJahr: 1000, belastung: 2 },
+      { restJahr: 6000, belastung: 12 }, // kein Anspruch: ganze Prämie
+      { restJahr: null, belastung: null }, // keine Zahl
+      { restJahr: null, belastung: null, restOffen: 'verbilligungUeberPraemie' },
+      { restJahr: 3000, belastung: 6 },
+    ];
+    expect(kennzahlenRest(z)).toEqual({
+      mitRest: 3, restOffen: 1, restMin: 1000, restMedian: 3000, restMax: 6000, belastungMin: 2, belastungMedian: 6, belastungMax: 12,
+    });
+    expect(kennzahlenRest([]).restMedian).toBeNull();
+    expect(kennzahlenRest([]).belastungMedian).toBeNull();
+  });
+
+  it('Einkommen: Erwerb = Netto-Richtwert × 12, Rente = AHV + BVG × 12', () => {
+    const erwerb = musterProfil('ZH', 'bag3');
+    expect(einkommenJahr(erwerb)).toBe(Math.round(erwerb.finanzen.monthlyIncome * 12));
+    expect(einkommenJahr(musterProfil('ZH', 'bag1'))).toBe(45000);
+  });
+
+  it('Einkommen hängt nicht am Kanton (sonst wäre die Belastung zwischen Kantonen nicht vergleichbar)', () => {
+    for (const h of Object.keys(MUSTERHAUSHALTE)) {
+      const werte = new Set(CANTON_CODES.map((kt) => einkommenJahr(musterProfil(kt, h))));
+      expect(werte.size).toBe(1);
+    }
+  });
+});
+
 describe('Systemblick: alle 26 Kantone, geladen', () => {
   // Je Haushalt das BAG-Brutto und zwei Nachbarn (−20 %, +20 %) für die Monotonie-Prüfung.
   const FAKTOREN = [0.8, 1, 1.2];
@@ -110,6 +162,24 @@ describe('Systemblick: alle 26 Kantone, geladen', () => {
       .filter((z) => z.art === 'betrag' && !(Number.isInteger(z.jahr) && z.jahr > 0))
       .map((z) => `${id} ${z.kanton}: ${z.jahr}`));
     expect(schlecht).toEqual([]);
+  });
+
+  it('Restprämie: nie negativ, nie über der Jahresprämie, genau bei «keine Zahl» oder offenem Grund null', () => {
+    const schlecht = Object.entries(ergebnisse).flatMap(([id, r]) => r.zeilen.filter((z) => (
+      z.art === 'keineZahl' || z.restOffen
+        ? z.restJahr !== null || z.belastung !== null
+        : !(Number.isInteger(z.restJahr) && z.restJahr >= 0 && z.restJahr <= z.praemieMonat * 12 && z.belastung >= 0)
+    )).map((z) => `${id} ${z.kanton}: ${z.restJahr}`));
+    expect(schlecht).toEqual([]);
+  });
+
+  it('Einelternfamilie (H3) zum BAG-Brutto: Kennzahlen der Restprämie passen zu den Zeilen', () => {
+    const r = ergebnisse['bag3/1'];
+    const mit = r.zeilen.filter((z) => z.restJahr != null);
+    expect(r.einkommenJahr).toBeGreaterThan(0);
+    expect(r.kennzahlenRest.mitRest).toBe(mit.length);
+    expect(r.kennzahlenRest.restMin).toBe(Math.min(...mit.map((z) => z.restJahr)));
+    expect(r.kennzahlenRest.restMax).toBe(Math.max(...mit.map((z) => z.restJahr)));
   });
 
   it('mehr Lohn gibt in keinem Kanton mehr Verbilligung (derselbe Haushalt)', () => {

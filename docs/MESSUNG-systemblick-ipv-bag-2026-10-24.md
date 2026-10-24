@@ -70,6 +70,61 @@ Je Zelle: Verbilligung CHF pro Jahr · Haushaltsprämie CHF pro Monat · verbill
 | Höchster Betrag (CHF/Jahr, nur Kantone mit Betrag) | 1'490 | 7'344 |
 | Median verbilligter Anteil (mit Betrag UND «kein Anspruch» = 0 %) | 5 % | 52 % |
 
+## Restprämie und Belastung
+
+Die Verbilligung allein sagt nicht, was ein Haushalt trägt: Wo die Prämie hoch ist, ist meist auch die Verbilligung
+hoch. **Restprämie** = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie). **Belastung** =
+Restprämie ÷ Einkommen pro Jahr, mit dem die App rechnet (Nettolohn-Richtwert × 12 bzw. Rente × 12; ohne 13., ohne
+Familienzulagen, ohne Steuern). Das ist **nicht** das «verfügbare Einkommen» des BAG; die BAG-Werte (13.7 % bzw. 9.4 %,
+S. 13) sind darum nicht vergleichbar. Anders als beim Median der Verbilligung zählt «kein Anspruch im Modell» hier mit:
+dieser Haushalt trägt die ganze Prämie. «Verbilligung über Musterprämie»: Der Kanton rechnet mit einer eigenen
+Richtprämie, die über der Musterprämie liegt (Durchschnitt über alle Franchisen); eine negative Restprämie gibt es
+nicht, darum keine Zahl.
+
+Einkommen pro Jahr: H1 CHF 45'000 · H3 CHF 54'480.
+
+Je Zelle: Restprämie CHF pro Jahr · Belastung in % des Einkommens.
+
+| Kanton (Hauptort) | H1 | H3 |
+|---|---:|---:|
+| ZH (Zürich) | 4'440 · 9.9 % | 4'497 · 8.3 % |
+| BE (Bern) | 6'096 · 13.5 % | 5'141 · 9.4 % |
+| LU (Luzern) | 5'112 · 11.4 % | 3'990 · 7.3 % |
+| UR (Altdorf (UR)) | 3'813 · 8.5 % | 4'618 · 8.5 % |
+| SZ (Schwyz) | keine Zahl | keine Zahl |
+| OW (Sarnen) | 3'906 · 8.7 % | 2'605 · 4.8 % |
+| NW (Stans) | 3'612 · 8.0 % | keine Zahl |
+| GL (Glarus) | 4'057 · 9.0 % | keine Zahl |
+| ZG (Zug) | 2'359 · 5.2 % | 1'374 · 2.5 % |
+| FR (Fribourg) | 5'640 · 12.5 % | 4'185 · 7.7 % |
+| SO (Solothurn) | keine Zahl | keine Zahl |
+| BS (Basel) | 6'228 · 13.8 % | 3'264 · 6.0 % |
+| BL (Liestal) | 6'396 · 14.2 % | keine Zahl |
+| SH (Schaffhausen) | 5'472 · 12.2 % | 5'955 · 10.9 % |
+| AR (Herisau) | 4'872 · 10.8 % | 3'232 · 5.9 % |
+| AI (Appenzell) | 2'386 · 5.3 % | 1'710 · 3.1 % |
+| SG (St. Gallen) | 5'208 · 11.6 % | 4'232 · 7.8 % |
+| GR (Chur) | 3'708 · 8.2 % | keine Zahl |
+| AG (Aarau) | 5'280 · 11.7 % | keine Zahl |
+| TG (Frauenfeld) | keine Zahl | keine Zahl |
+| TI (Bellinzona) | 7'056 · 15.7 % | keine Zahl |
+| VD (Lausanne) | 6'084 · 13.5 % | 4'728 · 8.7 % |
+| VS (Sion) | 5'448 · 12.1 % | 2'974 · 5.5 % |
+| NE (Neuchâtel) | 5'028 · 11.2 % | 4'812 · 8.8 % |
+| GE (Genève) | 5'592 · 12.4 % | 3'336 · 6.1 % |
+| JU (Delémont) | keine Zahl | keine Zahl |
+
+| Kennzahl | H1 | H3 |
+|---|---:|---:|
+| Kantone mit Restprämie (mit Betrag oder «kein Anspruch») | 22 | 16 |
+| Kantone «Verbilligung über Musterprämie» | 0 | 0 |
+| Tiefste Restprämie (CHF/Jahr) | 2'359 | 1'374 |
+| Median Restprämie (CHF/Jahr) | 5'160 | 4'088 |
+| Höchste Restprämie (CHF/Jahr) | 7'056 | 5'955 |
+| Tiefste Belastung | 5.2 % | 2.5 % |
+| Median Belastung | 11.5 % | 7.5 % |
+| Höchste Belastung | 15.7 % | 10.9 % |
+
 ## Haushalte, für die Maloja heute keine Zahl nennen kann
 
 In allen 26 Kantonen «keine Zahl». In 24 Kantonen liegt das an Maloja: Paare und junge Erwachsene (19–25) rechnet

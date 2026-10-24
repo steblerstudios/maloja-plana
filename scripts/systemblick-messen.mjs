@@ -104,6 +104,38 @@ zeile('Höchster Betrag (CHF/Jahr, nur Kantone mit Betrag)', (r) => chf(r.kennza
 zeile('Median verbilligter Anteil (mit Betrag UND «kein Anspruch» = 0 %)', (r) => pct(median(r.zeilen.map(anteil))));
 out.push('');
 
+// Restprämie: was der Haushalt nach der Verbilligung selbst trägt (data/systemblick.js → restpraemie).
+const pct1 = (n) => (n == null ? '—' : `${n.toFixed(1)} %`);
+const restZelle = (z) => (z.restJahr != null ? `${chf(z.restJahr)} · ${pct1(z.belastung)}`
+  : z.restOffen ? 'keine Zahl (Verbilligung über Musterprämie)' : 'keine Zahl');
+out.push('## Restprämie und Belastung', '');
+out.push('Die Verbilligung allein sagt nicht, was ein Haushalt trägt: Wo die Prämie hoch ist, ist meist auch die Verbilligung');
+out.push('hoch. **Restprämie** = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie). **Belastung** =');
+out.push('Restprämie ÷ Einkommen pro Jahr, mit dem die App rechnet (Nettolohn-Richtwert × 12 bzw. Rente × 12; ohne 13., ohne');
+out.push('Familienzulagen, ohne Steuern). Das ist **nicht** das «verfügbare Einkommen» des BAG; die BAG-Werte (13.7 % bzw. 9.4 %,');
+out.push('S. 13) sind darum nicht vergleichbar. Anders als beim Median der Verbilligung zählt «kein Anspruch im Modell» hier mit:');
+out.push('dieser Haushalt trägt die ganze Prämie. «Verbilligung über Musterprämie»: Der Kanton rechnet mit einer eigenen');
+out.push('Richtprämie, die über der Musterprämie liegt (Durchschnitt über alle Franchisen); eine negative Restprämie gibt es');
+out.push('nicht, darum keine Zahl.', '');
+out.push(`Einkommen pro Jahr: ${mitZahl.map((k) => `${kurz(k)} CHF ${chf(runs[k].einkommenJahr)}`).join(' · ')}.`, '');
+out.push('Je Zelle: Restprämie CHF pro Jahr · Belastung in % des Einkommens.', '');
+out.push(`| Kanton (Hauptort) | ${mitZahl.map(kurz).join(' | ')} |`);
+out.push(`|---|${mitZahl.map(() => '---:').join('|')}|`);
+for (const kt of Object.keys(HAUPTORTE)) {
+  const zs = mitZahl.map((k) => runs[k].zeilen.find((z) => z.kanton === kt));
+  out.push(`| ${kt} (${HAUPTORTE[kt].ort}) | ${zs.map(restZelle).join(' | ')} |`);
+}
+out.push('', `| Kennzahl | ${mitZahl.map(kurz).join(' | ')} |`, `|---|${mitZahl.map(() => '---:').join('|')}|`);
+zeile('Kantone mit Restprämie (mit Betrag oder «kein Anspruch»)', (r) => r.kennzahlenRest.mitRest);
+zeile('Kantone «Verbilligung über Musterprämie»', (r) => r.kennzahlenRest.restOffen);
+zeile('Tiefste Restprämie (CHF/Jahr)', (r) => chf(r.kennzahlenRest.restMin));
+zeile('Median Restprämie (CHF/Jahr)', (r) => chf(r.kennzahlenRest.restMedian));
+zeile('Höchste Restprämie (CHF/Jahr)', (r) => chf(r.kennzahlenRest.restMax));
+zeile('Tiefste Belastung', (r) => pct1(r.kennzahlenRest.belastungMin));
+zeile('Median Belastung', (r) => pct1(r.kennzahlenRest.belastungMedian));
+zeile('Höchste Belastung', (r) => pct1(r.kennzahlenRest.belastungMax));
+out.push('');
+
 out.push('## Haushalte, für die Maloja heute keine Zahl nennen kann', '');
 out.push('In allen 26 Kantonen «keine Zahl». In 24 Kantonen liegt das an Maloja: Paare und junge Erwachsene (19–25) rechnet');
 out.push('die App noch nicht. In TG und JU nennt Maloja schon vorher keine Zahl, weil das Kantonsmodell eine Steuergrösse braucht,');

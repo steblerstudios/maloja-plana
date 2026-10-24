@@ -175,16 +175,71 @@ export function kennzahlen(zeilen) {
   };
 }
 
+// Einkommen pro Jahr, mit dem die App rechnet: Nettolohn (Richtwert) × 12 bzw. AHV- + BVG-Rente × 12.
+// Ohne 13., ohne Familienzulagen, ohne Steuern — darum NICHT das «verfügbare Einkommen» des BAG-Monitorings.
+export function einkommenJahr(profil) {
+  const f = profil.finanzen;
+  return Math.round(12 * (f.employmentType === 'retired' ? f.ahvRente + f.bvgRente : f.monthlyIncome));
+}
+
+// Was der Haushalt nach der Verbilligung selbst trägt. Die Verbilligung allein sagt das nicht: wo die
+// Prämie hoch ist, ist meist auch die Verbilligung hoch.
+//   restJahr  = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie)
+//   belastung = restJahr ÷ einkommenJahr × 100 (Prozent, ungerundet — gerundet wird erst in der Darstellung)
+// Bei «keine Zahl» beides null: ohne Verbilligung keine Restprämie, nie geschätzt.
+// Liegt die Verbilligung ÜBER der Musterprämie, ebenfalls null, mit Grund `verbilligungUeberPraemie`.
+// Das passiert, wo ein Kanton mit einer eigenen Richtprämie rechnet und erst an der Prämie mit
+// ordentlicher Franchise deckelt (z. B. AR, Art. 7 V zum KVG): Die Musterprämie ist ein Durchschnitt über
+// alle Franchisen und liegt tiefer (Konzept, Grenze 8). Eine negative Restprämie gibt es nicht, und 0
+// wäre eine Behauptung — darum keine Zahl.
+export function restpraemie(zeile, einkommen) {
+  if (zeile.art === 'keineZahl' || !(zeile.praemieMonat > 0)) return { restJahr: null, belastung: null, restOffen: null };
+  const restJahr = zeile.praemieMonat * 12 - zeile.jahr;
+  if (restJahr < 0) return { restJahr: null, belastung: null, restOffen: 'verbilligungUeberPraemie' };
+  return { restJahr, belastung: einkommen > 0 ? (restJahr / einkommen) * 100 : null, restOffen: null };
+}
+
+// Kennzahlen der Restprämie. Anders als bei der Verbilligung zählt «kein Anspruch im Modell» hier MIT:
+// dieser Haushalt trägt die ganze Prämie, das ist eine echte Last, kein fehlender Wert. «keine Zahl» und
+// `restOffen` bleiben draussen und werden gezählt (`restOffen`), damit die Lücke sichtbar bleibt.
+export function kennzahlenRest(zeilen) {
+  const mit = zeilen.filter((z) => z.restJahr != null);
+  const offen = zeilen.filter((z) => z.restOffen).length;
+  const med = (xs) => {
+    const s = [...xs].sort((a, b) => a - b);
+    const n = s.length;
+    return n === 0 ? null : n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2;
+  };
+  const rest = mit.map((z) => z.restJahr);
+  const last = mit.map((z) => z.belastung).filter((b) => b != null);
+  return {
+    mitRest: mit.length,
+    restOffen: offen,
+    restMin: rest.length ? Math.min(...rest) : null,
+    restMedian: rest.length ? Math.round(med(rest)) : null,
+    restMax: rest.length ? Math.max(...rest) : null,
+    belastungMin: last.length ? Math.min(...last) : null,
+    belastungMedian: med(last),
+    belastungMax: last.length ? Math.max(...last) : null,
+  };
+}
+
 // Ein Modellhaushalt durch alle 26 Kantone (Brutto = BAG-Wert, ausser `bruttoJahr` ist gesetzt).
 // Wartet, bis alle Kantonsmodelle geladen sind — sonst stünden Kantone auf «laden» und die
-// Auswertung wäre zufällig unvollständig. Je Zeile auch die verwendete Haushaltsprämie.
+// Auswertung wäre zufällig unvollständig. Je Zeile auch die verwendete Haushaltsprämie und die Restprämie.
 export async function systemblickIPV(haushalt, bruttoJahr) {
   await ladeIPVModelle();
+  let einkommen = null;
   const zeilen = CANTON_CODES.map((kt) => {
     const profil = musterProfil(kt, haushalt, bruttoJahr);
-    return { ...einordnen(kt, calculateIPV(profil)), praemieMonat: profil.versicherungen.kkPremium };
+    einkommen = einkommenJahr(profil); // in allen Kantonen gleich (Richtwert ohne Kantonsbezug)
+    const z = { ...einordnen(kt, calculateIPV(profil)), praemieMonat: profil.versicherungen.kkPremium };
+    return { ...z, ...restpraemie(z, einkommen) };
   });
   const offenLaden = zeilen.filter((z) => z.grund === 'laden');
   if (offenLaden.length) throw new Error(`Systemblick: Modelle nicht geladen (${offenLaden.map((z) => z.kanton).join(', ')})`);
-  return { haushalt, bruttoJahr: bruttoJahr ?? MUSTERHAUSHALTE[haushalt].bruttoJahr, zeilen, kennzahlen: kennzahlen(zeilen) };
+  return {
+    haushalt, bruttoJahr: bruttoJahr ?? MUSTERHAUSHALTE[haushalt].bruttoJahr, einkommenJahr: einkommen,
+    zeilen, kennzahlen: kennzahlen(zeilen), kennzahlenRest: kennzahlenRest(zeilen),
+  };
 }
