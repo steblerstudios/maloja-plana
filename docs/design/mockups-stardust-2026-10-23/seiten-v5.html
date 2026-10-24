@@ -2689,43 +2689,45 @@ body.still .rs-karte { transition: none; }
             <p class="satz">Notfallkontakte und medizinische Informationen</p>
             <p class="unter">Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.</p>
             <p class="kap-zus">Für den Notfall ist eine Kontaktperson hinterlegt. Ein Hausarzt ist eingetragen. Blutgruppe A+, Allergie gegen Penicillin.</p>
-            <nav class="nf-geschw" aria-label="Notfall-Seiten"><a href="#ae" aria-current="page">Notfall</a><a href="#q">Notfallkarte</a><a href="#r">Notfallpass</a><a href="#s">Notfall-Dossier</a></nav>
           </div>
           <div class="held stufe s2">
-            <h4 class="kap-h">Im Ernstfall</h4>
-            <a class="verweis" href="#q" style="border:1px solid var(--notfall);border-radius:12px;padding:12px 12px;min-height:64px"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span><b style="font-weight:600">Notfallkarte</b><small data-sie="Was Sie am Telefon sagen — führt durch den Anruf und zeigt Ihre wichtigsten Angaben." data-du="Was du am Telefon sagst — führt durch den Anruf und zeigt deine wichtigsten Angaben."></small></span><span class="pfeil">›</span></a>
+            <a href="#q" style="display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--notfall);color:#fff;border-radius:14px;padding:14px 16px;min-height:64px">
+              <span aria-hidden="true" style="font-size:22px">☎</span>
+              <span style="flex:1"><b style="font-size:16px;font-weight:600;display:block">Im Ernstfall: Notfallkarte öffnen</b><small style="opacity:.9;font-size:12px">Führt durch den Anruf · 144 Sanität · 117 Polizei · 118 Feuerwehr</small></span>
+              <span aria-hidden="true" style="font-size:18px">›</span>
+            </a>
 
-            <h4 class="kap-h">Vorbereiten</h4>
-            <a class="verweis" href="#r"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfallpass<small>Für den Sperrbildschirm · Angaben Feld für Feld zum Übertragen</small></span><span class="pfeil">›</span></a>
-            <a class="verweis" href="#s"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><span>Notfall-Dossier<small>Wenn jemand anderes helfen muss · zum Ausdrucken, mit QR-Code</small></span><span class="pfeil">›</span></a>
-            <h4 class="kap-h" style="font-size:15px;margin-top:16px">Karte zum Drucken — Vorschau</h4>
-            <div style="background:#f6f3ee;color:#2a2622;border-radius:10px;padding:14px 16px;font-size:12px;line-height:1.45;box-shadow:0 1px 0 var(--border);border-left:5px solid #B0524C">
-              <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#B0524C">NOTFALL</div>
-              <div style="font-size:16px;font-weight:600;margin-top:2px">Maria Muster</div>
-              <div style="color:#6b6560">Geburtsdatum: 15. März 1992</div>
-              <div style="margin-top:8px;font-weight:600">Kontaktperson</div>
-              <div>Peter Muster · +41 79 654 32 10</div>
-              <div style="margin-top:8px;font-weight:600">Medizinisches</div>
-              <div>Blutgruppe: <b>A+</b> · Allergien: erfasst</div>
-              <div style="margin-top:8px;font-weight:600">Ärztliche Betreuung</div>
-              <div>Dr. med. Lisa Brunner · +41 44 242 80 00</div>
+            <h4 class="kap-h">Bereit für den Ernstfall</h4>
+            <div style="display:flex;align-items:baseline;gap:8px"><span class="gross" style="font-size:30px;white-space:nowrap">19 von 20</span><span class="fuss" style="margin:0">Angaben, die im Notfall gebraucht werden</span></div>
+            <div class="k-baro" aria-hidden="true" style="margin:8px 0 10px"><i class="fuell" style="width:95%;background:var(--notfall)"></i></div>
+            <a class="po" href="#ae-medikamente" style="color:inherit;text-decoration:none;border:1px dashed var(--notfall);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between"><span>○ Regelmässige Medikamente <small style="display:block;color:var(--soft)">fehlt für «Unfall»</small></span><span style="color:var(--sand);align-self:center">ergänzen ↓</span></a>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+              <details class="nf-szen" style="flex:1 1 100%"><summary><span><b>Drei Szenarien</b><small>Unfall 8 von 9 · Spitalaufenthalt ✓ · Behördengang ✓</small></span><span class="stand">ansehen</span></summary>
+                <p class="fuss" style="margin:4px 0"><b>Unfall</b> — Kontaktperson, Telefon Notfall, Blutgruppe, Allergien, ○ Medikamente, Hausarzt, Telefon Arzt, Krankenkasse, KK-Karte.</p>
+                <p class="fuss" style="margin:4px 0"><b>Spitalaufenthalt</b> — Name, Geburtsdatum, AHV-Nummer, Krankenkasse, KK-Karte, Franchise, Kontaktperson, Telefon Notfall, Patientenverfügung.</p>
+                <p class="fuss" style="margin:4px 0"><b>Behördengang</b> — Name, Geburtsdatum, Adresse, Kanton, AHV-Nummer, Steuerkanton.</p>
+              </details>
             </div>
-            <div class="knoepfe" style="margin-top:10px"><button class="knopfruhig">Notfallkarte drucken</button></div>
-            <p class="fuss">Für die Brieftasche. Allergien stehen nur als «erfasst» auf der Karte, der Inhalt nicht.</p>
 
-            <h4 class="kap-h">Drei Szenarien</h4>
-            <p class="fuss" style="margin:0 0 4px">Welche Angaben Sie dafür parat haben sollten.</p>
-            <details class="nf-szen" open><summary><span><b>Unfall</b><small>Sie hatten einen Unfall. Was brauchen Rettungskräfte und Spital?</small></span><span class="stand">8 von 9</span></summary>
-              <ul class="nf-liste"><li>Notfall-Kontaktperson</li><li>Telefon Notfall</li><li>Blutgruppe</li><li>Allergien</li><li class="offen">Regelmässige Medikamente</li><li>Hausarzt</li><li>Telefon Arzt</li><li>Krankenkasse</li><li>KK-Kartennummer</li></ul>
-              <a class="verweis" href="#ae-medikamente" style="margin-bottom:10px"><span>Regelmässige Medikamente ergänzen<small>Unten in den Angaben · Medizinisches</small></span><span class="pfeil">↓</span></a>
+            <h4 class="kap-h">Ihre Notfall-Unterlagen</h4>
+            <p class="fuss" style="margin:0 0 8px">Alle entstehen aus den Angaben unten — ändern Sie dort, ändern sich alle.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <a href="#q" style="text-decoration:none;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:88px"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><b style="display:block;font-weight:600;margin-top:6px">Notfallkarte</b><small style="color:var(--soft)">Am Telefon vorlesen</small></a>
+              <a href="#r" style="text-decoration:none;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:88px"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><b style="display:block;font-weight:600;margin-top:6px">Notfallpass</b><small style="color:var(--soft)">Auf den Sperrbildschirm</small></a>
+              <a href="#s" style="text-decoration:none;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:88px"><span class="sym k" data-icon="notfall" style="--licht: var(--notfall)"></span><b style="display:block;font-weight:600;margin-top:6px">Notfall-Dossier</b><small style="color:var(--soft)">Für Helfende · Druck, QR</small></a>
+              <a href="#ae-druck" style="text-decoration:none;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:88px"><span class="sym k" data-icon="basis"></span><b style="display:block;font-weight:600;margin-top:6px">Karte zum Drucken</b><small style="color:var(--soft)">Für die Brieftasche</small></a>
+            </div>
+            <details id="ae-druck" class="nf-szen" style="margin-top:8px"><summary><span><b>Karte zum Drucken — Vorschau</b><small>Name, Kontaktperson, Medizinisches, Hausarzt</small></span><span class="stand">ansehen</span></summary>
+              <div style="background:#f6f3ee;color:#2a2622;border-radius:10px;padding:14px 16px;font-size:12px;line-height:1.45;border-left:5px solid #B0524C;margin:6px 0">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#B0524C">NOTFALL</div>
+                <div style="font-size:16px;font-weight:600;margin-top:2px">Maria Muster</div>
+                <div style="color:#6b6560">Geburtsdatum: 15. März 1992</div>
+                <div style="margin-top:8px;font-weight:600">Kontaktperson</div><div>Peter Muster · +41 79 654 32 10</div>
+                <div style="margin-top:8px;font-weight:600">Medizinisches</div><div>Blutgruppe: <b>A+</b> · Allergien: erfasst</div>
+                <div style="margin-top:8px;font-weight:600">Ärztliche Betreuung</div><div>Dr. med. Lisa Brunner · +41 44 242 80 00</div>
+              </div>
+              <div class="knoepfe" style="margin:6px 0 10px"><button class="knopfruhig">Drucken</button></div>
             </details>
-            <details class="nf-szen"><summary><span><b>Spitalaufenthalt</b><small>Sie müssen ins Spital. Was braucht die Aufnahme?</small></span><span class="stand">10 von 10 ✓</span></summary>
-              <ul class="nf-liste"><li>Vorname</li><li>Nachname</li><li>Geburtsdatum</li><li>AHV-Nummer</li><li>Krankenkasse</li><li>KK-Kartennummer</li><li>Franchise CHF</li><li>Notfall-Kontaktperson</li><li>Telefon Notfall</li><li>Patientenverfügung vorhanden?</li></ul>
-            </details>
-            <details class="nf-szen"><summary><span><b>Behördengang</b><small>Sie gehen auf ein Amt. Was müssen Sie dabei haben?</small></span><span class="stand">9 von 9 ✓</span></summary>
-              <ul class="nf-liste"><li>Vorname</li><li>Nachname</li><li>Geburtsdatum</li><li>Kanton</li><li>Strasse &amp; Hausnummer</li><li>PLZ</li><li>Ort</li><li>AHV-Nummer</li><li>Steuerkanton</li></ul>
-            </details>
-
             <h4 class="kap-h">Vorsorge</h4>
             <p class="fuss" style="margin:0 0 6px">Was gilt, wenn Sie selbst nicht mehr entscheiden können. <span style="color:var(--text)">1 von 4 geregelt.</span></p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center">
@@ -2775,8 +2777,10 @@ body.still .rs-karte { transition: none; }
     <li><b>Oben: Vorschau der Karte zum Drucken</b> (Papierkarte wie die Lebenslauf-Vorschau in AC), aus denselben Abschnitten wie der Druck (`notfallkarteAbschnitte`, `ChapterView.jsx:1103`). Darunter «Notfallkarte drucken» als echter Knopf — heute ein Link mit Kästchen-Zeichen (`hinweisZeichen('kaestchen')`, `ChapterView.jsx:1869`), der wie ein Häkchen zum Abhaken aussieht.</li>
     <li><b>Namensfrage:</b> «Notfallkarte» heisst seit Runde 5 die Notruf-Vorlesekarte (Q). Die Karte zum Drucken hier ist etwas anderes (Brieftasche). Zwei Dinge, ein Name — vor dem Bau klären (z. B. «Karte für die Brieftasche»).</li>
     <li><b>Ein Ort (ersetzt Runde 5 «Kapitel bleibt der Ort zum Eintragen»):</b> P (`#/notfalleinstieg`) entfällt; die Route leitet ins Kapitel. Die Zeile der Schwesterseiten heisst jetzt Notfall (Kapitel) · Notfallkarte · Notfallpass · Notfall-Dossier; Q, R, S führen mit «Übersicht › Notfall ›» hierher zurück. Die Übersichtskarte «Notfallkarte vorbereiten» führt ins Kapitel.</li>
-    <li><b>Im Ernstfall</b> zuoberst: die Notfallkarte (Q) als umrandete Zeile — ein Tipp vom Kapitel aus, wie bisher von P.</li>
-    <li><b>Drei Szenarien</b> aus P übernommen (Unfall 8 von 9, Spital 10 von 10, Behördengang 9 von 9). Fehlt etwas, führt die Zeile direkt zum Feld in den Angaben derselben Seite (hier «Regelmässige Medikamente», mit ○ und «ergänzen ›» markiert) — statt «Fehlende Angabe im Kapitel Notfall ergänzen». Angaben aus anderen Kapiteln (z. B. AHV-Nummer) führen in jenes Kapitel.</li>
+    <li><b>Zweite Fassung (Sophie: «mega Anfang, geht noch besser»):</b> kürzer, jede Sache nur einmal.</li>
+    <li><b>Im Ernstfall</b> zuoberst als grosser Knopf in der Notfall-Farbe: «Notfallkarte öffnen» mit den Nummern aus Q (144, 117, 118). Die Zeile der Schwesterseiten entfällt im Kapitel (die Kacheln unten führen dorthin); auf Q, R, S bleibt sie.</li>
+    <li><b>Bereit für den Ernstfall:</b> eine Zahl statt drei Listen — «19 von 20» (die 20 verschiedenen Angaben der drei Szenarien aus P, ohne Doppelte), Balken, darunter <b>nur was fehlt</b> mit «ergänzen ↓» direkt zum Feld (Entscheid Sophie: «direkt zum Feld»). Angaben aus anderen Kapiteln (z. B. AHV-Nummer) führen in jenes Kapitel. Die drei Szenarien bleiben zugeklappt zum Nachsehen.</li>
+    <li><b>Ihre Notfall-Unterlagen:</b> vier Kacheln — Notfallkarte, Notfallpass, Notfall-Dossier, Karte zum Drucken — mit dem Satz «Alle entstehen aus den Angaben unten». Die Vorschau der Druckkarte ist zugeklappt.</li>
     <li><b>Vorsorge</b> als vier Felder mit ✓/○ (nicht nur Farbe) und «1 von 4 geregelt». Patientenverfügung und Vorsorgeauftrag stehen auch in AD «Für den Fall der Fälle» — dort als Sicht, eingetragen werden sie hier.</li>
     <li><b>Passend:</b> Patientenverfügung erstellen · Bestattungswünsche · Dokumente ablegen. Notfall (Ort) und Notfallpass fallen aus «Passend», weil sie jetzt oben auf der Seite stehen.</li>
     <li><b>Als Nächstes:</b> Notfall ist das letzte Kapitel. Heute endet es ohne Weg; neu «Alle Kapitel durchgegangen · Zur Übersicht ›». «Die Informationen sind hinterlegt.» bleibt leise.</li>
