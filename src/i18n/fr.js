@@ -1980,8 +1980,8 @@ export default {
       monat: {
         bleiben: "Il reste chaque mois",
         fehlen: "Il manque chaque mois",
-        eigenBleiben: "Avec le revenu propre, il reste chaque mois",
-        eigenFehlen: "Avec le revenu propre, il manque chaque mois",
+        eigenBleiben: "Avec son propre revenu, il reste chaque mois",
+        eigenFehlen: "Avec son propre revenu, il manque chaque mois",
         verplant: "{betrag} planifié",
         vonEinkommenNetto: "sur {betrag} de revenu net",
         vonEinkommen: "sur {betrag} de revenu",
@@ -1991,13 +1991,13 @@ export default {
       },
       passend: {
         titel: "En lien avec ce domaine",
-        uebersichtSub: "Vue d'ensemble financière : impôts, IPV, aide sociale, PC",
-        ipv: "Vérifier la réduction de primes",
-        ipvSub: "Droit · selon le revenu",
         neuerJobSub: "Parcours · {n} étapes",
         lohnausweis: "Classer le certificat de salaire",
         lohnausweisSub: "Documents · Classeur de documents",
+        budgetSub: "Revenus et dépenses en détail",
       },
+      folgt: { titel: "Ce qui en résulte" },
+      weitereAnsprueche: { titel: "Autres droits", sub: "Aide sociale et prestations complémentaires" },
       nebenerwerb: {
         titel: "Activité accessoire",
         fallsVorhanden: "le cas échéant",
@@ -2687,7 +2687,6 @@ export default {
     vorsorgeauftrag: { sie: 'Un mandat pour cause d’inaptitude désigne qui gère vos finances, vos affaires juridiques et votre bien-être si vous devenez incapable de discernement. Il doit être entièrement manuscrit, daté et signé, ou authentifié (CC art. 361). L’APEA le vérifie le cas échéant. Vous pouvez faire inscrire à l’office de l’état civil qu’il existe et où il se trouve (CC art. 361 al. 3).', du: 'Un mandat pour cause d’inaptitude désigne qui gère tes finances, tes affaires juridiques et ton bien-être si tu deviens incapable de discernement. Il doit être entièrement manuscrit, daté et signé, ou authentifié (CC art. 361). L’APEA le vérifie le cas échéant. Tu peux faire inscrire à l’office de l’état civil qu’il existe et où il se trouve (CC art. 361 al. 3).' },
     testament: 'Sans testament, la succession légale suisse s\'applique (CC art. 457 ss.). Un testament olographe doit être entièrement écrit, daté et signé de la main du testateur (art. 505 al. 1). Le testament public est reçu par un notaire ou un fonctionnaire, avec deux témoins (art. 499) — les vices de forme sont alors moins probables. Un testament olographe peut être remis à une autorité chargée d’en recevoir le dépôt, que désigne le canton (art. 505 al. 2).',
     // ─── P0 : Indices contextuels (selon les données) ──────
-    contextIpv: { sie: 'Selon votre revenu, vous pourriez avoir droit à une réduction de votre prime d\'assurance maladie. Renseignez-vous auprès de votre commune ou de votre canton.', du: 'Selon ton revenu, tu pourrais avoir droit à une réduction de ta prime d\'assurance maladie. Renseigne-toi auprès de ta commune ou de ton canton.' },
     contextFamilienzulagen: { sie: 'Vous avez droit à des allocations familiales pour vos enfants. Le montant dépend du canton. Votre employeur peut vous aider.', du: 'Tu as droit à des allocations familiales pour tes enfants. Le montant dépend du canton. Ton employeur peut t\'aider.' },
     // ─── P1 : Préparé, pas encore visible ──────────────────
     ipv: { sie: 'Selon votre revenu et votre canton, vous pourriez bénéficier d\'une réduction sur vos coûts d\'assurance maladie.', du: 'Selon ton revenu et ton canton, tu pourrais bénéficier d\'une réduction sur tes coûts d\'assurance maladie.' },

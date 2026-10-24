@@ -30,7 +30,6 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
@@ -66,6 +65,8 @@ const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
+// Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
+const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -121,7 +122,7 @@ export const haushaltsSaldo = (allData, kapitelBleibt) => {
   return b.bruttoDabei ? { brutto: true } : { brutto: false, rest };
 };
 
-export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen }) => {
+export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode, anfangsOffen, chapters, onSelectChapter, lang }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -1959,16 +1960,27 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '2px' } }, tr('chapters.finanzen.monat.haushaltWie'))
     );
   };
+  // Die Auswertung (früher die Finanz-Übersicht), in zwei Teilen um «Passend» herum —
+  // components/FinanzAuswertung.jsx, erst bei Bedarf geladen. Zusammenlegung 24.10.2026.
+  const renderAuswertung = (teil) => React.createElement(React.Suspense, { key: 'auswertung-' + teil, fallback: null },
+    React.createElement(FinanzenImKapitel, {
+      teil, palette, t: tr, data: allData || { finanzen: data }, onNavigate: onNavigate || (() => {}),
+      isDarkMode, chapters: chapters || [], onSelectChapter, isMobile, lang,
+    })
+  );
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).
+  // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV oben im Kapitel; dazu kamen
+  // die zwei Wege, die die Übersicht unten hatte: Budget und Behörden-Dossier.
   const renderPassend = () => {
     if (!onNavigate) return null;
     const ziele = [
-      { key: 'uebersicht', titel: tr('nav.crosslink.finanzuebersichtHint'), sub: tr('chapters.finanzen.passend.uebersichtSub'), gehe: () => onNavigate('finanzuebersicht'), ikon: ansichtIkon('finanzuebersicht') },
-      { key: 'ipv', titel: tr('chapters.finanzen.passend.ipv'), sub: tr('chapters.finanzen.passend.ipvSub'), gehe: () => onNavigate('premium'), ikon: ansichtIkon('premium') },
       // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
       { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
       // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
       { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
+      { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
+      // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
+      { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
     ];
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
       React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
@@ -2246,37 +2258,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       }),
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
-    // IPV: shown in finanzen when income + canton exist
-    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
-          border: '1px solid ' + palette.sage + '25',
-          borderLeft: '3px solid ' + palette.sage + '50',
-          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
-        }
-      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
-    // «Alle Berechnungen auf einen Blick» stand hier als eigener Knopf; seit Fassung 5 ist er
-    // der erste Eintrag in «Passend zu diesem Bereich» (unten) — und dort auch ohne Lohn.
-
-    // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
-    // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
-    // null aus der Komponente). `data: allData`, weil das Barometer basis.canton + ausbildung.workHoursPerWeek
-    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen
-    // Feld — `aktuellesKapitel` verhindert dabei den Klick ins eigene Kapitel (Einkommensart liegt hier).
-    chapter.key === 'finanzen' && allData && Number(allData.finanzen?.monthlyIncome) > 0 &&
-      // Rahmen wie am anderen Einbettungsort (FinanzUebersicht): `palette.up` ohne Rand — derselbe
-      // Baustein soll überall gleich sitzen. Bewusst NICHT die Sage-Hinweisfarbe der Nachbarkarten:
-      // das Barometer ist ein Instrument, kein Hinweis.
-      React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.up, borderRadius: radius.sm,
-        }
-      },
-        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: chapter.key })
-      ),
+    // Finanzen: der IPV-Hinweis und das Lohn-Barometer standen hier bis 24.10.2026. Seit der
+    // Zusammenlegung mit der Finanz-Übersicht stehen IPV-Karte und Lohn-Barometer in der
+    // Auswertung unter dem Formular (renderAuswertung, components/FinanzAuswertung.jsx).
 
     // Familienzulagen: shown in basis when children exist
     chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
@@ -2477,7 +2461,11 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Seit 27.09.2026 (Seitenrundgang) als der eine Hauptknopf «Weiter mit … ›», wie auf
     // der Übersicht — vorher eine stille Karte, die neben den Feldern kaum als Weg las.
     // Fassung 5 · Finanzen: «Passend zu diesem Bereich» und «Als Nächstes» (Entscheid 23.10.2026).
+    // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
+    // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
+    istFinanzen && renderAuswertung('oben'),
     istFinanzen && renderPassend(),
+    istFinanzen && renderAuswertung('unten'),
     istFinanzen && nextChapter && onNext ? renderAlsNaechstes() :
     nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
       React.createElement(PrimaryButton, {

@@ -1575,6 +1575,9 @@ const AppInner = ({ demo }) => {
           nextChapter: chapters[activeChapter + 1] || null,
           onNext: () => handleNavigate('chapter', activeChapter + 1),
           isDarkMode,
+          // Lebensbaum im Kapitel Finanzen (Zusammenlegung mit der Finanz-Übersicht, 24.10.2026).
+          chapters, lang,
+          onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
         })
       ),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },

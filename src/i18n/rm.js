@@ -2111,18 +2111,18 @@ export default {
         // rm ungeprüft F5
         titel: "Tutga tar quest sectur",
         // rm ungeprüft F5
-        uebersichtSub: "Survista finanziala: taglia, IPV, agid social, PC",
-        // rm ungeprüft F5
-        ipv: "Controllar la reducziun da premias",
-        // rm ungeprüft F5
-        ipvSub: "Dretg · tenor l'entrada",
-        // rm ungeprüft F5
         neuerJobSub: "Andament · {n} pass",
         // rm ungeprüft F5
         lohnausweis: "Deponer il certificat da salari",
         // rm ungeprüft F5
         lohnausweisSub: "Documents · Deposita da documents",
+        // rm ungeprüft Finanzen-Fusion
+        budgetSub: "Entradas ed expensas en detagl",
       },
+      // rm ungeprüft Finanzen-Fusion
+      folgt: { titel: "Tge che sa resulta da quai" },
+      // rm ungeprüft Finanzen-Fusion
+      weitereAnsprueche: { titel: "Ulteriurs dretgs", sub: "Agid social e prestaziuns cumplementaras" },
       nebenerwerb: {
         // rm ungeprüft F5
         titel: "Gudogn accessoric",
@@ -4296,7 +4296,6 @@ export default {
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     vorsorgeauftrag: { sie: 'Ein Vorsorgeauftrag bestimmt, wer für Sie entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, können Sie beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).', du: 'Ein Vorsorgeauftrag bestimmt, wer für Dich entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, kannst Du beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).' },
     testament: "En Svizra vala senza testament la successiun legala (ZGB Art. 457 ss.). In testament a maun sto esser cumplettamain scrit a maun, datà e suttascrit.",
-    contextIpv: { sie: "Tenor l'entrada avais Vus eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmai Vus tar Vossa vischnanca u Voss chantun.", du: "Tenor l'entrada has Ti eventualmain dretg ad ina reducziun tar la cassa da malsauns. Infurmescha Tai tar Tia vischnanca u Tes chantun." },
     contextFamilienzulagen: { sie: "Per Voss uffants As stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Voss patrun po gidar enavant.", du: "Per Tes uffants Ta stattan a disposiziun allocaziuns per famiglia. La summa dependa dal chantun. Tes patrun po gidar enavant." },
     ipv: { sie: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Vus.", du: "Tenor l'entrada e il chantun pudess ina reducziun tar ils custs da cassa da malsauns esser pussaivla per Tai." },
     familienzulagen: "Per uffants datti en Svizra allocaziuns per famiglia. La summa è differenta tenor il chantun — almain CHF 215 per uffant e mais.", // TODO(rm): Ausbildungszulage mind. CHF 268 (FamZG Art. 5) ergänzen, siehe de.js (25.09.2026)

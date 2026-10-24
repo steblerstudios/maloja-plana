@@ -1998,13 +1998,13 @@ export default {
       },
       passend: {
         titel: "Passend zu diesem Bereich",
-        uebersichtSub: "Finanz-Übersicht: Steuer, IPV, Sozialhilfe, EL",
-        ipv: "Prämienverbilligung prüfen",
-        ipvSub: "Anspruch · je nach Einkommen",
         neuerJobSub: "Ablauf · {n} Schritte",
         lohnausweis: "Lohnausweis ablegen",
         lohnausweisSub: "Unterlagen · Dokumentenablage",
+        budgetSub: "Einnahmen und Ausgaben im Detail",
       },
+      folgt: { titel: "Was sich daraus ergibt" },
+      weitereAnsprueche: { titel: "Weitere Ansprüche", sub: "Sozialhilfe und Ergänzungsleistungen" },
       nebenerwerb: {
         titel: "Nebenerwerb",
         fallsVorhanden: "falls vorhanden",
@@ -2696,7 +2696,6 @@ export default {
     vorsorgeauftrag: { sie: 'Ein Vorsorgeauftrag bestimmt, wer für Sie entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, können Sie beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).', du: 'Ein Vorsorgeauftrag bestimmt, wer für Dich entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Er muss ganz von Hand geschrieben, datiert und unterzeichnet oder öffentlich beurkundet sein (ZGB Art. 361). Die KESB prüft ihn im Ernstfall. Dass es ihn gibt und wo er liegt, kannst Du beim Zivilstandsamt eintragen lassen (ZGB Art. 361 Abs. 3).' },
     testament: 'In der Schweiz gilt ohne Testament die gesetzliche Erbfolge (ZGB Art. 457 ff.). Ein eigenhändiges Testament muss vollständig von Hand geschrieben, datiert und unterschrieben sein (Art. 505 Abs. 1). Bei der öffentlichen Beurkundung wirken eine Urkundsperson und zwei Zeugen mit (Art. 499) — Formfehler sind dann weniger wahrscheinlich. Ein eigenhändiges Testament kann bei einer Amtsstelle aufbewahrt werden, die der Kanton bestimmt (Art. 505 Abs. 2).',
     // ─── P0: Kontexthinweise (datenabhängig) ───────────────
-    contextIpv: { sie: 'Je nach Einkommen haben Sie möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundigen Sie sich bei Ihrer Gemeinde oder Ihrem Kanton.', du: 'Je nach Einkommen hast Du möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundige Dich bei Deiner Gemeinde oder Deinem Kanton.' },
     contextFamilienzulagen: { sie: 'Für Ihre Kinder stehen Ihnen Familienzulagen zu. Die Höhe hängt vom Kanton ab. Ihr Arbeitgeber kann Ihnen weiterhelfen.', du: 'Für Deine Kinder stehen Dir Familienzulagen zu. Die Höhe hängt vom Kanton ab. Dein Arbeitgeber kann Dir weiterhelfen.' },
     // ─── P1: Vorbereitet, noch nicht sichtbar ──────────────
     ipv: { sie: 'Je nach Einkommen und Kanton könnte eine Vergünstigung bei den Krankenkassenkosten für Sie möglich sein.', du: 'Je nach Einkommen und Kanton könnte eine Vergünstigung bei den Krankenkassenkosten für Dich möglich sein.' },

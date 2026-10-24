@@ -20,6 +20,9 @@ import { renderSource } from '../utils/renderSource.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 import { GlossarText } from '../GlossarBegriff.jsx';
 import { betrag } from '../utils/geld.js';
+import { ReserveTank } from './ReserveTank.jsx';
+import { Lebensbaum } from '../Lebensbaum.jsx';
+import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -245,7 +248,9 @@ const generatePrintHTML = (t, data, w) => {
 };
 
 // Wo steht der Lohn: Armutsgrenzen-Befund, Lohn-Barometer, Branchen-Chips. Nur mit erfasstem Lohn.
-export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w }) => {
+// `aktuellesKapitel` (im Kapitel Finanzen): der «fehlt noch …»-Hinweis des Barometers springt
+// nicht ins eigene Kapitel — die Einkommensart liegt dort (LohnEinordnung).
+export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
   const { income, sozialhilfe, hh, totalIncome, bruttoDabei } = w;
@@ -302,7 +307,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w }) =>
       React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
         t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter)) }))
     ),
-    React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate }),
+    React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate, aktuellesKapitel }),
     (() => {
       const vgl = getBranchenvergleich(income);
       if (!vgl) return null;
@@ -355,120 +360,135 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w }) =>
   );
 };
 
-// Was daraus folgt: Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten, KK-Last.
-// Eine Funktion, keine Komponente (siehe oben): liefert ein Fragment mit den Karten.
-export const auswertungsKarten = ({ palette, t, data, onNavigate, w }) => {
-  const { kantonal, taxResult, steuerOhneZahl, steuerkanton, kantonsSchaetzung, annahmenSatz, steuerAngabeSatz,
-    ipv, ipvVerfuegung, ipvOhneJahr, ipvFristVorbei, sozialhilfe, el } = w;
-  return React.createElement(React.Fragment, null,
-    React.createElement(StatusCard, {
-      palette, icon: 'money',
-      title: t('finanzUebersicht.taxes'),
-      status: kantonal
-        ? '~ ' + formatCHF(kantonal.total) + ' ' + t('common.perYear')
-        : taxResult
-          ? '~ ' + formatCHF(taxResult.steuer) + ' ' + t('common.perYear') + ' (' + t('tax.federalOnly') + ')'
-          : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
-      statusColor: palette.text,
-      detail: [steuerAngabeSatz, kantonal
-        ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION }) + (annahmenSatz ? ' ' + annahmenSatz : '')
-        : steuerOhneZahl ? (steuerkanton && ERKLAERT_IN_ORIENTIERUNG.includes(steuerOhneZahl) ? null : bundOhneZahlText(t, steuerOhneZahl))
-          : [!steuerkanton ? t('finanzUebersicht.selectCanton') : '', annahmenSatz].filter(Boolean).join(' ') || null,
-      ].filter(Boolean).join(' ') || null,
-      onClick: () => onNavigate('tax'),
-    }),
-    // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,
-    // weil die Karte selbst ein Knopf ist und keine Links enthalten darf).
-    steuerkanton && kantonsSchaetzung && !kantonal && React.createElement(KantonssteuerOrientierung, {
-      palette, t, canton: steuerkanton, schaetzung: kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
-    }),
-
-    React.createElement(StatusCard, {
-      palette, icon: 'insurance',
-      title: t('finanzUebersicht.ipv'),
-      // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
-      status: ipvVerfuegung != null || ipvOhneJahr != null
-        ? erledigtZeichen(true, formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth'))
-        : ipv.eligible
-        ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
-        : ipv.belegt === false
-          ? t('ipv.statusOffen')
-          : t('finanzUebersicht.notEligible'),
-      statusColor: ipvVerfuegung != null || ipvOhneJahr != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
-      // Kein Jahresbetrag aus der Verfügung: sie kann unterjährig beginnen, «× 12» wäre geraten.
-      detail: ipvVerfuegung != null
-        ? t('finanzUebersicht.ipvLautVerfuegung')
-        : ipvOhneJahr != null
-        ? t('finanzUebersicht.ipvVerfuegungOhneJahr')
-        : ipv.eligible
-        ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
-          + ipvAnnahmenTexte(t, ipv.annahmen).map((x) => '. ' + x).join('')
-        : ipv.belegt === false
-          ? t(ipv.noteKey, ipv.noteParams)
-          // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht
-          // in der Kachel «Einkommen über Grenze (CHF )», eine Grenze ohne Zahl. Dann sagt der
-          // Kanton selbst, warum es keinen Anspruch gibt (Befund Fachprüfung 20.09.2026).
-          : ipv.canton
-            ? (ipv.cantonData?.maxIncome != null
-              ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
-              : t(ipv.noteKey, ipv.noteParams))
-            : t('finanzUebersicht.selectCanton'),
-      onClick: () => onNavigate('premium'),
-    }),
-
-    React.createElement(StatusCard, {
-      palette, icon: 'home',
-      title: t('finanzUebersicht.sozialhilfe'),
-      status: sozialhilfe.eligible
-        ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
-          // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
-          + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
-        // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
-        : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
-      statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
-      detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf) + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
-      onClick: () => onNavigate('sozialhilfe'),
-    }),
-
-    React.createElement(StatusCard, {
-      palette, icon: 'legal',
-      title: t('finanzUebersicht.el'),
-      // checkELEligibility (config/cantonalData.js) liefert `elCalc.onlyAhvIv`; bis 28.09.2026
-      // verglich die Karte mit `el.onlyAhvIv` und zeigte darum immer «Nicht anwendbar» — ohne
-      // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
-      status: el.eligible
-        ? t('sozialhilfe.elPossible')
-        : el.noteKey === 'elCalc.onlyAhvIv'
-          ? t('sozialhilfe.elOnlyAhvIv')
-          : t('finanzUebersicht.notApplicable'),
-      statusColor: el.eligible ? (palette.goldDeep || palette.gold) : palette.mid,
-      detail: el.eligible ? formatCHF(el.deficit) + ' ' + t('common.perMonth') : null,
-      onClick: () => onNavigate('ergaenzungsleistungen'),
-    }),
-
-    w.hasAssets && React.createElement(StatusCard, {
-      palette, icon: 'budget',
-      title: t('finanzUebersicht.assets'),
-      status: formatCHF(w.totalAssets),
-      statusColor: palette.text,
-      detail: t('finanzUebersicht.assetsDetail'),
-      onClick: () => onNavigate('chapter', 2),
-    }),
-
-    w.hasGesundheitskosten && React.createElement(StatusCard, {
-      palette, icon: 'health',
-      title: t('finanzUebersicht.healthCosts'),
-      status: formatCHF(w.gesundheitskosten),
-      statusColor: palette.text,
-      detail: t('finanzUebersicht.healthCostsDetail', { year: w.currentYear })
-        + (w.gesundheitskostenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(w.gesundheitskostenOffen) }) : ''),
-      onClick: () => onNavigate('kvg', undefined, 'franchise'),
-    }),
-
-    // Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
-    React.createElement(KKLastCard, { palette, t, data, onNavigate })
-  );
+// Was daraus folgt: je Karte eine Funktion (siehe oben), alle mit ({ palette, t, data, onNavigate, w }).
+// Die Übersicht zeigt sie in ihrer Reihenfolge (auswertungsKarten), das Kapitel Finanzen in seiner.
+export const steuerKarte = ({ palette, t, onNavigate, w }) => {
+  const { kantonal, taxResult, steuerOhneZahl, steuerkanton, annahmenSatz, steuerAngabeSatz } = w;
+  return React.createElement(StatusCard, {
+    palette, icon: 'money',
+    title: t('finanzUebersicht.taxes'),
+    status: kantonal
+      ? '~ ' + formatCHF(kantonal.total) + ' ' + t('common.perYear')
+      : taxResult
+        ? '~ ' + formatCHF(taxResult.steuer) + ' ' + t('common.perYear') + ' (' + t('tax.federalOnly') + ')'
+        : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
+    statusColor: palette.text,
+    detail: [steuerAngabeSatz, kantonal
+      ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION }) + (annahmenSatz ? ' ' + annahmenSatz : '')
+      : steuerOhneZahl ? (steuerkanton && ERKLAERT_IN_ORIENTIERUNG.includes(steuerOhneZahl) ? null : bundOhneZahlText(t, steuerOhneZahl))
+        : [!steuerkanton ? t('finanzUebersicht.selectCanton') : '', annahmenSatz].filter(Boolean).join(' ') || null,
+    ].filter(Boolean).join(' ') || null,
+    onClick: () => onNavigate('tax'),
+  });
 };
+
+// E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,
+// weil die Karte selbst ein Knopf ist und keine Links enthalten darf).
+export const steuerOrientierung = ({ palette, t, w }) =>
+  w.steuerkanton && w.kantonsSchaetzung && !w.kantonal && React.createElement(KantonssteuerOrientierung, {
+    palette, t, canton: w.steuerkanton, schaetzung: w.kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
+  });
+
+export const ipvKarte = ({ palette, t, onNavigate, w }) => {
+  const { ipv, ipvVerfuegung, ipvOhneJahr, ipvFristVorbei } = w;
+  return React.createElement(StatusCard, {
+    palette, icon: 'insurance',
+    title: t('finanzUebersicht.ipv'),
+    // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
+    status: ipvVerfuegung != null || ipvOhneJahr != null
+      ? erledigtZeichen(true, formatCHF(ipvVerfuegung != null ? ipvVerfuegung : ipvOhneJahr) + ' ' + t('common.perMonth'))
+      : ipv.eligible
+      ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
+      : ipv.belegt === false
+        ? t('ipv.statusOffen')
+        : t('finanzUebersicht.notEligible'),
+    statusColor: ipvVerfuegung != null || ipvOhneJahr != null || ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
+    // Kein Jahresbetrag aus der Verfügung: sie kann unterjährig beginnen, «× 12» wäre geraten.
+    detail: ipvVerfuegung != null
+      ? t('finanzUebersicht.ipvLautVerfuegung')
+      : ipvOhneJahr != null
+      ? t('finanzUebersicht.ipvVerfuegungOhneJahr')
+      : ipv.eligible
+      ? formatCHF(ipv.annual) + ' ' + t('common.perYear') + (ipvFristVorbei ? '. ' + t(ipv.noteKey, ipv.noteParams) : '')
+        + ipvAnnahmenTexte(t, ipv.annahmen).map((x) => '. ' + x).join('')
+      : ipv.belegt === false
+        ? t(ipv.noteKey, ipv.noteParams)
+        // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht
+        // in der Kachel «Einkommen über Grenze (CHF )», eine Grenze ohne Zahl. Dann sagt der
+        // Kanton selbst, warum es keinen Anspruch gibt (Befund Fachprüfung 20.09.2026).
+        : ipv.canton
+          ? (ipv.cantonData?.maxIncome != null
+            ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
+            : t(ipv.noteKey, ipv.noteParams))
+          : t('finanzUebersicht.selectCanton'),
+    onClick: () => onNavigate('premium'),
+  });
+};
+
+export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
+  const { sozialhilfe } = w;
+  return React.createElement(StatusCard, {
+    palette, icon: 'home',
+    title: t('finanzUebersicht.sozialhilfe'),
+    status: sozialhilfe.eligible
+      ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
+        // Ohne Mietzins-Limite gerechnet (config/cantonalData.js) — bei hoher Miete eher zu hoch.
+        + (sozialhilfe.effectiveRent > 0 ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : '')
+      // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
+      : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
+    statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
+    detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf) + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
+    onClick: () => onNavigate('sozialhilfe'),
+  });
+};
+
+export const elKarte = ({ palette, t, onNavigate, w }) => {
+  const { el } = w;
+  return React.createElement(StatusCard, {
+    palette, icon: 'legal',
+    title: t('finanzUebersicht.el'),
+    // checkELEligibility (config/cantonalData.js) liefert `elCalc.onlyAhvIv`; bis 28.09.2026
+    // verglich die Karte mit `el.onlyAhvIv` und zeigte darum immer «Nicht anwendbar» — ohne
+    // den Grund. Und sie war die einzige Karte ohne Weg: die EL-Seite gibt es (main.jsx).
+    status: el.eligible
+      ? t('sozialhilfe.elPossible')
+      : el.noteKey === 'elCalc.onlyAhvIv'
+        ? t('sozialhilfe.elOnlyAhvIv')
+        : t('finanzUebersicht.notApplicable'),
+    statusColor: el.eligible ? (palette.goldDeep || palette.gold) : palette.mid,
+    detail: el.eligible ? formatCHF(el.deficit) + ' ' + t('common.perMonth') : null,
+    onClick: () => onNavigate('ergaenzungsleistungen'),
+  });
+};
+
+export const vermoegenKarte = ({ palette, t, onNavigate, w }) =>
+  w.hasAssets && React.createElement(StatusCard, {
+    palette, icon: 'budget',
+    title: t('finanzUebersicht.assets'),
+    status: formatCHF(w.totalAssets),
+    statusColor: palette.text,
+    detail: t('finanzUebersicht.assetsDetail'),
+    onClick: () => onNavigate('chapter', 2),
+  });
+
+export const gesundheitKarte = ({ palette, t, onNavigate, w }) =>
+  w.hasGesundheitskosten && React.createElement(StatusCard, {
+    palette, icon: 'health',
+    title: t('finanzUebersicht.healthCosts'),
+    status: formatCHF(w.gesundheitskosten),
+    statusColor: palette.text,
+    detail: t('finanzUebersicht.healthCostsDetail', { year: w.currentYear })
+      + (w.gesundheitskostenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(w.gesundheitskostenOffen) }) : ''),
+    onClick: () => onNavigate('kvg', undefined, 'franchise'),
+  });
+
+// Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
+export const kkLastKarte = ({ palette, t, data, onNavigate }) => React.createElement(KKLastCard, { palette, t, data, onNavigate });
+
+// Die Karten in der Reihenfolge der Übersicht — ein Fragment.
+export const auswertungsKarten = (p) => React.createElement(React.Fragment, null,
+  steuerKarte(p), steuerOrientierung(p), ipvKarte(p), sozialhilfeKarte(p), elKarte(p),
+  vermoegenKarte(p), gesundheitKarte(p), kkLastKarte(p));
 
 // «Übersicht drucken» mit Export-Vorschau (K20): erst zeigen, was auf dem Ausdruck steht, dann drucken.
 export const UebersichtDrucken = ({ palette, t, data, w, style }) => {
@@ -503,3 +523,55 @@ export const auswertungsHinweis = ({ palette, t }) =>
   React.createElement('div', {
     style: { marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4' }
   }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('finanzUebersicht.disclaimer')));
+
+// ─── Im Kapitel Finanzen (Bauschritt 3, docs/entscheide/finanzen-fusion.md §3) ──────────────
+// ChapterView lädt diesen Teil erst bei Bedarf (React.lazy), damit die anderen Kapitel ihn nicht
+// mittragen. Zwei Teile, weil «Passend zu diesem Bereich» (ChapterView) dazwischen steht:
+//   'oben'  — Lebensbaum (Entscheid 2: nach den Angaben, vor der Rechnung), Lohn, «Was daraus
+//             folgt», «Weitere Ansprüche» (Entscheid 3: eingeklappt, offen bei Anspruch)
+//   'unten' — Übersicht drucken, Hinweis zur Schätzung
+// `data` ist das ganze Profil (allData), nicht nur das Kapitel.
+export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMode, chapters = [], onSelectChapter, isMobile, lang = 'de' }) => {
+  const w = finanzWerte(data, t);
+  const p = { palette, t, data, onNavigate, w };
+  if (teil === 'unten') {
+    if (!w.hasData) return null;
+    return React.createElement('div', { 'data-teil': 'auswertung-unten', style: { marginTop: space.xl + 'px' } },
+      React.createElement(UebersichtDrucken, { palette, t, data, w }),
+      auswertungsHinweis({ palette, t })
+    );
+  }
+  const fruechte = chapters.length ? bereichsFruechte(chapters, data, astFarben(chapters, palette, isDarkMode)) : [];
+  // Offen, sobald ein Anspruch möglich ist — dieselben Signale wie die Karten selbst.
+  const anspruch = !!(w.sozialhilfe.eligible || w.sozialhilfe.efbEntscheidet || w.el.eligible);
+  const titel = { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
+  return React.createElement('div', { id: 'mp-finanz-auswertung', 'data-teil': 'auswertung', style: { marginTop: space.xl + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
+    fruechte.length > 0 && React.createElement('div', { 'data-teil': 'lebensbaum' },
+      React.createElement(Lebensbaum, {
+        palette, t, data, text, weight, space, radius,
+        onNavigate, bereiche: fruechte, onSelectChapter, isMobile, lang, isDarkMode,
+      })
+    ),
+    w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen' }),
+    w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
+      React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
+      steuerKarte(p), steuerOrientierung(p), ipvKarte(p), kkLastKarte(p), gesundheitKarte(p), vermoegenKarte(p),
+      // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
+      (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
+        palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
+      })
+    ),
+    w.hasData && React.createElement('details', {
+      'data-ansprueche': anspruch ? 'moeglich' : 'keiner', open: anspruch || undefined,
+      style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginBottom: space.md + 'px' },
+    },
+      React.createElement('summary', {
+        style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+      },
+        t('chapters.finanzen.weitereAnsprueche.titel'),
+        React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, t('chapters.finanzen.weitereAnsprueche.sub'))
+      ),
+      React.createElement('div', { style: { paddingTop: space.sm + 'px' } }, sozialhilfeKarte(p), elKarte(p))
+    )
+  );
+};

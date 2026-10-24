@@ -112,4 +112,23 @@ Reiner Umbau: gerenderter Text vorher/nachher bei Maria und einem knappen BE-Pro
 Zeichen gleich; einzig der Druckknopf sitzt jetzt unter statt im Zwei-Spalten-Raster (volle
 Breite wie vorher). Drei Tests, die den Quelltext lesen, zeigen auf die neue Datei.
 
+## 7 · Stand Bauschritt 3 (24.10.2026)
+
+Das Kapitel Finanzen steht in der Reihenfolge aus §3. Nach dem Formular lädt ChapterView
+`FinanzenImKapitel` (lazy, `components/FinanzAuswertung.jsx`): Lebensbaum, Lohn-Barometer mit
+Armutsgrenze und Branchen, «Was sich daraus ergibt» (Steuern, Orientierung, IPV, KK-Last,
+Gesundheitskosten*, Vermögen*, Reserve-Tank), «Weitere Ansprüche» (Sozialhilfe, EL; offen bei
+`sozialhilfe.eligible`, `efbEntscheidet` oder `el.eligible`). Nach «Passend» Drucken und Hinweis.
+Weg: grüner IPV-Hinweis und das eigene Barometer im Kapitel (die IPV-Karte und der neue
+Baustein ersetzen sie; `aktuellesKapitel` wandert mit). «Passend»: Neuer Job, Lohnausweis,
+Monatsbudget, Behörden-Dossier. Vier verwaiste Texte aus fünf Sprachen entfernt
+(`orientation.contextIpv`, `passend.uebersichtSub/ipv/ipvSub`). `main.jsx` reicht `chapters`,
+`lang`, `onSelectChapter` ans Kapitel (für den Lebensbaum).
+
+Noch nicht umgezogen: der Mietvergleich (Bauschritt 5) — er steht weiter nur auf der Übersicht.
+Der Querverweis am Feld «Monatliches Einkommen» zeigt noch auf `finanzuebersicht` (Bauschritt 4).
+Ebenso für Bauschritt 4: Die Steuer-Karte sagt im Kapitel «Angeben lässt sich das im Kapitel
+«Finanzen & Geld»» — im Kapitel selbst ein Verweis auf sich. Copy-Prüfer 24.10.: Texte
+übernommen («Was sich daraus ergibt», IT «Aiuto sociale», EN «missing», FR «son propre revenu»).
+
 **Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.

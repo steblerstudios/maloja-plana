@@ -1980,8 +1980,8 @@ export default {
       monat: {
         bleiben: "Ogni mese restano",
         fehlen: "Ogni mese mancano",
-        eigenBleiben: "Con il proprio reddito ogni mese restano",
-        eigenFehlen: "Con il proprio reddito ogni mese mancano",
+        eigenBleiben: "Con il reddito personale ogni mese restano",
+        eigenFehlen: "Con il reddito personale ogni mese mancano",
         verplant: "{betrag} pianificato",
         vonEinkommenNetto: "su {betrag} di reddito netto",
         vonEinkommen: "su {betrag} di reddito",
@@ -1991,13 +1991,13 @@ export default {
       },
       passend: {
         titel: "Collegato a questo ambito",
-        uebersichtSub: "Panoramica finanziaria: imposte, IPV, assistenza sociale, PC",
-        ipv: "Verificare la riduzione dei premi",
-        ipvSub: "Diritto · secondo il reddito",
         neuerJobSub: "Percorso · {n} passi",
         lohnausweis: "Archiviare il certificato di salario",
         lohnausweisSub: "Documenti · Raccoglitore documenti",
+        budgetSub: "Entrate e uscite nel dettaglio",
       },
+      folgt: { titel: "Che cosa ne risulta" },
+      weitereAnsprueche: { titel: "Altri diritti", sub: "Aiuto sociale e prestazioni complementari" },
       nebenerwerb: {
         titel: "Attività accessoria",
         fallsVorhanden: "se presente",
@@ -2687,7 +2687,6 @@ export default {
     vorsorgeauftrag: { sie: 'Il mandato precauzionale designa chi gestisce le Sue finanze, gli affari legali e la cura personale in caso di incapacità di discernimento. Deve essere interamente manoscritto, datato e firmato, oppure documentato da un pubblico ufficiale (CC art. 361). L’APMA lo verifica all’occorrenza. Può far iscrivere all’ufficio dello stato civile che esiste e dove si trova (CC art. 361 cpv. 3).', du: 'Il mandato precauzionale designa chi gestisce le tue finanze, gli affari legali e la cura personale in caso di incapacità di discernimento. Deve essere interamente manoscritto, datato e firmato, oppure documentato da un pubblico ufficiale (CC art. 361). L’APMA lo verifica all’occorrenza. Puoi far iscrivere all’ufficio dello stato civile che esiste e dove si trova (CC art. 361 cpv. 3).' },
     testament: 'Senza testamento si applica la successione legale svizzera (CC art. 457 ss.). Un testamento olografo deve essere scritto interamente a mano, datato e firmato (art. 505 cpv. 1). Il testamento pubblico si fa davanti a un funzionario o notaio e a due testimoni (art. 499) — gli errori di forma sono allora meno probabili. Un testamento olografo può essere consegnato in custodia a un pubblico ufficio designato dal Cantone (art. 505 cpv. 2).',
     // ─── P0: Indicazioni contestuali (in base ai dati) ────
-    contextIpv: { sie: 'In base al Suo reddito, potrebbe avere diritto a una riduzione del premio dell\'assicurazione malattia. Si informi presso il Suo comune o il Suo cantone.', du: 'In base al tuo reddito, potresti avere diritto a una riduzione del premio dell\'assicurazione malattia. Informati presso il tuo comune o il tuo cantone.' },
     contextFamilienzulagen: { sie: 'Ha diritto agli assegni familiari per i Suoi figli. L\'importo dipende dal cantone. Il Suo datore di lavoro può aiutarLa.', du: 'Hai diritto agli assegni familiari per i tuoi figli. L\'importo dipende dal cantone. Il tuo datore di lavoro può aiutarti.' },
     // ─── P1: Preparato, non ancora visibile ────────────────
     ipv: { sie: 'In base al Suo reddito e al Suo cantone, potrebbe beneficiare di una riduzione sui costi dell\'assicurazione malattia.', du: 'In base al tuo reddito e al tuo cantone, potresti beneficiare di una riduzione sui costi dell\'assicurazione malattia.' },

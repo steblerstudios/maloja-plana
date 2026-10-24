@@ -1979,9 +1979,9 @@ export default {
       // F5 · Kapitel Finanzen (23.10.2026, Copy-Prüfer)
       monat: {
         bleiben: "Left over each month",
-        fehlen: "Short each month",
+        fehlen: "Missing each month",
         eigenBleiben: "With your own income, left over each month",
-        eigenFehlen: "With your own income, short each month",
+        eigenFehlen: "With your own income, missing each month",
         verplant: "{betrag} budgeted",
         vonEinkommenNetto: "of {betrag} net income",
         vonEinkommen: "of {betrag} income",
@@ -1991,13 +1991,13 @@ export default {
       },
       passend: {
         titel: "Related to this area",
-        uebersichtSub: "Financial overview: tax, premium reduction, social assistance, supplementary benefits",
-        ipv: "Check premium reduction",
-        ipvSub: "Entitlement · depends on income",
         neuerJobSub: "Guide · {n} steps",
         lohnausweis: "File your salary statement",
         lohnausweisSub: "Documents · Document folder",
+        budgetSub: "Income and expenses in detail",
       },
+      folgt: { titel: "What this leads to" },
+      weitereAnsprueche: { titel: "Other entitlements", sub: "Social assistance and supplementary benefits" },
       nebenerwerb: {
         titel: "Side income",
         fallsVorhanden: "if any",
@@ -2687,7 +2687,6 @@ export default {
     vorsorgeauftrag: 'An advance care mandate appoints someone to handle your finances, legal affairs and personal care if you lose capacity. It must be entirely handwritten, dated and signed, or publicly notarised (ZGB Art. 361). The KESB reviews it when needed. You can have the civil registry office record that it exists and where it is kept (ZGB Art. 361 para. 3).',
     testament: 'Without a will, Swiss statutory succession applies (CC Art. 457 ff.). A holographic will must be written entirely by hand, dated and signed (Art. 505 para. 1). A will by public deed is made before a public official or notary and two witnesses (Art. 499) — formal errors are then less likely. The cantons ensure that a holographic will can be deposited with an authority for safekeeping (Art. 505 para. 2).',
     // ─── P0: Context hints (data-driven) ───────────────────
-    contextIpv: 'Depending on your income, you may be eligible for a reduction on your health insurance premium. Check with your municipality or canton.',
     contextFamilienzulagen: 'You are entitled to family allowances for your children. The amount depends on the canton. Your employer can help you with this.',
     // ─── P1: Prepared, not yet visible ─────────────────────
     ipv: 'Depending on your income and canton, you may be eligible for a reduction on your health insurance costs.',
