@@ -955,3 +955,22 @@ Barometer-Beschriftungen kurz (kein Umbruch); Tausender-Zeichen «’».
   Steuern · übrige Ausgaben · bleibt) statt Sankey. Sophie mag den Sankey als Idee, aber an einem anderen Ort,
   und will kreativere Darstellungen sehen (offen).
 - **Kuchendiagramm auf der Charts-Seite wird gestrichen**: Die Finanz-Auswertung hat einen Ort, das Kapitel.
+
+### Geldfluss, Kuchen, Balken und Steuern · nachentschieden (Sophie, 24.10.2026 abends)
+
+⟨Ersetzt die zwei Punkte «Geldfluss … vorerst ein ruhiger Balken» und «Kuchendiagramm … gestrichen» oben.⟩
+Sophie: «das charts kuchen diagramm soll vorkommen aber halt bei den finanzen», auf die Frage Kuchen/Balken/Sankey:
+«alle drei irgendwie logisch und helfend eingebaut». Befund: Die Charts-Seite gibt es seit #556 nicht mehr
+(`#/charts` → Kapitel Finanzen), der Kuchen war damit nirgends mehr sichtbar.
+Alle drei im Kapitel Finanzen, je eine eigene Frage:
+- **Balken** — «Wie viel ist verplant, was bleibt?»: der bestehende Balken unter «Jeden Monat bleiben», neu
+  unterteilt (Wohnen · Versicherungen · Steuern · Übriges · bleibt). Immer.
+- **Kuchen** — «Wofür geht es weg?»: alle Ausgabenposten in der Auswertung. Sobald Ausgaben erfasst sind.
+- **Sankey** — «Woher kommt es, wohin fliesst es?»: nach dem Kuchen, **nur mit zwei oder mehr Einnahmequellen**
+  (Lohn, Nebenerwerb, Familienzulagen, Alimente). Mit einem Lohn ist er ein Strom, der sich auffächert — darum
+  «komisch». Alle drei rechnen aus `utils/monatsrechnung.js`; bei brutto erfasstem Lohn kein «bleibt».
+
+**Steuern: aufteilen, klar benannt** (Sophie, Auswahl-Dialog, empfohlene Option). Geld (Betrag «Steuern
+monatlich», Belastung, Steuerrechner, Karte in der Auswertung) bei **Finanzen & Geld**; Behördengang (Kanton,
+Steuernummer, Frist als Kalenderblatt, offene Erklärungen) bei **Behörden & Rechtliches** (Runde 9, AD, gilt
+weiter). Beide verweisen aufeinander.
