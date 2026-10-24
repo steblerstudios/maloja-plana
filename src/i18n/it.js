@@ -1045,6 +1045,15 @@ export default {
     footerNote: 'Convocazioni, moduli e competenze spettano al Cantone (comando di circondario) e all’organo d’esecuzione del servizio civile. Aliquote e importi valgono allo stato di settembre 2026 e cambiano — l’indennità di perdita di guadagno da luglio 2027. Questo è un orientamento, non una consulenza legale.',
     quelle: 'Fonti: [[Cost. art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/it#art_59]], [[LM art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/it#art_7]], [[LM art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/it#art_9]], [[LSC art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/it#art_1]], [[LSC art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/it#art_17]], [[LIPG art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it#art_9]], [[CO art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/it#art_336_c]], [[LTEO art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/it#art_13]], [[LTEO art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/it#art_30]] (verificato a settembre 2026).',
   },
+  // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
+  rechnungOffen: {
+    title: 'Sollecito o precetto esecutivo — che fare?',
+    intro: 'I passi dipendono dal documento ricevuto: un sollecito o un precetto esecutivo.',
+    stufeMahnung: 'Sollecito ricevuto',
+    stufeBetreibung: 'Precetto esecutivo ricevuto',
+    frage: 'Quale documento è arrivato?',
+  },
+
   mahnung: {
     title: 'Sollecito ricevuto — che fare?',
     intro: 'Un sollecito è un promemoria, non ancora un’esecuzione. Ora il margine di manovra è il più ampio: verificare, chiedere, proporre delle rate. Ecco una panoramica tranquilla.',

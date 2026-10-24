@@ -1225,6 +1225,16 @@ export default {
     footerNote: 'Quai è orientaziun, betg cussegl giuridic. Aufgebote, Formulare und Zuständigkeiten liegen beim Kanton (Kreiskommando) und bei der Vollzugsstelle für den Zivildienst. Sätze und Beträge gelten mit Stand September 2026 und ändern sich — der Erwerbsersatz ab Juli 2027. Dies ist Orientierung, keine Rechtsberatung.',
     quelle: 'Quellen: [[BV Art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_59]], [[MG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_7]], [[MG Art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_9]], [[ZDG Art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_1]], [[ZDG Art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_17]], [[EOG Art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_9]], [[OR Art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_336_c]], [[WPEG Art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_13]], [[WPEG Art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_30]] (geprüft im September 2026).',
   },
+  // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
+  rechnungOffen: {
+    // Ungeprüft (24.10.2026): braucht eine Rumantsch-Fachperson.
+    title: 'Admoniziun u scussiun — tge far?',
+    intro: 'Ils pass sa drizzan tenor quai ch’è arrivà: in’admoniziun u ina scussiun.',
+    stufeMahnung: 'Admoniziun retschavida',
+    stufeBetreibung: 'Scussiun retschavida',
+    frage: 'Tge è arrivà?',
+  },
+
   // TODO(rm): provisorisch — Gegenlese (Mahnung-Ablauf, 28.09.2026) — ganzer Block aus dem deutschen Rückfall übersetzt
   mahnung: {
     title: 'Admoniziun retschavida — tge far?', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)

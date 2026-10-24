@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { leseBetrag } from './briefGenerator.js';
 import { verzugszins, zinsEingabeStatus, SATZ_GESETZ } from './utils/verzugszins.js';
 import { zahl } from './utils/geld.js';
@@ -46,14 +46,12 @@ const ZinsRechner = ({ palette, t }) => {
   );
 };
 
-export const MahnungErhalten = ({ palette, t, onNavigate }) => {
+// Seit 24.10.2026 der Teil «Mahnung erhalten» der Seite «Rechnung nicht bezahlt» (RechnungOffen.jsx,
+// seiten-buendeln.md Gruppe E). Schritte, Texte und Quellen unverändert.
+export const MahnungTeil = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   const brief = (template) => () => onNavigate('briefe', undefined, { template });
-  return React.createElement(AblaufContainer, {
-    palette, icon: 'money',
-    title: t('mahnung.title'),
-    intro: t('mahnung.intro'),
-  },
+  return React.createElement(React.Fragment, null,
     // Schritt 1 — Einordnen: Verzug ja, Betreibung nein (OR 102, SchKG 38 Abs. 2)
     React.createElement(AblaufStep, { palette, title: t('mahnung.step1Title') },
       React.createElement('p', { style: s.stepText }, t('mahnung.step1Text')),
@@ -109,4 +107,4 @@ export const MahnungErhalten = ({ palette, t, onNavigate }) => {
   );
 };
 
-export default MahnungErhalten;
+export default MahnungTeil;

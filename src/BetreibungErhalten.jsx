@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AblaufContainer, AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { AblaufStep, AblaufLink, EreignisFrist, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { plusTage } from './utils/fristen.js';
 
 // Betreibung erhalten — geführter Ablauf als ruhige Anti-Panik-Orientierung. Die
@@ -9,16 +9,14 @@ import { plusTage } from './utils/fristen.js';
 // Lebenszustand „Verschuldet oder in Betreibung". Würdevoll, kein Strafregister-Frame.
 // Kein Rat — Orientierung, keine Rechtsberatung.
 
-export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
+// Seit 24.10.2026 der Teil «Betreibung erhalten» der Seite «Rechnung nicht bezahlt» (RechnungOffen.jsx,
+// seiten-buendeln.md Gruppe E). Schritte, Frist, Texte und Quellen unverändert.
+export const BetreibungTeil = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
   // Zustelldatum hier gehalten, damit der Rechtsvorschlag-Brief dasselbe Datum übernimmt.
   const [zustelldatum, setZustelldatum] = useState('');
 
-  return React.createElement(AblaufContainer, {
-    palette, icon: 'behoerden',
-    title: t('betreibung.title'),
-    intro: t('betreibung.intro'),
-  },
+  return React.createElement(React.Fragment, null,
     // Schritt 1 — Ruhe, 10-Tage-Frist Rechtsvorschlag (das Wichtigste zuerst)
     React.createElement(AblaufStep, { palette, title: t('betreibung.step1Title') },
       React.createElement('p', { style: s.stepText }, t('betreibung.step1Text')),
@@ -53,4 +51,4 @@ export const BetreibungErhalten = ({ palette, t, onNavigate }) => {
   );
 };
 
-export default BetreibungErhalten;
+export default BetreibungTeil;
