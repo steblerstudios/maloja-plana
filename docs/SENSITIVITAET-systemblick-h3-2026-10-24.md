@@ -23,8 +23,11 @@ Vermögen als Sparguthaben eingesetzt, Brutto CHF 60'000. Median über dieselben
 | 150'000 | 14 | 2 | 3'568¹ | 8.5 %¹ |
 
 ¹ Bei 100'000 haben NE und SG «kein Anspruch». Bei 150'000 haben **AR und NE** «kein Anspruch»; **SG** steht auf «keine
-Zahl» (über der Vermögensgrenze 100'000 + 2 × 20'000 = 140'000, `ipvStGallen.js`). Der Median bei 150'000 läuft darum
-über **15** statt 16 Kantone.
+Zahl» (über der Vermögensgrenze 100'000 + 2 × 20'000 = 140'000, `ipvStGallen.js`). Dafür wird **NW** rechenbar
+(CHF 2'016; bei 0 und 100'000 «keine Zahl», Grund `mindestanspruch`): Mit dem höheren massgebenden Einkommen entscheidet
+die offene Lesart der Kinder-Mindestverbilligung nicht mehr. Das heisst **nicht**, dass Vermögen den Anspruch erhöht —
+ohne Vermögen nennt Maloja für NW keine Zahl. Darum 14 mit Betrag = 16 − AR − NE − SG + NW. Der Median läuft über die
+16 Basis-Kantone, also ohne NW und ohne SG (null): über **15** Werte, AR und NE mit 0. (Nachgerechnet 24.10.2026.)
 
 **Im Median wirkt das Vermögen schwach** (7.5 % → 8.4 % bei CHF 100'000). **In einzelnen Kantonen stark:**
 

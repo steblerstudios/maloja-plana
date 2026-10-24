@@ -84,7 +84,9 @@ eigener Grundsatzentscheid auf den Tisch — dann gälte der erste Satz dieses A
    nichts, nur an der Aufteilung AHV/BVG; nicht an einer Quelle geprüft.)
 6. **Vermögen 0.** Alle Kantone rechnen einen Teil des steuerbaren Vermögens ins massgebende Einkommen (BAG S. 11).
    Das BAG nennt für die Modellhaushalte in Anhang B (S. 131–134) keine Vermögensannahme. Mit Vermögen fiele die
-   Verbilligung tiefer aus — am stärksten bei H1.
+   Verbilligung tiefer aus — am stärksten bei H1. Gerechnet für H3: Im Median steigt die Restprämie von 7.5 % auf 8.4 %
+   des Netto-Richtwerts bei CHF 100'000 Vermögen; in SG und NE fällt der Anspruch dabei im Modell ganz weg, bei
+   CHF 150'000 auch in AR ([`SENSITIVITAET-systemblick-h3-2026-10-24.md`](SENSITIVITAET-systemblick-h3-2026-10-24.md), Teil A).
 7. **Ohne Familienzulagen.** Das BAG zählt sie zum Nettoeinkommen (Anhang B, S. 132, Abb. B-2: Haushalt 3 + CHF 5'575);
    Maloja fragt nicht danach. Mit ihnen läge das Einkommen höher und die Verbilligung eher tiefer.
 8. **Prämie** = regionale Durchschnittsprämie 2026 am Hauptort je Person, Standardmodell, alle Versicherer
@@ -274,6 +276,12 @@ durch das Kantonsmodell gerechnet. Nie zwei Ersparnisse addieren.
    Kanton sein Ziel festgelegt hat — und auch dann nicht direkt, weil das Gesetz am verfügbaren bzw. steuerbaren
    Einkommen misst. Wortlaute und Herleitung: [`BEFUND-quellen-kosten-senken-2026-10-24.md`](BEFUND-quellen-kosten-senken-2026-10-24.md), Abschnitt 1.
 4. **Gesundheitskosten** treiben die Prämien. Das kann Maloja nicht messen. Es gehört nicht in Maloja-Kernsätze.
+5. **Kanten bei der Lohnerhöhung** (nur intern, bis von der kantonalen Stelle bestätigt): In der Modellrechnung für H3
+   gibt es in AR (Brutto 60'000 → 64'000) und NE (80'000 → 84'000) eine Stufe, an der eine Lohnerhöhung von CHF 4'000
+   zu mehr Restprämie führt, als netto dazukommt — wegen einer harten Einkommensgrenze, die auch den Kinderanteil
+   abschneidet. Die Wirkung kommt mit Verzug über die Steuerveranlagung (AR 2024, NE 2025), und die Lage der Kante ist nur
+   angenähert. Für Petitionen nur je Kanton, mit Quelle der Grenze und nach Bestätigung durch SOVAR bzw. OCAB
+   ([`SENSITIVITAET-systemblick-h3-2026-10-24.md`](SENSITIVITAET-systemblick-h3-2026-10-24.md), Teil B).
 
 ### Wie Maloja die Hebel messen könnte (Vorschlag, nicht gebaut)
 
