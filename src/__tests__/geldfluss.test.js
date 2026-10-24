@@ -23,8 +23,10 @@ const summe = (l) => l.reduce((a, x) => a + x.value, 0);
 const summeHoehe = (knoten) => knoten.reduce((a, k) => a + k.h, 0);
 
 describe('Geldfluss', () => {
-  it('Beispiel Maria: Titel und Beschreibung für Screenreader', () => {
-    const html = zeichne(DEMO_DATA);
+  // Fassung 6: der Fluss erst mit zwei Einnahmequellen — Maria (ein Lohn) zeigt den Kuchen, hier
+  // mit Familienzulagen als zweiter Quelle.
+  it('Beispiel Maria mit Familienzulagen: Titel und Beschreibung für Screenreader', () => {
+    const html = zeichne({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, familienzulagen: '215' } });
     expect(html).toContain(G.title);
     expect(html).toContain('role="img"');
     expect(html).toContain('Pro Monat kommen CHF');
@@ -39,13 +41,13 @@ describe('Geldfluss', () => {
   });
 
   it('Überschuss: rechts steht der Rest, links kein «Nicht gedeckt»', () => {
-    const svg = bild(zeichne({ finanzen: { monthlyIncome: '5000', groceries: '400' } }));
+    const svg = bild(zeichne({ finanzen: { monthlyIncome: '5000', familienzulagen: '215', groceries: '400' } }));
     expect(svg).toContain(de.budgetSync.remaining);
     expect(svg).not.toContain(G.uncovered);
   });
 
   it('Fehlbetrag: links steht «Nicht gedeckt», rechts kein Rest', () => {
-    const svg = bild(zeichne({ finanzen: { monthlyIncome: '2000', groceries: '500' }, wohnen: { rentAmount: '1800' } }));
+    const svg = bild(zeichne({ finanzen: { monthlyIncome: '2000', familienzulagen: '215', groceries: '500' }, wohnen: { rentAmount: '1800' } }));
     expect(svg).toContain(G.uncovered);
     expect(svg).not.toContain(de.budgetSync.remaining);
   });
@@ -94,13 +96,15 @@ describe('Geldfluss am neuen Ort', () => {
   });
 
   // Bis 24.10.2026 hiess es hier «die Charts-Seite zeigt wieder ihr Kuchendiagramm». Die Seite
-  // gibt es nicht mehr (#/charts → hierher, chartsUmleitung.test.js); der Geldfluss ist ihr Ersatz.
-  it('ein alter Charts-Link landet beim Geldfluss', () => {
+  // gibt es nicht mehr (#/charts → hierher, chartsUmleitung.test.js). Seit Fassung 6 steht ihr Kuchen
+  // hier; Maria hat einen Lohn, darum kein Fluss.
+  it('ein alter Charts-Link landet beim Kuchen', () => {
     const html = renderToStaticMarkup(React.createElement(FinanzenImKapitel, {
       teil: 'oben', palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {},
     }));
     expect(html).toContain('id="mp-finanz-auswertung"');
-    expect(html).toContain(G.title);
+    expect(html).toContain(de.budgetSync.expensesOverview);
+    expect(html).not.toContain(G.title);
   });
 });
 
