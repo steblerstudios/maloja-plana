@@ -780,3 +780,23 @@ Entwurf: `seiten-v5.html?nur=y` (d0ad6655). Bild heute: `heute-kapitel-basis.jpg
 - **Als Nächstes:** Wohnen & Leben mit Satz und Knopf. «Das Bild steht.» bleibt als leiser Satz.
 
 **Copy-Prüfer:** Untertitel der Passend-Zeilen, «Im Haushalt».
+
+### Kapitel Wohnen & Leben (Z) · entschieden (Sophie, 24.10.2026)
+
+Entwurf: `seiten-v5.html?nur=z` (f5fe7e6d). Bild heute: `heute-kapitel-wohnen.jpg`.
+- Zusammenfassungs-Satz ruhig unter dem Kopf statt im grünen Kasten.
+- **Hauptzahl** (Sophie wählte alle drei: «Wohnkosten mit Drittel-Marke & Mit Regional-Barometer & Regler zum
+  Testen … wenn man eine Wohnung sucht, quasi Sandbox»): «Wohnkosten pro Monat» gross, Balken «… % des
+  Einkommens» mit Marke bei einem Drittel (über einem Drittel sand und Satz «Mehr als ein Drittel …»); darunter
+  **Regional-Barometer** «Miete regional vs. Schweiz» wie in der Finanz-Übersicht; darunter aufklappbar
+  **«Ausprobieren: andere Miete»** — Regler Nettomiete 800–3’500, Nebenkosten wie heute, Hauptzahl, Drittel,
+  Barometer und «Frei verfügbar danach» folgen; nichts gespeichert, «Zurück auf die heutige Miete». Im Bau wie der
+  Probier-Modus der App, ohne Profil zu verändern.
+- Ersetzt den Kasten Wohnkosten / Einkommen / Anteil.
+- **Passend** (Sophie wählte alle vier): Umzug (Ablauf, 4 Schritte) · Mietzinsbeiträge · Wohnung gekündigt ·
+  Mietvertrag ablegen. **Als Nächstes:** Finanzen & Geld. «Ihr Zuhause hat einen Platz.» bleibt leise.
+
+**Copy-Prüfer:** «Wohnkosten pro Monat», «… % des Einkommens», «ein Drittel», «Mehr als ein Drittel …»,
+«Ausprobieren: andere Miete», «Nettomiete einer neuen Wohnung», «Frei verfügbar danach», Durchspiel-Hinweis,
+«Zurück auf die heutige Miete», Passend-Untertitel.
+**Voraussetzung im Bau:** Anteil am Haushaltseinkommen aus der einen Monatsrechnung (🔴 1).
