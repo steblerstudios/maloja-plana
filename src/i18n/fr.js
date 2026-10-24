@@ -3942,6 +3942,14 @@ export default {
     title: 'Graphiques',
     noData: 'Pas encore de graphiques',
     noDataHint: { sie: 'Renseignez vos revenus et dépenses dans les chapitres pour voir les graphiques ici.', du: 'Renseigne tes revenus et dépenses dans les chapitres pour voir les graphiques ici.' },
+    flowTitle: 'D’où vient l’argent, où il va',
+    flowSalary: 'Revenu mensuel',
+    flowFamilyAllowances: 'Allocations familiales',
+    flowAlimonyReceived: 'Pension alimentaire reçue',
+    flowUncovered: 'Non couvert',
+    flowSummary: 'Chaque mois, {income} entrent et {expenses} sortent. La largeur de chaque bande montre le montant.',
+    flowFrom: 'D’où',
+    flowTo: 'Vers où',
   },
 
   validation: {

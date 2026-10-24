@@ -4215,6 +4215,14 @@ export default {
     title: 'Graficas',
     noData: 'Anc naginas graficas',
     noDataHint: { sie: 'Endatai Vossa entrada e Vossas expensas en ils chapitels per vesair qua graficas.', du: 'Endatescha Tia entrada e Tias expensas en ils chapitels per vesair qua graficas.' },
+    flowTitle: 'Danunder ch’ils daners vegnan, nua ch’els van',
+    flowSalary: 'Entrada mensiala',
+    flowFamilyAllowances: 'Supplements da famiglia',
+    flowAlimonyReceived: 'Aliments retschavids',
+    flowUncovered: 'Betg cuvrì',
+    flowSummary: 'Mintga mais entran {income} e sortan {expenses}. La largezza da mintga banda mussa il import.',
+    flowFrom: 'Danunder',
+    flowTo: 'Nua',
   },
 
   expiryHints: {

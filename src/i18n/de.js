@@ -3987,6 +3987,14 @@ export default {
     title: 'Charts',
     noData: 'Noch keine Charts',
     noDataHint: { sie: 'Tragen Sie Ihr Einkommen und Ihre Ausgaben in den Kapiteln ein, um hier Charts zu sehen.', du: 'Trage Dein Einkommen und Deine Ausgaben in den Kapiteln ein, um hier Charts zu sehen.' },
+    flowTitle: 'Woher das Geld kommt, wohin es geht',
+    flowSalary: 'Monatseinkommen',
+    flowFamilyAllowances: 'Familienzulagen',
+    flowAlimonyReceived: 'Alimente erhalten',
+    flowUncovered: 'Nicht gedeckt',
+    flowSummary: 'Pro Monat kommen {income} herein und {expenses} gehen hinaus. Die Breite jedes Bands zeigt den Betrag.',
+    flowFrom: 'Woher',
+    flowTo: 'Wohin',
   },
 
   validation: {

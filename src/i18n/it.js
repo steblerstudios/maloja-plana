@@ -3943,6 +3943,14 @@ export default {
     title: 'Grafici',
     noData: 'Nessun grafico ancora',
     noDataHint: { sie: 'Inserisca entrate e uscite nei capitoli per vedere i grafici qui.', du: 'Inserisci entrate e uscite nei capitoli per vedere i grafici qui.' },
+    flowTitle: 'Da dove arrivano i soldi, dove vanno',
+    flowSalary: 'Reddito mensile',
+    flowFamilyAllowances: 'Assegni familiari',
+    flowAlimonyReceived: 'Alimenti ricevuti',
+    flowUncovered: 'Non coperto',
+    flowSummary: 'Ogni mese entrano {income} ed escono {expenses}. La larghezza di ogni banda mostra l’importo.',
+    flowFrom: 'Da dove',
+    flowTo: 'Verso dove',
   },
 
   validation: {
