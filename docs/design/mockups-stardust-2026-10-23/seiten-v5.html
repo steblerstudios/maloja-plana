@@ -2413,15 +2413,23 @@ body.still .rs-karte { transition: none; }
               <div class="po" style="padding-left:0"><span>Hausrat (CHF 22 / Jahr)</span><span>CHF 2</span></div>
               <div class="leer" style="padding-left:0">Haftpflicht und Reiseversicherung: Prämie nicht erfasst. Pensionskasse (CHF 420) ist schon vom Lohn abgezogen.</div>
             </div>
-            <details class="fu-auf"><summary><span>Schutzschild</span><b>Pflicht 3/3 · Empfohlen 2/2</b></summary>
-              <div class="fu-posten">
-                <p class="leer" style="padding-left:0">Was das Gesetz verlangt — und was sich zusätzlich lohnt.</p>
-                <div class="gr"><span>Pflicht</span><span>3/3</span></div>
-                <div class="po"><span>Krankenversicherung</span><span>gedeckt</span></div><div class="po"><span>Unfallversicherung</span><span>gedeckt</span></div><div class="po"><span>Pensionskasse (BVG)</span><span>gedeckt</span></div>
-                <div class="gr"><span>Empfohlen</span><span>2/2</span></div>
-                <div class="po"><span>Privathaftpflicht</span><span>gedeckt</span></div><div class="po"><span>Hausrat</span><span>gedeckt</span></div>
+            <div class="k-baro" aria-hidden="true" style="margin:14px 0 8px"><i class="fuell" style="width:41.3%;background:var(--versicherungen)"></i><i class="strich" style="left:66.7%"></i></div>
+            <div class="k-baro-leg"><span>Krankenkasse 6.2 % des Einkommens</span><span><i class="m-strich"></i>Richtwert 10 % (WHO)</span></div>
+            <p class="fuss">Die Prämie allein liegt unter 10 % — Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu. Die WHO zählt Gesundheitsausgaben über 10 % des Einkommens zu den belastenden.</p>
+            <p class="unter" style="margin:16px 0 4px;font-weight:600">Schutzschild</p>
+            <p class="fuss" style="margin:0 0 8px">Was das Gesetz verlangt — und was sich zusätzlich lohnt.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="text-align:center">
+                <svg width="58" height="66" viewBox="0 0 24 27" aria-hidden="true"><path d="M12 1 2 4.8V12c0 6.4 4.3 11 10 13.5C17.7 23 22 18.4 22 12V4.8Z" fill="color-mix(in srgb, var(--sage) 70%, transparent)" stroke="var(--sage)"/><text x="12" y="15.5" text-anchor="middle" font-size="6" font-weight="700" fill="var(--bg)">3/3</text></svg>
+                <div style="font-size:13px;font-weight:600">Pflicht</div><div class="fuss" style="margin:0">Gesetzlich vorgeschrieben.</div>
+                <ul class="nf-liste" style="text-align:left;margin-top:6px"><li>Krankenversicherung</li><li>Unfallversicherung</li><li>Pensionskasse (BVG)</li></ul>
               </div>
-            </details>
+              <div style="text-align:center">
+                <svg width="58" height="66" viewBox="0 0 24 27" aria-hidden="true"><path d="M12 1 2 4.8V12c0 6.4 4.3 11 10 13.5C17.7 23 22 18.4 22 12V4.8Z" fill="color-mix(in srgb, var(--sage) 70%, transparent)" stroke="var(--sage)"/><text x="12" y="15.5" text-anchor="middle" font-size="6" font-weight="700" fill="var(--bg)">2/2</text></svg>
+                <div style="font-size:13px;font-weight:600">Empfohlen</div><div class="fuss" style="margin:0">Freiwillig, aber sinnvoll.</div>
+                <ul class="nf-liste" style="text-align:left;margin-top:6px"><li>Privathaftpflicht</li><li>Hausrat</li></ul>
+              </div>
+            </div>
             <div style="margin-top:14px">
               <p class="unter" style="margin:0;font-weight:600">Franchise-Kreuz</p>
               <svg width="100%" height="90" viewBox="0 0 300 90" aria-hidden="true" style="display:block;margin:6px 0">
@@ -2432,7 +2440,7 @@ body.still .rs-karte { transition: none; }
                 <text x="12" y="38" font-size="10" fill="var(--mid)">Franchise 300</text><text x="12" y="88" font-size="10" fill="var(--versicherungen)">Franchise 2’500</text><text x="290" y="88" font-size="10" fill="var(--mid)" text-anchor="end">Arztkosten im Jahr →</text>
               </svg>
               <p class="unter" style="margin:0">Eher 2’500 (Schätzung, Prämien 2026)</p>
-              <p class="fuss" style="margin:2px 0 0">Zwei Linien: Gesamtkosten mit tiefer und mit hoher Franchise, je nach Arztkosten im Jahr. Wo sie sich kreuzen, lohnt sich der Wechsel. Mehr in der Prämien-Orientierung ›</p>
+              <p class="fuss" style="margin:2px 0 0">Zwei Linien: Gesamtkosten mit tiefer und mit hoher Franchise, je nach Arztkosten im Jahr. Wo sie sich kreuzen, lohnt sich der Wechsel. Mehr in der Versicherungs-Übersicht ›</p>
             </div>
           </div>
         </div>
@@ -2452,6 +2460,7 @@ body.still .rs-karte { transition: none; }
           </div>
           <div class="passend">
             <h4>Passend zu diesem Bereich</h4>
+            <a class="verweis" href="#ab"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Alle Versicherungen auf einen Blick<small>Versicherungs-Übersicht: Prämien, Franchise, Region, IPV, Wechselfrist</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#b"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Prämienverbilligung prüfen<small>Anspruch · je nach Einkommen</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#w"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Krankenkasse wechseln<small>Ablauf · Kündigung bis 30.11.</small></span><span class="pfeil">›</span></a>
             <a class="verweis" href="#"><span class="sym k" data-icon="versicherungen" style="--licht: var(--versicherungen)"></span><span>Vorsorge-Rechner<small>AHV &amp; Pensionskasse · was im Alter kommt</small></span><span class="pfeil">›</span></a>
@@ -2473,6 +2482,7 @@ body.still .rs-karte { transition: none; }
   <div class="notiz"><ul>
     <li><b>Hauptzahl</b> (Entscheid Sophie: «Prämien pro Monat + Schutzschild & Franchise-Kreuz dazu»): Versicherungen pro Monat aus den erfassten Prämien (KK 385, Hausrat 22/Jahr ≈ 2); nicht erfasste Prämien werden genannt, die Pensionskasse als Lohnabzug ausgewiesen. Schutzschild als eine Zeile «Pflicht 3/3 · Empfohlen 2/2» zum Aufklappen statt zwei grosser Schilde. Franchise-Kreuz wie in der Prämien-Orientierung (`FranchiseKreuz`), Satz der App «Eher 2’500 (Schätzung, Prämien 2026)», im Mockup als Platzhalter-Zeichnung.</li>
     <li><b>Passend</b> (Entscheid Sophie): Prämienverbilligung prüfen · Krankenkasse wechseln (Ablauf, Frist 30.11.) · Vorsorge-Rechner · Policen ablegen. <b>Als Nächstes:</b> Ausbildung &amp; Arbeit.</li>
+    <li><b>Nachgebessert 24.10.</b> (Sophie: «wo ist das Schutzschild hin? achte auf die Details … vielleicht wieder ein Barometer … wie viel vom Einkommen»): <b>KK-Last-Barometer</b> «Krankenkasse 6.2 % des Einkommens» mit Marke «Richtwert 10 % (WHO)» und dem App-Satz dazu; <b>Schutzschild sichtbar</b> — zwei kleine Schilde mit Zahl und Listen nebeneinander, offen (statt zugeklappter Textzeile). Neu oben in «Passend»: «Alle Versicherungen auf einen Blick» → Versicherungs-Übersicht (AB).</li>
     <li><b>Befund Beispielprofil:</b> «Versicherungssumme CHF 35» bei der Haftpflicht (`demoData.js`, `liabilityAmount: '35'`) — ergibt keinen Sinn; wohl als Prämie gemeint. Ausserdem fehlt ein Feld für die Haftpflicht-<i>Prämie</i>, darum kann sie nicht in «pro Monat» einfliessen. Beim Bau klären.</li>
     <li><b>Copy-Prüfer:</b> «Versicherungen pro Monat», Hinweis zu nicht erfassten Prämien, Erklärsatz zum Franchise-Kreuz, Passend-Untertitel.</li>
   </ul></div>
