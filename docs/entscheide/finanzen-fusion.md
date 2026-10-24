@@ -102,4 +102,14 @@ Geprüft von `swiss-precision-pruefer` und `copy-pruefer`, Funde eingearbeitet (
 > erfasstem Lohn kein «Es bleiben CHF …» mehr»): Der Spiegelsatz (`MirrorCards.jsx`) nennt bei
 > brutto erfasstem eigenem Lohn Einkommen und Ausgaben, aber keinen Rest («Es bleiben / Es fehlen»).
 
+## 6 · Stand Bauschritt 2 (24.10.2026)
+
+Die Auswertung steht in `src/components/FinanzAuswertung.jsx`: `finanzWerte` (eine Rechnung),
+`druckAbschnitte` + Druck, `LohnStandort` (Barometer, Armutsgrenze, Branchen-Chips),
+`auswertungsKarten` (Steuern bis KK-Last), `UebersichtDrucken`, `auswertungsHinweis`. Die
+Finanz-Übersicht setzt sich daraus zusammen; `druckAbschnitte` wird von dort weiter exportiert.
+Reiner Umbau: gerenderter Text vorher/nachher bei Maria und einem knappen BE-Profil Zeichen für
+Zeichen gleich; einzig der Druckknopf sitzt jetzt unter statt im Zwei-Spalten-Raster (volle
+Breite wie vorher). Drei Tests, die den Quelltext lesen, zeigen auf die neue Datei.
+
 **Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.
