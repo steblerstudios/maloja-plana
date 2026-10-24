@@ -2078,13 +2078,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement('button', {
         type: 'button',
         onClick: () => setKartenVorschau(true),
+        // Sieht aus wie ein Knopf, nicht wie ein Kästchen zum Abhaken (Fassung 6, Fix 4).
         style: {
-          background: 'none', border: 'none', padding: 0, fontFamily: 'inherit',
-          fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
-          borderBottom: '1px solid ' + palette.border,
-          paddingBottom: '1px',
+          display: 'inline-flex', alignItems: 'center', minHeight: '44px',
+          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.full,
+          padding: '0 ' + space.md + 'px', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium, color: palette.text, cursor: 'pointer',
         }
-      }, hinweisZeichen('kaestchen'), tr('notfallSummary.printCard')),
+      }, hinweisZeichen('document'), tr('notfallSummary.printCard')),
 
       // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
       // Abschnitte der Karte mit Feldnamen, nie mit Werten.
