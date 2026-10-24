@@ -939,3 +939,19 @@ Ernstfall-Knopf darf beim Stehenbleiben nichts verdecken (Tastatur, Anker unten)
 Zusammenfassungs-Satz mit Abstand und normaler Schrift (`.kap-zus`); Zwischentitel im Kapitel einheitlich
 (`.kap-h`: «Ihre KK-Last», «Schutzschild», «Franchise-Kreuz», «Wo steht Ihr Lohn?», «Miete regional vs. Schweiz» …);
 Barometer-Beschriftungen kurz (kein Umbruch); Tausender-Zeichen «’».
+
+### Offene Entscheide aus der Übergabe · entschieden (Sophie, 24.10.2026, Start Fassung 6)
+
+- **Karte zum Drucken heisst «Portemonnaie-Karte».** Damit heisst nur noch die Vorlesekarte (Q) «Notfallkarte».
+  Gewählt statt «Notfallausweis» (zu nah an «Notfallpass») und «Brieftaschenkarte» (weniger schweizerisch).
+- **Übersicht zeigt 70 %** (Durchschnitt der sieben Bereiche, `BergDetail.jsx`), nicht 63 %
+  (`gesamtVollstaendigkeit`). Grund: Die grosse Zahl passt zu den Bereichszeilen darunter; jeder Bereich zählt
+  gleich, Finanzen mit vielen Feldern drückt nicht alles. Kartentitel und Bereichszeilen bleiben offen.
+- **ALV heisst überall «Arbeitslosenentschädigung»** (Titel, Suche, Register, Merkliste); «ALV-Taggeld» fällt weg.
+- **Erfasste Versicherungsprämien gehören ins Budget** (Hausrat, Haftpflicht). Dafür braucht die Haftpflicht ein
+  eigenes Prämienfeld; `liabilityAmount` im Beispielprofil klären.
+- **Reiter «Dokumente»** war schon am 23.10. entschieden (siehe «Kapitel Finanzen · entschieden»).
+- **Geldfluss im Kapitel Finanzen: vorerst ein ruhiger Balken** (Einkommen aufgeteilt in Wohnen · Versicherungen ·
+  Steuern · übrige Ausgaben · bleibt) statt Sankey. Sophie mag den Sankey als Idee, aber an einem anderen Ort,
+  und will kreativere Darstellungen sehen (offen).
+- **Kuchendiagramm auf der Charts-Seite wird gestrichen**: Die Finanz-Auswertung hat einen Ort, das Kapitel.
