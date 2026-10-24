@@ -17,6 +17,26 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧩 **Nachtrag 24.10.2026, 20:25 — Seiten bündeln: fünf Seiten weniger, sechs PRs gemergt (#555–#560). NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 20:22): main = `00058e0f` (#560, 20:20) · live = `4299bfb9` (0.1.48-beta,
+> 23.10. 18:08, ⚠️ aus ungespeichertem Arbeitsbaum) · **75 Commits** dazwischen · offene PRs: keine.
+> **Gemergt auf Zuruf von Stebler Studios** (je nach grüner CI, Merge-Commit):
+> #555 Finanzen-Fusion + Geldfluss/Jahreskreis/Spinnennetz (`ec92c798`) · #556 Blatt + `#/charts` → Kapitel Finanzen
+> (`4f615aa2`) · #557 «Ausgesteuert» als Aufklapp-Teil von «Stelle verloren» (`591c84d4`) · #558 Notfall-Einstieg im
+> Kapitel Notfall (`e760207d`) · #559 «Meine Unterlagen» als Abschnitt in der Ablage (`32284107`) · #560 Mahnung und
+> Betreibung auf einer Seite «Mahnung oder Zahlungsbefehl — was tun?» (`00058e0f`, mit Fachprüfung: swiss-precision,
+> rechts, copy — 0 Blocker, Hinweise eingearbeitet).
+> **Muster für jede Bündelung:** alte Adresse in `UMLEITUNGEN` (`utils/hashRouter.js`), nie toter Link; `springeZuAnker`
+> klappt ein `<details>` auf; je Gruppe ein Wächter-Test (`*Umleitung.test.js`, `rechnungOffen.test.js`).
+> **Belegt je PR:** volle Suite grün (zuletzt 6730), Lint 0, Build ok, Startbündel 62,4 / 65 kB, Browser 375 px.
+> **Offen** (Stand im Blatt `docs/entscheide/seiten-buendeln.md` §7–§10): Gruppe B (Prämien + KVG-Leistungen ins
+> Kapitel Versicherungen, IPV bleibt) · Gruppe A zurückgestellt (Empfehlung: Ansprüche am Anker «Was steht mir zu?»
+> zusammenlegen, eher mit Fassung 6) · Notfallpass/-Dossier ins Kapitel? · Gepäck-Aussenfach: «Dokumentenablage» und
+> «Meine Unterlagen» zeigen auf dieselbe Seite · `unterlagen.note` ungenutzt · neue rm-Texte ungeprüft ·
+> Fachbefunde aus #555 (Franchise-Wechsel, KVV 94, «Arbeitstag», KVG 7 Abs. 1) nicht umgesetzt. **Nächster Deploy
+> (Stebler Studios) nimmt 75 Commits mit — vorher `/maloja-predeploy`.**
+
 > 🧩 **Nachtrag 24.10.2026, 19:25 — Seiten bündeln: Blatt + Entscheide + erster Schritt (`#/charts` → Kapitel Finanzen) auf Zweig `feat/charts-umleitung` `78566302`, PR #556. NICHT live.**
 >
 > **Gemessen:** ≈ 91 sichtbare Seiten (86 Ansichten in `main.jsx` + 7 Kapitel; Aug./Sep. 65, ab Okt. 86).
