@@ -9,8 +9,9 @@ const t = (k) => k;
 // Ein Feld, das der Rechner liest, das Formular aber nicht anbietet, bleibt für immer leer —
 // grün und wertlos. Bis 24.09.2026 lasen Budget und Mietvergleich drei solche Felder.
 describe('Budget liest nur Felder, die man auch ausfüllen kann', () => {
-  it('jedes data.<kapitel>.<feld> in budgetSync.js und BudgetSync.jsx ist ein Formularfeld', () => {
-    const quelle = ['budgetSync.js', 'BudgetSync.jsx']
+  // Seit Fassung 6 stehen die Ausgabenposten in utils/monatsrechnung.js (eine Rechnung für Kapitel und Budget).
+  it('jedes data.<kapitel>.<feld> in budgetSync.js, BudgetSync.jsx und utils/monatsrechnung.js ist ein Formularfeld', () => {
+    const quelle = ['budgetSync.js', 'BudgetSync.jsx', 'utils/monatsrechnung.js']
       .map(f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8')).join('\n');
     const gelesen = [...quelle.matchAll(/data\.(wohnen|versicherungen|finanzen|basis)\?\.(\w+)/g)].map(m => [m[1], m[2]]);
     expect(gelesen.length).toBeGreaterThan(10);
