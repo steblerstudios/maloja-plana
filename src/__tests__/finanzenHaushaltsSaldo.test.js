@@ -11,6 +11,8 @@ import { calculateMonthlyBudget } from '../budgetSync.js';
 // docs/entscheide/finanzen-fusion.md): beide Saldi zeigen, klar benannt. «Jeden Monat bleiben»
 // rechnet weiter nach utils/monatsrechnung.js; darunter steht der Saldo des Haushalts wie auf der
 // Budget-Seite (budgetSync.js) — nur, wenn er abweicht.
+// Fassung 6 (24.10.2026, Gesamtbericht 🔴 1): beide rechnen mit denselben Posten (Nebenerwerb,
+// Hypothek, Kinderbetreuung, Gebäudeversicherung, Säule 3a); nur Partner/in trennt die zwei Zeilen.
 const t = createT({ de }, 'de', 'sie');
 const kapitel = getChapters(t).find((c) => c.key === 'finanzen');
 const render = (allData) => renderToStaticMarkup(React.createElement(ChapterViewComplete, {
@@ -18,6 +20,9 @@ const render = (allData) => renderToStaticMarkup(React.createElement(ChapterView
   onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {},
 }));
 const nurText = (html) => html.replace(/<[^>]+>/g, '');
+
+// Partner/in im Haushalt: das Feld zählt bei zwei Erwachsenen (utils/partnereinkommen.js).
+const mitPartner = (d, betrag) => ({ ...d, basis: { ...d.basis, household: { adults: 2, partnerIncome: betrag } } });
 
 // Ohne Kanton: keine IPV-Schätzung, nichts Kantonales im Spiel.
 const basis = () => ({
@@ -43,16 +48,16 @@ describe('Saldo-Block: Minus, ohne eigenen Lohn, Benennung', () => {
   });
 
   it('eigener Saldo im Minus, Haushalt im Plus: beide Zeilen, oben das eigene Einkommen', () => {
-    const d = basis();
-    d.finanzen = { ...d.finanzen, monthlyIncome: 2000, sideIncome: 1500, sideIncomeType: 'netto' };
+    const d = mitPartner(basis(), 1500);
+    d.finanzen = { ...d.finanzen, monthlyIncome: 2000 };
     const text = nurText(render(d));
     expect(text).toContain('Mit dem eigenen Einkommen fehlen jeden MonatCHF 500');
     expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF 1’000');
   });
 
-  it('ohne eigenes Einkommen, aber mit Nebenerwerb: Block mit beiden Zeilen', () => {
-    const d = basis();
-    d.finanzen = { incomeType: 'netto', groceries: 600, sideIncome: 3000, sideIncomeType: 'netto' };
+  it('ohne eigenes Einkommen, aber mit Partner/in: Block mit beiden Zeilen', () => {
+    const d = mitPartner(basis(), 3000);
+    d.finanzen = { incomeType: 'netto', groceries: 600 };
     const text = nurText(render(d));
     expect(text).toContain('Mit dem eigenen Einkommen fehlen jeden MonatCHF 2’500');
     expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF 500');
@@ -82,36 +87,59 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
-  it('mit Nebenerwerb: die Budget-Zahl, benannt als Haushalt', () => {
+  // Fassung 6: der eigene Nebenerwerb ist eigenes Einkommen — er zählt oben, eine Zahl mit dem Budget.
+  // Vorher: oben 2’500, «Mit dem ganzen Haushalt bleiben 3’500» (Gesamtbericht 🔴 1).
+  it('mit Nebenerwerb: oben die Budget-Zahl, keine zweite Zeile', () => {
     const d = basis();
     d.finanzen = { ...d.finanzen, sideIncome: 1000, sideIncomeType: 'netto' };
+    expect(calculateMonthlyBudget(d).remaining).toBe(3500);
+    expect(haushaltsSaldo(d, 3500)).toBeNull();
+    const html = render(d);
+    expect(nurText(html)).toContain('Jeden Monat bleibenCHF 3’500');
+    expect(html).not.toContain('data-teil="monat-haushalt"');
+  });
+
+  it('mit Partner/in: die Budget-Zahl, benannt als Haushalt', () => {
+    const d = mitPartner(basis(), 1000);
     expect(calculateMonthlyBudget(d).remaining).toBe(3500);
     const html = render(d);
     expect(html).toContain('data-teil="monat-haushalt"');
     const text = nurText(html);
-    // Die erste Zahl bleibt die des Kapitels, jetzt als eigenes Einkommen benannt.
     expect(text).toContain('Mit dem eigenen Einkommen bleiben jeden MonatCHF 2’500');
     expect(text).toContain('Mit dem ganzen Haushalt bleiben CHF 3’500');
     expect(text).toContain('wie auf der Budget-Seite');
   });
 
-  it('Hypothek nur im Haushalt: Minus heisst «fehlen», ohne Vorzeichen', () => {
+  // Fassung 6: die Hypothek zählt auch oben — im Minus «Jeden Monat fehlen», ohne Vorzeichen.
+  it('Hypothek: oben «fehlen», ohne Vorzeichen, keine zweite Zeile', () => {
     const d = basis();
     d.wohnen = { ...d.wohnen, mortgagePayment: 3000 };
+    const html = render(d);
+    const text = nurText(html);
+    expect(text).toContain('Jeden Monat fehlenCHF 500');
+    expect(text).not.toContain('−');
+    expect(html).not.toContain('data-teil="monat-haushalt"');
+  });
+
+  it('Haushalt im Minus: «Mit dem ganzen Haushalt fehlen», ohne Vorzeichen', () => {
+    const d = mitPartner(basis(), 500);
+    d.wohnen = { ...d.wohnen, mortgagePayment: 3500 };
     const text = nurText(render(d));
     expect(text).toContain('Mit dem ganzen Haushalt fehlen CHF 500');
     expect(text).not.toContain('−');
   });
 
-  it('Nebenerwerb brutto: kein Haushalts-Betrag, sondern die Frage nach dem Netto', () => {
+  // Fassung 6: ein brutto erfasster Nebenerwerb ist eigenes Einkommen — oben die Netto-Frage,
+  // keine Zahl, die so nie auf dem Konto liegt; keine zweite Zeile.
+  it('Nebenerwerb brutto: oben die Frage nach dem Netto, keine Zahl', () => {
     const d = basis();
     d.finanzen = { ...d.finanzen, sideIncome: 1000, sideIncomeType: 'brutto' };
     expect(calculateMonthlyBudget(d).bruttoDabei).toBe(true);
     const html = render(d);
-    expect(html).toContain('data-teil="monat-haushalt"');
-    const text = nurText(html);
-    expect(text).not.toContain('Mit dem ganzen Haushalt bleiben');
+    expect(html).not.toContain('data-teil="monat-haushalt"');
+    const text = nurText(html).split('Monatliches Einkommen')[0];
     expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
+    expect(text).not.toContain('CHF 3’500');
   });
 
   it('eigener Lohn brutto: keine zweite Zeile, auch mit Hypothek (die Zahl darüber ist selbst brutto)', () => {
@@ -124,9 +152,8 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
   });
 
   it('mit Kanton: die Zeile nennt genau den Saldo der Budget-Seite (IPV steht dort neben, nicht im Saldo)', () => {
-    const d = basis();
-    d.basis = { canton: 'ZH' };
-    d.finanzen = { ...d.finanzen, sideIncome: 1000, sideIncomeType: 'netto' };
+    const d = mitPartner(basis(), 1000);
+    d.basis = { ...d.basis, canton: 'ZH' };
     const h = haushaltsSaldo(d, 2500);
     expect(h.rest).toBe(Math.round(calculateMonthlyBudget(d).remaining));
     expect(h.rest).toBe(3500);

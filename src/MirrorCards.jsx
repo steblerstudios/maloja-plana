@@ -11,7 +11,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { text, space, radius, leading, shadow } from './config/tokens.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
 import { betrag } from './utils/geld.js';
-import { sumExpenses, sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
+import { sumExpenses, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -179,7 +179,9 @@ function buildFinanzenSentence(data, allData, t) {
   }
 
   // Second part: recorded expenses
-  const expSum = sumExpenses(data, allData);
+  // Auf Franken: Gebäudeversicherung und Säule 3a sind Jahresbeträge ÷ 12 (Fassung 6) — Rappen
+  // daraus wären Scheingenauigkeit.
+  const expSum = Math.round(sumExpenses(data, allData));
   if (expSum > 0) {
     parts.push(t('mirror.finanzen.expensesRecorded', { amount: formatCHF(expSum) }) + '.');
   }
@@ -187,9 +189,9 @@ function buildFinanzenSentence(data, allData, t) {
   // Third part: financial difference — nicht bei brutto erfasstem Lohn. Darüber steht dann die
   // Frage nach dem Netto statt einer Zahl (Entscheid Stebler Studios 24.10.2026,
   // docs/entscheide/finanzen-fusion.md); ein Rest aus dem Bruttolohn läge so nie auf dem Konto.
-  const totalIncome = sumTotalIncome(data);
-  const totalExp = sumAllExpenses(data, allData);
-  if (data.incomeType !== 'brutto' && totalIncome > 0 && totalExp > 0) {
+  const { total: totalIncome, brutto } = eigeneEinnahmen(data);
+  const totalExp = Math.round(sumAllExpenses(data, allData));
+  if (!brutto && totalIncome > 0 && totalExp > 0) {
     const diff = totalIncome - totalExp;
     if (diff > 0) {
       parts.push(t('mirror.finanzen.remainsPositive', { amount: formatCHF(diff) }) + '.');

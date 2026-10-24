@@ -167,3 +167,24 @@ Ohne Kanton oder Miete zeigt er nichts, wie bisher. Zwischen Bauschritt 4 und 5 
 sichtbar (die Übersicht wird seit Bauschritt 4 nicht mehr angezeigt).
 
 **Offen, übrige:** Lage des Baums im Browser prüfen · rm-Texte gegenlesen.
+
+## 10 · Fassung 6: eine Rechnung, nur Partner/in trennt (24.10.2026)
+
+> ✅ **Entschieden 24.10.2026 abends** (Stebler Studios, Auswahl-Dialog «Wie lösen wir die
+> Monatsrechnung?» → «Nur Partner/in trennt»). Ergänzt Entscheid 1, hebt ihn nicht auf: beide
+> Zeilen bleiben, aber sie rechnen mit denselben Posten.
+
+Anlass: Gesamtbericht 2026-10, 🔴 1 — «Jeden Monat bleiben» liess den **eigenen** Nebenerwerb
+weg sowie Kinderbetreuung, Hypothek, Gebäudeversicherung und Säule 3a. 3'000 Lohn + 1'500
+Nebenerwerb, 3'600 Ausgaben: Kapitel «Es fehlen CHF 600», Budget «+900».
+
+Gebaut (Zweig `feat/f6-monatsrechnung`):
+- `utils/monatsrechnung.js`: `monatsAusgaben` (alle Posten, Jahresbeträge ÷ 12) und `eigeneEinnahmen`
+  (Lohn, Nebenerwerb, Familienzulagen, Alimente = `haushaltsEinnahmen` ohne Partner/in, mit Brutto-Flag).
+  `budgetSync.js` liest die Ausgabenposten von dort.
+- Kapitel, Spiegelsatz, Geldfluss: dieselben Posten; Brutto-Regel gilt auch für einen brutto erfassten
+  Nebenerwerb. Die Haushalts-Zeile erscheint nur noch mit Partner/in; `haushaltWie` in 5 Sprachen angepasst.
+- Maria: oben jetzt **CHF 2’459** (vorher 2’480), gleich wie «Verfügbar» im Budget; keine zweite Zeile mehr.
+
+Offen: erfasste Hausrat- und Haftpflichtprämie ins Budget (Entscheid 24.10.2026, VERGLEICH.md) —
+Haftpflicht braucht zuerst ein Prämienfeld.

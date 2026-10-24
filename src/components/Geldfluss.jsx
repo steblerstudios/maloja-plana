@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
-import { sumAllExpenses, sumTotalIncome } from '../utils/monatsrechnung.js';
+import { sumAllExpenses, sumTotalIncome, monatsAusgaben } from '../utils/monatsrechnung.js';
 
 // Geldfluss (Sankey): links, woher das Geld kommt, in der Mitte der Monat, rechts, wohin es
 // geht. Die Breite jedes Bands ist der Betrag. Das Geld fliesst über die Mitte, weil Maloja
@@ -116,20 +116,23 @@ export const geldflussDaten = (data, t, palette) => {
   const income = sumTotalIncome(f);
   const totalExpenses = sumAllExpenses(f, data);
   const remaining = Math.max(0, income - totalExpenses);
-  const ausgaben = [
-    { label: t('budgetSync.housingCosts'), value: n(data?.wohnen?.rentAmount), color: palette.rose },
-    { label: t('budgetSync.field.utilities'), value: n(data?.wohnen?.utilities), color: palette.gold },
-    { label: t('budgetSync.field.healthInsurance'), value: n(data?.versicherungen?.kkPremium), color: palette.sky },
-    { label: t('budgetSync.field.tax'), value: n(f.monthlyTax), color: '#8B7355' },
-    { label: t('budgetSync.field.groceries'), value: n(f.groceries), color: '#7B9E8C' },
-    { label: t('budgetSync.field.communication'), value: n(f.communication), color: '#6E90B0' },
-    { label: t('budgetSync.field.mobility'), value: n(f.mobility), color: '#B08060' },
-    { label: t('budgetSync.field.debtPayments'), value: n(f.debtPayments), color: palette.rose },
-    { label: t('budgetSync.field.alimentePaid'), value: n(f.alimentePaid), color: palette.sage },
-    { label: t('budgetSync.field.otherInsurance'), value: n(f.otherInsurance), color: '#A89F94' },
-  ].filter((x) => x.value > 0);
+  // Dieselben Posten wie die Rechnung (Fassung 6: dazu Hypothek, Gebäudeversicherung,
+  // Kinderbetreuung, Säule 3a), sonst ginge der Fluss nicht auf.
+  const posten = monatsAusgaben(data);
+  const farbe = {
+    rent: palette.rose, utilities: palette.gold, mortgage: palette.rose, buildingsInsurance: '#A89F94',
+    healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6E90B0',
+    childcare: palette.sand, mobility: '#B08060', pension3a: palette.sage, debtPayments: palette.rose,
+    alimentePaid: palette.sage, otherInsurance: '#A89F94',
+  };
+  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'tax', 'groceries',
+    'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];
+  const ausgaben = reihenfolge.map((k) => ({
+    label: t(k === 'rent' ? 'budgetSync.housingCosts' : 'budgetSync.field.' + k), value: posten[k], color: farbe[k],
+  })).filter((x) => x.value > 0);
   const quellen = [
     { label: t('chapters.finanzen.geldfluss.salary'), value: n(f.monthlyIncome), color: palette.sky },
+    { label: t('budgetSync.incomeSide'), value: n(f.sideIncome), color: palette.sage },
     { label: t('chapters.finanzen.geldfluss.familyAllowances'), value: n(f.familienzulagen), color: palette.gold },
     { label: t('chapters.finanzen.geldfluss.alimonyReceived'), value: n(f.alimenteReceived), color: palette.sand },
     { label: t('chapters.finanzen.geldfluss.uncovered'), value: Math.max(0, totalExpenses - income), color: palette.border },
