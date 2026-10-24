@@ -152,6 +152,14 @@ CHF/Monat (ohne Nebenkosten)» (Abdruck `kapitelAbdruck.txt` erneuert, nur diese
 eigener Schritt, auf Zuruf. Hinweis für Worktrees: zeigt die App beim Start «Etwas ist schiefgelaufen» mit
 «Invalid hook call», ist der Vite-Cache alt (`node_modules/.vite` wegräumen, neu starten).
 
+**Nachtrag 25.10.2026, 01:00 — Mietpreise 2024 nachgezogen** (Sophie: «Ja, lade die BFS-Tabelle …»): #567
+Spitze `5933c91d`, gepusht, weiter Entwurf. Werte aus BFS je-d-09.03.03.01, Blatt «2024» (Gegenprobe Blatt «2020»
+= bisherige Werte, 0 Abweichungen; Swiss-Precision las «2024» unabhängig nach, identisch). Neu: 26 BFS-Zellen
+«weniger als 50 Beobachtungen» (`RENT_LOW_N`, Kennzeichen steht nur im Zahlenformat — beim nächsten Nachzug
+Werte **und** Zahlenformate lesen) mit Hinweis im Barometer; Barometer nennt die Vergleichsgrösse und ob sie
+angenommen ist. Maria ZH 3 Zi.: 1’732 / 1’446 (vorher 1’538 / 1’327). 6’771 Tests grün, Build sauber, Browser 375 px.
+Offen («kann»): Quellenzeile «bestehende Mietverhältnisse inkl. Genossenschaften, keine Angebotsmieten».
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
