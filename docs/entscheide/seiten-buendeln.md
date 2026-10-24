@@ -208,6 +208,18 @@ verschiedene Dinge hinter ähnlichen Namen stehen.
 >
 > **Noch nichts gebaut.** Nächster Schritt nach Entscheid 2: `charts` → `UMLEITUNGEN`.
 
+## 6 · Stand Schritt 1 (24.10.2026)
+
+`#/charts` führt ins Kapitel Finanzen, Sprungmarke `mp-finanz-auswertung` (`UMLEITUNGEN`,
+`utils/hashRouter.js`), Commit `78566302` auf `feat/charts-umleitung`. `ChartsAdvanced.jsx` und
+`charts.*` (5 Sprachen) sind weg; das Register behält den Eintrag (Menü, Suche, Gepäck → Umleitung).
+Tests umgezogen: `chartsWieKapitel` und `chartsLegendeSchluessel` prüfen jetzt `geldflussDaten`.
+Weg fällt der BVG-Hinweis der Charts-Seite (steht weiter auf Budget und Steuer).
+
+**Offen:** nicht gepusht, kein PR — der Zweig steht auf dem ungepushten Stapel `feat/charts-geldfluss`.
+Zur Entscheidung: soll der Eintrag «Charts» im Gepäck (Aussenfach) bleiben, obwohl er ins Kapitel führt?
+Nächste Schritte: A Ansprüche, F Ausgesteuert.
+
 ## 5 · Was je Bündelung gilt (wie bei Finanzen)
 
 - Alte Adresse → `UMLEITUNGEN`, nie toter Link. Suche, Menü, Dashboard zeigen aufs neue Ziel.

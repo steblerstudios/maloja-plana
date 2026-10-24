@@ -17,6 +17,20 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧩 **Nachtrag 24.10.2026, 19:25 — Seiten bündeln: Blatt + Entscheide + erster Schritt (`#/charts` → Kapitel Finanzen) auf Zweig `feat/charts-umleitung` `78566302`. NICHT gepusht, kein PR.**
+>
+> **Gemessen:** ≈ 91 sichtbare Seiten (86 Ansichten in `main.jsx` + 7 Kapitel; Aug./Sep. 65, ab Okt. 86).
+> Entscheidungsblatt `docs/entscheide/seiten-buendeln.md`: neun Gruppen, Ziel ≈ 15 Seiten weniger, sechs Entscheide
+> von Stebler Studios am 24.10. gefällt (je die empfohlene Option). Schritt 1 gebaut: `charts` in `UMLEITUNGEN`,
+> `ChartsAdvanced.jsx` und `charts.*` (5 Sprachen) weg, Tests auf `geldflussDaten` umgezogen, neu `chartsUmleitung.test.js`.
+> Belegt: 6637 Tests grün, Lint 0, Build ok, Browser 375 px (Beispiel Maria): `#/charts` → `#/chapter/2`, Auswertung oben,
+> Geldfluss sichtbar — wie `#/finanzuebersicht`. Pre-Commit-Hook lief erst im dritten Anlauf grün (Timeouts unter Last nach
+> App-Neustarts, Load bis 26; die betroffenen Dateien einzeln grün).
+> **Offen:** Der Zweig steht auf dem **ungepushten** Stapel `feat/charts-geldfluss` (Finanzen-Fusion Schritte 1–5,
+> Geldfluss, Spinnennetz, Kalender) — 19 Commits vor `origin/main`. Ein PR zeigt sie alle; vor dem Push klären, ob als
+> ein Entwurfs-PR oder gestapelt. Weg fällt der BVG-Hinweis der Charts-Seite (steht weiter auf Budget/Steuer). Nächste
+> Schritte laut Blatt: A Ansprüche, F Ausgesteuert.
+
 > 🚪 **Nachtrag 23.10.2026, 17:45 — Deploy-Tor 0.1.48-beta (Nachzug 29.10.) auf Zweig `release/0.1.48-beta` `c88ee519`: 0 Blocker. Marke NICHT gesetzt, NICHT deployt.**
 >
 > **Gemessen:** live = `d4da4629` (0.1.47-beta) · main = `412d11bb` (Fassung 5 #539–#544 gemergt) · Release-Zweig = main-Inhalt
