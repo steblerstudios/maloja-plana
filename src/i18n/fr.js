@@ -31,7 +31,6 @@ export default {
       },
     },
     moreInfo: 'En savoir plus',
-    pageTitle: 'Situations de vie',
     pageSub: 'Découvrir des droits méconnus',
     dashboardLink: { sie: 'Une situation vous concerne ?', du: 'Une situation te concerne ?' },
     tiefesEinkommen: {
@@ -242,6 +241,10 @@ export default {
     fertigTitel: 'Le déménagement est en ordre',
     fertigText: 'Les quatre étapes sont faites.',
     nochmals: 'Revoir le parcours',
+    passAdresse: 'Adresse',
+    passGemeinde: 'Commune',
+    passNachfuehren: 'Mettre à jour',
+    passKuendigen: 'Résilier',
     reminderTitle: 'S\'annoncer à la nouvelle commune',
     reminderNotes: 'S\'annoncer à la nouvelle commune dans les 14 jours suivant le déménagement (et se désannoncer de l\'ancienne). Prendre pièce d\'identité et contrat de bail.',
     step3Title: '3 · Mettre l\'adresse à jour partout',
@@ -531,7 +534,7 @@ export default {
     step5Title: '5 · Réexaminer les droits',
     step5Text: { sie: 'Un ménage plus grand change ce à quoi vous avez droit. Votre réduction de primes (RIP) est recalculée sur le nouveau ménage — cela vaut la peine de vérifier à nouveau. Si vous élevez l’enfant seul ou avec un budget serré, les situations de vie rassemblent d’autres soutiens en un endroit calme.', du: 'Un ménage plus grand change ce à quoi tu as droit. Ta réduction de primes (RIP) est recalculée sur le nouveau ménage — cela vaut la peine de vérifier à nouveau. Si tu élèves l’enfant seul ou avec un budget serré, les situations de vie rassemblent d’autres soutiens en un endroit calme.' },
     step5LinkIpv: 'Recalculer la réduction de primes',
-    step5LinkSituation: 'Voir les situations de vie correspondantes',
+    step5LinkSituation: 'Voir les situations correspondantes sous « À quoi ai-je droit ? »',
     relatedTitle: 'Événements liés',
     relatedHeirat: 'Mariage ou partenariat',
     footerNote: { sie: 'Beaucoup passe par l’employeur et la caisse de compensation — conservez bien les confirmations. Ceci est une orientation, pas un conseil juridique.', du: 'Beaucoup passe par l’employeur et la caisse de compensation — conserve bien les confirmations. Ceci est une orientation, pas un conseil juridique.' },
@@ -1391,7 +1394,6 @@ export default {
     unterlagen: 'Mes documents',
     flyer: 'Flyer à partager',
     export: 'Export',
-    calendar: 'Calendrier',
     merkliste: 'Mon aide-mémoire',
     umzug: 'Déménagement',
     unfallkrankheit: 'Accident ou maladie',
@@ -1403,7 +1405,6 @@ export default {
     installApp: 'Installer comme application',
     menu: 'Menu',
     erfassen: 'Ajouter',
-    anspruch: 'Droits',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
@@ -4896,7 +4897,6 @@ export default {
     linkBudget: 'Voir dans le budget',
   },
   calendar: {
-    title: 'À venir',
     aufgabe: 'Tâche',
     ausMerkliste: 'de l’aide-mémoire',
     ganzerMonat: 'Tout le mois',
@@ -5025,6 +5025,12 @@ export default {
     yourCanton: { sie: 'Votre canton', du: 'Ton canton' },
     privacyNote: { sie: 'Vos données restent sur cet appareil. Pas de compte. Pas de cloud.', du: 'Tes données restent sur cet appareil. Pas de compte. Pas de cloud.' },
     skipForNow: 'Passer pour l\'instant',
+    // Application installée vide (Onboarding.jsx, zurSicherungWechseln)
+    appLeer: {
+      titel: 'Déjà rempli dans le navigateur ?',
+      text: { sie: 'L\'application installée a sa propre mémoire. Ce que vous avez saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, créez une sauvegarde sous « Export », puis restaurez-la ici.', du: 'L\'application installée a sa propre mémoire. Ce que tu as saisi dans le navigateur n\'y figure donc pas encore. Dans le navigateur, crée une sauvegarde sous « Export », puis restaure-la ici.' },
+      knopf: 'Restaurer une sauvegarde',
+    },
     stepOf: 'Étape {current} sur {total}',
     needsTitle: { sie: 'Qu\'est-ce qui vous concerne en ce moment ?', du: 'Qu\'est-ce qui te concerne en ce moment ?' },
     needsSubtitle: { sie: 'Choisissez ce qui vous correspond — Maloja vous montre aussitôt ce à quoi vous avez droit. Vous pouvez le modifier à tout moment.', du: 'Choisis ce qui te correspond — Maloja te montre aussitôt ce à quoi tu as droit. Tu peux le modifier à tout moment.' },
@@ -5856,9 +5862,7 @@ export default {
     b: { wohnen: 'Logement', finanzen: 'Finances', person: 'Personne', versicherungen: 'Assurance', gesundheit: 'Santé', arbeit: 'Travail', familie: 'Famille', vorsorge: 'Prévoyance', bildung: 'Formation', notfall: 'Urgence', behoerden: 'Autorités' },
   },
   gepaeck: {
-    title: 'Sac à dos de randonnée',
     intro: { sie: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.', du: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballe, ouvre un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.' },
-    link: 'Sac à dos de randonnée',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
     pack: 'Remballer',
@@ -5874,7 +5878,7 @@ export default {
     // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
     aussenfachKarte: 'Poche extérieure',
     aussenfachKarteSub: 'Les mêmes outils, à ranger',
-    menuAlle: 'Tous les outils dans le bagage',
+    menuAlle: 'Tous les outils dans le sac à dos',
     packed: '{done} sur {total} renseignés',
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Porte-monnaie' },

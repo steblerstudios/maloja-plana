@@ -39,7 +39,7 @@ const AUSNAHMEN = new Set([
   // als Referenz-Set der Outline-Icons (docs/ICON_KONVENTION.md).
   // Fassung 5 (23.10.2026): Ablage und Merkliste zeichnen `ordner` und `check` — Register-Namen,
   // darum keine Ausnahme mehr für die früheren `file` und `pencil`.
-  ...['receipt', 'calendarToday', 'sackmesser', 'gift', 'menu', 'rucksack', 'search']
+  ...['receipt', 'calendarToday', 'sackmesser', 'gift', 'menu', 'rucksack']
     .map((n) => `main.jsx:${n}`),
   // Browser-Benachrichtigung: ein Bildpfad, kein Icon-Name.
   'notifications.js:/icon-192.png',

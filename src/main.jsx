@@ -15,7 +15,6 @@ import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlaeufigContext } from './hooks/vorlaeufigContext.js';
-import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { speichereFallsOffen, beimVerlassenSpeichern, hoechstWarteRest, AUTOSAVE_RUHE_MS } from './utils/autoSave.js';
 import { gesamtVollstaendigkeit, naechsterSchritt } from './utils/vollstaendigkeit.js';
@@ -38,12 +37,12 @@ const OverdueBanner = React.lazy(() => import('./OverdueBanner.jsx'));
 import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
-import { syncDocumentReminders } from './utils/docReminders.js';
 import { istFremdeAenderung } from './utils/fremdeAenderung.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
 const InstallHinweis = React.lazy(() => import('./InstallHinweis.jsx'));
-import BetaGate from './BetaGate.jsx';
+// Nur das Tor im Startbündel; die Code-Wand (BetaGate.jsx) lädt es bei Bedarf nach.
+import BetaGateTor from './BetaGateTor.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
 // Luft unter dem 65-KB-Deckel. Damit das erste Antippen trotzdem nicht stockt, wird
@@ -305,9 +304,8 @@ const bottomIcon = (name, color, size) => {
     );
   }
   // Wanderrucksack (dieselbe Zeichnung wie im Block «Was steht mir zu?», hier im Startbündel
-  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B) und Lupe.
+  // von Hand — ein Import aus miniRucksack.js zöge die Datei hinein, gemessen +90 B).
   if (name === 'rucksack') return React.createElement('svg', common, P('M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z'), P('M9 8a3 3 0 0 1 6 0'), P('M9 14h6'));
-  if (name === 'search') return React.createElement('svg', common, React.createElement('circle', { cx: 11, cy: 11, r: 6 }), P('M15.5 15.5 L20 20'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
 
@@ -349,7 +347,9 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     key: it.key, onClick: it.onClick, 'aria-label': it.label,
     'aria-current': it.active ? 'page' : undefined,
     style: {
-      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+      // alignSelf stretch + flex-start: die Zeichen stehen auf einer Linie, auch wenn ein
+      // Name zweizeilig umbricht («Was steht mir zu?», 23.10.2026).
+      flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
       padding: '9px 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
       color: it.active ? palette.text : palette.mid,
     },
@@ -357,7 +357,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
     it.icon === 'sackmesser'
       ? React.createElement(SackmesserIcon, { open: it.active, color: it.active ? palette.sage : palette.mid })
       : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
-    React.createElement('span', { style: { fontSize: '10px', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
+    React.createElement('span', { style: { fontSize: '10px', lineHeight: 1.2, textAlign: 'center', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
   );
   const fan = [
@@ -394,15 +394,17 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
         paddingBottom: 'env(safe-area-inset-bottom)',
+        // Eigene Ebene: sonst zeichnet iOS/Android die Leiste mit Weichzeichner beim Ein-/
+        // Ausfahren der Adressleiste neu und sie zittert hinterher.
+        transform: 'translateZ(0)',
       },
     },
       // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
-      // in der Mitte. Seit 27.09.2026 drei je Seite: links Wanderrucksack neben der
-      // Übersicht, rechts die Suche zwischen Anspruch und Menü.
+      // in der Mitte. Seit 23.10.2026 wieder zwei je Seite (Stebler Studios: sieben waren
+      // am Handy zu viel): Kalender liegt im „+"-Fächer und im Menü, die Suche oben im Menü.
       ...(() => {
         const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
-        const leftR = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
-        const left2 = slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') });
+        const left2 = slot({ key: 'gepaeck', label: t('nav.rucksack'), icon: 'rucksack', active: view === 'gepaeck', onClick: () => onNavigate('gepaeck') });
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
             onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
@@ -415,12 +417,11 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
         );
-        const right1 = slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
-        const rightS = slot({ key: 'search', label: t('nav.search'), icon: 'search', active: view === 'search', onClick: () => onNavigate('search') });
+        const right1 = slot({ key: 'situationen', label: t('dashboard.anspruchTitle'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
         const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
         return leftHand
-          ? [right2, rightS, right1, center, left2, leftR, left1]
-          : [left1, leftR, left2, center, right1, rightS, right2];
+          ? [right2, right1, center, left2, left1]
+          : [left1, left2, center, right1, right2];
       })()
     )
   );
@@ -448,6 +449,14 @@ const AppInner = ({ demo }) => {
   // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
   const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
+  // Der Filter sitzt auf <html>, nicht auf dem App-Rahmen: ein `filter` auf einem Vorfahren
+  // macht ihn zum Bezugsrahmen für `position: fixed` — der Boden-Anker scrollte dann mit
+  // und sprang (gemeldet 23.10.2026). Das Wurzelelement ist von dieser Regel ausgenommen.
+  useEffect(() => {
+    const html = document.documentElement;
+    html.style.filter = grayscale ? 'grayscale(1)' : '';
+    return () => { html.style.filter = ''; };
+  }, [grayscale]);
   // Farbenblind-Modus: tauscht das Rot-Grün-Paar sage/rose gegen Blau/Orange (opt-in)
   const [colorBlind, setColorBlind] = useState(() => { try { return localStorage.getItem('or5_colorblind') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_colorblind', colorBlind ? '1' : '0'); } catch {} }, [colorBlind]);
@@ -747,8 +756,11 @@ const AppInner = ({ demo }) => {
 
   // Register service worker + check overdue reminders on mount
   useEffect(() => {
-    registerServiceWorker();
-    checkOverdueReminders(t);
+    // Startbündel-Diät (23.10.2026): beides läuft erst nach dem ersten Bild, darum nachgeladen.
+    import('./utils/notifications.js').then(({ registerServiceWorker, checkOverdueReminders }) => {
+      registerServiceWorker();
+      checkOverdueReminders(t);
+    }).catch(() => { /* offline beim ersten Start: SW und Erinnerung beim nächsten Öffnen */ });
     // PLZ->Gemeinde-Daten vorladen, damit Kanton/City-Autofill schon beim ersten PLZ-Eintrag greift
     preloadPLZ();
     // Die Menü-Schubladen liegen seit dem Deckel-Durchgang ausserhalb der Startdatei.
@@ -780,8 +792,12 @@ const AppInner = ({ demo }) => {
   }, [demo]);
 
   // Sync document expiry dates → calendar reminders
+  // Nachgeladen wie oben; das Modul ist nach dem ersten Mal im Speicher, die Reihenfolge der
+  // Aufrufe bleibt (aufgelöste Importe laufen in Aufruf-Reihenfolge).
   useEffect(() => {
-    syncDocumentReminders(documents, t);
+    import('./utils/docReminders.js')
+      .then(({ syncDocumentReminders }) => syncDocumentReminders(documents, t))
+      .catch(() => { /* Erinnerungen holt der nächste Lauf nach */ });
   }, [documents, t]);
 
   useEffect(() => {
@@ -1012,6 +1028,13 @@ const AppInner = ({ demo }) => {
     }
     // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
     startTransition(() => setView(viewName));
+    hauptteilFokussieren();
+  };
+
+  // Nach einem Ansichtswechsel: nach oben, Fokus auf <main>. Auch für den Sprung aus der
+  // Einführung (onSicherungEinspielen) — dort verschwindet der fokussierte Knopf mit der
+  // Einführung, ohne das hier läge der Fokus danach auf <body>.
+  const hauptteilFokussieren = () => {
     requestAnimationFrame(() => {
       // Das Dokument scrollt, nicht mehr <main> — der Sprung nach oben geht ans Fenster.
       // `preventScroll` bleibt: der Fokus soll die Seite nicht ein zweites Mal bewegen.
@@ -1028,6 +1051,8 @@ const AppInner = ({ demo }) => {
         palette, t, setLanguage, supportedLanguages,
         onComplete: () => setOnboardingDone(true),
         onUpdateData: updateData,
+        // Leere installierte App: direkt zur Sicherungs-Seite (Begründung in Onboarding.jsx).
+        onSicherungEinspielen: () => { setView('export'); setOnboardingDone(true); hauptteilFokussieren(); },
       })
     );
   }
@@ -1227,7 +1252,7 @@ const AppInner = ({ demo }) => {
   // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
   // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
@@ -1312,58 +1337,52 @@ const AppInner = ({ demo }) => {
         )
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        // Handy: oben rechts = Einstellungen/Konto (Zahnrad); Navigation liegt am Boden-Anker.
-        // Desktop: Bedienelemente inline + Hamburger (kein Boden-Anker).
-        isMobile
-          ? React.createElement('button', {
-              key: 'settings',
-              'aria-label': t('nav.settings'),
-              'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
-              onClick: () => setSettingsOpen(true),
-              style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-            },
-              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
-                // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
-                React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
-              )
-            )
-          : React.createElement(React.Fragment, { key: 'desktop-controls' },
-              // Ruhige, hierarchische Kopfzeile: nur Sprache + Erscheinungsbild bleiben
-              // griffbereit inline. Alle Barrierefreiheits-Schalter (und Anrede) wandern
-              // hinter EIN Symbol → Einstellungs-Schublade (gruppiert & beschriftet).
-              ...settingsControls.filter(c => c.key === 'lang' || c.key === 'theme'),
-              React.createElement('button', {
-                key: 'a11y',
-                'aria-label': t('common.settingsAccessibility'),
-                title: t('common.settingsAccessibility'),
-                'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
-                onClick: () => setSettingsOpen(true),
-                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-              },
-                // Universelles Barrierefreiheit-Symbol (Figur mit ausgestreckten Armen im Kreis)
-                React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
-                  React.createElement('circle', { cx: '12', cy: '12', r: '10', opacity: '0.35' }),
-                  React.createElement('circle', { cx: '12', cy: '6.6', r: '1.35', fill: 'currentColor', stroke: 'none' }),
-                  React.createElement('path', { d: 'M6.5 9.2 H17.5' }),
-                  React.createElement('path', { d: 'M12 9.2 V13.2' }),
-                  React.createElement('path', { d: 'M12 13.2 L9.4 18' }),
-                  React.createElement('path', { d: 'M12 13.2 L14.6 18' })
-                )
-              ),
-              React.createElement('button', {
-                key: 'menu',
-                'aria-label': t('nav.menu'),
-                onClick: () => setMobileNavOpen(!mobileNavOpen),
-                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-              },
-                React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-                  React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
-                  React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
-                  React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
-                )
-              )
-            )
+        // Oben rechts, Handy wie Desktop: Lupe (Suche) und Zahnrad (Einstellungen-Schublade).
+        // Die Lupe sitzt seit 23.10.2026 hier statt in der Fusszeile (dort waren sieben Plätze
+        // zu viel). Am Desktop ersetzt das Zahnrad die frühere Barrierefreiheits-Figur — sie
+        // öffnete dieselbe Schublade; Barrierefreiheit ist dort eine eigene Gruppe, der Tooltip
+        // nennt sie. Desktop zusätzlich: Sprache + Erscheinungsbild inline und Hamburger; am
+        // Handy liegt die Navigation am Boden-Anker.
+        React.createElement('button', {
+          key: 'search',
+          'aria-label': t('nav.search'),
+          title: isMobile ? undefined : t('nav.search'),
+          'aria-current': view === 'search' ? 'page' : undefined,
+          onClick: () => handleNavigate('search'),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+            React.createElement('circle', { cx: '11', cy: '11', r: '6' }),
+            React.createElement('path', { d: 'M15.5 15.5 L20 20' })
+          )
+        ),
+        ...(isMobile ? [] : settingsControls.filter(c => c.key === 'lang' || c.key === 'theme')),
+        React.createElement('button', {
+          key: 'settings',
+          'aria-label': t('nav.settings'),
+          title: isMobile ? undefined : t('common.settingsTitle') + ' · ' + t('common.settingsAccessibility'),
+          'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
+          onClick: () => setSettingsOpen(true),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+            React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
+            // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
+            React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+          )
+        ),
+        !isMobile && React.createElement('button', {
+          key: 'menu',
+          'aria-label': t('nav.menu'),
+          onClick: () => setMobileNavOpen(!mobileNavOpen),
+          style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        },
+          React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
+            React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
+            React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
+            React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
+          )
+        )
       )
     ),
     !demoMode && React.createElement('div', {
@@ -1507,7 +1526,9 @@ const AppInner = ({ demo }) => {
       // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
-      view !== 'dashboard' && !PFADE[view] && React.createElement('button', {
+      // Der Umzug (Fassung 5) zeichnet seine Brotkrume im eigenen Kopf (AblaufSchale `kopf`). Als
+      // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
+      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',
@@ -1684,7 +1705,7 @@ const AppInner = ({ demo }) => {
           onLegal: () => handleNavigate('legal'),
         }),
         view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'umzug' && React.createElement(UmzugAblauf, { key: datenModus, palette, t, data: activeData, chapters, onNavigate: handleNavigate, datenModus }),
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'stelleverloren' && React.createElement(StelleVerloren, { palette, t, onNavigate: handleNavigate }),
@@ -1778,10 +1799,10 @@ const AppInner = ({ demo }) => {
   )));
 };
 
-// Wrap in I18nProvider + ErrorBoundary + BetaGate
+// Wrap in I18nProvider + ErrorBoundary + BetaGateTor (→ BetaGate nur ohne Zugang)
 const App = () => React.createElement(I18nProvider, null,
   React.createElement(ErrorBoundary, null,
-    React.createElement(BetaGate, null,
+    React.createElement(BetaGateTor, null,
       React.createElement(AppInner)
     )
   )

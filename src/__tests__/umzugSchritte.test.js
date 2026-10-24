@@ -6,7 +6,8 @@ import de from '../i18n/de.js';
 import { VorlaeufigContext } from '../hooks/vorlaeufigContext.js';
 import { formatDE } from '../utils/helpers.js';
 import { ablaufStandLaden, ablaufStandSichern, ablaufStandKey } from '../utils/ablaufStand.js';
-import { UmzugAblauf, ohneNummer } from '../UmzugAblauf.jsx';
+import { UmzugAblauf, ohneNummer, umzugsDatumVorschlag } from '../UmzugAblauf.jsx';
+import { plusTage, heuteIso } from '../utils/fristen.js';
 import { EreignisFrist } from '../AblaufSchale.jsx';
 
 // Fassung 5 · Ablauf Umzug (Entscheid Stebler Studios 23.10.2026): ein Schritt nach dem anderen auf
@@ -102,11 +103,38 @@ describe('Umzug — ein Schritt nach dem anderen', () => {
     expect(html).not.toContain('data-frist-karte');
   });
 
-  it('Schritt 2, Frist vorbei: ruhiger Satz in der Karte, kein Kalender-Knopf', () => {
-    const html = render({ stand: { schritt: 1, fertig: false }, data: { wohnen: { moveInDate: '2020-01-10' } } });
+  it('Frist vorbei: ruhiger Satz in der Karte, kein Kalender-Knopf', () => {
+    const html = renderToStaticMarkup(React.createElement(EreignisFrist, {
+      palette, t, id: 'x', frist: () => '2020-01-24', wert: '2020-01-10', onWert: () => {},
+      labelKey: 'umzug.fristLabel', hinweisKey: 'umzug.fristHinweis', vorbeiKey: 'umzug.fristVorbei',
+      buttonKey: 'umzug.step2Button', doneKey: 'umzug.step2Done', calendarKey: 'umzug.step2CalendarLink',
+      karte: { titelKey: 'umzug.fristKarteTitel', bisKey: 'umzug.fristKarteBis', knopfKey: 'kvg.addToCalendar' },
+      reminderTitle: 'X',
+    }));
     expect(html).toContain('data-frist-karte="vorbei"');
     expect(html).toContain('Die 14 Tage waren am ' + formatDE('2020-01-24') + ' vorbei.');
     expect(html).not.toContain('In den Kalender');
+  });
+
+  // «Wohnt hier seit» ist meist der letzte Umzug, nicht dieser (Befund 23.10.2026: Maria zeigte
+  // «Die 14 Tage waren am 15.08.2021 vorbei»).
+  it('Umzugsdatum: altes Einzugsdatum nicht übernehmen, im Beispiel ein Umzug in einer Woche', () => {
+    expect(umzugsDatumVorschlag('2099-01-10', 'echt')).toBe('2099-01-10');
+    expect(umzugsDatumVorschlag('2021-08-01', 'echt')).toBe('');
+    expect(umzugsDatumVorschlag('', 'probe')).toBe('');
+    expect(umzugsDatumVorschlag('2021-08-01', 'beispiel')).toBe(plusTage(heuteIso(), 7));
+    const html = renderToStaticMarkup(React.createElement(VorlaeufigContext.Provider, { value: true },
+      React.createElement(UmzugAblauf, { palette, t, data: { wohnen: { moveInDate: '2021-08-01' } }, chapters: [{ key: 'wohnen' }], onNavigate: () => {}, datenModus: 'beispiel' })));
+    expect(html).not.toContain('2021');
+  });
+
+  it('Kopf wie im Mockup: Landschaftsband, Brotkrume mit Bereich, Stationsnamen auf der Strasse', () => {
+    const html = renderToStaticMarkup(React.createElement(UmzugAblauf, { palette, t, data: {}, chapters: [{ key: 'wohnen', title: 'Wohnen & Leben' }], onNavigate: () => {} }));
+    expect(html).toContain('data-ablauf-band');
+    expect(html).toContain('aria-label="Pfad"');
+    expect(html).toContain('Wohnen &amp; Leben');
+    expect(html).toContain('aria-current="page"');
+    for (const n of ['Adresse', 'Gemeinde', 'Nachführen', 'Kündigen']) expect(html).toContain('>' + n + '</text>');
   });
 
   it('Schritt 3: alle acht Stellen, merken, «Alle in die Merkliste», Adressänderungs-Brief', () => {

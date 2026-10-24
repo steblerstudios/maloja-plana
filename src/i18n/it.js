@@ -31,7 +31,6 @@ export default {
       },
     },
     moreInfo: 'Saperne di più',
-    pageTitle: 'Situazioni di vita',
     pageSub: 'Scoprire diritti poco noti',
     dashboardLink: { sie: 'Una situazione la riguarda?', du: 'Una situazione ti riguarda?' },
     tiefesEinkommen: {
@@ -242,6 +241,10 @@ export default {
     fertigTitel: 'Il trasloco è in ordine',
     fertigText: 'Tutti e quattro i passi sono fatti.',
     nochmals: 'Rivedere il percorso',
+    passAdresse: 'Indirizzo',
+    passGemeinde: 'Comune',
+    passNachfuehren: 'Aggiornare',
+    passKuendigen: 'Disdire',
     reminderTitle: 'Annunciarsi al nuovo comune',
     reminderNotes: 'Annunciarsi al nuovo comune entro 14 giorni dal trasloco (e disdirsi dal vecchio). Portare documento d\'identità e contratto d\'affitto.',
     step3Title: '3 · Aggiornare l\'indirizzo ovunque',
@@ -531,7 +534,7 @@ export default {
     step5Title: '5 · Riverificare i diritti',
     step5Text: { sie: 'Un’economia domestica più grande cambia ciò a cui ha diritto. La Sua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresce il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.', du: 'Un’economia domestica più grande cambia ciò a cui hai diritto. La tua riduzione dei premi (RIP) viene ricalcolata sulla nuova economia domestica — vale la pena ricontrollare. Se cresci il figlio da solo o con un budget stretto, gli stati di vita raccolgono ulteriori sostegni in un luogo tranquillo.' },
     step5LinkIpv: 'Ricalcola la riduzione dei premi',
-    step5LinkSituation: 'Vedi le situazioni di vita corrispondenti',
+    step5LinkSituation: 'Vedi le situazioni corrispondenti in «A cosa ho diritto?»',
     relatedTitle: 'Eventi correlati',
     relatedHeirat: 'Matrimonio o unione',
     footerNote: { sie: 'Molto passa tramite datore di lavoro e cassa di compensazione — conservi bene le conferme. Questo è orientamento, non consulenza legale.', du: 'Molto passa tramite datore di lavoro e cassa di compensazione — conserva bene le conferme. Questo è orientamento, non consulenza legale.' },
@@ -1390,7 +1393,6 @@ export default {
     charts: 'Grafici',
     unterlagen: 'I miei documenti',
     export: 'Esportazione',
-    calendar: 'Calendario',
     notifications: 'Notifiche',
     installApp: 'Installare come app',
     flyer: 'Volantino da condividere',
@@ -1403,7 +1405,6 @@ export default {
     search: 'Cerca',
     menu: 'Menu',
     erfassen: 'Aggiungi',
-    anspruch: 'Diritti',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Zaino',
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
@@ -4869,7 +4870,6 @@ export default {
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
-    title: 'In arrivo',
     aufgabe: 'Compito',
     ausMerkliste: 'dal promemoria',
     ganzerMonat: 'Tutto il mese',
@@ -4998,6 +4998,12 @@ export default {
     yourCanton: { sie: 'Il Suo cantone', du: 'Il tuo cantone' },
     privacyNote: { sie: 'I Suoi dati restano su questo dispositivo. Nessun account. Nessun cloud.', du: 'I tuoi dati restano su questo dispositivo. Nessun account. Nessun cloud.' },
     skipForNow: 'Salta per ora',
+    // App installata vuota (Onboarding.jsx, zurSicherungWechseln)
+    appLeer: {
+      titel: 'Già compilato nel browser?',
+      text: { sie: 'L\'app installata ha una propria memoria. Quanto ha inserito nel browser non è quindi ancora qui. Nel browser crei un backup sotto «Esportazione» e poi lo ripristini qui.', du: 'L\'app installata ha una propria memoria. Quanto hai inserito nel browser non è quindi ancora qui. Nel browser crea un backup sotto «Esportazione» e poi ripristinalo qui.' },
+      knopf: 'Ripristina un backup',
+    },
     stepOf: 'Passo {current} di {total}',
     needsTitle: { sie: 'Cosa la riguarda in questo momento?', du: 'Cosa ti riguarda in questo momento?' },
     needsSubtitle: { sie: 'Scelga ciò che le corrisponde — Maloja le mostra subito a cosa ha diritto. Può modificarlo in qualsiasi momento.', du: 'Scegli ciò che ti corrisponde — Maloja ti mostra subito a cosa hai diritto. Puoi modificarlo in qualsiasi momento.' },
@@ -5830,9 +5836,7 @@ export default {
     b: { wohnen: 'Abitare', finanzen: 'Finanze', person: 'Persona', versicherungen: 'Assicurazione', gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza', bildung: 'Formazione', notfall: 'Emergenza', behoerden: 'Autorità' },
   },
   gepaeck: {
-    title: 'Zaino da escursione',
     intro: { sie: 'Ogni ambito della vita è un attrezzo nello zaino. Disfaccia il bagaglio, apra un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.', du: 'Ogni ambito della vita è un attrezzo nello zaino. Disfa il bagaglio, apri un oggetto — dentro ci sono i percorsi della vita. Un percorso porta al suo iter guidato.' },
-    link: 'Zaino da escursione',
     ctaSub: 'Gli eventi della vita come attrezzatura — disfare, guardare dentro.',
     unpack: 'Disfare',
     pack: 'Rifare il bagaglio',
@@ -5848,7 +5852,7 @@ export default {
     // Die achte, zuklappbare Karte: dasselbe Fach wie oben, eigener kurzer Name.
     aussenfachKarte: 'Tasca esterna',
     aussenfachKarteSub: 'Gli stessi strumenti, da riporre',
-    menuAlle: 'Tutti gli strumenti nel bagaglio',
+    menuAlle: 'Tutti gli strumenti nello zaino',
     packed: '{done} di {total} inseriti',
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',
     obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata', geld: 'Portamonete' },

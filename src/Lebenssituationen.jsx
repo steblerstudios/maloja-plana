@@ -110,7 +110,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
   return React.createElement('div', { style: { maxWidth: '640px' } },
     React.createElement('h1', {
       style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.3px' }
-    }, t('lebenszustaende.pageTitle')),
+    }, t('dashboard.anspruchTitle')),
     React.createElement('p', {
       style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: leading.relaxed }
     }, t('lebenszustaende.sectionIntro')),

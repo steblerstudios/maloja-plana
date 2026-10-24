@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
-import { text, weight, space, radius, leading } from './config/tokens.js';
+import { text, weight, space, radius, leading, fontFamilyDisplay } from './config/tokens.js';
+import landschaft from './assets/berge/landschaft.webp?url';
 import { erinnerungSichern } from './utils/reminders.js';
 import { useVorlaeufig } from './hooks/vorlaeufigContext.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -51,9 +52,64 @@ const ablaufFarbe = (palette) => {
   return farbe ? { balken: farbe, zeichen: lesbareFarbe(farbe, palette.surface || palette.bg, dunkel, 3) } : null;
 };
 
-export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
+// Schriftfarbe des Bereichs für kleinen Text («Schritt 2 von 4»): 4.5:1 statt 3:1 wie beim Zeichen.
+export const ablaufTextFarbe = (palette) => {
+  let ansicht = null;
+  try { ansicht = typeof window !== 'undefined' ? parseHash() : null; } catch { ansicht = null; }
+  const key = ansicht && ablaufBereich(ansicht.view);
+  if (!key) return null;
+  const dunkel = kontrast(palette.bg, '#FFFFFF') > kontrast(palette.bg, '#000000');
+  const farbe = bereichColor(key, dunkel);
+  return farbe ? lesbareFarbe(farbe, palette.bg, dunkel, 4.5) : null;
+};
+
+// Kopf wie im Mockup Fassung 5 (Entscheid Stebler Studios 23.10.2026, erster Nutzer: Umzug):
+// Landschaftsband oben (Malojapass, halb durchsichtig, getönt in der Bereichsfarbe, läuft in den
+// Grund aus), darauf die Brotkrume «Übersicht › Bereich › Ablauf» als Pille, darunter das
+// Zeichen in einer Kachel neben dem Titel. Ersetzt Balken oben und «← Übersicht» (main.jsx
+// lässt es für 'umzug' weg). Das Band hebt den Rand von <main> selbst auf (24 px oben, 20 px seitlich),
+// damit main.jsx nichts dazulernen muss. `kopf`: { t, onNavigate, bereichTitel, zumBereich }.
+const BAND_HOEHE = 112;
+const MockKopf = ({ palette, farbe, icon, title, kopf }) => {
+  const { t, onNavigate, bereichTitel, zumBereich } = kopf;
+  const stufe = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.mid, padding: 0, minHeight: '44px' };
+  const pfeil = (k) => React.createElement('span', { key: k, 'aria-hidden': 'true', style: { color: palette.soft } }, '›');
+  const balken = farbe ? farbe.balken : palette.sage;
+  return React.createElement(React.Fragment, null,
+    React.createElement('div', { 'aria-hidden': 'true', 'data-ablauf-band': '', style: { position: 'relative', height: BAND_HOEHE + 'px', overflow: 'hidden', margin: '-24px -20px 0' } },
+      React.createElement('div', { style: { position: 'absolute', inset: 0, background: 'url(' + landschaft + ') center 72% / cover', opacity: 0.5 } }),
+      React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + balken + '38 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
+    ),
+    React.createElement('div', { style: { position: 'relative', marginTop: '-52px' } },
+      React.createElement('nav', { 'aria-label': t('nav.pfad'), style: { marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 8px', padding: '0 12px', borderRadius: radius.full + 'px', background: palette.bg + 'B8', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' } },
+          React.createElement('button', { type: 'button', className: 'mp-link', style: stufe, onClick: () => onNavigate && onNavigate('dashboard') }, t('nav.backToDashboard')),
+          bereichTitel && pfeil('p1'),
+          bereichTitel && React.createElement('button', { type: 'button', className: 'mp-link', style: stufe, onClick: zumBereich }, bereichTitel),
+          pfeil('p2'),
+          React.createElement('span', { 'aria-current': 'page', style: { fontSize: text.xs, color: palette.text } }, title)
+        )
+      ),
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
+        icon && React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg + 'px', flexShrink: 0, display: 'grid', placeItems: 'center', background: balken + '2E', boxShadow: 'inset 0 0 0 1px ' + balken + '4D', color: farbe ? farbe.zeichen : palette.text } },
+          React.createElement(Icon, { name: icon, size: 26 })),
+        React.createElement(PageTitle, { palette, style: { fontFamily: fontFamilyDisplay, fontSize: '30px', lineHeight: 1.05, letterSpacing: '-.015em', minWidth: 0 } }, title)
+      )
+    )
+  );
+};
+
+export const AblaufContainer = ({ palette, icon, title, intro, kopf, children }) => {
   const s = styles(palette);
   const farbe = ablaufFarbe(palette);
+  if (kopf) {
+    return React.createElement('div', null,
+      React.createElement(MockKopf, { palette, farbe, icon, title, kopf }),
+      React.createElement('div', { style: s.wrap },
+        intro ? React.createElement('p', { style: s.intro }, React.createElement(GlossarText, { palette }, intro)) : null,
+        children)
+    );
+  }
   return React.createElement('div', { style: farbe ? { ...s.wrap, borderTop: '4px solid ' + farbe.balken, paddingTop: space.md + 'px' } : s.wrap },
     // Kein Rückfall-Zeichen mehr (bis 27.09.2026 'insurance'): ein Ablauf ohne Zeichen zeigt
     // keines, statt still das der Versicherung. Wächter: zeichenEineQuelle.test.js.
@@ -65,11 +121,13 @@ export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
 };
 
 // Ein ruhiger Schritt: Titel + freier Inhalt.
-export const AblaufStep = ({ palette, title, icon, children }) => {
+// `titelStyle` (Fassung 5): der grössere Schritt-Titel im Schritt-für-Schritt.
+export const AblaufStep = ({ palette, title, icon, titelStyle, children }) => {
+  const stil = { margin: space.lg + 'px 0 ' + space.xs + 'px 0', ...titelStyle };
   return React.createElement(React.Fragment, null,
     icon
-      ? React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: icon, size: 20 }), style: { margin: space.lg + 'px 0 ' + space.xs + 'px 0' } }, title)
-      : React.createElement(PanelTitle, { palette, style: { margin: space.lg + 'px 0 ' + space.xs + 'px 0' } }, title),
+      ? React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: icon, size: 20 }), style: stil }, title)
+      : React.createElement(PanelTitle, { palette, style: stil }, title),
     children
   );
 };
@@ -202,11 +260,14 @@ const PASS_PFAD = 'M24 132 C 120 132, 150 104, 96 88 S 70 46, 170 52 S 300 40, 3
 const PASS_STATIONEN = [{ x: 24, y: 132, anteil: 0 }, { x: 96, y: 88, anteil: 0.321 }, { x: 170, y: 52, anteil: 0.644 }, { x: 316, y: 18, anteil: 1 }];
 export const PASS_SCHRITTE = PASS_STATIONEN.length;
 
-export const AblaufPass = ({ palette, aktuell, fertig }) => {
+// `namen` (optional, vier kurze Wörter): die Stationen beschriftet wie im Mockup — unter dem
+// Anfang, links der ersten Kehre, über der zweiten Kehre und links über dem Ziel.
+const PASS_NAMEN_ORT = [{ x: 24, y: 154, anker: 'middle' }, { x: 80, y: 106, anker: 'end' }, { x: 170, y: 34, anker: 'middle' }, { x: 302, y: 4, anker: 'end' }];
+export const AblaufPass = ({ palette, aktuell, fertig, namen }) => {
   const farbe = (ablaufFarbe(palette) || {}).zeichen || palette.sageDeep || palette.sage;
   const stand = fertig ? 1 : PASS_STATIONEN[Math.min(Math.max(aktuell, 0), PASS_SCHRITTE - 1)].anteil;
   return React.createElement('svg', {
-    viewBox: '0 0 340 150', 'aria-hidden': 'true', focusable: 'false', 'data-ablauf-pass': fertig ? 'fertig' : String(aktuell),
+    viewBox: namen ? '0 -10 340 172' : '0 0 340 150', 'aria-hidden': 'true', focusable: 'false', 'data-ablauf-pass': fertig ? 'fertig' : String(aktuell),
     style: { display: 'block', width: '100%', maxWidth: '340px', height: 'auto', margin: '0 0 ' + space.md + 'px' },
   },
     React.createElement('path', { d: PASS_PFAD, fill: 'none', stroke: palette.border, strokeWidth: 12, strokeLinecap: 'round' }),
@@ -220,7 +281,11 @@ export const AblaufPass = ({ palette, aktuell, fertig }) => {
         erledigt
           ? React.createElement('path', { d: `M${p.x - 4} ${p.y} l3 3 5-6`, stroke: palette.bg, strokeWidth: 2.2, fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' })
           : React.createElement('text', { x: p.x, y: p.y + 4, textAnchor: 'middle', style: { fontSize: '11px', fontWeight: 600, fill: jetzt ? farbe : palette.soft } }, String(i + 1)));
-    })
+    }),
+    namen && namen.map((n, i) => React.createElement('text', {
+      key: 'n' + i, x: PASS_NAMEN_ORT[i].x, y: PASS_NAMEN_ORT[i].y, textAnchor: PASS_NAMEN_ORT[i].anker,
+      style: { fontSize: '11px', fill: palette.mid, paintOrder: 'stroke', stroke: palette.bg, strokeWidth: '4px', strokeLinejoin: 'round' },
+    }, n))
   );
 };
 

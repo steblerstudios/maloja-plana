@@ -66,6 +66,17 @@ export function preloadIPVModelle() {
   }
 }
 
+// Wie preloadIPVModelle, aber mit Versprechen: erfüllt, sobald alle 26 Kantonsmodelle UND die PLZ-Daten
+// geladen sind. Für Auswertungen über alle Kantone (data/systemblick.js), die nicht auf «laden» stehen
+// bleiben dürfen. Ein Ladefehler lehnt ab — die Auswertung meldet ihn, statt still Kantone auszulassen.
+export function ladeIPVModelle() {
+  preloadPLZModul();
+  return Promise.all([
+    import('../data/plzGemeinde.js'),
+    ...Object.entries(IPV_MODULE).map(([kt, m]) => m.laden().then((mod) => { _module[kt] = mod; })),
+  ]).then(() => new Promise((r) => setTimeout(r, 0)));
+}
+
 // PLZ-Modul aktiv vorladen UND die Kantonsmodelle — wie bisher, für alle, die von hier importieren.
 export function preloadPLZ() {
   preloadPLZModul();

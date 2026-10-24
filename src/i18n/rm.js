@@ -39,7 +39,6 @@ export default {
       },
     },
     moreInfo: 'Vinavant',
-    pageTitle: 'Situaziuns da vita',
     pageSub: 'Scuvrir dretgs pauc enconuschents',
     // TODO(rm): provisorisch — Gegenlese (Du-Fassung neu, K124, 24.09.2026)
     dashboardLink: { sie: 'Pertutga ina situaziun a Vus?', du: 'Pertutga ina situaziun a tai?' },
@@ -308,6 +307,14 @@ export default {
     fertigText: 'Tut ils quatter pass èn fatgs.',
     // rm ungeprüft F5
     nochmals: 'Guardar puspè il decurs',
+    // rm ungeprüft F5
+    passAdresse: 'Adressa',
+    // rm ungeprüft F5
+    passGemeinde: 'Vischnanca',
+    // rm ungeprüft F5
+    passNachfuehren: 'Actualisar',
+    // rm ungeprüft F5
+    passKuendigen: 'Desdir',
     reminderTitle: 'Bei der neuen Gemeinde anmelden',
     reminderNotes: 'Innert 14 Tagen nach dem Umzug bei der neuen Gemeinde anmelden (und bei der alten abmelden). Ausweis und Mietvertrag mitnehmen.',
     step3Title: '3 · Adresse überall nachführen',
@@ -679,7 +686,8 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step5Text: { sie: 'Ina chasada pli gronda mida quai che As stat a disposiziun. Vossa reducziun da premias (RIP) vegn calculada danovamain sin la nova chasada — ei vala la paina da controllar danovamain. Sche Vus faschais crescher l’uffant suletta u cun in budget stgars, rimnan ils stadis da vita ulteriurs sustegns en in lieu calm.', du: 'Ina chasada pli gronda mida quai che ta stat a disposiziun. Tia reducziun da premias (RIP) vegn calculada danovamain sin la nova chasada — ei vala la paina da controllar danovamain. Sche ti fas crescher l’uffant suletta u cun in budget stgars, rimnan ils stadis da vita ulteriurs sustegns en in lieu calm.' },
     step5LinkIpv: 'Calcular danovamain la reducziun da premias',
-    step5LinkSituation: 'Guardar las situaziuns da vita correspundentas',
+    // rm ungeprüft (23.10.2026, Seite heisst «Was steht mir zu?»)
+    step5LinkSituation: 'Guardar las situaziuns correspundentas sut «A tge hai jau dretg?»',
     relatedTitle: 'Eveniments parents',
     relatedHeirat: 'Maridaglia u partenariat',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -1641,7 +1649,6 @@ export default {
     unterlagen: 'Mes documents',
     flyer: 'Flyer per derasar',
     export: 'Export',
-    calendar: 'Chalender',
     merkliste: 'Mia glista da memoria',
     umzug: 'Midada da domicil',
     unfallkrankheit: 'Accident u malsauna',
@@ -1653,7 +1660,6 @@ export default {
     installApp: 'Installar sco app',
     menu: 'Menu',
     erfassen: 'Agiuntar',
-    anspruch: 'Dretgs',
     // Kurzname des Wanderrucksacks für die untere Leiste am Handy (27.09.2026).
     rucksack: 'Sac à dos',
     // Fassung 5 · Menü (23.10.2026): eigener Menü-Name für den Kalender-Anker — nav.calendar
@@ -3726,6 +3732,12 @@ export default {
     yourCanton: { sie: 'Voss chantun', du: 'Tes chantun' },
     privacyNote: { sie: 'Vossas indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.', du: 'Tias indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.' },
     skipForNow: 'Sursiglir per il mument',
+    // App installada vida (Onboarding.jsx, zurSicherungWechseln) — TODO(rm): Gegenlese
+    appLeer: {
+      titel: 'Gia emplenì en il navigatur?',
+      text: { sie: 'L\'app installada ha in agen spazi da memoria. Quai che Vus avais endatà en il navigatur n\'è perquai anc betg qua. Faschai en il navigatur sut «Export» ina segirezza e restituì ella qua.', du: 'L\'app installada ha in agen spazi da memoria. Quai che ti has endatà en il navigatur n\'è perquai anc betg qua. Fa en il navigatur sut «Export» ina segirezza e restituescha ella qua.' },
+      knopf: 'Restituir ina segirezza',
+    },
     stepOf: 'Pass {current} da {total}',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     needsTitle: { sie: 'Tge pertutga Vus en quest mument?', du: 'Tge pertutga tai en quest mument?' },
@@ -6449,8 +6461,6 @@ export default {
   },
   calendar: {
     // rm ungeprüft F5
-    title: 'Tge ch\'è proxim',
-    // rm ungeprüft F5
     aufgabe: 'Incumbensa',
     // rm ungeprüft F5
     ausMerkliste: 'ord la glista da memoria',
@@ -6601,9 +6611,7 @@ export default {
     b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   gepaeck: {
-    title: 'Sac à dos de randonnée',
     intro: 'Chaque domaine de la vie est un équipement dans le sac à dos. Déballez, ouvrez un objet — à l’intérieur se trouvent les chemins de la vie. Un chemin mène à son parcours guidé.',
-    link: 'Sac à dos de randonnée',
     ctaSub: 'Les événements de la vie comme équipement — déballer, regarder à l’intérieur.',
     unpack: 'Déballer',
     pack: 'Remballer',

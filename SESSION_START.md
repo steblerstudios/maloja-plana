@@ -17,7 +17,7 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
-> 🧩 **Nachtrag 24.10.2026, 19:25 — Seiten bündeln: Blatt + Entscheide + erster Schritt (`#/charts` → Kapitel Finanzen) auf Zweig `feat/charts-umleitung` `78566302`. NICHT gepusht, kein PR.**
+> 🧩 **Nachtrag 24.10.2026, 19:25 — Seiten bündeln: Blatt + Entscheide + erster Schritt (`#/charts` → Kapitel Finanzen) auf Zweig `feat/charts-umleitung` `78566302`, PR #556. NICHT live.**
 >
 > **Gemessen:** ≈ 91 sichtbare Seiten (86 Ansichten in `main.jsx` + 7 Kapitel; Aug./Sep. 65, ab Okt. 86).
 > Entscheidungsblatt `docs/entscheide/seiten-buendeln.md`: neun Gruppen, Ziel ≈ 15 Seiten weniger, sechs Entscheide
@@ -26,10 +26,48 @@
 > Belegt: 6637 Tests grün, Lint 0, Build ok, Browser 375 px (Beispiel Maria): `#/charts` → `#/chapter/2`, Auswertung oben,
 > Geldfluss sichtbar — wie `#/finanzuebersicht`. Pre-Commit-Hook lief erst im dritten Anlauf grün (Timeouts unter Last nach
 > App-Neustarts, Load bis 26; die betroffenen Dateien einzeln grün).
-> **Offen:** Der Zweig steht auf dem **ungepushten** Stapel `feat/charts-geldfluss` (Finanzen-Fusion Schritte 1–5,
-> Geldfluss, Spinnennetz, Kalender) — 19 Commits vor `origin/main`. Ein PR zeigt sie alle; vor dem Push klären, ob als
-> ein Entwurfs-PR oder gestapelt. Weg fällt der BVG-Hinweis der Charts-Seite (steht weiter auf Budget/Steuer). Nächste
-> Schritte laut Blatt: A Ansprüche, F Ausgesteuert.
+> **Später am 24.10.:** auf Zuruf gepusht; der Stapel `feat/charts-geldfluss` als #555 gemergt (`ec92c798`), dieser Zweig
+> als #556 darauf. Weg fällt der BVG-Hinweis der Charts-Seite (steht weiter auf Budget/Steuer). Nächste Schritte laut
+> Blatt: A Ansprüche, F Ausgesteuert. **Nichts davon ist live.**
+
+> 📱 **Nachtrag 23.10.2026, 18:40 — Fusszeile, Kopfzeile, Scroll-Fix (#545) gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 18:36): main = `55ca1e93` (#545, 18:31) · live = `4299bfb9` (0.1.48-beta, 18:08,
+> ⚠️ laut Skript aus ungespeichertem Arbeitsbaum gebaut) · 8 Commits dazwischen · offen: #549 (dieser Doku-Nachzug), #548, #547.
+> **Inhalt #545:** Boden-Anker am Handy 5 statt 7 Plätze (Übersicht · Rucksack | ＋ | Anspruch · Menü; Kalender im ＋-Fächer
+> und Menü, Suche im Menü). Kopfzeile Handy **und** Desktop: Lupe + Zahnrad (Desktop: Zahnrad ersetzt die Barrierefreiheits-
+> Figur, gleiche Schublade). Scroll-Springen behoben: `filter: grayscale` lag auf dem App-Rahmen und machte ihn zum Bezugsrahmen
+> für `position: fixed` (gemessen 4716 px statt 812 px) → Filter jetzt auf `<html>`; dazu `translateZ(0)` an der Leiste.
+> **Verifiziert:** vitest 363 / 6550 grün, build ok, size 64,55 / 65 kB, CI grün; im Browser 375 px und 1280 px angeschaut.
+> **Nicht verifiziert:** echtes iPhone/Android (das Zittern beim Ein-/Ausfahren der Adressleiste ist nur vorbeugend behandelt).
+> **Lehre:** Zwei Sitzungen im selben Checkout — eine wechselte den Zweig zwischen Build und Commit, der Commit landete auf dem
+> fremden Zweig. Parallel arbeitende Sitzungen gehören in **eigene Arbeitsbäume** (`git worktree add`), nie in denselben Ordner.
+> **Nächster Schritt:** nächster Deploy (Stebler Studios) nimmt #545 mit; danach live am Handy prüfen (Schwarzweiss an, scrollen).
+
+> 🏷️ **Nachtrag 23.10.2026, 18:21 — Ein Name je Seite. Branch `fix/ein-name-pro-seite`, PR gegen main offen, NICHT gemergt, NICHT live.**
+>
+> **Anlass (Stebler Studios):** Dieselbe Seite hatte drei Namen — unten «Anspruch», im Rucksack «Was steht mir zu?», als
+> Titel «Lebenssituationen». **Regel ab jetzt: eine Seite, ein Name, ein i18n-Schlüssel** — Leiste, Menü, Seitentitel,
+> Suche, «Zurück zu …» und Panorama lesen denselben Schlüssel. Entscheid: auch in der schmalen Leiste der volle Name
+> (bricht zweizeilig um), keine Kurzform.
+>
+> **Commits:** `05721a4b` Namen · `d1503f21` Leiste (Zeichen bleiben auf einer Linie, wenn ein Name umbricht).
+> - `situationen` → `dashboard.anspruchTitle` («Was steht mir zu?»). Im Menü stand die Seite **doppelt** (Anker +
+>   Werkzeug «Lebenssituationen») — jetzt nur noch als Anker. Link in «Kind bekommen» umformuliert.
+> - `calendar` → `nav.wasAnsteht` («Was ansteht»; vorher in Suche/«Zurück zu …» «Kalender»). Suche findet weiter
+>   «Kalender» (Aliase in allen fünf Sprachen). Hebt die Fassung-5-Regel «nav.calendar bleibt Kalender» (heute Morgen) auf.
+> - `gepaeck` → `nav.rucksack` («Rucksack»; vorher Titel + Panorama «Wanderrucksack»). Menü: «Alle Werkzeuge im Rucksack».
+> - Gelöscht in allen fünf Sprachen: `nav.anspruch`, `nav.calendar`, `calendar.title`, `gepaeck.title`, `gepaeck.link`,
+>   `lebenszustaende.pageTitle`. Wächter: `src/__tests__/einNameJeSeite.test.js`.
+>
+> **Verifiziert:** vitest 362 Dateien / 6534 grün · eslint 0 · build ok. Leiste im Browser bei 375 px gemessen: alle Zeichen
+> auf derselben Höhe; bei 320 px in allen fünf Sprachen höchstens zwei Zeilen (Messtexte in der Leistenschrift, Sprache
+> nicht echt umgestellt). **Nicht** auf echtem iPhone, **nicht** live.
+>
+> **Offen:** (1) rm-Gegenlese: neuer Linktext «rm ungeprüft»; `nav.rucksack` ist in rm.js französisch («Sac à dos»).
+> (2) Nach dem Merge live am Handy prüfen, ob die zweizeilige Leiste ruhig steht. (3) `ipv_rechner_28.html` im Stamm, ungetrackt,
+> nicht aus dieser Sitzung. *Nachgetragen 18:50:* origin/main (#545, #548, #549, Tor 0.1.48) hineingemergt; main hatte
+> `calendar.title` parallel auf «Was ansteht» angeglichen — Schlüssel bleibt gelöscht, Text identisch mit `nav.wasAnsteht`.
 
 > 🚪 **Nachtrag 23.10.2026, 17:45 — Deploy-Tor 0.1.48-beta (Nachzug 29.10.) auf Zweig `release/0.1.48-beta` `c88ee519`: 0 Blocker. Marke NICHT gesetzt, NICHT deployt.**
 >
