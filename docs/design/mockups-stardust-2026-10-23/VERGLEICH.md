@@ -800,3 +800,21 @@ Entwurf: `seiten-v5.html?nur=z` (f5fe7e6d). Bild heute: `heute-kapitel-wohnen.jp
 «Ausprobieren: andere Miete», «Nettomiete einer neuen Wohnung», «Frei verfügbar danach», Durchspiel-Hinweis,
 «Zurück auf die heutige Miete», Passend-Untertitel.
 **Voraussetzung im Bau:** Anteil am Haushaltseinkommen aus der einen Monatsrechnung (🔴 1).
+
+### Kapitel Versicherungen & Vorsorge (AA) · entschieden (Sophie, 24.10.2026)
+
+Entwurf: `seiten-v5.html?nur=aa` (0e2e55d7, dacd7fda). Bild heute: `heute-kapitel-versicherungen.jpg`.
+- Zusammenfassungs-Satz ruhig unter dem Kopf statt im grünen Kasten.
+- **Hauptzahl** (Sophie: «Prämien pro Monat + Schutzschild & Franchise-Kreuz dazu»): «Versicherungen pro Monat»
+  aus den erfassten Prämien (Maria: KK 385 + Hausrat 22/Jahr ≈ 2 = 387); nicht erfasste Prämien werden genannt,
+  die Pensionskasse als Lohnabzug ausgewiesen. **Schutzschild** als eine Zeile «Pflicht 3/3 · Empfohlen 2/2» zum
+  Aufklappen statt zwei grosser Schilde. **Franchise-Kreuz** (`FranchiseKreuz`, wie Prämien-Orientierung) mit
+  dem App-Satz «Eher 2’500 (Schätzung, Prämien 2026)» und einem Erklärsatz.
+- Angaben in Abschnitten; leere Abschnitte (Sozialversicherung, Mobilität) zu einer Zeile zusammengefasst.
+- **Passend** (Sophie wählte alle vier): Prämienverbilligung prüfen · Krankenkasse wechseln (Ablauf, Frist
+  30.11.) · Vorsorge-Rechner · Policen ablegen. **Als Nächstes:** Ausbildung & Arbeit.
+
+**Befund Beispielprofil / Datenmodell:** Haftpflicht «Versicherungssumme CHF 35» (`liabilityAmount: '35'`) ergibt
+keinen Sinn; ein Feld für die Haftpflicht-*Prämie* fehlt, darum fliesst sie nicht in «pro Monat». Vor dem Bau klären.
+**Copy-Prüfer:** «Versicherungen pro Monat», Hinweis zu nicht erfassten Prämien, Erklärsatz Franchise-Kreuz,
+Passend-Untertitel.
