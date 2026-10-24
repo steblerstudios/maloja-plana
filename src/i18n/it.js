@@ -1507,7 +1507,7 @@ export default {
       stipendien: 'Sussidi di formazione, cantonale',
       alv: "Stima dell'indennità giornaliera",
       asyl: "Orientamento nella procedura d'asilo",
-      taxes: 'Calcola l\'imposta federale',
+      taxes: 'Stimare il carico fiscale',
       sozialhilfe: 'Orientamento SKOS',
       direktlinks: 'Autorità e uffici',
       tresor: 'Archivio sicuro',

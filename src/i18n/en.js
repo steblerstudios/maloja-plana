@@ -1506,7 +1506,7 @@ export default {
       stipendien: 'Education grants, cantonal',
       alv: "Estimate daily allowance",
       asyl: "Orientation in the asylum process",
-      taxes: 'Calculate federal tax',
+      taxes: 'Estimate tax burden',
       sozialhilfe: 'SKOS orientation',
       direktlinks: 'Authorities & offices',
       tresor: 'Secure storage',

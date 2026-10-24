@@ -1768,7 +1768,7 @@ export default {
       stipendien: 'Contribuziuns da furmaziun, chantunal',
       alv: "Stimar l'indemnisaziun dal di",
       asyl: "Orientaziun en la procedura d'asil",
-      taxes: 'Calcular la taglia federala',
+      taxes: 'Stimar la chargia fiscala',
       sozialhilfe: 'Orientaziun COSAS',
       direktlinks: 'Autoritads & uffizis',
       tresor: 'Deposita segira',

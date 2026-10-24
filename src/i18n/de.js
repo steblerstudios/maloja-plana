@@ -1508,7 +1508,7 @@ export default {
       eo: 'Mutterschaft, Vaterschaft, Adoption, Betreuung',
       stipendien: 'Ausbildungsbeiträge, kantonal',
       alv: "Taggeld abschätzen",
-      taxes: 'Bundessteuer berechnen',
+      taxes: 'Steuerbelastung abschätzen',
       sozialhilfe: 'SKOS-Orientierung',
       direktlinks: 'Behörden & Ämter',
       tresor: 'Sichere Ablage',
