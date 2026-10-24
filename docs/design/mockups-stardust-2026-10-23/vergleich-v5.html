@@ -328,7 +328,7 @@ document.getElementById('seiten').innerHTML = SEITEN.map((s, i) => `
     <h2>${s.titel}</h2>
     <div class="nebeneinander">
       <div><div class="etikett"><b>Heute</b>${s.bausteine ? ' · ' + s.bausteine + ' Bausteine' : ''}${s.heuteHinweis ? ' · ' + s.heuteHinweis : ''}</div>${(s.heuteBilder || [[s.heuteBild, '']]).map(([b, l]) => `${l ? `<div class="etikett" style="margin-top:8px">${l}</div>` : ''}<div class="foto"><img src="${b}" alt="${l || s.titel} heute"></div>`).join('')}</div>
-      <div><div class="etikett"><b>Neu</b> · ${s.neu.startsWith('seiten-v5') ? 'Fassung 5' : 'Fassung 4 (Eingang unverändert)'} — antippen erlaubt · <a href="${s.neu.replace('?nur=', '#').replace('index.html#eingang', 'index.html').replace('index.html#uebersicht', 'index.html')}" target="_blank">ganz öffnen</a></div><iframe data-src="${s.neu}" title="${s.titel} neu" loading="lazy"></iframe></div>
+      <div><div class="etikett"><b>Neu</b> · ${s.neu.startsWith('seiten-v5') ? 'Fassung 5' : 'Fassung 4 (Eingang unverändert)'} — antippen erlaubt · <a href="${s.neu.replace('?nur=', '#').replace('index.html#eingang', 'index.html').replace('index.html#uebersicht', 'index.html')}" target="_blank">ganz öffnen</a></div><iframe data-src="${s.neu}${s.neu.includes('?') ? '&' : '?'}t=${Date.now()}" title="${s.titel} neu" loading="lazy"></iframe></div>
     </div>
     <div class="filter" role="group" aria-label="Filter">${['alle', 'fehlt', 'anders', 'drin', 'neu'].map((f) => `<button data-f="${f}" aria-pressed="${f === 'alle'}">${f === 'alle' ? 'Alle' : ST[f]}</button>`).join('')}</div>
     <table><thead><tr><th>Element</th><th>Heute</th><th>Fassung 5</th><th>Stand</th></tr></thead><tbody>
