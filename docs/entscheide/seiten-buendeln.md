@@ -192,6 +192,22 @@ verschiedene Dinge hinter ähnlichen Namen stehen.
    (`swiss-precision-pruefer`, `rechts-pruefer`)?
 6. **Ablauf + Formular (G):** getrennt lassen?
 
+> ✅ **Entschieden 24.10.2026** (Stebler Studios, Auswahl-Dialog, alle sechs je die empfohlene Option):
+> 1. **Ziel:** ≈ 15 Seiten weniger — die neun Gruppen wie oben, je mit Umleitung. Kein
+>    grundsätzlicher Umbau «jedes Werkzeug in sein Kapitel».
+> 2. **Reihenfolge:** klein zuerst — I `charts`, A Ansprüche, F Ausgesteuert; dann D Notfall,
+>    H Ablage, E Geldsorgen; zuletzt B KK-Werkzeuge. (Die übrigen Teile von I — Importe — mit H.)
+> 3. **IPV:** bleibt eigene Seite. Nur `praemien` und `kvg` ins Kapitel Versicherungen.
+> 4. **Notfall:** die Vorlesekarte bleibt eigene Seite. `notfalleinstieg` geht im Kapitel Notfall
+>    auf, Pass und Dossier werden Ausgänge dort.
+> 5. **Geldsorgen:** `mahnung` + `betreibung` werden ein Ablauf «Rechnung nicht bezahlt» mit
+>    Stufen-Einstieg — **mit neuer Fachprüfung** (`swiss-precision-pruefer`, `rechts-pruefer`).
+>    Betreibungsauszug und Schulden bleiben.
+> 6. **Ablauf + Formular:** getrennt. Zu prüfen ist nur, dass Vorsorgeauftrag → Patientenverfügung
+>    und Todesfall → Bestattung verlinken.
+>
+> **Noch nichts gebaut.** Nächster Schritt nach Entscheid 2: `charts` → `UMLEITUNGEN`.
+
 ## 5 · Was je Bündelung gilt (wie bei Finanzen)
 
 - Alte Adresse → `UMLEITUNGEN`, nie toter Link. Suche, Menü, Dashboard zeigen aufs neue Ziel.
