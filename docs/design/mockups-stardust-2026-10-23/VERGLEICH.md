@@ -860,6 +860,28 @@ Entwurf: `seiten-v5.html?nur=ac` (f474dbda, 7c1003d9). Bild heute: `heute-kapite
 **Befund App:** Werte in der schmalen Spalte brechen mitten im Wort («Kantonsspita / l Zürich»,
 `overflowWrap: anywhere`, `ChapterView.jsx:1860`) — vermutlich alle Kapitel. Umbruch nur zwischen Wörtern.
 
+### Kapitel Behörden & Rechtliches (AD) · entschieden (Sophie, 24.10.2026)
+
+Entwurf: `seiten-v5.html?nur=ad` (8bc8662e). Bild heute: `heute-kapitel-behoerden.jpg`.
+- **Weg** (Sophie: «Weg»): der Kasten «Folgende Stände und Fristen sind erfasst» (`ChapterView.jsx:1884`), er
+  wiederholt die Angaben rechts.
+- **Oben** (Sophie wählte alle drei): **Steuerfrist** als Kalenderblatt mit dem App-Satz zur Frist und «Alles zu
+  Ihren Steuern ›» → Steuern (J) · **Behördengänge** offen statt zugeklappter Checkliste, mit Weg zum Werkzeug
+  (Steuern, Betreibungsauszug, Ausweis); «Steuererklärung eingereicht» als Vorschlag automatisch, wenn «Offene
+  Steuererklärungen 0» · **Für den Fall der Fälle**: Testament, Vorsorgeauftrag, Patientenverfügung als drei Felder
+  mit Weg zu «Vorsorgeauftrag & Patientenverfügung»; «Patientenverfügung hinterlegt» fällt aus den Behördengängen.
+- Zusammenfassung ruhig unter dem Kopf, ergänzt um Steuererklärung und Betreibungsregister. Vertretung leer →
+  «Rechtliche Vertretung: nicht erfasst».
+- **Passend** (Sophie, alle): Steuern · Betreibungsauszug bestellen · Betreibung erhalten · Vorsorgeauftrag &
+  Patientenverfügung · Briefvorlagen · Dokumente ablegen. Je nach Angaben: Betreibungsregister «Einträge» →
+  Betreibung erhalten und Schulden-Hilfe nach oben. **Als Nächstes:** Notfall. «Der Stand ist dokumentiert.» bleibt.
+
+**Befund Beispielprofil:** Steuerfrist 30.09.2026 liegt in der Vergangenheit (App: «vor 24 Tagen»). Auf eine
+kommende Frist setzen; welche Frist im Kanton gilt, mit Quelle prüfen (Swiss-Precision-Prüfer), nicht raten.
+**Befund App:** «ZH-2024-123456» bricht in der Wertspalte um (wie AC).
+**Copy-Prüfer:** Zusammenfassung, «Steuererklärung fällig am …», «Alles zu Ihren Steuern», «Behördengänge»,
+«1 von 5 erledigt», «Für den Fall der Fälle» mit Satz, «Rechtliche Vertretung: nicht erfasst», Passend-Untertitel.
+
 ### Feinschliff, gilt für alle Kapitel (24.10.2026)
 
 Zusammenfassungs-Satz mit Abstand und normaler Schrift (`.kap-zus`); Zwischentitel im Kapitel einheitlich
