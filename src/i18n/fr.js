@@ -2008,6 +2008,8 @@ export default {
         haushaltBleiben: "Pour tout le ménage, il reste {betrag}",
         haushaltFehlen: "Pour tout le ménage, il manque {betrag}",
         haushaltWie: "Calculé comme sur la page Budget, en comptant aussi le revenu de la ou du partenaire.",
+        // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        teil: { wohnen: "Logement", versicherungen: "Assurances", steuern: "Impôts", uebriges: "Autres" },
       },
       passend: {
         titel: "En lien avec ce domaine",
