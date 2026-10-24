@@ -882,7 +882,7 @@ kommende Frist setzen; welche Frist im Kanton gilt, mit Quelle prüfen (Swiss-Pr
 **Copy-Prüfer:** Zusammenfassung, «Steuererklärung fällig am …», «Alles zu Ihren Steuern», «Behördengänge»,
 «1 von 5 erledigt», «Für den Fall der Fälle» mit Satz, «Rechtliche Vertretung: nicht erfasst», Passend-Untertitel.
 
-### Kapitel Notfall (AE) · entschieden (Sophie, 24.10.2026)
+### Kapitel Notfall (AE) · entschieden (Sophie, 24.10.2026) ⟨überholt am selben Tag, siehe «ein Ort» unten⟩
 
 Entwurf: `seiten-v5.html?nur=ae` (ef0f5474). Bild heute: `heute-kapitel-notfall.jpg`.
 - **Oben** (Sophie wählte alle drei): **Vorschau der Karte zum Drucken** (Papierkarte aus `notfallkarteAbschnitte`,
@@ -904,6 +904,35 @@ Zeilen (wie AC, AD).
 **Copy-Prüfer:** Zusammenfassung, «Ihre Notfallkarte — Vorschau», Satz zur Brieftasche, «Alles für den Ernstfall»,
 Vorsorge-Satz, «1 von 4 geregelt», «Medikamente und Vorerkrankungen: nicht erfasst», «Alle Kapitel durchgegangen»,
 Passend-Untertitel (u. a. «Festhalten, was Ihnen wichtig ist» ist neu).
+
+### Kapitel Notfall (AE) · ein Ort, entschieden (Sophie, 24.10.2026)
+
+Sophie: «hatten wir nicht besprochen, dass wir die Notfall-Sachen zusammenbringen, ergänzen?» — in den Dateien
+stand das nicht (Runde 5: «Das Kapitel Notfall bleibt der Ort zum Eintragen»). Auf Claudes Empfehlung: «bau AE so
+um, dass das Kapitel Notfall der eine Ort ist und P wegfällt». Danach zweimal «geht noch besser», dann «Jetzt passt
+es» mit allen vier Neuerungen der dritten Fassung. Commits 6eb70507, 758824d5, 54edd269.
+**Ersetzt** in Runde 5 den Punkt «P Notfall … Das Kapitel Notfall bleibt der Ort zum Eintragen».
+
+- **P entfällt:** `#/notfalleinstieg` leitet ins Kapitel; die Übersichtskarte führt ins Kapitel. Q, R, S behalten
+  Brotkrume «Übersicht › Notfall › …» und die Zeile der Schwesterseiten (erster Eintrag: das Kapitel).
+- **Im Ernstfall** zuoberst: roter Knopf «Notfallkarte öffnen» mit 144 · 117 · 118 (aus Q), **bleibt beim Scrollen
+  stehen**; darunter **«Peter Muster anrufen»** (Telefon-Link der Notfall-Kontaktperson).
+- **Bereit für den Ernstfall:** «19 von 20» (die verschiedenen Angaben der drei Szenarien aus P) mit Balken, darunter
+  **nur das Fehlende, gleich hier ausfüllbar** (Feld, «Speichern», «Ich nehme keine» zählt als erledigt wie
+  `naOk`). Angaben aus anderen Kapiteln führen in jenes Kapitel. Die drei Szenarien zugeklappt zum Nachsehen.
+- **Ihre Notfall-Unterlagen:** vier Kacheln Notfallkarte · Notfallpass · Notfall-Dossier · Karte zum Drucken, mit
+  «Alle entstehen aus den Angaben unten»; Druckvorschau zugeklappt mit Knopf «Drucken».
+- **Vorsorge:** vier Felder ✓/○, «1 von 4 geregelt»; offene Felder führen selbst zum Werkzeug («erstellen ›»,
+  «festhalten ›»).
+- Angaben wie zuvor, fehlende Medikamente markiert. **Passend:** nur noch Dokumente ablegen. **Ende:** «Alle
+  Kapitel durchgegangen · Zur Übersicht ›», «Die Informationen sind hinterlegt.», «Ihre Daten bleiben auf diesem Gerät.»
+
+**Weiter offen:** eigener Name für die Karte zum Drucken (zwei Dinge heissen «Notfallkarte»).
+**Zu prüfen vor dem Bau:** die Zahl 20 aus den Szenario-Listen nachzählen; Telefon-Link nur bei erfasster Nummer;
+Ernstfall-Knopf darf beim Stehenbleiben nichts verdecken (Tastatur, Anker unten).
+**Copy-Prüfer:** «Im Ernstfall: Notfallkarte öffnen» mit Nummern-Zeile, «… anrufen», «Bereit für den Ernstfall»,
+«Angaben, die im Notfall gebraucht werden», «fehlt für «Unfall»», «z. B. Name und Dosis», «Ich nehme keine»,
+«Ihre Notfall-Unterlagen» mit Satz, Kachel-Untertitel, «erstellen ›», «festhalten ›».
 
 ### Feinschliff, gilt für alle Kapitel (24.10.2026)
 
