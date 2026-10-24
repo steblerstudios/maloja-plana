@@ -4884,6 +4884,7 @@ export default {
     exportIcs: 'Esporta calendario (.ics)',
     locale: 'it-CH',
     calAria: 'Panoramica del calendario',
+    beispiel: { zahnarzt: 'Dentista: controllo', velo: 'Servizio bici', hausrat: 'Assicurazione economia domestica: verificare la polizza', nebenkosten: 'Verificare il conteggio delle spese accessorie', hausarzt: 'Medico di famiglia: controllo annuale' },
     jahreskreis: {
       title: 'L’anno {year} in sintesi',
       aria: 'Cerchio dell’anno {year}, voci: {count}. Un mese lo apre nel calendario qui sotto.',
@@ -4891,7 +4892,7 @@ export default {
       empty: 'Per quest’anno non è ancora stato inserito nulla.',
       more: '+ altre {count}',
       kvgTitle: 'Disdetta dell’assicurazione di base',
-      kvgSource: 'Ricezione da parte della cassa (LAMal art. 7 cpv. 2); nel fine settimana, il giorno feriale precedente (UFSP)',
+      kvgSource: 'Dalla ricezione della comunicazione del premio (al più tardi il 31 ott., UFSP); ricezione da parte della cassa entro il 30 nov. (LAMal art. 7 cpv. 2). Di sabato, domenica o in un giorno festivo vale il giorno feriale precedente; Maloja non tiene conto dei giorni festivi.',
       taxSource: 'Dal capitolo Autorità',
     },
     exportIcsHint: { sie: 'Aggiunga i Suoi promemoria al calendario del telefono o del computer.', du: 'Aggiungi i tuoi promemoria al calendario del telefono o del computer.' },

@@ -4950,6 +4950,7 @@ export default {
     exportIcs: 'Kalender exportieren (.ics)',
     locale: 'de-CH',
     calAria: 'Kalender-Übersicht',
+    beispiel: { zahnarzt: 'Zahnarzt: Kontrolle', velo: 'Velo-Service', hausrat: 'Hausratversicherung: Police prüfen', nebenkosten: 'Nebenkostenabrechnung prüfen', hausarzt: 'Hausarzt: Jahreskontrolle' },
     jahreskreis: {
       title: 'Das Jahr {year} im Überblick',
       aria: 'Jahreskreis {year}, Einträge: {count}. Ein Monat öffnet ihn im Kalender darunter.',
@@ -4957,7 +4958,7 @@ export default {
       empty: 'Für dieses Jahr ist noch nichts eingetragen.',
       more: '+ {count} weitere',
       kvgTitle: 'Kündigung Grundversicherung',
-      kvgSource: 'Eingang bei der Kasse (KVG Art. 7 Abs. 2); am Wochenende der Werktag davor (BAG)',
+      kvgSource: 'Ab Erhalt der Prämienmitteilung (spätestens 31. Okt., BAG); Eingang bei der Kasse bis 30. Nov. (KVG Art. 7 Abs. 2). An Samstag, Sonntag oder Feiertag gilt der Arbeitstag davor; Feiertage rechnet Maloja nicht mit.',
       taxSource: 'Aus dem Kapitel Behörden',
     },
     exportIcsHint: { sie: 'Fügen Sie Ihre Erinnerungen zu Ihrem Handy- oder Computerkalender hinzu.', du: 'Füge deine Erinnerungen zu deinem Handy- oder Computerkalender hinzu.' },

@@ -113,3 +113,27 @@ describe('Überfällig-Banner im Beispiel (Dashboard)', () => {
     expect(await render(true)).toBe('');
   });
 });
+
+// Beispiel lebendiger (Sophie 24.10.2026): nur das Beispiel Maria beginnt mit ein paar Terminen.
+// Beim Ausprobieren bleibt der Kalender leer; gespeichert wird in beiden nichts (Test oben).
+describe('Kalender: Beispieleinträge nur im Beispiel', () => {
+  const t = createT({ de }, 'de', 'sie');
+  const palette = new Proxy({}, { get: () => '#888888' });
+  const render = async (vorlaeufig, beispiel) => {
+    const { CalendarReminders } = await import('../CalendarReminders.jsx');
+    return renderToStaticMarkup(React.createElement(VorlaeufigContext.Provider, { value: vorlaeufig },
+      React.createElement(CalendarReminders, { palette, t, data: {}, onNavigate: () => {}, beispiel })));
+  };
+  it('Beispiel: Marias Termine stehen da, die echten nicht', async () => {
+    store.or5_reminders = JSON.stringify([{ id: '1', title: 'Echter Zahnarzttermin', dueDate: '2099-01-15', category: 'health', recurrence: 'once', done: false }]);
+    const html = await render(true, true);
+    expect(html).toContain(de.calendar.beispiel.velo);
+    expect(html).not.toContain('Echter Zahnarzttermin');
+  });
+  it('Ausprobieren: leer, keine Beispieltermine', async () => {
+    expect(await render(true, false)).not.toContain(de.calendar.beispiel.velo);
+  });
+  it('echt: nie Beispieltermine', async () => {
+    expect(await render(false, true)).not.toContain(de.calendar.beispiel.velo);
+  });
+});

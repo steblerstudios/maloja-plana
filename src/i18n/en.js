@@ -4982,6 +4982,7 @@ export default {
     exportIcs: 'Export calendar (.ics)',
     locale: 'en-GB',
     calAria: 'Calendar overview',
+    beispiel: { zahnarzt: 'Dentist: check-up', velo: 'Bike service', hausrat: 'Household insurance: review policy', nebenkosten: 'Check service charge statement', hausarzt: 'GP: annual check-up' },
     jahreskreis: {
       title: 'The year {year} at a glance',
       aria: 'Year circle {year}, entries: {count}. A month opens it in the calendar below.',
@@ -4989,7 +4990,7 @@ export default {
       empty: 'Nothing has been entered for this year yet.',
       more: '+ {count} more',
       kvgTitle: 'Cancelling basic health insurance',
-      kvgSource: 'Must reach the insurer (KVG Art. 7 para. 2); on a weekend, the working day before (FOPH)',
+      kvgSource: 'From receipt of the premium notice (by 31 Oct. at the latest, FOPH); must reach the insurer by 30 Nov. (KVG Art. 7 para. 2). On a Saturday, Sunday or public holiday, the working day before applies; Maloja does not account for public holidays.',
       taxSource: 'From the chapter Authorities',
     },
     exportIcsHint: 'Add your reminders to your phone or computer calendar.',

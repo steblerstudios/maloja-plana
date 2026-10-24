@@ -6475,6 +6475,7 @@ export default {
     exportIcs: 'Exportar il chalender (.ics)',
     locale: 'rm-CH',
     calAria: 'Survista dal chalender',
+    beispiel: { zahnarzt: 'Dentist: controlla', velo: 'Service dal velo', hausrat: 'Assicuranza d’inventari: controllar la polizza', nebenkosten: 'Controllar il quint dals custs accessorics', hausarzt: 'Medi da chasa: controlla annuala' },
     jahreskreis: {
       title: 'L’onn {year} en survista',
       aria: 'Ring da l’onn {year}, endataziuns: {count}. In mais al avra en il chalender sutvart.',
@@ -6482,7 +6483,7 @@ export default {
       empty: 'Per quest onn n’è anc nagut endatà.',
       more: '+ {count} ulteriurs',
       kvgTitle: 'Disditga da l’assicuranza da basa',
-      kvgSource: 'Retschavida da la cassa (KVG art. 7 al. 2); la fin d’emna il di da lavur avant (UFSP)',
+      kvgSource: 'Dapi la retschavida da la communicaziun da la premia (il pli tard ils 31 d’oct., UFSP); retschavida da la cassa fin ils 30 da nov. (KVG art. 7 al. 2). Sonda, dumengia u di da festa vala il di da lavur avant; Maloja na quinta betg cun dis da festa.',
       taxSource: 'Dal chapitel Autoritads',
     },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

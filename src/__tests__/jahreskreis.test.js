@@ -62,3 +62,35 @@ describe('Jahreskreis', () => {
     expect(zeichne({ jahr: 2027 })).not.toContain('<line');
   });
 });
+
+// Zeitfenster und Hauptansicht (24.10.2026). Die Fachprüfung vom selben Tag: das Recht auf
+// die KVG-Kündigung beginnt mit der eigenen Prämienmitteilung (KVG Art. 7 Abs. 2), der
+// 31. Oktober ist nur der späteste Mitteilungstag (BAG). Darum kein harter Anfang.
+describe('Jahreskreis: Fristen als Zeitfenster', () => {
+  const kvg = { key: 'k', iso: '2026-11-30', art: 'frist', farbe: '#336699', titel: 'KVG', auslauf: 61, merke: '2026-10-31' };
+
+  it('das Fenster läuft aus: die Deckkraft steigt zum Stichtag hin, der Anfang ist fast unsichtbar', () => {
+    const html = zeichne({ eintraege: [kvg] });
+    const deckkraft = [...html.matchAll(/stroke="#336699" stroke-width="10" stroke-opacity="([\d.]+)"/g)].map((m) => Number(m[1]));
+    expect(deckkraft.length).toBe(10);
+    expect(deckkraft[0]).toBeLessThan(0.1);
+    for (let i = 1; i < deckkraft.length; i++) expect(deckkraft[i]).toBeGreaterThan(deckkraft[i - 1]);
+  });
+
+  it('der 31. Oktober ist ein feiner Strich, kein Anfang des Bogens', () => {
+    const html = zeichne({ eintraege: [kvg] });
+    expect(html).toContain('stroke-dasharray="2 2"');
+    // Das Ausblenden beginnt vor dem 31. Oktober (61 Tage vor dem 30. November).
+    expect(winkelFuerTag('2026-09-30', 2026)).toBeLessThan(winkelFuerTag('2026-10-31', 2026));
+  });
+
+  it('die Quelle nennt Mitteilung, Eingang, Artikel und Feiertage ehrlich', () => {
+    const q = de.calendar.jahreskreis.kvgSource;
+    for (const teil of ['Prämienmitteilung', '31. Okt.', '30. Nov.', 'KVG Art. 7 Abs. 2', 'Feiertag']) expect(q).toContain(teil);
+  });
+
+  it('eingebettet: ohne eigene Karte', () => {
+    expect(zeichne({ eingebettet: true })).not.toMatch(/^<div style="background/);
+    expect(zeichne({})).toMatch(/^<div style="background/);
+  });
+});

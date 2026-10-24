@@ -4916,6 +4916,7 @@ export default {
     exportIcs: 'Exporter le calendrier (.ics)',
     locale: 'fr-CH',
     calAria: 'Aperçu du calendrier',
+    beispiel: { zahnarzt: 'Dentiste : contrôle', velo: 'Service du vélo', hausrat: 'Assurance ménage : vérifier la police', nebenkosten: 'Vérifier le décompte des charges', hausarzt: 'Médecin de famille : contrôle annuel' },
     jahreskreis: {
       title: 'L’année {year} en un coup d’œil',
       aria: 'Cercle de l’année {year}, entrées : {count}. Un mois l’ouvre dans le calendrier ci-dessous.',
@@ -4923,7 +4924,7 @@ export default {
       empty: 'Rien n’est encore inscrit pour cette année.',
       more: '+ {count} autres',
       kvgTitle: 'Résiliation de l’assurance de base',
-      kvgSource: 'Réception par la caisse (LAMal art. 7 al. 2) ; le week-end, le jour ouvrable précédent (OFSP)',
+      kvgSource: 'Dès réception de l’avis de prime (au plus tard le 31 oct., OFSP) ; réception par la caisse jusqu’au 30 nov. (LAMal art. 7 al. 2). Un samedi, dimanche ou jour férié, le jour ouvrable précédent fait foi ; Maloja ne tient pas compte des jours fériés.',
       taxSource: 'Du chapitre Autorités',
     },
     exportIcsHint: { sie: 'Ajoutez vos rappels au calendrier de votre téléphone ou ordinateur.', du: 'Ajoute tes rappels au calendrier de ton téléphone ou ordinateur.' },

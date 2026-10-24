@@ -70,7 +70,7 @@ const ListenMarke = ({ art, farbe }) => {
   return React.createElement('span', { 'aria-hidden': 'true', style: { ...basis, ...form } });
 };
 
-export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMonat, locale, palette, t }) => {
+export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMonat, locale, palette, t, eingebettet }) => {
   const punkte = jahreskreisPunkte(eintraege, jahr);
   const heuteWinkel = winkelFuerTag(heuteIso, jahr);
   const monName = (m) => new Date(2024, m, 1).toLocaleDateString(locale, { month: 'short' });
@@ -86,7 +86,36 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
     onMonat(m);
   };
 
-  return React.createElement('div', { style: { background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md } },
+  // Eingebettet (im Kalender, seit 24.10.2026 die Hauptansicht): ohne eigene Karte.
+  const huelle = eingebettet
+    ? { marginBottom: space.sm + 'px' }
+    : { background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md };
+
+  // Zeitfenster: ein Bogen, der am Stichtag endet und nach vorne ohne harten Anfang ausläuft.
+  // Bewusst kein Startdatum: bei der KVG-Kündigung beginnt das Recht mit dem Erhalt der
+  // eigenen Prämienmitteilung (KVG Art. 7 Abs. 2) — ein fester Anfang wäre falsch
+  // (Fachprüfung 24.10.2026). `merke` zeichnet einen feinen Strich, z. B. «spätestens hier».
+  const fenster = punkte.filter((p) => p.auslauf > 0).map((p) => {
+    const ende = winkelFuerTag(p.iso, jahr);
+    const schritt = (p.auslauf / tageImJahr(jahr)) * 360 / 10;
+    const teile = Array.from({ length: 10 }, (_, i) => {
+      const von = Math.max(0, ende - schritt * (10 - i));
+      const bis = Math.max(0, ende - schritt * (9 - i));
+      if (bis <= von) return null;
+      const [ax, ay] = punkt(von, SPUR);
+      const [bx, by] = punkt(bis, SPUR);
+      return React.createElement('path', { key: i, d: `M ${ax} ${ay} A ${SPUR} ${SPUR} 0 0 1 ${bx} ${by}`, fill: 'none', stroke: p.farbe, strokeWidth: 10, strokeOpacity: 0.06 + i * 0.05 });
+    });
+    const merke = p.merke && winkelFuerTag(p.merke, jahr);
+    const strich = merke !== null && merke !== undefined && (() => {
+      const [ax, ay] = punkt(merke, RING_INNEN + 1);
+      const [bx, by] = punkt(merke, RING_AUSSEN - 1);
+      return React.createElement('line', { key: 'merke', x1: ax, y1: ay, x2: bx, y2: by, stroke: palette.mid, strokeWidth: 1, strokeDasharray: '2 2' });
+    })();
+    return React.createElement('g', { key: 'f' + p.key }, ...teile, strich);
+  });
+
+  return React.createElement('div', { style: huelle },
     React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, t('calendar.jahreskreis.title', { year: jahr })),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px', alignItems: 'center' } },
       React.createElement('svg', {
@@ -111,6 +140,7 @@ export const Jahreskreis = ({ jahr, heuteIso, eintraege, gewaehlterMonat, onMona
           const [bx, by] = punkt(heuteWinkel, RING_AUSSEN + 5);
           return React.createElement('line', { x1: ax, y1: ay, x2: bx, y2: by, stroke: palette.text, strokeWidth: 1.5, strokeLinecap: 'round', 'aria-hidden': 'true' });
         })(),
+        React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, ...fenster),
         React.createElement('g', { 'aria-hidden': 'true', style: { pointerEvents: 'none' } }, punkte.map((p) => React.createElement(Marke, { key: p.key, p, palette }))),
         React.createElement('text', { x: MITTE, y: MITTE - 6, textAnchor: 'middle', fontSize: 18, fontWeight: 600, fill: palette.text, 'aria-hidden': 'true' }, String(jahr)),
         React.createElement('text', { x: MITTE, y: MITTE + 12, textAnchor: 'middle', fontSize: 10, fill: palette.mid, 'aria-hidden': 'true' },
