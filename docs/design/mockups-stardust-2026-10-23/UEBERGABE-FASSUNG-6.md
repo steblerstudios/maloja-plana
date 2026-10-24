@@ -102,6 +102,19 @@ eine Sitzung je Kapitel.
 Querverweise Finanzen ↔ Behörden sind noch nicht gebaut (gehört zum Kapitel Behörden, Runde 9 AD).
 **Kapitel Wohnen** läuft in eigener Sitzung (Zweig von #565).
 
+**Kapitel Wohnen: Instrumente gebaut** (24.10.2026, 22:16): Zweig `feat/f6-wohnen-instrumente` (Worktree
+`_werkbank/f6-wohnen`), Entwurfs-PR #567 (Basis #565), Spitze `72d1afff`. Neues Bauteil
+`components/WohnkostenInstrument.jsx` ersetzt Kasten «Wohnkosten / Einkommen / Anteil» **und** im Kapitel den
+MietVergleich: Wohnkosten pro Monat, Drittel-Marke (Faustregel, nie Vorschrift), Barometer «Miete regional vs.
+Schweiz», Regler 800–3’500 «Ausprobieren: andere Miete» (nur `useState`, Profil unverändert). Einkommen und «Frei
+verfügbar» aus `monatsrechnung.js`; brutto → Netto-Frage. Fachprüfung eingearbeitet: Partner/in («eigenes
+Einkommen»), «teils brutto», Eigentum mit Hypothek (zählt mit, kein Regler), «Es fehlen danach». 6’755 Tests grün,
+Build sauber, Browser 375 px (Maria 1’830 · 29.5 % · frei 2’459; Regler 2’400 → frei 1’709).
+**Offen aus der Fachprüfung (nicht gebaut):** `mietzinsView.rentShareGuide` «viele Vermieter verlangen das sogar»
+unbelegt (steht noch im MietVergleich auf Mietzins-Seite/Finanz-Übersicht) · Feld «Monatsmiete» mehrdeutig →
+«Nettomiete (ohne Nebenkosten)» · `data/mietpreise.js` Quelle «Mietpreiserhebung» vs. «Strukturerhebung», Stand
+2020 beim BFS prüfen · Barometer-Legende bricht bei 375 px um. **Als Nächstes:** Kapitel Versicherungen (AA).
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
