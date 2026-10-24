@@ -818,3 +818,50 @@ Entwurf: `seiten-v5.html?nur=aa` (0e2e55d7, dacd7fda). Bild heute: `heute-kapite
 keinen Sinn; ein Feld für die Haftpflicht-*Prämie* fehlt, darum fliesst sie nicht in «pro Monat». Vor dem Bau klären.
 **Copy-Prüfer:** «Versicherungen pro Monat», Hinweis zu nicht erfassten Prämien, Erklärsatz Franchise-Kreuz,
 Passend-Untertitel.
+
+### Kapitel Versicherungen (AA) · nachgebessert (Sophie, 24.10.2026)
+
+Sophie: «wo ist das Schutzschild hin? achte auf die Details … vielleicht wieder ein Barometer … wie viel vom
+Einkommen», danach «Feinschliff … vergiss die Details nicht», dann «alle drei passen jetzt».
+Commits a0e05c1a, 7c1003d9.
+- **Ihre KK-Last** als Barometer «6.2 % des Einkommens» mit Marke «WHO 10 %» (Skala wie Finanz-Übersicht) und
+  dem kurzen App-Satz.
+- **Schutzschild sichtbar:** zwei kleine Schilde (3/3, 2/2) mit Listen, offen — statt zugeklappter Textzeile.
+- **Franchise-Kreuz** als kleine Fassung des echten (Break-even ≈ 2’050, «bisher 420», Fläche «hohe Franchise
+  günstiger»), darunter Verweis-Zeile «Alles zur Franchise und zum Vergleich» → Versicherungs-Übersicht.
+- Neu oben in «Passend»: «Alle Versicherungen auf einen Blick» → Versicherungs-Übersicht.
+
+### Versicherungs-Übersicht (AB) · entschieden (Sophie, 24.10.2026)
+
+Sophie wählte «Versicherungs-Übersicht» (wie beim Geld: Kapitel zum Eintragen, eine Übersicht für alles).
+Entwurf: `seiten-v5.html?nur=ab` (ec77ee14, 7c1003d9). Bilder heute: `heute-praemien-1/2/3.jpg`.
+- Die **Prämien-Orientierung** (`#/praemien`) wird **«Versicherungs-Übersicht»**, Brotkrume über das Kapitel.
+- Aufbau wie die Finanz-Übersicht: Marken (Kasse · Modell, Franchise, Prämienregion) · **Versicherungen pro
+  Monat** + KK-Last (WHO 10 %), «Was darin steckt» aufklappbar · **Zeilen mit Wert**, je zum Werkzeug: Franchise
+  («Eher 2’500», Break-even, Ersparnis), Krankenkasse wechseln («Kündigung bis 30.11.2026», ohne Countdown),
+  Prämienverbilligung mit Pegel, Gesundheitskosten, KVG-Leistungen, Vorsorge · **Schutzschild** sichtbar ·
+  aufklappbar: das echte **Franchise-Kreuz** mit Reserve-Satz, **Prämie regional** (Regional-Barometer),
+  **Prämienvergleich & Unfalldeckung** mit Referenzprämien je Franchise, **Alle Kassen** (Top 5 + «alle anzeigen»)
+  · Zusatz-Wechsel und KK-Scanner als Zeilen.
+- `#/praemien` leitet weiter; Titel in fünf Sprachen neu (Copy-Prüfer).
+
+**Befund Beispielprofil:** Marias Prämie CHF 385 liegt unter jeder Referenzprämie (günstigste 535.20 bei
+Franchise 1’500); die App meldet «CHF 196 unter der Referenz». Beispiel realistisch machen.
+
+### Kapitel Ausbildung & Arbeit (AC) · entschieden (Sophie, 24.10.2026)
+
+Entwurf: `seiten-v5.html?nur=ac` (f474dbda, 7c1003d9). Bild heute: `heute-kapitel-ausbildung.jpg`.
+- **Oben** (Sophie: «Lohn-Barometer & Lebenslauf-Vorschau»): «Wo steht Ihr Lohn?» mit vier Abschnitten (wie
+  Kapitel Finanzen) und eine Lebenslauf-Vorschau (Papierkarte aus den Angaben) mit «Lebenslauf erstellen ›».
+- Zusammenfassung ruhig unter dem Kopf, ergänzt um Arbeitgeber, Dauer (aus «Anstellung seit») und Wochenstunden.
+- **Passend** (Sophie, alle): Lebenslauf erstellen · Neue Stelle · Stelle verloren · Stundenlohn & Mindestlohn ·
+  Diplome ablegen. **Als Nächstes:** Behörden & Rechtliches.
+
+**Befund App:** Werte in der schmalen Spalte brechen mitten im Wort («Kantonsspita / l Zürich»,
+`overflowWrap: anywhere`, `ChapterView.jsx:1860`) — vermutlich alle Kapitel. Umbruch nur zwischen Wörtern.
+
+### Feinschliff, gilt für alle Kapitel (24.10.2026)
+
+Zusammenfassungs-Satz mit Abstand und normaler Schrift (`.kap-zus`); Zwischentitel im Kapitel einheitlich
+(`.kap-h`: «Ihre KK-Last», «Schutzschild», «Franchise-Kreuz», «Wo steht Ihr Lohn?», «Miete regional vs. Schweiz» …);
+Barometer-Beschriftungen kurz (kein Umbruch); Tausender-Zeichen «’».
