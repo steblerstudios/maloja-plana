@@ -110,9 +110,13 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   };
 
   // ── Der Rucksack (klickbar: ein-/auspacken) ─────────────────────────────────
+  // Nur für Maus und Finger: der Knopf darunter trägt dieselbe Handlung. Sonst stand
+  // «Wieder einpacken» für Tastatur und Vorlesen zweimal hintereinander (Fassung 6).
   const bag = h('button', {
+    type: 'button',
     onClick: () => setPacked((p) => !p),
-    'aria-label': packed ? t('gepaeck.unpack') : t('gepaeck.pack'),
+    tabIndex: -1,
+    'aria-hidden': 'true',
     style: { appearance: 'none', background: 'none', border: 'none', padding: 0, cursor: 'pointer', width: '128px' },
   },
     h('svg', { viewBox: '0 0 200 220', width: '100%', 'aria-hidden': 'true', style: { display: 'block' } },
@@ -135,6 +139,7 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode, chapters }) 
   );
 
   const toggle = h('button', {
+    type: 'button',
     onClick: () => setPacked((p) => !p),
     style: {
       fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, cursor: 'pointer',
