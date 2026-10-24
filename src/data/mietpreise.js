@@ -1,6 +1,10 @@
 // Durchschnittliche Netto-Monatsmiete (ohne Neben-/Heizkosten) pro Wohnung,
 // nach Kanton und Zimmerzahl. Quelle: BFS Strukturerhebung, Tabelle
 // „Mietpreis in Franken nach Zimmerzahl und Kanton" (asset 20784921), Stand 2020.
+// Nachgesehen 24.10.2026 beim BFS (je-d-09.03.03.01): Erhebung heisst «Mietpreis-Strukturerhebung»
+// (fr «Enquête de structure sur les loyers», it «Rilevazione strutturale sugli affitti») — so steht
+// es jetzt in der Quellenzeile (vorher «Mietpreiserhebung»). Eine neuere Ausgabe 2010–2024 ist am
+// 05.03.2026 erschienen (asset 36398431); die Werte hier sind noch die von 2020.
 // CHF — direkt vergleichbar mit wohnen.rentAmount (ebenfalls Nettomiete).
 //
 // WICHTIG (Ehrlichkeit): der Total-Schnitt mischt Wohnungsgrössen und ist

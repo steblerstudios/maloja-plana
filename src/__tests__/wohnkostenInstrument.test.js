@@ -198,3 +198,29 @@ describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
     expect(render(p.wohnen, p)).toMatch(/type="range"[^>]*max="4150"[^>]*value="4100"/);
   });
 });
+
+// Offene Befunde der Fachprüfung, nachgezogen 24.10.2026 abends (auf Sophies Zuruf).
+describe('Kapitel Wohnen · Nachzug Fachprüfung', () => {
+  it('kein unbelegter Vermieter-Satz mehr, in keiner Sprache', () => {
+    for (const l of [i18nDe, i18nEn, i18nFr, i18nIt, i18nRm]) {
+      expect(l.mietzinsView.rentShareGuide).not.toMatch(/Vermieter|landlord|bailleur|locator|locatur/i);
+    }
+    expect(i18nDe.mietzinsView.rentShareGuide).toMatch(/feste Grenze ist das nicht/);
+  });
+
+  it('das Feld heisst Nettomiete, ohne Nebenkosten — wie die BFS-Werte, mit denen verglichen wird', () => {
+    expect(i18nDe.chapters.wohnen.fields.rentAmount).toMatch(/^Nettomiete .*ohne Nebenkosten/);
+  });
+
+  it('Quellenzeile nennt die Erhebung so wie das BFS: Mietpreis-Strukturerhebung', () => {
+    expect(i18nDe.po.regionalCompare.rent.source).toMatch(/Mietpreis-Strukturerhebung \{year\}/);
+    expect(i18nFr.po.regionalCompare.rent.source).toMatch(/enquête de structure sur les loyers/);
+    expect(i18nIt.po.regionalCompare.rent.source).toMatch(/rilevazione strutturale sugli affitti/);
+  });
+
+  it('Barometer-Legende: Einträge brechen nicht in sich um', () => {
+    const html = render(profil().wohnen, profil());
+    expect(html).toMatch(/white-space:nowrap[^>]*>.*po\.regionalCompare\.nationalVal/);
+    expect(html).toMatch(/white-space:nowrap[^>]*>.*po\.regionalCompare\.regionalVal/);
+  });
+});

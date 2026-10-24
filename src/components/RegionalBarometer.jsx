@@ -168,16 +168,19 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Werte als Marken (Farben = Encoding). Die Legenden-Marken (`LegendenMarke`) spiegeln
     // die Marken AUF dem Balken in derselben Farbvariablen — eine Marke, eine Farbe.
     // Rein dekorativ (`aria-hidden`), der Wert steht im Text daneben.
+    // Fassung 6 (Feinschliff «Barometer-Beschriftungen kurz, kein Umbruch»): bei 375 px brach
+    // «Schweizer Schnitt: CHF / 1327» mitten im Eintrag. Jetzt bleibt jeder Eintrag ganz und rückt
+    // bei Platzmangel als Ganzes in die nächste Zeile.
     React.createElement('div', {
-      style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
+      style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.xs, color: palette.mid },
     },
       // Strich verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
       // liest man den Strich leicht als „meinen Wert" statt als Referenz.
-      React.createElement('span', null,
+      React.createElement('span', { style: { whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }),
         t(ns + 'nationalVal', { amount: national.toFixed(0) })),
       // Punkt in der Grafik-Farbe des Punkts, Label in der lesbaren Deep-Variante.
-      React.createElement('span', { style: { color: dotTextColor } },
+      React.createElement('span', { style: { color: dotTextColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: dotColor, palette }),
         t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
     ),

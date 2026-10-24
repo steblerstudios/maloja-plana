@@ -1969,7 +1969,7 @@ export default {
         postalCode: 'PLZ',
         city: 'Ort',
         moveInDate: 'Einzugsdatum',
-        rentAmount: 'Monatsmiete CHF',
+        rentAmount: 'Nettomiete CHF/Monat (ohne Nebenkosten)',
         utilities: 'Nebenkosten CHF/Monat',
         landlord: 'Name Vermieter',
         landlordPhone: 'Telefon Vermieter',
@@ -4974,7 +4974,7 @@ export default {
     cantonNote_ZG: 'Nur für Wohnungen, die dem kantonalen Wohnraumförderungsgesetz unterstellt sind (bei der Verwaltung erfragen). Einkommen nach direkter Bundessteuer bis CHF 60’000 (+2’500 je minderjähriges Kind, +20’000 je volljährige Person ab der dritten); zwischen 50’000 und 60’000 nur bei Mietbelastung über 25 %. Reinvermögen bis CHF 144’000 (+16’900 je Kind). Mind. 3 Jahre Wohnsitz oder Arbeitsplatz im Kanton; der Beitrag geht an die Vermieterschaft.',
     compareTitle: { sie: 'Wo steht Ihre Miete?', du: 'Wo steht deine Miete?' },
     rentShare: { sie: 'Ihre Wohnkosten sind {pct}% Ihres Einkommens.', du: 'Deine Wohnkosten sind {pct}% deines Einkommens.' },
-    rentShareGuide: 'Als Faustregel sollte die Miete rund einen Drittel des Einkommens nicht übersteigen — viele Vermieter verlangen das sogar.',
+    rentShareGuide: 'Als grobe Orientierung gilt oft: Wohnkosten bis rund einen Drittel des Einkommens. Eine feste Grenze ist das nicht — bei kleinem Einkommen kann auch weniger schon knapp werden.',
     docsTitle: { sie: 'Was Sie meist brauchen', du: 'Was du meist brauchst' },
     doc1: 'Mietvertrag',
     doc2: 'Einkommensnachweis (Lohn, Rente, Belege)',
@@ -5938,7 +5938,7 @@ export default {
         thresholdBreachedLine: { sie: 'Ihre Miete übersteigt einen Drittel Ihres Einkommens.', du: 'Deine Miete übersteigt einen Drittel Deines Einkommens.' },
         // ⚠️ `www.` ist Pflicht: die nackte Domain bfs.admin.ch ist als HTTPS-Ziel tot
         // (Connection refused) — in Runde 8 belegt.
-        source: 'Quelle: [[BFS|www.bfs.admin.ch]], Mietpreiserhebung {year} · Nettomiete, ohne Nebenkosten',
+        source: 'Quelle: [[BFS|www.bfs.admin.ch]], Mietpreis-Strukturerhebung {year} · Nettomiete, ohne Nebenkosten',
       },
     },
   },
