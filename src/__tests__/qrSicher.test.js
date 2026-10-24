@@ -1,6 +1,6 @@
 // K80 (17.09.2026): QR im Notfall-Dossier fehlte bei längeren Angaben — und schon ein
 // einziger Umlaut verfälschte die Kodierung. Diese Tests halten beides fest.
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -318,6 +318,15 @@ describe('qrZeichnen', () => {
   it('zeichnet den gekürzten langen Umlaut-Text', () => {
     const { text } = qrKuerzen(langerText);
     expect(ohneZeichnen(() => qrZeichnen(element(), text))).toBe(true);
+  });
+
+  // Fassung 6 (24.10.2026): die Android-Erkennung der Bibliothek warf im Strict Mode
+  // «aMat is not defined» — der Notfall-QR fehlte auf jedem Android-Telefon.
+  it('zeichnet auch auf Android', () => {
+    vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/141.0 Mobile Safari/537.36' });
+    try {
+      expect(ohneZeichnen(() => qrZeichnen(element(), 'Notfall'))).toBe(true);
+    } finally { vi.unstubAllGlobals(); }
   });
 
   it('entfernt den Klartext-Tooltip der Bibliothek und beschriftet den Code als Bild', () => {
