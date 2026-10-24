@@ -27,27 +27,33 @@ eigener Grundsatzentscheid auf den Tisch.
 
 ## Stufe 1 — Systemblick: Musterhaushalte durch die Kantonsmodelle (Prototyp gebaut)
 
-- **Was:** Ein erfundener Haushalt (z. B. alleinerziehend, ein Kind, CHF 2'500 netto) wird durch alle 26
-  IPV-Kantonsmodelle gerechnet — dieselben Module, die der Rechner nutzt (`config/cantonalData.js` →
-  `IPV_MODULE`, Belege in `docs/sources/ipv-kantone-2026.md`).
+- **Was:** Die **sieben Modellhaushalte des BAG-Monitorings** (Monitoring 2020, Abb. K-2, mit deren
+  Bruttoeinkommen) werden durch alle 26 IPV-Kantonsmodelle gerechnet — dieselben Module, die der Rechner
+  nutzt (`config/cantonalData.js` → `IPV_MODULE`, Belege in `docs/sources/ipv-kantone-2026.md`). Damit
+  schliessen die Zahlen an die amtliche Reihe an (letzte Daten: 2020).
 - **Code:** `src/data/systemblick.js` · Tests `src/data/__tests__/systemblick.test.js` ·
-  Messung `node scripts/systemblick-messen.mjs` → [`MESSUNG-systemblick-ipv-2026-10-24.md`](MESSUNG-systemblick-ipv-2026-10-24.md).
+  Messung `node scripts/systemblick-messen.mjs` → [`MESSUNG-systemblick-ipv-bag-2026-10-24.md`](MESSUNG-systemblick-ipv-bag-2026-10-24.md).
 - **Daten:** keine neuen. Jede Zahl ist das, was der Maloja-Rechner einer Person mit genau diesem Profil zeigen würde.
 - **Nicht in der App sichtbar.** Kein Route, kein Menü, keine Übersetzung. Ein sichtbarer «Systemblick»
   ist ein eigener Schritt nach Freigabe und Prüfung (siehe «Bevor etwas öffentlich wird»).
 
-### Erste Befunde aus der Messung vom 24.10.2026 (Prototyp, ungeprüft)
+### Befunde aus der Messung vom 24.10.2026, BAG-Modellhaushalte (Prototyp, ungeprüft)
 
-- **Spanne:** Alleinerziehend, ein Kind (7), CHF 2'500 netto, Hauptort: Verbilligung von CHF 2'922 (UR) bis
-  CHF 8'640 (NE) pro Jahr in den 16 Kantonen mit Betrag (Median 4'774).
-- **Lücke in Maloja:** Für Haushalte mit **zwei Erwachsenen** zeigt Maloja heute in keinem Kanton einen
-  Betrag (jedes Kantonsmodell bricht bei `mehrereErwachsene` mit «haushalt» ab). Das betrifft Paare und
-  Familien — vermutlich ein grosser Teil der Menschen, die Verbilligung brauchen. → eigener Backlog-Punkt.
-- **Lücke im System:** TG rechnet nach dem Steuerbetrag, JU nach dem steuerbaren Einkommen. Ohne
-  Steuerveranlagung kann niemand vorab eine Zahl nennen — auch Maloja nicht. Das ist selbst ein Befund
-  («Wer seine Verbilligung kennen will, braucht zuerst die Veranlagung»).
-- **Kinder:** AG, GR und TI zeigen für das Profil mit Kind bewusst keine Zahl (`agKinder`, `grKinder`, `tiKinder`);
-  NW, GL, BL bei tiefem Einkommen nicht (`mindestanspruch`). Gründe je Zelle stehen in der Messung.
+- **Maloja rechnet 2 von 7 BAG-Haushalten.** BAG 1 (Rentnerin) und BAG 3 (Einelternfamilie). Die übrigen fünf
+  stehen in allen 26 Kantonen auf «keine Zahl»:
+  - **zwei Erwachsene** (BAG 2, 4, 5, 7): jedes Kantonsmodell bricht bei `mehrereErwachsene` ab;
+  - **junge Erwachsene 19–25** (BAG 6): eigene Kategorie, oft an eine Ausbildung gebunden, nach der die App nicht fragt.
+  Das ist die grösste Lücke **in Maloja** — Paare, Familien und junge Erwachsene sind ein grosser Teil derer, die
+  Verbilligung brauchen. → eigener Backlog-Punkt, Voraussetzung für einen vollständigen Systemblick.
+- **Spanne Einelternfamilie (BAG 3, Brutto 60'000, zwei Kinder):** Verbilligung von CHF 1'946 (UR) bis CHF 7'344 (GE)
+  pro Jahr in den 16 Kantonen mit Betrag, Median CHF 4'313. Verbilligter Anteil der Haushaltsprämie: 28 % (SH) bis
+  76 % (ZG), Median 52 %. Zum Vergleich BAG 2020 über **alle** sieben Haushalte: 37 % der «Mittleren Prämie» (S. 13) —
+  nicht direkt vergleichbar (anderes Jahr, andere Haushaltsmischung, Maloja-Vereinfachungen).
+- **Rentnerin (BAG 1, Rente 45'000):** in 10 Kantonen kein Anspruch, in 12 zwischen CHF 312 (BS) und CHF 1'490 (AI).
+- **Lücke im System:** TG rechnet nach dem Steuerbetrag, JU nach dem steuerbaren Einkommen. Ohne Steuerveranlagung
+  kann niemand vorab eine Zahl nennen — auch Maloja nicht («Wer seine Verbilligung kennen will, braucht zuerst die Veranlagung»).
+- **Kinder:** AG, GR und TI zeigen für die Einelternfamilie bewusst keine Zahl (`agKinder`, `grKinder`, `tiKinder`),
+  NW, GL, BL nicht (`mindestanspruch`), SZ nicht (`szKinderMindestanspruch`). Gründe je Zelle stehen in der Messung.
 
 ### Grenzen, die jede Darstellung nennen muss
 
@@ -57,7 +63,9 @@ eigener Grundsatzentscheid auf den Tisch.
 2. **Ein Ort je Kanton** (Hauptort). In Kantonen mit Prämienregionen gilt der Betrag nur dort.
 3. **«Keine Zahl» ist nie 0** und zählt nicht in Median, Minimum, Maximum (Test erzwingt das).
 4. **Stand** = Stand der Kantonsmodelle (2026). Ab 2027 neu messen, mit Datum im Dateinamen.
-5. **Musterwerte** (Prämie CHF 450 / 560 / 1'120, Franchise 300, kein 13.) sind gesetzt, nicht erhoben.
+5. **Von Maloja gesetzt**, nicht vom BAG: Geburtsjahre, Kinderalter ganzzahlig (BAG «3.5» → 3), Netto aus Brutto
+   mit dem App-Richtwert (`bruttoZuNettoRichtwert`), Rente = AHV-Maximalrente 2026 + BVG-Rest, Franchise 300, kein 13.
+   Prämie = BAG-Durchschnittsprämie 2026 am Hauptort je Person (`praemienRegionen.js`) ≈ «Mittlere Prämie».
 
 ### Ausbau Stufe 1 (Ideen, nicht beschlossen)
 
@@ -65,7 +73,7 @@ eigener Grundsatzentscheid auf den Tisch.
   (`kantonaleSteuerdaten.js`, ESTV-Stichprobe), **Mietzinsbeiträge** — wo belegt.
 - **Schwelleneffekte:** Bei welchem Lohn kippt ein Haushalt aus der Verbilligung, und was bleibt netto übrig
   («Lohnerhöhung, die nichts bringt»)? Braucht Steuer + IPV + Sozialhilfe zusammen — erst nach swiss-precision-Prüfung.
-- **Paare** erst, wenn die Kantonsmodelle zwei Erwachsene können.
+- **Paare und junge Erwachsene** erst, wenn die Kantonsmodelle sie rechnen können (5 von 7 BAG-Haushalten).
 
 ## Stufe 2 — Öffentliche amtliche Statistik
 
@@ -118,7 +126,7 @@ Verwendung am Original nachlesen**, Wahrheits-Disziplin (`CLAUDE.md`). Keine Zah
 
 - **Methode = Systemblick:** «sieben Modellhaushalte» je Kanton, «in wirtschaftlich bescheidenen Verhältnissen ohne Anspruch
   auf EL oder Sozialhilfe» (S. 11–12, Abb. K-2), u. a. Einelternfamilie mit zwei Kindern, Bruttoeinkommen CHF 60'000.
-  → Unsere Musterhaushalte sollten sich an diesen sieben orientieren; dann sind die Zahlen anschlussfähig.
+  → Umgesetzt am 24.10.2026: Der Systemblick rechnet genau diese sieben (siehe Stufe 1).
 - **Befund 2020:** verbleibende Prämienbelastung im Schnitt über alle Kantone und Modellhaushalte **13.7 % des verfügbaren
   Einkommens** mit «Standardprämie», **9.4 %** mit «Mittlerer Prämie»; tiefste ZG (7 % / 4 %), höchste NE (19 % / 15 %) (S. 13).
 - **Zielgrösse des Bundesrats** (Botschaft 1991): Die Zielwerte «werden … für rund 20 % der Modellhaushalte erfüllt» (S. 13).
@@ -203,4 +211,5 @@ Verwendung am Original nachlesen**, Wahrheits-Disziplin (`CLAUDE.md`). Keine Zah
 - Armutsgefährdung gesamt 2024: 16,4 % oder 16,2 %? Unterschiedliche Definition (fiktive Miete) klären.
 - BAG-Statistik KV 2024/2025: genaue Tabellennummern zur IPV je Kanton im ZIP bestimmen.
 - Kommt ein BAG-Monitoring mit Daten nach 2020? Beim BAG nachfragen (gehört auch in `docs/sources/FRAGEN-AN-DIE-AEMTER.md`).
-- Musterhaushalte auf die sieben BAG-Modellhaushalte umstellen? Dafür bräuchte Maloja Paare (heute «keine Zahl»).
+- Die BAG-Werte je Modellhaushalt und Kanton 2020 (Anhang D, ab S. 138) als Vergleichsspalte neben die Messung legen?
+  Das zeigt, wie sich die Lage seit 2020 verändert hat. Vorher nachlesen, ob «verfügbares Einkommen» dort mit unserem Netto vergleichbar ist.
