@@ -140,6 +140,18 @@ Steuern ↔ Finanzen) · Notfall (Ernstfall-Knopf, «19 von 20»). Dazu: Hausrat
 Säule 3a ohne Plausibilität (`finanzen-fusion.md` §10) · Mietpunkte aus #567 (unbelegter Satz, «Monatsmiete» mehrdeutig,
 Mietpreise Stand 2020, Barometer-Legende bricht um) · rm-Texte brauchen eine Fachperson.
 
+## Stand 25.10.2026, 00:25 — #567 Kapitel Wohnen: `main` drin, Mietpunkte nachgezogen
+
+#567 hat `main` drin (Merge `024f55be`), Basis auf **`main`** umgestellt, weiter **Entwurf, nicht gemergt**. Spitze
+`cecf22d2`, gepusht. 6’760 Tests grün, Build sauber, Browser 375 px ohne Konsolenfehler. Nachgezogen (Sophie: «magst
+du das noch machen?»): unbelegter Vermieter-Satz weg (`rentShareGuide`, 5 Sprachen) · Feld heisst «Nettomiete
+CHF/Monat (ohne Nebenkosten)» (Abdruck `kapitelAbdruck.txt` erneuert, nur diese Zeile) · Quellenzeile
+«Mietpreis-Strukturerhebung» wie beim BFS (je-d-09.03.03.01) · Barometer-Legende bricht nicht mehr in sich um.
+**Noch offen: Mietpreis-Werte 2024.** Das BFS hat am 05.03.2026 die Ausgabe 2010–2024 veröffentlicht (asset
+36398431); die App zeigt Werte 2020. Nachziehen heisst XLSX laden und alle Kantonswerte neu übertragen —
+eigener Schritt, auf Zuruf. Hinweis für Worktrees: zeigt die App beim Start «Etwas ist schiefgelaufen» mit
+«Invalid hook call», ist der Vite-Cache alt (`node_modules/.vite` wegräumen, neu starten).
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
