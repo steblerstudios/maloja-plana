@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, radius, space } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
-import { sumAllExpenses, sumTotalIncome, monatsAusgaben } from '../utils/monatsrechnung.js';
+import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from '../utils/monatsrechnung.js';
 
 // Geldfluss (Sankey): links, woher das Geld kommt, in der Mitte der Monat, rechts, wohin es
 // geht. Die Breite jedes Bands ist der Betrag. Das Geld fliesst über die Mitte, weil Maloja
@@ -106,14 +106,14 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
   );
 };
 
-// Woher und wohin, aus denselben Feldern wie utils/monatsrechnung.js (sumTotalIncome,
+// Woher und wohin, aus denselben Feldern wie utils/monatsrechnung.js (eigeneEinnahmen,
 // sumAllExpenses) — der Geldfluss rechnet nichts Eigenes. Reicht das Einkommen nicht, steht der
 // Rest links als «Nicht gedeckt», damit beide Seiten gleich breit sind; es wird nichts erfunden.
 // `data` ist das ganze Profil (Wohnen und Versicherungen liefern Miete, Nebenkosten, KK-Prämie).
 export const geldflussDaten = (data, t, palette) => {
   const f = data?.finanzen || {};
   const n = (v) => Number(v) || 0;
-  const income = sumTotalIncome(f);
+  const { total: income, brutto } = eigeneEinnahmen(f);
   const totalExpenses = sumAllExpenses(f, data);
   const remaining = Math.max(0, income - totalExpenses);
   // Dieselben Posten wie die Rechnung (Fassung 6: dazu Hypothek, Gebäudeversicherung,
@@ -132,18 +132,22 @@ export const geldflussDaten = (data, t, palette) => {
   })).filter((x) => x.value > 0);
   const quellen = [
     { label: t('chapters.finanzen.geldfluss.salary'), value: n(f.monthlyIncome), color: palette.sky },
-    { label: t('budgetSync.incomeSide'), value: n(f.sideIncome), color: palette.sage },
+    { label: t(f.sideIncomeType === 'brutto' ? 'budgetSync.incomeSideGross' : 'budgetSync.incomeSide'), value: n(f.sideIncome), color: palette.sage },
     { label: t('chapters.finanzen.geldfluss.familyAllowances'), value: n(f.familienzulagen), color: palette.gold },
     { label: t('chapters.finanzen.geldfluss.alimonyReceived'), value: n(f.alimenteReceived), color: palette.sand },
     { label: t('chapters.finanzen.geldfluss.uncovered'), value: Math.max(0, totalExpenses - income), color: palette.border },
   ].filter((q) => q.value > 0);
   const ziele = ausgaben.concat(remaining > 0 ? [{ label: t('budgetSync.remaining'), value: remaining, color: palette.sage }] : []);
   const beschreibung = t('chapters.finanzen.geldfluss.summary', { income: betrag(income, { hoechstens: 2 }), expenses: betrag(totalExpenses, { hoechstens: 2 }) });
-  return { quellen, ziele, beschreibung };
+  // Brutto erfasster Lohn: kein Fluss — sein «Übrig» läge so nie auf dem Konto, und ohne es
+  // gingen die zwei Seiten nicht auf. Oben steht dann die Frage nach dem Netto (Brutto-Regel,
+  // finanzen-fusion.md; Fachprüfung Fassung 6).
+  return { quellen, ziele, beschreibung, brutto };
 };
 
 export const GeldflussImKapitel = ({ data, t, palette }) => {
-  const { quellen, ziele, beschreibung } = geldflussDaten(data, t, palette);
+  const { quellen, ziele, beschreibung, brutto } = geldflussDaten(data, t, palette);
+  if (brutto) return null;
   return React.createElement(Geldfluss, {
     palette, quellen, ziele, beschreibung,
     titel: t('chapters.finanzen.geldfluss.title'),

@@ -188,3 +188,11 @@ Gebaut (Zweig `feat/f6-monatsrechnung`):
 
 Offen: erfasste Hausrat- und Haftpflichtprämie ins Budget (Entscheid 24.10.2026, VERGLEICH.md) —
 Haftpflicht braucht zuerst ein Prämienfeld.
+
+**Fachprüfung 24.10.2026 (swiss-precision-pruefer), kein Blocker.** Eingearbeitet: Geldfluss zeigt
+bei brutto erfasstem Lohn (auch Nebenerwerb) keinen Fluss mehr; «Hypothek vorhanden? Nein» lässt einen
+stehengebliebenen Betrag nicht mehr zählen; negative Einträge verkleinern die Ausgaben nicht.
+**Schon vorher so, offen (nicht gebaut):** Miete und Hypothek werden ohne Prüfung addiert (Umzug
+mit altem Mietbetrag) · Quellensteuer kann unter «Steuern monatlich» doppelt zählen (Feld-Hinweis
+warnt nicht) · Familienzulagen zählen doppelt, falls schon im eingetragenen Lohn · Säule 3a ohne
+Plausibilitätsprüfung (Feld wurde schon mit Mehrjahresbetrag befüllt, `kantonsModell.js:114-134`).

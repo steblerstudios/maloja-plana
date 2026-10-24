@@ -103,3 +103,19 @@ describe('Geldfluss am neuen Ort', () => {
     expect(html).toContain(G.title);
   });
 });
+
+// Fachprüfung Fassung 6 (24.10.2026): bei brutto erfasstem Lohn kein Fluss mit «Übrig».
+describe('Geldfluss und Brutto-Regel', () => {
+  const t = (k) => k;
+  const palette = {};
+  it('Nebenerwerb brutto: geldflussDaten meldet brutto', () => {
+    const d = { finanzen: { monthlyIncome: 4000, incomeType: 'netto', sideIncome: 1000, sideIncomeType: 'brutto', groceries: 500 } };
+    expect(geldflussDaten(d, t, palette).brutto).toBe(true);
+  });
+  it('alles netto: kein brutto, Nebenerwerb als eigene Quelle', () => {
+    const d = { finanzen: { monthlyIncome: 4000, incomeType: 'netto', sideIncome: 1000, sideIncomeType: 'netto', groceries: 500 } };
+    const g = geldflussDaten(d, t, palette);
+    expect(g.brutto).toBe(false);
+    expect(g.quellen.map((q) => q.label)).toContain('budgetSync.incomeSide');
+  });
+});

@@ -169,3 +169,19 @@ describe('Saldo des Haushalts unter «Jeden Monat bleiben»', () => {
     expect(haushaltsSaldo({ ...basis(), wohnen: { rentAmount: 1500, buildingsInsurance: 4 } }, 2500)).toBeNull();
   });
 });
+
+// Fachprüfung Fassung 6 (24.10.2026).
+describe('Monatsrechnung: Befunde der Fachprüfung', () => {
+  it('«Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht', () => {
+    const d = basis();
+    d.wohnen = { ...d.wohnen, mortgageStatus: 'no', mortgagePayment: 3000 };
+    expect(nurText(render(d))).toContain('Jeden Monat bleibenCHF 2’500');
+    expect(calculateMonthlyBudget(d).remaining).toBe(2500);
+  });
+
+  it('negativer Eintrag verkleinert die Ausgaben nicht', () => {
+    const d = basis();
+    d.finanzen = { ...d.finanzen, mobility: -400 };
+    expect(nurText(render(d))).toContain('Jeden Monat bleibenCHF 2’500');
+  });
+});

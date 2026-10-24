@@ -16,7 +16,9 @@
 
 import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
 
-const n = (v) => Number(v) || 0;
+// Nur positive Beträge zählen — wie die Einnahmen (data/haushaltsEinnahmen.js); ein negativer
+// Eintrag soll die Ausgaben nicht still verkleinern (Fachprüfung Fassung 6).
+const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
 
 // Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG
 // fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur als
@@ -26,7 +28,8 @@ export function monatsAusgaben(profilDaten) {
   return {
     rent: n(data.wohnen?.rentAmount),
     utilities: n(data.wohnen?.utilities),
-    mortgage: n(data.wohnen?.mortgagePayment),
+    // «Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht (das Feld bleibt sichtbar).
+    mortgage: data.wohnen?.mortgageStatus === 'no' ? 0 : n(data.wohnen?.mortgagePayment),
     buildingsInsurance: n(data.wohnen?.buildingsInsurance) / 12,
     healthInsurance: n(data.versicherungen?.kkPremium),
     otherInsurance: n(data.finanzen?.otherInsurance),
