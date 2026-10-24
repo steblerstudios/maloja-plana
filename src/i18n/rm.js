@@ -2131,7 +2131,7 @@ export default {
         // rm ungeprüft Finanzen-Fusion
         haushaltFehlen: "Per l'entira chasada mancan {betrag}",
         // rm ungeprüft Finanzen-Fusion
-        haushaltWie: "Quintà sco sin la pagina dal budget. Sch'endatà, vegnan agiuntads l'entrada da la partenaria u dal partenari ed il guadagn accessoric; ultra da quai vegnan deducids la tgira dals uffants, l'ipoteca, l'assicuranza da bajetgs ed ils pajaments en la pitga 3a.",
+        haushaltWie: "Quintà sco sin la pagina dal budget, inclusiv l'entrada da la partenaria u dal partenari.",
       },
       passend: {
         // rm ungeprüft F5

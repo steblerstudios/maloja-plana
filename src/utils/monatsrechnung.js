@@ -1,5 +1,5 @@
-// Monatliche Einnahmen und Ausgaben — eine Rechnung für das Kapitel Finanzen
-// (Spiegel-Satz «Es bleiben CHF …») und Charts.
+// Monatliche Einnahmen und Ausgaben — EINE Rechnung für das Kapitel Finanzen
+// («Jeden Monat bleiben», Spiegel-Satz «Es bleiben CHF …»), den Geldfluss und die Budget-Seite.
 //
 // Bis 21.10.2026 rechnete Charts eigen: es zählte den BVG-Beitrag (steckt schon im
 // Nettolohn), die Haftpflicht-*Versicherungssumme* und die Hausrat-/Fahrzeug-*Jahres*prämien
@@ -7,30 +7,67 @@
 // Entscheid Stebler Studios 21.10.2026: Charts rechnet wie das Kapitel. Monatsprämien
 // weiterer Versicherungen gehören ins Finanzen-Feld «Weitere Versicherungen».
 //
-// Diese zwei Funktionen standen vorher unverändert in MirrorCards.jsx.
+// Bis 24.10.2026 (Fassung 6, Gesamtbericht 🔴 1) fehlten hier der eigene Nebenerwerb und die
+// Ausgaben Kinderbetreuung, Hypothek, Gebäudeversicherung und Säule 3a, die das Budget zählte:
+// 3'000 Lohn + 1'500 Nebenerwerb, 3'600 Ausgaben ergab im Kapitel «Es fehlen CHF 600», im Budget
+// «+900». Entscheid Stebler Studios 24.10.2026: beide Zeilen bleiben (finanzen-fusion.md,
+// Entscheid 1), aber nur das Einkommen von Partner/in trennt sie. Darum stehen die Ausgabenposten
+// jetzt hier, und budgetSync.js liest sie von hier.
 
-const n = (v) => Number(v) || 0;
+import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
 
-// Erfasste Lebenskosten: Steuern, Lebensmittel, Telefon, Mobilität, weitere Versicherungen,
-// dazu Miete + Nebenkosten (Wohnen) und KK-Prämie (Versicherungen).
+// Nur positive Beträge zählen — wie die Einnahmen (data/haushaltsEinnahmen.js); ein negativer
+// Eintrag soll die Ausgaben nicht still verkleinern (Fachprüfung Fassung 6).
+const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
+
+// Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG
+// fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur als
+// Referenz). Jahresbeträge (Gebäudeversicherung, Säule 3a) sind durch 12 geteilt.
+export function monatsAusgaben(profilDaten) {
+  const data = profilDaten || {};
+  return {
+    rent: n(data.wohnen?.rentAmount),
+    utilities: n(data.wohnen?.utilities),
+    // «Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht (das Feld bleibt sichtbar).
+    mortgage: data.wohnen?.mortgageStatus === 'no' ? 0 : n(data.wohnen?.mortgagePayment),
+    buildingsInsurance: n(data.wohnen?.buildingsInsurance) / 12,
+    healthInsurance: n(data.versicherungen?.kkPremium),
+    otherInsurance: n(data.finanzen?.otherInsurance),
+    groceries: n(data.finanzen?.groceries),
+    communication: n(data.finanzen?.communication),
+    childcare: n(data.finanzen?.childcare),
+    mobility: n(data.finanzen?.mobility),
+    tax: n(data.finanzen?.monthlyTax),
+    pension3a: n(data.finanzen?.pension3a) / 12,
+    debtPayments: n(data.finanzen?.debtPayments),
+    alimentePaid: n(data.finanzen?.alimentePaid),
+  };
+}
+
+const summe = (o) => Object.values(o).reduce((a, b) => a + b, 0);
+
+// `allData` ist das ganze Profil; `finanzen` darf der gerade bearbeitete Stand des Kapitels sein.
+const profil = (finanzen, allData) => ({ ...(allData || {}), finanzen: finanzen || allData?.finanzen || {} });
+
+// Erfasste Lebenskosten: alles ausser Schuldenraten und bezahlten Alimenten.
 export function sumExpenses(finanzen, allData) {
-  const f = finanzen || {};
-  let sum = 0;
-  ['monthlyTax', 'groceries', 'communication', 'mobility', 'otherInsurance'].forEach((k) => { sum += n(f[k]); });
-  sum += n(allData?.wohnen?.rentAmount);
-  sum += n(allData?.wohnen?.utilities);
-  sum += n(allData?.versicherungen?.kkPremium);
-  return sum;
+  const { debtPayments, alimentePaid, ...leben } = monatsAusgaben(profil(finanzen, allData));
+  return summe(leben);
 }
 
 // Alles, was monatlich abgeht: die Lebenskosten plus Schuldenraten und bezahlte Alimente.
 export function sumAllExpenses(finanzen, allData) {
-  const f = finanzen || {};
-  return sumExpenses(f, allData) + n(f.debtPayments) + n(f.alimentePaid);
+  return summe(monatsAusgaben(profil(finanzen, allData)));
 }
 
-// Einnahmen: Lohn, Familienzulagen, erhaltene Alimente.
+// Eigene Einnahmen: Lohn, Nebenerwerb, Familienzulagen, erhaltene Alimente — dieselbe Summe wie
+// data/haushaltsEinnahmen.js, nur ohne Partner/in (das trennt die Haushalts-Zeile).
+// `brutto`: ein eigener Lohn ist ausdrücklich brutto erfasst; der Rest liegt dann so nicht auf dem Konto.
+export function eigeneEinnahmen(finanzen) {
+  const e = haushaltsEinnahmen({ finanzen: finanzen || {} });
+  return { total: e.total, brutto: e.bruttoDabei };
+}
+
 export function sumTotalIncome(finanzen) {
-  const f = finanzen || {};
-  return n(f.monthlyIncome) + n(f.familienzulagen) + n(f.alimenteReceived);
+  return eigeneEinnahmen(finanzen).total;
 }

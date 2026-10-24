@@ -39,7 +39,7 @@ import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkomm
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
-import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
+import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -102,16 +102,17 @@ export const nebenerwerbAngegeben = (d) => NEBENERWERB_FELDER.some((k) => feldHa
 // (MirrorCards → utils/monatsrechnung.js). null nur, wenn keine Ausgaben erfasst sind.
 // Seit 24.10.2026 (docs/entscheide/finanzen-fusion.md) auch im Minus und ohne eigenes
 // Einkommen — ob der Block dann erscheint, entscheidet renderMonatsHeld. Vorher: null.
+// `brutto`: ein eigener Lohn (Haupt- oder Nebenerwerb) ist ausdrücklich brutto erfasst (Fassung 6).
 export const monatsUebersicht = (finanzen, allData) => {
-  const einkommen = sumTotalIncome(finanzen);
+  const { total: einkommen, brutto } = eigeneEinnahmen(finanzen);
   const verplant = sumAllExpenses(finanzen, allData);
   if (!(verplant > 0)) return null;
   const anteil = einkommen > 0 ? Math.min(100, Math.round((verplant / einkommen) * 100)) : 100;
-  return { einkommen, verplant, bleibt: einkommen - verplant, anteil };
+  return { einkommen, verplant, bleibt: einkommen - verplant, anteil, brutto };
 };
 
-// Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js: dazu Partner/in,
-// Nebenerwerb, Kinderbetreuung, Hypothek, Gebäudeversicherung, 3. Säule). Entscheid Stebler
+// Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js). Seit Fassung 6
+// (24.10.2026) dieselben Posten wie das Kapitel, dazu nur Partner/in. Entscheid Stebler
 // Studios 24.10.2026 (docs/entscheide/finanzen-fusion.md): beide Saldi zeigen, klar benannt —
 // der zweite nur, wenn er auf den Franken vom Kapitel-Saldo abweicht. Ist ein weiterer Lohn
 // (Nebenerwerb, Partner/in) brutto erfasst, gibt es keinen Haushalts-Betrag (wie im Budget), nur
@@ -119,7 +120,7 @@ export const monatsUebersicht = (finanzen, allData) => {
 // selbst mit dem Brutto, und «rechnen wir aus, was frei bleibt» stünde ihr direkt entgegen
 // (Fachprüfung 24.10.2026; wie die Hauptzahl bei brutto aussieht, ist offen — Entscheidungsblatt).
 export const haushaltsSaldo = (allData, kapitelBleibt) => {
-  if (!allData || allData.finanzen?.incomeType === 'brutto') return null;
+  if (!allData || eigeneEinnahmen(allData.finanzen).brutto) return null;
   const b = calculateMonthlyBudget(allData);
   if (!Number.isFinite(b.remaining)) return null;
   const rest = Math.round(b.remaining);
@@ -1932,7 +1933,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const m = monatsUebersicht(data, allData);
     if (!m) return null;
     const label = { fontSize: text.sm, color: palette.mid, marginBottom: '2px' };
-    if (data.incomeType === 'brutto' && m.einkommen > 0) {
+    if (m.brutto && m.einkommen > 0) {
       return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
         React.createElement('div', { style: label }, tr('chapters.finanzen.monat.bleiben')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('budgetSync.availableNeedsNetto'))
@@ -1943,7 +1944,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const plus = m.bleibt >= 0;
     const titelKey = 'chapters.finanzen.monat.' + (h ? (plus ? 'eigenBleiben' : 'eigenFehlen') : (plus ? 'bleiben' : 'fehlen'));
     // «netto» nur, wenn das Einkommen als Netto erfasst ist — sonst stimmte das Wort nicht.
-    const einkommenKey = data.incomeType === 'netto' ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
+    // Mit Nebenerwerb muss auch er als netto erfasst sein (Fassung 6: er zählt jetzt mit).
+    const allesNetto = data.incomeType === 'netto' && (!(Number(data.sideIncome) > 0) || data.sideIncomeType === 'netto');
+    const einkommenKey = allesNetto ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: label }, tr(titelKey)),
       React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),

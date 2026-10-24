@@ -2007,7 +2007,7 @@ export default {
         vonEinkommen: "sur {betrag} de revenu",
         haushaltBleiben: "Pour tout le ménage, il reste {betrag}",
         haushaltFehlen: "Pour tout le ménage, il manque {betrag}",
-        haushaltWie: "Calculé comme sur la page Budget. S'ils sont saisis, le revenu de la ou du partenaire et le revenu accessoire s'y ajoutent ; la garde des enfants, l'hypothèque, l'assurance bâtiment et les versements au pilier 3a sont en plus déduits.",
+        haushaltWie: "Calculé comme sur la page Budget, en comptant aussi le revenu de la ou du partenaire.",
       },
       passend: {
         titel: "En lien avec ce domaine",
