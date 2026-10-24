@@ -6,7 +6,7 @@ import { sumAllExpenses, sumTotalIncome } from '../utils/monatsrechnung.js';
 // Geldfluss (Sankey): links, woher das Geld kommt, in der Mitte der Monat, rechts, wohin es
 // geht. Die Breite jedes Bands ist der Betrag. Das Geld fliesst über die Mitte, weil Maloja
 // nicht weiss, welcher Franken welche Rechnung bezahlt — es wird nichts zugeordnet.
-// Gebaut am 24.10.2026 für die Charts-Seite; dort am falschen Ort (Sophie: «der Ort ist falsch»).
+// Gebaut am 24.10.2026 für die Charts-Seite; dort am falschen Ort (Stebler Studios: «der Ort ist falsch»).
 // Seither im Kapitel Finanzen, am Anfang der Auswertung (FinanzAuswertung.jsx).
 // Beträge stehen nicht im Bild, sondern im Kapitel (Felder, «Jeden Monat bleiben»).
 // Schmal (unter 480 px): das Bild hätte rund 6 px Schrift (im Browser gemessen 24.10.2026,

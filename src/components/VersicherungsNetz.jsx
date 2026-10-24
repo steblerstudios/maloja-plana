@@ -3,7 +3,7 @@ import { Spinnennetz } from './Spinnennetz.jsx';
 import { abschnittGruppen } from '../utils/abschnitte.js';
 import { feldErledigt } from '../utils/vollstaendigkeit.js';
 
-// Spinnennetz im Kapitel Versicherungen (Sophie 24.10.2026: Ort «Kapitel Versicherungen»).
+// Spinnennetz im Kapitel Versicherungen (Stebler Studios 24.10.2026: Ort «Kapitel Versicherungen»).
 // Eine Achse je Abschnitt des Kapitels; der Wert ist der Anteil erledigter Felder darin
 // (ausgefüllt oder «trifft nicht zu») — dieselbe Regel wie überall. Es zeigt, WIE VIEL
 // eingetragen ist, nicht, ob jemand gut versichert ist; das sagt der Hinweis darunter.

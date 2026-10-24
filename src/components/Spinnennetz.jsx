@@ -7,7 +7,7 @@ import { text, space } from '../config/tokens.js';
 // auf die Seite (das Bild ist nie die einzige Stelle) — das regelt die aufrufende Stelle.
 //
 // Zuerst am 24.10.2026 im Dashboard gebaut; dort verdoppelte es Berg und Prozente
-// (Sophie: «der Ort ist falsch»). Seither allgemein und im Kapitel Versicherungen
+// (Stebler Studios: «der Ort ist falsch»). Seither allgemein und im Kapitel Versicherungen
 // (components/VersicherungsNetz.jsx).
 
 const BREITE = 360;
