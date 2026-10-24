@@ -19,7 +19,11 @@ function currentAge(dateStr) {
 
 export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const alter = currentAge(data.basis?.dateOfBirth);
-  const householdChildren = (data.basis?.household?.children || []).length;
+  // 70 % statt 80 % gilt u. a. nur ohne Unterhaltspflicht gegenüber Kindern unter 25 Jahren
+  // (AVIG Art. 22 Abs. 2 Bst. a). Vorher zählte jedes Kind im Haushalt, auch ein 30-jähriges (Fassung 6).
+  // Ohne erfasstes Alter zählt das Kind — das Häkchen bleibt überschreibbar.
+  const householdChildren = (data.basis?.household?.children || [])
+    .filter((c) => c?.age === '' || c?.age == null || Number(c.age) < 25).length;
 
   // Monatslohn aus den Finanzen vorbefüllen (überschreibbar) — nicht zweimal eingeben.
   // ALV-Taggeld basiert auf dem BRUTTO-Lohn: nur vorbefüllen, wenn er als Brutto hinterlegt ist.

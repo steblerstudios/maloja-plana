@@ -1879,10 +1879,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // schrumpfen und umbrechen. Vorher («minmax(0,1fr) auto») nahm ein langer Wert
               // («Netto (was ich erhalte)») seine volle Breite, und «Einkommensart» lief bei
               // 375 px in ihn hinein (Massstab-Prüfung 21.10.2026).
-              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(0, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+              // Auch der Wert behält sein längstes Wort: mit «minmax(0, auto)» und
+              // «overflowWrap: anywhere» brach er mitten im Wort («Kantonsspita / l»,
+              // Fassung 6, 24.10.2026). «break-word» bricht nur ein Wort, das allein zu breit ist.
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(min-content, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
                     React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
-                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
+                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
                   ])))
       );
     };
@@ -2075,13 +2078,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement('button', {
         type: 'button',
         onClick: () => setKartenVorschau(true),
+        // Sieht aus wie ein Knopf, nicht wie ein Kästchen zum Abhaken (Fassung 6, Fix 4).
         style: {
-          background: 'none', border: 'none', padding: 0, fontFamily: 'inherit',
-          fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
-          borderBottom: '1px solid ' + palette.border,
-          paddingBottom: '1px',
+          display: 'inline-flex', alignItems: 'center', minHeight: '44px',
+          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.full,
+          padding: '0 ' + space.md + 'px', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium, color: palette.text, cursor: 'pointer',
         }
-      }, hinweisZeichen('kaestchen'), tr('notfallSummary.printCard')),
+      }, hinweisZeichen('document'), tr('notfallSummary.printCard')),
 
       // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
       // Abschnitte der Karte mit Feldnamen, nie mit Werten.
