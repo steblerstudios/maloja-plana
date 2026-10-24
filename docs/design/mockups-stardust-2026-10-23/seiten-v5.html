@@ -2135,6 +2135,52 @@ body.still .rs-karte { transition: none; }
   </ul></div>
 </section>
 
+<!-- ===================== W · Ablauf-Schale (alle Abläufe) ===================== -->
+<section class="abschnitt" id="w">
+  <h2>W · Ablauf-Schale — Beispiel «Heirat oder Partnerschaft»</h2>
+  <p class="warum"><b>Neu am 24.10. (Entscheid Sophie: in der Schale, alle auf einmal; Passstrasse mit n Kehren).</b> Heute zeigen ~33 Abläufe alle Schritte untereinander (<code>AblaufContainer</code> + <code>AblaufStep</code>), nur der Umzug geht Schritt für Schritt. Hier dasselbe Muster wie der Umzug, aber aus der Schale: jeder <code>AblaufStep</code> wird eine Station, die Passstrasse hat so viele Kehren wie Schritte, die Frist steht als Karte, «Verwandte Ereignisse» und Quellen stehen immer unten. Texte aus <code>heirat.*</code>.</p>
+  <div class="geraet" data-seite="w">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="basis"></nav>
+    <div class="seite" style="--licht: var(--basis)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links">
+          <div class="stufe">
+            <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Persönliche Basis</a><span>›</span>Heirat oder Partnerschaft</nav></div>
+            <div class="titelzeile"><span class="sym" data-icon="basis" style="--licht: var(--basis)"></span><h3 style="font-size:clamp(24px,7vw,34px)">Heirat oder Partnerschaft</h3></div>
+            <p class="satz">Eine Heirat verändert Zivilstand, Steuern und Vorsorge zugleich. Hier der ruhige Überblick: Trauung anmelden, Name &amp; Zivilstand, Steuern, Versicherungen. Eine eingetragene Partnerschaft lässt sich seit Juli 2022 nicht mehr neu eingehen; eine bestehende kann in eine Ehe umgewandelt werden (PartG Art. 35).</p>
+          </div>
+          <div class="pass stufe s2" aria-hidden="true"><svg viewBox="0 0 340 150" id="w-pass"></svg></div>
+        </div>
+        <div class="rechtsspalte stufe s3">
+          <div class="schritt" id="w-schritt" aria-live="polite"></div>
+          <div class="erledigt-w" id="w-erledigt" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:16px"></div>
+          <h4 style="margin:22px 0 4px">Verwandte Ereignisse</h4>
+          <a class="verweis" href="#"><span>Kind bekommen</span><span class="pfeil">›</span></a>
+          <a class="verweis" href="#"><span>Trennung oder Scheidung</span><span class="pfeil">›</span></a>
+          <p class="fuss">Ein Ehevertrag (Güterstand) ist freiwillig, kann aber sinnvoll sein — besonders bei Wohneigentum oder Selbständigkeit. Dies ist Orientierung, keine Rechtsberatung.</p>
+          <p class="fuss">Quellen: <a href="#">ZGB Art. 97</a>, <a href="#">DBG Art. 9</a> (geprüft im September 2026).</p>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv=""></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div style="margin:18px 0 0">
+    <p class="unter" style="margin-bottom:8px"><b>Dieselbe Passstrasse für Abläufe mit 3 bis 7 Schritten</b> — aus der Zahl der Schritte gerechnet, Stationen in den Kehren:</p>
+    <div id="w-varianten" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px"></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Eine Änderung, alle Abläufe:</b> <code>AblaufContainer</code> zählt seine <code>AblaufStep</code>, zeigt einen nach dem anderen («Schritt n von N», «Erledigt, weiter ›», «‹ zurück», zuletzt «Ablauf abschliessen») und speichert den Stand je Ablauf (wie <code>ablaufStand</code> beim Umzug). Der Schritt «Verwandte Ereignisse» und <code>AblaufFooter</code> sind keine Stationen und stehen immer unten.</li>
+    <li><b>Passstrasse mit n Kehren:</b> heute fest für 4 Stationen (<code>PASS_PFAD</code>, <code>PASS_STATIONEN</code>). Neu aus N gerechnet: die Strasse steigt in Kehren von unten links nach oben rechts, eine Station je Kehre. Farbe = Bereich des Ablaufs.</li>
+    <li><b>Frist als Karte:</b> <code>FristButton</code> und <code>EreignisFrist</code> zeigen die Frist im Schritt als Karte «… · bis Datum» mit «In den Kalender» (heute nur beim Umzug, <code>karte:</code>). 17 Abläufe haben eine <code>EreignisFrist</code>, drei davon zwei (Dienst, Wegzug, Zuzug) — dort zwei Karten im selben Schritt.</li>
+    <li><b>Reine Info-Schritte</b> (z. B. Heirat «Name &amp; Zivilstand» ohne Knopf): im Entwurf «Weiter ›» statt «Erledigt, weiter ›». Je Ablauf mit dir prüfen. Abschluss allgemein: «Alle N Schritte sind erledigt.» + «Zur Übersicht» (neu, Copy-Prüfer).</li>
+    <li><b>a11y mitlösen</b> (Gesamtbericht): Fokus bleibt nach «In den Kalender» auf der Bestätigung (heute verschwindet der Knopf, Fokus geht verloren), Bestätigung als Live-Region; Schrittfläche nicht zugleich <code>aria-live</code> und fokussiert (doppelte Ansage beim Umzug).</li>
+    <li>Abläufe ausserhalb der Schale (z. B. <code>AsylView</code>, eigene Kartenwand) bleiben vorerst — eigener Entscheid.</li>
+    <li><b>Bereich und Farbe:</b> im Mockup «Persönliche Basis»; heute trägt Heirat ein rosa Band mit Herz und nur die Brotkrume «Übersicht». Im Bau kommen Bereich, Farbe und Brotkrume je Ablauf aus dem Register (<code>ansichtenRegister.js</code>).</li>
+  </ul></div>
+</section>
+
 <!-- ===================== N · Suche ===================== -->
 <section class="abschnitt" id="n">
   <h2>N · Suche</h2>
@@ -2354,6 +2400,57 @@ body.still .rs-karte { transition: none; }
     document.getElementById('ls-hinweis').hidden = geld;
   }));
   document.querySelectorAll('[data-anker-sym]').forEach((el) => { el.innerHTML = ic(el.dataset.ankerSym); });
+
+  // ---------- W · Ablauf-Schale: Passstrasse mit n Kehren, ein Schritt nach dem anderen (Heirat) ----------
+  (function ablaufSchale() {
+    const svg = document.getElementById('w-pass'); if (!svg) return;
+    // Kehren: Stationen abwechselnd links/rechts, von unten nach oben; Kurven mit waagrechten Tangenten
+    // Höhe wächst mit den Schritten (36 px je Kehre), damit sich die 14 px breiten Fahrbahnen nie berühren
+    const passHoehe = (n) => Math.max(150, 36 + (n - 1) * 40);
+    const passPunkte = (n) => { const H = passHoehe(n); return Array.from({ length: n }, (_, i) => ({ x: n === 1 ? 170 : (i % 2 === 0 ? [40, 74, 52, 88][(i / 2) % 4] : [300, 262, 284, 248][((i - 1) / 2) % 4]), y: H - 18 - (n === 1 ? 0 : i * ((H - 36) / (n - 1))) })); };
+    // Serpentine: in jeder Kehre senkrechte Tangente (die Station sitzt im Scheitel), dazwischen ein weicher Bogen
+    const passPfad = (pts) => pts.reduce((d, p, i) => { if (!i) return `M${p.x} ${p.y}`; const q = pts[i - 1], h = q.y - p.y; return d + ` C${q.x} ${q.y - h * 0.55}, ${p.x} ${p.y + h * 0.55}, ${p.x} ${p.y}`; }, '');
+    const zeichne = (el, kurz, aktuell, fertig, gross) => {
+      el.setAttribute('viewBox', `0 0 340 ${passHoehe(kurz.length)}`);
+      const pts = passPunkte(kurz.length), d = passPfad(pts);
+      el.innerHTML = `<path class="strasse" d="${d}"/><path class="gefahren" id="${el.id}-g" d="${d}" style="stroke:var(--basis)"/><path class="mitte" d="${d}"/>` + pts.map((p, i) => {
+        const erl = fertig || i < aktuell, akt = !fertig && i === aktuell, r = gross ? (akt ? 11 : 9) : 7;
+        const lab = gross ? `<text x="${p.x + (p.x < 170 ? 16 : -16)}" y="${p.y + 4}" text-anchor="${p.x < 170 ? 'start' : 'end'}">${kurz[i]}</text>` : '';
+        return `<g><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${erl ? farbe('basis') : farbe('bg')}" stroke="${erl || akt ? farbe('basis') : farbe('border')}" stroke-width="3"/>${gross ? (erl ? `<path d="M${p.x - 4} ${p.y} l3 3 5-6" stroke="${farbe('bg')}" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` : `<text x="${p.x}" y="${p.y + 4}" text-anchor="middle" style="font-size:11px;font-weight:600;fill:${akt ? farbe('basis') : farbe('soft')};stroke:none">${i + 1}</text>`) : ''}${lab}</g>`;
+      }).join('');
+      const g = document.getElementById(el.id + '-g'), pf = el.querySelector('.strasse'), L = pf.getTotalLength();
+      const anteil = fertig ? 1 : (kurz.length > 1 ? aktuell / (kurz.length - 1) : 1);
+      g.style.strokeDasharray = L; g.style.strokeDashoffset = L * (1 - anteil);
+    };
+    const S = [
+      { kurz: 'Trauung', titel: 'Trauung anmelden', aktion: true, html: () => `<p>Vor der Trauung läuft beim Zivilstandsamt ein Vorbereitungsverfahren. Melden Sie sich früh an und halten Sie Ausweise, Wohnsitzbestätigung und je nach Herkunft weitere Dokumente bereit. Bei ausländischer Staatsangehörigkeit kann es länger dauern — und für eine ausländische Partnerin oder einen ausländischen Partner kann die Heirat der Grund für Familiennachzug und eine Aufenthaltsbewilligung sein.</p><div class="frist"><div class="text"><b>Trauung beim Zivilstandsamt anmelden</b><small>Orientierung · bis 23.11.2026</small></div><button class="knopfruhig" id="w-frist">${wFrist ? 'Im Kalender ✓' : 'In den Kalender'}</button></div><a class="verweis" href="#"><span>Aufenthaltsbewilligung &amp; Fristen ansehen</span><span class="pfeil">›</span></a>` },
+      { kurz: 'Name', titel: 'Name & Zivilstand', aktion: false, html: () => `<p>Sie können Ihren bisherigen Namen behalten oder einen gemeinsamen Familiennamen wählen. Nach der Heirat ändert sich der Zivilstand — denken Sie an die Anpassung von Ausweisen, AHV-Daten und Arbeitgeber-Angaben.</p>` },
+      { kurz: 'Steuern', titel: 'Steuern', aktion: true, html: () => `<p>Verheiratete und eingetragene Partner werden gemeinsam veranlagt — ab dem Jahr der Heirat fürs ganze Jahr. Das kann die Steuerlast erhöhen oder senken. Wer an der Quelle besteuert wird, sollte den Tarif anpassen lassen. Auch Ihre Prämienverbilligung (IPV) wird jetzt aufs gemeinsame Einkommen berechnet — ein Neuberechnen lohnt sich.</p><a class="verweis" href="#"><span>Steuern ansehen</span><span class="pfeil">›</span></a><a class="verweis" href="#"><span>Prämienverbilligung neu berechnen</span><span class="pfeil">›</span></a>` },
+      { kurz: 'Vorsorge', titel: 'Versicherungen & Vorsorge', aktion: true, html: () => `<p>Die Krankenkasse bleibt individuell. Prüfen Sie Hausrat und Haftpflicht — oft genügt eine gemeinsame Police. Passen Sie die Begünstigung in Säule 3a und Pensionskasse an, damit im Ernstfall die richtige Person abgesichert ist.</p><a class="verweis" href="#"><span>Vorsorge ansehen</span><span class="pfeil">›</span></a>` },
+    ];
+    let wJetzt = 0, wFertig = false, wFrist = false;
+    const geraet = svg.closest('.geraet');
+    const zeige = () => {
+      zeichne(svg, S.map((s) => s.kurz), wJetzt, wFertig, true);
+      const el = document.getElementById('w-schritt');
+      if (wFertig) {
+        el.innerHTML = `<div class="wechsel fertigbild">${HAKEN(farbe('basis'), 40)}<h4>Alle ${S.length} Schritte sind erledigt</h4><p>Die Erinnerung steht im Kalender. Unten finden Sie verwandte Ereignisse.</p><button class="knopfprim">Zur Übersicht</button><div style="margin-top:8px"><button id="w-neu" style="background:none;border:0;color:var(--mid);cursor:pointer;min-height:44px">Ablauf nochmals ansehen</button></div></div>`;
+        document.getElementById('w-erledigt').innerHTML = '';
+        document.getElementById('w-neu').onclick = () => { wFertig = false; wJetzt = 0; zeige(); };
+        return;
+      }
+      const s = S[wJetzt], letzter = wJetzt === S.length - 1;
+      el.innerHTML = `<div class="wechsel"><div class="nr" style="color:var(--basis)">Schritt ${wJetzt + 1} von ${S.length}</div><h4>${s.titel}</h4>${s.html()}<div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="knopfprim" id="w-weiter">${letzter ? 'Ablauf abschliessen' : (s.aktion ? 'Erledigt, weiter ›' : 'Weiter ›')}</button>${wJetzt > 0 ? '<button id="w-zurueck" style="background:none;border:0;color:var(--mid);cursor:pointer;min-height:44px">‹ zurück</button>' : ''}</div></div>`;
+      document.getElementById('w-erledigt').innerHTML = S.slice(0, wJetzt).map((x) => `<span style="font-size:12px;color:var(--soft);border:1px solid var(--border);border-radius:999px;padding:4px 10px 4px 8px;display:inline-flex;gap:5px;align-items:center">${HAKEN(farbe('basis'))}${x.kurz}</span>`).join('');
+      document.getElementById('w-weiter').onclick = () => { if (letzter) wFertig = true; else { wJetzt++; melden(geraet, `Schritt ${wJetzt} erledigt`, true, () => { wJetzt--; zeige(); }); } zeige(); };
+      const z = document.getElementById('w-zurueck'); if (z) z.onclick = () => { wJetzt--; zeige(); };
+      const f = document.getElementById('w-frist'); if (f) f.onclick = () => { wFrist = true; zeige(); melden(geraet, 'Erinnerung «Trauung anmelden» im Kalender (23.11.2026)', true, () => { wFrist = false; zeige(); }); document.getElementById('w-frist')?.focus({ preventScroll: true }); };
+    };
+    zeige();
+    const v = document.getElementById('w-varianten');
+    v.innerHTML = [3, 4, 5, 6, 7].map((n) => `<figure style="margin:0"><div class="pass" style="margin:0"><svg viewBox="0 0 340 150" id="w-var-${n}"></svg></div><figcaption class="fuss" style="text-align:center;margin:4px 0 0">${n} Schritte</figcaption></figure>`).join('');
+    [3, 4, 5, 6, 7].forEach((n) => zeichne(document.getElementById('w-var-' + n), Array.from({ length: n }, (_, i) => String(i + 1)), 1, false, false));
+  })();
 
   // ---------- O · Was steht mir zu? (eine Seite): eigene Auswahl, unabhängig von M ----------
   document.querySelectorAll('[data-lso]').forEach((b) => b.addEventListener('click', () => {
