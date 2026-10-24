@@ -112,9 +112,10 @@ Anrede für Nutzende später nach Sie/Du-Einstellung der App.
 1. «Für eine Einelternfamilie mit zwei Kindern und CHF 60'000 Bruttoeinkommen ergibt die Modellrechnung je nach
    Kanton eine Prämienverbilligung von CHF 1'946 bis CHF 7'344 im Jahr (Median CHF 4'313, 16 Kantone). Das zeigt,
    wie unterschiedlich die Regeln wirken — nicht, was eine bestimmte Familie erhält.»
-2. «Eine Studie der Berner Fachhochschule für den Kanton Basel-Stadt schätzt für 2022, dass 23 % der
-   Anspruchsberechtigten in der Stadt Basel die Prämienverbilligung nicht beziehen. Die Zahl gilt für Basel, nicht
-   für die Schweiz.» (Bezugsgrösse Personen oder Haushalte noch am Bericht prüfen.)
+2. «Eine Studie der Berner Fachhochschule im Auftrag des Kantons Basel-Stadt schätzt für 2022, dass 23 % der
+   Anspruchsberechtigten in der Stadt Basel die Prämienverbilligung nicht beziehen. Die Zahl gilt für die Stadt Basel,
+   nicht für die Schweiz und nicht für Kantone, die ohne Antrag auszahlen.» (Gebiet und Zählweise der Sozialhilfe-Studie
+   derselben Reihe sind am Bericht geprüft, siehe Datenquellen; der Bericht mit den 23 % selbst noch nicht.)
 3. «Alle Beträge sind Modellrechnungen, kein amtlicher Kantonsvergleich und keine Zusage. Über den Anspruch
    entscheidet die kantonale Stelle.»
 
@@ -297,9 +298,13 @@ viele beziehen nicht, obwohl sie Anspruch hätten (Nichtbezug)?
 - **Technik:** Zahlen werden **zur Bauzeit** als kleine, datierte Tabelle mit Quelle ins Repo übernommen
   (wie `scripts/build-praemien-data.mjs`), nie zur Laufzeit von einer fremden Seite geladen. So bleibt
   CSP self-only und die App offline-fähig.
-- **Lizenz:** Vor der Übernahme ganzer Tabellen je Datensatz die Nutzungsbedingungen (opendata.swiss / BFS) und die
-  verlangte Quellenangabe ins Repo schreiben — noch nicht geprüft. Studien (BFH, Ecoplan) nur als Zitat mit Quelle
-  (URG Art. 25), nie so, als stützten sie die Maloja-Zahlen.
+- **Lizenz:** BFS-Datensätze auf opendata.swiss tragen in der Regel «Freie Nutzung. Quellenangabe ist Pflicht.
+  Kommerzielle Nutzung nur mit Bewilligung des Datenlieferanten zulässig.» (◐ Wortlaut aus dem Suchwerkzeug, die
+  Datensatzseite selbst gab 403). Folgen: Quellenangabe (Amt, Titel, Link, Stand) an jeder übernommenen Zahl — das
+  verlangt Maloja ohnehin. Ob Maloja als kostenlose App einer Einzelfirma «kommerziell» nutzt, ist **offen** →
+  rechts-pruefer bzw. beim BFS nachfragen, bevor ganze Tabellen ins Repo kommen. Die Bedingungen gelten **je
+  Datensatz**: vor jeder Übernahme an dessen Seite nachlesen und mit Datum ins Repo schreiben. Studien (BFH, Ecoplan)
+  nur als Zitat mit Quelle (URG Art. 25), nie so, als stützten sie die Maloja-Zahlen.
 - **Orientierung für Nutzende** («Haushalte wie Ihrer/deiner») wird **lokal** gerechnet: die öffentliche Tabelle liegt
   im Bundle, das eigene Profil verlässt das Gerät nicht.
 
@@ -331,8 +336,8 @@ Anspruch, den sie nicht geltend machen?»). Mindestregeln, falls es je so weit k
 - [x] `swiss-precision-pruefer` über `systemblick.js`, Messung und Quellen (24.10.2026, eingearbeitet)
 - [x] `rechts-pruefer` (24.10.2026, eingearbeitet; Gesetzesartikel noch an Fedlex prüfen)
 - [x] `copy-pruefer` (24.10.2026, eingearbeitet)
-- [ ] BFS-Werte mit ◐/⚠️ am Original bzw. an den XLSX-Tabellen nachlesen
-- [ ] Lizenz je übernommenem Datensatz prüfen
+- [ ] BFS-Werte mit ◐ an den XLSX-Tabellen gegenlesen (Wortlaut der BFS-Seiten bestätigt, 24.10.2026)
+- [ ] Lizenz je übernommenem Datensatz an dessen Seite nachlesen; Frage «kommerziell» klären
 - [ ] Sichtbare Seite: 5 Sprachen, a11y, Tabelle mit Textalternative, Quelle und Stand an jeder Zahl, Hinweis oben
 - [ ] Für Petitionen: nur die Kernsätze oben, mit Stand, Methode und Link auf die Methode
 
@@ -372,15 +377,25 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
 
 ### Nichtbezug (wer Anspruch hätte und nicht bezieht)
 
-- ✅ **Basel-Stadt, WSU, Medienmitteilung 12.02.2026** — Studie der BFH (Prof. Oliver Hümbelin) im Auftrag des WSU,
-  «Nichtbezug von bedarfsabhängigen Sozialleistungen in der Stadt Basel: Berichtsjahr 2022»:
+- ✅ **Basel-Stadt, WSU, Medienmitteilung 12.02.2026** — Studie der BFH (Prof. Oliver Hümbelin) im Auftrag des Amtes
+  für Sozialbeiträge, «Nichtbezug von bedarfsabhängigen Sozialleistungen in der Stadt Basel: Berichtsjahr 2022»:
   Nichtbezugsquote **Familienmietzinsbeiträge 18 %, Prämienverbilligung 23 %, EL zur AHV 32 %, wirtschaftliche Sozialhilfe 26 %**.
   Absolute Zahl der Nichtbeziehenden gesunken bei allen ausser der Prämienverbilligung — gehört zu jedem öffentlichen Satz.
   https://www.bs.ch/medienmitteilungen/wsu/2026-neue-studie-zum-nichtbezug-von-sozialleistungen-zeigt-positive-entwicklungen ·
   Bericht: https://arbor.bfh.ch/entities/publication/ccd1e9a1-611a-42cd-b7a6-a3ed56d0fd35 ·
   Sozialhilfe 2016–2022: https://arbor.bfh.ch/entities/publication/f0df07f1-3828-4c7e-8501-40a32f66b278
-  → **Gilt für die Stadt Basel** (so der Titel der Studie), nicht für die Schweiz. Offen: Bezugsgrösse (Personen oder
-  Haushalte) und ob Riehen/Bettingen enthalten sind — am Bericht prüfen.
+  → **Gilt für die Stadt Basel**, nicht für die Schweiz. Den Bericht 2022 (23 %) selbst konnte ich nicht öffnen.
+- ✅ **BFH, «Trends und Entwicklungen im Nichtbezug von Sozialhilfe in der Stadt Basel, 2016–2022»**, Hümbelin, Lehmann,
+  Torkisz, Version 29.01.2026 (PDF gelesen) — https://arbor.bfh.ch/server/api/core/bitstreams/fc9c4676-7fcd-459a-b147-1c136fe91df7/content
+  - **Gebiet:** «Bevölkerung der Stadt Basel (ohne Riehen und Bettingen)»; nicht berücksichtigt: Personen im
+    Pensionsalter, Beziehende einer AHV- oder IV-Rente, Ausweis L/N/F, Kollektivhaushalte (S. 10).
+  - **Zählweise:** Anspruch je **Unterstützungseinheit** geprüft (S. 8–9), Quote über **Personen** («rund 11'000
+    Personen» potenziell Anspruchsberechtigte 2022, S. 3).
+  - **Sozialhilfe:** Nichtbezugsquote «28.3 Prozent (2016) auf 30.2 Prozent (2022)» (S. 3). Die Medienmitteilung nennt
+    für die Sozialhilfe 2022 **26 %** — andere Studie derselben Reihe (Berichtsjahr 2022). Nie die beiden Zahlen
+    vermischen; immer Studie und Jahr dazuschreiben.
+  - Dieselbe Reihe (BFH) dürfte für die 23 % ähnlich abgrenzen (Stadt Basel, ohne Rentenalter) — **Vermutung**, am
+    Bericht 2022 prüfen. Gilt die Abgrenzung auch dort, betrifft die 23 % keine Personen im Rentenalter.
 - ⚠️ **Kanton Bern, Sozialhilfe:** Nichtbezugsquote 26 % (Hümbelin, BFH; Quelle bisher nur Zeitschriftenartikel/Präsentation,
   Bezugsjahr und Methode am Bericht prüfen) — https://inequalities.unibe.ch/wp-content/uploads/2022/03/NichtbezugBFH_Zeso_01_22.pdf
 - ⚠️ Hümbelin 2016, Working Paper: internationale Spanne 20–60 % — https://repec.sowi.unibe.ch/files/wp21/Huembelin-2016-NonTakeUp.pdf
@@ -391,8 +406,11 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
   Vorjahren nicht signifikant verändert»; Armutsgrenze im Schnitt CHF 2'388/Monat für eine Einzelperson (SKOS-basiert);
   Erwerbstätige 4,3 % — https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/soziale-situation-wohlbefinden-und-armut/armut-deprivation/armut.html
 - ◐ **Armutsgefährdungsquote 2024: 16,4 %** (Schwelle 60 % des medianen verfügbaren Äquivalenzeinkommens, BFS-Hauptindikatoren).
-- ⚠️ **Einelternhaushalte 28,1 %**, Paare mit zwei Kindern 9,3 % (Armutsgefährdung 2024); eine andere Stelle nennt gesamt
-  16,2 % «ohne fiktive Miete» — beides am Original klären —
+  Die **16,2 %** an anderer Stelle sind der **europäische Vergleich ohne fiktive Miete** (Nutzungswert von Wohneigentum
+  nicht im Einkommen). Immer sagen, welche der beiden Zahlen gemeint ist. (◐, Definition mit fiktiver Miete für die
+  16,4 % noch an der BFS-Methodik prüfen.)
+- ◐ **Einelternhaushalte 28,1 %** (Armutsgefährdung 2024, Fliesstext der BFS-Seite, «28% der Personen in
+  Einelternhaushalten»); Paare ohne Kinder 6,3 %, Paare mit zwei Kindern 9,3 %, Paare mit drei und mehr Kindern 27,0 % —
   https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/soziale-situation-wohlbefinden-und-armut/armut-deprivation/armutsgefaehrdung.html
 - Maschinenlesbar: BFS STAT-TAB / PxWeb (siehe unten).
 
@@ -438,14 +456,17 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
 1. **BAG Monitoring 2020**: gleiche Profile, amtlich, Belastung in % des Einkommens. Rahmen für unsere Musterhaushalte.
 2. **Nichtbezug Basel 2022**: zeigt, wie viele Ansprüche nicht geltend gemacht werden (23 % bei der Prämienverbilligung).
 3. **BSV EL-Statistik 2025**: aktuell, je Kanton, maschinenlesbar.
-4. **BFS Armut SILC 2024**: Armutsquote 8,4 %; Einelternhaushalte erst nach Prüfung am Original.
+4. **BFS Armut SILC 2024**: Armutsquote 8,4 %; Armutsgefährdung Einelternhaushalte 28,1 % (◐; vor Veröffentlichung an der
+   BFS-Tabelle gegenlesen).
 5. **BFS Sozialhilfequote je Kanton 2024**: nur mit Hinweis auf den Methodenbruch.
 
 ### Offene Fragen
 
-- BFS-Werte mit ◐/⚠️ am Original bzw. an den XLSX-Tabellen nachlesen (Einelternhaushalte 28,1 %; 16,4 % vs. 16,2 %).
+- BFS-Werte mit ◐ vor Veröffentlichung an den XLSX-Tabellen gegenlesen (BFS-Seiten laden nur per JavaScript).
+- Lizenz: Zählt Maloja als «kommerzielle Nutzung» der BFS-Daten? (rechts-pruefer / BFS)
 - BAG-Statistik KV 2024/2025: genaue Tabellennummern zur IPV je Kanton im ZIP bestimmen.
 - Kommt ein BAG-Monitoring mit Daten nach 2020? Beim BAG nachfragen (gehört auch in `docs/sources/FRAGEN-AN-DIE-AEMTER.md`).
 - Die BAG-Werte je Modellhaushalt und Kanton 2020 (Anhang D, ab S. 138) als Vergleichsspalte neben die Messung legen?
   Vorher nachlesen, ob «verfügbares Einkommen» dort mit unserem Netto vergleichbar ist.
-- Nichtbezug Basel: Bezugsgrösse und Gebiet (Stadt / Kanton) am Bericht prüfen.
+- Nichtbezug Basel: Gebiet und Zählweise am Sozialhilfe-Trendbericht geprüft (Stadt Basel, ohne Rentenalter, Quote über
+  Personen); den Bericht 2022 mit den 23 % noch öffnen und gegenprüfen.
