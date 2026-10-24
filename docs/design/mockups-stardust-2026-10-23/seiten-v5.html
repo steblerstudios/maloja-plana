@@ -673,7 +673,7 @@ body.still .rs-karte { transition: none; }
 /* M · Lebenssituationen, N · Suche (Fassung 5, 23.10. abends) */
 .ls-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .ls-chips button { border: 1px solid var(--border); background: none; color: var(--text); border-radius: 999px; min-height: 44px; padding: 8px 14px; font: inherit; font-size: 14px; text-align: start; cursor: pointer; }
-.ls-chips button[aria-pressed="true"] { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 16%, transparent); }
+.ls-chips button[aria-pressed="true"], .ls-chips button[aria-checked="true"] { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 16%, transparent); }
 .ls-karte { border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; }
 .ls-karte b { display: block; font-size: 15px; margin-bottom: 4px; }
 .ls-karte p { margin: 0; font-size: 14px; color: var(--mid); line-height: 1.5; }
@@ -2178,6 +2178,65 @@ body.still .rs-karte { transition: none; }
     <li><b>a11y mitlösen</b> (Gesamtbericht): Fokus bleibt nach «In den Kalender» auf der Bestätigung (heute verschwindet der Knopf, Fokus geht verloren), Bestätigung als Live-Region; Schrittfläche nicht zugleich <code>aria-live</code> und fokussiert (doppelte Ansage beim Umzug).</li>
     <li>Abläufe ausserhalb der Schale (z. B. <code>AsylView</code>, eigene Kartenwand) bleiben vorerst — eigener Entscheid.</li>
     <li><b>Bereich und Farbe:</b> im Mockup «Persönliche Basis»; heute trägt Heirat ein rosa Band mit Herz und nur die Brotkrume «Übersicht». Im Bau kommen Bereich, Farbe und Brotkrume je Ablauf aus dem Register (<code>ansichtenRegister.js</code>).</li>
+  </ul></div>
+</section>
+
+<!-- ===================== X · Rechner-Form (alle Rechner) ===================== -->
+<section class="abschnitt" id="x">
+  <h2>X · Rechner-Form — Beispiel «Arbeitslosenentschädigung»</h2>
+  <p class="warum"><b>Neu am 24.10. (Entscheid Sophie: eine Rechner-Form für alle).</b> Muster nach Steuern (J) und IPV: Kopf links, <b>Ergebnis zuerst</b> (als Live-Region), darunter «Ihre Angaben» aufgeklappt, dann wo man sich meldet, offizielle Stelle, Quelle. Keine Kartenwand. Werte: Bruttolohn 6’796 (App-Schätzung aus Marias Netto), 24 Beitragsmonate, ohne Kinder, ohne IV-Rente — Ergebnis wie die App heute.</p>
+  <div class="geraet" data-seite="x">
+    <div class="appkopf"><span class="logo" data-breite="118"></span><span class="rechts"><span class="gespeichert"><i></i>Gespeichert</span></span></div>
+    <div class="rahmen"><nav class="seitenmenue" data-aktiv="finanzen"></nav>
+    <div class="seite" style="--licht: var(--finanzen)"><div class="band" aria-hidden="true"></div>
+      <div class="innen">
+        <div class="links"><div class="stufe">
+          <div class="wege"><nav class="krume" aria-label="Brotkrume"><a href="#">Übersicht</a><span>›</span><a href="#">Finanzen &amp; Geld</a><span>›</span>Arbeitslosenentschädigung</nav></div>
+          <div class="titelzeile"><span class="sym" data-icon="finanzen" style="--licht: var(--finanzen)"></span><h3 style="font-size:clamp(22px,6.4vw,32px);hyphens:auto" lang="de">Arbeitslosen&shy;entschädigung</h3></div>
+          <p class="satz">Eine Orientierung, was Ihnen bei Arbeitslosigkeit als Taggeld zustehen könnte. Verbindlich rechnet das RAV bzw. Ihre Arbeitslosenkasse.</p>
+          <div role="status" style="margin-top:14px">
+            <div class="etikett">Ihre Orientierung</div>
+            <div class="st-zeile" style="border-bottom:0;font-size:15px"><span>Geschätzt pro Monat</span><b class="anzeige" style="font-size:26px">CHF 4’757</b></div>
+            <div class="fu-posten" style="padding-bottom:6px">
+              <div class="po"><span>Taggeld pro Tag</span><span>CHF 219.23</span></div>
+              <div class="po"><span>Taggeldsatz</span><span>70 % des versicherten Verdienstes</span></div>
+              <div class="po"><span>Wartetage</span><span>10 Tage</span></div>
+              <div class="po"><span>Anspruchsdauer</span><span>400 Taggelder (≈ 18 Monate)</span></div>
+            </div>
+            <p class="fuss" style="margin:0">Orientierung ohne Gewähr. Verbindlich rechnet das RAV bzw. die Arbeitslosenkasse — abhängig von Ihrer konkreten Situation. Schätzung nach amtlichen Eckwerten, vereinfacht.</p>
+          </div>
+        </div></div>
+        <div class="rechtsspalte stufe s2">
+          <details class="fu-auf" open style="border-top:0"><summary><span>Ihre Angaben</span><b>4 von 4</b></summary>
+            <div class="fu-posten">
+              <div class="nf-feld" style="border-top:0"><span><small>Bisheriger Bruttolohn pro Monat (CHF)</small>6’796</span></div>
+              <div class="leer" style="padding-left:0">Das hinterlegte Einkommen ist als Netto markiert — für die ALV bitte den Bruttolohn eintragen.</div>
+              <div class="nf-feld"><span><small>Beitragsmonate</small>24</span></div>
+              <div class="leer" style="padding-left:0">Wie viele Monate haben Sie in den letzten 2 Jahren gearbeitet? Ab 12 Monaten besteht meist Anspruch.</div>
+              <div class="nf-feld"><span><small>Unterhaltspflicht für Kinder unter 25?</small>Beeinflusst Taggeldsatz und Wartetage.</span></div>
+              <div class="ls-chips" role="radiogroup" aria-label="Unterhaltspflicht für Kinder unter 25" style="margin-top:4px"><button role="radio" aria-checked="false">Ja</button><button role="radio" aria-checked="true">Nein</button></div>
+              <div class="nf-feld" style="margin-top:8px"><span><small>IV-Rente mit Invaliditätsgrad ≥ 40 %?</small></span></div>
+              <div class="ls-chips" role="radiogroup" aria-label="IV-Rente mit Invaliditätsgrad ab 40 Prozent" style="margin-top:4px"><button role="radio" aria-checked="false">Ja</button><button role="radio" aria-checked="true">Nein</button></div>
+            </div>
+          </details>
+          <h4 style="margin:16px 0 4px">Wo Sie sich anmelden</h4>
+          <p class="unter" style="margin-top:0">Melden Sie sich so früh wie möglich beim RAV (Regionales Arbeitsvermittlungszentrum) — am besten am ersten Tag der Arbeitslosigkeit. Der Anspruch beginnt nicht rückwirkend.</p>
+          <a class="verweis" href="#"><span>Ihr Kanton: ZH — RAV und Anlaufstellen finden ↗</span><span class="pfeil">›</span></a>
+          <h4 style="margin:16px 0 4px">Offizielle Stelle &amp; Antrag</h4>
+          <a class="verweis" href="#"><span class="sym k" data-icon="globus" style="--licht: var(--sage)"></span><span>Arbeitslosenentschädigung ↗<small>Arbeitslosenentschädigung bei Stellenverlust · Antragsstelle: RAV</small></span><span class="pfeil">›</span></a>
+          <a class="verweis" href="#"><span class="sym k" data-icon="globus" style="--licht: var(--sage)"></span><span>Überbrückungsleistungen (ÜL) ↗<small>Für ältere Arbeitslose ab 60 Jahren · Antragsstelle: EL-Stelle des Wohnkantons</small></span><span class="pfeil">›</span></a>
+        </div>
+      </div>
+    </div></div>
+    <nav class="anker" data-aktiv=""></nav>
+    <div class="meldung" role="status"><span class="txt"></span><button>Rückgängig</button></div>
+  </div>
+  <div class="notiz"><ul>
+    <li><b>Die Form für alle Rechner:</b> (1) Kopf links mit Bereichssymbol, Brotkrume, Satz · (2) <b>Ergebnis zuerst</b>, eine grosse Zahl + wenige Zeilen, Vorbehalt direkt darunter, <code>role="status"</code> · (3) «Ihre Angaben» aufgeklappt mit «x von n», Einzelwahl als <code>radiogroup</code> (a11y M2) · (4) wo man sich meldet / was zu tun ist · (5) offizielle Stelle als Zeilen mit ↗ (Zwischentitel ohne Versalien) · (6) Quelle. Keine Kartenwand, kein Kopf in Karte.</li>
+    <li><b>Ohne Ergebnis</b> (Angaben fehlen): oben steht an der Stelle des Ergebnisses der App-Satz «Geben Sie Ihren bisherigen Bruttolohn ein, um die Orientierung zu sehen.» und «Noch n Angaben nötig» — die Angaben darunter sind dann offen.</li>
+    <li><b>Übertragen auf:</b> EO, Vorsorge, Sozialhilfe, Prämien-Orientierung, Mietzinsbeiträge, Stundenlohn, Kreditkarte, Stipendien, KVG-Leistungen, Schulden (ihre Reiter/Tabs werden eine <code>Tabs</code>-Komponente mit Pfeiltasten, a11y M4). Steuern (J) und IPV haben die Form schon.</li>
+    <li><b>Befund Namen:</b> Titel «Arbeitslosenentschädigung», in Suche/Register «ALV-Taggeld». Nach der Regel «eine Seite, ein Name» einen wählen (Copy-Prüfer). Der lange Titel bricht mit Silbentrennung (Befund Bildschirm-Messung 23.10.).</li>
+    <li><b>Befund Code (Gesamtbericht):</b> «Kinder: ja» wird heute von jedem Haushaltskind vorbelegt, auch über 25 (`AlvRechner.jsx:22,30`) — beim Bau mitbeheben.</li>
   </ul></div>
 </section>
 
