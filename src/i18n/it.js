@@ -1047,7 +1047,7 @@ export default {
   },
   // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
   rechnungOffen: {
-    title: 'Fattura non pagata — che fare?',
+    title: 'Sollecito o precetto esecutivo — che fare?',
     intro: 'I passi dipendono dal documento ricevuto: un sollecito o un precetto esecutivo.',
     stufeMahnung: 'Sollecito ricevuto',
     stufeBetreibung: 'Precetto esecutivo ricevuto',

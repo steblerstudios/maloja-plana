@@ -1047,7 +1047,7 @@ export default {
   },
   // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
   rechnungOffen: {
-    title: 'Facture impayée — que faire ?',
+    title: 'Rappel ou commandement de payer — que faire ?',
     intro: 'Les étapes dépendent du document reçu : un rappel ou un commandement de payer.',
     stufeMahnung: 'Rappel reçu',
     stufeBetreibung: 'Commandement de payer reçu',

@@ -1047,7 +1047,7 @@ export default {
   },
   // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
   rechnungOffen: {
-    title: 'Unpaid bill — what now?',
+    title: 'Payment reminder or payment order — what now?',
     intro: 'The steps depend on what arrived: a payment reminder or a payment order.',
     stufeMahnung: 'Payment reminder received',
     stufeBetreibung: 'Payment order received',

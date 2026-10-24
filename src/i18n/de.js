@@ -1048,7 +1048,7 @@ export default {
   },
   // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
   rechnungOffen: {
-    title: 'Rechnung nicht bezahlt — was tun?',
+    title: 'Mahnung oder Zahlungsbefehl — was tun?',
     intro: 'Die Schritte richten sich danach, was angekommen ist: eine Mahnung oder ein Zahlungsbefehl.',
     stufeMahnung: 'Mahnung erhalten',
     stufeBetreibung: 'Zahlungsbefehl erhalten',

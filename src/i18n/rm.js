@@ -1228,7 +1228,7 @@ export default {
   // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
   rechnungOffen: {
     // Ungeprüft (24.10.2026): braucht eine Rumantsch-Fachperson.
-    title: 'Quint betg pajà — tge far?',
+    title: 'Admoniziun u scussiun — tge far?',
     intro: 'Ils pass sa drizzan tenor quai ch’è arrivà: in’admoniziun u ina scussiun.',
     stufeMahnung: 'Admoniziun retschavida',
     stufeBetreibung: 'Scussiun retschavida',

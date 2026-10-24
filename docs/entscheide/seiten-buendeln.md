@@ -318,3 +318,6 @@ SchKG Art. 74 (10 Tage ab Zustellung) im Code-Kommentar bestätigt.
   evtl. nicht angesprochen (swiss-precision ⚠️). Neutraler wäre z. B. «Mahnung oder Zahlungsbefehl — was tun?».
 - Zustelldatum geht beim Wechsel zur Mahnung und zurück verloren (rechts-pruefer 💡) — war mit zwei Seiten gleich.
 - rm-Texte brauchen eine Rumantsch-Fachperson; für «Zahlungsbefehl» gibt es in `rm.js` noch keinen Begriff.
+
+> ✅ **Entschieden 24.10.2026** (Stebler Studios): Titel neutral — «Mahnung oder Zahlungsbefehl — was tun?», in allen
+> fünf Sprachen (rm weiter ungeprüft). Ersetzt «Rechnung nicht bezahlt».

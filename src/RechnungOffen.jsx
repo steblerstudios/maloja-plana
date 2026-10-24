@@ -4,7 +4,7 @@ import { MahnungTeil } from './MahnungErhalten.jsx';
 import { BetreibungTeil } from './BetreibungErhalten.jsx';
 import { text, weight, radius, space } from './config/tokens.js';
 
-// Rechnung nicht bezahlt — seit 24.10.2026 EINE Seite für «Mahnung erhalten» und «Betreibung
+// «Mahnung oder Zahlungsbefehl — was tun?» — seit 24.10.2026 EINE Seite für «Mahnung erhalten» und «Betreibung
 // erhalten» (docs/entscheide/seiten-buendeln.md, Gruppe E, Entscheid 5). Oben die Wahl, was
 // angekommen ist; darunter nur der gewählte Teil, Schritte und Quellen unverändert.
 // Bewusst kein Aufklappen: die 10-Tage-Frist des Rechtsvorschlags (SchKG Art. 74) steht, wer
