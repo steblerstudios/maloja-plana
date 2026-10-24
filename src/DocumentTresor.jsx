@@ -4,6 +4,7 @@ import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { UnterlagenWege } from './components/UnterlagenWege.jsx';
 
 // Fassung 5 (Entscheid 23.10.2026, VERGLEICH.md «Dokumentenablage · entschieden»):
 // leer = ruhiges Bild + «Was oft zuerst hineingehört»; mit Inhalt = «{n} Dokumente»,
@@ -105,7 +106,8 @@ export const DocumentTresor = ({
   onUpdateExpiry,
   onOpenChapter,
   initialTab,
-  isDarkMode
+  isDarkMode,
+  onNavigate
 }) => {
   const [activeTab, setActiveTab] = useState(initialTab || 'all');
   // Ast-Farbe pro Kapitel — dieselbe Sprache wie der Lebensbaum.
@@ -359,6 +361,9 @@ export const DocumentTresor = ({
         ),
 
     vorschlagBlock,
+
+    // «Meine Unterlagen» — seit 24.10.2026 hier statt eigener Seite (components/UnterlagenWege.jsx).
+    React.createElement(UnterlagenWege, { palette, t, onNavigate }),
 
     // Nur auf diesem Gerät
     React.createElement('div', {

@@ -67,7 +67,7 @@ const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
 const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
 // ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
 const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
-const MeineUnterlagen = React.lazy(() => import('./MeineUnterlagen.jsx'));
+// MeineUnterlagen: seit 24.10.2026 keine eigene Seite — Abschnitt in der Ablage (UMLEITUNGEN, components/UnterlagenWege.jsx).
 const Lebensmappe = React.lazy(() => import('./Lebensmappe.jsx'));
 const NotfallDossier = React.lazy(() => import('./NotfallDossier.jsx'));
 const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
@@ -1638,7 +1638,9 @@ const AppInner = ({ demo }) => {
           // «Was oft zuerst hineingehört» (Fassung 5): ein Vorschlag öffnet sein Kapitel.
           onOpenChapter: (key) => { const i = chapters.findIndex((c) => c.key === key); if (i >= 0) handleNavigate('chapter', i); },
           initialTab: tresorInitialTab,
-          isDarkMode
+          isDarkMode,
+          // «Meine Unterlagen» steht seit 24.10.2026 unten in der Ablage (UnterlagenWege).
+          onNavigate: handleNavigate,
         }),
         view === 'kk' && React.createElement(KKScanner, {
           palette, t, data: activeData, vorlaeufig,
@@ -1761,7 +1763,6 @@ const AppInner = ({ demo }) => {
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, heuteIso(), Date.now())) }),
-        view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),

@@ -270,3 +270,24 @@ bleiben und führen über die Umleitung. Wächter: `aussteuerungUmleitung.test.j
 **Noch offen in Gruppe D:** Notfallpass und Notfall-Dossier sind weiter eigene Seiten, im Kapitel als Wege erreichbar
 (Pass oben, Dossier über Unterlagen und Vorlesekarte). Ob sie als Aufklapp-Teile ins Kapitel kommen (2 weitere Seiten),
 ist ein eigener Schritt — beide sind Ausgabe-Werkzeuge (QR fürs Papier, Felder fürs Telefon), kein Lesetext.
+
+## 9 · Gruppe H gebaut (24.10.2026)
+
+#558 (Gruppe D, Schritt 1) auf Zuruf gemergt, `main` = `e760207d`. Nicht live.
+
+**«Meine Unterlagen» → Abschnitt in der Dokumentenablage** auf Zweig `feat/ablage-buendeln`.
+Die frühere Seite war eine Verteilseite mit sechs Karten, die erste davon die Ablage selbst. Die Ablage
+(`tresor`, Fassung 5, rund 25 Aufrufer, Platz im Menü und im ＋-Fächer) bleibt die Seite; darunter steht neu
+`components/UnterlagenWege.jsx`: «Meine Unterlagen» mit Lebensmappe, Notfall-Dossier, Behörden-Dossier,
+Briefvorlagen und Datensicherung — echte Knöpfe, Texte unverändert (`unterlagen.*`).
+- `#/unterlagen` → `UMLEITUNGEN` → Ablage, Sprungmarke `mp-unterlagen`. Abläufe (KVG-/Zusatz-Wechsel),
+  Merkpunkte und die Brotkrumen der vier Dossiers zeigen weiter auf `unterlagen` und landen dort.
+- `MeineUnterlagen.jsx` entfernt. Im Dashboard (Werkzeuggruppe Dokumente) fällt der zweite Eintrag weg, der auf
+  dieselbe Seite zeigte. Register/Suche/Aussenfach behalten ihn (Suchwörter «unterlagen», «dossier»).
+- Weg fällt der Satz `unterlagen.note` («Alle Unterlagen bleiben auf Ihrem Gerät») — die Ablage sagt dasselbe
+  schon in ihrer Fusszeile (`trust.localOnly`).
+- Wächter: `unterlagenUmleitung.test.js`.
+
+**Offen:** Im Aussenfach des Gepäcks stehen weiter «Dokumentenablage» und «Meine Unterlagen» nebeneinander,
+beide führen jetzt in die Ablage — einen davon herausnehmen? Lebensmappe, Merkliste und Export bleiben
+eigene Seiten (Entscheid in §2: Merkliste gehört zu «Was ansteht», Export bleibt sichtbar).
