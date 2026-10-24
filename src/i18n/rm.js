@@ -1423,13 +1423,13 @@ export default {
     step4Title: '4 · Frist sichern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step4Text: { sie: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Werktag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Die ordentliche Kündigung muss bis 30. November {year} bei der alten Kasse eingegangen sein; fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Werktag davor (BAG). Leg dir die Frist in den Kalender.' },
+    step4Text: { sie: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Leg dir die Frist in den Kalender.' },
     step4Button: 'Termin «Desdir la cassa da malsauns» en il chalender ({date})',
     step4Done: 'Im Kalender notiert.',
     step4CalendarLink: 'Zum Kalender',
     policeLink: 'Police ablegen',
     reminderTitle: 'Krankenkasse kündigen — Frist',
-    reminderNotes: 'Ordentliche Kündigung der Grundversicherung bis 30.11. Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
+    reminderNotes: 'Kündigung der Grundversicherung nach der Prämienmitteilung: Eingang bis 30.11. (KVG Art. 7 Abs. 2). Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     specialRight: { sie: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie können Sie mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie kannst du mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.' },
