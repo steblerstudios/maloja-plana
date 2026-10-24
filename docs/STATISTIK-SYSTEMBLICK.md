@@ -37,21 +37,26 @@ eigener Grundsatzentscheid auf den Tisch.
 - **Nicht in der App sichtbar.** Kein Route, kein Menü, keine Übersetzung. Ein sichtbarer «Systemblick»
   ist ein eigener Schritt nach Freigabe und Prüfung (siehe «Bevor etwas öffentlich wird»).
 
-### Befunde aus der Messung vom 24.10.2026, BAG-Modellhaushalte (Prototyp, ungeprüft)
+### Befunde aus der Messung vom 24.10.2026, BAG-Modellhaushalte (Prototyp; swiss-precision-Prüfung 24.10.2026 eingearbeitet)
 
 - **Maloja rechnet 2 von 7 BAG-Haushalten.** BAG 1 (Rentnerin) und BAG 3 (Einelternfamilie). Die übrigen fünf
   stehen in allen 26 Kantonen auf «keine Zahl»:
-  - **zwei Erwachsene** (BAG 2, 4, 5, 7): jedes Kantonsmodell bricht bei `mehrereErwachsene` ab;
-  - **junge Erwachsene 19–25** (BAG 6): eigene Kategorie, oft an eine Ausbildung gebunden, nach der die App nicht fragt.
-  Das ist die grösste Lücke **in Maloja** — Paare, Familien und junge Erwachsene sind ein grosser Teil derer, die
-  Verbilligung brauchen. → eigener Backlog-Punkt, Voraussetzung für einen vollständigen Systemblick.
+  - **zwei Erwachsene** (BAG 2, 4, 5, 7): in 24 Kantonen bricht das Modell am Riegel `mehrereErwachsene` ab;
+  - **junge Erwachsene 19–25** (BAG 6): eigene Kategorie, oft an eine Ausbildung gebunden, nach der die App nicht fragt;
+  - TG und JU halten in allen Fällen schon vorher an der Steuergrösse an (siehe unten).
+  Das ist die grösste Lücke **in Maloja**: Fünf der sieben Haushaltstypen, mit denen das BAG die Wirksamkeit misst,
+  bekommen keine Zahl. → eigener Backlog-Punkt, Voraussetzung für einen vollständigen Systemblick.
 - **Spanne Einelternfamilie (BAG 3, Brutto 60'000, zwei Kinder):** Verbilligung von CHF 1'946 (UR) bis CHF 7'344 (GE)
   pro Jahr in den 16 Kantonen mit Betrag, Median CHF 4'313. Verbilligter Anteil der Haushaltsprämie: 28 % (SH) bis
   76 % (ZG), Median 52 %. Zum Vergleich BAG 2020 über **alle** sieben Haushalte: 37 % der «Mittleren Prämie» (S. 13) —
-  nicht direkt vergleichbar (anderes Jahr, andere Haushaltsmischung, Maloja-Vereinfachungen).
-- **Rentnerin (BAG 1, Rente 45'000):** in 10 Kantonen kein Anspruch, in 12 zwischen CHF 312 (BS) und CHF 1'490 (AI).
-- **Lücke im System:** TG rechnet nach dem Steuerbetrag, JU nach dem steuerbaren Einkommen. Ohne Steuerveranlagung
-  kann niemand vorab eine Zahl nennen — auch Maloja nicht («Wer seine Verbilligung kennen will, braucht zuerst die Veranlagung»).
+  **nicht vergleichbar**: anderes Jahr, andere Haushaltsmischung, Mittelwert statt Median, anderer Nenner (unsere
+  Prämie ist weder «Standardprämie» noch «Mittlere Prämie», siehe Grenzen) und ohne Familienzulagen im Einkommen.
+  Weil Prämiendefinition und Franchise vereinfacht sind (Grenze 8), ist der Anteil eine Näherung.
+- **Rentnerin (BAG 1, Rente 45'000):** nach dem Maloja-Modell in 10 Kantonen kein Anspruch, in 12 zwischen CHF 312 (BS)
+  und CHF 1'490 (AI). Gerechnet ohne Abzüge und mit Vermögen 0 — beides beeinflusst gerade hier das Ergebnis stark.
+- **TG und JU:** Die Kantone stützen sich wie fast alle auf Steuerdaten (BAG S. 11). Maloja nennt dort bewusst keine
+  Zahl, weil das Kantonsmodell eine Steuergrösse braucht (Steuerbetrag bzw. steuerbares Einkommen), die die App nicht
+  verlässlich schätzen kann. Das ist ein Entscheid von Maloja, keine Eigenschaft des Systems.
 - **Kinder:** AG, GR und TI zeigen für die Einelternfamilie bewusst keine Zahl (`agKinder`, `grKinder`, `tiKinder`),
   NW, GL, BL nicht (`mindestanspruch`), SZ nicht (`szKinderMindestanspruch`). Gründe je Zelle stehen in der Messung.
 
@@ -65,7 +70,19 @@ eigener Grundsatzentscheid auf den Tisch.
 4. **Stand** = Stand der Kantonsmodelle (2026). Ab 2027 neu messen, mit Datum im Dateinamen.
 5. **Von Maloja gesetzt**, nicht vom BAG: Geburtsjahre, Kinderalter ganzzahlig (BAG «3.5» → 3), Netto aus Brutto
    mit dem App-Richtwert (`bruttoZuNettoRichtwert`), Rente = AHV-Maximalrente 2026 + BVG-Rest, Franchise 300, kein 13.
-   Prämie = BAG-Durchschnittsprämie 2026 am Hauptort je Person (`praemienRegionen.js`) ≈ «Mittlere Prämie».
+   (Ab Dezember 2026 kommt die 13. AHV-Altersrente dazu — an der Summe von 45'000 ändert das nichts, nur an der
+   Aufteilung AHV/BVG; nicht an einer Quelle geprüft.)
+6. **Vermögen 0.** Alle Kantone rechnen einen Teil des steuerbaren Vermögens ins massgebende Einkommen (BAG S. 11).
+   Das BAG nennt für die Modellhaushalte in Anhang B (S. 131–134) keine Vermögensannahme. Mit Vermögen fiele die
+   Verbilligung tiefer aus — am stärksten bei der Rentnerin.
+7. **Ohne Familienzulagen.** Das BAG zählt sie zum Nettoeinkommen (Anhang B, S. 132, Abb. B-2: Haushalt 3 + CHF 5'575);
+   Maloja fragt nicht danach. Mit ihnen läge das Einkommen höher und die Verbilligung eher tiefer.
+8. **Prämie** = regionale Durchschnittsprämie 2026 am Hauptort je Person, Standardmodell, alle Versicherer
+   (`praemienRegionen.js`). Das ist **weder** die «Standardprämie» des Monitorings (Prämie der teuersten Region des
+   Kantons) **noch** dessen «Mittlere Prämie» (im Kanton effektiv bezahlt, mit Wahlmodellen und hohen Franchisen) —
+   beide BAG S. 134. Welche Franchisen der Durchschnitt mischt, ist nicht geprüft; zusammen mit Franchise 300 ist das
+   Profil eine Vereinfachung. Wo ein Kantonsmodell auf die tatsächliche Prämie deckelt, kann das den Betrag verschieben.
+   → Offene Frage an die Quelle: Definition der priminfo-Spalte (Franchise-Mischung) beim BAG klären.
 
 ### Ausbau Stufe 1 (Ideen, nicht beschlossen)
 
@@ -129,7 +146,8 @@ Verwendung am Original nachlesen**, Wahrheits-Disziplin (`CLAUDE.md`). Keine Zah
   → Umgesetzt am 24.10.2026: Der Systemblick rechnet genau diese sieben (siehe Stufe 1).
 - **Befund 2020:** verbleibende Prämienbelastung im Schnitt über alle Kantone und Modellhaushalte **13.7 % des verfügbaren
   Einkommens** mit «Standardprämie», **9.4 %** mit «Mittlerer Prämie»; tiefste ZG (7 % / 4 %), höchste NE (19 % / 15 %) (S. 13).
-- **Zielgrösse des Bundesrats** (Botschaft 1991): Die Zielwerte «werden … für rund 20 % der Modellhaushalte erfüllt» (S. 13).
+- **Zielgrösse des Bundesrats** (Botschaft 1991): Bei Belastung mit der «Mittleren Prämie» werden die Zielwerte «für rund
+  20 % der Modellhaushalte erfüllt» (S. 13); mit der «Standardprämie» nur in ZG und GR für einige Haushalte.
 - **Bezug 2020:** «rund 2.4 Millionen Personen», Bezugsquote 28 %; Ausgaben rund 5.5 Mrd. CHF, Kantonsanteil im Schnitt 48 % (S. 9).
 - **Lücke:** neuer Bericht seit 2022 nicht angekündigt (Rhythmus bisher alle drei bis vier Jahre). Daten 2020 sind alt —
   der Systemblick kann hier mit Stand 2026 etwas zeigen, das amtlich fehlt.
@@ -187,7 +205,8 @@ Verwendung am Original nachlesen**, Wahrheits-Disziplin (`CLAUDE.md`). Keine Zah
 
 - ✅ **ESTV, «Steuerbelastung in den Kantonshauptorten»** — https://www.estv.admin.ch/de/steuerbelastung-in-den-kantonshauptorten
   Für natürliche Personen ist die **neueste Ausgabe 2018** (PDF/XLSX, eingestellt 8.11.2023); 2019–2021 dort nur juristische Personen.
-  Zu alt für einen Vergleich 2026 → Maloja hat mit `kantonaleSteuerdaten.js` und der ESTV-Stichprobe (156/156) aktuellere,
+  Die PDF-Reihe ist zu alt für einen Vergleich 2026 (für aktuelle Jahre verweist die ESTV-Seite auf einen Rechner, mit dem
+  man die Belastung selbst erzeugt). Maloja hat mit `kantonaleSteuerdaten.js` und der ESTV-Stichprobe (156/156) aktuellere,
   eigene Rechenwege. Ein Steuer-Systemblick wäre Stufe 1, nicht Stufe 2.
 
 ### Maschinenzugang

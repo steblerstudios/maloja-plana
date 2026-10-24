@@ -56,11 +56,18 @@ export const HAUPTORTE = {
 //   - Geburtsjahre der Erwachsenen; Kinderalter ganzzahlig (BAG «3.5 Jahre» → 3)
 //   - Rentnerin: AHV-Maximalrente 2026 (CHF 2'520, data/ahvRechner.js) + Rest als BVG-Rente
 //   - Netto aus Brutto mit dem App-Richtwert (bruttoZuNettoRichtwert: AHV/IV/EO, ALV, PK-Anteil);
-//     ohne 13., Brutto ÷ 12
-//   - Prämie = BAG-Durchschnittsprämie 2026 am Hauptort je Person (data/praemienRegionen.js),
-//     entspricht der «Mittleren Prämie» des Monitorings, nicht der «Standardprämie»
+//     ohne 13., Brutto ÷ 12. OHNE Familienzulagen — das BAG rechnet sie zum Nettoeinkommen dazu
+//     (Anhang B, S. 132, Abb. B-2: z. B. Haushalt 3 + CHF 5'575); die App fragt nicht danach.
+//   - Vermögen 0 (kein Feld gesetzt → vermoegenSumme 0). Alle Kantone rechnen einen Teil des Vermögens
+//     an (BAG S. 11); das BAG nennt für die Modellhaushalte in Anhang B (S. 131–134) keine Annahme dazu.
+//   - Prämie = regionale Durchschnittsprämie 2026 am Hauptort je Person, Standardmodell, alle Versicherer
+//     (data/praemienRegionen.js). Das ist WEDER die «Standardprämie» des Monitorings (teuerste Region
+//     des Kantons) NOCH dessen «Mittlere Prämie» (effektiv bezahlt, mit Wahlmodellen und hohen
+//     Franchisen) — beide BAG S. 134. Welche Franchisen der Durchschnitt mischt, ist nicht geprüft;
+//     zusammen mit Franchise 300 unten ist das Profil eine Vereinfachung, kein realer Versicherungsvertrag.
 // Haushalte mit zwei Erwachsenen (2, 4, 5, 7) und junge Erwachsene 19–25 (6) rechnet heute kein
-// Kantonsmodell in Maloja: sie stehen trotzdem in der Tabelle, damit die Lücke sichtbar bleibt.
+// Kantonsmodell in Maloja (24 Kantone stoppen am Riegel `mehrereErwachsene` bzw. am Alter; TG und JU
+// schon vorher an der Steuergrösse): sie stehen trotzdem in der Tabelle, damit die Lücke sichtbar bleibt.
 export const MUSTERHAUSHALTE = {
   bag1: {
     bezeichnung: 'BAG 1 · Alleinstehende Rentnerin', bruttoJahr: 45000, rente: true,
@@ -107,7 +114,7 @@ export function hauptortBfs(kanton) {
   return g ? g.bfsNr : null;
 }
 
-// Haushaltsprämie pro Monat = Summe der BAG-Durchschnittsprämien 2026 am Hauptort, je Person.
+// Haushaltsprämie pro Monat = Summe der regionalen Durchschnittsprämien 2026 am Hauptort, je Person.
 export function haushaltsPraemie(kanton, h) {
   const p = getAveragePremium(hauptortBfs(kanton));
   if (!p) return null;
@@ -131,6 +138,8 @@ export function musterProfil(kanton, haushalt, bruttoJahr) {
       canton: kanton, dateOfBirth: h.erwachsene[0], maritalStatus: h.maritalStatus,
       // Kinder mit Geburtsjahr (1. Januar), nicht nur mit Alter: ohne Datum bleiben vorsichtige Kantone
       // an der Altersgrenze stehen (AR: Kinderabzug nach Jahrgang), und alle lesen dasselbe Jahr.
+      // partnerIncome 0: heute ohne Wirkung (zwei Erwachsene → keine Zahl). Rechnen die Modelle einmal
+      // Paare, wäre hier das ganze Haushaltsbrutto einer Person zugeordnet — dann aufteilen.
       household: { adults: h.erwachsene.length, children: h.kinder.map((age) => ({ age, birthDate: `${JAHR - age}-01-01` })), isRetired: !!h.rente, partnerIncome: 0 },
     },
     finanzen,

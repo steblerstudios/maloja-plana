@@ -1,16 +1,22 @@
 # Messung Systemblick IPV — BAG-Modellhaushalte — 2026-10-24
 
 > Erzeugt mit `node scripts/systemblick-messen.mjs`. Prototyp, **nicht veröffentlichen**, bevor das
-> Konzept (`docs/STATISTIK-SYSTEMBLICK.md`) freigegeben und der swiss-precision-pruefer gelaufen ist.
+> Konzept (`docs/STATISTIK-SYSTEMBLICK.md`) freigegeben ist. Fachprüfung (swiss-precision) 24.10.2026: Befunde eingearbeitet.
+> **Keine Anspruchszusage.** Ob und wie viel Verbilligung jemand erhält, entscheidet allein die kantonale Stelle.
 
 **Haushalte:** die sieben Modellhaushalte aus Ecoplan/BAG, «Wirksamkeit der Prämienverbilligung – Monitoring 2020»,
-Mai 2022, S. 12 (Abb. K-2), mit deren Bruttoeinkommen. Von Maloja gesetzt: Geburtsjahre, Kinderalter ganzzahlig,
-Netto aus Brutto mit dem App-Richtwert, Rente = AHV-Maximalrente 2026 + BVG-Rest, Franchise 300, kein 13.
-**Prämie:** BAG-Durchschnittsprämie 2026 am Hauptort je Person (≈ «Mittlere Prämie» des Monitorings).
+Mai 2022, S. 12 (Abb. K-2), mit deren Bruttoeinkommen.
+**Von Maloja gesetzt** (nicht vom BAG): Geburtsjahre; Kinderalter ganzzahlig; Netto aus Brutto mit dem App-Richtwert,
+**ohne Familienzulagen** (das BAG zählt sie dazu, Anhang B S. 132); **Vermögen 0** (alle Kantone rechnen einen Teil
+des Vermögens an, BAG S. 11); Rente = AHV-Maximalrente 2026 + BVG-Rest; Franchise 300; kein 13.
+**Prämie:** regionale Durchschnittsprämie 2026 am Hauptort je Person, Standardmodell, alle Versicherer. Das ist weder
+die «Standardprämie» (teuerste Region) noch die «Mittlere Prämie» (effektiv bezahlt) des Monitorings (BAG S. 134).
 
 **Lesart:** Werte = Prämienverbilligung pro Jahr in CHF, so wie der Maloja-Rechner sie für genau dieses Profil zeigen
-würde. Die Kantone rechnen mit ihrem eigenen massgebenden Einkommen — **kein amtlicher Kantonsvergleich**.
-`0` = belegt kein Anspruch · `keine Zahl` = das Kantonsmodell zeigt für dieses Profil bewusst keinen Betrag.
+würde. Die Kantone rechnen mit ihrem eigenen massgebenden Einkommen (meist aus der Steuerveranlagung, nach Abzügen)
+— **kein amtlicher Kantonsvergleich**.
+`0` = nach dem Maloja-Modell kein Anspruch (bei der Rentnerin stark von den Vereinfachungen oben abhängig) ·
+`keine Zahl` = das Kantonsmodell in Maloja zeigt für dieses Profil bewusst keinen Betrag.
 
 ## Haushalte, für die Maloja rechnen kann
 
@@ -49,7 +55,7 @@ würde. Die Kantone rechnen mit ihrem eigenen massgebenden Einkommen — **kein 
 | Kennzahl | BAG1 | BAG3 |
 |---|---:|---:|
 | Kantone mit Betrag | 12 | 16 |
-| Kantone ohne Anspruch | 10 | 0 |
+| Kantone ohne Anspruch (Maloja-Modell) | 10 | 0 |
 | Kantone ohne Zahl | 4 | 10 |
 | Tiefster Betrag (CHF/Jahr) | 312 | 1'946 |
 | Median Betrag (CHF/Jahr) | 1'134 | 4'313 |
@@ -58,10 +64,12 @@ würde. Die Kantone rechnen mit ihrem eigenen massgebenden Einkommen — **kein 
 
 ## Haushalte, für die Maloja heute keine Zahl zeigt
 
-In **allen 26 Kantonen** «keine Zahl». Das ist eine Lücke in Maloja, nicht im System:
-- **zwei Erwachsene** — jedes Kantonsmodell bricht ab (`haushalt`, Riegel `mehrereErwachsene`);
+In **allen 26 Kantonen** «keine Zahl». In 24 Kantonen liegt das an Maloja selbst:
+- **zwei Erwachsene** — das Kantonsmodell bricht am Riegel `mehrereErwachsene` ab (`haushalt`);
 - **junge Erwachsene 19–25** — eigene Kategorie in den Kantonen, oft abhängig von einer Ausbildung, nach der die App
   nicht fragt (`alter`, `ausbildung`, `geJungeErwachsene`, `neJeuneAdulte`, `vsJungeErwachsene`).
+TG und JU halten schon vorher an: Maloja nennt dort bewusst keine Zahl, weil das Modell eine Steuergrösse braucht
+(`tgSteuerbetrag`, `steuerbaresEinkommen`), die die App nicht verlässlich schätzen kann.
 
 Betroffen sind 5 von 7 BAG-Modellhaushalten:
 
