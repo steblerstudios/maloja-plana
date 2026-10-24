@@ -1872,9 +1872,6 @@ export default {
   fortschritt: {
     title: { sie: 'Voss progress', du: 'Tes progress' },
     fieldsOpen: 'averts',
-    netzAria: 'Rait dals secturs da vita: Il pli lunsch ch’in piz tanscha anora, il dapli è endatà en quest sectur.',
-    netzHinweis: 'Il pli lunsch anora, il dapli è endatà. «Na concerna betg» quinta er.',
-    netzLeer: 'Anc n’è nagut endatà. Mintga sectur crescha qua anora, uschespert ch’el cuntegna insatge.',
   },
 
   ankunft: {
@@ -2213,6 +2210,12 @@ export default {
     },
     versicherungen: {
       title: 'Assicuranzas & prevenziun',
+      netz: {
+        achse: { basic: 'Cassa da malsauns', occupational: 'Cassa da pensiun', additional: 'Ulteriuras', property: 'Chasa & viadi', mobility: 'Auto', social: 'AVS' },
+        aria: 'Rait da las assicuranzas: Il pli lunsch ch’in piz tanscha anora, il dapli è endatà en quest chapitel.',
+        hinweis: { sie: 'Mussa quant è endatà per mintga assicuranza, betg sche Vus essas bain assicurads. «Na concerna betg» quinta er.', du: 'Mussa quant è endatà per mintga assicuranza, betg sche ti es bain assicurà. «Na concerna betg» quinta er.' },
+        leer: 'Anc n’è nagut endatà. Mintga part crescha qua anora, uschespert ch’ella cuntegna insatge.',
+      },
       // TODO(rm): 'Assicuranza' (singular) da la fuorma plurala dal titel — controlar tar
       // ina/in linguist/a natal/a.
       short: 'Assicuranza',

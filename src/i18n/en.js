@@ -1755,9 +1755,6 @@ export default {
   fortschritt: {
     title: 'Your progress',
     fieldsOpen: 'open',
-    netzAria: 'Web of life areas: the further a corner reaches out, the more is filled in for that area.',
-    netzHinweis: 'The further out, the more is filled in. “Not applicable” counts too.',
-    netzLeer: 'Nothing is filled in yet. Each area grows outwards here as soon as something is in it.',
   },
   chapterStatus: {
     leer: 'Ready to fill in',
@@ -2078,6 +2075,12 @@ export default {
     },
     versicherungen: {
       title: 'Insurance',
+      netz: {
+        achse: { basic: 'Health', occupational: 'Pension fund', additional: 'Other', property: 'Home & travel', mobility: 'Car', social: 'AHV' },
+        aria: 'Web of insurances: the further a corner reaches out, the more is filled in for that section.',
+        hinweis: { sie: 'Shows how much is filled in for each insurance, not whether you are well insured. “Not applicable” counts too.', du: 'Shows how much is filled in for each insurance, not whether you are well insured. “Not applicable” counts too.' },
+        leer: 'Nothing is filled in yet. Each section grows outwards here as soon as something is in it.',
+      },
       short: 'Insurance',
       description: 'Health insurance, pension, and coverage',
       intro: 'Your insurance details in one place. Helpful when switching providers or applying for premium reductions.',

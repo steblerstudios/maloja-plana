@@ -1755,9 +1755,6 @@ export default {
   fortschritt: {
     title: { sie: 'Votre progression', du: 'Ta progression' },
     fieldsOpen: 'ouverts',
-    netzAria: 'Toile des domaines de vie : plus une pointe s’étend vers l’extérieur, plus ce domaine est rempli.',
-    netzHinweis: 'Plus c’est vers l’extérieur, plus c’est rempli. « Non applicable » compte aussi.',
-    netzLeer: 'Rien n’est encore rempli. Chaque domaine s’étend ici vers l’extérieur dès qu’il contient quelque chose.',
   },
   chapterStatus: {
     leer: 'Prêt à remplir',
@@ -2078,6 +2075,12 @@ export default {
     },
     versicherungen: {
       title: 'Assurances',
+      netz: {
+        achse: { basic: 'Caisse maladie', occupational: 'Caisse de pension', additional: 'Autres', property: 'Ménage & voyage', mobility: 'Voiture', social: 'AVS' },
+        aria: 'Toile des assurances : plus une pointe s’étend vers l’extérieur, plus cette section est remplie.',
+        hinweis: { sie: 'Montre ce qui est rempli pour chaque assurance, pas si vous êtes bien assuré·e. « Non applicable » compte aussi.', du: 'Montre ce qui est rempli pour chaque assurance, pas si tu es bien assuré·e. « Non applicable » compte aussi.' },
+        leer: 'Rien n’est encore rempli. Chaque section s’étend ici vers l’extérieur dès qu’elle contient quelque chose.',
+      },
       short: 'Assurances',
       description: 'Assurance maladie, prévoyance et couverture',
       intro: { sie: 'Vos assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.', du: 'Tes assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.' },

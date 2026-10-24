@@ -67,6 +67,8 @@ const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
 const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));
+// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
+const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const MietVergleich = React.lazy(() => import('./components/MietVergleich.jsx').then((m) => ({ default: m.MietVergleich })));
 
@@ -2331,6 +2333,19 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )
+      ),
+      // Versicherungen: das Netz über den Abschnitten, sobald etwas eingetragen ist. Ein Tipp
+      // auf eine Achse öffnet den Abschnitt darunter und springt hin (id mp-section-<erstes Feld>).
+      chapter.key === 'versicherungen' && filledCount > 0 && React.createElement(React.Suspense, { fallback: null },
+        React.createElement(VersicherungsNetz, {
+          chapter, data, palette, tr,
+          onAbschnitt: (key) => {
+            setOffeneAbschnitte((o) => ({ ...o, [key]: true }));
+            // Erst nach dem Zeichnen des aufgeklappten Abschnitts springen: mit requestAnimationFrame
+            // lief der Sprung zu früh und die Seite blieb stehen (im Browser gemessen 24.10.2026).
+            setTimeout(() => document.getElementById('mp-section-' + key)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+          },
+        })
       ),
       abschnittsliste()
     ),

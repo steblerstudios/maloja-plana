@@ -1763,9 +1763,6 @@ export default {
   fortschritt: {
     title: { sie: 'Ihr Fortschritt', du: 'Dein Fortschritt' },
     fieldsOpen: 'offen',
-    netzAria: 'Netz der Lebensbereiche: Je weiter eine Ecke nach aussen reicht, desto mehr ist in diesem Bereich eingetragen.',
-    netzHinweis: 'Je weiter nach aussen, desto mehr ist eingetragen. «Trifft nicht zu» zählt mit.',
-    netzLeer: 'Noch ist nichts eingetragen. Jeder Bereich wächst hier nach aussen, sobald etwas drinsteht.',
   },
   chapterStatus: {
     leer: 'Bereit zum Ausfüllen',
@@ -2085,6 +2082,12 @@ export default {
     },
     versicherungen: {
       title: 'Versicherungen & Vorsorge',
+      netz: {
+        achse: { basic: 'Krankenkasse', occupational: 'Pensionskasse', additional: 'Weitere', property: 'Hausrat & Reise', mobility: 'Auto', social: 'AHV' },
+        aria: 'Netz der Versicherungen: Je weiter eine Ecke nach aussen reicht, desto mehr ist in diesem Abschnitt eingetragen.',
+        hinweis: { sie: 'Zeigt, wie viel zu jeder Versicherung eingetragen ist, nicht, ob Sie gut versichert sind. «Trifft nicht zu» zählt mit.', du: 'Zeigt, wie viel zu jeder Versicherung eingetragen ist, nicht, ob du gut versichert bist. «Trifft nicht zu» zählt mit.' },
+        leer: 'Noch ist nichts eingetragen. Jeder Abschnitt wächst hier nach aussen, sobald etwas drinsteht.',
+      },
       short: 'Versicherung',
       description: 'Krankenkasse, Pensionskasse und Absicherung',
       intro: { sie: 'Ihre Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.', du: 'Deine Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.' },

@@ -1755,9 +1755,6 @@ export default {
   fortschritt: {
     title: { sie: 'Il Suo progresso', du: 'Il tuo progresso' },
     fieldsOpen: 'aperti',
-    netzAria: 'Rete degli ambiti di vita: più una punta si estende verso l’esterno, più quell’ambito è compilato.',
-    netzHinweis: 'Più è verso l’esterno, più è compilato. Anche «Non pertinente» conta.',
-    netzLeer: 'Non è ancora compilato nulla. Ogni ambito cresce qui verso l’esterno appena contiene qualcosa.',
   },
   chapterStatus: {
     leer: 'Pronto da compilare',
@@ -2078,6 +2075,12 @@ export default {
     },
     versicherungen: {
       title: 'Assicurazioni',
+      netz: {
+        achse: { basic: 'Cassa malati', occupational: 'Cassa pensioni', additional: 'Altre', property: 'Economia dom. & viaggio', mobility: 'Auto', social: 'AVS' },
+        aria: 'Rete delle assicurazioni: più una punta si estende verso l’esterno, più quella sezione è compilata.',
+        hinweis: { sie: 'Mostra quanto è compilato per ogni assicurazione, non se Lei è assicurata/o bene. Anche «Non pertinente» conta.', du: 'Mostra quanto è compilato per ogni assicurazione, non se sei assicurata/o bene. Anche «Non pertinente» conta.' },
+        leer: 'Non è ancora compilato nulla. Ogni sezione cresce qui verso l’esterno appena contiene qualcosa.',
+      },
       short: 'Assicurazioni',
       description: 'Cassa malati, previdenza e coperture',
       intro: { sie: 'I dettagli delle Sue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.', du: 'I dettagli delle tue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.' },
