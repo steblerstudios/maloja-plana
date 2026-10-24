@@ -156,7 +156,7 @@ den Rechner der App laufen. 26-mal dieselbe Frage, 26 kantonale Regeln.
 - **Median statt Durchschnitt.** Bei 16 Werten ist der Median der Mittelwert aus dem 8. und 9. Wert (AI 4'242, FR 4'383
   → 4'313). Der Durchschnitt läge bei CHF 4'467, weil BS und GE ihn nach oben ziehen.
 - **Die Spanne kommt von den Rändern.** Die mittlere Hälfte der 16 Kantone liegt zwischen rund CHF 4'050 und 4'900
-  (Quartile). «CHF 1'946 bis 7'344» stimmt, beschreibt aber die Extreme: UR und SH unten, BS und GE oben. Öffentlich beides
+  (Quartile nach der Methode «inclusive»: 4'054 / 4'884; mit «exclusive» 3'883 / 5'100 — die Methode immer nennen). «CHF 1'946 bis 7'344» stimmt, beschreibt aber die Extreme: UR und SH unten, BS und GE oben. Öffentlich beides
   nennen, sonst wirkt die Streuung grösser, als sie für die meisten Kantone ist.
 - **«Keine Zahl» ist keine Zufallslücke.** Die 10 Kantone ohne Zahl haben oft besondere Regeln für Kinder. Der Median
   gilt darum nur für die 16 Kantone mit Betrag. Nie «Schweizer Median» schreiben.
@@ -168,13 +168,15 @@ Verbilligung hoch (Korrelation Prämie–Verbilligung über die 16 Kantone: r = 
 die **Restprämie**:
 
 > **Restprämie** = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie)  ·
-> **Belastung** = Restprämie ÷ Einkommen pro Jahr, mit dem die App rechnet (H3: Nettolohn-Richtwert × 12 = CHF 54'480)
+> **Restprämie in % des Netto-Richtwerts** = Restprämie ÷ Einkommen pro Jahr, mit dem die App rechnet (H3:
+> Nettolohn-Richtwert × 12 = CHF 54'480). Bewusst **nie nur «Belastung»** nennen: Das klänge nach der BAG-Grösse
+> «verbleibende Prämienbelastung», die anders gerechnet ist (siehe unten).
 
-Gerechnet im Code (`restpraemie`, `kennzahlenRest` in `systemblick.js`, mit Tests). Die Messung enthält den Abschnitt
-«Restprämie und Belastung» für H1 und H3. Die Tabelle hier zeigt H3, sortiert nach Belastung. Sie deckt sich genau mit der
-Handrechnung vom selben Tag. Noch nicht vom swiss-precision-pruefer geprüft:
+Gerechnet im Code (`restpraemie`, `kennzahlenRest` in `systemblick.js`, mit Tests; das Feld heisst intern `belastung`).
+Die Messung enthält den Abschnitt «Restprämie» für H1 und H3. Die Tabelle hier zeigt H3, sortiert nach dem Prozentwert.
+Vom swiss-precision-pruefer am 24.10.2026 nachgerechnet (alle 16 Werte, Median, Prozentwerte):
 
-| Kanton | Verbilligung | Jahresprämie | Restprämie | Belastung |
+| Kanton | Verbilligung | Jahresprämie | Restprämie | % des Netto-Richtwerts |
 |---|---:|---:|---:|---:|
 | ZG | 4'434 | 5'808 | 1'374 | 2.5 % |
 | AI | 4'242 | 5'952 | 1'710 | 3.1 % |
@@ -193,25 +195,30 @@ Handrechnung vom selben Tag. Noch nicht vom swiss-precision-pruefer geprüft:
 | BE | 4'147 | 9'288 | 5'141 | 9.4 % |
 | SH | 2'349 | 8'304 | 5'955 | 10.9 % |
 
-- **Restprämie** CHF 1'374 (ZG) bis 5'955 (SH), Median CHF 4'088. **Belastung** 2.5 % bis 10.9 %, Median 7.5 %. Das ist
-  gut ein Faktor 4 für dieselbe Familie.
-- **Die Rangfolge kippt.** GE hat die höchste Verbilligung, liegt bei der Belastung aber auf Platz 7. ZG steht bei der
-  Verbilligung auf Platz 7, bei der Belastung auf Platz 1. UR hat die tiefste Verbilligung, aber nicht die höchste Last.
-  Die höchste Last trägt die Familie in SH.
-- **Folgerung:** Wer über *Kosten* spricht, rangiert die Belastung, nie die Verbilligung allein.
+- **Restprämie** CHF 1'374 (ZG) bis 5'955 (SH), Median CHF 4'088. **In % des Netto-Richtwerts** 2.5 % bis 10.9 %,
+  Median 7.5 %. Das ist gut ein Faktor 4 für dasselbe Profil.
+- **Die Rangfolge kippt.** GE hat die höchste Verbilligung, liegt bei der Restprämie in % aber auf Platz 7. ZG steht bei
+  der Verbilligung auf Platz 7, bei der Restprämie in % auf Platz 1. UR hat die tiefste Verbilligung, aber nicht die
+  höchste Restprämie. Die höchste Restprämie trägt das Profil in SH.
+- **Folgerung:** Wer über *Kosten* spricht, rangiert die Restprämie, nie die Verbilligung allein.
 - **Zählregel:** Beim Median der Verbilligung zählen nur Kantone mit Betrag. Bei der Restprämie zählt «kein Anspruch im
   Modell» mit, denn dieser Haushalt trägt die ganze Prämie. Darum hat H1 22 Werte statt 12. H1 bleibt intern (siehe oben).
-- **Verbilligung über der Musterprämie:** Das kommt vor, wo ein Kanton mit einer eigenen Richtprämie rechnet und erst an der
-  Prämie mit ordentlicher Franchise deckelt. Der Test hat es am 24.10.2026 bei AR gefunden: H3 mit Brutto CHF 48'000
-  (−20 %) ergab CHF 851 Verbilligung mehr als die Musterprämie. Grund ist Grenze 8: Die Musterprämie ist ein Durchschnitt
-  über alle Franchisen und liegt unter der Prämie mit Franchise CHF 300. Eine negative Restprämie gibt es nicht, und 0 wäre
-  eine Behauptung. Darum steht dort «keine Zahl» mit Grund `verbilligungUeberPraemie`, gezählt unter `restOffen`. Zum
-  BAG-Brutto tritt der Fall in keinem Kanton auf. Er zeigt aber: Für eine verlässliche Restprämie braucht es die Prämie mit
-  ordentlicher Franchise, nicht den Durchschnitt (offene Frage priminfo, siehe Grenze 8).
-- **Nicht mit dem BAG vergleichbar** (13.7 % bzw. 9.4 %, S. 13): Unser Nenner ist der Nettolohn nach Maloja-Richtwert,
-  ohne Familienzulagen. Wie das BAG sein «verfügbares Einkommen» abgrenzt, ist noch nicht nachgelesen (siehe offene
-  Fragen). Mit Familienzulagen stiege der Nenner. Ob die Belastung dann sinkt, hängt davon ab, wie stark die Verbilligung
-  mitsinkt. Die Richtung ist offen.
+- **Verbilligung über der Musterprämie:** Der Test hat es am 24.10.2026 bei AR gefunden: H3 mit Brutto CHF 48'000 (−20 %)
+  ergab CHF 851 mehr Verbilligung als die Musterprämie (Richtprämie 6'025.20 + 2 × 1'114.80 = 8'254.80, minus
+  Musterprämie 7'404; vom Prüfer nachgerechnet). AR deckelt den Anteil der erwachsenen Person auf die Prämie «mit der
+  ordentlichen Franchise und mit Unfalldeckung» (V zum KVG Art. 7, bGS 833.141). Gründe, zusammen: (1) Das AR-Modul lässt
+  den Kinderanteil ungedeckelt und vergleicht den Erwachsenenanteil mit der ganzen Haushaltsprämie; (2) die
+  AR-Richtprämie für Erwachsene (6'025) liegt über der Musterprämie (Herisau, eine Person: 4'872); (3) die Musterprämie ist
+  ein Durchschnitt, der vermutlich tiefer liegt als die Prämie mit Franchise CHF 300 — **nicht geprüft** (Grenze 8).
+  Eine negative Restprämie gibt es nicht, und 0 wäre eine Behauptung. Darum steht dort «keine Zahl» mit Grund
+  `verbilligungUeberPraemie`, gezählt unter `restOffen`. Beim BAG-Brutto tritt der Fall in keinem Kanton auf; andere
+  Kantone mit eigener Richtprämie sind nicht systematisch getestet. Für eine verlässliche Restprämie braucht es die Prämie
+  mit ordentlicher Franchise, nicht den Durchschnitt (offene Frage priminfo, siehe Grenze 8).
+- **Nicht mit dem BAG vergleichbar** (13.7 % bzw. 9.4 %, S. 13). Das BAG teilt durch das «verfügbare Einkommen»
+  (Nettolohn − Steuern, mit Familienzulagen; Anhang B, S. 132 und 134). Unser Wert unterscheidet sich dreifach:
+  **ohne Steuern** im Nenner (unser Prozentwert fällt dadurch tiefer aus), **ohne Familienzulagen** (fällt dadurch höher
+  aus) und eine **andere Prämie** (Musterprämie statt «Standardprämie» bzw. «Mittlere Prämie»). Dass einzelne Werte nahe
+  bei den BAG-Zahlen liegen (H3/BE 9.4 %, H1/BS 13.8 %), ist Zufall, keine Bestätigung.
 
 ## Wie die Kosten sinken können
 
@@ -221,10 +228,13 @@ bewirken würde (Petitionen, Medien). Zwei Regeln aus der Statistik gelten für 
 
 ### Für den einzelnen Haushalt (grösster Hebel zuerst)
 
-1. **Verbilligung beantragen.** Mit Abstand der grösste Hebel. Bei H3 geht es um den ganzen Betrag (Median CHF 4'313 pro
-   Jahr), mehr als jede Sparmassnahme bei der Prämie. In der Stadt Basel bezog 2022 knapp ein Viertel der Berechtigten
-   die Verbilligung nicht (23 %, BFH, gilt nur für die Stadt Basel). In Kantonen mit Gesuchsfrist entscheidet das Datum
-   (SO: Frist 2026 laut Messung vorbei). Hier hilft Maloja direkt: Anspruch prüfen, Frist merken.
+1. **Verbilligung beantragen.** Bei H3 geht es um den ganzen Betrag (Median CHF 4'313 pro Jahr in der Modellrechnung).
+   Ob das mehr ist als andere Sparmöglichkeiten bei der Prämie, misst Maloja heute nicht (siehe Hebel 2) — offen.
+   In der Stadt Basel bezog 2022 knapp ein Viertel der Berechtigten die Verbilligung nicht (23 %, BFH, gilt nur für die
+   Stadt Basel). In Kantonen mit Gesuchsfrist entscheidet das Datum, z. B. SO (Gesuch bis 31. Juli des Anspruchsjahres,
+   Sozialverordnung § 75 Abs. 2, BGS 831.2) und AR (Antrag bis 31. März, in Härtefällen bis 30. April, V zum KVG Art. 10,
+   bGS 833.141) — für 2026 sind beide vorbei. Hier hilft Maloja: einen möglichen Anspruch einschätzen und die Frist
+   merken. Entscheiden tut der Kanton.
 2. **Günstigeren Versicherer in derselben Region wählen.** Die Leistungen der Grundversicherung sind bei allen gleich.
    Wie gross die Spanne je Region ist, zeigt der Systemblick heute nicht: Er rechnet mit dem Durchschnitt aller
    Versicherer. → messbar machen (siehe unten).
@@ -239,18 +249,25 @@ durch das Kantonsmodell gerechnet. Nie zwei Ersparnisse addieren.
 
 ### Auf der Ebene der Regeln (für Petitionen und Medien, erst nach Prüfung)
 
-1. **Die Regeln machen den Unterschied.** Dieselbe Familie trägt in der Modellrechnung je nach Kanton 2.5 % oder 10.9 %
-   ihres Nettolohns als Restprämie. Die Familie ist überall gleich, also liegt die Spanne an den Regeln. Das ist ein
-   Argument für eine verbindliche Höchstbelastung in % des Einkommens. Die Restprämie steht seit 24.10.2026 im Code und
-   ist getestet. Als Kernsatz erst, wenn der swiss-precision-pruefer sie geprüft hat.
+1. **Prämien und Regeln machen den Unterschied.** Dasselbe Profil trägt in der Modellrechnung je nach Kanton 2.5 % oder
+   10.9 % des Netto-Richtwerts als Restprämie. Die Spanne liegt an **Prämienniveau und kantonalen Regeln zusammen**
+   (die Jahresprämie desselben Profils reicht von CHF 5'808 in ZG bis 10'680 in GE) und an den Maloja-Annahmen
+   (Vermögen 0, Netto statt massgebendes Einkommen). Wie viel davon an den Regeln allein liegt, ist **nicht getrennt
+   gemessen** — dafür bräuchte es dieselbe Prämie in allen Kantonen als Gegenrechnung (siehe unten). Erst dann taugt
+   der Befund als Argument für eine verbindliche Höchstbelastung. Kein Kernsatz, bis das gemessen ist.
 2. **Nichtbezug senken.** Verbilligung automatisch oder auf Hinweis auszahlen statt nur auf Gesuch. Die Kantone stützen
-   sich ohnehin auf Steuerdaten (BAG S. 11), die Daten sind also da. ⚠️ Welche Kantone schon automatisch auszahlen,
-   ist nicht geprüft → je Kanton in `ipv-kantone-2026.md` nachsehen.
-3. **Bundesrecht ab 2026.** ⚠️ Nach meinem Stand: Der indirekte Gegenvorschlag zur Prämien-Entlastungs-Initiative
-   (Initiative am 9.6.2024 abgelehnt) verpflichtet die Kantone, einen Mindestbetrag für die Verbilligung aufzuwenden und
-   ein Ziel für die höchste Prämienbelastung festzulegen. In Kraft seit 1.1.2026. **Nicht an der Quelle geprüft** →
-   Fedlex (KVG Art. 65) und BAG lesen, bevor der Satz irgendwo steht. Falls es stimmt, ist das der beste Massstab für
-   den Systemblick: Erreichen die Musterhaushalte das Ziel, das ihr eigener Kanton gesetzt hat?
+   sich ohnehin auf Steuerdaten (BAG S. 11), die Daten sind also da. Stand 2026 laut `ipv-kantone-2026.md`: **ohne
+   Antrag** BE, UR, AI, VS, GE, JU (6); gemischt NE; Kanton schreibt an, Antrag nötig 11; Antrag ohne Zustellung 8 —
+   in 19 von 26 Kantonen muss eine berechtigte Person 2026 selbst handeln. Der Basler Nichtbezug (23 %) stammt aus einem
+   Antragskanton und ist **nicht** auf Kantone mit automatischer Auszahlung übertragbar. Einzelheiten, Fristen und
+   Prüfstand: [`BEFUND-quellen-kosten-senken-2026-10-24.md`](BEFUND-quellen-kosten-senken-2026-10-24.md), Abschnitt 2.
+3. **Bundesrecht ab 2026** (KVG Art. 65 Abs. 1ter–1sexies, in Kraft seit 1.1.2026, an Fedlex und BAG gelesen
+   24.10.2026): Jeder Kanton legt fest, welchen Anteil die Prämie am verfügbaren Einkommen höchstens ausmachen darf —
+   **bis spätestens vier Jahre nach Inkrafttreten, ohne Höchstwert vom Bund**; sonst legt ihn der Bundesrat fest.
+   Dazu ein Mindestbeitrag der Kantone von 3,5–7,5 % der OKP-Bruttokosten, in den ersten zwei Jahren überall 3,5 %.
+   Als Massstab für den Systemblick («Erreichen die Musterhaushalte das Ziel ihres Kantons?») taugt das erst, wenn ein
+   Kanton sein Ziel festgelegt hat — und auch dann nicht direkt, weil das Gesetz am verfügbaren bzw. steuerbaren
+   Einkommen misst. Wortlaute und Herleitung: [`BEFUND-quellen-kosten-senken-2026-10-24.md`](BEFUND-quellen-kosten-senken-2026-10-24.md), Abschnitt 1.
 4. **Gesundheitskosten** treiben die Prämien. Das kann Maloja nicht messen. Es gehört nicht in Maloja-Kernsätze.
 
 ### Wie Maloja die Hebel messen könnte (Vorschlag, nicht gebaut)
@@ -263,6 +280,10 @@ durch das Kantonsmodell gerechnet. Nie zwei Ersparnisse addieren.
 - **Schwellenfächer:** `systemblickIPV('bag3', brutto)` für Brutto CHF 40'000 bis 100'000 in Schritten von 2'000 (der
   Parameter `bruttoJahr` ist schon da). Das zeigt, wo die Verbilligung wegfällt und wie viel von CHF 1'000 mehr Lohn
   nach der Restprämie übrig bleibt.
+- **Regeln von Prämien trennen:** dasselbe Profil in allen Kantonen mit **derselben** Prämie rechnen (z. B. dem
+  Schweizer Mittel). Was dann an Spanne bleibt, liegt an den Regeln; die Differenz zur Messung am Prämienniveau.
+  Voraussetzung für jeden Kernsatz «die Regeln machen den Unterschied». Achtung: Kantone mit eigener Richtprämie oder
+  Deckel auf die tatsächliche Prämie reagieren darauf unterschiedlich — Ergebnis je Kanton prüfen.
 - **Spanne der Versicherer je Region:** günstigste und teuerste Prämie je Region zur Bauzeit übernehmen, wie
   `scripts/build-praemien-data.mjs`. ⚠️ Datenquelle und Lizenz noch nicht geprüft.
 

@@ -185,13 +185,16 @@ export function einkommenJahr(profil) {
 // Was der Haushalt nach der Verbilligung selbst trägt. Die Verbilligung allein sagt das nicht: wo die
 // Prämie hoch ist, ist meist auch die Verbilligung hoch.
 //   restJahr  = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie)
-//   belastung = restJahr ÷ einkommenJahr × 100 (Prozent, ungerundet — gerundet wird erst in der Darstellung)
+//   belastung = restJahr ÷ einkommenJahr × 100 (Prozent, ungerundet — gerundet wird erst in der Darstellung).
+//               Nach aussen «Restprämie in % des Netto-Richtwerts», nie nur «Belastung»: das BAG teilt durch das
+//               verfügbare Einkommen (mit Steuern abgezogen, mit Familienzulagen) — eine andere Grösse.
 // Bei «keine Zahl» beides null: ohne Verbilligung keine Restprämie, nie geschätzt.
 // Liegt die Verbilligung ÜBER der Musterprämie, ebenfalls null, mit Grund `verbilligungUeberPraemie`.
-// Das passiert, wo ein Kanton mit einer eigenen Richtprämie rechnet und erst an der Prämie mit
-// ordentlicher Franchise deckelt (z. B. AR, Art. 7 V zum KVG): Die Musterprämie ist ein Durchschnitt über
-// alle Franchisen und liegt tiefer (Konzept, Grenze 8). Eine negative Restprämie gibt es nicht, und 0
-// wäre eine Behauptung — darum keine Zahl.
+// Gefunden bei AR (V zum KVG Art. 7: Deckel auf die Prämie mit ordentlicher Franchise): das Modul lässt
+// den Kinderanteil ungedeckelt und vergleicht den Erwachsenenanteil mit der ganzen Haushaltsprämie, die
+// AR-Richtprämie liegt über der Musterprämie, und die Musterprämie ist ein Durchschnitt, der vermutlich
+// tiefer liegt als die Prämie mit Franchise 300 (nicht geprüft, Konzept Grenze 8). Eine negative
+// Restprämie gibt es nicht, und 0 wäre eine Behauptung — darum keine Zahl.
 export function restpraemie(zeile, einkommen) {
   if (zeile.art === 'keineZahl' || !(zeile.praemieMonat > 0)) return { restJahr: null, belastung: null, restOffen: null };
   const restJahr = zeile.praemieMonat * 12 - zeile.jahr;

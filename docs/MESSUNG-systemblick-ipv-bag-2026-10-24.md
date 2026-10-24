@@ -70,20 +70,21 @@ Je Zelle: Verbilligung CHF pro Jahr · Haushaltsprämie CHF pro Monat · verbill
 | Höchster Betrag (CHF/Jahr, nur Kantone mit Betrag) | 1'490 | 7'344 |
 | Median verbilligter Anteil (mit Betrag UND «kein Anspruch» = 0 %) | 5 % | 52 % |
 
-## Restprämie und Belastung
+## Restprämie
 
 Die Verbilligung allein sagt nicht, was ein Haushalt trägt: Wo die Prämie hoch ist, ist meist auch die Verbilligung
-hoch. **Restprämie** = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie). **Belastung** =
-Restprämie ÷ Einkommen pro Jahr, mit dem die App rechnet (Nettolohn-Richtwert × 12 bzw. Rente × 12; ohne 13., ohne
-Familienzulagen, ohne Steuern). Das ist **nicht** das «verfügbare Einkommen» des BAG; die BAG-Werte (13.7 % bzw. 9.4 %,
-S. 13) sind darum nicht vergleichbar. Anders als beim Median der Verbilligung zählt «kein Anspruch im Modell» hier mit:
-dieser Haushalt trägt die ganze Prämie. «Verbilligung über Musterprämie»: Der Kanton rechnet mit einer eigenen
-Richtprämie, die über der Musterprämie liegt (Durchschnitt über alle Franchisen); eine negative Restprämie gibt es
-nicht, darum keine Zahl.
+hoch. **Restprämie** = Jahresprämie − Verbilligung (bei «kein Anspruch im Modell» die ganze Prämie). Dazu die
+**Restprämie in % des Netto-Richtwerts** (Einkommen, mit dem die App rechnet: Nettolohn-Richtwert × 12 bzw. Rente × 12;
+ohne 13. Monatslohn, ohne Familienzulagen, ohne Steuern). **Nicht vergleichbar** mit der «verbleibenden
+Prämienbelastung» des BAG (13.7 % bzw. 9.4 %, S. 13): Das BAG teilt durch das verfügbare Einkommen (Steuern abgezogen,
+mit Familienzulagen, Anhang B S. 132/134) und rechnet mit einer anderen Prämie. Ähnliche Werte sind Zufall.
+Anders als beim Median der Verbilligung zählt «kein Anspruch im Modell» hier mit: dieser Haushalt trägt die ganze
+Prämie. «Verbilligung über Musterprämie»: Die Verbilligung des Kantonsmodells liegt über der Musterprämie (z. B. AR,
+Konzept); eine negative Restprämie gibt es nicht, darum keine Zahl.
 
 Einkommen pro Jahr: H1 CHF 45'000 · H3 CHF 54'480.
 
-Je Zelle: Restprämie CHF pro Jahr · Belastung in % des Einkommens.
+Je Zelle: Restprämie CHF pro Jahr · Restprämie in % des Netto-Richtwerts.
 
 | Kanton (Hauptort) | H1 | H3 |
 |---|---:|---:|
@@ -121,9 +122,9 @@ Je Zelle: Restprämie CHF pro Jahr · Belastung in % des Einkommens.
 | Tiefste Restprämie (CHF/Jahr) | 2'359 | 1'374 |
 | Median Restprämie (CHF/Jahr) | 5'160 | 4'088 |
 | Höchste Restprämie (CHF/Jahr) | 7'056 | 5'955 |
-| Tiefste Belastung | 5.2 % | 2.5 % |
-| Median Belastung | 11.5 % | 7.5 % |
-| Höchste Belastung | 15.7 % | 10.9 % |
+| Tiefste Restprämie in % des Netto-Richtwerts | 5.2 % | 2.5 % |
+| Median Restprämie in % des Netto-Richtwerts | 11.5 % | 7.5 % |
+| Höchste Restprämie in % des Netto-Richtwerts | 15.7 % | 10.9 % |
 
 ## Haushalte, für die Maloja heute keine Zahl nennen kann
 
