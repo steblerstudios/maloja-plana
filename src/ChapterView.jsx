@@ -35,7 +35,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegister.js';
-import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
+import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
@@ -1788,7 +1788,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     if (f.type === 'household') {
       const h = v || {};
       const kinder = Array.isArray(h.children) ? h.children.length : 0;
-      return tr('chapters.basis.fields.household.adults') + ' ' + (Number(h.adults) || 1) + ' · ' + tr('chapters.basis.fields.household.children') + ' ' + kinder;
+      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder». Die Zahl
+      // der Erwachsenen wie die Erfassung sie zählt (adultsList, sonst adults; utils/partnereinkommen.js).
+      return tr(kinder === 1 ? 'chapterView.haushaltWertEinKind' : 'chapterView.haushaltWert', { erwachsene: erwachseneImHaushalt(h), kinder });
     }
     if (f.type === 'currency') {
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
@@ -1882,7 +1884,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // 375 px in ihn hinein (Massstab-Prüfung 21.10.2026).
               : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(0, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
-                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
+                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
                   ])))
       );
