@@ -112,10 +112,14 @@ Anrede für Nutzende später nach Sie/Du-Einstellung der App.
 1. «Für eine Einelternfamilie mit zwei Kindern und CHF 60'000 Bruttoeinkommen ergibt die Modellrechnung je nach
    Kanton eine Prämienverbilligung von CHF 1'946 bis CHF 7'344 im Jahr (Median CHF 4'313, 16 Kantone). Das zeigt,
    wie unterschiedlich die Regeln wirken — nicht, was eine bestimmte Familie erhält.»
-2. «Eine Studie der Berner Fachhochschule im Auftrag des Kantons Basel-Stadt schätzt für 2022, dass 23 % der
-   Anspruchsberechtigten in der Stadt Basel die Prämienverbilligung nicht beziehen. Die Zahl gilt für die Stadt Basel,
-   nicht für die Schweiz und nicht für Kantone, die ohne Antrag auszahlen.» (Gebiet und Zählweise der Sozialhilfe-Studie
-   derselben Reihe sind am Bericht geprüft, siehe Datenquellen; der Bericht mit den 23 % selbst noch nicht.)
+2. «Eine Studie der Berner Fachhochschule schätzt, dass 2022 in der Stadt Basel 23 % der rechnerisch Berechtigten keine
+   Prämienverbilligung bezogen (ohne Riehen, Bettingen und Quellenbesteuerte). Bei Paaren und Alleinerziehenden mit
+   minderjährigen Kindern, die ohne weitere Personen wohnen, waren es rund 11 %. Basel zahlt nur auf Antrag aus; die Zahl
+   gilt nicht für die Schweiz.» (Bericht 2022, S. 9–19, Abb. 2 — siehe
+   [`BEFUND-quellen-stufe2-2026-10-24.md`](BEFUND-quellen-stufe2-2026-10-24.md).)
+   **Nie direkt neben Kernsatz 1 stellen:** Für Einelternhaushalte, den Typ von H3, liegt der Basler Nichtbezug bei
+   10,7 %, nicht bei 23 %. Und nie «der Nichtbezug nimmt zu» ohne den Zusatz, dass der Anstieg seit 2015 ein
+   Mischungseffekt ist (weniger Sozialhilfe; der direkte Bezug stieg sogar).
 3. «Alle Beträge sind Modellrechnungen, kein amtlicher Kantonsvergleich und keine Zusage. Über den Anspruch
    entscheidet die kantonale Stelle.»
 
@@ -232,7 +236,7 @@ bewirken würde (Petitionen, Medien). Zwei Regeln aus der Statistik gelten für 
 1. **Verbilligung beantragen.** Bei H3 geht es um den ganzen Betrag (Median CHF 4'313 pro Jahr in der Modellrechnung).
    Ob das mehr ist als andere Sparmöglichkeiten bei der Prämie, misst Maloja heute nicht (siehe Hebel 2) — offen.
    In der Stadt Basel bezog 2022 knapp ein Viertel der Berechtigten die Verbilligung nicht (23 %, BFH, gilt nur für die
-   Stadt Basel). In Kantonen mit Gesuchsfrist entscheidet das Datum, z. B. SO (Gesuch bis 31. Juli des Anspruchsjahres,
+   Stadt Basel); bei Einelternhaushalten mit minderjährigen Kindern waren es 10,7 % — für H3 ist das die passende Zahl. In Kantonen mit Gesuchsfrist entscheidet das Datum, z. B. SO (Gesuch bis 31. Juli des Anspruchsjahres,
    Sozialverordnung § 75 Abs. 2, BGS 831.2) und AR (Antrag bis 31. März, in Härtefällen bis 30. April, V zum KVG Art. 10,
    bGS 833.141) — für 2026 sind beide vorbei. Hier hilft Maloja: einen möglichen Anspruch einschätzen und die Frist
    merken. Entscheiden tut der Kanton.
@@ -275,12 +279,14 @@ durch das Kantonsmodell gerechnet. Nie zwei Ersparnisse addieren.
 
 - ~~**Restprämie in den Code**~~ — gebaut 24.10.2026 (`restJahr`, `belastung`, `restOffen` je Zeile, `kennzahlenRest`,
   Abschnitt in der Messung).
-- **Sensitivität:** H3 einzeln mit Vermögen 0 / 25'000 / 50'000, mit und ohne Familienzulagen (BAG: CHF 5'575) und mit
-  Franchise 300 / 2'500 rechnen. So zeigt sich, welche Annahme die Zahl am stärksten bewegt. Öffentlich steht dann eine
-  Spanne statt eines Punktes.
-- **Schwellenfächer:** `systemblickIPV('bag3', brutto)` für Brutto CHF 40'000 bis 100'000 in Schritten von 2'000 (der
-  Parameter `bruttoJahr` ist schon da). Das zeigt, wo die Verbilligung wegfällt und wie viel von CHF 1'000 mehr Lohn
-  nach der Restprämie übrig bleibt.
+- ~~**Sensitivität Vermögen**~~ — gerechnet 24.10.2026 für H3 (0 bis 150'000), geprüft →
+  [`SENSITIVITAET-systemblick-h3-2026-10-24.md`](SENSITIVITAET-systemblick-h3-2026-10-24.md), Teil A. Im Median schwach
+  (Restprämie 7.5 % → 8.4 % bei 100'000), in SG und NE entscheidet es über alles oder nichts. Familienzulagen und Franchise
+  noch **nicht** variiert (kein Kantonsmodul liest Familienzulagen; die Musterprämie hängt nicht an der Franchise).
+- ~~**Schwellenfächer**~~ — gerechnet 24.10.2026 für H3 (Brutto 40'000–100'000 in 4'000er-Schritten), geprüft → ebenda,
+  Teil B. Abschöpfung im Median 17–23 %; **Kanten im Modell** in AR (60'000→64'000) und NE (80'000→84'000), an denen mehr
+  Restprämie anfällt, als netto dazukommt — mit Zeitverzug über die Steuerveranlagung und einer Kantenlage, die nur
+  angenähert ist. Nicht nach aussen ohne Bestätigung der kantonalen Stelle.
 - **Regeln von Prämien trennen:** dasselbe Profil in allen Kantonen mit **derselben** Prämie rechnen (z. B. dem
   Schweizer Mittel). Was dann an Spanne bleibt, liegt an den Regeln; die Differenz zur Messung am Prämienniveau.
   Voraussetzung für jeden Kernsatz «die Regeln machen den Unterschied». Achtung: Kantone mit eigener Richtprämie oder
@@ -384,7 +390,18 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
   https://www.bs.ch/medienmitteilungen/wsu/2026-neue-studie-zum-nichtbezug-von-sozialleistungen-zeigt-positive-entwicklungen ·
   Bericht: https://arbor.bfh.ch/entities/publication/ccd1e9a1-611a-42cd-b7a6-a3ed56d0fd35 ·
   Sozialhilfe 2016–2022: https://arbor.bfh.ch/entities/publication/f0df07f1-3828-4c7e-8501-40a32f66b278
-  → **Gilt für die Stadt Basel**, nicht für die Schweiz. Den Bericht 2022 (23 %) selbst konnte ich nicht öffnen.
+  → **Gilt für die Stadt Basel**, nicht für die Schweiz.
+- ✅ **BFH/econcept, «Nichtbezug von bedarfsabhängigen Sozialleistungen in der Stadt Basel – Berichtsjahr 2022»**,
+  Hümbelin, Elsener, Lehmann, Schlussbericht 29.01.2026 im Auftrag des Amts für Sozialbeiträge — https://doi.org/10.24451/arbor.13015
+  (PDF gelesen S. 1–19 durch die Sitzung «Sozioökonomische Zahlen erklären», Prüfsumme gegen das Repositorium geprüft;
+  hier nicht erneut geöffnet, die Seite lädt nur per JavaScript). Details: [`BEFUND-quellen-stufe2-2026-10-24.md`](BEFUND-quellen-stufe2-2026-10-24.md), Abschnitt 1.
+  - **Gebiet:** nur Stadt Basel; ausgeschlossen u. a. Riehen und Bettingen, **Quellenbesteuerte**, Kollektivhaushalte (S. 9–10).
+  - **Prämienverbilligung: alle Altersgruppen, Rentenalter eingeschlossen** (Untersuchungspopulation PV 149'635, S. 14).
+  - **Zählweise:** Anspruch je wirtschaftlicher Haushaltseinheit geprüft, Resultate über Personen (S. 14).
+  - **PV 2022: 23.1 %** = 13'450 von 58'222 rechnerisch Berechtigten (2015: 20.7 %). Der Anstieg ist ein **Mischungseffekt**:
+    weniger Sozialhilfebeziehende, der direkte Bezug stieg von 60.1 % auf 61.7 % (S. 16). Werte sind **geschätzt** (S. 3).
+  - **Nach Haushaltstyp** (Abb. 2): Einelternhaushalte mit minderjährigen Kindern **10.7 %**, Paare mit nur
+    minderjährigen Kindern 10.5 %, Einpersonenhaushalte 24.4 %, Einzelpersonen in Mehrpersonenhaushalten 38.5 %.
 - ✅ **BFH, «Trends und Entwicklungen im Nichtbezug von Sozialhilfe in der Stadt Basel, 2016–2022»**, Hümbelin, Lehmann,
   Torkisz, Version 29.01.2026 (PDF gelesen) — https://arbor.bfh.ch/server/api/core/bitstreams/fc9c4676-7fcd-459a-b147-1c136fe91df7/content
   - **Gebiet:** «Bevölkerung der Stadt Basel (ohne Riehen und Bettingen)»; nicht berücksichtigt: Personen im
@@ -394,8 +411,8 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
   - **Sozialhilfe:** Nichtbezugsquote «28.3 Prozent (2016) auf 30.2 Prozent (2022)» (S. 3). Die Medienmitteilung nennt
     für die Sozialhilfe 2022 **26 %** — andere Studie derselben Reihe (Berichtsjahr 2022). Nie die beiden Zahlen
     vermischen; immer Studie und Jahr dazuschreiben.
-  - Dieselbe Reihe (BFH) dürfte für die 23 % ähnlich abgrenzen (Stadt Basel, ohne Rentenalter) — **Vermutung**, am
-    Bericht 2022 prüfen. Gilt die Abgrenzung auch dort, betrifft die 23 % keine Personen im Rentenalter.
+  - **Korrektur (24.10.2026):** Die frühere Vermutung, die 23 % grenzten wie diese Studie ohne Rentenalter ab, war
+    **falsch** — der Bericht 2022 schliesst bei der Prämienverbilligung alle Altersgruppen ein (siehe oben).
 - ⚠️ **Kanton Bern, Sozialhilfe:** Nichtbezugsquote 26 % (Hümbelin, BFH; Quelle bisher nur Zeitschriftenartikel/Präsentation,
   Bezugsjahr und Methode am Bericht prüfen) — https://inequalities.unibe.ch/wp-content/uploads/2022/03/NichtbezugBFH_Zeso_01_22.pdf
 - ⚠️ Hümbelin 2016, Working Paper: internationale Spanne 20–60 % — https://repec.sowi.unibe.ch/files/wp21/Huembelin-2016-NonTakeUp.pdf
@@ -429,7 +446,12 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
 - ✅ **BSV, Statistik der Ergänzungsleistungen zur AHV und IV 2025**, veröffentlicht 26.05.2026, nächste Ende Mai 2027 —
   https://www.bsv.admin.ch/de/statistik-el · Je Kanton: «EL-Bezügerquote bei den EL zur AV pro Kanton, 2025»;
   PxWeb-Cubes «EL-Quoten nach EL-Stelle, 2008–2025», Ausgaben je Kanton 2000–2025.
-- ⚠️ EL-Quote 2024: AV 12,2 %, IV 49,2 % (aus Suchergebnis zur BSV-Mitteilung; am PDF 2025 prüfen).
+- ✅ **EL-Quote** (Tabelle T1, S. 2, «EL-Quote: Anteil Rentner/-innen mit EL in %»): 2024 Total 16,2 % · EL zur AV
+  **12,2 %** · EL zur IV **49,2 %**; 2025 Total 16,4 % · AV **12,3 %** · IV **49,8 %**; EL-Beziehende 2025: 361'200.
+  Nenner sind die Rentenbeziehenden, nicht die Bevölkerung. Der Kasten auf S. 1 nennt für 2025 «12,2 Prozent der AHV-»
+  Rentenbeziehenden — vermutlich mit Hinterlassenenversicherung (T1 weist HV nicht separat aus); für Maloja die Zahl aus
+  T1 nehmen und «EL zur AV» nennen. 2024/2025 nur mit dem Hinweis auf die EL-Reform lesen (BSV: «vermutlich» deren Folge).
+  https://www.bsv.admin.ch/dam/de/sd-web/pOeXq3eVysUG/el_stat_2025_d.pdf
 
 ### Schulden (BFS, Betreibungs- und Konkursstatistik)
 
@@ -454,7 +476,8 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
 ### Rangfolge für eine erste Systemblick-Seite
 
 1. **BAG Monitoring 2020**: gleiche Profile, amtlich, Belastung in % des Einkommens. Rahmen für unsere Musterhaushalte.
-2. **Nichtbezug Basel 2022**: zeigt, wie viele Ansprüche nicht geltend gemacht werden (23 % bei der Prämienverbilligung).
+2. **Nichtbezug Basel 2022**: zeigt, wie viele Ansprüche nicht geltend gemacht werden (23 % bei der Prämienverbilligung,
+   Einelternhaushalte 10,7 %; nur Stadt Basel, Antragskanton).
 3. **BSV EL-Statistik 2025**: aktuell, je Kanton, maschinenlesbar.
 4. **BFS Armut SILC 2024**: Armutsquote 8,4 %; Armutsgefährdung Einelternhaushalte 28,1 % (◐; vor Veröffentlichung an der
    BFS-Tabelle gegenlesen).
@@ -469,4 +492,5 @@ Keine Zahl dieser Liste geht ungeprüft in App oder Petition.
 - Die BAG-Werte je Modellhaushalt und Kanton 2020 (Anhang D, ab S. 138) als Vergleichsspalte neben die Messung legen?
   Vorher nachlesen, ob «verfügbares Einkommen» dort mit unserem Netto vergleichbar ist.
 - Nichtbezug Basel: Gebiet und Zählweise am Sozialhilfe-Trendbericht geprüft (Stadt Basel, ohne Rentenalter, Quote über
-  Personen); den Bericht 2022 mit den 23 % noch öffnen und gegenprüfen.
+  Personen); Bericht 2022 (23 %) gelesen, siehe `BEFUND-quellen-stufe2-2026-10-24.md`. Offen: Werte nach Haushaltstyp
+  sind am Balkenbild abgelesen — vor Veröffentlichung an einer Tabelle des Berichts gegenlesen, falls vorhanden.
