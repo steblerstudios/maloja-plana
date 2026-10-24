@@ -250,3 +250,23 @@ ist der letzte, aufklappbare Teil von «Stelle verloren» (`<details id="mp-auss
 Umzug). Alle fünf Schritte, Frist, Quelle und Hinweis unverändert, **keine neuen Texte**. `#/aussteuerung` →
 `UMLEITUNGEN` → «Stelle verloren», `springeZuAnker` klappt den Teil auf. Einträge in Dashboard, Suche und Gepäck
 bleiben und führen über die Umleitung. Wächter: `aussteuerungUmleitung.test.js`.
+
+## 8 · Gruppe D · Schritt 1 gebaut (24.10.2026)
+
+#557 (Gruppe F) auf Zuruf gemergt, `main` = `591c84d4`. Nicht live.
+
+**Notfall-Einstieg → Kapitel Notfall** auf Zweig `feat/notfall-buendeln`. `components/NotfallImKapitel.jsx`:
+- **oben**, gleich nach dem Kapitelkopf: Vorlesekarte (Ernstfall) und Notfallpass, Sprungmarke `mp-notfall-ernstfall`.
+  Nicht lazy — der Ernstfall-Knopf soll ohne Nachladen dastehen.
+- **unten**, nach dem Formular: «Was brauchen Sie im Notfall?», die drei Lagen (Unfall, Spital, Behörde).
+  Fehlende Angaben aus dem Kapitel Notfall stehen im Formular darüber; nur andere Kapitel bekommen einen Knopf.
+- Texte unverändert (`notfallEinstieg.*`, `notfallpass.einstieg*`), keine neuen. `NotfallEinstieg.jsx` entfernt.
+- `#/notfalleinstieg` → `UMLEITUNGEN` → Kapitel 6. Dashboard, Lebensbaum, Abläufe, Arztkoffer, Suche und die
+  Brotkrume des Notfallpasses rufen weiter `notfalleinstieg` auf und landen dort.
+- Querverweis «Notfallkarte erstellen» am Feld Notfallkontakt zeigt jetzt direkt auf die Vorlesekarte.
+- Vorlesekarte bleibt eigene Seite (Entscheid 4). Wächter: `notfallEinstiegUmleitung.test.js`; `brotkrume.test.js`
+  lässt Umleitungen als Eltern-Stufe zu.
+
+**Noch offen in Gruppe D:** Notfallpass und Notfall-Dossier sind weiter eigene Seiten, im Kapitel als Wege erreichbar
+(Pass oben, Dossier über Unterlagen und Vorlesekarte). Ob sie als Aufklapp-Teile ins Kapitel kommen (2 weitere Seiten),
+ist ein eigener Schritt — beide sind Ausgabe-Werkzeuge (QR fürs Papier, Felder fürs Telefon), kein Lesetext.
