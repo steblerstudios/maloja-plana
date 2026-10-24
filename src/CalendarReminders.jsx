@@ -14,6 +14,8 @@ import { ZielHinweis } from './components/ExternerLink.jsx';
 import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
+import { werktagAmOderDavor } from './utils/fristen.js';
+import { Jahreskreis } from './components/Jahreskreis.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -414,6 +416,23 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
             + (sig.mitGanzerMiete ? ' (' + t('sozialhilfe.mitGanzerMiete') + ')' : ''))
         ))
       );
+    })(),
+
+    // Jahreskreis: das gewählte Jahr auf einen Blick. Nur Hinterlegtes — eigene offene Einträge
+    // dieses Jahres, dazu zwei feste Stichtage, die schon anderswo in der App belegt sind:
+    // die KVG-Kündigung (fristen.js, Werktag davor nach BAG) und die eigene Steuerfrist aus
+    // dem Kapitel Behörden. Kantonale IPV-Fristen fehlen bewusst (erst 5 von 26 hinterlegt).
+    (() => {
+      const eintraege = [
+        ...upcoming.map(r => ({ key: 'r' + r.id, iso: r.dueDate, art: artVon(r), farbe: bereichZeichenFarbe(kategorieBereich(r.category), palette), titel: r.title })),
+        ...aufgabenOffen.map(m => ({ key: 'm' + m.id, iso: m.tag, art: 'aufgabe', farbe: bereichZeichenFarbe(merkpunktBereich(m.link), palette), titel: m.text })),
+        { key: 'fest-kvg', iso: werktagAmOderDavor(calYear + '-11-30'), art: 'frist', farbe: bereichZeichenFarbe(kategorieBereich('insurance'), palette), titel: t('calendar.jahreskreis.kvgTitle'), quelle: t('calendar.jahreskreis.kvgSource') },
+        data?.behoerden?.taxFilingDeadline && { key: 'fest-steuer', iso: data.behoerden.taxFilingDeadline, art: 'frist', farbe: bereichZeichenFarbe(kategorieBereich('finance'), palette), titel: t('calendar.templates.taxDeadline'), quelle: t('calendar.jahreskreis.taxSource') },
+      ].filter(Boolean);
+      return React.createElement(Jahreskreis, {
+        jahr: calYear, heuteIso: today, eintraege, gewaehlterMonat: calMonth, locale: LOCALE, palette, t,
+        onMonat: (m) => { setCalMonth(m); setSelDate(null); },
+      });
     })(),
 
     // Tagesleiste mit Monatssprung (‹ Monat ›, zwölf Monate, Heute), darunter aufklappbar

@@ -6469,6 +6469,16 @@ export default {
     exportIcs: 'Exportar il chalender (.ics)',
     locale: 'rm-CH',
     calAria: 'Survista dal chalender',
+    jahreskreis: {
+      title: 'L’onn {year} en survista',
+      aria: 'Ring da l’onn {year}, endataziuns: {count}. In mais al avra en il chalender sutvart.',
+      count: '{count} avert',
+      empty: 'Per quest onn n’è anc nagut endatà.',
+      more: '+ {count} ulteriurs',
+      kvgTitle: 'Disditga da l’assicuranza da basa',
+      kvgSource: 'Retschavida da la cassa (KVG art. 7 al. 2); la fin d’emna il di da lavur avant (UFSP)',
+      taxSource: 'Dal chapitel Autoritads',
+    },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     exportIcsHint: { sie: 'Surpigliai Vossas commemoraziuns en il chalender da Voss telefon u computer.', du: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.' },
     editReminder: 'Modifitgar la commemoraziun',
