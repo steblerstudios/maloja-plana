@@ -5939,6 +5939,13 @@ export default {
         // ⚠️ `www.` ist Pflicht: die nackte Domain bfs.admin.ch ist als HTTPS-Ziel tot
         // (Connection refused) — in Runde 8 belegt.
         source: 'Quelle: [[BFS|www.bfs.admin.ch]], Mietpreis-Strukturerhebung {year} · Nettomiete, ohne Nebenkosten',
+        // Fachprüfung 25.10.2026: womit verglichen wird, und ob der BFS-Wert unsicher ist.
+        vergleichZimmer: 'Verglichen mit {n}-Zimmer-Wohnungen.',
+        vergleichAb6: 'Verglichen mit Wohnungen ab 6 Zimmern.',
+        vergleichAlle: 'Verglichen mit Wohnungen aller Grössen.',
+        zimmerAngenommen: { sie: 'Die Grösse ist aus der Haushaltsgrösse angenommen — mit Ihrer Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer.', du: 'Die Grösse ist aus der Haushaltsgrösse angenommen — mit deiner Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer.' },
+        ohneWertFuerGroesse: 'Für diese Wohnungsgrösse veröffentlicht das BFS im Kanton keinen Wert.',
+        wenigeAntworten: 'Der BFS-Wert beruht hier auf weniger als 50 Antworten — nur als grobe Orientierung lesen.',
       },
     },
   },

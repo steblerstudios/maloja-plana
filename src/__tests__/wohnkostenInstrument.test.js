@@ -224,3 +224,23 @@ describe('Kapitel Wohnen · Nachzug Fachprüfung', () => {
     expect(html).toMatch(/white-space:nowrap[^>]*>.*po\.regionalCompare\.regionalVal/);
   });
 });
+
+// Fachprüfung Mietpreise 2024 (25.10.2026): das Barometer sagt, womit es vergleicht.
+describe('Kapitel Wohnen · Barometer nennt die Vergleichsgrösse', () => {
+  it('ohne Zimmerzahl: 3-Zimmer-Wohnungen, angenommen aus der Haushaltsgrösse', () => {
+    const html = render(profil().wohnen, profil());
+    expect(html).toContain('data-teil="miete-vergleich-groesse"');
+    expect(html).toContain('po.regionalCompare.rent.vergleichZimmer(3)');
+    expect(html).toContain('po.regionalCompare.rent.zimmerAngenommen');
+  });
+
+  it('mit Zimmerzahl: nicht «angenommen»; in einem unsicheren Feld der Hinweis', () => {
+    const p = profil({}, { rooms: '1' });
+    p.basis.canton = 'UR';
+    const html = render(p.wohnen, p);
+    expect(html).toContain('po.regionalCompare.rent.vergleichZimmer(1)');
+    expect(html).not.toContain('po.regionalCompare.rent.zimmerAngenommen');
+    expect(html).toContain('po.regionalCompare.rent.wenigeAntworten');
+  });
+});
+

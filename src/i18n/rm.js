@@ -5211,6 +5211,13 @@ export default {
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
         thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
         source: 'Funtauna: [[UST|www.bfs.admin.ch]], enquista structurala davart ils tschains {year} · tschains net, senza cuosts secundars',
+        // rm ungeprüft F6
+        vergleichZimmer: 'Cumparà cun abitaziuns da {n} stanzas.',
+        vergleichAb6: 'Cumparà cun abitaziuns da 6 stanzas e dapli.',
+        vergleichAlle: 'Cumparà cun abitaziuns da tut las grondezzas.',
+        zimmerAngenommen: { sie: "La grondezza è deducida da la grondezza da l'economia da chasa — cun Voss dumber da stanzas en il chapitel Abitar vegn la cumparegliaziun pli exacta.", du: "La grondezza è deducida da la grondezza da l'economia da chasa — cun tes dumber da stanzas en il chapitel Abitar vegn la cumparegliaziun pli exacta." },
+        ohneWertFuerGroesse: "L'UST na publitgescha nagina valur per questa grondezza d'abitaziun en il chantun.",
+        wenigeAntworten: "Qua sa basa la valur da l'UST sin main che 50 respostas — mo da leger sco orientaziun grossa.",
       },
     },
   },

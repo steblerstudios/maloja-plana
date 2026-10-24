@@ -10,7 +10,8 @@ describe('mietpreise', () => {
     for (const c of Object.values(RENT_BY_CANTON)) {
       expect(c.total).toBeGreaterThan(0);
     }
-    expect(RENT_NATIONAL.total).toBe(1373);
+    // BFS 2024 (je-d-09.03.03.01, Blatt «2024»); bis 25.10.2026 Stand 2020: 1373.
+    expect(RENT_NATIONAL.total).toBe(1485);
   });
 
   describe('roomKeyFromRooms', () => {
@@ -48,8 +49,9 @@ describe('mietpreise', () => {
       const c = getRentComparison('BS', { rooms: 4 });
       expect(c).not.toBeNull();
       expect(c.roomKey).toBe('r4');
-      expect(c.regional).toBe(1717);
-      expect(c.national).toBe(1578);
+      // BFS 2024; bis 25.10.2026 Stand 2020: 1717 / 1578.
+      expect(c.regional).toBe(1891);
+      expect(c.national).toBe(1708);
       expect(c.diffPct).toBeGreaterThan(0); // honest: size-matched BS is dearer
       expect(c.year).toBe(MIETPREIS_DATA_YEAR);
     });
