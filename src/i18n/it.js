@@ -1755,6 +1755,9 @@ export default {
   fortschritt: {
     title: { sie: 'Il Suo progresso', du: 'Il tuo progresso' },
     fieldsOpen: 'aperti',
+    netzAria: 'Rete degli ambiti di vita: più una punta si estende verso l’esterno, più quell’ambito è compilato.',
+    netzHinweis: 'Più è verso l’esterno, più è compilato. Anche «Non pertinente» conta.',
+    netzLeer: 'Non è ancora compilato nulla. Ogni ambito cresce qui verso l’esterno appena contiene qualcosa.',
   },
   chapterStatus: {
     leer: 'Pronto da compilare',

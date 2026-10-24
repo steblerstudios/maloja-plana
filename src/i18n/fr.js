@@ -1755,6 +1755,9 @@ export default {
   fortschritt: {
     title: { sie: 'Votre progression', du: 'Ta progression' },
     fieldsOpen: 'ouverts',
+    netzAria: 'Toile des domaines de vie : plus une pointe s’étend vers l’extérieur, plus ce domaine est rempli.',
+    netzHinweis: 'Plus c’est vers l’extérieur, plus c’est rempli. « Non applicable » compte aussi.',
+    netzLeer: 'Rien n’est encore rempli. Chaque domaine s’étend ici vers l’extérieur dès qu’il contient quelque chose.',
   },
   chapterStatus: {
     leer: 'Prêt à remplir',

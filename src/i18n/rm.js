@@ -1872,6 +1872,9 @@ export default {
   fortschritt: {
     title: { sie: 'Voss progress', du: 'Tes progress' },
     fieldsOpen: 'averts',
+    netzAria: 'Rait dals secturs da vita: Il pli lunsch ch’in piz tanscha anora, il dapli è endatà en quest sectur.',
+    netzHinweis: 'Il pli lunsch anora, il dapli è endatà. «Na concerna betg» quinta er.',
+    netzLeer: 'Anc n’è nagut endatà. Mintga sectur crescha qua anora, uschespert ch’el cuntegna insatge.',
   },
 
   ankunft: {

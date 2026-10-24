@@ -1763,6 +1763,9 @@ export default {
   fortschritt: {
     title: { sie: 'Ihr Fortschritt', du: 'Dein Fortschritt' },
     fieldsOpen: 'offen',
+    netzAria: 'Netz der Lebensbereiche: Je weiter eine Ecke nach aussen reicht, desto mehr ist in diesem Bereich eingetragen.',
+    netzHinweis: 'Je weiter nach aussen, desto mehr ist eingetragen. «Trifft nicht zu» zählt mit.',
+    netzLeer: 'Noch ist nichts eingetragen. Jeder Bereich wächst hier nach aussen, sobald etwas drinsteht.',
   },
   chapterStatus: {
     leer: 'Bereit zum Ausfüllen',

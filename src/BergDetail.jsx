@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icons, { aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { LebensbereichNetz } from './components/LebensbereichNetz.jsx';
 
 // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ───────────────────
 //
@@ -175,6 +176,8 @@ export const BergDetail = ({ palette, t, chapters, chapterCompletions, chapterSt
       React.createElement('div', null,
         mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress'))
     ),
+    // Spinnennetz der Lebensbereiche (24.10.2026) — dieselben Zahlen wie die Zeilen darunter.
+    React.createElement(LebensbereichNetz, { chapters, chapterCompletions, chapterAccentColor, onSelectChapter, palette, t }),
     React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '2px' } },
       chapters.map((ch, idx) => React.createElement(KapitelZeile, {
         key: ch.key, palette, t, ch, idx, lang, statusLabels, onSelectChapter,
