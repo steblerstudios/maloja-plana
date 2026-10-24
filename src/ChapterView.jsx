@@ -25,6 +25,8 @@ import { openPrintWindow, escapeHtml, formatDE } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
+// Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
+import { NotfallImKapitel } from './components/NotfallImKapitel.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
@@ -66,8 +68,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 // Die Auswertung der Finanzen (früher die Finanz-Übersicht) — nur im Kapitel Finanzen gebraucht.
-const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));
-// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
+const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung.jsx').then((m) => ({ default: m.FinanzenImKapitel })));// Spinnennetz der Versicherungs-Abschnitte (24.10.2026) — nur im Kapitel Versicherungen gebraucht.
 const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const MietVergleich = React.lazy(() => import('./components/MietVergleich.jsx').then((m) => ({ default: m.MietVergleich })));
@@ -1745,7 +1746,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           }
           // K38: der Hinweis sagt «Kontakt hinterlegt» — also nur, wenn wirklich einer da ist.
           if (field.k === 'emergencyContact' && chapter.key === 'notfall' && data.emergencyContact) {
-            crosslinkBtn('notfallkarte', 'notfalleinstieg', 'nav.crosslink.notfallkarteHint');
+            // Seit 24.10.2026 direkt zur Vorlesekarte — der Einstieg steht jetzt in diesem Kapitel.
+            crosslinkBtn('notfallkarte', 'notfallkarte', 'nav.crosslink.notfallkarteHint');
           }
           return elements;
         };
@@ -2032,6 +2034,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // «Es bleiben CHF …» (utils/monatsrechnung.js). Seit 24.10.2026 im Minus «Jeden Monat
     // fehlen» (wie der Satz «Es fehlen …»), bei Brutto die Netto-Frage — siehe renderMonatsHeld.
     chapter.key === 'finanzen' && renderMonatsHeld(),
+
+    // Notfall: der frühere Einstieg (24.10.2026, seiten-buendeln.md Gruppe D) — oben die
+    // Vorlesekarte und der Notfallpass, gleich nach dem Kopf; unten die drei Lagen.
+    chapter.key === 'notfall' && React.createElement(NotfallImKapitel, { teil: 'oben', palette, t: tr, onNavigate }),
 
     // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt
     // (Abschnittsliste) — oben war er Vorspann vor jedem Inhalt.
@@ -2493,6 +2499,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     istFinanzen && renderAuswertung('oben'),
     istFinanzen && renderPassend(),
     istFinanzen && renderAuswertung('unten'),
+    chapter.key === 'notfall' && React.createElement(NotfallImKapitel, { teil: 'unten', palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate }),
     istFinanzen && nextChapter && onNext ? renderAlsNaechstes() :
     nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
       React.createElement(PrimaryButton, {

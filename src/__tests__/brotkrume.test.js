@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Brotkrume, PFADE, ELTERN_TITEL, stufen } from '../components/Brotkrume.jsx';
+import { UMLEITUNGEN } from '../utils/hashRouter.js';
 import de from '../i18n/de.js';
 import fr from '../i18n/fr.js';
 import itL from '../i18n/it.js';
@@ -31,9 +32,15 @@ describe('Pfade', () => {
       for (const k of schluessel) expect(hol(w, k), lang + ' ' + k).toBeTruthy();
     }
   });
-  it('Ansicht und Eltern gibt es in main.jsx wirklich', () => {
+  // Eine Eltern-Stufe darf auch eine Umleitung sein (UMLEITUNGEN): seit 24.10.2026 ist
+  // `notfalleinstieg` keine eigene Seite mehr, die Stufe «Notfall» führt ins Kapitel Notfall.
+  it('Ansicht und Eltern gibt es in main.jsx wirklich (oder als Umleitung)', () => {
     const main = lies('main.jsx');
-    for (const v of [...Object.keys(PFADE), ...new Set(Object.values(PFADE).map((p) => p.eltern))]) {
+    for (const v of Object.keys(PFADE)) {
+      expect(main, v).toMatch(new RegExp("view === '" + v + "' && React\\.createElement"));
+    }
+    for (const v of new Set(Object.values(PFADE).map((p) => p.eltern))) {
+      if (UMLEITUNGEN[v]) continue;
       expect(main, v).toMatch(new RegExp("view === '" + v + "' && React\\.createElement"));
     }
   });

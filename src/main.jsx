@@ -75,7 +75,7 @@ const BehoerdenDossier = React.lazy(() => import('./BehoerdenDossier.jsx'));
 const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
-const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
+// NotfallEinstieg: seit 24.10.2026 keine eigene Seite — im Kapitel Notfall (UMLEITUNGEN, components/NotfallImKapitel.jsx).
 const ArztkofferView = React.lazy(() => import('./ArztkofferView.jsx'));
 const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx'));
 const NotfallpassBlatt = React.lazy(() => import('./NotfallpassBlatt.jsx'));
@@ -1766,7 +1766,6 @@ const AppInner = ({ demo }) => {
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate, initialAngaben: briefInitialAngaben }),
-        view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'notfallpass' && React.createElement(NotfallpassBlatt, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
