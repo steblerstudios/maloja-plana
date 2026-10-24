@@ -581,3 +581,45 @@ Alle sichtbaren Texte gegen `de.js` und die laufende App geprüft: **0 unbelegt*
   reduzieren»), ein Gegenstand offen auf einmal, «x von 4 erfasst», «Was steht mir zu?» oben, das
   Aussenfach oben offen und unten noch einmal als Karte (Wunsch 27.09.), der Satz unten.
 - Die Zahlen in den Untertiteln («11 Wege», «6 Werkzeuge») rechnet die App aus den Listen.
+
+---
+
+## Runde 4 · Einstieg: «Was steht mir zu?» als eine Seite (24.10.2026)
+
+**Gefunden beim Ansehen (Demo Maria, App `origin/main` aa94f3d6):** dieselbe Frage hat heute vier Orte und
+vier Namen — «Lebenssituationen» (`#/situationen`, ab Zweig `fix/ein-name-pro-seite` «Was steht mir zu?»),
+«Ansprüche im Überblick» (`#/schnellcheck` **und** `#/ansprueche`, beides `Schnellcheck.jsx`), Schritt 1 des
+geführten Checks «Leistungs-Schnellcheck» (`#/anspruchcheck`, nochmals dieselbe Rechnung) und der Block
+«Leistungen» auf der Übersicht. Bilder: `heute-situationen.jpg`, `heute-schnellcheck.jpg`,
+`heute-anspruchcheck.jpg`. Vergleich: Reiter «Was steht mir zu? · eine Seite» in `vergleich-v5.html`.
+
+### Was steht mir zu? (O) · entschieden (Sophie, 24.10.2026)
+
+Sophie fragte «was ist die beste Lösung?»; Empfehlung Claude: eine Seite (gleiche Frage, Regel «eine Seite, ein
+Name», ein Ort gibt eine Antwort). Sophie: «Ja, eine Seite … so wie du es empfiehlst», danach «Entwurf O passt».
+Entwurf: `seiten-v5.html?nur=o` (00c5d5c4).
+
+- **Ein Ort, ein Name «Was steht mir zu?»** (`dashboard.anspruchTitle`), Anker unten wie heute.
+- **Reihenfolge:** (1) **Mit Ihren Angaben** — Einkommen, Miete, KK, Kanton/Haushalt als Marken, «Angaben
+  anpassen, um durchzuspielen» aufklappbar (netto/brutto wie heute); Ergebnis als **zwei Pegel** (IPV «luft»,
+  Sozialhilfe «aufstockung», wie Finanz-Übersicht) mit den App-Sätzen, als Live-Region; Ergebnis-Satz.
+  (2) **Nach Ihrer Lebenslage** — die elf Situationen mit ihren Karten (Entwurf M). (3) **Weitere Wege**
+  zugeklappt, die 15 Einträge der Landkarte (Nach Einkommen / Lebenslage / Ereignis).
+- **Geführter Anspruch-Check bleibt** als eigener Ablauf, nur von hier erreichbar («Lieber Schritt für
+  Schritt?»); sein Schritt 1 nutzt dieselbe Rechnung, ohne den Titel «Leistungs-Schnellcheck».
+- **Leistungs-Kompass fällt weg** auf dieser Seite (die Pegel tragen die Aussage); der Prämien-Beleg (Papier)
+  wird durch den IPV-Pegel ersetzt — gleiche Instrumente wie auf der Finanz-Übersicht.
+- **Weiterleitungen:** `#/schnellcheck` und `#/ansprueche` → diese Seite (Sprungmarke «Mit Ihren Angaben»).
+- **Übersicht:** der Block «Leistungen» wird eine Zeile hierher — gehört zum noch offenen Entscheid Übersicht.
+- **Fassung-5-Form:** Kopf links, keine Kartenwand (Design-Befund), Ergebnis mit `role="status"`
+  (a11y-Befund M3), Hinweise «bewertet nichts», «Grobe Orientierung», «Daten bleiben auf dem Gerät» unten.
+
+**Neue Texte für den Copy-Prüfer:** Einleitung (ein Satz für beides), «Mit Ihren Angaben», «Angaben anpassen,
+um durchzuspielen», «Nach Ihrer Lebenslage», «Mit diesen Angaben zeigt sich …» (statt «zeigt der Schnellcheck»),
+«Lieber Schritt für Schritt?» mit Untertitel.
+
+**Beobachtet, unbestätigt:** beim ersten Öffnen zeigte der Schnellcheck für Maria «IPV prüfenswert, ohne
+Betrag», nach erneutem Laden «über der Grenze» wie die Finanz-Übersicht. Nicht wiederholbar; vermutlich vor
+fertig geladenem Profil. Im Bau prüfen.
+
+**Noch offen (unverändert):** Übersicht (4 Fragen: Zahl 63/70 %, Kartentitel, Bereichszeilen, Bereiche einmal).
