@@ -2317,12 +2317,24 @@ export default {
     patientenverfuegung: 'Direttive anticipate depositate',
   },
 
-  wohnkostenanteil: {
-    intro: 'I costi abitativi registrati in rapporto al reddito registrato.',
-    housing: 'Costi abitativi',
-    income: 'Reddito',
-    share: 'Quota',
-    perMonth: 'al mese',
+  // Fassung 6 · capitolo Abitazione, strumento in alto (giro 9, bozza Z, 24.10.2026). Sostituisce «wohnkostenanteil».
+  wohnenInstrument: {
+    titel: 'Costi abitativi al mese',
+    titelAusprobiert: 'Costi abitativi al mese · in prova',
+    anteil: '{pct}% del reddito (CHF {einkommen})',
+    anteilBrutto: '{pct}% del reddito lordo (CHF {einkommen})',
+    drittel: 'un terzo',
+    faustregel: 'Regola pratica: costi abitativi fino a circa un terzo del reddito lasciano di solito abbastanza margine. Non è un limite fisso.',
+    mehrAlsDrittel: { sie: 'Più di un terzo del reddito va all\'abitazione. È una regola pratica, non un obbligo — il Suo budget mostra se i conti tornano.', du: 'Più di un terzo del reddito va all\'abitazione. È una regola pratica, non un obbligo — il tuo budget mostra se i conti tornano.' },
+    ohneEinkommen: 'Appena un reddito è registrato nel capitolo Finanze, qui si vede quale quota richiede l\'abitazione.',
+    ausprobieren: 'Provare: un altro affitto',
+    wohnungssuche: 'Ricerca di un alloggio',
+    reglerLabel: 'Affitto netto di un nuovo alloggio',
+    nebenkostenWieHeute: 'Spese accessorie (come oggi)',
+    freiDanach: 'Disponibile dopo',
+    durchspielen: { sie: 'Solo per provare — non viene salvato nulla. Le cifre sopra seguono il cursore finché non lo reimposta.', du: 'Solo per provare — non viene salvato nulla. Le cifre sopra seguono il cursore finché non lo reimposti.' },
+    zurueck: 'Tornare all\'affitto attuale',
+    ausprobierteMiete: 'Affitto provato: CHF {amount}',
   },
 
   chapterView: {

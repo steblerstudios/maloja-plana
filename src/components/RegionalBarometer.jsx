@@ -26,7 +26,9 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // erzählt die Nachbarzeile (`rentShareGuide`) die Drittel-Regel schon, dort wäre sie doppelt
 // (Predeploy-Runde 8, dritte Prüfung). `BudgetSync` hat keine Nachbarzeile → setzt sie true.
 // Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText }) => {
+// `userLabel` (optional): ersetzt «Ihre Miete: CHF …» — im Kapitel Wohnen beim Regler «Ausprobierte
+// Miete: CHF …» (Fassung 6), damit niemand die ausprobierte Zahl für die erfasste hält.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year } = comparison;
   const ns = 'po.regionalCompare.';
@@ -89,7 +91,8 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   let ariaLabel = t(ns + 'aria', {
     regional: regional.toFixed(0), national: national.toFixed(0), diff: diffText,
   });
-  if (hasUser) ariaLabel += ' ' + t(k + 'yourVal', { amount: userValue.toFixed(0) });
+  const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: userValue.toFixed(0) })) : null;
+  if (hasUser) ariaLabel += ' ' + userText;
   // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (a11y-Prüfer): Die Schwellen-Überschreitung stand
   // NUR in der Farbe — das „!" schaltet auf roseDeep, das aria-Label nannte sie nicht
   // (WCAG 1.4.1, Level A). In `MietVergleich` fing die Nachbarzeile (Drittel-Regel) das auf;
@@ -184,7 +187,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // Füllung in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
       // klar ist: die FÜLLUNG ist dein Wert, der Strich ist der Schweizer Schnitt.
       React.createElement(LegendenMarke, { form: 'fuellung', color: barFill, palette }),
-      t(k + 'yourVal', { amount: userValue.toFixed(0) })
+      userText
     ),
 
     // Die Schwellen-Überschreitung als SATZ — nur wo die Eltern-Ansicht sie nicht schon

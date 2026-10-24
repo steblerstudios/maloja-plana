@@ -2317,12 +2317,24 @@ export default {
     patientenverfuegung: 'Directives anticipées déposées',
   },
 
-  wohnkostenanteil: {
-    intro: 'Les frais de logement enregistrés par rapport au revenu enregistré.',
-    housing: 'Frais de logement',
-    income: 'Revenu',
-    share: 'Part',
-    perMonth: 'par mois',
+  // Fassung 6 · chapitre Logement, instrument en haut (tour 9, esquisse Z, 24.10.2026). Remplace «wohnkostenanteil».
+  wohnenInstrument: {
+    titel: 'Frais de logement par mois',
+    titelAusprobiert: 'Frais de logement par mois · à l\'essai',
+    anteil: '{pct} % du revenu (CHF {einkommen})',
+    anteilBrutto: '{pct} % du revenu brut (CHF {einkommen})',
+    drittel: 'un tiers',
+    faustregel: 'Règle empirique : des frais de logement jusqu\'à environ un tiers du revenu laissent en général assez de marge. Ce n\'est pas une limite fixe.',
+    mehrAlsDrittel: { sie: 'Plus d\'un tiers du revenu va au logement. C\'est une règle empirique, pas une obligation — votre budget montre si cela tient.', du: 'Plus d\'un tiers du revenu va au logement. C\'est une règle empirique, pas une obligation — ton budget montre si cela tient.' },
+    ohneEinkommen: 'Dès qu\'un revenu est saisi dans le chapitre Finances, on voit ici la part que prend le logement.',
+    ausprobieren: 'Essayer : un autre loyer',
+    wohnungssuche: 'Recherche de logement',
+    reglerLabel: 'Loyer net d\'un nouveau logement',
+    nebenkostenWieHeute: 'Charges (comme aujourd\'hui)',
+    freiDanach: 'Disponible ensuite',
+    durchspielen: { sie: 'Pour essayer — rien n\'est enregistré. Les chiffres ci-dessus suivent le curseur jusqu\'à ce que vous le réinitialisiez.', du: 'Pour essayer — rien n\'est enregistré. Les chiffres ci-dessus suivent le curseur jusqu\'à ce que tu le réinitialises.' },
+    zurueck: 'Revenir au loyer actuel',
+    ausprobierteMiete: 'Loyer essayé : CHF {amount}',
   },
 
   chapterView: {
