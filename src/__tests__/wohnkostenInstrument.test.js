@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { WohnkostenInstrument, wohnkostenRechnung, REGLER_MIN, REGLER_MAX } from '../components/WohnkostenInstrument.jsx';
+import { WohnkostenInstrument, wohnkostenRechnung, REGLER_MIN, REGLER_MAX, reglerMax } from '../components/WohnkostenInstrument.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 import i18nDe from '../i18n/de.js';
 import i18nEn from '../i18n/en.js';
@@ -139,11 +139,62 @@ describe('Kapitel Wohnen · Anzeige', () => {
   });
 
   it('Drittel nie als Regel oder Recht ausgegeben (Swiss-Precision): «Faustregel» in jeder Sprache', () => {
-    expect(i18nDe.wohnenInstrument.faustregel).toMatch(/Faustregel/);
-    expect(i18nDe.wohnenInstrument.mehrAlsDrittel.sie).toMatch(/Faustregel, keine Vorschrift/);
+    expect(i18nDe.wohnenInstrument.faustregel).toMatch(/Orientierung/);
+    expect(i18nDe.wohnenInstrument.mehrAlsDrittel).toMatch(/Faustregel, keine Vorschrift/);
+    expect(i18nDe.wohnenInstrument.faustregel).toMatch(/feste Grenze ist das nicht/);
     for (const l of [i18nDe, i18nEn, i18nFr, i18nIt, i18nRm]) {
       const alles = JSON.stringify(l.wohnenInstrument);
       expect(alles).not.toMatch(/Vermieter|landlord|bailleur|locator|locatur/i);
     }
+  });
+});
+
+// Fachprüfung (Swiss-Precision) 24.10.2026, eingearbeitet.
+describe('Kapitel Wohnen · Randfälle der Fachprüfung', () => {
+  it('Partner/in: «eigenen Einkommens» und kein «Mehr als ein Drittel», die Miete gilt für den Haushalt', () => {
+    const p = profil({ monthlyIncome: '4000' });
+    p.basis = { ...p.basis, maritalStatus: 'married', household: { adults: 2, children: [], partnerIncome: '4000' } };
+    const r = wohnkostenRechnung(p.wohnen, p);
+    expect(r.mitPartner).toBe(true);
+    expect(r.einkommen).toBe(4000);
+    const html = render(p.wohnen, p);
+    expect(html).toContain('wohnenInstrument.anteilEigen');
+    expect(html).toContain('wohnenInstrument.mitPartner');
+    expect(html).not.toContain('wohnenInstrument.mehrAlsDrittel');
+  });
+
+  it('nur der Nebenerwerb brutto: «teils brutto», nicht «des Bruttoeinkommens»', () => {
+    const p = profil({ monthlyIncome: '4000', sideIncome: '800', sideIncomeType: 'brutto' });
+    const html = render(p.wohnen, p);
+    expect(html).toContain('wohnenInstrument.anteilTeilsBrutto');
+    expect(html).not.toContain('wohnenInstrument.anteilBrutto(');
+  });
+
+  it('Eigentum mit Hypothek: Hypothek und Gebäudeversicherung zählen, kein Regler', () => {
+    const p = profil({}, { rentAmount: '', utilities: '250', mortgageStatus: 'yes', mortgagePayment: '1200', buildingsInsurance: '600' });
+    const r = wohnkostenRechnung(p.wohnen, p);
+    expect(r.eigentum).toBe(true);
+    expect(r.kosten).toBe(1500);
+    const html = render(p.wohnen, p);
+    expect(html).toContain('wohnenInstrument.titel');
+    expect(html).not.toContain('miete-ausprobieren');
+    // «Hypothek vorhanden? Nein»: ein stehengebliebener Betrag zählt nicht.
+    const nein = profil({}, { mortgageStatus: 'no', mortgagePayment: '1200' });
+    expect(wohnkostenRechnung(nein.wohnen, nein).kosten).toBe(1830);
+  });
+
+  it('im Minus: «Es fehlen danach» mit dem Betrag ohne Vorzeichen', () => {
+    const p = profil({ monthlyIncome: '1500' });
+    expect(wohnkostenRechnung(p.wohnen, p).frei).toBeLessThan(0);
+    const html = render(p.wohnen, p);
+    expect(html).toContain('wohnenInstrument.fehltDanach');
+    expect(html).not.toContain('wohnenInstrument.freiDanach');
+  });
+
+  it('eine erfasste Miete über 3’500 bleibt auf dem Regler erreichbar', () => {
+    expect(reglerMax(1650)).toBe(3500);
+    expect(reglerMax(4120)).toBe(4150);
+    const p = profil({ monthlyIncome: '12000' }, { rentAmount: '4120' });
+    expect(render(p.wohnen, p)).toMatch(/type="range"[^>]*max="4150"[^>]*value="4100"/);
   });
 });

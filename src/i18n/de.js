@@ -2333,8 +2333,8 @@ export default {
     anteil: '{pct} % des Einkommens (CHF {einkommen})',
     anteilBrutto: '{pct} % des Bruttoeinkommens (CHF {einkommen})',
     drittel: 'ein Drittel',
-    faustregel: 'Faustregel: Wohnkosten bis rund einen Drittel des Einkommens lassen meist genug Spielraum. Eine feste Grenze ist das nicht.',
-    mehrAlsDrittel: { sie: 'Mehr als ein Drittel des Einkommens geht ans Wohnen. Das ist eine Faustregel, keine Vorschrift — ob es aufgeht, zeigt Ihr Budget.', du: 'Mehr als ein Drittel des Einkommens geht ans Wohnen. Das ist eine Faustregel, keine Vorschrift — ob es aufgeht, zeigt dein Budget.' },
+    faustregel: 'Als grobe Orientierung gilt oft: Wohnkosten bis rund einen Drittel des Einkommens. Eine feste Grenze ist das nicht — bei kleinem Einkommen kann auch weniger schon knapp werden.',
+    mehrAlsDrittel: 'Mehr als ein Drittel des Einkommens geht ans Wohnen. Das ist eine Faustregel, keine Vorschrift — ob es aufgeht, zeigt die Rechnung mit allen Ausgaben.',
     ohneEinkommen: 'Sobald ein Einkommen im Kapitel Finanzen erfasst ist, zeigt sich hier, welchen Anteil das Wohnen braucht.',
     ausprobieren: 'Ausprobieren: andere Miete',
     wohnungssuche: 'Wohnungssuche',
@@ -2344,6 +2344,10 @@ export default {
     durchspielen: { sie: 'Zum Durchspielen — es wird nichts gespeichert. Die Zahlen oben folgen dem Regler, bis Sie ihn zurücksetzen.', du: 'Zum Durchspielen — es wird nichts gespeichert. Die Zahlen oben folgen dem Regler, bis du ihn zurücksetzt.' },
     zurueck: 'Zurück auf die heutige Miete',
     ausprobierteMiete: 'Ausprobierte Miete: CHF {amount}',
+    anteilEigen: { sie: '{pct} % Ihres eigenen Einkommens (CHF {einkommen})', du: '{pct} % deines eigenen Einkommens (CHF {einkommen})' },
+    anteilTeilsBrutto: '{pct} % des erfassten Einkommens (CHF {einkommen}, teils brutto)',
+    mitPartner: 'Die Wohnkosten gelten für den Haushalt, gerechnet ist hier nur das eigene Einkommen. Mit Partner/in zusammen ist der Anteil kleiner.',
+    fehltDanach: 'Es fehlen danach',
   },
 
   chapterView: {

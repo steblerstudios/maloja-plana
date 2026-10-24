@@ -2324,8 +2324,8 @@ export default {
     anteil: '{pct} % du revenu (CHF {einkommen})',
     anteilBrutto: '{pct} % du revenu brut (CHF {einkommen})',
     drittel: 'un tiers',
-    faustregel: 'Règle empirique : des frais de logement jusqu\'à environ un tiers du revenu laissent en général assez de marge. Ce n\'est pas une limite fixe.',
-    mehrAlsDrittel: { sie: 'Plus d\'un tiers du revenu va au logement. C\'est une règle empirique, pas une obligation — votre budget montre si cela tient.', du: 'Plus d\'un tiers du revenu va au logement. C\'est une règle empirique, pas une obligation — ton budget montre si cela tient.' },
+    faustregel: 'Repère approximatif souvent utilisé : des frais de logement jusqu\'à environ un tiers du revenu. Ce n\'est pas une limite fixe — avec un petit revenu, moins peut déjà être serré.',
+    mehrAlsDrittel: 'Plus d\'un tiers du revenu va au logement. C\'est une règle empirique, pas une obligation — le calcul avec toutes les dépenses montre si cela tient.',
     ohneEinkommen: 'Dès qu\'un revenu est saisi dans le chapitre Finances, on voit ici la part que prend le logement.',
     ausprobieren: 'Essayer : un autre loyer',
     wohnungssuche: 'Recherche de logement',
@@ -2335,6 +2335,10 @@ export default {
     durchspielen: { sie: 'Pour essayer — rien n\'est enregistré. Les chiffres ci-dessus suivent le curseur jusqu\'à ce que vous le réinitialisiez.', du: 'Pour essayer — rien n\'est enregistré. Les chiffres ci-dessus suivent le curseur jusqu\'à ce que tu le réinitialises.' },
     zurueck: 'Revenir au loyer actuel',
     ausprobierteMiete: 'Loyer essayé : CHF {amount}',
+    anteilEigen: { sie: '{pct} % de votre propre revenu (CHF {einkommen})', du: '{pct} % de ton propre revenu (CHF {einkommen})' },
+    anteilTeilsBrutto: '{pct} % du revenu saisi (CHF {einkommen}, en partie brut)',
+    mitPartner: 'Les frais de logement valent pour le ménage, mais seul le revenu propre est compté ici. Avec celui du ou de la partenaire, la part est plus petite.',
+    fehltDanach: 'Manque ensuite',
   },
 
   chapterView: {

@@ -4,6 +4,8 @@ import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { eigeneEinnahmen, sumAllExpenses } from '../utils/monatsrechnung.js';
+import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
+import { partnerEinkommenRoh } from '../utils/partnereinkommen.js';
 import { zahl, betrag } from '../utils/geld.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
@@ -21,13 +23,21 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // «Frei verfügbar»-Zahl, sondern die Netto-Frage (budgetSync.availableNeedsNetto), wie dort.
 //
 // Die Drittel-Marke ist eine Faustregel, keine Vorschrift (Swiss-Precision-Prüfer) — so steht es im Text.
+// Fachprüfung 24.10.2026, eingearbeitet:
+//   • Partner/in: die Miete gilt für den Haushalt, das Einkommen ist das eigene. Dann heisst es
+//     «Ihres eigenen Einkommens», und statt «Mehr als ein Drittel» steht, dass Partner/in fehlt.
+//   • «des Bruttoeinkommens» nur, wenn wirklich alles brutto ist; sonst «teils brutto».
+//   • Eigentum mit Hypothek: Hypothek und Gebäudeversicherung zählen zu den Wohnkosten, und den
+//     Regler gibt es nicht — er rechnete die neue Miete neben der weiterlaufenden Hypothek.
 
 export const REGLER_MIN = 800;
 export const REGLER_MAX = 3500;
 export const REGLER_SCHRITT = 50;
+// Eine erfasste Miete über 3'500 bleibt auf dem Regler erreichbar (kein Sprung beim ersten Schieben).
+export const reglerMax = (heute) => Math.max(REGLER_MAX, Math.ceil(heute / REGLER_SCHRITT) * REGLER_SCHRITT);
 
 const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : 0; };
-const aufRegler = (v) => Math.min(REGLER_MAX, Math.max(REGLER_MIN, Math.round(v / REGLER_SCHRITT) * REGLER_SCHRITT));
+const aufRegler = (v, max) => Math.min(max, Math.max(REGLER_MIN, Math.round(v / REGLER_SCHRITT) * REGLER_SCHRITT));
 
 // Reine Rechnung, damit sie ohne DOM geprüft werden kann. `wohnen` ist der gerade bearbeitete Stand
 // des Kapitels, `allData` das ganze Profil, `miete` die (ausprobierte) Nettomiete.
@@ -35,19 +45,31 @@ export function wohnkostenRechnung(wohnen, allData, miete) {
   const heute = n(wohnen?.rentAmount);
   const nk = n(wohnen?.utilities);
   const netto = miete == null ? heute : n(miete);
-  const kosten = netto + nk;
+  // Eigentum: wie die Monatsrechnung — «Hypothek vorhanden? Nein» zählt nicht.
+  const hypothek = wohnen?.mortgageStatus === 'no' ? 0 : n(wohnen?.mortgagePayment);
+  const eigentum = hypothek > 0;
+  const kosten = netto + nk + hypothek + n(wohnen?.buildingsInsurance) / 12;
   const { total: einkommen, brutto } = eigeneEinnahmen(allData?.finanzen);
+  const e = haushaltsEinnahmen({ finanzen: allData?.finanzen || {} });
+  const ganzBrutto = brutto && e.lohnArt === 'brutto' && e.lohn > 0 && (e.neben === 0 || e.nebenArt === 'brutto') && e.familienzulagen + e.alimente === 0;
+  const mitPartner = n(partnerEinkommenRoh(allData?.basis)) > 0;
   const anteil = einkommen > 0 ? (kosten / einkommen) * 100 : null;
   const profil = { ...(allData || {}), wohnen: { ...(wohnen || {}), rentAmount: netto } };
   const frei = einkommen > 0 && !brutto ? einkommen - sumAllExpenses(allData?.finanzen, profil) : null;
-  return { heute, nk, netto, kosten, einkommen, brutto, anteil, ueberDrittel: anteil != null && anteil > 100 / 3, frei };
+  return { heute, nk, netto, kosten, eigentum, einkommen, brutto, ganzBrutto, mitPartner, anteil, ueberDrittel: anteil != null && anteil > 100 / 3, frei };
 }
+
+// Welcher Text unter «… % des Einkommens» steht.
+const anteilKey = (r) => r.brutto ? (r.ganzBrutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteilTeilsBrutto')
+  : r.mitPartner ? 'wohnenInstrument.anteilEigen' : 'wohnenInstrument.anteil';
+const satzKey = (r) => r.mitPartner ? 'wohnenInstrument.mitPartner' : r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel';
 
 export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }) => {
   const [probe, setProbe] = useState(null);
   const r = wohnkostenRechnung(wohnen, allData, probe);
   // Ohne erfasste Wohnkosten bleibt das Instrument weg — das Formular darunter ist der Ort zum Eintragen.
-  if (r.heute + r.nk <= 0) return null;
+  if (r.kosten <= 0) return null;
+  const max = reglerMax(r.heute);
 
   const ausprobiert = probe != null && probe !== r.heute;
   const fuell = bereichFillColor('wohnen', isDarkMode) || palette.sage;
@@ -73,11 +95,11 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         React.createElement('div', { style: { position: 'absolute', top: '-5px', bottom: '-5px', left: (100 / 3) + '%', width: '2px', background: palette.text } })
       ),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.sm, color: palette.mid } },
-        React.createElement('span', null, t(r.brutto ? 'wohnenInstrument.anteilBrutto' : 'wohnenInstrument.anteil', { pct, einkommen: zahl(r.einkommen) })),
+        React.createElement('span', null, t(anteilKey(r), { pct, einkommen: zahl(r.einkommen) })),
         React.createElement('span', null, React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('wohnenInstrument.drittel'))
       ),
       React.createElement('p', { 'data-teil': 'drittel-satz', style: { ...klein, margin: space.xs + 'px 0 0', color: r.ueberDrittel ? palette.text : palette.mid } },
-        t(r.ueberDrittel ? 'wohnenInstrument.mehrAlsDrittel' : 'wohnenInstrument.faustregel'))
+        t(satzKey(r)))
     ),
     r.anteil == null && React.createElement('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('wohnenInstrument.ohneEinkommen')),
 
@@ -90,8 +112,8 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
       })
     ),
 
-    // Ausprobieren: andere Miete — nur hier, nichts wird gespeichert.
-    React.createElement('details', { 'data-teil': 'miete-ausprobieren', style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
+    // Ausprobieren: andere Miete — nur hier, nichts wird gespeichert. Nicht bei Eigentum (siehe oben).
+    !r.eigentum && React.createElement('details', { 'data-teil': 'miete-ausprobieren', style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
       React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
         React.createElement('span', null, t('wohnenInstrument.ausprobieren')),
         React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, t('wohnenInstrument.wohnungssuche'))
@@ -102,8 +124,8 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
           React.createElement('span', { style: { fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(r.netto))
         ),
         React.createElement('input', {
-          id: 'wohnen-regler', type: 'range', min: REGLER_MIN, max: REGLER_MAX, step: REGLER_SCHRITT,
-          value: aufRegler(probe ?? (r.heute || REGLER_MIN)),
+          id: 'wohnen-regler', type: 'range', min: REGLER_MIN, max, step: REGLER_SCHRITT,
+          value: aufRegler(probe ?? (r.heute || REGLER_MIN), max),
           onChange: (e) => setProbe(Number(e.target.value)),
           'aria-valuetext': betrag(r.netto),
           style: { width: '100%', minHeight: '44px', accentColor: fuell, margin: 0 },
@@ -115,8 +137,8 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
         r.brutto && r.einkommen > 0
           ? React.createElement('div', { role: 'status', style: { ...zeile, display: 'block', borderTop: '1px solid ' + palette.border + '88' } }, t('budgetSync.availableNeedsNetto'))
           : r.frei != null && React.createElement('div', { role: 'status', 'data-teil': 'frei-danach', style: { ...zeile, fontWeight: weight.semi, borderTop: '1px solid ' + palette.border + '88' } },
-              React.createElement('span', null, t('wohnenInstrument.freiDanach')),
-              React.createElement('span', { style: { color: palette.text, whiteSpace: 'nowrap' } }, betrag(r.frei))
+              React.createElement('span', null, t(r.frei < 0 ? 'wohnenInstrument.fehltDanach' : 'wohnenInstrument.freiDanach')),
+              React.createElement('span', { style: { color: palette.text, whiteSpace: 'nowrap' } }, betrag(Math.abs(r.frei)))
             ),
         React.createElement('p', { style: { ...klein, margin: space.xs + 'px 0 ' + space.sm + 'px' } }, t('wohnenInstrument.durchspielen')),
         probe != null && React.createElement('button', {
