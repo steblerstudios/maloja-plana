@@ -728,3 +728,31 @@ Sophie wählte beide Empfehlungen («In der Schale, alle auf einmal», «Passstr
 Heirat (heute rosa Band, Herz, kein Bereich). Abläufe ausserhalb der Schale (z. B. `AsylView`) — eigener Entscheid.
 **Neue Texte für den Copy-Prüfer:** «Weiter ›», «Alle N Schritte sind erledigt», Frist-Karten-Untertitel
 «Orientierung · bis …» (Heirat: Frist ist Orientierung, keine gesetzliche).
+
+---
+
+## Runde 8 · Rechner: eine Form für alle (24.10.2026)
+
+**Gefunden:** 11 Rechner tragen eine Kartenwand (Design-Befund), mehrere zeigen das Ergebnis erst unter den
+Eingaben und ohne Live-Ansage (a11y M3), Einzelwahl als `aria-pressed` ohne Gruppe (M2), Reiter ohne Pfeiltasten
+(M4). Steuern (J) und IPV sind schon Fassung 5. Bild: `heute-alv.jpg` (Beispiel mit 6'796 brutto, 24 Monaten).
+Vergleich: Reiter «Rechner · Form (Beispiel ALV)».
+
+### Rechner-Form (X) · entschieden (Sophie, 24.10.2026)
+
+Sophie wählte die Empfehlung «Eine Rechner-Form für alle», danach «Entwurf X passt für alle Rechner».
+Entwurf: `seiten-v5.html?nur=x` (4a654f3c, 7ac16da1), Beispiel «Arbeitslosenentschädigung».
+
+- **Aufbau für jeden Rechner:** (1) Kopf links mit Bereichssymbol, Brotkrume, Satz; lange Titel mit
+  Silbentrennung · (2) **Ergebnis zuerst** — eine grosse Zahl, wenige Zeilen, Vorbehalt direkt darunter,
+  `role="status"` · (3) «Ihre Angaben» aufgeklappt mit «x von n», Einzelwahl als `radiogroup` · (4) was zu tun ist /
+  wo man sich meldet · (5) «Offizielle Stelle & Antrag» als Zeilen mit ↗, ohne Versalien und ohne ausgeschriebene
+  Adressen · (6) Quelle. Keine Kartenwand, kein Kopf in Karte.
+- **Ohne Ergebnis:** an der Stelle des Ergebnisses der App-Satz («Geben Sie … ein …», «Noch n Angaben nötig»),
+  die Angaben darunter offen.
+- **Gilt für:** EO, Vorsorge, Sozialhilfe, Prämien-Orientierung, Mietzinsbeiträge, Stundenlohn, Kreditkarte,
+  Stipendien, KVG-Leistungen, Schulden, ALV. Reiter/Tabs (Schulden, KVG, Vorsorge) werden eine `Tabs`-Komponente
+  mit Pfeiltasten.
+
+**Befunde:** Name ALV — Titel «Arbeitslosenentschädigung», Suche/Register «ALV-Taggeld» (einen wählen, Copy-Prüfer).
+Code: «Kinder: ja» auch für Kinder über 25 vorbelegt (`AlvRechner.jsx:22,30`) — beim Bau mitbeheben.
