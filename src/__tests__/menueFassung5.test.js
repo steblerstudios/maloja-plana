@@ -71,7 +71,7 @@ describe('Menü · Inhalt (Fassung 5)', () => {
   it('nichts von heute fällt weg: Stand, Startbildschirm, Werkzeuge, Gepäck, Einstellungen, Hinweis', () => {
     for (const s of ['63% vollständig', 'Auf den Startbildschirm legen', 'Dokumentenablage', 'Merkliste',
       'Steuern', 'Finanz-Übersicht', 'Alle Werkzeuge im Rucksack ›',
-      'Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.', 'Bundessteuer berechnen',
+      'Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.', 'Steuerbelastung abschätzen',
       'Einstellungen', 'Einfache Ansicht', 'Datenschutz & Rechtliches', 'Problem melden',
       'Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht.']) {
       expect(txt, s).toContain(s);

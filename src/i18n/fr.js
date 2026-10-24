@@ -1515,7 +1515,7 @@ export default {
       stipendien: 'Subsides de formation, cantonal',
       alv: "Estimer l'indemnité journalière",
       asyl: "Orientation dans la procédure d'asile",
-      taxes: 'Calculer l\'impôt fédéral',
+      taxes: 'Estimer la charge fiscale',
       sozialhilfe: 'Orientation CSIAS',
       direktlinks: 'Autorités & offices',
       tresor: 'Classement sécurisé',
