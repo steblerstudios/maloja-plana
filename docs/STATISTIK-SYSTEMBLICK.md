@@ -6,6 +6,18 @@
 > handelt von *sozioökonomischen* Zahlen: Wie wirken die Schweizer Regeln für verschiedene Haushalte, und wo
 > erhalten Haushalte keine Leistung, obwohl sie Anspruch hätten?
 
+> **Verwandte Wünsche aus derselben Sitzung (24.10.2026), nicht Teil des Systemblicks** — hier nur festgehalten, damit
+> sie nicht mit dem Chat verloren gehen:
+> - **Petitions-Generator** (in `docs/TODO.md` als BD19): im **Dezember 2026 bereit**, **Launch im Januar 2027**.
+>   Maloja erzeugt nur Text/PDF, sammelt keine Unterschriften; Volksinitiativen/Referenden ausschliessen.
+>   Kernsätze für Petitionen: siehe unten, nur geprüfte.
+> - **Verbrauch ausgleichen** (AI, Strom, Wasser) über Wasser- und Wiederaufforstungsprogramme: zuerst messen; nicht
+>   «klimaneutral» versprechen (UWG/Lauterkeit), sondern «Klimabeitrag». Ideen: myclimate, Bergwaldprojekt, Helvetas.
+>   Vorarbeit: `docs/certifications.md` (Green-Hosting erfüllt, myclimate optional).
+> - **ISO-Zertifikate** «irgendwann» (27001, 27701, 14001): jetzt nach den Normen arbeiten, zertifizieren erst bei Bedarf.
+> - **B Corp** «irgendwann»: Stebler Studios ist Einzelfirma → **keine** Statuten-Klausel nötig (`certifications.md`);
+>   kostenloses B Impact Assessment als Selbsttest jederzeit möglich.
+
 ## Haltung
 
 Maloja sammelt heute **keine Nutzerdaten** — auch nicht für eine gute Sache. Das Versprechen «die App sendet
