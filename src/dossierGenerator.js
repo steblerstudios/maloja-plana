@@ -50,6 +50,13 @@ function formatCHF(value) {
   return betrag(rounded); // utils/geld.js — eine Quelle
 }
 
+// formatCHF gibt bei 0 '' zurück; mit Vor- oder Nachsatz blieb dann «− » bzw. «/Mt.» ohne
+// Betrag stehen (Fassung 6, Fix 7). Ohne Betrag bleibt der Wert leer, die Zeile fällt weg.
+function mit(vor, wert, nach = '') {
+  const b = formatCHF(wert);
+  return b ? vor + b + nach : '';
+}
+
 // Format date for display (DD.MM.YYYY — Swiss convention)
 function formatDate(value) {
   if (!value) return '';
@@ -758,15 +765,18 @@ function getBehoerdenSections(data, chapters, t, calculations) {
   ];
 
   if (sozialhilfe) {
+    // formatCHF gibt bei 0 '' zurück; mit Vor- oder Nachsatz blieb dann «− » bzw. «/Mt.»
+    // ohne Betrag stehen (Fassung 6, Fix 7). Ohne Betrag fällt die Zeile weg.
+    const mit = (vor, wert, nach = '') => { const b = formatCHF(wert); return b ? vor + b + nach : ''; };
     const sRows = [
       { label: t('sozialhilfe.basicNeeds'), value: formatCHF(sozialhilfe.grundbedarf) },
       { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
       { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
       { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
-      { label: t('sozialhilfe.deductIncome'), value: '− ' + formatCHF(sozialhilfe.income) },
+      { label: t('sozialhilfe.deductIncome'), value: mit('− ', sozialhilfe.income) },
       // Freibetrag (SKOS-RL D.2): ohne diese Zeile ginge Bedarf − Einkommen = Lücke nicht auf.
       sozialhilfe.eligible && sozialhilfe.efb > 0 && { label: t('sh.efbLabel'), value: '+ ' + formatCHF(sozialhilfe.efb) },
-      { label: t('sozialhilfe.deficit'), value: formatCHF(sozialhilfe.deficit) + t('common.perMonth'), bold: true },
+      { label: t('sozialhilfe.deficit'), value: mit('', sozialhilfe.deficit, t('common.perMonth')), bold: true },
     ].filter(r => r && r.value);
     // Was an dieser Rechnung unsicher ist, gehört ins Blatt, das an die Behörde geht.
     const notes = [
@@ -792,8 +802,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
   if (ipv) {
     const iRows = [];
     if (ipv.eligible) {
-      iRows.push({ label: t('premium.monthlySubsidy'), value: formatCHF(ipv.amount) + t('common.perMonth'), bold: true });
-      iRows.push({ label: t('premium.annualSubsidy'), value: formatCHF(ipv.amount * 12) + t('common.perYear') });
+      iRows.push({ label: t('premium.monthlySubsidy'), value: mit('', ipv.amount, t('common.perMonth')), bold: true });
+      iRows.push({ label: t('premium.annualSubsidy'), value: mit('', ipv.amount * 12, t('common.perYear')) });
       // 13. Monatslohn offen: ×12 gerechnet — dieselbe Annahme wie bei der Steuer, auch hier sichtbar.
       if (ipv.annahmen?.ohneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmeOhneDreizehnten') });
       if (ipv.annahmen?.partnerOhneDreizehnten) iRows.push({ label: t('tax.annahmenLabel'), value: t('behoerdenDossier.jsonTexte.annahmePartnerOhneDreizehnten') });
@@ -825,17 +835,18 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     });
   }
 
-  // E38: auch bei Bundessteuer 0 zeigen, wenn eine Kantonszahl da ist.
+  // E38: auch bei Bundessteuer 0 zeigen, wenn eine Kantonszahl da ist. Darum hier «CHF 0» statt
+  // formatCHF (das bei 0 leer bleibt; vorher stand dann nur «/Jahr», Fassung 6, Fix 7).
   if (tax && (tax.total > 0 || tax.kantonal)) {
     const taxRows = [
       { label: tax.taxableQuelle === 'estv' ? t('tax.taxableIncomeEstimated') : t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
-      { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear') },
+      { label: t('tax.federalTax'), value: betrag(Math.round(Number(tax.total) || 0)) + t('common.perYear') },
     ];
     if (tax.kantonal) {
       // E38: aus der ESTV-Tabelle (Hauptort, ohne Kirchensteuer) — als grobe Schätzung gekennzeichnet.
       taxRows.push(
-        { label: t('tax.cantonalAndMunicipal') + ' (' + tax.kantonal.hauptort + ', ' + t('tax.roughEstimateBadge') + ')', value: formatCHF(tax.kantonal.kantonalUndGemeinde) + t('common.perYear') },
-        { label: t('tax.totalEstimate'), value: formatCHF(tax.kantonal.total) + t('common.perYear'), bold: true },
+        { label: t('tax.cantonalAndMunicipal') + ' (' + tax.kantonal.hauptort + ', ' + t('tax.roughEstimateBadge') + ')', value: betrag(Math.round(Number(tax.kantonal.kantonalUndGemeinde) || 0)) + t('common.perYear') },
+        { label: t('tax.totalEstimate'), value: betrag(Math.round(Number(tax.kantonal.total) || 0)) + t('common.perYear'), bold: true },
         { label: t('tax.cantonalNoteLabel'), value: t('tax.basedOnHauptort', { year: tax.datenstand || '' }) },
       );
     } else {
