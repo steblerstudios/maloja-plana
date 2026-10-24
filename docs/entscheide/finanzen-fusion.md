@@ -98,4 +98,8 @@ Geprüft von `swiss-precision-pruefer` und `copy-pruefer`, Funde eingearbeitet (
 > - **Benennung:** «Jeden Monat bleiben» bleibt der Normalfall. Steht die Haushalts-Zeile darunter,
 >   heisst die obere Zeile «… vom eigenen Einkommen».
 
+> ✅ **Nachtrag 24.10.2026** (Stebler Studios: «Ja, gleiche den Spiegelsatz an: bei brutto
+> erfasstem Lohn kein «Es bleiben CHF …» mehr»): Der Spiegelsatz (`MirrorCards.jsx`) nennt bei
+> brutto erfasstem eigenem Lohn Einkommen und Ausgaben, aber keinen Rest («Es bleiben / Es fehlen»).
+
 **Offen, übrige:** Aufwand Probiermodus · Lage des Baums im Browser prüfen · rm-Texte gegenlesen.

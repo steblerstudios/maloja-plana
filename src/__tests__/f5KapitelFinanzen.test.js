@@ -71,6 +71,17 @@ describe('«Jeden Monat bleiben»', () => {
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
+  // Entscheid 24.10.2026: auch der Spiegelsatz nennt bei brutto keinen Rest — sonst stünde
+  // «Es bleiben CHF 2’480» direkt unter der Frage nach dem Netto.
+  it('Einkommen brutto: Spiegelsatz mit Einkommen und Ausgaben, ohne «Es bleiben / Es fehlen»', () => {
+    const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' }).replace(/<[^>]+>/g, '');
+    expect(text).toContain('Monatliches Einkommen CHF 6’200');
+    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’720.');
+    expect(text).not.toContain('Es bleiben');
+    const minus = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto', monthlyIncome: '1000' }).replace(/<[^>]+>/g, '');
+    expect(minus).not.toContain('Es fehlen');
+  });
+
   it('ohne Ausgaben: kein Block', () => {
     expect(monatsUebersicht({ monthlyIncome: '5000' }, {})).toBeNull();
   });
