@@ -756,3 +756,27 @@ Entwurf: `seiten-v5.html?nur=x` (4a654f3c, 7ac16da1), Beispiel «Arbeitslosenent
 
 **Befunde:** Name ALV — Titel «Arbeitslosenentschädigung», Suche/Register «ALV-Taggeld» (einen wählen, Copy-Prüfer).
 Code: «Kinder: ja» auch für Kinder über 25 vorbelegt (`AlvRechner.jsx:22,30`) — beim Bau mitbeheben.
+
+---
+
+## Runde 9 · Kapitel, eines nach dem anderen (24.10.2026)
+
+Sophie: «Kapitel für Kapitel» (statt einer Form für alle). Vorlage ist Kapitel Finanzen (A, entschieden 23.10.).
+Im Code gilt der Kopf links schon für alle Kapitel (`ChapterView.jsx:1955`); «Passend zu diesem Bereich» und
+«Als Nächstes» gibt es heute nur bei Finanzen (`ChapterView.jsx:2435`).
+
+### Kapitel Persönliche Basis (Y) · entschieden (Sophie, 24.10.2026)
+
+Entwurf: `seiten-v5.html?nur=y` (d0ad6655). Bild heute: `heute-kapitel-basis.jpg`.
+- Kopf links wie heute; **Zusammenfassungs-Satz** («Maria Muster, geboren 1992 …») ruhig unter dem Kopf statt im
+  grünen Kasten.
+- Reiter «Angaben / Dokumente», Abschnitte Person, Kontakt, Familie mit «ändern ›»; «Erwachsene im Haushalt 1 ·
+  Kinder 0» als eine Zeile **«Im Haushalt: 1 Erwachsene · 0 Kinder»**.
+- **Passend zu diesem Bereich** (Sophie wählte alle vier): Lebensmappe · Pass oder Identitätskarte (Ablauf
+  `ausweis`, 5 Schritte) · Zivilstand ändert sich (→ Rucksack-Gegenstand «Familie»: Heirat, Zusammenziehen, Kind,
+  Trennung) · Ausweis-Kopie ablegen (Ablage, gefiltert auf Basis).
+- **Je nach Angaben** (Sophie: «Ja, je nach Angaben»): Nationalität nicht Schweiz → Aufenthaltsbewilligung
+  verlängern, Einbürgerung; Zuzug in den letzten 12 Monaten → Neu in der Schweiz. Stehen oben in «Passend».
+- **Als Nächstes:** Wohnen & Leben mit Satz und Knopf. «Das Bild steht.» bleibt als leiser Satz.
+
+**Copy-Prüfer:** Untertitel der Passend-Zeilen, «Im Haushalt».
