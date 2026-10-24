@@ -97,6 +97,11 @@ Kapitel durchgegangen», Basis «Im Haushalt». Copy-Prüfer eingearbeitet.
 **Als Nächstes:** Instrumente je Kapitel, eins nach dem anderen — Wohnen (Drittel, Barometer, Regler) zuerst,
 eine Sitzung je Kapitel.
 
+**Finanzen: Balken, Kuchen, Sankey gebaut** (24.10.2026, 21:57): Zweig `feat/f6-finanzen-grafiken`, Entwurfs-PR
+#566 (Basis #565). Entscheid in VERGLEICH.md «nachentschieden». **Steuern aufteilen** ist entschieden, aber die
+Querverweise Finanzen ↔ Behörden sind noch nicht gebaut (gehört zum Kapitel Behörden, Runde 9 AD).
+**Kapitel Wohnen** läuft in eigener Sitzung (Zweig von #565).
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
