@@ -72,7 +72,7 @@ describe('Menü · Inhalt (Fassung 5)', () => {
   // Kapitel Finanzen führt, das darüber schon steht (Wächter: ablaufSprungziele.test.js).
   it('nichts von heute fällt weg: Stand, Startbildschirm, Werkzeuge, Gepäck, Einstellungen, Hinweis', () => {
     for (const s of ['63% vollständig', 'Auf den Startbildschirm legen', 'Dokumentenablage', 'Merkliste',
-      'Steuern', 'Alle Werkzeuge im Rucksack ›', 'Bundessteuer berechnen',
+      'Steuern', 'Alle Werkzeuge im Rucksack ›', 'Steuerbelastung abschätzen',
       'Einstellungen', 'Einfache Ansicht', 'Datenschutz & Rechtliches', 'Problem melden',
       'Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht.']) {
       expect(txt, s).toContain(s);

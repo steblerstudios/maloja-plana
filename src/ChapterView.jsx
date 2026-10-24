@@ -34,12 +34,12 @@ import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
-import { ansichtIkon } from './config/ansichtenRegister.js';
-import { zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
+import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegister.js';
+import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
-import { sumAllExpenses, sumTotalIncome } from './utils/monatsrechnung.js';
+import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -102,16 +102,17 @@ export const nebenerwerbAngegeben = (d) => NEBENERWERB_FELDER.some((k) => feldHa
 // (MirrorCards → utils/monatsrechnung.js). null nur, wenn keine Ausgaben erfasst sind.
 // Seit 24.10.2026 (docs/entscheide/finanzen-fusion.md) auch im Minus und ohne eigenes
 // Einkommen — ob der Block dann erscheint, entscheidet renderMonatsHeld. Vorher: null.
+// `brutto`: ein eigener Lohn (Haupt- oder Nebenerwerb) ist ausdrücklich brutto erfasst (Fassung 6).
 export const monatsUebersicht = (finanzen, allData) => {
-  const einkommen = sumTotalIncome(finanzen);
+  const { total: einkommen, brutto } = eigeneEinnahmen(finanzen);
   const verplant = sumAllExpenses(finanzen, allData);
   if (!(verplant > 0)) return null;
   const anteil = einkommen > 0 ? Math.min(100, Math.round((verplant / einkommen) * 100)) : 100;
-  return { einkommen, verplant, bleibt: einkommen - verplant, anteil };
+  return { einkommen, verplant, bleibt: einkommen - verplant, anteil, brutto };
 };
 
-// Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js: dazu Partner/in,
-// Nebenerwerb, Kinderbetreuung, Hypothek, Gebäudeversicherung, 3. Säule). Entscheid Stebler
+// Saldo des ganzen Haushalts, wie die Budget-Seite rechnet (budgetSync.js). Seit Fassung 6
+// (24.10.2026) dieselben Posten wie das Kapitel, dazu nur Partner/in. Entscheid Stebler
 // Studios 24.10.2026 (docs/entscheide/finanzen-fusion.md): beide Saldi zeigen, klar benannt —
 // der zweite nur, wenn er auf den Franken vom Kapitel-Saldo abweicht. Ist ein weiterer Lohn
 // (Nebenerwerb, Partner/in) brutto erfasst, gibt es keinen Haushalts-Betrag (wie im Budget), nur
@@ -119,7 +120,7 @@ export const monatsUebersicht = (finanzen, allData) => {
 // selbst mit dem Brutto, und «rechnen wir aus, was frei bleibt» stünde ihr direkt entgegen
 // (Fachprüfung 24.10.2026; wie die Hauptzahl bei brutto aussieht, ist offen — Entscheidungsblatt).
 export const haushaltsSaldo = (allData, kapitelBleibt) => {
-  if (!allData || allData.finanzen?.incomeType === 'brutto') return null;
+  if (!allData || eigeneEinnahmen(allData.finanzen).brutto) return null;
   const b = calculateMonthlyBudget(allData);
   if (!Number.isFinite(b.remaining)) return null;
   const rest = Math.round(b.remaining);
@@ -1787,7 +1788,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     if (f.type === 'household') {
       const h = v || {};
       const kinder = Array.isArray(h.children) ? h.children.length : 0;
-      return tr('chapters.basis.fields.household.adults') + ' ' + (Number(h.adults) || 1) + ' · ' + tr('chapters.basis.fields.household.children') + ' ' + kinder;
+      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder». Die Zahl
+      // der Erwachsenen wie die Erfassung sie zählt (adultsList, sonst adults; utils/partnereinkommen.js).
+      return tr(kinder === 1 ? 'chapterView.haushaltWertEinKind' : 'chapterView.haushaltWert', { erwachsene: erwachseneImHaushalt(h), kinder });
     }
     if (f.type === 'currency') {
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
@@ -1879,10 +1882,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // schrumpfen und umbrechen. Vorher («minmax(0,1fr) auto») nahm ein langer Wert
               // («Netto (was ich erhalte)») seine volle Breite, und «Einkommensart» lief bei
               // 375 px in ihn hinein (Massstab-Prüfung 21.10.2026).
-              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(0, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+              // Auch der Wert behält sein längstes Wort: mit «minmax(0, auto)» und
+              // «overflowWrap: anywhere» brach er mitten im Wort («Kantonsspita / l»,
+              // Fassung 6, 24.10.2026). «break-word» bricht nur ein Wort, das allein zu breit ist.
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(min-content, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
-                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
-                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'anywhere' } }, abschnittWert(f)),
+                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
+                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
                   ])))
       );
     };
@@ -1929,7 +1935,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const m = monatsUebersicht(data, allData);
     if (!m) return null;
     const label = { fontSize: text.sm, color: palette.mid, marginBottom: '2px' };
-    if (data.incomeType === 'brutto' && m.einkommen > 0) {
+    if (m.brutto && m.einkommen > 0) {
       return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
         React.createElement('div', { style: label }, tr('chapters.finanzen.monat.bleiben')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('budgetSync.availableNeedsNetto'))
@@ -1940,19 +1946,43 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const plus = m.bleibt >= 0;
     const titelKey = 'chapters.finanzen.monat.' + (h ? (plus ? 'eigenBleiben' : 'eigenFehlen') : (plus ? 'bleiben' : 'fehlen'));
     // «netto» nur, wenn das Einkommen als Netto erfasst ist — sonst stimmte das Wort nicht.
-    const einkommenKey = data.incomeType === 'netto' ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
+    // Mit Nebenerwerb muss auch er als netto erfasst sein (Fassung 6: er zählt jetzt mit).
+    const allesNetto = data.incomeType === 'netto' && (!(Number(data.sideIncome) > 0) || data.sideIncomeType === 'netto');
+    const einkommenKey = allesNetto ? 'chapters.finanzen.monat.vonEinkommenNetto' : 'chapters.finanzen.monat.vonEinkommen';
     return React.createElement('div', { 'data-teil': 'monat-bleiben', style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: label }, tr(titelKey)),
       React.createElement('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.abs(m.bleibt))),
-      // Der Balken wiederholt nur die zwei Zahlen darunter — darum für Screenreader stumm.
-      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
-        React.createElement('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: m.anteil + '%', background: palette.gold, borderRadius: radius.full } })
-      ),
+      // Der Balken wiederholt nur die Zahlen darunter — darum für Screenreader stumm.
+      // Fassung 6 («nachentschieden» 24.10.2026): unterteilt in Wohnen · Versicherungen · Steuern ·
+      // Übriges; der leere Rest ist, was bleibt. Gemessen am Einkommen, im Minus an den Ausgaben.
+      renderMonatsBalken(m),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', marginTop: space.xs + 'px', fontSize: text.sm, color: palette.mid } },
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
       ),
       renderHaushaltsSaldo(h)
+    );
+  };
+  const renderMonatsBalken = (m) => {
+    const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
+    const teile = [
+      { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: palette.rose },
+      { key: 'versicherungen', wert: p.healthInsurance + p.otherInsurance, farbe: palette.sky },
+      { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
+    ];
+    teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
+    const basis = Math.max(m.einkommen, m.verplant) || 1;
+    const sichtbar = teile.filter((x) => x.wert > 0);
+    return React.createElement('div', { 'aria-hidden': 'true', 'data-teil': 'monat-balken' },
+      React.createElement('div', { style: { display: 'flex', height: '10px', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border, overflow: 'hidden' } },
+        ...sichtbar.map((x) => React.createElement('div', { key: x.key, style: { width: (x.wert / basis) * 100 + '%', background: x.farbe } }))
+      ),
+      sichtbar.length > 1 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '2px ' + space.sm + 'px', marginTop: '4px', fontSize: text.xs, color: palette.mid } },
+        ...sichtbar.map((x) => React.createElement('span', { key: x.key, style: { display: 'inline-flex', alignItems: 'center', gap: '4px', color: palette.mid } },
+          React.createElement('span', { style: { width: '8px', height: '8px', borderRadius: radius.hair, background: x.farbe } }),
+          tr('chapters.finanzen.monat.teil.' + x.key)
+        ))
+      )
     );
   };
   // Zweite Zeile: der Haushalt wie auf der Budget-Seite — nur, wenn er abweicht.
@@ -1978,17 +2008,53 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // «Passend zu diesem Bereich»: nur Ziele, die es in der App gibt (Register der Ansichten).
   // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV oben im Kapitel; dazu kamen
   // die zwei Wege, die die Übersicht unten hatte: Budget und Behörden-Dossier.
+  // Fassung 6 (Runde 9, VERGLEICH.md): in jedem Kapitel, je mit den von Sophie gewählten Zielen.
+  // Name und Untertitel aus dem Register (wie Menü und Suche), wo es einen gibt; neu sind nur
+  // die Ablage-Zeilen und die Untertitel, die das Register nicht hat.
+  const passendZiele = () => {
+    const weg = (view, extra = {}) => {
+      const subKey = SEARCH_VIEWS.find((v) => v.view === view)?.sub;
+      return { key: view, titel: tr(ansichtName(view) || view), sub: subKey ? tr(subKey) : '', gehe: () => onNavigate(view), ikon: ansichtIkon(view), ...extra };
+    };
+    // Die Ablage, gefiltert auf das Kapitel (wie «Lohnausweis ablegen» bei Finanzen).
+    const ablage = (titelKey) => ({ key: 'ablage', titel: tr(titelKey), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, chapter.key), ikon: ansichtIkon('tresor') });
+    const b = allData?.basis || {};
+    switch (chapter.key) {
+      case 'basis': return [
+        // Je nach Angaben oben (Runde 9, Y). Ein Zuzugsdatum gibt es im Profil nicht — «Neu in der
+        // Schweiz» darum nur, wenn die Nationalität nicht Schweiz ist, zusammen mit den zwei anderen.
+        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug')] : []),
+        weg('lebensmappe', { sub: tr('chapterView.passend.lebensmappeSub') }),
+        weg('ausweis'),
+        weg('gepaeck', { key: 'familie', titel: tr('chapterView.passend.familie'), sub: tr('chapterView.passend.familieSub'), ikon: 'family' }),
+        ablage('chapterView.passend.ablageBasis'),
+      ];
+      case 'wohnen': return [weg('umzug'), weg('mietzins'), weg('wohnunggekuendigt'), ablage('chapterView.passend.ablageWohnen')];
+      case 'versicherungen': return [weg('praemien'), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
+      case 'ausbildung': return [weg('cv'), weg('neuerjob'), weg('stelleverloren'), weg('stundenlohn'), ablage('chapterView.passend.ablageAusbildung')];
+      case 'behoerden': return [
+        // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
+        ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
+        weg('tax'), weg('betreibungsauszug'),
+        ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
+        weg('vorsorgeauftrag'), weg('briefe', { sub: tr('chapterView.passend.briefeSub') }),
+        ablage('chapterView.passend.ablageDokumente'),
+      ];
+      case 'notfall': return [weg('patientenverfuegung'), weg('bestattung', { sub: tr('chapterView.passend.bestattungSub') }), ablage('chapterView.passend.ablageDokumente')];
+      default: return [
+        // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
+        { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
+        // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
+        { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
+        { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
+        // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
+        { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
+      ];
+    }
+  };
   const renderPassend = () => {
     if (!onNavigate) return null;
-    const ziele = [
-      // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
-      { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
-      // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
-      { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
-      { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
-      // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
-      { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
-    ];
+    const ziele = passendZiele();
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
       React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
       ...ziele.map((z) => React.createElement('button', {
@@ -1998,7 +2064,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: palette.sageDeep || palette.mid } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
         React.createElement('span', { style: { flex: 1, minWidth: 0 } },
           React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
-          React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
+          z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
         ),
         React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›')
       ))
@@ -2013,6 +2079,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       palette, onClick: onNext,
       style: { minHeight: '44px', boxSizing: 'border-box' },
     }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›')
+  );
+
+  // Das letzte Kapitel (Notfall) endete ohne Weg — jetzt zurück zur Übersicht (Runde 9, AE).
+  const renderAlleDurch = () => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.md } },
+    React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase', letterSpacing: '0.5px', color: palette.mid } }, tr('chapterView.alleDurch')),
+    React.createElement('h3', { style: { margin: space.xs + 'px 0 2px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, tr('chapterView.zurUebersichtTitel')),
+    React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, tr('chapterView.zurUebersichtSatz')),
+    React.createElement(PrimaryButton, {
+      palette, className: 'mp-link',
+      onClick: () => onNavigate('dashboard'),
+      style: { minHeight: '44px', boxSizing: 'border-box' },
+    }, tr('chapterView.zurUebersicht'), ' ›')
   );
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
@@ -2075,13 +2153,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement('button', {
         type: 'button',
         onClick: () => setKartenVorschau(true),
+        // Sieht aus wie ein Knopf, nicht wie ein Kästchen zum Abhaken (Fassung 6, Fix 4).
         style: {
-          background: 'none', border: 'none', padding: 0, fontFamily: 'inherit',
-          fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
-          borderBottom: '1px solid ' + palette.border,
-          paddingBottom: '1px',
+          display: 'inline-flex', alignItems: 'center', minHeight: '44px',
+          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.full,
+          padding: '0 ' + space.md + 'px', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium, color: palette.text, cursor: 'pointer',
         }
-      }, hinweisZeichen('kaestchen'), tr('notfallSummary.printCard')),
+      }, hinweisZeichen('document'), tr('notfallSummary.printCard')),
 
       // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
       // Abschnitte der Karte mit Feldnamen, nie mit Werten.
@@ -2497,16 +2576,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
     // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
     istFinanzen && renderAuswertung('oben'),
-    istFinanzen && renderPassend(),
-    istFinanzen && renderAuswertung('unten'),
+    // Fassung 6 (Runde 9): «Passend» und «Als Nächstes» in jedem Kapitel. Notfall: erst die drei
+    // Lagen, dann «Passend»; das letzte Kapitel endet mit «Alle Kapitel durchgegangen».
     chapter.key === 'notfall' && React.createElement(NotfallImKapitel, { teil: 'unten', palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate }),
-    istFinanzen && nextChapter && onNext ? renderAlsNaechstes() :
-    nextChapter && onNext ? React.createElement('div', { style: { marginTop: space.xl + 'px' } },
-      React.createElement(PrimaryButton, {
-        palette, onClick: onNext,
-        style: { minHeight: '44px', boxSizing: 'border-box' },
-      }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›'),
-    ) : null,
+    renderPassend(),
+    istFinanzen && renderAuswertung('unten'),
+    nextChapter && onNext ? renderAlsNaechstes() : (!nextChapter && onNavigate ? renderAlleDurch() : null),
 
     // Chapter arrival — quiet rest moment when enough data is present
     (() => {

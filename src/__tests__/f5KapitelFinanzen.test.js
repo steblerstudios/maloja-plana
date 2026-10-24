@@ -41,15 +41,16 @@ describe('«Jeden Monat bleiben»', () => {
     expect(m.bleibt).toBe(m.einkommen - m.verplant);
   });
 
-  // Maria zahlt in die Säule 3a ein — die Budget-Rechnung weicht ab, darum steht die
-  // Haushalts-Zeile darunter und die obere Zeile nennt das eigene Einkommen (Entscheid 24.10.2026).
-  it('Maria: CHF 2’480, 3’720 verplant von 6’200 Einkommen, netto — wie der Satz', () => {
+  // Fassung 6 (24.10.2026): die Säule 3a (CHF 250/Jahr) zählt jetzt auch im Kapitel — eine Zahl
+  // mit dem Budget, darum keine Haushalts-Zeile mehr. Vorher: 2’480 hier, 2’459 im Budget.
+  it('Maria: CHF 2’459, 3’741 verplant von 6’200 Einkommen, netto — wie der Satz und das Budget', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const text = html.replace(/<[^>]+>/g, '');
-    expect(text).toContain('Mit dem eigenen Einkommen bleiben jeden MonatCHF 2’480');
-    expect(text).toContain('3’720 verplant');
+    expect(text).toContain('Jeden Monat bleibenCHF 2’459');
+    expect(text).toContain('3’741 verplant');
     expect(text).toContain('von 6’200 Einkommen, netto');
-    expect(text).toContain('Es bleiben CHF 2’480.');
+    expect(text).toContain('Es bleiben CHF 2’459.');
+    expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
   it('Einkommen ohne Art: Zahl ohne «netto»', () => {
@@ -66,7 +67,7 @@ describe('«Jeden Monat bleiben»', () => {
     const text = html.replace(/<[^>]+>/g, '').split('Monatliches Einkommen')[0];
     expect(text).toContain('Jeden Monat bleiben');
     expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
-    expect(text).not.toContain('CHF 2’480');
+    expect(text).not.toContain('CHF 2’459');
     expect(text).not.toContain('verplant');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
@@ -76,7 +77,7 @@ describe('«Jeden Monat bleiben»', () => {
   it('Einkommen brutto: Spiegelsatz mit Einkommen und Ausgaben, ohne «Es bleiben / Es fehlen»', () => {
     const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' }).replace(/<[^>]+>/g, '');
     expect(text).toContain('Monatliches Einkommen CHF 6’200');
-    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’720.');
+    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’741.');
     expect(text).not.toContain('Es bleiben');
     const minus = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto', monthlyIncome: '1000' }).replace(/<[^>]+>/g, '');
     expect(minus).not.toContain('Es fehlen');
@@ -128,11 +129,19 @@ describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
     expect(text).toContain('Weiter mit ' + naechstes.title);
   });
 
-  it('andere Kapitel behalten den bisherigen Weiter-Knopf ohne «Als Nächstes»', () => {
+  // Fassung 6 (Runde 9, VERGLEICH.md): «Passend» und «Als Nächstes» in jedem Kapitel.
+  it('andere Kapitel: auch «Passend» und «Als Nächstes» mit dem Weiter-Knopf', () => {
     const html = render('wohnen', DEMO_DATA.wohnen, { nextChapter: kapitel('finanzen'), onNext: () => {} });
     expect(html).toContain('Weiter mit');
-    expect(html).not.toContain('Als Nächstes');
-    expect(html).not.toContain('Passend zu diesem Bereich');
+    expect(html).toContain('Als Nächstes');
+    expect(html).toContain('Passend zu diesem Bereich');
+    expect(html).toContain('Mietvertrag ablegen');
+  });
+
+  it('letztes Kapitel (Notfall): «Alle Kapitel durchgegangen» mit Weg zur Übersicht', () => {
+    const html = render('notfall', DEMO_DATA.notfall || {}, { nextChapter: null, onNext: undefined });
+    expect(html).toContain('Alle Kapitel durchgegangen');
+    expect(html).toContain('Zur Übersicht');
   });
 });
 
@@ -207,5 +216,19 @@ describe('Reiter «Dokumente» plus «Dokument fotografieren»', () => {
     for (const k of ['chapterView.docType', 'chapterView.expiryDate', 'chapterView.selectFile', 'chapterView.upload', 'chapterView.requiredDocs', 'chapterView.trustDocuments', 'chapterView.selectDocType', 'chapterView.selectExpiry', 'chapterView.fileTooLarge', 'chapterView.uploadError']) {
       expect(QUELLE).toContain("'" + k + "'");
     }
+  });
+});
+
+// Fassung 6 (Runde 9, Y): eine lesbare Zeile statt «Erwachsene im Haushalt 1 · Kinder 0».
+describe('Persönliche Basis: «Im Haushalt»', () => {
+  it('eine Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder»', () => {
+    const text = render('basis', DEMO_DATA.basis).replace(/<[^>]+>/g, '');
+    expect(text).toContain('Im Haushalt1 Erwachsene · 0 Kinder');
+    expect(text).not.toContain('Erwachsene im Haushalt 1');
+  });
+  it('ein Kind: «1 Kind»; Erwachsene aus der Liste der Erfassung', () => {
+    const basis = { ...DEMO_DATA.basis, household: { adultsList: [{ name: 'A' }], children: [{ age: 4 }] } };
+    const text = render('basis', basis).replace(/<[^>]+>/g, '');
+    expect(text).toContain('2 Erwachsene · 1 Kind');
   });
 });

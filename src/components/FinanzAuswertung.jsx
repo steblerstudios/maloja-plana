@@ -24,6 +24,7 @@ import { ReserveTank } from './ReserveTank.jsx';
 import { Lebensbaum } from '../Lebensbaum.jsx';
 import { astFarben, bereichsFruechte } from '../utils/lebensbereichFruechte.js';
 import { GeldflussImKapitel } from './Geldfluss.jsx';
+import { KuchenImKapitel } from './Kuchen.jsx';
 
 // Die Auswertung der Finanzen — bis 24.10.2026 nur in FinanzUebersicht.jsx, seit der
 // Zusammenlegung mit dem Kapitel Finanzen (docs/entscheide/finanzen-fusion.md, Bauschritt 2)
@@ -567,8 +568,10 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
         onNavigate, bereiche: fruechte, onSelectChapter, isMobile, lang, isDarkMode,
       })
     ),
-    // Geldfluss (24.10.2026, vorher auf der Charts-Seite): woher das Geld kommt, wohin es geht —
-    // nach dem Baum, als erster Teil der Rechnung. Rechnet wie «Jeden Monat bleiben».
+    // Fassung 6 (VERGLEICH.md «nachentschieden», 24.10.2026 abends): nach dem Baum erst der Kuchen
+    // («Wofür geht es weg?»), dann der Geldfluss («Woher, wohin?») — dieser nur mit zwei oder mehr
+    // Einnahmequellen (GeldflussImKapitel). Beide rechnen wie «Jeden Monat bleiben».
+    w.hasData && React.createElement(KuchenImKapitel, { data, t, palette }),
     w.hasData && React.createElement('div', { 'data-teil': 'geldfluss' },
       React.createElement(GeldflussImKapitel, { data, t, palette })
     ),

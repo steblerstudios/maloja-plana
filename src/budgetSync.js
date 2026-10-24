@@ -5,6 +5,7 @@ import { calculateIPV } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 import { haushaltsEinnahmen } from './data/haushaltsEinnahmen.js';
+import { monatsAusgaben } from './utils/monatsrechnung.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
@@ -142,31 +143,16 @@ const syncBudgetFromChapters = (data) => {
     expenses: {}
   };
 
-  // From "wohnen" chapter
-  budget.expenses.rent = Number(data.wohnen?.rentAmount || 0);
-  budget.expenses.utilities = Number(data.wohnen?.utilities || 0);
-  budget.expenses.mortgage = Number(data.wohnen?.mortgagePayment || 0);
-  budget.expenses.buildingsInsurance = Number(data.wohnen?.buildingsInsurance || 0) / 12;
+  // Die Ausgabenposten kommen aus utils/monatsrechnung.js — dieselben wie im Kapitel Finanzen
+  // (Fassung 6, 24.10.2026: nur das Einkommen von Partner/in trennt die zwei Saldi).
+  Object.assign(budget.expenses, monatsAusgaben(data));
 
-  // From "versicherungen" chapter
-  budget.expenses.healthInsurance = Number(data.versicherungen?.kkPremium || 0);
   budget.expenses.bvg = Number(data.versicherungen?.bvgContribution || 0);
   budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
   // Keine UVG-Zeile: ein Feld «uvgPremium» gab es nie (der Wert war immer 0). Bei Angestellten
   // ab 8 Std./Woche trägt die Arbeitnehmerin die Nichtberufsunfall-Prämie (UVG Art. 91 Abs. 2),
   // der Arbeitgeber zieht sie vom Lohn ab (Abs. 3) — sie steckt im Nettolohn. Selbständige und
   // Nichterwerbstätige sind über die Krankenkasse unfallversichert.
-
-  // Budget Light V1 — new fields from "finanzen" chapter
-  budget.expenses.otherInsurance = Number(data.finanzen?.otherInsurance || 0);
-  budget.expenses.groceries = Number(data.finanzen?.groceries || 0);
-  budget.expenses.communication = Number(data.finanzen?.communication || 0);
-  budget.expenses.childcare = Number(data.finanzen?.childcare || 0);
-  budget.expenses.mobility = Number(data.finanzen?.mobility || 0);
-  budget.expenses.tax = Number(data.finanzen?.monthlyTax || 0);
-  budget.expenses.pension3a = Number(data.finanzen?.pension3a || 0) / 12;
-  budget.expenses.debtPayments = Number(data.finanzen?.debtPayments || 0);
-  budget.expenses.alimentePaid = Number(data.finanzen?.alimentePaid || 0);
 
   // BVG and AHV are already deducted from net salary — keep for reference, exclude from totals
   const referenceOnly = { bvg: budget.expenses.bvg, ahv: budget.expenses.ahv };

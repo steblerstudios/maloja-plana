@@ -1778,7 +1778,7 @@ export default {
       stipendien: 'Contribuziuns da furmaziun, chantunal',
       alv: "Stimar l'indemnisaziun dal di",
       asyl: "Orientaziun en la procedura d'asil",
-      taxes: 'Calcular la taglia federala',
+      taxes: 'Stimar la chargia fiscala',
       finanzuebersicht: 'Taglia, IPV, agid social, PC — tut en ina egliada.',
       sozialhilfe: 'Orientaziun COSAS',
       direktlinks: 'Autoritads & uffizis',
@@ -2132,7 +2132,9 @@ export default {
         // rm ungeprüft Finanzen-Fusion
         haushaltFehlen: "Per l'entira chasada mancan {betrag}",
         // rm ungeprüft Finanzen-Fusion
-        haushaltWie: "Quintà sco sin la pagina dal budget. Sch'endatà, vegnan agiuntads l'entrada da la partenaria u dal partenari ed il guadagn accessoric; ultra da quai vegnan deducids la tgira dals uffants, l'ipoteca, l'assicuranza da bajetgs ed ils pajaments en la pitga 3a.",
+        haushaltWie: "Quintà sco sin la pagina dal budget, inclusiv l'entrada da la partenaria u dal partenari.",
+        // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben» — rm ungeprüft F6
+        teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", uebriges: "Ulteriur" },
       },
       passend: {
         // rm ungeprüft F5
@@ -3959,6 +3961,27 @@ export default {
     fotografieren: "Fotografar in document",
     // rm ungeprüft F5
     alsNaechstes: "Sco proxim",
+    // Fassung 6 · Runde 9: «Passend» und Ende in jedem Kapitel (24.10.2026, vor Copy-Prüfer)
+    // rm ungeprüft F6
+    passend: {
+      familie: "Il stadi civil sa mida",
+      familieSub: "Maridaglia, viver ensemen, uffant, separaziun · en il satg «Famiglia»",
+      lebensmappeSub: "Tut ils chapitels en ina survista · per stampar",
+      briefeSub: "Brevs da model, cumplettadas cun las atgnas indicaziuns",
+      bestattungSub: { sie: "Fixar quai che Vus è impurtant", du: "Fixar quai che ta è impurtant" },
+      ablageBasis: "Deponer ina copia dal document d’identitad",
+      ablageWohnen: "Deponer il contract da locaziun",
+      ablageVersicherungen: "Deponer las policas",
+      ablageAusbildung: "Deponer ils diploms",
+      ablageDokumente: "Deponer documents",
+    },
+    alleDurch: "Tut ils chapitels percurrids",
+    zurUebersichtTitel: "Enavos a la survista",
+    zurUebersichtSatz: { sie: "Voss organisatur da vita en ina survista.", du: "Tes organisatur da vita en ina survista." },
+    zurUebersicht: "A la survista",
+    imHaushalt: "En l’economia domestica",
+    haushaltWert: "{erwachsene} creschids · {kinder} uffants",
+    haushaltWertEinKind: "{erwachsene} creschids · 1 uffant",
     nextTopic: 'Proxim tema',
     sectionNav: 'Temas dal chapitel',
     showMore: 'Mussar ulteriurs secturs',
