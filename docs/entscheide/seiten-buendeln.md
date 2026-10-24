@@ -291,3 +291,30 @@ Briefvorlagen und Datensicherung — echte Knöpfe, Texte unverändert (`unterla
 **Offen:** Im Aussenfach des Gepäcks stehen weiter «Dokumentenablage» und «Meine Unterlagen» nebeneinander,
 beide führen jetzt in die Ablage — einen davon herausnehmen? Lebensmappe, Merkliste und Export bleiben
 eigene Seiten (Entscheid in §2: Merkliste gehört zu «Was ansteht», Export bleibt sichtbar).
+
+## 10 · Gruppe E gebaut, mit Fachprüfung (24.10.2026)
+
+#559 (Gruppe H) auf Zuruf gemergt, `main` = `32284107`. Nicht live.
+
+**«Mahnung erhalten» + «Betreibung erhalten» → eine Seite «Rechnung nicht bezahlt»** (`src/RechnungOffen.jsx`) auf
+Zweig `feat/geldsorgen-buendeln`. Oben die Wahl «Was ist angekommen?» (Mahnung / Zahlungsbefehl), darunter nur der
+gewählte Teil (`MahnungTeil`, `BetreibungTeil`) — Schritte, Fristen, Briefe und Quellen byte-gleich. Bewusst **kein
+Aufklappen**: wer über `#/betreibung` kommt, sieht «1 · Ruhig bleiben — Sie haben 10 Tage» auf dem ersten Bildschirm
+(375 px). Beide Adressen bleiben und wählen die Stufe; die Wahl wechselt die Adresse (Zurück-Taste geprüft).
+Register, Suche, Gepäck, Lebenszustand und Mahnstufen zeigen unverändert auf `mahnung`/`betreibung`.
+
+**Neue Texte** `rechnungOffen.title/intro/frage/stufeMahnung/stufeBetreibung` in 5 Sprachen; rm als ungeprüft markiert.
+
+**Fachprüfung 24.10.2026** — swiss-precision-, rechts- und copy-pruefer: **0 Blocker**. Umgesetzt:
+- Einleitung ohne Abfolge «von der Mahnung bis …» — ein Zahlungsbefehl setzt weder Rechnung noch Mahnung voraus
+  (swiss-precision). Neu: «Die Schritte richten sich danach, was angekommen ist: eine Mahnung oder ein Zahlungsbefehl.»
+- Englisch «payment order» wie der bestehende Teil und die englische SchKG-Fassung.
+- Eigene Knopf-Beschriftungen: «Zahlungsbefehl erhalten» nennt das Papier; `nav.betreibung` bleibt für Menü/Suche.
+- rm: der alte TODO-Vermerk steht wieder über `mahnung` (rechts-pruefer).
+SchKG Art. 74 (10 Tage ab Zustellung) im Code-Kommentar bestätigt.
+
+**Offen für Stebler Studios:**
+- **Titel «Rechnung nicht bezahlt»** setzt voraus, dass man etwas schuldet; wer zu Unrecht betrieben wird, fühlt sich
+  evtl. nicht angesprochen (swiss-precision ⚠️). Neutraler wäre z. B. «Mahnung oder Zahlungsbefehl — was tun?».
+- Zustelldatum geht beim Wechsel zur Mahnung und zurück verloren (rechts-pruefer 💡) — war mit zwei Seiten gleich.
+- rm-Texte brauchen eine Rumantsch-Fachperson; für «Zahlungsbefehl» gibt es in `rm.js` noch keinen Begriff.

@@ -1045,6 +1045,15 @@ export default {
     footerNote: 'Call-ups, forms and responsibilities lie with the canton (district command) and the civilian service authority. Rates and amounts are as of September 2026 and will change — income compensation from July 2027. This is orientation, not legal advice.',
     quelle: 'Sources: [[BV Art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_59]], [[MG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_7]], [[MG Art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_9]], [[ZDG Art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_1]], [[ZDG Art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_17]], [[EOG Art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_9]], [[OR Art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_336_c]], [[WPEG Art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_13]], [[WPEG Art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_30]] (German text where no English exists, checked September 2026).',
   },
+  // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
+  rechnungOffen: {
+    title: 'Unpaid bill — what now?',
+    intro: 'The steps depend on what arrived: a payment reminder or a payment order.',
+    stufeMahnung: 'Payment reminder received',
+    stufeBetreibung: 'Payment order received',
+    frage: 'What arrived?',
+  },
+
   mahnung: {
     title: 'Payment reminder received — what now?',
     intro: 'A reminder (Mahnung) is a prompt, not yet debt collection. Right now you have the most room to act: check, ask, propose instalments. Here is a calm overview.',

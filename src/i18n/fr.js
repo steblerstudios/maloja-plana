@@ -1045,6 +1045,15 @@ export default {
     footerNote: 'Convocations, formulaires et compétences relèvent du canton (commandement d’arrondissement) et de l’organe d’exécution du service civil. Taux et montants sont indiqués selon l’état de septembre 2026 et changent — l’allocation pour perte de gain dès juillet 2027. Ceci est une orientation, pas un conseil juridique.',
     quelle: 'Sources : [[Cst. art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/fr#art_59]], [[LAAM art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/fr#art_7]], [[LAAM art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/fr#art_9]], [[LSC art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/fr#art_1]], [[LSC art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/fr#art_17]], [[LAPG art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/fr#art_9]], [[CO art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/fr#art_336_c]], [[LTEO art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/fr#art_13]], [[LTEO art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/fr#art_30]] (vérifié en septembre 2026).',
   },
+  // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
+  rechnungOffen: {
+    title: 'Facture impayée — que faire ?',
+    intro: 'Les étapes dépendent du document reçu : un rappel ou un commandement de payer.',
+    stufeMahnung: 'Rappel reçu',
+    stufeBetreibung: 'Commandement de payer reçu',
+    frage: 'Quel document est arrivé ?',
+  },
+
   mahnung: {
     title: 'Rappel reçu — que faire ?',
     intro: 'Un rappel est une relance, pas encore une poursuite. C’est maintenant que la marge de manœuvre est la plus grande : vérifier, demander, proposer des acomptes. Voici l’essentiel, calmement.',

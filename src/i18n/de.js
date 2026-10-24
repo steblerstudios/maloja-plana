@@ -1046,6 +1046,15 @@ export default {
     footerNote: 'Aufgebote, Formulare und Zuständigkeiten liegen beim Kanton (Kreiskommando) und bei der Vollzugsstelle für den Zivildienst. Sätze und Beträge gelten mit Stand September 2026 und ändern sich — der Erwerbsersatz ab Juli 2027. Dies ist Orientierung, keine Rechtsberatung.',
     quelle: 'Quellen: [[BV Art. 59|https://www.fedlex.admin.ch/eli/cc/1999/404/de#art_59]], [[MG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_7]], [[MG Art. 9|https://www.fedlex.admin.ch/eli/cc/1995/4093_4093_4093/de#art_9]], [[ZDG Art. 1|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_1]], [[ZDG Art. 17|https://www.fedlex.admin.ch/eli/cc/1996/1445_1445_1445/de#art_17]], [[EOG Art. 9|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_9]], [[OR Art. 336c|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_336_c]], [[WPEG Art. 13|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_13]], [[WPEG Art. 30|https://www.fedlex.admin.ch/eli/cc/1959/2035_2097_2125/de#art_30]] (geprüft im September 2026).',
   },
+  // Seiten bündeln, Gruppe E (24.10.2026): Mahnung und Betreibung auf einer Seite.
+  rechnungOffen: {
+    title: 'Rechnung nicht bezahlt — was tun?',
+    intro: 'Die Schritte richten sich danach, was angekommen ist: eine Mahnung oder ein Zahlungsbefehl.',
+    stufeMahnung: 'Mahnung erhalten',
+    stufeBetreibung: 'Zahlungsbefehl erhalten',
+    frage: 'Was ist angekommen?',
+  },
+
   mahnung: {
     title: 'Mahnung erhalten — was tun?',
     intro: 'Eine Mahnung ist eine Erinnerung, noch keine Betreibung. Jetzt ist der Spielraum am grössten: prüfen, nachfragen, Raten vorschlagen. Hier der ruhige Überblick.',

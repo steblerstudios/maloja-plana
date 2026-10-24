@@ -3,8 +3,8 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { generateLetter, getLetterTemplates, BRIEF_ANGABEN, briefCanRender, mahnFrist, angabenEingetippt, feldSichtbar } from '../briefGenerator.js';
 import BriefGenerator, { briefUebersetzer } from '../BriefGenerator.jsx';
-import { MahnungErhalten } from '../MahnungErhalten.jsx';
-import { BetreibungErhalten } from '../BetreibungErhalten.jsx';
+// Seit 24.10.2026 eine Seite «Rechnung nicht bezahlt»; die Stufe wählt den Teil (seiten-buendeln.md Gruppe E).
+import { RechnungOffen } from '../RechnungOffen.jsx';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { LEBENSZUSTAENDE } from '../data/lebenszustaende.js';
@@ -182,7 +182,7 @@ describe('Briefgenerator-Ansicht — Hinweis VOR dem Formular', () => {
 });
 
 describe('Ablauf «Mahnung erhalten»', () => {
-  const html = renderToStaticMarkup(React.createElement(MahnungErhalten, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+  const html = renderToStaticMarkup(React.createElement(RechnungOffen, { stufe: 'mahnung', palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
   it('rendert ohne rohe Schlüssel, mit allen drei Brief-Wegen', () => {
     expect(html).not.toMatch(/mahnung\.[a-zA-Z]|briefe\.[a-zA-Z]/);
     for (const k of ['paymentReminder', 'claimDispute', 'installmentRequest']) expect(html).toContain(de.briefe.ablaufLink[k]);
@@ -190,7 +190,7 @@ describe('Ablauf «Mahnung erhalten»', () => {
   it.each(['fr', 'it', 'en', 'rm'])('%s: rendert ohne rohe Schlüssel und ohne Platzhalter-Reste', (lang) => {
     for (const anrede of ['sie', 'du']) {
       const tl = createT(ALL, lang, anrede);
-      const h = renderToStaticMarkup(React.createElement(MahnungErhalten, { palette: LIGHT_PALETTE, t: tl, onNavigate: () => {} }));
+      const h = renderToStaticMarkup(React.createElement(RechnungOffen, { stufe: 'mahnung', palette: LIGHT_PALETTE, t: tl, onNavigate: () => {} }));
       expect(h, `${lang}/${anrede}`).not.toMatch(/mahnung\.[a-zA-Z]|briefe\.[a-zA-Z]|\[object Object\]/);
       expect(h, `${lang}/${anrede}`).toContain('257');
     }
@@ -261,7 +261,7 @@ describe('Ablauf «Mahnung erhalten»', () => {
 describe('Rückweg zur Mahnung (27.09.2026)', () => {
   it('«Betreibung erhalten» führt zurück zur Mahnung', () => {
     const ziele = [];
-    const h = renderToStaticMarkup(React.createElement(BetreibungErhalten, { palette: LIGHT_PALETTE, t, onNavigate: (v) => ziele.push(v) }));
+    const h = renderToStaticMarkup(React.createElement(RechnungOffen, { stufe: 'betreibung', palette: LIGHT_PALETTE, t, onNavigate: (v) => ziele.push(v) }));
     expect(h).toContain(de.betreibung.step2LinkMahnung);
   });
   it('Schuldenmanager verlinkt die Mahnung', () => {
@@ -276,7 +276,7 @@ describe('Rückweg zur Mahnung (27.09.2026)', () => {
 });
 
 describe('Steuern und Verzugszins-Rechner im Ablauf (27.09.2026)', () => {
-  const html = renderToStaticMarkup(React.createElement(MahnungErhalten, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+  const html = renderToStaticMarkup(React.createElement(RechnungOffen, { stufe: 'mahnung', palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
   it('Steuer-Erlass nur vor dem Zahlungsbefehl (DBG Art. 167 Abs. 4)', () => {
     expect(html).toContain('DBG Art. 167 Abs. 1 und 4');
     expect(html).toContain('bevor für diese Steuer ein Zahlungsbefehl zugestellt ist');
