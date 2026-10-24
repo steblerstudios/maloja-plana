@@ -2790,7 +2790,7 @@ export default {
     skosNote: 'Richtwert der Schweizerischen Konferenz für Sozialhilfe. Dient als Orientierung, nicht als Bewertung.',
     autoUpdateNote: { sie: 'Wird automatisch aktualisiert, wenn Sie in anderen Kapiteln Daten ändern.', du: 'Wird automatisch aktualisiert, wenn Du in anderen Kapiteln Daten änderst.' },
     bvgReferenceNote: 'BVG und AHV sind bereits vom Nettolohn abgezogen — hier nur zur Übersicht.',
-    // Legacy keys used by ChartsAdvanced
+    // Legacy keys, used by the Geldfluss (components/Geldfluss.jsx)
     housingCosts: 'Wohnen',
     healthInsurance: 'Krankenkasse',
     group: {
@@ -4001,11 +4001,6 @@ export default {
     },
   },
 
-  charts: {
-    title: 'Charts',
-    noData: 'Noch keine Charts',
-    noDataHint: { sie: 'Tragen Sie Ihr Einkommen und Ihre Ausgaben in den Kapiteln ein, um hier Charts zu sehen.', du: 'Trage Dein Einkommen und Deine Ausgaben in den Kapiteln ein, um hier Charts zu sehen.' },
-  },
 
   validation: {
     countryCode: 'Landesvorwahl',

@@ -65,7 +65,7 @@ const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
 const BudgetSync = React.lazy(() => import('./BudgetSync.jsx'));
 const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
 const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
-const ChartsAdvanced = React.lazy(() => import('./ChartsAdvanced.jsx'));
+// ChartsAdvanced: seit 24.10.2026 keine eigene Seite — #/charts führt ins Kapitel Finanzen (UMLEITUNGEN).
 const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
 const MeineUnterlagen = React.lazy(() => import('./MeineUnterlagen.jsx'));
 const Lebensmappe = React.lazy(() => import('./Lebensmappe.jsx'));
@@ -1756,7 +1756,6 @@ const AppInner = ({ demo }) => {
         view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
-        view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
         // chapters/onSelectChapter/isMobile seit 21.09.: der Lebensbaum steht jetzt
         // hier statt auf dem Dashboard und braucht die Kapitel für seine Äste.
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),

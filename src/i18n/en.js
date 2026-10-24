@@ -2780,7 +2780,7 @@ export default {
     skosNote: 'Guideline from the Swiss Conference on Social Welfare. For orientation, not evaluation.',
     autoUpdateNote: 'Updated automatically when you change data in other chapters.',
     bvgReferenceNote: 'BVG and AHV are already deducted from net salary — shown here for reference only.',
-    // Legacy keys used by ChartsAdvanced
+    // Legacy keys, used by the Geldfluss (components/Geldfluss.jsx)
     housingCosts: 'Housing',
     healthInsurance: 'Health insurance',
     group: {
@@ -3955,11 +3955,6 @@ export default {
     },
   },
 
-  charts: {
-    title: 'Charts',
-    noData: 'No charts yet',
-    noDataHint: 'Fill in your income and expenses in the chapters to see charts here.',
-  },
 
   validation: {
     countryCode: 'Country code',

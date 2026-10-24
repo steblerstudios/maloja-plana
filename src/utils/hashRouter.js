@@ -33,9 +33,13 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //   finanzuebersicht → Kapitel Finanzen, bei der Auswertung (Zusammenlegung 24.10.2026,
 //                      docs/entscheide/finanzen-fusion.md). Kapitel 2 = finanzen (CHAPTER_KEYS;
 //                      Wächter: finanzuebersichtUmleitung.test.js, chapterOrder.test.js).
+//   charts           → ebenda (24.10.2026, docs/entscheide/seiten-buendeln.md, Gruppe I): die Seite
+//                      rechnete seit 21.10. wie das Kapitel, der Geldfluss steht seit 24.10. am
+//                      Anfang der Auswertung (Wächter: chartsUmleitung.test.js).
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
 export const UMLEITUNGEN = {
   finanzuebersicht: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
+  charts: { view: 'chapter', chapterIndex: 2, anker: 'mp-finanz-auswertung' },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):

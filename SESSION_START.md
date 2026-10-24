@@ -17,6 +17,19 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧩 **Nachtrag 24.10.2026, 19:25 — Seiten bündeln: Blatt + Entscheide + erster Schritt (`#/charts` → Kapitel Finanzen) auf Zweig `feat/charts-umleitung` `78566302`, PR #556. NICHT live.**
+>
+> **Gemessen:** ≈ 91 sichtbare Seiten (86 Ansichten in `main.jsx` + 7 Kapitel; Aug./Sep. 65, ab Okt. 86).
+> Entscheidungsblatt `docs/entscheide/seiten-buendeln.md`: neun Gruppen, Ziel ≈ 15 Seiten weniger, sechs Entscheide
+> von Stebler Studios am 24.10. gefällt (je die empfohlene Option). Schritt 1 gebaut: `charts` in `UMLEITUNGEN`,
+> `ChartsAdvanced.jsx` und `charts.*` (5 Sprachen) weg, Tests auf `geldflussDaten` umgezogen, neu `chartsUmleitung.test.js`.
+> Belegt: 6637 Tests grün, Lint 0, Build ok, Browser 375 px (Beispiel Maria): `#/charts` → `#/chapter/2`, Auswertung oben,
+> Geldfluss sichtbar — wie `#/finanzuebersicht`. Pre-Commit-Hook lief erst im dritten Anlauf grün (Timeouts unter Last nach
+> App-Neustarts, Load bis 26; die betroffenen Dateien einzeln grün).
+> **Später am 24.10.:** auf Zuruf gepusht; der Stapel `feat/charts-geldfluss` als #555 gemergt (`ec92c798`), dieser Zweig
+> als #556 darauf. Weg fällt der BVG-Hinweis der Charts-Seite (steht weiter auf Budget/Steuer). Nächste Schritte laut
+> Blatt: A Ansprüche, F Ausgesteuert. **Nichts davon ist live.**
+
 > 📱 **Nachtrag 23.10.2026, 18:40 — Fusszeile, Kopfzeile, Scroll-Fix (#545) gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 18:36): main = `55ca1e93` (#545, 18:31) · live = `4299bfb9` (0.1.48-beta, 18:08,

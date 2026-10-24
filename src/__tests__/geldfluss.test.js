@@ -2,14 +2,13 @@
 // der Charts-Seite; Sophie: «der Ort ist falsch»). Gehalten wird: beide Seiten sind gleich
 // breit (nichts verschwindet, nichts kommt dazu), ein Fehlbetrag steht als «Nicht gedeckt»
 // links statt still unterzugehen, die Beschriftungen überlappen sich nicht, er rechnet wie
-// utils/monatsrechnung.js, steht nach dem Lebensbaum und vor dem Lohn — und die Charts-Seite
-// zeigt wieder ihr Kuchendiagramm.
+// utils/monatsrechnung.js, steht nach dem Lebensbaum und vor dem Lohn — und ein alter
+// Charts-Link landet hier (die Charts-Seite gibt es seit 24.10.2026 nicht mehr).
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { geldflussLayout, geldflussDaten, GeldflussImKapitel } from '../components/Geldfluss.jsx';
 import { FinanzenImKapitel } from '../components/FinanzAuswertung.jsx';
-import { ChartsAdvanced } from '../ChartsAdvanced.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 import { LIGHT_PALETTE, getChapters } from '../config/constants.js';
 import { sumAllExpenses, sumTotalIncome } from '../utils/monatsrechnung.js';
@@ -94,9 +93,13 @@ describe('Geldfluss am neuen Ort', () => {
     expect(html).not.toContain('data-teil="geldfluss"');
   });
 
-  it('die Charts-Seite zeigt wieder ihr Kuchendiagramm, keinen Geldfluss', () => {
-    const html = renderToStaticMarkup(React.createElement(ChartsAdvanced, { palette: LIGHT_PALETTE, t, data: DEMO_DATA }));
-    expect(html).toContain(de.budgetSync.expensesOverview);
-    expect(html).not.toContain(G.title);
+  // Bis 24.10.2026 hiess es hier «die Charts-Seite zeigt wieder ihr Kuchendiagramm». Die Seite
+  // gibt es nicht mehr (#/charts → hierher, chartsUmleitung.test.js); der Geldfluss ist ihr Ersatz.
+  it('ein alter Charts-Link landet beim Geldfluss', () => {
+    const html = renderToStaticMarkup(React.createElement(FinanzenImKapitel, {
+      teil: 'oben', palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {},
+    }));
+    expect(html).toContain('id="mp-finanz-auswertung"');
+    expect(html).toContain(G.title);
   });
 });
