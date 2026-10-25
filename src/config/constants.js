@@ -251,6 +251,9 @@ export function getChapters(t) {
         { k: 'postalCode', type: 'text', mvo: true, autoComplete: 'postal-code' },
         { k: 'city', type: 'text', mvo: true, autoComplete: 'address-level2' },
         { k: 'moveInDate', type: 'date' },
+        // Aufenthaltstyp (Haupt-/Wochenaufenthalt) gehört zur Adresse, nicht zum Eigentum — sonst stand
+        // «Eigentum 1 von 5» bei jeder Mieterin (Fachprüfung Muster M2, 25.10.2026).
+        { k: 'residenceType', type: 'select', sel: 1, orientation: or(t, 'wohnform') },
         { k: 'rentAmount', type: 'currency', sec: 'costs', orientation: or(t, 'miete') },
         { k: 'utilities', type: 'currency' },
         // Zimmerzahl: der Mietvergleich im Budget liest sie (sonst Schätzung aus der Haushaltsgrösse).
@@ -262,7 +265,6 @@ export function getChapters(t) {
         { k: 'mortgagePayment', type: 'currency', secondary: true },
         { k: 'propertyValue', type: 'currency', secondary: true },
         { k: 'buildingsInsurance', type: 'currency', secondary: true, jahr: true },
-        { k: 'residenceType', type: 'select', sel: 1, secondary: true, orientation: or(t, 'wohnform') },
       ],
       docs: [
         'lease',
@@ -455,7 +457,7 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 // Daten-Init/-Validierung sie ohne getChapters(t) nutzen können.
 export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
-  wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'residenceType', 'wfgWohnung'],
+  wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'residenceType', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'wfgWohnung'],
   finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],

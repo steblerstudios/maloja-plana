@@ -151,15 +151,18 @@ describe('Im Kapitel', () => {
     expect(text).toContain('Ein Hausarzt ist eingetragen. Blutgruppe A+. Allergien: Penicillin.');
     expect(text.indexOf('Allergien: Penicillin.')).toBeLessThan(text.indexOf('Im Ernstfall: Notfallkarte öffnen'));
   });
+  // Muster M2 (25.10.2026): «x von n» am Abschnitt, das Übrige in EINER leisen Zeile «Nicht erfasst: …».
   it('Angaben nennen das Fehlende: Medikamente «ergänzen ›», chronische Erkrankungen «nicht erfasst.»', () => {
-    const text = nurText(kapitelHtml());
-    expect(text).toContain('Regelmässige Medikamente ergänzen ›');
-    expect(text).toContain('Chronische Erkrankungen: nicht erfasst.');
+    const html = kapitelHtml();
+    const text = nurText(html);
+    expect(html).toMatch(/data-fehlt="medications"[\s\S]*?Regelmässige Medikamente[\s\S]*?ergänzen ›/);
+    expect(text).toContain('Nicht erfasst: Chronische Erkrankungen.');
+    expect(html).toMatch(/data-erfasst="\d+\/\d+"/);
   });
   it('Passend: nur noch Dokumente ablegen, mit den Unterlagen des Kapitels', () => {
     const html = kapitelHtml();
     const passend = nurText(html.slice(html.indexOf('data-teil="passend"')));
-    expect(passend).toContain('Dokumente ablegen Patientenverfügung, Organspende-Karte, Blutgruppen-Ausweis');
+    expect(passend).toContain('Unterlagen · Patientenverfügung, Organspende-Karte, Blutgruppen-Ausweis');
     expect(passend).not.toContain('Patientenverfügung erstellen');
   });
   it('die drei Lagen stehen nicht mehr offen unten, der alte Druck-Link ist weg', () => {

@@ -38,9 +38,11 @@ describe('Kapitel Behörden', () => {
   it('Zusammenfassung mit Steuererklärung und Betreibungsregister', () => {
     expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, laut Ihren Angaben ist das Betreibungsregister ohne Einträge.');
   });
-  it('Vertretung leer: «Rechtsbeistand: nicht erfasst.»', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Rechtsbeistand: nicht erfasst.');
-    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toContain('Rechtsbeistand: nicht erfasst.');
+  // Seit dem Muster M2 (25.10.2026) gilt das für jedes Kapitel: leere Felder stehen leise in «Nicht erfasst: …»
+  // (vorher eine eigene Zeile nur für die Vertretung).
+  it('Vertretung leer: «Nicht erfasst: Rechtsbeistand …»', () => {
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
+    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toMatch(/Nicht erfasst: Rechtsbeistand[,.]/);
   });
 });
 
@@ -89,7 +91,8 @@ describe('Texte in allen fünf Sprachen', () => {
     it(name, () => {
       for (const k of Object.keys(de.behoerdenInstrument)) expect(s.behoerdenInstrument?.[k], name + ' ' + k).toBeTruthy();
       for (const k of ['keineOffene', 'eineOffene', 'offene', 'betreibungLeer', 'betreibungEintraege']) expect(s.mirror.behoerden[k], name + ' ' + k).toBeTruthy();
-      expect(s.chapterView.vertretungNichtErfasst).toBeTruthy();
+      // Muster M2 (25.10.2026): «Nicht erfasst: …» für alle Kapitel statt der eigenen Vertretungs-Zeile.
+      expect(s.chapterView.abschnitt.nichtErfasst).toContain('{liste}');
       expect(s.chapterView.passend.steuerfrist).toBeTruthy();
     });
   }

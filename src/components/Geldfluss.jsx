@@ -2,6 +2,7 @@ import React from 'react';
 import { text, weight, radius, space } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
 import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from '../utils/monatsrechnung.js';
+import { bereichsTon, mischeHex } from '../utils/lebensbereichFruechte.js';
 
 // Geldfluss (Sankey): links, woher das Geld kommt, in der Mitte der Monat, rechts, wohin es
 // geht. Die Breite jedes Bands ist der Betrag. Das Geld fliesst über die Mitte, weil Maloja
@@ -112,14 +113,20 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
 // Säule 3a), sonst ginge der Fluss nicht auf.
 export const ausgabenPosten = (data, t, palette) => {
   const posten = monatsAusgaben(data);
+  // Muster M8 (25.10.2026): Miete und Hypothek in der Wohnen-Farbe, die Krankenkasse in der Farbe der
+  // Versicherungen — wie in den Kapiteln selbst (vorher rose und sky). Hausrat und Haftpflicht sind zwei
+  // Stufen davon, weiter weg vom Grund (hell dunkler, dunkel heller): so bleibt jedes Stück ≥ 3:1 gegen
+  // den Grund (A11y-Prüfung 25.10.2026), und die Legende nennt jedes mit Namen und Betrag.
+  const wohnen = bereichsTon('wohnen', palette) || palette.rose;
+  const vers = bereichsTon('versicherungen', palette) || palette.sky;
+  const weg = parseInt(String(palette.bg || '#ffffff').slice(1, 3), 16) < 128 ? '#FFFFFF' : '#000000';
   const farbe = {
-    rent: palette.rose, utilities: palette.gold, mortgage: palette.rose, buildingsInsurance: '#A89F94',
+    rent: wohnen, utilities: palette.gold, mortgage: wohnen, buildingsInsurance: '#A89F94',
     // communication bis 25.10.2026 '#6E90B0' — im Kuchen kaum von Krankenkasse (sky) zu unterscheiden (Abnahme F6).
-    healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6F6A99',
+    healthInsurance: vers, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6F6A99',
     childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', debtPayments: palette.rose,
     alimentePaid: palette.sage, otherInsurance: '#A89F94',
-    // Hausrat und Haftpflicht (seit 25.10.2026 im Budget) — Töne neben der Krankenkasse (sky).
-    householdInsurance: '#8FA8BF', liabilityInsurance: '#5B7A99',
+    householdInsurance: mischeHex(vers, weg, 0.3), liabilityInsurance: mischeHex(vers, weg, 0.55),
   };
   const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'householdInsurance', 'liabilityInsurance', 'tax', 'groceries',
     'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];

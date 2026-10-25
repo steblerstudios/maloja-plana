@@ -109,6 +109,17 @@ export const lesbareFarbe = (farbe, grund, isDarkMode, min = 4.5) => {
   return ziel;
 };
 
+// Muster M8 (Fassung 6, Sophie 25.10.2026): EINE Bereichsfarbe je Kapitel überall — die
+// Fruchtfarbe des Bereichs, je nach Grund hell oder dunkel. Für Grafiken, die nur die Palette
+// kennen (Balken, Kuchen, Geldfluss): dunkel ist, was einen dunklen Seitengrund hat.
+// Vorher war Wohnen im Finanzen-Balken rose und im Kapitel Wohnen grün.
+export const bereichsTon = (chapterKey, palette) => {
+  const b = getBereichForChapter(chapterKey);
+  if (!b) return null;
+  // Hell der Ton für Flächen (`lightDeep`, WCAG 1.4.11 gegen den Grund — wie bereichFillColor).
+  return parseInt(String(palette.bg || '#ffffff').slice(1, 3), 16) < 128 ? b.dark : (b.lightDeep || b.light);
+};
+
 // { schrift, grund } für ein Kapitel — oder null, wenn es keinem Bereich gehört.
 // Tönung: 16 % dunkel, 12 % hell («schwächer», Probe 27.09.2026).
 export const kapitelBereichsfarbe = (chapterKey, palette, isDarkMode) => {

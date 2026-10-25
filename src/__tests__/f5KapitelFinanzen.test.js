@@ -21,15 +21,21 @@ const render = (key, data, extra = {}) => renderToStaticMarkup(React.createEleme
 }));
 const QUELLE = fs.readFileSync(path.resolve(__dirname, '../ChapterView.jsx'), 'utf8');
 
-describe('Kopf links und ruhig — für alle Kapitel', () => {
-  it.each(CHAPTER_KEYS)('%s: Kopf links, Titel in Textfarbe, kein zentriertes Band', (key) => {
+// Muster M5 (Fassung 6, Sophie 25.10.2026) löst «Kopf links und ruhig» (23.10.2026) ab: Kopf wie im
+// Entwurf — Landschaftsband, Brotkrume «Übersicht › Kapitel», Symbol in einer Kachel, keine Karte.
+describe('Kopf wie im Entwurf — für alle Kapitel (M5)', () => {
+  it.each(CHAPTER_KEYS)('%s: Band, Brotkrume «Übersicht › Kapitel», Symbol in der Kachel, Titel in Textfarbe', (key) => {
     const html = render(key, DEMO_DATA[key] || {});
-    const kopf = html.match(/<div data-kapitelkopf="links"[^>]*>/);
-    expect(kopf).toBeTruthy();
-    expect(kopf[0]).toContain('text-align:left');
-    expect(html).toContain(kapitel(key).title.replace(/&/g, '&amp;'));
-    // Titel trägt die Textfarbe, nicht mehr die Bereichsfarbe
+    const kopf = html.slice(html.indexOf('data-kapitelkopf="band"'));
+    expect(html).toContain('data-kapitelkopf="band"');
+    expect(kopf).toMatch(/background-image:url\([^)]*landschaft[^)]*\.webp\)/);
+    const titel = kapitel(key).title.replace(/&/g, '&amp;');
+    expect(kopf).toMatch(new RegExp('<nav aria-label="' + t('nav.pfad') + '"[\\s\\S]*?' + t('nav.backToDashboard') + '[\\s\\S]*?<li aria-current="page"[^>]*>' + titel + '</li>'));
+    expect(kopf).toMatch(/width:52px;height:52px;border-radius:16px/);
+    // Titel trägt die Textfarbe, nicht die Bereichsfarbe
     expect(html).toMatch(new RegExp('<h2[^>]*color:' + LIGHT_PALETTE.text));
+    // keine Karte mehr um das Kapitel
+    expect(html.slice(0, html.indexOf('data-kapitelkopf'))).not.toMatch(/box-shadow/);
   });
 });
 
@@ -106,7 +112,7 @@ describe('«Passend zu diesem Bereich» und «Als Nächstes»', () => {
   it('vier Wege zu Zielen, die es in der App gibt', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     expect(html).toContain('Passend zu diesem Bereich');
-    for (const s of ['Neuer Job', 'Ablauf · 5 Schritte', 'Lohnausweis ablegen', 'Monatsbudget', 'Behörden-Dossier']) {
+    for (const s of ['Neue Stelle', 'Ablauf · 5 Schritte', 'Lohnausweis ablegen', 'Monatsbudget', 'Behörden-Dossier']) {
       expect(html).toContain(s);
     }
   });
@@ -199,9 +205,16 @@ describe('Weitere Bereiche anzeigen', () => {
     expect(QUELLE).toMatch(/!showSecondary && secondaryHasData && [\s\S]{0,200}chapterView\.hasHiddenData/);
   });
 
-  it('andere Kapitel behalten ihren eigenen Schalter', () => {
+  // Muster M3 (25.10.2026): in den anderen Kapiteln kein eigener Schalter mehr — Abschnitte ohne Angabe
+  // stehen zusammen in EINER Zeile «… · noch leer» mit «ergänzen ›».
+  it('andere Kapitel: leere Abschnitte in einer Zeile statt eines Schalters', () => {
     const html = render('notfall', {});
-    expect(html).toContain(t('chapterView.disclosure.notfall.more'));
+    // der frühere Schalter «Persönliche Vorsorgeverfügungen anzeigen» (Schlüssel entfernt)
+    expect(html).not.toContain('Vorsorgeverfügungen anzeigen');
+    const leer = html.slice(html.indexOf('data-teil="leere-abschnitte"'));
+    expect(html).toContain('data-teil="leere-abschnitte"');
+    expect(leer).toContain('ergänzen ›');
+    expect(leer).toContain('noch leer');
   });
 });
 

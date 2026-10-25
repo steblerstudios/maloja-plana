@@ -2437,7 +2437,7 @@ export default {
 
   chapterView: {
     // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
-    abschnitt: { aendern: 'edit', fertig: 'done', ergaenzen: 'add', leer: 'nothing yet', aendernAria: 'Edit {name}', fertigAria: '{name} done' },
+    abschnitt: { aendern: 'edit', fertig: 'done', ergaenzen: 'add', leer: 'nothing yet', aendernAria: 'Edit {name}', fertigAria: '{name} done', erfasst: '{n} of {total}', nichtErfasst: 'Not entered: {liste}.', ergaenzenAria: 'Add {name}', erfasstSr: '{n} of {total} details entered' },
     benefitsLabel: 'Your data feeds into:',
     emptyState: 'Empty for now — a few entries and Maloja starts working for you.',
     emptyStateHint: 'You can add more any time. Nothing needs to be done all at once.',
@@ -2464,7 +2464,7 @@ export default {
       familie: "Your civil status changes",
       familieSub: "Marriage, moving in together, a child, separation · in the backpack «Family»",
       lebensmappeSub: "All chapters at a glance · to print",
-      briefeSub: "Template letters, pre-filled with your details",
+      briefeSub: "Deadline extension, terminating a lease, switching health insurer",
       bestattungSub: "Write down what matters to you",
       ablageBasis: "File a copy of your ID",
       ablageWohnen: "File the tenancy agreement",
@@ -2475,14 +2475,33 @@ export default {
       ablageDokumente: "File documents",
       steuerfrist: "Tax deadline & tax return",
       steuerfristSub: "Authorities chapter · deadline, tax number, open returns",
+      // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf.
+      unterlagen: "Documents · {liste}",
+      bewilligungSub: "Guide · deadlines and documents",
+      einbuergerungSub: "Guide · requirements and route",
+      ausweisSub: "Guide · 5 steps · renewal, costs, loss",
+      mietzinsSub: "Only in some cantons and municipalities · depends on income",
+      gekuendigtSub: "Guide · deadlines and challenge",
+      ipvSub: "Entitlement · depends on income and canton",
+      kvgwechselSub: "Guide · notice must reach the insurer by 30.11.",
+      vorsorgeSub: "AHV & pension fund · roughly what comes in retirement",
+      cv: "Create a CV",
+      cvSub: { sie: "From your details · as PDF", du: "From your details · as PDF" },
+      neueStelle: "New job",
+      stelleverlorenSub: "Guide · RAV, deadlines, daily allowance",
+      stundenlohn: "Hourly wage & minimum wage",
+      stundenlohnSub: "Holiday supplement, on-call work, minimum wage check",
+      steuernSub: "Estimate taxes, deductions, extend the deadline",
     },
     alleDurch: "All chapters covered",
     zurUebersichtTitel: "Back to the overview",
     zurUebersichtSatz: "Your life folder at a glance.",
     zurUebersicht: "Go to the overview",
     imHaushalt: "In the household",
-    vertretungNichtErfasst: "Legal representative: not entered.",
     bewilligungNichtNoetig: "not needed (Swiss citizen)",
+    // Muster M1/M4 (Fassung 6, 25.10.2026).
+    stdProWoche: "hrs/week",
+    plzOrt: "Postcode · Town",
     proJahr: "/ year",
     haushaltAllein: "living alone",
     haushaltErwachsene: "{n} adults",
@@ -2494,28 +2513,6 @@ export default {
     showMore: 'Show more sections',
     showLess: 'Show less',
     hasHiddenData: 'Some hidden sections already contain data.',
-    disclosure: {
-      versicherungen: {
-        more: 'Show additional insurance details',
-        less: 'Hide additional insurance',
-        hint: 'Some insurance details are already saved.',
-      },
-      wohnen: {
-        more: 'Show property & ownership details',
-        less: 'Hide property details',
-        hint: 'Some property details are already saved.',
-      },
-      finanzen: {
-        more: 'Show pension & investments',
-        less: 'Hide pension details',
-        hint: 'Some pension details are already saved.',
-      },
-      notfall: {
-        more: 'Show advance care planning',
-        less: 'Hide advance care details',
-        hint: 'Some advance care details are already saved.',
-      },
-    },
   },
 
   trust: {

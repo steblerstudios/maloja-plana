@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import { PFADE } from './config/brotkrumePfade.js';
-import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { herkunftName } from './config/ansichtenRegister.js';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
@@ -669,10 +668,10 @@ const AppInner = ({ demo }) => {
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
-  // Kapitel-Seiten: der Hintergrund hinter der Karte leicht in der Bereichsfarbe
-  // (Entscheid 27.09.2026, utils/lebensbereichFruechte.js). Sonst palette.bg wie bisher.
-  const kapitelFarbe = view === 'chapter' && chapters[activeChapter] ? kapitelBereichsfarbe(chapters[activeChapter].key, palette, isDarkMode) : null;
-  const seitenGrund = kapitelFarbe ? kapitelFarbe.grund : palette.bg;
+  // Kapitel-Seiten: bis 25.10.2026 war der Hintergrund hinter der Kapitelkarte in der Bereichsfarbe
+  // getönt (Entscheid 27.09.2026). Seit dem Muster M5 gibt es keine Karte mehr; die Farbe trägt das
+  // Landschaftsband oben im Kapitel (ChapterView), die Seite bleibt palette.bg wie im Entwurf.
+  const seitenGrund = palette.bg;
 
   // Woher man in die aktuelle Ansicht kam (Entscheid 25.09.2026: Brotkrume + Herkunft).
   // Steht im Verlaufs-Eintrag, nicht nur hier — darum überlebt es Neuladen und
@@ -1518,7 +1517,7 @@ const AppInner = ({ demo }) => {
     // --mp-kopf-h darunter.
     // Auf der Übersicht ohne Abstand oben: das Bergpanorama schliesst direkt an die Kopfzeile bzw.
     // den Beispiel-Balken an (Entscheid 25.09.2026).
-    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: (view === 'dashboard' ? '0' : '24px') + ' 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
+    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: (view === 'dashboard' || view === 'chapter' ? '0' : '24px') + ' 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
       // In den fünf Unter-Ansichten zeichnet die Ansicht selbst die Brotkrume (components/
       // Brotkrume.jsx, Entscheid 25.09.2026); hier steht dann kein zweites «Übersicht».
       // «Übersicht» über handleNavigate — vorher setView: seit das Dokument scrollt (#296)
@@ -1526,9 +1525,10 @@ const AppInner = ({ demo }) => {
       // Kam man von der Übersicht (Seitenrundgang 27.09.2026): history.back() statt
       // handleNavigate — man landet dort, wo man war (z. B. bei «Lebensereignisse»),
       // nicht am Anfang der Seite, und der Verlauf bleibt wie mit der Zurück-Taste.
-      // Der Umzug (Fassung 5) zeichnet seine Brotkrume im eigenen Kopf (AblaufSchale `kopf`). Als
+      // Der Umzug (Fassung 5) und seit dem Muster M5 (25.10.2026) die Kapitel zeichnen ihre Brotkrume im
+      // eigenen Kopf (AblaufSchale `kopf`, ChapterView). Als
       // Vergleich statt Liste: das Hauptbündel hat 30 B Luft (Messung 23.10.2026).
-      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && React.createElement('button', {
+      view !== 'dashboard' && !PFADE[view] && view !== 'umzug' && view !== 'chapter' && React.createElement('button', {
         onClick: () => (herkunft && herkunft.view === 'dashboard' ? window.history.back() : handleNavigate('dashboard')),
         'aria-label': t('nav.backToDashboard'),
         className: 'mp-link',

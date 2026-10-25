@@ -61,9 +61,12 @@ describe('Angaben', () => {
   it('mit Bewilligung: die Bewilligung wie bisher', () => {
     expect(kapitel({ ...DEMO_DATA.ausbildung, workPermit: 'b' })).toContain('Aufenthaltsbewilligung B');
   });
-  it('Spalten teilen sich den Platz; Bezeichnung trennt nach Silben', () => {
-    expect(QUELLE).toContain("gridTemplateColumns: 'minmax(0, 3fr) minmax(min-content, 2fr)'");
-    expect(QUELLE).toMatch(/'dt', \{ key: 'dt-' \+ f\.k, style: \{[^}]*hyphens: 'auto'/);
+  // Muster M1 (25.10.2026) löst die Spalten 3 : 2 ab: Zeilen wie im Entwurf — die Bezeichnung nimmt den
+  // Platz, den der Wert übrig lässt (trennt nach Silben), der Wert höchstens 62 % und bricht nur
+  // zwischen Wörtern. Bei 3 : 2 brachen Telefonnummern («+41 79 654 32 / 10»).
+  it('Zeilen: Bezeichnung nimmt den Rest und trennt nach Silben, Wert höchstens 62 %', () => {
+    expect(QUELLE).toMatch(/'dt', \{ style: \{[^}]*flex: '1 1 0'[^}]*hyphens: 'auto'/);
+    expect(QUELLE).toMatch(/'dd', \{ style: \{[^}]*maxWidth: '62%'[^}]*overflowWrap: 'break-word'/);
   });
 });
 
