@@ -2852,7 +2852,7 @@ export default {
   orientation: {
     // ─── P0: Sichtbar auf Feldern ──────────────────────────
     ahv: { sie: 'Ihre AHV-Nummer begleitet Sie Ihr ganzes Arbeitsleben. Sie brauchen sie bei Arbeitgebern, Versicherungen und Behörden.', du: 'Deine AHV-Nummer begleitet Dich Dein ganzes Arbeitsleben. Du brauchst sie bei Arbeitgebern, Versicherungen und Behörden.' },
-    ahvBeitrag: { sie: 'Die AHV sichert Ihre Rente. Ihr Beitrag wird direkt vom Lohn abgezogen — Ihr Arbeitgeber zahlt die andere Hälfte.', du: 'Die AHV sichert Deine Rente. Dein Beitrag wird direkt vom Lohn abgezogen — Dein Arbeitgeber zahlt die andere Hälfte.' },
+    ahvBeitrag: { sie: "Die AHV sichert Ihre Rente. Als angestellte Person zahlen Sie die Hälfte des Beitrags, sie wird direkt vom Lohn abgezogen — die andere Hälfte zahlt der Arbeitgeber. Selbständige und Nichterwerbstätige zahlen ihren Beitrag selbst.", du: "Die AHV sichert deine Rente. Als angestellte Person zahlst du die Hälfte des Beitrags, sie wird direkt vom Lohn abgezogen — die andere Hälfte zahlt der Arbeitgeber. Selbständige und Nichterwerbstätige zahlen ihren Beitrag selbst." }, // Fachprüfung 25.10.2026
     bvg: { sie: 'Ihre Pensionskasse wird gemeinsam von Ihnen und Ihrem Arbeitgeber finanziert. Sie sorgt dafür, dass Sie im Alter mehr als nur die AHV-Rente bekommen.', du: 'Deine Pensionskasse wird gemeinsam von Dir und Deinem Arbeitgeber finanziert. Sie sorgt dafür, dass Du im Alter mehr als nur die AHV-Rente bekommst.' },
     kvg: { sie: 'In der Schweiz ist eine Grundversicherung bei einer Krankenkasse Pflicht. Sie wählen Ihre Krankenkasse und Ihr Modell selbst.', du: 'In der Schweiz ist eine Grundversicherung bei einer Krankenkasse Pflicht. Du wählst Deine Krankenkasse und Dein Modell selbst.' },
     franchise: { sie: 'Die Franchise ist der Betrag, den Sie pro Jahr selbst tragen, bevor Ihre Krankenkasse Leistungen übernimmt. Höhere Franchise = tiefere Prämie.', du: 'Die Franchise ist der Betrag, den Du pro Jahr selbst trägst, bevor Deine Krankenkasse Leistungen übernimmt. Höhere Franchise = tiefere Prämie.' },
@@ -6183,6 +6183,7 @@ export default {
     pflichtNote: 'Gesetzlich vorgeschrieben.',
     bvgUnklar: 'Pensionskasse: Pflicht ab einem Bruttojahreslohn von CHF {schwelle}. Erfasst ist kein Bruttolohn — ob sie hier dazugehört, zeigt der Lohnausweis.',
     bvgUnklar13: 'Pensionskasse: Pflicht ab einem Bruttojahreslohn von CHF {schwelle}. Mit einem 13. Monatslohn läge der Lohn darüber — die Angabe dazu fehlt noch (Kapitel Finanzen & Geld).',
+    bvgNa: "Pensionskasse als «trifft nicht zu» markiert. Ab einem Bruttojahreslohn von CHF {schwelle} besteht in der Regel eine Pflicht; Ausnahmen gibt es, etwa bei einer befristeten Stelle bis drei Monate. Am besten beim Arbeitgeber klären.", // Fachprüfung 25.10.2026
     empfohlenTitle: 'Empfohlen',
     empfohlenNote: 'Freiwillig, aber sinnvoll.',
     kk: 'Krankenversicherung',

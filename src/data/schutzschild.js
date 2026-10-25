@@ -64,6 +64,9 @@ export function schildState(v = {}, opts = {}) {
   // Abschluss-Prüfung 25.09.2026: Brutto, 13. offen, ×12 knapp unter, ×13 über der Schwelle → offen.
   const bvgUnklar13 = employed && !bvgPflicht && !bvgErfasst && Number(opts.annualIncomeMit13) > BVG_PARAMS.eintrittsschwelle;
   const bvgUnklar = bvgUnklarBasis || bvgUnklar13;
+  // «trifft nicht zu» an der Pensionskasse (seit 25.10.2026): die Lücke bleibt — bei Pflicht ist sie meist echt
+  // (BVG Art. 2, 7) —, aber sie wird ruhig benannt, mit den Ausnahmen (BVV 2 Art. 1j). Fachprüfung 25.10.2026.
+  const bvgNa = bvgPflicht && !bvgErfasst && Array.isArray(v._na) && v._na.includes('bvgInsurer');
   const bvgUnklarGrund = bvgUnklar13 && !bvgUnklarBasis ? 'dreizehnter' : bvgUnklarBasis ? 'basis' : null;
 
   const pflicht = groupStat([
@@ -86,5 +89,5 @@ export function schildState(v = {}, opts = {}) {
   const total = pflicht.total + empfohlen.total;
   const overall = { covered, total, fraction: total ? covered / total : 0 };
 
-  return { pflicht, empfohlen, overall, touched, bvgUnklar, bvgUnklarGrund, bvgSchwelle: BVG_PARAMS.eintrittsschwelle };
+  return { pflicht, empfohlen, overall, touched, bvgUnklar, bvgUnklarGrund, bvgNa, bvgSchwelle: BVG_PARAMS.eintrittsschwelle };
 }

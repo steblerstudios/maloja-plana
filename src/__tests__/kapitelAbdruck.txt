@@ -101,7 +101,7 @@ de   k=travelInsurance type="select" label~67f3c95c options=2 optWerte~2bfd19fd 
 de   k=cyberInsurance type="select" label~20416e75 options=2 optWerte~2bfd19fd optLabels~b50f42dc weitere=secondary
 de   k=autoInsurance type="select" section~dc190f05 label~8c2e48e7 sectionIntro~1047edc8 options=4 optWerte~5e620e1c optLabels~886529c7 weitere=secondary
 de   k=autoInsuranceAmount type="currency" label~287b6bc3 weitere=jahr+secondary
-de   k=ahvContribution type="currency" section~68b4466c orientation~c73b3b05 link~4c587ded label~81b296f0 sectionIntro~227f8993 weitere=jahr
+de   k=ahvContribution type="currency" section~68b4466c orientation~3346ba32 link~4c587ded label~81b296f0 sectionIntro~227f8993 weitere=jahr
 de   doc k=kkcard label~2633a5e7
 de   doc k=bvg_cert label~88abb78c
 de   doc k=ahv_confirmation label~2afe4119
@@ -257,7 +257,7 @@ fr   k=travelInsurance type="select" label~04d093eb options=2 optWerte~2bfd19fd 
 fr   k=cyberInsurance type="select" label~4c129163 options=2 optWerte~2bfd19fd optLabels~b74e5823 weitere=secondary
 fr   k=autoInsurance type="select" section~26357dc4 label~2aff3843 sectionIntro~20d535e5 options=4 optWerte~5e620e1c optLabels~09ea8a6d weitere=secondary
 fr   k=autoInsuranceAmount type="currency" label~88995d9f weitere=jahr+secondary
-fr   k=ahvContribution type="currency" section~8375c184 orientation~fa310432 link~4a587ac7 label~8ba447b4 sectionIntro~0c34c283 weitere=jahr
+fr   k=ahvContribution type="currency" section~8375c184 orientation~6d6e945c link~4a587ac7 label~8ba447b4 sectionIntro~0c34c283 weitere=jahr
 fr   doc k=kkcard label~20db5e70
 fr   doc k=bvg_cert label~bfe675a1
 fr   doc k=ahv_confirmation label~75494ae1
@@ -303,7 +303,7 @@ fr   k=chronicDiseases type="textarea" label~8bbdbea2
 fr   k=doctor type="text" section~0c503b47 label~ca3df85b sectionIntro~ebb1d025
 fr   k=doctorPhone type="tel" label~35c819af
 fr   k=hospital type="text" label~625996ae
-fr   k=organDonor type="select" section~e44d35b2 label~dbe0732b sectionIntro~f31f5299 options=5 optWerte~7020aec1 optLabels~cfafb2ba weitere=secondary
+fr   k=organDonor type="select" section~cd6b7c54 label~dbe0732b sectionIntro~f31f5299 options=5 optWerte~7020aec1 optLabels~cfafb2ba weitere=secondary
 fr   k=patientenverfuegung type="select" orientation~f2822acf link~361b792c hint~d143b29a label~9956aacb options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
 fr   k=vorsorgeauftrag type="select" orientation~aeb9d379 hint~924f6e39 label~d06cac12 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
 fr   k=bestattungswuensche type="select" hint~06046825 label~86c51b39 options=2 optWerte~ed5d4f23 optLabels~3f6b60a4 weitere=secondary
@@ -413,7 +413,7 @@ it   k=travelInsurance type="select" label~e0f5f5b5 options=2 optWerte~2bfd19fd 
 it   k=cyberInsurance type="select" label~a28b3902 options=2 optWerte~2bfd19fd optLabels~2fd2aa2d weitere=secondary
 it   k=autoInsurance type="select" section~1f3572bf label~3aa8ae90 sectionIntro~68c8d198 options=4 optWerte~5e620e1c optLabels~2418f905 weitere=secondary
 it   k=autoInsuranceAmount type="currency" label~8d48a8e7 weitere=jahr+secondary
-it   k=ahvContribution type="currency" section~4371ba35 orientation~c126ad4b link~3f586976 label~4181a7cf sectionIntro~1672b9c2 weitere=jahr
+it   k=ahvContribution type="currency" section~4371ba35 orientation~a54b006f link~3f586976 label~4181a7cf sectionIntro~1672b9c2 weitere=jahr
 it   doc k=kkcard label~92e4c462
 it   doc k=bvg_cert label~a2a32982
 it   doc k=ahv_confirmation label~71f7f2ca
@@ -448,7 +448,7 @@ it   k=willMade type="select" orientation~490c26eb link~d56f10b4 label~4c267d0b 
 it   doc k=betreibungsauszug label~bc93e2f7
 it   doc k=will label~b7e8c66d
 it   doc k=power_of_attorney label~c432f491
-it   doc k=patientenverfuegung label~9b700c11
+it   doc k=patientenverfuegung label~d9115358
 it kapitel=notfall title~36f4217f short~36f4217f description~1b9a2c44 felder=13 docs=3
 it   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~143370ca label~c4da7048 sectionIntro~c046401f
 it   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~7b60e85c
@@ -459,11 +459,11 @@ it   k=chronicDiseases type="textarea" label~fea4e791
 it   k=doctor type="text" section~f198b1cd label~d578256d sectionIntro~b2afb76b
 it   k=doctorPhone type="tel" label~6aa5ea13
 it   k=hospital type="text" label~7b926a78
-it   k=organDonor type="select" section~9b700c11 label~afaa36a3 sectionIntro~4ce2e7a2 options=5 optWerte~7020aec1 optLabels~aeb97878 weitere=secondary
-it   k=patientenverfuegung type="select" orientation~14c9e3b1 link~6994aaab hint~8e7ba057 label~df632c6a options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
+it   k=organDonor type="select" section~62076c16 label~afaa36a3 sectionIntro~4ce2e7a2 options=5 optWerte~7020aec1 optLabels~aeb97878 weitere=secondary
+it   k=patientenverfuegung type="select" orientation~14c9e3b1 link~6994aaab hint~8e7ba057 label~1d464b25 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
 it   k=vorsorgeauftrag type="select" orientation~9818162d hint~0514a3ca label~143d53a6 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
 it   k=bestattungswuensche type="select" hint~c5ab5793 label~7bba6303 options=2 optWerte~ed5d4f23 optLabels~0ff9683f weitere=secondary
-it   doc k=advance_directive label~9b700c11
+it   doc k=advance_directive label~d9115358
 it   doc k=organ_card label~a329f71a
 it   doc k=blood_card label~34152ed1
 # en: 7 Kapitel
@@ -569,7 +569,7 @@ en   k=travelInsurance type="select" label~04eced3d options=2 optWerte~2bfd19fd 
 en   k=cyberInsurance type="select" label~68ff8a82 options=2 optWerte~2bfd19fd optLabels~ea0983bd weitere=secondary
 en   k=autoInsurance type="select" section~b634cd74 label~054022aa sectionIntro~ce039abf options=4 optWerte~5e620e1c optLabels~5303abcb weitere=secondary
 en   k=autoInsuranceAmount type="currency" label~ffd97b45 weitere=jahr+secondary
-en   k=ahvContribution type="currency" section~dd92f452 orientation~e7b8571e link~4b587c5a label~8ec4ed40 sectionIntro~00192e85 weitere=jahr
+en   k=ahvContribution type="currency" section~dd92f452 orientation~2bc864c8 link~4b587c5a label~8ec4ed40 sectionIntro~00192e85 weitere=jahr
 en   doc k=kkcard label~8e5054bf
 en   doc k=bvg_cert label~c9936b59
 en   doc k=ahv_confirmation label~0a6f64f3
@@ -725,7 +725,7 @@ rm   k=travelInsurance type="select" label~fd43f88d options=2 optWerte~2bfd19fd 
 rm   k=cyberInsurance type="select" label~ccb9967a options=2 optWerte~2bfd19fd optLabels~1534032f weitere=secondary
 rm   k=autoInsurance type="select" section~d4e41fd8 label~72dffc50 sectionIntro~39ee63b6 options=4 optWerte~5e620e1c optLabels~4078091e weitere=secondary
 rm   k=autoInsuranceAmount type="currency" label~1757863b weitere=jahr+secondary
-rm   k=ahvContribution type="currency" section~13b243dd orientation~5e087791 link~4c587ded label~3dfda40a sectionIntro~625d0f89 weitere=jahr
+rm   k=ahvContribution type="currency" section~13b243dd orientation~d8fb87d3 link~4c587ded label~3dfda40a sectionIntro~625d0f89 weitere=jahr
 rm   doc k=kkcard label~8569dede
 rm   doc k=bvg_cert label~bfe675a1
 rm   doc k=ahv_confirmation label~71f7f2ca
