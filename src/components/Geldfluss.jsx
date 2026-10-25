@@ -106,6 +106,25 @@ const Geldfluss = ({ quellen, ziele, titel, beschreibung, woher, wohin, palette 
   );
 };
 
+// Die Ausgabenposten mit Namen und Farbe — eine Liste für Geldfluss und Kuchen (Fassung 6:
+// Balken, Kuchen und Sankey im Kapitel Finanzen, VERGLEICH.md «nachentschieden»).
+// Dieselben Posten wie die Rechnung (dazu Hypothek, Gebäudeversicherung, Kinderbetreuung,
+// Säule 3a), sonst ginge der Fluss nicht auf.
+export const ausgabenPosten = (data, t, palette) => {
+  const posten = monatsAusgaben(data);
+  const farbe = {
+    rent: palette.rose, utilities: palette.gold, mortgage: palette.rose, buildingsInsurance: '#A89F94',
+    healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6E90B0',
+    childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', debtPayments: palette.rose,
+    alimentePaid: palette.sage, otherInsurance: '#A89F94',
+  };
+  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'tax', 'groceries',
+    'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];
+  return reihenfolge.map((k) => ({
+    key: k, label: t(k === 'rent' ? 'budgetSync.housingCosts' : 'budgetSync.field.' + k), value: posten[k], color: farbe[k],
+  })).filter((x) => x.value > 0);
+};
+
 // Woher und wohin, aus denselben Feldern wie utils/monatsrechnung.js (eigeneEinnahmen,
 // sumAllExpenses) — der Geldfluss rechnet nichts Eigenes. Reicht das Einkommen nicht, steht der
 // Rest links als «Nicht gedeckt», damit beide Seiten gleich breit sind; es wird nichts erfunden.
@@ -116,20 +135,7 @@ export const geldflussDaten = (data, t, palette) => {
   const { total: income, brutto } = eigeneEinnahmen(f);
   const totalExpenses = sumAllExpenses(f, data);
   const remaining = Math.max(0, income - totalExpenses);
-  // Dieselben Posten wie die Rechnung (Fassung 6: dazu Hypothek, Gebäudeversicherung,
-  // Kinderbetreuung, Säule 3a), sonst ginge der Fluss nicht auf.
-  const posten = monatsAusgaben(data);
-  const farbe = {
-    rent: palette.rose, utilities: palette.gold, mortgage: palette.rose, buildingsInsurance: '#A89F94',
-    healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6E90B0',
-    childcare: palette.sand, mobility: '#B08060', pension3a: palette.sage, debtPayments: palette.rose,
-    alimentePaid: palette.sage, otherInsurance: '#A89F94',
-  };
-  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'tax', 'groceries',
-    'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];
-  const ausgaben = reihenfolge.map((k) => ({
-    label: t(k === 'rent' ? 'budgetSync.housingCosts' : 'budgetSync.field.' + k), value: posten[k], color: farbe[k],
-  })).filter((x) => x.value > 0);
+  const ausgaben = ausgabenPosten(data, t, palette);
   const quellen = [
     { label: t('chapters.finanzen.geldfluss.salary'), value: n(f.monthlyIncome), color: palette.sky },
     { label: t(f.sideIncomeType === 'brutto' ? 'budgetSync.incomeSideGross' : 'budgetSync.incomeSide'), value: n(f.sideIncome), color: palette.sage },
@@ -147,7 +153,10 @@ export const geldflussDaten = (data, t, palette) => {
 
 export const GeldflussImKapitel = ({ data, t, palette }) => {
   const { quellen, ziele, beschreibung, brutto } = geldflussDaten(data, t, palette);
-  if (brutto) return null;
+  // Erst mit zwei oder mehr Einnahmequellen sagt der Fluss mehr als der Kuchen: mit einem Lohn
+  // ist er ein Strom, der sich auffächert (Sophie: «komisch»). «Nicht gedeckt» zählt nicht als Quelle.
+  const echteQuellen = quellen.filter((q) => q.label !== t('chapters.finanzen.geldfluss.uncovered')).length;
+  if (brutto || echteQuellen < 2) return null;
   return React.createElement(Geldfluss, {
     palette, quellen, ziele, beschreibung,
     titel: t('chapters.finanzen.geldfluss.title'),

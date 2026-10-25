@@ -2016,6 +2016,8 @@ export default {
         haushaltBleiben: "Mit dem ganzen Haushalt bleiben {betrag}",
         haushaltFehlen: "Mit dem ganzen Haushalt fehlen {betrag}",
         haushaltWie: "Gerechnet wie auf der Budget-Seite, zusätzlich mit dem Einkommen der Partnerin oder des Partners.",
+        // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        teil: { wohnen: "Wohnen", versicherungen: "Versicherungen", steuern: "Steuern", uebriges: "Übriges" },
       },
       passend: {
         titel: "Passend zu diesem Bereich",

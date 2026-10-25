@@ -2008,6 +2008,8 @@ export default {
         haushaltBleiben: "For the whole household, {betrag} is left over",
         haushaltFehlen: "For the whole household, {betrag} is missing",
         haushaltWie: "Calculated as on the budget page, also counting a partner's income.",
+        // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben»
+        teil: { wohnen: "Housing", versicherungen: "Insurance", steuern: "Taxes", uebriges: "Other" },
       },
       passend: {
         titel: "Related to this area",

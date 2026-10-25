@@ -2132,6 +2132,8 @@ export default {
         haushaltFehlen: "Per l'entira chasada mancan {betrag}",
         // rm ungeprüft Finanzen-Fusion
         haushaltWie: "Quintà sco sin la pagina dal budget, inclusiv l'entrada da la partenaria u dal partenari.",
+        // Fassung 6: Teile des Balkens unter «Jeden Monat bleiben» — rm ungeprüft F6
+        teil: { wohnen: "Abitar", versicherungen: "Assicuranzas", steuern: "Taglias", uebriges: "Ulteriur" },
       },
       passend: {
         // rm ungeprüft F5
