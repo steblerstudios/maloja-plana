@@ -93,7 +93,7 @@ export const DIREKTLINKS = [
   {
     id: 'patientenverfuegung',
     kategorie: 'vorsorge',
-    name: { de: 'Patientenverfügung', en: 'Advance directive', fr: 'Directives anticipées' },
+    name: { de: 'Patientenverfügung', en: 'Patient decree', fr: 'Directives anticipées' },
     beschreibung: { de: 'Medizinische Behandlungswünsche festlegen', en: 'Define medical treatment wishes', fr: 'Définir les souhaits de traitement médical' },
     url: 'https://www.ch.ch/de/gesundheit/patientenverfugung/',
     antragsstelle: { de: 'Selbst erstellen (handschriftlich oder Vorlage)', en: 'Self-created (handwritten or template)', fr: 'Rédiger soi-même (manuscrit ou modèle)' },
