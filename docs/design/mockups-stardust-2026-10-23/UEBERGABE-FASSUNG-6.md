@@ -316,3 +316,5 @@ jeden Zweig vorher mit main nachgezogen, voll getestet, gebaut, gepusht und die 
 - Hilfs-Worktree `_werkbank/f6-merge-kette` kann weg.
 - Weiter offen: Spinnennetz · Fachbegriffe it/en · «Ich nehme keine» im Dossier · ZStB 133.1 · Prämien 2027 · rm · KVG Art. 7 Wortlaut ·
   `naOk`/`ahvContribution jahr`/PremiumSubsidy Wochenaufenthalt (aus der Fachprüfung #581).
+- **Nachtrag 19:58:** #581 gemergt (Sophie: «Merge #581, sobald die CI grün ist»), squash → main **`d2943f23`**, CI auf main grün.
+  **Nicht deployt** — live weiter 0.1.48-beta.
