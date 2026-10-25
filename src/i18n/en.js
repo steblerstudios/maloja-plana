@@ -5525,6 +5525,7 @@ export default {
     belowPoverty: 'Below poverty line',
     povertyLineNote: 'Poverty line for your household: {amount}/month (based on [[FSO methodology|https://www.bfs.admin.ch/bfs/en/home/statistics/economic-social-situation-population/surveys/poverty-statistics.html]] 2024). The comparison uses your disposable income: net minus taxes, premiums and deductions.',
     povertyBruttoHint: 'Your net is roughly ~ {brutto} gross (estimated from OASI/UI and pension fund, without taxes — varies by pension plan).',
+    povertyBruttoHintRente: 'Your net is roughly ~ {brutto} gross (estimated from the AHV/IV/EO contribution on wages above {freibetrag} a month, without taxes). From the reference age, UI and pension fund are not included; if pension fund cover continues, gross is higher.',
     povertyLine: 'Poverty line',
     median: 'Median CH',
     branchenvergleich: 'Your salary compared by industry (gross median):',
