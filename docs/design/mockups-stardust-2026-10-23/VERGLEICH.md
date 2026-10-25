@@ -1010,3 +1010,9 @@ ein Drittel …») · Reiter Angaben/Dokumente · Passend (4) · Als Nächstes F
 9. «Als Nächstes» als gefüllte Karte mit Goldknopf und Grossbuchstaben; Entwurf zentriert, leiser Umrissknopf.
 10. Anker unten: App 5 Punkte («Was steht mir zu?», ohne Kalender und Suche), Entwurf 6 («Anspruch», Kalender,
     Suche) — gilt für alle Seiten, gehört zum Menü-Entscheid, nicht zu diesem Kapitel.
+
+**Entschieden (Sophie, 25.10.2026):** «Behebe 1, 2, 3 (Barometer ruhiger), 4 und 7. Den Rest (5, 6, 8, 9) nehmen wir
+als Muster für alle Kapitel am Schluss.» Gebaut: Zweig `fix/f6-abnahme-wohnen`, Entwurfs-PR #571 (`bad9b708`) —
+«Nettomiete» im Satz · Tausender-Zeichen im Barometer (überall) · im Kapitel ohne strukturelle Erklärung, Zimmer-Hinweis
+«unten bei den Angaben» (rm ungeprüft) · «›» an «Ausprobieren». 6’784 Tests grün, Build sauber, Browser 375 px.
+Punkt 10 (Anker unten) gehört zum Menü-Entscheid.
