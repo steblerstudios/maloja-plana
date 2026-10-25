@@ -32,14 +32,19 @@ describe('Geldfluss rechnet wie das Kapitel Finanzen', () => {
     expect(ziele.map((z) => z.label)).not.toContain('BVG');
   });
 
-  it('Haftpflicht-Versicherungssumme wird nicht zur Monatsausgabe', () => {
+  // Bis 25.10.2026 prüfte dieser Test, dass auch die Hausrat-Prämie (240 / Jahr) NICHT zählt (Regel vom
+  // 21.10.). Seit dem Entscheid vom 24.10. («erfasste Versicherungsprämien gehören ins Budget», gebaut
+  // 25.10.) zählen Hausrat- und Haftpflicht-Prämie ÷ 12. Die Versicherungssumme und die Fahrzeug-
+  // versicherung zählen weiter nicht (Fahrzeug: «Mobilität» kann sie enthalten, eigener Entscheid).
+  it('Haftpflicht-Versicherungssumme und Fahrzeugversicherung zählen nicht; Hausrat und Haftpflicht-Prämie ÷ 12', () => {
     const data = {
       finanzen: { monthlyIncome: '5000', groceries: '400' },
-      versicherungen: { liabilityAmount: '5000000', householdInsuranceAmount: '240', autoInsuranceAmount: '900' },
+      versicherungen: { liabilityAmount: '5000000', liabilityPremium: '120', householdInsuranceAmount: '240', autoInsuranceAmount: '900' },
     };
     const { ziele } = geldflussDaten(data, t, palette);
-    expect(ausgaben(ziele)).toBe(400);
-    expect(rest(ziele)).toBe(4600);
+    // 400 + 240/12 + 120/12 = 430
+    expect(ausgaben(ziele)).toBe(430);
+    expect(rest(ziele)).toBe(4570);
   });
 
   it('Familienzulagen und bezahlte Alimente zählen wie im Kapitel', () => {

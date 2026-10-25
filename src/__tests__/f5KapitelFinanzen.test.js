@@ -42,14 +42,14 @@ describe('«Jeden Monat bleiben»', () => {
   });
 
   // Fassung 6 (24.10.2026): die Säule 3a (CHF 250/Jahr) zählt jetzt auch im Kapitel — eine Zahl
-  // mit dem Budget, darum keine Haushalts-Zeile mehr. Vorher: 2’480 hier, 2’459 im Budget.
-  it('Maria: CHF 2’459, 3’741 verplant von 6’200 Einkommen, netto — wie der Satz und das Budget', () => {
+  // mit dem Budget, darum keine Haushalts-Zeile mehr. Vorher: 2’480 hier, 2’459 im Budget. Seit 25.10.2026 (KK-Prämie 540.30, Hausrat und Haftpflicht ÷ 12): 2’274.
+  it('Maria: CHF 2’274, 3’926 verplant von 6’200 Einkommen, netto — wie der Satz und das Budget', () => {
     const html = render('finanzen', DEMO_DATA.finanzen);
     const text = html.replace(/<[^>]+>/g, '');
-    expect(text).toContain('Jeden Monat bleibenCHF 2’459');
-    expect(text).toContain('3’741 verplant');
+    expect(text).toContain('Jeden Monat bleibenCHF 2’274');
+    expect(text).toContain('3’926 verplant');
     expect(text).toContain('von 6’200 Einkommen, netto');
-    expect(text).toContain('Es bleiben CHF 2’459.');
+    expect(text).toContain('Es bleiben CHF 2’274.');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
 
@@ -67,7 +67,7 @@ describe('«Jeden Monat bleiben»', () => {
     const text = html.replace(/<[^>]+>/g, '').split('Monatliches Einkommen')[0];
     expect(text).toContain('Jeden Monat bleiben');
     expect(text).toContain('Ein Lohn ist als Bruttolohn erfasst');
-    expect(text).not.toContain('CHF 2’459');
+    expect(text).not.toContain('CHF 2’274');
     expect(text).not.toContain('verplant');
     expect(html).not.toContain('data-teil="monat-haushalt"');
   });
@@ -77,7 +77,7 @@ describe('«Jeden Monat bleiben»', () => {
   it('Einkommen brutto: Spiegelsatz mit Einkommen und Ausgaben, ohne «Es bleiben / Es fehlen»', () => {
     const text = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto' }).replace(/<[^>]+>/g, '');
     expect(text).toContain('Monatliches Einkommen CHF 6’200');
-    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’741.');
+    expect(text).toContain('Erfasste monatliche Ausgaben CHF 3’926.');
     expect(text).not.toContain('Es bleiben');
     const minus = render('finanzen', { ...DEMO_DATA.finanzen, incomeType: 'brutto', monthlyIncome: '1000' }).replace(/<[^>]+>/g, '');
     expect(minus).not.toContain('Es fehlen');
@@ -221,14 +221,26 @@ describe('Reiter «Dokumente» plus «Dokument fotografieren»', () => {
 
 // Fassung 6 (Runde 9, Y): eine lesbare Zeile statt «Erwachsene im Haushalt 1 · Kinder 0».
 describe('Persönliche Basis: «Im Haushalt»', () => {
-  it('eine Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder»', () => {
+  // Abnahme F6 (Sophie 25.10.2026): «allein, keine Kinder» statt «1 Erwachsene · 0 Kinder».
+  it('eine Person ohne Kinder: «allein, keine Kinder»', () => {
     const text = render('basis', DEMO_DATA.basis).replace(/<[^>]+>/g, '');
-    expect(text).toContain('Im Haushalt1 Erwachsene · 0 Kinder');
+    expect(text).toContain('Im Haushaltallein, keine Kinder');
     expect(text).not.toContain('Erwachsene im Haushalt 1');
+    expect(text).not.toContain('1 Erwachsene');
   });
   it('ein Kind: «1 Kind»; Erwachsene aus der Liste der Erfassung', () => {
     const basis = { ...DEMO_DATA.basis, household: { adultsList: [{ name: 'A' }], children: [{ age: 4 }] } };
     const text = render('basis', basis).replace(/<[^>]+>/g, '');
-    expect(text).toContain('2 Erwachsene · 1 Kind');
+    expect(text).toContain('2 Erwachsene, 1 Kind');
+  });
+  it('mehrere Kinder: «… Kinder»', () => {
+    const basis = { ...DEMO_DATA.basis, household: { adultsList: [{ name: 'A' }], children: [{ age: 4 }, { age: 7 }] } };
+    expect(render('basis', basis).replace(/<[^>]+>/g, '')).toContain('2 Erwachsene, 2 Kinder');
+  });
+  it('«Neu in der Schweiz» erscheint nicht, solange es kein Zuzugsdatum gibt', () => {
+    const basis = { ...DEMO_DATA.basis, nationality: 'other' };
+    const html = render('basis', basis);
+    expect(html).toMatch(/Einbürgerung/); // die anderen «je nach Angaben» bleiben
+    expect(html).not.toMatch(/Neu in der Schweiz/);
   });
 });

@@ -66,6 +66,7 @@ const satzKey = (r) => r.mitPartner ? 'wohnenInstrument.mitPartner' : r.ueberDri
 
 export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }) => {
   const [probe, setProbe] = useState(null);
+  const [offen, setOffen] = useState(false);
   const r = wohnkostenRechnung(wohnen, allData, probe);
   // Ohne erfasste Wohnkosten bleibt das Instrument weg — das Formular darunter ist der Ort zum Eintragen.
   if (r.kosten <= 0) return null;
@@ -107,16 +108,20 @@ export const WohnkostenInstrument = ({ palette, t, wohnen, allData, isDarkMode }
     vergleich && React.createElement(React.Fragment, null,
       React.createElement('h4', { style: kapH }, t('po.regionalCompare.rent.title')),
       React.createElement(RegionalBarometer, {
-        palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell,
+        palette, t, comparison: vergleich, userValue: r.netto, kind: 'rent', compact: true, fillColor: fuell, imKapitel: true,
         userLabel: ausprobiert ? t('wohnenInstrument.ausprobierteMiete', { amount: zahl(r.netto) }) : undefined,
       })
     ),
 
     // Ausprobieren: andere Miete — nur hier, nichts wird gespeichert. Nicht bei Eigentum (siehe oben).
-    !r.eigentum && React.createElement('details', { 'data-teil': 'miete-ausprobieren', style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
-      React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+    // Das «›» zeigt, dass die Zeile aufgeht (Abnahme F6, 25.10.2026: ohne Zeichen wirkte sie nicht aufklappbar).
+    !r.eigentum && React.createElement('details', { 'data-teil': 'miete-ausprobieren', onToggle: (e) => setOffen(e.currentTarget.open), style: { marginTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '88', paddingTop: space.sm + 'px' } },
+      React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, listStyle: 'none' } },
         React.createElement('span', null, t('wohnenInstrument.ausprobieren')),
-        React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } }, t('wohnenInstrument.wohnungssuche'))
+        React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.xs, fontWeight: weight.normal, color: palette.mid } },
+          t('wohnenInstrument.wohnungssuche'),
+          React.createElement('span', { 'aria-hidden': 'true', 'data-teil': 'ausprobieren-zeichen', style: { fontSize: text.lg, lineHeight: 1, color: palette.mid, transform: offen ? 'rotate(90deg)' : 'none', transition: 'transform 150ms ease' } }, '›')
+        )
       ),
       React.createElement('div', { style: { paddingTop: space.xs + 'px' } },
         React.createElement('label', { htmlFor: 'wohnen-regler', style: { ...zeile, paddingBottom: 0 } },
