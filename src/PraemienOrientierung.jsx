@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
-import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
+import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA, detailJahr } from './data/praemienDetail.js';
 import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -613,7 +613,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),
-    h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } }, renderSource(t('po.source'), null, t))
+    h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } }, renderSource(t('po.source', { jahr: detailJahr() }), null, t))
   );
 };
 

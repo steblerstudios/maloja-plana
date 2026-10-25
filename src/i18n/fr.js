@@ -6026,7 +6026,7 @@ export default {
     chooseTarget: 'Caisse souhaitée',
     targetSelected: 'Souhaitée',
     targetChosenHint: 'Caisse souhaitée : {insurer} — elle apparaît dans le processus de changement.',
-    source: 'Source : [[OFSP|priminfo.admin.ch]] · Modèle standard avec accident · État 2026',
+    source: 'Source : [[OFSP|priminfo.admin.ch]] · Modèle standard avec accident · État {jahr}',
     disclaimer: { sie: 'Primes de référence uniquement. Les primes effectives peuvent différer — la police de votre assureur fait foi.', du: 'Primes de référence uniquement. Les primes effectives peuvent différer — la police de ton assureur fait foi.' },
     regionalCompare: {
       national: 'Moyenne suisse',

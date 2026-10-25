@@ -5339,7 +5339,7 @@ export default {
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi 2026',
+    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi {jahr}',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',

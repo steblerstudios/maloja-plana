@@ -6000,7 +6000,7 @@ export default {
     chooseTarget: 'Desiderata',
     targetSelected: 'Desiderata',
     targetChosenHint: 'Cassa desiderata: {insurer} — appare nel processo di cambio.',
-    source: 'Fonte: [[UFSP|priminfo.admin.ch]] · Modello standard con infortunio · Stato 2026',
+    source: 'Fonte: [[UFSP|priminfo.admin.ch]] · Modello standard con infortunio · Stato {jahr}',
     disclaimer: { sie: 'Solo premi di riferimento. I premi effettivi possono variare — fa fede la polizza del Suo assicuratore.', du: 'Solo premi di riferimento. I premi effettivi possono variare — fa fede la polizza del tuo assicuratore.' },
     regionalCompare: {
       national: 'Media svizzera',

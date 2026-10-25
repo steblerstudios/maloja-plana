@@ -124,7 +124,7 @@ describe('praemienDetail', () => {
 
   describe('metadata', () => {
     it('has correct version', () => {
-      expect(DETAIL_DATA_VERSION).toBe('2026');
+      expect(DETAIL_DATA_VERSION).toBe('2027');
     });
   });
 });
