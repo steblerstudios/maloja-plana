@@ -114,7 +114,8 @@ export const ausgabenPosten = (data, t, palette) => {
   const posten = monatsAusgaben(data);
   const farbe = {
     rent: palette.rose, utilities: palette.gold, mortgage: palette.rose, buildingsInsurance: '#A89F94',
-    healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6E90B0',
+    // communication bis 25.10.2026 '#6E90B0' — im Kuchen kaum von Krankenkasse (sky) zu unterscheiden (Abnahme F6).
+    healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6F6A99',
     childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', debtPayments: palette.rose,
     alimentePaid: palette.sage, otherInsurance: '#A89F94',
   };

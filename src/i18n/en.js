@@ -1980,6 +1980,7 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      kuchenFrage: 'Where does it go?',
       geldfluss: {
         title: 'Where the money comes from, where it goes',
         salary: 'Monthly income',
@@ -2446,7 +2447,7 @@ export default {
     lohn: 'Minimum wage check active',
     notfall: 'Emergency card ready',
     budget: 'Budget overview active',
-    short: { tax: 'Tax', ipv: 'IPV', sozial: 'Welfare', lohn: 'Wage', notfall: 'Emergency', budget: 'Budget' },
+    short: { tax: 'Tax', ipv: 'IPV', sozial: 'Welfare', lohn: 'Wage', notfall: 'Emergency card', budget: 'Budget' },
   },
 
   legal: {
@@ -3004,6 +3005,7 @@ export default {
     mindestlohnJahrNichtBelegt: 'Cantonal minimum wage: verified against official sources for {jahr}, no verified figures for {laufend} yet — so no amount and no minimum-wage comparison here.',
     mindestlohnBreachedLine: 'Your wage appears to be below it.',
     fulltimeNote: 'Comparison based on a full-time position (40 hrs/week, as used for the FSO median).',
+    soIstGerechnet: 'How this is calculated',
     dreizehnterNote: 'The comparison figure includes the pro-rated 13th month salary (×13/12) so it matches the FSO median. Without the 13th it would be CHF {fte}.',
     ohneDreizehnterNote: 'Comparison without a pro-rated 13th month salary. With a 13th, the figure would be around 8% higher.',
     konformMit13Line: 'Compliant thanks to the 13th month salary — provided the 13th counts towards the minimum wage (in Basel-Stadt only if paid in monthly instalments).',
@@ -3064,6 +3066,8 @@ export default {
     selectCantonHint: 'Select a canton to see the cantonal tax estimate.',
     basedOnHauptort: 'Approximate value from data points of the FTA tax calculator (tax year {year}): cantonal capital, excluding church tax; in other municipalities, the tax can differ considerably.',
     roughEstimateBadge: 'Rough estimate',
+    kapitelZeile: 'Federal tax {bund} · canton and municipality {kanton} — rough estimate for the cantonal capital, without church tax.',
+    annahmeOhneDreizehntenHier: 'Calculated without a 13th month salary — with one, the tax is higher. You can enter it above under «Income».',
     // E37/E38: no cantonal figure where the FTA table does not apply
     bandOutside: 'Maloja shows no amount here for this taxable income. The table from the FTA tax calculator covers CHF {min} to CHF {max} (cantonal capital, tax year {year}); Maloja does not extend it outside that range. The FTA tax calculator works out the amount for your municipality.',
     bandNotChecked: 'Maloja shows no amount here for this situation. Cantonal and municipal tax has been measured for single and married people with up to three children; for people who are not married, only if the children live in the same household (confirmation under the parent tariff). The FTA tax calculator works out the amount for your municipality.',

@@ -1980,6 +1980,7 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      kuchenFrage: 'Où va l’argent ?',
       geldfluss: {
         title: 'D’où vient l’argent, où il va',
         salary: 'Revenu mensuel',
@@ -2446,7 +2447,7 @@ export default {
     lohn: 'Vérification salaire minimum active',
     notfall: "Carte d'urgence prête",
     budget: 'Aperçu budget actif',
-    short: { tax: 'Impôts', ipv: 'IPV', sozial: 'Aide sociale', lohn: 'Salaire', notfall: 'Urgence', budget: 'Budget' },
+    short: { tax: 'Impôts', ipv: 'IPV', sozial: 'Aide sociale', lohn: 'Salaire', notfall: 'Carte d’urgence', budget: 'Budget' },
   },
 
   legal: {
@@ -3004,6 +3005,7 @@ export default {
     mindestlohnJahrNichtBelegt: 'Salaire minimum cantonal : vérifié pour {jahr} d’après les sources officielles, pas encore de valeurs vérifiées pour {laufend} — donc ni montant ni comparaison avec le salaire minimum ici.',
     mindestlohnBreachedLine: { sie: 'Votre salaire semble inférieur.', du: 'Ton salaire semble inférieur.' },
     fulltimeNote: 'Comparaison sur la base d’un poste à plein temps (40 h/semaine, comme pour la médiane de l’OFS).',
+    soIstGerechnet: 'Comment c’est calculé',
     dreizehnterNote: 'La valeur de comparaison inclut la part du 13e salaire (×13/12) pour correspondre à la médiane de l’OFS. Sans 13e, ce serait CHF {fte}.',
     ohneDreizehnterNote: 'Comparaison sans part du 13e salaire. Avec un 13e, la valeur serait environ 8 % plus élevée.',
     konformMit13Line: 'Conforme grâce au 13e salaire — pour autant que le 13e soit pris en compte pour le salaire minimum (à Bâle-Ville uniquement s’il est versé mensuellement).',
@@ -3064,6 +3066,8 @@ export default {
     selectCantonHint: { sie: 'Sélectionnez un canton pour voir l\'estimation cantonale.', du: 'Sélectionne un canton pour voir l\'estimation cantonale.' },
     basedOnHauptort: 'Valeur indicative tirée de points de mesure du calculateur d\'impôts de l\'AFC (année fiscale {year}) : chef-lieu du canton, sans impôt ecclésiastique ; dans d\'autres communes, l\'impôt peut être nettement différent.',
     roughEstimateBadge: 'Estimation grossière',
+    kapitelZeile: 'Impôt fédéral {bund} · canton et commune {kanton} — estimation grossière pour le chef-lieu, sans impôt ecclésiastique.',
+    annahmeOhneDreizehntenHier: { sie: 'Calculé sans 13e salaire — avec un 13e, l’impôt est plus élevé. Vous pouvez l’indiquer plus haut sous «Revenu».', du: 'Calculé sans 13e salaire — avec un 13e, l’impôt est plus élevé. Tu peux l’indiquer plus haut sous «Revenu».' },
     // E37/E38 : pas de montant cantonal là où le tableau de l’AFC ne s’applique pas
     bandOutside: { sie: 'Pour ce revenu imposable, Maloja n\'affiche pas de montant ici. Le tableau issu du calculateur d\'impôts de l\'AFC va de CHF {min} à CHF {max} (chef-lieu, année fiscale {year}) ; en dehors, Maloja ne le prolonge pas. Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.', du: 'Pour ce revenu imposable, Maloja n\'affiche pas de montant ici. Le tableau issu du calculateur d\'impôts de l\'AFC va de CHF {min} à CHF {max} (chef-lieu, année fiscale {year}) ; en dehors, Maloja ne le prolonge pas. Le calculateur d\'impôts de l\'AFC calcule le montant pour ta commune.' },
     bandNotChecked: { sie: 'Pour cette situation, Maloja n\'affiche pas de montant ici. L\'impôt cantonal et communal a été mesuré pour les personnes célibataires et mariées ayant jusqu\'à trois enfants ; pour les personnes non mariées, seulement si les enfants vivent dans le même ménage (confirmation au barème parental). Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.', du: 'Pour cette situation, Maloja n\'affiche pas de montant ici. L\'impôt cantonal et communal a été mesuré pour les personnes célibataires et mariées ayant jusqu\'à trois enfants ; pour les personnes non mariées, seulement si les enfants vivent dans le même ménage (confirmation au barème parental). Le calculateur d\'impôts de l\'AFC calcule le montant pour ta commune.' },
