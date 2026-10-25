@@ -3026,9 +3026,11 @@ export default {
     doc4: 'Confirmation de prime d\'assurance maladie',
     applyOnline: 'Demander en ligne',
     document: 'Document',
-    weeklyResidence: 'Résidence hebdomadaire détectée',
-    weeklyIpvNote: 'Demande d\'IPV dans le canton de résidence principale, pas au lieu de travail.',
-    weeklyKkNote: 'La prime d\'assurance maladie est basée sur le canton de résidence principale.',
+    weeklyResidence: { sie: "Vous êtes en séjour hebdomadaire", du: "Tu es en séjour hebdomadaire" }, // Fachprüfung 25.10.2026
+    nebenResidence: { sie: "Vous avez indiqué une résidence secondaire", du: "Tu as indiqué une résidence secondaire" },
+    weeklyIpvNote: { sie: "Pour la réduction de primes, c’est le canton de votre domicile principal qui est compétent, pas celui du séjour hebdomadaire ou de la résidence secondaire.", du: "Pour la réduction de primes, c’est le canton de ton domicile principal qui est compétent, pas celui du séjour hebdomadaire ou de la résidence secondaire." },
+    weeklyKkNote: "La prime dépend du lieu du domicile principal (canton et région de primes). Cela vaut pour un domicile principal en Suisse.",
+    weeklyKanton: { sie: "Le calcul se fait avec ce canton : {kanton}. Cela n’est exact que si votre domicile principal s’y trouve.", du: "Le calcul se fait avec ce canton : {kanton}. Cela n’est exact que si ton domicile principal s’y trouve." },
   },
 
   sozialhilfe: {
@@ -3037,7 +3039,9 @@ export default {
     householdSize: 'Taille du ménage : {count} personne(s)',
     enterCanton: 'Veuillez entrer le canton pour le calcul cantonal.',
     weeklyResidence: 'Résidence hebdomadaire',
-    weeklyNote: 'L\'aide sociale est demandée au lieu de résidence principale.',
+    nebenResidence: "Résidence secondaire", // Fachprüfung 25.10.2026
+    weeklyNote: { sie: "En règle générale, le service social du domicile principal est compétent. En cas de détresse aiguë, la commune où vous vous trouvez aide aussi.", du: "En règle générale, le service social du domicile principal est compétent. En cas de détresse aiguë, la commune où tu te trouves aide aussi." },
+    weeklyMiete: "Le loyer indiqué concerne peut-être le séjour hebdomadaire. C’est le logement du domicile principal qui compte.",
     skosCalculation: 'Calcul des besoins (CSIAS)',
     basicNeeds: 'Besoins de base (CSIAS)',
     housingCosts: 'Frais de logement (effectifs)',
@@ -4165,7 +4169,7 @@ export default {
     mainResidence: 'Résidence principale',
     weeklyResidence: 'Résidence hebdomadaire',
     secondaryResidence: 'Résidence secondaire',
-    taxNote: 'Impôts au lieu de résidence principale, pas au lieu de résidence hebdomadaire',
+    taxNote: { sie: "En règle générale, vous payez les impôts au domicile principal (centre des intérêts vitaux). Pour les personnes célibataires qui vivent depuis longtemps au lieu de travail ou rentrent rarement, l’administration fiscale peut en décider autrement. Les immeubles sont imposés là où ils se trouvent.", du: "En règle générale, tu paies les impôts au domicile principal (centre des intérêts vitaux). Pour les personnes célibataires qui vivent depuis longtemps au lieu de travail ou rentrent rarement, l’administration fiscale peut en décider autrement. Les immeubles sont imposés là où ils se trouvent." }, // Fachprüfung 25.10.2026
     kkNote: 'Prime d\'assurance maladie basée sur le canton de résidence principale',
     ipvNote: 'Demande d\'IPV dans le canton de résidence principale, pas au lieu de travail',
     votingNote: 'Droit de vote uniquement au lieu de résidence principale',

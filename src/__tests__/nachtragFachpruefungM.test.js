@@ -28,6 +28,24 @@ describe('Wochenaufenthalt wird erkannt (gespeicherter Wert `weekly`)', () => {
     expect(sozialhilfe(mit('weekly'))).toContain(t('sozialhilfe.weeklyNote'));
     expect(sozialhilfe(mit('main'))).not.toContain(t('sozialhilfe.weeklyNote'));
   });
+  it('Prämienverbilligung nennt den Kanton, mit dem gerechnet wird', () => {
+    expect(premium(mit('weekly'))).toContain('Gerechnet wird mit dem Kanton Zürich. Das stimmt nur, wenn dort Ihr Hauptwohnsitz ist.');
+  });
+  it('Sozialhilfe bei Wochenaufenthalt: Notlage am Aufenthaltsort, Miete, Steuern mit Vorbehalt', () => {
+    const html = sozialhilfe(mit('weekly'));
+    expect(html).toContain('In einer akuten Notlage hilft auch die Gemeinde, in der Sie sich gerade aufhalten.');
+    expect(html).toContain(t('sozialhilfe.weeklyMiete'));
+    expect(html).toContain('kann die Steuerverwaltung anders entscheiden');
+  });
+  it('Nebenwohnsitz: Hinweise zu Prämie, IPV und Sozialhilfe — ohne Steuersatz und ohne Miete-Satz', () => {
+    expect(premium(mit('secondary'))).toContain(t('premium.nebenResidence'));
+    expect(premium(mit('secondary'))).toContain(t('premium.weeklyIpvNote'));
+    const html = sozialhilfe(mit('secondary'));
+    expect(html).toContain(t('sozialhilfe.nebenResidence'));
+    expect(html).toContain(t('sozialhilfe.weeklyNote'));
+    expect(html).not.toContain('kann die Steuerverwaltung anders entscheiden');
+    expect(html).not.toContain(t('sozialhilfe.weeklyMiete'));
+  });
   it('ältere Profile mit dem alten Wort gelten weiter', () => {
     expect(premium(mit('wochenaufenthalt'))).toContain(t('premium.weeklyIpvNote'));
   });

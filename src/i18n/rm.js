@@ -4420,7 +4420,7 @@ export default {
     mainResidence: 'Domicil principal',
     weeklyResidence: "Dimorant per l'emna",
     secondaryResidence: 'Domicil secundar',
-    taxNote: 'Taglientas al domicil principal, betg al lieu da dimora per emna',
+    taxNote: { sie: "Vus pajais las taglias per regla al domicil principal (center da la vita). Tar persunas nunmaridadas che vivan dapi ditg al lieu da lavur u turnan darar a chasa, po l'administraziun da taglia decider auter. Immobiglias vegnan taxadas là, nua ch'ellas sa chattan.", du: "Taglias pajas ti per regla al domicil principal (center da la vita). Tar persunas nunmaridadas che vivan dapi ditg al lieu da lavur u turnan darar a chasa, po l'administraziun da taglia decider auter. Immobiglias vegnan taxadas là, nua ch'ellas sa chattan." }, // Fachprüfung 25.10.2026 — rm ungeprüft
     kkNote: 'Premia CM sa drizza tenor il chantun da domicil (domicil principal)',
     ipvNote: "Dumonda IPV en il chantun da domicil, betg al lieu da lavur",
     votingNote: 'Dretg da votar e d\'eleger mo al domicil principal',
@@ -4526,9 +4526,11 @@ export default {
     doc4: 'Conferma da las premias da cassa da malsauns',
     applyOnline: 'Dumonda online',
     document: 'Document',
-    weeklyResidence: 'Dimora settimanala enconuschida',
-    weeklyIpvNote: 'Dumonda IPV en il chantun da domicil, betg al lieu da lavur.',
-    weeklyKkNote: 'Premia CM sa drizza tenor il chantun da domicil (domicil principal).',
+    weeklyResidence: { sie: "Vus essas dimorant(a) per l'emna", du: "Ti es dimorant(a) per l'emna" }, // Fachprüfung 25.10.2026 — rm ungeprüft
+    nebenResidence: { sie: "Vus avais indicà in domicil secundar", du: "Ti has indicà in domicil secundar" },
+    weeklyIpvNote: { sie: "Per la reducziun da premias è cumpetent il chantun da Voss domicil principal, betg il chantun da la dimora settimanala u dal domicil secundar.", du: "Per la reducziun da premias è cumpetent il chantun da tes domicil principal, betg il chantun da la dimora settimanala u dal domicil secundar." },
+    weeklyKkNote: "La premia sa drizza tenor il lieu dal domicil principal (chantun e regiun da premias). Quai vala per in domicil principal en Svizra.",
+    weeklyKanton: { sie: "Calculà vegn cun il chantun {kanton}. Quai è endretg mo, sche Voss domicil principal è là.", du: "Calculà vegn cun il chantun {kanton}. Quai è endretg mo, sche tes domicil principal è là." },
   },
 
   sozialhilfe: {
@@ -4537,7 +4539,9 @@ export default {
     householdSize: 'Grondezza dal ménaschi: {count} persuna(s)',
     enterCanton: 'Per plaschair endatar il chantun per la calculaziun chantunalas.',
     weeklyResidence: 'Dimora settimanala',
-    weeklyNote: "Agid social vegn dumandà al domicil principal.",
+    nebenResidence: "Domicil secundar", // Fachprüfung 25.10.2026 — rm ungeprüft
+    weeklyNote: { sie: "Cumpetent è per regla il servetsch social al domicil principal. En ina urgenza acuta gida er la vischnanca, nua che Vus As chattais.", du: "Cumpetent è per regla il servetsch social al domicil principal. En ina urgenza acuta gida er la vischnanca, nua che ti ta chattas." },
+    weeklyMiete: "Il tschains endatà tutga forsa tar la dimora settimanala. Decisiva è l'abitaziun al domicil principal.",
     skosCalculation: 'Calculaziun dal basegn COSAS',
     basicNeeds: 'Basegn fundamental (COSAS)',
     housingCosts: "Custs d'abitar (effectivs)",
