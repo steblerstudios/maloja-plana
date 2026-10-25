@@ -42,9 +42,10 @@ export function monatsAusgaben(profilDaten) {
     mortgage: data.wohnen?.mortgageStatus === 'no' ? 0 : n(data.wohnen?.mortgagePayment),
     buildingsInsurance: n(data.wohnen?.buildingsInsurance) / 12,
     healthInsurance: n(data.versicherungen?.kkPremium),
-    // Jahresprämien aus dem Kapitel Versicherungen (Nachtrag 25.10.2026 oben).
-    householdInsurance: n(data.versicherungen?.householdInsuranceAmount) / 12,
-    liabilityInsurance: n(data.versicherungen?.liabilityPremium) / 12,
+    // Jahresprämien aus dem Kapitel Versicherungen (Nachtrag 25.10.2026 oben). Wie bei der Hypothek:
+    // «Versicherung vorhanden? Nein» — ein stehengebliebener Betrag zählt nicht.
+    householdInsurance: data.versicherungen?.householdInsurance === 'no' ? 0 : n(data.versicherungen?.householdInsuranceAmount) / 12,
+    liabilityInsurance: data.versicherungen?.liabilityInsurance === 'no' ? 0 : n(data.versicherungen?.liabilityPremium) / 12,
     otherInsurance: n(data.finanzen?.otherInsurance),
     groceries: n(data.finanzen?.groceries),
     communication: n(data.finanzen?.communication),

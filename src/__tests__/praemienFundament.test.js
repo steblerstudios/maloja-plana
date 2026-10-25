@@ -57,8 +57,23 @@ describe('Beispiel Maria', () => {
   });
   it('Kapitel Versicherungen: Jahresprämien mit «/ Jahr»', () => {
     const text = render('versicherungen', DEMO_DATA.versicherungen);
-    expect(text).toContain('CHF 240 / Jahr');
-    expect(text).toContain('CHF 120 / Jahr');
+    // geschütztes Leerzeichen vor «/ Jahr»
+    expect(text).toContain('CHF 240 / Jahr');
+    expect(text).toContain('CHF 120 / Jahr');
+  });
+});
+
+// Nachprüfung (swiss-precision, 25.10.2026): wie bei der Hypothek zählt ein stehengebliebener Betrag
+// nicht, wenn «Versicherung vorhanden? Nein» gewählt ist; Dashboard und Tankanzeige rechnen wie das Budget.
+describe('Nachprüfung', () => {
+  it('«Nein» bei Hausrat oder Haftpflicht: die Prämie zählt nicht', () => {
+    const d = profil({ householdInsurance: 'no', householdInsuranceAmount: '240', liabilityInsurance: 'no', liabilityPremium: '120' });
+    expect(sumAllExpenses(d.finanzen, d)).toBe(400);
+    expect(monthlyExpenses(d)).toBe(400);
+  });
+  it('Tankanzeige zählt negative Beträge nicht mit (eine Rechnung mit dem Budget)', () => {
+    const d = profil({}, { otherInsurance: '-50' });
+    expect(monthlyExpenses(d)).toBe(calculateMonthlyBudget(d, t).totalExpenses);
   });
 });
 

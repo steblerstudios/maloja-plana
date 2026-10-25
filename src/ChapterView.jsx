@@ -1798,7 +1798,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // Jahresbeträge (`jahr: true` in constants.js) tragen «/ Jahr» am Wert: der Feldname verliert
       // sein «CHF/Jahr» in der Liste, und «Hausrat-Prämie CHF 22» las sich als Monatsbetrag
       // (Abnahme F6, 25.10.2026).
-      return f.jahr ? wert + ' ' + tr('chapterView.proJahr') : wert;
+      // Geschütztes Leerzeichen: «/ Jahr» bricht nie allein in die nächste Zeile (Copy-Prüfer).
+      return f.jahr ? wert + ' ' + tr('chapterView.proJahr') : wert;
     }
     if (Array.isArray(f.options) && f.options.length) {
       const o = f.options.find((x) => String(x.value) === String(v));
