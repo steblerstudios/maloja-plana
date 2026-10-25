@@ -1106,3 +1106,9 @@ Krankenkasse wechseln, Vorsorge-Rechner, Policen ablegen · Als Nächstes Ausbil
 9. Leere Abschnitte einzeln («Sozialversicherung · noch leer»); Entwurf fasst sie zu «Sozialversicherung · Mobilität» zusammen.
 10. Beispielprofil: Haftpflicht «Versicherungssumme CHF 35» (bekannt, `liabilityAmount`), KK-Prämie 385 unter jeder Referenz.
 11. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
+
+**Entschieden (Sophie, 25.10.2026):** «Versicherungs-Übersicht als eigene Seite, wie in Runde 9 AB entschieden.
+seiten-buendeln.md Entscheid 3 entsprechend nachführen.» Nachgeführt: `maloja-frontend/docs/entscheide/seiten-buendeln.md`
+§4 Entscheid 3 gestrichen, neu §11 — Zweig `docs/f6-versicherungs-uebersicht`, Entwurfs-PR #574 (`b7c12dde`). Damit ist
+der Widerspruch AB ↔ Entscheid 3 aufgelöst: `praemien` → Versicherungs-Übersicht, `kvg` bleibt eigene Seite (Zeile in der
+Übersicht), IPV unverändert. Befunde 1–11 oben sind damit nicht entschieden, nur der Rahmen.
