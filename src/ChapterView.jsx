@@ -72,6 +72,8 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
+const LohnEinordnung = React.lazy(() => import('./components/LohnEinordnung.jsx').then((m) => ({ default: m.LohnEinordnung })));
+const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -1796,6 +1798,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
       return betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
     }
+    // Schweizer/innen brauchen keine Aufenthaltsbewilligung: in der Liste nicht «Aufenthaltsbewilligung:
+    // Schweizer/in», sondern «nicht nötig (Schweizer/in)» (Abnahme F6, 25.10.2026). Die Auswahl bleibt.
+    if (f.k === 'workPermit' && v === 'swiss') return tr('chapterView.bewilligungNichtNoetig');
     if (Array.isArray(f.options) && f.options.length) {
       const o = f.options.find((x) => String(x.value) === String(v));
       return o ? o.label : String(v);
@@ -1885,9 +1890,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // Auch der Wert behält sein längstes Wort: mit «minmax(0, auto)» und
               // «overflowWrap: anywhere» brach er mitten im Wort («Kantonsspita / l»,
               // Fassung 6, 24.10.2026). «break-word» bricht nur ein Wort, das allein zu breit ist.
-              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(min-content, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+              // Abnahme F6 (25.10.2026): zwei lange Einzelwörter nebeneinander («Aufenthaltsbewilligung» |
+              // «Kantonsspital») waren zusammen breiter als die Karte — die Werte ragten bei 375 px rechts
+              // hinaus. Jetzt teilen sich beide Spalten den Platz (3 : 2, die Bezeichnung trennt so seltener);
+              // der Wert behält sein längstes Wort, die
+              // Bezeichnung trennt nach Silben (hyphens) und bricht nur im Notfall im Wort.
+              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(min-content, 2fr)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
-                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
+                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word', minWidth: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
                   ])))
       );
@@ -2148,6 +2158,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // einen Monatsrechnung; der Regler verändert das Profil nie.
     chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'wohnkosten', fallback: null },
       React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
+    ),
+
+    // Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC): oben «Wo steht Ihr Lohn?» — dasselbe Barometer wie in
+    // der Finanz-Auswertung (mit «So ist gerechnet») — und die Vorschau des Lebenslaufs aus den Angaben.
+    // `aktuellesKapitel` fest 'ausbildung': ein «fehlt noch …»-Hinweis springt nicht ins eigene Kapitel.
+    chapter.key === 'ausbildung' && allData && React.createElement(React.Suspense, { key: 'ausbildung-oben', fallback: null },
+      React.createElement('div', { 'data-teil': 'ausbildung-lohn', style: { marginBottom: space.lg + 'px' } },
+        React.createElement(LohnEinordnung, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: 'ausbildung' })
+      ),
+      React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
     ),
 
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).

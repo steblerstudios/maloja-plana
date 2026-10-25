@@ -2330,6 +2330,16 @@ export default {
 
   // Fassung 6 · Kapitel Wohnen, Instrument oben (Runde 9, Entwurf Z, 24.10.2026). Ersetzt «wohnkostenanteil».
   // Die Drittel-Marke ist eine Faustregel, keine Vorschrift (Swiss-Precision-Prüfer).
+  // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
+  lebenslaufVorschau: {
+    titel: { sie: "Ihr Lebenslauf — Vorschau", du: "Dein Lebenslauf — Vorschau" },
+    seit: "seit {datum}",
+    erfahrung: "Berufserfahrung",
+    bildung: "Ausbildung",
+    sprachen: "Sprachen",
+    erstellen: "Lebenslauf erstellen",
+    woher: "Aus den Angaben dieses Kapitels und der Persönlichen Basis — ergänzen und als PDF speichern im Lebenslauf.",
+  },
   wohnenInstrument: {
     titel: 'Wohnkosten pro Monat',
     titelAusprobiert: 'Wohnkosten pro Monat · ausprobiert',
@@ -2395,6 +2405,7 @@ export default {
     zurUebersichtSatz: { sie: "Ihr Lebensordner auf einen Blick.", du: "Dein Lebensordner auf einen Blick." },
     zurUebersicht: "Zur Übersicht",
     imHaushalt: "Im Haushalt",
+    bewilligungNichtNoetig: "nicht nötig (Schweizer/in)",
     haushaltWert: "{erwachsene} Erwachsene · {kinder} Kinder",
     haushaltWertEinKind: "{erwachsene} Erwachsene · 1 Kind",
     nextTopic: 'Nächstes Thema',
@@ -2736,6 +2747,9 @@ export default {
       employerOnly: 'Angestellt bei {employer}.',
       educationSentence: 'Höchster Abschluss: {level}.',
       educationAndJob: '{level}. Aktuell tätig als {job}.',
+      bei: "bei {employer}",
+      seit: "seit {datum}",
+      stunden: "{h} Std./Woche",
     },
   },
 

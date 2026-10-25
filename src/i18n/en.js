@@ -2321,6 +2321,16 @@ export default {
   },
 
   // Fassung 6 · housing chapter, instrument at the top (round 9, draft Z, 24.10.2026). Replaces «wohnkostenanteil».
+  // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
+  lebenslaufVorschau: {
+    titel: "Your CV — preview",
+    seit: "since {datum}",
+    erfahrung: "Work experience",
+    bildung: "Education",
+    sprachen: "Languages",
+    erstellen: "Create CV",
+    woher: "From the details in this chapter and Personal basics — add more and save as PDF in the CV.",
+  },
   wohnenInstrument: {
     titel: 'Housing costs per month',
     titelAusprobiert: 'Housing costs per month · trying out',
@@ -2386,6 +2396,7 @@ export default {
     zurUebersichtSatz: "Your life folder at a glance.",
     zurUebersicht: "Go to the overview",
     imHaushalt: "In the household",
+    bewilligungNichtNoetig: "not needed (Swiss citizen)",
     haushaltWert: "{erwachsene} adults · {kinder} children",
     haushaltWertEinKind: "{erwachsene} adults · 1 child",
     nextTopic: 'Next topic',
@@ -2725,6 +2736,9 @@ export default {
       employerOnly: 'Employed at {employer}.',
       educationSentence: 'Highest qualification: {level}.',
       educationAndJob: '{level}. Currently working as {job}.',
+      bei: "at {employer}",
+      seit: "since {datum}",
+      stunden: "{h} hrs/week",
     },
   },
 
