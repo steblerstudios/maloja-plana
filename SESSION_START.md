@@ -17,6 +17,23 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 26.10.2026, 00:40 — Elf Entwurfs-PRs (#586–#596), nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 00:35): main = `2db4d4ee` (25.10. 21:22, unverändert) · live = `4299bfb9`
+> (0.1.48-beta) · **110 Commits** dazwischen. Alle Arbeitszweige gepusht, Werkbank sauber.
+> **Neu, je eigener Zweig + Fachprüfung (0 Blocker) + Volltest grün:**
+> - **Einzeln mergebar** (CI grün): #587 «Ich nehme keine» in Dossier/QR/Notfallpass/Notfallkarte · #592 Vorsorge-Einleitung
+>   «zwei Dokumente» (5 Sprachen) · #594 Franchise-Text am Wortlaut KVV Art. 94 · **#595 + #596 zusammen:** Prämien 2027 —
+>   mittlere Prämien je Kantonsregion und Kassenprämien je Versicherer (aus `gesamtbericht_ch-2027.pdf`), Wechsel am 1.1.2027
+>   automatisch per Stichtag.
+> - **Kette** (CI nur #586; die gestapelten laufen erst nach Nachziehen): #586 keine BVG-Pflicht ab Referenzalter → #591 nicht
+>   vor dem Mindestalter · #586 → #588 Netto-Richtwert Rentenalter monatsgenau → #589 an allen Aufrufern → #590 Armutsgrenzen-
+>   Hinweis im Rentenalter → #593 ab Folgemonat (AHVV 6quater, AVIG 2 II c). Nach jedem Squash nächsten Zweig nachziehen.
+> **Fedlex im Browser lesbar** (curl liefert nur die Hülle): BVG 7/10/33b, AHVV 6quater, AVIG 2, KVG 7, KVV 94/100 am Wortlaut.
+> **Offen:** Deploy (Stebler Studios) · Wechselzeit: Vergleich bis 31.12. mit 2026 (Produktentscheid) · Altersklasse Prämie
+> nach Kalenderjahr (BAG) statt Alter am Tag · Kassenprämien-Chunk 133 kB gzip (2026 nach Jahreswechsel entfernen) · Spinnennetz ·
+> AG/BS «keine Säule 2» · ZStB 133.1 · rm-Texte. Übergabe: `_handoffs/2026-10-26-elf-entwurfs-prs-praemien-2027-bvg-alter.md`.
+
 > 🏁 **Nachtrag 25.10.2026, 21:30 — Fassung 6 fertig auf main: #571–#584 auf Zuruf gemergt. NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 21:26): main = `2db4d4ee` (25.10. 21:22) · live = `4299bfb9` (0.1.48-beta,
