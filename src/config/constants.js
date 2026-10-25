@@ -261,7 +261,7 @@ export function getChapters(t) {
         // Wohnkosten für Eigentümer:innen — das Budget liest den Betrag; ohne Feld blieb er immer 0.
         { k: 'mortgagePayment', type: 'currency', secondary: true },
         { k: 'propertyValue', type: 'currency', secondary: true },
-        { k: 'buildingsInsurance', type: 'currency', secondary: true },
+        { k: 'buildingsInsurance', type: 'currency', secondary: true, jahr: true },
         { k: 'residenceType', type: 'select', sel: 1, secondary: true, orientation: or(t, 'wohnform') },
       ],
       docs: [
@@ -310,7 +310,7 @@ export function getChapters(t) {
         { k: 'creditCardLimit', type: 'currency', hint: 1 },
         { k: 'creditCardBalance', type: 'currency', hint: 1 },
         { k: 'loans', type: 'currency' },
-        { k: 'pension3a', type: 'currency', sec: 'provision', secondary: true, orientation: or(t, 'saeule3a') },
+        { k: 'pension3a', type: 'currency', jahr: true, sec: 'provision', secondary: true, orientation: or(t, 'saeule3a') },
         { k: 'pension3aBalance', type: 'currency', hint: 1, secondary: true },
         { k: 'pension3b', type: 'select', sel: 1, secondary: true, orientation: or(t, 'saeule3b') },
         { k: 'pension3bBalance', type: 'currency', hint: 1, secondary: true },
@@ -341,14 +341,17 @@ export function getChapters(t) {
         { k: 'ktg', type: 'select', sel: 1, hint: 1 },
         { k: 'liabilityInsurance', type: 'select', sel: 1 },
         { k: 'liabilityAmount', type: 'currency' },
+        // Haftpflicht-Prämie (Jahr) — zählt im Budget ÷ 12 (utils/monatsrechnung.js, 25.10.2026).
+        // liabilityAmount bleibt die Versicherungssumme; alte Einträge dort werden nicht verschoben.
+        { k: 'liabilityPremium', type: 'currency', hint: 1, jahr: true },
         { k: 'legalInsurance', type: 'select', sel: 1 },
         { k: 'childInsurance', type: 'select', sel: 1 },
         { k: 'householdInsurance', type: 'select', sel: 1, sec: 'property', secondary: true },
-        { k: 'householdInsuranceAmount', type: 'currency', secondary: true },
+        { k: 'householdInsuranceAmount', type: 'currency', hint: 1, secondary: true, jahr: true },
         { k: 'travelInsurance', type: 'select', sel: 1, secondary: true },
         { k: 'cyberInsurance', type: 'select', sel: 1, secondary: true },
         { k: 'autoInsurance', type: 'select', sel: 1, sec: 'mobility', secondary: true },
-        { k: 'autoInsuranceAmount', type: 'currency', secondary: true },
+        { k: 'autoInsuranceAmount', type: 'currency', secondary: true, jahr: true },
         { k: 'ahvContribution', type: 'currency', sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
       ],
       docs: [
@@ -453,7 +456,7 @@ export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'rooms', 'landlord', 'landlordPhone', 'mortgageStatus', 'mortgagePayment', 'propertyValue', 'buildingsInsurance', 'residenceType', 'wfgWohnung'],
   finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
-  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
+  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'liabilityPremium', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],

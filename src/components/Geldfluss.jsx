@@ -118,8 +118,10 @@ export const ausgabenPosten = (data, t, palette) => {
     healthInsurance: palette.sky, tax: '#8B7355', groceries: '#7B9E8C', communication: '#6F6A99',
     childcare: palette.sand, mobility: '#B08060', pension3a: '#9C8FB0', debtPayments: palette.rose,
     alimentePaid: palette.sage, otherInsurance: '#A89F94',
+    // Hausrat und Haftpflicht (seit 25.10.2026 im Budget) — Töne neben der Krankenkasse (sky).
+    householdInsurance: '#8FA8BF', liabilityInsurance: '#5B7A99',
   };
-  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'tax', 'groceries',
+  const reihenfolge = ['rent', 'utilities', 'mortgage', 'buildingsInsurance', 'healthInsurance', 'householdInsurance', 'liabilityInsurance', 'tax', 'groceries',
     'communication', 'childcare', 'mobility', 'pension3a', 'debtPayments', 'alimentePaid', 'otherInsurance'];
   return reihenfolge.map((k) => ({
     key: k, label: t(k === 'rent' ? 'budgetSync.housingCosts' : 'budgetSync.field.' + k), value: posten[k], color: farbe[k],

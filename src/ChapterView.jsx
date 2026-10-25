@@ -1799,7 +1799,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     }
     if (f.type === 'currency') {
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
-      return betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+      const wert = betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+      // Jahresbeträge (`jahr: true` in constants.js) tragen «/ Jahr» am Wert: der Feldname verliert
+      // sein «CHF/Jahr» in der Liste, und «Hausrat-Prämie CHF 22» las sich als Monatsbetrag
+      // (Abnahme F6, 25.10.2026).
+      // Geschütztes Leerzeichen: «/ Jahr» bricht nie allein in die nächste Zeile (Copy-Prüfer).
+      return f.jahr ? wert + ' ' + tr('chapterView.proJahr') : wert;
     }
     if (Array.isArray(f.options) && f.options.length) {
       const o = f.options.find((x) => String(x.value) === String(v));
@@ -1965,14 +1970,25 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
       ),
+      renderDoppeltVersichert(),
       renderHaushaltsSaldo(h)
     );
+  };
+  // Seit 25.10.2026 zählen Hausrat- und Haftpflicht-Prämie aus dem Kapitel Versicherungen. Wer sie
+  // vorher in «Weitere Versicherungen» (Pauschale) eingetragen hat, zählt sie jetzt doppelt — die App
+  // kann nichts herausrechnen und zieht nichts still ab; sie sagt es nur (Fachprüfung 25.10.2026).
+  const renderDoppeltVersichert = () => {
+    const v = allData?.versicherungen || {};
+    const weitere = Number(data.otherInsurance) > 0;
+    const praemie = Number(v.householdInsuranceAmount) > 0 || Number(v.liabilityPremium) > 0;
+    return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+      tr('chapters.finanzen.monat.doppeltVersichert'));
   };
   const renderMonatsBalken = (m) => {
     const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
     const teile = [
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.otherInsurance, farbe: palette.sky },
+      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });

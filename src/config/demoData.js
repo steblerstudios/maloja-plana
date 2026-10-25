@@ -61,7 +61,10 @@ export const DEMO_DATA = {
   versicherungen: {
     kkInsurer: 'CSS',
     kkModel: 'standard',
-    kkPremium: '385',
+    // CSS, ZH Region 1, Standardmodell, Franchise 1’500, ohne Unfall (UVG über Arbeitgeber), Prämien 2026
+    // (BAG/priminfo, data/praemienDetail.js). Bis 25.10.2026 stand hier 385 — unter jeder Referenzprämie.
+    // ⚠️ Mit den Prämien 2027 nachziehen.
+    kkPremium: '540.30',
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
     policyNumber: 'CSS-2024-7788991',
@@ -75,9 +78,13 @@ export const DEMO_DATA = {
     ktg: 'employer',
     uvg: 'employer',
     liabilityInsurance: 'yes',
-    liabilityAmount: '35',
+    // Beispielwerte, nicht belegt (Fachprüfung 25.10.2026): übliche Versicherungssumme und eine Prämie
+    // aus der Marktspanne für eine Person (etwa 80–150 / Jahr). Bis 25.10.2026 stand hier '35' als «Summe».
+    liabilityAmount: '5000000',
+    liabilityPremium: '120',
     householdInsurance: 'yes',
-    householdInsuranceAmount: '22',
+    // Beispielwert, nicht belegt: Hausrat für 3 Zimmer in der Stadt Zürich etwa 150–350 / Jahr (bis 25.10.2026: 22).
+    householdInsuranceAmount: '240',
     travelInsurance: 'TCS',
     cyberInsurance: '',
     autoInsurance: '',

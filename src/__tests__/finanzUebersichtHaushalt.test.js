@@ -52,11 +52,11 @@ describe('Monatsbudget der Finanzübersicht', () => {
     expect(html).not.toContain('5’915');
   });
   // Einnahmen unverändert; die Ausgaben zählen jetzt die 3a-Einzahlung mit (250/J. ≈ 21/Mt.), wie
-  // die Budget-Seite schon immer — «frei» sinkt darum von 2’480 auf rund 2’459.
-  it('Beispielperson (allein, netto): Einnahmen 6’200, frei ≈ 2’459 wie auf der Budget-Seite', () => {
+  // die Budget-Seite schon immer — «frei» sinkt darum von 2’480 auf rund 2’459. Seit 25.10.2026 rund 2’274 (Beispielprofil: KK-Prämie 540.30, Hausrat 240 und Haftpflicht 120 pro Jahr).
+  it('Beispielperson (allein, netto): Einnahmen 6’200, frei ≈ 2’274 wie auf der Budget-Seite', () => {
     const b = calculateMonthlyBudget(DEMO_DATA, t);
     expect(b.income).toBe(6200);
-    expect(Math.round(b.remaining)).toBe(2459);
+    expect(Math.round(b.remaining)).toBe(2274);
     expect(b.bruttoDabei).toBe(false);
     const html = seite(DEMO_DATA);
     expect(html).not.toContain('budgetSync.availableNeedsNetto');
