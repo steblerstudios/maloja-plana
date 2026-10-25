@@ -39,8 +39,8 @@ const shieldSvg = (palette, group, clipId, label, klein) => {
 
 // `klein` (Kapitel Versicherungen, Fassung 6 Runde 9 AA nachgebessert, Sophie 24.10.2026): «zwei kleine
 // Schilde mit Listen, offen» — zwei Spalten nebeneinander, ohne eigenen Kasten, Satz ruhig links.
-export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, annualIncomeMit13, lohnBasis, klein }) => {
-  const st = schildState(versicherungen || {}, { employed, annualIncome, annualIncomeMit13, lohnBasis });
+export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht, klein }) => {
+  const st = schildState(versicherungen || {}, { employed, annualIncome, annualIncomeMit13, lohnBasis, referenzalterErreicht });
   if (!st.touched) return null;
   const h = React.createElement;
 
