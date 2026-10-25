@@ -2122,6 +2122,7 @@ export default {
         eigenFehlen: "Cun l'atgna entrada mancan mintga mais",
         // rm ungeprüft F5
         verplant: "{betrag} planisads",
+        doppeltVersichert: "Èn ménaschi u responsabladad civila anc en «Ulteriuras assicuranzas»? Lura deducir quai là — omadus quintan gia dal chapitel Assicuranzas.",
         // rm ungeprüft F5
         vonEinkommenNetto: "da {betrag} entrada netta",
         // rm ungeprüft F5
@@ -2218,7 +2219,7 @@ export default {
         communication: 'Internet, telefon mobil, telefon fix per mais.',
         mobility: 'AG, Halbtax, abunament u custs dad auto per mais.',
         childcare: "Cresch, scola da di, mamma da di — custs mensils.",
-        otherInsurance: 'Responsabladad civila, ménaschi, protecziun giuridica, supplement CM ensemen per mais.',
+        otherInsurance: "Protecziun giuridica, supplement CM ed autras ensemen per mais. Ménaschi e responsabladad civila quintan dal chapitel Assicuranzas.",
         alimenteReceived: { sie: 'Contribuziuns da mantegniment che Vus retschavais per mais.', du: 'Contribuziuns da mantegniment che Ti retschaivas per mais.' },
         alimentePaid: { sie: 'Contribuziuns da mantegniment che Vus pajais per mais.', du: 'Contribuziuns da mantegniment che Ti pajas per mais.' },
         debtPayments: 'Ratas mensualas per debits currents u pajaments.',
@@ -2274,6 +2275,7 @@ export default {
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
         liabilityAmount: 'Summa dad assicuranza CHF',
+        liabilityPremium: "Premia responsabladad civila CHF/onn",
         householdInsurance: { label: 'Assicuranza dal ménaschi', options: { no: 'Na', yes: 'Gea' } },
         householdInsuranceAmount: 'Premia ménaschi CHF/onn',
         travelInsurance: { label: 'Assicuranza da viadi', options: { no: 'Na', yes: 'Gea' } },
@@ -2288,6 +2290,8 @@ export default {
         freizuegigkeit: 'p.ex. fundaziun da liber passadi',
       },
       hints: {
+        liabilityPremium: "Premia annuala, quinta en il budget ÷ 12. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
+        householdInsuranceAmount: "Premia annuala, quinta en il budget ÷ 12. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
@@ -3979,6 +3983,7 @@ export default {
     zurUebersichtSatz: { sie: "Voss organisatur da vita en ina survista.", du: "Tes organisatur da vita en ina survista." },
     zurUebersicht: "A la survista",
     imHaushalt: "En l’economia domestica",
+    proJahr: "/ onn",
     haushaltWert: "{erwachsene} creschids · {kinder} uffants",
     haushaltWertEinKind: "{erwachsene} creschids · 1 uffant",
     nextTopic: 'Proxim tema',
@@ -5649,6 +5654,8 @@ export default {
       mortgage: 'Ipoteca',
       buildingsInsurance: "Assicuranza d'edifizi",
       healthInsurance: 'Cassa da malsauns',
+      householdInsurance: "Ménaschi",
+      liabilityInsurance: "Responsabladad civila",
       otherInsurance: 'Ulteriuras assicuranzas',
       groceries: 'Vivondas & menaschi',
       communication: 'Internet & telefon',

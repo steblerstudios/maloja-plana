@@ -13,6 +13,16 @@
 // «+900». Entscheid Stebler Studios 24.10.2026: beide Zeilen bleiben (finanzen-fusion.md,
 // Entscheid 1), aber nur das Einkommen von Partner/in trennt sie. Darum stehen die Ausgabenposten
 // jetzt hier, und budgetSync.js liest sie von hier.
+//
+// Nachtrag 25.10.2026 (Entscheid Stebler Studios 24.10.2026, gebaut Fassung 6): **erfasste
+// Versicherungsprämien gehören ins Budget** — die Hausrat-Prämie (`householdInsuranceAmount`) und
+// die neue Haftpflicht-Prämie (`liabilityPremium`), beide Jahresbeträge ÷ 12. Das ersetzt die Regel
+// vom 21.10. für diese zwei; «Weitere Versicherungen» (`otherInsurance`) bleibt für den Rest
+// (Rechtsschutz, KK-Zusatz …). Die Haftpflicht-*Versicherungssumme* (`liabilityAmount`) zählt nie.
+// Doppelt erfasst (Hausrat auch in «Weitere Versicherungen») wird nicht still abgezogen — das
+// Kapitel Finanzen zeigt dann einen Hinweis (Fachprüfung 25.10.2026).
+// Die Fahrzeugversicherung (`autoInsuranceAmount`) zählt bewusst NICHT: «Mobilität» darf laut
+// Hinweis die Autokosten schon enthalten. Das wäre ein eigener Entscheid.
 
 import { haushaltsEinnahmen } from '../data/haushaltsEinnahmen.js';
 
@@ -22,7 +32,7 @@ const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x :
 
 // Alle monatlichen Ausgabenposten, wie sie die Budget-Seite als Zeilen zeigt. AHV und BVG
 // fehlen bewusst: sie sind schon vom Nettolohn abgezogen (budgetSync.js führt sie nur als
-// Referenz). Jahresbeträge (Gebäudeversicherung, Säule 3a) sind durch 12 geteilt.
+// Referenz). Jahresbeträge (Gebäudeversicherung, Hausrat, Haftpflicht, Säule 3a) sind durch 12 geteilt.
 export function monatsAusgaben(profilDaten) {
   const data = profilDaten || {};
   return {
@@ -32,6 +42,9 @@ export function monatsAusgaben(profilDaten) {
     mortgage: data.wohnen?.mortgageStatus === 'no' ? 0 : n(data.wohnen?.mortgagePayment),
     buildingsInsurance: n(data.wohnen?.buildingsInsurance) / 12,
     healthInsurance: n(data.versicherungen?.kkPremium),
+    // Jahresprämien aus dem Kapitel Versicherungen (Nachtrag 25.10.2026 oben).
+    householdInsurance: n(data.versicherungen?.householdInsuranceAmount) / 12,
+    liabilityInsurance: n(data.versicherungen?.liabilityPremium) / 12,
     otherInsurance: n(data.finanzen?.otherInsurance),
     groceries: n(data.finanzen?.groceries),
     communication: n(data.finanzen?.communication),
