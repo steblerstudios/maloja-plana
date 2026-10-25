@@ -1197,3 +1197,10 @@ Patientenverfügung, Briefvorlagen, Dokumente ablegen) · Als Nächstes Notfall 
    Quelle setzen (Swiss-Precision-Prüfer), nicht raten.
 10. «ZH-2024-123456» bricht am Bindestrich («ZH-2024- / 123456»); mit #577 (Spalten 3 : 2) nachmessen.
 11. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
+
+**Entschieden und gebaut (Sophie, 25.10.2026: «Bau Behörden 1 bis 7 und 9 (Steuerfrist für Maria mit Quelle). 8, 10,
+11 ins Muster am Schluss.»):** Zweig `feat/f6-behoerden-instrumente`, Entwurfs-PR #578 (`a2089b81`, Basis main). Kasten weg ·
+Zusammenfassung mit Steuererklärung und «laut Ihren Angaben» Betreibungsregister · Kalenderblatt 31.03.2027 · Behördengänge
+offen, «Steuererklärung 2025 eingereicht» als gekennzeichneter Vorschlag · «Für den Fall der Fälle» · «Rechtsbeistand: nicht
+erfasst.» · Querverweis Steuern ↔ Finanzen · Maria-Frist 31.03.2027 nach ZStB Nr. 133.1 (Aufforderung 2027). swiss-precision und
+copy je 0 Blocker, eingearbeitet. 6’798 Tests grün. Offen: Wortlaut des ZStB-PDF vor dem Deploy nachlesen · rm.
