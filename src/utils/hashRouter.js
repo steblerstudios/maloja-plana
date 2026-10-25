@@ -23,6 +23,7 @@ export const VALID_VIEWS = new Set([
   'sozialhilfe', 'direktlinks', 'unterlagen', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
   'notfalleinstieg', 'notfallkarte', 'notfallpass', 'gesundheit', 'briefe', 'stipendien', 'schnellcheck', 'situationen', 'alv', 'asyl', 'kvg', 'mahnung', 'kvgwechsel', 'zusatzwechsel', 'umzug', 'unfallkrankheit', 'neuerjob', 'stelleverloren', 'kkerst', 'pensionierung', 'betreibung', 'selbstaendigkeit', 'heirat', 'kind', 'trennung', 'bewilligung', 'todesfall', 'iv', 'pflege', 'flyer', 'merkliste', 'search', 'obstgarten', 'gepaeck', 'ansprueche', 'anspruchcheck', 'fuehrerausweis', 'dienst', 'volljaehrig', 'lehre', 'betreibungsauszug', 'ausweis', 'wegzug', 'adoption', 'zusammenziehen', 'ergaenzungsleistungen', 'vorsorgeauftrag', 'patientenverfuegung', 'bestattung', 'einbuergerung', 'zuzug', 'aussteuerung', 'quellensteuer', 'wohnunggekuendigt',
   'settings', 'taxImport', 'legal', 'installApp',
+  'versicherungskapitel',
 ]);
 // Nur Design-Vorschau (Tresor 2b-UI): der Eintrag existiert ausschliesslich in DEV,
 // damit der Prod-Build byte-neutral bleibt (der Render-Branch in main.jsx ist ebenso DEV-gated).
@@ -41,6 +42,8 @@ if (import.meta.env.DEV) VALID_VIEWS.add('lockpreview');
 //                      springeZuAnker klappt es auf.
 //   notfalleinstieg  → Kapitel Notfall (6), oben bei Vorlesekarte und Notfallpass (24.10.2026, Gruppe D;
 //                      Wächter: notfallEinstiegUmleitung.test.js). Die Vorlesekarte bleibt eigene Seite.
+//   versicherungskapitel → Kapitel Versicherungen (3): nur die Stufe «Versicherungen & Vorsorge» der Brotkrume
+//                      über der Versicherungs-Übersicht (Runde 9 AB, 25.10.2026), keine frühere Seite.
 //   unterlagen       → Dokumentenablage, Abschnitt «Meine Unterlagen» unten (24.10.2026, Gruppe H;
 //                      Wächter: unterlagenUmleitung.test.js). Auch die Brotkrumen der Dossiers zeigen hierher.
 // handleNavigate (main.jsx) liest dieselbe Tabelle — eine Quelle für Link und Knopf.
@@ -50,6 +53,7 @@ export const UMLEITUNGEN = {
   aussteuerung: { view: 'stelleverloren', chapterIndex: null, anker: 'mp-aussteuerung' },
   notfalleinstieg: { view: 'chapter', chapterIndex: 6, anker: 'mp-notfall-ernstfall' },
   unterlagen: { view: 'tresor', chapterIndex: null, anker: 'mp-unterlagen' },
+  versicherungskapitel: { view: 'chapter', chapterIndex: 3, anker: null },
 };
 
 // Nach einem Wechsel zu einer Stelle in der Seite springen, die erst nachlädt (React.lazy):

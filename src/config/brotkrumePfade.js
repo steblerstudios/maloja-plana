@@ -14,6 +14,8 @@ export const PFADE = Object.freeze({
   briefe:           { eltern: 'unterlagen',      titel: 'briefe.title' },
   notfallpass:      { eltern: 'notfalleinstieg', titel: 'notfallpass.title' },
   notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
+  // Runde 9 AB (25.10.2026): Versicherungs-Übersicht unter dem Kapitel Versicherungen.
+  praemien:         { eltern: 'versicherungskapitel', titel: 'po.title' },
 });
 
 // Kurze Namen der Eltern-Ansichten. «Notfall» statt des Einstiegs-Titels, der eine Frage ist
@@ -21,6 +23,7 @@ export const PFADE = Object.freeze({
 export const ELTERN_TITEL = Object.freeze({
   unterlagen: 'nav.unterlagen',
   notfalleinstieg: 'chapters.notfall.title',
+  versicherungskapitel: 'chapters.versicherungen.title',
 });
 
 // Die Stufen als Daten — prüfbar ohne DOM.

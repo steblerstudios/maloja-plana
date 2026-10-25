@@ -61,7 +61,10 @@ export const DEMO_DATA = {
   versicherungen: {
     kkInsurer: 'CSS',
     kkModel: 'standard',
-    kkPremium: '385',
+    // CSS, ZH Region 1, Standardmodell, Franchise 1’500, ohne Unfall (UVG über Arbeitgeber), Prämien 2026
+    // (BAG/priminfo, data/praemienDetail.js). Bis 25.10.2026 stand hier 385 — unter jeder Referenzprämie.
+    // ⚠️ Mit den Prämien 2027 nachziehen.
+    kkPremium: '540.30',
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
     policyNumber: 'CSS-2024-7788991',
@@ -75,9 +78,13 @@ export const DEMO_DATA = {
     ktg: 'employer',
     uvg: 'employer',
     liabilityInsurance: 'yes',
-    liabilityAmount: '35',
+    // Beispielwerte, nicht belegt (Fachprüfung 25.10.2026): übliche Versicherungssumme und eine Prämie
+    // aus der Marktspanne für eine Person (etwa 80–150 / Jahr). Bis 25.10.2026 stand hier '35' als «Summe».
+    liabilityAmount: '5000000',
+    liabilityPremium: '120',
     householdInsurance: 'yes',
-    householdInsuranceAmount: '22',
+    // Beispielwert, nicht belegt: Hausrat für 3 Zimmer in der Stadt Zürich etwa 150–350 / Jahr (bis 25.10.2026: 22).
+    householdInsuranceAmount: '240',
     travelInsurance: 'TCS',
     cyberInsurance: '',
     autoInsurance: '',
@@ -99,7 +106,11 @@ export const DEMO_DATA = {
   behoerden: {
     cantoneOfTaxation: 'ZH',
     taxId: 'ZH-2024-123456',
-    taxFilingDeadline: '2026-09-30',
+    // Steuererklärung 2026 im Kanton Zürich: einzureichen bis 31. März 2027 (Kantonales Steueramt Zürich,
+    // ZStB Nr. 133.1 «Aufforderung zur Einreichung von Steuererklärungen … im Jahr 2027»,
+    // https://www.zh.ch/content/dam/zhweb/bilder-dokumente/themen/steuern-finanzen/steuern/vertreter/steuerbuch/zstb-nr-133-1/ZStB-Nr-133-1_Aufforderung-2027.pdf).
+    // Bis 25.10.2026 stand hier 30.09.2026 — im Beispiel schon vorbei. Die Erklärung 2025 ist eingereicht (0 offen).
+    taxFilingDeadline: '2027-03-31',
     pendingTaxReturns: '0',
     registryOffice: 'Kreisbüro 4',
     betreibungsStatus: 'none',

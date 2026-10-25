@@ -711,6 +711,8 @@ export default function Baum3D({
     // Rückseite bekommt eine blassere Marke, damit vorne und hinten
     // unterscheidbar bleiben — statt dass sich alles überlagert.
     const hilfsVektor = new THREE.Vector3();
+    const werkzeugZahl = {};
+    (werkzeuge || []).forEach((w) => { werkzeugZahl[w.area] = (werkzeugZahl[w.area] || 0) + 1; });
     let letzte = '';
     const markenNachfuehren = () => {
       const neu = anker.map((a) => {
@@ -728,12 +730,26 @@ export default function Baum3D({
       });
       // Entzerren: zwei Marken, die sich überlagern, schieben sich sanft
       // auseinander. Sonst liest man zwei Namen übereinander und keinen davon.
-      const vorneListe = neu.filter((m) => m.vorne).sort((a, c) => a.y - c.y);
-      for (let i = 1; i < vorneListe.length; i++) {
-        const oben = vorneListe[i - 1];
-        const unten = vorneListe[i];
-        if (Math.abs(unten.x - oben.x) < 26 && unten.y - oben.y < 8) {
-          unten.y = oben.y + 8;
+      // Abnahme F6 (25.10.2026, 375 px): vorher nur vordere Marken und nur gegen den
+      // direkten Nachbarn, mit fester Höhe — bei Marken mit Werkzeug-Pillen darunter
+      // («Notfall» + «Notfallkarte») lag die nächste Marke trotzdem darauf. Jetzt
+      // alle sichtbaren Marken, gegen jede darüber, und Marken mit Pillen brauchen
+      // die doppelte Höhe.
+      // Masse in Pixeln: eine Marke ist eine 44-px-Zeile, dazu je Werkzeug-Pille eine; sie
+      // steht mittig auf ihrem Punkt. Eine Pille ist rund 120 px breit.
+      const b = Math.max(1, el.clientWidth), h = Math.max(1, el.clientHeight);
+      const breiteProzent = Math.max(26, Math.min(45, 12000 / b));
+      // Je Werkzeug eine Zeile: auf schmalen Bildschirmen brechen zwei Pillen untereinander um.
+      const halbeHoehe = (m) => 23 * (1 + (werkzeugZahl[m.key] || 0));
+      const liste = neu.filter((m) => m.sichtbar).sort((a, c) => a.y - c.y);
+      for (let i = 1; i < liste.length; i++) {
+        const unten = liste[i];
+        for (let j = 0; j < i; j++) {
+          const oben = liste[j];
+          const noetig = ((halbeHoehe(oben) + halbeHoehe(unten)) / h) * 100;
+          if (Math.abs(unten.x - oben.x) < breiteProzent && unten.y - oben.y < noetig) {
+            unten.y = Math.min(96, oben.y + noetig);
+          }
         }
       }
 

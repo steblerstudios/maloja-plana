@@ -1,25 +1,26 @@
 import React from 'react';
 import { text, weight, space, radius } from '../config/tokens.js';
 import { betrag } from '../utils/geld.js';
-import { eigeneEinnahmen, sumAllExpenses } from '../utils/monatsrechnung.js';
 import { ausgabenPosten } from './Geldfluss.jsx';
 
 // Kuchen im Kapitel Finanzen — «Wofür geht das Geld weg?» (Sophie 24.10.2026 abends, VERGLEICH.md
 // «Geldfluss, Kuchen, Balken … nachentschieden»). Vorher auf der Charts-Seite (ChartsAdvanced.jsx,
 // entfernt mit #556); jetzt aus derselben Rechnung wie «Jeden Monat bleiben» (utils/monatsrechnung.js).
-// Ein Stück «bleibt» nur bei netto erfasstem Einkommen — aus einem Bruttolohn läge es so nie auf dem Konto.
+// Abnahme F6 (Sophie 25.10.2026): nur die Ausgaben. Bis dahin lag «Rest/Sparen» als Stück darin (bei
+// Maria 40 %) — das beantwortet nicht «Wofür geht es weg?», und «was bleibt» zeigt schon der Balken oben.
+// Die Prozente sind Anteile an den Ausgaben.
 
 // Daten ohne React, damit Tests die Stücke nachrechnen können.
 export const kuchenDaten = (data, t, palette) => {
-  const f = data?.finanzen || {};
   const stuecke = ausgabenPosten(data, t, palette);
-  const { total: einkommen, brutto } = eigeneEinnahmen(f);
-  const rest = einkommen - sumAllExpenses(f, data);
-  if (!brutto && rest > 0) {
-    stuecke.push({ key: 'bleibt', label: t('budgetSync.remaining'), value: rest, color: palette.sage });
-  }
   const summe = stuecke.reduce((a, s) => a + s.value, 0);
   return { stuecke, summe };
+};
+
+// Kleine Posten nicht als «0 %» (Säule 3a CHF 21 von 3’741).
+const anteil = (wert, summe) => {
+  const p = (wert / summe) * 100;
+  return p > 0 && p < 1 ? '< 1 %' : Math.round(p) + ' %';
 };
 
 // Ein Kreisstück von `von` bis `bis` (Grad, 0 = oben). Ein volles Stück (360°) lässt sich mit
@@ -46,14 +47,14 @@ export const KuchenImKapitel = ({ data, t, palette }) => {
       : React.createElement('path', { key: s.key, d: stueckPfad(von, winkel), fill: s.color, stroke: palette.surface, strokeWidth: 2 });
   });
   return React.createElement('section', { 'data-teil': 'kuchen', 'aria-labelledby': 'mp-kuchen-titel', style: { marginBottom: space.md + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.md } },
-    React.createElement('h3', { id: 'mp-kuchen-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('budgetSync.expensesOverview')),
+    React.createElement('h3', { id: 'mp-kuchen-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('chapters.finanzen.kuchenFrage')),
     // Das Bild wiederholt nur die Liste darunter — für Screenreader stumm.
     React.createElement('svg', { width: 180, height: 180, viewBox: '0 0 200 200', 'aria-hidden': 'true', style: { display: 'block', margin: '0 auto ' + space.sm + 'px' } }, flaechen),
     React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(150px, 100%), 1fr))', gap: '4px ' + space.md + 'px', fontSize: text.xs, color: palette.text } },
       stuecke.map((s) => React.createElement('li', { key: s.key, style: { display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 } },
         React.createElement('span', { 'aria-hidden': 'true', style: { width: '10px', height: '10px', borderRadius: radius.hair, background: s.color, flexShrink: 0 } }),
         React.createElement('span', { style: { flex: 1, minWidth: 0, color: palette.text } }, s.label),
-        React.createElement('span', { style: { color: palette.mid, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, betrag(Math.round(s.value)) + ' · ' + Math.round((s.value / summe) * 100) + ' %')
+        React.createElement('span', { style: { color: palette.mid, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' } }, betrag(Math.round(s.value)) + ' · ' + anteil(s.value, summe))
       ))
     )
   );

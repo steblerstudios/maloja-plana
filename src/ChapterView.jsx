@@ -14,8 +14,6 @@ import PrimaryButton from './components/PrimaryButton.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
-import { Schutzschild } from './components/Schutzschild.jsx';
-import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
@@ -38,7 +36,6 @@ import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegist
 import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
-import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
@@ -72,6 +69,10 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
+const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
+const LohnEinordnung = React.lazy(() => import('./components/LohnEinordnung.jsx').then((m) => ({ default: m.LohnEinordnung })));
+const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
+const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -1788,14 +1789,27 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     if (f.type === 'household') {
       const h = v || {};
       const kinder = Array.isArray(h.children) ? h.children.length : 0;
-      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder». Die Zahl
+      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt». Abnahme F6 (Sophie 25.10.2026): statt
+      // «1 Erwachsene · 0 Kinder» jetzt «allein, keine Kinder» bzw. «2 Erwachsene, 1 Kind». Die Zahl
       // der Erwachsenen wie die Erfassung sie zählt (adultsList, sonst adults; utils/partnereinkommen.js).
-      return tr(kinder === 1 ? 'chapterView.haushaltWertEinKind' : 'chapterView.haushaltWert', { erwachsene: erwachseneImHaushalt(h), kinder });
+      const erwachsene = erwachseneImHaushalt(h);
+      return [
+        erwachsene <= 1 ? tr('chapterView.haushaltAllein') : tr('chapterView.haushaltErwachsene', { n: erwachsene }),
+        kinder === 0 ? tr('chapterView.haushaltKeineKinder') : kinder === 1 ? tr('chapterView.haushaltEinKind') : tr('chapterView.haushaltKinder', { n: kinder }),
+      ].join(', ');
     }
     if (f.type === 'currency') {
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
-      return betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+      const wert = betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+      // Jahresbeträge (`jahr: true` in constants.js) tragen «/ Jahr» am Wert: der Feldname verliert
+      // sein «CHF/Jahr» in der Liste, und «Hausrat-Prämie CHF 22» las sich als Monatsbetrag
+      // (Abnahme F6, 25.10.2026).
+      // Geschütztes Leerzeichen: «/ Jahr» bricht nie allein in die nächste Zeile (Copy-Prüfer).
+      return f.jahr ? wert + ' ' + tr('chapterView.proJahr') : wert;
     }
+    // Schweizer/innen brauchen keine Aufenthaltsbewilligung: in der Liste nicht «Aufenthaltsbewilligung:
+    // Schweizer/in», sondern «nicht nötig (Schweizer/in)» (Abnahme F6, 25.10.2026). Die Auswahl bleibt.
+    if (f.k === 'workPermit' && v === 'swiss') return tr('chapterView.bewilligungNichtNoetig');
     if (Array.isArray(f.options) && f.options.length) {
       const o = f.options.find((x) => String(x.value) === String(v));
       return o ? o.label : String(v);
@@ -1904,9 +1918,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // «overflowWrap: anywhere» brach er mitten im Wort («Kantonsspita / l»,
               // Fassung 6, 24.10.2026). «break-word» bricht nur ein Wort, das allein zu breit ist.
               : React.createElement(React.Fragment, null,
-                React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(min-content, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+                // Abnahme F6 (25.10.2026): zwei lange Einzelwörter nebeneinander («Aufenthaltsbewilligung» |
+                // «Kantonsspital») waren zusammen breiter als die Karte — die Werte ragten bei 375 px rechts
+                // hinaus. Jetzt teilen sich beide Spalten den Platz (3 : 2, die Bezeichnung trennt so seltener);
+                // der Wert behält sein längstes Wort, die
+                // Bezeichnung trennt nach Silben (hyphens) und bricht nur im Notfall im Wort.
+                React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(min-content, 2fr)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
-                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
+                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word', minWidth: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
                   ])),
                 // Notfall (Runde 9, AE): auch das Fehlende steht da. Was im Ernstfall gebraucht wird, mit
@@ -1917,7 +1936,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                       style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', margin: '0 0 ' + space.xs + 'px', padding: '0 ' + space.xs + 'px', background: 'none', border: '1px dashed ' + (palette.roseDeep || palette.rose), borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
                     }, React.createElement('span', null, hinweisZeichen('kaestchen', 12), f.label), React.createElement('span', { style: { color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))
                   : React.createElement('div', { key: 'fehlt-' + f.k, 'data-nicht-erfasst': f.k, style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, tr('notfallKapitel.feldNichtErfasst', { feld: f.label })))))
-              )
+              ),
+        // Runde 9 AD: leere Vertretung nicht still weglassen — «Rechtliche Vertretung: nicht erfasst.»
+        !offen && !leer && chapter.key === 'behoerden' && felder.some((f) => f.k === 'legalRepresentative') && !data.legalRepresentative &&
+          React.createElement('p', { 'data-teil': 'vertretung-leer', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, tr('chapterView.vertretungNichtErfasst'))
       );
     };
     const haupt = gruppen.filter((g) => !g.sek);
@@ -1988,14 +2010,25 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
       ),
+      renderDoppeltVersichert(),
       renderHaushaltsSaldo(h)
     );
+  };
+  // Seit 25.10.2026 zählen Hausrat- und Haftpflicht-Prämie aus dem Kapitel Versicherungen. Wer sie
+  // vorher in «Weitere Versicherungen» (Pauschale) eingetragen hat, zählt sie jetzt doppelt — die App
+  // kann nichts herausrechnen und zieht nichts still ab; sie sagt es nur (Fachprüfung 25.10.2026).
+  const renderDoppeltVersichert = () => {
+    const v = allData?.versicherungen || {};
+    const weitere = Number(data.otherInsurance) > 0;
+    const praemie = Number(v.householdInsuranceAmount) > 0 || Number(v.liabilityPremium) > 0;
+    return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+      tr('chapters.finanzen.monat.doppeltVersichert'));
   };
   const renderMonatsBalken = (m) => {
     const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
     const teile = [
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.otherInsurance, farbe: palette.sky },
+      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
@@ -2049,16 +2082,19 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const b = allData?.basis || {};
     switch (chapter.key) {
       case 'basis': return [
-        // Je nach Angaben oben (Runde 9, Y). Ein Zuzugsdatum gibt es im Profil nicht — «Neu in der
-        // Schweiz» darum nur, wenn die Nationalität nicht Schweiz ist, zusammen mit den zwei anderen.
-        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug')] : []),
+        // Je nach Angaben oben (Runde 9, Y). «Neu in der Schweiz» (Ablauf `zuzug`) sollte nur nach einem
+        // Zuzug in den letzten 12 Monaten erscheinen; ein Zuzugsdatum gibt es im Profil nicht. Abnahme F6
+        // (Sophie 25.10.2026): weglassen, bis es ein Datum gibt — sonst stünde es auch nach 20 Jahren da.
+        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung')] : []),
         weg('lebensmappe', { sub: tr('chapterView.passend.lebensmappeSub') }),
         weg('ausweis'),
         weg('gepaeck', { key: 'familie', titel: tr('chapterView.passend.familie'), sub: tr('chapterView.passend.familieSub'), ikon: 'family' }),
         ablage('chapterView.passend.ablageBasis'),
       ];
       case 'wohnen': return [weg('umzug'), weg('mietzins'), weg('wohnunggekuendigt'), ablage('chapterView.passend.ablageWohnen')];
-      case 'versicherungen': return [weg('praemien'), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
+      // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Seite, die zur
+      // Versicherungs-Übersicht wird (Runde 9 AB, seiten-buendeln.md §11); bis dahin `praemien`.
+      case 'versicherungen': return [weg('praemien', { key: 'alle-versicherungen', titel: tr('chapterView.passend.alleVersicherungen'), sub: tr('chapterView.passend.alleVersicherungenSub') }), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
       case 'ausbildung': return [weg('cv'), weg('neuerjob'), weg('stelleverloren'), weg('stundenlohn'), ablage('chapterView.passend.ablageAusbildung')];
       case 'behoerden': return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
@@ -2077,6 +2113,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
         { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
         { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
+        // Entscheid «Steuern aufteilen» (24.10.2026): Geld hier, Behördengang im Kapitel Behörden — beide verweisen
+        // aufeinander (Behörden: Zeile «Steuerbetrag und Belastung» beim Kalenderblatt).
+        { key: 'steuerfrist', titel: tr('chapterView.passend.steuerfrist'), sub: tr('chapterView.passend.steuerfristSub'), gehe: () => onNavigate('chapter', 5), ikon: ansichtIkon('tax') },
         // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
         { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
       ];
@@ -2176,6 +2215,36 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
     ),
 
+    // Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD): Steuerfrist als Kalenderblatt, Behördengänge offen,
+    // «Für den Fall der Fälle». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
+    chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
+      React.createElement(BehoerdenInstrument, {
+        palette, t: tr, behoerden: data, allData, onNavigate, lang, checked: checklistChecked,
+        onToggle: (id, wert) => {
+          const next = { ...checklistChecked, [id]: wert };
+          setChecklistChecked(next);
+          try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch { /* privat: nur im Speicher */ }
+        },
+      })
+    ),
+
+    // Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC): oben «Wo steht Ihr Lohn?» — dasselbe Barometer wie in
+    // der Finanz-Auswertung (mit «So ist gerechnet») — und die Vorschau des Lebenslaufs aus den Angaben.
+    // `aktuellesKapitel` fest 'ausbildung': ein «fehlt noch …»-Hinweis springt nicht ins eigene Kapitel.
+    chapter.key === 'ausbildung' && allData && React.createElement(React.Suspense, { key: 'ausbildung-oben', fallback: null },
+      React.createElement('div', { 'data-teil': 'ausbildung-lohn', style: { marginBottom: space.lg + 'px' } },
+        React.createElement(LohnEinordnung, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: 'ausbildung' })
+      ),
+      React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
+    ),
+
+    // Fassung 6 · Kapitel Versicherungen (Runde 9, Entwurf AA, nachgebessert): Versicherungen pro Monat,
+    // KK-Last, Schutzschild klein, Franchise-Kreuz klein mit Weg zur Übersicht. Das grosse Schutzschild
+    // stand bis 25.10.2026 weiter unten (Instrument #4); es lebt jetzt hier in der kleinen Fassung.
+    chapter.key === 'versicherungen' && allData && React.createElement(React.Suspense, { key: 'versicherungen-instrument', fallback: null },
+      React.createElement(VersicherungenInstrument, { palette, t: tr, versicherungen: data, allData, onNavigate, uebersichtName: tr(ansichtName('praemien') || 'praemien') })
+    ),
+
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
     // Notfall · «ein Ort» (Runde 9, AE; gebaut Abnahme F6, 25.10.2026): nach der Zusammenfassung
@@ -2199,144 +2268,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Versicherungsübersicht entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
-    // Behörden-Zeitstatus — temporal overview of official matters
-    chapter.key === 'behoerden' && (() => {
-      const rows = [];
-      if (data.taxFilingDeadline) {
-        const deadline = new Date(data.taxFilingDeadline);
-        const now = new Date();
-        const diffMs = deadline.getTime() - now.getTime();
-        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-        let relative;
-        if (diffDays === 0) relative = tr('behördenStatus.today');
-        else if (diffDays > 0 && diffDays < 60) relative = tr('behördenStatus.inDays').replace('{n}', diffDays);
-        else if (diffDays >= 60) relative = tr('behördenStatus.inMonths').replace('{n}', Math.round(diffDays / 30));
-        else if (diffDays > -60) relative = tr('behördenStatus.agoDays').replace('{n}', Math.abs(diffDays));
-        else relative = tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
-        const formatted = deadline.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
-        rows.push({ label: tr('behördenStatus.taxDeadline'), value: formatted + ' (' + relative + ')' });
-      }
-      if (data.pendingTaxReturns) rows.push({ label: tr('behördenStatus.pendingReturns'), value: data.pendingTaxReturns });
-      if (data.betreibungsStatus) {
-        const opts = { none: tr('chapters.behoerden.fields.betreibungsStatus.options.none') || data.betreibungsStatus, entries: tr('chapters.behoerden.fields.betreibungsStatus.options.entries') || data.betreibungsStatus, unknown: tr('chapters.behoerden.fields.betreibungsStatus.options.unknown') || data.betreibungsStatus };
-        rows.push({ label: tr('behördenStatus.betreibung'), value: opts[data.betreibungsStatus] || data.betreibungsStatus });
-      }
-      if (data.courtCases) {
-        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || data.courtCases) : (tr('chapters.behoerden.fields.courtCases.options.no') || data.courtCases);
-        rows.push({ label: tr('behördenStatus.courtCases'), value: val });
-      }
-      if (data.willMade) {
-        const wOpts = { no: tr('chapters.behoerden.fields.willMade.options.no'), handwritten: tr('chapters.behoerden.fields.willMade.options.handwritten'), public: tr('chapters.behoerden.fields.willMade.options.public'), inProgress: tr('chapters.behoerden.fields.willMade.options.inProgress') };
-        rows.push({ label: tr('behördenStatus.will'), value: wOpts[data.willMade] || data.willMade });
-      }
-      if (data.legalRepresentative) rows.push({ label: tr('behördenStatus.legalRep'), value: data.legalRepresentative });
-      if (rows.length === 0) return null;
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('behördenStatus.intro')),
-        ...rows.map((row, i) =>
-          React.createElement('div', {
-            key: i,
-            style: {
-              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-              padding: '6px 0',
-              borderBottom: i < rows.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
-            }
-          },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
-            React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
-          )
-        ),
-        // Verpasste Steuerfrist, noch nicht als eingereicht vermerkt: ruhig sagen, was jetzt
-        // geht, statt nur «(vor 22 Tagen)» grau stehen zu lassen (Massstab-Prüfung 21.10.2026).
-        // Belegt an Fedlex (Fachprüfung 21.10.2026): Mahnung mit Nachfrist DBG Art. 124 Abs. 3;
-        // erst «trotz Mahnung» Ermessen (DBG 130 Abs. 2 · StHG 46 Abs. 3) und Busse (DBG 174 ·
-        // StHG 55), Ermessensveranlagung nur eingeschränkt anfechtbar (DBG 132 Abs. 3 · StHG 48
-        // Abs. 2). FR «sommation», IT «diffida» = Gesetzesbegriffe. Kantonale Praxis (Gebühren,
-        // Erstreckung) nicht geprüft — darum «Meist» und kein Betrag. «Falls … noch fehlt», weil
-        // der Hinweis auch bei leerem Feld «Ausstehende Steuererklärungen» erscheint.
-        (() => {
-          const n = new Date();
-          const heute = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
-          if (!steuerfristVorbei(data, heute)) return null;
-          return React.createElement('p', {
-            role: 'note',
-            style: { fontSize: text.sm, color: palette.text, margin: space.sm + 'px 0 0', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', lineHeight: leading.relaxed },
-          }, tr('behördenStatus.pastHint'));
-        })()
-      );
-    })(),
-
-    // Behörden-Checkliste — interactive checklist for common official tasks
-    chapter.key === 'behoerden' && (() => {
-      const items = [
-        { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
-        { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
-        { id: 'wohnsitzbestaetigung', key: 'checklist.wohnsitzbestaetigung' },
-        { id: 'ausweisRenewal', key: 'checklist.ausweisRenewal' },
-        { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
-        { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
-      ];
-      const checked = checklistChecked;
-      const toggle = (id) => {
-        const next = { ...checked, [id]: !checked[id] };
-        setChecklistChecked(next);
-        try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch {}
-      };
-      const done = items.filter(i => checked[i.id]).length;
-      return React.createElement('details', {
-        style: { marginBottom: space.lg + 'px' }
-      },
-        React.createElement('summary', {
-          style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' }
-        }, hinweisZeichen('kaestchen'), tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
-        React.createElement('div', {
-          style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginTop: space.xs + 'px' }
-        },
-          React.createElement('p', {
-            style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed }
-          }, tr('checklist.intro')),
-          ...items.map(item =>
-            React.createElement('label', {
-              key: item.id,
-              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm, ...(isMobile ? { minHeight: '44px' } : {}) }
-            },
-              React.createElement('input', {
-                type: 'checkbox',
-                checked: !!checked[item.id],
-                onChange: () => toggle(item.id),
-                style: { accentColor: palette.sand, flexShrink: 0 }
-              }),
-              React.createElement('span', {
-                style: { color: checked[item.id] ? palette.mid : palette.text, textDecoration: checked[item.id] ? 'line-through' : 'none' }
-              }, tr(item.key))
-            )
-          )
-        )
-      );
-    })(),
+    // Behörden: der Kasten «Folgende Stände und Fristen sind erfasst» und die zugeklappte «Behörden-Checkliste»
+    // standen bis 25.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf AD) ersetzt sie das Behörden-Instrument oben
+    // (components/BehoerdenInstrument.jsx): Kalenderblatt, Behördengänge offen, «Für den Fall der Fälle».
 
     // Wohnen: der Kasten «Wohnkosten / Einkommen / Anteil» und der MietVergleich standen bis
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
     // oben unter der Zusammenfassung (components/WohnkostenInstrument.jsx).
 
-    // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
-    // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
-    // solange nichts erfasst ist.
-    chapter.key === 'versicherungen' &&
-      React.createElement(Schutzschild, {
-        palette, t, versicherungen: data,
-        ...schildOptionen(allData),
-      }),
+    // Versicherungs-Schutzschild (Instrument #4): seit 25.10.2026 klein im Versicherungen-Instrument
+    // oben (components/VersicherungenInstrument.jsx), nicht mehr gross an dieser Stelle.
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // Finanzen: der IPV-Hinweis und das Lohn-Barometer standen hier bis 24.10.2026. Seit der

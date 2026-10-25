@@ -20,11 +20,12 @@ const lies = (p) => fs.readFileSync(path.join(SRC, p), 'utf8');
 const hol = (w, k) => k.split('.').reduce((o, s) => o?.[s], w);
 const t = (k) => { const v = hol(de, k); return v && typeof v === 'object' ? v.sie : (v ?? k); };
 
-const ANSICHTEN = { lebensmappe: 'Lebensmappe.jsx', behoerdendossier: 'BehoerdenDossier.jsx', notfalldossier: 'NotfallDossier.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx' };
+const ANSICHTEN = { lebensmappe: 'Lebensmappe.jsx', behoerdendossier: 'BehoerdenDossier.jsx', notfalldossier: 'NotfallDossier.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx', praemien: 'PraemienOrientierung.jsx' };
 
 describe('Pfade', () => {
   // Seit Runde 9 AE («ein Ort», 25.10.2026) auch die Notfallkarte; das Notfall-Dossier hängt unter Notfall.
-  it('genau die sechs entschiedenen Ansichten', () => {
+  // Seit Runde 9 AB (25.10.2026) auch die Versicherungs-Übersicht, unter dem Kapitel Versicherungen.
+  it('genau die sieben entschiedenen Ansichten', () => {
     expect(Object.keys(PFADE).sort()).toEqual(Object.keys(ANSICHTEN).sort());
   });
   it('jede Stufe hat eine Beschriftung in allen fünf Sprachen', () => {
