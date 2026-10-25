@@ -1204,3 +1204,46 @@ Zusammenfassung mit Steuererklärung und «laut Ihren Angaben» Betreibungsregis
 offen, «Steuererklärung 2025 eingereicht» als gekennzeichneter Vorschlag · «Für den Fall der Fälle» · «Rechtsbeistand: nicht
 erfasst.» · Querverweis Steuern ↔ Finanzen · Maria-Frist 31.03.2027 nach ZStB Nr. 133.1 (Aufforderung 2027). swiss-precision und
 copy je 0 Blocker, eingearbeitet. 6’798 Tests grün. Offen: Wortlaut des ZStB-PDF vor dem Deploy nachlesen · rm.
+
+### Kapitel Notfall (AE, ein Ort) · Befunde (25.10.2026, noch nicht entschieden)
+
+Gemessen auf `main` `97c476f3`, `#/chapter/6`, Maria, 375 px, dazu `#/notfalleinstieg`, `#/notfallkarte`,
+`#/notfallpass`, `#/notfalldossier`. Entwurf: `seiten-v5.html?nur=ae`. Gebaut ist das Kapitel-Muster (#565) und die
+Weiterleitung; von den Instrumenten des Entscheids «ein Ort» noch nichts.
+
+**Wie entschieden gebaut:** P entfällt — `#/notfalleinstieg` führt ins Kapitel (`hashRouter.js:51`, Anker
+`mp-notfall-ernstfall`), die Übersichtskarte und der Lebensbaum ebenso · Kopf links mit Untertitel · Zusammenfassung als
+ruhiger Satz · Reiter Angaben/Dokumente · Notfallpass mit Brotkrume über «Notfall» · Ende «Alle Kapitel durchgegangen».
+
+**Noch nicht gebaut (Entwurf AE):**
+1. **Im Ernstfall:** roter Knopf «Notfallkarte öffnen» mit «144 Sanität · 117 Polizei · 118 Feuerwehr», bleibt beim Scrollen
+   stehen. App: zwei Textkarten «Im Ernstfall: was Sie am Telefon sagen» und «Notfallpass im Telefon vorbereiten».
+2. **«Peter Muster anrufen»** (Telefon-Link der Notfall-Kontaktperson) fehlt.
+3. **«Bereit für den Ernstfall · 19 von 20»** mit Balken, darunter nur das Fehlende zum Ausfüllen (Feld, «Speichern»,
+   «Ich nehme keine»); die drei Szenarien zugeklappt. App: die drei Szenarien offen am Schluss, mit allen 28 Feldnamen.
+   **Nachgezählt:** 20 stimmt (Unfall 9, Spital +6, Behördengang +5 verschiedene); bei Maria fehlt nur «Regelmässige
+   Medikamente» → 19 von 20. «Ich nehme keine» braucht `naOk` am Feld `medications` (`constants.js:413`, heute ohne).
+4. **«Ihre Notfall-Unterlagen»:** vier Kacheln Notfallkarte · Notfallpass · Notfall-Dossier · Karte zum Drucken mit «Alle
+   entstehen aus den Angaben unten …», Druckvorschau zugeklappt. App: das Notfall-Dossier ist vom Kapitel aus nicht
+   erreichbar, die Karte zum Drucken ist der Link «Notfallkarte drucken» (Kästchen-Zeichen, Übergabe-Fix 4).
+5. **Vorsorge:** vier Kacheln ✓/○, «1 von 4 geregelt», offene führen zum Werkzeug («erstellen ›», «festhalten ›»). App: nur
+   «Noch nicht» in den Angaben, die Wege stehen unter «Passend».
+6. **Zusammenfassung** um «Blutgruppe A+, Allergie gegen Penicillin.» ergänzt. App: nur Kontaktperson und Hausarzt.
+7. **Angaben zeigen das Fehlende:** «○ Regelmässige Medikamente · ergänzen ›» und «Vorerkrankungen: nicht erfasst.» App
+   lässt leere Felder weg.
+8. **Passend: nur «Dokumente ablegen»** mit «Patientenverfügung, Organspendekarte, Blutgruppenausweis». App: drei Zeilen
+   (Patientenverfügung erstellen, Bestattungswünsche, Dokumente ablegen · «Unterlagen · Dokumentenablage»).
+
+**Namen und Wege (Runde 5 und Start Fassung 6):**
+9. **Vorlesekarte heisst noch «Notruf-Vorlesekarte»** (entschieden: «Notfallkarte»), Brotkrume nur «Übersicht» —
+   `notfallkarte` fehlt in `brotkrumePfade.js`. **Notfallpass** heisst noch «Notfallpass vorbereiten». **Notfall-Dossier**
+   hängt unter «Meine Unterlagen» statt unter «Notfall».
+10. **Karte zum Drucken heisst noch nicht «Portemonnaie-Karte»** (Entscheid 24.10.) — weder in der App noch im Entwurf.
+    Achtung: «Portemonnaie» ist im Rucksack schon der Gegenstand mit den Geld-Werkzeugen (`data/gepaeck.js:78`).
+11. **Übersichtskarte** heisst noch «Notfallkarte vorbereiten · In 2 Minuten bereit», führt aber ins Kapitel. Die Suche
+    nach «Notfallkarte» trifft weiterhin das Kapitel (Alias in `ansichtenRegister.js:80`) — entschieden war «nur noch Q».
+12. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss (Brotkrume «Übersicht › Notfall» im Kopf, «Ihre Daten bleiben auf diesem
+    Gerät.» am Ende u. a.).
+
+**Vor dem Bau prüfen (aus dem Entscheid):** Der stehende Ernstfall-Knopf darf weder Tastatur noch Anker unten verdecken ·
+Telefon-Link nur bei erfasster Nummer.
