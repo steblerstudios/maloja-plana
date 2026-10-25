@@ -235,3 +235,9 @@ Finanzen 7, 8; Basis 3, 4; Versicherungen 6, 8, 9; Ausbildung 6–8; Behörden 8
   `ChapterView.jsx` lädt der Dev-Server ganz neu und das Beispiel ist weg («Ohne Code ausprobieren» neu klicken) ·
   Screenshots im Browser-Pane springen nach `scrollIntoView` nicht mit — mit Scroll-Rad scrollen.
 - Worktree `_werkbank/abnahme-f6` (detached auf `97c476f3`) kann bleiben oder weg; die Zweige liegen alle auf origin.
+
+## Nachtrag 25.10.2026 nachmittags · Kapitel Notfall gebaut
+
+Abgleich Notfall (AE): 12 Befunde (`VERGLEICH.md`). Sophie: 1–11 bauen, 12 ins Muster am Schluss, Name «Portemonnaie-Karte» bleibt.
+**Entwurfs-PR #579** `feat/f6-notfall-ein-ort` (Basis main, Worktree `_werkbank/f6-notfall`), 0 Blocker, 6’801 Tests grün.
+Merge-Reihenfolge ergänzt: … → #578 → **#579**. Offen zum Entscheiden: siehe VERGLEICH.md «Kapitel Notfall … Offen zum Entscheiden».

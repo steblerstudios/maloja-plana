@@ -1247,3 +1247,14 @@ ruhiger Satz · Reiter Angaben/Dokumente · Notfallpass mit Brotkrume über «No
 
 **Vor dem Bau prüfen (aus dem Entscheid):** Der stehende Ernstfall-Knopf darf weder Tastatur noch Anker unten verdecken ·
 Telefon-Link nur bei erfasster Nummer.
+
+**Entschieden und gebaut (Sophie, 25.10.2026: «Baue Notfall 1 bis 11 … 12 kommt ins Muster am Schluss. Den Namen
+Portemonnaie-Karte behalten wir.»):** Zweig `feat/f6-notfall-ein-ort`, Entwurfs-PR #579 (`31bfc004`, Basis main). Ernstfall-Knopf
+direkt in der Kapitelkarte, steht (nicht beim Tippen; scroll-padding hält Fokus frei) · «… anrufen» · «Bereit 19 von 20» mit
+Fehlendem zum Ausfüllen, «Ich nehme keine» (`naOk`) · vier Kacheln mit Portemonnaie-Karte · Vorsorge 1 von 4 · Zusammenfassung
+mit Blutgruppe und Allergien · Fehlendes in den Angaben · Passend nur Ablage · Namen Notfallkarte/Notfallpass, Brotkrumen über
+Notfall · Übersichtskarte «Bereit für den Ernstfall», Suche «Notfallkarte» nur Q. Nebenbei: Medikamente aus der Liste zählten nie
+(`feldHatWert`). swiss-precision, copy, a11y je 0 Blocker, eingearbeitet. 6’801 Tests grün, Bündel 62.47 / 65 kB.
+**Offen zum Entscheiden:** «Patientenverfügung: Noch nicht» zählt in «Bereit» als beantwortet, in Vorsorge als nicht geregelt
+(swiss-precision: Muss) · Fachbegriffe Patientenverfügung/Vorsorgeauftrag it/en app-weit uneinheitlich (fedlex prüfen) · «Ich nehme
+keine» erscheint nicht im Dossier/QR · rm ungeprüft.
