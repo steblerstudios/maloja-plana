@@ -16,7 +16,7 @@ import { VersicherungenInstrument } from './components/VersicherungenInstrument.
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { franchiseVorschlag } from './data/franchiseTacho.js';
-import { calculateIPV, getCantonName } from './config/cantonalData.js';
+import { calculateIPV, getCantonName, ladeIPVModelle } from './config/cantonalData.js';
 import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
 import { nextNov30, fristKnopfDatum } from './KVGWechsel.jsx';
 
@@ -29,6 +29,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const [pickedFranchise, setPickedFranchise] = useState(null); // angeklickte Wunsch-Franchise fürs Vergleichen
   const [offenTeile, setOffenTeile] = useState({}); // welche aufklappbaren Teile offen sind (Übersicht)
   const [alleKassen, setAlleKassen] = useState(false); // «Alle Kassen»: erst fünf, dann alle
+  // Die Kantonsmodelle der IPV laden nach (ZH, BE …). Bis dahin sagt calculateIPV «laden» — danach einmal neu zeichnen,
+  // sonst bliebe die Zeile beim ersten Aufruf auf «prüfen» stehen.
+  const [, setIpvGeladen] = useState(0);
+  useEffect(() => {
+    let aktiv = true;
+    ladeIPVModelle().then(() => { if (aktiv) setIpvGeladen((n) => n + 1); }).catch(() => {});
+    return () => { aktiv = false; };
+  }, []);
 
   const gemeinden = useMemo(() => {
     const plz = plzInput.trim();
