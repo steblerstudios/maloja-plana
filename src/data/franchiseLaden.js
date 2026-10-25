@@ -9,7 +9,7 @@ export async function ladeFranchiseOpt(data) {
   const plz = String(data?.wohnen?.postalCode || '').trim();
   const kasse = data?.versicherungen?.kkInsurer;
   if (plz.length !== 4 || !kasse) return null;
-  const [{ lookupPLZ }, { getRegionInfo }, { getInsurerAllFranchises, insurerNrFromName, DETAIL_DATA_VERSION }] = await Promise.all([
+  const [{ lookupPLZ }, { getRegionInfo }, { getInsurerAllFranchises, insurerNrFromName, detailJahr }] = await Promise.all([
     import('./plzGemeinde.js'), import('./praemienRegionen.js'), import('./praemienDetail.js'),
   ]);
   const nr = insurerNrFromName(kasse);
@@ -24,5 +24,5 @@ export async function ladeFranchiseOpt(data) {
   const ageClass = ageClassFromBirth(data?.basis?.dateOfBirth);
   const opt = franchiseOptimierer(getInsurerAllFranchises(nr, kanton, region, ageClass), ageClass);
   // Prämienjahr mitgeben: der Vorschlag nennt, mit welchen Prämien er rechnet (Rechts-Prüfung 25.09.2026).
-  return opt && { ...opt, praemienJahr: DETAIL_DATA_VERSION };
+  return opt && { ...opt, praemienJahr: String(detailJahr()) };
 }

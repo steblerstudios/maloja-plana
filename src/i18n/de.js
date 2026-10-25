@@ -6076,7 +6076,7 @@ export default {
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Quelle: [[BAG|priminfo.admin.ch]] · Standardmodell mit Unfall · Stand 2026',
+    source: 'Quelle: [[BAG|priminfo.admin.ch]] · Standardmodell mit Unfall · Stand {jahr}',
     disclaimer: { sie: 'Nur Referenzprämien. Effektive Prämien können abweichen — massgebend ist die Police Ihres Versicherers.', du: 'Nur Referenzprämien. Effektive Prämien können abweichen — massgebend ist die Police Deines Versicherers.' },
     regionalCompare: {
       national: 'Schweizer Schnitt',

@@ -6026,7 +6026,7 @@ export default {
     chooseTarget: 'Preferred',
     targetSelected: 'Preferred',
     targetChosenHint: 'Preferred insurer: {insurer} — it appears in the switch flow.',
-    source: 'Source: [[FOPH|priminfo.admin.ch]] · Standard model with accident · As of 2026',
+    source: 'Source: [[FOPH|priminfo.admin.ch]] · Standard model with accident · As of {jahr}',
     disclaimer: 'Reference premiums only. Actual premiums may differ — your insurer\'s policy is authoritative.',
     regionalCompare: {
       national: 'Swiss average',
