@@ -1121,4 +1121,4 @@ Versicherungen», nichts still abgezogen · Jahresfelder «/ Jahr» (Befund 7 er
 Hausrat 240, Haftpflicht 120, Summe 5 Mio. (Befund 10 erledigt) → bleibt neu **2’274** statt 2’459.
 Fachprüfung vor und nach dem Bau: swiss-precision und copy-pruefer je 0 Blocker, Muss eingearbeitet. 6’793 Tests grün.
 Offen: rm ungeprüft · KK-Prämie mit 2027 nachziehen · Befunde 5, 6, 8, 9 · Schritt 2 (Instrumente) und 3 (Übersicht).
-**Achtung beim Mergen:** #571 und #572 prüfen Maria-Zahlen (2’459, frei); nach #575 auf 2’274 nachziehen.
+**Beim Mergen:** #571–#575 sind unabhängig von main abgezweigt; nach jedem Merge die Tests auf `main` laufen lassen (#575 ändert Marias Zahlen, die anderen Zweige rechnen noch mit 2’459).
