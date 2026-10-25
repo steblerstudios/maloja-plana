@@ -224,12 +224,22 @@ function buildBehoerdenSentence(data, t) {
   if (!data.cantoneOfTaxation) return null;
 
   const canton = getCantonName(data.cantoneOfTaxation, t);
+  const satz = data.legalRepresentative
+    ? t('mirror.behoerden.taxCantonWithRep', { canton: canton })
+    : t('mirror.behoerden.taxCantonSentence', { canton: canton });
 
-  if (data.legalRepresentative) {
-    return t('mirror.behoerden.taxCantonWithRep', { canton: canton });
-  }
-
-  return t('mirror.behoerden.taxCantonSentence', { canton: canton });
+  // Runde 9, AD (gebaut Abnahme F6, 25.10.2026): ein zweiter Satz zu Steuererklärung und Betreibungsregister —
+  // «Keine offene Steuererklärung, das Betreibungsregister ist ohne Einträge.» Nur, was erfasst ist.
+  const teile = [];
+  const offen = data.pendingTaxReturns === undefined || data.pendingTaxReturns === '' ? null : Number(data.pendingTaxReturns);
+  if (offen === 0) teile.push(t('mirror.behoerden.keineOffene'));
+  else if (offen === 1) teile.push(t('mirror.behoerden.eineOffene'));
+  else if (offen > 1) teile.push(t('mirror.behoerden.offene', { n: String(offen) }));
+  if (data.betreibungsStatus === 'none') teile.push(t('mirror.behoerden.betreibungLeer'));
+  else if (data.betreibungsStatus === 'entries') teile.push(t('mirror.behoerden.betreibungEintraege'));
+  if (!teile.length) return satz;
+  const zweiter = teile.join(', ');
+  return satz + ' ' + zweiter.charAt(0).toUpperCase() + zweiter.slice(1) + '.';
 }
 
 // ─── Notfall ──────────────────────────────────────────────
