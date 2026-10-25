@@ -28,7 +28,9 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const rueckFreibetrag = rueckerstattungsFreibetrag(hh.adults, minorChildren);
   const [erbschaft, setErbschaft] = useState('');
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
-  const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : 'hauptwohnsitz';
+  // Das Feld speichert `weekly` (constants.js); verglichen wurde mit 'wochenaufenthalt' — der Hinweis erschien
+  // nie (Fachprüfung 25.10.2026). Beide Schreibweisen.
+  const residenceKey = ['weekly', 'wochenaufenthalt'].includes(residenceType) ? 'wochenaufenthalt' : ['secondary', 'nebenwohnsitz'].includes(residenceType) ? 'nebenwohnsitz' : 'hauptwohnsitz';
 
   const formatCHF = (n) => betrag(n || 0);
 
@@ -75,11 +77,15 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       !canton && React.createElement('div', { style: { color: palette.roseDeep, marginTop: space.xs } }, t('sozialhilfe.enterCanton'))
     ),
 
-    // Residence type
-    residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('sozialhilfe.weeklyResidence')),
-      React.createElement('div', null, t('residence.taxNote')),
-      React.createElement('div', null, t('sozialhilfe.weeklyNote'))
+    // Wochenaufenthalt / Nebenwohnsitz (Fachprüfung 25.10.2026): zuständig ist in der Regel der Hauptwohnsitz,
+    // in der Notlage auch der Aufenthaltsort. Beim Wochenaufenthalt zusätzlich die Steuern (mit Vorbehalt) und
+    // die Miete — sie gehört womöglich zum Zimmer am Wochenaufenthaltsort. Beim Nebenwohnsitz kein Steuersatz:
+    // oft eine eigene Ferienwohnung, die dort besteuert wird, wo sie liegt (StHG Art. 4 Abs. 1).
+    residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'sozialhilfe.weeklyResidence' : 'sozialhilfe.nebenResidence')),
+      React.createElement('div', null, t('sozialhilfe.weeklyNote')),
+      residenceKey === 'wochenaufenthalt' && React.createElement('div', null, t('sozialhilfe.weeklyMiete')),
+      residenceKey === 'wochenaufenthalt' && React.createElement('div', null, t('residence.taxNote'))
     ),
 
     // SKOS Calculation

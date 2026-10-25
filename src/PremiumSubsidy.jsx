@@ -86,7 +86,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const canton = data.basis?.canton || '';
   const ipvResult = calculateIPV(data);
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
-  const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : residenceType === 'nebenwohnsitz' ? 'nebenwohnsitz' : 'hauptwohnsitz';
+  // Das Feld speichert `weekly`/`secondary` (constants.js, i18n residenceType.options); verglichen wurde mit
+  // 'wochenaufenthalt'/'nebenwohnsitz' — der Hinweis erschien darum nie (Fachprüfung 25.10.2026). Beide Schreibweisen.
+  const residenceKey = ['weekly', 'wochenaufenthalt'].includes(residenceType) ? 'wochenaufenthalt' : ['secondary', 'nebenwohnsitz'].includes(residenceType) ? 'nebenwohnsitz' : 'hauptwohnsitz';
   const kvgLink = getKVGApplicationLink(canton);
   // E9: Solange der Kanton nicht amtlich belegt ist, zeigt der Rechner keinen Betrag,
   // kein «Berechtigt» und keine Grenze — nur eine Orientierung mit dem Weg zum Kanton.
@@ -560,11 +562,14 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         // falsch) — der Weg zum Kanton steht als Link in der Orientierung darunter.
       ),
 
-      // Residence type warning
-      residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: lageHinweisStil },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('premium.weeklyResidence')),
+      // Wochenaufenthalt / Nebenwohnsitz (Fachprüfung 25.10.2026): zuständig für die IPV und massgebend für die
+      // Prämie ist der Hauptwohnsitz (KVG Art. 61 Abs. 2, Art. 65 Abs. 1). Gerechnet wird mit dem eingetragenen
+      // Kanton — der Hinweis nennt ihn, damit auffällt, wenn dort der Arbeitsort steht.
+      residenceKey !== 'hauptwohnsitz' && React.createElement('div', { 'data-teil': 'wohnsitz-hinweis', style: lageHinweisStil },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t(residenceKey === 'wochenaufenthalt' ? 'premium.weeklyResidence' : 'premium.nebenResidence')),
         React.createElement('div', null, t('premium.weeklyIpvNote')),
-        React.createElement('div', null, t('premium.weeklyKkNote'))
+        React.createElement('div', null, t('premium.weeklyKkNote')),
+        canton && React.createElement('div', null, t('premium.weeklyKanton', { kanton: kantonName(canton) }))
       ),
 
       // Nur wo die App rechnet: ohne amtlich belegten Kanton (E9) änderte der Regler nichts —

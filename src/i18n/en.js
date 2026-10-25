@@ -3026,9 +3026,11 @@ export default {
     doc4: 'Health insurance premium confirmation',
     applyOnline: 'Apply online',
     document: 'Document',
-    weeklyResidence: 'Weekly residence detected',
-    weeklyIpvNote: 'IPV application in the canton of main residence, not at the workplace.',
-    weeklyKkNote: 'Health insurance premium is based on the canton of main residence.',
+    weeklyResidence: { sie: "You are a weekly resident", du: "You are a weekly resident" }, // Fachprüfung 25.10.2026
+    nebenResidence: { sie: "You have entered a secondary residence", du: "You have entered a secondary residence" },
+    weeklyIpvNote: { sie: "Premium reduction is handled by the canton of your main residence, not the canton of the weekly or secondary residence.", du: "Premium reduction is handled by the canton of your main residence, not the canton of the weekly or secondary residence." },
+    weeklyKkNote: "The premium depends on where your main residence is (canton and premium region). This applies to a main residence in Switzerland.",
+    weeklyKanton: { sie: "The calculation uses the canton of {kanton}. That is only right if your main residence is there.", du: "The calculation uses the canton of {kanton}. That is only right if your main residence is there." },
   },
 
   sozialhilfe: {
@@ -3037,7 +3039,9 @@ export default {
     householdSize: 'Household size: {count} person(s)',
     enterCanton: 'Please enter canton for cantonal calculation.',
     weeklyResidence: 'Weekly residence',
-    weeklyNote: 'Social assistance is applied for at the main residence.',
+    nebenResidence: "Secondary residence", // Fachprüfung 25.10.2026
+    weeklyNote: { sie: "As a rule, the social services at your main residence are responsible. In an acute emergency, the municipality where you are staying also helps.", du: "As a rule, the social services at your main residence are responsible. In an acute emergency, the municipality where you are staying also helps." },
+    weeklyMiete: "The rent entered may belong to the weekly residence. What counts is the home at your main residence.",
     skosCalculation: 'Needs calculation (SKOS)',
     basicNeeds: 'Basic needs (SKOS)',
     housingCosts: 'Housing costs (effective)',
@@ -4165,7 +4169,7 @@ export default {
     mainResidence: 'Main residence',
     weeklyResidence: 'Weekly residence',
     secondaryResidence: 'Secondary residence',
-    taxNote: 'Taxes at main residence, not at weekly residence location',
+    taxNote: { sie: "As a rule, you pay taxes at your main residence (centre of life). For single people who have lived at their place of work for a long time or rarely go home, the tax authority may decide otherwise. Property is taxed where it is located.", du: "As a rule, you pay taxes at your main residence (centre of life). For single people who have lived at their place of work for a long time or rarely go home, the tax authority may decide otherwise. Property is taxed where it is located." }, // Fachprüfung 25.10.2026
     kkNote: 'Health insurance premium based on canton of main residence',
     ipvNote: 'IPV application in the canton of main residence, not at workplace',
     votingNote: 'Voting rights only at main residence',

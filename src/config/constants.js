@@ -293,13 +293,14 @@ export function getChapters(t) {
         { k: 'employerAddress', type: 'textarea', hint: 1, naOk: true },
         { k: 'employmentType', type: 'select', sel: 1 },
         { k: 'startDate', type: 'date', naOk: true },
-        { k: 'familienzulagen', type: 'currency', hint: 1 },
+        // Ohne Kinder trifft es nicht zu (Fachprüfung Muster M2, 25.10.2026) — wie die Alimente.
+        { k: 'familienzulagen', type: 'currency', hint: 1, naOk: true },
         { k: 'alimenteReceived', type: 'currency', hint: 1, naOk: true },
         { k: 'monthlyTax', type: 'currency', hint: 1, sec: 'budgetLight', orientation: or(t, 'steuern') },
         { k: 'groceries', type: 'currency', itemized: true, hint: 1 },
         { k: 'communication', type: 'currency', itemized: true, hint: 1 },
         { k: 'mobility', type: 'currency', hint: 1 },
-        { k: 'childcare', type: 'currency', hint: 1 },
+        { k: 'childcare', type: 'currency', hint: 1, naOk: true },
         { k: 'otherInsurance', type: 'currency', hint: 1 },
         { k: 'debtPayments', type: 'currency', hint: 1, sec: 'obligations', orientation: or(t, 'schuldenraten') },
         { k: 'alimentePaid', type: 'currency', hint: 1, naOk: true },
@@ -334,9 +335,11 @@ export function getChapters(t) {
         { k: 'kkCardNumber', type: 'text' },
         { k: 'policyNumber', type: 'text', hint: 1 },
         { k: 'kkZusatz', type: 'text', ph: 1 },
-        { k: 'bvgInsurer', type: 'text', sec: 'occupational', orientation: or(t, 'bvg') },
-        { k: 'bvgContribution', type: 'currency', hint: 1 },
-        { k: 'bvgBalance', type: 'currency', hint: 1 },
+        // «trifft nicht zu» (Selbständige, tiefe Einkommen ohne BVG-Pflicht) — Beitrag und Guthaben gehen mit;
+        // sonst blieb «Berufliche Vorsorge x von 5» für immer offen (Fachprüfung Muster M2, 25.10.2026).
+        { k: 'bvgInsurer', type: 'text', sec: 'occupational', naOk: true, naMit: ['bvgContribution', 'bvgBalance'], orientation: or(t, 'bvg') },
+        { k: 'bvgContribution', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
+        { k: 'bvgBalance', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'lifeInsurance', type: 'select', sel: 1 },
         { k: 'freizuegigkeit', type: 'text', ph: 1 },
         { k: 'uvg', type: 'select', sel: 1, sec: 'additional', orientation: or(t, 'uvg') },
@@ -354,7 +357,8 @@ export function getChapters(t) {
         { k: 'cyberInsurance', type: 'select', sel: 1, secondary: true },
         { k: 'autoInsurance', type: 'select', sel: 1, sec: 'mobility', secondary: true },
         { k: 'autoInsuranceAmount', type: 'currency', secondary: true, jahr: true },
-        { k: 'ahvContribution', type: 'currency', sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
+        // Jahresbetrag (Feldname «CHF/Jahr»): in der Liste mit «/ Jahr» (Fachprüfung Muster M4, 25.10.2026).
+        { k: 'ahvContribution', type: 'currency', jahr: true, sec: 'social', orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
       ],
       docs: [
         'kkcard',

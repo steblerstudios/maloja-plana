@@ -3026,9 +3026,11 @@ export default {
     doc4: 'Conferma del premio dell\'assicurazione malattia',
     applyOnline: 'Richiedi online',
     document: 'Documento',
-    weeklyResidence: 'Residenza settimanale rilevata',
-    weeklyIpvNote: 'La richiesta IPV va presentata nel cantone di residenza principale, non nel luogo di lavoro.',
-    weeklyKkNote: 'Il premio dell\'assicurazione malattia si basa sul cantone di residenza principale.',
+    weeklyResidence: { sie: "Soggiorna settimanalmente", du: "Soggiorni settimanalmente" }, // Fachprüfung 25.10.2026
+    nebenResidence: { sie: "Ha indicato una residenza secondaria", du: "Hai indicato una residenza secondaria" },
+    weeklyIpvNote: { sie: "Per la riduzione dei premi è competente il cantone del Suo domicilio principale, non quello del soggiorno settimanale o della residenza secondaria.", du: "Per la riduzione dei premi è competente il cantone del tuo domicilio principale, non quello del soggiorno settimanale o della residenza secondaria." },
+    weeklyKkNote: "Il premio dipende dal luogo del domicilio principale (cantone e regione di premio). Vale per un domicilio principale in Svizzera.",
+    weeklyKanton: { sie: "Il calcolo usa il cantone {kanton}. È corretto solo se lì si trova il Suo domicilio principale.", du: "Il calcolo usa il cantone {kanton}. È corretto solo se lì si trova il tuo domicilio principale." },
   },
 
   sozialhilfe: {
@@ -3037,7 +3039,9 @@ export default {
     householdSize: 'Dimensione del nucleo familiare: {count} persona/e',
     enterCanton: 'Indicare il cantone per il calcolo cantonale.',
     weeklyResidence: 'Residenza settimanale',
-    weeklyNote: 'L\'assistenza sociale viene richiesta presso la residenza principale.',
+    nebenResidence: "Residenza secondaria", // Fachprüfung 25.10.2026
+    weeklyNote: { sie: "Di regola è competente il servizio sociale del domicilio principale. In caso di emergenza acuta aiuta anche il comune in cui si trova.", du: "Di regola è competente il servizio sociale del domicilio principale. In caso di emergenza acuta aiuta anche il comune in cui ti trovi." },
+    weeklyMiete: "L’affitto indicato riguarda forse il soggiorno settimanale. Conta l’abitazione del domicilio principale.",
     skosCalculation: 'Calcolo del fabbisogno (COSAS)',
     basicNeeds: 'Fabbisogno di base (COSAS)',
     housingCosts: 'Costi abitativi (effettivi)',
@@ -4166,7 +4170,7 @@ export default {
     mainResidence: 'Residenza principale',
     weeklyResidence: 'Residenza settimanale',
     secondaryResidence: 'Residenza secondaria',
-    taxNote: 'Imposte presso la residenza principale, non nel luogo di residenza settimanale',
+    taxNote: { sie: "Di regola paga le imposte al domicilio principale (centro degli interessi vitali). Per le persone nubili o celibi che vivono da tempo al luogo di lavoro o rientrano raramente, l’amministrazione fiscale può decidere diversamente. Gli immobili sono tassati dove si trovano.", du: "Di regola paghi le imposte al domicilio principale (centro degli interessi vitali). Per le persone nubili o celibi che vivono da tempo al luogo di lavoro o rientrano raramente, l’amministrazione fiscale può decidere diversamente. Gli immobili sono tassati dove si trovano." }, // Fachprüfung 25.10.2026
     kkNote: 'Premio dell\'assicurazione malattia basato sul cantone di residenza principale',
     ipvNote: 'Richiesta IPV nel cantone di residenza principale, non nel luogo di lavoro',
     votingNote: 'Diritto di voto solo presso la residenza principale',

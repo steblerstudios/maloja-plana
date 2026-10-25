@@ -3038,9 +3038,11 @@ export default {
     doc4: 'Bestätigung der Krankenkassenprämien',
     applyOnline: 'Online Antrag',
     document: 'Dokument',
-    weeklyResidence: 'Wochenaufenthalt erkannt',
-    weeklyIpvNote: 'IPV-Antrag im Wohnkanton, nicht am Arbeitsort.',
-    weeklyKkNote: 'KK-Prämie richtet sich nach dem Wohnkanton (Hauptwohnsitz).',
+    weeklyResidence: { sie: "Sie leben im Wochenaufenthalt", du: "Du lebst im Wochenaufenthalt" }, // Fachprüfung 25.10.2026
+    nebenResidence: { sie: "Sie haben einen Nebenwohnsitz angegeben", du: "Du hast einen Nebenwohnsitz angegeben" },
+    weeklyIpvNote: { sie: "Für die Prämienverbilligung ist der Kanton Ihres Hauptwohnsitzes zuständig, nicht der Kanton des Wochenaufenthalts oder Nebenwohnsitzes.", du: "Für die Prämienverbilligung ist der Kanton deines Hauptwohnsitzes zuständig, nicht der Kanton des Wochenaufenthalts oder Nebenwohnsitzes." },
+    weeklyKkNote: "Die Prämie richtet sich nach dem Wohnort am Hauptwohnsitz (Kanton und Prämienregion). Das gilt bei Hauptwohnsitz in der Schweiz.",
+    weeklyKanton: { sie: "Gerechnet wird mit dem Kanton {kanton}. Das stimmt nur, wenn dort Ihr Hauptwohnsitz ist.", du: "Gerechnet wird mit dem Kanton {kanton}. Das stimmt nur, wenn dort dein Hauptwohnsitz ist." },
   },
 
   sozialhilfe: {
@@ -3049,7 +3051,9 @@ export default {
     householdSize: 'Haushaltgrösse: {count} Person(en)',
     enterCanton: 'Bitte Kanton eingeben für kantonale Berechnung.',
     weeklyResidence: 'Wochenaufenthalt',
-    weeklyNote: 'Sozialhilfe wird am Hauptwohnsitz beantragt.',
+    nebenResidence: "Nebenwohnsitz", // Fachprüfung 25.10.2026
+    weeklyNote: { sie: "Zuständig ist in der Regel der Sozialdienst am Hauptwohnsitz. In einer akuten Notlage hilft auch die Gemeinde, in der Sie sich gerade aufhalten.", du: "Zuständig ist in der Regel der Sozialdienst am Hauptwohnsitz. In einer akuten Notlage hilft auch die Gemeinde, in der du dich gerade aufhältst." },
+    weeklyMiete: "Die eingetragene Miete gehört womöglich zum Wochenaufenthalt. Massgebend ist die Wohnung am Hauptwohnsitz.",
     skosCalculation: 'SKOS-Bedarfsrechnung',
     basicNeeds: 'Grundbedarf (SKOS)',
     housingCosts: 'Wohnkosten (effektiv)',
@@ -4213,7 +4217,7 @@ export default {
     mainResidence: 'Hauptwohnsitz',
     weeklyResidence: 'Wochenaufenthalter/in',
     secondaryResidence: 'Nebenwohnsitz',
-    taxNote: 'Steuern am Hauptwohnsitz, nicht am Wochenaufenthaltsort',
+    taxNote: { sie: "Steuern zahlen Sie in der Regel am Hauptwohnsitz (Lebensmittelpunkt). Bei ledigen Personen, die schon länger am Arbeitsort wohnen oder selten heimkehren, kann die Steuerverwaltung anders entscheiden. Liegenschaften werden dort besteuert, wo sie liegen.", du: "Steuern zahlst du in der Regel am Hauptwohnsitz (Lebensmittelpunkt). Bei ledigen Personen, die schon länger am Arbeitsort wohnen oder selten heimkehren, kann die Steuerverwaltung anders entscheiden. Liegenschaften werden dort besteuert, wo sie liegen." }, // Fachprüfung 25.10.2026
     kkNote: 'KK-Prämie richtet sich nach dem Wohnkanton (Hauptwohnsitz)',
     ipvNote: 'IPV-Antrag im Wohnkanton, nicht am Arbeitsort',
     votingNote: 'Stimm- und Wahlrecht nur am Hauptwohnsitz',
