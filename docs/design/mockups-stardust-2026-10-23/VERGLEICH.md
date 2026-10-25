@@ -1291,3 +1291,6 @@ Versicherungen (Versicherungen 6 → Versicherungen Schritt 3).
 
 **Bau-Frage:** M1–M7 ändern vor allem `ChapterView.jsx` (Abschnittsliste, Kopf, Passend, Als Nächstes) — dieselbe Datei wie die
 neun offenen Entwurfs-PRs #571–#579. Auf `main` gebaut, gäbe jeder Merge danach Konflikte in allen neun.
+
+**Entschieden (Sophie, 25.10.2026):** «Bau M1 bis M8, aber erst wenn ich #571 bis #579 gemergt habe. Bis dahin: mach mit
+Versicherungen Schritt 3 weiter.»
