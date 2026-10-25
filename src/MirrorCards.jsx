@@ -241,7 +241,9 @@ function buildNotfallSentence(data, t) {
   const hasDoctor = Boolean(data.doctor);
   const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag'];
   const hasProvision = vorsorgeKeys.some(k => data[k] && data[k] !== 'no');
-  const hasHealth = Boolean(data.allergies || data.medications || data.chronicDiseases);
+  // Medikamente und Erkrankungen stehen meist in der Liste (`…List`), nicht im alten Textfeld.
+  const liste = (k) => Array.isArray(data[k + 'List']) && data[k + 'List'].some((x) => x && x.name);
+  const hasHealth = Boolean(data.allergies || data.medications || data.chronicDiseases || liste('medications') || liste('chronicDiseases'));
 
   let satz;
   if (hasDoctor && hasProvision) satz = t('mirror.notfall.contactDoctorProvision');

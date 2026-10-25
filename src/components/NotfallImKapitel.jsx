@@ -200,8 +200,9 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const speichern = (f) => {
     const wert = String(eingaben[f.k] || '').trim();
     if (!wert || demoMode || !onUpdate) return;
-    // Medikamente stehen im Kapitel als Liste (MedicationManager); hier ein erster Eintrag mit Name und Dosis.
-    if (f.k === 'medications') onUpdate('medicationsList', [{ name: wert, dose: '', unit: '' }]);
+    // Medikamente stehen im Kapitel als Liste (MedicationManager); der Eintrag wird angehängt — Zeilen ohne Namen
+    // (z. B. nur Dosis) bleiben stehen (Fachprüfung 25.10.2026).
+    if (f.k === 'medications') onUpdate('medicationsList', [...(Array.isArray(nf.medicationsList) ? nf.medicationsList : []), { name: wert, dose: '', unit: '' }]);
     else onUpdate(f.k, wert);
     setEingaben((e) => ({ ...e, [f.k]: '' }));
   };
