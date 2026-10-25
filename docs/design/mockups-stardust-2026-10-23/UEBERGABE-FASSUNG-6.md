@@ -354,3 +354,9 @@ Nicht gemergt, nicht live. Damit ist der offene Punkt «Fachbegriffe PV/VA it/en
 - **21:22:** #584 gemergt (Sophie: «Ja, merge #584, sobald die CI grün ist») → main **`2db4d4ee`**, CI grün. **Nicht deployt** —
   live weiter 0.1.48-beta. Offen bleiben: Spinnennetz · «Ich nehme keine» im Dossier · ZStB 133.1 · Prämien 2027 · rm ·
   `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · KVG Art. 7 Wortlaut.
+
+## Sitzungsende 25.10.2026, 21:30
+
+main `2db4d4ee` (CI grün), live 0.1.48-beta, 110 Commits dazwischen. Doku-Stand als Entwurfs-PR **#585** (SESSION_START,
+FEATURES). Übergabe: `maloja plana/_handoffs/2026-10-25-fassung6-gemergt-muster-und-nachtraege.md`. Nächster Schritt: Deploy-Tor
+(`/maloja-predeploy`, Sophie) oder einer der offenen Punkte dort.
