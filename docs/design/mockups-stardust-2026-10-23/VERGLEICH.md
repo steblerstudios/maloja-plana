@@ -1294,3 +1294,33 @@ neun offenen Entwurfs-PRs #571–#579. Auf `main` gebaut, gäbe jeder Merge dana
 
 **Entschieden (Sophie, 25.10.2026):** «Bau M1 bis M8, aber erst wenn ich #571 bis #579 gemergt habe. Bis dahin: mach mit
 Versicherungen Schritt 3 weiter.»
+
+### Versicherungs-Übersicht (AB) · Abgleich für Schritt 3 (25.10.2026, noch nicht entschieden)
+
+Gemessen auf dem Stand von #576 (`558c699b`, enthält Schritt 1 und 2), `#/praemien`, Maria, 375 px. Entwurf: `seiten-v5.html?nur=ab`.
+Die Seite ist heute die «Prämien-Orientierung» (`PraemienOrientierung.jsx`, 470 Zeilen): alles offen untereinander, rund
+neun Bildschirme. Zahlen im Entwurf sind vor #575 (CHF 387, 6.2 %); heute rechnet die App CHF 570 und 8.7 %.
+
+**Noch nicht gebaut (Entwurf AB):**
+1. **Name und Weg:** «Versicherungs-Übersicht» mit Satz «Ihre Versicherungen auf einen Blick — basierend auf Ihren Eingaben.»,
+   Brotkrume «Übersicht › Versicherungen & Vorsorge › Versicherungs-Übersicht» (heute «← Übersicht»); Titel in Menü, Suche,
+   Register in fünf Sprachen; `#/praemien` bleibt als Adresse.
+2. **Marken oben:** «CSS · Standard» · «Franchise 1’500» · «Prämienregion Zürich 1». Heute: PLZ-Feld und Prämienregion-Kasten.
+3. **«Versicherungen pro Monat» mit KK-Last** (wie im Kapitel, #576) und «Was darin steckt» aufklappbar. Heute: grosse
+   KK-Last-Karte mit drei Absätzen.
+4. **Zeilen mit Wert, je zum Werkzeug** — fehlen heute ganz:
+   Franchise «Eher 2’500» (Break-even, Ersparnis) · Krankenkasse wechseln «Kündigung bis 30.11.2026» · Prämienverbilligung
+   «Kein Anspruch» mit Pegel · Gesundheitskosten (KVG) mit Betrag · KVG-Leistungen · Vorsorge «PK-Guthaben».
+5. **Schutzschild sichtbar** (Pflicht 3/3, Empfohlen 2/2) — heute nicht auf der Seite.
+6. **Aufklappbar statt offen:** Franchise-Kreuz (ganz, mit Reserve-Satz) · Prämie regional · Prämienvergleich und Unfalldeckung
+   (mit Referenz je Franchise) · Alle Kassen (Entwurf: Top 5 + «alle anzeigen»; heute alle 28 offen).
+7. **Zusatzversicherung wechseln und KK-Scanner als Zeilen** — heute nicht da.
+8. **Unfalldeckung-Hinweis** («als Angestellte sparen») steht heute als eigene Karte oben; im Entwurf in «Prämienvergleich und
+   Unfalldeckung».
+9. **Schlusssatz** «Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte …» fehlt.
+
+**Zu entscheiden mit:**
+10. **Spinnennetz im Kapitel** (Versicherungen 6, offen): behalten, weg, oder hierher in die Übersicht?
+
+**Bau-Frage:** Schritt 3 braucht «Versicherungen pro Monat» und die Prämien aus #575/#576 — Zweig darum auf #576 gestapelt
+(`feat/f6-versicherungs-uebersicht`, Basis `feat/f6-versicherungen-instrumente`), wie #576 auf #575.
