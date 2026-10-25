@@ -26,9 +26,11 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // erzählt die Nachbarzeile (`rentShareGuide`) die Drittel-Regel schon, dort wäre sie doppelt
 // (Predeploy-Runde 8, dritte Prüfung). `BudgetSync` hat keine Nachbarzeile → setzt sie true.
 // Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText }) => {
+// `userLabel` (optional): ersetzt «Ihre Miete: CHF …» — im Kapitel Wohnen beim Regler «Ausprobierte
+// Miete: CHF …» (Fassung 6), damit niemand die ausprobierte Zahl für die erfasste hält.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel }) => {
   if (!comparison) return null;
-  const { regional, national, diffPct, year } = comparison;
+  const { regional, national, diffPct, year, roomKey, zimmerAngenommen, ohneWertFuerGroesse, wenigeAntworten } = comparison;
   const ns = 'po.regionalCompare.';
   const k = ns + kind + '.';
 
@@ -75,9 +77,10 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   const thresholdNearNational = hasThreshold && Math.abs(pct(thresholdValue) - nationalPct) < 3;
   // ⚠️ Predeploy-Runde 8: Der Fix oben prüfte NUR gegen den Strich. Gegen den ●-Punkt prüfte
   // niemand — und die Renderreihenfolge (Füllung → Punkt → „!" → Strich, kein z-index) legt
-  // das „!" direkt darauf. Belegt erreichbar: ZH, 1-Personen-Haushalt (regional 1538,
-  // national 1327), Einkommen CHF 4'614 → Drittel-Schwelle exakt auf dem Punkt; Abstand zum
-  // Strich 11.7pp, also greift `thresholdNearNational` nicht. Das „!" verdeckt dann den ●,
+  // das „!" direkt darauf. Belegt erreichbar: ZH, 1-Personen-Haushalt (regional 1732,
+  // national 1446, BFS 2024), Einkommen CHF 5'196 → Drittel-Schwelle exakt auf dem Punkt; Abstand
+  // zum Strich 14.3pp, also greift `thresholdNearNational` nicht. (Mit Stand 2020: 1538 / 1327,
+  // CHF 4'614, 11.7pp — nachgerechnet in der Fachprüfung 25.10.2026.) Das „!" verdeckt dann den ●,
   // und der ● trägt die Valenz-Aussage.
   // Toleranz 4pp statt 3: der ● ist 12px + 1.5px Halo, das „!" ~7px — 3pp sind bei einem
   // ~296px-Balken nur ~9px und damit zu eng.
@@ -89,7 +92,8 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   let ariaLabel = t(ns + 'aria', {
     regional: regional.toFixed(0), national: national.toFixed(0), diff: diffText,
   });
-  if (hasUser) ariaLabel += ' ' + t(k + 'yourVal', { amount: userValue.toFixed(0) });
+  const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: userValue.toFixed(0) })) : null;
+  if (hasUser) ariaLabel += ' ' + userText;
   // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (a11y-Prüfer): Die Schwellen-Überschreitung stand
   // NUR in der Farbe — das „!" schaltet auf roseDeep, das aria-Label nannte sie nicht
   // (WCAG 1.4.1, Level A). In `MietVergleich` fing die Nachbarzeile (Drittel-Regel) das auf;
@@ -165,16 +169,19 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Werte als Marken (Farben = Encoding). Die Legenden-Marken (`LegendenMarke`) spiegeln
     // die Marken AUF dem Balken in derselben Farbvariablen — eine Marke, eine Farbe.
     // Rein dekorativ (`aria-hidden`), der Wert steht im Text daneben.
+    // Fassung 6 (Feinschliff «Barometer-Beschriftungen kurz, kein Umbruch»): bei 375 px brach
+    // «Schweizer Schnitt: CHF / 1327» (Werte Stand 2020) mitten im Eintrag. Jetzt bleibt jeder Eintrag ganz und rückt
+    // bei Platzmangel als Ganzes in die nächste Zeile.
     React.createElement('div', {
-      style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
+      style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.xs, color: palette.mid },
     },
       // Strich verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
       // liest man den Strich leicht als „meinen Wert" statt als Referenz.
-      React.createElement('span', null,
+      React.createElement('span', { style: { whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }),
         t(ns + 'nationalVal', { amount: national.toFixed(0) })),
       // Punkt in der Grafik-Farbe des Punkts, Label in der lesbaren Deep-Variante.
-      React.createElement('span', { style: { color: dotTextColor } },
+      React.createElement('span', { style: { color: dotTextColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: dotColor, palette }),
         t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
     ),
@@ -184,7 +191,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // Füllung in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
       // klar ist: die FÜLLUNG ist dein Wert, der Strich ist der Schweizer Schnitt.
       React.createElement(LegendenMarke, { form: 'fuellung', color: barFill, palette }),
-      t(k + 'yourVal', { amount: userValue.toFixed(0) })
+      userText
     ),
 
     // Die Schwellen-Überschreitung als SATZ — nur wo die Eltern-Ansicht sie nicht schon
@@ -204,6 +211,21 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     dir === 'above' && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, t(k + 'structural')),
+
+    // Miete: womit verglichen wird (Zimmerzahl, angenommen oder erfasst) und ob der BFS-Wert unsicher
+    // ist (weniger als 50 Beobachtungen). Fachprüfung 25.10.2026: vorher unsichtbar — wer allein in
+    // 1½ Zimmern wohnt, wurde still mit 3-Zimmer-Wohnungen verglichen.
+    kind === 'rent' && roomKey && React.createElement('div', {
+      'data-teil': 'miete-vergleich-groesse',
+      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
+    },
+      ohneWertFuerGroesse ? t(k + 'ohneWertFuerGroesse') + ' ' : '',
+      roomKey === 'total' ? t(k + 'vergleichAlle')
+        : roomKey === 'r6' ? t(k + 'vergleichAb6')
+        : t(k + 'vergleichZimmer', { n: roomKey.slice(1) }),
+      zimmerAngenommen ? ' ' + t(k + 'zimmerAngenommen') : '',
+      wenigeAntworten ? ' ' + t(k + 'wenigeAntworten') : ''
+    ),
 
     // Quelle
     React.createElement('div', {

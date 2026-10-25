@@ -2075,7 +2075,7 @@ export default {
         postalCode: 'NPA',
         city: 'Lieu',
         moveInDate: "Data d'entrada",
-        rentAmount: 'Tschains per mais CHF',
+        rentAmount: 'Tschains net CHF/mais (senza custs accessorics)',
         utilities: 'Custs accessorics CHF/mais',
         landlord: 'Num dal possessur',
         landlordPhone: 'Telefon dal possessur',
@@ -4206,12 +4206,29 @@ export default {
     ahv: 'AVS/AI/EO',
   },
 
-  wohnkostenanteil: {
-    intro: "Ils custs d'abitar registrads en relaziun cun l'entrada registrada.",
-    housing: "Custs d'abitar",
-    income: 'Entrada',
-    share: 'Part',
-    perMonth: 'per mais',
+  // Fassung 6 · chapitel Abitar, instrument sisum (runda 9, sboz Z, 24.10.2026). Remplazza «wohnkostenanteil».
+  // rm ungeprüft F6
+  wohnenInstrument: {
+    titel: "Custs d'abitar per mais",
+    titelAusprobiert: "Custs d'abitar per mais · empruvà",
+    anteil: "{pct} % da l'entrada (CHF {einkommen})",
+    anteilBrutto: "{pct} % da l'entrada bruta (CHF {einkommen})",
+    drittel: 'in terz',
+    faustregel: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
+    mehrAlsDrittel: "Dapli ch'in terz da l'entrada va per abitar. Quai è ina reglacurta, nagin'obligaziun — il quint cun tut las expensas mussa, sch'i va si.",
+    ohneEinkommen: "Uschespert ch'ina entrada è registrada en il chapitel Finanzas, sa mussi qua, tge part che l'abitar dovra.",
+    ausprobieren: 'Empruvar: in auter tschains',
+    wohnungssuche: "Tschertga d'abitaziun",
+    reglerLabel: "Tschains net d'ina nova abitaziun",
+    nebenkostenWieHeute: 'Custs accessorics (sco oz)',
+    freiDanach: 'Liber suenter',
+    durchspielen: { sie: "Mo per empruvar — i na vegn memorisà nagut. Las cifras survart suondan il reglader, fin che Vus al reponis.", du: "Mo per empruvar — i na vegn memorisà nagut. Las cifras survart suondan il reglader, fin che ti al reponas." },
+    zurueck: 'Enavos al tschains dad oz',
+    ausprobierteMiete: 'Tschains empruvà: CHF {amount}',
+    anteilEigen: { sie: "{pct} % da Vossa atgna entrada (CHF {einkommen})", du: "{pct} % da tia atgna entrada (CHF {einkommen})" },
+    anteilTeilsBrutto: "{pct} % da l'entrada registrada (CHF {einkommen}, per part brut)",
+    mitPartner: "Ils custs d'abitar valan per l'economia da chasa, qua è quintada mo l'atgna entrada. Ensemen cun il partenari u la partenaria è la part pli pitschna.",
+    fehltDanach: 'I manca suenter',
   },
 
   contextLinks: {
@@ -5195,7 +5212,14 @@ export default {
         yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
         thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
-        source: 'Funtauna: [[UST|www.bfs.admin.ch]], dumbraziun da las fittanzas {year} · fittanza netta, senza cuosts secundars',
+        source: 'Funtauna: [[UST|www.bfs.admin.ch]], enquista structurala davart ils tschains {year} · tschains net, senza cuosts secundars',
+        // rm ungeprüft F6
+        vergleichZimmer: 'Cumparà cun abitaziuns da {n} stanzas.',
+        vergleichAb6: 'Cumparà cun abitaziuns da 6 stanzas e dapli.',
+        vergleichAlle: 'Cumparà cun abitaziuns da tut las grondezzas.',
+        zimmerAngenommen: { sie: "La grondezza è deducida da la grondezza da l'economia da chasa — cun Voss dumber da stanzas en il chapitel Abitar vegn la cumparegliaziun pli exacta.", du: "La grondezza è deducida da la grondezza da l'economia da chasa — cun tes dumber da stanzas en il chapitel Abitar vegn la cumparegliaziun pli exacta." },
+        ohneWertFuerGroesse: "L'UST na publitgescha nagina valur per questa grondezza d'abitaziun en il chantun.",
+        wenigeAntworten: "Qua sa basa la valur da l'UST sin main che 50 respostas — mo da leger sco orientaziun grossa.",
       },
     },
   },
@@ -6483,7 +6507,7 @@ export default {
     compareTitle: { sie: 'Nua sa chatta Vossa fittanza?', du: 'Nua sa chatta tia fittanza?' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     rentShare: { sie: 'Voss cuosts da viver èn {pct}% da Vossa entrada.', du: 'Tes cuosts da viver èn {pct}% da tia entrada.' },
-    rentShareGuide: 'Sco reglacurta na duessi la fittanza betg surpassar radund in terz da l\'entrada — blers locaturs pretendan quai schizont.',
+    rentShareGuide: "Sco orientaziun grossa vala savens: custs d'abitar fin radund in terz da l'entrada. Quai n'è nagin cunfin fix — cun ina pitschna entrada po er main gia esser stretg.",
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     docsTitle: { sie: 'Tge che Vus dovrais savens', du: 'Tge che ti dovras savens' },
     doc1: 'Contract da fittanza',
