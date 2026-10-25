@@ -3975,6 +3975,8 @@ export default {
       ablageBasis: "Deponer ina copia dal document d’identitad",
       ablageWohnen: "Deponer il contract da locaziun",
       ablageVersicherungen: "Deponer las policas",
+      alleVersicherungen: "Tut las assicuranzas en in sguard",
+      alleVersicherungenSub: "Premias, franschisa, regiun, RIP, termin da midada",
       ablageAusbildung: "Deponer ils diploms",
       ablageDokumente: "Deponer documents",
     },
@@ -4213,6 +4215,24 @@ export default {
 
   // Fassung 6 · chapitel Abitar, instrument sisum (runda 9, sboz Z, 24.10.2026). Remplazza «wohnkostenanteil».
   // rm ungeprüft F6
+  // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
+  versInstrument: {
+    titel: "Assicuranzas per mais",
+    kk: "Cassa da malsauns (assicuranza da basa)",
+    hausrat: "Ménaschi (CHF {jahr} / onn)",
+    haftpflicht: "Responsabladad civila (CHF {jahr} / onn)",
+    weitere: "Ulteriuras assicuranzas (chapitel Finanzas)",
+    nichtErfasst: "{liste}: premia betg endatada.",
+    nameHausrat: "Ménaschi",
+    nameHaftpflicht: "Responsabladad civila",
+    fahrzeug: "L’assicuranza dal vehichel na quinta betg qua — ils custs da l’auto tutgan en il chapitel Finanzas tar «Mobilitad».",
+    pk: "La cassa da pensiun (CHF {betrag}) è gia deducida da la paja.",
+    anteil: "{pct} % da l’entrada",
+    who: "OMS 10 %",
+    schutzschild: "Scut da protecziun",
+    franchise: "Crusch da franschisas",
+    alles: "Tut davart la franschisa ed il cumparegliar",
+  },
   wohnenInstrument: {
     titel: "Custs d'abitar per mais",
     titelAusprobiert: "Custs d'abitar per mais · empruvà",

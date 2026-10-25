@@ -2333,6 +2333,24 @@ export default {
 
   // Fassung 6 · Kapitel Wohnen, Instrument oben (Runde 9, Entwurf Z, 24.10.2026). Ersetzt «wohnkostenanteil».
   // Die Drittel-Marke ist eine Faustregel, keine Vorschrift (Swiss-Precision-Prüfer).
+  // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
+  versInstrument: {
+    titel: "Versicherungen pro Monat",
+    kk: "Krankenkasse (Grundversicherung)",
+    hausrat: "Hausrat (CHF {jahr} / Jahr)",
+    haftpflicht: "Haftpflicht (CHF {jahr} / Jahr)",
+    weitere: "Weitere Versicherungen (Kapitel Finanzen)",
+    nichtErfasst: "{liste}: Prämie nicht erfasst.",
+    nameHausrat: "Hausrat",
+    nameHaftpflicht: "Haftpflicht",
+    fahrzeug: "Die Fahrzeugversicherung zählt hier nicht mit — Autokosten gehören im Kapitel Finanzen zu «Mobilität».",
+    pk: "Die Pensionskasse (CHF {betrag}) ist schon vom Lohn abgezogen.",
+    anteil: "{pct} % des Einkommens",
+    who: "WHO 10 %",
+    schutzschild: "Schutzschild",
+    franchise: "Franchise-Kreuz",
+    alles: "Alles zur Franchise und zum Vergleich",
+  },
   wohnenInstrument: {
     titel: 'Wohnkosten pro Monat',
     titelAusprobiert: 'Wohnkosten pro Monat · ausprobiert',
@@ -2390,6 +2408,8 @@ export default {
       ablageBasis: "Ausweis-Kopie ablegen",
       ablageWohnen: "Mietvertrag ablegen",
       ablageVersicherungen: "Policen ablegen",
+      alleVersicherungen: "Alle Versicherungen auf einen Blick",
+      alleVersicherungenSub: "Prämien, Franchise, Region, IPV, Wechselfrist",
       ablageAusbildung: "Diplome ablegen",
       ablageDokumente: "Dokumente ablegen",
     },

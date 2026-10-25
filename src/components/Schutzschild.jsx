@@ -10,14 +10,16 @@ import { zahl } from '../utils/geld.js';
 // ✓/○-Liste (a11y: Zeichen + Wort, nicht nur Farbe). Ruhig: eine offene
 // Absicherung ist ein Hinweis, kein Alarm — kein ✕, kein Rot.
 const TOP = 12, BOTTOM = 148;
+// Nur für Screenreader sichtbar.
+const VERSTECKT = { position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 };
 const SHIELD = shieldPath(80, TOP, 108, BOTTOM - TOP);
 
-const shieldSvg = (palette, group, clipId, label) => {
+const shieldSvg = (palette, group, clipId, label, klein) => {
   const h = React.createElement;
   const fillHeight = group.fraction * (BOTTOM - TOP);
   return h('svg', {
     viewBox: '0 0 160 170', width: '100%',
-    style: { maxWidth: '96px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
+    style: { maxWidth: klein ? '58px' : '96px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
     role: 'img', 'aria-label': label,
   },
     h('defs', null, h('clipPath', { id: clipId }, h('path', { d: SHIELD }))),
@@ -33,18 +35,22 @@ const shieldSvg = (palette, group, clipId, label) => {
   );
 };
 
-export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, annualIncomeMit13, lohnBasis }) => {
+// `klein` (Kapitel Versicherungen, Fassung 6 Runde 9 AA nachgebessert, Sophie 24.10.2026): «zwei kleine
+// Schilde mit Listen, offen» — zwei Spalten nebeneinander, ohne eigenen Kasten, Satz ruhig links.
+export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncome, annualIncomeMit13, lohnBasis, klein }) => {
   const st = schildState(versicherungen || {}, { employed, annualIncome, annualIncomeMit13, lohnBasis });
   if (!st.touched) return null;
   const h = React.createElement;
 
   const row = (p) => h('div', {
     key: p.key,
-    style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
+    style: { display: 'flex', alignItems: 'center', gap: (klein ? 6 : space.sm) + 'px', fontSize: klein ? text.xs : text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
   },
-    h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', textAlign: 'center' } }, hinweisZeichen(p.covered ? 'check' : 'kaestchen', 12)),
-    h('span', null, t('schutzschild.' + p.key)),
-    h('span', { style: { marginLeft: 'auto', fontSize: text.xs, color: p.covered ? (palette.sageDeep || palette.sage) : palette.mid } }, p.covered ? t('schutzschild.covered') : t('schutzschild.open'))
+    h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(p.covered ? 'check' : 'kaestchen', 12)),
+    h('span', { style: { minWidth: 0 } }, t('schutzschild.' + p.key)),
+    // Klein: das Wort «gedeckt/offen» nur für Screenreader — in der halben Spalte lief es in die
+    // Nachbarspalte (Abnahme F6, 375 px). Sichtbar tragen ✓ und ○ den Stand, wie im Entwurf.
+    h('span', { style: klein ? VERSTECKT : { marginLeft: 'auto', fontSize: text.xs, color: p.covered ? (palette.sageDeep || palette.sage) : palette.mid } }, p.covered ? t('schutzschild.covered') : t('schutzschild.open'))
   );
 
   const groupBlock = (group, titleKey, clipId, note) => {
@@ -52,19 +58,27 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
     const label = t('schutzschild.' + titleKey) + ': ' + (group.allCovered
       ? t('schutzschild.allCovered')
       : t('schutzschild.someOpen', { list: group.gaps.map(k => t('schutzschild.' + k)).join(', ') }));
-    return h('div', { style: { flex: '1 1 220px', minWidth: '200px' } },
-      h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, textAlign: 'center', marginBottom: space['2xs'] + 'px' } }, t('schutzschild.' + titleKey)),
-      note && h('div', { style: { fontSize: text.xs, color: palette.mid, textAlign: 'center', marginBottom: space.sm + 'px', lineHeight: leading.normal } }, note),
-      shieldSvg(palette, group, clipId, label),
-      h('div', { style: { maxWidth: '260px', margin: space.sm + 'px auto 0' } }, group.items.map(row))
+    // Klein: Schild zuerst, dann Titel und Satz (wie im Entwurf); gross: Titel über dem Schild.
+    const titel = h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, textAlign: 'center', marginBottom: space['2xs'] + 'px', marginTop: klein ? space.xs + 'px' : 0 } }, t('schutzschild.' + titleKey));
+    const satz = note && h('div', { style: { fontSize: text.xs, color: palette.mid, textAlign: 'center', marginBottom: space.sm + 'px', lineHeight: leading.normal } }, note);
+    return h('div', { 'data-gruppe': titleKey, style: klein ? { flex: '1 1 0', minWidth: 0 } : { flex: '1 1 220px', minWidth: '200px' } },
+      !klein && titel, !klein && satz,
+      shieldSvg(palette, group, clipId, label, klein),
+      klein && titel, klein && satz,
+      h('div', { style: { maxWidth: '260px', margin: (klein ? space.xs : space.sm) + 'px auto 0' } }, group.items.map(row))
     );
   };
 
   return h('div', {
-    style: { marginBottom: space.lg + 'px', padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border + '66', borderRadius: radius.md },
+    'data-schild': klein ? 'klein' : 'gross',
+    style: klein
+      ? { marginBottom: space.sm + 'px' }
+      : { marginBottom: space.lg + 'px', padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border + '66', borderRadius: radius.md },
   },
-    h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed, textAlign: 'center' } }, t('schutzschild.intro')),
-    h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.lg + 'px', alignItems: 'flex-start' } },
+    h('p', { style: klein
+      ? { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.normal }
+      : { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed, textAlign: 'center' } }, t('schutzschild.intro')),
+    h('div', { style: { display: 'flex', flexWrap: klein ? 'nowrap' : 'wrap', gap: (klein ? space.md : space.lg) + 'px', alignItems: 'flex-start' } },
       groupBlock(st.pflicht, 'pflichtTitle', 'schild-pflicht', t('schutzschild.pflichtNote')),
       groupBlock(st.empfohlen, 'empfohlenTitle', 'schild-empfohlen', t('schutzschild.empfohlenNote'))
     ),

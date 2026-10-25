@@ -14,8 +14,6 @@ import PrimaryButton from './components/PrimaryButton.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
-import { Schutzschild } from './components/Schutzschild.jsx';
-import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
@@ -72,6 +70,7 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
+const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -2046,7 +2045,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ablage('chapterView.passend.ablageBasis'),
       ];
       case 'wohnen': return [weg('umzug'), weg('mietzins'), weg('wohnunggekuendigt'), ablage('chapterView.passend.ablageWohnen')];
-      case 'versicherungen': return [weg('praemien'), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
+      // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Seite, die zur
+      // Versicherungs-Übersicht wird (Runde 9 AB, seiten-buendeln.md §11); bis dahin `praemien`.
+      case 'versicherungen': return [weg('praemien', { key: 'alle-versicherungen', titel: tr('chapterView.passend.alleVersicherungen'), sub: tr('chapterView.passend.alleVersicherungenSub') }), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
       case 'ausbildung': return [weg('cv'), weg('neuerjob'), weg('stelleverloren'), weg('stundenlohn'), ablage('chapterView.passend.ablageAusbildung')];
       case 'behoerden': return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
@@ -2164,6 +2165,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // einen Monatsrechnung; der Regler verändert das Profil nie.
     chapter.key === 'wohnen' && allData && React.createElement(React.Suspense, { key: 'wohnkosten', fallback: null },
       React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
+    ),
+
+    // Fassung 6 · Kapitel Versicherungen (Runde 9, Entwurf AA, nachgebessert): Versicherungen pro Monat,
+    // KK-Last, Schutzschild klein, Franchise-Kreuz klein mit Weg zur Übersicht. Das grosse Schutzschild
+    // stand bis 25.10.2026 weiter unten (Instrument #4); es lebt jetzt hier in der kleinen Fassung.
+    chapter.key === 'versicherungen' && allData && React.createElement(React.Suspense, { key: 'versicherungen-instrument', fallback: null },
+      React.createElement(VersicherungenInstrument, { palette, t: tr, versicherungen: data, allData, onNavigate, uebersichtName: tr(ansichtName('praemien') || 'praemien') })
     ),
 
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
@@ -2327,14 +2335,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
     // oben unter der Zusammenfassung (components/WohnkostenInstrument.jsx).
 
-    // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
-    // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
-    // solange nichts erfasst ist.
-    chapter.key === 'versicherungen' &&
-      React.createElement(Schutzschild, {
-        palette, t, versicherungen: data,
-        ...schildOptionen(allData),
-      }),
+    // Versicherungs-Schutzschild (Instrument #4): seit 25.10.2026 klein im Versicherungen-Instrument
+    // oben (components/VersicherungenInstrument.jsx), nicht mehr gross an dieser Stelle.
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // Finanzen: der IPV-Hinweis und das Lohn-Barometer standen hier bis 24.10.2026. Seit der

@@ -2324,6 +2324,24 @@ export default {
   },
 
   // Fassung 6 · housing chapter, instrument at the top (round 9, draft Z, 24.10.2026). Replaces «wohnkostenanteil».
+  // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
+  versInstrument: {
+    titel: "Insurance per month",
+    kk: "Health insurance (basic)",
+    hausrat: "Household contents (CHF {jahr} / year)",
+    haftpflicht: "Liability (CHF {jahr} / year)",
+    weitere: "Other insurance (Finances chapter)",
+    nichtErfasst: "{liste}: premium not entered.",
+    nameHausrat: "Household contents",
+    nameHaftpflicht: "Liability",
+    fahrzeug: "Vehicle insurance does not count here — car costs belong to «Mobility» in the Finances chapter.",
+    pk: "The pension fund (CHF {betrag}) is already deducted from your salary.",
+    anteil: "{pct} % of income",
+    who: "WHO 10 %",
+    schutzschild: "Protection shield",
+    franchise: "Deductible cross",
+    alles: "Everything about the deductible and comparison",
+  },
   wohnenInstrument: {
     titel: 'Housing costs per month',
     titelAusprobiert: 'Housing costs per month · trying out',
@@ -2381,6 +2399,8 @@ export default {
       ablageBasis: "File a copy of your ID",
       ablageWohnen: "File the tenancy agreement",
       ablageVersicherungen: "File insurance policies",
+      alleVersicherungen: "All insurance at a glance",
+      alleVersicherungenSub: "Premiums, deductible, region, IPV, switching deadline",
       ablageAusbildung: "File diplomas",
       ablageDokumente: "File documents",
     },
