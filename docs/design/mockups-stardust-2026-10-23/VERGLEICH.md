@@ -1074,3 +1074,8 @@ Passend: Lebensmappe, Pass oder Identitätskarte, Zivilstand ändert sich, Auswe
    Kosten, Verlust» (App nimmt den Register-Untertitel).
 4. Feldnamen brechen, weil die Werte die Spalte füllen: «AHV- / Nummer», «Im / Haushalt» → gehört zum Muster (wie Wohnen 5).
 5. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
+
+**Entschieden (Sophie, 25.10.2026):** «Basis: 1 mit «allein, keine Kinder» usw. beheben, bei 2 die Zeile «Neu in der
+Schweiz» weglassen, bis es ein Datum gibt. 3 so lassen.» Gebaut: Zweig `fix/f6-abnahme-basis`, Entwurfs-PR #573
+(`735f3b66`) — «allein, keine Kinder» / «2 Erwachsene, 1 Kind» (5 Sprachen, rm ungeprüft) · «Neu in der Schweiz» aus
+«Passend», bis es ein Feld «in der Schweiz seit» gibt. 6’782 Tests grün, Build sauber.
