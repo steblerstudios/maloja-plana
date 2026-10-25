@@ -1790,9 +1790,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     if (f.type === 'household') {
       const h = v || {};
       const kinder = Array.isArray(h.children) ? h.children.length : 0;
-      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder». Die Zahl
+      // Fassung 6 (Runde 9, Y): eine lesbare Zeile «Im Haushalt». Abnahme F6 (Sophie 25.10.2026): statt
+      // «1 Erwachsene · 0 Kinder» jetzt «allein, keine Kinder» bzw. «2 Erwachsene, 1 Kind». Die Zahl
       // der Erwachsenen wie die Erfassung sie zählt (adultsList, sonst adults; utils/partnereinkommen.js).
-      return tr(kinder === 1 ? 'chapterView.haushaltWertEinKind' : 'chapterView.haushaltWert', { erwachsene: erwachseneImHaushalt(h), kinder });
+      const erwachsene = erwachseneImHaushalt(h);
+      return [
+        erwachsene <= 1 ? tr('chapterView.haushaltAllein') : tr('chapterView.haushaltErwachsene', { n: erwachsene }),
+        kinder === 0 ? tr('chapterView.haushaltKeineKinder') : kinder === 1 ? tr('chapterView.haushaltEinKind') : tr('chapterView.haushaltKinder', { n: kinder }),
+      ].join(', ');
     }
     if (f.type === 'currency') {
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
@@ -2031,9 +2036,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const b = allData?.basis || {};
     switch (chapter.key) {
       case 'basis': return [
-        // Je nach Angaben oben (Runde 9, Y). Ein Zuzugsdatum gibt es im Profil nicht — «Neu in der
-        // Schweiz» darum nur, wenn die Nationalität nicht Schweiz ist, zusammen mit den zwei anderen.
-        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung'), weg('zuzug')] : []),
+        // Je nach Angaben oben (Runde 9, Y). «Neu in der Schweiz» (Ablauf `zuzug`) sollte nur nach einem
+        // Zuzug in den letzten 12 Monaten erscheinen; ein Zuzugsdatum gibt es im Profil nicht. Abnahme F6
+        // (Sophie 25.10.2026): weglassen, bis es ein Datum gibt — sonst stünde es auch nach 20 Jahren da.
+        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung')] : []),
         weg('lebensmappe', { sub: tr('chapterView.passend.lebensmappeSub') }),
         weg('ausweis'),
         weg('gepaeck', { key: 'familie', titel: tr('chapterView.passend.familie'), sub: tr('chapterView.passend.familieSub'), ikon: 'family' }),
