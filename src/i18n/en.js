@@ -6007,7 +6007,7 @@ export default {
     plzNotFound: 'Postal code not found in the official register.',
     regionTitle: 'Premium region',
     regionInfo: '{gemeinde} ({kanton}) — premium region {region}',
-    avgPremium: 'Average premium 2026: Children CHF {kinder} · Young adults CHF {junge} · Adults CHF {erwachsene}',
+    avgPremium: 'Average premium {jahr}: Children CHF {kinder} · Young adults CHF {junge} · Adults CHF {erwachsene}',
     noInsurer: 'No insurer on file',
     noInsurerHint: 'Enter your health insurer under "Insurance" to see your reference premium.',
     insurerNotFound: '"{name}" not recognized',

@@ -6057,7 +6057,7 @@ export default {
     plzNotFound: 'PLZ nicht im amtlichen Verzeichnis gefunden.',
     regionTitle: 'Prämienregion',
     regionInfo: '{gemeinde} ({kanton}) — Prämienregion {region}',
-    avgPremium: 'Durchschnittsprämie 2026: Kinder CHF {kinder} · Junge CHF {junge} · Erwachsene CHF {erwachsene}',
+    avgPremium: 'Durchschnittsprämie {jahr}: Kinder CHF {kinder} · Junge CHF {junge} · Erwachsene CHF {erwachsene}',
     noInsurer: 'Kein Versicherer hinterlegt',
     noInsurerHint: { sie: 'Tragen Sie Ihre Krankenkasse unter «Versicherungen» ein, um Ihre Referenzprämie zu sehen.', du: 'Trage Deine Krankenkasse unter «Versicherungen» ein, um Deine Referenzprämie zu sehen.' },
     insurerNotFound: '«{name}» nicht erkannt',

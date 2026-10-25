@@ -378,7 +378,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         t('po.regionInfo', { gemeinde: regionInfo.gemeinde, kanton: regionInfo.kanton, region: regionInfo.region })
       ),
       React.createElement('div', { style: { color: palette.mid, marginTop: space.xs + 'px' } },
+        // Jahr aus den Daten (Stichtag heute), nicht fest im Text — ab 1.1.2027 stehen hier die Prämien 2027.
         t('po.avgPremium', {
+          jahr: regionInfo.jahr,
           kinder: regionInfo.praemien.kinder.toFixed(0),
           junge: regionInfo.praemien.junge.toFixed(0),
           erwachsene: regionInfo.praemien.erwachsene.toFixed(0)

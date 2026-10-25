@@ -6007,7 +6007,7 @@ export default {
     plzNotFound: 'Code postal non trouvé dans le registre officiel.',
     regionTitle: 'Région de primes',
     regionInfo: '{gemeinde} ({kanton}) — région de primes {region}',
-    avgPremium: 'Prime moyenne 2026 : Enfants CHF {kinder} · Jeunes CHF {junge} · Adultes CHF {erwachsene}',
+    avgPremium: 'Prime moyenne {jahr} : Enfants CHF {kinder} · Jeunes CHF {junge} · Adultes CHF {erwachsene}',
     noInsurer: 'Aucun assureur enregistré',
     noInsurerHint: { sie: 'Saisissez votre caisse maladie sous « Assurances » pour voir votre prime de référence.', du: 'Saisis ta caisse maladie sous « Assurances » pour voir ta prime de référence.' },
     insurerNotFound: '« {name} » non reconnu',

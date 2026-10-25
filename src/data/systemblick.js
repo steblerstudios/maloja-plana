@@ -118,7 +118,8 @@ export function hauptortBfs(kanton) {
 
 // Haushaltsprämie pro Monat = Summe der regionalen Durchschnittsprämien 2026 am Hauptort, je Person.
 export function haushaltsPraemie(kanton, h) {
-  const p = getAveragePremium(hauptortBfs(kanton));
+  // Prämien des Modelljahres (JAHR), nicht des heutigen Datums — sonst mischte sich ab 1.1. ein anderes Jahr hinein.
+  const p = getAveragePremium(hauptortBfs(kanton), new Date(JAHR, 6, 1));
   if (!p) return null;
   const alter = [...h.erwachsene.map((g) => alterIm(JAHR, g)), ...h.kinder];
   return Math.round(alter.reduce((s, a) => s + p[praemienKlasse(a)], 0));

@@ -5981,7 +5981,7 @@ export default {
     plzNotFound: 'CAP non trovato nel registro ufficiale.',
     regionTitle: 'Regione dei premi',
     regionInfo: '{gemeinde} ({kanton}) — Regione dei premi {region}',
-    avgPremium: 'Premio medio 2026: bambini CHF {kinder} · giovani CHF {junge} · adulti CHF {erwachsene}',
+    avgPremium: 'Premio medio {jahr}: bambini CHF {kinder} · giovani CHF {junge} · adulti CHF {erwachsene}',
     noInsurer: 'Nessun assicuratore registrato',
     noInsurerHint: { sie: 'Inserisca la Sua cassa malati alla voce «Assicurazioni» per vedere il Suo premio di riferimento.', du: 'Inserisci la tua cassa malati alla voce «Assicurazioni» per vedere il tuo premio di riferimento.' },
     insurerNotFound: '«{name}» non riconosciuto',
