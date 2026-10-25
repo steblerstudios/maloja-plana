@@ -342,3 +342,12 @@ Sophie: «ok sauber weiter bitte». **#583** `fix/f6-nachtrag-2` `3da27188`, Bas
 - swiss-precision 0 Blocker, eingearbeitet. 6’937 Tests grün. Nicht gemergt, nicht live.
 - **Entscheid offen (Sophie): Englisch** — fedlex (nichtamtlich) «patient decree» / «advance care directive» vs. App «advance directive» /
   «advance care mandate» + «lasting power of attorney». Weiter offen: `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · rm.
+- **21:05:** #583 gemergt (Sophie) → main **`fe1cf650`**, CI grün, nicht deployt.
+
+## Englisch wie fedlex · 25.10.2026 abends (#584, Entwurf)
+
+Sophie: «Englisch wie fedlex: «patient decree» für die Patientenverfügung, «advance care directive» für den Vorsorgeauftrag. Bau das
+als eigenen Entwurfs-PR.» **#584** `fix/f6-englisch-fedlex` `3a716bc7`, Basis main `fe1cf650`. en.js überall umgestellt (inkl.
+Vorlagen-Dokumenttext, Notfallkarte), Direktlink, Such-Aliasse (alte Wörter bleiben suchbar). Ausnahmen: SAMS-Titel «Advance
+directives», «SEM Directives AIG», «power of attorney» = Vollmacht (3×). copy 2 Blocker / 4 Muss eingearbeitet. 6’941 Tests grün.
+Nicht gemergt, nicht live. Damit ist der offene Punkt «Fachbegriffe PV/VA it/en» erledigt (it mit #583).
