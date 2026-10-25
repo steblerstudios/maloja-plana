@@ -1122,3 +1122,11 @@ Hausrat 240, Haftpflicht 120, Summe 5 Mio. (Befund 10 erledigt) → bleibt neu *
 Fachprüfung vor und nach dem Bau: swiss-precision und copy-pruefer je 0 Blocker, Muss eingearbeitet. 6’793 Tests grün.
 Offen: rm ungeprüft · KK-Prämie mit 2027 nachziehen · Befunde 5, 6, 8, 9 · Schritt 2 (Instrumente) und 3 (Übersicht).
 **Beim Mergen:** #571–#575 sind unabhängig von main abgezweigt; nach jedem Merge die Tests auf `main` laufen lassen (#575 ändert Marias Zahlen, die anderen Zweige rechnen noch mit 2’459).
+
+**Versicherungen · Schritt 2 gebaut (Sophie, 25.10.2026: «Bau Schritt 2 … Versicherungen pro Monat, KK-Last, kleine
+Schilde, kleines Franchise-Kreuz, Passend-Zeile zur Übersicht»):** Zweig `feat/f6-versicherungen-instrumente`, Entwurfs-PR
+#576 (`558c699b`, Basis #575). Neues `VersicherungenInstrument.jsx`: Versicherungen pro Monat CHF 570 · KK-Last 8.7 % mit
+WHO 10 %, IPV-Entlastung, Quelle wie KKLastCard · Schutzschild klein «Pflicht · 3/3» (Befund 5 erledigt) · Franchise-Kreuz
+klein mit «Eher 2’500» und «Alles zur Franchise» · Passend zuoberst «Alle Versicherungen auf einen Blick» (Punkt 4 erledigt,
+führt bis Schritt 3 auf `praemien`). swiss-precision, copy, a11y je 0 Blocker, Muss eingearbeitet. 6’810 Tests grün.
+Offen: Befunde 6 (Spinnennetz), 8 (Franchise ohne CHF, «BVG/Pensionskasse»), 9 (leere Abschnitte) · Schritt 3 · rm · Prämien 2027.
