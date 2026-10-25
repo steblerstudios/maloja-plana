@@ -2325,6 +2325,16 @@ export default {
   },
 
   // Fassung 6 · capitolo Abitazione, strumento in alto (giro 9, bozza Z, 24.10.2026). Sostituisce «wohnkostenanteil».
+  // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
+  lebenslaufVorschau: {
+    titel: { sie: "Il Suo curriculum — anteprima", du: "Il tuo curriculum — anteprima" },
+    seit: "dal {datum}",
+    erfahrung: "Esperienza professionale",
+    bildung: "Formazione",
+    sprachen: "Lingue",
+    erstellen: "Creare il curriculum",
+    woher: "Dai dati di questo capitolo e della Base personale. Nel curriculum si possono completare e salvare come PDF.",
+  },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     titel: "Assicurazioni al mese",
@@ -2407,6 +2417,7 @@ export default {
     zurUebersichtSatz: { sie: "Il Suo fascicolo di vita in un colpo d’occhio.", du: "Il tuo fascicolo di vita in un colpo d’occhio." },
     zurUebersicht: "Alla panoramica",
     imHaushalt: "Nell’economia domestica",
+    bewilligungNichtNoetig: "non necessario (cittadinanza svizzera)",
     proJahr: "/ anno",
     haushaltAllein: "una persona",
     haushaltErwachsene: "{n} adulti",
@@ -2752,6 +2763,9 @@ export default {
       employerOnly: 'Impiegato/a presso {employer}.',
       educationSentence: 'Titolo di studio più alto: {level}.',
       educationAndJob: '{level}. Attualmente impiegato/a come {job}.',
+      bei: "presso {employer}",
+      seit: "dal {datum}",
+      stunden: "{h} ore/settimana",
     },
   },
 

@@ -108,7 +108,10 @@ function calcDuration(moveInDate, t) {
     const start = new Date(moveInDate);
     if (isNaN(start.getTime())) return null;
     const now = new Date();
-    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    // Ein Monat zählt erst, wenn der Tag erreicht ist (Fachprüfung 25.10.2026: Beginn 30.04. zeigte am 01.10.
+    // schon einen Monat mehr); ein Datum in der Zukunft ergibt keine Dauer.
+    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()) - (now.getDate() < start.getDate() ? 1 : 0);
+    if (start > now) return null;
     if (totalMonths < 0) return null;
     const years = Math.floor(totalMonths / 12);
     const months = totalMonths % 12;
@@ -274,7 +277,30 @@ function buildVersicherungenSentence(data, t) {
 
 // ─── Ausbildung ───────────────────────────────────────────
 
+// Fassung 6 (Runde 9, AC; gebaut Abnahme 25.10.2026): die Zusammenfassung nennt auch, wo, seit wann und wie
+// viel — «… — bei Kantonsspital Zürich seit 01.04.2019 (7 Jahre, 6 Monate), 42 Std./Woche.»
+function datumCH(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
+  return m ? m[3] + '.' + m[2] + '.' + m[1] : null;
+}
+
 function buildAusbildungSentence(data, t) {
+  const satz = buildAusbildungGrundsatz(data, t);
+  if (!satz) return null;
+  const teile = [];
+  // Arbeitgeber nur, wenn der Grundsatz ihn nicht schon nennt («… bei {employer}.»).
+  const beiNoetig = data.employer && !satz.includes(data.employer);
+  const seit = datumCH(data.employmentStart);
+  const dauer = seit ? calcDuration(data.employmentStart, t) : null;
+  const seitText = seit ? t('mirror.ausbildung.seit', { datum: seit }) + (dauer ? ' (' + dauer + ')' : '') : null;
+  if (beiNoetig) teile.push(t('mirror.ausbildung.bei', { employer: data.employer }) + (seitText ? ' ' + seitText : ''));
+  else if (seitText && data.employer) teile.push(seitText);
+  const stunden = Number(data.workHoursPerWeek);
+  if (stunden > 0) teile.push(t('mirror.ausbildung.stunden', { h: String(stunden) }));
+  return teile.length ? satz.replace(/\.$/, '') + ' — ' + teile.join(', ') + '.' : satz;
+}
+
+function buildAusbildungGrundsatz(data, t) {
   const job = data.jobTitle;
   const employer = data.employer;
   const level = data.educationLevel ? selectLabel(t, 'ausbildung', 'educationLevel', data.educationLevel) : null;

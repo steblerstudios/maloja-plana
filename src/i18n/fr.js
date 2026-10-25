@@ -2325,6 +2325,16 @@ export default {
   },
 
   // Fassung 6 · chapitre Logement, instrument en haut (tour 9, esquisse Z, 24.10.2026). Remplace «wohnkostenanteil».
+  // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
+  lebenslaufVorschau: {
+    titel: { sie: "Votre CV — aperçu", du: "Ton CV — aperçu" },
+    seit: "depuis {datum}",
+    erfahrung: "Expérience professionnelle",
+    bildung: "Formation",
+    sprachen: "Langues",
+    erstellen: "Créer le CV",
+    woher: "À partir des données de ce chapitre et de la Base personnelle. Dans le CV, on peut les compléter et les enregistrer en PDF.",
+  },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     titel: "Assurances par mois",
@@ -2409,6 +2419,7 @@ export default {
     zurUebersichtSatz: { sie: "Votre dossier de vie en un coup d’œil.", du: "Ton dossier de vie en un coup d’œil." },
     zurUebersicht: "Voir la vue d’ensemble",
     imHaushalt: "Dans le ménage",
+    bewilligungNichtNoetig: "pas nécessaire (nationalité suisse)",
     proJahr: "/ an",
     haushaltAllein: "une personne",
     haushaltErwachsene: "{n} adultes",
@@ -2752,6 +2763,9 @@ export default {
       employerOnly: 'Employé(e) chez {employer}.',
       educationSentence: 'Diplôme le plus élevé : {level}.',
       educationAndJob: '{level}. Actuellement en poste comme {job}.',
+      bei: "chez {employer}",
+      seit: "depuis le {datum}",
+      stunden: "{h} h/semaine",
     },
   },
 

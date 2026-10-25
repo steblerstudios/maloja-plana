@@ -3986,6 +3986,7 @@ export default {
     zurUebersichtSatz: { sie: "Voss organisatur da vita en ina survista.", du: "Tes organisatur da vita en ina survista." },
     zurUebersicht: "A la survista",
     imHaushalt: "En l’economia domestica",
+    bewilligungNichtNoetig: "betg necessari (burgais svizzer)",
     proJahr: "/ onn",
     haushaltAllein: "ina persuna",
     haushaltErwachsene: "{n} creschids",
@@ -4219,6 +4220,16 @@ export default {
 
   // Fassung 6 · chapitel Abitar, instrument sisum (runda 9, sboz Z, 24.10.2026). Remplazza «wohnkostenanteil».
   // rm ungeprüft F6
+  // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
+  lebenslaufVorschau: {
+    titel: { sie: "Voss curriculum vitae — prevista", du: "Tes curriculum vitae — prevista" },
+    seit: "dapi {datum}",
+    erfahrung: "Experientscha professiunala",
+    bildung: "Furmaziun",
+    sprachen: "Linguas",
+    erstellen: "Crear il curriculum vitae",
+    woher: "Ord las indicaziuns da quest chapitel e da la Basa persunala — cumplettar e memorisar sco PDF en il curriculum vitae.",
+  },
   // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
   versInstrument: {
     titel: "Assicuranzas per mais",
@@ -5684,6 +5695,9 @@ export default {
       employerOnly: 'Emploià/ada tar {employer}.',
       educationSentence: 'Il pli aut diplom: {level}.',
       educationAndJob: '{level}. Actualmain activ/a sco {job}.',
+      bei: "tar {employer}",
+      seit: "dapi {datum}",
+      stunden: "{h} uras/emna",
     },
   },
 
