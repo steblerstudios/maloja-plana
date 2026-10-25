@@ -331,3 +331,14 @@ Sophie: «ok sauber weiter». Aufgeräumt: `_werkbank/f6-merge-kette` entfernt, 
 - Offen: Schutzschild BVG-Lücke trotz «trifft nicht zu» · Orientierung `ahvBeitrag` (Selbständige) · AG/BS «keine Säule 2» · rm.
 - **20:23:** #582 gemergt (Sophie: «Ja, Nebenwohnsitz ohne Steuersatz ist richtig. Merge #582, sobald die CI grün ist»), squash →
   main **`3e409432`**, CI auf main grün. **Nicht deployt** — live weiter 0.1.48-beta. Nebenwohnsitz ohne Steuersatz: entschieden.
+
+## Nachtrag 2 · 25.10.2026 abends (#583, Entwurf)
+
+Sophie: «ok sauber weiter bitte». **#583** `fix/f6-nachtrag-2` `3da27188`, Basis main `3e409432`, Worktree `_werkbank/f6-muster`
+(node_modules jetzt lokal per `npm ci` — der Link auf f6-notfall brach, als eine andere Sitzung f6-notfall aufräumte).
+- Schutzschild: Satz bei Pensionskasse «trifft nicht zu» trotz Pflicht (Lücke bleibt; BVV 2 Art. 1j/1k).
+- AHV-Orientierung: Hälfte nur für Angestellte, Selbständige/Nichterwerbstätige «in der Regel» selbst.
+- it «direttive del paziente» (CC Art. 370, fedlex); Abschnitt Vorsorge neutral it/fr/en.
+- swiss-precision 0 Blocker, eingearbeitet. 6’937 Tests grün. Nicht gemergt, nicht live.
+- **Entscheid offen (Sophie): Englisch** — fedlex (nichtamtlich) «patient decree» / «advance care directive» vs. App «advance directive» /
+  «advance care mandate» + «lasting power of attorney». Weiter offen: `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · rm.
