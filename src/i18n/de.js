@@ -2343,12 +2343,11 @@ export default {
     nichtErfasst: "{liste}: Prämie nicht erfasst.",
     nameHausrat: "Hausrat",
     nameHaftpflicht: "Haftpflicht",
+    nameKK: "Krankenkasse",
     fahrzeug: "Die Fahrzeugversicherung zählt hier nicht mit — Autokosten gehören im Kapitel Finanzen zu «Mobilität».",
     pk: "Die Pensionskasse (CHF {betrag}) ist schon vom Lohn abgezogen.",
     anteil: "{pct} % des Einkommens",
     who: "WHO 10 %",
-    schutzschild: "Schutzschild",
-    franchise: "Franchise-Kreuz",
     alles: "Alles zur Franchise und zum Vergleich",
   },
   wohnenInstrument: {

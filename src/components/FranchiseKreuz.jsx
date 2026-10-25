@@ -133,7 +133,7 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
       t('po.kreuzHochrechnungText', { value: num(st.hochrechnung) })),
     st.mode === 'orientation' && onNavigate && h('button', {
       onClick: () => onNavigate('kvg', null, 'franchise'),
-      style: { display: 'block', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
+      style: { display: 'block', minHeight: '44px', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
     }, t('po.tachoTrackLink'))
   );
 };

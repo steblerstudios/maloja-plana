@@ -102,3 +102,26 @@ describe('Texte in allen fünf Sprachen', () => {
     });
   }
 });
+
+// Fachprüfung und a11y-Prüfung nach dem Bau (25.10.2026).
+describe('Nachprüfung', () => {
+  const mitFinanzen = (finanzen) => ({ ...DEMO_DATA, finanzen: { ...DEMO_DATA.finanzen, ...finanzen } });
+  it('PK-Satz nur bei Angestellten mit netto erfasstem Lohn', () => {
+    expect(nurText(instrument(DEMO_DATA.versicherungen))).toContain('Die Pensionskasse (CHF 420)');
+    expect(nurText(instrument(DEMO_DATA.versicherungen, mitFinanzen({ incomeType: 'brutto' })))).not.toContain('Die Pensionskasse');
+    expect(nurText(instrument(DEMO_DATA.versicherungen, mitFinanzen({ employmentType: 'selfEmployed' })))).not.toContain('Die Pensionskasse');
+  });
+  it('Kasse erfasst, Prämie nicht: «Krankenkasse» steht zuerst bei «nicht erfasst»', () => {
+    const v = { ...DEMO_DATA.versicherungen, kkPremium: '', liabilityPremium: '' };
+    expect(nurText(instrument(v))).toContain('Krankenkasse, Haftpflicht: Prämie nicht erfasst.');
+  });
+  it('KK-Last mit Quelle (WHO) und Marke «Orientierung»', () => {
+    const text = nurText(instrument(DEMO_DATA.versicherungen));
+    expect(text).toContain('WHO / UNO SDG-Indikator 3.8.2');
+  });
+  it('kleines Schild: Zahl als Text neben dem Titel, Liste mit Rollen', () => {
+    const html = instrument(DEMO_DATA.versicherungen);
+    expect(nurText(html)).toContain('Pflicht · 3/3');
+    expect(html).toContain('role="list"');
+  });
+});

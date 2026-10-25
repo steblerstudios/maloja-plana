@@ -8,13 +8,19 @@ import { ladeFranchiseOpt } from '../data/franchiseLaden.js';
 import { Schutzschild } from './Schutzschild.jsx';
 import { FranchiseKreuz } from './FranchiseKreuz.jsx';
 import { LegendenMarke } from './LegendenMarke.jsx';
+import { calculateIPV } from '../config/cantonalData.js';
+import { ipvAbzug } from '../data/ipvAbzug.js';
+import { renderSource } from '../utils/renderSource.js';
+import { ErgebnisArt } from './ErgebnisArt.jsx';
+import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 
 // Kapitel Versicherungen · das Instrument oben (Fassung 6, Runde 9, Entwurf AA, Entscheid Sophie 24.10.2026,
 // nachgebessert am selben Tag). Wie das Wohnkosten-Instrument: unter der ruhigen Zusammenfassung, vor den Angaben.
 //   1. «Versicherungen pro Monat» — aus der einen Monatsrechnung (utils/monatsrechnung.js), also dieselbe Zahl wie
 //      die Budget-Gruppe «Versicherung & Gesundheit»: Krankenkasse, Hausrat ÷ 12, Haftpflicht ÷ 12, «Weitere
 //      Versicherungen» aus dem Kapitel Finanzen. Darunter, was fehlt und was bewusst nicht zählt.
-//   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze).
+//   2. «Ihre KK-Last» — Prämie ÷ Monatseinkommen gegen den WHO-Richtwert 10 % (wie KKLastCard, dieselben Sätze,
+//      dieselbe IPV-Entlastung über ipvAbzug, Quelle und «Orientierung» — Fachprüfung 25.10.2026).
 //   3. Schutzschild klein — zwei Schilde mit Listen, offen (statt der grossen Schilde darunter).
 //   4. Franchise-Kreuz klein — dieselbe Rechnung wie die Prämien-Seite (ladeFranchiseOpt, erst mit Kasse + PLZ),
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
@@ -58,7 +64,12 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     v.householdInsurance === 'yes' && !(Number(v.householdInsuranceAmount) > 0) && t('versInstrument.nameHausrat'),
     v.liabilityInsurance === 'yes' && !(Number(v.liabilityPremium) > 0) && t('versInstrument.nameHaftpflicht'),
   ].filter(Boolean);
-  const pk = Number(v.bvgContribution) > 0 ? Number(v.bvgContribution) : 0;
+  // Die Krankenkasse ist Pflicht: ist eine Kasse erfasst, aber keine Prämie, steht sie zuerst (Fachprüfung).
+  if (v.kkInsurer && !(Number(v.kkPremium) > 0)) fehlt.unshift(t('versInstrument.nameKK'));
+  // «Schon vom Lohn abgezogen» stimmt nur für Angestellte mit netto erfasstem Lohn — bei brutto steckt der
+  // Beitrag noch im Betrag, Selbständige zahlen freiwillige Beiträge selbst (Fachprüfung 25.10.2026).
+  const f = daten.finanzen || {};
+  const pk = Number(v.bvgContribution) > 0 && f.employmentType === 'employed' && f.incomeType === 'netto' ? Number(v.bvgContribution) : 0;
 
   // KK-Last wie KKLastCard: Grundversicherungs-Prämie ÷ monatliches Einkommen.
   const kkPraemie = Number(v.kkPremium) || 0;
@@ -66,6 +77,9 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
   const anteil = kkPraemie > 0 && einkommen > 0 ? (kkPraemie / einkommen) * 100 : null;
   const skala = anteil == null ? 15 : Math.max(15, Math.ceil(anteil / 5) * 5);
   const ueber = anteil != null && anteil >= WHO;
+  // IPV-Entlastung wie KKLastCard: was abgezogen werden darf, entscheidet data/ipvAbzug.js.
+  const ipvBetrag = anteil != null ? Math.min(kkPraemie, ipvAbzug(daten, calculateIPV(daten)).betrag || 0) : 0;
+  const effektiv = ipvBetrag > 0 ? Math.round(((kkPraemie - ipvBetrag) / einkommen) * 1000) / 10 : null;
 
   const schildDa = schildState(v, schildOptionen(daten)).touched;
 
@@ -106,17 +120,20 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
         h('span', { style: { whiteSpace: 'nowrap' } }, h(LegendenMarke, { form: 'strich', color: palette.text, palette }), t('versInstrument.who'))
       ),
       h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t(ueber ? 'kkLast.overNote' : 'kkLast.underNote')),
+      effektiv != null && h('p', { 'data-teil': 'kk-last-ipv', style: { ...klein, margin: space.xs + 'px 0 0', color: palette.skyDeep || palette.text } }, t('kkLast.ipvRelief', { ipv: zahl(ipvBetrag), share: effektiv })),
+      h(ErgebnisArt, { palette, t, ergebnis: KK_LAST_ERGEBNIS, style: { marginTop: space.xs + 'px' } }),
+      h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('kkLast.source'), null, t)),
       ueber && onNavigate && h('button', {
         type: 'button', className: 'mp-link', onClick: () => onNavigate('premium'),
         style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
       }, t('kkLast.ipvLink'))
     ),
 
-    schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('versInstrument.schutzschild')),
+    schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
     h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(daten) }),
 
     franchiseOpt && h(React.Fragment, null,
-      h('h4', { style: kapH }, t('versInstrument.franchise')),
+      h('h4', { style: kapH }, t('instrumente.tacho')),
       h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true }),
       vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal, textAlign: 'center' } }, vorschlagSatz),
       onNavigate && h('button', {

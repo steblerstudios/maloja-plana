@@ -28,7 +28,9 @@ const shieldSvg = (palette, group, clipId, label, klein) => {
       h('rect', { x: 20, y: BOTTOM - fillHeight, width: 120, height: fillHeight + 4, fill: palette.sage, opacity: 0.85 })
     ),
     h('path', { d: SHIELD, fill: 'none', stroke: palette.sage, strokeWidth: 2.5 }),
-    h('text', {
+    // Klein: die Zahl steht als Text unter dem Schild — im kleinen Schild (≈10 px) hielt sie auf der
+    // Füllung weder hell noch dunkel 4.5:1 (a11y-Prüfer, Abnahme F6).
+    !klein && h('text', {
       x: 80, y: 92, textAnchor: 'middle',
       style: { fontSize: '28px', fontWeight: weight.semi, fill: group.fraction > 0.55 ? palette.surface : palette.text },
     }, group.covered + '/' + group.total)
@@ -43,8 +45,8 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
   const h = React.createElement;
 
   const row = (p) => h('div', {
-    key: p.key,
-    style: { display: 'flex', alignItems: 'center', gap: (klein ? 6 : space.sm) + 'px', fontSize: klein ? text.xs : text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
+    key: p.key, role: 'listitem',
+    style: { position: 'relative', display: 'flex', alignItems: 'center', gap: (klein ? 6 : space.sm) + 'px', fontSize: klein ? text.xs : text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
   },
     h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', flexShrink: 0, textAlign: 'center' } }, hinweisZeichen(p.covered ? 'check' : 'kaestchen', 12)),
     h('span', { style: { minWidth: 0 } }, t('schutzschild.' + p.key)),
@@ -59,13 +61,14 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
       ? t('schutzschild.allCovered')
       : t('schutzschild.someOpen', { list: group.gaps.map(k => t('schutzschild.' + k)).join(', ') }));
     // Klein: Schild zuerst, dann Titel und Satz (wie im Entwurf); gross: Titel über dem Schild.
-    const titel = h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, textAlign: 'center', marginBottom: space['2xs'] + 'px', marginTop: klein ? space.xs + 'px' : 0 } }, t('schutzschild.' + titleKey));
+    const titel = h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, textAlign: 'center', marginBottom: space['2xs'] + 'px', marginTop: klein ? space.xs + 'px' : 0 } },
+      t('schutzschild.' + titleKey), klein ? ' · ' + group.covered + '/' + group.total : '');
     const satz = note && h('div', { style: { fontSize: text.xs, color: palette.mid, textAlign: 'center', marginBottom: space.sm + 'px', lineHeight: leading.normal } }, note);
     return h('div', { 'data-gruppe': titleKey, style: klein ? { flex: '1 1 0', minWidth: 0 } : { flex: '1 1 220px', minWidth: '200px' } },
       !klein && titel, !klein && satz,
       shieldSvg(palette, group, clipId, label, klein),
       klein && titel, klein && satz,
-      h('div', { style: { maxWidth: '260px', margin: (klein ? space.xs : space.sm) + 'px auto 0' } }, group.items.map(row))
+      h('div', { role: 'list', style: { maxWidth: '260px', margin: (klein ? space.xs : space.sm) + 'px auto 0' } }, group.items.map(row))
     );
   };
 

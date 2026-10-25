@@ -2334,12 +2334,11 @@ export default {
     nichtErfasst: "{liste}: premium not entered.",
     nameHausrat: "Household contents",
     nameHaftpflicht: "Liability",
+    nameKK: "Health insurance",
     fahrzeug: "Vehicle insurance does not count here — car costs belong to «Mobility» in the Finances chapter.",
     pk: "The pension fund (CHF {betrag}) is already deducted from your salary.",
     anteil: "{pct} % of income",
     who: "WHO 10 %",
-    schutzschild: "Protection shield",
-    franchise: "Deductible cross",
     alles: "Everything about the deductible and comparison",
   },
   wohnenInstrument: {

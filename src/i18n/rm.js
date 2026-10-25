@@ -4225,12 +4225,11 @@ export default {
     nichtErfasst: "{liste}: premia betg endatada.",
     nameHausrat: "Ménaschi",
     nameHaftpflicht: "Responsabladad civila",
+    nameKK: "Cassa da malsauns",
     fahrzeug: "L’assicuranza dal vehichel na quinta betg qua — ils custs da l’auto tutgan en il chapitel Finanzas tar «Mobilitad».",
     pk: "La cassa da pensiun (CHF {betrag}) è gia deducida da la paja.",
     anteil: "{pct} % da l’entrada",
     who: "OMS 10 %",
-    schutzschild: "Scut da protecziun",
-    franchise: "Crusch da franschisas",
     alles: "Tut davart la franschisa ed il cumparegliar",
   },
   wohnenInstrument: {
