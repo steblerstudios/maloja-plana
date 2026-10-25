@@ -26,7 +26,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 // Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
-import { NotfallImKapitel } from './components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NOTFALL_ANGABEN } from './components/NotfallImKapitel.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
@@ -1801,7 +1801,24 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       return o ? o.label : String(v);
     }
     if (f.type === 'date') return formatDE(v);
+    // Listen-Felder (Medikamente, Vorerkrankungen): die Namen, wie sie in der Liste stehen.
+    const posten = Array.isArray(data[f.k + 'List']) ? data[f.k + 'List'].filter((x) => x && x.name) : [];
+    if (posten.length) return posten.map((x) => x.name).join(', ');
     return String(v);
+  };
+  // Von oben direkt zu einem Feld (Notfall, «Bereit für den Ernstfall» und Vorsorge, Runde 9 AE): den
+  // Abschnitt öffnen, hinscrollen, ins Feld setzen. Ein ausgeblendeter Abschnitt wird erst gezeigt.
+  const zumFeld = (k) => {
+    const g = abschnittGruppen(chapter.fields, chapter.title).find((x) => x.felder.some((f) => f.k === k));
+    if (!g) return;
+    if (g.sek && !showSecondary) toggleSecondary();
+    setOffeneAbschnitte((o) => ({ ...o, [g.key]: true }));
+    setTimeout(() => {
+      const abschnitt = document.getElementById('mp-section-' + g.key);
+      if (abschnitt) abschnitt.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      const feld = document.getElementById(chapter.key + '-' + k);
+      if (feld && feld.focus) feld.focus({ preventScroll: true });
+    }, 0);
   };
   const abschnittGefuellt = (f) => (f.type === 'household' ? !!data.household : (feldHatWert(data, f.k) || trifftNichtZu(data, f.k)));
   // Fassung 5 · Finanzen: die «mehr Felder» (steuerbares Einkommen, Vorsorge) stehen hinter
@@ -1885,11 +1902,21 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               // Auch der Wert behält sein längstes Wort: mit «minmax(0, auto)» und
               // «overflowWrap: anywhere» brach er mitten im Wort («Kantonsspita / l»,
               // Fassung 6, 24.10.2026). «break-word» bricht nur ein Wort, das allein zu breit ist.
-              : React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(min-content, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
+              : React.createElement(React.Fragment, null,
+                React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(min-content, 1fr) minmax(min-content, auto)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
                   gefuellt.flatMap((f) => [
                     React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
-                  ])))
+                  ])),
+                // Notfall (Runde 9, AE): auch das Fehlende steht da. Was im Ernstfall gebraucht wird, mit
+                // «ergänzen ›»; das Übrige leise «nicht erfasst.».
+                isNotfall && felder.filter((f) => !abschnittGefuellt(f)).map((f) => (NOTFALL_ANGABEN.some((x) => x.chapter === 'notfall' && x.k === f.k)
+                  ? React.createElement('button', {
+                      key: 'fehlt-' + f.k, type: 'button', className: 'mp-link', 'data-fehlt': f.k, onClick: () => zumFeld(f.k),
+                      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', margin: '0 0 ' + space.xs + 'px', padding: '0 ' + space.xs + 'px', background: 'none', border: '1px dashed ' + (palette.roseDeep || palette.rose), borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
+                    }, React.createElement('span', null, hinweisZeichen('kaestchen', 12), f.label), React.createElement('span', { style: { color: palette.sandDeep, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))
+                  : React.createElement('div', { key: 'fehlt-' + f.k, 'data-nicht-erfasst': f.k, style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, tr('notfallKapitel.feldNichtErfasst', { feld: f.label })))))
+              )
       );
     };
     const haupt = gruppen.filter((g) => !g.sek);
@@ -2040,7 +2067,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         weg('vorsorgeauftrag'), weg('briefe', { sub: tr('chapterView.passend.briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
-      case 'notfall': return [weg('patientenverfuegung'), weg('bestattung', { sub: tr('chapterView.passend.bestattungSub') }), ablage('chapterView.passend.ablageDokumente')];
+      // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen jetzt aus «Vorsorge»
+      // oben selbst zum Werkzeug — hier bleibt die Ablage, mit den Unterlagen, die dazugehören.
+      case 'notfall': return [{ ...ablage('chapterView.passend.ablageDokumente'), sub: (chapter.docs || []).map((d) => d.label).join(', ') }];
       default: return [
         // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
         { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
@@ -2113,10 +2142,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // fehlen» (wie der Satz «Es fehlen …»), bei Brutto die Netto-Frage — siehe renderMonatsHeld.
     chapter.key === 'finanzen' && renderMonatsHeld(),
 
-    // Notfall: der frühere Einstieg (24.10.2026, seiten-buendeln.md Gruppe D) — oben die
-    // Vorlesekarte und der Notfallpass, gleich nach dem Kopf; unten die drei Lagen.
-    chapter.key === 'notfall' && React.createElement(NotfallImKapitel, { teil: 'oben', palette, t: tr, onNavigate }),
-
     // Beispiel-Hinweis steht seit 27.09.2026 im geöffneten Abschnitt, dort wo man tippt
     // (Abschnittsliste) — oben war er Vorspann vor jedem Inhalt.
 
@@ -2152,32 +2177,23 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
-    // Notfallkarte export — quiet text link (below mirror cards)
-    isNotfall && hasMedical && React.createElement('div', {
-      style: { marginBottom: space.md }
-    },
-      // Echter Knopf: Enter UND Leertaste, ohne eigenes Tastatur-Handling.
-      React.createElement('button', {
-        type: 'button',
-        onClick: () => setKartenVorschau(true),
-        // Sieht aus wie ein Knopf, nicht wie ein Kästchen zum Abhaken (Fassung 6, Fix 4).
-        style: {
-          display: 'inline-flex', alignItems: 'center', minHeight: '44px',
-          background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.full,
-          padding: '0 ' + space.md + 'px', fontFamily: 'inherit',
-          fontSize: text.sm, fontWeight: weight.medium, color: palette.text, cursor: 'pointer',
-        }
-      }, hinweisZeichen('document'), tr('notfallSummary.printCard')),
-
-      // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
-      // Abschnitte der Karte mit Feldnamen, nie mit Werten.
-      kartenVorschau && React.createElement(ExportVorschau, {
-        palette, t: tr, art: 'dossier',
-        quelle: { abschnitte: notfallkarteAbschnitte().map(s => ({ titel: s.title, felder: s.felder })) },
-        onWeiter: () => { setKartenVorschau(false); handleSaveCard(); },
-        onZurueck: () => setKartenVorschau(false),
-      })
-    ),
+    // Notfall · «ein Ort» (Runde 9, AE; gebaut Abnahme F6, 25.10.2026): nach der Zusammenfassung
+    // Ernstfall, «Bereit für den Ernstfall», die vier Unterlagen und Vorsorge. Die Portemonnaie-Karte
+    // (früher «Notfallkarte drucken») ist eine der vier Kacheln; ihre Vorschau (K20, Feldnamen, nie
+    // Werte) steht zugeklappt darunter, bis die Kachel sie öffnet.
+    isNotfall && React.createElement(NotfallImKapitel, {
+      palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate,
+      onUpdate, demoMode, zumFeld,
+      karteMoeglich: !!hasMedical,
+      onKarteDrucken: () => setKartenVorschau((v) => !v),
+      karteVorschau: kartenVorschau && hasMedical && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+        React.createElement(ExportVorschau, {
+          palette, t: tr, art: 'dossier',
+          quelle: { abschnitte: notfallkarteAbschnitte().map(s => ({ titel: s.title, felder: s.felder })) },
+          onWeiter: () => { setKartenVorschau(false); handleSaveCard(); },
+          onZurueck: () => setKartenVorschau(false),
+        })),
+    }),
 
     // Versicherungsübersicht entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
@@ -2540,9 +2556,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Zusammenlegung mit der Finanz-Übersicht (24.10.2026): nach dem Formular die Auswertung,
     // nach «Passend» der Druck und der Hinweis (docs/entscheide/finanzen-fusion.md §3).
     istFinanzen && renderAuswertung('oben'),
-    // Fassung 6 (Runde 9): «Passend» und «Als Nächstes» in jedem Kapitel. Notfall: erst die drei
-    // Lagen, dann «Passend»; das letzte Kapitel endet mit «Alle Kapitel durchgegangen».
-    chapter.key === 'notfall' && React.createElement(NotfallImKapitel, { teil: 'unten', palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate }),
+    // Fassung 6 (Runde 9): «Passend» und «Als Nächstes» in jedem Kapitel. Notfall: die drei Lagen
+    // stehen seit AE zugeklappt in «Bereit für den Ernstfall»; das letzte Kapitel endet mit «Alle
+    // Kapitel durchgegangen».
     renderPassend(),
     istFinanzen && renderAuswertung('unten'),
     nextChapter && onNext ? renderAlsNaechstes() : (!nextChapter && onNavigate ? renderAlleDurch() : null),

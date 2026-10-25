@@ -10,6 +10,7 @@ import React from 'react';
 import { getCantonName } from './config/cantonalData.js';
 import { text, space, weight, leading } from './config/tokens.js';
 import { zivilstandLabel } from './utils/zivilstand.js';
+import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { betrag } from './utils/geld.js';
 import { sumExpenses, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 
@@ -242,11 +243,21 @@ function buildNotfallSentence(data, t) {
   const hasProvision = vorsorgeKeys.some(k => data[k] && data[k] !== 'no');
   const hasHealth = Boolean(data.allergies || data.medications || data.chronicDiseases);
 
-  if (hasDoctor && hasProvision) return t('mirror.notfall.contactDoctorProvision');
-  if (hasDoctor) return t('mirror.notfall.contactAndDoctor');
-  if (hasProvision) return t('mirror.notfall.contactAndProvision');
-  if (hasHealth) return t('mirror.notfall.contactAndHealth');
-  return t('mirror.notfall.contactSentence');
+  let satz;
+  if (hasDoctor && hasProvision) satz = t('mirror.notfall.contactDoctorProvision');
+  else if (hasDoctor) satz = t('mirror.notfall.contactAndDoctor');
+  else if (hasProvision) satz = t('mirror.notfall.contactAndProvision');
+  else if (hasHealth) satz = t('mirror.notfall.contactAndHealth');
+  else satz = t('mirror.notfall.contactSentence');
+
+  // Runde 9, AE (gebaut Abnahme F6, 25.10.2026): Blutgruppe und Allergien gleich mit — das, was im Ernstfall
+  // zuerst gefragt wird. Nur, was erfasst ist; «unbekannt» nennt keine Blutgruppe.
+  const teile = [];
+  const gruppe = blutgruppeLabel(data.bloodType, t);
+  if (gruppe) teile.push(t('mirror.notfall.blutgruppe', { gruppe }));
+  const allergien = String(data.allergies || '').trim();
+  if (allergien) teile.push(t('mirror.notfall.allergien', { allergien: allergien.length > 60 ? allergien.slice(0, 57).trimEnd() + '…' : allergien }));
+  return teile.length ? satz + ' ' + teile.map((x) => x + '.').join(' ') : satz;
 }
 
 // ─── Versicherungen ───────────────────────────────────────

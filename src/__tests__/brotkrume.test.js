@@ -20,10 +20,11 @@ const lies = (p) => fs.readFileSync(path.join(SRC, p), 'utf8');
 const hol = (w, k) => k.split('.').reduce((o, s) => o?.[s], w);
 const t = (k) => { const v = hol(de, k); return v && typeof v === 'object' ? v.sie : (v ?? k); };
 
-const ANSICHTEN = { lebensmappe: 'Lebensmappe.jsx', behoerdendossier: 'BehoerdenDossier.jsx', notfalldossier: 'NotfallDossier.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx' };
+const ANSICHTEN = { lebensmappe: 'Lebensmappe.jsx', behoerdendossier: 'BehoerdenDossier.jsx', notfalldossier: 'NotfallDossier.jsx', briefe: 'BriefGenerator.jsx', notfallpass: 'NotfallpassBlatt.jsx', notfallkarte: 'NotfallVorlesekarte.jsx' };
 
 describe('Pfade', () => {
-  it('genau die fünf entschiedenen Ansichten', () => {
+  // Seit Runde 9 AE («ein Ort», 25.10.2026) auch die Notfallkarte; das Notfall-Dossier hängt unter Notfall.
+  it('genau die sechs entschiedenen Ansichten', () => {
     expect(Object.keys(PFADE).sort()).toEqual(Object.keys(ANSICHTEN).sort());
   });
   it('jede Stufe hat eine Beschriftung in allen fünf Sprachen', () => {
@@ -47,6 +48,7 @@ describe('Pfade', () => {
   it('drei Stufen: Übersicht › Eltern › hier', () => {
     expect(stufen('briefe').map((s) => s.ziel)).toEqual(['dashboard', 'unterlagen', null]);
     expect(stufen('notfallpass').map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
+    expect(stufen('notfalldossier').map((s) => s.ziel)).toEqual(['dashboard', 'notfalleinstieg', null]);
     expect(stufen('dashboard')).toBeNull();
     expect(stufen('tax')).toBeNull();
   });

@@ -8,9 +8,12 @@
 export const PFADE = Object.freeze({
   lebensmappe:      { eltern: 'unterlagen',      titel: 'lebensmappe.title' },
   behoerdendossier: { eltern: 'unterlagen',      titel: 'behoerdenDossier.title' },
-  notfalldossier:   { eltern: 'unterlagen',      titel: 'notfallDossier.title' },
+  // Runde 5 (S) und «ein Ort» (24.10.2026): das Notfall-Dossier hängt unter Notfall; in «Meine Unterlagen»
+  // steht es weiter als Eintrag.
+  notfalldossier:   { eltern: 'notfalleinstieg', titel: 'notfallDossier.title' },
   briefe:           { eltern: 'unterlagen',      titel: 'briefe.title' },
   notfallpass:      { eltern: 'notfalleinstieg', titel: 'notfallpass.title' },
+  notfallkarte:     { eltern: 'notfalleinstieg', titel: 'notfallkarte.title' },
 });
 
 // Kurze Namen der Eltern-Ansichten. «Notfall» statt des Einstiegs-Titels, der eine Frage ist

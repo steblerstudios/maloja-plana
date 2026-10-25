@@ -1980,8 +1980,8 @@ export default {
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
     highlightSozialhilfe: 'Orientaziun agid social',
     highlightSozialhilfeSub: { sie: "CHF 1'061/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF 1'061/mais basegn da basa (1 persuna) — nua stas Ti?" },
-    highlightNotfall: "Preparar la carta d'urgenza",
-    highlightNotfallSub: { sie: 'Pront en 2 minutas — sin Voss apparat.', du: 'Pront en 2 minutas — sin Tes apparat.' },
+    highlightNotfall: 'Pront per il cas d’urgenza',
+    highlightNotfallSub: 'Carta d’urgenza, pass d’urgenza e precauziun en in lieu.',
     highlightPrivacy: { sie: 'Endataziuns restan sin Voss apparat', du: 'Endataziuns restan sin tes apparat' }, // TODO(rm): E43 umformuliert, Gegenlese
     quickCheckTitle: { sie: 'Verifica svelta: A tge pudessas Vus avair dretg?', du: 'Verifica svelta: A tge pudessas Ti avair dretg?' },
     quickCheckIpv: 'Reducziun da premias',
@@ -3498,7 +3498,7 @@ export default {
   },
 
   notfallkarte: {
-    title: 'Carta da clamada d’urgenza',
+    title: 'Carta d’urgenza',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     intro: { sie: 'Sche insatge capita, na stuais Vus betg tegnair endament nagut. Questa carta As di tge dir — e mussa las indicaziuns che Vus avais memorisà.', du: 'Sche insatge capita, na stos ti betg tegnair endament nagut. Questa carta ti di tge dir — e mussa las indicaziuns che ti has memorisà.' },
     step1Title: 'Tscherner il numer',
@@ -3543,7 +3543,7 @@ export default {
     footerCalm: { sie: 'Questa carta resta mo sin Voss apparat — nagin auter la vesa.', du: 'Questa carta resta mo sin tes apparat — nagin auter la vesa.' },
   },
   notfallpass: {
-    title: 'Preparar il pass d’urgenza',
+    title: 'Pass d’urgenza',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
     intro: { sie: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; Vus endatais las indicaziuns a maun. Qua èn ellas prontas, champ per champ.', du: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; Ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, Gate 24.09.2026)
@@ -4154,6 +4154,40 @@ export default {
       zusatz: 'Midar assicuranza cumplementara',
       unfall: 'Accident & malsogna',
     },
+  },
+  // Chapitel Urgenza · «in lieu» (runda 9, AE; construì acceptanza F6, 25.10.2026) — texts betg anc examinads
+  notfallKapitel: {
+    ernstfallTitel: 'En cas d’urgenza: avrir la carta d’urgenza',
+    ernstfallSub: 'Maina tras il clom · 144 ambulanza · 117 polizia · 118 pumpiers',
+    anrufen: 'Telefonar a {name}',
+    bereitTitel: 'Pront per il cas d’urgenza',
+    bereitSatz: 'Indicaziuns ch’èn necessarias en cas d’urgenza',
+    vonN: '{n} da {total}',
+    fehltFuer: 'manca per {lagen}',
+    ergaenzenUnten: 'cumplettar ↓',
+    medikamentPlatzhalter: 'p. ex. num e dosa',
+    speichern: 'Memorisar',
+    keineMedikamente: 'Jau na prend nagins',
+    szenarien: 'Trais situaziuns',
+    ansehen: 'guardar',
+    unterlagenTitel: { sie: 'Voss documents d’urgenza', du: 'Tes documents d’urgenza' },
+    unterlagenSatz: { sie: 'Tuts resultan da las indicaziuns sutvart — sche Vus las midais là, sa midan tuts.', du: 'Tuts resultan da las indicaziuns sutvart — sche ti las midas là, sa midan tuts.' },
+    karteSub: 'Leger avant al telefon',
+    passSub: 'Sin il visur bloccà',
+    dossierSub: 'Per persunas che gidan · stampa, QR',
+    portemonnaie: 'Carta per la bursa',
+    portemonnaieSub: 'Per stampar, per prender cun sai',
+    portemonnaieLeer: 'Basegna l’emprim indicaziuns sutvart',
+    vorsorgeTitel: 'Precauziun',
+    vorsorgeSatz: { sie: 'Tge che vala, sche Vus na pudais betg pli decider sez.', du: 'Tge che vala, sche ti na pos betg pli decider sez.' },
+    geregelt: '{n} da {total} reglads.',
+    vorsorge: { organDonor: 'Donaziun d’organs', patientenverfuegung: 'Disposiziun da pazient', vorsorgeauftrag: 'Incumbensa da precauziun', bestattungswuensche: 'Giavischs da sepultura' },
+    erstellen: 'far ›',
+    festhalten: 'fixar ›',
+    ergaenzen: 'cumplettar ›',
+    nichtErfasst: 'betg registrà',
+    zustimmung: 'Consentiment',
+    feldNichtErfasst: '{feld}: betg registrà.',
   },
   notfallEinstieg: {
     title: { sie: "Tge dovrais Vus en cas d'urgenza?", du: "Tge dovras Ti en cas d'urgenza?" },
@@ -5598,6 +5632,8 @@ export default {
       contactAndProvision: "Per il cas d'urgenza è ina persuna da contact deponida. Indicaziuns da prevenziun èn registradas.",
       contactDoctorProvision: "Per il cas d'urgenza è ina persuna da contact deponida. In medi da chasa è registrà. Indicaziuns da prevenziun èn registradas.",
       contactAndHealth: "Per il cas d'urgenza è ina persuna da contact deponida. Infurmaziuns da sanadad èn registradas.",
+      blutgruppe: 'Gruppa da sang {gruppe}',
+      allergien: 'Allergias: {allergien}',
     },
     versicherungen: {
       insurerSentence: { sie: "Vus essas assicurà/ada tar {insurer} en l'assicuranza da basa.", du: "Ti es assicurà/ada tar {insurer} en l'assicuranza da basa." },

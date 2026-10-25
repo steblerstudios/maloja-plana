@@ -410,7 +410,8 @@ export function getChapters(t) {
         { k: 'emergencyPhone', type: 'tel', mvo: true, naVon: 'emergencyContact' },
         { k: 'bloodType', type: 'select', sel: 1, sec: 'medical' },
         { k: 'allergies', type: 'textarea' },
-        { k: 'medications', type: 'textarea' },
+        // naOk: «Ich nehme keine» zählt als erledigt (Runde 9, AE, wie «Keine Kontaktperson»).
+        { k: 'medications', type: 'textarea', naOk: true },
         { k: 'chronicDiseases', type: 'textarea' },
         { k: 'doctor', type: 'text', sec: 'care' },
         { k: 'doctorPhone', type: 'tel' },
