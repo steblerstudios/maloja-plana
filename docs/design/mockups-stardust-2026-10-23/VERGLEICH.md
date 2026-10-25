@@ -974,3 +974,39 @@ Alle drei im Kapitel Finanzen, je eine eigene Frage:
 monatlich», Belastung, Steuerrechner, Karte in der Auswertung) bei **Finanzen & Geld**; Behördengang (Kanton,
 Steuernummer, Frist als Kalenderblatt, offene Erklärungen) bei **Behörden & Rechtliches** (Runde 9, AD, gilt
 weiter). Beide verweisen aufeinander.
+
+---
+
+## Abnahme Fassung 6 · App von heute gegen Fassung 5 (25.10.2026)
+
+Sophie: «Geh die gebauten Seiten Seite für Seite durch: App von heute gegen den Entwurf aus Fassung 5, mit
+Vergleich wie vorher.» Gemessen auf `main` `97c476f3` (Worktree `_werkbank/abnahme-f6`, Port 5495), Beispiel
+Maria, 375 px. Entwurf: `seiten-v5.html?nur=<id>` (Port 5490). **Nicht live** (live 0.1.48-beta).
+
+### Kapitel Wohnen & Leben (Z) · Befunde (25.10.2026, noch nicht entschieden)
+
+**Wie entschieden gebaut:** Zusammenfassung als ruhiger Satz · «Wohnkosten pro Monat» CHF 1’830, 29.5 % von 6’200,
+Drittel-Marke · Barometer «Miete regional vs. Schweiz» · «Ausprobieren: andere Miete» mit Regler, «Frei verfügbar
+danach» und «Zurück auf die heutige Miete» (erscheint nach dem Verschieben; 2’400 → 2’580 · 41.6 % · Satz «Mehr als
+ein Drittel …») · Reiter Angaben/Dokumente · Passend (4) · Als Nächstes Finanzen · «Ihr Zuhause hat einen Platz.»
+**Bewusst anders (Fachprüfung #567):** Faustregel-Satz ohne «viele Vermieter verlangen das sogar» · BFS 2024
+(1’732 / 1’446 statt 1’538 / 1’327) · Feld «Nettomiete CHF/Monat (ohne Nebenkosten)».
+
+**Abweichungen:**
+1. Zusammenfassung sagt «Monatsmiete CHF 1’650», das Feld heisst jetzt «Nettomiete» — zwei Wörter für eins.
+2. Barometer-Zahlen ohne Tausender-Zeichen («CHF 1446 / 1732 / 1650»), Feinschliff verlangt «’».
+3. Barometer hat drei Sätze mehr als der Entwurf: «rund 20 % über dem Schweizer Schnitt», Erklärung «strukturell …»,
+   Zimmer-Satz. Entwurf: nur die Quellenzeile.
+4. Zimmer-Satz «mit Ihrer Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer» steht **im** Kapitel Wohnen; das
+   Feld `rooms` gibt es, ist bei Maria leer und darum in den Angaben unsichtbar (nur über «ändern»).
+5. Angaben je Abschnitt in einer eigenen Karte (Entwurf: ruhige Liste). Lange Feldnamen brechen um
+   («Nettomiete CHF/Monat (ohne Nebenkosten)», «Name Vermieter», «Telefon Vermieter», «Strasse & Hausnummer»);
+   PLZ und Ort zwei Zeilen statt «PLZ · Ort».
+6. Kopf: Entwurf mit Landschaftsband, Brotkrume «Übersicht › Wohnen & Leben» und Symbol-Kachel; App «← Übersicht»,
+   Emoji, Kopf in einer Karte.
+7. Zeile «Ausprobieren: andere Miete · Wohnungssuche» ohne «›» — wirkt nicht aufklappbar.
+8. Passend: Untertitel anders als im Entwurf («Adresse, Gemeinde, Kündigung» statt «Ablauf · 4 Schritte» usw.),
+   kleine Symbole ohne Kachel.
+9. «Als Nächstes» als gefüllte Karte mit Goldknopf und Grossbuchstaben; Entwurf zentriert, leiser Umrissknopf.
+10. Anker unten: App 5 Punkte («Was steht mir zu?», ohne Kalender und Suche), Entwurf 6 («Anspruch», Kalender,
+    Suche) — gilt für alle Seiten, gehört zum Menü-Entscheid, nicht zu diesem Kapitel.
