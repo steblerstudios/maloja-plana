@@ -47,7 +47,8 @@ export const WERKZEUGE = [
 
   // ── Arztkoffer (Gesundheit) ──
   { view: 'premium', nav: 'nav.kvgIpv', sub: 'nav.sub.kvgIpv', icon: 'praemienverbilligung', fach: 'gesundheit', aliases: ['ipv', 'pv'] },
-  { view: 'praemien', nav: 'nav.praemien', sub: 'nav.sub.praemien', icon: 'insurance', fach: 'gesundheit', aliases: ['praemien', 'kvg'] },
+  // Seit Runde 9 AB (25.10.2026) die Versicherungs-Übersicht; «prämien» bleibt als Suchwort.
+  { view: 'praemien', nav: 'nav.praemien', sub: 'nav.sub.praemien', icon: 'insurance', fach: 'gesundheit', aliases: ['praemien', 'prämien', 'kvg', 'versicherungen', 'assurances', 'assicurazioni', 'insurance'] },
   { view: 'kvg', nav: 'nav.kvgLeistungen', sub: 'nav.sub.kvgLeistungen', icon: 'health', fach: 'gesundheit', aliases: ['kvg', 'leistungen'] },
   { view: 'patientenverfuegung', nav: 'nav.patientenverfuegung', sub: 'nav.sub.patientenverfuegung', icon: 'document', fach: 'gesundheit', aliases: ['patientenverfügung', 'reanimation'] },
   { view: 'kk', nav: 'nav.kkScanner', icon: 'barcode', fach: 'gesundheit', aliases: ['kk', 'krankenkasse', 'scanner', 'qr', 'prämie'] },

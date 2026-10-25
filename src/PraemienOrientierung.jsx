@@ -7,11 +7,17 @@ import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerN
 import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
-import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
 import { ageClassFromBirth, parseFranchise, franchiseOptimierer, gesundheitskostenBisher } from './data/franchiseTacho.js';
 import { FranchiseKreuz } from './components/FranchiseKreuz.jsx';
-import { zahl } from './utils/geld.js';
+import { zahl, betrag } from './utils/geld.js';
+import { Brotkrume } from './components/Brotkrume.jsx';
+import { VersicherungenInstrument } from './components/VersicherungenInstrument.jsx';
+import { Schutzschild } from './components/Schutzschild.jsx';
+import { schildOptionen } from './data/schutzschild.js';
+import { franchiseVorschlag } from './data/franchiseTacho.js';
+import { calculateIPV } from './config/cantonalData.js';
+import { pegelState, PEGEL_SCALE } from './data/pegel.js';
 
 export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const storedPLZ = data.wohnen?.postalCode || '';
@@ -20,6 +26,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const [detailNr, setDetailNr] = useState(null); // aufgeklappte Kasse im Vergleich
   const [withUnfall, setWithUnfall] = useState(true); // UVG: Referenzprämie mit/ohne Unfalldeckung
   const [pickedFranchise, setPickedFranchise] = useState(null); // angeklickte Wunsch-Franchise fürs Vergleichen
+  const [offenTeil, setOffenTeil] = useState(null); // welcher aufklappbare Teil offen ist (Übersicht)
+  const [alleKassen, setAlleKassen] = useState(false); // «Alle Kassen»: erst fünf, dann alle
 
   const gemeinden = useMemo(() => {
     const plz = plzInput.trim();
@@ -142,17 +150,87 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     Array.from({ length: betraege }, (_, i) => React.createElement('col', { key: i, style: { width: betraege > 1 ? '29%' : '36%' } })));
   const zahlBetrag = (n) => zahl(n, { stellen: 2 });
 
-  return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('po.title')),
+  // ── Versicherungs-Übersicht (Fassung 6, Runde 9 AB; Schritt 3, Sophie 25.10.2026 «Baue 1 bis 9») ──
+  // Aufbau wie die Finanz-Auswertung: Marken · Versicherungen pro Monat mit KK-Last · Zeilen mit Wert je Werkzeug ·
+  // Schutzschild · vier aufklappbare Teile (die bisherige Prämien-Orientierung, unverändert gerechnet) · zwei Wege ·
+  // Schlusssatz. Keine neue Rechnung: alle Werte aus denselben Quellen wie bisher.
+  const h = React.createElement;
+  const v = data.versicherungen || {};
+  const modell = v.kkModel ? (t('chapters.versicherungen.fields.kkModel.options.' + v.kkModel) || v.kkModel) : '';
+  const marken = [
+    insurer && (modell ? insurer + ' · ' + String(modell).replace(/\s*\(.*\)\s*$/, '') : insurer),
+    userFranchise && t('vu.markeFranchise', { franchise: zahl(userFranchise, { hoechstens: 2 }) }),
+    regionInfo && t('vu.markeRegion', { kanton: regionInfo.kanton, region: regionInfo.region }),
+  ].filter(Boolean);
 
-    // Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
-    React.createElement(KKLastCard, { palette, t, data, onNavigate }),
+  // Zeilen mit Wert
+  const vorschlag = franchiseOpt ? franchiseVorschlag(franchiseOpt, { costs: healthCostsYTD, eigeneFranchise: userFranchise, ersparnisse: data.finanzen?.savingsAccount }) : null;
+  const heute = new Date();
+  // Kündigung der Grundversicherung bis 30. November (wie po.franchiseChangeWhen, KVG Art. 7); danach fürs nächste Jahr.
+  const fristJahr = heute.getMonth() === 11 ? heute.getFullYear() + 1 : heute.getFullYear();
+  const ipv = calculateIPV(data);
+  const pegel = pegelState(data);
+  const belege = (Array.isArray(v.kkBelege) ? v.kkBelege : []).filter((b) => !b.datum || Number(String(b.datum).slice(0, 4)) === heute.getFullYear());
+  const bezahlt = belege.filter((b) => b.status !== 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
+  const offen = belege.filter((b) => b.status === 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
+  const pk = Number(v.bvgBalance) > 0 ? Number(v.bvgBalance) : 0;
+  const zuTeil = (id) => { setOffenTeil(id); setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ block: 'start' }); }, 0); };
+  const zeilen = [
+    { key: 'franchise', titel: t('vu.franchise'),
+      wert: !vorschlag ? '' : vorschlag.art === 'wechsel' ? t('vu.eher', { franchise: zahl(vorschlag.franchise) }) : vorschlag.art === 'passt' ? t('vu.passt') : '',
+      sub: franchiseOpt && franchiseOpt.breakEven != null ? t('vu.franchiseSub', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) }) : t('vu.franchiseOhne'),
+      gehe: () => (franchiseOpt ? zuTeil('mp-vu-kreuz') : onNavigate && onNavigate('chapter', 3)) },
+    { key: 'wechsel', titel: t('vu.wechsel'), wert: t('vu.kuendigung', { datum: '30.11.' + fristJahr }), sub: t('vu.wechselSub'), gehe: () => onNavigate && onNavigate('kvgwechsel') },
+    { key: 'ipv', titel: t('nav.kvgIpv'),
+      wert: ipv.eligible && ipv.amount > 0 ? t('vu.ipvBetrag', { betrag: zahl(ipv.amount) }) : (ipv.belegt && !ipv.eligible ? t('vu.ipvKein') : t('vu.ipvPruefen')),
+      sub: ipv.belegt && !ipv.eligible && ipv.noteKey ? t(ipv.noteKey, Object.fromEntries(Object.entries(ipv.noteParams || {}).map(([k, x]) => [k, typeof x === 'number' ? zahl(x) : x]))) : t('nav.sub.kvgIpv'),
+      pegel: pegel && pegel.mode !== 'empty' ? pegel : null,
+      gehe: () => onNavigate && onNavigate('premium') },
+    { key: 'kosten', titel: t('vu.kosten'), wert: belege.length ? betrag(bezahlt) : '',
+      sub: belege.length ? t(offen > 0 ? 'vu.kostenSubOffen' : 'vu.kostenSub', { jahr: heute.getFullYear(), offen: zahl(offen) }) : t('vu.kostenLeer'),
+      gehe: () => onNavigate && onNavigate('kvg') },
+    { key: 'kvg', titel: t('nav.kvgLeistungen'), wert: '', sub: t('vu.kvgSub'), gehe: () => onNavigate && onNavigate('kvg') },
+    { key: 'vorsorge', titel: t('vu.vorsorge'), wert: pk ? t('vu.pkGuthaben', { betrag: zahl(pk) }) : '', sub: t('vu.vorsorgeSub'), gehe: () => onNavigate && onNavigate('vorsorge') },
+  ];
+  const zeileKnopf = (z) => h('button', {
+    key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe, 'data-zeile': z.key,
+    style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
+  },
+    h('span', { style: { flex: 1, minWidth: 0 } },
+      h('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        h('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
+        z.wert && h('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, z.wert)),
+      z.sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, z.sub),
+      // Pegel klein: Einkommen gegen die IPV-Grenze (pegelState, dieselbe Rechnung wie der Rechner). Stumm — der Satz daneben sagt es.
+      z.pegel && h('span', { 'aria-hidden': 'true', 'data-teil': 'ipv-pegel', style: { position: 'relative', display: 'block', height: '6px', marginTop: '6px', borderRadius: radius.full + 'px', background: palette.up, border: '1px solid ' + palette.border } },
+        h('span', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (z.pegel.fraction / PEGEL_SCALE) * 100) + '%', background: z.pegel.mode === 'over' ? palette.sand : palette.sky, borderRadius: radius.full + 'px' } }),
+        h('span', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (100 / PEGEL_SCALE) + '%', width: '2px', background: palette.text } }))),
+    h('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'));
 
-    // UVG: Angestellte sind über den Arbeitgeber unfallversichert → Unfalldeckung
-    // bei der Kasse abwählbar (tiefere Prämie). Zeigt nichts, wenn nicht angestellt.
-    React.createElement(UvgHinweis, { palette, t, data }),
+  // Aufklappbar: kontrolliert, damit die Franchise-Zeile das Kreuz öffnen kann.
+  const teil = (id, titel, sub, inhalt) => h('details', {
+    id, open: offenTeil === id || undefined, 'data-teil': id,
+    onToggle: (e) => { if (e.currentTarget.open) setOffenTeil(id); else if (offenTeil === id) setOffenTeil(null); },
+    style: { borderBottom: '1px solid ' + palette.border + '88', scrollMarginTop: 'var(--mp-sprungabstand)' },
+  },
+    h('summary', { style: { cursor: 'pointer', minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', color: palette.text, listStyle: 'none' } },
+      h('span', { style: { minWidth: 0 } },
+        h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, aufklappZeichen(offenTeil === id), titel),
+        sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, sub))),
+    h('div', { style: { padding: space.sm + 'px 0 ' + space.md + 'px' } }, ...inhalt));
 
-    React.createElement('div', { style: s.section },
+  const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
+
+  return h('div', { style: s.card },
+    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'praemien', onNavigate }),
+    h(PageTitle, { palette, icon: h(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.xs + 'px' } }, t('po.title')),
+    h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px', lineHeight: leading.relaxed } }, t('vu.satz')),
+
+    marken.length > 0 && h('div', { 'data-teil': 'vu-marken', style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px', marginBottom: space.md + 'px' } },
+      marken.map((m) => h('span', { key: m, style: { fontSize: text.xs, color: palette.text, padding: '4px 10px', borderRadius: radius.full + 'px', border: '1px solid ' + palette.border, background: palette.up } }, m))),
+
+    // Ohne Prämienregion: die PLZ zuerst (sonst steht sie unter «Prämie regional»).
+    !regionInfo && React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.label }, t('po.plzLabel')),
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
         React.createElement('input', {
@@ -187,6 +265,86 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       )
     ),
 
+
+    h(VersicherungenInstrument, { palette, t, versicherungen: v, allData: data, onNavigate, uebersicht: true }),
+
+    h('section', { 'data-teil': 'vu-zeilen', 'aria-label': t('vu.zeilenAria') }, zeilen.map(zeileKnopf)),
+
+    h('h3', { style: kapH }, t('instrumente.schild')),
+    h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(data) }),
+
+    h('div', { style: { marginTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '88' } },
+      franchiseOpt && teil('mp-vu-kreuz', t('po.franchiseOptTitle'), franchiseOpt.breakEven != null ? t('vu.breakEven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) }) : '', [
+    franchiseOpt && React.createElement('div', {
+      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
+    },
+      // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
+      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
+        t('po.franchiseOptSaving', { high: zahl(franchiseOpt.highFra, { hoechstens: 2 }), low: zahl(franchiseOpt.lowFra, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) })),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
+        t('po.franchiseOptReserve', { reserve: zahl(franchiseOpt.reserve, { hoechstens: 2 }), sb: franchiseOpt.sbMax })),
+      franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
+        t('po.franchiseOptBreakeven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) })),
+      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
+      reserveCheck && React.createElement('div', {
+        style: {
+          fontSize: text.sm,
+          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.goldDeep || palette.gold)),
+          lineHeight: leading.normal, marginBottom: space.xs + 'px',
+        },
+      },
+        t('po.reserveCheck_' + reserveCheck.level, {
+          savings: zahl(reserveCheck.savings, { hoechstens: 2 }),
+          need: zahl(reserveCheck.need, { hoechstens: 2 }),
+          ideal: zahl(reserveCheck.ideal, { hoechstens: 2 }),
+        }),
+        // Bei dünner/fehlender Reserve ruhig in die Finanzübersicht verweisen.
+        onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
+          style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
+          onClick: () => onNavigate('finanzuebersicht'),
+        }, t('po.reserveCheckLink'))
+      ),
+      // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'), null, t)),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource'), null, t))
+    )
+      ]),
+      regionInfo && teil('mp-vu-region', t('vu.regional'), '', [
+    React.createElement('div', { style: s.section },
+      React.createElement('div', { style: s.label }, t('po.plzLabel')),
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
+        React.createElement('input', {
+          type: 'text',
+          inputMode: 'numeric',
+          maxLength: 4,
+          value: plzInput,
+          onChange: (e) => { setPlzInput(e.target.value.replace(/\D/g, '').slice(0, 4)); setSelectedBfs(null); },
+          placeholder: '1000', 'aria-label': t('po.plzLabel'),
+          style: s.input
+        }),
+        activeGemeinde && React.createElement('span', { style: { color: palette.mid } },
+          activeGemeinde.gemeinde + ' (' + activeGemeinde.kanton + ')'
+        )
+      ),
+
+      gemeinden.length > 1 && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px' } }, t('po.selectGemeinde')),
+        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px' } },
+          gemeinden.map(g =>
+            React.createElement('button', {
+              key: g.bfsNr,
+              onClick: () => setSelectedBfs(g.bfsNr),
+              style: s.gemeindeBtn(g.bfsNr === activeBfs)
+            }, g.gemeinde + ' ' + g.kanton)
+          )
+        )
+      ),
+
+      plzInput.length === 4 && gemeinden.length === 0 && React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.roseDeep, fontSize: text.xs } },
+        t('po.plzNotFound')
+      )
+    ),
     regionInfo && React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.label }, t('po.regionTitle')),
       React.createElement('div', null,
@@ -203,8 +361,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       regionalComparison && React.createElement(RegionalBarometer, {
         palette, t, comparison: regionalComparison, userValue: userPremium, kind: 'premium'
       })
-    ),
-
+    )
+      ]),
+      regionInfo && teil('mp-vu-vergleich', t('vu.vergleich'), referenceData && referenceData.specificPremium ? t('vu.referenz', { betrag: zahl(referenceData.specificPremium, { hoechstens: 2 }) }) : '', [
+        h(UvgHinweis, { key: 'uvg', palette, t, data }),
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
         hinweisZeichen(), t('po.noInsurer')
@@ -218,7 +378,6 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.insurerNotFoundHint'))
     ),
-
     referenceData && referenceData.specificPremium && userPremium && (() => {
       const ohne = referenceData.specificOhne;
       const canToggle = ohne && Math.abs(ohne - referenceData.specificPremium) > 0.5;
@@ -315,47 +474,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           )
         )
       );
-    })(),
-
-    // Franchise-Optimierer: lohnt sich eine höhere Franchise? (Ersparnis vs. Reserve, belegt)
-    franchiseOpt && React.createElement('div', {
-      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
-    },
-      React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, marginBottom: space.sm + 'px' } }, t('po.franchiseOptTitle')),
-      // Franchise-Kreuz (seit 25.09.2026 statt Tacho): die zwei Gesamtkosten-Linien des Optimierers
-      React.createElement(FranchiseKreuz, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
-        t('po.franchiseOptSaving', { high: zahl(franchiseOpt.highFra, { hoechstens: 2 }), low: zahl(franchiseOpt.lowFra, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) })),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
-        t('po.franchiseOptReserve', { reserve: zahl(franchiseOpt.reserve, { hoechstens: 2 }), sb: franchiseOpt.sbMax })),
-      franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
-        t('po.franchiseOptBreakeven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) })),
-      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
-      reserveCheck && React.createElement('div', {
-        style: {
-          fontSize: text.sm,
-          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.goldDeep || palette.gold)),
-          lineHeight: leading.normal, marginBottom: space.xs + 'px',
-        },
-      },
-        t('po.reserveCheck_' + reserveCheck.level, {
-          savings: zahl(reserveCheck.savings, { hoechstens: 2 }),
-          need: zahl(reserveCheck.need, { hoechstens: 2 }),
-          ideal: zahl(reserveCheck.ideal, { hoechstens: 2 }),
-        }),
-        // Bei dünner/fehlender Reserve ruhig in die Finanzübersicht verweisen.
-        onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
-          style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
-          onClick: () => onNavigate('finanzuebersicht'),
-        }, t('po.reserveCheckLink'))
-      ),
-      // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'), null, t)),
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource'), null, t))
-    ),
-
+    })()
+      ]),
+      regionInfo && allInsurers.length > 0 && teil('mp-vu-kassen', t('po.allInsurersTitle'), t('vu.kassenZahl', { n: allInsurers.length }), [
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
-      React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
         t('po.compareFranchiseNote', { franchise: zahl(compFranchise, { hoechstens: 2 }) }) + ' ' + (onUpdateData ? t('po.chooseByPrice') : '')),
       // Franchise direkt hier wählbar (verschiedene Franchisen vergleichen) — treibt dieselbe Vergleichs-Franchise
@@ -378,7 +500,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           )
         ),
         React.createElement('tbody', null,
-          allInsurers.map(ins => {
+          (alleKassen ? allInsurers : allInsurers.slice(0, 5)).map(ins => {
             const isCurrent = insurerNr === ins.nr;
             const isOpen = detailNr === ins.nr;
             const cols = ageClass !== 'kind' ? 3 : 2;
@@ -448,22 +570,23 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           })
         )
       ),
+      allInsurers.length > 5 && React.createElement('button', {
+        type: 'button', onClick: () => setAlleKassen((x) => !x), 'aria-expanded': alleKassen,
+        style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
+      }, t(alleKassen ? 'vu.wenigerKassen' : 'vu.alleKassen', { n: allInsurers.length })),
       targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.sm + 'px', fontWeight: weight.medium } },
         t('po.targetChosenHint', { insurer: targetInsurer }) + (ageClass !== 'kind' && data.versicherungen?.targetUvg ? ' (' + (data.versicherungen.targetUvg === 'ohne' ? t('po.ohneUnfall') : t('po.mitUnfall')) + ')' : ''))
+    )
+      ]),
     ),
 
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontStyle: 'italic' } },
-      t('po.disclaimer')
-    ),
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } },
-      renderSource(t('po.source'), null, t)
-    ),
+    onNavigate && h('section', { 'data-teil': 'vu-wege', style: { marginTop: space.md + 'px' } },
+      zeileKnopf({ key: 'zusatz', titel: t('zusatzWechsel.title'), sub: t('vu.zusatzSub'), gehe: () => onNavigate('zusatzwechsel') }),
+      zeileKnopf({ key: 'scanner', titel: t('vu.scanner'), sub: t('nav.kkScanner'), gehe: () => onNavigate('kk') })),
 
-    // Crosslink: vom Vergleich in den geführten Wechsel-Ablauf
-    onNavigate && React.createElement('button', {
-      onClick: () => onNavigate('kvgwechsel'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
-    }, t('kvgWechsel.title'))
+    h('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.lg + 'px', lineHeight: leading.normal } }, t('vu.schluss')),
+    h('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginTop: space.xs + 'px' } }, t('po.disclaimer')),
+    h('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } }, renderSource(t('po.source'), null, t))
   );
 };
 

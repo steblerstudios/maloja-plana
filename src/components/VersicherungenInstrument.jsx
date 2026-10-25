@@ -26,7 +26,9 @@ import { KK_LAST_ERGEBNIS } from '../KKLastCard.jsx';
 //      der Vorschlag «Eher …» wie im Panel «Ihre Instrumente», darunter der Weg zur Übersicht.
 const WHO = 10;
 
-export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, onNavigate, uebersichtName }) => {
+// `uebersicht` (Versicherungs-Übersicht, Schritt 3): nur Geld und KK-Last, die Posten zugeklappt unter «Was darin steckt»;
+// Schutzschild und Franchise-Kreuz zeigt die Übersicht selbst.
+export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, onNavigate, uebersichtName, uebersicht = false }) => {
   const v = versicherungen || {};
   const daten = { ...(allData || {}), versicherungen: v };
   const p = monatsAusgaben(daten);
@@ -93,20 +95,29 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     : vorschlag.art === 'wechsel' ? t(vorschlag.polster ? 'instrumente.kreuzWechselPolster' : 'instrumente.kreuzWechsel', { franchise: zahl(vorschlag.franchise), jahr: franchiseOpt?.praemienJahr || '' })
     : null;
 
-  return h('section', { 'data-teil': 'versicherungen-instrument', style: { marginBottom: space.lg + 'px' } },
-    hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
-    hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.round(summe))),
-    hatGeld && h('div', { 'data-teil': 'versicherungen-posten' },
+  const posteListe = () => h(React.Fragment, null,
+    h('div', { 'data-teil': 'versicherungen-posten' },
       ...posten.map((x) => h('div', { key: x.key, style: zeile },
         h('span', { style: { color: palette.mid } }, x.name),
         h('span', { style: { whiteSpace: 'nowrap' } }, geld(x.wert))
       ))
     ),
-    hatGeld && (fehlt.length > 0 || pk > 0) && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 0' } },
+    (fehlt.length > 0 || pk > 0) && h('p', { 'data-teil': 'versicherungen-hinweis', style: { ...klein, margin: space.xs + 'px 0 ' + (uebersicht ? space.sm : 0) + 'px' } },
       fehlt.length > 0 ? t('versInstrument.nichtErfasst', { liste: fehlt.join(', ') }) + ' ' : '',
       pk > 0 ? t('versInstrument.pk', { betrag: zahl(pk) }) : ''
     ),
-    hatGeld && Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')),
+    Number(v.autoInsuranceAmount) > 0 && h('p', { style: { ...klein, margin: space.xs + 'px 0 0' } }, t('versInstrument.fahrzeug')));
+
+  return h('section', { 'data-teil': 'versicherungen-instrument', style: { marginBottom: space.lg + 'px' } },
+    hatGeld && h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '2px' } }, t('versInstrument.titel')),
+    hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.round(summe))),
+    hatGeld && (uebersicht
+      ? h('details', { 'data-teil': 'versicherungen-darin', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginBottom: space.sm + 'px' } },
+          h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, color: palette.text } },
+            h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t('vu.darin')),
+            h('span', { style: { fontSize: text.xs, color: palette.mid } }, t('vu.erfasst', { n: posten.length }))),
+          posteListe())
+      : posteListe()),
 
     // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
     anteil != null && h(React.Fragment, null,
@@ -129,10 +140,10 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
       }, t('kkLast.ipvLink'))
     ),
 
-    schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
-    h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(daten) }),
+    !uebersicht && schildDa && h('h4', { style: hatGeld ? kapH : { ...kapH, margin: '0 0 ' + space.xs + 'px' } }, t('instrumente.schild')),
+    !uebersicht && h(Schutzschild, { palette, t, versicherungen: v, klein: true, ...schildOptionen(daten) }),
 
-    franchiseOpt && h(React.Fragment, null,
+    !uebersicht && franchiseOpt && h(React.Fragment, null,
       h('h4', { style: kapH }, t('instrumente.tacho')),
       h(FranchiseKreuz, { palette, t, franchiseOpt, costs: gesundheitskostenBisher(daten), onNavigate, klein: true }),
       vorschlagSatz && h('p', { 'data-teil': 'franchise-vorschlag', style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: leading.normal, textAlign: 'center' } }, vorschlagSatz),
