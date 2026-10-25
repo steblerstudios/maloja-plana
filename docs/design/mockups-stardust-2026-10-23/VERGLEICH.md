@@ -1079,3 +1079,30 @@ Passend: Lebensmappe, Pass oder Identitätskarte, Zivilstand ändert sich, Auswe
 Schweiz» weglassen, bis es ein Datum gibt. 3 so lassen.» Gebaut: Zweig `fix/f6-abnahme-basis`, Entwurfs-PR #573
 (`735f3b66`) — «allein, keine Kinder» / «2 Erwachsene, 1 Kind» (5 Sprachen, rm ungeprüft) · «Neu in der Schweiz» aus
 «Passend», bis es ein Feld «in der Schweiz seit» gibt. 6’782 Tests grün, Build sauber.
+
+### Kapitel Versicherungen & Vorsorge (AA, nachgebessert) · Befunde (25.10.2026, noch nicht entschieden)
+
+Gemessen auf `main` `97c476f3`, `#/chapter/3`, Maria. Entwurf: `seiten-v5.html?nur=aa`. Für dieses Kapitel ist bisher
+nur das Kapitel-Muster gebaut (#565); die Instrumente stehen in der Übergabe als «offen, zu bauen».
+
+**Wie entschieden gebaut:** Zusammenfassung ruhig («Sie sind bei CSS grundversichert. Franchise CHF 1’500. Eine
+Pensionskasse ist hinterlegt.») · Schutzschild offen mit Listen (Pflicht 3/3, Empfohlen 2/2) · Passend: IPV prüfen,
+Krankenkasse wechseln, Vorsorge-Rechner, Policen ablegen · Als Nächstes Ausbildung · «Der Schutz ist erfasst.»
+
+**Noch nicht gebaut (Entwurf AA):**
+1. **«Versicherungen pro Monat» CHF 387** mit Aufschlüsselung (KK 385, Hausrat 22/Jahr ≈ 2), Satz zu nicht erfassten
+   Prämien und «Pensionskasse ist schon vom Lohn abgezogen».
+2. **«Ihre KK-Last»** als Barometer 6.2 % mit Marke WHO 10 %.
+3. **Franchise-Kreuz** (klein, Break-even ≈ 2’050, «bisher 420», «Eher 2’500») mit Zeile «Alles zur Franchise».
+4. **Passend zuoberst «Alle Versicherungen auf einen Blick»** → Versicherungs-Übersicht. App hat stattdessen
+   «Prämien-Orientierung · Modelle vergleichen». Hängt am **offenen Entscheid AB gegen `seiten-buendeln.md` Entscheid 3**.
+
+**Abweichungen im Gebauten:**
+5. **Schutzschild gross** (zwei grosse Schilde, zentriert, fast ein Bildschirm); entschieden «zwei kleine Schilde mit Listen».
+6. **Spinnennetz** in den Angaben (Krankenkasse · Pensionskasse · Weitere · Hausrat & Reise · Auto · AHV, mit Satz «Zeigt,
+   wie viel … eingetragen ist …») — steht nicht im Entwurf. Behalten oder weg?
+7. **«Hausrat-Prämie CHF 22»** ohne «/ Jahr» — es ist eine Jahresprämie, liest sich als Monat (Entwurf: «CHF 22 / Jahr»).
+8. **«Franchise 1’500»** ohne «CHF» (Entwurf «CHF 1’500»). Feldname «BVG/Pensionskasse» (Entwurf «Pensionskasse»).
+9. Leere Abschnitte einzeln («Sozialversicherung · noch leer»); Entwurf fasst sie zu «Sozialversicherung · Mobilität» zusammen.
+10. Beispielprofil: Haftpflicht «Versicherungssumme CHF 35» (bekannt, `liabilityAmount`), KK-Prämie 385 unter jeder Referenz.
+11. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
