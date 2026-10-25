@@ -551,3 +551,6 @@ main[tabindex="-1"]:focus { outline: none; }
 @media (prefers-reduced-transparency: reduce) {
   .mp-tor-inhalt { background: var(--mp-tor-flaeche); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
+
+/* Aufklapp-Teile mit eigenem Chevron (Versicherungs-Übersicht): kein zweiter Pfeil in Safari. */
+.mp-summary::-webkit-details-marker { display: none; }

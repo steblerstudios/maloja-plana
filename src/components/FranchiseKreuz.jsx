@@ -19,9 +19,12 @@ import { zahl } from '../utils/geld.js';
 //   • Hover: Fadenkreuz mit beiden Gesamtkosten an der Stelle.
 // Breite = echte Breite (300–560 px): die Zeichenfläche wird nie skaliert, Schrift bleibt ≥ 11 px.
 // Unter 420 px (Handy): Namen der Linien über den Enden statt rechts daneben (R schrumpft).
-const W_MAX = 560, W_MIN = 240, H = 236, T = 22, B = 34;
+const W_MAX = 560, W_MIN = 240, H_GROSS = 236, T = 22, B = 34;
+// `klein` (Kapitel Versicherungen, Fassung 6 Runde 9 AA): dieselbe Rechnung, niedrigere Zeichenfläche.
+const H_KLEIN = 176;
 
-export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, heute }) => {
+export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, heute, klein }) => {
+  const H = klein ? H_KLEIN : H_GROSS;
   const [hoverC, setHoverC] = useState(null);
   const [W, setW] = useState(W_MAX);
   const huelle = useRef(null);
@@ -125,11 +128,12 @@ export const FranchiseKreuz = ({ palette, t, franchiseOpt, costs, onNavigate, he
     h('div', { style: { minHeight: '1.4em', fontSize: text.xs, color: palette.text, textAlign: 'center', marginBottom: space.xs + 'px', fontVariantNumeric: 'tabular-nums' } },
       hv ? t('po.kreuzTooltip', { c: num(hoverC), low: num(st.low), tief: num(hv.tief), high: num(st.high), hoch: num(hv.hoch) }) : ''),
     h('div', { 'aria-live': 'polite', style: { fontSize: text.sm, color: readoutColor, lineHeight: leading.normal, textAlign: 'center' } }, readout),
-    st.hochrechnung && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, textAlign: 'center', marginTop: space.xs + 'px' } },
+    // Klein (Kapitel Versicherungen): ohne den Hochrechnungs-Satz — die gestrichelte Linie bleibt im Bild.
+    st.hochrechnung && !klein && h('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, textAlign: 'center', marginTop: space.xs + 'px' } },
       t('po.kreuzHochrechnungText', { value: num(st.hochrechnung) })),
     st.mode === 'orientation' && onNavigate && h('button', {
       onClick: () => onNavigate('kvg', null, 'franchise'),
-      style: { display: 'block', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
+      style: { display: 'block', minHeight: '44px', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
     }, t('po.tachoTrackLink'))
   );
 };

@@ -17,6 +17,7 @@ import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { miniRucksack, rucksackZeichen } from './components/miniRucksack.js';
 import { auswahlLabel } from './utils/auswahlLabel.js';
 import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
+import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
@@ -60,21 +61,20 @@ export function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'finanzen') {
     const income = fmtCHF(chData.monthlyIncome);
     if (!income) return null;
-    const expFields = ['monthlyTax', 'groceries', 'communication', 'mobility', 'otherInsurance'];
-    let exp = 0;
-    expFields.forEach(k => { exp += Number(chData[k]) || 0; });
-    exp += Number(allData?.wohnen?.rentAmount) || 0;
-    exp += Number(allData?.wohnen?.utilities) || 0;
-    exp += Number(allData?.versicherungen?.kkPremium) || 0;
+    // Ausgaben und «frei» aus der einen Monatsrechnung (Fachprüfung 25.10.2026): vorher zählte diese
+    // Zeile nur acht Posten — ohne Hausrat, Haftpflicht, Kinderbetreuung, Hypothek, 3a, Schuldenraten,
+    // Alimente — und zeigte ein höheres «frei» als Kapitel und Budget.
+    const exp = Math.round(sumAllExpenses(chData, allData));
     const parts = [income];
     if (exp > 0) parts.push(fmtCHF(exp) + ' ' + t('synthesis.expenses'));
     const annual = (Number(chData.monthlyIncome) || 0) * 12;
     // «frei» nur bei netto erfasstem Lohn: ein Bruttolohn kommt nicht so an, ohne Art wäre es geraten.
     if (annual > 0 && exp > 0 && lohnIstNetto(chData)) {
-      const frei = Number(chData.monthlyIncome) - exp;
+      const frei = eigeneEinnahmen(chData).total - sumAllExpenses(chData, allData);
       if (frei > 0) parts.push(fmtCHF(Math.round(frei)) + ' ' + t('synthesis.freePerMonth'));
     }
-    return parts.join(', ') + '.';
+    // Kein zweiter Punkt nach einer Abkürzung («frei/Mt..» bis 25.10.2026).
+    return parts.join(', ').replace(/\.$/, '') + '.';
   }
   if (chapterKey === 'versicherungen') {
     if (!chData.kkInsurer) return null;

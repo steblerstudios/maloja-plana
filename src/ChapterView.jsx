@@ -14,8 +14,6 @@ import PrimaryButton from './components/PrimaryButton.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
-import { Schutzschild } from './components/Schutzschild.jsx';
-import { schildOptionen } from './data/schutzschild.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { lohnStelleSatz } from './data/lohnRechtsstellen.js';
@@ -74,6 +72,7 @@ const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNet
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
 const LohnEinordnung = React.lazy(() => import('./components/LohnEinordnung.jsx').then((m) => ({ default: m.LohnEinordnung })));
 const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
+const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
 
 // K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
 // «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
@@ -1801,7 +1800,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     }
     if (f.type === 'currency') {
       const n = (Number(v) === 0 && Array.isArray(data[f.k + 'Items'])) ? postenSumme(data[f.k + 'Items']) : v;
-      return betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+      const wert = betrag(Number(n), Number.isInteger(Number(n)) ? {} : { stellen: 2 });
+      // Jahresbeträge (`jahr: true` in constants.js) tragen «/ Jahr» am Wert: der Feldname verliert
+      // sein «CHF/Jahr» in der Liste, und «Hausrat-Prämie CHF 22» las sich als Monatsbetrag
+      // (Abnahme F6, 25.10.2026).
+      // Geschütztes Leerzeichen: «/ Jahr» bricht nie allein in die nächste Zeile (Copy-Prüfer).
+      return f.jahr ? wert + ' ' + tr('chapterView.proJahr') : wert;
     }
     // Schweizer/innen brauchen keine Aufenthaltsbewilligung: in der Liste nicht «Aufenthaltsbewilligung:
     // Schweizer/in», sondern «nicht nötig (Schweizer/in)» (Abnahme F6, 25.10.2026). Die Auswahl bleibt.
@@ -1975,14 +1979,25 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', null, ...mitBetrag('chapters.finanzen.monat.verplant', m.verplant)),
         m.einkommen > 0 && React.createElement('span', null, ...mitBetrag(einkommenKey, m.einkommen))
       ),
+      renderDoppeltVersichert(),
       renderHaushaltsSaldo(h)
     );
+  };
+  // Seit 25.10.2026 zählen Hausrat- und Haftpflicht-Prämie aus dem Kapitel Versicherungen. Wer sie
+  // vorher in «Weitere Versicherungen» (Pauschale) eingetragen hat, zählt sie jetzt doppelt — die App
+  // kann nichts herausrechnen und zieht nichts still ab; sie sagt es nur (Fachprüfung 25.10.2026).
+  const renderDoppeltVersichert = () => {
+    const v = allData?.versicherungen || {};
+    const weitere = Number(data.otherInsurance) > 0;
+    const praemie = Number(v.householdInsuranceAmount) > 0 || Number(v.liabilityPremium) > 0;
+    return weitere && praemie && React.createElement('p', { 'data-teil': 'doppelt-versichert', style: { margin: space.sm + 'px 0 0', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+      tr('chapters.finanzen.monat.doppeltVersichert'));
   };
   const renderMonatsBalken = (m) => {
     const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
     const teile = [
       { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.otherInsurance, farbe: palette.sky },
+      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
@@ -2046,7 +2061,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         ablage('chapterView.passend.ablageBasis'),
       ];
       case 'wohnen': return [weg('umzug'), weg('mietzins'), weg('wohnunggekuendigt'), ablage('chapterView.passend.ablageWohnen')];
-      case 'versicherungen': return [weg('praemien'), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
+      // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Seite, die zur
+      // Versicherungs-Übersicht wird (Runde 9 AB, seiten-buendeln.md §11); bis dahin `praemien`.
+      case 'versicherungen': return [weg('praemien', { key: 'alle-versicherungen', titel: tr('chapterView.passend.alleVersicherungen'), sub: tr('chapterView.passend.alleVersicherungenSub') }), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
       case 'ausbildung': return [weg('cv'), weg('neuerjob'), weg('stelleverloren'), weg('stundenlohn'), ablage('chapterView.passend.ablageAusbildung')];
       case 'behoerden': return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
@@ -2174,6 +2191,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement(LohnEinordnung, { palette, t: tr, data: { ...allData, ausbildung: data }, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: 'ausbildung' })
       ),
       React.createElement(LebenslaufVorschau, { palette, t: tr, ausbildung: data, allData, onNavigate })
+    ),
+
+    // Fassung 6 · Kapitel Versicherungen (Runde 9, Entwurf AA, nachgebessert): Versicherungen pro Monat,
+    // KK-Last, Schutzschild klein, Franchise-Kreuz klein mit Weg zur Übersicht. Das grosse Schutzschild
+    // stand bis 25.10.2026 weiter unten (Instrument #4); es lebt jetzt hier in der kleinen Fassung.
+    chapter.key === 'versicherungen' && allData && React.createElement(React.Suspense, { key: 'versicherungen-instrument', fallback: null },
+      React.createElement(VersicherungenInstrument, { palette, t: tr, versicherungen: data, allData, onNavigate, uebersichtName: tr(ansichtName('praemien') || 'praemien') })
     ),
 
     // Notfallübergabe entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
@@ -2337,14 +2361,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
     // oben unter der Zusammenfassung (components/WohnkostenInstrument.jsx).
 
-    // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
-    // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
-    // solange nichts erfasst ist.
-    chapter.key === 'versicherungen' &&
-      React.createElement(Schutzschild, {
-        palette, t, versicherungen: data,
-        ...schildOptionen(allData),
-      }),
+    // Versicherungs-Schutzschild (Instrument #4): seit 25.10.2026 klein im Versicherungen-Instrument
+    // oben (components/VersicherungenInstrument.jsx), nicht mehr gross an dieser Stelle.
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // Finanzen: der IPV-Hinweis und das Lohn-Barometer standen hier bis 24.10.2026. Seit der
