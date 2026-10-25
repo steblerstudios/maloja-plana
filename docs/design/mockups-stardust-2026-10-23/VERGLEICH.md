@@ -1158,3 +1158,9 @@ Sprachen · Passend mit fünf Zeilen · Als Nächstes Behörden · «Der Weg ist
    Mindestlohn»). Untertitel anders.
 7. «Arbeitsstunden pro Woche 42» ohne Einheit; Entwurf in der Zusammenfassung «42 Std./Woche».
 8. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
+
+**Entschieden und gebaut (Sophie, 25.10.2026: «Bau Ausbildung 1 bis 5 … 6 bis 8 ins Muster am Schluss»):** Zweig
+`feat/f6-ausbildung-instrumente`, Entwurfs-PR #577 (`2f964360`, Basis #572). Zusammenfassung mit Arbeitgeber, Dauer
+(tagesgenau), Stunden · «Wo steht Ihr Lohn?» oben · Lebenslauf-Vorschau · Angaben-Spalten 3 : 2, nichts ragt mehr über den
+Rand (alle 7 Kapitel, 375 px) · «nicht nötig (Schweizer Bürgerrecht)» im Kapitel und im Dossier. swiss-precision und copy je
+0 Blocker, eingearbeitet. 6’795 Tests grün. Punkte 6–8 → Muster am Schluss.
