@@ -19,8 +19,8 @@ const miete = (wohnen) => renderToStaticMarkup(React.createElement(MietVergleich
 describe('MietVergleich: Nettomiete gegen Nettomiete', () => {
   it('der Balken zeigt die Nettomiete, nicht Miete + Nebenkosten', () => {
     const html = miete({ rentAmount: '1650', utilities: '180' });
-    expect(html).toContain('po.regionalCompare.rent.yourVal(1650)');
-    expect(html).not.toContain('yourVal(1830)');
+    expect(html).toContain('po.regionalCompare.rent.yourVal(1’650)');
+    expect(html).not.toContain('yourVal(1’830)');
   });
   it('die Wohnkosten-Zeile zählt die Nebenkosten weiter mit (1830 / 6200 = 30 %)', () => {
     expect(miete({ rentAmount: '1650', utilities: '180' })).toContain('mietzinsView.rentShare(30)');
@@ -31,6 +31,6 @@ describe('MietVergleich: Nettomiete gegen Nettomiete', () => {
     expect(html).toContain('mietzinsView.rentShare(5)');
   });
   it('Gegenprobe: ohne Nebenkosten ändert sich nichts', () => {
-    expect(miete({ rentAmount: '1650' })).toContain('po.regionalCompare.rent.yourVal(1650)');
+    expect(miete({ rentAmount: '1650' })).toContain('po.regionalCompare.rent.yourVal(1’650)');
   });
 });

@@ -264,40 +264,21 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     // Die Legenden-Marken spiegeln die Marken auf dem Balken (Füllung in `arbeitColor`,
     // Punkt in `valenceColor`) — eine Marke, eine Farbe.
     // ⚠️ a11y: `valenceColor` ist die GRAFIK-Farbe (3:1); als Text gilt die Deep-Variante.
+    // Jeder Eintrag bleibt ganz (Abnahme F6: «Ihr Lohn: CHF / 6’472» brach bei 375 px mitten im Eintrag).
     React.createElement('div', {
-      style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
+      style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2px ' + space.md + 'px', fontSize: text.xs, color: palette.mid },
     },
-      React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium } },
+      React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'fuellung', color: arbeitColor, palette }),
         t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
-      React.createElement('span', { style: { color: readoutColor } },
+      React.createElement('span', { style: { color: readoutColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: valenceColor, palette }),
         t('lohnEinordnung.median') + ': CHF ' + fmt(median))
     ),
 
-    // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).
-    geschaetzt && React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', lineHeight: leading.normal },
-    }, t('lohnEinordnung.geschaetztAusNetto', { netto: fmt(incomeRoh) })),
-
     React.createElement('div', {
       style: { fontSize: text.sm, color: readoutColor, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal },
     }, t('lohnEinordnung.readout' + rel.charAt(0).toUpperCase() + rel.slice(1))),
-
-    React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
-    }, partTime ? t('lohnEinordnung.fteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
-      : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
-      : t('lohnEinordnung.fulltimeNote')),
-
-    // Die Basis des Vergleichs IMMER ausweisen (Stebler Studios): mit 13. enthält der
-    // Vergleichswert den anteiligen 13. (×13/12, standardisiert wie der BFS-Median); ohne 13.
-    // wird der Basislohn direkt verglichen — mit Hinweis, dass ein 13. den Wert hebt.
-    React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
-    }, hat13
-      ? t('lohnEinordnung.dreizehnterNote', { fte: fmt(incomeFTE) })
-      : t('lohnEinordnung.ohneDreizehnterNote')),
 
     mindestlohn && React.createElement('div', {
       style: { fontSize: text.xs, color: mlBreached ? palette.roseDeep : palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
@@ -316,6 +297,30 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     mindestlohnNichtBelegt && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, t('lohnEinordnung.mindestlohnJahrNichtBelegt', { jahr: mindestlohnNichtBelegt.jahr, laufend: mindestlohnNichtBelegt.laufendesJahr })),
+
+    // «So ist gerechnet» (Entscheid Sophie 23.10.2026, «Barometer und Ruhe»; gebaut Abnahme F6, 25.10.2026):
+    // die drei langen Hinweise zur Rechnung zugeklappt, Texte unverändert. Der Mindestlohn bleibt offen.
+    React.createElement('details', { 'data-teil': 'lohn-so-gerechnet', style: { marginTop: space.sm + 'px' } },
+      React.createElement('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', fontSize: text.xs, color: palette.mid, fontWeight: weight.medium } },
+        t('lohnEinordnung.soIstGerechnet')),
+      // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).
+      geschaetzt && React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal },
+      }, t('lohnEinordnung.geschaetztAusNetto', { netto: fmt(incomeRoh) })),
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
+      }, partTime ? t('lohnEinordnung.fteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
+        : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
+        : t('lohnEinordnung.fulltimeNote')),
+      // Die Basis des Vergleichs IMMER ausweisen (Stebler Studios): mit 13. enthält der
+      // Vergleichswert den anteiligen 13. (×13/12, standardisiert wie der BFS-Median); ohne 13.
+      // wird der Basislohn direkt verglichen — mit Hinweis, dass ein 13. den Wert hebt.
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
+      }, hat13
+        ? t('lohnEinordnung.dreizehnterNote', { fte: fmt(incomeFTE) })
+        : t('lohnEinordnung.ohneDreizehnterNote'))
+    ),
 
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },

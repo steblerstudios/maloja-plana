@@ -21,12 +21,12 @@ const profil = (finanzen = {}) => ({
 });
 
 describe('Kuchen: «Wofür geht es weg?»', () => {
-  it('Stücke = alle Ausgabenposten + «bleibt»; Summe = Einkommen', () => {
+  // Abnahme F6 (Sophie 25.10.2026): nur die Ausgaben — bis dahin lag «bleibt» als Stück darin.
+  it('Stücke = alle Ausgabenposten, ohne «bleibt»; Summe = Ausgaben', () => {
     const d = profil();
     const { stuecke, summe } = kuchenDaten(d, t, palette);
-    expect(stuecke.map((s) => s.key)).toEqual(['rent', 'healthInsurance', 'tax', 'groceries', 'bleibt']);
-    expect(summe).toBe(5000);
-    expect(stuecke.find((s) => s.key === 'bleibt').value).toBe(5000 - sumAllExpenses(d.finanzen, d));
+    expect(stuecke.map((s) => s.key)).toEqual(['rent', 'healthInsurance', 'tax', 'groceries']);
+    expect(summe).toBe(sumAllExpenses(d.finanzen, d));
   });
   it('brutto erfasster Lohn: kein Stück «bleibt»', () => {
     const { stuecke } = kuchenDaten(profil({ incomeType: 'brutto' }), t, palette);
@@ -41,9 +41,14 @@ describe('Kuchen: «Wofür geht es weg?»', () => {
   });
   it('Liste mit Betrag und Prozent, Bild für Screenreader stumm', () => {
     const html = renderToStaticMarkup(React.createElement(KuchenImKapitel, { data: profil(), t, palette }));
-    expect(html).toContain('Ausgaben-Übersicht');
+    expect(html).toContain('Wofür geht es weg?');
     expect(html).toContain('aria-hidden="true"');
-    expect(html.replace(/<[^>]+>/g, '')).toContain('CHF 1’500 · 30 %');
+    // 1’500 von 2’900 Ausgaben.
+    expect(html.replace(/<[^>]+>/g, '')).toContain('CHF 1’500 · 52 %');
+  });
+  it('kleine Posten als «< 1 %», nicht «0 %»', () => {
+    const html = renderToStaticMarkup(React.createElement(KuchenImKapitel, { data: profil({ pension3a: 120 }), t, palette }));
+    expect(html.replace(/<[^>]+>/g, '')).not.toContain('· 0 %');
   });
 });
 

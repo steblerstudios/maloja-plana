@@ -103,7 +103,7 @@ describe('Geldfluss am neuen Ort', () => {
       teil: 'oben', palette: LIGHT_PALETTE, t, data: DEMO_DATA, onNavigate: () => {},
     }));
     expect(html).toContain('id="mp-finanz-auswertung"');
-    expect(html).toContain(de.budgetSync.expensesOverview);
+    expect(html).toContain('data-teil="kuchen"');
     expect(html).not.toContain(G.title);
   });
 });
