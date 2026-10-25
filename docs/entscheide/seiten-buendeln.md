@@ -197,7 +197,9 @@ verschiedene Dinge hinter ähnlichen Namen stehen.
 >    grundsätzlicher Umbau «jedes Werkzeug in sein Kapitel».
 > 2. **Reihenfolge:** klein zuerst — I `charts`, A Ansprüche, F Ausgesteuert; dann D Notfall,
 >    H Ablage, E Geldsorgen; zuletzt B KK-Werkzeuge. (Die übrigen Teile von I — Importe — mit H.)
-> 3. **IPV:** bleibt eigene Seite. Nur `praemien` und `kvg` ins Kapitel Versicherungen.
+> 3. **IPV:** bleibt eigene Seite. ~~Nur `praemien` und `kvg` ins Kapitel Versicherungen.~~
+>    ⟨**überholt 25.10.2026**, siehe §11⟩ `praemien` wird die eigene Seite **«Versicherungs-Übersicht»**
+>    (Runde 9 AB); `kvg` kommt dort als Zeile hinein, nicht ins Kapitel.
 > 4. **Notfall:** die Vorlesekarte bleibt eigene Seite. `notfalleinstieg` geht im Kapitel Notfall
 >    auf, Pass und Dossier werden Ausgänge dort.
 > 5. **Geldsorgen:** `mahnung` + `betreibung` werden ein Ablauf «Rechnung nicht bezahlt» mit
@@ -321,3 +323,28 @@ SchKG Art. 74 (10 Tage ab Zustellung) im Code-Kommentar bestätigt.
 
 > ✅ **Entschieden 24.10.2026** (Stebler Studios): Titel neutral — «Mahnung oder Zahlungsbefehl — was tun?», in allen
 > fünf Sprachen (rm weiter ungeprüft). Ersetzt «Rechnung nicht bezahlt».
+
+## 11 · Gruppe B neu entschieden: Versicherungs-Übersicht als eigene Seite (25.10.2026)
+
+> ✅ **Entschieden 25.10.2026** (Stebler Studios, Abnahme Fassung 6): «Versicherungs-Übersicht als eigene Seite, wie in
+> Runde 9 AB entschieden.» Ersetzt in §4 Entscheid 3 den Teil «`praemien` und `kvg` ins Kapitel Versicherungen».
+
+Grund: Die beiden Blätter widersprachen sich — §4 Entscheid 3 (24.10., `praemien` + `kvg` ins Kapitel) und
+`docs/design/mockups-stardust-2026-10-23/VERGLEICH.md` Runde 9 AB (24.10. später, «wie beim Geld: Kapitel zum Eintragen,
+eine Übersicht für alles»). Es gilt AB.
+
+Was damit gilt (Entwurf `seiten-v5.html?nur=ab`, Beschreibung in `VERGLEICH.md` «Versicherungs-Übersicht (AB)»):
+- **`praemien` (`PraemienOrientierung`) wird «Versicherungs-Übersicht»**, Brotkrume über das Kapitel Versicherungen;
+  `#/praemien` bleibt als Adresse bzw. leitet weiter; Titel in fünf Sprachen neu (Copy-Prüfer).
+- Aufbau wie die Finanz-Auswertung: Marken (Kasse · Modell, Franchise, Prämienregion) · «Versicherungen pro Monat» +
+  KK-Last · Zeilen mit Wert je Werkzeug (Franchise, Krankenkasse wechseln, Prämienverbilligung, Gesundheitskosten,
+  **KVG-Leistungen**, Vorsorge) · Schutzschild · aufklappbar das ganze Franchise-Kreuz, Prämie regional,
+  Prämienvergleich & Unfalldeckung, Alle Kassen · Zusatz-Wechsel und KK-Scanner als Zeilen.
+- **`kvg` (`KVGLeistungen`) bleibt eigene Seite** und wird von der Übersicht als Zeile erreicht — nicht ins Kapitel
+  gezogen (die 1085 Zeilen und das 65-kB-Thema aus §2 B entfallen damit).
+- **IPV bleibt eigene Seite** (unverändert). Kassenkarte bleibt Werkzeug.
+- Das **Kapitel Versicherungen** bleibt der Ort zum Eintragen, mit den eigenen Instrumenten aus Runde 9 AA
+  (Versicherungen pro Monat, KK-Last, kleines Franchise-Kreuz, kleines Schutzschild) und zuoberst in «Passend»
+  «Alle Versicherungen auf einen Blick» → Versicherungs-Übersicht.
+
+**Noch nichts gebaut.**

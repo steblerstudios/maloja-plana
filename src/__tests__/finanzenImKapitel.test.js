@@ -144,3 +144,21 @@ describe('Probiermodus-Knopf bei der Auswertung', () => {
     expect(cv).toMatch(/onEnterSandbox: teil === 'oben' \? onEnterSandbox : undefined/);
   });
 });
+
+// Abnahme F6 (Sophie 25.10.2026, Befunde 1, 5): Lohn-Hinweise hinter «So ist gerechnet», Steuer-Karte im
+// Kapitel kurz und ohne Verweis «ins Kapitel Finanzen & Geld».
+describe('Kapitel Finanzen · Abnahme F6', () => {
+  it('die Lohn-Hinweise stecken hinter «So ist gerechnet»', () => {
+    const html = teil('oben', DEMO_DATA);
+    const block = html.match(/<details[^>]*data-teil="lohn-so-gerechnet"[^>]*>[\s\S]*?<\/details>/);
+    expect(block).not.toBeNull();
+    expect(block[0]).toContain('So ist gerechnet');
+    expect(nurText(block[0])).toContain('13. Monatslohn');
+  });
+  it('Steuer-Karte im Kapitel: kurz, ohne Selbstverweis', () => {
+    const text = nurText(teil('oben', DEMO_DATA));
+    expect(text).not.toContain('im Kapitel «Finanzen & Geld»');
+    expect(text).not.toContain('Messpunkten des Steuerrechners');
+    expect(text).toContain('grobe Schätzung für den Hauptort, ohne Kirchensteuer');
+  });
+});

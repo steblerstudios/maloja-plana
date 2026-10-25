@@ -364,7 +364,22 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
 
 // Was daraus folgt: je Karte eine Funktion (siehe oben), alle mit ({ palette, t, data, onNavigate, w }).
 // Die Übersicht zeigt sie in ihrer Reihenfolge (auswertungsKarten), das Kapitel Finanzen in seiner.
-export const steuerKarte = ({ palette, t, onNavigate, w }) => {
+// `imKapitel` (Abnahme F6, Sophie 25.10.2026): im Kapitel Finanzen kürzer — eine Zeile Bund · Kanton und
+// Gemeinde mit «grobe Schätzung, Hauptort, ohne Kirchensteuer»; die ganze Herleitung steht auf der Seite
+// Steuern, zu der die Karte führt. Und der 13. Monatslohn verweist nicht «ins Kapitel Finanzen & Geld»,
+// in dem man schon ist, sondern auf «Einkommen» oben.
+export const steuerKarte = ({ palette, t, onNavigate, w, imKapitel }) => {
+  if (imKapitel && w.kantonal && w.taxResult) {
+    const annahmen = annahmenTexte(t, w.annahmen).map((s) => (s === t('tax.annahmeOhneDreizehnten') ? t('tax.annahmeOhneDreizehntenHier') : s));
+    return React.createElement(StatusCard, {
+      palette, icon: 'money',
+      title: t('finanzUebersicht.taxes'),
+      status: '~ ' + formatCHF(w.kantonal.total) + ' ' + t('common.perYear'),
+      statusColor: palette.text,
+      detail: [w.steuerAngabeSatz, t('tax.kapitelZeile', { bund: formatCHF(w.taxResult.steuer), kanton: formatCHF(w.kantonal.kantonalUndGemeinde) }), ...annahmen].filter(Boolean).join(' '),
+      onClick: () => onNavigate('tax'),
+    });
+  }
   const { kantonal, taxResult, steuerOhneZahl, steuerkanton, annahmenSatz, steuerAngabeSatz } = w;
   return React.createElement(StatusCard, {
     palette, icon: 'money',
@@ -578,7 +593,7 @@ export const FinanzenImKapitel = ({ teil, palette, t, data, onNavigate, isDarkMo
     w.hasData && React.createElement(LohnStandort, { palette, t, data, isDarkMode, onNavigate, w, aktuellesKapitel: 'finanzen' }),
     w.hasData && React.createElement('section', { 'data-teil': 'folgt', 'aria-labelledby': 'mp-folgt-titel', style: { marginBottom: space.md + 'px' } },
       React.createElement('h3', { id: 'mp-folgt-titel', style: titel }, t('chapters.finanzen.folgt.titel')),
-      steuerKarte(p), steuerOrientierung(p), ipvKarte(p), kkLastKarte(p), gesundheitKarte(p), vermoegenKarte(p),
+      steuerKarte({ ...p, imKapitel: true }), steuerOrientierung(p), ipvKarte(p), kkLastKarte(p), gesundheitKarte(p), vermoegenKarte(p),
       // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? Nur wenn etwas erfasst ist.
       (w.savingsAccount > 0 || w.totalExpenses > 0) && React.createElement(ReserveTank, {
         palette, t, savings: w.savingsAccount, monthlyExpenses: w.totalExpenses,
