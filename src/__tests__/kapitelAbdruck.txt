@@ -604,7 +604,7 @@ en   k=willMade type="select" orientation~41d1a32b link~ef3beccd label~53f4e27a 
 en   doc k=betreibungsauszug label~4bc008c4
 en   doc k=will label~903cb9ad
 en   doc k=power_of_attorney label~9d16cfd7
-en   doc k=patientenverfuegung label~4ef71a24
+en   doc k=patientenverfuegung label~c00ef9f6
 en kapitel=notfall title~530a13e2 short~530a13e2 description~b7284be0 felder=13 docs=3
 en   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] section~ee5f7e66 label~36c28f7f sectionIntro~38d61fec
 en   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~4679bd36
@@ -615,11 +615,11 @@ en   k=chronicDiseases type="textarea" label~4b032299
 en   k=doctor type="text" section~351601dd label~e51dab88 sectionIntro~d63848d3
 en   k=doctorPhone type="tel" label~49650b66
 en   k=hospital type="text" label~38c19e90
-en   k=organDonor type="select" section~cbfed3da label~7facd0c2 sectionIntro~1d4c2fe2 options=5 optWerte~7020aec1 optLabels~225a5d02 weitere=secondary
-en   k=patientenverfuegung type="select" orientation~7796bc16 link~2f871eb7 hint~bc4bc8b4 label~67e42b26 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
-en   k=vorsorgeauftrag type="select" orientation~6125201c hint~1980a25e label~1e34ab98 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=organDonor type="select" section~cbfed3da label~7facd0c2 sectionIntro~dcf5e761 options=5 optWerte~7020aec1 optLabels~225a5d02 weitere=secondary
+en   k=patientenverfuegung type="select" orientation~6a8b7a10 link~2f871eb7 hint~bc4bc8b4 label~2093376b options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=vorsorgeauftrag type="select" orientation~e6671b5d hint~1980a25e label~3d2b38e0 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
 en   k=bestattungswuensche type="select" hint~668c42ca label~4f7f8f65 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
-en   doc k=advance_directive label~4ef71a24
+en   doc k=advance_directive label~c00ef9f6
 en   doc k=organ_card label~269afc58
 en   doc k=blood_card label~76ec1811
 # rm: 7 Kapitel
