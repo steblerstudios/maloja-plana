@@ -2688,8 +2688,8 @@ export default {
     },
     wohnen: {
       since: 'Résidence depuis {duration}',
-      rentOnly: 'Loyer mensuel {rent}',
-      rentAndUtils: 'Loyer mensuel {rent} plus {utilities} de charges',
+      rentOnly: 'Loyer net {rent}',
+      rentAndUtils: 'Loyer net {rent} plus {utilities} de charges',
       landlordLabel: 'Bailleur',
       durationUnder1: 'moins d\'un mois',
       durationMonths: '{months} mois',
@@ -5894,6 +5894,7 @@ export default {
         vergleichAb6: 'Comparé aux logements de 6 pièces ou plus.',
         vergleichAlle: 'Comparé aux logements de toutes tailles.',
         zimmerAngenommen: { sie: 'La taille est déduite de la taille du ménage — avec votre nombre de pièces dans le chapitre Logement, la comparaison devient plus précise.', du: 'La taille est déduite de la taille du ménage — avec ton nombre de pièces dans le chapitre Logement, la comparaison devient plus précise.' },
+        zimmerAngenommenHier: { sie: 'La taille est supposée — avec votre nombre de pièces dans les données ci-dessous, la comparaison devient plus précise.', du: 'La taille est supposée — avec ton nombre de pièces dans les données ci-dessous, la comparaison devient plus précise.' },
         ohneWertFuerGroesse: 'L\'OFS ne publie pas de valeur pour cette taille de logement dans le canton.',
         wenigeAntworten: 'Ici, la valeur de l\'OFS repose sur moins de 50 réponses — à lire seulement comme repère approximatif.',
       },

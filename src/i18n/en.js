@@ -2688,8 +2688,8 @@ export default {
     },
     wohnen: {
       since: 'Living here for {duration}',
-      rentOnly: 'Monthly rent {rent}',
-      rentAndUtils: 'Monthly rent {rent} plus {utilities} utilities',
+      rentOnly: 'Net rent {rent}',
+      rentAndUtils: 'Net rent {rent} plus {utilities} utilities',
       landlordLabel: 'Landlord',
       durationUnder1: 'less than 1 month',
       durationMonths: '{months} months',
@@ -5894,6 +5894,7 @@ export default {
         vergleichAb6: 'Compared with flats of 6 rooms or more.',
         vergleichAlle: 'Compared with flats of all sizes.',
         zimmerAngenommen: 'The size is assumed from the household size — with your number of rooms in the Housing chapter, the comparison becomes more precise.',
+        zimmerAngenommenHier: 'The size is assumed — with your number of rooms in the details below, the comparison becomes more precise.',
         ohneWertFuerGroesse: 'The FSO publishes no value for this flat size in the canton.',
         wenigeAntworten: 'Here the FSO value is based on fewer than 50 responses — read it only as a rough guide.',
       },

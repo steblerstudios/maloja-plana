@@ -2688,8 +2688,8 @@ export default {
     },
     wohnen: {
       since: 'Residente da {duration}',
-      rentOnly: 'Affitto mensile {rent}',
-      rentAndUtils: 'Affitto mensile {rent} più {utilities} di spese accessorie',
+      rentOnly: 'Affitto netto {rent}',
+      rentAndUtils: 'Affitto netto {rent} più {utilities} di spese accessorie',
       landlordLabel: 'Locatore',
       durationUnder1: 'meno di un mese',
       durationMonths: '{months} mesi',
@@ -5868,6 +5868,7 @@ export default {
         vergleichAb6: 'Confrontato con abitazioni di 6 locali o più.',
         vergleichAlle: 'Confrontato con abitazioni di tutte le grandezze.',
         zimmerAngenommen: { sie: 'La grandezza è dedotta dal numero di persone nell\'economia domestica — con il Suo numero di locali nel capitolo Abitazione il confronto diventa più preciso.', du: 'La grandezza è dedotta dal numero di persone nell\'economia domestica — con il tuo numero di locali nel capitolo Abitazione il confronto diventa più preciso.' },
+        zimmerAngenommenHier: { sie: 'La grandezza è ipotizzata — con il Suo numero di locali nei dati qui sotto il confronto diventa più preciso.', du: 'La grandezza è ipotizzata — con il tuo numero di locali nei dati qui sotto il confronto diventa più preciso.' },
         ohneWertFuerGroesse: 'L\'UST non pubblica alcun valore per questa grandezza di abitazione nel Cantone.',
         wenigeAntworten: 'Qui il valore dell\'UST si basa su meno di 50 risposte — da leggere solo come orientamento approssimativo.',
       },

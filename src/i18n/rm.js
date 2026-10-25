@@ -5221,6 +5221,7 @@ export default {
         vergleichAb6: 'Cumparà cun abitaziuns da 6 stanzas e dapli.',
         vergleichAlle: 'Cumparà cun abitaziuns da tut las grondezzas.',
         zimmerAngenommen: { sie: "La grondezza è deducida da la grondezza da l'economia da chasa — cun Voss dumber da stanzas en il chapitel Abitar vegn la cumparegliaziun pli exacta.", du: "La grondezza è deducida da la grondezza da l'economia da chasa — cun tes dumber da stanzas en il chapitel Abitar vegn la cumparegliaziun pli exacta." },
+        zimmerAngenommenHier: { sie: 'La grondezza è supponida — cun Voss dumber da stanzas en las indicaziuns sutvart vegn la cumparegliaziun pli exacta.', du: 'La grondezza è supponida — cun tes dumber da stanzas en las indicaziuns sutvart vegn la cumparegliaziun pli exacta.' },
         ohneWertFuerGroesse: "L'UST na publitgescha nagina valur per questa grondezza d'abitaziun en il chantun.",
         wenigeAntworten: "Qua sa basa la valur da l'UST sin main che 50 respostas — mo da leger sco orientaziun grossa.",
       },
@@ -5574,8 +5575,8 @@ export default {
     },
     wohnen: {
       since: "Durada d'abitar {duration}",
-      rentOnly: 'Tschains mensil {rent}',
-      rentAndUtils: 'Tschains mensil {rent} plus {utilities} custs accessorics',
+      rentOnly: 'Tschains net {rent}',
+      rentAndUtils: 'Tschains net {rent} plus {utilities} custs accessorics',
       landlordLabel: 'Possessur',
       durationUnder1: 'main che 1 mais',
       durationMonths: '{months} mais',
