@@ -26,7 +26,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 // Nicht lazy: «oben» ist der Knopf für den Ernstfall — er soll ohne Nachladen dastehen.
-import { NotfallImKapitel, NOTFALL_ANGABEN } from './components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANGABEN } from './components/NotfallImKapitel.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
@@ -1815,7 +1815,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     setOffeneAbschnitte((o) => ({ ...o, [g.key]: true }));
     setTimeout(() => {
       const abschnitt = document.getElementById('mp-section-' + g.key);
-      if (abschnitt) abschnitt.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      if (abschnitt) {
+        abschnitt.scrollIntoView({ block: 'start' });
+        // Der stehende Ernstfall-Knopf (Notfall) liegt oben über dem Abschnitt — um seine Höhe weiter zurück.
+        const knopf = document.querySelector('[data-teil="notfall-ernstfall-knopf"][data-stehend="1"]');
+        if (knopf) window.scrollBy(0, -(knopf.getBoundingClientRect().height + 8));
+      }
       const feld = document.getElementById(chapter.key + '-' + k);
       if (feld && feld.focus) feld.focus({ preventScroll: true });
     }, 0);
@@ -2181,6 +2186,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Ernstfall, «Bereit für den Ernstfall», die vier Unterlagen und Vorsorge. Die Portemonnaie-Karte
     // (früher «Notfallkarte drucken») ist eine der vier Kacheln; ihre Vorschau (K20, Feldnamen, nie
     // Werte) steht zugeklappt darunter, bis die Kachel sie öffnet.
+    isNotfall && React.createElement(NotfallErnstfallKnopf, { palette, t: tr, onNavigate }),
     isNotfall && React.createElement(NotfallImKapitel, {
       palette, t: tr, data: allData || { notfall: data }, chapters: chapters || [], onNavigate,
       onUpdate, demoMode, zumFeld,

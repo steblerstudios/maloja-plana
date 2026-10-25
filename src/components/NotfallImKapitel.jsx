@@ -94,6 +94,21 @@ export const vorsorgeGeregelt = (nf, k) => {
 // Felder, die oben direkt ausgefüllt werden (Text, Telefon). Auswahlfelder führen zum Feld im Formular.
 const EINGABE = { emergencyContact: 'text', emergencyPhone: 'tel', allergies: 'text', medications: 'text', doctor: 'text', doctorPhone: 'tel' };
 
+// Der Ernstfall-Knopf trägt weisse Schrift: seine Fläche braucht mindestens 4.5 : 1 (WCAG AA). roseDeep ist im
+// hellen Modus dunkel genug (#9A4A4A), im dunklen hell (#D98A8A, für Schrift auf Dunkel gedacht) — dann das
+// dunkle Notfall-Rot des hellen Modus.
+const NOTFALL_ROT_DUNKEL = '#9A4A4A';
+const leuchtdichte = (hex) => {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || ''));
+  if (!m) return 1;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+export const knopfRot = (palette) => {
+  const rot = palette.roseDeep || palette.rose;
+  return 1.05 / (leuchtdichte(rot) + 0.05) >= 4.5 ? rot : NOTFALL_ROT_DUNKEL;
+};
+
 // Während getippt wird, steht der Ernstfall-Knopf nicht mehr oben fest: er soll kein Feld verdecken, über
 // dem die Tastatur aufgeht (Prüfauftrag aus dem Entscheid).
 const useTippt = () => {
@@ -110,8 +125,31 @@ const useTippt = () => {
   return tippt;
 };
 
-export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
+// Der Ernstfall-Knopf: zuoberst, bleibt beim Scrollen stehen — ausser während getippt wird.
+export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
   const tippt = useTippt();
+  if (!onNavigate) return null;
+  const h = React.createElement;
+  return h('div', {
+    id: NOTFALL_ANKER, 'data-teil': 'notfall-ernstfall-knopf', 'data-stehend': tippt ? '0' : '1',
+    style: { position: tippt ? 'static' : 'sticky', top: 'calc(var(--mp-sprungabstand, 64px) + 4px)', zIndex: 3, marginBottom: space.sm + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' },
+  },
+    h('button', {
+      type: 'button', onClick: () => onNavigate('notfallkarte'),
+      style: {
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '64px', textAlign: 'left',
+        padding: space.sm + 'px ' + space.md + 'px', background: knopfRot(palette), color: '#fff', border: 'none',
+        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 18px rgba(0,0,0,.22)',
+      },
+    },
+      h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: '#fff' } }, h(Icon, { name: 'phone', size: 22 })),
+      h('span', { style: { flex: 1, minWidth: 0 } },
+        h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: '#fff' } }, t('notfallKapitel.ernstfallTitel')),
+        h('small', { style: { display: 'block', fontSize: text.xs, color: '#fff', lineHeight: leading.normal } }, t('notfallKapitel.ernstfallSub'))),
+      h('span', { 'aria-hidden': 'true', style: { color: '#fff', fontSize: text.lg } }, '›')));
+};
+
+export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
   const [eingaben, setEingaben] = useState({});
   if (!onNavigate) return null;
   const h = React.createElement;
@@ -129,32 +167,18 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
   const notfallRot = palette.roseDeep || palette.rose;
 
-  // 1. Im Ernstfall
+  // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
+  // kann er nur in einem Behälter, der so hoch ist wie das Kapitel); hier folgt «… anrufen».
   const telefon = String(nf.emergencyPhone || '').trim();
   const telHref = telefon ? 'tel:' + telefon.replace(/[^\d+]/g, '') : '';
-  const ernstfall = h('div', { id: NOTFALL_ANKER, 'data-teil': 'notfall-ernstfall', style: { marginBottom: space.md + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
-    h('div', { 'data-stehend': tippt ? '0' : '1', style: { position: tippt ? 'static' : 'sticky', top: 'calc(var(--mp-sprungabstand, 64px) + 4px)', zIndex: 3 } },
-      h('button', {
-        type: 'button', onClick: () => onNavigate('notfallkarte'),
-        style: {
-          display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '64px', textAlign: 'left',
-          padding: space.sm + 'px ' + space.md + 'px', background: notfallRot, color: '#fff', border: 'none',
-          borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 18px rgba(0,0,0,.22)',
-        },
-      },
-        h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: '#fff' } }, h(Icon, { name: 'phone', size: 22 })),
-        h('span', { style: { flex: 1, minWidth: 0 } },
-          h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: '#fff' } }, t('notfallKapitel.ernstfallTitel')),
-          h('small', { style: { display: 'block', fontSize: text.xs, color: '#fff', lineHeight: leading.normal } }, t('notfallKapitel.ernstfallSub'))),
-        h('span', { 'aria-hidden': 'true', style: { color: '#fff', fontSize: text.lg } }, '›'))
-    ),
+  const ernstfall = h('div', { 'data-teil': 'notfall-ernstfall', style: { marginBottom: space.md + 'px' } },
     nf.emergencyContact && telHref && h('a', {
       href: telHref, 'data-teil': 'notfall-anrufen',
       style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', minHeight: '48px', marginTop: space.sm + 'px', padding: space.xs + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.md, textDecoration: 'none', color: palette.text },
     },
       h('span', { style: { minWidth: 0 } },
         h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('notfallKapitel.anrufen', { name: nf.emergencyContact })),
-        h('small', { style: { display: 'block', ...klein } }, t('chapters.notfall.fields.emergencyContact') + ' · ' + telefon)),
+        h('small', { style: { display: 'block', ...klein } }, t('chapters.notfall.fields.emergencyContact') + ' · ', h('span', { style: { whiteSpace: 'nowrap' } }, telefon))),
       h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: palette.sandDeep || palette.mid } }, h(Icon, { name: 'phone', size: 18 })))
   );
 
@@ -242,10 +266,10 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
   // 3. Ihre Notfall-Unterlagen
   const kachel = (key, titel, sub, ikon, onClick, aus) => h('button', {
     key, type: 'button', onClick, disabled: !!aus, 'data-kachel': key,
-    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
+    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
   },
     h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: notfallRot } }, h(Icon, { name: ikon, size: 20 })),
-    h('span', { style: { display: 'block', marginTop: '6px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'auto', WebkitHyphens: 'auto' } }, titel),
+    h('span', { style: { display: 'block', marginTop: '6px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'manual', WebkitHyphens: 'manual' } }, titel),
     h('small', { style: { display: 'block', ...klein } }, sub));
   const unterlagen = h('section', { 'data-teil': 'notfall-unterlagen', 'aria-labelledby': 'mp-notfall-unterlagen' },
     h('h4', { id: 'mp-notfall-unterlagen', style: kapH }, t('notfallKapitel.unterlagenTitel')),
@@ -273,7 +297,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
       VORSORGE.map((v) => {
         const ok = vorsorgeGeregelt(nf, v.k);
         const innen = [
-          h('span', { key: 'n', style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, t('notfallKapitel.vorsorge.' + v.k)),
+          h('span', { key: 'n', style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, hyphens: 'manual', WebkitHyphens: 'manual', overflowWrap: 'break-word' } }, t('notfallKapitel.vorsorge.' + v.k)),
           // Zeichen UND Wort — nicht nur Farbe (Haken / Kästchen).
           h('span', { key: 'w', style: { display: 'block', fontSize: text.xs, color: ok ? palette.text : palette.mid, overflowWrap: 'break-word' } }, hinweisZeichen(ok ? 'check' : 'kaestchen', 12), (v.k === 'organDonor' && ok && nf.organDonor !== 'declined' && nf.organDonor !== 'delegated' ? t('notfallKapitel.zustimmung') : vorsorgeWert(v.k))),
         ];

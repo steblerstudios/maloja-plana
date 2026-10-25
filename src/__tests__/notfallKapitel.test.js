@@ -8,7 +8,7 @@ import path from 'node:path';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChapterViewComplete } from '../ChapterView.jsx';
-import { NotfallImKapitel, NOTFALL_ANGABEN, SCENARIOS, bereitschaft, vorsorgeGeregelt } from '../components/NotfallImKapitel.jsx';
+import { NotfallImKapitel, NotfallErnstfallKnopf, NOTFALL_ANKER, knopfRot, NOTFALL_ANGABEN, SCENARIOS, bereitschaft, vorsorgeGeregelt } from '../components/NotfallImKapitel.jsx';
 import { getChapters, LIGHT_PALETTE } from '../config/constants.js';
 import { stufen } from '../config/brotkrumePfade.js';
 import { feldHatWert } from '../utils/vollstaendigkeit.js';
@@ -22,7 +22,7 @@ import { DEMO_DATA } from '../config/demoData.js';
 
 const t = createT({ de }, 'de', 'sie');
 const chapters = getChapters(t);
-const nurText = (html) => html.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ');
+const nurText = (html) => html.replace(/\u00AD/g, '').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ');
 const kapitelHtml = (data = DEMO_DATA.notfall, allData = DEMO_DATA, extra = {}) => renderToStaticMarkup(React.createElement(ChapterViewComplete, {
   palette: LIGHT_PALETTE, t, chapter: chapters.find((c) => c.key === 'notfall'), data, allData: { ...allData, notfall: data },
   onUpdate: () => {}, onUpdateIn: () => {}, onNavigate: () => {}, chapters, ...extra,
@@ -79,11 +79,16 @@ describe('Bereit für den Ernstfall', () => {
 });
 
 describe('Im Ernstfall', () => {
-  it('roter Knopf mit den Nummern, bleibt stehen', () => {
-    const html = ort();
+  it('roter Knopf mit den Nummern, bleibt stehen — direkt in der Kapitelkarte, mit der Sprungmarke', () => {
+    const html = renderToStaticMarkup(React.createElement(NotfallErnstfallKnopf, { palette: LIGHT_PALETTE, t, onNavigate: () => {} }));
+    expect(html).toContain(`id="${NOTFALL_ANKER}"`);
     expect(nurText(html)).toContain('Im Ernstfall: Notfallkarte öffnen');
     expect(nurText(html)).toContain('144 Sanität · 117 Polizei · 118 Feuerwehr');
     expect(html).toContain('position:sticky');
+  });
+  it('weisse Schrift auf genug dunklem Rot, auch im dunklen Modus', () => {
+    expect(knopfRot({ roseDeep: '#9A4A4A' })).toBe('#9A4A4A');
+    expect(knopfRot({ roseDeep: '#D98A8A' })).toBe('#9A4A4A');
   });
   it('während getippt wird, steht er nicht fest (deckt kein Feld unter der Tastatur)', () => {
     expect(QUELLE('components/NotfallImKapitel.jsx')).toContain("position: tippt ? 'static' : 'sticky'");

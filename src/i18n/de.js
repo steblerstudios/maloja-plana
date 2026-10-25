@@ -1725,7 +1725,8 @@ export default {
     vorsorgeTitel: 'Vorsorge',
     vorsorgeSatz: { sie: 'Was gilt, wenn Sie selbst nicht mehr entscheiden können.', du: 'Was gilt, wenn du selbst nicht mehr entscheiden kannst.' },
     geregelt: '{n} von {total} geregelt.',
-    vorsorge: { organDonor: 'Organspende', patientenverfuegung: 'Patientenverfügung', vorsorgeauftrag: 'Vorsorgeauftrag', bestattungswuensche: 'Bestattungswünsche' },
+    // Weiche Trennstriche (\u00AD): in der schmalen Kachel bricht das Wort an der Fuge, nicht mitten in der Silbe.
+    vorsorge: { organDonor: 'Organspende', patientenverfuegung: 'Patienten\u00ADverfügung', vorsorgeauftrag: 'Vorsorge\u00ADauftrag', bestattungswuensche: 'Bestattungs\u00ADwünsche' },
     erstellen: 'erstellen ›',
     festhalten: 'festhalten ›',
     ergaenzen: 'ergänzen ›',
