@@ -17,6 +17,29 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🏁 **Nachtrag 25.10.2026, 21:30 — Fassung 6 fertig auf main: #571–#584 auf Zuruf gemergt. NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 21:26): main = `2db4d4ee` (25.10. 21:22) · live = `4299bfb9` (0.1.48-beta,
+> 23.10.) · **110 Commits** dazwischen · offen nur PRs anderer Sitzungen: #569, #568, #563, #561 (Entwürfe).
+> **Gemergt** (Stebler Studios: «merge wenn möglich», später je «merge, sobald die CI grün ist»; squash, je Zweig main
+> nachgezogen + Volltest + Build + CI, CI auf main nach jedem Merge grün):
+> - **#574 · #571 · #573 · #572 · #575 · #576 · #580 · #577 · #578 · #579** — Abnahme Fassung 6 Seite für Seite: Kapitel
+>   Wohnen, Finanzen, Basis, Versicherungen (Prämien-Fundament, Instrumente, Versicherungs-Übersicht), Ausbildung, Behörden,
+>   Notfall «ein Ort». Maria: bleibt CHF 2’274.
+> - **#581 Muster für alle Kapitel M1–M8:** Angaben als ruhige Liste mit «x von n», Wichtiges «ergänzen ›», Rest «Nicht erfasst»,
+>   leere Abschnitte in einer Zeile · Kopf mit Landschaftsband und Brotkrume «Übersicht › Kapitel», **keine Kapitelkarte, Seite
+>   nicht mehr getönt** · «Als Nächstes» ruhig · Passend wie im Entwurf · Bereichsfarbe in Balken/Kuchen/Geldfluss.
+> - **#582** Wochenaufenthalt-Hinweise (IPV, Sozialhilfe) erschienen nie (`weekly`/`secondary` vs. `wochenaufenthalt`) — behoben,
+>   Wortlaut neu geprüft; Nebenwohnsitz ohne Steuersatz (Entscheid). «trifft nicht zu» Pensionskasse/Familienzulagen/
+>   Kinderbetreuung · AHV-Beitrag «/ Jahr».
+> - **#583** Schutzschild nennt BVG-Lücke bei «trifft nicht zu» · AHV-Orientierung für Selbständige · it «direttive del paziente».
+> - **#584** Englisch wie fedlex: «patient decree» / «advance care directive» (Entscheid Stebler Studios).
+> Jede Änderung mit Fachprüfung (swiss-precision, copy, a11y): 0 Blocker offen. 6’941 Tests grün, Startbündel 63.34 / 65 kB.
+> **Entscheide und Fahrplan:** Werkbank `mockups-stardust`, `docs/design/mockups-stardust-2026-10-23/VERGLEICH.md` und
+> `UEBERGABE-FASSUNG-6.md` (Abschnitte vom 25.10.). Übergabe: `_handoffs/2026-10-25-fassung6-gemergt-muster-und-nachtraege.md`.
+> **Offen:** Deploy (Stebler Studios, `/maloja-predeploy`) · Spinnennetz Versicherungen · «Ich nehme keine» im Notfall-Dossier ·
+> ZStB 133.1 · BAG-Prämien 2027 · rm ungeprüft · `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · KVG Art. 7 Wortlaut.
+
 > 🎨 **Nachtrag 25.10.2026, 00:25 — Fassung 6, erster Bau: #562, #564, #565, #566 auf Zuruf gemergt. NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 25.10. 00:23): main = `c9d96a50` (24.10. 23:15) · live = `4299bfb9`

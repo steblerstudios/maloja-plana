@@ -13,6 +13,9 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
+**Stand:** 2026-10-25 21:30 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `2db4d4ee` (Fassung 6 + Muster, #571–#584) gebaut, nicht deployt.
+
+*Vorheriger Stand (bleibt als Beleg):*
 **Stand:** 2026-10-23 17:45 · **Live:** `d4da4629` (0.1.47-beta, 21.10.) · main `412d11bb` + Release `c88ee519` (0.1.48-beta) gebaut, nicht deployt.
 
 *Vorheriger Stand (bleibt als Beleg):*
@@ -46,6 +49,8 @@
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
+| **Fassung 6** — Abnahme Seite für Seite (Wohnen, Finanzen, Basis, Versicherungen inkl. Übersicht, Ausbildung, Behörden, Notfall «ein Ort») + **Muster M1–M8** für alle Kapitel | `built` | #571–#581 · main `d2943f23` | Volltest + Build + CI je Merge; Browser 375 px dunkel (alle Kapitel), hell nur Kopf. Fachprüfung 0 Blocker. Nicht live |
+| **Nachträge Fachprüfung** — Wochenaufenthalt-Hinweise sichtbar (vorher nie), «trifft nicht zu» Pensionskasse/Familienzulagen/Kinderbetreuung, AHV «/ Jahr», Schutzschild-BVG-Satz, AHV-Orientierung Selbständige, Fachbegriffe it/en nach fedlex | `built` | #582–#584 · main `2db4d4ee` | Tests `nachtragFachpruefungM`, `nachtragZwei`, `englischFedlex`; CI main grün. Nicht live; rm ungeprüft |
 | **Fassung 5** — Ablage, Umzug Schritt für Schritt, Menü mit Karten + Icons, Kapitel-Kopf links + Finanzen, Merkliste ↔ «Was ansteht» mit Tag, IPV-Weg mit «Jährlich erinnern» | `built` | #539–#544 · main `412d11bb` · Release `c88ee519` | Je Zweig Copy-Prüfer, Browser 375 px im Beispiel, Suite auf zusammengeführtem Stand, CI grün; Tor 23.10.: 0 🔴. Verknüpfung Merkliste→Kalender mit echten Daten nur per Tests. rm «ungeprüft F5». |
 | **Werte 2027 als Jahrestabellen** (#533/#536) · **AHV-Vorbezug im Referenzalter neu** (#529) · **sichtbare Fehler** (#530) · **Eingang als Ort** (#537) · **Bildschirme** (#538) | `built` | main `412d11bb` | Skala 2027 an ahv-iv.ch bytegleich (Swiss-Precision 23.10.), Kürzungssätze = Merkblatt 3.04 Ziff. 4. Fedlex-Verordnung 2026/542 noch nicht an der Quelle geöffnet. |
 | **Stundenlohn-Rechner** — Grundlohn, Ferien, Zuschläge, Mindestlohn je Arbeitskanton, BVG/UVG-Schwellen; Hinweis «Stunden aus dem Profil, Schwellen je Betrieb»; Quellenzeile «ohne Feiertagszuschlag» nur NE | `verified-live` | PRs #492, #505, #506 · live `650908a2` (0.1.46-beta) | Live 19.10. ~15:44 in `index-DonLTkj4.js`-Build: `#/stundenlohn` im Beispielmodus geöffnet, Profil-Hinweis und Quellenzeile (NE LEmpl Art. 32d Abs. 3) wörtlich sichtbar. **Rechnung live nicht durchgespielt** (keine Werte eingegeben); Rechnung über Tests. |
