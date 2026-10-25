@@ -55,8 +55,8 @@ describe('Oben im Kapitel', () => {
 });
 
 describe('Angaben', () => {
-  it('Schweizer/in: «Aufenthaltsbewilligung nicht nötig (Schweizer/in)»', () => {
-    expect(kapitel()).toContain('Aufenthaltsbewilligung nicht nötig (Schweizer/in)');
+  it('Schweizer/in: «Aufenthaltsbewilligung nicht nötig (Schweizer Bürgerrecht)»', () => {
+    expect(kapitel()).toContain('Aufenthaltsbewilligung nicht nötig (Schweizer Bürgerrecht)');
   });
   it('mit Bewilligung: die Bewilligung wie bisher', () => {
     expect(kapitel({ ...DEMO_DATA.ausbildung, workPermit: 'b' })).toContain('Aufenthaltsbewilligung B');

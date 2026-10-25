@@ -3980,7 +3980,7 @@ export default {
     zurUebersichtSatz: { sie: "Voss organisatur da vita en ina survista.", du: "Tes organisatur da vita en ina survista." },
     zurUebersicht: "A la survista",
     imHaushalt: "En l’economia domestica",
-    bewilligungNichtNoetig: "betg necessari (Svizzer/a)",
+    bewilligungNichtNoetig: "betg necessari (burgais svizzer)",
     haushaltWert: "{erwachsene} creschids · {kinder} uffants",
     haushaltWertEinKind: "{erwachsene} creschids · 1 uffant",
     nextTopic: 'Proxim tema',

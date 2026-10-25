@@ -2329,7 +2329,7 @@ export default {
     bildung: "Formation",
     sprachen: "Langues",
     erstellen: "Créer le CV",
-    woher: "À partir des données de ce chapitre et de la Base personnelle — compléter et enregistrer en PDF dans le CV.",
+    woher: "À partir des données de ce chapitre et de la Base personnelle. Dans le CV, on peut les compléter et les enregistrer en PDF.",
   },
   wohnenInstrument: {
     titel: 'Frais de logement par mois',
@@ -2396,7 +2396,7 @@ export default {
     zurUebersichtSatz: { sie: "Votre dossier de vie en un coup d’œil.", du: "Ton dossier de vie en un coup d’œil." },
     zurUebersicht: "Voir la vue d’ensemble",
     imHaushalt: "Dans le ménage",
-    bewilligungNichtNoetig: "pas nécessaire (citoyen(ne) suisse)",
+    bewilligungNichtNoetig: "pas nécessaire (nationalité suisse)",
     haushaltWert: "{erwachsene} adultes · {kinder} enfants",
     haushaltWertEinKind: "{erwachsene} adultes · 1 enfant",
     nextTopic: 'Thème suivant',

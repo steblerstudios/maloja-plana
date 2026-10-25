@@ -108,7 +108,10 @@ function calcDuration(moveInDate, t) {
     const start = new Date(moveInDate);
     if (isNaN(start.getTime())) return null;
     const now = new Date();
-    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    // Ein Monat zählt erst, wenn der Tag erreicht ist (Fachprüfung 25.10.2026: Beginn 30.04. zeigte am 01.10.
+    // schon einen Monat mehr); ein Datum in der Zukunft ergibt keine Dauer.
+    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()) - (now.getDate() < start.getDate() ? 1 : 0);
+    if (start > now) return null;
     if (totalMonths < 0) return null;
     const years = Math.floor(totalMonths / 12);
     const months = totalMonths % 12;

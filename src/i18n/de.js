@@ -2338,7 +2338,7 @@ export default {
     bildung: "Ausbildung",
     sprachen: "Sprachen",
     erstellen: "Lebenslauf erstellen",
-    woher: "Aus den Angaben dieses Kapitels und der Persönlichen Basis — ergänzen und als PDF speichern im Lebenslauf.",
+    woher: "Aus den Angaben dieses Kapitels und der Persönlichen Basis. Im Lebenslauf lässt sich das ergänzen und als PDF speichern.",
   },
   wohnenInstrument: {
     titel: 'Wohnkosten pro Monat',
@@ -2405,7 +2405,7 @@ export default {
     zurUebersichtSatz: { sie: "Ihr Lebensordner auf einen Blick.", du: "Dein Lebensordner auf einen Blick." },
     zurUebersicht: "Zur Übersicht",
     imHaushalt: "Im Haushalt",
-    bewilligungNichtNoetig: "nicht nötig (Schweizer/in)",
+    bewilligungNichtNoetig: "nicht nötig (Schweizer Bürgerrecht)",
     haushaltWert: "{erwachsene} Erwachsene · {kinder} Kinder",
     haushaltWertEinKind: "{erwachsene} Erwachsene · 1 Kind",
     nextTopic: 'Nächstes Thema',

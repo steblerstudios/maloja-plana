@@ -157,7 +157,8 @@ function getSections(data, chapters, t) {
         { label: lbl('ausbildung', 'employer'), value: d('ausbildung', 'employer') },
         { label: lbl('ausbildung', 'jobTitle'), value: d('ausbildung', 'jobTitle') },
         { label: lbl('ausbildung', 'employmentStart'), value: dt('ausbildung', 'employmentStart') },
-        { label: lbl('ausbildung', 'workPermit'), value: sel('ausbildung', 'workPermit') },
+        // Wie im Kapitel (Abnahme F6, 25.10.2026): Schweizer Bürgerrecht → «nicht nötig», nicht die Option als Bewilligung.
+        { label: lbl('ausbildung', 'workPermit'), value: data?.ausbildung?.workPermit === 'swiss' ? t('chapterView.bewilligungNichtNoetig') : sel('ausbildung', 'workPermit') },
         { label: lbl('ausbildung', 'languages'), value: d('ausbildung', 'languages') },
       ].filter(r => r.value),
     },

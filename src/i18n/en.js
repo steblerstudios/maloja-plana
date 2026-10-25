@@ -2329,7 +2329,7 @@ export default {
     bildung: "Education",
     sprachen: "Languages",
     erstellen: "Create CV",
-    woher: "From the details in this chapter and Personal basics — add more and save as PDF in the CV.",
+    woher: "From the details in this chapter and Personal basics. In the CV you can add more and save it as a PDF.",
   },
   wohnenInstrument: {
     titel: 'Housing costs per month',

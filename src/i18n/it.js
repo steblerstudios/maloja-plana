@@ -2329,7 +2329,7 @@ export default {
     bildung: "Formazione",
     sprachen: "Lingue",
     erstellen: "Creare il curriculum",
-    woher: "Dai dati di questo capitolo e della Base personale — completare e salvare come PDF nel curriculum.",
+    woher: "Dai dati di questo capitolo e della Base personale. Nel curriculum si possono completare e salvare come PDF.",
   },
   wohnenInstrument: {
     titel: 'Costi abitativi al mese',
@@ -2394,7 +2394,7 @@ export default {
     zurUebersichtSatz: { sie: "Il Suo fascicolo di vita in un colpo d’occhio.", du: "Il tuo fascicolo di vita in un colpo d’occhio." },
     zurUebersicht: "Alla panoramica",
     imHaushalt: "Nell’economia domestica",
-    bewilligungNichtNoetig: "non necessario (cittadino/a svizzero/a)",
+    bewilligungNichtNoetig: "non necessario (cittadinanza svizzera)",
     haushaltWert: "{erwachsene} adulti · {kinder} figli",
     haushaltWertEinKind: "{erwachsene} adulti · 1 figlio",
     emptyState: { sie: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per Lei.', du: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per te.' },
