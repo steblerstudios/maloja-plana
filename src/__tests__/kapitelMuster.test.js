@@ -38,7 +38,7 @@ describe('M1 · Angaben als eine ruhige Liste', () => {
   });
   it('PLZ und Ort in einer Zeile', () => {
     const text = nurText(render('wohnen'));
-    expect(text).toContain('PLZ · Ort 8004 Zürich');
+    expect(text).toContain('PLZ · Ort 8004\u00a0Zürich');
     expect(text).not.toMatch(/Postleitzahl 8004/);
   });
 });
@@ -64,7 +64,7 @@ describe('M1 · Feldnamen ohne das, was der Wert schon sagt', () => {
 describe('M2 · «x von n» und das Fehlende', () => {
   it('am Abschnitt «x von n», das Übrige leise in «Nicht erfasst: …»', () => {
     const html = render('versicherungen');
-    expect(html).toMatch(/data-erfasst="6\/7"[^>]*>6 von 7</);
+    expect(html).toMatch(/data-erfasst="6\/7"[^>]*><span aria-hidden="true">6 von 7<\/span><span[^>]*>6 von 7 Angaben erfasst</);
     expect(nurText(html)).toContain('Nicht erfasst: Zusatzversicherung.');
   });
   it('wichtige leere Felder (Grundordnung, empfohlen) mit «ergänzen ›»', () => {
@@ -73,6 +73,22 @@ describe('M2 · «x von n» und das Fehlende', () => {
   });
   it('Finanzen: die Nebenerwerb-Felder fehlen erst mit Nebenerwerb', () => {
     expect(render('finanzen')).not.toMatch(/data-fehlt="side|Nicht erfasst:[^<]*Nebenerwerb/);
+  });
+});
+
+describe('M2 · Wohnen: Eigentum nur, wo es gilt (Fachprüfung 25.10.2026)', () => {
+  it('der Aufenthaltstyp steht bei der Adresse; Eigentum ohne Angabe steht in «… · noch leer»', () => {
+    const html = render('wohnen');
+    const adresse = nurText(html.slice(html.indexOf('id="mp-section-address"'), html.indexOf('id="mp-section-rentAmount"')));
+    expect(adresse).toContain('Aufenthaltstyp Hauptwohnsitz');
+    expect(nurText(html.split('data-teil="leere-abschnitte"')[1])).toMatch(/^[^›]*Eigentum ergänzen › noch leer/);
+  });
+  it('Hypothek «Nein»: Zins, Immobilienwert und Gebäudeversicherung fehlen nicht', () => {
+    const html = render('wohnen', { ...DEMO_DATA.wohnen, mortgageStatus: 'no' });
+    const eigentum = nurText(html.slice(html.indexOf('id="mp-section-mortgageStatus"')));
+    // «Hypothek vorhanden? Nein» ist die einzige Angabe, die zählt — der Abschnitt ist damit vollständig
+    expect(eigentum).not.toMatch(/^\s*Eigentum \d+ von/);
+    expect(eigentum).not.toContain('Nicht erfasst: Hypothekarzins');
   });
 });
 
@@ -87,13 +103,14 @@ describe('M3 · leere Abschnitte in einer Zeile', () => {
 describe('M4 · Einheiten und Namen im Wert', () => {
   it('Franchise «CHF 1’500», «Pensionskasse», Kennnummer am Stück', () => {
     const text = nurText(render('versicherungen'));
-    expect(text).toContain('Franchise CHF 1’500');
+    expect(text).toContain('Franchise CHF\u00a01’500');
     expect(text).toContain('Pensionskasse BVK');
     expect(text).not.toContain('BVG/Pensionskasse');
-    expect(text).toContain('CSS‑2024‑7788991');
+    // am Stück per CSS (nowrap), der Text bleibt beim Kopieren dieselbe Nummer
+    expect(render('versicherungen')).toMatch(/white-space:nowrap">CSS-2024-7788991</);
   });
   it('Wochenstunden mit Einheit', () => {
-    expect(nurText(render('ausbildung'))).toContain('42 Std./Woche');
+    expect(nurText(render('ausbildung'))).toContain('42\u00a0Std./Woche');
   });
 });
 
@@ -115,7 +132,7 @@ describe('M6 · «Als Nächstes» ruhig', () => {
 describe('M7 · Passend wie im Entwurf', () => {
   it('Wohnen: Untertitel aus dem Entwurf, Umzug mit 4 Schritten', () => {
     const passend = nurText(render('wohnen').split('data-teil="passend"')[1]);
-    for (const s of ['Umzug Ablauf · 4 Schritte', 'Anspruch · je nach Einkommen und Kanton', 'Ablauf · Fristen und Anfechtung', 'Mietvertrag ablegen Unterlagen · Mietvertrag']) expect(passend, s).toContain(s);
+    for (const s of ['Umzug Ablauf · 4 Schritte', 'Nur in einzelnen Kantonen und Gemeinden · je nach Einkommen', 'Ablauf · Fristen und Anfechtung', 'Mietvertrag ablegen Unterlagen · Mietvertrag']) expect(passend, s).toContain(s);
   });
   it('Ausbildung: Namen aus dem Entwurf', () => {
     const passend = nurText(render('ausbildung').split('data-teil="passend"')[1]);
@@ -123,8 +140,8 @@ describe('M7 · Passend wie im Entwurf', () => {
   });
   it('Behörden: Steuern und Briefvorlagen wie im Entwurf', () => {
     const passend = nurText(render('behoerden').split('data-teil="passend"')[1]);
-    expect(passend).toContain('Steuerbetrag, Abzüge, Frist verlängern');
-    expect(passend).toContain('Fristverlängerung, Kündigung, Krankenkassenwechsel');
+    expect(passend).toContain('Steuern schätzen, Abzüge, Frist verlängern');
+    expect(passend).toContain('Fristverlängerung, Wohnungskündigung, Krankenkassenwechsel');
   });
   it('Symbole in einer Kachel (36 px)', () => {
     expect(render('wohnen').split('data-teil="passend"')[1]).toMatch(/width:36px;height:36px;border-radius:10px/);
@@ -140,8 +157,8 @@ describe('M8 · eine Bereichsfarbe je Kapitel', () => {
       expect(farbe('healthInsurance')).toBe(bereichsTon('versicherungen', palette));
     }
   });
-  it('hell und dunkel: die Fruchtfarbe des Bereichs', () => {
-    expect(bereichsTon('wohnen', LIGHT_PALETTE)).toBe(getBereichForChapter('wohnen').light);
+  it('hell und dunkel: die Fruchtfarbe des Bereichs (hell der Flächenton lightDeep)', () => {
+    expect(bereichsTon('wohnen', LIGHT_PALETTE)).toBe(getBereichForChapter('wohnen').lightDeep);
     expect(bereichsTon('wohnen', DARK_PALETTE)).toBe(getBereichForChapter('wohnen').dark);
   });
   it('der Monatsbalken im Kapitel Finanzen nimmt dieselben Farben', () => {
@@ -150,10 +167,24 @@ describe('M8 · eine Bereichsfarbe je Kapitel', () => {
   });
 });
 
+// A11y-Prüfung 25.10.2026 (WCAG 1.4.11): jedes Kuchenstück der Versicherungen ≥ 3:1 gegen den Grund.
+const lum = (h) => { const r = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * r[0] + 0.7152 * r[1] + 0.0722 * r[2]; };
+const kontrast = (a, b) => { const x = lum(a); const y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+describe('M8 · Kontrast der Flächen', () => {
+  it.each([['hell', LIGHT_PALETTE], ['dunkel', DARK_PALETTE]])('%s: Miete, Krankenkasse, Hausrat, Haftpflicht ≥ 3:1 gegen den Grund', (_n, palette) => {
+    const posten = ausgabenPosten(DEMO_DATA, t, palette);
+    for (const k of ['rent', 'healthInsurance', 'householdInsurance', 'liabilityInsurance']) {
+      const p = posten.find((x) => x.key === k);
+      const f = p.color || p.farbe;
+      expect(kontrast(f, palette.up), k + ' ' + f).toBeGreaterThanOrEqual(3);
+    }
+  });
+});
+
 describe('Texte in allen fünf Sprachen', () => {
   for (const [name, s] of Object.entries({ en, fr, it: it_, rm })) {
     it(name, () => {
-      for (const k of ['erfasst', 'nichtErfasst', 'ergaenzenAria']) expect(s.chapterView.abschnitt[k], name + ' ' + k).toBeTruthy();
+      for (const k of ['erfasst', 'erfasstSr', 'nichtErfasst', 'ergaenzenAria']) expect(s.chapterView.abschnitt[k], name + ' ' + k).toBeTruthy();
       for (const k of ['stdProWoche', 'plzOrt']) expect(s.chapterView[k], name + ' ' + k).toBeTruthy();
       for (const k of Object.keys(de.chapterView.passend)) expect(s.chapterView.passend[k], name + ' passend.' + k).toBeTruthy();
     });

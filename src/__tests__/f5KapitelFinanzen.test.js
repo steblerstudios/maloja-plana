@@ -209,7 +209,8 @@ describe('Weitere Bereiche anzeigen', () => {
   // stehen zusammen in EINER Zeile «… · noch leer» mit «ergänzen ›».
   it('andere Kapitel: leere Abschnitte in einer Zeile statt eines Schalters', () => {
     const html = render('notfall', {});
-    expect(html).not.toContain(t('chapterView.disclosure.notfall.more'));
+    // der frühere Schalter «Persönliche Vorsorgeverfügungen anzeigen» (Schlüssel entfernt)
+    expect(html).not.toContain('Vorsorgeverfügungen anzeigen');
     const leer = html.slice(html.indexOf('data-teil="leere-abschnitte"'));
     expect(html).toContain('data-teil="leere-abschnitte"');
     expect(leer).toContain('ergänzen ›');

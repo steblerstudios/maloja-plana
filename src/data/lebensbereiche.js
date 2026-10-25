@@ -37,7 +37,9 @@ export const LEBENSBEREICHE = [
   { key: 'wohnen',         chapterKey: 'wohnen',         fruit: 'birne',      light: '#7E9A4E', lightDeep: '#6C8343', dark: '#9DBA6A' },
   { key: 'finanzen',       chapterKey: 'finanzen',       fruit: 'aprikose',   light: '#C4A870', dark: '#D2B77E' },
   { key: 'person',         chapterKey: 'basis',          fruit: 'apfel',      light: '#5A7868', dark: '#7E9F8C' },
-  { key: 'versicherungen', chapterKey: 'versicherungen', fruit: 'heidelbeere',light: '#6E90B0', dark: '#86A6C2' },
+  // lightDeep seit dem Muster M8 (25.10.2026): die Krankenkasse im Kuchen und Balken des Kapitels Finanzen ist
+  // eine Fläche auf palette.up — #6E90B0 hatte dort 2.8:1, #6787A5 hat 3.2:1 (WCAG 1.4.11).
+  { key: 'versicherungen', chapterKey: 'versicherungen', fruit: 'heidelbeere',light: '#6E90B0', lightDeep: '#6787A5', dark: '#86A6C2' },
   { key: 'gesundheit',     chapterKey: null,             fruit: 'hagebutte',  light: '#C67A4A', dark: '#D98F5C' },
   { key: 'arbeit',         chapterKey: null,             fruit: 'haselnuss',  light: '#A8895E', lightDeep: '#947750', dark: '#C0A277' },
   { key: 'familie',        chapterKey: null,             fruit: 'kirsche',    light: '#B96470', dark: '#CE8088' },

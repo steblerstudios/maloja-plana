@@ -1846,8 +1846,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
   // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
   // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
-  // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Die Bezeichnung nimmt den Platz,
-  // den der Wert übrig lässt; ein Wert bricht nur zwischen Wörtern.
+  // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Der Wert nimmt seine Breite (bis 62 %),
+  // die Bezeichnung den Rest («flex: 1 1 0») — so bricht «Noch nicht» nicht neben einem langen Namen;
+  // ein Wert bricht nur zwischen Wörtern.
   // M2: «x von n» am Abschnitt; was fehlt, steht da — Wichtiges (Grundordnung, empfohlen; im
   // Notfall die Angaben für den Ernstfall) mit «ergänzen ›», der Rest leise «Nicht erfasst: …».
   // M3: ganz leere Abschnitte in EINER Zeile («Eigentum · Mobilität · noch leer»).
@@ -1856,11 +1857,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     ? NOTFALL_ANGABEN.some((x) => x.chapter === 'notfall' && x.k === f.k)
     : !!(f.mvo || f.recommended));
   // Finanzen · Nebenerwerb: die Felder gelten erst mit Nebenerwerb — ohne ihn fehlen sie nicht.
-  const feldZaehlt = (f) => !(istFinanzen && NEBENERWERB_FELDER.includes(f.k) && !nebenerwerbAngegeben(data));
-  // Kennnummern und Telefonnummern («ZH-2024-123456», «+41 79 654 32 10») am Stück: geschützter
-  // Bindestrich und geschützte Leerzeichen (Abnahme F6, Behörden 10, Notfall).
-  const amStueck = (s) => (typeof s === 'string' && s.length <= 24 && /\d/.test(s) && /^[\w+()./ -]+$/.test(s)
-    ? s.replace(/-/g, '\u2011').replace(/ /g, '\u00a0') : s);
+  // Wohnen · Eigentum: ohne Hypothek («Nein») fehlen Zins, Immobilienwert und Gebäudeversicherung nicht
+  // (Fachprüfung 25.10.2026).
+  const feldZaehlt = (f) => !(istFinanzen && NEBENERWERB_FELDER.includes(f.k) && !nebenerwerbAngegeben(data))
+    && !(chapter.key === 'wohnen' && data.mortgageStatus === 'no' && ['mortgagePayment', 'propertyValue', 'buildingsInsurance'].includes(f.k));
+  // Kennnummern und Telefonnummern («ZH-2024-123456», «+41 79 654 32 10») bleiben am Stück (Abnahme F6,
+  // Behörden 10, Notfall) — per CSS, nicht mit geschützten Zeichen: so bleibt die Nummer beim Kopieren
+  // dieselbe (A11y-Prüfung 25.10.2026).
+  const amStueck = (s) => typeof s === 'string' && s.length <= 24 && /\d/.test(s) && /^[\w+()./ -]+$/.test(s);
   // In der Liste ohne das, was der Wert schon sagt («CHF», «CHF/Monat»), und ohne Eingabe-Beispiel
   // («Anzahl Zimmer (z. B. 3.5)» → «Anzahl Zimmer»).
   const listenName = (f) => {
@@ -1868,15 +1872,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const roh = String(f.label || '');
     const ohneChf = f.type === 'currency'
       ? roh.replace(/CHF(\s*\/\s*[^\s(),]+)?,?\s*/g, '').replace(/\(\s*\)/g, '').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')')
-      : roh.replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '');
+      : roh.replace(/\s*(CHF(\s*\/\s*\S+)?|\(CHF\))\s*$/, '');
     return ohneChf.replace(/\s*\((z\. ?B\.|p\. ?ex\.|p\. ?es\.|e\.g\.)[^)]*\)/i, '').replace(/\s{2,}/g, ' ').trim();
   };
   const listenWert = (f) => {
     const w = abschnittWert(f);
     if (trifftNichtZu(data, f.k)) return w;
     if ((f.k === 'workHoursPerWeek' || f.k === 'sideHoursPerWeek') && /^\d+([.,]\d+)?$/.test(String(data[f.k]).trim())) return w + '\u00a0' + tr('chapterView.stdProWoche');
-    if (f.type === 'select' && /\sCHF\s*$/.test(String(f.label || '')) && /^[\d’']+$/.test(String(w))) return 'CHF\u00a0' + w;
-    return amStueck(w);
+    if (f.type === 'select' && /(\sCHF|\(CHF\))\s*$/.test(String(f.label || '')) && /^[\d’']+$/.test(String(w))) return 'CHF\u00a0' + w;
+    return w;
   };
   // PLZ und Ort in einer Zeile («PLZ · Ort  8004 Zürich»), wenn beide erfasst sind.
   const zeilenAus = (felder) => {
@@ -1886,13 +1890,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return felder.flatMap((f) => {
       if (beide && f.k === 'city') return [];
       if (beide && f.k === 'postalCode') return [{ k: 'plzOrt', name: tr('chapterView.plzOrt'), wert: String(data.postalCode) + '\u00a0' + String(data.city) }];
-      return [{ k: f.k, name: listenName(f), wert: listenWert(f) }];
+      const wert = listenWert(f);
+      return [{ k: f.k, name: listenName(f), wert, amStueck: amStueck(wert) }];
     });
   };
   const linkKnopf = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' };
   const zeile = (z) => React.createElement('div', { key: 'z-' + z.k, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '3px 0 3px ' + space.sm + 'px' } },
-    React.createElement('dt', { style: { color: palette.mid, margin: 0, flex: '1 1 auto', minWidth: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, z.name),
-    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, z.wert));
+    React.createElement('dt', { style: { color: palette.mid, margin: 0, flex: '1 1 0', minWidth: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, z.name),
+    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word', ...(z.amStueck ? { whiteSpace: 'nowrap' } : {}) } }, z.wert));
   const abschnittsliste = () => {
     const gruppen = abschnittGruppen(chapter.fields, chapter.title);
     const abschnitt = (g) => {
@@ -1936,7 +1941,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const wichtig = fehlend.filter(feldWichtig);
       const leise = fehlend.filter((f) => !feldWichtig(f));
       return React.createElement('section', {
-        key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel, 'data-abschnitt': offen ? 'offen' : 'liste',
+        key: g.key, id: 'mp-section-' + g.key, 'aria-labelledby': 'mp-abschnitt-' + g.key, 'data-abschnitt': offen ? 'offen' : 'liste',
         style: {
           scrollMarginTop: 'var(--mp-sprungabstand)',
           borderTop: '1px solid ' + palette.border + '88',
@@ -1945,10 +1950,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         },
       },
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px' } },
-          React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, g.titel),
+          React.createElement('h3', { id: 'mp-abschnitt-' + g.key, style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, g.titel),
           React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px' } },
-            !offen && fehlend.length > 0 && React.createElement('span', { 'data-erfasst': gefuellt.length + '/' + zaehlend.length, style: { fontSize: text.xs, color: palette.mid, whiteSpace: 'nowrap' } },
-              tr('chapterView.abschnitt.erfasst', { n: gefuellt.filter(feldZaehlt).length, total: zaehlend.length })),
+            // Sichtbar kurz «6 von 7» wie im Entwurf; vorgelesen «6 von 7 Angaben erfasst» (A11y- und Copy-Prüfung).
+            !offen && fehlend.length > 0 && React.createElement('span', { 'data-erfasst': gefuellt.filter(feldZaehlt).length + '/' + zaehlend.length, style: { fontSize: text.xs, color: palette.mid, whiteSpace: 'nowrap' } },
+              React.createElement('span', { 'aria-hidden': 'true' }, tr('chapterView.abschnitt.erfasst', { n: gefuellt.filter(feldZaehlt).length, total: zaehlend.length })),
+              React.createElement('span', { style: visuallyHiddenStyle }, tr('chapterView.abschnitt.erfasstSr', { n: gefuellt.filter(feldZaehlt).length, total: zaehlend.length }))),
             React.createElement('button', {
               type: 'button', className: 'mp-link', onClick: umschalten, 'aria-expanded': offen,
               'aria-label': tr(offen ? 'chapterView.abschnitt.fertigAria' : 'chapterView.abschnitt.aendernAria', { name: g.titel }),
@@ -1967,9 +1974,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ...wichtig.map((f) => React.createElement('button', {
                 key: 'fehlt-' + f.k, type: 'button', className: 'mp-link', 'data-fehlt': f.k, onClick: () => zumFeld(f.k),
                 style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '44px', padding: '0 0 0 ' + space.sm + 'px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid, textAlign: 'left' },
-              }, React.createElement('span', { style: { color: palette.mid } }, f.label), React.createElement('span', { style: { color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))),
+              }, React.createElement('span', { style: { color: palette.mid } }, listenName(f)), React.createElement('span', { style: { color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))),
               leise.length > 0 && React.createElement('p', { 'data-nicht-erfasst': leise.map((f) => f.k).join(' '), style: { margin: '2px 0 0', padding: '0 0 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
-                tr('chapterView.abschnitt.nichtErfasst', { liste: leise.map(listenName).join(', ') }))
+                // In der Aufzählung ohne das Fragezeichen der Feldnamen («13. Monatslohn?,» las sich holprig).
+                tr('chapterView.abschnitt.nichtErfasst', { liste: leise.map((f) => listenName(f).replace(/\s*\?$/, '')).join(', ') }))
             )
       );
     };
@@ -1977,12 +1985,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const leereZeile = (liste) => {
       const zu = liste.filter((g) => !offeneAbschnitte[g.key] && g.felder.filter(feldSichtbar).length > 0);
       if (zu.length === 0) return null;
-      return React.createElement('section', { key: 'leer', 'data-teil': 'leere-abschnitte', 'aria-label': zu.map((g) => g.titel).join(', '), style: { borderTop: '1px solid ' + palette.border + '88', paddingBottom: space.sm + 'px' } },
+      return React.createElement('div', { key: 'leer', 'data-teil': 'leere-abschnitte', style: { borderTop: '1px solid ' + palette.border + '88', paddingBottom: space.sm + 'px' } },
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px' } },
           React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.mid } }, zu.map((g) => g.titel).join(' · ')),
           React.createElement('button', {
-            type: 'button', className: 'mp-link', 'aria-expanded': false,
-            onClick: () => { if (zu.some((g) => g.sek) && !showSecondary) toggleSecondary(); setOffeneAbschnitte((o) => ({ ...o, ...Object.fromEntries(zu.map((g) => [g.key, true])) })); },
+            type: 'button', className: 'mp-link',
+            // Die Zeile verschwindet beim Öffnen — der Fokus geht auf «fertig» des ersten geöffneten Abschnitts
+            // (A11y-Prüfung 25.10.2026, sonst fiele er auf den Seitenanfang).
+            onClick: () => {
+              if (zu.some((g) => g.sek) && !showSecondary) toggleSecondary();
+              setOffeneAbschnitte((o) => ({ ...o, ...Object.fromEntries(zu.map((g) => [g.key, true])) }));
+              setTimeout(() => { const k = document.querySelector('#mp-section-' + zu[0].key + ' button[aria-expanded="true"]'); if (k) k.focus(); }, 0);
+            },
             'aria-label': tr('chapterView.abschnitt.ergaenzenAria', { name: zu.map((g) => g.titel).join(', ') }),
             style: linkKnopf,
           }, tr('chapterView.abschnitt.ergaenzen') + ' ›')
@@ -2124,7 +2138,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const P = (k, p) => tr('chapterView.passend.' + k, p);
     const schritte = (n) => tr('chapters.finanzen.passend.neuerJobSub', { n: String(n) });
     // Die Ablage, gefiltert auf das Kapitel (wie «Lohnausweis ablegen» bei Finanzen).
-    const unterlagen = P('unterlagen', { liste: (chapter.docs || []).map((d) => d.label).join(', ') });
+    const unterlagen = (chapter.docs || []).length ? P('unterlagen', { liste: chapter.docs.map((d) => d.label).join(', ') }) : tr('chapters.finanzen.passend.lohnausweisSub');
     const ablage = (titelKey) => ({ key: 'ablage', titel: tr(titelKey), sub: unterlagen, gehe: () => onNavigate('tresor', undefined, chapter.key), ikon: ansichtIkon('tresor') });
     const b = allData?.basis || {};
     switch (chapter.key) {
@@ -2198,7 +2212,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Muster M6 (Fassung 6, Sophie 25.10.2026): «Als Nächstes» ruhig wie im Entwurf — zentriert über
   // einer Linie, leiser Umrissknopf statt gefüllter Karte mit Goldknopf und Versalien. Gleich für
   // «Alle Kapitel durchgegangen» (Notfall), dort zusätzlich «Ihre Daten bleiben auf diesem Gerät.».
-  const ruhigerKnopf = { display: 'inline-flex', alignItems: 'center', gap: '8px', minHeight: '44px', padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.full, background: 'transparent', color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium };
+  // Rand in palette.mid: ein Bedienelement braucht 3:1 gegen den Grund (palette.border hat 1.3:1; A11y-Prüfung).
+  const ruhigerKnopf = { display: 'inline-flex', alignItems: 'center', gap: '8px', minHeight: '44px', padding: '10px 16px', border: '1px solid ' + palette.mid, borderRadius: radius.full, background: 'transparent', color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium };
   const ruhigesEnde = (etikett, titel, satz, knopf, onClick, fuss) => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.lg + 'px 0 ' + space.xs + 'px', borderTop: '1px solid ' + palette.border, textAlign: 'center' } },
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '4px' } }, etikett),
     React.createElement('h3', { style: { margin: '0 0 4px', fontSize: text.xl, fontWeight: weight.semi, color: palette.text } }, titel),
@@ -2225,7 +2240,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + kachelGrund + ' 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
       ),
       React.createElement('nav', { 'aria-label': tr('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
-        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 10px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 6px', borderRadius: radius.full, background: palette.bg + 'B8', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
+        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 10px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 6px', borderRadius: radius.full, background: palette.bg + 'E6', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
           React.createElement('li', null, React.createElement('button', {
             type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
             style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },

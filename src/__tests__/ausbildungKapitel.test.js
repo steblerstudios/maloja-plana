@@ -65,7 +65,7 @@ describe('Angaben', () => {
   // Platz, den der Wert übrig lässt (trennt nach Silben), der Wert höchstens 62 % und bricht nur
   // zwischen Wörtern. Bei 3 : 2 brachen Telefonnummern («+41 79 654 32 / 10»).
   it('Zeilen: Bezeichnung nimmt den Rest und trennt nach Silben, Wert höchstens 62 %', () => {
-    expect(QUELLE).toMatch(/'dt', \{ style: \{[^}]*flex: '1 1 auto'[^}]*hyphens: 'auto'/);
+    expect(QUELLE).toMatch(/'dt', \{ style: \{[^}]*flex: '1 1 0'[^}]*hyphens: 'auto'/);
     expect(QUELLE).toMatch(/'dd', \{ style: \{[^}]*maxWidth: '62%'[^}]*overflowWrap: 'break-word'/);
   });
 });
