@@ -1333,3 +1333,11 @@ Guthaben laut PK-Ausweis) · Schutzschild · vier Teile aufklappbar (Kassen: 5, 
 Schlusssatz. Pegel bewusst nicht (misst anderes Einkommen als ZH/BE). swiss-precision 1 Blocker (IPV-Betrag trotz Frist/Gesuch),
 copy und a11y 0 — alles eingearbeitet. 6’824 Tests grün, Bündel 63.32 / 65 kB.
 **Offen:** ordentliche Kündigung 30.6. (Kann) · Fristen-Wortlaut KVG Art. 7 / KVV Art. 94 gegen fedlex · rm.
+
+### Spinnennetz Versicherungen · offene Frage (25.10.2026)
+
+Sophie zu #580: «Das Spinnennetz bleibt im Kapitel.» — danach: «wohin wollen wir mit dem Netz ist die Frage oder nicht?» Ja:
+«bleibt» gilt vorläufig, beantwortet aber nicht, **wofür** es da ist. Stand: steht in den Angaben des Kapitels Versicherungen
+(Krankenkasse · Pensionskasse · Weitere · Hausrat & Reise · Auto · AHV, «Zeigt, wie viel … eingetragen ist»), in keinem Entwurf
+(weder AA noch AB), nicht in der Übersicht. Es zeigt Vollständigkeit — dasselbe, was Muster M2 («x von n erfasst» je Abschnitt)
+leisten wird. **Zu entscheiden:** behalten (wo, wozu), in die Übersicht, oder weg, sobald M2 gebaut ist.

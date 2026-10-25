@@ -248,3 +248,33 @@ Sophie: Muster M1–M8 erst nach den Merges #571–#579. Bis dahin Versicherunge
 `feat/f6-versicherungs-uebersicht` (Worktree `_werkbank/f6-versicherungs-uebersicht`), **gestapelt auf #576** → nach #575 und
 #576 mergen, dann auf main umstellen. Merge-Reihenfolge: #574 → #571 → #573 → #572 → #575 → #576 → **#580** → #577 → #578 → #579.
 Danach: Muster M1–M8 (VERGLEICH.md «Muster für alle Kapitel»).
+
+## Stand 25.10.2026, 17:05 (Sitzungsende «Seite für Seite», Teil 2)
+
+| Wo | Stand |
+|---|---|
+| `main` (origin) | `97c476f3` (#567, 25.10. 10:26) — unverändert, nichts gemergt |
+| live | 0.1.48-beta (`4299bfb9`) |
+| Entwurfs-PRs Fassung 6 | #571 · #572 · #573 · #574 · #575 · #576 · #577 · #578 · **#579** Notfall · **#580** Versicherungs-Übersicht |
+| #579 | `feat/f6-notfall-ein-ort` `e3776767`, Basis main, Worktree `_werkbank/f6-notfall` |
+| #580 | `feat/f6-versicherungs-uebersicht` `ea8ad89f`, **Basis #576**, Worktree `_werkbank/f6-versicherungs-uebersicht` |
+| Zweig `docs/mockups-stardust` | lokal, nicht gepusht (wie bisher) |
+
+**Merge-Reihenfolge (Sophie):** #574 → #571 → #573 → #572 → #575 (Tests: Maria 2’274) → #576 → #580 → #577 → #578 → #579.
+#576/#577/#580 nach dem Merge ihrer Basis auf main umstellen; Konflikte (i18n-Einfügestellen, ChapterView) löst Claude auf Zuruf.
+
+**Danach (entschieden):** Muster M1–M8 für alle Kapitel (VERGLEICH.md «Muster für alle Kapitel») — erst nach allen Merges.
+
+**Offen zum Entscheiden:** Spinnennetz (wofür, wo — siehe VERGLEICH.md) · Fachbegriffe Patientenverfügung/Vorsorgeauftrag
+it/en app-weit uneinheitlich (fedlex) · «Ich nehme keine» erscheint nicht im Dossier/QR · ordentliche KK-Kündigung 30.6. in der
+Übersicht · Fristen-Wortlaut KVG Art. 7 / KVV Art. 94 · ZStB Nr. 133.1 · BAG-Prämien 2027 · rm.
+
+**Nebensätze, die sonst nirgends stehen:**
+- Unter hoher Last (load 66 gemessen) bricht der volle Testlauf ab (Exit 137) — `npx vitest run --testTimeout=60000 --maxWorkers=3`.
+- Wird die App beendet, sind die Dev-Server weg (Ports 5490 Entwürfe, 5495–5497 App) — neu starten. Der Browser-Bereich findet
+  `.claude/launch.json` nicht immer; `navigate` mit URL geht.
+- `feldHatWert` zählte Listen-Felder (`medicationsList`, `chronicDiseasesList`) nie — in #579 behoben; wer auf #579 nicht baut, hat den Fehler noch.
+- IPV-Beträge nur über `ipvAbzug` zeigen (Frist vorbei, Gesuch, Verfügung); `pegel.js` bleibt unverdrahtet (misst rohes Einkommen,
+  ZH/BE rechnen anders). Kantonsmodule laden nach → `ladeIPVModelle()` und neu zeichnen, sonst steht beim ersten Aufruf «prüfen».
+- Ein `position: sticky` im Kapitel bleibt nur stehen, wenn es direktes Kind der Kapitelkarte ist (#579, Ernstfall-Knopf).
+- Der Brotkrumen-Test verlangt wörtlich `React.createElement(Brotkrume, { palette, t, view: '…', onNavigate })`.
