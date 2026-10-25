@@ -1255,6 +1255,6 @@ Fehlendem zum Ausfüllen, «Ich nehme keine» (`naOk`) · vier Kacheln mit Porte
 mit Blutgruppe und Allergien · Fehlendes in den Angaben · Passend nur Ablage · Namen Notfallkarte/Notfallpass, Brotkrumen über
 Notfall · Übersichtskarte «Bereit für den Ernstfall», Suche «Notfallkarte» nur Q. Nebenbei: Medikamente aus der Liste zählten nie
 (`feldHatWert`). swiss-precision, copy, a11y je 0 Blocker, eingearbeitet. 6’801 Tests grün, Bündel 62.47 / 65 kB.
-**Offen zum Entscheiden:** «Patientenverfügung: Noch nicht» zählt in «Bereit» als beantwortet, in Vorsorge als nicht geregelt
-(swiss-precision: Muss) · Fachbegriffe Patientenverfügung/Vorsorgeauftrag it/en app-weit uneinheitlich (fedlex prüfen) · «Ich nehme
+**Nachentschieden (Sophie, 25.10.2026):** Die Patientenverfügung zählt in «Bereit» erst bei «Ja» → Maria 18 von 20, Spital 9 von 10
+(`e3776767`). **Offen:** Fachbegriffe Patientenverfügung/Vorsorgeauftrag it/en app-weit uneinheitlich (fedlex prüfen) · «Ich nehme
 keine» erscheint nicht im Dossier/QR · rm ungeprüft.
