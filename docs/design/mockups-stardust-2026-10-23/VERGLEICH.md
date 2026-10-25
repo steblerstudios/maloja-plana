@@ -1295,6 +1295,15 @@ neun offenen Entwurfs-PRs #571–#579. Auf `main` gebaut, gäbe jeder Merge dana
 **Entschieden (Sophie, 25.10.2026):** «Bau M1 bis M8, aber erst wenn ich #571 bis #579 gemergt habe. Bis dahin: mach mit
 Versicherungen Schritt 3 weiter.»
 
+**Gebaut (25.10.2026, nach allen Merges; Sophie: «Ja, bau jetzt das Muster M1–M8 auf main»):** Zweig `feat/f6-muster-m1-m8`,
+Entwurfs-PR #581 (`f21a866f`, Basis main `a1c516e9`). Eine Angabenliste mit «x von n», Wichtiges «ergänzen ›», Rest «Nicht erfasst: …»,
+leere Abschnitte in einer Zeile · CHF/Std./Woche/«Pensionskasse», Nummern am Stück (CSS) · Kopf mit Band, Brotkrume, Kachel, **keine
+Karte, Seite nicht mehr getönt** (löst 27.09.2026 ab) · Als Nächstes ruhig · Passend wie im Entwurf (auch Basis — M7 nennt Basis 3) ·
+Wohnen/Versicherungen in Balken, Kuchen, Geldfluss in der Bereichsfarbe. Spalten 3 : 2 (#572) ersetzt: Telefonnummern brachen.
+Fachprüfung: swiss-precision 0 Blocker / 3 Muss (Aufenthaltstyp zur Adresse, Mietzins «nur in einzelnen Kantonen und Gemeinden»,
+IPV «je nach Einkommen und Kanton»), copy 0/1, a11y 0 — alles eingearbeitet. 6’915 Tests grün, Bündel 63.28 / 65 kB.
+**Offen:** rm · `naOk` für oft unzutreffende Felder · `ahvContribution` ohne `jahr` · `PremiumSubsidy.jsx:88` Wochenaufenthalt-Werte.
+
 ### Versicherungs-Übersicht (AB) · Abgleich für Schritt 3 (25.10.2026, noch nicht entschieden)
 
 Gemessen auf dem Stand von #576 (`558c699b`, enthält Schritt 1 und 2), `#/praemien`, Maria, 375 px. Entwurf: `seiten-v5.html?nur=ab`.

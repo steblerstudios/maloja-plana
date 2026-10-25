@@ -305,3 +305,14 @@ jeden Zweig vorher mit main nachgezogen, voll getestet, gebaut, gepusht und die 
 - Weiter offen: #569 (PII-Kommentare), #568, #563, #561 — nicht Teil der Kette.
 
 **Als Nächstes (entschieden):** Muster M1–M8 auf main bauen (ein Zweig, Fachprüfung, Entwurfs-PR). Spinnennetz-Frage bleibt offen.
+
+## Stand 25.10.2026 abends · Muster M1–M8 gebaut (#581, Entwurf)
+
+- Angabenliste in Notfall und Behörden nach der Zusammenführung im Browser angeschaut: das Fehlende und «nicht erfasst» stehen da;
+  Befund: Telefonnummern brachen mit den Spalten 3 : 2 → mit M1 behoben.
+- **#581** `feat/f6-muster-m1-m8` `f21a866f`, Basis main `a1c516e9`, Worktree `_werkbank/f6-muster` (node_modules Symlink auf
+  f6-notfall). Inhalt und Fachprüfung: VERGLEICH.md «Muster für alle Kapitel» → «Gebaut». **Nicht gemergt, nicht live.**
+- Dev-Server dieser Sitzung: App 5498 (f6-muster), Entwürfe 5490.
+- Hilfs-Worktree `_werkbank/f6-merge-kette` kann weg.
+- Weiter offen: Spinnennetz · Fachbegriffe it/en · «Ich nehme keine» im Dossier · ZStB 133.1 · Prämien 2027 · rm · KVG Art. 7 Wortlaut ·
+  `naOk`/`ahvContribution jahr`/PremiumSubsidy Wochenaufenthalt (aus der Fachprüfung #581).
