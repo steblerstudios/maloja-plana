@@ -17,7 +17,8 @@ import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { franchiseVorschlag } from './data/franchiseTacho.js';
 import { calculateIPV, getCantonName } from './config/cantonalData.js';
-import { pegelState, PEGEL_SCALE } from './data/pegel.js';
+import { ipvAbzug, IPV_ABZUG_GRUND, fristHinweisKey } from './data/ipvAbzug.js';
+import { nextNov30, fristKnopfDatum } from './KVGWechsel.jsx';
 
 export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const storedPLZ = data.wohnen?.postalCode || '';
@@ -166,28 +167,47 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   // Zeilen mit Wert
   const vorschlag = franchiseOpt ? franchiseVorschlag(franchiseOpt, { costs: healthCostsYTD, eigeneFranchise: userFranchise, ersparnisse: data.finanzen?.savingsAccount }) : null;
   const heute = new Date();
-  // Kündigung der Grundversicherung bis 30. November (wie po.franchiseChangeWhen, KVG Art. 7); danach fürs nächste Jahr.
-  const fristJahr = heute.getMonth() === 11 ? heute.getFullYear() + 1 : heute.getFullYear();
+  // Kündigungstermin nach der Prämienmitteilung (KVG Art. 7 Abs. 2): Eingang bei der Kasse bis 30. November, am
+  // Wochenende der Werktag davor — dieselbe Rechnung wie der Ablauf «Krankenkasse wechseln» (Fachprüfung 25.10.2026).
+  const kuendigungIso = nextNov30(heute);
+  // IPV: was ankommt, sagt ipvAbzug — nie den rohen Anspruch aus calculateIPV (Frist vorbei, nur auf Gesuch, Verfügung; Fachprüfung).
   const ipv = calculateIPV(data);
-  const pegel = pegelState(data);
+  const abzug = ipvAbzug(data, ipv);
+  const ipvNote = (key, params) => t(key, Object.fromEntries(Object.entries(params || {}).map(([k, x]) => [k, typeof x === 'number' && x > 3000 ? zahl(x) : x])));
+  const ipvZeile = (() => {
+    if (abzug.grund === IPV_ABZUG_GRUND.BESTAETIGT || abzug.grund === IPV_ABZUG_GRUND.VERFUEGUNG_UNZUGEORDNET) {
+      return { wert: t('vu.ipvVerfuegt', { betrag: zahl(abzug.betrag) }), sub: t('vu.ipvVerfuegtSub') };
+    }
+    if (abzug.grund === IPV_ABZUG_GRUND.GESCHAETZT) {
+      return { wert: t('vu.ipvBetrag', { betrag: zahl(abzug.betrag) }), sub: ipv.noteKey ? ipvNote(ipv.noteKey, ipv.noteParams) : t('vu.ipvSchaetzung', { jahr: heute.getFullYear() }) };
+    }
+    if (abzug.grund === IPV_ABZUG_GRUND.FRIST_VORBEI) return { wert: t('vu.ipvFrist'), sub: ipvNote(fristHinweisKey(ipv), abzug.frist) };
+    if (abzug.grund === IPV_ABZUG_GRUND.GESUCH_NOETIG) return { wert: t('vu.ipvGesuch'), sub: ipv.gesuchNichtAbgezogenKey ? t(ipv.gesuchNichtAbgezogenKey) : t('nav.sub.kvgIpv') };
+    if (ipv.belegt && !ipv.eligible) return { wert: t('vu.ipvKein'), sub: ipv.noteKey ? ipvNote(ipv.noteKey, ipv.noteParams) : t('nav.sub.kvgIpv') };
+    return { wert: t('vu.ipvPruefen'), sub: t('nav.sub.kvgIpv') };
+  })();
+  // Gesundheitskosten: dieselbe Zahl wie das Franchise-Kreuz (bezahlt und offen, an die Franchise anrechenbar),
+  // darunter, was davon bezahlt und was offen ist (Fachprüfung 25.10.2026).
   const belege = (Array.isArray(v.kkBelege) ? v.kkBelege : []).filter((b) => !b.datum || Number(String(b.datum).slice(0, 4)) === heute.getFullYear());
   const bezahlt = belege.filter((b) => b.status !== 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
   const offen = belege.filter((b) => b.status === 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
   const pk = Number(v.bvgBalance) > 0 ? Number(v.bvgBalance) : 0;
-  const zuTeil = (id) => { setOffenTeile((o) => ({ ...o, [id]: true })); setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ block: 'start' }); }, 0); };
+  // Nach dem Sprung steht der Fokus auf dem geöffneten Teil (A11y-Prüfung).
+  const zuTeil = (id) => { setOffenTeile((o) => ({ ...o, [id]: true })); setTimeout(() => { const el = document.getElementById(id); if (el) { el.scrollIntoView({ block: 'start' }); const sm = el.querySelector('summary'); if (sm) sm.focus({ preventScroll: true }); } }, 0); };
   const zeilen = [
     { key: 'franchise', titel: t('vu.franchise'),
       wert: !vorschlag ? '' : vorschlag.art === 'wechsel' ? t('vu.eher', { franchise: zahl(vorschlag.franchise) }) : vorschlag.art === 'passt' ? t('vu.passt') : '',
-      sub: franchiseOpt && franchiseOpt.breakEven != null ? t('vu.franchiseSub', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) }) : t('vu.franchiseOhne'),
+      // Reicht das Polster nicht, steht der Vorbehalt in der Zeile — nicht nur im zugeklappten Kreuz (Fachprüfung).
+      sub: vorschlag && vorschlag.polster
+        ? (vorschlag.art === 'wechsel' ? t('instrumente.kreuzWechselPolster', { franchise: zahl(vorschlag.franchise) }) : t('instrumente.kreuzPasstPolster'))
+        : franchiseOpt && franchiseOpt.breakEven != null ? t('vu.franchiseSub', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }), jahr: franchiseOpt.praemienJahr || heute.getFullYear() }) : t('vu.franchiseOhne'),
       gehe: () => (franchiseOpt ? zuTeil('mp-vu-kreuz') : onNavigate && onNavigate('chapter', 3)) },
-    { key: 'wechsel', titel: t('vu.wechsel'), wert: t('vu.kuendigung', { datum: '30.11.' + fristJahr }), sub: t('vu.wechselSub'), gehe: () => onNavigate && onNavigate('kvgwechsel') },
+    { key: 'wechsel', titel: t('vu.wechsel'), wert: t('vu.kuendigung', { datum: fristKnopfDatum(kuendigungIso) }), sub: t('vu.wechselSub'), gehe: () => onNavigate && onNavigate('kvgwechsel') },
     { key: 'ipv', titel: t('nav.kvgIpv'),
-      wert: ipv.eligible && ipv.amount > 0 ? t('vu.ipvBetrag', { betrag: zahl(ipv.amount) }) : (ipv.belegt && !ipv.eligible ? t('vu.ipvKein') : t('vu.ipvPruefen')),
-      sub: ipv.belegt && !ipv.eligible && ipv.noteKey ? t(ipv.noteKey, Object.fromEntries(Object.entries(ipv.noteParams || {}).map(([k, x]) => [k, typeof x === 'number' ? zahl(x) : x]))) : t('nav.sub.kvgIpv'),
-      pegel: pegel && pegel.mode !== 'empty' ? pegel : null,
+      wert: ipvZeile.wert, sub: ipvZeile.sub,
       gehe: () => onNavigate && onNavigate('premium') },
-    { key: 'kosten', titel: t('vu.kosten'), wert: belege.length ? betrag(bezahlt) : '',
-      sub: belege.length ? t(offen > 0 ? 'vu.kostenSubOffen' : 'vu.kostenSub', { jahr: heute.getFullYear(), offen: zahl(offen) }) : t('vu.kostenLeer'),
+    { key: 'kosten', titel: t('vu.kosten'), wert: belege.length ? betrag(bezahlt + offen) : '',
+      sub: belege.length ? t('vu.kostenSub', { jahr: heute.getFullYear(), bezahlt: zahl(bezahlt), offen: zahl(offen) }) : t('vu.kostenLeer'),
       gehe: () => onNavigate && onNavigate('kvg') },
     { key: 'kvg', titel: t('nav.kvgLeistungen'), wert: '', sub: t('vu.kvgSub'), gehe: () => onNavigate && onNavigate('kvg') },
     { key: 'vorsorge', titel: t('vu.vorsorge'), wert: pk ? t('vu.pkGuthaben', { betrag: zahl(pk) }) : '', sub: t('vu.vorsorgeSub'), gehe: () => onNavigate && onNavigate('vorsorge') },
@@ -200,11 +220,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       h('span', { style: { display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
         h('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
         z.wert && h('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, z.wert)),
-      z.sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, z.sub),
-      // Pegel klein: Einkommen gegen die IPV-Grenze (pegelState, dieselbe Rechnung wie der Rechner). Stumm — der Satz daneben sagt es.
-      z.pegel && h('span', { 'aria-hidden': 'true', 'data-teil': 'ipv-pegel', style: { position: 'relative', display: 'block', height: '6px', marginTop: '6px', borderRadius: radius.full + 'px', background: palette.up, border: '1px solid ' + palette.border } },
-        h('span', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (z.pegel.fraction / PEGEL_SCALE) * 100) + '%', background: z.pegel.mode === 'over' ? palette.sand : palette.sky, borderRadius: radius.full + 'px' } }),
-        h('span', { style: { position: 'absolute', top: '-4px', bottom: '-4px', left: (100 / PEGEL_SCALE) + '%', width: '2px', background: palette.text } }))),
+      // Kein Pegel: pegelState misst das rohe Einkommen, die Kantonsmodule (ZH, BE) ein anderes — er stünde neben
+      // einem Betrag über der Linie (Fachprüfung 25.10.2026; pegel.js bleibt bewusst nicht verdrahtet).
+      z.sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } }, z.sub)),
     h('span', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'));
 
   // Aufklappbar: kontrolliert, damit die Franchise-Zeile das Kreuz öffnen kann.
@@ -213,8 +231,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     onToggle: (e) => { const auf = e.currentTarget.open; setOffenTeile((o) => (!!o[id] === auf ? o : { ...o, [id]: auf })); },
     style: { borderBottom: '1px solid ' + palette.border + '88', scrollMarginTop: 'var(--mp-sprungabstand)' },
   },
-    h('summary', { style: { cursor: 'pointer', minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', color: palette.text, listStyle: 'none' } },
-      h('span', { style: { minWidth: 0 } },
+    // Flex auf einem inneren Teil, nicht auf summary — sonst verliert summary in WebKit seine Rolle (A11y-Prüfung).
+    h('summary', { className: 'mp-summary', style: { cursor: 'pointer', minHeight: '48px', color: palette.text, listStyle: 'none', display: 'block', paddingTop: space.xs + 'px' } },
+      h('span', { style: { display: 'block', minWidth: 0 } },
         h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, aufklappZeichen(!!offenTeile[id]), titel),
         sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, sub))),
     h('div', { style: { padding: space.sm + 'px 0 ' + space.md + 'px' } }, ...inhalt));
@@ -571,7 +590,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         )
       ),
       allInsurers.length > 5 && React.createElement('button', {
-        type: 'button', onClick: () => setAlleKassen((x) => !x), 'aria-expanded': alleKassen,
+        type: 'button', onClick: () => setAlleKassen((x) => !x),
         style: { marginTop: space.sm + 'px', minHeight: '44px', padding: '0 ' + space.md + 'px', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', fontSize: text.sm, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' },
       }, t(alleKassen ? 'vu.wenigerKassen' : 'vu.alleKassen', { n: allInsurers.length })),
       targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.sm + 'px', fontWeight: weight.medium } },

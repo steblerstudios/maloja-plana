@@ -56,15 +56,23 @@ describe('Oben', () => {
 describe('Zeilen mit Wert', () => {
   it('Kassenwechsel, IPV, Gesundheitskosten, KVG-Leistungen, Vorsorge — je zum Werkzeug', () => {
     const text = nurText(seite());
-    expect(text).toMatch(/Krankenkasse wechseln Kündigung bis 30\.11\.20\d\d/);
+    expect(text).toMatch(/Krankenkasse wechseln Eingang bei der Kasse bis \d\d\.11\.20\d\d/);
     expect(text).toContain('Prämienverbilligung (IPV)');
-    expect(text).toContain('Gesundheitskosten (KVG) CHF 240 Bezahlte Arztrechnungen');
-    expect(text).toContain('noch offen: CHF 180');
-    expect(text).toContain('PK-Guthaben CHF 45’000');
+    // dieselbe Zahl wie das Franchise-Kreuz (bezahlt + offen), darunter aufgeteilt
+    expect(text).toMatch(/Gesundheitskosten \(KVG\) CHF 420 Arztrechnungen 20\d\d: bezahlt CHF 240 · unbezahlt CHF 180/);
+    expect(text).toContain('Guthaben laut PK-Ausweis CHF 45’000');
     for (const ziel of ["onNavigate('kvgwechsel')", "onNavigate('premium')", "onNavigate('kvg')", "onNavigate('vorsorge')", "onNavigate('zusatzwechsel')", "onNavigate('kk')"]) expect(QUELLE).toContain(ziel);
   });
-  it('Kündigung im Dezember gilt fürs nächste Jahr', () => {
-    expect(QUELLE).toContain('heute.getMonth() === 11 ? heute.getFullYear() + 1 : heute.getFullYear()');
+  it('Kündigungstermin wie der Ablauf «Krankenkasse wechseln» (Werktag, nächstes Jahr ab Dezember)', () => {
+    expect(QUELLE).toContain('nextNov30(heute)');
+  });
+  it('IPV: nur, was ankommt (ipvAbzug) — nie ipv.amount direkt, kein Pegel', () => {
+    expect(QUELLE).toContain('ipvAbzug(data, ipv)');
+    expect(QUELLE).not.toMatch(/ipv\.amount/);
+    expect(QUELLE).not.toContain('pegelState(');
+  });
+  it('Franchise-Zeile nennt den Polster-Vorbehalt', () => {
+    expect(QUELLE).toContain("t('instrumente.kreuzWechselPolster'");
   });
 });
 

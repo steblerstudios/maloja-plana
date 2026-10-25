@@ -113,15 +113,17 @@ export const VersicherungenInstrument = ({ palette, t, versicherungen, allData, 
     hatGeld && h('div', { style: { fontSize: text['2xl'], fontWeight: weight.bold, color: palette.text, lineHeight: 1.2, marginBottom: space.sm + 'px' } }, betrag(Math.round(summe))),
     hatGeld && (uebersicht
       ? h('details', { 'data-teil': 'versicherungen-darin', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88', marginBottom: space.sm + 'px' } },
-          h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, color: palette.text } },
+          // Der eigene Pfeil des Browsers zeigt offen/zu — kein Flex auf summary (A11y-Prüfung).
+          h('summary', { style: { cursor: 'pointer', minHeight: '44px', fontSize: text.sm, color: palette.text, paddingTop: '10px' } },
             h('span', { style: { fontWeight: weight.medium, color: palette.text } }, t('vu.darin')),
-            h('span', { style: { fontSize: text.xs, color: palette.mid } }, t('vu.erfasst', { n: posten.length }))),
+            h('span', { style: { fontSize: text.xs, color: palette.mid } }, ' · ' + t('vu.erfasst', { n: posten.length }))),
           posteListe())
       : posteListe()),
 
     // KK-Last: der Balken wiederholt die Zahl daneben — für Screenreader stumm.
     anteil != null && h(React.Fragment, null,
-      h('h4', { style: kapH }, t('kkLast.title')),
+      // In der Übersicht steht die KK-Last direkt unter dem Seitentitel (h2) — darum h3 (A11y-Prüfung).
+      h(uebersicht ? 'h3' : 'h4', { style: kapH }, t('kkLast.title')),
       h('div', { 'aria-hidden': 'true', 'data-teil': 'kk-last-balken', style: { position: 'relative', height: '10px', margin: space.sm + 'px 0', borderRadius: radius.full, background: palette.up, border: '1px solid ' + palette.border } },
         h('div', { style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: Math.min(100, (anteil / skala) * 100) + '%', background: ueber ? palette.gold : palette.sky, borderRadius: radius.full } }),
         h('div', { style: { position: 'absolute', top: '-5px', bottom: '-5px', left: (WHO / skala) * 100 + '%', width: '2px', background: palette.text } })
