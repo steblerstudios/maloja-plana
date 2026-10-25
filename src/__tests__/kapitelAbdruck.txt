@@ -83,7 +83,7 @@ de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b opti
 de   k=kkCardNumber type="text" label~8fdb99db
 de   k=policyNumber type="text" hint~d822c8ff label~45658792
 de   k=kkZusatz type="text" placeholder~e363faf1 label~32e009c5
-de   k=bvgInsurer type="text" section~a6cafb55 orientation~d8d2f012 label~c46d911d sectionIntro~1da37530
+de   k=bvgInsurer type="text" section~a6cafb55 orientation~d8d2f012 label~1e2c6667 sectionIntro~1da37530
 de   k=bvgContribution type="currency" hint~035e422c label~8e69d0e5
 de   k=bvgBalance type="currency" hint~eb9360bd label~fdb3b6f8
 de   k=lifeInsurance type="select" label~7c765337 options=2 optWerte~2bfd19fd optLabels~b50f42dc
@@ -707,7 +707,7 @@ rm   k=franchise type="select" mvo=true orientation~b80db104 label~c5887ae4 opti
 rm   k=kkCardNumber type="text" label~dcc7ad86
 rm   k=policyNumber type="text" hint~e509e3b0 label~655a1464
 rm   k=kkZusatz type="text" placeholder~f2b6e130 label~0104df8f
-rm   k=bvgInsurer type="text" section~4c4badb1 orientation~89ab7ff7 label~6974e838 sectionIntro~f7185a40
+rm   k=bvgInsurer type="text" section~4c4badb1 orientation~89ab7ff7 label~d316306d sectionIntro~f7185a40
 rm   k=bvgContribution type="currency" hint~e71c40c5 label~8496554b
 rm   k=bvgBalance type="currency" hint~5c37bdec label~2f73bf1b
 rm   k=lifeInsurance type="select" label~edfe7cec options=2 optWerte~2bfd19fd optLabels~1534032f

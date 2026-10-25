@@ -2437,7 +2437,7 @@ export default {
 
   chapterView: {
     // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
-    abschnitt: { aendern: 'modificare', fertig: 'fatto', ergaenzen: 'completare', leer: 'ancora vuoto', aendernAria: 'Modificare {name}', fertigAria: '{name} fatto' },
+    abschnitt: { aendern: 'modificare', fertig: 'fatto', ergaenzen: 'completare', leer: 'ancora vuoto', aendernAria: 'Modificare {name}', fertigAria: '{name} fatto', erfasst: '{n} di {total}', nichtErfasst: 'Non indicato: {liste}.', ergaenzenAria: 'Completare {name}' },
     benefitsLabel: { sie: 'I Suoi dati confluiscono in:', du: 'I tuoi dati confluiscono in:' },
     fields: 'Dati',
     documents: 'Documenti',
@@ -2462,7 +2462,7 @@ export default {
       familie: "Lo stato civile cambia",
       familieSub: "Matrimonio, convivenza, figlio, separazione · nello zaino «Famiglia»",
       lebensmappeSub: "Tutti i capitoli in un colpo d’occhio · da stampare",
-      briefeSub: "Lettere modello, precompilate con i propri dati",
+      briefeSub: "Proroga del termine, disdetta, cambio di cassa malati",
       bestattungSub: { sie: "Annotare ciò che Le sta a cuore", du: "Annotare ciò che ti sta a cuore" },
       ablageBasis: "Archiviare una copia del documento d’identità",
       ablageWohnen: "Archiviare il contratto di locazione",
@@ -2473,14 +2473,33 @@ export default {
       ablageDokumente: "Archiviare documenti",
       steuerfrist: "Termine & dichiarazione d’imposta",
       steuerfristSub: "Capitolo Autorità · termine, numero fiscale, dichiarazioni in sospeso",
+      // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf.
+      unterlagen: "Documenti · {liste}",
+      bewilligungSub: "Procedura · termini e documenti",
+      einbuergerungSub: "Procedura · requisiti e percorso",
+      ausweisSub: "Procedura · 5 passi · rinnovo, costi, smarrimento",
+      mietzinsSub: "Diritto · secondo reddito e cantone",
+      gekuendigtSub: "Procedura · termini e contestazione",
+      ipvSub: "Diritto · secondo il reddito",
+      kvgwechselSub: "Procedura · disdetta alla cassa entro il 30.11.",
+      vorsorgeSub: "AVS e cassa pensione · cosa arriva in vecchiaia",
+      cv: "Creare il curriculum",
+      cvSub: { sie: "Dai suoi dati · in PDF", du: "Dai tuoi dati · in PDF" },
+      neueStelle: "Nuovo impiego",
+      stelleverlorenSub: "Procedura · URC, termini, indennità",
+      stundenlohn: "Salario orario e salario minimo",
+      stundenlohnSub: "Supplemento vacanze, lavoro su chiamata, verifica del salario minimo",
+      steuernSub: "Importo d’imposta, deduzioni, prorogare il termine",
     },
     alleDurch: "Tutti i capitoli passati in rassegna",
     zurUebersichtTitel: "Torna alla panoramica",
     zurUebersichtSatz: { sie: "Il Suo fascicolo di vita in un colpo d’occhio.", du: "Il tuo fascicolo di vita in un colpo d’occhio." },
     zurUebersicht: "Alla panoramica",
     imHaushalt: "Nell’economia domestica",
-    vertretungNichtErfasst: "Rappresentante legale: non inserito.",
     bewilligungNichtNoetig: "non necessario (cittadinanza svizzera)",
+    // Muster M1/M4 (Fassung 6, 25.10.2026).
+    stdProWoche: "ore/settimana",
+    plzOrt: "NPA · Località",
     proJahr: "/ anno",
     haushaltAllein: "una persona",
     haushaltErwachsene: "{n} adulti",
@@ -2494,28 +2513,6 @@ export default {
     showMore: 'Mostra altre sezioni',
     showLess: 'Mostra meno',
     hasHiddenData: 'Alcune sezioni nascoste contengono già dei dati.',
-    disclosure: {
-      versicherungen: {
-        more: 'Mostra assicurazioni aggiuntive',
-        less: 'Nascondi assicurazioni aggiuntive',
-        hint: 'Alcune informazioni assicurative sono già salvate.',
-      },
-      wohnen: {
-        more: 'Mostra dettagli immobiliari',
-        less: 'Nascondi dettagli immobiliari',
-        hint: 'Alcuni dettagli immobiliari sono già salvati.',
-      },
-      finanzen: {
-        more: 'Mostra previdenza e investimenti',
-        less: 'Nascondi dettagli previdenziali',
-        hint: 'Alcune informazioni previdenziali sono già salvate.',
-      },
-      notfall: {
-        more: 'Mostra disposizioni di previdenza personale',
-        less: 'Nascondi disposizioni anticipate',
-        hint: 'Alcune informazioni di previdenza sono già salvate.',
-      },
-    },
   },
 
   trust: {

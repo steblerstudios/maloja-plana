@@ -7,12 +7,11 @@ import {
 } from './validationUtils.js';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
+import { text, weight, leading, space, radius, fontFamily, duration, ease, visuallyHiddenStyle } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
-import PrimaryButton from './components/PrimaryButton.jsx';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
-import { kapitelBereichsfarbe } from './utils/lebensbereichFruechte.js';
+import { kapitelBereichsfarbe, bereichsTon } from './utils/lebensbereichFruechte.js';
 import { betrag } from './utils/geld.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, wochenstundenUnplausibel, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
@@ -36,6 +35,8 @@ import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegist
 import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
+// Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
+import landschaft from './assets/berge/landschaft.webp?url';
 import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
@@ -1805,7 +1806,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       // sein «CHF/Jahr» in der Liste, und «Hausrat-Prämie CHF 22» las sich als Monatsbetrag
       // (Abnahme F6, 25.10.2026).
       // Geschütztes Leerzeichen: «/ Jahr» bricht nie allein in die nächste Zeile (Copy-Prüfer).
-      return f.jahr ? wert + ' ' + tr('chapterView.proJahr') : wert;
+      return f.jahr ? wert + '\u00a0' + tr('chapterView.proJahr') : wert;
     }
     // Schweizer/innen brauchen keine Aufenthaltsbewilligung: in der Liste nicht «Aufenthaltsbewilligung:
     // Schweizer/in», sondern «nicht nötig (Schweizer/in)» (Abnahme F6, 25.10.2026). Die Auswahl bleibt.
@@ -1843,30 +1844,78 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Bereiche enthalten bereits Daten.». Andere Kapitel bleiben, wie sie waren.
   const istFinanzen = chapter.key === 'finanzen';
   const feldSichtbar = (f) => !istFinanzen || showSecondary || !f.secondary;
+  // ─── Muster für alle Kapitel (Fassung 6, M1–M4; Sophie 25.10.2026) ─────────────────────
+  // M1: die Angaben als EINE ruhige Liste wie im Entwurf (Abschnittstitel, darunter Zeilen
+  // «Bezeichnung … Wert»), nicht mehr eine Karte je Abschnitt. Die Bezeichnung nimmt den Platz,
+  // den der Wert übrig lässt; ein Wert bricht nur zwischen Wörtern.
+  // M2: «x von n» am Abschnitt; was fehlt, steht da — Wichtiges (Grundordnung, empfohlen; im
+  // Notfall die Angaben für den Ernstfall) mit «ergänzen ›», der Rest leise «Nicht erfasst: …».
+  // M3: ganz leere Abschnitte in EINER Zeile («Eigentum · Mobilität · noch leer»).
+  // M4: Einheiten im Wert (Wochenstunden, Franchise), Nummern brechen nicht.
+  const feldWichtig = (f) => (isNotfall
+    ? NOTFALL_ANGABEN.some((x) => x.chapter === 'notfall' && x.k === f.k)
+    : !!(f.mvo || f.recommended));
+  // Finanzen · Nebenerwerb: die Felder gelten erst mit Nebenerwerb — ohne ihn fehlen sie nicht.
+  const feldZaehlt = (f) => !(istFinanzen && NEBENERWERB_FELDER.includes(f.k) && !nebenerwerbAngegeben(data));
+  // Kennnummern und Telefonnummern («ZH-2024-123456», «+41 79 654 32 10») am Stück: geschützter
+  // Bindestrich und geschützte Leerzeichen (Abnahme F6, Behörden 10, Notfall).
+  const amStueck = (s) => (typeof s === 'string' && s.length <= 24 && /\d/.test(s) && /^[\w+()./ -]+$/.test(s)
+    ? s.replace(/-/g, '\u2011').replace(/ /g, '\u00a0') : s);
+  // In der Liste ohne das, was der Wert schon sagt («CHF», «CHF/Monat»), und ohne Eingabe-Beispiel
+  // («Anzahl Zimmer (z. B. 3.5)» → «Anzahl Zimmer»).
+  const listenName = (f) => {
+    if (f.type === 'household') return tr('chapterView.imHaushalt');
+    const roh = String(f.label || '');
+    const ohneChf = f.type === 'currency'
+      ? roh.replace(/CHF(\s*\/\s*[^\s(),]+)?,?\s*/g, '').replace(/\(\s*\)/g, '').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')')
+      : roh.replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '');
+    return ohneChf.replace(/\s*\((z\. ?B\.|p\. ?ex\.|p\. ?es\.|e\.g\.)[^)]*\)/i, '').replace(/\s{2,}/g, ' ').trim();
+  };
+  const listenWert = (f) => {
+    const w = abschnittWert(f);
+    if (trifftNichtZu(data, f.k)) return w;
+    if ((f.k === 'workHoursPerWeek' || f.k === 'sideHoursPerWeek') && /^\d+([.,]\d+)?$/.test(String(data[f.k]).trim())) return w + '\u00a0' + tr('chapterView.stdProWoche');
+    if (f.type === 'select' && /\sCHF\s*$/.test(String(f.label || '')) && /^[\d’']+$/.test(String(w))) return 'CHF\u00a0' + w;
+    return amStueck(w);
+  };
+  // PLZ und Ort in einer Zeile («PLZ · Ort  8004 Zürich»), wenn beide erfasst sind.
+  const zeilenAus = (felder) => {
+    const plz = felder.find((f) => f.k === 'postalCode');
+    const ort = felder.find((f) => f.k === 'city');
+    const beide = plz && ort && feldHatWert(data, 'postalCode') && feldHatWert(data, 'city');
+    return felder.flatMap((f) => {
+      if (beide && f.k === 'city') return [];
+      if (beide && f.k === 'postalCode') return [{ k: 'plzOrt', name: tr('chapterView.plzOrt'), wert: String(data.postalCode) + '\u00a0' + String(data.city) }];
+      return [{ k: f.k, name: listenName(f), wert: listenWert(f) }];
+    });
+  };
+  const linkKnopf = { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' };
+  const zeile = (z) => React.createElement('div', { key: 'z-' + z.k, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '3px 0 3px ' + space.sm + 'px' } },
+    React.createElement('dt', { style: { color: palette.mid, margin: 0, flex: '1 1 auto', minWidth: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' } }, z.name),
+    React.createElement('dd', { style: { color: palette.text, margin: 0, flex: '0 1 auto', maxWidth: '62%', textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, z.wert));
   const abschnittsliste = () => {
     const gruppen = abschnittGruppen(chapter.fields, chapter.title);
-    const karte = (g) => {
+    const abschnitt = (g) => {
       const felder = g.felder.filter(feldSichtbar);
       if (felder.length === 0) return null;
       const gefuellt = felder.filter(abschnittGefuellt);
+      const fehlend = felder.filter((f) => !abschnittGefuellt(f) && feldZaehlt(f));
+      const zaehlend = felder.filter(feldZaehlt);
       const offen = !!offeneAbschnitte[g.key];
-      const leer = gefuellt.length === 0;
       const umschalten = () => setOffeneAbschnitte((o) => ({ ...o, [g.key]: !o[g.key] }));
-      // Alle Felder des Abschnitts — jedes mit dem Baustein seiner Art (Haupt / «mehr Felder»).
-      const liste = felder;
       // Finanzen · Nebenerwerb (Entscheid 23.10.2026): die fünf Felder erst mit Nebenerwerb.
       // Es gibt kein eigenes Ja/Nein-Feld — angegeben ist ein Nebenerwerb, sobald eines der
       // fünf Felder einen Wert trägt (oder «trifft nicht zu»). Dann steht die Zeile offen;
       // sonst eingeklappt «Nebenerwerb · falls vorhanden», ein Tipp öffnet sie.
       const feldBausteine = (f) => (f.secondary ? feldElementeSek(f) : feldElemente(f));
       const formular = [];
-      liste.forEach((f) => {
+      felder.forEach((f) => {
         if (!(istFinanzen && NEBENERWERB_FELDER.includes(f.k))) {
           formular.push(React.createElement(React.Fragment, { key: 'af-' + f.k }, ...feldBausteine(f)));
           return;
         }
         if (f.k !== NEBENERWERB_FELDER[0]) return;
-        const neben = liste.filter((x) => NEBENERWERB_FELDER.includes(x.k));
+        const neben = felder.filter((x) => NEBENERWERB_FELDER.includes(x.k));
         const angegeben = nebenerwerbAngegeben(data);
         if (nebenerwerbAnfangsOffen.current === null) nebenerwerbAnfangsOffen.current = angegeben;
         formular.push(React.createElement('details', {
@@ -1884,91 +1933,83 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             ...neben.map((x) => React.createElement(React.Fragment, { key: 'af-' + x.k }, ...feldBausteine(x))))
         ));
       });
+      const wichtig = fehlend.filter(feldWichtig);
+      const leise = fehlend.filter((f) => !feldWichtig(f));
       return React.createElement('section', {
-        key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel,
+        key: g.key, id: 'mp-section-' + g.key, 'aria-label': g.titel, 'data-abschnitt': offen ? 'offen' : 'liste',
         style: {
           scrollMarginTop: 'var(--mp-sprungabstand)',
-          border: offen ? '1.5px solid ' + palette.sand : (leer ? '1px dashed ' + palette.border : '1px solid ' + palette.border + 'AA'),
-          borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px',
-          background: leer && !offen ? 'transparent' : palette.up,
+          borderTop: '1px solid ' + palette.border + '88',
+          // Beim Ändern trägt der Abschnitt eine Linie in Sand am Rand — er bleibt in der Liste.
+          ...(offen ? { borderLeft: '2px solid ' + palette.sand, paddingLeft: space.sm + 'px' } : {}),
         },
       },
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px' } },
-          React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: leer && !offen ? palette.mid : palette.text } }, g.titel),
-          React.createElement('button', {
-            type: 'button', className: 'mp-link', onClick: umschalten, 'aria-expanded': offen,
-            'aria-label': tr(offen ? 'chapterView.abschnitt.fertigAria' : 'chapterView.abschnitt.aendernAria', { name: g.titel }),
-            style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium, color: offen ? palette.mid : palette.sandDeep, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' },
-          }, offen
-            ? React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, tr('chapterView.abschnitt.fertig'), React.createElement(Icon, { name: 'check', size: 14 }))
-            : tr(leer ? 'chapterView.abschnitt.ergaenzen' : 'chapterView.abschnitt.aendern') + ' ›')
+          React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, g.titel),
+          React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: space.sm + 'px' } },
+            !offen && fehlend.length > 0 && React.createElement('span', { 'data-erfasst': gefuellt.length + '/' + zaehlend.length, style: { fontSize: text.xs, color: palette.mid, whiteSpace: 'nowrap' } },
+              tr('chapterView.abschnitt.erfasst', { n: gefuellt.filter(feldZaehlt).length, total: zaehlend.length })),
+            React.createElement('button', {
+              type: 'button', className: 'mp-link', onClick: umschalten, 'aria-expanded': offen,
+              'aria-label': tr(offen ? 'chapterView.abschnitt.fertigAria' : 'chapterView.abschnitt.aendernAria', { name: g.titel }),
+              style: { ...linkKnopf, color: offen ? palette.mid : palette.sandDeep },
+            }, offen
+              ? React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '4px' } }, tr('chapterView.abschnitt.fertig'), React.createElement(Icon, { name: 'check', size: 14 }))
+              : tr('chapterView.abschnitt.aendern') + ' ›'))
         ),
         offen
           ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', paddingBottom: space.sm + 'px' } },
               demoMode && React.createElement('p', { key: 'demo', style: { gridColumn: '1 / -1', fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px' } }, tr('demo.readOnlyHint')),
               g.intro && React.createElement('p', { key: 'intro', style: { gridColumn: '1 / -1', fontSize: text.sm, color: palette.mid, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px' } }, g.intro),
               ...formular)
-          : (leer
-              ? React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, paddingBottom: space.xs + 'px' } }, tr('chapterView.abschnitt.leer'))
-              // Spalten: die Bezeichnung behält mindestens ihr längstes Wort, der Wert darf
-              // schrumpfen und umbrechen. Vorher («minmax(0,1fr) auto») nahm ein langer Wert
-              // («Netto (was ich erhalte)») seine volle Breite, und «Einkommensart» lief bei
-              // 375 px in ihn hinein (Massstab-Prüfung 21.10.2026).
-              // Auch der Wert behält sein längstes Wort: mit «minmax(0, auto)» und
-              // «overflowWrap: anywhere» brach er mitten im Wort («Kantonsspita / l»,
-              // Fassung 6, 24.10.2026). «break-word» bricht nur ein Wort, das allein zu breit ist.
-              : React.createElement(React.Fragment, null,
-                // Abnahme F6 (25.10.2026): zwei lange Einzelwörter nebeneinander («Aufenthaltsbewilligung» |
-                // «Kantonsspital») waren zusammen breiter als die Karte — die Werte ragten bei 375 px rechts
-                // hinaus. Jetzt teilen sich beide Spalten den Platz (3 : 2, die Bezeichnung trennt so seltener);
-                // der Wert behält sein längstes Wort, die
-                // Bezeichnung trennt nach Silben (hyphens) und bricht nur im Notfall im Wort.
-                React.createElement('dl', { style: { margin: '0 0 ' + space.xs + 'px', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(min-content, 2fr)', gap: '4px ' + space.md + 'px', fontSize: text.sm } },
-                  gefuellt.flatMap((f) => [
-                    React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word', minWidth: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
-                    React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
-                  ])),
-                // Notfall (Runde 9, AE): auch das Fehlende steht da. Was im Ernstfall gebraucht wird, mit
-                // «ergänzen ›»; das Übrige leise «nicht erfasst.».
-                isNotfall && felder.filter((f) => !abschnittGefuellt(f)).map((f) => (NOTFALL_ANGABEN.some((x) => x.chapter === 'notfall' && x.k === f.k)
-                  ? React.createElement('button', {
-                      key: 'fehlt-' + f.k, type: 'button', className: 'mp-link', 'data-fehlt': f.k, onClick: () => zumFeld(f.k),
-                      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', margin: '0 0 ' + space.xs + 'px', padding: '0 ' + space.xs + 'px', background: 'none', border: '1px dashed ' + (palette.roseDeep || palette.rose), borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
-                    }, React.createElement('span', null, hinweisZeichen('kaestchen', 12), f.label), React.createElement('span', { style: { color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))
-                  : React.createElement('div', { key: 'fehlt-' + f.k, 'data-nicht-erfasst': f.k, style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, tr('notfallKapitel.feldNichtErfasst', { feld: f.label })))))
-              ),
-        // Runde 9 AD: leere Vertretung nicht still weglassen — «Rechtliche Vertretung: nicht erfasst.»
-        !offen && !leer && chapter.key === 'behoerden' && felder.some((f) => f.k === 'legalRepresentative') && !data.legalRepresentative &&
-          React.createElement('p', { 'data-teil': 'vertretung-leer', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, tr('chapterView.vertretungNichtErfasst'))
+          : React.createElement('div', { style: { paddingBottom: space.sm + 'px', fontSize: text.sm } },
+              React.createElement('dl', { style: { margin: 0 } }, ...zeilenAus(gefuellt).map(zeile)),
+              ...wichtig.map((f) => React.createElement('button', {
+                key: 'fehlt-' + f.k, type: 'button', className: 'mp-link', 'data-fehlt': f.k, onClick: () => zumFeld(f.k),
+                style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '44px', padding: '0 0 0 ' + space.sm + 'px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid, textAlign: 'left' },
+              }, React.createElement('span', { style: { color: palette.mid } }, f.label), React.createElement('span', { style: { color: palette.sandDeep, fontWeight: weight.medium, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))),
+              leise.length > 0 && React.createElement('p', { 'data-nicht-erfasst': leise.map((f) => f.k).join(' '), style: { margin: '2px 0 0', padding: '0 0 0 ' + space.sm + 'px', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal } },
+                tr('chapterView.abschnitt.nichtErfasst', { liste: leise.map(listenName).join(', ') }))
+            )
       );
     };
-    const haupt = gruppen.filter((g) => !g.sek);
+    // M3: Abschnitte ohne jede Angabe in EINER Zeile; «ergänzen ›» öffnet sie alle.
+    const leereZeile = (liste) => {
+      const zu = liste.filter((g) => !offeneAbschnitte[g.key] && g.felder.filter(feldSichtbar).length > 0);
+      if (zu.length === 0) return null;
+      return React.createElement('section', { key: 'leer', 'data-teil': 'leere-abschnitte', 'aria-label': zu.map((g) => g.titel).join(', '), style: { borderTop: '1px solid ' + palette.border + '88', paddingBottom: space.sm + 'px' } },
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', minHeight: '44px' } },
+          React.createElement('h3', { style: { margin: 0, fontSize: text.sm, fontWeight: weight.semi, color: palette.mid } }, zu.map((g) => g.titel).join(' · ')),
+          React.createElement('button', {
+            type: 'button', className: 'mp-link', 'aria-expanded': false,
+            onClick: () => { if (zu.some((g) => g.sek) && !showSecondary) toggleSecondary(); setOffeneAbschnitte((o) => ({ ...o, ...Object.fromEntries(zu.map((g) => [g.key, true])) })); },
+            'aria-label': tr('chapterView.abschnitt.ergaenzenAria', { name: zu.map((g) => g.titel).join(', ') }),
+            style: linkKnopf,
+          }, tr('chapterView.abschnitt.ergaenzen') + ' ›')
+        ),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, paddingLeft: space.sm + 'px' } }, tr('chapterView.abschnitt.leer'))
+      );
+    };
+    const hatAngabe = (g) => g.felder.filter(feldSichtbar).some(abschnittGefuellt);
+    const liste = (gs) => React.createElement('div', { 'data-teil': 'angaben-liste', style: { marginBottom: space.lg + 'px', borderBottom: '1px solid ' + palette.border + '88' } },
+      ...gs.filter((g) => hatAngabe(g) || offeneAbschnitte[g.key]).map(abschnitt),
+      leereZeile(gs.filter((g) => !hatAngabe(g))));
     if (istFinanzen) {
-      const sek = gruppen.filter((g) => g.sek);
       const hatSekFelder = chapter.fields.some((f) => f.secondary);
-      return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginBottom: space.lg + 'px' } },
-        ...haupt.map(karte),
-        ...(showSecondary ? sek.map(karte) : []),
-        hatSekFelder && React.createElement('div', { key: 'mehr', style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px' } },
+      return React.createElement('div', null,
+        liste(gruppen.filter((g) => !g.sek || showSecondary)),
+        hatSekFelder && React.createElement('div', { key: 'mehr', style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.sm + 'px', margin: '-' + space.sm + 'px 0 ' + space.lg + 'px' } },
           React.createElement('button', {
             type: 'button', onClick: toggleSecondary, 'aria-expanded': showSecondary,
-            style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text, padding: '8px 16px', minHeight: '44px', fontFamily: 'inherit' },
+            style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.full, cursor: 'pointer', fontSize: text.sm, color: palette.text, padding: '8px 16px', minHeight: '44px', fontFamily: 'inherit' },
           }, tr(showSecondary ? 'chapterView.showLess' : 'chapterView.showMore')),
           !showSecondary && secondaryHasData && React.createElement('small', { 'data-hinweis': 'ausgeblendet-mit-daten', style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.hasHiddenData'))
         )
       );
     }
-    const sekMitDaten = gruppen.filter((g) => g.sek && g.felder.some(abschnittGefuellt));
-    const sekLeer = gruppen.filter((g) => g.sek && !g.felder.some(abschnittGefuellt));
-    return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm + 'px', marginBottom: space.lg + 'px' } },
-      ...haupt.map(karte),
-      ...sekMitDaten.map(karte),
-      sekLeer.length > 0 && React.createElement('button', {
-        key: 'mehr', type: 'button', onClick: toggleSecondary, 'aria-expanded': showSecondary,
-        style: { alignSelf: 'flex-start', background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text, padding: '8px 16px', minHeight: '44px', fontFamily: 'inherit' },
-      }, tr('chapterView.disclosure.' + chapter.key + (showSecondary ? '.less' : '.more'))),
-      ...(showSecondary ? sekLeer.map(karte) : [])
-    );
+    // Die «mehr»-Abschnitte (Eigentum, Mobilität …) stehen mit in der Liste: mit Angaben als
+    // Abschnitt, ohne in der einen Zeile «noch leer» (M3) — kein eigener Knopf mehr davor.
+    return liste(gruppen);
   };
 
   // ─── Fassung 5 · Kapitel Finanzen (Entscheid 23.10.2026) ──────────────────────────────
@@ -2027,8 +2068,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const renderMonatsBalken = (m) => {
     const p = monatsAusgaben({ ...(allData || {}), finanzen: data });
     const teile = [
-      { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: palette.rose },
-      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: palette.sky },
+      // Muster M8 (25.10.2026): die Bereichsfarben der Kapitel Wohnen und Versicherungen (vorher rose / sky).
+      { key: 'wohnen', wert: p.rent + p.utilities + p.mortgage + p.buildingsInsurance, farbe: bereichsTon('wohnen', palette) || palette.rose },
+      { key: 'versicherungen', wert: p.healthInsurance + p.householdInsurance + p.liabilityInsurance + p.otherInsurance, farbe: bereichsTon('versicherungen', palette) || palette.sky },
       { key: 'steuern', wert: p.tax, farbe: '#8B7355' },
     ];
     teile.push({ key: 'uebriges', wert: Math.max(0, m.verplant - teile.reduce((a, x) => a + x.wert, 0)), farbe: palette.gold });
@@ -2070,67 +2112,81 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   // Seit der Zusammenlegung (24.10.2026) stehen Übersicht und IPV oben im Kapitel; dazu kamen
   // die zwei Wege, die die Übersicht unten hatte: Budget und Behörden-Dossier.
   // Fassung 6 (Runde 9, VERGLEICH.md): in jedem Kapitel, je mit den von Sophie gewählten Zielen.
-  // Name und Untertitel aus dem Register (wie Menü und Suche), wo es einen gibt; neu sind nur
-  // die Ablage-Zeilen und die Untertitel, die das Register nicht hat.
+  // Muster M7 (Sophie 25.10.2026): Namen und Untertitel wie im Entwurf statt aus dem Register
+  // («Ablauf · 4 Schritte», «Neue Stelle», «Lebenslauf erstellen · Aus Ihren Angaben · als PDF» …);
+  // wo ein Untertitel eine Zahl nennt, ist sie gezählt (Umzug: 4 Schritte, Neue Stelle: 5).
+  // Die Ablage nennt die Unterlagen, die das Kapitel kennt (wie bisher schon Notfall).
   const passendZiele = () => {
     const weg = (view, extra = {}) => {
       const subKey = SEARCH_VIEWS.find((v) => v.view === view)?.sub;
       return { key: view, titel: tr(ansichtName(view) || view), sub: subKey ? tr(subKey) : '', gehe: () => onNavigate(view), ikon: ansichtIkon(view), ...extra };
     };
+    const P = (k, p) => tr('chapterView.passend.' + k, p);
+    const schritte = (n) => tr('chapters.finanzen.passend.neuerJobSub', { n: String(n) });
     // Die Ablage, gefiltert auf das Kapitel (wie «Lohnausweis ablegen» bei Finanzen).
-    const ablage = (titelKey) => ({ key: 'ablage', titel: tr(titelKey), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, chapter.key), ikon: ansichtIkon('tresor') });
+    const unterlagen = P('unterlagen', { liste: (chapter.docs || []).map((d) => d.label).join(', ') });
+    const ablage = (titelKey) => ({ key: 'ablage', titel: tr(titelKey), sub: unterlagen, gehe: () => onNavigate('tresor', undefined, chapter.key), ikon: ansichtIkon('tresor') });
     const b = allData?.basis || {};
     switch (chapter.key) {
       case 'basis': return [
         // Je nach Angaben oben (Runde 9, Y). «Neu in der Schweiz» (Ablauf `zuzug`) sollte nur nach einem
         // Zuzug in den letzten 12 Monaten erscheinen; ein Zuzugsdatum gibt es im Profil nicht. Abnahme F6
         // (Sophie 25.10.2026): weglassen, bis es ein Datum gibt — sonst stünde es auch nach 20 Jahren da.
-        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung'), weg('einbuergerung')] : []),
-        weg('lebensmappe', { sub: tr('chapterView.passend.lebensmappeSub') }),
-        weg('ausweis'),
-        weg('gepaeck', { key: 'familie', titel: tr('chapterView.passend.familie'), sub: tr('chapterView.passend.familieSub'), ikon: 'family' }),
+        ...(b.nationality && b.nationality !== 'swiss' ? [weg('bewilligung', { sub: P('bewilligungSub') }), weg('einbuergerung', { sub: P('einbuergerungSub') })] : []),
+        weg('lebensmappe', { sub: P('lebensmappeSub') }),
+        weg('ausweis', { sub: P('ausweisSub') }),
+        weg('gepaeck', { key: 'familie', titel: P('familie'), sub: P('familieSub'), ikon: 'family' }),
         ablage('chapterView.passend.ablageBasis'),
       ];
-      case 'wohnen': return [weg('umzug'), weg('mietzins'), weg('wohnunggekuendigt'), ablage('chapterView.passend.ablageWohnen')];
-      // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Seite, die zur
-      // Versicherungs-Übersicht wird (Runde 9 AB, seiten-buendeln.md §11); bis dahin `praemien`.
-      case 'versicherungen': return [weg('praemien', { key: 'alle-versicherungen', titel: tr('chapterView.passend.alleVersicherungen'), sub: tr('chapterView.passend.alleVersicherungenSub') }), weg('premium'), weg('kvgwechsel'), weg('vorsorge'), ablage('chapterView.passend.ablageVersicherungen')];
-      case 'ausbildung': return [weg('cv'), weg('neuerjob'), weg('stelleverloren'), weg('stundenlohn'), ablage('chapterView.passend.ablageAusbildung')];
+      case 'wohnen': return [weg('umzug', { sub: schritte(4) }), weg('mietzins', { sub: P('mietzinsSub') }), weg('wohnunggekuendigt', { sub: P('gekuendigtSub') }), ablage('chapterView.passend.ablageWohnen')];
+      // Runde 9 AA nachgebessert: zuoberst «Alle Versicherungen auf einen Blick» → die Versicherungs-Übersicht
+      // (Runde 9 AB, seiten-buendeln.md §11), im Untertitel mit ihrem Namen wie im Entwurf.
+      case 'versicherungen': return [
+        weg('praemien', { key: 'alle-versicherungen', titel: P('alleVersicherungen'), sub: tr(ansichtName('praemien') || 'praemien') + ': ' + P('alleVersicherungenSub') }),
+        weg('premium', { sub: P('ipvSub') }), weg('kvgwechsel', { sub: P('kvgwechselSub') }), weg('vorsorge', { sub: P('vorsorgeSub') }),
+        ablage('chapterView.passend.ablageVersicherungen'),
+      ];
+      case 'ausbildung': return [
+        weg('cv', { titel: P('cv'), sub: P('cvSub') }), weg('neuerjob', { titel: P('neueStelle'), sub: schritte(5) }),
+        weg('stelleverloren', { sub: P('stelleverlorenSub') }), weg('stundenlohn', { titel: P('stundenlohn'), sub: P('stundenlohnSub') }),
+        ablage('chapterView.passend.ablageAusbildung'),
+      ];
       case 'behoerden': return [
         // Je nach Angaben (Runde 9, AD): Einträge im Betreibungsregister → Zahlungsbefehl und Schulden-Hilfe nach oben.
         ...(data?.betreibungsStatus === 'entries' ? [weg('betreibung'), weg('schulden')] : []),
-        weg('tax'), weg('betreibungsauszug'),
+        weg('tax', { sub: P('steuernSub') }), weg('betreibungsauszug'),
         ...(data?.betreibungsStatus === 'entries' ? [] : [weg('betreibung')]),
-        weg('vorsorgeauftrag'), weg('briefe', { sub: tr('chapterView.passend.briefeSub') }),
+        weg('vorsorgeauftrag', { sub: tr('behoerdenInstrument.vorsorgeWegSub') }), weg('briefe', { sub: P('briefeSub') }),
         ablage('chapterView.passend.ablageDokumente'),
       ];
       // Runde 9, AE (dritte Fassung): Patientenverfügung und Bestattungswünsche führen jetzt aus «Vorsorge»
       // oben selbst zum Werkzeug — hier bleibt die Ablage, mit den Unterlagen, die dazugehören.
-      case 'notfall': return [{ ...ablage('chapterView.passend.ablageDokumente'), sub: (chapter.docs || []).map((d) => d.label).join(', ') }];
+      case 'notfall': return [ablage('chapterView.passend.ablageDokumente')];
       default: return [
-        // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5).
-        { key: 'neuerjob', titel: tr('nav.neuerjob'), sub: tr('chapters.finanzen.passend.neuerJobSub', { n: '5' }), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
+        // Der Ablauf «Neuer Job» hat fünf Schritte (NeuerJob.jsx, step1–step5); im Entwurf «Neue Stelle».
+        { key: 'neuerjob', titel: P('neueStelle'), sub: schritte(5), gehe: () => onNavigate('neuerjob'), ikon: ansichtIkon('neuerjob') },
         // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
-        { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
+        { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: unterlagen, gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
         { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
         // Entscheid «Steuern aufteilen» (24.10.2026): Geld hier, Behördengang im Kapitel Behörden — beide verweisen
         // aufeinander (Behörden: Zeile «Steuerbetrag und Belastung» beim Kalenderblatt).
-        { key: 'steuerfrist', titel: tr('chapterView.passend.steuerfrist'), sub: tr('chapterView.passend.steuerfristSub'), gehe: () => onNavigate('chapter', 5), ikon: ansichtIkon('tax') },
+        { key: 'steuerfrist', titel: P('steuerfrist'), sub: P('steuerfristSub'), gehe: () => onNavigate('chapter', 5), ikon: ansichtIkon('tax') },
         // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
         { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
       ];
     }
   };
+  // M7: das Zeichen in einer Kachel (36 px) in der Bereichsfarbe, wie im Entwurf — vorher klein ohne Kachel.
   const renderPassend = () => {
     if (!onNavigate) return null;
     const ziele = passendZiele();
     return React.createElement('section', { 'data-teil': 'passend', 'aria-labelledby': 'mp-passend-titel', style: { marginTop: space.xl + 'px' } },
-      React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
+      React.createElement('h3', { id: 'mp-passend-titel', style: { margin: '0 0 4px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, tr('chapters.finanzen.passend.titel')),
       ...ziele.map((z) => React.createElement('button', {
         key: z.key, type: 'button', className: 'mp-link', onClick: z.gehe,
-        style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
+        style: { display: 'flex', alignItems: 'center', gap: space.md + 'px', width: '100%', minHeight: '56px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid ' + palette.border + '88', padding: space.sm + 'px 0', cursor: 'pointer', fontFamily: 'inherit', color: palette.text },
       },
-        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: palette.sageDeep || palette.mid } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
+        React.createElement('span', { 'aria-hidden': 'true', style: { width: '36px', height: '36px', borderRadius: radius.md, display: 'grid', placeItems: 'center', flexShrink: 0, background: bereichsfarbe ? bereichsfarbe.grund : palette.up, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : palette.sageDeep } }, React.createElement(Icon, { name: z.ikon, size: 18 })),
         React.createElement('span', { style: { flex: 1, minWidth: 0 } },
           React.createElement('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, z.titel),
           z.sub && React.createElement('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, z.sub)
@@ -2139,42 +2195,53 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       ))
     );
   };
-  // «Als Nächstes»: das nächste Kapitel mit Titel und Satz, darunter derselbe Hauptknopf wie bisher.
-  const renderAlsNaechstes = () => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.md } },
-    React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase', letterSpacing: '0.5px', color: palette.mid } }, tr('chapterView.alsNaechstes')),
-    React.createElement('h3', { style: { margin: space.xs + 'px 0 2px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, nextChapter.title),
-    nextChapter.description && React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, nextChapter.description),
-    React.createElement(PrimaryButton, {
-      palette, onClick: onNext,
-      style: { minHeight: '44px', boxSizing: 'border-box' },
-    }, tr('dashboard.nextUpWeiter', { name: nextChapter.title }), ' ›')
+  // Muster M6 (Fassung 6, Sophie 25.10.2026): «Als Nächstes» ruhig wie im Entwurf — zentriert über
+  // einer Linie, leiser Umrissknopf statt gefüllter Karte mit Goldknopf und Versalien. Gleich für
+  // «Alle Kapitel durchgegangen» (Notfall), dort zusätzlich «Ihre Daten bleiben auf diesem Gerät.».
+  const ruhigerKnopf = { display: 'inline-flex', alignItems: 'center', gap: '8px', minHeight: '44px', padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.full, background: 'transparent', color: palette.text, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium };
+  const ruhigesEnde = (etikett, titel, satz, knopf, onClick, fuss) => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.lg + 'px 0 ' + space.xs + 'px', borderTop: '1px solid ' + palette.border, textAlign: 'center' } },
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '4px' } }, etikett),
+    React.createElement('h3', { style: { margin: '0 0 4px', fontSize: text.xl, fontWeight: weight.semi, color: palette.text } }, titel),
+    satz && React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, satz),
+    React.createElement('button', { type: 'button', className: 'mp-link', onClick, style: ruhigerKnopf }, knopf, ' ›'),
+    fuss && React.createElement('p', { style: { margin: space.md + 'px 0 0', fontSize: text.xs, color: palette.mid } }, fuss)
   );
+  const renderAlsNaechstes = () => ruhigesEnde(tr('chapterView.alsNaechstes'), nextChapter.title, nextChapter.description,
+    tr('dashboard.nextUpWeiter', { name: nextChapter.title }), onNext);
 
   // Das letzte Kapitel (Notfall) endete ohne Weg — jetzt zurück zur Übersicht (Runde 9, AE).
-  const renderAlleDurch = () => React.createElement('section', { 'data-teil': 'als-naechstes', style: { marginTop: space.xl + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.md } },
-    React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase', letterSpacing: '0.5px', color: palette.mid } }, tr('chapterView.alleDurch')),
-    React.createElement('h3', { style: { margin: space.xs + 'px 0 2px', fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, tr('chapterView.zurUebersichtTitel')),
-    React.createElement('p', { style: { margin: '0 0 ' + space.md + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, tr('chapterView.zurUebersichtSatz')),
-    React.createElement(PrimaryButton, {
-      palette, className: 'mp-link',
-      onClick: () => onNavigate('dashboard'),
-      style: { minHeight: '44px', boxSizing: 'border-box' },
-    }, tr('chapterView.zurUebersicht'), ' ›')
-  );
+  const renderAlleDurch = () => ruhigesEnde(tr('chapterView.alleDurch'), tr('chapterView.zurUebersichtTitel'), tr('chapterView.zurUebersichtSatz'),
+    tr('chapterView.zurUebersicht'), () => onNavigate('dashboard'), tr('trust.localOnly'));
 
-  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
-    // Kopf — links und ruhig (Fassung 5, Entscheid 23.10.2026, für alle Kapitel): kleines
-    // Zeichen in der Bereichsfarbe neben dem Titel, Titel und Sätze in den Textfarben. Vorher
-    // zentriert auf getöntem Band, Münze (48 px), Titel und Intro-Satz in der Bereichsfarbe.
-    React.createElement('div', { 'data-kapitelkopf': 'links', style: { textAlign: 'left', marginBottom: space.lg + 'px', paddingBottom: space.md + 'px', borderBottom: '1px solid ' + palette.border + '55' } },
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.xs + 'px' } },
-        React.createElement('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
-          React.createElement(Icon, { name: chapter.key, size: 28 })
+  // Muster M5 (Fassung 6, Sophie 25.10.2026): Kopf wie im Entwurf — Landschaftsband in der
+  // Bereichsfarbe, darauf die Brotkrume «Übersicht › Kapitel», darunter das Symbol in einer Kachel
+  // und der Titel. Keine Karte mehr um das Kapitel (vorher Kopf und Inhalt in einer Karte, die Seite
+  // dahinter getönt; Entscheid 27.09.2026). Das Band reicht bis an den Rand (main: 20 px seitlich).
+  const kachelGrund = bereichsfarbe ? bereichsfarbe.grund : palette.up;
+  return React.createElement('div', { 'data-kapitel': chapter.key },
+    React.createElement('div', { 'data-kapitelkopf': 'band', style: { textAlign: 'left', marginBottom: space.lg + 'px' } },
+      React.createElement('div', { 'aria-hidden': 'true', style: { position: 'relative', height: '112px', margin: '0 -20px', overflow: 'hidden' } },
+        React.createElement('div', { style: { position: 'absolute', inset: 0, backgroundImage: 'url(' + landschaft + ')', backgroundSize: 'cover', backgroundPosition: 'center 72%', opacity: 0.5 } }),
+        React.createElement('div', { style: { position: 'absolute', inset: '0 0 -1px 0', background: 'linear-gradient(to bottom, ' + kachelGrund + ' 0%, transparent 45%, ' + palette.bg + ' 100%)' } })
+      ),
+      React.createElement('nav', { 'aria-label': tr('nav.pfad'), style: { position: 'relative', marginTop: '-46px', marginBottom: space.md + 'px' } },
+        React.createElement('ol', { style: { listStyle: 'none', margin: 0, padding: '0 10px', display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 6px', borderRadius: radius.full, background: palette.bg + 'B8', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', fontSize: text.sm } },
+          React.createElement('li', null, React.createElement('button', {
+            type: 'button', className: 'mp-link', onClick: () => onNavigate && onNavigate('dashboard'),
+            style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.mid, padding: '0 4px', margin: '0 -4px', minHeight: '44px' },
+          }, tr('nav.backToDashboard'))),
+          React.createElement('li', { 'aria-hidden': 'true', style: { color: palette.mid } }, '›'),
+          React.createElement('li', { 'aria-current': 'page', style: { color: palette.text, fontWeight: weight.medium } }, chapter.title)
+        )
+      ),
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '14px', marginBottom: space.sm + 'px' } },
+        React.createElement('span', { 'aria-hidden': 'true', style: { width: '52px', height: '52px', borderRadius: radius.lg, display: 'grid', placeItems: 'center', flexShrink: 0, background: kachelGrund, boxShadow: 'inset 0 0 0 1px ' + (bereichsfarbe ? bereichsfarbe.schrift + '4D' : palette.border), color: bereichsfarbe ? bereichsfarbe.schrift : accent.icon } },
+          React.createElement(Icon, { name: chapter.key, size: 26 })
         ),
         React.createElement(PageTitle, { palette, style: { color: palette.text, minWidth: 0 } }, chapter.title)
       ),
-      React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.xs + 'px 0 0', lineHeight: leading.relaxed, maxWidth: '560px' } }, introText)
+      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '560px' } }, chapter.description),
+      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed, maxWidth: '560px' } }, introText)
     ),
 
     // Fassung 5 · «Jeden Monat bleiben» — nur Finanzen. Rechnet genau wie der Satz

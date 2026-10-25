@@ -113,9 +113,10 @@ describe('Kapitel Finanzen: Reihenfolge und keine Doppelungen mehr', () => {
     expect(AUSWERTUNG).toContain("aktuellesKapitel: 'finanzen'");
   });
 
-  it('«Passend»: Neuer Job, Lohnausweis, Monatsbudget, Behörden-Dossier — keine Übersicht, keine IPV mehr', () => {
+  // Muster M7 (25.10.2026): «Neue Stelle» wie im Entwurf (vorher der Register-Name «Neuer Job»).
+  it('«Passend»: Neue Stelle, Lohnausweis, Monatsbudget, Behörden-Dossier — keine Übersicht, keine IPV mehr', () => {
     const text = nurText(render());
-    for (const s of ['Neuer Job', 'Lohnausweis ablegen', 'Monatsbudget', 'Einnahmen und Ausgaben im Detail', 'Behörden-Dossier']) expect(text, s).toContain(s);
+    for (const s of ['Neue Stelle', 'Lohnausweis ablegen', 'Monatsbudget', 'Einnahmen und Ausgaben im Detail', 'Behörden-Dossier']) expect(text, s).toContain(s);
     expect(text).not.toContain('Alle Berechnungen auf einen Blick');
     expect(text).not.toContain('Prämienverbilligung prüfen');
   });

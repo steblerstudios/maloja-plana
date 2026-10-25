@@ -2437,7 +2437,7 @@ export default {
 
   chapterView: {
     // Abschnittsliste (Entscheid 27.09.2026): Werte einmal, «ändern ›» öffnet genau diesen Abschnitt.
-    abschnitt: { aendern: 'modifier', fertig: 'terminé', ergaenzen: 'compléter', leer: 'encore vide', aendernAria: 'Modifier {name}', fertigAria: '{name} terminé' },
+    abschnitt: { aendern: 'modifier', fertig: 'terminé', ergaenzen: 'compléter', leer: 'encore vide', aendernAria: 'Modifier {name}', fertigAria: '{name} terminé', erfasst: '{n} sur {total}', nichtErfasst: 'Non renseigné : {liste}.', ergaenzenAria: 'Compléter {name}' },
     benefitsLabel: { sie: 'Vos données alimentent :', du: 'Tes données alimentent :' },
     emptyState: { sie: 'Encore vide — quelques indications suffisent pour que Maloja travaille pour vous.', du: 'Encore vide — quelques indications suffisent pour que Maloja travaille pour toi.' },
     emptyStateHint: { sie: 'Vous pouvez compléter à tout moment. Rien ne doit être fait d\'un coup.', du: 'Tu peux compléter à tout moment. Rien ne doit être fait d\'un coup.' },
@@ -2464,7 +2464,7 @@ export default {
       familie: "L’état civil change",
       familieSub: "Mariage, vie commune, enfant, séparation · dans le sac à dos «Famille»",
       lebensmappeSub: "Tous les chapitres en un coup d’œil · à imprimer",
-      briefeSub: "Lettres types, préremplies avec les données saisies",
+      briefeSub: "Prolongation de délai, résiliation, changement de caisse maladie",
       bestattungSub: { sie: "Noter ce qui vous importe", du: "Noter ce qui t’importe" },
       ablageBasis: "Classer une copie de la pièce d’identité",
       ablageWohnen: "Classer le bail",
@@ -2475,14 +2475,33 @@ export default {
       ablageDokumente: "Classer des documents",
       steuerfrist: "Délai & déclaration d’impôt",
       steuerfristSub: "Chapitre Autorités · délai, numéro fiscal, déclarations en suspens",
+      // Muster M7 (Fassung 6, 25.10.2026): Namen und Untertitel wie im Entwurf.
+      unterlagen: "Documents · {liste}",
+      bewilligungSub: "Démarche · délais et documents",
+      einbuergerungSub: "Démarche · conditions et étapes",
+      ausweisSub: "Démarche · 5 étapes · renouveler, coûts, perte",
+      mietzinsSub: "Droit · selon le revenu et le canton",
+      gekuendigtSub: "Démarche · délais et contestation",
+      ipvSub: "Droit · selon le revenu",
+      kvgwechselSub: "Démarche · résiliation reçue par la caisse au 30.11.",
+      vorsorgeSub: "AVS et caisse de pension · ce qui vient à la retraite",
+      cv: "Créer un CV",
+      cvSub: { sie: "À partir de vos données · en PDF", du: "À partir de tes données · en PDF" },
+      neueStelle: "Nouvel emploi",
+      stelleverlorenSub: "Démarche · ORP, délais, indemnités",
+      stundenlohn: "Salaire horaire et salaire minimum",
+      stundenlohnSub: "Supplément vacances, travail sur appel, contrôle du salaire minimum",
+      steuernSub: "Montant de l’impôt, déductions, prolonger le délai",
     },
     alleDurch: "Tous les chapitres parcourus",
     zurUebersichtTitel: "Retour à la vue d’ensemble",
     zurUebersichtSatz: { sie: "Votre dossier de vie en un coup d’œil.", du: "Ton dossier de vie en un coup d’œil." },
     zurUebersicht: "Voir la vue d’ensemble",
     imHaushalt: "Dans le ménage",
-    vertretungNichtErfasst: "Représentant juridique : non saisi.",
     bewilligungNichtNoetig: "pas nécessaire (nationalité suisse)",
+    // Muster M1/M4 (Fassung 6, 25.10.2026).
+    stdProWoche: "h/semaine",
+    plzOrt: "NPA · Localité",
     proJahr: "/ an",
     haushaltAllein: "une personne",
     haushaltErwachsene: "{n} adultes",
@@ -2494,28 +2513,6 @@ export default {
     showMore: 'Afficher plus de sections',
     showLess: 'Afficher moins',
     hasHiddenData: 'Certaines sections masquées contiennent déjà des données.',
-    disclosure: {
-      versicherungen: {
-        more: 'Afficher les assurances complémentaires',
-        less: 'Masquer les assurances complémentaires',
-        hint: 'Certaines informations d\'assurance sont déjà enregistrées.',
-      },
-      wohnen: {
-        more: 'Afficher les détails immobiliers',
-        less: 'Masquer les détails immobiliers',
-        hint: 'Certains détails immobiliers sont déjà enregistrés.',
-      },
-      finanzen: {
-        more: 'Afficher la prévoyance et les placements',
-        less: 'Masquer les détails de prévoyance',
-        hint: 'Certaines informations de prévoyance sont déjà enregistrées.',
-      },
-      notfall: {
-        more: 'Afficher les directives anticipées',
-        less: 'Masquer les directives anticipées',
-        hint: 'Certaines informations de prévoyance sont déjà enregistrées.',
-      },
-    },
   },
 
   trust: {
