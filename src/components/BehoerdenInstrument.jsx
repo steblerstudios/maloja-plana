@@ -23,9 +23,26 @@ export const GAENGE = [
   { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
 ];
 
-// Erledigt: eigener Haken; sonst bei «Steuererklärung eingereicht» der Vorschlag aus «0 offen».
-export const gangErledigt = (id, checked, behoerden) =>
-  checked[id] !== undefined ? !!checked[id] : (id === 'steuererklaerung' && String(behoerden?.pendingTaxReturns) === '0');
+// «Offene Steuererklärungen» als Zahl — leer, null und Leerzeichen heissen «nicht erfasst» (wie utils/steuerfrist.js).
+export const offeneErklaerungen = (behoerden) => {
+  const roh = behoerden?.pendingTaxReturns;
+  if (roh == null || String(roh).trim() === '') return null;
+  const n = Number(String(roh).trim());
+  return Number.isFinite(n) ? n : null;
+};
+
+// Welches Steuerjahr mit «0 offen» erledigt ist (Fachprüfung 25.10.2026): die erfasste Frist gilt für das Jahr davor;
+// liegt sie noch vor uns, ist erst die Erklärung des Jahres davor eingereicht. Ohne Frist kein Jahr, kein Vorschlag.
+export const erledigtesSteuerjahr = (behoerden, heute = new Date()) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(behoerden?.taxFilingDeadline || ''));
+  if (!m || offeneErklaerungen(behoerden) !== 0) return null;
+  const frist = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return frist >= new Date(heute.getFullYear(), heute.getMonth(), heute.getDate()) ? Number(m[1]) - 2 : Number(m[1]) - 1;
+};
+
+// Erledigt: eigener Haken; sonst bei «Steuererklärung eingereicht» der Vorschlag aus «0 offen» — mit Steuerjahr.
+export const gangErledigt = (id, checked, behoerden, heute) =>
+  checked[id] !== undefined ? !!checked[id] : (id === 'steuererklaerung' && erledigtesSteuerjahr(behoerden, heute) != null);
 
 const relativ = (tr, iso) => {
   const diffDays = Math.round((new Date(iso).getTime() - Date.now()) / 86400000);
@@ -68,7 +85,7 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, allData, onNavi
       ),
       h('div', { style: { minWidth: 0 } },
         h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, tr('behoerdenInstrument.faellig', { datum: datum.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' }) })),
-        h('div', { style: klein }, relativ(tr, iso) + (d.pendingTaxReturns !== undefined && d.pendingTaxReturns !== '' ? ' · ' + tr('behoerdenInstrument.offen', { n: d.pendingTaxReturns }) : ''))
+        h('div', { style: klein }, relativ(tr, iso) + (offeneErklaerungen(d) != null ? ' · ' + tr('behoerdenInstrument.offen', { n: offeneErklaerungen(d) }) : ''))
       )
     ),
     steuerfristVorbei(d, heute) && h('p', { role: 'note', style: { fontSize: text.sm, color: palette.text, margin: space.sm + 'px 0 0', lineHeight: leading.relaxed } }, tr('behördenStatus.pastHint')),
@@ -84,10 +101,15 @@ export const BehoerdenInstrument = ({ palette, t: tr, behoerden, allData, onNavi
     h('p', { style: { ...klein, margin: '0 0 ' + space.xs + 'px' } }, tr('checklist.intro'), ' ', tr('behoerdenInstrument.vonErledigt', { n: erledigt, total: GAENGE.length })),
     ...GAENGE.map((g) => {
       const ist = gangErledigt(g.id, checked, d);
+      // «Steuererklärung 2025 eingereicht» statt ohne Jahr — sonst stünde sie angehakt neben der Frist fürs nächste Jahr.
+      const jahr = g.id === 'steuererklaerung' ? erledigtesSteuerjahr(d) : null;
+      const vorschlag = jahr != null && checked[g.id] === undefined;
       return h('div', { key: g.id, style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', borderBottom: '1px solid ' + palette.border + '33', minHeight: '44px' } },
         h('label', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', flex: 1, minWidth: 0, minHeight: '44px', cursor: 'pointer', fontSize: text.sm } },
           h('input', { type: 'checkbox', checked: ist, onChange: () => onToggle && onToggle(g.id, !ist), style: { accentColor: palette.sand, flexShrink: 0, width: '18px', height: '18px' } }),
-          h('span', { style: { color: ist ? palette.mid : palette.text } }, tr(g.key))),
+          h('span', { style: { color: ist ? palette.mid : palette.text } },
+            jahr != null ? tr('behoerdenInstrument.steuererklaerungJahr', { jahr }) : tr(g.key),
+            vorschlag && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, tr('behoerdenInstrument.vorschlag')))),
         g.weg && onNavigate && h('button', {
           type: 'button', className: 'mp-link', onClick: () => onNavigate(g.weg),
           style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.sandDeep || palette.mid, minHeight: '44px', padding: '0 4px', whiteSpace: 'nowrap' },

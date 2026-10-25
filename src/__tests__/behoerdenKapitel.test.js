@@ -36,11 +36,11 @@ describe('Kapitel Behörden', () => {
     expect(QUELLE).not.toContain("tr('behördenStatus.intro')");
   });
   it('Zusammenfassung mit Steuererklärung und Betreibungsregister', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, das Betreibungsregister ist ohne Einträge.');
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Ihre Steuerangelegenheiten laufen über den Kanton Zürich. Keine offene Steuererklärung, laut Ihren Angaben ist das Betreibungsregister ohne Einträge.');
   });
-  it('Vertretung leer: «Rechtliche Vertretung: nicht erfasst.»', () => {
-    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Rechtliche Vertretung: nicht erfasst.');
-    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toContain('Rechtliche Vertretung: nicht erfasst.');
+  it('Vertretung leer: «Rechtsbeistand: nicht erfasst.»', () => {
+    expect(kapitel('behoerden', DEMO_DATA.behoerden)).toContain('Rechtsbeistand: nicht erfasst.');
+    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, legalRepresentative: 'Anwältin X' })).not.toContain('Rechtsbeistand: nicht erfasst.');
   });
 });
 
@@ -58,8 +58,10 @@ describe('Instrument oben', () => {
   it('Behördengänge offen: 5 Gänge, «Steuererklärung eingereicht» als Vorschlag bei 0 offen', () => {
     expect(GAENGE).toHaveLength(5);
     expect(GAENGE.map((g) => g.id)).not.toContain('patientenverfuegung');
-    expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '0' })).toBe(true);
-    expect(gangErledigt('steuererklaerung', { steuererklaerung: false }, { pendingTaxReturns: '0' })).toBe(false);
+    // Seit der Nachprüfung nur mit Frist (dann mit Steuerjahr), siehe unten.
+    expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '0', taxFilingDeadline: '2027-03-31' })).toBe(true);
+    expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '0' })).toBe(false);
+    expect(gangErledigt('steuererklaerung', { steuererklaerung: false }, { pendingTaxReturns: '0', taxFilingDeadline: '2027-03-31' })).toBe(false);
     expect(gangErledigt('steuererklaerung', {}, { pendingTaxReturns: '1' })).toBe(false);
     expect(instrument()).toContain('1 von 5 erledigt.');
   });
@@ -91,4 +93,32 @@ describe('Texte in allen fünf Sprachen', () => {
       expect(s.chapterView.passend.steuerfrist).toBeTruthy();
     });
   }
+});
+
+// Nachprüfung 25.10.2026 (swiss-precision Muss): der Haken nennt das Steuerjahr und ist als Vorschlag gekennzeichnet —
+// sonst stand «Steuererklärung eingereicht» angehakt neben der Frist fürs nächste Jahr.
+import { erledigtesSteuerjahr, offeneErklaerungen } from '../components/BehoerdenInstrument.jsx';
+describe('Nachprüfung: Steuerjahr und leere Werte', () => {
+  const heute = new Date(2026, 9, 25);
+  it('Frist noch vor uns, 0 offen: das Jahr davor ist erledigt (2027 → 2025)', () => {
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2027-03-31', pendingTaxReturns: '0' }, heute)).toBe(2025);
+  });
+  it('Frist vorbei, 0 offen: die Erklärung zu dieser Frist ist erledigt (2026 → 2025)', () => {
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2026-03-31', pendingTaxReturns: '0' }, heute)).toBe(2025);
+  });
+  it('ohne Frist oder mit offenen: kein Jahr, kein Vorschlag', () => {
+    expect(erledigtesSteuerjahr({ pendingTaxReturns: '0' }, heute)).toBeNull();
+    expect(erledigtesSteuerjahr({ taxFilingDeadline: '2027-03-31', pendingTaxReturns: '1' }, heute)).toBeNull();
+  });
+  it('leer, null und Leerzeichen heissen «nicht erfasst»', () => {
+    expect(offeneErklaerungen({ pendingTaxReturns: null })).toBeNull();
+    expect(offeneErklaerungen({ pendingTaxReturns: ' ' })).toBeNull();
+    expect(offeneErklaerungen({ pendingTaxReturns: ' 0' })).toBe(0);
+    expect(kapitel('behoerden', { ...DEMO_DATA.behoerden, pendingTaxReturns: null })).not.toContain('Keine offene Steuererklärung');
+  });
+  it('Maria: «Steuererklärung 2025 eingereicht» mit Hinweis auf den Vorschlag', () => {
+    const text = instrument();
+    expect(text).toContain('Steuererklärung 2025 eingereicht');
+    expect(text).toContain('Vorschlag aus «Offene Steuererklärungen: 0»');
+  });
 });
