@@ -318,3 +318,14 @@ jeden Zweig vorher mit main nachgezogen, voll getestet, gebaut, gepusht und die 
   `naOk`/`ahvContribution jahr`/PremiumSubsidy Wochenaufenthalt (aus der Fachprüfung #581).
 - **Nachtrag 19:58:** #581 gemergt (Sophie: «Merge #581, sobald die CI grün ist»), squash → main **`d2943f23`**, CI auf main grün.
   **Nicht deployt** — live weiter 0.1.48-beta.
+
+## Nachtrag 25.10.2026, ~21:00 · Fachprüfung zum Muster (#582, Entwurf)
+
+Sophie: «ok sauber weiter». Aufgeräumt: `_werkbank/f6-merge-kette` entfernt, Dev-Server gestoppt.
+**#582** `fix/f6-nachtrag-fachpruefung` `815129f9`, Basis main `d2943f23`, Worktree `_werkbank/f6-muster`:
+- **Fehler behoben:** Wochenaufenthalt-Hinweise (IPV, Sozialhilfe) erschienen nie (`weekly`/`secondary` gespeichert, mit
+  `wochenaufenthalt`/`nebenwohnsitz` verglichen). Wortlaut neu nach swiss-precision (0 Blocker / 3 Muss) und copy (0 / 4 Muss).
+  Nebenwohnsitz ohne Steuersatz — **Produktentscheid, Sophie bestätigen**.
+- «trifft nicht zu» an Pensionskasse (+ Beitrag, Guthaben), Familienzulagen, Kinderbetreuung · AHV-Beitrag «/ Jahr».
+- 6’925 Tests grün, Bündel 63.31 / 65 kB. Nicht gemergt, nicht live.
+- Offen: Schutzschild BVG-Lücke trotz «trifft nicht zu» · Orientierung `ahvBeitrag` (Selbständige) · AG/BS «keine Säule 2» · rm.
