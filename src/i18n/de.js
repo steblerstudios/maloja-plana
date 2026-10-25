@@ -2696,8 +2696,8 @@ export default {
     },
     wohnen: {
       since: 'Wohndauer {duration}',
-      rentOnly: 'Monatsmiete {rent}',
-      rentAndUtils: 'Monatsmiete {rent} plus {utilities} Nebenkosten',
+      rentOnly: 'Nettomiete {rent}',
+      rentAndUtils: 'Nettomiete {rent} plus {utilities} Nebenkosten',
       landlordLabel: 'Vermieter',
       durationUnder1: 'weniger als 1 Monat',
       durationMonths: '{months} Monate',
@@ -5946,6 +5946,7 @@ export default {
         vergleichAb6: 'Verglichen mit Wohnungen ab 6 Zimmern.',
         vergleichAlle: 'Verglichen mit Wohnungen aller Grössen.',
         zimmerAngenommen: { sie: 'Die Grösse ist aus der Haushaltsgrösse angenommen — mit Ihrer Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer.', du: 'Die Grösse ist aus der Haushaltsgrösse angenommen — mit deiner Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer.' },
+        zimmerAngenommenHier: { sie: 'Die Grösse ist angenommen — mit Ihrer Zimmerzahl unten bei den Angaben wird der Vergleich genauer.', du: 'Die Grösse ist angenommen — mit deiner Zimmerzahl unten bei den Angaben wird der Vergleich genauer.' },
         ohneWertFuerGroesse: 'Für diese Wohnungsgrösse veröffentlicht das BFS im Kanton keinen Wert.',
         wenigeAntworten: 'Der BFS-Wert beruht hier auf weniger als 50 Antworten — nur als grobe Orientierung lesen.',
       },
