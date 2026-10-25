@@ -1054,3 +1054,23 @@ Werkzeug-Frucht «Notfallkarte» · Steuer-Karte im Kapitel eine Zeile, 13. Mona
 ganz. 6’783 Tests grün, Build sauber, Browser 375 px. rm ungeprüft, Copy-Prüfer steht aus.
 **Punkt 2 war ein Fehlbefund:** «Alle Berechnungen» und «Prämienverbilligung» wurden mit der Finanzen-Fusion bewusst aus
 «Passend» genommen (`finanzen-fusion.md`, Test «keine Doppelungen mehr») — Übersicht und IPV stehen im Kapitel. Nicht geändert.
+
+### Kapitel Persönliche Basis (Y) · Befunde (25.10.2026, noch nicht entschieden)
+
+Gemessen auf `main` `97c476f3`, `#/chapter/0`, Maria. Entwurf: `seiten-v5.html?nur=y`.
+
+**Wie entschieden gebaut:** Zusammenfassung ruhig («Maria Muster, geboren 1992, wohnhaft im Kanton Zürich. Ledig, lebt
+alleine.») · Reiter Angaben/Dokumente · Person, Kontakt, Familie mit «ändern ›» · «Im Haushalt» als eine Zeile ·
+Passend: Lebensmappe, Pass oder Identitätskarte, Zivilstand ändert sich, Ausweis-Kopie ablegen · Als Nächstes Wohnen ·
+«Das Bild steht.» Text Wort für Wort wie im Entwurf.
+
+**Abweichungen:**
+1. **«1 Erwachsene · 0 Kinder»** — holprig (schon in der Übergabe offen). Vorschlag: «allein, keine Kinder» bzw.
+   «2 Erwachsene · 1 Kind»; Singular/Plural und «keine» statt «0».
+2. **«Neu in der Schweiz» je nach Angaben:** Entschieden war «Zuzug in den letzten 12 Monaten». Ein Zuzugsdatum gibt es
+   im Profil nicht, darum zeigt die App die Zeile bei **jeder** Nationalität ausser Schweiz — auch nach 20 Jahren hier
+   (`ChapterView.jsx` passendZiele, Kommentar dort). Entweder ein Feld «in der Schweiz seit» oder die Zeile weglassen.
+3. Untertitel «Pass oder Identitätskarte»: App «Erneuern, Kosten, Verlust», Entwurf «Ablauf · 5 Schritte · Erneuern,
+   Kosten, Verlust» (App nimmt den Register-Untertitel).
+4. Feldnamen brechen, weil die Werte die Spalte füllen: «AHV- / Nummer», «Im / Haushalt» → gehört zum Muster (wie Wohnen 5).
+5. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
