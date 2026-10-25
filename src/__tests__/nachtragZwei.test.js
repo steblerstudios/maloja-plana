@@ -30,12 +30,22 @@ describe('Schutzschild · Pensionskasse «trifft nicht zu»', () => {
 
 describe('Texte', () => {
   it('AHV-Orientierung nennt Selbständige und Nichterwerbstätige', () => {
-    expect(de.orientation.ahvBeitrag.sie).toContain('Selbständige und Nichterwerbstätige zahlen ihren Beitrag selbst');
+    expect(de.orientation.ahvBeitrag.sie).toContain('Selbständige und Nichterwerbstätige zahlen ihren Beitrag in der Regel selbst');
     expect(de.orientation.ahvBeitrag.du).toContain('Als angestellte Person zahlst du');
   });
   it.each(Object.entries({ de, en, fr, it: it_, rm }))('%s: bvgNa und ahvBeitrag vorhanden', (_n, s) => {
     expect(s.schutzschild.bvgNa).toContain('{schwelle}');
     expect(s.orientation.ahvBeitrag.sie && s.orientation.ahvBeitrag.du).toBeTruthy();
+  });
+  it('Schwelle «mehr als» wie BVG Art. 2 und 7 (Code: >)', () => {
+    expect(de.schutzschild.bvgNa).toContain('mehr als CHF {schwelle}');
+    expect(rm.schutzschild.bvgNa).toContain('«Na concerna betg»');
+  });
+  it('Abschnitt Vorsorge im Notfall: ein neutraler Titel je Sprache', () => {
+    for (const [s, w] of [[fr, 'Dispositions personnelles'], [it_, 'Disposizioni personali'], [en, 'Personal arrangements']]) {
+      expect(s.sections.notfall.provision).toBe(w);
+      expect(JSON.stringify(s)).toContain('"sectionProvision":"' + w + '"');
+    }
   });
   it('Italienisch: «direttive del paziente» wie ZGB Art. 370; «Direttive anticipate» nur als Titel der ASSM-Richtlinie', () => {
     const roh = JSON.stringify(it_);

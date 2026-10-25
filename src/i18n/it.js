@@ -1238,7 +1238,7 @@ export default {
     versicherungen: { basic: 'Assicurazione di base', occupational: 'Previdenza professionale', additional: 'Assicurazioni complementari', property: 'Assicurazioni beni & viaggio', mobility: 'Mobilità', social: 'Assicurazione sociale' },
     ausbildung: { education: 'Formazione', work: 'Impiego', languages: 'Lingue' },
     behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza' },
-    notfall: { contact: 'Contatto d\'emergenza', medical: 'Medico', care: 'Assistenza medica', provision: 'Misure precauzionali' },
+    notfall: { contact: 'Contatto d\'emergenza', medical: 'Medico', care: 'Assistenza medica', provision: 'Disposizioni personali' },
   },
   sectionIntros: {
     basis: {
@@ -2840,7 +2840,7 @@ export default {
   orientation: {
     // ─── P0: Visibile sui campi ────────────────────────────
     ahv: { sie: 'Il Suo numero AVS La accompagna per tutta la vita lavorativa. Ne ha bisogno presso datori di lavoro, assicurazioni e autorità.', du: 'Il tuo numero AVS ti accompagna per tutta la vita lavorativa. Ne hai bisogno presso datori di lavoro, assicurazioni e autorità.' },
-    ahvBeitrag: { sie: "L’AVS assicura la Sua rendita. Se è dipendente, paga metà del contributo, trattenuta direttamente dallo stipendio — l’altra metà la paga il datore di lavoro. Indipendenti e persone senza attività lucrativa pagano il contributo da sé.", du: "L’AVS assicura la tua rendita. Se sei dipendente, paghi metà del contributo, trattenuta direttamente dallo stipendio — l’altra metà la paga il datore di lavoro. Indipendenti e persone senza attività lucrativa pagano il contributo da sé." }, // Fachprüfung 25.10.2026
+    ahvBeitrag: { sie: "L’AVS assicura la Sua rendita. Se è dipendente, paga metà del contributo, trattenuta direttamente dallo stipendio — l’altra metà la paga il datore di lavoro. Indipendenti e persone senza attività lucrativa pagano di regola il contributo da sé.", du: "L’AVS assicura la tua rendita. Se sei dipendente, paghi metà del contributo, trattenuta direttamente dallo stipendio — l’altra metà la paga il datore di lavoro. Indipendenti e persone senza attività lucrativa pagano di regola il contributo da sé." }, // Fachprüfung 25.10.2026
     bvg: { sie: 'La Sua cassa pensione è finanziata congiuntamente da Lei e dal Suo datore di lavoro. Le garantisce di ricevere in pensione più della sola rendita AVS.', du: 'La tua cassa pensione è finanziata congiuntamente da te e dal tuo datore di lavoro. Ti garantisce di ricevere in pensione più della sola rendita AVS.' },
     kvg: { sie: 'In Svizzera un\'assicurazione malattia di base è obbligatoria. Sceglie Lei stesso il Suo assicuratore e il Suo modello.', du: 'In Svizzera un\'assicurazione malattia di base è obbligatoria. Scegli tu stesso il tuo assicuratore e il tuo modello.' },
     franchise: { sie: 'La franchigia è l\'importo che paga di tasca Sua ogni anno prima che l\'assicurazione malattia copra i costi. Franchigia più alta = premio più basso.', du: 'La franchigia è l\'importo che paghi di tasca tua ogni anno prima che l\'assicurazione malattia copra i costi. Franchigia più alta = premio più basso.' },
@@ -5422,7 +5422,7 @@ export default {
     sectionContact: 'Contatto di emergenza',
     sectionMedical: 'Dati medici',
     sectionCare: 'Cure mediche',
-    sectionProvision: 'Misure precauzionali e direttive',
+    sectionProvision: 'Disposizioni personali',
     sectionInsurance: 'Assicurazione',
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
     qrTitle: 'QR d’emergenza per i soccorritori',
@@ -6101,7 +6101,7 @@ export default {
     pflichtNote: 'Prescritto dalla legge.',
     bvgUnklar: 'Cassa pensioni: obbligatoria da un salario annuo lordo di CHF {schwelle}. Non è registrato un salario lordo — il certificato di salario indica se vale qui.',
     bvgUnklar13: 'Cassa pensioni: obbligatoria da un salario annuo lordo di CHF {schwelle}. Con una tredicesima il salario sarebbe sopra — l’indicazione manca ancora (capitolo Finanze).',
-    bvgNa: "Cassa pensione segnata come «non pertinente». Da un salario annuo lordo di CHF {schwelle} vige di regola l’obbligo; esistono eccezioni, ad esempio un impiego a tempo determinato fino a tre mesi. Meglio chiarire con il datore di lavoro.", // Fachprüfung 25.10.2026
+    bvgNa: "Cassa pensione segnata come «non pertinente». Con un salario annuo lordo superiore a CHF {schwelle} vige di regola l’obbligo; esistono eccezioni, ad esempio un impiego a tempo determinato fino a tre mesi (senza proroga). Meglio chiarire con il datore di lavoro.", // Fachprüfung 25.10.2026
     empfohlenTitle: 'Consigliato',
     empfohlenNote: 'Facoltativo, ma sensato.',
     kk: 'Assicurazione malattia',

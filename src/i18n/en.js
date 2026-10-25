@@ -1238,7 +1238,7 @@ export default {
     versicherungen: { basic: 'Basic insurance', occupational: 'Occupational pension', additional: 'Additional insurance', property: 'Property & travel insurance', mobility: 'Mobility', social: 'Social insurance' },
     ausbildung: { education: 'Education', work: 'Employment', languages: 'Languages' },
     behoerden: { taxes: 'Taxes', legal: 'Legal', representation: 'Representation' },
-    notfall: { contact: 'Emergency contact', medical: 'Medical', care: 'Medical care', provision: 'Advance directives' },
+    notfall: { contact: 'Emergency contact', medical: 'Medical', care: 'Medical care', provision: 'Personal arrangements' },
   },
   sectionIntros: {
     basis: {
@@ -2840,7 +2840,7 @@ export default {
   orientation: {
     // ─── P0: Visible on fields ─────────────────────────────
     ahv: 'Your AHV number stays with you throughout your working life. You need it for employers, insurers, and authorities.',
-    ahvBeitrag: { sie: "The AHV secures your pension. As an employee, you pay half of the contribution, deducted directly from your salary — your employer pays the other half. Self-employed and non-employed people pay their contribution themselves.", du: "The AHV secures your pension. As an employee, you pay half of the contribution, deducted directly from your salary — your employer pays the other half. Self-employed and non-employed people pay their contribution themselves." }, // Fachprüfung 25.10.2026
+    ahvBeitrag: { sie: "The AHV secures your pension. As an employee, you pay half of the contribution, deducted directly from your salary — your employer pays the other half. Self-employed and non-employed people usually pay their contribution themselves.", du: "The AHV secures your pension. As an employee, you pay half of the contribution, deducted directly from your salary — your employer pays the other half. Self-employed and non-employed people usually pay their contribution themselves." }, // Fachprüfung 25.10.2026
     bvg: 'Your pension fund is financed jointly by you and your employer. It ensures you receive more than just the basic AHV pension in retirement.',
     kvg: 'In Switzerland, basic health insurance is mandatory. You choose your insurer and your model yourself.',
     franchise: 'The franchise is the amount you pay yourself each year before your health insurer covers costs. Higher franchise = lower premium.',
@@ -5449,7 +5449,7 @@ export default {
     sectionContact: 'Emergency contact',
     sectionMedical: 'Medical details',
     sectionCare: 'Medical care',
-    sectionProvision: 'Advance directives',
+    sectionProvision: 'Personal arrangements',
     sectionInsurance: 'Insurance',
     footerPrivacy: 'This dossier contains personal health information. Please store it carefully.',
     qrTitle: 'Emergency QR for first responders',
@@ -6127,7 +6127,7 @@ export default {
     pflichtNote: 'Mandatory by law.',
     bvgUnklar: 'Pension fund: mandatory from a gross annual salary of CHF {schwelle}. No gross salary is recorded — the salary certificate shows whether it applies here.',
     bvgUnklar13: 'Pension fund: mandatory from a gross annual salary of CHF {schwelle}. With a 13th monthly salary the salary would be above it — this has not been stated yet (Finances chapter).',
-    bvgNa: "Pension fund marked as “does not apply”. From a gross annual salary of CHF {schwelle}, cover is usually compulsory; there are exceptions, for example a fixed-term job of up to three months. Best to check with your employer.", // Fachprüfung 25.10.2026
+    bvgNa: "Pension fund marked as “does not apply”. With a gross annual salary above CHF {schwelle}, cover is usually compulsory; there are exceptions, for example a fixed-term job of up to three months (not extended). Best to check with your employer.", // Fachprüfung 25.10.2026
     empfohlenTitle: 'Recommended',
     empfohlenNote: 'Optional, but sensible.',
     kk: 'Health insurance',
