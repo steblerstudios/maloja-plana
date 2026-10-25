@@ -3980,12 +3980,15 @@ export default {
       alleVersicherungenSub: "Premias, franschisa, regiun, RIP, termin da midada",
       ablageAusbildung: "Deponer ils diploms",
       ablageDokumente: "Deponer documents",
+      steuerfrist: "Termin & decleraziun da taglia",
+      steuerfristSub: "Chapitel Autoritads · termin, numer da taglia, decleraziuns avertas",
     },
     alleDurch: "Tut ils chapitels percurrids",
     zurUebersichtTitel: "Enavos a la survista",
     zurUebersichtSatz: { sie: "Voss organisatur da vita en ina survista.", du: "Tes organisatur da vita en ina survista." },
     zurUebersicht: "A la survista",
     imHaushalt: "En l’economia domestica",
+    vertretungNichtErfasst: "Assistenza giuridica: betg endatada.",
     bewilligungNichtNoetig: "betg necessari (burgais svizzer)",
     proJahr: "/ onn",
     haushaltAllein: "ina persuna",
@@ -4220,6 +4223,29 @@ export default {
 
   // Fassung 6 · chapitel Abitar, instrument sisum (runda 9, sboz Z, 24.10.2026). Remplazza «wohnkostenanteil».
   // rm ungeprüft F6
+  // Kapitel Behörden · oben (Fassung 6, Runde 9 AD). rm ungeprüft.
+  behoerdenInstrument: {
+    faellig: "Decleraziun da taglia da consegnar ils {datum}",
+    offen: "Decleraziuns avertas: {n}",
+    allesSteuern: { sie: "Tut davart Vossas taglias", du: "Tut davart tias taglias" },
+    allesSteuernSub: "Taglias · import, deducziuns, prolungar il termin",
+    zuFinanzen: "Import e chargia da taglia",
+    zuFinanzenSub: "Chapitel Finanzas & daners",
+    gaenge: "Fatschentas administrativas",
+    vonErledigt: "{n} da {total} fatg.",
+    wegSteuern: "Taglias",
+    wegSoGehts: "Uschia vai",
+    wegAblauf: "Andament",
+    fallTitel: "Per il cas dals cas",
+    fallSatz: { sie: "Tgi che agescha per Vus e tge che vala, sche Vus na pudais betg pli decider sez.", du: "Tgi che agescha per tai e tge che vala, sche ti na pos betg pli decider sez." },
+    vorsorgeauftrag: "Mandat da precauziun",
+    patientenverfuegung: "Disposiziun da pazient",
+    nichtErfasst: "betg endatà",
+    vorsorgeWeg: "Mandat da precauziun & disposiziun da pazient",
+    steuererklaerungJahr: "Decleraziun da taglia {jahr} inoltrada",
+    vorschlag: "Proposta da «Decleraziuns avertas: 0»",
+    vorsorgeWegSub: "Tgi che agescha, tge che vala medicalmain",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Voss curriculum vitae — prevista", du: "Tes curriculum vitae — prevista" },
@@ -5675,6 +5701,12 @@ export default {
     },
     behoerden: {
       taxCantonSentence: { sie: 'Voss affars da taglia curran via il chantun {canton}.', du: 'Tes affars da taglia curran via il chantun {canton}.' },
+      keineOffene: "nagina decleraziun da taglia averta",
+      eineOffene: "ina decleraziun da taglia averta",
+      offene: "{n} decleraziuns da taglia avertas",
+      betreibungLeer: { sie: "tenor Vossas indicaziuns è il register da scussiun senza inscripziuns", du: "tenor tias indicaziuns è il register da scussiun senza inscripziuns" },
+      trenner: ", ",
+      betreibungEintraege: { sie: "tenor Vossas indicaziuns hai inscripziuns en il register da scussiun", du: "tenor tias indicaziuns hai inscripziuns en il register da scussiun" },
       taxCantonWithRep: 'Chantun da taglia {canton}. Ina assistenza giuridica è deponida.',
     },
     notfall: {

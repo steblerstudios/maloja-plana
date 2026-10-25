@@ -2325,6 +2325,29 @@ export default {
   },
 
   // Fassung 6 · chapitre Logement, instrument en haut (tour 9, esquisse Z, 24.10.2026). Remplace «wohnkostenanteil».
+  // Kapitel Behörden · oben (Fassung 6, Runde 9 AD). rm ungeprüft.
+  behoerdenInstrument: {
+    faellig: "Déclaration d’impôt à rendre le {datum}",
+    offen: "Déclarations en suspens : {n}",
+    allesSteuern: { sie: "Tout sur vos impôts", du: "Tout sur tes impôts" },
+    allesSteuernSub: "Impôts · montant, déductions, prolonger le délai",
+    zuFinanzen: "Montant et charge fiscale",
+    zuFinanzenSub: "Chapitre Finances & argent",
+    gaenge: "Démarches administratives",
+    vonErledigt: "{n} sur {total} effectuées.",
+    wegSteuern: "Impôts",
+    wegSoGehts: "Comment faire",
+    wegAblauf: "Démarche",
+    fallTitel: "En cas de besoin",
+    fallSatz: { sie: "Qui agit pour vous et ce qui s’applique si vous ne pouvez plus décider vous-même.", du: "Qui agit pour toi et ce qui s’applique si tu ne peux plus décider toi-même." },
+    vorsorgeauftrag: "Mandat pour cause d’inaptitude",
+    patientenverfuegung: "Directives anticipées",
+    nichtErfasst: "aucune saisie",
+    vorsorgeWeg: "Mandat pour cause d’inaptitude et directives anticipées",
+    steuererklaerungJahr: "Déclaration d’impôt {jahr} déposée",
+    vorschlag: "Proposé d’après «Déclarations en suspens : 0»",
+    vorsorgeWegSub: "Qui agit, ce qui s’applique médicalement",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Votre CV — aperçu", du: "Ton CV — aperçu" },
@@ -2413,12 +2436,15 @@ export default {
       alleVersicherungenSub: "Primes, franchise, région, RIP, délai de changement",
       ablageAusbildung: "Classer les diplômes",
       ablageDokumente: "Classer des documents",
+      steuerfrist: "Délai & déclaration d’impôt",
+      steuerfristSub: "Chapitre Autorités · délai, numéro fiscal, déclarations en suspens",
     },
     alleDurch: "Tous les chapitres parcourus",
     zurUebersichtTitel: "Retour à la vue d’ensemble",
     zurUebersichtSatz: { sie: "Votre dossier de vie en un coup d’œil.", du: "Ton dossier de vie en un coup d’œil." },
     zurUebersicht: "Voir la vue d’ensemble",
     imHaushalt: "Dans le ménage",
+    vertretungNichtErfasst: "Représentant juridique : non saisi.",
     bewilligungNichtNoetig: "pas nécessaire (nationalité suisse)",
     proJahr: "/ an",
     haushaltAllein: "une personne",
@@ -2743,6 +2769,12 @@ export default {
     },
     behoerden: {
       taxCantonSentence: { sie: 'Vos affaires fiscales sont gérées par le canton de {canton}.', du: 'Tes affaires fiscales sont gérées par le canton de {canton}.' },
+      keineOffene: "aucune déclaration d’impôt en suspens",
+      eineOffene: "une déclaration d’impôt en suspens",
+      offene: "{n} déclarations d’impôt en suspens",
+      betreibungLeer: { sie: "selon vos indications, le registre des poursuites ne contient aucune inscription", du: "selon tes indications, le registre des poursuites ne contient aucune inscription" },
+      trenner: ", ",
+      betreibungEintraege: { sie: "selon vos indications, le registre des poursuites contient des inscriptions", du: "selon tes indications, le registre des poursuites contient des inscriptions" },
       taxCantonWithRep: 'Canton fiscal {canton}. Un conseiller juridique est enregistré.',
     },
     notfall: {

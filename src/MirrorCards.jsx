@@ -227,12 +227,25 @@ function buildBehoerdenSentence(data, t) {
   if (!data.cantoneOfTaxation) return null;
 
   const canton = getCantonName(data.cantoneOfTaxation, t);
+  const satz = data.legalRepresentative
+    ? t('mirror.behoerden.taxCantonWithRep', { canton: canton })
+    : t('mirror.behoerden.taxCantonSentence', { canton: canton });
 
-  if (data.legalRepresentative) {
-    return t('mirror.behoerden.taxCantonWithRep', { canton: canton });
-  }
-
-  return t('mirror.behoerden.taxCantonSentence', { canton: canton });
+  // Runde 9, AD (gebaut Abnahme F6, 25.10.2026): ein zweiter Satz zu Steuererklärung und Betreibungsregister —
+  // «Keine offene Steuererklärung, das Betreibungsregister ist ohne Einträge.» Nur, was erfasst ist.
+  const teile = [];
+  // Leer, null und Leerzeichen heissen «nicht erfasst» (Fachprüfung 25.10.2026, wie utils/steuerfrist.js).
+  const roh = data.pendingTaxReturns == null ? '' : String(data.pendingTaxReturns).trim();
+  const offen = roh === '' || !Number.isFinite(Number(roh)) ? null : Number(roh);
+  if (offen === 0) teile.push(t('mirror.behoerden.keineOffene'));
+  else if (offen === 1) teile.push(t('mirror.behoerden.eineOffene'));
+  else if (offen > 1) teile.push(t('mirror.behoerden.offene', { n: String(offen) }));
+  if (data.betreibungsStatus === 'none') teile.push(t('mirror.behoerden.betreibungLeer'));
+  else if (data.betreibungsStatus === 'entries') teile.push(t('mirror.behoerden.betreibungEintraege'));
+  if (!teile.length) return satz;
+  // Trennzeichen je Sprache (en «; », Copy-Prüfer 25.10.2026).
+  const zweiter = teile.join(t('mirror.behoerden.trenner'));
+  return satz + ' ' + zweiter.charAt(0).toUpperCase() + zweiter.slice(1) + '.';
 }
 
 // ─── Notfall ──────────────────────────────────────────────

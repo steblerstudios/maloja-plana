@@ -2325,6 +2325,29 @@ export default {
   },
 
   // Fassung 6 · housing chapter, instrument at the top (round 9, draft Z, 24.10.2026). Replaces «wohnkostenanteil».
+  // Kapitel Behörden · oben (Fassung 6, Runde 9 AD). rm ungeprüft.
+  behoerdenInstrument: {
+    faellig: "Tax return due on {datum}",
+    offen: "Outstanding tax returns: {n}",
+    allesSteuern: "Everything about your taxes",
+    allesSteuernSub: "Taxes · amount, deductions, extending the deadline",
+    zuFinanzen: "Tax amount and burden",
+    zuFinanzenSub: "Finances & money chapter",
+    gaenge: "Dealings with authorities",
+    vonErledigt: "{n} of {total} done.",
+    wegSteuern: "Taxes",
+    wegSoGehts: "How it works",
+    wegAblauf: "Guide",
+    fallTitel: "Just in case",
+    fallSatz: "Who acts for you and what applies if you can no longer decide yourself.",
+    vorsorgeauftrag: "Advance care mandate",
+    patientenverfuegung: "Advance directive",
+    nichtErfasst: "not entered",
+    vorsorgeWeg: "Advance care mandate & advance directive",
+    steuererklaerungJahr: "Tax return {jahr} filed",
+    vorschlag: "Suggested from «Outstanding tax returns: 0»",
+    vorsorgeWegSub: "Who acts, what applies medically",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: "Your CV — preview",
@@ -2413,12 +2436,15 @@ export default {
       alleVersicherungenSub: "Premiums, deductible, region, IPV, switching deadline",
       ablageAusbildung: "File diplomas",
       ablageDokumente: "File documents",
+      steuerfrist: "Tax deadline & tax return",
+      steuerfristSub: "Authorities chapter · deadline, tax number, open returns",
     },
     alleDurch: "All chapters covered",
     zurUebersichtTitel: "Back to the overview",
     zurUebersichtSatz: "Your life folder at a glance.",
     zurUebersicht: "Go to the overview",
     imHaushalt: "In the household",
+    vertretungNichtErfasst: "Legal representative: not entered.",
     bewilligungNichtNoetig: "not needed (Swiss citizen)",
     proJahr: "/ year",
     haushaltAllein: "living alone",
@@ -2743,6 +2769,12 @@ export default {
     },
     behoerden: {
       taxCantonSentence: 'Your tax affairs are handled by the canton of {canton}.',
+      keineOffene: "no tax return outstanding",
+      eineOffene: "one tax return outstanding",
+      offene: "{n} tax returns outstanding",
+      betreibungLeer: "according to your details, the debt enforcement register has no entries",
+      trenner: "; ",
+      betreibungEintraege: "according to your details, the debt enforcement register has entries",
       taxCantonWithRep: 'Tax canton {canton}. A legal representative is on file.',
     },
     notfall: {

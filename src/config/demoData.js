@@ -106,7 +106,11 @@ export const DEMO_DATA = {
   behoerden: {
     cantoneOfTaxation: 'ZH',
     taxId: 'ZH-2024-123456',
-    taxFilingDeadline: '2026-09-30',
+    // Steuererklärung 2026 im Kanton Zürich: einzureichen bis 31. März 2027 (Kantonales Steueramt Zürich,
+    // ZStB Nr. 133.1 «Aufforderung zur Einreichung von Steuererklärungen … im Jahr 2027»,
+    // https://www.zh.ch/content/dam/zhweb/bilder-dokumente/themen/steuern-finanzen/steuern/vertreter/steuerbuch/zstb-nr-133-1/ZStB-Nr-133-1_Aufforderung-2027.pdf).
+    // Bis 25.10.2026 stand hier 30.09.2026 — im Beispiel schon vorbei. Die Erklärung 2025 ist eingereicht (0 offen).
+    taxFilingDeadline: '2027-03-31',
     pendingTaxReturns: '0',
     registryOffice: 'Kreisbüro 4',
     betreibungsStatus: 'none',

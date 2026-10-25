@@ -2325,6 +2325,29 @@ export default {
   },
 
   // Fassung 6 · capitolo Abitazione, strumento in alto (giro 9, bozza Z, 24.10.2026). Sostituisce «wohnkostenanteil».
+  // Kapitel Behörden · oben (Fassung 6, Runde 9 AD). rm ungeprüft.
+  behoerdenInstrument: {
+    faellig: "Dichiarazione d’imposta da consegnare il {datum}",
+    offen: "Dichiarazioni in sospeso: {n}",
+    allesSteuern: { sie: "Tutto sulle Sue imposte", du: "Tutto sulle tue imposte" },
+    allesSteuernSub: "Imposte · importo, deduzioni, proroga",
+    zuFinanzen: "Importo e onere fiscale",
+    zuFinanzenSub: "Capitolo Finanze & denaro",
+    gaenge: "Pratiche amministrative",
+    vonErledigt: "{n} su {total} sbrigate.",
+    wegSteuern: "Imposte",
+    wegSoGehts: "Come fare",
+    wegAblauf: "Percorso",
+    fallTitel: "Per ogni evenienza",
+    fallSatz: { sie: "Chi agisce per Lei e che cosa vale se non può più decidere da sé.", du: "Chi agisce per te e che cosa vale se non puoi più decidere da te." },
+    vorsorgeauftrag: "Mandato precauzionale",
+    patientenverfuegung: "Direttive del paziente",
+    nichtErfasst: "nessuna voce",
+    vorsorgeWeg: "Mandato precauzionale & direttive del paziente",
+    steuererklaerungJahr: "Dichiarazione d’imposta {jahr} inoltrata",
+    vorschlag: "Proposta da «Dichiarazioni in sospeso: 0»",
+    vorsorgeWegSub: "Chi agisce, che cosa vale sul piano medico",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Il Suo curriculum — anteprima", du: "Il tuo curriculum — anteprima" },
@@ -2411,12 +2434,15 @@ export default {
       alleVersicherungenSub: "Premi, franchigia, regione, RIP, termine di cambio",
       ablageAusbildung: "Archiviare i diplomi",
       ablageDokumente: "Archiviare documenti",
+      steuerfrist: "Termine & dichiarazione d’imposta",
+      steuerfristSub: "Capitolo Autorità · termine, numero fiscale, dichiarazioni in sospeso",
     },
     alleDurch: "Tutti i capitoli passati in rassegna",
     zurUebersichtTitel: "Torna alla panoramica",
     zurUebersichtSatz: { sie: "Il Suo fascicolo di vita in un colpo d’occhio.", du: "Il tuo fascicolo di vita in un colpo d’occhio." },
     zurUebersicht: "Alla panoramica",
     imHaushalt: "Nell’economia domestica",
+    vertretungNichtErfasst: "Rappresentante legale: non inserito.",
     bewilligungNichtNoetig: "non necessario (cittadinanza svizzera)",
     proJahr: "/ anno",
     haushaltAllein: "una persona",
@@ -2743,6 +2769,12 @@ export default {
     },
     behoerden: {
       taxCantonSentence: { sie: 'Le Sue questioni fiscali sono gestite dal cantone di {canton}.', du: 'Le tue questioni fiscali sono gestite dal cantone di {canton}.' },
+      keineOffene: "nessuna dichiarazione d’imposta in sospeso",
+      eineOffene: "una dichiarazione d’imposta in sospeso",
+      offene: "{n} dichiarazioni d’imposta in sospeso",
+      betreibungLeer: { sie: "secondo i Suoi dati il registro delle esecuzioni non contiene iscrizioni", du: "secondo i tuoi dati il registro delle esecuzioni non contiene iscrizioni" },
+      trenner: ", ",
+      betreibungEintraege: { sie: "secondo i Suoi dati nel registro delle esecuzioni figurano iscrizioni", du: "secondo i tuoi dati nel registro delle esecuzioni figurano iscrizioni" },
       taxCantonWithRep: 'Cantone fiscale {canton}. Un consulente legale è registrato.',
     },
     notfall: {

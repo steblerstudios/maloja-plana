@@ -2334,6 +2334,29 @@ export default {
 
   // Fassung 6 · Kapitel Wohnen, Instrument oben (Runde 9, Entwurf Z, 24.10.2026). Ersetzt «wohnkostenanteil».
   // Die Drittel-Marke ist eine Faustregel, keine Vorschrift (Swiss-Precision-Prüfer).
+  // Kapitel Behörden · oben (Fassung 6, Runde 9 AD). rm ungeprüft.
+  behoerdenInstrument: {
+    faellig: "Steuererklärung fällig am {datum}",
+    offen: "Offene Steuererklärungen: {n}",
+    allesSteuern: { sie: "Alles zu Ihren Steuern", du: "Alles zu deinen Steuern" },
+    allesSteuernSub: "Steuern · Steuerbetrag, Abzüge, Frist verlängern",
+    zuFinanzen: "Steuerbetrag und Belastung",
+    zuFinanzenSub: "Kapitel Finanzen & Geld",
+    gaenge: "Behördengänge",
+    vonErledigt: "{n} von {total} erledigt.",
+    wegSteuern: "Steuern",
+    wegSoGehts: "So geht’s",
+    wegAblauf: "Ablauf",
+    fallTitel: "Für den Fall der Fälle",
+    fallSatz: { sie: "Wer für Sie handelt und was gilt, wenn Sie selbst nicht mehr entscheiden können.", du: "Wer für dich handelt und was gilt, wenn du selbst nicht mehr entscheiden kannst." },
+    vorsorgeauftrag: "Vorsorgeauftrag",
+    patientenverfuegung: "Patientenverfügung",
+    nichtErfasst: "nicht erfasst",
+    vorsorgeWeg: "Vorsorgeauftrag & Patientenverfügung",
+    steuererklaerungJahr: "Steuererklärung {jahr} eingereicht",
+    vorschlag: "Vorschlag aus «Offene Steuererklärungen: 0»",
+    vorsorgeWegSub: "Wer handelt, was medizinisch gilt",
+  },
   // Kapitel Ausbildung · Vorschau des Lebenslaufs (Fassung 6, Runde 9 AC). rm ungeprüft.
   lebenslaufVorschau: {
     titel: { sie: "Ihr Lebenslauf — Vorschau", du: "Dein Lebenslauf — Vorschau" },
@@ -2422,12 +2445,15 @@ export default {
       alleVersicherungenSub: "Prämien, Franchise, Region, IPV, Wechselfrist",
       ablageAusbildung: "Diplome ablegen",
       ablageDokumente: "Dokumente ablegen",
+      steuerfrist: "Steuerfrist & Steuererklärung",
+      steuerfristSub: "Kapitel Behörden · Frist, Steuernummer, offene Erklärungen",
     },
     alleDurch: "Alle Kapitel durchgegangen",
     zurUebersichtTitel: "Zurück zur Übersicht",
     zurUebersichtSatz: { sie: "Ihr Lebensordner auf einen Blick.", du: "Dein Lebensordner auf einen Blick." },
     zurUebersicht: "Zur Übersicht",
     imHaushalt: "Im Haushalt",
+    vertretungNichtErfasst: "Rechtsbeistand: nicht erfasst.",
     bewilligungNichtNoetig: "nicht nötig (Schweizer Bürgerrecht)",
     proJahr: "/ Jahr",
     haushaltAllein: "allein",
@@ -2754,6 +2780,12 @@ export default {
     },
     behoerden: {
       taxCantonSentence: { sie: 'Ihre Steuerangelegenheiten laufen über den Kanton {canton}.', du: 'Deine Steuerangelegenheiten laufen über den Kanton {canton}.' },
+      keineOffene: "keine offene Steuererklärung",
+      eineOffene: "eine offene Steuererklärung",
+      offene: "{n} offene Steuererklärungen",
+      betreibungLeer: { sie: "laut Ihren Angaben ist das Betreibungsregister ohne Einträge", du: "laut deinen Angaben ist das Betreibungsregister ohne Einträge" },
+      trenner: ", ",
+      betreibungEintraege: { sie: "laut Ihren Angaben stehen im Betreibungsregister Einträge", du: "laut deinen Angaben stehen im Betreibungsregister Einträge" },
       taxCantonWithRep: 'Steuerkanton {canton}. Ein Rechtsbeistand ist hinterlegt.',
     },
     notfall: {

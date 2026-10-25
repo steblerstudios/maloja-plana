@@ -36,7 +36,6 @@ import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegist
 import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
-import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { sumAllExpenses, eigeneEinnahmen, monatsAusgaben } from './utils/monatsrechnung.js';
 import { calculateMonthlyBudget } from './budgetSync.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
@@ -70,6 +69,7 @@ const FinanzenImKapitel = React.lazy(() => import('./components/FinanzAuswertung
 const VersicherungsNetz = React.lazy(() => import('./components/VersicherungsNetz.jsx'));
 // Der Mietvergleich (früher auf der Finanz-Übersicht unter dem Lohn) — nur im Kapitel Wohnen.
 const WohnkostenInstrument = React.lazy(() => import('./components/WohnkostenInstrument.jsx').then((m) => ({ default: m.WohnkostenInstrument })));
+const BehoerdenInstrument = React.lazy(() => import('./components/BehoerdenInstrument.jsx').then((m) => ({ default: m.BehoerdenInstrument })));
 const LohnEinordnung = React.lazy(() => import('./components/LohnEinordnung.jsx').then((m) => ({ default: m.LohnEinordnung })));
 const LebenslaufVorschau = React.lazy(() => import('./components/LebenslaufVorschau.jsx').then((m) => ({ default: m.LebenslaufVorschau })));
 const VersicherungenInstrument = React.lazy(() => import('./components/VersicherungenInstrument.jsx').then((m) => ({ default: m.VersicherungenInstrument })));
@@ -1908,7 +1908,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   gefuellt.flatMap((f) => [
                     React.createElement('dt', { key: 'dt-' + f.k, style: { color: palette.mid, margin: 0, hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word', minWidth: 0 } }, f.type === 'household' ? tr('chapterView.imHaushalt') : String(f.label || '').replace(/\s*CHF(\s*\/\s*\S+)?\s*$/, '')),
                     React.createElement('dd', { key: 'dd-' + f.k, style: { color: palette.text, margin: 0, textAlign: 'right', fontWeight: weight.medium, overflowWrap: 'break-word' } }, abschnittWert(f)),
-                  ])))
+                  ]))),
+        // Runde 9 AD: leere Vertretung nicht still weglassen — «Rechtliche Vertretung: nicht erfasst.»
+        !offen && !leer && chapter.key === 'behoerden' && felder.some((f) => f.k === 'legalRepresentative') && !data.legalRepresentative &&
+          React.createElement('p', { 'data-teil': 'vertretung-leer', style: { margin: '0 0 ' + space.xs + 'px', fontSize: text.xs, color: palette.mid } }, tr('chapterView.vertretungNichtErfasst'))
       );
     };
     const haupt = gruppen.filter((g) => !g.sek);
@@ -2080,6 +2083,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         // Wie der Ablauf «Neuer Job»: die Ablage, gefiltert auf Finanzen.
         { key: 'lohnausweis', titel: tr('chapters.finanzen.passend.lohnausweis'), sub: tr('chapters.finanzen.passend.lohnausweisSub'), gehe: () => onNavigate('tresor', undefined, 'finanzen'), ikon: ansichtIkon('tresor') },
         { key: 'budget', titel: tr('budgetSync.title'), sub: tr('chapters.finanzen.passend.budgetSub'), gehe: () => onNavigate('sync'), ikon: ansichtIkon('sync') },
+        // Entscheid «Steuern aufteilen» (24.10.2026): Geld hier, Behördengang im Kapitel Behörden — beide verweisen
+        // aufeinander (Behörden: Zeile «Steuerbetrag und Belastung» beim Kalenderblatt).
+        { key: 'steuerfrist', titel: tr('chapterView.passend.steuerfrist'), sub: tr('chapterView.passend.steuerfristSub'), gehe: () => onNavigate('chapter', 5), ikon: ansichtIkon('tax') },
         // Zeichen wie auf der früheren Übersicht («mappe»); das Dossier steht nicht im Ansichten-Register.
         { key: 'dossier', titel: tr('behoerdenDossier.title'), sub: tr('behoerdenDossier.subtitle'), gehe: () => onNavigate('behoerdendossier'), ikon: 'mappe' },
       ];
@@ -2183,6 +2189,19 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       React.createElement(WohnkostenInstrument, { palette, t: tr, wohnen: data, allData, isDarkMode })
     ),
 
+    // Fassung 6 · Kapitel Behörden (Runde 9, Entwurf AD): Steuerfrist als Kalenderblatt, Behördengänge offen,
+    // «Für den Fall der Fälle». Die Haken der Behördengänge bleiben im selben Speicher wie die frühere Checkliste.
+    chapter.key === 'behoerden' && React.createElement(React.Suspense, { key: 'behoerden-instrument', fallback: null },
+      React.createElement(BehoerdenInstrument, {
+        palette, t: tr, behoerden: data, allData, onNavigate, lang, checked: checklistChecked,
+        onToggle: (id, wert) => {
+          const next = { ...checklistChecked, [id]: wert };
+          setChecklistChecked(next);
+          try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch { /* privat: nur im Speicher */ }
+        },
+      })
+    ),
+
     // Fassung 6 · Kapitel Ausbildung (Runde 9, Entwurf AC): oben «Wo steht Ihr Lohn?» — dasselbe Barometer wie in
     // der Finanz-Auswertung (mit «So ist gerechnet») — und die Vorschau des Lebenslaufs aus den Angaben.
     // `aktuellesKapitel` fest 'ausbildung': ein «fehlt noch …»-Hinweis springt nicht ins eigene Kapitel.
@@ -2231,131 +2250,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Versicherungsübersicht entfiel am 27.09.2026 (Wiederholung der Abschnittsliste).
 
-    // Behörden-Zeitstatus — temporal overview of official matters
-    chapter.key === 'behoerden' && (() => {
-      const rows = [];
-      if (data.taxFilingDeadline) {
-        const deadline = new Date(data.taxFilingDeadline);
-        const now = new Date();
-        const diffMs = deadline.getTime() - now.getTime();
-        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-        let relative;
-        if (diffDays === 0) relative = tr('behördenStatus.today');
-        else if (diffDays > 0 && diffDays < 60) relative = tr('behördenStatus.inDays').replace('{n}', diffDays);
-        else if (diffDays >= 60) relative = tr('behördenStatus.inMonths').replace('{n}', Math.round(diffDays / 30));
-        else if (diffDays > -60) relative = tr('behördenStatus.agoDays').replace('{n}', Math.abs(diffDays));
-        else relative = tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
-        const formatted = deadline.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
-        rows.push({ label: tr('behördenStatus.taxDeadline'), value: formatted + ' (' + relative + ')' });
-      }
-      if (data.pendingTaxReturns) rows.push({ label: tr('behördenStatus.pendingReturns'), value: data.pendingTaxReturns });
-      if (data.betreibungsStatus) {
-        const opts = { none: tr('chapters.behoerden.fields.betreibungsStatus.options.none') || data.betreibungsStatus, entries: tr('chapters.behoerden.fields.betreibungsStatus.options.entries') || data.betreibungsStatus, unknown: tr('chapters.behoerden.fields.betreibungsStatus.options.unknown') || data.betreibungsStatus };
-        rows.push({ label: tr('behördenStatus.betreibung'), value: opts[data.betreibungsStatus] || data.betreibungsStatus });
-      }
-      if (data.courtCases) {
-        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || data.courtCases) : (tr('chapters.behoerden.fields.courtCases.options.no') || data.courtCases);
-        rows.push({ label: tr('behördenStatus.courtCases'), value: val });
-      }
-      if (data.willMade) {
-        const wOpts = { no: tr('chapters.behoerden.fields.willMade.options.no'), handwritten: tr('chapters.behoerden.fields.willMade.options.handwritten'), public: tr('chapters.behoerden.fields.willMade.options.public'), inProgress: tr('chapters.behoerden.fields.willMade.options.inProgress') };
-        rows.push({ label: tr('behördenStatus.will'), value: wOpts[data.willMade] || data.willMade });
-      }
-      if (data.legalRepresentative) rows.push({ label: tr('behördenStatus.legalRep'), value: data.legalRepresentative });
-      if (rows.length === 0) return null;
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.md + 'px',
-          background: palette.surface,
-          border: '1px solid ' + palette.border + '66',
-          borderRadius: radius.md,
-        }
-      },
-        React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
-        }, tr('behördenStatus.intro')),
-        ...rows.map((row, i) =>
-          React.createElement('div', {
-            key: i,
-            style: {
-              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-              padding: '6px 0',
-              borderBottom: i < rows.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
-            }
-          },
-            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
-            React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
-          )
-        ),
-        // Verpasste Steuerfrist, noch nicht als eingereicht vermerkt: ruhig sagen, was jetzt
-        // geht, statt nur «(vor 22 Tagen)» grau stehen zu lassen (Massstab-Prüfung 21.10.2026).
-        // Belegt an Fedlex (Fachprüfung 21.10.2026): Mahnung mit Nachfrist DBG Art. 124 Abs. 3;
-        // erst «trotz Mahnung» Ermessen (DBG 130 Abs. 2 · StHG 46 Abs. 3) und Busse (DBG 174 ·
-        // StHG 55), Ermessensveranlagung nur eingeschränkt anfechtbar (DBG 132 Abs. 3 · StHG 48
-        // Abs. 2). FR «sommation», IT «diffida» = Gesetzesbegriffe. Kantonale Praxis (Gebühren,
-        // Erstreckung) nicht geprüft — darum «Meist» und kein Betrag. «Falls … noch fehlt», weil
-        // der Hinweis auch bei leerem Feld «Ausstehende Steuererklärungen» erscheint.
-        (() => {
-          const n = new Date();
-          const heute = n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
-          if (!steuerfristVorbei(data, heute)) return null;
-          return React.createElement('p', {
-            role: 'note',
-            style: { fontSize: text.sm, color: palette.text, margin: space.sm + 'px 0 0', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', lineHeight: leading.relaxed },
-          }, tr('behördenStatus.pastHint'));
-        })()
-      );
-    })(),
-
-    // Behörden-Checkliste — interactive checklist for common official tasks
-    chapter.key === 'behoerden' && (() => {
-      const items = [
-        { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
-        { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
-        { id: 'wohnsitzbestaetigung', key: 'checklist.wohnsitzbestaetigung' },
-        { id: 'ausweisRenewal', key: 'checklist.ausweisRenewal' },
-        { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
-        { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
-      ];
-      const checked = checklistChecked;
-      const toggle = (id) => {
-        const next = { ...checked, [id]: !checked[id] };
-        setChecklistChecked(next);
-        try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch {}
-      };
-      const done = items.filter(i => checked[i.id]).length;
-      return React.createElement('details', {
-        style: { marginBottom: space.lg + 'px' }
-      },
-        React.createElement('summary', {
-          style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' }
-        }, hinweisZeichen('kaestchen'), tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
-        React.createElement('div', {
-          style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginTop: space.xs + 'px' }
-        },
-          React.createElement('p', {
-            style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed }
-          }, tr('checklist.intro')),
-          ...items.map(item =>
-            React.createElement('label', {
-              key: item.id,
-              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm, ...(isMobile ? { minHeight: '44px' } : {}) }
-            },
-              React.createElement('input', {
-                type: 'checkbox',
-                checked: !!checked[item.id],
-                onChange: () => toggle(item.id),
-                style: { accentColor: palette.sand, flexShrink: 0 }
-              }),
-              React.createElement('span', {
-                style: { color: checked[item.id] ? palette.mid : palette.text, textDecoration: checked[item.id] ? 'line-through' : 'none' }
-              }, tr(item.key))
-            )
-          )
-        )
-      );
-    })(),
+    // Behörden: der Kasten «Folgende Stände und Fristen sind erfasst» und die zugeklappte «Behörden-Checkliste»
+    // standen bis 25.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf AD) ersetzt sie das Behörden-Instrument oben
+    // (components/BehoerdenInstrument.jsx): Kalenderblatt, Behördengänge offen, «Für den Fall der Fälle».
 
     // Wohnen: der Kasten «Wohnkosten / Einkommen / Anteil» und der MietVergleich standen bis
     // 24.10.2026 hier. Seit Fassung 6 (Runde 9, Entwurf Z) ersetzt sie das Wohnkosten-Instrument
