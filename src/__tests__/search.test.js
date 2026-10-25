@@ -68,7 +68,8 @@ describe('SearchView Katalog', () => {
 
   // Befund 23.10.2026: «Notfallkarte» und «Mietzins» fanden nichts.
   it.each([
-    ['notfallkarte', 'notfalleinstieg'],
+    ['notfall', 'notfalleinstieg'],
+    ['portemonnaie-karte', 'notfalleinstieg'],
     ['notfallkarte', 'notfallkarte'],
     ['mietzins', 'mietzins'],
     ['notruf', 'notfallkarte'],
@@ -77,6 +78,13 @@ describe('SearchView Katalog', () => {
     const treffer = SEARCH_VIEWS.filter((v) => [resolve(de, v.nav), v.view, ...(v.aliases || [])]
       .some((x) => String(typeof x === 'object' ? x.sie : x).toLowerCase().includes(wort)));
     expect(treffer.map((v) => v.view)).toContain(view);
+  });
+
+  // Runde 5 / «ein Ort» (24.10.2026): «Notfallkarte» trifft nur noch die Notfallkarte, nicht das Kapitel.
+  it('«notfallkarte» findet das Kapitel Notfall nicht mehr', () => {
+    const treffer = SEARCH_VIEWS.filter((v) => [resolve(de, v.nav), v.view, ...(v.aliases || [])]
+      .some((x) => String(typeof x === 'object' ? x.sie : x).toLowerCase().includes('notfallkarte')));
+    expect(treffer.map((v) => v.view)).toEqual(['notfallkarte']);
   });
 
   it('jeder Weg im Gepäck ist auch über die Suche erreichbar', () => {

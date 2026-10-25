@@ -24,6 +24,10 @@ export const feldHatWert = (d, k) => {
   const v = d[k];
   const posten = d[k + 'Items'];
   if (v === 0 && Array.isArray(posten)) return posten.some((r) => r && hatWert(r.amount));
+  // Listen-Felder (Medikamente, Vorerkrankungen, Sprachen) speichern die Einträge in `<k>List`; das Textfeld
+  // bleibt dabei leer. Ein Eintrag mit Namen zählt (Abnahme F6, 25.10.2026: Medikamente zählten sonst nie).
+  const eintraege = d[k + 'List'];
+  if (Array.isArray(eintraege) && eintraege.some((r) => r && hatWert(r.name))) return true;
   return hatWert(v);
 };
 

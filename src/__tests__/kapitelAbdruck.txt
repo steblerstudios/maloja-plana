@@ -142,7 +142,7 @@ de   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] 
 de   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~5ad51ea0
 de   k=bloodType type="select" section~43769dba label~08bc5ed1 sectionIntro~fde5817a options=9 optWerte~a43a8405 optLabels~5ba685c5
 de   k=allergies type="textarea" label~5c4713d0
-de   k=medications type="textarea" label~7f167c9e
+de   k=medications type="textarea" naOk=true label~7f167c9e
 de   k=chronicDiseases type="textarea" label~a2e0f5ce
 de   k=doctor type="text" section~3a28348b label~5bf93fcf sectionIntro~fae0cb62
 de   k=doctorPhone type="tel" label~b805a4e9
@@ -298,7 +298,7 @@ fr   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] 
 fr   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~8d429f0b
 fr   k=bloodType type="select" section~d1e6c920 label~4f88c36e sectionIntro~38f12aaa options=9 optWerte~a43a8405 optLabels~4d3c65db
 fr   k=allergies type="textarea" label~59470f17
-fr   k=medications type="textarea" label~00ad4c03
+fr   k=medications type="textarea" naOk=true label~00ad4c03
 fr   k=chronicDiseases type="textarea" label~8bbdbea2
 fr   k=doctor type="text" section~0c503b47 label~ca3df85b sectionIntro~ebb1d025
 fr   k=doctorPhone type="tel" label~35c819af
@@ -454,7 +454,7 @@ it   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] 
 it   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~7b60e85c
 it   k=bloodType type="select" section~e7e0bc52 label~40192ca9 sectionIntro~681baf10 options=9 optWerte~a43a8405 optLabels~616efef2
 it   k=allergies type="textarea" label~e30c3e9e
-it   k=medications type="textarea" label~9404816c
+it   k=medications type="textarea" naOk=true label~9404816c
 it   k=chronicDiseases type="textarea" label~fea4e791
 it   k=doctor type="text" section~f198b1cd label~d578256d sectionIntro~b2afb76b
 it   k=doctorPhone type="tel" label~6aa5ea13
@@ -610,7 +610,7 @@ en   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] 
 en   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~4679bd36
 en   k=bloodType type="select" section~40cccc7c label~ecfa190d sectionIntro~90bdb19a options=9 optWerte~a43a8405 optLabels~42aa4f91
 en   k=allergies type="textarea" label~59470f17
-en   k=medications type="textarea" label~74d1df63
+en   k=medications type="textarea" naOk=true label~74d1df63
 en   k=chronicDiseases type="textarea" label~4b032299
 en   k=doctor type="text" section~351601dd label~e51dab88 sectionIntro~d63848d3
 en   k=doctorPhone type="tel" label~49650b66
@@ -766,7 +766,7 @@ rm   k=emergencyContact type="text" mvo=true naOk=true naMit=["emergencyPhone"] 
 rm   k=emergencyPhone type="tel" mvo=true naVon="emergencyContact" label~74e527b1
 rm   k=bloodType type="select" section~40cccc7c label~20a1bc58 sectionIntro~9a87c1c0 options=17 optWerte~47314723 optLabels~ad41972d
 rm   k=allergies type="textarea" label~514ffcdb
-rm   k=medications type="textarea" label~3df944cd
+rm   k=medications type="textarea" naOk=true label~3df944cd
 rm   k=chronicDiseases type="textarea" label~5fd1cb1e
 rm   k=doctor type="text" section~349f10cb label~058b8411 sectionIntro~3c4142db
 rm   k=doctorPhone type="tel" label~fa642349

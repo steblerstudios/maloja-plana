@@ -5,6 +5,7 @@ import { getNotfallDossierPreview } from './dossierGenerator.js';
 import { getFullName } from './config/constants.js';
 import { hinweisZeichen } from './IconSystem.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { Brotkrume } from './components/Brotkrume.jsx';
 
 // Notruf-Vorlesekarte — für den Ernstfall: du musst dir nichts merken.
 // Die Karte nennt die Nummer, sagt Satz für Satz, was du am Telefon sagst,
@@ -116,7 +117,10 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
         : React.createElement('span', { style: s.sayEmpty }, ' — ' + t(emptyKey))
     );
 
-  return React.createElement(AblaufContainer, {
+  // Brotkrume «Übersicht › Notfall › Notfallkarte» (Runde 5 Q, Entscheid «ein Ort» 24.10.2026) — wie Notfallpass.
+  return React.createElement(React.Fragment, null,
+    onNavigate && React.createElement(Brotkrume, { palette, t, view: 'notfallkarte', onNavigate }),
+    React.createElement(AblaufContainer, {
     palette, icon: 'notfall',
     title: t('notfallkarte.title'),
     intro: t('notfallkarte.intro'),
@@ -171,7 +175,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     ),
 
     React.createElement(AblaufFooter, { palette, notes: [t('notfallkarte.footerCalm'), t('trust.localOnly')] })
-  );
+  ));
 };
 
 export default NotfallVorlesekarte;

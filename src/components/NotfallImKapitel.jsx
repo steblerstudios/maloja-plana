@@ -1,17 +1,20 @@
-import React from 'react';
-import { PanelTitle } from './Heading.jsx';
-import { hinweisZeichen } from '../IconSystem.jsx';
-import { text, weight, leading, space, radius, shadow, ease, duration } from '../config/tokens.js';
-import { feldErledigt } from '../utils/vollstaendigkeit.js';
+import React, { useEffect, useState } from 'react';
+import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
+import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
+import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 
-// Der frühere Notfall-Einstieg (NotfallEinstieg.jsx), seit 24.10.2026 im Kapitel Notfall
-// (docs/entscheide/seiten-buendeln.md, Gruppe D, Entscheid 4). Zwei Teile:
-//   oben  — gleich nach dem Kapitelkopf: Vorlesekarte (der eine Knopf für den Ernstfall) und
-//           Notfallpass. Die Vorlesekarte bleibt eigene Seite, mit einem Griff erreichbar.
-//   unten — nach dem Formular: «Was brauchen Sie im Notfall?», drei Lagen mit ihren Angaben.
-// Texte unverändert aus dem Einstieg (notfallEinstieg.*, notfallpass.einstieg*).
-// #/notfalleinstieg leitet hierher (UMLEITUNGEN), Sprungmarke NOTFALL_ANKER.
+// Kapitel Notfall · «ein Ort» (Fassung 6, Runde 9, Entwurf AE, Entscheid Sophie 24.10.2026; gebaut Abnahme
+// 25.10.2026). Das Kapitel ist der eine Notfall-Ort; der frühere Einstieg (#/notfalleinstieg) leitet hierher.
+// Oben, nach der Zusammenfassung, vier Teile:
+//   1. Im Ernstfall — Knopf zur Notfallkarte (bleibt beim Scrollen oben stehen, ausser während man tippt),
+//      darunter «… anrufen» (Telefon-Link der Notfall-Kontaktperson, nur mit erfasster Nummer).
+//   2. Bereit für den Ernstfall — «19 von 20»: die verschiedenen Angaben der drei Szenarien, darunter nur das
+//      Fehlende, gleich hier ausfüllbar. Angaben aus anderen Kapiteln führen in jenes Kapitel. Die drei Szenarien
+//      zugeklappt zum Nachsehen (früher «Was brauchen Sie im Notfall?», offen unten).
+//   3. Ihre Notfall-Unterlagen — vier Kacheln: Notfallkarte, Notfallpass, Notfall-Dossier, Portemonnaie-Karte.
+//   4. Vorsorge — vier Felder ✓/○ mit «x von 4 geregelt»; offene führen selbst zum Werkzeug.
+// Sprungmarke NOTFALL_ANKER (UMLEITUNGEN.notfalleinstieg).
 
 export const NOTFALL_ANKER = 'mp-notfall-ernstfall';
 
@@ -61,144 +64,284 @@ export const SCENARIOS = [
   },
 ];
 
-// Oben: die zwei Wege hinaus — Ernstfall (laut) und Vorbereitung (leise).
-const Ernstfall = ({ palette, t, onNavigate }) =>
-  React.createElement('div', { id: NOTFALL_ANKER, 'data-teil': 'notfall-ernstfall', style: { marginBottom: space.lg + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' } },
-    React.createElement('button', {
-      type: 'button',
-      onClick: () => onNavigate('notfallkarte'),
+// Die verschiedenen Angaben der drei Szenarien, ohne Doppelte (20), in der Reihenfolge des ersten Auftretens.
+export const NOTFALL_ANGABEN = SCENARIOS.flatMap((s) => s.fields)
+  .filter((f, i, alle) => alle.findIndex((x) => x.chapter === f.chapter && x.k === f.k) === i);
+
+// Eine Angabe ist bereit, wenn sie einen Wert hat oder «trifft nicht zu» trägt. Ausnahme Patientenverfügung: erst
+// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Sophie 25.10.2026, nach der
+// Fachprüfung; sonst zählte «Bereit» sie als erledigt und «Vorsorge» darunter als nicht geregelt).
+export const angabeBereit = (data, f) => (f.chapter === 'notfall' && f.k === 'patientenverfuegung'
+  ? vorsorgeGeregelt((data || {}).notfall, 'patientenverfuegung')
+  : feldErledigt((data || {})[f.chapter], f.k));
+
+// Wie bereit: erledigt, gesamt, und das Fehlende mit den Szenarien, für die es fehlt.
+export const bereitschaft = (data) => {
+  const d = data || {};
+  const fehlend = NOTFALL_ANGABEN
+    .filter((f) => !angabeBereit(d, f))
+    .map((f) => ({ ...f, lagen: SCENARIOS.filter((s) => s.fields.some((x) => x.chapter === f.chapter && x.k === f.k)).map((s) => s.key) }));
+  return { erledigt: NOTFALL_ANGABEN.length - fehlend.length, gesamt: NOTFALL_ANGABEN.length, fehlend };
+};
+
+// Vorsorge: geregelt ist, was entschieden ist. Organspende: jede Wahl ausser «Noch nicht entschieden»;
+// die drei anderen: «Ja».
+export const VORSORGE = [
+  { k: 'organDonor', weg: null },
+  { k: 'patientenverfuegung', weg: 'patientenverfuegung', wegKey: 'notfallKapitel.erstellen' },
+  { k: 'vorsorgeauftrag', weg: 'vorsorgeauftrag', wegKey: 'notfallKapitel.erstellen' },
+  { k: 'bestattungswuensche', weg: 'bestattung', wegKey: 'notfallKapitel.festhalten' },
+];
+export const vorsorgeGeregelt = (nf, k) => {
+  const v = (nf || {})[k];
+  if (!v) return false;
+  return k === 'organDonor' ? v !== 'undecided' : v === 'yes';
+};
+
+// Felder, die oben direkt ausgefüllt werden (Text, Telefon). Auswahlfelder führen zum Feld im Formular.
+const EINGABE = { emergencyContact: 'text', emergencyPhone: 'tel', allergies: 'text', medications: 'text', doctor: 'text', doctorPhone: 'tel' };
+
+// Der Ernstfall-Knopf trägt weisse Schrift: seine Fläche braucht mindestens 4.5 : 1 (WCAG AA). roseDeep ist im
+// hellen Modus dunkel genug (#9A4A4A), im dunklen hell (#D98A8A, für Schrift auf Dunkel gedacht) — dann das
+// dunkle Notfall-Rot des hellen Modus.
+const NOTFALL_ROT_DUNKEL = '#9A4A4A';
+const leuchtdichte = (hex) => {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || ''));
+  if (!m) return 1;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+export const knopfRot = (palette) => {
+  const rot = palette.roseDeep || palette.rose;
+  return 1.05 / (leuchtdichte(rot) + 0.05) >= 4.5 ? rot : NOTFALL_ROT_DUNKEL;
+};
+
+// Während getippt wird, steht der Ernstfall-Knopf nicht mehr oben fest: er soll kein Feld verdecken, über
+// dem die Tastatur aufgeht (Prüfauftrag aus dem Entscheid).
+const useTippt = () => {
+  const [tippt, setTippt] = useState(false);
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+    // Nur Felder, über denen eine Tastatur aufgeht — Häkchen und Knöpfe lassen den Knopf stehen (A11y-Prüfung).
+    const istFeld = (el) => !!el && (/^(TEXTAREA|SELECT)$/.test(el.tagName) || (el.tagName === 'INPUT' && !/^(checkbox|radio|button|submit|reset|file|range|color)$/.test(el.type)));
+    const rein = (e) => setTippt(istFeld(e.target));
+    const raus = () => setTippt(false);
+    document.addEventListener('focusin', rein);
+    document.addEventListener('focusout', raus);
+    return () => { document.removeEventListener('focusin', rein); document.removeEventListener('focusout', raus); };
+  }, []);
+  return tippt;
+};
+
+// Der Ernstfall-Knopf: zuoberst, bleibt beim Scrollen stehen — ausser während getippt wird.
+export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
+  const tippt = useTippt();
+  // Solange der Knopf oben steht, hält die Seite beim Scrollen zu einem Fokus um seine Höhe Abstand — so liegt er
+  // nie über dem, was gerade fokussiert ist (WCAG 2.4.11, A11y-Prüfung 25.10.2026).
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+    const wurzel = document.documentElement;
+    const vorher = wurzel.style.scrollPaddingTop;
+    wurzel.style.scrollPaddingTop = 'calc(var(--mp-sprungabstand, 64px) + 84px)';
+    return () => { wurzel.style.scrollPaddingTop = vorher; };
+  }, []);
+  if (!onNavigate) return null;
+  const h = React.createElement;
+  return h('div', {
+    id: NOTFALL_ANKER, 'data-teil': 'notfall-ernstfall-knopf', 'data-stehend': tippt ? '0' : '1',
+    style: { position: tippt ? 'static' : 'sticky', top: 'calc(var(--mp-sprungabstand, 64px) + 4px)', zIndex: 3, marginBottom: space.sm + 'px', scrollMarginTop: 'var(--mp-sprungabstand)' },
+  },
+    h('button', {
+      type: 'button', onClick: () => onNavigate('notfallkarte'),
       style: {
-        display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
-        marginBottom: space.sm + 'px',
-        padding: space.lg + 'px ' + space.md + 'px',
-        background: (palette.sageDeep || palette.sage) + '14',
-        border: '1px solid ' + (palette.sageDeep || palette.sage) + '55',
-        borderRadius: radius.md, fontFamily: 'inherit',
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '64px', textAlign: 'left',
+        padding: space.sm + 'px ' + space.md + 'px', background: knopfRot(palette), color: '#fff', border: '1px solid ' + (palette.roseDeep || palette.rose),
+        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 18px rgba(0,0,0,.22)',
       },
     },
-      React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
-        hinweisZeichen('phone'), t('notfallEinstieg.vorlesekarteTitle')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, t('notfallEinstieg.vorlesekarteSub'))
-    ),
-    // Vorbereitung, nicht Ernstfall: darum leiser als die Vorlesekarte darüber.
-    React.createElement('button', {
-      type: 'button',
-      onClick: () => onNavigate('notfallpass'),
-      style: {
-        display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
-        padding: space.md + 'px',
-        background: palette.surface,
-        border: '1px solid ' + palette.border,
-        borderRadius: radius.md, fontFamily: 'inherit',
-      },
+      h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', flexShrink: 0, color: '#fff' } }, h(Icon, { name: 'phone', size: 22 })),
+      h('span', { style: { flex: 1, minWidth: 0 } },
+        h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: '#fff' } }, t('notfallKapitel.ernstfallTitel')),
+        h('small', { style: { display: 'block', fontSize: text.xs, color: '#fff', lineHeight: leading.normal } }, t('notfallKapitel.ernstfallSub'))),
+      h('span', { 'aria-hidden': 'true', style: { color: '#fff', fontSize: text.lg } }, '›')));
+};
+
+export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
+  const [eingaben, setEingaben] = useState({});
+  const [szenOffen, setSzenOffen] = useState(false);
+  if (!onNavigate) return null;
+  const h = React.createElement;
+  const alle = data || {};
+  const nf = alle.notfall || {};
+  const kapitelListe = chapters || [];
+  const feldName = (kap, k) => {
+    const ch = kapitelListe.find((c) => c.key === kap);
+    const f = ch && ch.fields.find((x) => x.k === k);
+    return f ? f.label : k;
+  };
+  const kapitelTitel = (kap) => (kapitelListe.find((c) => c.key === kap) || {}).title || kap;
+  const kapH = { margin: space.lg + 'px 0 ' + space.xs + 'px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text };
+  const klein = { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal };
+  const ruhigKnopf = { minHeight: '44px', padding: '0 ' + space.md + 'px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, fontFamily: 'inherit', fontSize: text.sm, cursor: 'pointer' };
+  const notfallRot = palette.roseDeep || palette.rose;
+
+  // 1. Im Ernstfall — der Knopf selbst steht als NotfallErnstfallKnopf direkt in der Kapitelkarte (stehen bleiben
+  // kann er nur in einem Behälter, der so hoch ist wie das Kapitel); hier folgt «… anrufen».
+  const telefon = String(nf.emergencyPhone || '').trim();
+  const telHref = telefon ? 'tel:' + telefon.replace(/[^\d+]/g, '') : '';
+  const ernstfall = h('div', { 'data-teil': 'notfall-ernstfall', style: { marginBottom: space.md + 'px' } },
+    nf.emergencyContact && telHref && h('a', {
+      href: telHref, 'data-teil': 'notfall-anrufen',
+      style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', minHeight: '48px', marginTop: space.sm + 'px', padding: space.xs + 'px ' + space.md + 'px', border: '1px solid ' + palette.border, borderRadius: radius.md, textDecoration: 'none', color: palette.text },
     },
-      React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
-        hinweisZeichen('lock'), t('notfallpass.einstiegTitel')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, t('notfallpass.einstiegSub'))
+      h('span', { style: { minWidth: 0 } },
+        h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('notfallKapitel.anrufen', { name: nf.emergencyContact })),
+        h('small', { style: { display: 'block', ...klein } }, t('chapters.notfall.fields.emergencyContact') + ' · ', h('span', { style: { whiteSpace: 'nowrap' } }, telefon))),
+      h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: palette.sandDeep || palette.mid } }, h(Icon, { name: 'phone', size: 18 })))
+  );
+
+  // 2. Bereit für den Ernstfall
+  const stand = bereitschaft(alle);
+  const pct = Math.round((stand.erledigt / stand.gesamt) * 100);
+  const lagenName = (keys) => keys.map((k) => '«' + t('notfallEinstieg.' + k + '.title') + '»').join(', ');
+  const speichern = (f) => {
+    const wert = String(eingaben[f.k] || '').trim();
+    if (!wert || demoMode || !onUpdate) return;
+    // Medikamente stehen im Kapitel als Liste (MedicationManager); der Eintrag wird angehängt — Zeilen ohne Namen
+    // (z. B. nur Dosis) bleiben stehen (Fachprüfung 25.10.2026).
+    if (f.k === 'medications') onUpdate('medicationsList', [...(Array.isArray(nf.medicationsList) ? nf.medicationsList : []), { name: wert, dose: '', unit: '' }]);
+    else onUpdate(f.k, wert);
+    setEingaben((e) => ({ ...e, [f.k]: '' }));
+  };
+  const keineMedikamente = () => {
+    if (demoMode || !onUpdate) return;
+    if (!trifftNichtZu(nf, 'medications')) onUpdate(NA_FELD, naUmschalten(nf, 'medications'));
+  };
+  const fehlZeile = (f) => {
+    const id = 'mp-notfall-ein-' + f.k;
+    // Offen: das Kästchen-Zeichen wie in den Szenarien (Form, nicht nur Farbe); keine geklebten Glyphen.
+    const titel = h('span', { style: { fontSize: text.sm, color: palette.text } }, hinweisZeichen('kaestchen', 12), feldName(f.chapter, f.k), ' ',
+      h('small', { style: { fontSize: text.xs, color: palette.mid } }, '· ' + t('notfallKapitel.fehltFuer', { lagen: lagenName(f.lagen) })));
+    const rahmen = { border: '1px dashed ' + notfallRot, borderRadius: radius.md, padding: space.sm + 'px ' + space.md + 'px', marginBottom: space.sm + 'px' };
+    // Aus einem anderen Kapitel: der Weg dorthin.
+    if (f.chapter !== 'notfall') {
+      return h('div', { key: f.chapter + '.' + f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        titel,
+        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), style: { ...ruhigKnopf, background: 'none' } }, kapitelTitel(f.chapter) + ' ›'));
+    }
+    // Patientenverfügung mit «Noch nicht»: die Antwort steht, es fehlt das Dokument — der Weg zum Werkzeug.
+    if (f.k === 'patientenverfuegung' && nf.patientenverfuegung) {
+      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        titel,
+        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.erstellen')));
+    }
+    // Auswahl (Blutgruppe, Patientenverfügung ohne Antwort): zum Feld im Formular unten.
+    if (!EINGABE[f.k]) {
+      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        titel,
+        h('button', { type: 'button', className: 'mp-link', onClick: () => zumFeld && zumFeld(f.k), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.ergaenzenUnten')));
+    }
+    return h('div', { key: f.k, 'data-fehlt': f.k, style: rahmen },
+      h('label', { htmlFor: id, style: { display: 'block' } }, titel),
+      h('input', {
+        id, type: EINGABE[f.k], value: eingaben[f.k] || '', disabled: !!demoMode,
+        placeholder: f.k === 'medications' ? t('notfallKapitel.medikamentPlatzhalter') : '',
+        autoComplete: 'off',
+        onChange: (e) => setEingaben((x) => ({ ...x, [f.k]: e.target.value })),
+        onKeyDown: (e) => { if (e.key === 'Enter') speichern(f); },
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '10px 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+      }),
+      demoMode
+        ? h('p', { style: { ...klein, margin: 0 } }, t('demo.readOnlyHint'))
+        : h('div', { style: { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap' } },
+            h('button', { type: 'button', onClick: () => speichern(f), style: ruhigKnopf }, t('notfallKapitel.speichern')),
+            f.k === 'medications' && h('button', { type: 'button', onClick: keineMedikamente, style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.keineMedikamente'))));
+  };
+  const szenarienZeile = SCENARIOS.flatMap((s, i) => {
+    const n = s.fields.filter((f) => angabeBereit(alle, f)).length;
+    const name = t('notfallEinstieg.' + s.key + '.title');
+    return [i > 0 ? ' · ' : '', n === s.fields.length
+      ? h('span', { key: s.key }, name, ' ', hinweisZeichen('check', 11), h('span', { style: visuallyHiddenStyle }, t('notfallKapitel.vollstaendig')))
+      : h('span', { key: s.key }, name + ' ' + t('notfallKapitel.vonN', { n, total: s.fields.length }))];
+  });
+  const bereit = h('section', { 'data-teil': 'notfall-bereit', 'aria-labelledby': 'mp-notfall-bereit' },
+    h('h3', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
+    h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap' } },
+      h('span', { style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
+      h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
+    h('div', { 'aria-hidden': 'true', style: { height: '6px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', margin: space.xs + 'px 0 ' + space.sm + 'px' } },
+      h('div', { style: { width: pct + '%', height: '100%', background: notfallRot } })),
+    stand.fehlend.length === 0
+      ? h('p', { style: { fontSize: text.sm, color: palette.sageDeep || palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('notfallEinstieg.allDone'))
+      : stand.fehlend.map(fehlZeile),
+    h('details', { 'data-teil': 'notfall-szenarien', onToggle: (e) => setSzenOffen(e.currentTarget.open), style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
+      h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', color: palette.text } },
+        h('span', { style: { minWidth: 0 } },
+          h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('notfallKapitel.szenarien')),
+          h('small', { style: { display: 'block', ...klein } }, szenarienZeile)),
+        h('span', { style: { fontSize: text.xs, color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, aufklappZeichen(szenOffen), t(szenOffen ? 'notfallKapitel.zuklappen' : 'notfallKapitel.ansehen'))),
+      SCENARIOS.map((s) => h('p', { key: s.key, style: { ...klein, margin: space.xs + 'px 0' } },
+        h('b', { style: { color: palette.text } }, t('notfallEinstieg.' + s.key + '.title')), ' — ',
+        s.fields.flatMap((f, i) => [i > 0 ? ', ' : '', angabeBereit(alle, f)
+          ? feldName(f.chapter, f.k)
+          : h('span', { key: f.chapter + f.k }, hinweisZeichen('kaestchen', 10), feldName(f.chapter, f.k), h('span', { style: visuallyHiddenStyle }, ' (' + t('notfallKapitel.fehlt') + ')'))]), '.'))
     )
   );
 
-// Unten: drei Lagen. Fehlende Angaben aus dem Kapitel Notfall stehen im Formular darüber;
-// nur die aus anderen Kapiteln führen weg.
-const Lagen = ({ palette, t, data, chapters, onNavigate }) => {
-  const getFieldLabel = (chapterKey, fieldKey) => {
-    const chapter = chapters.find((ch) => ch.key === chapterKey);
-    if (!chapter) return fieldKey;
-    const field = chapter.fields.find((f) => f.k === fieldKey);
-    return field ? field.label : fieldKey;
-  };
-  // K38: «trifft nicht zu» (z. B. keine Kontaktperson) zählt als erledigt, wie in den Kapiteln.
-  const hasValue = (chapterKey, fieldKey) => feldErledigt(data[chapterKey], fieldKey);
-  const anderesKapitel = (chapterKey) => chapterKey !== 'notfall' && CHAPTER_KEYS.includes(chapterKey);
-  const goToChapter = (chapterKey) => {
-    if (anderesKapitel(chapterKey)) onNavigate('chapter', CHAPTER_KEYS.indexOf(chapterKey));
-  };
-
-  return React.createElement('section', { 'data-teil': 'notfall-lagen', 'aria-labelledby': 'mp-notfall-lagen-titel', style: { marginTop: space.xl + 'px' } },
-    React.createElement(PanelTitle, { palette, id: 'mp-notfall-lagen-titel', style: { margin: '0 0 4px 0' } }, t('notfallEinstieg.title')),
-    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('notfallEinstieg.subtitle')),
-
-    SCENARIOS.map((scenario) => {
-      const filled = scenario.fields.filter((f) => hasValue(f.chapter, f.k)).length;
-      const total = scenario.fields.length;
-      const pct = Math.round((filled / total) * 100);
-      const allDone = filled === total;
-      const chaptersNeeded = [...new Set(scenario.fields.filter((f) => !hasValue(f.chapter, f.k) && anderesKapitel(f.chapter)).map((f) => f.chapter))];
-
-      return React.createElement('div', {
-        key: scenario.key,
-        style: {
-          marginBottom: space.lg + 'px',
-          padding: space.lg + 'px ' + space.md + 'px',
-          background: allDone ? palette.sage + '12' : palette.surface,
-          borderRadius: radius.md,
-          border: '1px solid ' + (allDone ? palette.sage + '40' : palette.border + '88'),
-          boxShadow: shadow.sm,
-        },
-      },
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.sm } },
-          // h4: eine Stufe unter dem Abschnittstitel (im Einstieg waren beide h3 unter dem Seitentitel).
-          React.createElement('h4', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: 0 } }, t('notfallEinstieg.' + scenario.key + '.title')),
-          React.createElement('span', { style: { fontSize: text.sm, color: allDone ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: weight.medium } }, filled + '/' + total)
-        ),
-        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.md + 'px 0' } },
-          t('notfallEinstieg.' + scenario.key + '.description')),
-        React.createElement('div', { style: { width: '100%', height: '3px', background: palette.up, borderRadius: radius.hair, overflow: 'hidden', marginBottom: space.md + 'px' } },
-          React.createElement('div', { style: { width: pct + '%', height: '100%', background: allDone ? palette.sage : palette.sand, borderRadius: radius.hair, transition: `width ${duration.slow}ms ${ease}` } })
-        ),
-        React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px' } },
-          scenario.fields.map((f) => {
-            const done = hasValue(f.chapter, f.k);
-            const weg = !done && anderesKapitel(f.chapter);
-            return React.createElement('div', {
-              key: f.chapter + '.' + f.k,
-              onClick: weg ? () => goToChapter(f.chapter) : undefined,
-              role: weg ? 'button' : undefined,
-              tabIndex: weg ? 0 : undefined,
-              onKeyDown: weg ? (e) => { if (e.key === 'Enter') goToChapter(f.chapter); } : undefined,
-              style: {
-                display: 'flex', alignItems: 'center', gap: space.sm + 'px',
-                fontSize: text.sm,
-                color: done ? (palette.sageDeep || palette.sage) : palette.text,
-                cursor: weg ? 'pointer' : 'default',
-                padding: '4px 0',
-                // Erledigt erkennbar über die FORM (Haken statt Kästchen), nicht über Deckkraft:
-                // 0.7 drückte den Kontrast unter 4.5 (Befund aus dem Einstieg).
-              },
-            },
-              React.createElement('span', { style: { fontSize: text.xs, flexShrink: 0, width: '16px', textAlign: 'center' } }, hinweisZeichen(done ? 'check' : 'kaestchen', 12)),
-              getFieldLabel(f.chapter, f.k)
-            );
-          })
-        ),
-        !allDone && chaptersNeeded.length > 0 && React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },
-            chaptersNeeded.map((chKey) => {
-              const ch = chapters.find((c) => c.key === chKey);
-              return React.createElement('button', {
-                key: chKey,
-                type: 'button',
-                onClick: () => goToChapter(chKey),
-                style: {
-                  background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-                  cursor: 'pointer', padding: '6px 12px', minHeight: '44px',
-                  fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
-                },
-              }, (ch ? ch.title : chKey));
-            })
-          )
-        ),
-        allDone && React.createElement('div', { style: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.sageDeep, fontStyle: 'italic' } }, t('notfallEinstieg.allDone'))
-      );
-    })
+  // 3. Ihre Notfall-Unterlagen
+  const kachel = (key, titel, sub, ikon, onClick, aus) => h('button', {
+    // Ohne Angaben: erreichbar, aber still (aria-disabled statt disabled — der Grund im Untertitel bleibt lesbar).
+    key, type: 'button', onClick: aus ? undefined : onClick, 'aria-disabled': aus ? 'true' : undefined, 'data-kachel': key,
+    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px ' + (aus ? 'dashed ' : 'solid ') + palette.border, borderRadius: radius.md, background: aus ? 'none' : palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
+  },
+    h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: notfallRot } }, h(Icon, { name: ikon, size: 20 })),
+    h('span', { style: { display: 'block', marginTop: '6px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'manual', WebkitHyphens: 'manual' } }, titel),
+    h('small', { style: { display: 'block', ...klein } }, sub));
+  const unterlagen = h('section', { 'data-teil': 'notfall-unterlagen', 'aria-labelledby': 'mp-notfall-unterlagen' },
+    h('h3', { id: 'mp-notfall-unterlagen', style: kapH }, t('notfallKapitel.unterlagenTitel')),
+    h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.unterlagenSatz')),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
+      kachel('notfallkarte', t('notfallkarte.title'), t('notfallKapitel.karteSub'), 'phone', () => onNavigate('notfallkarte')),
+      kachel('notfallpass', t('notfallpass.title'), t('notfallKapitel.passSub'), 'lock', () => onNavigate('notfallpass')),
+      kachel('notfalldossier', t('notfallDossier.title'), t('notfallKapitel.dossierSub'), 'mappe', () => onNavigate('notfalldossier')),
+      kachel('portemonnaie', t('notfallKapitel.portemonnaie'), karteMoeglich ? t('notfallKapitel.portemonnaieSub') : t('notfallKapitel.portemonnaieLeer'), 'document', onKarteDrucken, !karteMoeglich)),
+    karteVorschau || null
   );
-};
 
-export const NotfallImKapitel = ({ teil, palette, t, data, chapters, onNavigate }) => {
-  if (!onNavigate) return null;
-  return teil === 'oben'
-    ? React.createElement(Ernstfall, { palette, t, onNavigate })
-    : React.createElement(Lagen, { palette, t, data: data || {}, chapters: chapters || [], onNavigate });
+  // 4. Vorsorge
+  const geregelt = VORSORGE.filter((v) => vorsorgeGeregelt(nf, v.k)).length;
+  const vorsorgeWert = (k) => {
+    const v = nf[k];
+    if (!v) return t('notfallKapitel.nichtErfasst');
+    return t('chapters.notfall.fields.' + k + '.options.' + v) || v;
+  };
+  const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
+    h('h3', { id: 'mp-notfall-vorsorge', style: kapH }, t('notfallKapitel.vorsorgeTitel')),
+    h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.vorsorgeSatz'), ' ',
+      h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
+      VORSORGE.map((v) => {
+        const ok = vorsorgeGeregelt(nf, v.k);
+        const innen = [
+          h('span', { key: 'n', style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, hyphens: 'manual', WebkitHyphens: 'manual', overflowWrap: 'break-word' } }, t('notfallKapitel.vorsorge.' + v.k)),
+          // Zeichen UND Wort — nicht nur Farbe (Haken / Kästchen).
+          h('span', { key: 'w', style: { display: 'block', fontSize: text.xs, color: ok ? palette.text : palette.mid, overflowWrap: 'break-word' } }, hinweisZeichen(ok ? 'check' : 'kaestchen', 12), (v.k === 'organDonor' && ok && nf.organDonor !== 'declined' && nf.organDonor !== 'delegated' ? t('notfallKapitel.zustimmung') : vorsorgeWert(v.k))),
+        ];
+        const stil = { display: 'block', textAlign: 'left', minHeight: '64px', padding: space.sm + 'px', borderRadius: radius.sm, border: '1px solid ' + (ok ? (palette.sage || palette.border) : palette.border), background: 'none', fontFamily: 'inherit', minWidth: 0 };
+        if (ok || !v.weg) {
+          // Offen ohne eigenes Werkzeug (Organspende): zum Feld im Formular.
+          if (!ok && zumFeld) {
+            return h('button', { key: v.k, type: 'button', onClick: () => zumFeld(v.k), style: { ...stil, cursor: 'pointer', color: palette.text } }, ...innen,
+              h('span', { key: 'g', style: { display: 'block', fontSize: text.xs, color: palette.sandDeep || palette.mid, marginTop: '2px' } }, t('notfallKapitel.ergaenzen')));
+          }
+          return h('div', { key: v.k, 'data-vorsorge': v.k, style: stil }, ...innen);
+        }
+        return h('button', { key: v.k, type: 'button', 'data-vorsorge': v.k, onClick: () => onNavigate(v.weg), style: { ...stil, cursor: 'pointer', color: palette.text } }, ...innen,
+          h('span', { key: 'g', style: { display: 'block', fontSize: text.xs, color: palette.sandDeep || palette.mid, marginTop: '2px' } }, t(v.wegKey)));
+      }))
+  );
+
+  return h('div', { 'data-teil': 'notfall-ort', style: { marginBottom: space.lg + 'px' } }, ernstfall, bereit, unterlagen, vorsorge);
 };
 
 export default NotfallImKapitel;

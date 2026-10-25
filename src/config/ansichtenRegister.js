@@ -77,8 +77,9 @@ export const SEARCH_VIEWS = [
   // Ablauf sind. Befund 23.10.2026: wer «Notfallkarte» eintippte, bekam nichts — die
   // Karte auf dem Dashboard führt in `notfalleinstieg`, und keine dieser Seiten stand hier.
   // Der Name ist derselbe wie auf der Dashboard-Karte.
-  { view: 'notfalleinstieg', nav: 'dashboard.highlightNotfall', icon: 'notfall', aliases: ['notfallkarte', 'notfall', 'notfallkontakt', 'blutgruppe', 'carte d’urgence', 'urgence', 'scheda d’emergenza', 'emergenza', 'emergency card', 'emergency'] },
-  { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
+  // Runde 5 / «ein Ort»: «Notfallkarte» trifft nur noch die Notfallkarte (Q), nicht mehr das Kapitel.
+  { view: 'notfalleinstieg', nav: 'chapters.notfall.title', icon: 'notfall', aliases: ['notfall', 'notfallkontakt', 'blutgruppe', 'portemonnaie-karte', 'urgence', 'emergenza', 'emergency', 'wallet card'] },
+  { view: 'notfallkarte', nav: 'notfallkarte.title', icon: 'notfall', aliases: ['notfallkarte', 'carte d’urgence', 'scheda d’emergenza', 'emergency card', 'notruf', 'vorlesekarte', '144', '112', '117', '118', '1414', 'rega', 'appel d’urgence', 'chiamata d’emergenza', 'emergency call'] },
   { view: 'notfallpass', nav: 'notfallpass.title', icon: 'health', aliases: ['notfallpass', 'notfall-id', 'medical id', 'fiche médicale', 'cartella clinica'] },
   { view: 'briefe', nav: 'briefe.title', icon: 'document', aliases: ['briefe', 'brief', 'briefvorlage', 'vorlage', 'kündigungsschreiben', 'lettre', 'lettera', 'letter'] },
   { view: 'lebensmappe', nav: 'lebensmappe.title', icon: 'documents', aliases: ['lebensmappe', 'mappe', 'dossier', 'cartella', 'life folder'] },
