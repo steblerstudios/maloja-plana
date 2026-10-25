@@ -1130,3 +1130,31 @@ WHO 10 %, IPV-Entlastung, Quelle wie KKLastCard · Schutzschild klein «Pflicht 
 klein mit «Eher 2’500» und «Alles zur Franchise» · Passend zuoberst «Alle Versicherungen auf einen Blick» (Punkt 4 erledigt,
 führt bis Schritt 3 auf `praemien`). swiss-precision, copy, a11y je 0 Blocker, Muss eingearbeitet. 6’810 Tests grün.
 Offen: Befunde 6 (Spinnennetz), 8 (Franchise ohne CHF, «BVG/Pensionskasse»), 9 (leere Abschnitte) · Schritt 3 · rm · Prämien 2027.
+
+### Kapitel Ausbildung & Arbeit (AC) · Befunde (25.10.2026, noch nicht entschieden)
+
+Gemessen auf `main` `97c476f3`, `#/chapter/4`, Maria, 375 px. Entwurf: `seiten-v5.html?nur=ac`. Gebaut ist bisher nur das
+Kapitel-Muster (#565); die Instrumente stehen in der Übergabe als «offen, zu bauen».
+
+**Wie entschieden gebaut:** Kopf links · Zusammenfassung als ruhiger Satz · Reiter Angaben/Dokumente · Bildung, Arbeit,
+Sprachen · Passend mit fünf Zeilen · Als Nächstes Behörden · «Der Weg ist festgehalten.»
+
+**Noch nicht gebaut (Entwurf AC):**
+1. **Zusammenfassung ergänzt** um Arbeitgeber, Dauer und Wochenstunden («… bei Kantonsspital Zürich seit 01.04.2019 (7 Jahre,
+   6 Monate), 42 Std./Woche»). App: «Bachelor. Aktuell tätig als Pflegefachfrau HF.»
+2. **«Wo steht Ihr Lohn?»** oben im Kapitel, wie in Finanzen (vier Abschnitte, «So ist gerechnet»). Das Bauteil gibt es
+   (`LohnEinordnung`, mit #572 ruhiger); es steht heute nur in der Finanz-Auswertung.
+3. **Lebenslauf-Vorschau** (Papierkarte aus den Angaben: Name, Beruf, Ort, Mail, Berufserfahrung, Ausbildung, Sprachen) mit
+   «Lebenslauf erstellen ›».
+
+**Abweichungen im Gebauten:**
+4. **Werte laufen über den Kartenrand** (Abschnitt «Arbeit», 375 px): «Kantonsspital», «01.04.2019», «Schweizer/in», «42»
+   ragen rechts aus der Karte. Ursache: Spalten `minmax(min-content, …)` — das lange Wort «Aufenthaltsbewilligung» plus
+   «Kantonsspital» sind breiter als die Karte. Betrifft vermutlich jedes Kapitel mit langen Einzelwörtern → mit dem Muster lösen.
+5. **«Aufenthaltsbewilligung: Schweizer/in»** — eine Schweizerin hat keine Aufenthaltsbewilligung; der Wert ist die
+   Nationalität. Steht so auch im Entwurf. Besser: Zeile bei Schweizer Nationalität weglassen oder «nicht nötig (Schweizer/in)».
+6. **Passend-Titel aus dem Register** statt Entwurf: «Lebenslauf / Lebenslauf erstellen» (Entwurf «Lebenslauf erstellen · Aus
+   Ihren Angaben · als PDF»), «Neuer Job» (Entwurf «Neue Stelle»), «Stundenlohn: was steht mir zu?» (Entwurf «Stundenlohn &
+   Mindestlohn»). Untertitel anders.
+7. «Arbeitsstunden pro Woche 42» ohne Einheit; Entwurf in der Zusammenfassung «42 Std./Woche».
+8. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
