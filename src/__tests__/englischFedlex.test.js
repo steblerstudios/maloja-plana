@@ -19,6 +19,16 @@ describe('Englisch nach fedlex', () => {
     expect(roh).toContain('"patientenverfuegung":"Patient decree"');
     expect(roh).toContain('"vorsorgeauftrag":"Advance care directive"');
   });
+  // Copy-Prüfung 25.10.2026: «directive» allein war nach der Umstellung mehrdeutig, «power of attorney» meinte
+  // an sieben Stellen den Vorsorgeauftrag (auch im Dokumenttext). Jetzt: nur noch die Vollmacht heisst so.
+  it('kein «directive» allein, «power of attorney» nur für die Vollmacht', () => {
+    const ohne = roh.replace(/advance care directives?/gi, '').replace(/SAMS guidelines «Advance directives»/, '')
+      .replace(/SEM Directives AIG/, ''); // Weisungen des SEM — andere Bedeutung
+    expect(ohne).not.toMatch(/\bdirectives?\b/i);
+    expect(roh.match(/power of attorney/gi)).toHaveLength(3);
+    expect(en.notfallSummary?.cardPowerOfAttorney).toBe('Advance care directive');
+    expect(en.va.doc.ergaenzt).toBe('This advance care directive supplements my earlier advance care directive of {datum}.');
+  });
   it('die Suche findet mit den neuen und den gebräuchlichen Wörtern', () => {
     const va = SEARCH_VIEWS.find((v) => v.view === 'vorsorgeauftrag');
     for (const w of ['patient decree', 'advance care directive', 'advance directive', 'living will', 'lasting power of attorney']) expect(va.aliases).toContain(w);

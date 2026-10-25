@@ -615,8 +615,8 @@ en   k=chronicDiseases type="textarea" label~4b032299
 en   k=doctor type="text" section~351601dd label~e51dab88 sectionIntro~d63848d3
 en   k=doctorPhone type="tel" label~49650b66
 en   k=hospital type="text" label~38c19e90
-en   k=organDonor type="select" section~cbfed3da label~7facd0c2 sectionIntro~d20c7203 options=5 optWerte~7020aec1 optLabels~225a5d02 weitere=secondary
-en   k=patientenverfuegung type="select" orientation~6a8b7a10 link~2f871eb7 hint~bc4bc8b4 label~67e42b26 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
+en   k=organDonor type="select" section~cbfed3da label~7facd0c2 sectionIntro~dcf5e761 options=5 optWerte~7020aec1 optLabels~225a5d02 weitere=secondary
+en   k=patientenverfuegung type="select" orientation~6a8b7a10 link~2f871eb7 hint~bc4bc8b4 label~2093376b options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
 en   k=vorsorgeauftrag type="select" orientation~e6671b5d hint~1980a25e label~3d2b38e0 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
 en   k=bestattungswuensche type="select" hint~668c42ca label~4f7f8f65 options=2 optWerte~ed5d4f23 optLabels~963dc983 weitere=secondary
 en   doc k=advance_directive label~c00ef9f6
