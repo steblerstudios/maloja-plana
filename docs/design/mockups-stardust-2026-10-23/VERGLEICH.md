@@ -1016,3 +1016,33 @@ als Muster für alle Kapitel am Schluss.» Gebaut: Zweig `fix/f6-abnahme-wohnen`
 «Nettomiete» im Satz · Tausender-Zeichen im Barometer (überall) · im Kapitel ohne strukturelle Erklärung, Zimmer-Hinweis
 «unten bei den Angaben» (rm ungeprüft) · «›» an «Ausprobieren». 6’784 Tests grün, Build sauber, Browser 375 px.
 Punkt 10 (Anker unten) gehört zum Menü-Entscheid.
+
+### Kapitel Finanzen & Geld (A + nachentschieden 24.10.) · Befunde (25.10.2026, noch nicht entschieden)
+
+Gemessen auf `main` `97c476f3`, `#/chapter/2`, Maria. Entwurf: `seiten-v5.html?nur=a`. Die Auswertung (Lebensbaum,
+Kuchen, Lohn, «Was sich daraus ergibt») stand im Entwurf A nicht; sie wird gegen die Entscheide vom 24.10. gelesen.
+
+**Wie entschieden gebaut:** Kopf links (Münze, ruhig) · «Jeden Monat bleiben» CHF 2’459 aus der einen Monatsrechnung,
+Balken **unterteilt** Wohnen · Versicherungen · Steuern · Übriges · «3’741 verplant von 6’200 Einkommen, netto» ·
+Zusammenfassung «Es bleiben CHF 2’459.» · Nebenerwerb erst mit Nebenerwerb · Kuchen in der Auswertung · **kein Sankey**
+(Maria hat eine Einnahmequelle — richtig so) · «Wo steht Ihr Lohn?» als Barometer mit vier Abschnitten · Passend ·
+Als Nächstes Versicherungen · Tausender-Zeichen «’».
+
+**Abweichungen:**
+1. **Lohn-Hinweise offen statt hinter «So ist gerechnet»** (entschieden 23.10., «Barometer und Ruhe»): drei lange
+   Absätze (Netto→Brutto, 42 Std., 13. Monatslohn) plus Quelle und «Orientierung» stehen offen.
+2. **Passend weicht ab:** Entwurf «Alle Berechnungen auf einen Blick» (Finanz-Übersicht) · «Prämienverbilligung
+   prüfen» · «Neue Stelle» · «Lohnausweis ablegen». App: «Neuer Job» · «Lohnausweis ablegen», danach Monatsbudget,
+   Behörden-Dossier, «Übersicht drucken». Der Weg zur Finanz-Übersicht fehlt.
+3. **Kuchen «Ausgaben-Übersicht»:** zählt «Rest/Sparen» (40 %) als Stück mit — die Frage war «Wofür geht es weg?».
+   Farben doppelt (Lebensmittel = Rest/Sparen grün, Krankenkasse = Internet blau). «Säule 3a CHF 21 · 0 %».
+   Titel ist nicht die Frage.
+4. **Lebensbaum:** Beschriftungen überdecken sich bei 375 px («Ausbildung 82 %» unter «Notfall», «Finanzen» unter
+   «Versicherung»), «Notfall» steht zweimal.
+5. **Steuer-Karte** sagt «Angeben lässt sich das im Kapitel «Finanzen & Geld»» — man ist schon dort (wie Wohnen 4).
+   Die Karte ist ein langer Absatz. Querverweis Steuern ↔ Behörden fehlt noch (gehört zu AD).
+6. **Lohn-Legende bricht** «Ihr Lohn: CHF / 6’472», «Median: CHF / 7’024».
+7. **Balken-Farbe Wohnen** rose hier, im Kapitel Wohnen Birne/grün — eine Bereichsfarbe, zwei Farben.
+8. Angaben: Entwurf zeigt je Abschnitt «5 von 14 erfasst» und leere Felder mit «ergänzen»; App nur die erfassten.
+   Werte brechen um («Netto (was ich / erhalte)», «Kantonsspital / Zürich»). Feldname «Ersparte» (statt «Erspartes»).
+9. Wie Wohnen 5, 6, 8, 9 (Karten, Kopf, Passend-Symbole, Als-Nächstes-Karte) → Muster am Schluss.
