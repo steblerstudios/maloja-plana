@@ -11,12 +11,13 @@ import { bruttoZuNettoRichtwert, referenzalterMonate } from '../data/lohnAbzuege
 //   art offen    → der Betrag wie bisher (galt schon immer als netto); `offen` sagt es der Anzeige
 
 // Alter in ganzen Jahren und ob das Referenzalter erreicht ist (AHV 21: Frauen JG 1961–63 früher).
+// Rentenalter monatsgenau über referenzalterErreicht (seit 25.10.2026): vorher ganze Jahre × 12 — Frauen
+// JG 1961–63 galten erst mit 65 als im Rentenalter, der Netto-Richtwert zog bis dahin weiter PK ab.
 export function alterUndRentenalter(basis, heute = new Date()) {
   const g = basis?.dateOfBirth ? new Date(basis.dateOfBirth) : null;
   if (!g || isNaN(g.getTime())) return { alter: undefined, rentenalter: false };
   const alter = heute.getFullYear() - g.getFullYear() - (heute < new Date(heute.getFullYear(), g.getMonth(), g.getDate()) ? 1 : 0);
-  const rentenalter = alter * 12 >= referenzalterMonate({ geschlecht: basis?.gender, geburtsjahr: g.getFullYear() });
-  return { alter, rentenalter };
+  return { alter, rentenalter: referenzalterErreicht(basis, heute) === true };
 }
 
 // Referenzalter erreicht — monatsgenau, weil AHV 21 in 3-Monats-Schritten läuft (Frauen JG 1961–63).
