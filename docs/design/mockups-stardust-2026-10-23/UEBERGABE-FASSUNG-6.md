@@ -186,3 +186,52 @@ Entwurfs-PRs erlaubt bis 31.12.2026, mergen und deployen nur Sophie).
   `seiten-v5.html?nur=<id>` und `vergleich-v5.html#<id>`.
 - **Sitzungen kurz halten:** Die Sitzung «Maloja Seiten durchgehen» hatte über 3'000 Nachrichten und lief
   voll. Eine Sitzung je zwei bis drei Seiten; alles Entschiedene steht in VERGLEICH.md.
+
+## Stand 25.10.2026 abends — Abnahme Fassung 6 (Sitzung «Maloja Plana Fassung 6: Seite für Seite»)
+
+Sophie: «wir wollen maloja plana seite für seite durchgehen … wieder mit vergleich und allem». Gemacht: die **gebaute App
+(main `97c476f3`) Seite für Seite gegen die Entwürfe aus Fassung 5** abgeglichen (Beispiel Maria, 375 px; App auf Port 5495
+aus Worktree `_werkbank/abnahme-f6`, Entwürfe auf Port 5490), Befunde je Kapitel in `VERGLEICH.md` → Abschnitt **«Abnahme
+Fassung 6»**, Entscheide dort direkt darunter. Danach auf Zuruf gebaut, je Kapitel ein Zweig + Entwurfs-PR, je mit
+Fachprüfung (swiss-precision, copy, bei Instrumenten a11y — überall 0 Blocker, Muss eingearbeitet).
+
+**main frisch gemessen 25.10.2026 abends: `97c476f3` — nichts davon gemergt, nichts live (live 0.1.48-beta).**
+
+| PR | Inhalt | Basis | Tests |
+|---|---|---|---|
+| #571 | Wohnen: «Nettomiete» im Satz, Barometer ruhiger + Tausender-Zeichen, Zimmer-Hinweis, «›» | main | 6’784 grün, CI grün |
+| #572 | Finanzen: Lohn «So ist gerechnet», Kuchen nur Ausgaben, Lebensbaum entzerrt, Steuer-Karte kurz | main | 6’783, CI grün |
+| #573 | Basis: «allein, keine Kinder», «Neu in der Schweiz» vorerst weg | main | 6’782, CI grün |
+| #574 | Doku: Versicherungs-Übersicht eigene Seite (seiten-buendeln §4 Entscheid 3 → §11) | main | — |
+| #575 | Prämien-Fundament: Haftpflicht-Prämie, «/ Jahr», Prämien ins Budget, Dashboard rechnet mit, Maria KK 540.30 | main | 6’793, CI grün |
+| #576 | Versicherungen Schritt 2: Versicherungen pro Monat, KK-Last, kleine Schilde, kleines Franchise-Kreuz | #575 | 6’810 (CI nie gelaufen) |
+| #577 | Ausbildung: Zusammenfassung, Lohn-Barometer, Lebenslauf-Vorschau, Werte im Kartenrand, Bürgerrecht | #572 | 6’795 (CI nie gelaufen) |
+| #578 | Behörden: Kasten weg, Kalenderblatt, Behördengänge offen, Fall der Fälle, Steuerfrist Maria 31.03.2027 | main | 6’798, CI grün |
+
+**Empfohlene Merge-Reihenfolge:** #574 → #571 → #573 → #572 → #575 (danach Tests auf main: Maria bleibt **2’274** statt
+2’459) → #576 (auf main umstellen und neu aufsetzen) → #577 (ebenso) → #578. Ab #573 harmlose Konflikte: fast alle fügen
+Texte in den 5 Sprachdateien an denselben Ankern ein (vor `wohnenInstrument: {`, nach `imHaushalt:`) und #576/#577/#578
+hängen ihr Instrument in `ChapterView.jsx` gleich nach dem Wohnkosten-Instrument ein — jeweils beide Teile behalten.
+Angebot an Sophie: Claude holt nach jedem ihrer Merges main in den nächsten Zweig, löst die Konflikte, testet, pusht.
+**Mergen und deployen nur Sophie.**
+
+**Entscheide dieser Sitzung** (Wortlaut in VERGLEICH.md): Muster-Punkte (Karten je Abschnitt, Kopf, Passend-Symbole und
+-Untertitel, «Als Nächstes»-Karte, Anker unten) **am Schluss für alle Kapitel** · Finanzen-Befund «Passend ohne Übersicht/IPV»
+war ein Fehlbefund (Finanzen-Fusion) · Versicherungs-Übersicht = eigene Seite (AB) · Versicherungen in drei Schritten
+(1 Fundament ✓ #575, 2 Instrumente ✓ #576, 3 Übersicht offen).
+
+**Noch abzugleichen:** Kapitel **Notfall (AE)** — dann das **Muster für alle Kapitel** (Befunde Wohnen 5, 6, 8, 9;
+Finanzen 7, 8; Basis 3, 4; Versicherungen 6, 8, 9; Ausbildung 6–8; Behörden 8, 10, 11).
+
+**Offen, nicht vergessen:**
+- Wortlaut ZStB Nr. 133.1 «Aufforderung 2027» (Kanton Zürich) vor dem Deploy nachlesen — Websuche nennt 31.03.2027, der
+  Prüfer konnte das PDF offline nicht öffnen.
+- Prämien 2027 (BAG, Ende September veröffentlicht) fehlen in der App: Franchise-Vorschlag und Marias KK-Prämie rechnen mit 2026.
+- Fahrzeugversicherung im Budget: eigener Entscheid (heute bewusst nicht, «Mobilität» kann sie enthalten).
+- Versicherungen Schritt 3 (Prämien-Orientierung → Versicherungs-Übersicht) · Befunde Versicherungen 6 (Spinnennetz), 8, 9.
+- Alle neuen rm-Texte sind ungeprüft (Fachperson Rumantsch).
+- Nebenbefunde: Startbündel nach #576 bei 63.3 / 65 kB (Puffer schrumpft) · bei hoher Last (load ~20) fallen im vollen
+  Testlauf wechselnde i18n-Tests aus Zeitgründen — einzeln grün; `--testTimeout=30000` hilft · nach jeder Änderung an
+  `ChapterView.jsx` lädt der Dev-Server ganz neu und das Beispiel ist weg («Ohne Code ausprobieren» neu klicken) ·
+  Screenshots im Browser-Pane springen nach `scrollIntoView` nicht mit — mit Scroll-Rad scrollen.
+- Worktree `_werkbank/abnahme-f6` (detached auf `97c476f3`) kann bleiben oder weg; die Zweige liegen alle auf origin.
