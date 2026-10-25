@@ -87,7 +87,10 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
     ),
     // Pensionskasse: Pflicht ab Bruttolohn-Schwelle; erfasst ist kein Bruttolohn → offen, nicht still weg.
     st.bvgUnklar && h('p', { style: { fontSize: text.xs, color: palette.mid, margin: space.md + 'px 0 0', lineHeight: leading.normal, textAlign: 'center' } },
-      hinweisZeichen(), t(st.bvgUnklarGrund === 'dreizehnter' ? 'schutzschild.bvgUnklar13' : 'schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) }))
+      hinweisZeichen(), t(st.bvgUnklarGrund === 'dreizehnter' ? 'schutzschild.bvgUnklar13' : 'schutzschild.bvgUnklar', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) })),
+    // Als «trifft nicht zu» markiert, obwohl in der Regel Pflicht: die Lücke bleibt, der Satz sagt warum.
+    st.bvgNa && h('p', { 'data-teil': 'bvg-na', style: { fontSize: text.xs, color: palette.mid, margin: space.md + 'px 0 0', lineHeight: leading.normal, textAlign: 'center' } },
+      hinweisZeichen(), t('schutzschild.bvgNa', { schwelle: zahl(st.bvgSchwelle, { hoechstens: 2 }) }))
   );
 };
 

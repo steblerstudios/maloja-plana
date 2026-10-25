@@ -1238,7 +1238,7 @@ export default {
     versicherungen: { basic: 'Assurance de base', occupational: 'Prévoyance professionnelle', additional: 'Assurances complémentaires', property: 'Assurances biens & voyage', mobility: 'Mobilité', social: 'Assurance sociale' },
     ausbildung: { education: 'Formation', work: 'Emploi', languages: 'Langues' },
     behoerden: { taxes: 'Impôts', legal: 'Droit', representation: 'Représentation' },
-    notfall: { contact: 'Contact d\'urgence', medical: 'Médical', care: 'Soins médicaux', provision: 'Directives anticipées' },
+    notfall: { contact: 'Contact d\'urgence', medical: 'Médical', care: 'Soins médicaux', provision: 'Dispositions personnelles' },
   },
   sectionIntros: {
     basis: {
@@ -2840,7 +2840,7 @@ export default {
   orientation: {
     // ─── P0 : Visible sur les champs ───────────────────────
     ahv: { sie: 'Votre numéro AVS vous accompagne toute votre vie active. Vous en avez besoin auprès des employeurs, assurances et autorités.', du: 'Ton numéro AVS t\'accompagne toute ta vie active. Tu en as besoin auprès des employeurs, assurances et autorités.' },
-    ahvBeitrag: { sie: 'L\'AVS assure votre rente de retraite. Votre cotisation est directement déduite de votre salaire — votre employeur en paie l\'autre moitié.', du: 'L\'AVS assure ta rente de retraite. Ta cotisation est directement déduite de ton salaire — ton employeur en paie l\'autre moitié.' },
+    ahvBeitrag: { sie: "L’AVS assure votre rente. Si vous êtes salarié·e, vous payez la moitié de la cotisation, déduite directement du salaire — l’employeur paie l’autre moitié. Les indépendant·e·s et les personnes sans activité lucrative paient en règle générale elles-mêmes leur cotisation.", du: "L’AVS assure ta rente. Si tu es salarié·e, tu paies la moitié de la cotisation, déduite directement du salaire — l’employeur paie l’autre moitié. Les indépendant·e·s et les personnes sans activité lucrative paient en règle générale elles-mêmes leur cotisation." }, // Fachprüfung 25.10.2026
     bvg: { sie: 'Votre caisse de pension est financée conjointement par vous et votre employeur. Elle vous permet de recevoir plus que la seule rente AVS à la retraite.', du: 'Ta caisse de pension est financée conjointement par toi et ton employeur. Elle te permet de recevoir plus que la seule rente AVS à la retraite.' },
     kvg: { sie: 'En Suisse, une assurance maladie de base est obligatoire. Vous choisissez vous-même votre assureur et votre modèle.', du: 'En Suisse, une assurance maladie de base est obligatoire. Tu choisis toi-même ton assureur et ton modèle.' },
     franchise: { sie: 'La franchise est le montant que vous payez vous-même chaque année avant que votre assurance maladie ne prenne en charge les coûts. Franchise plus élevée = prime plus basse.', du: 'La franchise est le montant que tu paies toi-même chaque année avant que ton assurance maladie ne prenne en charge les coûts. Franchise plus élevée = prime plus basse.' },
@@ -5449,7 +5449,7 @@ export default {
     sectionContact: 'Contact d\'urgence',
     sectionMedical: 'Données médicales',
     sectionCare: 'Soins médicaux',
-    sectionProvision: 'Directives anticipées',
+    sectionProvision: 'Dispositions personnelles',
     sectionInsurance: 'Assurance',
     footerPrivacy: 'Ce dossier contient des informations de santé personnelles. Veuillez le conserver avec soin.',
     qrTitle: 'QR d’urgence pour les secours',
@@ -6127,6 +6127,7 @@ export default {
     pflichtNote: 'Exigé par la loi.',
     bvgUnklar: 'Caisse de pension : obligatoire dès un salaire annuel brut de CHF {schwelle}. Aucun salaire brut n’est saisi — le certificat de salaire indique si elle s’applique ici.',
     bvgUnklar13: 'Caisse de pension : obligatoire dès un salaire annuel brut de CHF {schwelle}. Avec un 13e salaire, le salaire serait au-dessus — l’indication manque encore (chapitre Finances).',
+    bvgNa: "Caisse de pension marquée « ne s’applique pas ». Avec un salaire annuel brut supérieur à CHF {schwelle}, l’assurance est en règle générale obligatoire ; il existe des exceptions, par exemple un emploi de durée limitée jusqu’à trois mois (sans prolongation). Le mieux est de vérifier auprès de l’employeur.", // Fachprüfung 25.10.2026
     empfohlenTitle: 'Recommandé',
     empfohlenNote: 'Facultatif, mais utile.',
     kk: 'Assurance-maladie',

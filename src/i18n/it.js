@@ -1238,7 +1238,7 @@ export default {
     versicherungen: { basic: 'Assicurazione di base', occupational: 'Previdenza professionale', additional: 'Assicurazioni complementari', property: 'Assicurazioni beni & viaggio', mobility: 'Mobilità', social: 'Assicurazione sociale' },
     ausbildung: { education: 'Formazione', work: 'Impiego', languages: 'Lingue' },
     behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza' },
-    notfall: { contact: 'Contatto d\'emergenza', medical: 'Medico', care: 'Assistenza medica', provision: 'Direttive anticipate' },
+    notfall: { contact: 'Contatto d\'emergenza', medical: 'Medico', care: 'Assistenza medica', provision: 'Disposizioni personali' },
   },
   sectionIntros: {
     basis: {
@@ -1719,7 +1719,7 @@ export default {
     vorsorgeTitel: 'Previdenza',
     vorsorgeSatz: { sie: 'Cosa vale se non può più decidere da sé.', du: 'Cosa vale se non puoi più decidere da te.' },
     geregelt: '{n} di {total} regolati.',
-    vorsorge: { organDonor: 'Donazione di organi', patientenverfuegung: 'Direttive anticipate', vorsorgeauftrag: 'Mandato precauzionale', bestattungswuensche: 'Volontà funerarie' },
+    vorsorge: { organDonor: 'Donazione di organi', patientenverfuegung: 'Direttive del paziente', vorsorgeauftrag: 'Mandato precauzionale', bestattungswuensche: 'Volontà funerarie' },
     erstellen: 'redigi ›',
     festhalten: 'annota ›',
     ergaenzen: 'completa ›',
@@ -2248,7 +2248,7 @@ export default {
         betreibungsauszug: 'Estratto del registro esecuzioni',
         will: 'Testamento',
         power_of_attorney: 'Procura',
-        patientenverfuegung: 'Direttive anticipate',
+        patientenverfuegung: 'Direttive del paziente',
       },
     },
     notfall: {
@@ -2270,7 +2270,7 @@ export default {
         doctorPhone: 'Telefono del medico',
         hospital: 'Ospedale preferito',
         organDonor: { label: 'Decisione sulla donazione di organi', options: { yes: 'Consenso — tutti gli organi e tessuti', partial: 'Consenso — solo determinati organi e tessuti', declined: 'Rifiuto', delegated: 'Decisione affidata a una persona di fiducia', undecided: 'Non ancora deciso' } },
-        patientenverfuegung: { label: 'Direttive anticipate?', options: { yes: 'Sì', no: 'Non ancora' } },
+        patientenverfuegung: { label: 'Direttive del paziente?', options: { yes: 'Sì', no: 'Non ancora' } },
         vorsorgeauftrag: { label: 'Mandato precauzionale?', options: { yes: 'Sì', no: 'Non ancora' } },
         bestattungswuensche: { label: 'Desideri di sepoltura registrati?', options: { yes: 'Sì', no: 'Non ancora' } },
       },
@@ -2280,7 +2280,7 @@ export default {
         bestattungswuensche: { sie: 'I Suoi desideri per la sepoltura o la cremazione: metterli per iscritto e dire ai familiari dove si trovano. Ciò che è possibile lo regolano il cantone e il comune.', du: 'I tuoi desideri per la sepoltura o la cremazione: metterli per iscritto e dire ai familiari dove si trovano. Ciò che è possibile lo regolano il cantone e il comune.' },
       },
       docs: {
-        advance_directive: 'Direttive anticipate',
+        advance_directive: 'Direttive del paziente',
         organ_card: 'Tessera di donatore di organi',
         blood_card: 'Tessera del gruppo sanguigno',
       },
@@ -2293,7 +2293,7 @@ export default {
     vorsorge: 'Previdenza',
     saveCard: 'Salva scheda d\'emergenza',
     cardTitle: 'Scheda d\'emergenza',
-    patientenverfuegung: 'Direttive anticipate',
+    patientenverfuegung: 'Direttive del paziente',
     vorsorgeauftrag: 'Mandato precauzionale',
     bestattungswuensche: 'Volontà funerarie',
     done: 'Presente',
@@ -2312,7 +2312,7 @@ export default {
     cardDateOfBirth: 'Data di nascita',
     cardDoctor: 'Medico',
     cardRecorded: 'documentato',
-    cardAdvanceDirective: 'Direttive anticipate',
+    cardAdvanceDirective: 'Direttive del paziente',
     cardPowerOfAttorney: 'Mandato precauzionale',
     cardFooter: 'Creato con Maloja Plana · Stato delle informazioni all\'ultimo salvataggio',
   },
@@ -2358,7 +2358,7 @@ export default {
     wohnsitzbestaetigung: 'Conferma di domicilio ottenuta',
     ausweisRenewal: 'Carta d\'identità / passaporto rinnovato',
     strafregisterauszug: 'Estratto del casellario giudiziale ordinato',
-    patientenverfuegung: 'Direttive anticipate depositate',
+    patientenverfuegung: 'Direttive del paziente depositate',
   },
 
   // Fassung 6 · capitolo Abitazione, strumento in alto (giro 9, bozza Z, 24.10.2026). Sostituisce «wohnkostenanteil».
@@ -2840,7 +2840,7 @@ export default {
   orientation: {
     // ─── P0: Visibile sui campi ────────────────────────────
     ahv: { sie: 'Il Suo numero AVS La accompagna per tutta la vita lavorativa. Ne ha bisogno presso datori di lavoro, assicurazioni e autorità.', du: 'Il tuo numero AVS ti accompagna per tutta la vita lavorativa. Ne hai bisogno presso datori di lavoro, assicurazioni e autorità.' },
-    ahvBeitrag: { sie: 'L\'AVS assicura la Sua rendita di vecchiaia. Il Suo contributo viene detratto direttamente dallo stipendio — il Suo datore di lavoro paga l\'altra metà.', du: 'L\'AVS assicura la tua rendita di vecchiaia. Il tuo contributo viene detratto direttamente dallo stipendio — il tuo datore di lavoro paga l\'altra metà.' },
+    ahvBeitrag: { sie: "L’AVS assicura la Sua rendita. Se è dipendente, paga metà del contributo, trattenuta direttamente dallo stipendio — l’altra metà la paga il datore di lavoro. Indipendenti e persone senza attività lucrativa pagano di regola il contributo da sé.", du: "L’AVS assicura la tua rendita. Se sei dipendente, paghi metà del contributo, trattenuta direttamente dallo stipendio — l’altra metà la paga il datore di lavoro. Indipendenti e persone senza attività lucrativa pagano di regola il contributo da sé." }, // Fachprüfung 25.10.2026
     bvg: { sie: 'La Sua cassa pensione è finanziata congiuntamente da Lei e dal Suo datore di lavoro. Le garantisce di ricevere in pensione più della sola rendita AVS.', du: 'La tua cassa pensione è finanziata congiuntamente da te e dal tuo datore di lavoro. Ti garantisce di ricevere in pensione più della sola rendita AVS.' },
     kvg: { sie: 'In Svizzera un\'assicurazione malattia di base è obbligatoria. Sceglie Lei stesso il Suo assicuratore e il Suo modello.', du: 'In Svizzera un\'assicurazione malattia di base è obbligatoria. Scegli tu stesso il tuo assicuratore e il tuo modello.' },
     franchise: { sie: 'La franchigia è l\'importo che paga di tasca Sua ogni anno prima che l\'assicurazione malattia copra i costi. Franchigia più alta = premio più basso.', du: 'La franchigia è l\'importo che paghi di tasca tua ogni anno prima che l\'assicurazione malattia copra i costi. Franchigia più alta = premio più basso.' },
@@ -2881,7 +2881,7 @@ export default {
     kkWechsel: { label: 'Confrontare le casse malati (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/it/praemien' },
     ahv: { label: 'Rendita AVS: promemoria 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.i' },
     testament: { label: 'Testamento e contratto successorio (ch.ch)', url: 'https://www.ch.ch/it/famiglia-e-unione-domestica/eredita/testamento-e-contratto-successorio/' },
-    patientenverfuegung: { label: 'Direttive anticipate (ch.ch)', url: 'https://www.ch.ch/it/salute/direttive-del-paziente/' },
+    patientenverfuegung: { label: 'Direttive del paziente (ch.ch)', url: 'https://www.ch.ch/it/salute/direttive-del-paziente/' },
   },
 
   tresor: {
@@ -3908,7 +3908,7 @@ export default {
     keineOrganeGewaehlt: { sie: 'Nessun organo selezionato finora. La preghiamo di indicare quali organi e tessuti desidera donare — altrimenti in caso d\'emergenza nessuno sa quali siano.', du: 'Nessun organo selezionato finora. Indica quali organi e tessuti desideri donare — altrimenti in caso d\'emergenza nessuno sa quali siano.' },
     bitteBestaetigen: { sie: 'Nel capitolo Emergenza era indicato «Donatore di organi registrato: sì». Questo non dice di quali organi si tratta. La preghiamo di scegliere di nuovo la Sua decisione e di salvarla.', du: 'Nel capitolo Emergenza era indicato «Donatore di organi registrato: sì». Questo non dice di quali organi si tratta. Scegli di nuovo la tua decisione e salvala.' },
     bitteBestaetigenWiderspruch: { sie: 'Prima c\'erano due indicazioni contraddittorie: «Donatore di organi registrato: sì» nel capitolo Emergenza, «Rifiutato» su questa pagina. La preghiamo di scegliere di nuovo la Sua decisione e di salvarla.', du: 'Prima c\'erano due indicazioni contraddittorie: «Donatore di organi registrato: sì» nel capitolo Emergenza, «Rifiutato» su questa pagina. Scegli di nuovo la tua decisione e salvala.' },
-    wirkung: { sie: 'Maloja non è un registro. La Sua decisione vale se la si trova: sulla tessera di donatore, nelle direttive anticipate — e se i Suoi congiunti la conoscono.', du: 'Maloja non è un registro. La tua decisione vale se la si trova: sulla tessera di donatore, nelle direttive anticipate — e se i tuoi congiunti la conoscono.' },
+    wirkung: { sie: 'Maloja non è un registro. La Sua decisione vale se la si trova: sulla tessera di donatore, nelle direttive del paziente — e se i Suoi congiunti la conoscono.', du: 'Maloja non è un registro. La tua decisione vale se la si trova: sulla tessera di donatore, nelle direttive del paziente — e se i tuoi congiunti la conoscono.' },
     speicherort: 'Oggi Maloja salva queste indicazioni nella memoria di questo browser.',
     organsAndTissue: 'Organi e tessuti',
     heart: 'Cuore',
@@ -5422,7 +5422,7 @@ export default {
     sectionContact: 'Contatto di emergenza',
     sectionMedical: 'Dati medici',
     sectionCare: 'Cure mediche',
-    sectionProvision: 'Direttive anticipate',
+    sectionProvision: 'Disposizioni personali',
     sectionInsurance: 'Assicurazione',
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
     qrTitle: 'QR d’emergenza per i soccorritori',
@@ -6101,6 +6101,7 @@ export default {
     pflichtNote: 'Prescritto dalla legge.',
     bvgUnklar: 'Cassa pensioni: obbligatoria da un salario annuo lordo di CHF {schwelle}. Non è registrato un salario lordo — il certificato di salario indica se vale qui.',
     bvgUnklar13: 'Cassa pensioni: obbligatoria da un salario annuo lordo di CHF {schwelle}. Con una tredicesima il salario sarebbe sopra — l’indicazione manca ancora (capitolo Finanze).',
+    bvgNa: "Cassa pensione segnata come «non pertinente». Con un salario annuo lordo superiore a CHF {schwelle} vige di regola l’obbligo; esistono eccezioni, ad esempio un impiego a tempo determinato fino a tre mesi (senza proroga). Meglio chiarire con il datore di lavoro.", // Fachprüfung 25.10.2026
     empfohlenTitle: 'Consigliato',
     empfohlenNote: 'Facoltativo, ma sensato.',
     kk: 'Assicurazione malattia',
