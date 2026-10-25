@@ -1112,3 +1112,13 @@ seiten-buendeln.md Entscheid 3 entsprechend nachführen.» Nachgeführt: `maloja
 §4 Entscheid 3 gestrichen, neu §11 — Zweig `docs/f6-versicherungs-uebersicht`, Entwurfs-PR #574 (`b7c12dde`). Damit ist
 der Widerspruch AB ↔ Entscheid 3 aufgelöst: `praemien` → Versicherungs-Übersicht, `kvg` bleibt eigene Seite (Zeile in der
 Übersicht), IPV unverändert. Befunde 1–11 oben sind damit nicht entschieden, nur der Rahmen.
+
+**Versicherungen · Schritt 1 gebaut (Sophie, 25.10.2026: «bau Schritt 1: Prämien-Fundament … mit Fachprüfung»):**
+Zweig `feat/f6-praemien-fundament`, Entwurfs-PR #575 (`94b88b12`). Neues Feld Haftpflicht-Prämie (CHF/Jahr) · Hausrat
+und Haftpflicht zählen pro Monat zu einem Zwölftel in Kapitel, Budget, Geldfluss/Kuchen, Tankanzeige und Dashboard-Zeile ·
+«Nein» → zählt nicht · Fahrzeug bewusst nicht (eigener Entscheid) · Hinweis bei Überschneidung mit «Weitere
+Versicherungen», nichts still abgezogen · Jahresfelder «/ Jahr» (Befund 7 erledigt) · Maria: KK 540.30 (BAG 2026),
+Hausrat 240, Haftpflicht 120, Summe 5 Mio. (Befund 10 erledigt) → bleibt neu **2’274** statt 2’459.
+Fachprüfung vor und nach dem Bau: swiss-precision und copy-pruefer je 0 Blocker, Muss eingearbeitet. 6’793 Tests grün.
+Offen: rm ungeprüft · KK-Prämie mit 2027 nachziehen · Befunde 5, 6, 8, 9 · Schritt 2 (Instrumente) und 3 (Übersicht).
+**Achtung beim Mergen:** #571 und #572 prüfen Maria-Zahlen (2’459, frei); nach #575 auf 2’274 nachziehen.
