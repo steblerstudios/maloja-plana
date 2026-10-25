@@ -241,3 +241,10 @@ Finanzen 7, 8; Basis 3, 4; Versicherungen 6, 8, 9; Ausbildung 6–8; Behörden 8
 Abgleich Notfall (AE): 12 Befunde (`VERGLEICH.md`). Sophie: 1–11 bauen, 12 ins Muster am Schluss, Name «Portemonnaie-Karte» bleibt.
 **Entwurfs-PR #579** `feat/f6-notfall-ein-ort` (Basis main, Worktree `_werkbank/f6-notfall`), 0 Blocker, 6’801 Tests grün.
 Merge-Reihenfolge ergänzt: … → #578 → **#579**. Offen zum Entscheiden: siehe VERGLEICH.md «Kapitel Notfall … Offen zum Entscheiden».
+
+## Nachtrag 25.10.2026 abends · Versicherungen Schritt 3 gebaut
+
+Sophie: Muster M1–M8 erst nach den Merges #571–#579. Bis dahin Versicherungen Schritt 3: **Entwurfs-PR #580**
+`feat/f6-versicherungs-uebersicht` (Worktree `_werkbank/f6-versicherungs-uebersicht`), **gestapelt auf #576** → nach #575 und
+#576 mergen, dann auf main umstellen. Merge-Reihenfolge: #574 → #571 → #573 → #572 → #575 → #576 → **#580** → #577 → #578 → #579.
+Danach: Muster M1–M8 (VERGLEICH.md «Muster für alle Kapitel»).

@@ -1324,3 +1324,12 @@ neun Bildschirme. Zahlen im Entwurf sind vor #575 (CHF 387, 6.2 %); heute rechne
 
 **Bau-Frage:** Schritt 3 braucht «Versicherungen pro Monat» und die Prämien aus #575/#576 — Zweig darum auf #576 gestapelt
 (`feat/f6-versicherungs-uebersicht`, Basis `feat/f6-versicherungen-instrumente`), wie #576 auf #575.
+
+**Entschieden und gebaut (Sophie, 25.10.2026: «Baue Versicherungs-Übersicht 1 bis 9, gestapelt auf #576 … Das Spinnennetz
+bleibt im Kapitel.»):** Zweig `feat/f6-versicherungs-uebersicht`, Entwurfs-PR #580 (`ea8ad89f`, Basis #576). Name und Brotkrume
+über das Kapitel · Marken · Versicherungen pro Monat + KK-Last, Posten zugeklappt · Zeilen mit Wert (Franchise mit
+Polster-Vorbehalt, «Eingang bei der Kasse bis 30.11.2026», IPV über `ipvAbzug`, Gesundheitskosten wie das Kreuz, KVG-Leistungen,
+Guthaben laut PK-Ausweis) · Schutzschild · vier Teile aufklappbar (Kassen: 5, dann alle) · Zusatz-Wechsel, KK-Scanner ·
+Schlusssatz. Pegel bewusst nicht (misst anderes Einkommen als ZH/BE). swiss-precision 1 Blocker (IPV-Betrag trotz Frist/Gesuch),
+copy und a11y 0 — alles eingearbeitet. 6’824 Tests grün, Bündel 63.32 / 65 kB.
+**Offen:** ordentliche Kündigung 30.6. (Kann) · Fristen-Wortlaut KVG Art. 7 / KVV Art. 94 gegen fedlex · rm.
