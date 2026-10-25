@@ -2325,6 +2325,23 @@ export default {
   },
 
   // Fassung 6 · capitolo Abitazione, strumento in alto (giro 9, bozza Z, 24.10.2026). Sostituisce «wohnkostenanteil».
+  // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
+  versInstrument: {
+    titel: "Assicurazioni al mese",
+    kk: "Cassa malati (assicurazione di base)",
+    hausrat: "Assicurazione economia domestica (CHF {jahr} / anno)",
+    haftpflicht: "Responsabilità civile (CHF {jahr} / anno)",
+    weitere: "Altre assicurazioni (capitolo Finanze)",
+    nichtErfasst: "{liste}: premio non inserito.",
+    nameHausrat: "Assicurazione economia domestica",
+    nameHaftpflicht: "Responsabilità civile",
+    nameKK: "Cassa malati",
+    fahrzeug: "L’assicurazione del veicolo qui non conta — i costi dell’auto rientrano in «Mobilità» nel capitolo Finanze.",
+    pk: "La cassa pensioni (CHF {betrag}) è già dedotta dal salario.",
+    anteil: "{pct} % del reddito",
+    who: "OMS 10 %",
+    alles: "Tutto sulla franchigia e il confronto",
+  },
   wohnenInstrument: {
     titel: 'Costi abitativi al mese',
     titelAusprobiert: 'Costi abitativi al mese · in prova',
@@ -2380,6 +2397,8 @@ export default {
       ablageBasis: "Archiviare una copia del documento d’identità",
       ablageWohnen: "Archiviare il contratto di locazione",
       ablageVersicherungen: "Archiviare le polizze",
+      alleVersicherungen: "Tutte le assicurazioni in un colpo d’occhio",
+      alleVersicherungenSub: "Premi, franchigia, regione, RIP, termine di cambio",
       ablageAusbildung: "Archiviare i diplomi",
       ablageDokumente: "Archiviare documenti",
     },

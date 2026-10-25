@@ -2325,6 +2325,23 @@ export default {
   },
 
   // Fassung 6 · chapitre Logement, instrument en haut (tour 9, esquisse Z, 24.10.2026). Remplace «wohnkostenanteil».
+  // Kapitel Versicherungen · Instrument oben (Fassung 6, Runde 9 AA). rm ungeprüft.
+  versInstrument: {
+    titel: "Assurances par mois",
+    kk: "Caisse maladie (assurance de base)",
+    hausrat: "Assurance ménage (CHF {jahr} / an)",
+    haftpflicht: "Responsabilité civile (CHF {jahr} / an)",
+    weitere: "Autres assurances (chapitre Finances)",
+    nichtErfasst: "{liste} : prime non saisie.",
+    nameHausrat: "Assurance ménage",
+    nameHaftpflicht: "Responsabilité civile",
+    nameKK: "Caisse maladie",
+    fahrzeug: "L’assurance véhicule ne compte pas ici — les frais de voiture relèvent de «Mobilité» dans le chapitre Finances.",
+    pk: "La caisse de pension (CHF {betrag}) est déjà déduite du salaire.",
+    anteil: "{pct} % du revenu",
+    who: "OMS 10 %",
+    alles: "Tout sur la franchise et la comparaison",
+  },
   wohnenInstrument: {
     titel: 'Frais de logement par mois',
     titelAusprobiert: 'Frais de logement par mois · à l\'essai',
@@ -2382,6 +2399,8 @@ export default {
       ablageBasis: "Classer une copie de la pièce d’identité",
       ablageWohnen: "Classer le bail",
       ablageVersicherungen: "Classer les polices",
+      alleVersicherungen: "Toutes les assurances en un coup d’œil",
+      alleVersicherungenSub: "Primes, franchise, région, RIP, délai de changement",
       ablageAusbildung: "Classer les diplômes",
       ablageDokumente: "Classer des documents",
     },
