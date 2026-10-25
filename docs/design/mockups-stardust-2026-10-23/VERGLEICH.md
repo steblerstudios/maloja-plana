@@ -1164,3 +1164,36 @@ Sprachen · Passend mit fünf Zeilen · Als Nächstes Behörden · «Der Weg ist
 (tagesgenau), Stunden · «Wo steht Ihr Lohn?» oben · Lebenslauf-Vorschau · Angaben-Spalten 3 : 2, nichts ragt mehr über den
 Rand (alle 7 Kapitel, 375 px) · «nicht nötig (Schweizer Bürgerrecht)» im Kapitel und im Dossier. swiss-precision und copy je
 0 Blocker, eingearbeitet. 6’795 Tests grün. Punkte 6–8 → Muster am Schluss.
+
+### Kapitel Behörden & Rechtliches (AD) · Befunde (25.10.2026, noch nicht entschieden)
+
+Gemessen auf `main` `97c476f3`, `#/chapter/5`, Maria, 375 px. Entwurf: `seiten-v5.html?nur=ad`. Gebaut ist bisher nur das
+Kapitel-Muster (#565); die Instrumente stehen in der Übergabe als «offen, zu bauen».
+
+**Wie entschieden gebaut:** Kopf links · Zusammenfassung als ruhiger Satz · Reiter Angaben/Dokumente · Steuern, Recht,
+Vertretung · Passend mit allen sechs Zeilen (Steuern, Betreibungsauszug, Betreibung erhalten, Vorsorgeauftrag &
+Patientenverfügung, Briefvorlagen, Dokumente ablegen) · Als Nächstes Notfall · «Der Stand ist dokumentiert.»
+
+**Noch nicht gebaut (Entwurf AD):**
+1. **Kasten «Folgende Stände und Fristen sind erfasst» steht noch** (Steuerfrist, Ausstehende Steuererklärungen,
+   Betreibungsregister, Gerichtsverfahren, Testament) — entschieden war «Weg», er wiederholt die Angaben.
+2. **Zusammenfassung ergänzt** um Steuererklärung und Betreibungsregister («… Keine offene Steuererklärung, das
+   Betreibungsregister ist ohne Einträge.»). App: nur der Kanton.
+3. **Steuerfrist als Kalenderblatt** (SEP · 30 · 2026) mit «Steuererklärung fällig am …», «vor … Tagen · Offene
+   Steuererklärungen: 0» und «Alles zu Ihren Steuern ›».
+4. **Behördengänge offen** statt der zugeklappten «Behörden-Checkliste» (▶ und ein Kästchen-Zeichen davor — dasselbe
+   Kästchen-Problem wie Fix 4), mit «1 von 5 erledigt», Wegen zu Steuern / Betreibungsauszug / Ausweis und
+   «Steuererklärung eingereicht» als Vorschlag, wenn «Offene Steuererklärungen 0».
+5. **«Für den Fall der Fälle»:** Testament, Vorsorgeauftrag, Patientenverfügung als drei Felder mit Weg zu «Vorsorgeauftrag &
+   Patientenverfügung»; «Patientenverfügung hinterlegt» fällt dann aus den Behördengängen.
+6. **«Rechtliche Vertretung: nicht erfasst.»** bei leerer Vertretung.
+7. **Querverweis Steuern ↔ Finanzen** (Entscheid «Steuern aufteilen», 24.10.) fehlt noch hier und bei Finanzen.
+
+**Abweichungen im Gebauten:**
+8. Passend-Untertitel aus dem Register: «Steuern · Steuerbelastung abschätzen» (Entwurf «Steuerbetrag, Abzüge, Frist
+   verlängern»), «Briefvorlagen · Musterbriefe, mit den eigenen Angaben vorausgefüllt» (Entwurf «Fristverlängerung,
+   Kündigung, Krankenkassenwechsel»), «Dokumente ablegen · Unterlagen · Dokumentenablage» (Entwurf nennt die Unterlagen).
+9. **Beispielprofil:** Steuerfrist 30.09.2026 liegt in der Vergangenheit («vor 26 Tagen») — bekannt; Frist für Zürich mit
+   Quelle setzen (Swiss-Precision-Prüfer), nicht raten.
+10. «ZH-2024-123456» bricht am Bindestrich («ZH-2024- / 123456»); mit #577 (Spalten 3 : 2) nachmessen.
+11. Wie Wohnen 5, 6, 8, 9 → Muster am Schluss.
