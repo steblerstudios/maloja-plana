@@ -13,6 +13,7 @@ import { berechneArmutsgrenze } from '../data/sozialhilfeRechner.js';
 import { nettoZuBruttoRichtwert } from '../data/ahvRechner.js';
 import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState } from '../data/lohnEinordnung.js';
+import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { KKLastCard } from '../KKLastCard.jsx';
 import { calculateMonthlyBudget } from '../budgetSync.js';
 import { einnahmenZeilen } from '../data/haushaltsEinnahmen.js';
@@ -273,8 +274,8 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
   // aus (ein incomeType), darum kein Gedränge.
   const f = data.finanzen || {};
   const rentKnown = Number(data.wohnen?.rentAmount || 0) > 0;
-  const geb = data.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
-  const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
+  // Eine Regel mit Barometer und Netto-Richtwert: im Rentenalter ohne ALV/PK (alterUndRentenalter).
+  const { alter, rentenalter } = alterUndRentenalter(data.basis);
   const personenAb16 = hh.adults + (hh.children || []).filter(c => (Number(c.age) || 0) >= 16).length;
   const armutsgrenze = berechneArmutsgrenze({
     grundbedarf: sozialhilfe.grundbedarf,
@@ -307,7 +308,7 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
-        t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter)) }))
+        t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter, rentenalter)) }))
     ),
     React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate, aktuellesKapitel }),
     (() => {
@@ -319,6 +320,8 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
         income: data.finanzen?.monthlyIncome, canton: data.basis?.canton,
         hoursPerWeek: data.ausbildung?.workHoursPerWeek,
         incomeType: data.finanzen?.incomeType, dreizehnter: data.finanzen?.dreizehnter,
+        // Wie das Barometer (LohnEinordnung): sonst färbten die Chips gegen ein Brutto ohne PK-Anteil.
+        alter, rentenalter,
       }).incomeVergleich || income;
       return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
         React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
