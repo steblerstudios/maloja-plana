@@ -1771,6 +1771,7 @@ export default {
     markiert: 'trifft nicht zu. Zählt als erledigt.',
     // K38 · Notfallkontakt «trifft nicht zu»
     keineKontaktperson: 'Keine Kontaktperson hinterlegt',
+    keineMedikamente: 'keine',
     notfallAnregung: { sie: 'Vielleicht mögen Sie eine Person Ihres Vertrauens fragen, ob sie im Notfall Ihre Kontaktperson sein möchte. Das hat Zeit.', du: 'Vielleicht magst Du eine Person Deines Vertrauens fragen, ob sie im Notfall Deine Kontaktperson sein möchte. Das hat Zeit.' },
   },
   // E18 · Löschweg «Alle Daten auf diesem Gerät löschen» (Bau-Liste O11)

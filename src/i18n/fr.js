@@ -1761,6 +1761,7 @@ export default {
     markiert: 'ne s\'applique pas. Compte comme réglé.',
     // K38 · personne de contact « ne s'applique pas »
     keineKontaktperson: 'Aucune personne de contact enregistrée',
+    keineMedikamente: 'aucun',
     notfallAnregung: { sie: 'Peut-être aimeriez-vous demander à une personne de confiance si elle souhaite être votre personne de contact en cas d’urgence. Rien ne presse.', du: 'Peut-être aimerais-tu demander à une personne de confiance si elle souhaite être ta personne de contact en cas d’urgence. Rien ne presse.' },
   },
   // E18 · « Supprimer toutes les données de cet appareil » (liste O11)
