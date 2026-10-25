@@ -278,3 +278,30 @@ it/en app-weit uneinheitlich (fedlex) · «Ich nehme keine» erscheint nicht im 
   ZH/BE rechnen anders). Kantonsmodule laden nach → `ladeIPVModelle()` und neu zeichnen, sonst steht beim ersten Aufruf «prüfen».
 - Ein `position: sticky` im Kapitel bleibt nur stehen, wenn es direktes Kind der Kapitelkarte ist (#579, Ernstfall-Knopf).
 - Der Brotkrumen-Test verlangt wörtlich `React.createElement(Brotkrume, { palette, t, view: '…', onNavigate })`.
+
+## Stand 25.10.2026, 18:05 · alle zehn Entwurfs-PRs gemergt (nicht live)
+
+Sophie 25.10. ~17:10: «merge wenn möglich» — Claude hat die Kette in der vereinbarten Reihenfolge gemergt (squash, wie bisher),
+jeden Zweig vorher mit main nachgezogen, voll getestet, gebaut, gepusht und die CI abgewartet. **Nicht deployt.**
+
+| PR | main danach | Tests lokal | Konflikt |
+|---|---|---|---|
+| #574 Doku Vers.-Übersicht | `1ab40daa` | – (nur Doku) | keiner |
+| #571 Wohnen | `adaf7715` | 6’784 | keiner |
+| #573 Basis | `a82251e8` | 6’786 | keiner |
+| #572 Finanzen | `2d59e96e` | 6’789 | keiner |
+| #575 Prämien-Fundament | `34703b6f` | 6’802 | i18n: `proJahr` neben die neuen `haushalt*`-Schlüssel aus #573 |
+| #576 Versicherungen Schritt 2 | `eb3b5a5d` | 6’819 | i18n wie #575; Basis auf main umgestellt |
+| #580 Versicherungs-Übersicht | `0bf9fbf6` | 6’833 | erst nachgezogenen #576-Zweig, dann main; `VersicherungenInstrument.jsx` = Fassung #580 |
+| #577 Ausbildung | `8a0b8e43` | 6’845 | erst nachgezogenen #572-Zweig, dann main; i18n + ChapterView: beide Teile behalten |
+| #578 Behörden | `0a66f51c` | 6’863 | i18n + ChapterView: beide Teile behalten |
+| #579 Notfall | **`a1c516e9`** (18:02) | 6’885 | ChapterView-Angabenliste: Fragment (#579) + Spalten 3:2 (#572) + «Vertretung nicht erfasst» (#578); Brotkrumen: beide Pfade, Test «sieben Ansichten» |
+
+- CI auf main `a1c516e9`: grün. Live weiter 0.1.48-beta (`4299bfb9`).
+- `haushaltWert`/`haushaltWertEinKind` sind mit #573 überall weg (kein Aufrufer mehr) — bei Konflikten nicht wiederbeleben.
+- Jeder PR-Diff nach dem Nachziehen = dieselben Dateien wie vorher (gegengeprüft).
+- **Nicht im Browser angeschaut:** die zusammengeführte Angabenliste (Notfall + Behörden in derselben Karte). Tests decken sie ab, Auge noch nicht.
+- Hilfs-Worktree `_werkbank/f6-merge-kette` (node_modules als Symlink auf f6-notfall) — kann weg.
+- Weiter offen: #569 (PII-Kommentare), #568, #563, #561 — nicht Teil der Kette.
+
+**Als Nächstes (entschieden):** Muster M1–M8 auf main bauen (ein Zweig, Fachprüfung, Entwurfs-PR). Spinnennetz-Frage bleibt offen.
