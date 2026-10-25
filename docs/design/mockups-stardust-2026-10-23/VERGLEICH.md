@@ -1258,3 +1258,36 @@ Notfall · Übersichtskarte «Bereit für den Ernstfall», Suche «Notfallkarte�
 **Nachentschieden (Sophie, 25.10.2026):** Die Patientenverfügung zählt in «Bereit» erst bei «Ja» → Maria 18 von 20, Spital 9 von 10
 (`e3776767`). **Offen:** Fachbegriffe Patientenverfügung/Vorsorgeauftrag it/en app-weit uneinheitlich (fedlex prüfen) · «Ich nehme
 keine» erscheint nicht im Dossier/QR · rm ungeprüft.
+
+### Muster für alle Kapitel · Befunde (25.10.2026, noch nicht entschieden)
+
+Zusammengeführt aus den sieben Abnahmen (Sophie: «am Schluss für alle Kapitel»): Wohnen 5, 6, 8, 9 · Finanzen 7, 8 · Basis 3, 4 ·
+Versicherungen 8, 9 · Ausbildung 6, 7 · Behörden 8, 10 · Notfall 12. Doppelte zusammengelegt; gilt jeweils für alle sieben Kapitel.
+
+**Angaben**
+M1. **Angaben als ruhige Liste statt einer Karte je Abschnitt** (Wohnen 5). Feldnamen brechen heute, weil die Werte die Spalte
+    füllen («AHV- / Nummer», «Im / Haushalt», «Name Vermieter», Basis 4); «PLZ · Ort» in einer Zeile statt zwei.
+M2. **Je Abschnitt «x von n erfasst» und leere Felder mit «ergänzen»** (Finanzen 8). Notfall zeigt das Fehlende seit #579
+    schon (Muster dafür); die anderen Kapitel nennen nur Erfasstes.
+M3. **Leere Abschnitte zusammenfassen** («Sozialversicherung · Mobilität · noch leer» statt je eine Zeile, Versicherungen 9).
+M4. **Einheiten und Namen im Wert:** «CHF 1’500» statt «Franchise 1’500», «42 Std./Woche», «Pensionskasse» statt
+    «BVG/Pensionskasse» (Versicherungen 8, Ausbildung 7); Kennnummern brechen nicht am Bindestrich («ZH-2024- / 123456»,
+    Behörden 10).
+
+**Kopf und Ende**
+M5. **Kopf wie im Entwurf:** Landschaftsband, Brotkrume «Übersicht › Kapitel» statt «← Übersicht», Symbol in einer Kachel,
+    Kopf nicht in einer eigenen Karte (Wohnen 6, Notfall 12).
+M6. **«Als Nächstes» ruhig:** zentriert, leiser Umrissknopf statt gefüllter Karte mit Goldknopf und Versalien (Wohnen 9); gleich
+    für «Alle Kapitel durchgegangen» (Notfall), dort zusätzlich «Ihre Daten bleiben auf diesem Gerät.» (Notfall 12).
+
+**Passend und Farbe**
+M7. **Passend-Untertitel wie im Entwurf** statt aus dem Register («Ablauf · 4 Schritte · …», «Lebenslauf erstellen · Aus Ihren
+    Angaben», «Steuerbetrag, Abzüge, Frist verlängern» …; Wohnen 8, Basis 3, Ausbildung 6, Behörden 8) und die Symbole in
+    einer Kachel statt klein ohne Kachel.
+M8. **Eine Bereichsfarbe je Kapitel überall** — der Wohnen-Balken ist in Finanzen rose, im Kapitel Wohnen grün (Finanzen 7).
+
+**Nicht im Muster (eigener Entscheid):** Anker unten mit Kalender und Suche (Wohnen 10 → Menü-Entscheid) · Spinnennetz
+Versicherungen (Versicherungen 6 → Versicherungen Schritt 3).
+
+**Bau-Frage:** M1–M7 ändern vor allem `ChapterView.jsx` (Abschnittsliste, Kopf, Passend, Als Nächstes) — dieselbe Datei wie die
+neun offenen Entwurfs-PRs #571–#579. Auf `main` gebaut, gäbe jeder Merge danach Konflikte in allen neun.
