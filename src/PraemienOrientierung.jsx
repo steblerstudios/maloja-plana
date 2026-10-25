@@ -332,7 +332,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           onClick: () => onNavigate('finanzuebersicht'),
         }, t('po.reserveCheckLink'))
       ),
-      // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
+      // (j) Franchise ändern: höher nur auf 1. Januar (KVV Art. 94 Abs. 1, ohne Frist), tiefer auf Ende Jahr mit den
+      // Fristen von KVG Art. 7 Abs. 1/2 (KVV Art. 94 Abs. 2) — Wortlaut in po.franchiseChangeWhen.
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'), null, t)),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource'), null, t))
     )

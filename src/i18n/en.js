@@ -5968,7 +5968,7 @@ export default {
     ipvGesuch: 'on application only',
   },
   po: {
-    franchiseChangeWhen: 'The deductible can be changed once a year — effective 1 January, with notice by end of November (insurer switch: 30 November). Source: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KVV Art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    franchiseChangeWhen: 'A higher deductible only applies from 1 January; the insurer sets the deadline in its terms. A lower deductible is only possible at the end of the year, with the same deadlines as switching insurer: after the premium notice, the request must reach the insurer by 30 November. Source: [[KVG Art. 7 para. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[KVV Art. 94 paras. 1 and 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Is a higher deductible worth it?',
     franchiseOptSaving: 'With a CHF {high} deductible instead of CHF {low}, you save about CHF {saving}/year on premiums.',
     franchiseOptReserve: 'In return, in a bad year you pay up to CHF {reserve} yourself (deductible + max. coinsurance CHF {sb}). You should be able to set this buffer aside.',

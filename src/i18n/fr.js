@@ -5968,7 +5968,7 @@ export default {
     ipvGesuch: 'seulement sur demande',
   },
   po: {
-    franchiseChangeWhen: 'La franchise peut être changée une fois par an — effet au 1er janvier, avis jusqu\'à fin novembre (changement de caisse : 30 novembre). Source : [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr]].',
+    franchiseChangeWhen: 'Une franchise plus élevée ne s\'applique qu\'à partir du 1er janvier ; la caisse fixe le délai dans ses conditions. Une franchise plus basse n\'est possible que pour la fin de l\'année, avec les mêmes délais que pour un changement de caisse : après la communication de la nouvelle prime, la demande doit parvenir à la caisse au plus tard le 30 novembre. Source : [[LAMal art. 7 al. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_7]], [[OAMal art. 94 al. 1 et 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr#art_94]].',
     franchiseOptTitle: 'Une franchise plus élevée en vaut-elle la peine ?',
     franchiseOptSaving: { sie: 'Avec une franchise de CHF {high} au lieu de CHF {low}, vous économisez environ CHF {saving}/an de primes.', du: 'Avec une franchise de CHF {high} au lieu de CHF {low}, tu économises environ CHF {saving}/an de primes.' },
     franchiseOptReserve: { sie: 'En contrepartie, une mauvaise année, vous payez jusqu\'à CHF {reserve} vous-même (franchise + quote-part max. CHF {sb}). Vous devriez pouvoir mettre ce coussin de côté.', du: 'En contrepartie, une mauvaise année, tu paies jusqu\'à CHF {reserve} toi-même (franchise + quote-part max. CHF {sb}). Tu devrais pouvoir mettre ce coussin de côté.' },

@@ -5942,7 +5942,7 @@ export default {
     ipvGesuch: 'solo su domanda',
   },
   po: {
-    franchiseChangeWhen: 'La franchigia può essere cambiata una volta all\'anno — con effetto dal 1° gennaio, preavviso entro fine novembre (cambio cassa: 30 novembre). Fonte: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it]].',
+    franchiseChangeWhen: 'Una franchigia più alta vale solo dal 1° gennaio; il termine lo fissa la cassa nelle sue condizioni. Una franchigia più bassa è possibile solo per la fine dell\'anno, con gli stessi termini di un cambio di cassa: dopo la comunicazione del nuovo premio, la richiesta deve pervenire alla cassa entro il 30 novembre. Fonte: [[LAMal art. 7 cpv. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_7]], [[OAMal art. 94 cpv. 1 e 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it#art_94]].',
     franchiseOptTitle: 'Conviene una franchigia più alta?',
     franchiseOptSaving: { sie: 'Con una franchigia di CHF {high} invece di CHF {low} risparmia circa CHF {saving}/anno di premi.', du: 'Con una franchigia di CHF {high} invece di CHF {low} risparmi circa CHF {saving}/anno di premi.' },
     franchiseOptReserve: { sie: 'In cambio, in un anno sfortunato paga fino a CHF {reserve} di tasca Sua (franchigia + aliquota max. CHF {sb}). Dovrebbe poter mettere da parte questo cuscinetto.', du: 'In cambio, in un anno sfortunato paghi fino a CHF {reserve} di tasca tua (franchigia + aliquota max. CHF {sb}). Dovresti poter mettere da parte questo cuscinetto.' },

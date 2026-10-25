@@ -6018,7 +6018,9 @@ export default {
     ipvGesuch: 'nur auf Gesuch',
   },
   po: {
-    franchiseChangeWhen: 'Die Franchise lässt sich einmal pro Jahr ändern — wirksam auf den 1. Januar, Anmeldung bis Ende November (Kassenwechsel: 30. November). Quelle: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KVV Art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    // Wortlaut KVV Art. 94 Abs. 1/2 und KVG Art. 7 Abs. 2, fedlex gelesen 25.10.2026. Vorher: «einmal pro Jahr …
+    // Anmeldung bis Ende November» — eine Frist für die höhere Franchise nennt die Verordnung nicht.
+    franchiseChangeWhen: 'Eine höhere Franchise gilt erst ab 1. Januar; die Frist legt die Kasse in ihren Bedingungen fest. Eine tiefere Franchise geht nur auf Ende Jahr, mit denselben Fristen wie ein Kassenwechsel: Nach der Prämienmitteilung muss der Antrag bis 30. November bei der Kasse eingehen. Quelle: [[KVG Art. 7 Abs. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[KVV Art. 94 Abs. 1 und 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Lohnt sich eine höhere Franchise?',
     franchiseOptSaving: { sie: 'Mit Franchise CHF {high} statt CHF {low} sparen Sie rund CHF {saving}/Jahr an Prämien.', du: 'Mit Franchise CHF {high} statt CHF {low} sparst du rund CHF {saving}/Jahr an Prämien.' },
     franchiseOptReserve: { sie: 'Dafür tragen Sie im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster sollten Sie zurücklegen können.', du: 'Dafür trägst du im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster solltest du zurücklegen können.' },
