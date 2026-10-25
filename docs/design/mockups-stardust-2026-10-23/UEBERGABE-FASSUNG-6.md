@@ -351,3 +351,6 @@ als eigenen Entwurfs-PR.» **#584** `fix/f6-englisch-fedlex` `3a716bc7`, Basis m
 Vorlagen-Dokumenttext, Notfallkarte), Direktlink, Such-Aliasse (alte Wörter bleiben suchbar). Ausnahmen: SAMS-Titel «Advance
 directives», «SEM Directives AIG», «power of attorney» = Vollmacht (3×). copy 2 Blocker / 4 Muss eingearbeitet. 6’941 Tests grün.
 Nicht gemergt, nicht live. Damit ist der offene Punkt «Fachbegriffe PV/VA it/en» erledigt (it mit #583).
+- **21:22:** #584 gemergt (Sophie: «Ja, merge #584, sobald die CI grün ist») → main **`2db4d4ee`**, CI grün. **Nicht deployt** —
+  live weiter 0.1.48-beta. Offen bleiben: Spinnennetz · «Ich nehme keine» im Dossier · ZStB 133.1 · Prämien 2027 · rm ·
+  `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · KVG Art. 7 Wortlaut.
