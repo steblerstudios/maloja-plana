@@ -1046,3 +1046,11 @@ Als Nächstes Versicherungen · Tausender-Zeichen «’».
 8. Angaben: Entwurf zeigt je Abschnitt «5 von 14 erfasst» und leere Felder mit «ergänzen»; App nur die erfassten.
    Werte brechen um («Netto (was ich / erhalte)», «Kantonsspital / Zürich»). Feldname «Ersparte» (statt «Erspartes»).
 9. Wie Wohnen 5, 6, 8, 9 (Karten, Kopf, Passend-Symbole, Als-Nächstes-Karte) → Muster am Schluss.
+
+**Entschieden (Sophie, 25.10.2026):** «Behebe bei Finanzen 1 bis 6. 7 und 8 nehmen wir ins Muster für alle Kapitel am
+Schluss.» Gebaut: Zweig `fix/f6-abnahme-finanzen`, Entwurfs-PR #572 (`04765604`) — Lohn-Hinweise hinter «So ist
+gerechnet» · Kuchen «Wofür geht es weg?» nur Ausgaben, «< 1 %», eigene Farbe Internet & Telefon · Lebensbaum entzerrt,
+Werkzeug-Frucht «Notfallkarte» · Steuer-Karte im Kapitel eine Zeile, 13. Monatslohn «oben bei Einkommen» · Lohn-Legende
+ganz. 6’783 Tests grün, Build sauber, Browser 375 px. rm ungeprüft, Copy-Prüfer steht aus.
+**Punkt 2 war ein Fehlbefund:** «Alle Berechnungen» und «Prämienverbilligung» wurden mit der Finanzen-Fusion bewusst aus
+«Passend» genommen (`finanzen-fusion.md`, Test «keine Doppelungen mehr») — Übersicht und IPV stehen im Kapitel. Nicht geändert.
