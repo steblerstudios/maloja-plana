@@ -28,7 +28,9 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const rueckFreibetrag = rueckerstattungsFreibetrag(hh.adults, minorChildren);
   const [erbschaft, setErbschaft] = useState('');
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
-  const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : 'hauptwohnsitz';
+  // Das Feld speichert `weekly` (constants.js); verglichen wurde mit 'wochenaufenthalt' — der Hinweis erschien
+  // nie (Fachprüfung 25.10.2026). Beide Schreibweisen.
+  const residenceKey = ['weekly', 'wochenaufenthalt'].includes(residenceType) ? 'wochenaufenthalt' : 'hauptwohnsitz';
 
   const formatCHF = (n) => betrag(n || 0);
 
