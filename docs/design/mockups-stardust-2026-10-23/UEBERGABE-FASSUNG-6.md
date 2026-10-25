@@ -160,6 +160,10 @@ Werte **und** Zahlenformate lesen) mit Hinweis im Barometer; Barometer nennt die
 angenommen ist. Maria ZH 3 Zi.: 1’732 / 1’446 (vorher 1’538 / 1’327). 6’771 Tests grün, Build sauber, Browser 375 px.
 Offen («kann»): Quellenzeile «bestehende Mietverhältnisse inkl. Genossenschaften, keine Angebotsmieten».
 
+**Nachtrag 25.10.2026, 10:26 — #567 gemergt** (Sophie: «merge was geht»): vorher `main` (#566, #570) hineingeholt,
+ohne Konflikt; 6’780 Tests grün, Build sauber, CI grün; Squash-Merge `97c476f3` auf `main`. **Nicht deployt —
+gemergt ist nicht live.** Andere offene Entwurfs-PRs (#561, #563, #568, #569) gehören anderen Sitzungen, nicht angefasst.
+
 ## Vorschlag für den Einstieg in Fassung 6
 
 Sophie wählt. Zwei sinnvolle Wege:
