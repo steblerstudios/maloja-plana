@@ -244,3 +244,26 @@ describe('Kapitel Wohnen · Barometer nennt die Vergleichsgrösse', () => {
   });
 });
 
+
+// Abnahme Fassung 6 (Sophie 25.10.2026): Barometer im Kapitel ruhiger, Zimmer-Hinweis zeigt auf die
+// Angaben darunter statt «im Kapitel Wohnen», Tausender-Zeichen, «›» an der Ausprobieren-Zeile.
+describe('Kapitel Wohnen · Abnahme F6', () => {
+  it('ohne strukturelle Erklärung, mit dem Zimmer-Hinweis fürs Kapitel', () => {
+    const html = render(profil().wohnen, profil());
+    expect(html).toContain('po.regionalCompare.rent.title');
+    expect(html).not.toContain('po.regionalCompare.rent.structural');
+    expect(html).toContain('po.regionalCompare.rent.zimmerAngenommenHier');
+    expect(html).not.toContain('po.regionalCompare.rent.zimmerAngenommen ');
+  });
+  it('Werte im Barometer mit Tausender-Zeichen', () => {
+    expect(render(profil().wohnen, profil())).toContain('po.regionalCompare.rent.yourVal(1’650)');
+  });
+  it('die Ausprobieren-Zeile zeigt ein «›»', () => {
+    expect(render(profil().wohnen, profil())).toMatch(/data-teil="ausprobieren-zeichen"[^>]*>›</);
+  });
+  it('der neue Hinweis steht in allen fünf Sprachen', () => {
+    for (const s of [i18nDe, i18nEn, i18nFr, i18nIt, i18nRm]) {
+      expect(s.po.regionalCompare.rent.zimmerAngenommenHier).toBeTruthy();
+    }
+  });
+});

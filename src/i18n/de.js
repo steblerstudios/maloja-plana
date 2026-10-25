@@ -1988,6 +1988,7 @@ export default {
     },
     finanzen: {
       title: 'Finanzen & Geld',
+      kuchenFrage: 'Wofür geht es weg?',
       geldfluss: {
         title: 'Woher das Geld kommt, wohin es geht',
         salary: 'Monatseinkommen',
@@ -2418,8 +2419,11 @@ export default {
     zurUebersicht: "Zur Übersicht",
     imHaushalt: "Im Haushalt",
     proJahr: "/ Jahr",
-    haushaltWert: "{erwachsene} Erwachsene · {kinder} Kinder",
-    haushaltWertEinKind: "{erwachsene} Erwachsene · 1 Kind",
+    haushaltAllein: "allein",
+    haushaltErwachsene: "{n} Erwachsene",
+    haushaltKeineKinder: "keine Kinder",
+    haushaltEinKind: "1 Kind",
+    haushaltKinder: "{n} Kinder",
     nextTopic: 'Nächstes Thema',
     sectionNav: 'Themen im Kapitel',
     showMore: 'Weitere Bereiche anzeigen',
@@ -2476,7 +2480,7 @@ export default {
     lohn: 'Mindestlohn-Check aktiv',
     notfall: 'Notfallkarte bereit',
     budget: 'Budget-Übersicht aktiv',
-    short: { tax: 'Steuer', ipv: 'IPV', sozial: 'Sozialhilfe', lohn: 'Lohn', notfall: 'Notfall', budget: 'Budget' },
+    short: { tax: 'Steuer', ipv: 'IPV', sozial: 'Sozialhilfe', lohn: 'Lohn', notfall: 'Notfallkarte', budget: 'Budget' },
   },
 
   legal: {
@@ -2720,8 +2724,8 @@ export default {
     },
     wohnen: {
       since: 'Wohndauer {duration}',
-      rentOnly: 'Monatsmiete {rent}',
-      rentAndUtils: 'Monatsmiete {rent} plus {utilities} Nebenkosten',
+      rentOnly: 'Nettomiete {rent}',
+      rentAndUtils: 'Nettomiete {rent} plus {utilities} Nebenkosten',
       landlordLabel: 'Vermieter',
       durationUnder1: 'weniger als 1 Monat',
       durationMonths: '{months} Monate',
@@ -3043,6 +3047,7 @@ export default {
     mindestlohnBreachedLine: { sie: 'Ihr Lohn scheint darunter zu liegen.', du: 'Dein Lohn scheint darunter zu liegen.' },
     // 40 Std./Woche = die BFS-Norm für den Median (nicht 42 — das ist die Mindestlohn-Welt).
     fulltimeNote: 'Vergleich auf Basis einer Vollzeitstelle (40 Std./Woche, wie beim BFS-Median).',
+    soIstGerechnet: 'So ist gerechnet',
     dreizehnterNote: 'Der Vergleichswert enthält den anteiligen 13. Monatslohn (×13/12), damit er zum BFS-Median passt. Ohne 13. wären es CHF {fte}.',
     ohneDreizehnterNote: 'Vergleich ohne anteiligen 13. Monatslohn. Mit einem 13. läge der Vergleichswert rund 8 % höher.',
     konformMit13Line: 'Mit dem 13. Monatslohn gesetzeskonform — sofern der 13. an den Mindestlohn angerechnet wird (in Basel-Stadt nur bei anteilig monatlicher Auszahlung).',
@@ -3120,6 +3125,8 @@ export default {
     selectCantonHint: { sie: 'Wählen Sie einen Kanton, um die kantonale Steuerbelastung zu sehen.', du: 'Wähle einen Kanton, um die kantonale Steuerbelastung zu sehen.' },
     basedOnHauptort: 'Orientierungswert aus Messpunkten des Steuerrechners der ESTV (Steuerjahr {year}): Hauptort des Kantons, ohne Kirchensteuer; in anderen Gemeinden kann die Steuer deutlich abweichen.',
     roughEstimateBadge: 'Grobe Schätzung',
+    kapitelZeile: 'Bundessteuer {bund} · Kanton und Gemeinde {kanton} — grobe Schätzung für den Hauptort, ohne Kirchensteuer.',
+    annahmeOhneDreizehntenHier: { sie: 'Ohne 13. Monatslohn gerechnet — mit einem 13. liegt die Steuer höher. Angeben lässt er sich oben bei «Einkommen».', du: 'Ohne 13. Monatslohn gerechnet — mit einem 13. liegt die Steuer höher. Angeben lässt er sich oben bei «Einkommen».' },
     // E37/E38: wo die ESTV-Tabelle nicht trägt, keine Kantonszahl
     bandOutside: { sie: 'Für Ihr steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Tabelle aus dem Steuerrechner der ESTV reicht von CHF {min} bis CHF {max} (Hauptort, Steuerjahr {year}); ausserhalb davon rechnet Maloja nicht weiter. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für dein steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Tabelle aus dem Steuerrechner der ESTV reicht von CHF {min} bis CHF {max} (Hauptort, Steuerjahr {year}); ausserhalb davon rechnet Maloja nicht weiter. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
     bandNotChecked: { sie: 'Für diese Situation zeigt Maloja hier keinen Betrag. Gemessen ist die Kantons- und Gemeindesteuer für alleinstehende und verheiratete Personen mit bis zu drei Kindern; bei Personen, die nicht verheiratet sind, nur, wenn die Kinder im gleichen Haushalt leben (Bestätigung beim Elterntarif). Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für diese Situation zeigt Maloja hier keinen Betrag. Gemessen ist die Kantons- und Gemeindesteuer für alleinstehende und verheiratete Personen mit bis zu drei Kindern; bei Personen, die nicht verheiratet sind, nur, wenn die Kinder im gleichen Haushalt leben (Bestätigung beim Elterntarif). Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
@@ -6014,6 +6021,7 @@ export default {
         vergleichAb6: 'Verglichen mit Wohnungen ab 6 Zimmern.',
         vergleichAlle: 'Verglichen mit Wohnungen aller Grössen.',
         zimmerAngenommen: { sie: 'Die Grösse ist aus der Haushaltsgrösse angenommen — mit Ihrer Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer.', du: 'Die Grösse ist aus der Haushaltsgrösse angenommen — mit deiner Zimmerzahl im Kapitel Wohnen wird der Vergleich genauer.' },
+        zimmerAngenommenHier: { sie: 'Die Grösse ist angenommen — mit Ihrer Zimmerzahl unten bei den Angaben wird der Vergleich genauer.', du: 'Die Grösse ist angenommen — mit deiner Zimmerzahl unten bei den Angaben wird der Vergleich genauer.' },
         ohneWertFuerGroesse: 'Für diese Wohnungsgrösse veröffentlicht das BFS im Kanton keinen Wert.',
         wenigeAntworten: 'Der BFS-Wert beruht hier auf weniger als 50 Antworten — nur als grobe Orientierung lesen.',
       },

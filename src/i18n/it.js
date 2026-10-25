@@ -1980,6 +1980,7 @@ export default {
     },
     finanzen: {
       title: 'Finanze',
+      kuchenFrage: 'Dove vanno i soldi?',
       geldfluss: {
         title: 'Da dove arrivano i soldi, dove vanno',
         salary: 'Reddito mensile',
@@ -2407,8 +2408,11 @@ export default {
     zurUebersicht: "Alla panoramica",
     imHaushalt: "Nell’economia domestica",
     proJahr: "/ anno",
-    haushaltWert: "{erwachsene} adulti · {kinder} figli",
-    haushaltWertEinKind: "{erwachsene} adulti · 1 figlio",
+    haushaltAllein: "una persona",
+    haushaltErwachsene: "{n} adulti",
+    haushaltKeineKinder: "nessun figlio",
+    haushaltEinKind: "1 figlio",
+    haushaltKinder: "{n} figli",
     emptyState: { sie: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per Lei.', du: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per te.' },
     emptyStateHint: { sie: 'Può completare in qualsiasi momento. Niente deve essere fatto tutto insieme.', du: 'Puoi completare in qualsiasi momento. Niente deve essere fatto tutto insieme.' },
     nextTopic: 'Prossimo tema',
@@ -2467,7 +2471,7 @@ export default {
     lohn: 'Verifica salario minimo attiva',
     notfall: "Scheda d'emergenza pronta",
     budget: 'Panoramica budget attiva',
-    short: { tax: 'Imposte', ipv: 'IPV', sozial: 'Assistenza', lohn: 'Salario', notfall: 'Emergenza', budget: 'Budget' },
+    short: { tax: 'Imposte', ipv: 'IPV', sozial: 'Assistenza', lohn: 'Salario', notfall: 'Scheda d’emergenza', budget: 'Budget' },
   },
 
   legal: {
@@ -2709,8 +2713,8 @@ export default {
     },
     wohnen: {
       since: 'Residente da {duration}',
-      rentOnly: 'Affitto mensile {rent}',
-      rentAndUtils: 'Affitto mensile {rent} più {utilities} di spese accessorie',
+      rentOnly: 'Affitto netto {rent}',
+      rentAndUtils: 'Affitto netto {rent} più {utilities} di spese accessorie',
       landlordLabel: 'Locatore',
       durationUnder1: 'meno di un mese',
       durationMonths: '{months} mesi',
@@ -3041,6 +3045,8 @@ export default {
     selectCantonHint: { sie: 'Selezioni un cantone per vedere la stima cantonale.', du: 'Seleziona un cantone per vedere la stima cantonale.' },
     basedOnHauptort: 'Valore indicativo tratto da punti di misura del calcolatore d’imposta dell’AFC (anno fiscale {year}): capoluogo del cantone, senza imposta di culto; in altri comuni l’imposta può essere molto diversa.',
     roughEstimateBadge: 'Stima approssimativa',
+    kapitelZeile: 'Imposta federale {bund} · cantone e comune {kanton} — stima approssimativa per il capoluogo, senza imposta di culto.',
+    annahmeOhneDreizehntenHier: { sie: 'Calcolato senza 13a mensilità — con una 13a l’imposta è più alta. Può indicarla più sopra in «Reddito».', du: 'Calcolato senza 13a mensilità — con una 13a l’imposta è più alta. Puoi indicarla più sopra in «Reddito».' },
     // E37/E38: nessun importo cantonale dove la tabella AFC non si applica
     bandOutside: { sie: 'Per questo reddito imponibile Maloja non mostra qui alcun importo. La tabella del calcolatore d’imposta dell’AFC va da CHF {min} a CHF {max} (capoluogo, anno fiscale {year}); al di fuori Maloja non la estende. Il calcolatore d’imposta dell’AFC calcola l’importo per il Suo comune.', du: 'Per questo reddito imponibile Maloja non mostra qui alcun importo. La tabella del calcolatore d’imposta dell’AFC va da CHF {min} a CHF {max} (capoluogo, anno fiscale {year}); al di fuori Maloja non la estende. Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.' },
     bandNotChecked: { sie: 'Per questa situazione Maloja non mostra qui alcun importo. L’imposta cantonale e comunale è stata misurata per persone nubili o celibi e coniugate con al massimo tre figli; per le persone non coniugate, solo se i figli vivono nella stessa economia domestica (conferma alla tariffa per genitori). Il calcolatore d’imposta dell’AFC calcola l’importo per il Suo comune.', du: 'Per questa situazione Maloja non mostra qui alcun importo. L’imposta cantonale e comunale è stata misurata per persone nubili o celibi e coniugate con al massimo tre figli; per le persone non coniugate, solo se i figli vivono nella stessa economia domestica (conferma alla tariffa per genitori). Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.' },
@@ -3326,6 +3332,7 @@ export default {
     mindestlohnJahrNichtBelegt: 'Salario minimo cantonale: verificato sulle fonti ufficiali per il {jahr}, per il {laufend} non ci sono ancora valori verificati — per questo qui senza importo e senza confronto con il salario minimo.',
     mindestlohnBreachedLine: { sie: 'Il Suo salario sembra inferiore.', du: 'Il tuo salario sembra inferiore.' },
     fulltimeNote: 'Confronto sulla base di un impiego a tempo pieno (40 ore/settimana, come per la mediana UST).',
+    soIstGerechnet: 'Come è calcolato',
     dreizehnterNote: 'Il valore di confronto include la quota di tredicesima (×13/12) per corrispondere alla mediana UST. Senza tredicesima sarebbe CHF {fte}.',
     ohneDreizehnterNote: 'Confronto senza quota di tredicesima. Con una tredicesima il valore sarebbe circa l’8 % più alto.',
     konformMit13Line: 'Conforme grazie alla tredicesima — a condizione che la tredicesima sia computata nel salario minimo (a Basilea Città solo se versata mensilmente).',
@@ -5933,6 +5940,7 @@ export default {
         vergleichAb6: 'Confrontato con abitazioni di 6 locali o più.',
         vergleichAlle: 'Confrontato con abitazioni di tutte le grandezze.',
         zimmerAngenommen: { sie: 'La grandezza è dedotta dal numero di persone nell\'economia domestica — con il Suo numero di locali nel capitolo Abitazione il confronto diventa più preciso.', du: 'La grandezza è dedotta dal numero di persone nell\'economia domestica — con il tuo numero di locali nel capitolo Abitazione il confronto diventa più preciso.' },
+        zimmerAngenommenHier: { sie: 'La grandezza è ipotizzata — con il Suo numero di locali nei dati qui sotto il confronto diventa più preciso.', du: 'La grandezza è ipotizzata — con il tuo numero di locali nei dati qui sotto il confronto diventa più preciso.' },
         ohneWertFuerGroesse: 'L\'UST non pubblica alcun valore per questa grandezza di abitazione nel Cantone.',
         wenigeAntworten: 'Qui il valore dell\'UST si basa su meno di 50 risposte — da leggere solo come orientamento approssimativo.',
       },

@@ -221,14 +221,26 @@ describe('Reiter «Dokumente» plus «Dokument fotografieren»', () => {
 
 // Fassung 6 (Runde 9, Y): eine lesbare Zeile statt «Erwachsene im Haushalt 1 · Kinder 0».
 describe('Persönliche Basis: «Im Haushalt»', () => {
-  it('eine Zeile «Im Haushalt: 1 Erwachsene · 0 Kinder»', () => {
+  // Abnahme F6 (Sophie 25.10.2026): «allein, keine Kinder» statt «1 Erwachsene · 0 Kinder».
+  it('eine Person ohne Kinder: «allein, keine Kinder»', () => {
     const text = render('basis', DEMO_DATA.basis).replace(/<[^>]+>/g, '');
-    expect(text).toContain('Im Haushalt1 Erwachsene · 0 Kinder');
+    expect(text).toContain('Im Haushaltallein, keine Kinder');
     expect(text).not.toContain('Erwachsene im Haushalt 1');
+    expect(text).not.toContain('1 Erwachsene');
   });
   it('ein Kind: «1 Kind»; Erwachsene aus der Liste der Erfassung', () => {
     const basis = { ...DEMO_DATA.basis, household: { adultsList: [{ name: 'A' }], children: [{ age: 4 }] } };
     const text = render('basis', basis).replace(/<[^>]+>/g, '');
-    expect(text).toContain('2 Erwachsene · 1 Kind');
+    expect(text).toContain('2 Erwachsene, 1 Kind');
+  });
+  it('mehrere Kinder: «… Kinder»', () => {
+    const basis = { ...DEMO_DATA.basis, household: { adultsList: [{ name: 'A' }], children: [{ age: 4 }, { age: 7 }] } };
+    expect(render('basis', basis).replace(/<[^>]+>/g, '')).toContain('2 Erwachsene, 2 Kinder');
+  });
+  it('«Neu in der Schweiz» erscheint nicht, solange es kein Zuzugsdatum gibt', () => {
+    const basis = { ...DEMO_DATA.basis, nationality: 'other' };
+    const html = render('basis', basis);
+    expect(html).toMatch(/Einbürgerung/); // die anderen «je nach Angaben» bleiben
+    expect(html).not.toMatch(/Neu in der Schweiz/);
   });
 });

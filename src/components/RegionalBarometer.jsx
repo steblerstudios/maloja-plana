@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space, leading, radius } from '../config/tokens.js';
 import { renderSource } from '../utils/renderSource.js';
+import { zahl } from '../utils/geld.js';
 import { LegendenMarke } from './LegendenMarke.jsx';
 
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
@@ -28,7 +29,10 @@ import { LegendenMarke } from './LegendenMarke.jsx';
 // Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
 // `userLabel` (optional): ersetzt «Ihre Miete: CHF …» — im Kapitel Wohnen beim Regler «Ausprobierte
 // Miete: CHF …» (Fassung 6), damit niemand die ausprobierte Zahl für die erfasste hält.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel }) => {
+// `imKapitel` (optional): ruhige Fassung fürs Kapitel Wohnen (Abnahme F6, Sophie 25.10.2026 «Barometer
+// ruhiger»). Ohne die strukturelle Erklärung, und der Zimmer-Hinweis zeigt auf das Feld unten im
+// Kapitel statt «im Kapitel Wohnen» — man ist ja schon dort.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText, userLabel, imKapitel }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year, roomKey, zimmerAngenommen, ohneWertFuerGroesse, wenigeAntworten } = comparison;
   const ns = 'po.regionalCompare.';
@@ -92,7 +96,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   let ariaLabel = t(ns + 'aria', {
     regional: regional.toFixed(0), national: national.toFixed(0), diff: diffText,
   });
-  const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: userValue.toFixed(0) })) : null;
+  const userText = hasUser ? (userLabel || t(k + 'yourVal', { amount: zahl(userValue) })) : null;
   if (hasUser) ariaLabel += ' ' + userText;
   // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (a11y-Prüfer): Die Schwellen-Überschreitung stand
   // NUR in der Farbe — das „!" schaltet auf roseDeep, das aria-Label nannte sie nicht
@@ -179,11 +183,11 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // liest man den Strich leicht als „meinen Wert" statt als Referenz.
       React.createElement('span', { style: { whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }),
-        t(ns + 'nationalVal', { amount: national.toFixed(0) })),
+        t(ns + 'nationalVal', { amount: zahl(national) })),
       // Punkt in der Grafik-Farbe des Punkts, Label in der lesbaren Deep-Variante.
       React.createElement('span', { style: { color: dotTextColor, whiteSpace: 'nowrap' } },
         React.createElement(LegendenMarke, { form: 'punkt', color: dotColor, palette }),
-        t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
+        t(ns + 'regionalVal', { amount: zahl(regional) })),
     ),
     hasUser && React.createElement('div', {
       style: { fontSize: text.xs, color: fillColor ? palette.text : palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
@@ -208,7 +212,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     }, diffText),
 
     // Strukturelle Einordnung (neutral, kein Vorwurf) — nur wenn merklich drüber
-    dir === 'above' && React.createElement('div', {
+    dir === 'above' && !imKapitel && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, t(k + 'structural')),
 
@@ -223,7 +227,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       roomKey === 'total' ? t(k + 'vergleichAlle')
         : roomKey === 'r6' ? t(k + 'vergleichAb6')
         : t(k + 'vergleichZimmer', { n: roomKey.slice(1) }),
-      zimmerAngenommen ? ' ' + t(k + 'zimmerAngenommen') : '',
+      zimmerAngenommen ? ' ' + t(k + (imKapitel ? 'zimmerAngenommenHier' : 'zimmerAngenommen')) : '',
       wenigeAntworten ? ' ' + t(k + 'wenigeAntworten') : ''
     ),
 
