@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Icon, hinweisZeichen } from '../IconSystem.jsx';
-import { text, weight, leading, space, radius } from '../config/tokens.js';
+import { Icon, hinweisZeichen, aufklappZeichen } from '../IconSystem.jsx';
+import { text, weight, leading, space, radius, visuallyHiddenStyle } from '../config/tokens.js';
 import { feldErledigt, NA_FELD, naUmschalten, trifftNichtZu } from '../utils/vollstaendigkeit.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 
@@ -115,7 +115,8 @@ const useTippt = () => {
   const [tippt, setTippt] = useState(false);
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
-    const istFeld = (el) => !!el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName);
+    // Nur Felder, über denen eine Tastatur aufgeht — Häkchen und Knöpfe lassen den Knopf stehen (A11y-Prüfung).
+    const istFeld = (el) => !!el && (/^(TEXTAREA|SELECT)$/.test(el.tagName) || (el.tagName === 'INPUT' && !/^(checkbox|radio|button|submit|reset|file|range|color)$/.test(el.type)));
     const rein = (e) => setTippt(istFeld(e.target));
     const raus = () => setTippt(false);
     document.addEventListener('focusin', rein);
@@ -128,6 +129,15 @@ const useTippt = () => {
 // Der Ernstfall-Knopf: zuoberst, bleibt beim Scrollen stehen — ausser während getippt wird.
 export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
   const tippt = useTippt();
+  // Solange der Knopf oben steht, hält die Seite beim Scrollen zu einem Fokus um seine Höhe Abstand — so liegt er
+  // nie über dem, was gerade fokussiert ist (WCAG 2.4.11, A11y-Prüfung 25.10.2026).
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+    const wurzel = document.documentElement;
+    const vorher = wurzel.style.scrollPaddingTop;
+    wurzel.style.scrollPaddingTop = 'calc(var(--mp-sprungabstand, 64px) + 84px)';
+    return () => { wurzel.style.scrollPaddingTop = vorher; };
+  }, []);
   if (!onNavigate) return null;
   const h = React.createElement;
   return h('div', {
@@ -138,7 +148,7 @@ export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
       type: 'button', onClick: () => onNavigate('notfallkarte'),
       style: {
         display: 'flex', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '64px', textAlign: 'left',
-        padding: space.sm + 'px ' + space.md + 'px', background: knopfRot(palette), color: '#fff', border: 'none',
+        padding: space.sm + 'px ' + space.md + 'px', background: knopfRot(palette), color: '#fff', border: '1px solid ' + (palette.roseDeep || palette.rose),
         borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 18px rgba(0,0,0,.22)',
       },
     },
@@ -151,6 +161,7 @@ export const NotfallErnstfallKnopf = ({ palette, t, onNavigate }) => {
 
 export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpdate, demoMode, zumFeld, onKarteDrucken, karteMoeglich, karteVorschau }) => {
   const [eingaben, setEingaben] = useState({});
+  const [szenOffen, setSzenOffen] = useState(false);
   if (!onNavigate) return null;
   const h = React.createElement;
   const alle = data || {};
@@ -224,7 +235,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         autoComplete: 'off',
         onChange: (e) => setEingaben((x) => ({ ...x, [f.k]: e.target.value })),
         onKeyDown: (e) => { if (e.key === 'Enter') speichern(f); },
-        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '10px 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
+        style: { width: '100%', boxSizing: 'border-box', margin: space.xs + 'px 0', padding: '10px 12px', minHeight: '44px', borderRadius: radius.sm, border: '1px solid ' + palette.mid, background: palette.up, color: palette.text, fontFamily: 'inherit', fontSize: text.body },
       }),
       demoMode
         ? h('p', { style: { ...klein, margin: 0 } }, t('demo.readOnlyHint'))
@@ -236,11 +247,11 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     const n = s.fields.filter((f) => feldErledigt(alle[f.chapter], f.k)).length;
     const name = t('notfallEinstieg.' + s.key + '.title');
     return [i > 0 ? ' · ' : '', n === s.fields.length
-      ? h('span', { key: s.key }, name, ' ', hinweisZeichen('check', 11))
+      ? h('span', { key: s.key }, name, ' ', hinweisZeichen('check', 11), h('span', { style: visuallyHiddenStyle }, t('notfallKapitel.vollstaendig')))
       : h('span', { key: s.key }, name + ' ' + t('notfallKapitel.vonN', { n, total: s.fields.length }))];
   });
   const bereit = h('section', { 'data-teil': 'notfall-bereit', 'aria-labelledby': 'mp-notfall-bereit' },
-    h('h4', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
+    h('h3', { id: 'mp-notfall-bereit', style: kapH }, t('notfallKapitel.bereitTitel')),
     h('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm + 'px', flexWrap: 'wrap' } },
       h('span', { style: { fontSize: '28px', fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, t('notfallKapitel.vonN', { n: stand.erledigt, total: stand.gesamt })),
       h('span', { style: klein }, t('notfallKapitel.bereitSatz'))),
@@ -249,30 +260,31 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     stand.fehlend.length === 0
       ? h('p', { style: { fontSize: text.sm, color: palette.sageDeep || palette.text, margin: '0 0 ' + space.sm + 'px' } }, t('notfallEinstieg.allDone'))
       : stand.fehlend.map(fehlZeile),
-    h('details', { 'data-teil': 'notfall-szenarien', style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
+    h('details', { 'data-teil': 'notfall-szenarien', onToggle: (e) => setSzenOffen(e.currentTarget.open), style: { borderTop: '1px solid ' + palette.border + '88', borderBottom: '1px solid ' + palette.border + '88' } },
       h('summary', { style: { cursor: 'pointer', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', color: palette.text } },
         h('span', { style: { minWidth: 0 } },
           h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('notfallKapitel.szenarien')),
           h('small', { style: { display: 'block', ...klein } }, szenarienZeile)),
-        h('span', { style: { fontSize: text.xs, color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, t('notfallKapitel.ansehen'))),
+        h('span', { style: { fontSize: text.xs, color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, aufklappZeichen(szenOffen), t(szenOffen ? 'notfallKapitel.zuklappen' : 'notfallKapitel.ansehen'))),
       SCENARIOS.map((s) => h('p', { key: s.key, style: { ...klein, margin: space.xs + 'px 0' } },
         h('b', { style: { color: palette.text } }, t('notfallEinstieg.' + s.key + '.title')), ' — ',
         s.fields.flatMap((f, i) => [i > 0 ? ', ' : '', feldErledigt(alle[f.chapter], f.k)
           ? feldName(f.chapter, f.k)
-          : h('span', { key: f.chapter + f.k }, hinweisZeichen('kaestchen', 10), feldName(f.chapter, f.k))]), '.'))
+          : h('span', { key: f.chapter + f.k }, hinweisZeichen('kaestchen', 10), feldName(f.chapter, f.k), h('span', { style: visuallyHiddenStyle }, ' (' + t('notfallKapitel.fehlt') + ')'))]), '.'))
     )
   );
 
   // 3. Ihre Notfall-Unterlagen
   const kachel = (key, titel, sub, ikon, onClick, aus) => h('button', {
-    key, type: 'button', onClick, disabled: !!aus, 'data-kachel': key,
-    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px solid ' + palette.border, borderRadius: radius.md, background: palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
+    // Ohne Angaben: erreichbar, aber still (aria-disabled statt disabled — der Grund im Untertitel bleibt lesbar).
+    key, type: 'button', onClick: aus ? undefined : onClick, 'aria-disabled': aus ? 'true' : undefined, 'data-kachel': key,
+    style: { display: 'block', textAlign: 'left', minHeight: '88px', padding: space.sm + 'px', border: '1px ' + (aus ? 'dashed ' : 'solid ') + palette.border, borderRadius: radius.md, background: aus ? 'none' : palette.surface, color: palette.text, fontFamily: 'inherit', cursor: aus ? 'default' : 'pointer', minWidth: 0 },
   },
     h('span', { 'aria-hidden': 'true', style: { display: 'inline-flex', color: notfallRot } }, h(Icon, { name: ikon, size: 20 })),
     h('span', { style: { display: 'block', marginTop: '6px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, overflowWrap: 'break-word', hyphens: 'manual', WebkitHyphens: 'manual' } }, titel),
     h('small', { style: { display: 'block', ...klein } }, sub));
   const unterlagen = h('section', { 'data-teil': 'notfall-unterlagen', 'aria-labelledby': 'mp-notfall-unterlagen' },
-    h('h4', { id: 'mp-notfall-unterlagen', style: kapH }, t('notfallKapitel.unterlagenTitel')),
+    h('h3', { id: 'mp-notfall-unterlagen', style: kapH }, t('notfallKapitel.unterlagenTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.unterlagenSatz')),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
       kachel('notfallkarte', t('notfallkarte.title'), t('notfallKapitel.karteSub'), 'phone', () => onNavigate('notfallkarte')),
@@ -290,7 +302,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
     return t('chapters.notfall.fields.' + k + '.options.' + v) || v;
   };
   const vorsorge = h('section', { 'data-teil': 'notfall-vorsorge', 'aria-labelledby': 'mp-notfall-vorsorge' },
-    h('h4', { id: 'mp-notfall-vorsorge', style: kapH }, t('notfallKapitel.vorsorgeTitel')),
+    h('h3', { id: 'mp-notfall-vorsorge', style: kapH }, t('notfallKapitel.vorsorgeTitel')),
     h('p', { style: { ...klein, margin: '0 0 ' + space.sm + 'px' } }, t('notfallKapitel.vorsorgeSatz'), ' ',
       h('span', { style: { color: palette.text } }, t('notfallKapitel.geregelt', { n: geregelt, total: VORSORGE.length }))),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },

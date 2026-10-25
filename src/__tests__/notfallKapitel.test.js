@@ -69,7 +69,7 @@ describe('Bereit für den Ernstfall', () => {
   it('die drei Szenarien zugeklappt mit Stand', () => {
     const html = ort();
     expect(html).toMatch(/<details data-teil="notfall-szenarien"(?![^>]*open)/);
-    expect(nurText(html)).toContain('Unfall 8 von 9 · Spitalaufenthalt · Behördengang');
+    expect(nurText(html)).toContain('Unfall 8 von 9 · Spitalaufenthalt vollständig · Behördengang vollständig');
   });
   it('im Beispiel: Feld gesperrt, Hinweis statt «Speichern»', () => {
     const text = nurText(ort(DEMO_DATA, { demoMode: true }));
@@ -118,6 +118,21 @@ describe('Unterlagen und Vorsorge', () => {
     expect(vorsorgeGeregelt({ organDonor: 'undecided' }, 'organDonor')).toBe(false);
     expect(vorsorgeGeregelt({ patientenverfuegung: 'no' }, 'patientenverfuegung')).toBe(false);
     expect(vorsorgeGeregelt({ patientenverfuegung: 'yes' }, 'patientenverfuegung')).toBe(true);
+  });
+});
+
+describe('Barrierefreiheit (A11y-Prüfung 25.10.2026)', () => {
+  it('Abschnitte als h3, gleichrangig zu den Angaben-Abschnitten', () => {
+    const html = ort();
+    for (const id of ['mp-notfall-bereit', 'mp-notfall-unterlagen', 'mp-notfall-vorsorge']) expect(html).toContain(`<h3 id="${id}"`);
+  });
+  it('Portemonnaie-Karte ohne Angaben: erreichbar, aber aria-disabled', () => {
+    const html = ort(DEMO_DATA, { karteMoeglich: false });
+    expect(html).toMatch(/aria-disabled="true" data-kachel="portemonnaie"/);
+    expect(nurText(html)).toContain('Braucht zuerst Angaben unten');
+  });
+  it('der stehende Knopf hält per scroll-padding Abstand zum Fokus', () => {
+    expect(QUELLE('components/NotfallImKapitel.jsx')).toContain("wurzel.style.scrollPaddingTop = 'calc(var(--mp-sprungabstand, 64px) + 84px)'");
   });
 });
 

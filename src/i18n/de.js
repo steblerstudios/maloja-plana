@@ -1701,6 +1701,9 @@ export default {
   },
   // Kapitel Notfall · «ein Ort» (Runde 9, AE; gebaut Abnahme F6, 25.10.2026)
   notfallKapitel: {
+    vollstaendig: 'vollständig',
+    fehlt: 'fehlt',
+    zuklappen: 'zuklappen',
     ernstfallTitel: 'Im Ernstfall: Notfallkarte öffnen',
     ernstfallSub: 'Führt durch den Anruf · 144 Sanität · 117 Polizei · 118 Feuerwehr',
     anrufen: '{name} anrufen',

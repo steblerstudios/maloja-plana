@@ -1815,12 +1815,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     setOffeneAbschnitte((o) => ({ ...o, [g.key]: true }));
     setTimeout(() => {
       const abschnitt = document.getElementById('mp-section-' + g.key);
-      if (abschnitt) {
-        abschnitt.scrollIntoView({ block: 'start' });
-        // Der stehende Ernstfall-Knopf (Notfall) liegt oben über dem Abschnitt — um seine Höhe weiter zurück.
-        const knopf = document.querySelector('[data-teil="notfall-ernstfall-knopf"][data-stehend="1"]');
-        if (knopf) window.scrollBy(0, -(knopf.getBoundingClientRect().height + 8));
-      }
+      // Den Abstand unter dem stehenden Ernstfall-Knopf hält scroll-padding (NotfallErnstfallKnopf).
+      if (abschnitt) abschnitt.scrollIntoView({ block: 'start' });
       const feld = document.getElementById(chapter.key + '-' + k);
       if (feld && feld.focus) feld.focus({ preventScroll: true });
     }, 0);
@@ -1919,7 +1915,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   ? React.createElement('button', {
                       key: 'fehlt-' + f.k, type: 'button', className: 'mp-link', 'data-fehlt': f.k, onClick: () => zumFeld(f.k),
                       style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm + 'px', width: '100%', minHeight: '44px', margin: '0 0 ' + space.xs + 'px', padding: '0 ' + space.xs + 'px', background: 'none', border: '1px dashed ' + (palette.roseDeep || palette.rose), borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
-                    }, React.createElement('span', null, hinweisZeichen('kaestchen', 12), f.label), React.createElement('span', { style: { color: palette.sandDeep, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))
+                    }, React.createElement('span', null, hinweisZeichen('kaestchen', 12), f.label), React.createElement('span', { style: { color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, tr('chapterView.abschnitt.ergaenzen') + ' ›'))
                   : React.createElement('div', { key: 'fehlt-' + f.k, 'data-nicht-erfasst': f.k, style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.xs + 'px' } }, tr('notfallKapitel.feldNichtErfasst', { feld: f.label })))))
               )
       );

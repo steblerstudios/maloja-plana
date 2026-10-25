@@ -1692,6 +1692,9 @@ export default {
   },
   // Emergency chapter · "one place" (round 9, AE; built in acceptance F6, 25.10.2026)
   notfallKapitel: {
+    vollstaendig: 'complete',
+    fehlt: 'missing',
+    zuklappen: 'close',
     ernstfallTitel: 'In an emergency: open the emergency card',
     ernstfallSub: 'Guides you through the call · 144 ambulance · 117 police · 118 fire brigade',
     anrufen: 'Call {name}',
@@ -1716,7 +1719,7 @@ export default {
     vorsorgeTitel: 'Advance planning',
     vorsorgeSatz: 'What applies if you can no longer decide for yourself.',
     geregelt: '{n} of {total} settled.',
-    vorsorge: { organDonor: 'Organ donation', patientenverfuegung: 'Advance directive', vorsorgeauftrag: 'Power of attorney', bestattungswuensche: 'Funeral wishes' },
+    vorsorge: { organDonor: 'Organ donation', patientenverfuegung: 'Advance directive', vorsorgeauftrag: 'Advance care mandate', bestattungswuensche: 'Funeral wishes' },
     erstellen: 'create ›',
     festhalten: 'write down ›',
     ergaenzen: 'add ›',
@@ -2286,7 +2289,7 @@ export default {
     saveCard: 'Save emergency card',
     cardTitle: 'Emergency Card',
     patientenverfuegung: 'Advance directive',
-    vorsorgeauftrag: 'Power of attorney',
+    vorsorgeauftrag: 'Advance care mandate',
     bestattungswuensche: 'Funeral wishes',
     done: 'Done',
     open: 'Still open',
