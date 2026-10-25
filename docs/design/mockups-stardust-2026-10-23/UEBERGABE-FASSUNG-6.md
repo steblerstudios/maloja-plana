@@ -329,3 +329,5 @@ Sophie: «ok sauber weiter». Aufgeräumt: `_werkbank/f6-merge-kette` entfernt, 
 - «trifft nicht zu» an Pensionskasse (+ Beitrag, Guthaben), Familienzulagen, Kinderbetreuung · AHV-Beitrag «/ Jahr».
 - 6’925 Tests grün, Bündel 63.31 / 65 kB. Nicht gemergt, nicht live.
 - Offen: Schutzschild BVG-Lücke trotz «trifft nicht zu» · Orientierung `ahvBeitrag` (Selbständige) · AG/BS «keine Säule 2» · rm.
+- **20:23:** #582 gemergt (Sophie: «Ja, Nebenwohnsitz ohne Steuersatz ist richtig. Merge #582, sobald die CI grün ist»), squash →
+  main **`3e409432`**, CI auf main grün. **Nicht deployt** — live weiter 0.1.48-beta. Nebenwohnsitz ohne Steuersatz: entschieden.
