@@ -1915,7 +1915,7 @@ export default {
     lohn: 'Controlla dal salari minimal activa',
     notfall: "Carta d'urgenza pronta",
     budget: 'Survista dal budget activa',
-    short: { tax: 'Taglia', ipv: 'IPV', sozial: 'Agid social', lohn: 'Salari', notfall: 'Urgenza', budget: 'Budget' },
+    short: { tax: 'Taglia', ipv: 'IPV', sozial: 'Agid social', lohn: 'Salari', notfall: 'Carta d’urgenza', budget: 'Budget' },
   },
 
   dashboard: {
@@ -2094,6 +2094,7 @@ export default {
     },
     finanzen: {
       title: 'Finanzas & daners',
+      kuchenFrage: 'Nua va il daner?',
       geldfluss: {
         title: 'Danunder ch’ils daners vegnan, nua ch’els van',
         salary: 'Entrada mensiala',
@@ -4259,6 +4260,7 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
+    soIstGerechnet: 'Uschia è quint',
     dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
     ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8 % pli auta.",
     konformMit13Line: "Conform grazia al 13avel salari — sche il 13avel vegn quintà tar il salari minimal (a Basilea-Citad mo sch'el vegn pajà mensilmain).",
@@ -4535,6 +4537,8 @@ export default {
     // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
     basedOnHauptort: "Valur d'orientaziun da puncts da mesiraziun dal calculatur da taglia da l'AFT (onn fiscal {year}): lieu principal dal chantun, senza taglia da baselgia; en autras vischnancas po la taglia esser considerablamain autra.",
     roughEstimateBadge: 'Stimaziun aproximativa',
+    kapitelZeile: 'Taglia federala {bund} · chantun e vischnanca {kanton} — stimaziun aproximativa per il chalieu, senza taglia ecclesiastica.',
+    annahmeOhneDreizehntenHier: { sie: 'Quintà senza 13avla paja — cun ina 13avla è la taglia pli auta. Vus pudais inditgar quai survart sut «Entrada».', du: 'Quintà senza 13avla paja — cun ina 13avla è la taglia pli auta. Ti pos inditgar quai survart sut «Entrada».' },
     // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
     bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
