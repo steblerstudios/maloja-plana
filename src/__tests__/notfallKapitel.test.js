@@ -38,13 +38,14 @@ describe('Bereit für den Ernstfall', () => {
     const alle = SCENARIOS.flatMap((s) => s.fields.map((f) => f.chapter + '.' + f.k));
     expect(new Set(alle).size).toBe(20);
   });
-  it('Maria: 19 von 20, es fehlen nur die Medikamente — für «Unfall»', () => {
+  it('Maria: 18 von 20 — es fehlen die Medikamente (Unfall) und die Patientenverfügung (Spital)', () => {
     const b = bereitschaft(DEMO_DATA);
-    expect([b.erledigt, b.gesamt]).toEqual([19, 20]);
-    expect(b.fehlend.map((f) => f.k)).toEqual(['medications']);
-    expect(b.fehlend[0].lagen).toEqual(['unfall']);
+    expect([b.erledigt, b.gesamt]).toEqual([18, 20]);
+    expect(b.fehlend.map((f) => f.k)).toEqual(['medications', 'patientenverfuegung']);
+    expect(b.fehlend.map((f) => f.lagen)).toEqual([['unfall'], ['spital']]);
     const text = nurText(ort());
-    expect(text).toContain('19 von 20');
+    expect(text).toContain('18 von 20');
+    expect(text).toContain('Patientenverfügung vorhanden? · fehlt für «Spitalaufenthalt» erstellen ›');
     expect(text).toContain('Regelmässige Medikamente · fehlt für «Unfall»');
     expect(text).toContain('Ich nehme keine');
   });
@@ -52,13 +53,21 @@ describe('Bereit für den Ernstfall', () => {
     expect(feldHatWert({ medications: '', medicationsList: [{ name: 'Levothyroxin' }] }, 'medications')).toBe(true);
     expect(feldHatWert({ medications: '', medicationsList: [{ name: '' }] }, 'medications')).toBe(false);
     const mit = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, medicationsList: [{ name: 'Levothyroxin', dose: '50', unit: 'µg' }] } };
-    expect(bereitschaft(mit).erledigt).toBe(20);
-    expect(nurText(ort(mit))).toContain('Alle Angaben vorhanden.');
+    expect(bereitschaft(mit).erledigt).toBe(19);
+    const alles = { ...mit, notfall: { ...mit.notfall, patientenverfuegung: 'yes' } };
+    expect(bereitschaft(alles).erledigt).toBe(20);
+    expect(nurText(ort(alles))).toContain('Alle Angaben vorhanden.');
   });
   it('«Ich nehme keine» zählt als erledigt', () => {
     const keine = { ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, _na: ['medications'] } };
-    expect(bereitschaft(keine).erledigt).toBe(20);
+    expect(bereitschaft(keine).erledigt).toBe(19);
     expect(chapters.find((c) => c.key === 'notfall').fields.find((f) => f.k === 'medications').naOk).toBe(true);
+  });
+  it('Patientenverfügung zählt erst bei «Ja» (Sophie 25.10.2026)', () => {
+    const mit = (pv) => ({ ...DEMO_DATA, notfall: { ...DEMO_DATA.notfall, patientenverfuegung: pv } });
+    expect(bereitschaft(mit('no')).fehlend.some((f) => f.k === 'patientenverfuegung')).toBe(true);
+    expect(bereitschaft(mit('yes')).fehlend.some((f) => f.k === 'patientenverfuegung')).toBe(false);
+    expect(bereitschaft(mit('')).fehlend.some((f) => f.k === 'patientenverfuegung')).toBe(true);
   });
   it('Angaben aus anderen Kapiteln führen in jenes Kapitel, Auswahlfelder zum Feld', () => {
     const leer = nurText(ort({ notfall: {} }));
@@ -69,7 +78,7 @@ describe('Bereit für den Ernstfall', () => {
   it('die drei Szenarien zugeklappt mit Stand', () => {
     const html = ort();
     expect(html).toMatch(/<details data-teil="notfall-szenarien"(?![^>]*open)/);
-    expect(nurText(html)).toContain('Unfall 8 von 9 · Spitalaufenthalt vollständig · Behördengang vollständig');
+    expect(nurText(html)).toContain('Unfall 8 von 9 · Spitalaufenthalt 9 von 10 · Behördengang vollständig');
   });
   it('im Beispiel: Feld gesperrt, Hinweis statt «Speichern»', () => {
     const text = nurText(ort(DEMO_DATA, { demoMode: true }));

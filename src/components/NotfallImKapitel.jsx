@@ -68,11 +68,18 @@ export const SCENARIOS = [
 export const NOTFALL_ANGABEN = SCENARIOS.flatMap((s) => s.fields)
   .filter((f, i, alle) => alle.findIndex((x) => x.chapter === f.chapter && x.k === f.k) === i);
 
-// Wie bereit: erledigt (Wert oder «trifft nicht zu»), gesamt, und das Fehlende mit den Szenarien, für die es fehlt.
+// Eine Angabe ist bereit, wenn sie einen Wert hat oder «trifft nicht zu» trägt. Ausnahme Patientenverfügung: erst
+// bei «Ja» — «Noch nicht» ist zwar eine Antwort, im Spital fehlt aber die Verfügung (Sophie 25.10.2026, nach der
+// Fachprüfung; sonst zählte «Bereit» sie als erledigt und «Vorsorge» darunter als nicht geregelt).
+export const angabeBereit = (data, f) => (f.chapter === 'notfall' && f.k === 'patientenverfuegung'
+  ? vorsorgeGeregelt((data || {}).notfall, 'patientenverfuegung')
+  : feldErledigt((data || {})[f.chapter], f.k));
+
+// Wie bereit: erledigt, gesamt, und das Fehlende mit den Szenarien, für die es fehlt.
 export const bereitschaft = (data) => {
   const d = data || {};
   const fehlend = NOTFALL_ANGABEN
-    .filter((f) => !feldErledigt(d[f.chapter], f.k))
+    .filter((f) => !angabeBereit(d, f))
     .map((f) => ({ ...f, lagen: SCENARIOS.filter((s) => s.fields.some((x) => x.chapter === f.chapter && x.k === f.k)).map((s) => s.key) }));
   return { erledigt: NOTFALL_ANGABEN.length - fehlend.length, gesamt: NOTFALL_ANGABEN.length, fehlend };
 };
@@ -222,7 +229,13 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         titel,
         h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(f.chapter)), style: { ...ruhigKnopf, background: 'none' } }, kapitelTitel(f.chapter) + ' ›'));
     }
-    // Auswahl (Blutgruppe, Patientenverfügung): zum Feld im Formular unten.
+    // Patientenverfügung mit «Noch nicht»: die Antwort steht, es fehlt das Dokument — der Weg zum Werkzeug.
+    if (f.k === 'patientenverfuegung' && nf.patientenverfuegung) {
+      return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        titel,
+        h('button', { type: 'button', className: 'mp-link', onClick: () => onNavigate('patientenverfuegung'), style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.erstellen')));
+    }
+    // Auswahl (Blutgruppe, Patientenverfügung ohne Antwort): zum Feld im Formular unten.
     if (!EINGABE[f.k]) {
       return h('div', { key: f.k, 'data-fehlt': f.k, style: { ...rahmen, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap' } },
         titel,
@@ -245,7 +258,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
             f.k === 'medications' && h('button', { type: 'button', onClick: keineMedikamente, style: { ...ruhigKnopf, background: 'none' } }, t('notfallKapitel.keineMedikamente'))));
   };
   const szenarienZeile = SCENARIOS.flatMap((s, i) => {
-    const n = s.fields.filter((f) => feldErledigt(alle[f.chapter], f.k)).length;
+    const n = s.fields.filter((f) => angabeBereit(alle, f)).length;
     const name = t('notfallEinstieg.' + s.key + '.title');
     return [i > 0 ? ' · ' : '', n === s.fields.length
       ? h('span', { key: s.key }, name, ' ', hinweisZeichen('check', 11), h('span', { style: visuallyHiddenStyle }, t('notfallKapitel.vollstaendig')))
@@ -269,7 +282,7 @@ export const NotfallImKapitel = ({ palette, t, data, chapters, onNavigate, onUpd
         h('span', { style: { fontSize: text.xs, color: palette.sandDeep || palette.mid, whiteSpace: 'nowrap' } }, aufklappZeichen(szenOffen), t(szenOffen ? 'notfallKapitel.zuklappen' : 'notfallKapitel.ansehen'))),
       SCENARIOS.map((s) => h('p', { key: s.key, style: { ...klein, margin: space.xs + 'px 0' } },
         h('b', { style: { color: palette.text } }, t('notfallEinstieg.' + s.key + '.title')), ' — ',
-        s.fields.flatMap((f, i) => [i > 0 ? ', ' : '', feldErledigt(alle[f.chapter], f.k)
+        s.fields.flatMap((f, i) => [i > 0 ? ', ' : '', angabeBereit(alle, f)
           ? feldName(f.chapter, f.k)
           : h('span', { key: f.chapter + f.k }, hinweisZeichen('kaestchen', 10), feldName(f.chapter, f.k), h('span', { style: visuallyHiddenStyle }, ' (' + t('notfallKapitel.fehlt') + ')'))]), '.'))
     )
