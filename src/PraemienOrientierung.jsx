@@ -16,7 +16,7 @@ import { VersicherungenInstrument } from './components/VersicherungenInstrument.
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { schildOptionen } from './data/schutzschild.js';
 import { franchiseVorschlag } from './data/franchiseTacho.js';
-import { calculateIPV } from './config/cantonalData.js';
+import { calculateIPV, getCantonName } from './config/cantonalData.js';
 import { pegelState, PEGEL_SCALE } from './data/pegel.js';
 
 export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateData }) => {
@@ -26,7 +26,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const [detailNr, setDetailNr] = useState(null); // aufgeklappte Kasse im Vergleich
   const [withUnfall, setWithUnfall] = useState(true); // UVG: Referenzprämie mit/ohne Unfalldeckung
   const [pickedFranchise, setPickedFranchise] = useState(null); // angeklickte Wunsch-Franchise fürs Vergleichen
-  const [offenTeil, setOffenTeil] = useState(null); // welcher aufklappbare Teil offen ist (Übersicht)
+  const [offenTeile, setOffenTeile] = useState({}); // welche aufklappbaren Teile offen sind (Übersicht)
   const [alleKassen, setAlleKassen] = useState(false); // «Alle Kassen»: erst fünf, dann alle
 
   const gemeinden = useMemo(() => {
@@ -160,7 +160,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const marken = [
     insurer && (modell ? insurer + ' · ' + String(modell).replace(/\s*\(.*\)\s*$/, '') : insurer),
     userFranchise && t('vu.markeFranchise', { franchise: zahl(userFranchise, { hoechstens: 2 }) }),
-    regionInfo && t('vu.markeRegion', { kanton: regionInfo.kanton, region: regionInfo.region }),
+    regionInfo && t('vu.markeRegion', { kanton: getCantonName(regionInfo.kanton, t) || regionInfo.kanton, region: regionInfo.region }),
   ].filter(Boolean);
 
   // Zeilen mit Wert
@@ -174,7 +174,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const bezahlt = belege.filter((b) => b.status !== 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
   const offen = belege.filter((b) => b.status === 'offen').reduce((x, b) => x + (Number(b.betrag) || 0), 0);
   const pk = Number(v.bvgBalance) > 0 ? Number(v.bvgBalance) : 0;
-  const zuTeil = (id) => { setOffenTeil(id); setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ block: 'start' }); }, 0); };
+  const zuTeil = (id) => { setOffenTeile((o) => ({ ...o, [id]: true })); setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ block: 'start' }); }, 0); };
   const zeilen = [
     { key: 'franchise', titel: t('vu.franchise'),
       wert: !vorschlag ? '' : vorschlag.art === 'wechsel' ? t('vu.eher', { franchise: zahl(vorschlag.franchise) }) : vorschlag.art === 'passt' ? t('vu.passt') : '',
@@ -209,13 +209,13 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
   // Aufklappbar: kontrolliert, damit die Franchise-Zeile das Kreuz öffnen kann.
   const teil = (id, titel, sub, inhalt) => h('details', {
-    id, open: offenTeil === id || undefined, 'data-teil': id,
-    onToggle: (e) => { if (e.currentTarget.open) setOffenTeil(id); else if (offenTeil === id) setOffenTeil(null); },
+    id, open: !!offenTeile[id] || undefined, 'data-teil': id,
+    onToggle: (e) => { const auf = e.currentTarget.open; setOffenTeile((o) => (!!o[id] === auf ? o : { ...o, [id]: auf })); },
     style: { borderBottom: '1px solid ' + palette.border + '88', scrollMarginTop: 'var(--mp-sprungabstand)' },
   },
     h('summary', { style: { cursor: 'pointer', minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', color: palette.text, listStyle: 'none' } },
       h('span', { style: { minWidth: 0 } },
-        h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, aufklappZeichen(offenTeil === id), titel),
+        h('span', { style: { display: 'block', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, aufklappZeichen(!!offenTeile[id]), titel),
         sub && h('small', { style: { display: 'block', fontSize: text.xs, color: palette.mid } }, sub))),
     h('div', { style: { padding: space.sm + 'px 0 ' + space.md + 'px' } }, ...inhalt));
 
