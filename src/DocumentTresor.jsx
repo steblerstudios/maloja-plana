@@ -322,7 +322,7 @@ export const DocumentTresor = ({
                 key: c.key, type: 'button', 'aria-pressed': aktiv, 'aria-label': c.title + ' (' + c.n + ')',
                 onClick: () => setActiveTab(c.key),
                 style: {
-                  display: 'inline-flex', alignItems: 'center', gap: '5px', minHeight: '36px', padding: '0 12px',
+                  display: 'inline-flex', alignItems: 'center', gap: '5px', minHeight: '44px', padding: '0 12px',
                   borderRadius: radius.full, border: '1px solid ' + (aktiv ? palette.text : palette.border),
                   background: aktiv ? palette.up : 'none', color: aktiv ? palette.text : palette.mid,
                   cursor: 'pointer', fontSize: text.xs, whiteSpace: 'nowrap', font: 'inherit',

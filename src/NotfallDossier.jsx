@@ -213,7 +213,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         type: 'button',
         onClick: () => onNavigate('notfallpass'),
         style: {
-          background: 'none', border: 'none', cursor: 'pointer', padding: 0, margin: '12px 0 0',
+          background: 'none', border: 'none', cursor: 'pointer', padding: 0, margin: '12px 0 0', minHeight: '44px',
           fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium,
         },
       }, t('notfallpass.dossierVerweis'))

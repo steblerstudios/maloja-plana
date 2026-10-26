@@ -67,6 +67,8 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
       textDecoration: 'none', fontFamily: 'inherit',
       padding: space.xs + 'px ' + space.sm + 'px', borderRadius: radius.sm,
       border: '1px solid ' + palette.border, background: palette.up,
+      // Tippziel ≥ 44 px — gerade im Ernstfall (Seitenrundgang 26.10.2026, R9; vorher ~30 px).
+      minHeight: '44px', display: 'inline-flex', alignItems: 'center',
     },
     sayList: { margin: space.sm + 'px 0 0 0', paddingLeft: '20px' },
     sayItem: { marginBottom: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed },
@@ -82,11 +84,14 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
       marginTop: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',
       background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
       padding: '6px 12px', fontSize: text.sm, color: palette.text,
+      minHeight: '44px', // R9: Standort-Knopf vorher ~30 px
     },
     locResult: { marginTop: space.sm + 'px', padding: '10px 14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
     locCoords: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, letterSpacing: '0.3px' },
     locAcc: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
-    locMap: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, textDecoration: 'none', fontFamily: 'inherit' },
+    // Eigenständiger Link im Notfall-Ablauf, kein Fliesstext: 44 px und unterstrichen, damit er nicht nur über
+    // die Farbe als Link erkennbar ist (a11y-Prüfung 26.10.2026; vorher ~21 px).
+    locMap: { display: 'inline-flex', alignItems: 'center', minHeight: '44px', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, textDecoration: 'underline', fontFamily: 'inherit' },
     locNote: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px' },
   };
 

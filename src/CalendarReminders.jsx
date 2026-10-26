@@ -255,7 +255,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
         style: { textAlign: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
       }, hinweisZeichen('check'), t('calendar.nicelyDone')),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' } },
-        React.createElement('div', { style: { flex: 1 } },
+        React.createElement('div', { style: { flex: 1, minWidth: 0 } },
           React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.xs } },
             React.createElement(Icon, { name: iconKey, size: 16 }),
             React.createElement('span', { style: { fontWeight: weight.semi, fontSize: text.sm, textDecoration: r.done ? 'line-through' : 'none' } }, r.title)
@@ -274,7 +274,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
             'aria-label': r.done ? t('calendar.undo') : t('calendar.markDone'),
             onClick: () => toggleDone(r.id),
             style: {
-              padding: '6px 10px', background: r.done ? palette.gold : palette.sageBtn,
+              padding: '6px 10px', minWidth: '44px', minHeight: '44px', background: r.done ? palette.gold : palette.sageBtn,
               color: r.done ? palette.onSand : '#fff', border: 'none', borderRadius: radius.xs,
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
@@ -283,7 +283,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
             'aria-label': t('common.delete'),
             onClick: () => deleteReminder(r.id),
             style: {
-              padding: '6px 10px', background: palette.roseBtn,
+              padding: '6px 10px', minWidth: '44px', minHeight: '44px', background: palette.roseBtn,
               color: '#fff', border: 'none', borderRadius: radius.xs,
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
@@ -389,7 +389,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   const gWoche = gruppe(d => d > today && daysBetween(today, d) <= 7);
   const gSpaeter = gruppe(d => d > today && daysBetween(today, d) > 7);
 
-  const knopfRuhig = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', minHeight: '32px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' };
+  const knopfRuhig = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', minHeight: '44px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' };
   const reiter = (aktiv) => ({ flex: 1, padding: '10px 12px', minHeight: '44px', background: aktiv ? palette.surface : 'none', color: palette.text, border: '1px solid ' + (aktiv ? palette.sand : 'transparent'), borderRadius: radius.sm, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: aktiv ? weight.semi : weight.normal });
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
@@ -443,7 +443,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
 
       const navBtn = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, minWidth: '44px', height: '44px', cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.md, lineHeight: 1 };
       const verteilRand = verteilen ? palette.sage : palette.border;
-      const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, background: iso === selDate ? palette.sand + '2E' : 'none', border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.sky : 'transparent')), fontWeight: isToday ? weight.semi : weight.normal });
+      // minHeight 44 statt nur aspectRatio 1 (a11y-Prüfung 26.10.2026: bei 375 px 34 px hoch).
+      const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', minHeight: '44px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2px', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, background: iso === selDate ? palette.sand + '2E' : 'none', border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.sky : 'transparent')), fontWeight: isToday ? weight.semi : weight.normal });
       const stripTag = (iso, isToday) => ({ flex: '0 0 46px', minHeight: '64px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', gap: '3px', padding: '6px 0', borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', color: palette.text, background: iso === selDate ? palette.sand + '2E' : (isToday ? palette.surface : 'none'), border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.text : 'transparent')) });
       const markenReihe = (iso) => React.createElement('span', { style: { display: 'flex', gap: '2px', alignItems: 'center', minHeight: '8px' } }, ...markenZeile(iso));
 
@@ -499,7 +500,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
         ),
         // Ganzer Monat — das bisherige Monatsraster, aufklappbar
         React.createElement('details', { style: { marginTop: space.sm + 'px' }, open: verteilen ? true : undefined },
-          React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, minHeight: '32px', display: 'flex', alignItems: 'center' } }, t('calendar.ganzerMonat')),
+          React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, minHeight: '44px', display: 'flex', alignItems: 'center' } }, t('calendar.ganzerMonat')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', margin: space.sm + 'px 0 ' + space.xs + 'px' } },
             ...wdNames.map((w, i) => React.createElement('div', { key: i, style: { textAlign: 'center', fontSize: text.xs, color: palette.mid } }, w))
           ),

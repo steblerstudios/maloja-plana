@@ -151,7 +151,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
         fontSize: text.sm, color: palette.mid, fontFamily: 'inherit',
-        padding: space.sm + 'px 0', marginTop: space.md + 'px',
+        padding: space.sm + 'px 0', marginTop: space.md + 'px', minHeight: '44px',
       },
     }, zurueckZeichen(), t('arztkoffer.back')),
   );
