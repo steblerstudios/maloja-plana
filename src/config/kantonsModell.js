@@ -19,6 +19,7 @@
 import { saeule3aMaximum, groessteJahresEinzahlung } from '../data/saeule3a.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
+import { trifftNichtZu, feldHatWert } from '../utils/vollstaendigkeit.js';
 
 // ─── Eingaben lesen ────────────────────────────────────────────────────────────
 
@@ -83,6 +84,8 @@ export function vermoegenSumme(f) {
 //                        Art. 19 Abs. 1 lit. b EG zum KVG (bGS 833.14) i. V. m. Art. 5 Abs. 1 lit. a
 //                        V zum KVG (bGS 833.141). Mit Säule 2 gilt dort `voll`.
 //
+// ⟨26.10.2026⟩ Seit heute rechnen alle Regeln. `schwelleOhneSaeule2` wirkt, sobald `saeule2()` «ohne» sagt;
+// der Absatz darunter beschreibt den Stand bis dahin und bleibt als Beleg stehen.
 // 🛑 EINE DIESER REGELN (`schwelleOhneSaeule2`) WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
 // wird beim nächsten Kanton nicht kopiert. `schwelleOhneSaeule2` gibt `0` zurück wie `voll`,
@@ -110,6 +113,27 @@ export function vermoegenSumme(f) {
 // nicht harmlos. Hier trotzdem so: eine unlesbare Zahl zu deuten wäre Raten, und der Fall
 // entsteht nicht über die Oberfläche (`type: 'number'`), sondern nur aus Altdaten.
 const betrag3a = (f) => Math.max(0, Number(f.pension3a) || 0);
+
+// AG: 10 % des Nettoerwerbseinkommens (§ 5 Abs. 1 V KVGG) — Hauptlohn × 12, mit 13. Monatslohn × 13.
+const agSchwelle = (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter);
+
+// Besteht eine zweite Säule? `true` mit, `false` ohne, `null` unbekannt. Eine Quelle für AG, AR, BS
+// und GR (Entscheid Stebler Studios 26.10.2026, «Variante A + C»), damit die Kantone dieselbe
+// Angabe gleich lesen.
+//   BVG-Beitrag über 0            ⇒ mit (wie bisher in AR, BS, GR)
+//   BVG-Beitrag ausdrücklich 0    ⇒ ohne (K82: eine gespeicherte 0 ist eine Antwort; wie AR, GR)
+//   Pensionskasse «Trifft nicht zu» und kein Name eingetragen ⇒ ohne. Die Markierung nimmt Beitrag und
+//     Guthaben mit (`naMit`, config/constants.js); ein eingetragener Wert geht vor (K45).
+//   sonst                         ⇒ unbekannt — leere Felder heissen «nicht erfasst».
+export function saeule2(v) {
+  const d = v || {};
+  const roh = d.bvgContribution;
+  const leer = roh === undefined || roh === null || String(roh).trim() === '';
+  const wert = Number(roh);
+  if (!leer && Number.isFinite(wert)) return wert > 0;
+  if (trifftNichtZu(d, 'bvgInsurer') && !feldHatWert(d, 'bvgInsurer')) return false;
+  return null;
+}
 
 // Kann der gespeicherte `pension3a`-Wert überhaupt EIN Jahr sein?
 //
@@ -345,12 +369,18 @@ export const SAEULE_3A = Object.freeze({
     // ausdrücklich, nicht aus Versehen. Wirkung: bei Personen ohne Säule 2 fällt der
     // Anspruch bis zu 34 % zu tief aus (nachgerechnet 20.09.2026: Nettoerwerb 30'000,
     // 3a 6'000 → 1'017.50 statt 1'542.50).
-    offen: 'Ob eine Säule 2 besteht, weiss die App nicht SICHER — leere BVG-Felder heissen '
-      + '«nicht erfasst». Entscheid nötig: fragen, oder in AG eine Orientierung statt einer '
-      + 'Zahl zeigen. Bis dahin volle Zurechnung wie bisher.',
-    // Die Rechnung steht bereit, damit sie beim Entscheid nicht neu erfunden wird.
-    schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter),
-    nichtAufgerechnet: () => 0,
+    //
+    // ⟨26.10.2026, Entscheid Stebler Studios «Variante A + C»⟩ Die Angabe kommt jetzt aus
+    // `saeule2()` oben: BVG-Beitrag 0 oder Pensionskasse «Trifft nicht zu» heisst «ohne Säule 2».
+    // Diese Regel gilt NUR in diesem Fall — ipvAargau.js wählt sie danach und rechnet bei
+    // unbekannter Säule 2 beide Fälle; unterscheiden sie sich, zeigt AG eine Orientierung statt
+    // einer Zahl (wie AR und BS). Der Text oben bleibt als Beleg für den Weg.
+    // Aufgerechnet wird nur, was ÜBER 10 % des Nettoerwerbseinkommens liegt; im Nettoeinkommen
+    // der App steckt die ganze Einzahlung, also kommt der Teil bis zur Schwelle weg.
+    vorbehalt: 'Ob die Schwelle auch gilt, wenn nur während eines Teils des Jahres eine '
+      + 'Säule 2 bestand, ist bei der SVA Aargau angefragt (FRAGEN-AN-DIE-AEMTER.md, Frage 1).',
+    schwelle: agSchwelle,
+    nichtAufgerechnet: (f) => Math.min(betrag3a(f), agSchwelle(f)),
   }),
 
   // ⟨28.09.2026, K31 GL⟩ Glarus misst am «Total der Einkünfte» — VOR allen Abzügen:

@@ -49,7 +49,7 @@
 
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A, saeule2,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
 
@@ -186,10 +186,11 @@ export function ipvAargauRechnen({ personen, me, praemien = null, werte = IPV_AG
 //   Amtlich zählen die Steuerfaktoren des Steuerjahres 2023; es fehlen also die amtlichen
 //   Abzüge (Berufsauslagen, Versicherungs- und Sozialabzüge), und das Vermögen ist hier nur
 //   die Summe der erfassten Werte, nicht das steuerbare Gesamtvermögen inkl. Liegenschaft
-//   und abzüglich Schulden. Die Säule 3a wird voll aufgerechnet, obwohl § 6 Abs. 5 KVGG
-//   i. V. m. § 5 Abs. 1 V KVGG sie bei Personen ohne Säule 2 nur über 10 % des
-//   Nettoerwerbseinkommens aufrechnet — die App weiss nichts über eine Säule 2, und die
-//   volle Aufrechnung ist die vorsichtigere Seite (sie senkt den Betrag).
+//   und abzüglich Schulden. Die Säule 3a rechnet bei Personen ohne Säule 2 nur über 10 % des
+//   Nettoerwerbseinkommens auf (§ 6 Abs. 5 KVGG i. V. m. § 5 Abs. 1 V KVGG), mit Säule 2 voll;
+//   ist das nicht erfasst und entscheidet es über den Betrag, keine Zahl (seit 26.10.2026).
+//   ⟨Hier stand bis dahin, die volle Aufrechnung sei «die vorsichtigere Seite» — falsch, eine zu
+//   tiefe Zahl hält Berechtigte vom Antrag ab; siehe unten.⟩
 export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   const b = data.basis || {};
   const f = data.finanzen || {};
@@ -234,14 +235,29 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // zu tief aus (Nettoerwerb 30'000, 3a 6'000 → 1'017.50 statt 1'542.50, nachgerechnet
   // 20.09.2026). Das ist NICHT die vorsichtige Seite — eine zu tiefe Zahl hält Berechtigte
   // vom Antrag ab. (Hier stand vorher genau diese Begründung; sie war falsch.)
-  const bereinigtesEinkommen = einkommenJahr(f, SAEULE_3A.schwelleOhneSaeule2);
-  const me = agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen, verheiratet: false, kinderZahl: 0, werte });
+  // ⟨26.10.2026, Entscheid Stebler Studios «Variante A + C»⟩ Die Angabe kommt aus `saeule2()`
+  // (kantonsModell.js): BVG-Beitrag 0 oder Pensionskasse «Trifft nicht zu» ⇒ ohne Säule 2, die
+  // 10-%-Schwelle gilt; Beitrag über 0 ⇒ mit, volle Zurechnung. Unbekannt und mit 3a: beide Fälle
+  // rechnen und nur eine Zahl zeigen, wenn sie gleich ausgehen — sonst Orientierung, wie AR und BS.
+  // Der Absatz darüber beschreibt den Stand bis dahin und bleibt als Beleg stehen.
+  const mitSaeule2 = saeule2(data.versicherungen);
+  const meFuer = (mit) => agMassgebendesEinkommen({
+    bereinigtesEinkommen: einkommenJahr(f, mit ? SAEULE_3A.voll : SAEULE_3A.schwelleOhneSaeule2),
+    vermoegen, verheiratet: false, kinderZahl: 0, werte,
+  });
+  // Unbekannt rechnet vorerst wie «mit» (volle Zurechnung, das bisherige Verhalten) und wird unten
+  // gegen «ohne» geprüft.
+  const me = meFuer(mitSaeule2 !== false);
 
   // Nur eine Person im Haushalt, darum ist die erfasste Prämie ihre eigene (§ 7 Abs. 3 KVGG).
   const praemie = praemieJahr(data);
   if (praemieFehlt(praemie)) return orientierung('praemie');
   const praemien = [praemie];
   const annual = Math.round(ipvAargauRechnen({ personen: ['e'], me, praemien, werte }).total);
+  if (mitSaeule2 === null && Number(f.pension3a) > 0) {
+    const ohne = Math.round(ipvAargauRechnen({ personen: ['e'], me: meFuer(false), praemien, werte }).total);
+    if (ohne !== annual) return orientierung('saeule2Unbekannt');
+  }
   // Vergleichsgrösse «höchstens möglich»: dieselbe Rechnung bei massgebendem Einkommen 0.
   const maxAnnual = Math.round(ipvAargauRechnen({ personen: ['e'], me: 0, praemien, werte }).total);
 

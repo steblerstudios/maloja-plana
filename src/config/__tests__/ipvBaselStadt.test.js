@@ -278,6 +278,12 @@ describe('K31 calculateIPV für BS (App-Angaben → Modell)', () => {
     it('Pensionskassenbeitrag erfasst: die 3a bleibt im Einkommen, Betrag wie ohne 3a', () => {
       expect(calculateIPV(person({ finanzen: { pension3a: 7258 }, versicherungen: { bvgContribution: 300 } }))).toMatchObject({ amount: 118, gruppe: 12 });
     });
+    // ⟨26.10.2026, Entscheid «Variante A + C»⟩ Ohne zweite Säule ist jetzt eine Antwort: ein erfasster
+    // Beitrag 0 oder die Pensionskasse «Trifft nicht zu». Dann kommt die 3a weg (SoHaV § 17 Abs. 1 lit. a).
+    it('ohne zweite Säule (Beitrag 0 oder «Trifft nicht zu»): die 3a kommt weg — Gruppe 06', () => {
+      expect(calculateIPV(person({ finanzen: { pension3a: 7258 }, versicherungen: { bvgContribution: 0 } }))).toMatchObject({ belegt: true, gruppe: 6 });
+      expect(calculateIPV(person({ finanzen: { pension3a: 7258 }, versicherungen: { _na: ['bvgInsurer'] } }))).toMatchObject({ belegt: true, gruppe: 6 });
+    });
     it('3a zu klein, um die Gruppe zu wechseln: gerechnet', () => {
       // 36 000 − 500 = 35 500 läge in Gruppe 11 (≠ 12), darum 36 500 als Basis:
       // 36 500 und 36 500 − 500 = 36 000 liegen beide in Gruppe 12 (35 625 < … ≤ 36 875).

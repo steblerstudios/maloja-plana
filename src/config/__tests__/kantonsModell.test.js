@@ -3,7 +3,7 @@ import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
-  ergebnisOhneAnspruch, ergebnisMitAnspruch,
+  ergebnisOhneAnspruch, ergebnisMitAnspruch, saeule2,
 } from '../kantonsModell.js';
 import { SAEULE3A_MAX } from '../../data/saeule3a.js';
 
@@ -79,7 +79,9 @@ describe('Eingaben lesen', () => {
     // Maximum nicht ÜBERSTEIGT — 7'258 ist genau der Grenzfall, bei dem BE noch nichts abzieht.
     expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.voll)).toBe(12000);
     expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.bisBundesMaximum)).toBe(12000);
-    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.schwelleOhneSaeule2)).toBe(12000);
+    // ⟨26.10.2026⟩ AG rechnet seit heute: ohne Säule 2 bleiben 10 % des Nettoerwerbs (1'200) weg.
+    // Das ist kein zweites Aufrechnen, sondern der Abzug, den die Regel verlangt.
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.schwelleOhneSaeule2)).toBe(10800);
   });
 
   // ⟨neu 23.09.2026⟩ KKVV Art. 6 Abs. 4 lit. i, Wortlaut an der Quelle (BELEX, BSG 842.111.1):
@@ -274,10 +276,10 @@ describe('Eingaben lesen', () => {
     // Jetzt hat BE keine mehr — der Deckel rechnet. Geprüft wird darum, dass eine FERTIGE
     // Regel kein `offen` mehr trägt: sonst bliebe ein «noch nicht» stehen, das nicht mehr
     // stimmt, und läse sich beim nächsten Kanton wie ein Auftrag.
-    it('zwei von dreien sind fertig — die dritte sagt, was ihr fehlt', () => {
-      expect(SAEULE_3A.voll.offen).toBeUndefined();
-      expect(SAEULE_3A.bisBundesMaximum.offen).toBeUndefined();
-      expect(SAEULE_3A.schwelleOhneSaeule2.offen).toMatch(/nicht SICHER/);
+    // ⟨26.10.2026⟩ Seit dem Entscheid «Variante A + C» ist auch die dritte fertig: keine Regel trägt
+    // mehr `offen`. Der Test hiess bis dahin «zwei von dreien sind fertig — die dritte sagt, was ihr fehlt».
+    it('alle Regeln sind fertig — keine trägt mehr `offen`', () => {
+      for (const r of Object.values(SAEULE_3A)) expect(r.offen, r.name).toBeUndefined();
     });
 
     // 🛑 Eine fertige Regel MUSS rechnen. Ohne diesen Test könnte `offen` verschwinden,
@@ -289,7 +291,8 @@ describe('Eingaben lesen', () => {
       // `voll` ist fertig mit Abzug 0 — das ist die Regel selbst (ZH/SG rechnen unbedingt zu),
       // kein Platzhalter. Deshalb steht sie hier neben und nicht bei der offenen Regel.
       expect(SAEULE_3A.voll.nichtAufgerechnet(ueberMaximum, { bemessungsjahr: 2024 })).toBe(0);
-      expect(SAEULE_3A.schwelleOhneSaeule2.nichtAufgerechnet(ueberMaximum, { bemessungsjahr: 2024 })).toBe(0);
+      // AG seit 26.10.2026: 10 % von 60'000 = 6'000 bleiben weg (gilt nur ohne Säule 2; ipvAargau.js wählt).
+      expect(SAEULE_3A.schwelleOhneSaeule2.nichtAufgerechnet(ueberMaximum, { bemessungsjahr: 2024 })).toBe(6000);
     });
 
     // 🛑 `offen` und `vorbehalt` sind NICHT dasselbe, und die Verwechslung war genau der
@@ -304,7 +307,10 @@ describe('Eingaben lesen', () => {
       expect(be.vorbehalt).toMatch(/nicht bestätigt|angefragt/);
       // Und die Gegenrichtung: was `offen` trägt, trägt keinen Vorbehalt — sonst läse sich
       // eine Lücke wie eine bloss unbestätigte Lesart.
-      expect(SAEULE_3A.schwelleOhneSaeule2.vorbehalt).toBeUndefined();
+      // ⟨26.10.2026⟩ AG rechnet jetzt und trägt seinerseits einen Vorbehalt (Teiljahr, Frage an die
+      // SVA Aargau). Die Gegenrichtung gilt weiter: was `offen` trüge, trüge keinen Vorbehalt.
+      expect(SAEULE_3A.schwelleOhneSaeule2.vorbehalt).toMatch(/SVA Aargau/);
+      for (const r of Object.values(SAEULE_3A)) if (r.offen) expect(r.vorbehalt).toBeUndefined();
       expect(SAEULE_3A.voll.vorbehalt).toBeUndefined();
     });
 
@@ -452,5 +458,33 @@ describe('Ergebnis', () => {
   it('`extra` trägt, was den Kanton ausmacht — Region hier, Basisjahr dort', () => {
     expect(ergebnisMitAnspruch({ ...basis, annual: 1200, maxAnnual: 1200, noteKey: 'x', extra: { region: 2 } }).region).toBe(2);
     expect(ergebnisMitAnspruch({ ...basis, annual: 1200, maxAnnual: 1200, noteKey: 'x', extra: { basisjahr: 2023 } }).basisjahr).toBe(2023);
+  });
+});
+
+// ⟨26.10.2026, Entscheid Stebler Studios «Variante A + C»⟩ Eine Lesart für AG, AR, BS, GR.
+describe('saeule2: besteht eine zweite Säule?', () => {
+  it('BVG-Beitrag über 0 ⇒ mit, ausdrücklich 0 ⇒ ohne (auch als Text «0»)', () => {
+    expect(saeule2({ bvgContribution: 250 })).toBe(true);
+    expect(saeule2({ bvgContribution: '250' })).toBe(true);
+    expect(saeule2({ bvgContribution: 0 })).toBe(false);
+    expect(saeule2({ bvgContribution: '0' })).toBe(false);
+  });
+
+  it('Pensionskasse «Trifft nicht zu» ⇒ ohne — ausser es steht doch ein Name oder ein Beitrag', () => {
+    expect(saeule2({ _na: ['bvgInsurer'] })).toBe(false);
+    expect(saeule2({ _na: ['bvgInsurer'], bvgInsurer: 'Publica' })).toBe(null);
+    expect(saeule2({ _na: ['bvgInsurer'], bvgContribution: 300 })).toBe(true);
+  });
+
+  it('leer, nur ein Name, nur ein Guthaben oder unlesbar ⇒ unbekannt', () => {
+    expect(saeule2(undefined)).toBe(null);
+    expect(saeule2({})).toBe(null);
+    expect(saeule2({ bvgContribution: '' })).toBe(null);
+    expect(saeule2({ bvgContribution: '   ' })).toBe(null);
+    expect(saeule2({ bvgInsurer: 'Publica' })).toBe(null);
+    expect(saeule2({ bvgBalance: 40000 })).toBe(null);
+    expect(saeule2({ bvgContribution: 'abc' })).toBe(null);
+    // Eine andere Markierung im Kapitel zählt nicht.
+    expect(saeule2({ _na: ['kkInsurer'] })).toBe(null);
   });
 });

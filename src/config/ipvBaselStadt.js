@@ -92,7 +92,7 @@
 //   · die Erhöhung der Mindesterwerbseinkommen im Einzelfall (SoHaV § 27).
 import {
   vermoegenSumme, rohesEinkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A, saeule2,
   kinderAlter, ALTER_UNERFASST, UEBER_18, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -387,11 +387,14 @@ export function ipvBaselStadt(data, hh, ipvData, youngAdultsCount, orientierung)
   const basis = roh + unterhalt + hypothetisch + anteil;
   const meMit = Math.max(0, basis - regel.nichtAufgerechnet(f));
   const meOhne = Math.max(0, basis - regel.ohneSaeule2(f));
-  const saeule2Erfasst = Number(data.versicherungen?.bvgContribution) > 0;
-  if (!saeule2Erfasst && bsGruppe(meMit, personen.length) !== bsGruppe(meOhne, personen.length)) {
+  // ⟨26.10.2026, Entscheid Stebler Studios «Variante A + C»⟩ Die Angabe kommt jetzt aus `saeule2()`
+  // (kantonsModell.js): auch ein erfasster Beitrag 0 oder die Pensionskasse «Trifft nicht zu» gilt —
+  // dann als «ohne», und die 3a kommt weg. Nur unbekannt rechnet weiter beide Fälle.
+  const mitSaeule2 = saeule2(data.versicherungen);
+  if (mitSaeule2 === null && bsGruppe(meMit, personen.length) !== bsGruppe(meOhne, personen.length)) {
     return orientierung('bsSaeule3a');
   }
-  const me = meMit;
+  const me = mitSaeule2 === false ? meOhne : meMit;
 
   // KVO § 22 Abs. 2 [1]: «höchstens der im konkreten Fall tatsächlich geschuldeten Prämie».
   const praemie = praemieJahr(data);
