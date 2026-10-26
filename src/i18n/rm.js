@@ -6989,6 +6989,14 @@ export default {
     ausMerkliste: 'ord la glista da memoria',
     // rm ungeprüft F5
     ganzerMonat: 'L’entir mais',
+    // rm ungeprüft, Fassung G (27.10.2026)
+    ganzesJahr: 'L’entir onn',
+    untertitel: { sie: 'Termins, inscunters e quai che Vus avais notà — en l’urden dal temp.', du: 'Termins, inscunters e quai che ti has notà — en l’urden dal temp.' },
+    alsNaechstes: 'Sco proxim',
+    inTagen: 'en {days} dis',
+    morgen: 'Damaun',
+    ausAblauf: 'ord il decurs {name}',
+    legende: { frist: 'Termin', termin: 'Inscunter', erledigt: 'fatg', heute: 'oz' },
     // rm ungeprüft F5
     nochOhneTag: 'Anc senza di',
     // rm ungeprüft F5
