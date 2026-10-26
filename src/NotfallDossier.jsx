@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { qrNotfallVcard, qrZeichnen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { getFullName } from './config/constants.js';
-import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier, notfallQrAbschnitte } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -52,6 +52,8 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   // Gesundheitsangaben unverschlüsselt und war sofort sichtbar, sobald das Dossier Inhalte hatte — auch für alle,
   // die über die Schulter schauen. Jeder Besuch beginnt verborgen; nichts davon wird gespeichert.
   const [qrSichtbar, setQrSichtbar] = useState(false);
+  // Verliert das Dossier seine Inhalte, wird der Code wieder verborgen — sonst erschiene er später ohne Klick.
+  useEffect(() => { if (!hasSections) setQrSichtbar(false); }, [hasSections]);
   useEffect(() => {
     if (!qrSichtbar || !hasSections || !qrRef.current) return;
     const gezeichnet = qrZeichnen(qrRef.current, qrText, {
@@ -175,17 +177,21 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
       }, t('notfallDossier.qrHint')),
       // Knopf «QR anzeigen» / «QR ausblenden». Die Fläche gibt es nur, solange der Code sichtbar ist.
-      React.createElement('button', {
-        type: 'button',
-        'aria-expanded': qrSichtbar,
-        onClick: () => { setQrStatus('ok'); setQrSichtbar((v) => !v); },
-        style: {
-          minHeight: '44px', padding: '0 ' + space.md + 'px', margin: '0 0 ' + (qrSichtbar ? '12px' : '0'),
-          background: palette.surface, color: palette.text, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
-        },
-      }, t(qrSichtbar ? 'notfallDossier.qrAusblenden' : 'notfallDossier.qrAnzeigen')),
-      qrSichtbar && React.createElement('br'),
+      // Rand in palette.mid und Aufklapp-Zeichen (a11y-pruefer 26.10.2026): der Rand in palette.border hob sich
+      // vom Kartengrund kaum ab; als Knopf erkennbar war er fast nur am Text.
+      React.createElement('div', { style: { marginBottom: qrSichtbar ? '12px' : 0 } },
+        React.createElement('button', {
+          type: 'button',
+          'aria-expanded': qrSichtbar,
+          onClick: () => { setQrStatus('ok'); setQrSichtbar((v) => !v); },
+          style: {
+            minHeight: '44px', padding: '0 ' + space.md + 'px',
+            background: palette.surface, color: palette.text, border: '1px solid ' + palette.mid,
+            borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
+          },
+        }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(qrSichtbar)),
+        t(qrSichtbar ? 'notfallDossier.qrAusblenden' : 'notfallDossier.qrAnzeigen'))
+      ),
       qrSichtbar && React.createElement('div', {
         ref: qrRef,
         style: {
