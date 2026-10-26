@@ -5539,6 +5539,8 @@ export default {
     sectionInsurance: 'Versicherung',
     footerPrivacy: 'Dieses Dossier enthält persönliche Gesundheitsinformationen. Bitte sorgfältig aufbewahren.',
     qrTitle: 'Notfall-QR für Rettungskräfte',
+    qrAnzeigen: 'QR anzeigen',
+    qrAusblenden: 'QR ausblenden',
     qrHint: 'Scannbar mit jedem Smartphone — der Code enthält nur Text, keinen Link. Er ist nicht verschlüsselt: Wer ihn scannt, liest alle Angaben darin. Zum Mitführen ein Bildschirmfoto machen oder diese Seite drucken. Beim Scannen bietet das Telefon oft an, die Angaben als Kontakt zu speichern — dann stehen sie im Adressbuch der Person, die scannt.',
     qrGekuerzt: 'Der QR-Code enthält eine Kurzfassung: Nicht alle Angaben passen hinein, und der Code nennt am Ende, was fehlt. Vollständig stehen die Angaben nur im Dossier unten.',
     qrNichtEnthalten: 'Nicht enthalten, siehe Dossier',

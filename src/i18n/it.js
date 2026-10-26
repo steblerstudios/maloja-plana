@@ -5470,6 +5470,8 @@ export default {
     sectionInsurance: 'Assicurazione',
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
     qrTitle: 'QR d’emergenza per i soccorritori',
+    qrAnzeigen: 'Mostra il QR',
+    qrAusblenden: 'Nascondi il QR',
     qrHint: 'Leggibile con qualsiasi smartphone — il codice contiene solo testo, nessun link. Non è cifrato: chiunque lo scansioni può leggere tutte le indicazioni che contiene. Per portarlo con sé, fare uno screenshot o stampare questa pagina. Durante la scansione, il telefono propone spesso di salvare le indicazioni come contatto — finiscono così nella rubrica di chi scansiona.',
     qrGekuerzt: 'Il codice QR contiene una versione abbreviata: non tutte le indicazioni ci stanno e alla fine il codice indica cosa manca. Per intero figurano solo nel dossier qui sotto.',
     qrNichtEnthalten: 'Non incluso, vedi il dossier',

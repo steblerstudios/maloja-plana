@@ -3824,6 +3824,9 @@ export default {
     sectionInsurance: 'Assicuranza',
     footerPrivacy: "Quest dossier cuntegna infurmaziuns persunalas da sanadad. Per plaschair conservar cun attenziun.",
     qrTitle: 'QR d’urgenza per ils squadruns da salvament',
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    qrAnzeigen: 'Mussar il QR',
+    qrAusblenden: 'Zuppentar il QR',
     // TODO(rm): Deploy-Gate 0.1.36 provisorisch — von Muttersprachler:in gegenlesen.
     // TODO(rm): provisorisch — Gegenlese (Satz «Kontakt speichern» neu, 26.09.2026)
     qrHint: 'Scannabel cun mintga smartphone — il code cuntegna mo text, nagina colliaziun. El n’è betg criptà: tgi che al scanna, po leger tut las indicaziuns en el. Per al purtar cun sai, far in screenshot u stampar questa pagina. Cun scannar, porscha il telefon savens da memorisar las indicaziuns sco contact — lura èn ellas en il cudeschet d’adressas da la persuna che scanna.',
