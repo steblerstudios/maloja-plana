@@ -4,6 +4,19 @@ Grundlage ist main `99ab58e4` vom 26.10.2026, dazu `docs/design/mockups-stardust
 
 Geprüft wurde nur der Code, nicht im Browser. Was nur live zu bestätigen ist, steht als «prüfen». Bis Stebler Studios entscheidet, ist nichts gebaut.
 
+### Gebaut als Entwurfs-PR (Stand 26.10.2026, 23:20, nichts gemergt)
+
+| PR | Inhalt | Befunde |
+|---|---|---|
+| #612 | Fehlerklassen Dashboard/Kapitel | D1, D2, D12, K-F3, K-F4, K-F6, K-F8 |
+| #613 → #614 | Hausarzt aus der Liste; weitere Ärzte in Dossier/QR (QR ohne Fachrichtung) | D14 + Entscheid «weitere Ärzte» |
+| #616 | Notfall-QR erst auf Klick | Entscheid nach Rechtsprüfung |
+| #618 | Werte 2027: SKOS-Jahrestabelle, Mindestlöhne je Jahr, ALV nicht als 2027 | W9 + Werte-2027-Punkte 1, 3, 4 |
+| #619 | fehlende i18n-Schlüssel, tote Rückfälle, Anrede/Schalter | S1, R10, R11 |
+| #620 | Tippziele ≥ 44 px | R9, R12 (+ «Karte öffnen», Monatsraster, «Beispiel verlassen») |
+| #621 | Kalender: Wiederholungen nach Kalender, Ankertag, .ics; Datum in App-Sprache | W10, S3; S2 nachgeprüft: kein Fehler |
+| (Gruppe 5) | Steuerrechner key datenModus, «Abzüge (geschätzt)», Franken/Stundenansätze über geld.js | J-key, S3, W11, S5; W12 nachgeprüft: kein Fehler |
+
 | Bereich | Stand |
 |---|---|
 | Dashboard, 7 Kapitel, Versicherungs-Übersicht | geprüft 26.10.2026 (unten) |
