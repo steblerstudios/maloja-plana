@@ -5384,9 +5384,13 @@ export default {
     compareFranchiseNote: 'Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Tippe eine Kasse für Details.',
     // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     wechselzeitNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Die Kündigungsfrist für einen Kassenwechsel auf diesen Termin ist abgelaufen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     wechselzeitStufen: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise: Antrag spätestens am {datum} bei der Kasse. Eine höhere: Die Frist legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     refJahr: 'Prämien {jahr}',
     // TODO(rm): provisorisch deutsch — Prämien veraltet (26.10.2026)
     veraltet: 'Für {aktuell} sind hier noch keine Prämien hinterlegt. Die Werte unten sind die Prämien {jahr} — massgebend ist die Prämienmitteilung der Kasse.',
