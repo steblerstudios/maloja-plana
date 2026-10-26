@@ -17,6 +17,90 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Sophie: «Ja, merge die Entwurfs-PRs in der festgehaltenen
+> Reihenfolge … Nichts erzwingen, kein Deploy»). NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:22): main = `c5ba39e3` (26.10. 15:22) · live = `4299bfb9` (0.1.48-beta) ·
+> **133 Commits** zwischen live und main. Squash je PR, jeweils auf main nachgezogen, CI grün abgewartet, kein Force-Push.
+> - **Netto/BVG-Kette (diese Sitzung):** #586 `c313f0a7` · #591 `22fda887` · #588 `48b7d3d2` · #589 `b9fcdae4` · #590
+>   `2101942b` · #593 `5ec38a6d` · #599 `96ceb295` · #600 `4550523a` · #602 `c5ba39e3`.
+> - **Übrige (Sitzung «SESSION_START Nachtrag Maloja», abgestimmt):** #587 `e966b908` · #592 `94633896` · #594 `46c9ae7a` ·
+>   #597 `fd88bc79` (enthält #595 + #596, beide geschlossen «enthalten in #597») · #607 `87df726c` · #598 `009e27dd` ·
+>   #608 `5fa9c85f` · #601 `ebd7a2ff` · #603 `13fe1081` (rm-Wächter: wörtlich deutsche rm-Texte brauchen `// TODO(rm)`).
+> - Dazu vorher (andere Sitzung): #604, #605, #606 (14:00).
+> **Nachziehen:** Nach jedem Squash Konflikte in Dateien, die der Kind-PR nicht ändert (Schutzschild → Fassung main), und in
+> eigenen Dateien nur dort, wo main seit dem Elternstand unverändert war (→ Fassung des PR); bei #588 doppelte
+> `referenzalterErreicht` aus dem Auto-Merge entfernt. CI (`ci.yml`) läuft nur bei pull_request gegen main → erst Basis
+> umstellen, dann pushen. main ist nicht geschützt — `gh pr merge --auto` würde ohne CI mergen, bewusst nicht benutzt.
+> **Offen:** **Deploy** (nur Stebler Studios, vorher `/maloja-predeploy`) · #609, #561, #563 (nicht Teil dieser Runde) ·
+> Kapitel-Spinnennetz weg nach M2 · Geburt am 1. eines Monats (Ausgleichskasse) · rm gegenlesen.
+
+> 🧾 **Nachtrag 26.10.2026, 04:25 — #601 und #602 dazu. Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (04:20): main = `0413772a` · live = `4299bfb9` (0.1.48-beta) · 112 Commits dazwischen. Alle Zweige gepusht, sauber.
+> - **#601** `feat/absicherung-je-risiko` `06339b11` (auf #598): «Absicherung je Risiko» als Liste in der Versicherungs-Übersicht;
+>   Fach- (0 Blocker, 8 «Sollte») und Textbefunde eingearbeitet; zusätzlich gelesen AHVG 21, 24 Abs. 1, 42 · IVG 39 · UVV 13.
+> - **#602** `fix/bvg-restzeit` `61cd50c7` (auf #600): BVG-Hochrechnung mit monatsgenauer Restzeit; Projektion = BVG-Block.
+> **Merge-Reihenfolge:** #586 → #588 → #589 → #590 → #593 → #599 → #600 → #602 (#591 auf #586) · #594 → #595 + #596 → #597 →
+> #598 → #601. Offen wie unten, ohne «BVG-Hochrechnung aufgerundet» (erledigt in #602).
+
+> 🧾 **Nachtrag 26.10.2026, 03:50 — Vier weitere Entwurfs-PRs (#597–#600) + Zweig «Absicherung je Risiko». Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 03:47): main = `0413772a` (26.10. 00:48, #569 gemergt) · live = `4299bfb9`
+> (0.1.48-beta) · **112 Commits** dazwischen. Alle Arbeitszweige gepusht.
+> - **#597** Wechselzeit: ab BAG-Publikation (2027: 29.09.2026) bis 31.12. rechnen Kassenvergleich, Franchise-Stufen und
+>   -Vorschlag mit dem Folgejahr; Altersklasse der Prämie nach **Jahrgang** (BAG-Gesamtbericht 2027 S. 24; KVG/KVV/KVAV nennen
+>   keine Grenzen); kein Vorschlag «tiefer» nach dem 30.11. (KVV 94 II). Enthält #595 + #596. **CI grün.**
+> - **#598** (auf #597): Hinweis, wenn fürs Kalenderjahr keine Prämien hinterlegt sind (2028 ohne Import).
+> - **#599** (auf #593): Netto-Richtwert ohne AHV/ALV/PK, solange im Jahr ≤17 (AHVG 3 II a, AVIG 2 I a, BVG 7 I); «Neuer Job»
+>   nennt das BVG-Mindestalter. · **#600** (auf #599): BVG-Altersgutschrift nach Jahrgang (BVV 2 Art. 13).
+> - **Zweig `feat/absicherung-je-risiko`** `e231e928` (auf #598, **kein PR**): Liste «Absicherung je Risiko» in der Versicherungs-
+>   Übersicht (Sophie: Liste statt Spinnennetz). Textprüfung 0 Blocker (noch nicht eingearbeitet), **Fachprüfung ausstehend**.
+> **Merge-Reihenfolge:** #586 → #588 → #589 → #590 → #593 → #599 → #600 (#591 auf #586) · #594 → #595 + #596 → #597 → #598.
+> **Offen:** Geburt am 1. eines Monats (Merkblätter 3.01/3.04 und RWL Stand 1.1.2026 gelesen: nicht geregelt → Ausgleichskasse
+> fragen) · Spinnennetz im Kapitel weg, sobald M2 steht · BVG-Hochrechnung: Jahresschritte ab heute, Gutschriftjahre aufgerundet ·
+> AG/BS «keine Säule 2» · ZStB 133.1 · rm. Übergabe: `_handoffs/2026-10-26-elf-entwurfs-prs-praemien-2027-bvg-alter.md` (Nachträge).
+
+> 🧾 **Nachtrag 26.10.2026, 00:40 — Elf Entwurfs-PRs (#586–#596), nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 00:35): main = `2db4d4ee` (25.10. 21:22, unverändert) · live = `4299bfb9`
+> (0.1.48-beta) · **110 Commits** dazwischen. Alle Arbeitszweige gepusht, Werkbank sauber.
+> **Neu, je eigener Zweig + Fachprüfung (0 Blocker) + Volltest grün:**
+> - **Einzeln mergebar** (CI grün): #587 «Ich nehme keine» in Dossier/QR/Notfallpass/Notfallkarte · #592 Vorsorge-Einleitung
+>   «zwei Dokumente» (5 Sprachen) · #594 Franchise-Text am Wortlaut KVV Art. 94 · **#595 + #596 zusammen:** Prämien 2027 —
+>   mittlere Prämien je Kantonsregion und Kassenprämien je Versicherer (aus `gesamtbericht_ch-2027.pdf`), Wechsel am 1.1.2027
+>   automatisch per Stichtag.
+> - **Kette** (CI nur #586; die gestapelten laufen erst nach Nachziehen): #586 keine BVG-Pflicht ab Referenzalter → #591 nicht
+>   vor dem Mindestalter · #586 → #588 Netto-Richtwert Rentenalter monatsgenau → #589 an allen Aufrufern → #590 Armutsgrenzen-
+>   Hinweis im Rentenalter → #593 ab Folgemonat (AHVV 6quater, AVIG 2 II c). Nach jedem Squash nächsten Zweig nachziehen.
+> **Fedlex im Browser lesbar** (curl liefert nur die Hülle): BVG 7/10/33b, AHVV 6quater, AVIG 2, KVG 7, KVV 94/100 am Wortlaut.
+> **Offen:** Deploy (Stebler Studios) · Wechselzeit: Vergleich bis 31.12. mit 2026 (Produktentscheid) · Altersklasse Prämie
+> nach Kalenderjahr (BAG) statt Alter am Tag · Kassenprämien-Chunk 133 kB gzip (2026 nach Jahreswechsel entfernen) · Spinnennetz ·
+> AG/BS «keine Säule 2» · ZStB 133.1 · rm-Texte. Übergabe: `_handoffs/2026-10-26-elf-entwurfs-prs-praemien-2027-bvg-alter.md`.
+
+> 🏁 **Nachtrag 25.10.2026, 21:30 — Fassung 6 fertig auf main: #571–#584 auf Zuruf gemergt. NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 21:26): main = `2db4d4ee` (25.10. 21:22) · live = `4299bfb9` (0.1.48-beta,
+> 23.10.) · **110 Commits** dazwischen · offen nur PRs anderer Sitzungen: #569, #568, #563, #561 (Entwürfe).
+> **Gemergt** (Stebler Studios: «merge wenn möglich», später je «merge, sobald die CI grün ist»; squash, je Zweig main
+> nachgezogen + Volltest + Build + CI, CI auf main nach jedem Merge grün):
+> - **#574 · #571 · #573 · #572 · #575 · #576 · #580 · #577 · #578 · #579** — Abnahme Fassung 6 Seite für Seite: Kapitel
+>   Wohnen, Finanzen, Basis, Versicherungen (Prämien-Fundament, Instrumente, Versicherungs-Übersicht), Ausbildung, Behörden,
+>   Notfall «ein Ort». Maria: bleibt CHF 2’274.
+> - **#581 Muster für alle Kapitel M1–M8:** Angaben als ruhige Liste mit «x von n», Wichtiges «ergänzen ›», Rest «Nicht erfasst»,
+>   leere Abschnitte in einer Zeile · Kopf mit Landschaftsband und Brotkrume «Übersicht › Kapitel», **keine Kapitelkarte, Seite
+>   nicht mehr getönt** · «Als Nächstes» ruhig · Passend wie im Entwurf · Bereichsfarbe in Balken/Kuchen/Geldfluss.
+> - **#582** Wochenaufenthalt-Hinweise (IPV, Sozialhilfe) erschienen nie (`weekly`/`secondary` vs. `wochenaufenthalt`) — behoben,
+>   Wortlaut neu geprüft; Nebenwohnsitz ohne Steuersatz (Entscheid). «trifft nicht zu» Pensionskasse/Familienzulagen/
+>   Kinderbetreuung · AHV-Beitrag «/ Jahr».
+> - **#583** Schutzschild nennt BVG-Lücke bei «trifft nicht zu» · AHV-Orientierung für Selbständige · it «direttive del paziente».
+> - **#584** Englisch wie fedlex: «patient decree» / «advance care directive» (Entscheid Stebler Studios).
+> Jede Änderung mit Fachprüfung (swiss-precision, copy, a11y): 0 Blocker offen. 6’941 Tests grün, Startbündel 63.34 / 65 kB.
+> **Entscheide und Fahrplan:** Werkbank `mockups-stardust`, `docs/design/mockups-stardust-2026-10-23/VERGLEICH.md` und
+> `UEBERGABE-FASSUNG-6.md` (Abschnitte vom 25.10.). Übergabe: `_handoffs/2026-10-25-fassung6-gemergt-muster-und-nachtraege.md`.
+> **Offen:** Deploy (Stebler Studios, `/maloja-predeploy`) · Spinnennetz Versicherungen · «Ich nehme keine» im Notfall-Dossier ·
+> ZStB 133.1 · BAG-Prämien 2027 · rm ungeprüft · `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · KVG Art. 7 Wortlaut.
+
 > 🤝 **Nachtrag 26.10.2026, 13:50 — Pflege & Hilflosenentschädigung: drei Entwurfs-PRs (#604, #605, #606), CI grün. NICHT gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 26.10. 13:50): main = `0413772a` (26.10. 00:48) · live = `4299bfb9`
