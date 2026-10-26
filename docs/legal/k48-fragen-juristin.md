@@ -419,6 +419,11 @@ neben jedem QR genau das.
 Frage: Genügt dieser Hinweis (DSG Art. 6 Abs. 2 Verhältnismässigkeit; Art. 5 lit. c
 Ziff. 2 besonders schützenswert), oder braucht es eine andere Bauform (z. B. einen
 zweiten, kleineren Code nur mit Name und Notfallnummer)?
+*Nachtrag 26.10.2026:* Seit dem Zweig `feat/weitere-aerzte` stehen im Notfall-QR auch weitere Ärztinnen und
+Ärzte aus der Liste im Kapitel Notfall, **nur mit Name und Telefon, ohne Fachrichtung**. Die Fachrichtung (z. B.
+Psychiatrie) zeigt eine Behandlung an und ist damit selbst eine Gesundheitsangabe. Sie steht nur im gedruckten
+Dossier. Unterfrage: Ist auch der Name einer Fachärztin oder eines Facharztes im QR verhältnismässig, oder gehört
+er nur ins gedruckte Dossier?
 → *Was hängt daran:* die Bauform des Notfall-QR.
 
 ---

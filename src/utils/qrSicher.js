@@ -87,7 +87,8 @@ export function qrKuerzen(text, maxBytes = QR_MAX_BYTES) {
 // Ein Abschnittstitel steht nur da, wenn mindestens eine seiner Zeilen passt.
 // Rückgabe: { text, gekuerzt, fehlt: [label, …] }.
 export function qrNotfallText(abschnitte, { maxBytes = QR_MAX_BYTES, fehltTitel = '' } = {}) {
-  const zeileVon = r => '  ' + r.label + ': ' + r.value;
+  // Ohne Wert nur die Beschriftung (z. B. eine weitere Ärztin ohne Telefon, dossierGenerator.js).
+  const zeileVon = r => '  ' + r.label + (r.value ? ': ' + r.value : '');
 
   const baue = (budget) => {
     const teile = [];
@@ -100,7 +101,10 @@ export function qrNotfallText(abschnitte, { maxBytes = QR_MAX_BYTES, fehltTitel 
           teile.push(...neu);
           titelDrin = true;
         } else {
-          fehlt.push(r.label);
+          // `fehltAls`: unter welchem Namen eine weggefallene Zeile genannt wird (weitere Ärzte: die Zeile,
+          // nicht jeder Name einzeln); doppelte Nennungen nur einmal.
+          const als = r.fehltAls || r.label;
+          if (!fehlt.includes(als)) fehlt.push(als);
         }
       }
     }
@@ -226,7 +230,7 @@ export function qrNotfallVcard(abschnitte, {
 
   // Passt selbst der Rahmen nicht mehr: lieber nichts zeichnen als einen halben Ausweis.
   if (!letzte || letzte.bytes > maxBytes) {
-    return { text: '', inhalt: '', gekuerzt: true, fehlt: abschnitte.flatMap(a => a.rows.map(r => r.label)), bytes: 0 };
+    return { text: '', inhalt: '', gekuerzt: true, fehlt: [...new Set(abschnitte.flatMap(a => a.rows.map(r => r.fehltAls || r.label)))], bytes: 0 };
   }
   return letzte;
 }

@@ -428,6 +428,15 @@ function weitereAerzteText(notfall, t) {
   }).join('; ');
 }
 
+// Für den Notfall-QR: Name und Telefon, keine Fachrichtung (Prüfung rechts-pruefer 26.10.2026, s. NOTFALL_QR_FELDER).
+// Je Eintrag eine Zeile, damit bei knappem Platz einzelne wegfallen statt der ganzen Liste.
+function weitereAerzteQr(notfall) {
+  return weitereAerzteAusListe(notfall).map((x) => ({
+    label: x.name.trim(),
+    value: typeof x.phone === 'string' ? x.phone.trim() : '',
+  }));
+}
+
 function erkrankungenText(notfall) {
   const liste = Array.isArray(notfall?.chronicDiseasesList) ? notfall.chronicDiseasesList.filter(x => x && x.name) : [];
   if (liste.length) return liste.map(x => x.name + (x.code ? ' (' + x.code + ')' : '')).join(', ');
@@ -488,7 +497,8 @@ function getNotfallSections(data, chapters, t) {
         { feld: 'notfall.doctor', label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
         { feld: 'notfall.doctorPhone', label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
         { feld: 'notfall.hospital', label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
-        { feld: 'notfall.weitereAerzte', label: t('notfallDossier.weitereAerzte'), value: weitereAerzteText(data.notfall, t) },
+        // `qrZeilen`: die Fassung für den Notfall-QR — je Ärztin/Arzt eine Zeile, OHNE Fachrichtung (s. NOTFALL_QR_FELDER).
+        { feld: 'notfall.weitereAerzte', label: t('notfallDossier.weitereAerzte'), value: weitereAerzteText(data.notfall, t), qrZeilen: weitereAerzteQr(data.notfall) },
       ].filter(r => r.value),
     },
     {
@@ -530,6 +540,10 @@ function getNotfallSections(data, chapters, t) {
 // Verbotsliste: ein neues Dossier-Feld kommt erst in den Code, wenn es hier steht.
 // Bewusst NICHT hier (27.09.2026): notfall.organVertrauensperson — Name und Nummer einer
 // Drittperson stehen im gedruckten Dossier und im Organspende-QR, nicht im allgemeinen Notfall-QR.
+// notfall.weitereAerzte (Entscheid Stebler Studios 26.10.2026): im QR nur Name und Telefon, OHNE
+// Fachrichtung. Die Fachrichtung ist selbst eine Gesundheitsangabe (sie zeigt eine Behandlung an,
+// z. B. Psychiatrie) und wurde im Kapitel als Adressbuch erfasst, nicht für den Notfall; für Helfende
+// reicht Name und Nummer. Das gedruckte Dossier behält die Fachrichtung. Offene Frage dazu: K48 H7.
 export const NOTFALL_QR_FELDER = Object.freeze([
   'basis.name', 'basis.dateOfBirth', 'basis.phone', 'wohnen.address',
   'notfall.emergencyContact', 'notfall.emergencyPhone',
@@ -544,7 +558,8 @@ export const NOTFALL_QR_FELDER = Object.freeze([
 const NOTFALL_QR_REIHENFOLGE = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
 // Ganz ans Ende (26.10.2026): «weitere Ärzte» kann lang werden. Der QR füllt sein Budget der Reihe nach;
 // stünde die Zeile in «Ärztliche Betreuung», könnte sie Krankenkasse und Kartennummer (danach) verdrängen.
-// Eigener Schlussabschnitt mit demselben Titel.
+// Eigener Schlussabschnitt mit dem Titel der Zeile und je Ärztin/Arzt einer Zeile aus `qrZeilen`: passt
+// nicht alles, fallen einzelne Einträge weg, und «Nicht enthalten» nennt die Zeile, nicht die Namen.
 const QR_ZULETZT = ['notfall.weitereAerzte'];
 export function notfallQrAbschnitte(sections) {
   const rang = key => { const i = NOTFALL_QR_REIHENFOLGE.indexOf(key); return i === -1 ? NOTFALL_QR_REIHENFOLGE.length : i; };
@@ -553,7 +568,11 @@ export function notfallQrAbschnitte(sections) {
     .map(s => ({ ...s, rows: s.rows.filter(r => NOTFALL_QR_FELDER.includes(r.feld)) }));
   const zuletzt = geordnet.flatMap(s => s.rows.filter(r => QR_ZULETZT.includes(r.feld)).map(r => ({ r, s })));
   const ohne = geordnet.map(s => ({ ...s, rows: s.rows.filter(r => !QR_ZULETZT.includes(r.feld)) }));
-  const schluss = zuletzt.length ? [{ key: zuletzt[0].s.key + 'Weitere', title: zuletzt[0].s.title, rows: zuletzt.map(x => x.r) }] : [];
+  const schluss = zuletzt.map(({ r }) => ({
+    key: 'weitereAerzte',
+    title: r.label,
+    rows: (r.qrZeilen || []).map(z => ({ feld: r.feld, label: z.label, value: z.value, fehltAls: r.label })),
+  }));
   return ohne.concat(schluss).filter(s => s.rows.length > 0);
 }
 

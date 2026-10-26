@@ -66,14 +66,26 @@ describe('weitere Ärzte', () => {
     expect(generateNotfallDossier(data, chapters, t)).toContain('Dr. med. Psych');
   });
 
-  it('QR: darf hinein, steht ganz am Schluss', () => {
+  it('QR: darf hinein, steht ganz am Schluss, eigener Titel, je Arzt eine Zeile', () => {
     expect(NOTFALL_QR_FELDER).toContain('notfall.weitereAerzte');
     const voll = { ...data, versicherungen: { kkInsurer: 'Helsana', kkCardNumber: '80756' } };
     const qr = notfallQrAbschnitte(getNotfallDossierPreview(voll, chapters, t).sections);
     const letzte = qr[qr.length - 1];
-    expect(letzte.rows.map((r) => r.feld)).toEqual(['notfall.weitereAerzte']);
-    expect(letzte.title).toBe(de.notfallDossier.sectionCare);
+    expect(letzte.title).toBe('Weitere Ärztinnen und Ärzte');
+    expect(letzte.rows.map((r) => [r.label, r.value])).toEqual([
+      ['Dr. med. dent. Zahn', '044 222 22 22'], ['Dr. med. Psych', ''], ['Dr. med. Herz', '044 333 33 33'],
+    ]);
     expect(qr.find((s) => s.key === 'care').rows.some((r) => r.feld === 'notfall.weitereAerzte')).toBe(false);
+    // Titel «Ärztliche Betreuung» nur einmal
+    expect(qr.filter((s) => s.title === de.notfallDossier.sectionCare)).toHaveLength(1);
+  });
+
+  it('QR: keine Fachrichtung (Gesundheitsangabe), das gedruckte Dossier behält sie', () => {
+    const qr = notfallQrAbschnitte(getNotfallDossierPreview(data, chapters, t).sections);
+    const { inhalt } = qrNotfallVcard(qr, { fehltTitel: 'Nicht enthalten' });
+    expect(inhalt).toContain('Dr. med. Psych');
+    expect(inhalt).not.toMatch(/Psychiater|Zahnärztin|Zahnarzt/);
+    expect(generateNotfallDossier(data, chapters, t)).toContain('Psychiaterin / Psychiater');
   });
 
   it('QR: lange Liste verdrängt Krankenkasse und Kartennummer nicht', () => {
@@ -84,6 +96,10 @@ describe('weitere Ärzte', () => {
     expect(bytes).toBeLessThanOrEqual(QR_MAX_BYTES_VCARD);
     expect(inhalt).toContain('Helsana');
     expect(inhalt).toContain('80756000000000000000');
+    // einzelne Einträge passen noch, der Rest wird unter dem Zeilennamen genannt, nicht mit Namen
+    expect(inhalt).toContain('Dr. med. Fachärztin Nummer 0');
+    expect(inhalt).toMatch(/Nicht enthalten: [^\n]*Weitere Ärztinnen und Ärzte/);
+    expect(inhalt).not.toContain('Nummer 11');
   });
 
   it('Beschriftung in allen fünf Sprachen', () => {
