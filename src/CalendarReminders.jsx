@@ -460,7 +460,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
           ),
           React.createElement('button', { type: 'button', style: { ...knopfRuhig, color: palette.mid }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
-        // Jahreskreis statt der zwölf Monatsknöpfe (Sophie 24.10.2026: «Ring als Hauptansicht»).
+        // Jahreskreis statt der zwölf Monatsknöpfe (Stebler Studios 24.10.2026: «Ring als Hauptansicht»).
         // Ein Monat im Ring wählt ihn für die Tagesleiste darunter. Darauf nur Hinterlegtes:
         // eigene offene Einträge, die KVG-Kündigung (fristen.js, Werktag davor nach BAG) und die
         // eigene Steuerfrist aus dem Kapitel Behörden. Kantonale IPV-Fristen fehlen bewusst

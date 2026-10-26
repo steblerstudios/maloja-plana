@@ -114,7 +114,7 @@ describe('Überfällig-Banner im Beispiel (Dashboard)', () => {
   });
 });
 
-// Beispiel lebendiger (Sophie 24.10.2026): nur das Beispiel Maria beginnt mit ein paar Terminen.
+// Beispiel lebendiger (Stebler Studios 24.10.2026): nur das Beispiel Maria beginnt mit ein paar Terminen.
 // Beim Ausprobieren bleibt der Kalender leer; gespeichert wird in beiden nichts (Test oben).
 describe('Kalender: Beispieleinträge nur im Beispiel', () => {
   const t = createT({ de }, 'de', 'sie');
