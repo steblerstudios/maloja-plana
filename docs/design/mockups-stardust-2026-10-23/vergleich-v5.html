@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heute neben Fassung 5</title>
+<style>
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 700; src: url(hanken-grotesk-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 400; src: url(lexend-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 500; src: url(lexend-latin-500-normal.woff2) format('woff2'); }
+:root { --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39; --text: #E6E3DC; --mid: #9CA0A6; --soft: #989CA4; --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D98A8A; }
+:root[data-theme="light"] { --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6; --text: #24262A; --mid: #5E6167; --soft: #5A5D63; --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #4A6A88; --rose: #9A4A4A; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Lexend', sans-serif; font-size: 15px; line-height: 1.5; }
+main { max-width: 1240px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font-family: 'Hanken Grotesk'; font-size: 30px; margin: 0 0 6px; }
+p { color: var(--mid); max-width: 82ch; margin: 0 0 10px; }
+a { color: var(--sand); }
+nav.reiter { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--border); margin: 14px 0 0; }
+nav.reiter button { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 13px; cursor: pointer; min-height: 40px; display: inline-flex; gap: 8px; align-items: center; }
+nav.reiter button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+nav.reiter small { opacity: .8; }
+.gesamt { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.gesamt span { border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+.seite { display: none; padding-top: 18px; }
+.seite.an { display: block; }
+.seite h2 { font-family: 'Hanken Grotesk'; font-size: 24px; margin: 0 0 4px; }
+.nebeneinander { display: grid; grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); gap: 28px; margin: 16px 0 10px; align-items: start; }
+@media (max-width: 860px) { .nebeneinander { grid-template-columns: 1fr; } }
+.etikett { font-size: 13px; color: var(--soft); margin-bottom: 8px; }
+.etikett b { color: var(--text); font-weight: 500; }
+.foto { border-radius: 22px; overflow: hidden; border: 1px solid var(--border); max-width: 400px; }
+.foto img { display: block; width: 100%; }
+iframe { width: 100%; height: 960px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 14px; }
+th { text-align: left; font-weight: 500; color: var(--soft); font-size: 13px; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--border); }
+td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+td:first-child { font-weight: 500; width: 24%; }
+td small { color: var(--mid); display: block; font-size: 13px; margin-top: 2px; }
+.st { display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; font-size: 13px; }
+.st i { width: 10px; height: 10px; display: inline-block; }
+.st.drin i { background: var(--sage); border-radius: 50%; }
+.st.anders i { background: var(--gold); border-radius: 2px; }
+.st.fehlt i { border: 2px solid var(--rose); border-radius: 50%; }
+.st.weg i { background: var(--soft); height: 2px; }
+.st.neu i { background: var(--sky); transform: rotate(45deg); width: 9px; height: 9px; }
+.filter { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.filter button { border: 1px solid var(--border); background: transparent; color: var(--mid); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: 12px; cursor: pointer; min-height: 32px; }
+.filter button[aria-pressed="true"] { color: var(--text); border-color: var(--text); }
+@media (max-width: 640px) { table, tbody, tr, td { display: block; } thead { display: none; } tr { padding: 10px 0; border-bottom: 1px solid var(--border); } td { border: 0; padding: 2px 0; width: auto !important; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Heute neben Fassung 5 · Seite für Seite</h1>
+  <p>Links die App von heute (Demo «Maria Muster», 23.10.2026, Stand <code>main</code> nach #534/#537/#538), rechts die neue Fassung zum Ausprobieren. Darunter jedes Element von heute — gemessen, nicht geschätzt: ein Skript hat jede Seite im Demo-Modus vollständig durchgezählt (Überschriften, Felder, Knöpfe, Links, Texte).</p>
+  <p>Legende: <span class="st drin"><i></i>drin</span> · <span class="st anders"><i></i>anders</span> · <span class="st fehlt"><i></i>fehlt noch</span> · <span class="st weg"><i></i>bewusst weg</span> · <span class="st neu"><i></i>neu</span></p>
+  <div class="gesamt" id="gesamt"></div>
+  <nav class="reiter" id="reiter" aria-label="Seiten"></nav>
+  <div id="seiten"></div>
+</main>
+<script>
+const SEITEN = [
+  { id: 'eingang', titel: 'Eingang', heuteBild: 'vorher-eingang.jpg', heuteHinweis: 'Bild vor #537 — heute ist der neue Eingang schon live in main', neu: 'index.html?nur=eingang', bausteine: 12, zeilen: [
+    ['Logo, Leitsatz, Beschreibung', 'Logo, Beschreibung', 'Logo anthrazit, Leitsatz als Titel, gleiche Beschreibung', 'drin'],
+    ['«Lokal gespeichert — Ihre Daten bleiben auf diesem Gerät»', 'graues Kästchen', 'gross mit Schloss', 'drin'],
+    ['Zugangscode, Öffnen, Ohne Code ausprobieren, Einfache Ansicht', 'drei gleich laute Knöpfe', 'ein Hauptknopf, Rest ruhig', 'drin'],
+    ['Datenschutz & Rechtliches, Problem melden, Stebler Studios · Basel', 'unten', 'unten, zentriert', 'drin'],
+  ]},
+  { id: 'uebersicht', titel: 'Übersicht', heuteBild: 'vorher-hero.jpg', neu: 'seiten-v5.html?nur=u', bausteine: 98, zeilen: [
+    ['Landschaft mit Stationen, Leitsatz', 'Bild mit 8 Stationen', 'gleich', 'drin'],
+    ['Karte «Auf den Startbildschirm legen · So geht es»', 'oben rechts im Bild', 'oben rechts im Bild, mit «So geht es»', 'drin', 'gehört weiter dazu; Ort im Bild beibehalten', 'nicht im Mockup', 'fehlt'],
+    ['Zwei Kreise «7/7 begonnen», «63 % ausgefüllt»', 'unten im Bild', 'ein Ring «63 %» in der Karte', 'anders', 'offen: welche Zahl gilt — 63 % oder 70 %?', 'ein Ring in der Karte', 'anders'],
+    ['«Was ist jetzt dran?» — Grundordnung steht, Weiter mit Finanzen, Frist, Sicherung', 'eigene Karte', 'Karte «Ihr Lebensordner» mit «Weiter mit Finanzen», Frist, Sicherung', 'anders', '', 'Karte «Ihr Lebensordner»', 'anders'],
+    ['«Ihr Fortschritt 70 %», Grundordnung 15/15, 7 Bereichszeilen mit Prozent', 'Karte mit Balken und %', 'Bereichszeilen mit Stand («Überblick steht»), ohne %', 'anders', 'Berg-% bleibt laut Entscheid 06.07.; Prozente in den Zeilen fallen weg', 'Bereichszeilen ohne %', 'anders'],
+    ['«Was steht mir zu?» — Wanderrucksack auspacken, Finanz-Übersicht, Notfallkarte vorbereiten', '3 Karten', 'eigener ruhiger Block, 3 Karten', 'drin', 'als «Passend» unter den Bereichen oder eigener ruhiger Block', 'nicht im Mockup', 'fehlt'],
+    ['«Leistungen» — Monatseinkommen netto/brutto, 5 Leistungen, Leistungs-Kompass, «Trifft eine Situation auf Sie zu?»', 'Eingabe + Liste', 'Eingabe netto/brutto + 5 Leistungen, Leistungs-Kompass, «Trifft eine Situation …»', 'drin', 'wichtigster Block nach der Karte — muss im Mockup ausgeführt werden', 'nur angedeutet («wie heute»)', 'fehlt'],
+    ['«Ihre Instrumente» — Franchise-Kreuz, Steuer-Säule, Reserve-Tankanzeige, Schutzschild', '4 Instrumente', 'Reihe von 4 kleinen Instrumenten', 'drin', 'passen zur Daten-Grammatik — als Reihe kleiner Instrumente zeigen', 'nicht im Mockup', 'fehlt'],
+    ['«Ihr Alltag / Ihre Absicherung / Ihr Schutz» — die 7 Bereiche nochmals mit Satz', '3 Gruppen', 'ein Mal, in 3 Gruppen mit Satz', 'anders', 'heute doppelt (Fortschritt + Gruppen) — Vorschlag: ein Mal, mit Satz', 'mit den Bereichszeilen zusammengelegt', 'anders'],
+    ['«Mein Obstgarten»', 'Karte', 'Karte', 'drin', 'bleibt (Guardrail 06.07.: Baum/Garten bleiben)', 'nicht im Mockup', 'fehlt'],
+    ['«Werkzeuge & Features» — Alle Werkzeuge im Gepäck, Lebensereignisse 35, 6 Gruppen', 'aufklappbare Gruppen', 'ruhig zugeklappte Gruppen + «Alle Werkzeuge im Gepäck»', 'drin', 'Einstieg auf der Übersicht behalten, ruhig zugeklappt', 'nur im Menü', 'fehlt'],
+    ['«Jetzt sichern ›» (Sicherungsdatei)', 'Knopf', 'Zeile mit Knopf «Jetzt sichern ›»', 'drin', 'wichtig — Sicherung muss mit einem Tipp erreichbar bleiben', 'nur als Zeile «Noch keine Sicherungsdatei»', 'fehlt'],
+    ['«Tipps für den Anfang»', 'Block', 'Block', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['Hinweis «Frühe Version …»', 'Banner unter dem Bild', 'Hinweis unter dem Bild, schliessbar', 'drin', 'bleibt bis zum Ende der Beta', 'nicht im Mockup', 'fehlt'],
+    ['Leiste «Beispiel: Maria Muster · Beispiel verlassen»', 'im Demo-Modus oben', 'Leiste «Beispiel: Maria Muster …»', 'drin', 'gehört in jeden Demo-Bildschirm', 'nicht im Mockup', 'fehlt'],
+    ['Fusszeile', 'Version, Feedback, Rechtliches, Grün gehostet', 'gleich (Tippflächen 44 px, #538)', 'drin'],
+  ]},
+  { id: 'kapitel', titel: 'Kapitel Finanzen', heuteBild: 'heute-kapitel.jpg', neu: 'seiten-v5.html?nur=a', bausteine: 51, zeilen: [
+    ['Kopf: Münze, Titel, Untertitel, kursiver Satz', 'zentriert', 'links, Icon auf Fläche, ein Satz', 'anders'],
+    ['Zusammenfassung «Einkommen 6’200 … es bleiben 2’480»', 'Textkasten', 'Hauptobjekt mit Balken', 'drin'],
+    ['Hinweis Prämienverbilligung', 'farbiger Kasten', 'wörtlich, unter dem Hauptobjekt + «Passend»', 'drin', '', '«Passend zu diesem Bereich»', 'anders'],
+    ['«Alle Berechnungen auf einen Blick» (→ Finanz-Übersicht)', 'Knopf', 'unter «Passend zu diesem Bereich»', 'drin', 'unter «Passend» aufnehmen', 'nicht im Mockup', 'fehlt'],
+    ['«Wo steht Ihr Lohn?» — Barometer mit Median CHF 7’024, Hinweise, Quelle BFS', 'Instrument', 'Lohn-Skala mit Median, allen Hinweisen, Quelle BFS', 'drin', 'Referenz-Instrument des Daten-Systems — muss bleiben, gleich gestaltet wie das IPV-Barometer', 'nicht im Mockup', 'fehlt'],
+    ['Reiter «Angaben / Dokumente»', 'zwei Reiter', 'zwei Reiter', 'drin', 'Dokumente des Kapitels: als Reiter oder unter «Passend»', 'nicht im Mockup', 'fehlt'],
+    ['7 Gruppen: Einkommen, Monatliche Ausgaben, Verpflichtungen, Sparen, Vermögen & Wertschriften, Kredit, Vorsorge', 'Gruppen mit «ändern › / ergänzen ›»', 'die 7 echten Gruppen', 'drin', 'Mockup auf die echten 7 umstellen', '4 erfundene Gruppen', 'anders'],
+    ['Felder mit Werten (Einkommensart, Anstellungstyp, Arbeitsbeginn …)', 'unter jeder Gruppe', 'aufklappbar in der Gruppe', 'drin'],
+    ['«Weiter mit Versicherungen & Vorsorge ›»', 'am Ende', '«Als Nächstes»', 'drin', 'gibt es heute schon — Mockup übernimmt es nur sichtbarer'],
+    ['«Gespeichert», Brotkrume, «Passend zu diesem Bereich»', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'rechner', titel: 'Rechner IPV', heuteBild: 'heute-rechner.jpg', neu: 'seiten-v5.html?nur=b', bausteine: 39, zeilen: [
+    ['Titel, Erklärung', 'gleich', 'gleich + Glossar «IPV ⓘ»', 'drin'],
+    ['Kasten «Anspruch & Aufenthaltsbewilligung»', 'langer Textkasten', 'Aufklapp-Zeile', 'anders'],
+    ['Kanton Zürich · Modell einkommensabhängig · Max. Einkommen CHF 61’090 · Antrag bei SVA ZH', 'Faktenzeilen', 'Kanton, Modell, Jahresgrenze CHF 61’090, Antrag bei SVA ZH', 'drin', 'Fehler im Mockup: echte Jahresgrenze und echtes Modell zeigen', 'erfundene Monatsgrenze CHF 6’000', 'anders'],
+    ['Ergebnis «Nicht berechtigt · Einkommen über Grenze»', 'Ergebniszeile', 'Urteil mit Barometer', 'drin', 'Wortlaut ruhig halten'],
+    ['Monatliche und jährliche Förderung', 'zwei Werte', 'zwei Werte im Ergebnis', 'drin', 'gehört ins Ergebnis', 'nicht im Mockup', 'fehlt'],
+    ['Anspruchsjahr 2026, Prämienregion 1, Hinweise zur Berechnungsgrundlage', 'Textzeilen', 'wörtlich im Fuss', 'drin', 'in den Fuss übernehmen, wörtlich', 'nur «Quelle · Stand» als Platzhalter', 'fehlt'],
+    ['«Benötigte Dokumente» (4 Punkte)', 'Liste', 'Liste vollständig (4 Punkte)', 'drin', 'Liste vollständig übernehmen', 'Aufklapp-Zeile, gekürzt', 'anders'],
+    ['«Unterlagen für den Antrag merken»', 'Knopf', '«Unterlagen für den Antrag merken»', 'drin', '', '«Merken»', 'anders'],
+    ['Online-Antrag, Dokument, Offizielle Stelle (ch.ch, Kanton Zürich)', 'Knöpfe und Links', 'Online-Antrag, offizielle Stellen', 'drin', 'unter «Wie es weitergeht» die echten Wege', 'nur «Antrag vorbereiten»', 'fehlt'],
+    ['«Ihre Daten bleiben auf diesem Gerät.»', 'Zeile', 'Zeile', 'drin', '', 'nicht im Rechner-Mockup', 'fehlt'],
+    ['Knöpfe «Finanz-Übersicht», «Offizielle Links»', 'am Ende', 'Finanz-Übersicht, Offizielle Links', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['Einkommen ändern (Regler), Barometer, Herkunft, Abschnittsanzeige', '—', 'im Mockup', 'neu', 'Regler nur, wenn er mit der echten Jahresberechnung rechnet'],
+  ]},
+  { id: 'ablauf', titel: 'Ablauf Umzug', heuteBild: 'heute-ablauf.jpg', neu: 'seiten-v5.html?nur=c', bausteine: 47, zeilen: [
+    ['Einleitung, Schritt 1 «Neue Adresse», Schritt 2 «Gemeinde» mit 3 Wahlknöpfen', 'gleich', 'gleich, als Weg', 'drin'],
+    ['In Schritt 2: «Krankenkassen-Prämie prüfen ›»', 'Querverweis', 'Querverweis in Schritt 2', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['In Schritt 2: Mietzinsbeiträge mit Kantonsübersicht (BWO)', 'Hinweis + Link + Knopf', 'Hinweis + BWO + Knopf in Schritt 2', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['Feld «Umzugsdatum» und Hinweis bei verpasster Frist', 'Datumsfeld + ruhige Meldung', 'Datumsfeld, Frist rechnet daraus, ruhiger Hinweis', 'drin', 'die Frist im Kalender muss aus dem Umzugsdatum rechnen', 'Frist ohne Datum', 'fehlt'],
+    ['Schritt 3 «Adresse überall nachführen» — 6 Stellen mit «merken», «Alle in die Merkliste», Adressänderungs-Brief', 'eigener Schritt', 'eigener Schritt 3, 8 Stellen, «merken», Brief', 'drin', 'Mockup auf 4 Schritte umstellen', 'fehlt (Mockup: 3 Schritte)', 'fehlt'],
+    ['Schritt 4 «Alte Wohnung kündigen» + «Zur Mietkündigung ›»', 'eigener Schritt', 'eigener Schritt 4 + «Zur Mietkündigung ›»', 'drin', '', 'Platzhalter «Alte Wohnung»', 'anders'],
+    ['Quellen RHG Art. 11, OR Art. 266c', 'am Ende', 'am Ende', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['Passstrasse, Frist in den Kalender, Abschluss, Erledigt-Marken', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'ablage', titel: 'Dokumentenablage', heuteBild: 'heute-ablage.jpg', neu: 'seiten-v5.html?nur=d', bausteine: 13, zeilen: [
+    ['Leerer Zustand «Ihr Ordner ist bereit» + Satz', 'Kasten', 'Bild + Satz', 'drin'],
+    ['Zähler «0 Aktiv · 0 Archiv»', 'Knöpfe', 'Reiter «3 Aktiv · 1 Archiv», erst ab Inhalt', 'anders', '', 'Übersichtszeile, erst ab Inhalt', 'anders'],
+    ['Archiv (aktiv / archiviert umschalten)', 'Reiter', 'Reiter «Aktiv / Archiv»', 'drin', 'im gefüllten Zustand ergänzen', 'nicht im Mockup', 'fehlt'],
+    ['Suche', 'Feld', 'erst ab Inhalt', 'anders'],
+    ['Sortieren: nach Ablauf, Datum, Name', 'Auswahl', 'Auswahl mit 3 Optionen (wie heute)', 'drin', 'als ruhige Pills im gefüllten Zustand', 'nicht im Mockup', 'fehlt'],
+    ['«Ihre Daten bleiben auf diesem Gerät.»', 'Zeile', 'gleich', 'drin'],
+    ['Drei Vorschläge, Fotografieren, Löschen mit Nachfrage', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'merkliste', titel: 'Merkliste', heuteBild: 'heute-merkliste.jpg', neu: 'seiten-v5.html?nur=f', bausteine: 10, zeilen: [
+    ['Erklärtext «Ist Ihnen etwas aufgefallen …»', 'Absatz', 'wörtlich', 'drin', '', 'kürzerer Satz', 'anders'],
+    ['Eingabe «Was möchten Sie sich merken?» + Hinzufügen', 'Feld + Knopf', 'Feld + «Hinzufügen»', 'drin', 'muss rein — sonst kann man nichts merken', 'nicht im Mockup', 'fehlt'],
+    ['«Verknüpfen mit» (12 Werkzeuge)', 'Auswahl', 'Auswahl mit den 12 Zielen', 'drin', 'Verknüpfung führt zurück zum Werkzeug — übernehmen', 'Bereich als Unterzeile, ohne Auswahl', 'fehlt'],
+    ['Leerer Zustand «Noch nichts gemerkt»', 'Kasten', 'gleich, ruhiger', 'drin'],
+    ['Entfernen mit Rückgängig', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'kalender', titel: 'Kalender · Was ansteht', heuteBild: 'heute-kalender.jpg', neu: 'seiten-v5.html?nur=g', bausteine: 57, zeilen: [
+    ['Titel «Kalender und Erinnerungen»', 'Titel', '«Was ansteht»', 'anders', 'Name entscheiden'],
+    ['Jahr ‹ › , Monate Jan–Dez, «Heute»', 'Navigation', '‹ Monat › über den Jahreswechsel, Monate Jan–Dez, «Heute»', 'drin', 'für ferne Daten (Steuer im März) nötig — als Sprung über der Tagesleiste', 'nicht im Mockup', 'fehlt'],
+    ['Monatsraster', '31 Tage als Raster', 'Tagesleiste zum Wischen', 'anders', 'beides denkbar: Leiste für «bald», Raster für «später»'],
+    ['«Bevorstehend / Erledigt»', 'Reiter mit Zahl', 'Reiter mit Zahl, abhaken', 'drin', '', 'nur Bevorstehendes', 'fehlt'],
+    ['«+ Erinnerung hinzufügen»', 'Knopf', 'Knopf + kurzes Formular', 'drin', 'muss rein — Hauptknopf der Seite', 'nicht im Mockup', 'fehlt'],
+    ['Leerer Zustand + Hinweis «dienen nur zur Information»', 'Text', 'wörtlich', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['Band laufender Abläufe, Bereichsfarben, «Als Nächstes»', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'menue', titel: 'Menü', heuteBild: 'heute-menue.jpg', neu: 'seiten-v5.html?nur=e', bausteine: 16, zeilen: [
+    ['Kopf «Maloja Plana · 63 % vollständig»', 'Kopf', '«63% vollständig» unter dem Logo', 'drin', '', 'nur Logo', 'fehlt'],
+    ['«Auf den Startbildschirm legen»', 'Knopf', 'Knopf oben', 'drin', '', 'nicht im Mockup', 'fehlt'],
+    ['Suche', 'Feld', 'gleich', 'drin'],
+    ['Bereiche gegliedert: Ihr Alltag · Ihre Absicherung · Ihr Schutz', '3 Gruppen', '3 Gruppen', 'drin', 'Gliederung übernehmen', 'eine Gruppe «Bereiche»', 'anders'],
+    ['Werkzeuge: Dokumentenablage, Kalender, Merkliste, Steuern, Finanz-Übersicht, Lebenssituationen, Alle Werkzeuge im Gepäck', '7 Einträge', 'Ablage, Kalender, Merkliste als Anker; Steuern, Finanz-Übersicht, Lebenssituationen, «Alle Werkzeuge im Gepäck ›»', 'drin', 'Steuern, Finanz-Übersicht, Lebenssituationen, Werkzeuge ergänzen', 'nur Übersicht, Was ansteht, Rucksack, Anspruch', 'fehlt'],
+    ['Einstellungen', 'Eintrag', 'in der Reihe unten', 'drin'],
+    ['Karten mit Einzeiler, Continuity-Übergang', '—', 'im Mockup', 'neu'],
+  ]},
+  // Runde 2 (23.10.2026 abends): neu gemessen (vergleich-inventar-runde2.json), Entwürfe I, J, K
+  { id: 'steuern', titel: 'Steuern', heuteBild: 'heute-steuern.jpg', neu: 'seiten-v5.html?nur=j', bausteine: 84, zeilen: [
+    ['Titel «Steuer-Orientierung» und Einleitung', 'Kasten oben', 'Titel mit Symbol, Satz darunter', 'drin'],
+    ['Ergebnis: Bundessteuer, Kantons-/Gemeindesteuer, Gesamtsteuer, Nettoeinkommen', '3 Kästen nach den Abzügen', 'zuerst: Gesamtsteuer gross, Balken Bund/Kanton, zwei Teile, Nettoeinkommen', 'anders'],
+    ['Eingaben: Steuerkanton, Verheiratet, Kinder, Nettolohn pro Jahr, Glossar BVG/AHV/Nettolohn', 'oben', 'aufgeklappt unter dem Ergebnis', 'drin'],
+    ['Steuerbares Einkommen (optional), Glossar Bundessteuer/Veranlagung', 'Feld', 'Feld; «Veranlagung ⓘ» einmal statt zweimal', 'drin'],
+    ['6 Abzüge mit Max-Betrag', 'Felder', 'Felder mit Max darunter', 'drin'],
+    ['Berechnung: Nettolohn, Total (-), steuerbares Einkommen, Hinweise ESTV/13. Monatslohn/Messpunkte', 'Liste', 'zugeklappt «Berechnung»', 'drin'],
+    ['Zivilstand im Vergleich: 3 Säulen, Sätze, «Daten speichern»', 'Säulen', 'Säulen, Sätze, Knopf', 'drin'],
+    ['Datenstand, offizielle Stelle, Querlinks Finanz-Übersicht und Steuerfristverlängerung', 'unten', 'unten', 'drin'],
+    ['Zustand «Kanton fehlt»', 'nur ohne Kanton', 'Schalter im Mockup', 'drin'],
+  ]},
+  { id: 'finanzuebersicht', titel: 'Finanz-Übersicht', heuteBild: 'heute-finanzuebersicht.jpg', neu: 'seiten-v5.html?nur=k', bausteine: 79, zeilen: [
+    ['Lebensbaum «Was aus Ihren Angaben wächst», Flache Ansicht, Dreh-Hinweis', 'ganzer erster Bildschirm', 'weiter unten, ganz erhalten', 'anders'],
+    ['Nettoeinkommen, Kanton', 'Kasten', 'zwei Marken über dem Budget', 'drin'],
+    ['Monatsbudget, frei verfügbar, Notgroschen-Tank', 'ganz unten', 'zuerst', 'anders'],
+    ['Steuern, IPV, Sozialhilfe, EL, Vermögen, Gesundheitskosten', '6 Kästen', '6 ruhige Zeilen mit Wert, je zum Werkzeug', 'drin'],
+    ['Wo steht Ihr Lohn? mit Sätzen, Quelle, Branchenvergleich (18 Branchen)', 'Balken', 'Barometer mit vier Abschnitten wie im Kapitel', 'drin'],
+    ['Wo steht Ihre Miete? 3 Balken, Sätze, Wohnkosten-Anteil', 'Karte', 'zugeklappt', 'drin'],
+    ['Ihre KK-Last mit Richtwert 10 % (WHO)', 'Karte', 'zugeklappt', 'drin'],
+    ['Budget-Übersicht, Behörden-Dossier, drucken, Hinweis', 'unten', 'unten', 'drin'],
+    ['Zustand «Noch kein Einkommen»', 'nur ohne Einkommen', 'Schalter im Mockup', 'drin'],
+  ]},
+  { id: 'einstellungen', titel: 'Einstellungen', heuteBild: 'heute-einstellungen.jpg', neu: 'seiten-v5.html?nur=i', bausteine: 33, zeilen: [
+    ['Anzeige & Sprache: Anrede, Sprache, Erscheinungsbild', 'Symbol-Knöpfe («Hell» heisst «auf Hell umschalten»)', 'Wahl «Sie | Du», «Hell | Dunkel», Auswahl hervorgehoben', 'anders'],
+    ['Barrierefreiheit: 7 Schalter', 'nur Symbol', 'Schalter mit sichtbarem Zustand', 'anders'],
+    ['Rundgang neu starten', 'nur in der Zahnrad-Schublade', 'auf der Seite', 'neu'],
+    ['Daten & Sicherung: Persönliche Basis, Export, Benachrichtigungen', 'Knöpfe', 'Zeilen; «Export» heisst wie in der Schublade «Backup & Export»', 'drin'],
+    ['Daten auf diesem Gerät: Löschen (im Beispiel aus)', 'eigene Karte', 'eigene Karte mit Satz', 'drin'],
+    ['Zweiter Ort: Zahnrad-Schublade «Ansicht & Sprache»', 'fast gleich', 'Vorschlag: Zahnrad öffnet die Seite', 'anders'],
+  ]},
+  // Runde 3 (23.10.2026 abends): Anker unten — Rucksack, Anspruch (= Lebenssituationen), Suche
+  { id: 'rucksack', titel: 'Rucksack', heuteBild: 'heute-rucksack.jpg', neu: 'seiten-v5.html?nur=l', bausteine: 26, zeilen: [
+    ['Titel «Wanderrucksack», Einleitung', 'oben', 'Titel mit Symbol, Satz', 'drin'],
+    ['Rucksack-Zeichnung zum Antippen, «Wieder einpacken» / «Auspacken»', 'Zeichnung + goldene Pille', 'Zeichnung + ruhiger Knopf; Name nur einmal', 'anders'],
+    ['«Was steht mir zu? Versteckte Ansprüche entdecken»', 'Zeile', 'Zeile mit Symbol', 'drin'],
+    ['Aussenfach offen mit 9 Werkzeugen', 'gestrichelte Fläche', 'gestrichelte Fläche, zwei Spalten', 'drin'],
+    ['7 Gegenstände mit Zeichnung, Untertitel, Punkte «x von 4 erfasst», aufklappbar (Wege/Werkzeuge)', 'Karten', 'Karten, aufgeklappt Liste mit ›', 'drin'],
+    ['Aussenfach als achte Karte', 'Karte', 'Karte', 'drin'],
+    ['Satz unten', 'klein', 'klein', 'drin'],
+  ]},
+  { id: 'situationen', titel: 'Anspruch · Lebenssituationen', heuteBild: 'heute-situationen.jpg', neu: 'seiten-v5.html?nur=m', bausteine: 14, zeilen: [
+    ['Titel «Lebenssituationen», Einleitung', 'oben', 'Titel mit Geschenk-Symbol (wie der Anker), Satz', 'drin'],
+    ['11 Situationen zum Antippen', 'Knöpfe', 'Auswahl-Pillen, gewählte in Gold', 'drin'],
+    ['Nach dem Antippen: Karten mit Quelle · Stand, Angebote in der Region', 'Liste', 'Zeilen mit Bereichssymbol, führen zum Werkzeug', 'anders'],
+  ]},
+  // 24.10.2026: eine Seite «Was steht mir zu?» statt vier Orten (Entscheid Stebler Studios)
+  { id: 'wasstehtmirzu', titel: 'Was steht mir zu? · eine Seite', heuteBilder: [['heute-situationen.jpg', 'Lebenssituationen (#/situationen)'], ['heute-schnellcheck.jpg', 'Ansprüche im Überblick (#/schnellcheck = #/ansprueche)'], ['heute-anspruchcheck.jpg', 'Geführter Check, Schritt 1 «Leistungs-Schnellcheck» (#/anspruchcheck)']], heuteHinweis: 'drei Seiten; gezählt nur Lebenssituationen, Schnellcheck und geführter Check nicht gemessen', neu: 'seiten-v5.html?nur=o', bausteine: 14, zeilen: [
+    ['Titel', '«Lebenssituationen», «Ansprüche im Überblick», «Leistungs-Schnellcheck»', 'ein Titel «Was steht mir zu?» mit Geschenk-Symbol', 'anders'],
+    ['Einleitung', 'zwei verschiedene Sätze', 'ein Satz für beides (neu, Copy-Prüfer)', 'anders'],
+    ['Angaben Einkommen (netto/brutto), Miete, KK, Kanton', 'Formular in Kasten', 'als Marken, «Angaben anpassen» aufklappbar', 'anders'],
+    ['Leistungs-Kompass', 'Instrument über dem Ergebnis', 'weggelassen — die Pegel tragen die Aussage', 'weg'],
+    ['Prämienverbilligung (Beleg) und Sozialhilfe (Pegel)', 'zwei Materialien (Papier, Glas)', 'zwei Pegel wie in der Finanz-Übersicht, Live-Region', 'anders'],
+    ['Ergebnis-Satz', '«… zeigt der Schnellcheck …»', '«Mit diesen Angaben zeigt sich …»', 'anders'],
+    ['11 Situationen und ihre Karten', 'eigene Seite', '«Nach Ihrer Lebenslage» auf derselben Seite (Entwurf M)', 'drin'],
+    ['Weitere Wege (Nach Einkommen / Lebenslage / Ereignis)', 'offen, lang', 'zugeklappt, gleiche Einträge', 'drin'],
+    ['Geführter Anspruch-Check', 'eigene Seite, Schritt 1 = Schnellcheck', 'eigener Weg «Lieber Schritt für Schritt?»', 'drin'],
+    ['Hinweise «bewertet nichts», «Grobe Orientierung», «Daten bleiben auf dem Gerät»', 'unten', 'unten', 'drin'],
+    ['#/schnellcheck, #/ansprueche', 'eigene Seiten', 'leiten auf diese Seite', 'neu'],
+  ]},
+  // 24.10.2026: Notfall — vier Seiten, ein Ort, ein Name je Seite (Entscheid Stebler Studios). Bausteine nicht gezählt.
+  { id: 'notfall', titel: 'Notfall · Ort', heuteBild: 'heute-notfalleinstieg.jpg', heuteHinweis: '«Was brauchen Sie im Notfall?» · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=p', bausteine: 0, zeilen: [
+    ['Titel', '«Was brauchen Sie im Notfall?» (auf der Übersicht «Notfallkarte vorbereiten»)', '«Notfall», Satz darunter', 'anders'],
+    ['Kopf', 'zentriert, Herz-Symbol, 3-px-Balken', 'links, Notfall-Symbol', 'anders'],
+    ['Zwei Wege: Vorlesekarte, Notfallpass', 'Kästen', 'Zeilen mit Satz, dazu Notfall-Dossier', 'anders'],
+    ['Drei Szenarien mit Listen und Stand', 'Kästen, Zeile ~28 px, nur Enter', 'aufklappbar, 56 px, Enter und Leertaste, «8 von 9»', 'anders'],
+    ['Fehlende Angabe ergänzen', 'Knopf «Notfall»', 'Zeile «Fehlende Angabe im Kapitel Notfall ergänzen»', 'anders'],
+    ['Brotkrume und Schwesterseiten', 'nur «Übersicht»', '«Übersicht › Notfall», Zeile mit allen vier Seiten', 'neu'],
+  ]},
+  { id: 'notfallkarte', titel: 'Notfall · Notfallkarte', heuteBild: 'heute-notfallkarte.jpg', heuteHinweis: '«Notruf-Vorlesekarte» · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=q', bausteine: 0, zeilen: [
+    ['Titel', '«Notruf-Vorlesekarte»', '«Notfallkarte»', 'anders'],
+    ['Nummern 144, 117, 118, 145, 1414, 112', 'Pillen', 'Knöpfe mit grosser Zahl, zwei Spalten', 'anders'],
+    ['Was Sie sagen (4 Fragen mit Adresse, Name, Telefon)', 'Liste', 'Liste', 'drin'],
+    ['Standort zeigen, «Bleiben Sie am Telefon»', 'Knopf, Satz', 'Knopf, Satz', 'drin'],
+    ['Angaben zum Ablesen (Kontakt, Medizin, Arzt)', 'Kästen', 'Liste in drei Gruppen', 'drin'],
+    ['Ganzes Notfall-Dossier', 'Link', 'Zeile', 'drin'],
+  ]},
+  { id: 'notfallpass', titel: 'Notfall · Notfallpass', heuteBild: 'heute-notfallpass.jpg', heuteHinweis: '«Notfallpass vorbereiten» · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=r', bausteine: 0, zeilen: [
+    ['Titel', '«Notfallpass vorbereiten»', '«Notfallpass»', 'anders'],
+    ['Hinweis «kann lesen, wer Ihr Telefon in der Hand hält»', 'Kasten', 'leiser Satz', 'drin'],
+    ['Zwischentitel', 'IN DEN GESUNDHEITSINFOS / IM NOTFALLPASS (Versalien)', 'normal geschrieben', 'anders'],
+    ['Felder mit «Kopieren»', 'Liste', 'Liste, Knöpfe 44 px', 'drin'],
+    ['Anleitung iPhone und Android', 'beide offen', 'beide zugeklappt, «4 Schritte»', 'anders'],
+    ['Dossier mit QR, «sendet nichts»', 'unten', 'unten', 'drin'],
+  ]},
+  { id: 'notfalldossier', titel: 'Notfall · Dossier', heuteBild: 'heute-notfalldossier.jpg', heuteHinweis: 'Bausteine nicht gezählt · QR im Beispiel nicht erzeugt', neu: 'seiten-v5.html?nur=s', bausteine: 0, zeilen: [
+    ['Brotkrume', 'Übersicht › Meine Unterlagen', 'Übersicht › Notfall', 'anders'],
+    ['Kopf', 'in einer Karte, mit «6 Bereiche mit Angaben»', 'links, gleicher Satz', 'anders'],
+    ['Drucken / Als PDF speichern', 'breiter Sand-Knopf', 'Hauptknopf links', 'drin'],
+    ['Notfall-QR mit Hinweisen', 'zentriert in Kasten; im Beispiel «liess sich nicht erzeugen»', 'eigener Abschnitt, Code neben dem Hinweis', 'anders'],
+    ['Vorschau in sechs Bereichen', 'Kästen', 'Liste mit Gruppen', 'drin'],
+  ]},
+  // 24.10.2026: Datenseiten — Budget geht in der Finanz-Übersicht auf; drei Dossiers in einer Form (Entscheid Stebler Studios). Bausteine nicht gezählt.
+  { id: 'budget', titel: 'Budget → Finanz-Übersicht', heuteBild: 'heute-budget.jpg', heuteHinweis: '«Monatsbudget» (#/sync) · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=k', bausteine: 0, zeilen: [
+    ['Monatsbudget, Posten in sechs Gruppen', 'eigene Seite', 'in der Finanz-Übersicht (Einnahmen / Ausgaben aufklappbar)', 'drin'],
+    ['Anteil am Einkommen je Gruppe (30 %, 6 % …)', 'rechts neben der Summe', 'leise hinter dem Gruppennamen', 'drin'],
+    ['Richtwerte & Teuerung', 'hinter ⓘ je Posten', 'kurze Zeilen je Posten, eine Fussnote', 'drin'],
+    ['BVG/AHV schon abgezogen (CHF 420)', 'Hinweis', 'bei «Sparen & Vorsorge»', 'drin'],
+    ['SKOS-Grundbedarf (Orientierung)', 'aufklappbar', 'aufklappbar', 'drin'],
+    ['Budget-Hinweis, «6 Kategorien ergänzen»', 'Kasten, Satz', 'Satz unter «Frei verfügbar», Satz unter den Ausgaben', 'drin'],
+    ['Jahresansicht, Export', 'Knöpfe', '«Aufs Jahr gerechnet» aufklappbar, «Budget exportieren»', 'drin'],
+    ['#/sync', 'eigene Seite', 'leitet auf die Finanz-Übersicht', 'neu'],
+  ]},
+  { id: 'unterlagen', titel: 'Meine Unterlagen', heuteBild: 'heute-unterlagen.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=t', bausteine: 0, zeilen: [
+    ['Kopf', 'in einer Karte', 'links', 'anders'],
+    ['Sechs Einträge mit Satz und Knopf', 'Kästen mit «… öffnen»', 'Liste, die Zeile ist der Knopf', 'anders'],
+    ['Gruppen', 'keine', '«Zum Ausdrucken», «Schreiben und sichern»', 'neu'],
+    ['Notfall-Dossier', 'eigener Kasten', 'Verweis «unter Notfall»', 'anders'],
+    ['«Alle Unterlagen bleiben auf Ihrem Gerät»', 'unten', 'unten', 'drin'],
+  ]},
+  { id: 'lebensmappe', titel: 'Lebensmappe', heuteBild: 'heute-lebensmappe.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=u', bausteine: 0, zeilen: [
+    ['Kopf mit «6 Bereiche mit Angaben»', 'in einer Karte', 'links, Satz', 'anders'],
+    ['Drucken / Als PDF speichern', 'breiter Sand-Knopf', 'Hauptknopf links', 'drin'],
+    ['Vorschau in sechs Bereichen', 'Kästen', 'Liste mit Gruppen', 'drin'],
+    ['«lokal erstellt, nichts übermittelt»', 'unten', 'unter dem Knopf', 'drin'],
+  ]},
+  { id: 'behoerdendossier', titel: 'Behörden-Dossier', heuteBild: 'heute-behoerdendossier.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=v', bausteine: 0, zeilen: [
+    ['Kopf', 'in einer Karte', 'links', 'anders'],
+    ['Als PDF drucken, Dossier-Datei exportieren', 'zwei breite Knöpfe', 'Hauptknopf + ruhiger Knopf links', 'drin'],
+    ['Person, Finanzielle Situation', 'Kästen', 'Liste mit Gruppen', 'drin'],
+    ['Sozialhilfe-, IPV-, EL-, Bundessteuer-Orientierung', 'Kästen', 'Gruppen mit Status rechts', 'drin'],
+    ['Lange Hinweise (Steuer, Annahmen, Mehrkosten)', 'fett in der schmalen Wertspalte', 'als Satz unter der Gruppe', 'anders'],
+    ['«Mögliche Unterstützung»', '«/Mt.» ohne Betrag', '«keine»', 'anders'],
+  ]},
+  // 24.10.2026: Ablauf-Schale — alle Abläufe auf einmal, Passstrasse mit n Kehren (Entscheid Stebler Studios). Beispiel Heirat.
+  { id: 'ablaeufe', titel: 'Abläufe · Schale (Beispiel Heirat)', heuteBild: 'heute-heirat.jpg', heuteHinweis: '«Heirat oder Partnerschaft» · gilt für ~33 Abläufe · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=w', bausteine: 0, zeilen: [
+    ['Alle Schritte', 'untereinander auf einer Seite', 'ein Schritt nach dem anderen, «Schritt n von N»', 'anders'],
+    ['Fortschritt', 'keiner (nur farbiger Strich oben)', 'Passstrasse mit so vielen Kehren wie Schritte', 'neu'],
+    ['Frist (Trauung anmelden)', 'breiter Sand-Knopf «Erinnerung … in den Kalender (23.11.2026)»', 'Karte «… · bis 23.11.2026» mit «In den Kalender»', 'anders'],
+    ['Weiter / zurück / abschliessen', '—', '«Erledigt, weiter ›» (bei Info-Schritten «Weiter ›»), «‹ zurück», «Ablauf abschliessen»', 'neu'],
+    ['Stand', 'nicht gespeichert', 'gespeichert je Ablauf (wie Umzug)', 'neu'],
+    ['Verwandte Ereignisse', 'als letzter «Schritt»', 'immer unten, keine Station', 'anders'],
+    ['Quellen und Hinweis', 'unten', 'unten', 'drin'],
+    ['Kopf', 'Herz-Symbol, Titel', 'Kopf links mit Bereichssymbol und Brotkrume', 'anders'],
+  ]},
+  // 24.10.2026: eine Rechner-Form für alle (Entscheid Stebler Studios). Beispiel ALV, Werte: brutto 6'796, 24 Monate.
+  { id: 'rechnerform', titel: 'Rechner · Form (Beispiel ALV)', heuteBild: 'heute-alv.jpg', heuteHinweis: '«Arbeitslosenentschädigung», mit 6’796 brutto und 24 Monaten · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=x', bausteine: 0, zeilen: [
+    ['Kopf', 'in Kartenwand, Titel bricht hart', 'links, Brotkrume, Silbentrennung', 'anders'],
+    ['Ergebnis (Taggeld, pro Monat, Satz, Wartetage, Dauer)', 'unter den Eingaben, ohne Live-Ansage', 'zuerst, grosse Zahl pro Monat, role="status"', 'anders'],
+    ['Eingaben (Bruttolohn, Beitragsmonate, Kinder, IV-Rente)', 'oben in Kasten', '«Ihre Angaben» aufgeklappt, «4 von 4», Ja/Nein als radiogroup', 'anders'],
+    ['Vorbehalt «Orientierung ohne Gewähr …»', 'kursiv im Ergebniskasten', 'direkt unter dem Ergebnis', 'drin'],
+    ['Wo Sie sich anmelden, RAV im Kanton', 'zwei Kästen', 'Satz + Zeile', 'drin'],
+    ['Offizielle Stelle & Antrag', 'Versalien-Titel, URLs ausgeschrieben', 'normaler Titel, Zeilen mit ↗', 'anders'],
+  ]},
+  // 24.10.2026: Kapitel für Kapitel — Persönliche Basis
+  { id: 'kapitelbasis', titel: 'Kapitel · Persönliche Basis', heuteBild: 'heute-kapitel-basis.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=y', bausteine: 0, zeilen: [
+    ['Kopf links, Titel, zwei Sätze', 'so', 'so', 'drin'],
+    ['Zusammenfassung «Maria Muster, geboren 1992 …»', 'grüner Kasten', 'ruhiger Satz unter dem Kopf', 'anders'],
+    ['Reiter Angaben / Dokumente, drei Abschnitte mit «ändern ›»', 'Kästen', 'Liste mit Gruppen', 'drin'],
+    ['Erwachsene im Haushalt / Kinder', 'eine schwer lesbare Zeile', '«Im Haushalt: 1 Erwachsene · 0 Kinder»', 'anders'],
+    ['Passend zu diesem Bereich', '—', 'Lebensmappe, Pass/ID, Zivilstand ändert sich, Ausweis-Kopie; je nach Angaben Bewilligung, Einbürgerung, Neu in der Schweiz', 'neu'],
+    ['Weiter mit Wohnen & Leben', 'Sand-Knopf', '«Als Nächstes» mit Titel und Satz', 'anders'],
+    ['«Das Bild steht.»', 'zentriert, kursiv', 'leiser Satz', 'drin'],
+  ]},
+  { id: 'kapitelwohnen', titel: 'Kapitel · Wohnen & Leben', heuteBild: 'heute-kapitel-wohnen.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=z', bausteine: 0, zeilen: [
+    ['Kopf links, Titel, Sätze, Zusammenfassung', 'Zusammenfassung im grünen Kasten', 'Zusammenfassung als ruhiger Satz', 'anders'],
+    ['Wohnkosten / Einkommen / Anteil', 'Kasten mit drei Zeilen', 'Hauptzahl «Wohnkosten pro Monat», Balken mit Drittel-Marke', 'anders'],
+    ['Miete regional vs. Schweiz', '— (nur Finanz-Übersicht)', 'Regional-Barometer im Kapitel', 'neu'],
+    ['Ausprobieren: andere Miete', '—', 'Regler, nichts gespeichert, «Frei verfügbar danach»', 'neu'],
+    ['Reiter Angaben / Dokumente, vier Abschnitte', 'Kästen', 'Liste mit Gruppen', 'drin'],
+    ['Passend zu diesem Bereich', '—', 'Umzug, Mietzinsbeiträge, Wohnung gekündigt, Mietvertrag ablegen', 'neu'],
+    ['Weiter mit Finanzen & Geld', 'Sand-Knopf', '«Als Nächstes» mit Titel und Satz', 'anders'],
+  ]},
+  { id: 'kapitelversicherungen', titel: 'Kapitel · Versicherungen & Vorsorge', heuteBild: 'heute-kapitel-versicherungen.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=aa', bausteine: 0, zeilen: [
+    ['Zusammenfassung «Sie sind bei CSS grundversichert …»', 'grüner Kasten', 'ruhiger Satz unter dem Kopf', 'anders'],
+    ['Versicherungen pro Monat', '—', 'Hauptzahl aus den erfassten Prämien, Fehlendes genannt', 'neu'],
+    ['Schutzschild', 'zwei grosse Schilde mit Listen', 'eine Zeile «Pflicht 3/3 · Empfohlen 2/2» zum Aufklappen', 'anders'],
+    ['Franchise-Kreuz', '— (nur Prämien-Orientierung, Übersicht)', 'im Kapitel unter dem Schutzschild', 'neu'],
+    ['Angaben in sechs Abschnitten', 'Kästen, «Zusatzversicherungen ausblenden»', 'Liste mit Gruppen, leere Abschnitte zusammengefasst', 'anders'],
+    ['Passend zu diesem Bereich', '—', 'IPV prüfen, Krankenkasse wechseln, Vorsorge-Rechner, Policen ablegen', 'neu'],
+    ['Weiter mit Ausbildung & Arbeit', 'Sand-Knopf', '«Als Nächstes» mit Titel und Satz', 'anders'],
+  ]},
+  { id: 'kapitelausbildung', titel: 'Kapitel · Ausbildung & Arbeit', heuteBild: 'heute-kapitel-ausbildung.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=ac', bausteine: 0, zeilen: [
+    ['Zusammenfassung «Bachelor. Aktuell tätig als …»', 'grüner Kasten', 'ruhiger Satz mit Arbeitgeber, Dauer, Wochenstunden', 'anders'],
+    ['Wo steht Ihr Lohn?', '— (nur Finanzen, Finanz-Übersicht)', 'Lohn-Barometer im Kapitel', 'neu'],
+    ['Lebenslauf-Vorschau', '—', 'Papierkarte aus den Angaben + «Lebenslauf erstellen ›»', 'neu'],
+    ['Angaben Bildung, Arbeit, Sprachen', 'Kästen, Werte brechen mitten im Wort', 'Liste, Umbruch nur zwischen Wörtern', 'anders'],
+    ['Passend zu diesem Bereich', '—', 'Lebenslauf, Neue Stelle, Stelle verloren, Stundenlohn & Mindestlohn, Diplome ablegen', 'neu'],
+    ['Weiter mit Behörden & Rechtliches', 'Sand-Knopf', '«Als Nächstes» mit Titel und Satz', 'anders'],
+  ]},
+  { id: 'kapitelbehoerden', titel: 'Kapitel · Behörden & Rechtliches', heuteBild: 'heute-kapitel-behoerden.jpg', heuteHinweis: 'Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=ad', bausteine: 0, zeilen: [
+    ['Zusammenfassung «Ihre Steuerangelegenheiten laufen über den Kanton Zürich.»', 'grüner Kasten', 'ruhiger Satz, ergänzt um Steuererklärung und Betreibungsregister', 'anders'],
+    ['«Folgende Stände und Fristen sind erfasst»', 'Kasten, wiederholt die Angaben', '—', 'weg'],
+    ['Steuerfrist', 'Zeile im Kasten', 'Kalenderblatt oben + Weg zur Steuern-Seite', 'anders'],
+    ['Behörden-Checkliste', 'zugeklappt, 6 Punkte', '«Behördengänge» offen, 5 Punkte mit Weg zum Werkzeug', 'anders'],
+    ['Testament, Vorsorgeauftrag, Patientenverfügung', 'verteilt auf Behörden und Notfall', '«Für den Fall der Fälle» zusammen', 'neu'],
+    ['Angaben Steuern, Recht, Vertretung', 'Kästen, Steuernummer bricht um', 'Liste, Vertretung «nicht erfasst»', 'anders'],
+    ['Passend zu diesem Bereich', '—', 'Steuern, Betreibungsauszug, Betreibung erhalten, Vorsorgeauftrag & PV, Briefvorlagen, Dokumente', 'neu'],
+    ['Weiter mit Notfall', 'Sand-Knopf', '«Als Nächstes» mit Titel und Satz', 'anders'],
+  ]},
+  { id: 'kapitelnotfall', titel: 'Kapitel · Notfall (ein Ort)', heuteBilder: [['heute-kapitel-notfall.jpg', 'Kapitel Notfall (#/chapter/6)'], ['heute-notfalleinstieg.jpg', 'Notfall-Einstieg (#/notfalleinstieg) — geht im Kapitel auf']], heuteHinweis: 'zwei Seiten heute, eine neu · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=ae', bausteine: 0, zeilen: [
+    ['Zwei Orte «Notfall» (Kapitel und Einstieg)', 'zwei Seiten', 'eine Seite: das Kapitel', 'anders'],
+    ['Zusammenfassung «Für den Notfall ist eine Kontaktperson hinterlegt …»', 'grüner Kasten', 'ruhiger Satz, ergänzt um Blutgruppe und Allergie', 'anders'],
+    ['Notfallkarte (Vorlesekarte)', 'nur über den Einstieg', 'grosser Knopf «Im Ernstfall» zuoberst, bleibt beim Scrollen stehen, mit 144 · 117 · 118', 'anders'],
+    ['Drei Szenarien mit «x von n»', 'drei offene Listen auf dem Einstieg', '«Bereit für den Ernstfall: 19 von 20», nur Fehlendes mit «ergänzen ↓» zum Feld; Szenarien zugeklappt', 'anders'],
+    ['Notfallpass, Notfall-Dossier, Karte zum Drucken', 'Einstieg bzw. Link mit Kästchen-Zeichen', 'vier Kacheln «Ihre Notfall-Unterlagen», Druckvorschau zugeklappt', 'anders'],
+    ['Vorsorge (Organspende, PV, Vorsorgeauftrag, Bestattung)', 'nur als Angaben', 'vier Felder mit ✓/○, «1 von 4 geregelt»', 'neu'],
+    ['Angaben in vier Abschnitten', 'Kästen, Werte über vier Zeilen', 'Liste, fehlende Medikamente markiert', 'anders'],
+    ['Notfall-Kontaktperson anrufen', '— (nur Nummer als Text)', 'Knopf «Peter Muster anrufen» unter dem Ernstfall-Knopf', 'neu'],
+    ['Fehlende Angabe ergänzen', 'im Kapitel suchen', 'gleich im Block ausfüllen, «Ich nehme keine» zählt als erledigt', 'neu'],
+    ['Vorsorge offen', 'nur «Noch nicht»', 'Felder führen selbst zum Werkzeug («erstellen ›»)', 'neu'],
+    ['Passend zu diesem Bereich', '—', 'nur noch Dokumente ablegen (der Rest steht auf der Seite)', 'neu'],
+    ['Ende des Kapitels', 'kein Weg weiter', '«Alle Kapitel durchgegangen · Zur Übersicht ›»', 'neu'],
+  ]},
+  { id: 'versicherungsuebersicht', titel: 'Prämien → Versicherungs-Übersicht', heuteBilder: [['heute-praemien-1.jpg', 'Prämien-Orientierung, Teil 1'], ['heute-praemien-2.jpg', 'Teil 2'], ['heute-praemien-3.jpg', 'Teil 3']], heuteHinweis: '#/praemien · Bausteine nicht gezählt', neu: 'seiten-v5.html?nur=ab', bausteine: 0, zeilen: [
+    ['Titel', '«Prämien-Orientierung»', '«Versicherungs-Übersicht», Brotkrume über das Kapitel', 'anders'],
+    ['KK-Last mit WHO 10 %', 'erster Kasten', 'unter «Versicherungen pro Monat»', 'drin'],
+    ['Versicherungen pro Monat', '—', 'Hauptzahl, Posten aufklappbar', 'neu'],
+    ['Franchise, Wechselfrist, IPV, Gesundheitskosten, KVG-Leistungen, Vorsorge', 'verstreut auf mehreren Seiten', 'Zeilen mit Wert, je zum Werkzeug; IPV mit Pegel', 'neu'],
+    ['Schutzschild', '— (Kapitel)', 'sichtbar, zwei kleine Schilde', 'neu'],
+    ['Lohnt sich eine höhere Franchise? (Kreuz, Break-even, Reserve)', 'offen, lang', 'aufgeklappt, Texte gekürzt auf die App-Sätze', 'drin'],
+    ['Postleitzahl, Prämienregion, Prämie regional', 'drei Kästen', 'aufklappbar «Prämie regional vs. Schweiz»', 'anders'],
+    ['Prämienvergleich, Unfalldeckung, Referenzprämien', 'Kästen und Tabelle', 'aufklappbar', 'anders'],
+    ['Alle Kassen vergleichen (28)', 'lange Tabelle offen', 'aufklappbar, Top 5 + «alle anzeigen»', 'anders'],
+    ['Krankenkasse wechseln, Zusatz, Scanner', 'Link am Ende', 'Zeilen', 'drin'],
+  ]},
+  { id: 'suche', titel: 'Suche', heuteBild: 'heute-suche.jpg', neu: 'seiten-v5.html?nur=n', bausteine: 78, zeilen: [
+    ['Suchfeld', 'oben', 'oben, bleibt beim Scrollen stehen', 'drin'],
+    ['70 «Werkzeuge» (inkl. Lebensereignisse) zuerst', 'eine lange Liste', 'Werkzeuge und Lebensereignisse getrennt', 'anders'],
+    ['7 Kapitel ganz unten', 'Liste', 'zuerst, als Kacheln in den Bereichsfarben', 'anders'],
+    ['Treffer, «Keine Treffer …»', 'Liste / Satz', 'markiert / gleicher Satz', 'drin'],
+    ['Mietzins, Notfallkarte, Rucksack u. a. nicht auffindbar', 'fehlen', 'Vorschlag: in der Suche', 'neu'],
+  ]},
+];
+const ST = { drin: 'drin', anders: 'anders', fehlt: 'fehlt noch', weg: 'bewusst weg', neu: 'neu' };
+const st = (k) => `<span class="st ${k}"><i></i>${ST[k]}</span>`;
+const zaehl = (z) => { const n = {}; z.forEach((r) => n[r[3]] = (n[r[3]] || 0) + 1); return n; };
+const alle = SEITEN.flatMap((s) => s.zeilen), ges = zaehl(alle);
+document.getElementById('gesamt').innerHTML = `<span><b>${SEITEN.length}</b> Seiten · <b>${SEITEN.reduce((a, s) => a + s.bausteine, 0)}</b> Bausteine heute gezählt</span>` + Object.keys(ST).filter((k) => ges[k]).map((k) => `<span>${st(k)} <b>${ges[k]}</b></span>`).join('');
+document.getElementById('reiter').innerHTML = SEITEN.map((s, i) => { const n = zaehl(s.zeilen).fehlt || 0; return `<button data-i="${i}" aria-pressed="${i === 0}">${s.titel}${n ? ` <small>${n} fehlt</small>` : ''}</button>`; }).join('');
+document.getElementById('seiten').innerHTML = SEITEN.map((s, i) => `
+  <section class="seite${i === 0 ? ' an' : ''}" id="s-${s.id}">
+    <h2>${s.titel}</h2>
+    <div class="nebeneinander">
+      <div><div class="etikett"><b>Heute</b>${s.bausteine ? ' · ' + s.bausteine + ' Bausteine' : ''}${s.heuteHinweis ? ' · ' + s.heuteHinweis : ''}</div>${(s.heuteBilder || [[s.heuteBild, '']]).map(([b, l]) => `${l ? `<div class="etikett" style="margin-top:8px">${l}</div>` : ''}<div class="foto"><img src="${b}" alt="${l || s.titel} heute"></div>`).join('')}</div>
+      <div><div class="etikett"><b>Neu</b> · ${s.neu.startsWith('seiten-v5') ? 'Fassung 5' : 'Fassung 4 (Eingang unverändert)'} — antippen erlaubt · <a href="${s.neu.replace('?nur=', '#').replace('index.html#eingang', 'index.html').replace('index.html#uebersicht', 'index.html')}" target="_blank">ganz öffnen</a></div><iframe data-src="${s.neu}${s.neu.includes('?') ? '&' : '?'}t=${Date.now()}" title="${s.titel} neu" loading="lazy"></iframe></div>
+    </div>
+    <div class="filter" role="group" aria-label="Filter">${['alle', 'fehlt', 'anders', 'drin', 'neu'].map((f) => `<button data-f="${f}" aria-pressed="${f === 'alle'}">${f === 'alle' ? 'Alle' : ST[f]}</button>`).join('')}</div>
+    <table><thead><tr><th>Element</th><th>Heute</th><th>Fassung 5</th><th>Stand</th></tr></thead><tbody>
+      ${s.zeilen.map((r) => `<tr data-st="${r[3]}"><td>${r[0]}${r[4] ? `<small>${r[4]}</small>` : ''}</td><td>${r[1]}</td><td>${r[2]}</td><td>${st(r[3])}${r[6] && r[6] !== r[3] ? `<small>Fassung 4: ${ST[r[6]]}</small>` : ''}</td></tr>`).join('')}
+    </tbody></table>
+  </section>`).join('');
+function zeige(i) {
+  document.querySelectorAll('#reiter button').forEach((b) => b.setAttribute('aria-pressed', +b.dataset.i === i));
+  document.querySelectorAll('.seite').forEach((s, j) => s.classList.toggle('an', j === i));
+  const f = document.querySelectorAll('.seite')[i].querySelector('iframe'); if (!f.src) f.src = f.dataset.src;
+  try { history.replaceState(null, '', '#' + SEITEN[i].id); } catch (e) {}
+}
+document.querySelectorAll('#reiter button').forEach((b) => b.onclick = () => zeige(+b.dataset.i));
+document.querySelectorAll('.filter').forEach((g) => g.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+  g.parentElement.querySelectorAll('tbody tr').forEach((tr) => tr.style.display = (b.dataset.f === 'alle' || tr.dataset.st === b.dataset.f) ? '' : 'none');
+}));
+const start = SEITEN.findIndex((s) => '#' + s.id === location.hash); zeige(start >= 0 ? start : 0);
+</script>
+</body>
+</html>

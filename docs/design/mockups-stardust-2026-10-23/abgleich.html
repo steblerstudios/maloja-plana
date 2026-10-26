@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stardust Abgleich</title>
+<style>
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 700; src: url(hanken-grotesk-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 400; src: url(lexend-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 500; src: url(lexend-latin-500-normal.woff2) format('woff2'); }
+:root { --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39; --text: #E6E3DC; --mid: #9CA0A6; --soft: #989CA4; --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6; --text: #24262A; --mid: #5E6167; --soft: #5A5D63; --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #4A6A88; } }
+:root[data-theme="light"] { --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6; --text: #24262A; --mid: #5E6167; --soft: #5A5D63; --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #4A6A88; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Lexend', sans-serif; font-size: 15px; line-height: 1.5; }
+main { max-width: 1080px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-family: 'Hanken Grotesk'; font-size: 30px; margin: 0 0 6px; }
+h2 { font-family: 'Hanken Grotesk'; font-size: 22px; margin: 40px 0 6px; }
+p { color: var(--mid); max-width: 78ch; margin: 0 0 12px; }
+a { color: var(--sand); }
+.zahlen { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
+.zahlen span { border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+.zahlen b { font-weight: 500; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+th { text-align: left; font-weight: 500; color: var(--soft); font-size: 13px; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--border); }
+td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+td:first-child { color: var(--soft); width: 36px; font-variant-numeric: tabular-nums; }
+td small { color: var(--mid); display: block; font-size: 13px; }
+.st { display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; font-size: 13px; }
+.st i { width: 10px; height: 10px; display: inline-block; }
+.st.uebernommen i, .st.erfuellt i { background: var(--sage); border-radius: 50%; }
+.st.angepasst i, .st.teilweise i { background: var(--gold); border-radius: 2px; }
+.st.offen i { border: 2px solid var(--sky); border-radius: 50%; }
+.st.nicht i { background: var(--soft); width: 10px; height: 2px; }
+@media (max-width: 640px) { table, tbody, tr, td { display: block; } thead { display: none; } tr { border-bottom: 1px solid var(--border); padding: 10px 0; } td { border: 0; padding: 2px 0; } td:first-child { width: auto; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Abgleich · Stardust und frühere Entscheide</h1>
+  <p>Stand 23.10.2026. Zwei Fragen, sauber beantwortet: Welche UI/UX-Muster hat Stardust, und was machen wir damit? Und hält Fassung 4 alles ein, was wir früher entschieden haben? Zum Ansehen: <a href="seiten-v4.html">Fassung 4</a> · <a href="index.html">Eingang und Übersicht</a>.</p>
+  <p>Legende: <span class="st uebernommen"><i></i>übernommen</span> · <span class="st angepasst"><i></i>angepasst</span> · <span class="st offen"><i></i>offen</span> · <span class="st nicht"><i></i>bewusst nicht</span> — Form und Wort tragen die Bedeutung, nicht nur die Farbe.</p>
+
+  <h2>1 · Stardust — 27 Muster</h2>
+  <p>Gesammelt auf stardust.app: Startseite mit Galaxie, App Features, Moon Magic, Your Data, Menü (23.10.2026, Handy-Ansicht).</p>
+  <div class="zahlen" id="z1"></div>
+  <table><thead><tr><th>#</th><th>Muster bei Stardust</th><th>Bei Maloja</th><th>Stand</th></tr></thead><tbody id="t1"></tbody></table>
+
+  <h2>2 · Frühere Entscheide — 31 Punkte der Prüfliste</h2>
+  <p>Jeder Punkt mit Quelle in <code>PRUEFLISTE.md</code>. Geprüft an Fassung 4: im Browser gemessen (Tippflächen, Versalien) oder angetippt (Rückmeldungen, Nachfrage, Sie/Du, Graustufen).</p>
+  <div class="zahlen" id="z2"></div>
+  <table><thead><tr><th>#</th><th>Regel</th><th>Wo in Fassung 4</th><th>Stand</th></tr></thead><tbody id="t2"></tbody></table>
+</main>
+<script>
+const S = { uebernommen: 'übernommen', angepasst: 'angepasst', offen: 'offen', nicht: 'bewusst nicht', erfuellt: 'erfüllt', teilweise: 'teilweise' };
+const STARDUST = [
+  ['Eine Metapher trägt alles (Kosmos)', 'Die Passstrasse: Eingang (live), Band auf jeder Seite, Ablauf als Strasse', 'uebernommen'],
+  ['Ein Hauptobjekt pro Bildschirm (Zyklus-Ring)', 'Monatsfluss, Barometer, Passstrasse, leerer Ordner', 'uebernommen'],
+  ['Ein Satz deutet die Daten («Daily Decode»)', 'Übersicht-Karte «Die Grundordnung steht», Urteil im Rechner', 'uebernommen'],
+  ['Die Handlung steht direkt unter dem Objekt («Add Period»)', 'Weiter, Antrag vorbereiten, Erledigt — je eine', 'uebernommen'],
+  ['Kontextzeile «Cycle day 13 of 28»', '«Schritt 2 von 3», «3 Dokumente · 1 läuft bald ab»', 'uebernommen'],
+  ['Mitte-Knopf in der Bodenleiste', 'Boden-Anker mit Erfassen-Knopf (live seit Juli 2026)', 'uebernommen'],
+  ['Farbe trägt Bedeutung (Phasen im Ring)', 'Bereichsfarben, aber immer mit Icon und Wort; Graustufen-Test', 'angepasst'],
+  ['Grosse Ziffern, ruhige Titelschrift', 'Hanken Grotesk, Ziffern in gleicher Breite', 'uebernommen'],
+  ['Ein kleines Werkzeug als Einstieg («Find My Moon»)', 'Regler im Rechner, die bestehenden Schnellchecks', 'uebernommen'],
+  ['Menü als Karten mit Bild und einem Satz', 'Abschnitt E: Anker und sieben Bereiche mit Einzeiler', 'uebernommen'],
+  ['Mitlaufende Abschnittsanzeige mit Sprungliste («Overview +»)', 'Rechner: «Abschnitt: …» klebt oben, ＋ öffnet die Sprungliste', 'uebernommen'],
+  ['«Up next» am Seitenende', '«Als Nächstes» im Kapitel, «Wie es weitergeht» im Rechner', 'uebernommen'],
+  ['Kacheln je Lebensbereich mit einem Tipp für jetzt', '«Passend zu diesem Bereich»: Ablauf, Anspruch, Unterlagen', 'angepasst'],
+  ['Schwebende, weiche Leisten mit Unschärfe', 'Brotkrume und Abschnittsanzeige als Glas über dem Band', 'angepasst'],
+  ['Gestaffelte, weiche Bewegung', 'Kopf → Objekt → Rest; aus mit «Bewegung reduzieren»', 'uebernommen'],
+  ['Pillenförmige Knöpfe', 'In allen Mockups; im Code fehlt noch ein Token radius.pill (IDEEN §15)', 'uebernommen'],
+  ['Datenschutz als Stolz, eigene Seite', 'Eingang (live), Ablage, Fusszeile; eine eigene «Ihre Daten»-Seite fehlt', 'angepasst'],
+  ['Zeitleiste mit «heute» und Phasenband', 'Abschnitt G «Was ansteht»: Tage zum Wischen, heute hervorgehoben, Fristen als Punkt, Termine als Raute, laufende Abläufe als Band', 'uebernommen'],
+  ['Erzählung, die beim Scrollen mitläuft', 'Nur der Berg tritt beim Scrollen zurück (live); sonst bewusst sparsam', 'angepasst'],
+  ['Daten aus der alten App mitnehmen («beam it up»)', 'Abschnitt H «Dokument fotografieren»: Foto, Seiten sammeln, einordnen, Ablaufdatum als Frist — Bild bleibt auf dem Gerät; ohne Kamera: Datei auswählen', 'angepasst'],
+  ['Mit Partner:in teilen («Inner Circle»)', 'Haushalt teilen (IDEEN §11) — geparkt, eigener Entscheid', 'offen'],
+  ['Schwebender Hilfe-Knopf («Contact Us»)', '«Problem melden» in Fusszeile und Menü, kein schwebender Knopf (Lautstärke)', 'angepasst'],
+  ['Serifenschrift für Titel', 'Vorschlag 7 vom Morgen — Hanken bleibt, bis du entscheidest', 'offen'],
+  ['Humorvoller, frecher Ton', 'Ruhig, Sie als Standard, oft ernste Themen', 'nicht'],
+  ['Kleine Versalien-Überschriften («OVERVIEW»)', 'Lärm-Audit N4: Satzschreibung', 'nicht'],
+  ['Neon, nur dunkel, 3D-Planeten', 'Bündelgrösse, CSP, Ruhe — hell und dunkel bleiben gleichwertig', 'nicht'],
+  ['Cookie-Banner mit Werbe-Tracking', 'Kein Tracking (Playbook §10)', 'nicht'],
+];
+const PRUEF = [
+  ['W1', 'Brotkrume «Übersicht › Bereich › Seite»', 'Alle vier Seiten', 'erfuellt'],
+  ['W2', '«‹ Zurück zu …», wer über einen Verweis kommt', 'Rechner (B), erreicht aus dem Kapitel', 'erfuellt'],
+  ['W3', 'Keine Sackgassen', 'Rechner: «Wie es weitergeht»; Kapitel: «Als Nächstes»; Ablauf: Abschluss', 'erfuellt'],
+  ['W4', 'Klammer Kalender · Merkliste · Unterlagen', 'Frist in den Kalender, Merken, Lohnausweis ablegen', 'erfuellt'],
+  ['W5', 'Handy Boden-Anker, Desktop Seitenmenü', 'Alle Geräte, umschaltbar', 'erfuellt'],
+  ['W6', 'Ast-Zoom: Felder + Abläufe + Anspruch + Dokumente', 'Kapitel: «Passend zu diesem Bereich»', 'erfuellt'],
+  ['F1', 'Neutrals bis zur einen Handlung', 'Nur die Hauptknöpfe in Sand', 'erfuellt'],
+  ['F2', 'Farbe + Form + Helligkeit + Wort', 'Icon auf Fläche + Name; Graustufen-Test', 'erfuellt'],
+  ['F3', 'Daten-Grammatik', 'Füllung = Ihr Wert, «!» = Grenze, schwarz', 'erfuellt'],
+  ['F4', 'Kein Vergleich mit anderen', '«| Schnitt» entfernt', 'erfuellt'],
+  ['F5', 'Achsen mit Einheit', '«Einkommen netto pro Monat», CHF an den Enden', 'erfuellt'],
+  ['F6', 'Dunkel: tonale Flächen', 'Keine hellen Flächen im Dunkelmodus', 'erfuellt'],
+  ['F7', 'Logo nach Fläche', 'Kopf und Menü: farbig dunkel, Anthrazit hell', 'erfuellt'],
+  ['F8', 'Graustufen-Test', 'Schalter oben', 'erfuellt'],
+  ['S1', 'Keine Versalien', 'Gemessen: 0 Elemente mit text-transform uppercase', 'erfuellt'],
+  ['S2', 'Sie und Du gespiegelt', 'Überall umschaltbar. Gemessen im Du-Modus über alle Zustände (Urteile, Abschluss, leere Merkliste, Nachfrage): 0 Mal «Sie/Ihr/Ihnen»', 'erfuellt'],
+  ['S3', 'Keine Emojis, Häkchen gezeichnet', 'SVG-Häkchen; «ⓘ» ist das bestehende Glossar-Zeichen', 'erfuellt'],
+  ['S4', 'Labels als Frage, 2–7 Optionen als Pills', '«Welche Art Umzug ist das?», «Wie hoch ist Ihr Einkommen pro Monat?»', 'erfuellt'],
+  ['S5', 'Schweizer Schreibweise', "CHF 6'200, innert, ss", 'erfuellt'],
+  ['S6', 'Fachbegriffe erklärt', '«IPV ⓘ» klappt auf', 'erfuellt'],
+  ['S7', 'Quelle, Stand, keine Rechtsberatung', 'Fuss im Rechner', 'erfuellt'],
+  ['Z1', 'Jede Handlung gibt Rückmeldung', 'Frist, Merken, Schritt erledigt, gelöscht', 'erfuellt'],
+  ['Z2', 'Leer ≠ kaputt', 'Ablage leer: warum + drei Starts', 'erfuellt'],
+  ['Z3', 'Löschen: Listen mit Rückgängig, Tresor mit Nachfrage', 'Ablage (D): Nachfrage · Merkliste (F): sofort weg, «Entfernt · Rückgängig» holt an dieselbe Stelle zurück', 'erfuellt'],
+  ['Z4', '«Gespeichert» im Kapitel', 'Kopf von Kapitel und Ablauf', 'erfuellt'],
+  ['Z5', 'Fristen sanft', '«innert 14 Tagen» → Als Frist eintragen, kein Rot', 'erfuellt'],
+  ['Z6', 'Fortschritt ohne Prozent-Angst', 'Balken und Worte, keine Prozente auf den Seiten', 'erfuellt'],
+  ['B1', 'Rule of Three', 'Gestaffelte Einblendung', 'erfuellt'],
+  ['B2', 'Context, Drill, Continuity', 'Context (Ablauf wechselt Inhalt), Drill (Gruppen klappen auf), Continuity (Menü-Karte wächst zur Seite, Icon wandert in den Kopf, Fokus kehrt zurück)', 'erfuellt'],
+  ['B3', '«Bewegung reduzieren»', 'Schalter oben und Systemeinstellung', 'erfuellt'],
+  ['B4', 'Tippflächen ≥ 44 px', 'Gemessen: alles ≥ 44 ausser Brotkrume (32) und Glossar im Fliesstext (39) — beide über WCAG-Minimum 24', 'erfuellt'],
+  ['B5', 'Gleiche Komponente, gleiches Verhalten', 'Bereichszeilen, Meldung, Knöpfe überall gleich', 'erfuellt'],
+];
+const st = (k) => `<span class="st ${k}"><i></i>${S[k]}</span>`;
+document.getElementById('t1').innerHTML = STARDUST.map((r, i) => `<tr><td>${i + 1}</td><td>${r[0]}</td><td>${r[1]}</td><td>${st(r[2])}</td></tr>`).join('');
+document.getElementById('t2').innerHTML = PRUEF.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${st(r[3])}</td></tr>`).join('');
+const zaehlen = (arr, i, el) => { const z = {}; arr.forEach((r) => z[r[i]] = (z[r[i]] || 0) + 1); document.getElementById(el).innerHTML = Object.entries(z).map(([k, n]) => `<span><b>${n}</b> ${S[k]}</span>`).join(''); };
+zaehlen(STARDUST, 2, 'z1'); zaehlen(PRUEF, 3, 'z2');
+</script>
+</body>
+</html>
