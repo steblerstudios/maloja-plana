@@ -389,7 +389,8 @@ export const SAEULE_3A = Object.freeze({
     // einer Zahl (wie AR und BS). Der Text oben bleibt als Beleg für den Weg.
     // Aufgerechnet wird nur, was ÜBER 10 % des Nettoerwerbseinkommens liegt; im Nettoeinkommen
     // der App steckt die ganze Einzahlung, also kommt der Teil bis zur Schwelle weg.
-    // Die Frage an die SVA Aargau ist ein Entwurf, NICHT gesendet (FRAGEN-AN-DIE-AEMTER.md) — darum
+    // Die Frage an die SVA Aargau ist ein Entwurf, NICHT gesendet (stebler-studios/KANTONS-NACHFRAGEN-ENTWURF-2026-10.md,
+    // «Nichts davon ist gesendet», Zeile A4 ohne Haken; Fragetext in FRAGEN-AN-DIE-AEMTER.md, Frage 1) — darum
     // «offen», nicht «angefragt». Angezeigt als `ipv.vorbehaltAG3aTeiljahr` (ipvAargau.js).
     vorbehalt: 'Ob die Schwelle auch gilt, wenn nur während eines Teils des Jahres eine '
       + 'Säule 2 bestand, ist offen — Frage an die SVA Aargau (FRAGEN-AN-DIE-AEMTER.md, Frage 1, Entwurf).',
