@@ -36,6 +36,78 @@ Maloja Plana ist ein **privacy-first, offline-fähiges Lebens-Organisationswerkz
 
 ---
 
+## Nachtrag 26.10.2026 — Ansprüche, Pflege, betreuende Angehörige
+
+Der Abschnitt oben (Juni 2026) kennt die folgenden Angebote noch nicht. Angaben aus den
+Websites der Anbieter und aus der Presse, abgerufen am 26.10.2026; **Selbstangaben, nicht
+unabhängig geprüft**.
+
+### We+ (weplus.care) — die nächste direkte Konkurrenz
+- **Was:** iPhone-App für betreuende Angehörige. Prüft Leistungen von Bund, Kanton und
+  Gemeinde (laut App-Store-Eintrag über 50 Leistungen, alle 26 Kantone), füllt Formulare aus
+  (u. a. EL-Anmeldung und Hilflosenentschädigung), KI-Lotse für Fragen, Tagesplan,
+  Belegerfassung für Rückforderungen und Steuern.
+- **Datenschutz:** Dossier, Pflegetagebuch und Belege auf dem iPhone, kein Konto, kein Login.
+  Der KI-Lotse läuft auf dem Gerät, ohne Apple Intelligence oder auf Wunsch über eine Cloud-KI.
+- **Preis:** Basisstufe gratis; danach CHF 99/Jahr oder 19/Monat, CHF 149 und 199/Jahr.
+- **Betreiber:** We Technology, Zürich; die Website nennt We+ zugleich einen gemeinnützigen
+  Verein. Gründer nicht genannt.
+- **Sichtbarkeit:** Berichte bei SRF, 20 Minuten und Aargauer Zeitung (Juli 2026); laut SRF
+  bisher nur für Apple.
+- **Abgrenzung:** Gleiche Haltung wie Maloja (lokal, kein Konto) und genau unser Thema EL/HE —
+  aber Abo, KI im Kern, nur iPhone und nur die Lebenslage Pflege. Maloja ist gratis, läuft im Browser (iOS-Hülle über Capacitor im Repo),
+  ohne KI-Annahmen, und verbindet Pflege mit Pensionierung, AHV, EL und IV.
+- Quellen: <https://www.weplus.care/>, App-Store-Eintrag «We+ für Betreuende Angehörige»,
+  SRF «Digitale Hilfe im Dschungel der Ergänzungsleistungen».
+
+### Sozial-Navigator (sozial-navigator.ch)
+- **Was:** Anspruchs-Check (laut Seite kostenlos) und Leistungs-Wegweiser für IV, AHV/EL,
+  Krankenkasse, Kanton, Gemeinde, Stiftungen; Kantonsinfos für alle 26 Kantone; Themen wie
+  IV-Assistenzbeitrag, Hilflosenentschädigung, pflegende Angehörige.
+- **Modell:** beschreibt sich als «Projekt ohne Gewinnabsichten»; Betreiber und Datenschutz
+  aus dem gelesenen Text nicht ersichtlich.
+- **Abgrenzung:** Wegweiser und Check, kein persönlicher Ordner und keine Fristen.
+
+### Pflegewegweiser (pflegewegweiser.ch) — kein Software-Konkurrent
+- **Was:** Pflegewegweiser GmbH, St. Gallen. Stellt pflegende Angehörige an und entlöhnt sie
+  (Grundpflege CHF 37.90/h laut Seite), Abklärung durch Pflegefachperson, Begleitung, Kurse,
+  Shop für Hilfsmittel. Die Ratgeber-Seiten (z. B. EL 2026) und der Lohnrechner dienen der
+  Kundengewinnung; einen HE-Rechner gibt es dort nicht.
+- **Für Maloja:** Das Geschäftsmodell (Anstellung über eine Spitex-Organisation) ist nicht
+  übertragbar. Die Branche ist politisch umstritten (Positionspapier Spitex Schweiz
+  16.09.2025; kantonale Vorstösse BE, BS, GR). ⚠️ `PflegeEntloehnung.jsx` rechnet mit dieser
+  Anbieterzahl als Richtwert (Freigabe-Register Nr. 23, ohne Stand) — eine neutrale Quelle
+  wäre besser.
+
+### Faula (faula.ch) — keine Konkurrenz
+- **Was:** faula GmbH, Bern. Wechselt die Grundversicherung jedes Jahr automatisch zur
+  günstigsten Kasse (Fristen, Formulare). Ein Anwendungsfall, keine Pflege, keine
+  Lebensadministration. Gehört zu Comparis/moneyland.
+- **Lernen:** Faula nimmt eine lästige Pflicht *ganz* ab, statt sie zu erklären.
+
+### Weitere, nur am Rand
+- **fabel**, **in.kontakt**: Pflegealltag und Vernetzung von Angehörigen, ohne
+  Sozialversicherungs-Logik.
+- **Amtliche Rechner** (ahv-iv.ch, Ausgleichskassen, z. B. EL-Rechner der AKSO): gratis und mit
+  Autorität, aber einzeln und ohne Zusammenhang.
+
+### Folge für Maloja
+- Pflege und Hilflosenentschädigung sind nicht mehr «spätere Ausbaustufe» (vgl.
+  `maloja c/16-MARKTPOSITIONIERUNG-UND-MESSAGING.md`, Stufen 2–3): We+ besetzt das Feld jetzt.
+- Erster Schritt: Rechner Hilflosenentschädigung in «Angehörige pflegen» und «Krankheit & IV»
+  (PR #604, Entwurf, 26.10.2026).
+
+| Eigenschaft | We+ | Sozial-Navigator | Pflegewegweiser | **Maloja Plana** |
+|---|---|---|---|---|
+| Daten nur auf dem Gerät | ✓ (KI teils Cloud) | nicht ersichtlich | – | **✓** |
+| Kostenlos | Basis ✓, sonst Abo | Check ✓ | Beratung gratis, verdient an Anstellung | **✓** |
+| Plattform | iPhone | Web | Web | **Web** (iOS-Hülle im Repo) |
+| HE/EL-Ansprüche | ✓ | ✓ | Ratgeber | **✓** (HE ab PR #604) |
+| Pensionierung, AHV, Steuern, KVG | ✗ | teilw. | ✗ | **✓** |
+| Open Source | ✗ | ✗ | ✗ | **✓** |
+
+---
+
 ## Indirekte Konkurrenz (Allgemeine Lebens-Organizer)
 
 ### Notion / Obsidian / Craft
@@ -129,3 +201,8 @@ Apps verwalten **Informationen**, Maloja verwaltet **Zusammenhänge**. (Ausführ
 ## Fazit
 
 Maloja Plana hat **keine direkte Konkurrenz** in seiner spezifischen Nische. Die grössten "Konkurrenten" sind Comparis (kommerziell, datensammelnd) und ch.ch (informativ, aber kein persönliches Tool). Die stärkste Differenzierung ist die Kombination aus Privatsphäre, Offline-Fähigkeit und Schweiz-Expertise in einem einzigen, kostenlosen Werkzeug.
+
+> **Nachtrag 26.10.2026:** «Keine direkte Konkurrenz» gilt so nicht mehr. Mit **We+** gibt es
+> seit Sommer 2026 eine App mit derselben Haltung (lokal, kein Konto) im Feld Pflege und
+> Ansprüche. Abgrenzung: Maloja ist gratis, ohne Abo und ohne KI im Kern, im Browser, und
+> denkt quer über alle Lebenslagen statt nur über die Pflege. Details im Nachtrag oben.

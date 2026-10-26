@@ -1,6 +1,15 @@
 # K48 — Fragen an die Jurist:in
 
-> **Stand: 27.09.2026**, Code-Stand live = `80262b6` (Abschnitt H neu).
+> **Stand: 24.10.2026**, `main` = `00058e0f`, live laut Stand-Bericht vom 24.10. = 0.1.48-beta.
+> Nachgezogen: C4 (Konten), C6 neu (Kantonsatlas), H6 (Wiedervorlage), H8–H10 neu (Patientenverfügung,
+> «Rechnung nicht bezahlt», Systemblick), A2 (Jahreswechsel), Reihenfolge (Querschnittsfragen).
+> **Neu: ein Termin für alle Produkte.** Stebler Studios bündelt diese Liste mit den Fragen zur Studio-Website und
+> zu zwei weiteren Web-Apps in **einem** Dossier. Neun Querschnittsfragen (Adresse im Impressum, Gerichtsstand,
+> Haftung, Speichern im Browser, nur Schweiz oder EU, Online-Verkauf, Marke, KI und Urheberrecht, Affiliate) werden
+> dort einmal für alle gestellt. Das Dossier liegt ausserhalb dieses Repos. **Die Steuer- und AHV-Fragen G1–G3 gehen
+> an die Treuhand** (G4 bleibt hier).
+>
+> Stand vorher: 27.09.2026, Code-Stand live = `80262b6` (Abschnitt H neu).
 > Vorher: 23.09.2026, `main` `2f15946`.
 > Ergänzt 23.09.2026 um F5–F7 (EU-Produkthaftung, Cyber Resilience Act, AGPL § 13)
 > und G1–G4 (freiwillige Unterstützungsbeiträge).
@@ -64,6 +73,10 @@ Konkret: ein Kanton ändert seine Ansätze, wir merken es drei Monate nicht, die
 rechnet weiter mit alten Werten. Ist das leichte oder grobe Fahrlässigkeit?
 → *Was hängt daran:* wie eng der Aktualisierungs-Prozess für Fachdaten sein muss —
 das ist Bauarbeit, keine Textarbeit.
+*Nachtrag 24.10.2026:* Für den Jahreswechsel 2027 gibt es inzwischen einen Ablauf: Bundeswerte als
+Jahrestabellen (#533), Tests mit fester Uhr (#532), Kantonswerte je Kanton belegt, zweiter Durchgang
+30.11. und Nachprüfung 16.12. Die Frage bleibt: Genügt ein solcher dokumentierter Ablauf, oder erwartet
+man mehr (z. B. einen sichtbaren «Stand der Werte»-Hinweis je Rechner)?
 
 **A3. Ist der Brief-Generator noch Vorlage oder schon Rechtsdienstleistung?**
 *(Seit 27.09.2026 live dazu: Rechtsvorschlag, Einsprache gegen die Kündigung,
@@ -139,12 +152,24 @@ Erklärung nennt das. Reicht die Formulierung?
 ihrer heutigen Form: mit Konten bearbeitet Stebler Studios Personendaten selbst (Art. 5 lit. j).
 → *Was hängt daran:* Datenschutzerklärung, Bearbeitungsverzeichnis, DSFA (C2) und jede Aussage
 «bleibt auf Ihrem Gerät» in App, Erklärseiten und Flyer. **Rückt nach vorn** — vor dem Konten-Bau klären.
+*Nachtrag 24.10.2026:* «ab Oktober» ist nicht eingetreten. Konten sind **nicht gebaut**. Im November wird nur
+das Konzept als Architekturentscheid festgehalten, gebaut wird frühestens 2027. Die Frage gehört damit **vor**
+diesen Entscheid: Welche Bauform hält die Pflichten am kleinsten (z. B. nur verschlüsselte Sicherung ohne
+Zugriff der Anbieterin, Server in der Schweiz)?
 
 **C5. Braucht es eine Einwilligungs-Verwaltung (Backlog LEG-005)?**
 Idee aus dem Backlog: Zustimmung zur Datenbearbeitung granular erteilen und jederzeit widerrufen.
 Heute rein lokal, ohne Konto — ob das nötig ist, ist eine Rechtsfrage, keine Bau-Frage
 (Entscheid Stebler Studios 27.09.2026: auf diese Liste). Mit Konten (C4) stellt sie sich neu.
 → *Was hängt daran:* ob vor oder mit den Konten ein Einwilligungs-Dialog gebaut werden muss.
+
+**C6. Kantonsatlas: Zahlen aus der App veröffentlichen?** *(neu 24.10.2026)*
+Geplant ist ein öffentlicher Atlas ohne Login mit Standortdaten (Mindestlohn, Familienzulagen, Prämienlast,
+Steuern) aus amtlichen Quellen. Später kämen Spenden-Werte nach Branche und Region dazu, die aus Maloja-Nutzung
+stammen, immer mit dem Hinweis, dass Maloja-Nutzende nicht repräsentativ sind. Heute verlässt nichts das Gerät.
+Fragen: Unter welchen Bedingungen dürfen solche Werte überhaupt erhoben werden (freiwillig, anonym, Mindestgrösse
+der Gruppe)? Ab wann ist ein Aggregat keine Personendaten mehr? Was müsste in Datenschutzerklärung und App stehen?
+→ *Was hängt daran:* ob der Spenden-Teil des Atlas je gebaut wird. Der Teil mit amtlichen Daten hängt nicht daran.
 
 ---
 
@@ -382,6 +407,8 @@ KK-Karte nur, wenn die Person das Kästchen setzt (Standard aus).
 2. Verlangt die Datensparsamkeit (DSG), die Nummer standardmässig **nicht** in einen
    weitergebbaren Code zu schreiben, wenn die Person sie selbst erfasst hat?
 → *Was hängt daran:* ob das Kästchen bleibt oder die Nummer ganz aus den Codes fällt.
+*Nachtrag 24.10.2026:* Die im Entscheidungsblatt vorgesehene Wiedervorlage im Oktober hat nicht stattgefunden.
+Der Zustand von 25.09. gilt unverändert. Sinnvoll ist, sie nach der Antwort auf H6 zu führen.
 
 **H7. Gesundheitsdaten im fremden Adressbuch.**
 Die QR-Codes sind vCards, weil die normale Kamera nur so etwas anzeigt (am Gerät
@@ -393,6 +420,33 @@ Frage: Genügt dieser Hinweis (DSG Art. 6 Abs. 2 Verhältnismässigkeit; Art. 5 
 Ziff. 2 besonders schützenswert), oder braucht es eine andere Bauform (z. B. einen
 zweiten, kleineren Code nur mit Name und Notfallnummer)?
 → *Was hängt daran:* die Bauform des Notfall-QR.
+
+---
+
+## H · Nachtrag 24.10.2026 — drei weitere Teile
+
+*Artikelangaben hier sind Stichworte für das Gespräch, nicht am Wortlaut geprüft.*
+
+**H8. Patientenverfügung zum Ausfüllen.**
+Die App führt in dreizehn Fragen durch eine Patientenverfügung, eine Frage pro Seite, am Ende ein Ausdruck mit
+Begleitblatt. Sie ist als Hilfe zum Aufschreiben gekennzeichnet. Eine ärztliche Gegenlese der medizinischen Fragen
+ist angefragt. Stichwort: ZGB Art. 370 ff.
+Fragen: Erfüllt der Ausdruck die Formvorschrift, wenn er datiert und unterschrieben wird? Ist eine geführte Vorlage
+dieser Art Rechtsberatung (vgl. A3)? Was muss der Hinweis zur Hinterlegung sagen?
+→ *Was hängt daran:* der Wortlaut des Begleitblatts, und ob der Ausdruck als «Entwurf» beschriftet werden muss.
+
+**H9. «Rechnung nicht bezahlt — Mahnung oder Zahlungsbefehl, was tun?»** (gemergt 24.10., #560, noch nicht live)
+Eine Seite führt Mahnung und Betreibung zusammen und verweist auf den Rechtsvorschlag (H1).
+Frage: Gilt für diese Orientierung dasselbe wie für A3/H1, oder braucht eine Seite zu laufenden Fristen
+(Betreibung) einen stärkeren Hinweis, sich sofort an eine Beratungsstelle zu wenden?
+→ *Was hängt daran:* der Warnkasten der Seite.
+
+**H10. Systemblick: Kantone öffentlich vergleichen.** (gemergt 24.10., #553, noch nicht live)
+Die App rechnet die sieben BAG-Modellhaushalte durch alle 26 kantonalen IPV-Modelle und zeigt die Restprämie,
+also was ein Haushalt nach der Verbilligung selbst trägt, mit Quellen. Stichwort für die Zielgrösse: KVG Art. 65.
+Fragen: Wie deutlich muss stehen, dass es eigene Modellrechnungen sind und keine amtlichen Werte? Gibt es ein
+Risiko, wenn eine Modellrechnung einen Kanton schlechter darstellt, als dessen eigene Zahlen es tun?
+→ *Was hängt daran:* der Hinweis über dem Vergleich und ob Einzelkantone benannt werden.
 
 ---
 
@@ -429,3 +483,10 @@ zweiten, kleineren Code nur mit Name und Notfallnummer)?
 
 **G1–G2** (Unterstützungsbeiträge) rücken nach vorn, sobald ein Unterstützen-Knopf
 gebaut werden soll — sie sind die Bedingung dafür, nicht eine Folge davon.
+
+*Nachtrag 24.10.2026:*
+- **F3/F5/F6** (EU ja oder nein) entscheidet Stebler Studios vor dem Termin. Alle Entwürfe gehen von «nur
+  Schweiz» aus. Fällt der Entscheid so, sind die EU-Fragen nur noch zur Bestätigung da.
+- **H8** gehört zu A3 und ist live, rückt also mit A1–A3 nach vorn. **H9/H10** sind gemergt, aber noch nicht live.
+  Sie sollten vor dem nächsten Deploy beantwortet sein, oder der Hinweis wird bis dahin vorsichtig formuliert.
+- **G1–G3** stehen jetzt beim Treuhand-Gespräch. Hier bleibt nur G4.
