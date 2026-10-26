@@ -3294,7 +3294,8 @@ export default {
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
     // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
     vorbehaltAG3aTeiljahr: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: senza cassa da pensiun quinta il pajament en la 3. pitga A qua mo per la part sur 10 pertschient da l’entrada da gudogn. Ils documents publitgads na din betg, sche quai vala era, sch’i ha dà ina cassa da pensiun mo durant ina part da l’onn. Laschar confermar l’import da la SVA Argovia.',
-    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
+    // TODO(rm): provisorisch — Gegenlese (Satz «Unterlagen», 26.10.2026)
+    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. Ils documents publitgads na din betg quai. Laschar confermar l’import tar l’Uffizi da las assicuranzas socialas dal chantun Berna.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     vorbehaltAG: 'En il chantun Argovia è la taxaziun definitiva {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura notablamain pli pauc po dumandar ina nova quintada tar la SVA Aargau. Imports retschavids nunlegitimamain vegnan pretends enavos.',
@@ -5279,6 +5280,52 @@ export default {
 
   // Survista da las assicuranzas (runda 9 AB, pass 3, 25.10.2026) — texts betg anc examinads
   vu: {
+    // TODO(rm): provisorisch deutsch — Absicherung je Risiko (26.10.2026)
+    risiko: {
+      titel: 'Absicherung je Risiko',
+      subOffen: '{n} noch offen',
+      subKeins: 'Was zu jedem Risiko eingetragen ist',
+      satz: 'Zeigt, was eingetragen ist — nicht, ob die Leistungen reichen oder die Beiträge vollständig sind. Haftpflicht und Hausrat stehen im Schutzschild.',
+      marke: {
+        offen: 'offen',
+        zusatz: 'zusätzlich',
+      },
+      krankheit: 'Krankheit',
+      unfall: 'Unfall',
+      invaliditaet: 'Invalidität',
+      tod: 'Tod (Hinterbliebene)',
+      alter: 'Alter',
+      kkErfasst: 'Krankenkasse: {name}',
+      kkOffen: 'Keine Krankenkasse eingetragen — für alle mit Wohnsitz in der Schweiz Pflicht (KVG Art. 3).',
+      ktgArbeitgeber: 'Krankentaggeld über den Arbeitgeber.',
+      ktgErfasst: 'Krankentaggeld erfasst.',
+      ktgNicht: 'Lohnausfall bei Krankheit (Krankentaggeld): nichts erfasst — die Taggeldversicherung ist freiwillig (KVG Art. 1a Abs. 1).',
+      uvgArbeitgeber: 'Unfallversicherung über den Arbeitgeber.',
+      uvgErfasst: 'Unfallversicherung erfasst.',
+      uvgOffen: 'Unfallversicherung noch nicht eingetragen — für Angestellte obligatorisch (UVG Art. 1a).',
+      unfallKk: 'Über die Krankenkasse, soweit keine Unfallversicherung aufkommt (KVG Art. 1a Abs. 2 lit. b): Behandlungskosten, kein Lohnersatz.',
+      unfallOhneKk: 'Weder Krankenkasse noch Unfallversicherung eingetragen.',
+      uvgFreiwillig: 'Selbständige können sich freiwillig gegen Unfall versichern (UVG Art. 4).',
+      iv: 'IV: Versichert ist, wer in der AHV versichert ist (IVG Art. 1b). Eine ordentliche Rente setzt mindestens drei Beitragsjahre voraus (IVG Art. 36); ausserordentliche Renten richten sich nach eigenen Regeln (IVG Art. 39).',
+      ivRente: 'Mit der Altersrente endet der Anspruch auf eine IV-Rente (IVG Art. 30).',
+      ahvHinterlassene: 'AHV: Witwen- oder Witwerrente, wenn bei der Verwitwung Kinder da sind (AHVG Art. 23); eine Witwe auch ohne Kinder, wenn sie dann mindestens 45 Jahre alt und mindestens fünf Jahre verheiratet war (AHVG Art. 24); Waisenrente für Kinder (AHVG Art. 25).',
+      ahvAlter: 'AHV: Altersrente ab dem Referenzalter (AHVG Art. 21); ob als Voll- oder Teilrente, hängt von den Beitragsjahren ab (AHVG Art. 29).',
+      pkErfasst: 'Pensionskasse: {name}',
+      pkErfasstOhneName: 'Pensionskasse erfasst.',
+      pkSelbst: 'Pensionskasse: für Selbständige freiwillig (BVG Art. 4).',
+      pkMindestalter: 'Pensionskasse: obligatorisch erst ab dem 1. Januar nach dem 17. Geburtstag (BVG Art. 7).',
+      pkAltersparen: 'Pensionskasse: Alterssparen erst ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7).',
+      pkOffen: 'Pensionskasse noch nicht eingetragen — bei einem Arbeitgeber mit diesem Lohn in der Regel obligatorisch (BVG Art. 2, 7).',
+      pkUnklar: 'Pensionskasse: Ob sie obligatorisch ist, hängt vom Bruttolohn ab (BVG Art. 7).',
+      pkUnterSchwelle: 'Pensionskasse: beim erfassten Lohn nicht obligatorisch (BVG Art. 7).',
+      pkJeNachArbeit: 'Pensionskasse: obligatorisch für Angestellte mit einem Jahreslohn über der Eintrittsschwelle (BVG Art. 2, 7).',
+      leben: 'Lebensversicherung erfasst.',
+      saeule3a: 'Säule 3a erfasst.',
+      pkGuthaben: 'Erfasst ist nur ein Guthaben, keine Pensionskasse mit laufenden Beiträgen.',
+      pkOhneGeburtsdatum: 'Pensionskasse: Alterssparen ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7) — dafür fehlt das Geburtsdatum.',
+      nbuUnter8: 'Unter 8 Stunden pro Woche beim selben Arbeitgeber sind Freizeitunfälle nicht versichert; der Arbeitsweg gilt als Berufsunfall (UVG Art. 8 Abs. 2, UVV Art. 13).',
+      unfallArbeitslos: 'Wer arbeitslos ist, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).',
+    },
     satz: { sie: 'Vossas assicuranzas en ina survista — sin basa da Vossas indicaziuns.', du: 'Tias assicuranzas en ina survista — sin basa da tias indicaziuns.' },
     darin: 'Tge che quai cuntegna',
     erfasst: 'Registradas: {n}',
@@ -5397,6 +5444,8 @@ export default {
     wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
     // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     refJahr: 'Prämien {jahr}',
+    // TODO(rm): provisorisch deutsch — Prämien veraltet (26.10.2026)
+    veraltet: 'Für {aktuell} sind hier noch keine Prämien hinterlegt. Die Werte unten sind die Prämien {jahr} — massgebend ist die Prämienmitteilung der Kasse.',
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
