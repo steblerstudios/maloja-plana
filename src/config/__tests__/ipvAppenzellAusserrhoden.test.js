@@ -163,6 +163,8 @@ describe('K31 calculateIPV für AR (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ monthlyIncome: 2000, kkPremium: 520, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: '0' } }))).toMatchObject({ belegt: true, annual: 5873 });
     expect(calculateIPV(person({ monthlyIncome: 2000, kkPremium: 520, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: 0 } }))).toMatchObject({ belegt: true, annual: 5873 });
     expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { pension3a: 3000 }, versicherungen: { bvgContribution: '' } }))).toMatchObject({ belegt: false, offen: 'saeule2Unbekannt' });
+    // ⟨26.10.2026⟩ Auch die Pensionskasse «Trifft nicht zu» heisst «keine» (saeule2(), kantonsModell.js).
+    expect(calculateIPV(person({ monthlyIncome: 2000, kkPremium: 520, finanzen: { pension3a: 3000 }, versicherungen: { _na: ['bvgInsurer'] } }))).toMatchObject({ belegt: true, annual: 5873 });
     // Ohne 3a ändert die Angabe nichts.
     expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: '0' } }))).toMatchObject({ belegt: true, annual: 4493 });
     // Unter dem Lebensbedarf ändert die 3a nichts — dann bleibt die Zahl.

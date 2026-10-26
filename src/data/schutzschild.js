@@ -38,7 +38,17 @@ export function schildOptionen(data = {}) {
       ? (Number(data?.finanzen?.monthlyIncome) || 0) * 13 : null,
     lohnBasis: lohnBasis(data?.finanzen),
     referenzalterErreicht: referenzalterErreicht(data?.basis) === true,
+    vorBvgMindestalter: vorBvgMindestalter(data?.basis),
   };
+}
+
+// BVG Art. 7 Abs. 1 (fedlex, gelesen 25.10.2026): Pflicht «ab 1. Januar nach Vollendung des 17. Altersjahres»
+// (Tod und Invalidität; fürs Alter ab dem 24.) — also erst im Kalenderjahr, in dem man 18 wird. Ohne Datum: nein.
+// Das Jahr aus dem Text (wie kantonsModell.js): `new Date('2009-01-01')` ist UTC und läge westlich davon im Vorjahr.
+export function vorBvgMindestalter(basis, heute = new Date()) {
+  const s = String(basis?.dateOfBirth || '');
+  if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return false;
+  return heute.getFullYear() < Number(s.slice(0, 4)) + 18;
 }
 const has = (x) => x != null && String(x).trim() !== '';
 
@@ -59,7 +69,8 @@ export function schildState(v = {}, opts = {}) {
   const einkommen = Number(opts.annualIncome) || 0;
   // Ab dem Referenzalter keine BVG-Pflicht mehr (BVG Art. 10 Abs. 2 lit. a) — Weiterversichern geht nur nach
   // Reglement (Art. 33b), ist also keine Lücke. Ohne Geburtsdatum bleibt es bei der Pflicht wie bisher.
-  const bvgAlter = opts.referenzalterErreicht !== true;
+  // Ebenso vor dem Mindestalter (BVG Art. 7 Abs. 1, siehe vorBvgMindestalter) — z. B. in der Lehre mit 16.
+  const bvgAlter = opts.referenzalterErreicht !== true && opts.vorBvgMindestalter !== true;
   // BVG Art. 7 Abs. 1: Jahreslohn von «mehr als» der Schwelle — wie lohnAbzuege.js (`<=` → nicht versichert).
   const bvgPflicht = employed && bvgAlter && einkommen > BVG_PARAMS.eintrittsschwelle;
   const bvgErfasst = has(v.bvgInsurer) || Number(v.bvgContribution) > 0 || Number(v.bvgBalance) > 0;

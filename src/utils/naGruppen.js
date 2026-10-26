@@ -18,6 +18,12 @@ const liste = (d) => (d && Array.isArray(d[NA_FELD]) ? d[NA_FELD] : []);
 export const keineKontaktperson = (notfall) =>
   Boolean(notfall) && !notfall.emergencyContact && trifftNichtZu(notfall, 'emergencyContact');
 
+// Medikamente als «Ich nehme keine» markiert und nichts erfasst (weder Liste noch altes Textfeld).
+// Anders als die Kontaktperson eine echte Angabe für Helfende — darum kein Platzhalter.
+export const keineMedikamente = (notfall) =>
+  Boolean(notfall) && !(Array.isArray(notfall.medicationsList) && notfall.medicationsList.some(m => m && m.name))
+  && !String(notfall.medications || '').trim() && trifftNichtZu(notfall, 'medications');
+
 // Neue Liste nach dem Umschalten eines Feldes samt seinen `naMit`-Feldern.
 // Beim Setzen gehen nur leere Mit-Felder mit (eine eingetragene Nummer bleibt sichtbar);
 // beim Zurücknehmen fallen alle wieder weg.

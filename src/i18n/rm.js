@@ -496,7 +496,7 @@ export default {
     footerNote: 'Il led dovra temp, e la gronda part dals pass pon spetgar. In post da cussegliaziun u l’interpresa da pompas funebras gida a mantegnair la survista. Quai è orientaziun, betg cussegl giuridic.',
   },
   pflege: {
-    quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]] (geprüft im September 2026).',
+    quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]], [[AHVG Art. 43bis|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_43_bis]] (geprüft im September 2026 · Art. 42ter/43bis geprüft im Oktober 2026).',
     title: 'Tgirar confamigliars',
     intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista calma: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
@@ -509,10 +509,12 @@ export default {
     entl: {
       hoursLabel: 'Tgira per emna',
       hoursUnit: 'uras',
-      resultLabel: 'Indemnisaziun pussaivla (brutto)',
+      resultLabel: 'Indemnisaziun pussaivla (grondezza)',
       month: 'mais',
       year: 'onn',
-      rateNote: 'quintà cun ca. CHF 37.90/ura (pflegewegweiser.ch, 09.2026)',
+      rateNote: 'Spanna da {von} fin {bis} CHF per ura: confamigliars che tgiran survegnan tenor ina communicaziun dal chantun Basilea-Citad «per regla ina contribuziun da 30 fin 40 francs per ura» (16.12.2025). Sch’i sa tracta da brutto u netto, na stat betg là. I n’exista nagina cifra uffiziala per l’entira Svizra; en l’agen chantun e tar l’atgna organisaziun po quai esser auter.',
+      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF {betrag} per ura (KLV art. 7a al. 1 lit. c). Quai n’è ni il salari ni l’entira indemnisaziun da l’organisaziun: tut tenor chantun vegnan vitiers contribuziuns dal chantun u da la vischnanca e da la persuna tgirada.',
+      nurGrundpflege: 'Per regla vegn indemnisada mo la tgira da basa en il basegn examinà, betg l’assistenza u la chasada. Tge uras che quintan, di l’organisaziun che engascha.',
       zuschlaege: 'Per intervents la saira, la fin d’emna u la notg èn supplements pussaivels tut tenor l’organisaziun.',
       disclaimer: 'Orientaziun nunliand. Il salari real dependa da l’organisaziun che engascha e dal chantun — betg ina tariffa garantida.',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -523,15 +525,52 @@ export default {
     step2Link: 'Vesair l’indemnisaziun per perdita da gudogn (IPG)',
     step3Title: '4 · Indemnisaziun d’impotenza da la persuna tgirada',
     step3Text: 'Sche la persuna tgirada dovra regularmain agid en il mintgadi, po ella avair dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ella gida a finanziar la tgira necessaria.',
-    step3Link: 'Vesair malsogna & AI',
     step4Title: '5 · Sgravi & cussegliaziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step4Text: { sie: 'Vus na stuais betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.', du: 'Ti na stos betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.' },
     step4Link: 'Vesair la situaziun «Tgirar confamigliars»',
     footerNote: 'Orientaziun, betg cussegliaziun giuridica. Dretgs e termins vegnan sclerids da la cassa da cumpensaziun u dad in post da cussegliaziun.',
   },
+  hilflos: {
+    merkblattSprache: 'd',
+    frageWer: 'Tgi survegn l’indemnisaziun?',
+    wer: { iv: 'Creschì, senza entira renta da vegliadetgna AVS', ahv: 'Survegn l’entira renta da vegliadetgna AVS', kind: 'Uffant sut 18 onns' },
+    frageWohnen: 'Nua viva la persuna?',
+    wohnen: { zuhause: 'A chasa', heim: 'En in chasa da tgira (dapli che 15 dis al mais)' },
+    frageGrad: 'Grad da l’impotenza',
+    grad: { leicht: 'Leva', mittel: 'Mesauna', schwer: 'Greva', offen: 'Anc betg cler' },
+    gradErklaerung: 'Il grad fixescha il post AI suenter ina examinaziun. El dependa da quant agid regular e considerabel ch’ins dovra per las activitads quotidianas sco sa vestgir, mangiar u la tgira dal corp, e sch’i dovra ina survegliaziun persunala permanenta (fegl d’infurmaziun 4.13, cifra 1 e 3).',
+    frageBesitzstand: 'È vegnida pajada fin a la pensiun ina indemnisaziun d’impotenza da l’AI?',
+    frageIntensiv: 'Tgira supplementara per di, cumparegliada cun in uffant da la medema vegliadetgna senza impediment',
+    intensiv: { keine: 'Main che 4 uras', h: 'almain {n} uras' },
+    resultLabel: 'Indemnisaziun d’impotenza',
+    spanneLabel: 'Tenor il grad',
+    gradWaehlen: 'Cun il grad cumpara qua l’import exact.',
+    monat: 'mais',
+    jahr: 'onn',
+    davonIntensiv: 'da quai supplement per tgira intensiva {betrag}',
+    besitzstandNote: 'Tgi che survegniva pli baud ina indemnisaziun d’impotenza da l’AI, survegn da l’AVS almain l’import da fin ussa (AHVG art. 43bis al. 4). Quintà cun l’import AI dad oz; l’import exact stat en la disposiziun da fin ussa.',
+    kindHeim: 'Per dis en ina chasa da tgira datti mo in dretg, sch’ils geniturs pajan sezs ils custs da la chasa (fegl d’infurmaziun 4.13, cifra 8). Quai na quinta quest calculatur betg — il post AI dat infurmaziuns.',
+    ahvLeichtHeim: 'Tar ina impotenza leva na paja l’AVS nagina indemnisaziun en ina chasa da tgira (AHVG art. 43bis al. 1bis). Tar ina impotenza mesauna u greva bain.',
+    wartezeitIv: 'Il dretg nascha il pli baud, cura che l’impotenza ha durà in onn senza interrupziun considerabla (IVG art. 42 al. 4). Tgi che s’annunzia dapli ch’in onn pli tard, survegn il pli ils dudesch mais avant l’annunzia (IVG art. 48 al. 1).',
+    wartezeitAhv: 'Tar l’AVS sto l’impotenza avair durà almain sis mais senza interrupziun (AHVG art. 43bis al. 2).',
+    unabhaengig: 'L’indemnisaziun d’impotenza na dependa betg da l’entrada u da la facultad.',
+    gerechnetNote: 'Ils imports {jahr} èn quintads tenor la lescha a basa da las novas rentas AVS; ina tabella uffiziala n’era anc betg disponibla durant la construcziun.',
+    folgen: 'Cun ina indemnisaziun d’impotenza da l’AI po ins dumandar sut ulteriuras premissas ina contribuziun d’assistenza, sche la persuna viva u vul viver a chasa (fegl d’infurmaziun 4.13, cifra 10). Tgi che tgira in commember da la famiglia cun indemnisaziun d’impotenza, po survegnir bonificaziuns d’assistenza da l’AVS (cifra 11).',
+    gradBegleitung: 'Tar creschids che vivan a chasa quinta er in accumpagnament permanent en il mintgadi — per exempel sch’els na pon betg abitar independentamain senza accumpagnament u sa isolassan uschiglio permanentamain dal mund exteriur. Quai dat adina il grad lev; sch’i sa tracta mo d’ina donnegiaziun psichica, dovri per quai in dretg a renta (IVG art. 42 al. 3).',
+    besitzstandKlaeren: 'Sch’ina indemnisaziun da fin ussa da grad lev cuntinuescha en ina chasa da tgira, n’è betg cumprovà qua (AHVG art. 43bis al. 1bis e 4). Quai sclerescha la cassa da cumpensaziun.',
+    stand: 'Stadi {jahr}.',
+    nichtNachgefuehrt: 'Las valurs per l’onn current n’èn anc betg actualisadas qua.',
+    proTag: 'Tar uffants quinta l’AI per di; qua stat il mais cun 30 dis.',
+    wartezeitKind: 'Tar uffants en l’emprim onn da vita nascha il dretg, uschespert che l’impotenza dura probablamain dapli che dudesch mais (IVG art. 42bis al. 3), uschiglio suenter in onn (art. 42 al. 4).',
+    voraussetzungIv: 'Premissa èn domicil e dimora usitada en Svizra (IVG art. 42 al. 1). I n’exista nagin dretg, sche l’assicuranza cunter accidents u l’assicuranza militara paja ina indemnisaziun d’impotenza; per mintga mais chalendar entir en in institut da guariziun vegn ella suspendida (fegl d’infurmaziun 4.13, cifra 2 e 7).',
+    voraussetzungAhv: 'Premissa èn l’entira renta da vegliadetgna u prestaziuns cumplementaras sco er domicil e dimora usitada en Svizra (AHVG art. 43bis al. 1). I n’exista nagin dretg, sche l’assicuranza cunter accidents u l’assicuranza militara paja ina indemnisaziun d’impotenza (fegl d’infurmaziun 3.01, cifra 28).',
+    folgenAhv: 'Tgi che tgira in commember da la famiglia cun indemnisaziun d’impotenza, po survegnir bonificaziuns d’assistenza da l’AVS (AHVG art. 29septies).',
+    linkIv: 'Fegl d’infurmaziun 4.13 «Hilflosenentschädigungen der IV» (tudestg)',
+    linkAhv: 'Fegl d’infurmaziun 3.01 «Altersrenten und Hilflosenentschädigungen der AHV» (tudestg)',
+  },
   iv: {
-    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]] (geprüft im September 2026).',
+    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]], [[IVG Art. 42|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42]], [[IVG Art. 48|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_48]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]] (geprüft im September 2026 · Art. 42ter geprüft im Oktober 2026).',
     title: 'Malsogna & AI',
     intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista calma, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
     step1Title: '1 · Inabilitad da lavurar — salari & indemnisaziun',
@@ -550,7 +589,9 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step3Text: { sie: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinai els senza temma.', du: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinescha els senza temma.' },
     step3Link: 'Examinar il dretg',
-    step4Title: '4 · Sustegn & sgraventscha',
+    stepHeTitle: '4 · Indemnisaziun d’impotenza',
+    stepHeText: 'Tgi che dovra per motivs da sanadad permanentamain agid en il mintgadi, survegliaziun u accumpagnament, ha eventualmain dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ils posts AI dattan infurmaziuns.',
+    step4Title: '5 · Sustegn & sgraventscha',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step4Text: { sie: 'Vus na stuais betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) As accumpognan tras la procedura AI. Pensai era al mandat preventiv ed a las directivas dal pazient, uschè ditg che Vus pudais decider sez — quai prenda squetsch per pli tard.', du: 'Ti na stos betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) t’accumpognan tras la procedura AI. Pensa era al mandat preventiv ed a las directivas dal pazient, uschè ditg che ti pos decider sez — quai prenda squetsch per pli tard.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -1533,7 +1574,7 @@ export default {
       medical: { sie: "Tge medis e forzas da salvament duain savair da Vus en cas d'urgenza.", du: "Tge medis e forzas da salvament duain savair da Tai en cas d'urgenza." },
       care: { sie: "Voss medi da famiglia e Vossa clinica preferida — per che questa infurmaziun saja chattabla cura ch'ella vegn dovrada.", du: "Tes medi da famiglia e Tia clinica preferida — per che questa infurmaziun saja chattabla cura ch'ella vegn dovrada." },
       // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
-      provision: { sie: 'Diese drei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese drei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
+      provision: { sie: 'Diese zwei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese zwei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
       contacts: "Contact d'urgenza e relaziun.",
       documents: "Carta d'organs e certificat da vaccinaziun.",
     },
@@ -2293,6 +2334,8 @@ export default {
       hints: {
         liabilityPremium: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         householdInsuranceAmount: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
+        // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+        bvgInsurer: 'Nagina cassa da pensiun? Lura tscherner «Na concerna betg». En intgins chantuns vala quai per la reducziun da premias sco «nagina 2. pitga».',
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
@@ -2741,6 +2784,9 @@ export default {
     // K38 · persuna da contact «na concerna betg»
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     keineKontaktperson: 'Nagina persuna da contact deponida',
+    // Medicaments «Jau na prend nagins» — Wert hinter «Medicaments:» in Dossier, QR, Notfallpass.
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    keineMedikamente: 'nagins',
     notfallAnregung: { sie: 'Forsa vulais Vus dumandar ina persuna da confidenza, sch’ella vul esser Vossa persuna da contact en cas d’urgenza. Quai ha temp.', du: 'Forsa vuls Ti dumandar ina persuna da confidenza, sch’ella vul esser Tia persuna da contact en cas d’urgenza. Quai ha temp.' },
   },
   // E18 · «Stizzar tut las datas sin quest apparat» (glista O11)
@@ -3246,7 +3292,10 @@ export default {
     jahrBS: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Citad na dependan las contribuziuns betg dal lieu da domicil — ellas valan tuttina en tut il chantun.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
-    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
+    // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+    vorbehaltAG3aTeiljahr: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: senza cassa da pensiun quinta il pajament en la 3. pitga A qua mo per la part sur 10 pertschient da l’entrada da gudogn. Ils documents publitgads na din betg, sche quai vala era, sch’i ha dà ina cassa da pensiun mo durant ina part da l’onn. Laschar confermar l’import da la SVA Argovia.',
+    // TODO(rm): provisorisch — Gegenlese (Satz «Unterlagen», 26.10.2026)
+    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. Ils documents publitgads na din betg quai. Laschar confermar l’import tar l’Uffizi da las assicuranzas socialas dal chantun Berna.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     vorbehaltAG: 'En il chantun Argovia è la taxaziun definitiva {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura notablamain pli pauc po dumandar ina nova quintada tar la SVA Aargau. Imports retschavids nunlegitimamain vegnan pretends enavos.',
@@ -3423,7 +3472,7 @@ export default {
       saeule3aAbzugUnklar: 'Il pajament en la 3. pitga A registrà è sur l’import che dastgava en mintga cas vegnir deducì da l’entrada: 7 056 francs ils onns fiscals 2023 e 2024, senza cassa da pensiun il pli 20 pertschient da l’entrada da gudogn. Quant ch’è vegnì deducì, dependa da quai, sch’i dat ina cassa da pensiun — quai n’è betg registrà qua. Senza questa indicaziun fiss la cifra memia auta u memia bassa.',  // TODO(rm): Gegenlese
       szKinderMindestanspruch: 'Per ils uffants exista en il chantun Sviz cun questa entrada en mintga vischnanca in dretg: lur premia da referenza vegn reducida per almain 80 pertschient. L’import per l’entira chasada na sa lascha betg determinar qua cun segirezza. Ina dumonda tar la SVA Schwyz vala la paina.',  // TODO(rm): Gegenlese
       bsHypothetisch: 'En il chantun Basilea-Citad quinta l’Amt für Sozialbeiträge a persunas che vivan sulettas u educheschan sulettas ils uffants e lavuran main che 80 pertschient ina entrada ipotetica; ina plazza cumplaina quinta cun 36 000 francs netto per onn. Excepziuns valan per exempel per la tgira d’uffants sut 16 onns, en furmaziun, en cas da malsogna u rendita AI, cun daners da dischoccupaziun e sur 60 onns. Quant che vegn lavurà n’è betg registrà qua, e cun ina entrada da gudogn sut 28 800 francs per onn po quest supplement reducir fermamain l’import. Cun las uras da lavur per emna en il chapitel «Furmaziun & lavur» quinta l’app.',
-      bsSaeule3a: 'En il chantun Basilea-Citad vegnan ils pajaments en la 3. pitga A deducids da l’entrada mo, sch’i na dat nagina cassa da pensiun. Sch’i dat ina, n’è betg registrà qua — ed en quest cas decida quai davart la gruppa da contribuziun. Tgi che fa part d’ina cassa da pensiun, po endatar la contribuziun en il chapitel «Assicuranzas & prevenziun»; lura quinta l’app.',
+      bsSaeule3a: 'En il chantun Basilea-Citad vegnan ils pajaments en la 3. pitga A deducids da l’entrada mo, sch’i na dat nagina cassa da pensiun. Sch’i dat ina, n’è betg registrà qua — ed en quest cas decida quai davart la gruppa da contribuziun. Tgi che fa part d’ina cassa da pensiun, po endatar la contribuziun en il chapitel «Assicuranzas & prevenziun»; tgi che na fa part d’nagina, tscherna tar «Cassa da pensiun» «Na concerna betg». Lura quinta l’app.', // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'Per giuvenils creschids (19 fin 25 onns) dependa la reducziun da quai, sch’ina furmaziun è stada en vigur il 1. da schaner — lura vala, tenor l’entrada, in dretg minimal. L’app na registrescha betg quai, perquai na stat qua nagina cifra; il post chantunal dat infurmaziuns.',
       stichtagAlter: 'Tgi che cumplenescha 26 onns en l’onn da dretg, vala tenor la data da referenza anc sco giuvna persuna creschida u gia sco persuna creschida — cun premias da referenza differentas. Il chantun na numna nagina data da referenza explicita per la vegliadetgna, perquai na stat qua nagina cifra.',
@@ -3439,7 +3488,7 @@ export default {
       tiKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Tessin anc betg: la reducziun vegn quintada là per l’entira chasada ed è limitada a la summa da tut las premias effectivamain pajadas. Las premias dals uffants n’èn betg registradas qua.', // TODO(rm): provisorisch — Gegenlese
       tiEltern: 'Tgi che ha il pli 30 onns, gudogna pauc e fa ina emprima scolaziun, vegn quintà en il chantun Tessin ensemen cun ils geniturs. Sche quai è il cas, na sa l’applicaziun betg — perquai na stat qua nagina cifra. L’IAS dat infurmaziuns.', // TODO(rm): provisorisch — Gegenlese
       kindNachStichtag: 'In uffant è naschì pir suenter il 1. da schaner da l’onn dal dretg. Decisivas èn las relaziuns ils 1. da schaner, e per l’uffant cumenza il dretg pir il mais suenter la naschientscha. Co che quai vegn quintà ensemen, na sa lascha betg dir cun segirezza qua.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
-      saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u 0, sch’i na dat nagina cassa da pensiun. Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
+      saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u, sch’i na dat nagina, inscriver 0 u tscherner tar «Cassa da pensiun» «Na concerna betg». Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026; Säule 2, 26.10.2026)
       praemieFranchise: 'En quest chantun è la reducziun il pli uschè auta sco la premia cun la franchisa ordinaria da 300 francs e cun cuvrida d’accidents — betg sco la premia registrada. L’import quintà è sur la premia registrada; tge limita superiura che vala, dependa d’ina premia che n’è betg registrada qua. Il dretg è almain uschè aut sco la premia registrada.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz. — TODO(rm): provisorisch, Gegenlese offen
       owSelbstbehaltRahmen: 'Cun questa entrada imputabla è la franchisa en il chantun Sursilvania tenor la decisiun per il 2026 pli auta che 12 pertschient. Dapi il 1. d’avrigl 2026 numna la lescha dentant ina rama da 9 fin 12 pertschient. Tgenina regla che vala per las disposiziuns 2026 è avert — perquai na stat qua nagina cifra. L’Ausgleichskasse Obwalden dat infurmaziuns.',
@@ -5231,6 +5280,52 @@ export default {
 
   // Survista da las assicuranzas (runda 9 AB, pass 3, 25.10.2026) — texts betg anc examinads
   vu: {
+    // TODO(rm): provisorisch deutsch — Absicherung je Risiko (26.10.2026)
+    risiko: {
+      titel: 'Absicherung je Risiko',
+      subOffen: '{n} noch offen',
+      subKeins: 'Was zu jedem Risiko eingetragen ist',
+      satz: 'Zeigt, was eingetragen ist — nicht, ob die Leistungen reichen oder die Beiträge vollständig sind. Haftpflicht und Hausrat stehen im Schutzschild.',
+      marke: {
+        offen: 'offen',
+        zusatz: 'zusätzlich',
+      },
+      krankheit: 'Krankheit',
+      unfall: 'Unfall',
+      invaliditaet: 'Invalidität',
+      tod: 'Tod (Hinterbliebene)',
+      alter: 'Alter',
+      kkErfasst: 'Krankenkasse: {name}',
+      kkOffen: 'Keine Krankenkasse eingetragen — für alle mit Wohnsitz in der Schweiz Pflicht (KVG Art. 3).',
+      ktgArbeitgeber: 'Krankentaggeld über den Arbeitgeber.',
+      ktgErfasst: 'Krankentaggeld erfasst.',
+      ktgNicht: 'Lohnausfall bei Krankheit (Krankentaggeld): nichts erfasst — die Taggeldversicherung ist freiwillig (KVG Art. 1a Abs. 1).',
+      uvgArbeitgeber: 'Unfallversicherung über den Arbeitgeber.',
+      uvgErfasst: 'Unfallversicherung erfasst.',
+      uvgOffen: 'Unfallversicherung noch nicht eingetragen — für Angestellte obligatorisch (UVG Art. 1a).',
+      unfallKk: 'Über die Krankenkasse, soweit keine Unfallversicherung aufkommt (KVG Art. 1a Abs. 2 lit. b): Behandlungskosten, kein Lohnersatz.',
+      unfallOhneKk: 'Weder Krankenkasse noch Unfallversicherung eingetragen.',
+      uvgFreiwillig: 'Selbständige können sich freiwillig gegen Unfall versichern (UVG Art. 4).',
+      iv: 'IV: Versichert ist, wer in der AHV versichert ist (IVG Art. 1b). Eine ordentliche Rente setzt mindestens drei Beitragsjahre voraus (IVG Art. 36); ausserordentliche Renten richten sich nach eigenen Regeln (IVG Art. 39).',
+      ivRente: 'Mit der Altersrente endet der Anspruch auf eine IV-Rente (IVG Art. 30).',
+      ahvHinterlassene: 'AHV: Witwen- oder Witwerrente, wenn bei der Verwitwung Kinder da sind (AHVG Art. 23); eine Witwe auch ohne Kinder, wenn sie dann mindestens 45 Jahre alt und mindestens fünf Jahre verheiratet war (AHVG Art. 24); Waisenrente für Kinder (AHVG Art. 25).',
+      ahvAlter: 'AHV: Altersrente ab dem Referenzalter (AHVG Art. 21); ob als Voll- oder Teilrente, hängt von den Beitragsjahren ab (AHVG Art. 29).',
+      pkErfasst: 'Pensionskasse: {name}',
+      pkErfasstOhneName: 'Pensionskasse erfasst.',
+      pkSelbst: 'Pensionskasse: für Selbständige freiwillig (BVG Art. 4).',
+      pkMindestalter: 'Pensionskasse: obligatorisch erst ab dem 1. Januar nach dem 17. Geburtstag (BVG Art. 7).',
+      pkAltersparen: 'Pensionskasse: Alterssparen erst ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7).',
+      pkOffen: 'Pensionskasse noch nicht eingetragen — bei einem Arbeitgeber mit diesem Lohn in der Regel obligatorisch (BVG Art. 2, 7).',
+      pkUnklar: 'Pensionskasse: Ob sie obligatorisch ist, hängt vom Bruttolohn ab (BVG Art. 7).',
+      pkUnterSchwelle: 'Pensionskasse: beim erfassten Lohn nicht obligatorisch (BVG Art. 7).',
+      pkJeNachArbeit: 'Pensionskasse: obligatorisch für Angestellte mit einem Jahreslohn über der Eintrittsschwelle (BVG Art. 2, 7).',
+      leben: 'Lebensversicherung erfasst.',
+      saeule3a: 'Säule 3a erfasst.',
+      pkGuthaben: 'Erfasst ist nur ein Guthaben, keine Pensionskasse mit laufenden Beiträgen.',
+      pkOhneGeburtsdatum: 'Pensionskasse: Alterssparen ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7) — dafür fehlt das Geburtsdatum.',
+      nbuUnter8: 'Unter 8 Stunden pro Woche beim selben Arbeitgeber sind Freizeitunfälle nicht versichert; der Arbeitsweg gilt als Berufsunfall (UVG Art. 8 Abs. 2, UVV Art. 13).',
+      unfallArbeitslos: 'Wer arbeitslos ist, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).',
+    },
     satz: { sie: 'Vossas assicuranzas en ina survista — sin basa da Vossas indicaziuns.', du: 'Tias assicuranzas en ina survista — sin basa da tias indicaziuns.' },
     darin: 'Tge che quai cuntegna',
     erfasst: 'Registradas: {n}',
@@ -5272,7 +5367,8 @@ export default {
     ipvGesuch: 'mo sin dumonda',
   },
   po: {
-    franchiseChangeWhen: 'La franchisa po vegnir midada ina giada l\'onn — cun effect dal 1. da schaner, communicaziun fin la fin da november (midada da cassa: 30 da november). Funtauna: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (neu gefasst 25.10.2026).
+    franchiseChangeWhen: 'Ina franchisa pli auta vala pir a partir dal 1. da schaner; il termin fixescha la cassa en sias condiziuns. Ina franchisa pli bassa è pussaivla mo per la fin da l\'onn, cun ils medems termins sco ina midada da cassa: suenter la communicaziun da la nova prima sto la dumonda entrar tar la cassa fin ils 30 da november. Funtauna: [[LAMal art. 7 al. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[OAMal art. 94 al. 1 e 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptSaving: { sie: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnais Vus var CHF {saving}/onn da premias.', du: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.' },
@@ -5322,7 +5418,7 @@ export default {
     plzNotFound: 'PLZ betg chattada en il register uffizial.',
     regionTitle: 'Regiun da premias',
     regionInfo: '{gemeinde} ({kanton}) — regiun da premias {region}',
-    avgPremium: 'Premia media 2026: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
+    avgPremium: 'Premia media {jahr}: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
     noInsurer: 'Nagin assicurader deponì',
     noInsurerHint: { sie: 'Endatai Vossa cassa da malsauns sut «Assicuranzas» per vesair Vossa premia da referenza.', du: 'Endatescha Tia cassa da malsauns sut «Assicuranzas» per vesair Tia premia da referenza.' },
     insurerNotFound: '«{name}» betg enconuschent',
@@ -5338,10 +5434,22 @@ export default {
     thInsurer: 'Kasse',
     allInsurersTitle: 'Alle Kassen vergleichen',
     compareFranchiseNote: 'Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Tippe eine Kasse für Details.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Die Kündigungsfrist für einen Kassenwechsel auf diesen Termin ist abgelaufen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufen: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise: Antrag spätestens am {datum} bei der Kasse. Eine höhere: Die Frist legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    refJahr: 'Prämien {jahr}',
+    // TODO(rm): provisorisch deutsch — Prämien veraltet (26.10.2026)
+    veraltet: 'Für {aktuell} sind hier noch keine Prämien hinterlegt. Die Werte unten sind die Prämien {jahr} — massgebend ist die Prämienmitteilung der Kasse.',
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi 2026',
+    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi {jahr}',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',

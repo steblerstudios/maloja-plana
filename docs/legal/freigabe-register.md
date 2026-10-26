@@ -7,7 +7,7 @@ belegt und nennt die Datei. Was dort nicht steht, steht hier auch nicht.*
 ## Wie man diese Tabelle liest
 
 - **Fachliche Prüfung (Fachperson):** eine *externe* Prüfung durch eine fachkundige Stelle
-  (Sozialdienst, Treuhand, Anwaltskanzlei, Amt, Beratungsstelle). **Bei keinem der 24 Module ist eine
+  (Sozialdienst, Treuhand, Anwaltskanzlei, Amt, Beratungsstelle). **Bei keinem der 25 Module ist eine
   solche Prüfung im Repo dokumentiert.** Die Spalte sagt deshalb überall «keine dokumentiert». Das ist
   ein Befund und kein Platzhalter: niemand wird hier nachgetragen, bevor eine Prüfung mit Stelle,
   Datum, Umfang und Beleg vorliegt.
@@ -24,7 +24,7 @@ belegt und nennt die Datei. Was dort nicht steht, steht hier auch nicht.*
 - **Freigabe:** eine formelle Freigabe je Modul gibt es nicht. Heute heisst «freigegeben»: Stebler
   Studios hat gemergt und deployt (`DEV_WORKFLOW.md`). Eine eigene Spalte dafür wäre leer.
 
-**Kurzbilanz:** 24 Module · 0 mit dokumentierter externer Fachprüfung · 10 mit Artikel oder Erlass im
+**Kurzbilanz:** 25 Module (Nr. 25 seit 26.10.2026) · 0 mit dokumentierter externer Fachprüfung · 11 mit Artikel oder Erlass im
 Code, dazu die Sozialhilfe mit den SKOS-Richtlinien · 1 Modul mit offenem 🔴 aus dem Voll-Review (IPV, Entscheid E9).
 
 ---
@@ -55,8 +55,9 @@ Code, dazu die Sozialhilfe mit den SKOS-Richtlinien · 1 Modul mit offenem 🔴 
 | 20 | **Budget-Richtwerte und Teuerung** — `BudgetSync.jsx` → `src/budgetSync.js` | keine dokumentiert | keine (Statistik): BFS HABE 2020/21, BFS LIK Basis Dez. 2020, Stand August 2025 (`:18–20, :62–64`) | siehe links · `e74c3e7` 30.06.2026 | national | 💡 LIK ab 2026 neu basiert → Januar-Wartung (`voll-review…:91`) |
 | 21 | **Versicherungs-Schutzschild** — `components/Schutzschild.jsx` → `src/data/schutzschild.js` | keine dokumentiert | KVG Art. 3; UVG und BVG ohne Artikel (`:6`) | BVG-Schwelle aus `ahvRechner.js` (2026) | Bundesrecht | — |
 | 22 | **Schulden-Tilgungsplan** — `SchuldenManager.jsx` → `src/schuldenCalc.js` | keine dokumentiert | keine (reine Tilgungsrechnung) | kein Stand · `ca4bc5a` 28.06.2026 | kantonsunabhängig | 💡 Betreibungsauszug-Funktionen ohne Aufrufer (`voll-review…:72`) |
-| 23 | **Pflege-Entlöhnung** — `PflegeEntloehnung.jsx` | keine dokumentiert | keine; CHF 37.90/h ist ein Anbieter-Richtwert (pflegewegweiser.ch), «kein gesetzlicher Tarif» (`:4–9`) | kein Stand | kantonsunabhängig (Kanton beeinflusst den realen Lohn, `:8`) | — |
+| 23 | **Pflege-Entlöhnung** — `PflegeEntloehnung.jsx` | keine dokumentiert | keine für den Lohn (es gibt keinen amtlichen Satz). Spanne 30–40 CHF/h: Regierungsrat Basel-Stadt, Medienmitteilung 16.12.2025 («erhalten üblicherweise einen Beitrag von 30 bis 40 Franken pro Stunde»); Vergleich KLV Art. 7a Abs. 1 Bst. c (52.60 CHF/h an die Organisation). Bis 26.10.2026: CHF 37.90/h eines privaten Anbieters (pflegewegweiser.ch) | gelesen 26.10.2026 | Quelle kantonal (BS), schweizweit nur als Orientierung; Lohn hängt von Organisation und Kanton ab | — |
 | 24 | **Asyl-Orientierung** — `AsylView.jsx` → `src/data/asylData.js` | keine dokumentiert | im Code nicht zitiert; SEM, SFH, humanrights.ch (`:2–3`) | «Stand 2025» · `36e4bdc` 27.06.2026 | kantonal (Migrationsämter) | `docs/TODO.md` §A: «fachliche Review vor Deploy empfohlen» — als erledigt nirgends dokumentiert |
+| 25 | **Hilflosenentschädigung (IV/AHV)** — `HilflosenRechner.jsx` in den Abläufen «Angehörige pflegen» und «Krankheit & IV» → `src/data/hilflosenentschaedigung.js` | keine dokumentiert | IVG Art. 42 Abs. 4, Art. 42ter Abs. 1–3; AHVG Art. 43bis Abs. 1bis–4 (Fedlex, Stand 1.1.2026, gelesen 26.10.2026, Kopf der Datei) | 2026 zitiert: Merkblatt 4.13 (Stand 1.1.2025), 3.01 (Stand 1.1.2026), BSV Beträge ab 1.1.2026. 2027 **gerechnet** (Regel × Renten 2027), keine amtliche HE-Tabelle 2027 gefunden · angelegt 26.10.2026 | Bundesrecht | Ergebnis-Art Schätzung (Grad selbst eingeschätzt). ⚠️ Besitzstand AHV mit heutigem IV-Betrag genähert; Minderjährige im Heim ohne Betrag; Tagesansätze Minderjährige nur als Monat. `swiss-precision-pruefer` 26.10.2026: kein 🔴, sieben ⚠️ eingearbeitet (Voraussetzungen, Säuglinge, Besitzstand bis Referenzalter, Stand-Jahr); offen: Besitzstand leicht im Heim (Abs. 1bis gegen Abs. 4) nicht belegt → kein Betrag |
 
 **Nicht aufgenommen, weil sie nichts Fachliches rechnen:** Reserve-Tank (`reserveTank.js`, Ersparnis
 ÷ Ausgaben), Leistungs-Kompass, Obstgarten und Gepäck (Navigation), Direktlinks (Linkliste,
