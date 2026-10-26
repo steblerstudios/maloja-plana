@@ -3433,6 +3433,18 @@ zeigt die App für GR keinen Betrag (`jahrVorbei`).
 
 Rechenbeispiel (eigene Rechnung, nicht amtlich): Einzelperson, bereinigtes steuerbares Einkommen 20'000, kein Vermögen → massgebend 11'500 → 5'830 − 17,5 % × 11'500 = 3'817.50.
 
+**Säule 3a ohne Säule 2 — Wortlaut** (gelesen 26.10.2026 auf gesetzessammlungen.ag.ch, im eingebauten Browser):
+- KVGG § 6 Abs. 5 (SAR 837.200, Version in Kraft seit 01.12.2025): «Bei Personen, die keiner Einrichtung der
+  beruflichen Vorsorge (Säule 2) angehören, werden Beiträge an die Säule 3a in Abweichung von Absatz 3 lit. b nur
+  soweit aufgerechnet, als sie einen vom Regierungsrat durch Verordnung festzulegenden Prozentsatz des
+  Nettoerwerbseinkommens übersteigen.»
+- V KVGG § 5 Abs. 1 (SAR 837.211, Version in Kraft seit 01.09.2026): «Personen, die keiner Einrichtung der
+  beruflichen Vorsorge angehören, werden Beiträge an die Säule 3a gemäss § 6 Abs. 3 lit. b KVGG nur aufgerechnet,
+  soweit sie 10 % des Nettoerwerbseinkommens übersteigen.»
+- Was der Wortlaut NICHT sagt: ob Zugehörigkeit nur während eines Teils des Jahres genügt, und ob
+  «Nettoerwerbseinkommen» vor oder nach Berufsauslagen gemeint ist. App: `saeule2()` und
+  `SAEULE_3A.schwelleOhneSaeule2` (src/config/kantonsModell.js), Vorbehalt `ipv.vorbehaltAG3aTeiljahr`.
+
 ### Massgebendes Einkommen
 > «Das massgebende Einkommen besteht aus dem bereinigten steuerbaren Einkommen, zuzüglich einem Fünftel des steuerbaren Vermögens des massgebenden Steuerjahres, abzüglich eines Einkommensabzugs.» — Quelle [1], § 6 Abs. 2
 

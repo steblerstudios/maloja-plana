@@ -3246,6 +3246,8 @@ export default {
     jahrBS: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Citad na dependan las contribuziuns betg dal lieu da domicil — ellas valan tuttina en tut il chantun.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
+    // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+    vorbehaltAG3aTeiljahr: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: senza cassa da pensiun quinta il pajament en la 3. pitga A qua mo per la part sur 10 pertschient da l’entrada da gudogn. Ils documents publitgads na din betg, sche quai vala era, sch’i ha dà ina cassa da pensiun mo durant ina part da l’onn. Laschar confermar l’import da la SVA Argovia.',
     vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).

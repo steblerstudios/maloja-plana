@@ -299,6 +299,19 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
         .toMatchObject({ belegt: false, amount: null, offen: 'saeule2Unbekannt' });
     });
 
+    it('ohne Säule 2 und die Schwelle wirkt: Teiljahr-Vorbehalt in der Anzeige (Fachprüfung S2)', () => {
+      const r = calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: { bvgContribution: 0 } }));
+      expect(r.zusatzVorbehaltKey).toBe('ipv.vorbehaltAG3aTeiljahr');
+      // mit Säule 2 oder ohne 3a: kein solcher Vorbehalt
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: { bvgContribution: 200 } })).zusatzVorbehaltKey).toBeUndefined();
+      expect(calculateIPV(person({ monthlyIncome: 2500, vers: { bvgContribution: 0 } })).zusatzVorbehaltKey).toBeUndefined();
+    });
+
+    it('unbekannt, Nebenerwerb statt Hauptlohn: auch dann die Orientierung, keine stille Zahl (Fachprüfung S3)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 0, finanzen: { sideIncome: 2500, pension3a: 3000 } })))
+        .toMatchObject({ belegt: false, offen: 'saeule2Unbekannt' });
+    });
+
     it('unbekannt ohne 3a: kein Unterschied, also eine Zahl', () => {
       expect(calculateIPV(person({ monthlyIncome: 2500 })).annual).toBe(2068);
     });

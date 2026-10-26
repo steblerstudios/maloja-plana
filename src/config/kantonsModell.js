@@ -16,7 +16,7 @@
 // Der Frankenwert des bundesrechtlichen 3a-Maximums steht an EINER Stelle (src/data/saeule3a.js)
 // und wird hier nicht wiederholt. Das Blatt hat bewusst keine eigenen Importe, kostet also
 // nichts ausser sich selbst.
-import { saeule3aMaximum, groessteJahresEinzahlung } from '../data/saeule3a.js';
+import { saeule3aMaximum, groessteJahresEinzahlung, SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR } from '../data/saeule3a.js';
 import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { trifftNichtZu, feldHatWert } from '../utils/vollstaendigkeit.js';
@@ -114,14 +114,19 @@ export function vermoegenSumme(f) {
 // entsteht nicht über die Oberfläche (`type: 'number'`), sondern nur aus Altdaten.
 const betrag3a = (f) => Math.max(0, Number(f.pension3a) || 0);
 
-// AG: 10 % des Nettoerwerbseinkommens (§ 5 Abs. 1 V KVGG) — Hauptlohn × 12, mit 13. Monatslohn × 13.
-const agSchwelle = (f) => 0.1 * Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter);
+// AG: 10 % des Nettoerwerbseinkommens (§ 5 Abs. 1 V KVGG) — Hauptlohn × 12 (× 13 mit 13. Monatslohn)
+// plus Nebenerwerb × 12. ⟨Fachprüfung 26.10.2026, S3⟩ Der Nebenerwerb fehlte (Schwelle zu tief, Betrag zu
+// tief), und bei Pensionierten steht im Lohnfeld oft die Rente — sie ist kein Erwerbseinkommen, darum
+// dort keine Schwelle (die 3a zählt dann voll, wie mit Säule 2).
+const agSchwelle = (f) => (f.employmentType === 'retired' ? 0
+  : 0.1 * (Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12));
 
 // Besteht eine zweite Säule? `true` mit, `false` ohne, `null` unbekannt. Eine Quelle für AG, AR, BS
 // und GR (Entscheid Stebler Studios 26.10.2026, «Variante A + C»), damit die Kantone dieselbe
 // Angabe gleich lesen.
 //   BVG-Beitrag über 0            ⇒ mit (wie bisher in AR, BS, GR)
-//   BVG-Beitrag ausdrücklich 0    ⇒ ohne (K82: eine gespeicherte 0 ist eine Antwort; wie AR, GR)
+//   BVG-Beitrag ausdrücklich 0    ⇒ ohne (K82: eine gespeicherte 0 ist eine Antwort; wie AR, GR) —
+//                                   ausser ein Kassenname steht dabei: dann unbekannt
 //   Pensionskasse «Trifft nicht zu» und kein Name eingetragen ⇒ ohne. Die Markierung nimmt Beitrag und
 //     Guthaben mit (`naMit`, config/constants.js); ein eingetragener Wert geht vor (K45).
 //   sonst                         ⇒ unbekannt — leere Felder heissen «nicht erfasst».
@@ -130,7 +135,9 @@ export function saeule2(v) {
   const roh = d.bvgContribution;
   const leer = roh === undefined || roh === null || String(roh).trim() === '';
   const wert = Number(roh);
-  if (!leer && Number.isFinite(wert)) return wert > 0;
+  // Fachprüfung S5: Beitrag 0 bei eingetragenem Kassennamen ist widersprüchlich (eher «mit», der Beitrag
+  // steckt vielleicht im Nettolohn) — dann unbekannt statt «ohne».
+  if (!leer && Number.isFinite(wert)) return wert > 0 ? true : (feldHatWert(d, 'bvgInsurer') ? null : false);
   if (trifftNichtZu(d, 'bvgInsurer') && !feldHatWert(d, 'bvgInsurer')) return false;
   return null;
 }
@@ -260,6 +267,8 @@ export const SAEULE_3A = Object.freeze({
     // Veranlagung höchstens 7'056 abgezogen, die Aufrechnung von 7'056 hübe das genau auf,
     // und der richtige Abzug wäre NULL. Ob eine 2. Säule besteht, weiss die App nicht — es
     // ist dieselbe fehlende Angabe, die `schwelleOhneSaeule2` (AG) blockiert.
+    // ⟨26.10.2026⟩ AG ist nicht mehr blockiert: die Angabe liefert `saeule2()`. Ob BE sie ebenfalls
+    // nutzt (mit Pensionskasse wäre der Abzug null), ist ein eigener Entscheid — hier unverändert.
     // Wir rechnen hier trotzdem, weil der Fall ohne 2. Säule derjenige ist, für den der
     // Deckel überhaupt geschrieben wurde: nur dort werden Beträge weit über dem
     // Unselbständigen-Maximum einbezahlt. Bei einer Person mit PK über 7'258 wäre die
@@ -353,6 +362,9 @@ export const SAEULE_3A = Object.freeze({
     name: 'schwelleOhneSaeule2',
     kantone: 'AG',
     beleg: '§ 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (SAR 837.211)',
+    // Wortlaut gelesen 26.10.2026 (gesetzessammlungen.ag.ch): § 5 Abs. 1 V KVGG «Personen, die keiner Einrichtung
+    // der beruflichen Vorsorge angehören, werden Beiträge an die Säule 3a … nur aufgerechnet, soweit sie 10 % des
+    // Nettoerwerbseinkommens übersteigen.» Volltext in docs/sources/ipv-kantone-2026.md (AG).
     // 🛑 Die Regel ist belegt und rechenbar — was fehlt, ist die ANGABE, ob eine Säule 2
     // besteht. Die App führt `bvgInsurer`, `bvgContribution` und `bvgBalance`, aber leere
     // Felder heissen «nicht erfasst», nicht «keine Säule 2». Aus einem Nichtwissen in die
@@ -377,8 +389,10 @@ export const SAEULE_3A = Object.freeze({
     // einer Zahl (wie AR und BS). Der Text oben bleibt als Beleg für den Weg.
     // Aufgerechnet wird nur, was ÜBER 10 % des Nettoerwerbseinkommens liegt; im Nettoeinkommen
     // der App steckt die ganze Einzahlung, also kommt der Teil bis zur Schwelle weg.
+    // Die Frage an die SVA Aargau ist ein Entwurf, NICHT gesendet (FRAGEN-AN-DIE-AEMTER.md) — darum
+    // «offen», nicht «angefragt». Angezeigt als `ipv.vorbehaltAG3aTeiljahr` (ipvAargau.js).
     vorbehalt: 'Ob die Schwelle auch gilt, wenn nur während eines Teils des Jahres eine '
-      + 'Säule 2 bestand, ist bei der SVA Aargau angefragt (FRAGEN-AN-DIE-AEMTER.md, Frage 1).',
+      + 'Säule 2 bestand, ist offen — Frage an die SVA Aargau (FRAGEN-AN-DIE-AEMTER.md, Frage 1, Entwurf).',
     schwelle: agSchwelle,
     nichtAufgerechnet: (f) => Math.min(betrag3a(f), agSchwelle(f)),
   }),
@@ -532,7 +546,23 @@ export const SAEULE_3A = Object.freeze({
     kantone: 'BS',
     beleg: 'SoHaV BS § 17 Abs. 1 lit. a und b (SG 890.710, in Kraft seit 01.07.2021)',
     nichtAufgerechnet: () => 0,
-    ohneSaeule2: (f) => betrag3a(f),
+    // ⟨26.10.2026, Fachprüfung S1⟩ Seit «ohne Säule 2» eine Antwort ist, erscheint dieser Abzug allein als
+    // Zahl. Abgezogen wird darum höchstens, was ohne Pensionskasse überhaupt eingezahlt werden durfte
+    // (BVV 3 Art. 7 Abs. 1 lit. b: 20 % des Erwerbseinkommens, höchstens der Jahresbetrag; Werte in
+    // data/saeule3a.js). Ohne belegten Jahresbetrag: kein Abzug sicher (`null`).
+    ohneSaeule2: (f, jahr) => {
+      const max = SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[jahr]?.ohnePensionskasse;
+      if (!max) return null;
+      const erwerb = Number(f.monthlyIncome || 0) * hauptlohnMonate(f.dreizehnter) + Number(f.sideIncome || 0) * 12;
+      return Math.min(betrag3a(f), max, Math.max(0, 0.2 * erwerb));
+    },
+    // Kann der Wert überhaupt die Einzahlung EINES Jahres aus diesen Einkünften sein? Sonst keine Zahl
+    // (wie BE/NW: der Kontostand oder ein alter Mehrjahreswert im Feld landete sonst in der höchsten Gruppe).
+    widerlegt: (f, jahresEinkommen, jahr) => {
+      if (betrag3a(f) <= 0) return false;
+      const ueberEinkommen = Number.isFinite(jahresEinkommen) && betrag3a(f) > Math.max(0, jahresEinkommen);
+      return ueberEinkommen || ueberEinJahrHinaus(f, jahr);
+    },
   }),
 });
 

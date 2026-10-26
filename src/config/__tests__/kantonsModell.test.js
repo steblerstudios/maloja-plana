@@ -468,6 +468,8 @@ describe('saeule2: besteht eine zweite Säule?', () => {
     expect(saeule2({ bvgContribution: '250' })).toBe(true);
     expect(saeule2({ bvgContribution: 0 })).toBe(false);
     expect(saeule2({ bvgContribution: '0' })).toBe(false);
+    // Fachprüfung S5: 0 mit eingetragenem Kassennamen ist widersprüchlich ⇒ unbekannt.
+    expect(saeule2({ bvgContribution: 0, bvgInsurer: 'Publica' })).toBe(null);
   });
 
   it('Pensionskasse «Trifft nicht zu» ⇒ ohne — ausser es steht doch ein Name oder ein Beitrag', () => {
@@ -486,5 +488,17 @@ describe('saeule2: besteht eine zweite Säule?', () => {
     expect(saeule2({ bvgContribution: 'abc' })).toBe(null);
     // Eine andere Markierung im Kapitel zählt nicht.
     expect(saeule2({ _na: ['kkInsurer'] })).toBe(null);
+  });
+});
+
+describe('AG-Schwelle (§ 5 Abs. 1 V KVGG): 10 % des Nettoerwerbseinkommens', () => {
+  const s = SAEULE_3A.schwelleOhneSaeule2.schwelle;
+  it('Hauptlohn × 12 bzw. × 13, plus Nebenerwerb × 12 (Fachprüfung S3)', () => {
+    expect(s({ monthlyIncome: 2500 })).toBe(3000);
+    expect(s({ monthlyIncome: 0, sideIncome: 2500 })).toBe(3000);
+    expect(s({ monthlyIncome: 2000, sideIncome: 500 })).toBe(3000);
+  });
+  it('pensioniert: keine Schwelle — eine Rente ist kein Erwerbseinkommen', () => {
+    expect(s({ monthlyIncome: 2500, employmentType: 'retired' })).toBe(0);
   });
 });

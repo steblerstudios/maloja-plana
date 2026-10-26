@@ -230,7 +230,7 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Nettoerwerbseinkommens auf, und nur bei Personen OHNE Säule 2. Ob eine Säule 2 besteht,
   // weiss die App nicht sicher (leere BVG-Felder heissen «nicht erfasst») — darum bleibt es
   // vorerst bei der vollen Zurechnung, ausdrücklich und benannt:
-  // siehe SAEULE_3A.schwelleOhneSaeule2.offen.
+  // siehe SAEULE_3A.schwelleOhneSaeule2.offen. ⟨überholt 26.10.2026: `offen` gibt es nicht mehr, siehe unten⟩
   // 🛑 Wirkung, solange das so ist: bei Personen ohne Säule 2 fällt der Anspruch bis zu 34 %
   // zu tief aus (Nettoerwerb 30'000, 3a 6'000 → 1'017.50 statt 1'542.50, nachgerechnet
   // 20.09.2026). Das ist NICHT die vorsichtige Seite — eine zu tiefe Zahl hält Berechtigte
@@ -276,7 +276,13 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // der Schlüssel ist entfernt. Wer je einen Datensatz für ein künftiges Jahr rechnen lässt,
   // braucht einen neuen, geprüften Satz (ohne den Betrag als «abgelaufen» zu bezeichnen).
   const basisjahr = jahr - werte.basisjahrAbstand;
-  const gemeinsam = { canton: 'AG', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltAG', extra: { basisjahr } };
+  // Fachprüfung 26.10.2026, S2: der Teiljahr-Vorbehalt muss bei der Person ankommen, nicht nur im Code
+  // stehen (wie BE `vorbehaltBE3aDeckel`) — aber nur, wo die Schwelle den Betrag wirklich verändert.
+  const schwelleWirkt = mitSaeule2 === false && SAEULE_3A.schwelleOhneSaeule2.nichtAufgerechnet(f) > 0;
+  const gemeinsam = {
+    canton: 'AG', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltAG',
+    extra: { basisjahr, ...(schwelleWirkt ? { zusatzVorbehaltKey: 'ipv.vorbehaltAG3aTeiljahr' } : {}) },
+  };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.agKeinAnspruch' });
   }

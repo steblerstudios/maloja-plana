@@ -386,11 +386,17 @@ export function ipvBaselStadt(data, hh, ipvData, youngAdultsCount, orientierung)
   const regel = SAEULE_3A.abzugOhneSaeule2;
   const basis = roh + unterhalt + hypothetisch + anteil;
   const meMit = Math.max(0, basis - regel.nichtAufgerechnet(f));
-  const meOhne = Math.max(0, basis - regel.ohneSaeule2(f));
   // ⟨26.10.2026, Entscheid Stebler Studios «Variante A + C»⟩ Die Angabe kommt jetzt aus `saeule2()`
   // (kantonsModell.js): auch ein erfasster Beitrag 0 oder die Pensionskasse «Trifft nicht zu» gilt —
   // dann als «ohne», und die 3a kommt weg. Nur unbekannt rechnet weiter beide Fälle.
+  // Fachprüfung S1: «ohne» zieht höchstens den Höchstabzug ohne Pensionskasse ab, und ein Wert, der
+  // keine Jahreseinzahlung aus diesen Einkünften sein kann, gibt keine Zahl.
   const mitSaeule2 = saeule2(data.versicherungen);
+  const abzugOhne = regel.ohneSaeule2(f, jahr);
+  if (mitSaeule2 === false && (abzugOhne === null || regel.widerlegt(f, roh, jahr))) {
+    return orientierung('saeule3aUeberEinkommen');
+  }
+  const meOhne = Math.max(0, basis - (abzugOhne ?? Math.max(0, Number(f.pension3a) || 0)));
   if (mitSaeule2 === null && bsGruppe(meMit, personen.length) !== bsGruppe(meOhne, personen.length)) {
     return orientierung('bsSaeule3a');
   }
