@@ -83,7 +83,7 @@ de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b opti
 de   k=kkCardNumber type="text" label~8fdb99db
 de   k=policyNumber type="text" hint~d822c8ff label~45658792
 de   k=kkZusatz type="text" placeholder~e363faf1 label~32e009c5
-de   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~a6cafb55 orientation~d8d2f012 label~1e2c6667 sectionIntro~1da37530
+de   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~a6cafb55 orientation~d8d2f012 hint~212c7267 label~1e2c6667 sectionIntro~1da37530
 de   k=bvgContribution type="currency" naVon="bvgInsurer" hint~035e422c label~8e69d0e5
 de   k=bvgBalance type="currency" naVon="bvgInsurer" hint~eb9360bd label~fdb3b6f8
 de   k=lifeInsurance type="select" label~7c765337 options=2 optWerte~2bfd19fd optLabels~b50f42dc
@@ -239,7 +239,7 @@ fr   k=franchise type="select" mvo=true orientation~1148922f label~41fbffa6 opti
 fr   k=kkCardNumber type="text" label~527590eb
 fr   k=policyNumber type="text" hint~d07b68a9 label~57ba1e46
 fr   k=kkZusatz type="text" placeholder~2e1ce55e label~0e5cafc1
-fr   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~05df8781 orientation~62af339c label~ec62308d sectionIntro~231c6da0
+fr   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~05df8781 orientation~62af339c hint~bd037b92 label~ec62308d sectionIntro~231c6da0
 fr   k=bvgContribution type="currency" naVon="bvgInsurer" hint~0ed643ae label~bc7757e2
 fr   k=bvgBalance type="currency" naVon="bvgInsurer" hint~9a0b9e08 label~efff73bc
 fr   k=lifeInsurance type="select" label~05c2d09e options=2 optWerte~2bfd19fd optLabels~b74e5823
@@ -395,7 +395,7 @@ it   k=franchise type="select" mvo=true orientation~95d3602b label~dd2b8bed opti
 it   k=kkCardNumber type="text" label~c8cc9310
 it   k=policyNumber type="text" hint~f2c42569 label~2ccc2ea9
 it   k=kkZusatz type="text" placeholder~4dd9e6e3 label~3a2c1215
-it   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~757bc421 orientation~47f63c40 label~d886a320 sectionIntro~d616286e
+it   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~757bc421 orientation~47f63c40 hint~e8dbc795 label~d886a320 sectionIntro~d616286e
 it   k=bvgContribution type="currency" naVon="bvgInsurer" hint~66d767ef label~faffbd49
 it   k=bvgBalance type="currency" naVon="bvgInsurer" hint~be03c0fd label~73e86460
 it   k=lifeInsurance type="select" label~3952c95e options=2 optWerte~2bfd19fd optLabels~2fd2aa2d
@@ -551,7 +551,7 @@ en   k=franchise type="select" mvo=true orientation~680a9a69 label~7c145cb0 opti
 en   k=kkCardNumber type="text" label~75df6208
 en   k=policyNumber type="text" hint~3f6eab70 label~fab0da68
 en   k=kkZusatz type="text" placeholder~2c2048e7 label~984042b4
-en   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~ff4e9269 orientation~bdf1872b label~4cd38100 sectionIntro~54bc6b88
+en   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~ff4e9269 orientation~bdf1872b hint~5077b930 label~4cd38100 sectionIntro~54bc6b88
 en   k=bvgContribution type="currency" naVon="bvgInsurer" hint~867f3ee0 label~880d440f
 en   k=bvgBalance type="currency" naVon="bvgInsurer" hint~160eef79 label~46a3a5f9
 en   k=lifeInsurance type="select" label~04f0d58f options=2 optWerte~2bfd19fd optLabels~ea0983bd
@@ -707,7 +707,7 @@ rm   k=franchise type="select" mvo=true orientation~b80db104 label~c5887ae4 opti
 rm   k=kkCardNumber type="text" label~dcc7ad86
 rm   k=policyNumber type="text" hint~e509e3b0 label~655a1464
 rm   k=kkZusatz type="text" placeholder~f2b6e130 label~0104df8f
-rm   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~4c4badb1 orientation~89ab7ff7 label~d316306d sectionIntro~f7185a40
+rm   k=bvgInsurer type="text" naOk=true naMit=["bvgContribution","bvgBalance"] section~4c4badb1 orientation~89ab7ff7 hint~06aca0aa label~d316306d sectionIntro~f7185a40
 rm   k=bvgContribution type="currency" naVon="bvgInsurer" hint~e71c40c5 label~8496554b
 rm   k=bvgBalance type="currency" naVon="bvgInsurer" hint~5c37bdec label~2f73bf1b
 rm   k=lifeInsurance type="select" label~edfe7cec options=2 optWerte~2bfd19fd optLabels~1534032f

@@ -1,4 +1,5 @@
 import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './kvgLeistungen.js';
+import { werktagAmOderDavor } from '../utils/fristen.js';
 // Reine Logik für den Franchise-Tacho — kein React, damit testbar.
 // Der Tacho ist ein Instrument ÜBER der bestehenden Franchise-Optimierer-Logik
 // (franchiseOpt aus PraemienOrientierung): Zeiger = laufende Gesundheitskosten
@@ -86,13 +87,27 @@ export function kreuzState(franchiseOpt, costs, heute = new Date()) {
 // ─── Gemeinsame Franchise-Rechnung (seit 25.09.2026 hier, vorher in PraemienOrientierung) ───
 // Eine Wahrheit für Prämien-Seite und Dashboard-Instrument: dieselbe Altersklasse, derselbe
 // Optimierer, dieselben Gesundheitskosten des laufenden Jahres.
-export function ageClassFromBirth(dateStr, heute = new Date()) {
+// Altersklasse der Prämie nach Jahrgang, nicht nach dem Alter am Tag (seit 26.10.2026). BAG-Gesamtbericht 2027 S. 24,
+// im Wortlaut gelesen: Kinder «bis Ende des Kalenderjahrs, in dem das 18. Altersjahr vollendet wurde», junge Erwachsene
+// «ab Beginn des Kalenderjahrs, das der Vollendung des 18. Altersjahrs folgt, bis Ende des Kalenderjahrs, in dem das
+// 25. Altersjahr vollendet wurde». KVG Art. 61 Abs. 3, KVV und KVAV nennen keine Grenzen (fedlex, 26.10.2026).
+// stichtag: ein Tag im Prämienjahr — in der Wechselzeit vergleichsStichtag(), sonst heute.
+export function ageClassFromBirth(dateStr, stichtag = new Date()) {
   if (!dateStr) return 'erwachsen';
   const birth = new Date(dateStr);
-  const age = heute.getFullYear() - birth.getFullYear() - (heute < new Date(heute.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
-  if (age < 19) return 'kind';
-  if (age < 26) return 'jung';
+  if (isNaN(birth)) return 'erwachsen';
+  const jahrAlter = stichtag.getFullYear() - birth.getFullYear(); // Alter, das im Prämienjahr vollendet wird
+  if (jahrAlter <= 18) return 'kind';
+  if (jahrAlter <= 25) return 'jung';
   return 'erwachsen';
+}
+
+// Kündigungstermin nach der Prämienmitteilung (KVG Art. 7 Abs. 2): Eingang bis 30. November, am Wochenende der
+// Werktag davor. Danach geht auf 1. Januar weder ein Kassenwechsel noch eine tiefere Franchise (KVV Art. 94 Abs. 2).
+export function kvgFristVorbei(heute = new Date()) {
+  const p = (n) => String(n).padStart(2, '0');
+  const heuteIso = `${heute.getFullYear()}-${p(heute.getMonth() + 1)}-${p(heute.getDate())}`;
+  return heuteIso > werktagAmOderDavor(`${heute.getFullYear()}-11-30`);
 }
 
 export function parseFranchise(val) {
@@ -146,5 +161,8 @@ export function franchiseVorschlag(opt, { costs, eigeneFranchise, ersparnisse, h
   // Polster auch bei «passt»: wer die hohe Franchise schon hat, aber die Reserve nicht trägt.
   const polster = guenstiger === opt.highFra && (Number(ersparnisse) || 0) < opt.reserve;
   if (eigeneFranchise === guenstiger) return { art: 'passt', franchise: guenstiger, polster };
+  // Nach dem 30. November geht eine tiefere Franchise erst auf das übernächste Jahr (KVV Art. 94 Abs. 2) — dann keinen
+  // Wechsel nach unten vorschlagen, sondern offen lassen (Fachprüfung 26.10.2026). Eine höhere bleibt vorschlagbar.
+  if (guenstiger === opt.lowFra && kvgFristVorbei(heute)) return { art: 'offen' };
   return { art: 'wechsel', franchise: guenstiger, polster };
 }

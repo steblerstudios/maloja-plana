@@ -2334,6 +2334,8 @@ export default {
       hints: {
         liabilityPremium: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         householdInsuranceAmount: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
+        // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+        bvgInsurer: 'Nagina cassa da pensiun? Lura tscherner «Na concerna betg». En intgins chantuns vala quai per la reducziun da premias sco «nagina 2. pitga».',
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
@@ -3290,6 +3292,8 @@ export default {
     jahrBS: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Citad na dependan las contribuziuns betg dal lieu da domicil — ellas valan tuttina en tut il chantun.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
+    // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+    vorbehaltAG3aTeiljahr: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: senza cassa da pensiun quinta il pajament en la 3. pitga A qua mo per la part sur 10 pertschient da l’entrada da gudogn. Ils documents publitgads na din betg, sche quai vala era, sch’i ha dà ina cassa da pensiun mo durant ina part da l’onn. Laschar confermar l’import da la SVA Argovia.',
     vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
@@ -3467,7 +3471,7 @@ export default {
       saeule3aAbzugUnklar: 'Il pajament en la 3. pitga A registrà è sur l’import che dastgava en mintga cas vegnir deducì da l’entrada: 7 056 francs ils onns fiscals 2023 e 2024, senza cassa da pensiun il pli 20 pertschient da l’entrada da gudogn. Quant ch’è vegnì deducì, dependa da quai, sch’i dat ina cassa da pensiun — quai n’è betg registrà qua. Senza questa indicaziun fiss la cifra memia auta u memia bassa.',  // TODO(rm): Gegenlese
       szKinderMindestanspruch: 'Per ils uffants exista en il chantun Sviz cun questa entrada en mintga vischnanca in dretg: lur premia da referenza vegn reducida per almain 80 pertschient. L’import per l’entira chasada na sa lascha betg determinar qua cun segirezza. Ina dumonda tar la SVA Schwyz vala la paina.',  // TODO(rm): Gegenlese
       bsHypothetisch: 'En il chantun Basilea-Citad quinta l’Amt für Sozialbeiträge a persunas che vivan sulettas u educheschan sulettas ils uffants e lavuran main che 80 pertschient ina entrada ipotetica; ina plazza cumplaina quinta cun 36 000 francs netto per onn. Excepziuns valan per exempel per la tgira d’uffants sut 16 onns, en furmaziun, en cas da malsogna u rendita AI, cun daners da dischoccupaziun e sur 60 onns. Quant che vegn lavurà n’è betg registrà qua, e cun ina entrada da gudogn sut 28 800 francs per onn po quest supplement reducir fermamain l’import. Cun las uras da lavur per emna en il chapitel «Furmaziun & lavur» quinta l’app.',
-      bsSaeule3a: 'En il chantun Basilea-Citad vegnan ils pajaments en la 3. pitga A deducids da l’entrada mo, sch’i na dat nagina cassa da pensiun. Sch’i dat ina, n’è betg registrà qua — ed en quest cas decida quai davart la gruppa da contribuziun. Tgi che fa part d’ina cassa da pensiun, po endatar la contribuziun en il chapitel «Assicuranzas & prevenziun»; lura quinta l’app.',
+      bsSaeule3a: 'En il chantun Basilea-Citad vegnan ils pajaments en la 3. pitga A deducids da l’entrada mo, sch’i na dat nagina cassa da pensiun. Sch’i dat ina, n’è betg registrà qua — ed en quest cas decida quai davart la gruppa da contribuziun. Tgi che fa part d’ina cassa da pensiun, po endatar la contribuziun en il chapitel «Assicuranzas & prevenziun»; tgi che na fa part d’nagina, tscherna tar «Cassa da pensiun» «Na concerna betg». Lura quinta l’app.', // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'Per giuvenils creschids (19 fin 25 onns) dependa la reducziun da quai, sch’ina furmaziun è stada en vigur il 1. da schaner — lura vala, tenor l’entrada, in dretg minimal. L’app na registrescha betg quai, perquai na stat qua nagina cifra; il post chantunal dat infurmaziuns.',
       stichtagAlter: 'Tgi che cumplenescha 26 onns en l’onn da dretg, vala tenor la data da referenza anc sco giuvna persuna creschida u gia sco persuna creschida — cun premias da referenza differentas. Il chantun na numna nagina data da referenza explicita per la vegliadetgna, perquai na stat qua nagina cifra.',
@@ -3483,7 +3487,7 @@ export default {
       tiKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Tessin anc betg: la reducziun vegn quintada là per l’entira chasada ed è limitada a la summa da tut las premias effectivamain pajadas. Las premias dals uffants n’èn betg registradas qua.', // TODO(rm): provisorisch — Gegenlese
       tiEltern: 'Tgi che ha il pli 30 onns, gudogna pauc e fa ina emprima scolaziun, vegn quintà en il chantun Tessin ensemen cun ils geniturs. Sche quai è il cas, na sa l’applicaziun betg — perquai na stat qua nagina cifra. L’IAS dat infurmaziuns.', // TODO(rm): provisorisch — Gegenlese
       kindNachStichtag: 'In uffant è naschì pir suenter il 1. da schaner da l’onn dal dretg. Decisivas èn las relaziuns ils 1. da schaner, e per l’uffant cumenza il dretg pir il mais suenter la naschientscha. Co che quai vegn quintà ensemen, na sa lascha betg dir cun segirezza qua.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
-      saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u 0, sch’i na dat nagina cassa da pensiun. Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
+      saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u, sch’i na dat nagina, inscriver 0 u tscherner tar «Cassa da pensiun» «Na concerna betg». Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026; Säule 2, 26.10.2026)
       praemieFranchise: 'En quest chantun è la reducziun il pli uschè auta sco la premia cun la franchisa ordinaria da 300 francs e cun cuvrida d’accidents — betg sco la premia registrada. L’import quintà è sur la premia registrada; tge limita superiura che vala, dependa d’ina premia che n’è betg registrada qua. Il dretg è almain uschè aut sco la premia registrada.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz. — TODO(rm): provisorisch, Gegenlese offen
       owSelbstbehaltRahmen: 'Cun questa entrada imputabla è la franchisa en il chantun Sursilvania tenor la decisiun per il 2026 pli auta che 12 pertschient. Dapi il 1. d’avrigl 2026 numna la lescha dentant ina rama da 9 fin 12 pertschient. Tgenina regla che vala per las disposiziuns 2026 è avert — perquai na stat qua nagina cifra. L’Ausgleichskasse Obwalden dat infurmaziuns.',
@@ -5367,7 +5371,7 @@ export default {
     plzNotFound: 'PLZ betg chattada en il register uffizial.',
     regionTitle: 'Regiun da premias',
     regionInfo: '{gemeinde} ({kanton}) — regiun da premias {region}',
-    avgPremium: 'Premia media 2026: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
+    avgPremium: 'Premia media {jahr}: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
     noInsurer: 'Nagin assicurader deponì',
     noInsurerHint: { sie: 'Endatai Vossa cassa da malsauns sut «Assicuranzas» per vesair Vossa premia da referenza.', du: 'Endatescha Tia cassa da malsauns sut «Assicuranzas» per vesair Tia premia da referenza.' },
     insurerNotFound: '«{name}» betg enconuschent',
@@ -5383,10 +5387,20 @@ export default {
     thInsurer: 'Kasse',
     allInsurersTitle: 'Alle Kassen vergleichen',
     compareFranchiseNote: 'Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Tippe eine Kasse für Details.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Die Kündigungsfrist für einen Kassenwechsel auf diesen Termin ist abgelaufen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufen: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise: Antrag spätestens am {datum} bei der Kasse. Eine höhere: Die Frist legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    refJahr: 'Prämien {jahr}',
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi 2026',
+    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi {jahr}',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',
