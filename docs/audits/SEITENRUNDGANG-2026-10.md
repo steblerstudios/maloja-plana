@@ -15,7 +15,7 @@ Geprüft wurde nur der Code, nicht im Browser. Was nur live zu bestätigen ist, 
 | #619 | fehlende i18n-Schlüssel, tote Rückfälle, Anrede/Schalter | S1, R10, R11 |
 | #620 | Tippziele ≥ 44 px | R9, R12 (+ «Karte öffnen», Monatsraster, «Beispiel verlassen») |
 | #621 | Kalender: Wiederholungen nach Kalender, Ankertag, .ics; Datum in App-Sprache | W10, S3; S2 nachgeprüft: kein Fehler |
-| (Gruppe 5) | Steuerrechner key datenModus, «Abzüge (geschätzt)», Franken/Stundenansätze über geld.js | J-key, S3, W11, S5; W12 nachgeprüft: kein Fehler |
+| #622 | Steuerrechner key datenModus, «Abzüge (geschätzt)», Franken/Stundenansätze über geld.js | J-key, S3, W11, S5; W12 nachgeprüft: kein Fehler |
 
 | Bereich | Stand |
 |---|---|
