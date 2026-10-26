@@ -101,7 +101,9 @@ describe('K31 IPV-Rechner, Kanton Appenzell Ausserrhoden', () => {
     expect(de.vorbehaltAR).toMatch(/eher höher/);
     expect(de.arKeinAnspruch).toMatch(/Antrag lohnt sich/);
     expect(de.offenGrund.praemieFranchise).toMatch(/mindestens so hoch wie die erfasste Prämie/);
-    expect(de.offenGrund.saeule2Unbekannt).toMatch(/oder 0/);
+    // ⟨26.10.2026⟩ Zwei Auswege: 0 eintragen oder «Trifft nicht zu» bei der Pensionskasse.
+    expect(de.offenGrund.saeule2Unbekannt).toMatch(/0 eintragen/);
+    expect(de.offenGrund.saeule2Unbekannt).toMatch(/«Trifft nicht zu»/);
     expect(de.arFristLaeuft).toMatch(/AHV-Zweigstelle der Wohngemeinde/);
   }, 30000);
 

@@ -11,7 +11,7 @@
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
 import { getFullName } from './config/constants.js';
-import { keineKontaktperson } from './utils/naGruppen.js';
+import { keineKontaktperson, keineMedikamente } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
@@ -403,11 +403,14 @@ export function generateLebensmappe(data, chapters, t, documents) {
 // Textfeld. Wer Medikamente in der Liste erfasst hatte — der einzige Weg, den das Kapitel
 // heute anbietet —, fand sie weder im Dossier noch im QR noch auf der Vorlesekarte.
 // Format wie auf der gedruckten Notfallkarte (ChapterView): «Name Dosis Einheit».
-function medikamenteText(notfall) {
+// «Ich nehme keine» (seit 25.10.2026): fehlte bis dahin in Dossier, QR und Notfallpass — für Helfende
+// ist «keine» etwas anderes als «nicht erfasst».
+function medikamenteText(notfall, t) {
   const liste = Array.isArray(notfall?.medicationsList) ? notfall.medicationsList.filter(m => m && m.name) : [];
   if (liste.length) {
     return liste.map(m => [m.name, m.dose ? m.dose + (m.unit ? ' ' + m.unit : '') : ''].filter(Boolean).join(' ')).join(', ');
   }
+  if (keineMedikamente(notfall)) return t('naZustand.keineMedikamente');
   return typeof notfall?.medications === 'string' ? notfall.medications : '';
 }
 
@@ -459,7 +462,7 @@ function getNotfallSections(data, chapters, t) {
       rows: [
         { feld: 'notfall.bloodType', label: lbl('notfall', 'bloodType'), value: sel('notfall', 'bloodType') },
         { feld: 'notfall.allergies', label: lbl('notfall', 'allergies'), value: d('notfall', 'allergies') },
-        { feld: 'notfall.medications', label: lbl('notfall', 'medications'), value: medikamenteText(data.notfall) },
+        { feld: 'notfall.medications', label: lbl('notfall', 'medications'), value: medikamenteText(data.notfall, t) },
         { feld: 'notfall.chronicDiseases', label: lbl('notfall', 'chronicDiseases'), value: erkrankungenText(data.notfall) },
       ].filter(r => r.value),
     },

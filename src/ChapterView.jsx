@@ -30,7 +30,7 @@ import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
-import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
+import { keineKontaktperson, keineMedikamente, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegister.js';
 import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
@@ -1177,7 +1177,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
     if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
     else if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
-    if (medList.length || data.medications) medFelder.push(tr('chapters.notfall.fields.medications'));
+    else if (keineMedikamente(data)) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + escapeHtml(tr('naZustand.keineMedikamente')) + '</div>');
+    if (medList.length || data.medications || keineMedikamente(data)) medFelder.push(tr('chapters.notfall.fields.medications'));
     const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
     if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => escapeHtml(d.name) + (d.code ? ' (' + escapeHtml(d.code) + ')' : '')).join(', ') + '</div>');
     else if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
