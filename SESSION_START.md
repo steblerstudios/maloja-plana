@@ -17,6 +17,23 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 26.10.2026, 03:50 — Vier weitere Entwurfs-PRs (#597–#600) + Zweig «Absicherung je Risiko». Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 03:47): main = `0413772a` (26.10. 00:48, #569 gemergt) · live = `4299bfb9`
+> (0.1.48-beta) · **112 Commits** dazwischen. Alle Arbeitszweige gepusht.
+> - **#597** Wechselzeit: ab BAG-Publikation (2027: 29.09.2026) bis 31.12. rechnen Kassenvergleich, Franchise-Stufen und
+>   -Vorschlag mit dem Folgejahr; Altersklasse der Prämie nach **Jahrgang** (BAG-Gesamtbericht 2027 S. 24; KVG/KVV/KVAV nennen
+>   keine Grenzen); kein Vorschlag «tiefer» nach dem 30.11. (KVV 94 II). Enthält #595 + #596. **CI grün.**
+> - **#598** (auf #597): Hinweis, wenn fürs Kalenderjahr keine Prämien hinterlegt sind (2028 ohne Import).
+> - **#599** (auf #593): Netto-Richtwert ohne AHV/ALV/PK, solange im Jahr ≤17 (AHVG 3 II a, AVIG 2 I a, BVG 7 I); «Neuer Job»
+>   nennt das BVG-Mindestalter. · **#600** (auf #599): BVG-Altersgutschrift nach Jahrgang (BVV 2 Art. 13).
+> - **Zweig `feat/absicherung-je-risiko`** `e231e928` (auf #598, **kein PR**): Liste «Absicherung je Risiko» in der Versicherungs-
+>   Übersicht (Sophie: Liste statt Spinnennetz). Textprüfung 0 Blocker (noch nicht eingearbeitet), **Fachprüfung ausstehend**.
+> **Merge-Reihenfolge:** #586 → #588 → #589 → #590 → #593 → #599 → #600 (#591 auf #586) · #594 → #595 + #596 → #597 → #598.
+> **Offen:** Geburt am 1. eines Monats (Merkblätter 3.01/3.04 und RWL Stand 1.1.2026 gelesen: nicht geregelt → Ausgleichskasse
+> fragen) · Spinnennetz im Kapitel weg, sobald M2 steht · BVG-Hochrechnung: Jahresschritte ab heute, Gutschriftjahre aufgerundet ·
+> AG/BS «keine Säule 2» · ZStB 133.1 · rm. Übergabe: `_handoffs/2026-10-26-elf-entwurfs-prs-praemien-2027-bvg-alter.md` (Nachträge).
+
 > 🧾 **Nachtrag 26.10.2026, 00:40 — Elf Entwurfs-PRs (#586–#596), nichts gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 00:35): main = `2db4d4ee` (25.10. 21:22, unverändert) · live = `4299bfb9`
