@@ -92,7 +92,7 @@
 //     der Vorbehalt nennt den Vorschuss.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr,
-  jahrVorbei, mehrereErwachsene, ERWACHSEN, KEIN_PRAEMIENDECKEL, SAEULE_3A,
+  jahrVorbei, mehrereErwachsene, ERWACHSEN, KEIN_PRAEMIENDECKEL, SAEULE_3A, saeule2,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -256,8 +256,9 @@ export function ipvGraubuenden(data, hh, ipvData, youngAdultsCount, orientierung
   // 3'300 netto/Monat → 2'352 statt 1'716 mit 200 BVG, über eine Kategoriengrenze). Das gehört
   // in die Anzeige, nicht nur hierher: Zusatz-Vorbehalt, sobald ein Lohn erfasst ist.
   // Nur wenn das Feld wirklich LEER ist — eine erfasste 0 heisst «keine Pensionskasse».
-  const bvgLeer = bvgRoh === undefined || bvgRoh === null || String(bvgRoh).trim() === '';
-  const bvgFehlt = Number(f.monthlyIncome) > 0 && bvgLeer;
+  // ⟨26.10.2026⟩ Auch die Pensionskasse «Trifft nicht zu» ist eine Antwort (keine PK ⇒ Beitrag 0) —
+  // Lesart aus `saeule2()` (kantonsModell.js); der Vorbehalt bleibt nur, solange es unbekannt ist.
+  const bvgFehlt = Number(f.monthlyIncome) > 0 && saeule2(data.versicherungen) === null;
   const gemeinsam = {
     canton: 'GR', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltGR',
     extra: { region, basisjahr, ...(bvgFehlt ? { zusatzVorbehaltKey: 'ipv.vorbehaltGRbvg' } : {}) },
