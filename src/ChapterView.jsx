@@ -34,6 +34,7 @@ import { keineKontaktperson, keineMedikamente, naGruppeUmschalten, naVerdeckt, n
 import { ansichtIkon, ansichtName, SEARCH_VIEWS } from './config/ansichtenRegister.js';
 import { erwachseneImHaushalt, zeigtPartnereinkommen, zweitePersonFehlt } from './utils/partnereinkommen.js';
 import { zahl } from './utils/geld.js';
+import { kalenderdatum } from './utils/datumAnzeige.js';
 import { abschnittGruppen } from './utils/abschnitte.js';
 // Dasselbe Bild wie das Bergpanorama der Übersicht (BergLandschaft) — im Cache, kein zweiter Download.
 import landschaft from './assets/berge/landschaft.webp?url';
@@ -1153,7 +1154,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const notfallkarteAbschnitte = () => {
     const basis = allData && allData.basis || {};
     const name = [basis.firstName, basis.middleName, basis.lastName].filter(Boolean).join(' ');
-    const dob = basis.dateOfBirth ? new Date(basis.dateOfBirth).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    // Lokal gelesen und in der App-Sprache (Seitenrundgang 26.10.2026: Browsersprache, und «1990-05-12» als
+    // UTC-Mitternacht konnte westlich von Greenwich den Vortag drucken).
+    const dob = basis.dateOfBirth ? kalenderdatum(basis.dateOfBirth, lang) : '';
     const sections = [];
     if (name || dob) {
       const rows = [];
@@ -1468,7 +1471,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                     lineHeight: leading.relaxed,
                     marginBottom: space.sm + 'px',
                   }
-                }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('wohnen.nkEstimate', { monthly: Math.round(monthlyNK), annual: Math.round(monthlyNK * 12) })))
+                }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('wohnen.nkEstimate', { monthly: zahl(Math.round(monthlyNK)), annual: zahl(Math.round(monthlyNK * 12)) })))
               );
             }
           }

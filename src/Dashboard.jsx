@@ -19,6 +19,8 @@ import { auswahlLabel } from './utils/auswahlLabel.js';
 import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
+import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
+import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
 import { inZwischenablage } from './utils/zwischenablage.js';
 import { version as APP_VERSION } from '../package.json';
@@ -46,7 +48,7 @@ function fmtCHF(v) {
   return n && !isNaN(n) ? betrag(n, { hoechstens: 2 }) : null;
 }
 
-export function buildSnippet(chapterKey, chData, allData, t) {
+export function buildSnippet(chapterKey, chData, allData, t, lang) {
   if (chapterKey === 'basis') {
     const name = [(chData.firstName || ''), (chData.lastName || '')].filter(Boolean).join(' ');
     if (!name) return null;
@@ -95,12 +97,13 @@ export function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'behoerden') {
     if (!chData.cantoneOfTaxation) return null;
     const parts = [t('synthesis.taxCanton', { canton: getCantonName(chData.cantoneOfTaxation, t) })];
-    if (chData.taxFilingDeadline) parts.push(t('synthesis.taxDeadline', { date: chData.taxFilingDeadline }));
-    try {
-      const cl = JSON.parse(localStorage.getItem('or5_behoerden_checklist') || '{}');
-      const done = Object.values(cl).filter(Boolean).length;
-      if (done > 0) parts.push(done + '/6 ' + t('synthesis.checklistDone'));
-    } catch {}
+    if (chData.taxFilingDeadline) parts.push(t('synthesis.taxDeadline', { date: kalenderdatum(chData.taxFilingDeadline, lang) }));
+    // Dieselben Gänge und dieselbe Erledigt-Regel wie im Kapitel (utils/behoerdenGaenge.js) — nicht alle Haken im
+    // Speicher und nicht gegen eine feste Zahl.
+    let cl = {};
+    try { cl = JSON.parse(localStorage.getItem('or5_behoerden_checklist') || '{}') || {}; } catch { /* Storage blockiert */ }
+    const done = GAENGE.filter((g) => gangErledigt(g.id, cl, chData)).length;
+    if (done > 0) parts.push(t('synthesis.checklistDone', { n: done, total: GAENGE.length }));
     return parts.join(' · ') + '.';
   }
   if (chapterKey === 'notfall') {
@@ -375,7 +378,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   let lastBackupRaw = null;
   try { lastBackupRaw = localStorage.getItem('or5_lastBackup'); } catch { /* Storage blockiert (Privat-Modus) — Render darf nicht crashen */ }
-  const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+  // In der App-Sprache, mit Rückfall; ein unlesbarer Wert zeigt nichts statt «Invalid Date».
+  const lastBackup = zeitpunktDatum(lastBackupRaw, lang);
 
   const [alphaDismissed, setAlphaDismissed] = useState(false);
   const chapterStatuses = chapters.map(ch => getChapterStatus(ch));
@@ -544,7 +548,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const verpasst = steuerfristVorbei(data.behoerden, today);
         // Lokal gelesen (new Date('2026-09-30') ist UTC-Mitternacht) und in der App-Sprache,
         // nicht in der des Browsers.
-        const fmt = (iso) => { try { const [j, m, d] = iso.split('-').map(Number); return new Date(j, m - 1, d).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        const fmt = (iso) => kalenderdatum(iso, lang, { day: 'numeric', month: 'short' });
         const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
         const part = (label, value) => React.createElement('span', null,
           React.createElement('span', { style: { color: palette.soft } }, label + ' '),
@@ -811,7 +815,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 ),
                 !simpleView && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
                 !simpleView && status !== 'leer' && (() => {
-                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
+                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t, lang);
                   return snippet ? React.createElement('div', {
                     style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
                   }, snippet) : null;
