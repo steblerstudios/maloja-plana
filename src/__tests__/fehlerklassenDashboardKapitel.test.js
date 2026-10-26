@@ -12,6 +12,7 @@ import { buildSnippet } from '../Dashboard.jsx';
 import { MirrorCards } from '../MirrorCards.jsx';
 import { DEMO_DATA } from '../config/demoData.js';
 import { GAENGE } from '../utils/behoerdenGaenge.js';
+import { kalenderdatum, zeitpunktDatum } from '../utils/datumAnzeige.js';
 
 const t = createT({ de }, 'de');
 
@@ -85,9 +86,51 @@ describe('K-F6: Beispiel-Hausarzt steht in der Liste', () => {
   });
 });
 
+const quelle = (datei) => fs.readFileSync(path.resolve(__dirname, '..', datei), 'utf8');
+
 describe('D12: Prämienvergleich formatiert über utils/geld.js', () => {
   it('kein toFixed mehr in PraemienOrientierung.jsx', () => {
-    const src = fs.readFileSync(path.resolve(__dirname, '../PraemienOrientierung.jsx'), 'utf8');
-    expect(src).not.toMatch(/\.toFixed\(/);
+    expect(quelle('PraemienOrientierung.jsx')).not.toMatch(/\.toFixed\(/);
+  });
+  it('Referenzprämie: Betrag mit zwei Stellen, Franchise mit ’', () => {
+    const z = quelle('PraemienOrientierung.jsx').split('\n').find((l) => l.includes("t('po.refPremium'"));
+    expect(z).toMatch(/amount: zahl\(shownRef, \{ stellen: 2 \}\)/);
+    expect(z).toMatch(/franchise: zahl\(userFranchise/);
+    // So sieht es im Text aus (2’500 statt 2500):
+    expect(t('po.refPremium', { amount: '581.00', franchise: '2’500' })).toContain('Franchise 2’500');
+  });
+});
+
+describe('K-F4: Nebenkosten-Schätzung mit ’', () => {
+  it('beide Zahlen gehen über zahl()', () => {
+    const z = quelle('ChapterView.jsx').split('\n').find((l) => l.includes("t('wohnen.nkEstimate'"));
+    expect(z).toMatch(/monthly: zahl\(/);
+    expect(z).toMatch(/annual: zahl\(/);
+    expect(t('wohnen.nkEstimate', { monthly: '180', annual: '2’160' })).toContain('ca. CHF 2’160/Jahr');
+  });
+});
+
+describe('K-F8: Datum in der App-Sprache (utils/datumAnzeige.js)', () => {
+  it('Kalenderdatum lokal gelesen, je Sprache', () => {
+    expect(kalenderdatum('1990-05-12', 'de')).toBe('12. Mai 1990');
+    expect(kalenderdatum('1990-05-12', 'fr')).toBe('12 mai 1990');
+    expect(kalenderdatum('1990-05-12', 'en')).toBe('12 May 1990');
+  });
+  it('rm wie im Kapitel Behörden mit de-CH, fehlende Sprache fällt auf de zurück', () => {
+    expect(kalenderdatum('2027-03-31', 'rm')).toBe('31. März 2027');
+    expect(kalenderdatum('2027-03-31', undefined)).toBe('31. März 2027');
+  });
+  it('kein ISO-Datum: Rohwert, kein «Invalid Date»', () => {
+    expect(kalenderdatum('31.03.2027', 'de')).toBe('31.03.2027');
+    expect(kalenderdatum('', 'de')).toBe('');
+  });
+  it('Zeitpunkt «Zuletzt gesichert»: ungültig → null', () => {
+    expect(zeitpunktDatum('2026-10-26T14:00:00.000Z', 'de')).toBe('26. Oktober 2026');
+    expect(zeitpunktDatum('kaputt', 'de')).toBeNull();
+    expect(zeitpunktDatum(null, 'de')).toBeNull();
+  });
+  it('Dashboard und Portemonnaie-Karte formatieren nicht mehr selbst', () => {
+    expect(quelle('Dashboard.jsx')).not.toMatch(/toLocaleDateString\(undefined|lang \+ '-CH'/);
+    expect(quelle('ChapterView.jsx')).not.toMatch(/toLocaleDateString\(undefined/);
   });
 });

@@ -20,6 +20,7 @@ import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { GAENGE, gangErledigt } from './utils/behoerdenGaenge.js';
+import { kalenderdatum, zeitpunktDatum } from './utils/datumAnzeige.js';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
@@ -43,15 +44,6 @@ function fmtCHF(v) {
   const n = Number(v);
   return n && !isNaN(n) ? betrag(n, { hoechstens: 2 }) : null;
 }
-
-// «2027-03-31» → «31. März 2027» in der App-Sprache, lokal gelesen (new Date('2027-03-31') ist UTC-Mitternacht
-// und kippt westlich von Greenwich auf den Vortag). Seitenrundgang 26.10.2026: die Bereichszeile Behörden
-// zeigte das rohe ISO-Datum.
-const datumLang = (iso, lang) => {
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
-  if (!m) return iso;
-  try { return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])).toLocaleDateString((lang || 'de') + '-CH', { day: 'numeric', month: 'long', year: 'numeric' }); } catch { return iso; }
-};
 
 export function buildSnippet(chapterKey, chData, allData, t, lang) {
   if (chapterKey === 'basis') {
@@ -102,7 +94,7 @@ export function buildSnippet(chapterKey, chData, allData, t, lang) {
   if (chapterKey === 'behoerden') {
     if (!chData.cantoneOfTaxation) return null;
     const parts = [t('synthesis.taxCanton', { canton: getCantonName(chData.cantoneOfTaxation, t) })];
-    if (chData.taxFilingDeadline) parts.push(t('synthesis.taxDeadline', { date: datumLang(chData.taxFilingDeadline, lang) }));
+    if (chData.taxFilingDeadline) parts.push(t('synthesis.taxDeadline', { date: kalenderdatum(chData.taxFilingDeadline, lang) }));
     // Dieselben Gänge und dieselbe Erledigt-Regel wie im Kapitel (utils/behoerdenGaenge.js) — nicht alle Haken im
     // Speicher und nicht gegen eine feste Zahl.
     let cl = {};
@@ -327,7 +319,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   let lastBackupRaw = null;
   try { lastBackupRaw = localStorage.getItem('or5_lastBackup'); } catch { /* Storage blockiert (Privat-Modus) — Render darf nicht crashen */ }
-  const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+  // In der App-Sprache, mit Rückfall; ein unlesbarer Wert zeigt nichts statt «Invalid Date».
+  const lastBackup = zeitpunktDatum(lastBackupRaw, lang);
 
   const [alphaDismissed, setAlphaDismissed] = useState(false);
   const chapterStatuses = chapters.map(ch => getChapterStatus(ch));
@@ -496,7 +489,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         const verpasst = steuerfristVorbei(data.behoerden, today);
         // Lokal gelesen (new Date('2026-09-30') ist UTC-Mitternacht) und in der App-Sprache,
         // nicht in der des Browsers.
-        const fmt = (iso) => { try { const [j, m, d] = iso.split('-').map(Number); return new Date(j, m - 1, d).toLocaleDateString(lang + '-CH', { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        const fmt = (iso) => kalenderdatum(iso, lang, { day: 'numeric', month: 'short' });
         const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
         const part = (label, value) => React.createElement('span', null,
           React.createElement('span', { style: { color: palette.soft } }, label + ' '),
