@@ -17,6 +17,25 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🤝 **Nachtrag 26.10.2026, 13:50 — Pflege & Hilflosenentschädigung: drei Entwurfs-PRs (#604, #605, #606), CI grün. NICHT gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 26.10. 13:50): main = `0413772a` (26.10. 00:48) · live = `4299bfb9`
+> (0.1.48-beta, 23.10.) · 112 Commits dazwischen. Alle drei je mit eigenem Arbeitsbaum unter `_werkbank/`, ab `origin/main`.
+> - **#604** `feat/hilflosenentschaedigung` — Rechner Hilflosenentschädigung (IV/AHV) als Baustein in «Angehörige pflegen»
+>   (Schritt 4) und «Krankheit & IV» (neuer Schritt 4, die HE-Links der Lebenssituationen führten vorher ins Leere).
+>   2026 zitiert (Merkblatt 4.13, 3.01, BSV), 2027 gerechnet (IVG 42ter / AHVG 43bis × Renten 2027). Ergebnis-Art Schätzung.
+>   `swiss-precision-pruefer`: kein 🔴, Befunde eingearbeitet. Offen: Besitzstand leicht im Heim nicht belegt → kein Betrag.
+>   Freigabe-Register Nr. 25. Auto-fix an.
+> - **#605** `docs/konkurrenz-pflege` — Konkurrenzanalyse-Nachtrag: We+ (nächste direkte Konkurrenz: lokal, kein Konto,
+>   EL/HE, aber Abo, KI, nur iPhone), Sozial-Navigator, Pflegewegweiser (kein Software-Konkurrent), Faula (keine Konkurrenz).
+>   Dazu dieser Nachtrag.
+> - **#606** `fix/pflege-entloehnung-quelle` — `PflegeEntloehnung.jsx` ohne Anbieter-Satz 37.90: Spanne 30–40 CHF/h aus der
+>   Medienmitteilung BS vom 16.12.2025 (kantonal, Orientierung), Vergleich KLV Art. 7a Abs. 1 Bst. c (52.60/h an die
+>   Organisation). `swiss-precision-pruefer`: kein 🔴, Befunde eingearbeitet.
+> **Belegt:** je vitest voll grün (Ausfälle nur Zeitüberschreitungen unter Last, einzeln grün), Build ok, size ≤ 63,38 / 65 kB,
+> Browser 375 px. **Nicht belegt:** Rumantsch-Texte nicht gegengelesen.
+> **Nächster Schritt:** Review und Merge durch Stebler Studios; danach Deploy.
+
 > 🎨 **Nachtrag 25.10.2026, 00:25 — Fassung 6, erster Bau: #562, #564, #565, #566 auf Zuruf gemergt. NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 25.10. 00:23): main = `c9d96a50` (24.10. 23:15) · live = `4299bfb9`
