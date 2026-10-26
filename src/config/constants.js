@@ -337,7 +337,7 @@ export function getChapters(t) {
         { k: 'kkZusatz', type: 'text', ph: 1 },
         // «trifft nicht zu» (Selbständige, tiefe Einkommen ohne BVG-Pflicht) — Beitrag und Guthaben gehen mit;
         // sonst blieb «Berufliche Vorsorge x von 5» für immer offen (Fachprüfung Muster M2, 25.10.2026).
-        { k: 'bvgInsurer', type: 'text', sec: 'occupational', naOk: true, naMit: ['bvgContribution', 'bvgBalance'], orientation: or(t, 'bvg') },
+        { k: 'bvgInsurer', type: 'text', sec: 'occupational', hint: 1, naOk: true, naMit: ['bvgContribution', 'bvgBalance'], orientation: or(t, 'bvg') },
         { k: 'bvgContribution', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'bvgBalance', type: 'currency', hint: 1, naVon: 'bvgInsurer' },
         { k: 'lifeInsurance', type: 'select', sel: 1 },

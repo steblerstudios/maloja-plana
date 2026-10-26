@@ -158,11 +158,23 @@ describe('K31 BS: die Säule-3a-Regel SAEULE_3A.abzugOhneSaeule2 (SoHaV § 17 Ab
     expect(r.kantone).toBe('BS');
     expect(r.beleg).toMatch(/SoHaV BS § 17 Abs\. 1/);
   });
-  it('mit zweiter Säule kein Abzug, ohne zweite Säule die ganze Einzahlung', () => {
+  // ⟨26.10.2026, Fachprüfung S1⟩ Bis dahin «ohne zweite Säule die ganze Einzahlung». Jetzt höchstens, was ohne
+  // Pensionskasse eingezahlt werden durfte: 20 % des Erwerbseinkommens, höchstens 36 288 (2026; BVV 3 Art. 7 Abs. 1 lit. b).
+  it('mit zweiter Säule kein Abzug, ohne zweite Säule die Einzahlung bis zum Höchstabzug', () => {
     expect(r.nichtAufgerechnet({ pension3a: 7258 })).toBe(0);
-    expect(r.ohneSaeule2({ pension3a: 7258 })).toBe(7258);
-    expect(r.ohneSaeule2({ pension3a: 'abc' })).toBe(0);
-    expect(r.ohneSaeule2({})).toBe(0);
+    expect(r.ohneSaeule2({ monthlyIncome: 5000, pension3a: 7258 }, 2026)).toBe(7258);
+    expect(r.ohneSaeule2({ monthlyIncome: 3000, pension3a: 7258 }, 2026)).toBe(7200);   // 20 % von 36 000
+    expect(r.ohneSaeule2({ monthlyIncome: 20000, pension3a: 40000 }, 2026)).toBe(36288);
+    expect(r.ohneSaeule2({ monthlyIncome: 2000, sideIncome: 1000, pension3a: 7258 }, 2026)).toBe(7200);
+    expect(r.ohneSaeule2({ monthlyIncome: 3000, pension3a: 'abc' }, 2026)).toBe(0);
+    expect(r.ohneSaeule2({}, 2026)).toBe(0);
+    // Jahr ohne belegten Höchstabzug: kein sicherer Abzug.
+    expect(r.ohneSaeule2({ monthlyIncome: 3000, pension3a: 7258 }, 2031)).toBe(null);
+  });
+  it('widerlegt: Einzahlung über den Einkünften', () => {
+    expect(r.widerlegt({ pension3a: 50000 }, 36000, 2026)).toBe(true);
+    expect(r.widerlegt({ pension3a: 7258 }, 36000, 2026)).toBe(false);
+    expect(r.widerlegt({ pension3a: 0 }, 0, 2026)).toBe(false);
   });
 });
 
@@ -277,6 +289,17 @@ describe('K31 calculateIPV für BS (App-Angaben → Modell)', () => {
     });
     it('Pensionskassenbeitrag erfasst: die 3a bleibt im Einkommen, Betrag wie ohne 3a', () => {
       expect(calculateIPV(person({ finanzen: { pension3a: 7258 }, versicherungen: { bvgContribution: 300 } }))).toMatchObject({ amount: 118, gruppe: 12 });
+    });
+    // ⟨26.10.2026, Entscheid «Variante A + C»⟩ Ohne zweite Säule ist jetzt eine Antwort: ein erfasster
+    // Beitrag 0 oder die Pensionskasse «Trifft nicht zu». Dann kommt die 3a weg (SoHaV § 17 Abs. 1 lit. a).
+    it('ohne zweite Säule (Beitrag 0 oder «Trifft nicht zu»): die 3a kommt weg — Gruppe 06', () => {
+      expect(calculateIPV(person({ finanzen: { pension3a: 7258 }, versicherungen: { bvgContribution: 0 } }))).toMatchObject({ belegt: true, gruppe: 6 });
+      expect(calculateIPV(person({ finanzen: { pension3a: 7258 }, versicherungen: { _na: ['bvgInsurer'] } }))).toMatchObject({ belegt: true, gruppe: 6 });
+    });
+    it('ohne zweite Säule, aber die Einzahlung kann keine Jahreseinzahlung aus diesen Einkünften sein: keine Zahl', () => {
+      // z. B. der Kontostand statt der Jahreseinzahlung im Feld (Fachprüfung S1)
+      expect(calculateIPV(person({ finanzen: { pension3a: 50000 }, versicherungen: { bvgContribution: 0 } })))
+        .toMatchObject({ belegt: false, offen: 'saeule3aUeberEinkommen' });
     });
     it('3a zu klein, um die Gruppe zu wechseln: gerechnet', () => {
       // 36 000 − 500 = 35 500 läge in Gruppe 11 (≠ 12), darum 36 500 als Basis:

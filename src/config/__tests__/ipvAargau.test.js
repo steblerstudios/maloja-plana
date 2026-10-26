@@ -233,11 +233,11 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {}, vers = {} } = {}) => ({
     basis: { canton: 'AG', dateOfBirth: dob, household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: '5000', city: 'Aarau' },
-    versicherungen: kkPremium != null ? { kkPremium } : {},
+    versicherungen: { ...(kkPremium != null ? { kkPremium } : {}), ...vers },
   });
 
   it('ohne erfasste Prämie keine Zahl: der Deckel nach § 7 Abs. 3 KVGG liesse sich sonst nicht anwenden', () => {
@@ -266,23 +266,62 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
   // Die 3a wurde doppelt gezählt: einmal im Nettoeinkommen, einmal aufgerechnet. In AG
   // kostete das 17,5 % der Einzahlung — bei 3 000 also 525.–/Jahr, bei 12 000 fiel der
   // Anspruch auf null. Eine zu tiefe Zahl hält Berechtigte vom Antrag ab.
+  // ⟨26.10.2026⟩ Seit der Säule-2-Angabe gilt der Wächter für Personen MIT Pensionskasse (volle
+  // Zurechnung); ohne Säule 2 greift zusätzlich die 10-%-Schwelle (Test unten).
   it('Säule 3a zählt NICHT zusätzlich zum Nettoeinkommen', () => {
-    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 } })).annual).toBe(2068);
-    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 } })).annual).toBe(2068);
+    const mitPK = { bvgContribution: 200 };
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: mitPK })).annual).toBe(2068);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 }, vers: mitPK })).annual).toBe(2068);
     // der alte Weg hätte bei 12 000 null ergeben (30 000 + 12 000 − 8 500 = 33 500 > Nullpunkt)
-    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 } })).eligible).toBe(true);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 }, vers: mitPK })).eligible).toBe(true);
   });
 
-  // ⚠️ NOCH NICHT UMGESETZT, und darum hier festgehalten statt vergessen:
-  // § 6 Abs. 5 KVGG i. V. m. § 5 Abs. 1 V KVGG rechnet die 3a bei Personen OHNE Säule 2 nur
-  // über 10 % des Nettoerwerbseinkommens auf. Die App weiss nicht sicher, ob eine Säule 2
-  // besteht (leere BVG-Felder heissen «nicht erfasst»), darum bleibt es bei der vollen
-  // Zurechnung. Wirkung: bei Personen ohne Säule 2 bis zu 34 % zu tief.
-  it('die 10-%-Schwelle ist benannt und belegt, wirkt aber noch nicht', () => {
-    expect(SAEULE_3A.schwelleOhneSaeule2.beleg).toMatch(/§ 6 Abs\. 5 KVGG/);
-    expect(SAEULE_3A.schwelleOhneSaeule2.offen).toMatch(/nicht SICHER/);
-    // 10 % von 30 000 = 3 000 — die Rechnung steht bereit
-    expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({ monthlyIncome: 2500 })).toBe(3000);
+  // ⟨26.10.2026, Entscheid Stebler Studios «Variante A + C»⟩ Bis dahin stand hier «benannt und belegt,
+  // wirkt aber noch nicht». § 6 Abs. 5 KVGG i. V. m. § 5 Abs. 1 V KVGG: ohne Säule 2 wird die 3a nur
+  // über 10 % des Nettoerwerbseinkommens aufgerechnet. 10 % von 30 000 = 3 000 bleiben weg:
+  // 27 000 − 8 500 = 18 500 → 5 830 − 17,5 % × 18 500 = 2 592.50 → 2 593.
+  describe('Säule 2 und die 10-%-Schwelle', () => {
+    it('ohne Säule 2 (Beitrag 0): die 3a bis 10 % des Nettoerwerbs zählt nicht', () => {
+      const ohne = { bvgContribution: 0 };
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: ohne })).annual).toBe(2593);
+      // über der Schwelle zählt der Rest wieder: 12 000 − 3 000 = 9 000 bleiben im Einkommen, also
+      // dasselbe Einkommen wie ohne Einzahlung über der Schwelle → 2 593
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 }, vers: ohne })).annual).toBe(2593);
+    });
+
+    it('ohne Säule 2 («Trifft nicht zu» bei der Pensionskasse): dasselbe', () => {
+      const na = { _na: ['bvgInsurer'] };
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: na })).annual).toBe(2593);
+    });
+
+    it('unbekannt und es macht einen Unterschied: keine Zahl, sondern die Orientierung', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 } })))
+        .toMatchObject({ belegt: false, amount: null, offen: 'saeule2Unbekannt' });
+    });
+
+    it('ohne Säule 2 und die Schwelle wirkt: Teiljahr-Vorbehalt in der Anzeige (Fachprüfung S2)', () => {
+      const r = calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: { bvgContribution: 0 } }));
+      expect(r.zusatzVorbehaltKey).toBe('ipv.vorbehaltAG3aTeiljahr');
+      // mit Säule 2 oder ohne 3a: kein solcher Vorbehalt
+      expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 }, vers: { bvgContribution: 200 } })).zusatzVorbehaltKey).toBeUndefined();
+      expect(calculateIPV(person({ monthlyIncome: 2500, vers: { bvgContribution: 0 } })).zusatzVorbehaltKey).toBeUndefined();
+    });
+
+    it('unbekannt, Nebenerwerb statt Hauptlohn: auch dann die Orientierung, keine stille Zahl (Fachprüfung S3)', () => {
+      expect(calculateIPV(person({ monthlyIncome: 0, finanzen: { sideIncome: 2500, pension3a: 3000 } })))
+        .toMatchObject({ belegt: false, offen: 'saeule2Unbekannt' });
+    });
+
+    it('unbekannt ohne 3a: kein Unterschied, also eine Zahl', () => {
+      expect(calculateIPV(person({ monthlyIncome: 2500 })).annual).toBe(2068);
+    });
+
+    it('Regel trägt den Vorbehalt zur Frage an die SVA, nicht mehr `offen`', () => {
+      expect(SAEULE_3A.schwelleOhneSaeule2.beleg).toMatch(/§ 6 Abs\. 5 KVGG/);
+      expect(SAEULE_3A.schwelleOhneSaeule2.offen).toBeUndefined();
+      expect(SAEULE_3A.schwelleOhneSaeule2.vorbehalt).toMatch(/SVA Aargau/);
+      expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({ monthlyIncome: 2500 })).toBe(3000);
+    });
   });
 
   it('Monatseinkommen und Renten zählen mit × 12', () => {

@@ -343,6 +343,12 @@ entfernt von der betreuten Person wohnt oder diese innert einer Stunde erreichen
 Voraussetzungen (HE-Bezug, ≤30 km/1 h)» belegt. Der Stundensatz CHF 37.90 aus PR #342 bleibt
 unbelegt (nicht Teil dieser Sammlung).
 
+> **Nachtrag 26.10.2026:** Der Satz CHF 37.90 ist ersetzt. `PflegeEntloehnung.jsx` zeigt jetzt die
+> Spanne 30–40 CHF/h aus der Medienmitteilung des Regierungsrats Basel-Stadt vom 16.12.2025
+> («Pflegende Angehörige erhalten üblicherweise einen Beitrag von 30 bis 40 Franken pro Stunde»;
+> **Quelle kantonal (BS)** — die Zeile «Kantonal verschieden? Nein.» unten betrifft nur die gesetzlichen Wege) und zum Vergleich den OKP-Beitrag für Grundpflege
+> (KLV Art. 7a Abs. 1 Bst. c, 52.60 CHF/h, Fedlex Stand 1.1.2026). Einen amtlichen Lohnsatz gibt es nicht.
+
 **Kantonal verschieden?** Nein.
 
 **In Maloja?** Ja: `src/i18n/de.js:88–89`, `src/PflegeAblauf.jsx:6`, `src/data/eoRechner.js`.

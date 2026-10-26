@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
+import { HilflosenRechner } from './HilflosenRechner.jsx';
 
 // Krankheit & IV — geführter Ablauf bei längerer Arbeitsunfähigkeit/Einschränkung.
 // Mit reduzierter Energie lesbar: Lohn & Taggeld, IV früh anmelden (Eingliederung vor
@@ -34,6 +35,12 @@ export const IvVerfahren = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('iv.step3Title'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('iv.step3Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('iv.step3Link'), onClick: () => onNavigate('ergaenzungsleistungen') })
+    ),
+    // Hilflosenentschädigung — eigener Schritt mit Rechner (auf «iv» zeigen die HE-Hinweise der
+    // Lebenssituationen; bis 26.10.2026 stand hier nichts dazu, die Links führten ins Leere).
+    React.createElement(AblaufStep, { palette, title: t('iv.stepHeTitle'), icon: 'ergaenzungsleistungen' },
+      React.createElement('p', { style: s.stepText }, t('iv.stepHeText')),
+      React.createElement(HilflosenRechner, { palette, t })
     ),
     React.createElement(AblaufStep, { palette, title: t('iv.step4Title') },
       React.createElement('p', { style: s.stepText }, t('iv.step4Text'))
