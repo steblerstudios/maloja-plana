@@ -125,8 +125,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate, eingebettet = f
     eigeneFranchise: parseFranchise(data?.versicherungen?.franchise),
     ersparnisse: data?.finanzen?.savingsAccount,
   }) : { art: 'offen' };
-  // Immer als Schätzung und mit dem Prämienjahr, kein «ab 1. Januar» (Rechts-Prüfung 25.09.2026:
-  // die Prämien fürs Folgejahr sind nicht drin).
+  // Immer als Schätzung und mit dem Prämienjahr (Rechts-Prüfung 25.09.2026). Seit 26.10.2026 ist das in der
+  // Wechselzeit (Ende September bis 31.12.) das Folgejahr — franchiseLaden.js rechnet dann mit dessen Prämien.
   const kreuzSub = vorschlag.art === 'passt' ? t(vorschlag.polster ? 'instrumente.kreuzPasstPolster' : 'instrumente.kreuzPasst')
     : vorschlag.art === 'wechsel' ? t(vorschlag.polster ? 'instrumente.kreuzWechselPolster' : 'instrumente.kreuzWechsel', { franchise: zahl(vorschlag.franchise), jahr: franchiseOpt?.praemienJahr || '' })
     : t('instrumente.tachoSub');

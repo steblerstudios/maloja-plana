@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { PflegeEntloehnung } from './PflegeEntloehnung.jsx';
+import { HilflosenRechner } from './HilflosenRechner.jsx';
 
 // Pflegende Angehörige — geführter Ablauf, der die oft übersehenen Ansprüche bündelt:
 // Betreuungsgutschrift (AHV, hebt die eigene Rente), Betreuungsentschädigung (EO,
@@ -31,10 +32,10 @@ export const PflegeAblauf = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('pflege.step2Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.step2Link'), onClick: () => onNavigate('eo') })
     ),
-    // Schritt 3 — Hilflosenentschädigung der gepflegten Person (finanziert Betreuung)
+    // Schritt 4 — Hilflosenentschädigung der gepflegten Person (finanziert Betreuung), mit Rechner
     React.createElement(AblaufStep, { palette, title: t('pflege.step3Title'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('pflege.step3Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.step3Link'), onClick: () => onNavigate('iv') })
+      React.createElement(HilflosenRechner, { palette, t })
     ),
     // Schritt 4 — Entlastung & Beratung: du musst es nicht allein tragen
     React.createElement(AblaufStep, { palette, title: t('pflege.step4Title') },

@@ -121,8 +121,9 @@ const EIGENNAMEN = new Set([
   'Excel (.xlsx)', 'Caritas-Markt', 'Volkszahnklinik', 'Volkshochschule beider Basel', 'Familienpass Region Basel',
   'FerienPass A-Welle (AG/SO)', 'Uri', 'Zug', 'Tessin', 'de',
 ]);
+// Ein- und Zweizeichen-Werte sind Codes (z. B. `hilflos.merkblattSprache: 'd'` — das AHV-Merkblatt gibt es nur d/f/i).
 const neutral = (v) =>
-  /^(https?:|tel:)/.test(v) || EIGENNAMEN.has(v) || !/\p{Ll}/u.test(v.replace(/\{[^}]*\}/g, ''));
+  v.length <= 2 || /^(https?:|tel:)/.test(v) || EIGENNAMEN.has(v) || !/\p{Ll}/u.test(v.replace(/\{[^}]*\}/g, ''));
 const rueckfaelle = blattListe(rm)
   .filter(([p, v]) => typeof v === 'string' && wert(de, p) === v && !neutral(v))
   .map(([p]) => p.join('.'));
