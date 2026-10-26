@@ -1802,6 +1802,7 @@ export default {
     markiert: 'non pertinente. Vale come completato.',
     // K38 · persona di contatto «non pertinente»
     keineKontaktperson: 'Nessuna persona di contatto registrata',
+    keineMedikamente: 'nessuno',
     notfallAnregung: { sie: 'Forse desidera chiedere a una persona di fiducia se vuole essere la Sua persona di contatto in caso di emergenza. Non c’è fretta.', du: 'Forse desideri chiedere a una persona di fiducia se vuole essere la tua persona di contatto in caso di emergenza. Non c’è fretta.' },
   },
   // E18 · «Eliminare tutti i dati su questo dispositivo» (lista O11)

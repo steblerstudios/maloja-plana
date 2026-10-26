@@ -1802,6 +1802,7 @@ export default {
     markiert: 'does not apply. Counts as done.',
     // K38 · emergency contact "does not apply"
     keineKontaktperson: 'No contact person on file',
+    keineMedikamente: 'none',
     notfallAnregung: { sie: 'Perhaps you would like to ask someone you trust whether they would be your contact person in an emergency. There is no hurry.', du: 'Perhaps you would like to ask someone you trust whether they would be your contact person in an emergency. There is no hurry.' },
   },
   // E18 · "Delete all data on this device" (build list O11)
