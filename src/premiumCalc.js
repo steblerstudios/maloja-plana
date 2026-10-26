@@ -22,11 +22,15 @@ const ipvErgebnisFuerDokument = (r, t) => {
   };
 };
 
+// Sprachkürzel der App (calendar.locale, z. B. «fr-CH»); ohne gültiges Kürzel de-CH.
+const appLocale = (t) => { const l = t ? t('calendar.locale') : ''; return /^[a-z]{2}-[A-Z]{2}$/.test(l) ? l : 'de-CH'; };
+
 export const buildIpvDokument = (data, t, ipvResult) => {
   const canton = (data && data.basis && data.basis.canton) || '';
   return {
     title: 'KVG IPV — Kantonal',
-    date: new Date().toLocaleDateString(),
+    // App-Sprache statt Gerätesprache (Seitenrundgang 26.10.2026, S3).
+    date: new Date().toLocaleDateString(appLocale(t)),
     canton,
     cantonName: getCantonName(canton, t),
     applicant: getFullName(data && data.basis) || '',
