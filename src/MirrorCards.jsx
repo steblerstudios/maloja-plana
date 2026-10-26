@@ -13,6 +13,7 @@ import { zivilstandLabel } from './utils/zivilstand.js';
 import { blutgruppeLabel } from './utils/blutgruppe.js';
 import { betrag } from './utils/geld.js';
 import { sumExpenses, sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
+import { hausarztName } from './utils/hausarzt.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -254,7 +255,7 @@ function buildBehoerdenSentence(data, t) {
 function buildNotfallSentence(data, t) {
   if (!data.emergencyContact) return null;
 
-  const hasDoctor = Boolean(data.doctor);
+  const hasDoctor = hausarztName(data) !== ''; // Liste oder altes Feld (D14)
   const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag'];
   const hasProvision = vorsorgeKeys.some(k => data[k] && data[k] !== 'no');
   // Medikamente und Erkrankungen stehen meist in der Liste (`…List`), nicht im alten Textfeld.

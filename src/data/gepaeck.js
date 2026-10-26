@@ -4,6 +4,7 @@
 // führen. Bewusst datenfrei und deterministisch: nur Struktur + Glyphen (SVG-Pfade),
 // keine React-Abhängigkeit, damit testbar. Der Baum und der Obstgarten bleiben
 // unberührt — das Gepäck ist eine eigene, zusätzliche Ansicht.
+import { hausarztName } from '../utils/hausarzt.js';
 
 // Glyph = Liste von SVG-path-`d`-Strings, gezeichnet als ruhige Outline (stroke).
 // viewBox aller Weg-Glyphen ist 0 0 24 24.
@@ -110,7 +111,7 @@ const CHECKS = {
   wohnen: (d) => [d?.wohnen?.address, d?.wohnen?.city || d?.wohnen?.postalCode, d?.wohnen?.rentAmount, d?.basis?.canton],
   arbeit: (d) => [d?.finanzen?.employer, d?.finanzen?.monthlyIncome, d?.finanzen?.employmentType, d?.ausbildung?.jobTitle],
   familie: (d) => [d?.basis?.maritalStatus, d?.basis?.household?.children, d?.finanzen?.familienzulagen, d?.finanzen?.alimenteReceived || d?.finanzen?.alimentePaid],
-  gesundheit: (d) => [d?.versicherungen?.kkInsurer, d?.versicherungen?.franchise, d?.versicherungen?.kkPremium, d?.notfall?.doctor],
+  gesundheit: (d) => [d?.versicherungen?.kkInsurer, d?.versicherungen?.franchise, d?.versicherungen?.kkPremium, hausarztName(d?.notfall)],
   alter: (d) => [d?.versicherungen?.bvgInsurer, d?.finanzen?.pension3a, d?.versicherungen?.bvgBalance, d?.vorsorge?.ikAuszug],
   abschied: (d) => [d?.behoerden?.willMade, d?.notfall?.patientenverfuegung, d?.notfall?.vorsorgeauftrag, d?.notfall?.organDonor === 'undecided' ? '' : d?.notfall?.organDonor],
   // Steuern, Haushaltsbudget, Sparziel, Bankverbindung — was die Geld-Werkzeuge lesen.

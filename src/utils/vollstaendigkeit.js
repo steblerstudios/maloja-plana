@@ -4,6 +4,7 @@
 // `data[kapitel]._na` — rein additiv: alte Daten ohne das Feld lesen sich wie
 // «nichts markiert», und `_`-Schlüssel gelten im Export als Verwaltungsfeld.
 // Eine Quelle für Dashboard und Kopfzeile, damit beide gleich zählen.
+import { hausarztName, hausarztTelefon } from './hausarzt.js';
 
 export const NA_FELD = '_na';
 
@@ -26,6 +27,10 @@ export const feldHatWert = (d, k) => {
   if (v === 0 && Array.isArray(posten)) return posten.some((r) => r && hatWert(r.amount));
   // Listen-Felder (Medikamente, Vorerkrankungen, Sprachen) speichern die Einträge in `<k>List`; das Textfeld
   // bleibt dabei leer. Ein Eintrag mit Namen zählt (Abnahme F6, 25.10.2026: Medikamente zählten sonst nie).
+  // Ärztinnen und Ärzte stehen in `doctorsList` (Mehrzahl), nicht in `doctorList` — die Regel oben griff dort nie
+  // (Seitenrundgang 26.10.2026, D14). Hausarzt und Telefon wie in allen Ausgängen aus utils/hausarzt.js.
+  if (k === 'doctor') return hausarztName(d) !== '';
+  if (k === 'doctorPhone') return hausarztTelefon(d) !== '';
   const eintraege = d[k + 'List'];
   if (Array.isArray(eintraege) && eintraege.some((r) => r && hatWert(r.name))) return true;
   return hatWert(v);
