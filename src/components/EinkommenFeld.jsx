@@ -34,10 +34,10 @@ export function useEinkommen(data) {
   const [betrag, setBetrag] = useState(bekannt && profilWert ? String(profilWert) : '');
   const [art, setArt] = useState(typ === 'brutto' ? 'brutto' : 'netto');
   // Alter und Rentenalter: dieselbe Regel wie die Sozialhilfe-Schnellrechnung (utils/nettoAusProfil.js).
-  const { alter, rentenalter } = alterUndRentenalter(data?.basis);
+  const { alter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
   const zahlWert = Math.max(0, Number(betrag) || 0);
-  const nettoMonat = art === 'netto' ? zahlWert : bruttoZuNettoRichtwert(zahlWert, alter, rentenalter);
-  const gegenwert = zahlWert > 0 ? (art === 'netto' ? nettoZuBruttoRichtwert(zahlWert, alter, rentenalter) : nettoMonat) : 0;
+  const nettoMonat = art === 'netto' ? zahlWert : bruttoZuNettoRichtwert(zahlWert, alter, rentenalter, undefined, beitragsfrei);
+  const gegenwert = zahlWert > 0 ? (art === 'netto' ? nettoZuBruttoRichtwert(zahlWert, alter, rentenalter, undefined, beitragsfrei) : nettoMonat) : 0;
   return {
     betrag, setBetrag, art, setArt, alter, ohneAlter: alter == null, nettoMonat, gegenwert,
     geschaetzt: art === 'brutto' && zahlWert > 0,
