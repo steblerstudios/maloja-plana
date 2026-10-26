@@ -17,6 +17,25 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> ✅ **Nachtrag 26.10.2026, 17:50 — #611 und #609 gemergt (Sophie: «ja dann lass und comitten mergen pushen usw
+> was wir alles können»). NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 17:50): main = `758da6c7` (26.10. 17:37) · live = `4299bfb9` (0.1.48-beta,
+> gebaut 23.10. 18:08, `sauber: false`) · **138 Commits** zwischen live und main · offene PRs: #614, #613, #612, #610,
+> #563, #561 (alle Entwurf, nicht aus dieser Sitzung).
+> - **#611 `5137320c`** Patch-Updates gegen 6 npm-audit-Meldungen: Capacitor 8.4.1 → 8.4.3 (kritisch, GHSA-rvm3-566m-v7fv),
+>   vite 7.3.7, vitest 4.1.12, zod 4.6.7, source-map-js 1.2.2. `npm audit` 6 → **0**. Alles dev, React und three unverändert.
+>   **Die iOS-App bezieht Capacitor über Swift PM** (`ios/App/CapApp-SPM/Package.swift`, `exact:`): die Zeile steht jetzt
+>   auf 8.4.3. In der App wirkt das erst mit einem neuen iOS-Build, der noch aussteht.
+> - **#609 `758da6c7`** Beta-Feedback: Der Knopf hiess «Feedback senden» und schickte nichts. Jetzt «Als E-Mail vorbereiten»
+>   mit Vorschau, «Text kopieren» und ehrlichem Dank. Auf dem Gerät bleibt nur der Merker `or5_beta_feedback = done`.
+>   Mail-Knopf nicht scharf geklickt. rm-Texte provisorisch (`TODO(rm)`).
+> - **Geprüft:** beide zusammen vor dem Merge und `main` nach dem Merge, je frisch mit `npm ci`: 7091 Tests grün (zweiter
+>   Lauf), Lint 0, Audit 0, Build ok, **64,53 von 65 kB, nur 0,47 kB Reserve**.
+> - **Merker:** `ipvVaud.test.js` und `geldEineQuelle.test.js` brauchen auch einzeln rund 5,0–5,1 s und kippen je nach Last
+>   über das Test-Zeitlimit. «sauber: false» vom 23.10. kam von der unversionierten `ipv_rechner_28.html`, weil der Stash
+>   vor dem Deploy ohne `-u` lief. Am 29.10. aus frischem Worktree von `main` deployen oder `git stash -u`.
+
 > ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Sophie: «Ja, merge die Entwurfs-PRs in der festgehaltenen
 > Reihenfolge … Nichts erzwingen, kein Deploy»). NICHT live.**
 >
