@@ -53,7 +53,7 @@ export const NotfallpassBlatt = ({ palette, t, data, chapters, onNavigate }) => 
     offen: { fontSize: text.sm, color: palette.mid, fontStyle: 'italic' },
     knopf: {
       flexShrink: 0, cursor: 'pointer', fontFamily: 'inherit', background: 'none',
-      border: '1px solid ' + palette.border, borderRadius: radius.sm, minHeight: '36px',
+      border: '1px solid ' + palette.border, borderRadius: radius.sm, minHeight: '44px',
       padding: '6px 12px', fontSize: text.sm, color: palette.text,
     },
     knopfOk: { color: palette.sageDeep || palette.text },

@@ -274,7 +274,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
             'aria-label': r.done ? t('calendar.undo') : t('calendar.markDone'),
             onClick: () => toggleDone(r.id),
             style: {
-              padding: '6px 10px', background: r.done ? palette.gold : palette.sageBtn,
+              padding: '6px 10px', minWidth: '44px', minHeight: '44px', background: r.done ? palette.gold : palette.sageBtn,
               color: r.done ? palette.onSand : '#fff', border: 'none', borderRadius: radius.xs,
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
@@ -283,7 +283,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
             'aria-label': t('common.delete'),
             onClick: () => deleteReminder(r.id),
             style: {
-              padding: '6px 10px', background: palette.roseBtn,
+              padding: '6px 10px', minWidth: '44px', minHeight: '44px', background: palette.roseBtn,
               color: '#fff', border: 'none', borderRadius: radius.xs,
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
@@ -389,7 +389,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   const gWoche = gruppe(d => d > today && daysBetween(today, d) <= 7);
   const gSpaeter = gruppe(d => d > today && daysBetween(today, d) > 7);
 
-  const knopfRuhig = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', minHeight: '32px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' };
+  const knopfRuhig = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', minHeight: '44px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit' };
   const reiter = (aktiv) => ({ flex: 1, padding: '10px 12px', minHeight: '44px', background: aktiv ? palette.surface : 'none', color: palette.text, border: '1px solid ' + (aktiv ? palette.sand : 'transparent'), borderRadius: radius.sm, cursor: 'pointer', font: 'inherit', fontSize: text.sm, fontWeight: aktiv ? weight.semi : weight.normal });
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
@@ -499,7 +499,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
         ),
         // Ganzer Monat — das bisherige Monatsraster, aufklappbar
         React.createElement('details', { style: { marginTop: space.sm + 'px' }, open: verteilen ? true : undefined },
-          React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, minHeight: '32px', display: 'flex', alignItems: 'center' } }, t('calendar.ganzerMonat')),
+          React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.text, minHeight: '44px', display: 'flex', alignItems: 'center' } }, t('calendar.ganzerMonat')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', margin: space.sm + 'px 0 ' + space.xs + 'px' } },
             ...wdNames.map((w, i) => React.createElement('div', { key: i, style: { textAlign: 'center', fontSize: text.xs, color: palette.mid } }, w))
           ),

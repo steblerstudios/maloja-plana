@@ -115,7 +115,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
       onClick: () => onNavigate('dashboard'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
+        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0', minHeight: '44px',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
     }, zurueckZeichen(), t('common.back')),
