@@ -110,7 +110,8 @@ export const BVG_GUTSCHRIFTEN = [
   { von: 55, bis: 65, satz: 18 },
 ];
 
-// BVG-Altersgutschrift-Satz (% des koordinierten Lohns) für ein Alter (Art. 16 BVG).
+// BVG-Altersgutschrift-Satz (% des koordinierten Lohns) für ein Alter (Art. 16 BVG). Das Alter ist das nach BVV 2
+// Art. 13 (Kalenderjahr minus Geburtsjahr) — die Aufrufer geben `bvgAlter` aus alterUndRentenalter (seit 26.10.2026).
 // Unter 25 / über 65: keine obligatorischen Sparbeiträge → 0.
 export function bvgAltersgutschriftSatz(alter) {
   const a = Number(alter);
