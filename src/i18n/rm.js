@@ -512,7 +512,8 @@ export default {
       resultLabel: 'Indemnisaziun pussaivla (brutto)',
       month: 'mais',
       year: 'onn',
-      rateNote: 'quintà cun ca. CHF 37.90/ura (pflegewegweiser.ch, 09.2026)',
+      rateNote: 'Spanna da {von} fin {bis} CHF per ura: quai survegnivan confamigliars che tgiran fin ussa per regla tenor la regenza da Basilea-Citad (communicaziun 16.12.2025). I n’exista nagin salari uffizial.',
+      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF {betrag} per ura (KLV art. 7a al. 1 lit. c). Quai è la contribuziun a l’organisaziun, betg il salari.',
       zuschlaege: 'Per intervents la saira, la fin d’emna u la notg èn supplements pussaivels tut tenor l’organisaziun.',
       disclaimer: 'Orientaziun nunliand. Il salari real dependa da l’organisaziun che engascha e dal chantun — betg ina tariffa garantida.',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

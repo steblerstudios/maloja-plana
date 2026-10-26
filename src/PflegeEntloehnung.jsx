@@ -7,20 +7,30 @@ import { zahl } from './utils/geld.js';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
 // (Spitex-nahen) Organisationen angestellt und für ihre Pflege entlöhnt werden.
-// Bewusst UNVERBINDLICH — der Anker CHF 37.90/h ist ein Anbieter-Richtwert
-// (pflegewegweiser.ch), kein gesetzlicher Tarif. Der reale Lohn hängt von der
-// anstellenden Organisation und vom Kanton ab. Keine Rechtsberatung.
-const STUNDENSATZ = 37.90;        // CHF/h, Richtwert
+// Bewusst UNVERBINDLICH. Einen amtlichen Lohnsatz gibt es nicht — den Lohn legt die
+// anstellende Organisation fest. Darum eine SPANNE statt einer Zahl.
+//
+// Spanne 30–40 CHF/h: Regierungsrat Basel-Stadt, Medienmitteilung vom 16.12.2025 («Basel-Stadt
+// führt Tarif für Angehörigenpflege ein»): pflegende Angehörige erhielten bisher «üblicherweise
+// 30 bis 40 Franken pro Stunde». Eine amtliche Beobachtung, keine Vorgabe; gelesen 26.10.2026.
+// Vergleich 52.60 CHF/h: Beitrag der Krankenversicherung an die Organisation für Grundpflege,
+// KLV Art. 7a Abs. 1 Bst. c (Fedlex, Stand 1.1.2026) — das erhält die Organisation, nicht der Lohn.
+// Bis 26.10.2026 stand hier CHF 37.90/h, der Satz eines privaten Anbieters (pflegewegweiser.ch).
+// Keine Rechtsberatung.
+export const LOHN_SPANNE = Object.freeze({ von: 30, bis: 40 }); // CHF/h
+export const OKP_GRUNDPFLEGE_PRO_STUNDE = 52.60;                // CHF/h, KLV Art. 7a Abs. 1 Bst. c
 const WOCHEN_PRO_MONAT = 4.33;    // 52/12
 
-// O3 — Ergebnis-Art: ORIENTIERUNG. Der Stundensatz ist ein Anbieter-Richtwert, kein amtlicher
-// Tarif; gerechnet wird nicht nach einer Regel der Stelle, die den Lohn festlegt. Es fehlt nie
-// eine Angabe (der Regler hat immer einen Wert).
+// O3 — Ergebnis-Art: ORIENTIERUNG. Die Spanne ist eine amtliche Beobachtung aus einem Kanton,
+// kein Tarif; gerechnet wird nicht nach einer Regel der Stelle, die den Lohn festlegt. Es fehlt
+// nie eine Angabe (der Regler hat immer einen Wert).
 export const PFLEGE_ENTLOEHNUNG_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 
 export const PflegeEntloehnung = ({ palette, t }) => {
   const [stunden, setStunden] = useState(14);
-  const brutto = Math.round(stunden * WOCHEN_PRO_MONAT * STUNDENSATZ);
+  const monat = (satz) => Math.round(stunden * WOCHEN_PRO_MONAT * satz);
+  const von = monat(LOHN_SPANNE.von);
+  const bis = monat(LOHN_SPANNE.bis);
   const fmt = (v) => zahl(v);
 
   const s = {
@@ -52,9 +62,11 @@ export const PflegeEntloehnung = ({ palette, t }) => {
       React.createElement('span', null, '1'), React.createElement('span', null, '40')),
     React.createElement('div', { style: s.result },
       React.createElement('div', { style: s.resultLabel }, t('pflege.entl.resultLabel')),
-      React.createElement('div', { style: s.big }, 'CHF ' + fmt(brutto) + ' / ' + t('pflege.entl.month')),
-      React.createElement('div', { style: s.sub }, '≈ CHF ' + fmt(brutto * 12) + ' / ' + t('pflege.entl.year') + ' · ' + t('pflege.entl.rateNote'))
+      React.createElement('div', { style: s.big }, 'CHF ' + fmt(von) + ' – ' + fmt(bis) + ' / ' + t('pflege.entl.month')),
+      React.createElement('div', { style: s.sub }, '≈ CHF ' + fmt(von * 12) + ' – ' + fmt(bis * 12) + ' / ' + t('pflege.entl.year')),
+      React.createElement('div', { style: s.sub }, t('pflege.entl.rateNote', { von: LOHN_SPANNE.von, bis: LOHN_SPANNE.bis }))
     ),
+    React.createElement('div', { style: s.note }, t('pflege.entl.vergleich', { betrag: OKP_GRUNDPFLEGE_PRO_STUNDE.toFixed(2) })),
     React.createElement(ErgebnisArt, { palette, t, ergebnis: PFLEGE_ENTLOEHNUNG_ERGEBNIS }),
     React.createElement('div', { style: s.note }, t('pflege.entl.zuschlaege')),
     React.createElement('div', { style: s.note }, t('pflege.entl.disclaimer')),
