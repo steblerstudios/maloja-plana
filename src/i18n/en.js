@@ -1324,7 +1324,7 @@ export default {
       contact: 'Who should be contacted first? A name and phone number are enough to start.',
       medical: 'What doctors and paramedics should know about you in an emergency.',
       care: 'Your family doctor and preferred hospital — so this information is findable when needed.',
-      provision: 'Three documents protect you and your family: the patient decree covers medical decisions (ZGB Art. 370). The advance care directive appoints someone to act on your behalf if you lose capacity (ZGB Art. 360). The advance care directive must be entirely handwritten or publicly notarised (ZGB Art. 361); the patient decree only needs to be written, dated and signed — a template is enough (ZGB Art. 371). Once done — filed for good.',
+      provision: 'Two documents protect you and your family: the patient decree covers medical decisions (ZGB Art. 370). The advance care directive appoints someone to act on your behalf if you lose capacity (ZGB Art. 360). The advance care directive must be entirely handwritten or publicly notarised (ZGB Art. 361); the patient decree only needs to be written, dated and signed — a template is enough (ZGB Art. 371). Once done — filed for good.',
     },
   },
   itemized: {
