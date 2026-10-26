@@ -122,7 +122,7 @@ export function bvgAltersgutschriftSatz(alter) {
 
 // Grober Brutto-RICHTWERT aus einem Netto-Monatslohn (inkl. geschätzter PK/BVG).
 // Kehrt die fixen Arbeitnehmer-Abzüge um: AHV/IV/EO 5.3 % + ALV 1.1 % = 6.4 %
-// (Quelle BSV/AHV-IV 2025) PLUS die BVG-Altersgutschrift nach Alter (Art. 16 BVG),
+// (Merkblätter 2.01 und 2.08, Belege bei abzuegeRichtwertMonat unten) PLUS die BVG-Altersgutschrift nach Alter (Art. 16 BVG),
 // als ~halber Arbeitnehmer-Anteil auf dem koordinierten Lohn und erst über der
 // Eintrittsschwelle (CHF 22'680/Jahr, ab 2027 23'040). NICHT enthalten: Steuern, NBU-Prämie,
 // überobligatorische PK-Pläne — der PK-Anteil variiert nach Kasse. Bleibt darum
