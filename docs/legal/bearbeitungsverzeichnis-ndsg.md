@@ -32,7 +32,7 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Zweck** | Selbstorganisation: Verwaltung persönlicher Informationen zu Leben, Wohnen, Finanzen, Versicherungen, Behördengängen und Notfallplanung in der Schweiz |
 | **Kategorien betroffener Personen** | Nutzende der Webanwendung (Immigrant:innen, Geflüchtete, Expats in der Schweiz) |
 | **Kategorien von Personendaten** | Name, Geburtsdatum, Adresse, Telefon, E-Mail, Zivilstand, Wohnsituation, Mietkosten, Einkommen, Versicherungsdaten, Haushaltszusammensetzung |
-| **Besonders schützenswerte Daten** | Möglich: Gesundheitsdaten (Medikamente, Organspende), Daten zu Sozialhilfemassnahmen, religiöse Überzeugungen (nur wenn freiwillig eingegeben) |
+| **Besonders schützenswerte Daten** | Möglich: Gesundheitsdaten (Medikamente, Allergien, chronische Erkrankungen, Blutgruppe, Ärztinnen und Ärzte mit Fachrichtung, Organspende, Patientenverfügung), Daten zu Sozialhilfemassnahmen, religiöse Überzeugungen (nur wenn freiwillig eingegeben) |
 | **Speicherort** | Browser-localStorage auf dem Endgerät: `or5_data` (Stammdaten), `or5_contacts` (Kontakte), `or5_merkliste` (Merkliste), `or5_beta_access` (Beta-Zugang, nur UI-Hürde), `or5_lang` / `or5_theme` / `or5_onboarding_done` (Einstellungen). Belege: `src/main.jsx` Z. 416, `src/utils/backupCrypto.js` Z. 57–67, `src/MerklisteView.jsx` Z. 10, `src/BetaGate.jsx` Z. 15, `src/Onboarding.jsx` Z. 17. In `or5_data` steht je Kapitel optional die Liste `_na` der als «trifft nicht zu» markierten Feldnamen (`src/utils/vollstaendigkeit.js` Z. 4–8), ohne weitere Angaben |
 | **Empfänger** | Keine — Daten verlassen das Gerät nicht |
 | **Übermittlung ins Ausland** | Keine |

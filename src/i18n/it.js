@@ -1335,6 +1335,9 @@ export default {
     remove: 'Rimuovi voce',
   },
   common: {
+    clear: 'Cancella la ricerca',
+    anredeLabel: 'Forma di cortesia: {form}',
+    anredeTooltip: 'Forma di cortesia: {formell} / {informell}',
     betraegeVerordnung: 'Importi {jahr}: [[ordinanza del {datum}|https://www.fedlex.admin.ch/{eli}/it]].',
     qrFehler: 'Al momento non è stato possibile generare il codice QR.',
     qrErstellt: "Codice QR creato.",
@@ -1943,7 +1946,7 @@ export default {
     highlightIpv: 'Verifica riduzione premi',
     highlightIpvSub: { sie: 'Dipende da cantone e reddito — li inserisce entrambi direttamente nel calcolatore.', du: 'Dipende da cantone e reddito — li inserisci entrambi direttamente nel calcolatore.' },
     highlightSozialhilfe: 'Orientamento assistenza sociale',
-    highlightSozialhilfeSub: { sie: 'CHF 1’061/mese fabbisogno base (1 persona) — dove si trova?', du: 'CHF 1’061/mese fabbisogno base (1 persona) — dove ti trovi?' },
+    highlightSozialhilfeSub: { sie: 'CHF {betrag}/mese fabbisogno base (1 persona) — dove si trova?', du: 'CHF {betrag}/mese fabbisogno base (1 persona) — dove ti trovi?' },
     highlightNotfall: 'Preparazione all’emergenza',
     highlightNotfallSub: 'Scheda d’emergenza, scheda medica d’emergenza e previdenza in un solo luogo.',
     highlightPrivacy: { sie: 'Dati inseriti sul Suo dispositivo', du: 'Dati inseriti sul tuo dispositivo' },
@@ -3142,6 +3145,7 @@ export default {
   },
 
   tax: {
+    abzuegeGeschaetzt: 'Deduzioni (stima)',
     title: 'Orientamento fiscale',
     intro: { sie: 'Questa panoramica Le offre una stima approssimativa del Suo carico fiscale — come orientamento, non come consulenza fiscale. Può provare diverse deduzioni e vedere come cambia la Sua situazione.', du: 'Questa panoramica ti offre una stima approssimativa del tuo carico fiscale — come orientamento, non come consulenza fiscale. Puoi provare diverse deduzioni e vedere come cambia la tua situazione.' },
     inputs: 'Dati',
@@ -4030,6 +4034,7 @@ export default {
     },
   },
   budgetImport: {
+    importFailed: 'L’importazione non è riuscita. Controllare il file e riprovare.',
     title: 'Importazione budget',
     fileFormat: 'Formato file',
     csv: 'CSV (separato da virgola)',
@@ -5080,6 +5085,7 @@ export default {
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
+    nicelyDone: 'Fatto',
     aufgabe: 'Compito',
     ausMerkliste: 'dal promemoria',
     ganzerMonat: 'Tutto il mese',
@@ -5466,11 +5472,14 @@ export default {
     sectionContact: 'Contatto di emergenza',
     sectionMedical: 'Dati medici',
     sectionCare: 'Cure mediche',
+    weitereAerzte: 'Altri medici',
     sectionProvision: 'Disposizioni personali',
     sectionInsurance: 'Assicurazione',
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
     qrTitle: 'QR d’emergenza per i soccorritori',
-    qrHint: 'Leggibile con qualsiasi smartphone — il codice contiene solo testo, nessun link. Non è cifrato: chiunque lo scansioni può leggere tutte le indicazioni che contiene. Per portarlo con sé, fare uno screenshot o stampare questa pagina. Durante la scansione, il telefono propone spesso di salvare le indicazioni come contatto — finiscono così nella rubrica di chi scansiona.',
+    qrAnzeigen: 'Mostra il QR',
+    qrAusblenden: 'Nascondi il QR',
+    qrHint: 'Leggibile con qualsiasi smartphone — il codice contiene solo testo, nessun link. Non è cifrato: chiunque lo scansioni può leggere tutte le indicazioni che contiene. Per portarlo con sé, mostrare il codice, poi fare uno screenshot o stampare questa pagina. Durante la scansione, il telefono propone spesso di salvare le indicazioni come contatto — finiscono così nella rubrica di chi scansiona.',
     qrGekuerzt: 'Il codice QR contiene una versione abbreviata: non tutte le indicazioni ci stanno e alla fine il codice indica cosa manca. Per intero figurano solo nel dossier qui sotto.',
     qrNichtEnthalten: 'Non incluso, vedi il dossier',
     qrFehler: 'Non è stato possibile generare il codice QR. Tutte le indicazioni figurano per intero nel dossier qui sotto.',
@@ -6556,6 +6565,8 @@ export default {
     nebenOffen: 'Nel profilo non è indicato se il reddito accessorio è lordo o netto — per questo non viene conteggiato. Aggiungere qui l’importo netto.',
   },
   sh: {
+    gblNichtBelegt: 'Il forfait per il mantenimento è verificato in questa app secondo le direttive COSAS per il {jahr}. Un eventuale adeguamento per il {laufend} non è ancora registrato; il cantone può inoltre discostarsene. Il calcolo usa il {jahr}. Informa il servizio sociale.',
+    gblStandKurz: 'forfait per il mantenimento stato {jahr}',
     title: 'Calcolatore aiuto sociale',
     haushalt: 'Dimensione dell\'economia domestica',
     erwachsene: 'Adulti',
@@ -6604,7 +6615,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
-    source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali (salvo le spese dovute al lavoro inserite) e differenze cantonali, anche per la franchigia sul reddito. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
+    source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.{jahr}), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali (salvo le spese dovute al lavoro inserite) e differenze cantonali, anche per la franchigia sul reddito. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
   },
 
   dl: {
@@ -6787,6 +6798,7 @@ export default {
     anspruchValue: "{n} indennità giornaliere (≈ {m} mesi)",
     anspruchUnklar: "Con meno di 12 mesi di contribuzione negli ultimi due anni di norma nessun diritto. Esistono eccezioni: chi deve cercare un lavoro a causa di separazione, divorzio, invalidità o decesso del coniuge (anche in unione domestica registrata) e allora abitava in Svizzera può essere esonerato dal periodo di contribuzione — fino a 90 indennità giornaliere, se l’evento risale al massimo a un anno (LADI art. 14 cpv. 2, art. 27 cpv. 4). Altri esoneri valgono p. es. dopo una formazione, una malattia o la soppressione di una rendita AI. La cassa di disoccupazione lo verifica.",
     gedeckeltHint: "I guadagni superiori a CHF {max}/mese sono limitati al massimo.",
+    satz80NichtBelegt: "L’importo limite per l’aliquota dell’80 % (CHF {betrag} al mese) è verificato in questa app sulle fonti ufficiali per il {jahr}. Un eventuale adeguamento del DEFR per il {laufend} non è ancora registrato. Il calcolo vincolante spetta alla cassa di disoccupazione.",
     disclaimer: { sie: 'Orientamento senza garanzia. L\'URC / la cassa di disoccupazione calcola l\'importo vincolante, a seconda della Sua situazione.', du: 'Orientamento senza garanzia. L\'URC / la cassa di disoccupazione calcola l\'importo vincolante, a seconda della tua situazione.' },
     ravTitle: { sie: 'Dove annunciarsi', du: 'Dove annunciarti' },
     ravBody: { sie: 'Si annunci all\'URC (ufficio regionale di collocamento) il prima possibile — idealmente il primo giorno di disoccupazione. Il diritto non inizia retroattivamente.', du: 'Annunciati all\'URC (ufficio regionale di collocamento) il prima possibile — idealmente il primo giorno di disoccupazione. Il diritto non inizia retroattivamente.' },

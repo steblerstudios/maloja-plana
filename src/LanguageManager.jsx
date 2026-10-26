@@ -53,7 +53,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
         ),
         React.createElement('button', {
           onClick: () => removeLang(idx),
-          'aria-label': t('common.delete') || 'Entfernen',
+          'aria-label': t('common.delete'),
           style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 6px' }
         }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
       )

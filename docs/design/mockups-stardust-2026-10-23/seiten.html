@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maloja Seitenarten</title>
+<style>
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 600; src: url(hanken-grotesk-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 700; src: url(hanken-grotesk-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 400; src: url(lexend-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 500; src: url(lexend-latin-500-normal.woff2) format('woff2'); }
+
+/* Farben aus src/config/constants.js, Bereichsfarben aus src/data/lebensbereiche.js */
+:root, :root[data-theme="dark"] {
+  --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39;
+  --text: #E6E3DC; --mid: #9CA0A6; --soft: #989CA4; --sand: #C4A06A; --onSand: #2A2620; --sage: #7E9F8C;
+  --finanzen: #D2B77E; --wohnen: #9DBA6A; --versicherungen: #86A6C2; --basis: #7E9F8C;
+  --nebel: rgba(34,33,31,.0);
+}
+:root[data-theme="light"] {
+  --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6;
+  --text: #24262A; --mid: #5E6167; --soft: #5A5D63; --sand: #C4A06A; --onSand: #2A2620; --sage: #5A7868;
+  --finanzen: #7C6428; --wohnen: #6C8343; --versicherungen: #4A6A88; --basis: #5A7868;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Lexend', sans-serif; font-size: 15px; line-height: 1.5; }
+h1, h2, h3, .anzeige { font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; letter-spacing: -.01em; }
+button { font: inherit; }
+
+.kopf { max-width: 1280px; margin: 0 auto; padding: 32px 16px 8px; }
+.kopf h1 { font-size: 28px; margin: 0 0 6px; }
+.kopf p { color: var(--mid); margin: 0; max-width: 76ch; }
+.leiste { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.pill { border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 13px; padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.pill[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.regeln { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; }
+.regeln ol { margin: 8px 0 0; padding-left: 20px; color: var(--mid); font-size: 14px; max-width: 80ch; }
+.regeln li { margin-bottom: 4px; }
+.regeln b { color: var(--text); font-weight: 500; }
+
+.abschnitt { max-width: 1280px; margin: 0 auto; padding: 32px 16px; border-top: 1px solid var(--border); margin-top: 24px; }
+.abschnitt > h2 { font-size: 21px; margin: 0 0 4px; }
+.abschnitt > .warum { color: var(--mid); margin: 0 0 20px; max-width: 80ch; font-size: 14px; }
+.paar { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 32px; align-items: start; }
+@media (max-width: 760px) { .paar { grid-template-columns: 1fr; } }
+.label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); margin-bottom: 8px; }
+.label b { color: var(--sage); font-weight: 500; }
+.foto { width: 100%; max-width: 340px; border-radius: 24px; overflow: hidden; border: 1px solid var(--border); }
+.foto img { display: block; width: 100%; }
+.notiz { font-size: 13px; color: var(--mid); margin: 12px 2px 0; max-width: 70ch; }
+.notiz ul { padding-left: 18px; margin: 6px 0 0; }
+.notiz li { margin-bottom: 4px; }
+
+/* Geräterahmen: Handy 390, Desktop 1040 */
+.geraet { width: 390px; max-width: 100%; border-radius: 28px; border: 1px solid var(--border); background: var(--bg); overflow: hidden; }
+body.desktop .geraet { width: 100%; max-width: 1040px; border-radius: 16px; }
+.appkopf { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.appkopf .name { font-family: 'Hanken Grotesk'; font-weight: 700; font-size: 16px; display: flex; gap: 8px; align-items: center; }
+.appkopf .name i { width: 22px; height: 22px; border-radius: 6px; background: var(--sage); display: block; }
+.appkopf .knopf { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); }
+
+/* ---------- Gemeinsamer Seitenkopf ---------- */
+.seite { position: relative; }
+.band { height: 92px; background: url(landschaft.webp) center 72% / cover; position: relative; opacity: .55; }
+.band::after { content: ''; position: absolute; inset: 0 0 -1px 0; background: linear-gradient(to bottom, transparent 10%, var(--bg)); }
+body.desktop .band { height: 120px; }
+.innen { padding: 0 20px 28px; margin-top: -44px; position: relative; }
+body.desktop .innen { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 48px; padding: 0 48px 40px; margin-top: -56px; align-items: start; }
+body.desktop .links { position: sticky; top: 16px; }
+.krume { font-size: 13px; color: var(--mid); margin-bottom: 14px; display: flex; gap: 6px; align-items: center; }
+.krume span { color: var(--soft); }
+.titelzeile { display: flex; gap: 14px; align-items: center; margin-bottom: 8px; }
+.sym { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; }
+.titelzeile h3 { font-size: 28px; line-height: 1.1; margin: 0; overflow-wrap: break-word; hyphens: auto; min-width: 0; }
+.satz { color: var(--mid); margin: 0 0 22px; }
+
+/* Das eine Objekt je Seite */
+.held { padding: 20px 0 22px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+.held .klein { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); }
+.held .gross { font-family: 'Hanken Grotesk'; font-weight: 700; font-size: 40px; line-height: 1.05; letter-spacing: -.02em; margin: 6px 0 8px; }
+.held .unter { color: var(--mid); font-size: 14px; margin: 0; }
+.balken { height: 10px; border-radius: 5px; background: var(--up); overflow: hidden; display: flex; margin: 14px 0 8px; }
+.balken i { display: block; height: 100%; }
+.legende { display: flex; justify-content: space-between; font-size: 12px; color: var(--soft); }
+.knopfprim { border: 0; border-radius: 999px; background: var(--sand); color: var(--onSand); font-weight: 500; padding: 12px 20px; min-height: 44px; cursor: pointer; }
+.knopfgeist { border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text); padding: 10px 18px; min-height: 44px; cursor: pointer; }
+
+/* Gruppen statt Kasten im Kasten */
+.gruppe { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.gruppe b { font-weight: 500; }
+.gruppe small { color: var(--soft); grid-column: 1; }
+.gruppe .pfeil { color: var(--soft); grid-row: 1 / span 2; grid-column: 2; }
+.ruhig { font-size: 14px; color: var(--mid); margin: 18px 0 0; display: flex; gap: 10px; }
+.ruhig a { color: var(--sand); text-decoration: none; }
+.ruhig .punkt { width: 6px; height: 6px; border-radius: 50%; background: var(--sand); margin-top: 8px; flex-shrink: 0; }
+
+/* Rechner */
+.lage { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 18px; }
+.lage span { border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+.lage button { background: none; border: 0; color: var(--sand); font-size: 13px; cursor: pointer; padding: 6px 4px; min-height: 32px; }
+details { border-bottom: 1px solid var(--border); padding: 14px 0; }
+summary { cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; }
+summary::after { content: '+'; color: var(--soft); }
+details[open] summary::after { content: '–'; }
+details p { color: var(--mid); font-size: 14px; margin: 10px 0 0; }
+
+/* Ablauf als Weg */
+.fortschritt { font-size: 13px; color: var(--soft); margin-bottom: 10px; }
+.fortschritt .linie { height: 4px; border-radius: 2px; background: var(--up); margin-top: 6px; overflow: hidden; }
+.fortschritt .linie i { display: block; height: 100%; width: 33%; background: var(--wohnen); }
+.weg { position: relative; padding-left: 34px; }
+.weg::before { content: ''; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: var(--border); }
+.halt { position: relative; padding: 10px 0 18px; }
+.halt .marke { position: absolute; left: -34px; top: 10px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; background: var(--bg); border: 2px solid var(--border); color: var(--soft); }
+.halt.fertig .marke { background: var(--wohnen); border-color: var(--wohnen); color: var(--bg); }
+.halt.jetzt .marke { border-color: var(--wohnen); color: var(--wohnen); box-shadow: 0 0 0 4px color-mix(in srgb, var(--wohnen) 22%, transparent); }
+.halt h4 { margin: 0; font-size: 16px; font-weight: 500; }
+.halt.jetzt h4 { font-family: 'Hanken Grotesk'; font-weight: 700; font-size: 22px; }
+.halt small { color: var(--soft); font-size: 13px; }
+.wahl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.wahl button { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); padding: 12px; text-align: left; font-size: 14px; cursor: pointer; min-height: 44px; }
+.wahl button.voll { grid-column: 1 / -1; }
+.wahl button[aria-pressed="true"] { border-color: var(--wohnen); background: color-mix(in srgb, var(--wohnen) 14%, var(--surface)); }
+.halt p { color: var(--mid); font-size: 14px; margin: 6px 0 0; }
+
+/* Ablage */
+.leer { text-align: center; padding: 28px 8px 8px; }
+.leer .bild { width: 120px; height: 96px; margin: 0 auto 16px; border-radius: 24px; display: grid; place-items: center; }
+.leer h4 { font-family: 'Hanken Grotesk'; font-size: 22px; margin: 0 0 6px; }
+.leer p { color: var(--mid); margin: 0 auto 18px; max-width: 34ch; }
+.zaehler { display: flex; justify-content: center; gap: 6px; font-size: 13px; color: var(--soft); margin-top: 18px; }
+.vertrauen { display: flex; gap: 10px; align-items: center; justify-content: center; font-size: 13px; color: var(--mid); margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <h1>Maloja nach Stardust · die anderen Seiten</h1>
+  <p>Vier Seitenarten stehen für alle 92 Seiten: Kapitel, Rechner, Ablauf, Ablage. Links der heutige Stand (Demo «Maria Muster», 23.10.2026), rechts der Vorschlag. Nur Entwurf, nichts gebaut.</p>
+  <div class="leiste" role="group" aria-label="Darstellung">
+    <button class="pill" data-modus="dark" aria-pressed="true">Dunkel</button>
+    <button class="pill" data-modus="light" aria-pressed="false">Hell</button>
+    <span style="width:12px"></span>
+    <button class="pill" data-geraet="handy" aria-pressed="true">Handy</button>
+    <button class="pill" data-geraet="desktop" aria-pressed="false">Desktop</button>
+  </div>
+</header>
+
+<div class="regeln">
+  <div class="label" style="margin-top:12px">Was für alle Seiten gilt</div>
+  <ol>
+    <li><b>Ein Ort statt einer Karte:</b> oben ein schmales Band der Passstrasse, darunter steht die Seite direkt auf dem Grund. Kein Kasten im Kasten mehr.</li>
+    <li><b>Der gleiche Kopf überall:</b> Brotkrume, Kapitel-Icon auf getönter Fläche, Titel, ein Satz, worum es geht.</li>
+    <li><b>Ein Objekt je Seite:</b> die eine Zahl, der eine Schritt, die eine Handlung — gross. Alles andere tritt zurück.</li>
+    <li><b>Lange Texte zum Aufklappen:</b> was heute als Textblock dasteht, wird zu ruhigen Zeilen mit «+».</li>
+    <li><b>Desktop nutzt die Breite:</b> links Kopf und Objekt (bleiben stehen), rechts der Inhalt.</li>
+  </ol>
+</div>
+
+<section class="abschnitt">
+  <h2>A · Kapitel — «Finanzen &amp; Geld»</h2>
+  <p class="warum">Heute: zentrierter Kopf mit Münze, kursiver Satz, darunter Kasten in Kasten. Vorschlag: die Zahl, die schon dasteht («Es bleiben CHF 2'480»), wird das Objekt der Seite; die Felder werden zu Gruppen.</p>
+  <div class="paar">
+    <div><div class="label">Heute</div><div class="foto"><img src="heute-kapitel.jpg" alt="Heutiges Kapitel Finanzen"></div></div>
+    <div>
+      <div class="label"><b>Vorschlag</b></div>
+      <div class="geraet"><div class="appkopf"><span class="name"><i></i>Maloja Plana</span><span class="knopf"></span></div>
+        <div class="seite"><div class="band" aria-hidden="true"></div>
+          <div class="innen">
+            <div class="links">
+              <div class="krume">‹ Übersicht <span>·</span> Kapitel</div>
+              <div class="titelzeile"><span class="sym" data-icon="finanzen" data-farbe="finanzen"></span><h3>Finanzen &amp; Geld</h3></div>
+              <p class="satz">Ihr Einkommen, Erspartes und Bankdaten — ein klares Bild für Budget, Steuern und Anträge.</p>
+              <div class="held">
+                <div class="klein">Jeden Monat</div>
+                <div class="gross">Es bleiben CHF 2'480</div>
+                <div class="balken" aria-hidden="true"><i style="width:60%;background:var(--finanzen)"></i><i style="width:40%;background:color-mix(in srgb, var(--finanzen) 35%, transparent)"></i></div>
+                <div class="legende"><span>Ausgaben 3'720</span><span>Einkommen 6'200</span></div>
+              </div>
+            </div>
+            <div class="rechts">
+              <div class="gruppe"><b>Einkommen</b><small>Kantonsspital Zürich · CHF 6'200 netto</small><span class="pfeil">›</span></div>
+              <div class="gruppe"><b>Ausgaben</b><small>CHF 3'720 erfasst</small><span class="pfeil">›</span></div>
+              <div class="gruppe"><b>Erspartes &amp; Vorsorge</b><small>Säule 3a, Konten</small><span class="pfeil">›</span></div>
+              <div class="gruppe"><b>Bank &amp; Zahlungen</b><small>Konten, Daueraufträge</small><span class="pfeil">›</span></div>
+              <div class="ruhig"><span class="punkt"></span><span>Je nach Einkommen ist eine Prämienverbilligung möglich. <a href="#">Prüfen ›</a></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notiz"><ul>
+        <li>Die Zahlen sind die der Demo (6'200 / 3'720 / 2'480). Die vier Gruppen sind ein Vorschlag, wie sich die heutigen Felder ordnen liessen — die echte Einteilung kommt aus dem Kapitel.</li>
+        <li>Der Hinweis auf die Prämienverbilligung bleibt, aber als ruhige Zeile statt als farbiger Kasten.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <h2>B · Rechner — «Prämienverbilligung (IPV)»</h2>
+  <p class="warum">Heute beginnt die Seite mit einem langen Textblock zu den Anspruchsregeln; das Ergebnis kommt weit unten. Vorschlag: zuerst die eigene Lage (aus dem Profil, änderbar), dann das Ergebnis als Objekt, die Regeln zum Aufklappen.</p>
+  <div class="paar">
+    <div><div class="label">Heute</div><div class="foto"><img src="heute-rechner.jpg" alt="Heutiger Rechner Prämienverbilligung"></div></div>
+    <div>
+      <div class="label"><b>Vorschlag</b></div>
+      <div class="geraet"><div class="appkopf"><span class="name"><i></i>Maloja Plana</span><span class="knopf"></span></div>
+        <div class="seite"><div class="band" aria-hidden="true"></div>
+          <div class="innen">
+            <div class="links">
+              <div class="krume">‹ Übersicht <span>·</span> Werkzeuge</div>
+              <div class="titelzeile"><span class="sym" data-icon="versicherungen" data-farbe="versicherungen"></span><h3>Prämienverbilligung (IPV)</h3></div>
+              <p class="satz">Der Kanton übernimmt einen Teil Ihrer Krankenkassenprämie, wenn Ihr Einkommen unter einer Grenze liegt.</p>
+              <div class="klein" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--soft)">Ihre Lage</div>
+              <div class="lage"><span>Kanton Zürich</span><span>1 Person</span><span>netto CHF 6'200 / Monat</span><button>ändern</button></div>
+              <div class="held">
+                <div class="klein">Ergebnis</div>
+                <div class="gross">CHF — im Jahr</div>
+                <p class="unter">Hier steht, was der Rechner heute schon ausgibt. Im Mockup bewusst ohne Zahl.</p>
+                <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap"><button class="knopfprim">Antrag vorbereiten ›</button></div>
+              </div>
+            </div>
+            <div class="rechts">
+              <details open><summary>Wer hat Anspruch?</summary><p>Anspruch besteht meist bei Wohnsitz im Kanton, obligatorischer Krankenversicherung und einer Bewilligung von mindestens 3 Monaten — auch eine Kurzaufenthaltsbewilligung (Ausweis L) kann berechtigen.</p></details>
+              <details><summary>Was brauche ich für den Antrag?</summary><p>Meist die Lohnabrechnungen der letzten Monate und die Police der Krankenkasse.</p></details>
+              <details><summary>Wo stelle ich den Antrag?</summary><p>Bei der kantonalen IPV-Stelle.</p></details>
+              <div class="ruhig"><span class="punkt"></span><span>Die genauen Regeln und Grenzen unterscheiden sich je Kanton. <a href="#">Offizielle Stelle ›</a></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notiz"><ul>
+        <li>Die Texte der Aufklapp-Zeilen sind aus dem heutigen Textblock genommen und nur aufgeteilt, nicht umgeschrieben. Vor dem Bau prüft der Swiss-Precision-Prüfer jede Aussage.</li>
+        <li>«Ihre Lage» füllt sich aus dem Profil — auf gleicher Basis (netto, ×12), wie es eure Regel verlangt.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <h2>C · Ablauf — «Umzug»</h2>
+  <p class="warum">Heute: nummerierte Abschnitte untereinander, alles offen. Vorschlag: der Ablauf als Weg mit Stationen wie auf der Passstrasse. Der aktuelle Schritt ist gross und offen, erledigte werden klein.</p>
+  <div class="paar">
+    <div><div class="label">Heute</div><div class="foto"><img src="heute-ablauf.jpg" alt="Heutiger Ablauf Umzug"></div></div>
+    <div>
+      <div class="label"><b>Vorschlag</b></div>
+      <div class="geraet"><div class="appkopf"><span class="name"><i></i>Maloja Plana</span><span class="knopf"></span></div>
+        <div class="seite"><div class="band" aria-hidden="true"></div>
+          <div class="innen">
+            <div class="links">
+              <div class="krume">‹ Übersicht <span>·</span> Abläufe</div>
+              <div class="titelzeile"><span class="sym" data-icon="wohnen" data-farbe="wohnen"></span><h3>Umzug</h3></div>
+              <p class="satz">Ein Umzug zieht viele kleine Schritte nach sich. Eines nach dem anderen.</p>
+              <div class="fortschritt">Schritt 2 von 3<div class="linie"><i></i></div></div>
+            </div>
+            <div class="rechts">
+              <div class="weg">
+                <div class="halt fertig"><span class="marke">✓</span><h4>Neue Adresse</h4><small>Langstrasse 42, 8004 Zürich</small></div>
+                <div class="halt jetzt"><span class="marke">2</span><h4>Bei der Gemeinde an- und abmelden</h4>
+                  <p>Welche Art Umzug ist das?</p>
+                  <div class="wahl" role="group">
+                    <button aria-pressed="false">In derselben Gemeinde</button>
+                    <button aria-pressed="true">Andere Gemeinde, gleicher Kanton</button>
+                    <button class="voll" aria-pressed="false">In einen anderen Kanton</button>
+                  </div>
+                  <p>In der Schweiz melden Sie sich innert 14 Tagen nach dem Umzug bei der neuen Gemeinde an und bei der alten ab.</p>
+                  <div style="margin-top:14px"><button class="knopfprim">Erledigt, weiter ›</button></div>
+                </div>
+                <div class="halt"><span class="marke">3</span><h4>Alte Wohnung</h4><small>Übergabe, Kündigung, Kaution</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notiz"><ul>
+        <li>Die drei Schritte folgen der heutigen Einleitung («Adresse, Gemeinde, alte Wohnung»). Texte von Schritt 1 und 2 sind wörtlich übernommen; die Unterzeile von Schritt 3 ist ein Platzhalter.</li>
+        <li>Das gleiche Muster passt auf alle rund 30 Abläufe (Heirat, Stelle verloren, Todesfall …), weil sie heute schon nummerierte Schritte haben.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="abschnitt">
+  <h2>D · Ablage — «Dokumentenablage»</h2>
+  <p class="warum">Heute: drei Zähler mit 0, Suche und Sortierung, obwohl noch nichts drin ist, dazu der leere Zustand im Kasten. Vorschlag: solange leer, nur der leere Zustand mit einer Handlung. Zähler, Suche und Sortierung kommen erst, wenn es etwas zu zählen gibt.</p>
+  <div class="paar">
+    <div><div class="label">Heute</div><div class="foto"><img src="heute-ablage.jpg" alt="Heutige Dokumentenablage"></div></div>
+    <div>
+      <div class="label"><b>Vorschlag</b></div>
+      <div class="geraet"><div class="appkopf"><span class="name"><i></i>Maloja Plana</span><span class="knopf"></span></div>
+        <div class="seite"><div class="band" aria-hidden="true"></div>
+          <div class="innen">
+            <div class="links">
+              <div class="krume">‹ Übersicht <span>·</span> Unterlagen</div>
+              <div class="titelzeile"><span class="sym" data-icon="basis" data-farbe="basis"></span><h3>Dokumentenablage</h3></div>
+              <p class="satz">Ausweise, Verträge, Belege — an einem Ort, nur auf Ihrem Gerät.</p>
+            </div>
+            <div class="rechts">
+              <div class="leer">
+                <div class="bild" style="background:color-mix(in srgb, var(--basis) 16%, transparent)"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--basis)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M12 11v5M9.5 13.5 12 11l2.5 2.5"/></svg></div>
+                <h4>Ihr Ordner ist bereit</h4>
+                <p>Sobald Sie ein Dokument in einem Kapitel hochladen, erscheint es hier — sicher und nur auf Ihrem Gerät.</p>
+                <button class="knopfprim">Erstes Dokument ablegen</button>
+                <div class="vertrauen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Ihre Daten bleiben auf diesem Gerät.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notiz"><ul>
+        <li>Texte wörtlich von heute. Neu ist nur der Knopf «Erstes Dokument ablegen» — heute muss man dafür in ein Kapitel wechseln; ob der Knopf direkt hochlädt oder ins Kapitel führt, ist ein Entscheid.</li>
+        <li>Das Muster «leer = nur eine Handlung» passt auch auf Merkliste, Kalender und Briefe.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.documentElement;
+  root.dataset.theme = 'dark';
+  let ICONS = {};
+  // Echte Kapitel-Icons aus src/IconKern.jsx / src/IconMuenzen.jsx (unverändert gerendert).
+  function iconsZeichnen() {
+    document.querySelectorAll('.sym').forEach((el) => {
+      const farbe = getComputedStyle(root).getPropertyValue('--' + el.dataset.farbe).trim();
+      el.style.background = farbe + '26';
+      const svg = ICONS[el.dataset.icon];
+      el.innerHTML = svg ? svg.replace('<svg ', `<svg width="24" height="24" style="color:${farbe};display:block" aria-hidden="true" `) : '';
+    });
+  }
+  fetch('icons.json').then((r) => r.json()).then((d) => { ICONS = d; iconsZeichnen(); });
+  document.querySelectorAll('[data-modus]').forEach((b) => b.addEventListener('click', () => {
+    root.dataset.theme = b.dataset.modus;
+    document.querySelectorAll('[data-modus]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    iconsZeichnen();
+  }));
+  document.querySelectorAll('[data-geraet]').forEach((b) => b.addEventListener('click', () => {
+    document.body.classList.toggle('desktop', b.dataset.geraet === 'desktop');
+    document.querySelectorAll('[data-geraet]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+  }));
+  document.querySelectorAll('.wahl').forEach((g) => g.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+  }));
+</script>
+</body>
+</html>

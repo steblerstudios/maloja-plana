@@ -58,7 +58,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       },
         React.createElement('div', { style: { padding: '20px 20px 16px 20px', borderBottom: '1px solid ' + palette.border, display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
           React.createElement('div', { style: { fontSize: text.body + 1, fontWeight: weight.semi, letterSpacing: '0.3px' } }, settingsLabel || t('nav.settings')),
-          React.createElement('button', { onClick: onClose, 'aria-label': t('common.close') || 'Schliessen', style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 6px', minWidth: '44px', minHeight: '44px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } }, '×')
+          React.createElement('button', { onClick: onClose, 'aria-label': t('common.close'), style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 6px', minWidth: '44px', minHeight: '44px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } }, '×')
         ),
         // Beschriftete, gruppierte Zeilen (Anzeige & Sprache / Barrierefreiheit) statt
         // flacher Icon-Reihe — dieselbe Hierarchie wie die ganze Einstellungs-Seite.
@@ -231,7 +231,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
 
   const suchErgebnisse = (q) => {
     const results = [];
-    if ((t('nav.dashboard') || 'Dashboard').toLowerCase().includes(q)) {
+    if (t('nav.dashboard').toLowerCase().includes(q)) {
       results.push(navItem('dashboard', t('nav.dashboard'), sackmesser, geh('dashboard'), activeView === 'dashboard'));
     }
     (chapters || []).forEach((ch, idx) => {
@@ -251,7 +251,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       results.push(React.createElement('div', {
         key: 'no-results', role: 'status', 'aria-live': 'polite',
         style: { padding: '20px', textAlign: 'center', fontSize: text.sm, color: palette.mid },
-      }, t('common.noResults') || 'Keine Ergebnisse'));
+      }, t('common.noResults')));
     }
     return React.createElement('div', { key: 'treffer', style: { display: 'flex', flexDirection: 'column', gap: '2px' } }, ...results);
   };
@@ -287,7 +287,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           style: { margin: 0, fontFamily: fontFamilyDisplay, fontSize: text.lg, fontWeight: weight.bold, color: palette.text, outlineOffset: '4px' },
         }, t('common.appName')),
         React.createElement('button', {
-          type: 'button', onClick: onClose, 'aria-label': t('common.close') || 'Schliessen',
+          type: 'button', onClick: onClose, 'aria-label': t('common.close'),
           style: { width: '44px', height: '44px', borderRadius: '50%', border: '1px solid ' + palette.border, background: 'none', color: palette.text, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
         }, React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', 'aria-hidden': 'true' },
           React.createElement('path', { d: 'M6 6l12 12M18 6 6 18' })))
@@ -314,11 +314,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         React.createElement('input', {
           type: 'search', value: searchQuery,
           onChange: (e) => setSearchQuery(e.target.value),
-          placeholder: t('common.search') || 'Suchen…', 'aria-label': t('common.search'),
+          placeholder: t('common.search'), 'aria-label': t('common.search'),
           style: { flex: 1, minHeight: '42px', border: 'none', background: 'transparent', outline: 'none', fontSize: text.sm, color: palette.text, fontFamily: 'inherit' },
         }),
         searchQuery ? React.createElement('button', {
-          type: 'button', onClick: () => setSearchQuery(''), 'aria-label': t('common.clear') || 'Clear',
+          type: 'button', onClick: () => setSearchQuery(''), 'aria-label': t('common.clear'),
           style: { minWidth: '44px', minHeight: '44px', background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '16px', lineHeight: 1 },
         }, '×') : null
       ),

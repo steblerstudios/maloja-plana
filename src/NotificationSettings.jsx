@@ -69,7 +69,9 @@ export const NotificationSettings = ({ palette, t }) => {
       React.createElement('button', {
         onClick: () => togglePref(key),
         disabled: !isGranted,
-        'aria-label': label + (enabled ? ' on' : ' off'),
+        // Zustand als aria-pressed statt angehängtem englischem ' on'/' off' (Seitenrundgang 26.10.2026, R11).
+        'aria-label': label,
+        'aria-pressed': enabled && isGranted,
         style: {
           ...toggleStyle(enabled && isGranted),
           opacity: isGranted ? 1 : 0.4,

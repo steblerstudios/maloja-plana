@@ -65,35 +65,6 @@ export function notfallpassFelder(abschnitte) {
   }));
 }
 
-// Kopiert Text in die Zwischenablage. Erst navigator.clipboard (braucht einen sicheren
-// Kontext), sonst der alte Weg über ein unsichtbares Textfeld. Gibt true/false zurück und
-// wirft nie — die Oberfläche sagt dann ruhig, dass von Hand abgeschrieben werden kann.
-export async function inZwischenablage(text, umgebung = globalThis) {
-  const wert = String(text ?? '');
-  if (!wert) return false;
-  try {
-    const cb = umgebung?.navigator?.clipboard;
-    if (cb && typeof cb.writeText === 'function') {
-      await cb.writeText(wert);
-      return true;
-    }
-  } catch {
-    // weiter zum Rückfall
-  }
-  try {
-    const doc = umgebung?.document;
-    if (!doc || typeof doc.execCommand !== 'function') return false;
-    const feld = doc.createElement('textarea');
-    feld.value = wert;
-    feld.setAttribute('readonly', '');
-    feld.style.position = 'fixed';
-    feld.style.opacity = '0';
-    doc.body.appendChild(feld);
-    feld.select();
-    const ok = doc.execCommand('copy');
-    doc.body.removeChild(feld);
-    return !!ok;
-  } catch {
-    return false;
-  }
-}
+// inZwischenablage lebt seit 26.10.2026 in utils/zwischenablage.js (das Dashboard braucht sie, und Rollup
+// zog sonst diese ganze Datei samt Feldlisten ins Startbündel). Hier nur weitergereicht.
+export { inZwischenablage } from './zwischenablage.js';

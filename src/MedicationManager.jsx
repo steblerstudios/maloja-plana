@@ -137,7 +137,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
       }, t('medications.label', { nr: idx + 1 })),
       React.createElement('button', {
         onClick: onRemove,
-        'aria-label': t('common.delete') || 'Entfernen',
+        'aria-label': t('common.delete'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px',

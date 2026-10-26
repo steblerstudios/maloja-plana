@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { qrNotfallVcard, qrZeichnen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { getFullName } from './config/constants.js';
-import { Icon, hinweisZeichen } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier, notfallQrAbschnitte } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -48,8 +48,14 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   const qrRef = useRef(null);
   // 'ok' | 'fehler' — bei 'fehler' bleibt die Fläche weg und ein Hinweis steht da.
   const [qrStatus, setQrStatus] = useState('ok');
+  // Erst auf Klick zeichnen (Entscheid Stebler Studios 26.10.2026, Vorschlag rechts-pruefer): der Code trägt
+  // Gesundheitsangaben unverschlüsselt und war sofort sichtbar, sobald das Dossier Inhalte hatte — auch für alle,
+  // die über die Schulter schauen. Jeder Besuch beginnt verborgen; nichts davon wird gespeichert.
+  const [qrSichtbar, setQrSichtbar] = useState(false);
+  // Verliert das Dossier seine Inhalte, wird der Code wieder verborgen — sonst erschiene er später ohne Klick.
+  useEffect(() => { if (!hasSections) setQrSichtbar(false); }, [hasSections]);
   useEffect(() => {
-    if (!hasSections || !qrRef.current) return;
+    if (!qrSichtbar || !hasSections || !qrRef.current) return;
     const gezeichnet = qrZeichnen(qrRef.current, qrText, {
       maxBytes: QR_MAX_BYTES_VCARD,
       width: 180, height: 180,
@@ -57,7 +63,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       beschriftung: qrBeschriftung,
     });
     setQrStatus(gezeichnet ? 'ok' : 'fehler');
-  }, [qrText, hasSections, qrBeschriftung]);
+  }, [qrSichtbar, qrText, hasSections, qrBeschriftung]);
 
   // Export-Vorschau (K3): erst zeigen, was im Dokument steht, dann öffnen.
   const [vorschau, setVorschau] = useState(false);
@@ -170,7 +176,23 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
       }, t('notfallDossier.qrHint')),
-      React.createElement('div', {
+      // Knopf «QR anzeigen» / «QR ausblenden». Die Fläche gibt es nur, solange der Code sichtbar ist.
+      // Rand in palette.mid und Aufklapp-Zeichen (a11y-pruefer 26.10.2026): der Rand in palette.border hob sich
+      // vom Kartengrund kaum ab; als Knopf erkennbar war er fast nur am Text.
+      React.createElement('div', { style: { marginBottom: qrSichtbar ? '12px' : 0 } },
+        React.createElement('button', {
+          type: 'button',
+          'aria-expanded': qrSichtbar,
+          onClick: () => { setQrStatus('ok'); setQrSichtbar((v) => !v); },
+          style: {
+            minHeight: '44px', padding: '0 ' + space.md + 'px',
+            background: palette.surface, color: palette.text, border: '1px solid ' + palette.mid,
+            borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
+          },
+        }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(qrSichtbar)),
+        t(qrSichtbar ? 'notfallDossier.qrAusblenden' : 'notfallDossier.qrAnzeigen'))
+      ),
+      qrSichtbar && React.createElement('div', {
         ref: qrRef,
         style: {
           display: qrStatus === 'fehler' ? 'none' : 'inline-block',
@@ -179,11 +201,11 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       }),
       // Fehler entsteht erst nach dem ersten Render → Live-Region. Die Kürzung steht schon beim
       // ersten Render da und würde nicht angesagt → normaler Absatz (Deploy-Gate 0.1.36, a11y).
-      qrStatus === 'fehler' && React.createElement('p', {
+      qrSichtbar && qrStatus === 'fehler' && React.createElement('p', {
         role: 'status',
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '0' }
       }, t('notfallDossier.qrFehler')),
-      qrStatus !== 'fehler' && qrGekuerzt && React.createElement('p', {
+      qrSichtbar && qrStatus !== 'fehler' && qrGekuerzt && React.createElement('p', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '10px 0 0' }
       }, t('notfallDossier.qrGekuerzt')),
       // Zweiter Ausgang derselben Angaben: der Notfallpass auf dem Telefon (Entscheid 22.09.2026).

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heute neben neu</title>
+<style>
+@font-face { font-family: 'Hanken Grotesk'; font-weight: 700; src: url(hanken-grotesk-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 400; src: url(lexend-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-weight: 500; src: url(lexend-latin-500-normal.woff2) format('woff2'); }
+:root { --bg: #22211F; --surface: #2B2A26; --up: #343330; --border: #423F39; --text: #E6E3DC; --mid: #9CA0A6; --soft: #989CA4; --sand: #C4A06A; --sage: #8FB0A0; --gold: #C4A870; --sky: #8CAAC6; --rose: #D98A8A; }
+:root[data-theme="light"] { --bg: #F2F2F0; --surface: #FAFAF8; --up: #ECECEA; --border: #DCDAD6; --text: #24262A; --mid: #5E6167; --soft: #5A5D63; --sand: #7A5F30; --sage: #3E5449; --gold: #7C6428; --sky: #4A6A88; --rose: #9A4A4A; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Lexend', sans-serif; font-size: 15px; line-height: 1.5; }
+main { max-width: 1240px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font-family: 'Hanken Grotesk'; font-size: 30px; margin: 0 0 6px; }
+p { color: var(--mid); max-width: 82ch; margin: 0 0 10px; }
+a { color: var(--sand); }
+nav.reiter { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--border); margin: 14px 0 0; }
+nav.reiter button { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 13px; cursor: pointer; min-height: 40px; display: inline-flex; gap: 8px; align-items: center; }
+nav.reiter button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+nav.reiter small { opacity: .8; }
+.gesamt { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.gesamt span { border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+.seite { display: none; padding-top: 18px; }
+.seite.an { display: block; }
+.seite h2 { font-family: 'Hanken Grotesk'; font-size: 24px; margin: 0 0 4px; }
+.nebeneinander { display: grid; grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); gap: 28px; margin: 16px 0 10px; align-items: start; }
+@media (max-width: 860px) { .nebeneinander { grid-template-columns: 1fr; } }
+.etikett { font-size: 13px; color: var(--soft); margin-bottom: 8px; }
+.etikett b { color: var(--text); font-weight: 500; }
+.foto { border-radius: 22px; overflow: hidden; border: 1px solid var(--border); max-width: 400px; }
+.foto img { display: block; width: 100%; }
+iframe { width: 100%; height: 960px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 14px; }
+th { text-align: left; font-weight: 500; color: var(--soft); font-size: 13px; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--border); }
+td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+td:first-child { font-weight: 500; width: 24%; }
+td small { color: var(--mid); display: block; font-size: 13px; margin-top: 2px; }
+.st { display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; font-size: 13px; }
+.st i { width: 10px; height: 10px; display: inline-block; }
+.st.drin i { background: var(--sage); border-radius: 50%; }
+.st.anders i { background: var(--gold); border-radius: 2px; }
+.st.fehlt i { border: 2px solid var(--rose); border-radius: 50%; }
+.st.weg i { background: var(--soft); height: 2px; }
+.st.neu i { background: var(--sky); transform: rotate(45deg); width: 9px; height: 9px; }
+.filter { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.filter button { border: 1px solid var(--border); background: transparent; color: var(--mid); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: 12px; cursor: pointer; min-height: 32px; }
+.filter button[aria-pressed="true"] { color: var(--text); border-color: var(--text); }
+@media (max-width: 640px) { table, tbody, tr, td { display: block; } thead { display: none; } tr { padding: 10px 0; border-bottom: 1px solid var(--border); } td { border: 0; padding: 2px 0; width: auto !important; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Heute neben neu · Seite für Seite</h1>
+  <p>Links die App von heute (Demo «Maria Muster», 23.10.2026, Stand <code>main</code> nach #534/#537/#538), rechts die neue Fassung zum Ausprobieren. Darunter jedes Element von heute — gemessen, nicht geschätzt: ein Skript hat jede Seite im Demo-Modus vollständig durchgezählt (Überschriften, Felder, Knöpfe, Links, Texte).</p>
+  <p>Legende: <span class="st drin"><i></i>drin</span> · <span class="st anders"><i></i>anders</span> · <span class="st fehlt"><i></i>fehlt noch</span> · <span class="st weg"><i></i>bewusst weg</span> · <span class="st neu"><i></i>neu</span></p>
+  <div class="gesamt" id="gesamt"></div>
+  <nav class="reiter" id="reiter" aria-label="Seiten"></nav>
+  <div id="seiten"></div>
+</main>
+<script>
+const SEITEN = [
+  { id: 'eingang', titel: 'Eingang', heuteBild: 'vorher-eingang.jpg', heuteHinweis: 'Bild vor #537 — heute ist der neue Eingang schon live in main', neu: 'index.html?nur=eingang', bausteine: 12, zeilen: [
+    ['Logo, Leitsatz, Beschreibung', 'Logo, Beschreibung', 'Logo anthrazit, Leitsatz als Titel, gleiche Beschreibung', 'drin'],
+    ['«Lokal gespeichert — Ihre Daten bleiben auf diesem Gerät»', 'graues Kästchen', 'gross mit Schloss', 'drin'],
+    ['Zugangscode, Öffnen, Ohne Code ausprobieren, Einfache Ansicht', 'drei gleich laute Knöpfe', 'ein Hauptknopf, Rest ruhig', 'drin'],
+    ['Datenschutz & Rechtliches, Problem melden, Stebler Studios · Basel', 'unten', 'unten, zentriert', 'drin'],
+  ]},
+  { id: 'uebersicht', titel: 'Übersicht', heuteBild: 'vorher-hero.jpg', neu: 'index.html?nur=uebersicht', bausteine: 98, zeilen: [
+    ['Landschaft mit Stationen, Leitsatz', 'Bild mit 8 Stationen', 'gleich', 'drin'],
+    ['Karte «Auf den Startbildschirm legen · So geht es»', 'oben rechts im Bild', 'nicht im Mockup', 'fehlt', 'gehört weiter dazu; Ort im Bild beibehalten'],
+    ['Zwei Kreise «7/7 begonnen», «63 % ausgefüllt»', 'unten im Bild', 'ein Ring in der Karte', 'anders', 'offen: welche Zahl gilt — 63 % oder 70 %?'],
+    ['«Was ist jetzt dran?» — Grundordnung steht, Weiter mit Finanzen, Frist, Sicherung', 'eigene Karte', 'Karte «Ihr Lebensordner»', 'anders'],
+    ['«Ihr Fortschritt 70 %», Grundordnung 15/15, 7 Bereichszeilen mit Prozent', 'Karte mit Balken und %', 'Bereichszeilen ohne %', 'anders', 'Berg-% bleibt laut Entscheid 06.07.; Prozente in den Zeilen fallen weg'],
+    ['«Was steht mir zu?» — Wanderrucksack auspacken, Finanz-Übersicht, Notfallkarte vorbereiten', '3 Karten', 'nicht im Mockup', 'fehlt', 'als «Passend» unter den Bereichen oder eigener ruhiger Block'],
+    ['«Leistungen» — Monatseinkommen netto/brutto, 5 Leistungen, Leistungs-Kompass, «Trifft eine Situation auf Sie zu?»', 'Eingabe + Liste', 'nur angedeutet («wie heute»)', 'fehlt', 'wichtigster Block nach der Karte — muss im Mockup ausgeführt werden'],
+    ['«Ihre Instrumente» — Franchise-Kreuz, Steuer-Säule, Reserve-Tankanzeige, Schutzschild', '4 Instrumente', 'nicht im Mockup', 'fehlt', 'passen zur Daten-Grammatik — als Reihe kleiner Instrumente zeigen'],
+    ['«Ihr Alltag / Ihre Absicherung / Ihr Schutz» — die 7 Bereiche nochmals mit Satz', '3 Gruppen', 'mit den Bereichszeilen zusammengelegt', 'anders', 'heute doppelt (Fortschritt + Gruppen) — Vorschlag: ein Mal, mit Satz'],
+    ['«Mein Obstgarten»', 'Karte', 'nicht im Mockup', 'fehlt', 'bleibt (Guardrail 06.07.: Baum/Garten bleiben)'],
+    ['«Werkzeuge & Features» — Alle Werkzeuge im Gepäck, Lebensereignisse 35, 6 Gruppen', 'aufklappbare Gruppen', 'nur im Menü', 'fehlt', 'Einstieg auf der Übersicht behalten, ruhig zugeklappt'],
+    ['«Jetzt sichern ›» (Sicherungsdatei)', 'Knopf', 'nur als Zeile «Noch keine Sicherungsdatei»', 'fehlt', 'wichtig — Sicherung muss mit einem Tipp erreichbar bleiben'],
+    ['«Tipps für den Anfang»', 'Block', 'nicht im Mockup', 'fehlt'],
+    ['Hinweis «Frühe Version …»', 'Banner unter dem Bild', 'nicht im Mockup', 'fehlt', 'bleibt bis zum Ende der Beta'],
+    ['Leiste «Beispiel: Maria Muster · Beispiel verlassen»', 'im Demo-Modus oben', 'nicht im Mockup', 'fehlt', 'gehört in jeden Demo-Bildschirm'],
+    ['Fusszeile', 'Version, Feedback, Rechtliches, Grün gehostet', 'gleich (Tippflächen 44 px, #538)', 'drin'],
+  ]},
+  { id: 'kapitel', titel: 'Kapitel Finanzen', heuteBild: 'heute-kapitel.jpg', neu: 'seiten-v4.html?nur=a', bausteine: 51, zeilen: [
+    ['Kopf: Münze, Titel, Untertitel, kursiver Satz', 'zentriert', 'links, Icon auf Fläche, ein Satz', 'anders'],
+    ['Zusammenfassung «Einkommen 6’200 … es bleiben 2’480»', 'Textkasten', 'Hauptobjekt mit Balken', 'drin'],
+    ['Hinweis Prämienverbilligung', 'farbiger Kasten', '«Passend zu diesem Bereich»', 'anders'],
+    ['«Alle Berechnungen auf einen Blick» (→ Finanz-Übersicht)', 'Knopf', 'nicht im Mockup', 'fehlt', 'unter «Passend» aufnehmen'],
+    ['«Wo steht Ihr Lohn?» — Barometer mit Median CHF 7’024, Hinweise, Quelle BFS', 'Instrument', 'nicht im Mockup', 'fehlt', 'Referenz-Instrument des Daten-Systems — muss bleiben, gleich gestaltet wie das IPV-Barometer'],
+    ['Reiter «Angaben / Dokumente»', 'zwei Reiter', 'nicht im Mockup', 'fehlt', 'Dokumente des Kapitels: als Reiter oder unter «Passend»'],
+    ['7 Gruppen: Einkommen, Monatliche Ausgaben, Verpflichtungen, Sparen, Vermögen & Wertschriften, Kredit, Vorsorge', 'Gruppen mit «ändern › / ergänzen ›»', '4 erfundene Gruppen', 'anders', 'Mockup auf die echten 7 umstellen'],
+    ['Felder mit Werten (Einkommensart, Anstellungstyp, Arbeitsbeginn …)', 'unter jeder Gruppe', 'aufklappbar in der Gruppe', 'drin'],
+    ['«Weiter mit Versicherungen & Vorsorge ›»', 'am Ende', '«Als Nächstes»', 'drin', 'gibt es heute schon — Mockup übernimmt es nur sichtbarer'],
+    ['«Gespeichert», Brotkrume, «Passend zu diesem Bereich»', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'rechner', titel: 'Rechner IPV', heuteBild: 'heute-rechner.jpg', neu: 'seiten-v4.html?nur=b', bausteine: 39, zeilen: [
+    ['Titel, Erklärung', 'gleich', 'gleich + Glossar «IPV ⓘ»', 'drin'],
+    ['Kasten «Anspruch & Aufenthaltsbewilligung»', 'langer Textkasten', 'Aufklapp-Zeile', 'anders'],
+    ['Kanton Zürich · Modell einkommensabhängig · Max. Einkommen CHF 61’090 · Antrag bei SVA ZH', 'Faktenzeilen', 'erfundene Monatsgrenze CHF 6’000', 'anders', 'Fehler im Mockup: echte Jahresgrenze und echtes Modell zeigen'],
+    ['Ergebnis «Nicht berechtigt · Einkommen über Grenze»', 'Ergebniszeile', 'Urteil mit Barometer', 'drin', 'Wortlaut ruhig halten'],
+    ['Monatliche und jährliche Förderung', 'zwei Werte', 'nicht im Mockup', 'fehlt', 'gehört ins Ergebnis'],
+    ['Anspruchsjahr 2026, Prämienregion 1, Hinweise zur Berechnungsgrundlage', 'Textzeilen', 'nur «Quelle · Stand» als Platzhalter', 'fehlt', 'in den Fuss übernehmen, wörtlich'],
+    ['«Benötigte Dokumente» (4 Punkte)', 'Liste', 'Aufklapp-Zeile, gekürzt', 'anders', 'Liste vollständig übernehmen'],
+    ['«Unterlagen für den Antrag merken»', 'Knopf', '«Merken»', 'anders'],
+    ['Online-Antrag, Dokument, Offizielle Stelle (ch.ch, Kanton Zürich)', 'Knöpfe und Links', 'nur «Antrag vorbereiten»', 'fehlt', 'unter «Wie es weitergeht» die echten Wege'],
+    ['«Ihre Daten bleiben auf diesem Gerät.»', 'Zeile', 'nicht im Rechner-Mockup', 'fehlt'],
+    ['Knöpfe «Finanz-Übersicht», «Offizielle Links»', 'am Ende', 'nicht im Mockup', 'fehlt'],
+    ['Einkommen ändern (Regler), Barometer, Herkunft, Abschnittsanzeige', '—', 'im Mockup', 'neu', 'Regler nur, wenn er mit der echten Jahresberechnung rechnet'],
+  ]},
+  { id: 'ablauf', titel: 'Ablauf Umzug', heuteBild: 'heute-ablauf.jpg', neu: 'seiten-v4.html?nur=c', bausteine: 47, zeilen: [
+    ['Einleitung, Schritt 1 «Neue Adresse», Schritt 2 «Gemeinde» mit 3 Wahlknöpfen', 'gleich', 'gleich, als Weg', 'drin'],
+    ['In Schritt 2: «Krankenkassen-Prämie prüfen ›»', 'Querverweis', 'nicht im Mockup', 'fehlt'],
+    ['In Schritt 2: Mietzinsbeiträge mit Kantonsübersicht (BWO)', 'Hinweis + Link + Knopf', 'nicht im Mockup', 'fehlt'],
+    ['Feld «Umzugsdatum» und Hinweis bei verpasster Frist', 'Datumsfeld + ruhige Meldung', 'Frist ohne Datum', 'fehlt', 'die Frist im Kalender muss aus dem Umzugsdatum rechnen'],
+    ['Schritt 3 «Adresse überall nachführen» — 6 Stellen mit «merken», «Alle in die Merkliste», Adressänderungs-Brief', 'eigener Schritt', 'fehlt (Mockup: 3 Schritte)', 'fehlt', 'Mockup auf 4 Schritte umstellen'],
+    ['Schritt 4 «Alte Wohnung kündigen» + «Zur Mietkündigung ›»', 'eigener Schritt', 'Platzhalter «Alte Wohnung»', 'anders'],
+    ['Quellen RHG Art. 11, OR Art. 266c', 'am Ende', 'nicht im Mockup', 'fehlt'],
+    ['Passstrasse, Frist in den Kalender, Abschluss, Erledigt-Marken', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'ablage', titel: 'Dokumentenablage', heuteBild: 'heute-ablage.jpg', neu: 'seiten-v4.html?nur=d', bausteine: 13, zeilen: [
+    ['Leerer Zustand «Ihr Ordner ist bereit» + Satz', 'Kasten', 'Bild + Satz', 'drin'],
+    ['Zähler «0 Aktiv · 0 Archiv»', 'Knöpfe', 'Übersichtszeile, erst ab Inhalt', 'anders'],
+    ['Archiv (aktiv / archiviert umschalten)', 'Reiter', 'nicht im Mockup', 'fehlt', 'im gefüllten Zustand ergänzen'],
+    ['Suche', 'Feld', 'erst ab Inhalt', 'anders'],
+    ['Sortieren: nach Ablauf, Datum, Name', 'Auswahl', 'nicht im Mockup', 'fehlt', 'als ruhige Pills im gefüllten Zustand'],
+    ['«Ihre Daten bleiben auf diesem Gerät.»', 'Zeile', 'gleich', 'drin'],
+    ['Drei Vorschläge, Fotografieren, Löschen mit Nachfrage', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'merkliste', titel: 'Merkliste', heuteBild: 'heute-merkliste.jpg', neu: 'seiten-v4.html?nur=f', bausteine: 10, zeilen: [
+    ['Erklärtext «Ist Ihnen etwas aufgefallen …»', 'Absatz', 'kürzerer Satz', 'anders'],
+    ['Eingabe «Was möchten Sie sich merken?» + Hinzufügen', 'Feld + Knopf', 'nicht im Mockup', 'fehlt', 'muss rein — sonst kann man nichts merken'],
+    ['«Verknüpfen mit» (12 Werkzeuge)', 'Auswahl', 'Bereich als Unterzeile, ohne Auswahl', 'fehlt', 'Verknüpfung führt zurück zum Werkzeug — übernehmen'],
+    ['Leerer Zustand «Noch nichts gemerkt»', 'Kasten', 'gleich, ruhiger', 'drin'],
+    ['Entfernen mit Rückgängig', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'kalender', titel: 'Kalender · Was ansteht', heuteBild: 'heute-kalender.jpg', neu: 'seiten-v4.html?nur=g', bausteine: 57, zeilen: [
+    ['Titel «Kalender und Erinnerungen»', 'Titel', '«Was ansteht»', 'anders', 'Name entscheiden'],
+    ['Jahr ‹ › , Monate Jan–Dez, «Heute»', 'Navigation', 'nicht im Mockup', 'fehlt', 'für ferne Daten (Steuer im März) nötig — als Sprung über der Tagesleiste'],
+    ['Monatsraster', '31 Tage als Raster', 'Tagesleiste zum Wischen', 'anders', 'beides denkbar: Leiste für «bald», Raster für «später»'],
+    ['«Bevorstehend / Erledigt»', 'Reiter mit Zahl', 'nur Bevorstehendes', 'fehlt'],
+    ['«+ Erinnerung hinzufügen»', 'Knopf', 'nicht im Mockup', 'fehlt', 'muss rein — Hauptknopf der Seite'],
+    ['Leerer Zustand + Hinweis «dienen nur zur Information»', 'Text', 'nicht im Mockup', 'fehlt'],
+    ['Band laufender Abläufe, Bereichsfarben, «Als Nächstes»', '—', 'im Mockup', 'neu'],
+  ]},
+  { id: 'menue', titel: 'Menü', heuteBild: 'heute-menue.jpg', neu: 'seiten-v4.html?nur=e', bausteine: 16, zeilen: [
+    ['Kopf «Maloja Plana · 63 % vollständig»', 'Kopf', 'nur Logo', 'fehlt'],
+    ['«Auf den Startbildschirm legen»', 'Knopf', 'nicht im Mockup', 'fehlt'],
+    ['Suche', 'Feld', 'gleich', 'drin'],
+    ['Bereiche gegliedert: Ihr Alltag · Ihre Absicherung · Ihr Schutz', '3 Gruppen', 'eine Gruppe «Bereiche»', 'anders', 'Gliederung übernehmen'],
+    ['Werkzeuge: Dokumentenablage, Kalender, Merkliste, Steuern, Finanz-Übersicht, Lebenssituationen, Alle Werkzeuge im Gepäck', '7 Einträge', 'nur Übersicht, Was ansteht, Rucksack, Anspruch', 'fehlt', 'Steuern, Finanz-Übersicht, Lebenssituationen, Werkzeuge ergänzen'],
+    ['Einstellungen', 'Eintrag', 'in der Reihe unten', 'drin'],
+    ['Karten mit Einzeiler, Continuity-Übergang', '—', 'im Mockup', 'neu'],
+  ]},
+];
+const ST = { drin: 'drin', anders: 'anders', fehlt: 'fehlt noch', weg: 'bewusst weg', neu: 'neu' };
+const st = (k) => `<span class="st ${k}"><i></i>${ST[k]}</span>`;
+const zaehl = (z) => { const n = {}; z.forEach((r) => n[r[3]] = (n[r[3]] || 0) + 1); return n; };
+const alle = SEITEN.flatMap((s) => s.zeilen), ges = zaehl(alle);
+document.getElementById('gesamt').innerHTML = `<span><b>${SEITEN.length}</b> Seiten · <b>${SEITEN.reduce((a, s) => a + s.bausteine, 0)}</b> Bausteine heute gezählt</span>` + Object.keys(ST).filter((k) => ges[k]).map((k) => `<span>${st(k)} <b>${ges[k]}</b></span>`).join('');
+document.getElementById('reiter').innerHTML = SEITEN.map((s, i) => { const n = zaehl(s.zeilen).fehlt || 0; return `<button data-i="${i}" aria-pressed="${i === 0}">${s.titel}${n ? ` <small>${n} fehlt</small>` : ''}</button>`; }).join('');
+document.getElementById('seiten').innerHTML = SEITEN.map((s, i) => `
+  <section class="seite${i === 0 ? ' an' : ''}" id="s-${s.id}">
+    <h2>${s.titel}</h2>
+    <div class="nebeneinander">
+      <div><div class="etikett"><b>Heute</b> · ${s.bausteine} Bausteine${s.heuteHinweis ? ' · ' + s.heuteHinweis : ''}</div><div class="foto"><img src="${s.heuteBild}" alt="${s.titel} heute"></div></div>
+      <div><div class="etikett"><b>Neu</b> · Fassung 4 — antippen erlaubt · <a href="${s.neu.replace('?nur=', '#').replace('index.html#eingang', 'index.html').replace('index.html#uebersicht', 'index.html')}" target="_blank">ganz öffnen</a></div><iframe data-src="${s.neu}" title="${s.titel} neu" loading="lazy"></iframe></div>
+    </div>
+    <div class="filter" role="group" aria-label="Filter">${['alle', 'fehlt', 'anders', 'drin', 'neu'].map((f) => `<button data-f="${f}" aria-pressed="${f === 'alle'}">${f === 'alle' ? 'Alle' : ST[f]}</button>`).join('')}</div>
+    <table><thead><tr><th>Element</th><th>Heute</th><th>Neu</th><th>Stand</th></tr></thead><tbody>
+      ${s.zeilen.map((r) => `<tr data-st="${r[3]}"><td>${r[0]}${r[4] ? `<small>${r[4]}</small>` : ''}</td><td>${r[1]}</td><td>${r[2]}</td><td>${st(r[3])}</td></tr>`).join('')}
+    </tbody></table>
+  </section>`).join('');
+function zeige(i) {
+  document.querySelectorAll('#reiter button').forEach((b) => b.setAttribute('aria-pressed', +b.dataset.i === i));
+  document.querySelectorAll('.seite').forEach((s, j) => s.classList.toggle('an', j === i));
+  const f = document.querySelectorAll('.seite')[i].querySelector('iframe'); if (!f.src) f.src = f.dataset.src;
+  try { history.replaceState(null, '', '#' + SEITEN[i].id); } catch (e) {}
+}
+document.querySelectorAll('#reiter button').forEach((b) => b.onclick = () => zeige(+b.dataset.i));
+document.querySelectorAll('.filter').forEach((g) => g.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+  g.parentElement.querySelectorAll('tbody tr').forEach((tr) => tr.style.display = (b.dataset.f === 'alle' || tr.dataset.st === b.dataset.f) ? '' : 'none');
+}));
+const start = SEITEN.findIndex((s) => '#' + s.id === location.hash); zeige(start >= 0 ? start : 0);
+</script>
+</body>
+</html>

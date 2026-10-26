@@ -462,7 +462,10 @@ export const sozialhilfeKarte = ({ palette, t, onNavigate, w }) => {
       // Freibetrag-Fall (Predeploy 25.09.2026): offen, nicht «Einkommen reicht aus».
       : sozialhilfe.efbEntscheidet ? t('dashboard.anspruchMoeglich') : t('sozialhilfe.notEntitled'),
     statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
-    detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf) + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
+    detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf)
+      // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → Jahr dazu.
+      + (sozialhilfe.gblBelegt === false ? ' (' + t('sh.gblStandKurz', { jahr: sozialhilfe.gblJahr }) + ')' : '')
+      + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
     onClick: () => onNavigate('sozialhilfe'),
   });
 };

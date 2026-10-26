@@ -101,7 +101,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', null, t('sozialhilfe.totalNeeds')),
           React.createElement('span', null, formatCHF(sozialhilfe.totalBedarf))
         ),
-        Row(t('sozialhilfe.deductIncome'), '- ' + formatCHF(sozialhilfe.income), palette.mid),
+        Row(t('sozialhilfe.deductIncome'), betrag(-(sozialhilfe.income || 0)), palette.mid), // echtes Minus wie im Steuerrechner (26.10.2026)
         // Aus brutto geschätzt (utils/nettoAusProfil.js, Predeploy 25.09.2026) — sagen, nicht verschweigen.
         sozialhilfe.einkommenGeschaetzt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } },
           t('einkommensfeld.nettoGeschaetzt', { value: zahl(sozialhilfe.income) })),
@@ -220,6 +220,10 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       sozialhilfe.children.some(c => c.age >= 16) &&
         React.createElement('div', { style: { marginTop: space.xs } }, praefix('kaestchen', 14), t('sozialhilfe.childrenEducationNote'))
     ),
+
+    // Werte 2027 (26.10.2026): Grundbedarf fürs laufende Jahr noch nicht nachgeführt → sagen, nicht still rechnen.
+    sozialhilfe.gblBelegt === false && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } },
+      t('sh.gblNichtBelegt', { jahr: sozialhilfe.gblJahr, laufend: new Date().getFullYear() })),
 
     // SKOS table
     React.createElement('details', { style: { marginBottom: space.md } },

@@ -141,7 +141,9 @@ const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { heuteIso } from './utils/fristen.js';
+import { inDays } from './utils/helpers.js';
+// heuteIso (utils/fristen.js) zog die ganze Fristen-Datei ins Startbündel; inDays(0) liefert dasselbe (lokal,
+// YYYY-MM-DD) und liegt ohnehin hier (Startbündel-Diät 26.10.2026).
 import { uebernehmen, nachSchuldenSpeichern } from './utils/offenePosten.js';
 import { installiereNeuLadenNachDeploy } from './utils/neuLadenNachDeploy.js';
 
@@ -1085,11 +1087,11 @@ const AppInner = ({ demo }) => {
     (lang === 'de' || lang === 'it' || lang === 'rm') ? (() => {
       const formal = lang === 'it' ? 'Lei' : lang === 'rm' ? 'Vus' : 'Sie';
       const informal = lang === 'it' ? 'Tu' : lang === 'rm' ? 'Ti' : 'Du';
-      const tooltip = lang === 'it' ? 'Forma di cortesia: Lei / Tu' : lang === 'rm' ? 'Furma da curtaschia: Vus / Ti' : 'Anrede: Sie / Du';
+      const tooltip = t('common.anredeTooltip', { formell: formal, informell: informal });
       const current = anrede === 'du' ? informal : formal;
       return React.createElement('button', {
         key: 'anrede',
-        'aria-label': 'Anrede: ' + current,
+        'aria-label': t('common.anredeLabel', { form: current }),
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
         style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
@@ -1253,7 +1255,7 @@ const AppInner = ({ demo }) => {
   // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
   React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: seitenGrund, transition: 'background-color 300ms ease', color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}) } },
     // Skip-to-content link for keyboard users
-    React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
+    React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent')),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
     // und der Gewinn wäre keiner. `fallback: null` statt Ladeanzeige: die Schublade
     // soll auftauchen, wenn sie da ist, nicht erst ein Warte-Rechteck zeigen.
@@ -1680,6 +1682,10 @@ const AppInner = ({ demo }) => {
           onSave: (schuldenData) => writeData(prev => nachSchuldenSpeichern(prev, schuldenData))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
+          // key wie bei Schulden: der Rechner übernimmt taxData beim Öffnen und speichert data samt taxData —
+          // ohne Neuaufbau nach «Beispiel verlassen» landeten die Beispielwerte im echten Profil (Seitenrundgang
+          // 26.10.2026, J).
+          key: datenModus,
           palette, t, vorlaeufig,
           data: activeData,
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
@@ -1761,7 +1767,7 @@ const AppInner = ({ demo }) => {
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
-        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, heuteIso(), Date.now())) }),
+        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
