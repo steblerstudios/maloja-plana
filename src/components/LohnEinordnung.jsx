@@ -108,9 +108,10 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {
   // Alter und Rentenalter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter,
   // im Rentenalter ohne ALV/PK). Eine Regel mit dem Netto-Richtwert (alterUndRentenalter).
-  const { alter, rentenalter } = alterUndRentenalter(data?.basis);
+  const { alter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
   const state = lohnBandState({
     rentenalter,
+    beitragsfrei,
     income: data?.finanzen?.monthlyIncome,
     canton: data?.basis?.canton,
     hoursPerWeek: data?.ausbildung?.workHoursPerWeek,

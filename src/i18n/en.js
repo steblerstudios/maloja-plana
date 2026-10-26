@@ -307,7 +307,7 @@ export default {
     step1LinkChapter: 'Enter salary & work',
     step1LinkAblage: 'File contract in life folder',
     step2Title: '2 · Pension fund (BVG)',
-    step2Text: 'If you earn more than CHF {schwelle} a year with one employer, you are mandatorily in the pension fund (2nd pillar; BVG Art. 7). Your employer registers you — check the salary statement and the BVG deductions.',
+    step2Text: 'If you earn more than CHF {schwelle} a year with one employer, you are mandatorily in the pension fund (2nd pillar; BVG Art. 7): from 1 January after your 17th birthday for death and disability, from 1 January after your 24th birthday for retirement as well. Your employer registers you — check the salary statement and the BVG deductions.',
     step3Title: '3 · Accident & daily sickness benefits',
     step3Text: 'From 8 hrs/week you are covered for accidents through your employer (UVG) — you can then drop accident cover from your health insurance and save premium. Whether a daily sickness benefit (KTG) exists is stated in the employment contract or staff regulations; if you contribute, the deduction shows on your payslip.',
     step3Link: 'Accident or illness — what to do?',

@@ -395,7 +395,7 @@ export default {
     step2Title: '2 · Pensionskasse (BVG)',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step2Text: { sie: 'Verdienen Sie bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, sind Sie obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7). Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Verdienst du bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, bist du obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
+    step2Text: { sie: 'Verdienen Sie bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, sind Sie obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7): ab dem 1. Januar nach dem 17. Geburtstag für Tod und Invalidität, ab dem 1. Januar nach dem 24. Geburtstag auch fürs Alter. Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Verdienst du bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, bist du obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7): ab dem 1. Januar nach dem 17. Geburtstag für Tod und Invalidität, ab dem 1. Januar nach dem 24. Geburtstag auch fürs Alter. Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
     step3Title: '3 · Unfall & Krankentaggeld',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)

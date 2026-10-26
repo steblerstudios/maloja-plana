@@ -141,8 +141,13 @@ export const AHV_IV_EO_SATZ_AN = LOHN_HEUTE.ahvIvEoSatzAn;
 export const ALV_SATZ_AN = LOHN_HEUTE.alvSatzAn;
 export const ALV_HOECHSTBETRAG_JAHR = LOHN_HEUTE.alvHoechstbetragJahr;
 export const AHV_FREIBETRAG_RENTNER_MONAT = LOHN_HEUTE.ahvFreibetragRentnerMonat;  // 16 800/Jahr
-function abzuegeRichtwertMonat(bruttoMonat, alter, rentenalter = false, stichtag) {
+// beitragsfrei (seit 26.10.2026, fedlex gelesen): erwerbstätige Kinder zahlen keine AHV/IV/EO «bis zum 31. Dezember des
+// Jahres, in welchem sie das 17. Altersjahr zurückgelegt haben» (AHVG Art. 3 Abs. 2 lit. a); die ALV folgt der AHV-
+// Beitragspflicht (AVIG Art. 2 Abs. 1 lit. a); die BVG-Pflicht beginnt erst am 1. Januar danach (BVG Art. 7 Abs. 1).
+// Dann zieht der Richtwert nichts ab. Bestimmt in alterUndRentenalter (utils/nettoAusProfil.js), nach Jahrgang.
+function abzuegeRichtwertMonat(bruttoMonat, alter, rentenalter = false, stichtag, beitragsfrei = false) {
   const w = lohnWerte(stichtag);
+  if (beitragsfrei) return 0;
   if (rentenalter) return Math.max(0, bruttoMonat - w.ahvFreibetragRentnerMonat) * w.ahvIvEoSatzAn;
   const gutschrift = bvgAltersgutschriftSatz(alter);
   const koord = bvgKoordinationsabzug(bruttoMonat * 12, stichtag);
@@ -150,9 +155,10 @@ function abzuegeRichtwertMonat(bruttoMonat, alter, rentenalter = false, stichtag
   return bruttoMonat * w.ahvIvEoSatzAn + Math.min(bruttoMonat, w.alvHoechstbetragJahr / 12) * w.alvSatzAn + pkMonat;
 }
 
-export function nettoZuBruttoRichtwert(nettoMonat, alter, rentenalter = false, stichtag) {
+export function nettoZuBruttoRichtwert(nettoMonat, alter, rentenalter = false, stichtag, beitragsfrei = false) {
   const netto = Math.max(0, Number(nettoMonat) || 0);
   if (netto <= 0) return 0;
+  if (beitragsfrei) return Math.round(netto);
   // Fixpunkt-Iteration: Brutto minus Abzüge soll das Netto treffen. Die Abzüge wachsen
   // monoton mit dem Brutto → wenige Schritte konvergieren.
   let brutto = netto / (1 - AHV_ALV_ARBEITNEHMER_SATZ);
@@ -171,8 +177,8 @@ export function nettoZuBruttoRichtwert(nettoMonat, alter, rentenalter = false, s
 // einem Brutto-Monatslohn — dieselben Abzüge wie oben (AHV/IV/EO + ALV 6.4 %, PK-Anteil nach Alter
 // über der Eintrittsschwelle). NICHT enthalten: NBU-Prämie, Krankentaggeld, überobligatorische PK,
 // Quellensteuer, 13. Monatslohn → das echte Netto liegt meist etwas TIEFER. Nur als «≈», nie verbindlich.
-export function bruttoZuNettoRichtwert(bruttoMonat, alter, rentenalter = false, stichtag) {
+export function bruttoZuNettoRichtwert(bruttoMonat, alter, rentenalter = false, stichtag, beitragsfrei = false) {
   const brutto = Math.max(0, Number(bruttoMonat) || 0);
   if (brutto <= 0) return 0;
-  return Math.round(brutto - abzuegeRichtwertMonat(brutto, alter, rentenalter, stichtag));
+  return Math.round(brutto - abzuegeRichtwertMonat(brutto, alter, rentenalter, stichtag, beitragsfrei));
 }
