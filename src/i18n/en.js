@@ -4032,7 +4032,7 @@ export default {
     },
   },
   budgetImport: {
-    importFailed: 'The import did not work. Please check the file and try again.',
+    importFailed: 'The import was not successful. Please check the file and try again.',
     title: 'Budget import',
     fileFormat: 'File format',
     csv: 'CSV (comma-separated)',

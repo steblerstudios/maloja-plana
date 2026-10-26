@@ -4079,7 +4079,7 @@ export default {
     },
   },
   budgetImport: {
-    importFailed: 'Der Import hat nicht geklappt. Bitte die Datei prüfen und nochmals versuchen.',
+    importFailed: 'Der Import ist nicht gelungen. Bitte die Datei prüfen und nochmals versuchen.',
     title: 'Budget Import',
     fileFormat: 'Dateiformat',
     csv: 'CSV (Komma-getrennt)',
