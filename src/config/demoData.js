@@ -126,6 +126,10 @@ export const DEMO_DATA = {
     allergies: 'Penicillin',
     medications: '',
     chronicDiseases: '',
+    // Hausarzt in der Liste, die das Kapitel zeigt (DoctorManager). Das alte Feld bleibt für Dossier,
+    // Notfallkarte und Rucksack, die noch nur `doctor` lesen — ohne Liste erschien das Beispiel als
+    // «Früherer Eintrag» unter einer leeren Liste (Seitenrundgang 27.09., K-F6).
+    doctorsList: [{ name: 'Dr. med. Lisa Brunner', specialty: 'hausarzt', phone: '+41 44 242 80 00' }],
     doctor: 'Dr. med. Lisa Brunner',
     doctorPhone: '+41 44 242 80 00',
     hospital: 'UniversitätsSpital Zürich',

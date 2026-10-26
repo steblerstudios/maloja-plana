@@ -117,9 +117,12 @@ function calcDuration(moveInDate, t) {
     const years = Math.floor(totalMonths / 12);
     const months = totalMonths % 12;
     if (years === 0 && months === 0) return t('mirror.wohnen.durationUnder1');
-    if (years === 0) return t('mirror.wohnen.durationMonths', { months: String(months) });
-    if (months === 0) return t('mirror.wohnen.durationYears', { years: String(years) });
-    return t('mirror.wohnen.durationFull', { years: String(years), months: String(months) });
+    // Einzahl eigens (Seitenrundgang 27.09./26.10.2026: «5 Jahre, 1 Monate», «1 Jahre»).
+    const j = years === 1 ? t('mirror.wohnen.durationYearsEins') : t('mirror.wohnen.durationYears', { years: String(years) });
+    const mo = months === 1 ? t('mirror.wohnen.durationMonthsEins') : t('mirror.wohnen.durationMonths', { months: String(months) });
+    if (years === 0) return mo;
+    if (months === 0) return j;
+    return t('mirror.wohnen.durationFull', { years: j, months: mo });
   } catch {
     return null;
   }

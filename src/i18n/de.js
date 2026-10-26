@@ -1848,7 +1848,7 @@ export default {
     freePerMonth: 'frei/Mt.',
     franchise: 'Franchise {value}',
     taxDeadline: 'Frist {date}',
-    checklistDone: 'erledigt',
+    checklistDone: '{n}/{total} erledigt',
     bloodType: 'Blutgruppe {type}',
   },
   fortschritt: {
@@ -2844,8 +2844,10 @@ export default {
       landlordLabel: 'Vermieter',
       durationUnder1: 'weniger als 1 Monat',
       durationMonths: '{months} Monate',
+      durationMonthsEins: '1 Monat',
+      durationYearsEins: '1 Jahr',
       durationYears: '{years} Jahre',
-      durationFull: '{years} Jahre, {months} Monate',
+      durationFull: '{years}, {months}',
     },
     finanzen: {
       incomeOnly: 'Monatliches Einkommen {income}',

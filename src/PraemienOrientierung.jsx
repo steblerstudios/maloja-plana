@@ -426,9 +426,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         // Jahr aus den Daten (Stichtag heute), nicht fest im Text — ab 1.1.2027 stehen hier die Prämien 2027.
         t('po.avgPremium', {
           jahr: regionInfo.jahr,
-          kinder: regionInfo.praemien.kinder.toFixed(0),
-          junge: regionInfo.praemien.junge.toFixed(0),
-          erwachsene: regionInfo.praemien.erwachsene.toFixed(0)
+          kinder: zahl(regionInfo.praemien.kinder),
+          junge: zahl(regionInfo.praemien.junge),
+          erwachsene: zahl(regionInfo.praemien.erwachsene)
         })
       ),
       // Regional vs. Schweiz — ruhiges Barometer (Fairness-Vision Stoßrichtung 1)
@@ -462,7 +462,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           t('po.comparison')
         ),
         React.createElement('div', { style: { fontSize: text.sm } },
-          t('po.yourPremium', { amount: userPremium.toFixed(2) })
+          t('po.yourPremium', { amount: zahl(userPremium, { stellen: 2 }) })
         ),
         // UVG: Mit/Ohne-Unfall-Umschalter — nur wenn ein Ohne-Tarif existiert (Erw/Jung).
         canToggle && React.createElement('div', { style: { display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: space.xs + 'px', margin: space.xs + 'px 0' } },
@@ -477,14 +477,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           )
         ),
         React.createElement('div', { style: { fontSize: text.sm } },
-          t('po.refPremium', { amount: shownRef.toFixed(2), franchise: userFranchise }) + refJahr
+          t('po.refPremium', { amount: zahl(shownRef, { stellen: 2 }), franchise: zahl(userFranchise, { hoechstens: 2 }) }) + refJahr
         ),
         canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginTop: '2px' } },
-          t('po.unfallSaving', { diff: saving.toFixed(2) })
+          t('po.unfallSaving', { diff: zahl(saving, { stellen: 2 }) })
         ),
         Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? (palette.roseDeep || palette.rose) : (palette.sageDeep || palette.sage) } },
           t(userPremium > shownRef ? 'po.premiumAbove' : 'po.premiumBelow', {
-            diff: Math.abs(userPremium - shownRef).toFixed(2)
+            diff: zahl(Math.abs(userPremium - shownRef), { stellen: 2 })
           })
         )
       );

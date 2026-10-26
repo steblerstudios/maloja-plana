@@ -1998,7 +1998,7 @@ export default {
     freePerMonth: "liber/mais",
     franchise: "Franschisa {value}",
     taxDeadline: "Termin {date}",
-    checklistDone: "fatgs",
+    checklistDone: "{n}/{total} fatgs",
     bloodType: "Grupa da sang {type}",
   },
 
@@ -5994,8 +5994,11 @@ export default {
       landlordLabel: 'Possessur',
       durationUnder1: 'main che 1 mais',
       durationMonths: '{months} mais',
+      // TODO(rm) Einzahl provisorisch, Gegenlese offen (26.10.2026)
+      durationMonthsEins: '1 mais',
+      durationYearsEins: '1 onn',
       durationYears: '{years} onns',
-      durationFull: '{years} onns, {months} mais',
+      durationFull: '{years}, {months}',
     },
     finanzen: {
       incomeOnly: 'Entrada mensiala {income}',

@@ -1838,7 +1838,7 @@ export default {
     freePerMonth: 'libero/mese',
     franchise: 'Franchigia {value}',
     taxDeadline: 'Scadenza {date}',
-    checklistDone: 'fatti',
+    checklistDone: '{n}/{total} fatti',
     bloodType: 'Gruppo sanguigno {type}',
   },
   fortschritt: {
@@ -2832,8 +2832,10 @@ export default {
       landlordLabel: 'Locatore',
       durationUnder1: 'meno di un mese',
       durationMonths: '{months} mesi',
+      durationMonthsEins: '1 mese',
+      durationYearsEins: '1 anno',
       durationYears: '{years} anni',
-      durationFull: '{years} anni, {months} mesi',
+      durationFull: '{years}, {months}',
     },
     finanzen: {
       incomeOnly: 'Reddito mensile {income}',
