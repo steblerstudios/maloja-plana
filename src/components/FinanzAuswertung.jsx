@@ -10,7 +10,7 @@ import { openPrintWindow, escapeHtml } from '../utils/helpers.js';
 import { ExportVorschau } from './ExportVorschau.jsx';
 import { BRANCHENLOHN, getBranchenvergleich } from '../data/branchenLohn.js';
 import { berechneArmutsgrenze } from '../data/sozialhilfeRechner.js';
-import { nettoZuBruttoRichtwert } from '../data/ahvRechner.js';
+import { nettoZuBruttoRichtwert, AHV_FREIBETRAG_RENTNER_MONAT } from '../data/ahvRechner.js';
 import { LohnEinordnung } from './LohnEinordnung.jsx';
 import { lohnBandState } from '../data/lohnEinordnung.js';
 import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
@@ -308,7 +308,11 @@ export const LohnStandort = ({ palette, t, data, isDarkMode, onNavigate, w, aktu
       // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
       // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
       React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
-        t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter, rentenalter)) }))
+        // Im Rentenalter eine eigene Begründung: dort rechnet der Richtwert ohne ALV/PK (lohnAbzuege.js).
+        t(rentenalter ? 'finanzUebersicht.povertyBruttoHintRente' : 'finanzUebersicht.povertyBruttoHint', {
+          brutto: formatCHF(nettoZuBruttoRichtwert(income, alter, rentenalter)),
+          freibetrag: formatCHF(AHV_FREIBETRAG_RENTNER_MONAT),
+        }))
     ),
     React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate, aktuellesKapitel }),
     (() => {
