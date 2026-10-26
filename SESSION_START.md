@@ -17,6 +17,15 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> 🧾 **Nachtrag 26.10.2026, 04:25 — #601 und #602 dazu. Nichts gemergt, NICHT live.**
+>
+> **Gemessen** (04:20): main = `0413772a` · live = `4299bfb9` (0.1.48-beta) · 112 Commits dazwischen. Alle Zweige gepusht, sauber.
+> - **#601** `feat/absicherung-je-risiko` `06339b11` (auf #598): «Absicherung je Risiko» als Liste in der Versicherungs-Übersicht;
+>   Fach- (0 Blocker, 8 «Sollte») und Textbefunde eingearbeitet; zusätzlich gelesen AHVG 21, 24 Abs. 1, 42 · IVG 39 · UVV 13.
+> - **#602** `fix/bvg-restzeit` `61cd50c7` (auf #600): BVG-Hochrechnung mit monatsgenauer Restzeit; Projektion = BVG-Block.
+> **Merge-Reihenfolge:** #586 → #588 → #589 → #590 → #593 → #599 → #600 → #602 (#591 auf #586) · #594 → #595 + #596 → #597 →
+> #598 → #601. Offen wie unten, ohne «BVG-Hochrechnung aufgerundet» (erledigt in #602).
+
 > 🧾 **Nachtrag 26.10.2026, 03:50 — Vier weitere Entwurfs-PRs (#597–#600) + Zweig «Absicherung je Risiko». Nichts gemergt, NICHT live.**
 >
 > **Gemessen** (`bash scripts/stand-jetzt.sh`, 03:47): main = `0413772a` (26.10. 00:48, #569 gemergt) · live = `4299bfb9`
