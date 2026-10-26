@@ -56,7 +56,8 @@ Alle anderen Punkte aus K-F, K-G, Y, Z, AA, AB, AC, AD, AE und M1–M8 sind auf 
 | D14 | Notfall-Dossier, Notfallkarte, Rucksack, Kapitel-Satz | Lesen nur das alte Feld `notfall.doctor`. Wer den Hausarzt über die Liste im Kapitel einträgt (`doctorsList`, DoctorManager), fehlt dort | Fehler | `dossierGenerator.js:171, 473`, `MirrorCards.jsx:257`, `data/gepaeck.js:113`, `components/NotfallImKapitel.jsx:30`; Druck der Portemonnaie-Karte liest beide (`ChapterView.jsx:1187-1196`) | eine Lesestelle «Hausarzt» (Liste vor altem Feld), überall verwenden; eigener Zweig |
 | D15 | Versicherungs-Übersicht | «Durchschnittsprämie 2026», obwohl die Prämien 2027 seit 29.09. veröffentlicht sind und der Kassenvergleich in der Wechselzeit schon 2027 nimmt (#597) | prüfen | `PraemienOrientierung.jsx:426` (Stichtag heute) | entscheiden, ob der Durchschnitt in der Wechselzeit auch das Folgejahr zeigt |
 
-Behoben auf `fix/fehlerklassen-dashboard-kapitel`: D1, D2, D12, K-F3, K-F4, K-F6, K-F8.
+Behoben auf `fix/fehlerklassen-dashboard-kapitel` (#612): D1, D2, D12, K-F3, K-F4, K-F6, K-F8.
+Behoben auf `fix/hausarzt-aus-liste` (#613): D14, dazu die Vollständigkeit, die die Liste unter `doctorList` suchte. Offen als Produktentscheid: Fachärzte in Dossier/QR («weitere Ärzte»)?
 
 ### Zu entscheiden (Stebler Studios)
 
