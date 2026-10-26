@@ -53,6 +53,8 @@ export const HilflosenRechner = ({ palette, t }) => {
   let ergebnisInhalt;
   if (r.grund === 'minderjaehrig_heim') {
     ergebnisInhalt = React.createElement('div', { style: s.sub }, t('hilflos.kindHeim'));
+  } else if (r.grund === 'besitzstand_klaeren') {
+    ergebnisInhalt = React.createElement('div', { style: s.sub }, t('hilflos.besitzstandKlaeren'));
   } else if (r.grund === 'ahv_leicht_heim') {
     ergebnisInhalt = React.createElement('div', { style: s.sub }, t('hilflos.ahvLeichtHeim'));
   } else if (r.grund === 'grad_offen') {
@@ -85,6 +87,9 @@ export const HilflosenRechner = ({ palette, t }) => {
     ], wohnen, setWohnen),
     auswahl(t('hilflos.frageGrad'), gradOptionen, grad, setGrad),
     React.createElement('div', { style: s.note }, t('hilflos.gradErklaerung')),
+    // Lebenspraktische Begleitung gilt nur bei der IV, für Erwachsene zu Hause (IVG Art. 42 Abs. 3,
+    // Art. 42bis Abs. 5) — die AHV kennt sie nicht.
+    person === 'iv' && wohnen === 'zuhause' && React.createElement('div', { style: s.note }, t('hilflos.gradBegleitung')),
     person === 'ahv' && auswahl(t('hilflos.frageBesitzstand'), [
       { v: false, l: t('common.no') },
       { v: true, l: t('common.yes') },
@@ -97,10 +102,15 @@ export const HilflosenRechner = ({ palette, t }) => {
     ], intensivStunden, setIntensivStunden),
     React.createElement('div', { style: s.result, 'aria-live': 'polite' }, ergebnisInhalt),
     React.createElement(ErgebnisArt, { palette, t, ergebnis: heErgebnis({ grad }) }),
-    React.createElement('div', { style: s.note }, t(r.traeger === 'ahv' ? 'hilflos.wartezeitAhv' : 'hilflos.wartezeitIv')),
-    React.createElement('div', { style: s.note }, t('hilflos.unabhaengig')),
+    React.createElement('div', { style: s.note }, t('hilflos.stand', { jahr: r.jahr })
+      + (r.belegt ? '' : ' ' + t('hilflos.nichtNachgefuehrt'))),
     r.gerechnet && React.createElement('div', { style: s.note }, t('hilflos.gerechnetNote', { jahr: r.jahr })),
-    React.createElement('div', { style: s.note }, t('hilflos.folgen')),
+    minderjaehrig && React.createElement('div', { style: s.note }, t('hilflos.proTag')),
+    React.createElement('div', { style: s.note },
+      t(minderjaehrig ? 'hilflos.wartezeitKind' : r.traeger === 'ahv' ? 'hilflos.wartezeitAhv' : 'hilflos.wartezeitIv')),
+    React.createElement('div', { style: s.note }, t('hilflos.unabhaengig')),
+    React.createElement('div', { style: s.note }, t(r.traeger === 'ahv' ? 'hilflos.voraussetzungAhv' : 'hilflos.voraussetzungIv')),
+    React.createElement('div', { style: s.note }, t(r.traeger === 'ahv' ? 'hilflos.folgenAhv' : 'hilflos.folgen')),
     React.createElement(ExternerLink, {
       t, style: s.extLink,
       // Merkblätter gibt es auf d/f/i; en und rm führen aufs deutsche (hilflos.merkblattSprache).

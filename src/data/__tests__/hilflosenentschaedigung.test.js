@@ -61,6 +61,15 @@ describe('Hilflosenentschädigung · Sonderfälle', () => {
     expect(r.betragMonat).toBe(1260);
     expect(r.besitzstand).toBe(true);
   });
+  it('AHV, leicht im Heim mit Besitzstand: kein Nullbetrag, die Ausgleichskasse klärt', () => {
+    const r = he({ traeger: 'ahv', grad: 'leicht', wohnen: 'heim', besitzstandIV: true, stichtag: 2026 });
+    expect(r.anspruch).toBeNull();
+    expect(r.grund).toBe('besitzstand_klaeren');
+    expect(r.betragMonat).toBeNull();
+  });
+  it('Spanne mit Besitzstand reicht bis zum IV-Betrag', () => {
+    expect(he({ traeger: 'ahv', besitzstandIV: true, stichtag: 2026 }).spanne).toEqual({ min: 504, max: 2016 });
+  });
   it('Grad offen: keine Zahl, nur die Spanne', () => {
     const r = he({ traeger: 'iv', stichtag: 2026 });
     expect(r.betragMonat).toBeNull();

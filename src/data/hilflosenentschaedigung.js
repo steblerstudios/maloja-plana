@@ -13,11 +13,22 @@
 //     4 / 6 / 8 Stunden täglich; er entfällt bei einem Heimaufenthalt. Für Minderjährige wird
 //     pro Tag gerechnet.
 //   IV, IVG Art. 42 Abs. 4: Anspruch erst, wenn die Hilflosigkeit «während eines Jahres ohne
-//     wesentlichen Unterbruch» bestanden hat.
-//   AHV, AHVG Art. 43bis Abs. 3 (Fedlex, Stand 1.1.2026): 80 / 50 / 20 % des MINDESTbetrages der
-//     Altersrente. Abs. 1bis: der leichte Grad entfällt bei einem Aufenthalt im Heim; mittel und
-//     schwer sind im Heim gleich hoch wie zu Hause. Abs. 2: Wartezeit sechs Monate. Abs. 4:
-//     wer vorher eine HE der IV bezog, erhält sie «mindestens im bisherigen Betrag» (Besitzstand).
+//     wesentlichen Unterbruch» bestanden hat; vorbehalten Art. 42bis Abs. 3: unter einem Jahr,
+//     «sobald voraussichtlich während mehr als zwölf Monaten eine Hilflosigkeit besteht».
+//     Abs. 4bis: die IV-HE endet beim Vorbezug der GANZEN Altersrente oder mit dem Referenzalter.
+//     Abs. 3: lebenspraktische Begleitung nur zu Hause, immer leichter Grad; bei ausschliesslich
+//     psychischer Beeinträchtigung nur mit Rentenanspruch. Art. 42bis Abs. 5: Minderjährige nicht
+//     allein wegen lebenspraktischer Begleitung. Art. 48: Nachzahlung höchstens zwölf Monate.
+//   AHV, AHVG Art. 43bis Abs. 1: Personen, «die ihre ganze Altersrente beziehen», oder mit EL,
+//     Wohnsitz und gewöhnlicher Aufenthalt in der Schweiz. Abs. 3 (Fedlex, Stand 1.1.2026):
+//     80 / 50 / 20 % des MINDESTbetrages der Altersrente. Abs. 1bis: «Der Anspruch auf die
+//     Entschädigung für eine Hilflosigkeit leichten Grades entfällt bei einem Aufenthalt im Heim»;
+//     mittel und schwer sind im Heim gleich hoch wie zu Hause. Abs. 2: die Hilflosigkeit muss
+//     «ununterbrochen während mindestens sechs Monaten bestanden» haben. Abs. 4: wer bei
+//     Erreichen des Referenzalters bzw. Vorbezug eine HE der IV bezog, erhält sie «mindestens im
+//     bisherigen Betrag» (Besitzstand).
+//   Ob der Besitzstand eine IV-HE leichten Grades im Heim erhält (Abs. 1bis gegen Abs. 4), ist
+//   nicht belegt (Fachprüfung 26.10.2026) — der Rechner zeigt dafür keinen Betrag.
 //
 // === Beträge ===
 //   2026 zitiert: Merkblatt 4.13 (Stand 1.1.2025, Ziff. 6 und 9) und Merkblatt 3.01
@@ -43,7 +54,7 @@ export const INTENSIV_ANTEIL = Object.freeze({ 4: 0.4, 6: 0.7, 8: 1.0 });
 // Wartezeit bis zum Anspruch, in Monaten.
 export const WARTEZEIT_MONATE = Object.freeze({ iv: 12, ahv: 6 });
 // IV: wer sich später als ein Jahr nach Entstehen des Anspruchs anmeldet, erhält höchstens die
-// zwölf Monate vor der Anmeldung (Merkblatt 4.13 Ziff. 5).
+// zwölf Monate vor der Anmeldung (IVG Art. 48 Abs. 1, Merkblatt 4.13 Ziff. 5).
 export const NACHZAHLUNG_MAX_MONATE_IV = 12;
 
 export const HE_WERTE_JE_JAHR = Object.freeze({
@@ -86,11 +97,19 @@ function betragFuer(w, traeger, grad, wohnen) {
   return w.iv[wohnen][grad];
 }
 
+// AHV mit Besitzstand: mindestens der IV-Betrag. Leicht im Heim bleibt offen (null), siehe Kopf.
+function betragMitBesitzstand(w, traeger, grad, wohnen, besitzstandIV) {
+  const b = betragFuer(w, traeger, grad, wohnen);
+  if (traeger !== 'ahv' || !besitzstandIV || b == null) return { betrag: b, besitzstand: false };
+  const iv = w.iv[wohnen][grad];
+  return iv > b ? { betrag: iv, besitzstand: true } : { betrag: b, besitzstand: false };
+}
+
 /**
  * Monatsbetrag der Hilflosenentschädigung.
  *
  * @param {Object} p
- * @param {'iv'|'ahv'} p.traeger          IV vor dem Referenzalter, AHV mit ganzer Altersrente oder EL
+ * @param {'iv'|'ahv'} p.traeger          IV ohne ganze Altersrente, AHV mit ganzer Altersrente oder EL
  * @param {'leicht'|'mittel'|'schwer'|null} p.grad  null = noch nicht bekannt → nur die Spanne
  * @param {'zuhause'|'heim'} p.wohnen      Heim = mehr als 15 Tage im Monat (Merkblatt 4.13 Ziff. 6)
  * @param {boolean} [p.minderjaehrig]      nur IV; Betrag pro Tag gerechnet, hier als Monat
@@ -118,25 +137,22 @@ export function berechneHilflosenentschaedigung({
     return { ...basis, anspruch: null, grund: 'minderjaehrig_heim', betragMonat: null, intensivMonat: 0 };
   }
 
+  const bs = effTraeger === 'ahv' && besitzstandIV;
+
   if (!GRADE.includes(grad)) {
-    const moeglich = GRADE.map((g) => betragFuer(w, effTraeger, g, wo)).filter((b) => b != null);
+    const moeglich = GRADE.map((g) => betragMitBesitzstand(w, effTraeger, g, wo, bs).betrag).filter((b) => b != null);
     return {
       ...basis, anspruch: null, grund: 'grad_offen', betragMonat: null, intensivMonat: 0,
       spanne: { min: Math.min(...moeglich), max: Math.max(...moeglich) },
     };
   }
 
-  let betrag = betragFuer(w, effTraeger, grad, wo);
+  // «mindestens im bisherigen Betrag» — den bisherigen kennt nur die Verfügung. Als Näherung
+  // der IV-Betrag von heute für denselben Grad und dieselbe Wohnform.
+  const { betrag, besitzstand } = betragMitBesitzstand(w, effTraeger, grad, wo, bs);
   if (betrag == null) {
+    if (bs) return { ...basis, anspruch: null, grund: 'besitzstand_klaeren', betragMonat: null, intensivMonat: 0 };
     return { ...basis, anspruch: false, grund: 'ahv_leicht_heim', betragMonat: 0, intensivMonat: 0 };
-  }
-
-  let besitzstand = false;
-  if (effTraeger === 'ahv' && besitzstandIV) {
-    // «mindestens im bisherigen Betrag» — den bisherigen kennt nur die Verfügung. Als Näherung
-    // der IV-Betrag von heute für denselben Grad und dieselbe Wohnform.
-    const ivBetrag = w.iv[wo][grad];
-    if (ivBetrag > betrag) { betrag = ivBetrag; besitzstand = true; }
   }
 
   const stunden = INTENSIV_ANTEIL[intensivStunden] ? intensivStunden : 0;
