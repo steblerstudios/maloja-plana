@@ -6073,6 +6073,7 @@ export default {
     wechselzeitStufen: 'Premiums {jahr} — they apply from 1 January {jahr}. Lower franchise: request to the insurer no later than {datum}. Higher franchise: the deadline is set by the insurer in its terms.',
     wechselzeitStufenNachFrist: 'Premiums {jahr} — they apply from 1 January {jahr}. A lower franchise is no longer possible for that date. For a higher one, the deadline is set by the insurer in its terms.',
     refJahr: 'premiums {jahr}',
+    veraltet: 'Premiums for {aktuell} are not yet stored here. The figures below are the {jahr} premiums — the insurer’s premium notice is what counts.',
     chooseTarget: 'Preferred',
     targetSelected: 'Preferred',
     targetChosenHint: 'Preferred insurer: {insurer} — it appears in the switch flow.',

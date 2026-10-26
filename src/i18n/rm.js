@@ -5397,6 +5397,8 @@ export default {
     wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
     // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
     refJahr: 'Prämien {jahr}',
+    // TODO(rm): provisorisch deutsch — Prämien veraltet (26.10.2026)
+    veraltet: 'Für {aktuell} sind hier noch keine Prämien hinterlegt. Die Werte unten sind die Prämien {jahr} — massgebend ist die Prämienmitteilung der Kasse.',
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',

@@ -6047,6 +6047,7 @@ export default {
     wechselzeitStufen: 'Premi {jahr} — valgono dal 1° gennaio {jahr}. Franchigia più bassa: richiesta alla cassa entro il {datum}. Franchigia più alta: il termine lo fissa la cassa nelle sue condizioni.',
     wechselzeitStufenNachFrist: 'Premi {jahr} — valgono dal 1° gennaio {jahr}. Una franchigia più bassa non è più possibile a questa data. Per una più alta, il termine lo fissa la cassa nelle sue condizioni.',
     refJahr: 'premi {jahr}',
+    veraltet: 'I premi {aktuell} non sono ancora registrati qui. I valori qui sotto sono i premi {jahr} — fa stato la comunicazione del premio della cassa.',
     chooseTarget: 'Desiderata',
     targetSelected: 'Desiderata',
     targetChosenHint: 'Cassa desiderata: {insurer} — appare nel processo di cambio.',
