@@ -286,7 +286,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     mindestlohn && React.createElement('div', {
       style: { fontSize: text.xs, color: mlBreached ? palette.roseDeep : palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     },
-      t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monatVollzeit), stunde: mindestlohn.chfStunde.toFixed(2), jahr: mindestlohn.jahr }),
+      t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monatVollzeit), stunde: zahl(mindestlohn.chfStunde, { stellen: 2 }), jahr: mindestlohn.jahr }),
       mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') + ' ' + t('lohnCheck.ausnahmen') : '',
       // Qualifiziert konform: Basislohn unter dem vollen, aber über dem reduzierten Boden —
       // gesetzeskonform, SOFERN der 13. angerechnet wird (in BS nur anteilig-monatlich).

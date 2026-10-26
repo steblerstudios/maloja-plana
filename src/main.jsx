@@ -1680,6 +1680,10 @@ const AppInner = ({ demo }) => {
           onSave: (schuldenData) => writeData(prev => nachSchuldenSpeichern(prev, schuldenData))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
+          // key wie bei Schulden: der Rechner übernimmt taxData beim Öffnen und speichert data samt taxData —
+          // ohne Neuaufbau nach «Beispiel verlassen» landeten die Beispielwerte im echten Profil (Seitenrundgang
+          // 26.10.2026, J).
+          key: datenModus,
           palette, t, vorlaeufig,
           data: activeData,
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),

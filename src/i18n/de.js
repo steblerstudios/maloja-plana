@@ -3223,6 +3223,7 @@ export default {
   },
 
   tax: {
+    abzuegeGeschaetzt: 'Abzüge (geschätzt)',
     title: 'Steuer-Orientierung',
     intro: { sie: 'Diese Übersicht zeigt Ihnen eine grobe Einschätzung Ihrer Steuerbelastung — als Orientierung, nicht als Steuerberatung. Sie können Abzüge ausprobieren und sehen, wie sich Ihre Situation verändert.', du: 'Diese Übersicht zeigt dir eine grobe Einschätzung deiner Steuerbelastung — als Orientierung, nicht als Steuerberatung. Du kannst Abzüge ausprobieren und sehen, wie sich deine Situation verändert.' },
     inputs: 'Eingaben',
