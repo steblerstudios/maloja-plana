@@ -101,7 +101,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', null, t('sozialhilfe.totalNeeds')),
           React.createElement('span', null, formatCHF(sozialhilfe.totalBedarf))
         ),
-        Row(t('sozialhilfe.deductIncome'), '- ' + formatCHF(sozialhilfe.income), palette.mid),
+        Row(t('sozialhilfe.deductIncome'), betrag(-(sozialhilfe.income || 0)), palette.mid), // echtes Minus wie im Steuerrechner (26.10.2026)
         // Aus brutto geschätzt (utils/nettoAusProfil.js, Predeploy 25.09.2026) — sagen, nicht verschweigen.
         sozialhilfe.einkommenGeschaetzt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, padding: '2px 0 ' + space.xs + 'px' } },
           t('einkommensfeld.nettoGeschaetzt', { value: zahl(sozialhilfe.income) })),

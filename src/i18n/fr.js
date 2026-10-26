@@ -3189,6 +3189,7 @@ export default {
   },
 
   tax: {
+    abzuegeGeschaetzt: 'Déductions (estimation)',
     title: 'Orientation fiscale',
     intro: { sie: 'Cet aperçu vous donne une estimation approximative de votre charge fiscale — à titre indicatif, pas de conseil fiscal. Vous pouvez essayer différentes déductions et voir comment votre situation évolue.', du: 'Cet aperçu te donne une estimation approximative de ta charge fiscale — à titre indicatif, pas de conseil fiscal. Tu peux essayer différentes déductions et voir comment ta situation évolue.' },
     inputs: 'Données',

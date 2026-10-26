@@ -3142,6 +3142,7 @@ export default {
   },
 
   tax: {
+    abzuegeGeschaetzt: 'Deduzioni (stima)',
     title: 'Orientamento fiscale',
     intro: { sie: 'Questa panoramica Le offre una stima approssimativa del Suo carico fiscale — come orientamento, non come consulenza fiscale. Può provare diverse deduzioni e vedere come cambia la Sua situazione.', du: 'Questa panoramica ti offre una stima approssimativa del tuo carico fiscale — come orientamento, non come consulenza fiscale. Puoi provare diverse deduzioni e vedere come cambia la tua situazione.' },
     inputs: 'Dati',

@@ -3189,6 +3189,7 @@ export default {
   },
 
   tax: {
+    abzuegeGeschaetzt: 'Deductions (estimate)',
     title: 'Tax orientation',
     intro: 'This overview gives you a rough estimate of your tax burden — as orientation, not tax advice. You can try different deductions and see how your situation changes.',
     inputs: 'Inputs',

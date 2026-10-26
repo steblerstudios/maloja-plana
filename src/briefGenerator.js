@@ -611,8 +611,8 @@ function generateWageClaim(data, t, options = {}) {
 
   const befund = lohnBefund(data, jobKey);
   const hasFigures = befund && befund.status === 'unterMindestlohn';
-  const lohnStunde = hasFigures ? befund.lohnStunde.toFixed(2) : t('briefe.fillIn');
-  const mindestStunde = hasFigures ? befund.mindestStunde.toFixed(2) : t('briefe.fillIn');
+  const lohnStunde = hasFigures ? zahl(befund.lohnStunde, { stellen: 2 }) : t('briefe.fillIn');
+  const mindestStunde = hasFigures ? zahl(befund.mindestStunde, { stellen: 2 }) : t('briefe.fillIn');
   const differenz = hasFigures ? formatAmount(befund.differenzMonat) : t('briefe.fillIn');
   // Jahr inkl. führendem Leerzeichen + Klammern nur wenn belegt (kein doppeltes Leerzeichen).
   const jahr = hasFigures ? ` (${befund.jahr})` : '';

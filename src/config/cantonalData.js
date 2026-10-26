@@ -369,7 +369,7 @@ export function calculateSozialhilfe(data) {
     isRetired: hh.isRetired,
     canton,
     noteKey: deficit > 0 ? 'sozialhilfeCalc.entitled' : 'sozialhilfeCalc.notEntitled',
-    noteParams: deficit > 0 ? { value: deficit.toFixed(0) } : {},
+    noteParams: deficit > 0 ? { value: Math.round(deficit) } : {}, // Zahl → t() setzt «CHF 1’234» (S5)
   };
 }
 

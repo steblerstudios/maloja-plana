@@ -4804,6 +4804,8 @@ export default {
   },
 
   tax: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    abzuegeGeschaetzt: 'Deducziuns (stima)',
     title: 'Orientaziun da taglia',
     intro: { sie: "Quest survista As dat ina stima approximativa da Vossa chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Vus pudais empruvar differentas deducziuns e vesair co che Vossa situaziun sa mida.", du: "Quest survista ta dat ina stima approximativa da Tia chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Ti pos empruvar differentas deducziuns e vesair co che Tia situaziun sa mida." },
     inputs: 'Endataziuns',
