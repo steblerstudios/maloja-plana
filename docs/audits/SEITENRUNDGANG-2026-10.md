@@ -117,6 +117,43 @@ Erledigt seit 27.09.: W1, W8, N1, R1, IPV-Entscheide, 3a-Feld am Höchstbetrag, 
 
 ---
 
+## Notfall, Anker, Datenseiten, Rahmen (geprüft 26.10.2026, Code-Lesung, Stand `2ad97fe0`)
+
+Erledigt: R1, R5 Tour, R7 (Auge prüfen), Dokumentenablage, Merkliste, Menü, Eingang, P (Notfall-Einstieg entfällt).
+
+**Wichtig zu S1:** `t()` gibt bei fehlendem Schlüssel den **Schlüssel selbst** zurück (`i18n/index.js`), die Rückfälle `t('x') || 'Text'` greifen nie. Im Kalender steht nach dem Abhaken wörtlich «calendar.nicelyDone», das Menü liest «common.clear» vor. Weitere solche Rückfälle: `MobileNav.jsx:61, 254, 317`, `LanguageManager.jsx:56`.
+
+### Entschieden, nicht (ganz) gebaut
+
+| ID | Status | Beleg |
+|---|---|---|
+| **N Suche** | offen (keine Bereichs-Kacheln, keine Gruppe Lebensereignisse; nicht auffindbar: «Was steht mir zu?», Rucksack, Obstgarten, Rechtliches, Dossiers) | `SearchView.jsx:51-75`, `werkzeugRegister.js:80` |
+| **O «Was steht mir zu?» als eine Seite** | offen (`#/schnellcheck`, `#/ansprueche` leiten nicht um) | `main.jsx:1753`, `hashRouter.js:50-57` |
+| **K Budget in der Finanz-Übersicht** | offen (`#/sync` lebt weiter) | `main.jsx:1695`, `werkzeugRegister.js:36` |
+| **Q Notfallkarte: 56-px-Nummernknöpfe in zwei Spalten**, Schwesterseiten-Zeile auf Q/R/S | offen | `NotfallVorlesekarte.jsx:63-67` |
+| I Einstellungen (Schublade und Seite eins, Knopf zeigt Zustand, keine Versalien, «Rundgang neu starten») | offen | `main.jsx:1284-1288`, `ThemeToggle.jsx:30`, `Heading.jsx:47` |
+| M Pillen-Seite (Geschenk-Symbol, goldene Auswahl, Bereichssymbol) | teilweise | `Lebenssituationen.jsx:111-195` |
+| L Rucksack «Wieder einpacken» als ruhiger Rahmen-Knopf | teilweise (goldene Pille, ~30 px) | `Gepaeck.jsx:141-148` |
+| R Notfallpass (Versalien, Anleitungen zuklappen, Kopieren 36 px) | teilweise | `NotfallpassBlatt.jsx:46, 56, 114-127` |
+| S/U/V Kopf ohne Karte; V zwei gleich laute Knöpfe | teilweise/offen | `NotfallDossier.jsx:120-139`, `Lebensmappe.jsx:82`, `BehoerdenDossier.jsx:140-170` |
+| T Meine Unterlagen (zwei Gruppen, ohne «… öffnen») | teilweise | `UnterlagenWege.jsx:42-53` |
+| R2/R3/R6/R8/S4 Rahmen-Altbefunde | offen | s. Prüferbericht: `NotificationSettings.jsx:72`, `LegalView.jsx:114-121`, Dossier-Leerzustände, zwei Suchen, `SettingsView.jsx:61` |
+| Druck-HTML `lang` fest «de» | teilweise | `dossierGenerator.js:247, 581, 1092` |
+
+### Neue Befunde
+
+| # | Seite | Befund | Klasse | Beleg | Vorschlag |
+|---|---|---|---|---|---|
+| R9 | **Notfallkarte** | Notruf-Links und Standort-Knopf ~30 px, im Ernstfall | Fehler | `NotfallVorlesekarte.jsx:63-67, 79-83` | 44 px (Q: 56 px) |
+| R10 | Kopfzeile | aria-label «Anrede: Sie» fest deutsch | vergessen | `main.jsx:1088, 1092` | t() |
+| R11 | Benachrichtigungen | aria ' on'/' off' englisch | Fehler | `NotificationSettings.jsx:72` | t() |
+| R12 | Tippziele < 44 px | Einstellungs-Schublade schliessen 24 px, Merkliste 32 px, Ablage-Filter 36 px, Kalender 32 px, Notfallpass Kopieren 36 px, Arztkoffer/Rechtliches Zurück ~31 px | Detail | `MobileNav.jsx:61`, `MerklisteView.jsx:112`, `DocumentTresor.jsx:325`, `CalendarReminders.jsx:392, 502`, `NotfallpassBlatt.jsx:56`, `ArztkofferView.jsx:150-156`, `LegalView.jsx:114-121` | 44 px |
+| R13 | Was steht mir zu? | rohes `h1`, Zeichen «health» statt Geschenk | Gestalt | `Lebenssituationen.jsx:111-113`, `werkzeugRegister.js:80` | `PageTitle`, ein Zeichen |
+| R14 | Suche, Kalender | ganze Seite in einer Karte, Versalien | Gestalt | `SearchView.jsx:28, 33`, `CalendarReminders.jsx:395` | mit N bzw. Kalender-Umbau |
+| R15 | Einstellungen | «Persönliche Basis bearbeiten» per `setView` statt `handleNavigate` | prüfen | `main.jsx:1782` | `handleNavigate('chapter', 0)` |
+
+---
+
 ## Werte 2027 (geprüft 26.10.2026, swiss-precision-pruefer)
 
 Volle Tabelle: [`WERTE-2027-STAND-2026-10.md`](WERTE-2027-STAND-2026-10.md). Bundeswerte (AHV, BVG-Grenzbeträge, 3a, Lohnabzüge, EO, ALV-Höchstverdienst, Hilflosenentschädigung, BAG-Prämien) schalten am 1.1.2027 selbst um.
