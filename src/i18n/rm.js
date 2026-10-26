@@ -2293,6 +2293,8 @@ export default {
       hints: {
         liabilityPremium: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         householdInsuranceAmount: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
+        // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+        bvgInsurer: 'Nagina cassa da pensiun? Lura tscherner «Na concerna betg». En intgins chantuns vala quai per la reducziun da premias sco «nagina 2. pitga».',
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',

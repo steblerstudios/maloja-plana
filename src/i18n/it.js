@@ -2184,6 +2184,7 @@ export default {
       hints: {
         liabilityPremium: { sie: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisca il premio una sola volta.", du: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisci il premio una sola volta." },
         householdInsuranceAmount: { sie: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisca il premio una sola volta.", du: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisci il premio una sola volta." },
+        bvgInsurer: 'Nessuna cassa pensione? Allora scegliere «Non pertinente». In alcuni Cantoni, per la riduzione dei premi ciò vale come «nessun 2° pilastro».',
         bvgContribution: 'Solo a titolo informativo — non viene dedotto nuovamente dal salario netto nel budget.',
         bvgBalance: 'Dall\'ultimo certificato della cassa pensione. Utilizzato nel calcolatore previdenziale.',
         policyNumber: 'Numero di contratto/polizza dell\'assicurazione di base — riportato sulla polizza, non il numero della tessera.',

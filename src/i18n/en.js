@@ -2184,6 +2184,7 @@ export default {
       hints: {
         liabilityPremium: "Annual premium. One twelfth of it counts in the budget each month. Household contents and liability in one policy? Then enter the premium only once.",
         householdInsuranceAmount: "Annual premium. One twelfth of it counts in the budget each month. Household contents and liability in one policy? Then enter the premium only once.",
+        bvgInsurer: 'No pension fund? Then choose «Does not apply». In some cantons this counts as «no second pillar» for the premium reduction.',
         bvgContribution: 'For reference only — not subtracted again from net income in the budget.',
         bvgBalance: 'From your latest pension fund statement. Feeds into the pension calculator.',
         policyNumber: 'Contract/policy number of the basic insurance — shown on the policy document, not the card number.',

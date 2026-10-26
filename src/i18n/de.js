@@ -2193,6 +2193,7 @@ export default {
       hints: {
         liabilityPremium: "Jahresprämie. Im Budget zählt davon pro Monat ein Zwölftel. Hausrat und Haftpflicht in einer Police? Dann die Prämie nur einmal eintragen.",
         householdInsuranceAmount: "Jahresprämie. Im Budget zählt davon pro Monat ein Zwölftel. Hausrat und Haftpflicht in einer Police? Dann die Prämie nur einmal eintragen.",
+        bvgInsurer: 'Keine Pensionskasse? Dann «Trifft nicht zu» wählen. In einigen Kantonen zählt das für die Prämienverbilligung als «keine 2. Säule».',
         bvgContribution: 'Nur zur Übersicht — wird im Budget nicht nochmals vom Nettolohn abgezogen.',
         bvgBalance: 'Letzter PK-Ausweis. Fliesst in den Vorsorge-Rechner.',
         policyNumber: 'Vertrags-/Policennummer der Grundversicherung — steht auf der Police, nicht die Kartennummer.',

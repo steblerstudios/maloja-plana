@@ -2184,6 +2184,7 @@ export default {
       hints: {
         liabilityPremium: { sie: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscrivez la prime qu’une fois.", du: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscris la prime qu’une fois." },
         householdInsuranceAmount: { sie: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscrivez la prime qu’une fois.", du: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscris la prime qu’une fois." },
+        bvgInsurer: 'Pas de caisse de pension ? Choisir alors «Ne s\'applique pas». Dans certains cantons, cela compte pour la réduction des primes comme «pas de 2e pilier».',
         bvgContribution: 'À titre indicatif — ce montant n\'est pas déduit une seconde fois du salaire net dans le budget.',
         bvgBalance: 'Dernier certificat de caisse de pension. Utilisé dans le calculateur de prévoyance.',
         policyNumber: 'Numéro de contrat/police de l\'assurance de base — figure sur la police, pas le numéro de carte.',
