@@ -509,11 +509,12 @@ export default {
     entl: {
       hoursLabel: 'Tgira per emna',
       hoursUnit: 'uras',
-      resultLabel: 'Indemnisaziun pussaivla (brutto)',
+      resultLabel: 'Indemnisaziun pussaivla (grondezza)',
       month: 'mais',
       year: 'onn',
-      rateNote: 'Spanna da {von} fin {bis} CHF per ura: quai survegnivan confamigliars che tgiran fin ussa per regla tenor la regenza da Basilea-Citad (communicaziun 16.12.2025). I n’exista nagin salari uffizial.',
-      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF {betrag} per ura (KLV art. 7a al. 1 lit. c). Quai è la contribuziun a l’organisaziun, betg il salari.',
+      rateNote: 'Spanna da {von} fin {bis} CHF per ura: confamigliars che tgiran survegnan tenor ina communicaziun dal chantun Basilea-Citad «per regla ina contribuziun da 30 fin 40 francs per ura» (16.12.2025). Sch’i sa tracta da brutto u netto, na stat betg là. I n’exista nagina cifra uffiziala per l’entira Svizra; en l’agen chantun e tar l’atgna organisaziun po quai esser auter.',
+      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF {betrag} per ura (KLV art. 7a al. 1 lit. c). Quai n’è ni il salari ni l’entira indemnisaziun da l’organisaziun: tut tenor chantun vegnan vitiers contribuziuns dal chantun u da la vischnanca e da la persuna tgirada.',
+      nurGrundpflege: 'Per regla vegn indemnisada mo la tgira da basa en il basegn examinà, betg l’assistenza u la chasada. Tge uras che quintan, di l’organisaziun che engascha.',
       zuschlaege: 'Per intervents la saira, la fin d’emna u la notg èn supplements pussaivels tut tenor l’organisaziun.',
       disclaimer: 'Orientaziun nunliand. Il salari real dependa da l’organisaziun che engascha e dal chantun — betg ina tariffa garantida.',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)

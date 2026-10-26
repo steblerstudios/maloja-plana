@@ -11,8 +11,9 @@ import { zahl } from './utils/geld.js';
 // anstellende Organisation fest. Darum eine SPANNE statt einer Zahl.
 //
 // Spanne 30–40 CHF/h: Regierungsrat Basel-Stadt, Medienmitteilung vom 16.12.2025 («Basel-Stadt
-// führt Tarif für Angehörigenpflege ein»): pflegende Angehörige erhielten bisher «üblicherweise
-// 30 bis 40 Franken pro Stunde». Eine amtliche Beobachtung, keine Vorgabe; gelesen 26.10.2026.
+// führt Tarif für Angehörigenpflege ein»), wörtlich: «Pflegende Angehörige erhalten üblicherweise
+// einen Beitrag von 30 bis 40 Franken pro Stunde.» Eine kantonale Beobachtung, keine Vorgabe,
+// ohne Angabe brutto/netto; gelesen 26.10.2026. Fachprüfung 26.10.2026 eingearbeitet.
 // Vergleich 52.60 CHF/h: Beitrag der Krankenversicherung an die Organisation für Grundpflege,
 // KLV Art. 7a Abs. 1 Bst. c (Fedlex, Stand 1.1.2026) — das erhält die Organisation, nicht der Lohn.
 // Bis 26.10.2026 stand hier CHF 37.90/h, der Satz eines privaten Anbieters (pflegewegweiser.ch).
@@ -29,6 +30,7 @@ export const PFLEGE_ENTLOEHNUNG_ERGEBNIS = ergebnis(ERGEBNIS_ART.ORIENTIERUNG);
 export const PflegeEntloehnung = ({ palette, t }) => {
   const [stunden, setStunden] = useState(14);
   const monat = (satz) => Math.round(stunden * WOCHEN_PRO_MONAT * satz);
+  const jahr = (satz) => Math.round(stunden * 52 * satz);
   const von = monat(LOHN_SPANNE.von);
   const bis = monat(LOHN_SPANNE.bis);
   const fmt = (v) => zahl(v);
@@ -63,10 +65,11 @@ export const PflegeEntloehnung = ({ palette, t }) => {
     React.createElement('div', { style: s.result },
       React.createElement('div', { style: s.resultLabel }, t('pflege.entl.resultLabel')),
       React.createElement('div', { style: s.big }, 'CHF ' + fmt(von) + ' – ' + fmt(bis) + ' / ' + t('pflege.entl.month')),
-      React.createElement('div', { style: s.sub }, '≈ CHF ' + fmt(von * 12) + ' – ' + fmt(bis * 12) + ' / ' + t('pflege.entl.year')),
+      React.createElement('div', { style: s.sub }, '≈ CHF ' + fmt(jahr(LOHN_SPANNE.von)) + ' – ' + fmt(jahr(LOHN_SPANNE.bis)) + ' / ' + t('pflege.entl.year')),
       React.createElement('div', { style: s.sub }, t('pflege.entl.rateNote', { von: LOHN_SPANNE.von, bis: LOHN_SPANNE.bis }))
     ),
     React.createElement('div', { style: s.note }, t('pflege.entl.vergleich', { betrag: OKP_GRUNDPFLEGE_PRO_STUNDE.toFixed(2) })),
+    React.createElement('div', { style: s.note }, t('pflege.entl.nurGrundpflege')),
     React.createElement(ErgebnisArt, { palette, t, ergebnis: PFLEGE_ENTLOEHNUNG_ERGEBNIS }),
     React.createElement('div', { style: s.note }, t('pflege.entl.zuschlaege')),
     React.createElement('div', { style: s.note }, t('pflege.entl.disclaimer')),
