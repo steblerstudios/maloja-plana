@@ -99,7 +99,8 @@ export function mindestlohnNichtBelegt(canton) {
 // { show, income, incomeFTE, partTime, overFullTime, hoursKnown, hoursPerWeek,
 //   rel: 'near'|'above'|'below'|null, pct, delta, median,
 //   mindestlohn, mlBreached, befundStatus, scaleMin, scaleMax }
-export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreizehnter, alter } = {}) {
+// `alter`/`rentenalter` aus alterUndRentenalter (utils/nettoAusProfil.js): im Rentenalter ohne ALV/PK.
+export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreizehnter, alter, rentenalter = false } = {}) {
   const lohn = num(income);
   const stunden = num(hoursPerWeek);
   const median = LOHN_REFERENZ.median;
@@ -122,7 +123,7 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
   // (AHV/ALV + PK nach Alter, `nettoZuBruttoRichtwert`) und rechnen die Skala/Marke darauf —
   // in der Anzeige deutlich als «geschätzt aus Netto» markiert. Ohne Alter fällt die PK weg.
   const geschaetztAusNetto = incomeType === 'netto' && lohn > 0;
-  const effektiverLohn = geschaetztAusNetto ? nettoZuBruttoRichtwert(lohn, alter) : lohn;
+  const effektiverLohn = geschaetztAusNetto ? nettoZuBruttoRichtwert(lohn, alter, rentenalter) : lohn;
   const effektiveBasis = geschaetztAusNetto ? 'brutto' : incomeType;
   const basisKnown = effektiveBasis === 'brutto';
 
