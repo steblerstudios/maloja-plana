@@ -19,13 +19,16 @@ describe('Steuerrechner', () => {
     const main = quelle('main.jsx');
     const i = main.indexOf("view === 'tax' && React.createElement(TaxCalculator, {");
     expect(i).toBeGreaterThan(-1);
-    expect(main.slice(i, i + 500)).toMatch(/key: datenModus,/);
+    // bis zum nächsten Ansichts-Zweig, damit ein längerer Kommentar den Test nicht still bricht
+    const ende = main.indexOf('view === ', i + 10);
+    expect(main.slice(i, ende)).toMatch(/key: datenModus,/);
   });
   it('Abzüge benannt, mit echtem Minus statt «- CHF» und «Total (-)»', () => {
     const src = ohneKommentare(quelle('TaxCalculator.jsx'));
     expect(src).not.toMatch(/'- ' \+ betrag/);
     expect(src).not.toMatch(/t\('common\.total'\) \+ ' \(-\)'/);
     expect(src).toMatch(/betrag\(-\(income - taxableIncome\)\)/);
+    expect(ohneKommentare(quelle('SozialhilfeView.jsx'))).not.toMatch(/'- ' \+ formatCHF/);
     for (const s of [de, en, fr, itSprache, rm]) expect(s.tax.abzuegeGeschaetzt).toBeTruthy();
   });
 });
