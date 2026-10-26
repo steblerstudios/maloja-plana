@@ -5367,7 +5367,7 @@ export default {
     plzNotFound: 'PLZ betg chattada en il register uffizial.',
     regionTitle: 'Regiun da premias',
     regionInfo: '{gemeinde} ({kanton}) — regiun da premias {region}',
-    avgPremium: 'Premia media 2026: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
+    avgPremium: 'Premia media {jahr}: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
     noInsurer: 'Nagin assicurader deponì',
     noInsurerHint: { sie: 'Endatai Vossa cassa da malsauns sut «Assicuranzas» per vesair Vossa premia da referenza.', du: 'Endatescha Tia cassa da malsauns sut «Assicuranzas» per vesair Tia premia da referenza.' },
     insurerNotFound: '«{name}» betg enconuschent',
@@ -5383,10 +5383,20 @@ export default {
     thInsurer: 'Kasse',
     allInsurersTitle: 'Alle Kassen vergleichen',
     compareFranchiseNote: 'Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Tippe eine Kasse für Details.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Die Kündigungsfrist für einen Kassenwechsel auf diesen Termin ist abgelaufen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufen: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise: Antrag spätestens am {datum} bei der Kasse. Eine höhere: Die Frist legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    refJahr: 'Prämien {jahr}',
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi 2026',
+    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi {jahr}',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',

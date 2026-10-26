@@ -10,6 +10,12 @@ raw_dir = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__f
 wb = openpyxl.load_workbook(os.path.join(raw_dir, 'praemienregionen.xlsx'), data_only=True)
 ws = wb['D_PRIM']
 
+# Prämienjahr aus der Kopfzeile (Zeile 15, Spalte E: «Monatliche mittlere Prämien 2027 *»).
+import re
+kopf = str(ws.cell(row=15, column=5).value or '')
+treffer = re.search(r'(20\d\d)', kopf)
+jahr = int(treffer.group(1)) if treffer else None
+
 praemien = {}
 for row in ws.iter_rows(min_row=17, values_only=True):
     bfs, kanton, gemeinde, region, kinder, junge, erwachsene = row[:7]
@@ -38,4 +44,4 @@ for row in ws2.iter_rows(min_row=4, values_only=False):
 
 insurers.sort(key=lambda x: x['name'].lower())
 
-print(json.dumps({"praemien": praemien, "insurers": insurers}))
+print(json.dumps({"jahr": jahr, "praemien": praemien, "insurers": insurers}))
