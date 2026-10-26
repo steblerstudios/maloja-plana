@@ -50,7 +50,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  const LOCALE = t('calendar.locale') || 'de-CH';
+  const LOCALE = t('calendar.locale');
   const datumKurz = (iso) => {
     const d = new Date(iso + 'T00:00:00');
     return isNaN(d.getTime()) ? iso : d.toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short' });

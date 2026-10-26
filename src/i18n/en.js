@@ -1335,6 +1335,9 @@ export default {
     remove: 'Remove item',
   },
   common: {
+    clear: 'Clear search',
+    anredeLabel: 'Form of address: {form}',
+    anredeTooltip: 'Form of address: {formell} / {informell}',
     betraegeVerordnung: 'Amounts for {jahr}: [[Ordinance of {datum}|https://www.fedlex.admin.ch/{eli}/de]].',
     qrFehler: 'The QR code could not be created just now.',
     qrErstellt: "QR code created.",
@@ -4029,6 +4032,7 @@ export default {
     },
   },
   budgetImport: {
+    importFailed: 'The import did not work. Please check the file and try again.',
     title: 'Budget import',
     fileFormat: 'File format',
     csv: 'CSV (comma-separated)',
@@ -5179,6 +5183,7 @@ export default {
     linkBudget: 'View in budget',
   },
   calendar: {
+    nicelyDone: 'Done',
     aufgabe: 'Task',
     ausMerkliste: 'from your checklist',
     ganzerMonat: 'Whole month',

@@ -1335,6 +1335,9 @@ export default {
     remove: 'Rimuovi voce',
   },
   common: {
+    clear: 'Cancella la ricerca',
+    anredeLabel: 'Forma di cortesia: {form}',
+    anredeTooltip: 'Forma di cortesia: {formell} / {informell}',
     betraegeVerordnung: 'Importi {jahr}: [[ordinanza del {datum}|https://www.fedlex.admin.ch/{eli}/it]].',
     qrFehler: 'Al momento non è stato possibile generare il codice QR.',
     qrErstellt: "Codice QR creato.",
@@ -4030,6 +4033,7 @@ export default {
     },
   },
   budgetImport: {
+    importFailed: 'L’importazione non è riuscita. Controllare il file e riprovare.',
     title: 'Importazione budget',
     fileFormat: 'Formato file',
     csv: 'CSV (separato da virgola)',
@@ -5080,6 +5084,7 @@ export default {
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
+    nicelyDone: 'Fatto',
     aufgabe: 'Compito',
     ausMerkliste: 'dal promemoria',
     ganzerMonat: 'Tutto il mese',

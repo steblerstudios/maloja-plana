@@ -1335,6 +1335,9 @@ export default {
     remove: 'Supprimer le poste',
   },
   common: {
+    clear: 'Effacer la recherche',
+    anredeLabel: 'Forme d’adresse : {form}',
+    anredeTooltip: 'Forme d’adresse : {formell} / {informell}',
     betraegeVerordnung: 'Montants {jahr} : [[ordonnance du {datum}|https://www.fedlex.admin.ch/{eli}/fr]].',
     qrFehler: 'Le code QR n’a pas pu être généré pour le moment.',
     qrErstellt: "Code QR créé.",
@@ -4029,6 +4032,7 @@ export default {
     },
   },
   budgetImport: {
+    importFailed: 'L’importation n’a pas fonctionné. Vérifier le fichier et réessayer.',
     title: 'Importation du budget',
     fileFormat: 'Format de fichier',
     csv: 'CSV (séparé par des virgules)',
@@ -5107,6 +5111,7 @@ export default {
     linkBudget: 'Voir dans le budget',
   },
   calendar: {
+    nicelyDone: 'Fait',
     aufgabe: 'Tâche',
     ausMerkliste: 'de l’aide-mémoire',
     ganzerMonat: 'Tout le mois',

@@ -30,7 +30,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         totalAmount: entries.reduce((sum, e) => sum + e.amount, 0)
       });
     } catch (error) {
-      setImportError(t('budgetImport.importFailed') || 'Import fehlgeschlagen');
+      setImportError(t('budgetImport.importFailed'));
     } finally {
       setImporting(false);
     }
