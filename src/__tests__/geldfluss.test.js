@@ -1,5 +1,5 @@
 // Geldfluss (Sankey), seit 24.10.2026 im Kapitel Finanzen am Anfang der Auswertung (vorher auf
-// der Charts-Seite; Sophie: «der Ort ist falsch»). Gehalten wird: beide Seiten sind gleich
+// der Charts-Seite; Stebler Studios: «der Ort ist falsch»). Gehalten wird: beide Seiten sind gleich
 // breit (nichts verschwindet, nichts kommt dazu), ein Fehlbetrag steht als «Nicht gedeckt»
 // links statt still unterzugehen, die Beschriftungen überlappen sich nicht, er rechnet wie
 // utils/monatsrechnung.js, steht nach dem Lebensbaum und vor dem Lohn — und ein alter

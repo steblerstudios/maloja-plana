@@ -1,4 +1,4 @@
-// Beispiel-Einträge für den Kalender im Beispiel Maria (Sophie 24.10.2026: «Beispiel lebendiger»).
+// Beispiel-Einträge für den Kalender im Beispiel Maria (Stebler Studios 24.10.2026: «Beispiel lebendiger»).
 //
 // Bis dahin begann der Kalender im Beispiel leer (Entscheid 18.10.2026) — der neue Jahreskreis
 // zeigte dort nur zwei feste Punkte und wirkte verlassen. Jetzt stehen ein paar persönliche
