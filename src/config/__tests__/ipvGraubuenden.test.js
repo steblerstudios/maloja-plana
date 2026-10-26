@@ -268,6 +268,9 @@ describe('K31 calculateIPV für GR (App-Angaben → Modell)', () => {
     // Eine erfasste 0 heisst «keine Pensionskasse» — dann ist nichts vergessen.
     expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: 0 } })).zusatzVorbehaltKey).toBeUndefined();
     expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { bvgContribution: '' } })).zusatzVorbehaltKey).toBe('ipv.vorbehaltGRbvg');
+    // ⟨26.10.2026⟩ Die Pensionskasse «Trifft nicht zu» ist ebenfalls eine Antwort: kein Vorbehalt, Betrag wie mit 0.
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { _na: ['bvgInsurer'] } })).zusatzVorbehaltKey).toBeUndefined();
+    expect(calculateIPV(person({ monthlyIncome: 2000, versicherungen: { _na: ['bvgInsurer'] } })).annual).toBe(3996);
     // Gegenprobe: ein Wert unter «finanzen» zählt nicht als erfasst.
     expect(calculateIPV(person({ monthlyIncome: 2000, finanzen: { bvgContribution: 300 } })).zusatzVorbehaltKey).toBe('ipv.vorbehaltGRbvg');
     // Ohne Lohn gibt es keinen BVG-Abzug zu vermissen.

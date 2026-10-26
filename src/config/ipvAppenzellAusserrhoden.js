@@ -92,7 +92,7 @@
 //     fehlen umgekehrt — dann ist das Einkommen hier zu hoch.
 import {
   vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A, saeule2,
   kinderAlter, ALTER_UNERFASST, UEBER_18,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -229,11 +229,11 @@ export function ipvAppenzellAusserrhoden(data, hh, ipvData, youngAdultsCount, or
   // der Teil bis 10'000 wieder abgezogen (`freibetragOhneSaeule2`, config/kantonsModell.js).
   const saeule3a = Math.max(0, Number(f.pension3a) || 0);
   // Erfasster BVG-Beitrag über 0 → Vorsorgeeinrichtung; ausdrücklich 0 → keine; leer → unbekannt.
-  const bvgRoh = v.bvgContribution;
-  const bvgLeer = bvgRoh === undefined || bvgRoh === null || String(bvgRoh).trim() === '';
-  const bvgWert = Number(bvgRoh);
-  const bvBekannt = !bvgLeer && Number.isFinite(bvgWert);
-  const mitBV = bvBekannt && bvgWert > 0;
+  // ⟨26.10.2026⟩ Seit heute aus `saeule2()` (kantonsModell.js), dieselbe Lesart wie AG, BS, GR — dazu
+  // neu: Pensionskasse «Trifft nicht zu» heisst ebenfalls «keine».
+  const status = saeule2(v);
+  const bvBekannt = status !== null;
+  const mitBV = status === true;
   const massgebend = (mitVorsorge) => einkommenJahr(f, mitVorsorge ? SAEULE_3A.voll : SAEULE_3A.freibetragOhneSaeule2)
     - kinderabzug + IPV_AR.vermoegenAnteil * steuerbaresVermoegen;
   const r = ipvAppenzellAusserrhodenRechnen({ me: massgebend(bvBekannt ? mitBV : true), kinderZahl });

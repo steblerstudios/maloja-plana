@@ -1,7 +1,7 @@
 import React from 'react';
 import { text, weight, space, radius } from '../config/tokens.js';
 
-// Jahreskreis in «Was ansteht» (Sophie 24.10.2026: «Bau zuerst den Jahreskreis mit den
+// Jahreskreis in «Was ansteht» (Stebler Studios 24.10.2026: «Bau zuerst den Jahreskreis mit den
 // hinterlegten Fristen»). Zwölf Monate als Ring, oben Januar, im Uhrzeigersinn. Darauf liegt
 // nur, was schon hinterlegt ist: die eigenen Fristen, Termine und Merkliste-Aufgaben des
 // Jahres (dieselbe Form-Sprache wie der Kalender: Punkt = Frist, Raute = Termin,
