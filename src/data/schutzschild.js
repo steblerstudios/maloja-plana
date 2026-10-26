@@ -1,6 +1,7 @@
 import { BVG_PARAMS } from './ahvRechner.js';
 import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { lohnBasis } from '../utils/jahreslohnAusProfil.js';
+import { referenzalterErreicht } from '../utils/nettoAusProfil.js';
 
 // Reine Logik für den Versicherungs-Schutzschild — kein React, damit testbar.
 // ZWEI Schilde, weil das Gesetz zwei Dinge unterscheidet:
@@ -36,7 +37,18 @@ export function schildOptionen(data = {}) {
     annualIncomeMit13: dreizehnterStatus(data?.finanzen?.dreizehnter) === 'offen'
       ? (Number(data?.finanzen?.monthlyIncome) || 0) * 13 : null,
     lohnBasis: lohnBasis(data?.finanzen),
+    referenzalterErreicht: referenzalterErreicht(data?.basis) === true,
+    vorBvgMindestalter: vorBvgMindestalter(data?.basis),
   };
+}
+
+// BVG Art. 7 Abs. 1 (fedlex, gelesen 25.10.2026): Pflicht «ab 1. Januar nach Vollendung des 17. Altersjahres»
+// (Tod und Invalidität; fürs Alter ab dem 24.) — also erst im Kalenderjahr, in dem man 18 wird. Ohne Datum: nein.
+// Das Jahr aus dem Text (wie kantonsModell.js): `new Date('2009-01-01')` ist UTC und läge westlich davon im Vorjahr.
+export function vorBvgMindestalter(basis, heute = new Date()) {
+  const s = String(basis?.dateOfBirth || '');
+  if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return false;
+  return heute.getFullYear() < Number(s.slice(0, 4)) + 18;
 }
 const has = (x) => x != null && String(x).trim() !== '';
 
@@ -55,14 +67,18 @@ function groupStat(list) {
 export function schildState(v = {}, opts = {}) {
   const employed = opts.employed === true;
   const einkommen = Number(opts.annualIncome) || 0;
+  // Ab dem Referenzalter keine BVG-Pflicht mehr (BVG Art. 10 Abs. 2 lit. a) — Weiterversichern geht nur nach
+  // Reglement (Art. 33b), ist also keine Lücke. Ohne Geburtsdatum bleibt es bei der Pflicht wie bisher.
+  // Ebenso vor dem Mindestalter (BVG Art. 7 Abs. 1, siehe vorBvgMindestalter) — z. B. in der Lehre mit 16.
+  const bvgAlter = opts.referenzalterErreicht !== true && opts.vorBvgMindestalter !== true;
   // BVG Art. 7 Abs. 1: Jahreslohn von «mehr als» der Schwelle — wie lohnAbzuege.js (`<=` → nicht versichert).
-  const bvgPflicht = employed && einkommen > BVG_PARAMS.eintrittsschwelle;
+  const bvgPflicht = employed && bvgAlter && einkommen > BVG_PARAMS.eintrittsschwelle;
   const bvgErfasst = has(v.bvgInsurer) || Number(v.bvgContribution) > 0 || Number(v.bvgBalance) > 0;
   // Unter der Schwelle, aber nicht als Brutto erfasst: ob die Pflicht besteht, ist offen (siehe oben).
   // Nicht als Lücke gezählt (keine falsche Lücke), aber benannt. Ist eine Kasse erfasst, erübrigt es sich.
-  const bvgUnklarBasis = employed && !bvgPflicht && einkommen > 0 && opts.lohnBasis !== 'brutto' && !bvgErfasst;
+  const bvgUnklarBasis = employed && bvgAlter && !bvgPflicht && einkommen > 0 && opts.lohnBasis !== 'brutto' && !bvgErfasst;
   // Abschluss-Prüfung 25.09.2026: Brutto, 13. offen, ×12 knapp unter, ×13 über der Schwelle → offen.
-  const bvgUnklar13 = employed && !bvgPflicht && !bvgErfasst && Number(opts.annualIncomeMit13) > BVG_PARAMS.eintrittsschwelle;
+  const bvgUnklar13 = employed && bvgAlter && !bvgPflicht && !bvgErfasst && Number(opts.annualIncomeMit13) > BVG_PARAMS.eintrittsschwelle;
   const bvgUnklar = bvgUnklarBasis || bvgUnklar13;
   // «trifft nicht zu» an der Pensionskasse (seit 25.10.2026): die Lücke bleibt — bei Pflicht ist sie meist echt
   // (BVG Art. 2, 7) —, aber sie wird ruhig benannt, mit den Ausnahmen (BVV 2 Art. 1j). Fachprüfung 25.10.2026.

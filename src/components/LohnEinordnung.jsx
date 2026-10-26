@@ -2,6 +2,7 @@ import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { lohnBandState, lohnEinordnungErgebnis, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 import { ErgebnisArt } from './ErgebnisArt.jsx';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
@@ -105,17 +106,19 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 // `embedded`: ohne eigene Karte rendern — für Orte, die schon in einer `palette.up`-Karte
 // sitzen (Finanz-Übersicht). Sonst läge Karte auf Karte und die Kante verschwände.
 export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {
-  // Alter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter).
-  const geb = data?.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
-  const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
+  // Alter und Rentenalter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter,
+  // im Rentenalter ohne ALV/PK). Eine Regel mit dem Netto-Richtwert (alterUndRentenalter).
+  const { bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
   const state = lohnBandState({
+    rentenalter,
+    beitragsfrei,
     income: data?.finanzen?.monthlyIncome,
     canton: data?.basis?.canton,
     hoursPerWeek: data?.ausbildung?.workHoursPerWeek,
     // Bei Brutto direkt; bei Netto schätzt lohnBandState das Brutto (AHV/ALV + PK nach Alter)
     // und markiert es als «geschätzt» — die Mindestlohn-Warnung bleibt echtem Brutto vorbehalten.
     incomeType: data?.finanzen?.incomeType,
-    alter,
+    alter: bvgAlter,
     // Der BFS-Median enthält den anteiligen 13.; mit einem 13. wird der Lohn ×13/12
     // vergleichbar gemacht, und der Mindestlohn-Boden sinkt um 12/13 (Jahres-Boden).
     dreizehnter: data?.finanzen?.dreizehnter,

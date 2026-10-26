@@ -86,7 +86,7 @@ describe('praemienRegionen', () => {
 
   describe('metadata', () => {
     it('has correct data version', () => {
-      expect(PRAEMIEN_DATA_VERSION).toBe('2026');
+      expect(PRAEMIEN_DATA_VERSION).toBe('2027');
     });
   });
 });

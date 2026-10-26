@@ -20,6 +20,10 @@ import { jahreslohnAusProfil, lohnIstNetto, lohnBasisOffen } from './utils/jahre
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
+  // Jahr aus dem Text (wie nettoAusProfil.js): `new Date('2001-01-01')` ist UTC und läge westlich davon im Vorjahr —
+  // seit 26.10.2026 steuert das Geburtsjahr die BVG-Gutschrift-Stufe (BVV 2 Art. 13).
+  const m = /^(\d{4})-\d{2}-\d{2}/.exec(String(dateStr));
+  if (m) return Number(m[1]);
   const d = new Date(dateStr);
   return isNaN(d.getTime()) ? null : d.getFullYear();
 }
@@ -34,7 +38,8 @@ function currentAge(dateStr) {
 export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const isMobile = useIsMobile();
   const birthYear = parseYear(data.basis?.dateOfBirth);
-  // Geburtsmonat nur für die volle Beitragsdauer der Frauen JG 1961–63 (Merkblatt 3.01 Ziff. 12).
+  // Geburtsmonat für die volle Beitragsdauer der Frauen JG 1961–63 (Merkblatt 3.01 Ziff. 12) und seit 26.10.2026 für
+  // die monatsgenaue Restzeit der BVG-Hochrechnung (berechneBVGGuthaben). Erwartet JJJJ-MM-TT, sonst volle Jahre.
   const birthMonth = Number(String(data.basis?.dateOfBirth || '').split('-')[1]) || undefined;
   const alter = currentAge(data.basis?.dateOfBirth);
   // Echtes Referenzalter (AHV 21) für diese Person — für Frauen der Übergangsgeneration
@@ -203,8 +208,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       aktuellesGuthaben: Number(bvgGuthaben) || 0,
       austrittsalter: parsedBezugAlter,
       umwandlungssatz: Number(bvgUmwandlung) || undefined,
+      geburtsjahr: birthYear || undefined,
+      geburtsmonat: birthMonth,
     });
-  }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung]);
+  }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung, birthYear, birthMonth]);
 
   const projektion = useMemo(() => {
     if (!alter) return null;

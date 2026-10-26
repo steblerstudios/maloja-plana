@@ -17,6 +17,24 @@
 > statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
 > als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
 
+> ✅ **Nachtrag 26.10.2026, 15:25 — Merge-Runde auf Zuruf (Sophie: «Ja, merge die Entwurfs-PRs in der festgehaltenen
+> Reihenfolge … Nichts erzwingen, kein Deploy»). NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 15:22): main = `c5ba39e3` (26.10. 15:22) · live = `4299bfb9` (0.1.48-beta) ·
+> **133 Commits** zwischen live und main. Squash je PR, jeweils auf main nachgezogen, CI grün abgewartet, kein Force-Push.
+> - **Netto/BVG-Kette (diese Sitzung):** #586 `c313f0a7` · #591 `22fda887` · #588 `48b7d3d2` · #589 `b9fcdae4` · #590
+>   `2101942b` · #593 `5ec38a6d` · #599 `96ceb295` · #600 `4550523a` · #602 `c5ba39e3`.
+> - **Übrige (Sitzung «SESSION_START Nachtrag Maloja», abgestimmt):** #587 `e966b908` · #592 `94633896` · #594 `46c9ae7a` ·
+>   #597 `fd88bc79` (enthält #595 + #596, beide geschlossen «enthalten in #597») · #607 `87df726c` · #598 `009e27dd` ·
+>   #608 `5fa9c85f` · #601 `ebd7a2ff` · #603 `13fe1081` (rm-Wächter: wörtlich deutsche rm-Texte brauchen `// TODO(rm)`).
+> - Dazu vorher (andere Sitzung): #604, #605, #606 (14:00).
+> **Nachziehen:** Nach jedem Squash Konflikte in Dateien, die der Kind-PR nicht ändert (Schutzschild → Fassung main), und in
+> eigenen Dateien nur dort, wo main seit dem Elternstand unverändert war (→ Fassung des PR); bei #588 doppelte
+> `referenzalterErreicht` aus dem Auto-Merge entfernt. CI (`ci.yml`) läuft nur bei pull_request gegen main → erst Basis
+> umstellen, dann pushen. main ist nicht geschützt — `gh pr merge --auto` würde ohne CI mergen, bewusst nicht benutzt.
+> **Offen:** **Deploy** (nur Stebler Studios, vorher `/maloja-predeploy`) · #609, #561, #563 (nicht Teil dieser Runde) ·
+> Kapitel-Spinnennetz weg nach M2 · Geburt am 1. eines Monats (Ausgleichskasse) · rm gegenlesen.
+
 > 🧾 **Nachtrag 26.10.2026, 04:25 — #601 und #602 dazu. Nichts gemergt, NICHT live.**
 >
 > **Gemessen** (04:20): main = `0413772a` · live = `4299bfb9` (0.1.48-beta) · 112 Commits dazwischen. Alle Zweige gepusht, sauber.
@@ -82,6 +100,25 @@
 > `UEBERGABE-FASSUNG-6.md` (Abschnitte vom 25.10.). Übergabe: `_handoffs/2026-10-25-fassung6-gemergt-muster-und-nachtraege.md`.
 > **Offen:** Deploy (Stebler Studios, `/maloja-predeploy`) · Spinnennetz Versicherungen · «Ich nehme keine» im Notfall-Dossier ·
 > ZStB 133.1 · BAG-Prämien 2027 · rm ungeprüft · `bvgPflicht` ohne Referenzalter · AG/BS «keine Säule 2» · KVG Art. 7 Wortlaut.
+
+> 🤝 **Nachtrag 26.10.2026, 13:50 — Pflege & Hilflosenentschädigung: drei Entwurfs-PRs (#604, #605, #606), CI grün. NICHT gemergt, NICHT live.**
+>
+> **Gemessen** (`bash scripts/stand-jetzt.sh`, 26.10. 13:50): main = `0413772a` (26.10. 00:48) · live = `4299bfb9`
+> (0.1.48-beta, 23.10.) · 112 Commits dazwischen. Alle drei je mit eigenem Arbeitsbaum unter `_werkbank/`, ab `origin/main`.
+> - **#604** `feat/hilflosenentschaedigung` — Rechner Hilflosenentschädigung (IV/AHV) als Baustein in «Angehörige pflegen»
+>   (Schritt 4) und «Krankheit & IV» (neuer Schritt 4, die HE-Links der Lebenssituationen führten vorher ins Leere).
+>   2026 zitiert (Merkblatt 4.13, 3.01, BSV), 2027 gerechnet (IVG 42ter / AHVG 43bis × Renten 2027). Ergebnis-Art Schätzung.
+>   `swiss-precision-pruefer`: kein 🔴, Befunde eingearbeitet. Offen: Besitzstand leicht im Heim nicht belegt → kein Betrag.
+>   Freigabe-Register Nr. 25. Auto-fix an.
+> - **#605** `docs/konkurrenz-pflege` — Konkurrenzanalyse-Nachtrag: We+ (nächste direkte Konkurrenz: lokal, kein Konto,
+>   EL/HE, aber Abo, KI, nur iPhone), Sozial-Navigator, Pflegewegweiser (kein Software-Konkurrent), Faula (keine Konkurrenz).
+>   Dazu dieser Nachtrag.
+> - **#606** `fix/pflege-entloehnung-quelle` — `PflegeEntloehnung.jsx` ohne Anbieter-Satz 37.90: Spanne 30–40 CHF/h aus der
+>   Medienmitteilung BS vom 16.12.2025 (kantonal, Orientierung), Vergleich KLV Art. 7a Abs. 1 Bst. c (52.60/h an die
+>   Organisation). `swiss-precision-pruefer`: kein 🔴, Befunde eingearbeitet.
+> **Belegt:** je vitest voll grün (Ausfälle nur Zeitüberschreitungen unter Last, einzeln grün), Build ok, size ≤ 63,38 / 65 kB,
+> Browser 375 px. **Nicht belegt:** Rumantsch-Texte nicht gegengelesen.
+> **Nächster Schritt:** Review und Merge durch Stebler Studios; danach Deploy.
 
 > 🎨 **Nachtrag 25.10.2026, 00:25 — Fassung 6, erster Bau: #562, #564, #565, #566 auf Zuruf gemergt. NICHT live.**
 >

@@ -395,7 +395,7 @@ export default {
     step2Title: '2 · Pensionskasse (BVG)',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
-    step2Text: { sie: 'Verdienen Sie bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, sind Sie obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7). Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Verdienst du bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, bist du obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
+    step2Text: { sie: 'Verdienen Sie bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, sind Sie obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7): ab dem 1. Januar nach dem 17. Geburtstag für Tod und Invalidität, ab dem 1. Januar nach dem 24. Geburtstag auch fürs Alter. Ihr Arbeitgeber meldet Sie an — prüfen Sie Lohnausweis und BVG-Abzüge.', du: 'Verdienst du bei einem Arbeitgeber mehr als {schwelle} Fr. im Jahr, bist du obligatorisch in der Pensionskasse (2. Säule; BVG Art. 7): ab dem 1. Januar nach dem 17. Geburtstag für Tod und Invalidität, ab dem 1. Januar nach dem 24. Geburtstag auch fürs Alter. Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.' },
     step3Title: '3 · Unfall & Krankentaggeld',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
@@ -496,7 +496,8 @@ export default {
     footerNote: 'Il led dovra temp, e la gronda part dals pass pon spetgar. In post da cussegliaziun u l’interpresa da pompas funebras gida a mantegnair la survista. Quai è orientaziun, betg cussegl giuridic.',
   },
   pflege: {
-    quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]] (geprüft im September 2026).',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
+    quelle: 'Quellen: [[AHVG Art. 29septies|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_29_septies]], [[EOG Art. 16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_n]], [[OR Art. 329h|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_329_h]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]], [[AHVG Art. 43bis|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_43_bis]] (geprüft im September 2026 · Art. 42ter/43bis geprüft im Oktober 2026).',
     title: 'Tgirar confamigliars',
     intro: 'Tgira che vegn prestada en silenzi resta savens senza attenziun — malgrà che quai dat dretgs che blers na dumondan mai. Ina survista calma: bonificaziun da renta, indemnisaziun, sgravi.',
     step1Title: '1 · Bonificaziun d’assistenza da l’AVS',
@@ -509,10 +510,12 @@ export default {
     entl: {
       hoursLabel: 'Tgira per emna',
       hoursUnit: 'uras',
-      resultLabel: 'Indemnisaziun pussaivla (brutto)',
+      resultLabel: 'Indemnisaziun pussaivla (grondezza)',
       month: 'mais',
       year: 'onn',
-      rateNote: 'quintà cun ca. CHF 37.90/ura (pflegewegweiser.ch, 09.2026)',
+      rateNote: 'Spanna da {von} fin {bis} CHF per ura: confamigliars che tgiran survegnan tenor ina communicaziun dal chantun Basilea-Citad «per regla ina contribuziun da 30 fin 40 francs per ura» (16.12.2025). Sch’i sa tracta da brutto u netto, na stat betg là. I n’exista nagina cifra uffiziala per l’entira Svizra; en l’agen chantun e tar l’atgna organisaziun po quai esser auter.',
+      vergleich: 'Per cumparegliar: per la tgira da basa paja l’assicuranza da malsauns a l’organisaziun che engascha CHF {betrag} per ura (KLV art. 7a al. 1 lit. c). Quai n’è ni il salari ni l’entira indemnisaziun da l’organisaziun: tut tenor chantun vegnan vitiers contribuziuns dal chantun u da la vischnanca e da la persuna tgirada.',
+      nurGrundpflege: 'Per regla vegn indemnisada mo la tgira da basa en il basegn examinà, betg l’assistenza u la chasada. Tge uras che quintan, di l’organisaziun che engascha.',
       zuschlaege: 'Per intervents la saira, la fin d’emna u la notg èn supplements pussaivels tut tenor l’organisaziun.',
       disclaimer: 'Orientaziun nunliand. Il salari real dependa da l’organisaziun che engascha e dal chantun — betg ina tariffa garantida.',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -523,15 +526,53 @@ export default {
     step2Link: 'Vesair l’indemnisaziun per perdita da gudogn (IPG)',
     step3Title: '4 · Indemnisaziun d’impotenza da la persuna tgirada',
     step3Text: 'Sche la persuna tgirada dovra regularmain agid en il mintgadi, po ella avair dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ella gida a finanziar la tgira necessaria.',
-    step3Link: 'Vesair malsogna & AI',
     step4Title: '5 · Sgravi & cussegliaziun',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step4Text: { sie: 'Vus na stuais betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.', du: 'Ti na stos betg purtar quai sulet/a. Servetschs da sgravi, Pro Senectute, Pro Infirmis e la Spitex accumpognan e sgravan. La situaziun da vita correspundenta raduna ulteriurs dretgs en in sulet lieu.' },
     step4Link: 'Vesair la situaziun «Tgirar confamigliars»',
     footerNote: 'Orientaziun, betg cussegliaziun giuridica. Dretgs e termins vegnan sclerids da la cassa da cumpensaziun u dad in post da cussegliaziun.',
   },
+  hilflos: {
+    merkblattSprache: 'd',
+    frageWer: 'Tgi survegn l’indemnisaziun?',
+    wer: { iv: 'Creschì, senza entira renta da vegliadetgna AVS', ahv: 'Survegn l’entira renta da vegliadetgna AVS', kind: 'Uffant sut 18 onns' },
+    frageWohnen: 'Nua viva la persuna?',
+    wohnen: { zuhause: 'A chasa', heim: 'En in chasa da tgira (dapli che 15 dis al mais)' },
+    frageGrad: 'Grad da l’impotenza',
+    grad: { leicht: 'Leva', mittel: 'Mesauna', schwer: 'Greva', offen: 'Anc betg cler' },
+    gradErklaerung: 'Il grad fixescha il post AI suenter ina examinaziun. El dependa da quant agid regular e considerabel ch’ins dovra per las activitads quotidianas sco sa vestgir, mangiar u la tgira dal corp, e sch’i dovra ina survegliaziun persunala permanenta (fegl d’infurmaziun 4.13, cifra 1 e 3).',
+    frageBesitzstand: 'È vegnida pajada fin a la pensiun ina indemnisaziun d’impotenza da l’AI?',
+    frageIntensiv: 'Tgira supplementara per di, cumparegliada cun in uffant da la medema vegliadetgna senza impediment',
+    intensiv: { keine: 'Main che 4 uras', h: 'almain {n} uras' },
+    resultLabel: 'Indemnisaziun d’impotenza',
+    spanneLabel: 'Tenor il grad',
+    gradWaehlen: 'Cun il grad cumpara qua l’import exact.',
+    monat: 'mais',
+    jahr: 'onn',
+    davonIntensiv: 'da quai supplement per tgira intensiva {betrag}',
+    besitzstandNote: 'Tgi che survegniva pli baud ina indemnisaziun d’impotenza da l’AI, survegn da l’AVS almain l’import da fin ussa (AHVG art. 43bis al. 4). Quintà cun l’import AI dad oz; l’import exact stat en la disposiziun da fin ussa.',
+    kindHeim: 'Per dis en ina chasa da tgira datti mo in dretg, sch’ils geniturs pajan sezs ils custs da la chasa (fegl d’infurmaziun 4.13, cifra 8). Quai na quinta quest calculatur betg — il post AI dat infurmaziuns.',
+    ahvLeichtHeim: 'Tar ina impotenza leva na paja l’AVS nagina indemnisaziun en ina chasa da tgira (AHVG art. 43bis al. 1bis). Tar ina impotenza mesauna u greva bain.',
+    wartezeitIv: 'Il dretg nascha il pli baud, cura che l’impotenza ha durà in onn senza interrupziun considerabla (IVG art. 42 al. 4). Tgi che s’annunzia dapli ch’in onn pli tard, survegn il pli ils dudesch mais avant l’annunzia (IVG art. 48 al. 1).',
+    wartezeitAhv: 'Tar l’AVS sto l’impotenza avair durà almain sis mais senza interrupziun (AHVG art. 43bis al. 2).',
+    unabhaengig: 'L’indemnisaziun d’impotenza na dependa betg da l’entrada u da la facultad.',
+    gerechnetNote: 'Ils imports {jahr} èn quintads tenor la lescha a basa da las novas rentas AVS; ina tabella uffiziala n’era anc betg disponibla durant la construcziun.',
+    folgen: 'Cun ina indemnisaziun d’impotenza da l’AI po ins dumandar sut ulteriuras premissas ina contribuziun d’assistenza, sche la persuna viva u vul viver a chasa (fegl d’infurmaziun 4.13, cifra 10). Tgi che tgira in commember da la famiglia cun indemnisaziun d’impotenza, po survegnir bonificaziuns d’assistenza da l’AVS (cifra 11).',
+    gradBegleitung: 'Tar creschids che vivan a chasa quinta er in accumpagnament permanent en il mintgadi — per exempel sch’els na pon betg abitar independentamain senza accumpagnament u sa isolassan uschiglio permanentamain dal mund exteriur. Quai dat adina il grad lev; sch’i sa tracta mo d’ina donnegiaziun psichica, dovri per quai in dretg a renta (IVG art. 42 al. 3).',
+    besitzstandKlaeren: 'Sch’ina indemnisaziun da fin ussa da grad lev cuntinuescha en ina chasa da tgira, n’è betg cumprovà qua (AHVG art. 43bis al. 1bis e 4). Quai sclerescha la cassa da cumpensaziun.',
+    stand: 'Stadi {jahr}.',
+    nichtNachgefuehrt: 'Las valurs per l’onn current n’èn anc betg actualisadas qua.',
+    proTag: 'Tar uffants quinta l’AI per di; qua stat il mais cun 30 dis.',
+    wartezeitKind: 'Tar uffants en l’emprim onn da vita nascha il dretg, uschespert che l’impotenza dura probablamain dapli che dudesch mais (IVG art. 42bis al. 3), uschiglio suenter in onn (art. 42 al. 4).',
+    voraussetzungIv: 'Premissa èn domicil e dimora usitada en Svizra (IVG art. 42 al. 1). I n’exista nagin dretg, sche l’assicuranza cunter accidents u l’assicuranza militara paja ina indemnisaziun d’impotenza; per mintga mais chalendar entir en in institut da guariziun vegn ella suspendida (fegl d’infurmaziun 4.13, cifra 2 e 7).',
+    voraussetzungAhv: 'Premissa èn l’entira renta da vegliadetgna u prestaziuns cumplementaras sco er domicil e dimora usitada en Svizra (AHVG art. 43bis al. 1). I n’exista nagin dretg, sche l’assicuranza cunter accidents u l’assicuranza militara paja ina indemnisaziun d’impotenza (fegl d’infurmaziun 3.01, cifra 28).',
+    folgenAhv: 'Tgi che tgira in commember da la famiglia cun indemnisaziun d’impotenza, po survegnir bonificaziuns d’assistenza da l’AVS (AHVG art. 29septies).',
+    linkIv: 'Fegl d’infurmaziun 4.13 «Hilflosenentschädigungen der IV» (tudestg)',
+    linkAhv: 'Fegl d’infurmaziun 3.01 «Altersrenten und Hilflosenentschädigungen der AHV» (tudestg)',
+  },
   iv: {
-    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]] (geprüft im September 2026).',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
+    quelle: 'Quellen: [[IVG Art. 28|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_28]], [[IVG Art. 29|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_29]], [[OR Art. 324a|https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_324_a]], [[IVG Art. 42|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42]], [[IVG Art. 48|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_48]], [[IVG Art. 42ter|https://www.fedlex.admin.ch/eli/cc/1959/827_857_845/de#art_42_ter]] (geprüft im September 2026 · Art. 42ter geprüft im Oktober 2026).',
     title: 'Malsogna & AI',
     intro: 'Ina malsogna u limitaziun pli lunga auza dumondas davart salari, assicuranza ed existenza. Ina survista calma, legibla cun pauca energia: inabilitad da lavurar, s’annunziar baud a l’AI, segirar l’existenza, retschaiver sustegn.',
     step1Title: '1 · Inabilitad da lavurar — salari & indemnisaziun',
@@ -550,7 +591,9 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step3Text: { sie: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinai els senza temma.', du: 'Sch’il gudogn croda davent, datti raits da segirezza: prestaziuns cumplementaras a l’AI, reducziun da premias per la cassa da malsauns e — sche necessari — l’agid social. Quai èn dretgs, betg elemosinas. Examinescha els senza temma.' },
     step3Link: 'Examinar il dretg',
-    step4Title: '4 · Sustegn & sgraventscha',
+    stepHeTitle: '4 · Indemnisaziun d’impotenza',
+    stepHeText: 'Tgi che dovra per motivs da sanadad permanentamain agid en il mintgadi, survegliaziun u accumpagnament, ha eventualmain dretg ad ina indemnisaziun d’impotenza — independentamain da l’entrada. Ils posts AI dattan infurmaziuns.',
+    step4Title: '5 · Sustegn & sgraventscha',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     step4Text: { sie: 'Vus na stuais betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) As accumpognan tras la procedura AI. Pensai era al mandat preventiv ed a las directivas dal pazient, uschè ditg che Vus pudais decider sez — quai prenda squetsch per pli tard.', du: 'Ti na stos betg purtar quai sulet. Posts da cussegliaziun (p.ex. Pro Infirmis) t’accumpognan tras la procedura AI. Pensa era al mandat preventiv ed a las directivas dal pazient, uschè ditg che ti pos decider sez — quai prenda squetsch per pli tard.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -563,6 +606,7 @@ export default {
     fristHinweis: 'Das Gesuch muss spätestens am {date} eingereicht sein — 14 Tage vor Ablauf (VZAE Art. 59). Frühestens geht es drei Monate vor Ablauf.',
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     fristLabel: 'Die Bewilligung ist gültig bis',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[VZAE Art. 59|https://www.fedlex.admin.ch/eli/cc/2007/759/de#art_59]], [[AIG Art. 33|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_33]] (geprüft im September 2026).',
     title: 'Renovar l’autorisaziun da dimora',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -595,6 +639,7 @@ export default {
     footerNote: { sie: 'Na laschai mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.', du: 'Na lascha mai scadair l’autorisaziun senza avair fatg la dumonda. En cas d’instabilitad gida l’autoritad chantunala da migraziun u in post da cussegliaziun per migrantas e migrants. Quai è orientaziun, betg cussegl giuridic.' },
   },
   fuehrerausweis: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[VZV Art. 27|https://www.fedlex.admin.ch/eli/cc/1976/2423_2423_2423/de#art_27]], [[SVG Art. 15a|https://www.fedlex.admin.ch/eli/cc/1959/679_705_685/de#art_15_a]] (geprüft im September 2026).',
     title: 'Permess da manar',
     intro: 'Il permess da manar na scada betg en Svizra — tuttina èsi bun da tegnair en egl intgins puncts: baratar il vegl permess da palpiri, la controlla medicinala a partir da 75 onns ed il temp da prova per novs manaders. Qua ina survista calma.',
@@ -624,6 +669,7 @@ export default {
     footerNote: 'Termins e custs pon variar tenor chantun. Fa fide l’uffizi chantunal da traffic. Quai è orientaziun, betg cussegl giuridic.',
   },
   heirat: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[ZGB Art. 97|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_97]], [[DBG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_9]] (geprüft im September 2026).',
     title: 'Maridaglia u partenariat',
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
@@ -660,6 +706,7 @@ export default {
     fristHinweis: 'Die drei Monate enden am {date} (KVG Art. 3). Bis dahin angemeldet, gilt die Deckung rückwirkend ab Geburt.',
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     fristLabel: 'Geburtsdatum des Kindes',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[ZGB Art. 260|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_260]], [[EOG Art. 16b|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de#art_16_b]] (geprüft im September 2026).',
     title: 'Avair in uffant',
     intro: 'In uffant mida bler a medem temp — annunzias, assicuranza, supplements, budget. Ina survista calma, pass per pass, per betg emblidar nagut.',
@@ -694,6 +741,7 @@ export default {
     footerNote: { sie: 'Bler va via il patrun e la cassa da cumpensaziun — conservai bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.', du: 'Bler va via il patrun e la cassa da cumpensaziun — conserva bain las confirmaziuns. Quai è orientaziun, betg cussegl giuridic.' },
   },
   trennung: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[ZGB Art. 176|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_176]], [[ZGB Art. 114|https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_114]] (geprüft im September 2026).',
     title: 'Separaziun u divorzi',
     intro: 'Ina separaziun è greva emoziunalmain — ed maina blers dumondas practicas. Ina survista calma senza squetsch: cussegl, abitar, uffants & mantegniment, finanzas & taglias.',
@@ -724,6 +772,7 @@ export default {
     footerNote: { sie: 'Vus na stuais betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.', du: 'Ti na stos betg reglar tut sulet — posts da mediaziun, cussegl matrimonial e giuridic existan. Quai è orientaziun, betg cussegl giuridic.' },
   },
   selbstaendigkeit: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[AHV-Merkblatt 2.02|https://www.ahv-iv.ch/p/2.02.d]], [[UVG Art. 4|https://www.fedlex.admin.ch/eli/cc/1982/1676_1676_1676/de#art_4]] (geprüft im September 2026).',
     title: 'Daventar independent',
     intro: 'Il pass en la independenza porta libertad — e responsabladad che il patrun ha purtà avant. Bler na va betg pli automaticamain. Ina survista calma: status AVS, tip d’activitad, largias d’assicuranza e taglias.',
@@ -1285,6 +1334,7 @@ export default {
     fristHinweis: 'Die 10 Tage enden am {date} (SchKG Art. 74). Fällt dieser Tag auf ein Wochenende, einen Feiertag oder in die Betreibungsferien, kann die Frist länger sein — früher ist nie falsch.',
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     fristLabel: 'Zugestellt am (steht auf dem Zahlungsbefehl)',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[SchKG Art. 74|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_74]] (geprüft im September 2026).',
     title: 'Scussiun retschavida — tge far?',
     intro: 'In cumond da pajar para smanatschant, ma l’emprim è quai mo ina pretensiun — nagina sentenzia e nagina inscripziun en il register penal. Ussa importa mo ina chaussa: il termin da 10 dis. Ina survista calma.',
@@ -1311,6 +1361,7 @@ export default {
     footerNote: { sie: 'Eine Betreibung ist kein Strafregister-Eintrag. Dritte sehen sie im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Haben Sie Rechtsvorschlag erhoben, können Sie frühestens drei Monate nach Zustellung des Zahlungsbefehls verlangen, dass sie Dritten nicht mehr gezeigt wird — ausser der Gläubiger weist innert 20 Tagen nach, dass er ein Verfahren eingeleitet hat (Art. 8a Abs. 3). Quai è orientaziun, betg cussegl giuridic.', du: 'Eine Betreibung ist kein Strafregister-Eintrag. Dritte sehen sie im Auszug bis fünf Jahre nach Abschluss des Verfahrens (SchKG Art. 8a Abs. 4). Hast du Rechtsvorschlag erhoben, kannst du frühestens drei Monate nach Zustellung des Zahlungsbefehls verlangen, dass sie Dritten nicht mehr gezeigt wird — ausser der Gläubiger weist innert 20 Tagen nach, dass er ein Verfahren eingeleitet hat (Art. 8a Abs. 3). Quai è orientaziun, betg cussegl giuridic.' },
   },
   pensionierung: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[AHVG Art. 21|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de#art_21]], [[BVG Art. 37|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de#art_37]], [[AHV-Merkblatt 3.01|https://www.ahv-iv.ch/p/3.01.d]] (geprüft im September 2026).',
     title: 'Pensiunament',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -1353,6 +1404,7 @@ export default {
     fristHinweis: 'Die drei Monate enden am {date} (KVG Art. 3). Bis dahin versichert, gilt die Deckung rückwirkend.',
     // TODO(rm): provisorisch — deutscher Rückfall, rm-Fassung fehlt (24.09.2026)
     fristLabel: 'Zuzug in die Schweiz (Wohnsitznahme)',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 3|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_3]], [[KVV Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_7]] (geprüft im September 2026).',
     title: 'Cassa da malsauns per l’emprima giada',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
@@ -1389,12 +1441,17 @@ export default {
     title: { sie: 'Ihr Tresor ist gesperrt', du: 'Dein Tresor ist gesperrt' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     intro: { sie: 'Geben Sie Ihre Passphrase ein, um Ihre Unterlagen zu entsperren. Die Unterlagen werden nur auf diesem Gerät entschlüsselt.', du: 'Gib deine Passphrase ein, um deine Unterlagen zu entsperren. Sie werden nur auf diesem Gerät entschlüsselt.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     passphraseLabel: 'Passphrase',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     passphrasePlaceholder: { sie: 'Ihre Passphrase', du: 'Deine Passphrase' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     showPassphrase: 'Anzeigen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     hidePassphrase: 'Verbergen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     unlock: 'Entsperren',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     unlocking: 'Entsperre…',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     wrong: { sie: 'Passphrase stimmt nicht. Versuchen Sie es nochmal.', du: 'Passphrase stimmt nicht. Versuch es nochmal.' },
@@ -1404,7 +1461,9 @@ export default {
     noReset: { sie: 'Maloja kann Ihre Passphrase nicht zurücksetzen — nur Sie kennen sie.', du: 'Maloja kann deine Passphrase nicht zurücksetzen — nur du kennst sie.' },
   },
   kvgWechsel: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]] (geprüft im September 2026).',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     checkPoint1: { sie: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert Ihre Deckung nicht und unterbricht keine laufende Behandlung.', du: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.' },
@@ -1412,51 +1471,74 @@ export default {
     checkPoint2: { sie: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu Ihrem Alltag?', du: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     checkPoint3: { sie: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündigen Sie sie nie vorschnell mit — prüfen Sie sie zuerst.', du: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige sie nie vorschnell mit — prüfe sie zuerst.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     checkZusatzLink: 'Zusatzversicherung zuerst prüfen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     title: 'Krankenkasse wechseln',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     intro: { sie: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Sie müssen nichts auf einmal entscheiden.', du: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Du musst nichts auf einmal entscheiden.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step1Title: '1 · Lohnt sich der Wechsel?',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step1Text: { sie: 'Vergleichen Sie Ihre Prämie mit den Alternativen in Ihrem Kanton.', du: 'Vergleiche deine Prämie mit den Alternativen in deinem Kanton.' },
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step1TextKnown: { sie: 'Ihre aktuelle Kasse: {insurer}. Vergleichen Sie die Prämie mit den Alternativen in Ihrem Kanton.', du: 'Deine aktuelle Kasse: {insurer}. Vergleiche die Prämie mit den Alternativen in deinem Kanton.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step1Link: 'Prämien vergleichen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step2Title: '2 · Neue Kasse — zwei Wege',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step2Intro: { sie: 'Sie können selbst zur neuen Kasse wechseln, oder die neue Kasse den Wechsel übernehmen lassen. Keiner ist «richtiger».', du: 'Du kannst selbst zur neuen Kasse wechseln, oder die neue Kasse den Wechsel übernehmen lassen. Keiner ist «richtiger».' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     path3aTitle: 'Ich melde mich selbst an',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     path3aText: 'Antrag bei der neuen Kasse stellen (Grundversicherung).',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     path3aWarn: 'Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     path3bTitle: 'Die neue Kasse übernimmt',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     path3bText: { sie: 'Viele Kassen kündigen die alte für Sie — mit einer Vollmacht / einem Wechselservice.', du: 'Viele Kassen kündigen die alte für dich — mit einer Vollmacht / einem Wechselservice.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     path3bReassure: 'Dann ist die Reihenfolge automatisch sicher.',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     uptakeReassure: { sie: 'In der Grundversicherung gilt Aufnahmepflicht — keine Kasse darf Sie ablehnen.', du: 'In der Grundversicherung gilt Aufnahmepflicht — keine Kasse darf dich ablehnen.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step3Title: '3 · Kündigung schreiben',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step3Text: { sie: 'Den Kündigungsbrief erstellen Sie mit der fertigen Vorlage — Ihre Kasse und Policennummer sind schon eingesetzt.', du: 'Den Kündigungsbrief erstellst du mit der fertigen Vorlage — deine Kasse und Policennummer sind schon eingesetzt.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step3Link: 'Kündigungsbrief erstellen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step4Title: '4 · Frist sichern',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     step4Text: { sie: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Legen Sie sich die Frist in den Kalender.', du: 'Nach der Mitteilung der neuen Prämie muss die Kündigung bis 30. November {year} bei der alten Kasse eingegangen sein (KVG Art. 7 Abs. 2); fällt der Tag auf einen Samstag, Sonntag oder Feiertag, am letzten Arbeitstag davor (BAG). Leg dir die Frist in den Kalender.' },
     step4Button: 'Termin «Desdir la cassa da malsauns» en il chalender ({date})',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step4Done: 'Im Kalender notiert.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     step4CalendarLink: 'Zum Kalender',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     policeLink: 'Police ablegen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     reminderTitle: 'Krankenkasse kündigen — Frist',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     reminderNotes: 'Kündigung der Grundversicherung nach der Prämienmitteilung: Eingang bis 30.11. (KVG Art. 7 Abs. 2). Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (24.09.2026)
     specialRight: { sie: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie können Sie mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.', du: 'Sonderkündigungsrecht: Nach der Mitteilung der neuen Prämie kannst du mit einer Frist von einem Monat auf das Ende des Monats wechseln, bevor die neue Prämie gilt (KVG Art. 7 Abs. 2) — auch bei Sparmodellen oder höherer Franchise.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     chosen: 'Gewählt',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     step3Note3b: { sie: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — Sie müssen selbst keinen Brief schreiben.', du: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     wunschKasseLabel: 'Wunsch-Kasse (optional)',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     wunschKassePlaceholder: 'Name der Kasse',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     reminderTitleTo: 'Wechsel zu {insurer} — Frist',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     todoText: 'Krankenkassen-Wechsel: Prämien vergleichen',
     // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
     path3bCaveat: { sie: 'Nicht jede Kasse übernimmt das zuverlässig — lassen Sie sich die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.', du: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.' },
@@ -1533,7 +1615,7 @@ export default {
       medical: { sie: "Tge medis e forzas da salvament duain savair da Vus en cas d'urgenza.", du: "Tge medis e forzas da salvament duain savair da Tai en cas d'urgenza." },
       care: { sie: "Voss medi da famiglia e Vossa clinica preferida — per che questa infurmaziun saja chattabla cura ch'ella vegn dovrada.", du: "Tes medi da famiglia e Tia clinica preferida — per che questa infurmaziun saja chattabla cura ch'ella vegn dovrada." },
       // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
-      provision: { sie: 'Diese drei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese drei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
+      provision: { sie: 'Diese zwei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese zwei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
       contacts: "Contact d'urgenza e relaziun.",
       documents: "Carta d'organs e certificat da vaccinaziun.",
     },
@@ -1547,6 +1629,7 @@ export default {
     remove: 'Allontanar posiziun',
   },
   common: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     betraegeVerordnung: 'Beträge {jahr}: [[Verordnung vom {datum}|https://www.fedlex.admin.ch/{eli}/de]].',
     // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
     qrFehler: 'Il code QR n’ha betg pudì vegnir generà per il mument.',
@@ -1600,6 +1683,7 @@ export default {
     select: '— Tscherner —',
     required: 'Obligatoric',
     optional: 'Facultativ',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     total: 'Total',
     actions: 'Acziuns',
     details: 'Detagls',
@@ -1637,11 +1721,13 @@ export default {
     advanced: 'Avanzà',
     tresor: 'Deposita da documents',
     kkScanner: 'Scanner cassa da malsauns',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     budget: 'Budget',
     debts: 'Debits',
     taxes: 'Taglia',
     finanzUebersicht: 'Survista da finanzas',
     organDonation: "Donaziun d'organs",
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     budgetSync: 'Budget-Sync',
     kvgIpv: 'Reducziun da premias (IPV)',
     praemien: 'Survista da las assicuranzas',
@@ -1658,6 +1744,7 @@ export default {
     charts: 'Graficas',
     unterlagen: 'Mes documents',
     flyer: 'Flyer per derasar',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     export: 'Export',
     merkliste: 'Mia glista da memoria',
     umzug: 'Midada da domicil',
@@ -1697,20 +1784,35 @@ export default {
     pensionierung: 'Pensiunament',
     mahnung: 'Admoniziun retschavida', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
     betreibung: 'Scussiun retschavida',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     dienst: 'Militär- oder Zivildienst',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     volljaehrig: '18 werden',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     lehre: 'Lehre beginnen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     betreibungsauszug: 'Betreibungsauszug bestellen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     ausweis: 'Pass oder Identitätskarte',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     wegzug: 'Wegzug ins Ausland',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     adoption: 'Adoption',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     zusammenziehen: 'Zusammenziehen ohne Trauschein',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     ergaenzungsleistungen: 'Ergänzungsleistungen beantragen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     vorsorgeauftrag: 'Vorsorgeauftrag & Patientenverfügung',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     einbuergerung: 'Einbürgerung',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     zuzug: 'Neu in der Schweiz',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     aussteuerung: 'Ausgesteuert',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quellensteuer: 'Quellensteuer',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     wohnunggekuendigt: 'Wohnung gekündigt',
     selbstaendigkeit: 'Daventar independent',
     heirat: 'Maridaglia u partenariat',
@@ -1733,20 +1835,35 @@ export default {
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
       mahnung: 'Controllar, contestar, dumandar ratas', // TODO(rm): provisorisch — Gegenlese (Mahnung, 28.09.2026)
       betreibung: 'Reagir cun calma',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       dienst: 'Rekrutierung, Zivildienst, EO, Ersatz',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       volljaehrig: 'Verträge, Krankenkasse, Steuern, Stimme',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       lehre: 'Lehrvertrag, Probezeit, Ferien, Lohn',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       betreibungsauszug: 'Wo, was er kostet, falsche Einträge',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ausweis: 'Erneuern, Kosten, Verlust',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       wegzug: 'Abmelden, Krankenkasse, AHV, Vorsorge',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       adoption: 'Voraussetzungen, Bewilligung, Urlaub',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       zusammenziehen: 'Miete, Erben, Vorsorge, Kinder',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ergaenzungsleistungen: 'Anspruch, Anmeldung, 6 Monate',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       vorsorgeauftrag: 'Wer handelt, was medizinisch gilt',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       einbuergerung: 'C-Bewilligung, Integration, Gesuch',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       zuzug: 'Gemeinde, Kasse, AHV, Führerausweis',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       aussteuerung: 'AHV, Unfall, Sozialhilfe, ab 60',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       quellensteuer: 'Tarifcode, 31. März, Wechsel',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       wohnunggekuendigt: 'Anfechten, Erstreckung, 30 Tage',
       selbstaendigkeit: 'AVS, assicuranza, prevenziun, taglias',
       heirat: 'Stadi civil, taglias, prevenziun',
@@ -1915,6 +2032,7 @@ export default {
     lohn: 'Controlla dal salari minimal activa',
     notfall: "Carta d'urgenza pronta",
     budget: 'Survista dal budget activa',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     short: { tax: 'Taglia', ipv: 'IPV', sozial: 'Agid social', lohn: 'Salari', notfall: 'Carta d’urgenza', budget: 'Budget' },
   },
 
@@ -2010,12 +2128,16 @@ export default {
         firstName: 'Prenum',
         middleName: 'Segund prenum',
         lastName: 'Surnum',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         academicTitle: 'Titel',
         dateOfBirth: 'Data da naschientscha',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         gender: { label: 'Schlattaina', options: { male: 'Masculin', female: 'Feminin', diverse: 'Divers' } },
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         pronouns: { label: 'Pronoms', options: { she: 'ella', he: 'el', they: 'they (neutral)', none: 'Nagina indicaziun' } },
         nationality: { label: 'Naziunalitad', options: { swiss: 'Svizzer/a', german: 'Tudestg/a', french: 'Franzos/a', italian: 'Talian/a', austrian: 'Austriac/a', other: 'Auter' } },
         canton: 'Chantun',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
@@ -2054,6 +2176,7 @@ export default {
         ahv: '756.XXXX.XXXX.XX',
       },
       hints: {
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         ahv: 'Format: 756.1234.5678.90',
         academicTitle: 'Titel academic u professiunal (p.ex. Dr., MSc) — mussà avant il num.',
       },
@@ -2241,6 +2364,7 @@ export default {
     versicherungen: {
       title: 'Assicuranzas & prevenziun',
       netz: {
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         achse: { basic: 'Cassa da malsauns', occupational: 'Cassa da pensiun', additional: 'Ulteriuras', property: 'Chasa & viadi', mobility: 'Auto', social: 'AVS' },
         aria: 'Rait da las assicuranzas: Il pli lunsch ch’in piz tanscha anora, il dapli è endatà en quest chapitel.',
         hinweis: { sie: 'Mussa quant è endatà per mintga assicuranza, betg sche Vus essas bain assicurads. «Na concerna betg» quinta er.', du: 'Mussa quant è endatà per mintga assicuranza, betg sche ti es bain assicurà. «Na concerna betg» quinta er.' },
@@ -2258,6 +2382,7 @@ export default {
       fields: {
         kkInsurer: 'Cassa da malsauns',
         kkPremium: 'Premia mensiala CHF',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         kkModel: { label: 'Model', options: { standard: 'Standard', hmo: 'HMO', telmed: 'Telmed', hausarzt: 'Medi da chasa', basic: 'Basic', comfort: 'Comfort', apotheke: 'Model dad apoteca' } },
         franchise: { label: 'Franschisa CHF', options: { 300: '300', 500: '500', 1000: "1'000", 1500: "1'500", 2500: "2'500", f300: '300', f500: '500', f1000: "1'000", f1500: "1'500", f2500: "2'500" } },
         bvgContribution: 'Contribuziun LPP CHF/mais',
@@ -2272,6 +2397,7 @@ export default {
         childInsurance: { label: 'Assicuranzas per uffants', options: { no: 'Na', yes: 'Gea' } },
         bvgInsurer: 'Cassa da pensiun',
         bvgBalance: 'Avair LPP actual CHF',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
         ktg: { label: 'Indemnità per cas da malsogna (ICM)', options: { yes: 'Gea', employer: 'Via il patrun', none: 'Nagina / Nunenconuschent' } },
         liabilityInsurance: { label: 'Responsabladad civila', options: { no: 'Na', yes: 'Gea' } },
@@ -2293,6 +2419,8 @@ export default {
       hints: {
         liabilityPremium: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
         householdInsuranceAmount: "Premia annuala. En il budget quinta mintga mais in dudeschavel. Ménaschi e responsabladad civila en ina polizza? Lura endatar la premia mo ina giada.",
+        // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+        bvgInsurer: 'Nagina cassa da pensiun? Lura tscherner «Na concerna betg». En intgins chantuns vala quai per la reducziun da premias sco «nagina 2. pitga».',
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
         policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
@@ -2322,6 +2450,7 @@ export default {
         employerAddress: 'Adressa dal patrun',
         startDate: 'Engaschà dapi',
         employmentPercent: 'Grond da lavur %',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         educationLevel: { label: 'Nivel da furmaziun', options: { mandatory: 'Scola obligatorica', apprenticeship: 'Emprendissadi', matura: 'Matura', vocMatura: 'Matura professiunala', bachelor: 'Bachelor', master: 'Master', phd: 'Doctorat', doctorate: 'Doctorat', other: 'Auter' } },
         fieldOfStudy: 'Sectur da furmaziun',
         currentlyStudying: { label: 'Actualmain en furmaziun?', options: { no: 'Na', partTime: 'Gea, part-time', fullTime: 'Gea, full-time' } },
@@ -2370,6 +2499,7 @@ export default {
       docs: {
         taxReturn: 'Decleraziun da taglia',
         betreibungsauszug: 'Extract da scussiun',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         will: 'Testament',
         vorsorgeauftrag: 'Mandat da prevenziun',
         patientenverfuegung: 'Disposiziun dal pazient',
@@ -2446,6 +2576,7 @@ export default {
 
   legal: {
     title: 'Giuridic',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     tabs: { privacy: 'Protecziun da datas', terms: 'Utilisaziun', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica', resources: 'Resursas', faq: 'FAQ', support: 'Contribuziun' },
     support: {
       whatTitle: 'Quant che Maloja custa',
@@ -2483,6 +2614,7 @@ export default {
       sensitiveTitle: 'Datas particularamain sensitivas',
       sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, donaziun d'organs), datas davart mesiras d'agid social u convicziuns religiusas.",
       sensitive2: { sie: "Questas indicaziuns restan sin Voss apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatai talas rubricas mo sche quai Vus convegn — e protegì l'apparat cun in code.", du: "Questas indicaziuns restan sin Tes apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatescha talas rubricas mo sche quai ta convegn — e protegia l'apparat cun in code." }, // TODO(rm): Gegenlese Muttersprache
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       hostingTitle: 'Hosting',
       hosting1: "L'applicaziun web statica (senza datas d'utilisader) vegn hosted tar Infomaniak Network SA (Rue Eugène-Marziano 25, 1227 Les Acacias / Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra. Cun la clomada da la pagina elavurescha Infomaniak sco incumbensada da l'elavuraziun (art. 9 nLPD) datas tecnicas: adressa IP, mument, datoteca clamada, tip da navigatur e sistem operativ. Intent: la consegna da la pagina e la segirezza da la gestiun. Tenor indicaziun dal purschider vegnan ils logs d'access e d'errur conservads almain 7 dis.", // TODO(rm): Gegenlese Muttersprache
       hostingSource: "Funtauna dal termin da conservaziun: Infomaniak Support-FAQ 1926 (indicaziun dal purschider, consultada ils 23 da settember 2026).", // TODO(rm): Gegenlese Muttersprache
@@ -2501,6 +2633,7 @@ export default {
       securityTitle: 'Segirezza da datas',
       security1: { sie: "Las datas d'utilisader na bandunan betg Voss apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain.", du: "Las datas d'utilisader na bandunan betg Tes apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain." },
       security2: { sie: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Vossa responsabladad: Segirai Voss apparat cun in pled-clav e fai regularmain segirezzas.', du: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Tia responsabladad: Segirescha Tes apparat cun in pled-clav e fai regularmain segirezzas.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       cookiesTitle: 'Cookies',
       cookies1: "Maloja Plana n'utilisescha nagins cookies — ni agens ni da terzs.",
       notificationsTitle: 'Communicaziuns dal navigatur',
@@ -2617,14 +2750,17 @@ export default {
       ombudsTitle: 'Mediaturs',
       // TODO(rm): provisorisch — deutscher Rückfall (25.09.2026)
       verbaendeTitle: 'Verbände & Interessenvertretung',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       verbaendeHinweis: 'Diese Verbände vertreten eine Seite — Mieterinnen und Mieter bzw. Konsumentinnen und Konsumenten. Sie beraten, sind aber keine neutrale Vermittlungsstelle.',
       ombuds1: { name: 'Ombudsman da l\'assicuranza da malsogna', url: 'https://www.om-kv.ch', desc: 'Mediaziun gratuita tar dispitas cun la cassa da malsogna.' },
       ombuds2: { name: 'Ombudsman da las bancas', url: 'https://www.bankingombudsman.ch', desc: 'Mediaziun tar conflicts cun bancas.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ombuds3: { name: 'Associaziun dals abitants', url: 'https://www.mieterverband.ch', desc: 'Interessenverband der Mieterinnen und Mieter: Beratung (teils nur für Mitglieder) und Begleitung vor die Schlichtungsbehörde.' },
       ombuds4: { name: 'Protecziun dals consumaders', url: 'https://www.konsumentenschutz.ch', desc: 'Cussegliaziun independenta per dretgs dals consumaders.' },
       heartfeltIntro: 'Servetschs e projects che nus stimain persunalmain — recumandads gratuitamain, senza cuntraprestaziun.',
       // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
       heartfeltIntroAffiliate: { sie: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a Vus.', du: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a tai.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       affiliateMarker: 'Affiliate',
       // TODO(rm): provisorischer DE-Fallback — RM nachziehen
       heartfeltGroups: { digital: 'Digital & Privatsphäre', soziales: 'Sustegn social', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
@@ -2648,12 +2784,19 @@ export default {
       // TODO(rm): provisorischer DE-Fallback — sauberes Romanisch nachziehen
       // TODO(rm): DE-Fallback — Sie-Fassung aus de übernommen (K124, 24.09.2026)
       heartfelt18: { sie: 'Schweizer Tastatur-App, die mit Ihnen mitdenkt — datensparsam, ohne Tracking.', du: 'Schweizer Tastatur-App, die mit dir mitdenkt — datensparsam, ohne Tracking.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt19: 'Tätowier-Kunst mit eigener Handschrift — derzeit auf Instagram zu finden.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt20: 'Tätowier-Kunst, die uns berührt — derzeit auf Instagram zu finden.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt21: 'Malergeschäft aus Nunningen — sorgfältiges Handwerk, persönlich.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt22: 'Traditionelle Chinesische Medizin — achtsame, ganzheitliche Behandlung.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt23: 'Überbrückt finanzielle Notlagen, damit Menschen das Nötigste haben und ihre Wohnung nicht verlieren.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       heartfelt25: 'Gemeinnützige Leihplattform in Basel — „Leihen statt kaufen“: über 1’300 Gegenstände zum Ausleihen, ehrenamtlich betrieben.',
       heartfelt26: 'Wildblumen-Saatgut, das Rasen in eine Blühwiese verwandelt — Nahrung für Wildbienen und andere Insekten. Liefert auch in die Schweiz.', // TODO(rm): Übersetzung
       // TODO(rm): provisorisch — Gegenlese (Nexter, 25.09.2026)
@@ -2741,6 +2884,9 @@ export default {
     // K38 · persuna da contact «na concerna betg»
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
     keineKontaktperson: 'Nagina persuna da contact deponida',
+    // Medicaments «Jau na prend nagins» — Wert hinter «Medicaments:» in Dossier, QR, Notfallpass.
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    keineMedikamente: 'nagins',
     notfallAnregung: { sie: 'Forsa vulais Vus dumandar ina persuna da confidenza, sch’ella vul esser Vossa persuna da contact en cas d’urgenza. Quai ha temp.', du: 'Forsa vuls Ti dumandar ina persuna da confidenza, sch’ella vul esser Tia persuna da contact en cas d’urgenza. Quai ha temp.' },
   },
   // E18 · «Stizzar tut las datas sin quest apparat» (glista O11)
@@ -2922,6 +3068,7 @@ export default {
     title: 'Deposita da documents',
     active: 'Activ',
     expiringSoon: 'Bainprest scadent',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     archive: 'Archiv',
     allChapters: 'Tuts',
     sortBy: 'Ordinar tenor',
@@ -2977,6 +3124,7 @@ export default {
     // TODO(rm): deutscher Rückfall (27.09.2026), Romanisch fehlt noch.
     addVerlustschein: 'Verlustschein erfassen',
     moreDetails: 'Ulteriuras indicaziuns',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     statusField: 'Status',
     needInfo: 'Per plaschair agiuntar creditur ed import.',
     creditor: 'Creditur (p.ex. banca, persuna)',
@@ -2993,9 +3141,11 @@ export default {
     statusPaid: 'Pajà',
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
     alsBezahlt: 'Als bezahlt markieren',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     wiederOffen: 'Wieder offen',
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
     ansageBezahlt: '{name}: bezahlt',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     ansageOffen: '{name}: wieder offen',
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
     ansageGeloescht: '{name} gelöscht',
@@ -3035,26 +3185,40 @@ export default {
     betreibungSumme: 'Erfasste offene Betreibungen: {amount} — das sind rund {monate} Monatseinkommen (so wie im Kapitel Finanzen erfasst).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     betreibungOhneEinkommen: 'Erfasste Betreibungen: {amount}. Mit einem Einkommen im Kapitel Finanzen zeigen wir, wie vielen Monatseinkommen das entspricht.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     plan: {
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       rateLabel: { sie: 'Wie viel können Sie monatlich für Schulden einsetzen? (CHF)', du: 'Wie viel kannst du monatlich für Schulden einsetzen? (CHF)' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       rateHilfe: 'Nur was nach Miete, Krankenkasse und dem Lebensbedarf übrig bleibt.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ohne: 'Betrag eintragen, dann erscheint ein Richtwert.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ergebnis: 'Mit {rate} pro Monat wären diese Schulden nach rund {monate} Monaten bezahlt; Zinsen insgesamt rund {zins}.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       zuWenig: '{rate} pro Monat reichen nicht für die Zinsen (rund {zins} pro Monat) — die Schulden würden wachsen. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       zuLang: 'Mit {rate} pro Monat dauert es länger als 30 Jahre. Eine Schuldenberatung hilft, einen Weg zu finden.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       fertigIn: '{name}: bezahlt nach rund {monate} Monaten',
       ergebnisEins: 'Mit {rate} pro Monat wären diese Schulden in rund einem Monat bezahlt; Zinsen insgesamt rund {zins}.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       fertigInEins: '{name}: bezahlt in rund einem Monat', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       vereinfacht: 'Richtwert, vereinfacht: Die ganze Rate geht jeweils an die erste offene Schuld in der Reihenfolge oben; die Zinsen der übrigen laufen weiter. Gebühren und Verzugszinsen sind nicht eingerechnet.',
       ausBudget: { sie: 'Vorschlag aus Ihrem Budget: Einnahmen {einnahmen} minus Ausgaben {ausgaben} (ohne die heutigen Schuldenraten) — rund {vorschlag}.', du: 'Vorschlag aus deinem Budget: Einnahmen {einnahmen} minus Ausgaben {ausgaben} (ohne die heutigen Schuldenraten) — rund {vorschlag}.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       budgetFehlt: 'Für einen Vorschlag aus dem Budget fehlt noch: {was}.', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       fehlt: {
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         wohnen: 'Miete oder Hypothek',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         krankenkasse: 'Krankenkassenprämie',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         lebensmittel: 'Lebensmittel',
       }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       budget: {
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         keinEinkommen: 'Mit einem Einkommen im Budget schlagen wir hier einen Betrag vor.',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         keinNetto: 'Einen Vorschlag aus dem Budget machen wir nur, wenn der Lohn als Nettolohn erfasst ist.',
+        // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
         nichtsUebrig: 'Laut Budget bleibt nach den laufenden Ausgaben nichts für Schulden übrig. Eine Schuldenberatung hilft, einen Weg zu finden.',
       }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
       zurueck: 'Vorschlag wieder einsetzen', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
@@ -3064,13 +3228,18 @@ export default {
       heutigeRaten: { sie: 'Ihre heutigen Schuldenraten ({amount}) sind als verfügbar gezählt; enthalten sie Raten für Schulden, die nicht in dieser Liste stehen (etwa Leasing), ziehen Sie diese ab.', du: 'Deine heutigen Schuldenraten ({amount}) sind als verfügbar gezählt; enthalten sie Raten für Schulden, die nicht in dieser Liste stehen (etwa Leasing), zieh diese ab.' }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     steuer: {
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       title: 'Und die Steuern?',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       text: { sie: 'Private Schuldzinsen — etwa für einen Kredit oder die Kreditkarte — lassen sich vom Einkommen abziehen, bis zur Höhe der steuerbaren Vermögenserträge plus 50’000 Franken (DBG Art. 33 Abs. 1 Bst. a; für die Kantons- und Gemeindesteuern StHG Art. 9 Abs. 2 Bst. a). Die Rückzahlung selbst ist nicht abziehbar (DBG Art. 34 Bst. c). Bei privaten Schulden sind auch Betreibungskosten und Mahngebühren nicht abziehbar (DBG Art. 34; StHG Art. 9 Abs. 4). Ob Verzugszinsen als Schuldzinsen gelten, sagt das Gesetz nicht ausdrücklich — fragen Sie beim Steueramt. Für die Vermögenssteuer der Kantone ist das Reinvermögen steuerbar, also das Vermögen abzüglich der Schulden (StHG Art. 13 Abs. 1).', du: 'Private Schuldzinsen — etwa für einen Kredit oder die Kreditkarte — lassen sich vom Einkommen abziehen, bis zur Höhe der steuerbaren Vermögenserträge plus 50’000 Franken (DBG Art. 33 Abs. 1 Bst. a; für die Kantons- und Gemeindesteuern StHG Art. 9 Abs. 2 Bst. a). Die Rückzahlung selbst ist nicht abziehbar (DBG Art. 34 Bst. c). Bei privaten Schulden sind auch Betreibungskosten und Mahngebühren nicht abziehbar (DBG Art. 34; StHG Art. 9 Abs. 4). Ob Verzugszinsen als Schuldzinsen gelten, sagt das Gesetz nicht ausdrücklich — frag beim Steueramt. Für die Vermögenssteuer der Kantone ist das Reinvermögen steuerbar, also das Vermögen abzüglich der Schulden (StHG Art. 13 Abs. 1).' },
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     planQuelle: 'Quellen: [[schuldeninfo.ch, «Weiterleben mit Schulden» (2011)|https://www.schuldeninfo.ch/files/_documents/stichwoerter/weiterleben_mit_schulden.pdf]], [[Caritas, Ratgeber Schuldensanierung|https://caritas-regio.ch/angebote/soziale-rechtliche-unterstuetzung/schuldenberatung/ratgeber-schuldensanierung]], [[DBG Art. 33|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_33]], [[DBG Art. 34|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_34]], [[DBG Art. 167|https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de#art_167]], [[StHG Art. 9|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_9]], [[StHG Art. 13|https://www.fedlex.admin.ch/eli/cc/1991/1256_1256_1256/de#art_13]] (gelesen im September 2026).', // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     verlustschein: {
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       title: 'Was ein Verlustschein bedeutet',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       text: { sie: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen können Sie jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn Sie zu neuem Vermögen gekommen sind (Art. 265 Abs. 2) — das müssen Sie mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.', du: 'Ein Verlustschein entsteht, wenn eine Pfändung die Forderung nicht deckt (SchKG Art. 149 Abs. 1). Er gilt als Schuldanerkennung (Abs. 2). Die Forderung verjährt 20 Jahre nach der Ausstellung (Art. 149a Abs. 1). Bezahlen kannst du jederzeit auch beim Betreibungsamt, das den Verlustschein ausgestellt hat (Abs. 2); nach der Tilgung wird der Eintrag im Register gelöscht (Abs. 3). Aus einem Verlustschein nach einem Konkurs ist eine neue Betreibung nur möglich, wenn du zu neuem Vermögen gekommen bist (Art. 265 Abs. 2) — das musst du mit dem Rechtsvorschlag geltend machen (Art. 265a Abs. 1); der Brief «Rechtsvorschlag erheben» hat dafür ein eigenes Feld.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       quelle: 'Quellen: [[SchKG Art. 149|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149]], [[SchKG Art. 149a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_149_a]], [[SchKG Art. 265|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265]], [[SchKG Art. 265a|https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_265_a]] (geprüft im September 2026).',
       // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
       rolle: {
@@ -3082,17 +3251,27 @@ export default {
         },
       },
       // SchKG Art. 149 Abs. 4 — nur für die schuldende Person, nie pauschal (swiss-precision-pruefer 05.10.2026).
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       zinslos: { sie: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für Sie als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an Ihrer Stelle Zinsen zahlen müssen, können sie nicht von Ihnen zurückverlangen.', du: 'SchKG Art. 149 Abs. 4: «Der Schuldner hat … keine Zinsen zu zahlen.» Das gilt für dich als schuldende Person. Mitschuldnerinnen, Mitschuldner und Bürgschaftsgebende, die an deiner Stelle Zinsen zahlen müssen, können sie nicht von dir zurückverlangen.' },
       // SchKG Art. 149a Abs. 1 inkl. Erben-Regel.
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       verjaehrung: { sie: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in Ihrem Fall verändert hat, kann Ihnen das Betreibungsamt sagen.', du: 'SchKG Art. 149a Abs. 1: Die Forderung «verjährt 20 Jahre nach der Ausstellung des Verlustscheines; gegenüber den Erben des Schuldners jedoch verjährt sie spätestens ein Jahr nach Eröffnung des Erbganges.» Die Achse rechnet nur die 20 Jahre ab dem erfassten Ausstellungsdatum. Ob sich die Frist in deinem Fall verändert hat, kann dir das Betreibungsamt sagen.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       verjaehrt: '20 Jahre nach Ausstellung: {datum}',
       // Ausgestellt vor dem 1.1.1997: Übergangsregel, kein errechnetes Datum (swiss-precision-pruefer 13.10.2026).
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       vor1997: { sie: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann Ihnen das Datum sagen.', du: 'Ausgestellt vor 1997 — für diese Verlustscheine gilt eine Übergangsregel. Das Betreibungsamt kann dir das Datum sagen.' },
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ausgestellt: 'ausgestellt am {datum}',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       ohneDatum: 'Ohne Ausstellungsdatum — die Verjährung lässt sich so nicht angeben.',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       datum: 'Ausstellungsdatum',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       bearbeiten: 'Bearbeiten',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       fertig: 'Fertig',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       zeitachse: { titel: 'Verjährung auf einen Blick', label: 'Verjährung je Verlustschein, einer pro Zeile', achse: 'Jahr', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
@@ -3108,7 +3287,9 @@ export default {
       zeitleiste: { titel: 'Erfasste Registerdaten', label: 'Registerdatum je Betreibung, eine pro Zeile', achse: 'Jahr', eingetragen: 'eingetragen am {datum}', heute: 'Der senkrechte Strich zeigt heute ({datum}).' },
     },
     bussen: {
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       title: 'Bussen und Geldstrafen',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       quelle: 'Quellen: [[StGB Art. 35|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_35]], [[StGB Art. 36|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_36]], [[StGB Art. 79a|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_79_a]], [[StGB Art. 106|https://www.fedlex.admin.ch/eli/cc/54/757_781_799/de#art_106]] (geprüft im September 2026).',
     }, // TODO(rm): provisorisch — deutscher Rückfall (27.09.2026)
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
@@ -3246,7 +3427,10 @@ export default {
     jahrBS: 'Quint per l’onn da dretg {jahr}. En il chantun Basilea-Citad na dependan las contribuziuns betg dal lieu da domicil — ellas valan tuttina en tut il chantun.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
-    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
+    // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
+    vorbehaltAG3aTeiljahr: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: senza cassa da pensiun quinta il pajament en la 3. pitga A qua mo per la part sur 10 pertschient da l’entrada da gudogn. Ils documents publitgads na din betg, sche quai vala era, sch’i ha dà ina cassa da pensiun mo durant ina part da l’onn. Laschar confermar l’import da la SVA Argovia.',
+    // TODO(rm): provisorisch — Gegenlese (Satz «Unterlagen», 26.10.2026)
+    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. Ils documents publitgads na din betg quai. Laschar confermar l’import tar l’Uffizi da las assicuranzas socialas dal chantun Berna.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     vorbehaltAG: 'En il chantun Argovia è la taxaziun definitiva {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura notablamain pli pauc po dumandar ina nova quintada tar la SVA Aargau. Imports retschavids nunlegitimamain vegnan pretends enavos.',
@@ -3423,7 +3607,7 @@ export default {
       saeule3aAbzugUnklar: 'Il pajament en la 3. pitga A registrà è sur l’import che dastgava en mintga cas vegnir deducì da l’entrada: 7 056 francs ils onns fiscals 2023 e 2024, senza cassa da pensiun il pli 20 pertschient da l’entrada da gudogn. Quant ch’è vegnì deducì, dependa da quai, sch’i dat ina cassa da pensiun — quai n’è betg registrà qua. Senza questa indicaziun fiss la cifra memia auta u memia bassa.',  // TODO(rm): Gegenlese
       szKinderMindestanspruch: 'Per ils uffants exista en il chantun Sviz cun questa entrada en mintga vischnanca in dretg: lur premia da referenza vegn reducida per almain 80 pertschient. L’import per l’entira chasada na sa lascha betg determinar qua cun segirezza. Ina dumonda tar la SVA Schwyz vala la paina.',  // TODO(rm): Gegenlese
       bsHypothetisch: 'En il chantun Basilea-Citad quinta l’Amt für Sozialbeiträge a persunas che vivan sulettas u educheschan sulettas ils uffants e lavuran main che 80 pertschient ina entrada ipotetica; ina plazza cumplaina quinta cun 36 000 francs netto per onn. Excepziuns valan per exempel per la tgira d’uffants sut 16 onns, en furmaziun, en cas da malsogna u rendita AI, cun daners da dischoccupaziun e sur 60 onns. Quant che vegn lavurà n’è betg registrà qua, e cun ina entrada da gudogn sut 28 800 francs per onn po quest supplement reducir fermamain l’import. Cun las uras da lavur per emna en il chapitel «Furmaziun & lavur» quinta l’app.',
-      bsSaeule3a: 'En il chantun Basilea-Citad vegnan ils pajaments en la 3. pitga A deducids da l’entrada mo, sch’i na dat nagina cassa da pensiun. Sch’i dat ina, n’è betg registrà qua — ed en quest cas decida quai davart la gruppa da contribuziun. Tgi che fa part d’ina cassa da pensiun, po endatar la contribuziun en il chapitel «Assicuranzas & prevenziun»; lura quinta l’app.',
+      bsSaeule3a: 'En il chantun Basilea-Citad vegnan ils pajaments en la 3. pitga A deducids da l’entrada mo, sch’i na dat nagina cassa da pensiun. Sch’i dat ina, n’è betg registrà qua — ed en quest cas decida quai davart la gruppa da contribuziun. Tgi che fa part d’ina cassa da pensiun, po endatar la contribuziun en il chapitel «Assicuranzas & prevenziun»; tgi che na fa part d’nagina, tscherna tar «Cassa da pensiun» «Na concerna betg». Lura quinta l’app.', // TODO(rm): provisorisch — Gegenlese (Säule 2, 26.10.2026)
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'Per giuvenils creschids (19 fin 25 onns) dependa la reducziun da quai, sch’ina furmaziun è stada en vigur il 1. da schaner — lura vala, tenor l’entrada, in dretg minimal. L’app na registrescha betg quai, perquai na stat qua nagina cifra; il post chantunal dat infurmaziuns.',
       stichtagAlter: 'Tgi che cumplenescha 26 onns en l’onn da dretg, vala tenor la data da referenza anc sco giuvna persuna creschida u gia sco persuna creschida — cun premias da referenza differentas. Il chantun na numna nagina data da referenza explicita per la vegliadetgna, perquai na stat qua nagina cifra.',
@@ -3439,7 +3623,7 @@ export default {
       tiKinder: 'Per chasadas cun uffants na quinta l’applicaziun en il chantun Tessin anc betg: la reducziun vegn quintada là per l’entira chasada ed è limitada a la summa da tut las premias effectivamain pajadas. Las premias dals uffants n’èn betg registradas qua.', // TODO(rm): provisorisch — Gegenlese
       tiEltern: 'Tgi che ha il pli 30 onns, gudogna pauc e fa ina emprima scolaziun, vegn quintà en il chantun Tessin ensemen cun ils geniturs. Sche quai è il cas, na sa l’applicaziun betg — perquai na stat qua nagina cifra. L’IAS dat infurmaziuns.', // TODO(rm): provisorisch — Gegenlese
       kindNachStichtag: 'In uffant è naschì pir suenter il 1. da schaner da l’onn dal dretg. Decisivas èn las relaziuns ils 1. da schaner, e per l’uffant cumenza il dretg pir il mais suenter la naschientscha. Co che quai vegn quintà ensemen, na sa lascha betg dir cun segirezza qua.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
-      saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u 0, sch’i na dat nagina cassa da pensiun. Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
+      saeule2Unbekannt: 'Co ch’il pajament en la 3. pitga A quinta, dependa en quest chantun da quai, sch’i dat ina cassa da pensiun. Quai n’è betg registrà qua. En il chapitel Assicuranzas inscriver la contribuziun LPP mensila — u, sch’i na dat nagina, inscriver 0 u tscherner tar «Cassa da pensiun» «Na concerna betg». Lura po l’applicaziun quintar.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026; Säule 2, 26.10.2026)
       praemieFranchise: 'En quest chantun è la reducziun il pli uschè auta sco la premia cun la franchisa ordinaria da 300 francs e cun cuvrida d’accidents — betg sco la premia registrada. L’import quintà è sur la premia registrada; tge limita superiura che vala, dependa d’ina premia che n’è betg registrada qua. Il dretg è almain uschè aut sco la premia registrada.', // TODO(rm): provisorisch — Gegenlese (K31 AR, 28.09.2026)
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz. — TODO(rm): provisorisch, Gegenlese offen
       owSelbstbehaltRahmen: 'Cun questa entrada imputabla è la franchisa en il chantun Sursilvania tenor la decisiun per il 2026 pli auta che 12 pertschient. Dapi il 1. d’avrigl 2026 numna la lescha dentant ina rama da 9 fin 12 pertschient. Tgenina regla che vala per las disposiziuns 2026 è avert — perquai na stat qua nagina cifra. L’Ausgleichskasse Obwalden dat infurmaziuns.',
@@ -3672,6 +3856,7 @@ export default {
     restoreConfirm: 'La restituziun remplazza tut las datas actualas. Cuntinuar?',
     success: 'Segirezza chargiada cun success.',
     restoreSuccess: 'Datas restituidas cun success.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     exportPlain: 'Export (JSON)',
     exportEncrypted: 'Export (criptà)',
     importFile: 'Importar ina segirezza',
@@ -3871,6 +4056,8 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     povertyLineNote: { sie: 'Limita da povrezza per Vossa chasada: {amount}/mais (tenor la [[metodologia UST|https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/erhebungen/armutsstatistik.html]] 2024). Il confront sa basa sin Vossa entrada disponibla: il net, senza taglias, premias e deducziuns.', du: 'Limita da povrezza per tia chasada: {amount}/mais (tenor la [[metodologia UST|https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/erhebungen/armutsstatistik.html]] 2024). Il confront sa basa sin tia entrada disponibla: il net, senza taglias, premias e deducziuns.' },
     povertyBruttoHint: { sie: 'Vossa entrada neta correspunda radund a ~ {brutto} brut (stimà da AVS/AD e LPP, senza taglias — variabel tenor la cassa da pensiun).', du: 'Tia entrada neta correspunda radund a ~ {brutto} brut (stimà da AVS/AD e LPP, senza taglias — variabel tenor la cassa da pensiun).' },
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    povertyBruttoHintRente: { sie: 'Vossa entrada neta correspunda radund a ~ {brutto} brut (stimà da la contribuziun AVS/AI/IPG sin la paja sur {freibetrag} il mais, senza taglias). A partir da la vegliadetgna da referenza n\'èn AD e LPP betg quintads; sche l\'assicuranza tar la cassa da pensiun cuntinuescha, è il brut pli aut.', du: 'Tia entrada neta correspunda radund a ~ {brutto} brut (stimà da la contribuziun AVS/AI/IPG sin la paja sur {freibetrag} il mais, senza taglias). A partir da la vegliadetgna da referenza n\'èn AD e LPP betg quintads; sche l\'assicuranza tar la cassa da pensiun cuntinuescha, è il brut pli aut.' },
     povertyLine: 'Limita da povrezza',
     median: 'Mediana CH',
     household: 'Chasada',
@@ -3916,6 +4103,7 @@ export default {
     pendingReturns: 'Decleraziuns da taglia avantatgas',
     betreibung: 'Register da scussiun',
     courtCases: 'Process giudizials',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     will: 'Testament',
     legalRep: 'Assistenza giuridica',
     inMonths: 'en {n} mais',
@@ -4339,6 +4527,7 @@ export default {
 
   lohnEinordnung: {
     title: { sie: 'Nua che sa chatta Voss salari?', du: 'Nua che sa chatta tes salari?' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     median: 'Median',
     mindestlohn: 'Salari minimal',
     // TODO(rm): Gegenlese Muttersprachler:in — Zonen-Begriffe analog fr/it übersetzt
@@ -4398,7 +4587,9 @@ export default {
     insurance: "Polizza d'assicuranza: controllar annualmain",
     // TODO(rm): provisorisch — deutscher Rückfall nach Fachkorrektur, rm-Fassung fehlt (25.09.2026)
     ikExtract: 'IK-Auszug: keine gesetzliche Gültigkeitsdauer — massgebend ist das Ausstellungsdatum',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     paySlip: 'Lohnzettel: keine gesetzliche Gültigkeitsdauer — massgebend ist der Monat, den er belegt',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     bankStatement: 'Kontoauszug: keine gesetzliche Gültigkeitsdauer — massgebend ist der Zeitraum, den er belegt',
     passport: 'Passaport: 10 onns valid (< 18: 5 onns)',
     diploma: 'Diploma: Illimitadamain',
@@ -4696,6 +4887,7 @@ export default {
     netIncomeNote13: { sie: "Projecziun da Voss salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar." }, // TODO(rm): provisorisch
     annahmenLabel: "Supposiziuns", // TODO(rm): provisorisch
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
     marriedTariff: 'Tarif da maridads',
@@ -4736,6 +4928,7 @@ export default {
   cv: {
     title: 'Generator da curriculum vitae',
     name: 'Num',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     phone: 'Telefon',
     profession: 'Professiun',
     qualification: 'Diplom',
@@ -5229,6 +5422,52 @@ export default {
 
   // Survista da las assicuranzas (runda 9 AB, pass 3, 25.10.2026) — texts betg anc examinads
   vu: {
+    // TODO(rm): provisorisch deutsch — Absicherung je Risiko (26.10.2026)
+    risiko: {
+      titel: 'Absicherung je Risiko',
+      subOffen: '{n} noch offen',
+      subKeins: 'Was zu jedem Risiko eingetragen ist',
+      satz: 'Zeigt, was eingetragen ist — nicht, ob die Leistungen reichen oder die Beiträge vollständig sind. Haftpflicht und Hausrat stehen im Schutzschild.',
+      marke: {
+        offen: 'offen',
+        zusatz: 'zusätzlich',
+      },
+      krankheit: 'Krankheit',
+      unfall: 'Unfall',
+      invaliditaet: 'Invalidität',
+      tod: 'Tod (Hinterbliebene)',
+      alter: 'Alter',
+      kkErfasst: 'Krankenkasse: {name}',
+      kkOffen: 'Keine Krankenkasse eingetragen — für alle mit Wohnsitz in der Schweiz Pflicht (KVG Art. 3).',
+      ktgArbeitgeber: 'Krankentaggeld über den Arbeitgeber.',
+      ktgErfasst: 'Krankentaggeld erfasst.',
+      ktgNicht: 'Lohnausfall bei Krankheit (Krankentaggeld): nichts erfasst — die Taggeldversicherung ist freiwillig (KVG Art. 1a Abs. 1).',
+      uvgArbeitgeber: 'Unfallversicherung über den Arbeitgeber.',
+      uvgErfasst: 'Unfallversicherung erfasst.',
+      uvgOffen: 'Unfallversicherung noch nicht eingetragen — für Angestellte obligatorisch (UVG Art. 1a).',
+      unfallKk: 'Über die Krankenkasse, soweit keine Unfallversicherung aufkommt (KVG Art. 1a Abs. 2 lit. b): Behandlungskosten, kein Lohnersatz.',
+      unfallOhneKk: 'Weder Krankenkasse noch Unfallversicherung eingetragen.',
+      uvgFreiwillig: 'Selbständige können sich freiwillig gegen Unfall versichern (UVG Art. 4).',
+      iv: 'IV: Versichert ist, wer in der AHV versichert ist (IVG Art. 1b). Eine ordentliche Rente setzt mindestens drei Beitragsjahre voraus (IVG Art. 36); ausserordentliche Renten richten sich nach eigenen Regeln (IVG Art. 39).',
+      ivRente: 'Mit der Altersrente endet der Anspruch auf eine IV-Rente (IVG Art. 30).',
+      ahvHinterlassene: 'AHV: Witwen- oder Witwerrente, wenn bei der Verwitwung Kinder da sind (AHVG Art. 23); eine Witwe auch ohne Kinder, wenn sie dann mindestens 45 Jahre alt und mindestens fünf Jahre verheiratet war (AHVG Art. 24); Waisenrente für Kinder (AHVG Art. 25).',
+      ahvAlter: 'AHV: Altersrente ab dem Referenzalter (AHVG Art. 21); ob als Voll- oder Teilrente, hängt von den Beitragsjahren ab (AHVG Art. 29).',
+      pkErfasst: 'Pensionskasse: {name}',
+      pkErfasstOhneName: 'Pensionskasse erfasst.',
+      pkSelbst: 'Pensionskasse: für Selbständige freiwillig (BVG Art. 4).',
+      pkMindestalter: 'Pensionskasse: obligatorisch erst ab dem 1. Januar nach dem 17. Geburtstag (BVG Art. 7).',
+      pkAltersparen: 'Pensionskasse: Alterssparen erst ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7).',
+      pkOffen: 'Pensionskasse noch nicht eingetragen — bei einem Arbeitgeber mit diesem Lohn in der Regel obligatorisch (BVG Art. 2, 7).',
+      pkUnklar: 'Pensionskasse: Ob sie obligatorisch ist, hängt vom Bruttolohn ab (BVG Art. 7).',
+      pkUnterSchwelle: 'Pensionskasse: beim erfassten Lohn nicht obligatorisch (BVG Art. 7).',
+      pkJeNachArbeit: 'Pensionskasse: obligatorisch für Angestellte mit einem Jahreslohn über der Eintrittsschwelle (BVG Art. 2, 7).',
+      leben: 'Lebensversicherung erfasst.',
+      saeule3a: 'Säule 3a erfasst.',
+      pkGuthaben: 'Erfasst ist nur ein Guthaben, keine Pensionskasse mit laufenden Beiträgen.',
+      pkOhneGeburtsdatum: 'Pensionskasse: Alterssparen ab dem 1. Januar nach dem 24. Geburtstag (BVG Art. 7) — dafür fehlt das Geburtsdatum.',
+      nbuUnter8: 'Unter 8 Stunden pro Woche beim selben Arbeitgeber sind Freizeitunfälle nicht versichert; der Arbeitsweg gilt als Berufsunfall (UVG Art. 8 Abs. 2, UVV Art. 13).',
+      unfallArbeitslos: 'Wer arbeitslos ist, ist obligatorisch unfallversichert (UVG Art. 1a Abs. 1 lit. b).',
+    },
     satz: { sie: 'Vossas assicuranzas en ina survista — sin basa da Vossas indicaziuns.', du: 'Tias assicuranzas en ina survista — sin basa da tias indicaziuns.' },
     darin: 'Tge che quai cuntegna',
     erfasst: 'Registradas: {n}',
@@ -5270,7 +5509,8 @@ export default {
     ipvGesuch: 'mo sin dumonda',
   },
   po: {
-    franchiseChangeWhen: 'La franchisa po vegnir midada ina giada l\'onn — cun effect dal 1. da schaner, communicaziun fin la fin da november (midada da cassa: 30 da november). Funtauna: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (neu gefasst 25.10.2026).
+    franchiseChangeWhen: 'Ina franchisa pli auta vala pir a partir dal 1. da schaner; il termin fixescha la cassa en sias condiziuns. Ina franchisa pli bassa è pussaivla mo per la fin da l\'onn, cun ils medems termins sco ina midada da cassa: suenter la communicaziun da la nova prima sto la dumonda entrar tar la cassa fin ils 30 da november. Funtauna: [[LAMal art. 7 al. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[OAMal art. 94 al. 1 e 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptSaving: { sie: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnais Vus var CHF {saving}/onn da premias.', du: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.' },
@@ -5278,6 +5518,7 @@ export default {
     franchiseOptReserve: { sie: 'En picada portais Vus en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas Vus pudair metter da maun.', du: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas ti pudair metter da maun.' },
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     franchiseOptBreakeven: { sie: 'La franchisa pli auta vala la paina, uschelunga Voss cuosts da sanadad restan sut var CHF {breakeven}/onn.', du: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     tachoBreakeven: 'Break-even',
     tachoLegendHigh: 'franchisa auta pli favuraivla',
     tachoLegendLow: 'franchisa bassa pli favuraivla',
@@ -5320,7 +5561,7 @@ export default {
     plzNotFound: 'PLZ betg chattada en il register uffizial.',
     regionTitle: 'Regiun da premias',
     regionInfo: '{gemeinde} ({kanton}) — regiun da premias {region}',
-    avgPremium: 'Premia media 2026: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
+    avgPremium: 'Premia media {jahr}: Uffants CHF {kinder} · Giuvens CHF {junge} · Creschids CHF {erwachsene}',
     noInsurer: 'Nagin assicurader deponì',
     noInsurerHint: { sie: 'Endatai Vossa cassa da malsauns sut «Assicuranzas» per vesair Vossa premia da referenza.', du: 'Endatescha Tia cassa da malsauns sut «Assicuranzas» per vesair Tia premia da referenza.' },
     insurerNotFound: '«{name}» betg enconuschent',
@@ -5333,13 +5574,30 @@ export default {
     franchiseTable: 'Premias da referenza {insurer} (model standard)',
     thFranchise: 'Franschischa',
     thPremium: 'Premia/mt.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     thInsurer: 'Kasse',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     allInsurersTitle: 'Alle Kassen vergleichen',
     compareFranchiseNote: 'Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Tippe eine Kasse für Details.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Die Kündigungsfrist für einen Kassenwechsel auf diesen Termin ist abgelaufen.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufen: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise: Antrag spätestens am {datum} bei der Kasse. Eine höhere: Die Frist legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
+    // TODO(rm): provisorisch deutsch — Wechselzeit-Hinweis (26.10.2026)
+    refJahr: 'Prämien {jahr}',
+    // TODO(rm): provisorisch deutsch — Prämien veraltet (26.10.2026)
+    veraltet: 'Für {aktuell} sind hier noch keine Prämien hinterlegt. Die Werte unten sind die Prämien {jahr} — massgebend ist die Prämienmitteilung der Kasse.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     chooseTarget: 'Wunsch-Kasse',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     targetSelected: 'Wunsch-Kasse',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi 2026',
+    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi {jahr}',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',
@@ -5380,14 +5638,17 @@ export default {
     nettoHint: "L'entrada memorisada è marcada sco netto — endatar qua per plaschair l'entrada annuala bruta per la EO.",
     einkommenEingeben: { sie: "Endatai Vossa entrada annaira per calcular l'indemnisaziun.", du: "Endatescha Tia entrada annaira per calcular l'indemnisaziun." },
     erklaerung: { sie: "Il calculatur mussa Voss taggeld e l'indemnisaziun totala per maternitad (14 emnas), paternitad (2 emnas), adopziun (2 emnas) e vacanzas da tgira (14 emnas).", du: "Il calculatur mussa Tes taggeld e l'indemnisaziun totala per maternitad (14 emnas), paternitad (2 emnas), adopziun (2 emnas) e vacanzas da tgira (14 emnas)." },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     taggeld: 'Taggeld',
     tag: 'Di',
     tage: 'Dis',
     entschaedigungssatz: "Taux d'indemnisaziun",
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     maximum: 'Maximum',
     leistung: 'Prestaziun',
     dauer: 'Durada',
     proTag: 'Per di',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     total: 'Total',
     mutterschaft: 'Indemnisaziun da maternitad',
     vaterschaft: 'Indemnisaziun da paternitad',
@@ -5397,6 +5658,7 @@ export default {
     hinweisBetreuung: 'Tgira d’in uffant grevamain malsaun u blessà: maximalmain 98 daners dal di entaifer 18 mais (var 14 emnas congedi). Sch’omadus geniturs lavuran, tutga a mintgin maximalmain la mesadad (per ordinari 49), tenor l’agen retgav — ina autra repartiziun è pussaivla. Il total vala per tut ils 98 daners dal di.',
     betreuungDauer: 'fin {n} daners dal di',
     hoechstens: 'maximalmain',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     plafoniert: 'Max.',
     hinweisMutterschaft: "Maternitad: 14 emnas a partir da la naschientscha. Cundiziun: almain 5 mais activa.",
     hinweisVaterschaft: 'Paternitad: 2 emnas, retschaviment entaifer 6 mais suenter la naschientscha.',
@@ -5418,8 +5680,11 @@ export default {
     knapp: 'Stretg — la stimaziun quinta senza AINP ed senza taglia a la funtauna; controllar cun la paja netta exacta.',
   },
   einkommensart: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     offenBrutto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte den Bruttolohn eintragen.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     offenNetto: 'Im Profil ist nicht angegeben, ob der Lohn brutto oder netto ist — darum hier nicht übernommen. Bitte das Netto-Einkommen eintragen.',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     nebenOffen: 'Beim Nebenerwerb ist nicht angegeben, ob er brutto oder netto ist — darum nicht mitgezählt. Hier den Netto-Betrag ergänzen.',
   },
   sh: {
@@ -5457,6 +5722,7 @@ export default {
     inklusiveIzu: "Incl. allocaziun d'integraziun (IZU)",
     position: 'Posiziun',
     gbl: 'Basegn fundamental (GBL)',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     personen: 'Pers.',
     wohnkosten: "Custs d'abitar",
     kvgLabel: 'Cassa da malsauns (LAMal)',
@@ -5669,8 +5935,11 @@ export default {
     belegReminderTitle: 'Pajar il quint dal medi ({betrag})',
     // TODO(rm): provisorisch — Gegenlese (Schulden R2, 05.10.2026)
     alsForderung: 'Als Forderung im Schuldenmanager führen',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     wirdGefuehrt: 'Wird im Schuldenmanager geführt',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     zumSchuldenmanager: 'Zum Schuldenmanager',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     loeschenVerbunden: 'Zum Löschen zuerst die Forderung im Schuldenmanager entfernen.',
     belegNichtGedeckt: 'Betg cuvrì da la cassa',
     belegNichtGedecktHint: 'Na quinta betg sin la franschisa/il parteniment — p.ex. prestaziuns pajadas sez.',
@@ -5969,6 +6238,7 @@ export default {
       name: 'Num',
       dateOfBirth: 'Data da naschientscha',
       ahv: 'AVS',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       phone: 'Telefon',
       email: 'E-mail',
       address: 'Adressa',
@@ -5985,6 +6255,7 @@ export default {
       educationLevel: 'Il pli aut diplom',
       taxCanton: 'Chantun da taglia',
       debtStatus: 'Stadi da scussiun',
+      // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
       will: 'Testament',
       bloodType: 'Gruppa da sang',
       emergencyContact: "Contact d'urgenza",
@@ -6602,6 +6873,7 @@ export default {
     status_braucheIch: 'Vegniss fatga uschiglio',
     wertVersicherung: 'Quant ch’ella custass uschiglio per onn, CHF',
     rechnungTitel: 'Calculà sin in onn',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     posten_cashback: 'Cashback',
     posten_vorteile: 'Ulteriurs avantatgs',
     posten_gebuehr: 'Taxa annuala',
@@ -6796,6 +7068,7 @@ export default {
     finanz: 'Finanzas',
     versicherung: 'Assicuranza',
     beratung: 'Cussegliaziun',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     telekom: 'Telekom',
     energie: 'Energia',
     oeffentlich: 'Admin. publica',
@@ -6804,6 +7077,7 @@ export default {
     bau: 'Construcziun',
     industrie: 'Industria',
     handel: 'Commerzi',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     transport: 'Transport',
     gastro: 'Gastronomia',
     reinigung: 'Nettegiament',
@@ -6854,6 +7128,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Werkzeug-Vorschau, 27.09.2026)
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée', geld: 'Buorsa' },
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu', geld: 'Daners & taglias' },
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     w: { bestattung: 'Fixar ils giavischs da sepultura', mahnung: 'Admoniziun retschavida', dienst: 'Service militaire ou civil', volljaehrig: 'Avoir 18 ans', lehre: 'Commencer un apprentissage', betreibungsauszug: 'Commander un extrait des poursuites', ausweis: 'Passeport ou carte d’identité', wegzug: 'Départ à l’étranger', adoption: 'Adoption', zusammenziehen: 'Emménager ensemble sans être marié·e·s', ergaenzungsleistungen: 'Demander des prestations complémentaires', vorsorgeauftrag: 'Mandat pour cause d’inaptitude et directives anticipées', einbuergerung: 'Naturalisation', aussteuerung: 'Fin de droits', quellensteuer: 'Impôt à la source', wohnunggekuendigt: 'Logement résilié', umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', fuehrerausweis: 'Permis de conduire', asyl: 'Asile & protection', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', betreibung: 'Commandement de payer', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', zusatz: 'Changer d’assurance complémentaire', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
@@ -7266,6 +7541,7 @@ export default {
     employerPlaceholder: 'p.ex. Exempel SA',
     jobTitle: 'Funcziun',
     jobTitlePlaceholder: 'p.ex. Acturas/a da commerzi',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     pensum: 'Pensum',
     period: 'Perioda',
     periodPlaceholder: 'p.ex. 2019–2022 u dapi 2023',
@@ -7293,6 +7569,7 @@ export default {
     pathsLink: 'Diplom professiunal per creschids',
   },
   asyl: {
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     quelle: 'Quellen: [[AsylG Art. 108|https://www.fedlex.admin.ch/eli/cc/1999/358/de#art_108]], [[AIG Art. 85a|https://www.fedlex.admin.ch/eli/cc/2007/758/de#art_85_a]] (geprüft im September 2026).',
     title: "Asil & protecziun en Svizra",
     intro: { sie: "La procedura d'asil è cumplexa e savens pesanta. Questa pagina As dat ina emprima orientaziun calma: tge status ch'i dat, co la procedura va e nua ch'i dat cussegliaziun persunala.", du: "La procedura d'asil è cumplexa e savens pesanta. Questa pagina At dat ina emprima orientaziun calma: tge status ch'i dat, co la procedura va e nua ch'i dat cussegliaziun persunala." },
@@ -7314,6 +7591,7 @@ export default {
     },
     orgsTitle: "Nua ch'i dat agid",
     official: "Autoritad",
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     phone: "Tel.",
     org: {
       sem: "Autoritad federala cumpetenta per la procedura d'asil e tut las decisiuns.",
@@ -7473,6 +7751,7 @@ export default {
     formNote: { sie: 'Stipendis na stuais Vus betg pajar enavos, mutgs gia. Blers chantuns combineschan omadus.', du: 'Stipendis na stos ti betg pajar enavos, mutgs gia. Blers chantuns combineschan omadus.' },
     privateTitle: 'Refusà u betg avunda? Fundaziuns privatas',
     privateIntro: 'Sche il chantun refusa u il sustegn na basta betg, vala la peina da tschertgar tar fundaziuns e fonds privats:',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     cost: { free: 'gratis', freemium: 'basa gratis', paid: 'cun custs' },
     private: {
       eth: 'Register da fundaziuns da l’ETH — passa 150 fundaziuns (PDF)',
@@ -7517,6 +7796,7 @@ export default {
     specialty: 'Spezialisaziun',
     name: 'Num',
     namePlaceholder: 'p.ex. Dr. med. Caflisch',
+    // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     phone: 'Telefon',
     notes: 'Remartga',
     notesPlaceholder: 'p.ex. mo cun termin',

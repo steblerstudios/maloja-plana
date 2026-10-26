@@ -246,6 +246,14 @@ und wurde ein zweites Mal aufgerechnet) ist behoben. Von den beiden kantonalen S
 fehlt keine Zahl, sondern die Angabe, ob eine Säule 2 besteht (Frage 1). Die holt keine Auskunft
 nach — das ist ein Produktentscheid.
 
+> **Nachtrag 26.10.2026 — entschieden, Variante A + C (Stebler Studios).** Die Angabe kommt jetzt aus
+> der App: ein erfasster BVG-Beitrag 0 oder die Pensionskasse «Trifft nicht zu» heisst «ohne Säule 2»,
+> ein Beitrag über 0 «mit» (`saeule2()` in `src/config/kantonsModell.js`, gilt auch für AR, BS, GR).
+> Ohne Säule 2 rechnet AG die 10-%-Schwelle; ist es unbekannt und entscheidet es über den Betrag, zeigt
+> AG wie AR und BS eine Orientierung statt einer Zahl. **Frage 1 bleibt offen** für den Teil, den die
+> App nicht beantworten kann: ob die Schwelle auch bei Zugehörigkeit nur während eines Teils des Jahres
+> gilt — im Code als `SAEULE_3A.schwelleOhneSaeule2.vorbehalt`.
+
 ---
 
 ## 7 · WAS Ausgleichskasse Luzern — Aufteilung, Rundung und die Kinder über der Grenze

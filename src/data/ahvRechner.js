@@ -417,22 +417,43 @@ export function berechneBVGGuthaben({
   // überschreibbar. Unter 1 oder über 10 wäre unplausibel → auf 6.8 zurückfallen.
   umwandlungssatz = 6.8,
   stichtag,
+  // Geburtsjahr, wenn bekannt: Gutschrift-Stufe je Jahr nach BVV 2 Art. 13 («Differenz zwischen dem laufenden
+  // Kalenderjahr und dem Geburtsjahr», fedlex gelesen 26.10.2026), nicht nach dem Alter am Tag. Die Zahl der Jahre und
+  // jahresDetail.alter bleiben am Alter am Tag (Zeitachse für projiziereVorsorge). Ohne Geburtsjahr wie bisher.
+  geburtsjahr,
+  // Geburtsmonat (1–12) mit Geburtsjahr: Restzeit bis zum Austritt monatsgenau. Bisher zählte jeder Durchlauf als volles
+  // Jahr — mit angebrochenem laufendem Jahr und gebrochenem Austrittsalter (AHV 21: 64 J. 9 M.) bis knapp ein
+  // Jahresbeitrag zu viel (Fachprüfung 26.10.2026). Der letzte Durchlauf zählt nur den Rest; Zahl der Durchläufe und
+  // jahresDetail.alter bleiben (Zeitachse für projiziereVorsorge). Ohne Geburtsmonat wie bisher.
+  geburtsmonat,
 }) {
   const koord = bvgKoordinationsabzug(jahresbruttolohn, stichtag);
+  const tag = stichtag || new Date();
+  const startJahr = tag.getFullYear();
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
 
   let guthaben = aktuellesGuthaben;
   const jahresDetail = [];
+  const durchlaeufe = Math.max(0, Math.ceil(austrittsalter - alter));
+  const monatsgenau = Number.isFinite(geburtsjahr) && Number(geburtsmonat) >= 1 && Number(geburtsmonat) <= 12;
+  // Vollendete Monate seit der Geburt (Monatsgranularität) und Restjahre bis zum Austritt.
+  const restJahre = monatsgenau
+    ? Math.max(0, Math.round(austrittsalter * 12) - ((startJahr - geburtsjahr) * 12 + (tag.getMonth() + 1 - geburtsmonat))) / 12
+    : durchlaeufe;
 
-  for (let a = alter; a < austrittsalter; a++) {
-    const gutschrift = BVG_GUTSCHRIFTEN.find(g => a >= g.von && a <= g.bis);
-    const beitrag = gutschrift ? koord.koordinierterLohn * gutschrift.satz / 100 : 0;
-    const zins = guthaben * zinssatz / 100;
+  for (let i = 0; i < durchlaeufe; i++) {
+    const a = alter + i;
+    const anteil = Math.min(1, Math.max(0, restJahre - i));
+    const stufenAlter = Number.isFinite(geburtsjahr) ? startJahr + i - geburtsjahr : a;
+    const gutschrift = BVG_GUTSCHRIFTEN.find(g => stufenAlter >= g.von && stufenAlter <= g.bis);
+    const beitrag = gutschrift ? koord.koordinierterLohn * gutschrift.satz / 100 * anteil : 0;
+    const zins = guthaben * zinssatz / 100 * anteil;
     guthaben += beitrag + zins;
 
     jahresDetail.push({
       alter: a,
       gutschriftSatz: gutschrift ? gutschrift.satz : 0,
+      anteil,
       beitrag: Math.round(beitrag),
       zins: Math.round(zins),
       guthaben: Math.round(guthaben),
@@ -478,7 +499,10 @@ export function projiziereVorsorge({
 }) {
   const round = Math.round;
   const jahr0 = startjahr || new Date().getFullYear();
-  const n = Math.max(0, Math.round(austrittsalter - alter));
+  // Mit BVG-Serie so viele Jahre wie sie hat (berechneBVGGuthaben: ceil, letzter Durchlauf anteilig) — sonst brach die
+  // Zeitachse bei einem Bezugsalter mit Bruchteil unter 0,5 (z. B. 65.25) ein Jahr früher ab, und Endwert und
+  // BVG-Block zeigten verschiedene Guthaben (Fachprüfung 26.10.2026).
+  const n = bvgSerie.length > 0 ? bvgSerie.length : Math.max(0, Math.round(austrittsalter - alter));
 
   let g3a = s3aBalance;
   let g3b = s3bBalance;
