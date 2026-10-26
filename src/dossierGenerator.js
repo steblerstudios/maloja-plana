@@ -16,6 +16,7 @@ import { annahmenTexte } from './utils/steuerTexte.js';
 import { escapeHtml as esc } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { organListe } from './utils/organspende.js';
+import { hausarztName, hausarztTelefon } from './utils/hausarzt.js';
 
 
 // ─── Druckfarben (K53) ────────────────────────────────────
@@ -168,8 +169,8 @@ function getSections(data, chapters, t) {
       rows: [
         { label: lbl('notfall', 'emergencyContact'), value: d('notfall', 'emergencyContact') },
         { label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
-        { label: lbl('notfall', 'doctor'), value: d('notfall', 'doctor') },
-        { label: lbl('notfall', 'doctorPhone'), value: d('notfall', 'doctorPhone') },
+        { label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
+        { label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
       ].filter(r => r.value),
     },
   ];
@@ -470,8 +471,9 @@ function getNotfallSections(data, chapters, t) {
       key: 'care',
       title: t('notfallDossier.sectionCare'),
       rows: [
-        { feld: 'notfall.doctor', label: lbl('notfall', 'doctor'), value: d('notfall', 'doctor') },
-        { feld: 'notfall.doctorPhone', label: lbl('notfall', 'doctorPhone'), value: d('notfall', 'doctorPhone') },
+        // Hausarzt aus der Liste, sonst altes Feld (D14, utils/hausarzt.js) — auch für den Notfall-QR.
+        { feld: 'notfall.doctor', label: lbl('notfall', 'doctor'), value: hausarztName(data.notfall) },
+        { feld: 'notfall.doctorPhone', label: lbl('notfall', 'doctorPhone'), value: hausarztTelefon(data.notfall) },
         { feld: 'notfall.hospital', label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
       ].filter(r => r.value),
     },
