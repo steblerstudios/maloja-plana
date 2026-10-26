@@ -1324,7 +1324,7 @@ export default {
       contact: 'Who should be contacted first? A name and phone number are enough to start.',
       medical: 'What doctors and paramedics should know about you in an emergency.',
       care: 'Your family doctor and preferred hospital — so this information is findable when needed.',
-      provision: 'Three documents protect you and your family: the patient decree covers medical decisions (ZGB Art. 370). The advance care directive appoints someone to act on your behalf if you lose capacity (ZGB Art. 360). The advance care directive must be entirely handwritten or publicly notarised (ZGB Art. 361); the patient decree only needs to be written, dated and signed — a template is enough (ZGB Art. 371). Once done — filed for good.',
+      provision: 'Two documents protect you and your family: the patient decree covers medical decisions (ZGB Art. 370). The advance care directive appoints someone to act on your behalf if you lose capacity (ZGB Art. 360). The advance care directive must be entirely handwritten or publicly notarised (ZGB Art. 361); the patient decree only needs to be written, dated and signed — a template is enough (ZGB Art. 371). Once done — filed for good.',
     },
   },
   itemized: {
@@ -1802,6 +1802,7 @@ export default {
     markiert: 'does not apply. Counts as done.',
     // K38 · emergency contact "does not apply"
     keineKontaktperson: 'No contact person on file',
+    keineMedikamente: 'none',
     notfallAnregung: { sie: 'Perhaps you would like to ask someone you trust whether they would be your contact person in an emergency. There is no hurry.', du: 'Perhaps you would like to ask someone you trust whether they would be your contact person in an emergency. There is no hurry.' },
   },
   // E18 · "Delete all data on this device" (build list O11)
@@ -2225,6 +2226,7 @@ export default {
       hints: {
         liabilityPremium: "Annual premium. One twelfth of it counts in the budget each month. Household contents and liability in one policy? Then enter the premium only once.",
         householdInsuranceAmount: "Annual premium. One twelfth of it counts in the budget each month. Household contents and liability in one policy? Then enter the premium only once.",
+        bvgInsurer: 'No pension fund? Then choose «Does not apply». In some cantons this counts as «no second pillar» for the premium reduction.',
         bvgContribution: 'For reference only — not subtracted again from net income in the budget.',
         bvgBalance: 'From your latest pension fund statement. Feeds into the pension calculator.',
         policyNumber: 'Contract/policy number of the basic insurance — shown on the policy document, not the card number.',
@@ -4277,6 +4279,7 @@ export default {
     jahrBS: 'Calculated for the {jahr} entitlement year. In the canton of Basel-Stadt the contributions do not depend on where you live — they are the same across the whole canton.',
     vorbehalt: 'The canton may still adjust the calculation basis during the year. The entitlement only becomes binding once the final {jahr} tax factors are available; amounts received in excess must be repaid.',
     vorbehaltBE: 'In the canton of Bern the basis is the final {basisjahr} tax assessment, not today’s income. Anyone earning considerably less today has to apply for a reassessment. Amounts received in excess must be repaid.',
+    vorbehaltAG3aTeiljahr: 'Part of this calculation is not legally settled: without a pension fund, the pillar 3a contribution only counts here for the part above 10 percent of earned income. The published documents do not say whether this also applies if there was a pension fund for only part of the year. Best to have the amount confirmed by the SVA Aargau.',
     vorbehaltBE3aDeckel: 'Part of this calculation is not legally settled: where the contribution exceeds the maximum the federal rules count, the figure depends on how the canton reads that limit. The published documents do not answer this. Best to have the amount confirmed by the Office for Social Insurance of the canton of Bern.',
     beAntragNoetig: 'Note: with an income below CHF 14,000 the canton of Bern does not check the entitlement automatically. The review has to be requested by 31 December, otherwise the entitlement for this year lapses.',
     vorbehaltAG: 'In the canton of Aargau the basis is the final {basisjahr} tax assessment — three years before the entitlement year, not today’s income. Anyone earning considerably less since then can ask SVA Aargau for a recalculation. Amounts received without entitlement are reclaimed.',
@@ -4437,7 +4440,7 @@ export default {
       saeule3aAbzugUnklar: 'The pillar 3a contribution entered is above the amount that could be deducted from income in any case: CHF 7,056 in the 2023 and 2024 tax years, without a pension fund at most 20 per cent of earned income. How much of it was deducted depends on whether there is a pension fund — this is not recorded here. Without it the figure would be too high or too low.',
       szKinderMindestanspruch: 'With this income, the children in the canton of Schwyz have an entitlement in every municipality: their reference premium is reduced by at least 80 per cent. The amount for the whole household cannot be determined reliably here. Applying to SVA Schwyz is worthwhile.',
       bsHypothetisch: 'In the canton of Basel-Stadt, the Amt für Sozialbeiträge credits people living alone or raising children alone who work less than 80 percent with a hypothetical income; a full-time position counts as 36,000 francs net per year. Exceptions apply, for example, when caring for children under 16, in education, in case of illness or a disability pension, with unemployment benefits and over 60. How much is worked is not recorded here, and with earned income below 28,800 francs a year this addition can lower the amount considerably. With the work hours per week in the «Education and work» chapter, the app calculates.',
-      bsSaeule3a: 'In the canton of Basel-Stadt, pillar 3a contributions are only deducted from income if there is no pension fund. Whether there is one is not recorded here — and in this case it decides the contribution group. Anyone who belongs to a pension fund can enter the contribution in the «Insurance» chapter; the app then calculates.',
+      bsSaeule3a: 'In the canton of Basel-Stadt, pillar 3a contributions are only deducted from income if there is no pension fund. Whether there is one is not recorded here — and in this case it decides the contribution group. Anyone who belongs to a pension fund can enter the contribution in the «Insurance» chapter; anyone who does not can choose «Does not apply» next to «Pension fund (BVG)». The app then calculates.',
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'For young adults (19 to 25) the reduction depends on whether they were in education or training on 1 January — then, depending on income, a minimum entitlement applies. The app does not record this, so no figure is shown here; the cantonal office can advise.',
       stichtagAlter: 'Anyone turning 26 in the entitlement year counts, depending on the reference date, either still as a young adult or already as an adult — with different reference premiums. The canton does not name an explicit reference date for age, so no figure is shown here.',
@@ -4453,7 +4456,7 @@ export default {
       tiKinder: 'For households with children the app does not calculate yet in the canton of Ticino: the reduction is calculated there for the whole household and is capped at the total of all premiums actually paid. The children’s premiums are not recorded here.',
       tiEltern: 'Anyone aged 30 or under with a low income who is in initial education is counted together with their parents in the canton of Ticino. The app does not know whether this applies — so no figure is shown here. IAS can advise.',
       kindNachStichtag: 'A child was born after 1 January of the entitlement year. The circumstances on 1 January are decisive, and the child\'s entitlement only starts in the month after birth. How the two are combined cannot be said with certainty here.',
-      saeule2Unbekannt: 'How the pillar 3a contribution counts depends in this canton on whether there is a pension fund. That is not recorded here. In the insurance chapter, enter the monthly occupational pension (BVG) contribution — or 0 if there is no pension fund. Then the app can calculate.',
+      saeule2Unbekannt: 'How the pillar 3a contribution counts depends in this canton on whether there is a pension fund. That is not recorded here. In the insurance chapter, enter the monthly occupational pension (BVG) contribution — or, if there is none, enter 0 or choose «Does not apply» next to «Pension fund (BVG)». Then the app can calculate.',
       praemieFranchise: 'In this canton the reduction is at most the premium with the ordinary deductible of CHF 300 and with accident cover — not the premium recorded here. The calculated amount is above the recorded premium; which upper limit applies depends on a premium that is not recorded here. The entitlement is at least as high as the recorded premium.',
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz.
       owSelbstbehaltRahmen: 'At this relevant income the deductible in the canton of Obwalden exceeds 12 per cent under the 2026 decision. Since 1 April 2026, however, the law sets a range of 9 to 12 per cent. Which rule applies to the 2026 decisions is open — so no figure is shown here. The Ausgleichskasse Obwalden can advise.',
@@ -5566,6 +5569,7 @@ export default {
     belowPoverty: 'Below poverty line',
     povertyLineNote: 'Poverty line for your household: {amount}/month (based on [[FSO methodology|https://www.bfs.admin.ch/bfs/en/home/statistics/economic-social-situation-population/surveys/poverty-statistics.html]] 2024). The comparison uses your disposable income: net minus taxes, premiums and deductions.',
     povertyBruttoHint: 'Your net is roughly ~ {brutto} gross (estimated from OASI/UI and pension fund, without taxes — varies by pension plan).',
+    povertyBruttoHintRente: 'Your net is roughly ~ {brutto} gross (estimated from the AHV/IV/EO contribution on wages above {freibetrag} a month, without taxes). From the reference age, UI and pension fund are not included; if pension fund cover continues, gross is higher.',
     povertyLine: 'Poverty line',
     median: 'Median CH',
     branchenvergleich: 'Your salary compared by industry (gross median):',
@@ -6009,7 +6013,7 @@ export default {
     ipvGesuch: 'on application only',
   },
   po: {
-    franchiseChangeWhen: 'The deductible can be changed once a year — effective 1 January, with notice by end of November (insurer switch: 30 November). Source: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KVV Art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    franchiseChangeWhen: 'A higher deductible only applies from 1 January; the insurer sets the deadline in its terms. A lower deductible is only possible at the end of the year, with the same deadlines as switching insurer: after the premium notice, the request must reach the insurer by 30 November. Source: [[KVG Art. 7 para. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[KVV Art. 94 paras. 1 and 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Is a higher deductible worth it?',
     franchiseOptSaving: 'With a CHF {high} deductible instead of CHF {low}, you save about CHF {saving}/year on premiums.',
     franchiseOptReserve: 'In return, in a bad year you pay up to CHF {reserve} yourself (deductible + max. coinsurance CHF {sb}). You should be able to set this buffer aside.',
@@ -6048,7 +6052,7 @@ export default {
     plzNotFound: 'Postal code not found in the official register.',
     regionTitle: 'Premium region',
     regionInfo: '{gemeinde} ({kanton}) — premium region {region}',
-    avgPremium: 'Average premium 2026: Children CHF {kinder} · Young adults CHF {junge} · Adults CHF {erwachsene}',
+    avgPremium: 'Average premium {jahr}: Children CHF {kinder} · Young adults CHF {junge} · Adults CHF {erwachsene}',
     noInsurer: 'No insurer on file',
     noInsurerHint: 'Enter your health insurer under "Insurance" to see your reference premium.',
     insurerNotFound: '"{name}" not recognized',
@@ -6064,10 +6068,15 @@ export default {
     thInsurer: 'Insurer',
     allInsurersTitle: 'Compare all insurers',
     compareFranchiseNote: 'Monthly premiums at franchise CHF {franchise} — cheapest first. Tap an insurer for details.',
+    wechselzeit: 'Premiums {jahr} — they apply from 1 January {jahr}. To switch insurer, the cancellation must reach the insurer no later than {datum}.',
+    wechselzeitNachFrist: 'Premiums {jahr} — they apply from 1 January {jahr}. The cancellation deadline for switching insurer on that date has passed.',
+    wechselzeitStufen: 'Premiums {jahr} — they apply from 1 January {jahr}. Lower franchise: request to the insurer no later than {datum}. Higher franchise: the deadline is set by the insurer in its terms.',
+    wechselzeitStufenNachFrist: 'Premiums {jahr} — they apply from 1 January {jahr}. A lower franchise is no longer possible for that date. For a higher one, the deadline is set by the insurer in its terms.',
+    refJahr: 'premiums {jahr}',
     chooseTarget: 'Preferred',
     targetSelected: 'Preferred',
     targetChosenHint: 'Preferred insurer: {insurer} — it appears in the switch flow.',
-    source: 'Source: [[FOPH|priminfo.admin.ch]] · Standard model with accident · As of 2026',
+    source: 'Source: [[FOPH|priminfo.admin.ch]] · Standard model with accident · As of {jahr}',
     disclaimer: 'Reference premiums only. Actual premiums may differ — your insurer\'s policy is authoritative.',
     regionalCompare: {
       national: 'Swiss average',

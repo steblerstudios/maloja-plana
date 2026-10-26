@@ -1324,7 +1324,7 @@ export default {
       contact: 'Chi deve essere informato per primo? Un nome e un numero di telefono bastano per iniziare.',
       medical: { sie: 'Quello che medici e soccorritori dovrebbero sapere su di Lei in caso di emergenza.', du: 'Quello che medici e soccorritori dovrebbero sapere su di te in caso di emergenza.' },
       care: { sie: 'Il Suo medico di famiglia e l\'ospedale preferito — affinché queste informazioni siano reperibili quando servono.', du: 'Il tuo medico di famiglia e l\'ospedale preferito — affinché queste informazioni siano reperibili quando servono.' },
-      provision: { sie: 'Tre documenti proteggono Lei e i Suoi cari: le direttive del paziente regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per Lei in caso di incapacità (CC art. 360). Il mandato deve essere interamente manoscritto o documentato da un pubblico ufficiale (CC art. 361); per le direttive basta che siano scritte, datate e firmate — un modello è sufficiente (CC art. 371). Una volta fatto — archiviato per sempre.', du: 'Tre documenti proteggono te e i tuoi cari: le direttive del paziente regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per te in caso di incapacità (CC art. 360). Il mandato deve essere interamente manoscritto o documentato da un pubblico ufficiale (CC art. 361); per le direttive basta che siano scritte, datate e firmate — un modello è sufficiente (CC art. 371). Una volta fatto — archiviato per sempre.' },
+      provision: { sie: 'Due documenti proteggono Lei e i Suoi cari: le direttive del paziente regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per Lei in caso di incapacità (CC art. 360). Il mandato deve essere interamente manoscritto o documentato da un pubblico ufficiale (CC art. 361); per le direttive basta che siano scritte, datate e firmate — un modello è sufficiente (CC art. 371). Una volta fatto — archiviato per sempre.', du: 'Due documenti proteggono te e i tuoi cari: le direttive del paziente regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per te in caso di incapacità (CC art. 360). Il mandato deve essere interamente manoscritto o documentato da un pubblico ufficiale (CC art. 361); per le direttive basta che siano scritte, datate e firmate — un modello è sufficiente (CC art. 371). Una volta fatto — archiviato per sempre.' },
     },
   },
   itemized: {
@@ -1802,6 +1802,7 @@ export default {
     markiert: 'non pertinente. Vale come completato.',
     // K38 · persona di contatto «non pertinente»
     keineKontaktperson: 'Nessuna persona di contatto registrata',
+    keineMedikamente: 'nessuno',
     notfallAnregung: { sie: 'Forse desidera chiedere a una persona di fiducia se vuole essere la Sua persona di contatto in caso di emergenza. Non c’è fretta.', du: 'Forse desideri chiedere a una persona di fiducia se vuole essere la tua persona di contatto in caso di emergenza. Non c’è fretta.' },
   },
   // E18 · «Eliminare tutti i dati su questo dispositivo» (lista O11)
@@ -2225,6 +2226,7 @@ export default {
       hints: {
         liabilityPremium: { sie: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisca il premio una sola volta.", du: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisci il premio una sola volta." },
         householdInsuranceAmount: { sie: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisca il premio una sola volta.", du: "Premio annuo. Nel budget conta un dodicesimo al mese. Economia domestica e RC in un’unica polizza? Allora inserisci il premio una sola volta." },
+        bvgInsurer: 'Nessuna cassa pensione? Allora scegliere «Non pertinente». In alcuni Cantoni, per la riduzione dei premi ciò vale come «nessun 2° pilastro».',
         bvgContribution: 'Solo a titolo informativo — non viene dedotto nuovamente dal salario netto nel budget.',
         bvgBalance: 'Dall\'ultimo certificato della cassa pensione. Utilizzato nel calcolatore previdenziale.',
         policyNumber: 'Numero di contratto/polizza dell\'assicurazione di base — riportato sulla polizza, non il numero della tessera.',
@@ -4278,6 +4280,7 @@ export default {
     jahrBS: 'Calcolo per l’anno di diritto {jahr}. Nel Cantone di Basilea Città i contributi non dipendono dal luogo di domicilio — valgono uguali in tutto il Cantone.',
     vorbehalt: 'Il Cantone può ancora adeguare le basi di calcolo nel corso dell’anno. Il diritto diventa vincolante solo con i fattori fiscali definitivi {jahr}; gli importi percepiti in eccesso vanno restituiti.',
     vorbehaltBE: 'Nel Cantone di Berna la base è la tassazione definitiva {basisjahr}, non il reddito attuale. Chi oggi guadagna nettamente meno deve chiedere un nuovo esame. Gli importi percepiti in eccesso vanno restituiti.',
+    vorbehaltAG3aTeiljahr: 'Una parte di questo calcolo non è giuridicamente chiarita in via definitiva: senza cassa pensioni, il versamento nel pilastro 3a conta qui solo per la parte che supera il 10 per cento del reddito da attività lucrativa. I documenti pubblicati non dicono se ciò valga anche quando una cassa pensioni è esistita solo per una parte dell’anno. Far confermare l’importo dalla SVA Argovia.',
     vorbehaltBE3aDeckel: 'Una parte di questo calcolo non è giuridicamente chiarita in via definitiva: in caso di versamento superiore all’importo massimo computato dalla Confederazione, la cifra dipende da come il Cantone interpreta questo limite. I documenti pubblicati non lo precisano. Far confermare l’importo dall’Ufficio delle assicurazioni sociali del Cantone di Berna.',
     beAntragNoetig: 'Attenzione: con un reddito inferiore a 14 000 franchi il Cantone di Berna non verifica il diritto automaticamente. La verifica va chiesta entro il 31 dicembre, altrimenti il diritto per quest’anno decade.',
     vorbehaltAG: 'Nel Cantone di Argovia la base è la tassazione definitiva {basisjahr} — tre anni prima dell’anno di diritto, non il reddito attuale. Chi da allora guadagna nettamente meno può chiedere un nuovo calcolo alla SVA Aargau. Gli importi percepiti indebitamente vengono richiesti indietro.',
@@ -4438,7 +4441,7 @@ export default {
       saeule3aAbzugUnklar: 'Il versamento al pilastro 3a indicato supera l’importo che poteva comunque essere dedotto dal reddito: 7 056 franchi negli anni fiscali 2023 e 2024, senza cassa pensioni al massimo il 20 per cento del reddito da attività lucrativa. Quanto ne è stato dedotto dipende dall’affiliazione o meno a una cassa pensioni — dato non registrato qui. Senza questa indicazione la cifra sarebbe troppo alta o troppo bassa.',
       szKinderMindestanspruch: 'Per i figli, nel Cantone di Svitto e con questo reddito, esiste in ogni Comune un diritto: il loro premio di riferimento viene ridotto di almeno l’80 per cento. L’importo per l’intera economia domestica non si può determinare qui con certezza. Una domanda alla SVA Schwyz vale la pena.',
       bsHypothetisch: 'Nel Cantone di Basilea Città l’Amt für Sozialbeiträge computa un reddito ipotetico alle persone sole o che allevano da sole i figli e lavorano meno dell’80 per cento; un impiego a tempo pieno vale 36 000 franchi netti all’anno. Ci sono eccezioni ad esempio per la cura di figli sotto i 16 anni, la formazione, la malattia o una rendita AI, le indennità di disoccupazione e oltre i 60 anni. Quanto si lavora non è registrato qui, e con un reddito da attività lucrativa inferiore a 28 800 franchi all’anno questo supplemento può ridurre molto l’importo. Con le ore di lavoro settimanali nel capitolo «Formazione e lavoro» l’app calcola.',
-      bsSaeule3a: 'Nel Cantone di Basilea Città i versamenti nel pilastro 3a vengono dedotti dal reddito solo se non esiste una cassa pensioni. Questa informazione non è registrata qui — e in questo caso decide il gruppo di contributo. Chi è affiliato a una cassa pensioni può inserire il contributo nel capitolo «Assicurazioni»; allora l’app calcola.',
+      bsSaeule3a: 'Nel Cantone di Basilea Città i versamenti nel pilastro 3a vengono dedotti dal reddito solo se non esiste una cassa pensioni. Questa informazione non è registrata qui — e in questo caso decide il gruppo di contributo. Chi è affiliato a una cassa pensioni può inserire il contributo nel capitolo «Assicurazioni»; altrimenti, alla voce «Cassa pensione (LPP)», scegliere «Non pertinente». Allora l’app calcola.',
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'Per i giovani adulti (da 19 a 25 anni) la riduzione dipende dal fatto che al 1° gennaio fosse in corso una formazione — in tal caso vale, a seconda del reddito, un diritto minimo. L’app non lo registra, perciò qui non c’è alcuna cifra; l’ufficio cantonale fornisce informazioni.',
       stichtagAlter: 'Chi compie 26 anni nell’anno di diritto conta, a seconda della data di riferimento, ancora come giovane adulto o già come adulto — con premi di riferimento diversi. Il Cantone non indica una data di riferimento esplicita per l’età, perciò qui non c’è alcuna cifra.',
@@ -4454,7 +4457,7 @@ export default {
       tiKinder: 'Per le economie domestiche con figli l’app non calcola ancora nel Cantone Ticino: la riduzione vi è calcolata per l’intera unità di riferimento e non può superare la somma di tutti i premi effettivamente pagati. I premi dei figli qui non sono registrati.',
       tiEltern: 'Nel Cantone Ticino chi ha al massimo 30 anni, un reddito basso ed è in prima formazione è incluso nell’unità di riferimento dei genitori. L’app non sa se è il caso — perciò qui non figura alcun importo. L’IAS fornisce informazioni.',
       kindNachStichtag: 'Un figlio è nato dopo il 1° gennaio dell’anno del diritto. Determinante è la situazione al 1° gennaio, e per il figlio il diritto inizia solo il mese dopo la nascita. Come si combinino le due cose non si può dire con certezza qui.',
-      saeule2Unbekannt: 'Come conta il versamento nel pilastro 3a dipende, in questo Cantone, dall’affiliazione a una cassa pensioni. Qui non è registrato. Nel capitolo Assicurazioni inserire il contributo LPP mensile — oppure 0 se non c’è una cassa pensioni. Allora l’app può calcolare.',
+      saeule2Unbekannt: 'Come conta il versamento nel pilastro 3a dipende, in questo Cantone, dall’affiliazione a una cassa pensioni. Qui non è registrato. Nel capitolo Assicurazioni inserire il contributo LPP mensile — oppure, se non c’è una cassa pensioni, inserire 0 o scegliere «Non pertinente» alla voce «Cassa pensione (LPP)». Allora l’app può calcolare.',
       praemieFranchise: 'In questo Cantone la riduzione non supera il premio con la franchigia ordinaria di 300 franchi e con copertura infortuni — non il premio registrato. L’importo calcolato supera il premio registrato; quale limite valga dipende da un premio che qui non è registrato. Il diritto è almeno pari al premio registrato.',
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz.
       owSelbstbehaltRahmen: 'Con questo reddito computabile la franchigia nel Cantone di Obvaldo supera il 12 per cento secondo la decisione per il 2026. Dal 1° aprile 2026 la legge fissa però un intervallo dal 9 al 12 per cento. Quale regola valga per le decisioni 2026 è aperto — perciò qui non c’è alcuna cifra. L’Ausgleichskasse Obwalden fornisce informazioni.',
@@ -5539,6 +5542,7 @@ export default {
     belowPoverty: 'Sotto la soglia di povertà',
     povertyLineNote: { sie: 'Soglia di povertà per la Sua economia domestica: {amount}/mese (secondo la [[metodologia UST|https://www.bfs.admin.ch/bfs/it/home/statistiche/situazione-economica-sociale-popolazione/rilevazioni/statistica-poverta.html]] 2024). Il confronto si basa sul reddito disponibile: il netto, meno imposte, premi e deduzioni.', du: 'Soglia di povertà per la tua economia domestica: {amount}/mese (secondo la [[metodologia UST|https://www.bfs.admin.ch/bfs/it/home/statistiche/situazione-economica-sociale-popolazione/rilevazioni/statistica-poverta.html]] 2024). Il confronto si basa sul reddito disponibile: il netto, meno imposte, premi e deduzioni.' },
     povertyBruttoHint: { sie: 'Il Suo netto corrisponde a circa ~ {brutto} lordo (stima da AVS/AD e LPP, senza imposte — variabile secondo la cassa pensioni).', du: 'Il tuo netto corrisponde a circa ~ {brutto} lordo (stima da AVS/AD e LPP, senza imposte — variabile secondo la cassa pensioni).' },
+    povertyBruttoHintRente: { sie: 'Il Suo netto corrisponde a circa ~ {brutto} lordo (stima dal contributo AVS/AI/IPG sul salario oltre {freibetrag} al mese, senza imposte). Dall\'età di riferimento non rientrano nel calcolo né l\'AD né la LPP; se l\'assicurazione presso la cassa pensioni prosegue, il lordo è più alto.', du: 'Il tuo netto corrisponde a circa ~ {brutto} lordo (stima dal contributo AVS/AI/IPG sul salario oltre {freibetrag} al mese, senza imposte). Dall\'età di riferimento non rientrano nel calcolo né l\'AD né la LPP; se l\'assicurazione presso la cassa pensioni prosegue, il lordo è più alto.' },
     povertyLine: 'Soglia di povertà',
     median: 'Mediana CH',
     branchenvergleich: { sie: 'Il Suo stipendio per settore (salario lordo mediano):', du: 'Il tuo stipendio per settore (salario lordo mediano):' },
@@ -5983,7 +5987,7 @@ export default {
     ipvGesuch: 'solo su domanda',
   },
   po: {
-    franchiseChangeWhen: 'La franchigia può essere cambiata una volta all\'anno — con effetto dal 1° gennaio, preavviso entro fine novembre (cambio cassa: 30 novembre). Fonte: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it]].',
+    franchiseChangeWhen: 'Una franchigia più alta vale solo dal 1° gennaio; il termine lo fissa la cassa nelle sue condizioni. Una franchigia più bassa è possibile solo per la fine dell\'anno, con gli stessi termini di un cambio di cassa: dopo la comunicazione del nuovo premio, la richiesta deve pervenire alla cassa entro il 30 novembre. Fonte: [[LAMal art. 7 cpv. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it#art_7]], [[OAMal art. 94 cpv. 1 e 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/it#art_94]].',
     franchiseOptTitle: 'Conviene una franchigia più alta?',
     franchiseOptSaving: { sie: 'Con una franchigia di CHF {high} invece di CHF {low} risparmia circa CHF {saving}/anno di premi.', du: 'Con una franchigia di CHF {high} invece di CHF {low} risparmi circa CHF {saving}/anno di premi.' },
     franchiseOptReserve: { sie: 'In cambio, in un anno sfortunato paga fino a CHF {reserve} di tasca Sua (franchigia + aliquota max. CHF {sb}). Dovrebbe poter mettere da parte questo cuscinetto.', du: 'In cambio, in un anno sfortunato paghi fino a CHF {reserve} di tasca tua (franchigia + aliquota max. CHF {sb}). Dovresti poter mettere da parte questo cuscinetto.' },
@@ -6022,7 +6026,7 @@ export default {
     plzNotFound: 'CAP non trovato nel registro ufficiale.',
     regionTitle: 'Regione dei premi',
     regionInfo: '{gemeinde} ({kanton}) — Regione dei premi {region}',
-    avgPremium: 'Premio medio 2026: bambini CHF {kinder} · giovani CHF {junge} · adulti CHF {erwachsene}',
+    avgPremium: 'Premio medio {jahr}: bambini CHF {kinder} · giovani CHF {junge} · adulti CHF {erwachsene}',
     noInsurer: 'Nessun assicuratore registrato',
     noInsurerHint: { sie: 'Inserisca la Sua cassa malati alla voce «Assicurazioni» per vedere il Suo premio di riferimento.', du: 'Inserisci la tua cassa malati alla voce «Assicurazioni» per vedere il tuo premio di riferimento.' },
     insurerNotFound: '«{name}» non riconosciuto',
@@ -6038,10 +6042,15 @@ export default {
     thInsurer: 'Cassa',
     allInsurersTitle: 'Confronta tutte le casse',
     compareFranchiseNote: 'Premi mensili con franchigia CHF {franchise} — prima la più economica. Toccare una cassa per i dettagli.',
+    wechselzeit: 'Premi {jahr} — valgono dal 1° gennaio {jahr}. Per cambiare cassa, la disdetta deve pervenire alla cassa entro il {datum}.',
+    wechselzeitNachFrist: 'Premi {jahr} — valgono dal 1° gennaio {jahr}. Il termine di disdetta per cambiare cassa a questa data è scaduto.',
+    wechselzeitStufen: 'Premi {jahr} — valgono dal 1° gennaio {jahr}. Franchigia più bassa: richiesta alla cassa entro il {datum}. Franchigia più alta: il termine lo fissa la cassa nelle sue condizioni.',
+    wechselzeitStufenNachFrist: 'Premi {jahr} — valgono dal 1° gennaio {jahr}. Una franchigia più bassa non è più possibile a questa data. Per una più alta, il termine lo fissa la cassa nelle sue condizioni.',
+    refJahr: 'premi {jahr}',
     chooseTarget: 'Desiderata',
     targetSelected: 'Desiderata',
     targetChosenHint: 'Cassa desiderata: {insurer} — appare nel processo di cambio.',
-    source: 'Fonte: [[UFSP|priminfo.admin.ch]] · Modello standard con infortunio · Stato 2026',
+    source: 'Fonte: [[UFSP|priminfo.admin.ch]] · Modello standard con infortunio · Stato {jahr}',
     disclaimer: { sie: 'Solo premi di riferimento. I premi effettivi possono variare — fa fede la polizza del Suo assicuratore.', du: 'Solo premi di riferimento. I premi effettivi possono variare — fa fede la polizza del tuo assicuratore.' },
     regionalCompare: {
       national: 'Media svizzera',

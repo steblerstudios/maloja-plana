@@ -17,6 +17,7 @@ import { CANTON_CODES, calculateIPV, ladeIPVModelle } from '../config/cantonalDa
 import { lookupPLZ } from './plzGemeinde.js';
 import { getAveragePremium } from './praemienRegionen.js';
 import { bruttoZuNettoRichtwert } from './lohnAbzuege.js';
+import { alterUndRentenalter } from '../utils/nettoAusProfil.js';
 
 // Hauptort je Kanton (Sitz der Kantonsregierung) mit einer seiner Postleitzahlen. Der Test prüft
 // gegen data/plzGemeinde.js, dass PLZ und Gemeinde wirklich im Kanton liegen.
@@ -118,7 +119,8 @@ export function hauptortBfs(kanton) {
 
 // Haushaltsprämie pro Monat = Summe der regionalen Durchschnittsprämien 2026 am Hauptort, je Person.
 export function haushaltsPraemie(kanton, h) {
-  const p = getAveragePremium(hauptortBfs(kanton));
+  // Prämien des Modelljahres (JAHR), nicht des heutigen Datums — sonst mischte sich ab 1.1. ein anderes Jahr hinein.
+  const p = getAveragePremium(hauptortBfs(kanton), new Date(JAHR, 6, 1));
   if (!p) return null;
   const alter = [...h.erwachsene.map((g) => alterIm(JAHR, g)), ...h.kinder];
   return Math.round(alter.reduce((s, a) => s + p[praemienKlasse(a)], 0));
@@ -132,9 +134,11 @@ export function musterProfil(kanton, haushalt, bruttoJahr) {
   if (!h || !ort) throw new Error(`Systemblick: unbekannt ${kanton}/${haushalt}`);
   const brutto = bruttoJahr ?? h.bruttoJahr;
   const alter = alterIm(JAHR, h.erwachsene[0]);
+  // Rentenalter am selben Stichtag wie alterIm (Ende Modelljahr); heute sind alle Erwerbs-Modelle jünger.
+  const { rentenalter } = alterUndRentenalter({ dateOfBirth: h.erwachsene[0] }, new Date(JAHR, 11, 31));
   const finanzen = h.rente
     ? { employmentType: 'retired', ahvRente: Math.min(AHV_MAXRENTE_2026, brutto / 12), bvgRente: Math.max(0, brutto / 12 - AHV_MAXRENTE_2026) }
-    : { employmentType: 'employed', dreizehnter: 'nein', monthlyIncome: bruttoZuNettoRichtwert(brutto / 12, alter) };
+    : { employmentType: 'employed', dreizehnter: 'nein', monthlyIncome: bruttoZuNettoRichtwert(brutto / 12, alter, rentenalter) };
   return {
     basis: {
       canton: kanton, dateOfBirth: h.erwachsene[0], maritalStatus: h.maritalStatus,

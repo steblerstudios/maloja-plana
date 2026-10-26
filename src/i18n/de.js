@@ -1325,7 +1325,7 @@ export default {
       contact: 'Wer soll zuerst informiert werden? Ein Name und eine Telefonnummer genügen als Anfang.',
       medical: { sie: 'Was Ärzte und Rettungskräfte im Notfall über Sie wissen sollten.', du: 'Was Ärzte und Rettungskräfte im Notfall über Dich wissen sollten.' },
       care: { sie: 'Ihr Hausarzt und Ihr bevorzugtes Spital — damit diese Information auffindbar ist, wenn sie gebraucht wird.', du: 'Dein Hausarzt und Dein bevorzugtes Spital — damit diese Information auffindbar ist, wenn sie gebraucht wird.' },
-      provision: { sie: 'Diese drei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese drei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
+      provision: { sie: 'Diese zwei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.', du: 'Diese zwei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Der Vorsorgeauftrag muss ganz von Hand geschrieben oder öffentlich beurkundet sein (ZGB Art. 361); für die Patientenverfügung genügt schriftlich, datiert und unterzeichnet — eine Vorlage reicht (ZGB Art. 371). Einmal erledigt — dauerhaft abgelegt.' },
     },
   },
   itemized: {
@@ -1812,6 +1812,7 @@ export default {
     markiert: 'trifft nicht zu. Zählt als erledigt.',
     // K38 · Notfallkontakt «trifft nicht zu»
     keineKontaktperson: 'Keine Kontaktperson hinterlegt',
+    keineMedikamente: 'keine',
     notfallAnregung: { sie: 'Vielleicht mögen Sie eine Person Ihres Vertrauens fragen, ob sie im Notfall Ihre Kontaktperson sein möchte. Das hat Zeit.', du: 'Vielleicht magst Du eine Person Deines Vertrauens fragen, ob sie im Notfall Deine Kontaktperson sein möchte. Das hat Zeit.' },
   },
   // E18 · Löschweg «Alle Daten auf diesem Gerät löschen» (Bau-Liste O11)
@@ -2234,6 +2235,7 @@ export default {
       hints: {
         liabilityPremium: "Jahresprämie. Im Budget zählt davon pro Monat ein Zwölftel. Hausrat und Haftpflicht in einer Police? Dann die Prämie nur einmal eintragen.",
         householdInsuranceAmount: "Jahresprämie. Im Budget zählt davon pro Monat ein Zwölftel. Hausrat und Haftpflicht in einer Police? Dann die Prämie nur einmal eintragen.",
+        bvgInsurer: 'Keine Pensionskasse? Dann «Trifft nicht zu» wählen. In einigen Kantonen zählt das für die Prämienverbilligung als «keine 2. Säule».',
         bvgContribution: 'Nur zur Übersicht — wird im Budget nicht nochmals vom Nettolohn abgezogen.',
         bvgBalance: 'Letzter PK-Ausweis. Fliesst in den Vorsorge-Rechner.',
         policyNumber: 'Vertrags-/Policennummer der Grundversicherung — steht auf der Police, nicht die Kartennummer.',
@@ -4329,6 +4331,7 @@ export default {
     vorbehalt: 'Der Kanton kann die Berechnungsgrundlagen im Laufe des Jahres noch anpassen. Verbindlich wird der Anspruch erst mit den definitiven Steuerfaktoren {jahr}; zu viel bezogene Beträge sind zurückzuzahlen.',
     // BE rechnet mit den Steuerdaten des Vorvorjahres (KKVV Art. 7 Abs. 1) — der ZH-Satz wäre hier falsch.
     vorbehaltBE: 'Im Kanton Bern ist die definitive Veranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Wer heute deutlich weniger verdient, muss eine Neubeurteilung beantragen. Zu viel bezogene Beträge sind zurückzuzahlen.',
+    vorbehaltAG3aTeiljahr: 'Ein Teil dieser Rechnung ist rechtlich nicht abschliessend geklärt: Ohne Pensionskasse zählt die Einzahlung in die Säule 3a hier nur, soweit sie 10 Prozent des Erwerbseinkommens übersteigt. Ob das auch gilt, wenn nur während eines Teils des Jahres eine Pensionskasse bestand, sagen die veröffentlichten Unterlagen nicht. Den Betrag bei der SVA Aargau bestätigen lassen.',
     vorbehaltBE3aDeckel: 'Ein Teil dieser Rechnung ist rechtlich nicht abschliessend geklärt: Bei einer Einzahlung über dem Betrag, den der Bund höchstens anrechnet, hängt die Zahl davon ab, wie der Kanton diese Obergrenze auslegt. Die veröffentlichten Unterlagen beantworten das nicht. Den Betrag beim Amt für Sozialversicherungen des Kantons Bern bestätigen lassen.',
     beAntragNoetig: 'Achtung: Bei einem Einkommen unter 14 000 Franken prüft der Kanton Bern den Anspruch nicht automatisch. Die Überprüfung muss bis zum 31. Dezember selbst beantragt werden, sonst verfällt der Anspruch für dieses Jahr.',
     // AG rechnet mit der Veranlagung von vor DREI Jahren (§ 7 Abs. 1 KVGG) — der BE-Satz wäre hier falsch.
@@ -4504,7 +4507,7 @@ export default {
       saeule3aAbzugUnklar: 'Die erfasste Einzahlung in die Säule 3a liegt über dem Betrag, der in jedem Fall vom Einkommen abgezogen werden durfte: 7 056 Franken in den Steuerjahren 2023 und 2024, ohne Pensionskasse höchstens 20 Prozent des Erwerbseinkommens. Wie viel davon abgezogen wurde, hängt davon ab, ob eine Pensionskasse besteht — das ist hier nicht erfasst. Ohne diese Angabe wäre die Zahl zu hoch oder zu tief.',
       szKinderMindestanspruch: 'Für die Kinder besteht im Kanton Schwyz bei diesem Einkommen in jeder Gemeinde ein Anspruch: Die Richtprämie der Kinder wird um mindestens 80 Prozent verbilligt. Wie hoch der Betrag für den ganzen Haushalt ist, lässt sich hier nicht sicher bestimmen. Ein Antrag bei der SVA Schwyz lohnt sich.',
       bsHypothetisch: 'Im Kanton Basel-Stadt rechnet das Amt für Sozialbeiträge allein stehenden und allein erziehenden Personen, die weniger als 80 Prozent arbeiten, ein hypothetisches Einkommen an; eine volle Stelle zählt dabei mit 36 000 Franken netto im Jahr. Ausnahmen gelten etwa bei der Betreuung von Kindern unter 16, in Ausbildung, bei Krankheit oder IV-Rente, mit Arbeitslosentaggeld und über 60. Wie viel hier gearbeitet wird, ist nicht erfasst, und bei einem Erwerbseinkommen unter 28 800 Franken im Jahr kann dieser Zuschlag den Betrag stark senken. Mit den Arbeitsstunden pro Woche im Kapitel «Ausbildung & Arbeit» rechnet die App.',
-      bsSaeule3a: 'Im Kanton Basel-Stadt wird die Einzahlung in die Säule 3a nur dann vom Einkommen abgezogen, wenn keine Pensionskasse besteht. Ob eine besteht, ist hier nicht erfasst — und in diesem Fall entscheidet es über die Beitragsgruppe. Wer einer Pensionskasse angehört, kann den Beitrag im Kapitel «Versicherungen & Vorsorge» eintragen; dann rechnet die App.',
+      bsSaeule3a: 'Im Kanton Basel-Stadt wird die Einzahlung in die Säule 3a nur dann vom Einkommen abgezogen, wenn keine Pensionskasse besteht. Ob eine besteht, ist hier nicht erfasst — und in diesem Fall entscheidet es über die Beitragsgruppe. Wer einer Pensionskasse angehört, kann den Beitrag im Kapitel «Versicherungen & Vorsorge» eintragen, wer keiner angehört, bei «Pensionskasse» «Trifft nicht zu» wählen; dann rechnet die App.',
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'Für junge Erwachsene (19 bis 25 Jahre) hängt die Verbilligung davon ab, ob am 1. Januar eine Ausbildung lief — dann gilt, je nach Einkommen, ein Mindestanspruch. Das erfasst die App nicht, darum steht hier keine Zahl; die kantonale Stelle gibt Auskunft.',
       stichtagAlter: 'Wer im Anspruchsjahr 26 wird, zählt je nach Stichtag noch als junge erwachsene Person oder schon als erwachsene Person — mit verschiedenen Richtprämien. Der Kanton nennt für das Alter keinen ausdrücklichen Stichtag, darum steht hier keine Zahl.',
@@ -4520,7 +4523,7 @@ export default {
       tiKinder: 'Für Haushalte mit Kindern rechnet die App im Kanton Tessin noch nicht: Die Verbilligung wird dort für den ganzen Haushalt berechnet und ist auf die Summe aller tatsächlich bezahlten Prämien begrenzt. Die Prämien der Kinder sind hier nicht erfasst.',
       tiEltern: 'Wer höchstens 30 Jahre alt ist, wenig verdient und in einer ersten Ausbildung steht, wird im Kanton Tessin zusammen mit den Eltern gerechnet. Ob das zutrifft, weiss die App nicht — darum steht hier keine Zahl. Das IAS gibt Auskunft.',
       kindNachStichtag: 'Ein Kind ist erst nach dem 1. Januar des Anspruchsjahres geboren. Massgebend sind die Verhältnisse am 1. Januar, und für das Kind beginnt der Anspruch erst im Monat nach der Geburt. Wie das zusammen gerechnet wird, lässt sich hier nicht sicher sagen.',
-      saeule2Unbekannt: 'Wie die Einzahlung in die Säule 3a zählt, hängt in diesem Kanton davon ab, ob eine Pensionskasse besteht. Das ist hier nicht erfasst. Im Kapitel Versicherungen beim BVG-Beitrag den monatlichen Beitrag eintragen — oder 0, wenn keine Pensionskasse besteht. Dann rechnet die App.',
+      saeule2Unbekannt: 'Wie die Einzahlung in die Säule 3a zählt, hängt in diesem Kanton davon ab, ob eine Pensionskasse besteht. Das ist hier nicht erfasst. Im Kapitel Versicherungen beim BVG-Beitrag den monatlichen Beitrag eintragen — oder, wenn keine besteht, 0 eintragen oder bei «Pensionskasse» «Trifft nicht zu» wählen. Dann rechnet die App.',
       praemieFranchise: 'Die Verbilligung ist in diesem Kanton höchstens so hoch wie die Prämie mit der ordentlichen Franchise von 300 Franken und mit Unfalldeckung — nicht wie die erfasste Prämie. Der gerechnete Betrag liegt über der erfassten Prämie; welche Obergrenze gilt, hängt an einer Prämie, die hier nicht erfasst ist. Der Anspruch ist mindestens so hoch wie die erfasste Prämie.',
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz.
       owSelbstbehaltRahmen: 'Bei diesem anrechenbaren Einkommen liegt der Selbstbehalt im Kanton Obwalden nach dem Beschluss für 2026 über 12 Prozent. Seit dem 1. April 2026 nennt das Gesetz aber einen Rahmen von 9 bis 12 Prozent. Welche Regel für die Verfügungen 2026 gilt, ist offen — darum steht hier keine Zahl. Die Ausgleichskasse Obwalden gibt Auskunft.',
@@ -5611,6 +5614,8 @@ export default {
     belowPoverty: 'Unter Armutsgrenze',
     povertyLineNote: { sie: 'Armutsgrenze für Ihren Haushalt: {amount}/Monat (nach [[BFS-Methodik|https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/erhebungen/armutsstatistik.html]] 2024). Verglichen wird Ihr verfügbares Einkommen: Netto minus Steuern, Prämien und Abzüge.', du: 'Armutsgrenze für deinen Haushalt: {amount}/Monat (nach [[BFS-Methodik|https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/erhebungen/armutsstatistik.html]] 2024). Verglichen wird dein verfügbares Einkommen: Netto minus Steuern, Prämien und Abzüge.' },
     povertyBruttoHint: { sie: 'Ihr Netto entspricht grob ~ {brutto} brutto (geschätzt aus AHV/ALV und Pensionskasse, ohne Steuern — je nach Pensionskasse abweichend).', du: 'Dein Netto entspricht grob ~ {brutto} brutto (geschätzt aus AHV/ALV und Pensionskasse, ohne Steuern — je nach Pensionskasse abweichend).' },
+    // Im Referenzalter (seit 25.10.2026): ohne ALV und Pensionskasse, AHV nur über dem Rentner-Freibetrag (lohnAbzuege.js).
+    povertyBruttoHintRente: { sie: 'Ihr Netto entspricht grob ~ {brutto} brutto (geschätzt aus dem AHV/IV/EO-Beitrag auf dem Lohn über {freibetrag} im Monat, ohne Steuern). Ab dem Referenzalter sind ALV und Pensionskasse nicht eingerechnet; bei weiterer Versicherung in der Pensionskasse liegt das Brutto höher.', du: 'Dein Netto entspricht grob ~ {brutto} brutto (geschätzt aus dem AHV/IV/EO-Beitrag auf dem Lohn über {freibetrag} im Monat, ohne Steuern). Ab dem Referenzalter sind ALV und Pensionskasse nicht eingerechnet; bei weiterer Versicherung in der Pensionskasse liegt das Brutto höher.' },
     povertyLine: 'Armutsgrenze',
     median: 'Median CH',
     branchenvergleich: { sie: 'Ihr Lohn im Branchenvergleich (Median-Bruttolohn):', du: 'Dein Lohn im Branchenvergleich (Median-Bruttolohn):' },
@@ -6059,7 +6064,9 @@ export default {
     ipvGesuch: 'nur auf Gesuch',
   },
   po: {
-    franchiseChangeWhen: 'Die Franchise lässt sich einmal pro Jahr ändern — wirksam auf den 1. Januar, Anmeldung bis Ende November (Kassenwechsel: 30. November). Quelle: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KVV Art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
+    // Wortlaut KVV Art. 94 Abs. 1/2 und KVG Art. 7 Abs. 2, fedlex gelesen 25.10.2026. Vorher: «einmal pro Jahr …
+    // Anmeldung bis Ende November» — eine Frist für die höhere Franchise nennt die Verordnung nicht.
+    franchiseChangeWhen: 'Eine höhere Franchise gilt erst ab 1. Januar; die Frist legt die Kasse in ihren Bedingungen fest. Eine tiefere Franchise geht nur auf Ende Jahr, mit denselben Fristen wie ein Kassenwechsel: Nach der Prämienmitteilung muss der Antrag bis 30. November bei der Kasse eingehen. Quelle: [[KVG Art. 7 Abs. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de#art_7]], [[KVV Art. 94 Abs. 1 und 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de#art_94]].',
     franchiseOptTitle: 'Lohnt sich eine höhere Franchise?',
     franchiseOptSaving: { sie: 'Mit Franchise CHF {high} statt CHF {low} sparen Sie rund CHF {saving}/Jahr an Prämien.', du: 'Mit Franchise CHF {high} statt CHF {low} sparst du rund CHF {saving}/Jahr an Prämien.' },
     franchiseOptReserve: { sie: 'Dafür tragen Sie im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster sollten Sie zurücklegen können.', du: 'Dafür trägst du im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster solltest du zurücklegen können.' },
@@ -6098,7 +6105,7 @@ export default {
     plzNotFound: 'PLZ nicht im amtlichen Verzeichnis gefunden.',
     regionTitle: 'Prämienregion',
     regionInfo: '{gemeinde} ({kanton}) — Prämienregion {region}',
-    avgPremium: 'Durchschnittsprämie 2026: Kinder CHF {kinder} · Junge CHF {junge} · Erwachsene CHF {erwachsene}',
+    avgPremium: 'Durchschnittsprämie {jahr}: Kinder CHF {kinder} · Junge CHF {junge} · Erwachsene CHF {erwachsene}',
     noInsurer: 'Kein Versicherer hinterlegt',
     noInsurerHint: { sie: 'Tragen Sie Ihre Krankenkasse unter «Versicherungen» ein, um Ihre Referenzprämie zu sehen.', du: 'Trage Deine Krankenkasse unter «Versicherungen» ein, um Deine Referenzprämie zu sehen.' },
     insurerNotFound: '«{name}» nicht erkannt',
@@ -6114,10 +6121,16 @@ export default {
     thInsurer: 'Kasse',
     allInsurersTitle: 'Alle Kassen vergleichen',
     compareFranchiseNote: 'Monatsprämien bei Franchise CHF {franchise} — günstigste zuerst. Für Details eine Kasse antippen.',
+    // Wechselzeit: Kassenvergleich und Franchise-Stufen zeigen die Prämien des Folgejahres (26.10.2026).
+    wechselzeit: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Für einen Kassenwechsel muss die Kündigung spätestens am {datum} bei der Kasse eingehen.',
+    wechselzeitNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Die Kündigungsfrist für einen Kassenwechsel auf diesen Termin ist abgelaufen.',
+    wechselzeitStufen: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise: Antrag spätestens am {datum} bei der Kasse. Eine höhere: Die Frist legt die Kasse in ihren Bedingungen fest.',
+    wechselzeitStufenNachFrist: 'Prämien {jahr} — sie gelten ab 1. Januar {jahr}. Eine tiefere Franchise geht auf diesen Termin nicht mehr. Ob eine höhere noch geht, legt die Kasse in ihren Bedingungen fest.',
+    refJahr: 'Prämien {jahr}',
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Quelle: [[BAG|priminfo.admin.ch]] · Standardmodell mit Unfall · Stand 2026',
+    source: 'Quelle: [[BAG|priminfo.admin.ch]] · Standardmodell mit Unfall · Stand {jahr}',
     disclaimer: { sie: 'Nur Referenzprämien. Effektive Prämien können abweichen — massgebend ist die Police Ihres Versicherers.', du: 'Nur Referenzprämien. Effektive Prämien können abweichen — massgebend ist die Police Deines Versicherers.' },
     regionalCompare: {
       national: 'Schweizer Schnitt',

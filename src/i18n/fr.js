@@ -1324,7 +1324,7 @@ export default {
       contact: 'Qui doit être informé en premier ? Un nom et un numéro de téléphone suffisent pour commencer.',
       medical: { sie: 'Ce que les médecins et secouristes doivent savoir sur vous en cas d\'urgence.', du: 'Ce que les médecins et secouristes doivent savoir sur toi en cas d\'urgence.' },
       care: { sie: 'Votre médecin de famille et votre hôpital préféré — pour que cette information soit trouvable quand il le faut.', du: 'Ton médecin de famille et ton hôpital préféré — pour que cette information soit trouvable quand il le faut.' },
-      provision: { sie: 'Trois documents vous protègent, vous et vos proches : les directives anticipées règlent les décisions médicales (CC art. 370). Le mandat pour cause d’inaptitude désigne qui agit en votre nom (CC art. 360). Le mandat doit être entièrement manuscrit ou authentifié (CC art. 361) ; pour les directives anticipées, il suffit qu’elles soient écrites, datées et signées — un modèle suffit (CC art. 371). Une fois fait — classé pour de bon.', du: 'Trois documents te protègent, toi et tes proches : les directives anticipées règlent les décisions médicales (CC art. 370). Le mandat pour cause d’inaptitude désigne qui agit en ton nom (CC art. 360). Le mandat doit être entièrement manuscrit ou authentifié (CC art. 361) ; pour les directives anticipées, il suffit qu’elles soient écrites, datées et signées — un modèle suffit (CC art. 371). Une fois fait — classé pour de bon.' },
+      provision: { sie: 'Deux documents vous protègent, vous et vos proches : les directives anticipées règlent les décisions médicales (CC art. 370). Le mandat pour cause d’inaptitude désigne qui agit en votre nom (CC art. 360). Le mandat doit être entièrement manuscrit ou authentifié (CC art. 361) ; pour les directives anticipées, il suffit qu’elles soient écrites, datées et signées — un modèle suffit (CC art. 371). Une fois fait — classé pour de bon.', du: 'Deux documents te protègent, toi et tes proches : les directives anticipées règlent les décisions médicales (CC art. 370). Le mandat pour cause d’inaptitude désigne qui agit en ton nom (CC art. 360). Le mandat doit être entièrement manuscrit ou authentifié (CC art. 361) ; pour les directives anticipées, il suffit qu’elles soient écrites, datées et signées — un modèle suffit (CC art. 371). Une fois fait — classé pour de bon.' },
     },
   },
   itemized: {
@@ -1802,6 +1802,7 @@ export default {
     markiert: 'ne s\'applique pas. Compte comme réglé.',
     // K38 · personne de contact « ne s'applique pas »
     keineKontaktperson: 'Aucune personne de contact enregistrée',
+    keineMedikamente: 'aucun',
     notfallAnregung: { sie: 'Peut-être aimeriez-vous demander à une personne de confiance si elle souhaite être votre personne de contact en cas d’urgence. Rien ne presse.', du: 'Peut-être aimerais-tu demander à une personne de confiance si elle souhaite être ta personne de contact en cas d’urgence. Rien ne presse.' },
   },
   // E18 · « Supprimer toutes les données de cet appareil » (liste O11)
@@ -2225,6 +2226,7 @@ export default {
       hints: {
         liabilityPremium: { sie: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscrivez la prime qu’une fois.", du: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscris la prime qu’une fois." },
         householdInsuranceAmount: { sie: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscrivez la prime qu’une fois.", du: "Prime annuelle. Un douzième compte chaque mois dans le budget. Assurance ménage et RC dans une seule police ? Alors n’inscris la prime qu’une fois." },
+        bvgInsurer: 'Pas de caisse de pension ? Choisir alors «Ne s\'applique pas». Dans certains cantons, cela compte pour la réduction des primes comme «pas de 2e pilier».',
         bvgContribution: 'À titre indicatif — ce montant n\'est pas déduit une seconde fois du salaire net dans le budget.',
         bvgBalance: 'Dernier certificat de caisse de pension. Utilisé dans le calculateur de prévoyance.',
         policyNumber: 'Numéro de contrat/police de l\'assurance de base — figure sur la police, pas le numéro de carte.',
@@ -4277,6 +4279,7 @@ export default {
     jahrBS: 'Calcul pour l’année de droit {jahr}. Dans le canton de Bâle-Ville, les contributions ne dépendent pas du lieu de domicile — elles sont les mêmes dans tout le canton.',
     vorbehalt: 'Le canton peut encore adapter les bases de calcul en cours d’année. Le droit ne devient définitif qu’avec les facteurs fiscaux {jahr} définitifs; les montants perçus en trop doivent être remboursés.',
     vorbehaltBE: 'Dans le canton de Berne, la base est la taxation définitive {basisjahr}, et non le revenu actuel. Qui gagne nettement moins aujourd’hui doit demander une nouvelle appréciation. Les montants perçus en trop doivent être remboursés.',
+    vorbehaltAG3aTeiljahr: 'Une partie de ce calcul n’est pas juridiquement tranchée : sans caisse de pension, le versement au pilier 3a ne compte ici que pour la part qui dépasse 10 pour cent du revenu de l’activité lucrative. Les documents publiés ne disent pas si cela vaut aussi lorsqu’une caisse de pension n’a existé que pendant une partie de l’année. Faire confirmer le montant par la SVA Argovie.',
     vorbehaltBE3aDeckel: 'Une partie de ce calcul n’est pas juridiquement tranchée : en cas de versement supérieur au montant maximal pris en compte par la Confédération, le chiffre dépend de la façon dont le canton interprète cette limite. Les documents publiés ne le précisent pas. Faire confirmer le montant par l’Office des assurances sociales du canton de Berne.',
     beAntragNoetig: 'Attention: avec un revenu inférieur à 14 000 francs, le canton de Berne ne vérifie pas le droit automatiquement. La vérification doit être demandée d’ici au 31 décembre, sinon le droit pour cette année est perdu.',
     vorbehaltAG: 'Dans le canton d’Argovie, la base est la taxation définitive {basisjahr} — trois ans avant l’année de droit, et non le revenu actuel. Qui gagne nettement moins depuis lors peut demander un nouveau calcul à la SVA Aargau. Les montants perçus indûment sont réclamés.',
@@ -4437,7 +4440,7 @@ export default {
       saeule3aAbzugUnklar: 'Le versement au pilier 3a saisi dépasse le montant qui pouvait de toute façon être déduit du revenu: 7 056 francs pour les années fiscales 2023 et 2024, sans caisse de pension au plus 20 pour cent du revenu de l’activité lucrative. La part déduite dépend de l’affiliation ou non à une caisse de pension — ce n’est pas saisi ici. Sans cette indication, le montant serait trop élevé ou trop bas.',
       szKinderMindestanspruch: 'Pour les enfants, il existe dans le canton de Schwyz, avec ce revenu et dans toutes les communes, un droit: leur prime de référence est réduite d’au moins 80 pour cent. Le montant pour l’ensemble du ménage ne peut pas être déterminé ici avec certitude. Une demande auprès de la SVA Schwyz vaut la peine.',
       bsHypothetisch: 'Dans le canton de Bâle-Ville, l’Amt für Sozialbeiträge impute un revenu hypothétique aux personnes seules ou élevant seules leurs enfants qui travaillent à moins de 80 pour cent; un plein temps y compte pour 36 000 francs nets par an. Des exceptions existent notamment pour la garde d’enfants de moins de 16 ans, la formation, la maladie ou une rente AI, les indemnités de chômage et au-delà de 60 ans. Le temps de travail n’est pas saisi ici, et pour un revenu d’activité inférieur à 28 800 francs par an, ce supplément peut fortement réduire le montant. Avec les heures de travail par semaine dans le chapitre «Formation et emploi», l’application calcule.',
-      bsSaeule3a: 'Dans le canton de Bâle-Ville, les versements au pilier 3a ne sont déduits du revenu que s’il n’existe pas de caisse de pension. Cette information n’est pas saisie ici — et dans ce cas, elle détermine le groupe de contribution. Les personnes affiliées à une caisse de pension peuvent inscrire la cotisation dans le chapitre «Assurances»; l’application calcule alors.',
+      bsSaeule3a: 'Dans le canton de Bâle-Ville, les versements au pilier 3a ne sont déduits du revenu que s’il n’existe pas de caisse de pension. Cette information n’est pas saisie ici — et dans ce cas, elle détermine le groupe de contribution. Les personnes affiliées à une caisse de pension peuvent inscrire la cotisation dans le chapitre «Assurances», les autres choisir «Ne s\'applique pas» à la ligne «Caisse de pension (LPP)»; l’application calcule alors.',
       // Uri/OW (Fachprüfungen #464, #476): statt «alter»; Wortlaut «je nach Einkommen» trägt UR, OW und NW.
       ausbildung: 'Pour les jeunes adultes (19 à 25 ans), la réduction dépend de la formation en cours au 1er janvier — un droit minimal s’applique alors, selon le revenu. L’application ne le saisit pas, c’est pourquoi aucun montant n’est indiqué ici ; l’office cantonal renseigne.',
       stichtagAlter: 'Qui a 26 ans dans l’année de droit compte, selon la date de référence, encore comme jeune adulte ou déjà comme adulte — avec des primes de référence différentes. Le canton ne fixe pas de date de référence explicite pour l’âge, c’est pourquoi aucun montant n’est indiqué ici.',
@@ -4453,7 +4456,7 @@ export default {
       tiKinder: 'Pour les ménages avec enfants, l’application ne calcule pas encore dans le canton du Tessin: la réduction y est calculée pour l’ensemble du ménage et plafonnée à la somme de toutes les primes effectivement payées. Les primes des enfants ne sont pas saisies ici.',
       tiEltern: 'Au Tessin, une personne de 30 ans au plus, avec un faible revenu et en première formation, est comptée avec ses parents. L’application ne sait pas si c’est le cas — c’est pourquoi aucun montant n’est indiqué ici. L’IAS peut renseigner.',
       kindNachStichtag: 'Un enfant est né après le 1er janvier de l’année du droit. La situation au 1er janvier est déterminante, et le droit de l’enfant ne commence que le mois suivant la naissance. Comment les deux se combinent ne peut pas être dit avec certitude ici.',
-      saeule2Unbekannt: 'La manière dont le versement au pilier 3a est pris en compte dépend, dans ce canton, de l’affiliation à une caisse de pension. Ce n’est pas saisi ici. Dans le chapitre Assurances, saisir la cotisation LPP mensuelle — ou 0 en l’absence de caisse de pension. L’application peut alors calculer.',
+      saeule2Unbekannt: 'La manière dont le versement au pilier 3a est pris en compte dépend, dans ce canton, de l’affiliation à une caisse de pension. Ce n’est pas saisi ici. Dans le chapitre Assurances, saisir la cotisation LPP mensuelle — ou, en l’absence de caisse de pension, saisir 0 ou choisir «Ne s\'applique pas» à la ligne «Caisse de pension (LPP)». L’application peut alors calculer.',
       praemieFranchise: 'Dans ce canton, la réduction ne dépasse pas la prime avec la franchise ordinaire de 300 francs et avec couverture accidents — et non la prime saisie. Le montant calculé dépasse la prime saisie; la limite applicable dépend d’une prime qui n’est pas saisie ici. Le droit est au moins aussi élevé que la prime saisie.',
       // OW (Fachprüfung #476, 28.09.2026): B2 Rahmen 9–12 % offen · W3 Kind 18+ ohne «Paare»-Satz.
       owSelbstbehaltRahmen: 'Pour ce revenu déterminant, la franchise dans le canton d’Obwald dépasse 12 % selon la décision pour 2026. Depuis le 1er avril 2026, la loi fixe toutefois une fourchette de 9 à 12 %. La règle applicable aux décisions 2026 n’est pas claire — c’est pourquoi aucun montant n’est indiqué ici. L’Ausgleichskasse Obwalden renseigne.',
@@ -5566,6 +5569,7 @@ export default {
     belowPoverty: 'Sous le seuil de pauvreté',
     povertyLineNote: { sie: 'Seuil de pauvreté pour votre ménage : {amount}/mois (selon la [[méthodologie OFS|https://www.bfs.admin.ch/bfs/fr/home/statistiques/situation-economique-sociale-population/enquetes/statistique-pauvrete.html]] 2024). La comparaison porte sur votre revenu disponible : le net, moins impôts, primes et déductions.', du: 'Seuil de pauvreté pour ton ménage : {amount}/mois (selon la [[méthodologie OFS|https://www.bfs.admin.ch/bfs/fr/home/statistiques/situation-economique-sociale-population/enquetes/statistique-pauvrete.html]] 2024). La comparaison porte sur ton revenu disponible : le net, moins impôts, primes et déductions.' },
     povertyBruttoHint: { sie: 'Votre net correspond à environ ~ {brutto} brut (estimé à partir de l\'AVS/AC et de la LPP, sans impôts — variable selon la caisse de pension).', du: 'Ton net correspond à environ ~ {brutto} brut (estimé à partir de l\'AVS/AC et de la LPP, sans impôts — variable selon la caisse de pension).' },
+    povertyBruttoHintRente: { sie: 'Votre net correspond à environ ~ {brutto} brut (estimé à partir de la cotisation AVS/AI/APG sur le salaire dépassant {freibetrag} par mois, sans impôts). Dès l\'âge de référence, ni l\'AC ni la LPP ne sont prises en compte ; si l\'assurance auprès de la caisse de pension se poursuit, le brut est plus élevé.', du: 'Ton net correspond à environ ~ {brutto} brut (estimé à partir de la cotisation AVS/AI/APG sur le salaire dépassant {freibetrag} par mois, sans impôts). Dès l\'âge de référence, ni l\'AC ni la LPP ne sont prises en compte ; si l\'assurance auprès de la caisse de pension se poursuit, le brut est plus élevé.' },
     povertyLine: 'Seuil de pauvreté',
     median: 'Médiane CH',
     branchenvergleich: { sie: 'Votre salaire par branche (salaire brut médian) :', du: 'Ton salaire par branche (salaire brut médian) :' },
@@ -6009,7 +6013,7 @@ export default {
     ipvGesuch: 'seulement sur demande',
   },
   po: {
-    franchiseChangeWhen: 'La franchise peut être changée une fois par an — effet au 1er janvier, avis jusqu\'à fin novembre (changement de caisse : 30 novembre). Source : [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr]].',
+    franchiseChangeWhen: 'Une franchise plus élevée ne s\'applique qu\'à partir du 1er janvier ; la caisse fixe le délai dans ses conditions. Une franchise plus basse n\'est possible que pour la fin de l\'année, avec les mêmes délais que pour un changement de caisse : après la communication de la nouvelle prime, la demande doit parvenir à la caisse au plus tard le 30 novembre. Source : [[LAMal art. 7 al. 2|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr#art_7]], [[OAMal art. 94 al. 1 et 2|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr#art_94]].',
     franchiseOptTitle: 'Une franchise plus élevée en vaut-elle la peine ?',
     franchiseOptSaving: { sie: 'Avec une franchise de CHF {high} au lieu de CHF {low}, vous économisez environ CHF {saving}/an de primes.', du: 'Avec une franchise de CHF {high} au lieu de CHF {low}, tu économises environ CHF {saving}/an de primes.' },
     franchiseOptReserve: { sie: 'En contrepartie, une mauvaise année, vous payez jusqu\'à CHF {reserve} vous-même (franchise + quote-part max. CHF {sb}). Vous devriez pouvoir mettre ce coussin de côté.', du: 'En contrepartie, une mauvaise année, tu paies jusqu\'à CHF {reserve} toi-même (franchise + quote-part max. CHF {sb}). Tu devrais pouvoir mettre ce coussin de côté.' },
@@ -6048,7 +6052,7 @@ export default {
     plzNotFound: 'Code postal non trouvé dans le registre officiel.',
     regionTitle: 'Région de primes',
     regionInfo: '{gemeinde} ({kanton}) — région de primes {region}',
-    avgPremium: 'Prime moyenne 2026 : Enfants CHF {kinder} · Jeunes CHF {junge} · Adultes CHF {erwachsene}',
+    avgPremium: 'Prime moyenne {jahr} : Enfants CHF {kinder} · Jeunes CHF {junge} · Adultes CHF {erwachsene}',
     noInsurer: 'Aucun assureur enregistré',
     noInsurerHint: { sie: 'Saisissez votre caisse maladie sous « Assurances » pour voir votre prime de référence.', du: 'Saisis ta caisse maladie sous « Assurances » pour voir ta prime de référence.' },
     insurerNotFound: '« {name} » non reconnu',
@@ -6064,10 +6068,15 @@ export default {
     thInsurer: 'Caisse',
     allInsurersTitle: 'Comparer toutes les caisses',
     compareFranchiseNote: 'Primes mensuelles avec franchise CHF {franchise} — la moins chère en premier. Toucher une caisse pour les détails.',
+    wechselzeit: 'Primes {jahr} — elles s’appliquent dès le 1er janvier {jahr}. Pour changer de caisse, la résiliation doit parvenir à la caisse au plus tard le {datum}.',
+    wechselzeitNachFrist: 'Primes {jahr} — elles s’appliquent dès le 1er janvier {jahr}. Le délai de résiliation pour changer de caisse à cette date est échu.',
+    wechselzeitStufen: 'Primes {jahr} — elles s’appliquent dès le 1er janvier {jahr}. Franchise plus basse : demande à la caisse au plus tard le {datum}. Franchise plus élevée : le délai est fixé par la caisse dans ses conditions.',
+    wechselzeitStufenNachFrist: 'Primes {jahr} — elles s’appliquent dès le 1er janvier {jahr}. Une franchise plus basse n’est plus possible à cette date. Pour une franchise plus élevée, le délai est fixé par la caisse dans ses conditions.',
+    refJahr: 'primes {jahr}',
     chooseTarget: 'Caisse souhaitée',
     targetSelected: 'Souhaitée',
     targetChosenHint: 'Caisse souhaitée : {insurer} — elle apparaît dans le processus de changement.',
-    source: 'Source : [[OFSP|priminfo.admin.ch]] · Modèle standard avec accident · État 2026',
+    source: 'Source : [[OFSP|priminfo.admin.ch]] · Modèle standard avec accident · État {jahr}',
     disclaimer: { sie: 'Primes de référence uniquement. Les primes effectives peuvent différer — la police de votre assureur fait foi.', du: 'Primes de référence uniquement. Les primes effectives peuvent différer — la police de ton assureur fait foi.' },
     regionalCompare: {
       national: 'Moyenne suisse',
