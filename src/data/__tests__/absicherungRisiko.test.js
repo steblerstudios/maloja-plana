@@ -29,9 +29,10 @@ describe('absicherungJeRisiko', () => {
     expect(r.risiken.flatMap((x) => x.zeilen).filter((z) => /^(iv|ahv)/.test(z.key)).every((z) => z.art === 'hinweis')).toBe(true);
   });
 
-  it('angestellt ohne Pensionskasse über der Schwelle: drei Zeilen «offen», ohne Krankentaggeld nur Hinweis', () => {
+  it('angestellt ohne Pensionskasse über der Schwelle: «offen» unter drei Risiken, aber nur einmal gezählt', () => {
     const r = absicherungJeRisiko({ ...angestellt, versicherungen: { kkInsurer: 'CSS', uvg: 'employer' } }, heute);
-    expect(r.offen).toBe(3);
+    expect(keys(r, 'invaliditaet')).toContain('pkOffen:offen');
+    expect(r.offen).toBe(1);
     expect(keys(r, 'krankheit')).toContain('ktgNicht:hinweis');
   });
 
@@ -63,8 +64,35 @@ describe('absicherungJeRisiko', () => {
   it('nichts eingetragen: Krankenkasse offen, Anstellung unbekannt → Pensionskasse als Hinweis', () => {
     const r = absicherungJeRisiko({}, heute);
     expect(keys(r, 'krankheit')[0]).toBe('kkOffen:offen');
-    expect(keys(r, 'unfall')).toEqual(['unfallOhneKk:offen']);
+    expect(keys(r, 'unfall')).toEqual(['unfallOhneKk:hinweis', 'unfallArbeitslos:hinweis']); // KK fehlt nur einmal «offen»
+    expect(r.offen).toBe(1);
     expect(keys(r, 'alter')).toContain('pkJeNachArbeit:hinweis');
+  });
+});
+
+describe('absicherungJeRisiko — Befunde der Fachprüfung 26.10.2026', () => {
+  it('nur ein PK-Guthaben (Freizügigkeit): fürs Alter erfasst, für Invalidität und Tod nicht', () => {
+    const r = absicherungJeRisiko({ basis: { dateOfBirth: '1980-02-02' }, finanzen: { employmentType: 'selfEmployed' }, versicherungen: { kkInsurer: 'CSS', bvgBalance: 40000 } }, heute);
+    expect(keys(r, 'alter')).toContain('pkErfasstOhneName:erfasst');
+    expect(keys(r, 'invaliditaet')).toEqual(['iv:hinweis', 'pkSelbst:hinweis', 'pkGuthaben:hinweis']);
+  });
+
+  it('frühpensioniert vor dem Referenzalter: IV-Zeile bleibt, kein «Lohnausfall»-Hinweis', () => {
+    const r = absicherungJeRisiko({ basis: { dateOfBirth: '1964-06-06' }, finanzen: { employmentType: 'retired' }, versicherungen: { kkInsurer: 'CSS' } }, heute);
+    expect(keys(r, 'invaliditaet')[0]).toBe('iv:hinweis');
+    expect(keys(r, 'krankheit')).toEqual(['kkErfasst:erfasst']);
+  });
+
+  it('angestellt ohne Geburtsdatum: Alterssparen als Hinweis, nicht «offen»', () => {
+    const r = absicherungJeRisiko({ finanzen: { employmentType: 'employed', monthlyIncome: 6000, incomeType: 'brutto' }, versicherungen: { kkInsurer: 'CSS', uvg: 'employer' } }, heute);
+    expect(keys(r, 'alter')).toContain('pkOhneGeburtsdatum:hinweis');
+    expect(keys(r, 'tod')).toContain('pkOffen:offen');
+  });
+
+  it('unter 8 Std./Woche: Hinweis zu Freizeitunfällen; ohne Pensum kein Hinweis', () => {
+    const mit = absicherungJeRisiko({ ...angestellt, ausbildung: { workHoursPerWeek: 6 } }, heute);
+    expect(keys(mit, 'unfall')).toEqual(['uvgArbeitgeber:erfasst', 'nbuUnter8:hinweis']);
+    expect(keys(absicherungJeRisiko(angestellt, heute), 'unfall')).toEqual(['uvgArbeitgeber:erfasst']);
   });
 });
 
@@ -73,7 +101,8 @@ describe('vu.risiko — Texte', () => {
     const genutzt = new Set(['titel', 'subOffen', 'subKeins', 'satz', 'krankheit', 'unfall', 'invaliditaet', 'tod', 'alter',
       'kkErfasst', 'kkOffen', 'ktgArbeitgeber', 'ktgErfasst', 'ktgNicht', 'uvgArbeitgeber', 'uvgErfasst', 'uvgOffen', 'unfallKk',
       'unfallOhneKk', 'uvgFreiwillig', 'iv', 'ivRente', 'ahvHinterlassene', 'ahvAlter', 'pkErfasst', 'pkErfasstOhneName', 'pkSelbst',
-      'pkMindestalter', 'pkAltersparen', 'pkOffen', 'pkUnklar', 'pkUnterSchwelle', 'pkJeNachArbeit', 'leben', 'saeule3a']);
+      'pkMindestalter', 'pkAltersparen', 'pkOffen', 'pkUnklar', 'pkUnterSchwelle', 'pkJeNachArbeit', 'leben', 'saeule3a',
+      'pkGuthaben', 'pkOhneGeburtsdatum', 'nbuUnter8', 'unfallArbeitslos']);
     for (const s of [de, en, fr, itSprache, rm]) {
       for (const k of genutzt) expect(typeof s.vu.risiko[k], k).toBe('string');
       expect(s.vu.risiko.marke.offen).toBeTruthy();
