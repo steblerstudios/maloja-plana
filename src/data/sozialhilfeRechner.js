@@ -12,21 +12,12 @@ import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestae
 import { vermoegensfreibetragKanton } from './vermoegensfreibetragKanton.js';
 import { ergebnis, fehlendeAngaben, ERGEBNIS_ART } from './ergebnisArt.js';
 import { EFB_PARAMS, einkommensfreibetrag, sozialhilfeBilanz } from './sozialhilfeKern.js';
+import { grundbedarf, gblStand } from './skosGrundbedarf.js';
 
 export const SKOS_DATA_VERSION = '2026-01';
 
-// GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1, ab 1.1.2025, für 2026 unverändert)
-const GBL_TABELLE = [
-  0,     // 0 Personen (Platzhalter)
-  1061,  // 1 Person
-  1624,  // 2 Personen
-  1974,  // 3 Personen
-  2271,  // 4 Personen
-  2568,  // 5 Personen
-  2784,  // 6 Personen
-  3000,  // 7 Personen
-];
-const GBL_PRO_WEITERE = 216;
+// GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1): Jahrestabelle in data/skosGrundbedarf.js
+// (seit 26.10.2026, vorher hier als feste Konstante ohne Jahr).
 
 // Integrationszulage (IZU) – SKOS-RL C.6.7 (die frühere Angabe «C.6.1» war die falsche Nummer)
 // Für besondere Integrationsleistungen (z.B. regelmässige Freiwilligenarbeit,
@@ -47,8 +38,8 @@ const SELBSTBEHALT_MAX_ERW = 700;
 const SELBSTBEHALT_MAX_KIND = 350;
 
 export const SKOS_PARAMS = {
-  gblEinperson: GBL_TABELLE[1],
-  gblProWeitere: GBL_PRO_WEITERE,
+  gblEinperson: grundbedarf(1),
+  gblProWeitere: gblStand().proWeitere,
   izuMin: IZU_MIN,
   izuMax: IZU_MAX,
   izuStandard: IZU_STANDARD,
@@ -60,10 +51,9 @@ export const SKOS_PARAMS = {
   selbstbehaltMaxKind: SELBSTBEHALT_MAX_KIND,
 };
 
-export function grundbedarfFuerHaushalt(personen) {
-  if (personen < 1) return 0;
-  if (personen <= 7) return GBL_TABELLE[personen];
-  return GBL_TABELLE[7] + (personen - 7) * GBL_PRO_WEITERE;
+// `stichtag` optional (Standard: heute) — das Jahr der Werte steht in gblStand(stichtag).
+export function grundbedarfFuerHaushalt(personen, stichtag) {
+  return grundbedarf(personen, stichtag);
 }
 
 export { einkommensfreibetrag };
@@ -100,14 +90,14 @@ export function rueckerstattungsFreibetrag(adults = 1, minorChildren = 0) {
 // Person nachweisen (GR-Merkblatt Ziff. 2.1). Sonderregeln für junge Erwachsene sind kantonal und
 // hier nicht abgebildet.
 export const WOHNFORMEN = ['allein', 'familienaehnlich', 'zweckWg'];
-export function grundbedarfNachWohnform(einheit, weiterePersonen = 0, wohnform = 'allein') {
+export function grundbedarfNachWohnform(einheit, weiterePersonen = 0, wohnform = 'allein', stichtag) {
   const weitere = Math.max(0, Math.floor(Number(weiterePersonen) || 0));
   if (wohnform === 'familienaehnlich' && weitere > 0) {
     const haushalt = einheit + weitere;
-    return Math.round(grundbedarfFuerHaushalt(haushalt) / haushalt * einheit);
+    return Math.round(grundbedarfFuerHaushalt(haushalt, stichtag) / haushalt * einheit);
   }
-  if (wohnform === 'zweckWg' && weitere > 0) return Math.round(grundbedarfFuerHaushalt(einheit) * 0.9);
-  return grundbedarfFuerHaushalt(einheit);
+  if (wohnform === 'zweckWg' && weitere > 0) return Math.round(grundbedarfFuerHaushalt(einheit, stichtag) * 0.9);
+  return grundbedarfFuerHaushalt(einheit, stichtag);
 }
 
 export function berechneSozialhilfe({
@@ -125,11 +115,13 @@ export function berechneSozialhilfe({
   erwerbstaetig = false,
   integrationsMassnahme = false,
   kanton, // Kantonskürzel; ohne → SKOS-Empfehlung beim Vermögensfreibetrag
+  stichtag, // optional, Standard heute: welches Jahr der GBL-Tabelle gilt
 }) {
   // haushaltGroesse = Grösse der Unterstützungseinheit (Erwachsene + Kinder); Mitbewohnende
   // ausserhalb der Einheit kommen über weiterePersonen + wohnform dazu.
   if (haushaltGroesse == null) haushaltGroesse = adults + kinderImHaushalt;
-  const gbl = grundbedarfNachWohnform(haushaltGroesse, weiterePersonen, wohnform);
+  const gbl = grundbedarfNachWohnform(haushaltGroesse, weiterePersonen, wohnform, stichtag);
+  const stand = gblStand(stichtag);
   const wohnkosten = Math.max(0, miete);
   const kvgPraemie = Math.max(0, krankenkassePraemie);
 
@@ -157,6 +149,9 @@ export function berechneSozialhilfe({
 
   return {
     gbl,
+    // Jahr der GBL-Werte und ob es das Jahr des Stichtags ist (sonst Hinweis sh.gblNichtBelegt).
+    gblJahr: stand.jahr,
+    gblBelegt: stand.belegt,
     gblProPerson: Math.round(gbl / haushaltGroesse),
     wohnkosten,
     kvgPraemie,

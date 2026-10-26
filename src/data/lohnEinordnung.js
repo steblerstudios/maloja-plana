@@ -90,8 +90,8 @@ export function mindestlohnBoden(canton) {
 // Der Kanton kennt einen Mindestlohn, aber für das laufende Jahr ist kein Satz belegt →
 // { jahr, laufendesJahr } für den Hinweis; sonst null (auch in Kantonen ohne Mindestlohn).
 export function mindestlohnNichtBelegt(canton) {
-  const ml = getMindestlohn(canton);
   const heute = new Date();
+  const ml = getMindestlohn(canton, heute);
   return ml && mindestlohnJahrNichtBelegt(ml.jahr, heute) ? { jahr: ml.jahr, laufendesJahr: heute.getFullYear() } : null;
 }
 

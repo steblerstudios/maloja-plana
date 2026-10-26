@@ -221,6 +221,10 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         React.createElement('div', { style: { marginTop: space.xs } }, praefix('kaestchen', 14), t('sozialhilfe.childrenEducationNote'))
     ),
 
+    // Werte 2027 (26.10.2026): Grundbedarf fürs laufende Jahr noch nicht nachgeführt → sagen, nicht still rechnen.
+    sozialhilfe.gblBelegt === false && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } },
+      t('sh.gblNichtBelegt', { jahr: sozialhilfe.gblJahr, laufend: new Date().getFullYear() })),
+
     // SKOS table
     React.createElement('details', { style: { marginBottom: space.md } },
       React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, praefix('rechner', 16), t('sozialhilfe.skosTable')),
