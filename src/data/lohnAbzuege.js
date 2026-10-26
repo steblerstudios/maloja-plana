@@ -23,7 +23,9 @@ export const REFERENZALTER = 65;
 //   AHVG Art. 5 Abs. 1 «4,35 Prozent» und IVG Art. 3 Abs. 1 «1,4 Prozent» (je hälftig), beide
 //   Fedlex Stand 1.1.2027, abgerufen 21.10.2026 · EOV Art. 36 Abs. 1 «0,5 Prozent» (AS 2026 548).
 // ALV-Höchstbetrag 148 200/Jahr, unverändert: UVV Art. 22 Abs. 1, Fedlex Stand 1.1.2027.
-// Freibetrag Rentner 16 800/Jahr = 1 400/Monat, unverändert: AHVV, Fedlex Stand 1.1.2027.
+// Freibetrag Rentner 16 800/Jahr = 1 400/Monat, unverändert: AHVV Art. 6quater Abs. 1 «den Freibetrag von
+//   16 800 Franken im Jahr», je Arbeitgeber, «ab dem Monat, nachdem» das Referenzalter erreicht ist
+//   (Fedlex, im Browser gelesen 25.10.2026; Fassung vom 30. Aug. 2023, in Kraft seit 1.1.2024, AS 2023 506).
 // ALV-Beitragssatz 1,1 %: keine Änderung gefunden (nicht im Paket des Bundesrats vom 02.10.2026).
 export const LOHN_WERTE_JE_JAHR = Object.freeze({
   2026: Object.freeze({
