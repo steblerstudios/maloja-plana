@@ -13,7 +13,7 @@ describe('herkunftName', () => {
   const chapters = [{ title: 'Persönliche Basis' }, { title: 'Wohnen & Leben' }];
 
   it('nennt Werkzeuge, Abläufe und die Suche', () => {
-    expect(herkunftName({ view: 'finanzuebersicht' }, 'tax', chapters, t)).toBe('Finanz-Übersicht');
+    expect(herkunftName({ view: 'finanzuebersicht' }, 'tax', chapters, t)).toBe('Finanzen & Geld');
     expect(herkunftName({ view: 'heirat' }, 'kind', chapters, t)).toBe('Heirat oder Partnerschaft');
     expect(herkunftName({ view: 'search' }, 'umzug', chapters, t)).toBe('Suche');
   });

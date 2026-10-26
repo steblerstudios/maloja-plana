@@ -146,12 +146,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   // Register (data/werkzeugRegister.js) die Einträge mit `imMenue`. Der Kalender steht
   // seit Fassung 5 oben als Anker «Was ansteht» und darum nicht ein zweites Mal hier;
   // ebenso «Was steht mir zu?» (bis 23.10.2026 doppelt: Anker und «Lebenssituationen»).
-  // Satz je Werkzeug: der Untertitel aus dem Register; die Finanz-Übersicht hat dort
-  // keinen und nimmt den Satz ihrer Dashboard-Kachel.
-  const WERKZEUG_SATZ = { finanzuebersicht: 'dashboard.highlightFinanzSub' };
+  // Satz je Werkzeug: der Untertitel aus dem Register.
   const alsEintrag = (w) => ({
     key: werkzeugKey(w), view: w.view, label: t(w.nav), icon: w.icon, aliases: w.aliases || [],
-    satz: w.sub ? t(w.sub) : (WERKZEUG_SATZ[w.view] ? t(WERKZEUG_SATZ[w.view]) : null),
+    satz: w.sub ? t(w.sub) : null,
     go: () => oeffne(w),
   });
   const menueWerkzeuge = MENUE_WERKZEUGE.map(alsEintrag).filter((w) => w.view !== 'calendar' && w.view !== 'situationen');

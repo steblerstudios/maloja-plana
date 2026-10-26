@@ -1729,7 +1729,7 @@ export default {
     budget: 'Budget',
     debts: 'Debits',
     taxes: 'Taglia',
-    finanzUebersicht: 'Survista da finanzas',
+    finanzUebersicht: 'Finanzas & daners',
     organDonation: "Donaziun d'organs",
     // TODO(rm): provisorisch — deutscher Rückfall, Marke nachgetragen (26.10.2026)
     budgetSync: 'Budget-Sync',
@@ -1900,6 +1900,7 @@ export default {
       alv: "Stimar l'indemnisaziun dal di",
       asyl: "Orientaziun en la procedura d'asil",
       taxes: 'Stimar la chargia fiscala',
+      finanzuebersicht: 'Taglia, IPV, agid social, PC — tut en ina egliada.',
       sozialhilfe: 'Orientaziun COSAS',
       direktlinks: 'Autoritads & uffizis',
       tresor: 'Deposita segira',
@@ -2096,7 +2097,7 @@ export default {
     exportReminderOld: { sie: 'Vossa ultima segirezza è pli veglia che ina emna.', du: 'Tia ultima segirezza è pli veglia che ina emna.' },
     openChapter: 'Avrir',
     fieldsCount: '{filled}/{total} champs',
-    highlightFinanz: 'Survista da finanzas',
+    highlightFinanz: 'Finanzas & daners',
     highlightFinanzSub: 'Taglia, IPV, agid social, PC — tut en ina egliada.',
     highlightIpv: 'Examinar il dretg IPV',
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
@@ -5566,7 +5567,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     reserveCheck_low: { sie: "Vossa reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa As dat dapli segirezza fin ch'il cussin è là.", du: "Tia reserva (CHF {savings}) è sut il cas il pli mal (CHF {need}). Ina franchisa pli bassa ta dat dapli segirezza fin ch'il cussin è là." },
     reserveCheck_none: 'Avant che tscherner la franchisa pli auta: metta sin vart var CHF {need} sco reserva — idealmain il dubel (CHF {ideal}), per pudair purtar il cas il pli mal era dus giadas.',
-    reserveCheckLink: 'Reserva en la survista finanziala',
+    reserveCheckLink: 'Reserva en il chapitel «Finanzas & daners»',
     franchiseOptSource: 'Funtauna: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · quota-part 10% / max. CHF 700 (creschids), CHF 350 (uffants).',
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     pickFranchiseHint: { sie: 'Tutgai ina franchisa per cumparegliar las cassas a quel nivel.', du: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.' },
@@ -7224,7 +7225,7 @@ export default {
     renewAdd: 'Regordar mintga onn',
     renewAdded: 'Regordientscha messa',
     reset: 'Reinizialisar',
-    ohneJahrLead: 'Per questa decisiun n’èn chantun ed onn betg memorisads. Fin ch’ella è attribuida, deduceschan budget e survista da finanzas al pli sia summa — e mai dapli che la stima.', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
+    ohneJahrLead: 'Per questa decisiun n’èn chantun ed onn betg memorisads. Fin ch’ella è attribuida, deduceschan budget ed il chapitel «Finanzas & daners» al pli sia summa — e mai dapli che la stima.', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     zuordnenFrage: 'Vala questa decisiun per {kanton} {jahr}?', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     zuordnenJa: 'Gea, per {kanton} {jahr}', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
     giltNicht: 'Decisiun per {kanton} {jahr} — na vala betg per {aktKanton} {aktJahr}. Perquai na vegn ella betg deducida en il budget.', // TODO(rm): provisorisch — Gegenlese (Gate Runde 4, 24.09.2026)
