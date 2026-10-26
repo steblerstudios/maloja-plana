@@ -59,6 +59,26 @@ Alle anderen Punkte aus K-F, K-G, Y, Z, AA, AB, AC, AD, AE und M1–M8 sind auf 
 Behoben auf `fix/fehlerklassen-dashboard-kapitel` (#612): D1, D2, D12, K-F3, K-F4, K-F6, K-F8.
 Behoben auf `fix/hausarzt-aus-liste` (#613): D14, dazu die Vollständigkeit, die die Liste unter `doctorList` suchte. Offen als Produktentscheid: Fachärzte in Dossier/QR («weitere Ärzte»)?
 
+---
+
+## Sprachen, Fehlerklassen, Hygiene (geprüft 26.10.2026, qualitaets-pruefer, Code auf main `99ab58e4`)
+
+Bereits behoben in #612: `PraemienOrientierung.jsx` toFixed, `Dashboard.jsx:319` und `ChapterView.jsx:1156` (Datum in Browsersprache).
+
+| # | Befund | Klasse | Beleg | Vorschlag |
+|---|---|---|---|---|
+| S1 | drei Schlüssel fehlen in de (und allen Sprachen), harter Rückfall: `budgetImport.importFailed` («Import fehlgeschlagen»), `calendar.nicelyDone` («Erledigt»), `common.clear` («Clear», englisch, im aria-label) | Fehler | `BudgetImport.jsx:33`, `CalendarReminders.jsx:256`, `MobileNav.jsx:321` | Schlüssel in 5 Sprachen, Rückfälle weg |
+| S2 | Datum per `toISOString().split('T')[0]` = UTC, nachts der Vortag | Fehler | `CalendarReminders.jsx:48, 140`, `utils/docReminders.js:63` | lokaler Datumshelfer (`zuerichTag.js`) |
+| S3 | Datum in Gerätesprache bzw. ohne Locale | Detail | `components/DatenLoeschen.jsx:49`, `premiumCalc.js:29` | `utils/datumAnzeige.js` (aus #612) |
+| S4 | Datum fest `de-CH` in fr/it/en | Detail | `zipExport.js:69`, `ZipExport.jsx:261`, `cvGenerator.js:157`, `ChapterView.jsx:2530`, `FinanzAuswertung.jsx:230`, `helpers.js:7` (CSV-Import/Export darf fest bleiben) | App-Sprache, wo angezeigt |
+| S5 | Franken per `toFixed` ohne ’ | Detail | `config/cantonalData.js:376` (Sozialhilfe-Defizit, kann > 1000), `PflegeEntloehnung.jsx:71`, Stundenlöhne `briefGenerator.js:614-615`, `LohnEinordnung.jsx:289` | `zahl()` |
+| S6 | Einheit «Hübe» und «Anrede: » ohne t() | Detail | `MedicationManager.jsx:235`, `main.jsx:1092` | in i18n |
+| S7 | fr/rm: Schlüssel `dashboard.detailProgress` ohne Nutzer; rm 125 Schlüssel, die in de fehlen | Hygiene | `fr.js:1906`, `rm.js:2058` | aufräumen |
+| S8 | `orientationRegistry.js` ohne Importeur, zwei Docs nennen ihn aktiv | Doku-Drift | `docs/AUDIT-VOLL-2026-10.md:168` (O2) | Entscheid: anbinden oder löschen |
+| S9 | 38 Exporte ohne jeden Nutzer (z. B. `autoBackup.listBackups`, `validationUtils.*`) | Hygiene | s. Prüferbericht | prüfen, löschen |
+| S10 | **Startbündel 64.53 / 65 kB** auf main (nach #609), 0.47 kB Reserve | Risiko | `package.json` size-limit | Kandidaten zum Auslagern: IconSystem (12.6 kB), MobileNav, BetaGate |
+| S11 | Fehlerschirm englisch («Your data is safe…»), wohl bewusst (ohne Sprachdatei) | prüfen | `ErrorBoundary.jsx:128, 168` | Entscheid festhalten |
+
 ### Zu entscheiden (Stebler Studios)
 
 1. **Spinnennetz im Kapitel Versicherungen:** weg, weil M2 dasselbe leistet? (AA-6)
