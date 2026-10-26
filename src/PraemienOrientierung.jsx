@@ -79,6 +79,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const vergleichsJahr = detailJahr(vergleichsTag);
   const laufendesJahr = detailJahr();
   const wechselzeit = vergleichsJahr !== laufendesJahr;
+  const praemienVeraltet = vergleichsTag.getFullYear() > vergleichsJahr;
   // Altersklasse je Prämienjahr (nach Jahrgang): wer 2027 19 wird, ist für 2027 junge Erwachsene, für 2026 noch Kind.
   const ageClass = ageClassFromBirth(data.basis?.dateOfBirth, vergleichsTag);
   const ageClassHeute = ageClassFromBirth(data.basis?.dateOfBirth);
@@ -280,6 +281,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     marken.length > 0 && h('div', { 'data-teil': 'vu-marken', style: { display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px', marginBottom: space.md + 'px' } },
       marken.map((m) => h('span', { key: m, style: { fontSize: text.xs, color: palette.text, padding: '4px 10px', borderRadius: radius.full + 'px', border: '1px solid ' + palette.border, background: palette.up } }, m))),
+
+    // Daten älter als das Kalenderjahr (z. B. 2028 ohne Import): detailJahr nimmt still das letzte vorhandene Jahr —
+    // das sagt die Seite hier offen, statt alte Prämien als aktuelle zu zeigen (Übergabe 26.10.2026, Punkt 5).
+    praemienVeraltet && h('div', { 'data-teil': 'vu-veraltet', style: s.warn },
+      h('div', { style: { fontSize: text.sm, color: palette.text } }, hinweisZeichen(), t('po.veraltet', { jahr: vergleichsJahr, aktuell: vergleichsTag.getFullYear() }))),
 
     // Ohne Prämienregion: die PLZ zuerst (sonst steht sie unter «Prämie regional»).
     !regionInfo && React.createElement('div', { style: s.section },

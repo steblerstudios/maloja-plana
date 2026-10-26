@@ -6028,6 +6028,7 @@ export default {
     wechselzeitStufen: 'Primes {jahr} — elles s’appliquent dès le 1er janvier {jahr}. Franchise plus basse : demande à la caisse au plus tard le {datum}. Franchise plus élevée : le délai est fixé par la caisse dans ses conditions.',
     wechselzeitStufenNachFrist: 'Primes {jahr} — elles s’appliquent dès le 1er janvier {jahr}. Une franchise plus basse n’est plus possible à cette date. Pour une franchise plus élevée, le délai est fixé par la caisse dans ses conditions.',
     refJahr: 'primes {jahr}',
+    veraltet: 'Les primes {aktuell} ne sont pas encore enregistrées ici. Les valeurs ci-dessous sont les primes {jahr} — seul l’avis de prime de la caisse fait foi.',
     chooseTarget: 'Caisse souhaitée',
     targetSelected: 'Souhaitée',
     targetChosenHint: 'Caisse souhaitée : {insurer} — elle apparaît dans le processus de changement.',
