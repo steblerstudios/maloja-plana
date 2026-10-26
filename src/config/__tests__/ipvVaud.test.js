@@ -652,9 +652,15 @@ describe('K31 VD 2027: Mechanik mit Attrappe für KK-Pauschale und Freibetrag', 
 });
 
 describe('K31 VD 2027: Texte in allen fünf Sprachen', () => {
-  it('Vorbehalt 2027 und Grund vermoegenVD gibt es in de/fr/it/en/rm', async () => {
+  // Die fünf Wörterbücher einmal vorab laden, nicht im Test: unter Last (paralleler Dev-Server,
+  // andere Sitzungen) brauchte das Laden allein über 5 s und riss das Test-Zeitlimit (26.10.2026).
+  const woerterbuch = {};
+  beforeAll(async () => {
+    for (const l of ['de', 'fr', 'it', 'en', 'rm']) woerterbuch[l] = (await import(`../../i18n/${l}.js`)).default;
+  });
+  it('Vorbehalt 2027 und Grund vermoegenVD gibt es in de/fr/it/en/rm', () => {
     for (const l of ['de', 'fr', 'it', 'en', 'rm']) {
-      const m = (await import(`../../i18n/${l}.js`)).default;
+      const m = woerterbuch[l];
       expect(m.ipv.vorbehaltVD2027.length, l).toBeGreaterThan(80);
       expect(m.ipv.offenGrund.vermoegenVD, l).toMatch(/130[  ,']000/);
     }

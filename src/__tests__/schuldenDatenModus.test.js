@@ -56,7 +56,8 @@ describe('Übernehmen und Abgleich: Verdrahtung in main.jsx', () => {
   });
   it('main.jsx ruft nur die beiden Funktionen auf', () => {
     expect(src).toMatch(/onSave: \(schuldenData\) => writeData\(prev => nachSchuldenSpeichern\(prev, schuldenData\)\)/);
-    expect(src).toMatch(/uebernehmen\(prev, id, heuteIso\(\), Date\.now\(\)\)/);
+    // heute als lokales Datum: seit 26.10.2026 inDays(0) statt heuteIso() (gleicher Wert; fristen.js bleibt aus dem Startbündel)
+    expect(src).toMatch(/uebernehmen\(prev, id, inDays\(0\), Date\.now\(\)\)/);
   });
   it('Beispielmodus: onUebernehmen wird nicht übergeben (wie updateData)', () => {
     expect(src).toMatch(/onUebernehmen: demoMode \? undefined : /);

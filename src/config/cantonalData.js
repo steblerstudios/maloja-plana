@@ -7,6 +7,7 @@ import { dreizehnterStatus, hauptlohnMonate } from '../utils/dreizehnter.js';
 import { vermoegensfreibetragKanton } from '../data/vermoegensfreibetragKanton.js';
 import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 import { sozialhilfeBilanz, istErwerbstaetig } from '../data/sozialhilfeKern.js';
+import { grundbedarf as skosGrundbedarf, gblStand } from '../data/skosGrundbedarf.js';
 import { nettoMonatAusProfil } from '../utils/nettoAusProfil.js';
 
 // PLZ → Kanton/Gemeinde, Kantonscodes und -namen liegen seit 28.09.2026 in kantonPLZ.js (klein, für
@@ -276,24 +277,15 @@ export const CANTONAL_IPV = {
 // sie je Gemeinde mit `beleg` ein (Bauart wie CANTONAL_IPV) — nicht als Kantonswert zurück.
 // Wächter: src/config/__tests__/mietzinslimiteUnbelegt.test.js
 
-// SKOS-Grundbedarf für den Lebensunterhalt (GBL), Stand 2025/2026 (SKOS-RL C.3.1)
-// Quelle: SKOS, bestätigt via Sozialhilfehandbuch Kanton ZH + AG. Ab 8 Personen + CHF 216/Person.
-// Muss mit grundbedarfFuerHaushalt() in data/sozialhilfeRechner.js übereinstimmen (Guard-Test).
-export const SKOS_GRUNDBEDARF = {
-  1: 1061,
-  2: 1624,
-  3: 1974,
-  4: 2271,
-  5: 2568,
-  6: 2784,
-  7: 3000,
-};
-const SKOS_GBL_PRO_WEITERE = 216;
+// SKOS-Grundbedarf für den Lebensunterhalt (GBL, SKOS-RL C.3.1): seit 26.10.2026 aus der einen
+// Jahrestabelle data/skosGrundbedarf.js — vorher stand hier eine zweite Kopie ohne Jahr, die ein
+// Guard-Test gegen data/sozialhilfeRechner.js hielt. `SKOS_GRUNDBEDARF` (Tabelle in der Sozialhilfe-
+// Ansicht) ist der Stand von heute; Ab 8 Personen + proWeitere.
+export const SKOS_GRUNDBEDARF = Object.fromEntries(gblStand().tabelle.slice(1).map((v, i) => [i + 1, v]));
 
 export function getGrundbedarf(householdSize) {
-  if (householdSize < 1) return SKOS_GRUNDBEDARF[1];
-  if (householdSize <= 7) return SKOS_GRUNDBEDARF[householdSize];
-  return SKOS_GRUNDBEDARF[7] + (householdSize - 7) * SKOS_GBL_PRO_WEITERE;
+  if (householdSize < 1) return skosGrundbedarf(1);
+  return skosGrundbedarf(householdSize);
 }
 
 // Sozialhilfe-Schnellrechnung (SKOS-basiert, kantonal angepasst), Ergebnis-Art SCHÄTZUNG.
@@ -343,8 +335,12 @@ export function calculateSozialhilfe(data) {
   const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, hh.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
 
+  // Jahr der GBL-Werte; `gblBelegt: false` ab einem Jahr, das data/skosGrundbedarf.js noch nicht führt.
+  const gbl = gblStand();
   return {
     grundbedarf,
+    gblJahr: gbl.jahr,
+    gblBelegt: gbl.belegt,
     effectiveRent,
     effectiveKK,
     totalBedarf,
@@ -373,7 +369,7 @@ export function calculateSozialhilfe(data) {
     isRetired: hh.isRetired,
     canton,
     noteKey: deficit > 0 ? 'sozialhilfeCalc.entitled' : 'sozialhilfeCalc.notEntitled',
-    noteParams: deficit > 0 ? { value: deficit.toFixed(0) } : {},
+    noteParams: deficit > 0 ? { value: Math.round(deficit) } : {}, // Zahl → t() setzt «CHF 1’234» (S5)
   };
 }
 

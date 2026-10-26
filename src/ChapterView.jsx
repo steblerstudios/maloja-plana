@@ -1383,7 +1383,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   // Mindestlohn-Kontext (Brutto) unbeschriftet gezeigt. Genau die Netto/Brutto-
                   // Vermengung, die diese Runde überall sonst trennt. Ohne belegte Brutto-Basis
                   // steht die Umrechnung „Std./Monat" da, aber kein „Stundenlohn: CHF X".
-                  check && check.lohnStunde != null && allData?.finanzen?.incomeType === 'brutto' && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, tr('lohnCheck.hourlyWage', { wage: check.lohnStunde.toFixed(2) }))
+                  check && check.lohnStunde != null && allData?.finanzen?.incomeType === 'brutto' && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, tr('lohnCheck.hourlyWage', { wage: zahl(check.lohnStunde, { stellen: 2 }) }))
                 )
               );
               // Jahres-Riegel (data/lohnCheck.js): kein belegter Satz fürs laufende Jahr → Hinweis statt Befund.
@@ -1403,7 +1403,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   },
                     // FIX D: pro-Kanton-Jahr (check.jahr), nicht das globale LOHNCHECK_DATA_VERSION —
                     // sonst zeigte ein TI-Nutzer im Kapitel ein anderes Jahr als im Brief.
-                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelleSatz: lohnStelleSatz(check.kanton, tr, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral'), ausnahmen: tr('lohnCheck.ausnahmen') })
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: zahl(check.mindestStunde, { stellen: 2 }), lohnStunde: zahl(check.lohnStunde, { stellen: 2 }), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelleSatz: lohnStelleSatz(check.kanton, tr, 'lohnCheck.stelleSatz', 'lohnCheck.stelleSatzNeutral'), ausnahmen: tr('lohnCheck.ausnahmen') })
                   )
                 );
                 // ⚠️ Der Brief-Knopf ruht (`WAGECLAIM_BEREIT === false`): Der Befund kennt
@@ -1660,8 +1660,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                     },
                       t('lohnCheck.unterMindestlohn')
                         .replace('{kanton}', kanton)
-                        .replace('{mindestStunde}', result.mindestStunde.toFixed(2))
-                        .replace('{lohnStunde}', result.lohnStunde.toFixed(2))
+                        .replace('{mindestStunde}', zahl(result.mindestStunde, { stellen: 2 }))
+                        .replace('{lohnStunde}', zahl(result.lohnStunde, { stellen: 2 }))
                         // FIX D: pro-Kanton-Jahr, nicht global (TI-Konsistenz Kapitel↔Brief).
                         .replace('{jahr}', result.jahr || LOHNCHECK_DATA_VERSION)
                         // 🔴 Predeploy-Runde 8: Hier stand fest „beim kantonalen

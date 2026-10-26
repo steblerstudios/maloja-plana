@@ -10,20 +10,41 @@
 // Verifiziert 2026-07-15 an den Volltexten der Kantonsquellen (nicht an Suchtreffern —
 // Wahrheits-Disziplin: exakte Beträge).
 
-const MINDESTLOHN = {
-  GE: { chfStunde: 24.59, jahr: 2026, indexiert: true },
-  NE: { chfStunde: 21.35, jahr: 2026, indexiert: true },
-  JU: { chfStunde: 21.40, jahr: 2026, indexiert: false },
-  BS: { chfStunde: 22.20, jahr: 2026, indexiert: true },
-  // TI ist nach Branche differenziert (CHF 20.00–20.50); konservativer unterer Wert.
-  // ⚠️ `indexiert: true` seit Predeploy-Runde 8 — vorher stand hier `false` mit der
-  // Begründung „kein Auto-Index". Das ist sachlich falsch: LSM Art. 4 cpv. 1 ordnet die
-  // jährliche LIK-Anpassung ausdrücklich an („Il salario minimo viene aggiornato
-  // annualmente secondo l'indice nazionale dei prezzi al consumo"). Dass der Wert 2026
-  // unverändert blieb, liegt nur daran, dass die LIK-Veränderung Nov.2025/Nov.2024
-  // 0.0 % betrug — richtiges Ergebnis, falsche Begründung. Also: jährlich prüfen.
-  TI: { chfStunde: 20.00, jahr: 2026, indexiert: true },
+// Tabelle JE JAHR (Werte 2027, Seitenrundgang 26.10.2026): vorher ein Eintrag je Kanton. Ein im
+// Dezember eingetragener Satz 2027 hätte sofort gegolten — der Riegel unten (`!==`) hätte dann den
+// ganzen Dezember 2026 gesperrt, und der neue Satz wäre an Dezemberlöhne angelegt worden. Jetzt gilt je
+// Kanton der Satz des laufenden Jahres; fehlt er, der letzte belegte (mit seinem `jahr`, damit der
+// Riegel greift). Ein neues Jahr: eigener Block `2027: { GE: {...}, … }`, nur nach Prüfung am Volltext.
+const MINDESTLOHN_JE_JAHR = {
+  2026: {
+    GE: { chfStunde: 24.59, indexiert: true },
+    NE: { chfStunde: 21.35, indexiert: true },
+    JU: { chfStunde: 21.40, indexiert: false },
+    BS: { chfStunde: 22.20, indexiert: true },
+    // TI ist nach Branche differenziert (CHF 20.00–20.50); konservativer unterer Wert.
+    // ⚠️ `indexiert: true` seit Predeploy-Runde 8 — vorher stand hier `false` mit der
+    // Begründung „kein Auto-Index". Das ist sachlich falsch: LSM Art. 4 cpv. 1 ordnet die
+    // jährliche LIK-Anpassung ausdrücklich an („Il salario minimo viene aggiornato
+    // annualmente secondo l'indice nazionale dei prezzi al consumo"). Dass der Wert 2026
+    // unverändert blieb, liegt nur daran, dass die LIK-Veränderung Nov.2025/Nov.2024
+    // 0.0 % betrug — richtiges Ergebnis, falsche Begründung. Also: jährlich prüfen.
+    TI: { chfStunde: 20.00, indexiert: true },
+  },
 };
+
+const KANTONE_MIT_MINDESTLOHN = [...new Set(Object.values(MINDESTLOHN_JE_JAHR).flatMap((j) => Object.keys(j)))];
+
+// Satz für `heute` aus einer Tabelle je Jahr: das laufende Jahr, sonst das letzte belegte Jahr davor
+// (sonst das erste). { chfStunde, indexiert, jahr } oder null, wenn der Kanton keinen Mindestlohn kennt.
+// Exportiert für den Test (mit eigener Tabelle, z. B. einem Eintrag 2027 im Dezember 2026).
+export function mindestlohnAusTabelle(tabelle, kanton, heute = new Date()) {
+  const jahre = Object.keys(tabelle).map(Number).filter((j) => tabelle[j][kanton]).sort((a, b) => a - b);
+  if (!jahre.length) return null;
+  const laufend = heute.getFullYear();
+  const jahr = jahre.includes(laufend) ? laufend : (jahre.filter((j) => j < laufend).pop() ?? jahre[0]);
+  return { ...tabelle[jahr][kanton], jahr };
+}
+const mindestlohnFuer = (kanton, heute = new Date()) => mindestlohnAusTabelle(MINDESTLOHN_JE_JAHR, kanton, heute);
 
 // 42 Std./Woche × 52 / 12 ≈ 182. Referenz für „Vollzeit" in der MINDESTLOHN-Welt:
 // die kantonalen Mindestlöhne sind Stundenlöhne, der Monatsboden ist Stundenlohn × 182.
@@ -97,11 +118,11 @@ function nichtBelegt(kanton, ml, heute) {
 export const WAGECLAIM_BEREIT = false;
 
 export function kantonHatMindestlohn(kanton) {
-  return kanton in MINDESTLOHN;
+  return KANTONE_MIT_MINDESTLOHN.includes(kanton);
 }
 
-export function getMindestlohn(kanton) {
-  return MINDESTLOHN[kanton] || null;
+export function getMindestlohn(kanton, heute = new Date()) {
+  return mindestlohnFuer(kanton, heute);
 }
 
 // ⚠️ NICHT für den Mindestlohn-Befund verwenden — nimmt blind eine Vollzeit-Anstellung an
@@ -111,9 +132,9 @@ export function getMindestlohn(kanton) {
 // sie meldet fehlende Stunden ehrlich als 'unvollstaendig', statt zu raten.
 // Bleibt nur als reine Referenz-Rechnung (Vollzeit-Monatslohn vs. Vollzeit-Mindestlohn).
 export function pruefeLohn(monatslohnChf, kanton) {
-  const ml = MINDESTLOHN[kanton];
-  if (!ml) return { status: 'keinGesetz', kanton };
   const heute = new Date();
+  const ml = mindestlohnFuer(kanton, heute);
+  if (!ml) return { status: 'keinGesetz', kanton };
   if (mindestlohnJahrNichtBelegt(ml.jahr, heute)) return nichtBelegt(kanton, ml, heute);
 
   const stundenChf = monatslohnChf / STUNDEN_PRO_MONAT;
@@ -140,12 +161,11 @@ export function pruefeLohn(monatslohnChf, kanton) {
   };
 }
 
-export function alleMindestlohnKantone() {
-  return Object.entries(MINDESTLOHN).map(([k, v]) => ({
-    kanton: k,
-    ...v,
-    monatBrutto: Math.round(v.chfStunde * STUNDEN_PRO_MONAT),
-  }));
+export function alleMindestlohnKantone(heute = new Date()) {
+  return KANTONE_MIT_MINDESTLOHN.map((k) => {
+    const v = mindestlohnFuer(k, heute);
+    return { kanton: k, ...v, monatBrutto: Math.round(v.chfStunde * STUNDEN_PRO_MONAT) };
+  });
 }
 
 // Wochenstunden → Monats-/Jahresstunden (52 Wochen / 12 Monate)
@@ -237,12 +257,12 @@ export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkom
   if (lohn <= 0 || stundenMonat <= 0) return { status: 'unvollstaendig' };
 
   const lohnStunde = Math.round((lohn / stundenMonat) * 100) / 100;
-  const ml = MINDESTLOHN[kanton];
+  const heute = new Date();
+  const ml = mindestlohnFuer(kanton, heute);
   const base = { lohnStunde, stundenMonat, kanton };
   if (!ml) return { ...base, status: 'keinGesetz' };
   // Jahres-Riegel vor jedem Urteil: ohne belegten Satz für das laufende Jahr kein Vergleich.
   // Kein `mindestStunde` im Ergebnis, damit keine Ansicht den alten Betrag doch noch zeigt.
-  const heute = new Date();
   if (mindestlohnJahrNichtBelegt(ml.jahr, heute)) return { ...base, ...nichtBelegt(kanton, ml, heute) };
 
   // Über dem VOLLEN Boden ist die Unterschreitung arithmetisch ausgeschlossen — ohne

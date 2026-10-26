@@ -1943,7 +1943,7 @@ export default {
     highlightIpv: 'Verifica riduzione premi',
     highlightIpvSub: { sie: 'Dipende da cantone e reddito — li inserisce entrambi direttamente nel calcolatore.', du: 'Dipende da cantone e reddito — li inserisci entrambi direttamente nel calcolatore.' },
     highlightSozialhilfe: 'Orientamento assistenza sociale',
-    highlightSozialhilfeSub: { sie: 'CHF 1’061/mese fabbisogno base (1 persona) — dove si trova?', du: 'CHF 1’061/mese fabbisogno base (1 persona) — dove ti trovi?' },
+    highlightSozialhilfeSub: { sie: 'CHF {betrag}/mese fabbisogno base (1 persona) — dove si trova?', du: 'CHF {betrag}/mese fabbisogno base (1 persona) — dove ti trovi?' },
     highlightNotfall: 'Preparazione all’emergenza',
     highlightNotfallSub: 'Scheda d’emergenza, scheda medica d’emergenza e previdenza in un solo luogo.',
     highlightPrivacy: { sie: 'Dati inseriti sul Suo dispositivo', du: 'Dati inseriti sul tuo dispositivo' },
@@ -3142,6 +3142,7 @@ export default {
   },
 
   tax: {
+    abzuegeGeschaetzt: 'Deduzioni (stima)',
     title: 'Orientamento fiscale',
     intro: { sie: 'Questa panoramica Le offre una stima approssimativa del Suo carico fiscale — come orientamento, non come consulenza fiscale. Può provare diverse deduzioni e vedere come cambia la Sua situazione.', du: 'Questa panoramica ti offre una stima approssimativa del tuo carico fiscale — come orientamento, non come consulenza fiscale. Puoi provare diverse deduzioni e vedere come cambia la tua situazione.' },
     inputs: 'Dati',
@@ -5904,7 +5905,7 @@ export default {
     feedbackForm: 'Modulo di feedback',
     feedback: {
       title: { sie: 'Il Suo feedback sulla beta', du: 'Il tuo feedback sulla beta' },
-      subtitle: { sie: 'Ci aiuti a migliorare Maloja Plana. Tutto resta sul Suo dispositivo.', du: 'Aiutaci a migliorare Maloja Plana. Tutto resta sul tuo dispositivo.' },
+      subtitle: { sie: 'Ci aiuti a migliorare Maloja Plana. Le Sue risposte lasciano il dispositivo solo se è Lei a inviare la bozza di e-mail.', du: 'Aiutaci a migliorare Maloja Plana. Le tue risposte lasciano il dispositivo solo se sei tu a inviare la bozza di e-mail.' },
       q1: { sie: 'Ha capito l\'utilità di Maloja Plana nel primo minuto?', du: 'Hai capito l\'utilità di Maloja Plana nel primo minuto?' },
       q2: { sie: 'Quanto si sente sicuro/a che i Suoi dati restino privati?', du: 'Quanto ti senti sicuro/a che i tuoi dati restino privati?' },
       q3: { sie: 'Cosa Le è piaciuto o cosa mancava?', du: 'Cosa ti è piaciuto o cosa mancava?' },
@@ -5915,9 +5916,18 @@ export default {
       trustHigh: 'Molto sicuro/a',
       trustOk: 'Abbastanza sicuro/a',
       trustLow: 'Poco sicuro/a',
-      submit: 'Invia feedback',
-      thanks: { sie: 'Grazie per il Suo feedback.', du: 'Grazie per il tuo feedback.' },
-      thanksDetail: { sie: 'Il Suo riscontro ci aiuta a migliorare Maloja Plana.', du: 'Il tuo riscontro ci aiuta a migliorare Maloja Plana.' },
+      submit: 'Prepara come e-mail',
+      submitHint: { sie: 'Apre il Suo programma di posta con una bozza a info@malojaplana.ch. Non viene inviato nulla finché non clicca su Invia.', du: 'Apre il tuo programma di posta con una bozza a info@malojaplana.ch. Non viene inviato nulla finché non clicchi su Invia.' },
+      to: 'A',
+      previewTitle: 'Ecco come appare l\'e-mail',
+      copy: 'Copia testo',
+      copied: 'Copiato. Da incollare in un\'e-mail a info@malojaplana.ch.',
+      copyFailed: 'La copia non è riuscita. Il testo qui sopra si può anche selezionare a mano.',
+      noMailApp: 'Non si è aperto nessun programma di posta?',
+      reopen: 'Riapri la bozza',
+      thanks: 'Grazie, la bozza è pronta.',
+      thanksDetail: { sie: 'Ci arriva non appena la invia dal Suo programma di posta.', du: 'Ci arriva non appena la invii dal tuo programma di posta.' },
+      thanksLater: { sie: 'Grazie per il Suo feedback sulla beta. Altre osservazioni sono benvenute in ogni momento a info@malojaplana.ch.', du: 'Grazie per il tuo feedback sulla beta. Altre osservazioni sono benvenute in ogni momento a info@malojaplana.ch.' },
     },
   },
 
@@ -6548,6 +6558,8 @@ export default {
     nebenOffen: 'Nel profilo non è indicato se il reddito accessorio è lordo o netto — per questo non viene conteggiato. Aggiungere qui l’importo netto.',
   },
   sh: {
+    gblNichtBelegt: 'Il forfait per il mantenimento è verificato in questa app secondo le direttive COSAS per il {jahr}. Un eventuale adeguamento per il {laufend} non è ancora registrato; il cantone può inoltre discostarsene. Il calcolo usa il {jahr}. Informa il servizio sociale.',
+    gblStandKurz: 'forfait per il mantenimento stato {jahr}',
     title: 'Calcolatore aiuto sociale',
     haushalt: 'Dimensione dell\'economia domestica',
     erwachsene: 'Adulti',
@@ -6596,7 +6608,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: { sie: 'Inserisca affitto e premio LAMal per calcolare il diritto.', du: 'Inserisci affitto e premio LAMal per calcolare il diritto.' },
-    source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali (salvo le spese dovute al lavoro inserite) e differenze cantonali, anche per la franchigia sul reddito. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
+    source: 'Forfait per il mantenimento secondo le [[direttive COSAS|skos.ch]] (stato 1.1.{jahr}), franchigia sul patrimonio secondo il cantone. Non considerati: limiti di pigione del comune, riduzione dei premi, prestazioni circostanziali (salvo le spese dovute al lavoro inserite) e differenze cantonali, anche per la franchigia sul reddito. Il diritto lo esamina il servizio sociale. Nessuna informazione giuridicamente vincolante.',
   },
 
   dl: {
@@ -6779,6 +6791,7 @@ export default {
     anspruchValue: "{n} indennità giornaliere (≈ {m} mesi)",
     anspruchUnklar: "Con meno di 12 mesi di contribuzione negli ultimi due anni di norma nessun diritto. Esistono eccezioni: chi deve cercare un lavoro a causa di separazione, divorzio, invalidità o decesso del coniuge (anche in unione domestica registrata) e allora abitava in Svizzera può essere esonerato dal periodo di contribuzione — fino a 90 indennità giornaliere, se l’evento risale al massimo a un anno (LADI art. 14 cpv. 2, art. 27 cpv. 4). Altri esoneri valgono p. es. dopo una formazione, una malattia o la soppressione di una rendita AI. La cassa di disoccupazione lo verifica.",
     gedeckeltHint: "I guadagni superiori a CHF {max}/mese sono limitati al massimo.",
+    satz80NichtBelegt: "L’importo limite per l’aliquota dell’80 % (CHF {betrag} al mese) è verificato in questa app sulle fonti ufficiali per il {jahr}. Un eventuale adeguamento del DEFR per il {laufend} non è ancora registrato. Il calcolo vincolante spetta alla cassa di disoccupazione.",
     disclaimer: { sie: 'Orientamento senza garanzia. L\'URC / la cassa di disoccupazione calcola l\'importo vincolante, a seconda della Sua situazione.', du: 'Orientamento senza garanzia. L\'URC / la cassa di disoccupazione calcola l\'importo vincolante, a seconda della tua situazione.' },
     ravTitle: { sie: 'Dove annunciarsi', du: 'Dove annunciarti' },
     ravBody: { sie: 'Si annunci all\'URC (ufficio regionale di collocamento) il prima possibile — idealmente il primo giorno di disoccupazione. Il diritto non inizia retroattivamente.', du: 'Annunciati all\'URC (ufficio regionale di collocamento) il prima possibile — idealmente il primo giorno di disoccupazione. Il diritto non inizia retroattivamente.' },

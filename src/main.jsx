@@ -141,7 +141,9 @@ const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
-import { heuteIso } from './utils/fristen.js';
+import { inDays } from './utils/helpers.js';
+// heuteIso (utils/fristen.js) zog die ganze Fristen-Datei ins Startbündel; inDays(0) liefert dasselbe (lokal,
+// YYYY-MM-DD) und liegt ohnehin hier (Startbündel-Diät 26.10.2026).
 import { uebernehmen, nachSchuldenSpeichern } from './utils/offenePosten.js';
 import { installiereNeuLadenNachDeploy } from './utils/neuLadenNachDeploy.js';
 
@@ -1680,6 +1682,10 @@ const AppInner = ({ demo }) => {
           onSave: (schuldenData) => writeData(prev => nachSchuldenSpeichern(prev, schuldenData))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
+          // key wie bei Schulden: der Rechner übernimmt taxData beim Öffnen und speichert data samt taxData —
+          // ohne Neuaufbau nach «Beispiel verlassen» landeten die Beispielwerte im echten Profil (Seitenrundgang
+          // 26.10.2026, J).
+          key: datenModus,
           palette, t, vorlaeufig,
           data: activeData,
           onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
@@ -1761,7 +1767,7 @@ const AppInner = ({ demo }) => {
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         // ③ Übernehmen: im Beispiel schreibt nichts (wie updateData), in der Probe nur in den Probe-Stand.
-        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, heuteIso(), Date.now())) }),
+        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate, onUebernehmen: demoMode ? undefined : (id) => writeData(prev => uebernehmen(prev, id, inDays(0), Date.now())) }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),

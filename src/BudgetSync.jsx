@@ -16,6 +16,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { inDays } from './utils/helpers.js';
 import { betrag } from './utils/geld.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { gblStand } from './data/skosGrundbedarf.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -400,6 +401,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
             amount: formatCHF(budget.householdContext.skosGrundbedarf),
           })
         ),
+        // Werte 2027 (Fachprüfung 26.10.2026): Grundbedarf eines Vorjahres → sagen.
+        !gblStand().belegt && React.createElement('div', { style: { marginBottom: space.xs, color: palette.mid } },
+          t('sh.gblNichtBelegt', { jahr: gblStand().jahr, laufend: new Date().getFullYear() })),
         // Entitlement orientation: greyed-out "not relevant" when income covers the
         // full support budget (Grundbedarf + rent + KK) — calm, never a rejection.
         sozialhilfe && React.createElement('div', {

@@ -115,3 +115,22 @@ describe('Berg-Detail lädt nach, das Dashboard hält es nicht fest (E36, 24.09.
     expect(html).toMatch(/<svg[^>]*viewBox/);
   });
 });
+
+// Startbündel-Diät 26.10.2026: Rollup nimmt ein Modul immer ganz. Das Dashboard brauchte aus
+// utils/notfallpass.js nur inZwischenablage (#609) und zog damit die Notfallpass-Feldlisten ins
+// Startbündel; main.jsx brauchte aus utils/fristen.js nur heuteIso. Zusammen −0.70 kB.
+describe('Startbündel: keine ganzen Fach-Dateien für eine kleine Hilfsfunktion', () => {
+  const dashboard = readFileSync(new URL('../Dashboard.jsx', import.meta.url), 'utf8');
+  it('Dashboard holt die Zwischenablage aus utils/zwischenablage.js, nicht aus notfallpass.js', () => {
+    expect(dashboard).toMatch(/from '\.\/utils\/zwischenablage\.js'/);
+    expect(dashboard).not.toMatch(/from '\.\/utils\/notfallpass\.js'/);
+  });
+  it('main.jsx importiert utils/fristen.js nicht', () => {
+    expect(mainJsx).not.toMatch(/from '\.\/utils\/fristen\.js'/);
+  });
+  it('notfallpass.js reicht inZwischenablage weiter (bestehende Aufrufer bleiben gültig)', async () => {
+    const a = await import('../utils/notfallpass.js');
+    const b = await import('../utils/zwischenablage.js');
+    expect(a.inZwischenablage).toBe(b.inZwischenablage);
+  });
+});

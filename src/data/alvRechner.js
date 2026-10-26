@@ -30,17 +30,29 @@ export const ALV_QUELLE_JE_JAHR = Object.freeze({
 });
 const ALV_HEUTE = werteFuerStichtag(ALV_QUELLE_JE_JAHR);
 
+// Grenzbetrag für den 80-%-Satz JE JAHR (Werte 2027, Seitenrundgang 26.10.2026): bis dahin stand er als
+// Wert ohne Jahr in ALV_PARAMS, und der Rechner wies ab 1.1.2027 «2027» aus, obwohl er für 2027 nicht
+// belegt ist (siehe ⚠️ OFFEN oben). Ein Jahr kommt erst dazu, wenn die WBF-Verordnung gelesen ist.
+export const SATZ80_JE_JAHR = Object.freeze({
+  2026: Object.freeze({ schwelle: 3797, quelle: 'AVIG Art. 22 Abs. 2 Bst. b, AVIV Art. 33 Abs. 2 (Stand 1.1.2026)' }),
+});
+const SATZ80_HEUTE = werteFuerStichtag(SATZ80_JE_JAHR);
+// Ausgewiesenes Jahr = das älteste, für das ALLE Werte belegt sind.
+const ALV_JAHR = Math.min(ALV_HEUTE.jahr, SATZ80_HEUTE.jahr);
+
 export const ALV_PARAMS = {
   versicherterVerdienstMax: 12350, // UVV Art. 22 Abs. 1: 148 200 Fr./Jahr ÷ 12 (AVIG Art. 3 Abs. 2 verweist auf das UVG-Maximum)
   versicherterVerdienstMin: 500,   // AVIV Art. 40: unter 500 Fr./Monat nicht versichert
   // AVIG Art. 22 Abs. 2 Bst. b: 70 % erst, wenn das volle Taggeld «mehr als 140 Franken» beträgt
   // → 140 × 21.7 ÷ 0.8 = 3797.5 Fr./Monat. Abs. 3 (seit 1.1.2026) lässt das WBF den Grenzbetrag
   // anpassen (AVIV Art. 33 Abs. 2); eine Anpassung war am 15.09.2026 nicht auffindbar.
-  satz80Schwelle: 3797,
+  satz80Schwelle: SATZ80_HEUTE.schwelle,
+  satz80Jahr: SATZ80_HEUTE.jahr,       // Jahr des Grenzbetrags
+  satz80Belegt: SATZ80_HEUTE.belegt,   // false ab einem Jahr ohne Eintrag → Hinweis alv.satz80NichtBelegt
   taggelderProMonat: 21.7,         // Durchschnitt (5 Taggelder/Woche, Mo–Fr); nicht in AVIG/AVIV beziffert
   satzHoch: 0.8,                   // AVIG Art. 22 Abs. 1
   satzTief: 0.7,                   // AVIG Art. 22 Abs. 2
-  version: String(ALV_HEUTE.jahr),
+  version: String(ALV_JAHR),
 };
 
 // Taggeldsatz: 80 % bei Unterhaltspflicht für Kinder <25, versichertem Verdienst
@@ -120,5 +132,5 @@ export function alvErgebnis({ bruttolohn, beitragsmonate, alter }) {
   });
 }
 
-export const ALV_DATA_VERSION = String(ALV_HEUTE.jahr);
+export const ALV_DATA_VERSION = String(ALV_JAHR);
 export const ALV_DATA_SOURCE = ALV_HEUTE.quelle;

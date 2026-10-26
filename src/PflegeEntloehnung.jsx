@@ -68,7 +68,7 @@ export const PflegeEntloehnung = ({ palette, t }) => {
       React.createElement('div', { style: s.sub }, '≈ CHF ' + fmt(jahr(LOHN_SPANNE.von)) + ' – ' + fmt(jahr(LOHN_SPANNE.bis)) + ' / ' + t('pflege.entl.year')),
       React.createElement('div', { style: s.sub }, t('pflege.entl.rateNote', { von: LOHN_SPANNE.von, bis: LOHN_SPANNE.bis }))
     ),
-    React.createElement('div', { style: s.note }, t('pflege.entl.vergleich', { betrag: OKP_GRUNDPFLEGE_PRO_STUNDE.toFixed(2) })),
+    React.createElement('div', { style: s.note }, t('pflege.entl.vergleich', { betrag: OKP_GRUNDPFLEGE_PRO_STUNDE }) /* Zahl → t() formatiert (S5) */),
     React.createElement('div', { style: s.note }, t('pflege.entl.nurGrundpflege')),
     React.createElement(ErgebnisArt, { palette, t, ergebnis: PFLEGE_ENTLOEHNUNG_ERGEBNIS }),
     React.createElement('div', { style: s.note }, t('pflege.entl.zuschlaege')),

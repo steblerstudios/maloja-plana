@@ -316,8 +316,10 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
         steuern.quelle === 'estv' && React.createElement('div', { style: { marginBottom: '12px' } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('common.total') + ' (-)'),
-          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '- ' + betrag(income - taxableIncome))
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.abzuegeGeschaetzt')),
+          // Seitenrundgang 26.10.2026 (S3/W11): vorher «Total (-)» und «- CHF …» mit Bindestrich — las sich wie
+          // eine Gutschrift. Jetzt benannt und mit echtem Minus (betrag(-x) → «− CHF …»).
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, betrag(-(income - taxableIncome)))
         ),
 
         steuern.quelle === 'estv' && React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
@@ -337,7 +339,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate, vorlaeufig
 
         taxResult && taxResult.kinderabzug > 0 ? React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.childDeduction')),
-          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '- ' + betrag(taxResult.kinderabzug, { hoechstens: 2 }))
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, betrag(-taxResult.kinderabzug, { hoechstens: 2 }))
         ) : null,
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),

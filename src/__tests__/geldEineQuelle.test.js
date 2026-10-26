@@ -4,7 +4,7 @@
 // dort den geraden Apostroph ', chf() und drei Kopien den typografischen ’. Auf einer Seite
 // standen zwei Trennzeichen. Und wo toFixed(2) stand (Schulden, Budget-Import, KVG),
 // fehlte die Trennung ganz: «CHF 12345.00».
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { zahl, betrag } from '../utils/geld.js';
@@ -53,10 +53,19 @@ describe('eine Quelle', () => {
     if (e.isDirectory()) return e.name === '__tests__' ? [] : dateien(p);
     return /\.(jsx?|ts)$/.test(e.name) ? [p] : [];
   });
-  const zeilen = () => dateien(SRC).flatMap((p) => fs.readFileSync(p, 'utf8').split('\n')
-    .map((z, i) => [path.relative(SRC, p) + ':' + (i + 1), z])
-    .filter(([, z]) => !/^\s*\/\//.test(z)));
+  // Einmal lesen statt dreimal, und vorab statt im Test: unter Last riss das Lesen des ganzen
+  // src/-Ordners sonst das 5-s-Zeitlimit eines einzelnen Tests (26.10.2026).
+  let alleZeilen = [];
+  beforeAll(() => {
+    alleZeilen = dateien(SRC).flatMap((p) => fs.readFileSync(p, 'utf8').split('\n')
+      .map((z, i) => [path.relative(SRC, p) + ':' + (i + 1), z])
+      .filter(([, z]) => !/^\s*\/\//.test(z)));
+  });
+  const zeilen = () => alleZeilen;
 
+  it('hat den Quellcode wirklich gelesen (sonst wären die Prüfungen unten leer grün)', () => {
+    expect(alleZeilen.length).toBeGreaterThan(10000);
+  });
   it('keine Zahl wird mit toLocaleString formatiert (Datumsformate sind frei)', () => {
     const treffer = zeilen().filter(([, z]) => /\.toLocaleString\(/.test(z)).map(([o]) => o);
     expect(treffer).toEqual([]);

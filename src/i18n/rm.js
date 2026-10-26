@@ -2097,7 +2097,7 @@ export default {
     highlightIpv: 'Examinar il dretg IPV',
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
     highlightSozialhilfe: 'Orientaziun agid social',
-    highlightSozialhilfeSub: { sie: "CHF 1'061/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF 1'061/mais basegn da basa (1 persuna) — nua stas Ti?" },
+    highlightSozialhilfeSub: { sie: "CHF {betrag}/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF {betrag}/mais basegn da basa (1 persuna) — nua stas Ti?" },
     highlightNotfall: 'Preparaziun per il cas d’urgenza',
     highlightNotfallSub: 'Carta d’urgenza, pass d’urgenza e prevenziun en in lieu.',
     highlightPrivacy: { sie: 'Endataziuns restan sin Voss apparat', du: 'Endataziuns restan sin tes apparat' }, // TODO(rm): E43 umformuliert, Gegenlese
@@ -2851,7 +2851,7 @@ export default {
     feedbackForm: 'Formular da feedback',
     feedback: {
       title: { sie: 'Voss feedback tar la beta', du: 'Tes feedback tar la beta' },
-      subtitle: { sie: 'Gidai nus a meglierar Maloja Plana. Tut resta sin Voss apparat.', du: 'Gida nus a meglierar Maloja Plana. Tut resta sin Tes apparat.' },
+      subtitle: { sie: 'Gidai nus a meglierar Maloja Plana. Vossas respostas bandunan l\'apparat mo, sche Vus trametteis sez il sboz dad e-mail.', du: 'Gida nus a meglierar Maloja Plana. Tias respostas bandunan l\'apparat mo, sche Ti trametteschas sez il sboz dad e-mail.' },
       q1: { sie: 'Avais Vus chapì il niz da Maloja Plana en la emprima minuta?', du: 'Has Ti chapì il niz da Maloja Plana en la emprima minuta?' },
       q2: { sie: 'Quant segir As sentais Vus che Vossas datas restan privatas?', du: 'Quant segir Ta sentas Ti che Tes datas restan privatas?' },
       q3: { sie: "Tge As ha plaschair u mancà?", du: "Tge T'ha plaschair u mancà?" },
@@ -2862,9 +2862,19 @@ export default {
       trustHigh: 'Fitg segir',
       trustOk: 'Pli probabel segir',
       trustLow: 'Insegir',
-      submit: 'Trametter il feedback',
-      thanks: { sie: 'Grazia per Voss feedback.', du: 'Grazia per Tes feedback.' },
-      thanksDetail: { sie: 'Vossa resista nus gida a meglierar Maloja Plana.', du: 'Tia resista nus gida a meglierar Maloja Plana.' },
+      // TODO(rm): neu 26.10.2026, provisorisch wie der ganze Block — gegenlesen.
+      submit: 'Preparar sco e-mail',
+      submitHint: { sie: 'Avra Voss program dad e-mail cun in sboz a info@malojaplana.ch. Tramess vegn pir, cur che Vus cliccais là sin Trametter.', du: 'Avra Tes program dad e-mail cun in sboz a info@malojaplana.ch. Tramess vegn pir, cur che Ti cliccas là sin Trametter.' },
+      to: 'A',
+      previewTitle: 'Uschia vesa ora l\'e-mail',
+      copy: 'Copiar il text',
+      copied: 'Copià. Per plaschair encollar en in e-mail a info@malojaplana.ch.',
+      copyFailed: 'Il copiar n\'ha betg funcziunà. Il text survart po er vegnir marcà a maun.',
+      noMailApp: 'Nagin program dad e-mail è s\'avert?',
+      reopen: 'Avrir danovamain il sboz',
+      thanks: 'Grazia, il sboz è preparà.',
+      thanksDetail: { sie: 'El arriva tar nus, uschespert che Vus al trametteis da Voss program dad e-mail.', du: 'El arriva tar nus, uschespert che Ti al trametteschas da Tes program dad e-mail.' },
+      thanksLater: { sie: 'Grazia per Voss feedback tar la beta. Ulteriuras indicaziuns èn adina bainvegnidas a info@malojaplana.ch.', du: 'Grazia per Tes feedback tar la beta. Ulteriuras indicaziuns èn adina bainvegnidas a info@malojaplana.ch.' },
     },
   },
 
@@ -4796,6 +4806,8 @@ export default {
   },
 
   tax: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    abzuegeGeschaetzt: 'Deducziuns (stima)',
     title: 'Orientaziun da taglia',
     intro: { sie: "Quest survista As dat ina stima approximativa da Vossa chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Vus pudais empruvar differentas deducziuns e vesair co che Vossa situaziun sa mida.", du: "Quest survista ta dat ina stima approximativa da Tia chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Ti pos empruvar differentas deducziuns e vesair co che Tia situaziun sa mida." },
     inputs: 'Endataziuns',
@@ -5690,6 +5702,9 @@ export default {
     nebenOffen: 'Beim Nebenerwerb ist nicht angegeben, ob er brutto oder netto ist — darum nicht mitgezählt. Hier den Netto-Betrag ergänzen.',
   },
   sh: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    gblNichtBelegt: 'Il basegn da basa è verifitgà en questa app tenor la recumandaziun SKOS per {jahr}. Sch’el è vegnì adattà per {laufend}, n’è anc betg registrà; il chantun po ultra da quai divergiar. Il quint dovra {jahr}. Infurmaziuns dat il servetsch social.',
+    gblStandKurz: 'basegn da basa stadi {jahr}',
     title: "Calculatur d'agid social",
     haushalt: 'Grondezza dal ménaschi',
     erwachsene: 'Creschids',
@@ -5742,7 +5757,7 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (Sie-Fassung neu, K124, 24.09.2026)
     eingeben: { sie: 'Endatai il tschains e la premia LAMal per calcular il dretg.', du: 'Endatescha il tschains e la premia LAMal per calcular il dretg.' },
     // TODO(rm): DE-Fallback (O3, 24.09.2026) — Quellenzeile nach Fachprüfung neu gefasst; romanische Fassung von Muttersprachler:in.
-    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.2026), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
+    source: 'Grundbedarf nach [[SKOS-Richtlinien|skos.ch]] (Stand 1.1.{jahr}), Vermögensfreibetrag je Kanton. Nicht berücksichtigt: Mietzins-Obergrenzen der Gemeinde, Prämienverbilligung, situationsbedingte Leistungen (ausser eingetragenen Mehrkosten für die Arbeit) und kantonale Abweichungen, auch beim Einkommensfreibetrag. Den Anspruch prüft der Sozialdienst. Keine rechtsverbindliche Auskunft.',
   },
 
   kvg: {
@@ -7705,6 +7720,8 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (ALV-Befreiung AVIG 14 II, 24.09.2026)
     anspruchUnklar: "Sut 12 mais da contribuziun ils ultims dus onns per ordinari nagin dretg. I dat excepziuns: tgi che sto tschertgar ina plazza pervia d’ina separaziun, d’in divorzi, da l’invaliditad u da la mort dal consort u da la consorta (era en partenadi registrà) ed abitava lura en Svizra po esser liberà dal temp da contribuziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn (LACI art. 14 al. 2, art. 27 al. 4). Ulteriuras liberaziuns valan p. ex. suenter ina scolaziun, ina malsogna u la fin d’ina renta AI. La cassa da dischoccupaziun scleriescha quai.",
     gedeckeltHint: "Gudogns sur CHF {max}/mais vegnan limitads al maximum.",
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    satz80NichtBelegt: "Il import limit per la tariffa da 80 % (CHF {betrag} per mais) è verifitgà en questa app tenor las funtaunas uffizialas per {jahr}. Sch’il DEFR al ha adattà per {laufend}, n’è anc betg registrà. Liant quinta la cassa da dischoccupaziun.",
     disclaimer: { sie: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor Vossa situaziun.", du: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor tia situaziun." },
     ravTitle: { sie: "Nua As annunziar", du: "Nua t'annunziar" },
     ravBody: { sie: "Annunziai Vus al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain.", du: "Annunzia tai al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain." },
