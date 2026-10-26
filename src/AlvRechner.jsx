@@ -147,6 +147,8 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
         { last: true }
       ),
       result.gedeckelt && React.createElement('div', { style: s.hint }, t('alv.gedeckeltHint', { max: fmt(ALV_PARAMS.versicherterVerdienstMax) })),
+      // Werte 2027 (26.10.2026): Grenzbetrag 80 % fürs laufende Jahr nicht belegt → sagen, nicht still rechnen.
+      !ALV_PARAMS.satz80Belegt && React.createElement('div', { style: s.hint }, t('alv.satz80NichtBelegt', { jahr: ALV_PARAMS.satz80Jahr, laufend: new Date().getFullYear(), betrag: ALV_PARAMS.satz80Schwelle })),
       React.createElement('div', { style: s.disclaimer }, t('alv.disclaimer'))
     ),
 

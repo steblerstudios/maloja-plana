@@ -2097,7 +2097,7 @@ export default {
     highlightIpv: 'Examinar il dretg IPV',
     highlightIpvSub: { sie: 'Dependa dal chantun e da l\'entrada — endatai omadus directamain en il calculatur.', du: 'Dependa dal chantun e da l\'entrada — endatescha omadus directamain en il calculatur.' },
     highlightSozialhilfe: 'Orientaziun agid social',
-    highlightSozialhilfeSub: { sie: "CHF 1'061/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF 1'061/mais basegn da basa (1 persuna) — nua stas Ti?" },
+    highlightSozialhilfeSub: { sie: "CHF {betrag}/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF {betrag}/mais basegn da basa (1 persuna) — nua stas Ti?" },
     highlightNotfall: 'Preparaziun per il cas d’urgenza',
     highlightNotfallSub: 'Carta d’urgenza, pass d’urgenza e prevenziun en in lieu.',
     highlightPrivacy: { sie: 'Endataziuns restan sin Voss apparat', du: 'Endataziuns restan sin tes apparat' }, // TODO(rm): E43 umformuliert, Gegenlese
@@ -5698,6 +5698,8 @@ export default {
     nebenOffen: 'Beim Nebenerwerb ist nicht angegeben, ob er brutto oder netto ist — darum nicht mitgezählt. Hier den Netto-Betrag ergänzen.',
   },
   sh: {
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    gblNichtBelegt: 'Il basegn da basa SKOS è verifitgà en questa app per {jahr}. Las valurs per {laufend} n’èn anc betg actualisadas; il quint dovra quellas da {jahr}. Dumandar al servetsch social.',
     title: "Calculatur d'agid social",
     haushalt: 'Grondezza dal ménaschi',
     erwachsene: 'Creschids',
@@ -7713,6 +7715,8 @@ export default {
     // TODO(rm): provisorisch — Gegenlese (ALV-Befreiung AVIG 14 II, 24.09.2026)
     anspruchUnklar: "Sut 12 mais da contribuziun ils ultims dus onns per ordinari nagin dretg. I dat excepziuns: tgi che sto tschertgar ina plazza pervia d’ina separaziun, d’in divorzi, da l’invaliditad u da la mort dal consort u da la consorta (era en partenadi registrà) ed abitava lura en Svizra po esser liberà dal temp da contribuziun — fin 90 daners dal di, sch’il eveniment è capità avant maximalmain in onn (LACI art. 14 al. 2, art. 27 al. 4). Ulteriuras liberaziuns valan p. ex. suenter ina scolaziun, ina malsogna u la fin d’ina renta AI. La cassa da dischoccupaziun scleriescha quai.",
     gedeckeltHint: "Gudogns sur CHF {max}/mais vegnan limitads al maximum.",
+    // TODO(rm) provisorisch, Gegenlese offen (26.10.2026)
+    satz80NichtBelegt: "Il import limit per la tariffa da 80 % (CHF {betrag} per mais) è verifitgà en questa app per {jahr}. L’adattaziun per {laufend} n’è anc betg actualisada; decisiva è la cassa da dischoccupaziun.",
     disclaimer: { sie: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor Vossa situaziun.", du: "Orientaziun senza garanzia. Il RAV / la cassa da dischoccupaziun quinta l'import obligatoric, tut tenor tia situaziun." },
     ravTitle: { sie: "Nua As annunziar", du: "Nua t'annunziar" },
     ravBody: { sie: "Annunziai Vus al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain.", du: "Annunzia tai al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain." },

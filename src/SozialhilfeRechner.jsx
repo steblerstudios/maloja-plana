@@ -285,6 +285,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
     !result && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('sh.eingeben')),
 
+    // Werte 2027 (26.10.2026): fehlt das laufende Jahr in data/skosGrundbedarf.js, sagt die Seite das,
+    // statt still mit dem Vorjahr zu rechnen.
+    result && !result.gblBelegt && React.createElement('div', { style: { ...s.hint, marginTop: space.sm + 'px' } },
+      t('sh.gblNichtBelegt', { jahr: result.gblJahr, laufend: new Date().getFullYear() })),
     // O3: die Art des Ergebnisses — Schätzung (Fachprüfung 24.09.2026), leere Felder zählen als fehlend.
     React.createElement(ErgebnisArt, { palette, t, ergebnis: sozialhilfeErgebnis({ miete, kvgPraemie: kvg, erwerbseinkommen: einkommen, vermoegen, kanton, erwerbstaetig, erwerbsunkosten }) }),
     React.createElement('div', { style: s.source }, renderSource(t('sh.source'), null, t))

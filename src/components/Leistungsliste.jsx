@@ -4,7 +4,7 @@ import { text, weight, leading, space, radius, ease, duration } from '../config/
 import { PanelTitle } from './Heading.jsx';
 import { miniCompass } from './miniKompass.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
-import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen } from '../config/cantonalData.js';
+import { calculateIPV, calculateSozialhilfe, checkELEligibility, ipvJahreseinkommen, getGrundbedarf } from '../config/cantonalData.js';
 import { zahl } from '../utils/geld.js';
 import { hauptlohnMonate } from '../utils/dreizehnter.js';
 import { useEinkommen, EinkommenFeld, istKnapp } from './EinkommenFeld.jsx';
@@ -94,7 +94,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
 
   const leistungen = [
     { key: 'ipv', label: t('dashboard.quickCheckIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
-    { key: 'soz', label: t('nav.sozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
+    { key: 'soz', label: t('nav.sozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub', { betrag: getGrundbedarf(1) }), view: 'sozialhilfe', icon: 'health' },
     { key: 'stipendien', label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
     { key: 'alv', label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
     { key: 'eo', label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
