@@ -79,6 +79,42 @@ Bereits behoben in #612: `PraemienOrientierung.jsx` toFixed, `Dashboard.jsx:319`
 | S10 | **Startbündel 64.53 / 65 kB** auf main (nach #609), 0.47 kB Reserve | Risiko | `package.json` size-limit | Kandidaten zum Auslagern: IconSystem (12.6 kB), MobileNav, BetaGate |
 | S11 | Fehlerschirm englisch («Your data is safe…»), wohl bewusst (ohne Sprachdatei) | prüfen | `ErrorBoundary.jsx:128, 168` | Entscheid festhalten |
 
+---
+
+## Werkzeuge und Rechner (geprüft 26.10.2026, Code-Lesung, Stand `2ad97fe0`)
+
+Erledigt seit 27.09.: W1, W8, N1, R1, IPV-Entscheide, 3a-Feld am Höchstbetrag, ALV «Kinder über 25». Jahreswechsel ohne Befund: AHV, ALV, EO, Lohnabzüge, Hilflosenentschädigung (über `data/jahrestabelle.js`), Mindestlohn (eigener Wächter).
+
+### Abgleich: offen oder teilweise
+
+| ID | Status | Beleg |
+|---|---|---|
+| **X Rechner-Form für alle (Runde 8)** | **offen, nirgends gebaut** (auch nicht ALV) | `AlvRechner.jsx:58-130` |
+| **J Steuern: Ergebnis zuerst** | offen | `TaxCalculator.jsx:209` vs. `:312` |
+| J «Max»-Grenzen nur mit Gesetzesgrundlage | offen | `TaxCalculator.jsx:86-89` (50’000 / 50’000 / 10’000 / 10’000) |
+| J `key: datenModus` am Steuerrechner | offen; Folge (Beispieldaten im echten Profil?) **prüfen** | `main.jsx:1682` (Schulden `:1676` hat ihn) |
+| W2 Zeichen aus `ansichtIkon` | teilweise (9 ja, 16 fest, Schulden ohne) | `TaxCalculator.jsx:200`, `SchuldenManager.jsx:271` |
+| W3 Hauptknopf | teilweise (7 Werkzeuge; kein Rechner) | – |
+| W4 Sackgassen | teilweise; offen: budget, organ, sync, flyer, eo, cv, direktlinks, kreditkarte, stundenlohn | `main.jsx:1664–1749` |
+| W5 Geld über `betrag()` | teilweise (’ stimmt, Form uneinheitlich) | `EOrechner.jsx:50-74`, `VorsorgeRechner.jsx:562…` |
+| W6 `'#fff'` / `'#000'` | offen (15 Dateien) | `CalendarReminders.jsx:278…`, `KVGLeistungen.jsx:56-59` |
+| W7 Kalender-Knöpfe ~28 px, Löschen laut rot | offen | `CalendarReminders.jsx:276-289`; Tresor-Rest `DocumentTresor.jsx:325` |
+| S2 IPV-Grenze «CHF 64000» ohne ’ | teilweise (nur Genf über `zahl()`) | `ipvBern.js:255`, `ipvZuerich.js:286`, `ipvFreiburg.js:275`, `cantonalData.js:463`, `FinanzAuswertung.jsx:446` |
+| S3 Steuer «Total (-) – CHF» | offen | `TaxCalculator.jsx:319-320, 340` |
+| ALV-Name einheitlich | teilweise | `de.js:1439` «ALV-Taggeld», `de.js:147` |
+
+### Neue Befunde
+
+| # | Werkzeug | Befund | Klasse | Beleg | Vorschlag |
+|---|---|---|---|---|---|
+| W9 | **Sozialhilfe** | SKOS-Grundbedarf 1061 als feste Konstante ohne Jahrestabelle; ab 1.1.2027 still Stand 2026, als «Stand 1.1.2026» beschriftet. Wert 2027: **prüfen** | Fach | `data/sozialhilfeRechner.js:1-16`, `config/cantonalData.js:282-290` | über `werteFuerStichtag` wie AHV/ALV; Wert 2027 belegen |
+| W10 | **Kalender** | «monatlich» = alle 30 Tage, «jährlich» = alle 365 Tage; Termine wandern | Fehler | `CalendarReminders.jsx:32-40, 47-48, 137-140` | nach Kalendermonat/-jahr fortschreiben |
+| W11 | Steuern | Abzug mit `'- ' + betrag()` statt echtem Minus | Detail | `TaxCalculator.jsx:320, 340` | `betrag(-x)` oder «Abzüge» ohne Vorzeichen |
+| W12 | KVG-Leistungen | Taxpunkt «= CHF {betrag}» roh | Detail | `de.js:5912`, `KVGLeistungen.jsx:584` | `zahl()` |
+| W13 | EO | kein Weg zur Ausgleichskasse/Antrag, Seite endet nach der Quelle | vergessen | `EOrechner.jsx`, `main.jsx:1749` | Schritt «Offizielle Stelle & Antrag» |
+| W14 | Kreditkarte, Stundenlohn | kein `onNavigate`, kein nächster Schritt | vergessen | `main.jsx:1699-1700` | Weg zu Schulden bzw. Lohn |
+| W15 | Register | «Charts», «Finanz-Übersicht», «Unterlagen» stehen als eigene Werkzeuge, sind aber Umleitungen. **prüfen** in der Oberfläche | Gestalt | `werkzeugRegister.js:42, 73, 77`, `hashRouter.js:51-55` | als Suchwort des Ziels führen |
+
 ### Zu entscheiden (Stebler Studios)
 
 1. **Spinnennetz im Kapitel Versicherungen:** weg, weil M2 dasselbe leistet? (AA-6)
