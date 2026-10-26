@@ -20,7 +20,7 @@ import { lohnIstNetto } from './utils/jahreslohnAusProfil.js';
 import { sumAllExpenses, eigeneEinnahmen } from './utils/monatsrechnung.js';
 import { steuerfristVorbei } from './utils/steuerfrist.js';
 import { betaFeedbackText, betaFeedbackHref } from './utils/betaFeedbackMail.js';
-import { inZwischenablage } from './utils/notfallpass.js';
+import { inZwischenablage } from './utils/zwischenablage.js';
 import { version as APP_VERSION } from '../package.json';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
