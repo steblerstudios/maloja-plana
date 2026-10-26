@@ -108,7 +108,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {
   // Alter und Rentenalter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter,
   // im Rentenalter ohne ALV/PK). Eine Regel mit dem Netto-Richtwert (alterUndRentenalter).
-  const { alter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
+  const { bvgAlter, rentenalter, beitragsfrei } = alterUndRentenalter(data?.basis);
   const state = lohnBandState({
     rentenalter,
     beitragsfrei,
@@ -118,7 +118,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     // Bei Brutto direkt; bei Netto schätzt lohnBandState das Brutto (AHV/ALV + PK nach Alter)
     // und markiert es als «geschätzt» — die Mindestlohn-Warnung bleibt echtem Brutto vorbehalten.
     incomeType: data?.finanzen?.incomeType,
-    alter,
+    alter: bvgAlter,
     // Der BFS-Median enthält den anteiligen 13.; mit einem 13. wird der Lohn ×13/12
     // vergleichbar gemacht, und der Mindestlohn-Boden sinkt um 12/13 (Jahres-Boden).
     dreizehnter: data?.finanzen?.dreizehnter,

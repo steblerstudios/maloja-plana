@@ -417,15 +417,21 @@ export function berechneBVGGuthaben({
   // überschreibbar. Unter 1 oder über 10 wäre unplausibel → auf 6.8 zurückfallen.
   umwandlungssatz = 6.8,
   stichtag,
+  // Geburtsjahr, wenn bekannt: Gutschrift-Stufe je Jahr nach BVV 2 Art. 13 («Differenz zwischen dem laufenden
+  // Kalenderjahr und dem Geburtsjahr», fedlex gelesen 26.10.2026), nicht nach dem Alter am Tag. Die Zahl der Jahre und
+  // jahresDetail.alter bleiben am Alter am Tag (Zeitachse für projiziereVorsorge). Ohne Geburtsjahr wie bisher.
+  geburtsjahr,
 }) {
   const koord = bvgKoordinationsabzug(jahresbruttolohn, stichtag);
+  const startJahr = (stichtag || new Date()).getFullYear();
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
 
   let guthaben = aktuellesGuthaben;
   const jahresDetail = [];
 
   for (let a = alter; a < austrittsalter; a++) {
-    const gutschrift = BVG_GUTSCHRIFTEN.find(g => a >= g.von && a <= g.bis);
+    const stufenAlter = Number.isFinite(geburtsjahr) ? startJahr + (a - alter) - geburtsjahr : a;
+    const gutschrift = BVG_GUTSCHRIFTEN.find(g => stufenAlter >= g.von && stufenAlter <= g.bis);
     const beitrag = gutschrift ? koord.koordinierterLohn * gutschrift.satz / 100 : 0;
     const zins = guthaben * zinssatz / 100;
     guthaben += beitrag + zins;
