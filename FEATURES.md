@@ -13,6 +13,9 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
+**Stand:** 2026-10-26 17:50 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `758da6c7` (+ #611 Patch-Updates, #609 Beta-Feedback ehrlich) gebaut, nicht deployt.
+
+*Vorheriger Stand (bleibt als Beleg):*
 **Stand:** 2026-10-25 21:30 · **Live:** `4299bfb9` (0.1.48-beta, 23.10.) · main `2db4d4ee` (Fassung 6 + Muster, #571–#584) gebaut, nicht deployt.
 
 *Vorheriger Stand (bleibt als Beleg):*
