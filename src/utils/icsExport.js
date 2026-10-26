@@ -8,7 +8,23 @@ const esc = (s) => String(s == null ? '' : s)
 const pad = (n) => String(n).padStart(2, '0');
 const toICSDate = (iso) => (iso || '').slice(0, 10).replace(/-/g, ''); // YYYY-MM-DD → YYYYMMDD
 
-const RRULE = { weekly: 'FREQ=WEEKLY', monthly: 'FREQ=MONTHLY', yearly: 'FREQ=YEARLY' };
+// Gleiche Wiederholungen wie in der App (utils/wiederholung.js). Bis 26.10.2026 fehlten täglich, vierteljährlich
+// und halbjährlich — die .ics enthielt dann nur den einen Termin, die App wiederholte weiter.
+const RRULE = {
+  daily: 'FREQ=DAILY', weekly: 'FREQ=WEEKLY', monthly: 'FREQ=MONTHLY',
+  quarterly: 'FREQ=MONTHLY;INTERVAL=3', halfYearly: 'FREQ=MONTHLY;INTERVAL=6', yearly: 'FREQ=YEARLY',
+};
+// Tag 29–31: Kalender-Programme ÜBERSPRINGEN nach RFC 5545 Monate ohne diesen Tag; die App nimmt den letzten
+// Tag des Monats. «BYMONTHDAY=28,…,d;BYSETPOS=-1» = der letzte vorhandene dieser Tage → dasselbe Verhalten.
+const rrule = (wiederholung, iso, ankerTag) => {
+  const basis = RRULE[wiederholung];
+  if (!basis) return '';
+  const tag = Number.isInteger(ankerTag) ? ankerTag : Number(String(iso || '').slice(8, 10));
+  if (!(tag >= 29) || /DAILY|WEEKLY/.test(basis)) return basis;
+  const tage = []; for (let d = 28; d <= tag; d++) tage.push(d);
+  const monat = /YEARLY/.test(basis) ? ';BYMONTH=' + Number(String(iso).slice(5, 7)) : '';
+  return basis + monat + ';BYMONTHDAY=' + tage.join(',') + ';BYSETPOS=-1';
+};
 
 function dtstamp(now = new Date()) {
   return now.getUTCFullYear() + pad(now.getUTCMonth() + 1) + pad(now.getUTCDate())
@@ -38,7 +54,7 @@ export function buildICS(reminders, t) {
     lines.push('DTSTART;VALUE=DATE:' + date);
     lines.push('SUMMARY:' + esc(r.title));
     lines.push('DESCRIPTION:' + esc((cat ? cat + ' · ' : '') + 'Maloja Plana'));
-    if (r.recurrence && RRULE[r.recurrence]) lines.push('RRULE:' + RRULE[r.recurrence]);
+    if (r.recurrence && RRULE[r.recurrence]) lines.push('RRULE:' + rrule(r.recurrence, r.dueDate, r.ankerTag));
     lines.push('BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(r.title), 'END:VALARM');
     lines.push('END:VEVENT');
   }

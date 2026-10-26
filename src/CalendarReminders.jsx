@@ -15,7 +15,7 @@ import { ansichtIkon } from './config/ansichtenRegister.js';
 import { loadTodos, saveTodos, merkpunktUmschalten, merkpunktTagSetzen, WIEDERHOLUNG_JAEHRLICH } from './utils/merkliste.js';
 import { merkpunktBereich, merkpunktZeichen, kategorieBereich, bereichZeichenFarbe } from './data/aufgabenBereiche.js';
 import { werktagAmOderDavor } from './utils/fristen.js';
-import { naechsterTermin } from './utils/wiederholung.js';
+import { naechsterTermin, bisHeuteWeiter, INTERVALLE } from './utils/wiederholung.js';
 import { Jahreskreis } from './components/Jahreskreis.jsx';
 import { kalenderBeispiel } from './demo/kalenderBeispiel.js';
 
@@ -37,7 +37,8 @@ const todayISO = () => inDays(0);
 // damit man egal wann im Jahr startet sinnvoll geplant wird. Standard: jährlich.
 const nextDueFrom = (lastVisit, recurrence) => {
   if (!lastVisit) return '';
-  return naechsterTermin(lastVisit, recurrence === 'once' ? 'yearly' : recurrence) || '';
+  // Ohne bekannte Wiederholung (auch «once»): jährlich, wie bisher.
+  return naechsterTermin(lastVisit, INTERVALLE[recurrence] ? recurrence : 'yearly') || '';
 };
 
 // Pre-built templates for Swiss life
@@ -124,14 +125,11 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, beispiel }) =>
   useEffect(() => {
     const today = todayISO();
     let changed = false;
+    // Bis heute weiterschalten, mit Ankertag (utils/wiederholung.js); ohne bekannte Wiederholung bleibt der
+    // Eintrag, wie er ist (Prüfung 26.10.2026).
     const updated = reminders.map(r => {
-      if (r.done && r.recurrence !== 'once' && r.dueDate <= today) {
-        const nextISO = naechsterTermin(r.dueDate, r.recurrence);
-        if (nextISO) {
-          changed = true;
-          return { ...r, dueDate: nextISO, done: false, completedDate: null };
-        }
-      }
+      const weiter = bisHeuteWeiter(r, today);
+      if (weiter) { changed = true; return weiter; }
       return r;
     });
     if (changed) setReminders(updated);
