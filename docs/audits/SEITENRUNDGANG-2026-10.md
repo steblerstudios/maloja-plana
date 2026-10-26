@@ -115,6 +115,14 @@ Erledigt seit 27.09.: W1, W8, N1, R1, IPV-Entscheide, 3a-Feld am Höchstbetrag, 
 | W14 | Kreditkarte, Stundenlohn | kein `onNavigate`, kein nächster Schritt | vergessen | `main.jsx:1699-1700` | Weg zu Schulden bzw. Lohn |
 | W15 | Register | «Charts», «Finanz-Übersicht», «Unterlagen» stehen als eigene Werkzeuge, sind aber Umleitungen. **prüfen** in der Oberfläche | Gestalt | `werkzeugRegister.js:42, 73, 77`, `hashRouter.js:51-55` | als Suchwort des Ziels führen |
 
+---
+
+## Werte 2027 (geprüft 26.10.2026, swiss-precision-pruefer)
+
+Volle Tabelle: [`WERTE-2027-STAND-2026-10.md`](WERTE-2027-STAND-2026-10.md). Bundeswerte (AHV, BVG-Grenzbeträge, 3a, Lohnabzüge, EO, ALV-Höchstverdienst, Hilflosenentschädigung, BAG-Prämien) schalten am 1.1.2027 selbst um.
+
+Dringend bis 31.12.2026: **SKOS-Grundbedarf** ohne Jahrestabelle (still 2026, = W9) · **BVG-Mindestzins** 2027 · **ALV-Schwelle 3’797** zeigt «2027» ohne Beleg · **Mindestlöhne**: Tabelle je Jahr vor dem Nachtrag, sonst sperrt ein Eintrag 2027 sofort 2026 · IPV-Kantone 2027 und kleinere Werte auf die Dezember-Liste · Kapitalbezugssteuer mit nicht amtlicher Quelle (finpension).
+
 ### Zu entscheiden (Stebler Studios)
 
 1. **Spinnennetz im Kapitel Versicherungen:** weg, weil M2 dasselbe leistet? (AA-6)
